@@ -1,0 +1,12 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "javascript.implicitProjectConfig.checkJs": true,
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/dist/*/**": true,
+        "**/coverage/*/**": true,
+        "**/tools/*/**": true
+    }
+}

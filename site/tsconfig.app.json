@@ -1,0 +1,24 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"outDir": "../out-tsc/app",
+		"target": "es5",
+		"module": "es2015",
+		"baseUrl": ".",
+		"types": [],
+		"paths": {
+			"@delon/theme": ["../src/core/theme"],
+			"@delon/theme/*": ["../src/core/theme/*"],
+			"@delon/abc": ["../src/core/abc"],
+			"@delon/abc/*": ["../src/core/abc/*"],
+			"@delon/acl": ["../src/core/acl"],
+			"@delon/acl/*": ["../src/core/acl/*"]
+		}
+	},
+	"exclude": ["test.ts", "**/*.spec.ts", "templates/*.ts"]
+}

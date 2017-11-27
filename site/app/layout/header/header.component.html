@@ -1,0 +1,33 @@
+<div nz-row>
+    <div nz-col nzXs="24" nzSm="8" nzMd="8" nzLg="5">
+        <a routerLink="/" class="logo">
+            <img src="./assets/img/logo-color.svg" />
+            <span>ng-alain</span>
+        </a>
+    </div>
+    <div nz-col nzXs="0" nzSm="16" nzMd="16" nzLg="19">
+        <div class="search-box">
+            <i class="anticon anticon-search"></i>
+            <nz-select [nzPlaceHolder]="'app.header.search' | translate"
+                        [nzMode]="'multiple'"
+                        [nzAllowClear]="true">
+            </nz-select>
+        </div>
+        <div class="header-meta">
+            <div class="menu">
+                <ul nz-menu [nzMode]="'horizontal'">
+                    <li nz-menu-item routerLink="/">{{'app.header.menu.home' | translate}}</li>
+                    <li nz-menu-item routerLink="/docs">{{'app.header.menu.docs' | translate}}</li>
+                    <li nz-menu-item routerLink="/components">{{'app.header.menu.components' | translate}}</li>
+                </ul>
+            </div>
+            <div class="preview">
+                <a class="preview-button" href="//cipchk.github.io/ng-alain/" target="_blank" rel="noopener noreferrer">
+                    <button nz-button>
+                        <i class="anticon anticon-eye-o"></i><span>{{'app.home.preview' | translate}}</span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

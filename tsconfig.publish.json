@@ -1,0 +1,43 @@
+{
+    "compilerOptions": {
+      "declaration": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "lib": [
+        "es7",
+        "dom"
+      ],
+      "module": "es2015",
+      "moduleResolution": "node",
+      "noEmitOnError": true,
+      "outDir": "./.lib",
+      "rootDir": "./.ng_build",
+      "sourceMap": true,
+      "target": "es5",
+      "inlineSources": true,
+      "stripInternal": true,
+      "baseUrl": ".",
+      "paths": {
+        "@delon/theme": ["./.ng_build/theme"]
+      },
+      "skipLibCheck": true,
+      "typeRoots": [
+        "node_modules/@types"
+      ]
+    },
+    "include": [
+      "./.ng_build/**/*"
+    ],
+    "files": [
+      "./src/typings.d.ts"
+    ],
+    "exclude": [
+      "./.ng_build/**/*.e2e.ts",
+      "./.ng_build/**/*.spec.ts"
+    ],
+    "angularCompilerOptions": {
+      "skipTemplateCodegen": true,
+      "strictMetadataEmit": true,
+      "genDir": "./.ng_compiled"
+    }
+  }

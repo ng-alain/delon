@@ -1,0 +1,36 @@
+.g2-chart {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	&__ {
+		&desc {
+			position: absolute;
+			bottom: -34px;
+			width: 100%;
+			& > div {
+				margin: 0 -5px;
+				overflow: hidden;
+			}
+		}
+		&loading {
+			position: absolute;
+			top: 16px;
+			left: 50%;
+			margin-left: -7px;
+		}
+	}
+}
+
+.min-chart {
+	position: relative;
+	width: 100%;
+	.g2-chart__desc {
+		position: absolute;
+		bottom: -34px;
+		width: 100%;
+		& > div {
+			margin: 0 -5px;
+			overflow: hidden;
+		}
+	}
+}

@@ -1,0 +1,36 @@
+<section class="code-box-demo" [ngStyle]="{'background': item.meta.bg}">
+    <div [ngClass]="{'browser-mockup': item.meta.browser}" [ngStyle]="{'height.px': item.meta.browser}">
+        <div [ngClass]="{'browser-scroll': item.meta.browser}">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</section>
+<section class="code-box-meta markdown">
+    <div class="code-box-title">
+        {{get(item.meta.title)}}
+        <edit-button [url]="item.source"></edit-button>
+    </div>
+    <div [innerHTML]="item.summary"></div>
+    <nz-tooltip [nzTitle]="expand ? 'Hide Code' : 'Show Code'">
+        <span class="code-expand-icon" nz-tooltip>
+
+            <img
+                alt="expand code"
+                src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg"
+                [ngClass]="{'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand}"
+                (click)="handle()"
+              />
+            <img
+                alt="expand code"
+                src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg"
+                [ngClass]="{'code-expand-icon-show': expand, 'code-expand-icon-hide': !expand}"
+                (click)="handle()"
+            />
+        </span>
+    </nz-tooltip>
+</section>
+<section class="highlight-wrapper" [ngClass]="{'highlight-wrapper-expand': expand}">
+    <div class="highlight">
+        <pre class="hljs language-{{item.lang}}"><code>{{item.code}}</code></pre>
+    </div>
+</section>

@@ -1,0 +1,17 @@
+<div nz-row>
+    <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5" nzXl="4" class="main-menu">
+        <ul nz-menu [nzMode]="'inline'" class="aside-container">
+            <li nz-menu-group *ngFor="let group of meta.menus">
+                <div title>{{group.title}}</div>
+                <ul>
+                    <li nz-menu-item *ngFor="let item of group.list" [routerLinkActive]="['ant-menu-item-selected']" style="padding-left: 54px;">
+                        <a routerLink="{{item.url}}">{{item.title}}<span class="chinese" *ngIf="item.subtitle">{{item.subtitle}}</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="19" nzXl="20" class="main-container main-container-component">
+        <router-outlet></router-outlet>
+    </div>
+</div>

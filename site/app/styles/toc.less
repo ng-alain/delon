@@ -1,0 +1,33 @@
+.toc {
+	font-size: 12px;
+	margin: 16px 0;
+    a {
+        display: block;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: @site-text-color;
+        width: 92px;
+    }
+    .ant-anchor-ink:before {
+        width: 1px;
+    }
+}
+
+.toc-affix {
+	position: absolute;
+	top: 8px;
+	right: 20px;
+	.ant-affix {
+		background: #fff;
+	}
+}
+.toc-affix-bottom {
+	position: absolute;
+	bottom: 88px;
+	right: 20px;
+	.ant-affix {
+		background: #fff;
+	}
+}
