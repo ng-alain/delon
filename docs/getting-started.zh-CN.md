@@ -74,6 +74,6 @@ $ npm start
 $ npm run serve:hmr
 ```
 
-启动完成后会自动打开浏览器访问 [http://localhost:4200](http://localhost:4200)，你看到下面的页面就代表成功了。
+启动完成后会打开浏览器访问 [http://localhost:4200](http://localhost:4200)，你看到下面的页面就代表成功了。
 
 ![](./assets/screenshot/desktop.png | width=700)

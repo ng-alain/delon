@@ -35,8 +35,8 @@
 		"site:serve:cli": "ng serve --app site",
 		"site:serve": "npm-run-all -s site:clean site:gen site:serve:cli",
 		"site:ts": "ng build --app site --prod --build-optimizer --bh ./",
-        "site:build": "npm-run-all -s site:clean site:gen site:ts site:cname",
-        "site:cname": "cname site/dist",
+		"site:build": "npm-run-all -s site:clean site:gen site:ts site:cname",
+		"site:cname": "cname site/dist",
 		"site:deploy": "gh-pages -d site/dist",
 		"site:release": "npm-run-all -s site:build site:deploy",
 		"build:package": "npm-run-all -s clean:tmp:lib build:copy-sources build:ts build:inline-resources build:bundle clean:tmp",
@@ -71,6 +71,7 @@
 		"moment": "^2.19.2",
 		"ng-zorro-antd": "^0.6.1",
 		"ng-zorro-antd-extra": "^1.1.2",
+		"ngx-countdown": "^1.0.3",
 		"ngx-highlight-js": "^1.0.3",
 		"rxjs": "^5.5.2",
 		"zone.js": "^0.8.14"

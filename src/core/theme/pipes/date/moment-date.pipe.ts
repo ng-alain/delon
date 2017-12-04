@@ -8,13 +8,13 @@ import * as moment from 'moment';
  *
  * @example
  * ```html
- * {{ data | _data }}
+ * {{ data | _date }}
  * 2017-09-17 15:35
  *
- * {{ data | _data: 'YYYY年MM月DD日' }}
+ * {{ data | _date: 'YYYY年MM月DD日' }}
  * 2017年09月17
  *
- * {{ data | _data: 'fn' }}
+ * {{ data | _date: 'fn' }}
  * 10 秒前
  * ```
  */
