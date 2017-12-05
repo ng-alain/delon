@@ -42,4 +42,8 @@ export class I18NService {
     fanyi(key: string) {
         return this.translate.instant(key);
     }
+
+    get(i: any) {
+        return typeof i === 'string' ? i : i[this.lang] || i[this.defaultLang] || '';
+    }
 }

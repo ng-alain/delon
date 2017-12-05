@@ -1,6 +1,6 @@
-<div class="toc-affix" *ngIf="get(item.toc)?.length">
+<div class="toc-affix" *ngIf="i18n.get(item.toc)?.length">
     <ul class="toc">
-        <li *ngFor="let item of get(item.toc)" class="depth-{{item.h}}">
+        <li *ngFor="let item of i18n.get(item.toc)" class="depth-{{item.h}}">
             <a (click)="goTo(item)" title="{{item.title}}">{{item.title}}</a>
         </li>
     </ul>
@@ -15,9 +15,9 @@
     <h1>
         {{meta.item.title}}
         <span *ngIf="meta.item.subtitle" class="subtitle">{{meta.item.subtitle}}</span>
-        <edit-button [url]="get(item.source)"></edit-button>
+        <edit-button [url]="i18n.get(item.source)"></edit-button>
     </h1>
-    <div *ngIf="get(item.content).content" [innerHTML]="get(item.content).content"></div>
+    <div *ngIf="i18n.get(item.content).content" [innerHTML]="safeHtml(i18n.get(item.content).content)"></div>
     <ng-container *ngIf="meta.item.module">
         <p>{{'app.component.refer.title' | translate}}</p>
         <pre class="typescript hljs"><span class="hljs-section">import</span> &#123; <span class="hljs-attribute">{{meta.item.module}}</span> &#125; from <span class="hljs-string">'{{meta.item.module_name}}'</span>;</pre>
@@ -27,8 +27,10 @@
                 {{'app.component.refer.link' | translate}}
             </a>
         </p>
-        <h2 *ngIf="item.demo" style="margin-bottom: 32px;">{{'app.component.examples' | translate}}</h2>
     </ng-container>
+    <h2 *ngIf="item.demo" id="{{'app.component.examples' | translate}}" style="margin-bottom: 32px;">
+        {{'app.component.examples' | translate}}
+    </h2>
 </section>
 <ng-container *ngIf="item.demo"><ng-content></ng-content></ng-container>
-<div class="markdown api-container" *ngIf="get(item.content).api" [innerHTML]="get(item.content).api"></div>
+<div class="markdown api-container" *ngIf="i18n.get(item.content).api" [innerHTML]="safeHtml(i18n.get(item.content).api)"></div>

@@ -7,13 +7,12 @@
 </section>
 <section class="code-box-meta markdown">
     <div class="code-box-title">
-        {{get(item.meta.title)}}
+        {{i18n.get(item.meta.title)}}
         <edit-button [url]="item.source"></edit-button>
     </div>
-    <div [innerHTML]="get(item.summary)"></div>
+    <div [innerHTML]="i18n.get(item.summary)"></div>
     <nz-tooltip [nzTitle]="expand ? 'Hide Code' : 'Show Code'">
         <span class="code-expand-icon" nz-tooltip>
-
             <img
                 alt="expand code"
                 src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg"

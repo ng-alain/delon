@@ -3,6 +3,7 @@ title: count-down
 subtitle: 倒计时
 cols: 2
 order: 3
+module: AdCountDownModule
 ---
 
 倒计时组件，依赖 [ngx-countdown](https://github.com/cipchk/ngx-countdown)。

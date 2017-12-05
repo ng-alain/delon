@@ -3,9 +3,11 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { LayoutComponent } from '../layout/layout.component';
 import { HomeComponent } from './home/home.component';
+import { NotFoundComponent } from './404/404.component';
 
 const COMPONENTS = [
-    HomeComponent
+    HomeComponent,
+    NotFoundComponent
 ];
 
 const routes = [
@@ -20,13 +22,14 @@ const routes = [
             // endregion
         ]
     },
-    { path: '**', redirectTo: 'home' }
+    { path: '404', component: NotFoundComponent },
+    { path: '**', redirectTo: '404' }
 ];
 
 @NgModule({
     imports: [
         SharedModule,
-        RouterModule.forRoot(routes, { useHash: true })
+        RouterModule.forRoot(routes)
     ],
     declarations: [
         ...COMPONENTS

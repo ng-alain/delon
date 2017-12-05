@@ -15,7 +15,7 @@ export class FooterComponent {
     constructor(public i18n: I18NService, private router: Router) {}
 
     langChange() {
-        let url = this.router.url.split('?')[0];
+        let url = this.router.url.split('#')[0];
         url += `?lang=${this.i18n.isZh ? 'en-US' : 'zh-CN'}`;
 
         this.router.navigateByUrl(url);

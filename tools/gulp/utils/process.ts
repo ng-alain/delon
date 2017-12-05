@@ -378,7 +378,7 @@ export function gen(config: any) {
             // generate doc component template
             ret.tpl.push(`
             <div nz-col [nzSpan]="item.cols > 1 ? 12 : 24">
-                <code-box [item]="codes[${point}]" id="codes[${point}].id">
+                <code-box [item]="codes[${point}]" [attr.id]="codes[${point}].id">
                     <${item.id}></${item.id}>
                 </code-box>
             </div>`);

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { I18NService } from '../../../i18n/service';
 import { MetaService } from '../../../core/meta.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-docs',
@@ -12,15 +13,18 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     private _item: any;
 
+    @Input() codes: any[];
+
     @Input()
     set item(value: any) {
         if (Array.isArray(value.toc)) {
             const toc = [ ...value.toc ];
             value.toc = {};
             for (const lang of this.i18n.langs) {
-                value.toc[lang] = toc;
+                value.toc[lang] = [ ...toc ];
             }
         }
+
         // region: source
         if (typeof value.source === 'string') {
             const source = '' + value.source;
@@ -29,39 +33,50 @@ export class DocsComponent implements OnInit, OnDestroy {
                 value.source[lang] = source;
             }
         }
-        // tslint:disable-next-line:forin
-        // for (const lang in value.source) {
-        //     value.source[lang] = `${this.meta.github}/edit/master/${value.source[lang]}`;
-        // }
         // endregion
 
-        // region: demo
-        // if (!value.demos || !Array.isArray(value.demos))
-        //     value.demos = [];
+        // region: demo toc
+        if (value.demo && this.codes && this.codes.length) {
+            // tslint:disable-next-line:forin
+            for (const lang in value.toc) {
+                const demoTocs: any[] = this.codes.map((item: any) => {
+                    return {
+                        h: 3,
+                        href: '#' + item.id,
+                        title: this.i18n.get(item.meta.title)
+                    };
+                });
+                const demoTitle = this.i18n.fanyi('app.component.examples');
+                value.toc[lang].splice(0, 0, {
+                    h: 2,
+                    href: '#' + demoTitle,
+                    title: demoTitle
+                }, ...demoTocs);
+            }
+        }
         // endregion
 
         this._item = value;
 
         // goTo
-        setTimeout(() => {
-            const toc = this.router.parseUrl(this.router.url).queryParams._toc || '';
-            if (toc) this.goTo({ href: `#${toc}` });
-        }, 800);
+        // setTimeout(() => {
+        //     const toc = this.router.parseUrl(this.router.url).queryParams._toc || '';
+        //     if (toc) this.goTo({ href: `#${toc}` });
+        // }, 800);
     }
     get item(): any {
         return this._item;
     }
 
-    constructor(public i18n: I18NService, public meta: MetaService, private router: Router) {}
-
-    get(i: any) {
-        return i ? i[this.i18n.lang] || i[this.i18n.defaultLang] : '';
-    }
+    constructor(
+        public i18n: I18NService,
+        public meta: MetaService,
+        private router: Router,
+        protected sanitizer: DomSanitizer) {}
 
     goTo(item: any) {
-        const el = document.querySelector(`[href="${item.href}"]`);
-        if (!el) return false;
-        el.parentElement.scrollIntoView();
+        document.querySelector(item.href).scrollIntoView();
+        location.hash = item.href;
         return false;
     }
 
@@ -72,6 +87,10 @@ export class DocsComponent implements OnInit, OnDestroy {
                 hljs.highlightBlock(element);
             }
         }, 250);
+    }
+
+    safeHtml(html: string) {
+        return this.sanitizer.bypassSecurityTrustHtml(html);
     }
 
     i18NChange$: any;

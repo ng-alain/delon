@@ -22,7 +22,7 @@ type: Advance
 - 带有时间轴的折线图（timeline）
 - 图表卡片（chart-card）
 
-[查看图表组件API文档](//ng-alain.com/#/components/charts)
+[查看图表组件API文档](//ng-alain.com/components/charts)
 
 ## 如何使用？
 

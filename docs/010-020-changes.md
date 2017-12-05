@@ -6,7 +6,7 @@ type: Advance
 
 `0.2` 最大的改变是将部分原本在 ng-alain 项目中文件进行独立拆分，这样对 ng-alain 在复用、更友好的升级问题上得到很好的解决。
 
-本次的变化对项目的改动其实不是很大，在开始阅读指引之前我建议先阅读入门指南序列文章（至少阅读 [关于 Delon](http://ng-alain.com/#/docs/delon) 文章），这样会更好的理解为何我要这么做。
+本次的变化对项目的改动其实不是很大，在开始阅读指引之前我建议先阅读入门指南序列文章（至少阅读 [关于 Delon](/docs/delon) 文章），这样会更好的理解为何我要这么做。
 
 当前 `0.2` 是以[独立分支](https://github.com/cipchk/ng-alain/tree/0.2.0)在存在，而 [ng-alain](https://cipchk.github.io/ng-alain/) github预览已经是 `0.2` 版本了。
 
@@ -89,7 +89,7 @@ export class CoreModule { }
 
 | 原组件名 | 新组件名 | 描述 |
 | ------- | ------ | ---- |
-| `fixed-btns` | `footer-toolbar` | [api](http://ng-alain.com/#/components/footer-toolbar) |
+| `fixed-btns` | `footer-toolbar` | [api](/components/footer-toolbar) |
 
 **g2升级至3.0**
 

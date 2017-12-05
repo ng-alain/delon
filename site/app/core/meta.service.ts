@@ -80,7 +80,7 @@ export class MetaService {
 
     genMenus(url: string): void {
         const arr = url.split('?')[0].split('/');
-        if (arr.length <= 2) return ;
+        if (arr.length <= 1) return ;
 
         const categoryName = arr[1].toLowerCase();
         const category = META.types.find(w => w.name === categoryName);

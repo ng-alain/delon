@@ -11,16 +11,16 @@ type: Basic
 当你开始着手在 ng-alain 基础上进行业务开发时，我建议你先了解一下以下文档，这对于亦或是团队每个成员都非常有帮助。
 
 + [Ant Desig 指引文章](https://ant.design/docs/spec/introduce-cn)
-+ [Ant Deisng for Angular](https://ng.ant.design/#/docs/angular/introduce)
++ [Ant Deisng for Angular](https://ng.ant.design/docs/angular/introduce)
 + [Antv 图表](https://antv.alipay.com/zh-cn/index.html)
 
-ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很细说 [API](https://ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](http://ng-alain.com/#/components)获取。
+ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很细说 [API](https://ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
 
 > ng-alain 依赖了一个 [ng-zorro-antd-extra](https://cipchk.github.io/ng-zorro-antd-extra/) 类库，这是它和 ng-zorro-antd 一样，只是提供了一些 3.0 才会有的组件临时解决方案。
 
 ## 如何开始？
 
-ng-alain 的目录非常简单，只有简单几个文件；默认情况下，包含了 [i18n](http://ng-alain.com/#/docs/i18n)、[acl](http://ng-alain.com/#/docs/acl)、[页面模板](http://ng-alain.com/#/docs/template)等文件。
+ng-alain 的目录非常简单，只有简单几个文件；默认情况下，包含了 [i18n](/docs/i18n)、[acl](/docs/acl)、[页面模板](/docs/template)等文件。
 
 > 很多情况下，可能你不需要这些功能，上述每个链接中都包含着如何去删除它们的方法。
 

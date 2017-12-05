@@ -11,6 +11,7 @@ import { I18NService } from './i18n/service';
 })
 export class AppComponent implements OnInit {
     @HostBinding('class.layout-fixed') isHome = false;
+    private prevUrl: string;
 
     constructor(
         private i18n: I18NService,
@@ -21,11 +22,16 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.router.events.pipe(
             filter(evt => evt instanceof NavigationEnd),
-            map(() => this.router.url)
+            map(() => this.router.url.split('#')[0])
         ).subscribe(url => {
-            // update i18n
             const urlLang = this.router.parseUrl(url).queryParams['lang'];
-            if (typeof urlLang !== 'undefined') {
+            const hasLang = typeof urlLang !== 'undefined';
+
+            if (!hasLang && url === this.prevUrl) return;
+            this.prevUrl = url;
+
+            // update i18n
+            if (hasLang) {
                 const lang = urlLang || this.i18n.defaultLang;
                 if (this.i18n.lang !== lang) {
                     this.i18n.use(<any>lang);

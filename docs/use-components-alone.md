@@ -14,7 +14,7 @@ ng-alain 脚手架内用到的组件分为三种：
 
 - [ng-zorro-antd](https://ng-zorro.github.io) 组件
 - [ng-zorro-antd-extra](https://cipchk.github.io/ng-zorro-antd-extra/#/) 组件
-- [@delon/abc](http://ng-alain.com/#/components) 组件
+- [@delon/abc](/components) 组件
 
 这三种组件都是独立发布在 Npm 上面，因此你都可以单独去使用它们：
 
@@ -28,7 +28,7 @@ import { AlainABCModule } from '@delon/abc';
 
 ## 文档和反馈
 
-你可以在 [组件页面](http://ng-alain.com/#/components) 找到所有的业务组件，以及相关的演示和 API 文档。
+你可以在 [组件页面](/components) 找到所有的业务组件，以及相关的演示和 API 文档。
 
 组件会随着脚手架的更新而不断迭代，有任何问题和需求可以反馈到 [这里](https://github.com/cipchk/ng-alain/issues)。
 
