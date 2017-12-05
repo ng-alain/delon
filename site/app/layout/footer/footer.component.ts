@@ -7,6 +7,7 @@ import { I18NService } from '../../i18n/service';
     templateUrl: './footer.component.html',
     styleUrls: [ './footer.component.less' ],
     host: {
+        '[attr.id]': '"footer"',
         '[class.dark]': 'true'
     }
 })

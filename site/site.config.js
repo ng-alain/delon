@@ -3,8 +3,9 @@ module.exports = {
         templates: './site/templates',
         github: 'https://github.com/cipchk/delon',
         defaultLang: 'zh-CN',
+        langs: [ 'zh-CN', 'en-US' ],
         dist: './site/app/routes/gen',
-        tocMaxDepth: 2, // toc max depth
+        tocMaxDepth: 3, // toc max depth
     },
     router: [
         {
@@ -15,6 +16,10 @@ module.exports = {
                 {
                     'zh-CN': '入门',
                     'en-US': 'Basic'
+                },
+                {
+                    'zh-CN': '主题',
+                    'en-US': 'Theme'
                 },
                 {
                     'zh-CN': '进阶',

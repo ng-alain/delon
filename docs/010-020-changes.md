@@ -112,3 +112,9 @@ export class CoreModule { }
 **不再依赖类库**
 
 + `angular-web-storage`
+
+**新依赖类库**
+
++ `@delon/theme`
++ `@delon/abc`
++ `@delon/acl`

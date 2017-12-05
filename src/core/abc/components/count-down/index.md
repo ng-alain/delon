@@ -1,7 +1,7 @@
 ---
 title: count-down
 subtitle: 倒计时
-cols: 1
+cols: 2
 order: 3
 ---
 

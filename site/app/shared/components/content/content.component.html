@@ -1,5 +1,5 @@
 <div nz-row>
-    <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5" nzXl="4" class="main-menu">
+    <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5" nzXl="4" class="main-menu" [ngClass]="{'main-menu__show': settings.layout.collapsed}">
         <ul nz-menu [nzMode]="'inline'" class="aside-container">
             <li nz-menu-group *ngFor="let group of meta.menus">
                 <div title>{{group.title}}</div>
@@ -13,5 +13,13 @@
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="19" nzXl="20" class="main-container main-container-component">
         <router-outlet></router-outlet>
+    </div>
+</div>
+<div nz-row *ngIf="meta.next || meta.prev">
+    <div nz-col nzXs="24" nzSm="24" nzMd="20" nzOffset="4">
+        <section class="prev-next-nav">
+            <a class="prev-page" *ngIf="meta.prev" routerLink="{{meta.prev.url}}"><span>{{get(meta.prev.title)}}</span><span class="chinese">{{meta.prev.subtitle}}</span></a>
+            <a class="next-page" *ngIf="meta.next" routerLink="{{meta.next.url}}"><span>{{get(meta.next.title)}}</span><span class="chinese">{{meta.next.subtitle}}</span></a>
+        </section>
     </div>
 </div>

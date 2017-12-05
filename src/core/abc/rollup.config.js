@@ -12,6 +12,7 @@ const globals = {
     'moment': 'moment',
     'ng-zorro-antd-extra': 'ngZorro.antd_extra',
     'file-saver': 'saveAs',
+    'ngx-countdown': 'ngxCountDown',
 
     'rxjs/operators': 'Rx.Observable.prototype',
     'rxjs/observable/fromEvent': 'Rx.Observable',

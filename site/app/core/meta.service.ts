@@ -25,6 +25,8 @@ export class MetaService {
             module_name: category.module || ''
         });
 
+        this.refPage(url);
+
         return false;
     }
 
@@ -36,7 +38,12 @@ export class MetaService {
         return META.github;
     }
 
-    private _menus: any;
+    get data() {
+        return META;
+    }
+
+    private _platMenus: any[];
+    private _menus: any[];
     private _type: string;
     get menus() {
         return this._menus;
@@ -80,7 +87,7 @@ export class MetaService {
         if (!category) return;
 
         // todo: support level 2
-        const group = category.types.map((item: any, index: number) => {
+        const group: any[] = category.types.map((item: any, index: number) => {
             return {
                 index: index,
                 title: item[this.i18n.lang] || item[this.i18n.defaultLang],
@@ -109,8 +116,10 @@ export class MetaService {
             groupItem.list.push(entry);
         });
 
+        this._platMenus = [];
         this._menus = group.map((item: any) => {
             item.list.sort((a: any, b: any) => a.order - b.order);
+            this._platMenus = this._platMenus.concat(item.list);
             return item;
         }).filter((item: any) => item.list.length);
     }
@@ -123,5 +132,17 @@ export class MetaService {
             ret = cat.list.find((i: any) => i.url === url);
         });
         return ret;
+    }
+
+    next: any;
+    prev: any;
+    private refPage(url: string) {
+        this.next = null;
+        this.prev = null;
+        if (!this._menus) this.genMenus(url);
+        const idx = this._platMenus.findIndex(w => w.url === url);
+        if (idx === -1) return;
+        if (idx > 0) this.prev = this._platMenus[idx - 1];
+        if ((idx + 1) <= this._platMenus.length) this.next = this._platMenus[idx + 1];
     }
 }

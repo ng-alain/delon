@@ -29,7 +29,7 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
     @Input() expand: boolean = false;
 
     get(i: any) {
-        return i ? i[this.i18n.lang] || i[this.i18n.defaultLang] : '';
+        return i ? i[this.i18n.lang] || i[this.i18n.defaultLang] || i : '';
     }
 
     constructor(private i18n: I18NService) {}

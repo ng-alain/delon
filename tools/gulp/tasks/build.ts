@@ -26,6 +26,7 @@ task('bump', bumpVersions);
 function bumpVersions() {
     src([
         './package.json',
+        './scaffold/package.json',
         './src/core/theme/package.json',
         './src/core/abc/package.json',
         './src/core/acl/package.json'], {base: './'})

@@ -7,3 +7,4 @@ package-lock.json
 dist
 coverage
 site/app/routes/gen
+scaffold

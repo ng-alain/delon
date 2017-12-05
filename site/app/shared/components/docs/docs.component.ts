@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { I18NService } from '../../../i18n/service';
 import { MetaService } from '../../../core/meta.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-docs',
@@ -40,15 +41,28 @@ export class DocsComponent implements OnInit, OnDestroy {
         // endregion
 
         this._item = value;
+
+        // goTo
+        setTimeout(() => {
+            const toc = this.router.parseUrl(this.router.url).queryParams._toc || '';
+            if (toc) this.goTo({ href: `#${toc}` });
+        }, 800);
     }
     get item(): any {
         return this._item;
     }
 
-    constructor(public i18n: I18NService, public meta: MetaService) {}
+    constructor(public i18n: I18NService, public meta: MetaService, private router: Router) {}
 
     get(i: any) {
         return i ? i[this.i18n.lang] || i[this.i18n.defaultLang] : '';
+    }
+
+    goTo(item: any) {
+        const el = document.querySelector(`[href="${item.href}"]`);
+        if (!el) return false;
+        el.parentElement.scrollIntoView();
+        return false;
     }
 
     private initHLJS() {

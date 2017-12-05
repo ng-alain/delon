@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { highlight, site } from '../converters';
 import { toc } from '../plugins';
-import { isStandalone, getCode, escapeHTML } from '../utils/utils';
+import { isStandalone, getCode, escapeHTML, genAttr } from '../utils/utils';
 const mkdirp = require('mkdirp');
 const through = require('through2');
 const MT = require('mark-twain');
@@ -22,8 +22,8 @@ const converters = [
         () => true,
         (node: any) => {
             const tagName = JsonML.getTagName(node);
-            const attrs = Object.assign({ }, JsonML.getAttributes(node));
-            return `${tagName ? `<${tagName}>` : ''}${isStandalone(tagName) ? '' : JsonML.getChildren(node).map(toHtml).join('')}${tagName ? `</${tagName}>` : ''}`;
+            const attrs = genAttr(Object.assign({ }, JsonML.getAttributes(node)));
+            return `${tagName ? `<${tagName}${attrs ? ' ' + attrs : ''}>` : ''}${isStandalone(tagName) ? '' : JsonML.getChildren(node).map(toHtml).join('') + (tagName ? `</${tagName}>` : '')}`;
         }
     ]
 ]);
@@ -70,7 +70,7 @@ export function gen(config: any) {
         }
 
         // todo: test
-        // if (file.path.indexOf('pro-header') === -1) {
+        // if (file.path.indexOf('theme') === -1) {
         //     cb();
         //     return;
         // }
@@ -182,8 +182,6 @@ export function gen(config: any) {
 
             group.list.push(groupItem);
         });
-
-        // group.list = group.list.sort((a: any, b: any) => a.order - b.order);
 
         fs.writeFileSync(config.theme.meta, tpl.begin + JSON.stringify(json) + tpl.end);
     }
@@ -333,7 +331,7 @@ export function gen(config: any) {
             const codeStartIndex = contentChildren.findIndex((node: any) => JsonML.getTagName(node) === 'pre');
 
             if (codeStartIndex > -1) {
-                item.summary = toHtml([''].concat(contentChildren.slice(0, codeStartIndex)));
+                item.summary = [''].concat(contentChildren.slice(0, codeStartIndex));
 
                 const codeNodes = contentChildren.slice(codeStartIndex);
                 if (codeNodes.length > 0) {
@@ -342,8 +340,31 @@ export function gen(config: any) {
                     item.lang = attr.lang;
                 }
             } else {
-                item.summary = toHtml(markdownData.content);
+                item.summary = markdownData.content;
             }
+            // parse languages
+            const summaryChildren = JsonML.getChildren(item.summary);
+            let summaryLangIdx = summaryChildren.findIndex((node: any) => JsonML.getTagName(node) === 'h2');
+            if (summaryLangIdx !== -1) {
+                let summaryRet: any = {};
+                for (let i = 0; i < summaryChildren.length; i++) {
+                    const summaryNode = summaryChildren[i];
+                    const summaryLang = '' + summaryNode[1];
+                    if (JsonML.getTagName(summaryNode) === 'h2' && ~config.theme.langs.indexOf(summaryLang)) {
+                        const nextLangPos = summaryChildren.slice(i + 1).findIndex((node: any) => JsonML.getTagName(node) === 'h2');
+                        summaryRet[summaryLang] = [''].concat(nextLangPos === -1 ? summaryChildren.slice(i + 1) : summaryChildren.slice(i + 1, nextLangPos + 1));
+                        if (nextLangPos === -1) break;
+                        i = nextLangPos;
+                    }
+                }
+                item.summary = summaryRet;
+                for (const lang in item.summary) {
+                    item.summary[lang] = toHtml(item.summary[lang]);
+                }
+            } else {
+                item.summary = toHtml(item.summary);
+            }
+
             ret.data.push(item);
             // replace component name
             const componentName = `${genUpperName(item.id)}Component`;

@@ -1,8 +1,10 @@
-<!-- <nz-affix class="toc toc-affix" *ngIf="get(item.toc)?.length">
-    <nz-anchor>
-        <nz-link *ngFor="let item of get(item.toc)" [nzHref]="item.href" [nzTitle]="item.title"></nz-link>
-    </nz-anchor>
-</nz-affix> -->
+<div class="toc-affix" *ngIf="get(item.toc)?.length">
+    <ul class="toc">
+        <li *ngFor="let item of get(item.toc)" class="depth-{{item.h}}">
+            <a (click)="goTo(item)" title="{{item.title}}">{{item.title}}</a>
+        </li>
+    </ul>
+</div>
 <nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'">
     <ng-container alert-body>
         This article has not been translated, hope that your can PR to translated it.
