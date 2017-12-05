@@ -54,11 +54,11 @@
         "release": "npm run version:bump && npm run release:prepare && npm publish --access=public .lib/theme && npm publish --access=public .lib/abc && npm publish --access=public .lib/acl && npm run site:release && npm run scaffold:install && npm run scaffold:gh-pages",
         "scaffold:install": "cd ./scaffold && npm install",
         "scaffold:start": "cd ./scaffold && npm run start",
-        "scaffold:build": "cd ./scaffold && npm run chore.build && cd ./dist && hs",
-        "scaffold:gh-pages": "cd ./scaffold && npm run chore.gh-pages",
-        "chore:add:ng-alain": "git subtree add --prefix=scaffold ng-alain 0.2.0",
-        "chore:pull:ng-alain": "git subtree pull --prefix=scaffold ng-alain 0.2.0",
-        "chore:push:ng-alain": "git subtree push --prefix=scaffold ng-alain 0.2.0"
+        "scaffold:build": "cd ./scaffold && ng build --prod --build-optimizer --bh ./",
+        "scaffold:build:hs": "npm run scaffold:build && cd ./scaffold/dist && hs",
+        "scaffold:deploy": "cd ./scaffold && gh-pages -d dist",
+        "scaffold:npm": "cd ./scaffold && npm publish --access=public",
+        "scaffold:release": "npm run scaffold:build && npm run scaffold:deploy && npm run scaffold:npm"
 	},
 	"dependencies": {
 		"@angular/animations": "^5.0.0",

@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 0.2.0-beta.1
+
+`2017-12-05`
+
+- 脚手架
+    - `package.json` 默认版本号跟 `@delon/*` 同步
+- @delon/abc
+    - 新增 `count-down`
+
 ### 0.2.0-beta.0
 
 `2017-12-04`
