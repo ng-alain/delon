@@ -10,3 +10,4 @@ export { GaugeComponent } from './gauge/gauge.component';
 export { TagCloudComponent } from './tag-cloud/tag-cloud.component';
 export { WaterWaveComponent } from './water-wave/water-wave.component';
 export { G2RadarComponent } from './radar/radar.component';
+export { ChartComponent } from './chart/chart.component';

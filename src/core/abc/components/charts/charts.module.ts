@@ -12,11 +12,12 @@ import { GaugeComponent } from './gauge/gauge.component';
 import { TagCloudComponent } from './tag-cloud/tag-cloud.component';
 import { WaterWaveComponent } from './water-wave/water-wave.component';
 import { G2RadarComponent } from './radar/radar.component';
+import { ChartComponent } from './chart/chart.component';
 
 const COMPONENTS = [
     ChartCardComponent, MiniAreaComponent, MiniBarComponent, MiniProgressComponent,
     G2BarComponent, G2PieComponent, TimelineComponent, GaugeComponent, TagCloudComponent,
-    WaterWaveComponent, G2RadarComponent
+    WaterWaveComponent, G2RadarComponent, ChartComponent
 ];
 
 // region: zorro modules
