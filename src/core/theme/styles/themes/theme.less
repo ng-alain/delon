@@ -542,4 +542,30 @@
         }
     }
     .TABS-mixin();
+
+    .TREE-mixin() when(@focusing-full-color-enabled = true), (@focusing-tree-color-enabled = true) {
+        @tree-prefix-cls: ~"@{ant-prefix}-tree";
+        .@{tree-prefix-cls} {
+            &-checkbox-wrapper:hover .ant-tree-checkbox-inner,
+            &-checkbox:hover .ant-tree-checkbox-inner,
+            &-checkbox-input:focus + .ant-tree-checkbox-inner,
+            .ant-tree-checkbox-checked:after,
+            .ant-tree-checkbox-checked .ant-tree-checkbox-inner {
+                border-color: @new-color;
+            }
+            .ant-tree-node-content-wrapper:hover {
+                background-color: @new-hover-bgcolor;
+            }
+            .ant-tree-checkbox-checked .ant-tree-checkbox-inner {
+                background-color: @new-color;
+            }
+            .ant-tree-node-content-wrapper.ant-tree-node-selected {
+                background-color: ~`colorPalette("@{new-color}", 2)`;
+            }
+            span.ant-tree-icon_loading:after {
+                color: @new-color;
+            }
+        }
+    }
+    .TREE-mixin();
 }

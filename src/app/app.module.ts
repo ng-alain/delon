@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { NgZorroAntdExtraModule } from 'ng-zorro-antd-extra';
+import { NzTreeModule } from 'ng-tree-antd';
 
 import { AppComponent } from './app.component';
 import { AlainThemeModule } from '@delon/theme';
@@ -39,6 +40,7 @@ import { ACLComponent } from 'app/acl/component';
     BrowserAnimationsModule,
     NgZorroAntdModule.forRoot(),
     NgZorroAntdExtraModule.forRoot(),
+    NzTreeModule,
     AlainThemeModule.forRoot(),
     AlainABCModule.forRoot(),
     AlainACLModule.forRoot()
