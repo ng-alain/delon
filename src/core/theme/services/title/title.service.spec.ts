@@ -13,9 +13,10 @@ describe('Service: Title', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                AlainThemeModule.forRoot()
+                AlainThemeModule
             ],
             providers: [
+                TitleService, MenuService,
                 { provide: Title, useClass: TestTitleService }
             ]
         });

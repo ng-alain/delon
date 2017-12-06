@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, Optional } from '@angular/core';
 import { Title, DOCUMENT } from '@angular/platform-browser';
 import { MenuService } from '../menu/menu.service';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
@@ -14,7 +14,7 @@ export class TitleService {
     constructor(
         private title: Title,
         private menuSrv: MenuService,
-        @Inject(ALAIN_I18N_TOKEN) private translatorSrv: AlainI18NService,
+        @Optional() @Inject(ALAIN_I18N_TOKEN) private translatorSrv: AlainI18NService,
         @Inject(DOCUMENT) private doc: any) { }
 
     private _prefix = '';
@@ -90,7 +90,7 @@ export class TitleService {
 
         const item = menus[menus.length - 1];
         let title;
-        if (item.translate) title = this.translatorSrv.fanyi(item.translate);
+        if (item.translate && this.translatorSrv) title = this.translatorSrv.fanyi(item.translate);
         this.setTitle(title || item.text);
     }
 }

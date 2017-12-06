@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, Optional } from '@angular/core';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
 
 export interface Menu {
@@ -53,7 +53,7 @@ export class MenuService {
 
     private data: Menu[] = [];
 
-    constructor(@Inject(ALAIN_I18N_TOKEN) private i18nService: AlainI18NService) { }
+    constructor(@Optional() @Inject(ALAIN_I18N_TOKEN) private i18nService: AlainI18NService) { }
 
     visit(callback: (item: Menu, parentMenum: Menu, depth?: number) => void) {
         const inFn = (list: Menu[], parentMenu: Menu, depth: number) => {
@@ -106,7 +106,7 @@ export class MenuService {
                 shortcuts.push(item);
 
             const i18n = item.i18n || item.translate;
-            item.text = i18n ? this.i18nService.fanyi(i18n) : item.text;
+            item.text = this.i18nService && i18n ? this.i18nService.fanyi(i18n) : item.text;
 
             if (callback) callback(item, parent, depth);
         });

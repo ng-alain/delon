@@ -1,4 +1,4 @@
-import { CNCurrencyPipe } from '@shared/pipes/cn-currency.pipe';
+import { CNCurrencyPipe } from './cn-currency.pipe';
 
 import { registerLocaleData } from '@angular/common';
 import localeZhHans from '@angular/common/locales/zh-Hans';
