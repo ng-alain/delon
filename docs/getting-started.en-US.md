@@ -10,6 +10,13 @@ type: Basic
 
 ng-alain is a production-ready solution for admin interfaces based on ng-zorro-antd, which should help you buid angular project to be faster and simpler.
 
+## Version
+
+- ng-alain: [![NPM version](https://img.shields.io/npm/v/ng-alain.svg)](https://www.npmjs.com/package/ng-alain)
+- `@delon/theme`: [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
+- `@delon/abc`: [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc)
+- `@delon/acl`: [![NPM version](https://img.shields.io/npm/v/@delon/acl.svg)](https://www.npmjs.com/package/@delon/acl)
+
 ## Installation
 
 There are two ways to install:

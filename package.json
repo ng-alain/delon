@@ -1,6 +1,6 @@
 {
 	"name": "delon",
-	"version": "0.2.0-beta.1",
+	"version": "0.2.0-beta.2",
 	"typings": "index.d.ts",
 	"description": "Delon is a set of essential modules for ng-alain.",
 	"repository": {
@@ -60,7 +60,7 @@
 		"scaffold:build:hs": "npm run scaffold:build && cd ./scaffold/dist && hs",
 		"scaffold:deploy": "cd ./scaffold && gh-pages -d dist",
 		"scaffold:npm": "cd ./scaffold && npm publish --access=public",
-		"scaffold:release": "npm run scaffold:build && npm run scaffold:deploy && npm run scaffold:npm"
+		"scaffold:release": "npm run scaffold:install && npm run scaffold:build && npm run scaffold:deploy && npm run scaffold:npm"
 	},
 	"dependencies": {
 		"@angular/animations": "^5.0.0",

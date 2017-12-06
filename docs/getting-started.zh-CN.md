@@ -10,6 +10,13 @@ type: Basic
 
 ng-alain 是一个基于 ng-zorro-antd 的企业级中后台前端脚手架，目标也非常简单，希望在Angular上面开发企业后台更简单、更快速。
 
+## 版本
+
+- ng-alain 脚手架：[![NPM version](https://img.shields.io/npm/v/ng-alain.svg)](https://www.npmjs.com/package/ng-alain)
+- `@delon/theme`：[![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
+- `@delon/abc`：[![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc)
+- `@delon/acl`：[![NPM version](https://img.shields.io/npm/v/@delon/acl.svg)](https://www.npmjs.com/package/@delon/acl)
+
 ## 安装
 
 有二种方式进行安装：
