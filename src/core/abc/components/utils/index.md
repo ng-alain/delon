@@ -10,6 +10,26 @@ module: AdUtilsModule
 
 ## API
 
+### 验证型
+
+方法名 | 说明 | 示例
+----|------|-----
+`Validate.isNum` | 是否为数字 | -
+`Validate.isInt` | 是否为整数 | -
+`Validate.isDecimal` | 是否为小数 | -
+`Validate.isIdCard` | 是否为身份证 | -
+`Validate.isMobile` | 是否为手机号 | -
+
+每一个验证型都包括着用于表单验证器：
+
+```ts
+this.valForm = fb.group({
+    id: [null, Validators.compose([Validators.required, _Validators.num])]
+});
+```
+
+### 常规型
+
 方法名 | 说明 | 示例
 ----|------|-----
 `isTruth` | 检查是否有真值 | -

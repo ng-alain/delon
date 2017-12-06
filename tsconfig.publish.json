@@ -37,7 +37,7 @@
     ],
     "angularCompilerOptions": {
       "skipTemplateCodegen": true,
-      "strictMetadataEmit": true,
+      "strictMetadataEmit": false,
       "genDir": "./.ng_compiled"
     }
   }
