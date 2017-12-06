@@ -6,7 +6,9 @@ import { ACLService } from './services/acl.service';
 const SERVICES = [ ACLService ];
 
 // components
-const COMPONENTS = [  ];
+
+import { ACLDirective } from './directives/acl.directive';
+const COMPONENTS = [ ACLDirective ];
 
 // pipes
 const PIPES = [  ];
@@ -16,7 +18,9 @@ const PIPES = [  ];
 // region: export
 
 export { ACLService } from './services/acl.service';
+export { ACLDirective } from './directives/acl.directive';
 export { ACLType } from './services/acl.type';
+
 // components
 
 // endregion

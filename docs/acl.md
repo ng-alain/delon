@@ -20,7 +20,7 @@ export class SharedModule {}
 
 内部实际是一个 `ACLService` 它提供一套基于角色权限服务类。但不包括路由守卫，这是因为路由守卫需要根据不同应用而定制，如果配合 `ACLService` 路由守卫也是非常简单。
 
-以下是相关API接口的说明。
+## API
 
 **ACLType**
 
@@ -44,6 +44,16 @@ export class SharedModule {}
 | `removeAbility(abilities: (number | string)[])` | 为当前用户移除权限 |
 | `can(roleOrAbility: string | string[] | ACLType)` | 当前用户是否有对应角色 |
 | `canAbility(ability: number | string)` | 当前用户是否有对应权限点 |
+
+## Directive 指令
+
+ACL 提供一个用于改变按钮级别粒度的控制能力，例如：无权限者不允许显示列表页中的增加按钮。
+
+```html
+<button [acl]="'user'"></button>
+or
+<button [acl-ability]="10"></button>
+```
 
 ## 如何删除？
 

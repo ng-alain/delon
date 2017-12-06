@@ -1,7 +1,7 @@
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
 
-describe('service: ACLService', () => {
+describe('acl: service', () => {
 
     const ADMIN = 'admin';
     const USER = 'user';
