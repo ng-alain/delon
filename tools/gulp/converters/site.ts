@@ -15,13 +15,6 @@ export function site() {
             }
         ],
         [
-            (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'a',
-            (node: any, index: number) => {
-                const attrs = Object.assign({ }, JsonML.getAttributes(node));
-                return `<a target="_blank" href="${attrs.href}">${JsonML.getChildren(node)}</a>`;
-            }
-        ],
-        [
             (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'img',
             (node: any, index: number) => {
                 const attrs = JsonML.getAttributes(node);

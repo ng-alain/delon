@@ -20,5 +20,8 @@ export const ZHCN = {
     'app.component.examples': '代码演示',
     'app.component.refer.title': '引用方式：',
     'app.component.refer.desc': '详细使用方式请参照：',
-    'app.component.refer.link': '独立使用 abc 组件'
+    'app.component.refer.link': '独立使用 abc 组件',
+    'app.demo.copy': '复制代码',
+    'app.demo.copied': '复制成功',
+    'app.demo.plnkr': '在 Plnkr 中打开'
 };

@@ -6,7 +6,7 @@ title:
 type: Basic
 ---
 
-页面整体布局是指包含导航、侧边栏、内容区域、页脚等最外层的框架结构。在页面之中，也有很多区块的布局结构，目前 ng-zorro-antd 有两套布局方案：[Layout](https://ng.ant.design/components/layout) 和 [Grid](https://ng.ant.design/components/grid)；而后者是日常都需要的，诸如：表单、列表页、明细页等多多少少都会涉及。
+页面整体布局是指包含导航、侧边栏、内容区域、页脚等最外层的框架结构。在页面之中，也有很多区块的布局结构，目前 ng-zorro-antd 有两套布局方案：[Layout](//ng.ant.design/components/layout) 和 [Grid](//ng.ant.design/components/grid)；而后者是日常都需要的，诸如：表单、列表页、明细页等多多少少都会涉及。
 
 ## 根据不同场景区分抽离布局组件
 
@@ -14,9 +14,9 @@ type: Basic
 
 | 类型 | 位置 | 描述 |
 | ---- | --- | ---- |
-| 基础 | [LayoutComponent](https://github.com/cipchk/ng-alain/blob/0.2.0/src/app/layout/layout.component.ts) | - |
-| 全屏 | [LayoutFullScreenComponent](https://github.com/cipchk/ng-alain/blob/0.2.0/src/app/layout/fullscreen/fullscreen.component.ts) | - |
-| PRO用户授权 | [ProUserLayoutComponent](https://github.com/cipchk/ng-alain/blob/0.2.0/src/app/layout/pro/user/user.component.ts) | 限 [pro](https://cipchk.github.io/ng-alain/#/pro/user/login) 用户相关 |
+| 基础 | [LayoutComponent](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/layout/layout.component.ts) | - |
+| 全屏 | [LayoutFullScreenComponent](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/layout/fullscreen/fullscreen.component.ts) | - |
+| PRO用户授权 | [ProUserLayoutComponent](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/layout/pro/user/user.component.ts) | 限 [pro](//cipchk.github.io/ng-alain/#/pro/user/login) 用户相关 |
 
 ## 如何使用
 

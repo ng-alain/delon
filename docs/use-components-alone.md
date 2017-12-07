@@ -12,8 +12,8 @@ ng-alain 脚手架内提供了一套默认业务组件，这些组件抽象了�
 
 ng-alain 脚手架内用到的组件分为三种：
 
-- [ng-zorro-antd](https://ng-zorro.github.io) 组件
-- [ng-zorro-antd-extra](https://cipchk.github.io/ng-zorro-antd-extra/#/) 组件
+- [ng-zorro-antd](//ng-zorro.github.io) 组件
+- [ng-zorro-antd-extra](//cipchk.github.io/ng-zorro-antd-extra/#/) 组件
 - [@delon/abc](/components) 组件
 
 这三种组件都是独立发布在 Npm 上面，因此你都可以单独去使用它们：
@@ -30,7 +30,7 @@ import { AlainABCModule } from '@delon/abc';
 
 你可以在 [组件页面](/components) 找到所有的业务组件，以及相关的演示和 API 文档。
 
-组件会随着脚手架的更新而不断迭代，有任何问题和需求可以反馈到 [这里](https://github.com/cipchk/ng-alain/issues)。
+组件会随着脚手架的更新而不断迭代，有任何问题和需求可以反馈到 [这里](//github.com/cipchk/ng-alain/issues)。
 
-- 最新版本：[![@delon/abc](https://img.shields.io/npm/v/@delon/abc.svg?style=flat-square)](https://www.npmjs.com/package/@delon/abc)
-- [更新日志](https://github.com/cipchk/ng-alain/releases)
+- 最新版本：[![@delon/abc](//img.shields.io/npm/v/@delon/abc.svg?style=flat-square)](//www.npmjs.com/package/@delon/abc)
+- [更新日志](//github.com/cipchk/ng-alain/releases)

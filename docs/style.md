@@ -110,7 +110,7 @@ type: Theme
         </tr>
         <tr>
             <td><code>.modal-header</code></td>
-            <td>自定义Modal时非常有效，<a href="https://cipchk.github.io/ng-alain/#/elements/modal" target="_blank">DEMO</a></td>
+            <td>自定义Modal时非常有效，<a href="//cipchk.github.io/ng-alain/#/elements/modal" target="_blank">DEMO</a></td>
             <td></td>
         </tr>
         <tr>
@@ -131,7 +131,7 @@ type: Theme
 
 ## CSS动画库
 
-来源于 [animate.css](https://daneden.github.io/animate.css/)。
+来源于 [animate.css](//daneden.github.io/animate.css/)。
 
 ## 工具类规则
 
@@ -180,9 +180,9 @@ type: Theme
 
 Ant Design 并没有按钮色这一说，而是以视觉效果为基准。`nz-button` 包括四种类型：`primary`、`dashed` 等。但 `primary` 是固定的蓝色系列，这是默认色系。
 
-而 `ng-alain` 依然不会破坏这种规则，但依 [色彩](https://ant.design/docs/spec/colors-cn) 章节，我产生了一种运用于文本、背景的色系类。
+而 `ng-alain` 依然不会破坏这种规则，但依 [色彩](//ant.design/docs/spec/colors-cn) 章节，我产生了一种运用于文本、背景的色系类。
 
-色彩一共有十种，前九种依[色彩](https://ant.design/docs/spec/colors-cn)为准，以及新增一种 `teal【#20c997】` （别问我为什么，我就喜欢偶数而已），分别如下：
+色彩一共有十种，前九种依[色彩](//ant.design/docs/spec/colors-cn)为准，以及新增一种 `teal【#20c997】` （别问我为什么，我就喜欢偶数而已），分别如下：
 
 | 名称 | 基本色 | 说明 |
 | ---- | --- | --- |
@@ -270,7 +270,7 @@ Ant Design 并没有按钮色这一说，而是以视觉效果为基准。`nz-bu
 
 #### 全量颜色
 
-包含10*10=100种颜色面板，具体效果参见 [color page](https://cipchk.github.io/ng-alain/#/elements/colors)。
+包含10*10=100种颜色面板，具体效果参见 [color page](//cipchk.github.io/ng-alain/#/elements/colors)。
 
 ### Clearfix
 

@@ -35,7 +35,7 @@ registerLocaleData(localeZhHans);
 
 ## _date
 
-基于 moment 日期格式化，显示更多细节参考：http://momentjs.com/docs/#/displaying
+基于 moment 日期格式化，显示更多细节参考：//momentjs.com/docs/#/displaying
 
 最大好处是 moment 支持不同种类的时间格式，例如：
 

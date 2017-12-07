@@ -20,5 +20,8 @@ export const ENUS = {
     'app.component.examples': 'Examples',
     'app.component.refer.title': 'Usage:',
     'app.component.refer.desc': 'Learning more to visit: ',
-    'app.component.refer.link': 'Using ABC Components Alone'
+    'app.component.refer.link': 'Using ABC Components Alone',
+    'app.demo.copy': 'Copy code',
+    'app.demo.copied': 'Copied!',
+    'app.demo.plnkr': 'Open in Plnkr'
 };

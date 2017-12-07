@@ -12,10 +12,10 @@ ng-alain is a production-ready solution for admin interfaces based on ng-zorro-a
 
 ## Version
 
-- ng-alain: [![NPM version](https://img.shields.io/npm/v/ng-alain.svg)](https://www.npmjs.com/package/ng-alain)
-- `@delon/theme`: [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
-- `@delon/abc`: [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc)
-- `@delon/acl`: [![NPM version](https://img.shields.io/npm/v/@delon/acl.svg)](https://www.npmjs.com/package/@delon/acl)
+- ng-alain: [![NPM version](//img.shields.io/npm/v/ng-alain.svg)](//www.npmjs.com/package/ng-alain)
+- `@delon/theme`: [![NPM version](//img.shields.io/npm/v/@delon/theme.svg)](//www.npmjs.com/package/@delon/theme)
+- `@delon/abc`: [![NPM version](//img.shields.io/npm/v/@delon/abc.svg)](//www.npmjs.com/package/@delon/abc)
+- `@delon/acl`: [![NPM version](//img.shields.io/npm/v/@delon/acl.svg)](//www.npmjs.com/package/@delon/acl)
 
 ## Installation
 
@@ -24,13 +24,13 @@ There are two ways to install:
 ### Clone the Git Repository
 
 ```bash
-$ git clone -b 0.2.0 --depth=1 https://github.com/cipchk/ng-alain.git my-project
+$ git clone -b 0.2.0 --depth=1 //github.com/cipchk/ng-alain.git my-project
 $ cd my-project
 ```
 
 ### Download the Package
 
-Download [https://github.com/cipchk/ng-alain/archive/0.2.0.zip](https://github.com/cipchk/ng-alain/archive/0.2.0.zip), and un-archive.
+Download [//github.com/cipchk/ng-alain/archive/0.2.0.zip](//github.com/cipchk/ng-alain/archive/0.2.0.zip), and un-archive.
 
 ## Scaffolding
 
@@ -79,6 +79,6 @@ or use HMR mode
 $ npm run serve:hmr
 ```
 
-open [http://localhost:4200](http://localhost:4200), If you see the following page then you have succeeded.
+open [//localhost:4200](//localhost:4200), If you see the following page then you have succeeded.
 
 ![](./assets/screenshot/desktop.png | width=700)

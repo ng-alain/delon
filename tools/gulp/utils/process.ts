@@ -19,6 +19,13 @@ const converters = [
         (node: any) => node
     ],
     [
+        (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'a',
+        (node: any, index: number) => {
+            const attrs = Object.assign({ }, JsonML.getAttributes(node));
+            return `<a target="_blank" href="${attrs.href}">${JsonML.getChildren(node).map(toHtml).join('')}</a>`;
+        }
+    ],
+    [
         () => true,
         (node: any) => {
             const tagName = JsonML.getTagName(node);
@@ -70,7 +77,7 @@ export function gen(config: any) {
         }
 
         // todo: test
-        // if (file.path.indexOf('theme') === -1) {
+        // if (file.path.indexOf('getting-started') === -1) {
         //     cb();
         //     return;
         // }

@@ -4,7 +4,7 @@ title: ACL
 type: Advance
 ---
 
-ACL 全称叫访问控制列表（Access Control List），是一种非常简单的基于角色权限控制方式，所以如果你需要它，则需要导入 `@delon/acl` 模块；另外你也可以在 [DEMO](https://cipchk.github.io/ng-alain/#/logics/acl) 中体验它。
+ACL 全称叫访问控制列表（Access Control List），是一种非常简单的基于角色权限控制方式，所以如果你需要它，则需要导入 `@delon/acl` 模块；另外你也可以在 [DEMO](//cipchk.github.io/ng-alain/#/logics/acl) 中体验它。
 
 ```ts
 import { AlainACLModule } from '@delon/acl';

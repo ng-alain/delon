@@ -6,11 +6,11 @@ title:
 type: Theme
 ---
 
-`@delon/theme` 的主题系统包含了[几十种参数](https://github.com/cipchk/delon/blob/master/src/core/theme/styles/app/variables.less)，你可以通过覆盖参数数值进而定制一些特别的需求。
+`@delon/theme` 的主题系统包含了[几十种参数](//github.com/cipchk/delon/blob/master/src/core/theme/styles/app/variables.less)，你可以通过覆盖参数数值进而定制一些特别的需求。
 
 ## 如何覆盖参数
 
-ng-alain 脚手架里有一个叫 [_alain-custom-variables.less](https://github.com/cipchk/ng-alain/blob/0.2.0/src/styles/_alain-custom-variables.less) LESS文件，允许你在注册 ng-alain 主题样式**之前**重新覆盖参数数值，例如：开启强制所有 `ng-zorro-antd` 组件字号为 `14px`， 只需要前重新覆盖 `@focusing-enabled: true` 参数数值即可。
+ng-alain 脚手架里有一个叫 [_alain-custom-variables.less](//github.com/cipchk/ng-alain/blob/0.2.0/src/styles/_alain-custom-variables.less) LESS文件，允许你在注册 ng-alain 主题样式**之前**重新覆盖参数数值，例如：开启强制所有 `ng-zorro-antd` 组件字号为 `14px`， 只需要前重新覆盖 `@focusing-enabled: true` 参数数值即可。
 
 ## 关于 ng-zorro-antd 字号问题
 

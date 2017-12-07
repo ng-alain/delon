@@ -10,13 +10,13 @@ type: Basic
 
 当你开始着手在 ng-alain 基础上进行业务开发时，我建议你先了解一下以下文档，这对于亦或是团队每个成员都非常有帮助。
 
-+ [Ant Desig 指引文章](https://ant.design/docs/spec/introduce-cn)
-+ [Ant Deisng for Angular](https://ng.ant.design/docs/angular/introduce)
-+ [Antv 图表](https://antv.alipay.com/zh-cn/index.html)
++ [Ant Desig 指引文章](//ant.design/docs/spec/introduce-cn)
++ [Ant Deisng for Angular](//ng.ant.design/docs/angular/introduce)
++ [Antv 图表](//antv.alipay.com/zh-cn/index.html)
 
-ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很细说 [API](https://ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
+ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很细说 [API](//ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
 
-> ng-alain 依赖了一个 [ng-zorro-antd-extra](https://cipchk.github.io/ng-zorro-antd-extra/) 类库，这是它和 ng-zorro-antd 一样，只是提供了一些 3.0 才会有的组件临时解决方案。
+> ng-alain 依赖了一个 [ng-zorro-antd-extra](//cipchk.github.io/ng-zorro-antd-extra/) 类库，这是它和 ng-zorro-antd 一样，只是提供了一些 3.0 才会有的组件临时解决方案。
 
 ## 如何开始？
 
@@ -24,7 +24,7 @@ ng-alain 的目录非常简单，只有简单几个文件；默认情况下，�
 
 > 很多情况下，可能你不需要这些功能，上述每个链接中都包含着如何去删除它们的方法。
 
-我们知道，项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），ng-alain 的启动始于 [startup.service.ts](https://github.com/cipchk/ng-alain/blob/0.2.0/src/app/core/services/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：
+我们知道，项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），ng-alain 的启动始于 [startup.service.ts](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/core/services/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：
 
 ```ts
 // 应用信息：包括站点名、描述、年份
@@ -123,4 +123,4 @@ const routes: Routes = [
 ];
 ```
 
-最终，你可以访问 [list](http://localhost:4200/#/trade/list) 页面。
+最终，你可以访问 [list](//localhost:4200/#/trade/list) 页面。

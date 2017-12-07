@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { I18NService } from './../../../i18n/service';
+import { configJs, indexHtml, mainTS, angularLoad } from './templates';
 
 @Component({
     selector: 'code-box',
@@ -32,6 +33,7 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
 
     handle() {
         this.expand = !this.expand;
+        this.genPlnkr();
     }
 
     private initHLJS() {
@@ -41,6 +43,30 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
                 hljs.highlightBlock(element);
             }
         }, 250);
+    }
+
+    plnkr: any;
+    private genPlnkr() {
+        if (this.plnkr) {
+            this.plnkr.title = this.i18n.get(this.item.meta.title);
+            return ;
+        }
+
+        const className = /export class ([^ ]*)/g.exec(this.item.code)[1];
+        const componentName = /selector: '([^']+)/g.exec(this.item.code)[1];
+        this.plnkr = {
+            title: this.i18n.get(this.item.meta.title),
+            files: [
+                { name: `index.html`, content: indexHtml.replace(/##component##/g, `<${componentName}>loading...</${componentName}>`) },
+                { name: `systemjs.config.js`, content: configJs },
+                { name: `systemjs-angular-loader.js`, content: angularLoad },
+                {
+                    name: `main.ts`, content: mainTS.replace(/##name##/g, className)
+                                                    .replace(/##import##/g, `import { ${className} } from './app/demo';`)
+                },
+                { name: 'app/demo.ts', content: this.item.code }
+            ]
+        };
     }
 
     i18NChange$: any;

@@ -16,7 +16,7 @@ ng-alain 默认配置了不生成样式文件&单元测试，因此，你会看�
 
 ## snippets
 
-vscode 是编写 Angular 最佳的选择，自然 ng-alain 也制作了相应 snippets 扩展插件：[ng-zorro-vscode](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)。除了大量的 ng-zorro-antd 组件片断以外，还加入了部分 ng-alain 片断，例如：
+vscode 是编写 Angular 最佳的选择，自然 ng-alain 也制作了相应 snippets 扩展插件：[ng-zorro-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)。除了大量的 ng-zorro-antd 组件片断以外，还加入了部分 ng-alain 片断，例如：
 
 ```
 nz-button => 构建一个按钮

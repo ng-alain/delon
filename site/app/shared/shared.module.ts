@@ -10,6 +10,7 @@ import { AlainABCModule } from '@delon/abc';
 import { AlainACLModule } from '@delon/acl';
 import { TranslateModule } from '@ngx-translate/core';
 import { HighlightJsModule } from 'ngx-highlight-js';
+import { NzClipboardModule } from 'ng-clipboard-antd';
 
 import { ContentComponent } from './components/content/content.component';
 import { EditButtonComponent } from './components/edit-button/edit-button.component';
@@ -31,7 +32,8 @@ const COMPONENTS = [ ContentComponent, EditButtonComponent, DocsComponent, CodeB
         AlainABCModule.forRoot(),
         AlainACLModule.forRoot(),
         HighlightJsModule,
-        TranslateModule
+        TranslateModule,
+        NzClipboardModule.forRoot()
     ],
     declarations: COMPONENTS,
     exports: [
@@ -46,6 +48,7 @@ const COMPONENTS = [ ContentComponent, EditButtonComponent, DocsComponent, CodeB
         AlainACLModule,
         HighlightJsModule,
         TranslateModule,
+        NzClipboardModule,
         ...COMPONENTS
     ]
 })

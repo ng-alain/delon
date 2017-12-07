@@ -27,7 +27,7 @@ type: Advance
 
 ## 如何使用？
 
-> 如果上面组件不能满足你的业务需求，可以直接试用 [G2](https://antv.alipay.com/zh-cn/g2/3.x/index.html) 封装自己的图表组件。
+> 如果上面组件不能满足你的业务需求，可以直接试用 [G2](//antv.alipay.com/zh-cn/g2/3.x/index.html) 封装自己的图表组件。
 
 ### 引入 G2
 
@@ -51,4 +51,4 @@ npm install @antv/g2 @antv/data-set @antv/g2-plugin-slider --save
 
 `@delon/abc` 提供了一个自定义G2组件的容器，可以减少不必要的组件渲染过程中所产生的奇怪问题。
 
-一个完整的示例见 [chart.md](https://github.com/cipchk/delon/blob/master/src/core/abc/components/charts/demo/chart.md)。
+一个完整的示例见 [chart.md](//github.com/cipchk/delon/blob/master/src/core/abc/components/charts/demo/chart.md)。

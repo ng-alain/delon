@@ -12,10 +12,10 @@ ng-alain 是一个基于 ng-zorro-antd 的企业级中后台前端脚手架，�
 
 ## 版本
 
-- ng-alain 脚手架：[![NPM version](https://img.shields.io/npm/v/ng-alain.svg)](https://www.npmjs.com/package/ng-alain)
-- `@delon/theme`：[![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
-- `@delon/abc`：[![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc)
-- `@delon/acl`：[![NPM version](https://img.shields.io/npm/v/@delon/acl.svg)](https://www.npmjs.com/package/@delon/acl)
+- ng-alain 脚手架：[![NPM version](//img.shields.io/npm/v/ng-alain.svg)](//www.npmjs.com/package/ng-alain)
+- `@delon/theme`：[![NPM version](//img.shields.io/npm/v/@delon/theme.svg)](//www.npmjs.com/package/@delon/theme)
+- `@delon/abc`：[![NPM version](//img.shields.io/npm/v/@delon/abc.svg)](//www.npmjs.com/package/@delon/abc)
+- `@delon/acl`：[![NPM version](//img.shields.io/npm/v/@delon/acl.svg)](//www.npmjs.com/package/@delon/acl)
 
 ## 安装
 
@@ -24,13 +24,13 @@ ng-alain 是一个基于 ng-zorro-antd 的企业级中后台前端脚手架，�
 ### 直接 clone git 仓库
 
 ```bash
-$ git clone -b 0.2.0 --depth=1 https://github.com/cipchk/ng-alain.git my-project
+$ git clone -b 0.2.0 --depth=1 //github.com/cipchk/ng-alain.git my-project
 $ cd my-project
 ```
 
 ### 下载压缩包
 
-点击 [https://github.com/cipchk/ng-alain/archive/0.2.0.zip](https://github.com/cipchk/ng-alain/archive/0.2.0.zip) 下载到本地后解压。
+点击 [//github.com/cipchk/ng-alain/archive/0.2.0.zip](//github.com/cipchk/ng-alain/archive/0.2.0.zip) 下载到本地后解压。
 
 ## 目录结构
 
@@ -69,7 +69,7 @@ ng-alain 是一个标准的 Angular cli 构建的项目，因此你会非常熟�
 $ npm install
 ```
 
-如果网络状况不佳，可以使用 [cnpm](https://cnpmjs.org/) 进行加速。
+如果网络状况不佳，可以使用 [cnpm](//cnpmjs.org/) 进行加速。
 
 ```bash
 $ npm start
@@ -81,6 +81,6 @@ $ npm start
 $ npm run serve:hmr
 ```
 
-启动完成后会打开浏览器访问 [http://localhost:4200](http://localhost:4200)，你看到下面的页面就代表成功了。
+启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，你看到下面的页面就代表成功了。
 
 ![](./assets/screenshot/desktop.png | width=700)

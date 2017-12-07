@@ -10,7 +10,7 @@ ng-alain 默认下有两处对任何网络请求进行一些处理。
 
 ## 一、扩展 HttpClient
 
-`@delon/theme` 包含了一个叫 [_HttpClient](https://github.com/cipchk/delon/blob/master/src/core/theme/services/http/http.client.ts) 类，其本质还是调用 Angular 的 `HttpClient`，只是包裹了一个 `loading`。
+`@delon/theme` 包含了一个叫 [_HttpClient](//github.com/cipchk/delon/blob/master/src/core/theme/services/http/http.client.ts) 类，其本质还是调用 Angular 的 `HttpClient`，只是包裹了一个 `loading`。
 
 我们知道 ng-zorro-antd 充斥着大量 `nzLoading` 属性，它可以让网络请求的加载有更友好的体验，这样我们无须在每一个业务页面维护一个 `loadind` 变量。
 

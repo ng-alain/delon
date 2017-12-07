@@ -8,7 +8,7 @@ type: Advance
 
 ## Web 图标
 
-默认除了 ng-zorro-antd 自带 Web 图标，额外增加了 [font-awesome](http://fontawesome.io/)、[simple-line-icons](http://simplelineicons.com/)、[weather-icons](http://erikflowers.github.io/weather-icons/) 三个图标库，如果你明确不需要，可以删除：
+默认除了 ng-zorro-antd 自带 Web 图标，额外增加了 [font-awesome](//fontawesome.io/)、[simple-line-icons](//simplelineicons.com/)、[weather-icons](//erikflowers.github.io/weather-icons/) 三个图标库，如果你明确不需要，可以删除：
 
 + 移除 `src/styles.less` 引用样式文件
 + 移除相应包体
