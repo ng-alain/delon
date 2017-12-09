@@ -1,3 +1,12 @@
+[![Build Status](https://travis-ci.org/cipchk/delon.svg?branch=master)](https://travis-ci.org/cipchk/delon)
+[![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
+
+## Links
+
++ [Home Page](http://ng-alain.com)
++ [@delon](https://github.com/cipchk/delon)
++ [DEMO](https://cipchk.github.io/ng-alain/)
+
 ## Troubleshooting
 
 Please follow this guidelines when reporting bugs and feature requests:

@@ -8,8 +8,6 @@ type: Advance
 
 本次的变化对项目的改动其实不是很大，在开始阅读指引之前我建议先阅读入门指南序列文章（至少阅读 [关于 Delon](/docs/delon) 文章），这样会更好的理解为何我要这么做。
 
-当前 `0.2` 是以[独立分支](//github.com/cipchk/ng-alain/tree/0.2.0)在存在，而 [ng-alain](//cipchk.github.io/ng-alain/) github预览已经是 `0.2` 版本了。
-
 ## 一、主题系统、服务、业务组件的变化
 
 将这些公共性质转变成：`@delon/theme`、`@delon/abc`、`@delon/acl` 三个独立类库，这三个类库将保存同步版本号的更新（不管类库是否实际发生改变）。

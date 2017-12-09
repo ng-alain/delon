@@ -115,8 +115,9 @@ function inlineStyle(content, urlResolver) {
         const styleFile = urlResolver(styleUrl);
         const styleContent = fs.readFileSync(styleFile, 'utf-8');
         const shortenedStyle = styleContent
-          .replace(/([\n\r]\s*)+/gm, ' ')
-          .replace(/"/g, '\\"');
+            .replace(/([\n\r]\s*)+/gm, ' ')
+            .replace(/content: "([^"]+)"/g, 'content: "\\$1"')
+            .replace(/"/g, '\\"');
         return `"${shortenedStyle}"`;
       })
       .join(',\n') +

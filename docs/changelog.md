@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 0.2.0
+
+`2017-12-09`
+
+- 脚手架
+    - 重构：统一的表单校验编码风格
+- @delon/theme
+    - 修复 `preloader`、IE下侧边框菜单样式问题，[#67](https://github.com/cipchk/ng-alain/pull/67) [@icycore](https://github.com/icycore)
+
 ### 0.2.0-beta.2
 
 `2017-12-06`

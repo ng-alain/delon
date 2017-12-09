@@ -5,6 +5,13 @@ import { MenuService, ThemesService } from '@delon/theme';
 @Component({
   selector: 'app-theme',
   template: `
+  <div class="aside">
+    <div class="aside-inner">
+        <div style="height: 1000px">
+        asdf
+        </div>
+    </div>
+  </div>
   <nz-tree [nzNodes]="nodes" [nzCheckable]="true"></nz-tree>
   `
 })
