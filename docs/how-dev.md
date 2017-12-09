@@ -24,7 +24,7 @@ ng-alain 的目录非常简单，只有简单几个文件；默认情况下，�
 
 > 很多情况下，可能你不需要这些功能，上述每个链接中都包含着如何去删除它们的方法。
 
-我们知道，项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），ng-alain 的启动始于 [startup.service.ts](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/core/services/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：
+我们知道，项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），ng-alain 的启动始于 [startup.service.ts](//github.com/cipchk/ng-alain/blob/master/src/app/core/services/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：
 
 ```ts
 // 应用信息：包括站点名、描述、年份

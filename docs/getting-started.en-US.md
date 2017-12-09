@@ -24,13 +24,13 @@ There are two ways to install:
 ### Clone the Git Repository
 
 ```bash
-$ git clone -b 0.2.0 --depth=1 //github.com/cipchk/ng-alain.git my-project
+$ git clone --depth=1 //github.com/cipchk/ng-alain.git my-project
 $ cd my-project
 ```
 
 ### Download the Package
 
-Download [//github.com/cipchk/ng-alain/archive/0.2.0.zip](//github.com/cipchk/ng-alain/archive/0.2.0.zip), and un-archive.
+Download [//github.com/cipchk/ng-alain/archive/master.zip](//github.com/cipchk/ng-alain/archive/master.zip), and un-archive.
 
 ## Scaffolding
 

@@ -16,7 +16,7 @@ type: Theme
 
 菜单服务的数据格式是一个 [Menu](//github.com/cipchk/delon/blob/master/src/core/theme/services/menu/menu.service.ts#L4) 数组，其中 `text` 属性表示菜单文本为必填项，而且本身并不受外部组件的影响（例如[sidebar-nav](/components/sidebar-nav)组件），这是因为菜单是贯穿整个项目必不可少的组成部分，而将其独立成一个服务可以更有效被使用，例如：动态生成导航、标题等。
 
-**建议：** 在 Angular 启动服务（[startup.service.ts](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/core/services/startup.service.ts)）从远程获取到菜单数据后，调用 `add()` 方法。
+**建议：** 在 Angular 启动服务（[startup.service.ts](//github.com/cipchk/ng-alain/blob/master/src/app/core/services/startup.service.ts)）从远程获取到菜单数据后，调用 `add()` 方法。
 
 **API 接口**
 
@@ -33,17 +33,17 @@ type: Theme
 
 项目配置项，包含应用[App](//github.com/cipchk/delon/blob/master/src/core/theme/services/settings/settings.service.ts#L13)、布局[Layout](//github.com/cipchk/delon/blob/master/src/core/theme/services/settings/settings.service.ts#L22)、用户信息[User](//github.com/cipchk/delon/blob/master/src/core/theme/services/settings/settings.service.ts#L6)三种类型。
 
-**建议：** 在 Angular 启动服务（[startup.service.ts](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/core/services/startup.service.ts)）从远程获取到应用、用户数据后，调用 `setApp()`、`setUser()` 方法。
+**建议：** 在 Angular 启动服务（[startup.service.ts](//github.com/cipchk/ng-alain/blob/master/src/app/core/services/startup.service.ts)）从远程获取到应用、用户数据后，调用 `setApp()`、`setUser()` 方法。
 
 ## TitleService
 
-用于设置页面标题，一般需要配置路由变化一起使用，例如：[app.component.ts](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/app.component.ts#L29)；而标题的数据来源于 `MenuService`。
+用于设置页面标题，一般需要配置路由变化一起使用，例如：[app.component.ts](//github.com/cipchk/ng-alain/blob/master/src/app/app.component.ts#L29)；而标题的数据来源于 `MenuService`。
 
-**建议：** 在 Angular 启动服务（[startup.service.ts](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/core/services/startup.service.ts)）从远程获取到应用数据后，设置 `prefix` 或 `suffix` 值来调整统一的标题前后缀。
+**建议：** 在 Angular 启动服务（[startup.service.ts](//github.com/cipchk/ng-alain/blob/master/src/app/core/services/startup.service.ts)）从远程获取到应用数据后，设置 `prefix` 或 `suffix` 值来调整统一的标题前后缀。
 
 ## ThemesService
 
-用于设置当前 ng-alain 主题颜色，默认提供 A-J 共十种颜色，除了调用 `setTheme()` 方法改变颜色系外，还要确保 [_alain-custom-variables.less](//github.com/cipchk/ng-alain/blob/0.2.0/src/styles/_alain-custom-variables.less) 中注册相应的颜色系样式。
+用于设置当前 ng-alain 主题颜色，默认提供 A-J 共十种颜色，除了调用 `setTheme()` 方法改变颜色系外，还要确保 [_alain-custom-variables.less](//github.com/cipchk/ng-alain/blob/master/src/styles/_alain-custom-variables.less) 中注册相应的颜色系样式。
 
 与之相对应的还有 `ColorsService` 用于获取这些颜色系。
 

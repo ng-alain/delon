@@ -33,4 +33,4 @@ import { AlainABCModule } from '@delon/abc';
 组件会随着脚手架的更新而不断迭代，有任何问题和需求可以反馈到 [这里](//github.com/cipchk/ng-alain/issues)。
 
 - 最新版本：[![@delon/abc](//img.shields.io/npm/v/@delon/abc.svg?style=flat-square)](//www.npmjs.com/package/@delon/abc)
-- [更新日志](//github.com/cipchk/ng-alain/releases)
+- [更新日志](//ng-alain.com/docs/changelog)

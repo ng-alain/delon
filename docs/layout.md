@@ -14,9 +14,9 @@ type: Basic
 
 | 类型 | 位置 | 描述 |
 | ---- | --- | ---- |
-| 基础 | [LayoutComponent](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/layout/layout.component.ts) | - |
-| 全屏 | [LayoutFullScreenComponent](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/layout/fullscreen/fullscreen.component.ts) | - |
-| PRO用户授权 | [ProUserLayoutComponent](//github.com/cipchk/ng-alain/blob/0.2.0/src/app/layout/pro/user/user.component.ts) | 限 [pro](//cipchk.github.io/ng-alain/#/pro/user/login) 用户相关 |
+| 基础 | [LayoutComponent](//github.com/cipchk/ng-alain/blob/master/src/app/layout/layout.component.ts) | - |
+| 全屏 | [LayoutFullScreenComponent](//github.com/cipchk/ng-alain/blob/master/src/app/layout/fullscreen/fullscreen.component.ts) | - |
+| PRO用户授权 | [ProUserLayoutComponent](//github.com/cipchk/ng-alain/blob/master/src/app/layout/pro/user/user.component.ts) | 限 [pro](//cipchk.github.io/ng-alain/#/pro/user/login) 用户相关 |
 
 ## 如何使用
 

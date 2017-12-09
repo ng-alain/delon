@@ -10,7 +10,7 @@ type: Theme
 
 ## 如何覆盖参数
 
-ng-alain 脚手架里有一个叫 [_alain-custom-variables.less](//github.com/cipchk/ng-alain/blob/0.2.0/src/styles/_alain-custom-variables.less) LESS文件，允许你在注册 ng-alain 主题样式**之前**重新覆盖参数数值，例如：开启强制所有 `ng-zorro-antd` 组件字号为 `14px`， 只需要前重新覆盖 `@focusing-enabled: true` 参数数值即可。
+ng-alain 脚手架里有一个叫 [_alain-custom-variables.less](//github.com/cipchk/ng-alain/blob/master/src/styles/_alain-custom-variables.less) LESS文件，允许你在注册 ng-alain 主题样式**之前**重新覆盖参数数值，例如：开启强制所有 `ng-zorro-antd` 组件字号为 `14px`， 只需要前重新覆盖 `@focusing-enabled: true` 参数数值即可。
 
 ## 关于 ng-zorro-antd 字号问题
 
