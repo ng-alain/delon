@@ -12,14 +12,18 @@ import { AppComponent } from './app.component';
 import { AlainThemeModule } from '@delon/theme';
 import { AlainACLModule } from '@delon/acl';
 import { AlainABCModule } from '@delon/abc';
+import { AlainAuthModule } from '@delon/auth';
 import { ThemeComponent } from 'app/theme/component';
 import { DemoComponent } from 'app/abc/component';
 import { ACLComponent } from 'app/acl/component';
+import { AuthComponent } from 'app/auth/auth.component';
+import { LayoutComponent } from 'app/layout.component';
+import { CallbackComponent } from 'app/auth/callback.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ThemeComponent, DemoComponent, ACLComponent
+    AppComponent, LayoutComponent,
+    ThemeComponent, DemoComponent, ACLComponent, AuthComponent, CallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -29,11 +33,13 @@ import { ACLComponent } from 'app/acl/component';
     RouterModule.forRoot([
         {
             path: '',
-            component: AppComponent,
+            component: LayoutComponent,
             children: [
                 { path: 'theme', component: ThemeComponent },
                 { path: 'abc', component: DemoComponent },
-                { path: 'acl', component: ACLComponent }
+                { path: 'acl', component: ACLComponent },
+                { path: 'auth', component: AuthComponent },
+                { path: 'callback/:type', component: CallbackComponent }
             ]
         }
     ]),
@@ -43,7 +49,8 @@ import { ACLComponent } from 'app/acl/component';
     NzTreeModule,
     AlainThemeModule.forRoot(),
     AlainABCModule.forRoot(),
-    AlainACLModule.forRoot()
+    AlainACLModule.forRoot(),
+    AlainAuthModule.forRoot({})
   ],
   providers: [],
   bootstrap: [AppComponent]

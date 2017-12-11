@@ -15,6 +15,7 @@ export const ZHCN = {
     'app.footer.change-log': '更新记录',
     'app.footer.faq': '常见问题',
     'app.footer.issues': '讨论列表',
+    'app.footer.qqgroup': 'QQ群',
     'app.content.edit-page': '在 Github 上编辑此页！',
     'app.content.edit-demo': '在 Github 上编辑此示例！',
     'app.component.examples': '代码演示',

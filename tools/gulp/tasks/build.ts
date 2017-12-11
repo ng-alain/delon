@@ -19,8 +19,9 @@ task('inline-resources', copyResources);
 task('bundle:umd:theme', bundleUmdTheme);
 task('bundle:umd:abc', bundleUmdABC);
 task('bundle:umd:acl', bundleUmdACL);
+task('bundle:umd:auth', bundleUmdAuth);
 // @ts-ignore
-task('bundle', <any>[ 'bundle:umd:theme', 'bundle:umd:abc', 'bundle:umd:acl' ]);
+task('bundle', <any>[ 'bundle:umd:theme', 'bundle:umd:abc', 'bundle:umd:acl', 'bundle:umd:auth' ]);
 task('bump', bumpVersions);
 
 function bumpVersions() {
@@ -29,7 +30,8 @@ function bumpVersions() {
         './scaffold/package.json',
         './src/core/theme/package.json',
         './src/core/abc/package.json',
-        './src/core/acl/package.json'], {base: './'})
+        './src/core/acl/package.json',
+        './src/core/auth/package.json'], {base: './'})
         .pipe(bump({
             version: VERSION
         }))
@@ -82,6 +84,10 @@ function bundleUmdABC() {
 
 function bundleUmdACL() {
     bundle(`${paths.lib}/acl/`);
+}
+
+function bundleUmdAuth() {
+    bundle(`${paths.lib}/auth/`);
 }
 
 function bundle(path: string) {
