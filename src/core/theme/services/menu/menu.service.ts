@@ -152,6 +152,13 @@ export class MenuService {
         return this.data;
     }
 
+    /**
+     * 清空菜单
+     */
+    clear() {
+        this.data = [];
+    }
+
     setDefault(url: string) {
         if (!url) {
             return;
