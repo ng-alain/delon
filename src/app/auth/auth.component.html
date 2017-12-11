@@ -1,0 +1,10 @@
+<h1>current token</h1>
+<p>{{ token | json }}</p>
+<h1>via href</h1>
+<ul>
+    <li *ngFor="let item of list"><a (click)="open(item)">{{item.type}}</a></li>
+</ul>
+<h1>via window</h1>
+<ul>
+    <li *ngFor="let item of list"><a (click)="open(item, 'window')">{{item.type}}</a></li>
+</ul>
