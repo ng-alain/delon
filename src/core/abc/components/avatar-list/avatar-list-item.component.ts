@@ -6,5 +6,7 @@ import { Component, Input } from '@angular/core';
 })
 export class AvatarListItemComponent {
     @Input() src: string;
+    @Input() text: string;
+    @Input() icon: string;
     @Input() tips: string;
 }

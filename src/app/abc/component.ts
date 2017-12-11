@@ -1,80 +1,16 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <chart (render)="render($event)"></chart>
+  <avatar-list size="mini">
+      <avatar-list-item tips="Jake" src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png"></avatar-list-item>
+      <avatar-list-item tips="Andy" src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png"></avatar-list-item>
+      <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png"></avatar-list-item>
+      <avatar-list-item tips="Cipchk" text="Cipchk"></avatar-list-item>
+      <avatar-list-item tips="heart-o" icon="heart-o"></avatar-list-item>
+  </avatar-list>
   `
 })
 export class DemoComponent {
-    render(el: ElementRef) {
-        const { DataView } = DataSet;
-        let data = [
-          { action: '浏览网站', pv: 50000 },
-          { action: '放入购物车', pv: 35000 },
-          { action: '生成订单', pv: 25000 },
-          { action: '支付订单', pv: 15000 },
-          { action: '完成交易', pv: 8000 }
-        ];
-        const dv = new DataView().source(data);
-        dv.transform({
-          type: 'percent',
-          field: 'pv',
-          dimension: 'action',
-          as: 'percent'
-        });
-        data = dv.rows;
-        const chart = new G2.Chart({
-          container: el.nativeElement,
-          forceFit: true,
-          height: 400,
-          padding: [ 20, 120, 95 ]
-        });
-        chart.source(data, {
-          percent: {
-            nice: false
-          }
-        });
-        chart.axis(false);
-        chart.tooltip({
-          showTitle: false,
-          itemTpl: '<li data-index={index} style="margin-bottom:4px;">'
-              + '<span style="background-color:{color};" class="g2-tooltip-marker"></span>'
-              + '{name}<br/>'
-              + '<span style="padding-left: 16px">浏览人数：{pv}</span><br/>'
-              + '<span style="padding-left: 16px">占比：{percent}</span><br/>'
-              + '</li>'
-        });
-        chart.coord('rect').transpose().scale(1, -1);
-        chart.intervalSymmetric().position('action*percent')
-          .shape('funnel')
-          .color('action', [ '#0050B3', '#1890FF', '#40A9FF', '#69C0FF', '#BAE7FF' ])
-          .tooltip('action*pv*percent', (action: any, pv: any, percent: any) => {
-            return {
-              name: action,
-              percent: (percent * 100).toFixed(2) + '%',
-              pv: pv
-            };
-          })
-        ;
-        data.map((obj: any) => {
-          // 中间标签文本
-          chart.guide().text({
-            top: true,
-            position: {
-              action: obj.action,
-              percent: 'median'
-            },
-            content: (obj.percent * 100).toFixed(2) + '%', // 显示的文本内容
-            style: {
-              fill: '#fff',
-              fontSize: '12',
-              textAlign: 'center',
-              shadowBlur: 2,
-              shadowColor: 'rgba(0, 0, 0, .45)'
-            }
-          });
-        });
-        chart.render();
-    }
 }

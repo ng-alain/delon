@@ -7,9 +7,9 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
     <ul>
         <li *ngFor="let i of _items" class="item" [ngClass]="_size">
             <nz-tooltip *ngIf="i.tips" [nzTitle]="i.tips">
-                <nz-avatar nz-tooltip [nzSrc]="i.src" [nzSize]="_avatarSize"></nz-avatar>
+                <nz-avatar nz-tooltip [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="_avatarSize"></nz-avatar>
             </nz-tooltip>
-            <nz-avatar *ngIf="!i.tips" [nzSrc]="i.src" [nzSize]="_avatarSize"></nz-avatar>
+            <nz-avatar *ngIf="!i.tips" [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="_avatarSize"></nz-avatar>
         </li>
     </ul>
     `,
