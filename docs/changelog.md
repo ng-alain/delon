@@ -6,6 +6,19 @@ title:
 type: Other
 ---
 
+### 0.2.1
+
+`2017-12-11`
+
+- 脚手架
+    - 构建：支持 Typescript 2.5
+    - 构建：移除 `@types/moment`，新版本自带定义文件
+    - 修正 `NzSubject` 不支持 `boolean` 值返回，[#92](https://github.com/cipchk/ng-alain/pull/92)
+- @delon/theme
+    - MenuService：增加 `clear()` 方法，[#98](https://github.com/cipchk/ng-alain/pull/98)
+- @delon/abc
+    - avatar-list-item：支持 `text`、`icon` 属性，[#93](https://github.com/cipchk/ng-alain/pull/93)
+
 ### 0.2.0
 
 `2017-12-09`
