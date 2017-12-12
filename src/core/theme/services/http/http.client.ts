@@ -58,7 +58,7 @@ export class _HttpClient {
     }
 
     private end() {
-        console.timeEnd();
+        console.timeEnd('http');
         this._loading = false;
     }
 
