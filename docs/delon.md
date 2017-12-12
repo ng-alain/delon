@@ -18,3 +18,8 @@ type: Basic
     + 基于G2，业务中常用的图表类型
 + **@delon/acl**
     + 基于角色权限控制
++ **@delon/auth**
+    + 用户认证过程的解决方案
+    + 简化操作社会化登录门槛
+    + Token 管理
+    + Simple Web Token & JSON Web Token 拦截器
