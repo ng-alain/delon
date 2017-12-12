@@ -16,6 +16,7 @@ ng-alain is a production-ready solution for admin interfaces based on ng-zorro-a
 - `@delon/theme`: [![NPM version](//img.shields.io/npm/v/@delon/theme.svg)](//www.npmjs.com/package/@delon/theme)
 - `@delon/abc`: [![NPM version](//img.shields.io/npm/v/@delon/abc.svg)](//www.npmjs.com/package/@delon/abc)
 - `@delon/acl`: [![NPM version](//img.shields.io/npm/v/@delon/acl.svg)](//www.npmjs.com/package/@delon/acl)
+- `@delon/auth`: [![NPM version](//img.shields.io/npm/v/@delon/auth.svg)](//www.npmjs.com/package/@delon/auth)
 
 ## Installation
 

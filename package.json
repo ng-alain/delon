@@ -1,6 +1,6 @@
 {
 	"name": "delon",
-	"version": "0.2.1",
+	"version": "0.3.0-rc.1",
 	"typings": "index.d.ts",
 	"description": "Delon is a set of essential modules for ng-alain.",
 	"repository": {
@@ -64,7 +64,7 @@
 		"scaffold:404": "cd ./scaffold/dist && cpy index.html --rename=404.html ./",
 		"scaffold:yml": "cpy ./_config.yml ./scaffold/dist",
 		"scaffold:build": "npm run scaffold:build:ts && npm run scaffold:404 && npm run scaffold:yml",
-		"scaffold:deploy": "npm run scaffold:build && cd ./scaffold && gh-pages -d dist",
+		"scaffold:deploy": "cd ./scaffold && gh-pages -d dist",
 		"scaffold:npm": "cd ./scaffold && npm publish --access=public",
 		"scaffold:release": "npm run scaffold:install && npm run scaffold:build && npm run scaffold:deploy && npm run scaffold:npm"
 	},

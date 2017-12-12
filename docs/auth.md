@@ -1,6 +1,8 @@
 ---
 order: 2
-title: Auth
+title:
+  en-US: Auth
+  zh-CN: 用户认证
 type: Advance
 ---
 
@@ -12,7 +14,9 @@ type: Advance
 + 如何存取认证信息，监听认证信息变化
 + 何时使用认证信息，区分不同的认证方式的使用规则，例如：JWT
 
-`@delonn/auth` 并不会关心用户界面是怎么样，只需要当登录成功后将后端返回的数据交给 `ITokenService`，它会帮你存储在 `localStorage` 当中（默认情况下）；当你发起一个 http 请求时，它会在自动帮你在 `header` 当中加入相应的 token 信息。
+`@delonn/auth` 并不会关心用户界面是怎么样，只需要当登录成功后将后端返回的数据交给 `ITokenService`，它会帮你存储在 `localStorage` 当中（默认情况下）；当发起一个 http 请求时，它会在自动在 `header` 当中加入相应的 token 信息。
+
+因此，`@delon/auth` 不限于 ng-alain 脚手架，任何 Angular 项目都可以使用它。
 
 > `@delon/auth` 只是解决认证环节，有关于权限控制可以使用 `@delon/acl`。
 
@@ -172,4 +176,11 @@ token_send_place = 'header';
 | `token_send_place` | `header,body,url` | `header` | 发送token参数位置 |
 | `login_url` | `string` | `/login` | 登录页路由地址 |
 | `ignores` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略TOKEN的URL地址列表 |
-| `allow_anonymous_key` | `_allow_anonymous` | 允许匿名登录KEY，若请求参数中带有该KEY表示忽略TOKEN |
+| `allow_anonymous_key` | `string` | `_allow_anonymous` | 允许匿名登录KEY，若请求参数中带有该KEY表示忽略TOKEN |
+
+## 如何删除
+
+ng-alain 脚手手默认在根模块（`AppModule1`）导入 `@delon/auth` 模块，并使用了 `SimpleInterceptor` 拦截器；移除包含：
+
+- `app.module.ts` 的 `@delon/auth` 模块导入语句
+- 删除 `@delon/auth` 包体
