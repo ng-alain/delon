@@ -22,8 +22,11 @@ type: Theme
 
 | 接口名 | 参数 | 描述 |
 | ----- | --- | ---- |
-| `resume` | `callback` | 重置菜单，可能I18N、用户权限变动时需要调用刷新 |
-| `getPathByUrl` | `url` | 根据url获取菜单列表 |
+| `add` | `items: Menu[]` | 设置菜单数据 |
+| `clear` | - | 清空菜单数据 |
+| `resume` | `callback: Funection` | 重置菜单，可能I18N、用户权限变动时需要调用刷新 |
+| `openedByUrl` | `url: string` | 根据URL设置菜单 `_open` 属性（`_open`用于是否展开菜单的条件值） |
+| `getPathByUrl` | `url: string` | 根据url获取菜单列表 |
 
 ## ScrollService
 

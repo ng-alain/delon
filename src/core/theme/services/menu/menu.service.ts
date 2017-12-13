@@ -128,7 +128,7 @@ export class MenuService {
         let pos = ls.findIndex(w => w.shortcut_root === true);
         if (pos === -1) {
             pos = ls.findIndex(w => w.link.includes('dashboard') || w.externalLink.includes('dashboard'));
-            pos = (pos !== -1 ? pos : 0) + 1;
+            pos = (pos !== -1 ? pos : -1) + 1;
             this.data[0].children.splice(pos, 0, {
                 text: '快捷菜单',
                 translate: 'shortcut',
@@ -159,6 +159,18 @@ export class MenuService {
         this.data = [];
     }
 
+    /**
+     * 根据URL设置菜单 `_open` 属性
+     * @param url URL地址
+     */
+    openedByUrl(url: string) {
+        this.setDefault(url);
+    }
+
+    /**
+     * 【已过期】请使用 `openedByUrl`
+     * @deprecated
+     */
     setDefault(url: string) {
         if (!url) {
             return;
