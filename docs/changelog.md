@@ -6,6 +6,19 @@ title:
 type: Other
 ---
 
+### 0.3.0-rc.2
+
+`2017-12-13`
+
+- @delon/theme
+    - **BREAKING CHANGES** MenuService： `setDefault` 已过期，使用 `openedByUrl` 替代； RC 后将移除。
+    - _HttpClient：修复JSONP参数转换URL错误问题
+- @delon/abc
+    - 修复 `sidebar-nav` 当Edge浏览器中收缩侧边栏时错位问题，[#100](https://github.com/cipchk/ng-alain/pull/100)
+    - 取消 `mini-bar` 在 Tooltip 时显示辅助框
+- @delon/acl
+    - 修复 `can()` 方法传递角色数组时总是返回 `false`
+
 ### 0.3.0-rc.1
 
 `2017-12-12`
