@@ -44,7 +44,7 @@ export class _HttpClient {
 
     appliedUrl(url: string, params?: any) {
         if (!params) return url;
-        url += ~url.indexOf('?') ? '#' : '&';
+        url += ~url.indexOf('?') ? '&' : '?';
         // tslint:disable-next-line:forin
         for (const key in params) {
             url += `${key}=${params[key]}`;
@@ -53,18 +53,18 @@ export class _HttpClient {
     }
 
     private begin() {
-        console.time('http');
+        // console.time('http');
         this._loading = true;
     }
 
     private end() {
-        console.timeEnd();
+        // console.timeEnd('http');
         this._loading = false;
     }
 
     /** 服务端URL地址 */
     get SERVER_URL(): string {
-        return this.themeOptions.SERVER_URL;
+        return this.themeOptions.SERVER_URL || '/';
     }
 
     /**
