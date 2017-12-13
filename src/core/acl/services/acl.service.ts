@@ -12,7 +12,7 @@ export class ACLService {
     private full = false;
 
     private parseACLType(val: string | string[] | ACLType): ACLType {
-        if (typeof val !== 'string') {
+        if (typeof val !== 'string' && !Array.isArray(val)) {
             return <ACLType>val;
         }
         if (Array.isArray(val)) {
