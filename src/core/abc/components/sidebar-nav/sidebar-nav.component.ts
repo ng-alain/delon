@@ -14,6 +14,7 @@ export class SidebarNavComponent implements OnInit {
 
     private rootEl: HTMLDivElement;
     private floatingEl: HTMLDivElement;
+    private bodyEl: HTMLBodyElement;
 
     constructor(
         public menuSrv: MenuService,
@@ -26,7 +27,8 @@ export class SidebarNavComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.menuSrv.setDefault(this.router.url);
+        this.bodyEl = this.doc.querySelector('body');
+        this.menuSrv.openedByUrl(this.router.url);
         this.genFloatingContainer();
     }
 
@@ -49,7 +51,7 @@ export class SidebarNavComponent implements OnInit {
         this.floatingEl = this.render.createElement('div');
         this.floatingEl.classList.add(FLOATINGCLS + '-container');
         this.floatingEl.addEventListener('click', this.floatingAreaClickHandle.bind(this), false);
-        this.doc.getElementsByTagName('body')[0].appendChild(this.floatingEl);
+        this.bodyEl.appendChild(this.floatingEl);
     }
 
     private genSubNode(linkNode: HTMLLinkElement, item: Menu): HTMLUListElement {
@@ -78,7 +80,9 @@ export class SidebarNavComponent implements OnInit {
     // calculate the node position values.
     private calPos(linkNode: HTMLLinkElement, node: HTMLUListElement) {
         const rect = linkNode.getBoundingClientRect();
-        const top = rect.top + this.doc.documentElement.scrollTop,
+        // bug: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/14721015/
+        const scrollTop = Math.max(this.doc.documentElement.scrollTop, this.bodyEl.scrollTop);
+        const top = rect.top + scrollTop,
               left = rect.right + 5;
         node.style.top = `${top}px`;
         node.style.left = `${left}px`;

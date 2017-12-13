@@ -6,4 +6,4 @@ cols: 1
 module: AdSidebarNavModule
 ---
 
-左边主菜单。
+ng-alain 左边主菜单，依赖于 `@delon/theme`。
