@@ -13,8 +13,8 @@ export class ScrollService {
 
   get topOffset() {
     if (!this._topOffset) {
-      const toolbar = this.doc.querySelector('md-toolbar.app-toolbar');
-      this._topOffset = (toolbar && toolbar.clientHeight || 0) + topMargin;
+        const toolbar = this.doc.querySelector('.header');
+        this._topOffset = (toolbar && toolbar.clientHeight || 0) + topMargin;
     }
     return this._topOffset;
   }

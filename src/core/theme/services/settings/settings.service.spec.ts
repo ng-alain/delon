@@ -1,5 +1,5 @@
 import { TestBed, async, inject } from '@angular/core/testing';
-import { SettingsService } from '../settings/settings.service';
+import { SettingsService, App, User } from '../settings/settings.service';
 
 describe('Service: Settings', () => {
     beforeEach(() => {
@@ -26,4 +26,27 @@ describe('Service: Settings', () => {
 
     });
 
+    it('should be setting app', inject([SettingsService], (service: SettingsService) => {
+        const app = <App>{
+            name: `ng-alain`,
+            description: 'description',
+            year: 2017
+        };
+        service.setApp(app);
+        expect(service.app.name).toBe(app.name);
+        expect(service.app.description).toBe(app.description);
+        expect(service.app.year).toBe(app.year);
+    }));
+
+    it('should be setting user', inject([SettingsService], (service: SettingsService) => {
+        const user = <User>{
+            name: `ng-alain`,
+            avatar: 'description',
+            email: 'cipchk@qq.com'
+        };
+        service.setApp(user);
+        expect(service.app.name).toBe(user.name);
+        expect(service.app.avatar).toBe(user.avatar);
+        expect(service.app.email).toBe(user.email);
+    }));
 });

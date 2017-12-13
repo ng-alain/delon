@@ -3,7 +3,7 @@ import { InjectionToken, Injectable  } from '@angular/core';
 export interface AlainI18NService {
     [key: string]: any;
 
-    use(lang: string, firstLoad): void;
+    use(lang: string, firstLoad: boolean): void;
 
     getLangs(): any[];
 
@@ -15,7 +15,7 @@ export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainTrans
 @Injectable()
 export class AlainI18NServiceFake implements AlainI18NService {
 
-    use(lang: string, firstLoad: any): void {
+    use(lang: string, firstLoad: boolean = true): void {
     }
 
     getLangs(): any[] {

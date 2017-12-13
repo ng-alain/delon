@@ -4,20 +4,12 @@ import { ITokenModel } from '../token/interface';
 export class LocalStorageStore implements IStore {
 
     get(key: string): ITokenModel {
-        try {
-            return JSON.parse(localStorage.getItem(key) || '{}') || null;
-        } catch {
-            return null;
-        }
+        return JSON.parse(localStorage.getItem(key) || '{}') || null;
     }
 
     set(key: string, value: ITokenModel): boolean {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-            return true;
-        } catch {
-            return false;
-        }
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
     }
 
     remove(key: string) {

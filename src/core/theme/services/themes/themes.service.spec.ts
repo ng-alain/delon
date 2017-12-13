@@ -13,4 +13,14 @@ describe('Service: Themes', () => {
     it('should create an instance', inject([ThemesService, SettingsService], (themes: ThemesService, settings: SettingsService) => {
         expect(themes).toBeTruthy();
     }));
+
+    it('#setTheme', inject([ThemesService, SettingsService], (themes: ThemesService, settings: SettingsService) => {
+        themes.setTheme('A');
+        themes.setTheme('B');
+        expect(themes.getDefaultTheme()).toBe('B');
+    }));
+
+    it('#getDefaultTheme', inject([ThemesService, SettingsService], (themes: ThemesService, settings: SettingsService) => {
+        expect(themes.getDefaultTheme()).toBe(themes.defaultTheme);
+    }));
 });

@@ -18,4 +18,4 @@ export function preloaderFinished() {
             body.style.overflow = '';
         }, 100);
     };
-};
+}

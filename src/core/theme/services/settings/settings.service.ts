@@ -43,12 +43,7 @@ export class SettingsService {
     private _layout: Layout = null;
 
     private get(key: string) {
-        try {
-            return JSON.parse(localStorage.getItem(key)) || null;
-        } catch (err) {
-            console.warn(`invalid key: ${key}`, err);
-            return null;
-        }
+        return JSON.parse(localStorage.getItem(key) || 'null') || null;
     }
 
     private set(key: string, value: any) {

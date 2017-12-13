@@ -6,6 +6,7 @@ describe('acl: service', () => {
     const ADMIN = 'admin';
     const USER = 'user';
     const ABILITY = 'order-cancel';
+    const ABILITY_NUMBER = 1;
 
     let srv: ACLService = null;
 
@@ -38,6 +39,7 @@ describe('acl: service', () => {
     });
 
     it(`#setRole()`, () => {
+        srv.setRole([ADMIN]);
         expect(srv.can(ADMIN)).toBe(true);
     });
 
@@ -52,32 +54,38 @@ describe('acl: service', () => {
     });
 
     it(`#attachRole()`, () => {
-        srv.attachRole(['NEWROLE']);
+        srv.attachRole(['NEWROLE', ADMIN]);
         expect(srv.can(ADMIN)).toBe(true);
         expect(srv.can('NEWROLE')).toBe(true);
     });
 
     it(`#attachAbility()`, () => {
-        srv.attachAbility(['NEWABILITY']);
+        srv.attachAbility(['NEWABILITY', ADMIN, 'INVALID']);
         expect(srv.can(ADMIN)).toBe(true);
+        expect(srv.canAbility('NEWABILITYINVALID')).toBe(false);
         expect(srv.canAbility('NEWABILITY')).toBe(true);
     });
 
     it(`#removeRole()`, () => {
         expect(srv.can(ADMIN)).toBe(true);
-        srv.removeRole([ADMIN]);
+        srv.removeRole([ADMIN, 'INVALID']);
         expect(srv.can(ADMIN)).toBe(false);
     });
 
     it(`#removeAbility()`, () => {
         srv.attachAbility([ABILITY]);
         expect(srv.canAbility(ABILITY)).toBe(true);
-        srv.removeAbility([ABILITY]);
+        srv.removeAbility([ABILITY, 10]);
         expect(srv.canAbility(ABILITY)).toBe(false);
     });
 
     it(`#can()`, () => {
-        expect(srv.can(ADMIN)).toBe(true);
+        srv.attachAbility([ABILITY_NUMBER]);
+        expect(srv.can(ADMIN)).toBe(true, 'can ' + ADMIN);
+        expect(srv.can(ABILITY_NUMBER)).toBe(true, 'ability muse be true');
+        expect(srv.can([ABILITY_NUMBER])).toBe(true, 'ability array muse be true');
+        expect(srv.can([ADMIN])).toBe(true, 'role array muse be true');
+        expect(srv.can(<ACLType>{ role: [ ADMIN ] })).toBe(true, 'ACLType item muse be true');
         expect(srv.can(ADMIN + '1')).toBe(false);
     });
 
