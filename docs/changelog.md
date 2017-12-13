@@ -6,20 +6,23 @@ title:
 type: Other
 ---
 
-### 0.3.0-rc.1
+### 0.3.0
 
-`2017-12-12`
-
-#### BREAKING CHANGES
+`2017-12-14`
 
 - 脚手架 [commit](https://github.com/cipchk/ng-alain/commit/6d89f7468232de6c828ad9c735cd53087014587e)
     - AppModule：导入 `@delon/auth` 模块
     - DefaultInterceptor：TOKEN信息由 `@delon/auth` 的 `SimpleInterceptor` 处理
     - PRO登录页：登录页基于 `@delon/auth` 实现账密、第三方登录动作
     - 新增 `callback` 页面，用于回调页
-
-#### Features
-
+- @delon/theme
+    - **BREAKING CHANGES** MenuService： `setDefault` 已过期，使用 `openedByUrl` 替代
+    - _HttpClient：修复JSONP参数转换URL错误问题
+- @delon/abc
+    - 修复 `sidebar-nav` 当Edge浏览器中收缩侧边栏时错位问题，[#100](https://github.com/cipchk/ng-alain/pull/100)
+    - 取消 `mini-bar` 在 Tooltip 时显示辅助框
+- @delon/acl
+    - 修复 `can()` 方法传递角色数组时总是返回 `false`
 - @delon/auth
     - 认证类库：用户认证过程的解决方案，[Document](http://ng-alain.com/docs/auth)
 
