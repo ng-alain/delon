@@ -70,6 +70,7 @@ export class MiniBarComponent implements OnDestroy, OnChanges, OnInit {
             chart.tooltip({
                 showTitle: false,
                 hideMarkders: false,
+                crosshairs: false,
                 'g2-tooltip': { padding: 4 },
                 'g2-tooltip-list-item': { margin: `0px 4px` }
             });
