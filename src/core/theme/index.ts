@@ -43,6 +43,10 @@ export { ThemesService, ThemeType } from './services/themes/themes.service';
 export { ALAIN_I18N_TOKEN, AlainI18NService } from './services/i18n/i18n';
 export { ModalHelper } from './services/modal/modal.helper';
 export { _HttpClient } from './services/http/http.client';
+export { MomentDatePipe } from './pipes/date/moment-date.pipe';
+export { CNCurrencyPipe } from './pipes/currency/cn-currency.pipe';
+export { KeysPipe } from './pipes/keys/keys.pipe';
+export { YNPipe } from './pipes/yn/yn.pipe';
 
 // endregion
 
