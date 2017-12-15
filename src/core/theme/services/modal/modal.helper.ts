@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs/Observable';
-import { filter } from 'rxjs/operators/filter';
+import { filter } from 'rxjs/operators';
 
 /**
  * 对话框辅助类

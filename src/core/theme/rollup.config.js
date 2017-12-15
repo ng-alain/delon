@@ -13,10 +13,8 @@ const globals = {
 
     'rxjs/Observer': 'Rx',
     'rxjs/Observable': 'Rx',
-    'rxjs/observable/fromEvent': 'Rx.Observable',
-    'rxjs/operators/tap': 'Rx.Observable.prototype',
-    'rxjs/operators/catchError': 'Rx.Observable.prototype',
-    'rxjs/operators/filter': 'Rx.Observable.prototype'
+    'rxjs/operators': 'Rx.Observable.prototype',
+    'rxjs/observable/fromEvent': 'Rx.Observable'
 };
 
 module.exports = {

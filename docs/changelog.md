@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 0.3.1
+
+`2017-12-15`
+
+- @delon/theme
+    - 新增重载更多 `_HttpClient` 的 `get`、`post`、`delete` 方法
+    - 新增导出所有 Pipes
+    - 修复 `MenuService` 重复调用 `resume` 导致快捷菜单重复，[#107](https://github.com/cipchk/ng-alain/pull/107)
+
 ### 0.3.0
 
 `2017-12-14`
