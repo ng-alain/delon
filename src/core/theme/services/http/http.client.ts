@@ -1,9 +1,8 @@
 // tslint:disable:no-console class-name
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { tap } from 'rxjs/operators/tap';
-import { catchError } from 'rxjs/operators/catchError';
+import { tap, catchError } from 'rxjs/operators';
 import * as moment from 'moment';
 import { AlainThemeOptions, ALAIN_THEME_OPTIONS } from '../../theme.options';
 
@@ -67,69 +66,159 @@ export class _HttpClient {
         return this.themeOptions.SERVER_URL || '/';
     }
 
-    /**
-     * `get` 请求
-     *
-     * @param {string} url URL地址
-     * @param {*} [params] 请求参数
-     */
-    get(url: string, params?: any): Observable<any> {
-        this.begin();
-        return this.http
-            .get(url, {
-                params: this.parseParams(params)
-            })
-            .pipe(
-                tap(() => this.end()),
-                catchError((res) => {
-                    this.end();
-                    return res;
-                })
-            );
-    }
+    // region: get
 
     /**
-     * `post` 请求
-     *
-     * @param {string} url URL地址
-     * @param {*} [body] body内容
-     * @param {*} [params] 请求参数
+     * GET：返回一个 `string` 类型
      */
-    post(url: string, body?: any, params?: any): Observable<any> {
-        this.begin();
-        return this.http
-            .post(url, body || null, {
-                params: this.parseParams(params)
-            })
-            .pipe(
-                tap(() => this.end()),
-                catchError((res) => {
-                    this.end();
-                    return res;
-                })
-            );
-    }
+    get(url: string, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body',
+        reportProgress?: boolean,
+        responseType: 'text', withCredentials?: boolean,
+    }): Observable<string>;
 
     /**
-     * `delete` 请求
-     *
-     * @param {string} url URL地址
-     * @param {*} [params] 请求参数
+     * GET：返回一个 `JSON` 类型
      */
-    delete(url: string, params?: any): Observable<any> {
-        this.begin();
-        return this.http
-            .delete(url, {
-                params: this.parseParams(params)
-            })
-            .pipe(
-                tap(() => this.end()),
-                catchError((res) => {
-                    this.end();
-                    return res;
-                })
-            );
+    get(url: string, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe: 'response',
+        reportProgress?: boolean,
+        responseType?: 'json',
+        withCredentials?: boolean,
+    }): Observable<HttpResponse<Object>>;
+
+    /**
+     * GET：返回一个 `any` 类型
+     */
+    get(url: string, params?: any, options?: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body' | 'events' | 'response',
+        reportProgress?: boolean,
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text',
+        withCredentials?: boolean,
+    }): Observable<any>;
+
+    /**
+     * GET 请求
+     */
+    get(url: string, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body' | 'events' | 'response',
+        reportProgress?: boolean,
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text',
+        withCredentials?: boolean,
+    }): Observable<any> {
+        return this.request('GET', url, Object.assign({
+            params
+        }, options));
     }
+
+    // endregion
+
+    // region: post
+
+    /**
+     * POST：返回一个 `string` 类型
+     */
+    post(url: string, body: any, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body',
+        reportProgress?: boolean,
+        responseType: 'text', withCredentials?: boolean,
+    }): Observable<string>;
+
+    /**
+     * POST：返回一个 `JSON` 类型
+     */
+    post(url: string, body: any, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe: 'response',
+        reportProgress?: boolean,
+        responseType?: 'json',
+        withCredentials?: boolean,
+    }): Observable<HttpResponse<Object>>;
+
+    /**
+     * POST：返回一个 `any` 类型
+     */
+    post(url: string, body?: any, params?: any, options?: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body' | 'events' | 'response',
+        reportProgress?: boolean,
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text',
+        withCredentials?: boolean,
+    }): Observable<any>;
+
+    /**
+     * POST 请求
+     */
+    post(url: string, body: any, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body' | 'events' | 'response',
+        reportProgress?: boolean,
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text',
+        withCredentials?: boolean,
+    }): Observable<any> {
+        return this.request('POST', url, Object.assign({
+            body,
+            params
+        }, options));
+    }
+
+    // endregion
+
+    // region: delete
+
+    /**
+     * DELETE：返回一个 `string` 类型
+     */
+    delete(url: string, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body',
+        reportProgress?: boolean,
+        responseType: 'text', withCredentials?: boolean,
+    }): Observable<string>;
+
+    /**
+     * POST：返回一个 `JSON` 类型
+     */
+    delete(url: string, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe: 'response',
+        reportProgress?: boolean,
+        responseType?: 'json',
+        withCredentials?: boolean,
+    }): Observable<HttpResponse<Object>>;
+
+    /**
+     * POST：返回一个 `any` 类型
+     */
+    delete(url: string, params?: any, options?: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body' | 'events' | 'response',
+        reportProgress?: boolean,
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text',
+        withCredentials?: boolean,
+    }): Observable<any>;
+
+    /**
+     * POST 请求
+     */
+    delete(url: string, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body' | 'events' | 'response',
+        reportProgress?: boolean,
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text',
+        withCredentials?: boolean,
+    }): Observable<any> {
+        return this.request('DELETE', url, Object.assign({
+            params
+        }, options));
+    }
+
+    // endregion
 
     /**
      * `jsonp` 请求
@@ -139,8 +228,6 @@ export class _HttpClient {
      * @param {string} [callbackParam] CALLBACK值，默认：JSONP_CALLBACK
      */
     jsonp(url: string, params?: any, callbackParam: string = 'JSONP_CALLBACK'): Observable<any> {
-        this.begin();
-
         return this.http
             .jsonp(this.appliedUrl(url, params), callbackParam)
             .pipe(
@@ -158,16 +245,11 @@ export class _HttpClient {
      * @param {string} url URL地址
      * @param {*} [body] 请求参数
      */
-    patch(url: string, body?: any): Observable<any> {
-        this.begin();
-        return this.http.patch(url, body)
-            .pipe(
-                tap(() => this.end()),
-                catchError((res) => {
-                    this.end();
-                    return res;
-                })
-            );
+    patch(url: string, body?: any, params?: any): Observable<any> {
+        return this.request('PATCH', url, Object.assign({
+            params,
+            body: body || null
+        }));
     }
 
     /**
@@ -176,16 +258,11 @@ export class _HttpClient {
      * @param {string} url URL地址
      * @param {*} [body] 请求参数
      */
-    put(url: string, body?: any): Observable<any> {
-        this.begin();
-        return this.http.put(url, body)
-            .pipe(
-                tap(() => this.end()),
-                catchError((res) => {
-                    this.end();
-                    return res;
-                })
-            );
+    put(url: string, body?: any, params?: any): Observable<any> {
+        return this.request('PUT', url, Object.assign({
+            params,
+            body: body || null
+        }));
     }
 
     /**
@@ -209,6 +286,9 @@ export class _HttpClient {
         withCredentials?: boolean;
     }): Observable<any> {
         this.begin();
+        if (options) {
+            if (options.params) options.params = this.parseParams(options.params);
+        }
         return this.http.request(method, url, options)
             .pipe(
                 tap(() => this.end()),

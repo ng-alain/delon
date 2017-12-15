@@ -33,7 +33,7 @@ describe('theme: http.client', () => {
             done();
         });
         expect(http.loading).toBeTruthy();
-        backend.expectOne(URL).flush(OK);
+        backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(OK);
     });
 
     it('#SERVER_URL', () => {
@@ -60,6 +60,29 @@ describe('theme: http.client', () => {
             ret.flush(OK);
         });
 
+        it(`return a string`, (done: () => void) => {
+            http.get(URL, PARAMS, { responseType: 'text' }).subscribe(res => {
+                expect(typeof res).toBe('string');
+                expect(res).toBe(OK);
+                done();
+            });
+            const ret = backend.expectOne(req => req.method === 'GET' && req.url === URL) as TestRequest;
+            for (const key in PARAMS)
+                expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
+            ret.flush(OK);
+        });
+
+        it(`return a HttpResponse<Object>`, (done: () => void) => {
+            http.get(URL, PARAMS, { observe: 'response', responseType: 'json' }).subscribe(res => {
+                expect(res.status).toBe(200);
+                expect(res.body).toBe(OK);
+                done();
+            });
+            const ret = backend.expectOne(req => req.method === 'GET' && req.url === URL) as TestRequest;
+            for (const key in PARAMS)
+                expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
+            ret.flush(OK);
+        });
     });
 
     describe('[post]', () => {
@@ -92,6 +115,32 @@ describe('theme: http.client', () => {
                 expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
             ret.flush(OK);
         });
+
+        it(`return a string`, (done: () => void) => {
+            http.post(URL, BODY, PARAMS, { responseType: 'text' }).subscribe(res => {
+                expect(typeof res).toBe('string');
+                expect(res).toBe(OK);
+                done();
+            });
+            const ret = backend.expectOne(req => req.method === 'POST' && req.url === URL) as TestRequest;
+            expect(ret.request.body).toBe(BODY);
+            for (const key in PARAMS)
+                expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
+            ret.flush(OK);
+        });
+
+        it(`return a HttpResponse<Object>`, (done: () => void) => {
+            http.post(URL, BODY, PARAMS, { observe: 'response', responseType: 'json' }).subscribe(res => {
+                expect(res.status).toBe(200);
+                expect(res.body).toBe(OK);
+                done();
+            });
+            const ret = backend.expectOne(req => req.method === 'POST' && req.url === URL) as TestRequest;
+            expect(ret.request.body).toBe(BODY);
+            for (const key in PARAMS)
+                expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
+            ret.flush(OK);
+        });
     });
 
     describe('[delete]', () => {
@@ -106,6 +155,30 @@ describe('theme: http.client', () => {
         it(`specified params`, (done: () => void) => {
             http.delete(URL, PARAMS).subscribe(res => {
                 expect(res).toBe(OK);
+                done();
+            });
+            const ret = backend.expectOne(req => req.method === 'DELETE' && req.url === URL) as TestRequest;
+            for (const key in PARAMS)
+                expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
+            ret.flush(OK);
+        });
+
+        it(`return a string`, (done: () => void) => {
+            http.delete(URL, PARAMS, { responseType: 'text' }).subscribe(res => {
+                expect(typeof res).toBe('string');
+                expect(res).toBe(OK);
+                done();
+            });
+            const ret = backend.expectOne(req => req.method === 'DELETE' && req.url === URL) as TestRequest;
+            for (const key in PARAMS)
+                expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
+            ret.flush(OK);
+        });
+
+        it(`return a HttpResponse<Object>`, (done: () => void) => {
+            http.delete(URL, PARAMS, { observe: 'response', responseType: 'json' }).subscribe(res => {
+                expect(res.status).toBe(200);
+                expect(res.body).toBe(OK);
                 done();
             });
             const ret = backend.expectOne(req => req.method === 'DELETE' && req.url === URL) as TestRequest;
@@ -195,6 +268,40 @@ describe('theme: http.client', () => {
 
         it(`method: get`, (done: () => void) => {
             http.request('GET', URL).subscribe(res => {
+                expect(res).toBe(OK);
+                done();
+            });
+            backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(OK);
+        });
+
+        it(`method: get, should be return Observable<ArrayBuffer>`, (done: () => void) => {
+            http.request('GET', URL, {
+                responseType: 'arraybuffer'
+            }).subscribe((res: ArrayBuffer) => {
+                expect(res.byteLength).toBe(1);
+                done();
+            });
+            backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(new ArrayBuffer(1));
+        });
+
+        it(`method: get, should be return Observable<Blob>`, (done: () => void) => {
+            const content = JSON.stringify({hello: `world`}, null, 2);
+            http.request('GET', URL, {
+                responseType: 'blob'
+            }).subscribe((res: Blob) => {
+                console.log(res);
+                expect(res.size).toBe(content.length);
+                expect(res.type).toBe('application/json');
+                done();
+            });
+            const blob = new Blob([content], { type: 'application/json' });
+            backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(blob);
+        });
+
+        it(`method: get, should be return Observable<String>`, (done: () => void) => {
+            http.request('GET', URL, {
+                responseType: 'text'
+            }).subscribe((res: string) => {
                 expect(res).toBe(OK);
                 done();
             });
