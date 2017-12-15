@@ -33,27 +33,40 @@ describe('Service: Menu', () => {
     });
 
     it('#add', () => {
-        srv.add(DATA);
+        srv.add([...DATA]);
         expect(srv.menus.length).toBe(DATA.length);
     });
 
     it('#clear', () => {
-        srv.add(DATA);
+        srv.add([...DATA]);
         expect(srv.menus.length).toBe(DATA.length);
         srv.clear();
         expect(srv.menus.length).toBe(0);
     });
 
     it('#openedByUrl', () => {
-        srv.add(DATA);
+        srv.add([...DATA]);
         srv.openedByUrl(`/dashboard/v1`);
         expect(srv.menus[0]._open).toBe(true);
     });
 
     it('#getPathByUrl', () => {
-        srv.add(DATA);
+        srv.add([...DATA]);
         const menus = srv.getPathByUrl(`/dashboard/v1`);
         expect(menus.length).toBe(2);
         expect(menus[0].text).toBe('dashboard');
+    });
+
+    it('#shortcuts', () => {
+        srv.add([...DATA]);
+        let ls = srv.menus[0].children || [];
+        let pos = ls.findIndex(w => w.shortcut_root === true);
+        expect(pos).not.toBe(-1);
+        expect(ls[pos].children.length).toBe(1);
+        srv.resume();
+        ls = srv.menus[0].children || [];
+        pos = ls.findIndex(w => w.shortcut_root === true);
+        expect(pos).not.toBe(-1);
+        expect(ls[pos].children.length).toBe(1);
     });
 });

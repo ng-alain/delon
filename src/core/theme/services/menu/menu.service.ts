@@ -80,6 +80,7 @@ export class MenuService {
      */
     resume(callback?: (item: Menu, parentMenum: Menu, depth?: number) => void) {
         let i = 1;
+        this.removeShortcut();
         const shortcuts: Menu[] = [];
         this.visit((item, parent, depth) => {
             item.__id = i++;
@@ -138,6 +139,7 @@ export class MenuService {
         }
         let _data = this.data[0].children[pos];
         _data = Object.assign(_data, {
+            shortcut_root: true,
             _type: 3,
             __id: -1,
             _depth: 1
@@ -146,6 +148,12 @@ export class MenuService {
             i._depth = 2;
             return i;
         });
+    }
+
+    private removeShortcut() {
+        const ls = this.data[0].children || [];
+        const pos = ls.findIndex(w => w.shortcut_root === true);
+        if (pos !== -1) ls.splice(pos, 1);
     }
 
     get menus() {
