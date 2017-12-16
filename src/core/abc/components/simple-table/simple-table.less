@@ -1,0 +1,39 @@
+
+:host {
+    display: block;
+
+    &.page-left {
+        ::ng-deep {
+            .ant-table-pagination {
+                float: none;
+                display: block;
+                text-align: left;
+            }
+        }
+    }
+    &.page-center {
+        ::ng-deep {
+            .ant-table-pagination {
+                float: none;
+                display: block;
+                text-align: center;
+            }
+        }
+    }
+
+    ::ng-deep {
+        img {}
+        .ant-radio-wrapper {
+            margin-right: 0;
+        }
+        th.ant-table-selection-column {
+            padding-right: 0;
+            padding-left: 16px;
+        }
+        .ant-table-selection-column {
+            .ant-checkbox-wrapper {
+                margin-right: 0;
+            }
+        }
+    }
+}

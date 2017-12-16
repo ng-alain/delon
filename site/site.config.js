@@ -35,7 +35,7 @@ module.exports = {
             name: 'components',
             src: [ './src/core/abc/components', './src/core/abc/directives' ],
             module: '@delon/abc',
-            defaultRoute: 'avatar-list',
+            defaultRoute: 'simple-table',
             types: [
                 {
                     'zh-CN': '业务组件',

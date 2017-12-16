@@ -80,3 +80,14 @@ export function getTimeDistance(type: 'today' | 'week' | 'month' | 'year', time:
         ];
     }
 }
+
+/**
+ * 类似 `_.get`，根据 `path` 获取安全值
+ * jsperf: https://jsperf.com/es-deep-get
+ */
+export function deepGet(obj: any, path: string[], defaultValue: any) {
+    if (!obj) return defaultValue;
+    if (path.length === 0) return obj || defaultValue;
+    if (path.length === 1) return obj[path[0]] || defaultValue;
+    return path.reduce((o, k) => (o || {})[k], obj) || defaultValue;
+}

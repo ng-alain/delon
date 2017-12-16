@@ -16,8 +16,9 @@ import { ContentComponent } from './components/content/content.component';
 import { EditButtonComponent } from './components/edit-button/edit-button.component';
 import { DocsComponent } from './components/docs/docs.component';
 import { CodeBoxComponent } from './components/code-box/code-box.component';
+import { DemoModalComponent } from './components/modal/demo.component';
 
-const COMPONENTS = [ ContentComponent, EditButtonComponent, DocsComponent, CodeBoxComponent ];
+const COMPONENTS = [ ContentComponent, EditButtonComponent, DocsComponent, CodeBoxComponent, DemoModalComponent ];
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ const COMPONENTS = [ ContentComponent, EditButtonComponent, DocsComponent, CodeB
         NzClipboardModule.forRoot()
     ],
     declarations: COMPONENTS,
+    entryComponents: [DemoModalComponent],
     exports: [
         CommonModule,
         FormsModule,

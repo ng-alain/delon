@@ -1,4 +1,11 @@
+---
+order: 2
+title: 自定义数据
+---
 
+利用 `data` 属性由外部传递数据。
+
+```ts
 import { Component } from '@angular/core';
 import { SimpleTableColumn, SimpleTableChange, SimpleTableFilter } from '@delon/abc';
 
@@ -49,3 +56,4 @@ export class DemoComponent {
         console.log('sortChange', ret);
     }
 }
+```
