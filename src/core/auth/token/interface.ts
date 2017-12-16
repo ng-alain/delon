@@ -13,7 +13,19 @@ export interface ITokenService {
 
     set(data: ITokenModel): boolean;
 
-    get(): ITokenModel;
+    /**
+     * 获取Token，形式包括：
+     * - `get()` 获取 Simple Token
+     * - `get<JWTTokenModel>(JWTTokenModel)` 获取 JWT Token
+     */
+    get(type?: any): ITokenModel;
+
+    /**
+     * 获取Token，形式包括：
+     * - `get()` 获取 Simple Token
+     * - `get<JWTTokenModel>(JWTTokenModel)` 获取 JWT Token
+     */
+    get<T extends ITokenModel>(type?: any): T;
 
     clear(): void;
 

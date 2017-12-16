@@ -23,8 +23,10 @@ export class TokenService implements ITokenService {
         return this.store.set(this.options.store_key, data);
     }
 
-    get(): ITokenModel {
-        return this.store.get(this.options.store_key);
+    get(type?: any);
+    get<T extends ITokenModel>(type?: { new(): T }): T {
+        const data = this.store.get(this.options.store_key);
+        return type ? Object.assign(new type(), data) as T : data as T;
     }
 
     clear() {
