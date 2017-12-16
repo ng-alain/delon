@@ -5,12 +5,16 @@ import { DA_STORE_TOKEN } from '../store/interface';
 import { LocalStorageStore } from '../store/local-storage.service';
 import { TokenService } from './token.service';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
+import { JWTTokenModel } from './jwt/jwt.model';
 
 describe('auth: token.service', () => {
     let injector: Injector;
     let service: ITokenService;
     const VALUE: ITokenModel = <ITokenModel> {
         token: 'token data'
+    };
+    const JWTVALUE: ITokenModel = <ITokenModel> {
+        token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ`
     };
 
     beforeEach(() => {
@@ -50,6 +54,13 @@ describe('auth: token.service', () => {
         service.set(VALUE);
         expect(service.get()).not.toBeNull();
         expect(service.get().token).toBe(VALUE.token);
+    });
+
+    it('#get, should be return JWTTokenModel', () => {
+        service.set(JWTVALUE);
+        const ret = service.get<JWTTokenModel>(JWTTokenModel);
+        expect(ret).not.toBeNull();
+        expect(ret.payload).not.toBeUndefined();
     });
 
     it('#clear', () => {
