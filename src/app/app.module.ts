@@ -1,4 +1,4 @@
-import { RouterModule } from '@angular/router';
+import { RouterModule, RouteReuseStrategy } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,11 +8,13 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { NgZorroAntdExtraModule } from 'ng-zorro-antd-extra';
 import { NzTreeModule } from 'ng-tree-antd';
 
-import { AppComponent } from './app.component';
 import { AlainThemeModule } from '@delon/theme';
 import { AlainACLModule } from '@delon/acl';
 import { AlainABCModule } from '@delon/abc';
 import { AlainAuthModule } from '@delon/auth';
+import { AppComponent } from './app.component';
+import { RoutesModule } from './routes/routes.module';
+
 import { ThemeComponent } from 'app/theme/component';
 import { DemoComponent } from 'app/abc/component';
 import { ACLComponent } from 'app/acl/component';
@@ -52,9 +54,10 @@ import { DemoModalComponent } from './shared/components/modal/demo.component';
     AlainThemeModule.forRoot(),
     AlainABCModule.forRoot(),
     AlainACLModule.forRoot(),
-    AlainAuthModule.forRoot({})
+    AlainAuthModule.forRoot({}),
+    RoutesModule
   ],
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent],
   entryComponents: [DemoModalComponent]
 })

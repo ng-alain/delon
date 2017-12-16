@@ -22,12 +22,14 @@ import { AdUtilsModule } from './components/utils/utils.module';
 import { AdChartsModule } from './components/charts/charts.module';
 import { AdCountDownModule } from './components/count-down/count-down.module';
 import { AdSimpleTableModule } from './components/simple-table/simple-table.module';
+import { AdReuseTabModule } from './components/reuse-tab/reuse-tab.module';
 
 const MODULES = [
     AdErrorCollectModule, AdFooterToolbarModule, AdSidebarNavModule, AdDownFileModule, AdImageModule,
     AdAvatarListModule, AdDescListModule, AdEllipsisModule, AdGlobalFooterModule, AdExceptionModule,
     AdNoticeIconModule, AdNumberInfoModule, AdProHeaderModule, AdResultModule, AdStandardFormRowModule,
-    AdTagSelectModule, AdTrendModule, AdUtilsModule, AdChartsModule, AdCountDownModule, AdSimpleTableModule
+    AdTagSelectModule, AdTrendModule, AdUtilsModule, AdChartsModule, AdCountDownModule, AdSimpleTableModule,
+    AdReuseTabModule
 ];
 
 // endregion
@@ -55,6 +57,7 @@ export * from './components/utils';
 export * from './components/charts';
 export * from './components/count-down';
 export * from './components/simple-table';
+export * from './components/reuse-tab';
 
 // endregion
 
@@ -63,7 +66,8 @@ export * from './components/simple-table';
         AdErrorCollectModule.forRoot(), AdFooterToolbarModule.forRoot(), AdSidebarNavModule.forRoot(), AdDownFileModule.forRoot(), AdImageModule.forRoot(),
         AdAvatarListModule.forRoot(), AdDescListModule.forRoot(), AdEllipsisModule.forRoot(), AdExceptionModule.forRoot(), AdExceptionModule.forRoot(),
         AdNoticeIconModule.forRoot(), AdNumberInfoModule.forRoot(), AdProHeaderModule.forRoot(), AdResultModule.forRoot(), AdStandardFormRowModule.forRoot(),
-        AdTagSelectModule.forRoot(), AdTrendModule.forRoot(), AdUtilsModule.forRoot(), AdChartsModule.forRoot(), AdCountDownModule.forRoot(), AdSimpleTableModule.forRoot()
+        AdTagSelectModule.forRoot(), AdTrendModule.forRoot(), AdUtilsModule.forRoot(), AdChartsModule.forRoot(), AdCountDownModule.forRoot(), AdSimpleTableModule.forRoot(),
+        AdReuseTabModule.forRoot()
     ],
     exports: MODULES
 })

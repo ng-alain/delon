@@ -1,0 +1,63 @@
+reuse-tab {
+    display: block;
+    background-color: @reuse-tab-bg;
+    padding: @reuse-tab-padding;
+    margin: 0 -@content-padding 0 -@content-padding;
+    border-bottom: 1px solid @reuse-tab-border-color;
+    outline: none;
+    user-select: none;
+
+    .ant-tabs-bar {
+        margin-bottom: 0;
+        border-bottom: none;
+    }
+
+    .ant-tabs-nav .ant-tabs-tab {
+        .op {
+            display: none;
+            position: absolute;
+            top: 14px;
+            right: 2px;
+            margin: 0;
+            font-size: 12px;
+        }
+        &:hover {
+            .op {
+                display: block;
+            }
+        }
+    }
+
+    &.fixed {
+        position: fixed;
+        top: @header-hg;
+        left: @aside-wd;
+        right: 0;
+        margin: 0;
+        z-index: 10;
+    }
+}
+
+.aside-collapsed reuse-tab.fixed {
+    left: @aside-collapsed-wd;
+}
+
+.has-reuse-tab {
+    .content {
+        margin-top: @header-hg + @reuse-tab-height;
+    }
+}
+
+// @media (min-width: @screen-sm-max) {
+// }
+
+@media (max-width: @screen-sm-min) {
+    reuse-tab.fixed {
+        left: -@content-padding;
+        top: -@reuse-tab-height;
+    }
+    .aside-collapsed reuse-tab.fixed {
+        left: -@content-padding;
+        right: -@content-padding;
+    }
+}

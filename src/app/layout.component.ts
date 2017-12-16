@@ -1,21 +1,67 @@
-import { Component } from '@angular/core';
-
-import 'style-loader!./app.themes.less';
+import { Component, OnInit } from '@angular/core';
+import { MenuService, SettingsService, Menu } from '@delon/theme';
 
 @Component({
   selector: 'app-layout',
   template: `
-<div style="margin: 0 auto; max-width: 80%;">
-    <div class="padding: 32px;">
-        <a routerLink="/theme">theme</a>
-        <a routerLink="/abc">abc</a>
-        <a routerLink="/acl">acl</a>
-        <a routerLink="/auth">auth</a>
+<div class="wrapper">
+    <div class="header">
+        <div class="item" (click)="toggleCollapsedSideabar()">
+            <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+        </div>
     </div>
-    <router-outlet></router-outlet>
+    <div class="aside">
+        <div class="aside-inner">
+            <sidebar-nav></sidebar-nav>
+        </div>
+    </div>
+    <section class="content">
+        <reuse-tab></reuse-tab>
+        <router-outlet></router-outlet>
+    </section>
 </div>
-  `
+`
 })
-export class LayoutComponent {
-    constructor() {}
+export class LayoutComponent implements OnInit {
+
+    menus: Menu[] = [
+        {
+            text: 'test',
+            group: true,
+            children: [
+                {
+                    text: 'Dashboard',
+                    link: '/dashboard',
+                    icon: 'anticon anticon-appstore-o'
+                },
+                {
+                    text: 'ABC',
+                    icon: 'anticon anticon-appstore',
+                    children: [
+                        { text: 'Reuse Tab', link: '/abc/reuse-tab' }
+                    ]
+                },
+                {
+                    text: 'ACL',
+                    icon: 'anticon anticon-save',
+                    children: [
+                        { text: 'JWT', link: '/acl/jwt' }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    constructor(
+        private menuSrv: MenuService,
+        private settings: SettingsService
+    ) {}
+
+    toggleCollapsedSideabar() {
+        this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
+    }
+
+    ngOnInit(): void {
+        this.menuSrv.add(this.menus);
+    }
 }

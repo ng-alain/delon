@@ -15,7 +15,12 @@ const globals = {
     'file-saver': 'saveAs',
     'ngx-countdown': 'ngxCountDown',
 
+    'rxjs/BehaviorSubject': 'Rx',
+    'rxjs/Observable': 'Rx',
+    'rxjs/Subject': 'Rx',
+    'rxjs/Subscription': 'Rx',
     'rxjs/operators': 'Rx.Observable.prototype',
+    'rxjs/observable/zip': 'Rx.Observable',
     'rxjs/observable/fromEvent': 'Rx.Observable',
     'rxjs/observable/FromEventObservable': 'Rx.Observable',
 

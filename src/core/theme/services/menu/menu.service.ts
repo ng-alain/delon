@@ -30,6 +30,8 @@ export interface Menu {
     shortcut?: boolean;
     /** 快捷菜单根节点 */
     shortcut_root?: boolean;
+    /** 是否允许复用，需配合 `reuse-tab` 组件 */
+    reuse?: boolean;
     /** 二级菜单 */
     children?: Menu[];
     /**

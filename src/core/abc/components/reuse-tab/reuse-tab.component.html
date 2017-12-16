@@ -1,0 +1,15 @@
+<nz-tabset [(nzSelectedIndex)]="_pos" (nzSelectChange)="to($event)" [nzTabBarExtraTemplate]="opsContent">
+    <nz-tab *ngFor="let i of _list; let index = index">
+        <ng-template #nzTabHeading>
+            {{i.title}}
+            <i *ngIf="allowClose" class="anticon anticon-close op" (click)="remove(i, index)"></i>
+        </ng-template>
+    </nz-tab>
+    <ng-template #opsContent>
+        <nz-popconfirm *ngIf="allowClose && srv.count" [nzTitle]="'确定清空吗？'" (nzOnConfirm)="clear()">
+            <button nz-popconfirm nz-button [nzType]="'dashed'" [nzShape]="'circle'">
+                <i class="anticon anticon-delete"></i>
+            </button>
+        </nz-popconfirm>
+    </ng-template>
+</nz-tabset>
