@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 0.4.0-rc.1
+
+`2017-12-16`
+
+- ng-alain 脚手架
+    - 新增 `simple-talbe` 示例[页](https://cipchk.github.io/ng-alain/tables/simple-table)
+- @delon/abc
+    - 新增 `simple-talbe` 组件，利用配置快速构建表格数据，[Document](http://ng-alain.com/components/simple-table)
+
 ### 0.3.2
 
 `2017-12-16`
