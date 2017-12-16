@@ -21,12 +21,13 @@ import { AdTrendModule } from './components/trend/trend.module';
 import { AdUtilsModule } from './components/utils/utils.module';
 import { AdChartsModule } from './components/charts/charts.module';
 import { AdCountDownModule } from './components/count-down/count-down.module';
+import { AdSimpleTableModule } from './components/simple-table/simple-table.module';
 
 const MODULES = [
     AdErrorCollectModule, AdFooterToolbarModule, AdSidebarNavModule, AdDownFileModule, AdImageModule,
     AdAvatarListModule, AdDescListModule, AdEllipsisModule, AdGlobalFooterModule, AdExceptionModule,
     AdNoticeIconModule, AdNumberInfoModule, AdProHeaderModule, AdResultModule, AdStandardFormRowModule,
-    AdTagSelectModule, AdTrendModule, AdUtilsModule, AdChartsModule, AdCountDownModule
+    AdTagSelectModule, AdTrendModule, AdUtilsModule, AdChartsModule, AdCountDownModule, AdSimpleTableModule
 ];
 
 // endregion
@@ -53,6 +54,7 @@ export * from './components/trend';
 export * from './components/utils';
 export * from './components/charts';
 export * from './components/count-down';
+export * from './components/simple-table';
 
 // endregion
 
@@ -61,7 +63,7 @@ export * from './components/count-down';
         AdErrorCollectModule.forRoot(), AdFooterToolbarModule.forRoot(), AdSidebarNavModule.forRoot(), AdDownFileModule.forRoot(), AdImageModule.forRoot(),
         AdAvatarListModule.forRoot(), AdDescListModule.forRoot(), AdEllipsisModule.forRoot(), AdExceptionModule.forRoot(), AdExceptionModule.forRoot(),
         AdNoticeIconModule.forRoot(), AdNumberInfoModule.forRoot(), AdProHeaderModule.forRoot(), AdResultModule.forRoot(), AdStandardFormRowModule.forRoot(),
-        AdTagSelectModule.forRoot(), AdTrendModule.forRoot(), AdUtilsModule.forRoot(), AdChartsModule.forRoot(), AdCountDownModule.forRoot()
+        AdTagSelectModule.forRoot(), AdTrendModule.forRoot(), AdUtilsModule.forRoot(), AdChartsModule.forRoot(), AdCountDownModule.forRoot(), AdSimpleTableModule.forRoot()
     ],
     exports: MODULES
 })
