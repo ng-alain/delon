@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 0.3.2
+
+`2017-12-16`
+
+- @delon/theme
+    - 新增 `nz-table` 样式类 `.img` 表示图片强制大小
+- @delon/auth
+    - 修复无法获取完整 Token 对象，[#5](https://github.com/cipchk/delon/issues/5)
+
 ### 0.3.1
 
 `2017-12-15`
