@@ -7,6 +7,7 @@ const globals = {
     '@angular/platform-browser': 'ng.platformBrowser',
     '@angular/router': 'ng.router',
     '@angular/common/http': 'ng.common.http',
+    '@angular/forms': 'ng.forms',
 
     'ng-zorro-antd': 'ngZorro.antd',
     'moment': 'moment',
