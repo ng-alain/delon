@@ -1,4 +1,11 @@
+---
+order: 1
+title: 基础
+---
 
+快速生成表格；利用 `resReName` 可以适配后端数据格式。
+
+```ts
 import { Component } from '@angular/core';
 import { SimpleTableColumn } from '@delon/abc';
 
@@ -20,3 +27,4 @@ export class DemoComponent {
         { title: '注册时间', type: 'date', index: 'registered' }
     ];
 }
+```

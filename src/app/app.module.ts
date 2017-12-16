@@ -19,11 +19,13 @@ import { ACLComponent } from 'app/acl/component';
 import { AuthComponent } from 'app/auth/auth.component';
 import { LayoutComponent } from 'app/layout.component';
 import { CallbackComponent } from 'app/auth/callback.component';
+import { DemoModalComponent } from './shared/components/modal/demo.component';
 
 @NgModule({
   declarations: [
     AppComponent, LayoutComponent,
-    ThemeComponent, DemoComponent, ACLComponent, AuthComponent, CallbackComponent
+    ThemeComponent, DemoComponent, ACLComponent, AuthComponent, CallbackComponent,
+    DemoModalComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +55,7 @@ import { CallbackComponent } from 'app/auth/callback.component';
     AlainAuthModule.forRoot({})
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DemoModalComponent]
 })
 export class AppModule { }
