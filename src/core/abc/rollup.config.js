@@ -15,6 +15,9 @@ const globals = {
     'file-saver': 'saveAs',
     'ngx-countdown': 'ngxCountDown',
 
+    '@angular/cdk': 'ng.cdk',
+    '@angular/cdk/coercion': 'ng.cdk.coercion',
+
     'rxjs/BehaviorSubject': 'Rx',
     'rxjs/Observable': 'Rx',
     'rxjs/Subject': 'Rx',

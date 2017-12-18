@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
 import { debounceTime } from 'rxjs/operators';
+import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'pie',
@@ -31,24 +32,71 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
 
     // region: fields
 
-    @Input() animate = true;
+    @Input()
+    get animate() { return this._animate; }
+    set animate(value: any) {
+        this._animate = coerceBooleanProperty(value);
+    }
+    private _animate = true;
+
     @Input() color = 'rgba(24, 144, 255, 0.85)';
     @Input() subTitle: string;
     @Input() total: string;
-    @Input() height = 0;
+
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height = 0;
 
     @HostBinding('class.has-legend')
-    @Input() hasLegend = false;
+    @Input()
+    get hasLegend() { return this._hasLegend; }
+    set hasLegend(value: any) {
+        this._hasLegend = coerceBooleanProperty(value);
+    }
+    private _hasLegend = false;
 
     @HostBinding('class.legend-block')
-    @Input() legendBlock = false;
+    @Input()
+    get legendBlock() { return this._legendBlock; }
+    set legendBlock(value: any) {
+        this._legendBlock = coerceBooleanProperty(value);
+    }
+    private _legendBlock = false;
 
     @Input() inner = 0.75;
     @Input() padding: number[] = [12, 0, 12, 0];
-    @Input() percent: number;
-    @Input() tooltip = true;
-    @Input() lineWidth = 0;
-    @Input() select = true;
+
+    @Input()
+    get percent() { return this._percent; }
+    set percent(value: any) {
+        this._percent = coerceNumberProperty(value);
+    }
+    private _percent: number;
+
+    @Input()
+    get tooltip() { return this._tooltip; }
+    set tooltip(value: any) {
+        this._tooltip = coerceBooleanProperty(value);
+    }
+    private _tooltip = true;
+
+    @Input()
+    get lineWidth() { return this._lineWidth; }
+    set lineWidth(value: any) {
+        this._lineWidth = coerceNumberProperty(value);
+    }
+    private _lineWidth = 0;
+
+    @Input()
+    get select() { return this._select; }
+    set select(value: any) {
+        this._select = coerceBooleanProperty(value);
+    }
+    private _select = true;
+
     @Input() data: Array<{ x: number | string, y: number, [key: string]: any }>;
     @Input() valueFormat: Function;
     @Input() colors: any[];

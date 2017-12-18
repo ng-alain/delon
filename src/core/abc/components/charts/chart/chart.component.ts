@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
 import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'chart',
@@ -14,9 +15,19 @@ export class ChartComponent implements OnInit, OnDestroy {
     // region: fields
 
     @HostBinding('style.height.px')
-    @Input() height;
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height;
 
-    @Input() resizeTime = 0;
+    @Input()
+    get resizeTime() { return this._resizeTime; }
+    set resizeTime(value: any) {
+        this._resizeTime = coerceNumberProperty(value);
+    }
+    private _resizeTime = 0;
 
     @Output() render: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 

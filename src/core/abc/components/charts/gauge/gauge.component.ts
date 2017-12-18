@@ -1,4 +1,5 @@
 import { Component, Input, HostBinding, ViewChild, ElementRef, OnInit, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef } from '@angular/core';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'gauge',
@@ -10,12 +11,22 @@ export class GaugeComponent implements OnInit, OnDestroy, OnChanges {
     // region: fields
 
     @Input() title: string;
-    @Input() height;
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height;
     @Input() color = '#2F9CFF';
     @Input() bgColor = '#F0F2F5';
     @Input() format: Function;
 
-    @Input() percent: number;
+    @Input()
+    get percent() { return this._percent; }
+    set percent(value: any) {
+        this._percent = coerceNumberProperty(value);
+    }
+    private _percent: number;
 
     // endregion
 

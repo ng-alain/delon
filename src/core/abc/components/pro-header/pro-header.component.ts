@@ -1,5 +1,6 @@
 import { Component, Input, ElementRef, TemplateRef, ContentChild, OnInit, AfterViewInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 
 @Component({
@@ -45,7 +46,12 @@ export class ProHeaderComponent implements OnInit {
     /**
      * 自动生成导航，以当前路由从主菜单中定位
      */
-    @Input() autoBreadcrumb = true;
+    @Input()
+    get autoBreadcrumb() { return this._autoBreadcrumb; }
+    set autoBreadcrumb(value: any) {
+        this._autoBreadcrumb = coerceBooleanProperty(value);
+    }
+    private _autoBreadcrumb = true;
 
     paths: any[] = [];
 

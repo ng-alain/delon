@@ -1,5 +1,5 @@
 import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit } from '@angular/core';
-import { isTruth } from '../../utils/utils';
+import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'mini-area',
@@ -16,14 +16,42 @@ export class MiniAreaComponent implements OnDestroy, OnChanges, OnInit {
 
     @Input() color = 'rgba(24, 144, 255, 0.2)';
     @Input() borderColor = '#1890FF';
-    @Input() borderWidth = 2;
+    @Input()
+    get borderWidth() { return this._borderWidth; }
+    set borderWidth(value: any) {
+        this._borderWidth = coerceNumberProperty(value);
+    }
+    private _borderWidth = 2;
 
     @HostBinding('style.height.px')
-    @Input() height = 0;
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height;
 
-    @Input() fit = true;
-    @Input() line = false;
-    @Input() animate = true;
+    @Input()
+    get fit() { return this._fit; }
+    set fit(value: any) {
+        this._fit = coerceBooleanProperty(value);
+    }
+    private _fit = true;
+
+    @Input()
+    get line() { return this._line; }
+    set line(value: any) {
+        this._line = coerceBooleanProperty(value);
+    }
+    private _line = false;
+
+    @Input()
+    get animate() { return this._animate; }
+    set animate(value: any) {
+        this._animate = coerceBooleanProperty(value);
+    }
+    private _animate = true;
+
     @Input() xAxis: any;
     @Input() yAxis: any;
     @Input() data: Array<{ x: number, y: number, [key: string]: any }>;
@@ -108,7 +136,7 @@ export class MiniAreaComponent implements OnDestroy, OnChanges, OnInit {
                 .shape('smooth')
                 .style({ fillOpacity: 1 });
 
-            if (isTruth(this.line)) {
+            if (this.line) {
                 const view2 = chart.view();
                 view2.source(this.data, dataConfig);
                 view2.line().position('x*y').color(this.borderColor).size(this.borderWidth).shape('smooth');

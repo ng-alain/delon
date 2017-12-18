@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
 import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
+import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'tag-cloud',
@@ -14,10 +15,23 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     // region: fields
 
     @Input() color = 'rgba(24, 144, 255, 0.85)';
-    @Input() height = 0;
-    @Input() padding: number = 0;
+
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height = 0;
+
+    @Input() padding = 0;
     @Input() data: Array<{ name: string, value: number, [key: string]: any }>;
-    @Input() autoLabel = true;
+
+    @Input()
+    get autoLabel() { return this._autoLabel; }
+    set autoLabel(value: any) {
+        this._autoLabel = coerceBooleanProperty(value);
+    }
+    private _autoLabel = true;
 
     // endregion
 

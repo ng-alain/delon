@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
 import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'water-wave',
@@ -36,8 +37,20 @@ export class WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     }
 
     @Input() color = '#1890FF';
-    @Input() height = 160;
-    @Input() percent: number;
+
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height = 160;
+
+    @Input()
+    get percent() { return this._percent; }
+    set percent(value: any) {
+        this._percent = coerceNumberProperty(value);
+    }
+    private _percent: number;
 
     // endregion
 

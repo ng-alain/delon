@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation, TemplateRef, Input, ContentChild, ElementRef, Renderer2, SimpleChanges, OnChanges } from '@angular/core';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'number-info',
@@ -18,6 +19,7 @@ import { Component, ViewEncapsulation, TemplateRef, Input, ContentChild, Element
 export class NumberInfoComponent implements OnChanges {
     _title = '';
     _titleTpl: TemplateRef<any>;
+    /** 标题 */
     @Input()
     set title(value: string | TemplateRef<any>) {
         if (value instanceof TemplateRef)
@@ -28,6 +30,7 @@ export class NumberInfoComponent implements OnChanges {
 
     _subTitle = '';
     _subTitleTpl: TemplateRef<any>;
+    /** 子标题 */
     @Input()
     set subTitle(value: string | TemplateRef<any>) {
         if (value instanceof TemplateRef)
@@ -38,6 +41,7 @@ export class NumberInfoComponent implements OnChanges {
 
     _total = '';
     _totalTpl: TemplateRef<any>;
+    /** 总量 */
     @Input()
     set total(value: string | TemplateRef<any>) {
         if (value instanceof TemplateRef)
@@ -48,6 +52,7 @@ export class NumberInfoComponent implements OnChanges {
 
     _subTotal = '';
     _subTotalTpl: TemplateRef<any>;
+    /** 总量后缀 */
     @Input()
     set subTotal(value: string | TemplateRef<any>) {
         if (value instanceof TemplateRef)
@@ -56,11 +61,22 @@ export class NumberInfoComponent implements OnChanges {
             this._subTotal = value;
     }
 
+    /** 子总量 */
     @Input() suffix: string;
-    @Input() status: 'up' | 'down';
-    @Input() theme: 'light' = 'light';
-    @Input() gap = 8;
 
+    /** 增加状态 */
+    @Input() status: 'up' | 'down';
+
+    /** 状态样式 */
+    @Input() theme: 'light' = 'light';
+
+    /** 设置数字和描述直接的间距（像素） */
+    @Input()
+    get gap() { return this._gap; }
+    set gap(value: any) {
+        this._gap = coerceNumberProperty(value);
+    }
+    private _gap = 8;
 
     constructor(private el: ElementRef, private renderer: Renderer2) {}
 

@@ -1,13 +1,6 @@
 import * as moment from 'moment';
 
 /**
- * 检查是否有真值
- */
-export function isTruth(value: any): boolean {
-    return typeof value !== 'undefined' && value !== false;
-}
-
-/**
  * 转化成RMB元字符串
  */
 export function yuan(value: any): string {

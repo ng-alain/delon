@@ -1,4 +1,5 @@
 import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, Output, EventEmitter, ContentChild } from '@angular/core';
+import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'radar',
@@ -34,10 +35,29 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     }
 
     @HostBinding('style.height.px')
-    @Input() height = 0;
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height = 0;
+
     @Input() padding: number[] = [44, 30, 16, 30];
-    @Input() hasLegend = true;
-    @Input() tickCount = 4;
+
+    @Input()
+    get hasLegend() { return this._hasLegend; }
+    set hasLegend(value: any) {
+        this._hasLegend = coerceBooleanProperty(value);
+    }
+    private _hasLegend = true;
+
+    @Input()
+    get tickCount() { return this._tickCount; }
+    set tickCount(value: any) {
+        this._tickCount = coerceNumberProperty(value);
+    }
+    private _tickCount = 4;
+
     @Input() data: Array<{ name: string, label: string, value: number, [key: string]: any }> = [];
 
     // endregion

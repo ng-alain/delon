@@ -1,4 +1,5 @@
 import { Component, HostBinding, Input } from '@angular/core';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'trend',
@@ -14,8 +15,15 @@ import { Component, HostBinding, Input } from '@angular/core';
 })
 export class TrendComponent {
 
+    /** 上升下降标识 */
     @Input() flag: 'up' | 'down';
 
-    @Input() colorful = true;
+    /** 是否彩色标记 */
+    @Input()
+    get colorful() { return this._colorful; }
+    set colorful(value: any) {
+        this._colorful = coerceBooleanProperty(value);
+    }
+    private _colorful = true;
 
 }

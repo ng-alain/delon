@@ -1,4 +1,5 @@
 import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit, TemplateRef } from '@angular/core';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'timeline',
@@ -26,9 +27,22 @@ export class TimelineComponent implements OnDestroy, OnChanges, OnInit {
     @Input() data: Array<{ x: Date, y1: number , y2: number, [key: string]: any }>;
     @Input() titleMap: { y1: string , y2: string };
     @Input() colorMap: { y1: string , y2: string } = { y1: '#1890FF', y2: '#2FC25B' };
-    @Input() height = 400;
+
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height = 400;
+
     @Input() padding: number[] = [60, 20, 40, 40];
-    @Input() borderWidth = 2;
+
+    @Input()
+    get borderWidth() { return this._borderWidth; }
+    set borderWidth(value: any) {
+        this._borderWidth = coerceNumberProperty(value);
+    }
+    private _borderWidth = 2;
 
     // endregion
 

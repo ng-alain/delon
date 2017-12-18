@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, Inject, TemplateRef, ContentChild } from '@angular/core';
 import { ElementRef, Renderer2, HostBinding } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
-import { isTruth } from '../utils/utils';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 const CLS = 'footer-toolbar';
 
@@ -10,7 +10,7 @@ const CLS = 'footer-toolbar';
     template: `
     <div class="left"><ng-container *ngIf="extra" [ngTemplateOutlet]="extra"></ng-container></div>
     <div class="right">
-        <error-collect *ngIf="_errorCollect"></error-collect>
+        <error-collect *ngIf="errorCollect"></error-collect>
         <ng-content></ng-content>
     </div>
     `,
@@ -20,11 +20,12 @@ const CLS = 'footer-toolbar';
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
 
-    _errorCollect = false;
     @Input()
+    get errorCollect() { return this._errorCollect; }
     set errorCollect(value: any) {
-        this._errorCollect = isTruth(value);
+        this._errorCollect = coerceBooleanProperty(value);
     }
+    private _errorCollect = false;
 
     @ContentChild('extra') extra: TemplateRef<any>;
 

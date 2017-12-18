@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation, TemplateRef, Input, ContentChild } from '@angular/core';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'chart-card',
@@ -36,7 +37,13 @@ export class ChartCardComponent {
 
     // region fields
 
-    @Input() bordered = false;
+    /** 是否显示边框 */
+    @Input()
+    get bordered() { return this._bordered; }
+    set bordered(value: any) {
+        this._bordered = coerceBooleanProperty(value);
+    }
+    private _bordered = false;
 
     _avatar = '';
     _avatarTpl: TemplateRef<any>;
@@ -88,7 +95,13 @@ export class ChartCardComponent {
             this._footer = value;
     }
 
-    @Input() loading = false;
+    /** 是否显示Loading */
+    @Input()
+    get loading() { return this._loading; }
+    set loading(value: any) {
+        this._loading = coerceBooleanProperty(value);
+    }
+    private _loading = false;
 
     // endregion
 

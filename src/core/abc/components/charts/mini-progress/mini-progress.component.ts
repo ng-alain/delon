@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'mini-progress',
@@ -21,11 +22,29 @@ export class MiniProgressComponent {
 
     @Input() color = '#1890FF';
 
-    @Input() target: number;
+    @Input()
+    get target() { return this._target; }
+    set target(value: any) {
+        const a = coerceNumberProperty(value);
+        this._target = Math.min(Math.max(coerceNumberProperty(value), 0), 100);
+        console.log('this._target', this._target);
+    }
+    private _target: number;
 
-    @Input() strokeWidth: number;
+    @Input()
+    get strokeWidth() { return this._strokeWidth; }
+    set strokeWidth(value: any) {
+        this._strokeWidth = coerceNumberProperty(value);
+    }
+    private _strokeWidth: number;
 
-    @Input() percent: number;
+    @Input()
+    get percent() { return this._percent; }
+    set percent(value: any) {
+        this._percent = Math.min(Math.max(coerceNumberProperty(value), 0), 100);
+        console.log('this._percent', this._percent);
+    }
+    private _percent: number;
 
     // endregion
 }

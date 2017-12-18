@@ -32,7 +32,6 @@ this.valForm = fb.group({
 
 方法名 | 说明 | 示例
 ----|------|-----
-`isTruth` | 检查是否有真值 | -
 `yuan` | 转化成RMB元字符串 | -
 `fixedZero` | 不满两位数自动填充 `0` | -
 `getTimeDistance` | 获取时间范围 | `getTimeDistance('week')`

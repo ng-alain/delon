@@ -4,6 +4,7 @@ import { DOCUMENT } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import { zip } from 'rxjs/observable/zip';
 import { filter, map } from 'rxjs/operators';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabCached, ReuseTabNotify } from './interface';
 
@@ -19,7 +20,12 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     _pos = 1;
 
     /** 允许最多复用多少个页面 */
-    @Input() max: number;
+    @Input()
+    get max() { return this._max; }
+    set max(value: any) {
+        this._max = coerceNumberProperty(value);
+    }
+    private _max: number;
     /** 排除规则，限 `mode=URL` */
     @Input() excludes: RegExp[];
     /** 允许关闭 */

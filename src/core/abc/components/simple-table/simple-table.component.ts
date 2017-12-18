@@ -3,9 +3,10 @@ import { _HttpClient, CNCurrencyPipe, MomentDatePipe, YNPipe, ModalHelper } from
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { tap } from 'rxjs/operators';
+import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { SimpleTableColumn, SimpleTableChange, CompareFn, SimpleTableSelection, SimpleTableFilter, SimpleTableData, SimpleTableButton } from './interface';
 import { SimpleTableConfig } from './simple-table.config';
-import { deepGet, isTruth } from '../utils/utils';
+import { deepGet } from '../utils/utils';
 import { SimpleTableRowDirective } from './simple-table-row.directive';
 
 @Component({
@@ -31,128 +32,129 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     // region: fields
 
-    /**
-     * 自定义数据源，且 `data` > `url`
-     */
+    /** 自定义数据源，且 `data` > `url` */
     @Input() data: any[] | Observable<any[]>;
-    /**
-     * 后端URL地址
-     */
+    /** 后端URL地址 */
     @Input() url: string;
     /**
      * 额外请求参数，默认自动附加 `pi`、`ps` 至URL
      * - `{ status: 'new' }` => `url?pi=1&ps=10&status=new`
      */
     @Input() extraParams: any;
-    /**
-     * 请求方法
-     */
+    /** 请求方法 */
     @Input() reqMehtod: string = 'GET';
-    /**
-     * 请求体 `body`
-     */
+    /** 请求体 `body` */
     @Input() reqBody: any;
-    /**
-     * 请求体 `Header`
-     */
+    /** 请求体 `Header` */
     @Input() reqHeaders: any;
     /**
      * 重命名请求参数 `pi`、`ps`
      * - `{ pi: 'Page' }` => `pi` 会被替换成 Page
      */
     @Input() reqReName: Object;
-    /**
-     * 请求异常时回调
-     */
+    /** 请求异常时回调 */
     @Output() reqError: EventEmitter<any> = new EventEmitter<any>();
     /**
      * 重命名返回参数 `total`、`list`
      * - `{ total: 'Total' }` => Total 会被当作 `total`
      */
     @Input() resReName: { total?: string | string[], list?: string | string[] } = { total: ['total'], list: ['list'] };
-    /**
-     * 列描述
-     */
+    /** 列描述  */
     @Input() columns: SimpleTableColumn[] = [];
-    /**
-     * 每页数量，当设置为 `0` 表示不分页，默认：`10`
-     */
-    @Input() ps = 10;
-    /**
-     * 当前页码
-     */
-    @Input() pi = 1;
-    /**
-     * 数据总量
-     */
-    @Input() total = 0;
-    /**
-     * 是否显示Loading
-     */
-    @Input() loading = false;
-    /**
-     * 是否显示边框
-     */
-    @Input() bordered = false;
-    /**
-     * table大小
-     */
+    /** 每页数量，当设置为 `0` 表示不分页，默认：`10` */
+    @Input()
+    get ps() { return this._ps; }
+    set ps(value: any) {
+        this._ps = coerceNumberProperty(value);
+    }
+    private _ps = 10;
+    /** 当前页码 */
+    @Input()
+    get pi() { return this._pi; }
+    set pi(value: any) {
+        this._pi = coerceNumberProperty(value);
+    }
+    private _pi = 1;
+    /** 数据总量 */
+    @Input()
+    get total() { return this._total; }
+    set total(value: any) {
+        this._total = coerceNumberProperty(value);
+    }
+    private _total = 0;
+    /** 是否显示Loading */
+    @Input()
+    get loading() { return this._loading; }
+    set loading(value: any) {
+        this._loading = coerceBooleanProperty(value);
+    }
+    private _loading = false;
+    /** 是否显示边框 */
+    @Input()
+    get bordered() { return this._bordered; }
+    set bordered(value: any) {
+        this._bordered = coerceBooleanProperty(value);
+    }
+    private _bordered = false;
+    /** table大小 */
     @Input() size: 'small' | 'middle' | 'default' = 'default';
-    /**
-     * 是否显示pagination中改变页数
-     */
-    @Input() showSizeChanger = false;
-    /**
-     * pagination中每页显示条目数下拉框值
-     */
+    /** 是否显示pagination中改变页数 */
+    @Input()
+    get showSizeChanger() { return this._showSizeChanger; }
+    set showSizeChanger(value: any) {
+        this._showSizeChanger = coerceBooleanProperty(value);
+    }
+    private _showSizeChanger = false;
+    /** pagination中每页显示条目数下拉框值 */
     @Input() pageSizeSelectorValues: number[] = [10, 20, 30, 40, 50];
-    /**
-     * 是否显示pagination中快速跳转
-     */
-    @Input() showQuickJumper = false;
-    /**
-     * 是否显示总数据量
-     */
-    @Input() showTotal = false;
-    /**
-     * 数据变更后是否保留在数据变更前的页码
-     */
-    @Input() isPageIndexReset = true;
-    /**
-     * 分页方向
-     */
+    /** 是否显示pagination中快速跳转 */
+    @Input()
+    get showQuickJumper() { return this._showQuickJumper; }
+    set showQuickJumper(value: any) {
+        this._showQuickJumper = coerceBooleanProperty(value);
+    }
+    private _showQuickJumper = false;
+    /** 是否显示总数据量 */
+    @Input()
+    get showTotal() { return this._showTotal; }
+    set showTotal(value: any) {
+        this._showTotal = coerceBooleanProperty(value);
+    }
+    private _showTotal = false;
+    /** 数据变更后是否保留在数据变更前的页码 */
+    @Input()
+    get isPageIndexReset() { return this._isPageIndexReset; }
+    set isPageIndexReset(value: any) {
+        this._isPageIndexReset = coerceBooleanProperty(value);
+    }
+    private _isPageIndexReset = true;
+    /** 分页方向 */
     @Input() pagePlacement?: 'left' | 'center' | 'right' = 'right';
-    /**
-     * 切换分页时返回顶部
-     */
-    @Input() toTopInChange = true;
-    /**
-     * 返回顶部偏移值
-     */
-    @Input() toTopOffset = 0;
-    /**
-     * 重命名排序值，`columns` 的重命名高于属性
-     */
+    /** 切换分页时返回顶部 */
+    @Input()
+    get toTopInChange() { return this._toTopInChange; }
+    set toTopInChange(value: any) {
+        this._toTopInChange = coerceBooleanProperty(value);
+    }
+    private _toTopInChange = true;
+    /** 返回顶部偏移值 */
+    @Input()
+    get toTopOffset() { return this._toTopOffset; }
+    set toTopOffset(value: any) {
+        this._toTopOffset = coerceNumberProperty(value);
+    }
+    private _toTopOffset = 0;
+    /** 重命名排序值，`columns` 的重命名高于属性 */
     @Input() sortReName: { ascend?: string, descend?: string };
-    /**
-     * 页码、每页数量变化时回调
-     */
+    /** 页码、每页数量变化时回调 */
     @Output() change: EventEmitter<SimpleTableChange> = new EventEmitter<SimpleTableChange>();
-    /**
-     * checkbox变化时回调，参数为当前所选清单
-     */
+    /** checkbox变化时回调，参数为当前所选清单 */
     @Output() checkboxChange: EventEmitter<any[]> = new EventEmitter<any[]>();
-    /**
-     * radio变化时回调，参数为当前所选
-     */
+    /** radio变化时回调，参数为当前所选 */
     @Output() radioChange: EventEmitter<any> = new EventEmitter<any>();
-    /**
-     * 排序回调
-     */
+    /** 排序回调 */
     @Output() sortChange: EventEmitter<any> = new EventEmitter<any>();
-    /**
-     * Filter回调
-     */
+    /** Filter回调 */
     @Output() filterChange: EventEmitter<any> = new EventEmitter<any>();
 
     // endregion
@@ -561,13 +563,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     }
 
     ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
-        if (changes.loading) this.loading = isTruth(this.loading);
-        if (changes.bordered) this.bordered = isTruth(this.bordered);
-        if (changes.showSizeChanger) this.showSizeChanger = isTruth(this.showSizeChanger);
-        if (changes.showQuickJumper) this.showQuickJumper = isTruth(this.showQuickJumper);
-        if (changes.showTotal) this.showTotal = isTruth(this.showTotal);
-        if (changes.isPageIndexReset) this.isPageIndexReset = isTruth(this.isPageIndexReset);
-        if (changes.toTopInChange) this.toTopInChange = isTruth(this.toTopInChange);
         this.updateStatus();
     }
 

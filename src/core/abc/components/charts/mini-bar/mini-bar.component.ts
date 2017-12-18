@@ -1,4 +1,5 @@
 import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit } from '@angular/core';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'mini-bar',
@@ -18,9 +19,19 @@ export class MiniBarComponent implements OnDestroy, OnChanges, OnInit {
     @Input() color = '#1890FF';
 
     @HostBinding('style.height.px')
-    @Input() height = 0;
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height = 0;
 
-    @Input() borderWidth = 5;
+    @Input()
+    get borderWidth() { return this._borderWidth; }
+    set borderWidth(value: any) {
+        this._borderWidth = coerceNumberProperty(value);
+    }
+    private _borderWidth = 5;
 
     @Input() padding: number[] = [36, 5, 30, 5];
 

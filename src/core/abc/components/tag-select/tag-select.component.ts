@@ -1,4 +1,5 @@
 import { Component, HostBinding, Input, Output, EventEmitter } from '@angular/core';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'tag-select',
@@ -13,9 +14,14 @@ export class TagSelectComponent {
     @HostBinding('class.tag-select')
     _cls = true;
 
-    @Input()
+    /** 是否启用 `展开与收进` */
     @HostBinding('class.has-expand')
-    expandable = true;
+    @Input()
+    get expandable() { return this._expandable; }
+    set expandable(value: any) {
+        this._expandable = coerceBooleanProperty(value);
+    }
+    private _expandable = true;
 
     @HostBinding('class.expanded')
     expand = false;

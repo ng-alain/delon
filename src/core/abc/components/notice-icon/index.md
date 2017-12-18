@@ -14,7 +14,7 @@ module: AdNoticeIconModule
 ----|------|-----|------
 data | 数据 | `NoticeItem[]` | -
 count | 图标上的消息总数 | `number` | -
-dot | 图标不展示数字，只有一个小红点 | `number` | -
+dot | 图标不展示数字，只有一个小红点 | `boolean` | -
 loading | 弹出卡片加载状态 | `boolean` | `false`
 select | 点击列表项的回调，参数：`{type:'',item:any}` | `EventEmitter` | -
 clear | 点击清空按钮的回调 | `EventEmitter` | -

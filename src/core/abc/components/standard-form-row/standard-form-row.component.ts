@@ -1,5 +1,5 @@
 import { Component, Input, ElementRef, OnChanges, SimpleChanges, Renderer2 } from '@angular/core';
-import { isTruth } from '../utils/utils';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'standard-form-row',
@@ -13,11 +13,29 @@ export class StandardFormRowComponent implements OnChanges {
 
     @Input() title: string;
 
-    @Input() block: boolean;
+    /** 是否整行 */
+    @Input()
+    get block() { return this._block; }
+    set block(value: any) {
+        this._block = coerceBooleanProperty(value);
+    }
+    private _block: boolean;
 
-    @Input() last: boolean;
+    /** 是否最后一行 */
+    @Input()
+    get last() { return this._last; }
+    set last(value: any) {
+        this._last = coerceBooleanProperty(value);
+    }
+    private _last: boolean;
 
-    @Input() grid: boolean;
+    /** 是否网格布局 */
+    @Input()
+    get grid() { return this._grid; }
+    set grid(value: any) {
+        this._grid = coerceBooleanProperty(value);
+    }
+    private _grid: boolean;
 
     constructor(private el: ElementRef, private renderer: Renderer2) {}
 
@@ -26,9 +44,9 @@ export class StandardFormRowComponent implements OnChanges {
         this._classMap.forEach(cls => this.renderer.removeClass(this.el.nativeElement, cls));
 
         this._classMap = [ `standard-form-row` ];
-        if (isTruth(this.block)) this._classMap.push('block');
-        if (isTruth(this.grid)) this._classMap.push('grid');
-        if (isTruth(this.last)) this._classMap.push('last');
+        if (this.block) this._classMap.push('block');
+        if (this.grid) this._classMap.push('grid');
+        if (this.last) this._classMap.push('last');
 
         this._classMap.forEach(v => this.renderer.addClass(this.el.nativeElement, v));
     }

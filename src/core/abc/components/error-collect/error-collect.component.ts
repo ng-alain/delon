@@ -1,6 +1,7 @@
 import { Component, Directive, OnInit, Input, HostBinding, OnDestroy, ElementRef, Renderer2, HostListener, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 const ANTDERRORCLS = '.has-error';
 const HEADERMINHEIGHT = 65 + 8 * 2;
@@ -25,7 +26,12 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     $time = null;
     formEl: HTMLFormElement;
 
-    @Input() tick = 500;
+    @Input()
+    get tick() { return this._tick; }
+    set tick(value: any) {
+        this._tick = coerceNumberProperty(value);
+    }
+    private _tick = 500;
 
     @HostBinding('class.d-none')
     _hiden = true;

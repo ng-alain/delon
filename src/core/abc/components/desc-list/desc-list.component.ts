@@ -1,4 +1,5 @@
 import { Component, Input, ViewEncapsulation, ElementRef, Renderer2, OnChanges, SimpleChanges, OnInit, ContentChild, TemplateRef, ContentChildren, QueryList } from '@angular/core';
+import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { DescListItemComponent } from './desc-list-item.component';
 
 @Component({
@@ -31,14 +32,26 @@ export class DescListComponent implements OnChanges, OnInit {
 
     @Input() size: 'small' | 'large';
 
-    @Input() gutter = 32;
+    /** 列表项间距，单位为 `px` */
+    @Input()
+    get gutter() { return this._gutter; }
+    set gutter(value: any) {
+        this._gutter = coerceNumberProperty(value);
+    }
+    private _gutter = 32;
 
     @Input() layout: 'horizontal' | 'vertical' = 'horizontal';
 
     _xs = 24;
     _sm = 12;
     _md = 8;
-    @Input() col = 3;
+    /** 指定信息最多分几列展示，最终一行几列由 col 配置结合响应式规则决定 */
+    @Input()
+    get col() { return this._col; }
+    set col(value: any) {
+        this._col = coerceNumberProperty(value);
+    }
+    private _col = 3;
 
     _classMap: string[] = [];
     setClass() {

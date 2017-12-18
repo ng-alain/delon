@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
 import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
-import { isTruth } from '../../utils/utils';
+import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'bar',
@@ -27,10 +27,21 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
 
     @Input() color = 'rgba(24, 144, 255, 0.85)';
     @HostBinding('style.height.px')
-    @Input() height = 0;
+    @Input()
+    get height() { return this._height; }
+    set height(value: any) {
+        this._height = coerceNumberProperty(value);
+    }
+    private _height = 0;
     @Input() padding: number[];
     @Input() data: Array<{ x: any, y: any, [key: string]: any }>;
-    @Input() autoLabel = true;
+
+    @Input()
+    get autoLabel() { return this._autoLabel; }
+    set autoLabel(value: any) {
+        this._autoLabel = coerceBooleanProperty(value);
+    }
+    private _autoLabel = true;
 
     // endregion
 
@@ -127,7 +138,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
     private autoHideXLabels = false;
     private scroll$: Subscription = null;
     private installResizeEvent() {
-        if (!isTruth(this.autoLabel) || this.scroll$) return;
+        if (!this.autoLabel || this.scroll$) return;
 
         this.scroll$ = FromEventObservable.create(window, 'resize')
                             .pipe(debounceTime(200))
