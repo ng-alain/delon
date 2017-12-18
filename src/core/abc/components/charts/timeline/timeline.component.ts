@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit, TemplateRef } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit, TemplateRef, SimpleChange } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
@@ -181,7 +181,7 @@ export class TimelineComponent implements OnDestroy, OnChanges, OnInit {
         });
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
         if (this.initFlag)
             this.install();
     }

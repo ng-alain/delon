@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, Output, EventEmitter, ContentChild } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, Output, EventEmitter, ContentChild, SimpleChange } from '@angular/core';
 import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
@@ -181,7 +181,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
         setTimeout(() => this.install(), 100);
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
         if (this.initFlag)
             this.install();
     }

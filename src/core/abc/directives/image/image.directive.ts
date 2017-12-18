@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, ElementRef, Renderer2, SimpleChanges, OnInit } from '@angular/core';
+import { Directive, Input, OnChanges, ElementRef, Renderer2, SimpleChanges, OnInit, SimpleChange } from '@angular/core';
 import { ImageConfig } from './image.config';
 
 /**
@@ -28,9 +28,9 @@ export class ImageDirective implements OnChanges, OnInit {
         this.inited = true;
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
         if (this.inited) {
-            if ('error' in changes)
+            if (changes.error)
                 this.updateError();
             else
                 this.update();

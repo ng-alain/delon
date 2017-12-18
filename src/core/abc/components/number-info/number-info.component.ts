@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, TemplateRef, Input, ContentChild, ElementRef, Renderer2, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, ViewEncapsulation, TemplateRef, Input, ContentChild, ElementRef, Renderer2, SimpleChanges, OnChanges, SimpleChange } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
@@ -90,7 +90,7 @@ export class NumberInfoComponent implements OnChanges {
         this._classMap.forEach(v => this.renderer.addClass(this.el.nativeElement, v));
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
         this.setClass();
     }
 }

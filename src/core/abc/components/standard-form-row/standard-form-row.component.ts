@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, OnChanges, SimpleChanges, Renderer2 } from '@angular/core';
+import { Component, Input, ElementRef, OnChanges, SimpleChanges, Renderer2, SimpleChange } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
@@ -51,7 +51,7 @@ export class StandardFormRowComponent implements OnChanges {
         this._classMap.forEach(v => this.renderer.addClass(this.el.nativeElement, v));
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
         this.setClass();
     }
 }

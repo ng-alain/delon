@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation, ElementRef, Renderer2, OnChanges, SimpleChanges, OnInit, ContentChild, TemplateRef, ContentChildren, QueryList } from '@angular/core';
+import { Component, Input, ViewEncapsulation, ElementRef, Renderer2, OnChanges, SimpleChanges, OnInit, ContentChild, TemplateRef, ContentChildren, QueryList, SimpleChange } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { DescListItemComponent } from './desc-list-item.component';
 
@@ -86,10 +86,10 @@ export class DescListComponent implements OnChanges, OnInit {
         this.setClass();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if ('size' in changes && !changes.size.firstChange)
+    ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+        if (changes.size && !changes.size.firstChange)
             this.setClass();
-        if ('col' in changes)
+        if (changes.col)
             this.setResponsive();
     }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, ViewEncapsulation, Renderer2 } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, ViewEncapsulation, Renderer2, SimpleChange } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
@@ -216,7 +216,7 @@ export class WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
         this.installResizeEvent();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
         if (this.initFlag)
             this.renderChart();
     }
