@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 0.4.0-rc.2
+
+`2017-12-18`
+
+- ng-alain 脚手架
+    - 新增 `reuse-tab` 示例[页](https://cipchk.github.io/ng-alain/)
+- @delon/abc
+    - 新增 `reuse-tab` 组件，解决不同路由页切换时组件数据不丢失问题，[Document](http://ng-alain.com/components/reuse-tab)
+
 ### 0.4.0-rc.1
 
 `2017-12-16`

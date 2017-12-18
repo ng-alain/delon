@@ -26,18 +26,17 @@ describe('abc: reuse-tab', () => {
         srv = injector.get(ReuseTabService);
     });
 
-    function genCached(count: number, urlTpl: string = `/a/{index}`) {
+    function genCached(count: number, urlTpl: string = `a/{index}`) {
         srv.clear();
         Array(count).fill({}).forEach((item: any, index: number) => {
             srv.store(getSnapshot(index + 1, urlTpl), { a: 1 });
         });
     }
 
-    function getSnapshot(index: number, urlTpl: string = `/a/{index}`) {
+    function getSnapshot(index: number, urlTpl: string = `a/{index}`) {
         return <any>{
-            _routerState: {
-                url: urlTpl.replace(`{index}`, index + '')
-            }
+            routeConfig: { },
+            url: [ urlTpl.replace(`{index}`, index + '') ]
         };
     }
 
