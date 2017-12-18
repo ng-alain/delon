@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, TemplateRef, ContentChild, OnInit, AfterViewInit, Inject } from '@angular/core';
+import { Component, Input, ElementRef, TemplateRef, ContentChild, OnInit, AfterViewInit, Inject, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
@@ -30,12 +30,7 @@ import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
     <ng-content></ng-content>
     <ng-template [ngTemplateOutlet]="tab"></ng-template>
     `,
-    styleUrls: [ './pro-header.less' ],
-    // tslint:disable-next-line:use-host-property-decorator
-    host: {
-        '[class.content__title]': 'true',
-        '[class.pro-header]': 'true'
-    }
+    styleUrls: [ './pro-header.less' ]
 })
 export class ProHeaderComponent implements OnInit {
 
@@ -72,7 +67,8 @@ export class ProHeaderComponent implements OnInit {
     constructor(
         private route: Router,
         private menuSrv: MenuService,
-        @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService) {}
+        @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
+        private el: ElementRef, private renderer: Renderer2) {}
 
     private genBreadcrumb() {
         if (this.breadcrumb || !this.autoBreadcrumb) return;
@@ -93,6 +89,7 @@ export class ProHeaderComponent implements OnInit {
     }
 
     ngOnInit() {
+        (this.el.nativeElement as HTMLElement).classList.add('content__title', 'pro-header');
         this.genBreadcrumb();
     }
 }

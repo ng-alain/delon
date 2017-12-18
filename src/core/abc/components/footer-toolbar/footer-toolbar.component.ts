@@ -13,10 +13,7 @@ const CLS = 'footer-toolbar';
         <error-collect *ngIf="errorCollect"></error-collect>
         <ng-content></ng-content>
     </div>
-    `,
-    host: {
-        '[class.footer-toolbar]': 'true'
-    }
+    `
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
 
@@ -32,6 +29,7 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
     constructor(private el: ElementRef, private renderer: Renderer2, @Inject(DOCUMENT) private doc: any) {}
 
     ngOnInit() {
+        (this.el.nativeElement as HTMLElement).classList.add('footer-toolbar');
         this.renderer.addClass(this.el.nativeElement, CLS);
         this.doc.querySelector('body').classList.add(`has-${CLS}`);
     }

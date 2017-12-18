@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, ViewEncapsulation, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
@@ -16,11 +16,7 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
         <h4>{{percent}}%</h4>
     </div>
     `,
-    styleUrls: [ './water-wave.less' ],
-    // tslint:disable-next-line:use-host-property-decorator
-    host: {
-        '[style.transform]': `'scale(' + radio + ')'`
-    }
+    styleUrls: [ './water-wave.less' ]
 })
 export class WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
@@ -60,9 +56,7 @@ export class WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     initFlag = false;
     timer: any;
 
-    radio = 1;
-
-    constructor(private el: ElementRef, private zone: NgZone) { }
+    constructor(private el: ElementRef, private renderer: Renderer2, private zone: NgZone) { }
 
     renderChart() {
         const data = this.percent / 100;
@@ -211,8 +205,13 @@ export class WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
         }
     }
 
+    private updateRadio(radio: number) {
+        this.renderer.setStyle(this.el.nativeElement, 'transform', `scale(${radio})`);
+    }
+
     ngOnInit(): void {
         this.initFlag = true;
+        this.updateRadio(1);
         setTimeout(() => this.resize(), 100);
         this.installResizeEvent();
     }
@@ -246,7 +245,7 @@ export class WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
     resize() {
         const { offsetWidth } = this.el.nativeElement;
-        this.radio = offsetWidth < this.height ? offsetWidth / this.height : 1;
+        this.updateRadio(offsetWidth < this.height ? offsetWidth / this.height : 1);
         if (!this.chart) this.renderChart();
     }
 

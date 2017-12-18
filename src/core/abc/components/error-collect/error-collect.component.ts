@@ -12,14 +12,7 @@ const HEADERMINHEIGHT = 65 + 8 * 2;
  */
 @Component({
     selector: 'error-collect, [error-collect]',
-    template: `<i class="anticon anticon-exclamation-circle"></i> {{count}}`,
-    // tslint:disable-next-line:use-host-property-decorator
-    host: {
-        '[class.error-collect]': 'true',
-        '[class.pr-lg]': 'true',
-        '[class.text-error]': 'true',
-        '[class.point]': 'true'
-    }
+    template: `<i class="anticon anticon-exclamation-circle"></i> {{count}}`
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
 
@@ -81,6 +74,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.formEl = this.findParent(this.el.nativeElement, 'form');
         if (this.formEl === null) throw new Error('未找到有效 form 元素');
+        (this.el.nativeElement as HTMLElement).classList.add('error-collect', 'pr-lg', 'text-error', 'point');
         this.install();
     }
 

@@ -1,13 +1,9 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit, Renderer2 } from '@angular/core';
 import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'mini-area',
     template: `<div class="g2-chart__desc"><div #container></div></div>`,
-    host: {
-        '[class.g2-chart]': 'true',
-        '[class.min-chart]': 'true'
-    },
     styles: [`:host { display: block; }`]
 })
 export class MiniAreaComponent implements OnDestroy, OnChanges, OnInit {
@@ -63,9 +59,10 @@ export class MiniAreaComponent implements OnDestroy, OnChanges, OnInit {
     chart: any;
     initFlag = false;
 
-    constructor(private zone: NgZone) { }
+    constructor(private el: ElementRef, private renderer: Renderer2, private zone: NgZone) { }
 
     ngOnInit(): void {
+        (this.el.nativeElement as HTMLElement).classList.add('g2-chart', 'min-chart');
         this.initFlag = true;
         setTimeout(() => this.install(), 100);
     }
