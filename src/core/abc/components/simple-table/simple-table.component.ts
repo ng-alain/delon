@@ -19,7 +19,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     private data$: Subscription;
     _data: (SimpleTableData)[] = [];
-    _needSliceData = false;
     _isAjax = false;
     _isPagination = true;
     _classMap: string[] = [];
@@ -221,7 +220,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     }
 
     _genData(forceRefresh: boolean = false) {
-        if (!this._needSliceData) return;
+        if (this._isAjax) return;
         let data = <any[]>this.data || [];
         // sort
         data = data.slice(0);
@@ -543,7 +542,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
                     this.data$ = <any>this.data.pipe(tap(() => this.loading = true)).subscribe(this._subscribeData);
                 }
             } else {
-                this._needSliceData = this._isPagination && this.data.length > this.ps;
                 this._genData(true);
             }
         } else {
