@@ -568,4 +568,31 @@
         }
     }
     .TREE-mixin();
+
+    .CALENDAR-mixin() when(@focusing-full-color-enabled = true), (@focusing-calendar-color-enabled = true) {
+        @calendar-prefix-cls: ~"@{ant-prefix}-calendar";
+
+        .@{calendar-prefix-cls} {
+            &-header a:hover {
+                color: @new-hover-color;
+            }
+
+            .ant-calendar-ok-btn {
+                background-color: @new-color;
+                border-color: @new-color;
+
+                &:hover,
+                &:focus {
+                    border-color: @new-hover-color;
+                    background-color: @new-hover-color;
+                }
+
+                &:active {
+                    border-color: @new-active-color;
+                    background-color: @new-active-color;
+                }
+            }
+        }
+    }
+    .CALENDAR-mixin();
 }
