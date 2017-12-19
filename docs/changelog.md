@@ -6,6 +6,18 @@ title:
 type: Other
 ---
 
+### 0.4.0-rc.3
+
+`2017-12-19`
+
+- ng-alain 脚手架
+    - 新增 [UEditor](https://cipchk.github.io/ng-alain/editor/ueditor)、[Tinymce](https://cipchk.github.io/ng-alain/editor/tinymce) 示例页
+- @delon/abc
+    - 修复 `simple-table` 无法加载第一页问题，[#122](https://github.com/cipchk/ng-alain/issues/122)
+    - 优化利用 `OnChange` 简化属性，[#103](https://github.com/cipchk/ng-alain/issues/103)
+    - 重构移除所有 `host` 属性，[#116](https://github.com/cipchk/ng-alain/issues/116)
+    - 重构简化所有组件布尔、数字属性更友好的使用性，[#102](https://github.com/cipchk/ng-alain/issues/102)
+
 ### 0.4.0-rc.2
 
 `2017-12-18`
