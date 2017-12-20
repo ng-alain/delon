@@ -1,6 +1,6 @@
 {
 	"name": "delon",
-	"version": "0.4.0-rc.4",
+	"version": "0.4.0-rc.5",
 	"typings": "index.d.ts",
 	"description": "Delon is a set of essential modules for ng-alain.",
 	"repository": {
@@ -55,7 +55,7 @@
 		"release:prepare": "npm run build:package",
 		"release:validity": "npm run version:bump && npm run release:prepare",
 		"temp:release:auth": "npm run release:prepare && npm publish --access=public .lib/auth",
-		"release": "npm run version:bump && npm run release:prepare && npm publish --access=public .lib/theme && npm publish --access=public .lib/abc && npm publish --access=public .lib/acl && npm publish --access=public .lib/auth && npm run site:release",
+		"release": "npm run version:bump && npm run release:prepare && npm publish --access=public .lib/theme && npm publish --access=public .lib/abc && npm publish --access=public .lib/acl && npm publish --access=public .lib/auth",
 		"scaffold:install": "cd ./scaffold && npm install",
 		"scaffold:start": "cd ./scaffold && npm run start",
 		"scaffold:analyze": "cd ./scaffold && npm run analyze",

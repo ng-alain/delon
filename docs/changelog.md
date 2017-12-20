@@ -6,17 +6,23 @@ title:
 type: Other
 ---
 
-### 0.4.0-rc.3
+### 0.4.0-rc.5
 
-`2017-12-19`
+> `0.4.0-rc.4` hotfix
+
+`2017-12-20`
 
 - ng-alain 脚手架
-    - 新增 [UEditor](https://cipchk.github.io/ng-alain/editor/ueditor)、[Tinymce](https://cipchk.github.io/ng-alain/editor/tinymce) 示例页
+    - 新增 [拆分视图](https://cipchk.github.io/ng-alain/other/split)、[剪贴板](https://cipchk.github.io/ng-alain/other/clipboard) 示例页
+- @delon/theme
+    - 修复 `MenuService` 带参数无法匹配问题，[#125](https://github.com/cipchk/ng-alain/issues/125)
+    - 增加 `nz-calendar` 组件主题色，[#7](https://github.com/cipchk/delon/pull/7) [@KennethMa](https://github.com/KennethMa)
+- @delon/auth
+    - 修复JWT拦截器无法获取过期值问题，[#8](https://github.com/cipchk/delon/issues/8)
+    - 新增 `token_send_template` 属性，[#112](https://github.com/cipchk/ng-alain/issues/112)
 - @delon/abc
-    - 修复 `simple-table` 无法加载第一页问题，[#122](https://github.com/cipchk/ng-alain/issues/122)
-    - 优化利用 `OnChange` 简化属性，[#103](https://github.com/cipchk/ng-alain/issues/103)
-    - 重构移除所有 `host` 属性，[#116](https://github.com/cipchk/ng-alain/issues/116)
-    - 重构简化所有组件布尔、数字属性更友好的使用性，[#102](https://github.com/cipchk/ng-alain/issues/102)
+    - 修复 `sidebar-nav` 侧边栏收缩时无法自动隐藏及跳转问题，[#128](https://github.com/cipchk/ng-alain/issues/128)
+    - 提升G2加载性能，[#118](https://github.com/cipchk/ng-alain/issues/118)
 
 ### 0.4.0-rc.3
 
