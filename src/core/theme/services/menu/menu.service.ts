@@ -8,7 +8,7 @@ export interface Menu {
     i18n?: string;
     /** 是否菜单组 */
     group?: boolean;
-    /** angular 链接 */
+    /** angular 路由 */
     link?: string;
     /** 外部链接 */
     externalLink?: string;
@@ -192,7 +192,7 @@ export class MenuService {
             if (!item.link) {
                 return;
             }
-            if (!findItem && item.link.includes(url)) {
+            if (!findItem && url.startsWith(item.link)) {
                 findItem = item;
             }
         });
