@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
@@ -9,8 +9,8 @@ import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coerci
     selector: 'bar',
     template: `
     <ng-container *ngIf="_title; else _titleTpl"><h4>{{_title}}</h4></ng-container>
-    <div #container></div>
-    `
+    <div #container></div>`,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
 
@@ -23,6 +23,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
             this._titleTpl = value;
         else
             this._title = value;
+        this.cd.markForCheck();
     }
 
     @Input() color = 'rgba(24, 144, 255, 0.85)';
@@ -52,67 +53,60 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
     chart: any;
     initFlag = false;
 
-    constructor(private el: ElementRef, private zone: NgZone) { }
+    constructor(private el: ElementRef, private cd: ChangeDetectorRef) { }
 
     install() {
         if (!this.data || (this.data && this.data.length < 1)) return;
         // this.uninstall();
+        this.node.nativeElement.innerHTML = '';
 
-        this.zone.runOutsideAngular(() => {
+        let padding = Object.assign([], this.padding);
+        if (padding.length <= 0) padding = [32, 0, this.autoHideXLabels ? 8 : 32, 40];
 
-            this.node.nativeElement.innerHTML = '';
-
-            let padding = Object.assign([], this.padding);
-            if (padding.length <= 0) padding = [32, 0, this.autoHideXLabels ? 8 : 32, 40];
-
-            const chart = new G2.Chart({
-                container: this.node.nativeElement,
-                forceFit: true,
-                height: +this.height - 22,
-                legend: null,
-                padding: padding
-            });
-
-            chart.axis('x', !this.autoHideXLabels);
-            chart.axis('y', {
-                title: false,
-                line: false,
-                tickLine: false
-            });
-
-            chart.source(this.data, {
-                x: {
-                    type: 'cat'
-                },
-                y: {
-                    min: 0
-                }
-            });
-
-            chart.tooltip({
-                showTitle: false
-            });
-            chart
-                .interval()
-                .position('x*y')
-                .color(this.color)
-                .tooltip('x*y', (x, y) => {
-                    return {
-                      name: x,
-                      value: y
-                    };
-                });
-            chart.render();
-
-            this.zone.run(() => this.chart = chart);
+        const chart = new G2.Chart({
+            container: this.node.nativeElement,
+            forceFit: true,
+            height: +this.height - 22,
+            legend: null,
+            padding: padding
         });
+
+        chart.axis('x', !this.autoHideXLabels);
+        chart.axis('y', {
+            title: false,
+            line: false,
+            tickLine: false
+        });
+
+        chart.source(this.data, {
+            x: {
+                type: 'cat'
+            },
+            y: {
+                min: 0
+            }
+        });
+
+        chart.tooltip({
+            showTitle: false
+        });
+        chart
+            .interval()
+            .position('x*y')
+            .color(this.color)
+            .tooltip('x*y', (x, y) => {
+                return {
+                  name: x,
+                  value: y
+                };
+            });
+        chart.render();
+        this.chart = chart;
     }
 
     uninstall() {
         if (this.chart) {
-            this.zone.runOutsideAngular(() => {
-                this.chart.destroy();
-            });
+            this.chart.destroy();
             this.chart = null;
         }
     }
@@ -140,7 +134,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
     private installResizeEvent() {
         if (!this.autoLabel || this.scroll$) return;
 
-        this.scroll$ = FromEventObservable.create(window, 'resize')
+        this.scroll$ = <any>FromEventObservable.create(window, 'resize')
                             .pipe(debounceTime(200))
                             .subscribe(() => this.resize());
     }

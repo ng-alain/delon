@@ -1,10 +1,11 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit, Renderer2 } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit, Renderer2, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'mini-area',
     template: `<div class="g2-chart__desc"><div #container></div></div>`,
-    styles: [`:host { display: block; }`]
+    styles: [`:host { display: block; }`],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MiniAreaComponent implements OnDestroy, OnChanges, OnInit {
 
@@ -59,7 +60,7 @@ export class MiniAreaComponent implements OnDestroy, OnChanges, OnInit {
     chart: any;
     initFlag = false;
 
-    constructor(private el: ElementRef, private renderer: Renderer2, private zone: NgZone) { }
+    constructor(private el: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         (this.el.nativeElement as HTMLElement).classList.add('g2-chart', 'min-chart');
@@ -70,86 +71,80 @@ export class MiniAreaComponent implements OnDestroy, OnChanges, OnInit {
     install() {
         if (!this.data || (this.data && this.data.length < 1)) return;
 
-        this.zone.runOutsideAngular(() => {
-
         this.node.nativeElement.innerHTML = '';
 
-            const chart = new G2.Chart({
-                container: this.node.nativeElement,
-                forceFit: this.fit,
-                height: +this.height + 54,
-                animate: this.animate,
-                padding: [36, 5, 30, 5],
-                legend: null
-            });
-
-            if (!this.xAxis && !this.yAxis) {
-                chart.axis(false);
-            }
-
-            if (this.xAxis) {
-                chart.axis('x', this.xAxis);
-            } else {
-                chart.axis('x', false);
-            }
-
-            if (this.yAxis) {
-                chart.axis('y', this.yAxis);
-            } else {
-                chart.axis('y', false);
-            }
-
-            const dataConfig = {
-                x: {
-                    type: 'cat',
-                    range: [0, 1],
-                    xAxis: this.xAxis
-                },
-                y: {
-                    min: 0,
-                    yAxis: this.yAxis
-                }
-            };
-
-            chart.tooltip({
-                showTitle: false,
-                hideMarkders: false,
-                'g2-tooltip': { padding: 4 },
-                'g2-tooltip-list-item': { margin: `0px 4px` }
-            });
-
-            const view = chart.view();
-            view.source(this.data, dataConfig);
-
-            view.area()
-                .position('x*y')
-                .color(this.color)
-                .tooltip('x*y', (x, y) => {
-                    return {
-                        name: x,
-                        value: y
-                    };
-                })
-                .shape('smooth')
-                .style({ fillOpacity: 1 });
-
-            if (this.line) {
-                const view2 = chart.view();
-                view2.source(this.data, dataConfig);
-                view2.line().position('x*y').color(this.borderColor).size(this.borderWidth).shape('smooth');
-                view2.tooltip(false);
-            }
-            chart.render();
-
-            this.zone.run(() => this.chart = chart);
+        const chart = new G2.Chart({
+            container: this.node.nativeElement,
+            forceFit: this.fit,
+            height: +this.height + 54,
+            animate: this.animate,
+            padding: [36, 5, 30, 5],
+            legend: null
         });
+
+        if (!this.xAxis && !this.yAxis) {
+            chart.axis(false);
+        }
+
+        if (this.xAxis) {
+            chart.axis('x', this.xAxis);
+        } else {
+            chart.axis('x', false);
+        }
+
+        if (this.yAxis) {
+            chart.axis('y', this.yAxis);
+        } else {
+            chart.axis('y', false);
+        }
+
+        const dataConfig = {
+            x: {
+                type: 'cat',
+                range: [0, 1],
+                xAxis: this.xAxis
+            },
+            y: {
+                min: 0,
+                yAxis: this.yAxis
+            }
+        };
+
+        chart.tooltip({
+            showTitle: false,
+            hideMarkders: false,
+            'g2-tooltip': { padding: 4 },
+            'g2-tooltip-list-item': { margin: `0px 4px` }
+        });
+
+        const view = chart.view();
+        view.source(this.data, dataConfig);
+
+        view.area()
+            .position('x*y')
+            .color(this.color)
+            .tooltip('x*y', (x, y) => {
+                return {
+                    name: x,
+                    value: y
+                };
+            })
+            .shape('smooth')
+            .style({ fillOpacity: 1 });
+
+        if (this.line) {
+            const view2 = chart.view();
+            view2.source(this.data, dataConfig);
+            view2.line().position('x*y').color(this.borderColor).size(this.borderWidth).shape('smooth');
+            view2.tooltip(false);
+        }
+        chart.render();
+        this.chart = chart;
     }
 
     uninstall() {
         if (this.chart) {
-            this.zone.runOutsideAngular(() => {
-                this.chart.destroy();
-            });
+            this.chart.destroy();
             this.chart = null;
         }
     }

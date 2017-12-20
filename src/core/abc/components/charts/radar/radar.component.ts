@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, Output, EventEmitter, ContentChild, SimpleChange } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, Output, EventEmitter, ContentChild, SimpleChange, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 
 @Component({
@@ -16,9 +16,9 @@ import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coerci
                 <h6>{{i.value}}</h6>
             </div>
         </div>
-    </div>
-    `,
-    styleUrls: [ './radar.less' ]
+    </div>`,
+    styleUrls: [ './radar.less' ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
 
@@ -68,7 +68,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     initFlag = false;
     legendData: any[] = [];
 
-    constructor(private el: ElementRef, private zone: NgZone) { }
+    constructor(private el: ElementRef, private cd: ChangeDetectorRef) { }
 
     handleLegendClick(i: number) {
         this.legendData[i].checked = !this.legendData[i].checked;
@@ -83,95 +83,87 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     install() {
         if (!this.data || (this.data && this.data.length < 1)) return;
 
-        // this.uninstall();
+        this.node.nativeElement.innerHTML = '';
 
-        this.zone.runOutsideAngular(() => {
+        const colors = [
+            '#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911',
+        ];
 
-            this.node.nativeElement.innerHTML = '';
-
-            const colors = [
-                '#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911',
-            ];
-
-            const chart = new G2.Chart({
-                container: this.node.nativeElement,
-                forceFit: true,
-                height: +this.height - (this.hasLegend ? 80 : 22),
-                padding: this.padding
-            });
-            chart.source(this.data, {
-                value: {
-                    min: 0,
-                    tickCount: this.tickCount
-                }
-            });
-
-            chart.coord('polar');
-            chart.legend(false);
-
-            chart.axis('label', {
-                line: null,
-                labelOffset: 8,
-                labels: {
-                    label: {
-                        fill: 'rgba(0, 0, 0, .65)'
-                    }
-                },
-                grid: {
-                    line: {
-                        stroke: '#e9e9e9',
-                        lineWidth: 1,
-                        lineDash: [0, 0]
-                    }
-                }
-            });
-
-            chart.axis('value', {
-                grid: {
-                    type: 'polygon',
-                    line: {
-                        stroke: '#e9e9e9',
-                        lineWidth: 1,
-                        lineDash: [0, 0]
-                    }
-                },
-                labels: {
-                    label: {
-                        fill: 'rgba(0, 0, 0, .65)'
-                    }
-                }
-            });
-
-            chart.line().position('label*value').color('name', colors);
-            chart.point().position('label*value').color('name', colors).shape('circle').size(3);
-
-            chart.render();
-
-            this.zone.run(() => {
-                this.chart = chart;
-
-                if (this.hasLegend) {
-                    this.legendData = chart.getAllGeoms()[0]._attrs.dataArray.map((item: any) => {
-                        const origin = item[0]._origin;
-                        const result = {
-                            name: origin.name,
-                            color: item[0].color,
-                            checked: true,
-                            value: item.reduce((p, n) => p + n._origin.value, 0),
-                        };
-
-                        return result;
-                    });
-                }
-            });
+        const chart = new G2.Chart({
+            container: this.node.nativeElement,
+            forceFit: true,
+            height: +this.height - (this.hasLegend ? 80 : 22),
+            padding: this.padding
         });
+        chart.source(this.data, {
+            value: {
+                min: 0,
+                tickCount: this.tickCount
+            }
+        });
+
+        chart.coord('polar');
+        chart.legend(false);
+
+        chart.axis('label', {
+            line: null,
+            labelOffset: 8,
+            labels: {
+                label: {
+                    fill: 'rgba(0, 0, 0, .65)'
+                }
+            },
+            grid: {
+                line: {
+                    stroke: '#e9e9e9',
+                    lineWidth: 1,
+                    lineDash: [0, 0]
+                }
+            }
+        });
+
+        chart.axis('value', {
+            grid: {
+                type: 'polygon',
+                line: {
+                    stroke: '#e9e9e9',
+                    lineWidth: 1,
+                    lineDash: [0, 0]
+                }
+            },
+            labels: {
+                label: {
+                    fill: 'rgba(0, 0, 0, .65)'
+                }
+            }
+        });
+
+        chart.line().position('label*value').color('name', colors);
+        chart.point().position('label*value').color('name', colors).shape('circle').size(3);
+
+        chart.render();
+
+        this.chart = chart;
+
+        if (this.hasLegend) {
+            this.legendData = chart.getAllGeoms()[0]._attrs.dataArray.map((item: any) => {
+                const origin = item[0]._origin;
+                const result = {
+                    name: origin.name,
+                    color: item[0].color,
+                    checked: true,
+                    value: item.reduce((p, n) => p + n._origin.value, 0),
+                };
+
+                return result;
+            });
+            this.cd.markForCheck();
+        }
     }
 
     uninstall() {
         if (this.chart) {
-            this.zone.runOutsideAngular(() => {
-                this.chart.destroy();
-            });
+            this.chart.destroy();
             this.chart = null;
         }
     }

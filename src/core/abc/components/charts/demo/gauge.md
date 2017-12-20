@@ -11,9 +11,13 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <gauge title="核销率" height="164" percent="87"></gauge>
+  <gauge title="核销率" height="164" [percent]="percent"></gauge>
   `
 })
 export class DemoComponent {
+    percent = 87;
+    constructor() {
+        setInterval(() => this.percent = parseInt((Math.random() * 100).toString(), 10), 1000);
+    }
 }
 ```

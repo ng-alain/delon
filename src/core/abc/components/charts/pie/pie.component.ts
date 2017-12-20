@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, ViewEncapsulation, Output, EventEmitter, ContentChild } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, ViewEncapsulation, Output, EventEmitter, ContentChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
@@ -23,10 +23,10 @@ import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coerci
             <span class="percent">{{item.percent}}%</span>
             <span class="value" [innerHTML]="valueFormat ? valueFormat(item.y) : item.y"></span>
         </li>
-    </ul>
-    `,
+    </ul>`,
     styleUrls: [ './pie.less' ],
-    encapsulation: ViewEncapsulation.Emulated
+    encapsulation: ViewEncapsulation.Emulated,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
 
@@ -109,7 +109,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     initFlag = false;
     legendData: any[] = [];
 
-    constructor(private el: ElementRef, private zone: NgZone) { }
+    constructor(private el: ElementRef, private cd: ChangeDetectorRef) { }
 
     install() {
         let formatColor;
@@ -133,86 +133,78 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
 
         if (!this.data || (this.data && this.data.length < 1)) return;
 
-        // this.uninstall();
+        this.node.nativeElement.innerHTML = '';
 
-        this.zone.runOutsideAngular(() => {
-
-            this.node.nativeElement.innerHTML = '';
-
-            const chart = new G2.Chart({
-                container: this.node.nativeElement,
-                forceFit: true,
-                height: this.height,
-                padding: this.padding,
-                animate: this.animate
-            });
-
-            if (!this.tooltip) {
-                chart.tooltip(false);
-            } else {
-                chart.tooltip({
-                    showTitle: false,
-                    itemTpl: '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value} %</li>'
-                });
-            }
-
-            chart.axis(false);
-            chart.legend(false);
-
-            const dv = new DataSet.DataView();
-            dv.source(this.data).transform({
-                type: 'percent',
-                field: 'y',
-                dimension: 'x',
-                as: 'percent'
-            });
-            chart.source(dv, {
-                x: {
-                    type: 'cat',
-                    range: [0, 1]
-                },
-                y: {
-                    min: 0
-                }
-            });
-
-            chart.coord('theta', { innerRadius: this.inner });
-
-            chart
-                .intervalStack()
-                .position('y')
-                .style({ lineWidth: this.lineWidth, stroke: '#fff' })
-                .tooltip('x*percent', (item, percent) => {
-                    return {
-                        name: item,
-                        value: percent
-                    };
-                })
-                .color('x', this.percent ? formatColor : this.colors)
-                .select(this.select);
-
-            chart.render();
-
-            this.zone.run(() => {
-                this.chart = chart;
-                if (this.hasLegend) {
-                    this.legendData = chart.getAllGeoms()[0]._attrs.dataArray.map((item: any) => {
-                        const origin = item[0]._origin;
-                        origin.color = item[0].color;
-                        origin.checked = true;
-                        origin.percent = (origin.percent * 100).toFixed(2);
-                        return origin;
-                    });
-                }
-            });
+        const chart = new G2.Chart({
+            container: this.node.nativeElement,
+            forceFit: true,
+            height: this.height,
+            padding: this.padding,
+            animate: this.animate
         });
+
+        if (!this.tooltip) {
+            chart.tooltip(false);
+        } else {
+            chart.tooltip({
+                showTitle: false,
+                itemTpl: '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value} %</li>'
+            });
+        }
+
+        chart.axis(false);
+        chart.legend(false);
+
+        const dv = new DataSet.DataView();
+        dv.source(this.data).transform({
+            type: 'percent',
+            field: 'y',
+            dimension: 'x',
+            as: 'percent'
+        });
+        chart.source(dv, {
+            x: {
+                type: 'cat',
+                range: [0, 1]
+            },
+            y: {
+                min: 0
+            }
+        });
+
+        chart.coord('theta', { innerRadius: this.inner });
+
+        chart
+            .intervalStack()
+            .position('y')
+            .style({ lineWidth: this.lineWidth, stroke: '#fff' })
+            .tooltip('x*percent', (item, percent) => {
+                return {
+                    name: item,
+                    value: percent
+                };
+            })
+            .color('x', this.percent ? formatColor : this.colors)
+            .select(this.select);
+
+        chart.render();
+
+        this.chart = chart;
+        if (this.hasLegend) {
+            this.legendData = chart.getAllGeoms()[0]._attrs.dataArray.map((item: any) => {
+                const origin = item[0]._origin;
+                origin.color = item[0].color;
+                origin.checked = true;
+                origin.percent = (origin.percent * 100).toFixed(2);
+                return origin;
+            });
+            this.cd.markForCheck();
+        }
     }
 
     uninstall() {
         if (this.chart) {
-            this.zone.runOutsideAngular(() => {
-                this.chart.destroy();
-            });
+            this.chart.destroy();
             this.chart = null;
         }
     }
@@ -244,12 +236,11 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
 
     // region: resize
 
-    private autoHideXLabels = false;
     private scroll$: Subscription = null;
     private installResizeEvent() {
         if (!this.hasLegend) return;
 
-        this.scroll$ = FromEventObservable.create(window, 'resize')
+        this.scroll$ = <any>FromEventObservable.create(window, 'resize')
                             .pipe(debounceTime(200))
                             .subscribe(() => this.resize());
     }

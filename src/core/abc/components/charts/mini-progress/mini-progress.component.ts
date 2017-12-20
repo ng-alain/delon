@@ -27,7 +27,6 @@ export class MiniProgressComponent {
     set target(value: any) {
         const a = coerceNumberProperty(value);
         this._target = Math.min(Math.max(coerceNumberProperty(value), 0), 100);
-        console.log('this._target', this._target);
     }
     private _target: number;
 
@@ -42,7 +41,6 @@ export class MiniProgressComponent {
     get percent() { return this._percent; }
     set percent(value: any) {
         this._percent = Math.min(Math.max(coerceNumberProperty(value), 0), 100);
-        console.log('this._percent', this._percent);
     }
     private _percent: number;
 

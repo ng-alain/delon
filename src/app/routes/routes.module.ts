@@ -4,11 +4,13 @@ import { SharedModule } from '../shared/shared.module';
 
 import { LayoutComponent } from '../layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DemoComponent } from './demo/demo.component';
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forRoot([
+            { path: 'demo', component: DemoComponent },
             {
                 path: '',
                 component: LayoutComponent,
@@ -22,7 +24,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         ], { useHash: true })
     ],
     declarations: [
-        DashboardComponent
+        DashboardComponent,
+        DemoComponent
     ],
     exports: [
         RouterModule

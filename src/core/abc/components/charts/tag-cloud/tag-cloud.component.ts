@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, ViewEncapsulation, SimpleChange } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, TemplateRef, OnInit, HostListener, ViewEncapsulation, SimpleChange, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
@@ -8,7 +8,8 @@ import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coerci
 @Component({
     selector: 'tag-cloud',
     template: `<div #container [ngStyle]="{'height.px': height}"></div>`,
-    styleUrls: [ './tag-cloud.less' ]
+    styleUrls: [ './tag-cloud.less' ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
@@ -40,7 +41,7 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     chart: any;
     initFlag = false;
 
-    constructor(private el: ElementRef, private zone: NgZone) { }
+    constructor(private el: ElementRef, private cd: ChangeDetectorRef) { }
 
     private initTagCloud() {
         // 给point注册一个词云的shape
@@ -69,67 +70,60 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     renderChart() {
         if (!this.data || (this.data && this.data.length < 1)) return;
 
-        this.zone.runOutsideAngular(() => {
+        this.node.nativeElement.innerHTML = '';
 
-            this.node.nativeElement.innerHTML = '';
+        const ds = new DataSet();
+        const dv = ds.createView('g2pv').source(this.data);
 
-            const ds = new DataSet();
-            const dv = ds.createView('g2pv').source(this.data);
+        const height = +this.height;
+        const width = +this.el.nativeElement.offsetWidth;
+        this.data.sort((a, b) => b.value - a.value);
+        const max = this.data[0].value;
+        const min = this.data[this.data.length - 1].value;
 
-            const height = +this.height;
-            const width = +this.el.nativeElement.offsetWidth;
-            this.data.sort((a, b) => b.value - a.value);
-            const max = this.data[0].value;
-            const min = this.data[this.data.length - 1].value;
-
-            dv.transform({
-                type: 'tag-cloud',
-                fields: [ 'name', 'value' ],
-                size: [ width, height ],
-                padding: this.padding,
-                text: words => words.name
-            });
-            const chart = new G2.Chart({
-                container: this.node.nativeElement,
-                width: width,
-                height: height,
-                padding: this.padding
-            });
-            chart.source(dv);
-            chart.legend(false);
-            chart.axis(false);
-            chart.tooltip({
-                showTitle: false
-            });
-            chart.coord().reflect();
-            chart.point()
-                .position('x*y')
-                .color('text')
-                .size('size', size => size)
-                .shape('cloud');
-
-            chart.render();
-
-            this.zone.run(() => {
-                this.chart = chart;
-            });
+        dv.transform({
+            type: 'tag-cloud',
+            fields: [ 'name', 'value' ],
+            size: [ width, height ],
+            padding: this.padding,
+            text: words => words.name
         });
+        const chart = new G2.Chart({
+            container: this.node.nativeElement,
+            width: width,
+            height: height,
+            padding: this.padding,
+            forceFit: true
+        });
+        chart.source(dv);
+        chart.legend(false);
+        chart.axis(false);
+        chart.tooltip({
+            showTitle: false
+        });
+        chart.coord().reflect();
+        chart.point()
+            .position('x*y')
+            .color('text')
+            .size('size', size => size)
+            .shape('cloud');
+
+        chart.render();
+
+        this.chart = chart;
     }
 
     uninstall() {
         if (this.chart) {
-            this.zone.runOutsideAngular(() => {
-                this.chart.destroy();
-            });
+            this.chart.destroy();
             this.chart = null;
         }
     }
 
     ngOnInit(): void {
         this.initFlag = true;
-        setTimeout(() => this.resize(), 100);
         this.initTagCloud();
-        this.installResizeEvent();
+        this.renderChart();
     }
 
     ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
@@ -138,29 +132,6 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     }
 
     ngOnDestroy(): void {
-        this.uninstallResizeEvent();
         this.uninstall();
     }
-
-    // region: resize
-
-    private autoHideXLabels = false;
-    private scroll$: Subscription = null;
-    private installResizeEvent() {
-        if (!this.autoLabel || this.scroll$) return;
-
-        this.scroll$ = FromEventObservable.create(window, 'resize')
-                            .pipe(debounceTime(200))
-                            .subscribe(() => this.resize());
-    }
-
-    private uninstallResizeEvent() {
-        if (this.scroll$) this.scroll$.unsubscribe();
-    }
-
-    resize() {
-        this.renderChart();
-    }
-
-    // endregion
 }

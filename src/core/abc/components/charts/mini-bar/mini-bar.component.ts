@@ -1,10 +1,11 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit, Renderer2 } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit, Renderer2, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'mini-bar',
     template: `<div class="g2-chart__desc"><div #container></div></div>`,
-    styles: [`:host { display: block; }`]
+    styles: [`:host { display: block; }`],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MiniBarComponent implements OnDestroy, OnChanges, OnInit {
 
@@ -38,7 +39,7 @@ export class MiniBarComponent implements OnDestroy, OnChanges, OnInit {
     chart: any;
     initFlag = false;
 
-    constructor(private el: ElementRef, private renderer: Renderer2, private zone: NgZone) { }
+    constructor(private el: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         (this.el.nativeElement as HTMLElement).classList.add('g2-chart', 'min-chart');
@@ -48,61 +49,55 @@ export class MiniBarComponent implements OnDestroy, OnChanges, OnInit {
 
     install() {
         if (!this.data || (this.data && this.data.length < 1)) return;
-        this.uninstall();
 
-        this.zone.runOutsideAngular(() => {
+        this.node.nativeElement.innerHTML = '';
 
-            this.node.nativeElement.innerHTML = '';
-
-            const chart = new G2.Chart({
-                container: this.node.nativeElement,
-                forceFit: true,
-                height: +this.height + 54,
-                padding: this.padding,
-                legend: null
-            });
-
-            chart.axis(false);
-
-            chart.source(this.data, {
-                x: {
-                    type: 'cat'
-                },
-                y: {
-                    min: 0
-                }
-            });
-
-            chart.tooltip({
-                showTitle: false,
-                hideMarkders: false,
-                crosshairs: false,
-                'g2-tooltip': { padding: 4 },
-                'g2-tooltip-list-item': { margin: `0px 4px` }
-            });
-            chart
-                .interval()
-                .position('x*y')
-                .size(this.borderWidth)
-                .color(this.color)
-                .tooltip('x*y', (x, y) => {
-                    return {
-                      name: x,
-                      value: y
-                    };
-                });
-
-            chart.render();
-
-            this.zone.run(() => this.chart = chart);
+        const chart = new G2.Chart({
+            container: this.node.nativeElement,
+            forceFit: true,
+            height: +this.height + 54,
+            padding: this.padding,
+            legend: null
         });
+
+        chart.axis(false);
+
+        chart.source(this.data, {
+            x: {
+                type: 'cat'
+            },
+            y: {
+                min: 0
+            }
+        });
+
+        chart.tooltip({
+            showTitle: false,
+            hideMarkders: false,
+            crosshairs: false,
+            'g2-tooltip': { padding: 4 },
+            'g2-tooltip-list-item': { margin: `0px 4px` }
+        });
+        chart
+            .interval()
+            .position('x*y')
+            .size(this.borderWidth)
+            .color(this.color)
+            .tooltip('x*y', (x, y) => {
+                return {
+                    name: x,
+                    value: y
+                };
+            });
+
+        chart.render();
+
+        this.chart = chart;
     }
 
     uninstall() {
         if (this.chart) {
-            this.zone.runOutsideAngular(() => {
-                this.chart.destroy();
-            });
+            this.chart.destroy();
             this.chart = null;
         }
     }
