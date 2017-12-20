@@ -158,4 +158,25 @@ describe('auth: simple.interceptor', () => {
             req.flush('ok!');
         });
     });
+
+    describe('token template', () => {
+        const basicModel = genModel();
+        beforeEach(() => {
+            genModule({
+                token_send_place: 'header',
+                token_send_key: 'Authorization',
+                token_send_template: 'Bearer ${token}'
+            }, basicModel);
+        });
+
+        it('should be', (done: () => void) => {
+            injector.get(HttpClient).get('/test', { responseType: 'text' }).subscribe(value => {
+                done();
+            });
+            const ret = injector.get(HttpTestingController)
+                .expectOne(r => r.method === 'GET' && (<string>r.url).startsWith('/test')) as TestRequest;
+            expect(ret.request.headers.get('Authorization')).toBe('Bearer ' + basicModel.token);
+            ret.flush('ok!');
+        });
+    });
 });

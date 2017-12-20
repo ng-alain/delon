@@ -23,6 +23,11 @@ export interface AuthOptions {
      */
     token_send_key?: string;
     /**
+     * 发送token模板，使用 `${token}` 表示token点位符，例如：
+     * - `Bearer ${token}`
+     */
+    token_send_template?: string;
+    /**
      * 发送token参数位置，默认：header
      *
      * @type {('header' | 'body' | 'url')}
@@ -47,6 +52,7 @@ export const DEFAULT = {
     token_invalid_redirect: true,
     token_exp_offset: 10,
     token_send_key: 'token',
+    token_send_template: '${token}',
     token_send_place: 'header',
     login_url: `/login`,
     ignores: [ /\/login/, /assets\// ],

@@ -28,24 +28,25 @@ export class SimpleInterceptor implements HttpInterceptor {
 
         const model = this.injector.get(DA_SERVICE_TOKEN).get() as SimpleTokenModel;
         if (model.token) {
+            const token = (options.token_send_template || '${token}').replace('${token}', model.token);
             switch (options.token_send_place) {
                 case 'header':
                     const obj = {};
-                    obj[options.token_send_key] = model.token;
+                    obj[options.token_send_key] = token;
                     req = req.clone({
                         setHeaders: obj
                     });
                     break;
                 case 'body':
                     const body = req.body || {};
-                    body[options.token_send_key] = model.token;
+                    body[options.token_send_key] = token;
                     req = req.clone({
                         body: body
                     });
                     break;
                 case 'url':
                     const url = this.injector.get(Router).parseUrl(req.url);
-                    url.queryParams[options.token_send_key] = model.token;
+                    url.queryParams[options.token_send_key] = token;
                     req = req.clone({
                         url: url.toString()
                     });
