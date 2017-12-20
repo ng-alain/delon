@@ -123,7 +123,7 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     ngOnInit(): void {
         this.initFlag = true;
         this.initTagCloud();
-        this.renderChart();
+        setTimeout(() => this.renderChart(), 100);
     }
 
     ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {

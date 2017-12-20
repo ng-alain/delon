@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Renderer2, Inject, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { MenuService, Menu, SettingsService } from '@delon/theme';
@@ -10,7 +10,7 @@ const FLOATINGCLS = 'nav-floating';
     selector: 'sidebar-nav',
     templateUrl: './sidebar-nav.component.html'
 })
-export class SidebarNavComponent implements OnInit {
+export class SidebarNavComponent implements OnInit, OnDestroy {
 
     private rootEl: HTMLDivElement;
     private floatingEl: HTMLDivElement;
@@ -33,6 +33,8 @@ export class SidebarNavComponent implements OnInit {
     }
 
     private floatingAreaClickHandle(e: MouseEvent) {
+        e.stopPropagation();
+        e.preventDefault();
         if (this.settings.layout.collapsed !== true) {
             return;
         }
@@ -40,7 +42,13 @@ export class SidebarNavComponent implements OnInit {
         if (linkNode.nodeName !== 'A') {
             return;
         }
+        let url: string = linkNode.getAttribute('href');
+        if (url) {
+            if (url.startsWith('#')) url = url.slice(1);
+            this.router.navigateByUrl(url);
+        }
         this.hideAll();
+        return false;
     }
 
     genFloatingContainer() {
@@ -110,5 +118,13 @@ export class SidebarNavComponent implements OnInit {
             }
         });
         item._open = !item._open;
+    }
+
+    @HostListener('document:click', ['$event.target'])
+    onClick() {
+        this.hideAll();
+    }
+
+    ngOnDestroy(): void {
     }
 }
