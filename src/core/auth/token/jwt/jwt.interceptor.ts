@@ -26,7 +26,7 @@ export class JWTInterceptor implements HttpInterceptor {
             return next.handle(req);
         }
 
-        const model = this.injector.get(DA_SERVICE_TOKEN).get() as JWTTokenModel;
+        const model = this.injector.get(DA_SERVICE_TOKEN).get<JWTTokenModel>(JWTTokenModel);
         if (model.token && !model.isExpired(options.token_exp_offset || 0)) {
             req = req.clone({
                 setHeaders: {
