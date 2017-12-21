@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, Inject, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, ElementRef, Renderer2, Inject, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { MenuService, Menu, SettingsService } from '@delon/theme';
@@ -8,7 +8,8 @@ const FLOATINGCLS = 'nav-floating';
 
 @Component({
     selector: 'sidebar-nav',
-    templateUrl: './sidebar-nav.component.html'
+    templateUrl: './sidebar-nav.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
 
@@ -22,6 +23,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
         private router: Router,
         el: ElementRef,
         private render: Renderer2,
+        private cd: ChangeDetectorRef,
         @Inject(DOCUMENT) private doc: any) {
         this.rootEl = el.nativeElement as HTMLDivElement;
     }
@@ -118,6 +120,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
             }
         });
         item._open = !item._open;
+        this.cd.markForCheck();
     }
 
     @HostListener('document:click', ['$event.target'])

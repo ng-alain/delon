@@ -1,4 +1,4 @@
-import { Component, Directive, OnInit, Input, HostBinding, OnDestroy, ElementRef, Renderer2, HostListener, Inject } from '@angular/core';
+import { Component, Directive, OnInit, Input, HostBinding, OnDestroy, ElementRef, Renderer2, HostListener, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
@@ -12,7 +12,8 @@ const HEADERMINHEIGHT = 65 + 8 * 2;
  */
 @Component({
     selector: 'error-collect, [error-collect]',
-    template: `<i class="anticon anticon-exclamation-circle"></i> {{count}}`
+    template: `<i class="anticon anticon-exclamation-circle"></i> {{count}}`,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
 
@@ -31,11 +32,14 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
 
     count = 0;
 
-    constructor(private el: ElementRef, private renderer: Renderer2, @Inject(DOCUMENT) private doc: any) {}
+    constructor(private el: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef, @Inject(DOCUMENT) private doc: any) {}
 
     private update() {
-        this.count = this.formEl.querySelectorAll(ANTDERRORCLS).length;
-        this._hiden = this.count === 0;
+        const count = this.formEl.querySelectorAll(ANTDERRORCLS).length;
+        if (count === this.count) return;
+        this.count = count;
+        this._hiden = count === 0;
+        this.cd.markForCheck();
     }
 
     @HostListener('click')
