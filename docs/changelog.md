@@ -6,6 +6,18 @@ title:
 type: Other
 ---
 
+### 0.4.0-rc.6
+
+`2017-12-21`
+
+- ng-alain 脚手架
+    - 修复无法启动 HMR 问题，[#130](https://github.com/cipchk/ng-alain/issues/130) [Commit](https://github.com/cipchk/ng-alain/commit/fca17fe7f74303e70ee2cfbac4dac0e032d426f4)
+    - 重构子模块路配置文件独立为 `*-routing.module.ts` 更符合 cli 生成规则，[#117](https://github.com/cipchk/ng-alain/issues/117)
+- @delon/auth
+    - 修复由于无法获取 `token` 导致拦截器抛出异常
+- @delon/abc
+    - 优化组件性能尽可能使用 `OnPush` 维护变更检测，[#115](https://github.com/cipchk/ng-alain/issues/115)
+
 ### 0.4.0-rc.5
 
 > `0.4.0-rc.4` hotfix
