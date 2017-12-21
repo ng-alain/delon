@@ -5,6 +5,8 @@ export function preloaderFinished() {
     body.style.overflow = 'hidden';
 
     function remove() {
+        // preloader value null when running --hmr
+        if (!preloader) return;
         preloader.addEventListener('transitionend', function () {
             preloader.className = 'preloader-hidden';
         });

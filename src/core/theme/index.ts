@@ -58,17 +58,6 @@ const ZORROMODULES = [ NzToolTipModule ];
 
 // endregion
 
-export const THEME_FORROOT_GUARD = new InjectionToken<void>('THEME_FORROOT_GUARD');
-
-export function provideForRootGuard(): any {
-    if (AlainThemeModule._THEME_FORROOT_GUARD) {
-        throw new Error(
-            `AlainThemeModule.forRoot() called twice. Lazy loaded modules should use AlainThemeModule.forChild() instead.`);
-    }
-    AlainThemeModule._THEME_FORROOT_GUARD = true;
-    return 'guarded';
-}
-
 @NgModule({
     imports: [
         CommonModule,
@@ -85,8 +74,6 @@ export function provideForRootGuard(): any {
     ]
 })
 export class AlainThemeModule {
-    static _THEME_FORROOT_GUARD = false;
-    constructor(@Optional() @Inject(THEME_FORROOT_GUARD) guard: any) {}
 
     static forRoot(options?: AlainThemeOptions): ModuleWithProviders {
         return {
@@ -94,10 +81,6 @@ export class AlainThemeModule {
             providers: [
                 { provide: ALAIN_THEME_OPTIONS, useValue: options || {} },
                 { provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake },
-                {
-                    provide: THEME_FORROOT_GUARD,
-                    useFactory: provideForRootGuard
-                },
                 ...SERVICES,
                 ...HELPERS
             ]
