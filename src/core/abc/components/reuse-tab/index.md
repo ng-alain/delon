@@ -12,9 +12,9 @@ module: AdReuseTabModule
 
 ## 匹配模式
 
-提供三种不同的匹配模式用于满足需求，可以根据 `ReuseTabService` 调整这种模式规则：
+在项目的任何位置（建议：`startup.service.ts`）注入 `ReuseTabService` 类，并设置 `mode` 属性，其值包括：
 
-**1、（推荐）Menu**
+**1、（推荐，默认值）Menu**
 
 按菜单 `Menu` 配置。
 
@@ -50,7 +50,34 @@ module: AdReuseTabModule
 
 **3、URL**
 
-对所有路由有效，可以配合 `excludes` 过滤无须复用路由
+对所有路由有效，可以配合 `excludes` 过滤无须复用路由。
+
+> 除以上规则以外，路由配置中 `data` 属性若设置 `reuse` 值时优先级高于上述规则。
+
+## 标签文本
+
+根据以下顺序获取标签文本：
+
+1. 组件内使用 `ReuseTabService.title = 'new title'` 重新指定文本，
+2. 路由配置中 `data` 属性中包含 `reuseTitle` > `title`
+3. 菜单数据中 `text` 属性
+
+`ReuseTabService` 代码示例：
+
+```ts
+export class DemoReuseTabEditComponent implements OnInit {
+    id: any;
+
+    constructor(private route: ActivatedRoute, private reuseTabService: ReuseTabService) {}
+
+    ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.id = params.id;
+            this.reuseTabService.title = `编辑 ${this.id}`;
+        });
+    }
+}
+```
 
 ## API
 

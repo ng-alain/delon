@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ReuseTabService } from '@delon/abc';
 
 @Component({
     selector: 'app-reuse-tab',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
 })
 export class DemoReuseTabComponent {
     value = 'reuse-tab';
+
+    constructor(private srv: ReuseTabService) {}
+
+    ngOnInit() {
+        this.srv.title = 'reuse';
+    }
 }
 

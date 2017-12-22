@@ -8,7 +8,7 @@ const TITLE = `标题`;
 let reuse: boolean = true;
 class MockMenuService {
     getPathByUrl(url: string) {
-        return url === 'NONE' ? null : [ { text: TITLE, reuse: reuse } ];
+        return url === '/a/0' ? null : [ { text: TITLE, reuse: reuse } ];
     }
 }
 
@@ -80,41 +80,41 @@ describe('abc: reuse-tab', () => {
 
         it('via menu, #ReuseTabMatchMode.Menu', () => {
             srv.mode = ReuseTabMatchMode.Menu;
-            expect(srv.can(`NONE`)).toBe(false);
-            expect(srv.can(`/a/1`)).toBe(true);
+            expect(srv.can(getSnapshot(0))).toBe(false);
+            expect(srv.can(getSnapshot(1))).toBe(true);
             reuse = false;
-            expect(srv.can(`/a/1`)).toBe(false);
+            expect(srv.can(getSnapshot(1))).toBe(false);
         });
 
         it('via menu, #ReuseTabMatchMode.MenuForce', () => {
             srv.mode = ReuseTabMatchMode.MenuForce;
             reuse = true;
-            expect(srv.can(`/a/1`)).toBe(true);
+            expect(srv.can(getSnapshot(1))).toBe(true);
             reuse = false;
-            expect(srv.can(`/a/1`)).toBe(false);
+            expect(srv.can(getSnapshot(1))).toBe(false);
             reuse = undefined;
-            expect(srv.can(`/a/1`)).toBe(false);
+            expect(srv.can(getSnapshot(1))).toBe(false);
         });
 
         it('via url', () => {
             srv.mode = ReuseTabMatchMode.URL;
-            expect(srv.can(`/a/1`)).toBe(true);
+            expect(srv.can(getSnapshot(1))).toBe(true);
         });
 
         it('via url, using excludes', () => {
             srv.mode = ReuseTabMatchMode.URL;
             srv.excludes = null;
             srv.excludes = [ /\/a\/1/ ];
-            expect(srv.can(`/a/1`)).toBe(false);
-            expect(srv.can(`/a/2`)).toBe(true);
+            expect(srv.can(getSnapshot(1))).toBe(false);
+            expect(srv.can(getSnapshot(2))).toBe(true);
         });
     });
 
     it('#shouldDetach', () => {
         genCached(2);
         srv.mode = ReuseTabMatchMode.Menu;
-        expect(srv.can(`NONE`)).toBe(false);
-        expect(srv.can(`/a/1`)).toBe(true);
+        expect(srv.can(getSnapshot(0))).toBe(false);
+        expect(srv.can(getSnapshot(1))).toBe(true);
     });
 
     describe('#store', () => {

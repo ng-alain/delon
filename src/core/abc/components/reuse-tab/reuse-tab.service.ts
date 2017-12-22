@@ -1,5 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
+import { Injectable, OnDestroy, Optional, Injector } from '@angular/core';
+import { ActivatedRouteSnapshot, DetachedRouteHandle, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MenuService } from '@delon/theme';
@@ -11,8 +11,11 @@ export class ReuseTabService implements OnDestroy {
     private _mode = ReuseTabMatchMode.Menu;
     private _excludes: RegExp[] = [ ];
     private _cachedChange: BehaviorSubject<ReuseTabNotify> = new BehaviorSubject<ReuseTabNotify>(null);
-    private _change: Observable<ReuseTabNotify> = this._cachedChange.asObservable();
     private _cached: ReuseTabCached[] = [];
+    private _titleCached: { [url: string]: string } = {};
+    private removeBuffer: string;
+
+    // region: public
 
     /** 允许最多复用多少个页面，取值范围 `2-100` */
     set max(value: number) {
@@ -31,27 +34,42 @@ export class ReuseTabService implements OnDestroy {
         this._excludes = values;
     }
     /** 获取指定路径缓存所在位置，`-1` 表示无缓存 */
-    index(path: string): number {
-        return this._cached.findIndex(w => w.url === path);
+    index(url: string): number {
+        return this._cached.findIndex(w => w.url === url);
     }
     /** 获取指定路径缓存是否存在 */
-    exists(path: string): boolean {
-        return this.index(path) !== -1;
+    exists(url: string): boolean {
+        return this.index(url) !== -1;
     }
     /** 获取指定路径缓存 */
     get(path: string): ReuseTabCached {
         return path ? this._cached.find(w => w.url === path) || null : null;
     }
-    /** 移除指定路径缓存 */
-    remove(path: string): boolean {
-        const item = this.get(path);
-        if (item) this._cached.splice(this.index(path), 1);
+    /**
+     * 移除指定路径缓存
+     */
+    remove(data: any): boolean {
+        let url = data;
+        if (typeof data !== 'string') {
+            url = data.url;
+        }
+        this.removeBuffer = url;
+        const idx = this.index(url);
+        const item = idx !== -1 ? this._cached[idx] : null;
+        if (item) {
+            this._cached.splice(idx, 1);
+            delete this._titleCached[url];
+        }
         this._cachedChange.next({ active: 'remove', item });
         return true;
     }
-    /** 清除所有缓存 */
+    /**
+     * 清除所有缓存
+     */
     clear() {
+        this.removeBuffer = null;
         this._cached = [];
+        this._titleCached = {};
         this._cachedChange.next({ active: 'clear' });
     }
     /** 获取已缓存的路由 */
@@ -64,27 +82,48 @@ export class ReuseTabService implements OnDestroy {
     }
     /** 订阅缓存变更通知 */
     get change(): Observable<ReuseTabNotify> {
-        return this._change;
+        return this._cachedChange.asObservable();
+    }
+    /** 设置当前页标题 */
+    set title(value: string) {
+        if (!value) return;
+        this._titleCached[this.getUrl(this.injector.get(ActivatedRoute).snapshot)] = value;
+        this._cachedChange.next({ active: 'title', title: value });
     }
 
-    constructor(private menuService: MenuService) { }
+    // endregion
 
-    private clearUrl(url: string) {
-        return url.split('?')[0].split('#')[0];
+    // region: privates
+
+    /** @private */
+    _clearRemoveBuffer() {
+        this.removeBuffer = null;
     }
 
-    getTitle(url: string): string {
-        url = this.clearUrl(url);
+    // endregion
+
+    constructor(private injector: Injector, @Optional() private menuService: MenuService) { }
+
+    /** @private */
+    getTitle(url: string, route?: ActivatedRouteSnapshot): string {
+        if (this._titleCached[url]) return this._titleCached[url];
+        if (route && route.data && (route.data.reuseTitle || route.data.title))
+            return route.data.reuseTitle || route.data.title;
+        if (!this.menuService) return url;
+
         const list = this.menuService.getPathByUrl(url);
         const item = list.pop();
         return item ? item.text : url;
     }
 
-    private getUrl(route: ActivatedRouteSnapshot): string {
+    getTruthRoute(route: ActivatedRouteSnapshot) {
         let next = route;
-        while (next.firstChild) {
-            next = next.firstChild;
-        }
+        while (next.firstChild) next = next.firstChild;
+        return next;
+    }
+
+    getUrl(route: ActivatedRouteSnapshot): string {
+        let next = this.getTruthRoute(route);
         const segments = [];
         while (next) {
             segments.push(next.url.join('/'));
@@ -94,11 +133,33 @@ export class ReuseTabService implements OnDestroy {
         return url;
     }
 
-    can(url: string): boolean {
+    private getMenu(url: string) {
+        const menus = this.menuService ? this.menuService.getPathByUrl(url) : [];
+        if (!menus || menus.length === 0) return null;
+        return menus.pop();
+    }
+
+    /** @private */
+    getClosable(url: string, route?: ActivatedRouteSnapshot): boolean {
+        if (route && route.data && typeof route.data.reuseClosable !== 'undefined')
+            return route.data.reuseClosable;
+
+        const menu = this._mode !== ReuseTabMatchMode.URL ? this.getMenu(url) : null;
+        if (menu && typeof menu.reuseClosable !== 'undefined')
+            return menu.reuseClosable;
+
+        return true;
+    }
+
+    can(route: ActivatedRouteSnapshot): boolean {
+        const url = this.getUrl(route);
+        if (url === this.removeBuffer) return false;
+
+        if (route.data && typeof route.data.reuse === 'boolean') return route.data.reuse;
+
         if (this._mode !== ReuseTabMatchMode.URL) {
-            const menus = this.menuService.getPathByUrl(url);
-            if (!menus || menus.length === 0) return false;
-            const menu = menus.pop();
+            const menu = this.getMenu(url);
+            if (!menu) return false;
             if (this._mode === ReuseTabMatchMode.Menu) {
                 if (menu.reuse === false) return false;
             } else {
@@ -116,9 +177,7 @@ export class ReuseTabService implements OnDestroy {
      */
     shouldDetach(route: ActivatedRouteSnapshot): boolean {
         if (!route.routeConfig || route.routeConfig.loadChildren || route.routeConfig.children) return false;
-        const url = this.getUrl(route);
-        console.log('shouldDetach', url, this.can(url), route);
-        return this.can(url);
+        return this.can(route);
     }
 
     /**
@@ -129,8 +188,11 @@ export class ReuseTabService implements OnDestroy {
         if (this.count >= this._max) this._cached.shift();
         const url = this.getUrl(_snapshot);
         const idx = this.index(url);
-        const item = {
-            title: this.getTitle(url),
+
+        const item: ReuseTabCached = {
+            customTitle: this._titleCached[url],
+            title: this.getTitle(url, _snapshot),
+            // closable: this.getClosable(url, _snapshot),
             url,
             _snapshot,
             _handle
@@ -140,9 +202,9 @@ export class ReuseTabService implements OnDestroy {
         } else {
             this._cached[idx] = item;
         }
+        this._clearRemoveBuffer();
 
         this._cachedChange.next({ active: 'add', item });
-        console.log('store', url, _snapshot, _handle);
     }
 
     /**
@@ -153,7 +215,6 @@ export class ReuseTabService implements OnDestroy {
         const url = this.getUrl(route);
         const data = this.get(url);
         const ret = !!(data && data._handle);
-        console.log('shouldAttach', url, ret);
         return ret;
     }
 
@@ -164,7 +225,6 @@ export class ReuseTabService implements OnDestroy {
         if (!route.routeConfig || route.routeConfig.loadChildren || route.routeConfig.children) return null;
         const url = this.getUrl(route);
         const data = this.get(url);
-        console.log('retrieve', url, data, route);
         return (data && data._handle) || null;
     }
 

@@ -18,7 +18,8 @@ import { DemoComponent } from './demo/demo.component';
                     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
                     { path: 'dashboard', component: DashboardComponent },
                     { path: 'abc', loadChildren: './abc/abc.module#DEMOABCModule' },
-                    { path: 'acl', loadChildren: './acl/acl.module#DEMOACLModule' }
+                    { path: 'acl', loadChildren: './acl/acl.module#DEMOACLModule' },
+                    { path: 'editor', loadChildren: './editor/editor.module#EditorModule' }
                 ]
             }
         ], { useHash: true })

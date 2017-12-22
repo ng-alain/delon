@@ -34,21 +34,11 @@ export class LayoutComponent implements OnInit {
                     link: '/dashboard',
                     icon: 'anticon anticon-appstore-o'
                 },
-                {
-                    text: 'ABC',
-                    icon: 'anticon anticon-appstore',
-                    children: [
-                        { text: 'Reuse Tab', link: '/abc/reuse-tab' },
-                        { text: 'Ellipsis', link: '/abc/ellipsis' }
-                    ]
-                },
-                {
-                    text: 'ACL',
-                    icon: 'anticon anticon-save',
-                    children: [
-                        { text: 'JWT', link: '/acl/jwt' }
-                    ]
-                }
+                { text: 'Reuse Tab', link: '/abc/reuse-tab' },
+                { text: 'Ellipsis', link: '/abc/ellipsis' },
+                { text: 'JWT', link: '/acl/jwt' },
+                { text: 'ueditor', link: '/editor/ueditor' },
+                { text: 'tinymce', link: '/editor/tinymce' }
             ]
         }
     ];
