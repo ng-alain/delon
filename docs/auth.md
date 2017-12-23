@@ -113,13 +113,13 @@ this.socialService.callback(<ITokenModel>{
 
 ## 如何存取
 
-`ITokenService` 接口（默认实现 `TokenService`），只有四个方法：
+`ITokenService` 接口（默认实现 `TokenService`），只有四个方法及 `login_url` 属性：
 
 - `set(data: ITokenModel): boolean` 设置认证信息，同时触发 `change`
 - `get(): ITokenModel` 获取认证信息
 - `clear()` 清除认证信息，同时触发 `change` 参数为 `null`
 - `change(): Observable<ITokenModel>` 订阅认证信息变更回调
-- `login_url` 获取登录地址
+- `login_url` 获取登录地址，等同 `forRoot()` 所配置的值
 
 因此，当登录过程中后端返回相应的认证信息时，只要符合 `ITokenModel` 接口对象，都可以调用　`set` 方法将认证存储至 `IStore` （默认实现 `LocalStorageStore`） 当中。
 

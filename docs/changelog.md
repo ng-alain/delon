@@ -6,65 +6,36 @@ title:
 type: Other
 ---
 
-### 0.4.0-rc.6
+### 0.4.0
 
-`2017-12-21`
+`2017-12-24`
 
 - ng-alain 脚手架
+    - 新增 [blank](//github.com/cipchk/ng-alain/tree/blank) 基础版分支，如何使用见[文档](//ng-alain.com/docs/getting-started)
+    - 新增 [reuse-tab](https://cipchk.github.io/ng-alain/)、[simple-talbe](https://cipchk.github.io/ng-alain/tables/simple-table)、[UEditor](https://cipchk.github.io/ng-alain/editor/ueditor)、[Tinymce](https://cipchk.github.io/ng-alain/editor/tinymce)、[拆分视图](https://cipchk.github.io/ng-alain/other/split)、[剪贴板](https://cipchk.github.io/ng-alain/other/clipboard) 示例页
     - 修复无法启动 HMR 问题，[#130](https://github.com/cipchk/ng-alain/issues/130) [Commit](https://github.com/cipchk/ng-alain/commit/fca17fe7f74303e70ee2cfbac4dac0e032d426f4)
+    - 修复i18n加载顺序问题，[#138](https://github.com/cipchk/ng-alain/issues/138)
+    - 重构 `layout` 文件夹结构，将 Pro 版本的用户页设置为默认授权页
     - 重构子模块路配置文件独立为 `*-routing.module.ts` 更符合 cli 生成规则，[#117](https://github.com/cipchk/ng-alain/issues/117)
-- @delon/auth
-    - 修复由于无法获取 `token` 导致拦截器抛出异常
-- @delon/abc
-    - 优化组件性能尽可能使用 `OnPush` 维护变更检测，[#115](https://github.com/cipchk/ng-alain/issues/115)
-
-### 0.4.0-rc.5
-
-> `0.4.0-rc.4` hotfix
-
-`2017-12-20`
-
-- ng-alain 脚手架
-    - 新增 [拆分视图](https://cipchk.github.io/ng-alain/other/split)、[剪贴板](https://cipchk.github.io/ng-alain/other/clipboard) 示例页
 - @delon/theme
-    - 修复 `MenuService` 带参数无法匹配问题，[#125](https://github.com/cipchk/ng-alain/issues/125)
     - 增加 `nz-calendar` 组件主题色，[#7](https://github.com/cipchk/delon/pull/7) [@KennethMa](https://github.com/KennethMa)
+    - 增加 `@aside-scrollbar-track-color` 侧边栏滚动条的轨道颜色
+    - 修复 `MenuService` 带参数无法匹配问题，[#125](https://github.com/cipchk/ng-alain/issues/125)
 - @delon/auth
-    - 修复JWT拦截器无法获取过期值问题，[#8](https://github.com/cipchk/delon/issues/8)
     - 新增 `token_send_template` 属性，[#112](https://github.com/cipchk/ng-alain/issues/112)
-- @delon/abc
-    - 修复 `sidebar-nav` 侧边栏收缩时无法自动隐藏及跳转问题，[#128](https://github.com/cipchk/ng-alain/issues/128)
-    - 提升G2加载性能，[#118](https://github.com/cipchk/ng-alain/issues/118)
-
-### 0.4.0-rc.3
-
-`2017-12-19`
-
-- ng-alain 脚手架
-    - 新增 [UEditor](https://cipchk.github.io/ng-alain/editor/ueditor)、[Tinymce](https://cipchk.github.io/ng-alain/editor/tinymce) 示例页
-- @delon/abc
-    - 修复 `simple-table` 无法加载第一页问题，[#122](https://github.com/cipchk/ng-alain/issues/122)
-    - 优化利用 `OnChange` 简化属性，[#103](https://github.com/cipchk/ng-alain/issues/103)
-    - 重构移除所有 `host` 属性，[#116](https://github.com/cipchk/ng-alain/issues/116)
-    - 重构简化所有组件布尔、数字属性更友好的使用性，[#102](https://github.com/cipchk/ng-alain/issues/102)
-
-### 0.4.0-rc.2
-
-`2017-12-18`
-
-- ng-alain 脚手架
-    - 新增 `reuse-tab` 示例[页](https://cipchk.github.io/ng-alain/)
+    - 新增 `login_url` 属性，获取当前登录页路由地址
+    - 修复由于无法获取 `token` 导致拦截器抛出异常
+    - 修复JWT拦截器无法获取过期值问题，[#8](https://github.com/cipchk/delon/issues/8)
 - @delon/abc
     - 新增 `reuse-tab` 组件，解决不同路由页切换时组件数据不丢失问题，[Document](http://ng-alain.com/components/reuse-tab)
-
-### 0.4.0-rc.1
-
-`2017-12-16`
-
-- ng-alain 脚手架
-    - 新增 `simple-talbe` 示例[页](https://cipchk.github.io/ng-alain/tables/simple-table)
-- @delon/abc
     - 新增 `simple-talbe` 组件，利用配置快速构建表格数据，[Document](http://ng-alain.com/components/simple-table)
+    - 修复 `sidebar-nav` 侧边栏收缩时无法自动隐藏及跳转问题，[#128](https://github.com/cipchk/ng-alain/issues/128)
+    - 修复 `simple-table` 无法加载第一页问题，[#122](https://github.com/cipchk/ng-alain/issues/122)
+    - 优化组件性能尽可能使用 `OnPush` 维护变更检测，[#115](https://github.com/cipchk/ng-alain/issues/115)
+    - 优化利用 `OnChange` 简化属性，[#103](https://github.com/cipchk/ng-alain/issues/103)
+    - 优化G2加载性能，[#118](https://github.com/cipchk/ng-alain/issues/118)
+    - 重构移除所有 `host` 属性，[#116](https://github.com/cipchk/ng-alain/issues/116)
+    - 重构简化所有组件布尔、数字属性更友好的使用性，[#102](https://github.com/cipchk/ng-alain/issues/102)
 
 ### 0.3.2
 

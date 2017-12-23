@@ -14,9 +14,9 @@ type: Basic
 
 | 类型 | 位置 | 描述 |
 | ---- | --- | ---- |
-| 基础 | [LayoutComponent](//github.com/cipchk/ng-alain/blob/master/src/app/layout/layout.component.ts) | - |
+| 基础 | [LayoutDefaultComponent](//github.com/cipchk/ng-alain/blob/master/src/app/layout/default/default.component) | - |
 | 全屏 | [LayoutFullScreenComponent](//github.com/cipchk/ng-alain/blob/master/src/app/layout/fullscreen/fullscreen.component.ts) | - |
-| PRO用户授权 | [ProUserLayoutComponent](//github.com/cipchk/ng-alain/blob/master/src/app/layout/pro/user/user.component.ts) | 限 [pro](//cipchk.github.io/ng-alain/#/pro/user/login) 用户相关 |
+| 用户授权 | [LayoutPassportComponent](//github.com/cipchk/ng-alain/blob/master/src/app/layout/passport/passport.component.ts) | - |
 
 ## 如何使用
 
@@ -25,9 +25,9 @@ type: Basic
 ```ts
 export const routes = [
     {
-        // 父路由，指向的是 `LayoutComponent` 布局
+        // 父路由，指向的是 `LayoutDefaultComponent` 布局
         path: '',
-        component: LayoutComponent,
+        component: LayoutDefaultComponent,
         children: [
             // 子路由，仪表盘页
             { path: 'dashboard/v1', component: DashboardV1Component }

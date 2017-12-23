@@ -6,7 +6,9 @@ title:
 type: Basic
 ---
 
-`@delon/*` 是开发 ng-alain 必不可少的类库，ng-alain 提供的是一个基础的布局框架，而 `@delon/*` 更像是一个积木仓库，你可以从它找到相应的业务组件、指令、ACL、主题等内容来构建产品。
+[@delon](//www.npmjs.com/org/delon) 是开发 ng-alain 脚手架必不可少的类库，ng-alain 提供的是一个基础的布局框架，而 [@delon](//www.npmjs.com/org/delon) 更像是一个积木仓库，你可以从它找到相应的业务组件、指令、ACL、主题等内容来构建产品。
+
+[@delon](//www.npmjs.com/org/delon) 并不限于 ng-alain 脚手架，它是一套基于 Ant Design 理念设计的偏向业务型组件的类库，可以应用在任何其他 Angular 项目中。
 
 ## 模块
 

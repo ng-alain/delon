@@ -21,3 +21,11 @@ ng-alain 默认下有两处对任何网络请求进行一些处理。
 拦截器的好处不言而喻；统一处理服务器请求前缀，统一对每一请求加上 `token` 等。
 
 在 `src/app/core/net/default.interceptor.ts` 文件只是提供一种编码拦截器一个方式，你可以根据你自己的需求做调整。
+
+## 三、QA
+
+**Q：** 请求可能被拒绝或直接返回 `401` ?
+
+脚手架默认情况下使用了 `@delon/auth` 的 `SimpleInterceptor` 拦截器，导致在请求过程中若发现无法获取 Token 时会直接返回错误。
+
+[用户认证](//ng-alain.com/docs/auth)这个过程是中台必备的。

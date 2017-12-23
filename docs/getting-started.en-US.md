@@ -25,7 +25,11 @@ There are two ways to install:
 ### Clone the Git Repository
 
 ```bash
+# Blank branch (just only basic)
+git clone -b blank --depth 1 https://github.com/cipchk/ng-alain.git my-project
+# Or Master
 $ git clone --depth=1 https://github.com/cipchk/ng-alain.git my-project
+
 $ cd my-project
 ```
 
