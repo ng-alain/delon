@@ -79,6 +79,10 @@ ng-alain 默认很多字号、尺寸都是以`@font-size-base` 变量为基础�
 | `@aside-nav-selected-text-color` | `#fcfcfc` | 侧边栏菜单激活时背景颜色 |
 | `@aside-collapsed-wd` | `@layout-gutter * 8` | 侧边栏收缩后宽度 |
 | `@aside-collapsed-nav-fs` | `24px` | 侧边栏收缩后文本字号 |
+| `@aside-scrollbar-width` | `0` | 侧边栏滚动条宽度 |
+| `@aside-scrollbar-height` | `0` | 侧边栏滚动条高度 |
+| `@aside-scrollbar-track-color` | `transparent` | 侧边栏滚动条的轨道颜色 |
+| `@aside-scrollbar-thumb-color` | `transparent` | 侧边栏滚动条小方块颜色 |
 | `@content-heading-bg` | `#fafbfc` | 内容区域标题背景色 |
 | `@content-heading-border` | `#efe3e5` | 内容区域标题底部边框色 |
 | `@content-padding` | `@layout-gutter * 3` | 内容区域内边距 |
