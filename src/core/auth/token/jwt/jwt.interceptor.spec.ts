@@ -45,6 +45,9 @@ class MockTokenService implements ITokenService {
     clear() {
         this._data = null;
     }
+    get login_url() {
+        return '/login';
+    }
 }
 
 describe('auth: jwt.interceptor', () => {

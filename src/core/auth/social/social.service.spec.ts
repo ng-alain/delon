@@ -32,6 +32,9 @@ class MockTokenService implements ITokenService {
     clear() {
         this._data = null;
     }
+    get login_url() {
+        return '/login';
+    }
 }
 const mockRouter = {
     navigate: jasmine.createSpy('navigate'),

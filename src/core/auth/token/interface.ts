@@ -30,4 +30,7 @@ export interface ITokenService {
     clear(): void;
 
     change(): Observable<ITokenModel>;
+
+    /** 获取登录地址 */
+    readonly login_url: string;
 }

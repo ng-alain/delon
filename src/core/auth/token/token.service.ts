@@ -18,6 +18,10 @@ export class TokenService implements ITokenService {
         @Inject(DA_STORE_TOKEN) private store: IStore
     ) { }
 
+    get login_url(): string {
+        return this.options.login_url;
+    }
+
     set(data: ITokenModel): boolean {
         this.change$.next(data);
         return this.store.set(this.options.store_key, data);
