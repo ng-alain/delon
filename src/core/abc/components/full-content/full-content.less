@@ -1,0 +1,35 @@
+:host {
+    display: block;
+    height: 100%;
+    overflow: hidden;
+}
+::ng-deep {
+    .full-content {
+        overflow: hidden;
+        .content {
+            router-outlet + * {
+                height: 100%;
+                width: 100%;
+            }
+        }
+        .content__title {
+            margin-left: -24px;
+        }
+    }
+    .full-content-fs {
+        .header,
+        .aside,
+        reuse-tab {
+            display: none !important;
+        }
+        .content {
+            margin: 24px !important;
+        }
+    }
+    .full-content-ht {
+        .content__title,
+        pro-header {
+            display: none !important;
+        }
+    }
+}
