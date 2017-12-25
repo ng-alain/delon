@@ -7,7 +7,8 @@ const bump = require('gulp-bump');
 const runSequence = require('run-sequence');
 const inline_recources = require('../utils/inline-resources');
 // @ts-ignore
-const VERSION = require('../../../package.json').version;
+const VERSION = require('../../../package.json').version_laster;
+const NEXTVERSION = require('../../../package.json').version_next;
 
 const paths = {
     build: './.ng_build',
@@ -23,6 +24,7 @@ task('bundle:umd:auth', bundleUmdAuth);
 // @ts-ignore
 task('bundle', <any>[ 'bundle:umd:theme', 'bundle:umd:abc', 'bundle:umd:acl', 'bundle:umd:auth' ]);
 task('bump', bumpVersions);
+task('bump:next', bumpNextVersions);
 
 function bumpVersions() {
     src([
@@ -37,6 +39,21 @@ function bumpVersions() {
         }))
         .pipe(dest('./'));
 }
+
+function bumpNextVersions() {
+    src([
+        './package.json',
+        './scaffold/package.json',
+        './src/core/theme/package.json',
+        './src/core/abc/package.json',
+        './src/core/acl/package.json',
+        './src/core/auth/package.json'], {base: './'})
+        .pipe(bump({
+            version: NEXTVERSION
+        }))
+        .pipe(dest('./'));
+}
+
 function copySources() {
     src('./src/core/**/*')
         .pipe(dest(paths.build))
