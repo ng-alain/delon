@@ -60,7 +60,7 @@ export class LayoutComponent implements OnInit {
     ];
 
     constructor(
-        public menuSrv: MenuService,
+        private menuSrv: MenuService,
         public settings: SettingsService
     ) {}
 

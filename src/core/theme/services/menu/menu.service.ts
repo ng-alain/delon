@@ -1,4 +1,7 @@
-import { Injectable, Inject, Optional } from '@angular/core';
+import { Injectable, Inject, Optional, OnDestroy } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { share } from 'rxjs/operators';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
 
 export interface Menu {
@@ -51,11 +54,17 @@ export interface Menu {
 }
 
 @Injectable()
-export class MenuService {
+export class MenuService implements OnDestroy {
+
+    private _change$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
 
     private data: Menu[] = [];
 
     constructor(@Optional() @Inject(ALAIN_I18N_TOKEN) private i18nService: AlainI18NService) { }
+
+    get change(): Observable<Menu[]> {
+        return this._change$.pipe(share());
+    }
 
     visit(callback: (item: Menu, parentMenum: Menu, depth?: number) => void) {
         const inFn = (list: Menu[], parentMenu: Menu, depth: number) => {
@@ -115,6 +124,7 @@ export class MenuService {
         });
 
         this.loadShortcut(shortcuts);
+        this._change$.next(this.data);
     }
 
     /**
@@ -167,6 +177,7 @@ export class MenuService {
      */
     clear() {
         this.data = [];
+        this._change$.next(this.data);
     }
 
     /**
@@ -220,5 +231,9 @@ export class MenuService {
         } while (item);
 
         return ret;
+    }
+
+    ngOnDestroy(): void {
+        if (this._change$) this._change$.unsubscribe();
     }
 }

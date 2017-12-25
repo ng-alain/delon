@@ -10,7 +10,7 @@ export class ThemesService {
     styleTag: any;
     defaultTheme: ThemeType = 'A';
 
-    constructor(settings: SettingsService, @Inject(DOCUMENT) private doc: any) {
+    constructor(private settings: SettingsService, @Inject(DOCUMENT) private doc: any) {
         this.setTheme(settings.layout.theme);
     }
 
@@ -28,6 +28,7 @@ export class ThemesService {
         bodyEl.classList.remove(...removeArr);
         bodyEl.classList.add(`theme-${name.toLowerCase()}`);
         this.defaultTheme = name;
+        this.settings.setLayout('theme', name);
     }
 
     getDefaultTheme() {

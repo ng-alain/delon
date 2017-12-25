@@ -1,6 +1,7 @@
 import { Component, ElementRef, Renderer2, Inject, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { Subscription } from 'rxjs/Subscription';
 import { MenuService, Menu, SettingsService } from '@delon/theme';
 
 const SHOWCLS = 'nav-floating-show';
@@ -16,9 +17,11 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private rootEl: HTMLDivElement;
     private floatingEl: HTMLDivElement;
     private bodyEl: HTMLBodyElement;
+    list: Menu[] = [];
+    private change$: Subscription;
 
     constructor(
-        public menuSrv: MenuService,
+        private menuSrv: MenuService,
         public settings: SettingsService,
         private router: Router,
         el: ElementRef,
@@ -32,6 +35,10 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
         this.bodyEl = this.doc.querySelector('body');
         this.menuSrv.openedByUrl(this.router.url);
         this.genFloatingContainer();
+        this.change$ = <any>this.menuSrv.change.subscribe(res => {
+            this.list = res;
+            this.cd.detectChanges();
+        });
     }
 
     private floatingAreaClickHandle(e: MouseEvent) {
@@ -129,5 +136,6 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
+        if (this.change$) this.change$.unsubscribe();
     }
 }

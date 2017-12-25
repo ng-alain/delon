@@ -1,5 +1,5 @@
 <ul class="nav">
-    <ng-container *ngFor="let group of menuSrv.menus">
+    <ng-container *ngFor="let group of list">
         <ng-template [ngIf]="group.hide !== true">
             <li class="nav-group-title">
                 <span>{{ group.text }}</span>
