@@ -15,8 +15,5 @@
 		"url": "https://github.com/cipchk/delon/issues"
 	},
 	"homepage": "https://github.com/cipchk/delon#readme",
-	"keywords": ["delon", "ng-alain", "alain", "antd", "ng-zorro-antd"],
-	"peerDependencies": {
-		"ngx-countdown": "^1.0.4"
-	}
+	"keywords": ["delon", "ng-alain", "alain", "antd", "ng-zorro-antd"]
 }

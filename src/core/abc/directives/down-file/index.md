@@ -9,6 +9,12 @@ module: AdDownFileModule
 
 一个基于 `blob` 的文件下载。
 
+## 依赖
+
+```
+npm install --save file-saver
+```
+
 ## API
 
 参数 | 说明 | 类型 | 默认值

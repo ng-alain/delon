@@ -8,6 +8,12 @@ module: AdCountDownModule
 
 倒计时组件，依赖 [ngx-countdown](https://github.com/cipchk/ngx-countdown)。
 
+## 依赖
+
+```
+npm install --save ngx-countdown
+```
+
 ## API
 
 | 参数      | 说明          | 类型         | 默认值 |
