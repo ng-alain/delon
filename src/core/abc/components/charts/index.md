@@ -42,7 +42,7 @@ ng-alain 提供的业务中常用的图表类型，都是基于 [G2](https://ant
 | height | 图表高度 | `number` | - |
 | data | 数据 | `Array<{ x: number, y: number, [key: string]: any }>` | - |
 | borderWidth | 线条粗细 | `number` | `5` |
-| padding | 图表内部间距 | `array` | `[36, 5, 30, 5]` |
+| padding | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
 
 ### mini-area 迷你区域图
 
@@ -53,6 +53,7 @@ ng-alain 提供的业务中常用的图表类型，都是基于 [G2](https://ant
 | height | 图表高度 | `number` | - |
 | line | 是否显示描边 | `boolean` | false |
 | animate | 是否显示动画 | `boolean` | true |
+| padding | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
 | xAxis | [x 轴配置](https://antv.alipay.com/g2/doc/tutorial/start/axis.html) | object | - |
 | yAxis | [y 轴配置](https://antv.alipay.com/g2/doc/tutorial/start/axis.html) | object | - |
 | data | 数据 | `Array<{ x: number, y: number, [key: string]: any }>` | - |

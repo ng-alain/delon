@@ -1,9 +1,9 @@
-import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, NgZone, OnInit, Renderer2, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, HostBinding, ViewChild, ElementRef, OnDestroy, OnChanges, SimpleChanges, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
     selector: 'mini-bar',
-    template: `<div class="g2-chart__desc"><div #container></div></div>`,
+    template: `<div #container></div>`,
     styles: [`:host { display: block; }`],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -28,7 +28,7 @@ export class MiniBarComponent implements OnDestroy, OnChanges, OnInit {
     }
     private _borderWidth = 5;
 
-    @Input() padding: number[] = [36, 5, 30, 5];
+    @Input() padding: number[] = [ 8, 8, 8, 8 ];
 
     @Input() data: Array<{ x: number, y: number, [key: string]: any }>;
 
@@ -39,10 +39,9 @@ export class MiniBarComponent implements OnDestroy, OnChanges, OnInit {
     chart: any;
     initFlag = false;
 
-    constructor(private el: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef) { }
+    constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit(): void {
-        (this.el.nativeElement as HTMLElement).classList.add('g2-chart', 'min-chart');
         this.initFlag = true;
         setTimeout(() => this.install(), 100);
     }
@@ -55,7 +54,7 @@ export class MiniBarComponent implements OnDestroy, OnChanges, OnInit {
         const chart = new G2.Chart({
             container: this.node.nativeElement,
             forceFit: true,
-            height: +this.height + 54,
+            height: +this.height,
             padding: this.padding,
             legend: null
         });
