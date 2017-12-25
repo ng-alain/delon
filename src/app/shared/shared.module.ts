@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { NgZorroAntdExtraModule } from 'ng-zorro-antd-extra';
 import { AlainThemeModule } from '@delon/theme';
-import { AlainABCModule, SimpleTableConfig } from '@delon/abc';
+import { AlainABCModule, SimpleTableConfig, FullContentService } from '@delon/abc';
 import { AlainACLModule } from '@delon/acl';
 
 // third libs
@@ -137,7 +137,8 @@ import {
     AdTrendModule,
     AdDownFileModule,
     AdImageModule,
-    AdUtilsModule
+    AdUtilsModule,
+    AdFullContentModule
 } from '@delon/abc';
 const ABCMODULES = [
     AdSimpleTableModule,
@@ -160,7 +161,8 @@ const ABCMODULES = [
     AdTrendModule,
     AdDownFileModule,
     AdImageModule,
-    AdUtilsModule
+    AdUtilsModule,
+    AdFullContentModule
 ];
 // endregion
 
@@ -202,7 +204,8 @@ export class SharedModule {
                 NzNotificationService,
                 NzMessageService,
                 // @delon/abc
-                SimpleTableConfig
+                SimpleTableConfig,
+                FullContentService
             ]
         };
     }

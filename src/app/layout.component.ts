@@ -34,6 +34,7 @@ export class LayoutComponent implements OnInit {
                     link: '/dashboard',
                     icon: 'anticon anticon-appstore-o'
                 },
+                { text: 'table', link: '/abc/table' },
                 { text: 'Reuse Tab', link: '/abc/reuse-tab' },
                 { text: 'Ellipsis', link: '/abc/ellipsis' },
                 { text: 'JWT', link: '/acl/jwt' },

@@ -50,6 +50,7 @@ columns | 列描述 | `SimpleTableColumn[]` | -
 ps | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10`
 bordered | 是否显示边框 | `boolean` | `false`
 size | table大小 | `small,middle,default` | `default`
+scroll | 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: 300 }` | `{ y: number }` | -
 showSizeChanger | 是否显示pagination中改变页数 | `boolean` | `false`
 pageSizeSelectorValues | pagination中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]`
 showQuickJumper | 是否显示pagination中快速跳转 | `boolean` | `false`
@@ -98,6 +99,7 @@ selections? | 选择功能配置 | `SimpleTableSelection[]` | -
 className? | 列 `class` 属性值，例如：；`text-center` 居中； `text-right` 居右； `text-danger` 异常色 | `string` | -
 colSpan? | 合并列 | `number` | -
 dateFormat? | 日期格式，`type=date` 有效 | `string` | `YYYY-MM-DD HH:mm`
+ynTruth? | 真值条件，`type=yn` 有效，（默认：`true`） | `any` | -
 ynYes? | 徽章 `true` 时文本，`type=yn` 有效 | `string` | `是`
 ynNo? | 徽章 `false` 时文本，`type=yn` 有效 | `string` | `否`
 

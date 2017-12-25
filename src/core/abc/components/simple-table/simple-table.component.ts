@@ -97,6 +97,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     private _bordered = false;
     /** table大小 */
     @Input() size: 'small' | 'middle' | 'default' = 'default';
+    /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: 300 }` */
+    @Input() scroll: { y: number };
     /** 是否显示pagination中改变页数 */
     @Input()
     get showSizeChanger() { return this._showSizeChanger; }
@@ -169,6 +171,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         private yn: YNPipe
     ) {
         Object.assign(this, defConfig);
+    }
+
+    load(pi = 1) {
+        this.pi = pi;
+        this._change('pi');
     }
 
     _change(type: 'pi' | 'ps') {
@@ -247,12 +254,16 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
                 this.pi = !this.pi ? 1 : (this.pi > maxPageIndex ? maxPageIndex : this.pi);
             }
         }
-        this.total = data.length;
+        this.total = this.total <= 0 ? data.length : this.total;
         this._subscribeData(data.slice((this.pi - 1) * this.ps, this.pi * this.ps));
     }
 
     _toTop() {
         if (!this.toTopInChange) return;
+        if (this.scroll) {
+            (this.el.nativeElement as HTMLElement).querySelector('.ant-table-body').scrollTo(0, 0);
+            return ;
+        }
         if (this.el.nativeElement.scrollIntoView) this.el.nativeElement.scrollIntoView();
         // todo: toTopOffset
     }
@@ -271,7 +282,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
             case 'date':
                 return this.date.transform(ret, col.dateFormat);
             case 'yn':
-                return this.yn.transform(ret, col.ynYes, col.ynNo);
+                return this.yn.transform(ret === col.ynTruth, col.ynYes, col.ynNo);
             default:
                 break;
         }
@@ -456,27 +467,30 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
                 item.indexKey = item.index.join('.');
             }
+            // rowSelection
+            if (!item.selections) item.selections = [];
             if (item.type === 'checkbox') {
                 ++checkboxCount;
-                if (!item.width) item.width = '50px';
+                if (!item.width) item.width = `${item.selections.length > 0 ? 60 : 50}px`;
             }
             if (item.type === 'radio') {
                 ++radioCount;
-                if (!item.width) item.width = '50px';
                 item.selections = [];
+                if (!item.width) item.width = '50px';
             }
 
             if (!item.className) {
                 item.className = {
-                    'checkbox': 'text-center',
-                    'radio': 'text-center',
+                    // 'checkbox': 'text-center',
+                    // 'radio': 'text-center',
                     'currency': 'text-right',
                     'date': 'text-center'
                 }[item.type];
             }
 
-            // rowSelection
-            if (!item.selections) item.selections = [];
+            if (item.type === 'yn' && typeof item.ynTruth === 'undefined')
+                item.ynTruth = true;
+
             // sorter
             if (item.sorter) {
                 sortMap[idx] = { v: item.sort, key: item.sortKey || item.indexKey };

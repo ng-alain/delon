@@ -138,6 +138,10 @@ export interface SimpleTableColumn {
      */
     dateFormat?: string;
     /**
+     * 真值条件，`type=yn` 有效，（默认：`true`）
+     */
+    ynTruth?: any;
+    /**
      * 徽章 `true` 时文本，`type=yn` 有效，（默认：是）
      */
     ynYes?: string;

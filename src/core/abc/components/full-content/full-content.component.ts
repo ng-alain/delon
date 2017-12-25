@@ -3,8 +3,9 @@ import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coerci
 import { DOCUMENT } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, filter, distinct } from 'rxjs/operators';
 import { FullContentService } from './full-content.service';
+import { Router, ActivationStart, ActivationEnd } from '@angular/router';
 
 const cls = `full-content`;
 const fsCls = `full-content-fs`;
@@ -21,6 +22,10 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
     private bodyEl: HTMLBodyElement;
     private inited = false;
     private srv$: Subscription;
+    private route$: Subscription;
+
+    @HostBinding('attr.id')
+    id = `_full-content-${Math.random().toString(36).substring(2)}`;
 
     @HostBinding('style.height.px')
     _height = 0;
@@ -55,6 +60,7 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
     constructor(
         private el: ElementRef,
         private render: Renderer2,
+        private router: Router,
         private cd: ChangeDetectorRef,
         private srv: FullContentService,
         @Inject(DOCUMENT) private doc: Document
@@ -70,17 +76,32 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
         this.srv$ = <any>this.srv.change.subscribe(res => {
             if (res) this.toggle();
         });
+        this.route$ = <any>this.router.events.pipe(
+            filter((e: any) => e instanceof ActivationStart || e instanceof ActivationEnd),
+            debounceTime(100)
+        ).subscribe(e => {
+            if (!!document.querySelector('#' + this.id)) {
+                this.bodyEl.classList.add(cls);
+                this.updateFsCls();
+            } else {
+                this.bodyEl.classList.remove(cls, fsCls, hideTitleCls);
+            }
+        });
     }
 
     ngAfterViewInit(): void {
     }
 
-    private update() {
+    private updateFsCls() {
         if (this.fullscreen) {
             this.bodyEl.classList.add(fsCls, this.hideTitle ? hideTitleCls : '');
         } else {
             this.bodyEl.classList.remove(fsCls, this.hideTitle ? hideTitleCls : '');
         }
+    }
+
+    private update() {
+        this.updateFsCls();
         this.fullscreenChange.emit(this.fullscreen);
     }
 
@@ -103,6 +124,7 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
         this.bodyEl.classList.remove(cls, fsCls, hideTitleCls);
         this.uninstallResizeEvent();
         if (this.srv$) this.srv$.unsubscribe();
+        if (this.route$) this.route$.unsubscribe();
     }
 
     // region: resize

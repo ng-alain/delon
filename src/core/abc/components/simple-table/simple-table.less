@@ -22,17 +22,20 @@
     }
 
     ::ng-deep {
-        img {}
         .ant-radio-wrapper {
             margin-right: 0;
         }
-        th.ant-table-selection-column {
-            padding-right: 0;
-            padding-left: 16px;
-        }
-        .ant-table-selection-column {
-            .ant-checkbox-wrapper {
-                margin-right: 0;
+
+        .ant-table-thead > tr > th,
+        .ant-table-tbody > tr > td {
+            &.ant-table-selection-column {
+                min-width: auto;
+                width: auto;
+                padding-left: 16px;
+                text-align: inherit;
+                .ant-checkbox-wrapper {
+                    margin-right: 0;
+                }
             }
         }
     }
