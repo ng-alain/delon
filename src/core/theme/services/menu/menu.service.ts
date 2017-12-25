@@ -174,14 +174,6 @@ export class MenuService {
      * @param url URL地址
      */
     openedByUrl(url: string) {
-        this.setDefault(url);
-    }
-
-    /**
-     * 【已过期】请使用 `openedByUrl`
-     * @deprecated
-     */
-    setDefault(url: string) {
         if (!url) {
             return;
         }
