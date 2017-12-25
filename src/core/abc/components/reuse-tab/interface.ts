@@ -39,7 +39,7 @@ export interface ReuseTabCached {
 
     _snapshot: ActivatedRouteSnapshot;
 
-    _handle: {};
+    _handle: any;
 
     [key: string]: any;
 }

@@ -45,6 +45,11 @@ export class ReuseTabService implements OnDestroy {
     get(path: string): ReuseTabCached {
         return path ? this._cached.find(w => w.url === path) || null : null;
     }
+
+    private destroy(_handle: any) {
+        if (_handle && _handle.componentRef && _handle.componentRef.destroy) _handle.componentRef.destroy();
+    }
+
     /**
      * 移除指定路径缓存
      */
@@ -57,17 +62,20 @@ export class ReuseTabService implements OnDestroy {
         const idx = this.index(url);
         const item = idx !== -1 ? this._cached[idx] : null;
         if (item) {
+            this.destroy(item._handle);
             this._cached.splice(idx, 1);
             delete this._titleCached[url];
         }
         this._cachedChange.next({ active: 'remove', item });
         return true;
     }
+
     /**
      * 清除所有缓存
      */
     clear() {
         this.removeBuffer = null;
+        this._cached.forEach(v => this.destroy(v._handle));
         this._cached = [];
         this._titleCached = {};
         this._cachedChange.next({ active: 'clear' });
