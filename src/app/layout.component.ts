@@ -39,14 +39,29 @@ export class LayoutComponent implements OnInit {
                 { text: 'Ellipsis', link: '/abc/ellipsis' },
                 { text: 'JWT', link: '/acl/jwt' },
                 { text: 'ueditor', link: '/editor/ueditor' },
-                { text: 'tinymce', link: '/editor/tinymce' }
+                { text: 'tinymce', link: '/editor/tinymce' },
+                {
+                    text: 'ABC',
+                    icon: 'anticon anticon-appstore',
+                    children: [
+                        { text: 'Reuse Tab', link: '/abc/reuse-tab' },
+                        { text: 'Ellipsis', link: '/abc/ellipsis' }
+                    ]
+                },
+                {
+                    text: 'ACL',
+                    icon: 'anticon anticon-save',
+                    children: [
+                        { text: 'JWT', link: '/acl/jwt' }
+                    ]
+                }
             ]
         }
     ];
 
     constructor(
-        private menuSrv: MenuService,
-        private settings: SettingsService
+        public menuSrv: MenuService,
+        public settings: SettingsService
     ) {}
 
     toggleCollapsedSideabar() {

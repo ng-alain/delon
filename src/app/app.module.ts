@@ -14,19 +14,12 @@ import { AlainABCModule } from '@delon/abc';
 import { AlainAuthModule } from '@delon/auth';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
-
-import { ThemeComponent } from 'app/theme/component';
-import { DemoComponent } from 'app/abc/component';
-import { ACLComponent } from 'app/acl/component';
-import { AuthComponent } from 'app/auth/auth.component';
 import { LayoutComponent } from 'app/layout.component';
-import { CallbackComponent } from 'app/auth/callback.component';
 import { DemoModalComponent } from './shared/components/modal/demo.component';
 
 @NgModule({
   declarations: [
     AppComponent, LayoutComponent,
-    ThemeComponent, DemoComponent, ACLComponent, AuthComponent, CallbackComponent,
     DemoModalComponent
   ],
   imports: [
@@ -34,19 +27,6 @@ import { DemoModalComponent } from './shared/components/modal/demo.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot([
-        {
-            path: '',
-            component: LayoutComponent,
-            children: [
-                { path: 'theme', component: ThemeComponent },
-                { path: 'abc', component: DemoComponent },
-                { path: 'acl', component: ACLComponent },
-                { path: 'auth', component: AuthComponent },
-                { path: 'callback/:type', component: CallbackComponent }
-            ]
-        }
-    ]),
     BrowserAnimationsModule,
     NgZorroAntdModule.forRoot(),
     NgZorroAntdExtraModule.forRoot(),
