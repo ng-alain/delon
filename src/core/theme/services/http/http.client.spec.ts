@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { _HttpClient } from './http.client';
 import { ALAIN_THEME_OPTIONS } from 'core/theme';
 
@@ -27,14 +27,14 @@ describe('theme: http.client', () => {
         backend = injector.get(HttpTestingController);
     });
 
-    it('#loading', (done: () => void) => {
-        http.get(URL).subscribe(res => {
-            expect(http.loading).toBeFalsy();
-            done();
-        });
+    it('#loading', fakeAsync(() => {
+        http.get(URL).subscribe(res => { });
+        tick(10);
         expect(http.loading).toBeTruthy();
         backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(OK);
-    });
+        tick(10);
+        expect(http.loading).toBeFalsy();
+    }));
 
     it('#SERVER_URL', () => {
         expect(http.SERVER_URL).toBe(SERVER_URL);

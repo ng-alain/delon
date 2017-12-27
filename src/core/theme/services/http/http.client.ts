@@ -53,12 +53,12 @@ export class _HttpClient {
 
     private begin() {
         // console.time('http');
-        this._loading = true;
+        setTimeout(() => this._loading = true);
     }
 
     private end() {
         // console.timeEnd('http');
-        this._loading = false;
+        setTimeout(() => this._loading = false);
     }
 
     /** 服务端URL地址 */
