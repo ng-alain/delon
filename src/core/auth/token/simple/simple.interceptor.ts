@@ -28,7 +28,7 @@ export class SimpleInterceptor implements HttpInterceptor {
 
         const model = this.injector.get(DA_SERVICE_TOKEN).get() as SimpleTokenModel;
         if (model && model.token) {
-            const token = (options.token_send_template || '${token}').replace('${token}', model.token);
+            const token = (options.token_send_template || '${token}').replace(/\$\{([\w]+)\}/g, (_: string, g) => model[g] || '');
             switch (options.token_send_place) {
                 case 'header':
                     const obj = {};

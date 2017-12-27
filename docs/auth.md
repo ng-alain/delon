@@ -175,7 +175,7 @@ token_send_place = 'header';
 | `token_invalid_redirect` | `boolean` | `true` | 无效时跳转至登录页，包括：无效token值、token已过期（限JWT） |
 | `token_exp_offset` | `number` | `10` | JWT token过期时间偏移值（单位：秒） |
 | `token_send_key` | `string` | `token` | 发送token参数名 |
-| `token_send_template` | `string` | `${token}` | 发送token模板，使用 `${token}` 表示token点位符 |
+| `token_send_template` | `string` | `${token}` | 发送token模板，以 `${属性名}` 表示占位符，属性名要确保存在否则以空字符代替 |
 | `token_send_place` | `header,body,url` | `header` | 发送token参数位置 |
 | `login_url` | `string` | `/login` | 登录页路由地址 |
 | `ignores` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略TOKEN的URL地址列表 |

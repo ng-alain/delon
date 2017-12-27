@@ -18,6 +18,7 @@ import { optionsFactory } from '../../index';
 function genModel(token: string = `123`) {
     const model = new SimpleTokenModel();
     model.token = token;
+    model.uid = 1;
     return model;
 }
 
@@ -164,21 +165,36 @@ describe('auth: simple.interceptor', () => {
 
     describe('token template', () => {
         const basicModel = genModel();
-        beforeEach(() => {
+
+        it('should be [Bearer ${token}]', (done: () => void) => {
             genModule({
                 token_send_place: 'header',
                 token_send_key: 'Authorization',
                 token_send_template: 'Bearer ${token}'
             }, basicModel);
-        });
 
-        it('should be', (done: () => void) => {
             injector.get(HttpClient).get('/test', { responseType: 'text' }).subscribe(value => {
                 done();
             });
             const ret = injector.get(HttpTestingController)
                 .expectOne(r => r.method === 'GET' && (<string>r.url).startsWith('/test')) as TestRequest;
-            expect(ret.request.headers.get('Authorization')).toBe('Bearer ' + basicModel.token);
+            expect(ret.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.token}`);
+            ret.flush('ok!');
+        });
+
+        it('should be [Bearer ${uid}-${token}]', (done: () => void) => {
+            genModule({
+                token_send_place: 'header',
+                token_send_key: 'Authorization',
+                token_send_template: 'Bearer ${uid}-${token}'
+            }, basicModel);
+
+            injector.get(HttpClient).get('/test', { responseType: 'text' }).subscribe(value => {
+                done();
+            });
+            const ret = injector.get(HttpTestingController)
+                .expectOne(r => r.method === 'GET' && (<string>r.url).startsWith('/test')) as TestRequest;
+            expect(ret.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.uid}-${basicModel.token}`);
             ret.flush('ok!');
         });
     });
