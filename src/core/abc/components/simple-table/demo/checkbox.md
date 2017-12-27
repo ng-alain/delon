@@ -7,12 +7,12 @@ title: 可选择
 
 ```ts
 import { Component } from '@angular/core';
-import { SimpleTableColumn } from '@delon/abc';
+import { SimpleTableColumn, SimpleTableData } from '@delon/abc';
 
 @Component({
     selector: 'app-demo',
     template: `<simple-table [url]="url" [extraParams]="params" [total]="total" [columns]="columns"
-                [resReName]="{list: 'results' }"
+                [preDataChange]="dataChange" [resReName]="{list: 'results' }"
                 (checkboxChange)="checkboxChange($event)"></simple-table>`
 })
 export class DemoComponent {
@@ -28,6 +28,12 @@ export class DemoComponent {
     ];
     checkboxChange(list: any[]) {
         console.log('checkboxChange', list);
+    }
+    dataChange(data: SimpleTableData[]) {
+        return data.map((i: SimpleTableData, index: number) => {
+            i.disabled = index === 0;
+            return i;
+        });
     }
 }
 ```

@@ -70,6 +70,7 @@ filterChange | Filter回调 | `EventEmitter` | -
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 checked? | 选择框或单选框状态值 | `boolean` | -
+disabled? | 选择框或单选框 `disabled` 值 | `boolean` | -
 [key: string]: any | - | - | -
 
 ### SimpleTableColumn

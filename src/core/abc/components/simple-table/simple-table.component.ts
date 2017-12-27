@@ -18,7 +18,7 @@ import { SimpleTableRowDirective } from './simple-table-row.directive';
 export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
     private data$: Subscription;
-    _data: (SimpleTableData)[] = [];
+    _data: SimpleTableData[] = [];
     _isAjax = false;
     _isPagination = true;
     _classMap: string[] = [];
@@ -147,12 +147,14 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     private _toTopOffset = 0;
     /** 重命名排序值，`columns` 的重命名高于属性 */
     @Input() sortReName: { ascend?: string, descend?: string };
+    /** 数据处理前回调 */
+    @Input() preDataChange: (data: SimpleTableData[]) => SimpleTableData[];
     /** 页码、每页数量变化时回调 */
     @Output() change: EventEmitter<SimpleTableChange> = new EventEmitter<SimpleTableChange>();
     /** checkbox变化时回调，参数为当前所选清单 */
-    @Output() checkboxChange: EventEmitter<any[]> = new EventEmitter<any[]>();
+    @Output() checkboxChange: EventEmitter<SimpleTableData[]> = new EventEmitter<SimpleTableData[]>();
     /** radio变化时回调，参数为当前所选 */
-    @Output() radioChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() radioChange: EventEmitter<SimpleTableData> = new EventEmitter<SimpleTableData>();
     /** 排序回调 */
     @Output() sortChange: EventEmitter<any> = new EventEmitter<any>();
     /** Filter回调 */
@@ -290,6 +292,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     }
 
     private _subscribeData(res: any[]) {
+        if (this.preDataChange) res = this.preDataChange(res);
         this.loading = false;
         this._data = res;
         this._refCheck();
@@ -386,24 +389,27 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     // region: checkbox
 
     _checkAll() {
-        for (const item of this._data) {
-            item.checked = this._allChecked;
-        }
+        this._data.filter(w => !w.disabled).forEach(i => i.checked = this._allChecked);
         this._refCheck();
         this.checkboxChange.emit(this._data.filter(w => w.checked === true));
     }
 
+    _checkSelection(i: SimpleTableData) {
+        this.checkboxChange.emit(this._data.filter(w => w.checked === true));
+    }
+
     _refCheck() {
-        const checkedList = this._data.filter(w => w.checked === true);
-        this._allChecked = checkedList.length > 0 && checkedList.length === this._data.length;
-        const allUnChecked = this._data.every(value => !value.checked);
+        const validData = this._data.filter(w => !w.disabled);
+        const checkedList = validData.filter(w => w.checked === true);
+        this._allChecked = checkedList.length > 0 && checkedList.length === validData.length;
+        const allUnChecked = validData.every(value => !value.checked);
         this._indeterminate = (!this._allChecked) && (!allUnChecked);
     }
 
     _rowSelection(row: SimpleTableSelection) {
         if (row.select) row.select(this._data);
         this._refCheck();
-        this.checkboxChange.emit(this._data.filter(w => w.checked === true));
+        this.checkboxChange.emit(this._data.filter(w => !w.disabled && w.checked === true));
     }
 
     // endregion

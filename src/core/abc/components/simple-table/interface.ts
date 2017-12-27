@@ -10,6 +10,10 @@ export interface SimpleTableData {
      * 选择框或单选框状态值
      */
     checked?: boolean;
+    /**
+     * 选择框或单选框 `disabled` 值
+     */
+    disabled?: boolean;
 
     [key: string]: any;
 }
