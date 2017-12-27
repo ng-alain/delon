@@ -6,6 +6,37 @@ title:
 type: Other
 ---
 
+### 0.5.0-rc.2 （@next）
+
+`2017-12-27`
+
+- ng-alain 脚手架
+    - 新增 `full-content` [示例页](//cipchk.github.io/ng-alain/tables/fs-table)
+- @delon/abc
+    - 新增 `full-content` 全屏工作区组件，[Document](//ng-alain.com/components/full-content)
+
+### 0.4.2
+
+> `0.4.1` invalid
+
+`2017-12-27`
+
+- 新增 `@next` NPM版本，用于区分稳定版本与展望版本
+- ng-alain 脚手架
+    - 修复顶部锁屏无效链接
+- @delon/theme
+    - 新增 `MenuService` 的 `change` 属性，可用于监听菜单数据的变更通知
+    - 修复 `_HttpClient` 共享服务 `loading` 容易引起 `ExpressionChangedAfterItHasBeenCheckedError` 问题
+    - 优化 `ThemeService.setTheme` 调用时同步调用 `SettingsService`
+- @delon/abc
+    - 修复 `reuse-tab` 组件在移除时自动调用目标组件 `OnDestroy` 事件，避免内存泄露
+    - 优化 G2 部分组件
+    - `simple-talbe` 变更
+        - 支持固定表头
+        - `columens` 支持 `ynTruth` 属性
+        - 修复选择框、单选框对齐问题
+    - 移除 `ngx-countdown` 强制依赖
+
 ### 0.4.0
 
 `2017-12-24`

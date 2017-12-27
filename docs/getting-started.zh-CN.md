@@ -12,11 +12,12 @@ ng-alain 是一个基于 ng-zorro-antd 的企业级中后台前端脚手架，�
 
 ## 版本
 
-- ng-alain 脚手架：[![NPM version](//img.shields.io/npm/v/ng-alain.svg)](//www.npmjs.com/package/ng-alain)
-- `@delon/theme`：[![NPM version](//img.shields.io/npm/v/@delon/theme.svg)](//www.npmjs.com/package/@delon/theme)
-- `@delon/abc`：[![NPM version](//img.shields.io/npm/v/@delon/abc.svg)](//www.npmjs.com/package/@delon/abc)
-- `@delon/acl`：[![NPM version](//img.shields.io/npm/v/@delon/acl.svg)](//www.npmjs.com/package/@delon/acl)
-- `@delon/auth`: [![NPM version](//img.shields.io/npm/v/@delon/auth.svg)](//www.npmjs.com/package/@delon/auth)
+| package name | version | next version |
+| ------------ |:-----:|:----------:|
+| @delon/theme | [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme) | [![NPM version](https://img.shields.io/npm/v/@delon/theme/next.svg)](https://www.npmjs.com/package/@delon/theme) |
+| @delon/abc | [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc) | [![NPM version](https://img.shields.io/npm/v/@delon/abc/next.svg)](https://www.npmjs.com/package/@delon/abc) |
+| @delon/acl | [![NPM version](https://img.shields.io/npm/v/@delon/acl.svg)](https://www.npmjs.com/package/@delon/acl) | [![NPM version](https://img.shields.io/npm/v/@delon/acl/next.svg)](https://www.npmjs.com/package/@delon/acl) |
+| @delon/auth | [![NPM version](https://img.shields.io/npm/v/@delon/auth.svg)](https://www.npmjs.com/package/@delon/auth) | [![NPM version](https://img.shields.io/npm/v/@delon/auth/next.svg)](https://www.npmjs.com/package/@delon/auth) |
 
 ## 安装
 
