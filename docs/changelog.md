@@ -6,6 +6,17 @@ title:
 type: Other
 ---
 
+### 0.4.3
+
+`2017-12-28`
+
+- @delon/abc
+    - `simple-talbe` 变更
+        - 新增 `disabled` 属性表示当前行多、单选框是否禁用状态，[#151](https://github.com/cipchk/ng-alain/issues/151)
+        - 修复无法显示部分数据类型问题
+- @delon/auth
+    - `token_send_template` 支持多属性（例如：`${uid}-${token}`），[#154](https://github.com/cipchk/ng-alain/issues/154)
+
 ### 0.5.0-rc.2 （@next）
 
 `2017-12-27`
