@@ -244,6 +244,7 @@ export class ReuseTabService implements OnDestroy {
      * 决定是否应该进行复用路由处理
      */
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+		// 增加针对带参路由情况的判断
         return future.routeConfig === curr.routeConfig && 
         JSON.stringify(future.params) === JSON.stringify(curr.params);
     }
