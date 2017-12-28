@@ -21,19 +21,23 @@ task('bundle:umd:theme', bundleUmdTheme);
 task('bundle:umd:abc', bundleUmdABC);
 task('bundle:umd:acl', bundleUmdACL);
 task('bundle:umd:auth', bundleUmdAuth);
+task('bundle:umd:mock', bundleUmdMock);
 // @ts-ignore
-task('bundle', <any>[ 'bundle:umd:theme', 'bundle:umd:abc', 'bundle:umd:acl', 'bundle:umd:auth' ]);
+task('bundle', <any>[ 'bundle:umd:theme', 'bundle:umd:abc', 'bundle:umd:acl', 'bundle:umd:auth', 'bundle:umd:mock' ]);
 task('bump', bumpVersions);
 task('bump:next', bumpNextVersions);
 
+const versionPaths = [
+    './package.json',
+    './scaffold/package.json',
+    './src/core/theme/package.json',
+    './src/core/abc/package.json',
+    './src/core/acl/package.json',
+    './src/core/auth/package.json',
+    './src/core/mock/package.json'];
+
 function bumpVersions() {
-    src([
-        './package.json',
-        './scaffold/package.json',
-        './src/core/theme/package.json',
-        './src/core/abc/package.json',
-        './src/core/acl/package.json',
-        './src/core/auth/package.json'], {base: './'})
+    src(versionPaths, {base: './'})
         .pipe(bump({
             version: VERSION
         }))
@@ -41,13 +45,7 @@ function bumpVersions() {
 }
 
 function bumpNextVersions() {
-    src([
-        './package.json',
-        './scaffold/package.json',
-        './src/core/theme/package.json',
-        './src/core/abc/package.json',
-        './src/core/acl/package.json',
-        './src/core/auth/package.json'], {base: './'})
+    src(versionPaths, {base: './'})
         .pipe(bump({
             version: NEXTVERSION
         }))
@@ -105,6 +103,10 @@ function bundleUmdACL() {
 
 function bundleUmdAuth() {
     bundle(`${paths.lib}/auth/`);
+}
+
+function bundleUmdMock() {
+    bundle(`${paths.lib}/mock/`);
 }
 
 function bundle(path: string) {

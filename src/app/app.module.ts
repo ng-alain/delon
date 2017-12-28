@@ -12,10 +12,21 @@ import { AlainThemeModule } from '@delon/theme';
 import { AlainACLModule } from '@delon/acl';
 import { AlainABCModule } from '@delon/abc';
 import { AlainAuthModule } from '@delon/auth';
+import { DelonMockModule } from '@delon/mock';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutComponent } from 'app/layout.component';
 import { DemoModalComponent } from './shared/components/modal/demo.component';
+
+// mock data
+import * as MOCKDATA from '../../_mock';
+import { environment } from '../environments/environment';
+const MOCKMODULE = [];
+if (!environment.production) {
+    MOCKMODULE.push(DelonMockModule.forRoot({
+        data: MOCKDATA
+    }));
+}
 
 @NgModule({
   declarations: [
@@ -35,6 +46,7 @@ import { DemoModalComponent } from './shared/components/modal/demo.component';
     AlainABCModule.forRoot(),
     AlainACLModule.forRoot(),
     AlainAuthModule.forRoot({}),
+    ...MOCKMODULE,
     RoutesModule
   ],
   providers: [ ],

@@ -8,6 +8,7 @@ import { NgZorroAntdExtraModule } from 'ng-zorro-antd-extra';
 import { AlainThemeModule } from '@delon/theme';
 import { AlainABCModule, SimpleTableConfig, FullContentService } from '@delon/abc';
 import { AlainACLModule } from '@delon/acl';
+import { DelonMockModule } from '@delon/mock';
 
 // third libs
 import { CountdownModule } from 'ngx-countdown';
@@ -178,6 +179,7 @@ const ABCMODULES = [
         AlainThemeModule.forChild(),
         ...ABCMODULES,
         AlainACLModule.forRoot(),
+        DelonMockModule,
         // third libs
         CountdownModule
     ],
@@ -191,6 +193,7 @@ const ABCMODULES = [
         AlainThemeModule,
         ...ABCMODULES,
         AlainACLModule,
+        DelonMockModule,
         // third libs
         CountdownModule
     ]

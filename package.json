@@ -58,9 +58,9 @@
 		"release:prepare": "npm run build:package",
 		"release:validity:next": "npm run version:bump:next && npm run release:prepare",
 		"release:validity": "npm run version:bump && npm run release:prepare",
-		"temp:release:auth": "npm run release:prepare && npm publish --access=public .lib/auth",
-		"release:next": "npm run release:validity:next && npm publish --tag next --access=public .lib/theme && npm publish --tag next --access=public .lib/abc && npm publish --tag next --access=public .lib/acl && npm publish --tag next --access=public .lib/auth",
-		"release": "npm run release:validity && npm publish --access=public .lib/theme && npm publish --access=public .lib/abc && npm publish --access=public .lib/acl && npm publish --access=public .lib/auth",
+		"temp:release:mock": "npm run release:prepare && npm publish --access=public .lib/mock",
+		"release:next": "npm run release:validity:next && npm publish --tag next --access=public .lib/theme && npm publish --tag next --access=public .lib/abc && npm publish --tag next --access=public .lib/acl && npm publish --tag next --access=public .lib/auth && npm publish --tag next --access=public .lib/mock",
+		"release": "npm run release:validity && npm publish --access=public .lib/theme && npm publish --access=public .lib/abc && npm publish --access=public .lib/acl && npm publish --access=public .lib/auth && npm publish --access=public .lib/mock",
 		"scaffold:install": "cd ./scaffold && npm install",
 		"scaffold:start": "cd ./scaffold && npm run start",
 		"scaffold:analyze": "cd ./scaffold && npm run analyze",
@@ -157,7 +157,9 @@
 		"ts-node": "~3.2.0",
 		"tslint": "~5.7.0",
 		"tslint-language-service": "^0.9.6",
-		"typescript": "~2.5.0"
+		"typescript": "~2.5.0",
+		"mockjs": "^1.0.1-beta3",
+		"@types/mockjs": "^1.0.0"
 	},
 	"lint-staged": {
 		"src/**/*.ts": "lint:ts",
