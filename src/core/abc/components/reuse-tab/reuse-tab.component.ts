@@ -81,13 +81,13 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
             };
         });
         if (this.showCurrent) {
-            const idx = ls.findIndex(w => w.url === url);
+            const idx = ls.findIndex(w => w.url === this.srv.getUrl(this.route.snapshot));
             if (idx !== -1) {
                 this._pos = idx;
             } else {
                 ls.push({
                     url,
-                    title: this.srv.getTitle(url, this.srv.getTruthRoute(this.route.snapshot)),
+                    title: this.srv.getTitle(this.srv.getUrl(this.route.snapshot), this.srv.getTruthRoute(this.route.snapshot)),
                     // closabled: this.allowClose && this.srv.getClosable(url, next.snapshot),
                     index: -1
                 });

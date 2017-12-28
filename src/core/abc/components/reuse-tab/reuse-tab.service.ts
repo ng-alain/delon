@@ -1,9 +1,10 @@
-import { Injectable, OnDestroy, Optional, Injector } from '@angular/core';
+import { Injectable, OnDestroy, Optional, Injector, Inject } from '@angular/core';
 import { ActivatedRouteSnapshot, DetachedRouteHandle, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MenuService } from '@delon/theme';
 import { ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify } from './interface';
+import { ALAIN_I18N_TOKEN, AlainI18NService } from 'core/theme/services/i18n/i18n';
 
 @Injectable()
 export class ReuseTabService implements OnDestroy {
@@ -110,13 +111,15 @@ export class ReuseTabService implements OnDestroy {
 
     // endregion
 
-    constructor(private injector: Injector, @Optional() private menuService: MenuService) { }
+    constructor(private injector: Injector, 
+        @Optional() @Inject(ALAIN_I18N_TOKEN) private translatorSrv: AlainI18NService,
+        @Optional() private menuService: MenuService) { }
 
     /** @private */
     getTitle(url: string, route?: ActivatedRouteSnapshot): string {
         if (this._titleCached[url]) return this._titleCached[url];
-        if (route && route.data && (route.data.reuseTitle || route.data.title))
-            return route.data.reuseTitle || route.data.title;
+        if (route && route.data && (route.data.translate || route.data.title))
+            return this.translatorSrv.fanyi(route.data.translate) || route.data.title;
         if (!this.menuService) return url;
 
         const list = this.menuService.getPathByUrl(url);
@@ -131,14 +134,15 @@ export class ReuseTabService implements OnDestroy {
     }
 
     getUrl(route: ActivatedRouteSnapshot): string {
-        let next = this.getTruthRoute(route);
-        const segments = [];
-        while (next) {
-            segments.push(next.url.join('/'));
-            next = next.parent;
-        }
-        const url = '/' + segments.filter(i => i).reverse().join('/');
-        return url;
+        return route['_routerState'].url;
+        // let next = this.getTruthRoute(route);
+        // const segments = [];
+        // while (next) {
+        //     segments.push(next.url.join('/'));
+        //     next = next.parent;
+        // }
+        // const url = '/' + segments.filter(i => i).reverse().join('/');
+        // return url;
     }
 
     private getMenu(url: string) {
@@ -240,7 +244,8 @@ export class ReuseTabService implements OnDestroy {
      * 决定是否应该进行复用路由处理
      */
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        return future.routeConfig === curr.routeConfig;
+        return future.routeConfig === curr.routeConfig && 
+        JSON.stringify(future.params) === JSON.stringify(curr.params);
     }
 
     ngOnDestroy(): void {
