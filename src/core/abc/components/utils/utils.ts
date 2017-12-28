@@ -80,7 +80,9 @@ export function getTimeDistance(type: 'today' | 'week' | 'month' | 'year', time:
  */
 export function deepGet(obj: any, path: string[], defaultValue: any) {
     if (!obj) return defaultValue;
-    if (path.length === 0) return obj || defaultValue;
-    if (path.length === 1) return obj[path[0]] || defaultValue;
+    if (path.length <= 1) {
+        const checkObj = path.length ? obj[path[0]] : obj;
+        return typeof checkObj === 'undefined' ? defaultValue : checkObj;
+    }
     return path.reduce((o, k) => (o || {})[k], obj) || defaultValue;
 }

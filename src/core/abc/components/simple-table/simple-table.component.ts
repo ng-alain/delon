@@ -274,7 +274,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         if (col.format) return col.format(item, col);
 
         const ret = deepGet(item, col.index as string[], '');
-        if (!ret) return '';
+        if (typeof ret === 'undefined') return '';
 
         switch (col.type) {
             case 'img':
@@ -285,8 +285,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
                 return this.date.transform(ret, col.dateFormat);
             case 'yn':
                 return this.yn.transform(ret === col.ynTruth, col.ynYes, col.ynNo);
-            default:
-                break;
         }
         return ret;
     }
