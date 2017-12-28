@@ -12,6 +12,7 @@
     [nzShowQuickJumper]="showQuickJumper"
     [nzShowTotal]="showTotal"
     [nzIsPageIndexReset]="isPageIndexReset"
+    [nzShowFooter]="_footer"
     [nzScroll]="scroll">
     <ng-template #header>
         <thead nz-thead>
@@ -107,5 +108,7 @@
                 </ng-container>
             </td>
         </tr>
+        <ng-template [ngIf]="!loading" [ngTemplateOutlet]="body"></ng-template>
     </tbody>
+    <ng-template [ngTemplateOutlet]="footer"></ng-template>
 </nz-table>

@@ -59,6 +59,9 @@ isPageIndexReset | 数据变更后是否保留在数据变更前的页码 | `boo
 toTopInChange | 切换分页时返回顶部 | `boolean` | `true`
 pagePlacement | 分页方向 | `left,center,right` | `right`
 sortReName | 重命名排序值，`columns` 的重命名高于属性 | `{ ascend?: string, descend?: string }` | -
+preDataChange | 数据处理前回调，一般在使用 `url` 时很有用 | `(data: SimpleTableData[]) => SimpleTableData[]` | -
+body | 额外 `body` 内容，一般用于添加合计行 | `TemplateRef<any>` | -
+footer | `footer` 内容 | `TemplateRef<any>` | -
 change | 页码、每页数量变化时回调 | `EventEmitter` | -
 checkboxChange | checkbox变化时回调，参数为当前所选清单 | `EventEmitter` | -
 radioChange | radio变化时回调，参数为当前所选 | `EventEmitter` | -

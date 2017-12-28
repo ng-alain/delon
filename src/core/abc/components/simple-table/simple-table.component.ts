@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnDestroy, OnInit, OnChanges, SimpleChanges, EventEmitter, Renderer2, ElementRef, TemplateRef, SimpleChange, QueryList, ViewChildren, AfterViewInit, ContentChildren } from '@angular/core';
+import { Component, Input, Output, OnDestroy, OnInit, OnChanges, SimpleChanges, EventEmitter, Renderer2, ElementRef, TemplateRef, SimpleChange, QueryList, ViewChildren, AfterViewInit, ContentChildren, ContentChild } from '@angular/core';
 import { _HttpClient, CNCurrencyPipe, MomentDatePipe, YNPipe, ModalHelper } from '@delon/theme';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -28,6 +28,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     _sortColumn: SimpleTableColumn = null;
     _sortOrder: string;
     _sortIndex: number;
+    _footer = false;
 
     // region: fields
 
@@ -149,6 +150,10 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     @Input() sortReName: { ascend?: string, descend?: string };
     /** 数据处理前回调 */
     @Input() preDataChange: (data: SimpleTableData[]) => SimpleTableData[];
+    /** 额外 `body` 内容 */
+    @ContentChild('body') body: TemplateRef<any>;
+    /** `footer` 内容 */
+    @ContentChild('footer') footer: TemplateRef<any>;
     /** 页码、每页数量变化时回调 */
     @Output() change: EventEmitter<SimpleTableChange> = new EventEmitter<SimpleTableChange>();
     /** checkbox变化时回调，参数为当前所选清单 */
@@ -257,6 +262,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
             }
         }
         this.total = this.total <= 0 ? data.length : this.total;
+        this._isPagination = this.ps > 0 && this.total > this.ps;
         this._subscribeData(data.slice((this.pi - 1) * this.ps, this.pi * this.ps));
     }
 
@@ -447,6 +453,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     }
 
     ngAfterViewInit(): void {
+        this._footer = !!this.footer;
     }
 
     addRow(row: SimpleTableRowDirective) {
@@ -552,12 +559,14 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         }
 
         // results
-        this._isPagination = this.ps > 0;
         if (this.data) {
             this._isAjax = false;
             if (!Array.isArray(this.data)) {
                 if (!this.data$) {
-                    this.data$ = <any>this.data.pipe(tap(() => this.loading = true)).subscribe(this._subscribeData);
+                    this.data$ = <any>this.data.pipe(tap(() => this.loading = true)).subscribe((res) => {
+                        this.data = res;
+                        this._genData(true);
+                    });
                 }
             } else {
                 this._genData(true);
