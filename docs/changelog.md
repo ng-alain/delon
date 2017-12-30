@@ -19,6 +19,8 @@ type: Other
 
 - ng-alain 脚手架
     - 修复 `g2-plugin-slider` 路径问题，[#157](https://github.com/cipchk/ng-alain/issues/157)
+- @delon/abc
+    - `simple-talbe` 新增 `body`、`footer` 属性
 
 ### 0.4.3
 
