@@ -8,7 +8,6 @@ import { gen } from '../utils/process';
 const del = require('del');
 const runSequence = require('run-sequence');
 const transform = require('gulp-transform');
-const htmlmin = require('gulp-htmlmin');
 const config = require('../../../site/site.config.js');
 // region: load template
 const tpl = {

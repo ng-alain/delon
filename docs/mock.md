@@ -52,13 +52,10 @@ npm install --save-dev @delon/mock
 在根模块 `AppModule` 导入 `DelonMockModule`；
 
 ```ts
-import { DelonMockModule, MockInterceptor } from '@delon/mock';
+import { DelonMockModule } from '@delon/mock';
 import * as MOCKDATA from '../../_mock';
-let MOCKMODULE = [];
 import { environment } from '../environments/environment';
-if (!environment.production) {
-    MOCKMODULE = [ DelonMockModule.forRoot({ data: MOCKDATA }) ];
-}
+const MOCKMODULE = !environment.production ? [ DelonMockModule.forRoot({ data: MOCKDATA }) ] : [];
 
 @NgModule({
     imports: [
