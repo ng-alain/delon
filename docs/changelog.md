@@ -6,6 +6,20 @@ title:
 type: Other
 ---
 
+### 0.5.0-rc.4 （@next）
+
+`2017-12-30`
+
+- @delon/mock
+    - Angular 里 Mock Http数据，适用于所有 Angular 项目，[Document](//ng-alain.com/docs/mock)
+
+### 0.4.4
+
+`2017-12-30`
+
+- ng-alain 脚手架
+    - 修复 `g2-plugin-slider` 路径问题，[#157](https://github.com/cipchk/ng-alain/issues/157)
+
 ### 0.4.3
 
 `2017-12-28`

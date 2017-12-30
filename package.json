@@ -1,7 +1,7 @@
 {
 	"name": "delon",
 	"version": "0.5.0-rc.3",
-	"version_laster": "0.4.3",
+	"version_laster": "0.4.4",
 	"version_next": "0.5.0-rc.3",
 	"typings": "index.d.ts",
 	"description": "Delon is a set of essential modules for ng-alain.",
@@ -60,7 +60,7 @@
 		"release:validity": "npm run version:bump && npm run release:prepare",
 		"temp:release:mock": "npm run release:prepare && npm publish --access=public .lib/mock",
 		"release:next": "npm run release:validity:next && npm publish --tag next --access=public .lib/theme && npm publish --tag next --access=public .lib/abc && npm publish --tag next --access=public .lib/acl && npm publish --tag next --access=public .lib/auth && npm publish --tag next --access=public .lib/mock",
-		"release": "npm run release:validity && npm publish --access=public .lib/theme && npm publish --access=public .lib/abc && npm publish --access=public .lib/acl && npm publish --access=public .lib/auth && npm publish --access=public .lib/mock",
+		"release": "npm run release:validity && npm publish --access=public .lib/theme && npm publish --access=public .lib/abc && npm publish --access=public .lib/acl && npm publish --access=public .lib/auth",
 		"scaffold:install": "cd ./scaffold && npm install",
 		"scaffold:start": "cd ./scaffold && npm run start",
 		"scaffold:analyze": "cd ./scaffold && npm run analyze",

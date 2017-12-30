@@ -23,6 +23,16 @@ delong is a production-ready solution for admin business components packages, Bu
 + [@delon](https://github.com/cipchk/delon)
 + [DEMO](https://cipchk.github.io/ng-alain/)
 
+## Architecture
+
+![Architecture](https://github.com/cipchk/delon/blob/master/_screenshot/architecture.png)
+
+## App Shots
+
+![desktop](https://github.com/cipchk/delon/blob/master/_screenshot/desktop.png)
+![ipad](https://github.com/cipchk/delon/blob/master/_screenshot/ipad.png)
+![iphone](https://github.com/cipchk/delon/blob/master/_screenshot/iphone.png)
+
 ## Troubleshooting
 
 Please follow this guidelines when reporting bugs and feature requests:
