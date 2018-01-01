@@ -1,30 +1,30 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 // region: all modules
-import { AdErrorCollectModule } from './components/error-collect/error-collect.module';
-import { AdFooterToolbarModule } from './components/footer-toolbar/footer-toolbar.module';
-import { AdSidebarNavModule } from './components/sidebar-nav/sidebar-nav.module';
-import { AdDownFileModule } from './directives/down-file/down-file.module';
-import { AdImageModule } from './directives/image/image.module';
-import { AdAvatarListModule } from './components/avatar-list/avatar-list.module';
-import { AdDescListModule } from './components/desc-list/desc-list.module';
-import { AdEllipsisModule } from './components/ellipsis/ellipsis.module';
-import { AdGlobalFooterModule } from './components/global-footer/global-footer.module';
-import { AdExceptionModule } from './components/exception/exception.module';
-import { AdNoticeIconModule } from './components/notice-icon/notice-icon.module';
-import { AdNumberInfoModule } from './components/number-info/number-info.module';
-import { AdProHeaderModule } from './components/pro-header/pro-header.module';
-import { AdResultModule } from './components/result/result.module';
-import { AdStandardFormRowModule } from './components/standard-form-row/standard-form-row.module';
-import { AdTagSelectModule } from './components/tag-select/tag-select.module';
-import { AdTrendModule } from './components/trend/trend.module';
-import { AdUtilsModule } from './components/utils/utils.module';
-import { AdChartsModule } from './components/charts/charts.module';
-import { AdCountDownModule } from './components/count-down/count-down.module';
-import { AdSimpleTableModule } from './components/simple-table/simple-table.module';
-import { AdReuseTabModule } from './components/reuse-tab/reuse-tab.module';
-import { AdFullContentModule } from './components/full-content/full-content.module';
-import { AdXlsxModule } from './components/xlsx/xlsx.module';
+import { AdErrorCollectModule } from './error-collect/error-collect.module';
+import { AdFooterToolbarModule } from './footer-toolbar/footer-toolbar.module';
+import { AdSidebarNavModule } from './sidebar-nav/sidebar-nav.module';
+import { AdDownFileModule } from './down-file/down-file.module';
+import { AdImageModule } from './image/image.module';
+import { AdAvatarListModule } from './avatar-list/avatar-list.module';
+import { AdDescListModule } from './desc-list/desc-list.module';
+import { AdEllipsisModule } from './ellipsis/ellipsis.module';
+import { AdGlobalFooterModule } from './global-footer/global-footer.module';
+import { AdExceptionModule } from './exception/exception.module';
+import { AdNoticeIconModule } from './notice-icon/notice-icon.module';
+import { AdNumberInfoModule } from './number-info/number-info.module';
+import { AdProHeaderModule } from './pro-header/pro-header.module';
+import { AdResultModule } from './result/result.module';
+import { AdStandardFormRowModule } from './standard-form-row/standard-form-row.module';
+import { AdTagSelectModule } from './tag-select/tag-select.module';
+import { AdTrendModule } from './trend/trend.module';
+import { AdUtilsModule } from './utils/utils.module';
+import { AdChartsModule } from './charts/charts.module';
+import { AdCountDownModule } from './count-down/count-down.module';
+import { AdSimpleTableModule } from './simple-table/simple-table.module';
+import { AdReuseTabModule } from './reuse-tab/reuse-tab.module';
+import { AdFullContentModule } from './full-content/full-content.module';
+import { AdXlsxModule } from './xlsx/xlsx.module';
 
 const MODULES = [
     AdErrorCollectModule, AdFooterToolbarModule, AdSidebarNavModule, AdDownFileModule, AdImageModule,
@@ -38,30 +38,30 @@ const MODULES = [
 
 // region: export
 
-export * from './components/error-collect';
-export * from './components/footer-toolbar';
-export * from './components/sidebar-nav';
-export * from './directives/down-file';
-export * from './directives/image';
-export * from './components/avatar-list';
-export * from './components/desc-list';
-export * from './components/ellipsis';
-export * from './components/global-footer';
-export * from './components/exception';
-export * from './components/notice-icon';
-export * from './components/number-info';
-export * from './components/pro-header';
-export * from './components/result';
-export * from './components/standard-form-row';
-export * from './components/tag-select';
-export * from './components/trend';
-export * from './components/utils';
-export * from './components/charts';
-export * from './components/count-down';
-export * from './components/simple-table';
-export * from './components/reuse-tab';
-export * from './components/full-content';
-export * from './components/xlsx';
+export * from './error-collect';
+export * from './footer-toolbar';
+export * from './sidebar-nav';
+export * from './down-file';
+export * from './image';
+export * from './avatar-list';
+export * from './desc-list';
+export * from './ellipsis';
+export * from './global-footer';
+export * from './exception';
+export * from './notice-icon';
+export * from './number-info';
+export * from './pro-header';
+export * from './result';
+export * from './standard-form-row';
+export * from './tag-select';
+export * from './trend';
+export * from './utils';
+export * from './charts';
+export * from './count-down';
+export * from './simple-table';
+export * from './reuse-tab';
+export * from './full-content';
+export * from './xlsx';
 
 // endregion
 

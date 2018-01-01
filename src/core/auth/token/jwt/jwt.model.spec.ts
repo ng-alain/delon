@@ -4,14 +4,14 @@ import { JWTTokenModel } from './jwt.model';
 describe('auth: jwt.model', () => {
     const model = new JWTTokenModel();
     // from: https://jwt.io/
-    model.token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6ImNpcGNoayIsImFkbWluIjp0cnVlLCJleHAiOjE1MTQ2NDk2MDB9.nocpzY3UnRLJXg6I7unzvH4JUzcBRYBtf_xQ41xCcTw`;
+    model.token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwibmFtZSI6ImNpcGNoayIsImFkbWluIjp0cnVlLCJleHAiOjQ2NzA0MDk2MDB9.IINuMTwqwCQP63fSQ-ZPgOEaE8lilrUceUX9Wy47PBk`;
     const payloadDATA = {
         sub: '1',
         'name': 'cipchk',
         'admin': true,
-        'exp': 1514649600 // 2017-12-31 0:0:0
+        'exp': 4670409600
     };
-    const MAXTIME = new Date(2017, 12, 31, 0, 0, 0, 0);
+    const MAXTIME = new Date(2118, 1, 1, 0, 0, 0, 0);
 
     it('#payload', () => {
         expect(model.payload.sub).toBe(payloadDATA.sub);

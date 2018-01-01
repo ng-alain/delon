@@ -6,6 +6,14 @@ title:
 type: Other
 ---
 
+### 0.5.0-rc.5 （@next）
+
+`2018-1-1`
+
+- @delon/abc
+    - 新增 `xlsx` 组件，[Document](//ng-alain.com/components/xlsx)
+    - 新增 `simple-table` 组件导出 Excel 方法，[Demo](//cipchk.github.io/ng-alain/tables/simple-table)
+
 ### 0.5.0-rc.4 （@next）
 
 `2017-12-30`

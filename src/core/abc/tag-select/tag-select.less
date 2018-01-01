@@ -1,0 +1,33 @@
+@import "../../theme/styles/antd/themes/default.less";
+
+:host {
+	user-select: none;
+	margin-left: -8px;
+	position: relative;
+	overflow: hidden;
+	max-height: 32px;
+	line-height: 32px;
+	transition: all 0.3s;
+	display: block;
+    &.expanded {
+        transition: all 0.3s;
+        max-height: 200px;
+    }
+    &.has-expand {
+        padding-right: 50px;
+    }
+	::ng-deep {
+		.ant-tag {
+			padding: 0 8px;
+			margin-right: 24px;
+		}
+		.trigger {
+			position: absolute;
+			top: 0;
+			right: 0;
+			i {
+				font-size: 12px;
+			}
+		}
+	}
+}
