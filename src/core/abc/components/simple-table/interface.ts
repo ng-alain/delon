@@ -153,6 +153,10 @@ export interface SimpleTableColumn {
      * 徽章 `false` 时文本，`type=yn` 有效，（默认：否）
      */
     ynNo?: string;
+    /**
+     * 是否允许导出，默认 `true`
+     */
+    exported?: boolean;
 
     [key: string]: any;
 }
@@ -274,4 +278,17 @@ export interface SimpleTableChange {
     //  * 数据，当 `type=data` 时有效
     //  */
     // list?: any[];
+}
+
+export interface STExportOptions {
+    /** @private */
+    _d: any[];
+    /** @private */
+    _c: SimpleTableColumn[];
+    /** 工作溥名 */
+    sheetname?: string;
+    /** 文件名 */
+    filename?: string;
+    /** triggers when saveas */
+    callback?: (wb: any) => void;
 }

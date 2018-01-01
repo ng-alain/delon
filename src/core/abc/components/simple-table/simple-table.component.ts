@@ -1,19 +1,21 @@
-import { Component, Input, Output, OnDestroy, OnInit, OnChanges, SimpleChanges, EventEmitter, Renderer2, ElementRef, TemplateRef, SimpleChange, QueryList, ViewChildren, AfterViewInit, ContentChildren, ContentChild } from '@angular/core';
+import { Component, Input, Output, OnDestroy, OnInit, OnChanges, SimpleChanges, EventEmitter, Renderer2, ElementRef, TemplateRef, SimpleChange, QueryList, ViewChildren, AfterViewInit, ContentChildren, ContentChild, Optional } from '@angular/core';
 import { _HttpClient, CNCurrencyPipe, MomentDatePipe, YNPipe, ModalHelper } from '@delon/theme';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
-import { SimpleTableColumn, SimpleTableChange, CompareFn, SimpleTableSelection, SimpleTableFilter, SimpleTableData, SimpleTableButton } from './interface';
+import { SimpleTableColumn, SimpleTableChange, CompareFn, SimpleTableSelection, SimpleTableFilter, SimpleTableData, SimpleTableButton, STExportOptions } from './interface';
 import { SimpleTableConfig } from './simple-table.config';
 import { deepGet } from '../utils/utils';
 import { SimpleTableRowDirective } from './simple-table-row.directive';
+import { SimpleTableExport } from './simple-table-export';
 
 @Component({
     selector: 'simple-table',
     templateUrl: './simple-table.component.html',
     styleUrls: [ './simple-table.less' ],
-    providers: [ CNCurrencyPipe, MomentDatePipe, YNPipe ]
+    providers: [ SimpleTableExport, CNCurrencyPipe, MomentDatePipe, YNPipe ]
 })
 export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
@@ -172,12 +174,37 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         private _http: _HttpClient,
         private el: ElementRef,
         private renderer: Renderer2,
+        private exportSrv: SimpleTableExport,
         private modal: ModalHelper,
         private currenty: CNCurrencyPipe,
         private date: MomentDatePipe,
         private yn: YNPipe
     ) {
         Object.assign(this, defConfig);
+    }
+
+    // region: data
+
+    private getAjaxData(url?: string): Observable<any> {
+        const params: any = {};
+        params[this.reqReName && this.reqReName['pi'] || 'pi'] = this.pi;
+        params[this.reqReName && this.reqReName['ps'] || 'ps'] = this.ps;
+        return this._http.request(this.reqMehtod, url || this.url, {
+            params: Object.assign(params, this.extraParams, this.getReqSortMap(), this.getReqFilterMap()),
+            body: this.reqBody,
+            headers: this.reqHeaders
+        }).pipe(map((res: any) => {
+            const ret = deepGet(res, this.resReName.list as string[], null);
+            if (typeof ret === 'undefined') {
+                console.warn(`results muse contain '${(this.resReName.list as string[]).join('.')}' attribute.`);
+                return;
+            }
+            if (!Array.isArray(ret)) {
+                console.warn(`'${(this.resReName.list as string[]).join('.')}' muse be array type.`);
+                return;
+            }
+            return <any[]>ret;
+        }));
     }
 
     load(pi = 1) {
@@ -201,24 +228,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         if (!this._isAjax) return;
         this.loading = true;
         if (forceRefresh === true) this.pi = 1;
-        const params: any = {};
-        params[this.reqReName && this.reqReName['pi'] || 'pi'] = this.pi;
-        params[this.reqReName && this.reqReName['ps'] || 'ps'] = this.ps;
-        this._http.request(this.reqMehtod, this.url, {
-            params: Object.assign(params, this.extraParams, this.getReqSortMap(), this.getReqFilterMap()),
-            body: this.reqBody,
-            headers: this.reqHeaders
-        }).subscribe((res: any) => {
-            const ret = deepGet(res, this.resReName.list as string[], null);
-            if (typeof ret === 'undefined') {
-                console.warn(`results muse contain '${(this.resReName.list as string[]).join('.')}' attribute.`);
-                return;
-            }
-            if (!Array.isArray(ret)) {
-                console.warn(`'${(this.resReName.list as string[]).join('.')}' muse be array type.`);
-                return;
-            }
-            this._subscribeData(ret);
+        this.getAjaxData().subscribe((res: any) => {
+            this._subscribeData(res);
 
             // total
             const retTotal = this.resReName.total && deepGet(res, this.resReName.total as string[], null);
@@ -302,15 +313,17 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         this._refCheck();
     }
 
+    // endregion
+
     // region: sort
 
     private getReqSortMap(): { [key: string]: string } {
         const ret: { [ key: string]: string } = {};
         if (!this._sortOrder) return ret;
 
-        const map = this._sortMap[this._sortIndex];
-        ret[map.key] =
-            (this._sortColumn.sortReName || this.sortReName || {})[map.v] || map.v;
+        const mapData = this._sortMap[this._sortIndex];
+        ret[mapData.key] =
+            (this._sortColumn.sortReName || this.sortReName || {})[mapData.v] || mapData.v;
         return ret;
     }
 
@@ -445,6 +458,33 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     btnText(record: any, btn: SimpleTableButton) {
         if (btn.format) return btn.format(record, btn);
         return btn.text;
+    }
+
+    // endregion
+
+    // region: export
+
+    private getExportData(url?: string): Observable<any[]> {
+        if (this._isAjax) {
+            return this.getAjaxData(url);
+        } else {
+            return Array.isArray(this.data) ? of(this.data) : this.data;
+        }
+    }
+
+    /**
+     * 导出Excel，确保已经注册 `AdXlsxModule`
+     * @param url 重新指定 `url`，例如希望导出所有数据非常有用
+     * @param opt 额外参数
+     */
+    export(url?: string, opt?: STExportOptions) {
+        (this._isAjax || url ? this.getAjaxData(url) : Array.isArray(this.data) ? of(this.data) : this.data)
+            .subscribe((res: any[]) =>
+                this.exportSrv.export(Object.assign({}, opt, <STExportOptions>{
+                    _d: res,
+                    _c: this.columns
+                }))
+            );
     }
 
     // endregion

@@ -68,6 +68,22 @@ radioChange | radio变化时回调，参数为当前所选 | `EventEmitter` | -
 sortChange | 排序回调 | `EventEmitter` | -
 filterChange | Filter回调 | `EventEmitter` | -
 
+**方法**
+
+参数 | 说明
+----|------
+`export(url?: string, opt?: STExportOptions)` | 导出Excel，确保已经注册 `AdXlsxModule` | `Function` | -
+
+> `url` 一般用于需要导出所有页时重新指定一下带有所有数据的URL地址，当所有参数都不指定时自动读书当前页数据。
+
+*STExportOptions*
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+sheetname | 工作溥名 | `string` | Sheet1
+filename | 保存的文件名 | `string` | export.xslx
+callback | 保存前的回调 | `(wb: WorkBook) => void` | -
+
 ### SimpleTableData
 
 参数 | 说明 | 类型 | 默认值
@@ -106,6 +122,7 @@ dateFormat? | 日期格式，`type=date` 有效 | `string` | `YYYY-MM-DD HH:mm`
 ynTruth? | 真值条件，`type=yn` 有效，（默认：`true`） | `any` | -
 ynYes? | 徽章 `true` 时文本，`type=yn` 有效 | `string` | `是`
 ynNo? | 徽章 `false` 时文本，`type=yn` 有效 | `string` | `否`
+exported? | 是否允许导出 | `boolean` | `true`
 
 ### SimpleTableButton
 

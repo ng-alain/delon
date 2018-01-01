@@ -3,5 +3,6 @@
 </div>
 <nz-input [(ngModel)]="value" name="value" [nzSize]="'large'"></nz-input>
 <button nz-button (click)="load()" [nzType]="'primary'" [nzSize]="'small'">load</button>
-
-<div style="height: 1000px"></div>
+<button nz-button (click)="xlsxExport()" [nzType]="'primary'" [nzSize]="'small'">export xlsx</button>
+<button nz-button (click)="xlsxImportViaUrl()" [nzType]="'primary'" [nzSize]="'small'">import via url</button>
+<simple-table [data]="users" [ps]="3" [columns]="columns"></simple-table>

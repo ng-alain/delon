@@ -1,6 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { LazyService } from './lazy.service';
+
 // import { TrendComponent } from './trend.component';
 
 const COMPONENTS = [];
@@ -21,6 +23,11 @@ const ZORROMODULES = [ ];
 })
 export class AdUtilsModule {
     static forRoot(): ModuleWithProviders {
-        return { ngModule: AdUtilsModule, providers: [] };
+        return {
+            ngModule: AdUtilsModule,
+            providers: [
+                LazyService
+            ]
+        };
     }
 }

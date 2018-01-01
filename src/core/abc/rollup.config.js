@@ -14,6 +14,7 @@ const globals = {
     'ng-zorro-antd-extra': 'ngZorro.antd_extra',
     'file-saver': 'saveAs',
     'ngx-countdown': 'ngxCountDown',
+    'xlsx': 'xlsx',
 
     '@angular/cdk': 'ng.cdk',
     '@angular/cdk/coercion': 'ng.cdk.coercion',
@@ -23,12 +24,14 @@ const globals = {
     'rxjs/Subject': 'Rx',
     'rxjs/Subscription': 'Rx',
     'rxjs/operators': 'Rx.Observable.prototype',
+    'rxjs/observable/of': 'Rx.Observable',
     'rxjs/observable/zip': 'Rx.Observable',
     'rxjs/observable/fromEvent': 'Rx.Observable',
     'rxjs/observable/FromEventObservable': 'Rx.Observable',
     'rxjs/observable/combineLatest': 'Rx.Observable',
 
-    '@delon/theme': 'alain.theme'
+    '@delon/theme': 'alain.theme',
+    '@delon/acl': 'alain.acl'
 };
 
 module.exports = {

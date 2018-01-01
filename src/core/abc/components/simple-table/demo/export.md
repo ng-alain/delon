@@ -1,3 +1,11 @@
+---
+order: 8
+title: 导出Excel
+---
+
+将表格数据保存为 Excel。
+
+```ts
 import { Component } from '@angular/core';
 import { SimpleTableColumn } from '@delon/abc';
 
@@ -23,3 +31,4 @@ export class DemoComponent {
         { title: '注册时间', type: 'date', index: 'registered' }
     ];
 }
+```
