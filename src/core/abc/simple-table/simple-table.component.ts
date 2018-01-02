@@ -1,5 +1,6 @@
 import { Component, Input, Output, OnDestroy, OnInit, OnChanges, SimpleChanges, EventEmitter, Renderer2, ElementRef, TemplateRef, SimpleChange, QueryList, ViewChildren, AfterViewInit, ContentChildren, ContentChild, Optional } from '@angular/core';
 import { _HttpClient, CNCurrencyPipe, MomentDatePipe, YNPipe, ModalHelper } from '@delon/theme';
+import { ACLService } from '@delon/acl';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { tap, map } from 'rxjs/operators';
@@ -31,6 +32,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     _sortOrder: string;
     _sortIndex: number;
     _footer = false;
+    _columns: SimpleTableColumn[] = [];
 
     // region: fields
 
@@ -175,6 +177,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         private el: ElementRef,
         private renderer: Renderer2,
         private exportSrv: SimpleTableExport,
+        @Optional() private acl: ACLService,
         private modal: ModalHelper,
         private currenty: CNCurrencyPipe,
         private date: MomentDatePipe,
@@ -255,7 +258,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         }
 
         // filter
-        this.columns.forEach(c => {
+        this._columns.filter(w => w.filters && w.filters.length).forEach(c => {
             const values = c.filters.filter(w => w.checked);
             if (values.length === 0) return;
             const onFilter = c.filter;
@@ -352,7 +355,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     sort(index: number, value: any) {
         if (this._sortIndex === index && this._sortOrder === value) return;
-        this._sortColumn = this.columns[index];
+        this._sortColumn = this._columns[index];
         this._sortOrder = value;
         this._sortIndex = index;
         Object.keys(this._sortMap).forEach(key => this._sortMap[key].v = +key === index ? value : null);
@@ -367,7 +370,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     private getReqFilterMap(): { [key: string]: string } {
         let ret: { [ key: string]: string } = {};
-        this.columns.filter(w => w.filtered === true).forEach(col => {
+        this._columns.filter(w => w.filtered === true).forEach(col => {
             const values = col.filters.filter(f => f.checked === true);
             let obj: Object = {};
             if (col.filterReName)
@@ -474,15 +477,19 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     /**
      * 导出Excel，确保已经注册 `AdXlsxModule`
-     * @param url 重新指定 `url`，例如希望导出所有数据非常有用
+     * @param urlOrData 重新指定数据，例如希望导出所有数据非常有用
      * @param opt 额外参数
      */
-    export(url?: string, opt?: STExportOptions) {
-        (this._isAjax || url ? this.getAjaxData(url) : Array.isArray(this.data) ? of(this.data) : this.data)
+    export(urlOrData?: string | any[], opt?: STExportOptions) {
+        (
+            (!urlOrData && this._isAjax) || (urlOrData && typeof urlOrData === 'string') ?
+                this.getAjaxData(urlOrData as string) :
+                urlOrData || Array.isArray(this.data) ? of(urlOrData || this.data) : this.data
+        )
             .subscribe((res: any[]) =>
                 this.exportSrv.export(Object.assign({}, opt, <STExportOptions>{
                     _d: res,
-                    _c: this.columns
+                    _c: this._columns
                 }))
             );
     }
@@ -497,7 +504,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     }
 
     addRow(row: SimpleTableRowDirective) {
-        const col = this.columns.find(w => w.render === row.id);
+        const col = this._columns.find(w => w.render === row.id);
         if (col) col.__render = row.templateRef;
     }
 
@@ -505,13 +512,17 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         if (this.data && this.url) throw new Error(`data & url property muse be either-or`);
 
         this.setClass();
+
         // columns
         if (!this.columns) throw new Error(`the columns property muse be define!`);
+
         let checkboxCount = 0;
         let radioCount = 0;
         const sortMap: Object = {};
         let idx = 0;
+        const newColumns: SimpleTableColumn[] = [];
         for (const item of this.columns) {
+            if (this.acl && item.acl && !this.acl.can(item.acl)) continue;
             if (item.index) {
                 if (!Array.isArray(item.index))
                     item.index = item.index.split('.');
@@ -559,24 +570,38 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
             if (!item.filterIcon) item.filterIcon = `anticon anticon-filter`;
             item.filtered = item.filters.findIndex(w => w.checked) !== -1;
 
-            // buttons
-            if (!item.buttons) item.buttons = [];
-            for (const btn of item.buttons) {
-                if (btn.type === 'del' && typeof btn.pop === 'undefined')
-                    btn.pop = true;
-
-                if (btn.pop === true) {
-                    btn._type = 2;
-                    if (typeof btn.popTitle === 'undefined') btn.popTitle = `确认删除吗？`;
-                }
-                if (btn.children && btn.children.length > 0) {
-                    btn._type = 3;
-                }
-                if (!btn._type) btn._type = 1;
+            if (this.acl) {
+                item.selections = item.selections.filter(w => !w.acl || this.acl.can(w.acl));
+                item.filters = item.filters.filter(w => !w.acl || this.acl.can(w.acl));
             }
 
+            // buttons
+            const buttons: SimpleTableButton[] = [];
+            if (item.buttons) {
+                for (const btn of item.buttons) {
+                    if (this.acl && btn.acl && !this.acl.can(btn.acl)) continue;
+
+                    if (btn.type === 'del' && typeof btn.pop === 'undefined')
+                        btn.pop = true;
+
+                    if (btn.pop === true) {
+                        btn._type = 2;
+                        if (typeof btn.popTitle === 'undefined') btn.popTitle = `确认删除吗？`;
+                    }
+                    if (btn.children && btn.children.length > 0) {
+                        btn._type = 3;
+                    }
+                    if (!btn._type) btn._type = 1;
+                    buttons.push(btn);
+                }
+                if (buttons.length === 0) continue;
+            }
+            item.buttons = buttons;
+
             ++idx;
+            newColumns.push(item);
         }
+        this._columns = newColumns;
         if (checkboxCount > 1) throw new Error(`just only one column checkbox`);
         if (radioCount > 1) throw new Error(`just only one column radio`);
         this._sortMap = sortMap;

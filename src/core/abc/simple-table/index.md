@@ -72,9 +72,9 @@ filterChange | Filter回调 | `EventEmitter` | -
 
 参数 | 说明
 ----|------
-`export(url?: string, opt?: STExportOptions)` | 导出Excel，确保已经注册 `AdXlsxModule` | `Function` | -
+`export(urlOrData?: string | any[], opt?: STExportOptions)` | 导出Excel，确保已经注册 `AdXlsxModule` | `Function` | -
 
-> `url` 一般用于需要导出所有页时重新指定一下带有所有数据的URL地址，当所有参数都不指定时自动读书当前页数据。
+> `urlOrData` 一般用于需要导出所有页时重新指定带有所有数据的URL地址或本地数据数组，当所有参数都不指定时自动读书当前页数据。
 
 *STExportOptions*
 
@@ -123,6 +123,7 @@ ynTruth? | 真值条件，`type=yn` 有效，（默认：`true`） | `any` | -
 ynYes? | 徽章 `true` 时文本，`type=yn` 有效 | `string` | `是`
 ynNo? | 徽章 `false` 时文本，`type=yn` 有效 | `string` | `否`
 exported? | 是否允许导出 | `boolean` | `true`
+acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
 
 ### SimpleTableButton
 
@@ -139,6 +140,7 @@ params | 对话框参数 | `(record: any) => Object` | -
 size | 对话框大小 | `string` | `lg`
 modalOptions | 对话框额外参数，见 [ModalHelper](http://ng-alain.com/docs/service#ModalHelper) | `any` | -
 children | 下拉菜单，当存在时以 `dropdown` 形式渲染；只支持一级 | `SimpleTableButton[]` | -
+acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
 
 ### SimpleTableSelection
 
@@ -146,6 +148,7 @@ children | 下拉菜单，当存在时以 `dropdown` 形式渲染；只支持一
 ----|------|-----|------
 text | 文本 | `string` | -
 select | 回调 | `Function` | -
+acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
 
 ### SimpleTableFilter
 
@@ -154,6 +157,7 @@ select | 回调 | `Function` | -
 text | 文本 | `string` | -
 value | 值 | `any` | -
 checked? | 是否选中 | `boolean` | -
+acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
 
 ### SimpleTableConfig
 

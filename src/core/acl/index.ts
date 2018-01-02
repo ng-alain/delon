@@ -19,7 +19,7 @@ const PIPES = [  ];
 
 export { ACLService } from './services/acl.service';
 export { ACLDirective } from './directives/acl.directive';
-export { ACLType } from './services/acl.type';
+export * from './services/acl.type';
 
 // components
 

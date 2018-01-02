@@ -14,3 +14,5 @@ export interface ACLType {
 
     [key: string]: any;
 }
+
+export type ACLCanType = number | number[] | string | string[] | ACLType;

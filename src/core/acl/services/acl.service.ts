@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ACLType } from './acl.type';
+import { ACLType, ACLCanType } from './acl.type';
 
 /**
  * 访问控制服务
@@ -132,9 +132,9 @@ export class ACLService {
     /**
      * 当前用户是否有对应角色，其实 `number` 表示Ability
      *
-     * @param {(number | number[] | string | string[] | ACLType)} roleOrAbility
+     * @param {ACLCanType} roleOrAbility
      */
-    can(roleOrAbility: number | number[] | string | string[] | ACLType): boolean {
+    can(roleOrAbility: ACLCanType): boolean {
         if (this.full === true) {
             return true;
         }

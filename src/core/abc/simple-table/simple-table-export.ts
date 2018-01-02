@@ -39,7 +39,7 @@ export class SimpleTableExport {
     private genSheet(opt: STExportOptions): { [sheet: string]: XLSX.WorkSheet } {
         const sheets: { [sheet: string]: XLSX.WorkSheet } = {};
         const sheet = sheets[opt.sheetname || 'Sheet1'] = { };
-        const colData = opt._c.filter(w => w.exported !== false && w.index && w.buttons.length === 0);
+        const colData = opt._c.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
         const cc = colData.length, dc = opt._d.length;
         // region: column
         for (let i = 0; i < cc; i++) {
