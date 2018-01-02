@@ -1,7 +1,7 @@
 ---
 title: _src
 subtitle: 显示图像
-order: 101
+order: 300
 cols: 1
 type: Directive
 module: AdImageModule

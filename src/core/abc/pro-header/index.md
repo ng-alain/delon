@@ -1,7 +1,7 @@
 ---
 title: pro-header
 subtitle: Pro 专用标题
-order: 11
+order: 150
 cols: 1
 module: AdProHeaderModule
 ---

@@ -33,12 +33,13 @@ module.exports = {
         },
         {
             name: 'components',
-            src: [ './src/core/abc/components', './src/core/abc/directives' ],
+            src: [ './src/core/abc' ],
+            ignores: [ './src/core/abc/README.md' ],
             module: '@delon/abc',
             defaultRoute: 'simple-table',
             types: [
                 {
-                    'zh-CN': '业务组件',
+                    'zh-CN': '组件',
                     'en-US': 'Components'
                 },
                 {

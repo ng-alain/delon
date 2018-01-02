@@ -1,7 +1,7 @@
 ---
 title: desc-list
 subtitle: 描述列表
-order: 3
+order: 60
 cols: 1
 module: AdDescListModule
 ---

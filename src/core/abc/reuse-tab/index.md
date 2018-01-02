@@ -1,7 +1,7 @@
 ---
 title: reuse-tab
 subtitle: 路由复用标签
-order: 1
+order: 30
 cols: 1
 module: AdReuseTabModule
 ---

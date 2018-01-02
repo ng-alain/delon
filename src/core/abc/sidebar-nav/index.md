@@ -1,7 +1,7 @@
 ---
 title: sidebar-nav
 subtitle: 主菜单
-order: 13
+order: 170
 cols: 1
 module: AdSidebarNavModule
 ---

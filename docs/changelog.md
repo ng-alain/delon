@@ -6,6 +6,16 @@ title:
 type: Other
 ---
 
+### 0.5.0-rc.6 （@next）
+
+`2018-1-2`
+
+- @delon/abc
+    - 新增 `zip` 组件，[Document](//ng-alain.com/components/zip)
+    - `simple-table` 变更：
+        - 新增列描述、按钮组、过滤、选择项的 `acl` 参数，用于权限控制，[#158](https://github.com/cipchk/ng-alain/issues/158)
+        - `export()` 支持指定数组数据，[#162](https://github.com/cipchk/ng-alain/issues/162)
+
 ### 0.5.0-rc.5 （@next）
 
 `2018-1-1`

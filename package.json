@@ -1,8 +1,8 @@
 {
 	"name": "delon",
-	"version": "0.5.0-rc.5",
+	"version": "0.5.0-rc.6",
 	"version_laster": "0.4.4",
-	"version_next": "0.5.0-rc.5",
+	"version_next": "0.5.0-rc.6",
 	"typings": "index.d.ts",
 	"description": "Delon is a set of essential modules for ng-alain.",
 	"repository": {
@@ -110,6 +110,8 @@
 		"@types/gulp": "^4.0.4",
 		"@types/jasmine": "~2.8.2",
 		"@types/jasminewd2": "~2.0.2",
+		"@types/jszip": "^3.1.2",
+		"@types/mockjs": "^1.0.0",
 		"@types/node": "~8.5.2",
 		"@types/webpack": "^3.0.14",
 		"chalk": "^2.3.0",
@@ -138,6 +140,7 @@
 		"karma-sauce-launcher": "^1.2.0",
 		"mark-twain": "^2.0.2",
 		"mkdirp": "^0.5.1",
+		"mockjs": "^1.0.1-beta3",
 		"mustache": "^2.3.0",
 		"ngx-tinymce": "^1.0.1",
 		"ngx-ueditor": "^1.1.0",
@@ -156,8 +159,6 @@
 		"tslint": "~5.8.0",
 		"tslint-language-service": "^0.9.6",
 		"typescript": "~2.5.0",
-		"mockjs": "^1.0.1-beta3",
-		"@types/mockjs": "^1.0.0",
 		"xlsx": "^0.11.16"
 	},
 	"lint-staged": {

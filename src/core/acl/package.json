@@ -1,6 +1,6 @@
 {
 	"name": "@delon/acl",
-	"version": "0.5.0-rc.5",
+	"version": "0.5.0-rc.6",
 	"description": "@delon/acl",
 	"main": "./bundles/acl.umd.js",
 	"module": "./index.js",

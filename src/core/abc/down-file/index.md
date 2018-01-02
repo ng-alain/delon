@@ -1,7 +1,7 @@
 ---
 title: down-file
 subtitle: 下载文件
-order: 100
+order: 310
 cols: 1
 type: Directive
 module: AdDownFileModule

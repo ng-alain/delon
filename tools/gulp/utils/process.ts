@@ -51,6 +51,15 @@ function toHtml(markdownData: any, codeEscape: boolean = true) {
 export function gen(config: any) {
     const files: any[] = [];
     const results: any[] = [];
+    if (!config.ignores)
+        config.ignores = [];
+    else {
+        const newIgnores = [];
+        for (const ignorePath of config.ignores) {
+            newIgnores.push(path.join(process.cwd(), ignorePath));
+        }
+        config.ignores = newIgnores;
+    }
 
     function bufferContents(file: any, enc: any, cb: any) {
         // ignore empty files
@@ -62,6 +71,11 @@ export function gen(config: any) {
         // ignore streams
         if (file.isStream()) {
             this.emit('error', new Error('Streaming not supported'));
+            cb();
+            return;
+        }
+
+        if (~config.ignores.indexOf(file.path)) {
             cb();
             return;
         }

@@ -1,7 +1,7 @@
 ---
 title: simple-table
 subtitle: 简易表格
-order: 0
+order: 10
 cols: 1
 module: AdSimpleTableModule
 ---
