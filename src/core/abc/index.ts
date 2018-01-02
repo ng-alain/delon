@@ -25,13 +25,14 @@ import { AdSimpleTableModule } from './simple-table/simple-table.module';
 import { AdReuseTabModule } from './reuse-tab/reuse-tab.module';
 import { AdFullContentModule } from './full-content/full-content.module';
 import { AdXlsxModule } from './xlsx/xlsx.module';
+import { AdZipModule } from './zip/zip.module';
 
 const MODULES = [
     AdErrorCollectModule, AdFooterToolbarModule, AdSidebarNavModule, AdDownFileModule, AdImageModule,
     AdAvatarListModule, AdDescListModule, AdEllipsisModule, AdGlobalFooterModule, AdExceptionModule,
     AdNoticeIconModule, AdNumberInfoModule, AdProHeaderModule, AdResultModule, AdStandardFormRowModule,
     AdTagSelectModule, AdTrendModule, AdUtilsModule, AdChartsModule, AdCountDownModule, AdSimpleTableModule,
-    AdReuseTabModule, AdFullContentModule, AdXlsxModule
+    AdReuseTabModule, AdFullContentModule, AdXlsxModule, AdZipModule
 ];
 
 // endregion
@@ -62,6 +63,7 @@ export * from './simple-table';
 export * from './reuse-tab';
 export * from './full-content';
 export * from './xlsx';
+export * from './zip';
 
 // endregion
 
@@ -71,7 +73,7 @@ export * from './xlsx';
         AdAvatarListModule.forRoot(), AdDescListModule.forRoot(), AdEllipsisModule.forRoot(), AdExceptionModule.forRoot(), AdExceptionModule.forRoot(),
         AdNoticeIconModule.forRoot(), AdNumberInfoModule.forRoot(), AdProHeaderModule.forRoot(), AdResultModule.forRoot(), AdStandardFormRowModule.forRoot(),
         AdTagSelectModule.forRoot(), AdTrendModule.forRoot(), AdUtilsModule.forRoot(), AdChartsModule.forRoot(), AdCountDownModule.forRoot(), AdSimpleTableModule.forRoot(),
-        AdReuseTabModule.forRoot(), AdFullContentModule.forRoot(), AdXlsxModule.forRoot()
+        AdReuseTabModule.forRoot(), AdFullContentModule.forRoot(), AdXlsxModule.forRoot(), AdZipModule.forRoot()
     ],
     exports: MODULES
 })

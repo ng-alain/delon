@@ -1,3 +1,11 @@
+---
+order: 2
+title: 压缩
+---
+
+通过 `pushUrl` 可以快速将URL资源写入 Zip 实例。
+
+```ts
 import { NzMessageService } from 'ng-zorro-antd';
 import { Component } from '@angular/core';
 import { ZipService } from '@delon/abc';
@@ -28,7 +36,7 @@ import * as JSZip from 'jszip';
 })
 export class DemoComponent {
 
-    private instance: JSZip = null;
+    instance: JSZip = null;
     data: { path: string, url: string }[] = [
         { path: 'demo.docx', url: 'http://ng-alain.com/assets/demo.docx' },
         { path: 'img/zorro.svg', url: 'https://ng.ant.design/assets/img/zorro.svg' },
@@ -52,3 +60,4 @@ export class DemoComponent {
         });
     }
 }
+```

@@ -18,7 +18,8 @@
       "stripInternal": true,
       "baseUrl": ".",
       "paths": {
-        "@delon/theme": ["./.ng_build/theme"]
+        "@delon/theme": ["./.ng_build/theme"],
+        "@delon/acl": ["./.ng_build/acl"]
       },
       "skipLibCheck": true,
       "typeRoots": [

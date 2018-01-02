@@ -15,6 +15,7 @@ const globals = {
     'file-saver': 'saveAs',
     'ngx-countdown': 'ngxCountDown',
     'xlsx': 'xlsx',
+    'jszip': 'jszip',
 
     '@angular/cdk': 'ng.cdk',
     '@angular/cdk/coercion': 'ng.cdk.coercion',
