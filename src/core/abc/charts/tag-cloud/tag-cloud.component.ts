@@ -25,7 +25,7 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     private _height = 0;
 
     @Input() padding = 0;
-    @Input() data: Array<{ name: string, value: number, [key: string]: any }>;
+    @Input() data: { name: string, value: number, [key: string]: any }[];
 
     @Input()
     get autoLabel() { return this._autoLabel; }
@@ -49,7 +49,7 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
             drawShape(cfg, container) {
                 const attrs = Object.assign({}, {
                     fillOpacity: cfg.opacity,
-                    fontSize: cfg.size,
+                    fontSize: cfg.origin._origin.size,
                     rotate: cfg.origin._origin.rotate,
                     text: cfg.origin._origin.text,
                     textAlign: 'center',
@@ -71,22 +71,32 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
         if (!this.data || (this.data && this.data.length < 1)) return;
 
         this.node.nativeElement.innerHTML = '';
-
-        const ds = new DataSet();
-        const dv = ds.createView('g2pv').source(this.data);
-
+        const dv = new DataSet.View().source(this.data);
+        const range = dv.range('value');
+        const min = range[0];
+        const max = range[1];
         const height = +this.height;
         const width = +this.el.nativeElement.offsetWidth;
-        this.data.sort((a, b) => b.value - a.value);
-        const max = this.data[0].value;
-        const min = this.data[this.data.length - 1].value;
 
         dv.transform({
             type: 'tag-cloud',
             fields: [ 'name', 'value' ],
             size: [ width, height ],
             padding: this.padding,
-            text: words => words.name
+            timeInterval: 5000, // max execute time
+            rotate() {
+                let random = ~~(Math.random() * 4) % 4;
+                if (random === 2) {
+                    random = 0;
+                }
+                return random * 90; // 0, 90, 270
+            },
+            fontSize(d) {
+                if (d.value) {
+                    return ((d.value - min) / (max - min)) * (80 - 24) + 24;
+                }
+                return 0;
+            }
         });
         const chart = new G2.Chart({
             container: this.node.nativeElement,
@@ -95,7 +105,10 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
             padding: this.padding,
             forceFit: true
         });
-        chart.source(dv);
+        chart.source(dv, {
+            x: { nice: false },
+            y: { nice: false }
+        });
         chart.legend(false);
         chart.axis(false);
         chart.tooltip({
@@ -105,8 +118,8 @@ export class TagCloudComponent implements OnDestroy, OnChanges, OnInit {
         chart.point()
             .position('x*y')
             .color('text')
-            .size('size', size => size)
-            .shape('cloud');
+            .shape('cloud')
+            .tooltip('value*category');
 
         chart.render();
 

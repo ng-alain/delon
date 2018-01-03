@@ -23,7 +23,6 @@ export class DemoComponent implements OnInit {
             });
         }
         // mock big number
-        this.tags.push({ name: `我最大`, value: 3000 });
         this.tags.push({ name: `我最大`, value: 1500 });
     }
 }
