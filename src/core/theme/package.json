@@ -1,6 +1,6 @@
 {
 	"name": "@delon/theme",
-	"version": "0.5.0-rc.6",
+	"version": "0.5.0-rc.7",
 	"description": "@delon/theme",
 	"main": "./bundles/theme.umd.js",
 	"module": "./index.js",

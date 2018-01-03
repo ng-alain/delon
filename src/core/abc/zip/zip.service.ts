@@ -1,9 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
 import { saveAs } from 'file-saver';
-import * as JSZip from 'jszip';
 import { _HttpClient } from '@delon/theme';
 import { LazyService } from '../utils/lazy.service';
 import { ZipConfig, DA_ZIP_CONFIG, ZipWriteOptions } from './interface';
+
+declare var JSZip: any;
 
 @Injectable()
 export class ZipService {
@@ -23,13 +24,13 @@ export class ZipService {
         return this.lazy.load([ config.url ].concat(config.utils));
     }
 
-    private check(zip: JSZip) {
+    private check(zip: any) {
         if (!zip) throw new Error('get instance via `ZipService.create()`');
     }
 
     /** 解压 */
-    read(fileOrUrl: File | string, options?: JSZip.JSZipLoadOptions): Promise<JSZip> {
-        return new Promise<JSZip>((resolve) => {
+    read(fileOrUrl: File | string, options?: any): Promise<any> {
+        return new Promise<any>((resolve) => {
             this.init().then(() => {
                 // from url
                 if (typeof fileOrUrl === 'string') {
@@ -49,10 +50,10 @@ export class ZipService {
     }
 
     /** 创建 Zip 实例，用于创建压缩文件 */
-    create(): Promise<JSZip> {
-        return new Promise<JSZip>((resolve) => {
+    create(): Promise<any> {
+        return new Promise<any>((resolve) => {
             this.init().then(() => {
-                const zipFile: JSZip = new JSZip();
+                const zipFile: any = new JSZip();
                 resolve(zipFile);
             });
         });
@@ -64,7 +65,7 @@ export class ZipService {
      * @param path Zip 路径，例如： `text.txt`、`txt/hi.txt`
      * @param url URL 地址
      */
-    pushUrl(zip: JSZip, path: string, url: string): Promise<void> {
+    pushUrl(zip: any, path: string, url: string): Promise<void> {
         this.check(zip);
         return new Promise<void>((resolve, reject) => {
             this._http.request('GET', url, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
@@ -77,7 +78,7 @@ export class ZipService {
     }
 
     /** 保存Zip */
-    save(zip: JSZip, options?: ZipWriteOptions): Promise<void> {
+    save(zip: any, options?: any): Promise<void> {
         this.check(zip);
         const opt = Object.assign({}, options);
         return new Promise<void>((resolve) => {

@@ -6,6 +6,13 @@ title:
 type: Other
 ---
 
+### 0.5.0-rc.7 （@next）
+
+`2018-1-3`
+
+- @delon/abc
+    - 修复 `zip` 组件依赖问题，[#164](https://github.com/cipchk/ng-alain/issues/164)
+
 ### 0.5.0-rc.6 （@next）
 
 `2018-1-2`

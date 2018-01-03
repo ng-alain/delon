@@ -1,5 +1,4 @@
 import { InjectionToken } from '@angular/core';
-import * as JSZip from 'jszip';
 
 export const DA_ZIP_CONFIG = new InjectionToken<ZipConfig>('DA_ZIP_CONFIG');
 
