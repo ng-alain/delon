@@ -38,6 +38,10 @@ export interface SimpleTableColumn {
      */
     title: string;
     /**
+     * 表格标题 i18n
+     */
+    i18n?: string;
+    /**
      * 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法
      */
     index?: string | string[];
@@ -210,6 +214,10 @@ export interface SimpleTableButton {
      * 文本
      */
     text: string;
+    /**
+     * 文本 i18n
+     */
+    i18n?: string;
     /**
      * 格式化文本
      */

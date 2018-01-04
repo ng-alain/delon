@@ -97,6 +97,7 @@ disabled? | 选择框或单选框 `disabled` 值 | `boolean` | -
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 title | 表格标题 | `string` | -
+i18n? | 表格标题i18n | `string` | -
 type? | `checkbox` 多选； `radio` 单选；`img` 图像且居中；`currency` 货币且居右；`date` 日期格式且居中；`yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn) | `string` | -
 index? | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | -
 buttons? | 按钮组 | `SimpleTableButton[]` | -
@@ -130,6 +131,7 @@ acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 text | 文本 | `string` | -
+i18n? | 文本i18n | `string` | -
 format | 格式化文本 | `(record: any, btn: SimpleTableButton) => string` | -
 type | 按钮类型 | `none,del,modal,static` | -
 click | 点击回调；`type=对话框` 只会在 `确认` 时触发；`type=对话框` 时才会返回 `modal` 所携带参数 | `(record: any, modal?: any) => void` | -

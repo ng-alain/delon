@@ -1,5 +1,5 @@
-import { Component, Input, Output, OnDestroy, OnInit, OnChanges, SimpleChanges, EventEmitter, Renderer2, ElementRef, TemplateRef, SimpleChange, QueryList, ViewChildren, AfterViewInit, ContentChildren, ContentChild, Optional } from '@angular/core';
-import { _HttpClient, CNCurrencyPipe, MomentDatePipe, YNPipe, ModalHelper } from '@delon/theme';
+import { Component, Inject, Input, Output, OnDestroy, OnInit, OnChanges, SimpleChanges, EventEmitter, Renderer2, ElementRef, TemplateRef, SimpleChange, QueryList, ViewChildren, AfterViewInit, ContentChildren, ContentChild, Optional } from '@angular/core';
+import { _HttpClient, CNCurrencyPipe, MomentDatePipe, YNPipe, ModalHelper, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 import { ACLService } from '@delon/acl';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
@@ -178,6 +178,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         private renderer: Renderer2,
         private exportSrv: SimpleTableExport,
         @Optional() private acl: ACLService,
+        @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
         private modal: ModalHelper,
         private currenty: CNCurrencyPipe,
         private date: MomentDatePipe,
@@ -592,11 +593,17 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
                         btn._type = 3;
                     }
                     if (!btn._type) btn._type = 1;
+
+                    // i18n
+                    if (btn.i18n && this.i18nSrv) btn.text = this.i18nSrv.fanyi(btn.i18n);
+
                     buttons.push(btn);
                 }
                 if (buttons.length === 0) continue;
             }
             item.buttons = buttons;
+            // i18n
+            if (item.i18n && this.i18nSrv) item.title = this.i18nSrv.fanyi(item.i18n);
 
             ++idx;
             newColumns.push(item);
