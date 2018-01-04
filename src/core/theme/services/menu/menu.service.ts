@@ -98,6 +98,9 @@ export class MenuService implements OnDestroy {
             item.__parent = parent;
             item._depth = depth;
 
+            if (!item.link) item.link = '';
+            if (!item.externalLink) item.externalLink = '';
+
             // badge
             if (item.badge) {
                 if (item.badge_dot !== true) {
