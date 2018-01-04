@@ -31,7 +31,7 @@ export class AvatarListComponent {
                 this._avatarSize = value;
                 break;
             default:
-            this._avatarSize = 'small';
+                this._avatarSize = 'small';
                 break;
         }
     }
