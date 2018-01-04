@@ -140,7 +140,7 @@ export class MenuService implements OnDestroy {
         const ls = this.data[0].children || [];
         let pos = ls.findIndex(w => w.shortcut_root === true);
         if (pos === -1) {
-            pos = ls.findIndex(w => w.link.includes('dashboard') || w.externalLink.includes('dashboard'));
+            pos = ls.findIndex(w => (w.link && w.link.includes('dashboard')) || (w.externalLink && w.externalLink.includes('dashboard')));
             pos = (pos !== -1 ? pos : -1) + 1;
             this.data[0].children.splice(pos, 0, {
                 text: '快捷菜单',
