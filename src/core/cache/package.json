@@ -1,8 +1,8 @@
 {
-	"name": "@delon/abc",
+	"name": "@delon/cache",
 	"version": "0.6.0-rc.1",
-	"description": "@delon/abc",
-	"main": "./bundles/abc.umd.js",
+	"description": "@delon/cache",
+	"main": "./bundles/cache.umd.js",
 	"module": "./index.js",
 	"typings": "./index.d.ts",
 	"author": "cipchk<cipchk@qq.com>",
@@ -15,5 +15,7 @@
 		"url": "https://github.com/cipchk/delon/issues"
 	},
 	"homepage": "https://github.com/cipchk/delon#readme",
-	"keywords": ["delon", "ng-alain", "alain", "antd", "ng-zorro-antd"]
+	"keywords": ["delon", "ng-alain", "alain", "antd", "ng-zorro-antd", "cache"],
+	"peerDependencies": {
+	}
 }

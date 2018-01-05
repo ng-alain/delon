@@ -7,6 +7,12 @@
         "**/node_modules/*/**": true,
         "**/dist/*/**": true,
         "**/coverage/*/**": true,
-        "**/tools/*/**": true
+        "**/tools/*/**": true,
+        "**/.lib/*/**": true,
+        "**/.ng_build/*/**": true
+    },
+    "files.exclude": {
+        "**/.lib/*/**": true,
+        "**/.ng_build/*/**": true
     }
 }

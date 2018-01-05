@@ -19,6 +19,7 @@
       "baseUrl": ".",
       "paths": {
         "@delon/theme": ["./.ng_build/theme"],
+        "@delon/abc": ["./.ng_build/abc"],
         "@delon/acl": ["./.ng_build/acl"]
       },
       "skipLibCheck": true,
