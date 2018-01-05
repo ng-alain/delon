@@ -48,6 +48,7 @@ class MockTokenService implements ITokenService {
     get login_url() {
         return '/login';
     }
+    redirect: string;
 }
 
 describe('auth: jwt.interceptor', () => {

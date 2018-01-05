@@ -10,8 +10,8 @@ import { AuthOptions, DA_OPTIONS_TOKEN } from '../auth.options';
 export class TokenService implements ITokenService {
 
     private change$: BehaviorSubject<ITokenModel> = new BehaviorSubject<ITokenModel>(null);
-
     private data: ITokenModel;
+    private _redirect: string;
 
     constructor(
         @Inject(DA_OPTIONS_TOKEN) private options: AuthOptions,
@@ -20,6 +20,14 @@ export class TokenService implements ITokenService {
 
     get login_url(): string {
         return this.options.login_url;
+    }
+
+    set redirect(url: string) {
+        this._redirect = url;
+    }
+
+    get redirect() {
+        return this._redirect || '/';
     }
 
     set(data: ITokenModel): boolean {

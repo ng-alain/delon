@@ -11,6 +11,15 @@ export class ACLService {
     private abilities: (number | string)[] = [];
     private full = false;
 
+    /** 获取所有数据 */
+    get data() {
+        return {
+            full: this.full,
+            roles: this.roles,
+            abilities: this.abilities
+        };
+    }
+
     private parseACLType(val: string | string[] | ACLType): ACLType {
         if (typeof val !== 'string' && !Array.isArray(val)) {
             return <ACLType>val;
@@ -135,7 +144,7 @@ export class ACLService {
      * @param {ACLCanType} roleOrAbility
      */
     can(roleOrAbility: ACLCanType): boolean {
-        if (this.full === true) {
+        if (this.full === true || !roleOrAbility) {
             return true;
         }
 

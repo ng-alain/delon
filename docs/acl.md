@@ -18,7 +18,34 @@ export class SharedModule {}
 
 ## 如何运行？
 
-内部实际是一个 `ACLService` 它提供一套基于角色权限服务类。但不包括路由守卫，这是因为路由守卫需要根据不同应用而定制，如果配合 `ACLService` 路由守卫也是非常简单。
+内部实际是一个 `ACLService` 它提供一套基于角色权限服务类。
+
+## 通用路由守卫
+
+`ACLGuard` 是一个通用路由守卫类，可以在路由注册时透过简单的配置完成一些复杂的操作，[在线体验](//cipchk.github.io/ng-alain/logics/guard)。
+
+```ts
+import { of } from 'rxjs/observable/of';
+import { ACLGuard } from '@delon/acl';
+const routes: Routes = [
+    {
+        path: 'guard',
+        component: GuardComponent,
+        children: [
+            // 角色限定
+            { path: 'auth', component: GuardAuthComponent, canActivate: [ ACLGuard ], data: { guard: 'user1' } },
+            { path: 'admin', component: GuardAdminComponent, canActivate: [ ACLGuard ], data: { guard: 'admin' } }
+        ],
+        // 所有子路由有效
+        canActivateChild: [ ACLGuard ],
+        data: { guard: 'user1' }
+    },
+    // 权限点限定
+    { path: 'pro', loadChildren: './pro/pro.module#ProModule', canLoad: [ ACLGuard ], data: { guard: 1 } },
+    // 或使用Observable实现更复杂的行为
+    { path: 'pro', loadChildren: './pro/pro.module#ProModule', canLoad: [ ACLGuard ], data: { guard: of(false).pipe(map(v => 'admin')) } }
+];
+```
 
 ## API
 
@@ -33,6 +60,7 @@ export class SharedModule {}
 
 | 方法 | 说明 |
 | --- | --- |
+| `data` | 获取所有ACL数据 |
 | `setFull(val: boolean)` | 标识当前用户为全量，即不受限 |
 | `set(value: ACLType)` | 设置当前用户角色或权限能力（会先清除所有） |
 | `setRole(roles: string[])` | 设置当前用户角色（会先清除所有） |

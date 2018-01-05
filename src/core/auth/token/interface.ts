@@ -33,4 +33,7 @@ export interface ITokenService {
 
     /** 获取登录地址 */
     readonly login_url: string;
+
+    /** 登录后跳转地址，未指定时返回 `/` */
+    redirect: string;
 }
