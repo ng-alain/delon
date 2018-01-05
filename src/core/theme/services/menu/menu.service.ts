@@ -42,12 +42,22 @@ export interface Menu {
      * 1：链接
      * 2：外部链接
      * 3：链接（子菜单）
+     * @private
      */
     _type?: number;
-    /** 是否选中 */
+    /**
+     * 是否选中
+     * @private
+     */
     _selected?: boolean;
-    /** 是否打开 */
+    /**
+     * 是否打开
+     * @private
+     */
     _open?: boolean;
+    /**
+     * @private
+     */
     _depth?: number;
 
     [key: string]: any;
