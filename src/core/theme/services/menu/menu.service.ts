@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { share } from 'rxjs/operators';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
+import { ACLService } from '@delon/acl';
 
 export interface Menu {
     /** 文本 */
@@ -27,7 +28,7 @@ export interface Menu {
     badge_status?: string;
     /** 是否隐藏 */
     hide?: boolean;
-    /** ACL配置 */
+    /** ACL配置，若导入 `@delon/acl` 时自动有效 */
     acl?: any;
     /** 是否快捷菜单项 */
     shortcut?: boolean;
@@ -51,6 +52,11 @@ export interface Menu {
      */
     _selected?: boolean;
     /**
+     * 是否隐藏菜单
+     * @private
+     */
+    _hidden?: boolean;
+    /**
      * 是否打开
      * @private
      */
@@ -70,7 +76,10 @@ export class MenuService implements OnDestroy {
 
     private data: Menu[] = [];
 
-    constructor(@Optional() @Inject(ALAIN_I18N_TOKEN) private i18nService: AlainI18NService) { }
+    constructor(
+        @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nService: AlainI18NService,
+        @Optional() private aclService: ACLService
+    ) { }
 
     get change(): Observable<Menu[]> {
         return this._change$.pipe(share());
@@ -132,6 +141,14 @@ export class MenuService implements OnDestroy {
 
             const i18n = item.i18n || item.translate;
             item.text = this.i18nService && i18n ? this.i18nService.fanyi(i18n) : item.text;
+
+            // hidden
+            item._hidden = typeof item.hide === 'undefined' ? false : item.hide;
+
+            // acl
+            if (item.acl && this.aclService) {
+                item._hidden = !this.aclService.can(item.acl);
+            }
 
             if (callback) callback(item, parent, depth);
         });

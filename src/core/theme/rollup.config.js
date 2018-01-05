@@ -19,7 +19,9 @@ const globals = {
     'rxjs/observable/zip': 'Rx.Observable',
     'rxjs/observable/fromEvent': 'Rx.Observable',
     'rxjs/observable/FromEventObservable': 'Rx.Observable',
-    'rxjs/observable/combineLatest': 'Rx.Observable'
+    'rxjs/observable/combineLatest': 'Rx.Observable',
+
+    '@delon/acl': 'alain.acl'
 };
 
 module.exports = {
