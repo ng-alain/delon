@@ -6,37 +6,30 @@ title:
 type: Other
 ---
 
-### 0.5.0-rc.7 （@next）
+### 0.5.0
 
-`2018-1-3`
+`2018-1-5`
 
+- ng-alain 脚手架
+    - 新增 `full-content`、`zip`、`full-content` 示例页
+- @delon/theme
+    - 修复快捷菜单项 `externalLink` 属性无效值问题，[#169](https://github.com/cipchk/ng-alain/issues/169)
 - @delon/abc
-    - 修复 `zip` 组件依赖问题，[#164](https://github.com/cipchk/ng-alain/issues/164)
-
-### 0.5.0-rc.6 （@next）
-
-`2018-1-2`
-
-- @delon/abc
+    - 新增 `full-content` 全屏工作区组件，[Document](//ng-alain.com/components/full-content)
     - 新增 `zip` 组件，[Document](//ng-alain.com/components/zip)
-    - `simple-table` 变更：
-        - 新增列描述、按钮组、过滤、选择项的 `acl` 参数，用于权限控制，[#158](https://github.com/cipchk/ng-alain/issues/158)
-        - `export()` 支持指定数组数据，[#162](https://github.com/cipchk/ng-alain/issues/162)
-
-### 0.5.0-rc.5 （@next）
-
-`2018-1-1`
-
-- @delon/abc
     - 新增 `xlsx` 组件，[Document](//ng-alain.com/components/xlsx)
-    - 新增 `simple-table` 组件导出 Excel 方法，[Demo](//cipchk.github.io/ng-alain/tables/simple-table)
-
-### 0.5.0-rc.4 （@next）
-
-`2017-12-30`
-
+    - `simple-table` 变更：
+        - **BREAKING CHANGES** 列描述 `url` 属性由 `data` 代替，数据源统一一个属性名，`0.6.0` 后将移除 `url` 属性
+        - 新增列描述 `i18n` 属性，支持国际化
+        - 新增 `simple-table` 组件导出 Excel 方法，[Demo](//cipchk.github.io/ng-alain/tables/simple-table)
+        - 新增列描述、按钮组、过滤、选择项的 `acl` 参数，用于权限控制，[#158](https://github.com/cipchk/ng-alain/issues/158)
+        - 新增 `export()` 支持指定数组数据，[#162](https://github.com/cipchk/ng-alain/issues/162)
+    - 优化 `tag-cloud` 云词组件
 - @delon/mock
     - Angular 里 Mock Http数据，适用于所有 Angular 项目，[Document](//ng-alain.com/docs/mock)
+- @delon/auth
+    - 修复Angular模块暂不支持正则参数（[#14187](https://github.com/angular/angular/issues/14187)）问题，[#170](https://github.com/cipchk/ng-alain/issues/170)
+
 
 ### 0.4.4
 
@@ -57,15 +50,6 @@ type: Other
         - 修复无法显示部分数据类型问题
 - @delon/auth
     - `token_send_template` 支持多属性（例如：`${uid}-${token}`），[#154](https://github.com/cipchk/ng-alain/issues/154)
-
-### 0.5.0-rc.2 （@next）
-
-`2017-12-27`
-
-- ng-alain 脚手架
-    - 新增 `full-content` [示例页](//cipchk.github.io/ng-alain/tables/fs-table)
-- @delon/abc
-    - 新增 `full-content` 全屏工作区组件，[Document](//ng-alain.com/components/full-content)
 
 ### 0.4.2
 
