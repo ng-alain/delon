@@ -22,6 +22,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     private data$: Subscription;
     _data: SimpleTableData[] = [];
+    _url: string;
     _isAjax = false;
     _isPagination = true;
     _classMap: string[] = [];
@@ -36,9 +37,12 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     // region: fields
 
-    /** 自定义数据源，且 `data` > `url` */
-    @Input() data: any[] | Observable<any[]>;
-    /** 后端URL地址 */
+    /** 数据源 */
+    @Input() data: string | any[] | Observable<any[]>;
+    /**
+     * 后端URL地址
+     * @deprecated 已过期，请使用 `data` 属性，`0.6.0` 后将移除
+     */
     @Input() url: string;
     /**
      * 额外请求参数，默认自动附加 `pi`、`ps` 至URL
@@ -193,7 +197,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         const params: any = {};
         params[this.reqReName && this.reqReName['pi'] || 'pi'] = this.pi;
         params[this.reqReName && this.reqReName['ps'] || 'ps'] = this.ps;
-        return this._http.request(this.reqMehtod, url || this.url, {
+        return this._http.request(this.reqMehtod, url || this._url, {
             params: Object.assign(params, this.extraParams, this.getReqSortMap(), this.getReqFilterMap()),
             body: this.reqBody,
             headers: this.reqHeaders
@@ -308,6 +312,34 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
                 return this.yn.transform(ret === col.ynTruth, col.ynYes, col.ynNo);
         }
         return ret;
+    }
+
+    private getDataObs(urlOrData?: string | any[]): Observable<any[]> {
+        return urlOrData || Array.isArray(this.data) ? of(urlOrData as any[] || this.data as any[]) : this.data as Observable<any[]>;
+    }
+
+    private processData() {
+        if (!this.data && !this.url) {
+            this._isAjax = false;
+            this.data = [];
+            return;
+        }
+
+        this._isAjax = false;
+        if (typeof this.data === 'string' || this.url) {
+            this._url = this.url || this.data as string;
+            this._isAjax = true;
+            this._genAjax(true);
+        } else if (Array.isArray(this.data)) {
+            this._genData(true);
+        } else {
+            if (!this.data$) {
+                this.data$ = <any>this.data.pipe(tap(() => this.loading = true)).subscribe((res) => {
+                    this.data = res;
+                    this._genData(true);
+                });
+            }
+        }
     }
 
     private _subscribeData(res: any[]) {
@@ -468,14 +500,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     // region: export
 
-    private getExportData(url?: string): Observable<any[]> {
-        if (this._isAjax) {
-            return this.getAjaxData(url);
-        } else {
-            return Array.isArray(this.data) ? of(this.data) : this.data;
-        }
-    }
-
     /**
      * 导出Excel，确保已经注册 `AdXlsxModule`
      * @param urlOrData 重新指定数据，例如希望导出所有数据非常有用
@@ -485,7 +509,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         (
             (!urlOrData && this._isAjax) || (urlOrData && typeof urlOrData === 'string') ?
                 this.getAjaxData(urlOrData as string) :
-                urlOrData || Array.isArray(this.data) ? of(urlOrData || this.data) : this.data
+                this.getDataObs(urlOrData)
         )
             .subscribe((res: any[]) =>
                 this.exportSrv.export(Object.assign({}, opt, <STExportOptions>{
@@ -515,103 +539,102 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         this.setClass();
 
         // columns
-        if (!this.columns) throw new Error(`the columns property muse be define!`);
+        if (!this.columns || this.columns.length === 0) throw new Error(`the columns property muse be define!`);
+        if (this._columns.length === 0) {
+            let checkboxCount = 0;
+            let radioCount = 0;
+            const sortMap: Object = {};
+            let idx = 0;
+            const newColumns: SimpleTableColumn[] = [];
+            for (const item of this.columns) {
+                if (this.acl && item.acl && !this.acl.can(item.acl)) continue;
+                if (item.index) {
+                    if (!Array.isArray(item.index))
+                        item.index = item.index.split('.');
 
-        let checkboxCount = 0;
-        let radioCount = 0;
-        const sortMap: Object = {};
-        let idx = 0;
-        const newColumns: SimpleTableColumn[] = [];
-        for (const item of this.columns) {
-            if (this.acl && item.acl && !this.acl.can(item.acl)) continue;
-            if (item.index) {
-                if (!Array.isArray(item.index))
-                    item.index = item.index.split('.');
-
-                item.indexKey = item.index.join('.');
-            }
-            // rowSelection
-            if (!item.selections) item.selections = [];
-            if (item.type === 'checkbox') {
-                ++checkboxCount;
-                if (!item.width) item.width = `${item.selections.length > 0 ? 60 : 50}px`;
-            }
-            if (item.type === 'radio') {
-                ++radioCount;
-                item.selections = [];
-                if (!item.width) item.width = '50px';
-            }
-
-            if (!item.className) {
-                item.className = {
-                    // 'checkbox': 'text-center',
-                    // 'radio': 'text-center',
-                    'currency': 'text-right',
-                    'date': 'text-center'
-                }[item.type];
-            }
-
-            if (item.type === 'yn' && typeof item.ynTruth === 'undefined')
-                item.ynTruth = true;
-
-            // sorter
-            if (item.sorter) {
-                sortMap[idx] = { v: item.sort, key: item.sortKey || item.indexKey };
-                if (item.sort && !this._sortColumn) {
-                    this._sortColumn = item;
-                    this._sortOrder = item.sort;
-                    this._sortIndex = idx;
+                    item.indexKey = item.index.join('.');
                 }
-            }
-            // filter
-            if (!item.filter || !item.filters) item.filters = [];
-            if (typeof item.filterMultiple === 'undefined') item.filterMultiple = true;
-            if (!item.filterConfirmText) item.filterConfirmText = `确认`;
-            if (!item.filterClearText) item.filterClearText = `重置`;
-            if (!item.filterIcon) item.filterIcon = `anticon anticon-filter`;
-            item.filtered = item.filters.findIndex(w => w.checked) !== -1;
-
-            if (this.acl) {
-                item.selections = item.selections.filter(w => !w.acl || this.acl.can(w.acl));
-                item.filters = item.filters.filter(w => !w.acl || this.acl.can(w.acl));
-            }
-
-            // buttons
-            const buttons: SimpleTableButton[] = [];
-            if (item.buttons) {
-                for (const btn of item.buttons) {
-                    if (this.acl && btn.acl && !this.acl.can(btn.acl)) continue;
-
-                    if (btn.type === 'del' && typeof btn.pop === 'undefined')
-                        btn.pop = true;
-
-                    if (btn.pop === true) {
-                        btn._type = 2;
-                        if (typeof btn.popTitle === 'undefined') btn.popTitle = `确认删除吗？`;
-                    }
-                    if (btn.children && btn.children.length > 0) {
-                        btn._type = 3;
-                    }
-                    if (!btn._type) btn._type = 1;
-
-                    // i18n
-                    if (btn.i18n && this.i18nSrv) btn.text = this.i18nSrv.fanyi(btn.i18n);
-
-                    buttons.push(btn);
+                // rowSelection
+                if (!item.selections) item.selections = [];
+                if (item.type === 'checkbox') {
+                    ++checkboxCount;
+                    if (!item.width) item.width = `${item.selections.length > 0 ? 60 : 50}px`;
                 }
-                if (buttons.length === 0) continue;
-            }
-            item.buttons = buttons;
-            // i18n
-            if (item.i18n && this.i18nSrv) item.title = this.i18nSrv.fanyi(item.i18n);
+                if (item.type === 'radio') {
+                    ++radioCount;
+                    item.selections = [];
+                    if (!item.width) item.width = '50px';
+                }
+                if (!item.className) {
+                    item.className = {
+                        // 'checkbox': 'text-center',
+                        // 'radio': 'text-center',
+                        'currency': 'text-right',
+                        'date': 'text-center'
+                    }[item.type];
+                }
+                if (item.type === 'yn' && typeof item.ynTruth === 'undefined')
+                    item.ynTruth = true;
 
-            ++idx;
-            newColumns.push(item);
+                // sorter
+                if (item.sorter) {
+                    sortMap[idx] = { v: item.sort, key: item.sortKey || item.indexKey };
+                    if (item.sort && !this._sortColumn) {
+                        this._sortColumn = item;
+                        this._sortOrder = item.sort;
+                        this._sortIndex = idx;
+                    }
+                }
+                // filter
+                if (!item.filter || !item.filters) item.filters = [];
+                if (typeof item.filterMultiple === 'undefined') item.filterMultiple = true;
+                if (!item.filterConfirmText) item.filterConfirmText = `确认`;
+                if (!item.filterClearText) item.filterClearText = `重置`;
+                if (!item.filterIcon) item.filterIcon = `anticon anticon-filter`;
+                item.filtered = item.filters.findIndex(w => w.checked) !== -1;
+
+                if (this.acl) {
+                    item.selections = item.selections.filter(w => !w.acl || this.acl.can(w.acl));
+                    item.filters = item.filters.filter(w => !w.acl || this.acl.can(w.acl));
+                }
+
+                // buttons
+                const buttons: SimpleTableButton[] = [];
+                if (item.buttons) {
+                    for (const btn of item.buttons) {
+                        if (this.acl && btn.acl && !this.acl.can(btn.acl)) continue;
+
+                        if (btn.type === 'del' && typeof btn.pop === 'undefined')
+                            btn.pop = true;
+
+                        if (btn.pop === true) {
+                            btn._type = 2;
+                            if (typeof btn.popTitle === 'undefined') btn.popTitle = `确认删除吗？`;
+                        }
+                        if (btn.children && btn.children.length > 0) {
+                            btn._type = 3;
+                        }
+                        if (!btn._type) btn._type = 1;
+
+                        // i18n
+                        if (btn.i18n && this.i18nSrv) btn.text = this.i18nSrv.fanyi(btn.i18n);
+
+                        buttons.push(btn);
+                    }
+                    if (buttons.length === 0) continue;
+                }
+                item.buttons = buttons;
+                // i18n
+                if (item.i18n && this.i18nSrv) item.title = this.i18nSrv.fanyi(item.i18n);
+
+                ++idx;
+                newColumns.push(item);
+            }
+            this._columns = newColumns;
+            if (checkboxCount > 1) throw new Error(`just only one column checkbox`);
+            if (radioCount > 1) throw new Error(`just only one column radio`);
+            this._sortMap = sortMap;
         }
-        this._columns = newColumns;
-        if (checkboxCount > 1) throw new Error(`just only one column checkbox`);
-        if (radioCount > 1) throw new Error(`just only one column radio`);
-        this._sortMap = sortMap;
         // reqReName
         if (this.reqReName) {
         }
@@ -629,24 +652,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         } else {
             this.resReName = { total: ['total'], list: ['list'] };
         }
-
-        // results
-        if (this.data) {
-            this._isAjax = false;
-            if (!Array.isArray(this.data)) {
-                if (!this.data$) {
-                    this.data$ = <any>this.data.pipe(tap(() => this.loading = true)).subscribe((res) => {
-                        this.data = res;
-                        this._genData(true);
-                    });
-                }
-            } else {
-                this._genData(true);
-            }
-        } else {
-            this._isAjax = true;
-            this._genAjax(true);
-        }
     }
 
     private setClass() {
@@ -660,7 +665,13 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     }
 
     ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+        if (changes.columns) this._columns = [];
+
         this.updateStatus();
+
+        if (changes.data || changes.url) {
+            this.processData();
+        }
     }
 
     ngOnDestroy(): void {

@@ -37,8 +37,8 @@ module: AdSimpleTableModule
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-data | 自定义数据源，且 `data` > `url` | `any[], Observable<any[]>` | -
-url | 后端URL地址 | `string` | -
+data | 数据源 | `string, any[], Observable<any[]>` | -
+**已过期** url | 后端URL地址，请使用 `data` 属性，`0.6.0` 后将移除 | `string` | -
 extraParams | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | -
 reqMehtod | 请求方法 | `string` | `GET`
 reqHeader | 请求 `header` | `any` | -

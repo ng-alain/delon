@@ -11,7 +11,7 @@ import { SimpleTableColumn, SimpleTableFilter } from '@delon/abc';
 
 @Component({
     selector: 'app-demo',
-    template: `<simple-table [url]="url" [extraParams]="params" [total]="total" [columns]="columns"
+    template: `<simple-table [data]="url" [extraParams]="params" [total]="total" [columns]="columns"
                 [resReName]="{list: 'results' }"></simple-table>`
 })
 export class DemoComponent {

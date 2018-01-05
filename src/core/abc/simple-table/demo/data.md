@@ -6,8 +6,11 @@ title: 自定义数据
 利用 `data` 属性由外部传递数据。
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SimpleTableColumn, SimpleTableChange, SimpleTableFilter } from '@delon/abc';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { delay } from 'rxjs/operators';
 
 @Component({
     selector: 'app-demo',
@@ -16,14 +19,8 @@ import { SimpleTableColumn, SimpleTableChange, SimpleTableFilter } from '@delon/
                 pagePlacement="center" toTopInChange
                 showSizeChanger showQuickJumper showTotal isPageIndexReset></simple-table>`
 })
-export class DemoComponent {
-    users: any[] = Array(100).fill({}).map((item: any, idx: number) => {
-        return {
-            id: idx + 1,
-            name: `name ${idx + 1}`,
-            age: Math.ceil(Math.random() * 10) + 20
-        };
-    });
+export class DemoComponent implements OnInit {
+    users: any[] = [];
     columns: SimpleTableColumn[] = [
         { title: '编号', index: 'id', type: 'checkbox', selections: [
             {
@@ -54,6 +51,15 @@ export class DemoComponent {
     }
     sortChange(ret: any) {
         console.log('sortChange', ret);
+    }
+    ngOnInit(): void {
+        of(Array(100).fill({}).map((item: any, idx: number) => {
+            return {
+                id: idx + 1,
+                name: `name ${idx + 1}`,
+                age: Math.ceil(Math.random() * 10) + 20
+            };
+        })).pipe(delay(500)).subscribe(res => this.users = res);
     }
 }
 ```

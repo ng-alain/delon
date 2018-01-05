@@ -15,7 +15,7 @@ import { SimpleTableColumn } from '@delon/abc';
     <button nz-button (click)="st.export()">Export</button>
     <button nz-button (click)="st.export('https://randomuser.me/api/?results=100', { filename: 'via-url.xlsx', sheetname: 'user' })">Export via url</button>
     <button nz-button (click)="st.export(exportData, { filename: 'via-data.xlsx', sheetname: 'user' })">Export via data</button>
-    <simple-table #st [url]="url" [extraParams]="params" [total]="total" [columns]="columns"
+    <simple-table #st [data]="url" [extraParams]="params" [total]="total" [columns]="columns"
                 [resReName]="{list: 'results' }" class="mt-sm"></simple-table>
     `
 })

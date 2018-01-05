@@ -11,7 +11,7 @@ import { SimpleTableColumn, SimpleTableData } from '@delon/abc';
 
 @Component({
     selector: 'app-demo',
-    template: `<simple-table [url]="url" [extraParams]="params" [total]="total" [columns]="columns"
+    template: `<simple-table [data]="url" [extraParams]="params" [total]="total" [columns]="columns"
                 [preDataChange]="dataChange" [resReName]="{list: 'results' }"
                 (checkboxChange)="checkboxChange($event)"></simple-table>`
 })
