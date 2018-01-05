@@ -178,7 +178,7 @@ token_send_place = 'header';
 | `token_send_template` | `string` | `${token}` | 发送token模板，以 `${属性名}` 表示占位符，属性名要确保存在否则以空字符代替 |
 | `token_send_place` | `header,body,url` | `header` | 发送token参数位置 |
 | `login_url` | `string` | `/login` | 登录页路由地址 |
-| `ignores` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略TOKEN的URL地址列表 |
+| `ignores` | `(string | RegExp)[]` | `[ /\/login/, /assets\// ]` | 忽略TOKEN的URL地址列表<br>**注：** 由于Angular的Bug（[#14187](https://github.com/angular/angular/issues/14187)），暂时只支持 `string[]` 格式正则表达式 |
 | `allow_anonymous_key` | `string` | `_allow_anonymous` | 允许匿名登录KEY，若请求参数中带有该KEY表示忽略TOKEN |
 
 ## 如何删除

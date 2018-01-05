@@ -114,6 +114,25 @@ describe('auth: simple.interceptor', () => {
         });
     });
 
+    describe('url ignores', () => {
+        const basicModel = genModel();
+        beforeEach(() => {
+            genModule({
+                ignores: [ `\\/login`, `assets\\/` ]
+            }, basicModel);
+        });
+
+        it(`should be ignore /login`, (done: () => void) => {
+            injector.get(HttpClient).get('/login', { responseType: 'text' }).subscribe(value => {
+                done();
+            });
+            const req = injector.get(HttpTestingController).expectOne('/login') as TestRequest;
+            expect(req.request.headers.get('token')).toBeNull();
+            req.flush('ok!');
+        });
+
+    });
+
     describe('invalid token', () => {
         beforeEach(() => {
             genModule({}, genModel(null));

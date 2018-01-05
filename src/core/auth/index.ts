@@ -16,7 +16,10 @@ export * from './token';
 
 // endregion
 
-export function optionsFactory(options) {
+export function optionsFactory(options: AuthOptions) {
+    if (options && options.ignores) {
+        options.ignores = options.ignores.map(v => new RegExp(v));
+    }
     return Object.assign(DEFAULT, options);
 }
 

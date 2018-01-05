@@ -17,7 +17,7 @@ export class SimpleInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
         const options = this.injector.get(DA_OPTIONS_TOKEN);
         if (options.ignores) {
-            for (const item of options.ignores) {
+            for (const item of options.ignores as RegExp[]) {
                 if (item.test(req.url)) return next.handle(req);
             }
         }

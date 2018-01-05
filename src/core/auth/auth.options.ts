@@ -39,8 +39,10 @@ export interface AuthOptions {
     login_url?: string;
     /**
      * 忽略TOKEN的URL地址列表，默认值为：[ /\/login/, /assets\// ]
+     *
+     * **注：** 由于Angular的Bug（[#14187](https://github.com/angular/angular/issues/14187)），暂时只支持 `string[]` 格式正则表达式
      */
-    ignores?: RegExp[];
+    ignores?: (string | RegExp)[];
     /**
      * 允许匿名登录KEY，若请求参数中带有该KEY表示忽略TOKEN
      */
