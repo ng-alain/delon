@@ -10,7 +10,8 @@ const FLOATINGCLS = 'nav-floating';
 @Component({
     selector: 'sidebar-nav',
     templateUrl: './sidebar-nav.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    preserveWhitespaces: false
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
 
@@ -122,10 +123,13 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
     toggleOpen(item: Menu) {
         this.menuSrv.visit((i, p) => {
-            if (i !== item) {
-                i._open = false;
-            }
+            if (i !== item) i._open = false;
         });
+        let pItem = item.__parent;
+        while (pItem) {
+            pItem._open = true;
+            pItem = pItem.__parent;
+        }
         item._open = !item._open;
         this.cd.markForCheck();
     }

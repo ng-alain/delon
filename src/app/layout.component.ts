@@ -34,6 +34,22 @@ export class LayoutComponent implements OnInit {
                     link: '/dashboard',
                     icon: 'anticon anticon-appstore-o'
                 },
+                {
+                    text: 'Level1',
+                    link: '/level',
+                    icon: 'anticon anticon-appstore-o',
+                    children: [
+                        {
+                            text: 'Level2',
+                            link: '#',
+                            children: [
+                                { text: 'Level3', link: '#' },
+                                { text: 'Level3', link: '#' }
+                            ]
+                        },
+                        { text: 'Level2', link: '#' }
+                    ]
+                },
                 { text: 'table', link: '/abc/table' },
                 { text: 'Reuse Tab', link: '/abc/reuse-tab' },
                 { text: 'Ellipsis', link: '/abc/ellipsis' },
