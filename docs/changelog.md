@@ -6,12 +6,27 @@ title:
 type: Other
 ---
 
+### 0.6.0-rc.1 (@next)
+
+`2018-1-8`
+
+- ng-alain 脚手架
+    - **BREAKING CHANGES** 优化模块注册指导原则，[#commit](https://github.com/cipchk/ng-alain/commit/7b6de512d2bd6cb99a1d576eedd4ad9ea0808352)，[#180](https://github.com/cipchk/ng-alain/issues/180)
+    - 新增 `cache`、`acl-guard` 通用路由守卫示例页
+    - 新增主菜单二级支持收缩，[#177](https://github.com/cipchk/ng-alain/issues/177)
+- @delon/theme
+    - 优化 `MenuService` 自动处理 `acl` 属性值
+- @delon/acl
+    - 新增通用ACL路由守卫方法，[Document](//ng-alain.com/docs/acl)
+- @delon/cache
+    - 缓存类型，解决字典、城市等缓存问题，[Document](//ng-alain.com/docs/cache)
+
 ### 0.5.0
 
 `2018-1-5`
 
 - ng-alain 脚手架
-    - 新增 `full-content`、`zip`、`full-content` 示例页
+    - 新增 `full-content`、`zip`、`xlsx` 示例页
 - @delon/theme
     - 修复快捷菜单项 `externalLink` 属性无效值问题，[#169](https://github.com/cipchk/ng-alain/issues/169)
 - @delon/abc
