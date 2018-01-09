@@ -107,9 +107,10 @@ export class CacheService implements OnDestroy {
         // expire
         let e = 0;
         if (options.expire && options.expire.length > 1) {
+            const vn = options.expire.split(/(\d+)/).filter(Boolean);
             e = moment().add(
-                +options.expire.slice(1),
-                <moment.unitOfTime.DurationConstructor>options.expire.slice(-1)
+                +vn[0],
+                <moment.unitOfTime.DurationConstructor>vn[1]
             ).unix();
         }
         if (!(data instanceof Observable)) {

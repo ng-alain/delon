@@ -79,7 +79,7 @@ describe('cache: service', () => {
             expect(srv.getNone(KEY)).toBe('a');
         });
         it('should be set string and expires vis storage', () => {
-            srv.set(KEY, 'a', { type: 's', expire: '1h' });
+            srv.set(KEY, 'a', { type: 's', expire: '10s' });
             expect(localStorage.setItem).toHaveBeenCalled();
             const org = JSON.parse(localStorage.getItem(KEY)) as ICache;
             expect(org.e).toBeGreaterThan(1000);
