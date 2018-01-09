@@ -64,14 +64,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         @Inject(DOCUMENT) private doc: any
     ) { }
 
-    private gen(url?: string, reload = false) {
+    private gen(url?: string) {
         if (!url) url = this.srv.getUrl(this.route.snapshot);
-        const nowPos = this._list.findIndex(w => w.url === url);
-        if (!reload && nowPos !== -1) {
-            this._pos = nowPos;
-            this.cd.markForCheck();
-            return ;
-        }
         const ls = [...this.srv.items].map((item: ReuseTabCached, index: number) => {
             return {
                 url: item.url,
@@ -113,14 +107,25 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         this.change.emit(item);
     }
 
-    remove(item: any, idx: number) {
+    private removeByUrl(url: string): string {
+        const removeIdx = this._list.findIndex(w => w.url === url);
+        if (removeIdx === -1) return null;
+
+        this.remove(removeIdx);
+        return this._list[Math.min(removeIdx, this._list.length - 1)].url;
+    }
+
+    remove(idx: number) {
         if (this.showCurrent && this._list.length === 1) return false;
 
-        if (!this.srv.remove(item)) return false;
+        const item = this._list[idx];
+        if (!this.srv._remove(item)) return false;
 
         this._list.splice(idx, 1);
+
         this.visibility();
         this.cd.markForCheck();
+
         this.close.emit(item);
 
         if (this._pos === idx) {
@@ -143,14 +148,19 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         this.sub$ = <any>combineLatest(this.srv.change, route$).pipe(
             debounceTime(300)
         ).subscribe(([res, url]) => {
-            this.gen(this.router.url, res && res.active === 'title');
+            let nextUrl = this.router.url;
+            if (res.active === 'remove' && res.url) {
+                nextUrl = this.removeByUrl(res.url);
+                if (nextUrl === null) return ;
+            }
+            this.gen(nextUrl);
         });
 
         const title$ = this.srv.change.pipe(
             filter(w => w && w.active === 'title'),
             first()
         ).subscribe(res => {
-            this.gen(this.router.url, true);
+            this.gen(this.router.url);
             title$.unsubscribe();
         });
 

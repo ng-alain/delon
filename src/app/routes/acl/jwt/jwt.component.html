@@ -1,3 +1,5 @@
 jwt
 <nz-input [(ngModel)]="value" name="value" [nzSize]="'large'"></nz-input>
 <a [routerLink]="['/abc/reuse-tab']" [queryParams]="{id: 1}">go reuse-tab page</a>
+<button nz-button (click)="clear()" [nzType]="'primary'" [nzSize]="'small'">Clear</button>
+<button nz-button (click)="remove()" [nzType]="'primary'" [nzSize]="'small'">Close</button>

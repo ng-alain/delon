@@ -61,10 +61,10 @@ describe('abc: reuse-tab', () => {
         expect(srv.get('/a/b')).toBeNull(`'get' muse be return null`);
         expect(srv.get(null)).toBeNull(`'get' muse be return null if null`);
         // remove
-        srv.remove('/a/1');
+        srv._remove('/a/1');
         --count;
         expect(srv.count).toBe(count, `'remove' muse be return ${count} when has removed`);
-        srv.remove('/a/b');
+        srv._remove('/a/b');
         expect(srv.count).toBe(count, `'remove' muse be return ${count} when invalid url`);
         // items
         expect(srv.items.length).toBe(count, `'items' muse be return ${count} length`);

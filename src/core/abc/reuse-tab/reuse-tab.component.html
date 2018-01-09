@@ -2,7 +2,7 @@
     <nz-tab *ngFor="let i of _list; let index = index">
         <ng-template #nzTabHeading>
             {{i.title}}
-            <i *ngIf="allowClose" class="anticon anticon-close op" (click)="remove(i, index)"></i>
+            <i *ngIf="allowClose" class="anticon anticon-close op" (click)="remove(index)"></i>
         </ng-template>
     </nz-tab>
     <ng-template #opsContent>
