@@ -1,6 +1,6 @@
 {
 	"name": "@delon/cache",
-	"version": "0.6.0-rc.1",
+	"version": "0.6.0-rc.2",
 	"description": "@delon/cache",
 	"main": "./bundles/cache.umd.js",
 	"module": "./index.js",

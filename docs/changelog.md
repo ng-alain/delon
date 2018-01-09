@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 0.6.0-rc.2 (@next)
+
+`2018-1-9`
+
+- @delon/cache
+    - 修复无法设置有效期，[#190](https://github.com/cipchk/ng-alain/issues/190)
+- @delon/abc
+    - 修复 `ReuseTabService` 调用 `clear()`、`remove()` 时无法同步更新组件，[#191](https://github.com/cipchk/ng-alain/issues/191)
+
 ### 0.6.0-rc.1 (@next)
 
 `2018-1-8`
