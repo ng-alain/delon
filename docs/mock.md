@@ -17,13 +17,12 @@ type: Advance
 
 ```ts
 import { MockStatusError } from '@delon/mock';
-import * as Mock from 'mockjs';
 
 export const USERS = {
     // 支持值为 Object 和 Array
     'GET /users': { users: [1, 2], total: 2 },
     // GET 可省略
-    '/users/1': Mock.mock({ id: 1, 'rank|3': '★★★' }),
+    '/users/1': { users: [1, 2], total: 2 },
     // POST 请求
     'POST /users/1': { uid: 1 },
     // 获取请求参数 queryString、headers、body
@@ -86,3 +85,7 @@ import * as MOCKDATA from '../../_mock';
 | `delay` | `number` | `300` | 请求延迟，单位：毫秒 |
 | `force` | `boolean` | `false` | 是否强制所有请求都Mock，`true` 表示当请求的URL不存在时直接返回 404 错误，`false` 表示未命中时发送真实HTTP请求 |
 | `log` | `boolean` | `true` | 是否打印 Mock 请求信息，弥补浏览器无Network信息  |
+
+## 关于 mock.js
+
+当引入 mock.js 可能会导致 `ng build --prod` 文件变大，目前受限于 Cli，我无法完整的切除它。

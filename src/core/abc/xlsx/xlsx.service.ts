@@ -1,9 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
-import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { _HttpClient } from '@delon/theme';
 import { XlsxExportOptions, DA_XLSX_CONFIG, XlsxConfig, XlsxExportSheet } from './interface';
 import { LazyService } from '../utils/lazy.service';
+
+declare var XLSX: any;
 
 @Injectable()
 export class XlsxService {
@@ -24,10 +25,10 @@ export class XlsxService {
         return this.lazy.load([ config.url ].concat(config.modules));
     }
 
-    private read(wb: XLSX.WorkBook): { [key: string]: any[][] } {
+    private read(wb: any): { [key: string]: any[][] } {
         const ret: any = {};
         wb.SheetNames.forEach(name => {
-            const sheet: XLSX.WorkSheet = wb.Sheets[name];
+            const sheet: any = wb.Sheets[name];
             ret[name] = XLSX.utils.sheet_to_json(sheet, {header: 1});
         });
         return ret;
@@ -48,7 +49,7 @@ export class XlsxService {
                 // from file
                 const reader: FileReader = new FileReader();
                 reader.onload = (e: any) => {
-                    const wb: XLSX.WorkBook = XLSX.read(e.target.result, {type: 'binary'});
+                    const wb: any = XLSX.read(e.target.result, {type: 'binary'});
                     resolver(this.read(wb));
                 };
                 reader.readAsBinaryString(<File>fileOrUrl);
@@ -59,10 +60,10 @@ export class XlsxService {
     /** 导出 */
     export(options: XlsxExportOptions): Promise<void> {
         return this.init().then(() => {
-            const wb: XLSX.WorkBook = XLSX.utils.book_new();
+            const wb: any = XLSX.utils.book_new();
             if (Array.isArray(options.sheets)) {
                 (<XlsxExportSheet[]>options.sheets).forEach((value: XlsxExportSheet, index: number) => {
-                    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(value.data);
+                    const ws: any = XLSX.utils.aoa_to_sheet(value.data);
                     XLSX.utils.book_append_sheet(wb, ws, value.name || `Sheet${index + 1}`);
                 });
             } else {

@@ -24,6 +24,7 @@
 	"homepage": "https://ng-alain.com",
 	"scripts": {
 		"ng": "ng",
+        "analyze": "ng build --prod --build-optimizer --stats-json",
 		"start": "ng serve",
 		"gulp": "gulp",
 		"prepush": "npm run lint",
@@ -159,6 +160,7 @@
 		"tslint": "~5.8.0",
 		"tslint-language-service": "^0.9.6",
 		"typescript": "~2.5.0",
+		"webpack-bundle-analyzer": "^2.9.2",
 		"xlsx": "^0.11.16"
 	},
 	"lint-staged": {

@@ -17,7 +17,6 @@
 	"homepage": "https://github.com/cipchk/delon#readme",
 	"keywords": ["delon", "ng-alain", "alain", "antd", "ng-zorro-antd", "mock", "mockjs", "angular-mock", "ngx-mock"],
 	"peerDependencies": {
-        "mockjs": "^1.0.1-beta3",
         "@types/mockjs": "^1.0.0"
 	}
 }
