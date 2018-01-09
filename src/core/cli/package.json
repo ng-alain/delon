@@ -1,0 +1,23 @@
+{
+	"name": "@delon/cli",
+	"version": "0.0.0-alpha.10",
+	"description": "Schematics for ng-alain",
+	"main": "./bundles/cli.umd.js",
+	"module": "./index.js",
+	"typings": "./index.d.ts",
+	"author": "cipchk<cipchk@qq.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cipchk/delon.git"
+	},
+	"bugs": {
+		"url": "https://github.com/cipchk/delon/issues"
+	},
+	"homepage": "https://github.com/cipchk/delon#readme",
+	"keywords": ["delon", "ng-alain", "alain", "antd", "ng-zorro-antd", "ng-alain-cli", "angular cli", "alain cli"],
+	"peerDependencies": {
+        "@angular-devkit/schematics": "^0.0.42"
+	},
+    "schematics": "./collection.json"
+}

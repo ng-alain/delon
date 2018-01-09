@@ -1,0 +1,7 @@
+@import '~@delon/theme/styles/antd/themes/default.less';
+
+:host {
+    ::ng-deep {
+    }
+}
+
