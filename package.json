@@ -73,8 +73,9 @@
 		"scaffold:deploy": "cd ./scaffold && gh-pages -d dist",
 		"scaffold:npm:next": "cd ./scaffold && npm publish --tag next --access=public",
 		"scaffold:npm": "cd ./scaffold && npm publish --access=public",
-		"scaffold:release:next": "npm run scaffold:install && npm run scaffold:build && npm run scaffold:deploy && npm run scaffold:npm:next",
-		"scaffold:release": "npm run scaffold:install && npm run scaffold:build && npm run scaffold:deploy && npm run scaffold:npm"
+		"scaffold:release:demo": "npm run scaffold:install && npm run scaffold:build && npm run scaffold:deploy",
+		"scaffold:release:next": "npm run scaffold:release:demo && npm run scaffold:npm:next",
+		"scaffold:release": "npm run scaffold:release:demo && npm run scaffold:npm"
 	},
 	"dependencies": {
 		"@angular/animations": "^5.0.0",
