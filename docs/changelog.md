@@ -6,6 +6,23 @@ title:
 type: Other
 ---
 
+### 0.6.0-rc.3 (@next)
+
+`2018-1-11`
+
+- ng-alain 脚手架
+    - 新增 `@delon/abc` 全局配置示例代码
+    - 优化 `DefaultInterceptor` 更友好的处理逻辑
+- @delon/theme
+    - 修复无法移除空快捷菜单数据，[#196](https://github.com/cipchk/ng-alain/issues/196)
+- @delon/abc
+    - `simple-table` 变更：
+        - 新增 `pi` 允许全局设置且最小可为 `0`，[#194](https://github.com/cipchk/ng-alain/issues/194)
+        - 修复无法获取 `total` 值，[#200](https://github.com/cipchk/ng-alain/issues/200)
+    - 优化包体大小
+- @delon/cli
+    - 基于 Angular Cli 向上构建的针对 ng-alain 脚手架的命令行工具，[Document](http://ng-alain.com/docs/cli)
+
 ### 0.6.0-rc.2 (@next)
 
 `2018-1-9`
@@ -26,9 +43,9 @@ type: Other
 - @delon/theme
     - 优化 `MenuService` 自动处理 `acl` 属性值
 - @delon/acl
-    - 新增通用ACL路由守卫方法，[Document](//ng-alain.com/docs/acl)
+    - 新增通用ACL路由守卫方法，[Document](http://ng-alain.com/docs/acl)
 - @delon/cache
-    - 缓存类型，解决字典、城市等缓存问题，[Document](//ng-alain.com/docs/cache)
+    - 缓存类型，解决字典、城市等缓存问题，[Document](http://ng-alain.com/docs/cache)
 
 ### 0.5.0
 
@@ -39,9 +56,9 @@ type: Other
 - @delon/theme
     - 修复快捷菜单项 `externalLink` 属性无效值问题，[#169](https://github.com/cipchk/ng-alain/issues/169)
 - @delon/abc
-    - 新增 `full-content` 全屏工作区组件，[Document](//ng-alain.com/components/full-content)
-    - 新增 `zip` 组件，[Document](//ng-alain.com/components/zip)
-    - 新增 `xlsx` 组件，[Document](//ng-alain.com/components/xlsx)
+    - 新增 `full-content` 全屏工作区组件，[Document](http://ng-alain.com/components/full-content)
+    - 新增 `zip` 组件，[Document](http://ng-alain.com/components/zip)
+    - 新增 `xlsx` 组件，[Document](http://ng-alain.com/components/xlsx)
     - `simple-table` 变更：
         - **BREAKING CHANGES** 列描述 `url` 属性由 `data` 代替，数据源统一一个属性名，`0.6.0` 后将移除 `url` 属性
         - 新增列描述 `i18n` 属性，支持国际化
@@ -50,7 +67,7 @@ type: Other
         - 新增 `export()` 支持指定数组数据，[#162](https://github.com/cipchk/ng-alain/issues/162)
     - 优化 `tag-cloud` 云词组件
 - @delon/mock
-    - Angular 里 Mock Http数据，适用于所有 Angular 项目，[Document](//ng-alain.com/docs/mock)
+    - Angular 里 Mock Http数据，适用于所有 Angular 项目，[Document](http://ng-alain.com/docs/mock)
 - @delon/auth
     - 修复Angular模块暂不支持正则参数（[#14187](https://github.com/angular/angular/issues/14187)）问题，[#170](https://github.com/cipchk/ng-alain/issues/170)
 
@@ -102,7 +119,7 @@ type: Other
 `2017-12-24`
 
 - ng-alain 脚手架
-    - 新增 [blank](//github.com/cipchk/ng-alain/tree/blank) 基础版分支，如何使用见[文档](//ng-alain.com/docs/getting-started)
+    - 新增 [blank](//github.com/cipchk/ng-alain/tree/blank) 基础版分支，如何使用见[文档](http://ng-alain.com/docs/getting-started)
     - 新增 [reuse-tab](https://cipchk.github.io/ng-alain/)、[simple-talbe](https://cipchk.github.io/ng-alain/tables/simple-table)、[UEditor](https://cipchk.github.io/ng-alain/editor/ueditor)、[Tinymce](https://cipchk.github.io/ng-alain/editor/tinymce)、[拆分视图](https://cipchk.github.io/ng-alain/other/split)、[剪贴板](https://cipchk.github.io/ng-alain/other/clipboard) 示例页
     - 修复无法启动 HMR 问题，[#130](https://github.com/cipchk/ng-alain/issues/130) [Commit](https://github.com/cipchk/ng-alain/commit/fca17fe7f74303e70ee2cfbac4dac0e032d426f4)
     - 修复i18n加载顺序问题，[#138](https://github.com/cipchk/ng-alain/issues/138)

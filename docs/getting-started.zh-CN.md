@@ -31,7 +31,7 @@ ng-alain 是一个基于 ng-zorro-antd 的企业级中后台前端脚手架，�
 需要依赖于 `@delon/cli`，[如何安装？](http://ng-alain.com/docs/cli)
 
 ```bash
-ng new --collection=@delon/cli my-app
+ng new -c=@delon/cli my-app
 ```
 
 ### 直接 clone git 仓库

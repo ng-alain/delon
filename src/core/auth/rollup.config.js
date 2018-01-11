@@ -12,6 +12,7 @@ const globals = {
     'rxjs/Observer': 'Rx',
     'rxjs/BehaviorSubject': 'Rx',
     'rxjs/operators': 'Rx.Observable.prototype',
+    'rxjs/observable/of': 'Rx.Observable',
     'rxjs/observable/fromEvent': 'Rx.Observable',
     'rxjs/observable/FromEventObservable': 'Rx.Observable',
     'rxjs/observable/ErrorObservable': 'Rx.Observable'

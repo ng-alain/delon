@@ -31,7 +31,7 @@ There are two ways to install:
 Depend on `@delon/cli`, [How install?](http://ng-alain.com/docs/cli)
 
 ```bash
-ng new --collection=@delon/cli my-app
+ng new -c=@delon/cli my-app
 ```
 
 ### Clone the Git Repository
