@@ -193,7 +193,7 @@ export class MenuService implements OnDestroy {
     }
 
     private removeShortcut() {
-        const ls = this.data[0].children || [];
+        const ls = this.data && this.data.length && this.data[0].children || [];
         const pos = ls.findIndex(w => w.shortcut_root === true);
         if (pos !== -1) ls.splice(pos, 1);
     }
