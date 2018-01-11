@@ -4,7 +4,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler,
          HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent,
          HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { of } from 'rxjs/observable/of';
 import { ITokenModel, DA_SERVICE_TOKEN } from '../interface';
 import { DA_OPTIONS_TOKEN } from '../../auth.options';
 import { SimpleTokenModel } from './simple.model';
@@ -55,7 +55,7 @@ export class SimpleInterceptor implements HttpInterceptor {
         } else {
             if (options.token_invalid_redirect === true) {
                 this.injector.get(Router).navigate([ options.login_url ]);
-                return <any>ErrorObservable.create({ status: 401, _from: 'simple_intercept' });
+                return of(<any>{ status: 401, _from: 'simple_intercept' });
             }
         }
         return next.handle(req);
