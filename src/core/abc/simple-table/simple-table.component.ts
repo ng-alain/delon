@@ -211,6 +211,13 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
                 console.warn(`'${(this.resReName.list as string[]).join('.')}' muse be array type.`);
                 return;
             }
+            // total
+            const retTotal = this.resReName.total && deepGet(res, this.resReName.total as string[], null);
+            if (typeof retTotal === 'undefined') {
+                if (this.resReName.total) console.warn(`results muse contain '${(this.resReName.total as string[]).join('.')}' attribute.`);
+                return;
+            }
+            this.total = +retTotal;
             return <any[]>ret;
         }));
     }
@@ -236,17 +243,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         if (!this._isAjax) return;
         this.loading = true;
         if (forceRefresh === true) this.pi = 1;
-        this.getAjaxData().subscribe((res: any) => {
-            this._subscribeData(res);
-
-            // total
-            const retTotal = this.resReName.total && deepGet(res, this.resReName.total as string[], null);
-            if (typeof retTotal === 'undefined') {
-                if (this.resReName.total) console.warn(`results muse contain '${(this.resReName.total as string[]).join('.')}' attribute.`);
-                return;
-            }
-            this.total = +retTotal;
-        }, err => {
+        this.getAjaxData().subscribe((res: any) => this._subscribeData(res), err => {
             this.loading = false;
             this.reqError.emit(err);
         });
