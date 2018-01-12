@@ -1,6 +1,6 @@
 // tslint:disable:no-console class-name
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { tap, catchError } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -69,6 +69,17 @@ export class _HttpClient {
     // region: get
 
     /**
+     * GET：返回一个 `T` 类型
+     */
+    get<T>(url: string, params?: any, options?: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe?: 'body',
+        reportProgress?: boolean,
+        responseType: 'json',
+        withCredentials?: boolean,
+    }): Observable<T>;
+
+    /**
      * GET：返回一个 `string` 类型
      */
     get(url: string, params: any, options: {
@@ -88,6 +99,17 @@ export class _HttpClient {
         responseType?: 'json',
         withCredentials?: boolean,
     }): Observable<HttpResponse<Object>>;
+
+    /**
+     * GET：返回一个 `JSON` 类型
+     */
+    get<T>(url: string, params: any, options: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe: 'response',
+        reportProgress?: boolean,
+        responseType?: 'json',
+        withCredentials?: boolean,
+    }): Observable<HttpResponse<T>>;
 
     /**
      * GET：返回一个 `any` 类型
@@ -139,6 +161,17 @@ export class _HttpClient {
         responseType?: 'json',
         withCredentials?: boolean,
     }): Observable<HttpResponse<Object>>;
+
+    /**
+     * POST：返回一个 `JSON` 类型
+     */
+    post<T>(url: string, body?: any, params?: any, options?: {
+        headers?: HttpHeaders | {[header: string]: string | string[]},
+        observe: 'response',
+        reportProgress?: boolean,
+        responseType?: 'json',
+        withCredentials?: boolean,
+    }): Observable<T>;
 
     /**
      * POST：返回一个 `any` 类型
@@ -265,6 +298,26 @@ export class _HttpClient {
         }));
     }
 
+    /**
+     * `request` 请求
+     *
+     * @param {string} method 请求方法类型
+     * @param {string} url URL地址
+     * @param {*} [options] 参数
+     */
+    request<R>(method: string, url: string, options?: {
+        body?: any;
+        headers?: HttpHeaders | {
+            [header: string]: string | string[];
+        };
+        observe?: 'body' | 'events' | 'response';
+        params?: HttpParams | {
+            [param: string]: string | string[];
+        };
+        responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+        reportProgress?: boolean;
+        withCredentials?: boolean;
+    }): Observable<R>;
     /**
      * `request` 请求
      *
