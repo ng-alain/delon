@@ -215,9 +215,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
             const retTotal = this.resReName.total && deepGet(res, this.resReName.total as string[], null);
             if (typeof retTotal === 'undefined') {
                 if (this.resReName.total) console.warn(`results muse contain '${(this.resReName.total as string[]).join('.')}' attribute.`);
-                return;
+            } else {
+                this.total = +retTotal;
             }
-            this.total = +retTotal;
             return <any[]>ret;
         }));
     }
