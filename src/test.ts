@@ -26,8 +26,8 @@ getTestBed().initTestEnvironment(
 );
 // Then we find all the tests.
 const context = require.context('./', true, /\.spec\.ts$/);
-// const context = require.context('./', true, /cache\.service\.spec\.ts$/);
+// const context = require.context('./', true, /jwt\.interceptor\.spec\.ts$/);
 // And load the modules.
-context.keys().map(context);
+context.keys().filter(path => path.indexOf('/core/cli/') === -1).map(context);
 // Finally, start Karma to run the tests.
 __karma__.start();

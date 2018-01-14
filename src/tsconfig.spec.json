@@ -16,9 +16,11 @@
     "files": [
       "test.ts"
     ],
+    "exclude": [
+        "./core/cli/**/*.spec.ts"
+    ],
     "include": [
       "**/*.spec.ts",
-      "**/*.d.ts",
-      "./core/cli/**/*"
+      "**/*.d.ts"
     ]
   }
