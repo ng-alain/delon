@@ -62,7 +62,7 @@ npm install --save-dev @delon/cache
 在根模块 `AppModule` 导入 `DelonCacheModule`；
 
 ```ts
-import { DelonCacheModule } from '@delon/mock';
+import { DelonCacheModule } from '@delon/cache';
 
 @NgModule({
     imports: [
