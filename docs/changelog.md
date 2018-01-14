@@ -6,46 +6,37 @@ title:
 type: Other
 ---
 
-### 0.6.0-rc.3 (@next)
+### 0.6.0
 
-`2018-1-11`
-
-- ng-alain 脚手架
-    - 新增 `@delon/abc` 全局配置示例代码
-    - 优化 `DefaultInterceptor` 更友好的处理逻辑
-- @delon/theme
-    - 修复无法移除空快捷菜单数据，[#196](https://github.com/cipchk/ng-alain/issues/196)
-- @delon/abc
-    - `simple-table` 变更：
-        - 新增 `pi` 允许全局设置且最小可为 `0`，[#194](https://github.com/cipchk/ng-alain/issues/194)
-        - 修复无法获取 `total` 值，[#200](https://github.com/cipchk/ng-alain/issues/200)
-    - 优化包体大小
-- @delon/cli
-    - 基于 Angular Cli 向上构建的针对 ng-alain 脚手架的命令行工具，[Document](http://ng-alain.com/docs/cli)
-
-### 0.6.0-rc.2 (@next)
-
-`2018-1-9`
-
-- @delon/cache
-    - 修复无法设置有效期，[#190](https://github.com/cipchk/ng-alain/issues/190)
-- @delon/abc
-    - 修复 `ReuseTabService` 调用 `clear()`、`remove()` 时无法同步更新组件，[#191](https://github.com/cipchk/ng-alain/issues/191)
-
-### 0.6.0-rc.1 (@next)
-
-`2018-1-8`
+`2018-1-14`
 
 - ng-alain 脚手架
     - **BREAKING CHANGES** 优化模块注册指导原则，[#commit](https://github.com/cipchk/ng-alain/commit/7b6de512d2bd6cb99a1d576eedd4ad9ea0808352)，[#180](https://github.com/cipchk/ng-alain/issues/180)
     - 新增 `cache`、`acl-guard` 通用路由守卫示例页
     - 新增主菜单二级支持收缩，[#177](https://github.com/cipchk/ng-alain/issues/177)
+    - 新增 `@delon/abc` 全局配置示例代码
+    - 升级 `typescript: 2.6.0` 版本，更严格的类型检查
+    - 优化 `DefaultInterceptor` 更友好的处理逻辑
 - @delon/theme
+    - 新增 `HttpClient` 泛型支持，[#16](https://github.com/cipchk/delon/issues/16)
+    - 修复无法移除空快捷菜单数据，[#196](https://github.com/cipchk/ng-alain/issues/196)
     - 优化 `MenuService` 自动处理 `acl` 属性值
+- @delon/abc
+    - `simple-table` 变更：
+        - 新增 `pi` 允许全局设置且最小可为 `0`，[#194](https://github.com/cipchk/ng-alain/issues/194)
+        - 修复无法获取 `total` 值，[#200](https://github.com/cipchk/ng-alain/issues/200)
+    - `reuse-tab` 变更：
+        - 新增 `mode`、`debug` 属性
+        - 修复 `ReuseTabService` 调用 `clear()`、`remove()` 时无法同步更新组件，[#191](https://github.com/cipchk/ng-alain/issues/191)
+    - 优化包体大小
 - @delon/acl
     - 新增通用ACL路由守卫方法，[Document](http://ng-alain.com/docs/acl)
 - @delon/cache
-    - 缓存类型，解决字典、城市等缓存问题，[Document](http://ng-alain.com/docs/cache)
+    - 修复无法设置有效期，[#190](https://github.com/cipchk/ng-alain/issues/190)
+    - 修复 `tryGet` 无法返回 `Observalbe` 类型，[#15](https://github.com/cipchk/delon/issues/15)
+    - 支持泛型，[#14](https://github.com/cipchk/delon/issues/14)
+- @delon/cli
+    - 基于 Angular Cli 向上构建的针对 ng-alain 脚手架的命令行工具，[Document](http://ng-alain.com/docs/cli)
 
 ### 0.5.0
 

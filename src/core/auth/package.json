@@ -1,6 +1,6 @@
 {
 	"name": "@delon/auth",
-	"version": "0.6.0-rc.3",
+	"version": "0.6.0",
 	"description": "@delon/auth",
 	"main": "./bundles/auth.umd.js",
 	"module": "./index.js",
