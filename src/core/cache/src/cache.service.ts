@@ -2,6 +2,7 @@ import { Injectable, OnDestroy, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 import { tap, map } from 'rxjs/operators';
 import { DC_STORE_STORAGE_TOKEN, ICacheStore, ICache } from './interface';
 import { DC_OPTIONS_TOKEN, CacheOptions } from '../cache.options';
@@ -59,6 +60,16 @@ export class CacheService implements OnDestroy {
 
     // region: set
 
+    /**
+     * 持久化缓存 `Observable` 对象，例如：
+     * - `set('data/1', this.http.get('data/1')).subscribe()`
+     * - `set('data/1', this.http.get('data/1'), { expire: '10s' }).subscribe()`
+     */
+    set<T>(
+        key: string,
+        data: Observable<T>,
+        options?: { type?: 's', expire?: string }
+    ): Observable<T>;
     /**
      * 持久化缓存 `Observable` 对象，例如：
      * - `set('data/1', this.http.get('data/1')).subscribe()`
@@ -136,6 +147,15 @@ export class CacheService implements OnDestroy {
     // region: get
 
     /** 获取缓存数据，若 `key` 则 `key` 作为HTTP请求缓存后返回 */
+    get<T>(
+        key: string,
+        options?: {
+            mode: 'promise',
+            type?: 'm' | 's',
+            expire?: string
+        }
+    ): Observable<T>;
+    /** 获取缓存数据，若 `key` 则 `key` 作为HTTP请求缓存后返回 */
     get(
         key: string,
         options?: {
@@ -176,10 +196,19 @@ export class CacheService implements OnDestroy {
     }
 
     /** 获取缓存数据，若 `key` 不存在或已过期则返回 null */
+    getNone<T>(key: string): T;
+    /** 获取缓存数据，若 `key` 不存在或已过期则返回 null */
     getNone(key: string): any {
         return this.get(key, { mode: 'none' });
     }
-
+    /**
+     * 获取缓存，若不存在则设置持久化缓存 `Observable` 对象
+     */
+    tryGet<T>(
+        key: string,
+        data: Observable<T>,
+        options?: { type?: 's', expire?: string }
+    ): Observable<T>;
     /**
      * 获取缓存，若不存在则设置持久化缓存 `Observable` 对象
      */
@@ -229,7 +258,7 @@ export class CacheService implements OnDestroy {
 
             return this.set(key, data as Observable<any>, <any>options);
         }
-        return ret;
+        return ret instanceof Observable ? ret : of(ret);
     }
 
     // endregion

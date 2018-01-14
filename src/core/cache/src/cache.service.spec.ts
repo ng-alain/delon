@@ -130,6 +130,13 @@ describe('cache: service', () => {
                 done();
             });
         });
+        it('should be return Observable when valid key', (done: () => void) => {
+            srv.set(KEY, 10);
+            srv.tryGet(KEY, of(10)).subscribe(ret => {
+                expect(ret).toBe(10);
+                done();
+            });
+        });
     });
 
     describe('#has', () => {
