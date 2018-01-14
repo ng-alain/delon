@@ -193,3 +193,10 @@ pagePlacement | 分页方向 | `left,center,right` | `right`
 reqReName | 重命名请求参数 `pi`、`ps`；例如：`{ pi: 'Page' }` `pi` 会被替换成 Page | `Object` | -
 resReName | 重命名返回参数 `total`、`list`；例如：`{ total: 'Total' }` Total 会被当作 `total` | `Object` | -
 sortReName | 重命名排序值，`columns` 的重命名高于属性 | `{ ascend?: string, descend?: string }` | -
+
+## 刷新表格
+
+```html
+<simple-table #st></simple-table>
+<button (click)="st.load()"></button>
+```
