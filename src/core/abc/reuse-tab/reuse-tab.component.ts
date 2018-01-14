@@ -6,7 +6,7 @@ import { combineLatest } from 'rxjs/observable/combineLatest';
 import { filter, debounceTime, take, first } from 'rxjs/operators';
 import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { ReuseTabService } from './reuse-tab.service';
-import { ReuseTabCached, ReuseTabNotify } from './interface';
+import { ReuseTabCached, ReuseTabNotify, ReuseTabMatchMode } from './interface';
 
 @Component({
     selector: 'reuse-tab',
@@ -19,6 +19,15 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     _list: { url: string, title: string, [key: string]: any }[] = [];
     _pos = 0;
 
+    /** 设置匹配模式 */
+    @Input() mode: ReuseTabMatchMode = ReuseTabMatchMode.Menu;
+    /** 是否Debug模式 */
+    @Input()
+    get debug() { return this._debug; }
+    set debug(value: any) {
+        this._debug = coerceBooleanProperty(value);
+    }
+    private _debug = true;
     /** 允许最多复用多少个页面 */
     @Input()
     get max() { return this._max; }
@@ -184,6 +193,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
         if (changes.max) this.srv.max = this.max;
         if (changes.excludes) this.srv.excludes = this.excludes;
+        if (changes.mode) this.srv.mode = this.mode;
+        this.srv.debug = this.debug;
+
         this.setClass();
         this.cd.markForCheck();
     }

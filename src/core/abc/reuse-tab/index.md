@@ -12,9 +12,9 @@ module: AdReuseTabModule
 
 ## 匹配模式
 
-在项目的任何位置（建议：`startup.service.ts`）注入 `ReuseTabService` 类，并设置 `mode` 属性，其值包括：
+在项目的任何位置（建议：`startup.service.ts`）注入 `ReuseTabService` 类，并设置 `mode` 属性，或通过 `<reuse-tab [mode]="0"></reuse-tab>` 重新设置值，包括：
 
-**1、（推荐，默认值）Menu**
+**0、（推荐，默认值）Menu**
 
 按菜单 `Menu` 配置。
 
@@ -31,7 +31,7 @@ module: AdReuseTabModule
 { text:'Dashboard', reuse: false }
 ```
 
-**2、（推荐）MenuForce**
+**1、（推荐）MenuForce**
 
 按菜单 `Menu` 强制配置。
 
@@ -48,7 +48,7 @@ module: AdReuseTabModule
 { text:'Dashboard', reuse: false }
 ```
 
-**3、URL**
+**2、URL**
 
 对所有路由有效，可以配合 `excludes` 过滤无须复用路由。
 
@@ -85,7 +85,9 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 - `OnDestroy` 可能会处理一些组件外部（例如：`body`）的样式等
 
-而在组件内部唯一能够知道是否由复用产生的组件激活状态，只能透过 `Router.events` 事件监听；有兴趣可以扩展阅读 [ngx-ueditor](https://github.com/cipchk/ngx-ueditor/blob/master/lib/src/ueditor.component.ts) 的解决办法。
+    而在组件内部唯一能够知道是否由复用产生的组件激活状态，只能透过 `Router.events` 事件监听；有兴趣可以扩展阅读 [ngx-ueditor](https://github.com/cipchk/ngx-ueditor/blob/master/lib/src/ueditor.component.ts) 的解决办法。
+
+- 开启 `debug` 模式后会在 `console` 很多信息这有助于分析路由复用的过程。
 
 ## API
 
@@ -93,6 +95,8 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
+mode | 设置匹配模式 | `ReuseTabMatchMode` | `0`
+debug | 是否Debug模式 | `boolean` | `false`
 max | 允许最多复用多少个页面 | `number` | `10`
 excludes | 排除规则，限 `mode=URL` | `RegExp[]` | -
 allowClose | 允许关闭 | `boolean` | `true`

@@ -11,7 +11,7 @@ const COMPONENTS = [DemoReuseTabComponent, DemoReuseTabEditComponent, DemoEllips
 
 const routes: Routes = [
     { path: 'reuse-tab', component: DemoReuseTabComponent, data: { title: 'R-title', reuseTitle: 'R-reuseTitle' } },
-    { path: 'reuse-tab/:id', component: DemoReuseTabEditComponent, data: { reuse: false, reuseClosable: false, title: 'edit title' } },
+    { path: 'reuse-tab/:id', component: DemoReuseTabEditComponent, data: { reuse: true, reuseClosable: false, title: 'edit title' } },
     { path: 'ellipsis', component: DemoEllipsisComponent }
 ];
 
