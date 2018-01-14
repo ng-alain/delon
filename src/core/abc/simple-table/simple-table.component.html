@@ -78,7 +78,7 @@
                             <label nz-checkbox [nzDisabled]="i.disabled" [(ngModel)]="i.checked" (ngModelChange)="_checkSelection(i)"></label>
                         </ng-container>
                         <ng-container *ngSwitchCase="'radio'">
-                            <label nz-radio-extra [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_refRadio(index, $event)"></label>
+                            <label nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_refRadio(index, $event)"></label>
                         </ng-container>
                         <span *ngSwitchDefault [innerHTML]="_get(i, c)"></span>
                     </ng-container>

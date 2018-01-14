@@ -1,5 +1,4 @@
 import { ElementRef, TemplateRef } from '@angular/core';
-import { ACLCanType } from '@delon/acl';
 
 export type CompareFn = ((a: any, b: any) => number);
 
@@ -163,7 +162,7 @@ export interface SimpleTableColumn {
      */
     exported?: boolean;
     /** 权限，等同 `can()` 参数值 */
-    acl?: ACLCanType;
+    acl?: any;
 
     [key: string]: any;
 }
@@ -181,7 +180,7 @@ export interface SimpleTableSelection {
      */
     select: Function;
     /** 权限，等同 `can()` 参数值 */
-    acl?: ACLCanType;
+    acl?: any;
 }
 
 /**
@@ -201,7 +200,7 @@ export interface SimpleTableFilter {
      */
     checked?: boolean;
     /** 权限，等同 `can()` 参数值 */
-    acl?: ACLCanType;
+    acl?: any;
 
     [key: string]: any;
 }
@@ -266,7 +265,7 @@ export interface SimpleTableButton {
      */
     children?: SimpleTableButton[];
     /** 权限，等同 `can()` 参数值 */
-    acl?: ACLCanType;
+    acl?: any;
 
     [key: string]: any;
 }

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
-import { _HttpClient } from '@delon/theme';
 import { XlsxExportOptions, DA_XLSX_CONFIG, XlsxConfig, XlsxExportSheet } from './interface';
 import { LazyService } from '../utils/lazy.service';
 
@@ -11,7 +11,7 @@ export class XlsxService {
 
     constructor(
         @Inject(DA_XLSX_CONFIG) private config: XlsxConfig,
-        private _http: _HttpClient,
+        private http: HttpClient,
         private lazy: LazyService
     ) {
     }
@@ -40,7 +40,7 @@ export class XlsxService {
             this.init().then(() => {
                 // from url
                 if (typeof fileOrUrl === 'string') {
-                    this._http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
+                    this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
                         const wb = XLSX.read(new Uint8Array(res), { type: 'array' });
                         resolver(this.read(wb));
                     });

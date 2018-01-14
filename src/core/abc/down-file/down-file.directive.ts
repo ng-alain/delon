@@ -1,8 +1,7 @@
 import { Directive, ElementRef, Input, HostListener, EventEmitter, Output } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { saveAs } from 'file-saver';
-import { _HttpClient } from '@delon/theme';
 
 /**
  * 文件下载
@@ -27,13 +26,13 @@ export class DownFileDirective {
     /** 错误回调 */
     @Output() error: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(private el: ElementRef, private _http: _HttpClient) {
+    constructor(private el: ElementRef, private http: HttpClient) {
     }
 
     @HostListener('click') _click() {
         this.el.nativeElement.disabled = true;
-        this._http.request(this.httpMethod, this.httpUrl, {
-            params: this._http.parseParams(this.httpData || {}),
+        this.http.request(this.httpMethod, this.httpUrl, {
+            params: this.httpData || {},
             responseType: 'blob',
             observe: 'response'
         }).subscribe((res: HttpResponse<Blob>) => {

@@ -19,10 +19,7 @@ const globals = {
     'rxjs/observable/of': 'Rx.Observable',
     'rxjs/observable/fromEvent': 'Rx.Observable',
     'rxjs/observable/FromEventObservable': 'Rx.Observable',
-    'rxjs/observable/ErrorObservable': 'Rx.Observable',
-
-    '@delon/theme': 'alain.theme',
-    '@delon/abc': 'alain.abc'
+    'rxjs/observable/ErrorObservable': 'Rx.Observable'
 };
 
 module.exports = {

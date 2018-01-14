@@ -38,7 +38,6 @@
       "./.ng_build/**/*.spec.ts"
     ],
     "angularCompilerOptions": {
-      "fullTemplateTypeCheck": true,
       "preserveWhiteSpace": false,
       "skipTemplateCodegen": true,
       "strictMetadataEmit": false,

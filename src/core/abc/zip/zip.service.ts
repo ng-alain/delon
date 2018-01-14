@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
-import { _HttpClient } from '@delon/theme';
 import { LazyService } from '../utils/lazy.service';
 import { ZipConfig, DA_ZIP_CONFIG, ZipWriteOptions } from './interface';
 
@@ -10,7 +10,7 @@ declare var JSZip: any;
 export class ZipService {
     constructor(
         @Inject(DA_ZIP_CONFIG) private config: ZipConfig,
-        private _http: _HttpClient,
+        private http: HttpClient,
         private lazy: LazyService
     ) {
     }
@@ -34,7 +34,7 @@ export class ZipService {
             this.init().then(() => {
                 // from url
                 if (typeof fileOrUrl === 'string') {
-                    this._http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
+                    this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
                         JSZip.loadAsync(res, options).then(ret => resolve(ret));
                     });
                     return;
@@ -68,7 +68,7 @@ export class ZipService {
     pushUrl(zip: any, path: string, url: string): Promise<void> {
         this.check(zip);
         return new Promise<void>((resolve, reject) => {
-            this._http.request('GET', url, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
+            this.http.request('GET', url, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
                 zip.file(path, res);
                 resolve();
             }, () => {

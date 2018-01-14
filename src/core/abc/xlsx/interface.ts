@@ -1,5 +1,4 @@
 import { InjectionToken } from '@angular/core';
-import { WritingOptions, WorkSheet, WorkBook } from 'xlsx/types';
 
 export const DA_XLSX_CONFIG = new InjectionToken<XlsxConfig>('DA_XLSX_CONFIG');
 
@@ -22,12 +21,12 @@ export interface XlsxExportOptions {
      * - `{ Sheet1: { A1: { t:"n", v:10000 } } }`
      * - `[['1'], [1]]`
      */
-    sheets: { [sheet: string]: WorkSheet } | XlsxExportSheet[];
+    sheets: { [sheet: string]: any } | XlsxExportSheet[];
     /** save file name, default: `export.xlsx` */
     filename?: string;
-    opts?: WritingOptions;
+    opts?: any;
     /** triggers when saveas */
-    callback?: (wb: WorkBook) => void;
+    callback?: (wb: any) => void;
 }
 
 export interface XlsxExportSheet {

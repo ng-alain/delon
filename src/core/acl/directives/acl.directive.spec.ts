@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixtureAutoDetect, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import { AlainACLModule } from '@delon/acl';
+import { AlainACLModule } from '../index';
 import { ACLService } from './../services/acl.service';
 import { By } from '@angular/platform-browser';
 

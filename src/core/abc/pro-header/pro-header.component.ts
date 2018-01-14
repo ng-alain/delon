@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, TemplateRef, ContentChild, OnInit, AfterViewInit, Inject, Renderer2 } from '@angular/core';
+import { Component, Input, ElementRef, TemplateRef, ContentChild, OnInit, AfterViewInit, Inject, Renderer2, Optional } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
@@ -66,23 +66,23 @@ export class ProHeaderComponent implements OnInit {
 
     constructor(
         private route: Router,
-        private menuSrv: MenuService,
-        @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
+        @Optional() private menuSrv: MenuService,
+        @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
         private el: ElementRef, private renderer: Renderer2) {}
 
     private genBreadcrumb() {
-        if (this.breadcrumb || !this.autoBreadcrumb) return;
+        if (this.breadcrumb || !this.autoBreadcrumb || !this.menuSrv) return;
         const menus = this.menuSrv.getPathByUrl(this.route.url);
         if (menus.length <= 0) return ;
         const paths: any[] = [];
         menus.forEach(item => {
             let title;
-            if (item.translate) title = this.i18nSrv.fanyi(item.translate);
+            if (item.translate && this.i18nSrv) title = this.i18nSrv.fanyi(item.translate);
             paths.push({ title: title || item.text, link: item.link && [ item.link ] });
         });
         // add home
         paths.splice(0, 0, {
-            title: this.i18nSrv.fanyi('home') || 'Home',
+            title: this.i18nSrv && this.i18nSrv.fanyi('home') || 'Home',
             link: [ '/' ]
         });
         this.paths = paths;

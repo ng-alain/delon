@@ -45,7 +45,7 @@
 		"site:404": "cd ./site/dist && cpy index.html --rename=404.html ./",
 		"site:deploy": "gh-pages -d site/dist",
 		"site:release": "npm-run-all -s site:build site:404 site:deploy",
-		"build:package": "npm-run-all -s clean:tmp:lib build:copy-sources build:ts build:inline-resources build:bundle clean:tmp build:cli",
+		"build:package": "npm-run-all -s clean:tmp:lib build:copy-sources build:ts build:inline-resources build:bundle clean:tmp",
 		"build:ts": "tsc -p tsconfig.publish.json && ngc -p tsconfig.publish.json",
 		"build:prod": "npm run build -- --prod",
 		"build:copy-sources": "gulp copy-sources",

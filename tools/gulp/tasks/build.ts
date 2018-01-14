@@ -46,8 +46,7 @@ const versionPaths = [
     './src/core/acl/package.json',
     './src/core/auth/package.json',
     './src/core/mock/package.json',
-    './src/core/cache/package.json',
-    './src/core/cli/package.json'
+    './src/core/cache/package.json'
 ];
 
 function bumpVersions() {

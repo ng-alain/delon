@@ -11,9 +11,8 @@ const COMPONENTS = [SimpleTableComponent, SimpleTableRowDirective];
 // region: zorro modules
 
 import { NzTableModule, NzCheckboxModule, NzRadioModule, NzDropDownModule, NzMenuModule, NzPopconfirmModule } from 'ng-zorro-antd';
-import { NzRadioExtraModule } from 'ng-zorro-antd-extra';
 
-const ZORROMODULES = [ NzTableModule, NzCheckboxModule, NzRadioModule, NzDropDownModule, NzMenuModule, NzPopconfirmModule, NzRadioExtraModule ];
+const ZORROMODULES = [ NzTableModule, NzCheckboxModule, NzRadioModule, NzDropDownModule, NzMenuModule, NzPopconfirmModule ];
 
 // endregion
 
