@@ -74,9 +74,11 @@ function copySources() {
 
 function cliResources() {
     // others
+
     src([
-        `node_modules/@schematics/angular/utility/**`
-    ], { base: 'node_modules/@schematics/angular/' }).pipe(dest('./src/core/cli'));
+        'utility', 'class', 'directive', 'enum', 'interface', 'pipe', 'service'
+    ].map(v => `node_modules/@schematics/angular/${v}/**`),
+    { base: 'node_modules/@schematics/angular/' }).pipe(dest('./src/core/cli'));
     // .vscode
     src([
         `${paths.scaffold}.vscode/**`
@@ -113,25 +115,19 @@ function cliResources() {
     ], { base: paths.scaffoldSrc }).pipe(dest('./src/core/cli/application/files/__sourcedir__/'));
     // app
     src([
-        `${paths.scaffoldApp}/layout/**`,
         `${paths.scaffoldApp}/core/net/**`,
         `${paths.scaffoldApp}/core/module-import-guard.ts`,
         `${paths.scaffoldApp}/core/README.md`,
         `${paths.scaffoldApp}/shared/README.md`,
         `${paths.scaffoldApp}/routes/callback/**`,
         `${paths.scaffoldApp}/routes/exception/**`,
-        `${paths.scaffoldApp}/routes/passport/**`,
-        `!${paths.scaffoldApp}/layout/layout.module.ts`,
-        `!${paths.scaffoldApp}/layout/default/default.component.html`,
-        `!${paths.scaffoldApp}/layout/default/header/components/langs.component.ts`,
-        `!${paths.scaffoldApp}/layout/default/header/header.component.html`
+        `${paths.scaffoldApp}/routes/passport/**`
     ], { base: paths.scaffoldApp }).pipe(dest('./src/core/cli/application/other-files/'));
 }
 
 function cliI18n() {
     // file wrap
     src([
-        `${paths.scaffoldApp}/layout/default/header/components/langs.component.ts`,
         `${paths.scaffoldApp}/core/i18n/**`
     ], { base: paths.scaffoldApp })
     .pipe(wrap('<%= "\\<% if (delonI18n) { %\\>" %><%= contents %><%= "\\<% } %\\>" %>'))

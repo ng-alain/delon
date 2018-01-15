@@ -22,10 +22,6 @@ application/files/__sourcedir__/test.ts
 application/files/__sourcedir__/tsconfig.app.json
 application/files/__sourcedir__/tsconfig.spec.json
 application/files/__sourcedir__/typings.d.ts
-application/other-files/layout
-!application/other-files/layout/layout.module.ts
-!application/other-files/layout/default/default.component.html
-!application/other-files/layout/default/header/header.component.html
 application/other-files/core/i18n
 application/other-files/core/net
 application/other-files/core/module-import-guard.ts
@@ -35,3 +31,9 @@ application/other-files/routes/callback
 application/other-files/routes/exception
 application/other-files/routes/passport
 utility
+class
+directive
+enum
+interface
+pipe
+service
