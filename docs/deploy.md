@@ -116,7 +116,7 @@ $ docker run -d -p 80:80 --name alain ng-alain
 
 #### 3、关于SSL
 
-`ng-alain` 提供的 Dockerfile 文件相对于比较简单，而实现项目中最觉用的是对SSL的支持。
+`ng-alain` 提供的 Dockerfile 文件相对于比较简单，而实际项目中最常用的是对SSL的支持。
 
 因此，默认情况下你可以将证书放置 `_nginx/ssl` 目录下，并开启 `_nginx/default.conf` 相关SSL配置项即可。
 
