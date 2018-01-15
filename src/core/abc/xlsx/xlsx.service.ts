@@ -18,7 +18,7 @@ export class XlsxService {
 
     private init(): Promise<void> {
         const config = Object.assign({
-            url: `//cdn.bootcss.com/xlsx/0.11.14/xlsx.min.js`,
+            url: `//cdn.bootcss.com/xlsx/0.11.17/xlsx.full.min.js`,
             modules: []
         }, this.config);
 
