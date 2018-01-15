@@ -17,4 +17,12 @@ export class DemoReuseTabEditComponent implements OnInit {
             this.srv.title = `编辑 ${this.id}`;
         });
     }
+
+    _onReuseInit() {
+        console.log('_onReuseInit');
+    }
+
+    _onReuseDestroy() {
+        console.log('_onReuseDestroy');
+    }
 }

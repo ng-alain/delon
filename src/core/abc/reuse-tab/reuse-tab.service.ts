@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, Optional, Injector } from '@angular/core';
-import { ActivatedRouteSnapshot, DetachedRouteHandle, ActivatedRoute } from '@angular/router';
+import { ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { MenuService } from '@delon/theme';
@@ -14,7 +14,9 @@ export class ReuseTabService implements OnDestroy {
     private _cachedChange: BehaviorSubject<ReuseTabNotify> = new BehaviorSubject<ReuseTabNotify>(null);
     private _cached: ReuseTabCached[] = [];
     private _titleCached: { [url: string]: string } = {};
+    private _hookCached: { [url: string]: boolean } = {};
     private removeBuffer: string;
+    private curUrl: string;
 
     // region: public
 
@@ -120,7 +122,7 @@ export class ReuseTabService implements OnDestroy {
     /** 设置当前页标题 */
     set title(value: string) {
         if (!value) return;
-        this._titleCached[this.getUrl(this.injector.get(ActivatedRoute).snapshot)] = value;
+        this._titleCached[this.curUrl] = value;
         this.di('update current tag title', value);
         this._cachedChange.next({ active: 'title', title: value });
     }
@@ -136,7 +138,7 @@ export class ReuseTabService implements OnDestroy {
 
     // endregion
 
-    constructor(private injector: Injector, @Optional() private menuService: MenuService) { }
+    constructor(@Optional() private menuService: MenuService) { }
 
     /** @private */
     getTitle(url: string, route?: ActivatedRouteSnapshot): string {
@@ -171,6 +173,16 @@ export class ReuseTabService implements OnDestroy {
         const menus = this.menuService ? this.menuService.getPathByUrl(url) : [];
         if (!menus || menus.length === 0) return null;
         return menus.pop();
+    }
+
+    private runHook(method: string, url: string, comp: any) {
+        if (this._hookCached[url]) return;
+        this._hookCached[url] = true;
+        setTimeout(() => {
+            if (comp.instance && comp.instance[method])
+                comp.instance[method]();
+            this._hookCached[url] = false;
+        }, 100);
     }
 
     /** @private */
@@ -218,7 +230,7 @@ export class ReuseTabService implements OnDestroy {
     /**
      * 存储
      */
-    store(_snapshot: ActivatedRouteSnapshot, _handle: {}) {
+    store(_snapshot: ActivatedRouteSnapshot, _handle: any) {
         if (!_snapshot.routeConfig || _snapshot.routeConfig.loadChildren || _snapshot.routeConfig.children) return ;
         if (this.count >= this._max) this._cached.shift();
         const url = this.getUrl(_snapshot);
@@ -240,6 +252,11 @@ export class ReuseTabService implements OnDestroy {
         this._clearRemoveBuffer();
 
         this.di('#store', url, idx === -1 ? '[new]' : '[override]');
+
+        if (_handle && _handle.componentRef) {
+            this.runHook('_onReuseDestroy', url, _handle.componentRef);
+        }
+
         this._cachedChange.next({ active: 'add', item });
     }
 
@@ -264,6 +281,9 @@ export class ReuseTabService implements OnDestroy {
         const data = this.get(url);
         const ret = (data && data._handle) || null;
         this.di('#retrieve', url, ret);
+        if (ret && ret.componentRef) {
+            this.runHook('_onReuseInit', url, ret.componentRef);
+        }
         return ret;
     }
 
@@ -271,7 +291,12 @@ export class ReuseTabService implements OnDestroy {
      * 决定是否应该进行复用路由处理
      */
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        return future.routeConfig === curr.routeConfig;
+        const futureUrl = this.getUrl(future);
+        const currUrl = this.getUrl(curr);
+        const ret = futureUrl === currUrl;
+        this.curUrl = ret ? '' : futureUrl;
+        return ret;
+        // return future.routeConfig === curr.routeConfig;
     }
 
     ngOnDestroy(): void {

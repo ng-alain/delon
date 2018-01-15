@@ -1,4 +1,4 @@
-<nz-tabset [(nzSelectedIndex)]="_pos" (nzSelectedIndexChange)="to($event)" [nzTabBarExtraTemplate]="opsContent">
+<nz-tabset [(nzSelectedIndex)]="_pos" [nzAnimated]="false" (nzSelectedIndexChange)="to($event)" [nzTabBarExtraTemplate]="opsContent">
     <nz-tab *ngFor="let i of _list; let index = index">
         <ng-template #nzTabHeading>
             {{i.title}}

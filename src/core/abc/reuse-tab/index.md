@@ -79,14 +79,25 @@ export class DemoReuseTabEditComponent implements OnInit {
 }
 ```
 
+## 生命周期
+
+路由复用过程中不会触发现有任何生命周期钩子（例如：`ngOnInit` 等），但是往往需要在复用过程中刷新数据，因此 `reuse-tab` 提供了两种新生命周期钩子用于临时解决这类问题。
+
+**_onReuseInit()**
+
+当目前路由在复用过程中时触发。
+
+**_onReuseDestroy()**
+
+当目前路由允许复用且进入新路由时触发。
+
+以 `_` 开头希望未来 Angular 会有相应的钩子用于快速替换。
+
 ## 常见问题
 
 路由复用会保留组件状态，这可能会带来另一个弊端；复用过程中组件的生命周期勾子不会重复触发，大部分情况下都能正常运行，但可能需要注意：
 
-- `OnDestroy` 可能会处理一些组件外部（例如：`body`）的样式等
-
-    而在组件内部唯一能够知道是否由复用产生的组件激活状态，只能透过 `Router.events` 事件监听；有兴趣可以扩展阅读 [ngx-ueditor](https://github.com/cipchk/ngx-ueditor/blob/master/lib/src/ueditor.component.ts) 的解决办法。
-
+- `OnDestroy` 可能会处理一些组件外部（例如：`body`）的样式等，可以参考生命周期解决。
 - 开启 `debug` 模式后会在 `console` 很多信息这有助于分析路由复用的过程。
 
 ## API

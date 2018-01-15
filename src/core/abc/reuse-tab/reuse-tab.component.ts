@@ -99,6 +99,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         } else {
             this._pos = ls.length;
         }
+
         this._list = ls;
         this.visibility();
         this.cd.markForCheck();
@@ -155,7 +156,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
             filter(evt => evt instanceof NavigationEnd)
         );
         this.sub$ = <any>combineLatest(this.srv.change, route$).pipe(
-            debounceTime(300)
+            debounceTime(200)
         ).subscribe(([res, url]) => {
             let nextUrl = this.router.url;
             if (res.active === 'remove' && res.url) {
