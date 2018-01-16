@@ -6,6 +6,21 @@ title:
 type: Other
 ---
 
+### 0.6.1
+
+`2018-1-16`
+
+- @delon/theme
+    - 修复IPAD屏幕以下出现错位，[#215](https://github.com/cipchk/ng-alain/issues/215)
+- @delon/abc
+    - `reuse-tab` 变更：
+        - 修复路由参数重复触发问题，[#13](https://github.com/cipchk/delon/issues/13)
+        - 新增 `_onReuseInit`、`_onReuseDestroy` 生命周期钩子，用于复用过程中无法触发Angular组件任何生命周期钩子问题
+    - 优化 `xlsx` 默认加载完整版本类库
+- @delon/cli
+    - 新增 class,directive,enum,interface,pipe,service 模板，[#217](https://github.com/cipchk/ng-alain/issues/217)
+    - 修复若干国际化问题，[#218](https://github.com/cipchk/ng-alain/issues/218)
+
 ### 0.6.0
 
 `2018-1-14`
