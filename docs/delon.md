@@ -26,4 +26,4 @@ type: Basic
     + Token 管理
     + Simple Web Token & JSON Web Token 拦截器
 + **@delon/mock**
-    + 简单 Angular Http Mock 类库，[Document](//ng-alain.com/docs/mock)
+    + 简单 Angular Http Mock 类库，[Document](http://ng-alain.com/docs/mock)

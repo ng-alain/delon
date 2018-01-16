@@ -1,6 +1,6 @@
 # @delon/abc module
 
-[Document](//ng-alain.com/components)
+[Document](http://ng-alain.com/components)
 
 ## Architecture
 

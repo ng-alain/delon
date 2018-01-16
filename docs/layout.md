@@ -6,7 +6,7 @@ title:
 type: Basic
 ---
 
-页面整体布局是指包含导航、侧边栏、内容区域、页脚等最外层的框架结构。在页面之中，也有很多区块的布局结构，目前 ng-zorro-antd 有两套布局方案：[Layout](//ng.ant.design/components/layout) 和 [Grid](//ng.ant.design/components/grid)；而后者是日常都需要的，诸如：表单、列表页、明细页等多多少少都会涉及。
+页面整体布局是指包含导航、侧边栏、内容区域、页脚等最外层的框架结构。在页面之中，也有很多区块的布局结构，目前 ng-zorro-antd 有两套布局方案：[Layout](https://ng.ant.design/#/components/layout) 和 [Grid](https://ng.ant.design/#/components/grid)；而后者是日常都需要的，诸如：表单、列表页、明细页等多多少少都会涉及。
 
 ## 根据不同场景区分抽离布局组件
 

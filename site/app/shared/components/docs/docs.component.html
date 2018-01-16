@@ -15,7 +15,7 @@
     <h1>
         {{meta.item.title}}
         <span *ngIf="meta.item.subtitle" class="subtitle">{{meta.item.subtitle}}</span>
-        <edit-button [url]="i18n.get(item.source)"></edit-button>
+        <edit-button [item]="item"></edit-button>
     </h1>
     <div *ngIf="i18n.get(item.content).content" [innerHTML]="safeHtml(i18n.get(item.content).content)"></div>
     <ng-container *ngIf="meta.item.module">

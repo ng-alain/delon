@@ -28,4 +28,4 @@ ng-alain 默认下有两处对任何网络请求进行一些处理。
 
 脚手架默认情况下使用了 `@delon/auth` 的 `SimpleInterceptor` 拦截器，导致在请求过程中若发现无法获取 Token 时会直接返回错误。
 
-[用户认证](//ng-alain.com/docs/auth)这个过程是中台必备的。
+[用户认证](http://ng-alain.com/docs/auth)这个过程是中台必备的。

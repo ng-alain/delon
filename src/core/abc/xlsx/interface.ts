@@ -5,7 +5,7 @@ export const DA_XLSX_CONFIG = new InjectionToken<XlsxConfig>('DA_XLSX_CONFIG');
 export interface XlsxConfig {
     /**
      * Xlsx library path
-     * @default //cdn.bootcss.com/xlsx/0.11.14/xlsx.min.js
+     * @default //cdn.bootcss.com/xlsx/0.11.17/xlsx.full.min.js
      */
     url?: string;
     /**

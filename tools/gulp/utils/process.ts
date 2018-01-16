@@ -22,7 +22,9 @@ const converters = [
         (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'a',
         (node: any, index: number) => {
             const attrs = Object.assign({ }, JsonML.getAttributes(node));
-            return `<a target="_blank" href="${attrs.href}">${JsonML.getChildren(node).map(toHtml).join('')}</a>`;
+            let target = attrs.href.startsWith('//') || attrs.href.startsWith('http') ? ' target="_blank"' : '';
+            if (~attrs.href.indexOf('ng-alain.com')) target = '';
+            return `<a${target} href="${attrs.href}">${JsonML.getChildren(node).map(toHtml).join('')}</a>`;
         }
     ],
     [
@@ -256,7 +258,7 @@ export function gen(config: any) {
                 ret.toc[lang] = i.data[lang].toc;
             }
         } else {
-            ret.source = `${relPath}/${i.name}.md`;
+            ret.source = `${relPath}/${i.name}${config.name === 'components' ? '/index' : ''}.md`;
             ret.content[config.theme.defaultLang] = parseContent(i.data[config.theme.defaultLang], i);
             ret.toc = i.data[config.theme.defaultLang].toc;
         }
@@ -305,14 +307,26 @@ export function gen(config: any) {
             const demos = genDemo(i);
 
             const fileDataObj = genContentObject(i);
-            fileDataObj.demo = demos.tpl.length > 0;
+            fileDataObj.demo = demos.tpl.left.length > 0 || demos.tpl.right.length > 0;
+            const demoHTML: string[] = [  ];
+            if (fileDataObj.demo) {
+                demoHTML.push(`<div nz-row [nzGutter]="16">`);
+                if (demos.tpl.left.length > 0 && demos.tpl.right.length > 0) {
+                    demoHTML.push(`<div nz-col nzSpan="12">${demos.tpl.left.join('')}</div>`);
+                    demoHTML.push(`<div nz-col nzSpan="12">${demos.tpl.right.join('')}</div>`);
+                } else {
+                    demoHTML.push(`<div nz-col nzSpan="24">${demos.tpl.left.join('')}${demos.tpl.right.join('')}</div>`);
+                }
+
+                demoHTML.push('</div>');
+            }
 
             const fileObj = {
                 name: i.name,
                 directoryName: config.name,
                 componentName: `${moduleName}${genUpperName(i.name)}Component`,
                 data: JSON.stringify(fileDataObj),
-                demos: demos.tpl.length > 0 ? `<div nz-row [nzGutter]="16">${demos.tpl.join('\r\n')}</div>` : '',
+                demos: demoHTML.join(''),
                 codes: JSON.stringify(demos.data)
             };
             // gen file
@@ -331,14 +345,18 @@ export function gen(config: any) {
         genModule(moduleObj);
     }
 
-    function genDemo(data: any): { tpl: string[], data: any[] } {
-        const ret: { tpl: string[], data: any[] } = {
-            tpl: [],
+    function genDemo(data: any): { tpl: { left: string[], right: string[] }, data: any[] } {
+        const ret: { tpl: { left: string[], right: string[] }, data: any[] } = {
+            tpl: {
+                left: [],
+                right: []
+            },
             data: []
         };
         if (data.demos.length <= 0) return ret;
+        const isTwo = data.data[config.theme.defaultLang].meta.cols > 1;
         let point = 0;
-        data.demos.sort((a: any, b: any) => a.meta.order - b.meta.order).forEach((markdownData: any) => {
+        data.demos.sort((a: any, b: any) => a.meta.order - b.meta.order).forEach((markdownData: any, index: number) => {
             const item: any = {
                 id: `${config.name}-${data.name}-${markdownData.name}`,
                 meta: markdownData.meta,
@@ -397,12 +415,12 @@ export function gen(config: any) {
             mkdirp.sync(path.dirname(filePath));
             fs.writeFileSync(filePath, code, { flag: 'w+' });
             // generate doc component template
-            ret.tpl.push(`
-            <div nz-col [nzSpan]="item.cols > 1 ? 12 : 24">
+            const pos = isTwo ? index % 2 === 0 ? 'left' : 'right' : 'left';
+            ret.tpl[pos].push(`
                 <code-box [item]="codes[${point}]" [attr.id]="codes[${point}].id">
                     <${item.id}></${item.id}>
                 </code-box>
-            </div>`);
+            `);
             // import component
             appendToModule(componentName, data.name, markdownData.name, false);
 

@@ -17,7 +17,7 @@ import * as JSZip from 'jszip';
     <div *ngIf="instance">
         <button nz-button (click)="data.push({})" [nzType]="'primary'">new</button>
         <button nz-button (click)="download()">download</button>
-        <nz-table [nzDataSource]="data" [nzIsPagination]="false">
+        <nz-table [nzDataSource]="data" [nzIsPagination]="false" class="mt-sm">
             <thead nz-thead>
                 <tr>
                 <th nz-th><span>path</span></th>

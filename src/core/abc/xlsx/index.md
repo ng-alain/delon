@@ -2,7 +2,7 @@
 title: xlsx
 subtitle: Excel 操作
 order: 210
-cols: 2
+cols: 1
 module: AdXlsxModule
 ---
 
@@ -16,7 +16,7 @@ module: AdXlsxModule
 npm install --save file-saver
 ```
 
-由于 sheetjs 脚本大小以及对 Excel 的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式。在导入 `AdXlsxModule` 模块时允许你指定个 URL、CDN 路径，默认情况下使用 `//cdn.bootcss.com/xlsx/0.11.14/xlsx.min.js`。
+由于 sheetjs 脚本大小以及对 Excel 的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式。在导入 `AdXlsxModule` 模块时允许你指定个 URL、CDN 路径，默认情况下使用 `//cdn.bootcss.com/xlsx/0.11.17/xlsx.full.min.js`。
 
 ## API
 

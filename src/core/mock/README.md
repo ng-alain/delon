@@ -1,6 +1,6 @@
 # @delon/mock module
 
-[Document](//ng-alain.com/docs/mock)
+[Document](http://ng-alain.com/docs/mock)
 
 ## Architecture
 

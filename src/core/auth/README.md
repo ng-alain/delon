@@ -1,6 +1,6 @@
 # @delon/auth module
 
-[Document](//ng-alain.com/docs/auth)
+[Document](http://ng-alain.com/docs/auth)
 
 ## Architecture
 

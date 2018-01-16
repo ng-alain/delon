@@ -3,7 +3,7 @@ order: 1
 title: 导入
 ---
 
-导入Excel并输出JSON，支持 `<input type="file">`、URL 形式
+导入Excel并输出JSON，支持 File、URL 形式
 
 ```ts
 import { Component } from '@angular/core';

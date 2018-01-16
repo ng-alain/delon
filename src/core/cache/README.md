@@ -1,6 +1,6 @@
 # @delon/cache module
 
-[Document](//ng-alain.com/docs/cache)
+[Document](http://ng-alain.com/docs/cache)
 
 ## Architecture
 

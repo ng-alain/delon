@@ -1,6 +1,6 @@
 # @delon/acl module
 
-[Document](//ng-alain.com/docs/acl)
+[Document](http://ng-alain.com/docs/acl)
 
 ## Architecture
 

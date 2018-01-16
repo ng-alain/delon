@@ -23,7 +23,7 @@ type: Advance
 | 地图类 | - | -
 | 其它 | 标签云：`tag-cloud`<br>图表卡片：`chart-card`<br>自定义图表：`chart` | -
 
-[查看图表组件API文档](//ng-alain.com/components/charts)
+[查看图表组件API文档](http://ng-alain.com/components/charts)
 
 ## 如何使用？
 

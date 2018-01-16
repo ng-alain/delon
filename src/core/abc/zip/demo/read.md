@@ -3,7 +3,7 @@ order: 1
 title: 解压
 ---
 
-读取Zip文件信息（含内容），支持 `<input type="file">`、URL 形式
+读取Zip文件信息（含内容），支持 File、URL 形式
 
 ```ts
 import { Component } from '@angular/core';

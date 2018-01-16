@@ -1,6 +1,6 @@
 # @delon/theme module
 
-[Document](//ng-alain.com/docs/theme)
+[Document](http://ng-alain.com/docs/theme)
 
 ## Architecture
 

@@ -2,7 +2,7 @@
 title: zip
 subtitle: Zip 操作
 order: 220
-cols: 2
+cols: 1
 module: AdZipModule
 ---
 

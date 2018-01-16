@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { I18NService } from '../../../i18n/service';
@@ -7,7 +7,8 @@ import { MetaService } from '../../../core/meta.service';
 @Component({
     selector: 'app-docs',
     templateUrl: './docs.component.html',
-    styleUrls: [ './docs.component.less' ]
+    styleUrls: [ './docs.component.less' ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocsComponent implements OnInit, OnDestroy {
 
@@ -46,12 +47,13 @@ export class DocsComponent implements OnInit, OnDestroy {
                         title: this.i18n.get(item.meta.title)
                     };
                 });
-                const demoTitle = this.i18n.fanyi('app.component.examples');
-                value.toc[lang].splice(0, 0, {
-                    h: 2,
-                    href: '#' + demoTitle,
-                    title: demoTitle
-                }, ...demoTocs);
+                value.toc[lang] = demoTocs;
+                // const demoTitle = this.i18n.fanyi('app.component.examples');
+                // value.toc[lang].splice(0, 0, {
+                //     h: 2,
+                //     href: '#' + demoTitle,
+                //     title: demoTitle
+                // }, ...demoTocs);
             }
         }
         // endregion
@@ -59,10 +61,11 @@ export class DocsComponent implements OnInit, OnDestroy {
         this._item = value;
 
         // goTo
-        // setTimeout(() => {
-        //     const toc = this.router.parseUrl(this.router.url).queryParams._toc || '';
-        //     if (toc) this.goTo({ href: `#${toc}` });
-        // }, 800);
+        setTimeout(() => {
+            const toc = this.router.parseUrl(this.router.url).fragment || '';
+            if (toc) document.querySelector(`#${toc}`).scrollIntoView();
+        }, 200);
+        this.cd.detectChanges();
     }
     get item(): any {
         return this._item;
@@ -72,7 +75,11 @@ export class DocsComponent implements OnInit, OnDestroy {
         public i18n: I18NService,
         public meta: MetaService,
         private router: Router,
-        protected sanitizer: DomSanitizer) {}
+        protected sanitizer: DomSanitizer,
+        private cd: ChangeDetectorRef
+    ) {
+        cd.detach();
+    }
 
     goTo(item: any) {
         document.querySelector(item.href).scrollIntoView();
@@ -86,6 +93,7 @@ export class DocsComponent implements OnInit, OnDestroy {
             for (let i = 0, element; element = elements[i++];) {
                 hljs.highlightBlock(element);
             }
+            this.cd.detectChanges();
         }, 250);
     }
 

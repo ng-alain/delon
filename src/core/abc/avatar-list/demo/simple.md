@@ -5,6 +5,13 @@ title:
 order: 0
 ---
 
+
+## zh-CN
+
+最简单的用法。
+
+## en-US
+
 Simplest of usage.
 
 ```ts
