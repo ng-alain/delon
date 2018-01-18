@@ -1,9 +1,9 @@
-<% if (delonI18n) { %>import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { SettingsService, MenuService } from '@delon/theme';
 import { I18NService } from '@core/i18n/i18n.service';
 
 @Component({
-    selector: 'header-langs',
+    selector: 'header-i18n',
     template: `
     <nz-dropdown>
         <div nz-dropdown>
@@ -19,7 +19,7 @@ import { I18NService } from '@core/i18n/i18n.service';
     </nz-dropdown>
     `
 })
-export class HeaderLangsComponent {
+export class HeaderI18nComponent {
 
     langs: any[];
 
@@ -38,4 +38,3 @@ export class HeaderLangsComponent {
         this.settings.setLayout('lang', lang);
     }
 }
-<% } %>
