@@ -61,6 +61,7 @@ import {
     // NzAffixModule,
     // NzAnchorModule,
     NzAvatarModule,
+    NzUploadModule,
     // SERVICES
     NzNotificationService,
     NzMessageService
@@ -111,7 +112,8 @@ export const ZORROMODULES = [
     // NzBackTopModule,
     // NzAffixModule,
     // NzAnchorModule,
-    NzAvatarModule
+    NzAvatarModule,
+    NzUploadModule
 ];
 // endregion
 
