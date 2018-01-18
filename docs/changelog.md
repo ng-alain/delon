@@ -6,6 +6,19 @@ title:
 type: Other
 ---
 
+### 0.6.2
+
+`2018-1-18`
+
+- 脚手架
+    - 新增上传示例页采用 `nz-upload`
+    - 修复最新 @angular/cli 无法加载 less 问题，采用固定 `1.6.2` 版本，[#205](https://github.com/cipchk/ng-alain/issues/205)
+    - 优化 `DefaultInterceptor` 注入 `NzMessageService` 消息框示例，及修复 `catchError` 类型问题，[#226](https://github.com/cipchk/ng-alain/issues/226) [@vellengs](https://github.com/vellengs)
+- @delon/abc
+    - 修复 `reuse-tab` 引发父组件复用问题，[#20](https://github.com/cipchk/delon/issues/20)
+- @delon/cli
+    - 修复最新 @angular/cli 无法加载 less 问题，[#205](https://github.com/cipchk/ng-alain/issues/205)
+
 ### 0.6.1
 
 `2018-1-16`

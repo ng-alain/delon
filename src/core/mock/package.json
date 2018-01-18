@@ -1,6 +1,6 @@
 {
 	"name": "@delon/mock",
-	"version": "0.6.1",
+	"version": "0.6.2",
 	"description": "@delon/mock",
 	"main": "./bundles/mock.umd.js",
 	"module": "./index.js",
