@@ -134,7 +134,7 @@ text | 文本 | `string` | -
 i18n? | 文本i18n | `string` | -
 format | 格式化文本 | `(record: any, btn: SimpleTableButton) => string` | -
 type | 按钮类型 | `none,del,modal,static` | -
-click | 点击回调；`type=对话框` 只会在 `确认` 时触发；`type=对话框` 时才会返回 `modal` 所携带参数 | `(record: any, modal?: any) => void` | -
+click | 点击回调；`type=modal` 只会在 `确认` 时触发；`type=modal` 时才会返回 `modal` 参数 | `(record: any, modal?: any) => void` | -
 pop | 是否需要气泡确认框 | `string` | -
 popTitle | 气泡确认框内容 | `string` | 确认删除吗？
 component | 对话框组件对象，务必在 `entryComponents` 注册 | `any` | -

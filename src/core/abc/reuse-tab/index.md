@@ -115,10 +115,3 @@ showCurrent | 总是显示当前页 | `boolean` | `true`
 fixed | 是否固定 | `boolean` | `true`
 change | 切换时回调 | `EventEmitter` | -
 close | 关闭回调 | `EventEmitter` | -
-
-## 如何删除？
-
-ng-alain 脚手架默认使用了 `reuse-tab` 组件，移除包含：
-
-- `shared.module.ts` 的 `AdReuseTabModule` 模块导入语句及 `providers` 定义
-- `layout.component.html` 的 `<reuse-tab></reuse-tab>` 组件模板定义

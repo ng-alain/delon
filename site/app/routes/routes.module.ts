@@ -1,5 +1,6 @@
+import { preloaderFinished } from '@delon/theme';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, PreloadAllModules } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { LayoutComponent } from '../layout/layout.component';
 import { HomeComponent } from './home/home.component';
@@ -29,7 +30,7 @@ const routes = [
 @NgModule({
     imports: [
         SharedModule,
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
     ],
     declarations: [
         ...COMPONENTS

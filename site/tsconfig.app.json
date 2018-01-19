@@ -12,6 +12,8 @@
 		"baseUrl": ".",
 		"types": [],
 		"paths": {
+            "@shared": [ "app/shared" ],
+            "@shared/*": [ "app/shared/*" ],
 			"@delon/theme": ["../src/core/theme"],
 			"@delon/theme/*": ["../src/core/theme/*"],
 			"@delon/abc": ["../src/core/abc"],
