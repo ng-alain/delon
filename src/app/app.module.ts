@@ -16,6 +16,7 @@ import { DelonMockModule } from '@delon/mock';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutComponent } from 'app/layout.component';
+import { PassportComponent } from 'app/passport.component';
 import { DemoModalComponent } from './shared/components/modal/demo.component';
 
 // mock data
@@ -30,7 +31,7 @@ if (!environment.production) {
 
 @NgModule({
   declarations: [
-    AppComponent, LayoutComponent,
+    AppComponent, LayoutComponent, PassportComponent,
     DemoModalComponent
   ],
   imports: [

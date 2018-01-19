@@ -6,6 +6,9 @@ import { LayoutComponent } from '../layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DemoComponent } from './demo/demo.component';
 
+import { PassportComponent } from '../passport.component';
+import { LoginComponent } from './passport/login.component';
+
 @NgModule({
     imports: [
         SharedModule,
@@ -21,12 +24,20 @@ import { DemoComponent } from './demo/demo.component';
                     { path: 'acl', loadChildren: './acl/acl.module#DEMOACLModule' },
                     { path: 'editor', loadChildren: './editor/editor.module#EditorModule' }
                 ]
+            },
+            {
+                path: 'login',
+                component: PassportComponent,
+                children: [
+                    { path: '', component: LoginComponent }
+                ]
             }
         ], { useHash: true })
     ],
     declarations: [
         DashboardComponent,
-        DemoComponent
+        DemoComponent,
+        LoginComponent
     ],
     exports: [
         RouterModule

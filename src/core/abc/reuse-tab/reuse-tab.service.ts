@@ -292,11 +292,19 @@ export class ReuseTabService implements OnDestroy {
      * 决定是否应该进行复用路由处理
      */
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        if (!future.routeConfig || future.routeConfig.loadChildren || future.routeConfig.children) return true;
-        const futureUrl = this.getUrl(future);
-        const currUrl = this.getUrl(curr);
-        const ret = futureUrl === currUrl;
-        this.curUrl = ret ? '' : currUrl;
+        let ret = future.routeConfig === curr.routeConfig;
+        let url = '';
+        if (ret) {
+            const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
+            if (path.length > 0 && ~path.indexOf(':')) {
+                const futureUrl = this.getUrl(future);
+                const currUrl = this.getUrl(curr);
+                url = futureUrl;
+                ret = futureUrl === currUrl;
+            }
+        }
+        this.curUrl = ret ? '' : (url || this.getUrl(future));
+        this.di('#shouldReuseRoute', future, curr, ret);
         return ret;
     }
 
