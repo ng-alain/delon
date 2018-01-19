@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "module": "es2015",
+    "types": [<% if (delonElectron) { %> "electron" <% } %>],
+    "paths": {
+        "@shared": [ "app/shared" ],
+        "@shared/*": [ "app/shared/*" ],
+        "@core": [ "app/core/" ],
+        "@core/*": [ "app/core/*" ],
+        "@testing": [ "testing/" ],
+        "@testing/*": [ "testing/*" ],
+        "@env": [ "environments/" ],
+        "@env/*": [ "environments/*" ]
+    }
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ]
+}

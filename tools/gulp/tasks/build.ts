@@ -107,7 +107,6 @@ function cliResources() {
         `${paths.scaffoldSrc}hmr.ts`,
         `${paths.scaffoldSrc}main.ts`,
         `${paths.scaffoldSrc}test.ts`,
-        `${paths.scaffoldSrc}tsconfig.app.json`,
         `${paths.scaffoldSrc}tsconfig.spec.json`,
         `${paths.scaffoldSrc}typings.d.ts`
     ], { base: paths.scaffoldSrc }).pipe(dest('./src/core/cli/application/files/__sourcedir__/'));

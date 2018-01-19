@@ -19,7 +19,6 @@ application/files/__sourcedir__/favicon.ico
 application/files/__sourcedir__/hmr.ts
 application/files/__sourcedir__/main.ts
 application/files/__sourcedir__/test.ts
-application/files/__sourcedir__/tsconfig.app.json
 application/files/__sourcedir__/tsconfig.spec.json
 application/files/__sourcedir__/typings.d.ts
 application/other-files/core/i18n

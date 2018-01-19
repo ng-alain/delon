@@ -104,6 +104,11 @@
       "type": "boolean",
       "default": true,
       "alias": "dm"
+    },
+    "delonElectron": {
+      "description": "Support electron packager.",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [

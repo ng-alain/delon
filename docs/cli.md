@@ -124,6 +124,7 @@ ng serve
 | `-dv` | `--delon-version` | `next` | 指定 `@delon/*` 版本，值包括：`laster`、`next` |
 | `-di` | `--delon-i18n` | `false` | 是否需要国际化支持 |
 | `-dm` | `--delon-mock` | `true` | 是否需要 mock 功能 |
+| - | `--delon-electron` | `false` | 是否需要 electron 打包 |
 
 例如生成一个带有国际化的项目：
 
@@ -132,3 +133,21 @@ ng new -c=@delon/cli my-app -di
 # OR
 ng new my-app -di
 ```
+
+## Electron
+
+当采用 Electron 打包跨平台应用时，可采用以下命令构建Angular项目：
+
+```bash
+ng new -c=@delon/cli my-app -di --delon-electron
+```
+
+ng-alain 脚手架只提供一个 electron 最基础的配置项，你可以通过 `package.json` 提供的命令快速的构建应用：
+
+```bash
+npm run el:bundle.windows
+```
+
+可将 Angular 打包成一个 Exe 应用程序。
+
+> 脚手架对 Electron 的实现来自 [angular-electron-seed](https://github.com/sean-perkins/angular-electron-seed)；有关更多细节可参考。

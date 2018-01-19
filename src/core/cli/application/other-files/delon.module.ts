@@ -202,7 +202,8 @@ import { DelonCacheModule } from '@delon/cache';
         AdAvatarListModule.forRoot(), AdDescListModule.forRoot(), AdEllipsisModule.forRoot(), AdExceptionModule.forRoot(), AdExceptionModule.forRoot(),
         AdNoticeIconModule.forRoot(), AdNumberInfoModule.forRoot(), AdProHeaderModule.forRoot(), AdResultModule.forRoot(), AdStandardFormRowModule.forRoot(),
         AdTagSelectModule.forRoot(), AdTrendModule.forRoot(), AdUtilsModule.forRoot(), AdChartsModule.forRoot(), AdCountDownModule.forRoot(), AdSimpleTableModule.forRoot(),
-        AdReuseTabModule.forRoot(), AdFullContentModule.forRoot(), AdXlsxModule.forRoot(), AdZipModule.forRoot(),
+        // AdReuseTabModule.forRoot(),
+        AdFullContentModule.forRoot(), AdXlsxModule.forRoot(), AdZipModule.forRoot(),
         // auth
         AlainAuthModule.forRoot({
             // ignores: [ `\\/login`, `assets\\/` ],

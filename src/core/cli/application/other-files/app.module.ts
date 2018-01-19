@@ -2,7 +2,7 @@ import { NgModule, LOCALE_ID, APP_INITIALIZER, Injector } from '@angular/core';
 import { HttpClient, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+<% if (delonElectron) { %>import { ElectronModule } from './electron/electron.module';<% } %>
 import { DelonModule } from './delon.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -38,7 +38,8 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        HttpClientModule,
+        HttpClientModule,<% if (delonElectron) { %>
+        ElectronModule,<% } %>
         DelonModule.forRoot(),
         CoreModule,
         SharedModule,

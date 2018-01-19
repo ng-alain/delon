@@ -73,4 +73,5 @@ export interface Schema {
     delonVersion?: ('laster' | 'next');
     delonI18n?: boolean;
     delonMock?: boolean;
+    delonElectron?: boolean;
 }
