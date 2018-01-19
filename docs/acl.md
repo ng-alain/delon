@@ -78,13 +78,14 @@ const routes: Routes = [
 ACL 提供一个用于改变按钮级别粒度的控制能力，例如：无权限者不允许显示列表页中的增加按钮。
 
 ```html
+使用角色名
 <button [acl]="'user'"></button>
-or
-<button [acl-ability]="10"></button>
+<button [acl]="['user', 'manage']"></button>
+使用权限点
+<button [acl]="10"></button>
+<button acl [acl-ability]="10"></button>
 ```
 
 ## 如何删除？
 
-移除内容包括：
-
-+ `shared.module.ts` 对 `AlainACLModule` 相关声明
+见 [独立使用 ABC 组件](http://ng-alain.com/docs/use-components-alone)。
