@@ -6,6 +6,20 @@ title:
 type: Other
 ---
 
+### 0.6.3
+
+`2018-1-20`
+
+- 脚手架
+    - 优化cli，将 i18n 相关文件统一命名为 `i18n.*` 开头 ([68ef9e9](https://github.com/cipchk/ng-alain/commit/68ef9e9))
+    - 优化 @delon/abc 模块 `forRoot` 按需注册，([28e0b88](https://github.com/cipchk/ng-alain/commit/28e0b88))
+    - 升级 @angular/cli 至最新版本，([9bcb411](https://github.com/cipchk/ng-alain/commit/9bcb411))
+- @delon/abc
+    - 优化类库依赖自动下载，[#22](https://github.com/cipchk/delon/issues/22) [#237](https://github.com/cipchk/ng-alain/issues/237)
+    - 重构 `reuse-tab` 决定是否复用逻辑，[#24](https://github.com/cipchk/delon/issues/24)
+- @delon/cli
+    - 新增 `--delon-electron` 参数，支持 Electron 打包，[#221](https://github.com/cipchk/ng-alain/issues/221)
+
 ### 0.6.2
 
 `2018-1-18`
