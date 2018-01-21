@@ -51,12 +51,12 @@ export class _HttpClient {
         return url;
     }
 
-    private begin() {
+    begin() {
         // console.time('http');
         setTimeout(() => this._loading = true);
     }
 
-    private end() {
+    end() {
         // console.timeEnd('http');
         setTimeout(() => this._loading = false);
     }
