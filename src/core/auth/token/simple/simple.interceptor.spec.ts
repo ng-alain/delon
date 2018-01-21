@@ -143,7 +143,6 @@ describe('auth: simple.interceptor', () => {
             injector.get(HttpClient).get('/test', { responseType: 'text' }).subscribe(value => {
             }, (err: any) => {
                 expect(err.status).toBe(401);
-                expect(mockRouter.navigate).toHaveBeenCalledWith([ '/login' ]);
                 done();
             });
         });

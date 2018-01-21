@@ -54,8 +54,8 @@ export class SimpleInterceptor implements HttpInterceptor {
             }
         } else {
             if (options.token_invalid_redirect === true) {
-                this.injector.get(Router).navigate([ options.login_url ]);
-                return _throw(<any>{ status: 401, _from: 'simple_intercept' });
+                setTimeout(() => this.injector.get(Router).navigate([ options.login_url ]));
+                return _throw(<any>{ status: 401, _from: 'jwt_intercept' });
             }
         }
         return next.handle(req);

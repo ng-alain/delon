@@ -35,8 +35,7 @@ export class JWTInterceptor implements HttpInterceptor {
             });
         } else {
             if (options.token_invalid_redirect === true) {
-                const router = this.injector.get(Router);
-                this.injector.get(Router).navigate([ options.login_url ]);
+                setTimeout(() => this.injector.get(Router).navigate([ options.login_url ]));
                 return _throw(<any>{ status: 401, _from: 'jwt_intercept' });
             }
         }
