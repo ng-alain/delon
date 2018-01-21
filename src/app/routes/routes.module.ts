@@ -13,7 +13,7 @@ import { LoginComponent } from './passport/login.component';
     imports: [
         SharedModule,
         RouterModule.forRoot([
-            { path: 'demo', component: DemoComponent },
+            { path: 'demo', component: DemoComponent, data: { title: 'DEMO' } },
             {
                 path: '',
                 component: LayoutComponent,
@@ -29,7 +29,7 @@ import { LoginComponent } from './passport/login.component';
                 path: 'login',
                 component: PassportComponent,
                 children: [
-                    { path: '', component: LoginComponent }
+                    { path: '', component: LoginComponent, data: { title: 'Login' } }
                 ]
             }
         ], { useHash: true })

@@ -1,17 +1,17 @@
-import { Injectable, Inject, Optional } from '@angular/core';
+import { Injectable, Inject, Optional, Injector } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Title, DOCUMENT } from '@angular/platform-browser';
 import { MenuService } from '../menu/menu.service';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
 
 /**
- * 设置标题（用法见 AppComponent）
- * 标题获取的优先级为：route（支持i18n） > html
- *  + 路由：配置标准的方法见 `./routes/routes.ts` 路由配置节点中 `data` 属性，允许设置：`translate` 或 `title` 两个参数，前者 i18n.
- *  + html：若不指定则从 `content__title` 中获取 `h1` 内容
+ * 设置标题
+ * @see http://ng-alain.com/docs/service#TitleService
  */
 @Injectable()
 export class TitleService {
     constructor(
+        private injector: Injector,
         private title: Title,
         private menuSrv: MenuService,
         @Optional() @Inject(ALAIN_I18N_TOKEN) private translatorSrv: AlainI18NService,
@@ -21,6 +21,7 @@ export class TitleService {
     private _suffix = '';
     private _separator = ' - ';
     private _reverse = false;
+    private _default = 'Not Page Name';
 
     /** 设置分隔符 */
     set separator(value: string) {
@@ -42,6 +43,11 @@ export class TitleService {
         this._reverse = value;
     }
 
+    /** 设置默认标题名 */
+    set default(value: string) {
+        this._default = value;
+    }
+
     private getByElement(): string {
         const el = this.doc.querySelector('.content__title h1');
         if (el) {
@@ -50,13 +56,32 @@ export class TitleService {
         return '';
     }
 
+    private getByRoute(): string {
+        let next = this.injector.get(ActivatedRoute);
+        while (next.firstChild) next = next.firstChild;
+        return next.snapshot && next.snapshot.data && next.snapshot.data.title;
+    }
+
+    private getByMenu(): string {
+        const menus = this.menuSrv.getPathByUrl(this.injector.get(Router).url);
+        if (!menus || menus.length <= 0) return '';
+
+        const item = menus[menus.length - 1];
+        let title;
+        if (item.translate && this.translatorSrv) title = this.translatorSrv.fanyi(item.translate);
+        return title || item.text;
+    }
+
     /**
-     * 设置标题
-     * 若不指定则从 `content__title` 中获取 `h1` 内容
+     * 设置标题，若不指定具体名称，则按以顺序获取：
+     * - 路由配置 `{ data: { title: 'page name' } }`
+     * - 根据当前 URL 解析菜单数据
+     * - 页面 `content__title` 中获取 `h1` 内容
+     * - 默认标题名
      */
     setTitle(title?: string | string[]) {
         if (!title) {
-            title = this.getByElement();
+            title = this.getByRoute() || this.getByMenu() || this.getByElement() || this._default;
         }
         if (title && !Array.isArray(title)) {
             title = [ title ];
@@ -76,21 +101,5 @@ export class TitleService {
             newTitles = newTitles.reverse();
         }
         this.title.setTitle(newTitles.join(this._separator));
-    }
-
-    /**
-     * 根据URL地址从 `MenuService` 中获取对应的标题
-     */
-    setTitleByUrl(url: string) {
-        const menus = this.menuSrv.getPathByUrl(url);
-        if (!menus || menus.length <= 0) {
-            this.setTitle();
-            return;
-        }
-
-        const item = menus[menus.length - 1];
-        let title;
-        if (item.translate && this.translatorSrv) title = this.translatorSrv.fanyi(item.translate);
-        this.setTitle(title || item.text);
     }
 }

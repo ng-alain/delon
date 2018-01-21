@@ -44,6 +44,15 @@ type: Theme
 
 **建议：** 在 Angular 启动服务（[startup.service.ts](//github.com/cipchk/ng-alain/blob/master/src/app/core/startup/startup.service.ts)）从远程获取到应用数据后，设置 `prefix` 或 `suffix` 值来调整统一的标题前后缀。
 
+**获取顺序**
+
+按以下顺序指定文档 `title` 值：
+
+- 路由配置 `{ data: { title: 'page name' } }`
+- 根据当前 URL 解析菜单数据
+- 页面 `content__title` 中获取 `h1` 内容
+- 默认标题名
+
 ## ThemesService
 
 用于设置当前 ng-alain 主题颜色，默认提供 A-J 共十种颜色，除了调用 `setTheme()` 方法改变颜色系外，还要确保 [_alain-custom-variables.less](//github.com/cipchk/ng-alain/blob/master/src/styles/_alain-custom-variables.less) 中注册相应的颜色系样式。
