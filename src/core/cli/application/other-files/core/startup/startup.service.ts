@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
 import { Injectable, Injector, Inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { zip } from 'rxjs/observable/zip';
+import { catchError } from 'rxjs/operators';
 import { MenuService, SettingsService, TitleService } from '@delon/theme';
 import { ACLService } from '@delon/acl';
 import { ITokenService, DA_SERVICE_TOKEN } from '@delon/auth';<% if (delonI18n) { %>
@@ -29,6 +30,12 @@ export class StartupService {
         zip(<% if (delonI18n) { %>
             this.httpClient.get(`assets/i18n/${this.i18n.defaultLang}.json`),<% } %>
             this.httpClient.get('assets/app-data.json')
+        ).pipe(
+            // 接收其他拦截器后产生的异常消息
+            catchError(([<% if (delonI18n) { %>langData, <% } %>appData]) => {
+                resolve(null);
+                return [<% if (delonI18n) { %>langData, <% } %>appData];
+            })
         ).subscribe(([<% if (delonI18n) { %>langData, <% } %>appData]) => {<% if (delonI18n) { %>
             // setting language data
             this.translate.setTranslation(this.i18n.defaultLang, langData);
@@ -46,9 +53,9 @@ export class StartupService {
             this.menuService.add(res.menu);
             // 设置页面标题的后缀
             this.titleService.suffix = res.app.name;
-
-            resolve(res);
-        }, (err: HttpErrorResponse) => {
+        },
+        () => { },
+        () => {
             resolve(null);
         });
     }
