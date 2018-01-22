@@ -157,9 +157,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         );
         this.sub$ = <any>combineLatest(this.srv.change, route$).pipe(
             debounceTime(200)
-        ).subscribe(([res, url]) => {
+        ).subscribe(([ res ]: [ any ]) => {
             let nextUrl = this.router.url;
-            if (res.active === 'remove' && res.url) {
+            if (res && res.active === 'remove' && res.url) {
                 nextUrl = this.removeByUrl(res.url);
                 if (nextUrl === null) return ;
             }
