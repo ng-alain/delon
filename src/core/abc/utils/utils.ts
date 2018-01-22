@@ -86,3 +86,8 @@ export function deepGet(obj: any, path: string[], defaultValue: any) {
     }
     return path.reduce((o, k) => (o || {})[k], obj) || defaultValue;
 }
+
+export function deepCopy(obj: any) {
+    // BAD: a temporary solution
+    return JSON.parse(JSON.stringify(obj));
+}

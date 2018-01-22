@@ -8,7 +8,7 @@ import { of } from 'rxjs/observable/of';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { SimpleTableColumn, SimpleTableChange, CompareFn, SimpleTableSelection, SimpleTableFilter, SimpleTableData, SimpleTableButton, STExportOptions } from './interface';
 import { SimpleTableConfig } from './simple-table.config';
-import { deepGet } from '../utils/utils';
+import { deepGet, deepCopy } from '../utils/utils';
 import { SimpleTableRowDirective } from './simple-table-row.directive';
 import { SimpleTableExport } from './simple-table-export';
 
@@ -188,7 +188,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         private date: MomentDatePipe,
         private yn: YNPipe
     ) {
-        Object.assign(this, defConfig);
+        Object.assign(this, deepCopy(defConfig));
     }
 
     // region: data

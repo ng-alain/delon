@@ -1,4 +1,5 @@
 import { Directive, Input, OnChanges, ElementRef, Renderer2, SimpleChanges, OnInit, SimpleChange } from '@angular/core';
+import { deepCopy } from '../utils/utils';
 import { ImageConfig } from './image.config';
 
 /**
@@ -19,7 +20,7 @@ export class ImageDirective implements OnChanges, OnInit {
     private inited = false;
 
     constructor(private el: ElementRef, private render: Renderer2, DEF: ImageConfig) {
-        Object.assign(this, DEF);
+        Object.assign(this, deepCopy(DEF));
     }
 
     ngOnInit(): void {
