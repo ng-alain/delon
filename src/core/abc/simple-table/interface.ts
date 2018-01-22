@@ -1,3 +1,4 @@
+import { SimpleTableComponent } from './simple-table.component';
 import { ElementRef, TemplateRef } from '@angular/core';
 
 export type CompareFn = ((a: any, b: any) => number);
@@ -231,10 +232,11 @@ export interface SimpleTableButton {
     type?: 'none' | 'del' | 'modal' | 'static';
     /**
      * 点击回调
-     * - `type=对话框` 只会在 `确认` 时触发
-     * - `type=对话框` 时才会返回 `modal` 所携带参数
+     * - Function
+     *  - `type=modal` 只会在 `确认` 时触发且 `modal` 参数有效
+     * - reload：重新加载表格数据
      */
-    click?: (record: any, modal?: any) => void;
+    click?: 'reload' | ((record: any, modal?: any, instance?: SimpleTableComponent) => void);
     /**
      * 是否需要气泡确认框
      */
@@ -251,6 +253,10 @@ export interface SimpleTableButton {
      * 对话框参数
      */
     params?: (record: any) => Object;
+    /**
+     * 指定模态框目标组件的接收参数名，默认：`record`
+     */
+    paramName?: string;
     /**
      * 对话框大小，默认：`lg`
      */

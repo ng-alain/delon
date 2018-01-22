@@ -176,7 +176,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     // endregion
 
     constructor(
-        defConfig: SimpleTableConfig,
+        private defConfig: SimpleTableConfig,
         private _http: _HttpClient,
         private el: ElementRef,
         private renderer: Renderer2,
@@ -279,7 +279,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         }
         this.total = this.total <= 0 ? data.length : this.total;
         this._isPagination = this.ps > 0 && this.total > this.ps;
-        this._subscribeData(data.slice((this.pi - 1) * this.ps, this.pi * this.ps));
+        this._subscribeData(this._isPagination ? data.slice((this.pi - 1) * this.ps, this.pi * this.ps) : data);
     }
 
     _toTop() {
@@ -478,14 +478,32 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
 
     btnClick(record: any, btn: SimpleTableButton) {
         if (btn.type === 'modal' || btn.type === 'static') {
-            this.modal[btn.type === 'modal' ? 'open' : 'static'](btn.component, Object.assign({
-                record
-            }, btn.params && btn.params(record)), btn.size, btn.modalOptions).subscribe(res => {
-                if (btn.click) btn.click(record, res);
+            const obj = {};
+            obj[btn.paramName || this.defConfig.modalParamsName || 'record'] = record;
+            this.modal[btn.type === 'modal' ? 'open' : 'static'](
+                btn.component,
+                Object.assign(obj, btn.params && btn.params(record)),
+                btn.size,
+                btn.modalOptions
+            ).subscribe(res => {
+                if (btn.click) this.btnCallback(record, btn, res);
             });
             return;
         }
-        if (btn.click) btn.click(record);
+        this.btnCallback(record, btn);
+    }
+
+    private btnCallback(record: any, btn: SimpleTableButton, modal?: any) {
+        if (!btn.click) return;
+        if (typeof btn.click === 'string') {
+            switch (btn.click) {
+                case 'reload':
+                    this.load();
+                    break;
+            }
+        } else {
+            btn.click(record, modal, this);
+        }
     }
 
     btnText(record: any, btn: SimpleTableButton) {

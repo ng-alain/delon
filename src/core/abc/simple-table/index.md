@@ -134,11 +134,12 @@ text | 文本 | `string` | -
 i18n? | 文本i18n | `string` | -
 format | 格式化文本 | `(record: any, btn: SimpleTableButton) => string` | -
 type | 按钮类型 | `none,del,modal,static` | -
-click | 点击回调；`type=modal` 只会在 `确认` 时触发；`type=modal` 时才会返回 `modal` 参数 | `(record: any, modal?: any) => void` | -
+click | 点击回调；**函数：** `type=modal` 只会在 `确认` 时触发且 `modal` 参数有效<br>**reload：** 重新加载表格数据 | `(record: any, modal?: any, instance?: SimpleTableComponent) => void | reload` | -
 pop | 是否需要气泡确认框 | `string` | -
 popTitle | 气泡确认框内容 | `string` | 确认删除吗？
 component | 对话框组件对象，务必在 `entryComponents` 注册 | `any` | -
 params | 对话框参数 | `(record: any) => Object` | -
+paramName | 目标组件的接收参数名 | `string` | record
 size | 对话框大小 | `string` | `lg`
 modalOptions | 对话框额外参数，见 [ModalHelper](http://ng-alain.com/docs/service#ModalHelper) | `any` | -
 children | 下拉菜单，当存在时以 `dropdown` 形式渲染；只支持一级 | `SimpleTableButton[]` | -
@@ -193,6 +194,7 @@ pagePlacement | 分页方向 | `left,center,right` | `right`
 reqReName | 重命名请求参数 `pi`、`ps`；例如：`{ pi: 'Page' }` `pi` 会被替换成 Page | `Object` | -
 resReName | 重命名返回参数 `total`、`list`；例如：`{ total: 'Total' }` Total 会被当作 `total` | `Object` | -
 sortReName | 重命名排序值，`columns` 的重命名高于属性 | `{ ascend?: string, descend?: string }` | -
+modalParamsName | 指定模态框目标组件的接收参数名 | `string` | record
 
 ## 刷新表格
 
