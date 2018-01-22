@@ -2,6 +2,7 @@ import { Component, Input, ElementRef, TemplateRef, ContentChild, OnInit, AfterV
 import { ActivatedRoute, Router } from '@angular/router';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
+import { ProHeaderConfig } from './pro-header.config';
 
 @Component({
     selector: 'pro-header',
@@ -65,6 +66,7 @@ export class ProHeaderComponent implements OnInit {
     // endregion
 
     constructor(
+        private cog: ProHeaderConfig,
         private route: Router,
         @Optional() private menuSrv: MenuService,
         @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
@@ -81,10 +83,12 @@ export class ProHeaderComponent implements OnInit {
             paths.push({ title: title || item.text, link: item.link && [ item.link ] });
         });
         // add home
-        paths.splice(0, 0, {
-            title: this.i18nSrv && this.i18nSrv.fanyi('home') || 'Home',
-            link: [ '/' ]
-        });
+        if (this.cog.home) {
+            paths.splice(0, 0, {
+                title: (this.cog.home_i18n && this.i18nSrv && this.i18nSrv.fanyi(this.cog.home_i18n)) || this.cog.home,
+                link: [ this.cog.home_link ]
+            });
+        }
         this.paths = paths;
     }
 

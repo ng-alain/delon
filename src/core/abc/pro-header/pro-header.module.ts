@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { ProHeaderComponent } from './pro-header.component';
+import { ProHeaderConfig } from './pro-header.config';
 
 const COMPONENTS = [ProHeaderComponent];
 
@@ -22,6 +23,6 @@ const ZORROMODULES = [ NzBreadCrumbModule ];
 })
 export class AdProHeaderModule {
     static forRoot(): ModuleWithProviders {
-        return { ngModule: AdProHeaderModule, providers: [] };
+        return { ngModule: AdProHeaderModule, providers: [ ProHeaderConfig ] };
     }
 }
