@@ -1,6 +1,6 @@
 {
 	"name": "@delon/abc",
-	"version": "0.6.3",
+	"version": "0.6.4",
 	"description": "@delon/abc",
 	"main": "./bundles/abc.umd.js",
 	"module": "./index.js",

@@ -6,6 +6,30 @@ title:
 type: Other
 ---
 
+### 0.6.4
+
+`2018-1-22`
+
+- 脚手架
+    - 重构 `startup.service`、`default.interceptor` 逻辑处理 ([3f437a1](https://github.com/cipchk/ng-alain/commit/3f437a1))
+    - 重构 `title.service` 将路由 `data.title` 优先级高于其他 ([7f2ceeb](https://github.com/cipchk/ng-alain/commit/7f2ceeb))
+    - 不再维护 `blank` 分支
+- @delon/theme
+    - 重构 `TitleService` 包括：
+        - **BREAKING CHANGES** 移除 `setTitleByUrl` 统一采用 `setTitle`
+        - 新增 `default` 属性指定默认标题名
+    - 重构 `begin`、`end` 为 `public`
+- @delon/abc
+    - `simple-table` 变更：
+        - 新增按钮允许设置 `"reload"` 表示重新加载表格
+        - 新增按钮当 `type=modal` 时允许设置 `paramName` 简化目标组件的接收参数名
+        - 修复当指定 `ps=0` 时应该不分页问题，[#27](https://github.com/cipchk/delon/issues/27)
+    - 修复 `reuse-tab` 某些情况下导致 `active` 无效问题，[#244](https://github.com/cipchk/ng-alain/issues/244)
+- @delon/auth
+    - 修复可能会因为跳转引起渲染异常
+- @delon/cli
+    - 同步脚手架的优化
+
 ### 0.6.3
 
 `2018-1-20`
