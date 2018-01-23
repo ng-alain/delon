@@ -1,7 +1,9 @@
-import { Component, ElementRef, Renderer2, Inject, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, Renderer2, Inject, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
+import { debounceTime } from 'rxjs/operators';
+import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
 import { MenuService, Menu, SettingsService } from '@delon/theme';
 
 const SHOWCLS = 'nav-floating-show';
@@ -20,6 +22,8 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private bodyEl: HTMLBodyElement;
     list: Menu[] = [];
     private change$: Subscription;
+
+    @Input() autoCloseUnderPad = true;
 
     constructor(
         private menuSrv: MenuService,
@@ -40,6 +44,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
             this.list = res;
             this.cd.detectChanges();
         });
+        this.installUnderPad();
     }
 
     private floatingAreaClickHandle(e: MouseEvent) {
@@ -141,5 +146,36 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         if (this.change$) this.change$.unsubscribe();
+        if (this.route$) this.route$.unsubscribe();
+        if (this.underPad$) this.underPad$.unsubscribe();
     }
+
+    // region: Under pad
+
+    private closeable = false;
+    private route$: Subscription;
+    private underPad$: Subscription = null;
+    private installUnderPad() {
+        if (!this.autoCloseUnderPad) return;
+
+        this.underPad$ = <any>FromEventObservable.create(window, 'resize')
+                            .pipe(debounceTime(200))
+                            .subscribe(() => this.underPad());
+        this.route$ = this.router.events.subscribe(s => {
+            if (s instanceof NavigationEnd) this.close();
+        });
+        this.underPad();
+    }
+
+    private underPad() {
+        this.closeable = window.innerWidth < 992;
+        this.close();
+    }
+
+    private close() {
+        if (!this.autoCloseUnderPad) return;
+        this.settings.setLayout('collapsed', this.closeable);
+    }
+
+    // endregion
 }
