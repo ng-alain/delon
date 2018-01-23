@@ -303,7 +303,7 @@ export class ReuseTabService implements OnDestroy {
                 ret = futureUrl === currUrl;
             }
         }
-        this.curUrl = ret ? '' : (url || this.getUrl(future));
+        this.curUrl = ret ? '' : (url || this.getUrl(curr));
         this.di('#shouldReuseRoute', future, curr, ret);
         return ret;
     }
