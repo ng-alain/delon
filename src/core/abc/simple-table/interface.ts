@@ -298,6 +298,11 @@ export interface SimpleTableChange {
     total: number;
 }
 
+export interface ResReNameType {
+    total?: string | string[];
+    list?: string | string[];
+}
+
 export interface STExportOptions {
     /** @private */
     _d: any[];

@@ -198,7 +198,10 @@ modalParamsName | 指定模态框目标组件的接收参数名 | `string` | rec
 
 ## 刷新表格
 
+一般用于表单搜索时。
+
 ```html
 <simple-table #st></simple-table>
 <button (click)="st.load()"></button>
+<button (click)="st.reset()">重置</button>
 ```
