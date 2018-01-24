@@ -6,6 +6,19 @@ title:
 type: Other
 ---
 
+### 0.6.5
+
+`2018-1-24`
+
+- 脚手架
+    - 修复切换语言时无同步更改标题问题，[#28](https://github.com/cipchk/delon/issues/28) ([80b0fce](https://github.com/cipchk/ng-alain/commit/80b0fce))
+- @delon/abc
+    - 新增 `simple-table` 方法 `reset()`，用于[重置](http://ng-alain.com/components/simple-table#components-simple-table-form)表单
+    - 新增 `sidebar-nav` 小于 `992` 以下切换路由时自动关闭侧边栏
+    - 新增 `pro-header` 配置项，例如自定义 Home 内容
+    - 修复 `reuse-tab` 自定义标题错位问题，[#25](https://github.com/cipchk/delon/issues/25) [#247](https://github.com/cipchk/ng-alain/issues/247)
+    - 优化更可靠的深度拷贝
+
 ### 0.6.4
 
 `2018-1-22`
