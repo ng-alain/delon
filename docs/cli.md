@@ -151,3 +151,34 @@ npm run el:bundle.windows
 可将 Angular 打包成一个 Exe 应用程序。
 
 > 脚手架对 Electron 的实现来自 [angular-electron-seed](https://github.com/sean-perkins/angular-electron-seed)；有关更多细节可参考。
+
+## [page] 命令
+
+@delon/cli 扩展了 `ng generate page` （简化：`ng g page`） 命令用于生成业务组件页。
+
+### 参数
+
+`page` 命令是由 `ng g component` 基础向下构建。
+
+**命令格式**
+
+```bash
+ng g page [page name] -t=view --modal
+```
+
+| Alias | Arguments | Default | Summary |
+| --------- | --------- | ------- | ------- |
+| `-t` | `--type` | `list` | 指定页面类型，值包括：`list`、`view`、`edit` |
+| - | `--modal` | `true` | 是否模态框，限：`view`、`edit` 时有效 |
+
+例如：
+
+```bash
+# 生成日志列表页
+ng g page log
+
+cd log
+
+# 生成日志详情页
+ng g page view -t=view
+```

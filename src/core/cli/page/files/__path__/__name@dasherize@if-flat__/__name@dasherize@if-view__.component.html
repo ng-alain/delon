@@ -1,0 +1,19 @@
+<% if(modal) { %><div class="modal-header">
+    <div class="modal-title">10000 - 标题</div>
+</div>
+<desc-list class="mb-md">
+    <desc-list-item term="编号">10000</desc-list-item>
+</desc-list>
+<div class="modal-footer">
+    <button nz-button type="button" (click)="close()">关闭</button>
+</div><% } else { %>
+<pro-header [title]="'基础详情页'"></pro-header>
+<nz-card [nzNoHovering]="true" [nzBordered]="false">
+    <desc-list size="large" title="区域一" class="mb-lg">
+        <desc-list-item term="编号">10000</desc-list-item>
+    </desc-list>
+    <nz-divider class="mb-lg"></nz-divider>
+    <desc-list size="large" title="区域二" class="mb-lg">
+        <desc-list-item term="编号">10000</desc-list-item>
+    </desc-list>
+</nz-card><% } %>
