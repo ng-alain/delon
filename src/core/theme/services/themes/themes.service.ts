@@ -19,14 +19,18 @@ export class ThemesService {
             return;
         }
         const bodyEl = this.doc.querySelector('body');
-        const removeArr = [];
-        for (let i = 0; i < bodyEl.classList.length; i++) {
-            if (bodyEl.classList[i].startsWith('theme-')) {
-                removeArr.push(bodyEl.classList[i]);
+        if (bodyEl.classList) {
+            const removeArr = [];
+            for (let i = 0; i < bodyEl.classList.length; i++) {
+                if (bodyEl.classList[i].startsWith('theme-')) {
+                    removeArr.push(bodyEl.classList[i]);
+                }
+            } 
+            if (removeArr.length > 0) {
+                bodyEl.classList.remove(...removeArr);
             }
+            bodyEl.classList.add(`theme-${name.toLowerCase()}`);
         }
-        bodyEl.classList.remove(...removeArr);
-        bodyEl.classList.add(`theme-${name.toLowerCase()}`);
         this.defaultTheme = name;
         this.settings.setLayout('theme', name);
     }
