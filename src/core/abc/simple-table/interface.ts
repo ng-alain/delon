@@ -59,7 +59,7 @@ export interface SimpleTableColumn {
     width?: string;
     /**
      * 排序的默认受控属性
-     * - 只支持同时对一列进行排序
+     * - 只支持同时对一列进行排序，除非指定 `multiSort`，建议后端支持时使用
      * - 保证只有一列的 `sort` 值，否则自动获取所有列的第一个值
      */
     sort?: 'ascend' | 'descend';
