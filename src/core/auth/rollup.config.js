@@ -20,18 +20,20 @@ const globals = {
 };
 
 module.exports = {
-    sourcemap: true,
     rollup: require('rollup'),
     context: 'this',
-    name: 'alain.auth',
-    output: 'auth.umd.js',
-    format: 'umd',
+    output: {
+        file: 'auth.umd.js',
+        name: 'alain.auth',
+        format: 'umd',
+        sourcemap: true,
+        globals: globals
+    },
     plugins: [
         resolve({
             jsnext: true,
             main: true
         })
     ],
-    external: Object.keys(globals),
-    globals: globals
+    external: Object.keys(globals)
 };

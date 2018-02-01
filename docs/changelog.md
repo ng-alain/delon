@@ -6,6 +6,22 @@ title:
 type: Other
 ---
 
+### 0.6.6
+
+`2018-2-2`
+
+- 脚手架
+    - 增加退出登录时清空路由复用数据，([0322190](https://github.com/cipchk/ng-alain/commit/0322190))
+    - 修复默认语言，[#269](https://github.com/cipchk/ng-alain/issues/269) ([39206be](https://github.com/cipchk/ng-alain/commit/39206be))
+- @delon/abc
+    - `simple-table` 变更：
+        - 新增 `type: 'number'` 数字格式化，[#267](https://github.com/cipchk/ng-alain/issues/267)
+        - 新增 `multiSort` 支持多排序，[#270](https://github.com/cipchk/ng-alain/issues/270)
+    - `sidebar-nav` 变更：
+        - 修复大屏幕也会自动关闭侧边栏问题
+        - 修复收起时鼠标悬停显示被选中项，[#266](https://github.com/cipchk/ng-alain/issues/266)
+    - 新增 `number-info` 允许数字型 `0`，[#262](https://github.com/cipchk/ng-alain/issues/262)
+
 ### 0.6.5
 
 `2018-1-24`

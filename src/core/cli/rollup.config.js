@@ -19,18 +19,20 @@ const globals = {
 };
 
 module.exports = {
-    sourcemap: true,
     rollup: require('rollup'),
     context: 'this',
-    name: 'delon.cli',
-    output: 'cli.umd.js',
-    format: 'umd',
+    output: {
+        file: 'cli.umd.js',
+        name: 'alain.cli',
+        format: 'umd',
+        sourcemap: true,
+        globals: globals
+    },
     plugins: [
         resolve({
             jsnext: true,
             main: true
         })
     ],
-    external: Object.keys(globals),
-    globals: globals
+    external: Object.keys(globals)
 };

@@ -35,9 +35,10 @@ npm install -g @delon/cli
 >
 > `ng set defaults.schematics.collection @schematics/angular --global`
 
-**注意：** 由于受限于 `require.resolve()`，需要将 `@delon/cli` 的相关文件复制至 Angular Cli 目录中：
+**注意：** 由于受限于 `require.resolve()`，需要将 `@delon/cli` 的相关文件复制至 Angular Cli 目录中，若出现下列异常几乎都是这个原因引起：
 
-> 如收到 `Error: Collection "@delon/cli" cannot be resolved` 则需要以下设置。
+- `Error: Collection "@delon/cli" cannot be resolved`
+- `Error: Path "/package.json" does not exist.`
 
 ```bash
 # linux
@@ -45,7 +46,7 @@ cd /usr/local/lib/node_modules/@angular/cli/node_modules
 mkdir @delon
 cp -R /usr/local/lib/node_modules/@delon/* @delon/
 
-# window(tips: replace your name)
+# window（提醒：注意 `asdf` 替换成你的用户名）
 cd C:\Users\asdf\AppData\Roaming\npm\node_modules
 xcopy "@delon" "@angular\cli\node_modules\@delon" /s /e /y
 ```

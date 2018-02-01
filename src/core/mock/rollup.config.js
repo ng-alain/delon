@@ -19,18 +19,20 @@ const globals = {
 };
 
 module.exports = {
-    sourcemap: true,
     rollup: require('rollup'),
     context: 'this',
-    name: 'delon.mock',
-    output: 'mock.umd.js',
-    format: 'umd',
+    output: {
+        file: 'mock.umd.js',
+        name: 'alain.mock',
+        format: 'umd',
+        sourcemap: true,
+        globals: globals
+    },
     plugins: [
         resolve({
             jsnext: true,
             main: true
         })
     ],
-    external: Object.keys(globals),
-    globals: globals
+    external: Object.keys(globals)
 };
