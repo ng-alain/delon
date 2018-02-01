@@ -99,7 +99,7 @@ disabled? | 选择框或单选框 `disabled` 值 | `boolean` | -
 ----|------|-----|------
 title | 表格标题 | `string` | -
 i18n? | 表格标题i18n | `string` | -
-type? | `checkbox` 多选； `radio` 单选；`img` 图像且居中；`currency` 货币且居右；`date` 日期格式且居中；`yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn) | `string` | -
+type? | `checkbox` 多选； `radio` 单选；`img` 图像且居中；`number` 数字且居右；`currency` 货币且居右；`date` 日期格式且居中；`yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn) | `string` | -
 index? | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | -
 buttons? | 按钮组 | `SimpleTableButton[]` | -
 width? | 列宽，例如：`10%`、`100px` | `string` | -
@@ -120,6 +120,7 @@ filterReName? | 过滤的后端相对应的VALUE；默认当 `filterMultiple` �
 selections? | 选择功能配置 | `SimpleTableSelection[]` | -
 className? | 列 `class` 属性值，例如：；`text-center` 居中； `text-right` 居右； `text-danger` 异常色 | `string` | -
 colSpan? | 合并列 | `number` | -
+numberDigits? | 数字格式，`type=number` 有效 | `string` | -
 dateFormat? | 日期格式，`type=date` 有效 | `string` | `YYYY-MM-DD HH:mm`
 ynTruth? | 真值条件，`type=yn` 有效，（默认：`true`） | `any` | -
 ynYes? | 徽章 `true` 时文本，`type=yn` 有效 | `string` | `是`

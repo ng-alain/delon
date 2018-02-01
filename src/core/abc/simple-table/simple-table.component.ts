@@ -1,4 +1,5 @@
 import { Component, Inject, Input, Output, OnDestroy, OnInit, OnChanges, SimpleChanges, EventEmitter, Renderer2, ElementRef, TemplateRef, SimpleChange, QueryList, ViewChildren, AfterViewInit, ContentChildren, ContentChild, Optional } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { _HttpClient, CNCurrencyPipe, MomentDatePipe, YNPipe, ModalHelper, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 import { ACLService } from '@delon/acl';
 import { Observable } from 'rxjs/Observable';
@@ -16,7 +17,7 @@ import { SimpleTableExport } from './simple-table-export';
     selector: 'simple-table',
     templateUrl: './simple-table.component.html',
     styleUrls: [ './simple-table.less' ],
-    providers: [ SimpleTableExport, CNCurrencyPipe, MomentDatePipe, YNPipe ]
+    providers: [ SimpleTableExport, CNCurrencyPipe, MomentDatePipe, YNPipe, DecimalPipe ]
 })
 export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 
@@ -190,7 +191,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         private modal: ModalHelper,
         private currenty: CNCurrencyPipe,
         private date: MomentDatePipe,
-        private yn: YNPipe
+        private yn: YNPipe,
+        private number: DecimalPipe
     ) {
         Object.assign(this, deepCopy(defConfig));
         this.updateResName();
@@ -311,6 +313,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         switch (col.type) {
             case 'img':
                 return `<img src="${ret}" class="img">`;
+            case 'number':
+                return this.number.transform(ret, col.numberDigits);
             case 'currency':
                 return this.currenty.transform(ret);
             case 'date':
@@ -619,6 +623,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
                     item.className = {
                         // 'checkbox': 'text-center',
                         // 'radio': 'text-center',
+                        'number': 'text-right',
                         'currency': 'text-right',
                         'date': 'text-center'
                     }[item.type];
