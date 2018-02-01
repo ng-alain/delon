@@ -47,7 +47,7 @@ export class NumberInfoComponent implements OnChanges {
         if (value instanceof TemplateRef)
             this._totalTpl = value;
         else
-            this._total = value;
+            this._total = '' + value;
     }
 
     _subTotal = '';
