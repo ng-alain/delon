@@ -1,8 +1,7 @@
-import { Component, OnInit, Inject, Optional } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
-import { ReuseTabService } from '@delon/abc';
 
 @Component({
     selector: 'header-user',
@@ -25,7 +24,6 @@ export class HeaderUserComponent implements OnInit {
     constructor(
         public settings: SettingsService,
         private router: Router,
-        @Optional() @Inject(ReuseTabService) private reuseTabService: ReuseTabService,
         @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {}
 
     ngOnInit(): void {
@@ -43,7 +41,6 @@ export class HeaderUserComponent implements OnInit {
     }
 
     logout() {
-        if (this.reuseTabService) this.reuseTabService.clear();
         this.tokenService.clear();
         this.router.navigateByUrl(this.tokenService.login_url);
     }
