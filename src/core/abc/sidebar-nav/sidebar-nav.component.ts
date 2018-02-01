@@ -120,6 +120,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
         if (linkNode.nodeName !== 'A') {
             return;
         }
+        this.genFloatingContainer();
         const subNode = this.genSubNode(linkNode as HTMLLinkElement, item);
         this.hideAll();
         subNode.classList.add(SHOWCLS);
@@ -147,34 +148,24 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         if (this.change$) this.change$.unsubscribe();
         if (this.route$) this.route$.unsubscribe();
-        if (this.underPad$) this.underPad$.unsubscribe();
     }
 
     // region: Under pad
 
-    private closeable = false;
     private route$: Subscription;
-    private underPad$: Subscription = null;
     private installUnderPad() {
         if (!this.autoCloseUnderPad) return;
-
-        this.underPad$ = <any>FromEventObservable.create(window, 'resize')
-                            .pipe(debounceTime(200))
-                            .subscribe(() => this.underPad());
         this.route$ = this.router.events.subscribe(s => {
-            if (s instanceof NavigationEnd) this.close();
+            if (s instanceof NavigationEnd) this.underPad();
         });
         this.underPad();
     }
 
     private underPad() {
-        this.closeable = window.innerWidth < 992;
-        this.close();
-    }
-
-    private close() {
         if (!this.autoCloseUnderPad) return;
-        this.settings.setLayout('collapsed', this.closeable);
+        if (window.innerWidth < 992 && !this.settings.layout.collapsed) {
+            this.settings.setLayout('collapsed', true);
+        }
     }
 
     // endregion
