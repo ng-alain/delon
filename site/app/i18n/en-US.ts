@@ -11,6 +11,7 @@ export const ENUS = {
     'app.footer.antd': 'ANTD for Angular',
     'app.footer.cli': 'Scaffold',
     'app.footer.antv': 'AntV',
+    'app.footer.ngfans': 'Angular Fans',
     'app.footer.community': 'Community',
     'app.footer.change-log': 'Change Log',
     'app.footer.faq': 'FAQ',
