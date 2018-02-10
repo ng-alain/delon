@@ -4,7 +4,13 @@ import * as moment from 'moment';
  * 转化成RMB元字符串
  */
 export function yuan(value: any): string {
-    return `&yen ${value}`;
+    let result = `&yen ${value}`;
+
+    if (result.length - result.indexOf('.') > 2) {
+        result = result.substring(0, result.indexOf('.') + 3);
+    }
+
+    return result;
 }
 
 /**
