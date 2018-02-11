@@ -181,7 +181,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
             .tooltip('x*percent', (item, percent) => {
                 return {
                     name: item,
-                    value: percent
+                    value: (percent * 100).toFixed(2)
                 };
             })
             .color('x', this.percent ? formatColor : this.colors)
