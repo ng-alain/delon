@@ -8,7 +8,7 @@ import { ProHeaderConfig } from './pro-header.config';
     selector: 'pro-header',
     template: `
     <ng-container *ngIf="!breadcrumb; else breadcrumb">
-        <nz-breadcrumb>
+        <nz-breadcrumb *ngIf="paths && paths.length > 0">
             <nz-breadcrumb-item *ngFor="let i of paths">
                 <ng-container *ngIf="i.link"><a [routerLink]="i.link">{{i.title}}</a></ng-container>
                 <ng-container *ngIf="!i.link">{{i.title}}</ng-container>
