@@ -94,7 +94,8 @@ function cliResources() {
         `${paths.scaffold}tslint.json`,
         `${paths.scaffold}karma.conf.js`,
         `${paths.scaffold}tsconfig.json`,
-        `${paths.scaffold}protractor.conf.js`
+        `${paths.scaffold}protractor.conf.js`,
+        `${paths.scaffold}package-lock.json`
     ], { base: paths.scaffold }).pipe(dest('./src/core/cli/application/files'));
     // source
     src([
