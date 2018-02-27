@@ -74,7 +74,7 @@ function cliResources() {
     // others
 
     src([
-        'utility', 'class', 'directive', 'enum', 'interface', 'pipe', 'service'
+        'utility', 'class', 'directive', 'enum', 'interface', 'pipe', 'service', 'guard', 'app-shell'
     ].map(v => `node_modules/@schematics/angular/${v}/**`),
     { base: 'node_modules/@schematics/angular/' }).pipe(dest('./src/core/cli'));
     // .vscode

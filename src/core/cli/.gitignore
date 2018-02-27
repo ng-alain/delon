@@ -36,3 +36,5 @@ enum
 interface
 pipe
 service
+guard
+app-shell
