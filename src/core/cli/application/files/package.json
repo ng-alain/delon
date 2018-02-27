@@ -76,6 +76,7 @@
     "ng-zorro-antd": "^0.6.5",
     "ng-zorro-antd-extra": "^1.1.6",
     "ngx-countdown": "^2.0.0",
+    "nz-schema-form": "^0.0.1",
     "rxjs": "^5.5.5",
     "screenfull": "^3.3.1",
     "simple-line-icons": "^2.4.1",
@@ -96,6 +97,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/jszip": "^3.1.2",
     "@types/node": "~6.0.60",
+    "@types/z-schema": "^3.16.32",
     "codecov": "^3.0.0",
     "codelyzer": "~4.0.1",<% if (delonElectron) { %>
     "electron-debug": "^1.5.0",

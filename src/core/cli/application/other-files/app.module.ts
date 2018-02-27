@@ -26,6 +26,9 @@ import { I18NService } from '@core/i18n/i18n.service';
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, `assets/i18n/`, '.json');
 }<% } %>
+<% if (jsonSchema) { %>
+// JSON-Schema form
+import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';<% } %>
 
 export function StartupServiceFactory(startupService: StartupService): Function {
     return () => startupService.load();
@@ -44,6 +47,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         CoreModule,
         SharedModule,
         LayoutModule,
+        <% if (jsonSchema) { %>JsonSchemaModule,<% } %>
         RoutesModule<% if (delonI18n) { %>,
         // i18n
         TranslateModule.forRoot({

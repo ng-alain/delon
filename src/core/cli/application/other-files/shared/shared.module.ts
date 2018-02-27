@@ -12,7 +12,11 @@ import { TranslateModule } from '@ngx-translate/core';<% } %>
 
 // region: third libs
 import { CountdownModule } from 'ngx-countdown';
-const THIRDMODULES = [ CountdownModule ];
+<% if (jsonSchema) { %>import { NzSchemaFormModule } from 'nz-schema-form';<% } %>
+const THIRDMODULES = [
+    CountdownModule<% if (jsonSchema) { %>,
+    NzSchemaFormModule<% } %>
+];
 // endregion
 
 // region: your componets & directives

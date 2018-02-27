@@ -65,6 +65,7 @@ function default_1(options) {
             schematics_1.mergeWith(schematics_1.apply(schematics_1.url('./files'), [
                 // =====@delon/cli=====
                 options.delonI18n ? schematics_1.noop() : schematics_1.filter(path => path.indexOf('i18n.') === -1),
+                options.jsonSchema ? schematics_1.noop() : schematics_1.filter(path => path.indexOf('json-schema') === -1),
                 options.delonElectron ? schematics_1.noop() : schematics_1.filter(path => path.indexOf('electron') === -1 && path.indexOf('gulpfile.js') === -1),
                 // =====@delon/cli=====
                 options.minimal ? schematics_1.filter(minimalPathFilter) : schematics_1.noop(),
@@ -88,6 +89,7 @@ function default_1(options) {
             schematics_1.mergeWith(schematics_1.apply(schematics_1.url('./other-files'), [
                 // =====@delon/cli=====
                 options.delonI18n ? schematics_1.noop() : schematics_1.filter(path => path.indexOf('i18n.') === -1),
+                options.jsonSchema ? schematics_1.noop() : schematics_1.filter(path => path.indexOf('json-schema') === -1),
                 options.delonElectron ? schematics_1.noop() : schematics_1.filter(path => path.indexOf('electron') === -1 && path.indexOf('gulpfile.js') === -1),
                 // =====@delon/cli=====
                 componentOptions.inlineTemplate ? schematics_1.filter(path => !path.endsWith('.html')) : schematics_1.noop(),

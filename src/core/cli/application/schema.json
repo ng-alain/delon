@@ -105,6 +105,12 @@
       "default": true,
       "alias": "dm"
     },
+    "jsonSchema": {
+      "description": "Support json-schema. 是否需要 json-schema 动态表单",
+      "type": "boolean",
+      "default": true,
+      "alias": "js"
+    },
     "delonElectron": {
       "description": "Support electron packager.",
       "type": "boolean",

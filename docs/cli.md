@@ -125,6 +125,7 @@ ng serve
 | `-dv` | `--delon-version` | `next` | 指定 `@delon/*` 版本，值包括：`laster`、`next` |
 | `-di` | `--delon-i18n` | `false` | 是否需要国际化支持 |
 | `-dm` | `--delon-mock` | `true` | 是否需要 mock 功能 |
+| `-js` | `--json-schema` | `true` | 是否需要 json-schema 动态表单 |
 | - | `--delon-electron` | `false` | 是否需要 electron 打包 |
 
 例如生成一个带有国际化的项目：
