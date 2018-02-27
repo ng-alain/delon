@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
 import { ACLType, ACLCanType } from './acl.type';
 
 /**
@@ -10,6 +12,12 @@ export class ACLService {
     private roles: string[] = [];
     private abilities: (number | string)[] = [];
     private full = false;
+    private aclChange: BehaviorSubject<ACLType | boolean> = new BehaviorSubject<ACLType | boolean>(null);
+
+    /** ACL变更通知 */
+    get change(): Observable<ACLType | boolean> {
+        return this.aclChange.asObservable();
+    }
 
     /** 获取所有数据 */
     get data() {
@@ -41,6 +49,7 @@ export class ACLService {
         this.abilities = [];
         this.roles = [];
         this.add(value);
+        this.aclChange.next(value);
     }
 
     /**
@@ -50,6 +59,7 @@ export class ACLService {
      */
     setFull(val: boolean) {
         this.full = val;
+        this.aclChange.next(val);
     }
 
     /**
@@ -95,6 +105,7 @@ export class ACLService {
                 this.roles.push(val);
             }
         }
+        this.aclChange.next(this.data);
     }
 
     /**
@@ -108,6 +119,7 @@ export class ACLService {
                 this.abilities.push(val);
             }
         }
+        this.aclChange.next(this.data);
     }
 
     /**
@@ -122,6 +134,7 @@ export class ACLService {
                 this.roles.splice(idx, 1);
             }
         }
+        this.aclChange.next(this.data);
     }
 
     /**
@@ -136,6 +149,7 @@ export class ACLService {
                 this.abilities.splice(idx, 1);
             }
         }
+        this.aclChange.next(this.data);
     }
 
     /**
