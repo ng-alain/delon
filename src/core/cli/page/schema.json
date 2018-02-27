@@ -92,8 +92,8 @@
             "description": "Specifies if declaring module exports the component."
         },
         "type": {
-            "description": "The page type, includes: list, edit, view",
-            "enum": ["list", "edit", "view"],
+            "description": "The page type, includes: list",
+            "enum": ["list"],
             "type": "string",
             "default": "list",
             "alias": "t"
@@ -101,7 +101,7 @@
         "modal": {
             "type": "boolean",
             "default": true,
-            "description": "Specifies if edit or view page using modal mode."
+            "description": "Specifies if edit or view page using modal mode. (not yet!!)"
         }
     },
     "required": ["name"]

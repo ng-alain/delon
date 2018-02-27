@@ -165,12 +165,12 @@ npm run el:bundle.windows
 **命令格式**
 
 ```bash
-ng g page [page name] -t=view --modal
+ng g page [page name]
 ```
 
 | Alias | Arguments | Default | Summary |
 | --------- | --------- | ------- | ------- |
-| `-t` | `--type` | `list` | 指定页面类型，值包括：`list`、`view`、`edit` |
+| `-t` | `--type` | `list` | 指定页面类型，值包括：`list`、`view (not yet)`、`edit (not yet)` |
 | - | `--modal` | `true` | 是否模态框，限：`view`、`edit` 时有效 |
 
 例如：
@@ -182,5 +182,5 @@ ng g page log
 cd log
 
 # 生成日志详情页
-ng g page view -t=view
+# ng g page view -t=view
 ```

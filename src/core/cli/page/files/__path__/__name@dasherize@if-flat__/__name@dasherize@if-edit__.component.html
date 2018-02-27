@@ -1,4 +1,6 @@
-<div class="content__title">
-    <h1>Page Name</h1>
-</div>
-<pro-header [title]="'Page Name'"></pro-header>
+<pro-header [title]="'Page Name Edit'"></pro-header>
+<nz-card>
+    <nz-sf layout="inline" [schema]="searchSchema"
+        [actions]="searchActions" (onChange)="params=$event.value"></nz-sf>
+    <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
+</nz-card>
