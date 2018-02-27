@@ -6,6 +6,23 @@ title:
 type: Other
 ---
 
+### 0.6.7
+
+`2018-2-27`
+
+- 脚手架
+    - 新增 [nz-schema-form](https://github.com/cipchk/nz-schema-form) 导入，([af77281](https://github.com/cipchk/ng-alain/commit/af77281))
+    - 新增 package-lock.json 文件，更健壮构建环境，[#298](https://github.com/cipchk/ng-alain/issues/298)
+    - 修复 acl 粒度控制时变更权限时无法生效问题，以及更友好的支持懒模块，[#291](https://github.com/cipchk/ng-alain/issues/291)，([a8c07fc](https://github.com/cipchk/ng-alain/commit/a8c07fc))
+    - 修复 toggleCollapsedSideabar 方法名更改为 toggleCollapsedSidebar，[#248](https://github.com/cipchk/ng-alain/pull/248) [@dusdong](https://github.com/dusdong)
+- @delon/abc
+    - 修复 `pie` 百分比显示问题，[#288](https://github.com/cipchk/ng-alain/issues/288)
+    - 修复 `pro-header` 当无任何面包屑数据时不显示该组件
+    - 新增 `yuan` 支持小数点，[#38](https://github.com/cipchk/delon/pull/38)
+- @delon/cli
+    - 新增 [nz-schema-form](https://github.com/cipchk/nz-schema-form) 导入
+    - 新增 page 命令
+
 ### 0.6.6
 
 `2018-2-2`
