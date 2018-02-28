@@ -18,9 +18,10 @@ export class TimelineComponent implements OnDestroy, OnChanges, OnInit {
     _titleTpl: TemplateRef<any>;
     @Input()
     set title(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._title = null;
             this._titleTpl = value;
-        else
+        } else
             this._title = value;
     }
 

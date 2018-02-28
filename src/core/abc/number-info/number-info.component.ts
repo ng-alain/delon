@@ -22,9 +22,10 @@ export class NumberInfoComponent implements OnChanges {
     /** 标题 */
     @Input()
     set title(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._title = null;
             this._titleTpl = value;
-        else
+        } else
             this._title = value;
     }
 
@@ -33,9 +34,10 @@ export class NumberInfoComponent implements OnChanges {
     /** 子标题 */
     @Input()
     set subTitle(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._subTitle = null;
             this._subTitleTpl = value;
-        else
+        } else
             this._subTitle = value;
     }
 
@@ -44,9 +46,10 @@ export class NumberInfoComponent implements OnChanges {
     /** 总量 */
     @Input()
     set total(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._total = null;
             this._totalTpl = value;
-        else
+        } else
             this._total = '' + value;
     }
 

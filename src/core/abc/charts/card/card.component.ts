@@ -49,9 +49,10 @@ export class ChartCardComponent {
     _avatarTpl: TemplateRef<any>;
     @Input()
     set avatar(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._avatar = null;
             this._avatarTpl = value;
-        else
+        } else
             this._avatar = value;
     }
 
@@ -59,9 +60,10 @@ export class ChartCardComponent {
     _titleTpl: TemplateRef<any>;
     @Input()
     set title(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._title = null;
             this._titleTpl = value;
-        else
+        } else
             this._title = value;
     }
 
@@ -69,9 +71,10 @@ export class ChartCardComponent {
     _actionTpl: TemplateRef<any>;
     @Input()
     set action(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._action = null;
             this._actionTpl = value;
-        else
+        } else
             this._action = value;
     }
 
@@ -89,9 +92,10 @@ export class ChartCardComponent {
     _footerTpl: TemplateRef<any>;
     @Input()
     set footer(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._footer = null;
             this._footerTpl = value;
-        else
+        } else
             this._footer = value;
     }
 

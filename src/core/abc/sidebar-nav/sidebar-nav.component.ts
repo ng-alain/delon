@@ -155,7 +155,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private route$: Subscription;
     private installUnderPad() {
         if (!this.autoCloseUnderPad) return;
-        this.route$ = this.router.events.subscribe(s => {
+        this.route$ = <any>this.router.events.subscribe(s => {
             if (s instanceof NavigationEnd) this.underPad();
         });
         this.underPad();

@@ -25,7 +25,6 @@ export class MiniProgressComponent {
     @Input()
     get target() { return this._target; }
     set target(value: any) {
-        const a = coerceNumberProperty(value);
         this._target = Math.min(Math.max(coerceNumberProperty(value), 0), 100);
     }
     private _target: number;

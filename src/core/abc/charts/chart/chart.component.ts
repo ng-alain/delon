@@ -62,7 +62,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
         if (this.resizeTime <= 200) this.resizeTime = 200;
 
-        this.resize$ = FromEventObservable.create(window, 'resize')
+        this.resize$ = <any>FromEventObservable.create(window, 'resize')
                             .pipe(debounceTime(this.resizeTime))
                             .subscribe(() => this.resize.emit(this.el));
     }

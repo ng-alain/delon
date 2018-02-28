@@ -19,9 +19,10 @@ export class DescListItemComponent {
     _termTpl: TemplateRef<any>;
     @Input()
     set term(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._term = null;
             this._termTpl = value;
-        else
+        } else
             this._term = value;
     }
 
