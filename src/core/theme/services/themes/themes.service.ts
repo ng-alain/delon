@@ -25,7 +25,7 @@ export class ThemesService {
                 removeArr.push(bodyEl.classList[i]);
             }
         }
-        bodyEl.classList.remove(...removeArr);
+        if (removeArr.length) bodyEl.classList.remove(...removeArr);
         bodyEl.classList.add(`theme-${name.toLowerCase()}`);
         this.defaultTheme = name;
         this.settings.setLayout('theme', name);
