@@ -32,6 +32,8 @@ const ZORROMODULES = [
 
 // endregion
 
+if (typeof G2 !== 'undefined') G2.track(false);
+
 @NgModule({
     imports:        [CommonModule, ...ZORROMODULES],
     declarations:   [...COMPONENTS],
