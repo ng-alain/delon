@@ -18,8 +18,8 @@ module.exports = {
                     'en-US': 'Basic'
                 },
                 {
-                    'zh-CN': '主题',
-                    'en-US': 'Theme'
+                    'zh-CN': '开发',
+                    'en-US': 'Dev'
                 },
                 {
                     'zh-CN': '进阶',
@@ -36,7 +36,7 @@ module.exports = {
             src: [ './src/core/abc' ],
             ignores: [ './src/core/abc/README.md' ],
             module: '@delon/abc',
-            defaultRoute: 'simple-table',
+            defaultRoute: 'avatar-list',
             types: [
                 {
                     'zh-CN': '组件',
@@ -45,28 +45,6 @@ module.exports = {
                 {
                     'zh-CN': '指令',
                     'en-US': 'Directive'
-                }
-            ]
-        },
-        {
-            name: 'acl',
-            src: './src/core/acl/docs',
-            module: '@delon/acl',
-            types: [
-                {
-                    'zh-CN': 'ACL',
-                    'en-US': 'ACL'
-                }
-            ]
-        },
-        {
-            name: 'theme',
-            src: './src/core/theme/docs',
-            module: '@delon/theme',
-            types: [
-                {
-                    'zh-CN': '主题',
-                    'en-US': 'Theme'
                 }
             ]
         }

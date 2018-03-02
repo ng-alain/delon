@@ -118,7 +118,11 @@ export class MetaService {
 
         this._platMenus = [];
         this._menus = group.map((item: any) => {
-            item.list.sort((a: any, b: any) => a.order - b.order);
+            if (category.name === 'components') {
+                item.list.sort((a: any, b: any) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
+            } else {
+                item.list.sort((a: any, b: any) => a.order - b.order);
+            }
             this._platMenus = this._platMenus.concat(item.list);
             return item;
         }).filter((item: any) => item.list.length);

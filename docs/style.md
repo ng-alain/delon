@@ -1,137 +1,45 @@
 ---
-order: 2
+order: 30
 title:
-  en-US: Style Rule
-  zh-CN: 样式规则
-type: Theme
+  en-US: Style
+  zh-CN: 样式
+type: Dev
 ---
 
-`@delon/theme` 包含了 ng-alain 主题系统所需要的样式文件外，还扩展的样式工具类（一种类似 Bootstrap 的命名方式）以及 Ant Design 的变量声明文件。
+这篇文档主要针对如何在项目中使用和规划样式文件进行介绍，如果想获取基础的 CSS 知识或查阅属性，可以参考 [MDN文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference)。
 
-## 设计规则
+## less
 
-`ng-alain` 是基于 `ng-zorro-antd` 组件库为基础的一个企业后台应用脚手架。
+ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到疑问时学习一下 [less](http://lesscss.org/) 的相关特性。
 
-因此，整体依 Ant Design 的设计规则，`ng-alain` 按上-左-右布局，这些规范细节：
+## 组件样式
 
-+ `顶部导航` 高度 `64px`。
-+ `侧边导航` 宽度 `200px`。
-    + 当屏幕低于 `1140px` 宽时隐藏 `侧边导航`。
-    + 当屏幕低于 `1140px` 宽时打开 `侧边导航` 为 `fixed` 状态。
+在组件样式开发过程中，你可以通过 *src/styles/index.less* 创建全局样式，或利用组件的 `styles` 属性创建样式。
 
-**内部区域**
+对于全局样式，有两个问题比较突出：
 
-内容区域包括页面标题、内容部分，其中页面标题与顶部导航、侧边导航粘在一起，一细规范细节：
+- 全局污染 —— CSS 文件中的选择器是全局生效的，不同文件中的同名选择器，根据 build 后生成文件中的先后顺序，后面的样式会将前面的覆盖；
+- 选择器复杂 —— 为了避免上面的问题，我们在编写样式的时候不得不小心翼翼，类名里会带上限制范围的标识，变得越来越长，多人开发时还很容易导致命名风格混乱，一个元素上使用的选择器个数也可能越来越多。
 
-+ 内容距离页面标准、侧边、右边滚动条、底部，这四边距依一个标准Dashboard的Gutter宽度 `24px`。
+因此，除非设计师明确需求以外，我们应该尽可能使用组件 `styles` 属性创建组件样式，有关如何Angular样式请参考《[关于Angular样式封装](https://zhuanlan.zhihu.com/p/31235358)》。
 
-## ng-zorro-antd 组件补丁类
+## 样式文件类别
 
-<table>
-    <thead>
-        <tr>
-            <th>名称</th>
-            <th style="width: 30%">类名</th>
-            <th>描述</th>
-            <th>状态</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>nz-button</code></td>
-            <td><code>.ant-btn__block</code></td>
-            <td>强制按钮为块元素<code>display: block; width: 100%;</code></td>
-            <td></td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td rowspan="4"><code>nz-card</code></td>
-            <td><code>.ant-card__title-img</code></td>
-            <td>标题为图片时设置 <code>valign</code> 为内容与对象中部对齐</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><code>.ant-card__img</code></td>
-            <td>图片类型卡片强制设置 <code>ant-card-body</code> 无间距且支持内部 <code>img</code> 样式为自动100%大小</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><code>.ant-card__body-nopadding</code></td>
-            <td>强制内容无间距</td>
-            <td>过期，使用 <code>[nzNoPadding]</code> 替代</td>
-        </tr>
-        <tr>
-            <td><code>.ant-card__{{color}}</code></td>
-            <td>设置标题背景色</td>
-            <td></td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td><code>nz-breadcrumb</code></td>
-            <td><code>.ant-breadcrumb__last-item-no-bold</code></td>
-            <td>强制最后一项字体粗细为正常 <code>font-weight: normal</code></td>
-            <td></td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td rowspan="3">纯CSS瀑布流</td>
-            <td><code>.row-masonry</code></td>
-            <td>行</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><code>.row-masonry-{xs|sm|md|lg|xl}-{1-10}</code></td>
-            <td>列，响应式样式</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><code>.col-masonry</code></td>
-            <td>列</td>
-            <td></td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td><code>nz-carousel</code></td>
-            <td><code>.nz-carousel__dot-{{color}}</code></td>
-            <td>设置指示点颜色</td>
-            <td></td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td rowspan="3"><code>nz-modal</code></td>
-            <td><code>.modal-{lg|sm}</code></td>
-            <td>设置Modal的大小 <code>wrapClassName: 'modal-lg'</code></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><code>.modal-header</code></td>
-            <td>自定义Modal时非常有效，<a href="//cipchk.github.io/ng-alain/#/elements/modal" target="_blank">DEMO</a></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><code>.modal-footer</code></td>
-            <td>自定义Modal时非常有效</td>
-            <td></td>
-        </tr>
-    </tbody>
-    <tbody>
-        <tr>
-            <td><code>list-group</code></td>
-            <td></td>
-            <td>列表组相当于 Bootstrap4。</td>
-            <td>可由 <code>nz-list</code> 替代</td>
-        </tr>
-    </tbody>
-</table>
+在一个项目中，样式文件根据功能不同，可以划分为不同的类别。
 
-## CSS动画库
+### src/styles/index.less
 
-来源于 [animate.css](//daneden.github.io/animate.css/)。
+全局样式文件，在这里你可以进行一些通用设置。
+
+> 因为 antd 中会自带一些全局设置，如字号，颜色，行高等，所以在这里，你只需要关注自己的个性化需求即可，不用进行大量的 reset。
+
+### src/styles/_alain-custom-variables.less
+
+脚手架有主题系统有几十种参数，你可以在这里重置变量值来改变主题系统外观，例如改变内容区域背景：
+
+```less
+@content-bg:  #fff;
+```
 
 ## 工具类规则
 
@@ -414,3 +322,111 @@ Ant Design 是以 `12px` 为基准字号。
 | `block-center` | `margin: 0 auto` |
 | `point` | `cursor: pointer` |
 | `no-resize` | 设置不允许调整元素 |
+
+### ng-zorro-antd 组件补丁类
+
+<table>
+    <thead>
+        <tr>
+            <th>名称</th>
+            <th style="width: 30%">类名</th>
+            <th>描述</th>
+            <th>状态</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>nz-button</code></td>
+            <td><code>.ant-btn__block</code></td>
+            <td>强制按钮为块元素<code>display: block; width: 100%;</code></td>
+            <td></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td rowspan="4"><code>nz-card</code></td>
+            <td><code>.ant-card__title-img</code></td>
+            <td>标题为图片时设置 <code>valign</code> 为内容与对象中部对齐</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>.ant-card__img</code></td>
+            <td>图片类型卡片强制设置 <code>ant-card-body</code> 无间距且支持内部 <code>img</code> 样式为自动100%大小</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>.ant-card__body-nopadding</code></td>
+            <td>强制内容无间距</td>
+            <td>过期，使用 <code>[nzNoPadding]</code> 替代</td>
+        </tr>
+        <tr>
+            <td><code>.ant-card__{{color}}</code></td>
+            <td>设置标题背景色</td>
+            <td></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td><code>nz-breadcrumb</code></td>
+            <td><code>.ant-breadcrumb__last-item-no-bold</code></td>
+            <td>强制最后一项字体粗细为正常 <code>font-weight: normal</code></td>
+            <td></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td rowspan="3">纯CSS瀑布流</td>
+            <td><code>.row-masonry</code></td>
+            <td>行</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>.row-masonry-{xs|sm|md|lg|xl}-{1-10}</code></td>
+            <td>列，响应式样式</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>.col-masonry</code></td>
+            <td>列</td>
+            <td></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td><code>nz-carousel</code></td>
+            <td><code>.nz-carousel__dot-{{color}}</code></td>
+            <td>设置指示点颜色</td>
+            <td></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td rowspan="3"><code>nz-modal</code></td>
+            <td><code>.modal-{lg|sm}</code></td>
+            <td>设置Modal的大小 <code>wrapClassName: 'modal-lg'</code></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>.modal-header</code></td>
+            <td>自定义Modal时非常有效，<a href="//cipchk.github.io/ng-alain/#/elements/modal" target="_blank">DEMO</a></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>.modal-footer</code></td>
+            <td>自定义Modal时非常有效</td>
+            <td></td>
+        </tr>
+    </tbody>
+    <tbody>
+        <tr>
+            <td><code>list-group</code></td>
+            <td></td>
+            <td>列表组相当于 Bootstrap4。</td>
+            <td>可由 <code>nz-list</code> 替代</td>
+        </tr>
+    </tbody>
+</table>
+
+## CSS动画库
+
+来源于 [animate.css](//daneden.github.io/animate.css/)。

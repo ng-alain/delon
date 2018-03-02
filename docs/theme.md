@@ -1,9 +1,9 @@
 ---
-order: 0
+order: 10
 title:
   en-US: Theme
   zh-CN: 主题系统
-type: Theme
+type: Advance
 ---
 
 `@delon/theme` 的主题系统包含了[几十种参数](//github.com/cipchk/delon/blob/master/src/core/theme/styles/app/variables.less)，你可以通过覆盖参数数值进而定制一些特别的需求。

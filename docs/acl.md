@@ -1,28 +1,33 @@
 ---
-order: 3
+order: 50
 title: ACL
 type: Advance
 ---
 
 ACL 全称叫访问控制列表（Access Control List），是一种非常简单的基于角色权限控制方式，所以如果你需要它，则需要导入 `@delon/acl` 模块；另外你也可以在 [DEMO](//cipchk.github.io/ng-alain/#/logics/acl) 中体验它。
 
-```ts
-import { AlainACLModule } from '@delon/acl';
-
-@NgModule({
-    imports: [ AlainACLModule.forRoot() ],
-    exports: [ AlainACLModule ]
-})
-export class SharedModule {}
-```
-
 ## 如何运行？
 
-内部实际是一个 `ACLService` 它提供一套基于角色权限服务类。
+内部实际是一个 `ACLService` 它提供一套基于角色权限服务类。为了更好的编码体验 ng-alain 有多处组件或模块也依赖于它，例如：`simple-table`、`MenuService` 等，并且这些会以 `acl` 属性的形式表现。因此，若某部分组件带有 `acl` 实际都是调用本模块。
 
-## 通用路由守卫
+## 需求实例
 
-`ACLGuard` 是一个通用路由守卫类，可以在路由注册时透过简单的配置完成一些复杂的操作，[在线体验](//cipchk.github.io/ng-alain/logics/guard)。
+## 粒度
+
+ACL 提供一个用于改变按钮级别粒度的控制能力，例如：无权限者不允许显示列表页中的增加按钮。
+
+```html
+使用角色名
+<button [acl]="'user'"></button>
+<button [acl]="['user', 'manage']"></button>
+使用权限点
+<button [acl]="10"></button>
+<button acl [acl-ability]="10"></button>
+```
+
+### 通用路由守卫
+
+大部分文章都会告诉你路由守卫需要针对每种角色定义一个类，其实未必如此。`ACLGuard` 是一个通用路由守卫类，可以在路由注册时透过简单的配置完成一些复杂的操作，甚至支持 Observable 参数：
 
 ```ts
 import { of } from 'rxjs/observable/of';
@@ -60,6 +65,7 @@ const routes: Routes = [
 
 | 方法 | 说明 |
 | --- | --- |
+| `change` | 监听ACL变更通知 |
 | `data` | 获取所有ACL数据 |
 | `setFull(val: boolean)` | 标识当前用户为全量，即不受限 |
 | `set(value: ACLType)` | 设置当前用户角色或权限能力（会先清除所有） |
@@ -73,18 +79,9 @@ const routes: Routes = [
 | `can(roleOrAbility: string | string[] | ACLType)` | 当前用户是否有对应角色 |
 | `canAbility(ability: number | string)` | 当前用户是否有对应权限点 |
 
-## Directive 指令
+**为什么can方法默认情况下角色是字符串，而权限点是数字类型？**
 
-ACL 提供一个用于改变按钮级别粒度的控制能力，例如：无权限者不允许显示列表页中的增加按钮。
-
-```html
-使用角色名
-<button [acl]="'user'"></button>
-<button [acl]="['user', 'manage']"></button>
-使用权限点
-<button [acl]="10"></button>
-<button acl [acl-ability]="10"></button>
-```
+我们无法区分在同一个字符串类型的情况下如何自动区分角色还是权限点，源于此作了这样的设计。因此对于角色使用字符串、权限点使用数字型的后端设计编码体验会更好，你无须再使用 `canAbility` 来表达权限点或使用 `ACLType` 复杂类型表述。
 
 ## 如何删除？
 

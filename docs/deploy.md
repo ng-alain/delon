@@ -1,9 +1,9 @@
 ---
-order: 8
+order: 70
 title:
   en-US: Build & Deploy
   zh-CN: 构建和发布
-type: Basic
+type: Dev
 ---
 
 ## 构建

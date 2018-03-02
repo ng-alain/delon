@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 100
 title:
   en-US: Changelog
   zh-CN: 更新日志

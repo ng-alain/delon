@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 70
 title:
   en-US: Cache
   zh-CN: 缓存
@@ -54,7 +54,7 @@ this.srv
 **安装**
 
 ```bash
-npm install --save-dev @delon/cache
+npm install --save @delon/cache
 ```
 
 **注册**

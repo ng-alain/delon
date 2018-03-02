@@ -1,5 +1,5 @@
 ---
-order: 10
+order: 20
 title:
   en-US: Charts
   zh-CN: 图表

@@ -1,5 +1,5 @@
 ---
-order: 15
+order: 100
 title:
   en-US: Use ABC Components Alone
   zh-CN: 独立使用 ABC 组件

@@ -1,26 +1,28 @@
 ---
-order: 10
+order: 30
 title:
   en-US: Module Guidelines
   zh-CN: 模块注册指导原则
-type: Basic
+type: Other
 ---
 
 一直以来 `AppModule`、`CoreModule`、`SharedModule` 模块使用没有很明确的规范，很容易让产生乱用。Angular模块目标是为了使组件、指令、服务和管道功能块更内聚，并每一个功能区域形成独立的业务领域或实用工具的集合。
 
-**AppModule**
+## 分类说明
+
+### AppModule
 
 根模块，用于引导 Angular 启动；它非常适合导入一些需要在整个应用到处需要的模块，例如：主题系统、用户主认证模块、权限模块等模块，以及一些全局性HTTP拦截器、国际化服务等。
 
-**CoreModule**
+### CoreModule
 
 核心模块只会被导入一次，它等同 `AppModule`，但我们更应该把它当成一个**纯服务类模块**，例如：消息、数据访问等。
 
-**SharedModule**
+### SharedModule
 
 我们叫它共享模块；它不应该出现 `providers`，因为 `ShareModule` 会在所有业务模块中被导入，这会导致服务被覆盖。
 
-基于以上，这些模块在 ng-alain 中呈现有些混乱，因此将模块更区明确的区分：
+## 建议
 
 ### AppModule
 
