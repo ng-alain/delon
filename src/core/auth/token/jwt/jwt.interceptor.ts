@@ -2,12 +2,14 @@ import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpInterceptor, HttpRequest, HttpHandler,
          HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent,
-         HttpHeaders } from '@angular/common/http';
+         HttpHeaders,
+         HttpEvent} from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { _throw } from 'rxjs/observable/throw';
 import { ITokenModel, DA_SERVICE_TOKEN } from '../interface';
 import { JWTTokenModel } from './jwt.model';
 import { DA_OPTIONS_TOKEN } from '../../auth.options';
+import { _HttpClient } from '@delon/theme';
 
 @Injectable()
 export class JWTInterceptor implements HttpInterceptor {
@@ -35,8 +37,17 @@ export class JWTInterceptor implements HttpInterceptor {
             });
         } else {
             if (options.token_invalid_redirect === true) {
-                setTimeout(() => this.injector.get(Router).navigate([ options.login_url ]));
-                return _throw(<any>{ status: 401, _from: 'jwt_intercept' });
+                return new Observable<HttpEvent<any>>(observer => {
+                    observer.next(<any>{ status: 401, _from: 'jwt_intercept' });
+                    observer.complete();
+                    setTimeout(() => {
+                        try {
+                            const hc = this.injector.get(_HttpClient);
+                            if (hc) hc.end();
+                        } catch {}
+                        this.injector.get(Router).navigate([ options.login_url ]);
+                    });
+                });
             }
         }
         return next.handle(req);
