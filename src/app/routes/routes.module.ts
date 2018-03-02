@@ -8,6 +8,7 @@ import { DemoComponent } from './demo/demo.component';
 
 import { PassportComponent } from '../passport.component';
 import { LoginComponent } from './passport/login.component';
+import { DemoModalComponent } from './dashboard/modal.component';
 
 @NgModule({
     imports: [
@@ -37,7 +38,11 @@ import { LoginComponent } from './passport/login.component';
     declarations: [
         DashboardComponent,
         DemoComponent,
-        LoginComponent
+        LoginComponent,
+        DemoModalComponent
+    ],
+    entryComponents: [
+        DemoModalComponent
     ],
     exports: [
         RouterModule

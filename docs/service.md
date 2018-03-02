@@ -61,7 +61,13 @@ type: Theme
 
 ## ModalHelper
 
-这是对 `NzModalService` 进一步封装，打开一个对话框，默认会过滤一些事件的回调，因此更容易处理回调：
+这是对 `NzModalService` 进一步封装，它解决一些已知问题：
+
+- 更友好的处理回调
+- 清除所有已打开对话框
+- 自动管理 `z-index` 值
+
+打开一个对话框，默认会过滤一些事件的回调，因此更容易处理回调：
 
 ```ts
 this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
@@ -76,3 +82,7 @@ this.subject.destroy();
 ```
 
 服务只包括两个方法体 `open` & `static` 分别打开普通&静态对话框。在 `NzModalService` 基础上新增了 `size` 参数，其值包括：`sm`、`lg`、`空字符串` 表示三种不同尺寸的对话框。
+
+### 移除当前所有对话框
+
+主要用于解决当路由切换时无法自动关闭对话框问题，特别是当在使用对话框时授权过期时自动跳转至 login 页时，可在 login 页中调用 `removeAll` 可移除所有对话框。
