@@ -2,7 +2,7 @@
 	"name": "@delon/acl",
 	"version": "0.6.7",
 	"description": "@delon/acl",
-	"main": "./bundles/acl.umd.js",
+	"main": "./bundles/index.js",
 	"module": "./index.js",
 	"typings": "./index.d.ts",
 	"author": "cipchk<cipchk@qq.com>",

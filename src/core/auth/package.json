@@ -2,7 +2,7 @@
 	"name": "@delon/auth",
 	"version": "0.6.7",
 	"description": "@delon/auth",
-	"main": "./bundles/auth.umd.js",
+	"main": "./bundles/index.js",
 	"module": "./index.js",
 	"typings": "./index.d.ts",
 	"author": "cipchk<cipchk@qq.com>",

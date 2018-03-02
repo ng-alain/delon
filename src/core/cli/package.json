@@ -2,7 +2,7 @@
 	"name": "@delon/cli",
 	"version": "0.6.7",
 	"description": "Schematics for ng-alain",
-	"main": "./bundles/cli.umd.js",
+	"main": "./bundles/index.js",
 	"module": "./index.js",
 	"typings": "./index.d.ts",
 	"author": "cipchk<cipchk@qq.com>",
