@@ -49,7 +49,7 @@ export class TitleService {
     }
 
     private getByElement(): string {
-        const el = this.doc.querySelector('.content__title h1');
+        const el = this.doc.querySelector('.content__title h1') || this.doc.querySelector('pro-header h1.title');
         if (el) {
             return el.firstChild.textContent.trim();
         }
