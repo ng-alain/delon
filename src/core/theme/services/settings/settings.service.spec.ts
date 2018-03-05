@@ -1,5 +1,6 @@
 import { TestBed, async, inject } from '@angular/core/testing';
-import { SettingsService, App, User } from '../settings/settings.service';
+import { SettingsService } from '../settings/settings.service';
+import { App, User } from './interface';
 
 describe('Service: Settings', () => {
     beforeEach(() => {

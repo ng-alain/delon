@@ -140,11 +140,11 @@ describe('auth: simple.interceptor', () => {
         });
 
         it('should be go to login', (done: () => void) => {
-            injector.get(HttpClient).get('/test', { responseType: 'text' }).subscribe(value => {
-            }, (err: any) => {
-                expect(err.status).toBe(401);
+            injector.get(HttpClient).get('/test', { responseType: 'text' }).subscribe();
+            setTimeout(() => {
+                expect(injector.get(Router).navigate).toHaveBeenCalled();
                 done();
-            });
+            }, 20);
         });
     });
 

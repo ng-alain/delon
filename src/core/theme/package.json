@@ -1,6 +1,6 @@
 {
 	"name": "@delon/theme",
-	"version": "0.6.7",
+	"version": "0.7.0",
 	"description": "@delon/theme",
 	"main": "./bundles/index.js",
 	"module": "./index.js",

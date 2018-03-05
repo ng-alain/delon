@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-demo',
     template: `
-    <standard-form-row grid text title="所属类目">头像</standard-form-row>
+    <standard-form-row grid title="所属类目">头像</standard-form-row>
     <standard-form-row grid last title="图片">
         <nz-input-group nzCompact>
             <input style="width: 80%" nz-input [(ngModel)]="url" placeholder="请贴入网络图片地址">
@@ -20,5 +20,6 @@ import { Component } from '@angular/core';
     </standard-form-row>`
 })
 export class DemoComponent {
+    url: string;
 }
 ```

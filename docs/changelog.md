@@ -6,6 +6,27 @@ title:
 type: Other
 ---
 
+### 0.7.0
+
+`2018-3-5`
+
+- 更新所有文档站点内容，[#307](https://github.com/cipchk/ng-alain/issues/307)
+- ALL：修复字符串与模板无法自由切换问题
+- @delon/theme
+    - ModalHelper：新增 `removeAll` 方法用于移除当前所有对话框，自动管理 `z-index` 参数
+    - Menu：新增 `hideInBreadcrumb` 参数，用于 `pro-header` 时自动隐藏某节点项
+    - 修复IE11下无法切换主题，[#302](https://github.com/cipchk/ng-alain/issues/302)
+- @delon/abc
+    - G2：关闭体验改进计划说明
+    - standard-form-row：新增支持字符串风格
+- @delon/auth
+    - 修复拦截器引起 “You provided an invalid object where a stream was expected. You can provide an Observable, Promise, Array, or Iterable.” 异常问题
+- @delon/cli
+    - 新增 `guard`、`app-shell` 命令
+    - 新增 `module` 命令增加无须路由组件注册区域
+
+> `1.0.0` 之前最后一个次版本
+
 ### 0.6.7
 
 `2018-2-27`
