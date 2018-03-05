@@ -117,6 +117,7 @@ function cliResources() {
         `${paths.scaffoldApp}/core/net/**`,
         `${paths.scaffoldApp}/core/module-import-guard.ts`,
         `${paths.scaffoldApp}/core/README.md`,
+        `${paths.scaffoldApp}/layout/default/header/components/i18n.component.ts`,
         `${paths.scaffoldApp}/shared/README.md`,
         `${paths.scaffoldApp}/routes/callback/**`,
         `${paths.scaffoldApp}/routes/exception/**`,

@@ -29,6 +29,7 @@ application/other-files/shared/README.md
 application/other-files/routes/callback
 application/other-files/routes/exception
 application/other-files/routes/passport
+application/other-files/layout/default/header/components/i18n.component.ts
 utility
 class
 directive
