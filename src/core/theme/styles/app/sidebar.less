@@ -182,10 +182,7 @@
         border: 1px solid @content-heading-border;
         background-color: @aside-bg;
         border-radius: 4px;
-        display: block;
-        visibility: hidden;
-        opacity: 0;
-        transition: visibility .3s @ease-in-out, opacity .3s @ease-in-out;
+        display: none;
 
         >li {
             a {
@@ -193,8 +190,7 @@
             }
         }
         &-show {
-            visibility: visible;
-            opacity: 1;
+            display: block;
         }
         .@{nav-prefix-cls}-sub {
             display: block;
