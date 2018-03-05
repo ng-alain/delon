@@ -131,6 +131,37 @@ constructor(@Inject(DELON_AUTH_TOKEN_SERVICE_TOKEN) service: ITokenService) {
 }
 ```
 
+### 存储类型
+
+默认是采用 `LocalStorageStore` 持久化存储，你可以在 `delon.module.ts` 或根模块里变更其他存储方式。
+
+```ts
+export class DelonModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: DelonModule,
+            providers: [
+                { provide: DA_STORE_TOKEN, useClass: MemoryStore }
+            ]
+        };
+    }
+}
+```
+
+包含三种存储类型：
+
+**LocalStorageStore**
+
+`localStorage` 存储，关掉浏览器后**不丢失**。
+
+**SessionStorageStore**
+
+`sessionStorage` 存储，关掉浏览器后**丢失**。
+
+**MemoryStore**
+
+内存存储，关掉浏览器标签后**丢失**。
+
 ## 如何使用
 
 通过HTTP拦截器在每一个请求中加入相应的认证信息，这是再好不过。`@delonn/auth` 实现两种不同风格拦截器。
