@@ -10,6 +10,24 @@ module: AdUtilsModule
 
 ## API
 
+### 延迟加载资源
+
+`LazyService` 用于延迟加载 JS 或 CSS 文件，一个简单的用法，例如：
+
+```ts
+import { LazyService } from '@delon/abc';
+
+export class AppComponent {
+    constructor(private lazy: LazyService) {}
+
+    ngOnInit() {
+        this.lazy.load([ `//cdn.bootcss.com/xlsx/0.11.17/xlsx.full.min.js` ]).then(() => {
+            // ToDo
+        });
+    }
+}
+```
+
 ### 验证型
 
 方法名 | 说明 | 示例

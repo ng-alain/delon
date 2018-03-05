@@ -17,7 +17,7 @@
       "test.ts"
     ],
     "exclude": [
-        "./core/cli/**/*.spec.ts"
+        "./core/cli/**/*"
     ],
     "include": [
       "**/*.spec.ts",

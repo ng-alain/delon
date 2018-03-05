@@ -20,68 +20,39 @@ export function fixedZero(val) {
 
 /**
  * 获取时间范围
- * @param type 类型
+ * @param type 类型，带 `-` 表示过去一个时间，若指定 `number` 表示天数
  * @param time 开始时间
  */
-export function getTimeDistance(type: 'today' | 'week' | 'month' | 'year', time: Date = new Date()) {
-    const oneDay = 1000 * 60 * 60 * 24;
+export function getTimeDistance(type: 'today' | '-today' | 'week' | '-week' | 'month' | '-month' | 'year' | '-year' | number, time?: moment.MomentInput) {
+    if (!time) time = moment(new Date());
+    if (!moment.isMoment(time)) time = moment(time);
 
-    if (type === 'today') {
-        time.setHours(0);
-        time.setMinutes(0);
-        time.setSeconds(0);
-        return [moment(time), moment(time.getTime() + (oneDay - 1000))];
-    }
-
-    if (type === 'week') {
-        let day = time.getDay();
-        time.setHours(0);
-        time.setMinutes(0);
-        time.setSeconds(0);
-
-        if (day === 0) {
-            day = 6;
-        } else {
-            day -= 1;
-        }
-
-        const beginTime = time.getTime() - day * oneDay;
-
-        return [moment(beginTime), moment(beginTime + (7 * oneDay - 1000))];
-    }
-
-    if (type === 'month') {
-        const year = time.getFullYear();
-        const month = time.getMonth();
-        const nextDate = moment(time).add(1, 'months');
-        const nextYear = nextDate.year();
-        const nextMonth = nextDate.month();
-
-        return [
-            moment(`${year}-${fixedZero(month + 1)}-01 00:00:00`),
-            moment(
-                moment(
-                    `${nextYear}-${fixedZero(nextMonth + 1)}-01 00:00:00`
-                ).valueOf() - 1000
-            )
-        ];
-    }
-
-    if (type === 'year') {
-        const year = time.getFullYear();
-
-        return [
-            moment(`${year}-01-01 00:00:00`),
-            moment(`${year}-12-31 23:59:59`)
-        ];
+    switch (type) {
+        case 'today':
+        case '-today':
+            return [moment(time), moment(time)];
+        case '-week':
+            return [moment(time).add(-1, 'week'), moment(time)];
+        case 'week':
+            return [moment(time), moment(time).add(1, 'week')];
+        case 'month':
+            return [moment(time).startOf('month'), moment(time).endOf('month')];
+        case '-month':
+            return [moment(time).subtract(1, 'month').startOf('month'), moment(time).subtract(1, 'month').endOf('month')];
+        case 'year':
+            return [moment(time).startOf('year'), moment(time).endOf('year')];
+        case '-year':
+            return [moment(time).subtract(1, 'year').startOf('year'), moment(time).subtract(1, 'year').endOf('year')];
+        default:
+            return type > 0 ? [moment(time), moment(time).add(type, 'days')] : [moment(time).add(type, 'days'), moment(time)];
     }
 }
 
 /**
  * 类似 `_.get`，根据 `path` 获取安全值
- * jsperf: https://jsperf.com/es-deep-get
+ * jsperf: https://jsperf.com/es-deep-getttps://jsperf.com/es-deep-get
  */
-export function deepGet(obj: any, path: string[], defaultValue: any) {
+export function deepGet(obj: any, path: string[], defaultValue?: any) {
     if (!obj) return defaultValue;
     if (path.length <= 1) {
         const checkObj = path.length ? obj[path[0]] : obj;

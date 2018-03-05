@@ -2,22 +2,32 @@ import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { share } from 'rxjs/operators';
+import { share, filter } from 'rxjs/operators';
+
+export interface LazyResult {
+    path: string;
+    loaded: boolean;
+    status: 'ok' | 'error';
+}
 
 @Injectable()
 export class LazyService {
 
     private list: any = {};
-    private _notify: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+    private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
 
-    constructor(@Inject(DOCUMENT) private doc: any) {}
+    constructor(@Inject(DOCUMENT) private doc: Document) {}
 
-    get change(): Observable<boolean> {
-        return this._notify.asObservable().pipe(share());
+    get change(): Observable<LazyResult[]> {
+        return this._notify.asObservable().pipe(share(), filter(ls => ls.length !== 0));
+    }
+
+    clear(): void {
+        this.list = {};
     }
 
     load(paths: string | string[]): Promise<void> {
-        const promises: Promise<any>[] = [];
+        const promises: Promise<LazyResult>[] = [];
 
         if (!Array.isArray(paths)) paths = [ paths ];
 
@@ -29,17 +39,17 @@ export class LazyService {
         });
 
         return Promise.all(promises).then(res => {
-            this._notify.next(true);
+            this._notify.next(res);
         });
     }
 
-    loadScript(path: string): Promise<any> {
-        return new Promise((resolve, reject) => {
+    loadScript(path: string): Promise<LazyResult> {
+        return new Promise((resolve) => {
             if (this.list[path] === true) {
-                resolve(<any>{
+                resolve({
                     path: path,
                     loaded: true,
-                    status: 'Loaded'
+                    status: 'ok'
                 });
                 return;
             }
@@ -54,38 +64,38 @@ export class LazyService {
                 (<any>node).onreadystatechange = () => {
                     if ((<any>node).readyState === 'loaded' || (<any>node).readyState === 'complete') {
                         (<any>node).onreadystatechange = null;
-                        resolve(<any>{
+                        resolve({
                             path: path,
                             loaded: true,
-                            status: 'Loaded'
+                            status: 'ok'
                         });
                     }
                 };
             } else {
                 node.onload = () => {
-                    resolve(<any>{
+                    resolve({
                         path: path,
                         loaded: true,
-                        status: 'Loaded'
+                        status: 'ok'
                     });
                 };
             }
-            node.onerror = (error: any) => resolve(<any>{
+            node.onerror = (error: any) => resolve({
                 path: path,
                 loaded: false,
-                status: 'Loaded'
+                status: 'error'
             });
             this.doc.getElementsByTagName('head')[0].appendChild(node);
         });
     }
 
-    loadStyle(path: string): Promise<any> {
-        return new Promise((resolve, reject) => {
+    loadStyle(path: string): Promise<LazyResult> {
+        return new Promise((resolve) => {
             if (this.list[path] === true) {
-                resolve(<any>{
+                resolve({
                     path: path,
                     loaded: true,
-                    status: 'Loaded'
+                    status: 'ok'
                 });
                 return;
             }
@@ -97,10 +107,10 @@ export class LazyService {
             node.type = 'text/css';
             node.href = path;
             this.doc.getElementsByTagName('head')[0].appendChild(node);
-            resolve(<any>{
+            resolve({
                 path: path,
                 loaded: true,
-                status: 'Loaded'
+                status: 'ok'
             });
         });
     }
