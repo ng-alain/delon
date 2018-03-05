@@ -34,7 +34,7 @@ const PIPES = [ MomentDatePipe, CNCurrencyPipe, KeysPipe, YNPipe ];
 
 export { AlainThemeOptions, ALAIN_THEME_OPTIONS } from './theme.options';
 export { preloaderFinished } from './services/preloader/preloader';
-export { MenuService, Menu } from './services/menu/menu.service';
+export * from './services/menu';
 export { ColorsService } from './services/colors/colors.service';
 export { ScrollService } from './services/scroll/scroll.service';
 export { SettingsService, User, App, SidebarThemeType, Layout } from './services/settings/settings.service';

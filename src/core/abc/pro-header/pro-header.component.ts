@@ -78,6 +78,7 @@ export class ProHeaderComponent implements OnInit {
         if (menus.length <= 0) return ;
         const paths: any[] = [];
         menus.forEach(item => {
+            if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb) return;
             let title;
             if (item.translate && this.i18nSrv) title = this.i18nSrv.fanyi(item.translate);
             paths.push({ title: title || item.text, link: item.link && [ item.link ] });
