@@ -146,7 +146,7 @@ export class CacheService implements OnDestroy {
 
     // region: get
 
-    /** 获取缓存数据，若 `key` 则 `key` 作为HTTP请求缓存后返回 */
+    /** 获取缓存数据，若 `key` 不存在则 `key` 作为HTTP请求缓存后返回 */
     get<T>(
         key: string,
         options?: {
@@ -155,7 +155,7 @@ export class CacheService implements OnDestroy {
             expire?: string
         }
     ): Observable<T>;
-    /** 获取缓存数据，若 `key` 则 `key` 作为HTTP请求缓存后返回 */
+    /** 获取缓存数据，若 `key` 不存在则 `key` 作为HTTP请求缓存后返回 */
     get(
         key: string,
         options?: {
@@ -181,9 +181,10 @@ export class CacheService implements OnDestroy {
             expire?: string
         } = {}
     ): Observable<any> | any {
+        const isPromise = options.mode !== 'none' && this.options.mode === 'promise';
         const value: ICache = this.memory.has(key) ? this.memory.get(key) : this.store.get(this.options.prefix + key);
         if (!value || (value.e && value.e > 0 && value.e < moment().unix())) {
-            if (options.mode !== 'none' && this.options.mode === 'promise') {
+            if (isPromise) {
                 return this.http.get(key).pipe(
                     map((ret: any) => this.deepGet(ret, this.options.reName as string[], null)),
                     tap(v => this.set(key, v))
@@ -192,7 +193,7 @@ export class CacheService implements OnDestroy {
             return null;
         }
 
-        return value.v;
+        return isPromise ? of(value.v) : value.v;
     }
 
     /** 获取缓存数据，若 `key` 不存在或已过期则返回 null */

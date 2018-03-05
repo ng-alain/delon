@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { AlainThemeModule } from './../../theme/index';
 import { DelonCacheModule } from '../index';
@@ -116,6 +117,16 @@ describe('cache: service', () => {
                 done();
             });
             injector.get(HttpTestingController).expectOne(k).flush('ok!');
+        });
+
+        it('reproduce-issues-40', () => {
+            const url = `/test`;
+            const firstGet = srv.get(url);
+            expect(firstGet instanceof Observable).toBe(true);
+            firstGet.subscribe();
+            injector.get(HttpTestingController).expectOne(url).flush('ok!');
+            const secondGet = srv.get(url);
+            expect(secondGet instanceof Observable).toBe(true);
         });
     });
 
