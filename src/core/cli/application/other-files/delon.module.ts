@@ -143,7 +143,8 @@ import {
     AdUtilsModule,
     AdFullContentModule,
     AdXlsxModule,
-    AdZipModule
+    AdZipModule,
+    AdNumberToChineseModule
 } from '@delon/abc';
 export const ABCMODULES = [
     AdSimpleTableModule,
@@ -170,7 +171,8 @@ export const ABCMODULES = [
     AdUtilsModule,
     AdFullContentModule,
     AdXlsxModule,
-    AdZipModule
+    AdZipModule,
+    AdNumberToChineseModule
 ];
 // endregion
 
@@ -202,7 +204,7 @@ import { DelonCacheModule } from '@delon/cache';
         AdNoticeIconModule.forRoot(), AdNumberInfoModule.forRoot(), AdProHeaderModule.forRoot(), AdResultModule.forRoot(), AdStandardFormRowModule.forRoot(),
         AdTagSelectModule.forRoot(), AdTrendModule.forRoot(), AdUtilsModule.forRoot(), AdChartsModule.forRoot(), AdCountDownModule.forRoot(), AdSimpleTableModule.forRoot(),
         // AdReuseTabModule.forRoot(),
-        AdFullContentModule.forRoot(), AdXlsxModule.forRoot(), AdZipModule.forRoot(),
+        AdFullContentModule.forRoot(), AdXlsxModule.forRoot(), AdZipModule.forRoot(), AdNumberToChineseModule.forRoot(),
         // auth
         AlainAuthModule.forRoot({
             // 受限于 https://github.com/cipchk/ng-alain/issues/246， 只支持字符串形式

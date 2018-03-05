@@ -7,6 +7,9 @@ describe('utils: utils', () => {
         it('should be', () => {
             expect(yuan(100)).toBe(`&yen 100.00`);
         });
+        it('should be a string', () => {
+            expect(yuan('100')).toBe(`&yen 100`);
+        });
         it('should be keeping only two decimals', () => {
             expect(yuan(100.456, 2)).toBe(`&yen 100.46`);
         });
