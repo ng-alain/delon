@@ -65,6 +65,8 @@ export class MockService implements OnDestroy {
             segments = url!.split('/').filter(segment => segment.startsWith(':')).map(v => v.substring(1));
             const reStr = url!.split('/').map(segment => segment.startsWith(':') ? `([^/]+)` : segment).join('/');
             martcher = new RegExp(reStr, 'i');
+        } else if (/(\([^)]+\))/i.test(url)) {
+            martcher = new RegExp(url, 'i');
         }
 
         return {

@@ -30,7 +30,9 @@ export const USERS = {
     // 路由参数
     '/users/:id': (req: MockRequest) => req.params, // /users/100, output: { id: 100 }
     // 发送 Status 错误
-    '/404': () => { throw new MockStatusError(404); }
+    '/404': () => { throw new MockStatusError(404); },
+    // 使用 () 表示：正则表达式
+    '/data/(.*)': (req: MockRequest) => req
 };
 ```
 

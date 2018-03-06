@@ -14,7 +14,8 @@ const DATA = {
         // GET 可省略
         '/users/1': Mock.mock({ id: 1, 'rank|3': '★★★' }),
         '/users/:id': (req: MockRequest) => req.params,
-        'POST /users/1': { uid: 0, action: 'add' }
+        'POST /users/1': { uid: 0, action: 'add' },
+        '/data/(.*)': (req: MockRequest) => req
     }
 };
 
@@ -66,6 +67,13 @@ describe('mock: service', () => {
             srv.clearCache();
             const rule = srv.getRule('POST', '/users/1');
             expect(rule).toBeNull();
+        });
+
+        it('should be support regex', () => {
+            const url = '/data/2';
+            const rule = srv.getRule('GET', url);
+            expect(rule).not.toBeNull();
+            expect(rule.url).toBe(url);
         });
     });
 
