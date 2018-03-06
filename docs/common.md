@@ -155,7 +155,7 @@ const data = { name: 'cipchk', address: { city: 'shanghai', district: 'changning
 变成可迭代对象：
 
 ```html
-<div *ngFor="let item of data | keys">{{item.value.city}} {{item.value.district}}</div>
+<div *ngFor="let item of data | keys">{{item.key}} {{item.value | json}}</div>
 ```
 
 ### 徽章 yn

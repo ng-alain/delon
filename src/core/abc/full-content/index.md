@@ -6,7 +6,7 @@ cols: 1
 module: AdFullContentModule
 ---
 
-全屏工作区，常用于带有滚动条表格；[完整示例]()。
+全屏工作区，常用于带有滚动条表格；[完整示例](https://cipchk.github.io/ng-alain/tables/fs-table)。
 
 ## 何时使用
 
@@ -26,4 +26,4 @@ padding | 工作区内边距 | `number` | `24`
 
 - 使用 `fullscreen` 双向绑定
 - 使用 `[full-toggle]` 指令
-- 使用 `FullContentService` 服务
+- 使用 `FullContentService.toggle()` 服务

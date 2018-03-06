@@ -3,9 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
-const ANTDERRORCLS = '.has-error';
-const HEADERMINHEIGHT = 65 + 8 * 2;
-
 /**
  * 错误消息采集器
  * PS：虽然此法并不好看，但对响应式表单&模板表单有很好的效果。
@@ -17,25 +14,36 @@ const HEADERMINHEIGHT = 65 + 8 * 2;
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
 
-    $time = null;
-    formEl: HTMLFormElement;
+    private $time = null;
+    private formEl: HTMLFormElement;
 
     @Input()
-    get tick() { return this._tick; }
-    set tick(value: any) {
-        this._tick = coerceNumberProperty(value);
+    get freq() { return this._freq; }
+    set freq(value: any) {
+        this._freq = coerceNumberProperty(value);
     }
-    private _tick = 500;
+    private _freq = 500;
+
+    @Input()
+    get offsetTop() { return this._offsetTop; }
+    set offsetTop(value: any) {
+        this._offsetTop = coerceNumberProperty(value);
+    }
+    private _offsetTop = 65 + 8 * 2;
 
     @HostBinding('class.d-none')
     _hiden = true;
 
     count = 0;
 
-    constructor(private el: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef, @Inject(DOCUMENT) private doc: any) {}
+    constructor(private el: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef, @Inject(DOCUMENT) private doc: Document) {}
+
+    private get errEls() {
+        return this.formEl.querySelectorAll('.has-error');
+    }
 
     private update() {
-        const count = this.formEl.querySelectorAll(ANTDERRORCLS).length;
+        const count = this.errEls.length;
         if (count === this.count) return;
         this.count = count;
         this._hiden = count === 0;
@@ -46,21 +54,21 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     _click() {
         if (this.count === 0) return false;
         // nz-form-item
-        let formItemEl = this.findParent(this.formEl.querySelector(ANTDERRORCLS), '[nz-form-item]');
-        if (!formItemEl) formItemEl = this.formEl.querySelector(ANTDERRORCLS);
+        const els = this.errEls;
+        const formItemEl = this.findParent(els[0], '[nz-form-item]') || els[0];
         formItemEl.scrollIntoView(true);
         // fix header height
-        this.doc.documentElement.scrollTop -= HEADERMINHEIGHT;
+        this.doc.documentElement.scrollTop -= this.offsetTop;
     }
 
     private install() {
         this.uninstall();
-        if (this.tick < 300) this.tick = 300;
-        this.$time = setInterval(() => this.update(), this.tick);
+        this.$time = setInterval(() => this.update(), this.freq);
+        this.update();
     }
 
     private uninstall() {
-        if (this.$time) clearInterval(this.$time);
+        clearInterval(this.$time);
     }
 
     private findParent(el: any, selector: string) {

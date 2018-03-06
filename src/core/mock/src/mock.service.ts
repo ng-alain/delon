@@ -79,8 +79,6 @@ export class MockService implements OnDestroy {
     }
 
     private outputError(error: any) {
-        if (!error) return;
-
         const filePath = error.message.split(': ')[0];
         const errors = error.stack.split('\n')
             .filter(line => line.trim().indexOf('at ') !== 0)
@@ -104,11 +102,9 @@ export class MockService implements OnDestroy {
         if (!ret) return null;
         if (ret.martcher) {
             const execArr = ret.martcher.exec(url);
-            if (execArr && execArr.length > 0) {
-                execArr.slice(1).map((value: string, index: number) => {
-                    params[ret.segments[index]] = value;
-                });
-            }
+            execArr.slice(1).map((value: string, index: number) => {
+                params[ret.segments[index]] = value;
+            });
         }
         return {
             url,
@@ -120,6 +116,10 @@ export class MockService implements OnDestroy {
 
     clearCache() {
         this.cached = [];
+    }
+
+    get rules() {
+        return this.cached;
     }
 
     ngOnDestroy(): void {

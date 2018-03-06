@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { LazyService } from '../utils/lazy.service';
-import { ZipConfig, DA_ZIP_CONFIG, ZipWriteOptions } from './interface';
+import { ZipConfig, DA_ZIP_CONFIG, ZipWriteOptions, ZipSaveOptions } from './interface';
 
 declare var JSZip: any;
 
@@ -30,12 +30,14 @@ export class ZipService {
 
     /** 解压 */
     read(fileOrUrl: File | string, options?: any): Promise<any> {
-        return new Promise<any>((resolve) => {
+        return new Promise<any>((resolve, reject) => {
             this.init().then(() => {
                 // from url
                 if (typeof fileOrUrl === 'string') {
                     this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
                         JSZip.loadAsync(res, options).then(ret => resolve(ret));
+                    }, (err: any) => {
+                        reject(err);
                     });
                     return;
                 }
@@ -77,17 +79,25 @@ export class ZipService {
         });
     }
 
-    /** 保存Zip */
-    save(zip: any, options?: any): Promise<void> {
+    /**
+     * 保存Zip并执行打开保存对话框
+     *
+     * @param {*} zip zip 对象，务必通过 `create()` 构建
+     * @param {*} [options] 额外参数，
+     */
+    save(zip: any, options?: ZipSaveOptions): Promise<void> {
         this.check(zip);
         const opt = Object.assign({}, options);
-        return new Promise<void>((resolve) => {
+        return new Promise<void>((resolve, reject) => {
             zip.generateAsync(
                 Object.assign({type: 'blob'}, opt.options),
                 opt.update
             ).then((data: Blob) => {
-                if (opt.callback) opt.callback();
+                if (opt.callback) opt.callback(data);
                 saveAs(data, opt.filename || 'download.zip');
+                resolve();
+            }, (err) => {
+                reject(err);
             });
         });
     }

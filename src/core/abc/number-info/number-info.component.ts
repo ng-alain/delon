@@ -8,7 +8,7 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
     <div *ngIf="_subTitle || _subTitleTpl" class="sub-title"><ng-container *ngIf="_subTitle; else _subTitleTpl">{{_subTitle}}</ng-container></div>
     <div class="value" [ngStyle]="{'margin-top.px': gap}">
         <span><ng-container *ngIf="_total; else _totalTpl">{{_total}}</ng-container><em class="suffix" *ngIf="suffix">{{suffix}}</em></span>
-        <span *ngIf="status || subTotal" class="sub-total">
+        <span *ngIf="status || _isSubTotal" class="sub-total">
             <ng-container *ngIf="_subTotal; else _subTotalTpl">{{_subTotal}}</ng-container>
             <nz-icon *ngIf="status" nzType="caret-{{status}}"></nz-icon>
         </span>
@@ -53,15 +53,19 @@ export class NumberInfoComponent implements OnChanges {
             this._total = '' + value;
     }
 
+    _isSubTotal = false;
     _subTotal = '';
     _subTotalTpl: TemplateRef<any>;
     /** 总量后缀 */
     @Input()
     set subTotal(value: string | TemplateRef<any>) {
-        if (value instanceof TemplateRef)
+        if (value instanceof TemplateRef) {
+            this._subTotal = null;
             this._subTotalTpl = value;
-        else
+        } else
             this._subTotal = value;
+
+        this._isSubTotal = !!value;
     }
 
     /** 子总量 */
@@ -71,7 +75,7 @@ export class NumberInfoComponent implements OnChanges {
     @Input() status: 'up' | 'down';
 
     /** 状态样式 */
-    @Input() theme: 'light' = 'light';
+    @Input() theme: 'light' | '' = 'light';
 
     /** 设置数字和描述直接的间距（像素） */
     @Input()

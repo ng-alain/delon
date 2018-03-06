@@ -135,6 +135,18 @@ describe('utils: utils', () => {
             const def = 'aa';
             expect(deepGet(tree, [ 'status11' ], def)).toBe(def);
         });
+        it('should be return default value when not exist deep key', () => {
+            const def = 'aa';
+            expect(deepGet(tree, [ 'responsne', 'totala' ], def)).toBe(def);
+        });
+        it('should be return default value when path is null', () => {
+            const def = 'aa';
+            expect(deepGet(tree, null, def)).toBe(def);
+        });
+        it('should be return default value when path is empty array', () => {
+            const def = 'aa';
+            expect(deepGet(tree, [], def)).toBe(def);
+        });
         it('should be return default value when source object is null', () => {
             const def = 'aa';
             expect(deepGet(null, [ 'status11' ], def)).toBe(def);

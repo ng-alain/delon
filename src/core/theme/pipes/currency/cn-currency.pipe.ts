@@ -1,19 +1,12 @@
-import { PipeTransform, Pipe } from '@angular/core';
+import { Pipe } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
 /**
- * 内置 `_currency` 货币格式化
- * 简化原 `currency` 针对中文货币格式化问题
- * 别忘记在根模块中注册语言环境：
- *
- * ```typescript
- * import { registerLocaleData } from '@angular/common';
- * import localeZhHans from '@angular/common/locales/zh-Hans';
- * registerLocaleData(localeZhHans);
- * ```
+ * @see http://ng-alain.com/docs/service-pipe#%E8%B4%A7%E5%B8%81-_currenty
  */
+// tslint:disable-next-line:use-pipe-transform-interface
 @Pipe({ name: '_currency' })
-export class CNCurrencyPipe extends CurrencyPipe implements PipeTransform {
+export class CNCurrencyPipe extends CurrencyPipe {
     transform(
         value: any,
         currencyCode: string = '￥',

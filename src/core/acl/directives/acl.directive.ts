@@ -39,6 +39,6 @@ export class ACLDirective implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this.change$) this.change$.unsubscribe();
+        this.change$.unsubscribe();
     }
 }

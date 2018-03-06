@@ -16,12 +16,12 @@ export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
         @Inject(DACL_OPTIONS_TOKEN) private options: ACLOptions
     ) {}
 
-    private process(guard: ACLCanType | Observable<ACLCanType>, url: string = '/'): Observable<boolean> {
-        return (guard && guard instanceof Observable ? guard : of(typeof guard !== 'undefined' ? guard as ACLCanType : null)).pipe(
+    private process(guard: ACLCanType | Observable<ACLCanType>): Observable<boolean> {
+        return (guard && guard instanceof Observable ? guard : of(typeof guard !== 'undefined' && guard !== null ? guard as ACLCanType : null)).pipe(
             map(v => this.srv.can(v)),
             tap(v => {
                 if (v) return;
-                this.router.navigateByUrl(this.options.guard_url || '/403');
+                this.router.navigateByUrl(this.options.guard_url);
             })
         );
     }

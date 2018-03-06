@@ -60,9 +60,11 @@ describe('acl: service', () => {
     });
 
     it(`#attachAbility()`, () => {
-        srv.attachAbility(['NEWABILITY', ADMIN, 'INVALID']);
+        srv.attachAbility([ ADMIN, 'INVALID']);
         expect(srv.can(ADMIN)).toBe(true);
-        expect(srv.canAbility('NEWABILITYINVALID')).toBe(false);
+        expect(srv.canAbility('INVALID')).toBe(true);
+        expect(srv.canAbility('NEWABILITY')).toBe(false);
+        srv.attachAbility(['NEWABILITY', ADMIN, 'INVALID']);
         expect(srv.canAbility('NEWABILITY')).toBe(true);
     });
 
@@ -87,11 +89,20 @@ describe('acl: service', () => {
         expect(srv.can([ADMIN])).toBe(true, 'role array muse be true');
         expect(srv.can(<ACLType>{ role: [ ADMIN ] })).toBe(true, 'ACLType item muse be true');
         expect(srv.can(ADMIN + '1')).toBe(false);
+        expect(srv.can(null)).toBe(true);
     });
 
     it(`#canAbility()`, () => {
         srv.attachAbility([ABILITY]);
         expect(srv.canAbility(ABILITY)).toBe(true);
         expect(srv.canAbility(ADMIN + '1')).toBe(false);
+    });
+
+    it('#change', (done: () => void) => {
+        srv.change.subscribe((res: ACLType) => {
+            expect(res.role.length).toBe(1);
+            expect(res.role[0]).toBe(ADMIN);
+            done();
+        });
     });
 });

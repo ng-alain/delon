@@ -5,7 +5,7 @@ delong is a production-ready solution for admin business components packages, Bu
 [![Build Status](https://travis-ci.org/cipchk/delon.svg?branch=master)](https://travis-ci.org/cipchk/delon)
 [![Dependency Status](https://david-dm.org/cipchk/delon/status.svg)](https://david-dm.org/cipchk/delon)
 [![DevDependency Status](https://david-dm.org/cipchk/delon/dev-status.svg)](https://david-dm.org/cipchk/delon?type=dev)
-
+[![codecov](https://codecov.io/gh/cipchk/delon/branch/master/graph/badge.svg)](https://codecov.io/gh/cipchk/delon)
 [![npm](https://img.shields.io/npm/l/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
 [![npm](https://img.shields.io/npm/dm/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
 

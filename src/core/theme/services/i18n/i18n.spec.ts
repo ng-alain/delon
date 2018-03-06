@@ -4,6 +4,7 @@ describe('theme: i18n', () => {
     const i18n = new AlainI18NServiceFake();
 
     it('#use', () => {
+        i18n.use('zh-CN');
         i18n.use('zh-CN', false);
         expect(true).toBeTruthy();
     });

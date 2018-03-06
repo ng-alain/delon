@@ -28,18 +28,16 @@ export class _HttpClient {
 
     parseParams(params: any): HttpParams {
         let ret = new HttpParams();
-        if (params) {
-            // tslint:disable-next-line:forin
-            for (const key in params) {
-                let _data = params[key];
-                // 将时间转化为：时间戳 (秒)
-                if (moment.isDate(_data)) {
-                    _data = moment(_data).valueOf();
-                } else if (moment.isMoment(_data)) {
-                    _data = _data.valueOf();
-                }
-                ret = ret.set(key, _data);
+        // tslint:disable-next-line:forin
+        for (const key in params) {
+            let _data = params[key];
+            // 将时间转化为：时间戳 (秒)
+            if (moment.isDate(_data)) {
+                _data = moment(_data).valueOf();
+            } else if (moment.isMoment(_data)) {
+                _data = _data.valueOf();
             }
+            ret = ret.set(key, _data);
         }
         return ret;
     }

@@ -57,12 +57,32 @@ describe('utils: lazy', () => {
         srv.load('/1.js');
     });
 
-    it('should be load a js resource in ie', () => {
-        isIE = true;
-        srv.change.subscribe(res => {
-            expect(res[0].status).toBe('ok');
+    describe('#IE', () => {
+        it('should be load a js resource', () => {
+            isIE = true;
+            srv.change.subscribe(res => {
+                expect(res[0].status).toBe('ok');
+            });
+            srv.load(['/1.js']);
         });
-        srv.load('/1.js');
+        it('should be load a js resource unit stauts is complete', (done: () => void) => {
+            isIE = true;
+            spyOn(doc, 'getElementsByTagName').and.callFake((data) => {
+                const mockObj = new MockDocument().getElementsByTagName();
+                mockObj[0].appendChild = (node) => {
+                    node.readyState = 'mock-status';
+                    node.onreadystatechange();
+                    node.readyState = 'complete';
+                    node.onreadystatechange();
+                };
+                return mockObj;
+            });
+            srv.change.subscribe(res => {
+                expect(res[0].status).toBe('ok');
+                done();
+            });
+            srv.load(['/1.js']);
+        });
     });
 
     it('should be load a css resource', () => {
@@ -74,7 +94,10 @@ describe('utils: lazy', () => {
 
     it('should be immediately when loaded a js resource', () => {
         let count = 0;
-        spyOn(doc, 'createElement').and.callFake(() => ++count);
+        spyOn(doc, 'createElement').and.callFake((data) => {
+            ++count;
+            return new MockDocument().createElement();
+        });
         srv.load('/2.js');
         expect(count).toBe(1);
         srv.load('/2.js');
@@ -83,7 +106,10 @@ describe('utils: lazy', () => {
 
     it('should be immediately when loaded a css resource', () => {
         let count = 0;
-        spyOn(doc, 'createElement').and.callFake(() => ++count);
+        spyOn(doc, 'createElement').and.callFake((data) => {
+            ++count;
+            return new MockDocument().createElement();
+        });
         srv.load('/2.css');
         expect(count).toBe(1);
         srv.load('/2.css');

@@ -1,5 +1,6 @@
 import { ReflectiveInjector } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
+
 import { ScrollService } from './scroll.service';
 import { WINDOW } from '../../win_tokens';
 

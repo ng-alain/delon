@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter, OnChanges, SimpleChanges, SimpleChange, OnInit, Inject, HostBinding, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter, OnChanges, SimpleChanges, SimpleChange, OnInit, Inject, HostBinding, OnDestroy, AfterViewInit } from '@angular/core';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
@@ -17,9 +17,9 @@ const hideTitleCls = `full-content-ht`;
     styleUrls: [ './full-content.less' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
 
-    private bodyEl: HTMLBodyElement;
+    private bodyEl: HTMLElement;
     private inited = false;
     private srv$: Subscription;
     private route$: Subscription;
@@ -59,7 +59,6 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
 
     constructor(
         private el: ElementRef,
-        private render: Renderer2,
         private router: Router,
         private cd: ChangeDetectorRef,
         private srv: FullContentService,
@@ -72,15 +71,13 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
         this.bodyEl.classList.add(cls);
         this.update();
         this.installResizeEvent();
-        setTimeout(() => this.updateHeight(), 100);
         this.srv$ = <any>this.srv.change.subscribe(res => {
             if (res) this.toggle();
         });
         this.route$ = <any>this.router.events.pipe(
-            filter((e: any) => e instanceof ActivationStart || e instanceof ActivationEnd),
-            debounceTime(100)
+            filter((e: any) => e instanceof ActivationStart || e instanceof ActivationEnd)
         ).subscribe(e => {
-            if (!!document.querySelector('#' + this.id)) {
+            if (!!this.doc.querySelector('#' + this.id)) {
                 this.bodyEl.classList.add(cls);
                 this.updateFsCls();
             } else {
@@ -89,14 +86,17 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
         });
     }
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit() {
+        this.updateHeight(false);
     }
 
     private updateFsCls() {
         if (this.fullscreen) {
-            this.bodyEl.classList.add(fsCls, this.hideTitle ? hideTitleCls : '');
+            this.bodyEl.classList.add(fsCls);
+            if (this.hideTitle) this.bodyEl.classList.add(hideTitleCls);
         } else {
-            this.bodyEl.classList.remove(fsCls, this.hideTitle ? hideTitleCls : '');
+            this.bodyEl.classList.remove(fsCls);
+            if (this.hideTitle) this.bodyEl.classList.remove(hideTitleCls);
         }
     }
 
@@ -105,9 +105,9 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
         this.fullscreenChange.emit(this.fullscreen);
     }
 
-    private updateHeight() {
+    private updateHeight(needDetectChange = true) {
         this._height = this.bodyEl.getBoundingClientRect().height - (this.el.nativeElement as HTMLElement).getBoundingClientRect().top - this.padding;
-        this.cd.detectChanges();
+        if (needDetectChange) this.cd.detectChanges();
     }
 
     toggle() {
@@ -123,8 +123,8 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
     ngOnDestroy(): void {
         this.bodyEl.classList.remove(cls, fsCls, hideTitleCls);
         this.uninstallResizeEvent();
-        if (this.srv$) this.srv$.unsubscribe();
-        if (this.route$) this.route$.unsubscribe();
+        this.srv$.unsubscribe();
+        this.route$.unsubscribe();
     }
 
     // region: resize
@@ -134,10 +134,11 @@ export class FullContentComponent implements OnInit, AfterViewInit, OnChanges, O
         this.scroll$ = <any>FromEventObservable.create(window, 'resize')
                             .pipe(debounceTime(200))
                             .subscribe(() => this.updateHeight());
+        this.updateHeight();
     }
 
     private uninstallResizeEvent() {
-        if (this.scroll$) this.scroll$.unsubscribe();
+        this.scroll$.unsubscribe();
     }
 
     // endregion

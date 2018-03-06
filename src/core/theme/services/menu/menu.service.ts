@@ -104,10 +104,10 @@ export class MenuService implements OnDestroy {
             return;
         }
 
-        const ls = this.data[0].children || [];
+        const ls = this.data[0].children;
         let pos = ls.findIndex(w => w.shortcut_root === true);
         if (pos === -1) {
-            pos = ls.findIndex(w => w.link.includes('dashboard') || w.externalLink.includes('dashboard'));
+            pos = ls.findIndex(w => w.link.includes('dashboard'));
             pos = (pos !== -1 ? pos : -1) + 1;
             const shortcutMenu = <Menu>{
                 text: '快捷菜单',
@@ -115,10 +115,10 @@ export class MenuService implements OnDestroy {
                 icon: 'icon-rocket',
                 children: []
             };
-            if (this.i18nSrv) shortcutMenu.text = this.i18nSrv.fanyi(shortcutMenu.i18n);
             this.data[0].children.splice(pos, 0, shortcutMenu);
         }
         let _data = this.data[0].children[pos];
+        if (_data.i18n && this.i18nSrv) _data.text = this.i18nSrv.fanyi(_data.i18n);
         _data = Object.assign(_data, {
             shortcut_root: true,
             _type: 3,
@@ -192,6 +192,6 @@ export class MenuService implements OnDestroy {
     }
 
     ngOnDestroy(): void {
-        if (this._change$) this._change$.unsubscribe();
+        this._change$.unsubscribe();
     }
 }

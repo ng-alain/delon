@@ -80,6 +80,8 @@
             "exclude": [
                 "./site/**/*",
                 "./src/app/**/*",
+                "./src/polyfills.ts",
+                "./src/test.ts",
                 "./src/core/cli/**/*"
             ]
         }

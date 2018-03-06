@@ -51,14 +51,18 @@ export function getTimeDistance(type: 'today' | '-today' | 'week' | '-week' | 'm
 /**
  * 类似 `_.get`，根据 `path` 获取安全值
  * jsperf: https://jsperf.com/es-deep-getttps://jsperf.com/es-deep-get
+ *
+ * @param obj 数据源，无效时直接返回 `defaultValue` 值
+ * @param path 若 `null`、`[]`、未定义及未找到时返回 `defaultValue` 值
+ * @param defaultValue 默认值
  */
 export function deepGet(obj: any, path: string[], defaultValue?: any) {
-    if (!obj) return defaultValue;
-    if (path.length <= 1) {
-        const checkObj = path.length ? obj[path[0]] : obj;
+    if (!obj || path == null || path.length === 0) return defaultValue;
+    if (path.length === 1) {
+        const checkObj = obj[path[0]];
         return typeof checkObj === 'undefined' ? defaultValue : checkObj;
     }
-    return path.reduce((o, k) => (o || {})[k], obj) || defaultValue;
+    return path.reduce((o, k) => o[k], obj) || defaultValue;
 }
 
 export function deepCopy(obj: any) {

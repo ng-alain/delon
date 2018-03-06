@@ -93,9 +93,7 @@ export class TitleService {
         if (this._prefix) {
             newTitles.push(this._prefix);
         }
-        if (title && title.length > 0) {
-            newTitles.push(...(title as string[]));
-        }
+        newTitles.push(...(title as string[]));
         if (this._suffix) {
             newTitles.push(this._suffix);
         }

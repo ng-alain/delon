@@ -1,4 +1,5 @@
 import { TestBed, async, inject } from '@angular/core/testing';
+
 import { SettingsService } from '../settings/settings.service';
 import { App, User } from './interface';
 
@@ -45,9 +46,9 @@ describe('Service: Settings', () => {
             avatar: 'description',
             email: 'cipchk@qq.com'
         };
-        service.setApp(user);
-        expect(service.app.name).toBe(user.name);
-        expect(service.app.avatar).toBe(user.avatar);
-        expect(service.app.email).toBe(user.email);
+        service.setUser(user);
+        expect(service.user.name).toBe(user.name);
+        expect(service.user.avatar).toBe(user.avatar);
+        expect(service.user.email).toBe(user.email);
     }));
 });

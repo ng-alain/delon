@@ -8,11 +8,9 @@ module: AdErrorCollectModule
 
 一个简单的表单异常消息采集器，点击图标自然跳转相应的位置；必须是一个标准的表单，例如：
 
-```html
-<form [formGroup]="form">
-    <div nz-form-control [nzValidateStatus]="name">
-        <nz-input formControlName="name" [nzPlaceHolder]="'required'" [nzSize]="'large'"></nz-input>
-    </div>
-    <error-collect></error-collect>
-</form>
-```
+## API
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+freq | 监听频率  | `number` | -
+offsetTop | 顶部偏移值  | `number` | -

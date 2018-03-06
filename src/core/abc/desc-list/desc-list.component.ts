@@ -59,7 +59,7 @@ export class DescListComponent implements OnChanges, OnInit {
         this._classMap.forEach(cls => this.renderer.removeClass(this.el.nativeElement, cls));
 
         this._classMap = [ 'desc-list', this.layout ];
-        if (this.size) this._classMap.push('desc-list-' + this.size);
+        if (this.size) this._classMap.push(this.size);
 
         this._classMap.forEach(cls => this.renderer.addClass(this.el.nativeElement, cls));
     }
@@ -88,8 +88,7 @@ export class DescListComponent implements OnChanges, OnInit {
     }
 
     ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
-        if (changes.size && !changes.size.firstChange)
-            this.setClass();
+        this.setClass();
         if (changes.col)
             this.setResponsive();
     }

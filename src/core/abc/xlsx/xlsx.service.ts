@@ -36,13 +36,15 @@ export class XlsxService {
 
     /** 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式 */
     import(fileOrUrl: File | string): Promise<{ [key: string]: any[][] }> {
-        return new Promise<{ [key: string]: any[][] }>((resolver) => {
+        return new Promise<{ [key: string]: any[][] }>((resolver, reject) => {
             this.init().then(() => {
                 // from url
                 if (typeof fileOrUrl === 'string') {
                     this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
                         const wb = XLSX.read(new Uint8Array(res), { type: 'array' });
                         resolver(this.read(wb));
+                    }, (err: any) => {
+                        reject(err);
                     });
                     return;
                 }
@@ -52,7 +54,7 @@ export class XlsxService {
                     const wb: any = XLSX.read(e.target.result, {type: 'binary'});
                     resolver(this.read(wb));
                 };
-                reader.readAsBinaryString(<File>fileOrUrl);
+                reader.readAsArrayBuffer(fileOrUrl);
             });
         });
     }

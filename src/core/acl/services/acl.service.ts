@@ -155,6 +155,8 @@ export class ACLService {
     /**
      * 当前用户是否有对应角色，其实 `number` 表示Ability
      *
+     * - 当 `full: true` 或参数 `null` 时返回 `true`
+     *
      * @param {ACLCanType} roleOrAbility
      */
     can(roleOrAbility: ACLCanType): boolean {

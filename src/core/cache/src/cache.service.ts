@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { tap, map } from 'rxjs/operators';
+
 import { DC_STORE_STORAGE_TOKEN, ICacheStore, ICache } from './interface';
 import { DC_OPTIONS_TOKEN, CacheOptions } from '../cache.options';
 
@@ -20,13 +21,14 @@ export class CacheService implements OnDestroy {
         this.loadMeta();
     }
 
-    private deepGet(obj: any, path: string[], defaultValue: any) {
+    /** @private */
+    deepGet(obj: any, path: string[], defaultValue?: any) {
         if (!obj) return defaultValue;
         if (path.length <= 1) {
             const checkObj = path.length ? obj[path[0]] : obj;
             return typeof checkObj === 'undefined' ? defaultValue : checkObj;
         }
-        return path.reduce((o, k) => (o || {})[k], obj) || defaultValue;
+        return path.reduce((o, k) => o[k], obj) || defaultValue;
     }
 
     // region: meta
@@ -54,6 +56,10 @@ export class CacheService implements OnDestroy {
         const metaData: string[] = [];
         this.meta.forEach(key => metaData.push(key));
         this.store.set(this.options.meta_key, { v: metaData, e: 0 });
+    }
+
+    getMeta() {
+        return this.meta;
     }
 
     // endregion
@@ -202,6 +208,7 @@ export class CacheService implements OnDestroy {
     getNone(key: string): any {
         return this.get(key, { mode: 'none' });
     }
+
     /**
      * 获取缓存，若不存在则设置持久化缓存 `Observable` 对象
      */
@@ -259,7 +266,7 @@ export class CacheService implements OnDestroy {
 
             return this.set(key, data as Observable<any>, <any>options);
         }
-        return ret instanceof Observable ? ret : of(ret);
+        return of(ret);
     }
 
     // endregion

@@ -1,22 +1,16 @@
 import { PipeTransform, Pipe } from '@angular/core';
 
 /**
- * 将对象数组化
- *
- * @example
- * ```
- * const data = { name: 'cipchk', address: { city: 'shanghai', district: 'changning' } };
- * <div *ngFor="let item of data | keys">{{item.value.city}} {{item.value.district}}</div>
- * ```
+ * @see http://ng-alain.com/docs/service-pipe#%E5%8F%AF%E8%BF%AD%E4%BB%A3-keys
  */
 @Pipe({ name: 'keys' })
 export class KeysPipe implements PipeTransform {
-    transform(value, args: string[]): any {
-        const keys = [];
+    transform(value: any, args: string[]): any[] {
+        const ret = [];
         // tslint:disable-next-line:forin
         for (const key in value) {
-            keys.push({ key: key, value: value[key] });
+            ret.push({ key: key, value: value[key] });
         }
-        return keys;
+        return ret;
     }
 }

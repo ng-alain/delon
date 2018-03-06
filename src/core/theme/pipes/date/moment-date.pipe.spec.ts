@@ -1,25 +1,52 @@
-import { MomentDatePipe } from './moment-date.pipe';
+import { Component } from '@angular/core';
+import * as moment from 'moment';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import localeZhHans from '@angular/common/locales/zh-Hans';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeZhHans);
+
+import { AlainThemeModule } from '../../index';
 
 describe('Pipe: _date', () => {
 
-    let instance: MomentDatePipe = null;
+    let fixture: ComponentFixture<TestComponent>;
     const date = new Date(2017, 9, 17, 15, 35, 59);
 
     beforeEach(() => {
-        instance = new MomentDatePipe();
+        TestBed.configureTestingModule({
+            imports: [ AlainThemeModule.forRoot() ],
+            declarations: [ TestComponent ]
+        });
+        fixture = TestBed.createComponent(TestComponent);
     });
 
-    it('should default format', () => {
-        expect(instance.transform(date)).toBe(`2017-10-17 15:35`);
-    });
-
-    it('should return a zh_cn format', () => {
-        expect(instance.transform(date, 'YYYY年MM月DD日')).toBe(`2017年10月17日`);
-    });
-
-    it('should return a empty', () => {
-        expect(instance.transform(null).length).toBe(0);
-        expect(instance.transform(undefined).length).toBe(0);
+    [
+        { date, result: `2017-10-17 15:35` },
+        { date, result: `2017年10月17日`, format: 'YYYY年MM月DD日' },
+        { date: null, result: `` },
+        { date: undefined, result: `` },
+        { date, result: ``, format: 'fn' }
+    ].forEach((item: any) => {
+        it(`${date.toString()} muse be ${item.result}${item.format ? `(format: ${item.format})` : ''}`, () => {
+            fixture.componentInstance.value = item.date;
+            if (item.format) {
+                fixture.componentInstance.format = item.format;
+                if (item.format === 'fn') {
+                    item.result = moment(item.date).fromNow();
+                }
+            }
+            fixture.detectChanges();
+            expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe(item.result);
+        });
     });
 
 });
+
+@Component({
+    template: `<p id="result">{{ value | _date:format }}</p>`
+})
+class TestComponent {
+    value: moment.MomentInput;
+    format: string;
+}

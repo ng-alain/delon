@@ -1,9 +1,10 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Title, DOCUMENT } from '@angular/platform-browser';
-import { MenuService } from '../menu/menu.service';
-import { AlainThemeModule, TitleService, ALAIN_I18N_TOKEN, Menu } from 'core/theme';
 import { ActivatedRoute } from '@angular/router';
+
+import { AlainThemeModule, TitleService, ALAIN_I18N_TOKEN, Menu } from 'core/theme';
+import { MenuService } from '../menu/menu.service';
 import { AlainI18NService, AlainI18NServiceFake } from '../i18n/i18n';
 
 describe('Service: Title', () => {
@@ -68,6 +69,12 @@ describe('Service: Title', () => {
             expect(title.setTitle).toHaveBeenCalledWith('newTitle - ' + alain);
         });
 
+        it('should set new title via array', () => {
+            srv.suffix = alain;
+            srv.setTitle(['newTitle']);
+            expect(title.setTitle).toHaveBeenCalledWith('newTitle - ' + alain);
+        });
+
         it('#separator', () => {
             srv.suffix = alain;
             srv.separator = ' / ';
@@ -87,6 +94,13 @@ describe('Service: Title', () => {
             srv.setTitle('newTitle');
             expect(title.setTitle).toHaveBeenCalledWith(alain + ' - newTitle');
         });
+
+        it('#default', () => {
+            const def = 'DEFAULT';
+            srv.default = def;
+            srv.setTitle();
+            expect(title.setTitle).toHaveBeenCalledWith(def);
+        });
     });
 
     describe('[login]', () => {
@@ -96,9 +110,11 @@ describe('Service: Title', () => {
                     {
                         provide: ActivatedRoute,
                         useValue: {
-                            snapshot: {
-                                data: {
-                                    title: alain
+                            firstChild: {
+                                snapshot: {
+                                    data: {
+                                        title: alain
+                                    }
                                 }
                             }
                         }
@@ -106,6 +122,17 @@ describe('Service: Title', () => {
                 ]);
                 srv.setTitle();
                 expect(title.setTitle).toHaveBeenCalledWith(alain);
+            });
+            it('without', () => {
+                genModule([
+                    {
+                        provide: ActivatedRoute,
+                        useValue: {
+                        }
+                    }
+                ]);
+                srv.setTitle();
+                expect(title.setTitle).toHaveBeenCalledWith(notPageName);
             });
             it('with i18n', () => {
                 const titleI18n = 'a';

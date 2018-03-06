@@ -94,14 +94,26 @@ describe('acl: guard', () => {
         });
     });
 
-    it(`#canLoad`, (done: () => void) => {
-        srv.canLoad(<any>{
-            data: {
-                guard: of('user')
-            }
-        }).subscribe(res => {
-            expect(res).toBeTruthy();
-            done();
+    describe(`#canLoad`, () => {
+        it(`should be can load when has [user] role`, (done: () => void) => {
+            srv.canLoad(<any>{
+                data: {
+                    guard: of('user')
+                }
+            }).subscribe(res => {
+                expect(res).toBeTruthy();
+                done();
+            });
+        });
+        it(`should be can load when is null`, (done: () => void) => {
+            srv.canLoad(<any>{
+                data: {
+                    guard: null
+                }
+            }).subscribe(res => {
+                expect(res).toBeTruthy();
+                done();
+            });
         });
     });
 

@@ -10,14 +10,21 @@ describe('theme: colors.service', () => {
 
     it('#colors', () => {
         expect(srv.colors).not.toBeNull();
-        expect(srv.colors.success).toBe('#00a854');
+        // tslint:disable-next-line:forin
+        for (const key in srv.colors) {
+            expect(srv.colors[key]).toBe(srv.byName(key));
+        }
     });
 
     it('#names', () => {
-        expect(srv.names).toContain('red');
+        for (const c of srv.names) {
+            expect(srv.names).toContain(c);
+        }
     });
 
     it('#brands', () => {
-        expect(srv.brands).toContain('primary');
+        for (const c of srv.brands) {
+            expect(srv.brands).toContain(c);
+        }
     });
 });

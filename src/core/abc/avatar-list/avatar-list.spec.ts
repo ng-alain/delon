@@ -18,14 +18,16 @@ describe('abc: avatar-list', () => {
         fixture.detectChanges();
     });
 
-    it('should be init', () => {
-        expect(context).not.toBeNull();
-    });
-
     it('#size, should be [large] size', () => {
         context.size = 'large';
         fixture.detectChanges();
         expect(dl.queryAll(By.css('.ant-avatar-lg')).length).toBe(5);
+    });
+
+    it('#size, should be [mini] size', () => {
+        context.size = 'mini';
+        fixture.detectChanges();
+        expect(dl.queryAll(By.css('.ant-avatar-sm')).length).toBe(5);
     });
 });
 
@@ -40,5 +42,5 @@ describe('abc: avatar-list', () => {
     </avatar-list>`
 })
 class TestComponent {
-    size: 'large' | 'small' | 'mini' | 'default' = 'mini';
+    size: 'large' | 'small' | 'mini' | 'default' = 'default';
 }

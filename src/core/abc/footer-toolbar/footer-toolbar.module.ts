@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FooterToolbarComponent } from './footer-toolbar.component';
 import { AdErrorCollectModule } from './../error-collect/error-collect.module';
+import { FooterToolbarComponent } from './footer-toolbar.component';
 
 const COMPONENTS = [FooterToolbarComponent];
 

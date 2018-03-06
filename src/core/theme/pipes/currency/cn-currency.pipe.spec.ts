@@ -1,26 +1,58 @@
 import { CNCurrencyPipe } from './cn-currency.pipe';
-
 import { registerLocaleData } from '@angular/common';
 import localeZhHans from '@angular/common/locales/zh-Hans';
+import { Component } from '@angular/core';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+
+import { AlainThemeModule } from '../../index';
+
 registerLocaleData(localeZhHans);
 
 describe('Pipe: _currency', () => {
 
-    let instance: CNCurrencyPipe = null;
-    const date = new Date(2017, 9, 17, 15, 35, 59);
+    let fixture: ComponentFixture<TestComponent>;
 
     beforeEach(() => {
-        instance = new CNCurrencyPipe('zh-Hans');
+        TestBed.configureTestingModule({
+            imports: [ AlainThemeModule.forRoot() ],
+            declarations: [ TestComponent ]
+        });
+        fixture = TestBed.createComponent(TestComponent);
     });
 
-    it('should return zh-hans format currency', () => {
-        expect(instance.transform(100)).toBe(`￥100.00`);
-        expect(instance.transform(100.50)).toBe(`￥100.50`);
-        expect(instance.transform(100.53)).toBe(`￥100.53`);
-        expect(instance.transform(100.534)).toBe(`￥100.53`);
-        expect(instance.transform(100.536)).toBe(`￥100.54`);
-        expect(instance.transform(10000.536)).toBe(`￥10,000.54`);
-        expect(instance.transform(1000000.536)).toBe(`￥1,000,000.54`);
+    [
+        { value: 100, result: `￥100.00` },
+        { value: 100.50, result: `￥100.50` },
+        { value: 100.534, result: `￥100.53` },
+        { value: 100.536, result: `￥100.54` },
+        { value: 1000000.536, result: `￥1,000,000.54` },
+        { value: 100, result: `RMB100.00`, currencyCode: 'RMB' },
+        { value: 100, result: `￥100.00`, display: 'code' },
+        { value: 100, result: `￥100.00`, display: 'symbol' },
+        { value: 100, result: `￥100.00`, display: 'symbol-narrow' },
+        { value: 100, result: `￥100.00`, display: false },
+        { value: 100, result: `￥100.00`, display: true },
+        { value: 3.14, result: `￥003.14000`, digits: '3.5-5' }
+    ].forEach((item: any) => {
+        it(`${JSON.stringify(item)} muse be ${item.result}`, () => {
+            fixture.componentInstance.value = item.value;
+            if (item.currencyCode) fixture.componentInstance.currencyCode = item.currencyCode;
+            if (item.display) fixture.componentInstance.display = item.display;
+            if (item.digits) fixture.componentInstance.digits = item.digits;
+            fixture.detectChanges();
+            expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe(item.result);
+        });
     });
 
 });
+
+@Component({
+    template: `<p id="result">{{ value | _currency:currencyCode:display:digits }}</p>`
+})
+class TestComponent {
+    value: number;
+    currencyCode: string;
+    display: 'code' | 'symbol' | 'symbol-narrow' | boolean;
+    digits: string;
+}

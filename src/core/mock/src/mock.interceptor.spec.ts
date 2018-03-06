@@ -21,7 +21,8 @@ const DATA = {
         '/fn/header': (req: MockRequest) => req.headers,
         'POST /fn/body': (req: MockRequest) => req.body,
         'POST /users/1': { uid: 1, action: 'add' },
-        '/404': () => { throw new MockStatusError(404); }
+        '/404': () => { throw new MockStatusError(404); },
+        '/500': () => { throw new Error('500'); }
     }
 };
 
@@ -104,6 +105,17 @@ describe('mock: service', () => {
                 done();
             });
         });
+        it('muse be use MockStatusError to throw status error', (done: () => void) => {
+            spyOn(console, 'error');
+            http.get('/500').subscribe(() => {
+                expect(false).toBe(true);
+                done();
+            }, () => {
+                expect(console.error).toHaveBeenCalled();
+                expect(true).toBe(true);
+                done();
+            });
+        });
         it('should request POST', (done: () => void) => {
             http.post('/users/1', { data: true }, { observe: 'response' }).subscribe((res: HttpResponse<any>) => {
                 expect(res.body).not.toBeNull();
@@ -118,6 +130,28 @@ describe('mock: service', () => {
                 done();
             });
             httpMock.expectOne('/non-mock').flush('ok!');
+        });
+    });
+    describe('[disabled log]', () => {
+        it('with request', (done: () => void) => {
+            spyOn(console, 'log');
+            genModule({ data: DATA, delay: 1, log: false });
+            http.get('/users').subscribe((res: any) => {
+                expect(console.log).not.toHaveBeenCalled();
+                done();
+            });
+        });
+        it('with error request', (done: () => void) => {
+            spyOn(console, 'log');
+            genModule({ data: DATA, delay: 1, log: false });
+            http.get('/404').subscribe(() => {
+                expect(false).toBe(true);
+                done();
+            }, () => {
+                expect(console.log).not.toHaveBeenCalled();
+                expect(true).toBe(true);
+                done();
+            });
         });
     });
 });

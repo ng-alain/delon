@@ -1,22 +1,38 @@
-import { KeysPipe } from './keys.pipe';
+import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+
+import { AlainThemeModule } from '../../index';
 
 describe('Pipe: keys', () => {
 
-    let instance: KeysPipe = null;
-    const data = { name: 'cipchk', address: { city: 'shanghai', district: 'changning' } };
+    let fixture: ComponentFixture<TestComponent>;
 
     beforeEach(() => {
-        instance = new KeysPipe();
+        TestBed.configureTestingModule({
+            imports: [ AlainThemeModule.forRoot() ],
+            declarations: [ TestComponent ]
+        });
+        fixture = TestBed.createComponent(TestComponent);
+        fixture.detectChanges();
     });
 
     it('should return a array', () => {
-        const ret = instance.transform(data, null);
-        expect(Array.isArray(ret)).toBeTruthy();
-        const retArr = ret as any[];
-        expect(retArr[0].key).toBe('name');
-        expect(retArr[0].value).toBe('cipchk');
-        expect(retArr[1].key).toBe('address');
-        expect(retArr[1].value).toBe(data.address);
+        const ul = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLUListElement).querySelectorAll('li');
+        expect(ul.length).toBe(2);
+        expect(ul[0].textContent).toBe('name');
+        expect(ul[1].textContent).toBe('address');
     });
 
 });
+
+@Component({
+    template: `
+    <ul id="result">
+        <li *ngFor="let item of data | keys">{{item.key}}</li>
+    </ul>
+    `
+})
+class TestComponent {
+    data: any = { name: 'cipchk', address: { city: 'shanghai', district: 'changning' } };
+}

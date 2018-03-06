@@ -1,13 +1,12 @@
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Injectable, Injector } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler,
          HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpResponse, HttpUserEvent,
          HttpHeaders, HttpErrorResponse, HttpEventType, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { _throw } from 'rxjs/observable/throw';
 import { delay } from 'rxjs/operators';
 import { Observer } from 'rxjs/Observer';
+
 import { DM_OPTIONS_TOKEN } from '../mock.options';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
@@ -43,20 +42,22 @@ export class MockInterceptor implements HttpInterceptor {
                 try {
                     res = rule.callback.call(this, mockRequest);
                 } catch (e) {
+                    let errRes: HttpErrorResponse;
                     if (e instanceof MockStatusError) {
-                        const errRes = new HttpErrorResponse({
+                        errRes = new HttpErrorResponse({
                             url: req.url,
                             headers: req.headers,
                             status: e.status,
                             statusText: e.statusText || 'Unknown Error',
                             error: e.error
                         });
-                        if (config.log) console.log('error mock', req.url, errRes, req);
-                        // TODO: TypeError: You provided an invalid object where a stream was expected. You can provide an Observable, Promise, Array, or Iterable.
-                        return new Observable((observer: Observer<HttpEvent<any>>) => {
-                            observer.error(errRes);
-                        });
+                        if (config.log) console.log(`%c 👽MOCK ${e.status} STATUS `, 'background:#000;color:#bada55', req.url, errRes, req);
+                    } else {
+                        console.error(`Please use MockStatusError to throw status error`, e, req);
                     }
+                    return new Observable((observer: Observer<HttpEvent<any>>) => {
+                        observer.error(errRes);
+                    });
                 }
                 break;
             default:
@@ -69,7 +70,7 @@ export class MockInterceptor implements HttpInterceptor {
             body: res,
             url: req.url
         });
-        if (config.log) console.log('👽MOCK', req.url, response, req);
+        if (config.log) console.log('%c 👽MOCK ', 'background:#000;color:#bada55', req.url, response, req);
         return of(response).pipe(delay(config.delay));
     }
 }

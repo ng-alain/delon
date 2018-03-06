@@ -1,7 +1,8 @@
-import { Component, Input, ElementRef, TemplateRef, ContentChild, OnInit, AfterViewInit, Inject, Renderer2, Optional } from '@angular/core';
+import { Component, Input, ElementRef, TemplateRef, ContentChild, OnInit, OnChanges, Inject, Renderer2, Optional, SimpleChange, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
+
 import { ProHeaderConfig } from './pro-header.config';
 
 @Component({
@@ -33,7 +34,7 @@ import { ProHeaderConfig } from './pro-header.config';
     `,
     styleUrls: [ './pro-header.less' ]
 })
-export class ProHeaderComponent implements OnInit {
+export class ProHeaderComponent implements OnInit, OnChanges {
 
     // region fields
 
@@ -79,9 +80,9 @@ export class ProHeaderComponent implements OnInit {
         const paths: any[] = [];
         menus.forEach(item => {
             if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb) return;
-            let title;
+            let title = item.text;
             if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-            paths.push({ title: title || item.text, link: item.link && [ item.link ] });
+            paths.push({ title, link: item.link && [ item.link ] });
         });
         // add home
         if (this.cog.home) {
@@ -96,5 +97,10 @@ export class ProHeaderComponent implements OnInit {
     ngOnInit() {
         (this.el.nativeElement as HTMLElement).classList.add('content__title', 'pro-header');
         this.genBreadcrumb();
+    }
+
+    ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+        if (changes.autoBreadcrumb && !changes.autoBreadcrumb.firstChange)
+            this.genBreadcrumb();
     }
 }
