@@ -59,7 +59,9 @@ export class TitleService {
     private getByRoute(): string {
         let next = this.injector.get(ActivatedRoute);
         while (next.firstChild) next = next.firstChild;
-        return next.snapshot && next.snapshot.data && next.snapshot.data.title;
+        const data = (next.snapshot && next.snapshot.data) || {};
+        if (data.titleI18n && this.i18nSrv) data.title = this.i18nSrv.fanyi(data.titleI18n);
+        return data.title;
     }
 
     private getByMenu(): string {
