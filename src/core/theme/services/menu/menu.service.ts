@@ -14,7 +14,7 @@ export class MenuService implements OnDestroy {
     private data: Menu[] = [];
 
     constructor(
-        @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nService: AlainI18NService,
+        @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
         @Optional() private aclService: ACLService
     ) { }
 
@@ -76,7 +76,7 @@ export class MenuService implements OnDestroy {
             if (item.shortcut === true && (item.link || item.externalLink))
                 shortcuts.push(item);
 
-            item.text = item.i18n && this.i18nService ? this.i18nService.fanyi(item.i18n) : item.text;
+            item.text = item.i18n && this.i18nSrv ? this.i18nSrv.fanyi(item.i18n) : item.text;
 
             // hidden
             item._hidden = typeof item.hide === 'undefined' ? false : item.hide;
@@ -108,12 +108,14 @@ export class MenuService implements OnDestroy {
         if (pos === -1) {
             pos = ls.findIndex(w => w.link.includes('dashboard') || w.externalLink.includes('dashboard'));
             pos = (pos !== -1 ? pos : -1) + 1;
-            this.data[0].children.splice(pos, 0, {
+            const shortcutMenu = <Menu>{
                 text: '快捷菜单',
-                translate: 'shortcut',
+                i18n: 'shortcut',
                 icon: 'icon-rocket',
                 children: []
-            });
+            };
+            if (this.i18nSrv) shortcutMenu.text = this.i18nSrv.fanyi(shortcutMenu.i18n);
+            this.data[0].children.splice(pos, 0, shortcutMenu);
         }
         let _data = this.data[0].children[pos];
         _data = Object.assign(_data, {
