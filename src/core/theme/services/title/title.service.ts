@@ -14,7 +14,7 @@ export class TitleService {
         private injector: Injector,
         private title: Title,
         private menuSrv: MenuService,
-        @Optional() @Inject(ALAIN_I18N_TOKEN) private translatorSrv: AlainI18NService,
+        @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
         @Inject(DOCUMENT) private doc: any) { }
 
     private _prefix = '';
@@ -68,7 +68,7 @@ export class TitleService {
 
         const item = menus[menus.length - 1];
         let title;
-        if (item.translate && this.translatorSrv) title = this.translatorSrv.fanyi(item.translate);
+        if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
         return title || item.text;
     }
 

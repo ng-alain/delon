@@ -80,7 +80,7 @@ export class ProHeaderComponent implements OnInit {
         menus.forEach(item => {
             if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb) return;
             let title;
-            if (item.translate && this.i18nSrv) title = this.i18nSrv.fanyi(item.translate);
+            if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
             paths.push({ title: title || item.text, link: item.link && [ item.link ] });
         });
         // add home

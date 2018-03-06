@@ -76,8 +76,7 @@ export class MenuService implements OnDestroy {
             if (item.shortcut === true && (item.link || item.externalLink))
                 shortcuts.push(item);
 
-            const i18n = item.i18n || item.translate;
-            item.text = this.i18nService && i18n ? this.i18nService.fanyi(i18n) : item.text;
+            item.text = item.i18n && this.i18nService ? this.i18nService.fanyi(item.i18n) : item.text;
 
             // hidden
             item._hidden = typeof item.hide === 'undefined' ? false : item.hide;
