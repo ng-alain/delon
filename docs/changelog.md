@@ -6,6 +6,28 @@ title:
 type: Other
 ---
 
+### 0.7.1
+
+`2018-3-6`
+
+- 脚手架
+    - 新增 `number-to-chinese` 模块导入，([a170141](https://github.com/cipchk/ng-alain/commit/a170141))
+    - 移除**老版本兼容性**属性 `translate`，已统一采用 `i18n`，([475ed58](https://github.com/cipchk/ng-alain/commit/475ed58))
+- @delon/theme
+    - 修复收缩时呈现子菜单会影响内容区域，[#305](https://github.com/cipchk/ng-alain/issues/305)
+    - `TitleService` 新增 `titleI18n` 属性支持国际化，[#315](https://github.com/cipchk/ng-alain/issues/315)
+    - `MenuService` 修复快捷菜单无法国际化，[#316](https://github.com/cipchk/ng-alain/issues/316)
+- @delon/abc
+    - `number-to-chinese` 新增人民币转大写模块
+- @delon/auth
+    - 新增 `SessionStorageStore`、`MemoryStore` 两种存储模式，见[API文档](http://ng-alain.com/docs/auth)
+- @delon/cache
+    - 修复 `get` 方法已存在key时应该返回 Observable 类型，[#40](https://github.com/cipchk/delon/issues/40)
+- @delon/mock
+    - 新增URL允许包括正则表达式，[#41](https://github.com/cipchk/delon/issues/41)
+- @delon/cli
+    - 修复部分内部无同步脚手架问题，[#311](https://github.com/cipchk/ng-alain/issues/311)
+
 ### 0.7.0
 
 `2018-3-5`

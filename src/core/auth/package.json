@@ -1,6 +1,6 @@
 {
 	"name": "@delon/auth",
-	"version": "0.7.0",
+	"version": "0.7.1",
 	"description": "@delon/auth",
 	"main": "./bundles/index.js",
 	"module": "./index.js",

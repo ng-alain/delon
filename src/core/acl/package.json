@@ -1,6 +1,6 @@
 {
 	"name": "@delon/acl",
-	"version": "0.7.0",
+	"version": "0.7.1",
 	"description": "@delon/acl",
 	"main": "./bundles/index.js",
 	"module": "./index.js",
