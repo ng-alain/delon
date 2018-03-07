@@ -47,7 +47,6 @@ export class MenuService implements OnDestroy {
      */
     resume(callback?: (item: Menu, parentMenum: Menu, depth?: number) => void) {
         let i = 1;
-        this.removeShortcut();
         const shortcuts: Menu[] = [];
         this.visit((item, parent, depth) => {
             item.__id = i++;
@@ -73,7 +72,7 @@ export class MenuService implements OnDestroy {
             }
 
             // shortcut
-            if (item.shortcut === true && (item.link || item.externalLink))
+            if (parent && item.shortcut === true && parent.shortcut_root !== true)
                 shortcuts.push(item);
 
             item.text = item.i18n && this.i18nSrv ? this.i18nSrv.fanyi(item.i18n) : item.text;
@@ -101,7 +100,9 @@ export class MenuService implements OnDestroy {
      *      3、否则放在0节点位置
      */
     private loadShortcut(shortcuts: Menu[]) {
-        if (shortcuts.length === 0 || this.data.length === 0) return;
+        if (shortcuts.length === 0 || this.data.length === 0) {
+            return;
+        }
 
         const ls = this.data[0].children || [];
         let pos = ls.findIndex(w => w.shortcut_root === true);
@@ -130,12 +131,6 @@ export class MenuService implements OnDestroy {
         });
     }
 
-    private removeShortcut() {
-        const ls = this.data && this.data.length && this.data[0].children || [];
-        const pos = ls.findIndex(w => w.shortcut_root === true);
-        if (pos !== -1) ls.splice(pos, 1);
-    }
-
     get menus() {
         return this.data;
     }
@@ -153,9 +148,7 @@ export class MenuService implements OnDestroy {
      * @param url URL地址
      */
     openedByUrl(url: string) {
-        if (!url) {
-            return;
-        }
+        if (!url) return;
 
         let findItem: Menu = null;
         this.visit(item => {
@@ -167,10 +160,7 @@ export class MenuService implements OnDestroy {
                 findItem = item;
             }
         });
-        if (!findItem) {
-            console.warn(`not found page name: ${url}`);
-            return;
-        }
+        if (!findItem) return;
 
         do {
             findItem._open = true;
