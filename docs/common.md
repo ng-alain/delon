@@ -30,6 +30,11 @@ ng-alain 提供若干常见的服务与Pipe管道，以便减少基础建设代�
 
 滚动条控制，允许滚动至指定元素所处位置。
 
+| 接口名 | 参数 | 描述 |
+| ----- | --- | ---- |
+| `scrollToElement` | `element?: Element, topOffset = 0` | 设置滚动条至指定元素 |
+| `scrollToTop` | `topOffset = 0` | 滚动至顶部 |
+
 ### SettingsService
 
 项目配置项，包含应用[App](//github.com/cipchk/delon/blob/master/src/core/theme/services/settings/interface.ts#L3)、布局[Layout](//github.com/cipchk/delon/blob/master/src/core/theme/services/settings/interface.ts#L19)、用户信息[User](//github.com/cipchk/delon/blob/master/src/core/theme/services/settings/interface.ts#L10)三种类型。

@@ -1,60 +1,40 @@
 import { Injectable, Inject } from '@angular/core';
-import { PlatformLocation } from '@angular/common';
 import { DOCUMENT } from '@angular/platform-browser';
-import { fromEvent } from 'rxjs/observable/fromEvent';
-
-export const topMargin = 16;
+import { WINDOW } from '../../win_tokens';
 
 @Injectable()
 export class ScrollService {
 
-  private _topOffset: number | null;
-  private _topOfPageElement: Element;
+  constructor(
+    @Inject(WINDOW) private win: Window,
+    @Inject(DOCUMENT) private doc: Document
+  ) { }
 
-  get topOffset() {
-    if (!this._topOffset) {
-        const toolbar = this.doc.querySelector('.header');
-        this._topOffset = (toolbar && toolbar.clientHeight || 0) + topMargin;
-    }
-    return this._topOffset;
-  }
+  /**
+   * 设置滚动条至指定元素
+   * @param element 指定元素，默认 `document.body`
+   * @param topOffset 偏移值，默认 `0`
+   */
+  scrollToElement(element?: Element, topOffset = 0) {
+    if (!element) element = this.doc.body;
 
-  get topOfPageElement() {
-    if (!this._topOfPageElement) {
-      this._topOfPageElement = this.doc.getElementById('top-of-page') || this.doc.body;
-    }
-    return this._topOfPageElement;
-  }
+    element.scrollIntoView();
 
-  constructor( @Inject(DOCUMENT) private doc: any, private location: PlatformLocation) {
-    fromEvent(window, 'resize').subscribe(() => this._topOffset = null);
-  }
+    const w = this.win;
+    if (w && w.scrollBy) {
+        w.scrollBy(0, element.getBoundingClientRect().top - topOffset);
 
-  scroll() {
-    const hash = this.getCurrentHash();
-    const element: HTMLElement = hash ? this.doc.getElementById(hash) : this.topOfPageElement;
-    this.scrollToElement(element);
-  }
-
-  scrollToElement(element: Element) {
-    if (element) {
-      element.scrollIntoView();
-
-      if (window && window.scrollBy) {
-        window.scrollBy(0, element.getBoundingClientRect().top - this.topOffset);
-
-        if (window.pageYOffset < 20) {
-          window.scrollBy(0, -window.pageYOffset);
+        if (w.pageYOffset < 20) {
+            w.scrollBy(0, -w.pageYOffset);
         }
-      }
     }
   }
 
-  scrollToTop() {
-    this.scrollToElement(this.topOfPageElement);
-  }
-
-  private getCurrentHash() {
-    return this.location.hash.replace(/^#/, '');
+  /**
+   * 滚动至顶部
+   * @param topOffset 偏移值，默认 `0`
+   */
+  scrollToTop(topOffset = 0) {
+      this.scrollToElement(this.doc.body, topOffset);
   }
 }
