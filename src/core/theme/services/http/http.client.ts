@@ -3,6 +3,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { tap, catchError } from 'rxjs/operators';
+import 'rxjs/add/observable/throw';
 import * as moment from 'moment';
 import { AlainThemeOptions, ALAIN_THEME_OPTIONS } from '../../theme.options';
 
@@ -33,7 +34,9 @@ export class _HttpClient {
                 let _data = params[key];
                 // 将时间转化为：时间戳 (秒)
                 if (moment.isDate(_data)) {
-                    _data = moment(_data).unix();
+                    _data = moment(_data).valueOf();
+                } else if (moment.isMoment(_data)) {
+                    _data = _data.valueOf();
                 }
                 ret = ret.set(key, _data);
             }
@@ -43,12 +46,13 @@ export class _HttpClient {
 
     appliedUrl(url: string, params?: any) {
         if (!params) return url;
-        url += ~url.indexOf('?') ? '&' : '?';
+        url += ~url.indexOf('?') ? '' : '?';
+        const arr: string[] = [];
         // tslint:disable-next-line:forin
         for (const key in params) {
-            url += `${key}=${params[key]}`;
+            arr.push(`${key}=${params[key]}`);
         }
-        return url;
+        return url + arr.join('&');
     }
 
     begin() {
@@ -264,10 +268,12 @@ export class _HttpClient {
         return this.http
             .jsonp(this.appliedUrl(url, params), callbackParam)
             .pipe(
-                tap(() => this.end()),
+                tap(() => {
+                    this.end();
+                }),
                 catchError((res) => {
                     this.end();
-                    return res;
+                    return Observable.throw(res);
                 })
             );
     }
@@ -344,10 +350,12 @@ export class _HttpClient {
         }
         return this.http.request(method, url, options)
             .pipe(
-                tap(() => this.end()),
+                tap(() => {
+                    this.end();
+                }),
                 catchError((res) => {
                     this.end();
-                    return res;
+                    return Observable.throw(res);
                 })
             );
     }
