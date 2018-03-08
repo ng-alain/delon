@@ -23,7 +23,6 @@ export class MockInterceptor implements HttpInterceptor {
         const config = this.injector.get(DM_OPTIONS_TOKEN);
         const rule = src.getRule(req.method, req.url);
         if (!rule && !config.force) {
-            if (config.log) console.log('non-mock', req.url, req);
             return next.handle(req);
         }
 
@@ -70,7 +69,7 @@ export class MockInterceptor implements HttpInterceptor {
             body: res,
             url: req.url
         });
-        if (config.log) console.log('mock', req.url, response, req);
+        if (config.log) console.log('👽MOCK', req.url, response, req);
         return of(response).pipe(delay(config.delay));
     }
 }
