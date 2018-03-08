@@ -35,13 +35,27 @@ describe('auth: token.service', () => {
 
         injector = TestBed.configureTestingModule({
             providers: [
-                { provide: DA_OPTIONS_TOKEN, useValue: { store_key: 'token' } },
+                { provide: DA_OPTIONS_TOKEN, useValue: { store_key: 'token', login_url: '/login' } },
                 { provide: DA_STORE_TOKEN, useClass: LocalStorageStore },
                 { provide: DA_SERVICE_TOKEN, useClass: TokenService }
             ]
         });
 
         service = injector.get(DA_SERVICE_TOKEN);
+    });
+
+    it('#login_url', () => {
+        expect(service.login_url).toBe('/login');
+    });
+
+    describe('[#redirect]', () => {
+        it('shoud be setting redirect', () => {
+            service.redirect = '/redirect';
+            expect(service.redirect).toBe('/redirect');
+        });
+        it(`shoud be default redirect value /`, () => {
+            expect(service.redirect).toBe('/');
+        });
     });
 
     it('#set', () => {

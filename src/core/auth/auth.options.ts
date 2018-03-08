@@ -23,7 +23,8 @@ export interface AuthOptions {
      */
     token_send_key?: string;
     /**
-     * 发送token模板，使用 `${token}` 表示token点位符，例如：
+     * 发送token模板（默认为：`${token}`），使用 `${token}` 表示token点位符，例如：
+     *
      * - `Bearer ${token}`
      */
     token_send_template?: string;

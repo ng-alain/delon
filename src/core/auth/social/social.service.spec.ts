@@ -1,44 +1,20 @@
-// tslint:disable
 import { Injector } from '@angular/core';
 import { TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router, DefaultUrlSerializer } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { publish, refCount } from 'rxjs/operators';
-import { AuthOptions, DA_USER_OPTIONS_TOKEN, DA_OPTIONS_TOKEN } from '../auth.options';
+
+import { AuthOptions } from '../auth.options';
 import { SimpleTokenModel } from '../token/simple/simple.model';
-import { DA_STORE_TOKEN } from '../store/interface';
-import { LocalStorageStore } from '../store/local-storage.service';
 import { DA_SERVICE_TOKEN, ITokenService, ITokenModel } from '../token/interface';
 import { SocialService } from './social.service';
-import { optionsFactory } from '../index';
+import { AlainAuthModule } from '../index';
 
-class MockTokenService implements ITokenService {
-    [key: string]: any;
-    _data: any;
-    set(data: ITokenModel): boolean {
-        this._data = data;
-        return true;
-    }
-    get(): ITokenModel {
-        return this._data;
-    }
-    change(): Observable<ITokenModel> {
-        return this.change$.pipe(publish(), refCount());
-    }
-    clear() {
-        this._data = null;
-    }
-    get login_url() {
-        return '/login';
-    }
-    redirect: string;
-}
 const mockRouter = {
+    url: '',
     navigate: jasmine.createSpy('navigate'),
+    navigateByUrl: jasmine.createSpy('navigateByUrl'),
     parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
         return (new DefaultUrlSerializer()).parse(value);
     })
@@ -60,43 +36,44 @@ class MockLocation {
     }
 }
 
+const MockAuth0 = {
+    type: 'auth0',
+    url: `//cipchk.auth0.com/login?client=8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5&redirect_uri=${decodeURIComponent('http://localhost:4200/#/login/callback')}`,
+    be: { client: '8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5' },
+    model: { client: '8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5', token: '123' }
+};
+
 describe('auth: social.service', () => {
     let injector: Injector;
+    let srv: SocialService;
 
     function genModule(options: AuthOptions, tokenData?: SimpleTokenModel) {
         injector = TestBed.configureTestingModule({
-            imports: [ HttpClientTestingModule, RouterTestingModule.withRoutes([]) ],
+            imports: [ HttpClientTestingModule, RouterTestingModule.withRoutes([]), AlainAuthModule.forRoot(options) ],
             providers: [
                 SocialService,
                 { provide: DOCUMENT, useClass: MockDocument },
-                { provide: Router, useValue: mockRouter },
-                { provide: DA_USER_OPTIONS_TOKEN, useValue: options },
-                { provide: DA_OPTIONS_TOKEN, useFactory: optionsFactory, deps: [DA_USER_OPTIONS_TOKEN] },
-                { provide: DA_STORE_TOKEN, useClass: LocalStorageStore },
-                { provide: DA_SERVICE_TOKEN, useClass: MockTokenService }
+                { provide: Router, useValue: mockRouter }
             ]
         });
         if (tokenData)
             injector.get(DA_SERVICE_TOKEN).set(tokenData);
+
+        srv = injector.get(SocialService);
     }
 
     beforeEach(() => {
         genModule({});
     });
 
-    describe('#login', () => {
-        [
-            {
-                type: 'auth0',
-                url: `//cipchk.auth0.com/login?client=8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5&redirect_uri=${decodeURIComponent('http://localhost:4200/#/login/callback')}`,
-                be: { client: '8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5' },
-                model: { client: '8gcNydIDzGBYxzqV0Vm1CX_RXH-wsWo5', token: '123' }
-            }
-        ].forEach((item: any) => {
+    afterEach(() => srv.ngOnDestroy());
 
+    describe('#login', () => {
+        [ MockAuth0 ].forEach((item: any) => {
             it(`${item.type} via href`, () => {
-                injector.get(SocialService).login(item.url, '/', { type: 'href' });
+                srv.login(item.url, '/', { type: 'href' });
                 const ret = injector.get(DOCUMENT).location.href;
+                // tslint:disable-next-line:forin
                 for (const key in item.be) {
                     const expected = `${key}=${item.be[key]}`;
                     expect(ret).toContain(expected, `muse contain "${expected}"`);
@@ -108,19 +85,44 @@ describe('auth: social.service', () => {
                     injector.get(DA_SERVICE_TOKEN).set(item.model);
                     return { closed: true };
                 });
-                injector.get(SocialService).login(item.url, '/', { type: 'window' }).subscribe(res => {
-
+                srv.login(item.url).subscribe(res => {
                 });
                 tick(130);
                 expect(window.open).toHaveBeenCalled();
                 const token = injector.get(DA_SERVICE_TOKEN).get();
+                // tslint:disable-next-line:forin
                 for (const key in item.be) {
                     expect(token[key]).toContain(item.be[key]);
                 }
                 discardPeriodicTasks();
             }));
-
         });
+
+        it(`should be return null model if set a null in window`, fakeAsync(() => {
+            spyOn(window, 'open').and.callFake(() => {
+                injector.get(DA_SERVICE_TOKEN).set(null);
+                return { closed: true };
+            });
+            srv.login(MockAuth0.url).subscribe(res => {
+            });
+            tick(130);
+            expect(window.open).toHaveBeenCalled();
+            discardPeriodicTasks();
+        }));
+
+        it(`can't get model until closed`, fakeAsync(() => {
+            spyOn(srv, 'ngOnDestroy');
+            spyOn(window, 'open').and.callFake(() => {
+                injector.get(DA_SERVICE_TOKEN).set(null);
+                return { closed: false };
+            });
+            srv.login(MockAuth0.url).subscribe(res => {
+            });
+            tick(130);
+            expect(window.open).toHaveBeenCalled();
+            expect(srv.ngOnDestroy).not.toHaveBeenCalled();
+            discardPeriodicTasks();
+        }));
     });
 
     describe('#callback', () => {
@@ -141,12 +143,15 @@ describe('auth: social.service', () => {
         ].forEach((item: any, index: number) => {
             it(`${item.summary}`, () => {
                 if (item.be === 'throw') {
+                    const router = injector.get(Router) as any;
+                    router.url = item.url;
                     expect(() => {
-                        injector.get(SocialService).callback(item.url, false)
+                        srv.callback(null);
                     }).toThrow();
                     return;
                 }
-                const ret = injector.get(SocialService).callback(item.url, false);
+                const ret = srv.callback(item.url);
+                // tslint:disable-next-line:forin
                 for (const key in item.be) {
                     expect(ret[key]).toBe(item.be[key]);
                 }

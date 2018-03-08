@@ -71,10 +71,10 @@ export class ProUserLoginComponent {
 }
 ```
 
-最后，打开一个 github 授权框：
+最后，利用 `type` 属性指定以采用什么形式打开一个授权框：
 
 ```ts
-this.socialService.login(`//github.com/login/oauth/authorize?xxxxxx`, '/');
+this.socialService.login(`//github.com/login/oauth/authorize?xxxxxx`, '/', { type: 'href' });
 // 或使用 window.open 打开授权框并订阅结果
 this.socialService.login(`//github.com/login/oauth/authorize?xxxxxx`, '/', {
     type: 'window'
@@ -89,7 +89,7 @@ this.socialService.login(`//github.com/login/oauth/authorize?xxxxxx`, '/', {
 
 因此 `@delon/auth` 是从回调页 URL 地址上携带信息作为获取源，当然它会受 URL 本身受限（例如：长度）；但我想对一个 Token 值是足够长的，你可以获取到 Token，再获取用户信息。
 
-需要创建一个用于回调的页面，而页面唯一要做的就是在 `ngOnInit` 时调用 `callback()` 方法：
+需要创建一个用于回调的页面，而页面唯一要做的就是在 `ngOnInit` 时调用 `callback()` 方法（例如：[callback.component.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/routes/callback/callback.component.ts#L24)）：
 
 ```ts
 // 1、默认根据当前URL地址
@@ -218,3 +218,22 @@ ng-alain 脚手手默认在根模块（`AppModule1`）导入 `@delon/auth` 模�
 
 - `app.module.ts` 的 `@delon/auth` 模块导入语句
 - 删除 `@delon/auth` 包体
+
+## 常见问题
+
+### 如何捕获无Token时被拦截信息？
+
+```ts
+// 利用订阅 Error
+this.http.get('/user').subscribe(
+    res => console.log('success', res),
+    err => console.error('error', err)
+);
+// 或使用 catchError
+this.http.get('/user').pipe(
+    catchError(err => {
+        console.error('error', err);
+        return of({});
+    })
+).subscribe();
+```

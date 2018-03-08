@@ -15,8 +15,6 @@ export class JWTTokenModel implements ITokenModel {
         if (parts.length !== 3) throw new Error('JWT must have 3 parts');
 
         const decoded = urlBase64Decode(parts[1]);
-        if (!decoded) throw new Error('Cannot decode the token');
-
         return JSON.parse(decoded);
     }
 
@@ -31,8 +29,6 @@ export class JWTTokenModel implements ITokenModel {
 
         const date = new Date(0);
         date.setUTCSeconds(decoded.exp);
-
-        if (date === null) return false;
 
         return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
     }

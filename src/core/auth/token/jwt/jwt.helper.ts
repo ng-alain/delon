@@ -13,22 +13,17 @@ export function urlBase64Decode(str: string): string {
             break;
         }
         default: {
-            throw new Error('Illegal base64url string!');
+            throw new Error(`'atob' failed: The string to be decoded is not correctly encoded.`);
         }
     }
     return b64DecodeUnicode(output);
 }
 
-// credits for decoder goes to https://github.com/atk
 function b64decode(str: string): string {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
     let output: string = '';
 
     str = String(str).replace(/=+$/, '');
-
-    if (str.length % 4 === 1) {
-        throw new Error(`'atob' failed: The string to be decoded is not correctly encoded.`);
-    }
 
     for (
         // initialize result and counters

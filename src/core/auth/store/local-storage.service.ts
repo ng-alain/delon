@@ -4,7 +4,7 @@ import { ITokenModel } from '../token/interface';
 export class LocalStorageStore implements IStore {
 
     get(key: string): ITokenModel {
-        return JSON.parse(localStorage.getItem(key) || '{}') || null;
+        return JSON.parse(localStorage.getItem(key) || '{}') || {};
     }
 
     set(key: string, value: ITokenModel): boolean {

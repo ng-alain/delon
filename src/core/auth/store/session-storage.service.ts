@@ -4,7 +4,7 @@ import { ITokenModel } from '../token/interface';
 export class SessionStorageStore implements IStore {
 
     get(key: string): ITokenModel {
-        return JSON.parse(sessionStorage.getItem(key) || '{}') || null;
+        return JSON.parse(sessionStorage.getItem(key) || '{}') || {};
     }
 
     set(key: string, value: ITokenModel): boolean {
