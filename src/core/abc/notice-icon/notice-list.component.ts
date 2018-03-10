@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NoticeItem } from './notice-item';
+import { NoticeItem } from './interface';
 
 @Component({
     selector: 'notice-list',
@@ -27,7 +27,8 @@ import { NoticeItem } from './notice-item';
         </nz-list>
         <div class="clear" (click)="onClear()">清空{{data.title}}</div>
     </ng-template>
-    `
+    `,
+    preserveWhitespaces: false
 })
 export class NoticeListComponent {
     @Input() data: NoticeItem;

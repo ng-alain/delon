@@ -23,9 +23,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     private inited = false;
     private srv$: Subscription;
     private route$: Subscription;
-
-    @HostBinding('attr.id')
-    id = `_full-content-${Math.random().toString(36).substring(2)}`;
+    private id = `_full-content-${Math.random().toString(36).substring(2)}`;
 
     @HostBinding('style.height.px')
     _height = 0;
@@ -69,15 +67,17 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
         this.inited = true;
         this.bodyEl = this.doc.querySelector('body');
         this.bodyEl.classList.add(cls);
+        (this.el.nativeElement as HTMLElement).id = this.id;
         this.update();
         this.installResizeEvent();
         this.srv$ = <any>this.srv.change.subscribe(res => {
             if (res) this.toggle();
         });
         this.route$ = <any>this.router.events.pipe(
-            filter((e: any) => e instanceof ActivationStart || e instanceof ActivationEnd)
+            filter((e: any) => e instanceof ActivationStart || e instanceof ActivationEnd),
+            debounceTime(200)
         ).subscribe(e => {
-            if (!!this.doc.querySelector('#' + this.id)) {
+            if (!!document.querySelector('#' + this.id)) {
                 this.bodyEl.classList.add(cls);
                 this.updateFsCls();
             } else {

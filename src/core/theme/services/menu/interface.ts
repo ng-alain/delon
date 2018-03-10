@@ -1,4 +1,5 @@
 export interface Menu {
+    [key: string]: any;
     /** 文本 */
     text: string;
     /** i18n主键 */
@@ -33,33 +34,4 @@ export interface Menu {
     reuse?: boolean;
     /** 二级菜单 */
     children?: Menu[];
-    /**
-     * 菜单类型，无须指定由 Service 自动识别
-     * 1：链接
-     * 2：外部链接
-     * 3：链接（子菜单）
-     * @private
-     */
-    _type?: number;
-    /**
-     * 是否选中
-     * @private
-     */
-    _selected?: boolean;
-    /**
-     * 是否隐藏菜单
-     * @private
-     */
-    _hidden?: boolean;
-    /**
-     * 是否打开
-     * @private
-     */
-    _open?: boolean;
-    /**
-     * @private
-     */
-    _depth?: number;
-
-    [key: string]: any;
 }

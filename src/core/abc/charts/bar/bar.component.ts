@@ -29,6 +29,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
     }
 
     @Input() color = 'rgba(24, 144, 255, 0.85)';
+
     @HostBinding('style.height.px')
     @Input()
     get height() { return this._height; }
@@ -36,6 +37,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
         this._height = coerceNumberProperty(value);
     }
     private _height = 0;
+
     @Input() padding: number[];
     @Input() data: Array<{ x: any, y: any, [key: string]: any }>;
 
@@ -48,9 +50,9 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
 
     // endregion
 
-    @HostBinding('class.g2-chart') _cls = true;
+    @HostBinding('class.g2-chart') private _cls = true;
 
-    @ViewChild('container') node: ElementRef;
+    @ViewChild('container') private node: ElementRef;
 
     chart: any;
     initFlag = false;

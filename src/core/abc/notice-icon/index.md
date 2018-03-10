@@ -19,7 +19,7 @@ loading | 弹出卡片加载状态 | `boolean` | `false`
 select | 点击列表项的回调，参数：`{type:'',item:any}` | `EventEmitter` | -
 clear | 点击清空按钮的回调 | `EventEmitter` | -
 popoverVisible | 手动控制Popover显示 | `boolean` | `false`
-popupVisibleChange | Popover显隐回调 | `EventEmitter` | -
+popoverVisibleChange | Popover显隐回调 | `EventEmitter` | -
 
 ### NoticeItem
 

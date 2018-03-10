@@ -4,7 +4,7 @@ import { By, DOCUMENT } from '@angular/platform-browser';
 import { RouterModule, Router, ActivationEnd, ActivationStart } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { of } from 'rxjs/observable/of';
-import { delay } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { AdFullContentModule } from './full-content.module';
 import { FullContentComponent } from './full-content.component';
@@ -131,30 +131,34 @@ describe('abc: full-content', () => {
             expect(bodyEl.getBoundingClientRect).toHaveBeenCalled();
             expect(context.comp._height).toBe(bodyHeight - el.getBoundingClientRect().top - context.padding);
         }));
-        it('should be add class when go to include full-content route', (done: () => void) => {
+        it('should be add class when go to include full-content route', () => {
+            const eventsSub = new BehaviorSubject<any>(null);
             class MockRouter {
-                events = of(new ActivationStart(null)).pipe(delay(100));
+                events = eventsSub;
             }
             TestBed.overrideProvider(Router, { useFactory: () => {
                 return new MockRouter();
             }, deps: [] });
             createComp();
-            setTimeout(() => {
-                expect(bodyEl.classList.contains('full-content')).toBe(true);
-                done();
-            }, 101);
+
+            eventsSub.next(new ActivationStart(null));
+            eventsSub.complete();
+            expect(bodyEl.classList.contains('full-content')).toBe(true);
         });
         it('should be clear class when go to other route', () => {
+            const eventsSub = new BehaviorSubject<any>(null);
             class MockRouter {
-                events = of(new ActivationEnd(null));
+                events = eventsSub;
             }
             TestBed.overrideProvider(Router, { useFactory: () => {
                 return new MockRouter();
             }, deps: [] });
-            bodyEl = document.querySelector('body');
-            bodyEl.classList.add('full-content');
-            expect(bodyEl.classList.contains('full-content')).toBe(true);
             createComp();
+            // mock component destroy
+            (dl.nativeElement as HTMLElement).innerHTML = ``;
+
+            eventsSub.next(new ActivationEnd(null));
+            eventsSub.complete();
             expect(bodyEl.classList.contains('full-content')).toBe(false);
         });
     });

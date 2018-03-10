@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, HostListener, HostBinding, ViewEncapsulation } from '@angular/core';
 import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { NoticeItem } from './notice-item';
+import { NoticeItem } from './interface';
 
 @Component({
     selector: 'notice-icon',
@@ -32,7 +32,8 @@ import { NoticeItem } from './notice-item';
         </ng-template>
     </nz-popover>
     `,
-    styleUrls: [ './notice-icon.less' ]
+    styleUrls: [ './notice-icon.less' ],
+    preserveWhitespaces: false
 })
 export class NoticeIconComponent {
     @Input() data: NoticeItem[] = [];
@@ -72,10 +73,10 @@ export class NoticeIconComponent {
     }
     private _popoverVisible = false;
 
-    @Output() popupVisibleChange = new EventEmitter<boolean>();
+    @Output() popoverVisibleChange = new EventEmitter<boolean>();
 
     onVisibleChange(result: boolean) {
-        this.popupVisibleChange.emit(result);
+        this.popoverVisibleChange.emit(result);
     }
 
     onSelect(i: any) {
