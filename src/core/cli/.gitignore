@@ -30,6 +30,10 @@ application/other-files/routes/callback
 application/other-files/routes/exception
 application/other-files/routes/passport
 application/other-files/layout/default/header/components/i18n.component.ts
+application/other-files/layout/default/header/components/icon.component.ts
+application/other-files/layout/default/header/components/notify.component.ts
+application/other-files/layout/default/header/components/task.component.ts
+application/other-files/layout/default/header/components/user.component.ts
 utility
 class
 directive
