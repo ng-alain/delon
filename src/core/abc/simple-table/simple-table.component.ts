@@ -17,7 +17,8 @@ import { SimpleTableExport } from './simple-table-export';
     selector: 'simple-table',
     templateUrl: './simple-table.component.html',
     styleUrls: [ './simple-table.less' ],
-    providers: [ SimpleTableExport, CNCurrencyPipe, MomentDatePipe, YNPipe, DecimalPipe ]
+    providers: [ SimpleTableExport, CNCurrencyPipe, MomentDatePipe, YNPipe, DecimalPipe ],
+    preserveWhitespaces: false
 })
 export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 

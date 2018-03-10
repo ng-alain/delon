@@ -8,3 +8,4 @@ dist
 coverage
 site/app/routes/gen
 .idea
+debug.log

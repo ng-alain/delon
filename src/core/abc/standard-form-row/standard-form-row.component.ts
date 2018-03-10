@@ -7,7 +7,8 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
     <div *ngIf="title" class="label"><span>{{title}}</span></div>
     <div class="control"><ng-content></ng-content></div>
     `,
-    styleUrls: [ './standard-form-row.less' ]
+    styleUrls: [ './standard-form-row.less' ],
+    preserveWhitespaces: false
 })
 export class StandardFormRowComponent implements OnChanges {
 

@@ -18,7 +18,8 @@ import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coerci
         </div>
     </div>`,
     styleUrls: [ './radar.less' ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    preserveWhitespaces: false
 })
 export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
 

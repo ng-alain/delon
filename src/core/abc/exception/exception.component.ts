@@ -19,7 +19,8 @@ import { Component, Input, ContentChild, TemplateRef } from '@angular/core';
         </div>
     </div>
     `,
-    styleUrls: [ './exception.less' ]
+    styleUrls: [ './exception.less' ],
+    preserveWhitespaces: false
 })
 export class ExceptionComponent {
 

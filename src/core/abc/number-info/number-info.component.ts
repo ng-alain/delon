@@ -14,7 +14,8 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
         </span>
     </div>
     `,
-    styleUrls: [ './number-info.less' ]
+    styleUrls: [ './number-info.less' ],
+    preserveWhitespaces: false
 })
 export class NumberInfoComponent implements OnChanges {
     _title = '';

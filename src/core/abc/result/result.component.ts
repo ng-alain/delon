@@ -11,7 +11,8 @@ import { Component, Input, TemplateRef, ContentChild } from '@angular/core';
     </div>
     <div class="actions"><ng-content></ng-content></div>
     `,
-    styleUrls: [ './result.less' ]
+    styleUrls: [ './result.less' ],
+    preserveWhitespaces: false
 })
 export class ResultComponent {
 

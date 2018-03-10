@@ -14,7 +14,8 @@ import { DescListItemComponent } from './desc-list-item.component';
         </div>
     </div>
     `,
-    styleUrls: [ './desc-list.less' ]
+    styleUrls: [ './desc-list.less' ],
+    preserveWhitespaces: false
 })
 export class DescListComponent implements OnChanges, OnInit {
 

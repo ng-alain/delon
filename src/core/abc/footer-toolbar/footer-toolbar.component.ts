@@ -13,7 +13,8 @@ const CLS = 'footer-toolbar';
         <error-collect *ngIf="errorCollect"></error-collect>
         <ng-content></ng-content>
     </div>
-    `
+    `,
+    preserveWhitespaces: false
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
 

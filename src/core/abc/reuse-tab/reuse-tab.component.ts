@@ -12,7 +12,8 @@ import { ReuseTabCached, ReuseTabNotify, ReuseTabMatchMode } from './interface';
     selector: 'reuse-tab',
     templateUrl: './reuse-tab.component.html',
     styleUrls: ['./reuse-tab.less'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    preserveWhitespaces: false
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private sub$: Subscription;

@@ -13,7 +13,8 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
         </li>
     </ul>
     `,
-    styleUrls: [ './avatar-list.less' ]
+    styleUrls: [ './avatar-list.less' ],
+    preserveWhitespaces: false
 })
 export class AvatarListComponent {
 

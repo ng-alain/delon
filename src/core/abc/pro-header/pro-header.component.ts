@@ -32,7 +32,8 @@ import { ProHeaderConfig } from './pro-header.config';
     <ng-content></ng-content>
     <ng-template [ngTemplateOutlet]="tab"></ng-template>
     `,
-    styleUrls: [ './pro-header.less' ]
+    styleUrls: [ './pro-header.less' ],
+    preserveWhitespaces: false
 })
 export class ProHeaderComponent implements OnInit, OnChanges {
 

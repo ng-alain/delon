@@ -9,8 +9,12 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
  */
 @Component({
     selector: 'error-collect, [error-collect]',
-    template: `<i class="anticon anticon-exclamation-circle"></i> {{count}}`,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    template: `
+    <i class="anticon anticon-exclamation-circle"></i>
+    <span class="pl-sm">{{count}}</span>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    preserveWhitespaces: false
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
 

@@ -10,7 +10,8 @@ import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coerci
     template: `
     <ng-container *ngIf="_title; else _titleTpl"><h4>{{_title}}</h4></ng-container>
     <div #container></div>`,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    preserveWhitespaces: false
 })
 export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
 

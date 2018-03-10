@@ -8,7 +8,8 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
     <div #container></div>
     <div #slider></div>`,
     styles: [ `:host {display:block}` ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    preserveWhitespaces: false
 })
 export class TimelineComponent implements OnDestroy, OnChanges, OnInit {
 

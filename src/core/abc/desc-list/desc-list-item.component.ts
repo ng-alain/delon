@@ -9,7 +9,8 @@ import { Component, Input, ViewChild, TemplateRef } from '@angular/core';
         </div>
         <div class="detail"><ng-content></ng-content></div>
     </ng-template>
-    `
+    `,
+    preserveWhitespaces: false
 })
 export class DescListItemComponent {
 

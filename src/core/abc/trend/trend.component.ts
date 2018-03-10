@@ -11,7 +11,8 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
     // tslint:disable-next-line:use-host-property-decorator
     host: {
         '[class.grey]': '!colorful'
-    }
+    },
+    preserveWhitespaces: false
 })
 export class TrendComponent {
 

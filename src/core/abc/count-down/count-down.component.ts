@@ -9,7 +9,8 @@ import * as moment from 'moment';
         (finished)="_finished()"
         (notify)="_notify($event)"></countdown>
     `,
-    styleUrls: [ './count-down.less' ]
+    styleUrls: [ './count-down.less' ],
+    preserveWhitespaces: false
 })
 export class CountDownComponent {
 

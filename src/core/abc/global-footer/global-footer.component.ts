@@ -8,7 +8,8 @@ import { Component, ContentChild, TemplateRef, Input } from '@angular/core';
     </div>
     <div *ngIf="copyright" class="copyright"><ng-template [ngTemplateOutlet]="copyright"></ng-template></div>
     `,
-    styleUrls: [ './global-footer.less' ]
+    styleUrls: [ './global-footer.less' ],
+    preserveWhitespaces: false
 })
 export class GlobalFooterComponent {
 

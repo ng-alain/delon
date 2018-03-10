@@ -14,7 +14,8 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
         <div class="progress" [ngStyle]="{'background-color': color, 'width.%': percent, 'height.px':strokeWidth}"></div>
     </div>
     `,
-    styleUrls: [ './mini-progress.less' ]
+    styleUrls: [ './mini-progress.less' ],
+    preserveWhitespaces: false
 })
 export class MiniProgressComponent {
 

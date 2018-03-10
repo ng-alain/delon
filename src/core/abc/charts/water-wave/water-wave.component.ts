@@ -16,7 +16,8 @@ import { coerceNumberProperty } from '@angular/cdk/coercion';
         <h4>{{percent}}%</h4>
     </div>`,
     styleUrls: [ './water-wave.less' ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    preserveWhitespaces: false
 })
 export class WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 

@@ -26,7 +26,8 @@ import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coerci
     </ul>`,
     styleUrls: [ './pie.less' ],
     encapsulation: ViewEncapsulation.Emulated,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    preserveWhitespaces: false
 })
 export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
 

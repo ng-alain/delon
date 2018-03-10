@@ -31,7 +31,8 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
         </nz-spin>
     </nz-card>
     `,
-    styleUrls: [ './card.less' ]
+    styleUrls: [ './card.less' ],
+    preserveWhitespaces: false
 })
 export class ChartCardComponent {
 
