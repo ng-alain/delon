@@ -20,6 +20,6 @@ export class DEMOJWTComponent {
     }
 
     remove() {
-        this.srv.remove(this.router.url);
+        this.srv.close(this.router.url);
     }
 }

@@ -1,4 +1,5 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { ReuseTabContextComponent } from './reuse-tab-context.component';
 
 /**
  * 复用匹配模式
@@ -37,6 +38,9 @@ export interface ReuseTabCached {
 
     url: string;
 
+    /** 是否可关闭，默认：`true` */
+    closable?: boolean;
+
     _snapshot: ActivatedRouteSnapshot;
 
     _handle: any;
@@ -45,7 +49,37 @@ export interface ReuseTabCached {
 }
 
 export interface ReuseTabNotify {
+    /** 事件类型 */
     active: string;
 
     [key: string]: any;
+}
+
+export interface ReuseItem {
+    url: string;
+    title: string;
+    closable: boolean;
+    index: number;
+    active: boolean;
+    last: boolean;
+}
+
+export interface ReuseContextEvent {
+    event: MouseEvent;
+    item: ReuseItem;
+    comp?: ReuseTabContextComponent;
+}
+
+export type CloseType = 'close' | 'closeOther' | 'closeRight' | 'clear' | null;
+
+export interface ReuseContextCloseEvent {
+    type: CloseType;
+    item: ReuseItem;
+}
+
+export interface ReuseContextI18n {
+    close?: string;
+    closeOther?: string;
+    closeRight?: string;
+    clear?: string;
 }

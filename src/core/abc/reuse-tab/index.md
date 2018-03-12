@@ -102,10 +102,43 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 ## API
 
-### reuse-tab
+### ReuseTabService 接口
+
+**属性**
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
+max | 允许最多复用多少个页面 | `number` | `10`
+mode | 设置匹配模式 | `ReuseTabMatchMode` | `0`
+debug | 是否Debug模式 | `boolean` | `false`
+excludes | 排除规则，限 `mode=URL` | `RegExp[]` | -
+items | 获取已缓存的路由 | `ReuseTabCached[]` | -
+count | 获取当前缓存的路由总数 | `number` | -
+change | 订阅缓存变更通知 | `Observable<ReuseTabNotify>` | -
+title | 自定义当前标题 | `string` | -
+closable | 自定义当前 `closable` 状态 | `boolean` | -
+
+**方法**
+
+方法名 | 说明 | 返回类型
+----|------|-----
+index(url) | 获取指定路径缓存所在位置，`-1` 表示无缓存 | `number`
+exists(url) | 获取指定路径缓存是否存在 | `boolean`
+get(url) | 获取指定路径缓存 | `boolean`
+getTitle(url, route?: ActivatedRouteSnapshot) | 获取标题 | `string`
+clearTitleCached() | 清空自定义标题数据 | `void`
+getClosable(url, route?: ActivatedRouteSnapshot) | 获取 `closable` 状态 | `string`
+clearClosableCached() | 清空 `closable` 缓存 | `void`
+remove(url) | 根据URL移除标签，同时触 `change` remove事件 | `void`
+move(url, position) | 移动缓存数据，同时触 `change` move事件 | `void`
+clear() | 清除所有缓存，同时触 `change` clear事件 | `void`
+refresh() | 无任何动作，但会触 `change` refresh事件 | `void`
+
+### reuse-tab 组件
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+i18n | 右击菜单国际化，支持HTML | `ReuseContextI18n` | -
 mode | 设置匹配模式 | `ReuseTabMatchMode` | `0`
 debug | 是否Debug模式 | `boolean` | `false`
 max | 允许最多复用多少个页面 | `number` | `10`
@@ -113,5 +146,6 @@ excludes | 排除规则，限 `mode=URL` | `RegExp[]` | -
 allowClose | 允许关闭 | `boolean` | `true`
 showCurrent | 总是显示当前页 | `boolean` | `true`
 fixed | 是否固定 | `boolean` | `true`
-change | 切换时回调 | `EventEmitter` | -
 close | 关闭回调 | `EventEmitter` | -
+change | 切换时回调，接收的参数至少包含：`active`、`list` 两个参数 | `EventEmitter` | -
+

@@ -22,7 +22,7 @@ import { MenuService, SettingsService, Menu } from '@delon/theme';
         </div>
     </div>
     <section class="content">
-        <reuse-tab debug></reuse-tab>
+        <reuse-tab></reuse-tab>
         <router-outlet></router-outlet>
     </section>
 </div>

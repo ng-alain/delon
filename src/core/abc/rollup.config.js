@@ -19,6 +19,8 @@ const globals = {
 
     '@angular/cdk': 'ng.cdk',
     '@angular/cdk/coercion': 'ng.cdk.coercion',
+    '@angular/cdk/overlay': 'ng.cdk.overlay',
+    '@angular/cdk/portal': 'ng.cdk.portal',
 
     'rxjs/BehaviorSubject': 'Rx',
     'rxjs/Observable': 'Rx',

@@ -3,32 +3,38 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 import { combineLatest } from 'rxjs/observable/combineLatest';
-import { filter, debounceTime, take, first } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
+
 import { ReuseTabService } from './reuse-tab.service';
-import { ReuseTabCached, ReuseTabNotify, ReuseTabMatchMode } from './interface';
+import { ReuseTabCached, ReuseTabNotify, ReuseTabMatchMode, ReuseItem, ReuseContextI18n, ReuseContextCloseEvent } from './interface';
+import { ReuseTabContextService } from './reuse-tab-context.service';
 
 @Component({
     selector: 'reuse-tab',
     templateUrl: './reuse-tab.component.html',
-    styleUrls: ['./reuse-tab.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    preserveWhitespaces: false
+    preserveWhitespaces: false,
+    providers: [ ReuseTabContextService ]
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private sub$: Subscription;
-    _list: { url: string, title: string, [key: string]: any }[] = [];
-    _pos = 0;
+    list: ReuseItem[] = [];
+    item: ReuseItem;
+    pos = 0;
 
+    // region: properties
     /** 设置匹配模式 */
     @Input() mode: ReuseTabMatchMode = ReuseTabMatchMode.Menu;
+    /** 选项文本国际化 */
+    @Input() i18n: ReuseContextI18n;
     /** 是否Debug模式 */
     @Input()
     get debug() { return this._debug; }
     set debug(value: any) {
         this._debug = coerceBooleanProperty(value);
     }
-    private _debug = true;
+    private _debug = false;
     /** 允许最多复用多少个页面 */
     @Input()
     get max() { return this._max; }
@@ -45,13 +51,6 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         this._allowClose = coerceBooleanProperty(value);
     }
     private _allowClose = true;
-    /** 总是显示当前页 */
-    @Input()
-    get showCurrent() { return this._showCurrent; }
-    set showCurrent(value: any) {
-        this._showCurrent = coerceBooleanProperty(value);
-    }
-    private _showCurrent = true;
     /** 是否固定 */
     @Input()
     get fixed() { return this._fixed; }
@@ -59,10 +58,18 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         this._fixed = coerceBooleanProperty(value);
     }
     private _fixed = true;
+    /** 总是显示当前页 */
+    @Input()
+    get showCurrent() { return this._showCurrent; }
+    set showCurrent(value: any) {
+        this._showCurrent = coerceBooleanProperty(value);
+    }
+    private _showCurrent = true;
     /** 切换时回调 */
-    @Output() change: EventEmitter<any> = new EventEmitter<any>();
+    @Output() change: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
     /** 关闭回调 */
-    @Output() close: EventEmitter<any> = new EventEmitter<any>();
+    @Output() close: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
+    // endregion
 
     constructor(
         public srv: ReuseTabService,
@@ -72,110 +79,117 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         private el: ElementRef,
         private render: Renderer2,
         @Inject(DOCUMENT) private doc: any
-    ) { }
+    ) {
+        const route$ = this.router.events.pipe(
+            filter(evt => evt instanceof NavigationEnd)
+        );
+        this.sub$ = <any>combineLatest(this.srv.change, route$).subscribe(([ res, e ]) => this.genList(res));
+    }
 
-    private gen(url?: string) {
-        if (!url) url = this.srv.getUrl(this.route.snapshot);
-        const ls = [...this.srv.items].map((item: ReuseTabCached, index: number) => {
-            return {
+    private genList(notify?: ReuseTabNotify) {
+        const ls = this.srv.items.map((item: ReuseTabCached, index: number) => {
+            return <ReuseItem>{
                 url: item.url,
-                // closabled: this.allowClose && item.closable,
-                title: item.customTitle || item.title,
-                index
+                title: item.title,
+                closable: this.allowClose && item.closable && this.srv.count > 0,
+                index,
+                active: false,
+                last: false
             };
         });
-        if (this.showCurrent) {
+
+        if (notify && notify.active === 'close' && (this.item && this.item.url === notify.url)) {
+            // to next tab
+            this.list = ls;
+            this.to(this.pos);
+            return;
+        } else if (this.showCurrent) {
+            const snapshot = this.route.snapshot;
+            const url = this.srv.getUrl(snapshot);
             const idx = ls.findIndex(w => w.url === url);
             if (idx !== -1) {
-                this._pos = idx;
+                this.pos = idx;
             } else {
-                ls.push({
+                const snapshotTrue = this.srv.getTruthRoute(snapshot);
+                ls.push(<ReuseItem>{
                     url,
-                    title: this.srv.getTitle(url, this.srv.getTruthRoute(this.route.snapshot)),
-                    // closabled: this.allowClose && this.srv.getClosable(url, next.snapshot),
-                    index: -1
+                    title: this.srv.getTitle(url, snapshotTrue),
+                    closable: this.allowClose && this.srv.count > 0 && this.srv.getClosable(url, snapshotTrue),
+                    index: ls.length,
+                    active: false,
+                    last: false
                 });
-                this._pos = ls.length;
+                this.pos = ls.length - 1;
             }
         } else {
-            this._pos = ls.length;
+            this.pos = ls.length - 1;
         }
 
-        this._list = ls;
+        this.list = ls;
+        this.refStatus(false);
         this.visibility();
-        this.cd.markForCheck();
+        this.cd.detectChanges();
     }
 
     private visibility() {
         if (this.showCurrent) return ;
-        this.render.setStyle(this.el.nativeElement, 'display', this._list.length === 0 ? 'none' : 'block');
+        this.render.setStyle(this.el.nativeElement, 'display', this.list.length === 0 ? 'none' : 'block');
+    }
+
+    // region: UI
+
+    cmChange(res: ReuseContextCloseEvent) {
+        switch (res.type) {
+            case 'close':
+                this._close(res.item.index);
+                break;
+            case 'closeRight':
+                this.srv.closeRight(res.item.url);
+                break;
+            case 'clear':
+            case 'closeOther':
+                this.srv.clear();
+                break;
+        }
+        this.close.emit(null);
+    }
+
+    refStatus(dc = true) {
+        if (this.list.length) {
+            this.list[this.list.length - 1].last = true;
+            this.list.forEach((i, idx) => i.active = this.pos === idx);
+        }
+        if (dc) this.cd.detectChanges();
     }
 
     to(index: number) {
-        const item = this._list[index];
-        if (!item || !item.url) return ;
-        this.router.navigateByUrl(item.url);
-        this.change.emit(item);
+        const item = this.list[index];
+        this.router.navigateByUrl(item.url).then((res) => {
+            if (!res) return;
+            this.pos = index;
+            this.item = item;
+            this.refStatus();
+            this.change.emit(item);
+        });
     }
 
-    private removeByUrl(url: string): string {
-        const removeIdx = this._list.findIndex(w => w.url === url);
-        if (removeIdx === -1) return null;
-
-        this.remove(removeIdx);
-        return this._list[Math.min(removeIdx, this._list.length - 1)].url;
-    }
-
-    remove(idx: number) {
-        if (this.showCurrent && this._list.length === 1) return false;
-
-        const item = this._list[idx];
-        if (!this.srv._remove(item)) return false;
-
-        this._list.splice(idx, 1);
-
-        this.visibility();
-        this.cd.markForCheck();
+    _close(idx: number) {
+        const item = this.list[idx];
+        if (!this.srv.close(item.url)) {
+            // should remove unstored tags if always show current page
+            this.list.splice(idx, 1);
+            this.to(this.list.length - 1);
+        }
 
         this.close.emit(item);
-
-        if (this._pos === idx) {
-            this.to(this._pos);
-        }
     }
 
-    clear() {
-        this._list = [ this._list.find(w => w.url === this.router.url) ];
-        this.srv.clear();
-        this.close.emit(null);
-    }
+    // endregion
 
     ngOnInit(): void {
         this.setClass();
 
-        const route$ = this.router.events.pipe(
-            filter(evt => evt instanceof NavigationEnd)
-        );
-        this.sub$ = <any>combineLatest(this.srv.change, route$).pipe(
-            debounceTime(200)
-        ).subscribe(([ res, e ]: [ any, any ]) => {
-            let nextUrl = this.router.url;
-            if (res && res.active === 'remove' && res.url) {
-                nextUrl = this.removeByUrl(res.url);
-                if (nextUrl === null) return ;
-            }
-            this.gen(nextUrl);
-        });
-
-        const title$ = this.srv.change.pipe(
-            filter(w => w && w.active === 'title'),
-            first()
-        ).subscribe(res => {
-            this.gen(this.router.url);
-            title$.unsubscribe();
-        });
-
-        this.gen();
+        this.genList();
     }
 
     private setClass() {
@@ -199,10 +213,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         this.srv.debug = this.debug;
 
         this.setClass();
-        this.cd.markForCheck();
+        this.cd.detectChanges();
     }
 
     ngOnDestroy(): void {
-        if (this.sub$) this.sub$.unsubscribe();
+        this.sub$.unsubscribe();
     }
 }
