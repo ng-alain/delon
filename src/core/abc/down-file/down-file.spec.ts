@@ -101,6 +101,19 @@ describe('abc: down-file', () => {
         ret.flush(genFile('docx', false));
         expect(context.error).toHaveBeenCalled();
     });
+
+    it('should be throw error when http status is not 200', () => {
+        spyOn(fs, 'saveAs');
+        spyOn(context, 'error');
+        expect(context.error).not.toHaveBeenCalled();
+        expect(fs.saveAs).not.toHaveBeenCalled();
+        (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+        const ret = httpBed
+            .expectOne(req => req.url.startsWith('/')) as TestRequest;
+        ret.flush(null, { status: 201, statusText: '201' });
+        expect(fs.saveAs).not.toHaveBeenCalled();
+        expect(context.error).toHaveBeenCalled();
+    });
 });
 
 @Component({

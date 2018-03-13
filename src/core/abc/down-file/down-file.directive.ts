@@ -36,7 +36,7 @@ export class DownFileDirective {
             responseType: 'blob',
             observe: 'response'
         }).subscribe((res: HttpResponse<Blob>) => {
-            if (res.body.size <= 0) {
+            if (res.status !== 200 || res.body.size <= 0) {
                 this.error.emit(res);
                 return;
             }
