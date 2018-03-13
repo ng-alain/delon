@@ -6,6 +6,26 @@ title:
 type: Other
 ---
 
+### 0.8.0
+
+`2018-3-13`
+
+- 脚手架
+    - **BREAKING CHANGES** 变更 `notice-icon` 组件的 `popupVisibleChange` 事件名为 `popoverVisibleChange`，([2ec3c40](https://github.com/cipchk/ng-alain/commit/2ec3c40))
+    - 修复 `nz-schema-form` 第三方小部件导入失败问题，([d676598](https://github.com/cipchk/ng-alain/commit/d676598))
+- @delon/theme
+    - 修复 `_HttpClient` 无法捕获异常问题
+    - 重构 `MenuService`、`ScrollService` 部分冗余逻辑
+- @delon/mock
+    - 更友好日志，只对命中的规则进行提醒
+- @delon/auth
+    - 修复无法捕获异常问题
+- delon/abc
+    - 重构 `reuse-tab`，[#23](https://github.com/cipchk/delon/issues/23)，[#252](https://github.com/cipchk/ng-alain/issues/252)，[#260](https://github.com/cipchk/ng-alain/issues/260)，[#272](https://github.com/cipchk/ng-alain/issues/272)，[#284](https://github.com/cipchk/ng-alain/issues/284)，[#296](https://github.com/cipchk/ng-alain/issues/296)，[#306](https://github.com/cipchk/ng-alain/issues/306)，[#320](https://github.com/cipchk/ng-alain/issues/320)，[#326](https://github.com/cipchk/ng-alain/issues/326)，[#328](https://github.com/cipchk/ng-alain/issues/328)
+    - 修复 `down-file` 没对状态码的校验，[#44](https://github.com/cipchk/delon/issues/44)
+- ALL
+    - 对所有组件设置 `preserveWhitespaces: false`
+
 ### 0.7.1
 
 `2018-3-6`
@@ -46,8 +66,6 @@ type: Other
 - @delon/cli
     - 新增 `guard`、`app-shell` 命令
     - 新增 `module` 命令增加无须路由组件注册区域
-
-> `1.0.0` 之前最后一个次版本
 
 ### 0.6.7
 
