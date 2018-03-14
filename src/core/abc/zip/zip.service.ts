@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
-import { LazyService } from '../utils/lazy.service';
+import { LazyService, LazyResult } from '../utils/lazy.service';
 import { ZipConfig, DA_ZIP_CONFIG, ZipWriteOptions, ZipSaveOptions } from './interface';
 
 declare var JSZip: any;
@@ -15,7 +15,7 @@ export class ZipService {
     ) {
     }
 
-    private init(): Promise<void> {
+    private init(): Promise<LazyResult[]> {
         const config = Object.assign({
             url: `//cdn.bootcss.com/jszip/3.1.5/jszip.min.js`,
             utils: [ ]

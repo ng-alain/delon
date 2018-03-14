@@ -14,6 +14,7 @@ export interface LazyResult {
 export class LazyService {
 
     private list: any = {};
+    private cached: any = {};
     private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
 
     constructor(@Inject(DOCUMENT) private doc: Document) {}
@@ -24,15 +25,16 @@ export class LazyService {
 
     clear(): void {
         this.list = {};
+        this.cached = {};
     }
 
-    load(paths: string | string[]): Promise<void> {
-        const promises: Promise<LazyResult>[] = [];
+    load(paths: string | string[]): Promise<LazyResult[]> {
 
         if (!Array.isArray(paths)) paths = [ paths ];
 
+        const promises: Promise<LazyResult>[] = [];
         paths.forEach(path => {
-            if (path.endsWith('.js'))
+            if (path.includes('.js'))
                 promises.push(this.loadScript(path));
             else
                 promises.push(this.loadStyle(path));
@@ -40,21 +42,22 @@ export class LazyService {
 
         return Promise.all(promises).then(res => {
             this._notify.next(res);
+            return Promise.resolve(res);
         });
     }
 
     loadScript(path: string): Promise<LazyResult> {
         return new Promise((resolve) => {
             if (this.list[path] === true) {
-                resolve({
-                    path: path,
-                    loaded: true,
-                    status: 'ok'
-                });
+                resolve(this.cached[path]);
                 return;
             }
 
             this.list[path] = true;
+            const onSuccess = (item: any) => {
+                this.cached[path] = item;
+                resolve(item);
+            };
 
             const node = this.doc.createElement('script');
             node.type = 'text/javascript';
@@ -64,7 +67,7 @@ export class LazyService {
                 (<any>node).onreadystatechange = () => {
                     if ((<any>node).readyState === 'loaded' || (<any>node).readyState === 'complete') {
                         (<any>node).onreadystatechange = null;
-                        resolve({
+                        onSuccess({
                             path: path,
                             loaded: true,
                             status: 'ok'
@@ -73,14 +76,14 @@ export class LazyService {
                 };
             } else {
                 node.onload = () => {
-                    resolve({
+                    onSuccess({
                         path: path,
                         loaded: true,
                         status: 'ok'
                     });
                 };
             }
-            node.onerror = (error: any) => resolve({
+            node.onerror = (error: any) => onSuccess({
                 path: path,
                 loaded: false,
                 status: 'error'
@@ -92,22 +95,22 @@ export class LazyService {
     loadStyle(path: string): Promise<LazyResult> {
         return new Promise((resolve) => {
             if (this.list[path] === true) {
-                resolve({
-                    path: path,
-                    loaded: true,
-                    status: 'ok'
-                });
+                resolve(this.cached[path]);
                 return;
             }
 
             this.list[path] = true;
+            const onSuccess = (item: any) => {
+                this.cached[path] = item;
+                resolve(item);
+            };
 
             const node = this.doc.createElement('link');
             node.rel = 'stylesheet';
             node.type = 'text/css';
             node.href = path;
             this.doc.getElementsByTagName('head')[0].appendChild(node);
-            resolve({
+            onSuccess({
                 path: path,
                 loaded: true,
                 status: 'ok'

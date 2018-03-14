@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { XlsxExportOptions, DA_XLSX_CONFIG, XlsxConfig, XlsxExportSheet } from './interface';
-import { LazyService } from '../utils/lazy.service';
+import { LazyService, LazyResult } from '../utils/lazy.service';
 
 declare var XLSX: any;
 
@@ -16,7 +16,7 @@ export class XlsxService {
     ) {
     }
 
-    private init(): Promise<void> {
+    private init(): Promise<LazyResult[]> {
         const config = Object.assign({
             url: `//cdn.bootcss.com/xlsx/0.11.17/xlsx.full.min.js`,
             modules: []
