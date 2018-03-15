@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { I18NService } from '../../../i18n/service';
@@ -7,8 +7,7 @@ import { MetaService } from '../../../core/meta.service';
 @Component({
     selector: 'app-docs',
     templateUrl: './docs.component.html',
-    styleUrls: [ './docs.component.less' ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: [ './docs.component.less' ]
 })
 export class DocsComponent implements OnInit, OnDestroy {
 
@@ -65,7 +64,6 @@ export class DocsComponent implements OnInit, OnDestroy {
             const toc = this.router.parseUrl(this.router.url).fragment || '';
             if (toc) document.querySelector(`#${toc}`).scrollIntoView();
         }, 200);
-        this.cd.detectChanges();
     }
     get item(): any {
         return this._item;
@@ -75,10 +73,8 @@ export class DocsComponent implements OnInit, OnDestroy {
         public i18n: I18NService,
         public meta: MetaService,
         private router: Router,
-        protected sanitizer: DomSanitizer,
-        private cd: ChangeDetectorRef
+        protected sanitizer: DomSanitizer
     ) {
-        cd.detach();
     }
 
     goTo(item: any) {
@@ -93,7 +89,6 @@ export class DocsComponent implements OnInit, OnDestroy {
             for (let i = 0, element; element = elements[i++];) {
                 hljs.highlightBlock(element);
             }
-            this.cd.detectChanges();
         }, 250);
     }
 

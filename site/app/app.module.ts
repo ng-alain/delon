@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { NzClipboardModule } from 'ng-clipboard-antd';
+
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
 
@@ -15,6 +17,8 @@ import { LayoutComponent } from './layout/layout.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 
+import { DelonModule } from './delon.module';
+
 export function StartupServiceFactory(startupService: StartupService): Function {
     return () => startupService.load();
 }
@@ -24,10 +28,12 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         BrowserModule,
         BrowserAnimationsModule,
         CoreModule,
+        DelonModule.forRoot(),
         SharedModule,
         RoutesModule,
         // i18n
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        NzClipboardModule.forRoot()
     ],
     providers: [
         I18NService,

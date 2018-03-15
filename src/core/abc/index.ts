@@ -27,13 +27,14 @@ import { AdFullContentModule } from './full-content/full-content.module';
 import { AdXlsxModule } from './xlsx/xlsx.module';
 import { AdZipModule } from './zip/zip.module';
 import { AdNumberToChineseModule } from './number-to-chinese/number-to-chinese.module';
+import { AdLodopModule } from './lodop/lodop.module';
 
 const MODULES = [
     AdErrorCollectModule, AdFooterToolbarModule, AdSidebarNavModule, AdDownFileModule, AdImageModule,
     AdAvatarListModule, AdDescListModule, AdEllipsisModule, AdGlobalFooterModule, AdExceptionModule,
     AdNoticeIconModule, AdNumberInfoModule, AdProHeaderModule, AdResultModule, AdStandardFormRowModule,
     AdTagSelectModule, AdTrendModule, AdUtilsModule, AdChartsModule, AdCountDownModule, AdSimpleTableModule,
-    AdReuseTabModule, AdFullContentModule, AdXlsxModule, AdZipModule, AdNumberToChineseModule
+    AdReuseTabModule, AdFullContentModule, AdXlsxModule, AdZipModule, AdNumberToChineseModule, AdLodopModule
 ];
 
 // endregion
@@ -66,6 +67,7 @@ export * from './full-content';
 export * from './xlsx';
 export * from './zip';
 export * from './number-to-chinese';
+export * from './lodop';
 
 // endregion
 
@@ -75,7 +77,7 @@ export * from './number-to-chinese';
         AdAvatarListModule.forRoot(), AdDescListModule.forRoot(), AdEllipsisModule.forRoot(), AdExceptionModule.forRoot(), AdExceptionModule.forRoot(),
         AdNoticeIconModule.forRoot(), AdNumberInfoModule.forRoot(), AdProHeaderModule.forRoot(), AdResultModule.forRoot(), AdStandardFormRowModule.forRoot(),
         AdTagSelectModule.forRoot(), AdTrendModule.forRoot(), AdUtilsModule.forRoot(), AdChartsModule.forRoot(), AdCountDownModule.forRoot(), AdSimpleTableModule.forRoot(),
-        AdReuseTabModule.forRoot(), AdFullContentModule.forRoot(), AdXlsxModule.forRoot(), AdZipModule.forRoot(), AdNumberToChineseModule.forRoot()
+        AdReuseTabModule.forRoot(), AdFullContentModule.forRoot(), AdXlsxModule.forRoot(), AdZipModule.forRoot(), AdNumberToChineseModule.forRoot(), AdLodopModule.forRoot()
     ],
     exports: MODULES
 })

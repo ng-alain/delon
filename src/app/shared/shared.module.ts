@@ -141,7 +141,8 @@ import {
     AdUtilsModule,
     AdFullContentModule,
     AdXlsxModule,
-    AdNumberToChineseModule
+    AdNumberToChineseModule,
+    AdLodopModule
 } from '@delon/abc';
 const ABCMODULES = [
     AdSimpleTableModule,
@@ -167,7 +168,8 @@ const ABCMODULES = [
     AdUtilsModule,
     AdFullContentModule,
     AdXlsxModule,
-    AdNumberToChineseModule
+    AdNumberToChineseModule,
+    AdLodopModule
 ];
 // endregion
 
