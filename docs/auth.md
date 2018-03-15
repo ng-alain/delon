@@ -192,7 +192,7 @@ token_send_place = 'header';
 
 ## 示例
 
-[DEMO](https://cipchk.github.io/ng-alain/pro/user/login)，账密或其他登录方式登录，并观察浏览器 localStorage 存储数据的变化。
+[DEMO](https://cipchk.github.io/ng-alain/passport/login)，账密或其他登录方式登录，并观察浏览器 localStorage 存储数据的变化。
 
 ## API
 
