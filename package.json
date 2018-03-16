@@ -1,7 +1,7 @@
 {
 	"name": "delon",
-	"version": "0.8.0",
-	"version_laster": "0.8.0",
+	"version": "0.8.1",
+	"version_laster": "0.8.1",
 	"version_next": "0.6.0-rc.3",
 	"typings": "index.d.ts",
 	"description": "Delon is a set of essential modules for ng-alain.",

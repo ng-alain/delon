@@ -6,6 +6,21 @@ title:
 type: Other
 ---
 
+### 0.8.1
+
+`2018-3-16`
+
+- 脚手架
+    - 增加 Lodop 打印[示例页](https://cipchk.github.io/ng-alain/other/print)
+- @delon/abc
+    - 增加 [Lodop](http://ng-alain.com/components/lodop) 组件，最强打印插件
+    - 修复 `LazyService` 延迟加载资源的JS脚本的判断规则
+    - 修复 `Pip` 饼图 tooltip 百分比显示错误，[#331](https://github.com/cipchk/ng-alain/issues/331)
+- @delon/cli
+    - 修复 @delon 使用新版本
+- site
+    - 修复链接错误，[#333](https://github.com/cipchk/ng-alain/issues/333)
+
 ### 0.8.0
 
 `2018-3-13`

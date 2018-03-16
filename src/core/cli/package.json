@@ -1,6 +1,6 @@
 {
 	"name": "@delon/cli",
-	"version": "0.8.0",
+	"version": "0.8.1",
 	"description": "Schematics for ng-alain",
 	"main": "./bundles/index.js",
 	"module": "./index.js",

@@ -69,7 +69,7 @@ import { AlainThemeModule } from '@delon/theme';
 // region: global config functions
 
 import { AdLodopConfig } from '@delon/abc';
-function adLodopConfig(): AdLodopConfig {
+export function adLodopConfig(): AdLodopConfig {
     return Object.assign(new AdLodopConfig(), {
         license: `A59B099A586B3851E0F0D7FDBF37B603`,
         licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`
