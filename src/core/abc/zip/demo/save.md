@@ -57,6 +57,9 @@ export class DemoComponent {
                 this.msg.success('download success');
                 this.data = [];
             });
+        }, (error: any) => {
+            console.warn(error);
+            this.msg.error(JSON.stringify(error));
         });
     }
 }

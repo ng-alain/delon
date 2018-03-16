@@ -73,8 +73,8 @@ export class ZipService {
             this.http.request('GET', url, { responseType: 'arraybuffer' }).subscribe((res: ArrayBuffer) => {
                 zip.file(path, res);
                 resolve();
-            }, () => {
-                reject();
+            }, (error: any) => {
+                reject({ url, error });
             });
         });
     }
