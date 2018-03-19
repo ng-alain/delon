@@ -146,7 +146,7 @@ export class MetaService {
         if (!this._menus) this.genMenus(url);
         const idx = this._platMenus.findIndex(w => w.url === url);
         if (idx === -1) return;
-        if (idx > 0) this.prev = this._platMenus[idx - 1];
+        if (idx > 1) this.prev = this._platMenus[idx - 1];
         if ((idx + 1) <= this._platMenus.length) this.next = this._platMenus[idx + 1];
     }
 }

@@ -18,8 +18,8 @@
 <div nz-row *ngIf="meta.next || meta.prev">
     <div nz-col nzXs="24" nzSm="24" nzMd="20" nzOffset="4">
         <section class="prev-next-nav">
-            <a class="prev-page" *ngIf="meta.prev" routerLink="{{meta.prev.url}}"><span>{{i18n.get(meta.prev.title)}}</span><span class="chinese">{{meta.prev.subtitle}}</span></a>
-            <a class="next-page" *ngIf="meta.next" routerLink="{{meta.next.url}}"><span>{{i18n.get(meta.next.title)}}</span><span class="chinese">{{meta.next.subtitle}}</span></a>
+            <a class="prev-page" *ngIf="meta.prev" routerLink="{{meta.prev.url}}"><span>{{meta.prev.title}}</span><span class="chinese">{{meta.prev.subtitle}}</span></a>
+            <a class="next-page" *ngIf="meta.next" routerLink="{{meta.next.url}}"><span>{{meta.next.title}}</span><span class="chinese">{{meta.next.subtitle}}</span></a>
         </section>
     </div>
 </div>

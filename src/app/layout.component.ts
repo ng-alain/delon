@@ -12,8 +12,14 @@ import { MenuService, SettingsService, Menu } from '@delon/theme';
                 <img class="collapsed" src="./assets/img/logo.svg" alt="{{settings.app.name}}" style="max-height:30px;" />
             </a>
         </div>
-        <div class="item" (click)="toggleCollapsedSideabar()">
-            <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+        <div class="top-nav-wrap">
+            <ul class="top-nav">
+                <li>
+                    <div class="item" (click)="toggleCollapsedSideabar()">
+                        <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="aside">

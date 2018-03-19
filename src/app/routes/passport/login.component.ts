@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalHelper } from '@delon/theme';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
     selector: 'login',
@@ -9,8 +9,8 @@ import { ModalHelper } from '@delon/theme';
     `
 })
 export class LoginComponent {
-    constructor(private router: Router, private modalHelper: ModalHelper) {
-        modalHelper.removeAll();
+    constructor(private router: Router, modalSrv: NzModalService) {
+        modalSrv.closeAll();
     }
 
     to() {

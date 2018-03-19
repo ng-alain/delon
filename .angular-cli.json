@@ -12,9 +12,9 @@
         "index": "index.html",
         "main": "main.ts",
         "polyfills": "polyfills.ts",
-        "test": "test.ts",
+        "test": "../packages/test.ts",
         "tsconfig": "tsconfig.app.json",
-        "testTsconfig": "tsconfig.spec.json",
+        "testTsconfig": "../packages/tsconfig.spec.json",
         "prefix": "app",
         "styles": [
             "styles.less"
@@ -65,7 +65,10 @@
     },
     "lint": [{
             "project": "src/tsconfig.app.json",
-            "exclude": "**/node_modules/**"
+            "exclude": [
+                "**/node_modules/**",
+                "**/packages/cli/**"
+            ]
         },
         {
             "project": "src/tsconfig.spec.json",
@@ -79,11 +82,10 @@
         "codeCoverage": {
             "exclude": [
                 "./site/**/*",
-                "./src/app/**/*",
-                "./src/core/abc/charts/**/*",
-                "./src/polyfills.ts",
-                "./src/test.ts",
-                "./src/core/cli/**/*"
+                "./src/**/*",
+                "./packages/abc/charts/**/*",
+                "./packages/cli/**/*",
+                "./packages/test.ts"
             ]
         }
     },

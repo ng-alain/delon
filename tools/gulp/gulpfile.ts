@@ -1,2 +1,2 @@
-import './tasks/build';
-import './tasks/site';
+import './build';
+import './site';

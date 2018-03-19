@@ -33,8 +33,8 @@ module.exports = {
         },
         {
             name: 'components',
-            src: [ './src/core/abc' ],
-            ignores: [ './src/core/abc/README.md' ],
+            src: [ './packages/abc' ],
+            ignores: [ './packages/abc/README.md' ],
             module: '@delon/abc',
             defaultRoute: 'avatar-list',
             types: [

@@ -6,7 +6,6 @@ import { MetaService } from '../../../core/meta.service';
 @Component({
     selector: 'app-content',
     templateUrl: './content.component.html',
-    styleUrls: [ './content.component.less' ],
     host: {
         '[class.main-wrapper]': 'true'
     }

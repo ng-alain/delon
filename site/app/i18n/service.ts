@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { zhCN, enUS, NzLocaleService } from 'ng-zorro-antd';
 import { TranslateService } from '@ngx-translate/core';
+import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd';
 import { ENUS } from './en-US';
 import { ZHCN } from './zh-CN';
 
@@ -11,7 +11,7 @@ export class I18NService {
 
     change: EventEmitter<LangType> = new EventEmitter<LangType>();
 
-    constructor(private nzLocalService: NzLocaleService, private translate: TranslateService) {
+    constructor(private nzLocalService: NzI18nService, private translate: TranslateService) {
         this.translate.setTranslation('en-US', ENUS);
         this.translate.setTranslation('zh-CN', ZHCN);
         this.translate.setDefaultLang('en-US');
@@ -19,7 +19,7 @@ export class I18NService {
 
     use(lang: LangType) {
         this.translate.use(lang);
-        this.nzLocalService.setLocale(lang === 'en-US' ? enUS : zhCN);
+        this.nzLocalService.setLocale(lang === 'en-US' ? en_US : zh_CN);
         this.change.emit(lang);
     }
 

@@ -5,6 +5,8 @@ export const ZHCN = {
     'app.header.menu.home': '首页',
     'app.header.menu.docs': '文档',
     'app.header.menu.components': '组件',
+    'app.header.menu.tool': '工具',
+    'app.header.menu.theme': '自定义主题',
     'app.header.lang': 'English',
     'app.footer.resources': '相关资源',
     'app.footer.angular': '中文网',
@@ -25,5 +27,5 @@ export const ZHCN = {
     'app.component.refer.link': '独立使用 abc 组件',
     'app.demo.copy': '复制代码',
     'app.demo.copied': '复制成功',
-    'app.demo.plnkr': '在 Plnkr 中打开'
+    'app.demo.stackblitz': '在 StackBlitz 中打开'
 };

@@ -10,14 +10,14 @@
         "node"
       ],
       "paths": {
-        "@delon/*": [ "./core/*" ]
+        "@delon/*": [ "../packages/*" ]
       }
     },
     "files": [
       "test.ts"
     ],
     "exclude": [
-        "./core/cli/**/*"
+      "../packages/cli/**/*"
     ],
     "include": [
       "**/*.spec.ts",

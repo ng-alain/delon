@@ -6,8 +6,7 @@ import { MetaService } from '../../../core/meta.service';
 
 @Component({
     selector: 'app-docs',
-    templateUrl: './docs.component.html',
-    styleUrls: [ './docs.component.less' ]
+    templateUrl: './docs.component.html'
 })
 export class DocsComponent implements OnInit, OnDestroy {
 

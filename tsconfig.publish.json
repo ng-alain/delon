@@ -1,46 +1,52 @@
 {
     "compilerOptions": {
-      "declaration": true,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "lib": [
-        "es7",
-        "dom"
-      ],
-      "module": "es2015",
-      "moduleResolution": "node",
-      "noEmitOnError": true,
-      "outDir": "./.lib",
-      "rootDir": "./.ng_build",
-      "sourceMap": true,
-      "target": "es5",
-      "inlineSources": true,
-      "stripInternal": true,
-      "baseUrl": ".",
-      "paths": {
-        "@delon/theme": ["./.ng_build/theme"],
-        "@delon/abc": ["./.ng_build/abc"],
-        "@delon/acl": ["./.ng_build/acl"]
-      },
-      "skipLibCheck": true,
-      "typeRoots": [
-        "node_modules/@types"
-      ]
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "es7",
+            "dom"
+        ],
+        "module": "es2015",
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "outDir": "./.lib",
+        "rootDir": "./.ng_build",
+        "sourceMap": true,
+        "target": "es5",
+        "inlineSources": true,
+        "stripInternal": true,
+        "baseUrl": ".",
+        "paths": {
+            "@delon/theme": [
+                "./.ng_build/theme"
+            ],
+            "@delon/abc": [
+                "./.ng_build/abc"
+            ],
+            "@delon/acl": [
+                "./.ng_build/acl"
+            ]
+        },
+        "skipLibCheck": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ]
     },
     "include": [
-      "./.ng_build/**/*"
+        "./.ng_build/**/*"
     ],
     "files": [
-      "./src/typings.d.ts"
+        "./src/typings.d.ts"
     ],
     "exclude": [
-      "./.ng_build/**/*.e2e.ts",
-      "./.ng_build/**/*.spec.ts"
+        "./.ng_build/**/*.e2e.ts",
+        "./.ng_build/**/*.spec.ts"
     ],
     "angularCompilerOptions": {
-      "preserveWhiteSpace": false,
-      "skipTemplateCodegen": true,
-      "strictMetadataEmit": false,
-      "genDir": "./.ng_compiled"
+        "preserveWhiteSpace": false,
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": false,
+        "genDir": "./.ng_compiled"
     }
-  }
+}

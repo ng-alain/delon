@@ -1,0 +1,80 @@
+// Layout Gutter
+@layout-gutter: 8px;
+
+@sm:    @layout-gutter;
+@md:    @layout-gutter * 2;
+@lg:    @layout-gutter * 3;
+
+@grid-breakpoints:
+    xs @screen-xs,
+    sm @screen-sm,
+    md @screen-md,
+    lg @screen-lg,
+    xl @screen-xl;
+
+// spaceing
+@spacings:
+    0  0,
+    sm @sm,
+    md @md,
+    lg @lg;
+
+// type
+@ul-ol-margin:      18px;
+
+// position
+@zindex-base:       @zindex-back-top - 1;
+@zindex-fixed:      @zindex-base;
+
+// 文本
+@text-sm:       @font-size-base + 0; // 12px
+@text-md:       @font-size-base + 2; // 14px
+@text-lg:       @font-size-base + 4; // 16px
+
+// icon
+@icon-sm:       @font-size-base * 2; // 24px
+@icon-md:       @font-size-base * 4; // 48px
+@icon-lg:       @font-size-base * 6; // 72px
+
+// 宽度
+@widths:
+    sm @layout-gutter * 20, // 160px
+    md @layout-gutter * 30, // 240px
+    lg @layout-gutter * 40; // 320px
+
+// 圆角
+@border-radius-md:       @border-radius-base; // 4px
+@border-radius-lg:       @border-radius-base + 2px; // 6px
+
+@muted-color:  @grey-7;
+
+// Colors
+@white:     #fff;
+@black:     #000;
+
+// scrollbar
+@scrollbar-width:           6px;
+@scrollbar-height:          6px;
+@scrollbar-track-color:     rgba(0, 0, 0, 0.3);
+@scrollbar-thumb-color:     #6e6e6e;
+
+// type
+// ==========
+
+// font-size
+// https://ant.design/docs/spec/font-cn#字号
+@font-size-large:         @font-size-base + 8;  // 20px
+@font-size-small:         @font-size-base;      // 12px
+
+@h1-font-size:            @font-size-base + 20; // 32px
+@h2-font-size:            @font-size-base + 12; // 24px
+@h3-font-size:            @font-size-base + 8;  // 20px
+@h4-font-size:            @font-size-base + 4;  // 16px
+@h5-font-size:            @font-size-base + 2;  // 14px
+@h6-font-size:            @font-size-base;      // 12px
+
+@enable-all-colors:           true;
+
+// Code
+@code-border-color:           #eee;
+@code-bg:                     #f7f7f7;

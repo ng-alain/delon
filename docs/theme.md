@@ -6,30 +6,22 @@ title:
 type: Advance
 ---
 
-`@delon/theme` 的主题系统包含了[几十种参数](//github.com/cipchk/delon/blob/master/src/core/theme/styles/app/variables.less)，你可以通过覆盖参数数值进而定制一些特别的需求。
+`@delon/theme` 的主题系统包含了[几十种参数](//github.com/cipchk/delon/blob/master/packages/theme/styles/variables)，你可以通过覆盖参数数值进而定制一些特别的需求。
 
 ## 如何覆盖参数
 
-ng-alain 脚手架里有一个叫 [_alain-custom-variables.less](//github.com/cipchk/ng-alain/blob/master/src/styles/_alain-custom-variables.less) LESS文件，允许你在注册 ng-alain 主题样式**之前**重新覆盖参数数值，例如：开启强制所有 `ng-zorro-antd` 组件字号为 `14px`， 只需要前重新覆盖 `@focusing-enabled: true` 参数数值即可。
-
-## 关于 ng-zorro-antd 字号问题
-
-默认情况下它是 `12px` 字号，就目前屏幕而言太小了，Ant Design 3.0 默认已经变更为 `14px`，而当下 ng-zorro-antd 的进度恐怕还需要一段时间才能升级至 3.0，所以 `@focusing-enabled` 算是目前的一种实验性功能，当然运行得还很不错。
-
-> 当字号变大时，如果行高不跟着变化，会让整体变形，因此还需要注意 `@nz-patch-line-height` 的调整；若为 `14px` 的情况下，你无须理会，因为默认已经做了调整。
+ng-alain 脚手架里有一个叫 [theme.less](//github.com/cipchk/ng-alain/blob/master/src/styles/theme.less) LESS文件，允许你在注册 ng-alain 主题样式**之前**重新覆盖参数数值，我们也提供一个简单的[自定义主题](/theme)工具，可以简单配置并将生成主题参数粘贴至 [theme.less](//github.com/cipchk/ng-alain/blob/master/src/styles/theme.less) 可以实时变化 ng-alain 的主题效果。
 
 ## 参数列表
 
-ng-alain 默认很多字号、尺寸都是以`@font-size-base` 变量为基础进行变形，就目前版本而言默认是 `12px`。
-
-> Ant Design 的字号是 `@font-size-base` 变量，但是我们无法去改它，这是因为即便修改了也无法真正更改 ng-zorro-antd 相应的组件字号。
+ng-alain 默认很多字号、尺寸都是以`@font-size-base` 变量为基础进行变形，就目前版本而言默认是 `14px`。
 
 ### 公共类
 
 | 名称 | 默认值 | 功能 |
 | --- | --- | --- |
 | `@layout-gutter` | `8px` | antd布局间距，不可改变 |
-| `@font-size-base` | `12px` | antd字号，不可改变 |
+| `@font-size-base` | `14px` | antd字号，不可改变 |
 | `@primary-color` | 蓝色 | antd 主视觉颜色，不可改变 |
 | `@text-sm` | `@font-size-base + 0` | 小号文本 |
 | `@text-md` | `@font-size-base + 2` | 中号文本 |
@@ -71,12 +63,12 @@ ng-alain 默认很多字号、尺寸都是以`@font-size-base` 变量为基础�
 | `@aside-bg` | `#fff` | 侧边栏背景色 |
 | `@aside-nav-fs` | `14px` | 侧边栏菜单字号 |
 | `@aside-nav-padding-top-bottom` | `@layout-gutter` | 侧边栏菜单项上下内边距 |
-| `@aside-nav-item-height` | `#fcfcfc` | 侧边栏菜单项高度 |
+| `@aside-nav-item-height` | `38px` | 侧边栏菜单项高度 |
 | `@aside-nav-text-color` | `rgba(0, 0, 0, 0.65)` | 侧边栏菜单文本颜色 |
 | `@aside-nav-text-hover-color` | `#108ee9` | 侧边栏菜单文本悬停颜色 |
 | `@aside-nav-group-text-color` | `rgba(0, 0, 0, 0.43)` | 侧边栏菜单分组文本颜色 |
 | `@aside-nav-selected-text-color` | `#108ee9` | 侧边栏菜单激活时文本颜色 |
-| `@aside-nav-selected-text-color` | `#fcfcfc` | 侧边栏菜单激活时背景颜色 |
+| `@aside-nav-selected-bg` | `#fcfcfc` | 侧边栏菜单激活时背景颜色 |
 | `@aside-collapsed-wd` | `@layout-gutter * 8` | 侧边栏收缩后宽度 |
 | `@aside-collapsed-nav-fs` | `24px` | 侧边栏收缩后文本字号 |
 | `@aside-scrollbar-width` | `0` | 侧边栏滚动条宽度 |
@@ -102,7 +94,3 @@ ng-alain 默认很多字号、尺寸都是以`@font-size-base` 变量为基础�
 | `@search-form-bg` | `#fbfbfb` | 列表页搜索表单背景色 |
 | `@search-form-radius` | `4px` | 列表页搜索表单圆角 |
 | `@preserve-white-spaces-enabled` | `true` | 开启 `preserveWhitespaces` |
-| `@focusing-enabled` | `false` | 开启强制所有 `ng-zorro-antd` 组件字号修订 |
-| `@nz-font-size` | `14px` | `ng-zorro-antd` 组件字号 |
-| `@nz-patch-line-height` | `1.6` | `ng-zorro-antd` 组件行高 |
-| `@focusing-full-color-enabled` | `false` | 开启强制所有 `ng-zorro-antd` 组件主题颜色化 |

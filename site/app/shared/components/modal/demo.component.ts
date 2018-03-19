@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NzModalSubject } from 'ng-zorro-antd';
+import { NzModalRef } from 'ng-zorro-antd';
 
 @Component({
     selector: `app-demo-modal`,
@@ -21,14 +21,14 @@ import { NzModalSubject } from 'ng-zorro-antd';
 export class DemoModalComponent {
     @Input() record: any;
 
-    constructor(private subject: NzModalSubject) {}
+    constructor(private modal: NzModalRef) {}
 
     ok() {
-        this.subject.next(`new time: ${+new Date}`);
+        this.modal.close(`new time: ${+new Date}`);
         this.cancel();
     }
 
     cancel() {
-        this.subject.destroy();
+        this.modal.destroy();
     }
 }

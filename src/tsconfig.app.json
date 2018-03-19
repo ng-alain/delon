@@ -1,17 +1,18 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
+        "sourceMap": false,
       "outDir": "../out-tsc/app",
       "baseUrl": "./",
       "module": "es2015",
       "types": [],
       "paths": {
-        "@delon/*": [ "./core/*" ]
+        "@delon/*": [ "../packages/*" ]
       }
     },
     "exclude": [
       "test.ts",
       "**/*.spec.ts",
-      "./core/cli/**/*"
+      "../packages/cli/**/*"
     ]
   }

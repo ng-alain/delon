@@ -31,11 +31,11 @@ type: Advance
 `@delon/auth` 只有一些接口、服务，因此建议在根模块注入即可：
 
 ```ts
-import { AlainAuthModule, SimpleInterceptor } from '@delon/auth';
+import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
 
 imports: [
     // 注入模块
-    AlainAuthModule.forRoot({
+    DelonAuthModule.forRoot({
         login_url: `/pro/user/login`
     })
 ],
@@ -168,7 +168,7 @@ export class DelonModule {
 
 ### SimpleInterceptor
 
-透过 `AuthOptions` 可以指定参数名以及其发送位置，例如：
+透过 `DelonAuthConfig` 可以指定参数名以及其发送位置，例如：
 
 ```ts
 token_send_key = 'token';
@@ -184,7 +184,7 @@ token_send_place = 'header';
 
 ### 如何加载
 
-默认情况下 `AlainAuthModule.forRoot({})` 是不会加载任何HTTP拦截器，这需要你手工在你的相应的模块中加上：
+默认情况下 `DelonAuthModule.forRoot()` 是不会加载任何HTTP拦截器，这需要你手工在你的相应的模块中加上：
 
 ```ts
 { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true }
@@ -196,9 +196,7 @@ token_send_place = 'header';
 
 ## API
 
-### AuthOptions
-
-`AlainAuthModule.forRoot({})` 唯一参数是 `AuthOptions`：
+### DelonAuthConfig
 
 | 参数名 | 类型 | 默认值 | 描述 |
 | ----- | --- | --- | --- |
@@ -209,8 +207,32 @@ token_send_place = 'header';
 | `token_send_template` | `string` | `${token}` | 发送token模板，以 `${属性名}` 表示占位符，属性名要确保存在否则以空字符代替 |
 | `token_send_place` | `header,body,url` | `header` | 发送token参数位置 |
 | `login_url` | `string` | `/login` | 登录页路由地址 |
-| `ignores` | `(string | RegExp)[]` | `[ /\/login/, /assets\// ]` | 忽略TOKEN的URL地址列表<br>**注：** 由于Angular的Bug（[#14187](https://github.com/angular/angular/issues/14187)），暂时只支持 `string[]` 格式正则表达式 |
+| `ignores` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略TOKEN的URL地址列表 |
 | `allow_anonymous_key` | `string` | `_allow_anonymous` | 允许匿名登录KEY，若请求参数中带有该KEY表示忽略TOKEN |
+
+你可以随时覆盖它们，例如：
+
+```ts
+// delon.module.ts
+import { DelonAuthConfig } from '@delon/auth';
+export function delonAuthConfig(): DelonAuthConfig {
+    return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
+        login_url: '/passport/login'
+    });
+}
+
+@NgModule({})
+export class DelonModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: DelonModule,
+            providers: [
+                { provide: DelonAuthConfig, useFactory: delonAuthConfig}
+            ]
+        };
+    }
+}
+```
 
 ## 如何删除
 

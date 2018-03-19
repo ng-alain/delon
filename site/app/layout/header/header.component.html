@@ -3,7 +3,7 @@
     <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="5">
         <a routerLink="/" class="logo">
             <nz-tooltip nzTitle="{{ 'app.footer.qqgroup' | translate}}: 316911865">
-                <span nz-tooltip [nz-clipboard]="'316911865'">
+                <span nz-tooltip (click)="onCopy('316911865')">
                     <img src="./assets/img/logo-color.svg" />
                     <span>ng-alain</span>
                 </span>
@@ -14,10 +14,8 @@
         <div class="search-box">
             <i class="anticon anticon-search"></i>
             <nz-select [nzPlaceHolder]="'app.header.search' | translate"
-                        [(ngModel)]="item" (ngModelChange)="select($event)"
-                        [nzMode]="'combobox'"
-                        [nzAllowClear]="true"
-                        (nzSearchChange)="change($event)">
+                       [ngModel]="item" (ngModelChange)="select($event)"
+                       nzShowSearch nzAllowClear>
                 <ng-container *ngFor="let i of list">
                     <nz-option [nzLabel]="i.type" [nzDisabled]="true"></nz-option>
                     <nz-option *ngFor="let entry of i.list"
@@ -33,6 +31,7 @@
                     <li nz-menu-item routerLink="/">{{'app.header.menu.home' | translate}}</li>
                     <li nz-menu-item routerLink="/docs">{{'app.header.menu.docs' | translate}}</li>
                     <li nz-menu-item routerLink="/components">{{'app.header.menu.components' | translate}}</li>
+                    <li nz-menu-item routerLink="/theme">{{'app.header.menu.theme' | translate}}</li>
                 </ul>
             </div>
             <div class="preview">

@@ -1,0 +1,8 @@
+<nz-popover [nzTrigger]="'click'" nzOverlayClassName="color-content">
+    <div class="color-demo" nz-popover>
+        <div class="color-demo-value" [ngStyle]="{'background': value}"></div>
+    </div>
+    <ng-template #nzTemplate>
+        <color-sketch [color]="value" (onChangeComplete)="change($event)"></color-sketch>
+    </ng-template>
+</nz-popover>

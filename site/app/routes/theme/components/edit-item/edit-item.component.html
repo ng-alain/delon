@@ -1,0 +1,35 @@
+<nz-form-label [nzSpan]="4">{{data.label}}</nz-form-label>
+<nz-form-control [nzSpan]="8">
+    <div [ngClass]="{'revised': data.value !== data.default}">
+        <ng-container *ngIf="!data.revising">
+            <a (click)="edit()" class="value">{{data.rel || data.value}}</a>
+            <span class="op">
+                <a *ngIf="!data.revising && data.value !== data.default" (click)="op('reset')">重置</a>
+            </span>
+        </ng-container>
+        <ng-container *ngIf="data.revising">
+            <ng-container [ngSwitch]="data.type">
+                <ng-container *ngSwitchCase="'color'">
+                    <color [(value)]="editingValue" [rgba]="data.rgba"></color>
+                </ng-container>
+                <ng-container *ngSwitchCase="'input'">
+                    <input nz-input [(ngModel)]="editingValue" [ngModelOptions]="{standalone: true}">
+                </ng-container>
+                <ng-container *ngSwitchCase="'px'">
+                    <theme-px [(value)]="editingValue" [min]="data.min" [max]="data.max"></theme-px>
+                </ng-container>
+                <ng-container *ngSwitchCase="'switch'">
+                    <nz-switch [(ngModel)]="editingValue" [ngModelOptions]="{standalone: true}"></nz-switch>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <ng-content></ng-content>
+                </ng-container>
+            </ng-container>
+            <span class="op">
+                <a *ngIf="data.revising" (click)="op('ok')">确定</a>
+                <a *ngIf="data.revising" (click)="op('cancel')">取消</a>
+            </span>
+        </ng-container>
+    </div>
+</nz-form-control>
+

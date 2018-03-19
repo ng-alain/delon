@@ -17,6 +17,7 @@ const routes = [
         component: LayoutComponent,
         children: [
             { path: '', component: HomeComponent },
+            { path: 'theme', loadChildren: './theme/theme.module#ThemeModule' },
             // region: region routers
             { path: 'docs', loadChildren: './gen/docs/docs.module#DocsModule' },
             { path: 'components', loadChildren: './gen/components/components.module#ComponentsModule' }

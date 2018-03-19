@@ -1,0 +1,72 @@
+@import '../../../theme/styles/default';
+
+@ad-desc-list-prefix: ~'.ad-desc-list';
+
+@{ad-desc-list-prefix} {
+	display: block;
+    // offset the padding-bottom of last row
+    .ant-row {
+        margin-bottom: -16px;
+        overflow: hidden;
+    }
+    &__title {
+        font-size: 14px;
+        color: @heading-color;
+        font-weight: 500;
+        margin-bottom: 16px;
+    }
+    &__term {
+        line-height: 22px;
+        padding-bottom: 16px;
+        margin-right: 8px;
+        color: @heading-color;
+        white-space: nowrap;
+        display: table-cell;
+
+        &:after {
+            content: ":";
+            margin: 0 8px 0 2px;
+            position: relative;
+            top: -0.5px;
+        }
+    }
+    &__detail {
+        line-height: 22px;
+        width: 100%;
+        padding-bottom: 16px;
+        color: @text-color;
+        display: table-cell;
+    }
+
+	&.small {
+        // offset the padding-bottom of last row
+        .ant-row {
+            margin-bottom: -8px;
+        }
+        @{ad-desc-list-prefix}__title {
+            margin-bottom: 12px;
+            color: @text-color;
+        }
+        @{ad-desc-list-prefix}__term,
+        @{ad-desc-list-prefix}__detail {
+            padding-bottom: 8px;
+        }
+    }
+
+	&.large {
+        @{ad-desc-list-prefix}__title {
+            font-size: 16px;
+        }
+    }
+
+	&.vertical {
+        @{ad-desc-list-prefix}__term {
+            padding-bottom: 8px;
+            display: block;
+        }
+
+        @{ad-desc-list-prefix}__detail {
+            display: block;
+        }
+	}
+}

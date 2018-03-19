@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { NzClipboardModule } from 'ng-clipboard-antd';
-
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
 
@@ -32,8 +30,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         SharedModule,
         RoutesModule,
         // i18n
-        TranslateModule.forRoot(),
-        NzClipboardModule.forRoot()
+        TranslateModule.forRoot()
     ],
     providers: [
         I18NService,

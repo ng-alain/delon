@@ -5,6 +5,8 @@ export const ENUS = {
     'app.header.menu.home': 'Home',
     'app.header.menu.docs': 'Docs',
     'app.header.menu.components': 'Components',
+    'app.header.menu.tool': 'Tools',
+    'app.header.menu.theme': 'Customize Theme',
     'app.header.lang': '中文',
     'app.footer.resources': 'Resources',
     'app.footer.angular': '中文网',
@@ -25,5 +27,5 @@ export const ENUS = {
     'app.component.refer.link': 'Using ABC Components Alone',
     'app.demo.copy': 'Copy code',
     'app.demo.copied': 'Copied!',
-    'app.demo.plnkr': 'Open in Plnkr'
+    'app.demo.stackblitz': 'Open in StackBlitz'
 };

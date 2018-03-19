@@ -1,0 +1,22 @@
+{
+	"name": "@delon/auth",
+    "version": "0.0.0-PLACEHOLDER",
+    "main": "./bundles/auth.umd.js",
+    "module": "./esm5/auth.js",
+    "es2015": "./esm2015/auth.js",
+    "typings": "./auth.d.ts",
+	"author": "cipchk<cipchk@qq.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cipchk/delon.git"
+	},
+	"bugs": {
+		"url": "https://github.com/cipchk/delon/issues"
+	},
+	"homepage": "https://github.com/cipchk/delon#readme",
+	"keywords": ["angular auth", "ng auth", "ngx auth", "angular jwt", "ng jwt", "ngx jwt", "delon", "ng-alain", "alain", "antd", "ng-zorro-antd"],
+	"peerDependencies": {
+        "@delon/theme": "PEER-0.0.0-PLACEHOLDER"
+	}
+}

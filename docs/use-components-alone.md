@@ -10,33 +10,19 @@ ng-alain 脚手架内提供了一套默认业务组件，这些组件抽象了�
 
 ## 如何使用
 
-ng-alain 脚手架内用到的组件分为三种：
+ng-alain 脚手架内用到的组件分为：
 
 - [ng-zorro-antd](//ng-zorro.github.io) 组件
-- [ng-zorro-antd-extra](//cipchk.github.io/ng-zorro-antd-extra/#/) 组件
 - [@delon/abc](/components) 组件
 
-这三种组件都是独立发布在 Npm 上面，因此你都可以单独去使用它们：
+这些组件都是独立发布在 Npm 上面，因此你都可以单独去使用它们：
 
 ```ts
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { NgZorroAntdExtraModule } from 'ng-zorro-antd-extra';
 import { AlainABCModule } from '@delon/abc';
 ```
 
 默认情况下 ng-alain 这三种组件都全部导入进来，你可以根据你所需要按需导入相应的模块。
-
-## 如何在脚手架按需加载模块？
-
-@delon/* 类库所有的模块注册、导出全都在 [delon.module.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/delon.module.ts) 当中，每一种变量名都有着一种意义：
-
-**ZORROMODULES**
-
-按需导入 ng-zorro-antd 组件至共享模块里。
-
-**ABCMODULES**
-
-按需导入 @delon/abc 组件至共享模块里。
 
 ### 如何删除呢？
 

@@ -31,15 +31,11 @@
 <section class="highlight-wrapper" [ngClass]="{'highlight-wrapper-expand': expand}">
     <div class="highlight">
         <div class="code-box-actions">
-            <form *ngIf="plnkr" ngNoForm action="https://plnkr.co/edit/?p=preview" method="POST" target="_blank">
-                <input type="hidden" name="description" value="{{plnkr.title}}">
-                <input type="hidden" *ngFor="let f of plnkr.files" name="files[{{f.name}}]" value="{{f.content}}">
-                <nz-tooltip [nzTitle]="'app.demo.plnkr' | translate">
-                    <input nz-tooltip type="submit" value="Create New Plnkr" class="code-box-plnkr" />
-                </nz-tooltip>
-            </form>
+            <nz-tooltip [nzTitle]="'app.demo.stackblitz' | translate">
+              <i nz-tooltip class="anticon anticon-form code-box-code-copy" (click)="openOnStackBlitz()"></i>
+            </nz-tooltip>
             <nz-tooltip [nzTitle]="'app.demo.copy' | translate">
-                <i nz-tooltip [nz-clipboard]="item.code" [nzSuccessText]="'app.demo.copied' | translate" class="anticon anticon-copy code-box-code-copy"></i>
+                <i nz-tooltip (click)="onCopy(item.code)" class="anticon anticon-copy code-box-code-copy"></i>
             </nz-tooltip>
         </div>
         <pre class="hljs language-{{item.lang}}"><code>{{item.code}}</code></pre>

@@ -94,14 +94,14 @@ import { DelonCacheModule } from '@delon/mock';
 | ----- | --- | --- |
 | `key` | `string` | 缓存唯一标识符 |
 | `data` | `any | Observable<any>` | 缓存数据源，数据源为 `Observable` 时，依然返回 `Observable`，否则返回 `void` |
-| `options` | `{ type?: 'm' | 's', expire?: string }` | `type` 存储类型，'m' 表示内存，'s' 表示持久<br>`expire` 过期时间，例如：`10s` 10秒，单位值等同[moment](http://momentjs.cn/docs/#/manipulating/add/) |
+| `options` | `{ type?: 'm' | 's', expire?: number }` | `type` 存储类型，'m' 表示内存，'s' 表示持久<br>`expire` 过期时间，单位 `秒` |
 
 **get()**
 
 | 参数名 | 类型 | 描述 |
 | ----- | --- | --- |
 | `key` | `string` | 缓存唯一标识符 |
-| `options` | `{ mode?: 'promise' | 'none', type?: 'm' | 's', expire?: string }` | `mode` 指定获取缓存的模式：<br>1、`promise` 表示若不存 `key` 则把 `key` 当URL发起请求并缓存且返回 Observable<br>2、`none` 表示直接返回数据若KEY不存在则直接返回 `null`<br><br>`type` 存储类型，'m' 表示内存，'s' 表示持久<br>`expire` 过期时间，例如：`10s` 10秒，单位值等同[moment](http://momentjs.cn/docs/#/manipulating/add/) |
+| `options` | `{ mode?: 'promise' | 'none', type?: 'm' | 's', expire?: number }` | `mode` 指定获取缓存的模式：<br>1、`promise` 表示若不存 `key` 则把 `key` 当URL发起请求并缓存且返回 Observable<br>2、`none` 表示直接返回数据若KEY不存在则直接返回 `null`<br><br>`type` 存储类型，'m' 表示内存，'s' 表示持久<br>`expire` 过期时间，单位 `秒` |
 
 **getNone()**
 

@@ -25,6 +25,7 @@
                 "ng-deep"
             ]
         }
-    ]
+    ],
+    "no-descending-specificity": null
   }
 }

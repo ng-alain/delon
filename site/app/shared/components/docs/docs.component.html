@@ -5,11 +5,11 @@
         </li>
     </ul>
 </div>
-<nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'">
-    <ng-container alert-body>
+<nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message">
+    <ng-template #message>
         This article has not been translated, hope that your can PR to translated it.
         <a href="//github.com/cipchk/ng-alain/issues/74" target="_blank"> Help us!</a>
-    </ng-container>
+    </ng-template>
 </nz-alert>
 <section class="markdown">
     <h1>

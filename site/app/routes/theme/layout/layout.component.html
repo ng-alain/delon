@@ -1,0 +1,28 @@
+<div class="wrapper">
+    <div class="header">
+        <div class="logo">
+            <a>
+                <img class="expanded" src="./assets/img/logo-full.svg" alt="{{settings.app.name}}" style="max-height:40px;" />
+                <img class="collapsed" src="./assets/img/logo.svg" alt="{{settings.app.name}}" style="max-height:30px;" />
+            </a>
+        </div>
+        <div class="top-nav-wrap">
+            <ul class="top-nav">
+                <li>
+                    <div class="item" (click)="toggleCollapsedSideabar()">
+                        <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="aside">
+        <div class="aside-inner">
+            <sidebar-nav></sidebar-nav>
+        </div>
+    </div>
+    <section class="content">
+        <reuse-tab mode="2"></reuse-tab>
+        <router-outlet></router-outlet>
+    </section>
+</div>

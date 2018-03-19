@@ -1,0 +1,22 @@
+{
+	"name": "@delon/mock",
+    "version": "0.0.0-PLACEHOLDER",
+    "main": "./bundles/mock.umd.js",
+    "module": "./esm5/mock.js",
+    "es2015": "./esm2015/mock.js",
+    "typings": "./mock.d.ts",
+	"author": "cipchk<cipchk@qq.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cipchk/delon.git"
+	},
+	"bugs": {
+		"url": "https://github.com/cipchk/delon/issues"
+	},
+	"homepage": "https://github.com/cipchk/delon#readme",
+	"keywords": ["delon", "ng-alain", "alain", "mock", "mockjs", "angular-mock", "ng mock", "ngx-mock", "antd", "ng-zorro-antd"],
+	"peerDependencies": {
+        "@types/mockjs": "^1.0.0"
+	}
+}

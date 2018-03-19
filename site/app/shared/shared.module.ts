@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { NgZorroAntdExtraModule } from 'ng-zorro-antd-extra';
+
 import { AlainThemeModule } from '@delon/theme';
-import { AlainABCModule } from '@delon/abc';
-import { AlainACLModule } from '@delon/acl';
+import { DelonABCModule } from '@delon/abc';
+import { DelonACLModule } from '@delon/acl';
+
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { TranslateModule } from '@ngx-translate/core';
 import { HighlightJsModule } from 'ngx-highlight-js';
-import { NzClipboardModule } from 'ng-clipboard-antd';
 
 import { ContentComponent } from './components/content/content.component';
 import { EditButtonComponent } from './components/edit-button/edit-button.component';
@@ -28,13 +28,11 @@ const COMPONENTS = [ ContentComponent, EditButtonComponent, DocsComponent, CodeB
         ReactiveFormsModule,
         HttpClientModule,
         NgZorroAntdModule,
-        NgZorroAntdExtraModule,
         AlainThemeModule.forChild(),
-        AlainABCModule,
-        AlainACLModule,
+        DelonABCModule,
+        DelonACLModule,
         HighlightJsModule,
-        TranslateModule,
-        NzClipboardModule
+        TranslateModule
     ],
     declarations: COMPONENTS,
     entryComponents: [DemoModalComponent],
@@ -44,13 +42,11 @@ const COMPONENTS = [ ContentComponent, EditButtonComponent, DocsComponent, CodeB
         ReactiveFormsModule,
         RouterModule,
         NgZorroAntdModule,
-        NgZorroAntdExtraModule,
         AlainThemeModule,
-        AlainABCModule,
-        AlainACLModule,
+        DelonABCModule,
+        DelonACLModule,
         HighlightJsModule,
         TranslateModule,
-        NzClipboardModule,
         ...COMPONENTS
     ]
 })

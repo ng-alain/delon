@@ -45,7 +45,7 @@
                 <div><a routerLink="/docs/changelog">{{ 'app.footer.change-log' | translate}}</a></div>
                 <div><a routerLink="/docs/faq">{{ 'app.footer.faq' | translate}}</a></div>
                 <div><a href="//github.com/cipchk/ng-alain/issues" target="_blank">{{ 'app.footer.issues' | translate}}</a></div>
-                <div><a [nz-clipboard]="'316911865'">{{ 'app.footer.qqgroup' | translate}}</a></div>
+                <div><a (click)="onCopy('316911865')">{{ 'app.footer.qqgroup' | translate}}</a></div>
             </div>
         </div>
         <div nz-col nzXs="24" nzSm="24" nzLg="6">
