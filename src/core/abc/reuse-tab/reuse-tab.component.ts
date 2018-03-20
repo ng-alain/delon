@@ -141,7 +141,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     cmChange(res: ReuseContextCloseEvent) {
         switch (res.type) {
             case 'close':
-                this._close(res.item.index);
+                this._close(null, res.item.index);
                 break;
             case 'closeRight':
                 this.srv.closeRight(res.item.url);
@@ -173,7 +173,11 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         });
     }
 
-    _close(idx: number) {
+    _close(e: Event, idx: number) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
         const item = this.list[idx];
         if (!this.srv.close(item.url)) {
             // should remove unstored tags if always show current page
@@ -182,6 +186,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         this.close.emit(item);
+        this.cd.detectChanges();
+        return false;
     }
 
     // endregion
