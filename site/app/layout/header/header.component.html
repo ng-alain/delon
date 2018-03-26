@@ -31,7 +31,15 @@
                     <li nz-menu-item routerLink="/">{{'app.header.menu.home' | translate}}</li>
                     <li nz-menu-item routerLink="/docs">{{'app.header.menu.docs' | translate}}</li>
                     <li nz-menu-item routerLink="/components">{{'app.header.menu.components' | translate}}</li>
-                    <li nz-menu-item routerLink="/theme">{{'app.header.menu.theme' | translate}}</li>
+                    <li nz-menu-item>
+                        <nz-dropdown nzPlacement="bottomRight">
+                            <span nz-dropdown>{{'app.header.menu.tool' | translate}}</span>
+                            <ul nz-menu>
+                                <li nz-menu-item routerLink="/theme">{{'app.header.menu.theme' | translate}}</li>
+                                <li nz-menu-item routerLink="/6to7">{{'app.header.menu.upgrade' | translate}}</li>
+                            </ul>
+                        </nz-dropdown>
+                    </li>
                 </ul>
             </div>
             <div class="preview">

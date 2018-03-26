@@ -36,12 +36,7 @@
 		"scaffold:release": "bash ./scaffold.sh -b",
 		"scaffold:gh": "bash ./scaffold.sh -b -d",
 		"scaffold:public": "cd ./scaffold && npm publish --access=public",
-        "scaffold:public:next": "cd ./scaffold && npm publish --tag next --access=public",
-
-
-
-
-
+		"scaffold:public:next": "cd ./scaffold && npm publish --tag next --access=public",
 		"build:package": "npm-run-all -s clean:tmp:lib build:copy-sources build:ts build:inline-resources build:bundle clean:tmp",
 		"build:ts": "tsc -p tsconfig.publish.json && ngc -p tsconfig.publish.json",
 		"build:prod": "npm run build -- --prod",
@@ -88,6 +83,7 @@
 		"@angular/language-service": "^5.0.0",
 		"@schematics/schematics": "0.0.11",
 		"@types/gulp": "^4.0.4",
+		"@types/htmlparser2": "^3.7.31",
 		"@types/jasmine": "~2.8.6",
 		"@types/jasminewd2": "~2.0.3",
 		"@types/jszip": "^3.1.2",
@@ -98,6 +94,7 @@
 		"codecov": "^3.0.0",
 		"codelyzer": "~4.2.1",
 		"del": "^3.0.0",
+		"domhandler": "^2.4.1",
 		"fs-extra": "^5.0.0",
 		"gh-pages": "^1.1.0",
 		"gulp": "^3.9.1",
@@ -111,6 +108,7 @@
 		"gulp-transform": "^3.0.5",
 		"gulp-util": "^3.0.8",
 		"gulp-wrap": "^0.13.0",
+		"htmlparser2": "^3.9.2",
 		"jasmine-core": "~2.8.0",
 		"jasmine-spec-reporter": "~4.2.1",
 		"jsonml.js": "^0.1.0",

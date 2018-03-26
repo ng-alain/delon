@@ -7,6 +7,7 @@ export const ZHCN = {
     'app.header.menu.components': '组件',
     'app.header.menu.tool': '工具',
     'app.header.menu.theme': '自定义主题',
+    'app.header.menu.upgrade': 'HTML模板升级工具',
     'app.header.lang': 'English',
     'app.footer.resources': '相关资源',
     'app.footer.angular': '中文网',

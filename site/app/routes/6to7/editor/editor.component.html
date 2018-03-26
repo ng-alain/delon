@@ -1,0 +1,17 @@
+<div style="margin: 32px auto; max-width: 95%;">
+    <p>0.6.x至 <a href="https://ng.ant.design/version/0.7.x/docs/introduce/zh" target="_blank">0.7.x</a> 的HTML模板升级工具，工具产生的结果并无法保证100%。</p>
+    <nz-row nzGutter="16">
+        <nz-col nzSpan="11">
+            <textarea [(ngModel)]="source"
+                nz-input [nzAutosize]="{minRows: 20, maxRows: 20}" [disabled]="doing"
+                placeholder="将0.6.x的HTML模板粘贴至此"></textarea>
+        </nz-col>
+        <nz-col nzSpan="2" style="text-align: center;">
+            <button nz-button (click)="run()" nzType="primary" [nzLoading]="doing">Run</button>
+        </nz-col>
+        <nz-col nzSpan="11">
+            <textarea [(ngModel)]="result"
+                nz-input [nzAutosize]="{minRows: 20, maxRows: 20}"></textarea>
+        </nz-col>
+    </nz-row>
+</div>

@@ -18,6 +18,7 @@ const routes = [
         children: [
             { path: '', component: HomeComponent },
             { path: 'theme', loadChildren: './theme/theme.module#ThemeModule' },
+            { path: '6to7', loadChildren: './6to7/6to7.module#SixToSevenModule' },
             // region: region routers
             { path: 'docs', loadChildren: './gen/docs/docs.module#DocsModule' },
             { path: 'components', loadChildren: './gen/components/components.module#ComponentsModule' }

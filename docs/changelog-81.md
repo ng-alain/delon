@@ -17,6 +17,12 @@ type: Other
 - `ng-tree-antd` 不再维护，使用 `nz-tree`
 - `ng-clipboard-antd` 不再维护，使用 `@delon/abc` 的 `copy` 方法
 
+> **注**：以下 [zorrt](https://www.npmjs.com/package/ng-zorro-antd?activeTab=versions) 和 [ng-alain](https://www.npmjs.com/package/@delon/cli?activeTab=versions) 都是针对 `@next` 版本
+
+**HTML模板升级工具**
+
+一个简化升级成本的小[工具](/6to7)，以下所有结尾带有【_6to7_】表示在[HTML模板升级工具](/6to7)可被直接替换。同时支持 zorro 一些基础组件，包括：按钮、表单、布局、表格。
+
 **nz-schema-form**
 
 近期会重构，并同步 0.7.0 有关其部分暂时移除。
@@ -38,17 +44,17 @@ type: Other
 
 ### pro-header
 
-- `pro-header` 组件名变更为 `page-header`
-- 内容无须指定 `<ng-tempatel #content>`
+- `pro-header` 组件名变更为 `page-header` _6to7_
+- 内容无须指定 `&lt;ng-tempatel #content>` _6to7_
 
 ### global-footer
 
-- `copyright` 无须指定 `<ng-tempatel #copyright>`
+- `copyright` 无须指定 `&lt;ng-tempatel #copyright>` _6to7_
 
 ### Chart
 
-- 所有组件名增加 `g2-` 开头
-- `chart-card` 替换成 `g2-card`
+- 所有组件名增加 `g2-` 开头 _6to7_
+- `chart-card` 替换成 `g2-card` _6to7_
 
 ### notice-icon
 
@@ -69,7 +75,6 @@ type: Other
 - 增加 `reset(extraParams?: any)` 方法允许直接传递 `extraParams` 值
 - 增加 `expand` 可展开，当数据源中包括 `expand` 表示展开状态
 - 列描述
-	- 强化描述
 	- 增加 `type: link`、`click` 链接
 	- 增加 `default` 当不存在数据时以默认值替代
 	- 增加 `fixed: left | right` 固定左右列
@@ -92,24 +97,24 @@ type: Other
 
 ### nz-list
 
-- `<ng-template #item>` 需指定 `[nzRenderItem]="item"`
-- `<ng-template #loadMore>` 需指定 `[nzLoadMore]="loadMore"`
-- `<ng-template #pagination>` 需指定 `[nzPagination]="pagination"`
+- `&lt;ng-template #item>` 需指定 `[nzRenderItem]="item"` _6to7_
+- `&lt;ng-template #loadMore>` 需指定 `[nzLoadMore]="loadMore"` _6to7_
+- `&lt;ng-template #pagination>` 需指定 `[nzPagination]="pagination"` _6to7_
 - `nz-list-item`
-    - `nz-list-item-action` 替换成 `<ng-template #op1>` 并指定 `[nzActions]="[op1]"` 属性**数组**值
+    - `nz-list-item-action` 替换成 `&lt;ng-template #op1>` 并指定 `[nzActions]="[op1]"` 属性**数组**值
 
 ### nz-cart
 
-- `<ng-template #extra>` 需指定 `[nzExtra]="extra"`
-- `<ng-template #cover>` 需指定 `[nzCover]="cover"`
-- 移除 `<ng-template #body>` 无须指定
+- `&lt;ng-template #extra>` 需指定 `[nzExtra]="extra"` _6to7_
+- `&lt;ng-template #cover>` 需指定 `[nzCover]="cover"` _6to7_
+- 移除 `&lt;ng-template #body>` 无须指定 _6to7_
 - 无 `nz-card-tab` 须自行完整 `nz-tabset` 见官网
 - `nzNoPadding` 替换 `class="ant-card__body-nopadding"`
 
 ### nz-icon
 
-- 移除，使用 `<i class="anticon anticon-step-backward"></i>` 替代
+- 移除，使用 `&lt;i class="anticon anticon-step-backward"></i>` 替代 _6to7_
 
 ### nz-divider
 
-- `nzTitle` 替换 `nzText`
+- `nzTitle` 替换 `nzText` _6to7_
