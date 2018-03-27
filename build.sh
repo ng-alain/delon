@@ -69,6 +69,7 @@ compileCli() {
         "${1}src/app/layout/default/default.component.html|${2}application/other-files/layout/default/"
         "${1}src/app/layout/default/default.component.spec.ts|${2}application/other-files/layout/default/"
         "${1}src/app/layout/default/default.component.ts|${2}application/other-files/layout/default/"
+        "${1}src/app/layout/default/header/index.md|${2}application/other-files/layout/default/header/"
         "${1}src/app/layout/default/header/components/i18n.component.ts|${2}application/other-files/layout/default/header/components/"
         "${1}src/app/layout/default/header/components/icon.component.ts|${2}application/other-files/layout/default/header/components/"
         "${1}src/app/layout/default/header/components/notify.component.ts|${2}application/other-files/layout/default/header/components/"
