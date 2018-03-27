@@ -15,3 +15,10 @@ export interface ICacheStore {
 
     remove(key: string);
 }
+
+export type CacheNotifyType = 'set' | 'remove' | 'expire';
+
+export interface CacheNotifyResult {
+    type: CacheNotifyType;
+    value?: any;
+}

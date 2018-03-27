@@ -123,6 +123,29 @@ import { DelonCacheModule } from '@delon/mock';
 
 清空所有缓存。
 
+**notify()**
+
+`key` 监听，当 `key` 变更、过期、移除时通知，注意以下若干细节：
+
+- 调用后除再次调用 `cancelNotify` 否则永远不过期
+- 监听器每 `freq` (默认：3秒) 执行一次过期检查
+
+**cancelNotify()**
+
+取消 `key` 监听
+
+**hasNotify()**
+
+`key` 是否已经监听
+
+**clearNotify()**
+
+清空所有 `key` 的监听
+
+**freq()**
+
+设置监听频率，单位：毫秒且最低 `20ms`，默认：`3000ms`。
+
 ## 常见问题
 
 ### `get` 和 `tryGet` 的区别

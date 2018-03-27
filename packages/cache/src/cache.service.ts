@@ -4,14 +4,18 @@ import * as addSeconds from 'date-fns/add_seconds';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { tap, map } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { DC_STORE_STORAGE_TOKEN, ICacheStore, ICache } from './interface';
+import { DC_STORE_STORAGE_TOKEN, ICacheStore, ICache, CacheNotifyResult, CacheNotifyType } from './interface';
 import { DelonCacheConfig } from '../cache.config';
 
 @Injectable()
 export class CacheService implements OnDestroy {
     private readonly memory: Map<string, ICache> = new Map<string, ICache>();
+    private readonly notifyBuffer: Map<string, BehaviorSubject<CacheNotifyResult>> = new Map<string, BehaviorSubject<CacheNotifyResult>>();
     private meta: Set<string> = new Set<string>();
+    private freq_tick = 3000;
+    private freq_time: any;
 
     constructor(
         private options: DelonCacheConfig,
@@ -19,6 +23,7 @@ export class CacheService implements OnDestroy {
         private http: HttpClient
     ) {
         this.loadMeta();
+        this.startExpireNotify();
     }
 
     _deepGet(obj: any, path: string[], defaultValue?: any) {
@@ -141,6 +146,7 @@ export class CacheService implements OnDestroy {
             this.store.set(this.options.prefix + key, value);
             this.pushMeta(key);
         }
+        this.runNotify(key, 'set');
     }
 
     // endregion
@@ -277,8 +283,8 @@ export class CacheService implements OnDestroy {
 
     // region: remove
 
-    /** 移除缓存 */
-    remove(key: string) {
+    private _remove(key: string, needNotify: boolean) {
+        if (needNotify) this.runNotify(key, 'remove');
         if (this.memory.has(key)) {
             this.memory.delete(key);
             return ;
@@ -287,16 +293,104 @@ export class CacheService implements OnDestroy {
         this.removeMeta(key);
     }
 
+    /** 移除缓存 */
+    remove(key: string) {
+        this._remove(key, true);
+    }
+
     /** 清空所有缓存 */
     clear() {
+        this.notifyBuffer.forEach((v, k) => this.runNotify(k, 'remove'));
         this.memory.clear();
         this.meta.forEach(key => this.store.remove(this.options.prefix + key));
     }
 
     // endregion
 
+    // region: notify
+
+    /**
+     * 设置监听频率，单位：毫秒且最低 `20ms`，默认：`3000ms`
+     */
+    set freq(value: number) {
+        this.freq_tick = Math.max(20, value);
+        this.abortExpireNotify();
+        this.startExpireNotify();
+    }
+
+    private startExpireNotify() {
+        this.checkExpireNotify();
+        this.runExpireNotify();
+    }
+
+    private runExpireNotify() {
+        this.freq_time = setTimeout(() => {
+            this.checkExpireNotify();
+            this.runExpireNotify();
+        }, this.freq_tick);
+    }
+
+    private checkExpireNotify() {
+        const removed: string[] = [];
+        this.notifyBuffer.forEach((v, key) => {
+            if (this.has(key) && this.getNone(key) === null)
+                removed.push(key);
+        });
+        removed.forEach(key => {
+            this.runNotify(key, 'expire');
+            this._remove(key, false);
+        });
+    }
+
+    private abortExpireNotify() {
+        clearTimeout(this.freq_time);
+    }
+
+    private runNotify(key: string, type: CacheNotifyType) {
+        if (!this.notifyBuffer.has(key)) return;
+        this.notifyBuffer.get(key).next({ type, value: this.getNone(key) });
+    }
+
+    /**
+     * `key` 监听，当 `key` 变更、过期、移除时通知，注意以下若干细节：
+     *
+     * - 调用后除再次调用 `cancelNotify` 否则永远不过期
+     * - 监听器每 `freq` (默认：3秒) 执行一次过期检查
+     */
+    notify(key: string): Observable<CacheNotifyResult> {
+        if (!this.notifyBuffer.has(key)) {
+            const change$ = new BehaviorSubject<CacheNotifyResult>(this.getNone(key));
+            this.notifyBuffer.set(key, change$);
+        }
+        return this.notifyBuffer.get(key).asObservable();
+    }
+
+    /**
+     * 取消 `key` 监听
+     */
+    cancelNotify(key: string): void {
+        if (!this.notifyBuffer.has(key)) return ;
+        this.notifyBuffer.get(key).unsubscribe();
+        this.notifyBuffer.delete(key);
+    }
+
+    /** `key` 是否已经监听 */
+    hasNotify(key: string): boolean {
+        return this.notifyBuffer.has(key);
+    }
+
+    /** 清空所有 `key` 的监听 */
+    clearNotify(): void {
+        this.notifyBuffer.forEach(v => v.unsubscribe());
+        this.notifyBuffer.clear();
+    }
+
+    // endregion
+
     ngOnDestroy(): void {
         this.memory.clear();
+        this.abortExpireNotify();
+        this.clearNotify();
     }
 
 }

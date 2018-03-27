@@ -3,6 +3,8 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { Injector } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { filter } from 'rxjs/operators';
+
 import { AlainThemeModule } from '@delon/theme';
 
 import { DelonCacheModule } from '../cache.module';
@@ -210,6 +212,15 @@ describe('cache: service', () => {
                 expect(srv.getNone(KEY)).toBeNull();
                 expect(srv.getNone(KEY + '1')).toBeNull();
             });
+            it('should be notify a remove event', (done: () => void) => {
+                srv.notify(KEY).pipe(filter(w => w !== null && w.type === 'remove')).subscribe(res => {
+                    expect(res.type).toBe('remove');
+                    done();
+                });
+                srv.freq = 10;
+                srv.set(KEY, 1, { expire: 1 });
+                srv.clear();
+            });
         });
 
         describe('#deepGet', () => {
@@ -238,6 +249,52 @@ describe('cache: service', () => {
             it('should be return default value when source object is null', () => {
                 const def = 'aa';
                 expect(srv._deepGet(null, [ 'status11' ], def)).toBe(def);
+            });
+        });
+
+        describe('#notify', () => {
+            it('should notify set', (done: () => void) => {
+                srv.notify(KEY).pipe(filter(w => w !== null)).subscribe(res => {
+                    expect(res.type).toBe('set');
+                    expect(res.value).toBe(1);
+                    done();
+                });
+                srv.notify(KEY).subscribe();
+                srv.set(KEY, 1);
+            });
+            it('should notify remove', (done: () => void) => {
+                srv.notify(KEY).pipe(filter(w => w !== null)).subscribe(res => {
+                    expect(res.type).toBe('remove');
+                    done();
+                });
+                srv.remove(KEY);
+            });
+            it('should notify expired', (done: () => void) => {
+                srv.notify(KEY).pipe(filter(w => w !== null && w.type === 'expire')).subscribe(res => {
+                    expect(res.type).toBe('expire');
+                    done();
+                });
+                srv.freq = 10;
+                srv.set(KEY, 1, { expire: 1 });
+            });
+            it('should be cancel notify', () => {
+                expect(srv.hasNotify(KEY)).toBe(false);
+                srv.notify(KEY).subscribe();
+                expect(srv.hasNotify(KEY)).toBe(true);
+                srv.cancelNotify(KEY);
+                expect(srv.hasNotify(KEY)).toBe(false);
+            });
+            it('shoulb be call cancel notify when is invalid key', () => {
+                expect(srv.hasNotify(KEY)).toBe(false);
+                srv.cancelNotify(KEY);
+                expect(srv.hasNotify(KEY)).toBe(false);
+            });
+            it('should be clear notify', () => {
+                expect(srv.hasNotify(KEY)).toBe(false);
+                srv.notify(KEY).subscribe();
+                expect(srv.hasNotify(KEY)).toBe(true);
+                srv.clearNotify();
+                expect(srv.hasNotify(KEY)).toBe(false);
             });
         });
     });
