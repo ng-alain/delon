@@ -1,8 +1,10 @@
 export { WINDOW } from './win_tokens';
 export { preloaderFinished } from './services/preloader/preloader';
-export * from './services/menu';
+export * from './services/menu/interface';
+export * from './services/menu/menu.service';
 export { ScrollService } from './services/scroll/scroll.service';
-export * from './services/settings';
+export * from './services/settings/interface';
+export * from './services/settings/settings.service';
 export { TitleService } from './services/title/title.service';
 export { ALAIN_I18N_TOKEN, AlainI18NService } from './services/i18n/i18n';
 export { ModalHelper } from './services/modal/modal.helper';

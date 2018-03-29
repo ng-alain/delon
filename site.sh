@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 
 set -u -e -o pipefail
 
@@ -49,6 +49,7 @@ if [[ ${DEPLOY} == true ]]; then
     cp -f site/CNAME site/dist/CNAME
 
     echo 'deploy by gh-pages'
+    $(npm bin)/gh-pages-clean
     $(npm bin)/gh-pages -d site/dist
 
 fi

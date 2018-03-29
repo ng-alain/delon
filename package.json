@@ -1,6 +1,6 @@
 {
 	"name": "delon",
-	"version": "1.0.0-alpha.3",
+	"version": "1.0.0-beta.2",
 	"typings": "index.d.ts",
 	"description": "Delon is a set of essential modules for ng-alain.",
 	"repository": {
@@ -36,19 +36,7 @@
 		"scaffold:release": "bash ./scaffold.sh -b",
 		"scaffold:gh": "bash ./scaffold.sh -b -d",
 		"scaffold:public": "cd ./scaffold && npm publish --access=public",
-		"scaffold:public:next": "cd ./scaffold && npm publish --tag next --access=public",
-		"build:package": "npm-run-all -s clean:tmp:lib build:copy-sources build:ts build:inline-resources build:bundle clean:tmp",
-		"build:ts": "tsc -p tsconfig.publish.json && ngc -p tsconfig.publish.json",
-		"build:prod": "npm run build -- --prod",
-		"build:copy-sources": "gulp copy-sources",
-		"build:inline-resources": "gulp inline-resources",
-		"build:bundle": "gulp bundle",
-		"build:cli": "gulp cli",
-		"build:ci": "exit 0",
-		"clean:tmp": "rimraf .ng_build .ng_compiled",
-		"clean:tmp:lib": "npm run clean:tmp && rimraf .lib",
-		"version:bump": "gulp bump",
-		"release:validity": "npm run build:package"
+		"scaffold:public:next": "cd ./scaffold && npm publish --tag next --access=public"
 	},
 	"dependencies": {
 		"@angular/animations": "^5.0.0",

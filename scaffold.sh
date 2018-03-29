@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 
 set -u -e -o pipefail
 
@@ -46,17 +46,17 @@ SCAFFOLD_DIR=${PWD}/scaffold
 ROOT_DIR=${PWD}/dist/scaffold
 DIST_DIR=${ROOT_DIR}/dist
 
-rm -rf ${ROOT_DIR}
-
 if [[ ${BUILD} == true ]]; then
 
     echo '===== copy...'
+
     rm -rf ${ROOT_DIR}
     mkdir -p ${ROOT_DIR}
     rsync -a --exclude="node_modules/" ${SCAFFOLD_DIR}/ ${ROOT_DIR}
 
     cd ${ROOT_DIR}
     updateVersionReferences ${ROOT_DIR}/package.json
+    updateVersionReferences ${SCAFFOLD_DIR}/package.json
 
     echo '===== need mock'
     sed -i "s/const MOCKMODULE[^;]*;/const MOCKMODULE = [ DelonMockModule.forRoot({ data: MOCKDATA }) ];/g" ${ROOT_DIR}/src/app/delon.module.ts
@@ -74,7 +74,8 @@ if [[ ${DEPLOY} == true ]]; then
     cp -f ${DIST_DIR}/index.html ${DIST_DIR}/404.html
 
     echo 'deploy by gh-pages'
-    $(npm bin)/gh-pages -d ${DIST_DIR}
+    $(npm bin)/gh-pages-clean
+    $(npm bin)/gh-pages -d dist/scaffold/dist -r https://github.com/cipchk/ng-alain/
 
 fi
 

@@ -49,7 +49,7 @@ export class SocialService implements OnDestroy {
      * @param options.windowFeatures 等同 `window.open` 的 `features` 参数值
      */
     login(url: string, callback: string = '/', options: {
-        type?: 'href' | 'window',
+        type?: SocialOpenType,
         windowFeatures?: string
     } = {}): Observable<ITokenModel> | void {
         options = Object.assign({

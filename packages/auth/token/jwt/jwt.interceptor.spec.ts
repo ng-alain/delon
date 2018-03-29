@@ -4,14 +4,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HTTP_INTERCEPTORS, HttpClient, HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
 import { DelonAuthModule } from '../../auth.module';
 import { DelonAuthConfig } from '../../auth.config';
 import { DA_SERVICE_TOKEN, ITokenService, ITokenModel } from '../interface';
 import { JWTInterceptor } from './jwt.interceptor';
 import { JWTTokenModel } from './jwt.model';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 
 const payloadDATA = {
     sub: '1',

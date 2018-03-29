@@ -4,9 +4,10 @@ node_js:
   - "8.5.0"
 
 env:
-  - TASK=release:validity
+  - TASK=release
   - TASK=test
   - TASK=lint
+  - TASK=scaffold:release
 
 addons:
 apt:

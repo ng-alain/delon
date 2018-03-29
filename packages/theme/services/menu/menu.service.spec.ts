@@ -3,10 +3,10 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { filter } from 'rxjs/operators';
 
 import { ACLService } from '@delon/acl';
-import { ALAIN_I18N_TOKEN, Menu } from '@delon/theme';
-import { AlainI18NServiceFake } from '@delon/theme/services/i18n/i18n';
-import { deepCopy } from '@delon/abc/utils/utils';
+import { ALAIN_I18N_TOKEN, AlainI18NServiceFake } from '@delon/theme/services/i18n/i18n';
+import { deepCopy } from '@delon/abc';
 
+import { Menu } from './interface';
 import { MenuService } from './menu.service';
 
 class MockACLService {
