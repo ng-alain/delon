@@ -111,7 +111,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
             x: {
                 type: 'timeCat',
                 tickCount: MAX,
-                mask: 'HH:MM',
+                mask: 'HH:mm',
                 range: [0, 1]
             },
             y1: {
