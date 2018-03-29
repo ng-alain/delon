@@ -145,6 +145,13 @@ describe('abc: reuse-tab', () => {
                     .close(1)
                     .expectUrl(1, '/c');
             }));
+            it('issues-363', fakeAsync(() => {
+                page.to('#b')
+                    .expectCount(2)
+                    .close(1)
+                    .expectCount(1)
+                    .expectAttr(0, 'closable', false);
+            }));
         });
 
         describe('#title', () => {
@@ -480,7 +487,7 @@ describe('abc: reuse-tab', () => {
             expect(this.list[pos].url).toBe(url);
             return this;
         }
-        expectAttr(pos: number, attrName: string, value: string): this {
+        expectAttr(pos: number, attrName: string, value: any): this {
             expect(this.list[pos][attrName]).toBe(value);
             return this;
         }

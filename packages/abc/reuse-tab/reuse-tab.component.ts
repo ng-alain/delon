@@ -117,6 +117,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
             const idx = ls.findIndex(w => w.url === url);
             if (idx !== -1) {
                 this.pos = idx;
+                if (ls.length <= 1) ls[0].closable = false;
             } else {
                 const snapshotTrue = this.srv.getTruthRoute(snapshot);
                 ls.push(<ReuseItem>{
