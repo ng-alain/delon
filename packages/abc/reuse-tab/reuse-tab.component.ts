@@ -177,7 +177,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
             e.preventDefault();
             e.stopPropagation();
         }
-        const item = this.list[Math.min(index, this.list.length - 1)];
+        const item = this.list[Math.max(0, Math.min(index, this.list.length - 1))];
         this.router.navigateByUrl(item.url).then((res) => {
             if (!res) return;
             this.pos = index;

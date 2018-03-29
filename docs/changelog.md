@@ -6,6 +6,20 @@ title:
 type: Other
 ---
 
+### 1.0.0-beta.2
+
+`2018-3-29`
+
+- 脚手架
+    - 修复按键切换全屏时无法同步按钮状态，([1d1f261](https://github.com/cipchk/ng-alain/commit/1d1f261)) [#360](https://github.com/cipchk/ng-alain/issues/360) [@jecyhw](https://github.com/jecyhw)
+    - 修复 `passport.component.html` 布局模板 `global-footer` 不显示问题，([b4cac34](https://github.com/cipchk/ng-alain/commit/b4cac34))
+- @delon/abc
+    - 修复 `reuse-tab` 会关闭最后一个标签问题，[#363](https://github.com/cipchk/ng-alain/issues/363)
+- @delon/cache
+    - 新增支持监听 `key` 用于处理类似通用事件处理服务（[#242](https://github.com/cipchk/ng-alain/issues/242)）
+- @delon/cli
+    - 修复国际化无法正常显示顶部搜索框问题
+
 ### 1.0.0-beta.1
 
 `2018-3-26`

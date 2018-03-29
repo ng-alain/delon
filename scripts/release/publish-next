@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 
 # Use for BETA and RC releases
 # Publish all packages in `dist/packages-dist` to npm (as next)
