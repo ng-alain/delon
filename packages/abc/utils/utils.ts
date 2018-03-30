@@ -1,5 +1,7 @@
 import * as parse from 'date-fns/parse';
-import * as addWeeks from 'date-fns/add_weeks';
+import * as startOfWeek from 'date-fns/start_of_week';
+import * as endOfWeek from 'date-fns/end_of_week';
+import * as subWeeks from 'date-fns/sub_weeks';
 import * as startOfMonth from 'date-fns/start_of_month';
 import * as endOfMonth from 'date-fns/end_of_month';
 import * as subMonths from 'date-fns/sub_months';
@@ -41,10 +43,10 @@ export function getTimeDistance(
         case 'today':
         case '-today':
             return [time, time];
-        case '-week':
-            return [addWeeks(time, -1), time];
         case 'week':
-            return [time, addWeeks(time, 1)];
+            return [startOfWeek(time), endOfWeek(time)];
+        case '-week':
+            return [startOfWeek(subWeeks(time, 1)), endOfWeek(subWeeks(time, 1))];
         case 'month':
             return [startOfMonth(time), endOfMonth(time)];
         case '-month':

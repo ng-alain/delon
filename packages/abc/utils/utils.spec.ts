@@ -2,7 +2,7 @@ import { yuan, fixedZero, getTimeDistance, deepGet, deepCopy, copy } from './uti
 import * as format from 'date-fns/format';
 
 describe('abc: utils', () => {
-    xdescribe('#yuan', () => {
+    describe('#yuan', () => {
         it('should be', () => {
             expect(yuan(100)).toBe(`&yen 100.00`);
         });
@@ -14,7 +14,7 @@ describe('abc: utils', () => {
         });
     });
 
-    xdescribe('#fixedZero', () => {
+    describe('#fixedZero', () => {
         it('less than 10', () => {
             expect(fixedZero(8)).toBe('08');
         });
@@ -23,7 +23,7 @@ describe('abc: utils', () => {
         });
     });
 
-    xdescribe('#getTimeDistance', () => {
+    describe('#getTimeDistance', () => {
         let time: Date;
         const FORMAT = 'YYYY-MM-DD';
         const NOW = '2018-03-05';
@@ -60,14 +60,14 @@ describe('abc: utils', () => {
             it('past', () => {
                 const ret = getTimeDistance('-week', time);
                 expect(ret.length).toBe(2);
-                expect(format(ret[0], FORMAT)).toBe('2018-02-26');
-                expect(format(ret[1], FORMAT)).toBe('2018-03-05');
+                expect(format(ret[0], FORMAT)).toBe('2018-02-25');
+                expect(format(ret[1], FORMAT)).toBe('2018-03-03');
             });
             it('feture', () => {
                 const ret = getTimeDistance('week', time);
                 expect(ret.length).toBe(2);
-                expect(format(ret[0], FORMAT)).toBe('2018-03-05');
-                expect(format(ret[1], FORMAT)).toBe('2018-03-12');
+                expect(format(ret[0], FORMAT)).toBe('2018-03-04');
+                expect(format(ret[1], FORMAT)).toBe('2018-03-10');
             });
         });
         describe('[month]', () => {
@@ -114,7 +114,7 @@ describe('abc: utils', () => {
         });
     });
 
-    xdescribe('#deepGet', () => {
+    describe('#deepGet', () => {
         const tree = {
             responsne: {
                 list: [],
@@ -150,7 +150,7 @@ describe('abc: utils', () => {
         });
     });
 
-    xit('#deepCopy', () => {
+    it('#deepCopy', () => {
         const a = 1;
         expect(deepCopy(a)).toBe(a);
     });
