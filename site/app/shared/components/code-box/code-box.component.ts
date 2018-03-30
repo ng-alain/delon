@@ -70,7 +70,12 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
       "styles": ["styles.less"]
     }]
   }`,
-          'index.html'          : `<${selector}>loading</${selector}>`,
+          'index.html'          : (~this.item.code.indexOf('<g2') ? `
+<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/g2/3.0.5-beta.5/g2.min.js"></script>
+<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/data-set/0.8.5/data-set.min.js"></script>
+<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/g2-plugin-slider/2.0.0/g2-plugin-slider.js"></script>
+` : ``)
++ `<${selector}>loading</${selector}>`,
           'main.ts'             : `import './polyfills';
   import { enableProdMode } from '@angular/core';
   import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -138,20 +143,45 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
   // import 'intl';  // Run \`npm install --save intl\`.`,
           'app/app.component.ts': this.item.code,
           'app/app.module.ts'   : `import { NgModule } from '@angular/core';
-  import { BrowserModule } from '@angular/platform-browser';
-  import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-  import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-  import { HttpClientModule } from '@angular/common/http';
-  import { NgZorroAntdModule } from 'ng-zorro-antd';
-  import { ${componentName} } from './app.component';
-  @NgModule({
-    imports:      [ BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, NgZorroAntdModule.forRoot(), BrowserAnimationsModule ],
-    declarations: [ ${componentName} ],
-    bootstrap:    [ ${componentName} ]
-  })
-  export class AppModule { }
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { AlainThemeModule } from '@delon/theme';
+import { DelonABCModule } from '@delon/abc';
+import { DelonAuthModule } from '@delon/auth';
+import { DelonACLModule } from '@delon/acl';
+import { DelonCacheModule } from '@delon/cache';
+
+import { ${componentName} } from './app.component';
+
+@NgModule({
+imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    NgZorroAntdModule.forRoot(),
+    AlainThemeModule.forRoot(),
+    DelonABCModule.forRoot(),
+    DelonAuthModule.forRoot(),
+    DelonACLModule.forRoot(),
+    DelonCacheModule.forRoot()
+],
+declarations: [ ${componentName} ],
+bootstrap:    [ ${componentName} ]
+})
+export class AppModule { }
   `,
-          'styles.less'         : `@import "~ng-zorro-antd/src/ng-zorro-antd.less";`
+          'styles.less'         : `@import "~ng-zorro-antd/src/ng-zorro-antd.less";
+@import '~@delon/theme/styles/index';
+@import '~@delon/abc/index';
+
+// 例如：内容区域背景色为白色
+// @content-bg:  #fff;`
         },
         template    : 'angular-cli',
         dependencies: {
@@ -166,6 +196,8 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
           '@angular/router'                  : '^5.0.0',
           '@angular/animations'              : '^5.0.0',
           'date-fns'                         : '^1.29.0',
+          'file-saver'                       : '^1.3.3',
+          'ngx-countdown'                    : '^2.0.0',
           'ng-zorro-antd'                    : 'next',
           '@delon/theme'                     : 'next',
           '@delon/abc'                       : 'next',
