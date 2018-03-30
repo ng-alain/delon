@@ -139,8 +139,8 @@ export class LodopService implements OnDestroy {
             if (fn) {
                 let arr: Array<any>;
                 try {
-                    // tslint:disable-next-line:no-eval
-                    arr = eval(`[${res[2]}]`);
+                    const fakeFn = new Function(`return [${res[2]}]`);
+                    arr = fakeFn() as any[];
                 } catch {}
 
                 if (Array.isArray(arr) && contextObj) {
