@@ -74,7 +74,7 @@ export class StartupService {
         };
         const user: any = {
             name: 'Admin',
-            avatar: './assets/img/zorro.svg',
+            avatar: './assets/img/avatar.jpg',
             email: 'cipchk@qq.com',
             token: '123456789'
         };
@@ -93,11 +93,11 @@ export class StartupService {
                     {
                         text: '仪表盘',
                         link: '/dashboard',
-                        icon: 'icon-speedometer'
+                        icon: 'anticon anticon-appstore-o'
                     },
                     {
                         text: '快捷菜单',
-                        icon: 'icon-rocket',
+                        icon: 'anticon anticon-rocket',
                         shortcut_root: true
                     }
                 ]
