@@ -6,6 +6,20 @@ title:
 type: Other
 ---
 
+### 1.0.0-beta.3
+
+`2018-4-3`
+
+- @delon/abc
+    - 修复 `getTimeDistance` 周范围问题，[#50](https://github.com/cipchk/delon/issues/50)
+    - 修复 `sidebar-nav` 不兼容 ie11 问题，[#52](https://github.com/cipchk/delon/issues/52)
+    - 重构 `lodop` 的 `eval` 问题
+- @delon/auth
+    - 支持 `login_url` 支持外部链接
+- @delon/cli
+    - 修复部分图片、Icon 无效链接问题
+- 更新文档站部分错别字，[@bigpear0201](https://github.com/bigpear0201)
+
 ### 1.0.0-beta.2
 
 `2018-3-29`
