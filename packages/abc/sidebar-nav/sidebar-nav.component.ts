@@ -66,10 +66,13 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
 
     clearFloatingContainer() {
-        if (this.floatingEl) {
-            this.floatingEl.removeEventListener('click', this.floatingAreaClickHandle.bind(this));
+        if (!this.floatingEl) return;
+        this.floatingEl.removeEventListener('click', this.floatingAreaClickHandle.bind(this));
+        // fix ie: https://github.com/cipchk/delon/issues/52
+        if (this.floatingEl.hasOwnProperty('remove'))
             this.floatingEl.remove();
-        }
+        else if (this.floatingEl.parentNode)
+            this.floatingEl.parentNode.removeChild(this.floatingEl);
     }
 
     genFloatingContainer() {

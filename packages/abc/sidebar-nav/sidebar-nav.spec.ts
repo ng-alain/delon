@@ -153,6 +153,17 @@ describe('abc: sidebar-nav', () => {
                 expect(router.navigateByUrl).not.toHaveBeenCalled();
             });
         });
+        it('#52', () => {
+            createComp();
+            setSrv.layout.collapsed = true;
+            fixture.detectChanges();
+            page.showSubMenu();
+            const floatingEl = getEl<HTMLElement>(floatingShowCls, true);
+            delete floatingEl.remove;
+            floatingEl.dispatchEvent(new Event('mouseleave'));
+            fixture.detectChanges();
+            expect(getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
+        });
     });
 
     describe('[underPad]', () => {
