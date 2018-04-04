@@ -24,6 +24,10 @@ export class MetaService {
             name: data.name,
             module_name: category.module || ''
         });
+        // fix title
+        if (typeof this._data.title === 'object') {
+            this._data.title = this._data.title[this.i18n.lang] || this._data.title[this.i18n.defaultLang];
+        }
 
         this.refPage(url);
 
@@ -109,7 +113,7 @@ export class MetaService {
             }
             const entry: any = Object.assign({
                 url: `/${category.name}/${item.name}`,
-                title: meta.title,
+                title: this.i18n.get(meta.title),
                 subtitle: meta.subtitle,
                 order: item.order
             });

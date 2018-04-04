@@ -7,6 +7,7 @@ env:
   - TASK=release
   - TASK=test
   - TASK=lint
+  - TASK=site:release
   - TASK=scaffold:release
 
 addons:

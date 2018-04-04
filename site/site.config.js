@@ -4,14 +4,27 @@ module.exports = {
         github: 'https://github.com/cipchk/delon',
         defaultLang: 'zh-CN',
         langs: [ 'zh-CN', 'en-US' ],
-        dist: './site/app/routes/gen',
         tocMaxDepth: 3, // toc max depth
+        meta: {
+            dist: './site/app/routes/gen',
+            template: './site/templates/meta.ts',
+            includeAttributes: [ 'github', 'langs', 'defaultLang', 'tocMaxDepth' ]
+        }
     },
-    router: [
+    modules: [
         {
             name: 'docs',
             src: './docs',
-            defaultRoute: 'getting-started',
+            dist: './site/app/routes/gen/docs',
+            defaultRoute: 'architecture',
+            template: {
+                content: './site/templates/content.ts',
+                module: './site/templates/module.ts'
+            },
+            meta: {
+                includeAttributes: [ 'name', 'types' ]
+            },
+            hasSubDir: false,
             types: [
                 {
                     'zh-CN': '入门',
@@ -33,9 +46,18 @@ module.exports = {
         },
         {
             name: 'components',
-            src: [ './packages/abc' ],
-            ignores: [ './packages/abc/README.md' ],
+            src: './packages/abc',
+            dist: './site/app/routes/gen/components',
+            ignores: [ 'README.md' ],
+            template: {
+                content: './site/templates/content.ts',
+                module: './site/templates/module.ts'
+            },
+            meta: {
+                includeAttributes: [ 'name', 'types', 'module' ]
+            },
             module: '@delon/abc',
+            hasSubDir: true,
             defaultRoute: 'avatar-list',
             types: [
                 {

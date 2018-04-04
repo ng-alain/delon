@@ -26,22 +26,24 @@ export class HeaderComponent implements OnInit {
     list: any[] = [];
 
     genData() {
-        const ret: any[] = [];
-        this.meta.data.types.forEach((item: any) => {
-            const typeRet: any[] = item.list;
-            if (typeRet.length === 0) return;
-            ret.push({
+        this.list = this.meta.data.types.filter(w => w.list.length > 0).map((item: any) => {
+            return {
                 type: item.name,
-                list: typeRet
-            });
+                list: item.list.map(i => {
+                    const ret: any = {
+                        name: i.name,
+                        meta: this.i18n.get(i.meta)
+                    };
+                    ret.meta.title = this.i18n.get(ret.meta.title);
+                    return ret;
+                })
+            };
         });
-        this.list = ret;
         this.searching = false;
     }
 
-    genTitle(item: any) {
-        const meta = item.meta[this.i18n.lang] || item.meta[this.i18n.defaultLang];
-        return meta ? `${meta.title}${meta.subtitle ? '-' + meta.subtitle : ''}` : ``;
+    genTitle(itemMeta: any) {
+        return itemMeta ? `${itemMeta.title}${itemMeta.subtitle ? '-' + itemMeta.subtitle : ''}` : ``;
     }
 
     select(url: string) {

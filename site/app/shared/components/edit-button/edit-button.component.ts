@@ -16,7 +16,7 @@ export class EditButtonComponent {
 
     @Input()
     set item(data: any) {
-        this._full = `${this.meta.github}/edit/master/${this.i18n.get(data.source)}`;
+        this._full = `${this.meta.github}/edit/master/${this.i18n.get(data.urls)}`;
     }
 
     constructor(private meta: MetaService, private i18n: I18NService) {}

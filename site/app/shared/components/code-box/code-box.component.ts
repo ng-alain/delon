@@ -17,16 +17,16 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
     private _item: any;
     @Input()
     set item(value: any) {
-        if (typeof value.meta.title === 'string') {
-            const defTitle = '' + value.meta.title;
-            value.meta.title = {};
-            for (const lang of this.i18n.langs) {
-                value.meta.title[lang] = defTitle;
-            }
-        }
-        value.code = value.code.trim();
-        value.meta.browser = +value.meta.browser > 0 ? +value.meta.browser : null;
-        this._item = value;
+        const ret: any = {
+            meta: value.meta,
+            code: value.code.trim(),
+            title: this.i18n.get(value.meta.title),
+            summary: this.i18n.get(value.summary),
+            browser: +value.meta.browser > 0 ? +value.meta.browser : null,
+            bg: value.meta.bg,
+            urls: value.urls
+        };
+        this._item = ret;
     }
     get item() { return this._item; }
 

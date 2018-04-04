@@ -75,13 +75,33 @@ radioChange | radio变化时回调，参数为当前所选 | `EventEmitter` | -
 sortChange | 排序回调 | `EventEmitter` | -
 filterChange | Filter回调 | `EventEmitter` | -
 
-**方法**
+### 组件方法
 
-参数 | 说明
-----|------
-`export(urlOrData?: string | any[], opt?: STExportOptions)` | 导出Excel，确保已经注册 `AdXlsxModule` | `Function` | -
+参数 | 返回值 | 说明
+----|-----|-----
+`load(pi = 1, extraParams?: any)` | `void` | 根据页码重新加载数据
+`reset(extraParams?: any)` | `void` | 重置且重新设置 `pi` 为 `1`
+`clearCheck()` | `void` | 清除所有 `checkbox`
+`clearRadio()` | `void` | 清除所有 `radio`
+`export(urlOrData?: string | any[], opt?: STExportOptions)` | `void` | 导出Excel，确保已经注册 `AdXlsxModule`
 
 > `urlOrData` 一般用于需要导出所有页时重新指定带有所有数据的URL地址或本地数据数组，当所有参数都不指定时自动读书当前页数据。
+
+**使用方式**
+
+```ts
+@Component({
+    template: `
+        <simple-table #st></simple-table>
+        <button (click)="st.load()"></button>
+        <button (click)="st.reset()">重置</button>
+    `
+})
+class TestComponent {
+    @ViewChild('st') comp: SimpleTableComponent;
+    // this.comp.load();
+}
+```
 
 *STExportOptions*
 
@@ -97,7 +117,6 @@ callback | 保存前的回调 | `(wb: WorkBook) => void` | -
 ----|------|-----|------
 checked? | 选择框或单选框状态值 | `boolean` | -
 disabled? | 选择框或单选框 `disabled` 值 | `boolean` | -
-[key: string]: any | - | - | -
 
 ### SimpleTableColumn
 
@@ -209,13 +228,3 @@ reqReName | 重命名请求参数 `pi`、`ps`；例如：`{ pi: 'Page' }` `pi` �
 resReName | 重命名返回参数 `total`、`list`；例如：`{ total: 'Total' }` Total 会被当作 `total` | `Object` | -
 sortReName | 重命名排序值，`columns` 的重命名高于属性 | `{ ascend?: string, descend?: string }` | -
 modalParamsName | 指定模态框目标组件的接收参数名 | `string` | record
-
-## 刷新表格
-
-一般用于表单搜索时。
-
-```html
-<simple-table #st></simple-table>
-<button (click)="st.load()"></button>
-<button (click)="st.reset()">重置</button>
-```

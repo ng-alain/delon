@@ -251,7 +251,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     }
 
     /**
-     * 重新加载列表
+     * 根据页码重新加载数据
      *
      * @param pi 指定当前页码，默认：`1`
      * @param extraParams 重新指定 `extraParams` 值

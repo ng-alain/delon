@@ -1,6 +1,6 @@
 <i class="anticon anticon-menu nav-phone-icon" (click)="toggleMenu()"></i>
-<div nz-row>
-    <div nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="5">
+<nz-row>
+    <nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="5">
         <a routerLink="/" class="logo">
             <nz-tooltip nzTitle="{{ 'app.footer.qqgroup' | translate}}: 316911865">
                 <span nz-tooltip (click)="onCopy('316911865')">
@@ -9,8 +9,8 @@
                 </span>
             </nz-tooltip>
         </a>
-    </div>
-    <div class="header-menu" nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="19">
+    </nz-col>
+    <nz-col class="header-menu" nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="19">
         <div class="search-box">
             <i class="anticon anticon-search"></i>
             <nz-select [nzPlaceHolder]="'app.header.search' | translate"
@@ -19,7 +19,7 @@
                 <ng-container *ngFor="let i of list">
                     <nz-option [nzLabel]="i.type" [nzDisabled]="true"></nz-option>
                     <nz-option *ngFor="let entry of i.list"
-                        [nzLabel]="genTitle(entry)"
+                        [nzLabel]="genTitle(entry.meta)"
                         [nzValue]="'/' + i.type + '/' + entry.name">
                     </nz-option>
                 </ng-container>
@@ -50,5 +50,5 @@
                 </a>
             </div>
         </div>
-    </div>
-</div>
+    </nz-col>
+</nz-row>

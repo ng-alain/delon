@@ -1,16 +1,16 @@
-<section class="code-box-demo" [ngStyle]="{'background': item.meta.bg}">
-    <div [ngClass]="{'browser-mockup': item.meta.browser}" [ngStyle]="{'height.px': item.meta.browser}">
-        <div [ngClass]="{'browser-scroll': item.meta.browser}">
+<section class="code-box-demo" [ngStyle]="{'background': item.bg}">
+    <div [ngClass]="{'browser-mockup': item.browser}" [ngStyle]="{'height.px': item.browser}">
+        <div [ngClass]="{'browser-scroll': item.browser}">
             <ng-content></ng-content>
         </div>
     </div>
 </section>
 <section class="code-box-meta markdown">
     <div class="code-box-title">
-        {{i18n.get(item.meta.title)}}
+        {{ item.title }}
         <edit-button [item]="item"></edit-button>
     </div>
-    <div [innerHTML]="i18n.get(item.summary)"></div>
+    <div [innerHTML]="item.summary"></div>
     <nz-tooltip [nzTitle]="expand ? 'Hide Code' : 'Show Code'">
         <span class="code-expand-icon" nz-tooltip>
             <img
@@ -38,6 +38,6 @@
                 <i nz-tooltip (click)="onCopy(item.code)" class="anticon anticon-copy code-box-code-copy"></i>
             </nz-tooltip>
         </div>
-        <pre class="hljs language-{{item.lang}}"><code>{{item.code}}</code></pre>
+        <pre class="hljs language-ts"><code>{{item.code}}</code></pre>
     </div>
 </section>

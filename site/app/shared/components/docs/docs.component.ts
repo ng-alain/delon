@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 import { I18NService } from '../../../i18n/service';
 import { MetaService } from '../../../core/meta.service';
 
@@ -16,47 +15,25 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     @Input()
     set item(value: any) {
-        if (Array.isArray(value.toc)) {
-            const toc = [ ...value.toc ];
-            value.toc = {};
-            for (const lang of this.i18n.langs) {
-                value.toc[lang] = [ ...toc ];
-            }
-        }
-
-        // region: source
-        if (typeof value.source === 'string') {
-            const source = '' + value.source;
-            value.source = {};
-            for (const lang of this.i18n.langs) {
-                value.source[lang] = source;
-            }
-        }
-        // endregion
+        const ret: any = {
+            demo: value.demo,
+            urls: value.urls, // [this.i18n.lang] || value.urls[this.i18n.defaultLang],
+            con: value.content[this.i18n.lang] || value.content[this.i18n.defaultLang]
+        };
 
         // region: demo toc
-        if (value.demo && this.codes && this.codes.length) {
-            // tslint:disable-next-line:forin
-            for (const lang in value.toc) {
-                const demoTocs: any[] = this.codes.map((item: any) => {
-                    return {
-                        h: 3,
-                        href: '#' + item.id,
-                        title: this.i18n.get(item.meta.title)
-                    };
-                });
-                value.toc[lang] = demoTocs;
-                // const demoTitle = this.i18n.fanyi('app.component.examples');
-                // value.toc[lang].splice(0, 0, {
-                //     h: 2,
-                //     href: '#' + demoTitle,
-                //     title: demoTitle
-                // }, ...demoTocs);
-            }
+        if (ret.demo && this.codes && this.codes.length) {
+            ret.con.toc = this.codes.map((item: any) => {
+                return {
+                    h: 3,
+                    href: '#' + item.id,
+                    title: this.i18n.get(item.meta.title)
+                };
+            });
         }
         // endregion
 
-        this._item = value;
+        this._item = ret;
 
         // goTo
         setTimeout(() => {
@@ -71,8 +48,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     constructor(
         public i18n: I18NService,
         public meta: MetaService,
-        private router: Router,
-        protected sanitizer: DomSanitizer
+        private router: Router
     ) {
     }
 
@@ -89,10 +65,6 @@ export class DocsComponent implements OnInit, OnDestroy {
                 hljs.highlightBlock(element);
             }
         }, 250);
-    }
-
-    safeHtml(html: string) {
-        return this.sanitizer.bypassSecurityTrustHtml(html);
     }
 
     i18NChange$: any;

@@ -13,10 +13,14 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Gulp task [site:build]",
-            "program": "${workspaceRoot}/node_modules/gulp/bin/gulp.js",
+            "name": "site generate",
+            "runtimeArgs": ["-r", "ts-node/register"],
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "internalConsoleOptions": "openOnSessionStart",
             "args": [
-                "site:build"
+                "${workspaceFolder}/scripts/site/generate.ts",
+                "architecture"
             ]
         }
     ]

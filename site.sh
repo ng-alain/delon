@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 set -u -e -o pipefail
 
@@ -23,7 +23,7 @@ echo 'BUILD(-b):' $BUILD ', DEPLOY(-d):' $DEPLOY
 if [[ ${BUILD} == true ]]; then
 
     echo 'Generate site...'
-    $(npm bin)/gulp site:gen
+    npm run site:gen init
 
     echo 'Generate site color less...'
     rm -rf .tmp

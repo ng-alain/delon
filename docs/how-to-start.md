@@ -16,8 +16,6 @@ type: Dev
 
 ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很细说 [API](//ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
 
-> ng-alain 依赖了一个 [ng-zorro-antd-extra](//cipchk.github.io/ng-zorro-antd-extra/) 类库，这是它和 ng-zorro-antd 一样，只是提供了一些 3.0 才会有的组件临时解决方案。
-
 ## 二、启动
 
 项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），脚手架的启动始于 [startup.service.ts](//github.com/cipchk/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：

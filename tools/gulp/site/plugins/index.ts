@@ -1,1 +1,0 @@
-export { toc } from './toc';

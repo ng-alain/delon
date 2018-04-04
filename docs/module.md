@@ -41,7 +41,6 @@ type: Other
 + HTTP 拦截器
 + Angular 启动服务
 + `ng-zorro-antd` 基础组件服务
-+ `ng-zorro-antd-extra` 基础组件扩展服务
 + `@delon/abc` 业务组件服务
 
 **作用：** 贯穿整个应用的定义。
@@ -62,7 +61,6 @@ type: Other
 
 + Angular 通用模块：`CommonModule`、`FormsModule`、`RouterModule`、`ReactiveFormsModule`
 + `ng-zorro-antd` 基础组件模块
-+ `ng-zorro-antd-extra` 基础扩展组件模块
 + `@delon/abc` 业务组件模块
 + 第三方通用依赖组件模块
 

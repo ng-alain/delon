@@ -97,8 +97,8 @@ describe('auth: simple.interceptor', () => {
             http.get('/test', { responseType: 'text' }).subscribe(value => {
                 done();
             });
-            const req = httpBed.expectOne('/test?token=123') as TestRequest;
-            expect(req.request.url).toContain(`token=123`);
+            const req = httpBed.expectOne(() => true) as TestRequest;
+            expect(req.request.url).toBe('/test?token=123');
             req.flush('ok!');
         });
     });
