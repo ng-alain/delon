@@ -96,6 +96,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private genList(notify?: ReuseTabNotify) {
+        const isClosed = notify && notify.active === 'close';
+        const beforeClosePos = isClosed ? this.list.findIndex(w => w.url === notify.url) : -1;
         const ls = this.srv.items.map((item: ReuseTabCached, index: number) => {
             return <ReuseItem>{
                 url: item.url,
@@ -106,18 +108,14 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
                 last: false
             };
         });
-
-        if (notify && notify.active === 'close' && (this.item && this.item.url === notify.url)) {
-            this.list = ls;
-            this.to(null, this.pos);
-            return;
-        } else if (this.showCurrent) {
+        if (this.showCurrent) {
             const snapshot = this.route.snapshot;
             const url = this.srv.getUrl(snapshot);
             const idx = ls.findIndex(w => w.url === url);
-            if (idx !== -1) {
-                this.pos = idx;
-                if (ls.length <= 1) ls[0].closable = false;
+            // jump directly when the current exists in the list
+            // or create a new current item and jump
+            if (idx !== -1 || (isClosed && notify.url === url)) {
+                this.pos = isClosed ? idx >= beforeClosePos ? this.pos - 1 : this.pos : idx;
             } else {
                 const snapshotTrue = this.srv.getTruthRoute(snapshot);
                 ls.push(<ReuseItem>{
@@ -130,11 +128,16 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
                 });
                 this.pos = ls.length - 1;
             }
-        } else {
-            this.pos = ls.length - 1;
+            // fix unabled close last item
+            if (ls.length <= 1) ls[0].closable = false;
         }
 
         this.list = ls;
+
+        if (ls.length && isClosed) {
+            this.to(null, this.pos);
+        }
+
         this.refStatus(false);
         this.visibility();
         this.cd.detectChanges();
@@ -177,7 +180,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
             e.preventDefault();
             e.stopPropagation();
         }
-        const item = this.list[Math.max(0, Math.min(index, this.list.length - 1))];
+        index = Math.max(0, Math.min(index, this.list.length - 1));
+        const item = this.list[index];
         this.router.navigateByUrl(item.url).then((res) => {
             if (!res) return;
             this.pos = index;
@@ -193,11 +197,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
             e.stopPropagation();
         }
         const item = this.list[idx];
-        if (!this.srv.close(item.url, includeNonCloseable)) {
-            // should remove unstored tags if always show current page
-            this.list.splice(idx, 1);
-            this.to(null, this.list.length - 1);
-        }
+        this.srv.close(item.url, includeNonCloseable);
         this.close.emit(item);
         this.cd.detectChanges();
         return false;
