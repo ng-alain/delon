@@ -1,7 +1,7 @@
 {
 	"name": "delon",
-	"version": "0.8.1",
-	"version_laster": "0.8.1",
+	"version": "0.8.2",
+	"version_laster": "0.8.2",
 	"version_next": "0.6.0-rc.3",
 	"typings": "index.d.ts",
 	"description": "Delon is a set of essential modules for ng-alain.",
@@ -103,6 +103,7 @@
 		"ng-zorro-antd-extra": "^1.1.5",
 		"ngx-countdown": "^2.0.0",
 		"ngx-highlight-js": "^1.0.3",
+		"rollup": "^0.57.1",
 		"rxjs": "^5.5.5",
 		"zone.js": "^0.8.14"
 	},
