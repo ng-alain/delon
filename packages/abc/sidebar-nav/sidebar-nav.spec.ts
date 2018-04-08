@@ -76,6 +76,20 @@ describe('abc: sidebar-nav', () => {
         return '';
     }
 
+    it('should be navigate url', () => {
+        createComp();
+        spyOn(context, 'select');
+        const data = deepCopy(MOCKMENUS);
+        menuSrv.add(data);
+        expect(context.select).not.toHaveBeenCalled();
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
+        const itemEl = getEl<HTMLElement>('.nav-depth1 a');
+        itemEl.click();
+        fixture.detectChanges();
+        expect(context.select).toHaveBeenCalled();
+        expect(router.navigateByUrl).toHaveBeenCalled();
+    });
+
     it('should be toggle open', () => {
         createComp();
         const data = deepCopy(MOCKMENUS);
@@ -230,10 +244,11 @@ describe('abc: sidebar-nav', () => {
 
 @Component({
     template: `
-    <sidebar-nav #comp [autoCloseUnderPad]="autoCloseUnderPad"></sidebar-nav>
+    <sidebar-nav #comp [autoCloseUnderPad]="autoCloseUnderPad" (select)="select()"></sidebar-nav>
     `
 })
 class TestComponent {
     @ViewChild('comp') comp: SidebarNavComponent;
     autoCloseUnderPad = false;
+    select() {}
 }

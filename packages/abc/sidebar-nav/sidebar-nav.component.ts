@@ -1,10 +1,10 @@
-import { Component, ElementRef, Renderer2, Inject, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, ElementRef, Renderer2, Inject, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
 import { debounceTime, filter } from 'rxjs/operators';
 import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
-import { MenuService, SettingsService } from '@delon/theme';
+import { MenuService, SettingsService, Menu } from '@delon/theme';
 
 import { Nav } from './interface';
 
@@ -26,6 +26,8 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private change$: Subscription;
 
     @Input() autoCloseUnderPad = true;
+
+    @Output() select = new EventEmitter<Menu>();
 
     constructor(
         private menuSrv: MenuService,
@@ -61,6 +63,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
             url = url.slice(1);
         }
         this.router.navigateByUrl(url);
+        this.onSelect(this.menuSrv.getPathByUrl(url).pop());
         this.hideAll();
         return false;
     }
@@ -124,6 +127,10 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
         this.hideAll();
         subNode.classList.add(SHOWCLS);
         this.calPos(linkNode as HTMLLinkElement, subNode);
+    }
+
+    onSelect(item: Menu) {
+        this.select.emit(item);
     }
 
     toggleOpen(item: Nav) {
