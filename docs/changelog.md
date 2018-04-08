@@ -6,7 +6,33 @@ title:
 type: Other
 ---
 
-### 1.0.0-beta.3
+### 0.8.2
+
+`2018-4-8`
+
+- @delon/abc
+    - 重构 `reuse-tab` 部分逻辑
+    - 修复 `Timeline` 日期格式问题
+- @delon/auth
+    - 修复无法使用 `url` 附加 `token` 问题
+    - 修复 `login_url` 支持外部链接
+
+### 1.0.0-beta.4@next
+
+`2018-4-8`
+
+- 脚手架
+    - 修复典型搜索页更好友的命中Tab标签，[49307e4](https://github.com/cipchk/ng-alain/commit/e933f9a513a4a8e9735878a14da183872cab0c0d) ([@Harlancui](https://github.com/Harlancui))
+- @delon/abc
+    - 增加 `sidebar-nav` 事件 `select`，[#54](https://github.com/cipchk/delon/issues/54)
+    - 重构 `reuse-tab` 部分逻辑
+- @delon/auth
+    - 修复无法使用 `url` 附加 `token` 问题
+- @delon/theme
+    - 修复超长页面可能被截断问题
+- 重构文档站
+
+### 1.0.0-beta.3@next
 
 `2018-4-3`
 
@@ -20,7 +46,7 @@ type: Other
     - 修复部分图片、Icon 无效链接问题
 - 更新文档站部分错别字，[@bigpear0201](https://github.com/bigpear0201)
 
-### 1.0.0-beta.2
+### 1.0.0-beta.2@next
 
 `2018-3-29`
 
@@ -34,7 +60,7 @@ type: Other
 - @delon/cli
     - 修复国际化无法正常显示顶部搜索框问题
 
-### 1.0.0-beta.1
+### 1.0.0-beta.1@next
 
 `2018-3-26`
 
