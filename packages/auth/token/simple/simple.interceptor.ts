@@ -32,10 +32,8 @@ export class SimpleInterceptor extends BaseInterceptor {
                 });
                 break;
             case 'url':
-                const url = this.injector.get(Router).parseUrl(req.url);
-                url.queryParams[options.token_send_key] = token;
                 req = req.clone({
-                    url: url.toString()
+                    params: req.params.append(options.token_send_key, token)
                 });
                 break;
         }

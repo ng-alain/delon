@@ -98,7 +98,20 @@ describe('auth: simple.interceptor', () => {
                 done();
             });
             const req = httpBed.expectOne(() => true) as TestRequest;
-            expect(req.request.url).toBe('/test?token=123');
+            expect(req.request.params.has('token')).toBe(true);
+            expect(req.request.params.get('token')).toBe('123');
+            req.flush('ok!');
+        });
+        it(`in url via full-domain`, (done: () => void) => {
+            genModule({
+                token_send_place: 'url'
+            }, genModel('123'));
+            http.get('https://ng-alain.com/test', { responseType: 'text' }).subscribe(value => {
+                done();
+            });
+            const req = httpBed.expectOne(() => true) as TestRequest;
+            expect(req.request.params.has('token')).toBe(true);
+            expect(req.request.params.get('token')).toBe('123');
             req.flush('ok!');
         });
     });
