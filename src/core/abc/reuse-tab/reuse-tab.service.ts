@@ -107,7 +107,7 @@ export class ReuseTabService implements OnDestroy {
     close(url: string, includeNonCloseable = false) {
         this.removeUrlBuffer = url;
 
-        if (!this.remove(url, includeNonCloseable)) return false;
+        this.remove(url, includeNonCloseable);
 
         this._cachedChange.next({ active: 'close', url, list: this._cached });
 

@@ -1,8 +1,8 @@
 <nz-tabset [nzSelectedIndex]="pos" [nzAnimated]="false">
     <nz-tab *ngFor="let i of list; let index = index">
         <ng-template #nzTabHeading>
-            <span [context-menu]="i" (click)="to(index)" class="name">{{i.title}}</span>
-            <i *ngIf="i.closable" class="anticon anticon-close op" (click)="_close(index)"></i>
+            <span [context-menu]="i" (click)="to($event, index)" class="name">{{i.title}}</span>
+            <i *ngIf="i.closable" class="anticon anticon-close op" (click)="_close($event, index)"></i>
         </ng-template>
     </nz-tab>
 </nz-tabset>
