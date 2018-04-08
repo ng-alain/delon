@@ -41,7 +41,12 @@ export abstract class BaseInterceptor implements HttpInterceptor {
             req = this.setReq(req, options);
         } else {
             if (options.token_invalid_redirect === true) {
-                setTimeout(() => this.injector.get(Router).navigate([ options.login_url ]));
+                setTimeout(() => {
+                    if (/^https?:\/\//g.test(options.login_url))
+                        location.href = options.login_url;
+                    else
+                        this.injector.get(Router).navigate([ options.login_url ]);
+                });
             }
             // observer.error：会导倒后续拦截器无法触发，因此，需要处理 `_HttpClient` 状态问题
             const hc = this.injector.get(_HttpClient, null);
