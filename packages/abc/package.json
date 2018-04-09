@@ -19,6 +19,7 @@
     "peerDependencies": {
         "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
         "@delon/acl": "PEER-0.0.0-PLACEHOLDER",
-        "file-saver": "^1.3.3"
+        "file-saver": "^1.3.3",
+        "ngx-countdown": "^2.1.0"
     }
 }

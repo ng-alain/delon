@@ -15,7 +15,7 @@ const converters = [
         (node: any, index: number) => {
             const attrs = Object.assign({ }, JsonML.getAttributes(node));
             let target = attrs.href.startsWith('//') || attrs.href.startsWith('http') ? ' target="_blank"' : '';
-            if (~attrs.href.indexOf('cipchk.github.io/ngx-weui')) target = '';
+            if (~attrs.href.indexOf('ng-alain.com')) target = '';
             return `<a${target} href="${attrs.href}">${JsonML.getChildren(node).map(toHtml).join('')}</a>`;
         }
     ],

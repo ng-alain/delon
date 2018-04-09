@@ -11,7 +11,7 @@ export function site() {
                 const children = JsonML.getChildren(node);
                 const sluggedId = generateSluggedId(children).id;
                 // <a href="#${sluggedId}" class="anchor">#</a>
-                return `<${tagName} id="${sluggedId}"><span>${children}</span></${tagName}>`;
+                return `<${tagName} id="${sluggedId}"><span>${children}</span><a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a></${tagName}>`;
             }
         ],
         [

@@ -2,11 +2,12 @@ import { Injector, Component, OnInit, NgModule } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CommonModule } from '@angular/common';
-import { NzModalService, NzModalModule, NzModalRef } from 'ng-zorro-antd';
+import { NzModalService, NzModalRef, NgZorroAntdModule } from 'ng-zorro-antd';
+import { NzMeasureScrollbarService } from 'ng-zorro-antd/src/core/services/nz-measure-scrollbar.service';
 import { ModalHelper } from './modal.helper';
 import { AlainThemeModule } from '../../index';
 
-describe('theme: modal.heper', () => {
+describe('theme: ModalHelper', () => {
     let injector: Injector;
     let modal: ModalHelper;
     let srv: NzModalService;
@@ -14,7 +15,7 @@ describe('theme: modal.heper', () => {
 
     beforeEach(() => {
         @NgModule({
-            imports: [CommonModule, NzModalModule, AlainThemeModule.forChild() ],
+            imports: [CommonModule, NgZorroAntdModule.forRoot(), AlainThemeModule.forChild() ],
             declarations: [TestModalComponent, TestComponent],
             entryComponents: [TestModalComponent]
         })

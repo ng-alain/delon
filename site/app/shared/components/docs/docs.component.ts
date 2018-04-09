@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { I18NService } from '../../../i18n/service';
 import { MetaService } from '../../../core/meta.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-docs',
@@ -33,6 +34,9 @@ export class DocsComponent implements OnInit, OnDestroy {
         }
         // endregion
 
+        if (ret.con.content) ret.con.content = this.sanitizer.bypassSecurityTrustHtml(ret.con.content);
+        if (ret.con.api) ret.con.api = this.sanitizer.bypassSecurityTrustHtml(ret.con.api);
+
         this._item = ret;
 
         // goTo
@@ -48,7 +52,8 @@ export class DocsComponent implements OnInit, OnDestroy {
     constructor(
         public i18n: I18NService,
         public meta: MetaService,
-        private router: Router
+        private router: Router,
+        private sanitizer: DomSanitizer
     ) {
     }
 

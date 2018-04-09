@@ -23,7 +23,7 @@ echo 'BUILD(-b):' $BUILD ', DEPLOY(-d):' $DEPLOY
 if [[ ${BUILD} == true ]]; then
 
     echo 'Generate site...'
-    npm run site:gen init
+    node scripts/site/main init
 
     echo 'Generate site color less...'
     rm -rf .tmp
@@ -38,6 +38,8 @@ if [[ ${BUILD} == true ]]; then
 
     echo 'build...'
     $(npm bin)/ng build --app site --prod --build-optimizer --bh /
+    # github pages
+    # $(npm bin)/ng build --app site --prod --build-optimizer --bh /delon/
 fi
 
 if [[ ${DEPLOY} == true ]]; then
@@ -45,8 +47,8 @@ if [[ ${DEPLOY} == true ]]; then
     echo 'copy index.html > 404.html'
     cp -f site/dist/index.html site/dist/404.html
 
-    echo 'copy CNAME'
-    cp -f site/CNAME site/dist/CNAME
+    # echo 'copy CNAME'
+    # cp -f site/CNAME site/dist/CNAME
 
     echo 'deploy by gh-pages'
     $(npm bin)/gh-pages-clean

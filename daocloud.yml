@@ -1,0 +1,33 @@
+version: 3
+stages:
+- compile
+- deploy
+release:
+  stage: compile
+  job_type: lite_image_build
+  only:
+    branches:
+    - master
+  allow_failure: false
+  compile:
+    build_dir: /
+    cache: false
+    dockerfile_path: /Dockerfile.compile
+  extract:
+  - /usr/src/app/site/dist
+  - /usr/src/app/_nginx/default.conf
+  package:
+    build_dir: /
+    cache: false
+    dockerfile_path: /Dockerfile.package
+self:
+  stage: deploy
+  job_type: DCS_deploy
+  only:
+    branches:
+    - master
+  allow_failure: false
+  dependencies:
+  - release
+  app_name: web
+  cluster_id: ""
