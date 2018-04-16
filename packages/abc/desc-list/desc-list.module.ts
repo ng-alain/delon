@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DescListComponent } from './desc-list.component';
 import { DescListItemComponent } from './desc-list-item.component';
+import { AdDescListConfig } from './desc-list.config';
 
 const COMPONENTS = [DescListComponent, DescListItemComponent];
 
@@ -21,6 +22,6 @@ const ZORROMODULES = [ NgZorroAntdModule ];
 })
 export class AdDescListModule {
     static forRoot(): ModuleWithProviders {
-        return { ngModule: AdDescListModule, providers: [] };
+        return { ngModule: AdDescListModule, providers: [ AdDescListConfig ] };
     }
 }

@@ -18,13 +18,13 @@ export interface Menu {
     badge?: number;
     /** 徽标数，显示小红点 */
     badge_dot?: boolean;
-    /** 徽标数，设置 Badge 颜色 （默认：error， 所有颜色值见：https://github.com/cipchk/ng-alain/blob/master/_documents/utils.md#色彩） */
+    /** 徽标 Badge 颜色 （默认：error， 所有颜色值见：https://github.com/cipchk/ng-alain/blob/master/_documents/utils.md#色彩） */
     badge_status?: string;
     /** 是否隐藏菜单 */
     hide?: boolean;
-    /** 隐藏面包屑，指 `pro-header` 组件的自动生成面包屑时有效 */
+    /** 隐藏面包屑，指 `page-header` 组件的自动生成面包屑时有效 */
     hideInBreadcrumb?: boolean;
-    /** ACL配置，若导入 `@delon/acl` 时自动有效 */
+    /** ACL配置，若导入 `@delon/acl` 时自动有效，等同于 `ACLService.can(roleOrAbility: ACLCanType)` 参数值 */
     acl?: any;
     /** 是否快捷菜单项 */
     shortcut?: boolean;

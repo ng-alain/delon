@@ -1,6 +1,7 @@
 import { Component, Input, ViewEncapsulation, ElementRef, Renderer2, OnChanges, SimpleChanges, OnInit, ContentChild, TemplateRef, ContentChildren, QueryList, SimpleChange } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { DescListItemComponent } from './desc-list-item.component';
+import { AdDescListConfig } from './desc-list.config';
 
 @Component({
     selector: 'desc-list',
@@ -82,7 +83,13 @@ export class DescListComponent implements OnChanges, OnInit {
 
     // endregion
 
-    constructor(private el: ElementRef, private renderer: Renderer2) {}
+    constructor(
+        cog: AdDescListConfig,
+        private el: ElementRef,
+        private renderer: Renderer2
+    ) {
+        Object.assign(this, cog);
+    }
 
     ngOnInit() {
         this.setClass();

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { AdFooterToolbarModule } from './footer-toolbar.module';
+import { AdErrorCollectModule } from '../error-collect/error-collect.module';
 
 describe('abc: footer-toolbar', () => {
     let fixture: ComponentFixture<TestComponent>;
@@ -11,7 +12,7 @@ describe('abc: footer-toolbar', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ AdFooterToolbarModule.forRoot() ],
+            imports: [ AdErrorCollectModule.forRoot(), AdFooterToolbarModule.forRoot() ],
             declarations: [ TestComponent ]
         });
         fixture = TestBed.createComponent(TestComponent);

@@ -73,7 +73,7 @@ describe('abc: page-header', () => {
         beforeEach(() => {
             TestBed.overrideTemplate(
                 TestComponent,
-                `<page-header #comp [title]="title" [autoBreadcrumb]="autoBreadcrumb"></page-header>`
+                `<page-header #comp [title]="title" [home]="home" [home_i18n]="home_i18n" [autoBreadcrumb]="autoBreadcrumb"></page-header>`
             );
             createComp();
             route = injector.get(Router);
@@ -100,9 +100,10 @@ describe('abc: page-header', () => {
 
         it('should be', () => {
             spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
+            context.home = '';
             context.autoBreadcrumb = true;
             fixture.detectChanges();
-            expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(4);
+            expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
         });
 
         it('should be no breadcrumb when invalid url', () => {
@@ -132,7 +133,7 @@ describe('abc: page-header', () => {
             spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
             context.autoBreadcrumb = true;
             fixture.detectChanges();
-            expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
+            expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(2);
         });
 
         it('should be i18n', () => {
@@ -157,14 +158,14 @@ describe('abc: page-header', () => {
             expect(i18n.fanyi).not.toHaveBeenCalled();
             context.autoBreadcrumb = true;
             fixture.detectChanges();
-            expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(4);
+            expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
             expect(i18n.fanyi).toHaveBeenCalled();
         });
 
         describe('#home', () => {
             it('shoule be hide home', () => {
                 spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
-                cog.home = null;
+                context.home = '';
                 context.autoBreadcrumb = true;
                 fixture.detectChanges();
                 expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
@@ -173,7 +174,8 @@ describe('abc: page-header', () => {
                 spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
                 spyOn(i18n, 'fanyi');
                 expect(i18n.fanyi).not.toHaveBeenCalled();
-                cog.home_i18n = 'home_i18n';
+                context.home = 'home';
+                context.home_i18n = 'home_i18n';
                 context.autoBreadcrumb = true;
                 fixture.detectChanges();
                 expect(i18n.fanyi).toHaveBeenCalled();
@@ -184,7 +186,8 @@ describe('abc: page-header', () => {
 
 @Component({
     template: `
-    <page-header #comp [title]="title" [autoBreadcrumb]="autoBreadcrumb">
+    <page-header #comp [title]="title"
+        [autoBreadcrumb]="autoBreadcrumb" [home]="home" [home_i18n]="home_i18n" [home_link]="home_link">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
         <ng-template #action><div class="action">action</div></ng-template>
@@ -198,4 +201,7 @@ class TestComponent {
     @ViewChild('comp') comp: PageHeaderComponent;
     title = '所属类目';
     autoBreadcrumb: boolean;
+    home: string;
+    home_link: string;
+    home_i18n: string;
 }

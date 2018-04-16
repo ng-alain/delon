@@ -4,6 +4,7 @@ subtitle: 简易表格
 order: 10
 cols: 1
 module: AdSimpleTableModule
+config: AdSimpleTableConfig
 ---
 
 现有的 `nz-table` 已经足够满足绝大多数需求，然而在中台系统中绝大多数在使用过程中只是需要一个简单的数据表格展示，但现有的使用规则很繁琐：

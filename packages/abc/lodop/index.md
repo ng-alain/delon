@@ -4,6 +4,7 @@ subtitle: Lodop打印
 order: 130
 cols: 1
 module: AdLodopModule
+config: AdLodopConfig
 ---
 
 Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时感谢 [lodop](http://c-lodop.com/) 为 ng-alain 免费提供正版KEY。

@@ -5,6 +5,7 @@ order: 300
 cols: 1
 type: Directive
 module: AdImageModule
+config: AdImageConfig
 ---
 
 等同于 `src`，但相比较更多功能：
@@ -19,19 +20,3 @@ module: AdImageModule
 ----|------|-----|------
 size | 图像大小 | `number` | `64`
 error | 替代图像无法加载 | `string` | `./assets/img/logo.svg`
-
-### ImageConfig
-
-导入 `AdImageModule` 时，允许指定默认 `size`、`error` 值。例如：
-
-```ts
-@NgModule({
-    imports: [
-        AdImageModule.forRoot()
-    ],
-    providers: [
-        // 重置默认大小为：32
-        { provide: ImageConfig, useFactory: ()=> { return Object.assign(new ImageConfig(), { size: 32 }); } }
-    ]
-})
-```
