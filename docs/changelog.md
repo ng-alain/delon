@@ -6,6 +6,23 @@ title:
 type: Other
 ---
 
+### 1.0.0-beta.5@next
+
+`2018-4-16`
+
+- 脚手架
+    - 修复顶部二级菜单更友好触发行为，[765644d](https://github.com/cipchk/ng-alain/commit/765644d) ([@ferried](https://github.com/ferried))
+    - 修复登录页
+        - 格式问题：顶部图文垂直居中、移除链接、标题问题，[b96cae](https://github.com/cipchk/ng-alain/commit/b96cae)
+        - 增加登录后重新加载 `startup.service` 示例代码，[16c964](https://github.com/cipchk/ng-alain/commit/16c964)
+    - 重构部分默认拦截器业务处理方式，[18e02f](https://github.com/cipchk/ng-alain/commit/18e02f)
+- @delon/abc
+    - 增加若干全局可配置项
+    - 增加 `page-header` 更多额外参数
+- @delon/cli
+    - 修复侧边栏用户信息不对齐问题
+- 文档站支持PWA、手机版
+
 ### 0.8.2
 
 `2018-4-8`
