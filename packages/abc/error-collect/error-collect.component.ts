@@ -2,6 +2,7 @@ import { Component, Directive, OnInit, Input, HostBinding, OnDestroy, ElementRef
 import { FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { AdErrorCollectConfig } from './error-collect.config';
 
 /**
  * 错误消息采集器
@@ -39,7 +40,15 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
 
     count = 0;
 
-    constructor(private el: ElementRef, private renderer: Renderer2, private cd: ChangeDetectorRef, @Inject(DOCUMENT) private doc: any) {}
+    constructor(
+        cog: AdErrorCollectConfig,
+        private el: ElementRef,
+        private renderer: Renderer2,
+        private cd: ChangeDetectorRef,
+        @Inject(DOCUMENT) private doc: any
+    ) {
+        Object.assign(this, cog);
+    }
 
     private get errEls() {
         return this.formEl.querySelectorAll('.has-error');
