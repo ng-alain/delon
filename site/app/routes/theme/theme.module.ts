@@ -20,7 +20,7 @@ const COMPONENTS = [
 ];
 
 const routes: Routes = [
-    { path: '', component: ThemeEditorComponent, data: { title: '编辑器' } }
+    { path: '', component: ThemeEditorComponent, data: { titleI18n: 'app.header.menu.theme' } }
 ];
 // endregion
 

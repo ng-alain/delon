@@ -1,15 +1,15 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { throwIfAlreadyLoaded } from './module-import-guard';
 
-import { TitleService } from './title.service';
 import { MetaService } from './meta.service';
+import { MobileService } from './mobile.service';
+import { I18NService } from './i18n/service';
 
 @NgModule({
-    imports: [
-    ],
     providers: [
-        TitleService,
-        MetaService
+        I18NService,
+        MetaService,
+        MobileService
     ]
 })
 export class CoreModule {

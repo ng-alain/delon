@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { I18NService } from '../i18n/service';
-import { TitleService } from '../core/title.service';
+import { TitleService } from '@delon/theme';
+import { I18NService } from '../core/i18n/service';
 
 @Injectable()
 export class StartupService {
@@ -8,7 +8,7 @@ export class StartupService {
 
     load(): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.title.suffix = 'ng-alain';
+            this.title.suffix = 'Ng Alain';
             this.i18N.use(this.i18N.defaultLang);
             resolve();
         });

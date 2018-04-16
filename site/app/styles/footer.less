@@ -1,85 +1,68 @@
-@padding-space: 114px;
-
-app-footer.dark {
-	background-color: #000;
-	color: rgba(255, 255, 255, 0.65);
-	a {
-		color: #fff;
-	}
-	h2 {
-		color: rgba(255, 255, 255, 1);
-		& > span {
-			color: rgba(255, 255, 255, 1);
-		}
-	}
-	.bottom-bar {
-		border-top: 1px solid rgba(255, 255, 255, 0.25);
-		overflow: hidden;
-	}
-}
-
-app-footer {
+@padding-space: 144px;
+#footer {
     display: block;
-	border-top: 1px solid @border-color;
-	clear: both;
-	font-size: 12px;
-	background: #fff;
-	position: relative;
-	z-index: 100;
-	color: @site-text-color;
-	box-shadow: 0 1000px 0 1000px #fff;
-	.ant-row {
-		text-align: center;
-		.footer-center {
-			display: inline-block;
-			text-align: left;
-			> h2 {
-				font-size: 14px;
-				margin: 0 auto 24px;
-				font-weight: 500;
-				position: relative;
-				> .anticon {
-					font-size: 16px;
-					position: absolute;
-					left: -22px;
-					top: 3px;
-					color: #aaa;
-				}
-			}
-			> div {
-				margin: 12px 0;
-			}
-		}
-	}
-	.footer-wrap {
-		position: relative;
-		padding: 86px @padding-space 70px @padding-space;
-	}
-	.bottom-bar {
-		border-top: 1px solid @border-color;
-		text-align: right;
-		padding: 20px @padding-space;
-		margin: 0;
-		line-height: 24px;
-		a {
-			color: rgba(255, 255, 255, 0.65);
-			&:hover {
-				color: #fff;
-			}
-		}
-		.translate-button {
-			text-align: left;
-			width: 200px;
-			margin: 0 auto;
-		}
-	}
-	.footer-logo {
-		position: relative;
-		top: -2px;
-	}
-	.footer-flag {
-		position: relative;
-		top: -4px;
-		margin-right: 8px;
-	}
+    clear: both;
+    font-size: 14px;
+    background-color: #000;
+    position: relative;
+    z-index: 100;
+    color: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 1000px 0 1000px #fff;
+    .ant-row {
+        text-align: center;
+    }
+    .footer-center {
+        display: inline-block;
+        text-align: left;
+        >h2 {
+            font-size: 16px;
+            margin: 0 auto 24px;
+            font-weight: 500;
+            position: relative;
+            >.title-icon {
+                width: 27px;
+                margin-right: 16px;
+            }
+            >.anticon {
+                font-size: 16px;
+                position: absolute;
+                left: -22px;
+                top: 3px;
+                color: #aaa;
+            }
+        }
+        >div {
+            margin: 12px 0;
+        }
+    }
+    .footer-wrap {
+        position: relative;
+        padding: 86px @padding-space 16px @padding-space;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .bottom-bar {
+        text-align: right;
+        padding: 16px @padding-space;
+        margin: 0;
+        line-height: 32px;
+        overflow: hidden;
+        a {
+            color: rgba(255, 255, 255, 0.65);
+            &:hover {
+                color: #fff;
+            }
+        }
+        .translate-button {
+            text-align: left;
+        }
+    }
+    a {
+        color: rgba(255, 255, 255, 0.9);
+    }
+    h2 {
+        color: rgba(255, 255, 255, 1);
+        &>span {
+            color: rgba(255, 255, 255, 1);
+        }
+    }
 }

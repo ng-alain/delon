@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { META } from '../routes/gen/meta';
-import { I18NService } from './../i18n/service';
+import { I18NService } from '../core/i18n/service';
 
 @Injectable()
 export class MetaService {

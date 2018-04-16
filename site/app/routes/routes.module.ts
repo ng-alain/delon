@@ -16,7 +16,7 @@ const routes = [
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', component: HomeComponent },
+            { path: '', component: HomeComponent, data: { titleI18n: 'slogan'} },
             { path: 'theme', loadChildren: './theme/theme.module#ThemeModule' },
             { path: '6to7', loadChildren: './6to7/6to7.module#SixToSevenModule' },
             // region: region routers

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { I18NService } from '../../i18n/service';
+import { I18NService } from '../../core/i18n/service';
 
 @Component({
     selector: 'app-home',

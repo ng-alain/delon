@@ -9,7 +9,8 @@ import { environment } from '../environments/environment';
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
 
-import { I18NService } from './i18n/service';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { I18NService } from './core/i18n/service';
 import { CoreModule } from './core/core.module';
 import { StartupService } from './core/startup.service';
 
@@ -40,7 +41,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         TranslateModule.forRoot()
     ],
     providers: [
-        I18NService,
+        { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
         StartupService,
         {
             provide: APP_INITIALIZER,

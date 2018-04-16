@@ -10,7 +10,7 @@ const COMPONENTS = [
 ];
 
 const routes: Routes = [
-    { path: '', component: SixToSevenEditorComponent, data: { title: '0.6.x至0.7.xHTML转化' } }
+    { path: '', component: SixToSevenEditorComponent, data: { titleI18n: 'app.header.menu.upgrade' } }
 ];
 // endregion
 

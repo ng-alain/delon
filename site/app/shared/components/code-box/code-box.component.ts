@@ -3,7 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { copy } from '@delon/abc';
 import sdk from '@stackblitz/sdk';
 
-import { I18NService } from './../../../i18n/service';
+import { I18NService } from './../../../core/i18n/service';
 
 @Component({
     selector: 'code-box',

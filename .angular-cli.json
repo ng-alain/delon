@@ -45,9 +45,12 @@
         "testTsconfig": "tsconfig.spec.json",
         "prefix": "",
         "styles": [
+            "../node_modules/docsearch.js/dist/cdn/docsearch.css",
             "styles.less"
         ],
         "scripts": [
+            "../node_modules/enquire.js/dist/enquire.js",
+            "../node_modules/docsearch.js/dist/cdn/docsearch.js",
             "../node_modules/@antv/g2/dist/g2.min.js",
             "../node_modules/@antv/data-set/dist/data-set.min.js",
             "../node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js"

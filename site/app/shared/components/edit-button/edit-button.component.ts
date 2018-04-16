@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MetaService } from './../../../core/meta.service';
-import { I18NService } from '../../../i18n/service';
+import { I18NService } from '../../../core/i18n/service';
 
 @Component({
     selector: 'edit-button',

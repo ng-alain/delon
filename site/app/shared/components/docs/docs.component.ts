@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { I18NService } from '../../../i18n/service';
+import { I18NService } from '../../../core/i18n/service';
 import { MetaService } from '../../../core/meta.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -65,7 +65,7 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     private initHLJS() {
         setTimeout(() => {
-            const elements = document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');
+            const elements = document.querySelectorAll('[class*="language-"], [class*="lang-"]');
             for (let i = 0, element; element = elements[i++];) {
                 hljs.highlightBlock(element);
             }

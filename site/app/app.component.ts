@@ -1,25 +1,44 @@
-import { Component, ViewEncapsulation, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { TitleService } from './core/title.service';
+import { TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { MetaService } from './core/meta.service';
-import { I18NService } from './i18n/service';
+import { MobileService } from './core/mobile.service';
+import { I18NService } from './core/i18n/service';
 
 @Component({
     selector: 'app-root',
     template: `<router-outlet></router-outlet>`
 })
-export class AppComponent implements OnInit {
-    @HostBinding('class.layout-fixed') isHome = false;
+export class AppComponent implements OnDestroy {
+
+    @HostBinding('class.mobile')
+    isMobile = false;
+
     private prevUrl: string;
+    private query = 'only screen and (max-width: 767.99px)';
 
     constructor(
-        private i18n: I18NService,
+        @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
         private meta: MetaService,
         private title: TitleService,
-        private router: Router) {}
+        private router: Router,
+        private mobileSrv: MobileService
+    ) {
+        enquire.register(
+            this.query,
+            {
+                match: () => {
+                    this.mobileSrv.next(true);
+                    this.isMobile = true;
+                },
+                unmatch: () => {
+                    this.mobileSrv.next(false);
+                    this.isMobile = false;
+                }
+            }
+        );
 
-    ngOnInit() {
         this.router.events.pipe(
             filter(evt => evt instanceof NavigationEnd),
             map(() => this.router.url.split('#')[0])
@@ -44,9 +63,13 @@ export class AppComponent implements OnInit {
                 this.router.navigateByUrl('/404');
                 return;
             }
-            this.title.setTitleByUrl(url);
+            const item = this.meta.getPathByUrl(url);
+            this.title.setTitle(item ? item.title || item.subtitle : '');
             // scroll to top
             document.body.scrollIntoView();
         });
+    }
+    ngOnDestroy(): void {
+        enquire.unregister(this.query);
     }
 }

@@ -1,54 +1,49 @@
-<i class="anticon anticon-menu nav-phone-icon" (click)="toggleMenu()"></i>
+<ng-template #menu>
+    <button nz-button nzGhost nzSize="small" (click)="langChange()" class="header-lang-button">{{ 'app.header.lang' | translate}}</button>
+    <ul nz-menu [nzMode]="isMobile ? 'inline' : 'horizontal'" class="menu-site" id="nav">
+        <li nz-menu-item routerLink="/">{{'app.header.menu.home' | translate}}</li>
+        <li nz-menu-item routerLink="/docs">{{'app.header.menu.docs' | translate}}</li>
+        <li nz-menu-item routerLink="/components">{{'app.header.menu.components' | translate}}</li>
+        <li nz-menu-item>
+            <nz-dropdown nzPlacement="bottomRight">
+                <div nz-dropdown>{{'app.header.menu.tool' | translate}}</div>
+                <ul nz-menu>
+                    <li nz-menu-item routerLink="/theme">{{'app.header.menu.theme' | translate}}</li>
+                    <li nz-menu-item routerLink="/6to7">{{'app.header.menu.upgrade' | translate}}</li>
+                </ul>
+            </nz-dropdown>
+        </li>
+    </ul>
+</ng-template>
+<nz-popover *ngIf="isMobile"
+    nzOverlayClassName="popover-menu"
+    nzPlacement="bottomRight"
+    nzTrigger="click"
+    [nzVisible]="menuVisible">
+    <i nz-popover class="anticon anticon-menu nav-phone-icon" (click)="showMenu()"></i>
+    <ng-template #nzTemplate>
+        <ng-template [ngTemplateOutlet]="menu"></ng-template>
+    </ng-template>
+</nz-popover>
 <nz-row>
-    <nz-col nzXs="8" nzSm="8" nzMd="8" nzLg="5">
-        <a routerLink="/" class="logo">
+    <nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5" nzXl="5" nzXXl="4">
+        <a routerLink="/">
             <nz-tooltip nzTitle="{{ 'app.footer.qqgroup' | translate}}: 316911865">
-                <span nz-tooltip (click)="onCopy('316911865')">
-                    <img src="./assets/img/logo-color.svg" />
-                    <span>ng-alain</span>
+                <span nz-tooltip (click)="onCopy('316911865')" id="logo">
+                    <img src="./assets/img/logo-color.svg" style="max-height: 32px;" />
+                    <img src="./assets/img/ng-alain.svg" style="max-height: 32px;" />
                 </span>
             </nz-tooltip>
         </a>
     </nz-col>
-    <nz-col class="header-menu" nz-col nzXs="16" nzSm="16" nzMd="16" nzLg="19">
-        <div class="search-box">
+    <nz-col class="header-menu" nz-col
+        nzXs="0" nzSm="0" nzMd="18" nzLg="19" nzXl="19" nzXXl="20">
+        <div id="search-box">
             <i class="anticon anticon-search"></i>
-            <nz-select [nzPlaceHolder]="'app.header.search' | translate"
-                       [ngModel]="item" (ngModelChange)="select($event)"
-                       nzShowSearch nzAllowClear>
-                <ng-container *ngFor="let i of list">
-                    <nz-option [nzLabel]="i.type" [nzDisabled]="true"></nz-option>
-                    <nz-option *ngFor="let entry of i.list"
-                        [nzLabel]="genTitle(entry.meta)"
-                        [nzValue]="'/' + i.type + '/' + entry.name">
-                    </nz-option>
-                </ng-container>
-            </nz-select>
+            <input nz-input #searchIpt [placeholder]="'app.header.search' | translate">
         </div>
-        <div class="header-meta">
-            <div class="menu">
-                <ul nz-menu [nzMode]="'horizontal'">
-                    <li nz-menu-item routerLink="/">{{'app.header.menu.home' | translate}}</li>
-                    <li nz-menu-item routerLink="/docs">{{'app.header.menu.docs' | translate}}</li>
-                    <li nz-menu-item routerLink="/components">{{'app.header.menu.components' | translate}}</li>
-                    <li nz-menu-item>
-                        <nz-dropdown nzPlacement="bottomRight">
-                            <span nz-dropdown>{{'app.header.menu.tool' | translate}}</span>
-                            <ul nz-menu>
-                                <li nz-menu-item routerLink="/theme">{{'app.header.menu.theme' | translate}}</li>
-                                <li nz-menu-item routerLink="/6to7">{{'app.header.menu.upgrade' | translate}}</li>
-                            </ul>
-                        </nz-dropdown>
-                    </li>
-                </ul>
-            </div>
-            <div class="preview">
-                <a class="preview-button" href="//cipchk.github.io/ng-alain/" target="_blank" rel="noopener noreferrer">
-                    <button nz-button>
-                        <i class="anticon anticon-eye-o"></i><span>{{'app.home.preview' | translate}}</span>
-                    </button>
-                </a>
-            </div>
-        </div>
+        <ng-container *ngIf="!isMobile">
+            <ng-template [ngTemplateOutlet]="menu"></ng-template>
+        </ng-container>
     </nz-col>
 </nz-row>

@@ -1,5 +1,6 @@
 export const ENUS = {
-    'app.header.search': 'Search...',
+    'slogan': 'A based on Antd for web applications',
+    'app.header.search': 'Search in ng-alain.com',
     'app.home.preview': 'Preview',
     'app.home.start': 'Start',
     'app.header.menu.home': 'Home',
@@ -26,6 +27,7 @@ export const ENUS = {
     'app.component.refer.title': 'Usage:',
     'app.component.refer.desc': 'Learning more to visit: ',
     'app.component.refer.link': 'Using ABC Components Alone',
+    'app.component.config.title': 'General configuration',
     'app.demo.copy': 'Copy code',
     'app.demo.copied': 'Copied!',
     'app.demo.stackblitz': 'Open in StackBlitz'

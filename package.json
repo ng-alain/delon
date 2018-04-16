@@ -85,7 +85,9 @@
 		"codecov": "^3.0.0",
 		"codelyzer": "~4.2.1",
 		"del": "^3.0.0",
+		"docsearch.js": "^2.5.2",
 		"domhandler": "^2.4.1",
+		"enquire.js": "^2.1.6",
 		"fs-extra": "^5.0.0",
 		"gh-pages": "^1.1.0",
 		"htmlparser2": "^3.9.2",
@@ -121,7 +123,8 @@
 		"tslint-language-service": "^0.9.6",
 		"typescript": "~2.6.0",
 		"webpack-bundle-analyzer": "^2.9.2",
-		"xlsx": "^0.11.16"
+		"xlsx": "^0.11.16",
+		"ng-github-button": "^0.0.1"
 	},
 	"lint-staged": {
 		"src/**/*.ts": "lint:ts",

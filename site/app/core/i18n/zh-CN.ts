@@ -1,5 +1,6 @@
 export const ZHCN = {
-    'app.header.search': '搜索...',
+    'slogan': '一个基于 Antd 中后台前端解决方案',
+    'app.header.search': '在 ng-alain.com 中搜索',
     'app.home.preview': '预览',
     'app.home.start': '开始使用',
     'app.header.menu.home': '首页',
@@ -26,6 +27,7 @@ export const ZHCN = {
     'app.component.refer.title': '引用方式：',
     'app.component.refer.desc': '详细使用方式请参照：',
     'app.component.refer.link': '独立使用 abc 组件',
+    'app.component.config.title': '通用配置',
     'app.demo.copy': '复制代码',
     'app.demo.copied': '复制成功',
     'app.demo.stackblitz': '在 StackBlitz 中打开'

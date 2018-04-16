@@ -7,30 +7,13 @@ module: AdSimpleTableModule
 config: AdSimpleTableConfig
 ---
 
-现有的 `nz-table` 已经足够满足绝大多数需求，然而在中台系统中绝大多数在使用过程中只是需要一个简单的数据表格展示，但现有的使用规则很繁琐：
+`simple-table` 并不是在创造另一个表格组件，而是在 `nz-table` 的基础上以**可配置**的形式渲染表格，在中后台里这种方式可以满足绝大多数场景，但又可以更易的管理表格渲染动作。
 
-- HTML模板存在大量 `td`、`th`
-- 表格数据来源于 HTTP
-- 繁琐的选择框
-- 简单的排序、过滤动作
+`simple-table` 并不希望**先入为主**，一个多数场景的表格分两个步骤：决定怎么渲染表格、以及表格数据源。
 
-而 `simple-table` 是在 `nz-table` 向上构建更高价的组件，同时以更简洁的方式解决上述问题。
+如何渲染这里采用 JSON 来替代这相比较于 HTML 而言更简洁明了。
 
-## 特性
-
-- 后端 HTTP 优先
-- Column 配置
-- 简化选择框处理
-- 简化单选框处理
-- 自定义渲染列
-- 简化模态框处理
-- 简化按钮组处理
-- 排序可配置
-- 过滤可配置
-- 切换分页时自动返回表格顶部
-- 允许设置分页左、中、右对齐
-- 支持对所有表格统一配置默认项
-- 简化页码、每页数量变化时回调处理
+数据源我把它分为纯HTTP和全量数据源两类——对于前者你只要告诉 `simpel-table` 请求域是什么亦可，而后者当希望所有数据一口气加载时。
 
 ## API
 
@@ -195,37 +178,3 @@ text | 文本 | `string` | -
 value | 值 | `any` | -
 checked? | 是否选中 | `boolean` | -
 acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
-
-### SimpleTableConfig
-
-调整统一默认参数值：
-
-```typescript
-// 调整所有 `simple-table` 每页数据为 15 条
-export function simpleTableConfigFactory() {
-    return Object.assign(new SimpleTableConfig(), { ps: 15 });
-}
-
-@NgModule({
-    providers: [
-        { provide: SimpleTableConfig, useFactory: simpleTableConfigFactory }
-    ]
-})
-```
-
-参数 | 说明 | 类型 | 默认值
-----|------|-----|------
-ps | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10`
-bordered | 是否显示边框 | `boolean` | `false`
-size | table大小 | `small,middle,default` | `default`
-showSizeChanger | 是否显示pagination中改变页数 | `boolean` | `false`
-pageSizeSelectorValues | pagination中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]`
-showQuickJumper | 是否显示pagination中快速跳转 | `boolean` | `false`
-showTotal | 是否显示总数据量 | `boolean` | `false`
-isPageIndexReset | 数据变更后是否保留在数据变更前的页码 | `boolean` | `true`
-toTopInChange | 切换分页时返回顶部 | `boolean` | `true`
-pagePlacement | 分页方向 | `left,center,right` | `right`
-reqReName | 重命名请求参数 `pi`、`ps`；例如：`{ pi: 'Page' }` `pi` 会被替换成 Page | `Object` | -
-resReName | 重命名返回参数 `total`、`list`；例如：`{ total: 'Total' }` Total 会被当作 `total` | `Object` | -
-sortReName | 重命名排序值，`columns` 的重命名高于属性 | `{ ascend?: string, descend?: string }` | -
-modalParamsName | 指定模态框目标组件的接收参数名 | `string` | record

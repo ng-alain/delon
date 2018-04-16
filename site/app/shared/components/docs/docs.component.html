@@ -1,10 +1,10 @@
-<div class="toc-affix" *ngIf="item.con.toc?.length">
+<nz-affix [nzOffsetTop]="16" class="toc-affix" *ngIf="item.con.toc?.length">
     <ul class="toc">
         <li *ngFor="let t of item.con.toc" class="depth-{{t.h}}">
             <a (click)="goTo(t)" title="{{t.title}}">{{t.title}}</a>
         </li>
     </ul>
-</div>
+</nz-affix>
 <nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message">
     <ng-template #message>
         This article has not been translated, hope that your can PR to translated it.
@@ -19,7 +19,7 @@
     </h1>
     <div *ngIf="item.con.content" [innerHTML]="item.con.content"></div>
     <ng-container *ngIf="meta.item.module">
-        <p>{{'app.component.refer.title' | translate}}</p>
+        <strong>{{'app.component.refer.title' | translate}}</strong>
         <pre class="typescript hljs"><span class="hljs-section">import</span> &#123; <span class="hljs-attribute">{{meta.item.module}}</span> &#125; from <span class="hljs-string">'{{meta.item.module_name}}'</span>;</pre>
         <p>
             {{'app.component.refer.desc' | translate}}
@@ -27,6 +27,27 @@
                 {{'app.component.refer.link' | translate}}
             </a>
         </p>
+        <ng-container *ngIf="meta.item.config">
+            <strong>{{'app.component.config.title' | translate}}</strong>
+            <pre class="lang-typescript">import &#123; {{ meta.item.config }} &#125; from '{{meta.item.module_name}}';
+export function fn{{ meta.item.config }}(): {{ meta.item.config }} &#123;
+    return Object.assign(new {{ meta.item.config }}(), <{{ meta.item.config }}>&#123;
+        // values
+    &#125;);
+&#125;
+
+@NgModule(&#123; &#125;)
+export class DelonModule &#123;
+    static forRoot(): ModuleWithProviders &#123;
+        return &#123;
+            ngModule: DelonModule,
+            providers: [
+                &#123; provide: {{ meta.item.config }}, useFactory: fn{{ meta.item.config }} &#125;
+            ]
+        &#125;;
+    &#125;
+&#125;</pre>
+        </ng-container>
     </ng-container>
     <h2 *ngIf="item.demo" id="{{'app.component.examples' | translate}}" style="margin-bottom: 32px;">
         {{'app.component.examples' | translate}}

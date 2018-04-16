@@ -11,6 +11,7 @@ import { DelonACLModule } from '@delon/acl';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { TranslateModule } from '@ngx-translate/core';
 import { HighlightJsModule } from 'ngx-highlight-js';
+import { GithubButtonModule } from 'ng-github-button';
 
 import { ContentComponent } from './components/content/content.component';
 import { EditButtonComponent } from './components/edit-button/edit-button.component';
@@ -32,7 +33,8 @@ const COMPONENTS = [ ContentComponent, EditButtonComponent, DocsComponent, CodeB
         DelonABCModule,
         DelonACLModule,
         HighlightJsModule,
-        TranslateModule
+        TranslateModule,
+        GithubButtonModule
     ],
     declarations: COMPONENTS,
     entryComponents: [DemoModalComponent],
@@ -47,6 +49,7 @@ const COMPONENTS = [ ContentComponent, EditButtonComponent, DocsComponent, CodeB
         DelonACLModule,
         HighlightJsModule,
         TranslateModule,
+        GithubButtonModule,
         ...COMPONENTS
     ]
 })
