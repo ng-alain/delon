@@ -46,6 +46,12 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
     @Input() title: string;
 
+    @Input() home: string;
+
+    @Input() home_link: string;
+
+    @Input() home_i18n: string;
+
     /**
      * 自动生成导航，以当前路由从主菜单中定位
      */
@@ -73,11 +79,14 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     // endregion
 
     constructor(
-        private cog: AdPageHeaderConfig,
+        cog: AdPageHeaderConfig,
         private renderer: Renderer2,
         private route: Router,
         @Optional() private menuSrv: MenuService,
-        @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService) {}
+        @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService
+    ) {
+        Object.assign(this, cog);
+    }
 
     genBreadcrumb() {
         if (this.breadcrumb || !this.autoBreadcrumb || !this.menuSrv) return;
@@ -91,10 +100,10 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
             paths.push({ title, link: item.link && [ item.link ] });
         });
         // add home
-        if (this.cog.home) {
+        if (this.home) {
             paths.splice(0, 0, {
-                title: (this.cog.home_i18n && this.i18nSrv && this.i18nSrv.fanyi(this.cog.home_i18n)) || this.cog.home,
-                link: [ this.cog.home_link ]
+                title: (this.home_i18n && this.i18nSrv && this.i18nSrv.fanyi(this.home_i18n)) || this.home,
+                link: [ this.home_link ]
             });
         }
         this.paths = paths;

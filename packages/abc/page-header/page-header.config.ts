@@ -10,5 +10,12 @@ export class AdPageHeaderConfig {
      * 首页链接
      */
     home_link?: string = '/';
+    /**
+     * 首页链接国际化参数
+     */
     home_i18n?: string;
+    /**
+     * 自动生成导航，以当前路由从主菜单中定位
+     */
+    autoBreadcrumb?: boolean = true;
 }
