@@ -42,6 +42,9 @@ export class DelonModule {
 @icon-url: "./assets/iconfont";
 ```
 
-## 为什么找不到 ng-zorro-antd.less 样式？
+## 为什么找不到 ng-zorro-antd/src/*.less 样式？
 
-如果使用 `cnpm` 安装依赖包，可能会遇到无法找到样式文件。这是由于 `cnpm` 采用的是软链接路径形式，导致 `ng-zorro-antd` 文件夹名有所变动，因此建议改用 `npm` 或 `yarn` 安装依赖包。
+两种情况：
+
+- 使用 `cnpm` 安装依赖包，会遇到无法找到样式文件。这是由于 `cnpm` 采用的是软链接路径形式，导致 `ng-zorro-antd` 文件夹名有所变动，因此建议改用 `npm` 或 `yarn` 安装依赖包。
+- `ng-zorro-antd` 版本过旧导致部分组件无法加载到相应样式
