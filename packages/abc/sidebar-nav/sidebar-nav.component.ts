@@ -1,6 +1,6 @@
 import { Component, ElementRef, Renderer2, Inject, OnInit, OnDestroy, HostListener, ChangeDetectionStrategy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, LocationStrategy } from '@angular/common';
 import { Subscription } from 'rxjs/Subscription';
 import { debounceTime, filter } from 'rxjs/operators';
 import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
@@ -33,6 +33,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
         private menuSrv: MenuService,
         public settings: SettingsService,
         private router: Router,
+        private locationStrategy: LocationStrategy,
         private render: Renderer2,
         private cd: ChangeDetectorRef,
         @Inject(DOCUMENT) private doc: any,
@@ -61,6 +62,11 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
         let url: string = linkNode.getAttribute('href');
         if (url && url.startsWith('#')) {
             url = url.slice(1);
+        }
+        // 如果配置了bashHref 则去掉baseHref
+        const baseHerf = this.locationStrategy.getBaseHref();
+        if (baseHerf) {
+            url = url.slice(baseHerf.length);
         }
         this.router.navigateByUrl(url);
         this.onSelect(this.menuSrv.getPathByUrl(url).pop());

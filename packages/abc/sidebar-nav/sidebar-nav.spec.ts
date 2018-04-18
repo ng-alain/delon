@@ -178,6 +178,21 @@ describe('abc: sidebar-nav', () => {
             fixture.detectChanges();
             expect(getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
         });
+        it('#59', () => {
+            const baseHref = '/testbh';
+            TestBed.overrideProvider(APP_BASE_HREF, {
+                useFactory: () => baseHref, deps: []
+            });
+            createComp();
+            setSrv.layout.collapsed = true;
+            fixture.detectChanges();
+            page.showSubMenu();
+            const containerEl = getEl<HTMLElement>(floatingShowCls, true);
+            expect(containerEl).not.toBeNull();
+            expect(containerEl.querySelector('a').href).toContain(baseHref);
+            page.hideSubMenu();
+            expect(router.navigateByUrl).not.toHaveBeenCalledWith(baseHref);
+        });
     });
 
     describe('[underPad]', () => {
