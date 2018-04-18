@@ -61,9 +61,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
         if (url && url.startsWith('#')) {
             url = url.slice(1);
         }
-        /**
-         * 如果配置了bashHref 则去掉baseHref
-         */
+        // 如果配置了bashHref 则去掉baseHref
         const baseHerf = this.locationStrategy.getBaseHref();
         if (baseHerf) {
             url = url.slice(baseHerf.length);
