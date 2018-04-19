@@ -27,8 +27,8 @@ reqMehtod | 请求方法 | `string` | `GET`
 reqHeader | 请求 `header` | `any` | -
 reqBody | 请求 `body` | `any` | -
 reqError | 请求异常时回调 | `EventEmitter` | -
-reqReName | 重命名请求参数 `pi`、`ps` | `Object` | -
-resReName | 重命名返回参数 `total`、`list` | `Object` | -
+reqReName | 重命名请求参数 `pi`、`ps` | `{pi:string;ps:string}` | -
+resReName | 重命名返回参数 `total`、`list`，支持 `a.b.c` 的嵌套写法 | `{total:string;list:string}` | -
 columns | 列描述 | `SimpleTableColumn[]` | -
 pi | 当前页码 | `number` | `10`
 ps | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10`

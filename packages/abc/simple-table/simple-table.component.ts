@@ -10,9 +10,9 @@ import { of } from 'rxjs/observable/of';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { CNCurrencyPipe, DatePipe, YNPipe, ModalHelper, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 
-import { SimpleTableColumn, SimpleTableChange, CompareFn, SimpleTableSelection, SimpleTableFilter, SimpleTableData, SimpleTableButton, STExportOptions, ResReNameType } from './interface';
-import { AdSimpleTableConfig } from './simple-table.config';
 import { deepGet, deepCopy } from '../utils/utils';
+import { SimpleTableColumn, SimpleTableChange, CompareFn, SimpleTableSelection, SimpleTableFilter, SimpleTableData, SimpleTableButton, STExportOptions, ResReNameType, ReqReNameType } from './interface';
+import { AdSimpleTableConfig } from './simple-table.config';
 import { SimpleTableRowDirective } from './simple-table-row.directive';
 import { SimpleTableExport } from './simple-table-export';
 
@@ -34,7 +34,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     _allChecked = false;
     _indeterminate = false;
     _columns: SimpleTableColumn[] = [];
-    _resRN: ResReNameType = { total: ['total'], list: ['list'] };
 
     // region: fields
 
@@ -55,14 +54,42 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
      * 重命名请求参数 `pi`、`ps`
      * - `{ pi: 'Page' }` => `pi` 会被替换成 Page
      */
-    @Input() reqReName: Object;
+    @Input()
+    set reqReName(value: ReqReNameType) {
+        this._reqReName = Object.assign(this._reqReName, value);
+    }
+    get reqReName() {
+        return this._reqReName;
+    }
+    private _reqReName: ReqReNameType = { pi: 'pi', ps: 'ps' };
     /** 请求异常时回调 */
     @Output() reqError: EventEmitter<any> = new EventEmitter<any>();
     /**
      * 重命名返回参数 `total`、`list`
      * - `{ total: 'Total' }` => Total 会被当作 `total`
      */
-    @Input() resReName: ResReNameType;
+    @Input()
+    set resReName(cur: ResReNameType) {
+        let ret: ResReNameType = {};
+        if (cur) {
+            if (cur.list)
+                ret.list = Array.isArray(cur.list) ? cur.list : cur.list.split('.');
+            else
+                ret.list = ['list'];
+
+            if (cur.total)
+                ret.total = Array.isArray(cur.total) ? cur.total : cur.total.split('.');
+            else
+                ret.total = ['total'];
+        } else {
+            ret = { total: ['total'], list: ['list'] };
+        }
+        this._resReName = ret;
+    }
+    get resReName() {
+        return this._resReName;
+    }
+    private _resReName: ResReNameType = { total: ['total'], list: ['list'] };
     /** 列描述  */
     @Input() columns: SimpleTableColumn[] = [];
     /** 每页数量，当设置为 `0` 表示不分页，默认：`10` */
@@ -135,7 +162,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
     }
     private _showQuickJumper = false;
     /** 是否显示总数据量 */
-    _totalTpl = ``;
+    private _totalTpl = ``;
     @Input()
     set showTotal(value: any) {
         if (typeof value === 'string' && value.length) {
@@ -226,25 +253,25 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         @Inject(DOCUMENT) private doc: any
     ) {
         Object.assign(this, deepCopy(defConfig));
-        this.updateResName();
     }
 
     // region: data
 
     private getAjaxData(url?: string): Observable<any> {
-        const params: any = {};
-        params[this.reqReName && this.reqReName['pi'] || 'pi'] = this.pi;
-        params[this.reqReName && this.reqReName['ps'] || 'ps'] = this.ps;
+        const params: any = Object.assign({
+            [ this.reqReName.pi ]: this.pi,
+            [ this.reqReName.ps ]: this.ps
+        }, this.extraParams, this.getReqSortMap(), this.getReqFilterMap());
         return this.http.request(this.reqMehtod || 'GET', url || this._url, {
-            params: Object.assign(params, this.extraParams, this.getReqSortMap(), this.getReqFilterMap()),
+            params,
             body: this.reqBody,
             headers: this.reqHeaders
         }).pipe(map((res: any) => {
             // list
-            const ret = deepGet(res, this._resRN.list as string[], []);
+            const ret = deepGet(res, this.resReName.list as string[], []);
             if (ret == null || !Array.isArray(ret)) return [];
             // total
-            const retTotal = this._resRN.total && deepGet(res, this._resRN.total as string[], null);
+            const retTotal = this.resReName.total && deepGet(res, this.resReName.total as string[], null);
             this.total = retTotal == null ? this.total || 0 : +retTotal;
             return <any[]>ret;
         }));
@@ -784,29 +811,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         this._sortMap = sortMap;
     }
 
-    private updateResName() {
-        let ret: ResReNameType = {};
-        const cur = this.resReName;
-        if (cur) {
-            if (cur.list)
-                ret.list = Array.isArray(cur.list) ? cur.list : cur.list.split('.');
-            else
-                ret.list = ['list'];
-
-            if (cur.total)
-                ret.total = Array.isArray(cur.total) ? cur.total : cur.total.split('.');
-            else
-                ret.total = ['total'];
-        } else {
-            ret = { total: ['total'], list: ['list'] };
-        }
-        this._resRN = ret;
-    }
-
     ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
         if (changes.columns) this.updateColumns();
-        if (changes.resReName) this.updateResName();
-
         if (changes.data) this.processData();
 
         this.setClass();
