@@ -93,7 +93,7 @@ describe('abc: simple-table', () => {
 
         beforeEach(() => genModule({ acl: false }));
 
-        xdescribe('#data', () => {
+        describe('#data', () => {
             describe('with array', () => {
                 it(`should render ${PS} rows`, () => {
                     page.expectCount(PS);
@@ -165,27 +165,6 @@ describe('abc: simple-table', () => {
                         expect(console.warn).not.toHaveBeenCalled();
                         page.expectTotal(1);
                     });
-                    it('should be wran when invalid rename list', () => {
-                        context.resReName = { total: 'aa', list: 'aa' };
-                        fixture.detectChanges();
-                        httpMock.expectOne(w => true).flush(URLDATA);
-                        expect(console.warn).toHaveBeenCalled();
-                    });
-                    it('should be wran when deep get is a not array', () => {
-                        context.resReName = { total: 'aa', list: 'list' };
-                        fixture.detectChanges();
-                        httpMock.expectOne(w => true).flush({
-                            list: 1,
-                            aa: 1
-                        });
-                        expect(console.warn).toHaveBeenCalled();
-                    });
-                    it('should be wran when invalid rename total', () => {
-                        context.resReName = { total: 'aa', list: 'list' };
-                        fixture.detectChanges();
-                        httpMock.expectOne(w => true).flush(URLDATA);
-                        expect(console.warn).toHaveBeenCalled();
-                    });
                     it('should be null arguments', () => {
                         context.resReName = { total: null, list: null };
                         fixture.detectChanges();
@@ -205,7 +184,7 @@ describe('abc: simple-table', () => {
             });
         });
 
-        xdescribe('#showTotal', () => {
+        describe('#showTotal', () => {
             it('with false', () => {
                 context.showTotal = false;
                 fixture.detectChanges();
@@ -230,7 +209,7 @@ describe('abc: simple-table', () => {
         });
     });
 
-    xdescribe('acl', () => {
+    describe('acl', () => {
 
         let acl: ACLService;
 

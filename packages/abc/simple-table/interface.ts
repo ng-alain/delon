@@ -339,6 +339,11 @@ export interface SimpleTableChange {
     total: number;
 }
 
+export interface ReqReNameType {
+    pi?: string;
+    ps?: string;
+}
+
 export interface ResReNameType {
     total?: string | string[];
     list?: string | string[];
