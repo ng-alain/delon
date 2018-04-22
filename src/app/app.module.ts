@@ -11,6 +11,7 @@ import { DelonACLModule } from '@delon/acl';
 import { DelonABCModule } from '@delon/abc';
 import { DelonAuthModule } from '@delon/auth';
 import { DelonMockModule } from '@delon/mock';
+import { DelonFormModule } from '@delon/form';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutComponent } from './layout.component';
@@ -43,6 +44,7 @@ if (!environment.production) {
     DelonABCModule.forRoot(),
     DelonACLModule.forRoot(),
     DelonAuthModule.forRoot(),
+    DelonFormModule.forRoot(),
     ...MOCKMODULE,
     RoutesModule
   ],

@@ -57,15 +57,19 @@
     "@delon/auth": "PEER-0.0.0-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/mock": "PEER-0.0.0-PLACEHOLDER",
+    "@delon/form": "PEER-0.0.0-PLACEHOLDER",
     "@delon/cache": "PEER-0.0.0-PLACEHOLDER",<% } else { %>
     "@delon/abc": "PEER-0.0.0-PLACEHOLDER",
     "@delon/acl": "PEER-0.0.0-PLACEHOLDER",
     "@delon/auth": "PEER-0.0.0-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/mock": "PEER-0.0.0-PLACEHOLDER",
+    "@delon/form": "PEER-0.0.0-PLACEHOLDER",
     "@delon/cache": "PEER-0.0.0-PLACEHOLDER",<% } %><% if (delonI18n) { %>
     "@ngx-translate/core": "^9.0.0",
     "@ngx-translate/http-loader": "^2.0.0",<% } %>
+    "@types/ajv": "^1.0.0",
+    "ajv": "^6.4.0",
     "core-js": "^2.5.1",
     "file-saver": "^1.3.3",
     "ng-zorro-antd": "ZORRO-0.0.0-PLACEHOLDER",

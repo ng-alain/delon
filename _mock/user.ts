@@ -1,9 +1,11 @@
-import { MockStatusError } from '@delon/mock';
+import { MockStatusError, MockRequest } from '@delon/mock';
 // import * as Mock from 'mockjs';
 
 export const USERS = {
     // 支持值为 Object 和 Array
     'GET /users': { users: [1, 2] },
+    'GET /user/check/': () => false,
+    'GET /user/check/:name': (req: MockRequest) => req.params.name === 'cipchk',
     // GET POST 可省略
     // '/users/1': Mock.mock({ id: 1, 'rank|3': '★★★' }),
     // 发送 Status 错误

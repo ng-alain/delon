@@ -5,18 +5,17 @@ import { RouterModule } from '@angular/router';
 // delon
 import { AlainThemeModule } from '@delon/theme';
 import { DelonABCModule } from '@delon/abc';
-import { DelonACLModule } from '@delon/acl';<% if (delonI18n) { %>
+import { DelonACLModule } from '@delon/acl';
+<% if (delonForm) { %>import { DelonFormModule } from '@delon/form';<% } %><% if (delonI18n) { %>
 // i18n
 import { TranslateModule } from '@ngx-translate/core';<% } %>
 
 // region: third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
-<% if (jsonSchema) { %>import { NzSchemaFormModule } from 'nz-schema-form';<% } %>
 const THIRDMODULES = [
     NgZorroAntdModule,
-    CountdownModule<% if (jsonSchema) { %>,
-    NzSchemaFormModule<% } %>
+    CountdownModule
 ];
 // endregion
 
@@ -33,7 +32,8 @@ const DIRECTIVES = [];
         ReactiveFormsModule,
         AlainThemeModule.forChild(),
         DelonABCModule,
-        DelonACLModule,
+        DelonACLModule,<% if (delonForm) { %>
+        DelonFormModule,<% } %>
         // third libs
         ...THIRDMODULES
     ],
@@ -49,7 +49,8 @@ const DIRECTIVES = [];
         RouterModule,
         AlainThemeModule,
         DelonABCModule,
-        DelonACLModule,<% if (delonI18n) { %>
+        DelonACLModule,<% if (delonForm) { %>
+        DelonFormModule,<% } %><% if (delonI18n) { %>
         // i18n
         TranslateModule,<% } %>
         // third libs

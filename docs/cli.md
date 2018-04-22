@@ -126,7 +126,7 @@ ng serve
 | `-di` | `--delon-i18n` | `false` | 是否需要国际化支持 |
 | `-dm` | `--delon-mock` | `true` | 是否需要 mock 功能 |
 | `-g2` | `--delon-g2` | `false` | Support G2 chart. 是否需要 G2 图表 |
-| `-js` | `--json-schema` | `false` | 是否需要 json-schema 动态表单 |
+| `-df` | `--delon-form` | `true` | 是否需要 `@delon/form` 动态表单 |
 | - | `--delon-electron` | `false` | 是否需要 electron 打包 |
 
 例如生成一个带有国际化的项目：

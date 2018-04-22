@@ -104,6 +104,8 @@
 		"mkdirp": "^0.5.1",
 		"mockjs": "^1.0.1-beta3",
 		"mustache": "^2.3.0",
+		"ng-github-button": "^0.0.1",
+		"ng2-ace-editor": "^0.3.7",
 		"ngx-tinymce": "^1.0.1",
 		"ngx-ueditor": "^1.1.0",
 		"npm-run-all": "^4.1.1",
@@ -123,8 +125,7 @@
 		"tslint-language-service": "^0.9.6",
 		"typescript": "~2.6.0",
 		"webpack-bundle-analyzer": "^2.9.2",
-		"xlsx": "^0.11.16",
-		"ng-github-button": "^0.0.1"
+		"xlsx": "^0.11.16"
 	},
 	"lint-staged": {
 		"src/**/*.ts": "lint:ts",

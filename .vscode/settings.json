@@ -14,5 +14,8 @@
     "files.exclude": {
         "**/.lib/*/**": true,
         "**/.ng_build/*/**": true
-    }
+    },
+    "docthis.includeTypes": false,
+    "docthis.includeMemberOfOnInterfaceMembers": false,
+    "docthis.includeMemberOfOnClassMembers": false
 }

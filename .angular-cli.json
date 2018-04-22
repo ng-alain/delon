@@ -22,7 +22,8 @@
         "scripts": [
             "../node_modules/@antv/g2/dist/g2.min.js",
             "../node_modules/@antv/data-set/dist/data-set.min.js",
-            "../node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js"
+            "../node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js",
+            "../node_modules/ajv/dist/ajv.bundle.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {
@@ -50,10 +51,13 @@
         ],
         "scripts": [
             "../node_modules/enquire.js/dist/enquire.js",
-            "../node_modules/docsearch.js/dist/cdn/docsearch.js",
             "../node_modules/@antv/g2/dist/g2.min.js",
             "../node_modules/@antv/data-set/dist/data-set.min.js",
-            "../node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js"
+            "../node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js",
+            "../node_modules/ace-builds/src-min/ace.js",
+            "../node_modules/ace-builds/src-min/mode-json.js",
+            "../node_modules/ace-builds/src-min/theme-github.js",
+            "../node_modules/ajv/dist/ajv.bundle.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

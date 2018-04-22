@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.initDocSearch();
+        // this.initDocSearch();
     }
 
     @ViewChild('searchIpt') searchIpt: HTMLInputElement;

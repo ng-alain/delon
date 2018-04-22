@@ -1,0 +1,63 @@
+---
+title: date
+subtitle: 日期
+type: Widgets
+---
+
+输入或选择日期的控件。
+
+## 注意事项
+
+- 格式化分为：**数据格式化**表示表单数据和**显示格式化**显示数据
+- 所有格式化单位，参考 [date-fns format](https://date-fns.org/v1.29.0/docs/format)（国内镜像：[moment format](http://momentjs.cn/docs/#/displaying/format/)）
+- 部分格式化单位需要依赖国际化，则**务必**使用指定 `window.__locale__` 表示当前 Date fns 使用的国际化数据，更多细节见[国际化](/docs/i18n)
+- 指定 `schema.format` 则必须遵守 [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.6) 时间格式，否则都视为格式错误，默认的数据格式化：
+    - `date-time` 默认 `YYYY-MM-DDTHH:mm:ssZ`，注意这里采用的是 `type="datetime-local"` 因此会涉及到**时区问题**
+    - `date`、`full-date` 默认 `YYYY-MM-DD`
+    - `time`、`full-time` 默认 `HH:mm:ss`
+    - 非标准：`week` 默认 `YYYY-Wo`
+    - 非标准：`month` 默认 `YYYY-MM`
+- 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过 `DelonFormConfig` 替换）数据格式化：
+    - `string` 默认 `YYYY-MM-DD HH:mm:ss`
+    - `number` 默认 `x` 13位Unix Timestamp
+
+## schema 属性
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+readOnly | 禁用状态  | `boolean` | -
+format | 数据格式类型  | `string` | -
+
+## ui 属性
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+size | 大小，等同 `nzSize` | `string` | -
+placeholder | 在文字框中显示提示讯息 | `string` | -
+format | 数据格式化 | `string` | -
+displayFormat | 显示格式化，默认：`YYYY-MM-DD HH:mm:ss` | `string` | -
+
+## Demo
+
+```ts
+schema = {
+    properties: {
+        "datetime": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "date": {
+            "type": "string",
+            "format": "date"
+        },
+        "date_number": {
+            "type": "number",
+            ui: { widget: 'date' }
+        },
+        "date_string": {
+            "type": "string",
+            ui: { widget: 'date' }
+        },
+    }
+}
+```

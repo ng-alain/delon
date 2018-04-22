@@ -11,6 +11,7 @@ PACKAGES=(acl
     auth
     cache
     mock
+    form
     cli)
 NODE_PACKAGES=(cli)
 
@@ -76,6 +77,7 @@ compileCli() {
         "${1}src/app/layout/default/header/components/task.component.ts|${2}application/other-files/layout/default/header/components/"
         "${1}src/app/layout/default/header/components/user.component.ts|${2}application/other-files/layout/default/header/components/"
         "${1}src/app/shared/README.md|${2}application/other-files/shared/"
+        "${1}src/app/shared/json-schema/index.md|${2}application/other-files/shared/json-schema/"
         "${1}src/app/routes/callback|${2}application/other-files/routes/"
         "${1}src/app/routes/exception|${2}application/other-files/routes/"
         "${1}src/app/routes/passport|${2}application/other-files/routes/"

@@ -105,11 +105,11 @@
       "default": true,
       "alias": "dm"
     },
-    "jsonSchema": {
-      "description": "Support json-schema. 是否需要 json-schema 动态表单",
+    "delonForm": {
+      "description": "Support json-schema. 是否需要 @delon/form 动态表单",
       "type": "boolean",
-      "default": false,
-      "alias": "js"
+      "default": true,
+      "alias": "df"
     },
     "delonG2": {
       "description": "Support G2 chart. 是否需要 G2 图表",

@@ -6,6 +6,8 @@ export const ENUS = {
     'app.header.menu.home': 'Home',
     'app.header.menu.docs': 'Docs',
     'app.header.menu.components': 'Components',
+    'app.header.menu.form': 'Dynamic Form',
+    'app.header.menu.form.validator': 'Online Validator',
     'app.header.menu.tool': 'Tools',
     'app.header.menu.theme': 'Customize Theme',
     'app.header.menu.upgrade': 'HTML Upgrade Tool',

@@ -16,7 +16,7 @@ export class AppComponent implements OnDestroy {
     isMobile = false;
 
     private prevUrl: string;
-    private query = 'only screen and (max-width: 767.99px)';
+    private query = 'only screen and (max-width: 991.99px)';
 
     constructor(
         @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,

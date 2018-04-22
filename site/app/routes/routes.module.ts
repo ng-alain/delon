@@ -21,7 +21,9 @@ const routes = [
             { path: '6to7', loadChildren: './6to7/6to7.module#SixToSevenModule' },
             // region: region routers
             { path: 'docs', loadChildren: './gen/docs/docs.module#DocsModule' },
-            { path: 'components', loadChildren: './gen/components/components.module#ComponentsModule' }
+            { path: 'components', loadChildren: './gen/components/components.module#ComponentsModule' },
+            { path: 'form', loadChildren: './gen/form/form.module#FormModule' },
+            { path: 'form-pages', loadChildren: './form-pages/form-pages.module#FormPagesModule' }
             // endregion
         ]
     },

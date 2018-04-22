@@ -4,10 +4,11 @@ import * as fse from 'fs-extra';
 import { parseMd } from './parse-md';
 import { getCode, genUpperName, genUrl } from './utils';
 import { toHtml } from './generate-md';
+import { ModuleConfig, SiteConfig } from '../interfaces';
 const MT = require('mark-twain');
 const JsonML = require('jsonml.js/lib/utils');
 
-export function generateDemo(rootDir: string, key: string, dir: string, cols: number, config: any, siteConfig: any) {
+export function generateDemo(rootDir: string, key: string, dir: string, cols: number, config: ModuleConfig, siteConfig: SiteConfig) {
     const ret: { tpl: { left: string[], right: string[] }, data: any[] } = {
         tpl: {
             left: [],
@@ -68,7 +69,7 @@ export function generateDemo(rootDir: string, key: string, dir: string, cols: nu
             for (let i = 0; i < summaryChildren.length; i++) {
                 const summaryNode = summaryChildren[i];
                 const summaryLang = '' + summaryNode[1];
-                if (JsonML.getTagName(summaryNode) === 'h2' && ~siteConfig.theme.langs.indexOf(summaryLang)) {
+                if (JsonML.getTagName(summaryNode) === 'h2' && ~siteConfig.langs.indexOf(summaryLang)) {
                     const nextLangPos = summaryChildren.slice(i + 1).findIndex((node: any) => JsonML.getTagName(node) === 'h2');
                     summaryRet[summaryLang] = [''].concat(nextLangPos === -1 ? summaryChildren.slice(i + 1) : summaryChildren.slice(i + 1, nextLangPos + 1));
                     if (nextLangPos === -1) break;

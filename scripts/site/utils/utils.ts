@@ -4,6 +4,7 @@ const mustache = require('mustache');
 import * as path from 'path';
 import * as fs from 'fs';
 import * as fse from 'fs-extra';
+import { ModuleConfig } from '../interfaces';
 
 export function isHeading(node: any) {
     return /h[1-6]/i.test(typeof node === 'string' ? node : JsonML.getTagName(node));
@@ -70,11 +71,11 @@ export function genUpperName(name: string) {
     return name.split('-').map(v => v.charAt(0).toUpperCase() + v.slice(1)).join('');
 }
 
-export function includeAttributes(config: any, targetMeta: any) {
-    if (!config.meta || !config.meta.includeAttributes || !Array.isArray(config.meta.includeAttributes)) return;
+export function includeAttributes(config: ModuleConfig, targetMeta: any) {
+    if (!config.metaIncludeAttributes || !Array.isArray(config.metaIncludeAttributes)) return;
 
     targetMeta = targetMeta || {};
-    for (const key of config.meta.includeAttributes) {
+    for (const key of config.metaIncludeAttributes) {
         targetMeta[key] = config[key];
     }
     return targetMeta;

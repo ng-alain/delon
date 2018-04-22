@@ -6,6 +6,8 @@ export const ZHCN = {
     'app.header.menu.home': '首页',
     'app.header.menu.docs': '文档',
     'app.header.menu.components': '组件',
+    'app.header.menu.form': '动态表单',
+    'app.header.menu.form.validator': '在线校验器',
     'app.header.menu.tool': '工具',
     'app.header.menu.theme': '自定义主题',
     'app.header.menu.upgrade': 'HTML模板升级工具',

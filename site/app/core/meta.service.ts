@@ -1,28 +1,53 @@
 import { Injectable } from '@angular/core';
-import { META } from '../routes/gen/meta';
+import { META as DocsMeta } from '../routes/gen/docs/meta';
+import { META as ComponentsMeta } from '../routes/gen/components/meta';
+import { META as FormMeta } from '../routes/gen/form/meta';
 import { I18NService } from '../core/i18n/service';
+import { Meta, MetaList } from '../interfaces';
+
+const FULLMETAS: Meta[] = [ DocsMeta, ComponentsMeta, FormMeta ];
 
 @Injectable()
 export class MetaService {
-
-    constructor(private i18n: I18NService) {}
+    constructor(private i18n: I18NService) {
+    }
 
     private _data: any;
+    private _isPages = false;
 
-    /** `true` 表示需要跳转404 */
-    set(url: string): boolean {
+    private getCatgory(url: string) {
         const arr = url.split('?')[0].split('/');
         if (arr.length <= 2) return false;
 
-        const categoryName = arr[1].toLowerCase();
-        const category: any = META.types.find(w => w.name === categoryName);
+        let categoryName = arr[1].toLowerCase().trim();
+        let category = FULLMETAS.find(w => w.name === categoryName);
+        if (~categoryName.indexOf('-')) {
+            categoryName = categoryName.split('-')[0];
+            category = FULLMETAS.find(w => w.name === categoryName);
+            this._isPages = !!category;
+        } else {
+            this._isPages = false;
+        }
+        return category;
+    }
+
+    private getPageName(url: string) {
+        return url.split('?')[0].split('/')[2].toLowerCase().trim();
+    }
+
+    /** `true` 表示需要跳转404 */
+    set(url: string): boolean {
+        const category = this.getCatgory(url);
         if (!category) return false;
-        const data = category.list.find(w => w.name === arr[2]) || null;
+        const name = this.getPageName(url);
+        const data = category.list.find(w => w.name === name) || null;
         if (!data) return true;
         this._data = Object.assign({}, data.meta[this.i18n.defaultLang], data.meta[this.i18n.lang], {
             i18n: data.i18n,
             name: data.name,
-            module_name: category.module || ''
+            module_name: category.module || '',
+            github: category.github,
+            list: category.list
         });
         // fix title
         if (typeof this._data.title === 'object') {
@@ -38,12 +63,16 @@ export class MetaService {
         return this._data || null;
     }
 
-    get github() {
-        return META.github;
+    get github(): string {
+        return this._data.github;
     }
 
-    get data() {
-        return META;
+    get data(): MetaList[] {
+        return this._data.list;
+    }
+
+    get isPages() {
+        return this._isPages;
     }
 
     private _platMenus: any[];
@@ -61,13 +90,9 @@ export class MetaService {
         this._menus = null;
     }
 
-    getType(url: string): string {
-        const arr = url.split('?')[0].split('/');
-        if (arr.length < 2) return '';
-
-        const categoryName = arr[1].toLowerCase();
-        const category = META.types.find(w => w.name === categoryName);
-        return category ? categoryName : '';
+    private getType(url: string): string {
+        const category = this.getCatgory(url);
+        return category ? url.split('?')[0].split('/')[1].toLowerCase().split('-')[0] : '';
     }
 
     refMenu(url: string) {
@@ -83,11 +108,7 @@ export class MetaService {
     }
 
     genMenus(url: string): void {
-        const arr = url.split('?')[0].split('/');
-        if (arr.length <= 1) return ;
-
-        const categoryName = arr[1].toLowerCase();
-        const category = META.types.find(w => w.name === categoryName);
+        const category = this.getCatgory(url);
         if (!category) return;
 
         // todo: support level 2
@@ -112,7 +133,7 @@ export class MetaService {
                 group.push(groupItem);
             }
             const entry: any = Object.assign({
-                url: `/${category.name}/${item.name}`,
+                url: item.route || `/${category.name}/${item.name}`,
                 title: this.i18n.get(meta.title),
                 subtitle: meta.subtitle,
                 order: item.order
@@ -121,8 +142,8 @@ export class MetaService {
         });
 
         this._platMenus = [];
-        this._menus = group.map((item: any) => {
-            if (category.name === 'components') {
+        this._menus = group.filter((item: any) => Array.isArray(item.list) && item.list.length > 0).map((item: any) => {
+            if (item.list[0].order === -1) {
                 item.list.sort((a: any, b: any) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
             } else {
                 item.list.sort((a: any, b: any) => a.order - b.order);
