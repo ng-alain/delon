@@ -6,6 +6,21 @@ title:
 type: Other
 ---
 
+### 1.0.0-beta.6@next
+
+`2018-4-22`
+
+- 脚手架
+    - **BREAKING CHANGES** 自包含 `ng-zorro-antd` 组件样式，无需再单纯此用，[44cad2](https://github.com/cipchk/ng-alain/commit/44cad2)
+    - 同步 `ng-zorro-antd 0.7.0-beta.4`，[52bce7](https://github.com/cipchk/ng-alain/commit/52bce7)
+- @delon/abc
+    - 修复 `sidebar-nav` 指定 `base-href` 后收缩时链接无效问题，[#59](https://github.com/cipchk/delon/pull/59) [@pbbisme](https://github.com/pbbisme)
+    - 修复 `simple-table` 在 `-bo` 打包时无效 `reqReName`，[#396](https://github.com/cipchk/ng-alain/issues/396)
+- @delon/theme
+    - 自包含 `ng-zorro-antd` 组件样式
+- @delon/cli
+    - 保持在 `package.json` 同步 `ng-zorro-antd` 版本
+
 ### 1.0.0-beta.5@next
 
 `2018-4-16`
