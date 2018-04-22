@@ -29,8 +29,6 @@ before_install:
 before_script:
   - npm install -g @angular/cli
   - npm install -g karma
-  - npm install -g npm-run-all
-  - npm install -g rimraf
 
 script:
   - npm run $TASK
