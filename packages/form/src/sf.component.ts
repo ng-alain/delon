@@ -195,12 +195,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         const inIfFn = (schema: SFSchema, ui: SFUISchemaItemRun) => {
             Object.keys(schema.properties).forEach(key => {
                 const property = schema.properties[key];
-                resolveIf(property, ui[key]);
+                const uiKey = `$${key}`;
+                resolveIf(property, ui[uiKey]);
                 if (property.items) {
-                    inIfFn(property.items, ui[key].$items);
+                    inIfFn(property.items, ui[uiKey].$items);
                 }
                 if (property.properties) {
-                    inIfFn(property, ui[key]);
+                    inIfFn(property, ui[uiKey]);
                 }
             });
         };
