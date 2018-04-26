@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 1.0.0-beta.7@next
+
+`2018-4-26`
+
+- 脚手架
+    - 增加 `@delon/form` 示例，[92d5d3](https://github.com/cipchk/ng-alain/commit/92d5d3)
+- @delon/form
+    - 基于JSON Schema动态表单
+
 ### 1.0.0-beta.6@next
 
 `2018-4-22`

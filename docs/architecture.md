@@ -20,27 +20,31 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 
 **@delon/cli**
 
-针对脚手架的[命令行工具](http://ng-alain.com/docs/cli)，它是继 Angular Cli 基础上新增一些额外命令用于创建 ng-alain 项目、业务页等。
+针对脚手架的[命令行工具](/docs/cli)，它是继 Angular Cli 基础上新增一些额外命令用于创建 ng-alain 项目、业务页等。
 
 **@delon/abc**
 
-脚手架内提供了一套默认[业务组件](http://ng-alain.com/components/)，这些组件抽象了控制台业务中的一些常见区块。我们将持续维护和迭代这些组件，为中后台业务提供比 Ant Design 基础组件更高级别的抽象。
+脚手架内提供了一套默认[业务组件](/components/)，这些组件抽象了控制台业务中的一些常见区块。我们将持续维护和迭代这些组件，为中后台业务提供比 Ant Design 基础组件更高级别的抽象。
+
+**@delon/form**
+
+[@delon/form](/form) 是一个基于 [JSON Schema](http://json-schema.org/) 标准的动态构建表单。
 
 **@delon/auth**
 
-[用户认证](http://ng-alain.com/docs/auth)模块，用于解决如何获取、存取、使用这三个步骤的用户认证环节。
+[用户认证](/docs/auth)模块，用于解决如何获取、存取、使用这三个步骤的用户认证环节。
 
 **@delon/acl**
 
-[ACL](http://ng-alain.com/docs/acl)访问控制列表，是一种非常简单的基于角色权限控制，甚至至某个按钮的粒度。
+[ACL](/docs/acl)访问控制列表，是一种非常简单的基于角色权限控制，甚至至某个按钮的粒度。
 
 **@delon/cache**
 
-将字典、城市数据等[缓存](http://ng-alain.com/docs/cache)至内存或持久化当中，有效减少 Http 请求。
+将字典、城市数据等[缓存](/docs/cache)至内存或持久化当中，有效减少 Http 请求。
 
 **@delon/mock**
 
-[Mock](http://ng-alain.com/docs/mock)会拦截 Angular Http 请求并返回测试数据。
+[Mock](/docs/mock)会拦截 Angular Http 请求并返回测试数据。
 
 ## 文档和反馈
 
@@ -54,6 +58,7 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 | ------------ |:-----:|:----------:|
 | @delon/theme | [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme) | [![NPM version](https://img.shields.io/npm/v/@delon/theme/next.svg)](https://www.npmjs.com/package/@delon/theme) |
 | @delon/abc | [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc) | [![NPM version](https://img.shields.io/npm/v/@delon/abc/next.svg)](https://www.npmjs.com/package/@delon/abc) |
+| @delon/form | [![NPM version](https://img.shields.io/npm/v/@delon/form.svg)](https://www.npmjs.com/package/@delon/form) | [![NPM version](https://img.shields.io/npm/v/@delon/form/next.svg)](https://www.npmjs.com/package/@delon/form) |
 | @delon/acl | [![NPM version](https://img.shields.io/npm/v/@delon/acl.svg)](https://www.npmjs.com/package/@delon/acl) | [![NPM version](https://img.shields.io/npm/v/@delon/acl/next.svg)](https://www.npmjs.com/package/@delon/acl) |
 | @delon/auth | [![NPM version](https://img.shields.io/npm/v/@delon/auth.svg)](https://www.npmjs.com/package/@delon/auth) | [![NPM version](https://img.shields.io/npm/v/@delon/auth/next.svg)](https://www.npmjs.com/package/@delon/auth) |
 | @delon/mock | [![NPM version](https://img.shields.io/npm/v/@delon/mock.svg)](https://www.npmjs.com/package/@delon/mock) | [![NPM version](https://img.shields.io/npm/v/@delon/mock/next.svg)](https://www.npmjs.com/package/@delon/mock) |
