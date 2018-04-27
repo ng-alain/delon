@@ -1,7 +1,6 @@
 ---
 title: ellipsis
 subtitle: 文本自动省略号
-order: 80
 cols: 1
 module: AdEllipsisModule
 ---

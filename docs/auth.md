@@ -95,9 +95,9 @@ this.socialService.login(`//github.com/login/oauth/authorize?xxxxxx`, '/', {
 // 1、默认根据当前URL地址
 this.socialService.callback();
 // 2、非 `{ useHash: true }` 路由
-this.socialService.callback(`http://ng-alain.com/callback?token=40SOJV-L8oOwwUIs&name=cipchk&uid=1`);
+this.socialService.callback(`/callback?token=40SOJV-L8oOwwUIs&name=cipchk&uid=1`);
 // 3、带有 `{ useHash: true }` 路由
-this.socialService.callback(`http://ng-alain.com/?token=40SOJV-L8oOwwUIs&name=cipchk&uid=1#/callback`);
+this.socialService.callback(`/?token=40SOJV-L8oOwwUIs&name=cipchk&uid=1#/callback`);
 // 4、指定 `ITokenModel` 对象
 this.socialService.callback(<ITokenModel>{
     token: '123456789',

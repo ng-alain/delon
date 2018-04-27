@@ -1,7 +1,6 @@
 ---
 title: number-to-chinese
 subtitle: 人民币大写
-order: 140
 cols: 1
 module: AdNumberToChineseModule
 ---

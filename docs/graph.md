@@ -23,7 +23,7 @@ type: Advance
 | 地图类 | - | -
 | 其它 | 标签云：`tag-cloud`<br>图表卡片：`chart-card`<br>自定义图表：`chart` | -
 
-[查看图表组件API文档](http://ng-alain.com/components/charts)
+[查看图表组件API文档](/components/charts)
 
 ## 如何使用？
 
@@ -51,7 +51,7 @@ npm install @antv/g2 @antv/data-set @antv/g2-plugin-slider --save
 
 `@delon/abc` 提供了一个自定义G2组件的容器，可以减少不必要的组件渲染过程中所产生的奇怪问题。
 
-一个完整的示例见 [chart.md](//github.com/cipchk/delon/blob/master/src/core/abc/components/charts/demo/chart.md)。
+一个完整的示例见 [chart.md](https://github.com/cipchk/delon/blob/master/packages/abc/components/charts/demo/chart.md)。
 
 ## 为什么会有 `kcart.alipay.com` 请求？
 

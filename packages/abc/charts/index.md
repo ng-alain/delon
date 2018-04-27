@@ -1,7 +1,6 @@
 ---
 title: Charts
 subtitle: 图表
-order: 20
 cols: 2
 module: AdChartsModule
 ---

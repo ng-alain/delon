@@ -20,7 +20,9 @@ type: Widgets
 
 指每一次选择会触发HTTP请求，数据来源于 `loadData`。
 
-## schema 属性
+## API
+
+### schema 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -29,7 +31,7 @@ readOnly | 禁用状态  | `boolean` | -
 minimum | 最少提及次数 | `number` | -
 maximum | 最多提及次数 | `number` | -
 
-## ui 属性
+### ui 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -44,43 +46,3 @@ valueWith | 建议选项的取值方法  | `(any) => string` | `(value: string) 
 select | 下拉框选择建议时回调 | `(value: any) => void` | -
 inputStyle | 文本框类型 | `text, textarea` | `text`
 autosize | 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }`  | `Boolean|Object` | `true`
-
-## Demo
-
-```ts
-schema = {
-    properties: {
-        remark: {
-            type: 'string',
-            title: '描述',
-            enum: ['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご'],
-            minimum: 1,
-            maximum: 2,
-            ui: {
-                widget: 'mention',
-                inputStyle: 'textarea
-            }
-        },
-        // 异步静态数据源
-        remark: {
-            type: 'string',
-            title: '描述',
-            ui: {
-                widget: 'mention',
-                asyncData: () => of(['afc163', 'benjycui', 'yiminghe', 'RaoHai', '中文', 'にほんご']).pipe(delay(1000))
-            }
-        },
-        // 实时数据
-        remark: {
-            type: 'string',
-            title: '描述',
-            ui: {
-                widget: 'mention',
-                loadData: (option: MentionOnSearchTypes) => of(
-                    ['afc163', 'benjycui', 'yiminghe', 'jljsj33', 'dqaria', 'RaoHai'].filter(item => item.indexOf(option.value) !== -1)
-                ).pipe(delay(300))
-            }
-        }
-    }
-}
-```

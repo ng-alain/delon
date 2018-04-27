@@ -1,7 +1,6 @@
 ---
 title: full-content
 subtitle: 全屏工作区
-order: 50
 cols: 1
 module: AdFullContentModule
 ---

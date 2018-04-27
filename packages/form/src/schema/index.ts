@@ -38,7 +38,7 @@ export type SFSchemaEnumType = SFSchemaEnum | number | string | boolean;
 /**
  * JSON Schema Form 结构体
  *
- * **注意：** 所有结构都以标准为基准，除了 `ui`、`debug` 两个属性为非标准单纯只是为了更好的开发
+ * **注意：** 所有结构都以标准为基准，除了 `ui` 属性为非标准单纯只是为了更好的开发
  */
 export interface SFSchema {
     //////////// Any /////////////

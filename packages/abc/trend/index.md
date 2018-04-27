@@ -1,7 +1,6 @@
 ---
 title: trend
 subtitle: 趋势标记
-order: 200
 cols: 1
 module: AdTrendModule
 ---

@@ -25,7 +25,7 @@ module.exports = {
                     'en-US': 'Other'
                 }
             ],
-            defaultRoute: 'architecture',
+            defaultRoute: 'getting-started',
             metaIncludeAttributes: [ 'name', 'types', 'github' ],
             template: {
                 meta: './site/templates/meta.ts',

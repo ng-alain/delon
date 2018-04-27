@@ -1,9 +1,32 @@
+import { Injectable } from '@angular/core';
 import sdk from '@stackblitz/sdk';
+import { NzModalService } from 'ng-zorro-antd';
 
+@Injectable()
 export class CodeService {
+
+    constructor(private modal: NzModalService) {}
 
     /** bug here https://github.com/stackblitz/core/issues/311 **/
     openOnStackBlitz(
+        code: string,
+        title: string,
+        summary: string
+    ) {
+        if (~code.indexOf('@delon/form')) {
+            this.modal.confirm({
+                nzTitle: `Stackblita 暂不支持 external resources 导入，需要手工加入否则会出现 Ajv 不存在问题`,
+                nzContent: `https://cdn.bootcss.com/ajv/6.4.0/ajv.min.js`,
+                nzOnOk: () => this._openOnStackBlitz(code, title, summary)
+            }, 'info').open();
+            return ;
+        }
+
+        this._openOnStackBlitz(code, title, summary);
+    }
+
+    /** bug here https://github.com/stackblitz/core/issues/311 **/
+    private _openOnStackBlitz(
         code: string,
         title: string,
         summary: string
@@ -28,12 +51,15 @@ export class CodeService {
       "styles": ["styles.less"]
     }]
   }`,
-                'index.html': (~code.indexOf('<g2') ? `
+                'index.html': [
+                    ~code.indexOf('<g2') ? `
 <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/g2/3.0.5-beta.5/g2.min.js"></script>
 <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/data-set/0.8.5/data-set.min.js"></script>
 <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/g2-plugin-slider/2.0.0/g2-plugin-slider.js"></script>
-` : ``)
-                    + `<${selector}>loading</${selector}>`,
+` : ``,
+
+                    `<${selector}>loading</${selector}>`
+                ].join(''),
                 'main.ts': `import './polyfills';
   import { enableProdMode } from '@angular/core';
   import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';

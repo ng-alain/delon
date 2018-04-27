@@ -1,7 +1,6 @@
 ---
 title: number-info
 subtitle: 数据文本
-order: 140
 cols: 1
 module: AdNumberInfoModule
 ---

@@ -41,7 +41,7 @@ type: Basic
 
 **_mock**
 
-Mock 数据规则目录；若你通过 [cli](http://ng-alain.com/docs/cli) 创建项目时可以指定 `-dm` 参数决定是否需要 Mock 功能。
+Mock 数据规则目录；若你通过 [cli](/docs/cli) 创建项目时可以指定 `-dm` 参数决定是否需要 Mock 功能。
 
 **src/app/core/core.module.ts**
 
@@ -49,7 +49,7 @@ Mock 数据规则目录；若你通过 [cli](http://ng-alain.com/docs/cli) 创�
 
 **src/app/core/i18n**
 
-[国际化](http://ng-alain.com/docs/i18n)数据加载及处理相关类；若你通过 [cli](http://ng-alain.com/docs/cli) 创建项目时可以指定 `-di` 参数决定是否需要国际化支持。
+[国际化](/docs/i18n)数据加载及处理相关类；若你通过 [cli](/docs/cli) 创建项目时可以指定 `-di` 参数决定是否需要国际化支持。
 
 **src/app/core/net**
 
@@ -75,7 +75,7 @@ Mock 数据规则目录；若你通过 [cli](http://ng-alain.com/docs/cli) 创�
 
 **src/app/delon.module.ts**
 
-针对 @delon 系列的模块导入集合，默认情况下导入所有模块，你可以利用[优化](http://ng-alain.com/docs/performance)章节，进一步按需优化。
+针对 @delon 系列的模块导入集合，默认情况下导入所有模块，你可以利用[优化](/docs/performance)章节，进一步按需优化。
 
 **src/styles/_alain-custom-variables.less**
 

@@ -4,7 +4,7 @@ subtitle: 日期
 type: Widgets
 ---
 
-输入或选择日期的控件。
+输入或选择日期的控件；`ng-zorro-antd` 未提供日期时间类组件，暂时以原生替代。
 
 ## 注意事项
 
@@ -21,14 +21,16 @@ type: Widgets
     - `string` 默认 `YYYY-MM-DD HH:mm:ss`
     - `number` 默认 `x` 13位Unix Timestamp
 
-## schema 属性
+## API
+
+### schema 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 readOnly | 禁用状态  | `boolean` | -
 format | 数据格式类型  | `string` | -
 
-## ui 属性
+### ui 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -36,28 +38,3 @@ size | 大小，等同 `nzSize` | `string` | -
 placeholder | 在文字框中显示提示讯息 | `string` | -
 format | 数据格式化 | `string` | -
 displayFormat | 显示格式化，默认：`YYYY-MM-DD HH:mm:ss` | `string` | -
-
-## Demo
-
-```ts
-schema = {
-    properties: {
-        "datetime": {
-            "type": "string",
-            "format": "date-time"
-        },
-        "date": {
-            "type": "string",
-            "format": "date"
-        },
-        "date_number": {
-            "type": "number",
-            ui: { widget: 'date' }
-        },
-        "date_string": {
-            "type": "string",
-            ui: { widget: 'date' }
-        },
-    }
-}
-```

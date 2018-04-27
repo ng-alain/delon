@@ -1,7 +1,6 @@
 ---
 title: notice-icon
 subtitle: 通知菜单
-order: 130
 cols: 1
 module: AdNoticeIconModule
 ---

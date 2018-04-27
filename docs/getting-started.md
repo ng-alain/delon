@@ -18,9 +18,9 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，目标�
 
 有两种方式进行安装：
 
-### 命令行工具
+### 【推荐】命令行工具
 
-需要依赖于 `@delon/cli`，[如何安装？](http://ng-alain.com/docs/cli)
+需要依赖于 `@delon/cli`，[如何安装？](/docs/cli)
 
 ```bash
 ng new -c=@delon/cli my-app
@@ -71,9 +71,13 @@ ng-alain 是一个标准的 Angular cli 构建的项目，因此你会非常熟�
 
 ```bash
 $ npm install
+// 或
+$ yarn
 ```
 
-如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速，请务直接使用 **cnpm** 会导致关联包无法找到问题。
+> 注：请务使用 `cnpm` 安装依赖包，因为 ng-alain 脚手架需要依赖 `node_modules` 路径，而 `cnpm` 采用软链接会导致破坏文件夹名称，导致很难获取相应的样式文件。
+
+如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速。
 
 ```bash
 $ npm start

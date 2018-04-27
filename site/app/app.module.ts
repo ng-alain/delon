@@ -2,7 +2,6 @@ import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { environment } from '../environments/environment';
 
@@ -21,8 +20,6 @@ import { FooterComponent } from './layout/footer/footer.component';
 
 import { DelonModule } from './delon.module';
 
-import { SwUpdatesModule } from './sw-updates/sw-updates.module';
-
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
@@ -35,8 +32,6 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
-        SwUpdatesModule,
         CoreModule,
         DelonModule.forRoot(),
         SharedModule,

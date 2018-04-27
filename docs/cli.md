@@ -6,6 +6,17 @@ title:
 type: Other
 ---
 
+# [CREF]
+
+**安装&配置** 小节的实施对很多新手来说经常忽略了一些操作细节，导致遇到一些文件找不到问题。
+
+最近，收到一个 [#60](https://github.com/cipchk/delon/issues/60) 可以极大简化安装 cli 过程，你可以优先尝试以下方法，若成功可以直接跳过 **安装&配置** 小节，反之希望你能把在实施下列所遇到的问题在 [#60](https://github.com/cipchk/delon/issues/60) 继续讨论。
+
+```bash
+yarn global add @angular/cli
+yarn global add @delon/cli@next
+```
+
 # 如何使用
 
 `@delon/cli` 是基于 Angular Cli 向上构建的针对 ng-alain 脚手架的命令行工具，因此在安装之前要先确保以下类库应该安装：

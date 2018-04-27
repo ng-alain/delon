@@ -125,3 +125,7 @@ $ docker run -d -p 80:80 --name alain ng-alain
 ```
 - 443:443
 ```
+
+### 容器部署
+
+参考 [Angular 容器部署](https://zhuanlan.zhihu.com/p/35688938)。

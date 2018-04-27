@@ -1,7 +1,6 @@
 ---
 title: quick-menu
 subtitle: 快速菜单
-order: 150
 cols: 1
 module: AdQuickMenuModule
 ---

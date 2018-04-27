@@ -10,13 +10,15 @@ type: Widgets
 
 - `default` 值被当成 `direction: 'right'` 表示右栏中
 
-## schema 属性
+## API
+
+### schema 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 enum | 数据源 | `SFSchemaEnumType[]` | -
 
-## ui 属性
+### ui 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -34,27 +36,3 @@ canMove | 穿梭时二次校验。 | `function` | -
 change | 选项在两栏之间转移时的回调函数 | `Function` | -
 searchChange | 搜索框内容时改变时的回调函数 | `Function` | -
 selectChange | 选中项发生改变时的回调函数 | `Function` | -
-
-## Demo
-
-```ts
-schema = {
-    properties: {
-        roles: {
-            type: 'number',
-            title: '角色',
-            enum: [
-                { title: 'DNS管理', value: 10 },
-                { title: 'ECS管理', value: 11 },
-                { title: 'OSS管理', value: 12 },
-                { title: 'RDS管理', value: 13 }
-            ],
-            ui: {
-                widget: 'transfer',
-                titles: [ '未拥有', '已拥有' ]
-            },
-            default: [ 11, 12 ]
-        }
-    }
-}
-```

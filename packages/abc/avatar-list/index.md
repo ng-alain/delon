@@ -1,7 +1,6 @@
 ---
 title: avatar-list
 subtitle: 用户头像列表
-order: 40
 cols: 1
 module: AdAvatarListModule
 ---

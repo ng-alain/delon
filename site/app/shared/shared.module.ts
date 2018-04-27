@@ -22,6 +22,7 @@ import { EditButtonComponent } from './components/edit-button/edit-button.compon
 import { DocsComponent } from './components/docs/docs.component';
 import { CodeBoxComponent } from './components/code-box/code-box.component';
 import { DemoModalComponent } from './components/modal/demo.component';
+import { RouteTransferDirective } from './components/route-transfer/route-transfer.directive';
 
 const COMPONENTS = [
     MainMenuComponent,
@@ -29,7 +30,8 @@ const COMPONENTS = [
     EditButtonComponent,
     DocsComponent,
     CodeBoxComponent,
-    DemoModalComponent
+    DemoModalComponent,
+    RouteTransferDirective
 ];
 
 const THIRDS = [

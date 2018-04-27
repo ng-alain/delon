@@ -1,7 +1,6 @@
 ---
 title: footer-toolbar
 subtitle: 底部工具栏
-order: 110
 cols: 1
 module: AdFooterToolbarModule
 ---

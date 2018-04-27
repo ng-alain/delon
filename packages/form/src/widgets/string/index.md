@@ -6,14 +6,16 @@ type: Widgets
 
 默认小部件，一般用于字符串元素。
 
-## schema 属性
+## API
+
+### schema 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 maxLength | 表单最大长度  | `number` | -
 readOnly | 禁用状态  | `boolean` | -
 
-## ui 属性
+### ui 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -29,19 +31,3 @@ prefix | 带有前缀图标的 input，等同 `nzPrefix` | `string` | -
 prefixIcon | 前缀图标，等同 `nzPrefixIcon` | `string` | -
 suffix | 带有后缀图标的 input，等同 `nzSuffix` | `string` | -
 suffixIcon | 后缀图标，等同 `nzSuffixIcon` | `string` | -
-
-## Demo
-
-```ts
-schema = {
-    properties: {
-        name: {
-            type: 'string',
-            title: 'Name',
-            ui: {
-                addOnAfter: 'RMB'
-            }
-        }
-    }
-}
-```

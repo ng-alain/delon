@@ -1,7 +1,6 @@
 ---
 title: exception
 subtitle: 异常
-order: 100
 cols: 1
 module: AdExceptionModule
 ---

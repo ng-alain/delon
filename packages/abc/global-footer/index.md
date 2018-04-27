@@ -1,7 +1,6 @@
 ---
 title: global-footer
 subtitle: 全局页脚
-order: 120
 cols: 1
 module: AdGlobalFooterModule
 ---

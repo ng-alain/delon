@@ -1,7 +1,6 @@
 ---
 title: reuse-tab
 subtitle: 路由复用标签
-order: 30
 cols: 1
 module: AdReuseTabModule
 ---
@@ -95,14 +94,14 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 ## 常见问题
 
-### 1、如何Debug？
+### 如何Debug？
 
 路由复用会保留组件状态，这可能会带来另一个弊端；复用过程中组件的生命周期勾子不会重复触发，大部分情况下都能正常运行，但可能需要注意：
 
 - `OnDestroy` 可能会处理一些组件外部（例如：`body`）的样式等，可以参考生命周期解决。
 - 开启 `debug` 模式后会在 `console` 很多信息这有助于分析路由复用的过程。
 
-### 2、移除 reuse-tab 组件后为什么还有路由复用效果？
+### 移除 reuse-tab 组件后为什么还有路由复用效果？
 
 默认脚手架导入了所有 @delon/abc 模块（在 `delon.module` 存在 `DelonABCModule.forRoot()` 时）这会导致 `AdReuseTabModule` 默认也会对相应服务进行注册，这导致即使没有使用 `<reuse-tab>` 也会路由复用的原因。你可以移除 `DelonABCModule.forRoot()` 并只导入你需要的模块即可。
 

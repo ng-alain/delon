@@ -13,14 +13,16 @@ type: Widgets
 - `enum`、`asyncData` 最后被转化成 `nzFileList` 值，且**务必**初始保证一个 `response` 属性表示远程数据并 `resReName` 能正确获取，若需要远程删除功能需要指定 `remove` 属性
 - 照片墙模式：预览统一使用 `nzModal` 实现且无法自定义
 
-## schema 属性
+## API
+
+### schema 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 enum | 数据源 | `SFSchemaEnumType[]` | -
 readOnly | 禁用状态  | `boolean` | -
 
-## ui 属性
+### ui 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -44,43 +46,3 @@ data | 上传所需参数或返回上传参数的方法 | `Object, (file: Upload
 withCredentials | 上传请求时是否携带 cookie | `boolean` | `false`
 remove | 点击移除文件时的回调，返回值为 `false` 时不移除 | `(file: UploadFile) => boolean｜Observable` | -
 change | 上传文件改变时的状态 | `(args: UploadChangeParam) => void` | -
-
-## Demo
-
-```ts
-schema = {
-    properties: {
-        avatar: {
-            type: 'string',
-            title: '头像',
-            enum: [
-                {
-                    uid: -1,
-                    name: 'xxx.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                    response: {
-                        resource_id: 1
-                    }
-                }
-            ],
-            ui: {
-                widget: 'upload',
-                action: '/upload',
-                resReName: 'resource_id'
-            }
-        },
-        // 拖动模式
-        avatar: {
-            type: 'string',
-            title: '头像',
-            ui: {
-                widget: 'upload',
-                action: '/upload',
-                resReName: 'resource_id',
-                type: 'drag'
-            }
-        }
-    }
-}
-```

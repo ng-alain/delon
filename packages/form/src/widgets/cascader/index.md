@@ -20,14 +20,16 @@ type: Widgets
 
 指每一次选择会触发HTTP请求，数据来源于 `loadData`；包含三个参数 `(node: CascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>`，其中 `me` 表示当前小部件实例，由于所有小部件的变更检测都是手控，因此数据请求返回后，**务必调用** `me.detectChanges()` 触发小部件变更检测。
 
-## schema 属性
+## API
+
+### schema 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 enum | 静态数据源 | `SFSchemaEnumType[]` | -
 readOnly | 禁用状态  | `boolean` | -
 
-## ui 属性
+### ui 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -55,78 +57,3 @@ selectionChange | 选项变更事件 | `(values: CascaderOption[]) => void` | -
 select | 选项被选中事件 | `(values: { option: CascaderOption, index: number }) => void` | -
 loadData | 实时数据源 | `(node: CascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | -
 clear | 内容被清空事件 | `() => void` | -
-
-## Demo
-
-```ts
-schema = {
-    properties: {
-        geo: {
-            type: 'number',
-            title: '所在地',
-            enum: [
-                {
-                    value: 110000, label: '北京', parent: 0, children: [
-                        { value: 110100, label: '北京市', parent: 110000, children: [
-                            { value: 110101, label: '东城区', parent: 110100, isLeaf: true },
-                            { value: 110105, label: '朝阳区', parent: 110100, isLeaf: true }
-                        ]}
-                    ]
-                }
-            ],
-            ui: 'cascader',
-            default: [110000, 110100, 110105]
-        },
-        // 异步获取所有数据
-        geo: {
-            type: 'number',
-            title: '所在地',
-            ui: {
-                widget: 'cascader',
-                asyncData: () => of([
-                    {
-                        value: 110000, label: '北京', parent: 0, children: [
-                            { value: 110100, label: '北京市', parent: 110000, children: [
-                                { value: 110101, label: '东城区', parent: 110100, isLeaf: true },
-                                { value: 110105, label: '朝阳区', parent: 110100, isLeaf: true }
-                            ]}
-                        ]
-                    }
-                ])
-            },
-            default: [110000, 110100, 110105]
-        },
-        // 实时
-        geo: {
-            type: 'number',
-            title: '所在地',
-            ui: {
-                widget: 'cascader',
-                loadData: (node: CascaderOption, index: number, me: CascaderWidget) => {
-                    return new Promise((resolve) => {
-                        setTimeout(() => {
-                            node.children = [
-                                { value: 110000, label: '北京', parent: 0 },
-                                { value: 110100, label: '北京市', parent: 110000 },
-                                { value: 110101, label: '东城区', parent: 110100 },
-                                { value: 110105, label: '朝阳区', parent: 110100 },
-                                { value: 310000, label: '上海', parent: 0 },
-                                { value: 310100, label: '上海市', parent: 310000 },
-                                { value: 310101, label: '黄浦区', parent: 310100 },
-                                { value: 310104, label: '徐汇区', parent: 310100 }
-                            ]
-                            .filter((w: any) => {
-                                w.isLeaf = index === 1;
-                                return w.parent === (node.value || 0);
-                            });
-                            resolve();
-                            me.detectChanges();
-                        }, 100);
-                    });
-                }
-            },
-            default: [110000, 110100, 110105]
-        }
-    }
-}
-```

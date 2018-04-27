@@ -1,7 +1,6 @@
 ---
 title: standard-form-row
 subtitle: 标准表单行
-order: 180
 cols: 1
 module: AdStandardFormRowModule
 ---

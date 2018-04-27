@@ -1,7 +1,6 @@
 ---
 title: Utils
 subtitle: 工具类
-order: 999
 cols: 1
 module: AdUtilsModule
 ---

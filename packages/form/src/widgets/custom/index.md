@@ -9,45 +9,16 @@ type: Widgets
 ## 如何使用？
 
 自定义小部件无须在 Schema 中任何特殊定义，但务必确保 **sf-template** 是一个有效路径值；它等同 Schema 属性名。
-## Demo
 
-```ts
-schema = {
-    properties: {
-        custom: {
-            type: 'string',
-            title: '自定义内容',
-            ui: {
-                widget: 'custom'
-            },
-            default: 'test'
-        }
-    }
-}
-```
+## API
 
-相对应模板：
+模板会传递（`{$implicit: this, schema: schema, ui: ui }`）三个参数，细节请参考DEMO：
 
-```html
-<sf [schema]="schema">
-    <ng-template sf-template="custom" let-me let-ui="ui" let-schema="schema">
-        <input nz-input
-            [attr.id]="id"
-            [disabled]="me.disabled"
-            [nzSize]="ui.size"
-            [value]="me.formProperty.value"
-            (input)="me.setValue($event.target?.value)">
-    </ng-template>
-</sf>
-```
-
-模板会传递（`{$implicit: this, schema: schema, ui: ui }`）三个参数：
-
-参数 | 说明 | 类型
-----|------|-----
-$implicit | 当前上下文 | `ControlWidget`
-schema | 当前节点Schema | `SFSchema`
-ui | 当前节点UI | `SFUISchemaItem`
+参数      | 说明           | 类型
+----------|----------------|------------------
+$implicit | 当前上下文     | `ControlWidget`
+schema    | 当前节点Schema | `SFSchema`
+ui        | 当前节点UI     | `SFUISchemaItem`
 
 上下文包括 `formProperty` 属性，它是传递数据的唯一中间层，因此维护 `formProperty.value` 是唯一与自定义组件通信的媒介。
 

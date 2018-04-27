@@ -16,7 +16,7 @@ type: Documents
 
 当 `custom` 小部件无法满足你的扩展时，可以使用更宽松的扩展方式。
 
-### 1、编写小部件
+### 编写小部件
 
 **常见小部件库**
 
@@ -84,7 +84,7 @@ export class TinymceWidget extends ControlWidget implements OnInit {
 
 小部件在渲染过程是手动变更检测，大部分情况下 `ControlWidget` 已经很好的管理什么时机应该执行变更检测，在自定义小部件过程中可能会遇到异步操作导致界面并未渲染，此时可以调用 `detectChanges` 来触发一次小部件节点的变更检测。
 
-### 2、注册小部件
+### 注册小部件
 
 在根模块中定义（`declarations`、`entryComponents`）注册小部件组件，同时在模块中导入 `WidgetRegistry` 并注册自定义小部件。
 
@@ -105,7 +105,7 @@ export class AppModule {
 
 当然为了更友好的维护，建议在Shared目录下定义一个专属 Json schema 模块，有兴趣可参考 [ng-alain实现](https://github.com/cipchk/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts)。
 
-### 2、使用自定义小部件
+### 使用自定义小部件
 
 同其他小部件一样，只需要指定 `widget` 值，例如：
 

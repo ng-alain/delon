@@ -19,7 +19,6 @@ import { getData } from '../../utils';
             [nzDropdownClassName]="i.dropdownClassName"
             [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth"
             [nzServerSearch]="i.serverSearch"
-            [nzFilterOption]="i.filterOption"
             [nzMaxMultipleCount]="i.maxMultipleCount"
             [nzMode]="i.mode"
             [nzNotFoundContent]="i.notFoundContent"
@@ -65,11 +64,10 @@ export class SelectWidget extends ControlWidget implements OnInit {
             dropdownClassName: this.ui.dropdownClassName || null,
             dropdownMatchSelectWidth: this.ui.dropdownMatchSelectWidth || true,
             serverSearch: this.ui.serverSearch || false,
-            filterOption: this.ui.filterOption,
             maxMultipleCount: this.ui.maxMultipleCount || Infinity,
             mode: this.ui.mode || 'default',
             notFoundContent: this.ui.notFoundContent || '无法找到',
-            showSearch: this.ui.showSearch
+            showSearch: this.ui.showSearch || true
         };
     }
 
@@ -87,8 +85,14 @@ export class SelectWidget extends ControlWidget implements OnInit {
     }
 
     searchChange(text: string) {
-        if (this.ui.onSearch)
-            this.ui.onSearch(text).then((res: any[]) => this.data = res);
+        if (this.ui.onSearch) {
+            this.ui.onSearch(text).then((res: any[]) => {
+                this.data = res;
+                this.detectChanges();
+            });
+            return ;
+        }
+        this.detectChanges();
     }
 
     scrollToBottom(value: any) {

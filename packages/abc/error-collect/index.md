@@ -1,7 +1,6 @@
 ---
 title: error-collect
 subtitle: 表单异常消息采集器
-order: 90
 cols: 1
 module: AdErrorCollectModule
 config: AdErrorCollectConfig

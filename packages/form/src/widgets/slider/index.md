@@ -10,7 +10,9 @@ type: Widgets
 
 - `exclusiveMinimum`、`exclusiveMaximum` 无效
 
-## schema 属性
+## API
+
+### schema 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -18,7 +20,7 @@ minimum | 最小值 | `number` | -
 maximum | 最小值 | `number` | -
 multipleOf | 倍数 | `number` | `1`
 
-## ui 属性
+### ui 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------

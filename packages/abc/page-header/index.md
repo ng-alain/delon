@@ -1,7 +1,6 @@
 ---
 title: page-header
 subtitle: 页头
-order: 150
 cols: 1
 module: AdProHeaderModule
 config: AdPageHeaderConfig

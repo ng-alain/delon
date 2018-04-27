@@ -1,7 +1,6 @@
 ---
 title: count-down
 subtitle: 倒计时
-order: 70
 cols: 3
 module: AdCountDownModule
 ---
