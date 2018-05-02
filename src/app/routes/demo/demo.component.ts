@@ -29,21 +29,18 @@ export class DemoComponent {
     uiSchema: SFUISchema = {};
     schema: SFSchema = {
         properties: {
-            type: { type: 'string', enum: [ 'mobile', 'name' ], default: 'mobile' },
-            name: { type: 'string' },
-            pwd: { type: 'string' },
-            mobile: { type: 'string' },
-            code: { type: 'string' }
-        },
-        required: [ 'type' ],
-        if: {
-            properties: { type: { enum: [ 'mobile' ] } }
-        },
-        then: {
-            required: [ 'mobile', 'code' ]
-        },
-        else: {
-            required: [ 'name', 'pwd' ]
+            'time': {
+                'type': 'string',
+                'format': 'time'
+            },
+            'time_number': {
+                'type': 'number',
+                ui: { widget: 'time', utcEpoch: true, displayFormat: 'HH:mm' }
+            },
+            'time_string': {
+                'type': 'string',
+                ui: { widget: 'time' }
+            }
         }
     };
 
@@ -59,7 +56,7 @@ export class DemoComponent {
     }
 
     error(value: any) {
-        // console.log('error', value);
+        console.log('error', value);
     }
 
 }

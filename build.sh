@@ -5,6 +5,7 @@ set -u -e -o pipefail
 readonly currentDir=$(cd $(dirname $0); pwd)
 cd ${currentDir}
 
+# PACKAGES=(cli)
 PACKAGES=(acl
     theme
     abc
@@ -29,15 +30,15 @@ compileCli() {
     mkdir -p ${2}
     rsync -a ${3} ${2}
     readonly paths=(
-        "node_modules/@schematics/angular/utility/|${2}utility"
-        "node_modules/@schematics/angular/class/|${2}class"
-        "node_modules/@schematics/angular/directive/|${2}directive"
-        "node_modules/@schematics/angular/enum/|${2}enum"
-        "node_modules/@schematics/angular/interface/|${2}interface"
-        "node_modules/@schematics/angular/pipe/|${2}pipe"
-        "node_modules/@schematics/angular/service/|${2}service"
-        "node_modules/@schematics/angular/guard/|${2}guard"
-        "node_modules/@schematics/angular/app-shell/|${2}app-shell"
+        "${1}node_modules/@schematics/angular/utility/|${2}utility"
+        "${1}node_modules/@schematics/angular/class/|${2}class"
+        "${1}node_modules/@schematics/angular/directive/|${2}directive"
+        "${1}node_modules/@schematics/angular/enum/|${2}enum"
+        "${1}node_modules/@schematics/angular/interface/|${2}interface"
+        "${1}node_modules/@schematics/angular/pipe/|${2}pipe"
+        "${1}node_modules/@schematics/angular/service/|${2}service"
+        "${1}node_modules/@schematics/angular/guard/|${2}guard"
+        "${1}node_modules/@schematics/angular/app-shell/|${2}app-shell"
         "${1}docker-compose.debug.yml|${2}application/files/"
         "${1}docker-compose.yml|${2}application/files"
         "${1}Dockerfile|${2}application/files"
@@ -89,7 +90,7 @@ compileCli() {
         if [[ ${to:(-1):1} == '/' ]]; then
             mkdir -p $to
         fi
-        cp -frR $from $to
+        cp -fr $from $to
     done
 }
 

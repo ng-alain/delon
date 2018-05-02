@@ -1,6 +1,6 @@
 import { RouterModule, RouteReuseStrategy } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,11 +21,16 @@ import { DemoModalComponent } from './shared/components/modal/demo.component';
 // mock data
 import * as MOCKDATA from '../../_mock';
 import { environment } from '../environments/environment';
+import { StartupService } from './core/startup.service';
 const MOCKMODULE = [];
 if (!environment.production) {
     MOCKMODULE.push(DelonMockModule.forRoot({
         data: MOCKDATA
     }));
+}
+
+export function StartupServiceFactory(startupService: StartupService): Function {
+  return () => startupService.load();
 }
 
 @NgModule({
@@ -48,7 +53,15 @@ if (!environment.production) {
     ...MOCKMODULE,
     RoutesModule
   ],
-  providers: [ ],
+  providers: [
+    StartupService,
+    {
+        provide: APP_INITIALIZER,
+        useFactory: StartupServiceFactory,
+        deps: [StartupService],
+        multi: true
+    }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [DemoModalComponent]
 })
