@@ -47,6 +47,8 @@ export class MockService implements OnDestroy {
                 }
             });
         });
+        // regular ordering
+        this.cached.sort((a, b) => (b.martcher || '').toString().length - (a.martcher || '').toString().length);
     }
 
     private genRule(key: string, callback: any): MockCachedRule {

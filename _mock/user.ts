@@ -10,5 +10,8 @@ export const USERS = {
     // '/users/1': Mock.mock({ id: 1, 'rank|3': '★★★' }),
     // 发送 Status 错误
     '/500': () => { throw new MockStatusError(500); },
-    '/404': () => { throw new MockStatusError(404); }
+    '/404': () => { throw new MockStatusError(404); },
+    '/user/:id': (req: MockRequest) => { return { id: req.params.id, name: 'detail' }; },
+    '/user/:id/edit': (req: MockRequest) => { return { id: req.params.id, name: 'edit' }; },
+    '/user/:id/upload': (req: MockRequest) => { return { id: req.params.id, name: 'upload' }; },
 };

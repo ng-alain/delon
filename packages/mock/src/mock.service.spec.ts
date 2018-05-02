@@ -13,7 +13,8 @@ const DATA = {
         'GET /users': { users: [1, 2] },
         // GET 可省略
         '/users/1': Mock.mock({ id: 1, 'rank|3': '★★★' }),
-        '/users/:id': (req: MockRequest) => req.params,
+        '/users/:id': (req: MockRequest) => { return { id: req.params.id, s: 'detail' } },
+        '/users/:id/edit': (req: MockRequest) => { return { id: req.params.id, s: 'edit' } },
         'POST /users/1': { uid: 0, action: 'add' },
         '/data/([0-9])': (req: MockRequest) => req
     }
@@ -65,6 +66,15 @@ describe('mock: service', () => {
             const rule = srv.getRule('GET', url);
             expect(rule).not.toBeNull();
             expect(rule.url).toBe(url);
+        });
+
+        it('should be full url priority', () => {
+            const editRule = srv.getRule('GET', '/users/1/edit');
+            const editRes = editRule.callback(editRule as any);
+            expect(editRes.s).toBe('edit');
+            const detailRule = srv.getRule('GET', '/users/1');
+            const detailRes = detailRule.callback(detailRule as any);
+            expect(detailRes.s).toBe('detail');
         });
     });
 
