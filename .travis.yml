@@ -1,7 +1,7 @@
 sudo: required
 language: node_js
 node_js:
-  - "8.5.0"
+  - "8.9.0"
 
 env:
   - TASK=release
@@ -29,6 +29,7 @@ before_install:
 before_script:
   - npm install -g @angular/cli
   - npm install -g karma
+  - npm install -g yarn
 
 script:
   - npm run $TASK
