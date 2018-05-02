@@ -6,6 +6,17 @@ title:
 type: Other
 ---
 
+### 1.0.0-beta.8@next
+
+`2018-5-3`
+
+- 同步ng-zorro-antd 0.7.0-beta.5，主要增加 `nz-time-picker` 组件
+- 脚手架
+    - 使用husky提交时风格检查，[329238](https://github.com/cipchk/ng-alain/commit/329238) [@billyma128](https://github.com/billyma128)
+- @delon/form
+    - 同步时间组件为 `nz-time-picker`
+    - 修复类型 `array` 导致UI `items` 无效问题
+
 ### 1.0.0-beta.7@next
 
 `2018-4-26`
