@@ -20,9 +20,11 @@ ACL 提供一个用于改变按钮级别粒度的控制能力，例如：无权�
 使用角色名
 <button [acl]="'user'"></button>
 <button [acl]="['user', 'manage']"></button>
+<button [acl]="{ role: ['user', 'manage'], mode: 'allOf' }"></button>
 使用权限点
 <button [acl]="10"></button>
 <button acl [acl-ability]="10"></button>
+<button [acl]="{ ability: ['user', 'manage'], mode: 'allOf' }"></button>
 ```
 
 ### 通用路由守卫
@@ -56,10 +58,11 @@ const routes: Routes = [
 
 **ACLType**
 
-| 属性 | 类型 | 说明 |
-| --- | --- | --- |
-| `role` | `string[]` | 角色 |
-| `ability` | `(number[] | string[])` | 权限点 |
+| 属性 | 类型 | 说明 | 默认 |
+| --- | --- | --- | --- |
+| `role` | `string[]` | 角色 | - |
+| `ability` | `number[], string[]` | 权限点 | - |
+| `mode` | `allOf, oneOf` | `allOf` 表示必须满足所有角色或权限点数组算有效<br>`oneOf` 表示只须满足角色或权限点数组中的一项算有效 | `oneOf` |
 
 **ACLService**
 
@@ -76,8 +79,8 @@ const routes: Routes = [
 | `attachAbility(abilities: (number | string)[])` | 为当前用户附加权限 |
 | `removeRole(roles: string[])` | 为当前用户移除角色 |
 | `removeAbility(abilities: (number | string)[])` | 为当前用户移除权限 |
-| `can(roleOrAbility: string | string[] | ACLType)` | 当前用户是否有对应角色 |
-| `canAbility(ability: number | string)` | 当前用户是否有对应权限点 |
+| `can(roleOrAbility: ACLCanType)` | 当前用户是否有对应角色 |
+| `canAbility(ability: ACLCanType)` | 当前用户是否有对应权限点 |
 
 **为什么can方法默认情况下角色是字符串，而权限点是数字类型？**
 

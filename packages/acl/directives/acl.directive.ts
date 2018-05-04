@@ -1,7 +1,7 @@
 import { Directive, Input, ElementRef, Renderer2, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ACLService } from '../services/acl.service';
-import { ACLType } from '../services/acl.type';
+import { ACLCanType } from '../services/acl.type';
 
 @Directive({
     selector: '[acl]'
@@ -11,19 +11,16 @@ export class ACLDirective implements OnDestroy {
     private change$: Subscription;
 
     @Input('acl')
-    set acl(value: number | number[] | string | string[] | ACLType) {
+    set acl(value: ACLCanType) {
         this.set(value);
     }
 
     @Input('acl-ability')
-    set ability(ability: number | string) {
-        this.set(<ACLType>{
-            ability: [ability],
-            role: null
-        });
+    set ability(value: ACLCanType) {
+        this.set(this.srv.parseAbility(value));
     }
 
-    private set(value: number | number[] | string | string[] | ACLType) {
+    private set(value: ACLCanType) {
         const CLS = 'acl__hide';
         const el = this.el.nativeElement;
         if (this.srv.can(value)) {

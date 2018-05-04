@@ -138,6 +138,7 @@ export class ACLService {
      * 当前用户是否有对应角色，其实 `number` 表示Ability
      *
      * - 当 `full: true` 或参数 `null` 时返回 `true`
+     * - 若使用 `ACLType` 参数，可以指定 `mode` 校验模式
      */
     can(roleOrAbility: ACLCanType): boolean {
         if (this.full === true || !roleOrAbility) {
@@ -154,29 +155,33 @@ export class ACLService {
         }
 
         if (t.role) {
-            for (const _r of t.role) {
-                if (this.roles.includes(_r)) {
-                    return true;
-                }
-            }
+            if (t.mode === 'allOf')
+                return t.role.every(v => this.roles.includes(v));
+            else
+                return t.role.some(v => this.roles.includes(v));
         }
         if (t.ability) {
-            for (const _p of t.ability) {
-                if (this.abilities.includes(_p)) {
-                    return true;
-                }
-            }
+            if (t.mode === 'allOf')
+                return (t.ability as any[]).every(v => this.abilities.includes(v));
+            else
+                return (t.ability as any[]).some(v => this.abilities.includes(v));
         }
         return false;
     }
 
+    /** @inner */
+    parseAbility(value: ACLCanType): ACLCanType {
+        if (typeof value === 'number' || typeof value === 'string' || Array.isArray(value)) {
+            value = <ACLType>{ ability: Array.isArray(value) ? value : [ value ]};
+        }
+        delete value.role;
+        return value;
+    }
+    
     /**
      * 当前用户是否有对应权限点
      */
-    canAbility(ability: number | string): boolean {
-        return this.can(<ACLType>{
-            ability: [ability],
-            role: null
-        });
+    canAbility(value: ACLCanType): boolean {
+        return this.can(this.parseAbility(value));
     }
 }
