@@ -15,7 +15,7 @@ type: Documents
 **1、Scheam 定义后可能受限于某个数据来自远程**
 
 ```ts
-@ViewChild('sf') sf: FormComponent;
+@ViewChild('sf') sf: SFComponent;
 schema: SFSchema = {
     properties: {
         app: {

@@ -109,6 +109,7 @@ export class HomeComponent {
 | schema       | **必填项** JSON Schema                             | `SFSchema`                  | -            |
 | ui           | UI Schema                                          | `SFUISchema`                | -            |
 | formData     | 表单默认值                                         | `any`                       | -            |
+| mode | 表单模式，细节见常见问题 | `default,search,edit` | `default` |
 | button       | 按钮，若指定 `null` 或 `undefined` 表示手动添加按钮 | `SFButton`                  | `{}`         |
 | firstVisual  | 是否立即呈现错误视觉                               | `boolean`                   | `true`       |
 | liveValidate | 是否实时校验，`false` 提交时检验                    | `boolean`                   | `true`       |
@@ -144,3 +145,13 @@ export class HomeComponent {
     <button (click)="sf.reset()" type="button" nz-button>重置</button>
 </sf>
 ```
+
+## 常见问题
+
+### mode有什么作用？
+
+`mode` 只是快捷作用，**且设置属性的优先级高于一切**，一共分三种模式：
+
+- `default` 默认模式，什么也不做
+- `search` 搜索模式，自动设置 `layout: inline`、`firstVisual: false`、`liveValidate: false`、`button.submit: '搜索'`
+- `edit` 编辑模式，自动设置 `layout: horizontal`、`firstVisual: false`、`liveValidate: true`、`button.submit: '保存'`

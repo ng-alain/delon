@@ -46,7 +46,9 @@ export function useFactory(schemaValidatorFactory: any, options: DelonFormConfig
         TerminatorService
     ],
     host: {
-        '[class.delon-sf]': 'true'
+        '[class.sf]': 'true',
+        '[class.sf-search]': `mode === 'search'`,
+        '[class.sf-edit]': `mode === 'edit'`
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -104,6 +106,30 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this._firstVisual = coerceBooleanProperty(value);
     }
     private _firstVisual = true;
+
+    /** 表单模式 */
+    @Input()
+    set mode(value: 'default' | 'search' | 'edit') {
+        switch (value) {
+            case 'search':
+                this.layout = 'inline';
+                this.firstVisual = false;
+                this.liveValidate = false;
+                this.button.submit = '搜索';
+                break;
+            case 'edit':
+                this.layout = 'horizontal';
+                this.firstVisual = false;
+                this.liveValidate = true;
+                this.button.submit = '保存';
+                break;
+        }
+        this._mode = value;
+    }
+    get mode() {
+        return this._mode;
+    }
+    private _mode: 'default' | 'search' | 'edit';
 
     /** 数据变更时回调 */
     @Output() formChange = new EventEmitter<{}>();

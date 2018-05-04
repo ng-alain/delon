@@ -158,6 +158,7 @@ export class SFPage {
         [schema]="schema"
         [ui]="ui"
         [formData]="formData"
+        [mode]="mode"
         [button]="button"
         [liveValidate]="liveValidate"
         [autocomplete]="autocomplete"
@@ -170,6 +171,7 @@ export class SFPage {
 })
 export class TestFormComponent {
     @ViewChild('comp') comp: SFComponent;
+    mode: 'default' | 'search' | 'edit' = 'default';
     layout = 'horizontal';
     schema: SFSchema = SCHEMA.user;
     ui: SFUISchema = {};

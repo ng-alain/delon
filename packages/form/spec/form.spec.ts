@@ -162,6 +162,23 @@ describe('form: component', () => {
             });
         });
 
+        describe('#mode', () => {
+            it('with search', () => {
+                context.mode = 'search';
+                fixture.detectChanges();
+                expect(context.comp.layout).toBe('inline');
+                expect(context.comp.firstVisual).toBe(false);
+                expect(context.comp.liveValidate).toBe(false);
+            });
+            it('with edit', () => {
+                context.mode = 'edit';
+                fixture.detectChanges();
+                expect(context.comp.layout).toBe('horizontal');
+                expect(context.comp.firstVisual).toBe(false);
+                expect(context.comp.liveValidate).toBe(true);
+            });
+        });
+
         it('#formChange', () => {
             page.setValue('/name', 'cipchk');
             expect(context.formChange).toHaveBeenCalled();
