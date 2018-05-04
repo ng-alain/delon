@@ -47,10 +47,6 @@ export interface SFRenderSchema {
      */
     class?: string | string[];
     /**
-     * 自定义样式，等同 `[ngStyle]` 值
-     */
-    style?: { [key: string]: string };
-    /**
      * 元素组件大小
      */
     size?: 'default' | 'large' | 'small';

@@ -124,6 +124,32 @@ export class SFPage {
         }
         return this;
     }
+
+    checkCls(cls: string, value: string) {
+        const el = this.getEl(cls);
+        expect(el).not.toBe(null);
+        expect(el.classList).toContain(value);
+    }
+
+    checkStyle(cls: string, key: string, value: string) {
+        const el = this.getEl(cls);
+        expect(el).not.toBe(null);
+        expect(el.style[key]).toBe(value);
+    }
+
+    checkAttr(cls: string, key: string, value: any, required = true) {
+        const el = this.getEl(cls);
+        expect(el).not.toBe(null);
+        const attr = el.attributes.getNamedItem(key);
+        if (required)
+            expect(attr.textContent).toBe(value);
+        else
+            expect(attr).toBe(value);
+    }
+
+    checkCount(cls: string, count: number) {
+        expect(dl.queryAll(By.css(cls)).length).toBe(count);
+    }
 }
 
 @Component({

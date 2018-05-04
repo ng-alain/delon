@@ -9,6 +9,6 @@ export interface SFButton {
     reset?: string;
     /** 重置按钮类型，默认：`default` */
     reset_type?: string;
-    /** 按钮样式，主要用于指定按钮 `grid`、`style` 属性 */
+    /** 按钮样式，主要用于指定按钮 `grid`、`class` 属性 */
     render?: SFRenderSchema;
 }

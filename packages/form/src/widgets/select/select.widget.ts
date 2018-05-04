@@ -60,7 +60,6 @@ export class SelectWidget extends ControlWidget implements OnInit {
         this.i = {
             allowClear: this.ui.allowClear,
             autoFocus: this.ui.autoFocus || false,
-            style: this.ui.style || null,
             dropdownClassName: this.ui.dropdownClassName || null,
             dropdownMatchSelectWidth: this.ui.dropdownMatchSelectWidth || true,
             serverSearch: this.ui.serverSearch || false,

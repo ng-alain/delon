@@ -13,7 +13,7 @@ describe('form: component', () => {
 
     beforeEach(() => ({ fixture, dl, context, page } = builder()));
 
-    xdescribe('[default]', () => {
+    describe('[default]', () => {
         it('should be create a form', () => {
             expect(context).not.toBeUndefined();
         });
@@ -34,189 +34,173 @@ describe('form: component', () => {
                 fixture.detectChanges();
             }).toThrowError(`Don't support string with root ui property`);
         });
-    });
 
-    xdescribe('#validate', () => {
-        it('should be validate when submitted and not liveValidate', () => {
-            page.submit(false);
-            expect((page.getEl('.ant-btn-primary') as HTMLButtonElement).disabled).toBe(true);
-            context.liveValidate = false;
+        it('should be used default widget when is invalid schema type', () => {
+            spyOn(console, 'warn');
+            expect(console.warn).not.toHaveBeenCalled();
+            context.schema = {
+                type: 'string',
+                properties: {},
+                ui: {
+                    widget: 'asdf'
+                }
+            };
             fixture.detectChanges();
-            page.submit(false);
-            page.setValue('/name', 'cipchk')
-                .setValue('/pwd', '1111')
-                .submit(true);
+            expect(console.warn).toHaveBeenCalled();
         });
-    });
 
-    xdescribe('#submit', () => {
-        it('should be submit when is valid', () => {
-            page.setValue('/name', 'cipchk')
-                .setValue('/pwd', '1111')
-                .isValid();
-        });
-        it('should not be submit when is invalid', () => {
-            page.setValue('/name', 'cipchk')
-                .isValid(false);
-        });
-    });
-
-    xdescribe('#reset', () => {
-        it('should be set default value', () => {
-            const schema = deepCopy(SCHEMA.user) as SFSchema;
-            schema.properties.name.default = 'cipchk';
-            page.newSchema(schema)
-                .reset()
-                .checkValue('/name', 'cipchk');
-        });
-    });
-
-    xdescribe('[cover schema]', () => {
-        it('should be using select widget when not ui and enum exists', () => {
-            page.newSchema({
-                    properties: {
-                        name: { type: 'string', enum: [ 'a' ] }
-                    }
-                })
-                .checkUI('/name', 'widget', 'select');
-        });
-        it('should be using autocomplete widget when format equal email', () => {
-            page.newSchema({
-                    properties: {
-                        name: { type: 'string', format: 'email' }
-                    }
-                })
-                .checkUI('/name', 'widget', 'autocomplete');
-        });
-        it('support ui property is a string', () => {
-            page.newSchema({
-                    properties: {
-                        name: { type: 'string', ui: 'textarea' }
-                    }
-                })
-                .checkUI('/name', 'widget', 'textarea');
-        });
-        it('should be inherit all properties with * for ui schema', () => {
-            const schema: SFSchema = {
-                properties: {
-                    name1: { type: 'string' },
-                    name2: {
-                        type: 'array',
-                        items: {
-                            type: 'object',
-                            properties: {
-                                a: { type: 'string' },
-                                b: { type: 'string' }
-                            }
-                        }
-                    }
-                }
-            };
-            const label = 10;
-            const ui: SFUISchema = {
-                '*': { spanLabel: label },
-                $name2: {
-                    $items: {
-                        $a: { spanLabel: 9 }
-                    }
-                }
-            };
-            page.newSchema(schema, ui)
-                .checkUI('/name1', 'spanLabel', label)
-                .add()
-                .checkUI('/name2/0/a', 'spanLabel', 9);
-        });
-        it('should be fixed label width', () => {
-            const schema: SFSchema = {
+        it('should be console debug informations', () => {
+            spyOn(console, 'warn');
+            expect(console.warn).not.toHaveBeenCalled();
+            context.schema = {
                 properties: {
                     name: { type: 'string' },
-                    protocol: {
-                        'type': 'boolean',
-                        'title': '同意本协议',
-                        'description': '《用户协议》',
-                        'ui': {
-                            'widget': 'checkbox'
-                        },
-                        'default': true
-                    }
+                    age: { type: 'number' }
                 },
-                ui: { spanLabelFixed: 10, debug: true }
-            };
-            page.newSchema(schema)
-                .checkUI('/name', 'spanLabelFixed', 10)
-                .checkUI('/protocol', 'spanLabelFixed', 10);
-        });
-        it('support invalid format value', () => {
-            page.newSchema({
-                    properties: {
-                        name: { type: 'string', format: 'email1' }
-                    }
-                })
-                .checkUI('/name', 'widget', 'string');
-        });
-        it('should be null spanLabel when not horizontal layout', () => {
-            context.layout = 'inline';
-            fixture.detectChanges();
-            page.checkUI('/name', 'spanLabel', null);
-        });
-        it('should call refreshSchema changed schema', () => {
-            context.comp.refreshSchema({
-                properties: {
-                    user: {
-                        type: 'object',
-                        properties: {
-                            name: { type: 'string' },
-                            age: { type: 'number' }
-                        }
-                    }
+                required: [ 'name', 'age' ],
+                ui: {
+                    debug: true
                 }
-            }, { '*': { spanLabelFixed: 100, spanControl: 10, offsetControl: 11 } });
-            page.checkUI('/user/name', 'spanLabelFixed', 100);
-            page.checkUI('/user/name', 'spanControl', 10);
-            page.checkUI('/user/name', 'offsetControl', 11);
+            }
+            fixture.detectChanges();
+            page.setValue('/name', 'a');
+            expect(console.warn).toHaveBeenCalled();
         });
-        it('support ui is null', () => {
-            expect(() => {
-                context.ui = null;
+    });
+
+    describe('properites', () => {
+
+        describe('#validate', () => {
+            it('should be validate when submitted and not liveValidate', () => {
+                page.submit(false);
+                expect((page.getEl('.ant-btn-primary') as HTMLButtonElement).disabled).toBe(true);
+                context.liveValidate = false;
                 fixture.detectChanges();
-            }).not.toThrow();
+                page.submit(false);
+                page.setValue('/name', 'cipchk')
+                    .setValue('/pwd', '1111')
+                    .submit(true);
+            });
         });
-        xdescribe('#array', () => {
-            const arrUI: SFUISchemaItem = { spanLabel: 10, grid: { arraySpan: 12 } };
-            const arrSchema: SFSchema = {
-                properties: {
-                    name: {
-                        type: 'array',
-                        items: {
-                            type: 'object',
-                            properties: {
-                                a: { type: 'string' }
+    
+        describe('#submit', () => {
+            it('should be submit when is valid', () => {
+                page.setValue('/name', 'cipchk')
+                    .setValue('/pwd', '1111')
+                    .isValid();
+            });
+            it('should not be submit when is invalid', () => {
+                page.setValue('/name', 'cipchk')
+                    .isValid(false);
+            });
+        });
+    
+        describe('#reset', () => {
+            it('should be set default value', () => {
+                const schema = deepCopy(SCHEMA.user) as SFSchema;
+                schema.properties.name.default = 'cipchk';
+                page.newSchema(schema)
+                    .reset()
+                    .checkValue('/name', 'cipchk');
+            });
+        });
+
+        describe('#layout', () => {
+            [ 'horizontal', 'vertical', 'inline' ].forEach(type => {
+                it(`with ${type}`, () => {
+                    context.layout = type;
+                    fixture.detectChanges();
+                    page.checkCls('form', `ant-form-${type}`);
+                });
+            });
+            describe(`when with horizontal`, () => {
+                it('shoule be fixed label width', () => {
+                    page.newSchema({
+                        properties: {
+                            name: {
+                                type: 'string',
+                                ui: {
+                                    spanLabelFixed: 100
+                                }
                             }
                         }
-                    }
-                }
-            };
-            xdescribe('[#via in json schema]', () => {
-                it('should be has $items when is array', () => {
-                    const schema = deepCopy(arrSchema) as SFSchema;
-                    schema.properties.name.ui = deepCopy(arrUI);
-                    page.newSchema(schema)
-                        .checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
+                    }).checkStyle('.ant-form-item-label', 'width', '100px');
                 });
-            });
-            xdescribe('[#via ui property]', () => {
-                it('should be has $items when is array', () => {
-                    const schema = deepCopy(arrSchema);
-                    const uiSchema: SFUISchema = {
-                        $name: {
-                            $items: {},
-                            ...deepCopy(arrUI)
+                it('shoule be fixed label width if parent node had setting', () => {
+                    page.newSchema({
+                        properties: {
+                            name: { type: 'string' }
+                        },
+                        ui: {
+                            spanLabelFixed: 99
                         }
-                    };
-                    page.newSchema(schema, uiSchema)
-                        .checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
+                    }).checkStyle('.ant-form-item-label', 'width', '99px');
                 });
             });
+        });
+
+        describe('#autocomplete', () => {
+            [ null , 'on', 'off' ].forEach((type: any) => {
+                it(`with [${type}]`, () => {
+                    context.autocomplete = type;
+                    fixture.detectChanges();
+                    page.checkAttr('form', 'autocomplete', type, !!type);
+                });
+            });
+        });
+
+        describe('#firstVisual', () => {
+            it('with false', () => {
+                context.firstVisual = false;
+                fixture.detectChanges();
+                page.checkCount('nz-form-explain', 0);
+            });
+            it('with true', () => {
+                context.firstVisual = true;
+                fixture.detectChanges();
+                page.checkCount('nz-form-explain', 2);
+            });
+        });
+
+        it('#formChange', () => {
+            page.setValue('/name', 'cipchk');
+            expect(context.formChange).toHaveBeenCalled();
+        });
+
+        it('#formSubmit', () => {
+            page.setValue('/name', 'cipchk')
+                .setValue('/pwd', 'asdf')
+                .submit();
+            expect(context.formSubmit).toHaveBeenCalled();
+        });
+
+        it('#formReset', () => {
+            page.setValue('/name', 'cipchk')
+                .setValue('/pwd', 'asdf')
+                .reset();
+            expect(context.formReset).toHaveBeenCalled();
+        });
+
+        it('#formError', () => {
+            page.setValue('/name', 'cipchk')
+                .setValue('/name', '');
+            expect(context.formError).toHaveBeenCalled();
+        });
+    
+    });
+
+    describe('[widgets]', () => {
+        it('#size', () => {
+            page.newSchema({ properties: { name: { type: 'string', ui: { size: 'large' } }} })
+                .checkCls('input', 'ant-input-lg');
+        });
+        it('#disabled', () => {
+            page.newSchema({ properties: { name: { type: 'string', readOnly: true }} })
+                .checkCls('input', 'ant-input-disabled');
+        });
+        it('should be custom class', () => {
+            page.newSchema({ properties: { name: { type: 'string', ui: { class: 'test-cls' } }} })
+                .checkCls('sf-string', 'test-cls');
         });
     });
 

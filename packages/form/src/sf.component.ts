@@ -19,9 +19,9 @@ export function useFactory(schemaValidatorFactory: any, options: DelonFormConfig
 @Component({
     selector: 'sf, [sf]',
     template: `
-    <form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [autocomplete]="autocomplete">
+    <form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
         <sf-item [formProperty]="rootProperty"></sf-item>
-        <nz-form-item [ngClass]="_btn.render.class" [ngStyle]="_btn.render.style">
+        <nz-form-item [ngClass]="_btn.render.class">
             <nz-col class="ant-form-item-control-wrapper"
                 [nzSpan]="_btn.render.grid.span" [nzOffset]="_btn.render.grid.offset"
                 [nzXs]="_btn.render.grid.xs" [nzSm]="_btn.render.grid.sm" [nzMd]="_btn.render.grid.md"

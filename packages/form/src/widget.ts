@@ -24,11 +24,6 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
         return this.ui.class || '';
     }
 
-    @HostBinding('style')
-    get style() {
-        return this.ui.style || '';
-    }
-
     get disabled(): boolean {
         if (typeof this.schema.readOnly !== 'undefined')
             return this.schema.readOnly;
