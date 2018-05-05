@@ -348,7 +348,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
                 this.pi = !this.pi ? 1 : (this.pi > maxPageIndex ? maxPageIndex : this.pi);
             }
         }
-        this.total = this.total <= 0 ? data.length : this.total;
+        this.total = data.length;
         this._isPagination = typeof this.showPagination === 'undefined' ? this.ps > 0 && this.total > this.ps : this.showPagination;
         this._subscribeData(this._isPagination ? data.slice((this.pi - 1) * this.ps, this.pi * this.ps) : data);
     }

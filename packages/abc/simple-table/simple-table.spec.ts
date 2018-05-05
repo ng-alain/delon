@@ -69,7 +69,7 @@ describe('abc: simple-table', () => {
     let page: PageObject;
     let comp: SimpleTableComponent;
 
-    function genModule(other: { acl: boolean }) {
+    function genModule(other: { acl?: boolean, template?: string, data?: any[] }) {
         const imports = [
             CommonModule, FormsModule, HttpClientModule, NgZorroAntdModule.forRoot(),
             HttpClientTestingModule, RouterTestingModule.withRoutes([]),
@@ -80,9 +80,11 @@ describe('abc: simple-table', () => {
             imports,
             declarations: [ TestComponent ]
         });
+        if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
         fixture = TestBed.createComponent(TestComponent);
         dl = fixture.debugElement;
         context = dl.componentInstance;
+        if (other.data) context.data = other.data;
         fixture.detectChanges();
         page = new PageObject();
     }
@@ -206,6 +208,19 @@ describe('abc: simple-table', () => {
                     `${comp.total}/${comp.pi}/${comp.ps}`
                 );
             });
+        });
+    });
+
+    describe('static data', () => {
+        it('should be not pagination when data length less than ps value', () => {
+            genModule({
+                template: `<simple-table #st [data]="data" [ps]="ps"></simple-table>`
+            });
+            context.data = USERS.slice(0, 3);
+            context.ps = 4;
+            fixture.detectChanges();
+            page.expectCount(3)
+                .expectEls('nz-pagination', 0);
         });
     });
 
