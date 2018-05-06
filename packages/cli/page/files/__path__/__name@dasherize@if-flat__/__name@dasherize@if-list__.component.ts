@@ -1,16 +1,15 @@
 import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
-import { SFSchema } from 'nz-schema-form';
 import { _HttpClient } from '@delon/theme';
 import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
+import { SFSchema } from '@delon/form';
 
 @Component({
   selector: '<%= selector %>',<% if(inlineTemplate) { %>
   template: `
-    <page-header [title]="'Page Name'"></page-header>
+  <page-header [title]="'Page Name'"></page-header>
     <nz-card>
-        <nz-sf layout="inline" [schema]="searchSchema"
-            [actions]="searchActions" (onChange)="params=$event.value"></nz-sf>
-        <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
+      <sf mode="search" [schema]="searchSchema" [formData]="params" (formSubmit)="st.reset($event)" (formReset)="st.reset(params)"></sf>
+      <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
     </nz-card>
   `,<% } else { %>
   templateUrl: './<%= dasherize(name) %>.component.html',<% } if(inlineStyle) { %><% } else { %>
@@ -21,41 +20,28 @@ import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
 export class <%= classify(name) %>Component implements OnInit {
 
     params: any = {};
-    url = `/`;
-    @ViewChild('st') st: SimpleTableComponent;
+    url = `/user`;
     searchSchema: SFSchema = {
-        properties: {
-            q: {
-                type: 'string',
-                title: '关键词'
-            }
-        },
-        button: {
-            items: [
-                {
-                    label: '搜索',
-                    id: 'send',
-                    type: 'primary'
-                },
-                {
-                    label: '重置',
-                    id: 'reset'
-                }
-            ]
+      properties: {
+        no: {
+          type: 'string',
+          title: '编号'
         }
+      }
     };
-    searchActions = {
-        send: (form: any) => {
-            this.st.load(1);
-        },
-        reset: (form: any) => {
-            form.reset({});
-            this.st.reset();
-        }
-    };
+    @ViewChild('st') st: SimpleTableComponent;
     columns: SimpleTableColumn[] = [
-        { title: '编号', index: 'id' },
-        { title: '邮箱', index: 'email' }
+      { title: '编号', index: 'no' },
+      { title: '调用次数', type: 'number', index: 'callNo' },
+      { title: '头像', type: 'img', width: '50px', index: 'avatar' },
+      { title: '时间', type: 'date', index: 'updatedAt' },
+      {
+        title: '',
+        buttons: [
+          // { text: '查看', click: (item: any) => this.router.navigateByUrl(`/form/${item.id}`) },
+          // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+        ]
+      }
     ];
 
     constructor(private http: _HttpClient) { }
