@@ -26,7 +26,7 @@ import {
 } from './interface';
 import { AdSimpleTableModule } from './simple-table.module';
 import { SimpleTableComponent } from './simple-table.component';
-import { deepCopy } from '..';
+import { deepCopy } from '../utils/utils';
 
 const USERS: any[] = Array(100)
   .fill({})

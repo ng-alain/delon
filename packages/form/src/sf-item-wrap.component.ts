@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { SFUISchemaItem, SFSchema } from '..';
+import { SFSchema } from './schema/index';
+import { SFUISchemaItem } from './schema/ui';
 
 @Component({
   selector: 'sf-item-wrap',
