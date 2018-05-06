@@ -269,9 +269,10 @@ export interface SimpleTableButton {
      * 点击回调
      * - Function
      *  - `type=modal` 只会在当有传回值时才会触发回调
-     * - reload：重新加载表格数据
+     * - reload：重新刷新当前页
+     * - load：重新加载数据，并重置页码为：`1`
      */
-    click?: 'reload' | ((record: any, modal?: any, instance?: SimpleTableComponent) => void);
+    click?: 'reload' | 'load' | ((record: any, modal?: any, instance?: SimpleTableComponent) => void);
     /**
      * 是否需要气泡确认框
      */

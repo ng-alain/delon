@@ -62,7 +62,8 @@ filterChange | Filter回调 | `EventEmitter` | -
 
 参数 | 返回值 | 说明
 ----|-----|-----
-`load(pi = 1, extraParams?: any)` | `void` | 根据页码重新加载数据
+`load(pi = 1, extraParams?: any)` | `void` | 根据页码重新加载数据<br>`pi` 指定当前页码，`-1` 表示不重置页码，只对当前页进行刷新，默认：`1`
+`reload(extraParams?: any)` | `void` | 刷新当前页
 `reset(extraParams?: any)` | `void` | 重置且重新设置 `pi` 为 `1`
 `clearCheck()` | `void` | 清除所有 `checkbox`
 `clearRadio()` | `void` | 清除所有 `radio`
@@ -149,7 +150,7 @@ text | 文本 | `string` | -
 i18n? | 文本i18n | `string` | -
 format | 格式化文本 | `(record: any, btn: SimpleTableButton) => string` | -
 type | 按钮类型 | `none,del,modal,static` | -
-click | 点击回调；**函数：** `type=modal` 只会在 `确认` 时触发且 `modal` 参数有效<br>**reload：** 重新加载表格数据 | `(record: any, modal?: any, instance?: SimpleTableComponent) => void | reload` | -
+click | 点击回调；**函数：** `type=modal` 只会在 `确认` 时触发且 `modal` 参数有效<br>**reload：** 重新刷新当前页<br>**load：** 重新加载数据，并重置页码为：`1` | `(record: any, modal?: any, instance?: SimpleTableComponent) => void | reload` | -
 pop | 是否需要气泡确认框 | `string` | -
 popTitle | 气泡确认框内容 | `string` | 确认删除吗？
 component | 对话框组件对象，务必在 `entryComponents` 注册 | `any` | -

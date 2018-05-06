@@ -284,8 +284,17 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
      * @param extraParams 重新指定 `extraParams` 值
      */
     load(pi = 1, extraParams?: any) {
-        this.pi = pi;
+        if (pi !== -1) this.pi = pi;
+        this.extraParams = extraParams || null;
         this._change('pi');
+    }
+
+    /**
+     * 重新刷新当前页
+     * @param extraParams 重新指定 `extraParams` 值
+     */
+    reload(extraParams?: any) {
+      this.load(-1, extraParams);
     }
 
     /**
@@ -294,8 +303,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
      * @param extraParams 重新指定 `extraParams` 值
      */
     reset(extraParams?: any) {
-        this.extraParams = extraParams || null;
-        this.load(1);
+        this.load(1, extraParams);
     }
 
     _change(type: 'pi' | 'ps') {
@@ -631,8 +639,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, AfterViewInit, O
         if (!btn.click) return;
         if (typeof btn.click === 'string') {
             switch (btn.click) {
-                case 'reload':
+                case 'load':
                     this.load();
+                    break;
+                case 'reload':
+                    this.reload();
                     break;
             }
         } else {
