@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, ViewChild, ViewContainerRef, ComponentRef, ElementRef, Renderer2, OnDestroy, SimpleChanges, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild, ViewContainerRef, ComponentRef, OnDestroy, SimpleChanges } from '@angular/core';
 import { FormProperty } from './model/form.property';
 import { Widget } from './widget';
 import { WidgetFactory } from './widget.factory';
@@ -11,9 +11,8 @@ let nextUniqueId = 0;
     selector: 'sf-item',
     template: `<ng-template #target></ng-template>`
 })
-export class SFItemComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
 
-    private el: HTMLDivElement;
     private ref: ComponentRef<any>;
     widget: Widget<any> = null;
 
@@ -25,35 +24,10 @@ export class SFItemComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
     // endregion
 
-    // region: fixed label
-
-    @Input('fixed-label') num: number;
-
-    private fixedLabel() {
-        if (this.num == null || this.num <= 0) return;
-        const widgetEl = this.el.querySelector('.ant-row');
-        this.render.addClass(widgetEl, 'sf-fixed');
-        const labelEl = widgetEl.querySelector('.ant-form-item-label');
-        const unit = this.num + 'px';
-        if (labelEl) {
-            this.render.setStyle(labelEl, 'width', unit);
-            this.render.setStyle(labelEl, 'flex', `0 0 ${unit}`);
-        } else {
-            const controlEl = widgetEl.querySelector('.ant-form-item-control-wrapper');
-            this.render.setStyle(controlEl, 'margin-left', unit);
-        }
-    }
-
-    // endregion
-
     constructor(
         private widgetFactory: WidgetFactory,
         private terminator: TerminatorService,
-        er: ElementRef,
-        private render: Renderer2
-    ) {
-        this.el = er.nativeElement as HTMLDivElement;
-    }
+    ) { }
 
     onWidgetInstanciated(widget: Widget<any>) {
         this.widget = widget;
@@ -72,10 +46,6 @@ export class SFItemComponent implements OnInit, AfterViewInit, OnChanges, OnDest
         this.terminator.onDestroy.subscribe(() => {
             this.ngOnDestroy();
         });
-    }
-
-    ngAfterViewInit(): void {
-        this.fixedLabel();
     }
 
     ngOnChanges(changes: SimpleChanges): void {

@@ -68,6 +68,42 @@ describe('form: component', () => {
         });
     });
 
+    describe('[button]', () => {
+        it('should be has a primary button when default value', () => {
+            page.checkCount('.sf-btns', 1)
+                .checkCount('.ant-btn-primary', 1);
+        });
+        it('should be has a fix 100px width', () => {
+            page.newSchema({
+                properties: {
+                    name: {
+                        type: 'string',
+                        ui: {
+                            spanLabelFixed: 100
+                        }
+                    }
+                }
+            }).checkStyle('.sf-btns .ant-form-item-control-wrapper', 'margin-left', '100px');
+        });
+        it('should be null', () => {
+            context.button = null;
+            fixture.detectChanges();
+            page.checkCount('.sf-btns', 1)
+                .checkCount('button', 0);
+        });
+        it('should be undefined', () => {
+            context.button = undefined;
+            fixture.detectChanges();
+            page.checkCount('.sf-btns', 1)
+                .checkCount('button', 0);
+        });
+        it('should be none', () => {
+            context.button = 'none';
+            fixture.detectChanges();
+            page.checkCount('.sf-btns', 0);
+        });
+    });
+
     describe('properites', () => {
 
         describe('#validate', () => {
@@ -76,13 +112,13 @@ describe('form: component', () => {
                 expect((page.getEl('.ant-btn-primary') as HTMLButtonElement).disabled).toBe(true);
                 context.liveValidate = false;
                 fixture.detectChanges();
-                page.submit(false);
-                page.setValue('/name', 'cipchk')
+                page.submit(false)
+                    .setValue('/name', 'cipchk')
                     .setValue('/pwd', '1111')
                     .submit(true);
             });
         });
-    
+
         describe('#submit', () => {
             it('should be submit when is valid', () => {
                 page.setValue('/name', 'cipchk')
@@ -94,7 +130,7 @@ describe('form: component', () => {
                     .isValid(false);
             });
         });
-    
+
         describe('#reset', () => {
             it('should be set default value', () => {
                 const schema = deepCopy(SCHEMA.user) as SFSchema;
@@ -203,7 +239,7 @@ describe('form: component', () => {
                 .setValue('/name', '');
             expect(context.formError).toHaveBeenCalled();
         });
-    
+
     });
 
     describe('[widgets]', () => {

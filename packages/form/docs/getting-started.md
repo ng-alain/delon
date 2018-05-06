@@ -103,21 +103,21 @@ export class HomeComponent {
 
 ## sf 组件接口
 
-| 参数         | 说明                                               | 类型                        | 默认值       |
-|--------------|----------------------------------------------------|-----------------------------|--------------|
-| layout       | 表单布局，等同 `nzLayout`                           | `string`                    | `horizontal` |
-| schema       | **必填项** JSON Schema                             | `SFSchema`                  | -            |
-| ui           | UI Schema                                          | `SFUISchema`                | -            |
-| formData     | 表单默认值                                         | `any`                       | -            |
-| mode | 表单模式，细节见常见问题 | `default,search,edit` | `default` |
-| button       | 按钮，若指定 `null` 或 `undefined` 表示手动添加按钮 | `SFButton`                  | `{}`         |
-| firstVisual  | 是否立即呈现错误视觉                               | `boolean`                   | `true`       |
-| liveValidate | 是否实时校验，`false` 提交时检验                    | `boolean`                   | `true`       |
-| autocomplete | 指定表单 `autocomplete` 值                         | `on,off`                    | `null`       |
-| formChange   | 数据变更时回调                                     | `EventEmitter<{}>`          | -            |
-| formSubmit   | 提交表单时回调                                     | `EventEmitter<{}>`          | -            |
-| formReset    | 重置表单时回调                                     | `EventEmitter<{}>`          | -            |
-| formError    | 表单校验结果回调                                   | `EventEmitter<ErrorData[]>` | -            |
+| 参数         | 说明                            | 类型                        | 默认值       |
+|--------------|---------------------------------|-----------------------------|--------------|
+| layout       | 表单布局，等同 `nzLayout`        | `string`                    | `horizontal` |
+| schema       | **必填项** JSON Schema          | `SFSchema`                  | -            |
+| ui           | UI Schema                       | `SFUISchema`                | -            |
+| formData     | 表单默认值                      | `any`                       | -            |
+| mode         | 表单模式，细节见常见问题         | `default,search,edit`       | `default`    |
+| button       | 按钮                            | `SFButton, 'none'`          | `{}`         |
+| firstVisual  | 是否立即呈现错误视觉            | `boolean`                   | `true`       |
+| liveValidate | 是否实时校验，`false` 提交时检验 | `boolean`                   | `true`       |
+| autocomplete | 指定表单 `autocomplete` 值      | `on,off`                    | `null`       |
+| formChange   | 数据变更时回调                  | `EventEmitter<{}>`          | -            |
+| formSubmit   | 提交表单时回调                  | `EventEmitter<{}>`          | -            |
+| formReset    | 重置表单时回调                  | `EventEmitter<{}>`          | -            |
+| formError    | 表单校验结果回调                | `EventEmitter<ErrorData[]>` | -            |
 
 ### 组件方法
 
@@ -132,7 +132,8 @@ export class HomeComponent {
 
 **注意事项**
 
-- 指定 `null` 或 `undefined` 表示手动添加按钮
+- 值为 `null` 或 `undefined` 表示手动添加按钮，但保留容器
+- 值为 `none` 表示手动添加按钮，且不保留容器
 - 使用固定 `label` 标签宽度时，若无 `render.class` 则默认为居中状态
 
 **自定义**

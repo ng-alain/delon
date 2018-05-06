@@ -9,12 +9,14 @@ import { SFComponent } from './sf.component';
 import { SFItemComponent } from './sf-item.component';
 import { SFItemWrapComponent } from './sf-item-wrap.component';
 import { SFTemplateDirective } from './widgets/custom/sf-template.directive';
+import { SFFixedDirective } from './sf-fixed.directive';
 
 const COMPONENTS = [
     SFComponent,
     SFItemComponent,
     SFItemWrapComponent,
-    SFTemplateDirective
+    SFTemplateDirective,
+    SFFixedDirective
 ];
 
 // region: widgets

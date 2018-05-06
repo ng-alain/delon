@@ -1,4 +1,4 @@
-import { SFRenderSchema } from './schema/ui';
+import { SFRenderSchema, SFHorizontalLayoutSchema } from './schema/ui';
 
 export interface SFButton {
     /** 提交按钮文本，默认：`提交` */
@@ -10,5 +10,9 @@ export interface SFButton {
     /** 重置按钮类型，默认：`default` */
     reset_type?: string;
     /** 按钮样式，主要用于指定按钮 `grid`、`class` 属性 */
-    render?: SFRenderSchema;
+    render?: SFRenderButton;
+}
+
+export interface SFRenderButton extends SFHorizontalLayoutSchema, SFRenderSchema {
+
 }
