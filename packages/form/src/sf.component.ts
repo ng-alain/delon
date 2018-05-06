@@ -13,6 +13,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import * as deepExtend from 'deep-extend';
 import { DelonFormConfig } from './config';
 import { di, retrieveSchema, FORMATMAPS, resolveIf } from './utils';
 import { TerminatorService } from './terminator.service';
@@ -79,11 +80,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   rootProperty: FormProperty = null;
   _formData: any;
   _btn: SFButton;
+  _schema: SFSchema;
   _ui: SFUISchema;
   private _item: any;
   private _valid = true;
   private _defUi: SFUISchemaItem;
-  private inited = false;
+  private _inited = false;
 
   // region: fields
 
@@ -203,7 +205,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   private coverProperty() {
     const isHorizontal = this.layout === 'horizontal';
-    const { definitions } = this.schema;
+    const _schema = deepExtend({}, this.schema);
+    const { definitions } = _schema;
 
     const inFn = (
       schema: SFSchema,
@@ -301,20 +304,22 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         liveValidate: this.liveValidate,
         firstVisual: this.firstVisual,
       },
-      this.schema.ui,
+      _schema.ui,
       this.ui['*'],
     );
 
     // root
     this._ui = Object.assign({}, this._defUi);
 
-    inFn(this.schema, this.schema, this.ui, this.ui, this._ui);
+    inFn(_schema, _schema, this.ui, this.ui, this._ui);
 
     // cond
-    resolveIf(this.schema, this._ui);
-    inIfFn(this.schema, this._ui);
+    resolveIf(_schema, this._ui);
+    inIfFn(_schema, this._ui);
 
-    if (this._ui.debug) di('cover schema & ui', this._ui, this.schema);
+    this._schema = _schema;
+
+    if (this._ui.debug) di('cover schema & ui', this._ui, _schema);
   }
 
   private coverButtonProperty() {
@@ -347,7 +352,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.inited = true;
+    this._inited = true;
     this.validator();
   }
 
@@ -391,17 +396,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     this._formData = { ...this.formData };
 
-    if (this.inited) this.terminator.destroy();
+    if (this._inited) this.terminator.destroy();
 
     this.coverProperty();
     this.coverButtonProperty();
 
-    if (this._ui.debug) {
-      di('schema', this.schema);
-    }
-
     this.rootProperty = this.formPropertyFactory.createProperty(
-      this.schema,
+      this._schema,
       this._ui,
       this.formData,
     );

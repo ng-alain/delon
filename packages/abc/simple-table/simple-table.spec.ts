@@ -26,6 +26,7 @@ import {
 } from './interface';
 import { AdSimpleTableModule } from './simple-table.module';
 import { SimpleTableComponent } from './simple-table.component';
+import { deepCopy } from '..';
 
 const USERS: any[] = Array(100)
   .fill({})
@@ -256,7 +257,7 @@ describe('abc: simple-table', () => {
   describe('static data', () => {
     it('should be not pagination when data length less than ps value', () => {
       genModule({
-        template: `<simple-table #st [data]="data" [ps]="ps"></simple-table>`,
+        template: `<simple-table #st [data]="data" [columns]="columns" [ps]="ps"></simple-table>`,
       });
       context.data = USERS.slice(0, 3);
       context.ps = 4;
@@ -379,7 +380,7 @@ describe('abc: simple-table', () => {
 })
 class TestComponent {
   @ViewChild('st') comp: SimpleTableComponent;
-  data: string | any[] = JSON.parse(JSON.stringify(USERS));
+  data: string | any[] = deepCopy([], USERS);
   extraParams: any;
   reqMehtod: string;
   reqBody: any;
@@ -388,7 +389,7 @@ class TestComponent {
   reqError() {}
   resReName: ResReNameType;
   ps = PS;
-  columns: SimpleTableColumn[] = JSON.parse(JSON.stringify(COLUMNS));
+  columns: SimpleTableColumn[] = deepCopy([], COLUMNS);
   pi: number;
   total: number;
   showPagination = true;

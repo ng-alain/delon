@@ -94,5 +94,11 @@
     "component-class-suffix": false,
     "directive-class-suffix": true,
     "invoke-injectable": true
+  },
+  "linterOptions": {
+    "exclude": [
+      "packages/**/*.spec.ts",
+      "packages/cli/**/*"
+    ]
   }
 }

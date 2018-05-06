@@ -86,7 +86,7 @@ export class ThemeEditorComponent {
 
     reset(nowData?: Object) {
         nowData = nowData || {};
-        const data = deepCopy(DEFAULT);
+        const data = deepCopy({}, DEFAULT);
         Object.keys(data).forEach(key => {
             data[key] = Object.assign({}, data[key], <EditorItem>{
                 value: nowData[key] || data[key].default,

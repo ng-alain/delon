@@ -16,7 +16,7 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
   @Input('fixed-label') num: number;
 
   private init() {
-    if (this._inited || this.num == null || this.num <= 0) return;
+    if (!this._inited || this.num == null || this.num <= 0) return;
     const widgetEl = this.el.querySelector('.ant-row') || this.el;
     this.render.addClass(widgetEl, 'sf-fixed');
     const labelEl = widgetEl.querySelector('.ant-form-item-label');
@@ -30,7 +30,6 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
       );
       this.render.setStyle(controlEl, 'margin-left', unit);
     }
-    this._inited = true;
   }
 
   constructor(er: ElementRef, private render: Renderer2) {
@@ -38,6 +37,7 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
+    this._inited = true;
     this.init();
   }
 

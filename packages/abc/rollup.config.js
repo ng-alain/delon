@@ -51,6 +51,8 @@ const globals = {
   'date-fns/sub_years': 'date-fns/sub_years/index',
   'date-fns/add_days': 'date-fns/add_days/index',
 
+  'deep-extend': 'deep-extend',
+
   '@delon/theme': 'alain.theme',
   '@delon/acl': 'alain.acl',
 };
@@ -70,6 +72,7 @@ const listOfDateFns = [
   'endOfYear',
   'subYears',
   'addDays',
+  'deepExtend',
 ];
 
 const listOfReplace = listOfDateFns.map(name => {

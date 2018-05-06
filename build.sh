@@ -5,15 +5,15 @@ set -u -e -o pipefail
 readonly currentDir=$(cd $(dirname $0); pwd)
 cd ${currentDir}
 
-PACKAGES=(cli)
-# PACKAGES=(acl
-#   theme
-#   abc
-#   auth
-#   cache
-#   mock
-#   form
-#   cli)
+# PACKAGES=(form)
+PACKAGES=(acl
+  theme
+  abc
+  auth
+  cache
+  mock
+  form
+  cli)
 NODE_PACKAGES=(cli)
 
 #######################################

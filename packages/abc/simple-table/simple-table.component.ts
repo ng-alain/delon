@@ -14,7 +14,6 @@ import {
   SimpleChange,
   QueryList,
   ViewChildren,
-  AfterViewInit,
   ContentChildren,
   ContentChild,
   Optional,
@@ -65,8 +64,9 @@ import { SimpleTableExport } from './simple-table-export';
   preserveWhitespaces: false,
 })
 export class SimpleTableComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy {
   private data$: Subscription;
+  private _inited = false;
   _data: SimpleTableData[] = [];
   _url: string;
   _isAjax = false;
@@ -333,7 +333,7 @@ export class SimpleTableComponent
     private number: DecimalPipe,
     @Inject(DOCUMENT) private doc: any,
   ) {
-    Object.assign(this, deepCopy(defConfig));
+    Object.assign(this, deepCopy({}, defConfig));
   }
 
   // region: data
@@ -399,6 +399,7 @@ export class SimpleTableComponent
   }
 
   _change(type: 'pi' | 'ps') {
+    if (!this._inited) return ;
     this._genAjax();
     this._genData();
     this._toTop();
@@ -842,9 +843,11 @@ export class SimpleTableComponent
 
   // endregion
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {}
+  ngOnInit(): void {
+    this._inited = true;
+    this.updateColumns();
+    this.processData();
+  }
 
   private setClass() {
     this._classMap.forEach(cls =>
@@ -869,7 +872,8 @@ export class SimpleTableComponent
     const sortMap: Object = {};
     let idx = 0;
     const newColumns: SimpleTableColumn[] = [];
-    for (const item of this.columns) {
+    const copyColumens = deepCopy([], this.columns);
+    for (const item of copyColumens) {
       if (this.acl && item.acl && !this.acl.can(item.acl)) continue;
       if (item.index) {
         if (!Array.isArray(item.index)) item.index = item.index.split('.');
@@ -977,8 +981,8 @@ export class SimpleTableComponent
   ngOnChanges(
     changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
   ): void {
-    if (changes.columns) this.updateColumns();
-    if (changes.data) this.processData();
+    if (changes.columns && this._inited) this.updateColumns();
+    if (changes.data && this._inited) this.processData();
 
     this.setClass();
   }

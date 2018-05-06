@@ -9,6 +9,7 @@ import * as startOfYear from 'date-fns/start_of_year';
 import * as endOfYear from 'date-fns/end_of_year';
 import * as subYears from 'date-fns/sub_years';
 import * as addDays from 'date-fns/add_days';
+import * as deepExtend from 'deep-extend';
 
 /**
  * 转化成RMB元字符串
@@ -87,9 +88,9 @@ export function deepGet(obj: any, path: string[], defaultValue?: any) {
   return path.reduce((o, k) => o[k], obj) || defaultValue;
 }
 
-export function deepCopy(obj: any) {
-  // BAD: a temporary solution
-  return JSON.parse(JSON.stringify(obj));
+export function deepCopy(target: any, obj: any) {
+  const result = deepExtend({ }, { __source: obj });
+  return result.__source;
 }
 
 /** 复制内容至剪贴板 */

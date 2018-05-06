@@ -30,6 +30,7 @@
     "ng-zorro-antd"
   ],
   "peerDependencies": {
-    "ng-zorro-antd": "ZORRO-0.0.0-PLACEHOLDER"
+    "ng-zorro-antd": "ZORRO-0.0.0-PLACEHOLDER",
+    "deep-extend": "^0.5.1"
   }
 }

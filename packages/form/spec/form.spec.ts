@@ -1,6 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
-import { deepCopy } from '@delon/abc';
+import * as deepExtend from 'deep-extend';
 import { builder, TestFormComponent, SFPage, SCHEMA } from './base.spec';
 import { SFSchema } from '../src/schema/index';
 import { SFUISchemaItem, SFUISchema } from '../src/schema/ui';
@@ -138,7 +138,7 @@ describe('form: component', () => {
 
     describe('#reset', () => {
       it('should be set default value', () => {
-        const schema = deepCopy(SCHEMA.user) as SFSchema;
+        const schema = deepExtend({}, SCHEMA.user) as SFSchema;
         schema.properties.name.default = 'cipchk';
         page
           .newSchema(schema)

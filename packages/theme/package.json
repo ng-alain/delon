@@ -18,6 +18,7 @@
   "keywords": ["delon", "ng-alain", "alain", "antd", "ng-zorro-antd"],
   "peerDependencies": {
     "ng-zorro-antd": "ZORRO-0.0.0-PLACEHOLDER",
-    "@delon/acl": "PEER-0.0.0-PLACEHOLDER"
+    "@delon/acl": "PEER-0.0.0-PLACEHOLDER",
+    "deep-extend": "^0.5.1"
   }
 }

@@ -70,7 +70,7 @@ describe('abc: sidebar-nav', () => {
     router = injector.get(Router);
     setSrv = injector.get(SettingsService);
     menuSrv = injector.get(MenuService);
-    menuSrv.add(deepCopy(MOCKMENUS));
+    menuSrv.add(deepCopy([], MOCKMENUS));
     page = new PageObject();
     if (needMockNavigateByUrl) spyOn(router, 'navigateByUrl');
     if (callback) callback();
@@ -96,7 +96,7 @@ describe('abc: sidebar-nav', () => {
   it('should be navigate url', () => {
     createComp();
     spyOn(context, 'select');
-    const data = deepCopy(MOCKMENUS);
+    const data = deepCopy([], MOCKMENUS);
     menuSrv.add(data);
     expect(context.select).not.toHaveBeenCalled();
     expect(router.navigateByUrl).not.toHaveBeenCalled();
@@ -109,7 +109,7 @@ describe('abc: sidebar-nav', () => {
 
   it('should be toggle open', () => {
     createComp();
-    const data = deepCopy(MOCKMENUS);
+    const data = deepCopy([], MOCKMENUS);
     menuSrv.add(data);
     expect(data[0].children[0]._open).toBeUndefined();
     const subTitleEl = getEl<HTMLElement>('.nav-sub-title');
@@ -121,7 +121,7 @@ describe('abc: sidebar-nav', () => {
   it('should be reset menu when service is changed', () => {
     createComp();
     isText('.nav-group-title', MOCKMENUS[0].text);
-    const newMenu = deepCopy(MOCKMENUS);
+    const newMenu = deepCopy([], MOCKMENUS);
     newMenu[0].text = 'new主导航';
     menuSrv.add(newMenu);
     fixture.detectChanges();

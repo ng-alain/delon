@@ -1,6 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
-import { deepCopy } from '@delon/abc';
+import * as deepExtend from 'deep-extend';
 import { builder, TestFormComponent, SFPage, SCHEMA } from './base.spec';
 import { SFSchema } from '../src/schema/index';
 import { SFUISchemaItem, SFUISchema } from '../src/schema/ui';
@@ -149,8 +149,8 @@ describe('form: schema', () => {
       };
       describe('[#via in json schema]', () => {
         it('should be has $items when is array', () => {
-          const schema = deepCopy(arrSchema) as SFSchema;
-          schema.properties.name.ui = deepCopy(arrUI);
+          const schema = deepExtend({}, arrSchema) as SFSchema;
+          schema.properties.name.ui = deepExtend({}, arrUI);
           page
             .newSchema(schema)
             .checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
@@ -158,11 +158,11 @@ describe('form: schema', () => {
       });
       describe('[#via ui property]', () => {
         it('should be has $items when is array', () => {
-          const schema = deepCopy(arrSchema);
+          const schema = deepExtend({}, arrSchema);
           const uiSchema: SFUISchema = {
             $name: {
               $items: {},
-              ...deepCopy(arrUI),
+              ...deepExtend({}, arrUI),
             },
           };
           page

@@ -31,9 +31,13 @@ const globals = {
   'rxjs/observable/combineLatest': 'Rx.Observable',
 
   'date-fns/format': 'date-fns/format/index',
+  'deep-extend': 'deep-extend',
 };
 
-const listOfDateFns = ['format'];
+const listOfDateFns = [
+  'format',
+  'deepExtend'
+];
 
 const listOfReplace = listOfDateFns.map(name => {
   const map = {};
