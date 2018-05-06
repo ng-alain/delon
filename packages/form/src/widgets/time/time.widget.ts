@@ -56,10 +56,18 @@ export class TimeWidget extends ControlWidget implements OnInit {
   }
 
   reset(value: any) {
-    this.displayValue =
-      value != null && typeof value === 'string' && value.length
-        ? new Date(value)
-        : null;
+    if (value instanceof Date) {
+      this.displayValue = value;
+      return;
+    }
+    let v = value != null && value.toString().length ? new Date(value) : null;
+
+    // trying restore full Date format
+    if (v != null && v.toString() === 'Invalid Date') {
+      if (value.toString().split(':').length <= 1) value += ':00';
+      v = new Date(`1970-1-1 ` + value);
+    }
+    this.displayValue = v;
   }
 
   _change(value: Date) {
