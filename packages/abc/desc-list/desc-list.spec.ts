@@ -4,46 +4,50 @@ import { AdDescListModule } from './desc-list.module';
 import { By } from '@angular/platform-browser';
 
 describe('abc: desc-list', () => {
-    let fixture: ComponentFixture<TestComponent>;
-    let dl: DebugElement;
-    let context: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
+  let dl: DebugElement;
+  let context: TestComponent;
 
-    beforeEach(() => {
-        fixture = TestBed.configureTestingModule({
-            imports: [ AdDescListModule.forRoot() ],
-            declarations: [ TestComponent ]
-        }).createComponent(TestComponent);
-        dl = fixture.debugElement;
-        context = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.configureTestingModule({
+      imports: [AdDescListModule.forRoot()],
+      declarations: [TestComponent],
+    }).createComponent(TestComponent);
+    dl = fixture.debugElement;
+    context = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should be create an instance', () => {
-        expect(context).not.toBeNull();
-        expect(dl.queryAll(By.css('#defaultDL .ad-desc-list__term')).length).toBe(3);
-    });
+  it('should be create an instance', () => {
+    expect(context).not.toBeNull();
+    expect(dl.queryAll(By.css('#defaultDL .ad-desc-list__term')).length).toBe(
+      3,
+    );
+  });
 
-    it('should be custome title template', () => {
-        expect(dl.queryAll(By.css('#custom-title-template #titleTpl')).length).toBe(1);
-    });
+  it('should be custome title template', () => {
+    expect(dl.queryAll(By.css('#custom-title-template #titleTpl')).length).toBe(
+      1,
+    );
+  });
 
-    it('should be changed property', () => {
-        expect(dl.queryAll(By.css('.large')).length).toBe(1);
-        // because of two desc-list component
-        expect(dl.queryAll(By.css('.horizontal')).length).toBe(2);
-        expect(dl.queryAll(By.css('.vertical')).length).toBe(0);
-        context.size = 'small';
-        context.layout = 'vertical';
-        context.col = 5;
-        fixture.detectChanges();
-        expect(dl.queryAll(By.css('.large')).length).toBe(0);
-        expect(dl.queryAll(By.css('.horizontal')).length).toBe(1);
-        expect(dl.queryAll(By.css('.vertical')).length).toBe(1);
-    });
+  it('should be changed property', () => {
+    expect(dl.queryAll(By.css('.large')).length).toBe(1);
+    // because of two desc-list component
+    expect(dl.queryAll(By.css('.horizontal')).length).toBe(2);
+    expect(dl.queryAll(By.css('.vertical')).length).toBe(0);
+    context.size = 'small';
+    context.layout = 'vertical';
+    context.col = 5;
+    fixture.detectChanges();
+    expect(dl.queryAll(By.css('.large')).length).toBe(0);
+    expect(dl.queryAll(By.css('.horizontal')).length).toBe(1);
+    expect(dl.queryAll(By.css('.vertical')).length).toBe(1);
+  });
 });
 
 @Component({
-    template: `
+  template: `
     <desc-list id="defaultDL"
         [size]="size"
         [title]="'title'"
@@ -80,11 +84,11 @@ describe('abc: desc-list', () => {
         Mozilla Corporation and hundreds of
         volunteers.
       </desc-list-item>
-    </desc-list>`
+    </desc-list>`,
 })
 class TestComponent {
-    size: 'small' | 'large' = 'large';
-    gutter = 32;
-    layout: 'horizontal' | 'vertical' = 'horizontal';
-    col = 3;
+  size: 'small' | 'large' = 'large';
+  gutter = 32;
+  layout: 'horizontal' | 'vertical' = 'horizontal';
+  col = 3;
 }

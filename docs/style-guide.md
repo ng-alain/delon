@@ -71,8 +71,23 @@ nz-alain-content => 构建一个ng-alain页面标题
 nz-alain-pro.header => 构建一个pro版本的页面标题
 ```
 
+## 一致的代码风格
+
+ng-alain 使用 [Prettier](https://prettier.io/) 来优化代码风格，并且使其结果符合 `tslint.json`。
+
+推荐安装几个插件在 vscode 中更友好的开发：
+
+- [ng-zorro snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+- [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis)
+
+> 可以通过配置 `.vscode/settings.json` 的 `formatOnSave` 在文件保存时自动修复代码风格。
+
+## Git
+
 ### pre commit
 
 `lint` 可以非常有效的帮助我们更早发现bug、更高的可读性；如果我们能够保证团队开发过程中每一次 commit 前都自动做一次 staged 中文件的 lint 的话，那不是非常酷吗？
 
-`ng-alain` 配置了每次对 staged 进行 commit 时会预先做 lint，若发现错误则无法提交。
+ng-alain 配置了每次对 staged 进行 commit 时会预先做 lint，若发现错误则无法提交。

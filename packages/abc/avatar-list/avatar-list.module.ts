@@ -10,17 +10,17 @@ const COMPONENTS = [AvatarListComponent, AvatarListItemComponent];
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-const ZORROMODULES = [ NgZorroAntdModule ];
+const ZORROMODULES = [NgZorroAntdModule];
 
 // endregion
 
 @NgModule({
-    imports:        [CommonModule, ...ZORROMODULES],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule, ...ZORROMODULES],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdAvatarListModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdAvatarListModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdAvatarListModule, providers: [] };
+  }
 }

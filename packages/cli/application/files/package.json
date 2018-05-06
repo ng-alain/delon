@@ -20,6 +20,7 @@
     "lint:ts": "ng lint",
     "lint:style": "stylelint \"{src}/**/*.less\" --syntax less",
     "lint-staged": "lint-staged",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "e2e": "ng e2e",
     "test": "ng test -sr -sm=false",
     "test-coverage": "ng test -sr -cc -sm=false"<% if (delonElectron) { %>,
@@ -113,11 +114,14 @@
     "karma-sauce-launcher": "^1.2.0",
     "lint-staged": "^5.0.0",
     "npm-run-all": "^4.1.1",
+    "prettier": "^1.12.1",
+    "prettier-stylelint": "^0.4.2",
     "protractor": "~5.1.2",
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^17.0.0",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
+    "tslint-config-prettier": "^1.12.0",
     "typescript": "~2.6.0",
     "webpack-bundle-analyzer": "^2.9.0",<% if (delonMock) { %>
     "mockjs": "^1.0.1-beta3",
@@ -125,8 +129,20 @@
     "xlsx": "^0.11.16"
   },
   "lint-staged": {
-    "src/**/*.ts": "lint:ts",
-    "src/**/*.less": "lint:style"
+    "*.{cmd,html,json,md,sh,txt,xml,yml}": [
+      "editorconfig-tools fix",
+      "git add"
+    ],
+    "*.ts": [
+      "npm run lint:ts",
+      "prettier --write",
+      "git add"
+    ],
+    "src/**/*.less": [
+      "npm run lint:style",
+      "prettier --write",
+      "git add"
+    ]
   },
   "browserslist": [
     "> 1%",

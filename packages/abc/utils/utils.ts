@@ -15,9 +15,8 @@ import * as addDays from 'date-fns/add_days';
  * @param digits 当数字类型时，允许指定小数点后数字的个数，默认2位小数
  */
 export function yuan(value: any, digits: number = 2): string {
-    if (typeof value === 'number')
-        value = value.toFixed(digits);
-    return `&yen ${value}`;
+  if (typeof value === 'number') value = value.toFixed(digits);
+  return `&yen ${value}`;
 }
 
 /**
@@ -25,7 +24,7 @@ export function yuan(value: any, digits: number = 2): string {
  * @param val 数值
  */
 export function fixedZero(val) {
-    return val * 1 < 10 ? `0${val}` : val;
+  return val * 1 < 10 ? `0${val}` : val;
 }
 
 /**
@@ -34,30 +33,41 @@ export function fixedZero(val) {
  * @param time 开始时间
  */
 export function getTimeDistance(
-    type: 'today' | '-today' | 'week' | '-week' | 'month' | '-month' | 'year' | '-year' | number,
-    time?: Date | string | number
-): [ Date, Date ] {
-    time = parse(time || new Date);
+  type:
+    | 'today'
+    | '-today'
+    | 'week'
+    | '-week'
+    | 'month'
+    | '-month'
+    | 'year'
+    | '-year'
+    | number,
+  time?: Date | string | number,
+): [Date, Date] {
+  time = parse(time || new Date());
 
-    switch (type) {
-        case 'today':
-        case '-today':
-            return [time, time];
-        case 'week':
-            return [startOfWeek(time), endOfWeek(time)];
-        case '-week':
-            return [startOfWeek(subWeeks(time, 1)), endOfWeek(subWeeks(time, 1))];
-        case 'month':
-            return [startOfMonth(time), endOfMonth(time)];
-        case '-month':
-            return [startOfMonth(subMonths(time, 1)), endOfMonth(subMonths(time, 1))];
-        case 'year':
-            return [startOfYear(time), endOfYear(time)];
-        case '-year':
-            return [startOfYear(subYears(time, 1)), endOfYear(subYears(time, 1))];
-        default:
-            return type > 0 ? [time, addDays(time, type)] : [addDays(time, type), time];
-    }
+  switch (type) {
+    case 'today':
+    case '-today':
+      return [time, time];
+    case 'week':
+      return [startOfWeek(time), endOfWeek(time)];
+    case '-week':
+      return [startOfWeek(subWeeks(time, 1)), endOfWeek(subWeeks(time, 1))];
+    case 'month':
+      return [startOfMonth(time), endOfMonth(time)];
+    case '-month':
+      return [startOfMonth(subMonths(time, 1)), endOfMonth(subMonths(time, 1))];
+    case 'year':
+      return [startOfYear(time), endOfYear(time)];
+    case '-year':
+      return [startOfYear(subYears(time, 1)), endOfYear(subYears(time, 1))];
+    default:
+      return type > 0
+        ? [time, addDays(time, type)]
+        : [addDays(time, type), time];
+  }
 }
 
 /**
@@ -69,38 +79,37 @@ export function getTimeDistance(
  * @param defaultValue 默认值
  */
 export function deepGet(obj: any, path: string[], defaultValue?: any) {
-    if (!obj || path == null || path.length === 0) return defaultValue;
-    if (path.length === 1) {
-        const checkObj = obj[path[0]];
-        return typeof checkObj === 'undefined' ? defaultValue : checkObj;
-    }
-    return path.reduce((o, k) => o[k], obj) || defaultValue;
+  if (!obj || path == null || path.length === 0) return defaultValue;
+  if (path.length === 1) {
+    const checkObj = obj[path[0]];
+    return typeof checkObj === 'undefined' ? defaultValue : checkObj;
+  }
+  return path.reduce((o, k) => o[k], obj) || defaultValue;
 }
 
 export function deepCopy(obj: any) {
-    // BAD: a temporary solution
-    return JSON.parse(JSON.stringify(obj));
+  // BAD: a temporary solution
+  return JSON.parse(JSON.stringify(obj));
 }
 
 /** 复制内容至剪贴板 */
 export function copy(value: string): Promise<string> {
-    return new Promise<string>((resolve, reject): void => {
-        let copyTextArea = null as HTMLTextAreaElement;
-        try {
-            copyTextArea = document.createElement('textarea');
-            copyTextArea.style.height = '0px';
-            copyTextArea.style.opacity = '0';
-            copyTextArea.style.width = '0px';
-            document.body.appendChild(copyTextArea);
-            copyTextArea.value = value;
-            copyTextArea.select();
-            document.execCommand('copy');
-            resolve(value);
-        } finally {
-            if (copyTextArea && copyTextArea.parentNode) {
-                copyTextArea.parentNode.removeChild(copyTextArea);
-            }
-        }
+  return new Promise<string>((resolve, reject): void => {
+    let copyTextArea = null as HTMLTextAreaElement;
+    try {
+      copyTextArea = document.createElement('textarea');
+      copyTextArea.style.height = '0px';
+      copyTextArea.style.opacity = '0';
+      copyTextArea.style.width = '0px';
+      document.body.appendChild(copyTextArea);
+      copyTextArea.value = value;
+      copyTextArea.select();
+      document.execCommand('copy');
+      resolve(value);
+    } finally {
+      if (copyTextArea && copyTextArea.parentNode) {
+        copyTextArea.parentNode.removeChild(copyTextArea);
       }
-    );
+    }
+  });
 }

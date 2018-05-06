@@ -1,10 +1,28 @@
-import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges, Input, SimpleChange, Output, EventEmitter, TemplateRef, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  Input,
+  SimpleChange,
+  Output,
+  EventEmitter,
+  TemplateRef,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { DelonFormConfig } from './config';
 import { di, retrieveSchema, FORMATMAPS, resolveIf } from './utils';
 import { TerminatorService } from './terminator.service';
 import { SFSchema } from './schema/index';
-import { SFUISchema, SFUISchemaItem, SFRenderSchema, SFUISchemaItemRun } from './schema/ui';
+import {
+  SFUISchema,
+  SFUISchemaItem,
+  SFRenderSchema,
+  SFUISchemaItemRun,
+} from './schema/ui';
 import { FormProperty } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import { SchemaValidatorFactory } from './validator.factory';
@@ -12,51 +30,52 @@ import { WidgetFactory } from './widget.factory';
 import { SFButton } from './interface';
 import { ErrorData } from './errors';
 
-export function useFactory(schemaValidatorFactory: any, options: DelonFormConfig) {
+export function useFactory(
+  schemaValidatorFactory: any,
+  options: DelonFormConfig,
+) {
   return new FormPropertyFactory(schemaValidatorFactory, options);
 }
 
 @Component({
   selector: 'sf, [sf]',
   template: `
-    <ng-template #con><ng-content></ng-content></ng-template>
-    <form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
-        <sf-item [formProperty]="rootProperty"></sf-item>
-        <ng-container *ngIf="button !== 'none'; else con">
-        {{ _btn.render.spanLabelFixed | json }}
-            <nz-form-item [ngClass]="_btn.render.class" class="sf-btns" [fixed-label]="_btn.render.spanLabelFixed">
-                <nz-col class="ant-form-item-control-wrapper"
-                    [nzSpan]="_btn.render.grid.span" [nzOffset]="_btn.render.grid.offset"
-                    [nzXs]="_btn.render.grid.xs" [nzSm]="_btn.render.grid.sm" [nzMd]="_btn.render.grid.md"
-                    [nzLg]="_btn.render.grid.lg" [nzXl]="_btn.render.grid.xl">
-                    <div class="ant-form-item-control">
-                        <ng-container *ngIf="button; else con">
-                            <button type="submit" nz-button [nzType]="_btn.submit_type" [disabled]="liveValidate && !valid">{{_btn.submit}}</button>
-                            <button *ngIf="_btn.reset" (click)="reset()" type="button" nz-button [nzType]="_btn.reset_type">{{_btn.reset}}</button>
-                        </ng-container>
-                    </div>
-                </nz-col>
-            </nz-form-item>
-        </ng-container>
-    </form>`,
+  <ng-template #con><ng-content></ng-content></ng-template>
+  <form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
+    <sf-item [formProperty]="rootProperty"></sf-item>
+    <ng-container *ngIf="button !== 'none'; else con">
+      <nz-form-item [ngClass]="_btn.render.class" class="sf-btns" [fixed-label]="_btn.render.spanLabelFixed">
+        <nz-col class="ant-form-item-control-wrapper"
+          [nzSpan]="_btn.render.grid.span" [nzOffset]="_btn.render.grid.offset"
+          [nzXs]="_btn.render.grid.xs" [nzSm]="_btn.render.grid.sm" [nzMd]="_btn.render.grid.md"
+          [nzLg]="_btn.render.grid.lg" [nzXl]="_btn.render.grid.xl">
+          <div class="ant-form-item-control">
+            <ng-container *ngIf="button; else con">
+              <button type="submit" nz-button [nzType]="_btn.submit_type" [disabled]="liveValidate && !valid">{{_btn.submit}}</button>
+              <button *ngIf="_btn.reset" (click)="reset()" type="button" nz-button [nzType]="_btn.reset_type">{{_btn.reset}}</button>
+            </ng-container>
+          </div>
+        </nz-col>
+      </nz-form-item>
+    </ng-container>
+  </form>`,
   providers: [
     WidgetFactory,
     {
       provide: FormPropertyFactory,
       useFactory: useFactory,
-      deps: [SchemaValidatorFactory, DelonFormConfig]
+      deps: [SchemaValidatorFactory, DelonFormConfig],
     },
-    TerminatorService
+    TerminatorService,
   ],
   host: {
     '[class.sf]': 'true',
     '[class.sf-search]': `mode === 'search'`,
-    '[class.sf-edit]': `mode === 'edit'`
+    '[class.sf-edit]': `mode === 'edit'`,
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
-
   rootProperty: FormProperty = null;
   _formData: any;
   _btn: SFButton;
@@ -94,7 +113,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * - `false` 提交时校验
    */
   @Input()
-  get liveValidate() { return this._liveValidate; }
+  get liveValidate() {
+    return this._liveValidate;
+  }
   set liveValidate(value: any) {
     this._liveValidate = coerceBooleanProperty(value);
   }
@@ -105,7 +126,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   /** 立即显示错误视觉 */
   @Input()
-  get firstVisual() { return this._firstVisual; }
+  get firstVisual() {
+    return this._firstVisual;
+  }
   set firstVisual(value: any) {
     this._firstVisual = coerceBooleanProperty(value);
   }
@@ -171,7 +194,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     private formPropertyFactory: FormPropertyFactory,
     private terminator: TerminatorService,
     private options: DelonFormConfig,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {
     this.liveValidate = options.liveValidate;
     this.firstVisual = options.firstVisual;
@@ -182,27 +205,53 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     const isHorizontal = this.layout === 'horizontal';
     const { definitions } = this.schema;
 
-    const inFn = (schema: SFSchema, parentSchema: SFSchema, uiSchema: SFUISchemaItemRun, parentUiSchema: SFUISchemaItemRun, uiRes: SFUISchemaItemRun) => {
+    const inFn = (
+      schema: SFSchema,
+      parentSchema: SFSchema,
+      uiSchema: SFUISchemaItemRun,
+      parentUiSchema: SFUISchemaItemRun,
+      uiRes: SFUISchemaItemRun,
+    ) => {
       Object.keys(schema.properties).forEach(key => {
         const uiKey = `$${key}`;
-        const property = retrieveSchema(schema.properties[key] as SFSchema, definitions);
+        const property = retrieveSchema(
+          schema.properties[key] as SFSchema,
+          definitions,
+        );
         const ui = Object.assign(
           { widget: property.type },
           property.format && FORMATMAPS[property.format],
           typeof property.ui === 'string' ? { widget: property.ui } : null,
-          !property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null,
+          !property.ui &&
+          Array.isArray(property.enum) &&
+          property.enum.length > 0
+            ? { widget: 'select' }
+            : null,
           this._defUi,
           property.ui,
-          uiSchema[uiKey]
+          uiSchema[uiKey],
         ) as SFUISchemaItemRun;
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
-            if (!ui.spanLabelFixed) ui.spanLabelFixed = parentUiSchema.spanLabelFixed;
+            if (!ui.spanLabelFixed)
+              ui.spanLabelFixed = parentUiSchema.spanLabelFixed;
           } else {
-            if (!ui.spanLabel) ui.spanLabel = typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
-            if (!ui.spanControl) ui.spanControl = typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
-            if (!ui.offsetControl) ui.offsetControl = typeof parentUiSchema.offsetControl === 'undefined' ? null : parentUiSchema.offsetControl;
+            if (!ui.spanLabel)
+              ui.spanLabel =
+                typeof parentUiSchema.spanLabel === 'undefined'
+                  ? 5
+                  : parentUiSchema.spanLabel;
+            if (!ui.spanControl)
+              ui.spanControl =
+                typeof parentUiSchema.spanControl === 'undefined'
+                  ? 19
+                  : parentUiSchema.spanControl;
+            if (!ui.offsetControl)
+              ui.offsetControl =
+                typeof parentUiSchema.offsetControl === 'undefined'
+                  ? null
+                  : parentUiSchema.offsetControl;
           }
         } else {
           ui.spanLabel = null;
@@ -215,7 +264,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
         if (property.items) {
           uiRes[uiKey]['$items'] = uiRes[uiKey]['$items'] || {};
-          inFn(property.items, property.items, (uiSchema[uiKey] || {})['$items'] || {}, ui, uiRes[uiKey]['$items']);
+          inFn(
+            property.items,
+            property.items,
+            (uiSchema[uiKey] || {})['$items'] || {},
+            ui,
+            uiRes[uiKey]['$items'],
+          );
         }
 
         if (property.properties && Object.keys(property.properties).length) {
@@ -239,12 +294,16 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     };
 
     if (this.ui == null) this.ui = {};
-    this._defUi = Object.assign(<SFUISchemaItem>{
-      onlyVisual: this.options.onlyVisual,
-      size: this.options.size,
-      liveValidate: this.liveValidate,
-      firstVisual: this.firstVisual
-    }, this.schema.ui, this.ui['*']);
+    this._defUi = Object.assign(
+      <SFUISchemaItem>{
+        onlyVisual: this.options.onlyVisual,
+        size: this.options.size,
+        liveValidate: this.liveValidate,
+        firstVisual: this.firstVisual,
+      },
+      this.schema.ui,
+      this.ui['*'],
+    );
 
     // root
     this._ui = Object.assign({}, this._defUi);
@@ -266,7 +325,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       if (!this._btn.render.grid) {
         this._btn.render.grid = {
           offset: btnUi.spanLabel,
-          span: btnUi.spanControl
+          span: btnUi.spanControl,
         };
       }
       // fixed label
@@ -274,7 +333,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this._btn.render.spanLabelFixed = btnUi.spanLabelFixed;
       }
       // 固定标签宽度时，若不指定样式，则默认居中
-      if (!this._btn.render.class && (typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0)) {
+      if (
+        !this._btn.render.class &&
+        (typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0)
+      ) {
         this._btn.render.class = 'text-center';
       }
     } else {
@@ -289,7 +351,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.validator();
   }
 
-  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+  ngOnChanges(
+    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
+  ): void {
     this.refreshSchema();
   }
 
@@ -315,12 +379,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * 刷新 Schema，一般需要动态修改 Schema 某个值时可以方便调用
    */
   refreshSchema(newSchema?: SFSchema, newUI?: SFUISchema) {
-
     if (newSchema) this.schema = newSchema;
     if (newUI) this.ui = newUI;
 
-    if (!this.schema || typeof this.schema.properties === 'undefined') throw new Error(`Invalid Schema`);
-    if (this.schema.ui && typeof this.schema.ui === 'string') throw new Error(`Don't support string with root ui property`);
+    if (!this.schema || typeof this.schema.properties === 'undefined')
+      throw new Error(`Invalid Schema`);
+    if (this.schema.ui && typeof this.schema.ui === 'string')
+      throw new Error(`Don't support string with root ui property`);
 
     this.schema.type = 'object';
 
@@ -335,7 +400,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       di('schema', this.schema);
     }
 
-    this.rootProperty = this.formPropertyFactory.createProperty(this.schema, this._ui, this.formData);
+    this.rootProperty = this.formPropertyFactory.createProperty(
+      this.schema,
+      this._ui,
+      this.formData,
+    );
 
     this.rootProperty.valueChanges.subscribe(value => {
       this._item = Object.assign({}, this.formData, value);

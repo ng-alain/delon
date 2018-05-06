@@ -10,17 +10,17 @@ const COMPONENTS = [ExceptionComponent];
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-const ZORROMODULES = [ NgZorroAntdModule ];
+const ZORROMODULES = [NgZorroAntdModule];
 
 // endregion
 
 @NgModule({
-    imports:        [CommonModule, RouterModule, ...ZORROMODULES],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule, RouterModule, ...ZORROMODULES],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdExceptionModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdExceptionModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdExceptionModule, providers: [] };
+  }
 }

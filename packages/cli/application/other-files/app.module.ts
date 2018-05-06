@@ -24,54 +24,54 @@ import { I18NService } from '@core/i18n/i18n.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, `assets/i18n/`, '.json');
+  return new TranslateHttpLoader(http, `assets/i18n/`, '.json');
 }<% } %>
 <% if (delonForm) { %>
 // @delon/form: JSON Schema form
 import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';<% } %>
 
 export function StartupServiceFactory(startupService: StartupService): Function {
-    return () => startupService.load();
+  return () => startupService.load();
 }
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,<% if (delonElectron) { %>
-        ElectronModule,<% } %>
-        DelonModule.forRoot(),
-        CoreModule,
-        SharedModule,
-        LayoutModule,
-        RoutesModule<% if (delonI18n) { %>,
-        // i18n
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
-            }
-        })<% } %><% if (delonForm) { %>,
-        // JSON-Schema form
-        JsonSchemaModule<% } %>
-    ],
-    providers: [
-        { provide: LOCALE_ID, useValue: 'zh-Hans' },
-        { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true},
-        { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true},<% if (delonI18n) { %>
-        { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },<% } %>
-        StartupService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: StartupServiceFactory,
-            deps: [StartupService],
-            multi: true
-        }
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,<% if (delonElectron) { %>
+    ElectronModule,<% } %>
+    DelonModule.forRoot(),
+    CoreModule,
+    SharedModule,
+    LayoutModule,
+    RoutesModule<% if (delonI18n) { %>,
+    // i18n
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })<% } %><% if (delonForm) { %>,
+    // JSON-Schema form
+    JsonSchemaModule<% } %>
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'zh-Hans' },
+    { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true},<% if (delonI18n) { %>
+    { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },<% } %>
+    StartupService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: StartupServiceFactory,
+      deps: [StartupService],
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

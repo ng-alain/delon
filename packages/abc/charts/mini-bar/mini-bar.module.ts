@@ -6,12 +6,12 @@ import { G2MiniBarComponent } from './mini-bar.component';
 const COMPONENTS = [G2MiniBarComponent];
 
 @NgModule({
-    imports:        [CommonModule],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdG2MiniBarModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdG2MiniBarModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdG2MiniBarModule, providers: [] };
+  }
 }

@@ -4,15 +4,13 @@ import { CommonModule } from '@angular/common';
 import { LazyService } from './lazy.service';
 
 @NgModule({
-    imports:        [CommonModule]
+  imports: [CommonModule],
 })
 export class AdUtilsModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: AdUtilsModule,
-            providers: [
-                LazyService
-            ]
-        };
-    }
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: AdUtilsModule,
+      providers: [LazyService],
+    };
+  }
 }

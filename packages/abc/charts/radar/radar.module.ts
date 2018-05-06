@@ -7,12 +7,12 @@ import { G2RadarComponent } from './radar.component';
 const COMPONENTS = [G2RadarComponent];
 
 @NgModule({
-    imports:        [CommonModule, NgZorroAntdModule],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule, NgZorroAntdModule],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdG2RadarModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdG2RadarModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdG2RadarModule, providers: [] };
+  }
 }

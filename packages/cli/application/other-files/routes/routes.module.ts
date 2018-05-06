@@ -16,19 +16,19 @@ import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
 
 @NgModule({
-    imports: [ SharedModule, RouteRoutingModule ],
-    declarations: [
-        DashboardComponent,
-        // passport pages
-        UserLoginComponent,
-        UserRegisterComponent,
-        UserRegisterResultComponent,
-        // single pages
-        CallbackComponent,
-        UserLockComponent,
-        Exception403Component,
-        Exception404Component,
-        Exception500Component
-    ]
+  imports: [ SharedModule, RouteRoutingModule ],
+  declarations: [
+    DashboardComponent,
+    // passport pages
+    UserLoginComponent,
+    UserRegisterComponent,
+    UserRegisterResultComponent,
+    // single pages
+    CallbackComponent,
+    UserLockComponent,
+    Exception403Component,
+    Exception404Component,
+    Exception500Component
+  ]
 })
 export class RoutesModule {}

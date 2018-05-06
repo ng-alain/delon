@@ -1,13 +1,13 @@
 import { Subject } from 'rxjs/Subject';
 
 export class TerminatorService {
-    public onDestroy: Subject<boolean>;
+  onDestroy: Subject<boolean>;
 
-    constructor() {
-        this.onDestroy = new Subject();
-    }
+  constructor() {
+    this.onDestroy = new Subject();
+  }
 
-    destroy() {
-        this.onDestroy.next(true);
-    }
+  destroy() {
+    this.onDestroy.next(true);
+  }
 }

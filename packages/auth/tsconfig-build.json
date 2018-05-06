@@ -1,25 +1,23 @@
 {
-    "extends": "../tsconfig-build.json",
+  "extends": "../tsconfig-build.json",
 
-    "compilerOptions": {
-      "baseUrl": ".",
-      "rootDir": ".",
-      "paths": {
-        "@delon/theme": ["../../packages-dist/theme"],
-        "@delon/acl": ["../../packages-dist/acl"]
-      },
-      "outDir": "../../@delon/auth"
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@delon/theme": ["../../packages-dist/theme"],
+      "@delon/acl": ["../../packages-dist/acl"]
     },
+    "outDir": "../../@delon/auth"
+  },
 
-    "files": [
-      "public_api.ts"
-    ],
+  "files": ["public_api.ts"],
 
-    "angularCompilerOptions": {
-      "annotateForClosureCompiler": true,
-      "strictMetadataEmit": true,
-      "skipTemplateCodegen": true,
-      "flatModuleOutFile": "index.js",
-      "flatModuleId": "@delon/auth"
-    }
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true,
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "@delon/auth"
   }
+}

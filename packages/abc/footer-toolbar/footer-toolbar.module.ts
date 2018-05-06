@@ -7,12 +7,12 @@ import { FooterToolbarComponent } from './footer-toolbar.component';
 const COMPONENTS = [FooterToolbarComponent];
 
 @NgModule({
-    imports:        [CommonModule, AdErrorCollectModule],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule, AdErrorCollectModule],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdFooterToolbarModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdFooterToolbarModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdFooterToolbarModule, providers: [] };
+  }
 }

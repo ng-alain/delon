@@ -6,12 +6,12 @@ import { G2ChartComponent } from './chart.component';
 const COMPONENTS = [G2ChartComponent];
 
 @NgModule({
-    imports:        [CommonModule],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdG2ChartModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdG2ChartModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdG2ChartModule, providers: [] };
+  }
 }

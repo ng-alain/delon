@@ -11,17 +11,17 @@ const COMPONENTS = [DescListComponent, DescListItemComponent];
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-const ZORROMODULES = [ NgZorroAntdModule ];
+const ZORROMODULES = [NgZorroAntdModule];
 
 // endregion
 
 @NgModule({
-    imports:        [CommonModule, ...ZORROMODULES],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule, ...ZORROMODULES],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdDescListModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdDescListModule, providers: [ AdDescListConfig ] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdDescListModule, providers: [AdDescListConfig] };
+  }
 }

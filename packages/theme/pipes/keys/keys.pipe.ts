@@ -5,12 +5,12 @@ import { PipeTransform, Pipe } from '@angular/core';
  */
 @Pipe({ name: 'keys' })
 export class KeysPipe implements PipeTransform {
-    transform(value: any, args: string[]): any[] {
-        const ret = [];
-        // tslint:disable-next-line:forin
-        for (const key in value) {
-            ret.push({ key: key, value: value[key] });
-        }
-        return ret;
+  transform(value: any, args: string[]): any[] {
+    const ret = [];
+    // tslint:disable-next-line:forin
+    for (const key in value) {
+      ret.push({ key: key, value: value[key] });
     }
+    return ret;
+  }
 }

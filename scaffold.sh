@@ -29,11 +29,11 @@ updateVersionReferences() {
   PACKAGE_DIR="$1"
   (
     echo "======    VERSION: Updating version references in ${PACKAGE_DIR}"
-    sed -i "" "s/\"version\":[ ]*\"[^\"]*\"/\"version\": \"${VERSION}\"/g" ${PACKAGE_DIR}
+    sed -i "s/\"version\":[ ]*\"[^\"]*\"/\"version\": \"${VERSION}\"/g" ${PACKAGE_DIR}
     PACKAGE_NAMES=(abc acl auth cache mock form theme cli)
     for name in ${PACKAGE_NAMES[@]}
     do
-        sed -i "" "s/\"@delon\/${name}\":[ ]*\"[^\"]*\"/\"@delon\/${name}\": \"^${VERSION}\"/g" ${PACKAGE_DIR}
+        sed -i "s/\"@delon\/${name}\":[ ]*\"[^\"]*\"/\"@delon\/${name}\": \"^${VERSION}\"/g" ${PACKAGE_DIR}
     done
   )
 }
@@ -59,7 +59,7 @@ if [[ ${BUILD} == true ]]; then
     updateVersionReferences ${SCAFFOLD_DIR}/package.json
 
     echo '===== need mock'
-    sed -i "" "s/const MOCKMODULE[^;]*;/const MOCKMODULE = [ DelonMockModule.forRoot({ data: MOCKDATA }) ];/g" ${ROOT_DIR}/src/app/delon.module.ts
+    sed -i "s/const MOCKMODULE[^;]*;/const MOCKMODULE = [ DelonMockModule.forRoot({ data: MOCKDATA }) ];/g" ${ROOT_DIR}/src/app/delon.module.ts
 
     yarn
 

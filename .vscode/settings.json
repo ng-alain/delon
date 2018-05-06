@@ -1,21 +1,26 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "javascript.implicitProjectConfig.checkJs": true,
-    "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.git/subtree-cache/**": true,
-        "**/node_modules/*/**": true,
-        "**/dist/*/**": true,
-        "**/coverage/*/**": true,
-        "**/tools/*/**": true,
-        "**/.lib/*/**": true,
-        "**/.ng_build/*/**": true
-    },
-    "files.exclude": {
-        "**/.lib/*/**": true,
-        "**/.ng_build/*/**": true
-    },
-    "docthis.includeTypes": false,
-    "docthis.includeMemberOfOnInterfaceMembers": false,
-    "docthis.includeMemberOfOnClassMembers": false
+  // 确保代码片断优先级高于内置
+  // https://github.com/cipchk/ng-zorro-vscode
+  "editor.snippetSuggestions": "top",
+  // 保存时自动格式化，需要安装：https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode
+  // "editor.formatOnSave": true,
+  "javascript.implicitProjectConfig.checkJs": true,
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/dist/*/**": true,
+    "**/coverage/*/**": true,
+    "**/tools/*/**": true,
+    "**/.lib/*/**": true,
+    "**/.ng_build/*/**": true
+  },
+  "files.exclude": {
+    "**/.lib/*/**": true,
+    "**/.ng_build/*/**": true
+  },
+  "docthis.includeTypes": false,
+  "docthis.includeMemberOfOnInterfaceMembers": false,
+  "docthis.includeMemberOfOnClassMembers": false
 }

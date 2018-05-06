@@ -5,11 +5,11 @@ import { ElectronService } from './electron.service';
 
 @NgModule({
     imports: [
-        CommonModule
+      CommonModule
     ],
     declarations: [],
     providers: [
-        ElectronService
+      ElectronService
     ]
 })
 export class ElectronModule { }

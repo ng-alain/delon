@@ -1,22 +1,35 @@
 {
-	"name": "@delon/form",
-    "version": "0.0.0-PLACEHOLDER",
-    "main": "./bundles/form.umd.js",
-    "module": "./esm5/form.js",
-    "es2015": "./esm2015/form.js",
-    "typings": "./form.d.ts",
-	"author": "cipchk<cipchk@qq.com>",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/cipchk/delon.git"
-	},
-	"bugs": {
-		"url": "https://github.com/cipchk/delon/issues"
-	},
-	"homepage": "https://github.com/cipchk/delon#readme",
-	"keywords": ["schema form", "angular schema form", "nz-form", "delon", "ng-alain", "alain", "form", "angular form", "ng form", "ngx form", "antd", "ng-zorro-antd"],
-	"peerDependencies": {
-        "ng-zorro-antd": "ZORRO-0.0.0-PLACEHOLDER"
-	}
+  "name": "@delon/form",
+  "version": "0.0.0-PLACEHOLDER",
+  "main": "./bundles/form.umd.js",
+  "module": "./esm5/form.js",
+  "es2015": "./esm2015/form.js",
+  "typings": "./form.d.ts",
+  "author": "cipchk<cipchk@qq.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cipchk/delon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cipchk/delon/issues"
+  },
+  "homepage": "https://github.com/cipchk/delon#readme",
+  "keywords": [
+    "schema form",
+    "angular schema form",
+    "nz-form",
+    "delon",
+    "ng-alain",
+    "alain",
+    "form",
+    "angular form",
+    "ng form",
+    "ngx form",
+    "antd",
+    "ng-zorro-antd"
+  ],
+  "peerDependencies": {
+    "ng-zorro-antd": "ZORRO-0.0.0-PLACEHOLDER"
+  }
 }

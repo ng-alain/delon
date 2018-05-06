@@ -3,67 +3,83 @@ import { ControlWidget } from '../../widget';
 import * as format from 'date-fns/format';
 
 @Component({
-    selector: 'sf-time',
-    template: `
-    <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
+  selector: 'sf-time',
+  template: `
+  <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
 
-        <nz-time-picker
-            [(ngModel)]="displayValue"
-            (ngModelChange)="_change($event)"
-            [nzDisabled]="disabled"
-            [nzSize]="ui.size"
-            [nzFormat]="i.displayFormat"
-            [nzAllowEmpty]="i.allowEmpty"
-            [nzClearText]="i.clearText"
-            [nzDefaultOpenValue]="i.defaultOpenValue"
-            [nzDisabledHours]="ui.disabledHours"
-            [nzDisabledMinutes]="ui.disabledMinutes"
-            [nzDisabledSeconds]="ui.disabledSeconds"
-            [nzHideDisabledOptions]="i.hideDisabledOptions"
-            [nzHourStep]="i.hourStep"
-            [nzMinuteStep]="i.minuteStep"
-            [nzSecondStep]="i.secondStep"
-            [nzPopupClassName]="ui.popupClassName"
-            ></nz-time-picker>
+    <nz-time-picker
+      [(ngModel)]="displayValue"
+      (ngModelChange)="_change($event)"
+      [nzDisabled]="disabled"
+      [nzSize]="ui.size"
+      [nzFormat]="i.displayFormat"
+      [nzAllowEmpty]="i.allowEmpty"
+      [nzClearText]="i.clearText"
+      [nzDefaultOpenValue]="i.defaultOpenValue"
+      [nzDisabledHours]="ui.disabledHours"
+      [nzDisabledMinutes]="ui.disabledMinutes"
+      [nzDisabledSeconds]="ui.disabledSeconds"
+      [nzHideDisabledOptions]="i.hideDisabledOptions"
+      [nzHourStep]="i.hourStep"
+      [nzMinuteStep]="i.minuteStep"
+      [nzSecondStep]="i.secondStep"
+      [nzPopupClassName]="ui.popupClassName"
+      >
+    </nz-time-picker>
 
-    </sf-item-wrap>
-    `,
-    preserveWhitespaces: false
+  </sf-item-wrap>
+  `,
+  preserveWhitespaces: false,
 })
 export class TimeWidget extends ControlWidget implements OnInit {
+  displayValue: Date = null;
+  format: string;
+  i: any;
 
-    displayValue: Date = null;
-    format: string;
-    i: any;
+  ngOnInit(): void {
+    const ui = this.ui;
+    this.format = ui.format
+      ? ui.format
+      : this.schema.type === 'number'
+        ? 'x'
+        : 'HH:mm:ss';
+    this.i = {
+      displayFormat: ui.displayFormat || 'HH:mm:ss',
+      allowEmpty: ui.allowEmpty || true,
+      clearText: ui.clearText || '清除',
+      defaultOpenValue: ui.defaultOpenValue || new Date(),
+      hideDisabledOptions: ui.hideDisabledOptions || false,
+      hourStep: ui.hourStep || 1,
+      minuteStep: ui.nzMinuteStep || 1,
+      secondStep: ui.secondStep || 1,
+    };
+  }
 
-    ngOnInit(): void {
-        const ui = this.ui;
-        this.format = ui.format ? ui.format : this.schema.type === 'number' ? 'x' : 'HH:mm:ss';
-        this.i = {
-            displayFormat: ui.displayFormat || 'HH:mm:ss',
-            allowEmpty: ui.allowEmpty || true,
-            clearText: ui.clearText || '清除',
-            defaultOpenValue: ui.defaultOpenValue || new Date,
-            hideDisabledOptions: ui.hideDisabledOptions || false,
-            hourStep: ui.hourStep || 1,
-            minuteStep: ui.nzMinuteStep || 1,
-            secondStep: ui.secondStep || 1,            
-        };
+  reset(value: any) {
+    this.displayValue =
+      value != null && typeof value === 'string' && value.length
+        ? new Date(value)
+        : null;
+  }
+
+  _change(value: Date) {
+    if (value == null) {
+      this.setValue(null);
+      return;
     }
-
-    reset(value: any) {
-        this.displayValue = value != null && typeof value === 'string' && value.length ? new Date(value) : null;
+    if (this.ui.utcEpoch === true) {
+      this.setValue(
+        Date.UTC(
+          1970,
+          0,
+          1,
+          value.getHours(),
+          value.getMinutes(),
+          value.getSeconds(),
+        ),
+      );
+      return;
     }
-
-    _change(value: Date) {
-        if (value == null) {
-            this.setValue(null);
-            return;
-        }
-        if (this.ui.utcEpoch === true) {
-            this.setValue(Date.UTC(1970, 0, 1, value.getHours(), value.getMinutes(), value.getSeconds()));
-            return;
-        }
-        this.setValue(format(value, this.format));
-    }
+    this.setValue(format(value, this.format));
+  }
 }

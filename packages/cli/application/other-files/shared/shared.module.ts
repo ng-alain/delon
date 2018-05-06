@@ -14,8 +14,8 @@ import { TranslateModule } from '@ngx-translate/core';<% } %>
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
 const THIRDMODULES = [
-    NgZorroAntdModule,
-    CountdownModule
+  NgZorroAntdModule,
+  CountdownModule
 ];
 // endregion
 
@@ -25,39 +25,39 @@ const DIRECTIVES = [];
 // endregion
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        RouterModule,
-        ReactiveFormsModule,
-        AlainThemeModule.forChild(),
-        DelonABCModule,
-        DelonACLModule,<% if (delonForm) { %>
-        DelonFormModule,<% } %>
-        // third libs
-        ...THIRDMODULES
-    ],
-    declarations: [
-        // your components
-        ...COMPONENTS,
-        ...DIRECTIVES
-    ],
-    exports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule,
-        AlainThemeModule,
-        DelonABCModule,
-        DelonACLModule,<% if (delonForm) { %>
-        DelonFormModule,<% } %><% if (delonI18n) { %>
-        // i18n
-        TranslateModule,<% } %>
-        // third libs
-        ...THIRDMODULES,
-        // your components
-        ...COMPONENTS,
-        ...DIRECTIVES
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    ReactiveFormsModule,
+    AlainThemeModule.forChild(),
+    DelonABCModule,
+    DelonACLModule,<% if (delonForm) { %>
+    DelonFormModule,<% } %>
+    // third libs
+    ...THIRDMODULES
+  ],
+  declarations: [
+    // your components
+    ...COMPONENTS,
+    ...DIRECTIVES
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    AlainThemeModule,
+    DelonABCModule,
+    DelonACLModule,<% if (delonForm) { %>
+    DelonFormModule,<% } %><% if (delonI18n) { %>
+    // i18n
+    TranslateModule,<% } %>
+    // third libs
+    ...THIRDMODULES,
+    // your components
+    ...COMPONENTS,
+    ...DIRECTIVES
+  ]
 })
 export class SharedModule { }

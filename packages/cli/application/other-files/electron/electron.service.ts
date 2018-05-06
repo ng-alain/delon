@@ -8,64 +8,64 @@ const ELECTRON_CLIENT = 'ELECTRON_BRIDGE_CLIENT';
 
 @Injectable()
 export class ElectronService {
-    private _electron: AllElectron = null;
+  private _electron: AllElectron = null;
 
-    private listenerSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-    listener$: Observable<any>;
+  private listenerSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  listener$: Observable<any>;
 
-    constructor() {
-        this.listener$ = this.listenerSubject.asObservable();
-        if (this.electron) {
-            this.electron.ipcRenderer.on(ELECTRON_CLIENT, (event, msg) => {
-                this.listenerSubject.next(msg);
-            });
-        }
+  constructor() {
+    this.listener$ = this.listenerSubject.asObservable();
+    if (this.electron) {
+      this.electron.ipcRenderer.on(ELECTRON_CLIENT, (event, msg) => {
+        this.listenerSubject.next(msg);
+      });
     }
+  }
 
-    send(data: any): void {
-        this.ipcRenderer.send(ELECTRON_HOST, data);
-    }
+  send(data: any): void {
+    this.ipcRenderer.send(ELECTRON_HOST, data);
+  }
 
-    get ipcRenderer(): IpcRenderer {
-        return this.electron.ipcRenderer || null;
-    }
+  get ipcRenderer(): IpcRenderer {
+    return this.electron.ipcRenderer || null;
+  }
 
-    get desktopCapturer(): DesktopCapturer {
-        return this.electron.desktopCapturer || null;
-    }
+  get desktopCapturer(): DesktopCapturer {
+    return this.electron.desktopCapturer || null;
+  }
 
-    get webFrame(): WebFrame {
-        return this.electron.webFrame || null;
-    }
+  get webFrame(): WebFrame {
+    return this.electron.webFrame || null;
+  }
 
-    get remote(): Remote {
-        return this.electron.remote || null;
-    }
+  get remote(): Remote {
+    return this.electron.remote || null;
+  }
 
-    get clipboard(): Clipboard {
-        return this.electron.clipboard || null;
-    }
+  get clipboard(): Clipboard {
+    return this.electron.clipboard || null;
+  }
 
-    get crashReporter(): CrashReporter {
-        return this.electron.crashReporter || null;
-    }
+  get crashReporter(): CrashReporter {
+    return this.electron.crashReporter || null;
+  }
 
-    get nativeImage(): NativeImage {
-        return <any>this.electron.nativeImage || null;
-    }
+  get nativeImage(): NativeImage {
+    return <any>this.electron.nativeImage || null;
+  }
 
-    get screen(): screen {
-        return this.electron.screen || null;
-    }
+  get screen(): screen {
+    return this.electron.screen || null;
+  }
 
-    get shell(): Shell {
-        return this.electron.shell || null;
-    }
+  get shell(): Shell {
+    return this.electron.shell || null;
+  }
 
-    get electron() {
-        if (!this._electron) {
-            this._electron = window ? window['electron'] : null;
-        }
-        return this._electron;
+  get electron() {
+    if (!this._electron) {
+      this._electron = window ? window['electron'] : null;
     }
+    return this._electron;
+  }
 }

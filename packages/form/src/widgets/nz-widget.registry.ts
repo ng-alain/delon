@@ -22,32 +22,32 @@ import { CascaderWidget } from './cascader/cascader.widget';
 import { MentionWidget } from './mention/mention.widget';
 
 export class NzWidgetRegistry extends WidgetRegistry {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.register('object', ObjectWidget);
-        this.register('array', ArrayWidget);
+    this.register('object', ObjectWidget);
+    this.register('array', ArrayWidget);
 
-        this.register('string', StringWidget);
-        this.register('number', NumberWidget);
-        this.register('integer', NumberWidget);
-        this.register('date', DateWidget);
-        this.register('time', TimeWidget);
-        this.register('radio', RadioWidget);
-        this.register('checkbox', CheckboxWidget);
-        this.register('boolean', BooleanWidget);
-        this.register('textarea', TextareaWidget);
-        this.register('select', SelectWidget);
-        this.register('tag', TagWidget);
-        this.register('upload', UploadWidget);
-        this.register('transfer', TransferWidget);
-        this.register('slider', SliderWidget);
-        this.register('rate', RateWidget);
-        this.register('autocomplete', AutoCompleteWidget);
-        this.register('cascader', CascaderWidget);
-        this.register('mention', MentionWidget);
-        this.register('custom', CustomWidget);
+    this.register('string', StringWidget);
+    this.register('number', NumberWidget);
+    this.register('integer', NumberWidget);
+    this.register('date', DateWidget);
+    this.register('time', TimeWidget);
+    this.register('radio', RadioWidget);
+    this.register('checkbox', CheckboxWidget);
+    this.register('boolean', BooleanWidget);
+    this.register('textarea', TextareaWidget);
+    this.register('select', SelectWidget);
+    this.register('tag', TagWidget);
+    this.register('upload', UploadWidget);
+    this.register('transfer', TransferWidget);
+    this.register('slider', SliderWidget);
+    this.register('rate', RateWidget);
+    this.register('autocomplete', AutoCompleteWidget);
+    this.register('cascader', CascaderWidget);
+    this.register('mention', MentionWidget);
+    this.register('custom', CustomWidget);
 
-        this.setDefault(StringWidget);
-    }
+    this.setDefault(StringWidget);
+  }
 }

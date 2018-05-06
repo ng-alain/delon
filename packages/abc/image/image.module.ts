@@ -7,12 +7,12 @@ import { AdImageConfig } from './image.config';
 const DIRECTIVES = [ImageDirective];
 
 @NgModule({
-    imports:        [CommonModule],
-    declarations:   [...DIRECTIVES],
-    exports:        [...DIRECTIVES]
+  imports: [CommonModule],
+  declarations: [...DIRECTIVES],
+  exports: [...DIRECTIVES],
 })
 export class AdImageModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdImageModule, providers: [ AdImageConfig ] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdImageModule, providers: [AdImageConfig] };
+  }
 }

@@ -41,6 +41,9 @@ export class DemoComponent {
                 'type': 'string',
                 ui: { widget: 'time' }
             }
+        },
+        ui: {
+            spanLabelFixed: 100
         }
     };
 

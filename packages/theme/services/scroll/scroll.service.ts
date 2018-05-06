@@ -4,11 +4,10 @@ import { WINDOW } from '../../win_tokens';
 
 @Injectable()
 export class ScrollService {
-
   constructor(
     @Inject(WINDOW) private win: any,
-    @Inject(DOCUMENT) private doc: any
-  ) { }
+    @Inject(DOCUMENT) private doc: any,
+  ) {}
 
   /**
    * 设置滚动条至指定元素
@@ -22,11 +21,11 @@ export class ScrollService {
 
     const w = this.win;
     if (w && w.scrollBy) {
-        w.scrollBy(0, element.getBoundingClientRect().top - topOffset);
+      w.scrollBy(0, element.getBoundingClientRect().top - topOffset);
 
-        if (w.pageYOffset < 20) {
-            w.scrollBy(0, -w.pageYOffset);
-        }
+      if (w.pageYOffset < 20) {
+        w.scrollBy(0, -w.pageYOffset);
+      }
     }
   }
 
@@ -35,6 +34,6 @@ export class ScrollService {
    * @param topOffset 偏移值，默认 `0`
    */
   scrollToTop(topOffset = 0) {
-      this.scrollToElement(this.doc.body, topOffset);
+    this.scrollToElement(this.doc.body, topOffset);
   }
 }

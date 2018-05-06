@@ -4,7 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { DelonFormConfig } from './config';
-import { SchemaValidatorFactory, AjvSchemaValidatorFactory } from './validator.factory';
+import {
+  SchemaValidatorFactory,
+  AjvSchemaValidatorFactory,
+} from './validator.factory';
 import { SFComponent } from './sf.component';
 import { SFItemComponent } from './sf-item.component';
 import { SFItemWrapComponent } from './sf-item-wrap.component';
@@ -12,11 +15,11 @@ import { SFTemplateDirective } from './widgets/custom/sf-template.directive';
 import { SFFixedDirective } from './sf-fixed.directive';
 
 const COMPONENTS = [
-    SFComponent,
-    SFItemComponent,
-    SFItemWrapComponent,
-    SFTemplateDirective,
-    SFFixedDirective
+  SFComponent,
+  SFItemComponent,
+  SFItemWrapComponent,
+  SFTemplateDirective,
+  SFFixedDirective,
 ];
 
 // region: widgets
@@ -45,45 +48,48 @@ import { CascaderWidget } from './widgets/cascader/cascader.widget';
 import { MentionWidget } from './widgets/mention/mention.widget';
 
 const WIDGETS = [
-    ObjectWidget,
-    ArrayWidget,
-    StringWidget,
-    NumberWidget,
-    DateWidget,
-    TimeWidget,
-    RadioWidget,
-    CheckboxWidget,
-    BooleanWidget,
-    TextareaWidget,
-    SelectWidget,
-    TagWidget,
-    UploadWidget,
-    TransferWidget,
-    SliderWidget,
-    RateWidget,
-    AutoCompleteWidget,
-    CascaderWidget,
-    MentionWidget,
-    CustomWidget
+  ObjectWidget,
+  ArrayWidget,
+  StringWidget,
+  NumberWidget,
+  DateWidget,
+  TimeWidget,
+  RadioWidget,
+  CheckboxWidget,
+  BooleanWidget,
+  TextareaWidget,
+  SelectWidget,
+  TagWidget,
+  UploadWidget,
+  TransferWidget,
+  SliderWidget,
+  RateWidget,
+  AutoCompleteWidget,
+  CascaderWidget,
+  MentionWidget,
+  CustomWidget,
 ];
 
 // endregion
 
 @NgModule({
-    imports: [CommonModule, FormsModule, NgZorroAntdModule],
-    declarations: [...COMPONENTS, ...WIDGETS],
-    entryComponents: [...WIDGETS],
-    exports: [...COMPONENTS]
+  imports: [CommonModule, FormsModule, NgZorroAntdModule],
+  declarations: [...COMPONENTS, ...WIDGETS],
+  entryComponents: [...WIDGETS],
+  exports: [...COMPONENTS],
 })
 export class DelonFormModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: DelonFormModule,
-            providers: [
-                DelonFormConfig,
-                { provide: SchemaValidatorFactory, useClass: AjvSchemaValidatorFactory },
-                { provide: WidgetRegistry, useClass: NzWidgetRegistry }
-            ]
-        };
-    }
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonFormModule,
+      providers: [
+        DelonFormConfig,
+        {
+          provide: SchemaValidatorFactory,
+          useClass: AjvSchemaValidatorFactory,
+        },
+        { provide: WidgetRegistry, useClass: NzWidgetRegistry },
+      ],
+    };
+  }
 }

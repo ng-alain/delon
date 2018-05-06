@@ -182,7 +182,7 @@ ng g page [page name]
 
 | Alias | Arguments | Default | Summary |
 | --------- | --------- | ------- | ------- |
-| `-t` | `--type` | `list` | 指定页面类型，值包括：`list`、`view (not yet)`、`edit (not yet)` |
+| `-t` | `--type` | `list` | 指定页面类型，值包括：`list`、`view`、`edit` |
 | - | `--modal` | `true` | 是否模态框，限：`view`、`edit` 时有效 |
 
 例如：

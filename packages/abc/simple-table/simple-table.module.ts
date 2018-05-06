@@ -12,18 +12,18 @@ const COMPONENTS = [SimpleTableComponent, SimpleTableRowDirective];
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-const ZORROMODULES = [ NgZorroAntdModule ];
+const ZORROMODULES = [NgZorroAntdModule];
 
 // endregion
 
 @NgModule({
-    schemas: [ NO_ERRORS_SCHEMA ],
-    imports:        [CommonModule, FormsModule, ...ZORROMODULES],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  schemas: [NO_ERRORS_SCHEMA],
+  imports: [CommonModule, FormsModule, ...ZORROMODULES],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdSimpleTableModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdSimpleTableModule, providers: [ AdSimpleTableConfig ] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdSimpleTableModule, providers: [AdSimpleTableConfig] };
+  }
 }

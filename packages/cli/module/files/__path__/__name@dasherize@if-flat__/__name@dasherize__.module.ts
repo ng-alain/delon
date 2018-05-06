@@ -12,8 +12,8 @@ const COMPONENT_NOROUNT = [];
     <%= classify(name) %>RoutingModule<% } %>
   ],
   declarations: [
-      ...COMPONENT,
-      ...COMPONENT_NOROUNT
+    ...COMPONENT,
+    ...COMPONENT_NOROUNT
   ],
   entryComponents: COMPONENT_NOROUNT
 })

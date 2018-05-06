@@ -6,12 +6,12 @@ import { EllipsisComponent } from './ellipsis.component';
 const COMPONENTS = [EllipsisComponent];
 
 @NgModule({
-    imports:        [CommonModule],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdEllipsisModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdEllipsisModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdEllipsisModule, providers: [] };
+  }
 }

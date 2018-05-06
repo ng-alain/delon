@@ -5,116 +5,121 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { share, filter } from 'rxjs/operators';
 
 export interface LazyResult {
-    path: string;
-    loaded: boolean;
-    status: 'ok' | 'error';
+  path: string;
+  loaded: boolean;
+  status: 'ok' | 'error';
 }
 
 @Injectable()
 export class LazyService {
+  private list: any = {};
+  private cached: any = {};
+  private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<
+    LazyResult[]
+  >([]);
 
-    private list: any = {};
-    private cached: any = {};
-    private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
+  constructor(@Inject(DOCUMENT) private doc: any) {}
 
-    constructor(@Inject(DOCUMENT) private doc: any) {}
+  get change(): Observable<LazyResult[]> {
+    return this._notify
+      .asObservable()
+      .pipe(share(), filter(ls => ls.length !== 0));
+  }
 
-    get change(): Observable<LazyResult[]> {
-        return this._notify.asObservable().pipe(share(), filter(ls => ls.length !== 0));
-    }
+  clear(): void {
+    this.list = {};
+    this.cached = {};
+  }
 
-    clear(): void {
-        this.list = {};
-        this.cached = {};
-    }
+  load(paths: string | string[]): Promise<LazyResult[]> {
+    if (!Array.isArray(paths)) paths = [paths];
 
-    load(paths: string | string[]): Promise<LazyResult[]> {
+    const promises: Promise<LazyResult>[] = [];
+    paths.forEach(path => {
+      if (path.includes('.js')) promises.push(this.loadScript(path));
+      else promises.push(this.loadStyle(path));
+    });
 
-        if (!Array.isArray(paths)) paths = [ paths ];
+    return Promise.all(promises).then(res => {
+      this._notify.next(res);
+      return Promise.resolve(res);
+    });
+  }
 
-        const promises: Promise<LazyResult>[] = [];
-        paths.forEach(path => {
-            if (path.includes('.js'))
-                promises.push(this.loadScript(path));
-            else
-                promises.push(this.loadStyle(path));
-        });
+  loadScript(path: string): Promise<LazyResult> {
+    return new Promise(resolve => {
+      if (this.list[path] === true) {
+        resolve(this.cached[path]);
+        return;
+      }
 
-        return Promise.all(promises).then(res => {
-            this._notify.next(res);
-            return Promise.resolve(res);
-        });
-    }
+      this.list[path] = true;
+      const onSuccess = (item: any) => {
+        this.cached[path] = item;
+        resolve(item);
+      };
 
-    loadScript(path: string): Promise<LazyResult> {
-        return new Promise((resolve) => {
-            if (this.list[path] === true) {
-                resolve(this.cached[path]);
-                return;
-            }
-
-            this.list[path] = true;
-            const onSuccess = (item: any) => {
-                this.cached[path] = item;
-                resolve(item);
-            };
-
-            const node = this.doc.createElement('script');
-            node.type = 'text/javascript';
-            node.src = path;
-            node.charset = 'utf-8';
-            if ((<any>node).readyState) { // IE
-                (<any>node).onreadystatechange = () => {
-                    if ((<any>node).readyState === 'loaded' || (<any>node).readyState === 'complete') {
-                        (<any>node).onreadystatechange = null;
-                        onSuccess({
-                            path: path,
-                            loaded: true,
-                            status: 'ok'
-                        });
-                    }
-                };
-            } else {
-                node.onload = () => {
-                    onSuccess({
-                        path: path,
-                        loaded: true,
-                        status: 'ok'
-                    });
-                };
-            }
-            node.onerror = (error: any) => onSuccess({
-                path: path,
-                loaded: false,
-                status: 'error'
-            });
-            this.doc.getElementsByTagName('head')[0].appendChild(node);
-        });
-    }
-
-    loadStyle(path: string, rel = 'stylesheet'): Promise<LazyResult> {
-        return new Promise((resolve) => {
-            if (this.list[path] === true) {
-                resolve(this.cached[path]);
-                return;
-            }
-
-            this.list[path] = true;
-            const onSuccess = (item: any) => {
-                this.cached[path] = item;
-                resolve(item);
-            };
-
-            const node = this.doc.createElement('link');
-            node.rel = rel;
-            node.type = 'text/css';
-            node.href = path;
-            this.doc.getElementsByTagName('head')[0].appendChild(node);
+      const node = this.doc.createElement('script');
+      node.type = 'text/javascript';
+      node.src = path;
+      node.charset = 'utf-8';
+      if ((<any>node).readyState) {
+        // IE
+        (<any>node).onreadystatechange = () => {
+          if (
+            (<any>node).readyState === 'loaded' ||
+            (<any>node).readyState === 'complete'
+          ) {
+            (<any>node).onreadystatechange = null;
             onSuccess({
-                path: path,
-                loaded: true,
-                status: 'ok'
+              path: path,
+              loaded: true,
+              status: 'ok',
             });
+          }
+        };
+      } else {
+        node.onload = () => {
+          onSuccess({
+            path: path,
+            loaded: true,
+            status: 'ok',
+          });
+        };
+      }
+      node.onerror = (error: any) =>
+        onSuccess({
+          path: path,
+          loaded: false,
+          status: 'error',
         });
-    }
+      this.doc.getElementsByTagName('head')[0].appendChild(node);
+    });
+  }
+
+  loadStyle(path: string, rel = 'stylesheet'): Promise<LazyResult> {
+    return new Promise(resolve => {
+      if (this.list[path] === true) {
+        resolve(this.cached[path]);
+        return;
+      }
+
+      this.list[path] = true;
+      const onSuccess = (item: any) => {
+        this.cached[path] = item;
+        resolve(item);
+      };
+
+      const node = this.doc.createElement('link');
+      node.rel = rel;
+      node.type = 'text/css';
+      node.href = path;
+      this.doc.getElementsByTagName('head')[0].appendChild(node);
+      onSuccess({
+        path: path,
+        loaded: true,
+        status: 'ok',
+      });
+    });
+  }
 }

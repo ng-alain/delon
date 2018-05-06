@@ -66,31 +66,31 @@
     },
     "styleExt": "less",
     "class": {
-        "spec": false
+      "spec": false
     },
     "component": {
-        "flat": false,
-        "spec": false,
-        "inlineStyle": true,
-        "inlineTemplate": false
+      "flat": false,
+      "spec": false,
+      "inlineStyle": true,
+      "inlineTemplate": false
     },
     "directive": {
-        "spec": false
+      "spec": false
     },
     "guard": {
-        "spec": false
+      "spec": false
     },
     "interface": {
-        "prefix": "I"
+      "prefix": "I"
     },
     "module": {
-        "spec": false
+      "spec": false
     },
     "pipe": {
-        "spec": true
+      "spec": true
     },
     "service": {
-        "spec": false
+      "spec": false
     }
   }
 }

@@ -1,23 +1,20 @@
 {
-    "extends": "../tsconfig-build.json",
+  "extends": "../tsconfig-build.json",
 
-    "compilerOptions": {
-      "baseUrl": ".",
-      "rootDir": ".",
-      "paths": {
-      },
-      "outDir": "../../@delon/mock"
-    },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {},
+    "outDir": "../../@delon/mock"
+  },
 
-    "files": [
-      "public_api.ts"
-    ],
+  "files": ["public_api.ts"],
 
-    "angularCompilerOptions": {
-      "annotateForClosureCompiler": true,
-      "strictMetadataEmit": true,
-      "skipTemplateCodegen": true,
-      "flatModuleOutFile": "index.js",
-      "flatModuleId": "@delon/mock"
-    }
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true,
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "@delon/mock"
   }
+}

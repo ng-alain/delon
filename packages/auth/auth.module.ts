@@ -6,16 +6,16 @@ import { DA_SERVICE_TOKEN } from './token/interface';
 import { LocalStorageStore } from './store/local-storage.service';
 import { TokenService } from './token/token.service';
 
-@NgModule({ })
+@NgModule({})
 export class DelonAuthModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: DelonAuthModule,
-            providers: [
-                DelonAuthConfig,
-                { provide: DA_STORE_TOKEN, useClass: LocalStorageStore },
-                { provide: DA_SERVICE_TOKEN, useClass: TokenService }
-            ]
-        };
-    }
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonAuthModule,
+      providers: [
+        DelonAuthConfig,
+        { provide: DA_STORE_TOKEN, useClass: LocalStorageStore },
+        { provide: DA_SERVICE_TOKEN, useClass: TokenService },
+      ],
+    };
+  }
 }
