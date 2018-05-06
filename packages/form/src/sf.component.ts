@@ -115,13 +115,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
                 this.layout = 'inline';
                 this.firstVisual = false;
                 this.liveValidate = false;
-                this.button.submit = '搜索';
+                if (this.button) this.button.submit = '搜索';
                 break;
             case 'edit':
                 this.layout = 'horizontal';
                 this.firstVisual = false;
                 this.liveValidate = true;
-                this.button.submit = '保存';
+                if (this.button) this.button.submit = '保存';
                 break;
         }
         this._mode = value;
@@ -145,11 +145,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     // endregion
 
+    /** 表单校验状态 */
     get valid(): boolean {
         return this._valid;
     }
 
-    get item(): any {
+    /** 表单值 */
+    get value(): any {
         return this._item;
     }
 
@@ -158,7 +160,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         e.stopPropagation();
         if (!this.liveValidate) this.validator();
         if (!this.valid) return;
-        this.formSubmit.emit(this.item);
+        this.formSubmit.emit(this.value);
     }
 
     constructor(
@@ -239,7 +241,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             liveValidate: this.liveValidate,
             firstVisual: this.firstVisual
         }, this.schema.ui, this.ui['*']);
-        delete this.ui['*'];
 
         // root
         this._ui = Object.assign({}, this._defUi);
@@ -345,7 +346,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     reset() {
         this.rootProperty.resetValue(this.formData, false);
         Promise.resolve().then(() => this.cd.detectChanges());
-        this.formReset.emit(this.item);
+        this.formReset.emit(this.value);
     }
 
     ngOnDestroy(): void {

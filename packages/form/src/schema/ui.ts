@@ -162,7 +162,7 @@ export interface SFUISchemaItem extends SFRenderSchema, SFArraySchema, SFHorizon
 }
 
 /**
- * UI Schema，KEY名**务必**是 `key:${schema key name}` 组合，以便能区分KEY值还是UI选项
+ * UI Schema，KEY名**务必**是 `$` 开头（例如：`$name`、`$id`），以便能区分KEY值还是UI选项
  * - 结构层级应同 `SFSchema` 一致
  * - 当KEY为 `*` 时表示对所有子表单元素都有效
  */

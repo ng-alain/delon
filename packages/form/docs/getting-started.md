@@ -124,7 +124,7 @@ export class HomeComponent {
 | 参数          | 说明             | 返回值    |
 |---------------|------------------|-----------|
 | valid         | 表单是否有效     | `boolean` |
-| item          | 表单数据         | `any`     |
+| value         | 表单值         | `any`     |
 | refreshSchema | 刷新 JSON Schema | `void`    |
 | reset         | 重置表单         | `void`    |
 
