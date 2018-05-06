@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
 <% if (routing) { %>import { <%= classify(name) %>RoutingModule } from './<%= dasherize(name) %>-routing.module';<% } %>
 
+const COMPONENT = [];
+
 const COMPONENT_NOROUNT = [];
 
 @NgModule({
@@ -10,6 +12,7 @@ const COMPONENT_NOROUNT = [];
     <%= classify(name) %>RoutingModule<% } %>
   ],
   declarations: [
+      ...COMPONENT,
       ...COMPONENT_NOROUNT
   ],
   entryComponents: COMPONENT_NOROUNT
