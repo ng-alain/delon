@@ -52,14 +52,14 @@ if [[ ${BUILD} == true ]]; then
 
     rm -rf ${ROOT_DIR}
     mkdir -p ${ROOT_DIR}
-    rsync -a --exclude="node_modules/" ${SCAFFOLD_DIR}/ ${ROOT_DIR}
+    rsync -a --exclude "node_modules" ${SCAFFOLD_DIR}/ ${ROOT_DIR}
 
     cd ${ROOT_DIR}
     updateVersionReferences ${ROOT_DIR}/package.json
     updateVersionReferences ${SCAFFOLD_DIR}/package.json
 
     echo '===== need mock'
-    sed -i "s/const MOCKMODULE[^;]*;/const MOCKMODULE = [ DelonMockModule.forRoot({ data: MOCKDATA }) ];/g" ${ROOT_DIR}/src/app/delon.module.ts
+    sed -i "s/const MOCKMODULE = !environment.production/const MOCKMODULE = true/g" ${ROOT_DIR}/src/app/delon.module.ts
 
     yarn
 
