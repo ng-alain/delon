@@ -58,5 +58,10 @@ npm install @antv/g2 @antv/data-set @antv/g2-plugin-slider --save
 为了更好服务用户，G2 会将 URL 和版本信息发送回 AntV 服务器。你可以通过以下代码关闭：
 
 ```ts
-if (typeof G2 !== 'undefined') G2.track(false);
+// app.components
+export class AppComponent {
+  constructor() {
+    if (typeof G2 !== 'undefined') G2.track(false);
+  }
+}
 ```
