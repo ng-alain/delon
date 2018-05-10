@@ -1,10 +1,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouteReuseStrategy } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { ReuseTabComponent } from './reuse-tab.component';
 import { ReuseTabService } from './reuse-tab.service';
-import { ReuseTabStrategy } from './reuse-tab.strategy';
 import { ReuseTabContextComponent } from './reuse-tab-context.component';
 import { ReuseTabContextDirective } from './reuse-tab-context.directive';
 import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
@@ -30,12 +29,7 @@ export class AdReuseTabModule {
     return {
       ngModule: AdReuseTabModule,
       providers: [
-        ReuseTabService,
-        {
-          provide: RouteReuseStrategy,
-          useClass: ReuseTabStrategy,
-          deps: [ReuseTabService],
-        },
+        ReuseTabService
       ],
     };
   }

@@ -1,11 +1,12 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { ActivatedRouteSnapshot, ActivatedRoute, RouteReuseStrategy } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 import { MenuService } from '@delon/theme';
 
 import { ReuseTabService } from './reuse-tab.service';
+import { ReuseTabStrategy } from './reuse-tab.strategy';
 import { ReuseTabMatchMode } from './interface';
 
 const TITLE = `标题`;
@@ -30,6 +31,11 @@ describe('abc: reuse-tab', () => {
     injector = TestBed.configureTestingModule({
       providers: [
         ReuseTabService,
+        {
+          provide: RouteReuseStrategy,
+          useClass: ReuseTabStrategy,
+          deps: [ReuseTabService],
+        },
         { provide: ActivatedRoute, useValue: { snapshot: { url: [] } } },
       ].concat(providers),
     });

@@ -8,7 +8,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { AlainThemeModule } from '@delon/theme';
 import { DelonACLModule } from '@delon/acl';
-import { DelonABCModule } from '@delon/abc';
+import { DelonABCModule, ReuseTabService, ReuseTabStrategy } from '@delon/abc';
 import { DelonAuthModule } from '@delon/auth';
 import { DelonMockModule } from '@delon/mock';
 import { DelonFormModule } from '@delon/form';
@@ -55,6 +55,11 @@ export function StartupServiceFactory(startupService: StartupService): Function 
   ],
   providers: [
     StartupService,
+    {
+      provide: RouteReuseStrategy,
+      useClass: ReuseTabStrategy,
+      deps: [ReuseTabService],
+    },
     {
         provide: APP_INITIALIZER,
         useFactory: StartupServiceFactory,

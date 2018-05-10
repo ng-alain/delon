@@ -9,6 +9,21 @@ module: AdReuseTabModule
 
 最新打开的永远是当前页，而路由复用是指当我们离开当前页时若符合复用条件（即：匹配模式）则保存当前路由所有组件状态（包括子组件），待下一次进入相同路由（即：匹配模式）时再从中缓存中获取到。
 
+## 如何使用？
+
+默认 `AdReuseTabModule` 并不会注册 `RouteReuseStrategy`，这是因为若默认在模块内注册会导致所有引入 `@delon/abc` 模块都会强制使用路由复用，不管是否模板是否包括 `<reuse-tab>`。因此，除了引入模块以外，还需要在**手动注册** `RouteReuseStrategy`。
+
+```ts
+// delon.module.ts or app.module.ts
+providers: [
+  {
+    provide: RouteReuseStrategy,
+    useClass: ReuseTabStrategy,
+    deps: [ReuseTabService],
+  }
+]
+```
+
 ## 匹配模式
 
 在项目的任何位置（建议：`startup.service.ts`）注入 `ReuseTabService` 类，并设置 `mode` 属性，或通过 `<reuse-tab [mode]="0"></reuse-tab>` 重新设置值，包括：
@@ -100,10 +115,6 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 - `OnDestroy` 可能会处理一些组件外部（例如：`body`）的样式等，可以参考生命周期解决。
 - 开启 `debug` 模式后会在 `console` 很多信息这有助于分析路由复用的过程。
-
-### 移除 reuse-tab 组件后为什么还有路由复用效果？
-
-默认脚手架导入了所有 @delon/abc 模块（在 `delon.module` 存在 `DelonABCModule.forRoot()` 时）这会导致 `AdReuseTabModule` 默认也会对相应服务进行注册，这导致即使没有使用 `<reuse-tab>` 也会路由复用的原因。你可以移除 `DelonABCModule.forRoot()` 并只导入你需要的模块即可。
 
 ## API
 

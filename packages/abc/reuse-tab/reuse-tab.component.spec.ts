@@ -20,6 +20,7 @@ import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
+  RouteReuseStrategy,
 } from '@angular/router';
 
 import { MenuService, ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -82,6 +83,11 @@ describe('abc: reuse-tab', () => {
       ],
       providers: [
         MenuService,
+        {
+          provide: RouteReuseStrategy,
+          useClass: ReuseTabStrategy,
+          deps: [ReuseTabService],
+        },
         {
           provide: 'CanDeactivate',
           useValue: (
