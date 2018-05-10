@@ -1,9 +1,5 @@
 import { HttpRequest } from '@angular/common/http';
 
-export interface MockRequest {
-  [key: string]: any;
-}
-
 export interface MockCachedRule {
   [key: string]: any;
 
@@ -34,6 +30,7 @@ export interface MockRule {
 export interface MockRequest {
   /** 路由参数 */
   params?: any;
+  /** URL参数 */
   queryString?: any;
   headers?: any;
   body?: any;

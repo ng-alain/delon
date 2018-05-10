@@ -8,7 +8,11 @@
       <nz-dropdown nzPlacement="bottomRight">
         <div nz-dropdown>{{'app.header.menu.delon' | translate}}</div>
         <ul nz-menu>
+          <li nz-menu-item routerLink="/auth">{{'app.header.menu.auth' | translate}}</li>
+          <li nz-menu-item routerLink="/acl">{{'app.header.menu.acl' | translate}}</li>
           <li nz-menu-item routerLink="/form">{{'app.header.menu.form' | translate}}</li>
+          <li nz-menu-item routerLink="/cache">{{'app.header.menu.cache' | translate}}</li>
+          <li nz-menu-item routerLink="/mock">{{'app.header.menu.mock' | translate}}</li>
           <li nz-menu-item routerLink="/util">{{'app.header.menu.util' | translate}}</li>
         </ul>
       </nz-dropdown>

@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
         <app-header></app-header>
         <router-outlet></router-outlet>
         <app-footer></app-footer>
+        <nz-back-top></nz-back-top>
     `,
     host: {
         '[class.page-wrapper]': 'true'
