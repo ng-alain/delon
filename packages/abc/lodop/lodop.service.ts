@@ -4,7 +4,7 @@ import { of } from 'rxjs/observable/of';
 import { Subject } from 'rxjs/Subject';
 import { Observer } from 'rxjs/Observer';
 
-import { LazyService } from '../utils/lazy.service';
+import { LazyService } from '@delon/util';
 
 import { Lodop, LodopResult, LodopPrintResult } from './interface';
 import { AdLodopConfig } from './lodop.config';

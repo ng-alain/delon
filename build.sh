@@ -7,6 +7,7 @@ cd ${currentDir}
 
 # PACKAGES=(form)
 PACKAGES=(acl
+  util
   theme
   abc
   auth

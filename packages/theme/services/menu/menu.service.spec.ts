@@ -7,7 +7,7 @@ import {
   ALAIN_I18N_TOKEN,
   AlainI18NServiceFake,
 } from '@delon/theme/services/i18n/i18n';
-import { deepCopy } from '@delon/abc';
+import { deepCopy } from '@delon/util';
 
 import { Menu } from './interface';
 import { MenuService } from './menu.service';

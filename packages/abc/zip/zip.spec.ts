@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
-import { LazyService } from '@delon/abc';
+import { LazyService } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';

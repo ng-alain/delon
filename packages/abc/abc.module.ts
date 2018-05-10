@@ -18,7 +18,6 @@ import { AdResultModule } from './result/result.module';
 import { AdStandardFormRowModule } from './standard-form-row/standard-form-row.module';
 import { AdTagSelectModule } from './tag-select/tag-select.module';
 import { AdTrendModule } from './trend/trend.module';
-import { AdUtilsModule } from './utils/utils.module';
 import { AdCountDownModule } from './count-down/count-down.module';
 import { AdSimpleTableModule } from './simple-table/simple-table.module';
 import { AdReuseTabModule } from './reuse-tab/reuse-tab.module';
@@ -60,7 +59,6 @@ const MODULES = [
   AdStandardFormRowModule,
   AdTagSelectModule,
   AdTrendModule,
-  AdUtilsModule,
   AdCountDownModule,
   AdSimpleTableModule,
   AdReuseTabModule,
@@ -106,7 +104,6 @@ const MODULES = [
     AdStandardFormRowModule.forRoot(),
     AdTagSelectModule.forRoot(),
     AdTrendModule.forRoot(),
-    AdUtilsModule.forRoot(),
     AdCountDownModule.forRoot(),
     AdSimpleTableModule.forRoot(),
     AdReuseTabModule.forRoot(),

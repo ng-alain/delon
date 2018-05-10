@@ -1,7 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
-import { LazyService, LazyResult } from '../utils/lazy.service';
+import { LazyService, LazyResult } from '@delon/util';
+
 import {
   ZipConfig,
   DA_ZIP_CONFIG,

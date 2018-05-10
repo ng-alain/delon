@@ -22,6 +22,7 @@ const routes = [
             // region: region routers
             { path: 'docs', loadChildren: './gen/docs/docs.module#DocsModule' },
             { path: 'components', loadChildren: './gen/components/components.module#ComponentsModule' },
+            { path: 'util', loadChildren: './gen/util/util.module#UtilModule' },
             { path: 'form', loadChildren: './gen/form/form.module#FormModule' },
             { path: 'form-pages', loadChildren: './form-pages/form-pages.module#FormPagesModule' }
             // endregion

@@ -1,13 +1,13 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+import { LazyService, LazyResult } from '@delon/util';
 import {
   XlsxExportOptions,
   DA_XLSX_CONFIG,
   XlsxConfig,
   XlsxExportSheet,
 } from './interface';
-import { LazyService, LazyResult } from '../utils/lazy.service';
 
 declare var XLSX: any;
 

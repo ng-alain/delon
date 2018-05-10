@@ -2,7 +2,7 @@ import { Component, ViewChild, DebugElement } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { deepGet } from '@delon/abc';
+import { deepGet } from '@delon/util';
 
 import { SFSchema } from '../src/schema';
 import { SFUISchema } from '../src/schema/ui';

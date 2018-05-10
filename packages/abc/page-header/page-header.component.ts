@@ -17,9 +17,9 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
+import { isEmpty } from '@delon/util';
 
 import { AdPageHeaderConfig } from './page-header.config';
-import { isEmpty } from '../utils/check';
 
 @Component({
   selector: 'page-header',

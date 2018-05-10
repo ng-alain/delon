@@ -46,6 +46,10 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 
 [Mock](/docs/mock)会拦截 Angular Http 请求并返回测试数据。
 
+**@delon/util**
+
+[日常工具集](/util)。
+
 ## 文档和反馈
 
 你可以在 [ng-alain.com](http://ng-alain.com) 找所有的文档。
@@ -64,3 +68,4 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 | @delon/mock [/docs/mock](Document) | [![NPM version](https://img.shields.io/npm/v/@delon/mock.svg)](https://www.npmjs.com/package/@delon/mock) | [![NPM version](https://img.shields.io/npm/v/@delon/mock/next.svg)](https://www.npmjs.com/package/@delon/mock) |
 | @delon/cache [/docs/cache](Document) | [![NPM version](https://img.shields.io/npm/v/@delon/cache.svg)](https://www.npmjs.com/package/@delon/cache) | [![NPM version](https://img.shields.io/npm/v/@delon/cache/next.svg)](https://www.npmjs.com/package/@delon/cache) |
 | @delon/cli [/docs/cli](Document) | [![NPM version](https://img.shields.io/npm/v/@delon/cli.svg)](https://www.npmjs.com/package/@delon/cli) | [![NPM version](https://img.shields.io/npm/v/@delon/cli/next.svg)](https://www.npmjs.com/package/@delon/cli) |
+| @delon/util | [![NPM version](https://img.shields.io/npm/v/@delon/util.svg)](https://www.npmjs.com/package/@delon/util) | [![NPM version](https://img.shields.io/npm/v/@delon/util/next.svg)](https://www.npmjs.com/package/@delon/util) |

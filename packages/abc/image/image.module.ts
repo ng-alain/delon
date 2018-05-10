@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DelonUtilModule } from '@delon/util';
 
 import { ImageDirective } from './image.directive';
 import { AdImageConfig } from './image.config';
@@ -7,7 +8,7 @@ import { AdImageConfig } from './image.config';
 const DIRECTIVES = [ImageDirective];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, DelonUtilModule],
   declarations: [...DIRECTIVES],
   exports: [...DIRECTIVES],
 })

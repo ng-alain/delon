@@ -59,6 +59,7 @@
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/mock": "PEER-0.0.0-PLACEHOLDER",
     "@delon/form": "PEER-0.0.0-PLACEHOLDER",
+    "@delon/util": "PEER-0.0.0-PLACEHOLDER",
     "@delon/cache": "PEER-0.0.0-PLACEHOLDER",<% } else { %>
     "@delon/abc": "PEER-0.0.0-PLACEHOLDER",
     "@delon/acl": "PEER-0.0.0-PLACEHOLDER",
@@ -66,6 +67,7 @@
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/mock": "PEER-0.0.0-PLACEHOLDER",
     "@delon/form": "PEER-0.0.0-PLACEHOLDER",
+    "@delon/util": "PEER-0.0.0-PLACEHOLDER",
     "@delon/cache": "PEER-0.0.0-PLACEHOLDER",<% } %><% if (delonI18n) { %>
     "@ngx-translate/core": "^9.0.0",
     "@ngx-translate/http-loader": "^2.0.0",<% } %>

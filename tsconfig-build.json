@@ -17,7 +17,8 @@
     "paths": {
       "@delon/theme": ["./dist/packages/theme"],
       "@delon/abc": ["./dist/packages/abc"],
-      "@delon/acl": ["./dist/packages/acl"]
+      "@delon/acl": ["./dist/packages/acl"],
+      "@delon/util": ["./dist/packages/util"]
     },
     "skipLibCheck": true,
     "typeRoots": ["node_modules/@types"]

@@ -1,6 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
-import { deepCopy, LazyService } from '@delon/abc';
+import { deepCopy, LazyService } from '@delon/util';
 import { EditorItem } from '../interface';
 
 const DEFAULT = {
@@ -86,7 +86,7 @@ export class ThemeEditorComponent {
 
     reset(nowData?: Object) {
         nowData = nowData || {};
-        const data = deepCopy({}, DEFAULT);
+        const data = deepCopy(DEFAULT);
         Object.keys(data).forEach(key => {
             data[key] = Object.assign({}, data[key], <EditorItem>{
                 value: nowData[key] || data[key].default,

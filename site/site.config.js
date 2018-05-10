@@ -74,6 +74,47 @@ module.exports = {
             ]
         },
         {
+            name: 'util',
+            github: 'https://github.com/cipchk/delon',
+            dist: './site/app/routes/gen/util',
+            types: [
+                {
+                    'zh-CN': '文档',
+                    'en-US': 'Documents'
+                },
+                {
+                    'zh-CN': '类型',
+                    'en-US': 'Type'
+                }
+            ],
+            module: '@delon/util',
+            defaultRoute: 'getting-started',
+            extraRouteMeta: [
+            ],
+            metaIncludeAttributes: [ 'name', 'types', 'github', 'module' ],
+            template: {
+                meta: './site/templates/meta.ts',
+                module: './site/templates/module.ts'
+            },
+            dir: [
+                {
+                    src: ['./packages/util/docs'],
+                    template: {
+                        content: './site/templates/content.ts',
+                    },
+                    hasSubDir: false
+                },
+                {
+                    src: ['./packages/util/src'],
+                    // ignores: [ 'README.md' ],
+                    template: {
+                        content: './site/templates/content.ts',
+                    },
+                    hasSubDir: true
+                }
+            ]
+        },
+        {
             name: 'form',
             github: 'https://github.com/cipchk/delon',
             dist: './site/app/routes/gen/form',

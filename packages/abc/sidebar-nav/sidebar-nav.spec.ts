@@ -16,10 +16,10 @@ import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { AlainThemeModule, MenuService, SettingsService } from '@delon/theme';
+import { deepCopy } from '@delon/util';
 
 import { AdSidebarNavModule } from './sidebar-nav.module';
 import { SidebarNavComponent } from './sidebar-nav.component';
-import { deepCopy } from '../utils/utils';
 import { Nav } from './interface';
 import { of } from 'rxjs/observable/of';
 

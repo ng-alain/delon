@@ -1,12 +1,12 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DelonUtilModule } from '@delon/util';
 
-import { AdUtilsModule } from '../utils/utils.module';
 import { ZipService } from './zip.service';
 import { ZipConfig, DA_ZIP_CONFIG } from './interface';
 
 @NgModule({
-  imports: [CommonModule, AdUtilsModule],
+  imports: [CommonModule, DelonUtilModule],
 })
 export class AdZipModule {
   static forRoot(config?: ZipConfig): ModuleWithProviders {

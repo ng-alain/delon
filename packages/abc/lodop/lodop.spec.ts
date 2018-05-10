@@ -5,7 +5,7 @@ import { concat } from 'rxjs/observable/concat';
 import { Observable } from 'rxjs/Observable';
 import { tap, delay, filter, flatMap } from 'rxjs/operators';
 
-import { LazyService } from '@delon/abc';
+import { LazyService } from '@delon/util';
 
 import { LodopService } from './lodop.service';
 import { AdLodopConfig } from './lodop.config';

@@ -1,6 +1,6 @@
-import { Validate } from './validate';
-import { _Validators } from './validators';
 import { FormControl } from '@angular/forms';
+import { isNum, isInt, isDecimal, isIdCard, isMobile } from './validate';
+import { _Validators } from './validators';
 
 describe('utils: validate', () => {
   it('#isNum', () => {
@@ -14,7 +14,7 @@ describe('utils: validate', () => {
       { k: '123a', v: false },
     ];
     for (const item of data) {
-      expect(Validate.isNum(item.k)).toBe(
+      expect(isNum(item.k)).toBe(
         item.v,
         `${item.k}=${typeof item.k} must be ${item.v}`,
       );
@@ -33,7 +33,7 @@ describe('utils: validate', () => {
       { k: '123.123', v: false },
     ];
     for (const item of data) {
-      expect(Validate.isInt(item.k)).toBe(
+      expect(isInt(item.k)).toBe(
         item.v,
         `${item.k}=${typeof item.k} must be ${item.v}`,
       );
@@ -56,7 +56,7 @@ describe('utils: validate', () => {
       { k: '123a', v: false },
     ];
     for (const item of data) {
-      expect(Validate.isDecimal(item.k)).toBe(
+      expect(isDecimal(item.k)).toBe(
         item.v,
         `${item.k}=${typeof item.k} must be ${item.v}`,
       );
@@ -72,7 +72,7 @@ describe('utils: validate', () => {
       { k: '61010219800604261', v: false },
     ];
     for (const item of data) {
-      expect(Validate.isIdCard(item.k)).toBe(
+      expect(isIdCard(item.k)).toBe(
         item.v,
         `${item.k}=${typeof item.k} must be ${item.v}`,
       );
@@ -92,7 +92,7 @@ describe('utils: validate', () => {
       { k: '+8615900000000', v: true },
     ];
     for (const item of data) {
-      expect(Validate.isMobile(item.k)).toBe(
+      expect(isMobile(item.k)).toBe(
         item.v,
         `${item.k}=${typeof item.k} must be ${item.v}`,
       );

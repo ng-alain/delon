@@ -16,7 +16,6 @@ export * from './result';
 export * from './standard-form-row';
 export * from './tag-select';
 export * from './trend';
-export * from './utils';
 export * from './count-down';
 export * from './simple-table';
 export * from './reuse-tab';

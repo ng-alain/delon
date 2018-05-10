@@ -1,15 +1,15 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { LazyService } from './lazy.service';
+import { LazyService } from './src/lazy/lazy.service';
 
 @NgModule({
   imports: [CommonModule],
 })
-export class AdUtilsModule {
+export class DelonUtilModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: AdUtilsModule,
+      ngModule: DelonUtilModule,
       providers: [LazyService],
     };
   }

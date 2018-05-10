@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { copy } from '@delon/abc';
+import { copy } from '@delon/util';
 
 import { I18NService } from './../../../core/i18n/service';
 import { CodeService } from '../../../core/code.service';

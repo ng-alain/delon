@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { DOCUMENT } from '@angular/platform-browser';
+import { DelonUtilModule } from '../../util.module';
 import { LazyService } from './lazy.service';
 
 let isIE = false;
@@ -40,7 +41,8 @@ describe('utils: lazy', () => {
     isIE = false;
     testStatus = 'ok';
     const injector = TestBed.configureTestingModule({
-      providers: [LazyService, { provide: DOCUMENT, useClass: MockDocument }],
+      imports: [DelonUtilModule.forRoot()],
+      providers: [{ provide: DOCUMENT, useClass: MockDocument }],
     });
     srv = injector.get(LazyService);
     srv.clear();

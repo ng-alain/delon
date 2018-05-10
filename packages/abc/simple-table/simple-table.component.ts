@@ -38,8 +38,8 @@ import {
   ALAIN_I18N_TOKEN,
   AlainI18NService,
 } from '@delon/theme';
+import { deepGet, deepCopy } from '@delon/util';
 
-import { deepGet, deepCopy } from '../utils/utils';
 import {
   SimpleTableColumn,
   SimpleTableChange,
