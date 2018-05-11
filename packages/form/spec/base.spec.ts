@@ -100,6 +100,15 @@ export class SFPage {
     return this;
   }
 
+  checkSchema(path: string, propertyName: string, value: any): this {
+    const property = this.comp.rootProperty.searchProperty(path);
+    expect(property != null).toBe(true);
+    const item = property.schema;
+    const res = deepGet(item, propertyName.split('.'), undefined);
+    expect(res).toBe(value);
+    return this;
+  }
+
   checkUI(path: string, propertyName: string, value: any): this {
     const property = this.comp.rootProperty.searchProperty(path);
     expect(property != null).toBe(true);

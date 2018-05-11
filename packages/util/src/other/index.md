@@ -31,7 +31,7 @@ deepGet(obj, 'user.age'); // 18
 
 ```ts
 const source = { a: 1, user: { name: 'cipchk' } };
-const obj = deepCopy({}, source);
+const obj = deepCopy(source);
 ```
 
 ## copy

@@ -1,9 +1,10 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
-import * as deepExtend from 'deep-extend';
+import { deepCopy } from '@delon/util';
 import { builder, TestFormComponent, SFPage, SCHEMA } from './base.spec';
 import { SFSchema } from '../src/schema/index';
 import { SFUISchemaItem, SFUISchema } from '../src/schema/ui';
+import { ObjectProperty } from '../src/model/object.property';
 
 describe('form: schema', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -149,8 +150,8 @@ describe('form: schema', () => {
       };
       describe('[#via in json schema]', () => {
         it('should be has $items when is array', () => {
-          const schema = deepExtend({}, arrSchema) as SFSchema;
-          schema.properties.name.ui = deepExtend({}, arrUI);
+          const schema = deepCopy(arrSchema) as SFSchema;
+          schema.properties.name.ui = deepCopy(arrUI);
           page
             .newSchema(schema)
             .checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
@@ -158,17 +159,280 @@ describe('form: schema', () => {
       });
       describe('[#via ui property]', () => {
         it('should be has $items when is array', () => {
-          const schema = deepExtend({}, arrSchema);
+          const schema = deepCopy(arrSchema);
           const uiSchema: SFUISchema = {
             $name: {
               $items: {},
-              ...deepExtend({}, arrUI),
+              ...deepCopy(arrUI),
             },
           };
           page
             .newSchema(schema, uiSchema)
             .checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
         });
+      });
+    });
+  });
+
+  describe('[definitions]', () => {
+    it('should be ref definitions', () => {
+      page
+        .newSchema({
+          definitions: {
+            large: {
+              type: 'string',
+              maxLength: 10,
+            },
+          },
+          properties: {
+            name: { $ref: '#/definitions/large' },
+          },
+        })
+        .checkSchema('/name', 'maxLength', 10);
+    });
+    it('should be throw error when not fond defind', () => {
+      expect(() => {
+        page.newSchema({
+          definitions: {},
+          properties: {
+            name: { $ref: '#/definitions/large' },
+          },
+        });
+      }).toThrow();
+    });
+    it('should be throw error when is invalid $ref', () => {
+      expect(() => {
+        page.newSchema({
+          definitions: {},
+          properties: {
+            name: { $ref: 'definitions/large' },
+          },
+        });
+      }).toThrow();
+    });
+  });
+
+  describe('[if]', () => {
+    it('should be changed login type via if', () => {
+      page
+        .newSchema({
+          properties: {
+            login_type: {
+              type: 'string',
+              title: '登录方式',
+              enum: [
+                { label: '手机', value: 'mobile' },
+                { label: '账密', value: 'account' },
+              ],
+              default: 'mobile',
+              ui: {
+                widget: 'radio',
+                class: 'j-login_type',
+              },
+            },
+            mobile: { type: 'string', ui: { class: 'j-mobile' } },
+            code: { type: 'number', ui: { class: 'j-code' } },
+            name: { type: 'string', ui: { class: 'j-name' } },
+            pwd: {
+              type: 'string',
+              ui: {
+                type: 'password',
+                class: 'j-pwd',
+              },
+            },
+          },
+          required: ['login_type'],
+          if: {
+            properties: { login_type: { enum: ['mobile'] } },
+          },
+          then: {
+            required: ['mobile', 'code'],
+          },
+          else: {
+            required: ['name', 'pwd'],
+          },
+        })
+        .checkCount('.j-mobile', 1)
+        .checkCount('.j-name', 0);
+      const labels = page
+        .getEl('.j-login_type nz-radio-group')
+        .querySelectorAll('label');
+      expect(labels.length).toBe(2);
+      labels[1].click();
+      page.checkCount('.j-mobile', 0).checkCount('.j-name', 1);
+    });
+    it('should be not else', () => {
+      page
+        .newSchema({
+          properties: {
+            login_type: {
+              type: 'string',
+              title: '登录方式',
+              enum: [
+                { label: '手机', value: 'mobile' },
+                { label: '账密', value: 'account' },
+              ],
+              default: 'mobile',
+              ui: {
+                widget: 'radio',
+                class: 'j-login_type',
+              },
+            },
+            mobile: { type: 'string', ui: { class: 'j-mobile' } },
+            code: { type: 'number', ui: { class: 'j-code' } },
+            name: { type: 'string', ui: { class: 'j-name' } },
+            pwd: {
+              type: 'string',
+              ui: {
+                type: 'password',
+                class: 'j-pwd',
+              },
+            },
+          },
+          required: ['login_type'],
+          if: {
+            properties: { login_type: { enum: ['mobile'] } },
+          },
+          then: {
+            required: ['mobile', 'code'],
+          },
+        })
+        .checkCount('.j-mobile', 1)
+        .checkCount('.j-name', 1);
+      const labels = page
+        .getEl('.j-login_type nz-radio-group')
+        .querySelectorAll('label');
+      expect(labels.length).toBe(2);
+      labels[1].click();
+      page.checkCount('.j-mobile', 0).checkCount('.j-name', 1);
+    });
+    it(`should be throw error when is not 'properties' for if`, () => {
+      expect(() => {
+        page.newSchema({
+          properties: { name: { type: 'string' } },
+          if: {},
+          then: {},
+        });
+      }).toThrowError(`if: does not contain 'properties'`);
+    });
+    it(`should be throw error when invalid key for 'properties' in if`, () => {
+      expect(() => {
+        page.newSchema({
+          properties: {
+            login_type: {
+              type: 'string',
+              title: '登录方式',
+              enum: [
+                { label: '手机', value: 'mobile' },
+                { label: '账密', value: 'account' },
+              ],
+              default: 'mobile',
+              ui: {
+                widget: 'radio',
+                class: 'j-login_type',
+              },
+            },
+            mobile: { type: 'string', ui: { class: 'j-mobile' } },
+            code: { type: 'number', ui: { class: 'j-code' } },
+            name: { type: 'string', ui: { class: 'j-name' } },
+            pwd: {
+              type: 'string',
+              ui: {
+                type: 'password',
+                class: 'j-pwd',
+              },
+            },
+          },
+          required: ['login_type'],
+          if: {
+            properties: { login_type1: { enum: ['mobile'] } },
+          },
+          then: {
+            required: ['mobile', 'code'],
+          },
+        });
+      }).toThrow();
+    });
+  });
+
+  describe('[order]', () => {
+    function genKeys() {
+      return JSON.stringify(
+        Object.keys((context.comp.rootProperty as ObjectProperty).properties),
+      );
+    }
+
+    function checkOrderKeys(arr: string[]) {
+      expect(genKeys()).toBe(JSON.stringify(arr));
+    }
+
+    it('should be adjust the order', () => {
+      const order = ['pwd', 'name'];
+      page.newSchema({
+        properties: {
+          name: { type: 'string' },
+          pwd: { type: 'string' },
+        },
+        ui: {
+          order,
+        },
+      });
+      checkOrderKeys(order);
+    });
+
+    it('should be used *', () => {
+      page.newSchema({
+        properties: {
+          a: { type: 'string' },
+          b: { type: 'string' },
+          c: { type: 'string' },
+        },
+        ui: {
+          order: ['b', '*'],
+        },
+      });
+      checkOrderKeys(['b', 'a', 'c']);
+    });
+
+    describe('should be throw error', () => {
+      it('when has extraneous key', () => {
+        expect(() => {
+          page.newSchema({
+            properties: {
+              a: { type: 'string' },
+              b: { type: 'string' }
+            },
+            ui: {
+              order: ['c', 'a'],
+            },
+          });
+        }).toThrow();
+      });
+      it('when does not contain all keys', () => {
+        expect(() => {
+          page.newSchema({
+            properties: {
+              a: { type: 'string' },
+              b: { type: 'string' }
+            },
+            ui: {
+              order: ['a'],
+            },
+          });
+        }).toThrow();
+      });
+      it('when contains more than one wildcard item', () => {
+        expect(() => {
+          page.newSchema({
+            properties: {
+              a: { type: 'string' },
+              b: { type: 'string' }
+            },
+            ui: {
+              order: ['a', '*', '*'],
+            },
+          });
+        }).toThrow();
       });
     });
   });

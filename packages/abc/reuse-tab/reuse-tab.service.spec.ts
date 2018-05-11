@@ -7,7 +7,7 @@ import { MenuService } from '@delon/theme';
 
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
-import { ReuseTabMatchMode } from './interface';
+import { ReuseTabMatchMode, ReuseTitle } from './interface';
 
 const TITLE = `标题`;
 let reuse: boolean = true;
@@ -195,6 +195,12 @@ describe('abc: reuse-tab', () => {
       it('should get title from route data', () => {
         const title = 'aa';
         expect(srv.getTitle('/', <any>{ data: { title } }).text).toBe(title);
+      });
+      it('should used ReuseTitle set title via service', () => {
+        genCached(1, '/');
+        expect(srv.getTitle('/').text).toBe('标题');
+        srv.title = <ReuseTitle>{ text: 'a' };
+        expect(srv.getTitle('/').text).toBe('a');
       });
       it('should use url as title when can be no found title', () => {
         const url = '/a/0';

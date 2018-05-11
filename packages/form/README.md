@@ -1,6 +1,6 @@
 # @delon/form module
 
-[Document](http://ng-alain.com/docs/form)
+[Document](http://ng-alain.com/form)
 
 ## Architecture
 

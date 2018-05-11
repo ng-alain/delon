@@ -98,7 +98,8 @@
   "linterOptions": {
     "exclude": [
       "packages/**/*.spec.ts",
-      "packages/cli/**/*"
+      "packages/cli/**/*",
+      "packages/site/app/routes/gen/**/*"
     ]
   }
 }

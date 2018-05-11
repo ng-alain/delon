@@ -93,6 +93,7 @@ describe('acl: service', () => {
     );
     expect(srv.can(ADMIN + '1')).toBe(false);
     expect(srv.can(null)).toBe(true);
+    expect(srv.can({})).toBe(false);
   });
 
   it('should be valid when all of for is array roles', () => {
@@ -107,8 +108,9 @@ describe('acl: service', () => {
 
   it(`#canAbility()`, () => {
     srv.attachAbility([ABILITY]);
-    expect(srv.canAbility(ABILITY)).toBe(true);
-    expect(srv.canAbility(ADMIN + '1')).toBe(false);
+    expect(srv.canAbility(ABILITY)).toBe(true, 'should be support number or string type');
+    expect(srv.canAbility([ABILITY])).toBe(true, 'should be support array type');
+    expect(srv.canAbility(ADMIN + '1')).toBe(false, 'should be invalid ability');
   });
 
   it('should be valid when all of for is array roles', () => {

@@ -23,7 +23,7 @@ class MockDocument {
         },
       },
     ];
-  }
+  };
   createElement = () => {
     const ret: any = {
       testStatus,
@@ -31,7 +31,7 @@ class MockDocument {
     };
     if (isIE) ret.readyState = 'loading';
     return ret;
-  }
+  };
 }
 
 describe('utils: lazy', () => {
@@ -84,11 +84,18 @@ describe('utils: lazy', () => {
     });
   });
 
-  it('should be load a css resource', () => {
-    srv.change.subscribe(res => {
-      expect(res[0].status).toBe('ok');
+  describe('Styles', () => {
+    it('should be load a css resource', () => {
+      srv.change.subscribe(res => {
+        expect(res[0].status).toBe('ok');
+      });
+      srv.load('/1.css');
     });
-    srv.load('/1.css');
+    it('should be load a less resource', () => {
+      srv.loadStyle('/1.less', 'stylesheet/less').then(res => {
+        expect(res.status).toBe('ok');
+      });
+    });
   });
 
   it('should be immediately when loaded a js resource', () => {

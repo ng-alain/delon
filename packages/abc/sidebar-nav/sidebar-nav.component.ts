@@ -32,7 +32,8 @@ const FLOATINGCLS = 'nav-floating';
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
   private rootEl: HTMLDivElement;
-  private floatingEl: HTMLDivElement;
+  /** @inner */
+  floatingEl: HTMLDivElement;
   private bodyEl: HTMLBodyElement;
   list: Nav[] = [];
   private change$: Subscription;
@@ -94,9 +95,11 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       this.floatingAreaClickHandle.bind(this),
     );
     // fix ie: https://github.com/cipchk/delon/issues/52
-    if (this.floatingEl.hasOwnProperty('remove')) this.floatingEl.remove();
-    else if (this.floatingEl.parentNode)
+    if (this.floatingEl.hasOwnProperty('remove')) {
+      this.floatingEl.remove();
+    } else if (this.floatingEl.parentNode) {
       this.floatingEl.parentNode.removeChild(this.floatingEl);
+    }
   }
 
   genFloatingContainer() {

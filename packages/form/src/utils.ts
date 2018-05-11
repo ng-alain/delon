@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { map, takeWhile } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import * as deepExtend from 'deep-extend';
+import { deepCopy } from '@delon/util';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 
@@ -25,15 +25,6 @@ export function isBlank(o: any) {
 export function di(...args) {
   // tslint:disable-next-line:no-console
   console.warn(...args);
-}
-
-export function deepGet(obj: any, path: string[], defaultValue?: any) {
-  if (!obj || path == null || path.length === 0) return defaultValue;
-  if (path.length === 1) {
-    const checkObj = obj[path[0]];
-    return typeof checkObj === 'undefined' ? defaultValue : checkObj;
-  }
-  return path.reduce((o, k) => o[k], obj) || defaultValue;
 }
 
 /** 根据 `$ref` 查找 `definitions` */
@@ -187,8 +178,7 @@ export function getEnum(list: any[], formData: any): SFSchemaEnum[] {
 }
 
 export function getCopyEnum(list: any[], formData: any) {
-  const copy = deepExtend({ }, { __source: list || [] }).__source;
-  return getEnum(copy, formData);
+  return getEnum(deepCopy(list || []), formData);
 }
 
 export function getData(

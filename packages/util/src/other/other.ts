@@ -20,7 +20,7 @@ export function deepGet(obj: any, path: string | string[], defaultValue?: any) {
   return path.reduce((o, k) => o[k], obj) || defaultValue;
 }
 
-export function deepCopy(target: any, obj: any) {
+export function deepCopy(obj: any) {
   const result = deepExtend({ }, { __source: obj });
   return result.__source;
 }

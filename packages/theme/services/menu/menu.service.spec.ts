@@ -66,19 +66,19 @@ describe('Service: Menu', () => {
     });
 
     it('#add', () => {
-      srv.add(deepCopy([], DATA));
+      srv.add(deepCopy(DATA));
       expect(srv.menus.length).toBe(DATA.length);
     });
 
     it('#resume', () => {
-      srv.add(deepCopy([], DATA));
+      srv.add(deepCopy(DATA));
       let tick = 0;
       srv.resume(item => ++tick);
       expect(tick).toBeGreaterThan(0);
     });
 
     it('#clear', () => {
-      srv.add(deepCopy([], DATA));
+      srv.add(deepCopy(DATA));
       expect(srv.menus.length).toBe(DATA.length);
       srv.clear();
       expect(srv.menus.length).toBe(0);
@@ -93,19 +93,19 @@ describe('Service: Menu', () => {
 
     describe('#openedByUrl', () => {
       it('with url', () => {
-        srv.add(deepCopy([], DATA));
+        srv.add(deepCopy(DATA));
         srv.openedByUrl(`/dashboard/v1`);
         expect(srv.menus[0]._open).toBe(true);
       });
       it('not found', () => {
-        srv.add(deepCopy([], DATA));
+        srv.add(deepCopy(DATA));
         srv.openedByUrl(`/notfound`);
         expect(srv.menus.filter(w => w._open === false).length).toBe(
           srv.menus.length,
         );
       });
       it('invalid url', () => {
-        srv.add(deepCopy([], DATA));
+        srv.add(deepCopy(DATA));
         srv.openedByUrl(null);
         expect(srv.menus.filter(w => w._open === false).length).toBe(0);
       });
@@ -113,13 +113,13 @@ describe('Service: Menu', () => {
 
     describe('#getPathByUrl', () => {
       it('with url', () => {
-        srv.add(deepCopy([], DATA));
+        srv.add(deepCopy(DATA));
         const menus = srv.getPathByUrl(`/dashboard/v1`);
         expect(menus.length).toBe(2);
         expect(menus[0].text).toBe('dashboard');
       });
       it('invalid url', () => {
-        srv.add(deepCopy([], DATA));
+        srv.add(deepCopy(DATA));
         const menus = srv.getPathByUrl(`/dashboard/v1111`);
         expect(menus.length).toBe(0);
       });
@@ -127,7 +127,7 @@ describe('Service: Menu', () => {
 
     describe('#shortcuts', () => {
       it('should be under the dashboard', () => {
-        srv.add(deepCopy([], DATA));
+        srv.add(deepCopy(DATA));
         expect(srv.menus[0].children[1].children.length).toBe(1);
       });
       it('should be use [shortcut_root: true]', () => {
@@ -188,7 +188,7 @@ describe('Service: Menu', () => {
 
     describe('ISSUES', () => {
       it('ng-alain #107', () => {
-        srv.add(deepCopy([], DATA));
+        srv.add(deepCopy(DATA));
         expect(
           srv.menus[0].children.filter(w => w.shortcut_root === true).length,
         ).toBe(1);

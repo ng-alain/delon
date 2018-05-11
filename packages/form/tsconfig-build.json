@@ -4,7 +4,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
-    "paths": {},
+    "paths": {
+      "@delon/util": ["../../packages-dist/util"]
+    },
     "outDir": "../../@delon/form"
   },
 

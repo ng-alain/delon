@@ -21,6 +21,7 @@ import { SimpleTokenModel } from './simple/simple.model';
 import { ITokenModel, DA_SERVICE_TOKEN, ITokenService } from './interface';
 import { BaseInterceptor } from './base.interceptor';
 import { SimpleInterceptor } from './simple/simple.interceptor';
+import { WINDOW } from '../win_tokens';
 
 function genModel<T extends ITokenModel>(
   modelType: { new (): T },
@@ -56,6 +57,7 @@ class MockTokenService implements ITokenService {
 
 describe('auth: base.interceptor', () => {
   let injector: Injector;
+  let window: any;
   let http: HttpClient;
   let httpBed: HttpTestingController;
   const mockRouter = {
@@ -63,6 +65,11 @@ describe('auth: base.interceptor', () => {
     parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
       return new DefaultUrlSerializer().parse(value);
     }),
+  };
+  const MockWindow = {
+    location: {
+      href: ''
+    }
   };
 
   function genModule(
@@ -77,6 +84,7 @@ describe('auth: base.interceptor', () => {
         DelonAuthModule.forRoot(),
       ],
       providers: [
+        { provide: WINDOW, useValue: MockWindow },
         { provide: DelonAuthConfig, useValue: options },
         { provide: Router, useValue: mockRouter },
         {
@@ -89,6 +97,7 @@ describe('auth: base.interceptor', () => {
     });
     if (tokenData) injector.get(DA_SERVICE_TOKEN).set(tokenData);
 
+    window = injector.get(WINDOW);
     http = injector.get(HttpClient);
     httpBed = injector.get(HttpTestingController);
   }
@@ -137,21 +146,42 @@ describe('auth: base.interceptor', () => {
   });
 
   describe('[invalid token]', () => {
-    it('should be navigate to login', (done: () => void) => {
-      genModule({}, genModel(SimpleTokenModel, null));
-      http.get('/test', { responseType: 'text' }).subscribe(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        (err: any) => {
-          expect(err.status).toBe(401);
-          setTimeout(() => {
-            expect(injector.get(Router).navigate).toHaveBeenCalled();
+    describe('should be navigate to login', () => {
+      it('with navigate', (done: () => void) => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        http.get('/test', { responseType: 'text' }).subscribe(
+          () => {
+            expect(false).toBe(true);
             done();
-          }, 20);
-        },
-      );
+          },
+          (err: any) => {
+            expect(err.status).toBe(401);
+            setTimeout(() => {
+              expect(injector.get(Router).navigate).toHaveBeenCalled();
+              done();
+            }, 20);
+          },
+        );
+      });
+      it('with location', (done: () => void) => {
+        const login_url = 'https://ng-alain.com/login';
+        genModule({
+          login_url
+        }, genModel(SimpleTokenModel, null));
+        http.get('/test', { responseType: 'text' }).subscribe(
+          () => {
+            expect(false).toBe(true);
+            done();
+          },
+          (err: any) => {
+            expect(err.status).toBe(401);
+            setTimeout(() => {
+              expect(window.location.href).toBe(login_url);
+              done();
+            }, 20);
+          },
+        );
+      });
     });
 
     it('should be not navigate to login when token_invalid_redirect: false', (done: () => void) => {

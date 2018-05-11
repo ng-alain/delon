@@ -74,7 +74,7 @@ describe('theme: http.client', () => {
           ret.flush(OK);
         });
         it(`should be unix timestamp when is date param`, (done: () => void) => {
-          const p = Object.assign(deepCopy({}, PARAMS), { time, date: new Date() });
+          const p = Object.assign(deepCopy(PARAMS), { time, date: new Date() });
           http.get(URL, p).subscribe(res => {
             expect(res).toBe(OK);
             done();

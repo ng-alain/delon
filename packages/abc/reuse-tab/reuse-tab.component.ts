@@ -248,7 +248,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  _close(e: Event, idx: number, includeNonCloseable = false) {
+  _close(e: Event, idx: number, includeNonCloseable: boolean) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();

@@ -45,7 +45,7 @@ describe('abc: utils', () => {
 
   it('#deepCopy', () => {
     const a = { number: 1 };
-    expect(deepCopy({}, a).number).toBe(a.number);
+    expect(deepCopy(a).number).toBe(a.number);
   });
 
   describe('#copy', () => {

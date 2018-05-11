@@ -32,7 +32,7 @@ export class ImageDirective implements OnChanges, OnInit {
     private render: Renderer2,
     DEF: AdImageConfig,
   ) {
-    Object.assign(this, deepCopy({}, DEF));
+    Object.assign(this, deepCopy(DEF));
   }
 
   ngOnInit(): void {

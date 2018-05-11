@@ -380,7 +380,7 @@ describe('abc: simple-table', () => {
 })
 class TestComponent {
   @ViewChild('st') comp: SimpleTableComponent;
-  data: string | any[] = deepCopy([], USERS);
+  data: string | any[] = deepCopy(USERS);
   extraParams: any;
   reqMehtod: string;
   reqBody: any;
@@ -389,7 +389,7 @@ class TestComponent {
   reqError() {}
   resReName: ResReNameType;
   ps = PS;
-  columns: SimpleTableColumn[] = deepCopy([], COLUMNS);
+  columns: SimpleTableColumn[] = deepCopy(COLUMNS);
   pi: number;
   total: number;
   showPagination = true;

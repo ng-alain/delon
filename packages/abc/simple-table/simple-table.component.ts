@@ -333,7 +333,7 @@ export class SimpleTableComponent
     private number: DecimalPipe,
     @Inject(DOCUMENT) private doc: any,
   ) {
-    Object.assign(this, deepCopy({}, defConfig));
+    Object.assign(this, deepCopy(defConfig));
   }
 
   // region: data
@@ -872,7 +872,7 @@ export class SimpleTableComponent
     const sortMap: Object = {};
     let idx = 0;
     const newColumns: SimpleTableColumn[] = [];
-    const copyColumens = deepCopy([], this.columns);
+    const copyColumens = deepCopy(this.columns);
     for (const item of copyColumens) {
       if (this.acl && item.acl && !this.acl.can(item.acl)) continue;
       if (item.index) {

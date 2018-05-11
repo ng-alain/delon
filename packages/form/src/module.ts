@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { DelonUtilModule } from '@delon/util';
 
 import { DelonFormConfig } from './config';
 import {
@@ -73,7 +74,7 @@ const WIDGETS = [
 // endregion
 
 @NgModule({
-  imports: [CommonModule, FormsModule, NgZorroAntdModule],
+  imports: [CommonModule, FormsModule, DelonUtilModule, NgZorroAntdModule],
   declarations: [...COMPONENTS, ...WIDGETS],
   entryComponents: [...WIDGETS],
   exports: [...COMPONENTS],

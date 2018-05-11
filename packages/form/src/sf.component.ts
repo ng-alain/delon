@@ -13,7 +13,8 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
-import * as deepExtend from 'deep-extend';
+import { deepCopy } from '@delon/util';
+
 import { DelonFormConfig } from './config';
 import { di, retrieveSchema, FORMATMAPS, resolveIf } from './utils';
 import { TerminatorService } from './terminator.service';
@@ -205,7 +206,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   private coverProperty() {
     const isHorizontal = this.layout === 'horizontal';
-    const _schema = deepExtend({}, this.schema);
+    const _schema = deepCopy(this.schema);
     const { definitions } = _schema;
 
     const inFn = (
