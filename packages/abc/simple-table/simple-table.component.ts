@@ -196,8 +196,8 @@ export class SimpleTableComponent
   private _bordered = false;
   /** table大小 */
   @Input() size: 'small' | 'middle' | 'default' = 'default';
-  /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: 300, x: 300 }` */
-  @Input() scroll: { y: number; x: number };
+  /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px', x: '300px' }` */
+  @Input() scroll: { y: string; x: string };
   /** 是否显示pagination中改变页数 */
   @Input()
   get showSizeChanger() {
