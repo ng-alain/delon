@@ -25,6 +25,7 @@ export * from './zip';
 export * from './number-to-chinese';
 export * from './lodop';
 export * from './quick-menu';
+export * from './qr';
 // charts
 export * from './charts/bar';
 export * from './charts/card';

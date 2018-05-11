@@ -1,3 +1,11 @@
+---
+order: 2
+title: 设计器
+---
+
+通过 `QRService` 操作更多参数；`change` 可以回调二维码 dataURL 值。
+
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -5,7 +13,8 @@ import { Component } from '@angular/core';
   template: `
   <nz-row [nzGutter]="24">
     <nz-col [nzSpan]="8" class="text-center">
-      <qr [value]="value"
+      <qr
+        [value]="value"
         [background]="background"
         [backgroundAlpha]="backgroundAlpha"
         [foreground]="foreground"
@@ -14,6 +23,7 @@ import { Component } from '@angular/core';
         [mime]="mime"
         [padding]="padding"
         [size]="size"
+        (change)="change($event)"
         style="border:1px solid #999"></qr>
     </nz-col>
     <nz-col [nzSpan]="16">
@@ -92,4 +102,9 @@ export class DemoComponent {
   mime = 'image/png';
   padding = 10;
   size = 220;
+
+  change(dataURL: string) {
+    console.log(dataURL);
+  }
 }
+```

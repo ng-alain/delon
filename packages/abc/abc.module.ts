@@ -27,6 +27,7 @@ import { AdZipModule } from './zip/zip.module';
 import { AdNumberToChineseModule } from './number-to-chinese/number-to-chinese.module';
 import { AdLodopModule } from './lodop/lodop.module';
 import { AdQuickMenuModule } from './quick-menu/quick-menu.module';
+import { AdQRModule } from './qr/qr.module';
 // charts
 import { AdG2BarModule } from './charts/bar/bar.module';
 import { AdG2CardModule } from './charts/card/card.module';
@@ -68,6 +69,7 @@ const MODULES = [
   AdNumberToChineseModule,
   AdLodopModule,
   AdQuickMenuModule,
+  AdQRModule,
   // charts
   AdG2BarModule,
   AdG2CardModule,
@@ -113,6 +115,7 @@ const MODULES = [
     AdNumberToChineseModule.forRoot(),
     AdLodopModule.forRoot(),
     AdQuickMenuModule.forRoot(),
+    AdQRModule.forRoot(),
     // charts
     AdG2BarModule.forRoot(),
     AdG2CardModule.forRoot(),
@@ -133,7 +136,7 @@ export class DelonABCRootModule {}
 
 @NgModule({ exports: MODULES })
 export class DelonABCModule {
-  public static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders {
     return { ngModule: DelonABCRootModule };
   }
 }
