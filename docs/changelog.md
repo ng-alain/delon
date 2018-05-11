@@ -6,6 +6,27 @@ title:
 type: Other
 ---
 
+### 1.0.0-beta.10@next
+
+`2018-5-11`
+
+- 重构所有 `@delon/*` 的强制依赖关系
+- 脚手架
+  - **BREAKING CHANGES** 重构路由复用组件用法，需要手动注册 `RouteReuseStrategy`，未使用该组件不受影响，[6713c4](https://github.com/cipchk/ng-alain/commit/6713c4)
+  - **BREAKING CHANGES** 从 `@delon/abc` 抽离 `AdUtilModule` 模块为 `@delon/util` 新类库，[66b0ea](https://github.com/cipchk/ng-alain/commit/66b0ea)
+  - 添加二维码示例页，[70fbfd](https://github.com/cipchk/ng-alain/commit/70fbfd)
+- @delon/util：新工具集类库
+- @delon/form
+  - 增加 `tag`、`checkbox` 变更回调事件，[#426](https://github.com/cipchk/ng-alain/issues/426)
+  - 修复无效导入路径，[#65](https://github.com/cipchk/delon/issues/65)
+- @delon/abc
+  - `reuse-tab`：**BREAKING CHANGES** 重构路由复用组件用法，需要手动注册 `RouteReuseStrategy`
+  - `qr`：增加生成二维码组件
+  - `simple-table`：文档细节，[@NitronPlus](https://github.com/NitronPlus)
+- @delon/cli
+  - 修复若干bug
+- 升级文档站
+
 ### 1.0.0-beta.9@next
 
 `2018-5-7`
