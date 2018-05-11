@@ -27,7 +27,8 @@
     "antd",
     "ng-zorro-antd"
   ],
+  "dependencies": {
+  },
   "peerDependencies": {
-    "@types/mockjs": "^1.0.0"
   }
 }

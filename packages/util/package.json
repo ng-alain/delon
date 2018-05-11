@@ -22,7 +22,7 @@
     "utility",
     "utils"
   ],
-  "peerDependencies": {
+  "dependencies": {
     "deep-extend": "^0.5.1"
   }
 }

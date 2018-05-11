@@ -21,7 +21,7 @@ const globals = {
   'rxjs/observable/FromEventObservable': 'Rx.Observable',
   'rxjs/observable/ErrorObservable': 'Rx.Observable',
 
-  '@delon/theme': 'alain.theme',
+  '@delon/theme': 'delon.theme',
 };
 
 const plugins = [sourcemaps(), resolve()];

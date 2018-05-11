@@ -31,12 +31,12 @@ const globals = {
   'rxjs/observable/combineLatest': 'Rx.Observable',
 
   'date-fns/format': 'date-fns/format/index',
-  'deep-extend': 'deep-extend',
+
+  '@delon/util': 'delon.util',
 };
 
 const listOfDateFns = [
-  'format',
-  'deepExtend'
+  'format'
 ];
 
 const listOfReplace = listOfDateFns.map(name => {
