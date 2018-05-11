@@ -1,119 +1,139 @@
-<nz-table [nzData]="_data" [(nzPageIndex)]="pi" (nzPageIndexChange)="_change('pi')" [(nzPageSize)]="ps" (nzPageSizeChange)="_change('ps')" [nzTotal]="total" [nzShowPagination]="_isPagination" [nzFrontPagination]="false" [nzBordered]="bordered" [nzSize]="size"
-    [nzLoading]="loading" [nzLoadingDelay]="loadingDelay" [nzScroll]="scroll" [nzTitle]="header" [nzFooter]="footer" [nzNoResult]="noResult" [nzPageSizeOptions]="pageSizeOptions" [nzShowQuickJumper]="showQuickJumper" [nzShowSizeChanger]="showSizeChanger"
-    [nzShowTotal]="totalTpl">
-    <thead>
-        <tr>
-            <th *ngIf="expand" [nzShowExpand]="expand"></th>
-            <th *ngFor="let c of _columns; let index=index" [nzWidth]="c.width" [nzLeft]="c._left" [nzRight]="c._right" [ngClass]="c.className" [attr.colspan]="c.colSpan" [attr.data-col]="c.indexKey" [nzShowSort]="_sortMap[index].enabled" [(nzSort)]="_sortMap[index].v"
-                (nzSortChange)="sort(index, $event)">
-                <ng-template #renderTitle [ngTemplateOutlet]="c.__renderTitle" [ngTemplateOutletContext]="{$implicit: c, index: index }"></ng-template>
-                <ng-container *ngIf="!c.__renderTitle; else renderTitle">
-                    <ng-container [ngSwitch]="c.type">
-                        <ng-container *ngSwitchCase="'checkbox'">
-                            <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll()"></label>
-                            <nz-dropdown *ngIf="c.selections.length">
-                                <span nz-dropdown>
+<nz-table
+  [nzData]="_data"
+  [(nzPageIndex)]="pi"
+  (nzPageIndexChange)="_change('pi')"
+  [(nzPageSize)]="ps"
+  (nzPageSizeChange)="_change('ps')"
+  [nzTotal]="total"
+  [nzShowPagination]="_isPagination"
+  [nzFrontPagination]="false"
+  [nzBordered]="bordered"
+  [nzSize]="size"
+  [nzLoading]="loading"
+  [nzLoadingDelay]="loadingDelay"
+  [nzScroll]="scroll"
+  [nzTitle]="header"
+  [nzFooter]="footer"
+  [nzNoResult]="noResult"
+  [nzPageSizeOptions]="pageSizeOptions"
+  [nzShowQuickJumper]="showQuickJumper"
+  [nzShowSizeChanger]="showSizeChanger"
+  [nzShowTotal]="totalTpl">
+  <thead>
+    <tr>
+      <th *ngIf="expand" [nzShowExpand]="expand"></th>
+      <th *ngFor="let c of _columns; let index=index" [nzWidth]="c.width" [nzLeft]="c._left" [nzRight]="c._right" [ngClass]="c.className"
+        [attr.colspan]="c.colSpan" [attr.data-col]="c.indexKey" [nzShowSort]="_sortMap[index].enabled" [(nzSort)]="_sortMap[index].v"
+        (nzSortChange)="sort(index, $event)">
+        <ng-template #renderTitle [ngTemplateOutlet]="c.__renderTitle" [ngTemplateOutletContext]="{$implicit: c, index: index }"></ng-template>
+        <ng-container *ngIf="!c.__renderTitle; else renderTitle">
+          <ng-container [ngSwitch]="c.type">
+            <ng-container *ngSwitchCase="'checkbox'">
+              <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll()"></label>
+              <nz-dropdown *ngIf="c.selections.length">
+                <span nz-dropdown>
                   <i class="anticon anticon-down"></i>
                 </span>
-                                <ul nz-menu>
-                                    <li nz-menu-item *ngFor="let rw of c.selections" (click)="_rowSelection(rw)" [innerHTML]="rw.text">
-                                    </li>
-                                </ul>
-                            </nz-dropdown>
-                        </ng-container>
-                        <ng-container *ngSwitchDefault>
-                            <span [innerHTML]="c.title"></span>
-                        </ng-container>
-                    </ng-container>
-                    <nz-dropdown *ngIf="c.filters.length > 0" nzTrigger="click" [hasFilterButton]="true" [nzClickHide]="false" [(nzVisible)]="c.filterVisible">
-                        <i class="{{c.filterIcon}}" [ngClass]="{'ant-table-filter-selected': c.filtered}" nz-dropdown></i>
-                        <ul nz-menu>
-                            <ng-container *ngIf="c.filterMultiple">
-                                <li nz-menu-item *ngFor="let filter of c.filters">
-                                    <label nz-checkbox [(ngModel)]="filter.checked">{{filter.text}}</label>
-                                </li>
-                            </ng-container>
-                            <ng-container *ngIf="!c.filterMultiple">
-                                <li nz-menu-item *ngFor="let filter of c.filters">
-                                    <label nz-radio [ngModel]="filter.checked" (ngModelChange)="filterRadio(c, filter, $event)">{{filter.text}}</label>
-                                </li>
-                            </ng-container>
-                        </ul>
-                        <div class="ant-table-filter-dropdown-btns">
-                            <a class="ant-table-filter-dropdown-link confirm" (click)="c.filterVisible = false">
-                                <span (click)="filterConfirm(c)">{{c.filterConfirmText}}</span>
-                            </a>
-                            <a class="ant-table-filter-dropdown-link clear" (click)="c.filterVisible = false">
-                                <span (click)="filterClear(c)">{{c.filterClearText}}</span>
-                            </a>
-                        </div>
-                    </nz-dropdown>
-                </ng-container>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <ng-container *ngFor="let i of _data; let index=index">
-            <tr>
-                <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand"></td>
-                <td *ngFor="let c of _columns" [nzLeft]="c._left" [nzRight]="c._right" [nzCheckbox]="c.type === 'checkbox'" [ngClass]="c.className" [attr.colspan]="c.colSpan">
-                    <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
-                    <ng-container *ngIf="!c.__render; else render">
-                        <ng-container *ngIf="c.index" [ngSwitch]="c.type">
-                            <ng-container *ngSwitchCase="'checkbox'">
-                                <label nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkSelection(i, $event)"></label>
-                            </ng-container>
-                            <ng-container *ngSwitchCase="'radio'">
-                                <label nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_refRadio(index, $event, i)"></label>
-                            </ng-container>
-                            <ng-container *ngSwitchCase="'link'">
-                                <a (click)="_click($event, i, c)" [innerHTML]="_get(i, c)"></a>
-                            </ng-container>
-                            <span *ngSwitchDefault [innerHTML]="_get(i, c)"></span>
-                        </ng-container>
-                        <ng-container *ngFor="let btn of c.buttons; let last=last">
-                            <ng-container *ngIf="btn.if(i, btn, c)" [ngSwitch]="btn._type">
-                                <ng-container *ngSwitchCase="2">
-                                    <nz-popconfirm [nzTitle]="btn.popTitle" (nzOnConfirm)="btnClick(i, btn)">
-                                        <a nz-popconfirm [innerHTML]="btnText(i, btn)"></a>
-                                    </nz-popconfirm>
-                                </ng-container>
-                                <ng-container *ngSwitchCase="3">
-                                    <nz-dropdown>
-                                        <a class="ant-dropdown-link" nz-dropdown [innerHTML]="btnText(i, btn, true)">
-                                        </a>
-                                        <ul nz-menu nzSelectable>
-                                            <ng-container *ngFor="let subBtn of btn.children">
-                                                <li nz-menu-item [nzClickHide]="false" *ngIf="subBtn.if(i, subBtn, c)">
-                                                    <ng-container *ngIf="subBtn._type == 2">
-                                                        <nz-popconfirm [nzTitle]="subBtn.popTitle" (nzOnConfirm)="btnClick(i, subBtn)">
-                                                            <a nz-popconfirm [innerHTML]="btnText(i, subBtn)"></a>
-                                                        </nz-popconfirm>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="subBtn._type != 2">
-                                                        <a (click)="btnClick(i, subBtn)" [innerHTML]="btnText(i, subBtn)"></a>
-                                                    </ng-container>
-                                                </li>
-                                            </ng-container>
-                                        </ul>
-                                    </nz-dropdown>
-                                </ng-container>
-                                <a *ngSwitchDefault (click)="btnClick(i, btn)" [innerHTML]="btnText(i, btn)"></a>
-                                <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
-                            </ng-container>
-                        </ng-container>
-                        <ng-template [ngIf]="!c.__renderExpanded" [ngTemplateOutlet]="c.__renderExpanded" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
-                    </ng-container>
-                </td>
-            </tr>
-            <tr [nzExpand]="i.expand">
-                <td></td>
-                <td [attr.colspan]="_columns.length">
-                    <ng-template [ngTemplateOutlet]="expand" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
-                </td>
-            </tr>
+                <ul nz-menu>
+                  <li nz-menu-item *ngFor="let rw of c.selections" (click)="_rowSelection(rw)" [innerHTML]="rw.text">
+                  </li>
+                </ul>
+              </nz-dropdown>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <span [innerHTML]="c.title"></span>
+            </ng-container>
+          </ng-container>
+          <nz-dropdown *ngIf="c.filters.length > 0" nzTrigger="click" [hasFilterButton]="true" [nzClickHide]="false" [(nzVisible)]="c.filterVisible">
+            <i class="{{c.filterIcon}}" [ngClass]="{'ant-table-filter-selected': c.filtered}" nz-dropdown></i>
+            <ul nz-menu>
+              <ng-container *ngIf="c.filterMultiple">
+                <li nz-menu-item *ngFor="let filter of c.filters">
+                  <label nz-checkbox [(ngModel)]="filter.checked">{{filter.text}}</label>
+                </li>
+              </ng-container>
+              <ng-container *ngIf="!c.filterMultiple">
+                <li nz-menu-item *ngFor="let filter of c.filters">
+                  <label nz-radio [ngModel]="filter.checked" (ngModelChange)="filterRadio(c, filter, $event)">{{filter.text}}</label>
+                </li>
+              </ng-container>
+            </ul>
+            <div class="ant-table-filter-dropdown-btns">
+              <a class="ant-table-filter-dropdown-link confirm" (click)="c.filterVisible = false">
+                <span (click)="filterConfirm(c)">{{c.filterConfirmText}}</span>
+              </a>
+              <a class="ant-table-filter-dropdown-link clear" (click)="c.filterVisible = false">
+                <span (click)="filterClear(c)">{{c.filterClearText}}</span>
+              </a>
+            </div>
+          </nz-dropdown>
         </ng-container>
-        <ng-template [ngIf]="!loading" [ngTemplateOutlet]="body"></ng-template>
-    </tbody>
-    <ng-template #totalTpl let-range="range" let-total>{{ renderTotal(total, range) }}</ng-template>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let i of _data; let index=index">
+      <tr>
+        <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand"></td>
+        <td *ngFor="let c of _columns" [nzLeft]="c._left" [nzRight]="c._right" [nzCheckbox]="c.type === 'checkbox'" [ngClass]="c.className"
+          [attr.colspan]="c.colSpan">
+          <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
+          <ng-container *ngIf="!c.__render; else render">
+            <ng-container *ngIf="c.index" [ngSwitch]="c.type">
+              <ng-container *ngSwitchCase="'checkbox'">
+                <label nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkSelection(i, $event)"></label>
+              </ng-container>
+              <ng-container *ngSwitchCase="'radio'">
+                <label nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_refRadio(index, $event, i)"></label>
+              </ng-container>
+              <ng-container *ngSwitchCase="'link'">
+                <a (click)="_click($event, i, c)" [innerHTML]="_get(i, c)"></a>
+              </ng-container>
+              <span *ngSwitchDefault [innerHTML]="_get(i, c)"></span>
+            </ng-container>
+            <ng-container *ngFor="let btn of c.buttons; let last=last">
+              <ng-container *ngIf="btn.if(i, btn, c)" [ngSwitch]="btn._type">
+                <ng-container *ngSwitchCase="2">
+                  <nz-popconfirm [nzTitle]="btn.popTitle" (nzOnConfirm)="btnClick(i, btn)">
+                    <a nz-popconfirm [innerHTML]="btnText(i, btn)"></a>
+                  </nz-popconfirm>
+                </ng-container>
+                <ng-container *ngSwitchCase="3">
+                  <nz-dropdown>
+                    <a class="ant-dropdown-link" nz-dropdown [innerHTML]="btnText(i, btn, true)">
+                    </a>
+                    <ul nz-menu nzSelectable>
+                      <ng-container *ngFor="let subBtn of btn.children">
+                        <li nz-menu-item [nzClickHide]="false" *ngIf="subBtn.if(i, subBtn, c)">
+                          <ng-container *ngIf="subBtn._type == 2">
+                            <nz-popconfirm [nzTitle]="subBtn.popTitle" (nzOnConfirm)="btnClick(i, subBtn)">
+                              <a nz-popconfirm [innerHTML]="btnText(i, subBtn)"></a>
+                            </nz-popconfirm>
+                          </ng-container>
+                          <ng-container *ngIf="subBtn._type != 2">
+                            <a (click)="btnClick(i, subBtn)" [innerHTML]="btnText(i, subBtn)"></a>
+                          </ng-container>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </nz-dropdown>
+                </ng-container>
+                <a *ngSwitchDefault (click)="btnClick(i, btn)" [innerHTML]="btnText(i, btn)"></a>
+                <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
+              </ng-container>
+            </ng-container>
+            <ng-template [ngIf]="!c.__renderExpanded" [ngTemplateOutlet]="c.__renderExpanded" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
+          </ng-container>
+        </td>
+      </tr>
+      <tr [nzExpand]="i.expand">
+        <td></td>
+        <td [attr.colspan]="_columns.length">
+          <ng-template [ngTemplateOutlet]="expand" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template [ngIf]="!loading" [ngTemplateOutlet]="body"></ng-template>
+  </tbody>
+  <ng-template #totalTpl let-range="range" let-total>{{ renderTotal(total, range) }}</ng-template>
 </nz-table>
