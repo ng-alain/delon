@@ -4,6 +4,7 @@ import { throwIfAlreadyLoaded } from './core/module-import-guard';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { AlainThemeModule } from '@delon/theme';
 import { DelonFormModule } from '@delon/form';
+import { DelonUtilModule } from '@delon/util';
 
 // region: global config functions
 
@@ -26,7 +27,8 @@ export function adLodopConfig(): AdLodopConfig {
         // abc
         DelonABCModule.forRoot(),
         // form
-        DelonFormModule.forRoot()
+        DelonFormModule.forRoot(),
+        DelonUtilModule.forRoot()
     ]
 })
 export class DelonModule {
