@@ -12,6 +12,8 @@ import { getData } from '../../utils';
       *ngFor="let i of data"
       nzMode="checkable"
       [nzChecked]="i.checked"
+      (nzAfterClose)="_afterClose()"
+      (nzOnClose)="_close($event)"
       (nzCheckedChange)="onChange(i)">
       {{i.label}}
     </nz-tag>
@@ -35,6 +37,15 @@ export class TagWidget extends ControlWidget {
   onChange(item: SFSchemaEnum) {
     item.checked = !item.checked;
     this.updateValue();
+    if (this.ui.checkedChange) this.ui.checkedChange(item.checked);
+  }
+
+  _afterClose() {
+    if (this.ui.afterClose) this.ui.afterClose();
+  }
+
+  _close(e: any) {
+    if (this.ui.onClose) this.ui.onClose(e);
   }
 
   private updateValue() {

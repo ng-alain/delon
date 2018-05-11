@@ -26,3 +26,4 @@ size | 大小，等同 `nzSize` | `string` | -
 styleType | radio的样式  | `default, button` | `default`
 checkAll | 是否需要全选  | `boolean` | -
 checkAllText | 全选按钮文本  | `string` | `全选`
+change | 值变更事件，参数：单个多选框为 `boolean`，否则为 `SFSchemaEnum[]` | `(res: boolean | SFSchemaEnum[]) => void` | -

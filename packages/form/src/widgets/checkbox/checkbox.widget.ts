@@ -31,7 +31,7 @@ import { SFSchemaEnum } from '../../schema';
             <label nz-checkbox
               [nzDisabled]="disabled"
               [ngModel]="value"
-              (ngModelChange)="setValue($event)">
+              (ngModelChange)="_setValue($event)">
               <span [innerHTML]="schema.title"></span>
               <span class="optional">
                 {{ ui.optional }}
@@ -95,10 +95,18 @@ export class CheckboxWidget extends ControlWidget {
     );
   }
 
+  _setValue(value: any) {
+    this.setValue(value);
+    this.detectChanges();
+    this.notifyChange(value);
+  }
+
   notifySet() {
+    const checkList = this.data.filter(w => w.checked);
     this.updateAllChecked().setValue(
-      this.data.filter(w => w.checked).map(item => item.value),
+      checkList.map(item => item.value),
     );
+    this.notifyChange(checkList);
   }
 
   groupInGridChange(values: any[]) {
@@ -126,5 +134,9 @@ export class CheckboxWidget extends ControlWidget {
     }
     this.detectChanges();
     return this;
+  }
+
+  private notifyChange(res: boolean | SFSchemaEnum[]) {
+    if (this.ui.change) this.ui.change(res);
   }
 }
