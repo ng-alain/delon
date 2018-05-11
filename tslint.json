@@ -99,7 +99,7 @@
     "exclude": [
       "packages/**/*.spec.ts",
       "packages/cli/**/*",
-      "packages/site/app/routes/gen/**/*"
+      "site/app/routes/gen/**/*"
     ]
   }
 }
