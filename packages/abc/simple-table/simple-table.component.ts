@@ -233,9 +233,9 @@ export class SimpleTableComponent
   renderTotal(total: string, range: string[]) {
     return this._totalTpl
       ? this._totalTpl
-          .replace('{{total}}', total)
-          .replace('{{range[0]}}', range[0])
-          .replace('{{range[1]}}', range[1])
+        .replace('{{total}}', total)
+        .replace('{{range[0]}}', range[0])
+        .replace('{{range[1]}}', range[1])
       : '';
   }
   /** 数据变更后是否保留在数据变更前的页码 */
@@ -295,24 +295,24 @@ export class SimpleTableComponent
   @Output()
   change: EventEmitter<SimpleTableChange> = new EventEmitter<
     SimpleTableChange
-  >();
+    >();
   /** checkbox变化时回调，参数为当前所选清单 */
   @Output()
   checkboxChange: EventEmitter<SimpleTableData[]> = new EventEmitter<
     SimpleTableData[]
-  >();
+    >();
   /** radio变化时回调，参数为当前所选 */
   @Output()
   radioChange: EventEmitter<SimpleTableData> = new EventEmitter<
     SimpleTableData
-  >();
+    >();
   /** 排序回调 */
   @Output() sortChange: EventEmitter<any> = new EventEmitter<any>();
   /** Filter回调 */
   @Output()
   filterChange: EventEmitter<SimpleTableColumn> = new EventEmitter<
     SimpleTableColumn
-  >();
+    >();
 
   // endregion
 
@@ -366,7 +366,7 @@ export class SimpleTableComponent
           this.total = retTotal == null ? this.total || 0 : +retTotal;
           return <any[]>ret;
         }),
-      );
+    );
   }
 
   /**
@@ -399,7 +399,7 @@ export class SimpleTableComponent
   }
 
   _change(type: 'pi' | 'ps') {
-    if (!this._inited) return ;
+    if (!this._inited) return;
     this._genAjax();
     this._genData();
     this._toTop();
@@ -595,12 +595,12 @@ export class SimpleTableComponent
       (item: any) =>
         item[childrenColumnName]
           ? {
-              ...item,
-              [childrenColumnName]: this.recursiveSort(
-                item[childrenColumnName],
-                sorterFn,
-              ),
-            }
+            ...item,
+            [childrenColumnName]: this.recursiveSort(
+              item[childrenColumnName],
+              sorterFn,
+            ),
+          }
           : item,
     );
   }
@@ -796,9 +796,17 @@ export class SimpleTableComponent
     }
   }
 
-  btnText(record: any, btn: SimpleTableButton) {
-    if (btn.format) return btn.format(record, btn);
-    return btn.text;
+  btnText(record: any, btn: SimpleTableButton, withDropdown?: Boolean) {
+    let text: String = '';
+    if (btn.format) {
+      text = btn.format(record, btn);
+    } else {
+      text = btn.text;
+    }
+    if (withDropdown) {
+      text += `<i class="anticon anticon-down"></i>`;
+    }
+    return text;
   }
 
   // endregion
@@ -828,7 +836,7 @@ export class SimpleTableComponent
    */
   export(urlOrData?: string | any[], opt?: STExportOptions) {
     ((!urlOrData && this._isAjax) ||
-    (urlOrData && typeof urlOrData === 'string')
+      (urlOrData && typeof urlOrData === 'string')
       ? this.getAjaxData(urlOrData as string)
       : this.getDataObs(urlOrData)
     ).subscribe((res: any[]) =>
@@ -954,6 +962,24 @@ export class SimpleTableComponent
           }
           if (btn.children && btn.children.length > 0) {
             btn._type = 3;
+            const subButtons: SimpleTableButton[] = [];
+            for (const subBut of btn.children) {
+              if (this.acl && subBut.acl && !this.acl.can(subBut.acl)) continue;
+              if (subBut.type === 'del' && typeof subBut.pop === 'undefined')
+                subBut.pop = true;
+
+              if (subBut.pop === true) {
+                subBut._type = 2;
+                if (typeof subBut.popTitle === 'undefined')
+                  subBut.popTitle = `确认删除吗？`;
+              }
+              if (!subBut._type) subBut._type = 1;
+
+              // i18n
+              if (subBut.i18n && this.i18nSrv) subBut.text = this.i18nSrv.fanyi(subBut.i18n);
+              subButtons.push(subBut);
+            }
+            btn.children = subButtons;
           }
           if (!btn._type) btn._type = 1;
 
