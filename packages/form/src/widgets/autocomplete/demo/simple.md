@@ -15,9 +15,9 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
+import { of } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SFSchema } from '@delon/form';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-demo',

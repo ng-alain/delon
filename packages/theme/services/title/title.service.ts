@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title, DOCUMENT } from '@angular/platform-browser';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { MenuService } from '../menu/menu.service';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';

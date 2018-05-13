@@ -23,6 +23,6 @@
     "utils"
   ],
   "dependencies": {
-    "deep-extend": "^0.5.1"
+    "extend": "^3.0.1"
   }
 }

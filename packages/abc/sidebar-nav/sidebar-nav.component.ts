@@ -14,9 +14,8 @@ import {
 } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { DOCUMENT, LocationStrategy } from '@angular/common';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
-import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
 import { MenuService, SettingsService, Menu } from '@delon/theme';
 
 import { Nav } from './interface';

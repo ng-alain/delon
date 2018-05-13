@@ -16,10 +16,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
-import { debounceTime } from 'rxjs/operators';
-import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
 import {
   coerceNumberProperty,
   coerceBooleanProperty,

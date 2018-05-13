@@ -30,7 +30,7 @@ delong is a production-ready solution for admin business components packages, Bu
 
 ## Architecture
 
-![Architecture](https://github.com/cipchk/delon/blob/master/_screenshot/architecture.png)
+![Architecture](https://raw.githubusercontent.com/cipchk/delon/master/_screenshot/architecture.png)
 
 ## App Shots
 

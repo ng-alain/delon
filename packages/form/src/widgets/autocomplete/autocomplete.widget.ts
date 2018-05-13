@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { startWith, map, flatMap, debounceTime } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { ControlWidget } from '../../widget';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum } from '../../utils';

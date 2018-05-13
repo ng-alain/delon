@@ -87,9 +87,7 @@ Mock 数据规则目录；若你通过 [cli](/docs/cli) 创建项目时可以指
 
 - `SERVER_URL` 所有HTTP请求的前缀
 - `production` 是否生产环境
-- `hmr` 是否HMR启动
 - `useHash` 路由是否useHash模式
-- `chore` ng-alain 开发标记，你可以删除它
 
 ## 页面结构
 

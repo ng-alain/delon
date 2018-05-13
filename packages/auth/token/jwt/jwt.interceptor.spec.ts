@@ -12,8 +12,8 @@ import {
   TestRequest,
 } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 
 import { DelonAuthModule } from '../../auth.module';
 import { DelonAuthConfig } from '../../auth.config';

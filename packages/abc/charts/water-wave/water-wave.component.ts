@@ -17,10 +17,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
@@ -260,7 +258,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   private installResizeEvent() {
     if (this.scroll$) return;
 
-    this.scroll$ = <any>FromEventObservable.create(window, 'resize')
+    this.scroll$ = fromEvent(window, 'resize')
       .pipe(debounceTime(500))
       .subscribe(() => this.resize());
   }

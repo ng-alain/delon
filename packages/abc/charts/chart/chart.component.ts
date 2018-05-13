@@ -8,10 +8,8 @@ import {
   Output,
   HostBinding,
 } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
 @Component({
@@ -73,7 +71,7 @@ export class G2ChartComponent implements OnInit, OnDestroy {
 
     if (this.resizeTime <= 200) this.resizeTime = 200;
 
-    this.resize$ = <any>FromEventObservable.create(window, 'resize')
+    this.resize$ = fromEvent(window, 'resize')
       .pipe(debounceTime(this.resizeTime))
       .subscribe(() => this.resize.emit(this.el));
   }

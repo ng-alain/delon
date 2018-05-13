@@ -81,8 +81,6 @@ $ yarn
 
 ```bash
 $ npm start
-# 或以HMR模式启动：
-$ npm run serve:hmr
 ```
 
 启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，你看到下面的页面就代表成功了。

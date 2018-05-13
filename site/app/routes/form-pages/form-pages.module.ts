@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AceEditorModule } from 'ng2-ace-editor';
+import { AceModule } from 'ngx-ace-wrapper';
 
 import { SharedModule } from '../../shared/shared.module';
 import { ContentComponent } from '../../shared/components/content/content.component';
@@ -25,7 +25,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         SharedModule,
-        AceEditorModule,
+        AceModule,
         RouterModule.forChild(routes)
     ],
     declarations: COMPONENTS

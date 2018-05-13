@@ -11,15 +11,8 @@ const globals = {
   '@angular/router': 'ng.router',
   '@angular/common/http': 'ng.common.http',
 
-  'rxjs/Observable': 'Rx',
-  'rxjs/Observer': 'Rx',
-  'rxjs/BehaviorSubject': 'Rx',
+  'rxjs'          : 'Rx',
   'rxjs/operators': 'Rx.Observable.prototype',
-  'rxjs/observable/of': 'Rx.Observable',
-  'rxjs/observable/throw': 'Rx.Observable',
-  'rxjs/observable/fromEvent': 'Rx.Observable',
-  'rxjs/observable/FromEventObservable': 'Rx.Observable',
-  'rxjs/observable/ErrorObservable': 'Rx.Observable',
 
   '@delon/theme': 'delon.theme',
 };
@@ -39,12 +32,12 @@ switch (target) {
 }
 
 export default {
-  exports: 'named',
-  name: 'delon.auth',
   plugins,
   external: Object.keys(globals),
-  globals,
   output: {
+    exports: 'named',
+    name: 'delon.auth',
     sourcemap: true,
+    globals,
   },
 };

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of } from 'rxjs';
 import { ControlWidget } from '../../widget';
 import { getData } from '../../utils';
 import { SFSchemaEnum } from '../../schema';

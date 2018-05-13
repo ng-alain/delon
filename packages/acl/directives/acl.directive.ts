@@ -5,7 +5,7 @@ import {
   Renderer2,
   OnDestroy,
 } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { ACLService } from '../services/acl.service';
 import { ACLCanType } from '../services/acl.type';
 

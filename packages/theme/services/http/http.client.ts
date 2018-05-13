@@ -7,9 +7,8 @@ import {
   HttpEvent,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import 'rxjs/add/observable/throw';
 import * as parse from 'date-fns/parse';
 
 /**

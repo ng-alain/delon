@@ -13,10 +13,7 @@ import {
   HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
-import { _throw } from 'rxjs/observable/throw';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { Observable, Observer } from 'rxjs';
 
 import { _HttpClient } from '@delon/theme';
 

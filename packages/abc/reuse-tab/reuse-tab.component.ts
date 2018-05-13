@@ -17,8 +17,7 @@ import {
 } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
-import { Subscription } from 'rxjs/Subscription';
-import { combineLatest } from 'rxjs/observable/combineLatest';
+import { Subscription, combineLatest } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import {
   coerceNumberProperty,
@@ -126,8 +125,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     const route$ = this.router.events.pipe(
       filter(evt => evt instanceof NavigationEnd),
     );
-    this.sub$ = <any>combineLatest(this.srv.change, route$).subscribe(
-      ([res, e]) => this.genList(res),
+    this.sub$ = combineLatest(this.srv.change, route$).subscribe(
+      ([res, e]) => this.genList(res as any),
     );
     if (this.i18nSrv)
       this.i18n$ = this.i18nSrv.change.subscribe(() => this.genList());

@@ -9,3 +9,4 @@ coverage
 site/app/routes/gen
 .idea
 debug.log
+yarn-error.log

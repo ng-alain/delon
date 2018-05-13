@@ -14,10 +14,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
 import {
   coerceBooleanProperty,
   coerceNumberProperty,
@@ -161,7 +159,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
   private installResizeEvent() {
     if (!this.autoLabel || this.scroll$) return;
 
-    this.scroll$ = <any>FromEventObservable.create(window, 'resize')
+    this.scroll$ = fromEvent(window, 'resize')
       .pipe(debounceTime(200))
       .subscribe(() => this.resize());
   }

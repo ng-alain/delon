@@ -37,7 +37,7 @@ type: Advance
 npm install @antv/g2 @antv/data-set @antv/g2-plugin-slider --save
 ```
 
-在 `.angular-cli.json` 引用G2文件
+在 `angular.json` 引用G2文件
 
 ```json
 "scripts": [

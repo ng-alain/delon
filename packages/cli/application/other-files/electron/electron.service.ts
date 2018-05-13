@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AllElectron, IpcRenderer, DesktopCapturer, WebFrame, Remote, Clipboard, CrashReporter, NativeImage, Screen as screen, Shell } from 'electron';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 const ELECTRON_HOST = 'ELECTRON_BRIDGE_HOST';
 const ELECTRON_CLIENT = 'ELECTRON_BRIDGE_CLIENT';

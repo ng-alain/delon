@@ -18,17 +18,8 @@ const globals = {
   '@angular/cdk': 'ng.cdk',
   '@angular/cdk/coercion': 'ng.cdk.coercion',
 
-  'rxjs/Observable': 'Rx',
-  'rxjs/Observer': 'Rx',
-  'rxjs/BehaviorSubject': 'Rx',
-  'rxjs/Subject': 'Rx',
-  'rxjs/Subscription': 'Rx',
+  'rxjs'          : 'Rx',
   'rxjs/operators': 'Rx.Observable.prototype',
-  'rxjs/observable/of': 'Rx.Observable',
-  'rxjs/observable/fromEvent': 'Rx.Observable',
-  'rxjs/observable/FromEventObservable': 'Rx.Observable',
-  'rxjs/observable/ErrorObservable': 'Rx.Observable',
-  'rxjs/observable/combineLatest': 'Rx.Observable',
 
   'date-fns/format': 'date-fns/format/index',
 
@@ -60,12 +51,12 @@ switch (target) {
 }
 
 export default {
-  exports: 'named',
-  name: 'delon.form',
   plugins,
   external: Object.keys(globals),
-  globals,
   output: {
+    exports: 'named',
+    name: 'delon.form',
     sourcemap: true,
+    globals,
   },
 };

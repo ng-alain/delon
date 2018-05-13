@@ -1,8 +1,7 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { concat } from 'rxjs/observable/concat';
-import { Observable } from 'rxjs/Observable';
+import { Observable, concat } from 'rxjs';
 import { tap, delay, filter, flatMap } from 'rxjs/operators';
 
 import { LazyService } from '@delon/util';

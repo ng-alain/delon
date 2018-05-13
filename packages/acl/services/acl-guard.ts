@@ -8,8 +8,7 @@ import {
   Router,
 } from '@angular/router';
 import { Injectable, Inject } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
