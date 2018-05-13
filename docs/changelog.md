@@ -6,6 +6,12 @@ title:
 type: Other
 ---
 
+### 1.0.1-beta.1@next
+
+`2018-5-14`
+
+- 支持 Angular6，见[升级指引](/docs/changelog-v6)
+
 ### 1.0.0-beta.10@next
 
 `2018-5-11`
