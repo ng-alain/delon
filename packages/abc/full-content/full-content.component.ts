@@ -15,11 +15,11 @@ import {
   OnDestroy,
   AfterViewInit,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import {
   coerceBooleanProperty,
   coerceNumberProperty,
 } from '@angular/cdk/coercion';
-import { DOCUMENT } from '@angular/platform-browser';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime, filter, distinct } from 'rxjs/operators';
 import { FullContentService } from './full-content.service';

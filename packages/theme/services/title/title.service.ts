@@ -6,7 +6,8 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Title, DOCUMENT } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { MenuService } from '../menu/menu.service';

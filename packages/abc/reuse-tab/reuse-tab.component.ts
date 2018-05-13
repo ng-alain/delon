@@ -16,7 +16,7 @@ import {
   Optional,
 } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { Subscription, combineLatest } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import {

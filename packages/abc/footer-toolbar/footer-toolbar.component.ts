@@ -6,9 +6,11 @@ import {
   Inject,
   TemplateRef,
   ContentChild,
+  ElementRef,
+  Renderer2,
+  HostBinding,
 } from '@angular/core';
-import { ElementRef, Renderer2, HostBinding } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 const CLS = 'ad-footer-toolbar';

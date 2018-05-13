@@ -7,7 +7,7 @@ import {
   HttpEvent,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import * as parse from 'date-fns/parse';
 
@@ -358,7 +358,7 @@ export class _HttpClient {
       }),
       catchError(res => {
         this.end();
-        return Observable.throw(res);
+        return throwError(res);
       }),
     );
   }
@@ -463,7 +463,7 @@ export class _HttpClient {
       }),
       catchError(res => {
         this.end();
-        return Observable.throw(res);
+        return throwError(res);
       }),
     );
   }

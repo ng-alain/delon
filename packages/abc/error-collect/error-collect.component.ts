@@ -13,7 +13,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { AdErrorCollectConfig } from './error-collect.config';
 

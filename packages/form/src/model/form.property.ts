@@ -300,7 +300,7 @@ export abstract class FormProperty {
     if (typeof visibleIf === 'object' && Object.keys(visibleIf).length === 0) {
       this.setVisible(false);
     } else if (visibleIf !== undefined) {
-      const propertiesBinding = [];
+      const propertiesBinding: Observable<boolean>[] = [];
       for (const dependencyPath in visibleIf) {
         if (visibleIf.hasOwnProperty(dependencyPath)) {
           const property = this.searchProperty(dependencyPath);
@@ -318,9 +318,8 @@ export abstract class FormProperty {
             );
             const visibilityCheck = property._visibilityChanges;
             const and = combineLatest(
-              [valueCheck, visibilityCheck],
-              (v1: boolean, v2: boolean) => v1 && v2,
-            );
+              valueCheck, visibilityCheck
+            ).pipe(map(results => results[0] && results[1]));
             propertiesBinding.push(and);
           } else {
             console.warn(
@@ -332,11 +331,11 @@ export abstract class FormProperty {
         }
       }
 
-      combineLatest(
-        propertiesBinding,
-        (...values: boolean[]) => values.indexOf(true) !== -1,
-      )
-        .pipe(distinctUntilChanged())
+      combineLatest(propertiesBinding)
+        .pipe(
+          map(values => values.indexOf(true) !== -1),
+          distinctUntilChanged()
+        )
         .subscribe(visible => this.setVisible(visible));
     }
   }
