@@ -1,0 +1,24 @@
+<% if(modal) { %><div class="modal-header">
+  <div class="modal-title">查看 {{ record.id }} 用户信息</div>
+</div>
+<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
+<desc-list *ngIf="i">
+  <desc-list-item term="姓名">{{ i.owner }}</desc-list-item>
+  <desc-list-item term="会员卡号">32943898021309809423</desc-list-item>
+  <desc-list-item term="身份证">3321944288191034921</desc-list-item>
+  <desc-list-item term="联系方式">18112345678</desc-list-item>
+  <desc-list-item term="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</desc-list-item>
+</desc-list>
+<div class="modal-footer">
+  <button nz-button type="button" (click)="close()">关闭</button>
+</div><% } else { %><page-header [title]="'查看 ' + id + ' 用户信息'"></page-header>
+<nz-card>
+  <nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
+  <desc-list *ngIf="i">
+    <desc-list-item term="姓名">{{ i.owner }}</desc-list-item>
+    <desc-list-item term="会员卡号">32943898021309809423</desc-list-item>
+    <desc-list-item term="身份证">3321944288191034921</desc-list-item>
+    <desc-list-item term="联系方式">18112345678</desc-list-item>
+    <desc-list-item term="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</desc-list-item>
+  </desc-list>
+</nz-card><% } %>

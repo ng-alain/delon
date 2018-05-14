@@ -37,7 +37,7 @@
     "no-debugger": true,
     "no-duplicate-super": true,
     "no-empty": false,
-    "no-empty-interface": true,
+    "no-empty-interface": false,
     "no-eval": true,
     "no-inferrable-types": [false, "ignore-params"],
     "no-misused-new": true,
@@ -101,6 +101,8 @@
     "exclude": [
       "packages/**/*.spec.ts",
       "packages/cli/**/*",
+      "packages/schematics/**/files/**/*",
+      "packages/schematics/utils/devkit-utils/**/*",
       "site/app/routes/gen/**/*"
     ]
   }

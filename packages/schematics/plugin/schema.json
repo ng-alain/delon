@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsNgAlainPlugin",
+  "title": "NgAlain Plugin Options Schema",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the plugin.",
+      "enum": ["g2"],
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      }
+    },
+    "type": {
+      "description": "Specifies the type of operation.",
+      "enum": ["add", "remove"],
+      "type": "string",
+      "alias": "t",
+      "default": "add"
+    },
+    "project": {
+      "type": "string",
+      "description": "The name of the project."
+    }
+  },
+  "required": ["name"]
+}
