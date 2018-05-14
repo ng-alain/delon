@@ -1,0 +1,17 @@
+<div class="aside-inner">
+  <nz-dropdown nzTrigger="click" class="user-block clearfix">
+    <div nz-dropdown class="user-block-dropdown">
+      <nz-avatar class="avatar" [nzIcon]="'user'"></nz-avatar>
+      <div class="info">
+        <strong>{{settings.user.name}}</strong>
+        <p class="text-truncate mb0">{{settings.user.email}}</p>
+      </div>
+    </div>
+    <ul nz-menu>
+      <li nz-menu-item (click)="msgSrv.success('profile')"><% if (!i18n) { %>个人资料<% } %><% if (i18n) { %>{{ 'profile' | translate }}<% } %></li>
+      <li nz-menu-item (click)="msgSrv.success('settings')"><% if (!i18n) { %>设置<% } %><% if (i18n) { %>{{ 'settings' | translate }}<% } %></li>
+      <li nz-menu-item (click)="msgSrv.success('logout')"><% if (!i18n) { %>登出<% } %><% if (i18n) { %>{{ 'logout' | translate }}<% } %></li>
+    </ul>
+  </nz-dropdown>
+  <sidebar-nav class="d-block py-lg"></sidebar-nav>
+</div>

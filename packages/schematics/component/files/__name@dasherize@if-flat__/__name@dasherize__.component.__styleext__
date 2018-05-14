@@ -1,0 +1,6 @@
+@import 'node_modules/@delon/theme/styles/default';
+:host {
+  ::ng-deep {
+  }
+}
+

@@ -6,9 +6,10 @@ node_js:
 env:
   - TASK=release
   - TASK=test
+  - TASK=test:schematics
   - TASK=lint
   - TASK=site:release
-  - TASK=scaffold:release
+  - TASK=scaffold:release_optional
 
 addons:
 apt:
