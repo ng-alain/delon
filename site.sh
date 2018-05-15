@@ -33,7 +33,6 @@ if [[ ${BUILD} == true ]]; then
     sed -e "s/~ng-zorro-antd/..\/..\/..\/..\/..\/node_modules\/ng-zorro-antd/g" packages/theme/styles/app/mixins/index.less > .tmp/theme/styles/app/mixins/index.less
 
     node ./scripts/site/generate-color-less.js
-    node ./fix-v6.js
 
     rm -rf .tmp
 
