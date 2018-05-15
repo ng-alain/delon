@@ -33,7 +33,6 @@ before_script:
   - npm install -g yarn
 
 script:
-  - npm run fix-v6
   - npm run $TASK
   - |
     if [ "$TASK" = "test" ]; then

@@ -63,8 +63,6 @@ if [[ ${BUILD} == true ]]; then
 
     npm i
 
-    node ./fix-v6.js
-
     echo '===== build...'
     $(npm bin)/ng build --prod --build-optimizer --base-href /ng-alain/
 
