@@ -33,7 +33,7 @@ TSC=${PWD}/node_modules/.bin/tsc
 JASMINE=${PWD}/node_modules/.bin/jasmine
 
 SOURCE=${PWD}/packages/schematics/
-DIST=${PWD}/publish/schematics/
+DIST=${PWD}/dist/packages-dist/schematics/
 
 updateVersionReferences() {
   NPM_DIR="$1"
@@ -126,7 +126,7 @@ if [[ ${BUILD} == true ]]; then
   rsync -am --include="*.json" --include="*/" --exclude=* ${SOURCE}/ ${DIST}/
   rsync -am --include="*.d.ts" --include="*/" --exclude=* ${SOURCE}/ ${DIST}/
   rsync -am --include="/files" ${SOURCE}/ ${DIST}/
-  rm ${DIST}/tsconfig.json ${DIST}/tsconfig.spec.json
+  rm ${DIST}/test.ts ${DIST}/tsconfig.json ${DIST}/tsconfig.spec.json
   copyFiles 'scaffold/' ${DIST}/
 
   cp ${SOURCE}/README.md ${DIST}/README.md

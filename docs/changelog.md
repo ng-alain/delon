@@ -6,6 +6,23 @@ title:
 type: Other
 ---
 
+### 1.0.1
+
+`2018-5-16`
+
+- 同步 `0.7.0`
+- 支持 `ng add ng-alain` 构建脚手架，[cli](/docs/cli)
+
+**据 `1.0.1-beta.2@next` 的更新细节：**
+
+- 脚手架
+  - 降级 less 版本，暂时受限于 [#10430](https://github.com/angular/angular-cli/issues/10430) 无法在 angular6 使用 zorro 问题，[46abde](https://github.com/cipchk/ng-alain/commit/46abde)
+  - **BREAKING CHANGES** 使用 `zh` 替代 `zh-Hans`，[541468](https://github.com/cipchk/ng-alain/commit/541468)
+  - 同步 `0.7.0`，[3832a4](https://github.com/cipchk/ng-alain/commit/3832a4)
+- 命令行
+  - 移除 `@delon/cli`
+  - 支持 `ng add ng-alain`
+
 ### 1.0.1-beta.2@next
 
 `2018-5-14`

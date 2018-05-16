@@ -18,13 +18,16 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，目标�
 
 有两种方式进行安装：
 
-### 【推荐】命令行工具
-
-需要依赖于 `@delon/cli`，[如何安装？](/docs/cli)
+### 【推荐】命令行
 
 ```bash
-ng new -c=@delon/cli my-app
+ng new demo --style less
+cd demo
+ng add ng-alain
+ng serve
 ```
+
+请参考[命令行工具](/docs/cli)了解更多细节。
 
 ### 直接 clone git 仓库
 
