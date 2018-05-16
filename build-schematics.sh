@@ -72,7 +72,7 @@ copyFiles() {
     "${1}src/main.ts|${2}application/files/src/"
     "${1}src/styles.less|${2}application/files/src/"
     # assets
-    "${1}src/assets/_/img/*|${2}application/files/src/assets/_/img/"
+    "${1}src/assets/tmp/img/*|${2}application/files/src/assets/tmp/img/"
     # core
     "${1}src/app/core/i18n|${2}application/files/src/app/core/"
     "${1}src/app/core/net|${2}application/files/src/app/core/"
