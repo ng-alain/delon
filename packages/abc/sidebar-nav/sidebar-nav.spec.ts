@@ -13,6 +13,7 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
+import { of } from 'rxjs';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { AlainThemeModule, MenuService, SettingsService } from '@delon/theme';
@@ -21,7 +22,6 @@ import { deepCopy } from '@delon/util';
 import { AdSidebarNavModule } from './sidebar-nav.module';
 import { SidebarNavComponent } from './sidebar-nav.component';
 import { Nav } from './interface';
-import { of } from 'rxjs/observable/of';
 
 const floatingShowCls = '.nav-floating-show';
 const MOCKMENUS = <Nav[]>[

@@ -30,7 +30,7 @@ updateVersionReferences() {
   (
     echo "======    VERSION: Updating version references in ${PACKAGE_DIR}"
     sed -i "s/\"version\":[ ]*\"[^\"]*\"/\"version\": \"${VERSION}\"/g" ${PACKAGE_DIR}
-    PACKAGE_NAMES=(abc acl auth cache mock form theme util cli)
+    PACKAGE_NAMES=(abc acl auth cache mock form theme util)
     for name in ${PACKAGE_NAMES[@]}
     do
         sed -i "s/\"@delon\/${name}\":[ ]*\"[^\"]*\"/\"@delon\/${name}\": \"^${VERSION}\"/g" ${PACKAGE_DIR}
@@ -61,10 +61,10 @@ if [[ ${BUILD} == true ]]; then
     echo '===== need mock'
     sed -i "s/const MOCKMODULE = !environment.production/const MOCKMODULE = true/g" ${ROOT_DIR}/src/app/delon.module.ts
 
-    yarn
+    npm i
 
     echo '===== build...'
-    $(npm bin)/ng build --prod --build-optimizer --bh /ng-alain/
+    $(npm bin)/ng build --prod --build-optimizer --base-href /ng-alain/
 
 fi
 

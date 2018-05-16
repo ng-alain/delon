@@ -3,6 +3,8 @@ import {
   Input,
   HostBinding,
   ViewEncapsulation,
+  Renderer2,
+  ElementRef,
 } from '@angular/core';
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 
@@ -22,4 +24,8 @@ export class EllipsisComponent {
     this._lines = coerceNumberProperty(value);
   }
   private _lines = 3;
+
+  constructor(el: ElementRef, render: Renderer2) {
+    render.setStyle(el.nativeElement, '-webkit-box-orient', 'vertical');
+  }
 }

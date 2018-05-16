@@ -45,8 +45,11 @@ export class ImageDirective implements OnChanges, OnInit {
     changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
   ): void {
     if (this.inited) {
-      if (changes.error) this.updateError();
-      else this.update();
+      if (changes.error) {
+        this.updateError();
+      } else {
+        this.update();
+      }
     }
   }
 

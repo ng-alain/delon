@@ -36,7 +36,7 @@ noResult | 无数据时显示内容 | `string | TemplateRef<void>` | -
 bordered | 是否显示边框 | `boolean` | `false`
 size | table大小 | `small,middle,default` | `default`
 loadingDelay | 延迟显示加载效果的时间（防止闪烁） | `number` | `0`
-scroll | 固定表头，纵向支持滚动，也可用于指定滚动区域的高度：`{ y: 300 }` | `{ y: number }` | -
+scroll | 固定表头，纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px' }` | `{ y: string }` | -
 showSizeChanger | 是否显示pagination中改变页数 | `boolean` | `false`
 pageSizeOptions | pagination中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]`
 showQuickJumper | 是否显示pagination中快速跳转 | `boolean` | `false`
@@ -75,15 +75,15 @@ filterChange | Filter回调 | `EventEmitter` | -
 
 ```ts
 @Component({
-    template: `
-        <simple-table #st></simple-table>
-        <button (click)="st.load()"></button>
-        <button (click)="st.reset()">重置</button>
-    `
+  template: `
+    <simple-table #st></simple-table>
+    <button (click)="st.load()"></button>
+    <button (click)="st.reset()">重置</button>
+  `
 })
 class TestComponent {
-    @ViewChild('st') comp: SimpleTableComponent;
-    // this.comp.load();
+  @ViewChild('st') comp: SimpleTableComponent;
+  // this.comp.load();
 }
 ```
 

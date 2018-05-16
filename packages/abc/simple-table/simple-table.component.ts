@@ -18,14 +18,11 @@ import {
   ContentChild,
   Optional,
 } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { DOCUMENT } from '@angular/platform-browser';
 import { ACLService } from '@delon/acl';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription, of } from 'rxjs';
 import { tap, map, filter } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import {
   coerceBooleanProperty,
   coerceNumberProperty,

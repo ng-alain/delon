@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["es2017", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "../../publish/schematics",
+    "noEmitOnError": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "declaration": true,
+    "target": "es6",
+    "types": ["jasmine", "node"]
+  },
+  "exclude": ["*/files/**/*", "*/overwrites/**/*", "**/*_spec.ts", "test.ts"]
+}

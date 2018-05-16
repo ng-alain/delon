@@ -13,10 +13,8 @@ import {
   HttpEventType,
   HttpEvent,
 } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, Observer, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { Observer } from 'rxjs/Observer';
 
 import { DelonMockConfig } from '../mock.config';
 import { MockService } from './mock.service';

@@ -1,8 +1,5 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { Subject } from 'rxjs/Subject';
-import { Observer } from 'rxjs/Observer';
+import { Observable, of, Subject, Observer } from 'rxjs';
 
 import { LazyService } from '@delon/util';
 

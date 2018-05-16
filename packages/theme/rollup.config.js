@@ -15,21 +15,12 @@ const globals = {
   'ng-zorro-antd': 'ngZorro.antd',
   '@delon/acl': 'delon.acl',
 
-  'rxjs/BehaviorSubject': 'Rx',
-  'rxjs/Observable': 'Rx',
-  'rxjs/Subject': 'Rx',
-  'rxjs/Subscription': 'Rx',
+  'rxjs'          : 'Rx',
   'rxjs/operators': 'Rx.Observable.prototype',
-  'rxjs/observable/zip': 'Rx.Observable',
-  'rxjs/observable/fromEvent': 'Rx.Observable',
-  'rxjs/observable/FromEventObservable': 'Rx.Observable',
-  'rxjs/observable/combineLatest': 'Rx.Observable',
-  'rxjs/add/observable/throw': 'Rx.Observable',
 
   'date-fns/format': 'date-fns/format/index',
   'date-fns/parse': 'date-fns/parse/index',
-  'date-fns/distance_in_words_to_now':
-    'date-fns/distance_in_words_to_now/index',
+  'date-fns/distance_in_words_to_now': 'date-fns/distance_in_words_to_now/index'
 };
 
 const listOfDateFns = ['format', 'parse', 'distanceInWordsToNow'];
@@ -55,12 +46,12 @@ switch (target) {
 }
 
 export default {
-  exports: 'named',
-  name: 'delon.theme',
   plugins,
   external: Object.keys(globals),
-  globals,
   output: {
+    exports: 'named',
+    name: 'delon.theme',
+    globals,
     sourcemap: true,
   },
 };

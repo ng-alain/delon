@@ -10,10 +10,8 @@ import {
   DetachedRouteHandle,
   ActivatedRoute,
 } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs/Subscription';
 
 import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 

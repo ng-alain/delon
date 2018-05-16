@@ -18,7 +18,7 @@
   "keywords": ["delon", "ng-alain", "alain", "antd", "ng-zorro-antd"],
   "dependencies": {
     "file-saver": "^1.3.3",
-    "ngx-countdown": "^2.1.0",
+    "ngx-countdown": "^3.0.0",
     "qrious": "^4.0.2"
   },
   "peerDependencies": {

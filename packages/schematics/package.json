@@ -1,0 +1,38 @@
+{
+  "name": "ng-alain",
+  "version": "0.0.0-PLACEHOLDER",
+  "description": "Schematics specific to ng-alain",
+  "keywords": [
+    "ng-alain",
+    "ng-zorro-antd",
+    "antd",
+    "blueprints",
+    "code generation",
+    "schematics"
+  ],
+  "scripts": {
+    "preinstall":
+      "echo DO NOT INSTALL THIS PROJECT, ONLY THE ROOT PROJECT. && exit 1"
+  },
+  "dependencies": {
+    "@angular-devkit/core": "^0.0.0",
+    "@angular-devkit/schematics": "^0.0.0",
+    "@schematics/angular": "^0.0.0"
+  },
+  "schematics": "./collection.json",
+  "ng-update": {
+    "migrations": "./migration.json",
+    "packageGroup": [
+      "@delon/acl",
+      "@delon/theme",
+      "@delon/abc",
+      "@delon/util",
+      "@delon/auth",
+      "@delon/cache",
+      "@delon/mock",
+      "@delon/form",
+      "ng-zorro-antd"
+    ]
+  },
+  "sideEffects": false
+}

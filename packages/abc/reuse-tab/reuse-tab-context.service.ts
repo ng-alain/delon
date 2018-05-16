@@ -5,8 +5,7 @@ import {
   ScrollStrategyOptions,
 } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
+import { Subscription, Subject } from 'rxjs';
 
 import {
   ReuseContextEvent,

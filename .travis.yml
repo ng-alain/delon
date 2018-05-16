@@ -1,14 +1,15 @@
 sudo: required
 language: node_js
 node_js:
-  - "8.9.0"
+  - "8.11"
 
 env:
   - TASK=release
   - TASK=test
+  - TASK=test:schematics
   - TASK=lint
   - TASK=site:release
-  - TASK=scaffold:release
+  - TASK=scaffold:release_optional
 
 addons:
 apt:

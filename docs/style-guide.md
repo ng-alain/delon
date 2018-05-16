@@ -59,7 +59,7 @@ vscode 是编写 Angular 最佳的选择，你可以在项目的任何目录里�
 
 ng-alain 默认配置了不生成样式文件&单元测试，因此，你会看到生成的只有 `.ts`、`.html`。这是因为 ng-alain 提供了非常丰富的样式API，在大多数页面中自定义样式并不是刚需的；同时，单元测试也是如此。
 
-当然，你可以很容易在 `.angular-cli.json` 中调整默认配置。
+当然，你可以很容易在 `angular.json` 中调整默认配置。
 
 ### vscode snippets
 

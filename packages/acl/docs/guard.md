@@ -15,7 +15,7 @@ type: Documents
 ## 示例
 
 ```ts
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { ACLGuard } from '@delon/acl';
 const routes: Routes = [
     {

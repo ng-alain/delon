@@ -29,5 +29,5 @@ self:
   allow_failure: false
   dependencies:
   - release
-  app_name: web
+  app_name: ng-alain
   cluster_id: ""

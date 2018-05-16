@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { deepCopy } from '@delon/util';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';

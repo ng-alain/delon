@@ -20,8 +20,7 @@ import {
   ActivationStart,
 } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
-import { of } from 'rxjs/observable/of';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { of, BehaviorSubject } from 'rxjs';
 
 import { AdFullContentModule } from './full-content.module';
 import { FullContentComponent } from './full-content.component';

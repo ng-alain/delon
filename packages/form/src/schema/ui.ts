@@ -1,5 +1,5 @@
 import { TemplateRef } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ErrorSchema, ErrorData } from '../errors';
 import { SFSchemaEnum, SFSchemaEnumType } from './index';
 import { FormProperty, PropertyGroup } from '../model/form.property';

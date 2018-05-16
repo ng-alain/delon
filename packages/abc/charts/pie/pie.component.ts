@@ -18,9 +18,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
-import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
+import { Observable, Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import {
   coerceNumberProperty,
@@ -284,7 +282,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
   private installResizeEvent() {
     if (!this.hasLegend) return;
 
-    this.scroll$ = <any>FromEventObservable.create(window, 'resize')
+    this.scroll$ = fromEvent(window, 'resize')
       .pipe(debounceTime(200))
       .subscribe(() => this.resize());
   }

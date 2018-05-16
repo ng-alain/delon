@@ -1,6 +1,5 @@
 import { Injectable, Optional, Inject } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { ITokenService, ITokenModel } from './interface';
 import { DA_STORE_TOKEN, IStore } from '../store/interface';

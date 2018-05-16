@@ -1,8 +1,7 @@
 import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { LazyService } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs/observable/of';
-import { _throw } from 'rxjs/observable/throw';
+import { of, throwError } from 'rxjs';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import * as fs from 'file-saver';
@@ -35,7 +34,7 @@ const DEFAULTMOCKJSZIP = {
 
 class MockHttpClient {
   request() {
-    return isErrorRequest ? _throw(null) : of(null);
+    return isErrorRequest ? throwError(null) : of(null);
   }
 }
 

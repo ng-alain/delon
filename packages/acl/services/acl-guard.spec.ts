@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Injector } from '@angular/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs';
 import { ACLGuard } from './acl-guard';
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';

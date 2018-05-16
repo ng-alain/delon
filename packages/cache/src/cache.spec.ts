@@ -5,8 +5,7 @@ import {
   TestRequest,
 } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { AlainThemeModule } from '@delon/theme';

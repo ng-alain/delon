@@ -7,9 +7,12 @@
     "class-name": true,
     "comment-format": [true, "check-space"],
     "curly": false,
+    "deprecation": {
+      "severity": "warn"
+    },
     "eofline": true,
     "forin": true,
-    "import-blacklist": [true, "rxjs", "rxjs/Rx"],
+    "import-blacklist": [true, "rxjs/Rx"],
     "import-spacing": true,
     "indent": [true, "spaces"],
     "interface-over-type-literal": true,
@@ -34,7 +37,7 @@
     "no-debugger": true,
     "no-duplicate-super": true,
     "no-empty": false,
-    "no-empty-interface": true,
+    "no-empty-interface": false,
     "no-eval": true,
     "no-inferrable-types": [false, "ignore-params"],
     "no-misused-new": true,
@@ -77,7 +80,6 @@
     "whitespace": [
       true,
       "check-branch",
-      "check-decl",
       "check-operator",
       "check-separator",
       "check-type"
@@ -99,6 +101,8 @@
     "exclude": [
       "packages/**/*.spec.ts",
       "packages/cli/**/*",
+      "packages/schematics/**/files/**/*",
+      "packages/schematics/utils/devkit-utils/**/*",
       "site/app/routes/gen/**/*"
     ]
   }

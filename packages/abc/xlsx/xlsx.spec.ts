@@ -1,8 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { LazyService } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs/observable/of';
-import { _throw } from 'rxjs/observable/throw';
+import { of, throwError } from 'rxjs';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import * as fs from 'file-saver';
@@ -49,7 +48,7 @@ let isErrorRequest = false;
 class MockHttpClient {
   request() {
     (window as any).XLSX = DEFAULTMOCKXLSX;
-    return isErrorRequest ? _throw(null) : of(null);
+    return isErrorRequest ? throwError(null) : of(null);
   }
 }
 

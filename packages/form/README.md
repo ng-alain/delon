@@ -1,10 +1,13 @@
-# @delon/form module
+# @delon/form module [![Build Status](https://travis-ci.org/cipchk/delon.svg?branch=master)](https://travis-ci.org/cipchk/delon) [![NPM version](https://img.shields.io/npm/v/@delon/form.svg)](https://www.npmjs.com/package/@delon/form) [![NPM version](https://img.shields.io/npm/v/@delon/form/next.svg)](https://www.npmjs.com/package/@delon/form)
 
-[Document](http://ng-alain.com/form)
+## Links
+
+- [Api Document](http://ng-alain.com/form)
+- [Demo](https://cipchk.github.io/ng-alain/)
 
 ## Architecture
 
-![Architecture](https://github.com/cipchk/delon/blob/master/_screenshot/architecture.png)
+![Architecture](https://raw.githubusercontent.com/cipchk/delon/master/_screenshot/architecture.png)
 
 ## Troubleshooting
 

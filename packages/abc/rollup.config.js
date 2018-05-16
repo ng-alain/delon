@@ -25,16 +25,8 @@ const globals = {
   '@angular/cdk/overlay': 'ng.cdk.overlay',
   '@angular/cdk/portal': 'ng.cdk.portal',
 
-  'rxjs/BehaviorSubject': 'Rx',
-  'rxjs/Observable': 'Rx',
-  'rxjs/Subject': 'Rx',
-  'rxjs/Subscription': 'Rx',
+  'rxjs'          : 'Rx',
   'rxjs/operators': 'Rx.Observable.prototype',
-  'rxjs/observable/of': 'Rx.Observable',
-  'rxjs/observable/zip': 'Rx.Observable',
-  'rxjs/observable/fromEvent': 'Rx.Observable',
-  'rxjs/observable/FromEventObservable': 'Rx.Observable',
-  'rxjs/observable/combineLatest': 'Rx.Observable',
 
   'date-fns/format': 'date-fns/format/index',
   'date-fns/parse': 'date-fns/parse/index',
@@ -51,7 +43,7 @@ const globals = {
   'date-fns/sub_years': 'date-fns/sub_years/index',
   'date-fns/add_days': 'date-fns/add_days/index',
 
-  'deep-extend': 'deep-extend',
+  'extend': 'extend',
 
   '@delon/theme': 'delon.theme',
   '@delon/util': 'delon.util',
@@ -73,7 +65,6 @@ const listOfDateFns = [
   'endOfYear',
   'subYears',
   'addDays',
-  'deepExtend',
 ];
 
 const listOfReplace = listOfDateFns.map(name => {
@@ -97,12 +88,12 @@ switch (target) {
 }
 
 module.exports = {
-  exports: 'named',
-  name: 'delon.abc',
   plugins,
   external: Object.keys(globals),
-  globals,
   output: {
+    exports: 'named',
+    name: 'delon.abc',
     sourcemap: true,
+    globals,
   },
 };

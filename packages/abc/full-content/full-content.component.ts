@@ -15,13 +15,12 @@ import {
   OnDestroy,
   AfterViewInit,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import {
   coerceBooleanProperty,
   coerceNumberProperty,
 } from '@angular/cdk/coercion';
-import { DOCUMENT } from '@angular/platform-browser';
-import { Subscription } from 'rxjs/Subscription';
-import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
+import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime, filter, distinct } from 'rxjs/operators';
 import { FullContentService } from './full-content.service';
 import { Router, ActivationStart, ActivationEnd } from '@angular/router';
@@ -168,7 +167,7 @@ export class FullContentComponent
 
   private scroll$: Subscription = null;
   private installResizeEvent() {
-    this.scroll$ = <any>FromEventObservable.create(window, 'resize')
+    this.scroll$ = fromEvent(window, 'resize')
       .pipe(debounceTime(200))
       .subscribe(() => this.updateHeight());
   }

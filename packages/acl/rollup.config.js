@@ -10,14 +10,8 @@ const globals = {
   '@angular/platform-browser': 'ng.platformBrowser',
   '@angular/router': 'ng.router',
 
-  'rxjs/Observable': 'Rx',
-  'rxjs/Observer': 'Rx',
-  'rxjs/BehaviorSubject': 'Rx',
+  'rxjs'          : 'Rx',
   'rxjs/operators': 'Rx.Observable.prototype',
-  'rxjs/observable/of': 'Rx.Observable',
-  'rxjs/observable/fromEvent': 'Rx.Observable',
-  'rxjs/observable/FromEventObservable': 'Rx.Observable',
-  'rxjs/observable/ErrorObservable': 'Rx.Observable',
 };
 
 const plugins = [sourcemaps(), resolve()];
@@ -35,12 +29,12 @@ switch (target) {
 }
 
 export default {
-  exports: 'named',
-  name: 'delon.acl',
   plugins,
   external: Object.keys(globals),
-  globals,
   output: {
+    exports: 'named',
+    name: 'delon.acl',
     sourcemap: true,
+    globals,
   },
 };
