@@ -9,7 +9,7 @@ env:
   - TASK=test:schematics
   - TASK=lint
   - TASK=site:release
-  - TASK=scaffold:release
+  - TASK=scaffold:release_optional
 
 matrix:
   fast_finish: true

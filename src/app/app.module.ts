@@ -22,11 +22,12 @@ import { DemoModalComponent } from './shared/components/modal/demo.component';
 import * as MOCKDATA from '../../_mock';
 import { environment } from '../environments/environment';
 import { StartupService } from './core/startup.service';
+import { LazyService } from '@delon/util';
 const MOCKMODULE = [];
 if (!environment.production) {
-    MOCKMODULE.push(DelonMockModule.forRoot({
-        data: MOCKDATA
-    }));
+  MOCKMODULE.push(DelonMockModule.forRoot({
+    data: MOCKDATA
+  }));
 }
 
 export function StartupServiceFactory(startupService: StartupService): Function {
@@ -61,10 +62,13 @@ export function StartupServiceFactory(startupService: StartupService): Function 
       deps: [ReuseTabService],
     },
     {
-        provide: APP_INITIALIZER,
-        useFactory: StartupServiceFactory,
-        deps: [StartupService],
-        multi: true
+      provide: APP_INITIALIZER,
+      useFactory: StartupServiceFactory,
+      deps: [StartupService],
+      multi: true
+    },
+    {
+      provide: LazyService, useClass: LazyService
     }
   ],
   bootstrap: [AppComponent],

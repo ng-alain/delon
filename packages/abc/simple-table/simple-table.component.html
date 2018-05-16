@@ -100,14 +100,19 @@
                 </ng-container>
                 <ng-container *ngSwitchCase="3">
                   <nz-dropdown>
-                    <a class="ant-dropdown-link" nz-dropdown>
-                      {{btnText(i, btn)}}
-                      <i class="anticon anticon-down"></i>
+                    <a class="ant-dropdown-link" nz-dropdown [innerHTML]="btnText(i, btn, true)">
                     </a>
-                    <ul nz-menu>
+                    <ul nz-menu nzSelectable>
                       <ng-container *ngFor="let subBtn of btn.children">
-                        <li nz-menu-item *ngIf="btn.if(i, btn, c)">
-                          <a (click)="btnClick(i, subBtn)" [innerHTML]="btnText(i, subBtn)"></a>
+                        <li nz-menu-item [nzClickHide]="false" *ngIf="subBtn.if(i, subBtn, c)">
+                          <ng-container *ngIf="subBtn._type == 2">
+                            <nz-popconfirm [nzTitle]="subBtn.popTitle" (nzOnConfirm)="btnClick(i, subBtn)">
+                              <a nz-popconfirm [innerHTML]="btnText(i, subBtn)"></a>
+                            </nz-popconfirm>
+                          </ng-container>
+                          <ng-container *ngIf="subBtn._type != 2">
+                            <a (click)="btnClick(i, subBtn)" [innerHTML]="btnText(i, subBtn)"></a>
+                          </ng-container>
                         </li>
                       </ng-container>
                     </ul>
