@@ -61,7 +61,7 @@ content += `@import "${path.join(alain, '.tmp/abc/index.less')}";\n`;
 content += `@import "${path.join(alain, 'site/app/styles/index.less')}";\n`;
 
 less.render.call(less, content, {
-    paths: [path.join(alain, 'node_modules/ng-zorro-antd/src/style')],
+    // paths: [path.join(alain, 'node_modules/ng-zorro-antd/src/style')],
 }).then(({ css }) => {
   return postcss([
     reducePlugin,

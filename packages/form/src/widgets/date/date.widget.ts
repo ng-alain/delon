@@ -12,49 +12,146 @@ const DEFAULTFORMAT = 'YYYY-MM-DD HH:mm:ss';
   selector: 'sf-date',
   template: `
   <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
+    <ng-container [ngSwitch]="mode">
 
-    <input nz-input
-      [attr.id]="id"
-      [disabled]="disabled"
-      [nzSize]="ui.size"
-      [value]="displayValue"
-      (input)="_change($event.target?.value)"
-      [attr.type]="type"
-      [attr.placeholder]="ui.placeholder"
-      autocomplete="off">
+      <nz-month-picker *ngSwitchCase="'month'"
+        [nzDisabled]="disabled"
+        [nzSize]="ui.size"
+        [nzFormat]="displayFormat"
+        [(ngModel)]="displayValue"
+        (ngModelChange)="_change($event)"
+        [nzAllowClear]="i.allowClear"
+        [nzClassName]="ui.className"
+        [nzDisabledDate]="ui.disabledDate"
+        [nzLocale]="ui.locale"
+        [nzPlaceholder]="ui.placeholder"
+        [nzPopupStyle]="ui.popupStyle"
+        [nzDropdownClassName]="ui.dropdownClassName"
+        (nzOnOpenChange)="_openChange($event)"
+        [nzRenderExtraFooter]="ui.renderExtraFooter"
+      ></nz-month-picker>
+
+      <nz-week-picker *ngSwitchCase="'week'"
+        [nzDisabled]="disabled"
+        [nzSize]="ui.size"
+        [nzFormat]="displayFormat"
+        [(ngModel)]="displayValue"
+        (ngModelChange)="_change($event)"
+        [nzAllowClear]="i.allowClear"
+        [nzClassName]="ui.className"
+        [nzDisabledDate]="ui.disabledDate"
+        [nzLocale]="ui.locale"
+        [nzPlaceholder]="ui.placeholder"
+        [nzPopupStyle]="ui.popupStyle"
+        [nzDropdownClassName]="ui.dropdownClassName"
+        (nzOnOpenChange)="_openChange($event)"
+      ></nz-week-picker>
+
+      <nz-range-picker *ngSwitchCase="'range'"
+        [nzDisabled]="disabled"
+        [nzSize]="ui.size"
+        [nzFormat]="displayFormat"
+        [(ngModel)]="displayValue"
+        (ngModelChange)="_change($event)"
+        [nzAllowClear]="i.allowClear"
+        [nzClassName]="ui.className"
+        [nzDisabledDate]="ui.disabledDate"
+        [nzLocale]="ui.locale"
+        [nzPlaceholder]="ui.placeholder"
+        [nzPopupStyle]="ui.popupStyle"
+        [nzDropdownClassName]="ui.dropdownClassName"
+        (nzOnOpenChange)="_openChange($event)"
+        [nzDisabledTime]="ui.disabledTime"
+        [nzRenderExtraFooter]="ui.renderExtraFooter"
+        [nzRanges]="ui.ranges"
+        (nzOnOk)="_ok($event)"
+      ></nz-range-picker>
+
+      <nz-date-picker *ngSwitchDefault
+        [nzDisabled]="disabled"
+        [nzSize]="ui.size"
+        [nzFormat]="displayFormat"
+        [(ngModel)]="displayValue"
+        (ngModelChange)="_change($event)"
+        [nzAllowClear]="i.allowClear"
+        [nzClassName]="ui.className"
+        [nzDisabledDate]="ui.disabledDate"
+        [nzLocale]="ui.locale"
+        [nzPlaceholder]="ui.placeholder"
+        [nzPopupStyle]="ui.popupStyle"
+        [nzDropdownClassName]="ui.dropdownClassName"
+        (nzOnOpenChange)="_openChange($event)"
+        [nzDisabledTime]="ui.disabledTime"
+        [nzRenderExtraFooter]="ui.renderExtraFooter"
+        [nzShowTime]="ui.showTime"
+        [nzShowToday]="i.showToday"
+        (nzOnOk)="_ok($event)"
+      ></nz-date-picker>
+    </ng-container>
 
   </sf-item-wrap>
   `,
   preserveWhitespaces: false,
 })
 export class DateWidget extends ControlWidget implements OnInit {
-  type: string;
-  displayValue: string;
+  mode: string;
+  displayValue: Date | Date[] = null;
+  displayFormat: string;
   format: string;
+  i: any;
 
   ngOnInit(): void {
-    this.type = this.schema.format === 'date-time' ? 'datetime-local' : 'date';
-    this.format =
-      !this.ui.format && this.schema.format
-        ? DATEFORMAT[this.schema.format] || 'YYYY-MM-DD'
-        : this.ui.format;
+    const ui = this.ui;
+    this.mode = ui.mode || 'date';
+    if (!ui.displayFormat) {
+      switch (this.mode) {
+        case 'month':
+          this.displayFormat = `yyyy-MM`;
+          break;
+        case 'week':
+          this.displayFormat = `yyyy-ww`;
+          break;
+      }
+    }
+    this.format = ui.format
+      ? ui.format
+      : this.schema.type === 'number'
+        ? 'x'
+        : 'YYYY-MM-DD HH:mm:ss';
+    // 公共API
+    this.i = {
+      allowClear: ui.allowClear || true,
+      // nz-date-picker
+      showToday: ui.showToday || true
+    };
   }
 
   reset(value: any) {
-    this.formatDisplay(value);
+    if (
+      (Array.isArray(value) && value.length > 0 && value[0] instanceof Date) ||
+      value instanceof Date
+    ) {
+      this.displayValue = value;
+    }
   }
 
-  private formatData(value: string, formatString: string) {
-    return format(value, formatString, { locale: (window as any).__locale__ });
+  _change(value: Date | Date[]) {
+    if (value == null) {
+      this.setValue(null);
+      return;
+    }
+    this.setValue(
+      Array.isArray(value)
+        ? value.map(d => format(d, this.format))
+        : format(value, this.format),
+    );
   }
 
-  private formatDisplay(value: any) {
-    // TODO：HTML 原生日期组件无法按 `displayFormat` 格式，暂时停用以下代码
-    // this.displayValue = this.formatData(value, this.ui.displayFormat || DEFAULTFORMAT);
+  _openChange(status: boolean) {
+    if (this.ui.onOpenChange) this.ui.onOpenChange(status);
   }
 
-  _change(value: string) {
-    this.formatDisplay(value);
-    this.setValue(this.formatData(value, this.format || DEFAULTFORMAT));
+  _ok(value: any) {
+    if (this.ui.onOk) this.ui.onOk(status);
   }
 }
