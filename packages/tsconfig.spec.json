@@ -8,6 +8,6 @@
     "types": ["jasmine", "node"]
   },
   "files": ["test.ts", "../src/polyfills.ts"],
-  "exclude": ["../packages/cli/**/*"],
+  "exclude": ["../packages/cli/**/*", "../packages/schematics/**/*"],
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

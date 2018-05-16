@@ -28,11 +28,6 @@
       "type": "boolean",
       "description": "Generates g2.",
       "default": false
-    },
-    "electron": {
-      "type": "boolean",
-      "description": "Generates electron.",
-      "default": false
     }
   }
 }

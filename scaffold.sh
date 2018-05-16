@@ -74,7 +74,7 @@ if [[ ${DEPLOY} == true ]]; then
     cp -f ${DIST_DIR}/index.html ${DIST_DIR}/404.html
 
     echo 'deploy by gh-pages'
-    $(npm bin)/gh-pages-clean
+    # $(npm bin)/gh-pages-clean
     $(npm bin)/gh-pages -d dist/scaffold/dist -r https://github.com/cipchk/ng-alain/
 
 fi

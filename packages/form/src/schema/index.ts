@@ -191,8 +191,8 @@ export interface SFSchema {
    * - `date`、`full-date` 日期，渲染为 `date`
    * - `time`、`full-time` 时间，渲染为 `time`
    * - `email` Email格式，渲染为 `autocomplete`
-   * - 非标准：`week`，渲染为 `date`
-   * - 非标准：`month`，渲染为 `date`
+   * - 非标准：`week`，渲染为 `nz-week-picker`
+   * - 非标准：`month`，渲染为 `nz-month-picker`
    * - `ip` IP地址，渲染为 `input`
    * - `uri` URL地址，渲染为 `upload`
    * - `regex` 正则表达式，必须指定 `pattern` 属性，渲染为 `input`

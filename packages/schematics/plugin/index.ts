@@ -65,7 +65,7 @@ export default function(options: PluginOptions): Rule {
         rules.push(pluginG2(options));
         break;
       default:
-        throw new SchematicsException('Could not find angular.json');
+        throw new SchematicsException(`Could not find '${options.name}' name`);
     }
 
     rules.push(installPackages());

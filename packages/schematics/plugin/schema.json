@@ -7,7 +7,6 @@
     "name": {
       "type": "string",
       "description": "The name of the plugin.",
-      "enum": ["g2"],
       "$default": {
         "$source": "argv",
         "index": 0
@@ -25,5 +24,5 @@
       "description": "The name of the project."
     }
   },
-  "required": ["name"]
+  "required": []
 }

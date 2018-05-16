@@ -34,13 +34,13 @@ cli 会自动创建 `trade.module.ts` 和 `trade-routing.module.ts` 文件，前
 
 ## 二、页面
 
-利用 cli 命令在 `trade` 目录下创建相应的页面文件：
+利用 `ng generate` 命令在 `trade` 目录下创建相应的页面文件：
 
 ```bash
-ng g c list
+ng generate ng-alain:list list -m=trade
 ```
 
-> [@delon/cli](/docs/cli) 有额外的 `page` 命令，可以创建一个更有意义的列表页。
+> 了解更多请参考[命令行工具](/docs/cli)。
 
 默认 cli 会帮助我们在 `trade.module.ts` 定义好相应的组件声明，但是列表是由路由触发的，因此还需要手动到 `trade-routing.module.ts` 注册一个路由：
 

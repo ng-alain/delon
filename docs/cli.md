@@ -6,195 +6,94 @@ title:
 type: Other
 ---
 
-# **注意：** `1.0.1` 以后不再提供
+## 如何使用
 
-# [CREF]
+`ng-alain` 脚手架实现了 `ng add` 来构建 ng-alain 项目，使得构建一个空 ng-alain 只需要简单几个动作：
 
-**安装&配置** 小节的实施对很多新手来说经常忽略了一些操作细节，导致遇到一些文件找不到问题。
-
-最近，收到一个 [#60](https://github.com/cipchk/delon/issues/60) 可以极大简化安装 cli 过程，你可以优先尝试以下方法，若成功可以直接跳过 **安装&配置** 小节，反之希望你能把在实施下列所遇到的问题在 [#60](https://github.com/cipchk/delon/issues/60) 继续讨论。
+1、创建一个空 angular 项目
 
 ```bash
-yarn global add @angular/cli
-yarn global add @delon/cli@next
+ng new demo --style less
 ```
 
-# 如何使用
-
-`@delon/cli` 是基于 Angular Cli 向上构建的针对 ng-alain 脚手架的命令行工具，因此在安装之前要先确保以下类库应该安装：
-
-**先决条件**
+2、添加 ng-alain 脚手架
 
 ```bash
-npm install -g @angular-devkit/core @angular-devkit/schematics @schematics/schematics rxjs
-npm install -g @angular/cli
+ng add ng-alain
 ```
 
-`@delon/cli` 允许你全局安装或只针对本地项目，对于全局后期所有命令都无需填写 `--collection` 选项。
+> 默认情况下会执行依赖包的安装，但可能会受限于使用 npm、yarn 等的关系，会有部分包降级时依然无法生效（例如：`less` [#10430](https://github.com/angular/angular-cli/issues/10430)），此时可能需要删除 `node_modules` 再 `npm i` 一次来解决。
 
-## 安装&配置
-
-### 全局
+3、运行项目
 
 ```bash
-npm install -g @delon/cli
-```
-
-> 你可以进一步替换将 ng-alain 脚手架设置为默认项目模板：
->
-> `ng set defaults.schematics.collection @delon/cli --global`
->
-> 或者还原为 Angular Cli 默认的：
->
-> `ng set defaults.schematics.collection @schematics/angular --global`
-
-**注意：** 由于受限于 `require.resolve()`，需要将 `@delon/cli` 的相关文件复制至 Angular Cli 目录中，若出现下列异常几乎都是这个原因引起：
-
-- `Error: Collection "@delon/cli" cannot be resolved`
-- `Error: Path "/package.json" does not exist.`
-
-```bash
-# linux
-cd /usr/local/lib/node_modules/@angular/cli/node_modules
-mkdir @delon
-cp -R /usr/local/lib/node_modules/@delon/* @delon/
-
-# window（提醒：注意 `asdf` 替换成你的用户名）
-cd C:\Users\asdf\AppData\Roaming\npm\node_modules
-xcopy "@delon" "@angular\cli\node_modules\@delon" /s /e /y
-```
-
-### 本地项目
-
-这里是指已经通过 Angular Cli 生成项目后，若你希望使用 `@delon/cli` 的话，则：
-
-```bash
-npm install @delon/cli --save-dev
-```
-
-设置 `.angular-cli.json` 的默认 `collection`：
-
-```json
-"defaults": {
-  "schematics": {
-    "collection": "@delon/cli"
-  }
-}
-```
-
-### 如何升级？
-
-**全局**
-
-必须先卸载：
-
-```bash
-npm uninstall -g @delon/cli
-```
-
-重新安装，同时需要将 `@delon/cli` 的相关文件复制至 Angular Cli 目录中：
-
-> 如收到 `Error: Collection "@delon/cli" cannot be resolved` 则需要以下设置。
-
-```bash
-# linux
-cd /usr/local/lib/node_modules/@angular/cli/node_modules
-mkdir @delon
-cp -R /usr/local/lib/node_modules/@delon/* @delon/
-
-# window(tips: replace your name)
-cd C:\Users\asdf\AppData\Roaming\npm\node_modules
-xcopy "@delon" "@angular\cli\node_modules\@delon" /s /e /y
-```
-
-**本地项目**
-
-修复版本号重新安装亦可。
-
-## 如何生成项目
-
-现在你可以直接使用 `ng new` 命令来创建 ng-alain 项目：
-
-```bash
-ng new -c=@delon/cli my-app
-cd my-app
 ng serve
 ```
 
-当然，若你设置了 `defaults.schematics.collection` 则：
+## 如何升级？
 
-```bash
-ng new my-app
-cd my-app
-ng serve
-```
+除DEMO示例页以外，会有一些影响比较严重的，依然会提供 `ng update` 来解决升级问题，对于其他情况的升级请参考 [升级脚手架](/docs/upgrade)。
 
-### 额外参数
+## ng add
 
-在 `ng new` 基础上，新增几个针对脚手架参数：
+额外参数：
 
-| Alias | Arguments | Default | Summary |
-| --------- | --------- | ------- | ------- |
-| `-dv` | `--delon-version` | `next` | 指定 `@delon/*` 版本，值包括：`laster`、`next` |
-| `-di` | `--delon-i18n` | `false` | 是否需要国际化支持 |
-| `-dm` | `--delon-mock` | `true` | 是否需要 mock 功能 |
-| `-g2` | `--delon-g2` | `false` | Support G2 chart. 是否需要 G2 图表 |
-| `-df` | `--delon-form` | `true` | 是否需要 `@delon/form` 动态表单 |
-| - | `--delon-electron` | `false` | 是否需要 electron 打包 |
+Arguments | Default | Summary
+--------- | ------- | -------
+`--codeStyle` | `true` | 是否需要代码风格
+`--form` | `true` | 是否需要动态表单
+`--mock` | `true` | 是否需要 mock 功能
+`--i18n` | `false` | 是否需要国际化支持
+`--g2` | `false` | 是否需要 G2 图表
 
 例如生成一个带有国际化的项目：
 
 ```bash
-ng new -c=@delon/cli my-app -di
-# OR
-ng new my-app -di
+ng add ng-alain --i18n
 ```
 
-## Electron
+## ng generate
 
-当采用 Electron 打包跨平台应用时，可采用以下命令构建Angular项目：
+### 业务页模板
+
+`ng generate` 用于生成业务组件页，包括：
+
+- `list` 列表页
+- `edit` 编辑页
+- `view` 查看页
+
+当你需要一个列表页时：
 
 ```bash
-ng new -c=@delon/cli my-app -di --delon-electron
+ng generate ng-alain:list <page name>
 ```
 
-ng-alain 脚手架只提供一个 electron 最基础的配置项，你可以通过 `package.json` 提供的命令快速的构建应用：
+对于 `edit`、`view` 默认是以模态框展示来生成，你可以改用页面展示则：
 
 ```bash
-npm run el:bundle.windows
+ng generate ng-alain:edit <page name> --modal=false
 ```
 
-可将 Angular 打包成一个 Exe 应用程序。
-
-> 脚手架对 Electron 的实现来自 [angular-electron-seed](https://github.com/sean-perkins/angular-electron-seed)；有关更多细节可参考。
-
-## [page] 命令
-
-@delon/cli 扩展了 `ng generate page` （简化：`ng g page`） 命令用于生成业务组件页。
-
-### 参数
-
-`page` 命令是由 `ng g component` 基础向下构建。
-
-**命令格式**
+> 这些命令类似 `ng generate component`，因此允许你依然可以使用所有对应参数，你可通过：
 
 ```bash
-ng g page [page name]
+ng generate ng-alain:list --help
 ```
 
-| Alias | Arguments | Default | Summary |
-| --------- | --------- | ------- | ------- |
-| `-t` | `--type` | `list` | 指定页面类型，值包括：`list`、`view`、`edit` |
-| - | `--modal` | `true` | 是否模态框，限：`view`、`edit` 时有效 |
+了解参数细节。
 
-例如：
+### 插件管理
+
+ng-alain 脚手架提供非常丰富的基建，但并非所有都是你希望的；这些基建你可以在 `ng add` 构建新项目得到它们。但有此时候希望可插拔部分基建时，例如把 G2 从项目中移除：
 
 ```bash
-# 生成日志列表页
-ng g page log
-
-cd log
-
-# 生成日志详情页
-# ng g page view -t=view
+ng generate ng-alain:plugin g2 -t=remove
 ```
+
+或者添加G2：
+
+```bash
+ng generate ng-alain:plugin g2
+```
+
+`ng-alain:plugin` 目前只支持 g2，未来会持续增加更多类型的支持。

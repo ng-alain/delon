@@ -5,13 +5,13 @@ import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 
 export const FORMATMAPS = {
-  'date-time': { widget: 'date' },
-  date: { widget: 'date' },
-  'full-date': { widget: 'date' },
+  'date-time': { widget: 'date', showTime: true, format: 'YYYY-MM-DDTHH:mm:ssZ' },
+  date: { widget: 'date', format: 'YYYY-MM-DD' },
+  'full-date': { widget: 'date', format: 'YYYY-MM-DD' },
   time: { widget: 'time' },
   'full-time': { widget: 'time' },
-  week: { widget: 'date' },
-  month: { widget: 'date' },
+  week: { widget: 'date', mode: 'week', format: 'YYYY-WW' },
+  month: { widget: 'date', mode: 'month', format: 'YYYY-MM' },
   uri: { widget: 'upload' },
   email: { widget: 'autocomplete', type: 'email' },
   '': { widget: 'string' },

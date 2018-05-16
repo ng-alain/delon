@@ -29,8 +29,8 @@ export class StartupService {
 
   private viaHttp(resolve: any, reject: any) {
     zip(<% if (i18n) { %>
-      this.httpClient.get(`assets/_/i18n/${this.i18n.defaultLang}.json`),<% } %>
-      this.httpClient.get('assets/_/app-data.json')
+      this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),<% } %>
+      this.httpClient.get('assets/tmp/app-data.json')
     ).pipe(
       // 接收其他拦截器后产生的异常消息
       catchError(([<% if (i18n) { %>langData, <% } %>appData]) => {
@@ -75,7 +75,7 @@ export class StartupService {
     };
     const user: any = {
       name: 'Admin',
-      avatar: './assets/_/img/avatar.jpg',
+      avatar: './assets/tmp/img/avatar.jpg',
       email: 'cipchk@qq.com',
       token: '123456789'
     };

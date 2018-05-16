@@ -8,8 +8,8 @@ type: Widgets
 
 ## 注意事项
 
-- 格式化分为：**数据格式化**表示表单数据和**显示格式化**显示数据
-- 所有格式化单位，参考 [date-fns format](https://date-fns.org/v1.29.0/docs/format)（国内镜像：[moment format](http://momentjs.cn/docs/#/displaying/format/)）
+- 格式化分为：**数据格式化**表示表单数据和**显示格式化**显示数据（等同 [nzFormat](https://ng.ant.design/components/time-picker/zh#api) 值）
+- 所有 **数据格式化** 单位，参考 [date-fns format](https://date-fns.org/v1.29.0/docs/format)（国内镜像：[moment format](http://momentjs.cn/docs/#/displaying/format/)）
 - 指定 `schema.format` 则必须遵守 [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.6) 时间格式，否则都视为格式错误，默认的数据格式化：
   - `time`、`full-time` 默认 `HH:mm:ss`
 - 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过 `DelonFormConfig` 替换）数据格式化：
@@ -33,7 +33,7 @@ format | 数据格式类型  | `string` | -
 | size | 大小，等同 `nzSize` | `string` | - |
 | placeholder | 在文字框中显示提示讯息 | `string` | - |
 | format | 数据格式化 | `string` | `HH:mm:ss` |
-| displayFormat | 显示格式化，等同 `nzFormat` | `string` | `HH:mm:ss` |
+| displayFormat | 显示格式化，（等同 [nzFormat](https://ng.ant.design/components/time-picker/zh#api) 值） | `string` | `HH:mm:ss` |
 | utcEpoch | 是否UTC新纪元（表示从 `1970` 开始计毫秒数），当 `type='number'` 时有效 | `boolean` | `false` |
 | allowEmpty | 是否展示清除按钮 | `boolean` | `true` |
 | clearText | 清除按钮的提示文案 | `string` | `清除` |

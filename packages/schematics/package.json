@@ -2,6 +2,16 @@
   "name": "ng-alain",
   "version": "0.0.0-PLACEHOLDER",
   "description": "Schematics specific to ng-alain",
+  "author": "cipchk<cipchk@qq.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cipchk/ng-alain.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cipchk/ng-alain/issues"
+  },
+  "homepage": "https://ng-alain.com/",
   "keywords": [
     "ng-alain",
     "ng-zorro-antd",
@@ -10,14 +20,10 @@
     "code generation",
     "schematics"
   ],
-  "scripts": {
-    "preinstall":
-      "echo DO NOT INSTALL THIS PROJECT, ONLY THE ROOT PROJECT. && exit 1"
-  },
   "dependencies": {
-    "@angular-devkit/core": "^0.0.0",
-    "@angular-devkit/schematics": "^0.0.0",
-    "@schematics/angular": "^0.0.0"
+    "@angular-devkit/core": "^0.6.1",
+    "@angular-devkit/schematics": "^0.6.1",
+    "@schematics/angular": "^0.6.1"
   },
   "schematics": "./collection.json",
   "ng-update": {
@@ -31,7 +37,8 @@
       "@delon/cache",
       "@delon/mock",
       "@delon/form",
-      "ng-zorro-antd"
+      "ng-zorro-antd",
+      "ng-alain"
     ]
   },
   "sideEffects": false
