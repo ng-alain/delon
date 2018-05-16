@@ -22,7 +22,7 @@ ng new demo --style less
 ng add ng-alain
 ```
 
-> 默认情况下会执行依赖包的安装，但可能会受限于使用 npm、yarn 等的关系，会有部分包降级时依然无法生效（例如：`less` [#10430](https://github.com/angular/angular-cli/issues/10430)），此时可能需要删除 `node_modules` 再 `npm i` 一次来解决。
+> 默认情况下会执行依赖包的安装，但可能会受限于使用 npm、yarn 等的关系，会有部分包降级时依然无法生效（例如：`less` [#10430](https://github.com/angular/angular-cli/issues/10430)，绝大多数可能会收到 `.bezierEasingMixin();` 异常信息），此时可能需要删除 `node_modules` 再 `npm i` 或 `yarn` 来解决。
 
 3、运行项目
 
