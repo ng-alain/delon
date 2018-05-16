@@ -9,7 +9,12 @@ env:
   - TASK=test:schematics
   - TASK=lint
   - TASK=site:release
-  - TASK=scaffold:release_optional
+  - TASK=scaffold:release
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: "CI_MODE=scaffold:release"
 
 addons:
 apt:

@@ -37,7 +37,7 @@
     "release": "bash ./build.sh && bash build-schematics.sh -b",
     "public:next": "npm run release && bash ./scripts/release/publish-next",
     "public": "npm run release && bash ./scripts/release/publish",
-    "scaffold:release_optional": "bash ./scaffold.sh -b",
+    "scaffold:release": "bash ./scaffold.sh -b",
     "scaffold:gh": "bash ./scaffold.sh -b -d",
     "scaffold:public": "cd ./scaffold && npm publish --access=public",
     "scaffold:public:next": "cd ./scaffold && npm publish --tag next --access=public"
