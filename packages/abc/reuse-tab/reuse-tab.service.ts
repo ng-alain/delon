@@ -351,7 +351,7 @@ export class ReuseTabService implements OnDestroy {
   }
 
   private runHook(method: string, url: string, comp: any) {
-    if (comp.instance && comp.instance.hasOwnProperty(method))
+    if (comp.instance && typeof comp.instance[method] === 'function')
       comp.instance[method]();
   }
 
