@@ -18,7 +18,7 @@ import {
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { Subscription, combineLatest } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, debounceTime } from 'rxjs/operators';
 import { toNumber, toBoolean } from '@delon/util';
 
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
@@ -130,7 +130,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       this.genList(res as any),
     );
     if (this.i18nSrv)
-      this.i18n$ = this.i18nSrv.change.subscribe(() => this.genList());
+      this.i18n$ = this.i18nSrv.change.pipe(debounceTime(100)).subscribe(() => this.genList());
   }
 
   private genTit(title: ReuseTitle): string {

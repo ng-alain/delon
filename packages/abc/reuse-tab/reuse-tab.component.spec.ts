@@ -608,6 +608,7 @@ describe('abc: reuse-tab', () => {
 
         i18nResult = 'en';
         injector.get(ALAIN_I18N_TOKEN).use('en');
+        tick(101);
         page.expectAttr(1, 'title', 'en');
       }),
     );
