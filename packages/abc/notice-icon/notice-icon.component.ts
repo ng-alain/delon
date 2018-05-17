@@ -10,10 +10,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import {
-  coerceNumberProperty,
-  coerceBooleanProperty,
-} from '@angular/cdk/coercion';
+import { toNumber, toBoolean } from '@delon/util';
 
 import { NoticeItem, NoticeIconClick } from './interface';
 
@@ -58,7 +55,7 @@ export class NoticeIconComponent {
     return this._count;
   }
   set count(value: any) {
-    this._count = coerceNumberProperty(value);
+    this._count = toNumber(value);
   }
   private _count: number;
 
@@ -68,7 +65,7 @@ export class NoticeIconComponent {
     return this._loading;
   }
   set loading(value: any) {
-    this._loading = coerceBooleanProperty(value);
+    this._loading = toBoolean(value);
   }
   private _loading = false;
 
@@ -81,7 +78,7 @@ export class NoticeIconComponent {
     return this._popoverVisible;
   }
   set popoverVisible(value: any) {
-    this._popoverVisible = coerceBooleanProperty(value);
+    this._popoverVisible = toBoolean(value);
   }
   private _popoverVisible = false;
 

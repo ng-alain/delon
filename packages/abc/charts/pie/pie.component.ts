@@ -20,10 +20,7 @@ import {
 } from '@angular/core';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import {
-  coerceNumberProperty,
-  coerceBooleanProperty,
-} from '@angular/cdk/coercion';
+import { toNumber, toBoolean } from '@delon/util';
 
 @Component({
   selector: 'g2-pie',
@@ -56,7 +53,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     return this._animate;
   }
   set animate(value: any) {
-    this._animate = coerceBooleanProperty(value);
+    this._animate = toBoolean(value);
   }
   private _animate = true;
 
@@ -69,7 +66,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     return this._height;
   }
   set height(value: any) {
-    this._height = coerceNumberProperty(value);
+    this._height = toNumber(value);
   }
   private _height = 0;
 
@@ -79,7 +76,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     return this._hasLegend;
   }
   set hasLegend(value: any) {
-    this._hasLegend = coerceBooleanProperty(value);
+    this._hasLegend = toBoolean(value);
   }
   private _hasLegend = false;
 
@@ -89,7 +86,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     return this._legendBlock;
   }
   set legendBlock(value: any) {
-    this._legendBlock = coerceBooleanProperty(value);
+    this._legendBlock = toBoolean(value);
   }
   private _legendBlock = false;
 
@@ -101,7 +98,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     return this._percent;
   }
   set percent(value: any) {
-    this._percent = coerceNumberProperty(value);
+    this._percent = toNumber(value);
   }
   private _percent: number;
 
@@ -110,7 +107,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     return this._tooltip;
   }
   set tooltip(value: any) {
-    this._tooltip = coerceBooleanProperty(value);
+    this._tooltip = toBoolean(value);
   }
   private _tooltip = true;
 
@@ -119,7 +116,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     return this._lineWidth;
   }
   set lineWidth(value: any) {
-    this._lineWidth = coerceNumberProperty(value);
+    this._lineWidth = toNumber(value);
   }
   private _lineWidth = 0;
 
@@ -128,7 +125,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     return this._select;
   }
   set select(value: any) {
-    this._select = coerceBooleanProperty(value);
+    this._select = toBoolean(value);
   }
   private _select = true;
 

@@ -13,7 +13,7 @@ import {
   QueryList,
   SimpleChange,
 } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 import { DescListItemComponent } from './desc-list-item.component';
 import { AdDescListConfig } from './desc-list.config';
 
@@ -53,7 +53,7 @@ export class DescListComponent implements OnChanges, OnInit {
     return this._gutter;
   }
   set gutter(value: any) {
-    this._gutter = coerceNumberProperty(value);
+    this._gutter = toNumber(value);
   }
   private _gutter = 32;
 
@@ -68,7 +68,7 @@ export class DescListComponent implements OnChanges, OnInit {
     return this._col;
   }
   set col(value: any) {
-    this._col = coerceNumberProperty(value);
+    this._col = toNumber(value);
   }
   private _col = 3;
 

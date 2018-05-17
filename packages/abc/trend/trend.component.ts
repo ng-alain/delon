@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { toBoolean } from '@delon/util';
 
 @Component({
   selector: 'trend',
@@ -23,7 +23,7 @@ export class TrendComponent {
     return this._colorful;
   }
   set colorful(value: any) {
-    this._colorful = coerceBooleanProperty(value);
+    this._colorful = toBoolean(value);
   }
   private _colorful = true;
 }

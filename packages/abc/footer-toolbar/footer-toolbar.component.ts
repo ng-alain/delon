@@ -11,7 +11,7 @@ import {
   HostBinding,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { toBoolean } from '@delon/util';
 
 const CLS = 'ad-footer-toolbar';
 
@@ -32,7 +32,7 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
     return this._errorCollect;
   }
   set errorCollect(value: any) {
-    this._errorCollect = coerceBooleanProperty(value);
+    this._errorCollect = toBoolean(value);
   }
   private _errorCollect = false;
 

@@ -5,7 +5,7 @@ import {
   Input,
   ContentChild,
 } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { toBoolean } from '@delon/util';
 
 @Component({
   selector: 'g2-card',
@@ -48,7 +48,7 @@ export class G2CardComponent {
     return this._bordered;
   }
   set bordered(value: any) {
-    this._bordered = coerceBooleanProperty(value);
+    this._bordered = toBoolean(value);
   }
   private _bordered = false;
 
@@ -109,7 +109,7 @@ export class G2CardComponent {
     return this._loading;
   }
   set loading(value: any) {
-    this._loading = coerceBooleanProperty(value);
+    this._loading = toBoolean(value);
   }
   private _loading = false;
 

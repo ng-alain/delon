@@ -7,7 +7,7 @@ import {
   Renderer2,
   SimpleChange,
 } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { toBoolean } from '@delon/util';
 
 @Component({
   selector: 'standard-form-row',
@@ -27,7 +27,7 @@ export class StandardFormRowComponent implements OnChanges {
     return this._block;
   }
   set block(value: any) {
-    this._block = coerceBooleanProperty(value);
+    this._block = toBoolean(value);
   }
   private _block: boolean;
 
@@ -37,7 +37,7 @@ export class StandardFormRowComponent implements OnChanges {
     return this._last;
   }
   set last(value: any) {
-    this._last = coerceBooleanProperty(value);
+    this._last = toBoolean(value);
   }
   private _last: boolean;
 
@@ -47,7 +47,7 @@ export class StandardFormRowComponent implements OnChanges {
     return this._grid;
   }
   set grid(value: any) {
-    this._grid = coerceBooleanProperty(value);
+    this._grid = toBoolean(value);
   }
   private _grid: boolean;
 

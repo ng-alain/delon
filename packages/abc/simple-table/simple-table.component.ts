@@ -31,12 +31,7 @@ import {
   ALAIN_I18N_TOKEN,
   AlainI18NService,
 } from '@delon/theme';
-import {
-  deepGet,
-  deepCopy,
-  toBoolean,
-  toNumber,
-} from '@delon/util';
+import { deepGet, deepCopy, toBoolean, toNumber } from '@delon/util';
 
 import {
   SimpleTableColumn,

@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { toBoolean } from '@delon/util';
 
 @Component({
   selector: 'tag-select',
@@ -23,7 +23,7 @@ export class TagSelectComponent {
     return this._expandable;
   }
   set expandable(value: any) {
-    this._expandable = coerceBooleanProperty(value);
+    this._expandable = toBoolean(value);
   }
   private _expandable = true;
 

@@ -18,10 +18,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import {
-  coerceNumberProperty,
-  coerceBooleanProperty,
-} from '@angular/cdk/coercion';
+import { toNumber, toBoolean } from '@delon/util';
 
 @Component({
   selector: 'g2-radar',
@@ -62,7 +59,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     return this._height;
   }
   set height(value: any) {
-    this._height = coerceNumberProperty(value);
+    this._height = toNumber(value);
   }
   private _height = 0;
 
@@ -73,7 +70,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     return this._hasLegend;
   }
   set hasLegend(value: any) {
-    this._hasLegend = coerceBooleanProperty(value);
+    this._hasLegend = toBoolean(value);
   }
   private _hasLegend = true;
 
@@ -82,7 +79,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     return this._tickCount;
   }
   set tickCount(value: any) {
-    this._tickCount = coerceNumberProperty(value);
+    this._tickCount = toNumber(value);
   }
   private _tickCount = 4;
 

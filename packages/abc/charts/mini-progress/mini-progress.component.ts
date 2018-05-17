@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-mini-progress',
@@ -27,7 +27,7 @@ export class G2ProgressComponent {
     return this._target;
   }
   set target(value: any) {
-    this._target = Math.min(Math.max(coerceNumberProperty(value), 0), 100);
+    this._target = Math.min(Math.max(toNumber(value), 0), 100);
   }
   private _target: number;
 
@@ -36,7 +36,7 @@ export class G2ProgressComponent {
     return this._strokeWidth;
   }
   set strokeWidth(value: any) {
-    this._strokeWidth = coerceNumberProperty(value);
+    this._strokeWidth = toNumber(value);
   }
   private _strokeWidth: number;
 
@@ -45,7 +45,7 @@ export class G2ProgressComponent {
     return this._percent;
   }
   set percent(value: any) {
-    this._percent = Math.min(Math.max(coerceNumberProperty(value), 0), 100);
+    this._percent = Math.min(Math.max(toNumber(value), 0), 100);
   }
   private _percent: number;
 

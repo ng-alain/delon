@@ -6,7 +6,7 @@ import {
   Renderer2,
   ElementRef,
 } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'ellipsis',
@@ -21,7 +21,7 @@ export class EllipsisComponent {
     return this._lines;
   }
   set lines(value: any) {
-    this._lines = coerceNumberProperty(value);
+    this._lines = toNumber(value);
   }
   private _lines = 3;
 

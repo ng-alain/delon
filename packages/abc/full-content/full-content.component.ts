@@ -16,10 +16,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import {
-  coerceBooleanProperty,
-  coerceNumberProperty,
-} from '@angular/cdk/coercion';
+import { toBoolean, toNumber } from '@delon/util';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime, filter, distinct } from 'rxjs/operators';
 import { FullContentService } from './full-content.service';
@@ -54,7 +51,7 @@ export class FullContentComponent
     return this._fullscreen;
   }
   set fullscreen(value: any) {
-    this._fullscreen = coerceBooleanProperty(value);
+    this._fullscreen = toBoolean(value);
   }
   private _fullscreen;
 
@@ -63,7 +60,7 @@ export class FullContentComponent
     return this._hideTitle;
   }
   set hideTitle(value: any) {
-    this._hideTitle = coerceBooleanProperty(value);
+    this._hideTitle = toBoolean(value);
   }
   private _hideTitle = true;
 
@@ -72,7 +69,7 @@ export class FullContentComponent
     return this._padding;
   }
   set padding(value: any) {
-    this._padding = coerceNumberProperty(value);
+    this._padding = toNumber(value);
   }
   private _padding = 24;
 

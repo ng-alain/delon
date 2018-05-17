@@ -14,7 +14,7 @@ import {
   ChangeDetectorRef,
   SimpleChange,
 } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-gauge',
@@ -30,7 +30,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     return this._height;
   }
   set height(value: any) {
-    this._height = coerceNumberProperty(value);
+    this._height = toNumber(value);
   }
   private _height;
   @Input() color = '#2F9CFF';
@@ -42,7 +42,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     return this._percent;
   }
   set percent(value: any) {
-    this._percent = coerceNumberProperty(value);
+    this._percent = toNumber(value);
   }
   private _percent: number;
 

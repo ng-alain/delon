@@ -14,7 +14,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-timeline',
@@ -48,7 +48,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     return this._height;
   }
   set height(value: any) {
-    this._height = coerceNumberProperty(value);
+    this._height = toNumber(value);
   }
   private _height = 400;
 
@@ -59,7 +59,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     return this._borderWidth;
   }
   set borderWidth(value: any) {
-    this._borderWidth = coerceNumberProperty(value);
+    this._borderWidth = toNumber(value);
   }
   private _borderWidth = 2;
 

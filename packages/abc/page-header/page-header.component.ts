@@ -15,7 +15,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { toBoolean } from '@delon/util';
 import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 import { isEmpty } from '@delon/util';
 
@@ -74,7 +74,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     return this._autoBreadcrumb;
   }
   set autoBreadcrumb(value: any) {
-    this._autoBreadcrumb = coerceBooleanProperty(value);
+    this._autoBreadcrumb = toBoolean(value);
   }
   private _autoBreadcrumb = true;
 

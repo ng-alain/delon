@@ -12,7 +12,7 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'number-info',
@@ -94,7 +94,7 @@ export class NumberInfoComponent implements OnChanges {
     return this._gap;
   }
   set gap(value: any) {
-    this._gap = coerceNumberProperty(value);
+    this._gap = toNumber(value);
   }
   private _gap = 8;
 

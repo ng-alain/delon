@@ -12,7 +12,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { toBoolean } from '@delon/util';
 import { deepCopy } from '@delon/util';
 
 import { DelonFormConfig } from './config';
@@ -120,7 +120,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     return this._liveValidate;
   }
   set liveValidate(value: any) {
-    this._liveValidate = coerceBooleanProperty(value);
+    this._liveValidate = toBoolean(value);
   }
   private _liveValidate = true;
 
@@ -133,7 +133,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     return this._firstVisual;
   }
   set firstVisual(value: any) {
-    this._firstVisual = coerceBooleanProperty(value);
+    this._firstVisual = toBoolean(value);
   }
   private _firstVisual = true;
 

@@ -1,5 +1,5 @@
 import { Directive, Input, TemplateRef, OnInit } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { toBoolean } from '@delon/util';
 import { SimpleTableComponent } from './simple-table.component';
 
 @Directive({

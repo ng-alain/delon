@@ -16,10 +16,7 @@ import {
 } from '@angular/core';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import {
-  coerceBooleanProperty,
-  coerceNumberProperty,
-} from '@angular/cdk/coercion';
+import { toBoolean, toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-bar',
@@ -50,7 +47,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
     return this._height;
   }
   set height(value: any) {
-    this._height = coerceNumberProperty(value);
+    this._height = toNumber(value);
   }
   private _height = 0;
 
@@ -62,7 +59,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
     return this._autoLabel;
   }
   set autoLabel(value: any) {
-    this._autoLabel = coerceBooleanProperty(value);
+    this._autoLabel = toBoolean(value);
   }
   private _autoLabel = true;
 

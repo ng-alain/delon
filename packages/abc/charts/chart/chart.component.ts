@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-chart',
@@ -25,7 +25,7 @@ export class G2ChartComponent implements OnInit, OnDestroy {
     return this._height;
   }
   set height(value: any) {
-    this._height = coerceNumberProperty(value);
+    this._height = toNumber(value);
   }
   private _height;
 
@@ -34,7 +34,7 @@ export class G2ChartComponent implements OnInit, OnDestroy {
     return this._resizeTime;
   }
   set resizeTime(value: any) {
-    this._resizeTime = coerceNumberProperty(value);
+    this._resizeTime = toNumber(value);
   }
   private _resizeTime = 0;
 

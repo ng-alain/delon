@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 import { AdErrorCollectConfig } from './error-collect.config';
 
 /**
@@ -38,7 +38,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     return this._freq;
   }
   set freq(value: any) {
-    this._freq = coerceNumberProperty(value);
+    this._freq = toNumber(value);
   }
   private _freq = 500;
 
@@ -47,7 +47,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     return this._offsetTop;
   }
   set offsetTop(value: any) {
-    this._offsetTop = coerceNumberProperty(value);
+    this._offsetTop = toNumber(value);
   }
   private _offsetTop = 65 + 64 + 8 * 2;
 

@@ -16,10 +16,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import {
-  coerceNumberProperty,
-  coerceBooleanProperty,
-} from '@angular/cdk/coercion';
+import { toNumber, toBoolean } from '@delon/util';
 
 @Component({
   selector: 'g2-tag-cloud',
@@ -36,7 +33,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     return this._height;
   }
   set height(value: any) {
-    this._height = coerceNumberProperty(value);
+    this._height = toNumber(value);
     this.cd.detectChanges();
   }
   private _height = 0;
@@ -49,7 +46,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     return this._autoLabel;
   }
   set autoLabel(value: any) {
-    this._autoLabel = coerceBooleanProperty(value);
+    this._autoLabel = toBoolean(value);
   }
   private _autoLabel = true;
 

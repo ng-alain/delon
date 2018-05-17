@@ -19,10 +19,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { Subscription, combineLatest } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import {
-  coerceNumberProperty,
-  coerceBooleanProperty,
-} from '@angular/cdk/coercion';
+import { toNumber, toBoolean } from '@delon/util';
 
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 
@@ -47,7 +44,7 @@ import { ReuseTabContextService } from './reuse-tab-context.service';
   host: {
     '[class.ad-rt]': 'true',
     '[class.fixed]': 'fixed',
-  }
+  },
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   private sub$: Subscription;
@@ -67,7 +64,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return this._debug;
   }
   set debug(value: any) {
-    this._debug = coerceBooleanProperty(value);
+    this._debug = toBoolean(value);
   }
   private _debug = false;
   /** 允许最多复用多少个页面 */
@@ -76,7 +73,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return this._max;
   }
   set max(value: any) {
-    this._max = coerceNumberProperty(value);
+    this._max = toNumber(value);
   }
   private _max: number;
   /** 排除规则，限 `mode=URL` */
@@ -87,7 +84,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return this._allowClose;
   }
   set allowClose(value: any) {
-    this._allowClose = coerceBooleanProperty(value);
+    this._allowClose = toBoolean(value);
   }
   private _allowClose = true;
   /** 是否固定 */
@@ -96,7 +93,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return this._fixed;
   }
   set fixed(value: any) {
-    this._fixed = coerceBooleanProperty(value);
+    this._fixed = toBoolean(value);
   }
   private _fixed = true;
   /** 总是显示当前页 */
@@ -105,7 +102,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return this._showCurrent;
   }
   set showCurrent(value: any) {
-    this._showCurrent = coerceBooleanProperty(value);
+    this._showCurrent = toBoolean(value);
   }
   private _showCurrent = true;
   /** 切换时回调 */
@@ -129,8 +126,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     const route$ = this.router.events.pipe(
       filter(evt => evt instanceof NavigationEnd),
     );
-    this.sub$ = combineLatest(this.srv.change, route$).subscribe(
-      ([res, e]) => this.genList(res as any),
+    this.sub$ = combineLatest(this.srv.change, route$).subscribe(([res, e]) =>
+      this.genList(res as any),
     );
     if (this.i18nSrv)
       this.i18n$ = this.i18nSrv.change.subscribe(() => this.genList());

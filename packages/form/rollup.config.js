@@ -16,7 +16,6 @@ const globals = {
   'ng-zorro-antd': 'ngZorro.antd',
 
   '@angular/cdk': 'ng.cdk',
-  '@angular/cdk/coercion': 'ng.cdk.coercion',
 
   'rxjs'          : 'Rx',
   'rxjs/operators': 'Rx.Observable.prototype',

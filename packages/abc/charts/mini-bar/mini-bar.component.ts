@@ -10,7 +10,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-mini-bar',
@@ -28,7 +28,7 @@ export class G2MiniBarComponent implements OnDestroy, OnChanges {
     return this._height;
   }
   set height(value: any) {
-    this._height = coerceNumberProperty(value);
+    this._height = toNumber(value);
   }
   private _height = 0;
 
@@ -37,7 +37,7 @@ export class G2MiniBarComponent implements OnDestroy, OnChanges {
     return this._borderWidth;
   }
   set borderWidth(value: any) {
-    this._borderWidth = coerceNumberProperty(value);
+    this._borderWidth = toNumber(value);
   }
   private _borderWidth = 5;
 

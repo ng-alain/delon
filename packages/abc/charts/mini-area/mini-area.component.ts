@@ -10,10 +10,7 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  coerceNumberProperty,
-  coerceBooleanProperty,
-} from '@angular/cdk/coercion';
+import { toNumber, toBoolean } from '@delon/util';
 
 @Component({
   selector: 'g2-mini-area',
@@ -30,7 +27,7 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
     return this._borderWidth;
   }
   set borderWidth(value: any) {
-    this._borderWidth = coerceNumberProperty(value);
+    this._borderWidth = toNumber(value);
   }
   private _borderWidth = 2;
 
@@ -40,7 +37,7 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
     return this._height;
   }
   set height(value: any) {
-    this._height = coerceNumberProperty(value);
+    this._height = toNumber(value);
   }
   private _height;
 
@@ -49,7 +46,7 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
     return this._fit;
   }
   set fit(value: any) {
-    this._fit = coerceBooleanProperty(value);
+    this._fit = toBoolean(value);
   }
   private _fit = true;
 
@@ -58,7 +55,7 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
     return this._line;
   }
   set line(value: any) {
-    this._line = coerceBooleanProperty(value);
+    this._line = toBoolean(value);
   }
   private _line = false;
 
@@ -67,7 +64,7 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
     return this._animate;
   }
   set animate(value: any) {
-    this._animate = coerceBooleanProperty(value);
+    this._animate = toBoolean(value);
   }
   private _animate = true;
 
