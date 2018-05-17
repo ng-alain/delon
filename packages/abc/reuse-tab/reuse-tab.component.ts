@@ -44,6 +44,10 @@ import { ReuseTabContextService } from './reuse-tab-context.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   providers: [ReuseTabContextService],
+  host: {
+    '[class.ad-rt]': 'true',
+    '[class.fixed]': 'fixed',
+  }
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   private sub$: Subscription;
@@ -268,15 +272,11 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private setClass() {
-    const el = this.el.nativeElement;
     const body = this.doc.querySelector('body');
-    const fixedCls = `fixed`;
-    const bodyCls = `has-reuse-tab`;
+    const bodyCls = `has-ad-rt`;
     if (this.fixed) {
-      this.render.addClass(el, fixedCls);
       this.render.addClass(body, bodyCls);
     } else {
-      this.render.removeClass(el, fixedCls);
       this.render.removeClass(body, bodyCls);
     }
   }

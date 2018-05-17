@@ -1,5 +1,5 @@
 @import '../../../theme/styles/default';
-reuse-tab {
+.ad-rt {
   display: block;
   background-color: @reuse-tab-bg;
   padding: @reuse-tab-padding;
@@ -47,11 +47,11 @@ reuse-tab {
   }
 }
 
-.aside-collapsed reuse-tab.fixed {
+.aside-collapsed .ad-rt.fixed {
   left: @aside-collapsed-wd;
 }
 
-.has-reuse-tab {
+.has-ad-rt {
   .content {
     margin-top: @header-hg + @reuse-tab-height;
   }
@@ -60,11 +60,11 @@ reuse-tab {
 // @media (min-width: @screen-sm-max) {
 // }
 @media (max-width: @screen-sm-max) {
-  reuse-tab.fixed {
+  .ad-rt.fixed {
     left: -@content-padding;
     top: -@reuse-tab-height;
   }
-  .aside-collapsed reuse-tab.fixed {
+  .aside-collapsed .ad-rt.fixed {
     left: -@content-padding;
     right: -@content-padding;
   }

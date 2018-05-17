@@ -340,7 +340,7 @@ describe('abc: reuse-tab', () => {
           layoutComp.fixed = true;
           fixture.detectChanges();
           expect(document.querySelector('body').classList).toContain(
-            'has-reuse-tab',
+            'has-ad-rt',
           );
           expect(dl.query(By.css('.fixed'))).not.toBeNull();
         });
@@ -348,7 +348,7 @@ describe('abc: reuse-tab', () => {
           layoutComp.fixed = false;
           fixture.detectChanges();
           expect(document.querySelector('body').classList).not.toContain(
-            'has-reuse-tab',
+            'has-ad-rt',
           );
           expect(dl.query(By.css('.fixed'))).toBeNull();
         });

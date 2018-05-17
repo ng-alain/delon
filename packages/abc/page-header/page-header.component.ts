@@ -49,7 +49,7 @@ import { AdPageHeaderConfig } from './page-header.config';
   `,
   host: {
     '[class.content__title]': 'true',
-    '[class.ad-page-header]': 'true',
+    '[class.ad-ph]': 'true',
   },
   preserveWhitespaces: false,
 })
