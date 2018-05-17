@@ -29,24 +29,30 @@ import {
 } from './interface';
 import { AdSimpleTableModule } from './simple-table.module';
 import { SimpleTableComponent } from './simple-table.component';
+import { of, Observable } from 'rxjs';
+
+function genData(count: number) {
+  return Array(count)
+    .fill({})
+    .map((item: any, idx: number) => {
+      return {
+        id: idx + 1,
+        name: `name ${idx + 1}`,
+        age: Math.ceil(Math.random() * 10) + 20,
+        status: idx % 2 === 0,
+        date: new Date(),
+        img: MOCKIMG,
+        prices: {
+          total: Math.ceil(Math.random() * 10) + 200,
+        },
+      };
+    });
+}
 
 const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
 const PS = 3;
-const USERS: any[] = Array(PS + 1)
-  .fill({})
-  .map((item: any, idx: number) => {
-    return {
-      id: idx + 1,
-      name: `name ${idx + 1}`,
-      age: Math.ceil(Math.random() * 10) + 20,
-      status: idx % 2 === 0,
-      date: new Date(),
-      img: MOCKIMG,
-      prices: {
-        total: Math.ceil(Math.random() * 10) + 200,
-      },
-    };
-  });
+const DEFAULTCOUNT = PS + 1;
+const USERS: any[] = genData(DEFAULTCOUNT);
 const COLUMNS: SimpleTableColumn[] = [
   {
     title: 'id',
@@ -141,6 +147,41 @@ describe('abc: simple-table', () => {
         it(`should render ${PS} rows`, () => {
           page.expectCount(PS);
         });
+
+        it('with observable', () => {
+          const obs$ = of(USERS);
+          context.data = obs$;
+          fixture.detectChanges();
+          expect(context.change).not.toHaveBeenCalled();
+          page.expectPageTotal(2)
+              .to(2);
+          expect(context.change).toHaveBeenCalled();
+        });
+
+        describe('#frontPagination', () => {
+          it('with true', () => {
+            context.frontPagination = true;
+            fixture.detectChanges();
+            page
+              .expectTotal(DEFAULTCOUNT)
+              .to(2)
+              .expectCount(DEFAULTCOUNT - PS);
+          });
+          it('with false', () => {
+            const total = 11;
+            context.frontPagination = false;
+            context.data = genData(total);
+            context.total = total;
+            context.pi = 1;
+            context.ps = 5;
+            fixture.detectChanges();
+            page
+              .expectTotal(total)
+              .to(3)
+              .expectCount(1);
+            expect(context.change).toHaveBeenCalled();
+          });
+        });
       });
       describe('with url', () => {
         let http: HttpClient;
@@ -222,14 +263,18 @@ describe('abc: simple-table', () => {
               context.multiSort = true;
               fixture.detectChanges();
               const h = httpMock.expectOne(w => true) as TestRequest;
-              expect(h.request.urlWithParams).toContain('sort1=ascend&sort2=descend');
+              expect(h.request.urlWithParams).toContain(
+                'sort1=ascend&sort2=descend',
+              );
             });
             describe('when using SimpleTableMultiSort', () => {
               it('should combine values', () => {
                 context.multiSort = <SimpleTableMultiSort>{};
                 fixture.detectChanges();
                 const h = httpMock.expectOne(w => true) as TestRequest;
-                expect(h.request.urlWithParams).toContain('sort=sort1.ascend-sort2.descend');
+                expect(h.request.urlWithParams).toContain(
+                  'sort=sort1.ascend-sort2.descend',
+                );
               });
             });
           });
@@ -245,7 +290,9 @@ describe('abc: simple-table', () => {
         it('#reqError', () => {
           fixture.detectChanges();
           expect(context.reqError).not.toHaveBeenCalled();
-          httpMock.expectOne(w => true).flush(null, { status: 503, statusText: '' });
+          httpMock
+            .expectOne(w => true)
+            .flush(null, { status: 503, statusText: '' });
           expect(context.reqError).toHaveBeenCalled();
         });
         it('#preDataChange', () => {
@@ -268,18 +315,18 @@ describe('abc: simple-table', () => {
       it('should be custom render via format', () => {
         context.data = USERS.slice(0, 3);
         context.columns = [
-          { title: '', index: 'id', format: (a) => `<div class="j-format">${a.id}</div>`}
+          {
+            title: '',
+            index: 'id',
+            format: a => `<div class="j-format">${a.id}</div>`,
+          },
         ];
         fixture.detectChanges();
         page.expectEls('.j-format', 3);
       });
       it('should be default render via default', () => {
-        context.data = [
-          { }
-        ];
-        context.columns = [
-          { title: '', index: 'id', default: '-' }
-        ];
+        context.data = [{}];
+        context.columns = [{ title: '', index: 'id', default: '-' }];
         fixture.detectChanges();
         const ret = page.getFirstCell().innerText;
         expect(ret).toBe('-');
@@ -291,7 +338,12 @@ describe('abc: simple-table', () => {
         });
         it('with link', () => {
           const col: SimpleTableColumn[] = [
-            { title: '', index: 'status', type: 'link', click: jasmine.createSpy() }
+            {
+              title: '',
+              index: 'status',
+              type: 'link',
+              click: jasmine.createSpy(),
+            },
           ];
           context.columns = col;
           fixture.detectChanges();
@@ -409,18 +461,6 @@ describe('abc: simple-table', () => {
     });
   });
 
-  describe('[static data]', () => {
-    it('should be not pagination when data length less than ps value', () => {
-      genModule({
-        template: `<simple-table #st [data]="data" [columns]="columns" [ps]="ps"></simple-table>`,
-      });
-      context.data = USERS.slice(0, 3);
-      context.ps = 4;
-      fixture.detectChanges();
-      page.expectCount(3).expectEls('nz-pagination', 0);
-    });
-  });
-
   describe('[acl]', () => {
     let acl: ACLService;
 
@@ -461,6 +501,18 @@ describe('abc: simple-table', () => {
     });
   });
 
+  describe('[edge]', () => {
+    it('should be not pagination when data length less than ps value', () => {
+      genModule({
+        template: `<simple-table #st [data]="data" [columns]="columns" [ps]="ps"></simple-table>`,
+      });
+      context.data = USERS.slice(0, 3);
+      context.ps = 4;
+      fixture.detectChanges();
+      page.expectCount(3).expectEls('nz-pagination', 0);
+    });
+  });
+
   class PageObject {
     constructor() {
       spyOn(context, 'reqError');
@@ -478,11 +530,14 @@ describe('abc: simple-table', () => {
       return el.nativeElement as any;
     }
     getFirstCell() {
-      return document.querySelector('.ant-table-tbody tr td:nth-child(2)') as HTMLElement;
+      return document.querySelector(
+        '.ant-table-tbody tr td:nth-child(2)',
+      ) as HTMLElement;
     }
-    to(pi: number = 2) {
+    to(pi: number = 2): this {
       this.getEl<HTMLElement>(`.ant-pagination [title="${pi}"]`).click();
       fixture.detectChanges();
+      return this;
     }
     expectEl(cls: string, result = true): this {
       const el = dl.query(By.css(cls));
@@ -503,6 +558,9 @@ describe('abc: simple-table', () => {
       expect(comp.total).toBe(value);
       return this;
     }
+    expectPageTotal(value: number): this {
+      return this.expectEls('.ant-pagination-item', value);
+    }
   }
 });
 
@@ -515,6 +573,7 @@ describe('abc: simple-table', () => {
         [columns]="columns"
         [ps]="ps" [pi]="pi" [total]="total"
         [showPagination]="showPagination"
+        [frontPagination]="frontPagination"
         [loading]="loading" [loadingDelay]="loadingDelay"
         [bordered]="bordered" [size]="size"
         [scroll]="scroll"
@@ -541,7 +600,7 @@ describe('abc: simple-table', () => {
 })
 class TestComponent {
   @ViewChild('st') comp: SimpleTableComponent;
-  data: string | any[] = deepCopy(USERS);
+  data: string | any[] | Observable<any[]> = deepCopy(USERS);
   extraParams: any;
   reqMehtod: string;
   reqBody: any;
@@ -561,6 +620,7 @@ class TestComponent {
   scroll: { y: number; x: number };
   showSizeChanger: boolean;
   pageSizeOptions: number[];
+  frontPagination: boolean = true;
   showQuickJumper = false;
   showTotal: any;
   isPageIndexReset: boolean;

@@ -6,13 +6,28 @@ module: AdSimpleTableModule
 config: AdSimpleTableConfig
 ---
 
-`simple-table` 并不是在创造另一个表格组件，而是在 `nz-table` 的基础上以**可配置**的形式渲染表格，在中后台里这种方式可以满足绝大多数场景，但又可以更易的管理表格渲染动作。
+`simple-table` 并不是在创造另一个表格组件，而是在 `nz-table` 基础上以**可配置**形式渲染表格，在中后台里这种方式可以满足绝大多数场景，但又可以更易地管理表格渲染动作。
 
-`simple-table` 并不希望**先入为主**，一个多数场景的表格分两个步骤：决定怎么渲染表格、以及表格数据源。
+## 关于数据源
 
-如何渲染这里采用 JSON 来替代这相比较于 HTML 而言更简洁明了。
+`data` 支持三种不同格式数据源，整体分为：URL和静态数据两类；但可以透过参数的配置达到不同的效果，同时有非常多参数可通过 `AdSimpleTableConfig` 重置默认值，使整个 `<simple-table>` 达到极简。
 
-数据源我把它分为纯HTTP和全量数据源两类——对于前者你只要告诉 `simpel-table` 请求域是什么亦可，而后者当希望所有数据一口气加载时。
+### URL
+
+指的是通过一个 URL 字符串来获取数据。
+
+- 通过 `extraParams`、`reqMehtod` 等参数解决请求数据格式问题
+- 通过 `resReName` 重置数据 `key` 而无须担心后端数据格式是否满足 `simpel-table` 需求
+- 通过 `preDataChange` 可以对表格渲染前对数据进一步优化
+
+### 静态数据
+
+指的是通过指定值为 `any[]` 或 `Observable<any[]>`，二者都遵循以下规则：
+
+- `frontPagination` 前端分页，默认：`true`
+  - `true` 由 `simple-table` 根据 `data` 长度受控分页，包括：排序、过滤等
+  - `false` 由用户通过 `total` 和 `data` 参数受控分页，并维护 `(change)` 当分页变更时重新加载数据
+- `showPagination` 是否显示分页器；当未指定时若 `ps>total` 情况下自动不显示
 
 ## API
 
@@ -32,7 +47,8 @@ resReName | 重命名返回参数 `total`、`list`，支持 `a.b.c` 的嵌套写
 preDataChange | 数据处理前回调，一般在使用 `url` 时很有用 | `(data: SimpleTableData[]) => SimpleTableData[]` | -
 pi | 当前页码 | `number` | `10`
 ps | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10`
-showPagination | 是否显示分页器；当未指定时若 `ps>total` 情况下自动不显示， | `boolean` | -
+frontPagination | 前端分页，当 `data` 为 `any[]` 或 `Observable<any[]>` 有效 | `boolean` | `true`
+showPagination | 是否显示分页器；当未指定时若 `ps>total` 情况下自动不显示 | `boolean` | -
 pagePlacement | 分页方向 | `left,center,right` | `right`
 noResult | 无数据时显示内容 | `string | TemplateRef<void>` | -
 bordered | 是否显示边框 | `boolean` | `false`

@@ -63,10 +63,16 @@ export class AdSimpleTableConfig {
    * 重命名排序值，`columns` 的重命名高于属性
    */
   sortReName?: { ascend?: string; descend?: string };
-
+  /**
+   * 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用
+   */
   multiSort?: boolean | SimpleTableMultiSort = false;
   /**
    * 指定模态框目标组件的接收参数名，默认：`record`
    */
   modalParamsName?: string;
+  /**
+   * 前端分页，当 `data` 为`any[]` 或 `Observable<any[]>` 有效
+   */
+  frontPagination? = true;
 }

@@ -231,6 +231,15 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
           .replace('{{range[1]}}', range[1])
       : '';
   }
+  /** 前端分页，当 `data` 为`any[]` 或 `Observable<any[]>` 有效，默认：`true` */
+  @Input()
+  get frontPagination() {
+    return this._frontPagination;
+  }
+  set frontPagination(value: any) {
+    this._frontPagination = toBoolean(value);
+  }
+  private _frontPagination: boolean;
   /** 数据变更后是否保留在数据变更前的页码 */
   @Input()
   get isPageIndexReset() {
@@ -443,9 +452,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       const values = c.filters.filter(w => w.checked);
       if (values.length === 0) return;
       const onFilter = c.filter;
-      data = data.filter(record => {
-        return values.some(v => onFilter(v, record));
-      });
+      data = data.filter(record => values.some(v => onFilter(v, record)));
     });
 
     if (forceRefresh) {
@@ -460,7 +467,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
             : this.pi;
       }
     }
-    this.total = data.length;
+    this.total = this.frontPagination ? data.length : this.total <= 0 ? data.length : this.total;
     this._isPagination =
       typeof this.showPagination === 'undefined'
         ? this.ps > 0 && this.total > this.ps
@@ -542,7 +549,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       this._genData(true);
     } else {
       if (!this.data$) {
-        this.data$ = <any>this.data
+        this.data$ = this.data
           .pipe(tap(() => (this.loading = true)))
           .subscribe(res => {
             this.data = res;
