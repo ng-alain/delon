@@ -130,7 +130,8 @@
     "typescript": "~2.7.2",
     "webpack-bundle-analyzer": "^2.11.2",
     "xlsx": "^0.12.12",
-    "less": "~2.7.0"
+    "less": "~2.7.0",
+    "less-plugin-clean-css": "^1.5.1"
   },
   "lint-staged": {
     "*.{cmd,html,json,md,sh,txt,xml,yml}": [
