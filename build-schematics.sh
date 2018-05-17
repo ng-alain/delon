@@ -72,7 +72,10 @@ copyFiles() {
     "${1}src/main.ts|${2}application/files/src/"
     "${1}src/styles.less|${2}application/files/src/"
     # assets
+    "${1}src/assets/*.svg|${2}application/files/src/assets/"
     "${1}src/assets/tmp/img/*|${2}application/files/src/assets/tmp/img/"
+    "${1}src/assets/tmp/i18n/*|${2}application/files/src/assets/tmp/i18n/"
+    "${1}src/assets/tmp/app-data.json|${2}application/files/src/assets/tmp/"
     # core
     "${1}src/app/core/i18n|${2}application/files/src/app/core/"
     "${1}src/app/core/net|${2}application/files/src/app/core/"
@@ -147,7 +150,7 @@ echo "Finished test-schematics"
 # clear | bash build-schematics.sh -b -debug
 if [[ ${DEBUG} == true ]]; then
   cd ../../
-  DEBUG_FROM=${PWD}/work/delon/publish/schematics/*
+  DEBUG_FROM=${PWD}/work/delon/dist/packages-dist/schematics/*
   DEBUG_TO=${PWD}/test-projects/demo/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
