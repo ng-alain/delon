@@ -16,3 +16,20 @@ export function isEmpty(element: HTMLElement): boolean {
   }
   return true;
 }
+
+export function toBoolean(
+  value: any,
+  allowUndefined = false,
+): boolean {
+  return allowUndefined && typeof value === 'undefined'
+    ? undefined
+    : value != null && `${value}` !== 'false';
+}
+
+export function toNumber(value: any): number;
+export function toNumber<D>(value: any, fallback: D): number | D;
+export function toNumber(value: any, fallbackValue = 0) {
+  return !isNaN(parseFloat(value as any)) && !isNaN(Number(value))
+    ? Number(value)
+    : fallbackValue;
+}

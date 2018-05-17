@@ -8,6 +8,14 @@ type: Type
 
 用于校验 `<ng-content></ng-content>` 是否为空，自定义组件时蛮有用。
 
+## toBoolean
+
+转换 `boolean` 属性
+
+## toNumber
+
+转换 `number` 属性
+
 ## deepGet
 
 类似 `_.get`，根据 `path` 获取安全值。
