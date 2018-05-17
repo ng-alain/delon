@@ -24,10 +24,13 @@ import {
   SimpleTableFilter,
   SimpleTableColumn,
   ResReNameType,
+  SimpleTableMultiSort,
+  SimpleTableData,
 } from './interface';
 import { AdSimpleTableModule } from './simple-table.module';
 import { SimpleTableComponent } from './simple-table.component';
 
+const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
 const USERS: any[] = Array(100)
   .fill({})
   .map((item: any, idx: number) => {
@@ -37,7 +40,7 @@ const USERS: any[] = Array(100)
       age: Math.ceil(Math.random() * 10) + 20,
       status: idx % 2 === 0,
       date: new Date(),
-      img: `${idx + 1}.png`,
+      img: MOCKIMG,
       prices: {
         total: Math.ceil(Math.random() * 10) + 200,
       },
@@ -77,6 +80,8 @@ const COLUMNS: SimpleTableColumn[] = [
   { title: 'date', index: 'date', type: 'date' },
   { title: 'img', index: 'img', type: 'img' },
   { title: 'status', index: 'status', type: 'yn' },
+  { title: 's1', index: 'sort1', sort: 'ascend', sorter: () => true },
+  { title: 's2', index: 'sort2', sort: 'descend', sorter: () => true },
   {
     title: 'op',
     buttons: [
@@ -152,7 +157,7 @@ describe('abc: simple-table', () => {
                 age: Math.ceil(Math.random() * 10) + 20,
                 status: idx % 2 === 0,
                 date: new Date(),
-                img: `${idx + 1}.png`,
+                img: MOCKIMG,
               };
             }),
           total: URLTOTAL,
@@ -211,6 +216,46 @@ describe('abc: simple-table', () => {
             expect(console.warn).not.toHaveBeenCalled();
           });
         });
+        describe('#sort', () => {
+          describe('#multiSort', () => {
+            it('should be multiSort', () => {
+              context.multiSort = true;
+              fixture.detectChanges();
+              const h = httpMock.expectOne(w => true) as TestRequest;
+              expect(h.request.urlWithParams).toContain('sort1=ascend&sort2=descend');
+            });
+            describe('when using SimpleTableMultiSort', () => {
+              it('should combine values', () => {
+                context.multiSort = <SimpleTableMultiSort>{};
+                fixture.detectChanges();
+                const h = httpMock.expectOne(w => true) as TestRequest;
+                console.log(h);
+                expect(h.request.urlWithParams).toContain('sort=sort1.ascend-sort2.descend');
+              });
+            });
+          });
+          describe('#sortReName', () => {
+            it('should used re-name value', () => {
+              context.sortReName = { ascend: 'asc', descend: 'desc' };
+              fixture.detectChanges();
+              const h = httpMock.expectOne(w => true) as TestRequest;
+              expect(h.request.urlWithParams).toContain('sort1=asc');
+            });
+          });
+        });
+        it('#reqError', () => {
+          fixture.detectChanges();
+          expect(context.reqError).not.toHaveBeenCalled();
+          httpMock.expectOne(w => true).flush(null, { status: 503, statusText: '' });
+          expect(context.reqError).toHaveBeenCalled();
+        });
+        it('#preDataChange', () => {
+          context.preDataChange = jasmine.createSpy().and.returnValue([]);
+          fixture.detectChanges();
+          expect(context.preDataChange).not.toHaveBeenCalled();
+          httpMock.expectOne(w => true).flush(URLDATA);
+          expect(context.preDataChange).toHaveBeenCalled();
+        });
       });
     });
 
@@ -220,6 +265,28 @@ describe('abc: simple-table', () => {
           context.columns = [];
           fixture.detectChanges();
         }).toThrowError('the columns property muse be define!');
+      });
+    });
+
+    describe('#showPagination', () => {
+      it('should auto hide when total less than ps', () => {
+        context.data = deepCopy(USERS).slice(0, 1);
+        context.ps = 2;
+        context.showPagination = undefined;
+        fixture.detectChanges();
+        page.expectEls('nz-pagination', 0);
+      });
+      it('should auto show when ps less than total', () => {
+        context.data = deepCopy(USERS).slice(0, 3);
+        context.ps = 2;
+        context.showPagination = undefined;
+        fixture.detectChanges();
+        page.expectEls('nz-pagination', 1);
+      });
+      it('should always show when with true', () => {
+        context.showPagination = true;
+        fixture.detectChanges();
+        page.expectEls('nz-pagination', 1);
       });
     });
 
@@ -309,7 +376,6 @@ describe('abc: simple-table', () => {
   class PageObject {
     constructor() {
       spyOn(context, 'reqError');
-      spyOn(context, 'preDataChange');
       spyOn(context, 'change');
       spyOn(context, 'checkboxChange');
       spyOn(context, 'radioChange');
@@ -365,7 +431,7 @@ describe('abc: simple-table', () => {
         [pagePlacement]="pagePlacement"
         [toTopInChange]="toTopInChange" [toTopOffset]="toTopOffset"
         [sortReName]="sortReName" [multiSort]="multiSort"
-        (preDataChange)="preDataChange()"
+        [preDataChange]="preDataChange"
         [noResult]="noResult"
         (change)="change()"
         (checkboxChange)="checkboxChange()"
@@ -407,8 +473,8 @@ class TestComponent {
   toTopInChange: boolean;
   toTopOffset: number;
   sortReName: { ascend?: string; descend?: string };
-  multiSort: boolean;
-  preDataChange() {}
+  multiSort: boolean | SimpleTableMultiSort;
+  preDataChange: (data: SimpleTableData[]) => SimpleTableData[] = null;
   noResult = 'noResult';
   change() {}
   checkboxChange() {}

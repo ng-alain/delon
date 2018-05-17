@@ -20,6 +20,7 @@ config: AdSimpleTableConfig
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
+columns | 列描述 | `SimpleTableColumn[]` | -
 data | 数据源 | `string, any[], Observable<any[]>` | -
 extraParams | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | -
 reqMehtod | 请求方法 | `string` | `GET`
@@ -28,10 +29,11 @@ reqBody | 请求 `body` | `any` | -
 reqError | 请求异常时回调 | `EventEmitter` | -
 reqReName | 重命名请求参数 `pi`、`ps` | `{pi:string;ps:string}` | -
 resReName | 重命名返回参数 `total`、`list`，支持 `a.b.c` 的嵌套写法 | `{total:string;list:string}` | -
-columns | 列描述 | `SimpleTableColumn[]` | -
+preDataChange | 数据处理前回调，一般在使用 `url` 时很有用 | `(data: SimpleTableData[]) => SimpleTableData[]` | -
 pi | 当前页码 | `number` | `10`
 ps | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10`
 showPagination | 是否显示分页器；当未指定时若 `ps>total` 情况下自动不显示， | `boolean` | -
+pagePlacement | 分页方向 | `left,center,right` | `right`
 noResult | 无数据时显示内容 | `string | TemplateRef<void>` | -
 bordered | 是否显示边框 | `boolean` | `false`
 size | table大小 | `small,middle,default` | `default`
@@ -44,10 +46,9 @@ showTotal | 是否显示总数据量 | `boolean` | `false`
 isPageIndexReset | 数据变更后是否保留在数据变更前的页码 | `boolean` | `true`
 toTopInChange | 切换分页时返回顶部 | `boolean` | `true`
 toTopOffset | 返回顶部偏移值 | `number` | `100`
-pagePlacement | 分页方向 | `left,center,right` | `right`
-multiSort | 是否多排序，建议后端支持时使用 | `boolean` | `false`
+multiSort | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, SimpleTableMultiSort` | `false`
 sortReName | 重命名排序值，`columns` 的重命名高于属性 | `{ ascend?: string, descend?: string }` | -
-preDataChange | 数据处理前回调，一般在使用 `url` 时很有用 | `(data: SimpleTableData[]) => SimpleTableData[]` | -
+sortChange | 排序回调 | `EventEmitter` | -
 header | `footer` 标题 | `TemplateRef<void>` | -
 body | 额外 `body` 内容，一般用于添加合计行 | `TemplateRef<void>` | -
 footer | `footer` 底部 | `TemplateRef<void>` | -
@@ -55,7 +56,6 @@ expand | `expand` 可展开，当数据源中包括 `expand` 表示展开状态 
 change | 页码、每页数量变化时回调 | `EventEmitter` | -
 checkboxChange | checkbox变化时回调，参数为当前所选清单 | `EventEmitter` | -
 radioChange | radio变化时回调，参数为当前所选 | `EventEmitter` | -
-sortChange | 排序回调 | `EventEmitter` | -
 filterChange | Filter回调 | `EventEmitter` | -
 
 ### 组件方法
@@ -119,7 +119,7 @@ fixed? | 固定前后列，当指定时务必指定 `width` 否则视为无效 |
 format? | 格式化列值 | `function(cell: any, row: any)` | -
 sort? | 排序的受控属性，`asc`、`desc` | `string` | -
 sorter? | 排序函数，本地排序使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction)；若需要后端排序直接返回 `true` | `Function` | -
-sortKey? | 排序的后端相对应的KEY，默认使用 `index` 属性 | `string` | -
+sortKey? | 排序的后端相对应的KEY，默认使用 `index` 属性<br>若 `multiSort: false` 时：`sortKey: 'name' => ?name=1&pi=1`<br>若 `multiSort: true` 允许多个排序 key 存在，或使用 `SimpleTableMultiSort` 进行多key合并 | `string` | -
 sortReName? | 排序的后端相对应的VALUE | `{ ascend?: string, descend?: string }` | -
 filters? | 表头的筛选菜单项，至少一项以上才会生效 | `SimpleTableFilter[]` | -
 filter? | 本地模式下，确定筛选的运行函数；只有当属性存在时筛选才会真的生效；如果是AJAX直接返回 true | `SimpleTableFilter[]` | -

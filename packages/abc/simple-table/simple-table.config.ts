@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { SimpleTableMultiSort } from './interface';
 
 @Injectable()
 export class AdSimpleTableConfig {
@@ -62,6 +63,8 @@ export class AdSimpleTableConfig {
    * 重命名排序值，`columns` 的重命名高于属性
    */
   sortReName?: { ascend?: string; descend?: string };
+
+  multiSort?: boolean | SimpleTableMultiSort = false;
   /**
    * 指定模态框目标组件的接收参数名，默认：`record`
    */

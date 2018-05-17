@@ -101,7 +101,8 @@ export interface SimpleTableColumn {
   sorter?: Function;
   /**
    * 排序的后端相对应的KEY，默认使用 `index` 属性
-   * sortKey: 'name' => ?name=1&pi=1
+   * - 若 `multiSort: false` 时：`sortKey: 'name' => ?name=1&pi=1`
+   * - 若 `multiSort: true` 允许多个排序 key 存在，或使用 `SimpleTableMultiSort` 进行多key合并
    */
   sortKey?: string;
   /**
@@ -374,4 +375,16 @@ export interface STExportOptions {
   filename?: string;
   /** triggers when saveas */
   callback?: (wb: any) => void;
+}
+
+/**
+ * 多排序相同排序 key 时合并规则
+ */
+export interface SimpleTableMultiSort {
+  /** 请求参数名，默认：`sort` */
+  key?: string;
+  /** 不同属性间分隔符，默认：`-` */
+  separator?: string;
+  /** 列名与状态间分隔符，默认：`.` */
+  name_separator?: string;
 }

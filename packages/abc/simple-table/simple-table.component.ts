@@ -24,10 +24,6 @@ import { ACLService } from '@delon/acl';
 import { Observable, Subscription, of } from 'rxjs';
 import { tap, map, filter } from 'rxjs/operators';
 import {
-  coerceBooleanProperty,
-  coerceNumberProperty,
-} from '@angular/cdk/coercion';
-import {
   CNCurrencyPipe,
   DatePipe,
   YNPipe,
@@ -35,7 +31,12 @@ import {
   ALAIN_I18N_TOKEN,
   AlainI18NService,
 } from '@delon/theme';
-import { deepGet, deepCopy } from '@delon/util';
+import {
+  deepGet,
+  deepCopy,
+  toBoolean,
+  toNumber,
+} from '@delon/util';
 
 import {
   SimpleTableColumn,
@@ -48,6 +49,7 @@ import {
   STExportOptions,
   ResReNameType,
   ReqReNameType,
+  SimpleTableMultiSort,
 } from './interface';
 import { AdSimpleTableConfig } from './simple-table.config';
 import { SimpleTableRowDirective } from './simple-table-row.directive';
@@ -60,8 +62,7 @@ import { SimpleTableExport } from './simple-table-export';
   providers: [SimpleTableExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
   preserveWhitespaces: false,
 })
-export class SimpleTableComponent
-  implements OnInit, OnChanges, OnDestroy {
+export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   private data$: Subscription;
   private _inited = false;
   _data: SimpleTableData[] = [];
@@ -134,7 +135,7 @@ export class SimpleTableComponent
     return this._ps;
   }
   set ps(value: any) {
-    this._ps = coerceNumberProperty(value);
+    this._ps = toNumber(value);
   }
   private _ps = 10;
   /** 当前页码 */
@@ -143,7 +144,7 @@ export class SimpleTableComponent
     return this._pi;
   }
   set pi(value: any) {
-    this._pi = coerceNumberProperty(value);
+    this._pi = toNumber(value);
   }
   private _pi = 1;
   /** 数据总量 */
@@ -152,7 +153,7 @@ export class SimpleTableComponent
     return this._total;
   }
   set total(value: any) {
-    this._total = coerceNumberProperty(value);
+    this._total = toNumber(value);
   }
   private _total = 0;
   /** 是否显示分页器 */
@@ -161,7 +162,7 @@ export class SimpleTableComponent
     return this._showPagination;
   }
   set showPagination(value: any) {
-    this._showPagination = coerceBooleanProperty(value);
+    this._showPagination = toBoolean(value, true);
   }
   private _showPagination: boolean;
   /** 是否显示Loading */
@@ -170,7 +171,7 @@ export class SimpleTableComponent
     return this._loading;
   }
   set loading(value: any) {
-    this._loading = coerceBooleanProperty(value);
+    this._loading = toBoolean(value);
   }
   private _loading = false;
   /** 延迟显示加载效果的时间（防止闪烁） */
@@ -179,7 +180,7 @@ export class SimpleTableComponent
     return this._loadingDelay;
   }
   set loadingDelay(value: any) {
-    this._loadingDelay = coerceNumberProperty(value);
+    this._loadingDelay = toNumber(value);
   }
   private _loadingDelay = 0;
   /** 是否显示边框 */
@@ -188,7 +189,7 @@ export class SimpleTableComponent
     return this._bordered;
   }
   set bordered(value: any) {
-    this._bordered = coerceBooleanProperty(value);
+    this._bordered = toBoolean(value);
   }
   private _bordered = false;
   /** table大小 */
@@ -201,7 +202,7 @@ export class SimpleTableComponent
     return this._showSizeChanger;
   }
   set showSizeChanger(value: any) {
-    this._showSizeChanger = coerceBooleanProperty(value);
+    this._showSizeChanger = toBoolean(value);
   }
   private _showSizeChanger = false;
   /** pagination中每页显示条目数下拉框值 */
@@ -212,7 +213,7 @@ export class SimpleTableComponent
     return this._showQuickJumper;
   }
   set showQuickJumper(value: any) {
-    this._showQuickJumper = coerceBooleanProperty(value);
+    this._showQuickJumper = toBoolean(value);
   }
   private _showQuickJumper = false;
   /** 是否显示总数据量 */
@@ -221,7 +222,7 @@ export class SimpleTableComponent
   set showTotal(value: any) {
     if (typeof value === 'string' && value.length) {
       this._totalTpl = value;
-    } else if (coerceBooleanProperty(value)) {
+    } else if (toBoolean(value)) {
       this._totalTpl = `共 {{total}} 条`;
     } else {
       this._totalTpl = '';
@@ -241,7 +242,7 @@ export class SimpleTableComponent
     return this._isPageIndexReset;
   }
   set isPageIndexReset(value: any) {
-    this._isPageIndexReset = coerceBooleanProperty(value);
+    this._isPageIndexReset = toBoolean(value);
   }
   private _isPageIndexReset = true;
   /** 分页方向 */
@@ -252,7 +253,7 @@ export class SimpleTableComponent
     return this._toTopInChange;
   }
   set toTopInChange(value: any) {
-    this._toTopInChange = coerceBooleanProperty(value);
+    this._toTopInChange = toBoolean(value);
   }
   private _toTopInChange = true;
   /** 返回顶部偏移值 */
@@ -261,20 +262,31 @@ export class SimpleTableComponent
     return this._toTopOffset;
   }
   set toTopOffset(value: any) {
-    this._toTopOffset = coerceNumberProperty(value);
+    this._toTopOffset = toNumber(value);
   }
   private _toTopOffset = 100;
   /** 重命名排序值，`columns` 的重命名高于属性 */
   @Input() sortReName: { ascend?: string; descend?: string };
-  /** 是否多排序，建议后端支持时使用，默认：`false` */
+  /** 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 */
   @Input()
   get multiSort() {
     return this._multiSort;
   }
   set multiSort(value: any) {
-    this._multiSort = coerceBooleanProperty(value);
+    if (typeof value === 'object') {
+      this._multiSort = Object.assign(
+        <SimpleTableMultiSort>{
+          key: 'sort',
+          separator: '-',
+          name_separator: '.',
+        },
+        value,
+      );
+    } else {
+      this._multiSort = toBoolean(value);
+    }
   }
-  private _multiSort = false;
+  private _multiSort: boolean | SimpleTableMultiSort;
   /** 数据处理前回调 */
   @Input() preDataChange: (data: SimpleTableData[]) => SimpleTableData[];
   /** `header` 标题 */
@@ -396,7 +408,7 @@ export class SimpleTableComponent
   }
 
   _change(type: 'pi' | 'ps') {
-    if (!this._inited) return ;
+    if (!this._inited) return;
     this._genAjax();
     this._genData();
     this._toTop();
@@ -563,10 +575,11 @@ export class SimpleTableComponent
   _sortIndex: number;
 
   private getReqSortMap(): { [key: string]: string } {
-    const ret: { [key: string]: string } = {};
+    let ret: { [key: string]: string } = {};
     if (!this._sortOrder) return ret;
 
-    if (this.multiSort) {
+    const ms = this.multiSort;
+    if (ms) {
       Object.keys(this._sortMap).forEach(key => {
         const item = this._sortMap[key];
         if (item.v) {
@@ -574,6 +587,14 @@ export class SimpleTableComponent
             (item.column.sortReName || this.sortReName || {})[item.v] || item.v;
         }
       });
+      // 合并处理
+      if (typeof ms === 'object') {
+        ret = {
+          [ms.key]: Object.keys(ret)
+            .map(key => key + ms.name_separator + ret[key])
+            .join(ms.separator),
+        };
+      }
     } else {
       const mapData = this._sortMap[this._sortIndex];
       ret[mapData.key] =
