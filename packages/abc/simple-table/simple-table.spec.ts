@@ -31,7 +31,8 @@ import { AdSimpleTableModule } from './simple-table.module';
 import { SimpleTableComponent } from './simple-table.component';
 
 const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
-const USERS: any[] = Array(100)
+const PS = 3;
+const USERS: any[] = Array(PS + 1)
   .fill({})
   .map((item: any, idx: number) => {
     return {
@@ -92,7 +93,6 @@ const COLUMNS: SimpleTableColumn[] = [
     ],
   },
 ];
-const PS = 3;
 
 describe('abc: simple-table', () => {
   let injector: Injector;
@@ -229,7 +229,6 @@ describe('abc: simple-table', () => {
                 context.multiSort = <SimpleTableMultiSort>{};
                 fixture.detectChanges();
                 const h = httpMock.expectOne(w => true) as TestRequest;
-                console.log(h);
                 expect(h.request.urlWithParams).toContain('sort=sort1.ascend-sort2.descend');
               });
             });
@@ -265,6 +264,47 @@ describe('abc: simple-table', () => {
           context.columns = [];
           fixture.detectChanges();
         }).toThrowError('the columns property muse be define!');
+      });
+      it('should be custom render via format', () => {
+        context.data = USERS.slice(0, 3);
+        context.columns = [
+          { title: '', index: 'id', format: (a) => `<div class="j-format">${a.id}</div>`}
+        ];
+        fixture.detectChanges();
+        page.expectEls('.j-format', 3);
+      });
+      it('should be default render via default', () => {
+        context.data = [
+          { }
+        ];
+        context.columns = [
+          { title: '', index: 'id', default: '-' }
+        ];
+        fixture.detectChanges();
+        const ret = page.getFirstCell().innerText;
+        expect(ret).toBe('-');
+      });
+      describe('when specify type', () => {
+        it(`with checkbox`, () => {
+          page.expectEls('.ant-table-thead .ant-checkbox-wrapper', 1);
+          page.expectEls('.ad-st-body .ant-checkbox-wrapper', PS);
+        });
+        it('with link', () => {
+          const col: SimpleTableColumn[] = [
+            { title: '', index: 'status', type: 'link', click: jasmine.createSpy() }
+          ];
+          context.columns = col;
+          fixture.detectChanges();
+          expect(col[0].click).not.toHaveBeenCalled();
+          const el = page.getFirstCell().querySelector('a');
+          expect(el).not.toBeNull();
+          el.click();
+          fixture.detectChanges();
+          expect(col[0].click).toHaveBeenCalled();
+        });
+        it(`with img`, () => {
+          page.expectEls('.ad-st-body .img', PS);
+        });
       });
     });
 
@@ -319,9 +359,57 @@ describe('abc: simple-table', () => {
         ).toBe(`${comp.total}/${comp.pi}/${comp.ps}`);
       });
     });
+
+    describe('#toTopInChange', () => {
+      beforeEach(() => {
+        context.toTopInChange = true;
+        context.toTopOffset = 10;
+        fixture.detectChanges();
+      });
+      it('should to top in changed page', () => {
+        const el = page.getEl<HTMLElement>('simple-table');
+        spyOn(el, 'scrollIntoView');
+        expect(el.scrollIntoView).not.toHaveBeenCalled();
+        page.to(2);
+        expect(el.scrollIntoView).toHaveBeenCalled();
+      });
+    });
   });
 
-  describe('static data', () => {
+  describe('[custom templates]', () => {
+    it('should be custom title', () => {
+      genModule({
+        template: `<simple-table #st [data]="data" [columns]="columns" [ps]="ps">
+          <ng-template [st-row]="age" type="title"><div class="age-title">age</div></ng-template>
+        </simple-table>`,
+      });
+      context.data = [];
+      fixture.detectChanges();
+      page.expectEls('.age-title', 1);
+    });
+    it('should be custom row', () => {
+      genModule({
+        template: `<simple-table #st [data]="data" [columns]="columns" [ps]="ps">
+          <ng-template [st-row]="age" let-item><div class="age">{{item.age}}</div></ng-template>
+        </simple-table>`,
+      });
+      context.data = deepCopy(USERS).slice(0, 2);
+      fixture.detectChanges();
+      page.expectEls('.age', 2);
+    });
+    it('allow invalid id', () => {
+      genModule({
+        template: `<simple-table #st [data]="data" [columns]="columns" [ps]="ps">
+          <ng-template [st-row]="invalid-age" type="title"><div class="age-title">age</div></ng-template>
+        </simple-table>`,
+      });
+      context.data = [];
+      fixture.detectChanges();
+      page.expectEls('.age-title', 0);
+    });
+  });
+
+  describe('[static data]', () => {
     it('should be not pagination when data length less than ps value', () => {
       genModule({
         template: `<simple-table #st [data]="data" [columns]="columns" [ps]="ps"></simple-table>`,
@@ -333,7 +421,7 @@ describe('abc: simple-table', () => {
     });
   });
 
-  describe('acl', () => {
+  describe('[acl]', () => {
     let acl: ACLService;
 
     beforeEach(() => {
@@ -389,6 +477,13 @@ describe('abc: simple-table', () => {
       expect(el).not.toBeNull();
       return el.nativeElement as any;
     }
+    getFirstCell() {
+      return document.querySelector('.ant-table-tbody tr td:nth-child(2)') as HTMLElement;
+    }
+    to(pi: number = 2) {
+      this.getEl<HTMLElement>(`.ant-pagination [title="${pi}"]`).click();
+      fixture.detectChanges();
+    }
     expectEl(cls: string, result = true): this {
       const el = dl.query(By.css(cls));
       if (result) expect(this.getEl(cls)).not.toBeNull();
@@ -396,7 +491,7 @@ describe('abc: simple-table', () => {
       return this;
     }
     expectEls(cls: string, count: number): this {
-      const els = dl.queryAll(By.css(cls));
+      const els = (dl.nativeElement as HTMLElement).querySelectorAll(cls);
       expect(els.length).toBe(count);
       return this;
     }

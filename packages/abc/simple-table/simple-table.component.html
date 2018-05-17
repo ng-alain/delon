@@ -19,7 +19,7 @@
   [nzShowQuickJumper]="showQuickJumper"
   [nzShowSizeChanger]="showSizeChanger"
   [nzShowTotal]="totalTpl">
-  <thead>
+  <thead class="ad-st-head">
     <tr>
       <th *ngIf="expand" [nzShowExpand]="expand"></th>
       <th *ngFor="let c of _columns; let index=index" [nzWidth]="c.width" [nzLeft]="c._left" [nzRight]="c._right" [ngClass]="c.className"
@@ -71,7 +71,7 @@
       </th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="ad-st-body">
     <ng-container *ngFor="let i of _data; let index=index">
       <tr>
         <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand"></td>

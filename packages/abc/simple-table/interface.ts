@@ -27,7 +27,7 @@ export interface SimpleTableColumn {
    * 类型
    * - `checkbox` 多选
    * - `radio` 单选
-   * - `link` 链接，可触发 `click`
+   * - `link` 链接，务必指定 `click`
    * - `img` 图片且居中(若 `className` 存在则优先)
    * - `number` 数字且居右(若 `className` 存在则优先)
    * - `currency` 货币且居右(若 `className` 存在则优先)

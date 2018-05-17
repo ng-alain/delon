@@ -482,7 +482,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (this.el.nativeElement.scrollIntoView)
       this.el.nativeElement.scrollIntoView();
-    // todo: toTopOffset
     // fix header height
     this.doc.documentElement.scrollTop -= this.toTopOffset;
   }
@@ -517,7 +516,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   _click(e: Event, item: any, col: SimpleTableColumn) {
     e.preventDefault();
     e.stopPropagation();
-    if (col.click) col.click(item, this);
+    col.click(item, this);
     return false;
   }
 
@@ -905,6 +904,12 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         item.selections = [];
         if (!item.width) item.width = '50px';
       }
+      if (item.type === 'yn' && typeof item.ynTruth === 'undefined') {
+        item.ynTruth = true;
+      }
+      if (item.type === 'link' && typeof item.click !== 'function') {
+        item.type = '';
+      }
       if (!item.className) {
         item.className = {
           // 'checkbox': 'text-center',
@@ -914,8 +919,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
           date: 'text-center',
         }[item.type];
       }
-      if (item.type === 'yn' && typeof item.ynTruth === 'undefined')
-        item.ynTruth = true;
 
       // sorter
       if (item.sorter) {

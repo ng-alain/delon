@@ -14,21 +14,17 @@ export class SimpleTableExport {
       ret.v = col.format(item, col);
     } else {
       const val = deepGet(item, col.index as string[], '');
-      if (typeof val === 'undefined') {
-        ret.v = '';
-      } else {
-        ret.v = val;
-        switch (col.type) {
-          case 'currency':
-            ret.t = 'n';
-            break;
-          case 'date':
-            ret.t = 'd';
-            break;
-          case 'yn':
-            ret.v = ret === col.ynTruth ? col.ynYes || '是' : col.ynNo || '否';
-            break;
-        }
+      ret.v = val;
+      switch (col.type) {
+        case 'currency':
+          ret.t = 'n';
+          break;
+        case 'date':
+          ret.t = 'd';
+          break;
+        case 'yn':
+          ret.v = ret.v === col.ynTruth ? col.ynYes || '是' : col.ynNo || '否';
+          break;
       }
     }
 
@@ -39,10 +35,7 @@ export class SimpleTableExport {
     const sheets: { [sheet: string]: any } = {};
     const sheet = (sheets[opt.sheetname || 'Sheet1'] = {});
     const colData = opt._c.filter(
-      w =>
-        w.exported !== false &&
-        w.index &&
-        (!w.buttons || w.buttons.length === 0),
+      w => w.exported !== false && w.index && !w.buttons,
     );
     const cc = colData.length,
       dc = opt._d.length;
