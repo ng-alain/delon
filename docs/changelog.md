@@ -6,6 +6,28 @@ title:
 type: Other
 ---
 
+### 1.0.2
+
+`2018-5-16`
+
+- 重构所有 `@angular/cdk/coercion` 优先使用 `@delon/util`
+- @delon/abc
+  - `page-header` 重构样式风格
+  - `reuse-tab`
+    - 重构样式风格
+    - 修复 `_onReuseInit` 在继承类无法触发问题，[#438](https://github.com/cipchk/ng-alain/issues/438)
+    - 修复语言与路由重置触发问题，[#440](https://github.com/cipchk/ng-alain/issues/440)
+  - `simple-table`
+    - 新增支持多个相同排序值自动合并，[#434](https://github.com/cipchk/ng-alain/issues/434)
+    - 新增 `frontPagination` 前端分页受控模式，[#443](https://github.com/cipchk/ng-alain/issues/443)
+  - `timeline` 增加 `mask`、`position` 接口，[@canaanjin](https://github.com/canaanjin)
+- @delon/util
+  - 增加 `toBoolean`、`toNumber` 方法
+- @delon/theme
+  - 增加 `ng-alain.css`、`ng-alain.min.css`
+- Schematics
+  - 修复 `ng add ng-alain --i18n` 无法运行问题，[#442](https://github.com/cipchk/ng-alain/issues/442)
+
 ### 1.0.1
 
 `2018-5-16`

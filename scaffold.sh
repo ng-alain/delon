@@ -66,6 +66,8 @@ if [[ ${BUILD} == true ]]; then
     echo '===== build...'
     $(npm bin)/ng build --prod --build-optimizer --base-href /ng-alain/
 
+    echo '===== copy package-lock.json to source scaffold'
+    cp -f ${ROOT_DIR}/package-lock.json ${SCAFFOLD_DIR}/package-lock.json
 fi
 
 if [[ ${DEPLOY} == true ]]; then
