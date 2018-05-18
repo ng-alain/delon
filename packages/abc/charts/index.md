@@ -110,6 +110,7 @@ ng-alain 提供的业务中常用的图表类型，都是基于 [G2](https://ant
 | position | 标题位置 | `'top','right','bottom','left'` | `'top'` |
 | tickCount | 坐标轴上刻度点的个数 | `number` | `8` |
 | start | 坐标轴上显示区域的开始位置 | `number` | `0` |
+| hasSlider | 是否显示滑动条 | `boolean` | `true` |
 
 ### gauge 仪表盘
 

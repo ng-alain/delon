@@ -51,6 +51,8 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
   tickCount: number = 8;
   @Input()
   start: number = 0;
+  @Input()
+  hasSlider: boolean = true;
 
   @Input()
   get height() {
@@ -183,40 +185,42 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
       chart.repaint();
     }, 60);
 
-    const sliderPadding = Object.assign([], this.padding);
-    sliderPadding[0] = 0;
-    const slider = new Slider({
-      container: this.sliderNode.nativeElement,
-      height: 26,
-      padding: sliderPadding,
-      scales: {
-        x: {
-          type: 'time',
-          tickCount: 16,
-          mask: this.mask,
+    if (this.hasSlider) {
+      const sliderPadding = Object.assign([], this.padding);
+      sliderPadding[0] = 0;
+      const slider = new Slider({
+        container: this.sliderNode.nativeElement,
+        height: 26,
+        padding: sliderPadding,
+        scales: {
+          x: {
+            type: 'time',
+            tickCount: 16,
+            mask: this.mask,
+          },
         },
-      },
-      backgroundChart: {
-        type: 'line',
-      },
-      start: ds.state.start,
-      end: ds.state.end,
-      xAxis: 'x',
-      yAxis: 'y1',
-      data: this.data,
-      onChange({ startValue, endValue }) {
-        ds.setState('start', startValue);
-        ds.setState('end', endValue);
-      },
-    });
-    slider.render();
-    setTimeout(() => {
-      slider.forceFit();
-      slider.repaint();
-    }, 60);
+        backgroundChart: {
+          type: 'line',
+        },
+        start: ds.state.start,
+        end: ds.state.end,
+        xAxis: 'x',
+        yAxis: 'y1',
+        data: this.data,
+        onChange({ startValue, endValue }) {
+          ds.setState('start', startValue);
+          ds.setState('end', endValue);
+        },
+      });
+      slider.render();
+      setTimeout(() => {
+        slider.forceFit();
+        slider.repaint();
+      }, 60);
+      this.slider = slider;
+    }
 
     this.chart = chart;
-    this.slider = slider;
   }
 
   uninstall() {
