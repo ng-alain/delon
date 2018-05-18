@@ -165,19 +165,22 @@ function addCodeStylesToPackageJson() {
     const tsLint = getJSON(host, 'tslint.json', 'rules');
     tsLint.rules['curly'] = false;
     tsLint.rules['use-host-property-decorator'] = false;
-    tsLint.rules['directive-selector'] = [
+    overwriteJSON(host, 'tslint.json', tsLint);
+    // app tslint
+    const appTsLint = getJSON(host, `${sourceRoot}/tslint.json`, 'rules');
+    appTsLint.rules['directive-selector'] = [
       true,
       'attribute',
       [projectPrefix, 'passport', 'exception', 'layout', 'header'],
       'camelCase',
     ];
-    tsLint.rules['component-selector'] = [
+    appTsLint.rules['component-selector'] = [
       true,
       'element',
       [projectPrefix, 'passport', 'exception', 'layout', 'header'],
       'kebab-case',
     ];
-    overwriteJSON(host, 'tslint.json', tsLint);
+    overwriteJSON(host, `${sourceRoot}/tslint.json`, appTsLint);
     // dependencies
     addPackageToPackageJson(host, [
       `tslint-config-prettier@^1.12.0`,
