@@ -178,6 +178,24 @@ function addCodeStylesToPackageJson() {
       'kebab-case',
     ];
     overwriteJSON(host, 'tslint.json', tsLint);
+    // app tslint
+    const sourceTslint = `${sourceRoot}/tslint.json`;
+    if (host.exists(sourceTslint)) {
+      const appTsLint = getJSON(host, sourceTslint, 'rules');
+      appTsLint.rules['directive-selector'] = [
+        true,
+        'attribute',
+        [projectPrefix, 'passport', 'exception', 'layout', 'header'],
+        'camelCase',
+      ];
+      appTsLint.rules['component-selector'] = [
+        true,
+        'element',
+        [projectPrefix, 'passport', 'exception', 'layout', 'header'],
+        'kebab-case',
+      ];
+      overwriteJSON(host, sourceTslint, appTsLint);
+    }
     // dependencies
     addPackageToPackageJson(host, [
       `tslint-config-prettier@^1.12.0`,
