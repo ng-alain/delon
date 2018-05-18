@@ -49,6 +49,8 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
   position: 'top' | 'right' | 'bottom' | 'left' = 'top';
   @Input()
   tickCount: number = 8;
+  @Input()
+  start: number = 0;
 
   @Input()
   get height() {
@@ -98,10 +100,14 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     if (this.tickCount >= this.data.length)
       this.tickCount = this.data.length - 1;
 
+    let end = this.start + this.tickCount;
+    if (end >= this.data.length)
+      end = this.data.length - 1;
+
     const ds = new DataSet({
       state: {
-        start: this.data[0].x,
-        end: this.data[0 + this.tickCount].x,
+        start: this.data[this.start].x,
+        end: this.data[end].x,
       },
     });
     const dv = ds.createView().source(this.data);
