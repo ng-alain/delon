@@ -47,6 +47,12 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
   mask: string = 'HH:mm';
   @Input()
   position: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  @Input()
+  tickCount: number = 8;
+  @Input()
+  start: number = 0;
+  @Input()
+  hasSlider: boolean = true;
 
   @Input()
   get height() {
@@ -93,13 +99,17 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     this.sliderNode.nativeElement.innerHTML = '';
     this.node.nativeElement.innerHTML = '';
 
-    const MAX = 8;
-    const begin = this.data.length > MAX ? (this.data.length - MAX) / 2 : 0;
+    if (this.tickCount >= this.data.length)
+      this.tickCount = this.data.length - 1;
+
+    let end = this.start + this.tickCount;
+    if (end >= this.data.length)
+      end = this.data.length - 1;
 
     const ds = new DataSet({
       state: {
-        start: this.data[begin - 1].x,
-        end: this.data[begin - 1 + MAX].x,
+        start: this.data[this.start].x,
+        end: this.data[end].x,
       },
     });
     const dv = ds.createView().source(this.data);
@@ -133,7 +143,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     chart.source(dv, {
       x: {
         type: 'timeCat',
-        tickCount: MAX,
+        tickCount: this.tickCount,
         mask: this.mask,
         range: [0, 1],
       },
@@ -175,40 +185,43 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
       chart.repaint();
     }, 60);
 
-    const sliderPadding = Object.assign([], this.padding);
-    sliderPadding[0] = 0;
-    const slider = new Slider({
-      container: this.sliderNode.nativeElement,
-      height: 26,
-      padding: sliderPadding,
-      scales: {
-        x: {
-          type: 'time',
-          tickCount: 16,
-          mask: this.mask,
+    if (this.hasSlider) {
+      const sliderPadding = Object.assign([], this.padding);
+      sliderPadding[0] = 0;
+      const slider = new Slider({
+        container: this.sliderNode.nativeElement,
+        height: 26,
+        padding: sliderPadding,
+        scales: {
+          x: {
+            type: 'time',
+            tickCount: 16,
+            mask: this.mask,
+          },
         },
-      },
-      backgroundChart: {
-        type: 'line',
-      },
-      start: ds.state.start,
-      end: ds.state.end,
-      xAxis: 'x',
-      yAxis: 'y1',
-      data: this.data,
-      onChange({ startValue, endValue }) {
-        ds.setState('start', startValue);
-        ds.setState('end', endValue);
-      },
-    });
-    slider.render();
-    setTimeout(() => {
-      slider.forceFit();
-      slider.repaint();
-    }, 60);
+        backgroundChart: {
+          type: 'line',
+        },
+        start: ds.state.start,
+        end: ds.state.end,
+        xAxis: 'x',
+        yAxis: 'y1',
+        data: this.data,
+        onChange({ startValue, endValue }) {
+          ds.setState('start', startValue);
+          ds.setState('end', endValue);
+        },
+      });
+      slider.render();
+      setTimeout(() => {
+        slider.forceFit();
+        slider.repaint();
+      }, 60);
+
+      this.slider = slider;
+    }
 
     this.chart = chart;
-    this.slider = slider;
   }
 
   uninstall() {
