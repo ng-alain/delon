@@ -65,7 +65,7 @@ export class XlsxService {
           const wb: any = XLSX.read(e.target.result, { type: 'binary' });
           resolver(this.read(wb));
         };
-        reader.readAsArrayBuffer(fileOrUrl);
+        reader.readAsBinaryString(fileOrUrl);
       });
     });
   }
