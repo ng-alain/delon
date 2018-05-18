@@ -44,6 +44,11 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
   colorMap: { y1: string; y2: string } = { y1: '#1890FF', y2: '#2FC25B' };
 
   @Input()
+  mask: string = 'HH:mm';
+  @Input()
+  position: 'top' | 'right' | 'bottom' | 'left' = 'top';
+
+  @Input()
   get height() {
     return this._height;
   }
@@ -129,7 +134,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
       x: {
         type: 'timeCat',
         tickCount: MAX,
-        mask: 'HH:mm',
+        mask: this.mask,
         range: [0, 1],
       },
       y1: {
@@ -145,7 +150,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     });
 
     chart.legend({
-      position: 'top',
+      position: this.position,
       custom: true,
       clickable: false,
       items: [
@@ -180,7 +185,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
         x: {
           type: 'time',
           tickCount: 16,
-          mask: 'HH:MM',
+          mask: this.mask,
         },
       },
       backgroundChart: {
