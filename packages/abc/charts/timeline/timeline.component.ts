@@ -47,6 +47,8 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
   mask: string = 'HH:mm';
   @Input()
   position: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  @Input()
+  tickCount: number = 8;
 
   @Input()
   get height() {
@@ -93,13 +95,13 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     this.sliderNode.nativeElement.innerHTML = '';
     this.node.nativeElement.innerHTML = '';
 
-    const MAX = 8;
-    const begin = this.data.length > MAX ? (this.data.length - MAX) / 2 : 0;
+    if (this.tickCount >= this.data.length)
+      this.tickCount = this.data.length - 1;
 
     const ds = new DataSet({
       state: {
-        start: this.data[begin - 1].x,
-        end: this.data[begin - 1 + MAX].x,
+        start: this.data[0].x,
+        end: this.data[0 + this.tickCount].x,
       },
     });
     const dv = ds.createView().source(this.data);
@@ -133,7 +135,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     chart.source(dv, {
       x: {
         type: 'timeCat',
-        tickCount: MAX,
+        tickCount: this.tickCount,
         mask: this.mask,
         range: [0, 1],
       },

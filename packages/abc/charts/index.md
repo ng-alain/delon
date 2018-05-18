@@ -108,6 +108,7 @@ ng-alain 提供的业务中常用的图表类型，都是基于 [G2](https://ant
 | borderWidth | 线条 | `number` | `2` |
 | mask | 日期格式 | `string` | `'HH:mm'` |
 | position | 标题位置 | `'top','right','bottom','left'` | `'top'` |
+| tickCount | 坐标轴上刻度点的个数 | `number` | `8` |
 
 ### gauge 仪表盘
 
