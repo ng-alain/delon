@@ -65,6 +65,7 @@ export class XlsxService {
           const wb: any = XLSX.read(e.target.result, { type: 'binary' });
           resolver(this.read(wb));
         };
+        // @see https://github.com/SheetJS/js-xlsx/wiki/Reading-XLSX-from-FileReader.readAsArrayBuffer()
         reader.readAsBinaryString(fileOrUrl);
       });
     });
