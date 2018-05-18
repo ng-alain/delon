@@ -46,7 +46,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
   @Input()
   mask: string = 'HH:mm';
   @Input()
-  titlePosition: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  position: 'top' | 'right' | 'bottom' | 'left' = 'top';
 
   @Input()
   get height() {
@@ -150,7 +150,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     });
 
     chart.legend({
-      position: this.titlePosition,
+      position: this.position,
       custom: true,
       clickable: false,
       items: [
