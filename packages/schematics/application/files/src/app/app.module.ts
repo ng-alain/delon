@@ -23,7 +23,7 @@ import { I18NService } from '@core/i18n/i18n.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, `assets/i18n/`, '.json');
+  return new TranslateHttpLoader(http, `assets/tmp/i18n/`, '.json');
 }<% } %>
 <% if (form) { %>
 // @delon/form: JSON Schema form
