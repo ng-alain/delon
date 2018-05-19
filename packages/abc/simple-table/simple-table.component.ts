@@ -49,6 +49,7 @@ import {
 import { AdSimpleTableConfig } from './simple-table.config';
 import { SimpleTableRowDirective } from './simple-table-row.directive';
 import { SimpleTableExport } from './simple-table-export';
+import { DEFAULT_RESIZE_TIME } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'simple-table',
@@ -190,7 +191,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   /** table大小 */
   @Input() size: 'small' | 'middle' | 'default' = 'default';
   /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px', x: '300px' }` */
-  @Input() scroll: { y: string; x: string };
+  @Input() scroll: { y?: string; x?: string };
   /** 是否显示pagination中改变页数 */
   @Input()
   get showSizeChanger() {
@@ -231,7 +232,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
           .replace('{{range[1]}}', range[1])
       : '';
   }
-  /** 前端分页，当 `data` 为`any[]` 或 `Observable<any[]>` 有效，默认：`true` */
+  /**
+   * 前端分页，当 `data` 为`any[]` 或 `Observable<any[]>` 有效，默认：`true`
+   * - `true` 由 `simple-table` 根据 `data` 长度受控分页，包括：排序、过滤等
+   * - `false` 由用户通过 `total` 和 `data` 参数受控分页，并维护 `(change)` 当分页变更时重新加载数据
+   */
   @Input()
   get frontPagination() {
     return this._frontPagination;
@@ -370,8 +375,10 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       .pipe(
         map((res: any) => {
           // list
-          const ret = deepGet(res, this.resReName.list as string[], []);
-          if (ret == null || !Array.isArray(ret)) return [];
+          let ret = deepGet(res, this.resReName.list as string[], []);
+          if (ret == null || !Array.isArray(ret)) {
+            ret = [];
+          }
           // total
           const retTotal =
             this.resReName.total &&
@@ -439,12 +446,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
 
   _genData(forceRefresh: boolean = false) {
     if (this._isAjax) return;
-    let data = <any[]>this.data || [];
+    let data = (<any[]>this.data).slice(0);
     // sort
-    data = data.slice(0);
     const sorterFn = this.getSorterFn();
     if (sorterFn) {
-      data = this.recursiveSort(data, sorterFn);
+      data = data.sort(sorterFn);
     }
 
     // filter
@@ -467,7 +473,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
             : this.pi;
       }
     }
-    this.total = this.frontPagination ? data.length : this.total <= 0 ? data.length : this.total;
+    this.total = this.frontPagination
+      ? data.length
+      : this.total <= 0
+        ? data.length
+        : this.total;
     this._isPagination =
       typeof this.showPagination === 'undefined'
         ? this.ps > 0 && this.total > this.ps
@@ -487,8 +497,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         .scrollTo(0, 0);
       return;
     }
-    if (this.el.nativeElement.scrollIntoView)
-      this.el.nativeElement.scrollIntoView();
+    this.el.nativeElement.scrollIntoView();
     // fix header height
     this.doc.documentElement.scrollTop -= this.toTopOffset;
   }
@@ -497,7 +506,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     if (col.format) return col.format(item, col);
 
     const value = deepGet(item, col.index as string[], col.default);
-    if (typeof value === 'undefined') return col.default;
 
     let ret = value;
     switch (col.type) {
@@ -517,7 +525,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         ret = this.yn.transform(value === col.ynTruth, col.ynYes, col.ynNo);
         break;
     }
-    return ret || col.default;
+    return ret;
   }
 
   _click(e: Event, item: any, col: SimpleTableColumn) {
@@ -525,12 +533,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     e.stopPropagation();
     col.click(item, this);
     return false;
-  }
-
-  private getDataObs(urlOrData?: string | any[]): Observable<any[]> {
-    return urlOrData || Array.isArray(this.data)
-      ? of((urlOrData as any[]) || (this.data as any[]))
-      : (this.data as Observable<any[]>);
   }
 
   private processData() {
@@ -548,14 +550,15 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     } else if (Array.isArray(this.data)) {
       this._genData(true);
     } else {
-      if (!this.data$) {
-        this.data$ = this.data
-          .pipe(tap(() => (this.loading = true)))
-          .subscribe(res => {
-            this.data = res;
-            this._genData(true);
-          });
+      if (this.data$) {
+        this.data$.unsubscribe();
       }
+      this.data$ = this.data
+        .pipe(tap(() => (this.loading = true)))
+        .subscribe(res => {
+          this.data = res;
+          this._genData(true);
+        });
     }
   }
 
@@ -583,10 +586,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     if (ms) {
       Object.keys(this._sortMap).forEach(key => {
         const item = this._sortMap[key];
-        if (item.v) {
-          ret[item.key] =
-            (item.column.sortReName || this.sortReName || {})[item.v] || item.v;
-        }
+        ret[item.key] =
+          (item.column.sortReName || this.sortReName || {})[item.v] || item.v;
       });
       // 合并处理
       if (typeof ms === 'object') {
@@ -605,37 +606,13 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     return ret;
   }
 
-  private recursiveSort(
-    data: any[],
-    sorterFn: (a: any, b: any) => number,
-  ): any[] {
-    const childrenColumnName = 'children';
-    return data.sort(sorterFn).map(
-      (item: any) =>
-        item[childrenColumnName]
-          ? {
-              ...item,
-              [childrenColumnName]: this.recursiveSort(
-                item[childrenColumnName],
-                sorterFn,
-              ),
-            }
-          : item,
-    );
-  }
-
   private getSorterFn() {
-    // _sortMap
-    if (
-      !this._sortOrder ||
-      !this._sortColumn ||
-      typeof this._sortColumn.sorter !== 'function'
-    ) {
+    if (!this._sortOrder || !this._sortColumn) {
       return;
     }
 
     return (a: any, b: any) => {
-      const result = (this._sortColumn!.sorter as CompareFn)(a, b);
+      const result = (this._sortColumn.sorter as CompareFn)(a, b);
       if (result !== 0) {
         return this._sortOrder === 'descend' ? -result : result;
       }
@@ -644,7 +621,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   sort(index: number, value: any) {
-    if (this._sortIndex === index && this._sortOrder === value) return;
     this._sortColumn = this._columns[index];
     this._sortOrder = value;
     this._sortIndex = index;
@@ -669,14 +645,15 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   // region: filter
 
   private getReqFilterMap(): { [key: string]: string } {
-    let ret: { [key: string]: string } = {};
+    let ret = {};
     this._columns.filter(w => w.filtered === true).forEach(col => {
       const values = col.filters.filter(f => f.checked === true);
       let obj: Object = {};
-      if (col.filterReName) obj = col.filterReName(col.filters, col);
-      else
+      if (col.filterReName) {
+        obj = col.filterReName(col.filters, col);
+      } else {
         obj[col.filterKey || col.indexKey] = values.map(i => i.value).join(',');
-
+      }
       ret = Object.assign(ret, obj);
     });
     return ret;
@@ -738,7 +715,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   _rowSelection(row: SimpleTableSelection): this {
-    if (row.select) row.select(this._data);
+    row.select(this._data);
     return this._refCheck()._checkNotify();
   }
 
@@ -761,7 +738,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   _refRadio(idx: number, checked: boolean, item: SimpleTableData): this {
-    if (item.disabled === true) return;
+    // if (item.disabled === true) return;
     this._data.filter(w => !w.disabled).forEach(i => (i.checked = false));
     item.checked = checked;
     this.radioChange.emit(item);
@@ -772,11 +749,45 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
 
   // region: buttons
 
+  btnCoerce(list: SimpleTableButton[]): SimpleTableButton[] {
+    if (!list) return [];
+    const ret: SimpleTableButton[] = [];
+    for (const item of list) {
+      if (this.acl && item.acl && !this.acl.can(item.acl)) continue;
+
+      if (item.type === 'del' && typeof item.pop === 'undefined')
+        item.pop = true;
+
+      if (item.pop === true) {
+        item._type = 2;
+        if (typeof item.popTitle === 'undefined')
+          item.popTitle = `确认删除吗？`;
+      }
+      if (item.children && item.children.length > 0) {
+        item._type = 3;
+        item.children = this.btnCoerce(item.children);
+      }
+      if (!item._type) item._type = 1;
+
+      // i18n
+      if (item.i18n && this.i18nSrv) item.text = this.i18nSrv.fanyi(item.i18n);
+
+      ret.push(item);
+    }
+    this.btnCoerceIf(ret);
+    return ret;
+  }
+
   btnCoerceIf(list: SimpleTableButton[]) {
     for (const item of list) {
-      if (!item.if) item.if = () => true;
-      if (!item.children) item.children = [];
-      if (item.children.length > 0) this.btnCoerceIf(item.children);
+      // TODO: remove 1.1.0
+      if (item.if) item.iif = item.if;
+      if (!item.iif) item.iif = () => true;
+      if (!item.children) {
+        item.children = [];
+      } else {
+        this.btnCoerceIf(item.children);
+      }
     }
   }
 
@@ -791,9 +802,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         btn.modalOptions,
       )
         .pipe(filter(w => typeof w !== 'undefined'))
-        .subscribe(res => {
-          if (btn.click) this.btnCallback(record, btn, res);
-        });
+        .subscribe(res => this.btnCallback(record, btn, res));
       return;
     }
     this.btnCallback(record, btn);
@@ -829,7 +838,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       if (item.fixed && item.width) {
         if (item.fixed === 'left') {
           item._left = idx === 0 ? '0px' : list[idx - 1].width;
-        } else if (item.fixed === 'right') {
+        } else {
           item._right = idx === list.length - 1 ? '0px' : list[idx + 1].width;
         }
       }
@@ -846,10 +855,13 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
    * @param opt 额外参数
    */
   export(urlOrData?: string | any[], opt?: STExportOptions) {
-    ((!urlOrData && this._isAjax) ||
-    (urlOrData && typeof urlOrData === 'string')
-      ? this.getAjaxData(urlOrData as string)
-      : this.getDataObs(urlOrData)
+    (urlOrData
+      ? typeof urlOrData === 'string'
+        ? this.getAjaxData(urlOrData)
+        : of(urlOrData)
+      : this._isAjax
+        ? this.getAjaxData()
+        : of(this.data)
     ).subscribe((res: any[]) =>
       this.exportSrv.export(
         Object.assign({}, opt, <STExportOptions>{
@@ -891,7 +903,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     const sortMap: Object = {};
     let idx = 0;
     const newColumns: SimpleTableColumn[] = [];
-    const copyColumens = deepCopy(this.columns);
+    const copyColumens = deepCopy(this.columns) as SimpleTableColumn[];
     for (const item of copyColumens) {
       if (this.acl && item.acl && !this.acl.can(item.acl)) continue;
       if (item.index) {
@@ -903,8 +915,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       if (!item.selections) item.selections = [];
       if (item.type === 'checkbox') {
         ++checkboxCount;
-        if (!item.width)
+        if (!item.width) {
           item.width = `${item.selections.length > 0 ? 60 : 50}px`;
+        }
       }
       if (item.type === 'radio') {
         ++radioCount;
@@ -915,7 +928,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         item.ynTruth = true;
       }
       if (item.type === 'link' && typeof item.click !== 'function') {
-        item.type = '';
+        (item as any).type = '';
       }
       if (!item.className) {
         item.className = {
@@ -928,7 +941,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       }
 
       // sorter
-      if (item.sorter) {
+      if (item.sorter && typeof item.sorter === 'function') {
         sortMap[idx] = {
           enabled: true,
           v: item.sort,
@@ -955,49 +968,21 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       item.filtered = item.filters.findIndex(w => w.checked) !== -1;
 
       if (this.acl) {
-        item.selections = item.selections.filter(
-          w => !w.acl || this.acl.can(w.acl),
-        );
-        item.filters = item.filters.filter(w => !w.acl || this.acl.can(w.acl));
+        item.selections = item.selections.filter(w => this.acl.can(w.acl));
+        item.filters = item.filters.filter(w => this.acl.can(w.acl));
       }
 
       // buttons
-      const buttons: SimpleTableButton[] = [];
-      if (item.buttons) {
-        for (const btn of item.buttons) {
-          if (this.acl && btn.acl && !this.acl.can(btn.acl)) continue;
-
-          if (btn.type === 'del' && typeof btn.pop === 'undefined')
-            btn.pop = true;
-
-          if (btn.pop === true) {
-            btn._type = 2;
-            if (typeof btn.popTitle === 'undefined')
-              btn.popTitle = `确认删除吗？`;
-          }
-          if (btn.children && btn.children.length > 0) {
-            btn._type = 3;
-          }
-          if (!btn._type) btn._type = 1;
-
-          // i18n
-          if (btn.i18n && this.i18nSrv) btn.text = this.i18nSrv.fanyi(btn.i18n);
-
-          buttons.push(btn);
-        }
-        if (buttons.length === 0) continue;
-        this.btnCoerceIf(buttons);
-      }
-      item.buttons = buttons;
+      item.buttons = this.btnCoerce(item.buttons);
       // i18n
       if (item.i18n && this.i18nSrv) item.title = this.i18nSrv.fanyi(item.i18n);
       ++idx;
       newColumns.push(item);
     }
-    this.fixedCoerce(newColumns);
-    this._columns = newColumns;
     if (checkboxCount > 1) throw new Error(`just only one column checkbox`);
     if (radioCount > 1) throw new Error(`just only one column radio`);
+    this.fixedCoerce(newColumns);
+    this._columns = newColumns;
     this._sortMap = sortMap;
   }
 

@@ -8,7 +8,7 @@
     "comment-format": [true, "check-space"],
     "curly": false,
     "deprecation": {
-      "severity": "warn"
+      "severity": "off"
     },
     "eofline": true,
     "forin": true,
@@ -101,6 +101,7 @@
     "exclude": [
       "packages/**/*.spec.ts",
       "packages/cli/**/*",
+      "packages/testing/**/*",
       "packages/schematics/**/files/**/*",
       "packages/schematics/utils/devkit-utils/**/*",
       "site/app/routes/gen/**/*"

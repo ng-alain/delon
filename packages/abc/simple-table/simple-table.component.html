@@ -23,14 +23,14 @@
     <tr>
       <th *ngIf="expand" [nzShowExpand]="expand"></th>
       <th *ngFor="let c of _columns; let index=index" [nzWidth]="c.width" [nzLeft]="c._left" [nzRight]="c._right" [ngClass]="c.className"
-        [attr.colspan]="c.colSpan" [attr.data-col]="c.indexKey" [nzShowSort]="_sortMap[index].enabled" [(nzSort)]="_sortMap[index].v"
+        [attr.colspan]="c.colSpan" [attr.data-col]="c.indexKey" [nzShowSort]="_sortMap[index].enabled" [nzSort]="_sortMap[index].v"
         (nzSortChange)="sort(index, $event)">
         <ng-template #renderTitle [ngTemplateOutlet]="c.__renderTitle" [ngTemplateOutletContext]="{$implicit: c, index: index }"></ng-template>
         <ng-container *ngIf="!c.__renderTitle; else renderTitle">
           <ng-container [ngSwitch]="c.type">
             <ng-container *ngSwitchCase="'checkbox'">
-              <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll()"></label>
-              <nz-dropdown *ngIf="c.selections.length">
+              <label nz-checkbox class="ad-st-checkall" [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll()"></label>
+              <nz-dropdown *ngIf="c.selections.length" class="ad-st-checkselection">
                 <span nz-dropdown>
                   <i class="anticon anticon-down"></i>
                 </span>
@@ -44,7 +44,7 @@
               <span [innerHTML]="c.title"></span>
             </ng-container>
           </ng-container>
-          <nz-dropdown *ngIf="c.filters.length > 0" nzTrigger="click" [hasFilterButton]="true" [nzClickHide]="false" [(nzVisible)]="c.filterVisible">
+          <nz-dropdown class="ad-st-filter" *ngIf="c.filters.length > 0" nzTrigger="click" [hasFilterButton]="true" [nzClickHide]="false" [(nzVisible)]="c.filterVisible">
             <i class="{{c.filterIcon}}" [ngClass]="{'ant-table-filter-selected': c.filtered}" nz-dropdown></i>
             <ul nz-menu>
               <ng-container *ngIf="c.filterMultiple">
@@ -73,7 +73,7 @@
   </thead>
   <tbody class="ad-st-body">
     <ng-container *ngFor="let i of _data; let index=index">
-      <tr>
+      <tr [attr.data-index]="index">
         <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand"></td>
         <td *ngFor="let c of _columns" [nzLeft]="c._left" [nzRight]="c._right" [nzCheckbox]="c.type === 'checkbox'" [ngClass]="c.className"
           [attr.colspan]="c.colSpan">
@@ -92,7 +92,7 @@
               <span *ngSwitchDefault [innerHTML]="_get(i, c)"></span>
             </ng-container>
             <ng-container *ngFor="let btn of c.buttons; let last=last">
-              <ng-container *ngIf="btn.if(i, btn, c)" [ngSwitch]="btn._type">
+              <ng-container *ngIf="btn.iif(i, btn, c)" [ngSwitch]="btn._type">
                 <ng-container *ngSwitchCase="2">
                   <nz-popconfirm [nzTitle]="btn.popTitle" (nzOnConfirm)="btnClick(i, btn)">
                     <a nz-popconfirm [innerHTML]="btnText(i, btn)"></a>
@@ -101,12 +101,12 @@
                 <ng-container *ngSwitchCase="3">
                   <nz-dropdown>
                     <a class="ant-dropdown-link" nz-dropdown>
-                      {{btnText(i, btn)}}
+                      <span [innerHTML]="btnText(i, btn)"></span>
                       <i class="anticon anticon-down"></i>
                     </a>
                     <ul nz-menu>
                       <ng-container *ngFor="let subBtn of btn.children">
-                        <li nz-menu-item *ngIf="btn.if(i, btn, c)">
+                        <li nz-menu-item *ngIf="btn.iif(i, btn, c)">
                           <a (click)="btnClick(i, subBtn)" [innerHTML]="btnText(i, subBtn)"></a>
                         </li>
                       </ng-container>

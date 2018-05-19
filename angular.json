@@ -81,6 +81,11 @@
               "node_modules/ajv/dist/ajv.bundle.js",
               "node_modules/qrious/dist/qrious.min.js"
             ],
+            "codeCoverageExclude": [
+              "packages/abc/charts/**",
+              "packages/schematics/**",
+              "packages/testing/**"
+            ],
             "assets": [
               "src/assets"
             ]

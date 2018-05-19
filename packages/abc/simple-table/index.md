@@ -58,7 +58,7 @@ scroll | 固定表头，纵向支持滚动，也可用于指定滚动区域的�
 showSizeChanger | 是否显示pagination中改变页数 | `boolean` | `false`
 pageSizeOptions | pagination中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]`
 showQuickJumper | 是否显示pagination中快速跳转 | `boolean` | `false`
-showTotal | 是否显示总数据量 | `boolean` | `false`
+showTotal | 是否显示总数据量，字符串表示自定义模板（支持三个变量名：`total` 表示数据总量、`range[0]` 和 `range[1]` 表示当前数据范围；**变量名**统一使用双引号包裹） | `boolean, string` | `false`
 isPageIndexReset | 数据变更后是否保留在数据变更前的页码 | `boolean` | `true`
 toTopInChange | 切换分页时返回顶部 | `boolean` | `true`
 toTopOffset | 返回顶部偏移值 | `number` | `100`
@@ -138,7 +138,7 @@ sorter? | 排序函数，本地排序使用一个函数(参考 [Array.sort](http
 sortKey? | 排序的后端相对应的KEY，默认使用 `index` 属性<br>若 `multiSort: false` 时：`sortKey: 'name' => ?name=1&pi=1`<br>若 `multiSort: true` 允许多个排序 key 存在，或使用 `SimpleTableMultiSort` 进行多key合并 | `string` | -
 sortReName? | 排序的后端相对应的VALUE | `{ ascend?: string, descend?: string }` | -
 filters? | 表头的筛选菜单项，至少一项以上才会生效 | `SimpleTableFilter[]` | -
-filter? | 本地模式下，确定筛选的运行函数；只有当属性存在时筛选才会真的生效；如果是AJAX直接返回 true | `SimpleTableFilter[]` | -
+filter? | 本地模式下，确定筛选的运行函数；只有当属性存在时筛选才会真的生效；如果是AJAX直接返回 true | `(filter: SimpleTableFilter, record: any) => boolean` | -
 filtered? | 标识数据是否经过过滤，筛选图标会高亮 | `boolean` | -
 filterIcon? | 自定义 fiter 图标 | `string` | `anticon anticon-filter`
 filterMultiple? | 是否多选 | `boolean` | `true`
@@ -176,14 +176,14 @@ size | 对话框大小 | `string` | `lg`
 modalOptions | 对话框额外参数，见 [ModalHelper](http://ng-alain.com/docs/service#ModalHelper) | `any` | -
 children | 下拉菜单，当存在时以 `dropdown` 形式渲染；只支持一级 | `SimpleTableButton[]` | -
 acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
-if? | 自定义条件表达式 | `boolean` | `() => true`
+iif? | 自定义条件表达式，原 `if` 属性 `1.1.0` 以后将移除 | `boolean` | `() => true`
 
 ### SimpleTableSelection
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 text | 文本 | `string` | -
-select | 回调 | `Function` | -
+select | 选择项点击回调，允许对参数 `data.checked` 进行操作 | `(data: SimpleTableData[]) => void` | -
 acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
 
 ### SimpleTableFilter

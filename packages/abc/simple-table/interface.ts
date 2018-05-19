@@ -31,7 +31,7 @@ export interface SimpleTableColumn {
    * - `img` 图片且居中(若 `className` 存在则优先)
    * - `number` 数字且居右(若 `className` 存在则优先)
    * - `currency` 货币且居右(若 `className` 存在则优先)
-   * - `date` 日期格式且居中(若 `className` 存在则优先)
+   * - `date` 日期格式且居中(若 `className` 存在则优先)，使用 `dateFormat` 自定义格式
    * - `yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn)
    */
   type?:
@@ -52,7 +52,10 @@ export interface SimpleTableColumn {
    */
   i18n?: string;
   /**
-   * 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法
+   * 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法，例如：
+   * - `id`
+   * - `price.market`
+   * - `[ 'price', 'market' ]`
    */
   index?: string | string[];
   /**
@@ -95,7 +98,7 @@ export interface SimpleTableColumn {
   sort?: 'ascend' | 'descend';
   /**
    * 排序函数，本地排序使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction)
-   * - 只有当属性存在时排序才会真的生效
+   * - 只有当属性存在时排序才会生效
    * - 如果是AJAX直接返回 true
    */
   sorter?: Function;
@@ -120,7 +123,7 @@ export interface SimpleTableColumn {
    * - 只有当属性存在时筛选才会真的生效
    * - 如果是AJAX直接返回 true
    */
-  filter?: Function;
+  filter?: (filter: SimpleTableFilter, record: any) => boolean;
   /**
    * 标识数据是否经过过滤，筛选图标会高亮
    */
@@ -178,7 +181,7 @@ export interface SimpleTableColumn {
    */
   numberDigits?: string;
   /**
-   * 日期格式，`type=date` 有效，（默认：YYYY-MM-DD HH:mm）
+   * 日期格式，`type=date` 有效，（默认：`YYYY-MM-DD HH:mm`）
    */
   dateFormat?: string;
   /**
@@ -186,11 +189,11 @@ export interface SimpleTableColumn {
    */
   ynTruth?: any;
   /**
-   * 徽章 `true` 时文本，`type=yn` 有效，（默认：是）
+   * 徽章 `true` 时文本，`type=yn` 有效，（默认：`是`）
    */
   ynYes?: string;
   /**
-   * 徽章 `false` 时文本，`type=yn` 有效，（默认：否）
+   * 徽章 `false` 时文本，`type=yn` 有效，（默认：`否`）
    */
   ynNo?: string;
   /**
@@ -221,9 +224,9 @@ export interface SimpleTableSelection {
    */
   text: string;
   /**
-   * 选择项点击回调
+   * 选择项点击回调，允许对参数 `data.checked` 进行操作
    */
-  select: Function;
+  select: (data: SimpleTableData[]) => void;
   /** 权限，等同 `can()` 参数值 */
   acl?: any;
 }
@@ -323,9 +326,17 @@ export interface SimpleTableButton {
    */
   acl?: any;
   /**
-   * 条件表达式，较高调用频率，请勿过多复杂计算免得产生性能问题
+   * @deprecated 请使用 `iif` 替代
    */
   if?: (
+    item: any,
+    btn: SimpleTableButton,
+    column: SimpleTableColumn,
+  ) => boolean;
+  /**
+   * 条件表达式，较高调用频率，请勿过多复杂计算免得产生性能问题
+   */
+  iif?: (
     item: any,
     btn: SimpleTableButton,
     column: SimpleTableColumn,
@@ -367,8 +378,8 @@ export interface ResReNameType {
 }
 
 export interface STExportOptions {
-  _d: any[];
-  _c: SimpleTableColumn[];
+  _d?: any[];
+  _c?: SimpleTableColumn[];
   /** 工作溥名 */
   sheetname?: string;
   /** 文件名 */

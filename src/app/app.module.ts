@@ -12,6 +12,7 @@ import { DelonABCModule, ReuseTabService, ReuseTabStrategy } from '@delon/abc';
 import { DelonAuthModule } from '@delon/auth';
 import { DelonMockModule } from '@delon/mock';
 import { DelonFormModule } from '@delon/form';
+import { DelonUtilModule } from '@delon/util';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutComponent } from './layout.component';
@@ -50,6 +51,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     DelonACLModule.forRoot(),
     DelonAuthModule.forRoot(),
     DelonFormModule.forRoot(),
+    DelonUtilModule.forRoot(),
     ...MOCKMODULE,
     RoutesModule
   ],
