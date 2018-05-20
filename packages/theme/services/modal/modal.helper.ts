@@ -77,7 +77,7 @@ export class ModalHelper {
       size,
       Object.assign(
         {
-          maskClosable: false,
+          nzMaskClosable: false,
         },
         options,
       ),
