@@ -145,21 +145,21 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
 
   install() {
     let formatColor;
-    if (typeof this.percent !== 'undefined') {
+    const isPercent = typeof this.percent !== 'undefined';
+    if (isPercent) {
       this.select = false;
       this.tooltip = false;
       formatColor = value =>
         value === '占比' ? this.color || 'rgba(24, 144, 255, 0.85)' : '#F0F2F5';
 
-      /* eslint no-param-reassign: */
       this.data = [
         {
           x: '占比',
-          y: +this.percent,
+          y: this.percent,
         },
         {
           x: '反比',
-          y: 100 - +this.percent,
+          y: 100 - this.percent,
         },
       ];
     }
@@ -218,7 +218,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
           value: percent,
         };
       })
-      .color('x', this.percent ? formatColor : this.colors)
+      .color('x', isPercent ? formatColor : this.colors)
       .select(this.select);
 
     chart.render();
