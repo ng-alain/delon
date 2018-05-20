@@ -5,7 +5,13 @@ import { ControlWidget } from '../../widget';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum } from '../../utils';
 
-const EMAILSUFFIX = ['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com'];
+export const EMAILSUFFIX = [
+  'qq.com',
+  '163.com',
+  'gmail.com',
+  '126.com',
+  'aliyun.com',
+];
 
 @Component({
   selector: 'sf-autocomplete',
@@ -47,11 +53,8 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
 
     this.filterOption = this.ui.filterOption || true;
     if (typeof this.filterOption === 'boolean') {
-      this.filterOption =
-        this.filterOption === true
-          ? (input: string, option: SFSchemaEnum) =>
-              option.label.toLowerCase().indexOf(input.toLowerCase()) > -1
-          : () => true;
+      this.filterOption = (input: string, option: SFSchemaEnum) =>
+        option.label.toLowerCase().indexOf(input.toLowerCase()) > -1;
     }
 
     this.isAsync = !!this.ui.asyncData;
@@ -69,18 +72,17 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
   }
 
   reset(value: any) {
-    if (!this.isAsync) {
-      switch (this.ui.type) {
-        case 'email':
-          this.fixData = getCopyEnum(EMAILSUFFIX, null);
-          break;
-        default:
-          this.fixData = getCopyEnum(
-            this.schema.enum,
-            this.formProperty.formData,
-          );
-          break;
-      }
+    if (this.isAsync) return;
+    switch (this.ui.type) {
+      case 'email':
+        this.fixData = getCopyEnum(EMAILSUFFIX, null);
+        break;
+      default:
+        this.fixData = getCopyEnum(
+          this.schema.enum,
+          this.formProperty.formData,
+        );
+        break;
     }
   }
 

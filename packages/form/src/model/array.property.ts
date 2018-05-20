@@ -86,7 +86,7 @@ export class ArrayProperty extends PropertyGroup {
 
   // region: actions
 
-  add(value: any = null): FormProperty {
+  add(value: any): FormProperty {
     const newProperty = this.addProperty(value);
     newProperty.resetValue(value, false);
     return newProperty;

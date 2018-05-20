@@ -5,7 +5,11 @@ import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 
 export const FORMATMAPS = {
-  'date-time': { widget: 'date', showTime: true, format: 'YYYY-MM-DDTHH:mm:ssZ' },
+  'date-time': {
+    widget: 'date',
+    showTime: true,
+    format: 'YYYY-MM-DDTHH:mm:ssZ',
+  },
   date: { widget: 'date', format: 'YYYY-MM-DD' },
   'full-date': { widget: 'date', format: 'YYYY-MM-DD' },
   time: { widget: 'time' },
@@ -27,10 +31,7 @@ export function di(...args) {
 }
 
 /** 根据 `$ref` 查找 `definitions` */
-function findSchemaDefinition(
-  $ref: string,
-  definitions: SFSchemaDefinition = {},
-) {
+function findSchemaDefinition($ref: string, definitions: SFSchemaDefinition) {
   const match = /^#\/definitions\/(.*)$/.exec($ref);
   if (match && match[1]) {
     // parser JSON Pointer
@@ -115,10 +116,7 @@ export function orderProperties(properties: string[], order: string[]) {
       prev[curr] = true;
       return prev;
     }, {});
-  const errorPropList = arr =>
-    arr.length > 1
-      ? `properties '${arr.join(`', '`)}'`
-      : `property '${arr[0]}'`;
+  const errorPropList = arr => `property [${arr.join(`', '`)}]`;
 
   const propertyHash = arrayToHash(properties);
   const orderHash = arrayToHash(order);
@@ -146,18 +144,6 @@ export function orderProperties(properties: string[], order: string[]) {
   const complete = [...order];
   complete.splice(restIndex, 1, ...rest);
   return complete;
-}
-
-export function getUiOptions(uiSchema: SFUISchema) {
-  if (!uiSchema) return {};
-  return Object.keys(uiSchema)
-    .filter(key => !key.startsWith('$'))
-    .reduce(
-      (options, key) => {
-        return { ...options, [key]: uiSchema[key] };
-      },
-      <SFUISchemaItem>{},
-    );
 }
 
 export function getEnum(list: any[], formData: any): SFSchemaEnum[] {

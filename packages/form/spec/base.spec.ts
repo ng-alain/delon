@@ -1,8 +1,13 @@
 import { Component, ViewChild, DebugElement } from '@angular/core';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import {
+  TestBed,
+  ComponentFixture,
+  tick,
+  discardPeriodicTasks,
+} from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { deepGet } from '@delon/util';
+import { deepGet, deepCopy } from '@delon/util';
 
 import { SFSchema } from '../src/schema';
 import { SFUISchema } from '../src/schema/ui';
@@ -10,6 +15,7 @@ import { SFButton } from '../src/interface';
 import { ErrorData } from '../src/errors';
 import { DelonFormModule } from '../src/module';
 import { SFComponent } from '../src/sf.component';
+import { dispatchFakeEvent, typeInElement } from '../../testing';
 
 export const SCHEMA = {
   user: <SFSchema>{
@@ -28,11 +34,19 @@ export const SCHEMA = {
 let fixture: ComponentFixture<TestFormComponent>;
 let dl: DebugElement;
 let context: TestFormComponent;
-export function builder() {
+export function builder(options?: {
+  detectChanges?: boolean;
+  template?: string;
+  ingoreAntd?: boolean;
+}) {
+  options = Object.assign({ detectChanges: true }, options);
   TestBed.configureTestingModule({
     imports: [NoopAnimationsModule, DelonFormModule.forRoot()],
     declarations: [TestFormComponent],
   });
+  if (options.template) {
+    TestBed.overrideTemplate(TestFormComponent, options.template);
+  }
   fixture = TestBed.createComponent(TestFormComponent);
   dl = fixture.debugElement;
   context = fixture.componentInstance;
@@ -40,7 +54,9 @@ export function builder() {
   spyOn(context, 'formSubmit');
   spyOn(context, 'formReset');
   spyOn(context, 'formError');
-  fixture.detectChanges();
+  if (options.detectChanges !== false) {
+    fixture.detectChanges();
+  }
   const page = new SFPage(context.comp);
   return {
     fixture,
@@ -63,8 +79,19 @@ export class SFPage {
     return el.nativeElement as HTMLElement;
   }
 
+  getWidget<T>(cls: string): T {
+    return this.getDl(cls).componentInstance as T;
+  }
+
+  private fixPath(path: string) {
+    return path.startsWith('/') ? path : '/' + path;
+  }
+
   setValue(path: string, value: any): this {
-    this.comp.rootProperty.searchProperty(path).widget.setValue(value);
+    path = this.fixPath(path);
+    const property = this.comp.rootProperty.searchProperty(path);
+    expect(property).not.toBeNull(`can't found ${path}`);
+    property.widget.setValue(value);
     return this;
   }
 
@@ -92,15 +119,33 @@ export class SFPage {
     this.getEl('.add button').click();
     return this;
   }
+  /** 下标从 `1` 开始 */
+  remove(index = 1): this {
+    this.getEl(
+      `.sf-array-container [data-index="${index - 1}"] .remove`,
+    ).click();
+    return this;
+  }
 
-  newSchema(schema: SFSchema, ui?: SFUISchema): this {
+  newSchema(schema: SFSchema, ui?: SFUISchema, formData?: any): this {
     context.schema = schema;
     if (typeof ui !== 'undefined') context.ui = ui;
+    if (typeof formData !== 'undefined') context.formData = formData;
+    fixture.detectChanges();
+    return this;
+  }
+
+  /** 强制指定 `a` 节点 */
+  chainSchema(schema: SFSchema, overObject: SFSchema): this {
+    context.schema = Object.assign({}, deepCopy(schema), {
+      properties: { a: overObject },
+    });
     fixture.detectChanges();
     return this;
   }
 
   checkSchema(path: string, propertyName: string, value: any): this {
+    path = this.fixPath(path);
     const property = this.comp.rootProperty.searchProperty(path);
     expect(property != null).toBe(true);
     const item = property.schema;
@@ -110,6 +155,7 @@ export class SFPage {
   }
 
   checkUI(path: string, propertyName: string, value: any): this {
+    path = this.fixPath(path);
     const property = this.comp.rootProperty.searchProperty(path);
     expect(property != null).toBe(true);
     const item = property.ui;
@@ -119,6 +165,7 @@ export class SFPage {
   }
 
   checkValue(path: string, value: any, propertyName?: string): this {
+    path = this.fixPath(path);
     const property = this.comp.rootProperty.searchProperty(path);
     expect(property != null).toBe(true);
     if (typeof propertyName !== 'undefined') {
@@ -126,6 +173,16 @@ export class SFPage {
       expect(res).toBe(value);
     } else {
       expect(property.value).toBe(value);
+    }
+    return this;
+  }
+
+  checkElText(cls: string, value: any): this {
+    const node = this.getEl(cls);
+    if (value == null) {
+      expect(node).toBeNull();
+    } else {
+      expect(node.textContent.trim()).toBe(value);
     }
     return this;
   }
@@ -157,6 +214,36 @@ export class SFPage {
     expect(dl.queryAll(By.css(cls)).length).toBe(count);
     return this;
   }
+
+  click(cls: string): this {
+    const el = this.getEl(cls);
+    expect(el).not.toBeNull();
+    el.click();
+    fixture.detectChanges();
+    return this;
+  }
+
+  typeChar(value: any, cls = 'input'): this {
+    const node = this.getEl(cls) as HTMLInputElement;
+    typeInElement(value, node);
+    tick();
+    fixture.detectChanges();
+    return this;
+  }
+
+  typeEvent(eventName: string, cls = 'input'): this {
+    const node = this.getEl(cls) as HTMLInputElement;
+    dispatchFakeEvent(node, eventName);
+    tick();
+    fixture.detectChanges();
+    return this;
+  }
+
+  asyncEnd(time = 0) {
+    tick(time);
+    discardPeriodicTasks();
+    return this;
+  }
 }
 
 @Component({
@@ -165,7 +252,6 @@ export class SFPage {
         [schema]="schema"
         [ui]="ui"
         [formData]="formData"
-        [mode]="mode"
         [button]="button"
         [liveValidate]="liveValidate"
         [autocomplete]="autocomplete"

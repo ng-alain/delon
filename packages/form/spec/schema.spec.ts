@@ -429,7 +429,7 @@ describe('form: schema', () => {
               b: { type: 'string' }
             },
             ui: {
-              order: ['a', '*', '*'],
+              order: ['a', '*', '*', '*', '*'],
             },
           });
         }).toThrow();

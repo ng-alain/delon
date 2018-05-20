@@ -32,6 +32,6 @@ maxMultipleCount | 最多选中多少个标签| `number` | `Infinity`
 mode | 设置 nz-select 的模式，`tags` 建议增加 `default: null`，否则可能会遇到初始化有一个空的标签。 | `multiple,tags,default` | `default`
 notFoundContent | 当下拉列表为空时显示的内容 | `string` | -
 showSearch | 使单选模式可搜索 | `boolean` | `false`
-searchChange | 搜索内容变化回调函数，参数为搜索内容，必须返回 `Promise` 对象 | `Function` | -
-openChange | 下拉菜单打开关闭回调函数 | `Function` | -
-scrollToBottom | 下拉菜单滚动到底部回调，可用于作为动态加载的触发条件 | `Function` | -
+onSearch | 搜索内容变化回调函数，参数为搜索内容，必须返回 `Promise` 对象 | `(text: string) => Promise<any[]>` | -
+openChange | 下拉菜单打开关闭回调函数 | `(nzOpen:boolean)=>{}` | -
+scrollToBottom | 下拉菜单滚动到底部回调，可用于作为动态加载的触发条件 | `()=>{}` | -

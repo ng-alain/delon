@@ -238,8 +238,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
-            if (!ui.spanLabelFixed)
+            if (!ui.spanLabelFixed) {
               ui.spanLabelFixed = parentUiSchema.spanLabelFixed;
+            }
           } else {
             if (!ui.spanLabel)
               ui.spanLabel =

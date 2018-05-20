@@ -43,17 +43,15 @@ export class ObjectProperty extends PropertyGroup {
       );
     }
     orderedProperties.forEach(propertyId => {
-      if (this.schema.properties.hasOwnProperty(propertyId)) {
-        const propertySchema = this.schema.properties[propertyId];
-        this.properties[propertyId] = this.formPropertyFactory.createProperty(
-          this.schema.properties[propertyId],
-          this.ui['$' + propertyId],
-          (this.formData || {})[propertyId],
-          this,
-          propertyId,
-        );
-        this._propertiesId.push(propertyId);
-      }
+      const propertySchema = this.schema.properties[propertyId];
+      this.properties[propertyId] = this.formPropertyFactory.createProperty(
+        this.schema.properties[propertyId],
+        this.ui['$' + propertyId],
+        (this.formData || {})[propertyId],
+        this,
+        propertyId,
+      );
+      this._propertiesId.push(propertyId);
     });
   }
 
@@ -67,10 +65,9 @@ export class ObjectProperty extends PropertyGroup {
   }
   resetValue(value: any, onlySelf: boolean) {
     value = value || this.schema.default || {};
+    // tslint:disable-next-line:forin
     for (const propertyId in this.schema.properties) {
-      if (this.schema.properties.hasOwnProperty(propertyId)) {
-        this.properties[propertyId].resetValue(value[propertyId], true);
-      }
+      this.properties[propertyId].resetValue(value[propertyId], true);
     }
     this.updateValueAndValidity(onlySelf, true);
   }

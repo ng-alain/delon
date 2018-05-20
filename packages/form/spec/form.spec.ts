@@ -11,9 +11,9 @@ describe('form: component', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  beforeEach(() => ({ fixture, dl, context, page } = builder()));
-
   describe('[default]', () => {
+    beforeEach(() => ({ fixture, dl, context, page } = builder()));
+
     it('should be create a form', () => {
       expect(context).not.toBeUndefined();
     });
@@ -69,26 +69,9 @@ describe('form: component', () => {
   });
 
   describe('[button]', () => {
+    beforeEach(() => ({ fixture, dl, context, page } = builder({})));
     it('should be has a primary button when default value', () => {
       page.checkCount('.sf-btns', 1).checkCount('.ant-btn-primary', 1);
-    });
-    it('should be has a fix 100px width', () => {
-      page
-        .newSchema({
-          properties: {
-            name: {
-              type: 'string',
-              ui: {
-                spanLabelFixed: 100,
-              },
-            },
-          },
-        })
-        .checkStyle(
-          '.sf-btns .ant-form-item-control-wrapper',
-          'margin-left',
-          '100px',
-        );
     });
     it('should be null', () => {
       context.button = null;
@@ -105,9 +88,57 @@ describe('form: component', () => {
       fixture.detectChanges();
       page.checkCount('.sf-btns', 0);
     });
+    describe('when layout is horizontal', () => {
+      it('should be has a fix 100px width', () => {
+        page
+          .newSchema({
+            properties: {
+              name: {
+                type: 'string',
+                ui: {
+                  spanLabelFixed: 100,
+                },
+              },
+            },
+          })
+          .checkStyle(
+            '.sf-btns .ant-form-item-control-wrapper',
+            'margin-left',
+            '100px',
+          );
+      });
+      it('should be specified grid', () => {
+        const span = 11;
+        context.button = {
+          render: {
+            grid: { span },
+          },
+        };
+        fixture.detectChanges();
+        page.checkCls(
+          '.sf-btns .ant-form-item-control-wrapper',
+          `ant-col-${span}`,
+        );
+      });
+      it('should be fixed label', () => {
+        const spanLabelFixed = 56;
+        context.button = {
+          render: {
+            spanLabelFixed,
+          },
+        };
+        fixture.detectChanges();
+        page.checkStyle(
+          '.sf-btns .ant-form-item-control-wrapper',
+          'margin-left',
+          `${spanLabelFixed}px`,
+        );
+      });
+    });
   });
 
   describe('properites', () => {
+    beforeEach(() => ({ fixture, dl, context, page } = builder({})));
     describe('#validate', () => {
       it('should be validate when submitted and not liveValidate', () => {
         page.submit(false);
@@ -170,17 +201,20 @@ describe('form: component', () => {
             })
             .checkStyle('.ant-form-item-label', 'width', '100px');
         });
-        it('shoule be fixed label width if parent node had setting', () => {
+        it('should inherit parent node', () => {
           page
             .newSchema({
               properties: {
-                name: { type: 'string' },
-              },
-              ui: {
-                spanLabelFixed: 99,
+                address: {
+                  type: 'object',
+                  ui: { spanLabelFixed: 98 },
+                  properties: {
+                    city: { type: 'string' },
+                  },
+                },
               },
             })
-            .checkStyle('.ant-form-item-label', 'width', '99px');
+            .checkStyle('.ant-form-item-label', 'width', '98px');
         });
       });
     });
@@ -205,23 +239,6 @@ describe('form: component', () => {
         context.firstVisual = true;
         fixture.detectChanges();
         page.checkCount('nz-form-explain', 2);
-      });
-    });
-
-    describe('#mode', () => {
-      it('with search', () => {
-        context.mode = 'search';
-        fixture.detectChanges();
-        expect(context.comp.layout).toBe('inline');
-        expect(context.comp.firstVisual).toBe(false);
-        expect(context.comp.liveValidate).toBe(false);
-      });
-      it('with edit', () => {
-        context.mode = 'edit';
-        fixture.detectChanges();
-        expect(context.comp.layout).toBe('horizontal');
-        expect(context.comp.firstVisual).toBe(false);
-        expect(context.comp.liveValidate).toBe(true);
       });
     });
 
@@ -253,6 +270,7 @@ describe('form: component', () => {
   });
 
   describe('[widgets]', () => {
+    beforeEach(() => ({ fixture, dl, context, page } = builder({})));
     it('#size', () => {
       page
         .newSchema({
@@ -271,6 +289,25 @@ describe('form: component', () => {
           properties: { name: { type: 'string', ui: { class: 'test-cls' } } },
         })
         .checkCls('sf-string', 'test-cls');
+    });
+  });
+
+  describe('#mode', () => {
+    beforeEach(() => {
+      ({ fixture, dl, context, page } = builder({
+        detectChanges: false,
+        template: `<sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode"></sf>`,
+      }));
+    });
+    it('should be auto 搜索 in submit', () => {
+      context.mode = 'search';
+      fixture.detectChanges();
+      expect(page.getEl('.ant-btn-primary').textContent).toBe('搜索');
+    });
+    it('should be auto 保存 in submit', () => {
+      context.mode = 'edit';
+      fixture.detectChanges();
+      expect(page.getEl('.ant-btn-primary').textContent).toBe('保存');
     });
   });
 });

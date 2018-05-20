@@ -18,7 +18,7 @@ type: Widgets
 
 **实时**
 
-指每一次选择会触发HTTP请求，数据来源于 `loadData`；包含三个参数 `(node: CascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>`，其中 `me` 表示当前小部件实例，由于所有小部件的变更检测都是手控，因此数据请求返回后，**务必调用** `me.detectChanges()` 触发小部件变更检测。
+指每一次每一次选择会触发HTTP请求，数据来源于 `asyncData`；包含三个参数 `(node: CascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>`，其中 `me` 表示当前小部件实例，由于所有小部件的变更检测都是手控，因此数据请求返回后，**务必调用** `me.detectChanges()` 触发小部件变更检测。
 
 ## API
 
@@ -33,7 +33,7 @@ readOnly | 禁用状态  | `boolean` | -
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-asyncData | 异步静态数据源 | `(input: string) => Observable<SFSchemaEnumType[]>` | -
+asyncData | 异步静态数据源 | `(node: CascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | -
 size | 大小，等同 `nzSize` | `string` | -
 placeholder | 在文字框中显示提示讯息 | `string` | -
 showSearch | 是否支持搜索 | `bool` | `false`
@@ -55,5 +55,4 @@ visibleChange | 异步加载事件 | `(value: boolean) => void` | -
 change | 选项值变更事件 | `(values: any[]) => void` | -
 selectionChange | 选项变更事件 | `(values: CascaderOption[]) => void` | -
 select | 选项被选中事件 | `(values: { option: CascaderOption, index: number }) => void` | -
-loadData | 实时数据源 | `(node: CascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | -
 clear | 内容被清空事件 | `() => void` | -
