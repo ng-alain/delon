@@ -102,7 +102,7 @@ describe('abc: xlsx', () => {
 
     it('should be load xlsx via file object', (done: () => void) => {
       genModule();
-      srv.import(new File([], '1.xlsx')).then(
+      srv.import(new File([], '1.xlsx'), 'readAsArrayBuffer').then(
         () => {
           expect(true).toBe(true);
           done();

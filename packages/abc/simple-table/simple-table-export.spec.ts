@@ -22,7 +22,10 @@ const columns: SimpleTableColumn[] = [
   { title: 'customYN', index: ['status'], type: 'yn', ynTruth: true, ynYes: 'Y', ynNo: 'N' },
   {
     title: '',
-    buttons: []
+    index: 'id',
+    buttons: [
+      { text: '' }
+    ]
   }
 ];
 const data: any[] = [
@@ -107,6 +110,15 @@ describe('abc: simple-table: export', () => {
       });
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets)).toContain('Sheet1');
+    });
+
+    it('should be generate empty sheet', () => {
+      const ret: any = srv.export({
+        _d: [],
+        _c: [],
+      });
+      expect(ret).not.toBeNull();
+      expect(Object.keys(ret.sheets.Sheet1).length).toBe(0);
     });
   });
 

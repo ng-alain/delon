@@ -59,7 +59,9 @@ export class SimpleTableExport {
     }
     // endregion
 
-    sheet['!ref'] = `A1:${String.fromCharCode(65 + cc - 1)}${dc + 1}`;
+    if (cc > 0 && dc > 0) {
+      sheet['!ref'] = `A1:${String.fromCharCode(65 + cc - 1)}${dc + 1}`;
+    }
 
     return sheets;
   }

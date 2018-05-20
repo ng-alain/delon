@@ -40,3 +40,9 @@ callback | 保存前触发 | `(wb: WorkBook) => void` | -
 ```html
 <div [xlsx]="XlsxExportOptions">导出</div>
 ```
+
+## 常见问题
+
+### csv格式
+
+需要 UTF8 with BOM 格式才能解析。

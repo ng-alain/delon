@@ -22,7 +22,7 @@ export class XlsxService {
   private init(): Promise<LazyResult[]> {
     const config = Object.assign(
       {
-        url: `//cdn.bootcss.com/xlsx/0.11.17/xlsx.full.min.js`,
+        url: `//cdn.bootcss.com/xlsx/0.12.12/xlsx.full.min.js`,
         modules: [],
       },
       this.config,
@@ -40,8 +40,14 @@ export class XlsxService {
     return ret;
   }
 
-  /** 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式 */
-  import(fileOrUrl: File | string): Promise<{ [key: string]: any[][] }> {
+  /**
+   * 导入Excel并输出JSON，支持 `<input type="file">`、URL 形式
+   * @param rABS 加载数据方式 `readAsBinaryString` （默认） 或 `readAsArrayBuffer`，[更多细节](http://t.cn/R3n63A0)
+   */
+  import(
+    fileOrUrl: File | string,
+    rABS: 'readAsBinaryString' | 'readAsArrayBuffer' = 'readAsBinaryString',
+  ): Promise<{ [key: string]: any[][] }> {
     return new Promise<{ [key: string]: any[][] }>((resolver, reject) => {
       this.init().then(() => {
         // from url
@@ -65,8 +71,7 @@ export class XlsxService {
           const wb: any = XLSX.read(e.target.result, { type: 'binary' });
           resolver(this.read(wb));
         };
-        // @see https://github.com/SheetJS/js-xlsx/wiki/Reading-XLSX-from-FileReader.readAsArrayBuffer()
-        reader.readAsBinaryString(fileOrUrl);
+        reader[rABS](fileOrUrl);
       });
     });
   }
@@ -98,6 +103,7 @@ export class XlsxService {
         Object.assign(
           {
             bookType: 'xlsx',
+            bookSST: false,
             type: 'array',
           },
           options.opts,
