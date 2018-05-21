@@ -9,6 +9,7 @@ import { ControlWidget } from '@delon/form';
       [ngModel]="value"
       [config]="config"
       [loadingTip]="loading"
+      [delay]="delay"
       (onContentChange)="change($event)">
     </ueditor>
   </sf-item-wrap>
@@ -22,10 +23,12 @@ export class UeditorWidget extends ControlWidget implements OnInit {
 
   config: any;
   loading: string;
+  delay: number;
 
   ngOnInit(): void {
     this.loading = this.ui.loading || '加载中……';
     this.config = this.ui.config || {};
+    this.delay = this.ui.delay || 300;
   }
 
   change(value: string) {
