@@ -271,8 +271,14 @@ module.exports = {
           hasSubDir: false,
         },
         {
+          src: ['./packages/form/examples'],
+          template: {
+            content: './site/templates/content.ts',
+          },
+          hasSubDir: true,
+        },
+        {
           src: ['./packages/form/src/widgets'],
-          // ignores: [ 'README.md' ],
           template: {
             content: './site/templates/content.ts',
           },
@@ -280,7 +286,6 @@ module.exports = {
         },
         {
           src: ['./packages/form/widgets-third'],
-          // ignores: [ 'README.md' ],
           template: {
             content: './site/templates/content.ts',
           },
