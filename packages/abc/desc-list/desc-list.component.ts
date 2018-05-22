@@ -29,7 +29,6 @@ import { AdDescListConfig } from './desc-list.config';
     </div>
   </div>
   `,
-  host: { '[class.ad-desc-list]': 'true' },
   preserveWhitespaces: false,
 })
 export class DescListComponent implements OnChanges, OnInit {
@@ -78,7 +77,7 @@ export class DescListComponent implements OnChanges, OnInit {
       this.renderer.removeClass(this.el.nativeElement, cls),
     );
 
-    this._classMap = ['desc-list', this.layout];
+    this._classMap = ['ad-desc-list', this.layout];
     if (this.size) this._classMap.push(this.size);
 
     this._classMap.forEach(cls =>

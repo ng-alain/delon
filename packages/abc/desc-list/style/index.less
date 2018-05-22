@@ -33,6 +33,11 @@
     color: @text-color;
     display: table-cell;
   }
+  &__default {
+    &:before {
+      content: '-';
+    }
+  }
   &.small {
     // offset the padding-bottom of last row
     .ant-row {

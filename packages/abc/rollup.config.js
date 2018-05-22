@@ -23,6 +23,7 @@ const globals = {
   '@angular/cdk': 'ng.cdk',
   '@angular/cdk/overlay': 'ng.cdk.overlay',
   '@angular/cdk/portal': 'ng.cdk.portal',
+  '@angular/cdk/observers': 'ng.cdk.observers',
 
   'rxjs'          : 'Rx',
   'rxjs/operators': 'Rx.Observable.prototype',
