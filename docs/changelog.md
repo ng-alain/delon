@@ -55,7 +55,7 @@ type: Other
 `2018-5-16`
 
 - 同步 `0.7.0`
-- 支持 `ng add ng-alain` 构建脚手架，[cli](/docs/cli)
+- 支持 `ng add ng-alain` 构建脚手架，[CLI](/docs/cli)
 
 **据 `1.0.1-beta.2@next` 的更新细节：**
 

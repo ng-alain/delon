@@ -10,7 +10,7 @@ config: AdQRConfig
 
 ## 注意
 
-默认 `AdQRModule` 并没有强制依赖 `qrious`，因此还需要额外在 `.angular-cli.json` 的 `scripts` 节点引用它。
+默认 `AdQRModule` 并没有强制依赖 `qrious`，因此还需要额外在 `angular.json` 的 `scripts` 节点引用它。
 
 ```ts
 "scripts": [

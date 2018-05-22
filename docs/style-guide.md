@@ -6,7 +6,7 @@ title:
 type: Advance
 ---
 
-Angular cli 构建的项目就其目录结构而言已经非常棒了，同时官网也有一份 [Angular Style Guide](https://angular.io/guide/styleguide)（[中文版](https://angular.cn/guide/styleguide)）风格指南，建议好好阅读几遍。除此之外，ng-alain 也有一部分编码风格，如下说明可能对于你阅读代码时有用。
+Angular CLI 构建的项目就其目录结构而言已经非常棒了，同时官网也有一份 [Angular Style Guide](https://angular.io/guide/styleguide)（[中文版](https://angular.cn/guide/styleguide)）风格指南，建议好好阅读几遍。除此之外，ng-alain 也有一部分编码风格，如下说明可能对于你阅读代码时有用。
 
 ## 风格指南
 
@@ -51,9 +51,9 @@ src | 图片地址  | `string` | -
 
 ## 辅助项
 
-ng-alain 配置了一些针对 cli、ide 选项，以便更好进行编码工作。
+ng-alain 配置了一些针对 CLI 选项，以便更好进行编码工作。
 
-### cli
+### CLI
 
 vscode 是编写 Angular 最佳的选择，你可以在项目的任何目录里输入：`ng g c list` 生成组件的相应的文件。
 

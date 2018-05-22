@@ -39,7 +39,7 @@ $ cd my-project
 
 ## 四、目录结构
 
-ng-alain 是一个标准的 Angular cli 构建的项目，因此你会非常熟悉结构的组成。在此基础上提供了很多典型的模板，利用这些模板你可以快速的构建产品。
+ng-alain 是一个标准的 Angular CLI 构建的项目，因此你会非常熟悉结构的组成。在此基础上提供了很多典型的模板，利用这些模板你可以快速地构建产品。
 
 ```
 ├── _mock                                       # Mock 数据规则
@@ -78,7 +78,7 @@ $ npm install
 $ yarn
 ```
 
-> 注：请务使用 `cnpm` 安装依赖包，因为 ng-alain 脚手架需要依赖 `node_modules` 路径，而 `cnpm` 采用软链接会导致破坏文件夹名称，导致很难获取相应的样式文件。
+> 注：请勿使用 `cnpm` 安装依赖包，因为 ng-alain 脚手架需要依赖 `node_modules` 路径，而 `cnpm` 采用软链接会导致破坏文件夹名称，导致很难获取相应的样式文件。
 
 如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速。
 
@@ -86,6 +86,6 @@ $ yarn
 $ npm start
 ```
 
-启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，你看到下面的页面就代表成功了。
+启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，若你看到如下页面则代表成功了。
 
 ![](./assets/screenshot/desktop.png | width=700)

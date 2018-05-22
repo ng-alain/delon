@@ -46,13 +46,13 @@ import { DelonFormModule } from '@delon/form';
 export class AppModule { }
 ```
 
-虽然默认 `@delon/form` 校验是 [ajv](http://epoberezkin.github.io/ajv/)，但这并不是唯一的选择，你可以覆盖 `SchemaValidatorFactory` 使用其他校验类库，所以 `ajv` 并没有强制依赖；其实从另一个点来看将这种第三方类库统一在 `scripts` 加载才是更合理的，因此你依然要自己安装 `ajv` 并在 `.angular-cli.json` 中导入它：
+虽然默认 `@delon/form` 校验是 [ajv](http://epoberezkin.github.io/ajv/)，但这并不是唯一的选择，你可以覆盖 `SchemaValidatorFactory` 使用其他校验类库，所以 `ajv` 并没有强制依赖；其实从另一个点来看将这种第三方类库统一在 `scripts` 加载才是更合理的，因此你依然要自己安装 `ajv` 并在 `angular.json` 中导入它：
 
 ```bash
 npm i --save ajv @types/ajv
 ```
 
-.angular-cli.json
+angular.json
 
 ```json
 "scripts": [
