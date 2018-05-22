@@ -127,12 +127,7 @@ export class DateWidget extends ControlWidget implements OnInit {
   }
 
   reset(value: any) {
-    if (
-      (Array.isArray(value) && value.length > 0 && value[0] instanceof Date) ||
-      value instanceof Date
-    ) {
-      this.displayValue = value;
-    }
+    this.displayValue = value;
   }
 
   _change(value: Date | Date[]) {

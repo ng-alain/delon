@@ -3,7 +3,7 @@
     <nz-select [(ngModel)]="name" (ngModelChange)="getSchema()">
       <nz-option *ngFor="let i of files" [nzValue]="i.name" [nzLabel]="i.title"></nz-option>
     </nz-select>
-    <nz-radio-group [(ngModel)]="layout">
+    <nz-radio-group [(ngModel)]="layout" class="ml-sm">
       <label nz-radio-button nzValue="horizontal">水平</label>
       <label nz-radio-button nzValue="vertical">垂直</label>
       <label nz-radio-button nzValue="inline">行内</label>
@@ -17,12 +17,12 @@
         </button>
       </nz-tooltip>
       <nz-tooltip [nzTitle]="'app.demo.stackblitz' | translate">
-        <button nz-tooltip nz-button (click)="openOnStackBlitz()">
+        <button nz-tooltip nz-button (click)="openOnStackBlitz()" class="ml-sm">
           <i class="anticon anticon-form"></i>
         </button>
       </nz-tooltip>
       <nz-tooltip [nzTitle]="'app.demo.copy' | translate">
-        <button nz-tooltip nz-button (click)="onCopy()">
+        <button nz-tooltip nz-button (click)="onCopy()" class="ml-sm">
           <i class="anticon anticon-copy"></i>
         </button>
       </nz-tooltip>

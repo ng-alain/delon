@@ -288,10 +288,8 @@ export abstract class FormProperty {
   private setVisible(visible: boolean) {
     this._visible = visible;
     this._visibilityChanges.next(visible);
-    // this.updateValueAndValidity();
-    // if (this.parent) {
-    //     this.parent.updateValueAndValidity(false, true);
-    // }
+    // 部分数据源来自 reset
+    this.resetValue(this.value, true);
   }
 
   // A field is visible if AT LEAST ONE of the properties it depends on is visible AND has a value in the list

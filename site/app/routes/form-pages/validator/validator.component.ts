@@ -11,6 +11,7 @@ import { CodeService } from '../../../core/code.service';
 
 const stackBlitzTpl = `
 import { Component } from '@angular/core';
+import { SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
@@ -44,95 +45,102 @@ export class DemoComponent {
 }`;
 
 @Component({
-    selector: 'form-validator',
-    templateUrl: './validator.component.html'
+  selector: 'form-validator',
+  templateUrl: './validator.component.html',
 })
 export class FormValidatorComponent implements OnInit {
-    files: any[] = [
-        { name: 'basic', title: '基本' },
-        { name: 'conditional', title: '条件' },
-        { name: 'sort', title: '顺序' },
-        { name: 'validation', title: '自定义校验' },
-        { name: 'fixed', title: '不规则布局' }
-    ];
-    layout = 'horizontal';
-    name: string;
-    title: string;
-    schema: string;
-    schemaData: SFSchema;
-    formCode: string;
-    formData: {};
-    uiCode: string;
-    uiSchema: {};
-    expand = true;
+  files: any[] = [
+    { name: 'basic', title: '基本' },
+    { name: 'conditional', title: '条件' },
+    { name: 'sort', title: '顺序' },
+    { name: 'validation', title: '自定义校验' },
+    { name: 'fixed', title: '不规则布局' },
+  ];
+  layout = 'horizontal';
+  name: string;
+  title: string;
+  schema: string;
+  schemaData: SFSchema;
+  formCode: string;
+  formData: {};
+  uiCode: string;
+  uiSchema: {};
+  expand = true;
 
-    constructor(
-        private i18n: I18NService,
-        private codeSrv: CodeService,
-        private http: _HttpClient,
-        private msg: NzMessageService
-    ) {
-        const defaultIndex = 0;
-        this.name = this.files[defaultIndex].name;
-        this.title = this.files[defaultIndex].title;
+  constructor(
+    private i18n: I18NService,
+    private codeSrv: CodeService,
+    private http: _HttpClient,
+    private msg: NzMessageService,
+  ) {
+    const defaultIndex = 0;
+    this.name = this.files[defaultIndex].name;
+    this.title = this.files[defaultIndex].title;
+  }
+
+  ngOnInit(): void {
+    this.getSchema();
+  }
+
+  getSchema() {
+    const item = this.files.find(w => w.name === this.name);
+    if (!item) return;
+    this.name = item.name;
+    this.title = item.title;
+    if (item.cache) {
+      this.schema = item.cache;
+      this.run();
+      return;
     }
 
-    ngOnInit(): void {
-        this.getSchema();
-    }
+    this.http
+      .get(`./assets/schema/${item.name}.json`, null, { responseType: 'text' })
+      .subscribe(res => {
+        item.cache = res;
+        this.schema = item.cache;
+        this.run();
+      });
+  }
 
-    getSchema() {
-        const item = this.files.find(w => w.name === this.name);
-        if (!item) return ;
-        this.name = item.name;
-        this.title = item.title;
-        if (item.cache) {
-            this.schema = item.cache;
-            this.run();
-            return ;
-        }
+  run() {
+    this.schemaData = JSON.parse(this.schema || '{}');
+    this.formData = JSON.parse(this.formCode || '{}');
+    this.uiSchema = JSON.parse(this.uiCode || '{}');
+  }
 
-        this.http.get(`./assets/schema/${item.name}.json`, null, { responseType: 'text' }).subscribe(res => {
-            item.cache = res;
-            this.schema = item.cache;
-            this.run();
-        });
-    }
+  openOnStackBlitz() {
+    const obj = {
+      schema: this.schema,
+      layout: this.layout,
+      formData: this.formCode || '{}',
+      ui: this.uiCode || '{}',
+    };
+    const componentCode = stackBlitzTpl.replace(
+      /\{(\w+)\}/g,
+      (match: string, offset: any) => obj[offset],
+    );
+    this.codeSrv.openOnStackBlitz(
+      componentCode,
+      this.title,
+      `@delon/form-${this.title}-${this.name}.json`,
+    );
+  }
 
-    run() {
-        this.schemaData = JSON.parse(this.schema || '{}');
-        this.formData = JSON.parse(this.formCode || '{}');
-        this.uiSchema = JSON.parse(this.uiCode || '{}');
-    }
+  onCopy() {
+    copy(this.schema).then(() =>
+      this.msg.success(this.i18n.fanyi('app.demo.copied')),
+    );
+  }
 
-    openOnStackBlitz() {
-        const obj = {
-            schema: this.schema,
-            layout: this.layout,
-            formData: this.formCode || '{}',
-            ui: this.uiCode || '{}'
-        };
-        const componentCode = stackBlitzTpl.replace(/\{(\w+)\}/g, (match: string, offset: any) => obj[offset]);
-        this.codeSrv.openOnStackBlitz(
-            componentCode,
-            this.title,
-            `@delon/form-${this.title}-${this.name}.json`
-        );
-    }
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 
-    onCopy() {
-        copy(this.schema).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
-    }
+  change(value: any) {
+    console.log('formChange', value);
+  }
 
-    submit(value: any) {
-        this.msg.success(JSON.stringify(value));
-    }
-
-    change(value: any) {
-        console.log('formChange', value);
-    }
-
-    error(value: any) {
-        console.log('formError', value);
-    }
+  error(value: any) {
+    console.log('formError', value);
+  }
 }

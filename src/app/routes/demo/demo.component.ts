@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { SFSchema } from '@delon/form';
@@ -6,41 +5,50 @@ import { SFSchema } from '@delon/form';
 @Component({
   selector: 'app-demo',
   template: `<sf [schema]="schema" (formSubmit)="submit($event)"
-  (formChange)="change($event)"></sf>`
+  (formChange)="change($event)"></sf>`,
 })
 export class DemoComponent {
-    schema: SFSchema = {
-        properties: {
-            'datetime': {
-                'type': 'string',
-                'format': 'date-time'
-            },
-            'date': {
-                'type': 'string',
-                'format': 'date'
-            },
-            'date_number': {
-                'type': 'number',
-                ui: { widget: 'date' }
-            },
-            'month': {
-                'type': 'string',
-                'format': 'month'
-            },
-            'week': {
-                'type': 'string',
-                'format': 'week'
-            },
-            'range': {
-                'type': 'string',
-                ui: { widget: 'date', mode: 'range' }
-            }
+  schema: SFSchema = {
+    properties: {
+      display: {
+        type: 'string',
+        default: 'inline',
+        title: '显示',
+        enum: [
+          { label: '默认', value: 'inherit' },
+          { label: '块元素', value: 'block' },
+          { label: '行内块', value: 'inline-block' },
+          { label: '行内', value: 'inline' },
+          { label: 'flex', value: 'flex' },
+        ],
+        ui: {
+          widget: 'select',
         }
-    };
-    constructor(public msg: NzMessageService) { }
-    submit(value: any) { this.msg.success(JSON.stringify(value)); }
+      },
+      flexDirection: {
+        type: 'string',
+        title: '方向',
+        default: 'row',
+        enum: [
+          { label: '默认', value: 'inherit' },
+          { label: '水平', value: 'row' },
+          { label: '垂直', value: 'column' },
+        ],
+        ui: {
+          visibleIf: {
+            display: ['flex'],
+          },
+          widget: 'select',
+        },
+      },
+    },
+  };
+  constructor(public msg: NzMessageService) {}
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 
-    change(value: any) {
-      console.log('change', value);
-    }
+  change(value: any) {
+    console.log('change', value);
+  }
 }
