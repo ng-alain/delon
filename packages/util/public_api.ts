@@ -9,5 +9,6 @@ export { _Validators } from './src/validate/validators';
 
 export * from './src/other/check';
 export * from './src/other/other';
+export * from './src/other/style';
 
 export * from './util.module';

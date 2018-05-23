@@ -7,7 +7,7 @@ import {
   Renderer2,
   SimpleChange,
 } from '@angular/core';
-import { toBoolean } from '@delon/util';
+import { toBoolean, updateHostClass } from '@delon/util';
 
 @Component({
   selector: 'standard-form-row',
@@ -15,7 +15,6 @@ import { toBoolean } from '@delon/util';
   <div *ngIf="title" class="label"><span>{{title}}</span></div>
   <div class="control"><ng-content></ng-content></div>
   `,
-  host: { '[class.ad-standard-form-row]': 'true' },
   preserveWhitespaces: false,
 })
 export class StandardFormRowComponent implements OnChanges {
@@ -53,20 +52,14 @@ export class StandardFormRowComponent implements OnChanges {
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
-  _classMap: string[] = [];
   setClass() {
-    this._classMap.forEach(cls =>
-      this.renderer.removeClass(this.el.nativeElement, cls),
-    );
-
-    this._classMap = [`standard-form-row`];
-    if (this.block) this._classMap.push('block');
-    if (this.grid) this._classMap.push('grid');
-    if (this.last) this._classMap.push('last');
-
-    this._classMap.forEach(v =>
-      this.renderer.addClass(this.el.nativeElement, v),
-    );
+    const classMap = {
+      ['ad-standard-form-row']: true,
+      ['block']: this.block,
+      ['grid']: this.grid,
+      ['last']: this.last,
+    };
+    updateHostClass(this.el.nativeElement, this.renderer, classMap);
   }
 
   ngOnChanges(

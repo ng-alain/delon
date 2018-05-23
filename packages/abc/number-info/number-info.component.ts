@@ -27,7 +27,6 @@ import { toNumber } from '@delon/util';
     </span>
   </div>
   `,
-  host: { '[class.ad-number-info]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -109,14 +108,11 @@ export class NumberInfoComponent implements OnChanges {
     this._classMap.forEach(cls =>
       this.renderer.removeClass(this.el.nativeElement, cls),
     );
-
-    this._classMap = [`number-info`];
+    this._classMap = ['ad-number-info'];
     if (this.theme) this._classMap.push(this.theme);
-
-    this._classMap.forEach(v =>
-      this.renderer.addClass(this.el.nativeElement, v),
+    this._classMap.forEach(cls =>
+      this.renderer.addClass(this.el.nativeElement, cls),
     );
-
     this.cd.detectChanges();
   }
 
