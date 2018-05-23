@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { App, Layout, User } from './interface';
 
-const KEY = 'layout';
+const LAYOUT_KEY = 'layout';
+const USER_KEY = 'user';
+const APP_KEY = 'app';
 
 @Injectable()
 export class SettingsService {
-  app: App = {
-    year: new Date().getFullYear(),
-  };
-
-  user: User = {};
-
+  private _app: App = null;
+  private _user: User = null;
   private _layout: Layout = null;
 
   private get(key: string) {
@@ -28,30 +26,52 @@ export class SettingsService {
           fixed: true,
           collapsed: false,
           boxed: false,
-          theme: 'A',
           lang: null,
         },
-        this.get(KEY),
+        this.get(LAYOUT_KEY),
       );
-      this.set(KEY, this._layout);
+      this.set(LAYOUT_KEY, this._layout);
     }
     return this._layout;
+  }
+
+  get app(): App {
+    if (!this._app) {
+      this._app = Object.assign(
+        <App>{
+          year: new Date().getFullYear(),
+        },
+        this.get(APP_KEY),
+      );
+      this.set(APP_KEY, this._app);
+    }
+    return this._app;
+  }
+
+  get user(): User {
+    if (!this._user) {
+      this._user = Object.assign(<User>{}, this.get(USER_KEY));
+      this.set(USER_KEY, this._user);
+    }
+    return this._user;
   }
 
   setLayout(name: string, value: any): boolean {
     if (typeof this.layout[name] !== 'undefined') {
       this.layout[name] = value;
-      this.set(KEY, this._layout);
+      this.set(LAYOUT_KEY, this._layout);
       return true;
     }
     return false;
   }
 
   setApp(val: App) {
-    this.app = Object.assign(this.app, val);
+    this._app = val;
+    this.set(APP_KEY, val);
   }
 
   setUser(val: User) {
-    this.user = Object.assign(this.user, val);
+    this._user = val;
+    this.set(USER_KEY, val);
   }
 }
