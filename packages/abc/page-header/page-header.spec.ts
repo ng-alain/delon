@@ -50,8 +50,16 @@ describe('abc: page-header', () => {
   }
 
   function isExists(cls: string, stauts: boolean = true) {
-    if (stauts) expect(dl.query(By.css(cls))).not.toBeNull();
-    else expect(dl.query(By.css(cls))).toBeNull();
+    if (stauts) {
+      expect(dl.query(By.css(cls))).not.toBeNull();
+    } else {
+      expect(dl.query(By.css(cls))).toBeNull();
+    }
+  }
+
+  function checkValue(cls: string, value: any) {
+    const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
+    expect(el.textContent.trim()).toBe(value);
   }
 
   describe('[property]', () => {
@@ -192,11 +200,43 @@ describe('abc: page-header', () => {
       });
     });
   });
+
+  describe('[generateion title]', () => {
+    let menuSrv: MenuService;
+    let route: Router;
+    let i18n: AlainI18NService;
+    let cog: AdPageHeaderConfig;
+    beforeEach(() => {
+      createComp();
+      route = injector.get(Router);
+      cog = injector.get(AdPageHeaderConfig);
+      i18n = injector.get(ALAIN_I18N_TOKEN);
+      menuSrv = injector.get(MenuService);
+
+      context.title = undefined;
+      context.autoTitle = true;
+    });
+
+    it('should be auto generate title via menu data', () => {
+      const text = 'asdf';
+      spyOn(menuSrv, 'getPathByUrl').and.returnValue([ { text } ]);
+      fixture.detectChanges();
+      checkValue('.title', text);
+    });
+
+    it('support i18n', () => {
+      const text = 'asdf';
+      const i18n = 'i18n';
+      spyOn(menuSrv, 'getPathByUrl').and.returnValue([ { text, i18n } ]);
+      fixture.detectChanges();
+      checkValue('.title', i18n);
+    });
+  });
 });
 
 @Component({
   template: `
-    <page-header #comp [title]="title"
+    <page-header #comp [title]="title" [autoTitle]="autoTitle"
         [autoBreadcrumb]="autoBreadcrumb" [home]="home" [home_i18n]="home_i18n" [home_link]="home_link">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
@@ -211,6 +251,7 @@ class TestComponent {
   @ViewChild('comp') comp: PageHeaderComponent;
   title = '所属类目';
   autoBreadcrumb: boolean;
+  autoTitle: boolean;
   home: string;
   home_link: string;
   home_i18n: string;

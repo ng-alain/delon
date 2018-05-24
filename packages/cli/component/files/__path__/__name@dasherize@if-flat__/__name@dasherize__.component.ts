@@ -7,9 +7,9 @@ import { _HttpClient } from '@delon/theme';
   <div class="content__title">
     <h1>Page Name</h1>
   </div>
-  <page-header [title]="'Page Name'"></page-header>
+  <page-header></page-header>
   `,<% } else { %>
-  templateUrl: './<%= dasherize(name) %>.component.html',<% } if(inlineStyle) { %><% } else { %>
+  templateUrl: './<%= dasherize(name) %>.component.html',<% } %><% if(!inlineStyle) { %>
   styleUrls: ['./<%= dasherize(name) %>.component.<%= styleext %>']<% } %><% if(!!viewEncapsulation) { %>,
   encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
   changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>

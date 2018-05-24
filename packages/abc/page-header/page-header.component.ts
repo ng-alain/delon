@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toBoolean } from '@delon/util';
-import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
+import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService, Menu } from '@delon/theme';
 import { isEmpty } from '@delon/util';
 
 import { AdPageHeaderConfig } from './page-header.config';
@@ -54,7 +54,17 @@ import { AdPageHeaderConfig } from './page-header.config';
   preserveWhitespaces: false,
 })
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
-  @ViewChild('conTpl') conTpl: ElementRef;
+  @ViewChild('conTpl') private conTpl: ElementRef;
+  private _menus: Menu[];
+
+  private get menus() {
+    if (this._menus) {
+      return this._menus;
+    }
+    this._menus = this.menuSrv.getPathByUrl(this.route.url);
+
+    return this._menus;
+  }
 
   // region fields
 
@@ -78,6 +88,18 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
   private _autoBreadcrumb = true;
 
+  /**
+   * 自动生成标题，以当前路由从主菜单中定位
+   */
+  @Input()
+  get autoTitle() {
+    return this._autoTitle;
+  }
+  set autoTitle(value: any) {
+    this._autoTitle = toBoolean(value);
+  }
+  private _autoTitle = true;
+
   paths: any[] = [];
 
   @ContentChild('breadcrumb') breadcrumb: TemplateRef<any>;
@@ -98,7 +120,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     cog: AdPageHeaderConfig,
     private renderer: Renderer2,
     private route: Router,
-    @Optional() private menuSrv: MenuService,
+    private menuSrv: MenuService,
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
@@ -107,11 +129,9 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   genBreadcrumb() {
-    if (this.breadcrumb || !this.autoBreadcrumb || !this.menuSrv) return;
-    const menus = this.menuSrv.getPathByUrl(this.route.url);
-    if (menus.length <= 0) return;
+    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0) return;
     const paths: any[] = [];
-    menus.forEach(item => {
+    this.menus.forEach(item => {
       if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb)
         return;
       let title = item.text;
@@ -132,6 +152,14 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     this.paths = paths;
   }
 
+  genTitle() {
+    if (typeof this.title !== 'undefined' || !this.autoTitle || this.menus.length <= 0) return ;
+    const item = this.menus[this.menus.length - 1];
+    let title = item.text;
+    if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
+    this.title = title;
+  }
+
   checkContent() {
     if (isEmpty(this.conTpl.nativeElement)) {
       this.renderer.setAttribute(this.conTpl.nativeElement, 'hidden', '');
@@ -141,6 +169,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit() {
+    this.genTitle();
     this.genBreadcrumb();
   }
 
@@ -153,5 +182,8 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   ): void {
     if (changes.autoBreadcrumb && !changes.autoBreadcrumb.firstChange)
       this.genBreadcrumb();
+
+    if (changes.autoTitle && !changes.autoTitle.firstChange)
+      this.genTitle();
   }
 }

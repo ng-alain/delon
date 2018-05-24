@@ -18,4 +18,8 @@ export class AdPageHeaderConfig {
    * 自动生成导航，以当前路由从主菜单中定位
    */
   autoBreadcrumb?: boolean = true;
+  /**
+   * 自动生成标题，以当前路由从主菜单中定位
+   */
+  autoTitle?: boolean = true;
 }

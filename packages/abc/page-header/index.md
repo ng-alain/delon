@@ -13,6 +13,7 @@ config: AdPageHeaderConfig
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 title | 标题名 | `string` | -
+autoTitle | 自动生成标题，以当前路由从主菜单中定位  | `boolean` | `true`
 home | 首页文本，若指定空表示不显示  | `string` | `首页`
 home_link | 首页链接  | `string` | `/`
 home_i18n | 首页链接国际化参数 | `string` | -

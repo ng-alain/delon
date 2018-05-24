@@ -1,4 +1,4 @@
-<page-header [title]="'Page Name'"></page-header>
+<page-header></page-header>
 <nz-card>
   <sf mode="search" [schema]="searchSchema" [formData]="params" (formSubmit)="st.reset($event)" (formReset)="st.reset(params)"></sf>
   <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
