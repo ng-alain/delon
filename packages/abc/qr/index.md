@@ -12,6 +12,10 @@ config: AdQRConfig
 
 默认 `AdQRModule` 并没有强制依赖 `qrious`，因此还需要额外在 `angular.json` 的 `scripts` 节点引用它。
 
+```bash
+npm i --save qrious
+```
+
 ```ts
 "scripts": [
   "../node_modules/qrious/dist/qrious.min.js"

@@ -6,6 +6,31 @@ title:
 type: Other
 ---
 
+### 1.0.4
+
+`2018-5-24`
+
+- 同步 ng-zorro-antd `0.7.1`
+- @delona/theme
+  - 新增 `SettingsService` 对 App、User 存储化
+- @delona/abc
+  - 新增 `desc-list` 当内容为空时显示 `-`
+  - 新增 `page-header` 属性 `autoTitle` 用于根据菜单数据自动获取标题
+  - `simple-table`
+    - 修复 URL 下当总量小于每页数量时应自动隐藏分页器
+    - 修复 `img` 类型若数据不存在不应该显示图像
+    - 修复更多按钮不支持HTML及子菜单不支持 `del` 问题
+    - 修复 `reqMehtod` 拼写错误问题，[@vellengs](https://github.com/vellengs)
+  - 修复 `reuse-tab` 会多次调用 `_onReuseInit` 问题
+  - 性能优化图表系列
+- @delon/form
+  - 增加 `text` 小部件
+  - 修复条件表达式无法加载数据源问题，[#460](https://github.com/cipchk/ng-alain/issues/460)
+  - 第三方小部件 `ueditor` 增加 `delay` 属性
+- @delona/util
+  - 新增 `updateHostClass` 函数，用于更新宿主组件样式 `class`
+- 文档站部分章节校验，[@Eve-1995](https://github.com/Eve-1995)、[@apphost](https://github.com/apphost)
+
 ### 1.0.3
 
 `2018-5-20`

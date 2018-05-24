@@ -52,7 +52,7 @@ if [[ ${BUILD} == true ]]; then
 
     rm -rf ${ROOT_DIR}
     mkdir -p ${ROOT_DIR}
-    rsync -a --exclude "node_modules" ${SCAFFOLD_DIR}/ ${ROOT_DIR}
+    rsync -a --exclude "node_modules" --exclude "package-lock.json" ${SCAFFOLD_DIR}/ ${ROOT_DIR}
 
     cd ${ROOT_DIR}
     updateVersionReferences ${ROOT_DIR}/package.json
@@ -65,10 +65,10 @@ if [[ ${BUILD} == true ]]; then
 
     echo '===== build...'
     $(npm bin)/ng build --prod --build-optimizer --base-href /ng-alain/
-
-    echo '===== copy package-lock.json to source scaffold'
-    cp -f ${ROOT_DIR}/package-lock.json ${SCAFFOLD_DIR}/package-lock.json
 fi
+
+echo '===== copy package-lock.json to source scaffold'
+cp -f ${ROOT_DIR}/package-lock.json ${SCAFFOLD_DIR}/package-lock.json
 
 if [[ ${DEPLOY} == true ]]; then
 
