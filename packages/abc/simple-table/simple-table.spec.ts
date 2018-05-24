@@ -1538,7 +1538,7 @@ describe('abc: simple-table', () => {
   template: `
     <simple-table #st
         [data]="data" [extraParams]="extraParams"
-        [reqMehtod]="reqMehtod" [reqBody]="reqBody" [reqHeaders]="reqHeaders" [reqReName]="reqReName" (reqError)="reqError()"
+        [reqMethod]="reqMethod" [reqBody]="reqBody" [reqHeaders]="reqHeaders" [reqReName]="reqReName" (reqError)="reqError()"
         [resReName]="resReName"
         [columns]="columns"
         [ps]="ps" [pi]="pi" [total]="total"
@@ -1568,7 +1568,7 @@ class TestComponent {
   @ViewChild('st') comp: SimpleTableComponent;
   data: string | any[] | Observable<any[]> = deepCopy(USERS);
   extraParams: any;
-  reqMehtod: string;
+  reqMethod: string;
   reqBody: any;
   reqHeaders: any;
   reqReName: Object;
