@@ -105,7 +105,19 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 当目前路由允许复用且进入新路由时触发。
 
-以 `_` 开头希望未来 Angular 会有相应的钩子用于快速替换。
+以 `_` 开头希望未来 Angular 会有相应的钩子用于快速替换，一个简单的示例：
+
+```ts
+@Component()
+export class DemoComponent {
+  _onReuseInit() {
+    console.log('_onReuseInit');
+  }
+  _onReuseDestroy() {
+    console.log('_onReuseDestroy');
+  }
+}
+```
 
 ## 常见问题
 

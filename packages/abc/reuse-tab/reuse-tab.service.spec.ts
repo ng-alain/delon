@@ -468,7 +468,7 @@ describe('abc: reuse-tab', () => {
       const snapshot = getSnapshot(3);
       // handle
       srv.store(snapshot, handle);
-      srv.retrieve(snapshot);
+      srv.shouldAttach(snapshot);
       expect(handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
     });
   });

@@ -412,6 +412,9 @@ export class ReuseTabService implements OnDestroy {
     const data = this.get(url);
     const ret = !!(data && data._handle);
     this.di('#shouldAttach', ret, url);
+    if (ret && data._handle.componentRef) {
+      this.runHook('_onReuseInit', url, data._handle.componentRef);
+    }
     return ret;
   }
 
@@ -424,9 +427,6 @@ export class ReuseTabService implements OnDestroy {
     const data = this.get(url);
     const ret = (data && data._handle) || null;
     this.di('#retrieve', url, ret);
-    if (ret && ret.componentRef) {
-      this.runHook('_onReuseInit', url, ret.componentRef);
-    }
     return ret;
   }
 
