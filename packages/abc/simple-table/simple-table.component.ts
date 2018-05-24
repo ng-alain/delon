@@ -436,7 +436,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     this.loading = true;
     if (forceRefresh === true) this.pi = 1;
     this.getAjaxData().subscribe(
-      (res: any) => this._subscribeData(res),
+      (res: any) => this.checkPaged().subscribeData(res),
       err => {
         this.loading = false;
         this.reqError.emit(err);
@@ -478,11 +478,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       : this.total <= 0
         ? data.length
         : this.total;
-    this._isPagination =
-      typeof this.showPagination === 'undefined'
-        ? this.ps > 0 && this.total > this.ps
-        : this.showPagination;
-    this._subscribeData(
+    this.checkPaged().subscribeData(
       this._isPagination
         ? data.slice((this.pi - 1) * this.ps, this.pi * this.ps)
         : data,
@@ -535,6 +531,15 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     return false;
   }
 
+  private checkPaged(): this {
+    this._isPagination =
+      typeof this.showPagination === 'undefined'
+        ? this.ps > 0 && this.total > this.ps
+        : this.showPagination;
+
+    return this;
+  }
+
   private processData() {
     if (!this.data) {
       this._isAjax = false;
@@ -562,7 +567,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private _subscribeData(res: any[]) {
+  private subscribeData(res: any[]) {
     if (this.preDataChange) res = this.preDataChange(res);
     this.loading = false;
     this._data = res;
