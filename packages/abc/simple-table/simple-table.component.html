@@ -106,8 +106,11 @@
                     </a>
                     <ul nz-menu>
                       <ng-container *ngFor="let subBtn of btn.children">
-                        <li nz-menu-item *ngIf="btn.iif(i, btn, c)">
-                          <a (click)="btnClick(i, subBtn)" [innerHTML]="btnText(i, subBtn)"></a>
+                        <li nz-menu-item *ngIf="subBtn.iif(i, subBtn, c)">
+                          <nz-popconfirm *ngIf="subBtn._type === 2" [nzTitle]="subBtn.popTitle" (nzOnConfirm)="btnClick(i, subBtn)">
+                            <a nz-popconfirm [innerHTML]="btnText(i, subBtn)"></a>
+                          </nz-popconfirm>
+                          <a *ngIf="subBtn._type !== 2" (click)="btnClick(i, subBtn)" [innerHTML]="btnText(i, subBtn)"></a>
                         </li>
                       </ng-container>
                     </ul>
