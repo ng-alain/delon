@@ -7,8 +7,8 @@ import {
   OnDestroy,
   OnChanges,
   SimpleChanges,
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
+  NgZone,
 } from '@angular/core';
 import { toNumber, toBoolean } from '@delon/util';
 
@@ -79,9 +79,7 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
 
   chart: any;
 
-  constructor(private cd: ChangeDetectorRef) {
-    this.cd.detach();
-  }
+  constructor(private zone: NgZone) {}
 
   install() {
     if (!this.data || (this.data && this.data.length < 1)) return;
@@ -160,10 +158,6 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
       view2.tooltip(false);
     }
     chart.render();
-    setTimeout(() => {
-      chart.forceFit();
-      chart.repaint();
-    });
     this.chart = chart;
   }
 
@@ -175,7 +169,7 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.install();
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install(), 100));
   }
 
   ngOnDestroy(): void {

@@ -11,7 +11,6 @@ import {
   NgZone,
   TemplateRef,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   SimpleChange,
 } from '@angular/core';
 import { toNumber } from '@delon/util';
@@ -53,13 +52,11 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   chart: any;
   initFlag = false;
 
-  constructor(private cd: ChangeDetectorRef) {
-    this.cd.detach();
-  }
+  constructor(private zone: NgZone) {}
 
   ngOnInit(): void {
     this.initFlag = true;
-    this.install();
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install(), 100));
   }
 
   private createData() {
@@ -188,10 +185,6 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
       .active(false);
 
     this.chart = chart;
-    setTimeout(() => {
-      chart.forceFit();
-      chart.repaint();
-    });
     this.draw();
   }
 

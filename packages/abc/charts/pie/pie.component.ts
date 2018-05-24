@@ -17,6 +17,7 @@ import {
   ContentChild,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  AfterViewInit,
 } from '@angular/core';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -45,7 +46,8 @@ import { toNumber, toBoolean } from '@delon/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
+export class G2PieComponent
+  implements OnDestroy, OnChanges, OnInit, AfterViewInit {
   // region: fields
 
   @Input()
@@ -141,7 +143,15 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
   initFlag = false;
   legendData: any[] = [];
 
-  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {}
+  constructor(
+    private el: ElementRef,
+    private cd: ChangeDetectorRef,
+    private zone: NgZone,
+  ) {}
+
+  private runInstall() {
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install(), 100));
+  }
 
   install() {
     let formatColor;
@@ -222,23 +232,21 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
       .select(this.select);
 
     chart.render();
-    setTimeout(() => {
-      chart.forceFit();
-      chart.repaint();
-    });
 
     this.chart = chart;
     if (this.hasLegend) {
-      this.legendData = chart
-        .getAllGeoms()[0]
-        ._attrs.dataArray.map((item: any) => {
-          const origin = item[0]._origin;
-          origin.color = item[0].color;
-          origin.checked = true;
-          origin.percent = (origin.percent * 100).toFixed(2);
-          return origin;
-        });
-      this.cd.detectChanges();
+      this.zone.run(() => {
+        this.legendData = chart
+          .getAllGeoms()[0]
+          ._attrs.dataArray.map((item: any) => {
+            const origin = item[0]._origin;
+            origin.color = item[0].color;
+            origin.checked = true;
+            origin.percent = (origin.percent * 100).toFixed(2);
+            return origin;
+          });
+        this.cd.detectChanges();
+      });
     }
   }
 
@@ -259,13 +267,16 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.initFlag = true;
-    setTimeout(() => this.install(), 100);
     this.installResizeEvent();
   }
 
+  ngAfterViewInit(): void {
+    this.initFlag = true;
+    this.runInstall();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.initFlag) this.install();
+    if (this.initFlag) this.runInstall();
   }
 
   ngOnDestroy(): void {
@@ -296,7 +307,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, OnInit {
     } else if (this.legendBlock) {
       this.legendBlock = false;
     }
-    if (!this.chart) this.install();
+    if (!this.chart) this.runInstall();
   }
 
   // endregion

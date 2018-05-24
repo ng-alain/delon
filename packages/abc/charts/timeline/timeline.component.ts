@@ -13,6 +13,7 @@ import {
   SimpleChange,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  AfterViewInit,
 } from '@angular/core';
 import { toNumber } from '@delon/util';
 
@@ -25,7 +26,7 @@ import { toNumber } from '@delon/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
+export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit, AfterViewInit {
   // region: fields
 
   _title = '';
@@ -35,7 +36,10 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
-    } else this._title = value;
+    } else {
+      this._title = value;
+    }
+    this.cd.detectChanges();
   }
 
   @Input() data: Array<{ x: Date; y1: number; y2: number; [key: string]: any }>;
@@ -77,13 +81,21 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
   initFlag = false;
   slider: any;
 
-  constructor(private cd: ChangeDetectorRef) {
-    cd.detach();
+  constructor(private cd: ChangeDetectorRef, private zone: NgZone) {
   }
 
   ngOnInit(): void {
     this.initFlag = true;
-    this.install();
+  }
+
+  ngAfterViewInit(): void {
+    this.runInstall();
+  }
+
+  private runInstall() {
+    this.zone.runOutsideAngular(() => {
+      setTimeout(() => this.install(), 100);
+    });
   }
 
   install() {
@@ -170,10 +182,6 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
       .color(this.colorMap.y2)
       .size(this.borderWidth);
     chart.render();
-    setTimeout(() => {
-      chart.forceFit();
-      chart.repaint();
-    }, 60);
 
     const sliderPadding = Object.assign([], this.padding);
     sliderPadding[0] = 0;
@@ -202,10 +210,6 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
       },
     });
     slider.render();
-    setTimeout(() => {
-      slider.forceFit();
-      slider.repaint();
-    }, 60);
 
     this.chart = chart;
     this.slider = slider;
@@ -219,7 +223,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit {
   ngOnChanges(
     changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
   ): void {
-    if (this.initFlag) this.install();
+    if (this.initFlag) this.runInstall();
   }
 
   ngOnDestroy(): void {

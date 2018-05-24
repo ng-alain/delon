@@ -99,7 +99,11 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
   initFlag = false;
   legendData: any[] = [];
 
-  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {}
+  constructor(
+    private el: ElementRef,
+    private cd: ChangeDetectorRef,
+    private zone: NgZone,
+  ) {}
 
   handleLegendClick(i: number) {
     this.legendData[i].checked = !this.legendData[i].checked;
@@ -112,6 +116,10 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
       );
       this.chart.repaint();
     }
+  }
+
+  private runInstall() {
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install(), 100));
   }
 
   install() {
@@ -191,28 +199,26 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
       .size(3);
 
     chart.render();
-    setTimeout(() => {
-      chart.forceFit();
-      chart.repaint();
-    });
 
     this.chart = chart;
 
     if (this.hasLegend) {
-      this.legendData = chart
-        .getAllGeoms()[0]
-        ._attrs.dataArray.map((item: any) => {
-          const origin = item[0]._origin;
-          const result = {
-            name: origin.name,
-            color: item[0].color,
-            checked: true,
-            value: item.reduce((p, n) => p + n._origin.value, 0),
-          };
+      this.zone.run(() => {
+        this.legendData = chart
+          .getAllGeoms()[0]
+          ._attrs.dataArray.map((item: any) => {
+            const origin = item[0]._origin;
+            const result = {
+              name: origin.name,
+              color: item[0].color,
+              checked: true,
+              value: item.reduce((p, n) => p + n._origin.value, 0),
+            };
 
-          return result;
-        });
-      this.cd.detectChanges();
+            return result;
+          });
+        this.cd.detectChanges();
+      });
     }
   }
 
@@ -225,13 +231,13 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
 
   ngOnInit(): void {
     this.initFlag = true;
-    this.install();
+    this.runInstall();
   }
 
   ngOnChanges(
     changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
   ): void {
-    if (this.initFlag) this.install();
+    if (this.initFlag) this.runInstall();
   }
 
   ngOnDestroy(): void {

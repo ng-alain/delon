@@ -57,7 +57,11 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   chart: any;
   initFlag = false;
 
-  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {}
+  constructor(
+    private el: ElementRef,
+    private cd: ChangeDetectorRef,
+    private zone: NgZone,
+  ) {}
 
   private initTagCloud() {
     // 给point注册一个词云的shape
@@ -143,10 +147,6 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       .tooltip('value*category');
 
     chart.render();
-    setTimeout(() => {
-      chart.forceFit();
-      chart.repaint();
-    });
 
     this.chart = chart;
   }
@@ -160,14 +160,22 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   ngOnInit(): void {
     this.initFlag = true;
-    this.initTagCloud();
-    this.renderChart();
+    this.zone.runOutsideAngular(() =>
+      setTimeout(() => {
+        this.initTagCloud();
+        this.renderChart();
+      }, 100),
+    );
   }
 
   ngOnChanges(
     changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
   ): void {
-    if (this.initFlag) this.renderChart();
+    if (this.initFlag) {
+      this.zone.runOutsideAngular(() =>
+        setTimeout(() => this.renderChart(), 100),
+      );
+    }
   }
 
   ngOnDestroy(): void {

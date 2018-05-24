@@ -71,8 +71,14 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
 
   chart: any;
 
-  constructor(private el: ElementRef, private cd: ChangeDetectorRef) {
-    this.cd.detach();
+  constructor(
+    private el: ElementRef,
+    private cd: ChangeDetectorRef,
+    private zone: NgZone,
+  ) {}
+
+  runInstall() {
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install(), 100));
   }
 
   install() {
@@ -122,10 +128,6 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
         };
       });
     chart.render();
-    setTimeout(() => {
-      chart.forceFit();
-      chart.repaint();
-    }, 30);
     this.chart = chart;
   }
 
@@ -172,15 +174,15 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
     if (canvasWidth <= minWidth) {
       if (!this.autoHideXLabels) {
         this.autoHideXLabels = true;
-        this.install();
+        this.runInstall();
         return;
       }
     } else if (this.autoHideXLabels) {
       this.autoHideXLabels = false;
-      this.install();
+      this.runInstall();
       return;
     }
-    if (!this.chart) this.install();
+    if (!this.chart) this.runInstall();
   }
 
   // endregion

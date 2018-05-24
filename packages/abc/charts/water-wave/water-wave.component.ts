@@ -45,7 +45,9 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
-    } else this._title = value;
+    } else {
+      this._title = value;
+    }
   }
 
   @Input() color = '#1890FF';
@@ -79,6 +81,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     private el: ElementRef,
     private renderer: Renderer2,
     private cd: ChangeDetectorRef,
+    private zone: NgZone,
   ) {}
 
   renderChart() {
@@ -231,9 +234,11 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   ngOnInit(): void {
     this.initFlag = true;
     this.cd.detectChanges();
-    this.updateRadio(1);
-    this.installResizeEvent();
-    setTimeout(() => this.resize(), 130);
+    this.zone.runOutsideAngular(() => {
+      this.updateRadio(1);
+      this.installResizeEvent();
+      setTimeout(() => this.resize(), 130);
+    });
   }
 
   ngOnChanges(
@@ -241,7 +246,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   ): void {
     if (this.initFlag) {
       this.cd.detectChanges();
-      this.renderChart();
+      this.zone.runOutsideAngular(() => this.renderChart());
     }
   }
 
