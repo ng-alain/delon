@@ -16,7 +16,7 @@ config: AdSimpleTableConfig
 
 指的是通过一个 URL 字符串来获取数据。
 
-- 通过 `extraParams`、`reqMehtod` 等参数解决请求数据格式问题
+- 通过 `extraParams`、`reqMethod` 等参数解决请求数据格式问题
 - 通过 `resReName` 重置数据 `key` 而无须担心后端数据格式是否满足 `simpel-table` 需求
 - 通过 `preDataChange` 可以对表格渲染前对数据进一步优化
 
@@ -38,7 +38,7 @@ config: AdSimpleTableConfig
 columns | 列描述 | `SimpleTableColumn[]` | -
 data | 数据源 | `string, any[], Observable<any[]>` | -
 extraParams | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | -
-reqMehtod | 请求方法 | `string` | `GET`
+reqMethod | 请求方法 | `string` | `GET`
 reqHeader | 请求 `header` | `any` | -
 reqBody | 请求 `body` | `any` | -
 reqError | 请求异常时回调 | `EventEmitter` | -
