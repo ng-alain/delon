@@ -20,7 +20,7 @@
     "code generation",
     "schematics"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "@angular-devkit/core": "^0.6.1",
     "@angular-devkit/schematics": "^0.6.1",
     "@schematics/angular": "^0.6.1"
@@ -37,7 +37,6 @@
       "@delon/cache",
       "@delon/mock",
       "@delon/form",
-      "ng-zorro-antd",
       "ng-alain"
     ]
   },
