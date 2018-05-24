@@ -310,6 +310,13 @@ describe('abc: simple-table', () => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
             page.newColumn(columns as any).expectCell('', 1, 1, 'img');
           });
+          it('should not render img when is empty data', () => {
+            const columns = [{ title: '', index: 'img', type: 'img' }];
+            context.data = [ { img: MOCKIMG }, { img: '' } ];
+            page.newColumn(columns as any)
+                .expectCell('', 1, 1, 'img')
+                .expectCell(null, 2, 1, 'img');
+          });
         });
         describe('with currency', () => {
           it(`should be render currency`, () => {

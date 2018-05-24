@@ -506,7 +506,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     let ret = value;
     switch (col.type) {
       case 'img':
-        ret = `<img src="${value}" class="img">`;
+        ret = value ? `<img src="${value}" class="img">` : '';
         break;
       case 'number':
         ret = this.number.transform(value, col.numberDigits);
