@@ -80,7 +80,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
    */
   @Input() extraParams: any;
   /** 请求方法 */
-  @Input() reqMehtod: string = 'GET';
+  @Input() reqMethod: string = 'GET';
   /** 请求体 `body` */
   @Input() reqBody: any;
   /** 请求体 `Header` */
@@ -367,7 +367,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       this.getReqFilterMap(),
     );
     return this.http
-      .request(this.reqMehtod || 'GET', url || this._url, {
+      .request(this.reqMethod || 'GET', url || this._url, {
         params,
         body: this.reqBody,
         headers: this.reqHeaders,
