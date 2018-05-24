@@ -47,6 +47,7 @@ import { RateWidget } from './widgets/rate/rate.widget';
 import { AutoCompleteWidget } from './widgets/autocomplete/autocomplete.widget';
 import { CascaderWidget } from './widgets/cascader/cascader.widget';
 import { MentionWidget } from './widgets/mention/mention.widget';
+import { TextWidget } from './widgets/text/text.widget';
 
 const WIDGETS = [
   ObjectWidget,
@@ -69,6 +70,7 @@ const WIDGETS = [
   CascaderWidget,
   MentionWidget,
   CustomWidget,
+  TextWidget,
 ];
 
 // endregion

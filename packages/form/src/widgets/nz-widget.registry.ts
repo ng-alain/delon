@@ -20,6 +20,7 @@ import { RateWidget } from './rate/rate.widget';
 import { AutoCompleteWidget } from './autocomplete/autocomplete.widget';
 import { CascaderWidget } from './cascader/cascader.widget';
 import { MentionWidget } from './mention/mention.widget';
+import { TextWidget } from './text/text.widget';
 
 export class NzWidgetRegistry extends WidgetRegistry {
   constructor() {
@@ -28,6 +29,7 @@ export class NzWidgetRegistry extends WidgetRegistry {
     this.register('object', ObjectWidget);
     this.register('array', ArrayWidget);
 
+    this.register('text', TextWidget);
     this.register('string', StringWidget);
     this.register('number', NumberWidget);
     this.register('integer', NumberWidget);

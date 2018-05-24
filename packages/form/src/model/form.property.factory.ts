@@ -52,8 +52,9 @@ export class FormPropertyFactory {
       if (
         propertyId &&
         ((parent!.schema.required || []) as string[]).indexOf(propertyId) !== -1
-      )
+      ) {
         ui._required = true;
+      }
       // fix title
       if (schema.title == null) schema.title = propertyId;
       // fix date
