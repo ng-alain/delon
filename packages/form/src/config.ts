@@ -1,4 +1,4 @@
-import { SFRenderSchema } from './schema/ui';
+import { SFRenderSchema, SFUISchemaItem } from './schema/ui';
 import { ERRORSDEFAULT } from './errors';
 import { SFButton } from './interface';
 
@@ -36,6 +36,10 @@ export class DelonFormConfig {
    * 自定义通用错误信息
    */
   errors?: { [key: string]: string } = ERRORSDEFAULT;
+  /**
+   * 默认全局布局
+   */
+  ui?: SFUISchemaItem;
   /**
    * 元素组件大小，用于 `nzSize` 值
    */

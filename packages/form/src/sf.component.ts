@@ -306,6 +306,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         liveValidate: this.liveValidate,
         firstVisual: this.firstVisual,
       },
+      this.options.ui,
       _schema.ui,
       this.ui['*'],
     );

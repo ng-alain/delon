@@ -71,6 +71,7 @@ autocomplete | 指定表单 `autocomplete` 值 | `on,off` | `null`
 firstVisual | 是否立即呈现错误视觉 | `boolean` | `false`
 onlyVisual | 是否只展示错误视觉不显示错误文本 | `boolean` | `false`
 errors | 自定义通用错误信息 | `{ [ key: string ]: string }` | `ERRORSDEFAULT`
+ui | 默认全局布局 | `SFUISchemaItem` | -
 size | 元素组件大小，用于 `nzSize` 值 | `default,large,small` | -
 button | 按钮风格 | `SFButton` | `{submit:'提交',submit_type:'primary',reset:'重置',reset_type:'default'}`
 uiDateStringFormat | date小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `YYYY-MM-DD HH:mm:ss`

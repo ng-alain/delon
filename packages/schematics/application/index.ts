@@ -82,7 +82,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       ]);
     }
     const devs = [
-      `ng-alain@^1.0.1`,
+      // `ng-alain@^1.0.1`,
       // ISSUES: [#10430](https://github.com/angular/angular-cli/issues/10430)
       `less@~2.7.0`,
     ];
