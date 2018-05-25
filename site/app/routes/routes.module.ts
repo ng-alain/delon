@@ -28,7 +28,8 @@ const routes = [
             { path: 'mock', loadChildren: './gen/mock/mock.module#MockModule' },
             { path: 'util', loadChildren: './gen/util/util.module#UtilModule' },
             { path: 'form', loadChildren: './gen/form/form.module#FormModule' },
-            { path: 'form-pages', loadChildren: './form-pages/form-pages.module#FormPagesModule' }
+            { path: 'form-pages', loadChildren: './form-pages/form-pages.module#FormPagesModule' },
+            { path: 'cli', loadChildren: './gen/cli/cli.module#CliModule' },
             // endregion
         ]
     },

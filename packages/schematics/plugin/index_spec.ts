@@ -10,11 +10,9 @@ import { createAlainApp } from '../utils/testing';
 describe('NgAlainSchematic: plugin', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
-  beforeEach(() => ({ runner, tree } = createAlainApp()));
 
   describe(`[g2]`, () => {
-    beforeEach(() =>
-      runner.runSchematic('plugin', { name: 'g2', type: 'add' }, tree));
+    beforeEach(() => ({ runner, tree } = createAlainApp({ g2: true })));
 
     describe('when add', () => {
       it(`should add dependencies`, () => {
@@ -41,9 +39,60 @@ describe('NgAlainSchematic: plugin', () => {
 
       it(`should add scripts`, () => {
         const json = JSON.parse(tree.readContent('angular.json'));
-        expect(
-          json.projects.foo.architect.build.options.scripts.length,
-        ).toBe(0);
+        expect(json.projects.foo.architect.build.options.scripts.length).toBe(
+          0,
+        );
+      });
+    });
+  });
+
+  describe(`[codeStyle]`, () => {
+    beforeEach(() => ({ runner, tree } = createAlainApp({ codeStyle: true })));
+
+    describe('when add', () => {
+      it(`should add precommit`, () => {
+        const json = JSON.parse(tree.readContent('package.json'));
+        expect(json.scripts.precommit).not.toBeUndefined();
+      });
+    });
+
+    describe('when remove', () => {
+      beforeEach(() =>
+        runner.runSchematic(
+          'plugin',
+          { name: 'codeStyle', type: 'remove' },
+          tree,
+        ));
+
+      it(`should remove precommit`, () => {
+        const json = JSON.parse(tree.readContent('package.json'));
+        expect(json.scripts.precommit).toBeUndefined();
+      });
+    });
+  });
+
+  describe(`[npm]`, () => {
+    const npmrc = '/.npmrc';
+
+    beforeEach(() => ({ runner, tree } = createAlainApp({ npm: true })));
+
+    describe('when add', () => {
+      it(`should add .npmrc`, () => {
+        expect(tree.exists(npmrc)).toBe(true);
+        expect(tree.readContent(npmrc)).toContain('taobao.org');
+      });
+    });
+
+    describe('when remove', () => {
+      beforeEach(() =>
+        runner.runSchematic(
+          'plugin',
+          { name: 'npm', type: 'remove' },
+          tree,
+        ));
+
+      it(`should remove .npmrc`, () => {
+        expect(tree.exists(npmrc)).toBe(false);
       });
     });
   });

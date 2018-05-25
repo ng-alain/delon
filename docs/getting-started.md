@@ -27,7 +27,7 @@ ng add ng-alain
 ng serve
 ```
 
-请参考[命令行工具](/docs/cli)了解更多细节。
+请参考[命令行工具](/cli)了解更多细节，若遇到问题请阅读 [常见问题](/cli/faq)。
 
 ### 直接 clone git 仓库
 
@@ -74,11 +74,9 @@ ng-alain 是一个标准的 Angular CLI 构建的项目，因此你会非常熟�
 
 ```bash
 $ npm install
-// 或
-$ yarn
 ```
 
-> 注：请勿使用 `cnpm` 安装依赖包，因为 ng-alain 脚手架需要依赖 `node_modules` 路径，而 `cnpm` 采用软链接会导致破坏文件夹名称，导致很难获取相应的样式文件。
+> 遇到问题请阅读 [常见问题](/cli/faq)
 
 如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速。
 

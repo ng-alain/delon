@@ -6,7 +6,7 @@
   "properties": {
     "codeStyle": {
       "type": "boolean",
-      "default": true,
+      "default": false,
       "description": "Do not add code styles (e.g., --codeStyle)"
     },
     "form": {
@@ -28,6 +28,11 @@
       "type": "boolean",
       "description": "Generates g2.",
       "default": false
+    },
+    "npm": {
+      "type": "boolean",
+      "description": "Generates .npmrc proxy to taobao.",
+      "default": true
     }
   }
 }

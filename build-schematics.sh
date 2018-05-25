@@ -50,23 +50,22 @@ copyFiles() {
   mkdir -p ${2}
   readonly paths=(
     # code styles
-    "${1}.prettierignore|${2}application/files/__dot__prettierignore"
-    "${1}.prettierrc|${2}application/files/__dot__prettierrc"
-    "${1}.stylelintrc|${2}application/files/__dot__stylelintrc"
+    "${1}.prettierignore|${2}application/files/root/__dot__prettierignore"
+    "${1}.prettierrc|${2}application/files/root/__dot__prettierrc"
+    "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
     # ci
-    "${1}.vscode|${2}application/files/__dot__vscode"
-    "${1}_nginx|${2}application/files/_nginx"
-    "${1}.dockerignore|${2}application/files/__dot__dockerignore"
-    "${1}docker-compose.debug.yml|${2}application/files"
-    "${1}docker-compose.yml|${2}application/files"
-    "${1}Dockerfile|${2}application/files"
-    "${1}src/testing|${2}application/files/src/"
+    "${1}.vscode|${2}application/files/root/__dot__vscode"
+    "${1}_nginx|${2}application/files/root/_nginx"
+    "${1}.dockerignore|${2}application/files/root/__dot__dockerignore"
+    "${1}docker-compose.debug.yml|${2}application/files/root"
+    "${1}docker-compose.yml|${2}application/files/root"
+    "${1}Dockerfile|${2}application/files/root"
     # LICENSE
-    "${1}LICENSE|${2}application/files"
-    "${1}README.md|${2}application/files"
-    "${1}README-zh_CN.md|${2}application/files"
+    "${1}LICENSE|${2}application/files/root"
+    "${1}README.md|${2}application/files/root"
+    "${1}README-zh_CN.md|${2}application/files/root"
     # src
-    "${1}src/typings.d.ts|${2}application/files/src/"
+    # "${1}src/typings.d.ts|${2}application/files/src/"
     "${1}src/environments|${2}application/files/src/"
     "${1}src/styles|${2}application/files/src/"
     "${1}src/main.ts|${2}application/files/src/"

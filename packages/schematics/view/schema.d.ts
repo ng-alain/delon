@@ -60,6 +60,10 @@ export interface Schema {
    */
   export?: boolean;
   /**
+   * Specifies relative path.
+   */
+  target?: string;
+  /**
    * Specifies using modal mode.
    */
   modal?: boolean;

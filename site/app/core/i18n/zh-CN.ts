@@ -14,6 +14,7 @@ export const ZHCN = {
     'app.header.menu.util': '@delon/util-工具集',
     'app.header.menu.form': '@delon/form-动态表单',
     'app.header.menu.form.validator': '在线校验器',
+    'app.header.menu.cli': 'ng-alain 命令行工具',
     'app.header.menu.tool': '工具',
     'app.header.menu.theme': '自定义主题',
     'app.header.menu.upgrade': 'HTML模板升级工具',

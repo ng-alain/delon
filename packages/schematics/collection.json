@@ -16,6 +16,11 @@
       "schema": "./plugin/schema.json",
       "description": "Enable or disable ng-alain plugin."
     },
+    "module": {
+      "factory": "./module",
+      "schema": "./module/schema.json",
+      "description": "Create a ng alain module."
+    },
     "list": {
       "factory": "./list",
       "schema": "./list/schema.json",

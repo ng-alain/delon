@@ -21,8 +21,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from '@core/i18n/i18n.service';
 
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
+// 加载i18n语言文件
+export function I18nHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, `assets/tmp/i18n/`, '.json');
 }<% } %>
 <% if (form) { %>
@@ -50,7 +50,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
+        useFactory: I18nHttpLoaderFactory,
         deps: [HttpClient]
       }
     })<% } %><% if (form) { %>,

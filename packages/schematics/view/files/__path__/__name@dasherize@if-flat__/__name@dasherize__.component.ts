@@ -31,12 +31,12 @@ import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }
         </desc-list>
       </nz-card><% } %>
     `,<% } else { %>
-    templateUrl: './<%= dasherize(name) %>.component.html',<% } if(inlineStyle) { %><% } else { %>
+    templateUrl: './<%= dasherize(name) %>.component.html',<% } if(!inlineStyle) { %><% } else { %>
     styleUrls: ['./<%= dasherize(name) %>.component.<%= styleext %>']<% } %><% if(!!viewEncapsulation) { %>,
     encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
     changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
   })
-  export class <%= classify(name) %>Component implements OnInit {
+  export class <%= componentName %> implements OnInit {
     <% if(modal) { %>record: any = {};<% } else { %>
     id = this.route.snapshot.params.id;<% } %>
     i: any;

@@ -36,23 +36,26 @@ import { addHeadStyle, addHtmlToBody } from '../utils/html';
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
 let project: Project;
 let projectPrefix = 'app';
-let sourceRoot = 'src';
+let appRoot = '/';
+let appSourceRoot = '/src';
 
 /** Remove files to be overwrite */
 function removeOrginalFiles() {
   return (host: Tree) => {
     [
-      'README.md',
-      `${sourceRoot}/main.ts`,
-      `${sourceRoot}/environments/environment.prod.ts`,
-      `${sourceRoot}/environments/environment.ts`,
-      `${sourceRoot}/styles.less`,
-      `${sourceRoot}/app/app.module.ts`,
-      `${sourceRoot}/app/app.component.spec.ts`,
-      `${sourceRoot}/app/app.component.ts`,
-      `${sourceRoot}/app/app.component.html`,
-      `${sourceRoot}/app/app.component.less`,
-    ].filter(p => host.exists(p)).forEach(p => host.delete(p));
+      `${appRoot}/README.md`,
+      `${appSourceRoot}/main.ts`,
+      `${appSourceRoot}/environments/environment.prod.ts`,
+      `${appSourceRoot}/environments/environment.ts`,
+      `${appSourceRoot}/styles.less`,
+      `${appSourceRoot}/app/app.module.ts`,
+      `${appSourceRoot}/app/app.component.spec.ts`,
+      `${appSourceRoot}/app/app.component.ts`,
+      `${appSourceRoot}/app/app.component.html`,
+      `${appSourceRoot}/app/app.component.less`,
+    ]
+      .filter(p => host.exists(p))
+      .forEach(p => host.delete(p));
   };
 }
 
@@ -65,7 +68,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       // ng-zorro-antd need
       `rxjs-compat@^6.1.0`,
       'screenfull@^3.3.1',
-      'ajv@^6.4.0'
+      'ajv@^6.4.0',
     ]);
     // @delon/*
     addPackageToPackageJson(
@@ -111,14 +114,14 @@ function addPathsToTsConfig() {
     [
       {
         path: 'tsconfig.json',
-        baseUrl: `${sourceRoot}/`,
+        baseUrl: `${appSourceRoot}/`,
       },
       {
-        path: `${sourceRoot}/tsconfig.app.json`,
+        path: `${appSourceRoot}/tsconfig.app.json`,
         baseUrl: './',
       },
       {
-        path: `${sourceRoot}/tsconfig.spec.json`,
+        path: `${appSourceRoot}/tsconfig.spec.json`,
         baseUrl: './',
       },
     ].forEach(item => {
@@ -146,9 +149,10 @@ function addCodeStylesToPackageJson() {
   return (host: Tree, context: SchematicContext) => {
     const json = getPackage(host);
     if (json == null) return host;
-    json.scripts['precommit'] = `npm run lint-staged`;
     json.scripts['lint'] = `npm run lint:ts && npm run lint:style`;
-    json.scripts['lint:ts'] = `tslint -p src/tsconfig.app.json -c tslint.json 'src/**/*.ts'`;
+    json.scripts[
+      'lint:ts'
+    ] = `tslint -p src/tsconfig.app.json -c tslint.json 'src/**/*.ts'`;
     json.scripts['lint:style'] = `stylelint \"{src}/**/*.less\" --syntax less`;
     json.scripts['lint-staged'] = `lint-staged`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
@@ -179,7 +183,7 @@ function addCodeStylesToPackageJson() {
     ];
     overwriteJSON(host, 'tslint.json', tsLint);
     // app tslint
-    const sourceTslint = `${sourceRoot}/tslint.json`;
+    const sourceTslint = `${appSourceRoot}/tslint.json`;
     if (host.exists(sourceTslint)) {
       const appTsLint = getJSON(host, sourceTslint, 'rules');
       appTsLint.rules['directive-selector'] = [
@@ -201,6 +205,7 @@ function addCodeStylesToPackageJson() {
       `tslint-config-prettier@^1.12.0`,
       `tslint-language-service@^0.9.9`,
       `editorconfig-tools@^0.1.1`,
+      `lint-staged@^7.1.2`,
       `husky@^0.14.3`,
       `prettier@^1.12.1`,
       `prettier-stylelint@^0.4.2`,
@@ -220,6 +225,20 @@ function addSchematics() {
       routing: true,
       spec: false,
     };
+    json.schematics['ng-alain:list'] = {
+      spec: false,
+    };
+    json.schematics['ng-alain:edit'] = {
+      spec: false,
+      modal: true,
+    };
+    json.schematics['ng-alain:view'] = {
+      spec: false,
+      modal: true,
+    };
+    json.schematics['ng-alain:curd'] = {
+      spec: false,
+    };
     json.schematics['@schematics/angular:module'] = {
       routing: true,
       spec: false,
@@ -228,7 +247,7 @@ function addSchematics() {
       spec: false,
       flat: false,
       inlineStyle: true,
-      inlineTemplate: false
+      inlineTemplate: false,
     };
     json.schematics['@schematics/angular:directive'] = {
       spec: false,
@@ -255,7 +274,10 @@ function addStyle(options: ApplicationOptions) {
     // add styles
     addFiles(
       host,
-      [`${sourceRoot}/styles/index.less`, `${sourceRoot}/styles/theme.less`],
+      [
+        `${appSourceRoot}/styles/index.less`,
+        `${appSourceRoot}/styles/theme.less`,
+      ],
       overwriteDataFileRoot,
     );
 
@@ -264,19 +286,36 @@ function addStyle(options: ApplicationOptions) {
 }
 
 function addFilesToRoot(options: ApplicationOptions) {
-  return mergeWith(
-    apply(url('./files'), [
-      options.i18n ? noop() : filter(p => p.indexOf('i18n') === -1),
-      options.form ? noop() : filter(p => p.indexOf('json-schema') === -1),
-      template({
-        utils: strings,
-        ...options,
-        dot: '.',
-        VERSION,
-        ZORROVERSION,
-      }),
-    ]),
-  );
+  return chain([
+    mergeWith(
+      apply(url('./files/src'), [
+        options.i18n ? noop() : filter(p => p.indexOf('i18n') === -1),
+        options.form ? noop() : filter(p => p.indexOf('json-schema') === -1),
+        template({
+          utils: strings,
+          ...options,
+          dot: '.',
+          VERSION,
+          ZORROVERSION,
+        }),
+        move(appSourceRoot),
+      ]),
+    ),
+    mergeWith(
+      apply(url('./files/root'), [
+        options.i18n ? noop() : filter(p => p.indexOf('i18n') === -1),
+        options.form ? noop() : filter(p => p.indexOf('json-schema') === -1),
+        template({
+          utils: strings,
+          ...options,
+          dot: '.',
+          VERSION,
+          ZORROVERSION,
+        }),
+        move('/'),
+      ]),
+    ),
+  ]);
 }
 
 function installPackages() {
@@ -289,8 +328,9 @@ export default function(options: ApplicationOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     const workspace = getWorkspace(host);
     project = getProjectFromWorkspace(workspace);
+    appRoot = (project as any).root;
+    appSourceRoot = (project as any).sourceRoot;
     projectPrefix = (project as any).prefix || 'app';
-    sourceRoot = (project as any).sourceRoot || 'src';
 
     return chain([
       // @delon/* dependencies
@@ -299,7 +339,7 @@ export default function(options: ApplicationOptions): Rule {
       addRunScriptToPackageJson(),
       addPathsToTsConfig(),
       // code style
-      options.codeStyle ? addCodeStylesToPackageJson() : noop(),
+      addCodeStylesToPackageJson(),
       addSchematics(),
       // files
       removeOrginalFiles(),

@@ -7,10 +7,11 @@ import { META as CacheMeta } from '../routes/gen/cache/meta';
 import { META as MockMeta } from '../routes/gen/mock/meta';
 import { META as UtilMeta } from '../routes/gen/util/meta';
 import { META as FormMeta } from '../routes/gen/form/meta';
+import { META as CliMeta } from '../routes/gen/cli/meta';
 import { I18NService } from '../core/i18n/service';
 import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
 
-const FULLMETAS: Meta[] = [DocsMeta, ComponentsMeta, AuthMeta, ACLMeta, CacheMeta, MockMeta, UtilMeta, FormMeta];
+const FULLMETAS: Meta[] = [DocsMeta, ComponentsMeta, AuthMeta, ACLMeta, CacheMeta, MockMeta, UtilMeta, FormMeta, CliMeta];
 
 @Injectable()
 export class MetaService {

@@ -1,9 +1,7 @@
 import { Rule, chain } from '@angular-devkit/schematics';
 import { Schema } from './schema';
-import { buildComponent } from '../utils/component';
+import { buildAlain } from '../utils/alain';
 
 export default function(options: Schema): Rule {
-  return chain([
-    buildComponent({...options})
-  ]);
+  return chain([buildAlain(options)]);
 }

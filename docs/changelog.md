@@ -80,7 +80,7 @@ type: Other
 `2018-5-16`
 
 - 同步 `0.7.0`
-- 支持 `ng add ng-alain` 构建脚手架，[CLI](/docs/cli)
+- 支持 `ng add ng-alain` 构建脚手架，[CLI](/cli)
 
 **据 `1.0.1-beta.2@next` 的更新细节：**
 
@@ -484,7 +484,7 @@ type: Other
   - 修复 `tryGet` 无法返回 `Observalbe` 类型，[#15](https://github.com/cipchk/delon/issues/15)
   - 支持泛型，[#14](https://github.com/cipchk/delon/issues/14)
 - @delon/cli
-  - 基于 Angular Cli 向上构建的针对 ng-alain 脚手架的命令行工具，[Document](/docs/cli)
+  - 基于 Angular Cli 向上构建的针对 ng-alain 脚手架的命令行工具，[Document](/cli)
 
 ### 0.5.0
 

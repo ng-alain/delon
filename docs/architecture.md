@@ -46,6 +46,10 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 
 [日常工具集](/util)。
 
+**CLI Schematics**
+
+[命令行工具](/cli)。
+
 ## 文档和反馈
 
 你可以在 [ng-alain.com](http://ng-alain.com) 找到所有的文档。
@@ -56,7 +60,7 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 
 | package name | version | next version |
 | ------------ |:-----:|:----------:|
-| ng-alain | [![NPM version](https://img.shields.io/npm/v/ng-alain.svg)](https://www.npmjs.com/package/ng-alain) | [![NPM version](https://img.shields.io/npm/v/ng-alain/next.svg)](https://www.npmjs.com/package/ng-alain) |
+| ng-alain [Document](/cli) | [![NPM version](https://img.shields.io/npm/v/ng-alain.svg)](https://www.npmjs.com/package/ng-alain) | [![NPM version](https://img.shields.io/npm/v/ng-alain/next.svg)](https://www.npmjs.com/package/ng-alain) |
 | @delon/theme [Document](/docs/theme) | [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme) | [![NPM version](https://img.shields.io/npm/v/@delon/theme/next.svg)](https://www.npmjs.com/package/@delon/theme) |
 | @delon/abc [Document](/components) | [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc) | [![NPM version](https://img.shields.io/npm/v/@delon/abc/next.svg)](https://www.npmjs.com/package/@delon/abc) |
 | @delon/form [Document](/form) | [![NPM version](https://img.shields.io/npm/v/@delon/form.svg)](https://www.npmjs.com/package/@delon/form) | [![NPM version](https://img.shields.io/npm/v/@delon/form/next.svg)](https://www.npmjs.com/package/@delon/form) |

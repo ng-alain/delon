@@ -4,8 +4,15 @@ import { Schema as CURDOptions } from './schema';
 export default function(options: CURDOptions): Rule {
   const rules: Rule[] = [];
 
-  ['list', 'edit', 'view'].forEach(name =>
-    rules.push(schematic(name, Object.assign({}, options, { name }))),
+  const name = options.name || 'list';
+  delete options.name;
+
+  [
+    { name: 'list', options: { name, modal: false } },
+    { name: 'edit', options: { name: 'edit', modal: true, target: name } },
+    { name: 'view', options: { name: 'view', modal: true, target: name } },
+  ].forEach(item =>
+    rules.push(schematic(item.name, Object.assign({}, options, item.options))),
   );
 
   return chain(rules);

@@ -293,5 +293,34 @@ module.exports = {
         },
       ],
     },
+    {
+      name: 'cli',
+      github: 'https://github.com/cipchk/delon',
+      dist: './site/app/routes/gen/cli',
+      types: [
+        {
+          'zh-CN': '文档',
+          'en-US': 'Documents',
+        },
+      ],
+      module: 'ng-alain',
+      defaultRoute: 'getting-started',
+      extraRouteMeta: [
+      ],
+      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
+      template: {
+        meta: './site/templates/meta.ts',
+        module: './site/templates/module.ts',
+      },
+      dir: [
+        {
+          src: ['./packages/schematics/docs'],
+          template: {
+            content: './site/templates/content.ts',
+          },
+          hasSubDir: false,
+        }
+      ],
+    },
   ],
 };

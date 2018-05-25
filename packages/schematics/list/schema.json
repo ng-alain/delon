@@ -91,7 +91,7 @@
     },
     "module":  {
       "type": "string",
-      "description": "Allows specification of the declaring module.",
+      "description": "Allows specification of the declaring module. (e.g., -m=trade)",
       "alias": "m"
     },
     "export": {

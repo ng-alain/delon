@@ -37,7 +37,8 @@
       "@delon/cache",
       "@delon/mock",
       "@delon/form",
-      "ng-alain"
+      "ng-alain",
+      "ng-zorro-antd"
     ]
   },
   "sideEffects": false

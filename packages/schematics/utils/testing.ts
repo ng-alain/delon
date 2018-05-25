@@ -18,14 +18,16 @@ export function createAlainRunner() {
   );
 }
 
-export function createAlainApp(): {
+export function createAlainApp(
+  ngAddOptions?: object,
+): {
   runner: SchematicTestRunner;
   tree: UnitTestTree;
 } {
   const baseRunner = createNgRunner();
   const workspaceTree = baseRunner.runSchematic('workspace', {
     name: 'workspace',
-    newProjectRoot: 'projects',
+    newProjectRoot: '',
     version: '6.0.0',
   });
   const appTree = baseRunner.runSchematic(
@@ -44,12 +46,31 @@ export function createAlainApp(): {
   const alainRunner = createAlainRunner();
   const tree = alainRunner.runSchematic(
     'ng-add',
-    {
-      skipPackageJson: false,
-    },
+    Object.assign(
+      {
+        skipPackageJson: false,
+      },
+      ngAddOptions,
+    ),
     appTree,
   );
   return { runner: alainRunner, tree };
+}
+
+export function createAlainAndModuleApp(
+  name = 'trade',
+  ngAddOptions?: object,
+): {
+  runner: SchematicTestRunner;
+  tree: UnitTestTree;
+} {
+  const res = createAlainApp(ngAddOptions);
+  res.tree = res.runner.runSchematic(
+    'module',
+    { name, project: 'foo', routing: true },
+    res.tree,
+  );
+  return res;
 }
 
 export function createTestApp(): UnitTestTree {

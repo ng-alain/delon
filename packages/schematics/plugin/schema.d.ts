@@ -1,5 +1,5 @@
 export interface Schema {
   name: string;
-  type: string;
+  type: 'add' | 'remove';
   project?: string;
 }

@@ -83,7 +83,6 @@ function addDeclarationToNgModule(options: any): Rule {
   };
 }
 
-
 function buildSelector(options: any, projectPrefix: string) {
   let selector = strings.dasherize(options.name);
   if (options.prefix) {
@@ -94,7 +93,6 @@ function buildSelector(options: any, projectPrefix: string) {
 
   return selector;
 }
-
 
 export function buildComponent(options: any): Rule {
   return (host: Tree, context: SchematicContext) => {
