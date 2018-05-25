@@ -35,7 +35,10 @@ export class SimpleTableExport {
     const sheets: { [sheet: string]: any } = {};
     const sheet = (sheets[opt.sheetname || 'Sheet1'] = {});
     const colData = opt._c.filter(
-      w => w.exported !== false && w.index && !w.buttons,
+      w =>
+        w.exported !== false &&
+        w.index &&
+        (!w.buttons || w.buttons.length === 0),
     );
     const cc = colData.length,
       dc = opt._d.length;
