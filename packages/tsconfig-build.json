@@ -13,5 +13,9 @@
     "sourceMap": true,
     "inlineSources": true,
     "importHelpers": true
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true
   }
 }

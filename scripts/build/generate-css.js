@@ -3,7 +3,6 @@
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
-const postcss = require('postcss');
 const less = require('less');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 
@@ -23,9 +22,6 @@ if (min) {
 }
 less.render
   .call(less, content, { plugins })
-  .then(({ css }) => {
-    return postcss([]).process(css, { parser: less.parser });
-  })
   .then(({ css }) => {
     fs.writeFileSync(path.join(ROOT_DIR, `theme/styles/ng-alain${min ? '.min' : ''}.css`), css);
   })
