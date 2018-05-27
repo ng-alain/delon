@@ -22,7 +22,7 @@ import { getData } from '../../utils';
       [nzData]="ui.data"
       [nzListType]="i.listType"
       [nzMultiple]="i.multiple"
-      [nzName]="i.argName"
+      [nzName]="i.name"
       [nzShowUploadList]="i.showUploadList"
       [nzWithCredentials]="i.withCredentials"
       [nzRemove]="ui.remove"
