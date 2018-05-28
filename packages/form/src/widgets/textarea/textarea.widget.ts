@@ -14,7 +14,7 @@ import { ControlWidget } from '../../widget';
       (input)="setValue($event.target?.value)"
       [attr.maxLength]="schema.maxLength || null"
       [attr.placeholder]="ui.placeholder"
-      [nzAutosize]="ui.autosize">
+      [nzAutosize]="ui.autosize || true">
     </textarea>
 
   </sf-item-wrap>`,

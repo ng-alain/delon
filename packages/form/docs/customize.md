@@ -24,10 +24,10 @@ type: Documents
 
 这些组件包括：
 
-| 名称 | 描述 | 描述 |
-| --- | ---- | ---- |
-| `tinymce` | Tinymce 富文本框 | [文档](/form/tinymce) |
-| `ueditor` | UEditor 富文本框 | [文档](/form/ueditor) |
+| 名称 | 描述 | 文档 | 源代码 |
+| --- | ---- | ---- | ---- |
+| `tinymce` | Tinymce 富文本框 | [文档](/form/tinymce) | [源代码](https://github.com/cipchk/delon/tree/master/packages/form/widgets-third/tinymce) |
+| `ueditor` | UEditor 富文本框 | [文档](/form/ueditor) | [源代码](https://github.com/cipchk/delon/tree/master/packages/form/widgets-third/ueditor) |
 
 **自己创建小部件**
 

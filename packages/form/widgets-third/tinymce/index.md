@@ -8,6 +8,10 @@ Tinymce富文本。
 
 > 注：第三方小部件默认并未注册，细节见[自定义小部件](https://ng-alain.com/form/customize)。
 
+## 源代码
+
+[源代码](https://github.com/cipchk/delon/tree/master/packages/form/widgets-third/tinymce)。
+
 ## API
 
 ### ui 属性
