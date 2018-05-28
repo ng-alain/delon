@@ -7,7 +7,7 @@ import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }
     selector: '<%= selector %>',<% if(inlineTemplate) { %>
     template: `<% if(modal) { %>
       <div class="modal-header">
-        <div class="modal-title">查看 {{ record.id }} 用户信息</div>
+        <div class="modal-title">查看 {{ record.id }} 信息</div>
       </div>
       <nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
       <desc-list *ngIf="i">
@@ -19,7 +19,7 @@ import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }
       </desc-list>
       <div class="modal-footer">
         <button nz-button type="button" (click)="close()">关闭</button>
-      </div><% } else { %><page-header [title]="'查看 ' + id + ' 用户信息'"></page-header>
+      </div><% } else { %><page-header [title]="'查看 ' + id + ' 信息'"></page-header>
       <nz-card>
         <nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
         <desc-list *ngIf="i">

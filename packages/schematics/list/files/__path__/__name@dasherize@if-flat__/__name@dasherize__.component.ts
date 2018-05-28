@@ -6,9 +6,12 @@ import { SFSchema } from '@delon/form';
 @Component({
   selector: '<%= selector %>',<% if(inlineTemplate) { %>
   template: `
-  <page-header [title]="'Page Name'"></page-header>
+  <page-header></page-header>
     <nz-card>
       <sf mode="search" [schema]="searchSchema" [formData]="params" (formSubmit)="st.reset($event)" (formReset)="st.reset(params)"></sf>
+      <div class="my-sm">
+        <button (click)="add()" nz-button nzType="primary">新建</button>
+      </div>
       <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
     </nz-card>
   `,<% } else { %>
@@ -47,5 +50,7 @@ export class <%= componentName %> implements OnInit {
     constructor(private http: _HttpClient) { }
 
     ngOnInit() { }
+
+    add() { }
 
 }
