@@ -25,7 +25,9 @@
     "ng mock",
     "ngx-mock",
     "antd",
-    "ng-zorro-antd"
+    "ng-zorro-antd",
+    "angular",
+    "component"
   ],
   "peerDependencies": {
   }

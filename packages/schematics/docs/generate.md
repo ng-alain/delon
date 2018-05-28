@@ -18,7 +18,7 @@ ng g ng-alain:<command name> <name> [options]
 
 ng-alain 有自己的一套文件组织结构，当你破坏这些结构时，可能会导致下列指令产生异常。
 
-## Module 模块（待发布）
+## Module 模块
 
 生成一个 `trade` 模块：
 

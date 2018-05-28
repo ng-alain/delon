@@ -15,7 +15,15 @@
     "url": "https://github.com/cipchk/delon/issues"
   },
   "homepage": "https://github.com/cipchk/delon#readme",
-  "keywords": ["delon", "ng-alain", "alain", "antd", "ng-zorro-antd"],
+  "keywords": [
+    "delon",
+    "ng-alain",
+    "alain",
+    "antd",
+    "ng-zorro-antd",
+    "angular",
+    "component"
+  ],
   "peerDependencies": {
     "ng-zorro-antd": "ZORRO-0.0.0-PLACEHOLDER",
     "@delon/acl": "PEER-0.0.0-PLACEHOLDER"

@@ -1,5 +1,7 @@
 # @delon/abc module [![Build Status](https://travis-ci.org/cipchk/delon.svg?branch=master)](https://travis-ci.org/cipchk/delon) [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc) [![NPM version](https://img.shields.io/npm/v/@delon/abc/next.svg)](https://www.npmjs.com/package/@delon/abc)
 
+Common business components of ng-alain.
+
 ## Links
 
 - [Api Document](http://ng-alain.com/components)

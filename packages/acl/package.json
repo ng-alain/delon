@@ -25,7 +25,9 @@
     "alain",
     "antd",
     "ng-zorro-antd",
-    "acl"
+    "acl",
+    "angular",
+    "component"
   ],
   "peerDependencies": {}
 }

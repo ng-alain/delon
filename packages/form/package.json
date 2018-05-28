@@ -27,7 +27,9 @@
     "ng form",
     "ngx form",
     "antd",
-    "ng-zorro-antd"
+    "ng-zorro-antd",
+    "angular",
+    "component"
   ],
   "peerDependencies": {
     "ng-zorro-antd": "ZORRO-0.0.0-PLACEHOLDER",

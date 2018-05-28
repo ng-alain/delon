@@ -6,6 +6,23 @@ title:
 type: Other
 ---
 
+### 1.0.5
+
+`2018-5-28`
+
+- @delon/abc
+  - 修复 `simple-table` 无法导出 Excel 问题，[#469](https://github.com/cipchk/ng-alain/issues/469)
+  - 修复 `file-saves`、`ngx-countdown` 依赖关系
+- @delon/form
+  - 增加全局配置 `ui` 参数
+  - 增加 `textarea` 默认 `autosize: true`
+  - 修复 `upload` 无效参数 `name`，[@vellengs](https://github.com/vellengs)
+- Schematics
+  - 重构 `ng g`
+  - 新增 `ng g ng-alain:module` 指令
+  - 新增 `codeStyle`、`npm` 插件
+  - 优化业务模板
+
 ### 1.0.4
 
 `2018-5-24`

@@ -1,6 +1,6 @@
 # Delon
 
-delong is a production-ready solution for admin business components packages, Built on the design principles developed by Ant Design.
+delon is a production-ready solution for admin business components packages, Built on the design principles developed by Ant Design.
 
 [![Build Status](https://travis-ci.org/cipchk/delon.svg?branch=master)](https://travis-ci.org/cipchk/delon)
 [![Dependency Status](https://david-dm.org/cipchk/delon/status.svg)](https://david-dm.org/cipchk/delon)

@@ -24,7 +24,9 @@
     "ng cache",
     "ngx cache",
     "antd",
-    "ng-zorro-antd"
+    "ng-zorro-antd",
+    "angular",
+    "component"
   ],
   "peerDependencies": {}
 }
