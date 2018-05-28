@@ -138,6 +138,7 @@ export class HomeComponent {
 | value         | 表单值         | `any`     |
 | refreshSchema | 刷新 JSON Schema | `void`    |
 | reset         | 重置表单         | `void`    |
+| validator     | 手动校验一次表单         | `void`    |
 
 ### 按钮说明
 

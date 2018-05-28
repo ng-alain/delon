@@ -171,8 +171,7 @@ export abstract class FormProperty {
 
   // region: process errors
 
-  private _isRequired(value: any) {
-    if (this.ui._required !== true) return false;
+  private isEmptyData(value: any) {
     if (isBlank(value)) return true;
     switch (this.type) {
       case 'string':
@@ -186,9 +185,14 @@ export abstract class FormProperty {
    */
   _runValidation() {
     let errors: ErrorData[];
-    // Should not via ajv validator of required fields
-    if (this._isRequired(this._value)) {
+    // The definition of some rules:
+    // 1. Should not ajv validator when is empty data and required fields
+    // 2. Should not ajv validator when is empty data
+    const isEmpty = this.isEmptyData(this._value);
+    if (isEmpty && this.ui._required) {
       errors = [{ keyword: 'required' }];
+    } else if (isEmpty) {
+      errors = [];
     } else {
       errors = this.schemaValidator(this._value) || [];
     }

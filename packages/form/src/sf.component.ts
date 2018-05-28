@@ -375,11 +375,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     (property.ui as SFUISchemaItemRun)._render = templateRef;
   }
 
-  private validator() {
+  validator() {
     this.rootProperty._runValidation();
     const errors = this.rootProperty.errors;
     this._valid = !(errors && errors.length);
-    this.formError.emit(errors);
+    if (!this._valid) this.formError.emit(errors);
     this.cd.detectChanges();
   }
 
