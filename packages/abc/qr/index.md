@@ -18,7 +18,7 @@ npm i --save qrious
 
 ```ts
 "scripts": [
-  "../node_modules/qrious/dist/qrious.min.js"
+  "node_modules/qrious/dist/qrious.min.js"
 ]
 ```
 

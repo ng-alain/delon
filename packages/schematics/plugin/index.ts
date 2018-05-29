@@ -18,6 +18,7 @@ import { PluginOptions } from './interface';
 import { pluginG2 } from './plugin.g2';
 import { pluginCodeStyle } from './plugin.code-style';
 import { pluginNpm } from './plugin.npm';
+import { pluginYarn } from './plugin.yarn';
 
 function installPackages() {
   return (host: Tree, context: SchematicContext) => {
@@ -48,6 +49,9 @@ export default function(options: PluginSchema): Rule {
         break;
       case 'npm':
         rules.push(pluginNpm(pluginOptions));
+        break;
+      case 'yarn':
+        rules.push(pluginYarn(pluginOptions));
         break;
       default:
         throw new SchematicsException(`Could not find '${options.name}' name`);

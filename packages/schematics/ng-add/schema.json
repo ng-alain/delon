@@ -33,6 +33,11 @@
       "type": "boolean",
       "description": "Generates .npmrc proxy to taobao.",
       "default": true
+    },
+    "yarn": {
+      "type": "boolean",
+      "description": "usage yarn install dependencies",
+      "default": false
     }
   }
 }

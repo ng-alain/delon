@@ -56,7 +56,7 @@ angular.json
 
 ```json
 "scripts": [
-    "../node_modules/ajv/dist/ajv.bundle.js"
+    "node_modules/ajv/dist/ajv.bundle.js"
 ]
 ```
 
