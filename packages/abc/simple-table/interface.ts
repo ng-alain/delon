@@ -59,9 +59,9 @@ export interface SimpleTableColumn {
    */
   index?: string | string[];
   /**
-   * 链接回调
+   * 链接回调，若返回一个字符串表示导航URL会自动触发 `router.navigateByUrl`
    */
-  click?: (record: any, instance?: SimpleTableComponent) => void;
+  click?: (record: any, instance?: SimpleTableComponent) => any;
   /**
    * 按钮组
    */
@@ -275,8 +275,9 @@ export interface SimpleTableButton {
    * - `del` 删除，默认开启 `pop: true`
    * - `modal` 对话框，需要指定 `component` 才会生效
    * - `static` 静态对话框，需要指定 `component` 才会生效
+   * - `link` 链接，当 `click` 返回字符串时自动调用 `navigateByUrl` 导航
    */
-  type?: 'none' | 'del' | 'modal' | 'static';
+  type?: 'none' | 'del' | 'modal' | 'static' | 'link';
   /**
    * 点击回调
    * - Function
@@ -287,7 +288,7 @@ export interface SimpleTableButton {
   click?:
     | 'reload'
     | 'load'
-    | ((record: any, modal?: any, instance?: SimpleTableComponent) => void);
+    | ((record: any, modal?: any, instance?: SimpleTableComponent) => any);
   /**
    * 是否需要气泡确认框
    */

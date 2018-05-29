@@ -20,6 +20,7 @@ import {
 } from '@angular/core';
 import { DecimalPipe, DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { ACLService } from '@delon/acl';
 import { Observable, Subscription, of } from 'rxjs';
 import { tap, map, filter } from 'rxjs/operators';
@@ -49,7 +50,6 @@ import {
 import { AdSimpleTableConfig } from './simple-table.config';
 import { SimpleTableRowDirective } from './simple-table-row.directive';
 import { SimpleTableExport } from './simple-table-export';
-import { DEFAULT_RESIZE_TIME } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'simple-table',
@@ -337,6 +337,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private defConfig: AdSimpleTableConfig,
     private http: HttpClient,
+    private router: Router,
     private el: ElementRef,
     private renderer: Renderer2,
     private exportSrv: SimpleTableExport,
@@ -527,7 +528,10 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   _click(e: Event, item: any, col: SimpleTableColumn) {
     e.preventDefault();
     e.stopPropagation();
-    col.click(item, this);
+    const res = col.click(item, this);
+    if (typeof res === 'string') {
+      this.router.navigateByUrl(res);
+    }
     return false;
   }
 
@@ -809,6 +813,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
       return;
+    } else if (btn.type === 'link') {
+      const clickRes = this.btnCallback(record, btn);
+      if (typeof clickRes === 'string') {
+        this.router.navigateByUrl(clickRes);
+      }
     }
     this.btnCallback(record, btn);
   }
@@ -825,7 +834,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
           break;
       }
     } else {
-      btn.click(record, modal, this);
+      return btn.click(record, modal, this);
     }
   }
 

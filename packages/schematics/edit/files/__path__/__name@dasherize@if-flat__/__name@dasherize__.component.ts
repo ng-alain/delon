@@ -38,7 +38,7 @@ import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncaps
     i: any;
     schema: SFSchema = {
       properties: {
-        no: { type: 'string', title: '编号', readOnly: true },
+        no: { type: 'string', title: '编号' },
         owner: { type: 'string', title: '姓名', maxLength: 15 },
         callNo: { type: 'number', title: '调用次数' },
         href: { type: 'string', title: '链接', format: 'uri' },
@@ -50,6 +50,9 @@ import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncaps
       '*': {
         spanLabelFixed: 100,
         grid: { span: 12 },
+      },
+      $no: {
+        widget: 'text'
       },
       $href: {
         widget: 'string',
@@ -69,6 +72,7 @@ import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncaps
     ) {}
 
     ngOnInit(): void {
+      <% if(modal) { %>if (this.record.id > 0)<% } else { %>if (this.id > 0)<% } %>
       this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
     }
 
