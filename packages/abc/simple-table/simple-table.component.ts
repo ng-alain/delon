@@ -398,7 +398,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
    */
   load(pi = 1, extraParams?: any) {
     if (pi !== -1) this.pi = pi;
-    this.extraParams = extraParams || null;
+    if (typeof extraParams !== 'undefined') {
+      this.extraParams = extraParams || null;
+    }
     this._change('pi');
   }
 

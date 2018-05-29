@@ -85,7 +85,10 @@ filterChange | Filter回调 | `EventEmitter` | -
 `clearRadio()` | `void` | 清除所有 `radio`
 `export(urlOrData?: string | any[], opt?: STExportOptions)` | `void` | 导出Excel，确保已经注册 `AdXlsxModule`
 
-> `urlOrData` 一般用于需要导出所有页时重新指定带有所有数据的URL地址或本地数据数组，当所有参数都不指定时自动读书当前页数据。
+一些细节：
+
+- `extraParams` 若不传递表示保留原始值
+- `urlOrData` 一般用于需要导出所有页时重新指定带有所有数据的URL地址或本地数据数组，当所有参数都不指定时自动读书当前页数据。
 
 **使用方式**
 

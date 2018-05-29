@@ -141,7 +141,7 @@ describe('abc: simple-table', () => {
   describe('[property]', () => {
     describe('#columns', () => {
       beforeEach(() => genModule({}));
-      xdescribe('[index]', () => {
+      describe('[index]', () => {
         it('support string', () => {
           page.newColumn([{ title: '', index: 'id' }]).expectCell('1');
         });
@@ -156,8 +156,8 @@ describe('abc: simple-table', () => {
             .expectCell('fix1');
         });
       });
-      xdescribe('[type]', () => {
-        xdescribe(`with checkbox`, () => {
+      describe('[type]', () => {
+        describe(`with checkbox`, () => {
           it(`should be render checkbox`, () => {
             page
               .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
@@ -239,7 +239,7 @@ describe('abc: simple-table', () => {
             page.expectData(1, 'checked', false);
           });
         });
-        xdescribe('with radio', () => {
+        describe('with radio', () => {
           it(`should be render checkbox`, () => {
             page
               .newColumn([{ title: 'RADIOname', index: 'id', type: 'radio' }])
@@ -286,7 +286,7 @@ describe('abc: simple-table', () => {
             page.expectData(1, 'checked', false);
           });
         });
-        xdescribe('with link', () => {
+        describe('with link', () => {
           it(`should be render anchor link`, () => {
             const columns = [
               {
@@ -317,7 +317,7 @@ describe('abc: simple-table', () => {
             expect(router.navigateByUrl).toHaveBeenCalled();
           });
         });
-        xdescribe('with img', () => {
+        describe('with img', () => {
           it(`should be render img`, () => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
             page.newColumn(columns as any).expectCell('', 1, 1, 'img');
@@ -330,7 +330,7 @@ describe('abc: simple-table', () => {
                 .expectCell(null, 2, 1, 'img');
           });
         });
-        xdescribe('with currency', () => {
+        describe('with currency', () => {
           it(`should be render currency`, () => {
             page
               .newColumn([{ title: '', index: 'id', type: 'currency' }])
@@ -341,7 +341,7 @@ describe('abc: simple-table', () => {
             page.getCell().classList.contains('text-right');
           });
         });
-        xdescribe('with number', () => {
+        describe('with number', () => {
           it(`should be render number`, () => {
             page
               .newColumn([{ title: '', index: 'num', type: 'number' }])
@@ -364,7 +364,7 @@ describe('abc: simple-table', () => {
             page.getCell().classList.contains('text-right');
           });
         });
-        xdescribe('with date', () => {
+        describe('with date', () => {
           it(`should be render date`, () => {
             page
               .newColumn([{ title: '', index: 'date', type: 'date' }])
@@ -389,7 +389,7 @@ describe('abc: simple-table', () => {
             page.getCell().classList.contains('text-right');
           });
         });
-        xdescribe('with yn', () => {
+        describe('with yn', () => {
           it(`should be render yn`, () => {
             page
               .newColumn([{ title: '', index: 'yn', type: 'yn' }])
@@ -422,7 +422,7 @@ describe('abc: simple-table', () => {
           });
         });
       });
-      xdescribe('[other]', () => {
+      describe('[other]', () => {
         it('should throw error when is null', () => {
           expect(() => {
             page.newColumn([]);
@@ -458,7 +458,7 @@ describe('abc: simple-table', () => {
         });
       });
       describe('[buttons]', () => {
-        xit(`should be pop confirm when type=del`, () => {
+        it(`should be pop confirm when type=del`, () => {
           const columns: SimpleTableColumn[] = [
             {
               title: '',
@@ -480,7 +480,7 @@ describe('abc: simple-table', () => {
           comp.btnClick(comp._data[0], comp._columns[0].buttons[1]);
           expect(columns[0].buttons[1].click).toHaveBeenCalled();
         });
-        xit(
+        it(
           'should be a dropdown menu buttons',
           fakeAsync(() => {
             const columns: SimpleTableColumn[] = [
@@ -501,7 +501,7 @@ describe('abc: simple-table', () => {
               .asyncEnd();
           }),
         );
-        xit('should custom render text via format', () => {
+        it('should custom render text via format', () => {
           const columns: SimpleTableColumn[] = [
             {
               title: '',
@@ -516,7 +516,7 @@ describe('abc: simple-table', () => {
           page.newColumn(columns)
               .expectElCount('.j-btn-format', PS);
         });
-        xdescribe('[condition]', () => {
+        describe('[condition]', () => {
           it('should be hide menu in first row', () => {
             const columns: SimpleTableColumn[] = [
               {
@@ -541,7 +541,7 @@ describe('abc: simple-table', () => {
           });
         });
         describe('[events]', () => {
-          xit('#reload', () => {
+          it('#reload', () => {
             const columns: SimpleTableColumn[] = [
               {
                 title: '',
@@ -554,7 +554,7 @@ describe('abc: simple-table', () => {
             page.clickCell('a');
             expect(comp.reload).toHaveBeenCalled();
           });
-          xit('#load', () => {
+          it('#load', () => {
             const columns: SimpleTableColumn[] = [
               {
                 title: '',
@@ -567,7 +567,7 @@ describe('abc: simple-table', () => {
             page.clickCell('a');
             expect(comp.load).toHaveBeenCalled();
           });
-          xit('#modal', () => {
+          it('#modal', () => {
             const columns: SimpleTableColumn[] = [
               {
                 title: '',
@@ -586,7 +586,7 @@ describe('abc: simple-table', () => {
             expect(columns[0].buttons[0].click).toHaveBeenCalled();
             mock$.unsubscribe();
           });
-          xit('#static', () => {
+          it('#static', () => {
             const columns: SimpleTableColumn[] = [
               {
                 title: '',
@@ -621,7 +621,7 @@ describe('abc: simple-table', () => {
           });
         });
       });
-      xdescribe('[fixed]', () => {
+      describe('[fixed]', () => {
         it('should be fixed left column', () => {
           page.newColumn([
             { title: '1', index: 'id', fixed: 'left', width: '100px' },
@@ -641,7 +641,7 @@ describe('abc: simple-table', () => {
       });
     });
 
-    xdescribe('#showTotal', () => {
+    describe('#showTotal', () => {
       beforeEach(() => genModule({ minColumn: true }));
       it('with true', () => {
         context.showTotal = true;
@@ -662,9 +662,9 @@ describe('abc: simple-table', () => {
       });
     });
 
-    xdescribe('#showPagination', () => {
+    describe('#showPagination', () => {
       beforeEach(() => genModule({ minColumn: true }));
-      xdescribe('with undefined', () => {
+      describe('with undefined', () => {
         beforeEach(() => {
           context.ps = 2;
           context.showPagination = undefined;
@@ -687,7 +687,7 @@ describe('abc: simple-table', () => {
       });
     });
 
-    xdescribe('#pagePlacement', () => {
+    describe('#pagePlacement', () => {
       beforeEach(() => genModule({ minColumn: true }));
       [ 'left', 'center', 'right' ].forEach(pos => {
         it(`with ${pos}`, () => {
@@ -698,7 +698,7 @@ describe('abc: simple-table', () => {
       });
     });
 
-    xdescribe('#toTopInChange', () => {
+    describe('#toTopInChange', () => {
       beforeEach(() => {
         genModule({ minColumn: true });
         context.toTopOffset = 10;
@@ -733,7 +733,7 @@ describe('abc: simple-table', () => {
       });
     });
 
-    xdescribe('#pagePlacement', () => {
+    describe('#pagePlacement', () => {
       beforeEach(() => genModule({ minColumn: true }));
       [ 'left', 'center', 'right' ].forEach(pos => {
         it(`with ${pos}`, () => {
@@ -752,7 +752,7 @@ describe('abc: simple-table', () => {
       });
     });
 
-    xdescribe('[custom render template]', () => {
+    describe('[custom render template]', () => {
       it('with column title', () => {
         genModule({
           template: `<simple-table #st [data]="data" [columns]="columns">
@@ -785,9 +785,9 @@ describe('abc: simple-table', () => {
     });
   });
 
-  xdescribe('[data]', () => {
+  describe('[data]', () => {
     beforeEach(() => genModule({ minColumn: true }));
-    xdescribe('with url', () => {
+    describe('with url', () => {
       let http: HttpClient;
       let httpMock: HttpTestingController;
       const URL = `/test`;
@@ -798,7 +798,7 @@ describe('abc: simple-table', () => {
         httpMock = injector.get(HttpTestingController);
         context.data = URL;
       });
-      xdescribe('[basic login]', () => {
+      describe('[basic login]', () => {
         it('should be get data from request', () => {
           fixture.detectChanges();
           httpMock.expectOne(w => true).flush(URLDATA);
@@ -848,7 +848,7 @@ describe('abc: simple-table', () => {
           expect(context.preDataChange).toHaveBeenCalled();
         });
       });
-      xdescribe('#resReName', () => {
+      describe('#resReName', () => {
         beforeEach(() => spyOn(console, 'warn'));
         it('should be rename', () => {
           context.resReName = { total: ['TOTAL'], list: ['LIST'] };
@@ -879,8 +879,8 @@ describe('abc: simple-table', () => {
           expect(console.warn).not.toHaveBeenCalled();
         });
       });
-      xdescribe('#sort', () => {
-        xdescribe('#multiSort', () => {
+      describe('#sort', () => {
+        describe('#multiSort', () => {
           beforeEach(() => context.columns = [
             { title: '', index: 'index', sortKey: 's1', sort: 'ascend', sorter: () => true },
             { title: '', index: 'index', sortKey: 's2', sort: 'descend', sorter: () => true }
@@ -893,7 +893,7 @@ describe('abc: simple-table', () => {
               's1=ascend&s2=descend',
             );
           });
-          xdescribe('when using SimpleTableMultiSort', () => {
+          describe('when using SimpleTableMultiSort', () => {
             it('should combine values', () => {
               context.multiSort = <SimpleTableMultiSort>{};
               fixture.detectChanges();
@@ -904,7 +904,7 @@ describe('abc: simple-table', () => {
             });
           });
         });
-        xdescribe('#sortReName', () => {
+        describe('#sortReName', () => {
           beforeEach(() => context.columns = [
             { title: '', index: 's1', sort: 'ascend', sorter: () => true },
           ]);
@@ -916,9 +916,9 @@ describe('abc: simple-table', () => {
           });
         });
       });
-      xdescribe('#filter', () => {
+      describe('#filter', () => {
         const columns = [ { title: '', index: 'id', filters: [ { text: 'f1', value: 'fv1' }, { text: 'f2', value: 'fv2' } ], filter: () => true, filterMultiple: true, filterConfirmText: 'ok', filterClearText: 'reset', filterIcon: 'anticon anticon-aa' }];
-        xdescribe('#filterMultiple', () => {
+        describe('#filterMultiple', () => {
           beforeEach(fakeAsync(() => {
             page.newColumn(columns).openDropDownInHead('id');
             expect(context.filterChange).not.toHaveBeenCalled();
@@ -975,8 +975,8 @@ describe('abc: simple-table', () => {
         }));
       });
     });
-    xdescribe('with array', () => {
-      xdescribe('[basic login]', () => {
+    describe('with array', () => {
+      describe('[basic login]', () => {
         it('should disabled call when is ajax data', () => {
           context.data = '/';
           fixture.detectChanges();
@@ -987,13 +987,13 @@ describe('abc: simple-table', () => {
           page.expectCurrentPageTotal(0);
         });
       });
-      xdescribe('with any[]', () => {
+      describe('with any[]', () => {
         it(`should be render`, () => {
           fixture.detectChanges();
           page.expectCurrentPageTotal(PS);
         });
       });
-      xdescribe('with observable<any[]>', () => {
+      describe('with observable<any[]>', () => {
         it('should be render', () => {
           const total = 4;
           const obs$ = of(genData(total));
@@ -1014,7 +1014,7 @@ describe('abc: simple-table', () => {
           page.expectCurrentPageTotal(3);
         });
       });
-      xdescribe('#frontPagination', () => {
+      describe('#frontPagination', () => {
         // `true` 由 `simple-table` 根据 `data` 长度受控分页，包括：排序、过滤等
         it('with true', () => {
           context.frontPagination = true;
@@ -1027,7 +1027,7 @@ describe('abc: simple-table', () => {
               .expectTotalPage(4); // 总页数
         });
         // `false` 由用户通过 `total` 和 `data` 参数受控分页，并维护 `(change)` 当分页变更时重新加载数据
-        xdescribe('with false', () => {
+        describe('with false', () => {
           const pi = 1;
           const ps = 5;
           const total = 11;
@@ -1080,7 +1080,7 @@ describe('abc: simple-table', () => {
           });
         });
       });
-      xdescribe('#sort', () => {
+      describe('#sort', () => {
         it('should be ascend id property', () => {
           page.newColumn([ { title: '', index: 'id', sort: 'ascend', sorter: (a, b) => a.id - b.id } ])
               .expectData(1, 'id', 1);
@@ -1128,7 +1128,7 @@ describe('abc: simple-table', () => {
           expect(Object.values(comp._sortMap).filter(item => item.v !== undefined).length).toBe(2);
         });
       });
-      xdescribe('#filter', () => {
+      describe('#filter', () => {
         const columns: SimpleTableColumn[] = [
           {
             title: '',
@@ -1150,7 +1150,7 @@ describe('abc: simple-table', () => {
         }));
       });
     });
-    xdescribe('[logic]', () => {
+    describe('[logic]', () => {
       it('shoule be empty data when invalid data', () => {
         context.data = null;
         fixture.detectChanges();
@@ -1159,8 +1159,8 @@ describe('abc: simple-table', () => {
     });
   });
 
-  xdescribe('[public method]', () => {
-    xdescribe('#load', () => {
+  describe('[public method]', () => {
+    describe('#load', () => {
       beforeEach(() => genModule({ minColumn: true }));
       it('nothing specified', () => {
         expect(context.change).not.toHaveBeenCalled();
@@ -1187,8 +1187,14 @@ describe('abc: simple-table', () => {
         comp.load();
         expect(context.change).not.toHaveBeenCalled();
       });
+      it('shoule be keeping extra params when do not passed', () => {
+        comp.load(1, { a: 1 });
+        expect(comp.extraParams.a).toBe(1);
+        comp.load(1);
+        expect(comp.extraParams.a).toBe(1);
+      });
     });
-    xdescribe('#reload', () => {
+    describe('#reload', () => {
       beforeEach(() => genModule({ minColumn: true }));
       it('keeping current page index', () => {
         fixture.detectChanges();
@@ -1199,10 +1205,11 @@ describe('abc: simple-table', () => {
       });
       it('without extra params', () => {
         expect(context.change).not.toHaveBeenCalled();
+        const orgExtraParams = comp.extraParams;
         fixture.detectChanges();
         comp.reload();
         expect(context.change).toHaveBeenCalled();
-        expect(comp.extraParams).toBe(null);
+        expect(comp.extraParams).toBe(orgExtraParams);
       });
       it(`with extra params`, () => {
         expect(context.change).not.toHaveBeenCalled();
@@ -1212,7 +1219,7 @@ describe('abc: simple-table', () => {
         expect(comp.extraParams.a).toBe(1);
       });
     });
-    xdescribe('#reset', () => {
+    describe('#reset', () => {
       beforeEach(() => genModule({ minColumn: true }));
       it('always the first page', () => {
         fixture.detectChanges();
@@ -1223,10 +1230,11 @@ describe('abc: simple-table', () => {
       });
       it('without extra params', () => {
         expect(context.change).not.toHaveBeenCalled();
+        const orgExtraParams = comp.extraParams;
         fixture.detectChanges();
         comp.reset();
         expect(context.change).toHaveBeenCalled();
-        expect(comp.extraParams).toBe(null);
+        expect(comp.extraParams).toBe(orgExtraParams);
         expect(comp.pi).toBe(1);
       });
       it(`with extra params`, () => {
@@ -1238,7 +1246,7 @@ describe('abc: simple-table', () => {
         expect(comp.pi).toBe(1);
       });
     });
-    xdescribe('#export', () => {
+    describe('#export', () => {
       let exportSrv: SimpleTableExport;
       beforeEach(() => {
         genModule({ minColumn: true, providers: [ SimpleTableExport ] });
@@ -1246,7 +1254,7 @@ describe('abc: simple-table', () => {
         exportSrv = comp['exportSrv'];
         spyOn(exportSrv, 'export');
       });
-      xdescribe('without specified data', () => {
+      describe('without specified data', () => {
         it('when data is array data', () => {
           context.data = genData(1);
           fixture.detectChanges();
@@ -1272,7 +1280,7 @@ describe('abc: simple-table', () => {
           expect(exportSrv.export).toHaveBeenCalled();
         });
       });
-      xdescribe('with specified data', () => {
+      describe('with specified data', () => {
         it('should be specified url', () => {
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export('/test');
@@ -1288,7 +1296,7 @@ describe('abc: simple-table', () => {
     });
   });
 
-  xdescribe('[i18n]', () => {
+  describe('[i18n]', () => {
     let i18nSrv: AlainI18NService;
     beforeEach(() => {
       genModule({ i18n: true });
@@ -1311,7 +1319,7 @@ describe('abc: simple-table', () => {
     });
   });
 
-  xdescribe('[acl]', () => {
+  describe('[acl]', () => {
     let acl: ACLService;
 
     beforeEach(() => {
