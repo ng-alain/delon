@@ -12,7 +12,7 @@ import { getData } from '../../utils';
       [nzDisabled]="disabled"
       [nzSize]="ui.size"
       [ngModel]="value"
-      (ngModelChange)="setValue($event)"
+      (ngModelChange)="change($event)"
       [nzPlaceHolder]="ui.placeholder"
       [nzAllowClear]="i.allowClear"
       [nzAutoFocus]="i.autoFocus"
@@ -77,6 +77,11 @@ export class SelectWidget extends ControlWidget implements OnInit {
         this.detectChanges();
       },
     );
+  }
+
+  change(values: any) {
+    if (this.ui.change) this.ui.change(values);
+    this.setValue(values);
   }
 
   openChange(value: any) {

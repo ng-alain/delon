@@ -33,5 +33,6 @@ mode | 设置 nz-select 的模式，`tags` 建议增加 `default: null`，否则
 notFoundContent | 当下拉列表为空时显示的内容 | `string` | -
 showSearch | 使单选模式可搜索 | `boolean` | `false`
 onSearch | 搜索内容变化回调函数，参数为搜索内容，必须返回 `Promise` 对象 | `(text: string) => Promise<any[]>` | -
+change | 选中的 nz-option 发生变化时，调用此函数 | `(ngModel:any丨any[])=>{}` | -
 openChange | 下拉菜单打开关闭回调函数 | `(nzOpen:boolean)=>{}` | -
 scrollToBottom | 下拉菜单滚动到底部回调，可用于作为动态加载的触发条件 | `()=>{}` | -
