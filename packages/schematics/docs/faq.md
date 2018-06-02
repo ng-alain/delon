@@ -27,3 +27,13 @@ ng g ng-alain:plugin yarn
 ```bash
 ng g ng-alain:plugin npm
 ```
+
+## no such file or directory
+
+这个问题很难解释，npm 有一个长楼 [#17444](https://github.com/npm/npm/issues/17444#issuecomment-393761515)，并且最后给出一种勉强答案：
+
+1. 确保安装最新 npm 版本：`npm i -g npm`
+2. 删除 `node_modules` 和 `package-lock.json`
+3. `npm i`
+
+最后，依然不行就再重复以上步骤！
