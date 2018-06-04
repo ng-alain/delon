@@ -6,6 +6,24 @@ title:
 type: Other
 ---
 
+### 1.0.6
+
+`2018-6-4`
+
+- @delon/abc
+  - simple-table
+    - 优化列描述 `click` 若返回字符串值表示自动导航该路由
+    - 修复 `reload`、`load` 组件方法若不指定 `extraParams` 时应保持上一次结果
+- @delon/form
+  - 增加 SFComponent 的 `validator` 方法用于手动触发一次校验
+  - 增加 Select 小部件 `change` 事件，[#482](https://github.com/cipchk/ng-alain/issues/482)
+  - 修复非必填项时空值也会被校验，[#91](https://github.com/cipchk/delon/issues/91)
+  - 修复 `ueditor` 无效参数 `ngContentChange` 为 `ngModelChange`，[@vellengs](https://github.com/vellengs)
+- @delon/util
+  - 修复 `deepGet` 路径中间空值时返回错误，此 bug 受影响 `simple-table` 若值为空时也会相同错误
+- Schematics
+  - 新增 `yarn` 插件
+
 ### 1.0.5
 
 `2018-5-28`
