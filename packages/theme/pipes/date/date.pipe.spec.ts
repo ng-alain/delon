@@ -31,7 +31,7 @@ describe('Pipe: _date', () => {
     { date: undefined, result: `` },
     { date, result: ``, format: 'fn' },
   ].forEach((item: any) => {
-    it(`${date.toString()} muse be ${item.result}${
+    it(`${'' + item.date} muse be ${item.result}${
       item.format ? `(format: ${item.format})` : ''
     }`, () => {
       fixture.componentInstance.value = item.date;
