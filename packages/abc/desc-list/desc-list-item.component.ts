@@ -52,6 +52,9 @@ export class DescListItemComponent implements AfterViewInit {
   constructor(private renderer: Renderer2) {}
 
   checkContent(): void {
+    if (!this.contentElement) {
+      return ;
+    }
     const el = this.contentElement.nativeElement as HTMLElement;
     const cls = `ad-desc-list__default`;
     if (!this.noDefault && isEmpty(el)) {

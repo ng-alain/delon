@@ -1,4 +1,9 @@
-import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import {
+  TestBed,
+  ComponentFixture,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
 import { AdDescListModule } from './desc-list.module';
 import { By } from '@angular/platform-browser';
@@ -71,6 +76,17 @@ describe('abc: desc-list', () => {
     expect(dl.queryAll(By.css('#custom-title-template #titleTpl')).length).toBe(
       1,
     );
+  });
+
+  it('should hide when using *ngIf', () => {
+    genModule(`
+    <desc-list id="custom-title-template">
+      <desc-list-item term="false" *ngIf="false"><div class="false">false</div></desc-list-item>
+      <desc-list-item term="true" *ngIf="true"><div class="true">true</div></desc-list-item>
+    </desc-list>`);
+    fixture.detectChanges();
+    expect(dl.queryAll(By.css('#custom-title-template .false')).length).toBe(0);
+    expect(dl.queryAll(By.css('#custom-title-template .true')).length).toBe(1);
   });
 
   describe('[empty content]', () => {
