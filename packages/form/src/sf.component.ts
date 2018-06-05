@@ -54,7 +54,7 @@ export function useFactory(
           <div class="ant-form-item-control">
             <ng-container *ngIf="button; else con">
               <button type="submit" nz-button [nzType]="_btn.submit_type" [disabled]="liveValidate && !valid">{{_btn.submit}}</button>
-              <button *ngIf="_btn.reset" (click)="reset()" type="button" nz-button [nzType]="_btn.reset_type">{{_btn.reset}}</button>
+              <button *ngIf="_btn.reset" (click)="reset(true)" type="button" nz-button [nzType]="_btn.reset_type">{{_btn.reset}}</button>
             </ng-container>
           </div>
         </nz-col>
@@ -423,11 +423,16 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.reset();
   }
 
-  /** 重置表单 */
-  reset() {
+  /**
+   * 重置表单
+   * @param [emit] 是否触发 `formReset` 事件，默认：`false`
+   */
+  reset(emit = false) {
     this.rootProperty.resetValue(this.formData, false);
     Promise.resolve().then(() => this.cd.detectChanges());
-    this.formReset.emit(this.value);
+    if (emit) {
+      this.formReset.emit(this.value);
+    }
   }
 
   ngOnDestroy(): void {
