@@ -22,9 +22,8 @@ describe('NgAlainSchematic: plugin', () => {
 
       it(`should add scripts`, () => {
         const json = JSON.parse(tree.readContent('angular.json'));
-        expect(
-          json.projects.foo.architect.build.options.scripts.length,
-        ).toBeGreaterThan(0);
+        const scripts: string[] = json.projects.foo.architect.build.options.scripts || [];
+        expect(scripts.filter(w => w.includes('g2')).length).toBeGreaterThan(0);
       });
     });
 
@@ -39,9 +38,8 @@ describe('NgAlainSchematic: plugin', () => {
 
       it(`should add scripts`, () => {
         const json = JSON.parse(tree.readContent('angular.json'));
-        expect(json.projects.foo.architect.build.options.scripts.length).toBe(
-          0,
-        );
+        const scripts: string[] = json.projects.foo.architect.build.options.scripts || [];
+        expect(scripts.filter(w => w.includes('g2')).length).toBe(0);
       });
     });
   });

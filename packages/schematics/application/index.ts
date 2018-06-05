@@ -23,6 +23,7 @@ import {
   overwritePackage,
   getJSON,
   overwriteJSON,
+  scriptsToAngularJson,
 } from '../utils/json';
 import { VERSION, ZORROVERSION } from '../utils/lib-versions';
 import { overwriteFiles, addFiles } from '../utils/file';
@@ -70,6 +71,15 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       'screenfull@^3.3.1',
       'ajv@^6.4.0',
     ]);
+    // add ajv
+    scriptsToAngularJson(
+      host,
+      [
+        'node_modules/ajv/dist/ajv.bundle.js'
+      ],
+      'add',
+      ['build', 'test']
+    );
     // @delon/*
     addPackageToPackageJson(
       host,
