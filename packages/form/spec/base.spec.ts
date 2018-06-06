@@ -211,7 +211,8 @@ export class SFPage {
   }
 
   checkCount(cls: string, count: number): this {
-    expect(dl.queryAll(By.css(cls)).length).toBe(count);
+    const len = dl.queryAll(By.css(cls)).length;
+    expect(len).toBe(count);
     return this;
   }
 

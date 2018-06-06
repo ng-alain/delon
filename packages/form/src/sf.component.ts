@@ -83,6 +83,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   _btn: SFButton;
   _schema: SFSchema;
   _ui: SFUISchema;
+  private _renders = new Map<string, TemplateRef<any>>();
   private _item: any;
   private _valid = true;
   private _defUi: SFUISchemaItem;
@@ -369,10 +370,23 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   _addTpl(path: string, templateRef: TemplateRef<{}>) {
     const property = this.rootProperty.searchProperty(path);
     if (!property) {
-      console.warn(`未找到路径 ${path}`);
+      console.warn(`未找到路径：${path}`);
       return;
     }
-    (property.ui as SFUISchemaItemRun)._render = templateRef;
+    if (this._renders.has(path)) {
+      console.warn(`已经存在相同自定义路径：${path}`);
+      return;
+    }
+    this._renders.set(path, templateRef);
+    const pui: SFUISchemaItemRun = this.rootProperty.searchProperty(path).ui;
+    pui._render = templateRef;
+  }
+
+  private attachCustomRender() {
+    this._renders.forEach((tpl, path) => {
+      const pui: SFUISchemaItemRun = this.rootProperty.searchProperty(path).ui;
+      if (!pui._render) pui._render = tpl;
+    });
   }
 
   validator() {
@@ -409,6 +423,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       this._ui,
       this.formData,
     );
+    this.attachCustomRender();
 
     this.rootProperty.valueChanges.subscribe(value => {
       this._item = Object.assign({}, this.formData, value);

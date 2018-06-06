@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { deepCopy } from '@delon/util';
 import {
   builder,
@@ -50,5 +50,17 @@ describe('form: widget: custom', () => {
     }));
     page.newSchema(schema);
     expect(console.warn).toHaveBeenCalled();
+  });
+
+  it('#ng-alain-issues-492: should changed default data', () => {
+    ({ fixture, dl, context, page } = builder({
+      detectChanges: false,
+      template: `<sf [schema]="schema" [formData]="formData" #comp><ng-template sf-template="/a">custom:<div class="custom-el">{{ id }}</div></ng-template></sf>`
+    }));
+    page.newSchema(schema);
+    detectChanges().checkCount('.custom-el', 1);
+    context.formData = { a: 'test' };
+    fixture.detectChanges();
+    detectChanges().checkCount('.custom-el', 1);
   });
 });
