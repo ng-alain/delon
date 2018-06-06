@@ -54,7 +54,7 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
     this.filterOption = this.ui.filterOption || true;
     if (typeof this.filterOption === 'boolean') {
       this.filterOption = (input: string, option: SFSchemaEnum) =>
-        option.label.toLowerCase().indexOf(input.toLowerCase()) > -1;
+        option.label.toLowerCase().indexOf((input || '').toLowerCase()) > -1;
     }
 
     this.isAsync = !!this.ui.asyncData;
