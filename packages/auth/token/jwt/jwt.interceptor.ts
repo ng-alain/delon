@@ -1,5 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 import { HttpRequest } from '@angular/common/http';
 
 import { DelonAuthConfig } from '../../auth.config';

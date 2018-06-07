@@ -20,7 +20,6 @@ import { DOCUMENT } from '@angular/common';
 import { Subscription, combineLatest } from 'rxjs';
 import { filter, debounceTime } from 'rxjs/operators';
 import { toNumber, toBoolean } from '@delon/util';
-
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 
 import { ReuseTabService } from './reuse-tab.service';

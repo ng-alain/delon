@@ -1,6 +1,5 @@
 import {
   Component,
-  Directive,
   OnInit,
   Input,
   HostBinding,
@@ -12,7 +11,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/common';
 import { toNumber } from '@delon/util';
 import { AdErrorCollectConfig } from './error-collect.config';

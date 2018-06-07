@@ -1,17 +1,13 @@
 import {
   Component,
   Input,
-  HostBinding,
   ViewChild,
   ElementRef,
   OnInit,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
   NgZone,
-  TemplateRef,
   ChangeDetectionStrategy,
-  SimpleChange,
 } from '@angular/core';
 import { toNumber } from '@delon/util';
 
@@ -192,9 +188,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     if (this.chart) this.chart.destroy();
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
+  ngOnChanges(): void {
     if (this.initFlag) this.draw();
   }
 

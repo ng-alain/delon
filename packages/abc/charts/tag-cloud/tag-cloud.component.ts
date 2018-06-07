@@ -1,18 +1,12 @@
 import {
   Component,
   Input,
-  HostBinding,
   ViewChild,
   ElementRef,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
   NgZone,
-  TemplateRef,
   OnInit,
-  HostListener,
-  ViewEncapsulation,
-  SimpleChange,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
@@ -168,9 +162,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     );
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
+  ngOnChanges(): void {
     if (this.initFlag) {
       this.zone.runOutsideAngular(() =>
         setTimeout(() => this.renderChart(), 100),

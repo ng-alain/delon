@@ -1,4 +1,4 @@
-import { Injectable, Injector, Optional } from '@angular/core';
+import { Injector, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   HttpInterceptor,
@@ -9,7 +9,6 @@ import {
   HttpProgressEvent,
   HttpResponse,
   HttpUserEvent,
-  HttpHeaders,
   HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';

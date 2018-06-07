@@ -8,7 +8,7 @@ import {
   Output,
   HostBinding,
 } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { toNumber } from '@delon/util';
 
@@ -51,6 +51,7 @@ export class G2ChartComponent implements OnInit, OnDestroy {
   private renderChart() {
     this.el.nativeElement.innerHTML = '';
     this.render.emit(this.el);
+    this.installResizeEvent();
   }
 
   ngOnInit(): void {

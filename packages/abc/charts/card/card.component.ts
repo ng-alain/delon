@@ -1,9 +1,7 @@
 import {
   Component,
-  ViewEncapsulation,
   TemplateRef,
   Input,
-  ContentChild,
 } from '@angular/core';
 import { toBoolean } from '@delon/util';
 

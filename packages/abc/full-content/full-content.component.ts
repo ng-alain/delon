@@ -18,7 +18,7 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { toBoolean, toNumber } from '@delon/util';
 import { Subscription, fromEvent } from 'rxjs';
-import { debounceTime, filter, distinct } from 'rxjs/operators';
+import { debounceTime, filter } from 'rxjs/operators';
 import { FullContentService } from './full-content.service';
 import { Router, ActivationStart, ActivationEnd } from '@angular/router';
 

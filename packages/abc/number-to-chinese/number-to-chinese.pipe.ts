@@ -1,7 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
 import { numberToChinese } from './number-to-chinese';
-import { NumberToChineseOptions } from './interface';
 
 @Pipe({ name: 'n2c' })
 export class NumberToChinesePipe implements PipeTransform {

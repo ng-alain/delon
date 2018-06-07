@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, Inject } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { DelonMockConfig } from '../mock.config';
 import { MockCachedRule, MockRule } from './interface';
 

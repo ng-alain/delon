@@ -1,14 +1,10 @@
 import {
   Component,
-  ViewEncapsulation,
   TemplateRef,
   Input,
-  ContentChild,
   ElementRef,
   Renderer2,
-  SimpleChanges,
   OnChanges,
-  SimpleChange,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -116,9 +112,7 @@ export class NumberInfoComponent implements OnChanges {
     this.cd.detectChanges();
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
+  ngOnChanges(): void {
     this.setClass();
   }
 }

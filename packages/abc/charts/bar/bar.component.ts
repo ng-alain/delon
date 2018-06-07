@@ -6,15 +6,13 @@ import {
   ElementRef,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
   NgZone,
   TemplateRef,
   OnInit,
-  HostListener,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { toBoolean, toNumber } from '@delon/util';
 
@@ -23,6 +21,7 @@ import { toBoolean, toNumber } from '@delon/util';
   template: `
   <ng-container *ngIf="_title; else _titleTpl"><h4>{{_title}}</h4></ng-container>
   <div #container></div>`,
+  host: { '[class.g2-chart]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -64,8 +63,6 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
   private _autoLabel = true;
 
   // endregion
-
-  @HostBinding('class.g2-chart') private _cls = true;
 
   @ViewChild('container') private node: ElementRef;
 
@@ -142,7 +139,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
     this.installResizeEvent();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.resize();
   }
 

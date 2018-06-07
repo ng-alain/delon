@@ -8,7 +8,6 @@ import {
   ContentChild,
   ElementRef,
   Renderer2,
-  HostBinding,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { toBoolean } from '@delon/util';

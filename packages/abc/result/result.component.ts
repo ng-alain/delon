@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, ContentChild } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'result',

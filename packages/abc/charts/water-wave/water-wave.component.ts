@@ -1,23 +1,18 @@
 import {
   Component,
   Input,
-  HostBinding,
   ViewChild,
   ElementRef,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
   NgZone,
   TemplateRef,
   OnInit,
-  HostListener,
-  ViewEncapsulation,
   Renderer2,
-  SimpleChange,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { toNumber } from '@delon/util';
 
@@ -241,9 +236,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     });
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
+  ngOnChanges(): void {
     if (this.initFlag) {
       this.cd.detectChanges();
       this.zone.runOutsideAngular(() => this.renderChart());
@@ -256,9 +249,6 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     this.uninstall();
   }
 
-  // region: resize
-
-  private autoHideXLabels = false;
   private scroll$: Subscription = null;
   private installResizeEvent() {
     if (this.scroll$) return;

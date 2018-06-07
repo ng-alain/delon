@@ -1,16 +1,13 @@
 import {
   Component,
   Input,
-  HostBinding,
   ViewChild,
   ElementRef,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
   NgZone,
   OnInit,
   TemplateRef,
-  SimpleChange,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   AfterViewInit,
@@ -26,7 +23,8 @@ import { toNumber } from '@delon/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit, AfterViewInit {
+export class G2TimelineComponent
+  implements OnDestroy, OnChanges, OnInit, AfterViewInit {
   // region: fields
 
   _title = '';
@@ -47,10 +45,8 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit, AfterV
   @Input()
   colorMap: { y1: string; y2: string } = { y1: '#1890FF', y2: '#2FC25B' };
 
-  @Input()
-  mask: string = 'HH:mm';
-  @Input()
-  position: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  @Input() mask: string = 'HH:mm';
+  @Input() position: 'top' | 'right' | 'bottom' | 'left' = 'top';
 
   @Input()
   get height() {
@@ -81,8 +77,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit, AfterV
   initFlag = false;
   slider: any;
 
-  constructor(private cd: ChangeDetectorRef, private zone: NgZone) {
-  }
+  constructor(private cd: ChangeDetectorRef, private zone: NgZone) {}
 
   ngOnInit(): void {
     this.initFlag = true;
@@ -220,9 +215,7 @@ export class G2TimelineComponent implements OnDestroy, OnChanges, OnInit, AfterV
     if (this.slider) this.slider.destroy();
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
+  ngOnChanges(): void {
     if (this.initFlag) this.runInstall();
   }
 

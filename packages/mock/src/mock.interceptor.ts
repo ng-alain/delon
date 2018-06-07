@@ -8,9 +8,7 @@ import {
   HttpProgressEvent,
   HttpResponse,
   HttpUserEvent,
-  HttpHeaders,
   HttpErrorResponse,
-  HttpEventType,
   HttpEvent,
 } from '@angular/common/http';
 import { Observable, Observer, of } from 'rxjs';

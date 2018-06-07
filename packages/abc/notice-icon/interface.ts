@@ -1,8 +1,3 @@
-export interface NoticeIconClick {
-  item: NoticeItem;
-  title: string;
-}
-
 export interface NoticeItem {
   title: string;
   list: NoticeIconList[];

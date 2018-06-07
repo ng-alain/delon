@@ -1,15 +1,12 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpClient,
   HttpHeaders,
   HttpParams,
   HttpResponse,
-  HttpEvent,
-  HttpRequest,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import * as parse from 'date-fns/parse';
 
 /**
  * 封装HttpClient，主要解决：

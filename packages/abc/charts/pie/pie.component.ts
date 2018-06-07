@@ -6,20 +6,13 @@ import {
   ElementRef,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
   NgZone,
-  TemplateRef,
   OnInit,
-  HostListener,
-  ViewEncapsulation,
-  Output,
-  EventEmitter,
-  ContentChild,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   AfterViewInit,
 } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
+import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { toNumber, toBoolean } from '@delon/util';
 
@@ -261,7 +254,7 @@ export class G2PieComponent
     this.legendData[i].checked = !this.legendData[i].checked;
 
     if (this.chart) {
-      this.chart.filter('x', (val: any, item: any) => item.checked);
+      this.chart.filter('x', (item: any) => item.checked);
       this.chart.repaint();
     }
   }
@@ -275,7 +268,7 @@ export class G2PieComponent
     this.runInstall();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.initFlag) this.runInstall();
   }
 

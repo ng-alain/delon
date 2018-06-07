@@ -1,13 +1,11 @@
 import {
   Component,
   Input,
-  ViewEncapsulation,
   ElementRef,
   Renderer2,
   OnChanges,
   SimpleChanges,
   OnInit,
-  ContentChild,
   TemplateRef,
   ContentChildren,
   QueryList,

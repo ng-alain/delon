@@ -12,9 +12,6 @@ import {
   ElementRef,
   TemplateRef,
   SimpleChange,
-  QueryList,
-  ViewChildren,
-  ContentChildren,
   ContentChild,
   Optional,
 } from '@angular/core';
@@ -48,7 +45,6 @@ import {
   SimpleTableMultiSort,
 } from './interface';
 import { AdSimpleTableConfig } from './simple-table.config';
-import { SimpleTableRowDirective } from './simple-table-row.directive';
 import { SimpleTableExport } from './simple-table-export';
 
 @Component({
@@ -748,7 +744,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     return this;
   }
 
-  _refRadio(idx: number, checked: boolean, item: SimpleTableData): this {
+  _refRadio(checked: boolean, item: SimpleTableData): this {
     // if (item.disabled === true) return;
     this._data.filter(w => !w.disabled).forEach(i => (i.checked = false));
     item.checked = checked;

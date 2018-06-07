@@ -1,18 +1,7 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  HostListener,
-  HostBinding,
-  ViewEncapsulation,
-  ViewChildren,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { toNumber, toBoolean } from '@delon/util';
 
-import { NoticeItem, NoticeIconClick } from './interface';
+import { NoticeItem } from './interface';
 
 @Component({
   selector: 'notice-icon',

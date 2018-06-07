@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Overlay,
-  OverlayRef,
-  ScrollStrategyOptions,
-} from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Subscription, Subject } from 'rxjs';
 
