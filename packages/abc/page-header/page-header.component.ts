@@ -7,17 +7,21 @@ import {
   OnChanges,
   Inject,
   Optional,
-  SimpleChange,
-  SimpleChanges,
   ViewChild,
   ElementRef,
   AfterViewInit,
   Renderer2,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { toBoolean } from '@delon/util';
-import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService, Menu } from '@delon/theme';
-import { isEmpty } from '@delon/util';
+import { Router } from '@angular/router';
+import { toBoolean, isEmpty } from '@delon/util';
+import {
+  MenuService,
+  ALAIN_I18N_TOKEN,
+  AlainI18NService,
+  Menu,
+  TitleService,
+} from '@delon/theme';
+import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 import { AdPageHeaderConfig } from './page-header.config';
 
@@ -54,6 +58,7 @@ import { AdPageHeaderConfig } from './page-header.config';
   preserveWhitespaces: false,
 })
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
+  private inited = false;
   @ViewChild('conTpl') private conTpl: ElementRef;
   private _menus: Menu[];
 
@@ -100,6 +105,18 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
   private _autoTitle = true;
 
+  /**
+   * 是否自动将标准信息同步至 `TitleService`、`ReuseService` 下
+   */
+  @Input()
+  get titleSync() {
+    return this._titleSync;
+  }
+  set titleSync(value: any) {
+    this._titleSync = toBoolean(value);
+  }
+  private _titleSync = false;
+
   paths: any[] = [];
 
   @ContentChild('breadcrumb') breadcrumb: TemplateRef<any>;
@@ -124,12 +141,19 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
+    @Optional()
+    @Inject(TitleService)
+    private titleSrv: TitleService,
+    @Optional()
+    @Inject(ReuseTabService)
+    private reuseSrv: ReuseTabService,
   ) {
     Object.assign(this, cog);
   }
 
-  genBreadcrumb() {
-    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0) return;
+  private genBreadcrumb() {
+    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0)
+      return;
     const paths: any[] = [];
     this.menus.forEach(item => {
       if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb)
@@ -150,14 +174,31 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
       });
     }
     this.paths = paths;
+    return this;
   }
 
-  genTitle() {
-    if (typeof this.title !== 'undefined' || !this.autoTitle || this.menus.length <= 0) return ;
-    const item = this.menus[this.menus.length - 1];
-    let title = item.text;
-    if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-    this.title = title;
+  private setTitle() {
+    if (
+      typeof this.title === 'undefined' &&
+      this.autoTitle &&
+      this.menus.length > 0
+    ) {
+      const item = this.menus[this.menus.length - 1];
+      let title = item.text;
+      if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
+      this.title = title;
+    }
+
+    if (this.titleSync) {
+      if (this.titleSrv) {
+        this.titleSrv.setTitle(this.title);
+      }
+      if (this.reuseSrv) {
+        this.reuseSrv.title = this.title;
+      }
+    }
+
+    return this;
   }
 
   checkContent() {
@@ -169,21 +210,15 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit() {
-    this.genTitle();
-    this.genBreadcrumb();
+    this.setTitle().genBreadcrumb();
+    this.inited = true;
   }
 
   ngAfterViewInit(): void {
     this.checkContent();
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
-    if (changes.autoBreadcrumb && !changes.autoBreadcrumb.firstChange)
-      this.genBreadcrumb();
-
-    if (changes.autoTitle && !changes.autoTitle.firstChange)
-      this.genTitle();
+  ngOnChanges(): void {
+    if (this.inited) this.setTitle().genBreadcrumb();
   }
 }

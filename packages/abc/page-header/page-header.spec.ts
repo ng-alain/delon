@@ -15,12 +15,14 @@ import {
   AlainThemeModule,
   AlainI18NService,
   ALAIN_I18N_TOKEN,
+  TitleService,
 } from '@delon/theme';
 import { DelonACLModule } from '@delon/acl';
 
 import { AdPageHeaderModule } from './page-header.module';
 import { PageHeaderComponent } from './page-header.component';
 import { AdPageHeaderConfig } from './page-header.config';
+import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 describe('abc: page-header', () => {
   let injector: Injector;
@@ -219,7 +221,7 @@ describe('abc: page-header', () => {
 
     it('should be auto generate title via menu data', () => {
       const text = 'asdf';
-      spyOn(menuSrv, 'getPathByUrl').and.returnValue([ { text } ]);
+      spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text }]);
       fixture.detectChanges();
       checkValue('.title', text);
     });
@@ -227,16 +229,51 @@ describe('abc: page-header', () => {
     it('support i18n', () => {
       const text = 'asdf';
       const i18n = 'i18n';
-      spyOn(menuSrv, 'getPathByUrl').and.returnValue([ { text, i18n } ]);
+      spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
       fixture.detectChanges();
       checkValue('.title', i18n);
+    });
+  });
+
+  describe('[auto sync title]', () => {
+    class MockTitle {
+      setTitle = jasmine.createSpy()
+    }
+    class MockReuse {
+      set title(val: string) {}
+      get title(): string { return ''; }
+    }
+    let titleSrv: TitleService;
+    let reuseSrv: ReuseTabService;
+    beforeEach(() => {
+      TestBed.overrideProvider(TitleService, {
+        useFactory: () => new MockTitle(),
+        deps: [],
+      });
+      TestBed.overrideProvider(ReuseTabService, {
+        useFactory: () => new MockReuse(),
+        deps: [],
+      });
+      createComp();
+      titleSrv = injector.get(TitleService);
+      reuseSrv = injector.get(ReuseTabService);
+
+      context.titleSync = true;
+    });
+
+    it('should be auto sync title of document and result-tab', () => {
+      const spyReuseTitle = spyOnProperty(reuseSrv, 'title', 'set').and.callThrough();
+      context.title = 'test';
+      fixture.detectChanges();
+      expect(titleSrv.setTitle).toHaveBeenCalled();
+      expect(spyReuseTitle).toHaveBeenCalled();
     });
   });
 });
 
 @Component({
   template: `
-    <page-header #comp [title]="title" [autoTitle]="autoTitle"
+    <page-header #comp [title]="title" [autoTitle]="autoTitle" [titleSync]="titleSync"
         [autoBreadcrumb]="autoBreadcrumb" [home]="home" [home_i18n]="home_i18n" [home_link]="home_link">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
@@ -255,4 +292,5 @@ class TestComponent {
   home: string;
   home_link: string;
   home_i18n: string;
+  titleSync: boolean;
 }

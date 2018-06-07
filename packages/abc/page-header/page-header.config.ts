@@ -22,4 +22,8 @@ export class AdPageHeaderConfig {
    * 自动生成标题，以当前路由从主菜单中定位
    */
   autoTitle?: boolean = true;
+  /**
+   * 是否自动将标准信息同步至 `TitleService`、`ReuseService` 下
+   */
+  titleSync?: boolean = false;
 }
