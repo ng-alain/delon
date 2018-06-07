@@ -17,7 +17,7 @@ import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
  * 设置标题
  * @see http://ng-alain.com/docs/service#TitleService
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TitleService implements OnDestroy {
   private _prefix = '';
   private _suffix = '';

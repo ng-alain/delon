@@ -7,7 +7,7 @@ import { ACLService } from '@delon/acl';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
 import { Menu } from './interface';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MenuService implements OnDestroy {
   private _change$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
   private i18n$: Subscription;

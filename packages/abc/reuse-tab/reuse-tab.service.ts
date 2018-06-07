@@ -1,20 +1,7 @@
-import {
-  Injectable,
-  OnDestroy,
-  Optional,
-  Injector,
-  Inject,
-} from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  DetachedRouteHandle,
-  ActivatedRoute,
-} from '@angular/router';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-
-import { MenuService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
-
+import { Injectable, OnDestroy, Optional, Injector } from '@angular/core';
+import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { MenuService } from '@delon/theme';
 import {
   ReuseTabCached,
   ReuseTabMatchMode,
@@ -27,7 +14,7 @@ import {
  *
  * **注：** 所有缓存数据来源于路由离开后才会产生
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ReuseTabService implements OnDestroy {
   private _max = 10;
   private _debug = false;

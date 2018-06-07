@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { ReuseTabComponent } from './reuse-tab.component';
-import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabContextComponent } from './reuse-tab-context.component';
 import { ReuseTabContextDirective } from './reuse-tab-context.directive';
 import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
@@ -28,9 +27,6 @@ export class AdReuseTabModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AdReuseTabModule,
-      providers: [
-        ReuseTabService
-      ],
     };
   }
 }

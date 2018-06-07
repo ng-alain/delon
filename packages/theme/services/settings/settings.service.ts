@@ -5,7 +5,7 @@ const LAYOUT_KEY = 'layout';
 const USER_KEY = 'user';
 const APP_KEY = 'app';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SettingsService {
   private _app: App = null;
   private _user: User = null;

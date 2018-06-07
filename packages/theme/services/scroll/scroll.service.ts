@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { WINDOW } from '../../win_tokens';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ScrollService {
   constructor(
     @Inject(WINDOW) private win: any,

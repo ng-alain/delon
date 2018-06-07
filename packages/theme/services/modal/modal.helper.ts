@@ -6,7 +6,7 @@ import { NzModalService, ModalOptionsForService } from 'ng-zorro-antd';
 /**
  * 对话框辅助类
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ModalHelper {
   private zIndex = 500;
 

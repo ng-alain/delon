@@ -18,7 +18,7 @@ export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>(
   'alainTranslatorToken',
 );
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AlainI18NServiceFake implements AlainI18NService {
   private change$ = new BehaviorSubject<string>(null);
 
