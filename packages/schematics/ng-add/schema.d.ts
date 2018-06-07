@@ -6,4 +6,5 @@ export interface Schema {
   codeStyle?: boolean;
   npm?: boolean;
   yarn?: boolean;
+  hmr?: boolean;
 }

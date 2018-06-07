@@ -38,6 +38,11 @@
       "type": "boolean",
       "description": "usage yarn install dependencies",
       "default": false
+    },
+    "hmr": {
+      "type": "boolean",
+      "description": "Generates hmr files and configuration",
+      "default": false
     }
   }
 }

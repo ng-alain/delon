@@ -20,9 +20,10 @@ ng add ng-alain <project name>
 `--codeStyle` | `false` | 是否需要代码风格
 `--i18n` | `false` | 是否需要国际化支持
 `--g2` | `false` | 是否需要 G2 图表
+`--hmr` | `false` | 是否需要 hmr 热替换（待发布）
 
-例如生成一个带有国际化的项目：
+例如生成一个带有国际化和HMR热替换项目：
 
 ```bash
-ng add ng-alain demo --i18n
+ng add ng-alain demo --i18n --hmr
 ```

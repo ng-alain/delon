@@ -3,7 +3,6 @@ import { PluginOptions } from './interface';
 import {
   addPackageToPackageJson,
   removePackageFromPackageJson,
-  scriptsToAngularJson,
 } from '../utils/json';
 
 export function pluginCodeStyle(options: PluginOptions): any {

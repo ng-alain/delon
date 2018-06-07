@@ -120,23 +120,23 @@ function addImportToModule(
   host.commitUpdate(declarationRecorder);
 }
 
-function addComponentToModule(
+export function addValueToVariable(
   host: Tree,
   path: string,
-  varName: string,
-  value: string,
+  variableName: string,
+  text: string,
 ) {
   const source = getTsSource(host, path);
-  const node = findNode(source, ts.SyntaxKind.Identifier, varName);
+  const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
-    throw new SchematicsException(`Could not find any [${varName}] variable.`);
+    throw new SchematicsException(`Could not find any [${variableName}] variable.`);
   }
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
 
   const change = new InsertChange(
     path,
     arr.end - 1,
-    `${arr.elements.length <= 0 ? '' : ','}\n  ${value}`,
+    `${arr.elements && arr.elements.length > 0 ? ',' : ''}\n  ${text}`,
   );
 
   const declarationRecorder = host.beginUpdate(path);
@@ -169,14 +169,19 @@ function addDeclaration(schema: CommonSchema) {
 
     // component
     if (schema.modal === true) {
-      addComponentToModule(
+      addValueToVariable(
         host,
         schema.importModulePath,
         'COMPONENTS_NOROUNT',
         schema.componentName,
       );
     } else {
-      addComponentToModule(host, schema.importModulePath, 'COMPONENTS', schema.componentName);
+      addValueToVariable(
+        host,
+        schema.importModulePath,
+        'COMPONENTS',
+        schema.componentName,
+      );
       // routing
       addImportToModule(
         host,
@@ -184,7 +189,7 @@ function addDeclaration(schema: CommonSchema) {
         schema.componentName,
         getRelativePath(schema.routerModulePath, schema),
       );
-      addComponentToModule(
+      addValueToVariable(
         host,
         schema.routerModulePath,
         'routes',
@@ -209,7 +214,9 @@ export function buildAlain(schema: CommonSchema): Rule {
 
     resolveSchema(host, project, schema);
 
-    schema.componentName = strings.classify(`${schema.module}-${schema.name}-Component`);
+    schema.componentName = strings.classify(
+      `${schema.module}-${schema.name}-Component`,
+    );
 
     const templateSource = apply(url('./files'), [
       schema.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),
@@ -231,4 +238,11 @@ export function buildAlain(schema: CommonSchema): Rule {
       ),
     ])(host, context);
   };
+}
+
+export function tryAddFile(host: Tree, path: string, content: string) {
+  if (host.exists(path)) {
+    host.delete(path);
+  }
+  host.create(path, content);
 }

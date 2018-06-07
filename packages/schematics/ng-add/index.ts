@@ -33,5 +33,9 @@ export default function(options: NgAddOptions): Rule {
     rules.push(schematic('plugin', { name: 'yarn', type: 'add' }));
   }
 
+  if (options.hmr) {
+    rules.push(schematic('plugin', { name: 'hmr', type: 'add' }));
+  }
+
   return chain(rules);
 }
