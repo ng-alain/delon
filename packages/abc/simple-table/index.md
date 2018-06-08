@@ -127,7 +127,7 @@ disabled? | 选择框或单选框 `disabled` 值 | `boolean` | -
 ----|------|-----|------
 title | 表格标题 | `string` | -
 i18n? | 表格标题i18n | `string` | -
-type? | `checkbox` 多选；`radio` 单选；`link` 链接，可触发 `click`；`img` 图像且居中；`number` 数字且居右；`currency` 货币且居右；`date` 日期格式且居中；`yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn) | `string` | -
+type? | `checkbox` 多选；`radio` 单选；`link` 链接，可触发 `click`；`img` 图像且居中；`number` 数字且居右；`currency` 货币且居右；`date` 日期格式且居中；`badge` [徽标](https://ng.ant.design/components/badge/zh)；`yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn) | `string` | -
 index? | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | -
 render? | 自定义渲染ID | `string` | -
 renderTitle? | 标题自定义渲染ID | `string` | -
@@ -160,6 +160,7 @@ ynNo? | 徽章 `false` 时文本，`type=yn` 有效 | `string` | `否`
 exported? | 是否允许导出 | `boolean` | `true`
 acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
 click | 链接回调 | `(record: any, instance?: SimpleTableComponent) => void` | -
+badge | 徽标配置项 | `SimpleTableBadge` | -
 
 ### SimpleTableButton
 
@@ -197,3 +198,10 @@ text | 文本 | `string` | -
 value | 值 | `any` | -
 checked? | 是否选中 | `boolean` | -
 acl? | ACL权限，等同 `can()` 参数值 | `boolean` | -
+
+### SimpleTableBadge
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+text? | 文本 | `string` | -
+color? | 徽标颜色值 | `success,processing,default,error,warning` | -

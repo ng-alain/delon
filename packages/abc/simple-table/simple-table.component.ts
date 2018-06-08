@@ -395,7 +395,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   load(pi = 1, extraParams?: any) {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
-      this.extraParams = extraParams || null;
+      this.extraParams = extraParams;
     }
     this._change('pi');
   }
@@ -572,6 +572,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   private subscribeData(res: any[]) {
     if (this.preDataChange) res = this.preDataChange(res);
     this.loading = false;
+    for (const i of res) {
+      i._values = this._columns.map(c => this._get(i, c));
+    }
     this._data = res;
     this._refCheck();
   }
@@ -816,6 +819,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       if (typeof clickRes === 'string') {
         this.router.navigateByUrl(clickRes);
       }
+      return ;
     }
     this.btnCallback(record, btn);
   }
@@ -940,6 +944,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         item.ynTruth = true;
       }
       if (item.type === 'link' && typeof item.click !== 'function') {
+        (item as any).type = '';
+      }
+      if (item.type === 'badge' && typeof item.badge === 'undefined') {
         (item as any).type = '';
       }
       if (!item.className) {

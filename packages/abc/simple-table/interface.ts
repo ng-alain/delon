@@ -28,6 +28,7 @@ export interface SimpleTableColumn {
    * - `checkbox` 多选
    * - `radio` 单选
    * - `link` 链接，务必指定 `click`
+   * - `badge` [徽标](https://ng.ant.design/components/badge/zh)，务必指定 `badge` 参数配置徽标对应值
    * - `img` 图片且居中(若 `className` 存在则优先)
    * - `number` 数字且居右(若 `className` 存在则优先)
    * - `currency` 货币且居右(若 `className` 存在则优先)
@@ -37,6 +38,7 @@ export interface SimpleTableColumn {
   type?:
     | 'checkbox'
     | 'link'
+    | 'badge'
     | 'radio'
     | 'img'
     | 'currency'
@@ -211,6 +213,11 @@ export interface SimpleTableColumn {
    * - 建议指定 `scroll.x` 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 `scroll.x`
    */
   fixed?: 'left' | 'right';
+
+  /**
+   * 徽标配置项
+   */
+  badge?: SimpleTableBadge;
 
   [key: string]: any;
 }
@@ -399,4 +406,23 @@ export interface SimpleTableMultiSort {
   separator?: string;
   /** 列名与状态间分隔符，默认：`.` */
   name_separator?: string;
+}
+
+/**
+ * 徽标信息
+ */
+export interface SimpleTableBadge {
+  [key: number]: SimpleTableBadgeValue;
+  [key: string]: SimpleTableBadgeValue;
+}
+
+export interface SimpleTableBadgeValue {
+  /**
+   * 文本
+   */
+  text?: string;
+  /**
+   * 徽标颜色值
+   */
+  color?: 'success' | 'processing' | 'default' | 'error' | 'warning';
 }

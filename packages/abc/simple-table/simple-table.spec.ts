@@ -7,7 +7,6 @@ import {
   TestBed,
   ComponentFixture,
   fakeAsync,
-  tick,
   discardPeriodicTasks,
 } from '@angular/core/testing';
 import {
@@ -15,10 +14,8 @@ import {
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-import { NgZorroAntdModule, NzDropDownDirective, NzPaginationComponent } from 'ng-zorro-antd';
+import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 import {
-  CNCurrencyPipe,
-  YNPipe,
   ModalHelper,
   AlainThemeModule,
   ALAIN_I18N_TOKEN,
@@ -34,6 +31,7 @@ import {
   ResReNameType,
   SimpleTableMultiSort,
   SimpleTableData,
+  SimpleTableBadge,
 } from './interface';
 import { AdSimpleTableModule } from './simple-table.module';
 import { SimpleTableComponent } from './simple-table.component';
@@ -62,6 +60,7 @@ function genData(count: number) {
         date: MOCKDATE,
         img: MOCKIMG,
         num: 11111111111.4556,
+        status: Math.floor(Math.random() * 5) + 1,
         prices: {
           fix: `fix${idx + 1}`,
           total: Math.ceil(Math.random() * 10) + 200,
@@ -422,6 +421,25 @@ describe('abc: simple-table', () => {
           });
         });
       });
+      describe('with badge', () => {
+        const STATUS: SimpleTableBadge = {
+          1: { text: 'Success', color: 'success' },
+          2: { text: 'Error', color: 'error' },
+          3: { text: 'Processing', color: 'processing' },
+          4: { text: 'Default', color: 'default' },
+          5: { text: 'Warning', color: 'warning' },
+        };
+        it(`should be render badge`, () => {
+          page
+            .newColumn([{ title: '', index: 'status', type: 'badge', badge: STATUS }])
+            .expectElCount('.ant-badge', PS);
+        });
+        it(`should be render text when badge is undefined`, () => {
+          page
+            .newColumn([{ title: '', index: 'status', type: 'badge' }])
+            .expectElCount('.ant-badge', 0);
+        });
+      });
       describe('[other]', () => {
         it('should throw error when is null', () => {
           expect(() => {
@@ -605,19 +623,35 @@ describe('abc: simple-table', () => {
             expect(columns[0].buttons[0].click).toHaveBeenCalled();
             mock$.unsubscribe();
           });
-          it('#link', () => {
-            const columns: SimpleTableColumn[] = [
-              {
-                title: '',
-                buttons: [ { text: 'a', type: 'link', click: (item: any) => '/a' } ]
-              },
-            ];
-            const router = injector.get(Router);
-            spyOn(router, 'navigateByUrl');
-            page.newColumn(columns);
-            expect(router.navigateByUrl).not.toHaveBeenCalled();
-            page.clickCell('a');
-            expect(router.navigateByUrl).toHaveBeenCalled();
+          describe('#link', () => {
+            it('should be trigger click', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [ { text: 'a', type: 'link', click: () => null } ]
+                },
+              ];
+              const router = injector.get(Router);
+              spyOn(router, 'navigateByUrl');
+              page.newColumn(columns);
+              expect(router.navigateByUrl).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(router.navigateByUrl).not.toHaveBeenCalled();
+            });
+            it('should be navigate when return a string value', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [ { text: 'a', type: 'link', click: (item: any) => '/a' } ]
+                },
+              ];
+              const router = injector.get(Router);
+              spyOn(router, 'navigateByUrl');
+              page.newColumn(columns);
+              expect(router.navigateByUrl).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(router.navigateByUrl).toHaveBeenCalled();
+            });
           });
         });
       });

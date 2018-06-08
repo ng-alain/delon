@@ -1,24 +1,7 @@
-<nz-table
-  [nzData]="_data"
-  [(nzPageIndex)]="pi"
-  (nzPageIndexChange)="_change('pi')"
-  [(nzPageSize)]="ps"
-  (nzPageSizeChange)="_change('ps')"
-  [nzTotal]="total"
-  [nzShowPagination]="_isPagination"
-  [nzFrontPagination]="false"
-  [nzBordered]="bordered"
-  [nzSize]="size"
-  [nzLoading]="loading"
-  [nzLoadingDelay]="loadingDelay"
-  [nzScroll]="scroll"
-  [nzTitle]="header"
-  [nzFooter]="footer"
-  [nzNoResult]="noResult"
-  [nzPageSizeOptions]="pageSizeOptions"
-  [nzShowQuickJumper]="showQuickJumper"
-  [nzShowSizeChanger]="showSizeChanger"
-  [nzShowTotal]="totalTpl">
+<nz-table [nzData]="_data" [(nzPageIndex)]="pi" (nzPageIndexChange)="_change('pi')" [(nzPageSize)]="ps" (nzPageSizeChange)="_change('ps')"
+  [nzTotal]="total" [nzShowPagination]="_isPagination" [nzFrontPagination]="false" [nzBordered]="bordered" [nzSize]="size"
+  [nzLoading]="loading" [nzLoadingDelay]="loadingDelay" [nzScroll]="scroll" [nzTitle]="header" [nzFooter]="footer" [nzNoResult]="noResult"
+  [nzPageSizeOptions]="pageSizeOptions" [nzShowQuickJumper]="showQuickJumper" [nzShowSizeChanger]="showSizeChanger" [nzShowTotal]="totalTpl">
   <thead class="ad-st-head">
     <tr>
       <th *ngIf="expand" [nzShowExpand]="expand"></th>
@@ -44,7 +27,8 @@
               <span [innerHTML]="c.title"></span>
             </ng-container>
           </ng-container>
-          <nz-dropdown class="ad-st-filter" *ngIf="c.filters.length > 0" nzTrigger="click" [hasFilterButton]="true" [nzClickHide]="false" [(nzVisible)]="c.filterVisible">
+          <nz-dropdown class="ad-st-filter" *ngIf="c.filters.length > 0" nzTrigger="click" [hasFilterButton]="true" [nzClickHide]="false"
+            [(nzVisible)]="c.filterVisible">
             <i class="{{c.filterIcon}}" [ngClass]="{'ant-table-filter-selected': c.filtered}" nz-dropdown></i>
             <ul nz-menu>
               <ng-container *ngIf="c.filterMultiple">
@@ -75,7 +59,7 @@
     <ng-container *ngFor="let i of _data; let index=index">
       <tr [attr.data-index]="index">
         <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand"></td>
-        <td *ngFor="let c of _columns" [nzLeft]="c._left" [nzRight]="c._right" [nzCheckbox]="c.type === 'checkbox'" [ngClass]="c.className"
+        <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right" [nzCheckbox]="c.type === 'checkbox'" [ngClass]="c.className"
           [attr.colspan]="c.colSpan">
           <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
           <ng-container *ngIf="!c.__render; else render">
@@ -87,9 +71,12 @@
                 <label nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_refRadio($event, i)"></label>
               </ng-container>
               <ng-container *ngSwitchCase="'link'">
-                <a (click)="_click($event, i, c)" [innerHTML]="_get(i, c)"></a>
+                <a (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx]"></a>
               </ng-container>
-              <span *ngSwitchDefault [innerHTML]="_get(i, c)"></span>
+              <ng-container *ngSwitchCase="'badge'">
+                <nz-badge [nzStatus]="c.badge[i._values[cIdx]].color" [nzText]="c.badge[i._values[cIdx]].text || i._values[cIdx]"></nz-badge>
+              </ng-container>
+              <span *ngSwitchDefault [innerHTML]="i._values[cIdx]"></span>
             </ng-container>
             <ng-container *ngFor="let btn of c.buttons; let last=last">
               <ng-container *ngIf="btn.iif(i, btn, c)" [ngSwitch]="btn._type">
