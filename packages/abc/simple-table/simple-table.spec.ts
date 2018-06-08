@@ -1073,14 +1073,17 @@ describe('abc: simple-table', () => {
             context.total = total;
           });
           it('should be full control', () => {
-            context.data = genData(total);
+            context.data = genData(ps);
+            context.change = () => {
+              context.data = genData(ps);
+              fixture.detectChanges();
+            };
             fixture.detectChanges();
             page
               .expectCurrentPageTotal(ps) // 当前页多少条
               .expectTotalPage(maxPageIndex) // 总页数
               .go(maxPageIndex) // 跳转最后一页
-              .expectCurrentPageTotal(total - (ps * (maxPageIndex - 1))); // 剩余多少条
-            expect(context.change).toHaveBeenCalled();
+              .expectCurrentPageTotal(ps); // 剩余多少条，始终由 `change` 返回决定
           });
           it('should be fixed total number, ignoring the data length', () => {
             context.data = genData(1);

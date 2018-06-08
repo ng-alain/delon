@@ -94,7 +94,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   }
   private _reqReName: ReqReNameType = { pi: 'pi', ps: 'ps' };
   /** 请求异常时回调 */
-  @Output() reqError: EventEmitter<any> = new EventEmitter<any>();
+  @Output() readonly reqError: EventEmitter<any> = new EventEmitter<any>();
   /**
    * 重命名返回参数 `total`、`list`
    * - `{ total: 'Total' }` => Total 会被当作 `total`
@@ -307,24 +307,24 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   @Input() widthConfig: string[];
   /** 页码、每页数量变化时回调 */
   @Output()
-  change: EventEmitter<SimpleTableChange> = new EventEmitter<
+  readonly change: EventEmitter<SimpleTableChange> = new EventEmitter<
     SimpleTableChange
   >();
   /** checkbox变化时回调，参数为当前所选清单 */
   @Output()
-  checkboxChange: EventEmitter<SimpleTableData[]> = new EventEmitter<
+  readonly checkboxChange: EventEmitter<SimpleTableData[]> = new EventEmitter<
     SimpleTableData[]
   >();
   /** radio变化时回调，参数为当前所选 */
   @Output()
-  radioChange: EventEmitter<SimpleTableData> = new EventEmitter<
+  readonly radioChange: EventEmitter<SimpleTableData> = new EventEmitter<
     SimpleTableData
   >();
   /** 排序回调 */
-  @Output() sortChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() readonly sortChange: EventEmitter<any> = new EventEmitter<any>();
   /** Filter回调 */
   @Output()
-  filterChange: EventEmitter<SimpleTableColumn> = new EventEmitter<
+  readonly filterChange: EventEmitter<SimpleTableColumn> = new EventEmitter<
     SimpleTableColumn
   >();
 
@@ -352,6 +352,37 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   // region: data
+
+  /**
+   * 根据页码重新加载数据
+   *
+   * @param pi 指定当前页码，默认：`1`
+   * @param extraParams 重新指定 `extraParams` 值
+   */
+  load(pi = 1, extraParams?: any) {
+    if (pi !== -1) this.pi = pi;
+    if (typeof extraParams !== 'undefined') {
+      this.extraParams = extraParams;
+    }
+    this._change('pi');
+  }
+
+  /**
+   * 重新刷新当前页
+   * @param extraParams 重新指定 `extraParams` 值
+   */
+  reload(extraParams?: any) {
+    this.load(-1, extraParams);
+  }
+
+  /**
+   * 重置且重新设置 `pi` 为 `1`
+   *
+   * @param extraParams 重新指定 `extraParams` 值
+   */
+  reset(extraParams?: any) {
+    this.load(1, extraParams);
+  }
 
   private getAjaxData(url?: string): Observable<any> {
     const params: any = Object.assign(
@@ -386,51 +417,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       );
   }
 
-  /**
-   * 根据页码重新加载数据
-   *
-   * @param pi 指定当前页码，默认：`1`
-   * @param extraParams 重新指定 `extraParams` 值
-   */
-  load(pi = 1, extraParams?: any) {
-    if (pi !== -1) this.pi = pi;
-    if (typeof extraParams !== 'undefined') {
-      this.extraParams = extraParams;
-    }
-    this._change('pi');
-  }
-
-  /**
-   * 重新刷新当前页
-   * @param extraParams 重新指定 `extraParams` 值
-   */
-  reload(extraParams?: any) {
-    this.load(-1, extraParams);
-  }
-
-  /**
-   * 重置且重新设置 `pi` 为 `1`
-   *
-   * @param extraParams 重新指定 `extraParams` 值
-   */
-  reset(extraParams?: any) {
-    this.load(1, extraParams);
-  }
-
-  _change(type: 'pi' | 'ps') {
-    if (!this._inited) return;
-    this._genAjax();
-    this._genData();
-    this._toTop();
-    this.change.emit({
-      type: type,
-      pi: this.pi,
-      ps: this.ps,
-      total: this.total,
-    });
-  }
-
-  _genAjax(forceRefresh: boolean = false) {
+  private _genAjax(forceRefresh: boolean = false) {
     if (!this._isAjax) return;
     this.loading = true;
     if (forceRefresh === true) this.pi = 1;
@@ -484,7 +471,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
 
-  _toTop() {
+  private _toTop() {
     if (!this.toTopInChange) return;
     if (this.scroll) {
       (this.el.nativeElement as HTMLElement)
@@ -495,42 +482,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     this.el.nativeElement.scrollIntoView();
     // fix header height
     this.doc.documentElement.scrollTop -= this.toTopOffset;
-  }
-
-  _get(item: any, col: SimpleTableColumn) {
-    if (col.format) return col.format(item, col);
-
-    const value = deepGet(item, col.index as string[], col.default);
-
-    let ret = value;
-    switch (col.type) {
-      case 'img':
-        ret = value ? `<img src="${value}" class="img">` : '';
-        break;
-      case 'number':
-        ret = this.number.transform(value, col.numberDigits);
-        break;
-      case 'currency':
-        ret = this.currenty.transform(value);
-        break;
-      case 'date':
-        ret = this.date.transform(value, col.dateFormat);
-        break;
-      case 'yn':
-        ret = this.yn.transform(value === col.ynTruth, col.ynYes, col.ynNo);
-        break;
-    }
-    return ret;
-  }
-
-  _click(e: Event, item: any, col: SimpleTableColumn) {
-    e.preventDefault();
-    e.stopPropagation();
-    const res = col.click(item, this);
-    if (typeof res === 'string') {
-      this.router.navigateByUrl(res);
-    }
-    return false;
   }
 
   private checkPaged(): this {
@@ -577,6 +528,55 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     }
     this._data = res;
     this._refCheck();
+  }
+
+  _change(type: 'pi' | 'ps') {
+    if (!this._inited) return;
+    this._genAjax();
+    if (this.frontPagination) this._genData();
+    this._toTop();
+    this.change.emit({
+      type: type,
+      pi: this.pi,
+      ps: this.ps,
+      total: this.total,
+    });
+  }
+
+  _get(item: any, col: SimpleTableColumn) {
+    if (col.format) return col.format(item, col);
+
+    const value = deepGet(item, col.index as string[], col.default);
+
+    let ret = value;
+    switch (col.type) {
+      case 'img':
+        ret = value ? `<img src="${value}" class="img">` : '';
+        break;
+      case 'number':
+        ret = this.number.transform(value, col.numberDigits);
+        break;
+      case 'currency':
+        ret = this.currenty.transform(value);
+        break;
+      case 'date':
+        ret = this.date.transform(value, col.dateFormat);
+        break;
+      case 'yn':
+        ret = this.yn.transform(value === col.ynTruth, col.ynYes, col.ynNo);
+        break;
+    }
+    return ret;
+  }
+
+  _click(e: Event, item: any, col: SimpleTableColumn) {
+    e.preventDefault();
+    e.stopPropagation();
+    const res = col.click(item, this);
+    if (typeof res === 'string') {
+      this.router.navigateByUrl(res);
+    }
+    return false;
   }
 
   // endregion
