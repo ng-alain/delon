@@ -4,7 +4,10 @@ import { Component, Input } from '@angular/core';
   selector: 'global-footer',
   template: `
   <div *ngIf="links && links.length > 0" class="links">
-    <a *ngFor="let i of links" routerLink="{{i.href}}" [attr.target]="i.blankTarget">{{i.title}}</a>
+    <ng-container *ngFor="let link of links">
+      <a *ngIf="link.href.indexOf('http')==-1" routerLink="{{link.href}}" [attr.target]="link.blankTarget">{{link.title}}</a>
+      <a *ngIf="link.href.indexOf('http')>-1" href="{{link.href}}" [attr.target]="link.blankTarget">{{link.title}}</a>
+    </ng-container>
   </div>
   <div class="copyright"><ng-content></ng-content></div>
   `,
