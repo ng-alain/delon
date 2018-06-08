@@ -1,10 +1,6 @@
-import { Injector, Injectable } from '@angular/core';
+import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpRequest,
-  HttpClient,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   HttpTestingController,
   HttpClientTestingModule,
@@ -16,10 +12,8 @@ import { _HttpClient } from '@delon/theme';
 
 import { DelonAuthModule } from '../auth.module';
 import { DelonAuthConfig } from '../auth.config';
-import { JWTTokenModel } from './jwt/jwt.model';
 import { SimpleTokenModel } from './simple/simple.model';
 import { ITokenModel, DA_SERVICE_TOKEN, ITokenService } from './interface';
-import { BaseInterceptor } from './base.interceptor';
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { WINDOW } from '../win_tokens';
 
@@ -60,7 +54,7 @@ describe('auth: base.interceptor', () => {
   let window: any;
   let http: HttpClient;
   let httpBed: HttpTestingController;
-  const mockRouter = {
+  const MockRouter = {
     navigate: jasmine.createSpy('navigate'),
     parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
       return new DefaultUrlSerializer().parse(value);
@@ -68,8 +62,8 @@ describe('auth: base.interceptor', () => {
   };
   const MockWindow = {
     location: {
-      href: ''
-    }
+      href: '',
+    },
   };
 
   function genModule(
@@ -86,7 +80,7 @@ describe('auth: base.interceptor', () => {
       providers: [
         { provide: WINDOW, useValue: MockWindow },
         { provide: DelonAuthConfig, useValue: options },
-        { provide: Router, useValue: mockRouter },
+        { provide: Router, useValue: MockRouter },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: SimpleInterceptor,
@@ -129,6 +123,7 @@ describe('auth: base.interceptor', () => {
 
   describe('[basic]', () => {
     it(`should be ignores Authorization when exists allow_anonymous_key`, (done: () => void) => {
+      genModule({}, genModel(SimpleTokenModel, null));
       http
         .get('/user', {
           responseType: 'text',
@@ -165,9 +160,12 @@ describe('auth: base.interceptor', () => {
       });
       it('with location', (done: () => void) => {
         const login_url = 'https://ng-alain.com/login';
-        genModule({
-          login_url
-        }, genModel(SimpleTokenModel, null));
+        genModule(
+          {
+            login_url,
+          },
+          genModel(SimpleTokenModel, null),
+        );
         http.get('/test', { responseType: 'text' }).subscribe(
           () => {
             expect(false).toBe(true);
@@ -206,6 +204,23 @@ describe('auth: base.interceptor', () => {
         { token_invalid_redirect: false },
         genModel(SimpleTokenModel, null),
         [{ provide: _HttpClient, useValue: { end: () => {} } }],
+      );
+      http.get('/test', { responseType: 'text' }).subscribe(
+        () => {
+          expect(false).toBe(true);
+          done();
+        },
+        (err: any) => {
+          expect(err.status).toBe(401);
+          done();
+        },
+      );
+    });
+    it(`can import _HttpClient`, (done: () => void) => {
+      genModule(
+        { token_invalid_redirect: false },
+        genModel(SimpleTokenModel, null),
+        [{ provide: _HttpClient, useValue: null }],
       );
       http.get('/test', { responseType: 'text' }).subscribe(
         () => {

@@ -22,6 +22,16 @@ describe('auth: jwt.model', () => {
       expect(payload.name).toBe(payloadDATA.name);
       expect(payload.admin).toBe(payloadDATA.admin);
     });
+    it('should be throw error when token is null or undefined', () => {
+      expect(() => {
+        model.token = null;
+        const payload = model.payload;
+      }).toThrowError();
+      expect(() => {
+        model.token = undefined;
+        const payload = model.payload;
+      }).toThrowError();
+    });
     it('should be throw error when invalid token length', () => {
       expect(() => {
         model.token = `a`;
