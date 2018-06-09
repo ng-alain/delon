@@ -59,4 +59,8 @@ export interface Schema {
    * Specifies if declaring module exports the component.
    */
   export?: boolean;
+  /**
+   * Without prefix to selectors
+   */
+  withoutPrefix?: boolean;
 }

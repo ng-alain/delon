@@ -14,7 +14,7 @@ import {
   mergeWith,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import { normalize, strings } from '@angular-devkit/core';
+import { strings } from '@angular-devkit/core';
 import { getWorkspace, Project } from './devkit-utils/config';
 import { parseName } from './devkit-utils/parse-name';
 import {
@@ -22,8 +22,8 @@ import {
   buildRelativePath,
 } from './devkit-utils/find-module';
 import { validateName, validateHtmlSelector } from './devkit-utils/validation';
-import { Change, InsertChange } from './devkit-utils/change';
-import { findNodes, findNode } from './devkit-utils/ast-utils';
+import { InsertChange } from './devkit-utils/change';
+import { findNode } from './devkit-utils/ast-utils';
 import { insertImport } from './devkit-utils/route-utils';
 
 export interface CommonSchema {
@@ -37,22 +37,37 @@ export interface CommonSchema {
   routerModulePath?: string;
   selector?: string;
   prefix?: string;
+  withoutPrefix?: boolean;
 }
 
 function buildSelector(schema: CommonSchema, projectPrefix: string) {
   const ret: string[] = [];
-  if (schema.prefix) {
-    ret.push(schema.prefix);
-  } else if (schema.prefix === undefined && projectPrefix) {
-    ret.push(projectPrefix);
+  if (!schema.withoutPrefix) {
+    if (schema.prefix) {
+      ret.push(schema.prefix);
+    } else if (schema.prefix === undefined && projectPrefix) {
+      ret.push(projectPrefix);
+    }
   }
   // module name
   if (schema.module) {
     ret.push(schema.module);
   }
+  // target name
+  if (schema.target) {
+    ret.push(schema.target);
+  }
   // name
   ret.push(strings.dasherize(schema.name));
   return ret.join('-');
+}
+
+function buildComponentName(schema: CommonSchema, projectPrefix: string) {
+  const ret: string[] = [schema.module];
+  if (schema.target && schema.target.length > 0) ret.push(schema.target);
+  ret.push(schema.name);
+  ret.push(`Component`);
+  return strings.classify(ret.join('-'));
 }
 
 function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
@@ -129,7 +144,9 @@ export function addValueToVariable(
   const source = getTsSource(host, path);
   const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
-    throw new SchematicsException(`Could not find any [${variableName}] variable.`);
+    throw new SchematicsException(
+      `Could not find any [${variableName}] variable.`,
+    );
   }
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
 
@@ -214,9 +231,7 @@ export function buildAlain(schema: CommonSchema): Rule {
 
     resolveSchema(host, project, schema);
 
-    schema.componentName = strings.classify(
-      `${schema.module}-${schema.name}-Component`,
-    );
+    schema.componentName = buildComponentName(schema, (project as any).prefix);
 
     const templateSource = apply(url('./files'), [
       schema.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),

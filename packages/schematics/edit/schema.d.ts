@@ -60,6 +60,10 @@ export interface Schema {
    */
   export?: boolean;
   /**
+   * Without prefix to selectors
+   */
+  withoutPrefix?: boolean;
+  /**
    * Specifies relative path.
    */
   target?: string;

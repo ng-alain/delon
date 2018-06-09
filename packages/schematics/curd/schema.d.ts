@@ -63,4 +63,8 @@ export interface Schema {
    * Specifies using modal mode.
    */
   modal?: boolean;
+  /**
+   * Without prefix to selectors
+   */
+  withoutPrefix?: boolean;
 }

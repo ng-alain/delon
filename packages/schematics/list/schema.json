@@ -98,6 +98,11 @@
       "type": "boolean",
       "default": false,
       "description": "Specifies if declaring module exports the component."
+    },
+    "withoutPrefix": {
+      "type": "boolean",
+      "description": "Without prefix to selectors",
+      "default": false
     }
   },
   "required": []
