@@ -15,6 +15,7 @@ import { HighlightJsModule } from 'ngx-highlight-js';
 import { GithubButtonModule } from 'ng-github-button';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
+import { SimplemdeModule } from 'ngx-simplemde';
 
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { ContentComponent } from './components/content/content.component';
@@ -39,7 +40,8 @@ const THIRDS = [
     TranslateModule,
     GithubButtonModule,
     NgxTinymceModule,
-    UEditorModule
+    UEditorModule,
+    SimplemdeModule
 ];
 
 @NgModule({

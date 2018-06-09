@@ -28,6 +28,7 @@ import { DelonModule } from './delon.module';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
+import { SimplemdeModule } from 'ngx-simplemde';
 
 export function StartupServiceFactory(
   startupService: StartupService,
@@ -59,6 +60,9 @@ export function StartupServiceFactory(
         UEDITOR_HOME_URL: `//apps.bdimg.com/libs/ueditor/1.4.3.1/`,
       },
     }),
+    SimplemdeModule.forRoot({
+      delay: 300
+    })
   ],
   providers: [
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },

@@ -146,9 +146,11 @@
               "site/assets"
             ],
             "styles": [
+              "node_modules/ngx-simplemde/src/index.css",
               "site/styles.less"
             ],
             "scripts": [
+              "node_modules/simplemde-antd/dist/simplemde.min.js",
               "node_modules/enquire.js/dist/enquire.js",
               "node_modules/@antv/g2/dist/g2.min.js",
               "node_modules/@antv/data-set/dist/data-set.min.js",

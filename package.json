@@ -68,6 +68,7 @@
     "ngx-highlight-js": "^2.0.0",
     "ngx-tinymce": "^2.0.0",
     "ngx-ueditor": "^2.1.0",
+    "ngx-simplemde": "^1.1.1",
     "qrious": "^4.0.2",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.1.0",
