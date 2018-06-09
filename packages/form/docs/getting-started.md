@@ -62,6 +62,29 @@ angular.json
 
 **DelonFormConfig**
 
+全局配置性可以通过在根模块或 `DelonModule` 里覆盖，例如：
+
+```ts
+import { DelonFormConfig } from '@delon/abc';
+export function fnDelonFormConfig(): DelonFormConfig {
+  return Object.assign(new DelonFormConfig(), <DelonFormConfig>{
+    // values
+  });
+}
+
+@NgModule({ })
+export class DelonModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: DelonFormConfig, useFactory: fnDelonFormConfig }
+      ]
+    };
+  }
+}
+```
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 ajv | [ajv](http://epoberezkin.github.io/ajv/#options) 参数 | `Ajv.Options` | -
