@@ -34,7 +34,7 @@ describe('Service: Menu', () => {
       text: 'text',
       children: [{ text: 'sub text', link: '/text/sub', shortcut: true }],
     },
-    { text: 'text', link: '/test', badge: 10 },
+    { text: 'text', link: '/test', linkExact: true, badge: 10 },
     {
       text: 'text',
       link: '/demo1',

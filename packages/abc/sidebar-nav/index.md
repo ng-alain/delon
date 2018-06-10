@@ -47,7 +47,8 @@ select | 切换时回调 | `EventEmitter<Menu>` | -
 text | `string` | 文本，必填项
 i18n | `string` | i18n主键
 group | `string` | 是否菜单组，指[示例](https://cipchk.github.io/ng-alain/)中的【主导航】字样
-link | `string` | angular 路由，`link`、`externalLink` 二选其一
+link | `string` | 路由，`link`、`externalLink` 二选其一
+linkExact | `boolean` | 路由是否精准匹配，默认：`false` [#344](https://github.com/cipchk/ng-alain/issues/344)
 externalLink | `string` | 外部链接，`link`、`externalLink` 二选其一
 target | `_blank,_self,_parent,_top` | 链接 target
 icon | `string` | 图标，指[示例](https://cipchk.github.io/ng-alain/)中的【仪表盘】前图标，只对一级菜单有效

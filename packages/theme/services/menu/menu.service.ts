@@ -60,6 +60,7 @@ export class MenuService implements OnDestroy {
       item._depth = depth;
 
       if (!item.link) item.link = '';
+      if (typeof item.linkExact === 'undefined') item.linkExact = false;
       if (!item.externalLink) item.externalLink = '';
 
       // badge

@@ -6,8 +6,14 @@ export interface Menu {
   i18n?: string;
   /** 是否菜单组 */
   group?: boolean;
-  /** angular 路由 */
+  /** 路由 */
   link?: string;
+  /**
+   * 路由是否精准匹配，默认：`false`，see:
+   * - [#344](https://github.com/cipchk/ng-alain/issues/344)
+   * - [RouterLinkActive](https://angular.io/api/router/RouterLinkActive#routerLinkActiveOptions)
+   */
+  linkExact?: boolean;
   /** 外部链接 */
   externalLink?: string;
   /** 链接 target */

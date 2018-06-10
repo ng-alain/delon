@@ -12,8 +12,7 @@ import {
   fakeAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
-import { of } from 'rxjs';
+import { RouterModule, Router } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 
 import { AlainThemeModule, MenuService, SettingsService } from '@delon/theme';
@@ -22,6 +21,7 @@ import { deepCopy } from '@delon/util';
 import { AdSidebarNavModule } from './sidebar-nav.module';
 import { SidebarNavComponent } from './sidebar-nav.component';
 import { Nav } from './interface';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const floatingShowCls = '.nav-floating-show';
 const MOCKMENUS = <Nav[]>[
@@ -93,39 +93,100 @@ describe('abc: sidebar-nav', () => {
     return '';
   }
 
-  it('should be navigate url', () => {
-    createComp();
-    spyOn(context, 'select');
-    const data = deepCopy(MOCKMENUS);
-    menuSrv.add(data);
-    expect(context.select).not.toHaveBeenCalled();
-    expect(router.navigateByUrl).not.toHaveBeenCalled();
-    const itemEl = getEl<HTMLElement>('.nav-depth1 a');
-    itemEl.click();
-    fixture.detectChanges();
-    expect(context.select).toHaveBeenCalled();
-    expect(router.navigateByUrl).toHaveBeenCalled();
-  });
+  describe('[default]', () => {
+    it('should be navigate url', () => {
+      createComp();
+      spyOn(context, 'select');
+      const data = deepCopy(MOCKMENUS);
+      menuSrv.add(data);
+      expect(context.select).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
+      const itemEl = getEl<HTMLElement>('.nav-depth1 a');
+      itemEl.click();
+      fixture.detectChanges();
+      expect(context.select).toHaveBeenCalled();
+      expect(router.navigateByUrl).toHaveBeenCalled();
+    });
 
-  it('should be toggle open', () => {
-    createComp();
-    const data = deepCopy(MOCKMENUS);
-    menuSrv.add(data);
-    expect(data[0].children[0]._open).toBeUndefined();
-    const subTitleEl = getEl<HTMLElement>('.nav-sub-title');
-    subTitleEl.click();
-    fixture.detectChanges();
-    expect(data[0].children[0]._open).toBe(true);
-  });
+    it('should be toggle open', () => {
+      createComp();
+      const data = deepCopy(MOCKMENUS);
+      menuSrv.add(data);
+      expect(data[0].children[0]._open).toBeUndefined();
+      const subTitleEl = getEl<HTMLElement>('.nav-sub-title');
+      subTitleEl.click();
+      fixture.detectChanges();
+      expect(data[0].children[0]._open).toBe(true);
+    });
 
-  it('should be reset menu when service is changed', () => {
-    createComp();
-    isText('.nav-group-title', MOCKMENUS[0].text);
-    const newMenu = deepCopy(MOCKMENUS);
-    newMenu[0].text = 'new主导航';
-    menuSrv.add(newMenu);
-    fixture.detectChanges();
-    isText('.nav-group-title', newMenu[0].text);
+    it('should be reset menu when service is changed', () => {
+      createComp();
+      isText('.nav-group-title', MOCKMENUS[0].text);
+      const newMenu = deepCopy(MOCKMENUS);
+      newMenu[0].text = 'new主导航';
+      menuSrv.add(newMenu);
+      fixture.detectChanges();
+      isText('.nav-group-title', newMenu[0].text);
+    });
+
+    describe('should be exact highlighting item', () => {
+      beforeEach(() => {
+        injector = TestBed.configureTestingModule({
+          imports: [
+            RouterModule.forRoot([]),
+            AlainThemeModule.forRoot(),
+            AdSidebarNavModule.forRoot(),
+            RouterTestingModule.withRoutes([
+              { path: 'group', component: TestRouteComponent },
+              { path: 'group/type', component: TestRouteComponent },
+            ]),
+          ],
+          declarations: [TestComponent, TestRouteComponent],
+          providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+        });
+        fixture = TestBed.createComponent(TestComponent);
+        dl = fixture.debugElement;
+        context = fixture.componentInstance;
+        menuSrv = injector.get(MenuService);
+        fixture.detectChanges();
+      });
+      it('when linkExact is [false]', (done: () => void) => {
+        const data = <Nav[]>[
+          {
+            text: '',
+            children: [
+              { text: 'group', link: '/group' },
+              { text: 'group/type', link: '/group/type' },
+            ],
+          },
+        ];
+        menuSrv.add(data);
+        router = injector.get(Router);
+        router.navigateByUrl('/group/type').then((res: any) => {
+          fixture.detectChanges();
+          expect(dl.queryAll(By.css('.nav-item-selected')).length).toBe(2);
+          done();
+        });
+      });
+      it('when linkExact is [true]', (done: () => void) => {
+        const data = <Nav[]>[
+          {
+            text: '',
+            children: [
+              { text: 'group', link: '/group', linkExact: true },
+              { text: 'group/type', link: '/group/type', linkExact: true },
+            ],
+          },
+        ];
+        menuSrv.add(data);
+        router = injector.get(Router);
+        router.navigateByUrl('/group/type').then((res: any) => {
+          fixture.detectChanges();
+          expect(dl.queryAll(By.css('.nav-item-selected')).length).toBe(1);
+          done();
+        });
+      });
+    });
   });
 
   describe('[collapsed]', () => {
@@ -190,7 +251,7 @@ describe('abc: sidebar-nav', () => {
       });
     });
     describe('should be process baseHref', () => {
-      [ '/testbh', '' ].forEach(baseHref => {
+      ['/testbh', ''].forEach(baseHref => {
         it(baseHref ? 'with' : 'without', () => {
           TestBed.overrideProvider(APP_BASE_HREF, {
             useFactory: () => baseHref,
@@ -300,3 +361,6 @@ class TestComponent {
   autoCloseUnderPad = false;
   select() {}
 }
+
+@Component({ template: `` })
+class TestRouteComponent {}
