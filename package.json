@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for ng-alain.",
   "repository": {
@@ -35,8 +35,8 @@
     "site:release": "bash ./site.sh -b",
     "site:gh": "bash ./site.sh -b -d",
     "release": "bash ./build.sh && bash build-schematics.sh -b",
-    "public:next": "npm run release && bash ./scripts/release/publish-next",
-    "public": "npm run release && bash ./scripts/release/publish",
+    "publish:next": "npm run release && bash ./scripts/release/publish-next",
+    "publish": "npm run release && bash ./scripts/release/publish",
     "scaffold:release": "bash ./scaffold.sh -b",
     "scaffold:gh": "bash ./scaffold.sh -b -d"
   },

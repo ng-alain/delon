@@ -14,6 +14,11 @@ addons:
 git:
   depth: 1
 
+cache:
+  npm: true
+  directories:
+     - ./node_modules
+
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
@@ -31,11 +36,6 @@ matrix:
   fast_finish: true
   allow_failures:
     - env: "TASK=scaffold:release"
-
-before_script:
-  - npm install -g @angular/cli
-  - npm install -g karma
-  - npm install -g yarn
 
 script:
   - npm run $TASK

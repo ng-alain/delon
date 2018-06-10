@@ -6,6 +6,38 @@ title:
 type: Other
 ---
 
+### 1.0.7
+
+`2018-6-10`
+
+- @delon/theme
+  - 重构部分服务类 angular6 写法
+  - 增加按钮与气泡确认框间距
+  - 增加 `keys` 支持 `number` 数字型字典风格
+- @delon/abc
+  - `page-header`
+    - 增加操作区域按钮与气泡确认框间距
+    - 增加 `titleSync` 属性用于自动同步当然标准至文档标题、路由复用组件标准
+  - `simple-table`
+    - 增加列描述 `type: 'badge'` 徽标
+    - 修复静态数据源无法切换分页，[#487](https://github.com/cipchk/ng-alain/issues/487)
+  - 修复 `desc-list` 不支持 `*ngIf`
+  - 增加 `sidebar-nav` 可通过 `Menu` 的 `linkExact` 属性来精准匹配路由高亮，[#344](https://github.com/cipchk/ng-alain/issues/344)
+- @delon/form
+  - 增加第三方 Markdown 小部件
+  - 修复首次加载总是触发 `reset` 事件
+  - 修复 `string` 无法清除数据问题
+  - 修复自定义小部件无法二次渲染，[#492](https://github.com/cipchk/ng-alain/issues/492)
+  - 文档优化，[#497](https://github.com/cipchk/ng-alain/issues/497)
+- @delon/auth
+  - 修复无效 `token` 值时引起解析失败，[#94](https://github.com/cipchk/delon/issues/94)
+- Schematics
+  - 新增 `hmr` 热替换插件
+  - 新增业务页（list、view、edit）可通过 `withoutPrefix` 表示不希望增加 `app-` 选择器
+  - 优化更智能组件名
+  - 优化 `list` 页的增加按钮放进 `page-header` 的操作区域
+  - 修复未引用 `ajv.js` 问题，[#488](https://github.com/cipchk/ng-alain/issues/488)
+
 ### 1.0.6
 
 `2018-6-4`
