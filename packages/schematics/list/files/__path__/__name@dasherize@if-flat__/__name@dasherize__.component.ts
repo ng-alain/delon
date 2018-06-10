@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
+import { filter } from 'rxjs/operators';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
@@ -6,14 +7,15 @@ import { SFSchema } from '@delon/form';
 @Component({
   selector: '<%= selector %>',<% if(inlineTemplate) { %>
   template: `
-  <page-header></page-header>
-    <nz-card>
-      <sf mode="search" [schema]="searchSchema" [formData]="params" (formSubmit)="st.reset($event)" (formReset)="st.reset(params)"></sf>
-      <div class="my-sm">
-        <button (click)="add()" nz-button nzType="primary">新建</button>
-      </div>
-      <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
-    </nz-card>
+  <page-header>
+    <ng-template #action>
+      <button (click)="add()" nz-button nzType="primary">新建</button>
+    </ng-template>
+  </page-header>
+  <nz-card>
+    <sf mode="search" [schema]="searchSchema" [formData]="params" (formSubmit)="st.reset($event)" (formReset)="st.reset(params)"></sf>
+    <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
+  </nz-card>
   `,<% } else { %>
   templateUrl: './<%= dasherize(name) %>.component.html',<% } if(!inlineStyle) { %><% } else { %>
   styleUrls: ['./<%= dasherize(name) %>.component.<%= styleext %>']<% } %><% if(!!viewEncapsulation) { %>,
