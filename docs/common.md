@@ -158,6 +158,18 @@ const data = { name: 'cipchk', address: { city: 'shanghai', district: 'changning
 <div *ngFor="let item of data | keys">{{item.key}} {{item.value | json}}</div>
 ```
 
+**字典可迭代**
+
+```typescript
+const data = { 1: '正常', 2: '删除' };
+```
+
+若希望保持键名为 `number` 数字型：
+
+```
+<div *ngFor="let item of data | keys: true">{{item.key}} {{item.value | json}}</div>
+```
+
 ### 徽章 yn
 
 `yn` 将boolean类型徽章化
