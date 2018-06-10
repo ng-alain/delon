@@ -151,7 +151,11 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     Object.assign(this, cog);
   }
 
-  private genBreadcrumb() {
+  refresh() {
+    this.setTitle().genBreadcrumb();
+  }
+
+  genBreadcrumb() {
     if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0)
       return;
     const paths: any[] = [];
@@ -177,7 +181,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     return this;
   }
 
-  private setTitle() {
+  setTitle() {
     if (
       typeof this.title === 'undefined' &&
       this.autoTitle &&
@@ -210,7 +214,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit() {
-    this.setTitle().genBreadcrumb();
+    this.refresh();
     this.inited = true;
   }
 
@@ -219,6 +223,6 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(): void {
-    if (this.inited) this.setTitle().genBreadcrumb();
+    if (this.inited) this.refresh();
   }
 }

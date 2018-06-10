@@ -6,7 +6,7 @@ title:
 type: Other
 ---
 
-### 1.0.7
+### 1.0.8
 
 `2018-6-10`
 
@@ -37,6 +37,10 @@ type: Other
   - 优化更智能组件名
   - 优化 `list` 页的增加按钮放进 `page-header` 的操作区域
   - 修复未引用 `ajv.js` 问题，[#488](https://github.com/cipchk/ng-alain/issues/488)
+
+### 1.0.7
+
+> 无效发布
 
 ### 1.0.6
 
