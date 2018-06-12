@@ -204,13 +204,15 @@ export class CacheService implements OnDestroy {
       : this.store.get(this.options.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
+        const type = options.type || this.options.type;
+        const expire = options.expire != null ? options.expire : this.options.expire;
         return this.http
           .get(key)
           .pipe(
             map((ret: any) =>
               this._deepGet(ret, this.options.reName as string[], null),
             ),
-            tap(v => this.set(key, v)),
+            tap(v => this.set(key, v, {type, expire})),
           );
       }
       return null;
