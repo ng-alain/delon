@@ -21,6 +21,11 @@
       "schema": "./module/schema.json",
       "description": "Create a ng alain module."
     },
+    "empty": {
+      "factory": "./empty",
+      "schema": "./empty/schema.json",
+      "description": "Create a ng alain empty page."
+    },
     "list": {
       "factory": "./list",
       "schema": "./list/schema.json",

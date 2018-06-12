@@ -34,6 +34,7 @@ ng g ng-alain:module trade
 
 目前包含的业务组件页，包括：
 
+- `empty` 空白页（待发布）
 - `list` 列表页
 - `edit` 编辑页
 - `view` 查看页
