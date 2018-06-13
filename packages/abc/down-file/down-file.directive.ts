@@ -5,9 +5,11 @@ import {
   HostListener,
   EventEmitter,
   Output,
+  Optional,
 } from '@angular/core';
 import { HttpResponse, HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
+import { _HttpClient } from '@delon/theme';
 
 /**
  * 文件下载
@@ -31,13 +33,31 @@ export class DownFileDirective {
   /** 错误回调 */
   @Output() error: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private el: ElementRef, private http: HttpClient) {}
+  private getDisposition(data: string) {
+    const arr: any = (data || '')
+      .split(';')
+      .filter(i => i.includes('='))
+      .map(v => {
+        const strArr = v.split('=');
+        const utfId = `UTF-8''`;
+        let value = strArr[1];
+        if (value.startsWith(utfId)) value = value.substr(utfId.length);
+        return { [strArr[0].trim()]: value };
+      });
+    return arr.reduce((o, item: any) => item, {});
+  }
+
+  constructor(
+    private el: ElementRef,
+    private http: HttpClient,
+    @Optional() private _http: _HttpClient,
+  ) {
+  }
 
   @HostListener('click')
   _click() {
     this.el.nativeElement.disabled = true;
-    this.http
-      .request(this.httpMethod, this.httpUrl, {
+    ((this._http || this.http) as any).request(this.httpMethod, this.httpUrl, {
         params: this.httpData || {},
         responseType: 'blob',
         observe: 'response',
@@ -48,8 +68,13 @@ export class DownFileDirective {
             this.error.emit(res);
             return;
           }
+          const disposition: any = this.getDisposition(
+            res.headers.get('content-disposition'),
+          );
           const fileName =
             this.fileName ||
+            disposition[`filename*`] ||
+            disposition[`filename`] ||
             res.headers.get('filename') ||
             res.headers.get('x-filename');
           saveAs(res.body, decodeURI(fileName));
