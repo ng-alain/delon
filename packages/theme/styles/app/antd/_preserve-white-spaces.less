@@ -3,8 +3,14 @@
   [nz-form] {
     // 按钮
     .ant-btn + .ant-btn,
-    .ant-btn + nz-popconfirm {
+    .ant-btn + nz-popconfirm,
+    nz-popconfirm + .ant-btn {
       margin-left: @white-spacing;
+    }
+    .ant-btn-group {
+      .ant-btn + .ant-btn {
+        margin-left: -1px;
+      }
     }
   }
   nz-sf + simple-table {
