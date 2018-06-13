@@ -372,11 +372,6 @@ export interface ReqReNameType {
   ps?: string;
 }
 
-export interface ReqReNameType {
-    pi?: string;
-    ps?: string;
-}
-
 export interface ResReNameType {
   total?: string | string[];
   list?: string | string[];

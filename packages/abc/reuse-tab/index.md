@@ -128,10 +128,6 @@ export class DemoComponent {
 - `OnDestroy` 可能会处理一些组件外部（例如：`body`）的样式等，可以参考生命周期解决。
 - 开启 `debug` 模式后会在 `console` 很多信息这有助于分析路由复用的过程。
 
-### 2、移除 reuse-tab 组件后为什么还有路由复用效果？
-
-默认脚手架导入了所有 @delon/abc 模块（在 `delon.module` 存在 `DelonABCModule.forRoot()` 时）这会导致 `AdReuseTabModule` 默认也会对相应服务进行注册，这导致即使没有使用 `<reuse-tab>` 也会路由复用的原因。你可以移除 `DelonABCModule.forRoot()` 并只导入你需要的模块即可。
-
 ## API
 
 ### ReuseTabService 接口
