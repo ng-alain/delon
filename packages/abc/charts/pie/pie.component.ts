@@ -254,7 +254,7 @@ export class G2PieComponent
     this.legendData[i].checked = !this.legendData[i].checked;
 
     if (this.chart) {
-      this.chart.filter('x', (item: any) => item.checked);
+      this.chart.filter('x', (val: any, item: any) => item.checked);
       this.chart.repaint();
     }
   }
