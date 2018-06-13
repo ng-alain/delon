@@ -17,4 +17,4 @@ type: Widgets
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-defaultText | 当值不存在时所指定的文本 | `string` | `-`
+`[defaultText]` | 当值不存在时所指定的文本 | `string` | `-`

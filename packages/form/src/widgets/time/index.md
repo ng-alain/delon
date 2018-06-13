@@ -23,26 +23,26 @@ type: Widgets
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-readOnly | 禁用状态  | `boolean` | -
-format | 数据格式类型  | `string` | -
+`[readOnly]` | 禁用状态  | `boolean` | -
+`[format]` | 数据格式类型  | `string` | -
 
 ### ui 属性
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-| size | 大小，等同 `nzSize` | `string` | - |
-| placeholder | 在文字框中显示提示讯息 | `string` | - |
-| format | 数据格式化 | `string` | `HH:mm:ss` |
-| displayFormat | 显示格式化，（等同 [nzFormat](https://ng.ant.design/components/time-picker/zh#api) 值） | `string` | `HH:mm:ss` |
-| utcEpoch | 是否UTC新纪元（表示从 `1970` 开始计毫秒数），当 `type='number'` 时有效 | `boolean` | `false` |
-| allowEmpty | 是否展示清除按钮 | `boolean` | `true` |
-| clearText | 清除按钮的提示文案 | `string` | `清除` |
-| defaultOpenValue | 设置面板打开时默认选中的值 | `Date` | `new Date()` |
-| disabledHours | 禁止选择部分小时选项 | `function()` | - |
-| disabledMinutes | 禁止选择部分分钟选项 | `function(selectedHour)` | - |
-| disabledSeconds | 禁止选择部分秒选项 | `function(selectedHour, selectedMinute)` | - |
-| hideDisabledOptions | 隐藏禁止选择的选项 | `boolean` | `false` |
-| hourStep | 小时选项间隔 | `number` | `1` |
-| minuteStep | 分钟选项间隔 | `number` | `1` |
-| secondStep | 秒选项间隔 | `number` | `1` |
-| popupClassName | 弹出层类名 | `string` | - |
+| `[size]` | 大小，等同 `nzSize` | `string` | - |
+| `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
+| `[format]` | 数据格式化 | `string` | `HH:mm:ss` |
+| `[displayFormat]` | 显示格式化，（等同 [nzFormat](https://ng.ant.design/components/time-picker/zh#api) 值） | `string` | `HH:mm:ss` |
+| `[utcEpoch]` | 是否UTC新纪元（表示从 `1970` 开始计毫秒数），当 `type='number'` 时有效 | `boolean` | `false` |
+| `[allowEmpty]` | 是否展示清除按钮 | `boolean` | `true` |
+| `[clearText]` | 清除按钮的提示文案 | `string` | `清除` |
+| `[defaultOpenValue]` | 设置面板打开时默认选中的值 | `Date` | `new Date()` |
+| `[disabledHours]` | 禁止选择部分小时选项 | `function()` | - |
+| `[disabledMinutes]` | 禁止选择部分分钟选项 | `function(selectedHour)` | - |
+| `[disabledSeconds]` | 禁止选择部分秒选项 | `function(selectedHour, selectedMinute)` | - |
+| `[hideDisabledOptions]` | 隐藏禁止选择的选项 | `boolean` | `false` |
+| `[hourStep]` | 小时选项间隔 | `number` | `1` |
+| `[minuteStep]` | 分钟选项间隔 | `number` | `1` |
+| `[secondStep]` | 秒选项间隔 | `number` | `1` |
+| `[popupClassName]` | 弹出层类名 | `string` | - |
