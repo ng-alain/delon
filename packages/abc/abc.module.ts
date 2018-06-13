@@ -28,6 +28,7 @@ import { AdNumberToChineseModule } from './number-to-chinese/number-to-chinese.m
 import { AdLodopModule } from './lodop/lodop.module';
 import { AdQuickMenuModule } from './quick-menu/quick-menu.module';
 import { AdQRModule } from './qr/qr.module';
+import { AdSHFModule } from './simple-html-form/module';
 // charts
 import { AdG2BarModule } from './charts/bar/bar.module';
 import { AdG2CardModule } from './charts/card/card.module';
@@ -70,6 +71,7 @@ const MODULES = [
   AdLodopModule,
   AdQuickMenuModule,
   AdQRModule,
+  AdSHFModule,
   // charts
   AdG2BarModule,
   AdG2CardModule,
@@ -116,6 +118,7 @@ const MODULES = [
     AdLodopModule.forRoot(),
     AdQuickMenuModule.forRoot(),
     AdQRModule.forRoot(),
+    AdSHFModule.forRoot(),
     // charts
     AdG2BarModule.forRoot(),
     AdG2CardModule.forRoot(),
