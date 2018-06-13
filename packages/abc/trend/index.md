@@ -1,7 +1,6 @@
 ---
 title: trend
 subtitle: 趋势标记
-order: 200
 cols: 1
 module: AdTrendModule
 ---
@@ -12,8 +11,8 @@ module: AdTrendModule
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-colorful | 是否彩色标记 | `boolean` | `true`
-flag | 上升下降标识 | `up,down` | -
+`[colorful]` | 是否彩色标记 | `boolean` | `true`
+`[flag]` | 上升下降标识 | `up,down` | -
 
 ## DEMO
 

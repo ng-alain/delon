@@ -1,10 +1,15 @@
-# @delon/mock module
+# @delon/mock module [![Build Status](https://travis-ci.org/cipchk/delon.svg?branch=master)](https://travis-ci.org/cipchk/delon) [![NPM version](https://img.shields.io/npm/v/@delon/mock.svg)](https://www.npmjs.com/package/@delon/mock) [![NPM version](https://img.shields.io/npm/v/@delon/mock/next.svg)](https://www.npmjs.com/package/@delon/mock)
 
-[Document](http://ng-alain.com/docs/mock)
+Generate random data, intercept http requests.
+
+## Links
+
+- [Api Document](http://ng-alain.com/mock)
+- [Demo](https://cipchk.github.io/ng-alain/)
 
 ## Architecture
 
-![Architecture](https://github.com/cipchk/delon/blob/master/_screenshot/architecture.png)
+![Architecture](https://raw.githubusercontent.com/cipchk/delon/master/_screenshot/architecture.png)
 
 ## Troubleshooting
 

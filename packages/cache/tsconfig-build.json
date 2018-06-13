@@ -1,23 +1,20 @@
 {
-    "extends": "../tsconfig-build.json",
+  "extends": "../tsconfig-build.json",
 
-    "compilerOptions": {
-      "baseUrl": ".",
-      "rootDir": ".",
-      "paths": {
-      },
-      "outDir": "../../@delon/cache"
-    },
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {},
+    "outDir": "../../@delon/cache"
+  },
 
-    "files": [
-      "public_api.ts"
-    ],
+  "files": ["public_api.ts"],
 
-    "angularCompilerOptions": {
-      "annotateForClosureCompiler": true,
-      "strictMetadataEmit": true,
-      "skipTemplateCodegen": true,
-      "flatModuleOutFile": "index.js",
-      "flatModuleId": "@delon/cache"
-    }
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true,
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "@delon/cache"
   }
+}

@@ -6,12 +6,12 @@ import { TagSelectComponent } from './tag-select.component';
 const COMPONENTS = [TagSelectComponent];
 
 @NgModule({
-    imports:        [CommonModule],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdTagSelectModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdTagSelectModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdTagSelectModule, providers: [] };
+  }
 }

@@ -12,7 +12,7 @@ ng-alain 提供若干常见的服务与Pipe管道，以便减少基础建设代�
 
 ### MenuService
 
-菜单服务的数据格式是一个 [Menu](https://github.com/cipchk/delon/blob/master/src/core/theme/services/menu/interface.ts) 数组，其中 `text` 属性表示菜单文本为必填项，而且本身并不受外部组件的影响（例如[sidebar-nav](/components/sidebar-nav)组件），这是因为菜单是贯穿整个项目必不可少的组成部分，而将其独立成一个服务可以更有效被使用，例如：动态生成导航、标题等。
+菜单服务的数据格式是一个 [Menu](https://github.com/cipchk/delon/blob/master/packages/theme/services/menu/interface.ts) 数组，其中 `text` 属性表示菜单文本为必填项，而且本身并不受外部组件的影响（例如[sidebar-nav](/components/sidebar-nav)组件），这是因为菜单是贯穿整个项目必不可少的组成部分，而将其独立成一个服务可以更有效被使用，例如：动态生成导航、标题等。
 
 **建议：** 在 Angular 启动服务（[startup.service.ts](//github.com/cipchk/ng-alain/blob/master/src/app/core/startup/startup.service.ts)）从远程获取到菜单数据后，调用 `add()` 方法。
 
@@ -37,7 +37,7 @@ ng-alain 提供若干常见的服务与Pipe管道，以便减少基础建设代�
 
 ### SettingsService
 
-项目配置项，包含应用[App](//github.com/cipchk/delon/blob/master/src/core/theme/services/settings/interface.ts#L3)、布局[Layout](//github.com/cipchk/delon/blob/master/src/core/theme/services/settings/interface.ts#L19)、用户信息[User](//github.com/cipchk/delon/blob/master/src/core/theme/services/settings/interface.ts#L10)三种类型。
+项目配置项，包含应用[App](https://github.com/cipchk/delon/blob/master/packages/theme/services/settings/interface.ts#L3)、布局[Layout](https://github.com/cipchk/delon/blob/master/packages/theme/services/settings/interface.ts#L19)、用户信息[User](https://github.com/cipchk/delon/blob/master/packages/theme/services/settings/interface.ts#L10)三种类型。
 
 **建议：** 在 Angular 启动服务（[startup.service.ts](//github.com/cipchk/ng-alain/blob/master/src/app/core/services/startup.service.ts)）从远程获取到应用、用户数据后，调用 `setApp()`、`setUser()` 方法。
 
@@ -156,6 +156,18 @@ const data = { name: 'cipchk', address: { city: 'shanghai', district: 'changning
 
 ```html
 <div *ngFor="let item of data | keys">{{item.key}} {{item.value | json}}</div>
+```
+
+**字典可迭代**
+
+```typescript
+const data = { 1: '正常', 2: '删除' };
+```
+
+若希望保持键名为 `number` 数字型：
+
+```
+<div *ngFor="let item of data | keys: true">{{item.key}} {{item.value | json}}</div>
 ```
 
 ### 徽章 yn

@@ -1,6 +1,7 @@
 import { NgModule, ModuleWithProviders, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DelonUtilModule } from '@delon/util';
 
 import { SimpleTableComponent } from './simple-table.component';
 import { SimpleTableRowDirective } from './simple-table-row.directive';
@@ -12,18 +13,18 @@ const COMPONENTS = [SimpleTableComponent, SimpleTableRowDirective];
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-const ZORROMODULES = [ NgZorroAntdModule ];
+const ZORROMODULES = [NgZorroAntdModule];
 
 // endregion
 
 @NgModule({
-    schemas: [ NO_ERRORS_SCHEMA ],
-    imports:        [CommonModule, FormsModule, ...ZORROMODULES],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  schemas: [NO_ERRORS_SCHEMA],
+  imports: [CommonModule, FormsModule, DelonUtilModule, ...ZORROMODULES],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdSimpleTableModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdSimpleTableModule, providers: [ AdSimpleTableConfig ] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdSimpleTableModule, providers: [AdSimpleTableConfig] };
+  }
 }

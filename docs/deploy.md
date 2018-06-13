@@ -14,15 +14,11 @@ type: Dev
 $ npm run build
 ```
 
-ng-alain 本身是一个 Angular cli 项目，因此也可以参照 [WiKi](//github.com/angular/angular-cli/wiki/build) 完整更复杂的构建需求。构建打包成功之后，会在根目录生成 `dist` 文件夹，里面就是构建打包好的文件，通常是若干 `*.js`、`*.css`、`index.html` 等静态文件。
+ng-alain 本身是一个 Angular CLI 项目，因此也可以参照 [WiKi](//github.com/angular/angular-cli/wiki/build) 完整更复杂的构建需求。构建打包成功之后，会在根目录生成 `dist` 文件夹，里面就是构建打包好的文件，通常是若干 `*.js`、`*.css`、`index.html` 等静态文件。
 
 ### 环境变量
 
-当你需要区别开发和部署以及测试环境的时候，可以通过 `src/environments` 文件夹根据不同环境配置相应的参数，配置项同时也可以在应用当中直接调用它们。同时，还需要配置 `.angular-cli.json` 内的配置项，最后你可以透过命令改变环境配置。例如：HMR 命令：
-
-```bash
-$ ng serve -e=hmr
-```
+当你需要区别开发和部署以及测试环境的时候，可以通过 `src/environments` 文件夹根据不同环境配置相应的参数，配置项同时也可以在应用当中直接调用它们。同时，还需要配置 `angular.json` 内的配置项，最后你可以透过命令改变环境配置。
 
 ### 分析构建文件体积
 
@@ -86,7 +82,7 @@ app.get('home', '/*', 'home.index');
 
 ### Docker
 
-`ng-alain` 提供了一个基于 `nginx` WEB服务完整的构建Angular项目的镜像文件。其中 `nginx` 是采用 [nginx:1.13.5-alpine](//github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile) 的镜像，基本上可以满足 `ng-alain` 项目的良好运行环境，倘若有更多需求，你可以利用 `docker run` 轻易的指定 *nginx.conf*。
+ng-alain 提供了一个基于 `nginx` WEB服务完整的构建Angular项目的镜像文件。其中 `nginx` 是采用 [nginx:1.13.5-alpine](//github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile) 的镜像，基本上可以满足 ng-alain 项目的良好运行环境，倘若有更多需求，你可以利用 `docker run` 轻易的指定 *nginx.conf*。
 
 #### 1、构建镜像
 
@@ -116,7 +112,7 @@ $ docker run -d -p 80:80 --name alain ng-alain
 
 #### 3、关于SSL
 
-`ng-alain` 提供的 Dockerfile 文件相对于比较简单，而实际项目中最常用的是对SSL的支持。
+ng-alain 提供的 Dockerfile 文件相对于比较简单，而实际项目中最常用的是对SSL的支持。
 
 因此，默认情况下你可以将证书放置 `_nginx/ssl` 目录下，并开启 `_nginx/default.conf` 相关SSL配置项即可。
 
@@ -125,3 +121,7 @@ $ docker run -d -p 80:80 --name alain ng-alain
 ```
 - 443:443
 ```
+
+### 容器部署
+
+参考 [Angular 容器部署](https://zhuanlan.zhihu.com/p/35688938)。

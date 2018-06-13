@@ -1,14 +1,45 @@
-import { escapeHTML, genAttr, isStandalone } from './utils';
+import { escapeHTML, genAttr, isStandalone, isHeading, generateSluggedId } from './utils';
 import { highlight } from '../converters/highlight';
-import { site } from '../converters/site';
 const JsonML = require('jsonml.js/lib/utils');
 
 const converters = [
     highlight()
-].concat(site()).concat([
+].concat([
     [
         (node: any) => typeof node === 'string',
         (node: any) => node
+    ],
+    [
+        (node: any) => JsonML.isElement(node) && isHeading(node),
+        (node: any, index: number) => {
+            const tagName = JsonML.getTagName(node);
+            const children = JsonML.getChildren(node);
+            const sluggedId = generateSluggedId(children).id;
+            // <a href="#${sluggedId}" class="anchor">#</a>
+            return `<${tagName} id="${sluggedId}">${children.map(toHtml).join('')}<a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a></${tagName}>`;
+        }
+    ],
+    [
+        (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'img',
+        (node: any, index: number) => {
+            const attrs = JsonML.getAttributes(node);
+            const ret: any[] = [];
+            if (attrs) {
+                // tslint:disable-next-line:forin
+                for (const key in attrs) {
+                    let value = attrs[key];
+                    if (key === 'src' && ~value.indexOf(' | ')) {
+                        const imgWH = value.split(' | ')[1].trim().split('=');
+                        for (let i = 0; i < imgWH.length; i += 2) {
+                            ret.push(`${imgWH[i]}=${imgWH[i + 1]}`);
+                        }
+                        value = value.split(' | ')[0];
+                    }
+                    if (value) ret.push(`${key}="${value}"`);
+                }
+            }
+            return `<img ${ret.join(' ')} />`;
+        }
     ],
     [
         (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'a',
@@ -16,7 +47,7 @@ const converters = [
             const attrs = Object.assign({ }, JsonML.getAttributes(node));
             let target = attrs.href.startsWith('//') || attrs.href.startsWith('http') ? ' target="_blank"' : '';
             if (~attrs.href.indexOf('ng-alain.com')) target = '';
-            return `<a${target} href="${attrs.href}">${JsonML.getChildren(node).map(toHtml).join('')}</a>`;
+            return `<a${target} href="${attrs.href}" data-url="${attrs.href}">${JsonML.getChildren(node).map(toHtml).join('')}</a>`;
         }
     ],
     [

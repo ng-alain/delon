@@ -1,0 +1,14 @@
+{
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "password": {
+            "type": "string",
+            "ui": {
+                "type": "password"
+            }
+        }
+    },
+    "required": [ "name", "password" ]
+}

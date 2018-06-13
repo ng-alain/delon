@@ -23,7 +23,7 @@ type: Advance
 | 地图类 | - | -
 | 其它 | 标签云：`tag-cloud`<br>图表卡片：`chart-card`<br>自定义图表：`chart` | -
 
-[查看图表组件API文档](http://ng-alain.com/components/charts)
+[查看图表组件API文档](/components/charts)
 
 ## 如何使用？
 
@@ -37,7 +37,7 @@ type: Advance
 npm install @antv/g2 @antv/data-set @antv/g2-plugin-slider --save
 ```
 
-在 `.angular-cli.json` 引用G2文件
+在 `angular.json` 引用G2文件
 
 ```json
 "scripts": [
@@ -51,12 +51,17 @@ npm install @antv/g2 @antv/data-set @antv/g2-plugin-slider --save
 
 `@delon/abc` 提供了一个自定义G2组件的容器，可以减少不必要的组件渲染过程中所产生的奇怪问题。
 
-一个完整的示例见 [chart.md](//github.com/cipchk/delon/blob/master/src/core/abc/components/charts/demo/chart.md)。
+一个完整的示例见 [chart.md](https://github.com/cipchk/delon/blob/master/packages/abc/components/charts/demo/chart.md)。
 
 ## 为什么会有 `kcart.alipay.com` 请求？
 
 为了更好服务用户，G2 会将 URL 和版本信息发送回 AntV 服务器。你可以通过以下代码关闭：
 
 ```ts
-if (typeof G2 !== 'undefined') G2.track(false);
+// app.components
+export class AppComponent {
+  constructor() {
+    if (typeof G2 !== 'undefined') G2.track(false);
+  }
+}
 ```

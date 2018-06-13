@@ -1,6 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
-import { deepCopy, LazyService } from '@delon/abc';
+import { deepCopy, LazyService } from '@delon/util';
 import { EditorItem } from '../interface';
 
 const DEFAULT = {

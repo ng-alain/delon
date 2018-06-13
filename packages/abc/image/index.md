@@ -1,7 +1,6 @@
 ---
 title: _src
 subtitle: 显示图像
-order: 300
 cols: 1
 type: Directive
 module: AdImageModule
@@ -18,5 +17,5 @@ config: AdImageConfig
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-size | 图像大小 | `number` | `64`
-error | 替代图像无法加载 | `string` | `./assets/img/logo.svg`
+`[size]` | 图像大小 | `number` | `64`
+`[error]` | 替代图像无法加载 | `string` | `./assets/img/logo.svg`

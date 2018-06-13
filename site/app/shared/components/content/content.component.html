@@ -1,27 +1,11 @@
-<ng-template #menu>
-    <ul nz-menu [nzMode]="'inline'" style="padding-bottom: 64px;">
-        <li nz-submenu nzOpen *ngFor="let group of meta.menus">
-            <span title>{{group.title}}</span>
-            <ul>
-                <li nz-menu-item *ngFor="let item of group.list"
-                    (click)="to(item.url)"
-                    [routerLink]="item.url"
-                    [routerLinkActive]="['ant-menu-item-selected']" style="padding-left: 54px;">
-                    {{item.title}}
-                    <span class="chinese" *ngIf="item.subtitle">{{item.subtitle}}</span>
-                </li>
-            </ul>
-        </li>
-    </ul>
-</ng-template>
-<ng-template #con><router-outlet></router-outlet></ng-template>
 <nz-row>
     <nz-col *ngIf="!isMobile" nzXs="24" nzSm="24" nzMd="24" nzLg="6" nzXl="5" nzXXl="4" class="main-menu">
-        <ng-template [ngTemplateOutlet]="menu"></ng-template>
+        <main-menu (clicl)="to()"></main-menu>
     </nz-col>
     <nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="18" nzXl="19" nzXXl="20"
-        class="main-container main-container-component">
-        <ng-template [ngTemplateOutlet]="con"></ng-template>
+        class="main-container"
+        [class.pages-container]="meta.isPages">
+        <router-outlet></router-outlet>
     </nz-col>
 </nz-row>
 <ng-container *ngIf="isMobile">
@@ -29,7 +13,7 @@
         <div class="drawer-bg" [hidden]="!opened" (click)="opened=!opened"></div>
         <div class="drawer-content-wrapper">
             <div class="drawer-content">
-                <ng-template [ngTemplateOutlet]="menu"></ng-template>
+                <main-menu (clicl)="to()"></main-menu>
             </div>
             <div class="drawer-button" (click)="opened=!opened"><i class="anticon anticon-menu-unfold"></i></div>
         </div>

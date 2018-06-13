@@ -1,4 +1,4 @@
 [submodule "scaffold"]
 	path = scaffold
 	url = https://github.com/cipchk/ng-alain.git
-	branch = 0.2.0
+	branch = master

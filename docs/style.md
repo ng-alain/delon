@@ -45,7 +45,7 @@ ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到�
 
 ## 工具类规则
 
-`ng-alain` 在 Ant Design 的基础上生产一套尺寸、间距、颜色等工具类。
+ng-alain 在 Ant Design 的基础上生产一套尺寸、间距、颜色等工具类。
 
 ### 尺寸
 
@@ -90,7 +90,7 @@ ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到�
 
 Ant Design 并没有按钮色这一说，而是以视觉效果为基准。`nz-button` 包括四种类型：`primary`、`dashed` 等。但 `primary` 是固定的蓝色系列，这是默认色系。
 
-而 `ng-alain` 依然不会破坏这种规则，但依 [色彩](//ant.design/docs/spec/colors-cn) 章节，我产生了一种运用于文本、背景的色系类。
+而 ng-alain 依然不会破坏这种规则，但依 [色彩](//ant.design/docs/spec/colors-cn) 章节，我产生了一种运用于文本、背景的色系类。
 
 色彩一共有十种，前九种依[色彩](//ant.design/docs/spec/colors-cn)为准，以及新增一种 `teal【#20c997】` （别问我为什么，我就喜欢偶数而已），分别如下：
 

@@ -1,7 +1,6 @@
 ---
 title: standard-form-row
 subtitle: 标准表单行
-order: 180
 cols: 1
 module: AdStandardFormRowModule
 ---
@@ -12,10 +11,10 @@ module: AdStandardFormRowModule
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-title | 标题 | `string` | -
-block | 是否整行 | `boolean` | `false`
-last | 是否最后一行 | `boolean` | `false`
-grid | 是否网格布局 | `boolean` | `false`
+`[title]` | 标题 | `string` | -
+`[block]` | 是否整行 | `boolean` | `false`
+`[last]` | 是否最后一行 | `boolean` | `false`
+`[grid]` | 是否网格布局 | `boolean` | `false`
 
 ## DEMO
 

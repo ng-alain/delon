@@ -1,42 +1,39 @@
 import { HttpRequest } from '@angular/common/http';
 
-export interface MockRequest {
-    [ key: string ]: any;
-}
-
 export interface MockCachedRule {
-    [ key: string ]: any;
+  [key: string]: any;
 
-    method: string;
+  method: string;
 
-    url: string;
+  url: string;
 
-    martcher: RegExp;
+  martcher: RegExp;
 
-    segments: string[];
+  segments: string[];
 
-    callback: (req: MockRequest) => any;
+  callback: (req: MockRequest) => any;
 }
 
 export interface MockRule {
-    [ key: string ]: any;
+  [key: string]: any;
 
-    method: string;
+  method: string;
 
-    url: string;
+  url: string;
 
-    /** 路由参数 */
-    params?: any;
+  /** 路由参数 */
+  params?: any;
 
-    callback: (req: MockRequest) => any;
+  callback: (req: MockRequest) => any;
 }
 
 export interface MockRequest {
-    /** 路由参数 */
-    params?: any;
-    queryString?: any;
-    headers?: any;
-    body?: any;
-    /** 原始 `HttpRequest` */
-    original: HttpRequest<any>;
+  /** 路由参数 */
+  params?: any;
+  /** URL参数 */
+  queryString?: any;
+  headers?: any;
+  body?: any;
+  /** 原始 `HttpRequest` */
+  original: HttpRequest<any>;
 }

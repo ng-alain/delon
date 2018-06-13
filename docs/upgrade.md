@@ -16,6 +16,7 @@ type: Dev
 
 - `@delon` 作为基础建设类库，在更新频率上会略高，一般一周至少更新一次
 - 带有 **BREAKING CHANGES** 至少提升一个次版本号
+- [更新日志](https://github.com/cipchk/ng-alain/releases)
 
 ## 如何升级？
 
@@ -29,11 +30,15 @@ type: Dev
 
 将 `^0.7.1` 替换成最新版本号。
 
-最后，执行：
+最后，重新安装依赖包。
 
 ```bash
-npm install
+$ npm install
 ```
+
+> 遇到问题请阅读 [常见问题](/cli/faq)
+
+如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速。
 
 ### 方式二：更新所有类库
 

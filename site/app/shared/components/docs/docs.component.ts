@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { I18NService } from '../../../core/i18n/service';
 import { MetaService } from '../../../core/meta.service';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-docs',
@@ -11,6 +11,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class DocsComponent implements OnInit, OnDestroy {
 
     private _item: any;
+    demoStr: string;
+    demoContent: SafeHtml;
 
     @Input() codes: any[];
 
@@ -24,13 +26,22 @@ export class DocsComponent implements OnInit, OnDestroy {
 
         // region: demo toc
         if (ret.demo && this.codes && this.codes.length) {
-            ret.con.toc = this.codes.map((item: any) => {
+            this.genDemoTitle();
+            const toc = (ret.con.toc as any[]);
+            const apiPos = toc.findIndex(w => w.title === 'API');
+            toc.splice(apiPos === -1 ? 0 : apiPos, 0, ...[
+                {
+                    h: 2,
+                    href: `#${this.demoStr}`,
+                    title: this.demoStr
+                }
+            ].concat(this.codes.map((item: any) => {
                 return {
                     h: 3,
                     href: '#' + item.id,
                     title: this.i18n.get(item.meta.title)
                 };
-            });
+            })));
         }
         // endregion
 
@@ -58,12 +69,32 @@ export class DocsComponent implements OnInit, OnDestroy {
     }
 
     goTo(item: any) {
-        document.querySelector(item.href).scrollIntoView();
-        location.hash = item.href;
+        let targetEl: any;
+        try {
+            targetEl = document.querySelector(item.href);
+        } catch (e) {
+            console.warn(`查找目标元素异常：${item.href}`, e);
+        }
+
+        if (targetEl) {
+            targetEl.scrollIntoView();
+            location.hash = item.href;
+        } else {
+            console.warn(`无法获取目标元素：${item.href}`);
+        }
         return false;
     }
 
-    private initHLJS() {
+    private genDemoTitle() {
+        this.demoStr = this.i18n.fanyi('app.component.examples');
+        this.demoContent = this.sanitizer.bypassSecurityTrustHtml(`
+            ${this.demoStr}
+            <a onclick="window.location.hash='${this.demoStr}'" class="anchor">#</a>
+        `);
+    }
+
+    private init() {
+        this.genDemoTitle();
         setTimeout(() => {
             const elements = document.querySelectorAll('[class*="language-"], [class*="lang-"]');
             for (let i = 0, element; element = elements[i++];) {
@@ -75,9 +106,9 @@ export class DocsComponent implements OnInit, OnDestroy {
     i18NChange$: any;
     ngOnInit(): void {
         this.i18NChange$ = this.i18n.change.subscribe(() => {
-            this.initHLJS();
+            this.init();
         });
-        this.initHLJS();
+        this.init();
     }
 
     ngOnDestroy(): void {

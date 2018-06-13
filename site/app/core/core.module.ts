@@ -4,12 +4,14 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
 import { MetaService } from './meta.service';
 import { MobileService } from './mobile.service';
 import { I18NService } from './i18n/service';
+import { CodeService } from './code.service';
 
 @NgModule({
     providers: [
         I18NService,
         MetaService,
-        MobileService
+        MobileService,
+        CodeService
     ]
 })
 export class CoreModule {

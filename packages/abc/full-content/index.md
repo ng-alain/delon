@@ -1,7 +1,6 @@
 ---
 title: full-content
 subtitle: 全屏工作区
-order: 50
 cols: 1
 module: AdFullContentModule
 ---
@@ -16,9 +15,9 @@ module: AdFullContentModule
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-fullscreen | 是否完整全屏（不包括顶部、侧边栏等），支持双向绑定 | `boolean` | -
-hideTitle | 完整全屏旱是否隐藏标题 | `boolean` | `true`
-padding | 工作区内边距 | `number` | `24`
+`[fullscreen]` | 是否完整全屏（不包括顶部、侧边栏等），支持双向绑定 | `boolean` | -
+`[hideTitle]` | 完整全屏旱是否隐藏标题 | `boolean` | `true`
+`[padding]` | 工作区内边距 | `number` | `24`
 
 ### 关于是否完整全屏
 

@@ -1,7 +1,6 @@
 ---
 title: xlsx
 subtitle: Excel 操作
-order: 210
 cols: 1
 module: AdXlsxModule
 ---
@@ -31,13 +30,19 @@ npm install --save file-saver
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-sheets | 数据源 | `{ [sheet: string]: WorkSheet } | XlsxExportSheet[]` | -
-filename | Excel文件名 | `string` | `export.xlsx`
-opts | Excel写入选项，见 [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | -
-callback | 保存前触发 | `(wb: WorkBook) => void` | -
+`[sheets]` | 数据源 | `{ [sheet: string]: WorkSheet } | XlsxExportSheet[]` | -
+`[filename]` | Excel文件名 | `string` | `export.xlsx`
+`[opts]` | Excel写入选项，见 [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | -
+`[callback]` | 保存前触发 | `(wb: WorkBook) => void` | -
 
 ### xlsx 指令
 
 ```html
 <div [xlsx]="XlsxExportOptions">导出</div>
 ```
+
+## 常见问题
+
+### csv格式
+
+需要 UTF8 with BOM 格式才能解析。

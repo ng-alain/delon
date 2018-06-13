@@ -1,1 +1,1 @@
-export const META: any = {{{data}}};
+export const META = {{{data}}};

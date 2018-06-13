@@ -1,8 +1,12 @@
 // antd
-@import '~ng-zorro-antd/src/ng-zorro-antd.less';
+@import 'node_modules/ng-zorro-antd/src/ng-zorro-antd.less';
 // alain
-@import '../packages/theme/styles/index';
-@import '../packages/abc/index';
+@import 'packages/theme/styles/index';
+@import 'packages/abc/index';
 
 // 例如：内容区域背景色为白色
 // @content-bg:  #fff;
+
+.ant-btn + .ant-btn {
+  margin-left: 8px;
+}

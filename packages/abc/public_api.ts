@@ -16,7 +16,6 @@ export * from './result';
 export * from './standard-form-row';
 export * from './tag-select';
 export * from './trend';
-export * from './utils';
 export * from './count-down';
 export * from './simple-table';
 export * from './reuse-tab';
@@ -26,6 +25,8 @@ export * from './zip';
 export * from './number-to-chinese';
 export * from './lodop';
 export * from './quick-menu';
+export * from './qr';
+export * from './simple-html-form';
 // charts
 export * from './charts/bar';
 export * from './charts/card';

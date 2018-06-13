@@ -1,8 +1,7 @@
 import { ITokenModel } from '../interface';
 
 export class SimpleTokenModel implements ITokenModel {
+  [key: string]: any;
 
-    [key: string]: any;
-
-    token: string;
+  token: string;
 }

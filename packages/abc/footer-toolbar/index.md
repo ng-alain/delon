@@ -1,7 +1,6 @@
 ---
 title: footer-toolbar
 subtitle: 底部工具栏
-order: 110
 cols: 1
 module: AdFooterToolbarModule
 ---
@@ -16,6 +15,6 @@ module: AdFooterToolbarModule
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-ng-content | 工具栏内容，向右对齐 | `any` | -
-errorCollect | 是否需要 `error-collect`，务必包裹在 `<form>` 元素内 | `boolean` | `false`
-extra | 额外信息，向左对齐 | `string, TemplateRef<any>` | -
+`ng-content` | 工具栏内容，向右对齐 | `any` | -
+`[errorCollect]` | 是否需要 `error-collect`，务必包裹在 `<form>` 元素内 | `boolean` | `false`
+`[extra]` | 额外信息，向左对齐 | `string, TemplateRef<any>` | -

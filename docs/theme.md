@@ -6,7 +6,7 @@ title:
 type: Advance
 ---
 
-`@delon/theme` 的主题系统包含了[几十种参数](//github.com/cipchk/delon/blob/master/packages/theme/styles/variables)，你可以通过覆盖参数数值进而定制一些特别的需求。
+`@delon/theme` 的主题系统包含了[几十种参数](//github.com/cipchk/delon/tree/master/packages/theme/styles/variable)，你可以通过覆盖参数数值进而定制一些特别的需求。
 
 ## 如何覆盖参数
 

@@ -1,74 +1,85 @@
-import { Component, OnInit, ElementRef, Input, OnDestroy, EventEmitter, Output, HostBinding } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { Observable } from 'rxjs/Observable';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  Input,
+  OnDestroy,
+  EventEmitter,
+  Output,
+  HostBinding,
+} from '@angular/core';
+import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { FromEventObservable } from 'rxjs/observable/FromEventObservable';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { toNumber } from '@delon/util';
 
 @Component({
-    selector: 'g2-chart',
-    template: ``
+  selector: 'g2-chart',
+  template: ``,
 })
 export class G2ChartComponent implements OnInit, OnDestroy {
+  // region: fields
 
-    // region: fields
+  @HostBinding('style.height.px')
+  @Input()
+  get height() {
+    return this._height;
+  }
+  set height(value: any) {
+    this._height = toNumber(value);
+  }
+  private _height;
 
-    @HostBinding('style.height.px')
-    @Input()
-    get height() { return this._height; }
-    set height(value: any) {
-        this._height = coerceNumberProperty(value);
-    }
-    private _height;
+  @Input()
+  get resizeTime() {
+    return this._resizeTime;
+  }
+  set resizeTime(value: any) {
+    this._resizeTime = toNumber(value);
+  }
+  private _resizeTime = 0;
 
-    @Input()
-    get resizeTime() { return this._resizeTime; }
-    set resizeTime(value: any) {
-        this._resizeTime = coerceNumberProperty(value);
-    }
-    private _resizeTime = 0;
+  @Output() render: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 
-    @Output() render: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  @Output() resize: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 
-    @Output() resize: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  @Output() destroy: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 
-    @Output() destroy: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  // endregion
 
-    // endregion
+  constructor(private el: ElementRef) {}
 
-    constructor(private el: ElementRef) {}
+  private renderChart() {
+    this.el.nativeElement.innerHTML = '';
+    this.render.emit(this.el);
+    this.installResizeEvent();
+  }
 
-    private renderChart() {
-        this.el.nativeElement.innerHTML = '';
-        this.render.emit(this.el);
-    }
+  ngOnInit(): void {
+    setTimeout(() => this.renderChart(), 200);
+  }
 
-    ngOnInit(): void {
-        setTimeout(() => this.renderChart(), 200);
-    }
+  ngOnDestroy(): void {
+    this.destroy.emit(this.el);
+    this.uninstallResizeEvent();
+  }
 
-    ngOnDestroy(): void {
-        this.destroy.emit(this.el);
-        this.uninstallResizeEvent();
-    }
+  // region: resize
 
-    // region: resize
+  private resize$: Subscription = null;
 
-    private resize$: Subscription = null;
+  private installResizeEvent() {
+    if (this.resizeTime <= 0 || !this.resize$) return;
 
-    private installResizeEvent() {
-        if (this.resizeTime <= 0 || !this.resize$) return;
+    if (this.resizeTime <= 200) this.resizeTime = 200;
 
-        if (this.resizeTime <= 200) this.resizeTime = 200;
+    this.resize$ = fromEvent(window, 'resize')
+      .pipe(debounceTime(this.resizeTime))
+      .subscribe(() => this.resize.emit(this.el));
+  }
 
-        this.resize$ = <any>FromEventObservable.create(window, 'resize')
-                            .pipe(debounceTime(this.resizeTime))
-                            .subscribe(() => this.resize.emit(this.el));
-    }
+  private uninstallResizeEvent() {
+    if (this.resize$) this.resize$.unsubscribe();
+  }
 
-    private uninstallResizeEvent() {
-        if (this.resize$) this.resize$.unsubscribe();
-    }
-
-    // endregion
+  // endregion
 }

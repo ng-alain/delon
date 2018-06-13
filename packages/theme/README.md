@@ -1,10 +1,15 @@
-# @delon/theme module
+# @delon/theme module [![Build Status](https://travis-ci.org/cipchk/delon.svg?branch=master)](https://travis-ci.org/cipchk/delon) [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme) [![NPM version](https://img.shields.io/npm/v/@delon/theme/next.svg)](https://www.npmjs.com/package/@delon/theme)
 
-[Document](http://ng-alain.com/docs/theme)
+ng-alain theme system library.
+
+## Links
+
+- [Api Document](http://ng-alain.com)
+- [Demo](https://cipchk.github.io/ng-alain/)
 
 ## Architecture
 
-![Architecture](https://github.com/cipchk/delon/blob/master/_screenshot/architecture.png)
+![Architecture](https://raw.githubusercontent.com/cipchk/delon/master/_screenshot/architecture.png)
 
 ## Troubleshooting
 

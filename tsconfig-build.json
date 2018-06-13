@@ -1,46 +1,35 @@
 {
-    "compilerOptions": {
-      "declaration": false,
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "lib": [
-        "es7",
-        "dom"
-      ],
-      "module": "es2015",
-      "moduleResolution": "node",
-      "noEmitOnError": true,
-      "outDir": "./dist/@delon",
-      "rootDir": "./dist/packages",
-      "sourceMap": true,
-      "target": "es5",
-      "inlineSources": true,
-      "stripInternal": true,
-      "baseUrl": ".",
-      "paths": {
-        "@delon/theme": ["./dist/packages/theme"],
-        "@delon/abc": ["./dist/packages/abc"],
-        "@delon/acl": ["./dist/packages/acl"]
-      },
-      "skipLibCheck": true,
-      "typeRoots": [
-        "node_modules/@types"
-      ]
+  "compilerOptions": {
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es7", "dom"],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "outDir": "./dist/@delon",
+    "rootDir": "./dist/packages",
+    "sourceMap": true,
+    "target": "es5",
+    "inlineSources": true,
+    "stripInternal": true,
+    "baseUrl": ".",
+    "paths": {
+      "@delon/theme": ["./dist/packages/theme"],
+      "@delon/abc": ["./dist/packages/abc"],
+      "@delon/acl": ["./dist/packages/acl"],
+      "@delon/util": ["./dist/packages/util"]
     },
-    "include": [
-      "./dist/packages/**/*"
-    ],
-    "files": [
-      "./src/typings.d.ts"
-    ],
-    "exclude": [
-      "./dist/packages/**/*.e2e.ts",
-      "./dist/packages/**/*.spec.ts"
-    ],
-    "angularCompilerOptions": {
-      "preserveWhiteSpace": false,
-      "annotateForClosureCompiler": true,
-      "skipTemplateCodegen": true,
-      "strictMetadataEmit": false
-    }
+    "skipLibCheck": true,
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["./dist/packages/**/*"],
+  "files": ["./src/typings.d.ts"],
+  "exclude": ["./dist/packages/**/*.e2e.ts", "./dist/packages/**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "preserveWhiteSpace": false,
+    "annotateForClosureCompiler": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": false
   }
+}

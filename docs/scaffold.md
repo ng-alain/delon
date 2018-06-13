@@ -41,15 +41,15 @@ type: Basic
 
 **_mock**
 
-Mock 数据规则目录；若你通过 [cli](http://ng-alain.com/docs/cli) 创建项目时可以指定 `-dm` 参数决定是否需要 Mock 功能。
+Mock 数据规则目录，若你通过 [命令行工具](/cli) 创建项目时可以指定 `--mock` 参数决定是否需要 Mock 功能。
 
 **src/app/core/core.module.ts**
 
-核心模块，只会导入一次。因此针对整个**业务模块都需要**使用的纯服务类（例如：消息、数据访问等），都应该存在这里。
+核心模块，只会导入一次。因此，针对整个**业务模块都需要**使用的纯服务类（例如：消息、数据访问等），都应该存在这里。
 
 **src/app/core/i18n**
 
-[国际化](http://ng-alain.com/docs/i18n)数据加载及处理相关类；若你通过 [cli](http://ng-alain.com/docs/cli) 创建项目时可以指定 `-di` 参数决定是否需要国际化支持。
+[国际化](/docs/i18n)数据加载及处理相关类，若你通过 [命令行工具](/cli) 创建项目时可以指定 `-di` 参数决定是否需要国际化支持。
 
 **src/app/core/net**
 
@@ -75,7 +75,7 @@ Mock 数据规则目录；若你通过 [cli](http://ng-alain.com/docs/cli) 创�
 
 **src/app/delon.module.ts**
 
-针对 @delon 系列的模块导入集合，默认情况下导入所有模块，你可以利用[优化](http://ng-alain.com/docs/performance)章节，进一步按需优化。
+针对 @delon 系列的模块导入集合，默认情况下导入所有模块，你可以利用[优化](/docs/performance)章节，进一步按需优化。
 
 **src/styles/_alain-custom-variables.less**
 
@@ -87,9 +87,7 @@ Mock 数据规则目录；若你通过 [cli](http://ng-alain.com/docs/cli) 创�
 
 - `SERVER_URL` 所有HTTP请求的前缀
 - `production` 是否生产环境
-- `hmr` 是否HMR启动
 - `useHash` 路由是否useHash模式
-- `chore` ng-alain 开发标记，你可以删除它
 
 ## 页面结构
 
@@ -121,15 +119,15 @@ Mock 数据规则目录；若你通过 [cli](http://ng-alain.com/docs/cli) 创�
 
 位置：*src/app/layout/default/header*。
 
-脚手架默认提供了一些常规顶部区域组件，这些组件都存放于 *components* 目录中；同时 `@delon/abc` 也提供若干顶部组件（例如：[notice-icon](/components/notice-icon) 通知菜单组件）。你可以根据提供的组件自行组合，或自行开发。
+脚手架默认提供了一些常规顶部区域组件，这些组件都存放于 *components* 目录中。同时 `@delon/abc` 也提供若干顶部组件（例如：[notice-icon](/components/notice-icon) 通知菜单组件）。你可以根据提供的组件自行组合或自行开发。
 
-> 脚手架支持响应式布局，对于顶部区域可能会是在小屏幕下需要隐藏一些组件，因此你可以在对应的DOM节点上加上 `hidden-xs` 表示当屏幕小于 `<768px` 时自动隐藏。
+> 脚手架支持响应式布局，对于顶部区域可能会是在小屏幕下需要隐藏一些组件，因此你可以在对应的DOM节点上加上 `hidden-xs` 表示当屏幕小于 `768px` 时自动隐藏。
 
 **侧边区域**
 
 位置：*src/app/layout/default/sidebar*。
 
-只包括一个用户信息和主菜单，主菜单是一个 [sidebar-nav](/components/sidebar-nav) 组件，具体使用细节请至[业务组件](/components/sidebar-nav)中查询。
+只包括一个用户信息和主菜单。主菜单是一个 [sidebar-nav](/components/sidebar-nav) 组件，具体使用细节请至[业务组件](/components/sidebar-nav)中查询。
 
 **内部区域**
 
@@ -139,7 +137,7 @@ Mock 数据规则目录；若你通过 [cli](http://ng-alain.com/docs/cli) 创�
 
 ### 全屏布局
 
-用于无须任何顶部和侧边区域，一般用于高定制性页面，诸如：大屏幕数据等。
+用于无须任何顶部和侧边区域，一般用于高定制性页面，诸如大屏幕数据等。
 
 ### 用户授权布局
 

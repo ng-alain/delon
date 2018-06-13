@@ -23,7 +23,7 @@ ng-alain 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 ### _HttpClient
 
-`@delon/theme` 包含了一个叫 [_HttpClient](//github.com/cipchk/delon/blob/master/src/core/theme/services/http/http.client.ts) 类，其本质还是调用 Angular 的 `HttpClient`，只是包裹了一个 `loading`。
+`@delon/theme` 包含了一个叫 [_HttpClient](https://github.com/cipchk/delon/blob/master/packages/theme/services/http/http.client.ts) 类，其本质还是调用 Angular 的 `HttpClient`，只是包裹了一个 `loading`。
 
 我们知道 ng-zorro-antd 充斥着大量 `nzLoading` 属性，它可以让网络请求的加载有更友好的体验，这样我们无须在每一个业务页面维护一个 `loadind` 变量。
 
@@ -31,11 +31,11 @@ ng-alain 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 ### 拦截器
 
-默认情况下在根模块注册了两个拦截器 [SimpleInterceptor](https://github.com/cipchk/delon/blob/master/src/core/auth/token/simple/simple.interceptor.ts) 和 [DefaultInterceptor](https://github.com/cipchk/ng-alain/blob/master/src/app/core/net/default.interceptor.ts)，且执行顺序按注册顺序执行。
+默认情况下在根模块注册了两个拦截器 [SimpleInterceptor](https://github.com/cipchk/delon/blob/master/packages/auth/token/simple/simple.interceptor.ts) 和 [DefaultInterceptor](https://github.com/cipchk/ng-alain/blob/master/src/app/core/net/default.interceptor.ts)，且执行顺序按注册顺序执行。
 
 **SimpleInterceptor**
 
-[用户认证](/docs/auth)内置用于自动为请求添加 `token` 参数的拦截器。这里还有一个叫 [JWTInterceptor](https://github.com/cipchk/delon/blob/master/src/core/auth/token/jwt/jwt.interceptor.ts) 拦截器，是一个标准 JWT 规范，若后端采用标准JWT可以直接换成JWTInterceptor拦截器。
+[用户认证](/docs/auth)内置用于自动为请求添加 `token` 参数的拦截器。这里还有一个叫 [JWTInterceptor](https://github.com/cipchk/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) 拦截器，是一个标准 JWT 规范，若后端采用标准JWT可以直接换成JWTInterceptor拦截器。
 
 **DefaultInterceptor**
 
@@ -71,4 +71,4 @@ export const USERS = {
 
 脚手架默认情况下使用了 `@delon/auth` 的 `SimpleInterceptor` 拦截器，导致在请求过程中若发现无法获取 Token 时会直接返回错误。
 
-[用户认证](http://ng-alain.com/docs/auth)这个过程是中台必备的。
+[用户认证](/docs/auth)这个过程是中台必备的。

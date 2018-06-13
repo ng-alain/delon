@@ -1,26 +1,24 @@
 {
-    "extends": "../tsconfig-build.json",
+  "extends": "../tsconfig-build.json",
 
-    "compilerOptions": {
-      "baseUrl": ".",
-      "rootDir": ".",
-      "paths": {
-        "@delon/theme": ["../../packages-dist/theme"],
-        "@delon/acl": ["../../packages-dist/acl"]
-      },
-      "outDir": "../../@delon/abc"
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@delon/theme": ["../../packages-dist/theme"],
+      "@delon/acl": ["../../packages-dist/acl"],
+      "@delon/util": ["../../packages-dist/util"]
     },
+    "outDir": "../../@delon/abc"
+  },
 
-    "files": [
-      "public_api.ts",
-      "../typings.d.ts"
-    ],
+  "files": ["public_api.ts", "../typings.d.ts"],
 
-    "angularCompilerOptions": {
-      "annotateForClosureCompiler": true,
-      "strictMetadataEmit": false,
-      "skipTemplateCodegen": true,
-      "flatModuleOutFile": "index.js",
-      "flatModuleId": "@delon/abc"
-    }
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": false,
+    "skipTemplateCodegen": true,
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "@delon/abc"
   }
+}

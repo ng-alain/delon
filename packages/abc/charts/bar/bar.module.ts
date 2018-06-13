@@ -6,12 +6,12 @@ import { G2BarComponent } from './bar.component';
 const COMPONENTS = [G2BarComponent];
 
 @NgModule({
-    imports:        [CommonModule],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdG2BarModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdG2BarModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdG2BarModule, providers: [] };
+  }
 }

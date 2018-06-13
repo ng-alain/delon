@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsWeUIShell",
+  "title": "WeUI Shell Options Schema",
+  "type": "object",
+  "properties": {
+    "codeStyle": {
+      "type": "boolean",
+      "default": true,
+      "description": "Do not add code styles (e.g., --codeStyle)"
+    },
+    "form": {
+      "type": "boolean",
+      "description": "Generates form.",
+      "default": true
+    },
+    "mock": {
+      "type": "boolean",
+      "description": "Generates mock.",
+      "default": true
+    },
+    "i18n": {
+      "type": "boolean",
+      "description": "Generates i18n.",
+      "default": false
+    },
+    "g2": {
+      "type": "boolean",
+      "description": "Generates g2.",
+      "default": false
+    }
+  },
+  "required": []
+}

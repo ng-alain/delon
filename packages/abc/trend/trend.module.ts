@@ -6,12 +6,12 @@ import { TrendComponent } from './trend.component';
 const COMPONENTS = [TrendComponent];
 
 @NgModule({
-    imports:        [CommonModule],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdTrendModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdTrendModule, providers: [] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdTrendModule, providers: [] };
+  }
 }

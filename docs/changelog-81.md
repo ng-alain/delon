@@ -1,23 +1,21 @@
 ---
 order: 1000
-title: 1.0.0升级指引
+title: 1.0.x升级指引
 type: Other
 ---
 
 ## 写在前面
 
-`1.0.0-beta` 主要是对 ng-zorro-antd 0.7.0 的同步升级，由于 zorro 基础组件的api有比较大的变动，因此本文不会叙述关于 zorro 如果升级的问题。
+`1.0.x` 主要是对 ng-zorro-antd 0.7.0 的同步升级，由于 zorro 基础组件的api有比较大的变动，因此本文不会叙述关于 zorro 如果升级的问题。
 
-`1.0.0-beta` 主要的变化是 `@delon/*` 系列业务组件的升级，其中这一部分并没有太多组件API的变动。反而尽可能在做一些减法，其主要包括：
+`1.0.x` 主要的变化是 `@delon/*` 系列业务组件的升级，其中这一部分并没有太多组件API的变动。反而尽可能在做一些减法，其主要包括：
 
-- 移除十种主题色，改由动态[自定义主题](http://ng-alain.com/theme)
+- 移除十种主题色，改由动态[自定义主题](/theme)
 - 移除 `forRoot()` 参数配置项，由 `provider` 统一配置，更易交付
 - `@delon/abc` 部分组件名的修改，这一部分可以直接搜索替换完成
 - `ng-zorro-antd-extra` 不再维护，指引后面有变动细节
 - `ng-tree-antd` 不再维护，使用 `nz-tree`
-- `ng-clipboard-antd` 不再维护，使用 `@delon/abc` 的 `copy` 方法
-
-> **注**：以下 [zorrt](https://www.npmjs.com/package/ng-zorro-antd?activeTab=versions) 和 [ng-alain](https://www.npmjs.com/package/@delon/cli?activeTab=versions) 都是针对 `@next` 版本
+- `ng-clipboard-antd` 不再维护，使用 `@delon/util` 的 `copy` 方法
 
 **HTML模板升级工具**
 
@@ -25,18 +23,17 @@ type: Other
 
 **nz-schema-form**
 
-近期会重构，并同步 0.7.0 有关其部分暂时移除。
+使用 `@delon/form` 替代。
 
 ## 脚手架
 
 - Module
-    - 改变 delon.module.ts、shared.module.ts 的使用方式，不再单独导入模块因为cli 在进行 Tree Shaking 时可以自动排除未使用过的模块
-    - `nz-schema-form` 未升级，暂时不引入
+  - 改变 delon.module.ts、shared.module.ts 的使用方式，不再单独导入模块因为cli 在进行 Tree Shaking 时可以自动排除未使用过的模块
 - 样式
-    - 改变 styles.less 的使用方式
-    - 移除 `font-awesome`、`simple-line-icons` 样式
+  - 改变 styles.less 的使用方式
+  - 移除 `font-awesome`、`simple-line-icons` 样式
 - 其它
-    - `ng-zorro-antd` 暂时还未开放日期组件，暂时留空所有跟日期相关的
+  - [路由复用](/components/reuse-tab)需要额外注册 `RouteReuseStrategy`
 
 ### reuse-tab
 

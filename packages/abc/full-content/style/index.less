@@ -1,35 +1,34 @@
 @import '../../../theme/styles/default';
-
 .ad-full-content {
-    display: block;
-    height: 100%;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  &-wrap {
     overflow: hidden;
-    &-wrap {
-        overflow: hidden;
-        .content {
-            router-outlet + * {
-                height: 100%;
-                width: 100%;
-            }
-        }
-        .content__title {
-            margin-left: -24px;
-        }
+    .content {
+      router-outlet + * {
+        height: 100%;
+        width: 100%;
+      }
     }
-    &-fs {
-        .header,
-        .aside,
-        reuse-tab {
-            display: none !important;
-        }
-        .content {
-            margin: 24px !important;
-        }
+    .content__title {
+      margin-left: -24px;
     }
-    &-ht {
-        .content__title,
-        pro-header {
-            display: none !important;
-        }
+  }
+  &-fs {
+    .header,
+    .aside,
+    reuse-tab {
+      display: none !important;
     }
+    .content {
+      margin: 24px !important;
+    }
+  }
+  &-ht {
+    .content__title,
+    pro-header {
+      display: none !important;
+    }
+  }
 }

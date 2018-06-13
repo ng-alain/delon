@@ -1,0 +1,2 @@
+export const VERSION = 'PEER-0.0.0-PLACEHOLDER';
+export const ZORROVERSION = 'ZORRO-0.0.0-PLACEHOLDER';

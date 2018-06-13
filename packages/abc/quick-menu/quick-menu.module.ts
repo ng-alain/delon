@@ -6,12 +6,12 @@ import { QuickMenuComponent } from './quick-menu.component';
 const COMPONENTS = [QuickMenuComponent];
 
 @NgModule({
-    imports:        [CommonModule],
-    declarations:   [...COMPONENTS],
-    exports:        [...COMPONENTS]
+  imports: [CommonModule],
+  declarations: [...COMPONENTS],
+  exports: [...COMPONENTS],
 })
 export class AdQuickMenuModule {
-    static forRoot(): ModuleWithProviders {
-        return { ngModule: AdQuickMenuModule, providers: [  ] };
-    }
+  static forRoot(): ModuleWithProviders {
+    return { ngModule: AdQuickMenuModule, providers: [] };
+  }
 }

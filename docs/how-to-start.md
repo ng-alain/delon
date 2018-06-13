@@ -8,13 +8,13 @@ type: Dev
 
 ## 一、前序准备
 
-当你开始着手在 ng-alain 基础上进行业务开发时，我建议你先了解一下以下文档，这对于亦或是团队每个成员都非常有帮助。
+当你开始着手在 ng-alain 基础上进行业务开发时，我建议你先了解一下以下文档，这对于团队中每个成员都非常有帮助。
 
 + [Ant Desig 指引文章](//ant.design/docs/spec/introduce-cn)
 + [Ant Deisng for Angular](//ng.ant.design/)
 + [Antv 图表](//antv.alipay.com/zh-cn/index.html)
 
-ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很细说 [API](//ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
+ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很详细的 [API](//ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
 
 ## 二、启动
 
@@ -45,7 +45,7 @@ this.aclService.setFull(true);
 
 ### 菜单数据
 
-中台的菜单数据大多数是来自后端，但给予的数据务必确保是 [Menu](https://github.com/cipchk/delon/blob/master/src/core/theme/services/menu/interface.ts) 格式，有关更多细节请参考：[sidebar-nav](/components/sidebar-nav) 的API说明。
+中台的菜单数据大多数是来自后端，但给予的数据务必确保是 [Menu](https://github.com/cipchk/delon/blob/master/packages/theme/services/menu/interface.ts) 格式，有关更多细节请参考[sidebar-nav](/components/sidebar-nav) 的API说明。
 
 ### 页面标题
 
@@ -53,11 +53,11 @@ this.aclService.setFull(true);
 
 ### 国际化
 
-建议在启动前优先加载国际化数据包，这样可确保用户启动后所看到为目标语言。
+建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。
 
 ### ACL
 
-建议在启动前加载ACL访问控制权限数据，有关更多细节可参考 [ACL](/docs/acl) API。
+建议在启动前加载ACL访问控制权限数据，有关更多细节可参考 [ACL](/acl)。
 
 最后，调用 `resolve(res)` 告诉Angular可以进行组件渲染了。
 
@@ -105,7 +105,7 @@ const routes: Routes = [
 
 上述我们在业务模块中使用了 `LayoutDefaultComponent` 基础布局、用户授权使用了 `LayoutPassportComponent` 用户授权布局以及全屏布局。
 
-建议所有子模块都使用懒模块加载，例如 `TradeModule` 订单模块，这种方式可以更有效的组织代码结构。
+建议所有子模块都使用懒模块加载，例如 `TradeModule` 订单模块，这种方式可以更有效地组织代码结构。
 
 ### 什么情况下不使用懒加载？
 
@@ -113,4 +113,4 @@ Angular 启动是从顶层组件开始向下渲染，当遇到懒模块时会先
 
 ### 路由权限控制
 
-路由URL可能会受浏览器自身历史记忆的原因，导致用户可能会访问至无权限路由时，若你希望有更好的体验，则需要在路由上配置 `canActivate` 选项，当用户无权限时会自动跳转至相关页；有关细节见[ACL](/docs/acl)章节。
+路由URL可能会受浏览器自身历史记忆的原因，导致用户可能会访问至无权限路由时，若你希望有更好的体验，则需要在路由上配置 `canActivate` 选项，当用户无权限时会自动跳转至相关页；有关细节见[ACL路由守卫](/acl/guard)章节。
