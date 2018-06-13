@@ -196,6 +196,9 @@ export interface SFSchema {
    * - `ip` IP地址，渲染为 `input`
    * - `uri` URL地址，渲染为 `upload`
    * - `regex` 正则表达式，必须指定 `pattern` 属性，渲染为 `input`
+   * - `mobile` 手机号
+   * - `id-card` 身份证
+   * - `color` 颜色值
    */
   format?: string;
   //////////// 注释/////////////
