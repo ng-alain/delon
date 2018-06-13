@@ -546,17 +546,6 @@ describe('abc: simple-table', () => {
                 .expectCell(null, 1, 1, 'a')
                 .expectCell('a', 2, 1, 'a');
           });
-          it('###deprecated### if compose', () => {
-            const columns: SimpleTableColumn[] = [
-              {
-                title: '',
-                buttons: [ { text: 'a', if: (item: any) => item.id !== 1 } ]
-              },
-            ];
-            page.newColumn(columns)
-                .expectCell(null, 1, 1, 'a')
-                .expectCell('a', 2, 1, 'a');
-          });
         });
         describe('[events]', () => {
           it('#reload', () => {

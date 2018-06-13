@@ -790,8 +790,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
 
   btnCoerceIf(list: SimpleTableButton[]) {
     for (const item of list) {
-      // TODO: remove 1.1.0
-      if (item.if) item.iif = item.if;
       if (!item.iif) item.iif = () => true;
       if (!item.children) {
         item.children = [];

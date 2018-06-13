@@ -334,14 +334,6 @@ export interface SimpleTableButton {
    */
   acl?: any;
   /**
-   * @deprecated 请使用 `iif` 替代
-   */
-  if?: (
-    item: any,
-    btn: SimpleTableButton,
-    column: SimpleTableColumn,
-  ) => boolean;
-  /**
    * 条件表达式，较高调用频率，请勿过多复杂计算免得产生性能问题
    */
   iif?: (
