@@ -10,6 +10,20 @@ type: Basic
 
 ng-alain 是一个企业级中后台前端/设计解决方案脚手架，目标也非常简单，希望在Angular上面开发企业后台更简单、更快速。随着『设计者』的不断反馈，将持续迭代，逐步沉淀和总结出更多设计模式和相应的代码实现，阐述中后台产品模板/组件/业务场景的最佳实践，也十分期待你的参与和共建。
 
+**如何阅读文档**
+
+在开始之前有一些文档描述约定说明，这有助于更好的阅读：
+
+- API相关
+  - `[]` 表示属性
+  - `()` 表示事件
+  - `[()]` 表示双向绑定
+  - `ng-content` 表示组件内容占位符
+  - `#tpl` 开头表示 `<ng-template #tpl>`
+- 对象相关，一般在类描述时
+  - `[]` 表示属性
+  - `()` 结尾表示方法
+
 ## 二、前序准备
 
 你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.io/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/cipchk/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。

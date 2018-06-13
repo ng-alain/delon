@@ -11,8 +11,8 @@ module: AdResultModule
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-type | 类型，不同类型自带对应的图标 | `string` | -
-title | 标题 | `string | TemplateRef<any>` | -
-description | 结果描述 | `string | TemplateRef<any>` | -
-extra | 补充信息，有默认的灰色背景 | `string | TemplateRef<any>` | -
-- | 操作建议，推荐放置跳转链接，按钮组等 | `ng-content` | -
+`[type]` | 类型，不同类型自带对应的图标 | `string` | -
+`[title]` | 标题 | `string | TemplateRef<any>` | -
+`[description]` | 结果描述 | `string | TemplateRef<any>` | -
+`[extra]` | 补充信息，有默认的灰色背景 | `string | TemplateRef<any>` | -
+`ng-content` | 操作建议，推荐放置跳转链接，按钮组等 | `ng-content` | -

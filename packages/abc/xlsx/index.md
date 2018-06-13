@@ -30,10 +30,10 @@ npm install --save file-saver
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-sheets | 数据源 | `{ [sheet: string]: WorkSheet } | XlsxExportSheet[]` | -
-filename | Excel文件名 | `string` | `export.xlsx`
-opts | Excel写入选项，见 [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | -
-callback | 保存前触发 | `(wb: WorkBook) => void` | -
+`[sheets]` | 数据源 | `{ [sheet: string]: WorkSheet } | XlsxExportSheet[]` | -
+`[filename]` | Excel文件名 | `string` | `export.xlsx`
+`[opts]` | Excel写入选项，见 [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | -
+`[callback]` | 保存前触发 | `(wb: WorkBook) => void` | -
 
 ### xlsx 指令
 

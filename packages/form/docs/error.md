@@ -10,11 +10,11 @@ JSON Schema 校验过程中会生产一组错误信息，每一个错误都有�
 
 ```json
 [{
-    "keyword": "required",
-    "dataPath": ".client",
-    "schemaPath": "#/required",
-    "params": {"missingProperty":"client"},
-    "message":"必填项"
+  "keyword": "required",
+  "dataPath": ".client",
+  "schemaPath": "#/required",
+  "params": {"missingProperty":"client"},
+  "message":"必填项"
 }]
 ```
 
@@ -33,24 +33,24 @@ JSON Schema 校验过程中会生产一组错误信息，每一个错误都有�
 ```ts
 import { DelonFormConfig } from '@delon/abc';
 export function fnDelonFormConfig(): DelonFormConfig {
-    return Object.assign(new DelonFormConfig(), <DelonFormConfig>{
-        errors: {
-            'required': '必填项',
-            // others
-        }
-    });
+  return Object.assign(new DelonFormConfig(), <DelonFormConfig>{
+    errors: {
+      'required': '必填项',
+      // others
+    }
+  });
 }
 
 @NgModule({ })
 export class DelonModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: DelonModule,
-            providers: [
-                { provide: DelonFormConfig, useFactory: fnDelonFormConfig }
-            ]
-        };
-    }
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: DelonFormConfig, useFactory: fnDelonFormConfig }
+      ]
+    };
+  }
 }
 ```
 
@@ -58,19 +58,19 @@ export class DelonModule {
 
 ```ts
 schema: SFSchema = {
-    properties: {
-        email: {
-            type: 'string',
-            title: '邮箱',
-            format: 'email',
-            maxLength: 20,
-            ui: {
-                errors: {
-                    'required': '必填项'
-                }
-            }
+  properties: {
+    email: {
+      type: 'string',
+      title: '邮箱',
+      format: 'email',
+      maxLength: 20,
+      ui: {
+        errors: {
+          'required': '必填项'
         }
+      }
     }
+  }
 };
 ```
 
@@ -86,21 +86,21 @@ JSON Schema 校验并不一定能够满足一些业务的需求，例如需要�
 
 ```ts
 schema: SFSchema = {
-    properties: {
-        name: {
-            type: 'string'
-        },
-        email: {
-            type: 'string',
-            title: '邮箱',
-            format: 'email',
-            ui: {
-                validator: (value: any, formProperty: FormProperty, form: PropertyGroup) => {
-                    return form.value.name === 'cipchk' ? [] : [{ keyword: 'required', message: '必须是cipchk@qq.com'}];
-                }
-            }
+  properties: {
+    name: {
+      type: 'string'
+    },
+    email: {
+      type: 'string',
+      title: '邮箱',
+      format: 'email',
+      ui: {
+        validator: (value: any, formProperty: FormProperty, form: PropertyGroup) => {
+          return form.value.name === 'cipchk' ? [] : [{ keyword: 'required', message: '必须是cipchk@qq.com'}];
         }
+      }
     }
+  }
 };
 ```
 
@@ -110,16 +110,16 @@ schema: SFSchema = {
 
 ```ts
 schema: SFSchema = {
-    properties: {
-        name: {
-            type: 'string',
-            ui: {
-                validator: (value: any) => this.http.get(`/user/check/${value}`).pipe(
-                    map(res => res ? [ { keyword: 'required', message: '用户名已存在'} ] : [])
-                )
-            }
-        }
+  properties: {
+    name: {
+      type: 'string',
+      ui: {
+        validator: (value: any) => this.http.get(`/user/check/${value}`).pipe(
+          map(res => res ? [ { keyword: 'required', message: '用户名已存在'} ] : [])
+        )
+      }
     }
+  }
 };
 ```
 

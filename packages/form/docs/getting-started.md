@@ -39,9 +39,9 @@ npm install @delon/form --save
 import { DelonFormModule } from '@delon/form';
 
 @NgModule({
-    imports: [
-        DelonFormModule.forRoot()
-    ]
+  imports: [
+    DelonFormModule.forRoot()
+  ]
 })
 export class AppModule { }
 ```
@@ -87,20 +87,20 @@ export class DelonModule {
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-ajv | [ajv](http://epoberezkin.github.io/ajv/#options) 参数 | `Ajv.Options` | -
-ingoreKeywords | 是否忽略某些数据类型校验 `ERRORSDEFAULT` | `string[]` | `[ 'type', 'enum' ]`
-liveValidate | 是否实时校验 | `boolean` | `true`
-autocomplete | 指定表单 `autocomplete` 值 | `on,off` | `null`
-firstVisual | 是否立即呈现错误视觉 | `boolean` | `false`
-onlyVisual | 是否只展示错误视觉不显示错误文本 | `boolean` | `false`
-errors | 自定义通用错误信息 | `{ [ key: string ]: string }` | `ERRORSDEFAULT`
-ui | 默认全局布局 | `SFUISchemaItem` | -
-size | 元素组件大小，用于 `nzSize` 值 | `default,large,small` | -
-button | 按钮风格 | `SFButton` | `{submit:'提交',submit_type:'primary',reset:'重置',reset_type:'default'}`
-uiDateStringFormat | date小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `YYYY-MM-DD HH:mm:ss`
-uiDateNumberFormat | date小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp | `string` | `x`
-uiTimeStringFormat | time小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `HH:mm:ss`
-uiTimeNumberFormat | time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp，日期统一使用 `1970-01-01` | `string` | `x`
+`[ajv]` | [ajv](http://epoberezkin.github.io/ajv/#options) 参数 | `Ajv.Options` | -
+`[ingoreKeywords]` | 是否忽略某些数据类型校验 `ERRORSDEFAULT` | `string[]` | `[ 'type', 'enum' ]`
+`[liveValidate]` | 是否实时校验 | `boolean` | `true`
+`[autocomplete]` | 指定表单 `autocomplete` 值 | `on,off` | `null`
+`[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false`
+`[onlyVisual]` | 是否只展示错误视觉不显示错误文本 | `boolean` | `false`
+`[errors]` | 自定义通用错误信息 | `{ [ key: string ]: string }` | `ERRORSDEFAULT`
+`[ui]` | 默认全局布局 | `SFUISchemaItem` | -
+`[size]` | 元素组件大小，用于 `nzSize` 值 | `default,large,small` | -
+`[button]` | 按钮风格 | `SFButton` | `{submit:'提交',submit_type:'primary',reset:'重置',reset_type:'default'}`
+`[uiDateStringFormat]` | date小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `YYYY-MM-DD HH:mm:ss`
+`[uiDateNumberFormat]` | date小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp | `string` | `x`
+`[uiTimeStringFormat]` | time小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `HH:mm:ss`
+`[uiTimeNumberFormat]` | time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp，日期统一使用 `1970-01-01` | `string` | `x`
 
 构建一个邮箱、姓名表单：
 
@@ -112,26 +112,25 @@ uiTimeNumberFormat | time小部件：`type="number"` 且不指定 `schema.format
     `
 })
 export class HomeComponent {
-
-    schema: SFSchema = {
-        properties: {
-            email: {
-                type: 'string',
-                title: '邮箱',
-                format: 'email',
-                maxLength: 20
-            },
-            name: {
-                type: 'string',
-                title: '姓名',
-                minLength: 3
-            }
-        }
-    };
-
-    submit(value: any) {
-
+  schema: SFSchema = {
+    properties: {
+      email: {
+        type: 'string',
+        title: '邮箱',
+        format: 'email',
+        maxLength: 20
+      },
+      name: {
+        type: 'string',
+        title: '姓名',
+        minLength: 3
+      }
     }
+  };
+
+  submit(value: any) {
+
+  }
 }
 ```
 
@@ -139,29 +138,29 @@ export class HomeComponent {
 
 | 参数         | 说明                            | 类型                        | 默认值       |
 |--------------|---------------------------------|-----------------------------|--------------|
-| layout       | 表单布局，等同 `nzLayout`        | `string`                    | `horizontal` |
-| schema       | **必填项** JSON Schema          | `SFSchema`                  | -            |
-| ui           | UI Schema                       | `SFUISchema`                | -            |
-| formData     | 表单默认值                      | `any`                       | -            |
-| mode         | 表单模式，细节见常见问题         | `default,search,edit`       | `default`    |
-| button       | 按钮                            | `SFButton, 'none'`          | `{}`         |
-| firstVisual  | 是否立即呈现错误视觉            | `boolean`                   | `true`       |
-| liveValidate | 是否实时校验，`false` 提交时检验 | `boolean`                   | `true`       |
-| autocomplete | 指定表单 `autocomplete` 值      | `on,off`                    | `null`       |
-| formChange   | 数据变更时回调                  | `EventEmitter<{}>`          | -            |
-| formSubmit   | 提交表单时回调                  | `EventEmitter<{}>`          | -            |
-| formReset    | 重置表单时回调                  | `EventEmitter<{}>`          | -            |
-| formError    | 表单校验结果回调                | `EventEmitter<ErrorData[]>` | -            |
+| `[layout]`       | 表单布局，等同 `nzLayout`        | `string`                    | `horizontal` |
+| `[schema]`       | **必填项** JSON Schema          | `SFSchema`                  | -            |
+| `[ui]`           | UI Schema                       | `SFUISchema`                | -            |
+| `[formData]`     | 表单默认值                      | `any`                       | -            |
+| `[mode]`         | 表单模式，细节见常见问题         | `default,search,edit`       | `default`    |
+| `[button]`       | 按钮                            | `SFButton, 'none'`          | `{}`         |
+| `[firstVisual]`  | 是否立即呈现错误视觉            | `boolean`                   | `true`       |
+| `[liveValidate]` | 是否实时校验，`false` 提交时检验 | `boolean`                   | `true`       |
+| `[autocomplete]` | 指定表单 `autocomplete` 值      | `on,off`                    | `null`       |
+| `(formChange)`   | 数据变更时回调                  | `EventEmitter<{}>`          | -            |
+| `(formSubmit)`   | 提交表单时回调                  | `EventEmitter<{}>`          | -            |
+| `(formReset)`    | 重置表单时回调                  | `EventEmitter<{}>`          | -            |
+| `(formError)`    | 表单校验结果回调                | `EventEmitter<ErrorData[]>` | -            |
 
 ### 组件方法
 
 | 参数          | 说明             | 返回值    |
 |---------------|------------------|-----------|
-| valid         | 表单是否有效     | `boolean` |
-| value         | 表单值         | `any`     |
-| refreshSchema | 刷新 JSON Schema | `void`    |
-| reset         | 重置表单         | `void`    |
-| validator     | 手动校验一次表单         | `void`    |
+| `valid`         | 表单是否有效     | `boolean` |
+| `value`         | 表单值         | `any`     |
+| `refreshSchema` | 刷新 JSON Schema | `void`    |
+| `reset`         | 重置表单         | `void`    |
+| `validator`     | 手动校验一次表单         | `void`    |
 
 ### 按钮说明
 

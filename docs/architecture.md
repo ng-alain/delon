@@ -54,7 +54,7 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 
 你可以在 [ng-alain.com](http://ng-alain.com) 找到所有的文档。
 
-随着脚手架的更新而不断迭代（[更新日志](/docs/changelog)），有任何问题和需求可以反馈到 [这里](//github.com/cipchk/ng-alain/issues)。
+随着脚手架的更新而不断迭代（[更新日志](https://github.com/cipchk/ng-alain/releases)），有任何问题和需求可以反馈到 [这里](//github.com/cipchk/ng-alain/issues)。
 
 ### 版本信息
 

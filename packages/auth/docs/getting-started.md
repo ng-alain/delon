@@ -69,15 +69,15 @@ export class AppModule { }
 
 | 参数名 | 类型 | 默认值 | 描述 |
 | ----- | --- | --- | --- |
-| `store_key` | `string` | `_token` | localStorage 的存储KEY值 |
-| `token_invalid_redirect` | `boolean` | `true` | 无效时跳转至登录页，包括：无效token值、token已过期（限JWT） |
-| `token_exp_offset` | `number` | `10` | JWT token过期时间偏移值（单位：秒） |
-| `token_send_key` | `string` | `token` | 发送token参数名 |
-| `token_send_template` | `string` | `${token}` | 发送token模板，以 `${属性名}` 表示占位符，属性名要确保存在否则以空字符代替 |
-| `token_send_place` | `header,body,url` | `header` | 发送token参数位置 |
-| `login_url` | `string` | `/login` | 登录页路由地址 |
-| `ignores` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略TOKEN的URL地址列表 |
-| `allow_anonymous_key` | `string` | `_allow_anonymous` | 允许匿名登录KEY，若请求参数中带有该KEY表示忽略TOKEN |
+| `[store_key]` | `string` | `_token` | localStorage 的存储KEY值 |
+| `[token_invalid_redirect]` | `boolean` | `true` | 无效时跳转至登录页，包括：无效token值、token已过期（限JWT） |
+| `[token_exp_offset]` | `number` | `10` | JWT token过期时间偏移值（单位：秒） |
+| `[token_send_key]` | `string` | `token` | 发送token参数名 |
+| `[token_send_template]` | `string` | `${token}` | 发送token模板，以 `${属性名}` 表示占位符，属性名要确保存在否则以空字符代替 |
+| `[token_send_place]` | `header,body,url` | `header` | 发送token参数位置 |
+| `[login_url]` | `string` | `/login` | 登录页路由地址 |
+| `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略TOKEN的URL地址列表 |
+| `[allow_anonymous_key]` | `string` | `_allow_anonymous` | 允许匿名登录KEY，若请求参数中带有该KEY表示忽略TOKEN |
 
 你可以随时覆盖它们，例如：
 
@@ -85,20 +85,20 @@ export class AppModule { }
 // delon.module.ts
 import { DelonAuthConfig } from '@delon/auth';
 export function delonAuthConfig(): DelonAuthConfig {
-    return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
-        login_url: '/passport/login'
-    });
+  return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
+    login_url: '/passport/login'
+  });
 }
 
 @NgModule({})
 export class DelonModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: DelonModule,
-            providers: [
-                { provide: DelonAuthConfig, useFactory: delonAuthConfig}
-            ]
-        };
-    }
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: DelonAuthConfig, useFactory: delonAuthConfig}
+      ]
+    };
+  }
 }
 ```

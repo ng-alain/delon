@@ -15,16 +15,16 @@ module: AdNumberToChineseModule
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-value | 值 | `number | string` | -
-rmb | 是否RMB格式 | `boolean` | `true`
-options | 额外选项 | `NumberToChineseOptions` | -
+`value` | 值 | `number | string` | -
+`rmb` | 是否RMB格式 | `boolean` | `true`
+`options` | 额外选项 | `NumberToChineseOptions` | -
 
 **NumberToChineseOptions**
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-minusSymbol | 指定负数符号 | `string` | `负`
-validThrow | 当传递值无法数值时抛出异常 | `boolean` | `false`
+`minusSymbol` | 指定负数符号 | `string` | `负`
+`validThrow` | 当传递值无法数值时抛出异常 | `boolean` | `false`
 
 ### Pipe管道
 
