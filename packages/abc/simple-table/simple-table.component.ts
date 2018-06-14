@@ -817,7 +817,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       if (typeof clickRes === 'string') {
         this.router.navigateByUrl(clickRes);
       }
-      return ;
+      return;
     }
     this.btnCallback(record, btn);
   }
@@ -941,10 +941,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       if (item.type === 'yn' && typeof item.ynTruth === 'undefined') {
         item.ynTruth = true;
       }
-      if (item.type === 'link' && typeof item.click !== 'function') {
-        (item as any).type = '';
-      }
-      if (item.type === 'badge' && typeof item.badge === 'undefined') {
+      if (
+        (item.type === 'link' && typeof item.click !== 'function') ||
+        (item.type === 'badge' && typeof item.badge === 'undefined') ||
+        (item.type === 'tag' && typeof item.tag === 'undefined')
+      ) {
         (item as any).type = '';
       }
       if (!item.className) {
