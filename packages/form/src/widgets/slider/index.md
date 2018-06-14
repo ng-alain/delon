@@ -31,3 +31,30 @@ type: Widgets
 `[vertical]` | 竖直显示。添加该属性时，Slider 为垂直方向。 | `attribute` | -
 `[afterChange]` | 与 `onmouseup` 触发时机一致，把当前值作为参数传入。 | `Function` | -
 `[formatter]` | 格式化 tip | `Function` | -
+
+## Demo
+
+```ts
+schema = {
+  properties: {
+    count: {
+      type: 'number',
+      title: '数量',
+      ui: {
+        widget: 'slider'
+      },
+      default: 10
+    },
+    // 双滑块模式
+    range: {
+      type: 'number',
+      title: '范围',
+      ui: {
+        widget: 'slider',
+        range: true
+      },
+      default: [ 10, 20 ]
+    }
+  }
+}
+```
