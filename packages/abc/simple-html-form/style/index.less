@@ -1,11 +1,14 @@
 @import '../../../theme/styles/default';
 
-@shf-name: ad-shf;
-.@{shf-name} {
+@ad-shf-prefix: ~'.ad-shf';
+@ad-shf-label-color: rgba(0, 0, 0, 0.85);
+@ad-shf-field-bottom: @layout-gutter;
+
+@{ad-shf-prefix} {
   &__wrap {
     display: flex;
     flex-wrap: wrap;
-    &.@{shf-name}__vertical {
+    &@{ad-shf-prefix}__vertical {
       display: block;
     }
   }
@@ -14,11 +17,11 @@
   }
   &__label {
     text-align: right;
-    color: rgba(0, 0, 0, 0.85);
+    color: @ad-shf-label-color;
     white-space: nowrap;
     display: table-cell;
     flex: 0 0 auto;
-    &:not(.@{shf-name}__nolabel) {
+    &:not(@{ad-shf-prefix}__nolabel) {
       &:after {
         content: ':';
         margin: 0 @layout-gutter 0 2px;
@@ -31,9 +34,9 @@
     flex: 1 0 0;
   }
   &__horizontal {
-    .@{shf-name}__item {
+    @{ad-shf-prefix}__item {
       display: flex;
-      margin-bottom: @layout-gutter;
+      margin-bottom: @ad-shf-field-bottom;
       &:last-child {
         margin-bottom: 0;
       }
@@ -41,12 +44,12 @@
   }
   &__inline,
   &__vertical {
-    .@{shf-name}__nolabel {
+    @{ad-shf-prefix}__nolabel {
       display: none !important;
     }
   }
   &__inline {
-    .@{shf-name}__item {
+    @{ad-shf-prefix}__item {
       width: auto;
       &:last-child {
         margin-right: 0;

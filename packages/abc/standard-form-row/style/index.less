@@ -1,4 +1,8 @@
 @import '../../../theme/styles/default';
+
+@ad-standard-form-row-label-color: @heading-color;
+@ad-standard-form-row-label-fs: @font-size-base;
+
 .ad-standard-form-row {
   border-bottom: 1px dashed @border-color-split;
   padding-bottom: 16px;
@@ -21,8 +25,8 @@
     font-size: @font-size-base;
   }
   .label {
-    color: @heading-color;
-    font-size: @font-size-base;
+    color: @ad-standard-form-row-label-color;
+    font-size: @ad-standard-form-row-label-fs;
     margin-right: 24px;
     flex: 0 0 auto;
     text-align: right;

@@ -1,20 +1,23 @@
-.preserve-white-spaces-mixin(@enabled) when(@enabled =true) {
-  @white-spacing: @layout-gutter; // 表单
-  [nz-form] {
-    // 按钮
-    .ant-btn + .ant-btn,
-    .ant-btn + nz-popconfirm,
-    nz-popconfirm + .ant-btn {
-      margin-left: @white-spacing;
-    }
-    .ant-btn-group {
-      .ant-btn + .ant-btn {
-        margin-left: -1px;
-      }
-    }
-  }
+.preserve-white-spaces-mixin(@enabled) when(@enabled=true) {
+  // 搜索框与表格
+  @sf-and-st-white-spacing: @layout-gutter * 2;
+
   nz-sf + simple-table {
-    margin-top: @white-spacing * 2;
+    margin-top: @sf-and-st-white-spacing;
+  }
+
+  // 按钮间间距
+  @button-and-button-white-spacing: @layout-gutter;
+
+  .ant-btn + .ant-btn,
+  .ant-btn + nz-popconfirm,
+  nz-popconfirm + .ant-btn {
+    margin-left: @button-and-button-white-spacing;
+  }
+  .ant-btn-group {
+    .ant-btn + .ant-btn {
+      margin-left: -1px;
+    }
   }
 }
 
