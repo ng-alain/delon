@@ -44,7 +44,7 @@ type: Widgets
 `[popupStyle]` | 额外的弹出日历样式 | `object` | -
 `[dropdownClassName]` | 额外的弹出日历 className | `string` | -
 `[onOpenChange]` | 弹出日历和关闭日历的回调 | `(status: boolean) => void` | -
-[disabledDate] | 不可选择的日期 | `(current: Date) => boolean` | -
+`[disabledDate]` | 不可选择的日期 | `(current: Date) => boolean` | -
 `[disabledTime]` | 不可选择的时间 | `(current: Date) => { nzDisabledHours, nzDisabledMinutes, nzDisabledSeconds }` | -
 `[renderExtraFooter]` | 在面板中添加额外的页脚 | `string` | -
 `[showTime]` | 增加时间选择功能 | `boolean` | `true`
