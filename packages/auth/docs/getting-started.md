@@ -6,13 +6,13 @@ type: Documents
 
 ## 写在前面
 
-`@delonn/auth` 是对认证过程进一步处理，通常其核心在于 Access token 的获取、使用环节，因此将集中解决以下三个问题：
+`@delon/auth` 是对认证过程进一步处理，通常其核心在于 Access token 的获取、使用环节，因此将集中解决以下三个问题：
 
 + 如何获取认证信息行为方式，例如：账密、社会化登录Github等
 + 如何存取认证信息，监听认证信息变化
 + 何时使用认证信息，区分不同的认证方式的使用规则，例如：JWT
 
-`@delonn/auth` 并不会关心用户界面是怎么样，只需要当登录成功后将后端返回的数据交给 `ITokenService`，它会帮你存储在 `localStorage` 当中（默认情况下）；当发起一个 http 请求时，它会在自动在 `header` 当中加入相应的 token 信息。
+`@delon/auth` 并不会关心用户界面是怎么样，只需要当登录成功后将后端返回的数据交给 `ITokenService`，它会帮你存储在 `localStorage` 当中（默认情况下）；当发起一个 http 请求时，它会在自动在 `header` 当中加入相应的 token 信息。
 
 因此，`@delon/auth` 不限于 ng-alain 脚手架，任何 Angular 项目都可以使用它。
 
@@ -28,7 +28,7 @@ type: Documents
 
 ### Token
 
-`@delonn/auth` 认为请求过程中所需要的一个用于校验有效信息称它为 `Token` 值，不管是采用 JWT 的 `Authorization` 参数，OAuth2 的 `access_token` 等其本质是一串加密字符串。这也是每一次发送请求时所携带的值，因此在 `@delonn/auth` 中看到只有一个叫 `ITokenModel` 接口用于表述认证信息，且只有一个 `token` 的字符串属性。
+`@delon/auth` 认为请求过程中所需要的一个用于校验有效信息称它为 `Token` 值，不管是采用 JWT 的 `Authorization` 参数，OAuth2 的 `access_token` 等其本质是一串加密字符串。这也是每一次发送请求时所携带的值，因此在 `@delonn/auth` 中看到只有一个叫 `ITokenModel` 接口用于表述认证信息，且只有一个 `token` 的字符串属性。
 
 ### 认证风格
 
