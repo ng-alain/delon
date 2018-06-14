@@ -1,7 +1,13 @@
 @import '../../../theme/styles/default';
 @ad-desc-list-prefix: ~'.ad-desc-list';
+
+@{ad-desc-list-prefix} + @{ad-desc-list-prefix} {
+  margin-top: 16px;
+}
+
 @{ad-desc-list-prefix} {
-  display: block; // offset the padding-bottom of last row
+  display: block;
+  // offset the padding-bottom of last row
   .ant-row {
     margin-bottom: -16px;
     overflow: hidden;
