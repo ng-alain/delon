@@ -26,27 +26,27 @@ type: Widgets
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-readOnly | 禁用状态  | `boolean` | -
-format | 数据格式类型  | `string` | -
+`[readOnly]` | 禁用状态  | `boolean` | -
+`[format]` | 数据格式类型  | `string` | -
 
 ### ui 属性
 
 参数        | 说明                   | 类型     | 默认值
 ------------|------------------------|----------|--------
-size        | 大小，等同 `nzSize`     | `string` | -
-placeholder | 在文字框中显示提示讯息 | `string` | -
-format      | 数据格式化             | `string` | -
-displayFormat | 显示格式化，（等同 [nzFormat](https://ng.ant.design/components/date-picker/zh#api) 值） | `string` | `yyyy-MM-dd HH:mm:ss`
-allowClear | 是否显示清除按钮 | `boolean` | `true`
-className | 选择器 className | `string` | -
-disabledDate | 不可选择的日期 | `(current: Date) => boolean` | -
-locale | 国际化配置 | `object` | -
-popupStyle | 额外的弹出日历样式 | `object` | -
-dropdownClassName | 额外的弹出日历 className | `string` | -
-onOpenChange | 弹出日历和关闭日历的回调 | `(status: boolean) => void` | -
-disabledDate | 不可选择的日期 | `(current: Date) => boolean` | -
-disabledTime | 不可选择的时间 | `(current: Date) => { nzDisabledHours, nzDisabledMinutes, nzDisabledSeconds }` | -
-renderExtraFooter | 在面板中添加额外的页脚 | `string` | -
-showTime | 增加时间选择功能 | `boolean` | `true`
-showToday | 是否展示“今天”按钮 | `boolean` | `true`
-onOk | 点击确定按钮的回调	 | `(data: Data | Data[]) => void` | -
+`[size]`        | 大小，等同 `nzSize`     | `string` | -
+`[placeholder]` | 在文字框中显示提示讯息 | `string` | -
+`[format]`      | 数据格式化             | `string` | -
+`[displayFormat]` | 显示格式化，（等同 [nzFormat](https://ng.ant.design/components/date-picker/zh#api) 值） | `string` | `yyyy-MM-dd HH:mm:ss`
+`[allowClear]` | 是否显示清除按钮 | `boolean` | `true`
+`[className]` | 选择器 className | `string` | -
+`[disabledDate]` | 不可选择的日期 | `(current: Date) => boolean` | -
+`[locale]` | 国际化配置 | `object` | -
+`[popupStyle]` | 额外的弹出日历样式 | `object` | -
+`[dropdownClassName]` | 额外的弹出日历 className | `string` | -
+`[onOpenChange]` | 弹出日历和关闭日历的回调 | `(status: boolean) => void` | -
+[disabledDate] | 不可选择的日期 | `(current: Date) => boolean` | -
+`[disabledTime]` | 不可选择的时间 | `(current: Date) => { nzDisabledHours, nzDisabledMinutes, nzDisabledSeconds }` | -
+`[renderExtraFooter]` | 在面板中添加额外的页脚 | `string` | -
+`[showTime]` | 增加时间选择功能 | `boolean` | `true`
+`[showToday]` | 是否展示“今天”按钮 | `boolean` | `true`
+`[onOk]` | 点击确定按钮的回调	 | `(data: Data | Data[]) => void` | -
