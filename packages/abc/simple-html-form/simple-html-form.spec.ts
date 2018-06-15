@@ -57,6 +57,12 @@ describe('abc: standard-form-row', () => {
       });
       page.check('#labelTpl');
     });
+    it('should be custom control class name', () => {
+      genModule({
+        template: `<shf-item label="App Key" controlClass="text-error"></shf-item>`,
+      });
+      page.check('.text-error');
+    });
   });
 
   describe('[with horizontal]', () => {

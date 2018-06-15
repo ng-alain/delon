@@ -64,6 +64,8 @@ export class SHFItemComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
   private _labelWidth: number;
 
+  @Input() controlClass: string = '';
+
   // endregion
 
   private get isHorizontal(): boolean {

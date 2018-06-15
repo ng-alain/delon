@@ -1,10 +1,12 @@
 @import '../../../theme/styles/default';
+
+@ad-result-extra-bg: #fafafa;
+
 .ad-result {
   display: block;
   text-align: center;
   width: 72%;
   margin: 0 auto;
-  @extra-bg: #fafafa;
   .icon {
     font-size: 72px;
     line-height: 72px;
@@ -30,7 +32,7 @@
     margin-bottom: 24px;
   }
   .extra {
-    background: @extra-bg;
+    background: @ad-result-extra-bg;
     padding: 24px 40px;
     border-radius: @border-radius-sm;
     text-align: left;
@@ -43,6 +45,6 @@
   }
   .ant-steps .ant-steps-head,
   .ant-steps .ant-steps-title {
-    background: @extra-bg;
+    background: @ad-result-extra-bg;
   }
 }

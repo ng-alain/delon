@@ -1,7 +1,16 @@
 @import '../../../theme/styles/default';
 @ad-desc-list-prefix: ~'.ad-desc-list';
+@ad-desc-term-color: @heading-color;
+@ad-desc-detail-color: @text-color;
+@ad-desc-field-bottom: 16px;
+
+@{ad-desc-list-prefix} + @{ad-desc-list-prefix} {
+  margin-top: @ad-desc-field-bottom;
+}
+
 @{ad-desc-list-prefix} {
-  display: block; // offset the padding-bottom of last row
+  display: block;
+  // offset the padding-bottom of last row
   .ant-row {
     margin-bottom: -16px;
     overflow: hidden;
@@ -10,13 +19,13 @@
     font-size: 14px;
     color: @heading-color;
     font-weight: 500;
-    margin-bottom: 16px;
+    margin-bottom: @ad-desc-field-bottom;
   }
   &__term {
     line-height: 22px;
-    padding-bottom: 16px;
+    padding-bottom: @ad-desc-field-bottom;
     margin-right: 8px;
-    color: @heading-color;
+    color: @ad-desc-term-color;
     white-space: nowrap;
     display: table-cell;
     &:after {
@@ -29,8 +38,8 @@
   &__detail {
     line-height: 22px;
     width: 100%;
-    padding-bottom: 16px;
-    color: @text-color;
+    padding-bottom: @ad-desc-field-bottom;
+    color: @ad-desc-detail-color;
     display: table-cell;
     word-break: break-all;
   }

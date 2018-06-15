@@ -32,6 +32,7 @@ import {
   SimpleTableMultiSort,
   SimpleTableData,
   SimpleTableBadge,
+  SimpleTableTag,
 } from './interface';
 import { AdSimpleTableModule } from './simple-table.module';
 import { SimpleTableComponent } from './simple-table.component';
@@ -438,6 +439,25 @@ describe('abc: simple-table', () => {
           page
             .newColumn([{ title: '', index: 'status', type: 'badge' }])
             .expectElCount('.ant-badge', 0);
+        });
+      });
+      describe('with tag', () => {
+        const STATUS: SimpleTableTag = {
+          1: { text: 'Success', color: 'success' },
+          2: { text: 'Error', color: 'error' },
+          3: { text: 'Processing', color: 'processing' },
+          4: { text: 'Default', color: 'default' },
+          5: { text: 'Warning', color: 'warning' },
+        };
+        it(`should be render tag`, () => {
+          page
+            .newColumn([{ title: '', index: 'status', type: 'tag', tag: STATUS }])
+            .expectElCount('.ant-tag', PS);
+        });
+        it(`should be render text when tag is undefined`, () => {
+          page
+            .newColumn([{ title: '', index: 'status', type: 'tag' }])
+            .expectElCount('.ant-tag', 0);
         });
       });
       describe('[other]', () => {

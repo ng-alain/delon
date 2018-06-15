@@ -305,6 +305,7 @@ Ant Design 是以 `12px` 为基准字号。
 | `width-sm` | `160px` |
 | `width-md` | `240px` |
 | `width-lg` | `320px` |
+| `width-[0-10]` | `0%-100%` |
 
 ### Responsive
 
