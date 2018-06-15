@@ -202,7 +202,11 @@ export class ReuseTabService implements OnDestroy {
    */
   replace(newUrl: string) {
     const url = this.curUrl;
-    if (this.exists(url)) this.close(url, true);
+    if (this.exists(url)) {
+      this.close(url, true);
+    } else {
+      this.removeUrlBuffer = url;
+    }
     this.injector.get(Router).navigateByUrl(newUrl);
   }
   /**
