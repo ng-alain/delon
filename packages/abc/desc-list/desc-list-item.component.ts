@@ -16,7 +16,7 @@ import { isEmpty, toBoolean } from '@delon/util';
     <div class="ad-desc-list__term" *ngIf="_term || _termTpl">
       <ng-container *ngIf="_term; else _termTpl">{{_term}}</ng-container>
     </div>
-    <div class="ad-desc-list__detail" (cdkObserveContent)="checkContent()" #contentElement><ng-content></ng-content></div>
+    <div class="ad-desc-list__detail {{detailClass}}" (cdkObserveContent)="checkContent()" #contentElement><ng-content></ng-content></div>
   </ng-template>
   `,
   preserveWhitespaces: false,
@@ -44,6 +44,8 @@ export class DescListItemComponent implements AfterViewInit {
     this._noDefault = toBoolean(value);
   }
   private _noDefault = false;
+
+  @Input() detailClass: string = '';
 
   // endregion
 
