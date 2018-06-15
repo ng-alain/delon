@@ -36,10 +36,11 @@ export class MockService implements OnDestroy {
             typeof value === 'object' ||
             typeof value === 'string'
           )
-        )
+        ) {
           throw Error(
             `mock value of [${key}-${ruleKey}] should be function or object or string, but got ${typeof value}`,
           );
+        }
         const rule = this.genRule(ruleKey, value);
         if (
           ['GET', 'POST', 'PUT', 'HEAD', 'DELETE', 'PATCH', 'OPTIONS'].indexOf(
@@ -122,13 +123,14 @@ export class MockService implements OnDestroy {
   getRule(method: string, url: string): MockRule {
     method = (method || 'GET').toUpperCase();
     const params: any = {};
-    const ret =
-      this.cached.find(
+    const list =
+      this.cached.filter(
         w =>
           w.method === method &&
           (w.martcher ? w.martcher.test(url) : w.url === url),
-      ) || null;
-    if (!ret) return null;
+      );
+    if (list.length === 0) return null;
+    const ret = list.find(w => w.url === url) || list[0];
     if (ret.martcher) {
       const execArr = ret.martcher.exec(url);
       execArr.slice(1).map((value: string, index: number) => {
