@@ -6,6 +6,13 @@ title:
 type: Other
 ---
 
+### 1.1.1
+
+`2018-6-15`
+
+- @delon/abc
+  - 修复 `reuse-tab` 右键无法打开问题，[#104](https://github.com/cipchk/delon/issues/104)
+
 ### 1.1.0
 
 `2018-6-15`
