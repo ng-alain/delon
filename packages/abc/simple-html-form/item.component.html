@@ -3,7 +3,7 @@
   <ng-container *ngIf="_label; else _labelTpl">{{_label}}</ng-container>
 </div>
 <div class="ant-form-item-control-wrapper ad-shf__control">
-  <div class="ant-form-item-control" [class.has-error]="invalid" [attr.title]="tip">
+  <div class="ant-form-item-control {{controlClass}}" [class.has-error]="invalid" [attr.title]="tip">
     <ng-content></ng-content>
   </div>
 </div>

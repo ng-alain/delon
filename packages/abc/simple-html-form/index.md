@@ -39,9 +39,10 @@ config: AdSHFConfig
 
 参数 | 类型 | 说明
 ----|------|-----
-`[label]` | 标签文本 | `string \| TemplateRef<any>` | -
 `[col]` | 元素默认占用列数 | `number` | -
+`[label]` | 标签文本 | `string \| TemplateRef<any>` | -
 `[labelWidth]` | 标签文本宽度，单位：`px` | `number` | -
+`[controlClass]` | 控件区域样式名 | `string` | -
 
 ## 常见问题
 
