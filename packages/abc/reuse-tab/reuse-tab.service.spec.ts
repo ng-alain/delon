@@ -1,6 +1,6 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, ActivatedRoute, RouteReuseStrategy } from '@angular/router';
+import { ActivatedRouteSnapshot, ActivatedRoute, RouteReuseStrategy, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 import { MenuService } from '@delon/theme';
@@ -17,11 +17,15 @@ class MockMenuService {
     return url === '/a/0' ? [] : [{ text: TITLE, reuse, reuseClosable }];
   }
 }
+class MockRouter {
+  navigateByUrl = jasmine.createSpy()
+}
 
 describe('abc: reuse-tab', () => {
   let injector: Injector;
   let srv: ReuseTabService;
   let menuSrv: MenuService;
+  let router: Router;
 
   afterEach(() => srv.ngOnDestroy());
 
@@ -37,10 +41,12 @@ describe('abc: reuse-tab', () => {
           deps: [ReuseTabService],
         },
         { provide: ActivatedRoute, useValue: { snapshot: { url: [] } } },
+        { provide: Router, useFactory: () => new MockRouter() }
       ].concat(providers),
     });
     srv = injector.get(ReuseTabService);
     menuSrv = injector.get(MenuService, null);
+    router = injector.get(Router);
     reuse = true;
     reuseClosable = true;
   }
@@ -337,6 +343,20 @@ describe('abc: reuse-tab', () => {
           () => expect(false).toBe(true),
         );
       srv.refresh(true);
+    });
+    describe('#replace', () => {
+      it('should be navigate to new url', () => {
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
+        srv.replace('/a/1');
+        expect(router.navigateByUrl).toHaveBeenCalled();
+      });
+      it('should be closed current router after navigate to new url', () => {
+        genCached(1, '/');
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
+        srv.replace('/b');
+        expect(srv.count).toBe(1);
+        expect(router.navigateByUrl).toHaveBeenCalled();
+      });
     });
   });
 

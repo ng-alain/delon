@@ -161,6 +161,7 @@ export class DemoComponent {
 `move(url, position)` | 移动缓存数据，同时触 `change` move事件 | `void`
 `clear()` | 清除所有缓存，同时触 `change` clear事件 | `void`
 `refresh()` | 无任何动作，但会触 `change` refresh事件 | `void`
+`replace(url)` | 强制关闭当前路由（包含不可关闭状态），并重新导航至 `newUrl` 路由 | `void`
 
 ### reuse-tab 组件
 
