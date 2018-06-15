@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Subscription, Subject } from 'rxjs';
@@ -32,7 +32,7 @@ export class ReuseTabContextService {
   open(context: ReuseContextEvent) {
     this.remove();
     const { event, item } = context;
-    const fakeElement = {
+    const fakeElement = new ElementRef({
       getBoundingClientRect: (): ClientRect => ({
         bottom: event.clientY,
         height: 0,
@@ -41,11 +41,11 @@ export class ReuseTabContextService {
         top: event.clientY,
         width: 0,
       }),
-    };
+    });
     const positionStrategy = this.overlay
       .position()
       .connectedTo(
-        { nativeElement: fakeElement },
+        fakeElement,
         { originX: 'start', originY: 'bottom' },
         { overlayX: 'start', overlayY: 'top' },
       )
