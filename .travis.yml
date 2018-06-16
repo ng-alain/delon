@@ -35,6 +35,7 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
+    - env: "TASK=site:release"
     - env: "TASK=scaffold:release"
 
 script:

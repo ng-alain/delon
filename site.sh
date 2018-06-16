@@ -29,8 +29,7 @@ if [[ ${BUILD} == true ]]; then
     rm -rf .tmp
     cp -r packages .tmp
 
-    sed -e "s/~ng-zorro-antd/..\/..\/..\/node_modules\/ng-zorro-antd/g" packages/theme/styles/default.less > .tmp/theme/styles/default.less
-    sed -e "s/~ng-zorro-antd/..\/..\/..\/..\/..\/node_modules\/ng-zorro-antd/g" packages/theme/styles/app/mixins/index.less > .tmp/theme/styles/app/mixins/index.less
+    sed -i "s/@import '..\//\/\/ @import/g" `grep @import\ \'../ -rl .tmp`
 
     node ./scripts/site/generate-color-less.js
 
