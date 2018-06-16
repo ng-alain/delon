@@ -16,6 +16,7 @@ import { getProjectFromWorkspace } from '../utils/devkit-utils/config';
 
 const HMR = `import { NgModuleRef, ApplicationRef } from '@angular/core';
 import { createNewHosts } from '@angularclass/hmr';
+import { NzModalService } from 'ng-zorro-antd';
 
 export const hmrBootstrap = (
   module: any,
@@ -26,6 +27,8 @@ export const hmrBootstrap = (
   bootstrap().then(mod => (ngModule = mod));
   module.hot.dispose(() => {
     const appRef: ApplicationRef = ngModule.injector.get(ApplicationRef);
+    const modalService = ngModule.injector.get(NzModalService, null) as NzModalService;
+    if (modalService) modalService.closeAll();
     const elements = appRef.components.map(c => c.location.nativeElement);
     const makeVisible = createNewHosts(elements);
     ngModule.destroy();
@@ -137,7 +140,7 @@ export function pluginHmr(options: PluginOptions): any {
     // 4. create a hmr.ts file
     tryAddFile(host, `${options.sourceRoot}/hmr.ts`, HMR);
     // 5. create a environment.hmr.ts file
-    envConfig(host, options);
+    // envConfig(host, options);
     // 6. update main.ts
     tryAddFile(host, `${options.sourceRoot}/main.ts`, MAINTS);
     // 7. fix not found types
