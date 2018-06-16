@@ -31,7 +31,7 @@ export class ModalHelper {
   open(
     comp: any,
     params?: any,
-    size: 'sm' | 'lg' | '' | number = 'lg',
+    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
     options?: ModalOptionsForService,
   ): Observable<any> {
     return Observable.create((observer: Observer<any>) => {
@@ -67,7 +67,7 @@ export class ModalHelper {
   static(
     comp: any,
     params?: any,
-    size: 'sm' | 'lg' | '' | number = 'lg',
+    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
     options?: any,
   ): Observable<any> {
     return this.open(

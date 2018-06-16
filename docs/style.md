@@ -405,7 +405,7 @@ Ant Design 是以 `12px` 为基准字号。
     <tbody>
         <tr>
             <td rowspan="3"><code>nz-modal</code></td>
-            <td><code>.modal-{lg|sm}</code></td>
+            <td><code>.modal-{sm|md|lg|xl}</code></td>
             <td>设置Modal的大小 <code>wrapClassName: 'modal-lg'</code></td>
             <td></td>
         </tr>
