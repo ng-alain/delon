@@ -29,6 +29,7 @@ import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
 import { SimplemdeModule } from 'ngx-simplemde';
+import { NgxWangEditorModule } from 'ngx-wangeditor';
 
 export function StartupServiceFactory(
   startupService: StartupService,
@@ -62,7 +63,8 @@ export function StartupServiceFactory(
     }),
     SimplemdeModule.forRoot({
       delay: 300
-    })
+    }),
+    NgxWangEditorModule.forRoot()
   ],
   providers: [
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },
