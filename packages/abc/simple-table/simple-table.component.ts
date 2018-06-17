@@ -506,7 +506,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       this._isAjax = true;
       this._genAjax(true);
     } else if (Array.isArray(this.data)) {
-      this._genData(true);
+      this._genData(this.frontPagination);
     } else {
       if (this.data$) {
         this.data$.unsubscribe();
@@ -515,7 +515,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         .pipe(tap(() => (this.loading = true)))
         .subscribe(res => {
           this.data = res;
-          this._genData(true);
+          this._genData(this.frontPagination);
         });
     }
   }

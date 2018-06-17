@@ -67,28 +67,52 @@ ng-alain 提供若干常见的服务与Pipe管道，以便减少基础建设代�
 这是对 `NzModalService` 进一步封装，它解决一些已知问题：
 
 - 更友好的处理回调
-- 清除所有已打开对话框
 - 自动管理 `z-index` 值
 
 打开一个对话框，默认会过滤一些事件的回调，因此更容易处理回调：
 
-```ts
-this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
+**create精准**
 
-// 成功：
-this.subject.destroy('onOk');
-    // 若需要回调用参数则：
-    this.subject.next(data);
-    this.subject.destroy();
+```ts
+this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
+
+// 成功范例
+// 1. 精准必须指定 `close(result)` 参数
+this.subject.close(true);
+// 2. 精准无指定时视为错误
+this.subject.close();
+
 // 关闭：
 this.subject.destroy();
 ```
 
-服务只包括两个方法体 `open` & `static` 分别打开普通&静态对话框。在 `NzModalService` 基础上新增了 `size` 参数，其值包括：`sm`、`lg`、`空字符串` 表示三种不同尺寸的对话框。
+包括两个方法体 `create` & `createStatic` 分别打开普通&静态对话框。在 `NzModalService` 基础上新增若干参数。
 
-**移除当前所有对话框**
+**参数**
 
-主要用于解决当路由切换时无法自动关闭对话框问题，特别是当在使用对话框时授权过期时自动跳转至 login 页时，可在 login 页中调用 `removeAll` 可移除所有对话框。
+| 名称 | 类型 | 默认值 | 功能 |
+| --- | --- | --- | --- |
+| `size` | `sm,md,lg,xl,数字` | `lg` | 指定对话框大小 |
+| `exact` | `boolean` | `true` | 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 |
+| `includeTabs` | `boolean` | `false` | 是否包裹标签页 |
+| `modalOptions` | `ModalOptionsForService` | - | nz-modal 对话框原始参数 |
+
+**open非精准**
+
+```ts
+this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
+
+// 成功范例：以下都视为成功
+this.subject.close(true);
+this.subject.close();
+
+// 关闭：
+this.subject.destroy();
+```
+
+包括两个方法体 `open` & `static` 分别打开普通&静态对话框。在 `NzModalService` 基础上新增若干参数，在 `NzModalService` 基础上新增了 `size` 参数，其值包括：`sm`、`lg`、`空字符串` 表示三种不同尺寸的对话框。
+
+> 建议：尽可能采用 `create` 精准模式，非精准未来可能会逐步被替代。
 
 ## Pipe
 

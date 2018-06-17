@@ -429,7 +429,3 @@ Ant Design 是以 `12px` 为基准字号。
         </tr>
     </tbody>
 </table>
-
-## CSS动画库
-
-来源于 [animate.css](//daneden.github.io/animate.css/)。

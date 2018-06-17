@@ -12,37 +12,54 @@ export class ModalHelper {
   constructor(private srv: NzModalService) {}
 
   /**
-   * 打开对话框
-   * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
-   *
-   * 对于组件的成功&关闭的处理说明：
-   * 成功：
-   *  this.NzModalRef.close(data);
-   *  this.NzModalRef.close();
-   *
-   * 关闭：
-   * this.NzModalRef.destroy();
+   * 构建一个对话框
    *
    * @param comp 组件
    * @param params 组件参数
-   * @param size 大小；例如：lg、600，默认：lg
-   * @param options 对话框 `ModalOptionsForService` 参数
+   * @param options 额外参数
+   *
+   * 示例：
+  ```ts
+this.modalHelper.create(FormEditComponent, { i }).subscribe(res => this.load());
+// 对于组件的成功&关闭的处理说明
+// 成功
+this.NzModalRef.close(data);
+this.NzModalRef.close();
+// 关闭
+this.NzModalRef.destroy();
+```
    */
-  open(
+  create(
     comp: any,
     params?: any,
-    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
-    options?: ModalOptionsForService,
+    options?: {
+      /** 大小；例如：lg、600，默认：`lg` */
+      size?: 'sm' | 'md' | 'lg' | 'xl' | '' | number;
+      /** 对话框 `ModalOptionsForService` 参数 */
+      modalOptions?: ModalOptionsForService;
+      /** 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 */
+      exact?: boolean;
+      /** 是否包裹标签页 */
+      includeTabs?: boolean;
+    }
   ): Observable<any> {
+    options = Object.assign({
+      size: 'lg',
+      exact: true,
+      includeTabs: false,
+    }, options);
     return Observable.create((observer: Observer<any>) => {
       let cls = '',
         width = '';
-      if (size) {
-        if (typeof size === 'number') {
-          width = `${size}px`;
+      if (options.size) {
+        if (typeof options.size === 'number') {
+          width = `${options.size}px`;
         } else {
-          cls = `modal-${size}`;
+          cls = `modal-${options.size}`;
         }
+      }
+      if (options.includeTabs) {
+        cls += ' modal-include-tabs';
       }
       const defaultOptions: ModalOptionsForService = {
         nzWrapClassName: cls,
@@ -52,9 +69,19 @@ export class ModalHelper {
         nzComponentParams: params,
         nzZIndex: ++this.zIndex,
       };
-      const subject = this.srv.create(Object.assign(defaultOptions, options));
+      const subject = this.srv.create(
+        Object.assign(defaultOptions, options.modalOptions),
+      );
       const afterClose$ = subject.afterClose.subscribe((res: any) => {
-        observer.next(res);
+        if (options.exact === true) {
+          if (res != null) {
+            observer.next(res);
+          } else {
+            observer.error(res);
+          }
+        } else {
+          observer.next(res);
+        }
         observer.complete();
         afterClose$.unsubscribe();
       });
@@ -62,7 +89,92 @@ export class ModalHelper {
   }
 
   /**
+   * 构建静态框，点击蒙层不允许关闭
+   *
+   * @param comp 组件
+   * @param params 组件参数
+   * @param options 额外参数
+   *
+   * 示例：
+  ```ts
+this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
+// 对于组件的成功&关闭的处理说明
+// 成功
+this.NzModalRef.close(data);
+this.NzModalRef.close();
+// 关闭
+this.NzModalRef.destroy();
+```
+   */
+  createStatic(
+    comp: any,
+    params?: any,
+    options?: {
+      /** 大小；例如：lg、600，默认：`lg` */
+      size?: 'sm' | 'md' | 'lg' | 'xl' | '' | number;
+      /** 对话框 `ModalOptionsForService` 参数 */
+      modalOptions?: ModalOptionsForService;
+      /** 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 */
+      exact?: boolean;
+      /** 是否包裹标签页 */
+      includeTabs?: boolean;
+    },
+  ): Observable<any> {
+    const modalOptions = Object.assign(
+      { nzMaskClosable: false },
+      options && options.modalOptions,
+    );
+    return this.create(comp, params, Object.assign({ modalOptions }, options));
+  }
+
+  /**
+   * 打开对话框
+   * @param comp 组件
+   * @param params 组件参数
+   * @param size 大小；例如：lg、600，默认：lg
+   * @param options 对话框 `ModalOptionsForService` 参数
+   *
+   * 示例：
+  ```ts
+this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
+// 对于组件的成功&关闭的处理说明
+// 成功
+this.NzModalRef.close(data);
+this.NzModalRef.close();
+// 关闭
+this.NzModalRef.destroy();
+```
+   */
+  open(
+    comp: any,
+    params?: any,
+    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
+    options?: ModalOptionsForService,
+  ): Observable<any> {
+    return this.create(comp, params, {
+      size,
+      modalOptions: options,
+      exact: false,
+    });
+  }
+
+  /**
    * 静态框，点击蒙层不允许关闭
+   * @param comp 组件
+   * @param params 组件参数
+   * @param size 大小；例如：lg、600，默认：lg
+   * @param options 对话框 `ModalOptionsForService` 参数
+   *
+   * 示例：
+  ```ts
+this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
+// 对于组件的成功&关闭的处理说明
+// 成功
+this.NzModalRef.close(data);
+this.NzModalRef.close();
+// 关闭
+this.NzModalRef.destroy();
+```
    */
   static(
     comp: any,
