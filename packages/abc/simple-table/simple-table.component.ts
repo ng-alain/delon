@@ -465,7 +465,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         ? data.length
         : this.total;
     this.checkPaged().subscribeData(
-      this._isPagination
+      this._isPagination && this.frontPagination
         ? data.slice((this.pi - 1) * this.ps, this.pi * this.ps)
         : data,
     );
