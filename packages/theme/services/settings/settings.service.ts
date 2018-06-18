@@ -11,11 +11,11 @@ export class SettingsService {
   private _user: User = null;
   private _layout: Layout = null;
 
-  private get(key: string) {
+  public get(key: string) {
     return JSON.parse(localStorage.getItem(key) || 'null') || null;
   }
 
-  private set(key: string, value: any) {
+  public set(key: string, value: any) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 

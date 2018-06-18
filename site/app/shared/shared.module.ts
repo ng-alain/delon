@@ -16,6 +16,7 @@ import { GithubButtonModule } from 'ng-github-button';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
 import { SimplemdeModule } from 'ngx-simplemde';
+import { NgxWangEditorModule } from 'ngx-wangeditor';
 
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { ContentComponent } from './components/content/content.component';
@@ -41,7 +42,8 @@ const THIRDS = [
     GithubButtonModule,
     NgxTinymceModule,
     UEditorModule,
-    SimplemdeModule
+    SimplemdeModule,
+    NgxWangEditorModule
 ];
 
 @NgModule({
