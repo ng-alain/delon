@@ -7,7 +7,7 @@ export * from './services/settings/interface';
 export * from './services/settings/settings.service';
 export { TitleService } from './services/title/title.service';
 export { ALAIN_I18N_TOKEN, AlainI18NService } from './services/i18n/i18n';
-export { ModalHelper } from './services/modal/modal.helper';
+export * from './services/modal/modal.helper';
 export { _HttpClient } from './services/http/http.client';
 export { DatePipe } from './pipes/date/date.pipe';
 export { CNCurrencyPipe } from './pipes/currency/cn-currency.pipe';

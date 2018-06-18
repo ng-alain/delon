@@ -2,6 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { NzModalService, ModalOptionsForService } from 'ng-zorro-antd';
 
+export interface ModalHelperOptions {
+  /** 大小；例如：lg、600，默认：`lg` */
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '' | number;
+  /** 对话框 `ModalOptionsForService` 参数 */
+  modalOptions?: ModalOptionsForService;
+  /** 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 */
+  exact?: boolean;
+  /** 是否包裹标签页 */
+  includeTabs?: boolean;
+}
+
 /**
  * 对话框辅助类
  */
@@ -32,16 +43,7 @@ this.NzModalRef.destroy();
   create(
     comp: any,
     params?: any,
-    options?: {
-      /** 大小；例如：lg、600，默认：`lg` */
-      size?: 'sm' | 'md' | 'lg' | 'xl' | '' | number;
-      /** 对话框 `ModalOptionsForService` 参数 */
-      modalOptions?: ModalOptionsForService;
-      /** 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 */
-      exact?: boolean;
-      /** 是否包裹标签页 */
-      includeTabs?: boolean;
-    }
+    options?: ModalHelperOptions
   ): Observable<any> {
     options = Object.assign({
       size: 'lg',
@@ -109,16 +111,7 @@ this.NzModalRef.destroy();
   createStatic(
     comp: any,
     params?: any,
-    options?: {
-      /** 大小；例如：lg、600，默认：`lg` */
-      size?: 'sm' | 'md' | 'lg' | 'xl' | '' | number;
-      /** 对话框 `ModalOptionsForService` 参数 */
-      modalOptions?: ModalOptionsForService;
-      /** 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 */
-      exact?: boolean;
-      /** 是否包裹标签页 */
-      includeTabs?: boolean;
-    },
+    options?: ModalHelperOptions
   ): Observable<any> {
     const modalOptions = Object.assign(
       { nzMaskClosable: false },

@@ -28,6 +28,7 @@ import {
   ModalHelper,
   ALAIN_I18N_TOKEN,
   AlainI18NService,
+  ModalHelperOptions,
 } from '@delon/theme';
 import { deepGet, deepCopy, toBoolean, toNumber } from '@delon/util';
 
@@ -803,11 +804,15 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     if (btn.type === 'modal' || btn.type === 'static') {
       const obj = {};
       obj[btn.paramName || this.defConfig.modalParamsName || 'record'] = record;
-      (this.modal[btn.type === 'modal' ? 'open' : 'static'] as any)(
+      const options: ModalHelperOptions = Object.assign({}, btn.modal);
+      // TODO: deprecated
+      if (btn.size) options.size = btn.size;
+      if (btn.modalOptions) options.modalOptions = btn.modalOptions;
+
+      (this.modal[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         btn.component,
         Object.assign(obj, btn.params && btn.params(record)),
-        btn.size,
-        btn.modalOptions,
+        options,
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));

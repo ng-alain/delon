@@ -604,52 +604,96 @@ describe('abc: simple-table', () => {
             page.clickCell('a');
             expect(comp.load).toHaveBeenCalled();
           });
-          it('#modal', () => {
-            const columns: SimpleTableColumn[] = [
-              {
-                title: '',
-                buttons: [
-                  { text: 'a', type: 'modal', click: jasmine.createSpy() },
-                ],
-              },
-            ];
-            const modalHelp = injector.get(ModalHelper);
-            const mock$ = new Subject();
-            spyOn(modalHelp, 'open').and.callFake(() => mock$);
-            page.newColumn(columns);
-            expect(modalHelp.open).not.toHaveBeenCalled();
-            page.clickCell('a');
-            expect(modalHelp.open).toHaveBeenCalled();
-            expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
-            mock$.next({});
-            expect(columns[0].buttons[0].click).toHaveBeenCalled();
-            mock$.unsubscribe();
-          });
-          it('#static', () => {
-            const columns: SimpleTableColumn[] = [
-              {
-                title: '',
-                buttons: [
-                  {
-                    text: 'a',
-                    type: 'static',
-                    click: jasmine.createSpy(),
-                    params: (record: any) => ({ aa: 1 }),
-                  },
-                ],
-              },
-            ];
-            const modalHelp = injector.get(ModalHelper);
-            const mock$ = new Subject();
-            spyOn(modalHelp, 'static').and.callFake(() => mock$);
-            page.newColumn(columns);
-            expect(modalHelp.static).not.toHaveBeenCalled();
-            page.clickCell('a');
-            expect(modalHelp.static).toHaveBeenCalled();
-            expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
-            mock$.next({});
-            expect(columns[0].buttons[0].click).toHaveBeenCalled();
-            mock$.unsubscribe();
+          describe('#modal', () => {
+            it('#modal', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    { text: 'a', type: 'modal', click: jasmine.createSpy() },
+                  ],
+                },
+              ];
+              const modalHelp = injector.get(ModalHelper);
+              const mock$ = new Subject();
+              spyOn(modalHelp, 'create').and.callFake(() => mock$);
+              page.newColumn(columns);
+              expect(modalHelp.create).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.create).toHaveBeenCalled();
+              expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons[0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+            });
+            it('#static', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    {
+                      text: 'a',
+                      type: 'static',
+                      click: jasmine.createSpy(),
+                      params: (record: any) => ({ aa: 1 }),
+                    },
+                  ],
+                },
+              ];
+              const modalHelp = injector.get(ModalHelper);
+              const mock$ = new Subject();
+              spyOn(modalHelp, 'createStatic').and.callFake(() => mock$);
+              page.newColumn(columns);
+              expect(modalHelp.createStatic).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.createStatic).toHaveBeenCalled();
+              expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons[0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+            });
+            it('[deprecated] #size', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    { text: 'a', type: 'modal', click: jasmine.createSpy(), size: 'sm' },
+                  ],
+                },
+              ];
+              const modalHelp = injector.get(ModalHelper);
+              const mock$ = new Subject();
+              spyOn(modalHelp, 'create').and.callFake(() => mock$);
+              page.newColumn(columns);
+              expect(modalHelp.create).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.create).toHaveBeenCalled();
+              expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons[0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+            });
+            it('[deprecated] #modalOptions', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    { text: 'a', type: 'modal', click: jasmine.createSpy(), modalOptions: {} },
+                  ],
+                },
+              ];
+              const modalHelp = injector.get(ModalHelper);
+              const mock$ = new Subject();
+              spyOn(modalHelp, 'create').and.callFake(() => mock$);
+              page.newColumn(columns);
+              expect(modalHelp.create).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.create).toHaveBeenCalled();
+              expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons[0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+            });
           });
           describe('#link', () => {
             it('should be trigger click', () => {
