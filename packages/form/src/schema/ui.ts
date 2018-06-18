@@ -51,6 +51,10 @@ export interface SFRenderSchema {
    */
   size?: 'default' | 'large' | 'small';
   /**
+   * 指定宽度，单位：`px`
+   */
+  width?: number;
+  /**
    * 响应式属性
    */
   grid?: SFGridSchema;

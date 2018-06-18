@@ -247,14 +247,15 @@ UI Schema 结构由通用性和小部件API两部分组成，以下是通用性�
 
 ### 渲染类
 
-| 参数          | 说明                           | 类型                        | 默认值 |
-|---------------|--------------------------------|-----------------------------|--------|
-| `[widget]`        | 指定采用什么小部件渲染         | `string`                    | -      |
-| `[class]`         | 自定义类，等同 `[ngClass]` 值   | `string or string[]`        | -      |
-| `[size]`          | 元素组件大小                   | `default,large,small`       | -      |
-| `[grid]`          | 响应式属性                     | `SFGridSchema`              | -      |
-| `[optional]`      | 标签可选信息                   | `string`                    | -      |
-| `[optionalHelp]` | 标签可选帮助                   | `string`                    | -      |
+| 参数             | 说明                         | 类型                  | 默认值 |
+|------------------|------------------------------|-----------------------|--------|
+| `[widget]`       | 指定采用什么小部件渲染       | `string`              | -      |
+| `[class]`        | 自定义类，等同 `[ngClass]` 值 | `string or string[]`  | -      |
+| `[width]`        | 指定宽度，单位：`px`           | `number`              | -      |
+| `[size]`         | 元素组件大小                 | `default,large,small` | -      |
+| `[grid]`         | 响应式属性                   | `SFGridSchema`        | -      |
+| `[optional]`     | 标签可选信息                 | `string`              | -      |
+| `[optionalHelp]` | 标签可选帮助                 | `string`              | -      |
 
 ### 响应式属性 SFGridSchema
 
