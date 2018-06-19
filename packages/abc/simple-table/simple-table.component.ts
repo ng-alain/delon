@@ -330,13 +330,13 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   >();
   /** 后端分页是否采用`1`基索引，只在`data`类型为`string`时有效 */
   @Input()
-  get oneBaseIndexed() {
-    return this._oneBaseIndexed;
+  get zeroIndexedOnPage() {
+    return this._zeroIndexedOnPage;
   }
-  set oneBaseIndexed(value: any) {
-    this._oneBaseIndexed = toBoolean(value);
+  set zeroIndexedOnPage(value: any) {
+    this._zeroIndexedOnPage = toBoolean(value);
   }
-  private _oneBaseIndexed = true;
+  private _zeroIndexedOnPage = false;
 
   // endregion
 
@@ -397,7 +397,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   private getAjaxData(url?: string): Observable<any> {
     const params: any = Object.assign(
       {
-        [this.reqReName.pi]: this._oneBaseIndexed ? this.pi : this.pi - 1,
+        [this.reqReName.pi]: this._zeroIndexedOnPage ? this.pi - 1 : this.pi,
         [this.reqReName.ps]: this.ps,
       },
       this.extraParams,

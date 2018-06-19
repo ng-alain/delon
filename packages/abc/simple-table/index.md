@@ -19,7 +19,7 @@ config: AdSimpleTableConfig
 - 通过 `extraParams`、`reqMethod` 等参数解决请求数据格式问题
 - 通过 `resReName` 重置数据 `key` 而无须担心后端数据格式是否满足 `simpel-table` 需求
 - 通过 `preDataChange` 可以对表格渲染前对数据进一步优化
-- 通过 `oneBaseIndexed` 可以调整 http 请求时 `pi` 参数是否遵循 1 基索引，默认情况下为 1 基索引，否则为 0 基索引
+- 通过 `zeroIndexedOnPage` 可以调整 http 请求时 `pi` 参数是否遵循 0 基索引，默认情况下为 1 基索引
 
 ### 静态数据
 
@@ -48,7 +48,7 @@ config: AdSimpleTableConfig
 `[preDataChange]` | 数据处理前回调，一般在使用 `url` 时很有用 | `(data: SimpleTableData[]) => SimpleTableData[]` | -
 `[pi]` | 当前页码 | `number` | `10`
 `[ps]` | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10`
-`[oneBaseIndexed]` | 后端分页是否采用`1`基索引，只在`data`类型为`string`时有效 | `boolean` | `true`
+`[zeroIndexedOnPage]` | 后端分页是否采用`0`基索引，只在`data`类型为`string`时有效 | `boolean` | `false`
 `[frontPagination]` | 前端分页，当 `data` 为 `any[]` 或 `Observable<any[]>` 有效 | `boolean` | `true`
 `[showPagination]` | 是否显示分页器；当未指定时若 `ps>total` 情况下自动不显示 | `boolean` | -
 `[pagePlacement]` | 分页方向 | `left,center,right` | `right`
