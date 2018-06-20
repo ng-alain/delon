@@ -247,7 +247,7 @@ Ant Design 是以 `12px` 为基准字号。
 
 #### Wrapping
 
-**容器必须是 `display: inline-block` 或 `display: block`。
+*容器*必须是 `display: inline-block` 或 `display: block`。
 
 | 名称 | 说明 |
 | ---- | --- |
@@ -309,14 +309,28 @@ Ant Design 是以 `12px` 为基准字号。
 
 ### Responsive
 
-类似 Bootstrap 响应式规则，当屏幕小于 `480px` 时会隐藏所有 `hidden-xs` 类。
+类似 Bootstrap 响应式规则，根据屏幕大小隐藏所有 `hidden-*` 类或者显示`visible-*-*`类。
 
-| 名称 | 屏幕 |
-| ---- | --- |
-| `hidden-xs` | <480px |
-| `hidden-sm` | <768px |
-| `hidden-md` | <992px |
-| `hidden-lg` | <1200px |
+| 名称           | 屏幕              |
+| -------------- | ----------------- |
+| `visible-xs-*` | <576px            |
+| `visible-sm-*` | >=576px && <768px |
+| `visible-md-*` | >=768px && <992px |
+| `visible-lg-*` | >=992px           |
+| `hidden-xs`    | <480px            |
+| `hidden-sm`    | <768px            |
+| `hidden-md`    | <992px            |
+| `hidden-lg`    | <1200px           |
+
+形如 `visible-*-*` 的类针对每种屏幕大小都有了三种变体，每个针对 CSS 中不同的 display 属性，列表如下：
+
+| 类组                     | CSS display              |
+| ------------------------ | ------------------------ |
+| `visible-*-block`        | `display: block;`        |
+| `visible-*-inline`       | `display: inline;`       |
+| `visible-*-inline-block` | `display: inline-block;` |
+
+以超小屏幕（`xs`）为例，可用的 `visible-*-*` 类是：`visible-xs-block`、`visible-xs-inline` 和 `visible-xs-inline-block`。
 
 ### Other
 
