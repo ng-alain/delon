@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as format from 'date-fns/format';
 import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import * as format from 'date-fns/format';
 
 /**
  * @see http://ng-alain.com/docs/service-pipe#%E6%97%A5%E6%9C%9F-_date
@@ -19,8 +19,8 @@ export class DatePipe implements PipeTransform {
         });
       }
 
-      //support timestamp of string type
-      if (typeof value === 'string' && /^\d+$/.test(value)){
+      // support timestamp of string type
+      if (typeof value === 'string' && /^\d+$/.test(value)) {
         value = Number(value);
       }
 
