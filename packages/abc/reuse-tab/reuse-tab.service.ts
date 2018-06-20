@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, Optional, Injector } from '@angular/core';
-import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { MenuService } from '@delon/theme';
 import {
@@ -29,6 +29,11 @@ export class ReuseTabService implements OnDestroy {
   private removeUrlBuffer: string;
 
   // region: public
+
+  /** 当前路由地址 */
+  get curUrl() {
+    return this.getUrl(this.injector.get(ActivatedRoute).snapshot);
+  }
 
   /** 允许最多复用多少个页面，取值范围 `2-100` */
   set max(value: number) {
@@ -73,9 +78,9 @@ export class ReuseTabService implements OnDestroy {
   }
   /** 自定义当前标题 */
   set title(value: string | ReuseTitle) {
-    const curUrl = this.getUrl(this.injector.get(ActivatedRoute).snapshot);
+    const url = this.curUrl;
     if (typeof value === 'string') value = { text: value };
-    this._titleCached[curUrl] = value;
+    this._titleCached[url] = value;
     this.di('update current tag title: ', value);
     this._cachedChange.next({
       active: 'title',
@@ -193,6 +198,18 @@ export class ReuseTabService implements OnDestroy {
     });
   }
   /**
+   * 强制关闭当前路由（包含不可关闭状态），并重新导航至 `newUrl` 路由
+   */
+  replace(newUrl: string) {
+    const url = this.curUrl;
+    if (this.exists(url)) {
+      this.close(url, true);
+    } else {
+      this.removeUrlBuffer = url;
+    }
+    this.injector.get(Router).navigateByUrl(newUrl);
+  }
+  /**
    * 获取标题，顺序如下：
    *
    * 1. 组件内使用 `ReuseTabService.title = 'new title'` 重新指定文本
@@ -220,8 +237,8 @@ export class ReuseTabService implements OnDestroy {
   }
   /** 自定义当前 `closable` 状态 */
   set closable(value: boolean) {
-    const curUrl = this.getUrl(this.injector.get(ActivatedRoute).snapshot);
-    this._closableCached[curUrl] = value;
+    const url = this.curUrl;
+    this._closableCached[url] = value;
     this.di('update current tag closable: ', value);
     this._cachedChange.next({
       active: 'closable',

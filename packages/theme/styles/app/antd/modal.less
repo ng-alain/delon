@@ -6,10 +6,26 @@
   }
 }
 
+// Medium screen / desktop
+@media (min-width: @screen-md) {
+  .modal-md .ant-modal {
+    max-width: @modal-md;
+    width: auto !important;
+  }
+}
+
 // Large screen / wide desktop
 @media (min-width: @screen-lg) {
   .modal-lg .ant-modal {
     max-width: @modal-lg;
+    width: auto !important;
+  }
+}
+
+// Extra extra large screen / large descktop
+@media (min-width: @screen-xxl) {
+  .modal-xl .ant-modal {
+    max-width: @modal-xl;
     width: auto !important;
   }
 }
@@ -48,11 +64,10 @@
     text-align: right;
     border-radius: 0 0 @border-radius-base @border-radius-base;
     margin: 24px -24px -24px -24px;
-    button + button,
-    button + nz-popconfirm,
-    nz-popconfirm + button {
-      margin-left: 8px;
-      margin-bottom: 0;
+  }
+  &-include-tabs {
+    nz-tabset {
+      margin-top: -16px;
     }
   }
 }

@@ -14,8 +14,8 @@ module: AdExceptionModule
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-type | 页面类型，若配置，则自带对应类型默认的 `title`，`desc`，`img`，此默认设置可以被 `title`，`desc`，`img` 覆盖 | `403,404,500` | -
-title | 标题 | `string` | -
-desc | 补充描述 | `string` | -
-img | 背景图片地址 | `string` | -
-actions, ng-content | 建议操作，配置此属性时默认的『返回首页』按钮不生效 | `TemplateRef<any>` | -
+`[type]` | 页面类型，若配置，则自带对应类型默认的 `title`，`desc`，`img`，此默认设置可以被 `title`，`desc`，`img` 覆盖 | `403,404,500` | -
+`[title]` | 标题 | `string` | -
+`[desc]` | 补充描述 | `string` | -
+`[img]` | 背景图片地址 | `string` | -
+`[actions]`, `ng-content` | 建议操作，配置此属性时默认的『返回首页』按钮不生效 | `TemplateRef<any>` | -

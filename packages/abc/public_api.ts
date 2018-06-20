@@ -26,6 +26,7 @@ export * from './number-to-chinese';
 export * from './lodop';
 export * from './quick-menu';
 export * from './qr';
+export * from './simple-html-form';
 // charts
 export * from './charts/bar';
 export * from './charts/card';

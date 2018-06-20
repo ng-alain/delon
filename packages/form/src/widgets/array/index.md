@@ -14,14 +14,14 @@ Schema 内嵌 UI 风格：
 
 ```ts
 const schema = {
-    list: {
-        type: 'array',
-        items: {
-            a: { type: 'string' },
-            b: { type: 'number', ui: { spanLabel: 10 } }
-        },
-        ui: { spanLabel: 5, grid: { arraySpan: 12 } }
-    }
+  list: {
+    type: 'array',
+    items: {
+      a: { type: 'string' },
+      b: { type: 'number', ui: { spanLabel: 10 } }
+    },
+    ui: { spanLabel: 5, grid: { arraySpan: 12 } }
+  }
 };
 ```
 
@@ -31,13 +31,13 @@ Schema 与 UI 分开风格，假如上述 Schema 转化成 UI 写法：
 
 ```ts
 const ui = {
-    $list: {
-        $items: {
-            $b: { spanLabel: 10 }
-        },
-        spanLabel: 5,
-        grid: { arraySpan: 12 }
-    }
+  $list: {
+    $items: {
+      $b: { spanLabel: 10 }
+    },
+    spanLabel: 5,
+    grid: { arraySpan: 12 }
+  }
 };
 ```
 
@@ -47,17 +47,17 @@ const ui = {
 
 参数        | 说明                     | 类型       | 默认值
 ------------|--------------------------|------------|--------
-items       | 数组元素类型描述         | `SFSchema` | -
-minItems    | 约束数组最小的元素个数   | `number`   | -
-maxItems    | 约束数组最大的元素个数   | `number`   | -
-uniqueItems | 约束数组每个元素都不相同 | `boolean`  | -
+`[items]`       | 数组元素类型描述         | `SFSchema` | -
+`[minItems]`    | 约束数组最小的元素个数   | `number`   | -
+`[maxItems]`    | 约束数组最大的元素个数   | `number`   | -
+`[uniqueItems]` | 约束数组每个元素都不相同 | `boolean`  | -
 
 ### ui 属性
 
 参数         | 说明                       | 类型      | 默认值
 -------------|----------------------------|-----------|----------
-addTitle    | 添加按钮文本               | `string`  | `添加`
-addType     | 添加按钮类型，等同 `nzType` | `string`  | `dashed`
-removable    | 是否包含移除按钮           | `boolean` | `true`
-removeTitle | 移除按钮文本               | `string`  | `移除`
-$items | 数组元素类型UI描述               | `SFUISchema`  | `移除`
+`[addTitle]`    | 添加按钮文本               | `string`  | `添加`
+`[addType]`     | 添加按钮类型，等同 `nzType` | `string`  | `dashed`
+`[removable]`    | 是否包含移除按钮           | `boolean` | `true`
+`[removeTitle]` | 移除按钮文本               | `string`  | `移除`
+`[$items]` | 数组元素类型UI描述               | `SFUISchema`  | `移除`

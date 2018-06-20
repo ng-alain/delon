@@ -73,6 +73,9 @@
               <ng-container *ngSwitchCase="'link'">
                 <a (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx]"></a>
               </ng-container>
+              <ng-container *ngSwitchCase="'tag'">
+                <nz-tag [nzColor]="c.tag[i._values[cIdx]].color">{{c.tag[i._values[cIdx]].text || i._values[cIdx]}}</nz-tag>
+              </ng-container>
               <ng-container *ngSwitchCase="'badge'">
                 <nz-badge [nzStatus]="c.badge[i._values[cIdx]].color" [nzText]="c.badge[i._values[cIdx]].text || i._values[cIdx]"></nz-badge>
               </ng-container>

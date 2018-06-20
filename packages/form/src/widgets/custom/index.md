@@ -16,9 +16,9 @@ type: Widgets
 
 参数      | 说明           | 类型
 ----------|----------------|------------------
-$implicit | 当前上下文     | `ControlWidget`
-schema    | 当前节点Schema | `SFSchema`
-ui        | 当前节点UI     | `SFUISchemaItem`
+`[$implicit]` | 当前上下文     | `ControlWidget`
+`[schema]`    | 当前节点Schema | `SFSchema`
+`[ui]`        | 当前节点UI     | `SFUISchemaItem`
 
 上下文包括 `formProperty` 属性，它是传递数据的唯一中间层，因此维护 `formProperty.value` 是唯一与自定义组件通信的媒介。
 

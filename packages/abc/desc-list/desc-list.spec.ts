@@ -84,6 +84,17 @@ describe('abc: desc-list', () => {
     expect(dl.queryAll(By.css('#custom-title-template .true')).length).toBe(1);
   });
 
+  it('should be custom detail class name', () => {
+    genModule(`
+    <desc-list id="custom-detail-class">
+      <desc-list-item term="false" detailClass="text-error"></desc-list-item>
+    </desc-list>`);
+    fixture.detectChanges();
+    expect(dl.queryAll(By.css('#custom-detail-class .text-error')).length).toBe(
+      1,
+    );
+  });
+
   describe('[empty content]', () => {
     describe('with noDefault: false', () => {
       it(`should be show '-'`, () => {

@@ -74,7 +74,7 @@ export class DescListComponent implements OnChanges, OnInit {
     this._classMap.forEach(cls =>
       this.renderer.removeClass(this.el.nativeElement, cls),
     );
-    this._classMap = ['ad-desc-list', this.layout];
+    this._classMap = ['ad-desc-list', 'clearfix', this.layout];
     if (this.size) this._classMap.push(this.size);
     this._classMap.forEach(cls =>
       this.renderer.addClass(this.el.nativeElement, cls),

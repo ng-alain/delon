@@ -305,6 +305,7 @@ Ant Design 是以 `12px` 为基准字号。
 | `width-sm` | `160px` |
 | `width-md` | `240px` |
 | `width-lg` | `320px` |
+| `width-[0-10]` | `0%-100%` |
 
 ### Responsive
 
@@ -404,7 +405,7 @@ Ant Design 是以 `12px` 为基准字号。
     <tbody>
         <tr>
             <td rowspan="3"><code>nz-modal</code></td>
-            <td><code>.modal-{lg|sm}</code></td>
+            <td><code>.modal-{sm|md|lg|xl}</code></td>
             <td>设置Modal的大小 <code>wrapClassName: 'modal-lg'</code></td>
             <td></td>
         </tr>
@@ -428,7 +429,3 @@ Ant Design 是以 `12px` 为基准字号。
         </tr>
     </tbody>
 </table>
-
-## CSS动画库
-
-来源于 [animate.css](//daneden.github.io/animate.css/)。

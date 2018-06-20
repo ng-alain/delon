@@ -37,8 +37,8 @@ ng-alain 左边主菜单，依赖于 `@delon/theme`。
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-autoCloseUnderPad | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true`
-select | 切换时回调 | `EventEmitter<Menu>` | -
+`[autoCloseUnderPad]` | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true`
+`(select)` | 切换时回调 | `EventEmitter<Menu>` | -
 
 ### 菜单数据结构
 

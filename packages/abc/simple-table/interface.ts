@@ -1,5 +1,5 @@
 import { SimpleTableComponent } from './simple-table.component';
-import { ElementRef, TemplateRef } from '@angular/core';
+import { ModalHelperOptions } from '@delon/theme';
 
 export type CompareFn = ((a: any, b: any) => number);
 
@@ -29,6 +29,7 @@ export interface SimpleTableColumn {
    * - `radio` 单选
    * - `link` 链接，务必指定 `click`
    * - `badge` [徽标](https://ng.ant.design/components/badge/zh)，务必指定 `badge` 参数配置徽标对应值
+   * - `tag` [标签](https://ng.ant.design/components/tag/zh)，务必指定 `tag` 参数配置标签对应值
    * - `img` 图片且居中(若 `className` 存在则优先)
    * - `number` 数字且居右(若 `className` 存在则优先)
    * - `currency` 货币且居右(若 `className` 存在则优先)
@@ -39,6 +40,7 @@ export interface SimpleTableColumn {
     | 'checkbox'
     | 'link'
     | 'badge'
+    | 'tag'
     | 'radio'
     | 'img'
     | 'currency'
@@ -213,11 +215,14 @@ export interface SimpleTableColumn {
    * - 建议指定 `scroll.x` 为大于表格宽度的固定值或百分比。注意，且非固定列宽度之和不要超过 `scroll.x`
    */
   fixed?: 'left' | 'right';
-
   /**
    * 徽标配置项
    */
   badge?: SimpleTableBadge;
+  /**
+   * 标签配置项
+   */
+  tag?: SimpleTableTag;
 
   [key: string]: any;
 }
@@ -317,11 +322,19 @@ export interface SimpleTableButton {
    */
   paramName?: string;
   /**
+   * 对话框额外参数
+   */
+  modal?: ModalHelperOptions;
+  /**
    * 对话框大小，默认：`lg`
+   *
+   * @deprecated 使用 `options.size` 替代
    */
   size?: 'sm' | 'lg' | '' | number;
   /**
    * 对话框额外参数，见 [ModalHelper](http://ng-alain.com/docs/service#ModalHelper)
+   *
+   * @deprecated 使用 `options.modalOptions` 替代
    */
   modalOptions?: any;
   /**
@@ -333,14 +346,6 @@ export interface SimpleTableButton {
    * 权限，等同 `can()` 参数值
    */
   acl?: any;
-  /**
-   * @deprecated 请使用 `iif` 替代
-   */
-  if?: (
-    item: any,
-    btn: SimpleTableButton,
-    column: SimpleTableColumn,
-  ) => boolean;
   /**
    * 条件表达式，较高调用频率，请勿过多复杂计算免得产生性能问题
    */
@@ -425,4 +430,25 @@ export interface SimpleTableBadgeValue {
    * 徽标颜色值
    */
   color?: 'success' | 'processing' | 'default' | 'error' | 'warning';
+}
+
+/**
+ * 标签信息
+ */
+export interface SimpleTableTag {
+  [key: number]: SimpleTableTagValue;
+  [key: string]: SimpleTableTagValue;
+}
+
+export interface SimpleTableTagValue {
+  /**
+   * 文本
+   */
+  text?: string;
+  /**
+   * 颜色值，支持预设和色值
+   * - 预设：geekblue,blue,purple,success,red,volcano,orange,gold,lime,green,cyan
+   * - 色值：#f50,#ff0
+   */
+  color?: 'geekblue' | 'blue' | 'purple' | 'success' | 'red' | 'volcano' | 'orange' | 'gold' | 'lime' | 'green' | 'cyan' | string;
 }

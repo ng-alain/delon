@@ -28,6 +28,7 @@ import {
   ModalHelper,
   ALAIN_I18N_TOKEN,
   AlainI18NService,
+  ModalHelperOptions,
 } from '@delon/theme';
 import { deepGet, deepCopy, toBoolean, toNumber } from '@delon/util';
 
@@ -465,7 +466,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         ? data.length
         : this.total;
     this.checkPaged().subscribeData(
-      this._isPagination
+      this._isPagination && this.frontPagination
         ? data.slice((this.pi - 1) * this.ps, this.pi * this.ps)
         : data,
     );
@@ -506,7 +507,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       this._isAjax = true;
       this._genAjax(true);
     } else if (Array.isArray(this.data)) {
-      this._genData(true);
+      this._genData(this.frontPagination);
     } else {
       if (this.data$) {
         this.data$.unsubscribe();
@@ -515,7 +516,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         .pipe(tap(() => (this.loading = true)))
         .subscribe(res => {
           this.data = res;
-          this._genData(true);
+          this._genData(this.frontPagination);
         });
     }
   }
@@ -790,8 +791,6 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
 
   btnCoerceIf(list: SimpleTableButton[]) {
     for (const item of list) {
-      // TODO: remove 1.1.0
-      if (item.if) item.iif = item.if;
       if (!item.iif) item.iif = () => true;
       if (!item.children) {
         item.children = [];
@@ -805,11 +804,15 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     if (btn.type === 'modal' || btn.type === 'static') {
       const obj = {};
       obj[btn.paramName || this.defConfig.modalParamsName || 'record'] = record;
-      (this.modal[btn.type === 'modal' ? 'open' : 'static'] as any)(
+      const options: ModalHelperOptions = Object.assign({}, btn.modal);
+      // TODO: deprecated
+      if (btn.size) options.size = btn.size;
+      if (btn.modalOptions) options.modalOptions = btn.modalOptions;
+
+      (this.modal[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         btn.component,
         Object.assign(obj, btn.params && btn.params(record)),
-        btn.size,
-        btn.modalOptions,
+        options,
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
@@ -819,7 +822,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       if (typeof clickRes === 'string') {
         this.router.navigateByUrl(clickRes);
       }
-      return ;
+      return;
     }
     this.btnCallback(record, btn);
   }
@@ -943,10 +946,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
       if (item.type === 'yn' && typeof item.ynTruth === 'undefined') {
         item.ynTruth = true;
       }
-      if (item.type === 'link' && typeof item.click !== 'function') {
-        (item as any).type = '';
-      }
-      if (item.type === 'badge' && typeof item.badge === 'undefined') {
+      if (
+        (item.type === 'link' && typeof item.click !== 'function') ||
+        (item.type === 'badge' && typeof item.badge === 'undefined') ||
+        (item.type === 'tag' && typeof item.tag === 'undefined')
+      ) {
         (item as any).type = '';
       }
       if (!item.className) {

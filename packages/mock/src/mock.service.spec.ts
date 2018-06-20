@@ -77,8 +77,14 @@ describe('mock: service', () => {
       const editRes = editRule.callback(editRule as any);
       expect(editRes.s).toBe('edit');
       const detailRule = srv.getRule('GET', '/users/1');
-      const detailRes = detailRule.callback(detailRule as any);
-      expect(detailRes.s).toBe('detail');
+      expect((detailRule.callback as any).rank).not.toBeUndefined();
+    });
+
+    it('should be exact match priority', () => {
+      const detail1Rule = srv.getRule('GET', '/users/1');
+      expect((detail1Rule.callback as any).rank).not.toBeUndefined();
+      const detail2Rule = srv.getRule('GET', '/users/2');
+      expect(detail2Rule.callback.name).toBe('/users/:id');
     });
   });
 

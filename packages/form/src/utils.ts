@@ -18,6 +18,7 @@ export const FORMATMAPS = {
   month: { widget: 'date', mode: 'month', format: 'YYYY-MM' },
   uri: { widget: 'upload' },
   email: { widget: 'autocomplete', type: 'email' },
+  color: { widget: 'string', type: 'color' },
   '': { widget: 'string' },
 };
 

@@ -1,7 +1,0 @@
-@import '~@delon/theme/styles/default';
-
-:host {
-  ::ng-deep {
-  }
-}
-

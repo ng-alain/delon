@@ -11,5 +11,5 @@ module: AdGlobalFooterModule
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-links | 链接数据 | `array<{ title: string, href: string, blankTarget?: boolean }>` | -
-copyright | 版权信息 | `TemplateRef` | -
+`[links]` | 链接数据 | `array<{ title: string, href: string, blankTarget?: boolean }>` | -
+`[copyright]` | 版权信息 | `TemplateRef` | -

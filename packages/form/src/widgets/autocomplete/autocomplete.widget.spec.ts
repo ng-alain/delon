@@ -42,7 +42,7 @@ describe('form: widget: autocomplete', () => {
           .checkCount('nz-auto-option', data.length)
           .click('nz-auto-option')
           .checkValue('a', `aaa`)
-          .asyncEnd(50);
+          .asyncEnd(500);
       }),
     );
     it('with async data', () => {
@@ -111,7 +111,7 @@ describe('form: widget: autocomplete', () => {
           .checkCount('nz-auto-option', 1)
           .typeChar('a11')
           .checkCount('nz-auto-option', 1)
-          .asyncEnd(50);
+          .asyncEnd(500);
       }),
     );
   });

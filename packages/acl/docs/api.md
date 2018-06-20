@@ -10,8 +10,8 @@ type: Documents
 
 | 方法 | 说明 |
 | --- | --- |
-| `change` | 监听ACL变更通知 |
-| `data` | 获取所有ACL数据 |
+| `[change]` | 监听ACL变更通知 |
+| `[data]` | 获取所有ACL数据 |
 | `setFull(val: boolean)` | 标识当前用户为全量，即不受限 |
 | `set(value: ACLType)` | 设置当前用户角色或权限能力（会先清除所有） |
 | `setRole(roles: string[])` | 设置当前用户角色（会先清除所有） |
@@ -28,6 +28,6 @@ type: Documents
 
 | 属性 | 类型 | 说明 | 默认 |
 | --- | --- | --- | --- |
-| `role` | `string[]` | 角色 | - |
-| `ability` | `number[], string[]` | 权限点 | - |
-| `mode` | `allOf, oneOf` | `allOf` 表示必须满足所有角色或权限点数组算有效<br>`oneOf` 表示只须满足角色或权限点数组中的一项算有效 | `oneOf` |
+| `[role]` | `string[]` | 角色 | - |
+| `[ability]` | `number[], string[]` | 权限点 | - |
+| `[mode]` | `allOf, oneOf` | `allOf` 表示必须满足所有角色或权限点数组算有效<br>`oneOf` 表示只须满足角色或权限点数组中的一项算有效 | `oneOf` |

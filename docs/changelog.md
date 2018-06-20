@@ -6,6 +6,41 @@ title:
 type: Other
 ---
 
+### 1.1.1
+
+`2018-6-15`
+
+- @delon/abc
+  - 修复 `reuse-tab` 右键无法打开问题，[#104](https://github.com/cipchk/delon/issues/104)
+
+### 1.1.0
+
+`2018-6-15`
+
+- 同步 ng-zorro-antd `1.0.0`：可移除 `package.json` 的 `rxjs-compat`，[70c905](https://github.com/cipchk/ng-alain/commit/70c9058ac08a738a78d31b84d07a12fdb4671593)
+- @delon/theme
+  - 新增按钮与按钮、按钮与气泡确认框、气泡确认框与气泡确认框之间的小号间距
+  - 新增 `width-[0-10]` 百分比宽度
+- @delon/abc
+  - 增加 `simple-html-form` 新组件，[#498](https://github.com/cipchk/ng-alain/issues/498)
+  - `simple-table`
+    - **BREAKING CHANGES** 移除过期列描述属性 `if`，[#503](https://github.com/cipchk/ng-alain/issues/503)
+    - 新增 `showPagination` 可全局配置，[#96](https://github.com/cipchk/delon/issues/96)
+    - 新增列描述类型 `tag`
+  - 新增 `down-file` 支持 `content-disposition`
+  - 新增 `ReuseTabService` 类 `replace` 方法，用于替换关闭当前路由并导航新路由，[#99](https://github.com/cipchk/delon/issues/99)
+  - 修复 `pipe` 无效图例数据，[#512](https://github.com/cipchk/ng-alain/issues/512) [@kiyonlin](https://github.com/kiyonlin)
+  - 修复 `desc-list` 相同组件间的间距
+- @delon/form
+  - 新增 `format` 支持 `id-card`、`mobile`、`color` 类型，[#502](https://github.com/cipchk/ng-alain/issues/502)
+- @delon/mock
+  - 修复完全匹配优先，[#508](https://github.com/cipchk/ng-alain/issues/508)
+- Schematics
+  - 新增 `empty` 空组件页
+  - 取消默认采用淘宝 npm，[#100](https://github.com/cipchk/delon/issues/100)
+  - 修复部分细节
+- 优化API文档站，[#515](https://github.com/cipchk/ng-alain/issues/515) [@hejinzhi](https://github.com/hejinzhi)
+
 ### 1.0.8
 
 `2018-6-10`

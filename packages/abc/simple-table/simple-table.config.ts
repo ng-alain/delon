@@ -20,6 +20,10 @@ export class AdSimpleTableConfig {
    */
   size?: 'small' | 'middle' | 'default';
   /**
+   * 是否显示分页器
+   */
+  showPagination?: boolean;
+  /**
    * 是否显示pagination中改变页数
    */
   showSizeChanger?: boolean;

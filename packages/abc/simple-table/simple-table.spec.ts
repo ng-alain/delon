@@ -32,6 +32,7 @@ import {
   SimpleTableMultiSort,
   SimpleTableData,
   SimpleTableBadge,
+  SimpleTableTag,
 } from './interface';
 import { AdSimpleTableModule } from './simple-table.module';
 import { SimpleTableComponent } from './simple-table.component';
@@ -128,9 +129,7 @@ describe('abc: simple-table', () => {
     context = dl.componentInstance;
     context.data = deepCopy(USERS);
     if (other.minColumn) {
-      context.columns = [
-        { title: '', index: 'id' }
-      ];
+      context.columns = [{ title: '', index: 'id' }];
     }
     page = new PageObject();
   }
@@ -309,9 +308,16 @@ describe('abc: simple-table', () => {
           it('should be navigate url when click is string value', () => {
             const router = injector.get(Router);
             spyOn(router, 'navigateByUrl');
-            context.data = [ { link: '/a' } ];
+            context.data = [{ link: '/a' }];
             page
-              .newColumn([{ title: '', index: 'link', type: 'link', click: (item: any) => item.link }])
+              .newColumn([
+                {
+                  title: '',
+                  index: 'link',
+                  type: 'link',
+                  click: (item: any) => item.link,
+                },
+              ])
               .clickCell('a', 1, 1);
             expect(router.navigateByUrl).toHaveBeenCalled();
           });
@@ -323,10 +329,11 @@ describe('abc: simple-table', () => {
           });
           it('should not render img when is empty data', () => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
-            context.data = [ { img: MOCKIMG }, { img: '' } ];
-            page.newColumn(columns as any)
-                .expectCell('', 1, 1, 'img')
-                .expectCell(null, 2, 1, 'img');
+            context.data = [{ img: MOCKIMG }, { img: '' }];
+            page
+              .newColumn(columns as any)
+              .expectCell('', 1, 1, 'img')
+              .expectCell(null, 2, 1, 'img');
           });
         });
         describe('with currency', () => {
@@ -431,13 +438,36 @@ describe('abc: simple-table', () => {
         };
         it(`should be render badge`, () => {
           page
-            .newColumn([{ title: '', index: 'status', type: 'badge', badge: STATUS }])
+            .newColumn([
+              { title: '', index: 'status', type: 'badge', badge: STATUS },
+            ])
             .expectElCount('.ant-badge', PS);
         });
         it(`should be render text when badge is undefined`, () => {
           page
             .newColumn([{ title: '', index: 'status', type: 'badge' }])
             .expectElCount('.ant-badge', 0);
+        });
+      });
+      describe('with tag', () => {
+        const STATUS: SimpleTableTag = {
+          1: { text: 'Success', color: 'success' },
+          2: { text: 'Error', color: 'error' },
+          3: { text: 'Processing', color: 'processing' },
+          4: { text: 'Default', color: 'default' },
+          5: { text: 'Warning', color: 'warning' },
+        };
+        it(`should be render tag`, () => {
+          page
+            .newColumn([
+              { title: '', index: 'status', type: 'tag', tag: STATUS },
+            ])
+            .expectElCount('.ant-tag', PS);
+        });
+        it(`should be render text when tag is undefined`, () => {
+          page
+            .newColumn([{ title: '', index: 'status', type: 'tag' }])
+            .expectElCount('.ant-tag', 0);
         });
       });
       describe('[other]', () => {
@@ -531,31 +561,20 @@ describe('abc: simple-table', () => {
               ],
             },
           ];
-          page.newColumn(columns)
-              .expectElCount('.j-btn-format', PS);
+          page.newColumn(columns).expectElCount('.j-btn-format', PS);
         });
         describe('[condition]', () => {
           it('should be hide menu in first row', () => {
             const columns: SimpleTableColumn[] = [
               {
                 title: '',
-                buttons: [ { text: 'a', iif: (item: any) => item.id !== 1 } ]
+                buttons: [{ text: 'a', iif: (item: any) => item.id !== 1 }],
               },
             ];
-            page.newColumn(columns)
-                .expectCell(null, 1, 1, 'a')
-                .expectCell('a', 2, 1, 'a');
-          });
-          it('###deprecated### if compose', () => {
-            const columns: SimpleTableColumn[] = [
-              {
-                title: '',
-                buttons: [ { text: 'a', if: (item: any) => item.id !== 1 } ]
-              },
-            ];
-            page.newColumn(columns)
-                .expectCell(null, 1, 1, 'a')
-                .expectCell('a', 2, 1, 'a');
+            page
+              .newColumn(columns)
+              .expectCell(null, 1, 1, 'a')
+              .expectCell('a', 2, 1, 'a');
           });
         });
         describe('[events]', () => {
@@ -563,7 +582,7 @@ describe('abc: simple-table', () => {
             const columns: SimpleTableColumn[] = [
               {
                 title: '',
-                buttons: [ { text: 'a', click: 'reload' } ]
+                buttons: [{ text: 'a', click: 'reload' }],
               },
             ];
             spyOn(comp, 'reload');
@@ -576,7 +595,7 @@ describe('abc: simple-table', () => {
             const columns: SimpleTableColumn[] = [
               {
                 title: '',
-                buttons: [ { text: 'a', click: 'load' } ]
+                buttons: [{ text: 'a', click: 'load' }],
               },
             ];
             spyOn(comp, 'load');
@@ -585,50 +604,103 @@ describe('abc: simple-table', () => {
             page.clickCell('a');
             expect(comp.load).toHaveBeenCalled();
           });
-          it('#modal', () => {
-            const columns: SimpleTableColumn[] = [
-              {
-                title: '',
-                buttons: [ { text: 'a', type: 'modal', click: jasmine.createSpy() } ]
-              },
-            ];
-            const modalHelp = injector.get(ModalHelper);
-            const mock$ = new Subject();
-            spyOn(modalHelp, 'open').and.callFake(() => mock$);
-            page.newColumn(columns);
-            expect(modalHelp.open).not.toHaveBeenCalled();
-            page.clickCell('a');
-            expect(modalHelp.open).toHaveBeenCalled();
-            expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
-            mock$.next({});
-            expect(columns[0].buttons[0].click).toHaveBeenCalled();
-            mock$.unsubscribe();
-          });
-          it('#static', () => {
-            const columns: SimpleTableColumn[] = [
-              {
-                title: '',
-                buttons: [ { text: 'a', type: 'static', click: jasmine.createSpy(), params: (record: any) => ({ aa: 1 }) } ]
-              },
-            ];
-            const modalHelp = injector.get(ModalHelper);
-            const mock$ = new Subject();
-            spyOn(modalHelp, 'static').and.callFake(() => mock$);
-            page.newColumn(columns);
-            expect(modalHelp.static).not.toHaveBeenCalled();
-            page.clickCell('a');
-            expect(modalHelp.static).toHaveBeenCalled();
-            expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
-            mock$.next({});
-            expect(columns[0].buttons[0].click).toHaveBeenCalled();
-            mock$.unsubscribe();
+          describe('#modal', () => {
+            it('#modal', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    { text: 'a', type: 'modal', click: jasmine.createSpy() },
+                  ],
+                },
+              ];
+              const modalHelp = injector.get(ModalHelper);
+              const mock$ = new Subject();
+              spyOn(modalHelp, 'create').and.callFake(() => mock$);
+              page.newColumn(columns);
+              expect(modalHelp.create).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.create).toHaveBeenCalled();
+              expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons[0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+            });
+            it('#static', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    {
+                      text: 'a',
+                      type: 'static',
+                      click: jasmine.createSpy(),
+                      params: (record: any) => ({ aa: 1 }),
+                    },
+                  ],
+                },
+              ];
+              const modalHelp = injector.get(ModalHelper);
+              const mock$ = new Subject();
+              spyOn(modalHelp, 'createStatic').and.callFake(() => mock$);
+              page.newColumn(columns);
+              expect(modalHelp.createStatic).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.createStatic).toHaveBeenCalled();
+              expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons[0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+            });
+            it('[deprecated] #size', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    { text: 'a', type: 'modal', click: jasmine.createSpy(), size: 'sm' },
+                  ],
+                },
+              ];
+              const modalHelp = injector.get(ModalHelper);
+              const mock$ = new Subject();
+              spyOn(modalHelp, 'create').and.callFake(() => mock$);
+              page.newColumn(columns);
+              expect(modalHelp.create).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.create).toHaveBeenCalled();
+              expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons[0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+            });
+            it('[deprecated] #modalOptions', () => {
+              const columns: SimpleTableColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    { text: 'a', type: 'modal', click: jasmine.createSpy(), modalOptions: {} },
+                  ],
+                },
+              ];
+              const modalHelp = injector.get(ModalHelper);
+              const mock$ = new Subject();
+              spyOn(modalHelp, 'create').and.callFake(() => mock$);
+              page.newColumn(columns);
+              expect(modalHelp.create).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.create).toHaveBeenCalled();
+              expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons[0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+            });
           });
           describe('#link', () => {
             it('should be trigger click', () => {
               const columns: SimpleTableColumn[] = [
                 {
                   title: '',
-                  buttons: [ { text: 'a', type: 'link', click: () => null } ]
+                  buttons: [{ text: 'a', type: 'link', click: () => null }],
                 },
               ];
               const router = injector.get(Router);
@@ -642,7 +714,9 @@ describe('abc: simple-table', () => {
               const columns: SimpleTableColumn[] = [
                 {
                   title: '',
-                  buttons: [ { text: 'a', type: 'link', click: (item: any) => '/a' } ]
+                  buttons: [
+                    { text: 'a', type: 'link', click: (item: any) => '/a' },
+                  ],
                 },
               ];
               const router = injector.get(Router);
@@ -659,7 +733,7 @@ describe('abc: simple-table', () => {
         it('should be fixed left column', () => {
           page.newColumn([
             { title: '1', index: 'id', fixed: 'left', width: '100px' },
-            { title: '2', index: 'id', fixed: 'left', width: '100px' }
+            { title: '2', index: 'id', fixed: 'left', width: '100px' },
           ]);
           expect(page.getCell(1, 1).style.left).toBe('0px');
           expect(page.getCell(1, 2).style.left).toBe('100px');
@@ -667,7 +741,7 @@ describe('abc: simple-table', () => {
         it('should be fixed right column', () => {
           page.newColumn([
             { title: '1', index: 'id', fixed: 'right', width: '100px' },
-            { title: '2', index: 'id', fixed: 'right', width: '100px' }
+            { title: '2', index: 'id', fixed: 'right', width: '100px' },
           ]);
           expect(page.getCell(1, 1).style.right).toBe('100px');
           expect(page.getCell(1, 2).style.right).toBe('0px');
@@ -680,7 +754,10 @@ describe('abc: simple-table', () => {
       it('with true', () => {
         context.showTotal = true;
         fixture.detectChanges();
-        page.expectElContent('.ant-pagination-total-text', `共 ${DEFAULTCOUNT} 条`);
+        page.expectElContent(
+          '.ant-pagination-total-text',
+          `共 ${DEFAULTCOUNT} 条`,
+        );
       });
       it('with false', () => {
         context.showTotal = false;
@@ -692,7 +769,10 @@ describe('abc: simple-table', () => {
         context.ps = 3;
         context.showTotal = `{{total}}/{{range[0]}}/{{range[1]}}`;
         fixture.detectChanges();
-        page.expectElContent('.ant-pagination-total-text', `${DEFAULTCOUNT}/${comp.pi}/${comp.ps}`);
+        page.expectElContent(
+          '.ant-pagination-total-text',
+          `${DEFAULTCOUNT}/${comp.pi}/${comp.ps}`,
+        );
       });
     });
 
@@ -723,7 +803,7 @@ describe('abc: simple-table', () => {
 
     describe('#pagePlacement', () => {
       beforeEach(() => genModule({ minColumn: true }));
-      [ 'left', 'center', 'right' ].forEach(pos => {
+      ['left', 'center', 'right'].forEach(pos => {
         it(`with ${pos}`, () => {
           context.pagePlacement = pos as any;
           fixture.detectChanges();
@@ -769,7 +849,7 @@ describe('abc: simple-table', () => {
 
     describe('#pagePlacement', () => {
       beforeEach(() => genModule({ minColumn: true }));
-      [ 'left', 'center', 'right' ].forEach(pos => {
+      ['left', 'center', 'right'].forEach(pos => {
         it(`with ${pos}`, () => {
           context.pagePlacement = pos as any;
           fixture.detectChanges();
@@ -862,7 +942,9 @@ describe('abc: simple-table', () => {
           fixture.detectChanges();
           page.expectDataTotal(URLTOTAL);
           page.go(2);
-          httpMock.expectOne(w => true).flush({ list: genData(1), total: URLTOTAL });
+          httpMock
+            .expectOne(w => true)
+            .flush({ list: genData(1), total: URLTOTAL });
           fixture.detectChanges();
           page.expectCurrentPageTotal(1);
         });
@@ -915,17 +997,28 @@ describe('abc: simple-table', () => {
       });
       describe('#sort', () => {
         describe('#multiSort', () => {
-          beforeEach(() => context.columns = [
-            { title: '', index: 'index', sortKey: 's1', sort: 'ascend', sorter: () => true },
-            { title: '', index: 'index', sortKey: 's2', sort: 'descend', sorter: () => true }
-          ]);
+          beforeEach(() =>
+            (context.columns = [
+              {
+                title: '',
+                index: 'index',
+                sortKey: 's1',
+                sort: 'ascend',
+                sorter: () => true,
+              },
+              {
+                title: '',
+                index: 'index',
+                sortKey: 's2',
+                sort: 'descend',
+                sorter: () => true,
+              },
+            ]));
           it('should be multiSort', () => {
             context.multiSort = true;
             fixture.detectChanges();
             const h = httpMock.expectOne(w => true) as TestRequest;
-            expect(h.request.urlWithParams).toContain(
-              's1=ascend&s2=descend',
-            );
+            expect(h.request.urlWithParams).toContain('s1=ascend&s2=descend');
           });
           describe('when using SimpleTableMultiSort', () => {
             it('should combine values', () => {
@@ -939,9 +1032,10 @@ describe('abc: simple-table', () => {
           });
         });
         describe('#sortReName', () => {
-          beforeEach(() => context.columns = [
-            { title: '', index: 's1', sort: 'ascend', sorter: () => true },
-          ]);
+          beforeEach(() =>
+            (context.columns = [
+              { title: '', index: 's1', sort: 'ascend', sorter: () => true },
+            ]));
           it('should used re-name value', () => {
             context.sortReName = { ascend: 'asc', descend: 'desc' };
             fixture.detectChanges();
@@ -951,62 +1045,107 @@ describe('abc: simple-table', () => {
         });
       });
       describe('#filter', () => {
-        const columns = [ { title: '', index: 'id', filters: [ { text: 'f1', value: 'fv1' }, { text: 'f2', value: 'fv2' } ], filter: () => true, filterMultiple: true, filterConfirmText: 'ok', filterClearText: 'reset', filterIcon: 'anticon anticon-aa' }];
+        const columns = [
+          {
+            title: '',
+            index: 'id',
+            filters: [
+              { text: 'f1', value: 'fv1' },
+              { text: 'f2', value: 'fv2' },
+            ],
+            filter: () => true,
+            filterMultiple: true,
+            filterConfirmText: 'ok',
+            filterClearText: 'reset',
+            filterIcon: 'anticon anticon-aa',
+          },
+        ];
         describe('#filterMultiple', () => {
-          beforeEach(fakeAsync(() => {
-            page.newColumn(columns).openDropDownInHead('id');
-            expect(context.filterChange).not.toHaveBeenCalled();
+          beforeEach(
+            fakeAsync(() => {
+              page.newColumn(columns).openDropDownInHead('id');
+              expect(context.filterChange).not.toHaveBeenCalled();
+              // choose first
+              page.click(
+                '.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(1) label',
+              );
+              httpMock.expectOne(w => true).flush({});
+              // choose second
+              page.click(
+                '.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(2) label',
+              );
+              // mock click confirm
+              comp.filterConfirm(comp._columns[0]);
+              fixture.detectChanges();
+              const h = httpMock.expectOne(w => true) as TestRequest;
+              expect(h.request.urlWithParams).toContain(`id=fv1,fv2`);
+              page.asyncEnd();
+            }),
+          );
+          it(
+            'should be send filter values in request querystring',
+            fakeAsync(() => {
+              page.asyncEnd();
+            }),
+          );
+          it(
+            'should be clear filter',
+            fakeAsync(() => {
+              // mock click confirm
+              comp.filterClear(comp._columns[0]);
+              fixture.detectChanges();
+              const h = httpMock.expectOne(w => true) as TestRequest;
+              expect(h.request.urlWithParams).not.toContain(`id=fv1,fv2`);
+              page.asyncEnd();
+            }),
+          );
+        });
+        it(
+          'should used re-name keys',
+          fakeAsync(() => {
+            const c = deepCopy(columns) as SimpleTableColumn[];
+            c[0].filterReName = (
+              list: SimpleTableFilter[],
+              col: SimpleTableColumn,
+            ) => ({ a: 1 });
+            page.newColumn(c).openDropDownInHead('id');
             // choose first
-            page.click('.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(1) label');
+            page.click(
+              '.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(1) label',
+            );
             httpMock.expectOne(w => true).flush({});
-            // choose second
-            page.click('.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(2) label');
             // mock click confirm
             comp.filterConfirm(comp._columns[0]);
             fixture.detectChanges();
             const h = httpMock.expectOne(w => true) as TestRequest;
-            expect(h.request.urlWithParams).toContain(`id=fv1,fv2`);
+            expect(h.request.urlWithParams).toContain(`a=1`);
             page.asyncEnd();
-          }));
-          it('should be send filter values in request querystring', fakeAsync(() => {
+          }),
+        );
+        it(
+          'should only filter one item when filterMultiple with false',
+          fakeAsync(() => {
+            const c = deepCopy(columns) as SimpleTableColumn[];
+            c[0].filterMultiple = false;
+            page.newColumn(c).openDropDownInHead('id');
+            // choose first
+            page.click(
+              '.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(1) label',
+            );
+            httpMock.expectOne(w => true).flush({});
+            expect(comp._columns[0].filters.filter(w => w.checked).length).toBe(
+              1,
+            );
+            // choose second
+            page.click(
+              '.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(2) label',
+            );
+            expect(comp._columns[0].filters.filter(w => w.checked).length).toBe(
+              1,
+            );
             page.asyncEnd();
-          }));
-          it('should be clear filter', fakeAsync(() => {
-            // mock click confirm
-            comp.filterClear(comp._columns[0]);
-            fixture.detectChanges();
-            const h = httpMock.expectOne(w => true) as TestRequest;
-            expect(h.request.urlWithParams).not.toContain(`id=fv1,fv2`);
-            page.asyncEnd();
-          }));
-        });
-        it('should used re-name keys', fakeAsync(() => {
-          const c = deepCopy(columns) as SimpleTableColumn[];
-          c[0].filterReName = (list: SimpleTableFilter[], col: SimpleTableColumn) => ({ a: 1 });
-          page.newColumn(c).openDropDownInHead('id');
-          // choose first
-          page.click('.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(1) label');
-          httpMock.expectOne(w => true).flush({});
-          // mock click confirm
-          comp.filterConfirm(comp._columns[0]);
-          fixture.detectChanges();
-          const h = httpMock.expectOne(w => true) as TestRequest;
-          expect(h.request.urlWithParams).toContain(`a=1`);
-          page.asyncEnd();
-        }));
-        it('should only filter one item when filterMultiple with false', fakeAsync(() => {
-          const c = deepCopy(columns) as SimpleTableColumn[];
-          c[0].filterMultiple = false;
-          page.newColumn(c).openDropDownInHead('id');
-          // choose first
-          page.click('.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(1) label');
-          httpMock.expectOne(w => true).flush({});
-          expect(comp._columns[0].filters.filter(w => w.checked).length).toBe(1);
-          // choose second
-          page.click('.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(2) label');
-          expect(comp._columns[0].filters.filter(w => w.checked).length).toBe(1);
-          page.asyncEnd();
-        }));
+          }),
+        );
       });
     });
     describe('with array', () => {
@@ -1014,7 +1153,10 @@ describe('abc: simple-table', () => {
         it('should disabled call when is ajax data', () => {
           context.data = '/';
           fixture.detectChanges();
-          injector.get(HttpTestingController).expectOne(w => true).flush({ list: [] });
+          injector
+            .get(HttpTestingController)
+            .expectOne(w => true)
+            .flush({ list: [] });
           fixture.detectChanges();
           page.expectCurrentPageTotal(0);
           comp._genData(true);
@@ -1034,9 +1176,10 @@ describe('abc: simple-table', () => {
           context.data = obs$;
           fixture.detectChanges();
           expect(context.change).not.toHaveBeenCalled();
-          page.expectCurrentPageTotal(PS)
-              .go(2)
-              .expectCurrentPageTotal(total - PS);
+          page
+            .expectCurrentPageTotal(PS)
+            .go(2)
+            .expectCurrentPageTotal(total - PS);
           expect(context.change).toHaveBeenCalled();
         });
         it('should first unsubscribe when changed', () => {
@@ -1050,15 +1193,29 @@ describe('abc: simple-table', () => {
       });
       describe('#frontPagination', () => {
         // `true` 由 `simple-table` 根据 `data` 长度受控分页，包括：排序、过滤等
-        it('with true', () => {
-          context.frontPagination = true;
-          context.pi = 1;
-          context.ps = 3;
-          context.data = genData(10);
-          fixture.detectChanges();
-          page.expectCurrentPageTotal(3) // 当前页多少条
+        describe('with true', () => {
+          beforeEach(() => context.frontPagination = true);
+          it('should be control paged by data', () => {
+            context.pi = 1;
+            context.ps = 3;
+            context.data = genData(10);
+            fixture.detectChanges();
+            page
+              .expectCurrentPageTotal(3) // 当前页多少条
               .expectDataTotal(10) // 总数据量
               .expectTotalPage(4); // 总页数
+          });
+          it(`should limit the maximum page total`, () => {
+            const ps = 5;
+            const total = 11;
+            const maxPageIndex = Math.ceil(total / ps);
+            context.data = genData(total);
+            context.ps = ps;
+            context.pi = maxPageIndex + 1;
+            context.frontPagination = true;
+            fixture.detectChanges();
+            page.expectCompDataPi(maxPageIndex);
+          });
         });
         // `false` 由用户通过 `total` 和 `data` 参数受控分页，并维护 `(change)` 当分页变更时重新加载数据
         describe('with false', () => {
@@ -1106,35 +1263,46 @@ describe('abc: simple-table', () => {
             context.total = 0;
             fixture.detectChanges();
             page
-              .expectCurrentPageTotal(ps) // 当前页多少条
+              .expectCurrentPageTotal(curTotal) // 当前页应为数据总量
               .expectTotalPage(2); // 总页数
-          });
-          it(`should limit the maximum page total`, () => {
-            context.data = genData(total);
-            context.pi = maxPageIndex + 1;
-            fixture.detectChanges();
-            page.expectCompDataPi(maxPageIndex);
           });
         });
       });
       describe('#sort', () => {
         it('should be ascend id property', () => {
-          page.newColumn([ { title: '', index: 'id', sort: 'ascend', sorter: (a, b) => a.id - b.id } ])
-              .expectData(1, 'id', 1);
+          page
+            .newColumn([
+              {
+                title: '',
+                index: 'id',
+                sort: 'ascend',
+                sorter: (a, b) => a.id - b.id,
+              },
+            ])
+            .expectData(1, 'id', 1);
         });
         it('should be descend id property', () => {
-          page.newColumn([ { title: '', index: 'id', sort: 'descend', sorter: (a, b) => a.id - b.id } ])
-              .expectData(1, 'id', DEFAULTCOUNT);
+          page
+            .newColumn([
+              {
+                title: '',
+                index: 'id',
+                sort: 'descend',
+                sorter: (a, b) => a.id - b.id,
+              },
+            ])
+            .expectData(1, 'id', DEFAULTCOUNT);
         });
         it(`sorter property muse be a function`, () => {
-          page.newColumn(<any[]>[ { title: '', index: 'id', sort: 'descend', sorter: 'null' } ])
-              .expectData(1, 'id', 1);
+          page
+            .newColumn(<any[]>[
+              { title: '', index: 'id', sort: 'descend', sorter: 'null' },
+            ])
+            .expectData(1, 'id', 1);
         });
         it('should be alwasy sorting value is zero', () => {
           page
-            .newColumn([
-              { title: 'id', index: 'id', sorter: (a, b) => 0 }
-            ])
+            .newColumn([{ title: 'id', index: 'id', sorter: (a, b) => 0 }])
             .clickHead('id', '.ant-table-column-sorter-down')
             .expectData(1, 'id', 1)
             .clickHead('id', '.ant-table-column-sorter-up')
@@ -1144,7 +1312,7 @@ describe('abc: simple-table', () => {
           page
             .newColumn([
               { title: 'id', index: 'id', sorter: (a, b) => a.id - b.id },
-              { title: 'age', index: 'age', sorter: (a, b) => a.id - b.id }
+              { title: 'age', index: 'age', sorter: (a, b) => a.id - b.id },
             ])
             .clickHead('id', '.ant-table-column-sorter-down')
             .expectData(1, 'id', DEFAULTCOUNT)
@@ -1154,15 +1322,20 @@ describe('abc: simple-table', () => {
         });
         it('should be multi sort', () => {
           context.multiSort = true;
-          page
-            .newColumn([
-              { title: 'id', index: 'id', sorter: (a, b) => a.id - b.id },
-              { title: 'age', index: 'age', sorter: (a, b) => a.id - b.id }
-            ]);
+          page.newColumn([
+            { title: 'id', index: 'id', sorter: (a, b) => a.id - b.id },
+            { title: 'age', index: 'age', sorter: (a, b) => a.id - b.id },
+          ]);
           page.clickHead('id', '.ant-table-column-sorter-down');
-          expect(Object.values(comp._sortMap).filter(item => item.v !== undefined).length).toBe(1);
+          expect(
+            Object.values(comp._sortMap).filter(item => item.v !== undefined)
+              .length,
+          ).toBe(1);
           page.clickHead('age', '.ant-table-column-sorter-up');
-          expect(Object.values(comp._sortMap).filter(item => item.v !== undefined).length).toBe(2);
+          expect(
+            Object.values(comp._sortMap).filter(item => item.v !== undefined)
+              .length,
+          ).toBe(2);
         });
       });
       describe('#filter', () => {
@@ -1170,21 +1343,30 @@ describe('abc: simple-table', () => {
           {
             title: '',
             index: 'id',
-            filters: [ { text: 'name 1', value: 'name 1' }, { text: 'name 2', value: 'name 2' } ],
-            filter: (filter: SimpleTableFilter, record: any) => record.name.indexOf(filter.value) === 0
-          }
+            filters: [
+              { text: 'name 1', value: 'name 1' },
+              { text: 'name 2', value: 'name 2' },
+            ],
+            filter: (filter: SimpleTableFilter, record: any) =>
+              record.name.indexOf(filter.value) === 0,
+          },
         ];
-        it('should only render name 1 data', fakeAsync(() => {
-          page.newColumn(columns).openDropDownInHead('id');
-          // choose first
-          page.click('.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(1) label');
-          page.expectCurrentPageTotal(PS);
-          // mock click confirm
-          comp.filterConfirm(comp._columns[0]);
-          fixture.detectChanges();
-          page.expectCurrentPageTotal(1);
-          page.asyncEnd();
-        }));
+        it(
+          'should only render name 1 data',
+          fakeAsync(() => {
+            page.newColumn(columns).openDropDownInHead('id');
+            // choose first
+            page.click(
+              '.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(1) label',
+            );
+            page.expectCurrentPageTotal(PS);
+            // mock click confirm
+            comp.filterConfirm(comp._columns[0]);
+            fixture.detectChanges();
+            page.expectCurrentPageTotal(1);
+            page.asyncEnd();
+          }),
+        );
       });
     });
     describe('[logic]', () => {
@@ -1286,7 +1468,7 @@ describe('abc: simple-table', () => {
     describe('#export', () => {
       let exportSrv: SimpleTableExport;
       beforeEach(() => {
-        genModule({ minColumn: true, providers: [ SimpleTableExport ] });
+        genModule({ minColumn: true, providers: [SimpleTableExport] });
         fixture.detectChanges();
         exportSrv = comp['exportSrv'];
         spyOn(exportSrv, 'export');
@@ -1321,12 +1503,15 @@ describe('abc: simple-table', () => {
         it('should be specified url', () => {
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export('/test');
-          injector.get(HttpTestingController).expectOne(w => true).flush({ list: [] });
+          injector
+            .get(HttpTestingController)
+            .expectOne(w => true)
+            .flush({ list: [] });
           expect(exportSrv.export).toHaveBeenCalled();
         });
         it('should be specified array data', () => {
           expect(exportSrv.export).not.toHaveBeenCalled();
-          comp.export([], { });
+          comp.export([], {});
           expect(exportSrv.export).toHaveBeenCalled();
         });
       });
@@ -1556,7 +1741,9 @@ describe('abc: simple-table', () => {
     }
     expectTotalPage(value: number): this {
       const a = dl.query(By.css('nz-pagination'));
-      expect((a.componentInstance as NzPaginationComponent).lastIndex).toBe(value);
+      expect((a.componentInstance as NzPaginationComponent).lastIndex).toBe(
+        value,
+      );
       return this;
     }
     expectCurrentPageTotal(value: number): this {
@@ -1592,7 +1779,7 @@ describe('abc: simple-table', () => {
     openDropDownInHead(nams: string): this {
       dispatchDropDown(
         dl.query(By.css(`.ant-table-thead th[data-col="${nams}"]`)),
-        'click'
+        'click',
       );
       fixture.detectChanges();
       return this;
@@ -1600,7 +1787,7 @@ describe('abc: simple-table', () => {
     openDropDownInRow(row: number = 1) {
       dispatchDropDown(
         dl.query(By.css(`.ad-st-body tr[data-index="${row - 1}"]`)),
-        'mouseleave'
+        'mouseleave',
       );
       fixture.detectChanges();
       return this;

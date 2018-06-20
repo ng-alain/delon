@@ -14,7 +14,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.lazy.load([ `//cdn.bootcss.com/xlsx/0.11.17/xlsx.full.min.js` ]).then(() => {
-      // ToDo
+      // do something
     });
   }
 }

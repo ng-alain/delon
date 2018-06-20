@@ -32,7 +32,7 @@
     "npm": {
       "type": "boolean",
       "description": "Generates .npmrc proxy to taobao.",
-      "default": true
+      "default": false
     },
     "yarn": {
       "type": "boolean",
