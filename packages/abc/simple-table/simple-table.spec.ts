@@ -931,6 +931,14 @@ describe('abc: simple-table', () => {
           expect(h.request.params.has('pi')).toBe(false);
           expect(h.request.params.has('pageindex')).toBe(true);
         });
+        it('should be change paramenter pi to pi-1', () => {
+          context.zeroIndexedOnPage = true;
+          context.pi = 1;
+          fixture.detectChanges();
+          const h = httpMock.expectOne(w => true) as TestRequest;
+          expect(context.comp.zeroIndexedOnPage).toBe(true);
+          expect(h.request.params.get('pi').toString()).toBe((context.pi - 1).toString());
+        });
         it('should be empty array when invalid list', () => {
           fixture.detectChanges();
           httpMock.expectOne(w => true).flush({ list: 'aa' });
@@ -1805,6 +1813,7 @@ describe('abc: simple-table', () => {
         [data]="data" [extraParams]="extraParams"
         [reqMethod]="reqMethod" [reqBody]="reqBody" [reqHeaders]="reqHeaders" [reqReName]="reqReName" (reqError)="reqError()"
         [resReName]="resReName"
+        [zeroIndexedOnPage]="zeroIndexedOnPage"
         [columns]="columns"
         [ps]="ps" [pi]="pi" [total]="total"
         [showPagination]="showPagination"
@@ -1837,6 +1846,7 @@ class TestComponent {
   reqBody: any;
   reqHeaders: any;
   reqReName: Object;
+  zeroIndexedOnPage = false;
   reqError() {}
   resReName: ResReNameType;
   ps = PS;

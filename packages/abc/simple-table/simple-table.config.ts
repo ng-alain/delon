@@ -60,6 +60,10 @@ export class AdSimpleTableConfig {
    */
   reqReName?: Object;
   /**
+   * 请求参数 `pi` 是否采用 0 基索引
+   */
+  zeroIndexedOnPage?: boolean;
+  /**
    * 重命名返回参数 `total`、`list`，例如：`{ total: 'Total' }` Total 会被当作 `total`
    */
   resReName?: { total?: string | string[]; list?: string | string[] };
