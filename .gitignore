@@ -12,3 +12,4 @@ publish
 debug.log
 yarn-error.log
 /yarn.lock
+*.iml
