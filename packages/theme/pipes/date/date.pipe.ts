@@ -7,6 +7,7 @@ import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
  */
 @Pipe({ name: '_date' })
 export class DatePipe implements PipeTransform {
+
   transform(
     value: Date | string | number,
     formatString: string = 'YYYY-MM-DD HH:mm',
@@ -17,6 +18,12 @@ export class DatePipe implements PipeTransform {
           locale: (window as any).__locale__,
         });
       }
+
+      //support timestamp of string type
+      if (typeof value === 'string' && /^\d+$/.test(value)){
+        value = Number(value);
+      }
+
       return format(value, formatString);
     } else {
       return '';
