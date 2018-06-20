@@ -936,7 +936,7 @@ describe('abc: simple-table', () => {
           context.pi = 1;
           fixture.detectChanges();
           const h = httpMock.expectOne(w => true) as TestRequest;
-          expect(h.request.params.get('pi')).toBe((context.pi - 1).toString());
+          expect(h.request.params.get('pi').toString()).toBe((context.pi - 1).toString());
         });
         it('should be empty array when invalid list', () => {
           fixture.detectChanges();
