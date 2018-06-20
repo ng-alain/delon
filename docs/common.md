@@ -145,9 +145,9 @@ registerLocaleData(localeZhHans);
 
 ### 日期 _date
 
-基于 moment 日期格式化，显示更多细节参考 [momentjs](//momentjs.com/docs/#/displaying)
+基于 date-fns 日期格式化，显示更多细节参考 [date-fns](https://date-fns.org/v1.29.0/docs/format)（国内镜像：[moment format](http://momentjs.cn/docs/#/displaying/format/)）
 
-最大好处是 moment 支持不同种类的时间格式，例如：
+最大好处是 date-fns 支持不同种类的时间格式，例如：
 
 + 2017-08-24 18:08:20
 + 2017-08-24

@@ -146,10 +146,16 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       this.doc.documentElement.scrollTop,
       this.bodyEl.scrollTop,
     );
-    const top = rect.top + scrollTop,
-      left = rect.right + 5;
-    node.style.top = `${top}px`;
-    node.style.left = `${left}px`;
+    const docHeight = Math.max(
+      this.doc.documentElement.clientHeight,
+      this.bodyEl.clientHeight,
+    );
+    let offsetHeight = 0;
+    if (docHeight < rect.top + node.clientHeight) {
+      offsetHeight = rect.top + node.clientHeight - docHeight;
+    }
+    node.style.top = `${rect.top + scrollTop - offsetHeight}px`;
+    node.style.left = `${rect.right + 5}px`;
   }
 
   showSubMenu(e: MouseEvent, item: Nav) {
@@ -198,9 +204,11 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   private route$: Subscription;
   private installUnderPad() {
     if (!this.autoCloseUnderPad) return;
-    this.route$ = <any>this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe(s => this.underPad());
+    this.route$ = <any>(
+      this.router.events
+        .pipe(filter(e => e instanceof NavigationEnd))
+        .subscribe(s => this.underPad())
+    );
     this.underPad();
   }
 

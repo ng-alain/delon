@@ -1,10 +1,4 @@
-import {
-  Component,
-  DebugElement,
-  TemplateRef,
-  ViewChild,
-  Injector,
-} from '@angular/core';
+import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import {
   ComponentFixture,
   TestBed,
@@ -13,7 +7,7 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule, Router } from '@angular/router';
-import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 
 import { AlainThemeModule, MenuService, SettingsService } from '@delon/theme';
 import { deepCopy } from '@delon/util';
@@ -49,6 +43,7 @@ describe('abc: sidebar-nav', () => {
   let setSrv: SettingsService;
   let menuSrv: MenuService;
   let page: PageObject;
+  let doc: Document;
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
@@ -70,6 +65,7 @@ describe('abc: sidebar-nav', () => {
     router = injector.get(Router);
     setSrv = injector.get(SettingsService);
     menuSrv = injector.get(MenuService);
+    doc = injector.get(DOCUMENT);
     menuSrv.add(deepCopy(MOCKMENUS));
     page = new PageObject();
     if (needMockNavigateByUrl) spyOn(router, 'navigateByUrl');
@@ -77,21 +73,6 @@ describe('abc: sidebar-nav', () => {
   }
 
   afterEach(() => context.comp.ngOnDestroy());
-
-  function getEl<T>(cls: string, body = false) {
-    const el = body
-      ? document.querySelector(cls)
-      : dl.query(By.css(cls))
-        ? dl.query(By.css(cls)).nativeElement
-        : null;
-    return el ? (el as T) : null;
-  }
-
-  function isText(cls: string, value: any) {
-    const el = getEl<HTMLElement>(cls);
-    if (el) return el.innerText.trim();
-    return '';
-  }
 
   describe('[default]', () => {
     it('should be navigate url', () => {
@@ -101,7 +82,7 @@ describe('abc: sidebar-nav', () => {
       menuSrv.add(data);
       expect(context.select).not.toHaveBeenCalled();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
-      const itemEl = getEl<HTMLElement>('.nav-depth1 a');
+      const itemEl = page.getEl<HTMLElement>('.nav-depth1 a');
       itemEl.click();
       fixture.detectChanges();
       expect(context.select).toHaveBeenCalled();
@@ -113,7 +94,7 @@ describe('abc: sidebar-nav', () => {
       const data = deepCopy(MOCKMENUS);
       menuSrv.add(data);
       expect(data[0].children[0]._open).toBeUndefined();
-      const subTitleEl = getEl<HTMLElement>('.nav-sub-title');
+      const subTitleEl = page.getEl<HTMLElement>('.nav-sub-title');
       subTitleEl.click();
       fixture.detectChanges();
       expect(data[0].children[0]._open).toBe(true);
@@ -121,12 +102,12 @@ describe('abc: sidebar-nav', () => {
 
     it('should be reset menu when service is changed', () => {
       createComp();
-      isText('.nav-group-title', MOCKMENUS[0].text);
+      page.checkText('.nav-group-title', MOCKMENUS[0].text);
       const newMenu = deepCopy(MOCKMENUS);
       newMenu[0].text = 'new主导航';
       menuSrv.add(newMenu);
       fixture.detectChanges();
-      isText('.nav-group-title', newMenu[0].text);
+      page.checkText('.nav-group-title', newMenu[0].text);
     });
 
     describe('should be exact highlighting item', () => {
@@ -204,6 +185,13 @@ describe('abc: sidebar-nav', () => {
       it('should be show sub-menu', () => {
         page.showSubMenu();
       });
+      it('should be displayed full submenu', () => {
+        const clientHeight = spyOnProperty(doc.documentElement, 'clientHeight').and.returnValue(0);
+        spyOnProperty(doc.querySelector('body'), 'clientHeight').and.returnValue(0);
+        expect(clientHeight).not.toHaveBeenCalled();
+        page.showSubMenu();
+        expect(clientHeight).toHaveBeenCalled();
+      });
     });
     describe('should be hide sub-menu in floating container', () => {
       it('muse be hide via click menu link', () => {
@@ -233,18 +221,18 @@ describe('abc: sidebar-nav', () => {
         setSrv.layout.collapsed = true;
         fixture.detectChanges();
         page.showSubMenu();
-        getEl<HTMLElement>(floatingShowCls, true).dispatchEvent(
+        page.getEl<HTMLElement>(floatingShowCls, true).dispatchEvent(
           new Event('mouseleave'),
         );
         fixture.detectChanges();
-        expect(getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
+        expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
       });
       it('muse be not hide via click except menu link area', () => {
         createComp();
         setSrv.layout.collapsed = true;
         fixture.detectChanges();
         page.showSubMenu();
-        const containerEl = getEl<HTMLElement>(floatingShowCls, true);
+        const containerEl = page.getEl<HTMLElement>(floatingShowCls, true);
         containerEl.querySelectorAll('li')[1].click();
         fixture.detectChanges();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
@@ -261,7 +249,7 @@ describe('abc: sidebar-nav', () => {
           setSrv.layout.collapsed = true;
           fixture.detectChanges();
           page.showSubMenu();
-          const containerEl = getEl<HTMLElement>(floatingShowCls, true);
+          const containerEl = page.getEl<HTMLElement>(floatingShowCls, true);
           expect(containerEl).not.toBeNull();
           expect(containerEl.querySelector('a').href).toContain(baseHref);
           page.hideSubMenu();
@@ -276,7 +264,7 @@ describe('abc: sidebar-nav', () => {
       page.showSubMenu();
       spyOn(context.comp.floatingEl, 'remove');
       page.hideSubMenu();
-      expect(getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
+      expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
     });
   });
 
@@ -324,14 +312,26 @@ describe('abc: sidebar-nav', () => {
   });
 
   class PageObject {
+    getEl<T>(cls: string, body = false) {
+      const el = body
+        ? document.querySelector(cls)
+        : dl.query(By.css(cls))
+          ? dl.query(By.css(cls)).nativeElement
+          : null;
+      return el ? (el as T) : null;
+    }
+    checkText(cls: string, value: any) {
+      const el = this.getEl<HTMLElement>(cls);
+      expect(el ? el.innerText.trim() : '').toBe(value);
+    }
     /** 期望显示子菜单，默认：`true` */
     showSubMenu(resultExpectShow = true) {
-      let conEl = getEl<HTMLElement>(floatingShowCls, true);
+      let conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       expect(conEl).toBeNull();
-      const subTitleEl = getEl<HTMLElement>('.nav-sub-title');
+      const subTitleEl = this.getEl<HTMLElement>('.nav-sub-title');
       subTitleEl.dispatchEvent(new Event('mouseenter'));
       fixture.detectChanges();
-      conEl = getEl<HTMLElement>(floatingShowCls, true);
+      conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       if (resultExpectShow) {
         expect(conEl).not.toBeNull();
       } else {
@@ -340,11 +340,11 @@ describe('abc: sidebar-nav', () => {
     }
     /** 期望隐藏子菜单，默认：`true` */
     hideSubMenu(resultExpectHide = true) {
-      const containerEl = getEl<HTMLElement>(floatingShowCls, true);
+      const containerEl = this.getEl<HTMLElement>(floatingShowCls, true);
       expect(containerEl).not.toBeNull();
       containerEl.querySelector(resultExpectHide ? 'a' : 'li').click();
       fixture.detectChanges();
-      const conEl = getEl<HTMLElement>(floatingShowCls, true);
+      const conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       if (resultExpectHide) expect(conEl).toBeNull();
       else expect(conEl).not.toBeNull();
     }
