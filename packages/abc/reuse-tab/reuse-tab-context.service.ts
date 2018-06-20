@@ -1,5 +1,9 @@
 import { Injectable, ElementRef } from '@angular/core';
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import {
+  Overlay,
+  OverlayRef,
+  ConnectionPositionPair,
+} from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Subscription, Subject } from 'rxjs';
 
@@ -42,33 +46,20 @@ export class ReuseTabContextService {
         width: 0,
       }),
     });
-    const positionStrategy = this.overlay
-      .position()
-      .connectedTo(
-        fakeElement,
+    const positions = [
+      new ConnectionPositionPair(
         { originX: 'start', originY: 'bottom' },
         { overlayX: 'start', overlayY: 'top' },
-      )
-      .withFallbackPosition(
+      ),
+      new ConnectionPositionPair(
         { originX: 'start', originY: 'top' },
         { overlayX: 'start', overlayY: 'bottom' },
-      )
-      .withFallbackPosition(
-        { originX: 'end', originY: 'top' },
-        { overlayX: 'start', overlayY: 'top' },
-      )
-      .withFallbackPosition(
-        { originX: 'start', originY: 'top' },
-        { overlayX: 'end', overlayY: 'top' },
-      )
-      .withFallbackPosition(
-        { originX: 'end', originY: 'center' },
-        { overlayX: 'start', overlayY: 'center' },
-      )
-      .withFallbackPosition(
-        { originX: 'start', originY: 'center' },
-        { overlayX: 'end', overlayY: 'center' },
-      );
+      ),
+    ];
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(fakeElement)
+      .withPositions(positions);
     this.ref = this.overlay.create({
       positionStrategy,
       panelClass: 'reuse-tab-cm',

@@ -5,7 +5,7 @@ import { SFUISchemaItem } from './schema/ui';
 @Component({
   selector: 'sf-item-wrap',
   template: `
-  <nz-form-item>
+  <nz-form-item [style.width.px]="ui.width">
     <nz-col *ngIf="showTitle" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
       <label [attr.for]="id" [class.ant-form-item-required]="ui._required">
         {{ schema.title }}

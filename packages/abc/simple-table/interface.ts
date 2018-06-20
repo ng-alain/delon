@@ -1,5 +1,5 @@
 import { SimpleTableComponent } from './simple-table.component';
-import { ElementRef, TemplateRef } from '@angular/core';
+import { ModalHelperOptions } from '@delon/theme';
 
 export type CompareFn = ((a: any, b: any) => number);
 
@@ -322,11 +322,19 @@ export interface SimpleTableButton {
    */
   paramName?: string;
   /**
+   * 对话框额外参数
+   */
+  modal?: ModalHelperOptions;
+  /**
    * 对话框大小，默认：`lg`
+   *
+   * @deprecated 使用 `options.size` 替代
    */
   size?: 'sm' | 'lg' | '' | number;
   /**
    * 对话框额外参数，见 [ModalHelper](http://ng-alain.com/docs/service#ModalHelper)
+   *
+   * @deprecated 使用 `options.modalOptions` 替代
    */
   modalOptions?: any;
   /**

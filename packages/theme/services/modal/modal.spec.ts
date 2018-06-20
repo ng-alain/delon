@@ -1,9 +1,7 @@
-import { Injector, Component, OnInit, NgModule } from '@angular/core';
+import { Injector, Component, NgModule } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CommonModule } from '@angular/common';
 import { NzModalService, NzModalRef, NgZorroAntdModule } from 'ng-zorro-antd';
-import { NzMeasureScrollbarService } from 'ng-zorro-antd/src/core/services/nz-measure-scrollbar.service';
 import { ModalHelper } from './modal.helper';
 import { AlainThemeModule } from '../../index';
 
@@ -36,40 +34,92 @@ describe('theme: ModalHelper', () => {
     if (a) a.remove();
   });
 
-  function getParentByClassName(el: Element, cls: string): Element {
-    while (el.parentElement) {
-      el = el.parentElement;
-      if (el.classList.contains(cls)) return el;
-    }
-    return null;
-  }
+  describe('[default]', () => {
+    it('#open', (done: () => void) => {
+      modal
+        .open(TestModalComponent, {
+          ret: 'true',
+        })
+        .subscribe(res => {
+          expect(true).toBeTruthy();
+          done();
+        });
+      fixture.detectChanges();
+    });
 
-  it('#open', (done: () => void) => {
-    modal
-      .open(TestModalComponent, {
-        ret: 'true',
-      })
-      .subscribe(res => {
-        expect(true).toBeTruthy();
-        done();
-      });
-    fixture.detectChanges();
+    it('#open of 100px modal', (done: () => void) => {
+      modal
+        .open(
+          TestModalComponent,
+          {
+            ret: 'true',
+          },
+          100,
+        )
+        .subscribe(res => {
+          expect(true).toBeTruthy();
+          done();
+        });
+      fixture.detectChanges();
+    });
   });
 
-  it('#open of 100px modal', (done: () => void) => {
-    modal
-      .open(
-        TestModalComponent,
-        {
+  describe('#create', () => {
+    it('should be open', (done: () => void) => {
+      modal
+        .create(TestModalComponent, {
           ret: 'true',
-        },
-        100,
-      )
-      .subscribe(res => {
-        expect(true).toBeTruthy();
-        done();
+        })
+        .subscribe(res => {
+          expect(true).toBeTruthy();
+          done();
+        });
+      fixture.detectChanges();
+    });
+    it('should be open a tabset', (done: () => void) => {
+      modal
+        .create(
+          TestModalComponent,
+          {
+            ret: 'true',
+          },
+          {
+            includeTabs: true,
+          },
+        )
+        .subscribe(res => {
+          expect(true).toBeTruthy();
+          done();
+        });
+      fixture.detectChanges();
+      expect(document.querySelector('.modal-include-tabs')).not.toBeNull();
+    });
+    describe('#exact width true', () => {
+      it('should be not trigger subscript when return a undefined value', (done: () => void) => {
+        modal
+          .create(
+            TestModalComponent,
+            {
+              ret: undefined,
+            },
+            {
+              includeTabs: true,
+              exact: true,
+            },
+          )
+          .subscribe(
+            res => {
+              expect(false).toBeTruthy();
+              done();
+            },
+            err => {
+              expect(true).toBeTruthy();
+              done();
+            }
+          );
+        fixture.detectChanges();
       });
-    fixture.detectChanges();
+    });
   });
 
   describe('#static', () => {
@@ -141,6 +191,41 @@ describe('theme: ModalHelper', () => {
         .subscribe(res => {
           fixture.detectChanges();
           expect(res).toBe(1);
+          done();
+        });
+      fixture.detectChanges();
+    });
+  });
+
+  describe('#createStatic', () => {
+    it('should be open', (done: () => void) => {
+      const id = '' + +new Date();
+      modal
+        .createStatic(TestModalComponent, {
+          id,
+          ret: true,
+        })
+        .subscribe(res => {
+          fixture.detectChanges();
+          expect(res).toBe(true);
+          done();
+        });
+      fixture.detectChanges();
+    });
+    it('should be open sm size', (done: () => void) => {
+      const id = '' + +new Date();
+      modal
+        .createStatic(
+          TestModalComponent,
+          {
+            id,
+            ret: 'true',
+          },
+          { size: 'sm' },
+        )
+        .subscribe(res => {
+          fixture.detectChanges();
+          expect(res).toBe('true');
           done();
         });
       fixture.detectChanges();
