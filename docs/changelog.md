@@ -6,6 +6,32 @@ title:
 type: Other
 ---
 
+### 1.1.2
+
+`2018-6-28`
+
+- @delon/theme
+  - **BREAKING CHANGES** 新增 `ModalHelper` 两个新方法 `create` 和 `createStatic`，就逐步替代 `open` 和 `static`（2.0后移除）
+  - 新增模态框 `md`、`xl` 两种大小，涉及 `ModalHelper`、`simpel-table`
+  - 增加 `modal-body-nopadding` 样式，表示模态框内容区域无边距
+- @delon/abc
+  - `resue-tab`
+    - 重构右击菜单过期方法，[#106](https://github.com/cipchk/delon/issues/106)
+    - 新增 `replace` 方法
+  - `simple-table`
+    - **BREAKING CHANGES** 新增列描述按钮 `modal`，将逐步替代 `size` 和 `modalOptions` （2.0后移除）
+    - 新增 `zeroIndexedOnPage` 属性表示从后端请求时使用 `0` 为起始基页码，[#111](https://github.com/cipchk/delon/issues/111) [@pholance](https://github.com/pholance)
+    - 修复静态数据源无法切换分页，[#524](https://github.com/cipchk/ng-alain/issues/524)
+  - 修复 `sidebar-nav` 收缩时底部无法显示完整子菜单问题，[#110](https://github.com/cipchk/delon/issues/110)
+- @delon/form
+  - 增加 `ui.width` 来指定字段元素的大小
+  - 增加 `number` 小部件支持 `placeholder`
+  - 修复 `checkbox` 小部件布局属性受 `ui.grid.span` 污染，采用新属性 `ui.span` 表示各选框布局，[#528](https://github.com/cipchk/ng-alain/issues/528)
+- Schematics
+  - 移除 `ng add` 默认依赖 `rxjs-compat`
+  - 修复 hmr 开发模式若出错时无法自动移除模态框问题
+  - 更友好的 `list` 业务页
+
 ### 1.1.1
 
 `2018-6-15`
