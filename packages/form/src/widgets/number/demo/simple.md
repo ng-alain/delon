@@ -20,16 +20,18 @@ import { SFSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`
+  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
 })
 export class DemoComponent {
-    schema: SFSchema = {
-        properties: {
-            number: { type: 'number', minimum: 18, maximum: 100, multipleOf: 2 },
-            integer: { type: 'integer', default: 10 }
-        }
-    };
-    constructor(public msg: NzMessageService) { }
-    submit(value: any) { this.msg.success(JSON.stringify(value)); }
+  schema: SFSchema = {
+    properties: {
+      number: { type: 'number', minimum: 18, maximum: 100, multipleOf: 2 },
+      integer: { type: 'integer', default: 10 },
+    },
+  };
+  constructor(public msg: NzMessageService) {}
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 }
 ```

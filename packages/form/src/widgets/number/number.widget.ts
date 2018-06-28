@@ -15,7 +15,8 @@ import { ControlWidget } from '../../widget';
       [nzStep]="step"
       [nzFormatter]="formatter"
       [nzParser]="parser"
-      [nzPrecision]="ui.precision">
+      [nzPrecision]="ui.precision"
+      [nzPlaceHolder]="ui.placeholder">
     </nz-input-number>
   </sf-item-wrap>`,
   preserveWhitespaces: false,
