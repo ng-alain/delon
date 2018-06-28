@@ -12,8 +12,8 @@ import { SFSchema } from '@delon/form';
     </ng-template>
   </page-header>
   <nz-card>
-    <sf mode="search" [schema]="searchSchema" [formData]="params" (formSubmit)="st.reset($event)" (formReset)="st.reset(params)"></sf>
-    <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
+    <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
+    <simple-table #st [data]="url" [columns]="columns"></simple-table>
   </nz-card>
   `,<% } else { %>
   templateUrl: './<%= dasherize(name) %>.component.html',<% } if(!inlineStyle) { %><% } else { %>
@@ -22,8 +22,6 @@ import { SFSchema } from '@delon/form';
   changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
 })
 export class <%= componentName %> implements OnInit {
-
-  params: any = {};
   url = `/user`;
   searchSchema: SFSchema = {
     properties: {
@@ -54,7 +52,7 @@ export class <%= componentName %> implements OnInit {
 
   add() {
     // this.modal
-    //   .createStatic(WareEditComponent, { i: { id: 0 } })
+    //   .createStatic(FormEditComponent, { i: { id: 0 } })
     //   .subscribe(() => this.st.reload());
   }
 
