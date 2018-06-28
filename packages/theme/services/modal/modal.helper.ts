@@ -117,7 +117,7 @@ this.NzModalRef.destroy();
       { nzMaskClosable: false },
       options && options.modalOptions,
     );
-    return this.create(comp, params, Object.assign({ modalOptions }, options));
+    return this.create(comp, params, Object.assign({}, options, { modalOptions }));
   }
 
   /**

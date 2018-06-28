@@ -419,13 +419,10 @@ Ant Design 是以 `12px` 为基准字号。
             <td>自定义Modal时非常有效</td>
             <td></td>
         </tr>
-    </tbody>
-    <tbody>
         <tr>
-            <td><code>list-group</code></td>
+            <td><code>.modal-body-nopadding</code></td>
+            <td>内容无内边距</td>
             <td></td>
-            <td>列表组相当于 Bootstrap4。</td>
-            <td>可由 <code>nz-list</code> 替代</td>
         </tr>
     </tbody>
 </table>
