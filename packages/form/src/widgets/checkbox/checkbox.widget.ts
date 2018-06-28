@@ -14,16 +14,18 @@ import { SFSchemaEnum } from '../../schema';
       {{ ui.checkAllText || '全选' }}
     </label>
   </ng-template>
-  <nz-form-item>
-    <nz-form-label *ngIf="data.length > 0" [nzSpan]="label" [nzRequired]="ui._required">
-      {{ schema.title }}
-      <span class="optional">
-        {{ ui.optional }}
-        <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
-          <i nz-tooltip class="anticon anticon-question-circle-o"></i>
-        </nz-tooltip>
-      </span>
-    </nz-form-label>
+  <nz-form-item [style.width.px]="ui.width">
+    <nz-col *ngIf="data.length > 0" [nzSpan]="label" class="ant-form-item-label">
+      <label [attr.for]="id" [class.ant-form-item-required]="ui._required">
+        {{ schema.title }}
+        <span class="optional">
+          {{ ui.optional }}
+          <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
+            <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+          </nz-tooltip>
+        </span>
+      </label>
+    </nz-col>
     <nz-col class="ant-form-item-control-wrapper" [nzSpan]="control" [nzOffset]="offset">
       <div class="ant-form-item-control" [class.has-error]="showError">
 
@@ -88,8 +90,7 @@ export class CheckboxWidget extends ControlWidget {
           this.label = null;
           this.offset = this.ui.spanLabel;
         }
-        this.grid_span =
-          this.ui.grid && this.ui.grid.span > 0 ? this.ui.grid.span : 0;
+        this.grid_span = this.ui.span && this.ui.span > 0 ? this.ui.span : 0;
         this.updateAllChecked();
       },
     );
@@ -103,9 +104,7 @@ export class CheckboxWidget extends ControlWidget {
 
   notifySet() {
     const checkList = this.data.filter(w => w.checked);
-    this.updateAllChecked().setValue(
-      checkList.map(item => item.value),
-    );
+    this.updateAllChecked().setValue(checkList.map(item => item.value));
     this.notifyChange(checkList);
   }
 
