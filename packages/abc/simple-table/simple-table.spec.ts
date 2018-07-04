@@ -1007,6 +1007,7 @@ describe('abc: simple-table', () => {
         describe('#multiSort', () => {
           beforeEach(() =>
             (context.columns = [
+              { title: '', index: 'index' },
               {
                 title: '',
                 index: 'index',

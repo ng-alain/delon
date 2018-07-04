@@ -604,11 +604,13 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
 
     const ms = this.multiSort;
     if (ms) {
-      Object.keys(this._sortMap).forEach(key => {
-        const item = this._sortMap[key];
-        ret[item.key] =
-          (item.column.sortReName || this.sortReName || {})[item.v] || item.v;
-      });
+      Object.keys(this._sortMap)
+        .filter(key => this._sortMap[key].enabled && this._sortMap[key].v)
+        .forEach(key => {
+          const item = this._sortMap[key];
+          ret[item.key] =
+            (item.column.sortReName || this.sortReName || {})[item.v] || item.v;
+        });
       // 合并处理
       if (typeof ms === 'object') {
         ret = {
