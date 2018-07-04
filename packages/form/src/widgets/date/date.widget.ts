@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlWidget } from '../../widget';
 import * as format from 'date-fns/format';
+import { toBool } from '../../utils';
 
 const DATEFORMAT = {
   'date-time': `YYYY-MM-DDTHH:mm:ssZ`,
@@ -120,9 +121,9 @@ export class DateWidget extends ControlWidget implements OnInit {
         : 'YYYY-MM-DD HH:mm:ss';
     // 公共API
     this.i = {
-      allowClear: ui.allowClear || true,
+      allowClear: toBool(ui.allowClear, true),
       // nz-date-picker
-      showToday: ui.showToday || true
+      showToday: toBool(ui.showToday, true)
     };
   }
 

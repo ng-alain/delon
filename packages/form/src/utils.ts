@@ -26,6 +26,10 @@ export function isBlank(o: any) {
   return o == null;
 }
 
+export function toBool(value: any, defaultValue: boolean) {
+  return value == null ? defaultValue : `${value}` !== 'false';
+}
+
 export function di(...args) {
   // tslint:disable-next-line:no-console
   console.warn(...args);

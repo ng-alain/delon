@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { deepGet } from '@delon/util';
 import { UploadFile, UploadChangeParam, NzModalService } from 'ng-zorro-antd';
 import { ControlWidget } from '../../widget';
-import { getData } from '../../utils';
+import { getData, toBool } from '../../utils';
 
 @Component({
   selector: 'sf-upload',
@@ -69,10 +69,10 @@ export class UploadWidget extends ControlWidget implements OnInit {
       size: this.ui.size == null ? 0 : +this.ui.size,
       fileType: this.ui.fileType || '',
       listType: this.ui.listType || 'text',
-      multiple: this.ui.multiple || false,
+      multiple: toBool(this.ui.multiple, false),
       name: this.ui.name || 'file',
-      showUploadList: this.ui.showUploadList || true,
-      withCredentials: this.ui.withCredentials || false,
+      showUploadList: toBool(this.ui.showUploadList, true),
+      withCredentials: toBool(this.ui.withCredentials, false),
       resReName: (this.ui.resReName || '').split('.'),
     };
     if (this.i.listType === 'picture-card') this.btnType = 'plus';

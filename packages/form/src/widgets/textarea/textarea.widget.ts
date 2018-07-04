@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ControlWidget } from '../../widget';
+import { toBool } from '../../utils';
 
 @Component({
   selector: 'sf-textarea',
@@ -14,10 +15,17 @@ import { ControlWidget } from '../../widget';
       (input)="setValue($event.target?.value)"
       [attr.maxLength]="schema.maxLength || null"
       [attr.placeholder]="ui.placeholder"
-      [nzAutosize]="ui.autosize || true">
+      [nzAutosize]="autosize">
     </textarea>
 
   </sf-item-wrap>`,
   preserveWhitespaces: false,
 })
-export class TextareaWidget extends ControlWidget {}
+export class TextareaWidget extends ControlWidget implements OnInit {
+  autosize: any = true;
+  ngOnInit(): void {
+    if (this.ui.autosize != null) {
+      this.autosize = this.ui.autosize;
+    }
+  }
+}

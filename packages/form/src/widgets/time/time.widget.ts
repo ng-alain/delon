@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlWidget } from '../../widget';
 import * as format from 'date-fns/format';
+import { toBool } from '../../utils';
 
 @Component({
   selector: 'sf-time',
@@ -45,10 +46,10 @@ export class TimeWidget extends ControlWidget implements OnInit {
         : 'HH:mm:ss';
     this.i = {
       displayFormat: ui.displayFormat || 'HH:mm:ss',
-      allowEmpty: ui.allowEmpty || true,
+      allowEmpty: toBool(ui.allowEmpty, true),
       clearText: ui.clearText || '清除',
       defaultOpenValue: ui.defaultOpenValue || new Date(),
-      hideDisabledOptions: ui.hideDisabledOptions || false,
+      hideDisabledOptions: toBool(ui.hideDisabledOptions, false),
       hourStep: ui.hourStep || 1,
       minuteStep: ui.nzMinuteStep || 1,
       secondStep: ui.secondStep || 1,

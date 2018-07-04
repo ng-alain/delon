@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { startWith, map, flatMap, debounceTime } from 'rxjs/operators';
 import { ControlWidget } from '../../widget';
 import { SFSchemaEnum } from '../../schema';
-import { getCopyEnum, getEnum } from '../../utils';
+import { getCopyEnum, getEnum, toBool } from '../../utils';
 
 export const EMAILSUFFIX = [
   'qq.com',
@@ -46,12 +46,12 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
 
   ngOnInit(): void {
     this.i = {
-      backfill: this.ui.backfill || false,
-      defaultActiveFirstOption: this.ui.defaultActiveFirstOption || true,
+      backfill: toBool(this.ui.backfill, false),
+      defaultActiveFirstOption: toBool(this.ui.defaultActiveFirstOption, true),
       width: this.ui.width || undefined,
     };
 
-    this.filterOption = this.ui.filterOption || true;
+    this.filterOption = this.ui.filterOption == null ? true : this.ui.filterOption;
     if (typeof this.filterOption === 'boolean') {
       this.filterOption = (input: string, option: SFSchemaEnum) =>
         option.label.toLowerCase().indexOf((input || '').toLowerCase()) > -1;

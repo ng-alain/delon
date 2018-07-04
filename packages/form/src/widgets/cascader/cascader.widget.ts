@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlWidget } from '../../widget';
-import { getData } from '../../utils';
+import { getData, toBool } from '../../utils';
 import { SFSchemaEnum } from '../../schema';
 
 @Component({
@@ -48,8 +48,8 @@ export class CascaderWidget extends ControlWidget implements OnInit {
 
   ngOnInit(): void {
     this.clearText = this.ui.clearText || '清除';
-    this.showArrow = this.ui.showArrow || true;
-    this.showInput = this.ui.showInput || true;
+    this.showArrow = toBool(this.ui.showArrow, true);
+    this.showInput = toBool(this.ui.showInput, true);
     this.triggerAction = this.ui.triggerAction || ['click'];
     if (!!this.ui.asyncData) {
       this.loadData = (node: any, index: number) =>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlWidget } from '../../widget';
 import { SFSchemaEnum } from '../../schema';
-import { getData } from '../../utils';
+import { getData, toBool } from '../../utils';
 
 @Component({
   selector: 'sf-select',
@@ -58,14 +58,14 @@ export class SelectWidget extends ControlWidget implements OnInit {
   ngOnInit(): void {
     this.i = {
       allowClear: this.ui.allowClear,
-      autoFocus: this.ui.autoFocus || false,
+      autoFocus: toBool(this.ui.autoFocus, false),
       dropdownClassName: this.ui.dropdownClassName || null,
-      dropdownMatchSelectWidth: this.ui.dropdownMatchSelectWidth || true,
-      serverSearch: this.ui.serverSearch || false,
+      dropdownMatchSelectWidth: toBool(this.ui.dropdownMatchSelectWidth, true),
+      serverSearch: toBool(this.ui.serverSearch, false),
       maxMultipleCount: this.ui.maxMultipleCount || Infinity,
       mode: this.ui.mode || 'default',
       notFoundContent: this.ui.notFoundContent || '无法找到',
-      showSearch: this.ui.showSearch || true,
+      showSearch: toBool(this.ui.showSearch, true),
     };
   }
 
