@@ -9,7 +9,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule, Router } from '@angular/router';
-import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF, I18nSelectPipe } from '@angular/common';
 import {
   MenuService,
   AlainThemeModule,
@@ -63,6 +63,8 @@ describe('abc: page-header', () => {
     const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
     expect(el.textContent.trim()).toBe(value);
   }
+
+  afterEach(() => context.comp.ngOnDestroy());
 
   describe('[property]', () => {
     beforeEach(() => createComp());
@@ -156,32 +158,6 @@ describe('abc: page-header', () => {
       expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(2);
     });
 
-    it('should be i18n', () => {
-      menuSrv.add([
-        {
-          text: 'root',
-          i18n: 'root-i18n',
-          children: [
-            {
-              text: '1-1',
-              link: '/1-1',
-              children: [
-                { text: '1-1-1', link: '/1-1/1-1-1' },
-                { text: '1-1-2', link: '/1-1/1-1-2' },
-              ],
-            },
-          ],
-        },
-      ]);
-      spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
-      spyOn(i18n, 'fanyi');
-      expect(i18n.fanyi).not.toHaveBeenCalled();
-      context.autoBreadcrumb = true;
-      fixture.detectChanges();
-      expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
-      expect(i18n.fanyi).toHaveBeenCalled();
-    });
-
     describe('#home', () => {
       it('shoule be hide home', () => {
         spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
@@ -199,6 +175,40 @@ describe('abc: page-header', () => {
         context.autoBreadcrumb = true;
         fixture.detectChanges();
         expect(i18n.fanyi).toHaveBeenCalled();
+      });
+    });
+
+    describe('[i18n]', () => {
+      it('should be auto fanyi i18n text', () => {
+        menuSrv.add([
+          {
+            text: 'root',
+            i18n: 'root-i18n',
+            children: [
+              {
+                text: '1-1',
+                link: '/1-1',
+                children: [
+                  { text: '1-1-1', link: '/1-1/1-1-1' },
+                  { text: '1-1-2', link: '/1-1/1-1-2' },
+                ],
+              },
+            ],
+          },
+        ]);
+        spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
+        spyOn(i18n, 'fanyi');
+        expect(i18n.fanyi).not.toHaveBeenCalled();
+        context.autoBreadcrumb = true;
+        fixture.detectChanges();
+        expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
+        expect(i18n.fanyi).toHaveBeenCalled();
+      });
+      it('should be refresh when i18n changed', () => {
+        spyOn(context.comp, 'refresh');
+        expect(context.comp.refresh).not.toHaveBeenCalled();
+        i18n.use('en');
+        expect(context.comp.refresh).toHaveBeenCalled();
       });
     });
   });
@@ -237,11 +247,13 @@ describe('abc: page-header', () => {
 
   describe('[auto sync title]', () => {
     class MockTitle {
-      setTitle = jasmine.createSpy()
+      setTitle = jasmine.createSpy();
     }
     class MockReuse {
       set title(val: string) {}
-      get title(): string { return ''; }
+      get title(): string {
+        return '';
+      }
     }
     let titleSrv: TitleService;
     let reuseSrv: ReuseTabService;
@@ -262,7 +274,11 @@ describe('abc: page-header', () => {
     });
 
     it('should be auto sync title of document and result-tab', () => {
-      const spyReuseTitle = spyOnProperty(reuseSrv, 'title', 'set').and.callThrough();
+      const spyReuseTitle = spyOnProperty(
+        reuseSrv,
+        'title',
+        'set',
+      ).and.callThrough();
       context.title = 'test';
       fixture.detectChanges();
       expect(titleSrv.setTitle).toHaveBeenCalled();

@@ -11,6 +11,7 @@ import {
   ElementRef,
   AfterViewInit,
   Renderer2,
+  OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { toBoolean, isEmpty } from '@delon/util';
@@ -24,6 +25,7 @@ import {
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 import { AdPageHeaderConfig } from './page-header.config';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'page-header',
@@ -57,8 +59,9 @@ import { AdPageHeaderConfig } from './page-header.config';
   },
   preserveWhitespaces: false,
 })
-export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
+export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
+  private i18n$: Subscription;
   @ViewChild('conTpl') private conTpl: ElementRef;
   private _menus: Menu[];
 
@@ -149,6 +152,8 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     private reuseSrv: ReuseTabService,
   ) {
     Object.assign(this, cog);
+    if (this.i18nSrv)
+      this.i18n$ = this.i18nSrv.change.subscribe(() => this.refresh());
   }
 
   refresh() {
@@ -224,5 +229,9 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnChanges(): void {
     if (this.inited) this.refresh();
+  }
+
+  ngOnDestroy(): void {
+    if (this.i18n$) this.i18n$.unsubscribe();
   }
 }
