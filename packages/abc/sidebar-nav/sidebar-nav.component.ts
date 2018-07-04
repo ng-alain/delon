@@ -67,8 +67,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
   private floatingAreaClickHandle(e: MouseEvent) {
     e.stopPropagation();
-    e.preventDefault();
-    const linkNode = e.target as Element;
+    const linkNode = e.target as HTMLElement;
     if (linkNode.nodeName !== 'A') {
       return false;
     }
@@ -76,14 +75,19 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     if (url && url.startsWith('#')) {
       url = url.slice(1);
     }
-    // 如果配置了bashHref 则去掉baseHref
-    const baseHerf = this.locationStrategy.getBaseHref();
-    if (baseHerf) {
-      url = url.slice(baseHerf.length);
+    if (linkNode.dataset!.type === 'external') {
+      return true;
+    } else {
+      // 如果配置了bashHref 则去掉baseHref
+      const baseHerf = this.locationStrategy.getBaseHref();
+      if (baseHerf) {
+        url = url.slice(baseHerf.length);
+      }
+      this.router.navigateByUrl(url);
     }
-    this.router.navigateByUrl(url);
     this.onSelect(this.menuSrv.getPathByUrl(url).pop());
     this.hideAll();
+    e.preventDefault();
     return false;
   }
 

@@ -17,7 +17,7 @@
             <span>{{ child1.text }}</span>
           </a>
           <!-- external link -->
-          <a *ngIf="child1._type === 2" href="{{ child1.externalLink }}" target="{{child1.target}}">
+          <a *ngIf="child1._type === 2" href="{{ child1.externalLink }}" target="{{child1.target}}" data-type="external">
             <i *ngIf="!settings.layout.collapsed" class="{{ child1.icon }}"></i>
             <nz-tooltip *ngIf="settings.layout.collapsed" nzPlacement="right" [nzTitle]="child1.text">
               <span nz-tooltip>
@@ -42,7 +42,7 @@
                 <!-- link -->
                 <a *ngIf="child2._type === 1" (click)="onSelect(child2)" [routerLink]="child2.link" [target]="child2.target">{{ child2.text }}</a>
                 <!-- external link -->
-                <a *ngIf="child2._type === 2" href="{{ child2.externalLink }}" target="{{ child2.target }}">{{ child2.text }}</a>
+                <a *ngIf="child2._type === 2" href="{{ child2.externalLink }}" target="{{ child2.target }}" data-type="external">{{ child2.text }}</a>
                 <!-- has children link -->
                 <a *ngIf="child2._type === 3" class="nav-sub-title" (click)="toggleOpen(child2)">
                   {{ child2.text }}
@@ -58,7 +58,7 @@
                       <!-- link -->
                       <a *ngIf="child3._type === 1" (click)="onSelect(child3)" [routerLink]="child3.link" [target]="child3.target">{{ child3.text }}</a>
                       <!-- external link -->
-                      <a *ngIf="child3._type === 2" href="{{ child3.externalLink }}" target="{{ child3.target }}">{{ child3.text }}</a>
+                      <a *ngIf="child3._type === 2" href="{{ child3.externalLink }}" target="{{ child3.target }}" data-type="external">{{ child3.text }}</a>
                       <!-- badge -->
                       <div *ngIf="child3.badge" title="{{child3.badge}}" class="badge badge-{{child3.badge_status}}" [class.badge-dot]="child3.badge_dot">
                         <em>{{child3.badge}}</em>

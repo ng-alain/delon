@@ -29,6 +29,7 @@ const MOCKMENUS = <Nav[]>[
           { text: 'v1', link: '/v1' },
           { text: 'v2', link: '#/v2', i18n: 'v2-i18n' },
           { text: 'v3' },
+          { text: 'externalLink', externalLink: '//ng-alain.com', target: '_blank' },
         ],
       },
     ],
@@ -191,6 +192,14 @@ describe('abc: sidebar-nav', () => {
         expect(clientHeight).not.toHaveBeenCalled();
         page.showSubMenu();
         expect(clientHeight).toHaveBeenCalled();
+      });
+      it('should be navigate to external', () => {
+        page.showSubMenu();
+        const containerEl = page.getEl<HTMLElement>(floatingShowCls, true);
+        const externalEl = containerEl.querySelector('[data-type="external"]');
+        expect(externalEl).not.toBeNull();
+        (externalEl as HTMLElement).click();
+        fixture.detectChanges();
       });
     });
     describe('should be hide sub-menu in floating container', () => {
