@@ -58,7 +58,7 @@ export default function(options: PluginSchema): Rule {
         rules.push(pluginHmr(pluginOptions));
         break;
       default:
-        throw new SchematicsException(`Could not find '${options.name}' name`);
+        throw new SchematicsException(`Could not find plugin name: ${options.name}`);
     }
 
     rules.push(installPackages());

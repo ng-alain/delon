@@ -1,6 +1,6 @@
 import { Tree, SchematicContext } from '@angular-devkit/schematics';
 import { PluginOptions } from './interface';
-import { tryAddFile, addValueToVariable } from '../utils/alain';
+import { tryAddFile, addValueToVariable, tryDelFile } from '../utils/alain';
 import {
   addPackageToPackageJson,
   removePackageFromPackageJson,
@@ -36,7 +36,8 @@ export const hmrBootstrap = (
   });
 };`;
 
-const MAINTS = `import { enableProdMode, ViewEncapsulation } from '@angular/core';
+const CONTENT = {
+HRM: `import { enableProdMode, ViewEncapsulation } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
@@ -72,7 +73,33 @@ if (environment.hmr) {
   }
 } else {
   bootstrap();
-}`;
+}`,
+NORMAL: `import { enableProdMode, ViewEncapsulation } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+
+import { preloaderFinished } from '@delon/theme';
+preloaderFinished();
+
+if (environment.production) {
+  enableProdMode();
+}
+
+const bootstrap = () => {
+  return platformBrowserDynamic().bootstrapModule(AppModule, {
+    defaultEncapsulation: ViewEncapsulation.Emulated,
+    preserveWhitespaces: false,
+  });
+};
+
+bootstrap().then(() => {
+  if ((<any>window).appBootstrap) {
+    (<any>window).appBootstrap();
+  }
+});`
+};
 
 // endregion
 
@@ -133,16 +160,19 @@ export function pluginHmr(options: PluginOptions): any {
       ['hmr@ng serve -c=hmr'],
       'scripts',
     );
-    if (options.type !== 'add') return;
-
     // 3. add angular.json
     configToAngularJson(host, options);
-    // 4. create a hmr.ts file
-    tryAddFile(host, `${options.sourceRoot}/hmr.ts`, HMR);
-    // 5. create a environment.hmr.ts file
-    // envConfig(host, options);
-    // 6. update main.ts
-    tryAddFile(host, `${options.sourceRoot}/main.ts`, MAINTS);
+    if (options.type === 'add') {
+      // 4. create a hmr.ts file
+      tryAddFile(host, `${options.sourceRoot}/hmr.ts`, HMR);
+      // 5. update main.ts
+      tryAddFile(host, `${options.sourceRoot}/main.ts`, CONTENT.HRM);
+    } else {
+      // 4. remove a hmr.ts file
+      tryDelFile(host, `${options.sourceRoot}/hmr.ts`);
+      // 5. update main.ts
+      tryAddFile(host, `${options.sourceRoot}/main.ts`, CONTENT.NORMAL);
+    }
     // 7. fix not found types
     addNodeTypeToTsconfig(host, options);
   };

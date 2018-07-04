@@ -42,7 +42,7 @@
     "hmr": {
       "type": "boolean",
       "description": "Generates hmr files and configuration",
-      "default": false
+      "default": true
     }
   }
 }

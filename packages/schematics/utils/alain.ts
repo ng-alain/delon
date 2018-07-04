@@ -255,9 +255,13 @@ export function buildAlain(schema: CommonSchema): Rule {
   };
 }
 
-export function tryAddFile(host: Tree, path: string, content: string) {
+export function tryDelFile(host: Tree, path: string) {
   if (host.exists(path)) {
     host.delete(path);
   }
+}
+
+export function tryAddFile(host: Tree, path: string, content: string) {
+  tryDelFile(host, path);
   host.create(path, content);
 }
