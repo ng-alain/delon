@@ -9,7 +9,7 @@ export interface LazyResult {
   status: 'ok' | 'error';
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LazyService {
   private list: any = {};
   private cached: any = {};
