@@ -6,6 +6,25 @@ title:
 type: Other
 ---
 
+### 1.1.3
+
+`2018-7-5`
+
+- 脚手架
+  - 修复HMR未找到 module 问题，[c3ccfea](https://github.com/cipchk/ng-alain/commit/c3ccfea)，[@gemron](https://github.com/gemron)
+- @delon/form
+  - 修复所有布尔类型小部件无效值，[#557](https://github.com/cipchk/ng-alain/issues/557)
+  - 修复 `number` 小部件未指定 placeholder 时显示 `undefine` 问题
+- @delon/abc
+  - `simple-table`
+    - 修复下拉菜单标签样式风格
+    - 修复多字段排序时存在 `undefined` 问题，[#549](https://github.com/cipchk/ng-alain/issues/549)
+  - 修复 `sidebar-nav` 收缩时无法打开外链，[#554](https://github.com/cipchk/ng-alain/issues/554)
+  - 修复 `page-header` I18n切换时未同步，[#545](https://github.com/cipchk/ng-alain/issues/545)
+- Schematics
+  - 新增 `ng add` 时默认加载 HMR 插件
+  - 修复未开启HMR时依然加载 `hmr.ts` 问题，[#547](https://github.com/cipchk/ng-alain/issues/547)
+
 ### 1.1.2
 
 `2018-6-28`
