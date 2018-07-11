@@ -86,7 +86,7 @@ export class ArrayService {
       childrenOf[id] = childrenOf[id] || [];
       item[options.childrenMapName] = childrenOf[id];
       if (options.cb) options.cb(item);
-      if (pid > 0) {
+      if (pid) {
         childrenOf[pid] = childrenOf[pid] || [];
         childrenOf[pid].push(item);
       } else {
