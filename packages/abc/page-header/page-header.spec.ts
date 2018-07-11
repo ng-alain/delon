@@ -213,83 +213,98 @@ describe('abc: page-header', () => {
     });
   });
 
-  describe('[generateion title]', () => {
-    let menuSrv: MenuService;
-    let route: Router;
-    let i18n: AlainI18NService;
-    let cog: AdPageHeaderConfig;
-    beforeEach(() => {
+  describe('#title', () => {
+    it('should be custom title template', () => {
+      TestBed.overrideTemplate(
+        TestComponent,
+        `<page-header #comp [title]="titleTpl">
+          <ng-template #titleTpl>
+            <div class="custom-title">title</div>
+          </ng-template>
+        </page-header>`,
+      );
       createComp();
-      route = injector.get(Router);
-      cog = injector.get(AdPageHeaderConfig);
-      i18n = injector.get(ALAIN_I18N_TOKEN);
-      menuSrv = injector.get(MenuService);
-
-      context.title = undefined;
-      context.autoTitle = true;
+      expect(dl.queryAll(By.css('.custom-title')).length).toBe(1);
     });
 
-    it('should be auto generate title via menu data', () => {
-      const text = 'asdf';
-      spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text }]);
-      fixture.detectChanges();
-      checkValue('.title', text);
+    describe('[generateion title]', () => {
+      let menuSrv: MenuService;
+      let route: Router;
+      let i18n: AlainI18NService;
+      let cog: AdPageHeaderConfig;
+      beforeEach(() => {
+        createComp();
+        route = injector.get(Router);
+        cog = injector.get(AdPageHeaderConfig);
+        i18n = injector.get(ALAIN_I18N_TOKEN);
+        menuSrv = injector.get(MenuService);
+
+        context.title = undefined;
+        context.autoTitle = true;
+      });
+
+      it('should be auto generate title via menu data', () => {
+        const text = 'asdf';
+        spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text }]);
+        fixture.detectChanges();
+        checkValue('.title', text);
+      });
+
+      it('support i18n', () => {
+        const text = 'asdf';
+        const i18n = 'i18n';
+        spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
+        fixture.detectChanges();
+        checkValue('.title', i18n);
+      });
     });
 
-    it('support i18n', () => {
-      const text = 'asdf';
-      const i18n = 'i18n';
-      spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
-      fixture.detectChanges();
-      checkValue('.title', i18n);
-    });
-  });
-
-  describe('[auto sync title]', () => {
-    class MockTitle {
-      setTitle = jasmine.createSpy();
-    }
-    class MockReuse {
-      set title(val: string) {}
-      get title(): string {
-        return '';
+    describe('[auto sync title]', () => {
+      class MockTitle {
+        setTitle = jasmine.createSpy();
       }
-    }
-    let titleSrv: TitleService;
-    let reuseSrv: ReuseTabService;
-    beforeEach(() => {
-      TestBed.overrideProvider(TitleService, {
-        useFactory: () => new MockTitle(),
-        deps: [],
-      });
-      TestBed.overrideProvider(ReuseTabService, {
-        useFactory: () => new MockReuse(),
-        deps: [],
-      });
-      createComp();
-      titleSrv = injector.get(TitleService);
-      reuseSrv = injector.get(ReuseTabService);
+      class MockReuse {
+        set title(val: string) {}
+        get title(): string {
+          return '';
+        }
+      }
+      let titleSrv: TitleService;
+      let reuseSrv: ReuseTabService;
+      beforeEach(() => {
+        TestBed.overrideProvider(TitleService, {
+          useFactory: () => new MockTitle(),
+          deps: [],
+        });
+        TestBed.overrideProvider(ReuseTabService, {
+          useFactory: () => new MockReuse(),
+          deps: [],
+        });
+        createComp();
+        titleSrv = injector.get(TitleService);
+        reuseSrv = injector.get(ReuseTabService);
 
-      context.titleSync = true;
-    });
+        context.syncTitle = true;
+      });
 
-    it('should be auto sync title of document and result-tab', () => {
-      const spyReuseTitle = spyOnProperty(
-        reuseSrv,
-        'title',
-        'set',
-      ).and.callThrough();
-      context.title = 'test';
-      fixture.detectChanges();
-      expect(titleSrv.setTitle).toHaveBeenCalled();
-      expect(spyReuseTitle).toHaveBeenCalled();
+      it('should be auto sync title of document and result-tab', () => {
+        const spyReuseTitle = spyOnProperty(
+          reuseSrv,
+          'title',
+          'set',
+        ).and.callThrough();
+        context.title = 'test';
+        fixture.detectChanges();
+        expect(titleSrv.setTitle).toHaveBeenCalled();
+        expect(spyReuseTitle).toHaveBeenCalled();
+      });
     });
   });
 });
 
 @Component({
   template: `
-    <page-header #comp [title]="title" [autoTitle]="autoTitle" [titleSync]="titleSync"
+    <page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
         [autoBreadcrumb]="autoBreadcrumb" [home]="home" [home_i18n]="home_i18n" [home_link]="home_link">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
@@ -305,8 +320,8 @@ class TestComponent {
   title = '所属类目';
   autoBreadcrumb: boolean;
   autoTitle: boolean;
+  syncTitle: boolean;
   home: string;
   home_link: string;
   home_i18n: string;
-  titleSync: boolean;
 }

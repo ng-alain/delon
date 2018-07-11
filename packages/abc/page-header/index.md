@@ -12,18 +12,19 @@ config: AdPageHeaderConfig
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[title]` | 标题名 | `string` | -
+`[title]` | 标题名 | `string \| TemplateRef<any>` | -
 `[autoTitle]` | 自动生成标题，以当前路由从主菜单中定位  | `boolean` | `true`
+`[syncTitle]` | 是否自动将标题同步至 `TitleService`、`ReuseService` 下，仅 `title` 为 `string` 类型时有效  | `boolean` | `true`
 `[home]` | 首页文本，若指定空表示不显示  | `string` | `首页`
 `[home_link]` | 首页链接  | `string` | `/`
 `[home_i18n]` | 首页链接国际化参数 | `string` | -
 `[autoBreadcrumb]` | 自动生成导航，以当前路由从主菜单中定位  | `boolean` | `true`
-`[breadcrumb]` | 导航区域  | `TemplateRef<any>` | -
-`[logo]` | LOGO区域  | `TemplateRef<any>` | -
-`[action]` | 操作区域  | `TemplateRef<any>` | -
-`[content]` | 内容区域  | `TemplateRef<any>` | -
-`[extra]` | 额外信息区域  | `TemplateRef<any>` | -
-`[tab]` | 标签区域  | `TemplateRef<any>` | -
+`[breadcrumb]` | 自定义导航区域  | `TemplateRef<any>` | -
+`[logo]` | 自定义LOGO区域  | `TemplateRef<any>` | -
+`[action]` | 自定义操作区域  | `TemplateRef<any>` | -
+`[content]` | 自定义内容区域  | `TemplateRef<any>` | -
+`[extra]` | 自定义额外信息区域  | `TemplateRef<any>` | -
+`[tab]` | 自定义标签区域  | `TemplateRef<any>` | -
 
 **自动生成导航**
 

@@ -29,37 +29,15 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'page-header',
-  template: `
-  <ng-container *ngIf="!breadcrumb; else breadcrumb">
-    <nz-breadcrumb *ngIf="paths && paths.length > 0">
-      <nz-breadcrumb-item *ngFor="let i of paths">
-        <ng-container *ngIf="i.link"><a [routerLink]="i.link">{{i.title}}</a></ng-container>
-        <ng-container *ngIf="!i.link">{{i.title}}</ng-container>
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-  </ng-container>
-  <div class="detail">
-    <div *ngIf="logo" class="logo"><ng-template [ngTemplateOutlet]="logo"></ng-template></div>
-    <div class="main">
-      <div class="row">
-        <h1 *ngIf="title" class="title">{{title}}</h1>
-        <div *ngIf="action" class="action"><ng-template [ngTemplateOutlet]="action"></ng-template></div>
-      </div>
-      <div class="row">
-        <div class="desc" (cdkObserveContent)="checkContent()" #conTpl><ng-content></ng-content><ng-template [ngTemplateOutlet]="content"></ng-template></div>
-        <div *ngIf="extra" class="extra"><ng-template [ngTemplateOutlet]="extra"></ng-template></div>
-      </div>
-    </div>
-  </div>
-  <ng-template [ngTemplateOutlet]="tab"></ng-template>
-  `,
+  templateUrl: './page-header.component.html',
   host: {
     '[class.content__title]': 'true',
     '[class.ad-ph]': 'true',
   },
   preserveWhitespaces: false,
 })
-export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class PageHeaderComponent
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
   private i18n$: Subscription;
   @ViewChild('conTpl') private conTpl: ElementRef;
@@ -76,7 +54,17 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
   // region fields
 
-  @Input() title: string;
+  _title: string;
+  _titleTpl: TemplateRef<any>;
+  @Input()
+  set title(value: string | TemplateRef<any>) {
+    if (value instanceof TemplateRef) {
+      this._title = null;
+      this._titleTpl = value;
+    } else {
+      this._title = value;
+    }
+  }
 
   @Input() home: string;
 
@@ -109,16 +97,16 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   private _autoTitle = true;
 
   /**
-   * 是否自动将标准信息同步至 `TitleService`、`ReuseService` 下
+   * 是否自动将标题同步至 `TitleService`、`ReuseService` 下，仅 `title` 为 `string` 类型时有效
    */
   @Input()
-  get titleSync() {
-    return this._titleSync;
+  get syncTitle() {
+    return this._syncTitle;
   }
-  set titleSync(value: any) {
-    this._titleSync = toBoolean(value);
+  set syncTitle(value: any) {
+    this._syncTitle = toBoolean(value);
   }
-  private _titleSync = false;
+  private _syncTitle = false;
 
   paths: any[] = [];
 
@@ -188,22 +176,23 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
   setTitle() {
     if (
-      typeof this.title === 'undefined' &&
+      typeof this._title === 'undefined' &&
+      typeof this._titleTpl === 'undefined' &&
       this.autoTitle &&
       this.menus.length > 0
     ) {
       const item = this.menus[this.menus.length - 1];
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-      this.title = title;
+      this._title = title;
     }
 
-    if (this.titleSync) {
+    if (this._title && this.syncTitle) {
       if (this.titleSrv) {
-        this.titleSrv.setTitle(this.title);
+        this.titleSrv.setTitle(this._title);
       }
       if (this.reuseSrv) {
-        this.reuseSrv.title = this.title;
+        this.reuseSrv.title = this._title;
       }
     }
 
