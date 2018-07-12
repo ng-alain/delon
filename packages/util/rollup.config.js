@@ -32,6 +32,7 @@ const globals = {
   'date-fns/add_days': 'date-fns/add_days/index',
 
   'extend': 'extend',
+  'ng-zorro-antd': 'ngZorro.antd',
 };
 
 const listOfDateFns = [

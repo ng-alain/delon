@@ -29,7 +29,7 @@ type: Type
 名称 | 类型 | 默认值 | 描述
 ---- | --- | ---- | ----
 `idMapName` | `string` | `id` | 编号项名
-`pidMapName` | `string` | `parent_id` | 父编号项名
+`parentIdMapName` | `string` | `parent_id` | 父编号项名
 `childrenMapName` | `string` | `children` | 子项名
 `cb` | `(item: any) => void` | - | 转换成树数据时回调
 
@@ -42,7 +42,7 @@ type: Type
 名称 | 类型 | 默认值 | 描述
 ---- | --- | ---- | ----
 `idMapName` | `string` | `id` | 编号项名
-`pidMapName` | `string` | `parent_id` | 父编号项名
+`parentIdMapName` | `string` | `parent_id` | 父编号项名
 `titleMapName` | `string` | `title` | 标题项名
 `isLeafMapName` | `string` | `isLeaf` | 设置为叶子节点项名，若数据源不存在时自动根据 `children` 值决定是否为叶子节点
 `checkedMapname` | `string` | `checked` | 节点 Checkbox 是否选中项名

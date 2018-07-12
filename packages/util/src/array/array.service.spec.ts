@@ -1,6 +1,9 @@
+import { TestBed } from '@angular/core/testing';
+import { NzTreeNode } from 'ng-zorro-antd';
 import { ArrayService } from './array.service';
 import { deepCopy } from '../other/other';
-import { NzTreeNode } from 'ng-zorro-antd';
+import { DelonUtilModule } from '../../util.module';
+import { DelonUtilConfig } from '../util.config';
 
 const MOCK_ARR: any[] = [
   { id: 1, pid: 0, name: 'name1', other: 'value1', halfChecked: true },
@@ -15,7 +18,11 @@ describe('utils: array', () => {
   let page: PageTreeNode;
 
   describe('#treeToArr', () => {
-    beforeEach(() => (srv = new ArrayService()));
+    beforeEach(() => {
+      srv = TestBed.configureTestingModule({
+        imports: [DelonUtilModule.forRoot()],
+      }).get(ArrayService);
+    });
     it('should be tree to array', () => {
       const res = srv.treeToArr([
         {
@@ -60,7 +67,11 @@ describe('utils: array', () => {
   });
 
   describe('#arrToTree', () => {
-    beforeEach(() => (srv = new ArrayService()));
+    beforeEach(() => {
+      srv = TestBed.configureTestingModule({
+        imports: [DelonUtilModule.forRoot()],
+      }).get(ArrayService);
+    });
     it('should be array to tree', () => {
       const res = srv.arrToTree([
         { id: 2, parent_id: 1, title: 'c1' },
@@ -80,7 +91,9 @@ describe('utils: array', () => {
 
   describe('[NzTreeNode]', () => {
     beforeEach(() => {
-      srv = new ArrayService();
+      srv = TestBed.configureTestingModule({
+        imports: [DelonUtilModule.forRoot()],
+      }).get(ArrayService);
       page = new PageTreeNode();
     });
 
@@ -184,13 +197,40 @@ describe('utils: array', () => {
     });
   });
 
+  describe('[config]', () => {
+    beforeEach(() => {
+      srv = TestBed.configureTestingModule({
+        imports: [DelonUtilModule.forRoot()],
+        providers: [
+          {
+            provide: DelonUtilConfig,
+            useValue: {
+              array: {
+                idMapName: 'ID',
+              },
+            },
+          },
+        ],
+      }).get(ArrayService);
+    });
+    it('should be tree to array', () => {
+      const id = 100;
+      const res = srv.arrToTree([
+        {
+          ID: id,
+        },
+      ]);
+      expect(res[0].ID).toBe(id);
+    });
+  });
+
   class PageTreeNode {
     data: NzTreeNode[];
     constructor(data?: any[]) {
       this.data = data
         ? data
         : srv.arrToTreeNode(deepCopy(MOCK_ARR), {
-            pidMapName: 'pid',
+            parentIdMapName: 'pid',
             titleMapName: 'name',
           });
     }

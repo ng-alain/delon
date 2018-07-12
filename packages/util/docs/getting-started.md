@@ -27,6 +27,34 @@ import { DelonUtilModule } from '@delon/util';
 export class AppModule { }
 ```
 
+## DelonUtilConfig
+
+通用配置项，例如统一对 `ArrayService` 设置映射名称。
+
+```ts
+import { DelonUtilConfig } from '@delon/abc';
+export function fnDelonUtilConfig(): DelonUtilConfig {
+  return Object.assign(new DelonUtilConfig(), <DelonUtilConfig>{
+    array: {
+      idMapName: 'Id',
+      parentIdMapName: 'ParentId'
+    }
+  });
+}
+
+@NgModule({ })
+export class DelonModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonModule,
+      providers: [
+        { provide: DelonUtilConfig, useFactory: fnDelonUtilConfig }
+      ]
+    };
+  }
+}
+```
+
 ## 如何在HTML模板中调用
 
 ```ts

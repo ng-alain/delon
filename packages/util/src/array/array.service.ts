@@ -1,8 +1,28 @@
 import { Injectable } from '@angular/core';
 import { NzTreeNode } from 'ng-zorro-antd';
+import { DelonUtilConfig } from '../util.config';
+import { ArrayConfig } from './array.config';
 
 @Injectable({ providedIn: 'root' })
 export class ArrayService {
+  private c: ArrayConfig;
+  constructor(cog: DelonUtilConfig) {
+    this.c = Object.assign(
+      <ArrayConfig>{
+        deepMapName: 'deep',
+        parentMapName: 'parent',
+        idMapName: 'id',
+        parentIdMapName: 'parent_id',
+        childrenMapName: 'children',
+        titleMapName: 'title',
+        checkedMapname: 'checked',
+        selectedMapname: 'selected',
+        expandedMapname: 'expanded',
+        disabledMapname: 'disabled',
+      },
+      cog && cog.array,
+    );
+  }
   /**
    * 将树结构转换成数组结构
    */
@@ -23,9 +43,9 @@ export class ArrayService {
   ): any[] {
     options = Object.assign(
       {
-        deepMapName: 'deep',
-        parentMapName: 'parent',
-        childrenMapName: 'children',
+        deepMapName: this.c.deepMapName,
+        parentMapName: this.c.parentMapName,
+        childrenMapName: this.c.childrenMapName,
         clearChildren: true,
         cb: null,
       },
@@ -62,7 +82,7 @@ export class ArrayService {
       /** 编号项名，默认：`'id'` */
       idMapName?: string;
       /** 父编号项名，默认：`'parent_id'` */
-      pidMapName?: string;
+      parentIdMapName?: string;
       /** 子项名，默认：`'children'` */
       childrenMapName?: string;
       /** 转换成树数据时回调 */
@@ -71,9 +91,9 @@ export class ArrayService {
   ): any[] {
     options = Object.assign(
       {
-        idMapName: 'id',
-        pidMapName: 'parent_id',
-        childrenMapName: 'children',
+        idMapName: this.c.idMapName,
+        parentIdMapName: this.c.parentIdMapName,
+        childrenMapName: this.c.childrenMapName,
         cb: null,
       },
       options,
@@ -82,7 +102,7 @@ export class ArrayService {
     const childrenOf = {};
     for (const item of arr) {
       const id = item[options.idMapName],
-        pid = item[options.pidMapName];
+        pid = item[options.parentIdMapName];
       childrenOf[id] = childrenOf[id] || [];
       item[options.childrenMapName] = childrenOf[id];
       if (options.cb) options.cb(item);
@@ -105,7 +125,7 @@ export class ArrayService {
       /** 编号项名，默认：`'id'` */
       idMapName?: string;
       /** 父编号项名，默认：`'parent_id'` */
-      pidMapName?: string;
+      parentIdMapName?: string;
       /** 标题项名，默认：`'title'` */
       titleMapName?: string;
       /** 设置为叶子节点项名，若数据源不存在时自动根据 `children` 值决定是否为叶子节点，默认：`'isLeaf'` */
@@ -125,21 +145,21 @@ export class ArrayService {
     options = Object.assign(
       {
         expanded: false,
-        idMapName: 'id',
-        pidMapName: 'parent_id',
-        titleMapName: 'title',
+        idMapName: this.c.idMapName,
+        parentIdMapName: this.c.parentIdMapName,
+        titleMapName: this.c.titleMapName,
         isLeafMapName: 'isLeaf',
-        checkedMapname: 'checked',
-        selectedMapname: 'selected',
-        expandedMapname: 'expanded',
-        disabledMapname: 'disabled',
+        checkedMapname: this.c.checkedMapname,
+        selectedMapname: this.c.selectedMapname,
+        expandedMapname: this.c.expandedMapname,
+        disabledMapname: this.c.disabledMapname,
         cb: null,
       },
       options,
     );
     const tree = this.arrToTree(arr, {
       idMapName: options.idMapName,
-      pidMapName: options.pidMapName,
+      parentIdMapName: options.parentIdMapName,
       childrenMapName: 'children',
     });
     this.visitTree(tree, (item: any, parent: any, deep: number) => {
@@ -172,7 +192,7 @@ export class ArrayService {
   ) {
     options = Object.assign(
       {
-        childrenMapName: 'children',
+        childrenMapName: this.c.childrenMapName,
       },
       options,
     );
