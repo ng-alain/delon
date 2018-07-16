@@ -6,6 +6,17 @@ title:
 type: Other
 ---
 
+### 1.1.4
+
+`2018-7-16`
+
+- @delon/abc
+  - `page-header`
+    - 增加 `title` 属性支持 `ng-template`
+    - **BREAKING CHANGES** `titleSync` 变更为 `syncTitle`
+- @delon/util
+  - 新增 `ArrayService` 数组操作及与树之间的转化
+
 ### 1.1.3
 
 `2018-7-5`
