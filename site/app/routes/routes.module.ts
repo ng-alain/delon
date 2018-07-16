@@ -17,11 +17,11 @@ const routes = [
         component: LayoutComponent,
         children: [
             { path: '', component: HomeComponent, data: { titleI18n: 'slogan'} },
-            { path: 'theme', loadChildren: './theme/theme.module#ThemeModule' },
-            { path: '6to7', loadChildren: './6to7/6to7.module#SixToSevenModule' },
+            { path: 'tools', loadChildren: './tools/tools.module#ToolsModule' },
             // region: region routers
             { path: 'docs', loadChildren: './gen/docs/docs.module#DocsModule' },
             { path: 'components', loadChildren: './gen/components/components.module#ComponentsModule' },
+            { path: 'theme', loadChildren: './gen/theme/theme.module#ThemeModule' },
             { path: 'auth', loadChildren: './gen/auth/auth.module#AuthModule' },
             { path: 'acl', loadChildren: './gen/acl/acl.module#AclModule' },
             { path: 'cache', loadChildren: './gen/cache/cache.module#CacheModule' },

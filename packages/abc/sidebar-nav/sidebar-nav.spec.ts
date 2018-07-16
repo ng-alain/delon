@@ -17,7 +17,7 @@ import { SidebarNavComponent } from './sidebar-nav.component';
 import { Nav } from './interface';
 import { RouterTestingModule } from '@angular/router/testing';
 
-const floatingShowCls = '.nav-floating-show';
+const floatingShowCls = '.ad-nav__floating-show';
 const MOCKMENUS = <Nav[]>[
   {
     text: '主导航',
@@ -83,7 +83,7 @@ describe('abc: sidebar-nav', () => {
       menuSrv.add(data);
       expect(context.select).not.toHaveBeenCalled();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
-      const itemEl = page.getEl<HTMLElement>('.nav-depth1 a');
+      const itemEl = page.getEl<HTMLElement>('.ad-nav__depth1 a');
       itemEl.click();
       fixture.detectChanges();
       expect(context.select).toHaveBeenCalled();
@@ -95,7 +95,7 @@ describe('abc: sidebar-nav', () => {
       const data = deepCopy(MOCKMENUS);
       menuSrv.add(data);
       expect(data[0].children[0]._open).toBeUndefined();
-      const subTitleEl = page.getEl<HTMLElement>('.nav-sub-title');
+      const subTitleEl = page.getEl<HTMLElement>('.ad-nav__sub-title');
       subTitleEl.click();
       fixture.detectChanges();
       expect(data[0].children[0]._open).toBe(true);
@@ -103,12 +103,12 @@ describe('abc: sidebar-nav', () => {
 
     it('should be reset menu when service is changed', () => {
       createComp();
-      page.checkText('.nav-group-title', MOCKMENUS[0].text);
+      page.checkText('.ad-nav__group-title', MOCKMENUS[0].text);
       const newMenu = deepCopy(MOCKMENUS);
       newMenu[0].text = 'new主导航';
       menuSrv.add(newMenu);
       fixture.detectChanges();
-      page.checkText('.nav-group-title', newMenu[0].text);
+      page.checkText('.ad-nav__group-title', newMenu[0].text);
     });
 
     describe('should be exact highlighting item', () => {
@@ -146,7 +146,7 @@ describe('abc: sidebar-nav', () => {
         router = injector.get(Router);
         router.navigateByUrl('/group/type').then((res: any) => {
           fixture.detectChanges();
-          expect(dl.queryAll(By.css('.nav-item-selected')).length).toBe(2);
+          expect(dl.queryAll(By.css('.ad-nav__selected')).length).toBe(2);
           done();
         });
       });
@@ -164,7 +164,7 @@ describe('abc: sidebar-nav', () => {
         router = injector.get(Router);
         router.navigateByUrl('/group/type').then((res: any) => {
           fixture.detectChanges();
-          expect(dl.queryAll(By.css('.nav-item-selected')).length).toBe(1);
+          expect(dl.queryAll(By.css('.ad-nav__selected')).length).toBe(1);
           done();
         });
       });
@@ -337,7 +337,7 @@ describe('abc: sidebar-nav', () => {
     showSubMenu(resultExpectShow = true) {
       let conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       expect(conEl).toBeNull();
-      const subTitleEl = this.getEl<HTMLElement>('.nav-sub-title');
+      const subTitleEl = this.getEl<HTMLElement>('.ad-nav__sub-title');
       subTitleEl.dispatchEvent(new Event('mouseenter'));
       fixture.detectChanges();
       conEl = this.getEl<HTMLElement>(floatingShowCls, true);

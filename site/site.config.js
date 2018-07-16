@@ -322,5 +322,46 @@ module.exports = {
         }
       ],
     },
+    {
+      name: 'theme',
+      github: 'https://github.com/cipchk/delon',
+      dist: './site/app/routes/gen/theme',
+      types: [
+        {
+          'zh-CN': '文档',
+          'en-US': 'Documents',
+        },
+        {
+          'zh-CN': '主题',
+          'en-US': 'Theme',
+        },
+        {
+          'zh-CN': '服务',
+          'en-US': 'Service',
+        },
+        {
+          'zh-CN': '管道',
+          'en-US': 'Pipe',
+        },
+      ],
+      module: 'ng-alain',
+      defaultRoute: 'getting-started',
+      extraRouteMeta: [
+      ],
+      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
+      template: {
+        meta: './site/templates/meta.ts',
+        module: './site/templates/module.ts',
+      },
+      dir: [
+        {
+          src: ['./packages/theme/docs'],
+          template: {
+            content: './site/templates/content.ts',
+          },
+          hasSubDir: false,
+        }
+      ],
+    },
   ],
 };

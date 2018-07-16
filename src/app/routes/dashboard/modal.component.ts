@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
     template: `
     <p>modal</p>
     <button (click)="change()">change</button>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
     `
 })
 export class DemoModalComponent {

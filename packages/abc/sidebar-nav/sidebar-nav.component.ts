@@ -20,8 +20,8 @@ import { MenuService, SettingsService, Menu } from '@delon/theme';
 
 import { Nav } from './interface';
 
-const SHOWCLS = 'nav-floating-show';
-const FLOATINGCLS = 'nav-floating';
+const SHOWCLS = 'ad-nav__floating-show';
+const FLOATINGCLS = 'ad-nav__floating';
 
 @Component({
   selector: 'sidebar-nav',
@@ -77,14 +77,14 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
     if (linkNode.dataset!.type === 'external') {
       return true;
-    } else {
-      // 如果配置了bashHref 则去掉baseHref
-      const baseHerf = this.locationStrategy.getBaseHref();
-      if (baseHerf) {
-        url = url.slice(baseHerf.length);
-      }
-      this.router.navigateByUrl(url);
     }
+
+    // 如果配置了bashHref 则去掉baseHref
+    const baseHerf = this.locationStrategy.getBaseHref();
+    if (baseHerf) {
+      url = url.slice(baseHerf.length);
+    }
+    this.router.navigateByUrl(url);
     this.onSelect(this.menuSrv.getPathByUrl(url).pop());
     this.hideAll();
     e.preventDefault();

@@ -24,7 +24,21 @@ import { MenuService, SettingsService, Menu } from '@delon/theme';
     </div>
     <div class="aside">
         <div class="aside-inner">
-            <sidebar-nav></sidebar-nav>
+          <nz-dropdown nzTrigger="click" class="user-block">
+            <div nz-dropdown class="user-block-dropdown">
+              <nz-avatar class="avatar" [nzSrc]="settings.user.avatar"></nz-avatar>
+              <div class="info">
+                <strong>{{settings.user.name}}</strong>
+                <p class="text-truncate mb0">{{settings.user.email}}</p>
+              </div>
+            </div>
+            <ul nz-menu>
+              <li nz-menu-item (click)="msgSrv.success('profile')">profile</li>
+              <li nz-menu-item (click)="msgSrv.success('profile')">profile</li>
+              <li nz-menu-item (click)="msgSrv.success('profile')">profile</li>
+            </ul>
+          </nz-dropdown>
+          <sidebar-nav class="d-block py-lg"></sidebar-nav>
         </div>
     </div>
     <section class="content">
@@ -32,77 +46,72 @@ import { MenuService, SettingsService, Menu } from '@delon/theme';
         <router-outlet></router-outlet>
     </section>
 </div>
-`
+`,
 })
 export class LayoutComponent implements OnInit {
-
-    menus: Menu[] = [
+  menus: Menu[] = [
+    {
+      text: 'test',
+      group: true,
+      children: [
         {
-            text: 'test',
-            group: true,
-            children: [
-                {
-                    text: 'Dashboard',
-                    link: '/dashboard',
-                    icon: 'anticon anticon-appstore-o'
-                },
-                {
-                    text: 'Level1',
-                    link: '/level',
-                    icon: 'anticon anticon-appstore-o',
-                    children: [
-                        {
-                            text: 'Level2',
-                            link: '#',
-                            children: [
-                                { text: 'Level3', link: '#' },
-                                { text: 'Level3', link: '#' }
-                            ]
-                        },
-                        { text: 'Level2', link: '#' }
-                    ]
-                },
-                { text: 'table', link: '/abc/table' },
-                { text: 'Reuse Tab', link: '/abc/reuse-tab' },
-                { text: 'Ellipsis', link: '/abc/ellipsis' },
-                { text: 'JWT', link: '/acl/jwt' },
-                { text: 'ueditor', link: '/editor/ueditor' },
-                { text: 'tinymce', link: '/editor/tinymce' },
-                {
-                    text: 'ABC',
-                    icon: 'anticon anticon-appstore',
-                    children: [
-                        { text: 'Reuse Tab7', link: '/abc/reuse-tab' },
-                        { text: 'Reuse Tab6', link: '/abc/reuse-tab' },
-                        { text: 'Reuse Tab5', link: '/abc/reuse-tab' },
-                        { text: 'Reuse Tab4', link: '/abc/reuse-tab' },
-                        { text: 'Reuse Tab3', link: '/abc/reuse-tab' },
-                        { text: 'Reuse Tab2', link: '/abc/reuse-tab' },
-                        { text: 'Reuse Tab1', link: '/abc/reuse-tab' },
-                        { text: 'Ellipsis', link: '/abc/ellipsis' }
-                    ]
-                },
-                {
-                    text: 'ACL',
-                    icon: 'anticon anticon-save',
-                    children: [
-                        { text: 'JWT', link: '/acl/jwt' }
-                    ]
-                }
-            ]
-        }
-    ];
+          text: 'Dashboard',
+          link: '/dashboard',
+          icon: 'anticon anticon-appstore-o',
+          badge: 5
+        },
+        {
+          text: 'Level1',
+          link: '/level',
+          icon: 'anticon anticon-appstore-o',
+          children: [
+            {
+              text: 'Level2',
+              link: '#',
+              children: [
+                { text: 'Level3', link: '#' },
+                { text: 'Level3', link: '#' },
+              ],
+            },
+            { text: 'Level2', link: '#' },
+          ],
+        },
+        // { text: 'table', link: '/abc/table' },
+        // { text: 'Reuse Tab', link: '/abc/reuse-tab' },
+        // { text: 'Ellipsis', link: '/abc/ellipsis' },
+        // { text: 'JWT', link: '/acl/jwt' },
+        // { text: 'ueditor', link: '/editor/ueditor' },
+        // { text: 'tinymce', link: '/editor/tinymce' },
+        {
+          text: 'ABC',
+          icon: 'anticon anticon-appstore',
+          children: [
+            { text: 'Reuse Tab7', link: '/abc/reuse-tab' },
+            { text: 'Reuse Tab6', link: '/abc/reuse-tab' },
+            { text: 'Reuse Tab5', link: '/abc/reuse-tab' },
+            { text: 'Reuse Tab4', link: '/abc/reuse-tab' },
+            { text: 'Reuse Tab3', link: '/abc/reuse-tab' },
+            { text: 'Reuse Tab2', link: '/abc/reuse-tab' },
+            { text: 'Reuse Tab1', link: '/abc/reuse-tab' },
+            { text: 'Ellipsis', link: '/abc/ellipsis' },
+          ],
+        },
+        {
+          text: 'ACL',
+          icon: 'anticon anticon-save',
+          children: [{ text: 'JWT', link: '/acl/jwt' }],
+        },
+      ],
+    },
+  ];
 
-    constructor(
-        private menuSrv: MenuService,
-        public settings: SettingsService
-    ) {}
+  constructor(private menuSrv: MenuService, public settings: SettingsService) {}
 
-    toggleCollapsedSideabar() {
-        this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
-    }
+  toggleCollapsedSideabar() {
+    this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
+  }
 
-    ngOnInit(): void {
-        this.menuSrv.add(this.menus);
-    }
+  ngOnInit(): void {
+    this.menuSrv.add(this.menus);
+  }
 }

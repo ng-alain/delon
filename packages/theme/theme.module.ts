@@ -1,11 +1,4 @@
-import {
-  NgModule,
-  ModuleWithProviders,
-  InjectionToken,
-  Optional,
-  SkipSelf,
-  Inject,
-} from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { WINDOW } from './win_tokens';

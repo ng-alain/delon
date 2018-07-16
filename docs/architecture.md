@@ -54,14 +54,14 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 
 你可以在 [ng-alain.com](http://ng-alain.com) 找到所有的文档。
 
-随着脚手架的更新而不断迭代（[更新日志](https://github.com/cipchk/ng-alain/releases)），有任何问题和需求可以反馈到 [这里](//github.com/cipchk/ng-alain/issues)。
+随着脚手架的更新而不断迭代（[更新日志](https://github.com/cipchk/ng-alain/releases)），有任何问题和需求可以反馈到 [这里](https://github.com/cipchk/ng-alain/issues)。
 
 ### 版本信息
 
 | package name | version | next version |
 | ------------ |:-----:|:----------:|
 | ng-alain [Document](/cli) | [![NPM version](https://img.shields.io/npm/v/ng-alain.svg)](https://www.npmjs.com/package/ng-alain) | [![NPM version](https://img.shields.io/npm/v/ng-alain/next.svg)](https://www.npmjs.com/package/ng-alain) |
-| @delon/theme [Document](/docs/theme) | [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme) | [![NPM version](https://img.shields.io/npm/v/@delon/theme/next.svg)](https://www.npmjs.com/package/@delon/theme) |
+| @delon/theme [Document](/theme) | [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme) | [![NPM version](https://img.shields.io/npm/v/@delon/theme/next.svg)](https://www.npmjs.com/package/@delon/theme) |
 | @delon/abc [Document](/components) | [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc) | [![NPM version](https://img.shields.io/npm/v/@delon/abc/next.svg)](https://www.npmjs.com/package/@delon/abc) |
 | @delon/form [Document](/form) | [![NPM version](https://img.shields.io/npm/v/@delon/form.svg)](https://www.npmjs.com/package/@delon/form) | [![NPM version](https://img.shields.io/npm/v/@delon/form/next.svg)](https://www.npmjs.com/package/@delon/form) |
 | @delon/acl [Document](/acl) | [![NPM version](https://img.shields.io/npm/v/@delon/acl.svg)](https://www.npmjs.com/package/@delon/acl) | [![NPM version](https://img.shields.io/npm/v/@delon/acl/next.svg)](https://www.npmjs.com/package/@delon/acl) |

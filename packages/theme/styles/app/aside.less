@@ -1,0 +1,76 @@
+.aside {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  margin-top: @header-hg;
+  width: @aside-wd;
+  background-color: @aside-bg;
+  transition: width 0.2s @layout-ease, translate 0.2s @layout-ease;
+  z-index: @zindex + 5;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-overflow-scrolling: touch;
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-right: 1px solid @content-heading-border;
+  }
+  &-inner {
+    overflow-x: hidden;
+    overflow-y: scroll; // margin-right: -17px;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    /*IE10,IE11*/
+    -ms-scroll-chaining: chained;
+    -ms-overflow-style: none;
+    -ms-content-zooming: zoom;
+    -ms-scroll-rails: none;
+    -ms-content-zoom-limit-min: 100%;
+    -ms-content-zoom-limit-max: 500%;
+    -ms-scroll-snap-type: proximity;
+    -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      height: @aside-scrollbar-width;
+      width: @aside-scrollbar-height;
+    }
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 @aside-scrollbar-width
+        @aside-scrollbar-track-color;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: @aside-scrollbar-thumb-color;
+    }
+  }
+}
+
+// Desktop
+@media (min-width: @screen-md-min) {
+  .aside-collapsed {
+    .aside {
+      width: @aside-collapsed-wd;
+    }
+  }
+}
+
+// Under pad
+@media (max-width: @screen-sm-max) {
+  .aside,
+  .content {
+    transition: transform 0.3s ease;
+  }
+  .content {
+    transform: translate3d(@aside-wd, 0, 0);
+  }
+  .aside-collapsed {
+    .aside {
+      transform: translate3d(-100%, 0, 0);
+    }
+    .content {
+      transform: translateZ(0);
+    }
+  }
+}

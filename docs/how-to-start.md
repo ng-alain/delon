@@ -18,7 +18,7 @@ ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使
 
 ## 二、启动
 
-项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），脚手架的启动始于 [startup.service.ts](//github.com/cipchk/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：
+项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），脚手架的启动始于 [startup.service.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：
 
 ```ts
 // 应用信息：包括站点名、描述、年份
