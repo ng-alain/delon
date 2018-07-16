@@ -7,7 +7,7 @@ release:
   job_type: lite_image_build
   only:
     tags:
-    - release.*
+    - .*
   allow_failure: false
   compile:
     build_dir: /
@@ -25,7 +25,7 @@ self:
   job_type: DCS_deploy
   only:
     tags:
-    - release.*
+    - .*
   allow_failure: false
   dependencies:
   - release
