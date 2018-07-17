@@ -54,7 +54,11 @@ export abstract class BaseInterceptor implements HttpInterceptor {
 
     if (
       options.allow_anonymous_key &&
-      req.params.has(options.allow_anonymous_key)
+      (req.params.has(options.allow_anonymous_key) ||
+        this.injector
+          .get(Router)
+          .parseUrl(req.urlWithParams)
+          .queryParamMap.has(options.allow_anonymous_key))
     ) {
       return next.handle(req);
     }

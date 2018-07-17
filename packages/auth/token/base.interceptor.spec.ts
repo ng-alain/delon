@@ -96,47 +96,64 @@ describe('auth: base.interceptor', () => {
     httpBed = injector.get(HttpTestingController);
   }
 
-  describe('[url ignores]', () => {
-    const basicModel = genModel(SimpleTokenModel);
+  describe('[ignores]', () => {
+    describe('#with config', () => {
+      const basicModel = genModel(SimpleTokenModel);
 
-    it(`should be ignore /login`, (done: () => void) => {
-      genModule({ ignores: [/assets\//, /\/login/] }, basicModel);
+      it(`should be ignore /login`, (done: () => void) => {
+        genModule({ ignores: [/assets\//, /\/login/] }, basicModel);
 
-      http.get('/login', { responseType: 'text' }).subscribe(value => {
-        done();
-      });
-      const req = httpBed.expectOne('/login') as TestRequest;
-      expect(req.request.headers.get('token')).toBeNull();
-      req.flush('ok!');
-    });
-
-    it('should be non-ignore', (done: () => void) => {
-      genModule({ ignores: null }, basicModel);
-      http.get('/login', { responseType: 'text' }).subscribe(value => {
-        done();
-      });
-      const req = httpBed.expectOne('/login') as TestRequest;
-      expect(req.request.headers.get('token')).toBe('123');
-      req.flush('ok!');
-    });
-  });
-
-  describe('[basic]', () => {
-    it(`should be ignores Authorization when exists allow_anonymous_key`, (done: () => void) => {
-      genModule({}, genModel(SimpleTokenModel, null));
-      http
-        .get('/user', {
-          responseType: 'text',
-          params: { _allow_anonymous: '' },
-        })
-        .subscribe(value => {
+        http.get('/login', { responseType: 'text' }).subscribe(value => {
           done();
         });
-      const ret = httpBed.expectOne(
-        req => req.method === 'GET' && req.url === '/user',
-      ) as TestRequest;
-      expect(ret.request.headers.get('Authorization')).toBeNull();
-      ret.flush('ok!');
+        const req = httpBed.expectOne('/login') as TestRequest;
+        expect(req.request.headers.get('token')).toBeNull();
+        req.flush('ok!');
+      });
+
+      it('should be non-ignore', (done: () => void) => {
+        genModule({ ignores: null }, basicModel);
+        http.get('/login', { responseType: 'text' }).subscribe(value => {
+          done();
+        });
+        const req = httpBed.expectOne('/login') as TestRequest;
+        expect(req.request.headers.get('token')).toBe('123');
+        req.flush('ok!');
+      });
+    });
+
+    describe('#with allow_anonymous_key', () => {
+      it(`in params`, (done: () => void) => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        http
+          .get('/user', {
+            responseType: 'text',
+            params: { _allow_anonymous: '' },
+          })
+          .subscribe(value => {
+            done();
+          });
+        const ret = httpBed.expectOne(
+          req => req.method === 'GET' && req.url === '/user',
+        ) as TestRequest;
+        expect(ret.request.headers.get('Authorization')).toBeNull();
+        ret.flush('ok!');
+      });
+      it(`in url`, (done: () => void) => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        http
+          .get('/user?_allow_anonymous=1', {
+            responseType: 'text',
+          })
+          .subscribe(value => {
+            done();
+          });
+        const ret = httpBed.expectOne(
+          req => req.method === 'GET',
+        ) as TestRequest;
+        expect(ret.request.headers.get('Authorization')).toBeNull();
+        ret.flush('ok!');
+      });
     });
   });
 
