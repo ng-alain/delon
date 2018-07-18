@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AlainThemeModule } from '../../index';
+import { AlainThemeModule } from '../../theme.module';
 
 registerLocaleData(localeZhHans);
 

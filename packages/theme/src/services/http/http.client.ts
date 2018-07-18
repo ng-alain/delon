@@ -7,6 +7,8 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
+import { DelonThemeConfig } from '../../theme.config';
+import { HttpClientConfig } from './http.config';
 
 /**
  * 封装HttpClient，主要解决：
@@ -17,7 +19,16 @@ import { tap, catchError } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 // tslint:disable-next-line:class-name
 export class _HttpClient {
-  constructor(private http: HttpClient) {}
+  private cog: HttpClientConfig;
+  constructor(private http: HttpClient, cog: DelonThemeConfig) {
+    this.cog = Object.assign(
+      <HttpClientConfig>{
+        nullValueHandling: 'include',
+        dateValueHandling: 'timestamp',
+      },
+      cog!.http,
+    );
+  }
 
   private _loading = false;
 
@@ -28,15 +39,16 @@ export class _HttpClient {
 
   parseParams(params: any): HttpParams {
     let ret = new HttpParams();
-    // tslint:disable-next-line:forin
-    for (const key in params) {
+    Object.keys(params).forEach(key => {
       let _data = params[key];
+      // 忽略空值
+      if (this.cog.nullValueHandling === 'ignore' && _data == null) return;
       // 将时间转化为：时间戳 (秒)
-      if (_data instanceof Date) {
+      if (this.cog.dateValueHandling === 'timestamp' && _data instanceof Date) {
         _data = _data.valueOf();
       }
       ret = ret.set(key, _data);
-    }
+    });
     return ret;
   }
 

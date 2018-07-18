@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 2
 title:
   en-US: Menu Service
   zh-CN: 菜单服务

@@ -6,7 +6,7 @@ import { ACLService } from '@delon/acl';
 import {
   ALAIN_I18N_TOKEN,
   AlainI18NServiceFake,
-} from '@delon/theme/services/i18n/i18n';
+} from '../i18n/i18n';
 import { deepCopy } from '@delon/util';
 
 import { Menu } from './interface';

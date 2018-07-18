@@ -9,7 +9,7 @@ registerLocaleData(localeZhHans);
 import { distanceInWordsToNow } from 'date-fns';
 import * as zh_cn from 'date-fns/locale/zh_cn';
 
-import { AlainThemeModule } from '../../index';
+import { AlainThemeModule } from '../../theme.module';
 
 describe('Pipe: _date', () => {
   let fixture: ComponentFixture<TestComponent>;

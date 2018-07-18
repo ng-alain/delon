@@ -39,7 +39,7 @@ import { SimpleTableComponent } from './simple-table.component';
 import {
   AlainI18NServiceFake,
   AlainI18NService,
-} from '../../theme/services/i18n/i18n';
+} from '../../theme/src/services/i18n/i18n';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { dispatchDropDown } from '../../testing';
 import { SimpleTableExport } from './simple-table-export';

@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 3
 title:
   en-US: Modal Helper
   zh-CN: 对话框辅助类

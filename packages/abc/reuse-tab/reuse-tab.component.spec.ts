@@ -30,7 +30,7 @@ import { ReuseTabComponent } from './reuse-tab.component';
 import { ReuseTabMatchMode } from './interface';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
-import { AlainI18NServiceFake } from '../../theme/services/i18n/i18n';
+import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 
 let i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {

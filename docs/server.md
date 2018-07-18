@@ -13,21 +13,15 @@ ng-alain 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 在 ng-alain 中，一个完整的前端 UI 交互到服务端处理流程是这样的：
 
-1. UI 组件交互操作；
-2. 使用封装的 _HttpClient 发送请求；
-3. 触发用户认证拦截器，统一加入token参数；
-4. 触发默认拦截器，统一处理前缀等信息；
-5. 获取服务端返回；
-6. 触发默认拦截器，统一处理请求异常、业务异常等；
-7. 数据更新，并刷新 UI。
-
-### _HttpClient
-
-`@delon/theme` 包含了一个叫 [_HttpClient](https://github.com/cipchk/delon/blob/master/packages/theme/services/http/http.client.ts) 类，其本质还是调用 Angular 的 `HttpClient`，只是包裹了一个 `loading`。
-
-我们知道 ng-zorro-antd 充斥着大量 `nzLoading` 属性，它可以让网络请求的加载有更友好的体验，这样我们无须在每一个业务页面维护一个 `loadind` 变量。
-
-当然，不光如此，`_HttpClient` 还统一处理了所有时间数据格式为时间戳，这对于前端后离的状态下保证数据的一致性有很好的作用。
+1. 首次启动 Angular 执行 `APP_INITIALIZER`；
+2. UI 组件交互操作；
+3. 使用封装的 [_HttpClient](/theme/http) 发送请求；
+4. 触发用户认证拦截器 [@delon/auth](/auth/getting-started)，统一加入 `token` 参数；
+    - 若未存在 `token` 或已过期中断后续请求，直接跳转至登录页；
+5. 触发默认拦截器，统一处理前缀等信息；
+6. 获取服务端返回；
+7. 触发默认拦截器，统一处理请求异常、业务异常等；
+8. 数据更新，并刷新 UI。
 
 ### 拦截器
 

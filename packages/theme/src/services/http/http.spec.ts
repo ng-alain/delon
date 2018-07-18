@@ -9,6 +9,8 @@ import { deepCopy } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
 
 import { _HttpClient } from './http.client';
+import { HttpClientConfig } from './http.config';
+import { DelonThemeConfig } from '../../theme.config';
 
 describe('theme: http.client', () => {
   let injector: Injector;
@@ -21,16 +23,27 @@ describe('theme: http.client', () => {
   const PARAMS = { a: 1 };
   const BODY = 'body data';
 
-  describe('[property]', () => {
-    beforeEach(() => {
-      injector = TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule],
-        providers: [_HttpClient],
+  function createModule(config?: HttpClientConfig) {
+    const providers: any[] = [_HttpClient];
+    if (config) {
+      providers.push({
+        provide: DelonThemeConfig,
+        useFactory: () => ({
+          http: config,
+        }),
       });
-
-      http = injector.get(_HttpClient);
-      backend = injector.get(HttpTestingController);
+    }
+    injector = TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers,
     });
+
+    http = injector.get(_HttpClient);
+    backend = injector.get(HttpTestingController);
+  }
+
+  describe('[property]', () => {
+    beforeEach(() => createModule());
 
     it(
       '#loading',
@@ -481,6 +494,21 @@ describe('theme: http.client', () => {
           .expectOne(req => req.method === 'POST' && req.url === URL)
           .flush(OK);
       });
+    });
+  });
+
+  describe('[config]', () => {
+    it('should be none processed date values', () => {
+      createModule({ dateValueHandling: 'ignore' });
+      http.get(URL, { a: new Date() }).subscribe();
+      const ret = backend.expectOne(() => true) as TestRequest;
+      expect(ret.request.urlWithParams.length).toBeGreaterThan(URL.length + 15);
+    });
+    it('should be ingore null values', () => {
+      createModule({ nullValueHandling: 'ignore' });
+      http.get(URL, { a: 1, b: null, c: undefined }).subscribe();
+      const ret = backend.expectOne(() => true) as TestRequest;
+      expect(ret.request.urlWithParams).toBe(URL + `?a=1`);
     });
   });
 });
