@@ -2,9 +2,6 @@ import {
   SchematicTestRunner,
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
-import { getFileContent } from '@schematics/angular/utility/test';
-import { join } from 'path';
-import { Schema as NgAddOptions } from './schema';
 import { createAlainApp } from '../utils/testing';
 
 describe('NgAlainSchematic: application', () => {

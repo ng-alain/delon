@@ -15,7 +15,6 @@ import {
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import { strings } from '@angular-devkit/core';
-import { getWorkspace, Project } from './devkit-utils/config';
 import { parseName } from './devkit-utils/parse-name';
 import {
   findModuleFromOptions,
@@ -23,8 +22,8 @@ import {
 } from './devkit-utils/find-module';
 import { validateName, validateHtmlSelector } from './devkit-utils/validation';
 import { InsertChange } from './devkit-utils/change';
-import { findNode } from './devkit-utils/ast-utils';
-import { insertImport } from './devkit-utils/route-utils';
+import { findNode, insertImport } from './devkit-utils/ast-utils';
+import { getProject, Project } from './project';
 
 export interface CommonSchema {
   [key: string]: any;
@@ -220,14 +219,7 @@ function addDeclaration(schema: CommonSchema) {
 
 export function buildAlain(schema: CommonSchema): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const workspace = getWorkspace(host);
-    if (Object.keys(workspace.projects).length <= 0) {
-      throw new SchematicsException('Could not find any project.');
-    }
-    if (!schema.project) {
-      schema.project = Object.keys(workspace.projects)[0];
-    }
-    const project = workspace.projects[schema.project];
+    const project = getProject(host, schema.project);
 
     resolveSchema(host, project, schema);
 

@@ -1,5 +1,5 @@
-import { Tree, SchematicsException } from '@angular-devkit/schematics';
-import { Project, Workspace, getProjectFromWorkspace } from './devkit-utils/config';
+import { Tree } from '@angular-devkit/schematics';
+import { getProjectFromWorkspace } from './project';
 
 export function getJSON(host: Tree, jsonFile: string, type?: string): any {
   if (!host.exists(jsonFile)) return null;
@@ -88,7 +88,7 @@ export function scriptsToAngularJson(
   resources: string | string[],
   behavior: string,
   types: string[] = ['build', 'test'],
-  projectName?: string
+  projectName?: string,
 ): Tree {
   const json = getAngular(host);
   const project = getProjectFromWorkspace(json, projectName);

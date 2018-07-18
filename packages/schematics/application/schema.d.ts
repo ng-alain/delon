@@ -4,4 +4,5 @@ export interface Schema {
   i18n?: boolean;
   g2?: boolean;
   codeStyle?: boolean;
+  project?: string;
 }

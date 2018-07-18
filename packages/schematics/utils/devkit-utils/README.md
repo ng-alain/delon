@@ -1,2 +1,2 @@
 # NOTE
-This code is directly taken from [material2 schematics package](https://github.com/angular/material2/tree/master/src/lib/schematics/utils/devkit-utils).
+This code is directly taken from [angular schematics package](https://github.com/angular/angular-cli/tree/master/packages/schematics/angular/utility).

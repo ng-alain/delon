@@ -7,101 +7,10 @@ import {
   getAngular,
   overwriteAngular,
   getJSON,
-  overwritePackage,
   overwriteJSON,
 } from '../utils/json';
-import { getProjectFromWorkspace } from '../utils/devkit-utils/config';
-
-// region: files content
-
-const HMR = `import { NgModuleRef, ApplicationRef } from '@angular/core';
-import { createNewHosts } from '@angularclass/hmr';
-import { NzModalService } from 'ng-zorro-antd';
-
-export const hmrBootstrap = (
-  module: any,
-  bootstrap: () => Promise<NgModuleRef<any>>,
-) => {
-  let ngModule: NgModuleRef<any>;
-  module.hot.accept();
-  bootstrap().then(mod => (ngModule = mod));
-  module.hot.dispose(() => {
-    const appRef: ApplicationRef = ngModule.injector.get(ApplicationRef);
-    const modalService = ngModule.injector.get(NzModalService, null) as NzModalService;
-    if (modalService) modalService.closeAll();
-    const elements = appRef.components.map(c => c.location.nativeElement);
-    const makeVisible = createNewHosts(elements);
-    ngModule.destroy();
-    makeVisible();
-  });
-};`;
-
-const CONTENT = {
-HRM: `import { enableProdMode, ViewEncapsulation } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-
-import { preloaderFinished } from '@delon/theme';
-preloaderFinished();
-
-import { hmrBootstrap } from './hmr';
-
-if (environment.production) {
-  enableProdMode();
-}
-
-const bootstrap = () => {
-  return platformBrowserDynamic().bootstrapModule(AppModule, {
-    defaultEncapsulation: ViewEncapsulation.Emulated,
-    preserveWhitespaces: false,
-  }).then((res) => {
-    if ((<any>window).appBootstrap) {
-      (<any>window).appBootstrap();
-    }
-    return res;
-  });
-};
-
-if (environment.hmr) {
-  if (module[ 'hot' ]) {
-    hmrBootstrap(module, bootstrap);
-  } else {
-    console.error('HMR is not enabled for webpack-dev-server!');
-    console.log('Are you using the --hmr flag for ng serve?');
-  }
-} else {
-  bootstrap();
-}`,
-NORMAL: `import { enableProdMode, ViewEncapsulation } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-
-import { preloaderFinished } from '@delon/theme';
-preloaderFinished();
-
-if (environment.production) {
-  enableProdMode();
-}
-
-const bootstrap = () => {
-  return platformBrowserDynamic().bootstrapModule(AppModule, {
-    defaultEncapsulation: ViewEncapsulation.Emulated,
-    preserveWhitespaces: false,
-  });
-};
-
-bootstrap().then(() => {
-  if ((<any>window).appBootstrap) {
-    (<any>window).appBootstrap();
-  }
-});`
-};
-
-// endregion
+import { getProject, getProjectFromWorkspace } from '../utils/project';
+import { HMR_CONTENT } from '../utils/contents';
 
 function configToAngularJson(host: Tree, options: PluginOptions) {
   const json = getAngular(host);
@@ -127,11 +36,16 @@ function configToAngularJson(host: Tree, options: PluginOptions) {
 function envConfig(host: Tree, options: PluginOptions) {
   const defEnvPath = `${options.sourceRoot}/environments/environment.ts`;
   const defContent = host.get(defEnvPath).content;
-  if (!host.exists(defEnvPath)) return ;
+  if (!host.exists(defEnvPath)) return;
   // 1. update default env file
   addValueToVariable(host, defEnvPath, 'environment', 'hmr: false');
   // 2. update prod env file
-  addValueToVariable(host, `${options.sourceRoot}/environments/environment.prod.ts`, 'environment', 'hmr: false');
+  addValueToVariable(
+    host,
+    `${options.sourceRoot}/environments/environment.prod.ts`,
+    'environment',
+    'hmr: false',
+  );
   // 3. copy default env file to hmr file
   const hmrEnvPath = `${options.sourceRoot}/environments/environment.hmr.ts`;
   host.create(hmrEnvPath, defContent);
@@ -140,9 +54,17 @@ function envConfig(host: Tree, options: PluginOptions) {
 
 function addNodeTypeToTsconfig(host: Tree, options: PluginOptions) {
   const tsConfigPath = `${options.sourceRoot}/tsconfig.app.json`;
-  if (!host.exists(tsConfigPath)) return ;
+  if (!host.exists(tsConfigPath)) return;
   const json = getJSON(host, tsConfigPath);
-  json.compilerOptions.types = [ 'node' ];
+  const TYPENAME = 'node';
+  if (options.type === 'add') {
+    json.compilerOptions.types = [TYPENAME];
+  } else {
+    const idx = (json.compilerOptions.types as string[]).findIndex(
+      w => w === TYPENAME,
+    );
+    if (idx !== -1) (json.compilerOptions.types as string[]).splice(idx, 1);
+  }
   overwriteJSON(host, tsConfigPath, json);
 }
 
@@ -151,27 +73,35 @@ export function pluginHmr(options: PluginOptions): any {
     // 1. add package
     (options.type === 'add'
       ? addPackageToPackageJson
-      : removePackageFromPackageJson)(host, ['@angularclass/hmr@^2.1.3'], 'devDependencies');
+      : removePackageFromPackageJson)(
+      host,
+      ['@angularclass/hmr@^2.1.3'],
+      'devDependencies',
+    );
     // 2. add run scripts
     (options.type === 'add'
       ? addPackageToPackageJson
-      : removePackageFromPackageJson)(
-      host,
-      ['hmr@ng serve -c=hmr'],
-      'scripts',
-    );
+      : removePackageFromPackageJson)(host, ['hmr@ng serve -c=hmr'], 'scripts');
     // 3. add angular.json
     configToAngularJson(host, options);
     if (options.type === 'add') {
       // 4. create a hmr.ts file
-      tryAddFile(host, `${options.sourceRoot}/hmr.ts`, HMR);
+      tryAddFile(host, `${options.sourceRoot}/hmr.ts`, HMR_CONTENT.HMR_DOT_TS);
       // 5. update main.ts
-      tryAddFile(host, `${options.sourceRoot}/main.ts`, CONTENT.HRM);
+      tryAddFile(
+        host,
+        `${options.sourceRoot}/main.ts`,
+        HMR_CONTENT.HMR_MAIN_DOT_TS,
+      );
     } else {
       // 4. remove a hmr.ts file
       tryDelFile(host, `${options.sourceRoot}/hmr.ts`);
       // 5. update main.ts
-      tryAddFile(host, `${options.sourceRoot}/main.ts`, CONTENT.NORMAL);
+      tryAddFile(
+        host,
+        `${options.sourceRoot}/main.ts`,
+        HMR_CONTENT.NO_HMR_MAIN_DOT_TS,
+      );
     }
     // 7. fix not found types
     addNodeTypeToTsconfig(host, options);

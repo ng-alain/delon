@@ -1,8 +1,18 @@
 import { Tree, SchematicsException } from '@angular-devkit/schematics';
 import * as parse5 from 'parse5';
-import { getIndexHtmlPath } from './ast';
 import { InsertChange } from './devkit-utils/change';
-import { Project } from './devkit-utils/config';
+import { Project } from './project';
+
+/** Gets the app index.html file */
+export function getIndexHtmlPath(host: Tree, project: Project): string {
+  const buildTarget = project.architect.build.options;
+
+  if (buildTarget.index && buildTarget.index.endsWith('index.html')) {
+    return buildTarget.index;
+  }
+
+  throw new SchematicsException('No index.html file was found.');
+}
 
 /**
  * Parses the index.html file to get the HEAD tag position.
