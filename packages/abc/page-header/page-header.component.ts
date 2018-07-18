@@ -47,7 +47,7 @@ export class PageHeaderComponent
     if (this._menus) {
       return this._menus;
     }
-    this._menus = this.menuSrv.getPathByUrl(this.route.url);
+    this._menus = this.menuSrv.getPathByUrl(this.route.url.split('?')[0]);
 
     return this._menus;
   }
