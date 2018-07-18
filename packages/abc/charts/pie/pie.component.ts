@@ -218,7 +218,7 @@ export class G2PieComponent
       .tooltip('x*percent', (item, percent) => {
         return {
           name: item,
-          value: percent,
+          value: this.hasLegend ? percent : (percent * 100).toFixed(2)
         };
       })
       .color('x', isPercent ? formatColor : this.colors)
@@ -235,6 +235,7 @@ export class G2PieComponent
             const origin = item[0]._origin;
             origin.color = item[0].color;
             origin.checked = true;
+            // console.log(item[0]);
             origin.percent = (origin.percent * 100).toFixed(2);
             return origin;
           });
