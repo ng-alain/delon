@@ -6,6 +6,24 @@ title:
 type: Other
 ---
 
+### 1.1.5
+
+`2018-7-22`
+
+- 脚手架，移除 Docker 文件，可通过 [docker](https://ng-alain.com/cli/plugin#docker) 插件安装支持
+- @delon/theme
+  - 重构 `styles` 目录结构
+  - 新增 `DelonThemeConfig` 统一对 `_HttpClient` 设置空值、时间处理方式
+- @delon/abc
+  - 修复 `page-header` 无法解析包含查询参数问题
+  - 修复 `pip` 无图例时百分比显示不正确，[#578](https://github.com/cipchk/ng-alain/issues/578)
+- @delon/auth
+  - 修复 `allow_anonymous_key` 在 URL 中无效问题
+- Schematics
+  - 重构所有代码
+  - 新增 `docker` [插件](https://ng-alain.com/cli/plugin#docker)
+  - 修复 `ng add` 若取消 `hmr` 可能导致项目无法运行问题
+
 ### 1.1.4
 
 `2018-7-16`

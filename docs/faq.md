@@ -64,3 +64,5 @@ yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass
 npm config set registry https://registry.npm.taobao.org
 npm config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass
 ```
+
+**注意：** 淘宝源可能会出现延迟同步最新版本的问题，这种情况已经发生很多次，可以访问 https://npm.taobao.org/package/@delon/theme （其他 `@delon` 包名见[体系结构](https://ng-alain.com/docs/architecture#%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF)）查看其淘宝对应的版本号是否与 Npm 一样，若不同可点击 【SYNC】 手动同步并重试安装依赖包。

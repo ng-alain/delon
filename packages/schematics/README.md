@@ -2,6 +2,7 @@
 [![Dependency Status](https://david-dm.org/cipchk/ng-alain/status.svg)](https://david-dm.org/cipchk/ng-alain)
 [![NPM version](https://img.shields.io/npm/v/ng-alain.svg)](https://www.npmjs.com/package/ng-alain)
 [![NPM version](https://img.shields.io/npm/v/ng-alain/next.svg)](https://www.npmjs.com/package/ng-alain)
+[![Taobao version](https://npm.taobao.org/badge/v/ng-alain.svg?style=flat-square)](https://npm.taobao.org/package/ng-alain)
 [![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://prettier.io/)
 
 Angular CLI Schematics of ng-alain.
