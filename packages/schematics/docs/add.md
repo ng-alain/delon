@@ -27,3 +27,5 @@ ng add ng-alain <project name>
 ```bash
 ng add ng-alain demo --i18n --hmr
 ```
+
+查看更多[插件](/cli/plugin)。

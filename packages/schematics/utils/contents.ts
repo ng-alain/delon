@@ -1,4 +1,3 @@
-
 export const HMR_CONTENT = {
   HMR_DOT_TS: `import { NgModuleRef, ApplicationRef } from '@angular/core';
 import { createNewHosts } from '@angularclass/hmr';
@@ -83,4 +82,28 @@ bootstrap().then(() => {
     (<any>window).appBootstrap();
   }
 });`,
+};
+
+export const DOCKER_CONTENT = {
+  ignore: `node_modules
+npm-debug.log
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
+README.md
+LICENSE
+.vscode`,
+  compose: `version: '2.1'
+
+services:
+  ng-alain:
+    image: ng-alain
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 80:80
+`
 };

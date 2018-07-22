@@ -32,6 +32,13 @@ ng g ng-alain:plugin <plugin name> -t=[add | remove]
 
 G2图表。
 
+```bash
+# add
+ng g ng-alain:plugin g2
+# remove
+ng g ng-alain:plugin g2 -t=remove
+```
+
 ### codeStyle
 
 代码风格，有几个规则：
@@ -43,18 +50,59 @@ G2图表。
 
 ng-alain 默认提供了一部分的代码风格配置方案，你可以在项目的根目录下找到这些配置信息，依照你自己的风格进行修饰。
 
+```bash
+# add
+ng g ng-alain:plugin codeStyle
+# remove
+ng g ng-alain:plugin codeStyle -t=remove
+```
+
+### hmr
+
+支持HMR热替换。
+
+```bash
+# add
+ng g ng-alain:plugin hmr
+# remove
+ng g ng-alain:plugin hmr -t=remove
+```
+
+安装后可使用启用HMR模式进入开发环境：
+
+```bash
+npm run hmr
+```
+
+### docker
+
+支持Docker部署。
+
+```bash
+# add
+ng g ng-alain:plugin docker
+# remove
+ng g ng-alain:plugin docker -t=remove
+```
+
 ### npm
 
 在国内使用 npm 始终是一个“痛”，因此你可以增加一个使用淘宝镜像配置文件 `.npmrc`，来解决网络问题。
+
+```bash
+# add
+ng g ng-alain:plugin npm
+# remove
+ng g ng-alain:plugin npm -t=remove
+```
 
 ### yarn
 
 修复由于降级 Less 导致无法使用 `yarn` 安装依赖包问题。
 
-### hmr
-
-支持HMR热替换，安装后可使用启用HMR模式进入开发环境：
-
 ```bash
-npm run hmr
+# add
+ng g ng-alain:plugin yarn
+# remove
+ng g ng-alain:plugin yarn -t=remove
 ```

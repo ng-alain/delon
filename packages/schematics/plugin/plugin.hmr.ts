@@ -9,7 +9,7 @@ import {
   getJSON,
   overwriteJSON,
 } from '../utils/json';
-import { getProject, getProjectFromWorkspace } from '../utils/project';
+import { getProjectFromWorkspace } from '../utils/project';
 import { HMR_CONTENT } from '../utils/contents';
 
 function configToAngularJson(host: Tree, options: PluginOptions) {

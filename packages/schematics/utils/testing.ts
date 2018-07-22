@@ -4,6 +4,8 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 
+export const APPNAME = 'foo';
+
 export function createNgRunner() {
   return new SchematicTestRunner(
     'schematics',
@@ -33,7 +35,7 @@ export function createAlainApp(
   const appTree = baseRunner.runSchematic(
     'application',
     {
-      name: 'foo',
+      name: APPNAME,
       inlineStyle: false,
       inlineTemplate: false,
       routing: false,
@@ -67,7 +69,7 @@ export function createAlainAndModuleApp(
   const res = createAlainApp(ngAddOptions);
   res.tree = res.runner.runSchematic(
     'module',
-    { name, project: 'foo', routing: true },
+    { name, project: APPNAME, routing: true },
     res.tree,
   );
   return res;
@@ -75,7 +77,7 @@ export function createAlainAndModuleApp(
 
 export function createTestApp(): UnitTestTree {
   return createNgRunner().runSchematic('ng-new', {
-    name: 'foo',
+    name: APPNAME,
     directory: '',
     version: '6.0.0',
     routing: true,

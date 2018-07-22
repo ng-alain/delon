@@ -55,11 +55,6 @@ copyFiles() {
     "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
     # ci
     "${1}.vscode|${2}application/files/root/__dot__vscode"
-    "${1}_nginx|${2}application/files/root/_nginx"
-    "${1}.dockerignore|${2}application/files/root/__dot__dockerignore"
-    "${1}docker-compose.debug.yml|${2}application/files/root"
-    "${1}docker-compose.yml|${2}application/files/root"
-    "${1}Dockerfile|${2}application/files/root"
     # LICENSE
     "${1}LICENSE|${2}application/files/root"
     "${1}README.md|${2}application/files/root"

@@ -16,6 +16,7 @@ import { pluginCodeStyle } from './plugin.code-style';
 import { pluginNpm } from './plugin.npm';
 import { pluginYarn } from './plugin.yarn';
 import { pluginHmr } from './plugin.hmr';
+import { pluginDocker } from './plugin.docker';
 
 function installPackages() {
   return (host: Tree, context: SchematicContext) => {
@@ -28,7 +29,9 @@ export default function(options: PluginSchema): Rule {
     const project = getProject(host, options.project);
     const pluginOptions: PluginOptions = {
       type: options.type,
+      name: project.name,
       projectPrefix: project.prefix,
+      root: project.root,
       sourceRoot: project.sourceRoot,
       project: options.project,
     };
@@ -49,6 +52,9 @@ export default function(options: PluginSchema): Rule {
         break;
       case 'hmr':
         rules.push(pluginHmr(pluginOptions));
+        break;
+      case 'docker':
+        rules.push(pluginDocker(pluginOptions));
         break;
       default:
         throw new SchematicsException(
