@@ -111,6 +111,8 @@ do
 
   if ! containsElement "${PACKAGE}" "${NODE_PACKAGES[@]}"; then
 
+    updateVersionReferences ${SRC_DIR}
+
     echo '======    Compiling to es2015 via Angular compiler'
     $NGC -p ${SRC_DIR}/tsconfig-build.json --t es2015 --outDir ${ES2015_DIR}/src
 

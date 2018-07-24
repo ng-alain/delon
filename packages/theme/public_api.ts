@@ -14,3 +14,4 @@ export { CNCurrencyPipe } from './src/pipes/currency/cn-currency.pipe';
 export { KeysPipe } from './src/pipes/keys/keys.pipe';
 export { YNPipe } from './src/pipes/yn/yn.pipe';
 export { AlainThemeModule } from './src/theme.module';
+export { VERSION } from './src/version';
