@@ -57,6 +57,7 @@ import { SimpleTableExport } from './simple-table-export';
 })
 export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   private data$: Subscription;
+  private i18n$: Subscription;
   private _inited = false;
   _data: SimpleTableData[] = [];
   _url: string;
@@ -67,7 +68,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   _indeterminate = false;
   _columns: SimpleTableColumn[] = [];
 
-  // region: fields
+  //#region fields
 
   /** 数据源 */
   @Input() data: string | any[] | Observable<any[]>;
@@ -338,7 +339,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   }
   private _zeroIndexedOnPage = false;
 
-  // endregion
+  //#endregion
 
   constructor(
     private defConfig: AdSimpleTableConfig,
@@ -359,9 +360,12 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     @Inject(DOCUMENT) private doc: any,
   ) {
     Object.assign(this, deepCopy(defConfig));
+    if (i18nSrv) {
+      this.i18n$ = i18nSrv.change.subscribe(() => this.updateColumns());
+    }
   }
 
-  // region: data
+  //#region data
 
   /**
    * 根据页码重新加载数据
@@ -589,9 +593,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     return false;
   }
 
-  // endregion
+  //#endregion
 
-  // region: sort
+  //#region sort
 
   _sortMap: { [key: number]: any } = {};
   _sortColumn: SimpleTableColumn = null;
@@ -662,9 +666,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  // endregion
+  //#endregion
 
-  // region: filter
+  //#region filter
 
   private getReqFilterMap(): { [key: string]: string } {
     let ret = {};
@@ -706,9 +710,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     item.checked = checked;
   }
 
-  // endregion
+  //#endregion
 
-  // region: checkbox
+  //#region checkbox
 
   /** 清除所有 `checkbox` */
   clearCheck(): this {
@@ -748,9 +752,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     return this;
   }
 
-  // endregion
+  //#endregion
 
-  // region: radio
+  //#region radio
 
   /** 清除所有 `radio` */
   clearRadio(): this {
@@ -767,9 +771,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     return this;
   }
 
-  // endregion
+  //#endregion
 
-  // region: buttons
+  //#region buttons
 
   btnCoerce(list: SimpleTableButton[]): SimpleTableButton[] {
     if (!list) return [];
@@ -859,9 +863,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     return btn.text;
   }
 
-  // endregion
+  //#endregion
 
-  // region: fixed
+  //#region fixed
 
   fixedCoerce(list: SimpleTableColumn[]) {
     list.forEach((item, idx) => {
@@ -875,9 +879,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  // endregion
+  //#endregion
 
-  // region: export
+  //#region export
 
   /**
    * 导出Excel，确保已经注册 `AdXlsxModule`
@@ -902,7 +906,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
 
-  // endregion
+  //#endregion
 
   ngOnInit(): void {
     this._inited = true;
@@ -1030,9 +1034,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.data$) {
-      this.data$.unsubscribe();
-      this.data$ = null;
-    }
+    [this.data$, this.i18n$].filter(w => w).forEach(i => {
+      i.unsubscribe();
+      i = null;
+    });
   }
 }

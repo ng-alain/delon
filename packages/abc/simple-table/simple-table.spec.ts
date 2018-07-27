@@ -1529,10 +1529,11 @@ describe('abc: simple-table', () => {
 
   describe('[i18n]', () => {
     let i18nSrv: AlainI18NService;
+    let curLang = 'en';
     beforeEach(() => {
       genModule({ i18n: true });
       i18nSrv = injector.get(ALAIN_I18N_TOKEN);
-      spyOn(i18nSrv, 'fanyi');
+      spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
     });
     it('in title', () => {
       page.newColumn([{ title: '', index: 'id' }]);
@@ -1547,6 +1548,14 @@ describe('abc: simple-table', () => {
         { title: '', index: 'id', buttons: [{ text: '', i18n: 'a' }] },
       ]);
       expect(i18nSrv.fanyi).toHaveBeenCalled();
+    });
+    it('should be re-render columns when i18n changed', () => {
+      page.newColumn([{ title: '', i18n: curLang, index: 'id' }])
+          .expectHead(curLang, 'id');
+          curLang = 'zh';
+      i18nSrv.use(curLang);
+      fixture.detectChanges();
+      page.expectHead(curLang, 'id');
     });
   });
 
