@@ -36,7 +36,7 @@
     "site:gh": "bash ./site.sh -b -d",
     "release": "bash ./build.sh && bash build-schematics.sh -b",
     "publish:next": "npm run release && bash ./scripts/release/publish-next",
-    "publish": "npm run release && bash ./scripts/release/publish",
+    "publish": "npm run release && bash ./scripts/release/publish && bash ./scripts/release/sync-taobao",
     "scaffold:release": "bash ./scaffold.sh -b",
     "scaffold:gh": "bash ./scaffold.sh -b -d"
   },
