@@ -5,7 +5,7 @@ set -u -e -o pipefail
 readonly currentDir=$(cd $(dirname $0); pwd)
 cd ${currentDir}
 
-# PACKAGES=(form)
+# PACKAGES=(theme)
 PACKAGES=(acl
   util
   theme
@@ -22,7 +22,7 @@ buildLess() {
   echo 'fix abc components import paths...'
   sed -i -r "s/..\/..\/..\/theme/..\/..\/..\/..\/theme/g" `grep ..\/..\/..\/theme -rl ${DIST_DIR}/packages-dist/abc/`
   # echo 'fix zorro paths...'
-  # sed -i -r "s/~ng-zorro-antd/..\/..\/..\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl ${DIST_DIR}/packages-dist/theme/styles/`
+  sed -i -r "s/~ng-zorro-antd/..\/..\/..\/..\/node_modules\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl ${DIST_DIR}/packages-dist/theme/styles/`
   echo 'build full css...'
   node ./scripts/build/generate-css.js
   node ./scripts/build/generate-css.js min
@@ -88,10 +88,10 @@ SRC_DIST_DIR=${DIST_DIR}/packages
 rm -rf ${SRC_DIST_DIR}
 rm -rf ${SRC_DIST_DIR}-dist
 
-echo "====== Copy source [exclude: cli]"
+echo "====== Copy source [exclude: schematics]"
 
 mkdir -p ${SRC_DIST_DIR}
-rsync -a --exclude="cli/" --exclude="schematics/" --exclude="test.ts" ${PACKAGES_DIR} ${SRC_DIST_DIR}
+rsync -a --exclude="schematics/" --exclude="test.ts" ${PACKAGES_DIR} ${SRC_DIST_DIR}
 node ./scripts/build/inline-template.js
 
 for PACKAGE in ${PACKAGES[@]}

@@ -21,7 +21,7 @@ if (min) {
   plugins.push(cleanCSSPlugin);
 }
 less.render
-  .call(less, content, { plugins })
+  .call(less, content, { plugins, paths: [ '/node_modules/ng-zorro-antd/src/'] })
   .then(({ css }) => {
     fs.writeFileSync(path.join(ROOT_DIR, `theme/styles/ng-alain${min ? '.min' : ''}.css`), css);
   })
