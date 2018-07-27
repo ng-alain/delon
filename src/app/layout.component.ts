@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService, SettingsService, Menu } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-layout',
@@ -58,7 +59,7 @@ export class LayoutComponent implements OnInit {
           text: 'Dashboard',
           link: '/dashboard',
           icon: 'anticon anticon-appstore-o',
-          badge: 5
+          badge: 5,
         },
         {
           text: 'Level1',
@@ -105,7 +106,11 @@ export class LayoutComponent implements OnInit {
     },
   ];
 
-  constructor(private menuSrv: MenuService, public settings: SettingsService) {}
+  constructor(
+    private menuSrv: MenuService,
+    public settings: SettingsService,
+    public msgSrv: NzMessageService,
+  ) {}
 
   toggleCollapsedSideabar() {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);

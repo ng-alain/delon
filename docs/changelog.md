@@ -6,6 +6,19 @@ title:
 type: Other
 ---
 
+### 1.2.0
+
+`2018-7-27`
+
+- 脚手架
+  - 增加 `ng-alain-version` 版本号至 `body` 元素，[3e1966](https://github.com/cipchk/ng-alain/commit/3e1966)
+  - 升级至 Angular 6.1.x 版本号，支持 typescript 2.9.x，[d0adcd](https://github.com/cipchk/ng-alain/commit/d0adcd)
+  - 重构引用 `node_modules/@delon` 开头的样式路径为 `~@delon`，[67c771](https://github.com/cipchk/ng-alain/commit/67c771)
+- @delon/theme
+  - 增加 `VERSION` 版本号
+- Schematics
+  - 修复 `ng add ng-alain` 在 Angular Cli 6.1.x 下无法运行，[#601](https://github.com/cipchk/ng-alain/issues/601)
+
 ### 1.1.5
 
 `2018-7-22`
