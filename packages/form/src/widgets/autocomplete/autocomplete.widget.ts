@@ -20,6 +20,7 @@ export const EMAILSUFFIX = [
       <input nz-input [nzAutocomplete]="auto"
         [attr.id]="id"
         [disabled]="disabled"
+        [attr.disabled]="disabled"
         [nzSize]="ui.size"
         [value]="value"
         (input)="setValue($event.target?.value)"

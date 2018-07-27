@@ -10,6 +10,7 @@ import { toBool } from '../../utils';
     <textarea nz-input
       [attr.id]="id"
       [disabled]="disabled"
+      [attr.disabled]="disabled"
       [nzSize]="ui.size"
       [value]="value"
       (input)="setValue($event.target?.value)"

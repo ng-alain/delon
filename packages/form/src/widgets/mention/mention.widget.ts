@@ -26,6 +26,7 @@ import { NzMentionComponent } from 'ng-zorro-antd';
           <input nzMentionTrigger nz-input
             [attr.id]="id"
             [disabled]="disabled"
+            [attr.disabled]="disabled"
             [nzSize]="ui.size"
             [ngModel]="value"
             (ngModelChange)="setValue($event)"
@@ -38,6 +39,7 @@ import { NzMentionComponent } from 'ng-zorro-antd';
           <textarea nzMentionTrigger nz-input
             [attr.id]="id"
             [disabled]="disabled"
+            [attr.disabled]="disabled"
             [nzSize]="ui.size"
             [ngModel]="value"
             (ngModelChange)="setValue($event)"

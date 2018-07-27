@@ -27,6 +27,7 @@ import { SFSchema } from '@delon/form';
         <input nz-input
                 [attr.id]="id"
                 [disabled]="me.disabled"
+                [attr.disabled]="me.disabled"
                 [nzSize]="ui.size"
                 [value]="me.formProperty.value"
                 (input)="me.setValue($event.target?.value)">
