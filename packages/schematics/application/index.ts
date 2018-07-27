@@ -10,6 +10,7 @@ import {
   template,
   move,
   filter,
+  MergeStrategy,
 } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
@@ -339,7 +340,9 @@ function addFilesToRoot(options: ApplicationOptions) {
           VERSION,
           ZORROVERSION,
         }),
+        // move('/')
       ]),
+      MergeStrategy.Overwrite
     )
   ]);
 }
