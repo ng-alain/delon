@@ -33,13 +33,13 @@
   <nz-col [nzSpan]="12" [hidden]="!expand">
     <nz-tabset>
       <nz-tab nzTitle="Schema">
-        <ace [(value)]="schema" [mode]="'json'" [theme]="'github'" [config]="{fontSize: '16px'}" (valueChange)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace>
+        <ace-editor [(text)]="schema" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '16px'}" [durationBeforeCallback]="1000" (textChanged)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
       </nz-tab>
       <nz-tab nzTitle="Form Data">
-        <ace [(value)]="formCode" [mode]="'json'" [theme]="'github'" [config]="{fontSize: '16px'}" (valueChange)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace>
+        <ace-editor [(text)]="formCode" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '16px'}" [durationBeforeCallback]="1000" (textChanged)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
       </nz-tab>
       <nz-tab nzTitle="UI Schema">
-        <ace [(value)]="uiCode" [mode]="'json'" [theme]="'github'" [config]="{fontSize: '16px'}" (valueChange)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace>
+        <ace-editor [(text)]="uiCode" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '16px'}" [durationBeforeCallback]="1000" (textChanged)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
       </nz-tab>
     </nz-tabset>
   </nz-col>

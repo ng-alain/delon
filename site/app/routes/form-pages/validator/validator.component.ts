@@ -3,9 +3,6 @@ import { _HttpClient } from '@delon/theme';
 import { SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 import { copy } from '@delon/util';
-import 'brace';
-import 'brace/mode/json';
-import 'brace/theme/github';
 import { I18NService } from '../../../core/i18n/service';
 import { CodeService } from '../../../core/code.service';
 
