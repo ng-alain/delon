@@ -39,7 +39,7 @@ function removeOrginalFiles() {
   return (host: Tree) => {
     [
       `${project.root}/README.md`,
-      // `${project.sourceRoot}/main.ts`,
+      `${project.sourceRoot}/main.ts`,
       `${project.sourceRoot}/environments/environment.prod.ts`,
       `${project.sourceRoot}/environments/environment.ts`,
       `${project.sourceRoot}/styles.less`,
@@ -51,7 +51,11 @@ function removeOrginalFiles() {
     ]
       .filter(p => host.exists(p))
       .forEach(p => host.delete(p));
+  };
+}
 
+function fixMain() {
+  return (host: Tree) => {
     // fix: main.ts using no hmr file
     tryAddFile(
       host,
@@ -291,6 +295,23 @@ function addStyle(options: ApplicationOptions) {
   };
 }
 
+function mergeFiles(options: ApplicationOptions, from: string, to: string) {
+  return mergeWith(
+    apply(url(from), [
+      options.i18n ? noop() : filter(p => p.indexOf('i18n') === -1),
+      options.form ? noop() : filter(p => p.indexOf('json-schema') === -1),
+      template({
+        utils: strings,
+        ...options,
+        dot: '.',
+        VERSION,
+        ZORROVERSION,
+      }),
+      move(to),
+    ]),
+  );
+}
+
 function addFilesToRoot(options: ApplicationOptions) {
   return chain([
     mergeWith(
@@ -318,9 +339,8 @@ function addFilesToRoot(options: ApplicationOptions) {
           VERSION,
           ZORROVERSION,
         }),
-        move('/'),
       ]),
-    ),
+    )
   ]);
 }
 
@@ -346,6 +366,7 @@ export default function(options: ApplicationOptions): Rule {
       // files
       removeOrginalFiles(),
       addFilesToRoot(options),
+      fixMain(),
       addStyle(options),
       installPackages(),
     ])(host, context);
