@@ -25,5 +25,6 @@
   ],
   "peerDependencies": {
     "extend": "^3.0.1"
-  }
+  },
+  "sideEffects": false
 }

@@ -33,5 +33,6 @@
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",
     "@delon/acl": "PEER-0.0.0-PLACEHOLDER"
-  }
+  },
+  "sideEffects": false
 }

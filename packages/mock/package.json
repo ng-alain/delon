@@ -30,5 +30,6 @@
     "component"
   ],
   "peerDependencies": {
-  }
+  },
+  "sideEffects": false
 }

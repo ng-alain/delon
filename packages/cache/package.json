@@ -28,5 +28,6 @@
     "angular",
     "component"
   ],
-  "peerDependencies": {}
+  "peerDependencies": {},
+  "sideEffects": false
 }

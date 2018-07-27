@@ -30,5 +30,6 @@
   ],
   "peerDependencies": {
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER"
-  }
+  },
+  "sideEffects": false
 }

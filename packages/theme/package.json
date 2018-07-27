@@ -27,5 +27,6 @@
   "peerDependencies": {
     "ng-zorro-antd": "ZORRO-0.0.0-PLACEHOLDER",
     "@delon/acl": "PEER-0.0.0-PLACEHOLDER"
-  }
+  },
+  "sideEffects": false
 }
