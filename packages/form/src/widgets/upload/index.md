@@ -27,7 +27,6 @@ type: Widgets
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | -
-`[size]` | 大小，等同 `nzSize` | `string` | -
 `[type]` | 上传类型 | `select,drag` | `select`
 `[text]` | 按钮文本 | `string` | `点击上传`
 `[hint]` | 提醒文本，drag 时有效 | `string` | `支持单个或批量，严禁上传公司数据或其他安全文件`
