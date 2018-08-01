@@ -5,6 +5,7 @@ import { DelonAuthConfig } from '../../auth.config';
 import { BaseInterceptor } from '../base.interceptor';
 import { DA_SERVICE_TOKEN } from '../interface';
 import { JWTTokenModel } from './jwt.model';
+import { CheckJwt } from '../helper';
 
 @Injectable()
 export class JWTInterceptor extends BaseInterceptor {
@@ -12,11 +13,7 @@ export class JWTInterceptor extends BaseInterceptor {
     this.model = this.injector
       .get(DA_SERVICE_TOKEN)
       .get<JWTTokenModel>(JWTTokenModel);
-    return (
-      this.model &&
-      this.model.token &&
-      !this.model.isExpired(options.token_exp_offset)
-    );
+    return CheckJwt(this.model as JWTTokenModel, options.token_exp_offset);
   }
 
   setReq(req: HttpRequest<any>, options: DelonAuthConfig): HttpRequest<any> {

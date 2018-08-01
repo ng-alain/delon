@@ -1,6 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class DelonAuthConfig {
   /**
    * 存储KEY值

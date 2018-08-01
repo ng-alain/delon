@@ -18,7 +18,7 @@ import { _HttpClient } from '@delon/theme';
 
 import { ITokenModel } from './interface';
 import { DelonAuthConfig } from '../auth.config';
-import { WINDOW } from '../win_tokens';
+import { ToLogin } from './helper';
 
 export abstract class BaseInterceptor implements HttpInterceptor {
   constructor(@Optional() protected injector: Injector) {}
@@ -66,15 +66,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
     if (this.isAuth(options)) {
       req = this.setReq(req, options);
     } else {
-      if (options.token_invalid_redirect === true) {
-        setTimeout(() => {
-          if (/^https?:\/\//g.test(options.login_url)) {
-            this.injector.get(WINDOW).location.href = options.login_url;
-          } else {
-            this.injector.get(Router).navigate([options.login_url]);
-          }
-        });
-      }
+      ToLogin(options, this.injector);
       // observer.error：会导倒后续拦截器无法触发，因此，需要处理 `_HttpClient` 状态问题
       const hc = this.injector.get(_HttpClient, null);
       if (hc) hc.end();

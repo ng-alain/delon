@@ -1,20 +1,17 @@
-import { Injectable, Injector } from '@angular/core';
-import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
 import { HttpRequest } from '@angular/common/http';
 
 import { DelonAuthConfig } from '../../auth.config';
 import { SimpleTokenModel } from './simple.model';
 import { BaseInterceptor } from '../base.interceptor';
 import { DA_SERVICE_TOKEN } from '../interface';
+import { CheckSimple } from '../helper';
 
 @Injectable()
 export class SimpleInterceptor extends BaseInterceptor {
   isAuth(options: DelonAuthConfig): boolean {
     this.model = this.injector.get(DA_SERVICE_TOKEN).get() as SimpleTokenModel;
-    return (
-      this.model &&
-      (typeof this.model.token === 'string' && this.model.token.length > 0)
-    );
+    return CheckSimple(this.model as SimpleTokenModel);
   }
 
   setReq(req: HttpRequest<any>, options: DelonAuthConfig): HttpRequest<any> {
