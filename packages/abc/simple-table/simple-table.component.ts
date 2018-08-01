@@ -44,6 +44,7 @@ import {
   ResReNameType,
   ReqReNameType,
   SimpleTableMultiSort,
+  SimpleTableRowClick,
 } from './interface';
 import { AdSimpleTableConfig } from './simple-table.config';
 import { SimpleTableExport } from './simple-table-export';
@@ -329,6 +330,18 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   readonly filterChange: EventEmitter<SimpleTableColumn> = new EventEmitter<
     SimpleTableColumn
   >();
+  /** 行单击回调 */
+  @Output()
+  readonly rowClick: EventEmitter<SimpleTableRowClick> = new EventEmitter<
+    SimpleTableRowClick
+  >();
+  /** 行双击回调 */
+  @Output()
+  readonly rowDblClick: EventEmitter<SimpleTableRowClick> = new EventEmitter<
+    SimpleTableRowClick
+  >();
+  /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
+  @Input() rowClickTime = 200;
   /** 后端分页是否采用`1`基索引，只在`data`类型为`string`时有效 */
   @Input()
   get zeroIndexedOnPage() {
@@ -593,6 +606,20 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     return false;
   }
 
+  private rowClickCount = 0;
+  _rowClick(e: Event, item: any, index: number) {
+    ++this.rowClickCount;
+    if (this.rowClickCount !== 1) return;
+    setTimeout(() => {
+      if (this.rowClickCount === 1) {
+        this.rowClick.emit({ e, item, index });
+      } else {
+        this.rowDblClick.emit({ e, item, index });
+      }
+      this.rowClickCount = 0;
+    }, this.rowClickTime);
+  }
+
   //#endregion
 
   //#region sort
@@ -815,7 +842,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  btnClick(record: any, btn: SimpleTableButton) {
+  btnClick(e: Event, record: any, btn: SimpleTableButton) {
+    e.stopPropagation();
     if (btn.type === 'modal' || btn.type === 'static') {
       const obj = {};
       obj[btn.paramName || this.defConfig.modalParamsName || 'record'] = record;

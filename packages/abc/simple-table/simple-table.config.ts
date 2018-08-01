@@ -83,4 +83,8 @@ export class AdSimpleTableConfig {
    * 前端分页，当 `data` 为`any[]` 或 `Observable<any[]>` 有效
    */
   frontPagination? = true;
+  /**
+   * 行单击多少时长之类为双击（单位：毫秒），默认：`200`
+   */
+  rowClickTime? = 200;
 }

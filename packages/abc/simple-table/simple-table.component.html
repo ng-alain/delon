@@ -57,7 +57,7 @@
   </thead>
   <tbody class="ad-st-body">
     <ng-container *ngFor="let i of _data; let index=index">
-      <tr [attr.data-index]="index">
+      <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)">
         <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand"></td>
         <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right" [nzCheckbox]="c.type === 'checkbox'" [ngClass]="c.className"
           [attr.colspan]="c.colSpan">
@@ -84,7 +84,7 @@
             <ng-container *ngFor="let btn of c.buttons; let last=last">
               <ng-container *ngIf="btn.iif(i, btn, c)" [ngSwitch]="btn._type">
                 <ng-container *ngSwitchCase="2">
-                  <nz-popconfirm [nzTitle]="btn.popTitle" (nzOnConfirm)="btnClick(i, btn)">
+                  <nz-popconfirm [nzTitle]="btn.popTitle" (nzOnConfirm)="btnClick($event, i, btn)">
                     <a nz-popconfirm [innerHTML]="btnText(i, btn)"></a>
                   </nz-popconfirm>
                 </ng-container>
@@ -97,16 +97,16 @@
                     <ul nz-menu>
                       <ng-container *ngFor="let subBtn of btn.children">
                         <li nz-menu-item *ngIf="subBtn.iif(i, subBtn, c)">
-                          <nz-popconfirm *ngIf="subBtn._type === 2" [nzTitle]="subBtn.popTitle" (nzOnConfirm)="btnClick(i, subBtn)">
+                          <nz-popconfirm *ngIf="subBtn._type === 2" [nzTitle]="subBtn.popTitle" (nzOnConfirm)="btnClick($event, i, subBtn)">
                             <span nz-popconfirm [innerHTML]="btnText(i, subBtn)"></span>
                           </nz-popconfirm>
-                          <span *ngIf="subBtn._type !== 2" (click)="btnClick(i, subBtn)" [innerHTML]="btnText(i, subBtn)"></span>
+                          <span *ngIf="subBtn._type !== 2" (click)="btnClick($event, i, subBtn)" [innerHTML]="btnText(i, subBtn)"></span>
                         </li>
                       </ng-container>
                     </ul>
                   </nz-dropdown>
                 </ng-container>
-                <a *ngSwitchDefault (click)="btnClick(i, btn)" [innerHTML]="btnText(i, btn)"></a>
+                <a *ngSwitchDefault (click)="btnClick($event, i, btn)" [innerHTML]="btnText(i, btn)"></a>
                 <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
               </ng-container>
             </ng-container>

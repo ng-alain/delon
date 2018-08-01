@@ -75,6 +75,9 @@ config: AdSimpleTableConfig
 `(checkboxChange)` | checkbox变化时回调，参数为当前所选清单 | `EventEmitter` | -
 `(radioChange)` | radio变化时回调，参数为当前所选 | `EventEmitter` | -
 `(filterChange)` | Filter回调 | `EventEmitter` | -
+`[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200`
+`(rowClick)` | 行单击回调 | `EventEmitter<SimpleTableRowClick>` | -
+`(rowDblClick)` | 行双击回调 | `EventEmitter<SimpleTableRowClick>` | -
 
 ### 组件方法
 
