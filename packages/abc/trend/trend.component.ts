@@ -10,6 +10,7 @@ import { toBoolean } from '@delon/util';
   host: {
     '[class.ad-trend]': 'true',
     '[class.grey]': '!colorful',
+    '[class.reverse]': 'colorful && reverseColor',
   },
   preserveWhitespaces: false,
 })
@@ -26,4 +27,14 @@ export class TrendComponent {
     this._colorful = toBoolean(value);
   }
   private _colorful = true;
+
+  /** 颜色反转 */
+  @Input()
+  get reverseColor() {
+    return this._reverseColor;
+  }
+  set reverseColor(value: any) {
+    this._reverseColor = toBoolean(value);
+  }
+  private _reverseColor = false;
 }

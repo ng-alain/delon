@@ -1,7 +1,7 @@
 @import '../../../theme/styles/default';
 .ad-trend {
   display: inline-block;
-  font-size: 14px;
+  font-size: @font-size-base;
   line-height: 22px;
   .up,
   .down {
@@ -24,6 +24,14 @@
     .up,
     .down {
       color: @text-color;
+    }
+  }
+  &.reverse {
+    .up {
+      color: @green-6;
+    }
+    .down {
+      color: @red-6;
     }
   }
 }

@@ -21,12 +21,6 @@ describe('abc: trend', () => {
     fixture.detectChanges();
   });
 
-  function isText(cls: string, value: any) {
-    const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
-    if (el) return el.innerText.trim();
-    return '';
-  }
-
   function isExists(cls: string, stauts: boolean = true) {
     if (stauts) expect(dl.query(By.css(cls))).not.toBeNull();
     else expect(dl.query(By.css(cls))).toBeNull();
@@ -57,16 +51,38 @@ describe('abc: trend', () => {
       isExists('.grey', true);
     });
   });
+
+  describe('#reverseColor', () => {
+    it('width true', () => {
+      context.colorful = true;
+      context.reverseColor = true;
+      fixture.detectChanges();
+      isExists('.reverse', true);
+    });
+    it('width false', () => {
+      context.colorful = true;
+      context.reverseColor = false;
+      fixture.detectChanges();
+      isExists('.reverse', false);
+    });
+    it('should be muse is colorful: true', () => {
+      context.reverseColor = true;
+      fixture.detectChanges();
+      isExists('.reverse', false);
+    });
+  });
 });
 
 @Component({
   template: `
     <trend #comp
         [flag]="flag"
-        [colorful]="colorful"></trend>`,
+        [colorful]="colorful"
+        [reverseColor]="reverseColor"></trend>`,
 })
 class TestComponent {
   @ViewChild('comp') comp: TrendComponent;
   flag: 'up' | 'down';
   colorful: boolean;
+  reverseColor: boolean;
 }
