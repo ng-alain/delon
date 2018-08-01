@@ -17,6 +17,7 @@ import { pluginNpm } from './plugin.npm';
 import { pluginYarn } from './plugin.yarn';
 import { pluginHmr } from './plugin.hmr';
 import { pluginDocker } from './plugin.docker';
+import { pluginAsdf } from './plugin.asdf';
 
 function installPackages() {
   return (host: Tree, context: SchematicContext) => {
@@ -55,6 +56,9 @@ export default function(options: PluginSchema): Rule {
         break;
       case 'docker':
         rules.push(pluginDocker(pluginOptions));
+        break;
+      case 'asdf':
+        rules.push(pluginAsdf(pluginOptions));
         break;
       default:
         throw new SchematicsException(
