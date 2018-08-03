@@ -631,9 +631,9 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
 
   private getReqSortMap(): { [key: string]: string } {
     let ret: { [key: string]: string } = {};
-    if (!this._sortOrder) return ret;
-
     const ms = this.multiSort;
+    if (!ms && !this._sortOrder) return ret;
+
     if (ms) {
       Object.keys(this._sortMap)
         .filter(key => this._sortMap[key].enabled && this._sortMap[key].v)
