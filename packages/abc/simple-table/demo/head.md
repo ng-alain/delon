@@ -7,13 +7,16 @@ title: 后端筛选和排序
 
 ```ts
 import { Component } from '@angular/core';
-import { SimpleTableColumn, SimpleTableFilter } from '@delon/abc';
+import { SimpleTableColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
-  template: `<simple-table [data]="url" [extraParams]="params" [total]="total" [columns]="columns"
+  template: `
+  <button nz-button (click)="st.reset()">重置</button>
+  <simple-table #st [data]="url" [extraParams]="params" [total]="total" [columns]="columns"
                 [resReName]="{list: 'results' }"
-                multiSort></simple-table>`,
+                multiSort></simple-table>
+  `,
 })
 export class DemoComponent {
   url = `https://randomuser.me/api/?results=3`;
@@ -26,7 +29,7 @@ export class DemoComponent {
       title: '姓名',
       index: 'name.last',
       format: (item: any) => `${item.name.last} ${item.name.first}`,
-      sorter: (a, b) => true,
+      sorter: () => true,
     },
     {
       title: '国家',
@@ -37,7 +40,7 @@ export class DemoComponent {
         { text: '德国', value: 'DE' },
       ],
       filter: () => true,
-      sorter: (a, b) => true,
+      sorter: () => true,
     },
     {
       title: '性别',
@@ -48,9 +51,9 @@ export class DemoComponent {
       ],
       filterMultiple: false,
       filter: () => true,
-      sorter: (a, b) => true,
+      sorter: () => true,
     },
-    { title: '注册时间', type: 'date', index: 'registered' },
+    { title: '注册时间', type: 'date', index: 'registered.date' },
   ];
 }
 ```

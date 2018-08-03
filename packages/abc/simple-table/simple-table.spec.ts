@@ -523,13 +523,13 @@ describe('abc: simple-table', () => {
           ];
           page.newColumn(columns).expectCell('del', 1, 1, 'nz-popconfirm');
           // mock trigger
-          comp.btnClick(
+          comp._btnClick(
             new MouseEvent('click'),
             comp._data[0],
             comp._columns[0].buttons[0],
           );
           expect(columns[0].buttons[1].click).not.toHaveBeenCalled();
-          comp.btnClick(
+          comp._btnClick(
             new MouseEvent('click'),
             comp._data[0],
             comp._columns[0].buttons[1],
@@ -1104,7 +1104,7 @@ describe('abc: simple-table', () => {
                 '.ant-table-filter-dropdown .ant-dropdown-menu-item:nth-child(2) label',
               );
               // mock click confirm
-              comp.filterConfirm(comp._columns[0]);
+              comp._filterConfirm(comp._columns[0]);
               fixture.detectChanges();
               const h = httpMock.expectOne(w => true) as TestRequest;
               expect(h.request.urlWithParams).toContain(`id=fv1,fv2`);
@@ -1121,7 +1121,7 @@ describe('abc: simple-table', () => {
             'should be clear filter',
             fakeAsync(() => {
               // mock click confirm
-              comp.filterClear(comp._columns[0]);
+              comp._filterClear(comp._columns[0]);
               fixture.detectChanges();
               const h = httpMock.expectOne(w => true) as TestRequest;
               expect(h.request.urlWithParams).not.toContain(`id=fv1,fv2`);
@@ -1144,7 +1144,7 @@ describe('abc: simple-table', () => {
             );
             httpMock.expectOne(w => true).flush({});
             // mock click confirm
-            comp.filterConfirm(comp._columns[0]);
+            comp._filterConfirm(comp._columns[0]);
             fixture.detectChanges();
             const h = httpMock.expectOne(w => true) as TestRequest;
             expect(h.request.urlWithParams).toContain(`a=1`);
@@ -1390,7 +1390,7 @@ describe('abc: simple-table', () => {
             );
             page.expectCurrentPageTotal(PS);
             // mock click confirm
-            comp.filterConfirm(comp._columns[0]);
+            comp._filterConfirm(comp._columns[0]);
             fixture.detectChanges();
             page.expectCurrentPageTotal(1);
             page.asyncEnd();
@@ -1493,6 +1493,17 @@ describe('abc: simple-table', () => {
         expect(comp.extraParams.a).toBe(1);
         expect(comp.pi).toBe(1);
       });
+      it('should be clean check, radio, filter, sort', fakeAsync(() => {
+        spyOn(comp, 'clearCheck');
+        spyOn(comp, 'clearRadio');
+        spyOn(comp, 'clearFilter');
+        spyOn(comp, 'clearSort');
+        comp.reset();
+        expect(comp.clearCheck).toHaveBeenCalled();
+        expect(comp.clearRadio).toHaveBeenCalled();
+        expect(comp.clearFilter).toHaveBeenCalled();
+        expect(comp.clearSort).toHaveBeenCalled();
+      }));
     });
     describe('#export', () => {
       let exportSrv: SimpleTableExport;

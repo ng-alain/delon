@@ -403,11 +403,19 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /**
-   * 重置且重新设置 `pi` 为 `1`
+   * 重置且重新设置 `pi` 为 `1`，包含以下值：
+   * - `check` 数据
+   * - `radio` 数据
+   * - `sort` 数据
+   * - `fileter` 数据
    *
    * @param extraParams 重新指定 `extraParams` 值
    */
   reset(extraParams?: any) {
+    this.clearCheck();
+    this.clearRadio();
+    this.clearFilter();
+    this.clearSort();
     this.load(1, extraParams);
   }
 
@@ -693,6 +701,11 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  clearSort() {
+    Object.keys(this._sortMap).forEach(key => (this._sortMap[key].v = null));
+    this._sortOrder = null;
+  }
+
   //#endregion
 
   //#region filter
@@ -719,22 +732,31 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     this.filterChange.emit(col);
   }
 
-  filterConfirm(col: SimpleTableColumn) {
+  _filterConfirm(col: SimpleTableColumn) {
     this.handleFilter(col);
   }
 
-  filterClear(col: SimpleTableColumn) {
+  _filterClear(col: SimpleTableColumn) {
     col.filters.forEach(i => (i.checked = false));
     this.handleFilter(col);
   }
 
-  filterRadio(
+  _filterRadio(
     col: SimpleTableColumn,
     item: SimpleTableFilter,
     checked: boolean,
   ) {
     col.filters.forEach(i => (i.checked = false));
     item.checked = checked;
+  }
+
+  clearFilter() {
+    this._columns
+      .filter(w => w.filtered === true)
+      .forEach(col => {
+        col.filtered = false;
+        col.filters.forEach(f => f.checked = false);
+      });
   }
 
   //#endregion
@@ -802,7 +824,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
 
   //#region buttons
 
-  btnCoerce(list: SimpleTableButton[]): SimpleTableButton[] {
+  private btnCoerce(list: SimpleTableButton[]): SimpleTableButton[] {
     if (!list) return [];
     const ret: SimpleTableButton[] = [];
     for (const item of list) {
@@ -831,7 +853,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     return ret;
   }
 
-  btnCoerceIf(list: SimpleTableButton[]) {
+  private btnCoerceIf(list: SimpleTableButton[]) {
     for (const item of list) {
       if (!item.iif) item.iif = () => true;
       if (!item.children) {
@@ -842,7 +864,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  btnClick(e: Event, record: any, btn: SimpleTableButton) {
+  _btnClick(e: Event, record: any, btn: SimpleTableButton) {
     e.stopPropagation();
     if (btn.type === 'modal' || btn.type === 'static') {
       const obj = {};
@@ -886,7 +908,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  btnText(record: any, btn: SimpleTableButton) {
+  _btnText(record: any, btn: SimpleTableButton) {
     if (btn.format) return btn.format(record, btn);
     return btn.text;
   }
@@ -895,7 +917,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
 
   //#region fixed
 
-  fixedCoerce(list: SimpleTableColumn[]) {
+  private fixedCoerce(list: SimpleTableColumn[]) {
     list.forEach((item, idx) => {
       if (item.fixed && item.width) {
         if (item.fixed === 'left') {
