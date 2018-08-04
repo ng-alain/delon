@@ -6,6 +6,28 @@ title:
 type: Other
 ---
 
+### 1.3.0
+
+`2018-8-4`
+
+- 脚手架
+  - 增加 `ng-zorro-version` 版本号至 `body` 元素，[a36b23](https://github.com/cipchk/ng-alain/commit/a36b23)
+- @delon/abc
+  - `simple-table`
+    - 新增单、双击行回调，[#607](https://github.com/cipchk/ng-alain/issues/607)
+    - 修复切换语言无法自动刷新列名
+    - 修复 `reset()` 方法没有清除单选、多选、过滤、顺序状态值，[#610](https://github.com/cipchk/ng-alain/issues/610)
+    - 修复多排序取消其中一项时排序数据丢失
+  - 新增 `trend` 反显颜色属性 `reverseColor`
+  - 修复 `page-header` 切换语言无法自动刷新，[#598](https://github.com/cipchk/ng-alain/issues/598)
+  - 修复 `sidebar-nav` 小屏幕下产生 ExpressionChangedAfterItHasBeenCheckedError 异常，[#606](https://github.com/cipchk/ng-alain/issues/606)
+- @delon/auth
+  - 新增 `SimpleGuard`、`JWTGuard` Token有效授权守卫，[#127](https://github.com/cipchk/delon/issues/127)
+- @delon/form
+  - 修复 `readOnly` 可编辑状态，[#604](https://github.com/cipchk/ng-alain/issues/604)
+- @delon/theme
+  - 同步 ng-zorro-antd 1.3.0，新增 Drawer 抽屉组件
+
 ### 1.2.0
 
 `2018-7-27`
