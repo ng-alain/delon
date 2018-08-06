@@ -76,7 +76,7 @@ describe('form: widget: autocomplete', () => {
           .checkCount('nz-auto-option', EMAILSUFFIX.length)
           .click('nz-auto-option')
           .checkValue('a', `${typeValue}@${EMAILSUFFIX[0]}`)
-          .asyncEnd(50);
+          .asyncEnd(150);
         // TIP: 一个非常不要脸的校验数据正确性的代码
         // 当测试用例需要依赖第三方组件时，如何更好的校验这是一个问题？
         // const autoComp = page.getWidget<NzAutocompleteComponent>('nz-autocomplete');
