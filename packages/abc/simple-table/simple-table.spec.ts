@@ -752,17 +752,21 @@ describe('abc: simple-table', () => {
           page.newColumn([
             { title: '1', index: 'id', fixed: 'left', width: '100px' },
             { title: '2', index: 'id', fixed: 'left', width: '100px' },
+            { title: '3', index: 'id', fixed: 'left', width: '100px' },
           ]);
           expect(page.getCell(1, 1).style.left).toBe('0px');
           expect(page.getCell(1, 2).style.left).toBe('100px');
+          expect(page.getCell(1, 3).style.left).toBe('200px');
         });
         it('should be fixed right column', () => {
           page.newColumn([
             { title: '1', index: 'id', fixed: 'right', width: '100px' },
             { title: '2', index: 'id', fixed: 'right', width: '100px' },
+            { title: '3', index: 'id', fixed: 'right', width: '100px' },
           ]);
-          expect(page.getCell(1, 1).style.right).toBe('100px');
-          expect(page.getCell(1, 2).style.right).toBe('0px');
+          expect(page.getCell(1, 1).style.right).toBe('200px');
+          expect(page.getCell(1, 2).style.right).toBe('100px');
+          expect(page.getCell(1, 3).style.right).toBe('0px');
         });
       });
     });
