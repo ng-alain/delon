@@ -883,7 +883,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   _btnClick(e: Event, record: any, btn: SimpleTableButton) {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     if (btn.type === 'modal' || btn.type === 'static') {
       const obj = {};
       obj[btn.paramName || this.defConfig.modalParamsName || 'record'] = record;
