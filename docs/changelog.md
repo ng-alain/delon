@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 1.3.1
+
+`2018-8-7`
+
+- @delon/abc
+  - `simple-table`
+    - 修复固定列三个以上时宽度计算不正确，[#132](https://github.com/cipchk/delon/issues/132)
+    - 修复 `type: "del"` 无法触发问题，[#614](https://github.com/cipchk/ng-alain/issues/614)
+
 ### 1.3.0
 
 `2018-8-4`
