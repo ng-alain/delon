@@ -113,6 +113,8 @@ export class DateWidget extends ControlWidget implements OnInit {
           this.displayFormat = `yyyy-ww`;
           break;
       }
+    } else {
+      this.displayFormat = ui.displayFormat;
     }
     this.format = ui.format
       ? ui.format
