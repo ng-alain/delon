@@ -6,6 +6,20 @@ title:
 type: Other
 ---
 
+### 1.3.2
+
+`2018-8-19`
+
+- 脚手架
+  - 修复取消时无法清除进度条，[f67c0c](https://github.com/cipchk/ng-alain/commit/f67c0c)
+  - 移除simple-line-icons类库，尽可能使用 ng-zorro-antd 图标库，[28f873](https://github.com/cipchk/ng-alain/commit/28f873)
+- @delon/theme
+  - 增加旋转样式
+- @delon/abc
+  - 修复 `simple-table` 自定义列刷新时丢失问题，[#622](https://github.com/cipchk/ng-alain/issues/622)
+- @delon/form
+  - 修复 `date` 小部件无效属性 `displayFormat`，[#640](https://github.com/cipchk/ng-alain/issues/640)
+
 ### 1.3.1
 
 `2018-8-7`
