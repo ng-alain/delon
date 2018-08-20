@@ -5,6 +5,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { AlainThemeModule } from '@delon/theme';
 import { DelonFormModule } from '@delon/form';
 import { DelonUtilModule } from '@delon/util';
+import { DelonChartModule } from '@delon/chart';
 
 // region: global config functions
 
@@ -26,6 +27,8 @@ export function adLodopConfig(): AdLodopConfig {
         AlainThemeModule.forRoot(),
         // abc
         DelonABCModule.forRoot(),
+        // chart
+        DelonChartModule.forRoot(),
         // form
         DelonFormModule.forRoot(),
         DelonUtilModule.forRoot()

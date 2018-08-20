@@ -10,6 +10,7 @@ export const ZHCN = {
     'app.header.menu.auth': '@delon/auth-用户认证',
     'app.header.menu.acl': '@delon/acl-访问控制列表',
     'app.header.menu.cache': '@delon/cache-缓存',
+    'app.header.menu.chart': '@delon/chart-图表',
     'app.header.menu.mock': '@delon/mock-Mock模拟数据',
     'app.header.menu.util': '@delon/util-工具集',
     'app.header.menu.form': '@delon/form-动态表单',

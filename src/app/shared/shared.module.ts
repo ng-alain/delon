@@ -8,6 +8,7 @@ import { AlainThemeModule } from '@delon/theme';
 import { DelonABCModule } from '@delon/abc';
 import { DelonACLModule } from '@delon/acl';
 import { DelonFormModule } from '@delon/form';
+import { DelonChartModule } from '@delon/chart';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { TranslateModule } from '@ngx-translate/core';
@@ -56,6 +57,7 @@ const THIRDS = [
         DelonABCModule,
         DelonACLModule,
         DelonFormModule,
+        DelonChartModule,
         ...THIRDS
     ],
     declarations: COMPONENTS,
@@ -70,6 +72,7 @@ const THIRDS = [
         DelonABCModule,
         DelonACLModule,
         DelonFormModule,
+        DelonChartModule,
         ...THIRDS,
         ...COMPONENTS
     ]

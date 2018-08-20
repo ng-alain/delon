@@ -5,15 +5,16 @@ set -u -e -o pipefail
 readonly currentDir=$(cd $(dirname $0); pwd)
 cd ${currentDir}
 
-# PACKAGES=(theme)
 PACKAGES=(acl
   util
   theme
   abc
   auth
   cache
+  chart
   mock
   form)
+PACKAGES=(util chart)
 NODE_PACKAGES=(schematics)
 
 buildLess() {

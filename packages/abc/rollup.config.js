@@ -14,7 +14,6 @@ const globals = {
   '@angular/forms': 'ng.forms',
 
   'ng-zorro-antd': 'ngZorro.antd',
-  'ng-zorro-antd-extra': 'ngZorro.antd_extra',
   'file-saver': 'saveAs',
   'ngx-countdown': 'ngxCountDown',
   xlsx: 'xlsx',

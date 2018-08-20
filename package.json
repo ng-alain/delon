@@ -35,8 +35,9 @@
     "site:gen": "node scripts/site/main",
     "site:release": "bash ./site.sh -b",
     "site:gh": "bash ./site.sh -b -d",
+    "site": "ng serve -c=hmr",
     "release": "bash ./build.sh && bash build-schematics.sh -b",
-    "publish:next": "npm run release && bash ./scripts/release/publish-next",
+    "publish:next": "npm run release && bash ./scripts/release/publish-next && bash ./scripts/release/sync-taobao",
     "publish": "npm run release && bash ./scripts/release/publish && bash ./scripts/release/sync-taobao",
     "scaffold:release": "bash ./scaffold.sh -b",
     "scaffold:gh": "bash ./scaffold.sh -b -d"
@@ -82,6 +83,7 @@
     "@angular/cli": "~6.1.1",
     "@angular/compiler-cli": "^6.1.0",
     "@angular/language-service": "^6.1.0",
+    "@angularclass/hmr": "^2.1.3",
     "@schematics/schematics": "~0.7.0",
     "@types/deep-extend": "^0.4.31",
     "@types/extend": "^3.0.0",
@@ -110,6 +112,8 @@
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
     "klaw-sync": "^4.0.0",
+    "less": "~2.7.0",
+    "less-plugin-clean-css": "^1.5.1",
     "lint-staged": "^7.1.0",
     "mark-twain": "^2.0.3",
     "mockjs": "^1.0.1-beta3",
@@ -131,9 +135,7 @@
     "tslint-language-service": "^0.9.9",
     "typescript": "2.9.x",
     "webpack-bundle-analyzer": "^2.11.2",
-    "xlsx": "^0.12.12",
-    "less": "~2.7.0",
-    "less-plugin-clean-css": "^1.5.1"
+    "xlsx": "^0.12.12"
   },
   "lint-staged": {
     "*.{cmd,html,json,md,sh,txt,xml,yml}": [

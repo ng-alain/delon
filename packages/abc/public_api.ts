@@ -27,16 +27,3 @@ export * from './lodop/index';
 export * from './quick-menu/index';
 export * from './qr/index';
 export * from './simple-html-form/index';
-// charts
-export * from './charts/bar/index';
-export * from './charts/card/index';
-export * from './charts/chart/index';
-export * from './charts/gauge/index';
-export * from './charts/mini-area/index';
-export * from './charts/mini-bar/index';
-export * from './charts/mini-progress/index';
-export * from './charts/pie/index';
-export * from './charts/radar/index';
-export * from './charts/tag-cloud/index';
-export * from './charts/timeline/index';
-export * from './charts/water-wave/index';

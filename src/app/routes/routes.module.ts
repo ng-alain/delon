@@ -28,6 +28,7 @@ const routes = [
       { path: 'cache', loadChildren: './gen/cache/cache.module#CacheModule' },
       { path: 'mock', loadChildren: './gen/mock/mock.module#MockModule' },
       { path: 'util', loadChildren: './gen/util/util.module#UtilModule' },
+      { path: 'chart', loadChildren: './gen/chart/chart.module#ChartModule' },
       { path: 'form', loadChildren: './gen/form/form.module#FormModule' },
       {
         path: 'form-pages',

@@ -10,6 +10,7 @@ export const ENUS = {
     'app.header.menu.auth': '@delon/auth-Authentication',
     'app.header.menu.acl': '@delon/acl-Access Control List',
     'app.header.menu.cache': '@delon/cache-Cache',
+    'app.header.menu.chart': '@delon/chart-Chart',
     'app.header.menu.mock': '@delon/mock-Mock',
     'app.header.menu.util': '@delon/util-Utils',
     'app.header.menu.form': '@delon/form-Dynamic Form',

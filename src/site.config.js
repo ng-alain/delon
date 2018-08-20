@@ -294,6 +294,46 @@ module.exports = {
       ],
     },
     {
+      name: 'chart',
+      github: 'https://github.com/cipchk/delon',
+      dist: './src/app/routes/gen/chart',
+      types: [
+        {
+          'zh-CN': '文档',
+          'en-US': 'Documents',
+        },
+        {
+          'zh-CN': '组件',
+          'en-US': 'Components',
+        },
+      ],
+      module: '@delon/chart',
+      defaultRoute: 'getting-started',
+      extraRouteMeta: [
+      ],
+      metaIncludeAttributes: ['name', 'types', 'github', 'module'],
+      template: {
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
+      },
+      dir: [
+        {
+          src: ['./packages/chart/docs'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          hasSubDir: false,
+        },
+        {
+          src: ['./packages/chart/src'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          hasSubDir: true,
+        },
+      ],
+    },
+    {
       name: 'cli',
       github: 'https://github.com/cipchk/delon',
       dist: './src/app/routes/gen/cli',

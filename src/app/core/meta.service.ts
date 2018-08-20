@@ -4,6 +4,7 @@ import { META as ComponentsMeta } from '../routes/gen/components/meta';
 import { META as AuthMeta } from '../routes/gen/auth/meta';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
 import { META as CacheMeta } from '../routes/gen/cache/meta';
+import { META as ChartMeta } from '../routes/gen/chart/meta';
 import { META as MockMeta } from '../routes/gen/mock/meta';
 import { META as UtilMeta } from '../routes/gen/util/meta';
 import { META as FormMeta } from '../routes/gen/form/meta';
@@ -12,7 +13,7 @@ import { META as ThemeMeta } from '../routes/gen/theme/meta';
 import { I18NService } from '../core/i18n/service';
 import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
 
-const FULLMETAS: Meta[] = [DocsMeta, ComponentsMeta, AuthMeta, ACLMeta, CacheMeta, MockMeta, UtilMeta, FormMeta, CliMeta, ThemeMeta];
+const FULLMETAS: Meta[] = [DocsMeta, ComponentsMeta, AuthMeta, ACLMeta, CacheMeta, ChartMeta, MockMeta, UtilMeta, FormMeta, CliMeta, ThemeMeta];
 
 @Injectable()
 export class MetaService {

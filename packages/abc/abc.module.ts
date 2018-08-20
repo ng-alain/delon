@@ -29,19 +29,6 @@ import { AdLodopModule } from './lodop/lodop.module';
 import { AdQuickMenuModule } from './quick-menu/quick-menu.module';
 import { AdQRModule } from './qr/qr.module';
 import { AdSHFModule } from './simple-html-form/module';
-// charts
-import { AdG2BarModule } from './charts/bar/bar.module';
-import { AdG2CardModule } from './charts/card/card.module';
-import { AdG2ChartModule } from './charts/chart/chart.module';
-import { AdG2GaugeModule } from './charts/gauge/gauge.module';
-import { AdG2MiniAreaModule } from './charts/mini-area/mini-area.module';
-import { AdG2MiniBarModule } from './charts/mini-bar/mini-bar.module';
-import { AdG2MiniProgressModule } from './charts/mini-progress/mini-progress.module';
-import { AdG2PieModule } from './charts/pie/pie.module';
-import { AdG2RadarModule } from './charts/radar/radar.module';
-import { AdG2TagCloudModule } from './charts/tag-cloud/tag-cloud.module';
-import { AdG2TimelineModule } from './charts/timeline/timeline.module';
-import { AdG2WaterWaveModule } from './charts/water-wave/water-wave.module';
 
 const MODULES = [
   AdErrorCollectModule,
@@ -72,19 +59,6 @@ const MODULES = [
   AdQuickMenuModule,
   AdQRModule,
   AdSHFModule,
-  // charts
-  AdG2BarModule,
-  AdG2CardModule,
-  AdG2ChartModule,
-  AdG2GaugeModule,
-  AdG2MiniAreaModule,
-  AdG2MiniBarModule,
-  AdG2MiniProgressModule,
-  AdG2PieModule,
-  AdG2RadarModule,
-  AdG2TagCloudModule,
-  AdG2TimelineModule,
-  AdG2WaterWaveModule,
 ];
 
 // endregion
@@ -119,19 +93,6 @@ const MODULES = [
     AdQuickMenuModule.forRoot(),
     AdQRModule.forRoot(),
     AdSHFModule.forRoot(),
-    // charts
-    AdG2BarModule.forRoot(),
-    AdG2CardModule.forRoot(),
-    AdG2ChartModule.forRoot(),
-    AdG2GaugeModule.forRoot(),
-    AdG2MiniAreaModule.forRoot(),
-    AdG2MiniBarModule.forRoot(),
-    AdG2MiniProgressModule.forRoot(),
-    AdG2PieModule.forRoot(),
-    AdG2RadarModule.forRoot(),
-    AdG2TagCloudModule.forRoot(),
-    AdG2TimelineModule.forRoot(),
-    AdG2WaterWaveModule.forRoot(),
   ],
   exports: MODULES,
 })

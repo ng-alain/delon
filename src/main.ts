@@ -7,12 +7,33 @@ import { AppModule } from './app/app.module';
 
 import './app/core/preloader';
 
+import { hmrBootstrap } from './hmr';
+
 if (environment.production) {
     enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule).then(() => {
-    if ((<any>window).appBootstrap) {
-      (<any>window).appBootstrap();
-    }
-});
+const bootstrap = () => {
+  return platformBrowserDynamic()
+    .bootstrapModule(AppModule, {
+      defaultEncapsulation: ViewEncapsulation.Emulated,
+      preserveWhitespaces: false,
+    })
+    .then(res => {
+      if ((<any>window).appBootstrap) {
+        (<any>window).appBootstrap();
+      }
+      return res;
+    });
+};
+
+if (environment.hmr) {
+  if (module['hot']) {
+    hmrBootstrap(module, bootstrap);
+  } else {
+    console.error('HMR is not enabled for webpack-dev-server!');
+    console.log('Are you using the --hmr flag for ng serve?');
+  }
+} else {
+  bootstrap();
+}
