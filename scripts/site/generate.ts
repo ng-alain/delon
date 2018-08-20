@@ -13,7 +13,7 @@ const isSyncSpecific = !!target && (target !== 'init');
 if (!target) throw new Error(`Should specify the generation type, 'init' is all module`);
 
 const rootDir = path.resolve(__dirname, '../../');
-const siteConfig = require(path.join(rootDir, 'site/site.config.js')) as SiteConfig;
+const siteConfig = require(path.join(rootDir, 'src/site.config.js')) as SiteConfig;
 const defaultLang = siteConfig.defaultLang;
 
 function generateModule(config: ModuleConfig) {

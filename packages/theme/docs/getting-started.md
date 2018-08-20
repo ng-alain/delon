@@ -27,4 +27,4 @@ ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到�
 
 ## 动态主题
 
-这里的动态主题是指**颜色**部分，ng-alain 里默认并没有这一选项，你可以下载 [color.less](https://github.com/cipchk/delon/blob/master/site/assets/color.less) 至 `./assets/` 目录下，并且参考 ng-alain.com 的做法应用颜色方法 [apply()](https://github.com/cipchk/delon/blob/master/site/app/routes/tools/theme/editor/editor.component.ts#L74) 来动态改变颜色。
+这里的动态主题是指**颜色**部分，ng-alain 里默认并没有这一选项，你可以下载 [color.less](https://github.com/cipchk/delon/blob/master/src/assets/color.less) 至 `./assets/` 目录下，并且参考 ng-alain.com 的做法应用颜色方法 [apply()](https://github.com/cipchk/delon/blob/master/src/app/routes/tools/theme/editor/editor.component.ts#L74) 来动态改变颜色。

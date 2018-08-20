@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "1.3.2",
+  "version": "2.0.0-alpha.0",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for ng-alain.",
   "repository": {
@@ -12,7 +12,8 @@
     "ng-alain",
     "alain",
     "antd",
-    "ng-zorro-antd"
+    "ng-zorro-antd",
+    "angular"
   ],
   "author": "cipchk <cipchk@qq.com>",
   "license": "MIT",

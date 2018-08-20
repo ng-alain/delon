@@ -1,12 +1,18 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import './polyfills.ts';
 
-import { AppModule } from './app/app.module';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode, ViewEncapsulation } from '@angular/core';
 import { environment } from './environments/environment';
+import { AppModule } from './app/app.module';
+
+import './app/core/preloader';
 
 if (environment.production) {
-  enableProdMode();
+    enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.log(err));
+platformBrowserDynamic().bootstrapModule(AppModule).then(() => {
+    if ((<any>window).appBootstrap) {
+      (<any>window).appBootstrap();
+    }
+});

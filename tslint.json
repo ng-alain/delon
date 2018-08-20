@@ -104,7 +104,7 @@
       "packages/testing/**/*",
       "packages/schematics/**/files/**/*",
       "packages/schematics/utils/devkit-utils/**/*",
-      "site/app/routes/gen/**/*"
+      "src/app/routes/gen/**/*"
     ]
   }
 }

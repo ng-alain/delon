@@ -6,7 +6,7 @@ module.exports = {
     {
       name: 'docs',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/docs',
+      dist: './src/app/routes/gen/docs',
       types: [
         {
           'zh-CN': '入门',
@@ -28,14 +28,14 @@ module.exports = {
       defaultRoute: 'getting-started',
       metaIncludeAttributes: ['name', 'types', 'github'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./docs'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: false,
         },
@@ -44,7 +44,7 @@ module.exports = {
     {
       name: 'components',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/components',
+      dist: './src/app/routes/gen/components',
       types: [
         {
           'zh-CN': '组件',
@@ -59,15 +59,15 @@ module.exports = {
       defaultRoute: 'avatar-list',
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./packages/abc'],
           ignores: ['README.md'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: true,
         },
@@ -76,7 +76,7 @@ module.exports = {
     {
       name: 'auth',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/auth',
+      dist: './src/app/routes/gen/auth',
       types: [
         {
           'zh-CN': '文档',
@@ -88,14 +88,14 @@ module.exports = {
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./packages/auth/docs'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: false,
         }
@@ -104,7 +104,7 @@ module.exports = {
     {
       name: 'acl',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/acl',
+      dist: './src/app/routes/gen/acl',
       types: [
         {
           'zh-CN': '文档',
@@ -116,14 +116,14 @@ module.exports = {
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./packages/acl/docs'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: false,
         }
@@ -132,7 +132,7 @@ module.exports = {
     {
       name: 'cache',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/cache',
+      dist: './src/app/routes/gen/cache',
       types: [
         {
           'zh-CN': '文档',
@@ -144,14 +144,14 @@ module.exports = {
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./packages/cache/docs'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: false,
         }
@@ -160,7 +160,7 @@ module.exports = {
     {
       name: 'mock',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/mock',
+      dist: './src/app/routes/gen/mock',
       types: [
         {
           'zh-CN': '文档',
@@ -172,14 +172,14 @@ module.exports = {
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./packages/mock/docs'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: false,
         }
@@ -188,7 +188,7 @@ module.exports = {
     {
       name: 'util',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/util',
+      dist: './src/app/routes/gen/util',
       types: [
         {
           'zh-CN': '文档',
@@ -204,14 +204,14 @@ module.exports = {
       extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./packages/util/docs'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: false,
         },
@@ -219,7 +219,7 @@ module.exports = {
           src: ['./packages/util/src'],
           // ignores: [ 'README.md' ],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: true,
         },
@@ -228,7 +228,7 @@ module.exports = {
     {
       name: 'form',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/form',
+      dist: './src/app/routes/gen/form',
       types: [
         {
           'zh-CN': '文档',
@@ -259,35 +259,35 @@ module.exports = {
       ],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./packages/form/docs'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: false,
         },
         {
           src: ['./packages/form/examples'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: true,
         },
         {
           src: ['./packages/form/src/widgets'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: true,
         },
         {
           src: ['./packages/form/widgets-third'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: true,
         },
@@ -296,7 +296,7 @@ module.exports = {
     {
       name: 'cli',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/cli',
+      dist: './src/app/routes/gen/cli',
       types: [
         {
           'zh-CN': '文档',
@@ -309,14 +309,14 @@ module.exports = {
       ],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./packages/schematics/docs'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: false,
         }
@@ -325,7 +325,7 @@ module.exports = {
     {
       name: 'theme',
       github: 'https://github.com/cipchk/delon',
-      dist: './site/app/routes/gen/theme',
+      dist: './src/app/routes/gen/theme',
       types: [
         {
           'zh-CN': '文档',
@@ -350,14 +350,14 @@ module.exports = {
       ],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
-        meta: './site/templates/meta.ts',
-        module: './site/templates/module.ts',
+        meta: './src/templates/meta.ts',
+        module: './src/templates/module.ts',
       },
       dir: [
         {
           src: ['./packages/theme/docs'],
           template: {
-            content: './site/templates/content.ts',
+            content: './src/templates/content.ts',
           },
           hasSubDir: false,
         }

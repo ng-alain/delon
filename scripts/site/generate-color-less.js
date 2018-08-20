@@ -10,7 +10,7 @@ const allLess = `
 @import './theme/styles/default';
 @import './theme/styles/app/index';
 @import './abc/index';
-@import '../site/app/styles/index.less';
+@import '../src/app/styles/index.less';
 `;
 fs.writeFileSync(path.resolve(root, '.tmp/all.less'), allLess);
 
@@ -20,7 +20,7 @@ const options = {
   // varFile: path.join(__dirname, '../components/style/themes/default.less'),
   themeVariables: ['@primary-color'],
   mainLessFile: path.join(root, '.tmp/all.less'),
-  outputFilePath: path.join(root, 'site/assets/color.less'),
+  outputFilePath: path.join(root, 'src/assets/color.less'),
 };
 
 generateTheme(options);

@@ -6,7 +6,7 @@ npm-debug.log
 .lib
 dist
 coverage
-site/app/routes/gen
+src/app/routes/gen
 publish
 .idea
 debug.log

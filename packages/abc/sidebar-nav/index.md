@@ -7,7 +7,7 @@ module: AdSidebarNavModule
 
 ng-alain 左边主菜单，依赖于 `@delon/theme`。
 
-组件的数据来自 `MenuService`，其结构为 [Menu](https://github.com/cipchk/delon/blob/master/packages/theme/services/menu/interface.ts)，同时对 `MenuService` 的操作会直接同步主菜单组件。
+组件的数据来自 `MenuService`，其结构为 [Menu](https://github.com/cipchk/delon/blob/master/packages/theme/src/services/menu/menu.service.ts)，同时对 `MenuService` 的操作会直接同步主菜单组件。
 
 ## 常见问题
 
