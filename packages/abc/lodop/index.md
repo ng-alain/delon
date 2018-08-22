@@ -1,4 +1,5 @@
 ---
+type: Other
 title: lodop
 subtitle: Lodop打印
 cols: 1

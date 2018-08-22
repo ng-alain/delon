@@ -9,6 +9,7 @@ import { DelonABCModule } from '@delon/abc';
 import { DelonACLModule } from '@delon/acl';
 import { DelonFormModule } from '@delon/form';
 import { DelonChartModule } from '@delon/chart';
+import { DelonMockModule } from '@delon/mock';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { TranslateModule } from '@ngx-translate/core';
@@ -58,6 +59,7 @@ const THIRDS = [
         DelonACLModule,
         DelonFormModule,
         DelonChartModule,
+        DelonMockModule.forChild(),
         ...THIRDS
     ],
     declarations: COMPONENTS,

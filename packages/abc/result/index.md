@@ -1,4 +1,5 @@
 ---
+type: Other
 title: result
 subtitle: 处理结果
 cols: 1

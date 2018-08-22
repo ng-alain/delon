@@ -19,7 +19,7 @@ import { AdStandardFormRowModule } from './standard-form-row/standard-form-row.m
 import { NaTagSelectModule } from './tag-select/tag-select.module';
 import { NaTrendModule } from './trend/trend.module';
 import { NaCountDownModule } from './count-down/count-down.module';
-import { AdSimpleTableModule } from './simple-table/simple-table.module';
+import { NaTableModule } from './table/table.module';
 import { NaReuseTabModule } from './reuse-tab/reuse-tab.module';
 import { NaFullContentModule } from './full-content/full-content.module';
 import { NaXlsxModule } from './xlsx/xlsx.module';
@@ -49,7 +49,7 @@ const MODULES = [
   NaTagSelectModule,
   NaTrendModule,
   NaCountDownModule,
-  AdSimpleTableModule,
+  NaTableModule,
   NaReuseTabModule,
   NaFullContentModule,
   NaXlsxModule,
@@ -83,7 +83,7 @@ const MODULES = [
     NaTagSelectModule.forRoot(),
     NaTrendModule.forRoot(),
     NaCountDownModule.forRoot(),
-    AdSimpleTableModule.forRoot(),
+    NaTableModule.forRoot(),
     NaReuseTabModule.forRoot(),
     NaFullContentModule.forRoot(),
     NaXlsxModule.forRoot(),

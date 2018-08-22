@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
@@ -7,8 +7,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { registerLocaleData } from '@angular/common';
 import localeZh from '@angular/common/locales/zh';
 registerLocaleData(localeZh);
-
-import { environment } from '../environments/environment';
 
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';

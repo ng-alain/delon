@@ -1,4 +1,5 @@
 ---
+type: Other
 title: reuse-tab
 subtitle: 路由复用标签
 cols: 1

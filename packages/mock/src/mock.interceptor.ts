@@ -42,7 +42,7 @@ export class MockInterceptor implements HttpInterceptor {
       },
       this.injector.get(DelonMockConfig, null),
     );
-    const rule = src.getRule(req.method, req.url);
+    const rule = src.getRule(req.method, req.url.split('?')[0]);
     if (!rule && !config.force) {
       return next.handle(req);
     }
@@ -57,7 +57,13 @@ export class MockInterceptor implements HttpInterceptor {
           headers: {},
           params: rule.params,
         };
-
+        const urlParams = req.url.split('?');
+        if (urlParams.length > 1) {
+          urlParams[1].split('&').forEach(item => {
+            const itemArr = item.split('=');
+            mockRequest.queryString[itemArr[0]] = itemArr[1];
+          });
+        }
         req.params
           .keys()
           .forEach(key => (mockRequest.queryString[key] = req.params.get(key)));

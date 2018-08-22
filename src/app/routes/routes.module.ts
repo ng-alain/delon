@@ -10,6 +10,10 @@ const COMPONENTS = [HomeComponent, NotFoundComponent];
 
 const routes = [
   {
+    path: 'dev',
+    loadChildren: './dev/dev.module#DevTestModule',
+  },
+  {
     path: '',
     component: LayoutComponent,
     children: [
@@ -41,14 +45,17 @@ const routes = [
   { path: '**', redirectTo: '404' },
 ];
 
-if (!environment.production) {
-  routes.splice(0, 0, { path: 'dev', loadChildren: './dev/dev.module#DevTestModule' } as any);
-}
-
 @NgModule({
   imports: [
     SharedModule,
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(
+      routes,
+      environment.production
+        ? { preloadingStrategy: PreloadAllModules }
+        : {
+            useHash: true,
+          },
+    ),
   ],
   declarations: [...COMPONENTS],
 })

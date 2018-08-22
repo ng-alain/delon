@@ -1,4 +1,5 @@
 ---
+type: Other
 title: sidebar-nav
 subtitle: 主菜单
 cols: 1

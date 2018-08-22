@@ -1,4 +1,5 @@
 ---
+type: Other
 title: zip
 subtitle: Zip 操作
 cols: 1

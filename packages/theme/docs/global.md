@@ -83,7 +83,7 @@ ng-alain 默认很多字号、尺寸都是以`@font-size-base` 变量为基础�
 | `@nz-table-img-margin-right` | `4px` | `nz-table` 表格中：图片右外边距 |
 | `@nz-table-img-max-width` | `32` | `nz-table` 表格中：图片最大宽度 |
 | `@nz-table-img-max-height` | `32` | `nz-table` 表格中：图片最大高度 |
-| `@simple-table-bc` | `#fff` | 简单表格背景色 |
+| `@na-table-bc` | `#fff` | 简单表格背景色 |
 | `@search-form-bg` | `#fbfbfb` | 列表页搜索表单背景色 |
 | `@search-form-radius` | `4px` | 列表页搜索表单圆角 |
 | `@preserve-white-spaces-enabled` | `true` | 开启 `preserveWhitespaces` |

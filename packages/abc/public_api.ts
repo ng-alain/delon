@@ -17,7 +17,7 @@ export * from './standard-form-row/index';
 export * from './tag-select/index';
 export * from './trend/index';
 export * from './count-down/index';
-export * from './simple-table/index';
+export * from './table/index';
 export * from './reuse-tab/index';
 export * from './full-content/index';
 export * from './xlsx/index';

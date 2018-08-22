@@ -6,22 +6,16 @@ title: 自定义按钮组
 透过简单的配置产生一组日常按钮组。
 
 ```ts
-import { Component, Input } from '@angular/core';
-import {
-  SimpleTableColumn,
-  SimpleTableChange,
-  SimpleTableFilter,
-  SimpleTableButton,
-} from '@delon/abc';
+import { Component } from '@angular/core';
+import { NaTableColumn } from '@delon/abc';
 import { NzMessageService } from 'ng-zorro-antd';
 import { DemoModalComponent } from 'app/shared/components/modal/demo.component';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <simple-table [data]="users" [ps]="3" [columns]="columns">
-    </simple-table>
-    `,
+  <na-table [data]="users" [columns]="columns"></na-table>
+  `,
 })
 export class DemoComponent {
   constructor(private message: NzMessageService) {}
@@ -35,7 +29,7 @@ export class DemoComponent {
         age: Math.ceil(Math.random() * 10) + 20,
       };
     });
-  columns: SimpleTableColumn[] = [
+  columns: NaTableColumn[] = [
     { title: '编号', index: 'id' },
     { title: '姓名', index: 'name' },
     { title: '年龄', index: 'age' },
@@ -47,8 +41,7 @@ export class DemoComponent {
           type: 'del',
           click: (record: any) =>
             this.message.success(`成功删除【${record.name}】`),
-          if: (item: any, btn: SimpleTableButton, column: SimpleTableColumn) =>
-            item.id % 2 === 0,
+          iif: (item: any) => item.id % 2 === 0,
         },
         {
           text: '编辑',

@@ -1,4 +1,5 @@
 ---
+type: Other
 title: notice-icon
 subtitle: 通知菜单
 cols: 1

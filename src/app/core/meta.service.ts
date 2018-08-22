@@ -11,9 +11,26 @@ import { META as FormMeta } from '../routes/gen/form/meta';
 import { META as CliMeta } from '../routes/gen/cli/meta';
 import { META as ThemeMeta } from '../routes/gen/theme/meta';
 import { I18NService } from '../core/i18n/service';
-import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
+import {
+  Meta,
+  MetaList,
+  MetaSearchGroup,
+  MetaSearchGroupItem,
+} from '../interfaces';
 
-const FULLMETAS: Meta[] = [DocsMeta, ComponentsMeta, AuthMeta, ACLMeta, CacheMeta, ChartMeta, MockMeta, UtilMeta, FormMeta, CliMeta, ThemeMeta];
+const FULLMETAS: Meta[] = [
+  DocsMeta,
+  ComponentsMeta,
+  AuthMeta,
+  ACLMeta,
+  CacheMeta,
+  ChartMeta,
+  MockMeta,
+  UtilMeta,
+  FormMeta,
+  CliMeta,
+  ThemeMeta,
+];
 
 @Injectable()
 export class MetaService {
@@ -22,7 +39,12 @@ export class MetaService {
     for (const g of FULLMETAS) {
       for (const item of g.list) {
         const curTitle = item.meta[i18n.defaultLang].title;
-        item._t = typeof curTitle !== 'string' ? Object.values(curTitle).map(v => v).join('-') : curTitle;
+        item._t =
+          typeof curTitle !== 'string'
+            ? Object.values(curTitle)
+                .map(v => v)
+                .join('-')
+            : curTitle;
       }
     }
   }
@@ -222,18 +244,20 @@ export class MetaService {
     const res: MetaSearchGroup[] = [];
     for (const g of FULLMETAS) {
       const type = g.name.toLowerCase();
-      const children: MetaSearchGroupItem[] = g.list.filter(w => w._t.includes(q)).map(item => {
-        return {
-          title: item._t,
-          name: item.name,
-          url: item.route || `/${type}/${item.name}`
-        };
-      });
+      const children: MetaSearchGroupItem[] = g.list
+        .filter(w => w._t.includes(q))
+        .map(item => {
+          return {
+            title: item._t,
+            name: item.name,
+            url: item.route || `/${type}/${item.name}`,
+          };
+        });
       if (children != null && children.length) {
         res.push({
           title: g.name,
           type,
-          children: children.slice(0, childrenMax)
+          children: children.slice(0, childrenMax),
         });
       }
     }

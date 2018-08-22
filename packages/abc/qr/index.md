@@ -1,4 +1,5 @@
 ---
+type: Other
 title: qr
 subtitle: 二维码
 cols: 1

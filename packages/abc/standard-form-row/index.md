@@ -1,4 +1,5 @@
 ---
+type: CURD
 title: standard-form-row
 subtitle: 标准表单行
 cols: 1

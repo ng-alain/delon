@@ -125,6 +125,7 @@
 }
 
 .markdown table {
+  table-layout: fixed;
   border-collapse: collapse;
   border-spacing: 0;
   empty-cells: show;
@@ -136,6 +137,7 @@
     border: 1px solid @site-border-color-split;
     padding: 8px;
     text-align: left;
+    word-wrap: break-word;
   }
   th {
     white-space: nowrap;
@@ -214,143 +216,12 @@
   td:first-child {
     font-weight: 500;
     width: 20%;
-    white-space: nowrap;
   }
   td:nth-child(3) {
     width: 30%;
   }
   td:last-child {
     width: 20%;
-  }
-}
-
-.grid-demo,
-[id^='components-grid-demo-'] {
-  .demo-row,
-  .code-box-demo .demo-row {
-    background-image: linear-gradient(
-      90deg,
-      #f5f5f5 4.16666667%,
-      transparent 4.16666667%,
-      transparent 8.33333333%,
-      #f5f5f5 8.33333333%,
-      #f5f5f5 12.5%,
-      transparent 12.5%,
-      transparent 16.66666667%,
-      #f5f5f5 16.66666667%,
-      #f5f5f5 20.83333333%,
-      transparent 20.83333333%,
-      transparent 25%,
-      #f5f5f5 25%,
-      #f5f5f5 29.16666667%,
-      transparent 29.16666667%,
-      transparent 33.33333333%,
-      #f5f5f5 33.33333333%,
-      #f5f5f5 37.5%,
-      transparent 37.5%,
-      transparent 41.66666667%,
-      #f5f5f5 41.66666667%,
-      #f5f5f5 45.83333333%,
-      transparent 45.83333333%,
-      transparent 50%,
-      #f5f5f5 50%,
-      #f5f5f5 54.16666667%,
-      transparent 54.16666667%,
-      transparent 58.33333333%,
-      #f5f5f5 58.33333333%,
-      #f5f5f5 62.5%,
-      transparent 62.5%,
-      transparent 66.66666667%,
-      #f5f5f5 66.66666667%,
-      #f5f5f5 70.83333333%,
-      transparent 70.83333333%,
-      transparent 75%,
-      #f5f5f5 75%,
-      #f5f5f5 79.16666667%,
-      transparent 79.16666667%,
-      transparent 83.33333333%,
-      #f5f5f5 83.33333333%,
-      #f5f5f5 87.5%,
-      transparent 87.5%,
-      transparent 91.66666667%,
-      #f5f5f5 91.66666667%,
-      #f5f5f5 95.83333333%,
-      transparent 95.83333333%
-    );
-    overflow: hidden;
-    margin-bottom: 8px;
-  }
-  .ant-row-flex,
-  .code-box-demo .ant-row-flex {
-    background: #f5f5f5;
-  }
-  .ant-row > div,
-  .code-box-demo .ant-row > div,
-  .ant-row-flex > div,
-  .code-box-demo .ant-row-flex > div {
-    padding: 5px 0;
-    text-align: center;
-    border-radius: 0;
-    min-height: 30px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    color: #fff;
-  }
-  .code-box-demo .ant-row > div:not(.gutter-row),
-  .code-box-demo .ant-row-flex > div:not(.gutter-row) {
-    background: #00a0e9;
-    padding: 16px 0;
-    &:nth-child(2n + 1) {
-      background: fade(#00a0e9, 70%);
-    }
-  }
-  .ant-row .demo-col,
-  .code-box-demo .ant-row .demo-col {
-    text-align: center;
-    padding: 30px 0;
-    color: #fff;
-    font-size: 18px;
-    border: none;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  .ant-row .demo-col-1,
-  .ant-row .demo-col-1 {
-    background: fade(#00a0e9, 70%);
-  }
-  .ant-row .demo-col-2,
-  .code-box-demo .ant-row .demo-col-2 {
-    background: fade(#00a0e9, 50%);
-  }
-  .ant-row .demo-col-3,
-  .code-box-demo .ant-row .demo-col-3 {
-    background: rgba(255, 255, 255, 0.2);
-    color: #999;
-  }
-  .ant-row .demo-col-4,
-  .code-box-demo .ant-row .demo-col-4 {
-    background: fade(#00a0e9, 60%);
-  }
-  .ant-row .demo-col-5,
-  .code-box-demo .ant-row .demo-col-5 {
-    background: rgba(255, 255, 255, 0.5);
-    color: #999;
-  }
-  .code-box-demo .height-100 {
-    height: 100px;
-    line-height: 100px;
-  }
-  .code-box-demo .height-50 {
-    height: 50px;
-    line-height: 50px;
-  }
-  .code-box-demo .height-120 {
-    height: 120px;
-    line-height: 120px;
-  }
-  .code-box-demo .height-80 {
-    height: 80px;
-    line-height: 80px;
   }
 }
 
@@ -374,6 +245,39 @@
     }
     li.ant-timeline-item:first-child {
       margin-top: 40px;
+    }
+  }
+}
+
+// For icon
+.markdown {
+  .component,
+  .directive {
+    padding: 1px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    line-height: 18px;
+    display: inline;
+    vertical-align: middle;
+    color: #fff;
+    margin-left: 8px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+  .component {
+    color: #1890ff;
+    border: 2px solid #1890ff;
+  }
+  .directive {
+    color: #eb2f96;
+    border: 2px solid #eb2f96;
+  }
+  .deprecated {
+    display: inline-block;
+    color: #f50;
+    font-style: normal;
+    &:before {
+      content: 'D';
     }
   }
 }

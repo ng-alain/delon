@@ -11,10 +11,19 @@ import { AlainThemeModule } from '@delon/theme';
 import { DelonFormModule } from '@delon/form';
 import { DelonUtilModule } from '@delon/util';
 import { DelonChartModule } from '@delon/chart';
+// mock
+import { DelonMockModule } from '@delon/mock';
+import * as MOCKDATA from '../../_mock';
 
 // region: global config functions
 
-import { NaLodopConfig, DelonABCModule } from '@delon/abc';
+import { NaLodopConfig, NaTableConfig, DelonABCModule } from '@delon/abc';
+
+export function fnNaTableConfig(): NaTableConfig {
+  return Object.assign(new NaTableConfig(), {
+    ps: 3,
+  });
+}
 
 export function fnNaLodopConfig(): NaLodopConfig {
   return Object.assign(new NaLodopConfig(), {
@@ -28,15 +37,12 @@ export function fnNaLodopConfig(): NaLodopConfig {
 @NgModule({
   imports: [
     NgZorroAntdModule.forRoot(),
-    // theme
     AlainThemeModule.forRoot(),
-    // abc
     DelonABCModule.forRoot(),
-    // chart
     DelonChartModule.forRoot(),
-    // form
     DelonFormModule.forRoot(),
     DelonUtilModule.forRoot(),
+    DelonMockModule.forRoot({ data: MOCKDATA }),
   ],
 })
 export class DelonModule {
@@ -51,7 +57,10 @@ export class DelonModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: DelonModule,
-      providers: [{ provide: NaLodopConfig, useFactory: fnNaLodopConfig }],
+      providers: [
+        { provide: NaTableConfig, useFactory: fnNaTableConfig },
+        { provide: NaLodopConfig, useFactory: fnNaLodopConfig },
+      ],
     };
   }
 }

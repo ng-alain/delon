@@ -7,15 +7,14 @@ import { I18NService } from './i18n/service';
 import { CodeService } from './code.service';
 
 @NgModule({
-    providers: [
-        I18NService,
-        MetaService,
-        MobileService,
-        CodeService
-    ]
+  providers: [I18NService, MetaService, MobileService, CodeService],
 })
 export class CoreModule {
-  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(
+    @Optional()
+    @SkipSelf()
+    parentModule: CoreModule,
+  ) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
   }
 }

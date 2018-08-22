@@ -1,4 +1,5 @@
 ---
+type: Other
 title: number-to-chinese
 subtitle: 人民币大写
 cols: 1

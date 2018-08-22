@@ -1,4 +1,5 @@
 ---
+type: CURD
 title: simple-html-form
 subtitle: 简易HTML模板表单
 cols: 1

@@ -3,13 +3,13 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class MobileService {
-    private notify$ = new BehaviorSubject<boolean>(null);
+  private notify$ = new BehaviorSubject<boolean>(null);
 
-    next(value: boolean) {
-        this.notify$.next(value);
-    }
+  next(value: boolean) {
+    this.notify$.next(value);
+  }
 
-    get change() {
-        return this.notify$.asObservable();
-    }
+  get change() {
+    return this.notify$.asObservable();
+  }
 }

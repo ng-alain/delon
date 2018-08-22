@@ -47,12 +47,29 @@ module.exports = {
       dist: './src/app/routes/gen/components',
       types: [
         {
-          'zh-CN': '组件',
-          'en-US': 'Components',
+          'zh-CN': 'CURD',
+          'en-US': 'CURD',
+        },
+        {
+          'zh-CN': '其他',
+          'en-US': 'Other',
         },
         {
           'zh-CN': '指令',
           'en-US': 'Directive',
+        },
+      ],
+      extraRouteMeta: [
+        {
+          name: 'form',
+          route: '/form',
+          i18n: false,
+          meta: {
+            'zh-CN': {
+              type: 'CURD',
+              title: { 'zh-CN': '动态表单', 'en-US': 'Dynamic Form' },
+            },
+          },
         },
       ],
       module: '@delon/abc',
@@ -98,7 +115,7 @@ module.exports = {
             content: './src/templates/content.ts',
           },
           hasSubDir: false,
-        }
+        },
       ],
     },
     {
@@ -126,7 +143,7 @@ module.exports = {
             content: './src/templates/content.ts',
           },
           hasSubDir: false,
-        }
+        },
       ],
     },
     {
@@ -154,7 +171,7 @@ module.exports = {
             content: './src/templates/content.ts',
           },
           hasSubDir: false,
-        }
+        },
       ],
     },
     {
@@ -182,7 +199,7 @@ module.exports = {
             content: './src/templates/content.ts',
           },
           hasSubDir: false,
-        }
+        },
       ],
     },
     {
@@ -309,8 +326,7 @@ module.exports = {
       ],
       module: '@delon/chart',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [
-      ],
+      extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
         meta: './src/templates/meta.ts',
@@ -345,8 +361,7 @@ module.exports = {
       ],
       module: 'ng-alain',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [
-      ],
+      extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
         meta: './src/templates/meta.ts',
@@ -359,7 +374,7 @@ module.exports = {
             content: './src/templates/content.ts',
           },
           hasSubDir: false,
-        }
+        },
       ],
     },
     {
@@ -386,8 +401,7 @@ module.exports = {
       ],
       module: 'ng-alain',
       defaultRoute: 'getting-started',
-      extraRouteMeta: [
-      ],
+      extraRouteMeta: [],
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
         meta: './src/templates/meta.ts',
@@ -400,7 +414,7 @@ module.exports = {
             content: './src/templates/content.ts',
           },
           hasSubDir: false,
-        }
+        },
       ],
     },
   ],

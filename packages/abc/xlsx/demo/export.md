@@ -7,13 +7,13 @@ title: 导出
 
 ```ts
 import { Component } from '@angular/core';
-import { SimpleTableColumn, NaXlsxService } from '@delon/abc';
+import { NaTableColumn, NaXlsxService } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="download()">Export</button>
-    <simple-table [data]="users" [ps]="3" [columns]="columns" class="mt-sm"></simple-table>
+    <na-table [data]="users" [ps]="3" [columns]="columns" class="mt-sm"></na-table>
     `,
 })
 export class DemoComponent {
@@ -28,7 +28,7 @@ export class DemoComponent {
         age: Math.ceil(Math.random() * 10) + 20,
       };
     });
-  columns: SimpleTableColumn[] = [
+  columns: NaTableColumn[] = [
     { title: '编号', index: 'id', type: 'checkbox' },
     { title: '姓名', index: 'name' },
     { title: '年龄', index: 'age' },

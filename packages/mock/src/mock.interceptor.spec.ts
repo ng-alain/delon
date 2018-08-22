@@ -85,6 +85,13 @@ describe('mock: service', () => {
         done();
       });
     });
+    it('should be get the default querystring', (done: () => void) => {
+      const key = '/fn/queryString?a=1';
+      http.get(key).subscribe((res: any) => {
+        expect(res.a).toBe('1');
+        done();
+      });
+    });
     it('should return route params', (done: () => void) => {
       const key = '/users/2';
       http.get(key).subscribe((res: any) => {

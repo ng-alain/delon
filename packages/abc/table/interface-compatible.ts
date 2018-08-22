@@ -1,4 +1,3 @@
-import { SimpleTableComponent } from './simple-table.component';
 import { ModalHelperOptions } from '@delon/theme';
 
 export type CompareFn = ((a: any, b: any) => number);
@@ -65,7 +64,7 @@ export interface SimpleTableColumn {
   /**
    * 链接回调，若返回一个字符串表示导航URL会自动触发 `router.navigateByUrl`
    */
-  click?: (record: any, instance?: SimpleTableComponent) => any;
+  click?: (record: any, instance?: any) => any;
   /**
    * 按钮组
    */
@@ -302,7 +301,7 @@ export interface SimpleTableButton {
   click?:
     | 'reload'
     | 'load'
-    | ((record: any, modal?: any, instance?: SimpleTableComponent) => any);
+    | ((record: any, modal?: any, instance?: any) => any);
   /**
    * 是否需要气泡确认框
    */

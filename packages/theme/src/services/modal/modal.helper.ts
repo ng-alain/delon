@@ -5,11 +5,11 @@ import { NzModalService, ModalOptionsForService } from 'ng-zorro-antd';
 export interface ModalHelperOptions {
   /** 大小；例如：lg、600，默认：`lg` */
   size?: 'sm' | 'md' | 'lg' | 'xl' | '' | number;
-  /** 对话框 `ModalOptionsForService` 参数 */
+  /** 对话框 [ModalOptionsForService](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/nz-modal.type.ts) 参数 */
   modalOptions?: ModalOptionsForService;
   /** 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 */
   exact?: boolean;
-  /** 是否包裹标签页 */
+  /** 是否包裹标签页，修复模态包含标签间距问题 */
   includeTabs?: boolean;
 }
 
@@ -50,7 +50,7 @@ this.NzModalRef.destroy();
       exact: true,
       includeTabs: false,
     }, options);
-    return Observable.create((observer: Observer<any>) => {
+    return new Observable((observer: Observer<any>) => {
       let cls = '',
         width = '';
       if (options.size) {
@@ -78,8 +78,6 @@ this.NzModalRef.destroy();
         if (options.exact === true) {
           if (res != null) {
             observer.next(res);
-          } else {
-            observer.error(res);
           }
         } else {
           observer.next(res);

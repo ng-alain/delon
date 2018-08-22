@@ -1,4 +1,5 @@
 ---
+type: Other
 title: avatar-list
 subtitle: 用户头像列表
 cols: 1

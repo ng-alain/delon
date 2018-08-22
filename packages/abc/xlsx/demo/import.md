@@ -7,7 +7,7 @@ title: 导入
 
 ```ts
 import { Component } from '@angular/core';
-import { SimpleTableColumn, NaXlsxService } from '@delon/abc';
+import { NaTableColumn, NaXlsxService } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',

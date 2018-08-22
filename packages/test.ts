@@ -30,7 +30,6 @@ const context = require.context('./', true, /\.spec\.ts$/);
 // And load the modules.
 context
   .keys()
-  .filter(path => path.indexOf('/cli/') === -1)
   .filter(path => path.indexOf('/schematics/') === -1)
   .map(context);
 // Finally, start Karma to run the tests.

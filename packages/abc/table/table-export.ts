@@ -1,13 +1,14 @@
 import { Injectable, Optional } from '@angular/core';
+
 import { deepGet } from '@delon/util';
 import { NaXlsxService } from '../xlsx/xlsx.service';
-import { SimpleTableColumn, STExportOptions } from './interface';
+import { NaTableColumn, NaTableExportOptions } from './interface';
 
 @Injectable()
-export class SimpleTableExport {
+export class NaTableExport {
   constructor(@Optional() private xlsxSrv: NaXlsxService) {}
 
-  private _stGet(item: any, col: SimpleTableColumn): any {
+  private _stGet(item: any, col: NaTableColumn): any {
     const ret: any = { t: 's', v: '' };
 
     if (col.format) {
@@ -31,7 +32,7 @@ export class SimpleTableExport {
     return ret;
   }
 
-  private genSheet(opt: STExportOptions): { [sheet: string]: any } {
+  private genSheet(opt: NaTableExportOptions): { [sheet: string]: any } {
     const sheets: { [sheet: string]: any } = {};
     const sheet = (sheets[opt.sheetname || 'Sheet1'] = {});
     const colData = opt._c.filter(
@@ -69,7 +70,7 @@ export class SimpleTableExport {
     return sheets;
   }
 
-  export(opt: STExportOptions) {
+  export(opt: NaTableExportOptions) {
     if (!this.xlsxSrv)
       throw new Error(`muse be import 'AdXlsxModule' module, but got null`);
     const sheets = this.genSheet(opt);

@@ -113,6 +113,10 @@ describe('theme: ModalHelper', () => {
               done();
             },
             err => {
+              expect(false).toBeTruthy();
+              done();
+            },
+            () => {
               expect(true).toBeTruthy();
               done();
             }

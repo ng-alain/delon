@@ -7,20 +7,17 @@ title: 自定义数据
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { SimpleTableColumn, SimpleTableFilter } from '@delon/abc';
+import { NaTableColumn, NaTableChange } from '@delon/abc';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demo',
-  template: `<simple-table [data]="users" [ps]="3" [columns]="columns"
-        (checkboxChange)="checkboxChange($event)" (sortChange)="sortChange($event)"
-        pagePlacement="center" toTopInChange
-        showSizeChanger showQuickJumper showTotal isPageIndexReset></simple-table>`,
+  template: `<na-table [data]="users" [columns]="columns" (change)="change($event)"></na-table>`,
 })
 export class DemoComponent implements OnInit {
   users: any[] = [];
-  columns: SimpleTableColumn[] = [
+  columns: NaTableColumn[] = [
     {
       title: '编号',
       index: 'id',
@@ -41,26 +38,34 @@ export class DemoComponent implements OnInit {
     {
       title: '姓名',
       index: 'name',
-      sorter: (a, b) => a.name.length - b.name.length,
-      filters: [
-        { text: 'name 1', value: 'name 1' },
-        { text: 'name 2', value: 'name 2' },
-      ],
-      filter: (filter: SimpleTableFilter, record: any) =>
-        record.name.indexOf(filter.value) === 0,
+      sort: {
+        compare: (a, b) => a.name.length - b.name.length,
+      },
+      filter: {
+        menus: [
+          { text: 'name 1', value: 'name 1' },
+          { text: 'name 2', value: 'name 2' },
+        ],
+        fn: (filter: any, record: any) =>
+          record.name.indexOf(filter.value) === 0,
+      },
     },
     {
       title: '年龄',
       index: 'age',
-      sorter: (a, b) => a.age - b.age,
-      filters: [
-        { text: '20岁以下', value: [0, 20] },
-        { text: '20-25岁', value: [20, 25] },
-        { text: '25岁以上', value: [25, 100] },
-      ],
-      filterMultiple: false,
-      filter: (filter: SimpleTableFilter, record: any) =>
-        record.age >= filter.value[0] && record.age <= filter.value[1],
+      sort: {
+        compare: (a, b) => a.age - b.age,
+      },
+      filter: {
+        menus: [
+          { text: '20岁以下', value: [0, 20] },
+          { text: '20-25岁', value: [20, 25] },
+          { text: '25岁以上', value: [25, 100] },
+        ],
+        fn: (filter: any, record: any) =>
+          record.age >= filter.value[0] && record.age <= filter.value[1],
+        multiple: false,
+      },
     },
     {
       title: '状态',
@@ -75,11 +80,8 @@ export class DemoComponent implements OnInit {
       },
     },
   ];
-  checkboxChange(ret: any) {
-    console.log('checkboxChange', ret);
-  }
-  sortChange(ret: any) {
-    console.log('sortChange', ret);
+  change(e: NaTableChange) {
+    console.log(e);
   }
   ngOnInit(): void {
     of(

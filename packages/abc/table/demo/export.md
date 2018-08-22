@@ -7,25 +7,22 @@ title: 导出Excel
 
 ```ts
 import { Component } from '@angular/core';
-import { SimpleTableColumn } from '@delon/abc';
+import { NaTableColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="st.export()">Export</button>
-    <button nz-button (click)="st.export('https://randomuser.me/api/?results=100', { filename: 'via-url.xlsx', sheetname: 'user' })">Export via url</button>
     <button nz-button (click)="st.export(exportData, { filename: 'via-data.xlsx', sheetname: 'user' })">Export via data</button>
-    <simple-table #st [data]="url" [extraParams]="params" [total]="total" [columns]="columns"
-                [resReName]="{list: 'results' }" class="mt-sm"></simple-table>
+    <na-table #st [data]="url" [req]="{params: params}" [columns]="columns" class="mt-sm"></na-table>
     `,
 })
 export class DemoComponent {
-  url = `https://randomuser.me/api/?results=3`;
+  url = `/users?total=100`;
   params = { a: 1, b: 2 };
   // mock
-  total = 100;
-  columns: SimpleTableColumn[] = [
-    { title: '编号', index: 'id.value' },
+  columns: NaTableColumn[] = [
+    { title: '编号', index: 'id' },
     {
       title: '头像',
       type: 'img',
@@ -37,7 +34,7 @@ export class DemoComponent {
     { title: '电话', index: 'phone' },
     { title: '数字', index: 'price', type: 'number' },
     { title: '货币', index: 'price', type: 'currency' },
-    { title: '注册时间', type: 'date', index: 'registered.date' },
+    { title: '注册时间', type: 'date', index: 'registered' },
   ];
   // mock export data
   exportData: any[] = Array(10000)

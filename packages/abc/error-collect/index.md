@@ -1,4 +1,5 @@
 ---
+type: Other
 title: error-collect
 subtitle: 表单异常消息采集器
 cols: 1

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
+import { NaTableColumn, NaTableComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 
 @Component({
@@ -13,7 +13,7 @@ import { SFSchema } from '@delon/form';
   </page-header>
   <nz-card>
     <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-    <simple-table #st [data]="url" [columns]="columns"></simple-table>
+    <na-table #st [data]="url" [columns]="columns"></na-table>
   </nz-card>
   `,<% } else { %>
   templateUrl: './<%= dasherize(name) %>.component.html',<% } if(!inlineStyle) { %><% } else { %>
@@ -31,8 +31,8 @@ export class <%= componentName %> implements OnInit {
       }
     }
   };
-  @ViewChild('st') st: SimpleTableComponent;
-  columns: SimpleTableColumn[] = [
+  @ViewChild('st') st: NaTableComponent;
+  columns: NaTableColumn[] = [
     { title: '编号', index: 'no' },
     { title: '调用次数', type: 'number', index: 'callNo' },
     { title: '头像', type: 'img', width: '50px', index: 'avatar' },

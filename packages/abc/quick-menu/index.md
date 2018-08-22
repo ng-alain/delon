@@ -1,4 +1,5 @@
 ---
+type: Other
 title: quick-menu
 subtitle: 快速菜单
 cols: 1

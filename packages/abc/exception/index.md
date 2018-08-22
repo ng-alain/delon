@@ -1,4 +1,5 @@
 ---
+type: Other
 title: exception
 subtitle: 异常
 cols: 1

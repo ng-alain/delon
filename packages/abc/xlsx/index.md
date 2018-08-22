@@ -1,4 +1,5 @@
 ---
+type: Other
 title: xlsx
 subtitle: Excel 操作
 cols: 1

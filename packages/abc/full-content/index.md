@@ -1,4 +1,5 @@
 ---
+type: Other
 title: full-content
 subtitle: 全屏工作区
 cols: 1
