@@ -1,10 +1,10 @@
 ---
-title: _src
+title: na-src
 subtitle: 显示图像
 cols: 1
 type: Directive
-module: AdImageModule
-config: AdImageConfig
+module: NaImageModule
+config: NaImageConfig
 ---
 
 等同于 `src`，但相比较更多功能：

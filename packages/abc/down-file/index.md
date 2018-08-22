@@ -1,9 +1,9 @@
 ---
-title: down-file
+title: na-down-file
 subtitle: 下载文件
 cols: 1
 type: Directive
-module: AdDownFileModule
+module: NaDownFileModule
 ---
 
 一个基于 `blob` 的文件下载。

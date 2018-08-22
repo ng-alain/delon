@@ -1,15 +1,14 @@
-import { preloaderFinished } from '@delon/theme';
 import { NgModule } from '@angular/core';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { LayoutComponent } from '../layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './404/404.component';
+import { environment } from '../../environments/environment';
 
 const COMPONENTS = [HomeComponent, NotFoundComponent];
 
 const routes = [
-  { path: 'dev', loadChildren: './dev/dev.module#DevTestModule' },
   {
     path: '',
     component: LayoutComponent,
@@ -41,6 +40,10 @@ const routes = [
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },
 ];
+
+if (!environment.production) {
+  routes.splice(0, 0, { path: 'dev', loadChildren: './dev/dev.module#DevTestModule' } as any);
+}
 
 @NgModule({
   imports: [

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { Injector } from '@angular/core';
-import { XlsxService } from '../xlsx/xlsx.service';
-import { XlsxExportOptions } from '../xlsx/interface';
+import { NaXlsxService } from '../xlsx/xlsx.service';
+import { NaXlsxExportOptions } from '../xlsx/interface';
 import { SimpleTableExport } from './simple-table-export';
 import { STExportOptions, SimpleTableColumn } from './interface';
 
 class MockXlsxService {
-  export(options: XlsxExportOptions) {
+  export(options: NaXlsxExportOptions) {
     return options;
   }
 }
@@ -71,7 +71,7 @@ describe('abc: simple-table: export', () => {
     beforeEach(() => {
       injector = TestBed.configureTestingModule({
         providers: [
-          { provide: XlsxService, useClass: MockXlsxService },
+          { provide: NaXlsxService, useClass: MockXlsxService },
           SimpleTableExport,
         ],
       });

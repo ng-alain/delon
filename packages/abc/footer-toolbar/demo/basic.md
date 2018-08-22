@@ -10,30 +10,30 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'app-demo',
-    template: `
-    <form nz-form [formGroup]="form">
-        <nz-form-control [nzValidateStatus]="name">
-            <input nz-input formControlName="name" placeholder="required">
-        </nz-form-control>
-        <footer-toolbar errorCollect>
-            <button nz-button [nzType]="'primary'">Submit</button>
-        </footer-toolbar>
-    </form>
+  selector: 'app-demo',
+  template: `
+  <form nz-form [formGroup]="form">
+    <nz-form-control [nzValidateStatus]="name">
+      <input nz-input formControlName="name" placeholder="required">
+    </nz-form-control>
+    <na-footer-toolbar errorCollect>
+      <button nz-button [nzType]="'primary'">Submit</button>
+    </na-footer-toolbar>
+  </form>
     `
 })
 export class DemoComponent implements OnInit {
-    form: FormGroup;
-    constructor(fb: FormBuilder) {
-        this.form = fb.group({
-            name: [ null, Validators.required ]
-        });
-    }
+  form: FormGroup;
+  constructor(fb: FormBuilder) {
+    this.form = fb.group({
+      name: [ null, Validators.required ]
+    });
+  }
 
-    get name() { return this.form.controls.name; }
+  get name() { return this.form.controls.name; }
 
-    ngOnInit(): void {
-        this.name.markAsDirty();
-    }
+  ngOnInit(): void {
+    this.name.markAsDirty();
+  }
 }
 ```

@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { SidebarNavComponent } from './sidebar-nav.component';
+import { NaSidebarNavComponent } from './sidebar-nav.component';
 
 @NgModule({
   imports: [CommonModule, RouterModule, NgZorroAntdModule],
-  declarations: [SidebarNavComponent],
-  exports: [SidebarNavComponent],
+  declarations: [NaSidebarNavComponent],
+  exports: [NaSidebarNavComponent],
 })
-export class AdSidebarNavModule {
+export class NaSidebarNavModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdSidebarNavModule, providers: [] };
+    return { ngModule: NaSidebarNavModule, providers: [] };
   }
 }

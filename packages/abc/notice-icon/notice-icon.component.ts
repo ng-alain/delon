@@ -4,7 +4,7 @@ import { toNumber, toBoolean } from '@delon/util';
 import { NoticeItem } from './interface';
 
 @Component({
-  selector: 'notice-icon',
+  selector: 'na-notice-icon',
   template: `
   <nz-badge *ngIf="data?.length === 0" [nzCount]="count">
     <i class="anticon anticon-bell"></i>
@@ -12,8 +12,8 @@ import { NoticeItem } from './interface';
   <nz-popover *ngIf="data?.length > 0"
     [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)" nzTrigger="click"
     nzPlacement="bottomRight"
-    nzOverlayClassName="ad-notice-icon-con">
-    <div nz-popover class="item">
+    nzOverlayClassName="na-notice-icon">
+    <div nz-popover class="na-notice-icon__item">
       <nz-badge [nzCount]="count">
         <i class="anticon anticon-bell"></i>
       </nz-badge>
@@ -22,20 +22,20 @@ import { NoticeItem } from './interface';
       <nz-spin [nzSpinning]="loading" [nzDelay]="0">
         <nz-tabset>
           <nz-tab *ngFor="let i of data" [nzTitle]="i.title">
-            <notice-icon-tab
+            <na-notice-icon-tab
               [data]="i"
               (select)="onSelect($event)"
-              (clear)="onClear($event)"></notice-icon-tab>
+              (clear)="onClear($event)"></na-notice-icon-tab>
           </nz-tab>
         </nz-tabset>
       </nz-spin>
     </ng-template>
   </nz-popover>
   `,
-  host: { '[class.ad-notice-icon]': 'true' },
+  host: { '[class.na-notice-icon__btn]': 'true' },
   preserveWhitespaces: false,
 })
-export class NoticeIconComponent {
+export class NaNoticeIconComponent {
   @Input() data: NoticeItem[] = [];
 
   /** 图标上的消息总数 */

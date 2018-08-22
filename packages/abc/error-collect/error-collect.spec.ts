@@ -1,9 +1,4 @@
-import {
-  TestBed,
-  ComponentFixture,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import {
   Component,
   DebugElement,
@@ -21,8 +16,8 @@ import {
 
 import { NzFormModule, NzInputModule } from 'ng-zorro-antd';
 
-import { AdErrorCollectModule } from './error-collect.module';
-import { ErrorCollectComponent } from './error-collect.component';
+import { NaErrorCollectModule } from './error-collect.module';
+import { NaErrorCollectComponent } from './error-collect.component';
 
 describe('abc: error-collect', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -33,7 +28,7 @@ describe('abc: error-collect', () => {
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
       imports: [
-        AdErrorCollectModule.forRoot(),
+        NaErrorCollectModule.forRoot(),
         ReactiveFormsModule,
         NzFormModule,
         NzInputModule,
@@ -75,7 +70,7 @@ describe('abc: error-collect', () => {
         const el = dl.query(By.css('.has-error')).nativeElement as HTMLElement;
         spyOn(el, 'scrollIntoView');
         expect(el.scrollIntoView).not.toHaveBeenCalled();
-        (dl.query(By.css('error-collect'))
+        (dl.query(By.css('na-error-collect'))
           .nativeElement as HTMLElement).click();
         expect(el.scrollIntoView).toHaveBeenCalled();
         done();
@@ -86,7 +81,7 @@ describe('abc: error-collect', () => {
   it('should be not to error element when not errores', () => {
     TestBed.overrideTemplate(
       TestComponent,
-      `<form nz-form [formGroup]="validateForm"><error-collect #ec [freq]="freq"></error-collect></form>`,
+      `<form nz-form [formGroup]="validateForm"><na-error-collect #ec [freq]="freq"></na-error-collect></form>`,
     );
     getPropertiesAndCreate();
     let count = 0;
@@ -95,7 +90,7 @@ describe('abc: error-collect', () => {
       return 0;
     });
     expect(count).toBe(0);
-    (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
+    (dl.query(By.css('na-error-collect')).nativeElement as HTMLElement).click();
     expect(count).toBe(0);
   });
 
@@ -103,7 +98,7 @@ describe('abc: error-collect', () => {
     expect(() => {
       TestBed.overrideTemplate(
         TestComponent,
-        `<error-collect #ec [freq]="freq"></error-collect>`,
+        `<na-error-collect #ec [freq]="freq"></na-error-collect>`,
       )
         .createComponent(TestComponent)
         .detectChanges();
@@ -119,14 +114,15 @@ describe('abc: error-collect', () => {
                 <input nz-input formControlName="email" id="email">
             </nz-form-control>
         </nz-form-item>
-        <error-collect #ec [freq]="freq" [offsetTop]="offsetTop"></error-collect>
+        <na-error-collect #ec [freq]="freq" [offsetTop]="offsetTop"></na-error-collect>
     </form>
     `,
 })
 class TestComponent implements OnInit {
   freq = 20;
   offsetTop = 65 + 8 * 2;
-  @ViewChild('ec') comp: ErrorCollectComponent;
+  @ViewChild('ec')
+  comp: NaErrorCollectComponent;
   validateForm: FormGroup;
   constructor(fb: FormBuilder) {
     this.validateForm = fb.group({

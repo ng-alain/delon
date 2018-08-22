@@ -2,8 +2,8 @@
 title: lodop
 subtitle: Lodop打印
 cols: 1
-module: AdLodopModule
-config: AdLodopConfig
+module: NaLodopModule
+config: NaLodopConfig
 ---
 
 Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时感谢 [lodop](http://c-lodop.com/) 为 ng-alain 免费提供正版KEY。
@@ -12,13 +12,13 @@ Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时�
 
 ## API
 
-### LodopService
+### NaLodopService
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`cog` | 获取或设置配置项 | `AdLodopConfig` | -
-`events` | 打印过程通知 | `Observable<LodopPrintResult>` | -
-`lodop` | 获取 Lodop 对象 | `Observable<LodopResult>` | -
+`cog` | 获取或设置配置项 | `NaLodopConfig` | -
+`events` | 打印过程通知 | `Observable<NaLodopPrintResult>` | -
+`lodop` | 获取 Lodop 对象 | `Observable<NaLodopResult>` | -
 
 **受控 Lodop 对象加载成功后辅助API**
 
@@ -29,7 +29,7 @@ Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时�
 `design()` | 打开打印设计关闭后自动返回代码 | `string[]` | -
 `print()` | 立即打印，一般用于批量套打 | `void` | -
 
-### LodopPrintResult
+### NaLodopPrintResult
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -39,7 +39,7 @@ Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时�
 `item` | 动态参数上下文对象 | `any` | -
 `parser` | 代码解析表达式 | `RegExp` | -
 
-### LodopResult
+### NaLodopResult
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -48,7 +48,7 @@ Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时�
 `lodop` | Lodop 对象 | `Lodop` | -
 `error` | 错误明细 | `any` | -
 
-### AdLodopConfig
+### NaLodopConfig
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------

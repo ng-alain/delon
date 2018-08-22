@@ -1,2 +1,2 @@
-export { GlobalFooterComponent } from './global-footer.component';
-export { AdGlobalFooterModule } from './global-footer.module';
+export { NaGlobalFooterComponent } from './global-footer.component';
+export { NaGlobalFooterModule } from './global-footer.module';

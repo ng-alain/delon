@@ -1,28 +1,28 @@
 import { Component, Input, ContentChild, TemplateRef } from '@angular/core';
 
 @Component({
-  selector: 'exception',
+  selector: 'na-exception',
   template: `
-  <div class="img-block">
-    <div class="img" [ngStyle]="{'background-image': 'url(' + _img + ')'}"></div>
+  <div class="na-exception__img-block">
+    <div class="na-exception__img" [ngStyle]="{'background-image': 'url(' + _img + ')'}"></div>
   </div>
-  <div class="cont">
-    <h1 [innerHTML]="_title"></h1>
-    <div class="desc" [innerHTML]="_desc"></div>
+  <div class="na-exception__cont">
+    <h1 class="na-exception__cont-title" [innerHTML]="_title"></h1>
+    <div class="na-exception__cont-desc" [innerHTML]="_desc"></div>
     <ng-template #defaultActions>
       <button nz-button [routerLink]="['/']" [nzType]="'primary'">返回首页</button>
       <ng-content></ng-content>
     </ng-template>
-    <div class="actions" *ngIf="actions; else defaultActions">
+    <div class="na-exception__cont-actions" *ngIf="actions; else defaultActions">
       <ng-template [ngTemplateOutlet]="actions"></ng-template>
       <ng-content></ng-content>
     </div>
   </div>
   `,
-  host: { '[class.ad-exception]': 'true' },
+  host: { '[class.na-exception]': 'true' },
   preserveWhitespaces: false,
 })
-export class ExceptionComponent {
+export class NaExceptionComponent {
   _img = '';
   _title = '';
   _desc = '';

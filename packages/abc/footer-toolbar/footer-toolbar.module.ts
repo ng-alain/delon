@@ -1,18 +1,18 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AdErrorCollectModule } from './../error-collect/error-collect.module';
-import { FooterToolbarComponent } from './footer-toolbar.component';
+import { NaErrorCollectModule } from './../error-collect/error-collect.module';
+import { NaFooterToolbarComponent } from './footer-toolbar.component';
 
-const COMPONENTS = [FooterToolbarComponent];
+const COMPONENTS = [NaFooterToolbarComponent];
 
 @NgModule({
-  imports: [CommonModule, AdErrorCollectModule],
+  imports: [CommonModule, NaErrorCollectModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdFooterToolbarModule {
+export class NaFooterToolbarModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdFooterToolbarModule, providers: [] };
+    return { ngModule: NaFooterToolbarModule, providers: [] };
   }
 }

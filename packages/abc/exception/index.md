@@ -2,7 +2,7 @@
 title: exception
 subtitle: 异常
 cols: 1
-module: AdExceptionModule
+module: NaExceptionModule
 ---
 
 一个简单的表单异常消息采集器。

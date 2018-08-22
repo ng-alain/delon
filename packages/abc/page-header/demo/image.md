@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-demo',
     template: `
-<page-header [title]="'卡片列表'">
+<na-page-header [title]="'卡片列表'">
     <ng-template #breadcrumb>
         <nz-breadcrumb>
             <nz-breadcrumb-item><a>一级菜单</a></nz-breadcrumb-item>
@@ -41,7 +41,7 @@ import { Component } from '@angular/core';
             </a>
         </div>
     </ng-template>
-</page-header>
+</na-page-header>
     `
 })
 export class DemoComponent {

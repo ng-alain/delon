@@ -2,19 +2,19 @@ import { Component, Input } from '@angular/core';
 import { toBoolean } from '@delon/util';
 
 @Component({
-  selector: 'trend',
+  selector: 'na-trend',
   template: `
   <ng-content></ng-content>
-  <span *ngIf="flag" class="{{flag}}"><i class="anticon anticon-caret-{{flag}}"></i></span>
+  <span *ngIf="flag" class="na-trend__{{flag}}"><i class="anticon anticon-caret-{{flag}}"></i></span>
   `,
   host: {
-    '[class.ad-trend]': 'true',
-    '[class.grey]': '!colorful',
-    '[class.reverse]': 'colorful && reverseColor',
+    '[class.na-trend]': 'true',
+    '[class.na-trend__grey]': '!colorful',
+    '[class.na-trend__reverse]': 'colorful && reverseColor',
   },
   preserveWhitespaces: false,
 })
-export class TrendComponent {
+export class NaTrendComponent {
   /** 上升下降标识 */
   @Input() flag: 'up' | 'down';
 

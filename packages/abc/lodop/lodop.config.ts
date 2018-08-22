@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class AdLodopConfig {
+export class NaLodopConfig {
   /**
    * 注册信息：主注册号
    */

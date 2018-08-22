@@ -1,3 +1,3 @@
-export { AdPageHeaderConfig } from './page-header.config';
-export { PageHeaderComponent } from './page-header.component';
-export { AdPageHeaderModule } from './page-header.module';
+export { NaPageHeaderConfig } from './page-header.config';
+export { NaPageHeaderComponent } from './page-header.component';
+export { NaPageHeaderModule } from './page-header.module';

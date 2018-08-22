@@ -7,14 +7,14 @@ import {
   OnInit,
 } from '@angular/core';
 import {
-  ReuseContextI18n,
-  ReuseContextCloseEvent,
-  ReuseItem,
-  CloseType,
+  NaReuseContextI18n,
+  NaReuseContextCloseEvent,
+  NaReuseItem,
+  NaCloseType,
 } from './interface';
 
 @Component({
-  selector: 'reuse-tab-context-menu',
+  selector: 'na-reuse-tab-context-menu',
   template: `
   <ul nz-menu>
       <li nz-menu-item (click)="click($event, 'close')" data-type="close" [nzDisabled]="!item.closable" [innerHTML]="i18n.close"></li>
@@ -24,10 +24,10 @@ import {
   </ul>`,
   preserveWhitespaces: false,
 })
-export class ReuseTabContextMenuComponent implements OnInit {
-  private _i18n: ReuseContextI18n;
+export class NaReuseTabContextMenuComponent implements OnInit {
+  private _i18n: NaReuseContextI18n;
   @Input()
-  set i18n(value: ReuseContextI18n) {
+  set i18n(value: NaReuseContextI18n) {
     this._i18n = Object.assign(
       {
         close: '关闭标签',
@@ -42,17 +42,17 @@ export class ReuseTabContextMenuComponent implements OnInit {
     return this._i18n;
   }
 
-  @Input() item: ReuseItem;
+  @Input() item: NaReuseItem;
 
   @Input() event: MouseEvent;
 
-  @Output() close = new EventEmitter<ReuseContextCloseEvent>();
+  @Output() close = new EventEmitter<NaReuseContextCloseEvent>();
 
   get includeNonCloseable() {
     return this.event.ctrlKey;
   }
 
-  private notify(type: CloseType, item: ReuseItem) {
+  private notify(type: NaCloseType, item: NaReuseItem) {
     this.close.next({
       type,
       item: this.item,
@@ -64,7 +64,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
     if (this.includeNonCloseable) this.item.closable = true;
   }
 
-  click(e: MouseEvent, type: CloseType) {
+  click(e: MouseEvent, type: NaCloseType) {
     e.preventDefault();
     e.stopPropagation();
     if (type === 'close' && !this.item.closable) return;

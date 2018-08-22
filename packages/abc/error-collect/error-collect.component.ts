@@ -5,7 +5,6 @@ import {
   HostBinding,
   OnDestroy,
   ElementRef,
-  Renderer2,
   HostListener,
   Inject,
   ChangeDetectionStrategy,
@@ -13,21 +12,22 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { toNumber } from '@delon/util';
-import { AdErrorCollectConfig } from './error-collect.config';
+import { NaErrorCollectConfig } from './error-collect.config';
 
 /**
  * 错误消息采集器
  * PS：虽然此法并不好看，但对响应式表单&模板表单有很好的效果。
  */
 @Component({
-  selector: 'error-collect, [error-collect]',
+  selector: 'na-error-collect, [na-error-collect]',
   template: `
   <i class="anticon anticon-exclamation-circle"></i>
   <span class="pl-sm">{{count}}</span>`,
+  host: { '[class.na-error-collect]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class ErrorCollectComponent implements OnInit, OnDestroy {
+export class NaErrorCollectComponent implements OnInit, OnDestroy {
   private $time = null;
   private formEl: HTMLFormElement;
 
@@ -49,14 +49,14 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   }
   private _offsetTop = 65 + 64 + 8 * 2;
 
-  @HostBinding('class.d-none') _hiden = true;
+  @HostBinding('class.d-none')
+  _hiden = true;
 
   count = 0;
 
   constructor(
-    cog: AdErrorCollectConfig,
+    cog: NaErrorCollectConfig,
     private el: ElementRef,
-    private renderer: Renderer2,
     private cd: ChangeDetectorRef,
     @Inject(DOCUMENT) private doc: any,
   ) {
@@ -111,12 +111,6 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.formEl = this.findParent(this.el.nativeElement, 'form');
     if (this.formEl === null) throw new Error('未找到有效 form 元素');
-    (this.el.nativeElement as HTMLElement).classList.add(
-      'error-collect',
-      'pr-lg',
-      'text-error',
-      'point',
-    );
     this.install();
   }
 

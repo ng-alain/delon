@@ -1,17 +1,17 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
 
-import { AdLodopConfig } from './lodop.config';
-import { LodopService } from './lodop.service';
+import { NaLodopConfig } from './lodop.config';
+import { NaLodopService } from './lodop.service';
 
 @NgModule({
   imports: [DelonUtilModule],
 })
-export class AdLodopModule {
+export class NaLodopModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: AdLodopModule,
-      providers: [LodopService, AdLodopConfig],
+      ngModule: NaLodopModule,
+      providers: [NaLodopService, NaLodopConfig],
     };
   }
 }

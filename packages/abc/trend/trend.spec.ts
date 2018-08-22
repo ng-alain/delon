@@ -2,8 +2,8 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdTrendModule } from './trend.module';
-import { TrendComponent } from './trend.component';
+import { NaTrendModule } from './trend.module';
+import { NaTrendComponent } from './trend.component';
 
 describe('abc: trend', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: trend', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AdTrendModule.forRoot()],
+      imports: [NaTrendModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -43,12 +43,12 @@ describe('abc: trend', () => {
     it('width true', () => {
       context.colorful = true;
       fixture.detectChanges();
-      isExists('.grey', false);
+      isExists('.na-trend__grey', false);
     });
     it('width false', () => {
       context.colorful = false;
       fixture.detectChanges();
-      isExists('.grey', true);
+      isExists('.na-trend__grey', true);
     });
   });
 
@@ -57,31 +57,31 @@ describe('abc: trend', () => {
       context.colorful = true;
       context.reverseColor = true;
       fixture.detectChanges();
-      isExists('.reverse', true);
+      isExists('.na-trend__reverse', true);
     });
     it('width false', () => {
       context.colorful = true;
       context.reverseColor = false;
       fixture.detectChanges();
-      isExists('.reverse', false);
+      isExists('.na-trend__reverse', false);
     });
     it('should be muse is colorful: true', () => {
       context.reverseColor = true;
       fixture.detectChanges();
-      isExists('.reverse', false);
+      isExists('.na-trend__reverse', false);
     });
   });
 });
 
 @Component({
   template: `
-    <trend #comp
+    <na-trend #comp
         [flag]="flag"
         [colorful]="colorful"
-        [reverseColor]="reverseColor"></trend>`,
+        [reverseColor]="reverseColor"></na-trend>`,
 })
 class TestComponent {
-  @ViewChild('comp') comp: TrendComponent;
+  @ViewChild('comp') comp: NaTrendComponent;
   flag: 'up' | 'down';
   colorful: boolean;
   reverseColor: boolean;

@@ -24,39 +24,39 @@ import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 
 import { ReuseTabService } from './reuse-tab.service';
 import {
-  ReuseTabCached,
-  ReuseTabNotify,
-  ReuseTabMatchMode,
-  ReuseItem,
-  ReuseContextI18n,
-  ReuseContextCloseEvent,
-  ReuseTitle,
+  NaReuseTabCached,
+  NaReuseTabNotify,
+  NaReuseTabMatchMode,
+  NaReuseItem,
+  NaReuseContextI18n,
+  NaReuseContextCloseEvent,
+  NaReuseTitle,
 } from './interface';
-import { ReuseTabContextService } from './reuse-tab-context.service';
+import { NaReuseTabContextService } from './reuse-tab-context.service';
 
 @Component({
-  selector: 'reuse-tab',
+  selector: 'na-reuse-tab',
   templateUrl: './reuse-tab.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
-  providers: [ReuseTabContextService],
+  providers: [NaReuseTabContextService],
   host: {
-    '[class.ad-rt]': 'true',
-    '[class.fixed]': 'fixed',
+    '[class.na-rt]': 'true',
+    '[class.na-rt__fixed]': 'fixed',
   },
 })
-export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
+export class NaReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   private sub$: Subscription;
   private i18n$: Subscription;
-  list: ReuseItem[] = [];
-  item: ReuseItem;
+  list: NaReuseItem[] = [];
+  item: NaReuseItem;
   pos = 0;
 
   // region: properties
   /** 设置匹配模式 */
-  @Input() mode: ReuseTabMatchMode = ReuseTabMatchMode.Menu;
+  @Input() mode: NaReuseTabMatchMode = NaReuseTabMatchMode.Menu;
   /** 选项文本国际化 */
-  @Input() i18n: ReuseContextI18n;
+  @Input() i18n: NaReuseContextI18n;
   /** 是否Debug模式 */
   @Input()
   get debug() {
@@ -105,9 +105,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
   private _showCurrent = true;
   /** 切换时回调 */
-  @Output() change: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
+  @Output() change: EventEmitter<NaReuseItem> = new EventEmitter<NaReuseItem>();
   /** 关闭回调 */
-  @Output() close: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
+  @Output() close: EventEmitter<NaReuseItem> = new EventEmitter<NaReuseItem>();
   // endregion
 
   constructor(
@@ -132,19 +132,19 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       this.i18n$ = this.i18nSrv.change.pipe(debounceTime(100)).subscribe(() => this.genList());
   }
 
-  private genTit(title: ReuseTitle): string {
+  private genTit(title: NaReuseTitle): string {
     return title.i18n && this.i18nSrv
       ? this.i18nSrv.fanyi(title.i18n)
       : title.text;
   }
 
-  private genList(notify?: ReuseTabNotify) {
+  private genList(notify?: NaReuseTabNotify) {
     const isClosed = notify && notify.active === 'close';
     const beforeClosePos = isClosed
       ? this.list.findIndex(w => w.url === notify.url)
       : -1;
-    const ls = this.srv.items.map((item: ReuseTabCached, index: number) => {
-      return <ReuseItem>{
+    const ls = this.srv.items.map((item: NaReuseTabCached, index: number) => {
+      return <NaReuseItem>{
         url: item.url,
         title: this.genTit(item.title),
         closable: this.allowClose && item.closable && this.srv.count > 0,
@@ -167,7 +167,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           : idx;
       } else {
         const snapshotTrue = this.srv.getTruthRoute(snapshot);
-        ls.push(<ReuseItem>{
+        ls.push(<NaReuseItem>{
           url,
           title: this.genTit(this.srv.getTitle(url, snapshotTrue)),
           closable:
@@ -206,7 +206,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
   // region: UI
 
-  cmChange(res: ReuseContextCloseEvent) {
+  cmChange(res: NaReuseContextCloseEvent) {
     switch (res.type) {
       case 'close':
         this._close(null, res.item.index, res.includeNonCloseable);

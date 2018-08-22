@@ -1,3 +1,3 @@
-export { ImageDirective } from './image.directive';
-export { AdImageConfig } from './image.config';
-export { AdImageModule } from './image.module';
+export { NaImageDirective } from './image.directive';
+export { NaImageConfig } from './image.config';
+export { NaImageModule } from './image.module';

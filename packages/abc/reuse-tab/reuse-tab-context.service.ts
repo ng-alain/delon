@@ -8,20 +8,20 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { Subscription, Subject } from 'rxjs';
 
 import {
-  ReuseContextEvent,
-  ReuseContextI18n,
-  ReuseContextCloseEvent,
+  NaReuseContextEvent,
+  NaReuseContextI18n,
+  NaReuseContextCloseEvent,
 } from './interface';
-import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
+import { NaReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
 
 @Injectable()
-export class ReuseTabContextService {
+export class NaReuseTabContextService {
   private ref: OverlayRef;
-  i18n: ReuseContextI18n;
+  i18n: NaReuseContextI18n;
 
-  show: Subject<ReuseContextEvent> = new Subject<ReuseContextEvent>();
-  close: Subject<ReuseContextCloseEvent> = new Subject<
-    ReuseContextCloseEvent
+  show: Subject<NaReuseContextEvent> = new Subject<NaReuseContextEvent>();
+  close: Subject<NaReuseContextCloseEvent> = new Subject<
+    NaReuseContextCloseEvent
   >();
 
   constructor(private overlay: Overlay) {}
@@ -33,7 +33,7 @@ export class ReuseTabContextService {
     this.ref = null;
   }
 
-  open(context: ReuseContextEvent) {
+  open(context: NaReuseContextEvent) {
     this.remove();
     const { event, item } = context;
     const fakeElement = new ElementRef({
@@ -62,11 +62,11 @@ export class ReuseTabContextService {
       .withPositions(positions);
     this.ref = this.overlay.create({
       positionStrategy,
-      panelClass: 'reuse-tab-cm',
+      panelClass: 'na-rt__cm',
       scrollStrategy: this.overlay.scrollStrategies.close(),
     });
     const comp = this.ref.attach(
-      new ComponentPortal(ReuseTabContextMenuComponent),
+      new ComponentPortal(NaReuseTabContextMenuComponent),
     );
     const instance = comp.instance;
     instance.i18n = this.i18n;
@@ -75,7 +75,7 @@ export class ReuseTabContextService {
 
     const sub$ = new Subscription();
     sub$.add(
-      instance.close.subscribe((res: ReuseContextCloseEvent) => {
+      instance.close.subscribe((res: NaReuseContextCloseEvent) => {
         this.close.next(res);
         this.remove();
       }),

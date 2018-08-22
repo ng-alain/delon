@@ -8,27 +8,27 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdQRModule } from './qr.module';
-import { QRComponent } from './qr.component';
-import { QRService } from './qr.service';
+import { NaQRModule } from './qr.module';
+import { NaQRComponent } from './qr.component';
+import { NaQRService } from './qr.service';
 
 describe('abc: qr', () => {
   let injector: Injector;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
-  let srv: QRService;
+  let srv: NaQRService;
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [AdQRModule.forRoot()],
+      imports: [NaQRModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     fixture.detectChanges();
-    srv = injector.get(QRService);
+    srv = injector.get(NaQRService);
   });
 
   function getDataURL() {
@@ -60,7 +60,7 @@ describe('abc: qr', () => {
 
 @Component({
   template: `
-  <qr #comp
+  <na-qr #comp
     [value]="value"
     [background]="background"
     [backgroundAlpha]="backgroundAlpha"
@@ -70,11 +70,11 @@ describe('abc: qr', () => {
     [mime]="mime"
     [padding]="padding"
     [size]="size"
-    (change)="change($event)"></qr>
+    (change)="change($event)"></na-qr>
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: QRComponent;
+  @ViewChild('comp') comp: NaQRComponent;
 
   value = 'https://ng-alain.com/';
   background = 'white';

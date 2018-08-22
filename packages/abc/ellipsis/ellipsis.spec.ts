@@ -1,8 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement, Injector } from '@angular/core';
-import { By } from '@angular/platform-browser';
 
-import { AdEllipsisModule } from './ellipsis.module';
+import { NaEllipsisModule } from './ellipsis.module';
 
 describe('abc: ellipsis', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +11,7 @@ describe('abc: ellipsis', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [AdEllipsisModule.forRoot()],
+      imports: [NaEllipsisModule.forRoot()],
       declarations: [TestComponent],
     });
 
@@ -24,7 +23,7 @@ describe('abc: ellipsis', () => {
 
   it('should be ellipsis', () => {
     const ret = ((dl.nativeElement as HTMLElement).querySelector(
-      'ellipsis',
+      'na-ellipsis',
     ) as HTMLElement).style['-webkit-line-clamp'];
     expect(ret).not.toBeUndefined();
     expect(+ret).toBe(context.lines);
@@ -33,9 +32,9 @@ describe('abc: ellipsis', () => {
 
 @Component({
   template: `
-    <ellipsis [lines]="lines" style="width: 200px">
+    <na-ellipsis [lines]="lines" style="width: 200px">
         <p>There were injuries alleged in three <a href="#cover">cases in 2015</a>, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.</p>
-    </ellipsis>`,
+    </na-ellipsis>`,
 })
 class TestComponent {
   lines = 3;

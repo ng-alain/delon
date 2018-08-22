@@ -4,24 +4,23 @@ import {
   ChangeDetectionStrategy,
   OnChanges,
   ChangeDetectorRef,
-  SimpleChanges,
   HostBinding,
   Output,
   EventEmitter,
 } from '@angular/core';
-import { QRService } from './qr.service';
-import { AdQRConfig } from './qr.config';
+import { NaQRService } from './qr.service';
+import { NaQRConfig } from './qr.config';
 
 @Component({
-  selector: 'qr',
+  selector: 'na-qr',
   template: `
-  <img src="{{dataURL}}">
+  <img class="na-qr__img" src="{{dataURL}}">
   `,
   preserveWhitespaces: false,
-  host: { '[class.ad-qr]': 'true' },
+  host: { '[class.na-qr]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QRComponent implements OnChanges {
+export class NaQRComponent implements OnChanges {
   dataURL: string;
   // region: fields
 
@@ -51,14 +50,14 @@ export class QRComponent implements OnChanges {
   // endregion
 
   constructor(
-    cog: AdQRConfig,
-    private srv: QRService,
+    cog: NaQRConfig,
+    private srv: NaQRService,
     private cd: ChangeDetectorRef,
   ) {
     Object.assign(this, cog);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.dataURL = this.srv.refresh({
       background: this.background,
       backgroundAlpha: this.backgroundAlpha,

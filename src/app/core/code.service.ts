@@ -212,11 +212,11 @@ import { DelonFormModule } from '@delon/form';
 import { DelonAuthModule } from '@delon/auth';
 import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
-import { DelonUtilModule, LazyService } from '@delon/util';
+import { DelonUtilModule, NaLazyService } from '@delon/util';
 
 @Injectable()
 export class StartupService {
-  constructor(private lazy: LazyService) { }
+  constructor(private lazy: NaLazyService) { }
   load(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.lazy.load([

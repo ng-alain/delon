@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
   template: `
   <nz-row [nzGutter]="24">
     <nz-col [nzSpan]="8" class="text-center">
-      <qr
+      <na-qr
         [value]="value"
         [background]="background"
         [backgroundAlpha]="backgroundAlpha"
@@ -24,7 +24,7 @@ import { Component } from '@angular/core';
         [padding]="padding"
         [size]="size"
         (change)="change($event)"
-        style="border:1px solid #999"></qr>
+        style="border:1px solid #999"></na-qr>
     </nz-col>
     <nz-col [nzSpan]="16">
     <form nz-form>

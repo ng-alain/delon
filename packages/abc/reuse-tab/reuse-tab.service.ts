@@ -3,10 +3,10 @@ import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router'
 import { Observable, BehaviorSubject } from 'rxjs';
 import { MenuService } from '@delon/theme';
 import {
-  ReuseTabCached,
-  ReuseTabMatchMode,
-  ReuseTabNotify,
-  ReuseTitle,
+  NaReuseTabCached,
+  NaReuseTabMatchMode,
+  NaReuseTabNotify,
+  NaReuseTitle,
 } from './interface';
 
 /**
@@ -18,13 +18,13 @@ import {
 export class ReuseTabService implements OnDestroy {
   private _max = 10;
   private _debug = false;
-  private _mode = ReuseTabMatchMode.Menu;
+  private _mode = NaReuseTabMatchMode.Menu;
   private _excludes: RegExp[] = [];
-  private _cachedChange: BehaviorSubject<ReuseTabNotify> = new BehaviorSubject<
-    ReuseTabNotify
+  private _cachedChange: BehaviorSubject<NaReuseTabNotify> = new BehaviorSubject<
+    NaReuseTabNotify
   >(null);
-  private _cached: ReuseTabCached[] = [];
-  private _titleCached: { [url: string]: ReuseTitle } = {};
+  private _cached: NaReuseTabCached[] = [];
+  private _titleCached: { [url: string]: NaReuseTitle } = {};
   private _closableCached: { [url: string]: boolean } = {};
   private removeUrlBuffer: string;
 
@@ -43,7 +43,7 @@ export class ReuseTabService implements OnDestroy {
     }
   }
   /** 设置匹配模式 */
-  set mode(value: ReuseTabMatchMode) {
+  set mode(value: NaReuseTabMatchMode) {
     this._mode = value;
   }
   get mode() {
@@ -65,7 +65,7 @@ export class ReuseTabService implements OnDestroy {
     return this._excludes;
   }
   /** 获取已缓存的路由 */
-  get items(): ReuseTabCached[] {
+  get items(): NaReuseTabCached[] {
     return this._cached;
   }
   /** 获取当前缓存的路由总数 */
@@ -73,11 +73,11 @@ export class ReuseTabService implements OnDestroy {
     return this._cached.length;
   }
   /** 订阅缓存变更通知 */
-  get change(): Observable<ReuseTabNotify> {
+  get change(): Observable<NaReuseTabNotify> {
     return this._cachedChange.asObservable(); // .pipe(filter(w => w !== null));
   }
   /** 自定义当前标题 */
-  set title(value: string | ReuseTitle) {
+  set title(value: string | NaReuseTitle) {
     const url = this.curUrl;
     if (typeof value === 'string') value = { text: value };
     this._titleCached[url] = value;
@@ -97,7 +97,7 @@ export class ReuseTabService implements OnDestroy {
     return this.index(url) !== -1;
   }
   /** 获取指定路径缓存 */
-  get(url: string): ReuseTabCached {
+  get(url: string): NaReuseTabCached {
     return url ? this._cached.find(w => w.url === url) || null : null;
   }
   private remove(url: string | number, includeNonCloseable: boolean): boolean {
@@ -219,13 +219,13 @@ export class ReuseTabService implements OnDestroy {
    * @param url 指定URL
    * @param route 指定路由快照
    */
-  getTitle(url: string, route?: ActivatedRouteSnapshot): ReuseTitle {
+  getTitle(url: string, route?: ActivatedRouteSnapshot): NaReuseTitle {
     if (this._titleCached[url]) return this._titleCached[url];
 
     if (route && route.data && (route.data.titleI18n || route.data.title))
-      return <ReuseTitle>{ text: route.data.title, i18n: route.data.titleI18n };
+      return <NaReuseTitle>{ text: route.data.title, i18n: route.data.titleI18n };
 
-    const menu = this.mode !== ReuseTabMatchMode.URL ? this.getMenu(url) : null;
+    const menu = this.mode !== NaReuseTabMatchMode.URL ? this.getMenu(url) : null;
     return menu ? { text: menu.text, i18n: menu.i18n } : { text: url };
   }
 
@@ -263,7 +263,7 @@ export class ReuseTabService implements OnDestroy {
     if (route && route.data && typeof route.data.reuseClosable === 'boolean')
       return route.data.reuseClosable;
 
-    const menu = this.mode !== ReuseTabMatchMode.URL ? this.getMenu(url) : null;
+    const menu = this.mode !== NaReuseTabMatchMode.URL ? this.getMenu(url) : null;
     if (menu && typeof menu.reuseClosable === 'boolean')
       return menu.reuseClosable;
 
@@ -308,10 +308,10 @@ export class ReuseTabService implements OnDestroy {
     if (route.data && typeof route.data.reuse === 'boolean')
       return route.data.reuse;
 
-    if (this.mode !== ReuseTabMatchMode.URL) {
+    if (this.mode !== NaReuseTabMatchMode.URL) {
       const menu = this.getMenu(url);
       if (!menu) return false;
-      if (this.mode === ReuseTabMatchMode.Menu) {
+      if (this.mode === NaReuseTabMatchMode.Menu) {
         if (menu.reuse === false) return false;
       } else {
         if (!menu.reuse || menu.reuse !== true) return false;
@@ -384,7 +384,7 @@ export class ReuseTabService implements OnDestroy {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);
 
-    const item: ReuseTabCached = {
+    const item: NaReuseTabCached = {
       title: this.getTitle(url, _snapshot),
       closable: this.getClosable(url, _snapshot),
       url,

@@ -7,7 +7,6 @@ import { SixToSevenEditorComponent } from './6to7/editor/editor.component';
 import { ColorComponent } from './theme/components/color/color.component';
 import { PXComponent } from './theme/components/px/px.component';
 import { EditItemComponent } from './theme/components/edit-item/edit-item.component';
-import { ThemeLayoutComponent } from './theme/layout/layout.component';
 import { ThemeEditorComponent } from './theme/editor/editor.component';
 
 // region: components
@@ -16,7 +15,6 @@ const COMPONENTS = [
   ColorComponent,
   PXComponent,
   EditItemComponent,
-  ThemeLayoutComponent,
   ThemeEditorComponent,
   SixToSevenEditorComponent,
 ];

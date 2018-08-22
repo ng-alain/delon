@@ -15,23 +15,29 @@ import { _HttpClient } from '@delon/theme';
  * 文件下载
  *
  * ```html
- * <button nz-button down-file http-url="assets/demo{{i}}" file-name="demo中文">{{i}}</button>
+ * <button nz-button na-down-file http-url="assets/demo{{i}}" file-name="demo中文">{{i}}</button>
  * ```
  */
-@Directive({ selector: '[down-file]' })
-export class DownFileDirective {
+@Directive({ selector: '[na-down-file]' })
+export class NaDownFileDirective {
   /** URL请求参数 */
-  @Input('http-data') httpData: any;
+  @Input('http-data')
+  httpData: any;
   /** 请求类型 */
-  @Input('http-method') httpMethod: string = 'get';
+  @Input('http-method')
+  httpMethod: string = 'get';
   /** 下载地址 */
-  @Input('http-url') httpUrl: string;
+  @Input('http-url')
+  httpUrl: string;
   /** 指定文件名，若为空从服务端返回的 `header` 中获取 `filename`、`x-filename` */
-  @Input('file-name') fileName: string;
+  @Input('file-name')
+  fileName: string;
   /** 成功回调 */
-  @Output() success: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  success: EventEmitter<any> = new EventEmitter<any>();
   /** 错误回调 */
-  @Output() error: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  error: EventEmitter<any> = new EventEmitter<any>();
 
   private getDisposition(data: string) {
     const arr: any = (data || '')
@@ -51,13 +57,13 @@ export class DownFileDirective {
     private el: ElementRef,
     private http: HttpClient,
     @Optional() private _http: _HttpClient,
-  ) {
-  }
+  ) {}
 
   @HostListener('click')
   _click() {
     this.el.nativeElement.disabled = true;
-    ((this._http || this.http) as any).request(this.httpMethod, this.httpUrl, {
+    ((this._http || this.http) as any)
+      .request(this.httpMethod, this.httpUrl, {
         params: this.httpData || {},
         responseType: 'blob',
         observe: 'response',

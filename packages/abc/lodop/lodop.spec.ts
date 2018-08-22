@@ -1,17 +1,17 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { Observable, concat } from 'rxjs';
-import { tap, delay, filter, flatMap } from 'rxjs/operators';
+import { concat } from 'rxjs';
+import { tap, filter, flatMap } from 'rxjs/operators';
 
-import { LazyService } from '@delon/util';
+import { NaLazyService } from '@delon/util';
 
-import { LodopService } from './lodop.service';
-import { AdLodopConfig } from './lodop.config';
-import { AdLodopModule } from './lodop.module';
-import { Lodop } from './interface';
+import { NaLodopService } from './lodop.service';
+import { NaLodopConfig } from './lodop.config';
+import { NaLodopModule } from './lodop.module';
+import { NaLodop } from './interface';
 
-const cog: AdLodopConfig = {
+const cog: NaLodopConfig = {
   license: '',
   licenseA: '',
   name: 'LODOP',
@@ -32,20 +32,20 @@ class MockLazyService {
 
 describe('abc: lodop', () => {
   let injector: Injector;
-  let srv: LodopService;
+  let srv: NaLodopService;
 
-  function adLodopConfig(): AdLodopConfig {
+  function fnNaLodopConfig(): NaLodopConfig {
     return cog;
   }
-  function genModule(options?: AdLodopConfig) {
+  function genModule(options?: NaLodopConfig) {
     injector = TestBed.configureTestingModule({
-      imports: [AdLodopModule.forRoot()],
+      imports: [NaLodopModule.forRoot()],
       providers: [
-        { provide: LazyService, useClass: MockLazyService },
-        { provide: AdLodopConfig, useFactory: adLodopConfig },
+        { provide: NaLazyService, useClass: MockLazyService },
+        { provide: NaLodopConfig, useFactory: fnNaLodopConfig },
       ],
     });
-    srv = injector.get(LodopService);
+    srv = injector.get(NaLodopService);
     isErrRequest = false;
     loadCount = 0;
     isNullLodop = false;
@@ -89,7 +89,7 @@ describe('abc: lodop', () => {
         },
       };
       setTimeout(() => {
-        const obj = window[cog.name] as Lodop;
+        const obj = window[cog.name] as NaLodop;
         (obj.webskt as any).readyState = 1;
       }, 30);
       srv.lodop.subscribe(res => {

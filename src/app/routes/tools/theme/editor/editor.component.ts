@@ -1,6 +1,6 @@
 import { Component, TemplateRef } from '@angular/core';
 import { NzModalService, NzMessageService } from 'ng-zorro-antd';
-import { deepCopy, LazyService } from '@delon/util';
+import { deepCopy, NaLazyService } from '@delon/util';
 import { EditorItem } from '../interface';
 
 const DEFAULT = {
@@ -57,7 +57,7 @@ export class ThemeEditorComponent {
     constructor(
         private modalSrv: NzModalService,
         private msg: NzMessageService,
-        private lazy: LazyService
+        private lazy: NaLazyService
     ) {
         this.reset();
         this.lazy.loadStyle('/assets/color.less', 'stylesheet/less');

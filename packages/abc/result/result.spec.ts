@@ -2,8 +2,8 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdResultModule } from './result.module';
-import { ResultComponent } from './result.component';
+import { NaResultModule } from './result.module';
+import { NaResultComponent } from './result.component';
 
 describe('abc: result', () => {
     let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: result', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ AdResultModule.forRoot() ],
+            imports: [ NaResultModule.forRoot() ],
             declarations: [ TestComponent ]
         });
         fixture = TestBed.createComponent(TestComponent);
@@ -54,7 +54,7 @@ describe('abc: result', () => {
 
     describe('#title', () => {
         it('with string', () => {
-            isText('.title', context.title);
+            isText('.na-result__title', context.title);
         });
         it('with template', () => {
             context.title = context.titleTpl;
@@ -65,7 +65,7 @@ describe('abc: result', () => {
 
     describe('#description', () => {
         it('with string', () => {
-            isText('.description', context.description);
+            isText('.na-result__desc', context.description);
         });
         it('with template', () => {
             context.description = context.descriptionTpl;
@@ -76,7 +76,7 @@ describe('abc: result', () => {
 
     describe('#extra', () => {
         it('with string', () => {
-            isText('.extra', context.extra);
+            isText('.na-result__extra', context.extra);
         });
         it('with template', () => {
             context.extra = context.extraTpl;
@@ -88,18 +88,18 @@ describe('abc: result', () => {
 
 @Component({
     template: `
-    <result #comp
+    <na-result #comp
         [type]="type"
         [title]="title"
         [description]="description"
-        [extra]="extra"></result>
+        [extra]="extra"></na-result>
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #descriptionTpl><p id="descriptionTpl">descriptionTpl</p></ng-template>
     <ng-template #extraTpl><p id="extraTpl">extraTpl</p></ng-template>
     `
 })
 class TestComponent {
-    @ViewChild('comp') comp: ResultComponent;
+    @ViewChild('comp') comp: NaResultComponent;
     type = 'custom';
     @ViewChild('titleTpl') titleTpl: TemplateRef<void>;
     @ViewChild('descriptionTpl') descriptionTpl: TemplateRef<void>;

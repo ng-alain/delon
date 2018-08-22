@@ -1,9 +1,12 @@
 @import '../../../theme/styles/default';
-.ad-full-content {
+
+@na-full-content-prefix: ~'.na-full-content';
+
+@{na-full-content-prefix} {
   display: block;
   height: 100%;
   overflow: hidden;
-  &-wrap {
+  &__wrap {
     overflow: hidden;
     .content {
       router-outlet + * {
@@ -15,19 +18,19 @@
       margin-left: -24px;
     }
   }
-  &-fs {
+  &__fs {
     .header,
     .aside,
-    reuse-tab {
+    na-reuse-tab {
       display: none !important;
     }
     .content {
       margin: 24px !important;
     }
   }
-  &-ht {
+  &__ht {
     .content__title,
-    pro-header {
+    .na-ph {
       display: none !important;
     }
   }

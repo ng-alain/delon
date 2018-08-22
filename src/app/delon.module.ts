@@ -1,4 +1,9 @@
-import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
+import {
+  NgModule,
+  Optional,
+  SkipSelf,
+  ModuleWithProviders,
+} from '@angular/core';
 import { throwIfAlreadyLoaded } from './core/module-import-guard';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -9,42 +14,44 @@ import { DelonChartModule } from '@delon/chart';
 
 // region: global config functions
 
-import { AdLodopConfig, DelonABCModule } from '@delon/abc';
+import { NaLodopConfig, DelonABCModule } from '@delon/abc';
 
-export function adLodopConfig(): AdLodopConfig {
-    return Object.assign(new AdLodopConfig(), {
-        license: `A59B099A586B3851E0F0D7FDBF37B603`,
-        licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`
-    });
+export function fnNaLodopConfig(): NaLodopConfig {
+  return Object.assign(new NaLodopConfig(), {
+    license: `A59B099A586B3851E0F0D7FDBF37B603`,
+    licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`,
+  });
 }
 
 // endregion
 
 @NgModule({
-    imports: [
-        NgZorroAntdModule.forRoot(),
-        // theme
-        AlainThemeModule.forRoot(),
-        // abc
-        DelonABCModule.forRoot(),
-        // chart
-        DelonChartModule.forRoot(),
-        // form
-        DelonFormModule.forRoot(),
-        DelonUtilModule.forRoot()
-    ]
+  imports: [
+    NgZorroAntdModule.forRoot(),
+    // theme
+    AlainThemeModule.forRoot(),
+    // abc
+    DelonABCModule.forRoot(),
+    // chart
+    DelonChartModule.forRoot(),
+    // form
+    DelonFormModule.forRoot(),
+    DelonUtilModule.forRoot(),
+  ],
 })
 export class DelonModule {
-  constructor( @Optional() @SkipSelf() parentModule: DelonModule) {
+  constructor(
+    @Optional()
+    @SkipSelf()
+    parentModule: DelonModule,
+  ) {
     throwIfAlreadyLoaded(parentModule, 'DelonModule');
   }
 
   static forRoot(): ModuleWithProviders {
-      return {
-          ngModule: DelonModule,
-          providers: [
-            { provide: AdLodopConfig, useFactory: adLodopConfig }
-          ]
-      };
+    return {
+      ngModule: DelonModule,
+      providers: [{ provide: NaLodopConfig, useFactory: fnNaLodopConfig }],
+    };
   }
 }

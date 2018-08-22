@@ -1,2 +1,2 @@
-export { TrendComponent } from './trend.component';
-export { AdTrendModule } from './trend.module';
+export { NaTrendComponent } from './trend.component';
+export { NaTrendModule } from './trend.module';

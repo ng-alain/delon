@@ -1,16 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NumberToChinesePipe } from './number-to-chinese.pipe';
 
-const PIPES = [NumberToChinesePipe];
+import { NaNumberToChinesePipe } from './number-to-chinese.pipe';
+
+const PIPES = [NaNumberToChinesePipe];
 
 @NgModule({
   imports: [CommonModule],
   declarations: PIPES,
   exports: PIPES,
 })
-export class AdNumberToChineseModule {
+export class NaNumberToChineseModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdNumberToChineseModule, providers: [] };
+    return { ngModule: NaNumberToChineseModule, providers: [] };
   }
 }

@@ -12,20 +12,20 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { toBoolean } from '@delon/util';
 
-const CLS = 'ad-footer-toolbar';
+const CLS = 'na-footer-toolbar';
 
 @Component({
-  selector: 'footer-toolbar',
+  selector: 'na-footer-toolbar',
   template: `
-  <div class="left"><ng-container *ngIf="extra" [ngTemplateOutlet]="extra"></ng-container></div>
-  <div class="right">
-    <error-collect *ngIf="errorCollect"></error-collect>
+  <div class="na-footer-toolbar__left"><ng-container *ngIf="extra" [ngTemplateOutlet]="extra"></ng-container></div>
+  <div class="na-footer-toolbar__right">
+    <na-error-collect *ngIf="errorCollect"></na-error-collect>
     <ng-content></ng-content>
   </div>
   `,
   preserveWhitespaces: false,
 })
-export class FooterToolbarComponent implements OnInit, OnDestroy {
+export class NaFooterToolbarComponent implements OnInit, OnDestroy {
   @Input()
   get errorCollect() {
     return this._errorCollect;

@@ -1,19 +1,19 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AdQRConfig } from './qr.config';
-import { QRComponent } from './qr.component';
-import { QRService } from './qr.service';
+import { NaQRConfig } from './qr.config';
+import { NaQRComponent } from './qr.component';
+import { NaQRService } from './qr.service';
 
-const COMPONENTS = [QRComponent];
+const COMPONENTS = [NaQRComponent];
 
 @NgModule({
   imports: [CommonModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdQRModule {
+export class NaQRModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdQRModule, providers: [AdQRConfig, QRService] };
+    return { ngModule: NaQRModule, providers: [NaQRConfig, NaQRService] };
   }
 }

@@ -2,10 +2,10 @@
 title: full-content
 subtitle: 全屏工作区
 cols: 1
-module: AdFullContentModule
+module: NaFullContentModule
 ---
 
-全屏工作区，常用于带有滚动条表格；[完整示例](https://cipchk.github.io/ng-alain/tables/fs-table)。
+全屏工作区，常用于带有滚动条表格。
 
 ## 何时使用
 
@@ -24,5 +24,5 @@ module: AdFullContentModule
 有三种方式可以控制是否完整全屏，包括：
 
 - 使用 `fullscreen` 双向绑定
-- 使用 `[full-toggle]` 指令
-- 使用 `FullContentService.toggle()` 服务
+- 使用 `[na-full-toggle]` 指令
+- 使用 `NaFullContentService.toggle()` 服务

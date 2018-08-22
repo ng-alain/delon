@@ -1,12 +1,12 @@
 import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
-import { LazyService } from '@delon/util';
+import { NaLazyService } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import * as fs from 'file-saver';
 
-import { AdZipModule, ZipService, ZipConfig } from './index';
+import { NaZipModule, NaZipService, NaZipConfig } from './index';
 
 let isErrorRequest = false;
 let isClassZIP = false;
@@ -39,16 +39,16 @@ class MockHttpClient {
 }
 
 describe('abc: zip', () => {
-  let srv: ZipService;
-  function genModule(options?: ZipConfig) {
+  let srv: NaZipService;
+  function genModule(options?: NaZipConfig) {
     const injector = TestBed.configureTestingModule({
-      imports: [AdZipModule.forRoot(options)],
+      imports: [NaZipModule.forRoot(options)],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
-        { provide: LazyService, useClass: MockLazyService },
+        { provide: NaLazyService, useClass: MockLazyService },
       ],
     });
-    srv = injector.get(ZipService);
+    srv = injector.get(NaZipService);
   }
 
   beforeEach(() => {

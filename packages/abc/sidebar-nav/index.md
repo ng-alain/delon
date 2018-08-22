@@ -2,7 +2,7 @@
 title: sidebar-nav
 subtitle: 主菜单
 cols: 1
-module: AdSidebarNavModule
+module: NaSidebarNavModule
 ---
 
 ng-alain 左边主菜单，依赖于 `@delon/theme`。
@@ -33,7 +33,7 @@ ng-alain 左边主菜单，依赖于 `@delon/theme`。
 
 ## API
 
-### sidebar-nav
+### na-sidebar-nav
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------

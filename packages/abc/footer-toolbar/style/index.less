@@ -1,43 +1,42 @@
 @import '../../../theme/styles/default';
 
-// footer-toolbar
-@ad-footer-toolbar-prefix: ~'.ad-footer-toolbar';
-@ad-footer-toolbar-height: 56px;
-@ad-footer-toolbar-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
-@ad-footer-toolbar-bg: #fff;
-@ad-footer-toolbar-border-top: 1px solid @border-color-split;
-@ad-footer-toolbar-padding: 0 24px;
+@na-footer-toolbar-prefix: ~'.na-footer-toolbar';
+@na-footer-toolbar-height: 56px;
+@na-footer-toolbar-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+@na-footer-toolbar-bg: #fff;
+@na-footer-toolbar-border-top: 1px solid @border-color-split;
+@na-footer-toolbar-padding: 0 24px;
 
-@{ad-footer-toolbar-prefix} {
+@{na-footer-toolbar-prefix} {
   display: flex;
   position: fixed;
   width: 100%;
   bottom: 0;
   right: 0;
-  height: @ad-footer-toolbar-height;
-  line-height: @ad-footer-toolbar-height;
-  box-shadow: @ad-footer-toolbar-box-shadow;
-  background: @ad-footer-toolbar-bg;
-  border-top: @ad-footer-toolbar-border-top;
-  padding: @ad-footer-toolbar-padding;
+  height: @na-footer-toolbar-height;
+  line-height: @na-footer-toolbar-height;
+  box-shadow: @na-footer-toolbar-box-shadow;
+  background: @na-footer-toolbar-bg;
+  border-top: @na-footer-toolbar-border-top;
+  padding: @na-footer-toolbar-padding;
   transition: all 0.3s;
   z-index: @zindex;
-  .left {
+  &__left {
     flex: 1;
     margin-left: @aside-wd;
   }
 }
 
 .aside-collapsed {
-  @{ad-footer-toolbar-prefix} {
-    .left {
+  @{na-footer-toolbar-prefix} {
+    &__left {
       margin-left: @aside-collapsed-wd;
     }
   }
 }
 
-.has-ad-footer-toolbar {
+.has-na-footer-toolbar {
   .content {
-    margin-bottom: @layout-gutter + @ad-footer-toolbar-height;
+    margin-bottom: @layout-gutter + @na-footer-toolbar-height;
   }
 }

@@ -1,3 +1,3 @@
-export { NoticeIconComponent } from './notice-icon.component';
 export * from './interface';
-export { AdNoticeIconModule } from './notice-icon.module';
+export { NaNoticeIconComponent } from './notice-icon.component';
+export { NaNoticeIconModule } from './notice-icon.module';

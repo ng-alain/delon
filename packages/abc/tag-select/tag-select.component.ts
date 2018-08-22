@@ -8,16 +8,18 @@ import {
 import { toBoolean } from '@delon/util';
 
 @Component({
-  selector: 'tag-select',
+  selector: 'na-tag-select',
   template: `
-    <ng-content></ng-content>
-    <a *ngIf="expandable" class="trigger" (click)="trigger()">{{expand ? '收起' : '展开'}}<i class="anticon anticon-{{expand ? 'up' : 'down'}} ml-sm"></i></a>`,
-  host: { '[class.ad-tag-select]': 'true' },
+  <ng-content></ng-content>
+  <a *ngIf="expandable" class="na-tag-select__trigger" (click)="trigger()">
+    {{expand ? '收起' : '展开'}}<i class="anticon anticon-{{expand ? 'up' : 'down'}} na-tag-select__trigger-icon"></i>
+  </a>`,
+  host: { '[class.na-tag-select]': 'true' },
   preserveWhitespaces: false,
 })
-export class TagSelectComponent {
+export class NaTagSelectComponent {
   /** 是否启用 `展开与收进` */
-  @HostBinding('class.has-expand')
+  @HostBinding('class.na-tag-select__has-expand')
   @Input()
   get expandable() {
     return this._expandable;
@@ -27,7 +29,7 @@ export class TagSelectComponent {
   }
   private _expandable = true;
 
-  @HostBinding('class.expanded') expand = false;
+  @HostBinding('class.na-tag-select__expanded') expand = false;
 
   @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>();
 

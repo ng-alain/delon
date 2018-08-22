@@ -1,17 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DownFileDirective } from './down-file.directive';
+import { NaDownFileDirective } from './down-file.directive';
 
-const DIRECTIVES = [DownFileDirective];
+const DIRECTIVES = [NaDownFileDirective];
 
 @NgModule({
   imports: [CommonModule],
   declarations: [...DIRECTIVES],
   exports: [...DIRECTIVES],
 })
-export class AdDownFileModule {
+export class NaDownFileModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdDownFileModule, providers: [] };
+    return { ngModule: NaDownFileModule, providers: [] };
   }
 }

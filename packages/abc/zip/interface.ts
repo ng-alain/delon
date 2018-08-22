@@ -1,8 +1,8 @@
 import { InjectionToken } from '@angular/core';
 
-export const DA_ZIP_CONFIG = new InjectionToken<ZipConfig>('DA_ZIP_CONFIG');
+export const DA_ZIP_CONFIG = new InjectionToken<NaZipConfig>('Na_ZIP_CONFIG');
 
-export interface ZipConfig {
+export interface NaZipConfig {
   /**
    * Zip library path
    * @default //cdn.bootcss.com/jszip/3.1.5/jszip.min.js
@@ -14,7 +14,7 @@ export interface ZipConfig {
   utils?: string[];
 }
 
-export interface ZipWriteOptions {
+export interface NaZipWriteOptions {
   /** save file name, default: `download.zip` */
   filename?: string;
   options?: any;
@@ -24,7 +24,7 @@ export interface ZipWriteOptions {
   callback?: () => void;
 }
 
-export interface ZipSaveOptions {
+export interface NaZipSaveOptions {
   /**
    * 指定保存文件名，默认 `download.zip`
    */

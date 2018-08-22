@@ -2,18 +2,18 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DelonUtilModule } from '@delon/util';
 
-import { ImageDirective } from './image.directive';
-import { AdImageConfig } from './image.config';
+import { NaImageDirective } from './image.directive';
+import { NaImageConfig } from './image.config';
 
-const DIRECTIVES = [ImageDirective];
+const DIRECTIVES = [NaImageDirective];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule],
   declarations: [...DIRECTIVES],
   exports: [...DIRECTIVES],
 })
-export class AdImageModule {
+export class NaImageModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdImageModule, providers: [AdImageConfig] };
+    return { ngModule: NaImageModule, providers: [NaImageConfig] };
   }
 }

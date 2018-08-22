@@ -1,21 +1,21 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { Observable, of, Subject, Observer } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
 
-import { LazyService } from '@delon/util';
+import { NaLazyService } from '@delon/util';
 
-import { Lodop, LodopResult, LodopPrintResult } from './interface';
-import { AdLodopConfig } from './lodop.config';
+import { NaLodop, NaLodopResult, NaLodopPrintResult } from './interface';
+import { NaLodopConfig } from './lodop.config';
 
 // TODO: zone
 @Injectable()
-export class LodopService implements OnDestroy {
-  private _cog: AdLodopConfig;
+export class NaLodopService implements OnDestroy {
+  private _cog: NaLodopConfig;
   private pending = false;
-  private _lodop: Lodop = null;
-  private _init: Subject<LodopResult> = new Subject<LodopResult>();
-  private _events: Subject<LodopPrintResult> = new Subject<LodopPrintResult>();
+  private _lodop: NaLodop = null;
+  private _init: Subject<NaLodopResult> = new Subject<NaLodopResult>();
+  private _events: Subject<NaLodopPrintResult> = new Subject<NaLodopPrintResult>();
 
-  constructor(private defCog: AdLodopConfig, private scriptSrv: LazyService) {
+  constructor(private defCog: NaLodopConfig, private scriptSrv: NaLazyService) {
     this.cog = defCog;
   }
 
@@ -27,7 +27,7 @@ export class LodopService implements OnDestroy {
   get cog() {
     return this._cog;
   }
-  set cog(value: AdLodopConfig) {
+  set cog(value: NaLodopConfig) {
     this._cog = Object.assign(
       {
         url: 'https://localhost:8443/CLodopfuncs.js',
@@ -41,7 +41,7 @@ export class LodopService implements OnDestroy {
   }
 
   /** 事件变更通知 */
-  get events(): Observable<LodopPrintResult> {
+  get events(): Observable<NaLodopPrintResult> {
     return this._events.asObservable();
   }
 
@@ -83,7 +83,7 @@ export class LodopService implements OnDestroy {
       }
       this._lodop =
         window.hasOwnProperty(this.cog.name) &&
-        (window[this.cog.name] as Lodop);
+        (window[this.cog.name] as NaLodop);
       if (this._lodop === null) {
         onResolve('load-variable-name-error', { name: this.cog.name });
         return;
@@ -106,8 +106,8 @@ export class LodopService implements OnDestroy {
   }
 
   /** 获取 lodop 对象 */
-  get lodop(): Observable<LodopResult> {
-    if (this._lodop) return of(<LodopResult>{ ok: true, lodop: this._lodop });
+  get lodop(): Observable<NaLodopResult> {
+    if (this._lodop) return of(<NaLodopResult>{ ok: true, lodop: this._lodop });
     if (this.pending) return this._init.asObservable();
 
     this.request();
@@ -192,7 +192,7 @@ export class LodopService implements OnDestroy {
       this._lodop.On_Return = null;
       this._events.next(
         Object.assign(
-          <LodopPrintResult>{
+          <NaLodopPrintResult>{
             ok: value === true,
             error: value === true ? null : value,
           },

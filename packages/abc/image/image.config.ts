@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class AdImageConfig {
+export class NaImageConfig {
   /**
    * 默认大小，默认值：`64`，单位：px
    */

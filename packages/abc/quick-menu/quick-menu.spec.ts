@@ -1,25 +1,18 @@
-import {
-  Component,
-  DebugElement,
-  TemplateRef,
-  ViewChild,
-  Injector,
-} from '@angular/core';
+import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdQuickMenuModule } from './quick-menu.module';
-import { QuickMenuComponent } from './quick-menu.component';
+import { NaQuickMenuModule } from './quick-menu.module';
+import { NaQuickMenuComponent } from './quick-menu.component';
 
 describe('abc: quick-menu', () => {
-  let injector: Injector;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
 
   beforeEach(() => {
-    injector = TestBed.configureTestingModule({
-      imports: [AdQuickMenuModule.forRoot()],
+    TestBed.configureTestingModule({
+      imports: [NaQuickMenuModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -28,7 +21,7 @@ describe('abc: quick-menu', () => {
     fixture.detectChanges();
   });
 
-  function getEl(cls: string = `quick-menu`): HTMLElement {
+  function getEl(cls: string = `na-quick-menu`): HTMLElement {
     return dl.query(By.css(cls)).nativeElement as HTMLElement;
   }
 
@@ -62,10 +55,11 @@ describe('abc: quick-menu', () => {
 
 @Component({
   template: `
-    <quick-menu #comp [width]="width"></quick-menu>
+    <na-quick-menu #comp [width]="width"></na-quick-menu>
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: QuickMenuComponent;
+  @ViewChild('comp')
+  comp: NaQuickMenuComponent;
   width = 200;
 }

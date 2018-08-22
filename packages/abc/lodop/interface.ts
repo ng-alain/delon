@@ -21,7 +21,7 @@ export interface CLodop {
   readonly On_Return_Remain: boolean;
 }
 
-export interface Lodop extends CLodop {
+export interface NaLodop extends CLodop {
   [key: string]: any;
 
   /** 获得软件版本号 */
@@ -155,7 +155,7 @@ export interface Lodop extends CLodop {
 
   /** 设置打印项风格 */
   SET_PRINT_STYLE(
-    strStyleName: LodopStyleValue,
+    strStyleName: NaLodopStyleValue,
     varStyleValue: number | string,
   ): void;
 
@@ -363,7 +363,7 @@ export interface Lodop extends CLodop {
   webskt: WebSocket;
 }
 
-export type LodopStyleValue =
+export type NaLodopStyleValue =
   | 'FontName'
   | 'FontSize'
   | 'FontColor'
@@ -381,18 +381,18 @@ export type LodopStyleValue =
   | 'PreviewOnly'
   | 'ReadOnly';
 
-export interface LodopResult {
+export interface NaLodopResult {
   /** 是否成功 */
   ok: boolean;
   /** 错误码 */
   status?: string;
   /** 成功时携带 LODOP 对象 */
-  lodop?: Lodop;
+  lodop?: NaLodop;
   /** 错误信息 */
   error?: any;
 }
 
-export interface LodopPrintResult {
+export interface NaLodopPrintResult {
   /** 是否成功 */
   ok: boolean;
   /** 错误信息 */

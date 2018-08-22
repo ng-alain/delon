@@ -2,8 +2,8 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdFooterToolbarModule } from './footer-toolbar.module';
-import { AdErrorCollectModule } from '../error-collect/error-collect.module';
+import { NaFooterToolbarModule } from './footer-toolbar.module';
+import { NaErrorCollectModule } from '../error-collect/error-collect.module';
 
 describe('abc: footer-toolbar', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -13,8 +13,8 @@ describe('abc: footer-toolbar', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        AdErrorCollectModule.forRoot(),
-        AdFooterToolbarModule.forRoot(),
+        NaErrorCollectModule.forRoot(),
+        NaFooterToolbarModule.forRoot(),
       ],
       declarations: [TestComponent],
     });
@@ -25,13 +25,13 @@ describe('abc: footer-toolbar', () => {
   });
 
   it('should be create', () => {
-    expect(dl.queryAll(By.css('.ad-footer-toolbar')).length).toBe(1);
+    expect(dl.queryAll(By.css('.na-footer-toolbar')).length).toBe(1);
   });
 
   it('should be load error-collect', () => {
     context.errorCollect = true;
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('error-collect')).length).toBe(1);
+    expect(dl.queryAll(By.css('na-error-collect')).length).toBe(1);
   });
 
   it('should be custom extra template', () => {
@@ -42,12 +42,12 @@ describe('abc: footer-toolbar', () => {
 @Component({
   template: `
     <form>
-        <footer-toolbar [errorCollect]="errorCollect">
+        <na-footer-toolbar [errorCollect]="errorCollect">
             <ng-template #extra>
                 <p id="extra">extra</p>
             </ng-template>
             <button>Submit</button>
-        </footer-toolbar>
+        </na-footer-toolbar>
     </form>
     `,
 })

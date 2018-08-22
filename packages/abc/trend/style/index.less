@@ -1,10 +1,13 @@
 @import '../../../theme/styles/default';
-.ad-trend {
+
+@na-trend-prefix: ~'.na-trend';
+
+@{na-trend-prefix} {
   display: inline-block;
   font-size: @font-size-base;
   line-height: 22px;
-  .up,
-  .down {
+  &__up,
+  &__down {
     margin-left: 4px;
     position: relative;
     top: 1px;
@@ -13,24 +16,24 @@
       transform: scale(0.83);
     }
   }
-  .up {
+  &__up {
     color: @red-6;
   }
-  .down {
+  &__down {
     color: @green-6;
     top: -1px;
   }
-  &.grey {
-    .up,
-    .down {
+  &__grey {
+    @{na-trend-prefix}__up,
+    @{na-trend-prefix}__down {
       color: @text-color;
     }
   }
-  &.reverse {
-    .up {
+  &__reverse {
+    @{na-trend-prefix}__up {
       color: @green-6;
     }
-    .down {
+    @{na-trend-prefix}__down {
       color: @red-6;
     }
   }

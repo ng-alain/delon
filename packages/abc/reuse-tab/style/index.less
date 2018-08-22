@@ -1,5 +1,8 @@
 @import '../../../theme/styles/default';
-.ad-rt {
+
+@na-rt-prefix: ~'.na-rt';
+
+@{na-rt-prefix} {
   display: block;
   background-color: @reuse-tab-bg;
   padding: @reuse-tab-padding;
@@ -31,7 +34,7 @@
       }
     }
   }
-  &.fixed {
+  &__fixed {
     position: fixed;
     top: @header-hg;
     left: @aside-wd;
@@ -41,13 +44,13 @@
   }
 }
 
-.reuse-tab-cm {
+@{na-rt-prefix}__cm {
   .ant-menu {
     border: 1px solid #e9e9e9;
   }
 }
 
-.aside-collapsed .ad-rt.fixed {
+.aside-collapsed @{na-rt-prefix}__fixed {
   left: @aside-collapsed-wd;
 }
 
@@ -60,11 +63,11 @@
 // @media (min-width: @screen-sm-max) {
 // }
 @media (max-width: @screen-sm-max) {
-  .ad-rt.fixed {
+  @{na-rt-prefix}__fixed {
     left: -@content-padding;
     top: -@reuse-tab-height;
   }
-  .aside-collapsed .ad-rt.fixed {
+  .aside-collapsed @{na-rt-prefix}__fixed {
     left: -@content-padding;
     right: -@content-padding;
   }

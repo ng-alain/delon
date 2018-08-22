@@ -8,16 +8,16 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { toNumber } from '@delon/util';
+import { toNumber, updateHostClass } from '@delon/util';
 
 @Component({
-  selector: 'number-info',
+  selector: 'na-number-info',
   template: `
-  <div *ngIf="_title || _titleTpl" class="title"><ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container></div>
-  <div *ngIf="_subTitle || _subTitleTpl" class="sub-title"><ng-container *ngIf="_subTitle; else _subTitleTpl">{{_subTitle}}</ng-container></div>
-  <div class="value" [ngStyle]="{'margin-top.px': gap}">
-    <span><ng-container *ngIf="_total; else _totalTpl">{{_total}}</ng-container><em class="suffix" *ngIf="suffix">{{suffix}}</em></span>
-    <span *ngIf="status || _isSubTotal" class="sub-total">
+  <div *ngIf="_title || _titleTpl" class="na-number-info__title"><ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container></div>
+  <div *ngIf="_subTitle || _subTitleTpl" class="na-number-info__title-sub"><ng-container *ngIf="_subTitle; else _subTitleTpl">{{_subTitle}}</ng-container></div>
+  <div class="na-number-info__value" [ngStyle]="{'margin-top.px': gap}">
+    <span class="na-number-info__value-text"><ng-container *ngIf="_total; else _totalTpl">{{_total}}</ng-container><em class="na-number-info__value-suffix" *ngIf="suffix">{{suffix}}</em></span>
+    <span *ngIf="status || _isSubTotal" class="na-number-info__value-text na-number-info__value-sub">
       <ng-container *ngIf="_subTotal; else _subTotalTpl">{{_subTotal}}</ng-container>
       <i *ngIf="status" class="anticon anticon-caret-{{status}}"></i>
     </span>
@@ -26,7 +26,7 @@ import { toNumber } from '@delon/util';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NumberInfoComponent implements OnChanges {
+export class NaNumberInfoComponent implements OnChanges {
   _title = '';
   _titleTpl: TemplateRef<any>;
   /** 标题 */
@@ -75,13 +75,16 @@ export class NumberInfoComponent implements OnChanges {
   }
 
   /** 子总量 */
-  @Input() suffix: string;
+  @Input()
+  suffix: string;
 
   /** 增加状态 */
-  @Input() status: 'up' | 'down';
+  @Input()
+  status: 'up' | 'down';
 
   /** 状态样式 */
-  @Input() theme: 'light' | '' = 'light';
+  @Input()
+  theme: 'light' | 'default' = 'light';
 
   /** 设置数字和描述直接的间距（像素） */
   @Input()
@@ -101,13 +104,14 @@ export class NumberInfoComponent implements OnChanges {
 
   _classMap: string[] = [];
   setClass() {
-    this._classMap.forEach(cls =>
-      this.renderer.removeClass(this.el.nativeElement, cls),
-    );
-    this._classMap = ['ad-number-info'];
-    if (this.theme) this._classMap.push(this.theme);
-    this._classMap.forEach(cls =>
-      this.renderer.addClass(this.el.nativeElement, cls),
+    updateHostClass(
+      this.el.nativeElement,
+      this.renderer,
+      {
+        'na-number-info': true,
+        [`na-number-info__${this.theme}`]: true
+      },
+      true,
     );
     this.cd.detectChanges();
   }

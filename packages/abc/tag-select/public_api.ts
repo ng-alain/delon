@@ -1,2 +1,2 @@
-export { TagSelectComponent } from './tag-select.component';
-export { AdTagSelectModule } from './tag-select.module';
+export { NaTagSelectComponent } from './tag-select.component';
+export { NaTagSelectModule } from './tag-select.module';

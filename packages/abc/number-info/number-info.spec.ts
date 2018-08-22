@@ -2,8 +2,8 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdNumberInfoModule } from './number-info.module';
-import { NumberInfoComponent } from './number-info.component';
+import { NaNumberInfoModule } from './number-info.module';
+import { NaNumberInfoComponent } from './number-info.component';
 
 describe('abc: number-info', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: number-info', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AdNumberInfoModule.forRoot()],
+      imports: [NaNumberInfoModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -34,7 +34,7 @@ describe('abc: number-info', () => {
 
   describe('#title', () => {
     it('with string', () => {
-      isText('.title', context.title);
+      isText('.na-number-info__title', context.title);
     });
     it('with template', () => {
       context.title = context.titleTpl;
@@ -45,7 +45,7 @@ describe('abc: number-info', () => {
 
   describe('#subTitle', () => {
     it('with string', () => {
-      isText('.sub-title', context.subTitle);
+      isText('.na-number-info__title-sub', context.subTitle);
     });
     it('with template', () => {
       context.subTitle = context.subTitleTpl;
@@ -67,7 +67,7 @@ describe('abc: number-info', () => {
 
   describe('#subTotal', () => {
     it('with string', () => {
-      isExists('.sub-total');
+      isExists('.na-number-info__value-sub');
     });
     it('with template', () => {
       context.subTotal = context.subTotalTpl;
@@ -77,23 +77,23 @@ describe('abc: number-info', () => {
   });
 
   it('should be change theme', () => {
-    isExists('.light');
+    isExists('.na-number-info__light');
     context.theme = '';
     fixture.detectChanges();
-    isExists('.light', false);
+    isExists('.na-number-info__light', false);
   });
 
   it('should be change gap', () => {
     context.gap = 10;
     fixture.detectChanges();
-    const el = dl.query(By.css('.value')).nativeElement as HTMLElement;
+    const el = dl.query(By.css('.na-number-info__value')).nativeElement as HTMLElement;
     expect(+el.style.marginTop.replace('px', '')).toBe(10);
   });
 });
 
 @Component({
   template: `
-    <number-info #ni
+    <na-number-info #ni
         [title]="title"
         [subTitle]="subTitle"
         [total]="total"
@@ -101,7 +101,7 @@ describe('abc: number-info', () => {
         suffix="suffix"
         [status]="status"
         [theme]="theme"
-        [gap]="gap"></number-info>
+        [gap]="gap"></na-number-info>
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #subTitleTpl><p id="subTitleTpl">subTitleTpl</p></ng-template>
     <ng-template #totalTpl><p id="totalTpl">totalTpl</p></ng-template>
@@ -109,7 +109,7 @@ describe('abc: number-info', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('ni') comp: NumberInfoComponent;
+  @ViewChild('ni') comp: NaNumberInfoComponent;
   @ViewChild('titleTpl') titleTpl: TemplateRef<void>;
   @ViewChild('subTitleTpl') subTitleTpl: TemplateRef<void>;
   @ViewChild('totalTpl') totalTpl: TemplateRef<void>;

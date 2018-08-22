@@ -2,7 +2,7 @@
 title: reuse-tab
 subtitle: 路由复用标签
 cols: 1
-module: AdReuseTabModule
+module: NaReuseTabModule
 ---
 
 复用标签在中台系统非常常见，本质是解决不同路由页切换时组件数据不丢失问题。
@@ -11,22 +11,22 @@ module: AdReuseTabModule
 
 ## 如何使用？
 
-默认 `AdReuseTabModule` 并不会注册 `RouteReuseStrategy`，这是因为若默认在模块内注册会导致所有引入 `@delon/abc` 模块都会强制使用路由复用，不管是否模板是否包括 `<reuse-tab>`。因此，除了引入模块以外，还需要在**手动注册** `RouteReuseStrategy`。
+默认 `NaReuseTabModule` 并不会注册 `RouteReuseStrategy`，这是因为若默认在模块内注册会导致所有引入 `@delon/abc` 模块都会强制使用路由复用，不管是否模板是否包括 `<reuse-tab>`。因此，除了引入模块以外，还需要在**手动注册** `RouteReuseStrategy`。
 
 ```ts
 // delon.module.ts or app.module.ts
 providers: [
   {
     provide: RouteReuseStrategy,
-    useClass: ReuseTabStrategy,
-    deps: [ReuseTabService],
+    useClass: NaReuseTabStrategy,
+    deps: [NaReuseTabService],
   }
 ]
 ```
 
 ## 匹配模式
 
-在项目的任何位置（建议：`startup.service.ts`）注入 `ReuseTabService` 类，并设置 `mode` 属性，或通过 `<reuse-tab [mode]="0"></reuse-tab>` 重新设置值，包括：
+在项目的任何位置（建议：`startup.service.ts`）注入 `NaReuseTabService` 类，并设置 `mode` 属性，或通过 `<na-reuse-tab [mode]="0"></na-reuse-tab>` 重新设置值，包括：
 
 **0、（推荐，默认值）Menu**
 
@@ -72,17 +72,17 @@ providers: [
 
 根据以下顺序获取标签文本：
 
-1. 组件内使用 `ReuseTabService.title = 'new title'` 重新指定文本，
+1. 组件内使用 `NaReuseTabService.title = 'new title'` 重新指定文本，
 2. 路由配置中 `data` 属性中包含 `reuseTitle` > `title`
 3. 菜单数据中 `text` 属性
 
-`ReuseTabService` 代码示例：
+`NaReuseTabService` 代码示例：
 
 ```ts
 export class DemoReuseTabEditComponent implements OnInit {
   id: any;
 
-  constructor(private route: ActivatedRoute, private reuseTabService: ReuseTabService) {}
+  constructor(private route: ActivatedRoute, private reuseTabService: NaReuseTabService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

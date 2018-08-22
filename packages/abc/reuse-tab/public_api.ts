@@ -1,11 +1,11 @@
-export { ReuseTabComponent } from './reuse-tab.component';
+export { NaReuseTabComponent } from './reuse-tab.component';
 export { ReuseTabService } from './reuse-tab.service';
 export { ReuseTabStrategy } from './reuse-tab.strategy';
-export { AdReuseTabModule } from './reuse-tab.module';
+export { NaReuseTabModule } from './reuse-tab.module';
 export {
-  ReuseTabMatchMode,
-  ReuseTabCached,
-  ReuseTabNotify,
-  ReuseItem,
-  ReuseContextI18n,
+  NaReuseTabMatchMode,
+  NaReuseTabCached,
+  NaReuseTabNotify,
+  NaReuseItem,
+  NaReuseContextI18n,
 } from './interface';

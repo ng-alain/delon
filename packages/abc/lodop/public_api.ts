@@ -1,4 +1,4 @@
 export * from './interface';
-export { AdLodopConfig } from './lodop.config';
-export { LodopService } from './lodop.service';
-export { AdLodopModule } from './lodop.module';
+export { NaLodopConfig } from './lodop.config';
+export { NaLodopService } from './lodop.service';
+export { NaLodopModule } from './lodop.module';

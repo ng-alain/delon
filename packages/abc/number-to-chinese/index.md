@@ -2,7 +2,7 @@
 title: number-to-chinese
 subtitle: 人民币大写
 cols: 1
-module: AdNumberToChineseModule
+module: NaNumberToChineseModule
 ---
 
 常用在数值转化为人民币大写。
@@ -19,7 +19,7 @@ module: AdNumberToChineseModule
 `rmb` | 是否RMB格式 | `boolean` | `true`
 `options` | 额外选项 | `NumberToChineseOptions` | -
 
-**NumberToChineseOptions**
+**NaNumberToChineseOptions**
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------

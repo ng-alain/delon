@@ -8,11 +8,11 @@ import {
 import { toNumber } from '@delon/util';
 
 @Component({
-  selector: 'ellipsis',
+  selector: 'na-ellipsis',
   template: `<ng-content></ng-content>`,
-  host: { '[class.ad-ellipsis]': 'true' },
+  host: { '[class.na-ellipsis]': 'true' },
 })
-export class EllipsisComponent {
+export class NaEllipsisComponent {
   /** 在按照行数截取下最大的行数，超过则截取省略 */
   @Input()
   @HostBinding('style.-webkit-line-clamp')

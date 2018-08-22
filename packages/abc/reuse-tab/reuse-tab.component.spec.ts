@@ -25,9 +25,9 @@ import {
 
 import { MenuService, ALAIN_I18N_TOKEN } from '@delon/theme';
 
-import { AdReuseTabModule } from './reuse-tab.module';
-import { ReuseTabComponent } from './reuse-tab.component';
-import { ReuseTabMatchMode } from './interface';
+import { NaReuseTabModule } from './reuse-tab.module';
+import { NaReuseTabComponent } from './reuse-tab.component';
+import { NaReuseTabMatchMode } from './interface';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
@@ -44,7 +44,7 @@ describe('abc: reuse-tab', () => {
   let fixture: ComponentFixture<AppComponent>;
   let dl: DebugElement;
   let layoutComp: LayoutComponent;
-  let rtComp: ReuseTabComponent;
+  let rtComp: NaReuseTabComponent;
   let srv: ReuseTabService;
   let page: PageObject;
 
@@ -60,7 +60,7 @@ describe('abc: reuse-tab', () => {
         EComponent,
       ],
       imports: [
-        AdReuseTabModule.forRoot(),
+        NaReuseTabModule.forRoot(),
         RouterTestingModule.withRoutes([
           {
             path: '',
@@ -118,8 +118,8 @@ describe('abc: reuse-tab', () => {
       .query(By.directive(LayoutComponent))
       .injector.get(LayoutComponent);
     rtComp = dl
-      .query(By.directive(ReuseTabComponent))
-      .injector.get(ReuseTabComponent);
+      .query(By.directive(NaReuseTabComponent))
+      .injector.get(NaReuseTabComponent);
     spyOn(layoutComp, 'change');
     spyOn(layoutComp, 'close');
   }
@@ -198,7 +198,7 @@ describe('abc: reuse-tab', () => {
             .expectCount(1)
             .close(0)
             .expectCount(0);
-          expect(page.getEl('reuse-tab').style.display).toBe('none');
+          expect(page.getEl('na-reuse-tab').style.display).toBe('none');
         }),
       );
       it(
@@ -274,9 +274,9 @@ describe('abc: reuse-tab', () => {
       });
       describe('#mode', () => {
         [
-          ReuseTabMatchMode.Menu,
-          ReuseTabMatchMode.MenuForce,
-          ReuseTabMatchMode.URL,
+          NaReuseTabMatchMode.Menu,
+          NaReuseTabMatchMode.MenuForce,
+          NaReuseTabMatchMode.URL,
         ].forEach(type => {
           it(`with ${type}`, () => {
             layoutComp.mode = type;
@@ -342,7 +342,7 @@ describe('abc: reuse-tab', () => {
           expect(document.querySelector('body').classList).toContain(
             'has-ad-rt',
           );
-          expect(dl.query(By.css('.fixed'))).not.toBeNull();
+          expect(dl.query(By.css('.na-rt__fixed'))).not.toBeNull();
         });
         it(`with false`, () => {
           layoutComp.fixed = false;
@@ -350,7 +350,7 @@ describe('abc: reuse-tab', () => {
           expect(document.querySelector('body').classList).not.toContain(
             'has-ad-rt',
           );
-          expect(dl.query(By.css('.fixed'))).toBeNull();
+          expect(dl.query(By.css('.na-rt__fixed'))).toBeNull();
         });
       });
     });
@@ -536,10 +536,10 @@ describe('abc: reuse-tab', () => {
             .to('#b')
             .openContextMenu(1)
             .expectCount(2);
-          expect(document.querySelectorAll('.reuse-tab-cm').length).toBe(1);
+          expect(document.querySelectorAll('.na-rt__cm').length).toBe(1);
           document.dispatchEvent(new Event('click'));
           page.advance();
-          expect(document.querySelectorAll('.reuse-tab-cm').length).toBe(0);
+          expect(document.querySelectorAll('.na-rt__cm').length).toBe(0);
         }),
       );
       it(
@@ -549,10 +549,10 @@ describe('abc: reuse-tab', () => {
             .to('#b')
             .openContextMenu(1)
             .expectCount(2);
-          expect(document.querySelectorAll('.reuse-tab-cm').length).toBe(1);
+          expect(document.querySelectorAll('.na-rt__cm').length).toBe(1);
           document.dispatchEvent(new MouseEvent('click', { button: 2 }));
           page.advance();
-          expect(document.querySelectorAll('.reuse-tab-cm').length).toBe(1);
+          expect(document.querySelectorAll('.na-rt__cm').length).toBe(1);
         }),
       );
       it(
@@ -563,14 +563,14 @@ describe('abc: reuse-tab', () => {
             .openContextMenu(1)
             .tap(() =>
               expect(
-                document.querySelector(`.reuse-tab-cm li[data-type="close"]`)
+                document.querySelector(`.na-rt__cm li[data-type="close"]`)
                   .classList,
               ).toContain('ant-menu-item-disabled'),
             )
             .openContextMenu(1, { ctrlKey: true })
             .tap(() =>
               expect(
-                document.querySelector(`.reuse-tab-cm li[data-type="close"]`)
+                document.querySelector(`.na-rt__cm li[data-type="close"]`)
                   .classList,
               ).not.toContain('ant-menu-item-disabled'),
             )
@@ -704,7 +704,7 @@ describe('abc: reuse-tab', () => {
     }
     clickContentMenu(type: string): this {
       const el = document.querySelector(
-        `.reuse-tab-cm li[data-type="${type}"]`,
+        `.na-rt__cm li[data-type="${type}"]`,
       );
       expect(el).not.toBeNull(
         `the ${type} is invalid element of content menu container`,
@@ -732,7 +732,7 @@ class AppComponent {}
 
 @Component({
   template: `
-    <reuse-tab #comp
+    <na-reuse-tab #comp
         [mode]="mode"
         [debug]="debug"
         [max]="max"
@@ -743,13 +743,13 @@ class AppComponent {}
         [showCurrent]="showCurrent"
         (change)="change($event)"
         (close)="close($event)">
-    </reuse-tab>
+    </na-reuse-tab>
     <div id="children"><router-outlet></router-outlet></div>
     `,
 })
 class LayoutComponent {
-  @ViewChild('comp') comp: ReuseTabComponent;
-  mode: ReuseTabMatchMode = ReuseTabMatchMode.URL;
+  @ViewChild('comp') comp: NaReuseTabComponent;
+  mode: NaReuseTabMatchMode = NaReuseTabMatchMode.URL;
   debug = false;
   max: number = 3;
   excludes: RegExp[] = [];

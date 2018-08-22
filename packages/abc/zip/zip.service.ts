@@ -1,17 +1,17 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
-import { LazyService, LazyResult } from '@delon/util';
-import { ZipConfig, DA_ZIP_CONFIG, ZipSaveOptions } from './interface';
+import { NaLazyService, LazyResult } from '@delon/util';
+import { NaZipConfig, DA_ZIP_CONFIG, NaZipSaveOptions } from './interface';
 
 declare var JSZip: any;
 
 @Injectable()
-export class ZipService {
+export class NaZipService {
   constructor(
-    @Inject(DA_ZIP_CONFIG) private config: ZipConfig,
+    @Inject(DA_ZIP_CONFIG) private config: NaZipConfig,
     private http: HttpClient,
-    private lazy: LazyService,
+    private lazy: NaLazyService,
   ) {}
 
   private init(): Promise<LazyResult[]> {
@@ -27,7 +27,7 @@ export class ZipService {
   }
 
   private check(zip: any) {
-    if (!zip) throw new Error('get instance via `ZipService.create()`');
+    if (!zip) throw new Error('get instance via `NaZipService.create()`');
   }
 
   /** 解压 */
@@ -95,7 +95,7 @@ export class ZipService {
    * @param zip zip 对象，务必通过 `create()` 构建
    * @param options 额外参数，
    */
-  save(zip: any, options?: ZipSaveOptions): Promise<void> {
+  save(zip: any, options?: NaZipSaveOptions): Promise<void> {
     this.check(zip);
     const opt = Object.assign({}, options);
     return new Promise<void>((resolve, reject) => {

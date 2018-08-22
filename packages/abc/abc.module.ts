@@ -1,63 +1,63 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 // region: all modules
-import { AdErrorCollectModule } from './error-collect/error-collect.module';
-import { AdFooterToolbarModule } from './footer-toolbar/footer-toolbar.module';
-import { AdSidebarNavModule } from './sidebar-nav/sidebar-nav.module';
-import { AdDownFileModule } from './down-file/down-file.module';
-import { AdImageModule } from './image/image.module';
+import { NaErrorCollectModule } from './error-collect/error-collect.module';
+import { NaFooterToolbarModule } from './footer-toolbar/footer-toolbar.module';
+import { NaSidebarNavModule } from './sidebar-nav/sidebar-nav.module';
+import { NaDownFileModule } from './down-file/down-file.module';
+import { NaImageModule } from './image/image.module';
 import { NaAvatarListModule } from './avatar-list/avatar-list.module';
 import { AdDescListModule } from './desc-list/desc-list.module';
-import { AdEllipsisModule } from './ellipsis/ellipsis.module';
-import { AdGlobalFooterModule } from './global-footer/global-footer.module';
-import { AdExceptionModule } from './exception/exception.module';
-import { AdNoticeIconModule } from './notice-icon/notice-icon.module';
-import { AdNumberInfoModule } from './number-info/number-info.module';
-import { AdPageHeaderModule } from './page-header/page-header.module';
-import { AdResultModule } from './result/result.module';
+import { NaEllipsisModule } from './ellipsis/ellipsis.module';
+import { NaGlobalFooterModule } from './global-footer/global-footer.module';
+import { NaExceptionModule } from './exception/exception.module';
+import { NaNoticeIconModule } from './notice-icon/notice-icon.module';
+import { NaNumberInfoModule } from './number-info/number-info.module';
+import { NaPageHeaderModule } from './page-header/page-header.module';
+import { NaResultModule } from './result/result.module';
 import { AdStandardFormRowModule } from './standard-form-row/standard-form-row.module';
-import { AdTagSelectModule } from './tag-select/tag-select.module';
-import { AdTrendModule } from './trend/trend.module';
+import { NaTagSelectModule } from './tag-select/tag-select.module';
+import { NaTrendModule } from './trend/trend.module';
 import { NaCountDownModule } from './count-down/count-down.module';
 import { AdSimpleTableModule } from './simple-table/simple-table.module';
-import { AdReuseTabModule } from './reuse-tab/reuse-tab.module';
-import { AdFullContentModule } from './full-content/full-content.module';
-import { AdXlsxModule } from './xlsx/xlsx.module';
-import { AdZipModule } from './zip/zip.module';
-import { AdNumberToChineseModule } from './number-to-chinese/number-to-chinese.module';
-import { AdLodopModule } from './lodop/lodop.module';
-import { AdQuickMenuModule } from './quick-menu/quick-menu.module';
-import { AdQRModule } from './qr/qr.module';
+import { NaReuseTabModule } from './reuse-tab/reuse-tab.module';
+import { NaFullContentModule } from './full-content/full-content.module';
+import { NaXlsxModule } from './xlsx/xlsx.module';
+import { NaZipModule } from './zip/zip.module';
+import { NaNumberToChineseModule } from './number-to-chinese/number-to-chinese.module';
+import { NaLodopModule } from './lodop/lodop.module';
+import { NaQuickMenuModule } from './quick-menu/quick-menu.module';
+import { NaQRModule } from './qr/qr.module';
 import { AdSHFModule } from './simple-html-form/module';
 
 const MODULES = [
-  AdErrorCollectModule,
-  AdFooterToolbarModule,
-  AdSidebarNavModule,
-  AdDownFileModule,
-  AdImageModule,
+  NaErrorCollectModule,
+  NaFooterToolbarModule,
+  NaSidebarNavModule,
+  NaDownFileModule,
+  NaImageModule,
   NaAvatarListModule,
   AdDescListModule,
-  AdEllipsisModule,
-  AdGlobalFooterModule,
-  AdExceptionModule,
-  AdNoticeIconModule,
-  AdNumberInfoModule,
-  AdPageHeaderModule,
-  AdResultModule,
+  NaEllipsisModule,
+  NaGlobalFooterModule,
+  NaExceptionModule,
+  NaNoticeIconModule,
+  NaNumberInfoModule,
+  NaPageHeaderModule,
+  NaResultModule,
   AdStandardFormRowModule,
-  AdTagSelectModule,
-  AdTrendModule,
+  NaTagSelectModule,
+  NaTrendModule,
   NaCountDownModule,
   AdSimpleTableModule,
-  AdReuseTabModule,
-  AdFullContentModule,
-  AdXlsxModule,
-  AdZipModule,
-  AdNumberToChineseModule,
-  AdLodopModule,
-  AdQuickMenuModule,
-  AdQRModule,
+  NaReuseTabModule,
+  NaFullContentModule,
+  NaXlsxModule,
+  NaZipModule,
+  NaNumberToChineseModule,
+  NaLodopModule,
+  NaQuickMenuModule,
+  NaQRModule,
   AdSHFModule,
 ];
 
@@ -65,33 +65,33 @@ const MODULES = [
 
 @NgModule({
   imports: [
-    AdErrorCollectModule.forRoot(),
-    AdFooterToolbarModule.forRoot(),
-    AdSidebarNavModule.forRoot(),
-    AdDownFileModule.forRoot(),
-    AdImageModule.forRoot(),
+    NaErrorCollectModule.forRoot(),
+    NaFooterToolbarModule.forRoot(),
+    NaSidebarNavModule.forRoot(),
+    NaDownFileModule.forRoot(),
+    NaImageModule.forRoot(),
     NaAvatarListModule.forRoot(),
     AdDescListModule.forRoot(),
-    AdEllipsisModule.forRoot(),
-    AdExceptionModule.forRoot(),
-    AdExceptionModule.forRoot(),
-    AdNoticeIconModule.forRoot(),
-    AdNumberInfoModule.forRoot(),
-    AdPageHeaderModule.forRoot(),
-    AdResultModule.forRoot(),
+    NaEllipsisModule.forRoot(),
+    NaExceptionModule.forRoot(),
+    NaExceptionModule.forRoot(),
+    NaNoticeIconModule.forRoot(),
+    NaNumberInfoModule.forRoot(),
+    NaPageHeaderModule.forRoot(),
+    NaResultModule.forRoot(),
     AdStandardFormRowModule.forRoot(),
-    AdTagSelectModule.forRoot(),
-    AdTrendModule.forRoot(),
+    NaTagSelectModule.forRoot(),
+    NaTrendModule.forRoot(),
     NaCountDownModule.forRoot(),
     AdSimpleTableModule.forRoot(),
-    AdReuseTabModule.forRoot(),
-    AdFullContentModule.forRoot(),
-    AdXlsxModule.forRoot(),
-    AdZipModule.forRoot(),
-    AdNumberToChineseModule.forRoot(),
-    AdLodopModule.forRoot(),
-    AdQuickMenuModule.forRoot(),
-    AdQRModule.forRoot(),
+    NaReuseTabModule.forRoot(),
+    NaFullContentModule.forRoot(),
+    NaXlsxModule.forRoot(),
+    NaZipModule.forRoot(),
+    NaNumberToChineseModule.forRoot(),
+    NaLodopModule.forRoot(),
+    NaQuickMenuModule.forRoot(),
+    NaQRModule.forRoot(),
     AdSHFModule.forRoot(),
   ],
   exports: MODULES,

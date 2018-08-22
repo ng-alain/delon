@@ -20,16 +20,16 @@ import { MenuService, SettingsService, Menu } from '@delon/theme';
 
 import { Nav } from './interface';
 
-const SHOWCLS = 'ad-nav__floating-show';
-const FLOATINGCLS = 'ad-nav__floating';
+const SHOWCLS = 'na-nav__floating-show';
+const FLOATINGCLS = 'na-nav__floating';
 
 @Component({
-  selector: 'sidebar-nav',
+  selector: 'na-sidebar-nav',
   templateUrl: './sidebar-nav.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class SidebarNavComponent implements OnInit, OnDestroy {
+export class NaSidebarNavComponent implements OnInit, OnDestroy {
   private rootEl: HTMLDivElement;
   /** @inner */
   floatingEl: HTMLDivElement;

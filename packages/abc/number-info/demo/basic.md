@@ -9,10 +9,10 @@ title: 演示
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-demo',
-    template: `
-    <number-info subTitle="本周访问" total="12,321" subTotal="17.1" status="up"></number-info>
-    `
+  selector: 'app-demo',
+  template: `
+  <na-number-info subTitle="本周访问" total="12,321" subTotal="17.1" status="up"></na-number-info>
+  `
 })
 export class DemoComponent {
 }

@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { ExceptionComponent } from './exception.component';
+import { NaExceptionComponent } from './exception.component';
 
-const COMPONENTS = [ExceptionComponent];
+const COMPONENTS = [NaExceptionComponent];
 
 @NgModule({
   imports: [CommonModule, RouterModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdExceptionModule {
+export class NaExceptionModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdExceptionModule, providers: [] };
+    return { ngModule: NaExceptionModule, providers: [] };
   }
 }

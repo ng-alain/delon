@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class AdErrorCollectConfig {
+export class NaErrorCollectConfig {
   /**
    * 监听频率
    */

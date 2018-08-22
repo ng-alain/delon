@@ -1,22 +1,20 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 
 @Component({
-  selector: 'result',
+  selector: 'na-result',
   template: `
-  <div class="icon"><i class="anticon anticon-{{_icon}} {{_type}}"></i></div>
-  <div class="title"><ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container></div>
-  <div *ngIf="_description || _descriptionTpl" class="description"><ng-container *ngIf="_description; else _descriptionTpl">{{_description}}</ng-container></div>
-  <div *ngIf="_extra || _extraTpl" class="extra">
+  <div class="na-result__icon"><i class="anticon anticon-{{_icon}} na-result__icon-{{_type}}"></i></div>
+  <div class="na-result__title"><ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container></div>
+  <div *ngIf="_description || _descriptionTpl" class="na-result__desc"><ng-container *ngIf="_description; else _descriptionTpl">{{_description}}</ng-container></div>
+  <div *ngIf="_extra || _extraTpl" class="na-result__extra">
     <ng-container *ngIf="_extra; else _extraTpl">{{_extra}}</ng-container>
   </div>
-  <div class="actions"><ng-content></ng-content></div>
+  <div class="na-result__actions"><ng-content></ng-content></div>
   `,
-  host: { '[class.ad-result]': 'true' },
+  host: { '[class.na-result]': 'true' },
   preserveWhitespaces: false,
 })
-export class ResultComponent {
-  // region: fields
-
+export class NaResultComponent {
   _type = '';
   _icon = '';
   @Input()
@@ -64,6 +62,4 @@ export class ResultComponent {
       this._extraTpl = value;
     } else this._extra = value;
   }
-
-  // endregion
 }

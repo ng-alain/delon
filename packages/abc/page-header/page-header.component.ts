@@ -24,19 +24,19 @@ import {
 } from '@delon/theme';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
-import { AdPageHeaderConfig } from './page-header.config';
+import { NaPageHeaderConfig } from './page-header.config';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'page-header',
+  selector: 'na-page-header',
   templateUrl: './page-header.component.html',
   host: {
     '[class.content__title]': 'true',
-    '[class.ad-ph]': 'true',
+    '[class.na-ph]': 'true',
   },
   preserveWhitespaces: false,
 })
-export class PageHeaderComponent
+export class NaPageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
   private i18n$: Subscription;
@@ -68,9 +68,9 @@ export class PageHeaderComponent
 
   @Input() home: string;
 
-  @Input() home_link: string;
+  @Input() homeLink: string;
 
-  @Input() home_i18n: string;
+  @Input() homeI18n: string;
 
   /**
    * 自动生成导航，以当前路由从主菜单中定位
@@ -125,7 +125,7 @@ export class PageHeaderComponent
   // endregion
 
   constructor(
-    cog: AdPageHeaderConfig,
+    cog: NaPageHeaderConfig,
     private renderer: Renderer2,
     private route: Router,
     private menuSrv: MenuService,
@@ -148,7 +148,7 @@ export class PageHeaderComponent
     this.setTitle().genBreadcrumb();
   }
 
-  genBreadcrumb() {
+  private genBreadcrumb() {
     if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0)
       return;
     const paths: any[] = [];
@@ -163,18 +163,18 @@ export class PageHeaderComponent
     if (this.home) {
       paths.splice(0, 0, {
         title:
-          (this.home_i18n &&
+          (this.homeI18n &&
             this.i18nSrv &&
-            this.i18nSrv.fanyi(this.home_i18n)) ||
+            this.i18nSrv.fanyi(this.homeI18n)) ||
           this.home,
-        link: [this.home_link],
+        link: [this.homeLink],
       });
     }
     this.paths = paths;
     return this;
   }
 
-  setTitle() {
+  private setTitle() {
     if (
       typeof this._title === 'undefined' &&
       typeof this._titleTpl === 'undefined' &&

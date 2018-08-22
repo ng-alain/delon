@@ -1,28 +1,28 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
-import { LazyService, LazyResult } from '@delon/util';
+import { NaLazyService, LazyResult } from '@delon/util';
 import {
-  XlsxExportOptions,
+  NaXlsxExportOptions,
   DA_XLSX_CONFIG,
-  XlsxConfig,
-  XlsxExportSheet,
+  NaXlsxConfig,
+  NaXlsxExportSheet,
 } from './interface';
 
 declare var XLSX: any;
 
 @Injectable()
-export class XlsxService {
+export class NaXlsxService {
   constructor(
-    @Inject(DA_XLSX_CONFIG) private config: XlsxConfig,
+    @Inject(DA_XLSX_CONFIG) private config: NaXlsxConfig,
     private http: HttpClient,
-    private lazy: LazyService,
+    private lazy: NaLazyService,
   ) {}
 
   private init(): Promise<LazyResult[]> {
     const config = Object.assign(
       {
-        url: `//cdn.bootcss.com/xlsx/0.12.12/xlsx.full.min.js`,
+        url: `//cdn.bootcss.com/xlsx/0.12.13/xlsx.full.min.js`,
         modules: [],
       },
       this.config,
@@ -77,12 +77,12 @@ export class XlsxService {
   }
 
   /** 导出 */
-  export(options: XlsxExportOptions): Promise<void> {
+  export(options: NaXlsxExportOptions): Promise<void> {
     return this.init().then(() => {
       const wb: any = XLSX.utils.book_new();
       if (Array.isArray(options.sheets)) {
-        (<XlsxExportSheet[]>options.sheets).forEach(
-          (value: XlsxExportSheet, index: number) => {
+        (<NaXlsxExportSheet[]>options.sheets).forEach(
+          (value: NaXlsxExportSheet, index: number) => {
             const ws: any = XLSX.utils.aoa_to_sheet(value.data);
             XLSX.utils.book_append_sheet(
               wb,

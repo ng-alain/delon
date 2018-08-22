@@ -1,11 +1,11 @@
 import { Injectable, Optional } from '@angular/core';
 import { deepGet } from '@delon/util';
-import { XlsxService } from '../xlsx/xlsx.service';
+import { NaXlsxService } from '../xlsx/xlsx.service';
 import { SimpleTableColumn, STExportOptions } from './interface';
 
 @Injectable()
 export class SimpleTableExport {
-  constructor(@Optional() private xlsxSrv: XlsxService) {}
+  constructor(@Optional() private xlsxSrv: NaXlsxService) {}
 
   private _stGet(item: any, col: SimpleTableColumn): any {
     const ret: any = { t: 's', v: '' };

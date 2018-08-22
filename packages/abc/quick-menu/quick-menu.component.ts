@@ -4,7 +4,6 @@ import {
   HostListener,
   OnInit,
   OnChanges,
-  SimpleChanges,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Renderer2,
@@ -12,20 +11,20 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'quick-menu',
+  selector: 'na-quick-menu',
   template: `
-  <div class="ad-quick-menu__inner">
-    <div class="ad-quick-menu__ctrl" [ngStyle]="ctrlStyle">
-      <i [ngClass]="icon"></i>
+  <div class="na-quick-menu__inner">
+    <div class="na-quick-menu__ctrl" [ngStyle]="ctrlStyle">
+      <i class="na-quick-menu__ctrl-icon" [ngClass]="icon"></i>
     </div>
     <ng-content></ng-content>
   </div>
   `,
-  host: { '[class.ad-quick-menu]': 'true' },
+  host: { '[class.na-quick-menu]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QuickMenuComponent implements OnInit, OnChanges {
+export class NaQuickMenuComponent implements OnInit, OnChanges {
   // region: fields
 
   @Input()
@@ -81,7 +80,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
     this.initFlag = true;
     this.setStyle();
   }
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.initFlag) this.setStyle();
   }
 }

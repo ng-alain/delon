@@ -2,7 +2,7 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdImageModule } from './image.module';
+import { NaImageModule } from './image.module';
 
 describe('abc: _src', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -11,7 +11,7 @@ describe('abc: _src', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AdImageModule.forRoot()],
+      imports: [NaImageModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -70,7 +70,7 @@ describe('abc: _src', () => {
 });
 
 @Component({
-  template: `<img [_src]="src" [size]="size" [error]="error" />`,
+  template: `<img [na-src]="src" [size]="size" [error]="error" />`,
 })
 class TestComponent {
   src = './assets/img/logo.svg';

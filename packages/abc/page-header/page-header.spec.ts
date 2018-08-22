@@ -1,7 +1,6 @@
 import {
   Component,
   DebugElement,
-  TemplateRef,
   ViewChild,
   CUSTOM_ELEMENTS_SCHEMA,
   Injector,
@@ -9,7 +8,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule, Router } from '@angular/router';
-import { APP_BASE_HREF, I18nSelectPipe } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 import {
   MenuService,
   AlainThemeModule,
@@ -19,9 +18,9 @@ import {
 } from '@delon/theme';
 import { DelonACLModule } from '@delon/acl';
 
-import { AdPageHeaderModule } from './page-header.module';
-import { PageHeaderComponent } from './page-header.component';
-import { AdPageHeaderConfig } from './page-header.config';
+import { NaPageHeaderModule } from './page-header.module';
+import { NaPageHeaderComponent } from './page-header.component';
+import { NaPageHeaderConfig } from './page-header.config';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 describe('abc: page-header', () => {
@@ -36,7 +35,7 @@ describe('abc: page-header', () => {
         RouterModule.forRoot([]),
         AlainThemeModule.forRoot(),
         DelonACLModule.forRoot(),
-        AdPageHeaderModule.forRoot(),
+        NaPageHeaderModule.forRoot(),
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [TestComponent],
@@ -71,12 +70,12 @@ describe('abc: page-header', () => {
 
     describe('#title', () => {
       it('with string', () => {
-        isExists('.title');
+        isExists('.na-ph__title');
       });
       it('with null', () => {
         context.title = null;
         fixture.detectChanges();
-        isExists('.title', false);
+        isExists('.na-ph__title', false);
       });
     });
 
@@ -91,15 +90,15 @@ describe('abc: page-header', () => {
     let menuSrv: MenuService;
     let route: Router;
     let i18n: AlainI18NService;
-    let cog: AdPageHeaderConfig;
+    let cog: NaPageHeaderConfig;
     beforeEach(() => {
       TestBed.overrideTemplate(
         TestComponent,
-        `<page-header #comp [title]="title" [home]="home" [home_i18n]="home_i18n" [autoBreadcrumb]="autoBreadcrumb"></page-header>`,
+        `<na-page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb"></na-page-header>`,
       );
       createComp();
       route = injector.get(Router);
-      cog = injector.get(AdPageHeaderConfig);
+      cog = injector.get(NaPageHeaderConfig);
       i18n = injector.get(ALAIN_I18N_TOKEN);
 
       menuSrv = injector.get(MenuService);
@@ -171,7 +170,7 @@ describe('abc: page-header', () => {
         spyOn(i18n, 'fanyi');
         expect(i18n.fanyi).not.toHaveBeenCalled();
         context.home = 'home';
-        context.home_i18n = 'home_i18n';
+        context.homeI18n = 'homeI18n';
         context.autoBreadcrumb = true;
         fixture.detectChanges();
         expect(i18n.fanyi).toHaveBeenCalled();
@@ -217,11 +216,11 @@ describe('abc: page-header', () => {
     it('should be custom title template', () => {
       TestBed.overrideTemplate(
         TestComponent,
-        `<page-header #comp [title]="titleTpl">
+        `<na-page-header #comp [title]="titleTpl">
           <ng-template #titleTpl>
             <div class="custom-title">title</div>
           </ng-template>
-        </page-header>`,
+        </na-page-header>`,
       );
       createComp();
       expect(dl.queryAll(By.css('.custom-title')).length).toBe(1);
@@ -231,11 +230,11 @@ describe('abc: page-header', () => {
       let menuSrv: MenuService;
       let route: Router;
       let i18n: AlainI18NService;
-      let cog: AdPageHeaderConfig;
+      let cog: NaPageHeaderConfig;
       beforeEach(() => {
         createComp();
         route = injector.get(Router);
-        cog = injector.get(AdPageHeaderConfig);
+        cog = injector.get(NaPageHeaderConfig);
         i18n = injector.get(ALAIN_I18N_TOKEN);
         menuSrv = injector.get(MenuService);
 
@@ -247,7 +246,7 @@ describe('abc: page-header', () => {
         const text = 'asdf';
         spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text }]);
         fixture.detectChanges();
-        checkValue('.title', text);
+        checkValue('.na-ph__title', text);
       });
 
       it('support i18n', () => {
@@ -255,7 +254,7 @@ describe('abc: page-header', () => {
         const i18n = 'i18n';
         spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
         fixture.detectChanges();
-        checkValue('.title', i18n);
+        checkValue('.na-ph__title', i18n);
       });
     });
 
@@ -304,24 +303,24 @@ describe('abc: page-header', () => {
 
 @Component({
   template: `
-    <page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
-        [autoBreadcrumb]="autoBreadcrumb" [home]="home" [home_i18n]="home_i18n" [home_link]="home_link">
+    <na-page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
+        [autoBreadcrumb]="autoBreadcrumb" [home]="home" [homeI18n]="homeI18n" [home_link]="home_link">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
         <ng-template #action><div class="action">action</div></ng-template>
         <ng-template #content><div class="content">content</div></ng-template>
         <ng-template #extra><div class="extra">extra</div></ng-template>
         <ng-template #tab><div class="tab">tab</div></ng-template>
-    </page-header>
+    </na-page-header>
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: PageHeaderComponent;
+  @ViewChild('comp') comp: NaPageHeaderComponent;
   title = '所属类目';
   autoBreadcrumb: boolean;
   autoTitle: boolean;
   syncTitle: boolean;
   home: string;
   home_link: string;
-  home_i18n: string;
+  homeI18n: string;
 }

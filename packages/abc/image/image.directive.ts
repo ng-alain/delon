@@ -9,7 +9,7 @@ import {
   SimpleChange,
 } from '@angular/core';
 import { deepCopy } from '@delon/util';
-import { AdImageConfig } from './image.config';
+import { NaImageConfig } from './image.config';
 
 /**
  * img标签
@@ -17,9 +17,9 @@ import { AdImageConfig } from './image.config';
  * + 支持移除http&https协议http
  * + 支持增加onerror事件
  */
-@Directive({ selector: '[_src]' })
-export class ImageDirective implements OnChanges, OnInit {
-  @Input('_src') src: string;
+@Directive({ selector: '[na-src]' })
+export class NaImageDirective implements OnChanges, OnInit {
+  @Input('na-src') src: string;
 
   @Input() size = 64;
 
@@ -30,7 +30,7 @@ export class ImageDirective implements OnChanges, OnInit {
   constructor(
     private el: ElementRef,
     private render: Renderer2,
-    DEF: AdImageConfig,
+    DEF: NaImageConfig,
   ) {
     Object.assign(this, deepCopy(DEF));
   }
@@ -56,7 +56,6 @@ export class ImageDirective implements OnChanges, OnInit {
   private update() {
     let newSrc = this.src;
 
-    // region: fix weixin & qq avatar size
     if (newSrc.includes('qlogo.cn')) {
       const arr = newSrc.split('/'),
         size = arr[arr.length - 1];
@@ -64,14 +63,10 @@ export class ImageDirective implements OnChanges, OnInit {
         size === '0' || +size !== this.size ? this.size.toString() : size;
       newSrc = arr.join('/');
     }
-    // endregion
 
-    // region: remove https & http
     const isHttp = newSrc.startsWith('http:'),
       isHttps = newSrc.startsWith('https:');
     if (isHttp || isHttps) newSrc = newSrc.substr(isHttp ? 5 : 6);
-
-    // endregion
 
     this.render.setAttribute(this.el.nativeElement, 'src', newSrc);
   }

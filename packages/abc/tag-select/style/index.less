@@ -1,5 +1,6 @@
 @import '../../../theme/styles/default';
-.ad-tag-select {
+
+.na-tag-select {
   user-select: none;
   margin-left: -8px;
   position: relative;
@@ -8,22 +9,23 @@
   line-height: 32px;
   transition: all 0.3s;
   display: block;
-  &.expanded {
+  &__expanded {
     transition: all 0.3s;
     max-height: 200px;
   }
-  &.has-expand {
+  &__has-expand {
     padding-right: 50px;
   }
   .ant-tag {
     padding: 0 8px;
     margin-right: 24px;
   }
-  .trigger {
+  &__trigger {
     position: absolute;
     top: 0;
     right: 0;
-    i {
+    &-icon {
+      margin-left: 8px;
       font-size: 12px;
     }
   }

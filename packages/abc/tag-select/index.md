@@ -2,7 +2,7 @@
 title: tag-select
 subtitle: 标签选择器
 cols: 1
-module: AdTagSelectModule
+module: NaTagSelectModule
 ---
 
 增加标签的展开与收进功能。

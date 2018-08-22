@@ -8,25 +8,25 @@
     </nz-breadcrumb-item>
   </nz-breadcrumb>
 </ng-container>
-<div class="detail">
-  <div *ngIf="logo" class="logo">
+<div class="na-ph__detail">
+  <div *ngIf="logo" class="na-ph__logo">
     <ng-template [ngTemplateOutlet]="logo"></ng-template>
   </div>
-  <div class="main">
-    <div class="row">
-      <h1 *ngIf="_title || _titleTpl" class="title">
+  <div class="na-ph__main">
+    <div class="na-ph__row">
+      <h1 *ngIf="_title || _titleTpl" class="na-ph__title">
         <ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container>
       </h1>
-      <div *ngIf="action" class="action">
+      <div *ngIf="action" class="na-ph__action">
         <ng-template [ngTemplateOutlet]="action"></ng-template>
       </div>
     </div>
-    <div class="row">
-      <div class="desc" (cdkObserveContent)="checkContent()" #conTpl>
+    <div class="na-ph__row">
+      <div class="na-ph__desc" (cdkObserveContent)="checkContent()" #conTpl>
         <ng-content></ng-content>
         <ng-template [ngTemplateOutlet]="content"></ng-template>
       </div>
-      <div *ngIf="extra" class="extra">
+      <div *ngIf="extra" class="na-ph__extra">
         <ng-template [ngTemplateOutlet]="extra"></ng-template>
       </div>
     </div>

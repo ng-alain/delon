@@ -1,17 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ResultComponent } from './result.component';
+import { NaResultComponent } from './result.component';
 
-const COMPONENTS = [ResultComponent];
+const COMPONENTS = [NaResultComponent];
 
 @NgModule({
   imports: [CommonModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdResultModule {
+export class NaResultModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdResultModule, providers: [] };
+    return { ngModule: NaResultModule, providers: [] };
   }
 }
