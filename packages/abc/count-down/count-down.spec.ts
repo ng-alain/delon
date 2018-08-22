@@ -1,8 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { Component, DebugElement } from '@angular/core';
 import * as addSeconds from 'date-fns/add_seconds';
-import { AdCountDownModule } from './count-down.module';
+import { NaCountDownModule } from './count-down.module';
 
 describe('abc: count-down', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -11,7 +10,7 @@ describe('abc: count-down', () => {
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
-      imports: [AdCountDownModule.forRoot()],
+      imports: [NaCountDownModule.forRoot()],
       declarations: [TestComponent],
     }).createComponent(TestComponent);
     dl = fixture.debugElement;
@@ -59,18 +58,18 @@ describe('abc: count-down', () => {
 @Component({
   template: `
     <div *ngIf="config">
-        <count-down
+        <na-count-down
             [config]="config"
             (begin)="begin()"
             (end)="end()"
-            (notify)="notify($event)" style="font-size: 20px"></count-down>
+            (notify)="notify($event)" style="font-size: 20px"></na-count-down>
     </div>
     <div *ngIf="target">
-        <count-down
+        <na-count-down
             [target]="target"
             (begin)="begin()"
             (end)="end()"
-            (notify)="notify($event)" style="font-size: 20px"></count-down>
+            (notify)="notify($event)" style="font-size: 20px"></na-count-down>
     </div>`,
 })
 class TestComponent {

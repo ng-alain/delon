@@ -2,7 +2,7 @@
 title: count-down
 subtitle: 倒计时
 cols: 3
-module: AdCountDownModule
+module: NaCountDownModule
 ---
 
 倒计时组件，依赖 [ngx-countdown](https://github.com/cipchk/ngx-countdown)。

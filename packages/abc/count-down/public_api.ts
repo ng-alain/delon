@@ -1,2 +1,2 @@
-export { CountDownComponent } from './count-down.component';
-export { AdCountDownModule } from './count-down.module';
+export { NaCountDownComponent } from './count-down.component';
+export { NaCountDownModule } from './count-down.module';

@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 1
 title:
   zh-CN: 基本
   en-US: Basic
@@ -21,16 +21,16 @@ import { addMinutes } from 'date-fns';
 @Component({
   selector: 'app-demo',
   template: `
-  <p class="mb-sm">10s: <count-down [target]="10" (end)="onEnd()" style="font-size: 20px;"></count-down></p>
-  <p>10m: <count-down [target]="target"></count-down></p>
+  <p class="mb-sm">10s: <na-count-down [target]="10" (end)="onEnd()" style="font-size: 20px;"></na-count-down></p>
+  <p>10m: <na-count-down [target]="target"></na-count-down></p>
   `
 })
 export class DemoComponent {
-    target = addMinutes(new Date, 10);
-    constructor(private msg: NzMessageService) {}
+  target = addMinutes(new Date, 10);
+  constructor(private msg: NzMessageService) {}
 
-    onEnd() {
-        this.msg.success('finised');
-    }
+  onEnd() {
+    this.msg.success('finised');
+  }
 }
 ```
