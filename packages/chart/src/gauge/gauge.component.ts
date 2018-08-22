@@ -34,9 +34,6 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   @Input() format: Function;
 
   @Input()
-  get percent() {
-    return this._percent;
-  }
   set percent(value: any) {
     this._percent = toNumber(value);
   }
@@ -52,7 +49,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   constructor(private zone: NgZone) {}
 
   private createData() {
-    return [{ name: this.title, value: +this.percent }];
+    return [{ name: this.title, value: +this._percent }];
   }
 
   private draw() {

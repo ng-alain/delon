@@ -27,7 +27,7 @@ import { toBoolean, toNumber } from '@delon/util';
 })
 export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
   private autoHideXLabels = false;
-  private scroll$: Subscription = null;
+  private resize$: Subscription = null;
   private chart: any;
 
   // #region fields
@@ -60,9 +60,6 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
   @Input() data: Array<{ x: any; y: any; [key: string]: any }>;
 
   @Input()
-  get autoLabel() {
-    return this._autoLabel;
-  }
   set autoLabel(value: any) {
     this._autoLabel = toBoolean(value);
   }
@@ -79,11 +76,10 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
   ) {}
 
   private runInstall() {
-    this.zone.runOutsideAngular(() => this.install());
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
   }
 
   private install() {
-    console.log('install');
     const canvasWidth = this.el.nativeElement.clientWidth;
     const minWidth = this.data.length * 30;
 
@@ -144,9 +140,9 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   private installResizeEvent() {
-    if (!this.autoLabel || this.scroll$) return;
+    if (!this._autoLabel || this.resize$) return;
 
-    this.scroll$ = fromEvent(window, 'resize')
+    this.resize$ = fromEvent(window, 'resize')
       .pipe(debounceTime(200))
       .subscribe(() => this.runInstall());
   }
@@ -160,7 +156,7 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.scroll$) this.scroll$.unsubscribe();
+    if (this.resize$) this.resize$.unsubscribe();
     if (this.chart) {
       this.chart.destroy();
       this.chart = null;

@@ -31,7 +31,7 @@ import { toNumber } from '@delon/util';
   preserveWhitespaces: false,
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
-  // region: fields
+  // #region fields
 
   _title = '';
   _titleTpl: TemplateRef<any>;
@@ -45,7 +45,8 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     }
   }
 
-  @Input() color = '#1890FF';
+  @Input()
+  color = '#1890FF';
 
   @Input()
   get height() {
@@ -65,12 +66,14 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   }
   private _percent: number;
 
-  // endregion
+  // #endregion
 
-  @ViewChild('container') node: ElementRef;
+  private resize$: Subscription = null;
+  @ViewChild('container')
+  private node: ElementRef;
 
-  initFlag = false;
-  timer: any;
+  private initFlag = false;
+  private timer: any;
 
   constructor(
     private el: ElementRef,
@@ -79,7 +82,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     private zone: NgZone,
   ) {}
 
-  renderChart() {
+  private renderChart() {
     const data = this.percent / 100;
     if (!data) return;
 
@@ -216,14 +219,26 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     render();
   }
 
-  uninstall() {}
-
   private updateRadio(radio: number) {
     this.renderer.setStyle(
       this.el.nativeElement,
       'transform',
       `scale(${radio})`,
     );
+  }
+
+  private installResizeEvent() {
+    if (this.resize$) return;
+
+    this.resize$ = fromEvent(window, 'resize')
+      .pipe(debounceTime(500))
+      .subscribe(() => this.resize());
+  }
+
+  private resize() {
+    const { offsetWidth } = this.el.nativeElement.parentNode;
+    this.updateRadio(offsetWidth < this.height ? offsetWidth / this.height : 1);
+    this.renderChart();
   }
 
   ngOnInit(): void {
@@ -245,28 +260,6 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   ngOnDestroy(): void {
     if (this.timer) cancelAnimationFrame(this.timer);
-    this.uninstallResizeEvent();
-    this.uninstall();
+    if (this.resize$) this.resize$.unsubscribe();
   }
-
-  private scroll$: Subscription = null;
-  private installResizeEvent() {
-    if (this.scroll$) return;
-
-    this.scroll$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(500))
-      .subscribe(() => this.resize());
-  }
-
-  private uninstallResizeEvent() {
-    if (this.scroll$) this.scroll$.unsubscribe();
-  }
-
-  resize() {
-    const { offsetWidth } = this.el.nativeElement.parentNode;
-    this.updateRadio(offsetWidth < this.height ? offsetWidth / this.height : 1);
-    this.renderChart();
-  }
-
-  // endregion
 }

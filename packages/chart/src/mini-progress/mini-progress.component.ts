@@ -18,8 +18,6 @@ import { toNumber } from '@delon/util';
   preserveWhitespaces: false,
 })
 export class G2ProgressComponent {
-  // region: fields
-
   @Input() color = '#1890FF';
 
   @Input()
@@ -48,6 +46,4 @@ export class G2ProgressComponent {
     this._percent = Math.min(Math.max(toNumber(value), 0), 100);
   }
   private _percent: number;
-
-  // endregion
 }

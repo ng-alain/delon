@@ -1,20 +1,19 @@
 import {
   Component,
   Input,
-  HostBinding,
   ViewChild,
   ElementRef,
   OnDestroy,
   OnChanges,
   NgZone,
-  OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   AfterViewInit,
+  Renderer2,
 } from '@angular/core';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { toNumber, toBoolean } from '@delon/util';
+import { toNumber, toBoolean, updateHostClass } from '@delon/util';
 
 @Component({
   selector: 'g2-pie',
@@ -27,7 +26,7 @@ import { toNumber, toBoolean } from '@delon/util';
     </div>
   </div>
   <ul *ngIf="hasLegend && legendData?.length" class="legend">
-    <li *ngFor="let item of legendData; let index = index" (click)="handleLegendClick(index)">
+    <li *ngFor="let item of legendData; let index = index" (click)="_click(index)">
       <span class="dot" [ngStyle]="{'background-color': !item.checked ? '#aaa' : item.color}"></span>
       <span class="legend-title">{{item.x}}</span>
       <nz-divider nzType="vertical"></nz-divider>
@@ -35,26 +34,32 @@ import { toNumber, toBoolean } from '@delon/util';
       <span class="value" [innerHTML]="valueFormat ? valueFormat(item.y) : item.y"></span>
     </li>
   </ul>`,
-  host: { '[class.ad-pie]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class G2PieComponent
-  implements OnDestroy, OnChanges, OnInit, AfterViewInit {
-  // region: fields
+export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
+  private scroll$: Subscription = null;
+  @ViewChild('container')
+  private node: ElementRef;
+
+  private chart: any;
+  private initFlag = false;
+  legendData: any[] = [];
+
+  // #region fields
 
   @Input()
-  get animate() {
-    return this._animate;
-  }
   set animate(value: any) {
     this._animate = toBoolean(value);
   }
   private _animate = true;
 
-  @Input() color = 'rgba(24, 144, 255, 0.85)';
-  @Input() subTitle: string;
-  @Input() total: string;
+  @Input()
+  color = 'rgba(24, 144, 255, 0.85)';
+  @Input()
+  subTitle: string;
+  @Input()
+  total: string;
 
   @Input()
   get height() {
@@ -65,7 +70,6 @@ export class G2PieComponent
   }
   private _height = 0;
 
-  @HostBinding('class.has-legend')
   @Input()
   get hasLegend() {
     return this._hasLegend;
@@ -75,18 +79,16 @@ export class G2PieComponent
   }
   private _hasLegend = false;
 
-  @HostBinding('class.legend-block')
   @Input()
-  get legendBlock() {
-    return this._legendBlock;
-  }
   set legendBlock(value: any) {
     this._legendBlock = toBoolean(value);
   }
   private _legendBlock = false;
 
-  @Input() inner = 0.75;
-  @Input() padding: number[] = [12, 0, 12, 0];
+  @Input()
+  inner = 0.75;
+  @Input()
+  padding: number[] = [12, 0, 12, 0];
 
   @Input()
   get percent() {
@@ -124,29 +126,43 @@ export class G2PieComponent
   }
   private _select = true;
 
-  @Input() data: Array<{ x: number | string; y: number; [key: string]: any }>;
-  @Input() valueFormat: Function;
-  @Input() colors: any[];
+  @Input()
+  data: Array<{ x: number | string; y: number; [key: string]: any }>;
+  @Input()
+  valueFormat: Function;
+  @Input()
+  colors: any[];
 
-  // endregion
-
-  @ViewChild('container') node: ElementRef;
-
-  chart: any;
-  initFlag = false;
-  legendData: any[] = [];
+  // #endregion
 
   constructor(
     private el: ElementRef,
+    private rend: Renderer2,
     private cd: ChangeDetectorRef,
     private zone: NgZone,
   ) {}
 
-  private runInstall() {
-    this.zone.runOutsideAngular(() => setTimeout(() => this.install(), 100));
+  private setCls() {
+    updateHostClass(
+      this.el.nativeElement,
+      this.rend,
+      {
+        'ad-pie': true,
+        'has-legend': this.hasLegend,
+        'legend-block': this._legendBlock,
+      },
+      true,
+    );
   }
 
-  install() {
+  private runInstall() {
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
+  }
+
+  private install() {
+    this.legendBlock = this.el.nativeElement.clientWidth <= 380;
+    this.setCls();
+
     let formatColor;
     const isPercent = typeof this.percent !== 'undefined';
     if (isPercent) {
@@ -169,6 +185,7 @@ export class G2PieComponent
 
     if (!this.data || (this.data && this.data.length < 1)) return;
 
+    if (this.chart) this.chart.destroy();
     this.node.nativeElement.innerHTML = '';
 
     const chart = new G2.Chart({
@@ -176,7 +193,7 @@ export class G2PieComponent
       forceFit: true,
       height: this.height,
       padding: this.padding,
-      animate: this.animate,
+      animate: this._animate,
     });
 
     if (!this.tooltip) {
@@ -218,7 +235,7 @@ export class G2PieComponent
       .tooltip('x*percent', (item, percent) => {
         return {
           name: item,
-          value: this.hasLegend ? percent : (percent * 100).toFixed(2)
+          value: this.hasLegend ? percent : (percent * 100).toFixed(2),
         };
       })
       .color('x', isPercent ? formatColor : this.colors)
@@ -235,7 +252,6 @@ export class G2PieComponent
             const origin = item[0]._origin;
             origin.color = item[0].color;
             origin.checked = true;
-            // console.log(item[0]);
             origin.percent = (origin.percent * 100).toFixed(2);
             return origin;
           });
@@ -244,14 +260,15 @@ export class G2PieComponent
     }
   }
 
-  uninstall() {
-    if (this.chart) {
-      this.chart.destroy();
-      this.chart = null;
-    }
+  private installResizeEvent() {
+    if (this.scroll$ || !this.hasLegend) return;
+
+    this.scroll$ = fromEvent(window, 'resize')
+      .pipe(debounceTime(200))
+      .subscribe(() => this.runInstall());
   }
 
-  handleLegendClick(i: number) {
+  _click(i: number) {
     this.legendData[i].checked = !this.legendData[i].checked;
 
     if (this.chart) {
@@ -260,49 +277,21 @@ export class G2PieComponent
     }
   }
 
-  ngOnInit(): void {
-    this.installResizeEvent();
-  }
-
   ngAfterViewInit(): void {
     this.initFlag = true;
     this.runInstall();
   }
 
   ngOnChanges(): void {
+    this.installResizeEvent();
     if (this.initFlag) this.runInstall();
   }
 
   ngOnDestroy(): void {
-    this.uninstallResizeEvent();
-    this.uninstall();
-  }
-
-  // region: resize
-
-  private scroll$: Subscription = null;
-  private installResizeEvent() {
-    if (!this.hasLegend) return;
-
-    this.scroll$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(200))
-      .subscribe(() => this.resize());
-  }
-
-  private uninstallResizeEvent() {
     if (this.scroll$) this.scroll$.unsubscribe();
-  }
-
-  resize() {
-    if (this.el.nativeElement.clientWidth <= 380) {
-      if (!this.legendBlock) {
-        this.legendBlock = true;
-      }
-    } else if (this.legendBlock) {
-      this.legendBlock = false;
+    if (this.chart) {
+      this.chart.destroy();
+      this.chart = null;
     }
-    if (!this.chart) this.runInstall();
   }
-
-  // endregion
 }

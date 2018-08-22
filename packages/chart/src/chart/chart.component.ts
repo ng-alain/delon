@@ -7,6 +7,7 @@ import {
   EventEmitter,
   Output,
   HostBinding,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -14,9 +15,13 @@ import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-chart',
-  template: ``,
+  template: `<ng-content></ng-content>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class G2ChartComponent implements OnInit, OnDestroy {
+
+  private resize$: Subscription = null;
+
   // region: fields
 
   @HostBinding('style.height.px')
@@ -30,19 +35,19 @@ export class G2ChartComponent implements OnInit, OnDestroy {
   private _height;
 
   @Input()
-  get resizeTime() {
-    return this._resizeTime;
-  }
   set resizeTime(value: any) {
     this._resizeTime = toNumber(value);
   }
   private _resizeTime = 0;
 
-  @Output() render: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  @Output()
+  render: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 
-  @Output() resize: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  @Output()
+  resize: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 
-  @Output() destroy: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  @Output()
+  destroy: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 
   // endregion
 
@@ -54,32 +59,20 @@ export class G2ChartComponent implements OnInit, OnDestroy {
     this.installResizeEvent();
   }
 
+  private installResizeEvent() {
+    if (this._resizeTime <= 0 || !this.resize$) return;
+
+    this.resize$ = fromEvent(window, 'resize')
+      .pipe(debounceTime(Math.min(200, this._resizeTime)))
+      .subscribe(() => this.resize.emit(this.el));
+  }
+
   ngOnInit(): void {
-    setTimeout(() => this.renderChart(), 200);
+    setTimeout(() => this.renderChart());
   }
 
   ngOnDestroy(): void {
     this.destroy.emit(this.el);
-    this.uninstallResizeEvent();
-  }
-
-  // region: resize
-
-  private resize$: Subscription = null;
-
-  private installResizeEvent() {
-    if (this.resizeTime <= 0 || !this.resize$) return;
-
-    if (this.resizeTime <= 200) this.resizeTime = 200;
-
-    this.resize$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(this.resizeTime))
-      .subscribe(() => this.resize.emit(this.el));
-  }
-
-  private uninstallResizeEvent() {
     if (this.resize$) this.resize$.unsubscribe();
   }
-
-  // endregion
 }

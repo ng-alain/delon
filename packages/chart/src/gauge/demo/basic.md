@@ -17,9 +17,9 @@ import { Component } from '@angular/core';
   `
 })
 export class DemoComponent {
-    percent = 87;
-    constructor() {
-        setInterval(() => this.percent = parseInt((Math.random() * 100).toString(), 10), 1000);
-    }
+  percent = 87;
+  // constructor() {
+  //   setInterval(() => this.percent = parseInt((Math.random() * 100).toString(), 10), 1000);
+  // }
 }
 ```

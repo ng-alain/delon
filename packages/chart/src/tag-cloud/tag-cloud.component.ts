@@ -10,7 +10,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { toNumber, toBoolean } from '@delon/util';
+import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-tag-cloud',
@@ -18,9 +18,7 @@ import { toNumber, toBoolean } from '@delon/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
-  // region: fields
-
-  @Input() color = 'rgba(24, 144, 255, 0.85)';
+  // #region fields
 
   @Input()
   get height() {
@@ -32,24 +30,19 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
   private _height = 0;
 
-  @Input() padding = 0;
-  @Input() data: { name: string; value: number; [key: string]: any }[];
+  @Input()
+  padding = 0;
 
   @Input()
-  get autoLabel() {
-    return this._autoLabel;
-  }
-  set autoLabel(value: any) {
-    this._autoLabel = toBoolean(value);
-  }
-  private _autoLabel = true;
+  data: { name: string; value: number; category?: any; [key: string]: any }[];
 
-  // endregion
+  // #endregion
 
-  @ViewChild('container') node: ElementRef;
+  @ViewChild('container')
+  private node: ElementRef;
 
-  chart: any;
-  initFlag = false;
+  private chart: any;
+  private initFlag = false;
 
   constructor(
     private el: ElementRef,
@@ -85,9 +78,10 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     });
   }
 
-  renderChart() {
+  private renderChart() {
     if (!this.data || (this.data && this.data.length < 1)) return;
 
+    this.uninstall();
     this.node.nativeElement.innerHTML = '';
     const dv = new DataSet.View().source(this.data);
     const range = dv.range('value');
@@ -98,7 +92,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
     dv.transform({
       type: 'tag-cloud',
-      fields: ['name', 'value'],
+      fields: ['x', 'value'],
       size: [width, height],
       padding: this.padding,
       timeInterval: 5000, // max execute time
@@ -111,7 +105,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       },
       fontSize(d) {
         if (d.value) {
-          return (d.value - min) / (max - min) * (80 - 24) + 24;
+          return ((d.value - min) / (max - min)) * (80 - 24) + 24;
         }
         return 0;
       },
@@ -136,7 +130,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     chart
       .point()
       .position('x*y')
-      .color('text')
+      .color('category')
       .shape('cloud')
       .tooltip('value*category');
 
@@ -145,7 +139,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     this.chart = chart;
   }
 
-  uninstall() {
+  private uninstall() {
     if (this.chart) {
       this.chart.destroy();
       this.chart = null;
@@ -158,15 +152,13 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       setTimeout(() => {
         this.initTagCloud();
         this.renderChart();
-      }, 100),
+      }),
     );
   }
 
   ngOnChanges(): void {
     if (this.initFlag) {
-      this.zone.runOutsideAngular(() =>
-        setTimeout(() => this.renderChart(), 100),
-      );
+      this.zone.runOutsideAngular(() => this.renderChart());
     }
   }
 

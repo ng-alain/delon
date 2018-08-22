@@ -6,15 +6,9 @@ import {
   ElementRef,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
   NgZone,
   TemplateRef,
   OnInit,
-  HostListener,
-  Output,
-  EventEmitter,
-  ContentChild,
-  SimpleChange,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
@@ -26,7 +20,7 @@ import { toNumber, toBoolean } from '@delon/util';
   <h4 *ngIf="_title; else _titleTpl">{{ _title }}</h4>
   <div #container></div>
   <div nz-row class="legend" *ngIf="hasLegend">
-    <div nz-col [nzSpan]="24 / legendData.length" *ngFor="let i of legendData; let idx = index" (click)="handleLegendClick(idx)">
+    <div nz-col [nzSpan]="24 / legendData.length" *ngFor="let i of legendData; let idx = index" (click)="_click(idx)">
       <div class="legend-item">
         <p>
           <i class="dot" [ngStyle]="{'background-color': !i.checked ? '#aaa' : i.color}"></i>
@@ -41,7 +35,7 @@ import { toNumber, toBoolean } from '@delon/util';
   preserveWhitespaces: false,
 })
 export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
-  // region: fields
+  // #region fields
 
   _title = '';
   _titleTpl: TemplateRef<any>;
@@ -63,7 +57,8 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
   }
   private _height = 0;
 
-  @Input() padding: number[] = [44, 30, 16, 30];
+  @Input()
+  padding: number[] = [44, 30, 16, 30];
 
   @Input()
   get hasLegend() {
@@ -75,9 +70,6 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
   private _hasLegend = true;
 
   @Input()
-  get tickCount() {
-    return this._tickCount;
-  }
   set tickCount(value: any) {
     this._tickCount = toNumber(value);
   }
@@ -91,21 +83,28 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     [key: string]: any;
   }> = [];
 
-  // endregion
+  @Input() colors = [
+    '#1890FF',
+    '#FACC14',
+    '#2FC25B',
+    '#8543E0',
+    '#F04864',
+    '#13C2C2',
+    '#fa8c16',
+    '#a0d911',
+  ];
 
-  @ViewChild('container') node: ElementRef;
+  // #endregion
 
-  chart: any;
-  initFlag = false;
+  @ViewChild('container')
+  private node: ElementRef;
+
+  private chart: any;
   legendData: any[] = [];
 
-  constructor(
-    private el: ElementRef,
-    private cd: ChangeDetectorRef,
-    private zone: NgZone,
-  ) {}
+  constructor(private cd: ChangeDetectorRef, private zone: NgZone) {}
 
-  handleLegendClick(i: number) {
+  _click(i: number) {
     this.legendData[i].checked = !this.legendData[i].checked;
 
     if (this.chart) {
@@ -119,24 +118,14 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   private runInstall() {
-    this.zone.runOutsideAngular(() => setTimeout(() => this.install(), 100));
+    this.zone.runOutsideAngular(() => this.install());
   }
 
-  install() {
+  private install() {
     if (!this.data || (this.data && this.data.length < 1)) return;
 
+    this.uninstall();
     this.node.nativeElement.innerHTML = '';
-
-    const colors = [
-      '#1890FF',
-      '#FACC14',
-      '#2FC25B',
-      '#8543E0',
-      '#F04864',
-      '#13C2C2',
-      '#fa8c16',
-      '#a0d911',
-    ];
 
     const chart = new G2.Chart({
       container: this.node.nativeElement,
@@ -147,7 +136,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     chart.source(this.data, {
       value: {
         min: 0,
-        tickCount: this.tickCount,
+        tickCount: this._tickCount,
       },
     });
 
@@ -190,11 +179,11 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     chart
       .line()
       .position('label*value')
-      .color('name', colors);
+      .color('name', this.colors);
     chart
       .point()
       .position('label*value')
-      .color('name', colors)
+      .color('name', this.colors)
       .shape('circle')
       .size(3);
 
@@ -222,7 +211,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
     }
   }
 
-  uninstall() {
+  private uninstall() {
     if (this.chart) {
       this.chart.destroy();
       this.chart = null;
@@ -230,14 +219,12 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.initFlag = true;
-    this.runInstall();
+    // this.initFlag = true;
+    // this.runInstall();
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
-    if (this.initFlag) this.runInstall();
+  ngOnChanges(): void {
+    this.runInstall();
   }
 
   ngOnDestroy(): void {

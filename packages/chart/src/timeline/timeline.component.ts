@@ -6,7 +6,6 @@ import {
   OnDestroy,
   OnChanges,
   NgZone,
-  OnInit,
   TemplateRef,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -24,8 +23,8 @@ import { toNumber } from '@delon/util';
   preserveWhitespaces: false,
 })
 export class G2TimelineComponent
-  implements OnDestroy, OnChanges, OnInit, AfterViewInit {
-  // region: fields
+  implements OnDestroy, OnChanges, AfterViewInit {
+  // #region fields
 
   _title = '';
   _titleTpl: TemplateRef<any>;
@@ -40,13 +39,17 @@ export class G2TimelineComponent
     this.cd.detectChanges();
   }
 
-  @Input() data: Array<{ x: Date; y1: number; y2: number; [key: string]: any }>;
-  @Input() titleMap: { y1: string; y2: string };
+  @Input()
+  data: Array<{ x: Date; y1: number; y2: number; [key: string]: any }>;
+  @Input()
+  titleMap: { y1: string; y2: string };
   @Input()
   colorMap: { y1: string; y2: string } = { y1: '#1890FF', y2: '#2FC25B' };
 
-  @Input() mask: string = 'HH:mm';
-  @Input() position: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  @Input()
+  mask: string = 'HH:mm';
+  @Input()
+  position: 'top' | 'right' | 'bottom' | 'left' = 'top';
 
   @Input()
   get height() {
@@ -57,46 +60,42 @@ export class G2TimelineComponent
   }
   private _height = 400;
 
-  @Input() padding: number[] = [60, 20, 40, 40];
+  @Input()
+  padding: number[] = [60, 20, 40, 40];
 
   @Input()
-  get borderWidth() {
-    return this._borderWidth;
-  }
   set borderWidth(value: any) {
     this._borderWidth = toNumber(value);
   }
   private _borderWidth = 2;
 
-  // endregion
+  // #endregion
 
-  @ViewChild('container') node: ElementRef;
-  @ViewChild('slider') sliderNode: ElementRef;
+  @ViewChild('container')
+  private node: ElementRef;
+  @ViewChild('slider')
+  private sliderNode: ElementRef;
 
-  chart: any;
-  initFlag = false;
-  slider: any;
+  private chart: any;
+  private initFlag = false;
+  private slider: any;
 
   constructor(private cd: ChangeDetectorRef, private zone: NgZone) {}
 
-  ngOnInit(): void {
-    this.initFlag = true;
-  }
-
   ngAfterViewInit(): void {
+    this.initFlag = true;
     this.runInstall();
   }
 
   private runInstall() {
-    this.zone.runOutsideAngular(() => {
-      setTimeout(() => this.install(), 100);
-    });
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
   }
 
-  install() {
+  private install() {
     if (!this.data || (this.data && this.data.length < 1)) return;
 
     // clean
+    this.uninstall();
     this.sliderNode.nativeElement.innerHTML = '';
     this.node.nativeElement.innerHTML = '';
 
@@ -170,12 +169,12 @@ export class G2TimelineComponent
       .line()
       .position('x*y1')
       .color(this.colorMap.y1)
-      .size(this.borderWidth);
+      .size(this._borderWidth);
     chart
       .line()
       .position('x*y2')
       .color(this.colorMap.y2)
-      .size(this.borderWidth);
+      .size(this._borderWidth);
     chart.render();
 
     const sliderPadding = Object.assign([], this.padding);
@@ -210,7 +209,7 @@ export class G2TimelineComponent
     this.slider = slider;
   }
 
-  uninstall() {
+  private uninstall() {
     if (this.chart) this.chart.destroy();
     if (this.slider) this.slider.destroy();
   }

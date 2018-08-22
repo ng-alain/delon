@@ -16,4 +16,5 @@ type: Components
 | `[height]` | 图表高度 | `number` | - |
 | `[hasLegend]` | 是否显示 legend | `boolean` | `false` |
 | `[padding]` | 图表内部间距 | `array` | `[24, 30, 16, 30]` |
+| `[colors]` | 颜色列表 | `string[]` | - |
 | `[data]` | 数据 | `Array<{ name: string, label: string, value: number, [key: string]: any }>` | - |

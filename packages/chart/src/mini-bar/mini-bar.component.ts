@@ -6,7 +6,6 @@ import {
   ElementRef,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
   ChangeDetectionStrategy,
   NgZone,
 } from '@angular/core';
@@ -18,9 +17,10 @@ import { toNumber } from '@delon/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2MiniBarComponent implements OnDestroy, OnChanges {
-  // region: fields
+  // #region fields
 
-  @Input() color = '#1890FF';
+  @Input()
+  color = '#1890FF';
 
   @HostBinding('style.height.px')
   @Input()
@@ -33,28 +33,30 @@ export class G2MiniBarComponent implements OnDestroy, OnChanges {
   private _height = 0;
 
   @Input()
-  get borderWidth() {
-    return this._borderWidth;
-  }
   set borderWidth(value: any) {
     this._borderWidth = toNumber(value);
   }
   private _borderWidth = 5;
 
-  @Input() padding: number[] = [8, 8, 8, 8];
+  @Input()
+  padding: number[] = [8, 8, 8, 8];
 
-  @Input() data: Array<{ x: number; y: number; [key: string]: any }>;
+  @Input()
+  data: Array<{ x: number; y: number; [key: string]: any }>;
 
-  // endregion
+  @Input()
+  yTooltipSuffix = '';
 
-  @ViewChild('container') node: ElementRef;
+  // #endregion
 
-  chart: any;
+  @ViewChild('container')
+  private node: ElementRef;
 
-  constructor(private zone: NgZone) {
-  }
+  private chart: any;
 
-  install() {
+  constructor(private zone: NgZone) {}
+
+  private install() {
     if (!this.data || (this.data && this.data.length < 1)) return;
 
     this.node.nativeElement.innerHTML = '';
@@ -88,12 +90,12 @@ export class G2MiniBarComponent implements OnDestroy, OnChanges {
     chart
       .interval()
       .position('x*y')
-      .size(this.borderWidth)
+      .size(this._borderWidth)
       .color(this.color)
       .tooltip('x*y', (x, y) => {
         return {
           name: x,
-          value: y,
+          value: y + this.yTooltipSuffix,
         };
       });
 
@@ -102,18 +104,14 @@ export class G2MiniBarComponent implements OnDestroy, OnChanges {
     this.chart = chart;
   }
 
-  uninstall() {
+  ngOnChanges(): void {
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
+  }
+
+  ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();
       this.chart = null;
     }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.zone.runOutsideAngular(() => setTimeout(() => this.install(), 100));
-  }
-
-  ngOnDestroy(): void {
-    this.uninstall();
   }
 }

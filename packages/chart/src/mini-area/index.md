@@ -1,7 +1,7 @@
 ---
 title: g2-mini-area
 subtitle: 迷你区域图
-cols: 1
+cols: 2
 module: AdG2GaugeModule
 type: Components
 ---
@@ -20,4 +20,5 @@ type: Components
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
 | `[xAxis]` | [x 轴配置](https://antv.alipay.com/g2/doc/tutorial/start/axis.html) | `object` | - |
 | `[yAxis]` | [y 轴配置](https://antv.alipay.com/g2/doc/tutorial/start/axis.html) | `object` | - |
+| `[yTooltipSuffix]` | y 轴Tooltip后缀，一般指定单位 | `string` | - |
 | `[data]` | 数据 | `Array<{ x: number, y: number, [key: string]: any }>` | - |

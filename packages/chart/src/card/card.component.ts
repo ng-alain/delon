@@ -38,7 +38,6 @@ import { toBoolean } from '@delon/util';
   preserveWhitespaces: false,
 })
 export class G2CardComponent {
-  // region fields
 
   /** 是否显示边框 */
   @Input()
@@ -111,5 +110,4 @@ export class G2CardComponent {
   }
   private _loading = false;
 
-  // endregion
 }

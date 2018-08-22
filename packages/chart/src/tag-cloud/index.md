@@ -12,5 +12,13 @@ type: Components
 
 | 参数      | 说明                                      | 类型         | 默认值 |
 |----------|------------------------------------------|-------------|-------|
-| `[tags]` | 标题 | `Array<{ name: string, value: number, [key: string]: any }>` | - |
+| `[data]` | 标题 | `Array<{ x: string, value: number, category?: any, [key: string]: any }>` | - |
 | `[height]` | 高度值 | `number` | - |
+
+**数据说明**
+
+| 名称 | 说明 |
+| --- | --- |
+| `x` | 显示标签云名称 |
+| `value` | 决定字体大小 |
+| `category` | 决定颜色视觉分类 |
