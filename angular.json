@@ -16,9 +16,7 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": [
-              "src/assets"
-            ],
+            "assets": ["src/assets"],
             "styles": [
               "node_modules/ngx-simplemde/src/index.css",
               "src/styles.less"
@@ -75,6 +73,35 @@
               "hmr": true
             }
           }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "packages/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "packages/tsconfig.spec.json",
+            "scripts": [
+              "node_modules/@antv/g2/dist/g2.min.js",
+              "node_modules/@antv/data-set/dist/data-set.min.js",
+              "node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js",
+              "node_modules/ajv/dist/ajv.bundle.js",
+              "node_modules/qrious/dist/qrious.min.js"
+            ],
+            "codeCoverageExclude": [
+              "packages/chart/**",
+              "packages/schematics/**",
+              "packages/testing/**"
+            ],
+            "assets": ["src/assets"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["src/tsconfig.app.json"],
+            "exclude": ["**/node_modules/**"]
+          }
         }
       }
     },
@@ -94,10 +121,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [],
-            "exclude": [
-              "**/node_modules/**",
-              "**/packages/cli/**"
-            ]
+            "exclude": ["**/node_modules/**", "**/packages/cli/**"]
           }
         }
       }
