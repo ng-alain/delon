@@ -6,7 +6,7 @@ import { AdFooterToolbarModule } from './footer-toolbar/footer-toolbar.module';
 import { AdSidebarNavModule } from './sidebar-nav/sidebar-nav.module';
 import { AdDownFileModule } from './down-file/down-file.module';
 import { AdImageModule } from './image/image.module';
-import { AdAvatarListModule } from './avatar-list/avatar-list.module';
+import { NaAvatarListModule } from './avatar-list/avatar-list.module';
 import { AdDescListModule } from './desc-list/desc-list.module';
 import { AdEllipsisModule } from './ellipsis/ellipsis.module';
 import { AdGlobalFooterModule } from './global-footer/global-footer.module';
@@ -36,7 +36,7 @@ const MODULES = [
   AdSidebarNavModule,
   AdDownFileModule,
   AdImageModule,
-  AdAvatarListModule,
+  NaAvatarListModule,
   AdDescListModule,
   AdEllipsisModule,
   AdGlobalFooterModule,
@@ -70,7 +70,7 @@ const MODULES = [
     AdSidebarNavModule.forRoot(),
     AdDownFileModule.forRoot(),
     AdImageModule.forRoot(),
-    AdAvatarListModule.forRoot(),
+    NaAvatarListModule.forRoot(),
     AdDescListModule.forRoot(),
     AdEllipsisModule.forRoot(),
     AdExceptionModule.forRoot(),

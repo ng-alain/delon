@@ -1,3 +1,3 @@
-export { AvatarListItemComponent } from './avatar-list-item.component';
-export { AvatarListComponent } from './avatar-list.component';
-export { AdAvatarListModule } from './avatar-list.module';
+export { NaAvatarListItemComponent } from './avatar-list-item.component';
+export { NaAvatarListComponent } from './avatar-list.component';
+export { NaAvatarListModule } from './avatar-list.module';

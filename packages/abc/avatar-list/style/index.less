@@ -1,13 +1,15 @@
 @import '../../../theme/styles/default';
-.ad-avatar-list {
+@na-avatar-list-prefix: ~'.na-avatar-list';
+
+@{na-avatar-list-prefix} {
   display: inline-block;
-  ul {
+  &__wrap {
     display: inline-block;
     margin-left: 8px;
     font-size: 0;
     padding: 0;
   }
-  .item {
+  &__item {
     display: inline-block;
     font-size: @font-size-base;
     margin-left: -8px;
@@ -16,15 +18,15 @@
     .ant-avatar {
       border: 1px solid #fff;
     }
-    &.large {
+    &-large {
       width: @avatar-size-lg;
       height: @avatar-size-lg;
     }
-    &.small {
+    &-small {
       width: @avatar-size-sm;
       height: @avatar-size-sm;
     }
-    &.mini {
+    &-mini {
       width: 20px;
       height: 20px;
       .ant-avatar {

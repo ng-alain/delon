@@ -1,10 +1,10 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AvatarListComponent } from './avatar-list.component';
-import { AvatarListItemComponent } from './avatar-list-item.component';
+import { NaAvatarListComponent } from './avatar-list.component';
+import { NaAvatarListItemComponent } from './avatar-list-item.component';
 
-const COMPONENTS = [AvatarListComponent, AvatarListItemComponent];
+const COMPONENTS = [NaAvatarListComponent, NaAvatarListItemComponent];
 
 // region: zorro modules
 
@@ -19,8 +19,8 @@ const ZORROMODULES = [NgZorroAntdModule];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdAvatarListModule {
+export class NaAvatarListModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdAvatarListModule, providers: [] };
+    return { ngModule: NaAvatarListModule, providers: [] };
   }
 }

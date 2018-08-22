@@ -1,11 +1,11 @@
 import { Component, Input, QueryList, ContentChildren } from '@angular/core';
-import { AvatarListItemComponent } from './avatar-list-item.component';
+import { NaAvatarListItemComponent } from './avatar-list-item.component';
 
 @Component({
-  selector: 'avatar-list',
+  selector: 'na-avatar-list',
   template: `
-  <ul>
-    <li *ngFor="let i of _items" class="item" [ngClass]="_size">
+  <ul class="na-avatar-list__wrap">
+    <li *ngFor="let i of _items" class="na-avatar-list__item{{_size ? ' na-avatar-list__item-' + _size : ''}}">
       <nz-tooltip *ngIf="i.tips" [nzTitle]="i.tips">
         <nz-avatar nz-tooltip [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="_avatarSize"></nz-avatar>
       </nz-tooltip>
@@ -13,10 +13,10 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
     </li>
   </ul>
   `,
-  host: { '[class.ad-avatar-list]': 'true' },
+  host: { '[class.na-avatar-list]': 'true' },
   preserveWhitespaces: false,
 })
-export class AvatarListComponent {
+export class NaAvatarListComponent {
   _size = '';
 
   _avatarSize = '';
@@ -36,6 +36,6 @@ export class AvatarListComponent {
     }
   }
 
-  @ContentChildren(AvatarListItemComponent)
-  _items: QueryList<AvatarListItemComponent>;
+  @ContentChildren(NaAvatarListItemComponent)
+  _items: QueryList<NaAvatarListItemComponent>;
 }
