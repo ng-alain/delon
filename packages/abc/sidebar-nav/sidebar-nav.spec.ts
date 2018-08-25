@@ -91,12 +91,12 @@ describe('abc: sidebar-nav', () => {
     });
     it('should be hide group name', () => {
       createComp();
-      page.checkCount('.na-nav__group-title');
+      page.checkCount('.ad-nav__group-title');
       const data = deepCopy(MOCKMENUS) as Nav[];
       data[0].group = false;
       menuSrv.add(data);
       fixture.detectChanges();
-      page.checkCount('.na-nav__group-title', 0);
+      page.checkCount('.ad-nav__group-title', 0);
     });
     it('should be toggle open', () => {
       createComp();
