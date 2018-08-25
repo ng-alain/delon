@@ -6,6 +6,17 @@ title:
 type: Other
 ---
 
+### 1.3.3
+
+`2018-8-25`
+
+- @delon/theme
+  - 修复 `ModalHelper` 可能会引进 `ngOriginalError` 异常，[#125](https://github.com/cipchk/delon/issues/125) [#626](https://github.com/cipchk/ng-alain/issues/626)
+  - 修复菜单 `group` 属性为 `false` 时应不显示组名，[#137](https://github.com/cipchk/delon/issues/137) [#140](https://github.com/cipchk/delon/issues/140)
+- @delon/form
+  - 放宽手机号格式校验规则，[#645](https://github.com/cipchk/ng-alain/issues/645)
+  - 修复 `placeholder` 属性支持字符串数组，[#142](https://github.com/cipchk/delon/issues/142)
+
 ### 1.3.2
 
 `2018-8-19`
