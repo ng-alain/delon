@@ -1,7 +1,7 @@
 <ul class="na-nav">
   <ng-container *ngFor="let group of list">
     <ng-template [ngIf]="group._hidden !== true">
-      <li class="na-nav__item na-nav__group-title">
+      <li class="na-nav__item na-nav__group-title" *ngIf="group.group">
         <span>{{ group.text }}</span>
       </li>
       <ng-container *ngFor="let child1 of group.children">

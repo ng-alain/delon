@@ -45,7 +45,7 @@ this.aclService.setFull(true);
 
 ### 菜单数据
 
-中台的菜单数据大多数是来自后端，但给予的数据务必确保是 [Menu](https://github.com/cipchk/delon/blob/master/packages/theme/services/menu/interface.ts) 格式，有关更多细节请参考[sidebar-nav](/components/sidebar-nav) 的API说明。
+中台的菜单数据大多数是来自后端，但给予的数据务必确保是 [Menu](https://github.com/cipchk/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，有关更多细节请参考[sidebar-nav](/components/sidebar-nav) 的API说明。
 
 ### 页面标题
 
