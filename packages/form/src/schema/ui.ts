@@ -117,7 +117,7 @@ export interface SFInputSchema {
   /**
    * **限string** 文字框中显示提示信息
    */
-  placeholder?: string;
+  placeholder?: string | string[];
 
   /**
    * **限string** 加载时是否获得焦点
