@@ -4,7 +4,7 @@ export interface Menu {
   text: string;
   /** i18n主键 */
   i18n?: string;
-  /** 是否菜单组 */
+  /** 是否显示分组名，默认：`true` */
   group?: boolean;
   /** 路由 */
   link?: string;

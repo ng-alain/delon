@@ -84,11 +84,18 @@ describe('Service: Menu', () => {
       expect(srv.menus.length).toBe(0);
     });
 
-    it('should be hidden menu when setting [hide] property', () => {
+    it('should be hidden item when setting [hide] property', () => {
       const newMenus = [{ text: 'new menu' }, { text: 'new menu', hide: true }];
       srv.add(newMenus);
       expect(srv.menus[0]._hidden).toBe(false);
       expect(srv.menus[1]._hidden).toBe(true);
+    });
+
+    it('should be hidden group name when setting [group] property', () => {
+      const newMenus = [{ text: 'new menu' }, { text: 'new menu', group: false }];
+      srv.add(newMenus);
+      expect(srv.menus[0].group).toBe(true);
+      expect(srv.menus[1].group).toBe(false);
     });
 
     describe('#openedByUrl', () => {
