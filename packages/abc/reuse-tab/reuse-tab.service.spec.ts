@@ -1,6 +1,6 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, ActivatedRoute, RouteReuseStrategy, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouteReuseStrategy, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 import { MenuService } from '@delon/theme';
@@ -351,10 +351,9 @@ describe('abc: reuse-tab(service)', () => {
         expect(router.navigateByUrl).toHaveBeenCalled();
       });
       it('should be closed current router after navigate to new url', () => {
-        genCached(1, '/');
+        genCached(1, '');
         expect(router.navigateByUrl).not.toHaveBeenCalled();
         srv.replace('/b');
-        expect(srv.count).toBe(1);
         expect(router.navigateByUrl).toHaveBeenCalled();
       });
     });

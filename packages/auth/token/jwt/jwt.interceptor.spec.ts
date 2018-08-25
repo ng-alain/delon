@@ -1,4 +1,4 @@
-import { Injector } from '@angular/core';
+import { Injector, Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
@@ -32,9 +32,15 @@ describe('auth: jwt.interceptor', () => {
 
   function genModule(options: DelonAuthConfig, tokenData?: JWTTokenModel) {
     injector = TestBed.configureTestingModule({
+      declarations: [MockComponent],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule.withRoutes([]),
+        RouterTestingModule.withRoutes([
+          {
+            path: 'login',
+            component: MockComponent,
+          },
+        ]),
         DelonAuthModule.forRoot(),
       ],
       providers: [
@@ -74,3 +80,6 @@ describe('auth: jwt.interceptor', () => {
       .subscribe();
   });
 });
+
+@Component({ template: '' })
+class MockComponent {}

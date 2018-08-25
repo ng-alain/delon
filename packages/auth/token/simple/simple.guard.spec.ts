@@ -1,7 +1,15 @@
-import { Injector, Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import {
+  Injector,
+  Component,
+  NgModuleFactoryLoader,
+  NgModule,
+} from '@angular/core';
+import { TestBed, inject, fakeAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import {
+  RouterTestingModule,
+  SpyNgModuleFactoryLoader,
+} from '@angular/router/testing';
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { SimpleGuard } from './simple.guard';
@@ -25,6 +33,11 @@ describe('auth: SimpleGuard', () => {
             path: 'my',
             canActivateChild: [SimpleGuard],
             children: [{ path: 'profile', component: MockComponent }],
+          },
+          {
+            path: 'lazy',
+            canLoad: [SimpleGuard],
+            loadChildren: 'expected',
           },
           {
             path: 'login',
@@ -73,7 +86,19 @@ describe('auth: SimpleGuard', () => {
       done();
     });
   });
+
+  it(`should be support load module route`, fakeAsync(
+    inject([NgModuleFactoryLoader], (loader: SpyNgModuleFactoryLoader) => {
+      loader.stubbedModules = { expected: AModule };
+      router.navigateByUrl('/lazy').then(res => {
+        expect(res).toBe(true);
+      });
+    }),
+  ));
 });
 
 @Component({ template: '' })
 class MockComponent {}
+
+@NgModule({})
+class AModule {}

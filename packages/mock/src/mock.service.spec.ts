@@ -35,6 +35,11 @@ describe('mock: service', () => {
       providers: [],
     });
     srv = injector.get(MockService);
+    spyOn(console, 'log');
+    spyOn(console, 'group');
+    spyOn(console, 'groupEnd');
+    spyOn(console, 'warn');
+    spyOn(console, 'error');
   }
 
   describe('#getRule', () => {
@@ -124,6 +129,8 @@ describe('mock: service', () => {
 
     it('should be throw invalid method error', () => {
       expect(() => {
+        spyOn(console, 'log');
+        spyOn(console, 'warn');
         genModule({
           data: {
             USERS: {
@@ -136,6 +143,8 @@ describe('mock: service', () => {
 
     it('should be throw invalid function error', () => {
       expect(() => {
+        spyOn(console, 'log');
+        spyOn(console, 'warn');
         genModule({
           data: {
             USERS: {
@@ -143,7 +152,7 @@ describe('mock: service', () => {
             },
           },
         });
-      }).toThrow();
+      }).toThrowError();
     });
   });
 

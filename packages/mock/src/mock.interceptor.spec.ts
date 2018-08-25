@@ -1,5 +1,11 @@
-import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import {
+  Injector,
+  NgModuleFactoryLoader,
+  Component,
+  NgModule,
+} from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 import {
   HttpTestingController,
   HttpClientTestingModule,
@@ -9,7 +15,10 @@ import {
   HttpClient,
   HttpResponse,
 } from '@angular/common/http';
-import { RouterTestingModule } from '@angular/router/testing';
+import {
+  RouterTestingModule,
+  SpyNgModuleFactoryLoader,
+} from '@angular/router/testing';
 import * as Mock from 'mockjs';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
@@ -37,7 +46,7 @@ const DATA = {
   },
 };
 
-describe('mock: service', () => {
+describe('mock: interceptor', () => {
   let injector: Injector;
   let srv: MockService = null;
   let http: HttpClient;
@@ -46,9 +55,15 @@ describe('mock: service', () => {
   function genModule(options: DelonMockConfig) {
     options = Object.assign(new DelonMockConfig(), options);
     injector = TestBed.configureTestingModule({
+      declarations: [RootCmp],
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule.withRoutes([]),
+        RouterTestingModule.withRoutes([
+          {
+            path: 'lazy',
+            loadChildren: 'expected',
+          },
+        ]),
         DelonMockModule.forRoot(options),
       ],
       providers: [
@@ -58,6 +73,9 @@ describe('mock: service', () => {
     srv = injector.get(MockService);
     http = injector.get(HttpClient);
     httpMock = injector.get(HttpTestingController);
+    spyOn(console, 'log');
+    spyOn(console, 'warn');
+    spyOn(console, 'error');
   }
 
   describe('[default]', () => {
@@ -129,7 +147,6 @@ describe('mock: service', () => {
       );
     });
     it('muse be use MockStatusError to throw status error', (done: () => void) => {
-      spyOn(console, 'error');
       http.get('/500').subscribe(
         () => {
           expect(false).toBe(true);
@@ -162,7 +179,6 @@ describe('mock: service', () => {
   });
   describe('[disabled log]', () => {
     it('with request', (done: () => void) => {
-      spyOn(console, 'log');
       genModule({ data: DATA, delay: 1, log: false });
       http.get('/users').subscribe((res: any) => {
         expect(console.log).not.toHaveBeenCalled();
@@ -170,7 +186,6 @@ describe('mock: service', () => {
       });
     });
     it('with error request', (done: () => void) => {
-      spyOn(console, 'log');
       genModule({ data: DATA, delay: 1, log: false });
       http.get('/404').subscribe(
         () => {
@@ -185,4 +200,57 @@ describe('mock: service', () => {
       );
     });
   });
+  describe('[lazy module]', () => {
+    beforeEach(() => genModule({ data: DATA, delay: 1 }));
+
+    it('should work', fakeAsync(
+      inject(
+        [Router, NgModuleFactoryLoader],
+        (router: Router, loader: SpyNgModuleFactoryLoader) => {
+          @Component({
+            selector: 'lazy',
+            template: '<router-outlet></router-outlet>',
+          })
+          class LayoutComponent {}
+
+          @Component({
+            selector: 'child',
+            template: 'length-{{res.users.length}}',
+          })
+          class ChildComponent {
+            res: any = {};
+            constructor(HTTP: HttpClient) {
+              HTTP.get('/users').subscribe(res => (this.res = res));
+            }
+          }
+
+          @NgModule({
+            declarations: [LayoutComponent, ChildComponent],
+            imports: [
+              DelonMockModule.forChild(),
+              RouterModule.forChild([
+                { path: 'child', component: ChildComponent },
+              ]),
+            ],
+          })
+          class LazyModule {}
+
+          loader.stubbedModules = { expected: LazyModule };
+          const fixture = TestBed.createComponent(RootCmp);
+          fixture.detectChanges();
+          router.navigateByUrl(`/lazy/child`);
+          tick(500);
+          fixture.detectChanges();
+          const text = (fixture.nativeElement as HTMLElement).textContent;
+          expect(text).toContain('length-2');
+        },
+      ),
+    ));
+  });
 });
+
+@Component({
+  selector: 'root-cmp',
+  template: `<router-outlet></router-outlet>`,
+})
+class RootCmp {}

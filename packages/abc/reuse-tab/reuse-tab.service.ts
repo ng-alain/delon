@@ -1,5 +1,9 @@
-import { Injectable, OnDestroy, Optional, Injector } from '@angular/core';
-import { ActivatedRouteSnapshot, ActivatedRoute, Router } from '@angular/router';
+import { Injectable, OnDestroy, Injector } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  ActivatedRoute,
+  Router,
+} from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { MenuService } from '@delon/theme';
 import {
@@ -20,9 +24,9 @@ export class ReuseTabService implements OnDestroy {
   private _debug = false;
   private _mode = NaReuseTabMatchMode.Menu;
   private _excludes: RegExp[] = [];
-  private _cachedChange: BehaviorSubject<NaReuseTabNotify> = new BehaviorSubject<
+  private _cachedChange: BehaviorSubject<
     NaReuseTabNotify
-  >(null);
+  > = new BehaviorSubject<NaReuseTabNotify>(null);
   private _cached: NaReuseTabCached[] = [];
   private _titleCached: { [url: string]: NaReuseTitle } = {};
   private _closableCached: { [url: string]: boolean } = {};
@@ -223,9 +227,13 @@ export class ReuseTabService implements OnDestroy {
     if (this._titleCached[url]) return this._titleCached[url];
 
     if (route && route.data && (route.data.titleI18n || route.data.title))
-      return <NaReuseTitle>{ text: route.data.title, i18n: route.data.titleI18n };
+      return <NaReuseTitle>{
+        text: route.data.title,
+        i18n: route.data.titleI18n,
+      };
 
-    const menu = this.mode !== NaReuseTabMatchMode.URL ? this.getMenu(url) : null;
+    const menu =
+      this.mode !== NaReuseTabMatchMode.URL ? this.getMenu(url) : null;
     return menu ? { text: menu.text, i18n: menu.i18n } : { text: url };
   }
 
@@ -263,7 +271,8 @@ export class ReuseTabService implements OnDestroy {
     if (route && route.data && typeof route.data.reuseClosable === 'boolean')
       return route.data.reuseClosable;
 
-    const menu = this.mode !== NaReuseTabMatchMode.URL ? this.getMenu(url) : null;
+    const menu =
+      this.mode !== NaReuseTabMatchMode.URL ? this.getMenu(url) : null;
     if (menu && typeof menu.reuseClosable === 'boolean')
       return menu.reuseClosable;
 
@@ -343,13 +352,10 @@ export class ReuseTabService implements OnDestroy {
 
   // endregion
 
-  constructor(
-    private injector: Injector,
-    @Optional() private menuService: MenuService,
-  ) {}
+  constructor(private injector: Injector, private menuService: MenuService) {}
 
   private getMenu(url: string) {
-    const menus = this.menuService ? this.menuService.getPathByUrl(url) : [];
+    const menus = this.menuService.getPathByUrl(url);
     if (!menus || menus.length === 0) return null;
     return menus.pop();
   }
