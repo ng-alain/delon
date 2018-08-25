@@ -92,7 +92,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   set req(value: NaTableReq) {
     const { req } = this.cog;
     const item = Object.assign({}, req, value);
-    if (typeof item.reName === 'undefined') {
+    if (item.reName == null) {
       item.reName = deepCopy(req.reName);
     }
     this._req = item;
@@ -106,8 +106,8 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   set res(value: NaTableRes) {
     const { res } = this.cog;
     const item = Object.assign({}, res, value);
-    if (typeof item.reName === 'undefined') {
-      item.reName = deepCopy(item.reName);
+    if (item.reName == null) {
+      item.reName = deepCopy(res.reName);
     }
     if (!Array.isArray(item.reName.list))
       item.reName.list = item.reName.list.split('.');
@@ -366,6 +366,9 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
         if (typeof result.total !== 'undefined') {
           this.total = result.total;
+        }
+        if (typeof result.pageShow !== 'undefined') {
+          this._isPagination = result.pageShow;
         }
         this._data = result.list;
         return this._data;
@@ -694,7 +697,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (changes.columns) {
       this.updateColumns();
     }
-    if (changes.data) {
+    if (changes.data && changes.data.currentValue) {
       this._load();
     }
     this.setClass();

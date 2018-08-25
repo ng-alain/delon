@@ -23,15 +23,11 @@ export class NaTableRowSource {
   getRow(path: string) {
     return this.rows[path];
   }
-
-  get res() {
-    return { titles: this.titles, rows: this.rows };
-  }
 }
 
-@Directive({ selector: '[st-row]' })
+@Directive({ selector: '[na-table-row]' })
 export class NaTableRowDirective implements OnInit {
-  @Input('st-row')
+  @Input('na-table-row')
   id: string;
 
   @Input()

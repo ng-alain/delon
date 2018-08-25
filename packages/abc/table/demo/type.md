@@ -1,3 +1,11 @@
+---
+order: 2
+title: 列类型
+---
+
+支持十种不同列类型，多选、单选、徽标、标签、图片、数字、货币、日期、布尔徽章。也可以使用自定义列完成更复杂渲染。
+
+```ts
 import { Component } from '@angular/core';
 import { NaTableColumn, NaTableColumnBadge, NaTableColumnTag } from '@delon/abc';
 
@@ -54,3 +62,4 @@ export class DemoComponent {
     this.reload();
   }
 }
+```

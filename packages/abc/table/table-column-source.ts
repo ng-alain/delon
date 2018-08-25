@@ -204,8 +204,10 @@ export class NaTableColumnSource {
   }
 
   private restoreRender(item: NaTableColumn) {
+    if (item.renderTitle) {
+      item.__renderTitle = this.rowSource.getTitle(item.renderTitle);
+    }
     if (item.render) {
-      item.__renderTitle = this.rowSource.getTitle(item.render);
       item.__render = this.rowSource.getRow(item.render);
     }
   }
@@ -264,8 +266,8 @@ export class NaTableColumnSource {
       }
       if (
         (item.type === 'link' && typeof item.click !== 'function') ||
-        (item.type === 'badge' && typeof item.badge === 'undefined') ||
-        (item.type === 'tag' && typeof item.tag === 'undefined')
+        (item.type === 'badge' && item.badge == null) ||
+        (item.type === 'tag' && item.tag == null)
       ) {
         (item as any).type = '';
       }

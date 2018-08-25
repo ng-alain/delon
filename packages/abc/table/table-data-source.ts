@@ -104,6 +104,10 @@ export class NaTableDataSource {
               const values = c.filter.menus.filter(w => w.checked);
               if (values.length === 0) return;
               const onFilter = c.filter.fn;
+              if (typeof onFilter !== 'function') {
+                console.warn(`[na-table] Muse provide the fn function in filter`);
+                return ;
+              }
               result = result.filter(record =>
                 values.some(v => onFilter(v, record)),
               );
@@ -220,6 +224,10 @@ export class NaTableDataSource {
     const sortList = this.getValidSort(columns);
     if (sortList.length === 0) {
       return;
+    }
+    if (typeof sortList[0].compare !== 'function') {
+      console.warn(`[na-table] Muse provide the compare function in sort`);
+      return ;
     }
 
     return (a: any, b: any) => {

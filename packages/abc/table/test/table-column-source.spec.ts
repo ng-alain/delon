@@ -476,14 +476,21 @@ describe('abc: table: column-souce', () => {
         spyOn(rowSrv, 'getTitle');
         spyOn(rowSrv, 'getRow');
       });
-      it('should be restore render elementref', () => {
-        expect(rowSrv.getTitle).not.toHaveBeenCalled();
+      it('should be restore render row elementref', () => {
+        expect(rowSrv.getRow).not.toHaveBeenCalled();
         srv.process([{ title: '', render: 'a' }])[0];
+        expect(rowSrv.getRow).toHaveBeenCalled();
+      });
+      it('should be restore render title elementref', () => {
+        expect(rowSrv.getTitle).not.toHaveBeenCalled();
+        srv.process([{ title: '', renderTitle: 'a' }])[0];
         expect(rowSrv.getTitle).toHaveBeenCalled();
       });
       it('#restoreAllRender', () => {
+        expect(rowSrv.getRow).not.toHaveBeenCalled();
         expect(rowSrv.getTitle).not.toHaveBeenCalled();
-        srv.restoreAllRender([{ title: '', render: 'a' }]);
+        srv.restoreAllRender([{ title: '', render: 'a', renderTitle: 'b' }]);
+        expect(rowSrv.getRow).toHaveBeenCalled();
         expect(rowSrv.getTitle).toHaveBeenCalled();
       });
     });
