@@ -1,4 +1,19 @@
+---
+order: 1
+title:
+  zh-CN: 基本
+  en-US: Basic
+---
 
+## zh-CN
+
+基本查看页。
+
+## en-US
+
+The simplest view page.
+
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -15,3 +30,4 @@ import { Component } from '@angular/core';
 })
 export class DemoComponent {
 }
+```

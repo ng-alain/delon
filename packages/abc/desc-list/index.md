@@ -1,10 +1,13 @@
 ---
+type: Deprecated
 title: desc-list
 subtitle: 描述列表
 cols: 1
 module: AdDescListModule
 config: AdDescListConfig
 ---
+
+请使用 [na-form-row](/components/form-row) 替代。
 
 成组展示多个只读字段，常见于详情页的信息展示。
 

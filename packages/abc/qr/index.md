@@ -27,6 +27,7 @@ npm i --save qrious
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
+`[value]` | 值，不支持中文 [#62](https://github.com/neocotic/qrious/issues/62) | `string` | -
 `[background]` | 背景 | `string` | `white`
 `[backgroundAlpha]` | 背景透明级别，范围：`0-1` 之间 | `number` | `1.0`
 `[foreground]` | 前景 | `string` | `white`
@@ -36,3 +37,9 @@ npm i --save qrious
 `[padding]` | 内边距（单位：px） | `number` | `10`
 `[size]` | 大小（单位：px） | `number` | `220`
 `(change)` | 变更时回调，返回二维码dataURL值 | `EventEmitter<string>` | -
+
+## 常见问题
+
+### 自定义LOGO
+
+参考 [#100](https://github.com/neocotic/qrious/issues/100#issuecomment-308249343) 的写法。

@@ -1,8 +1,8 @@
 ---
+type: Other
 title: na-src
 subtitle: 显示图像
 cols: 1
-type: Directive
 module: NaImageModule
 config: NaImageConfig
 ---

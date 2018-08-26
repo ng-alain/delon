@@ -55,19 +55,26 @@ module.exports = {
           'en-US': 'Other',
         },
         {
-          'zh-CN': '指令',
-          'en-US': 'Directive',
+          'zh-CN': '已过期',
+          'en-US': 'Deprecated',
         },
       ],
       extraRouteMeta: [
         {
           name: 'form',
           route: '/form',
-          i18n: false,
+          order: 3,
+          i18n: true,
           meta: {
             'zh-CN': {
               type: 'CURD',
-              title: { 'zh-CN': '动态表单', 'en-US': 'Dynamic Form' },
+              title: 'form',
+              subtitle: '动态表单',
+            },
+            'en-US': {
+              type: 'CURD',
+              title: 'form',
+              subtitle: 'Dynamic Form',
             },
           },
         },

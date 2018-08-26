@@ -29,6 +29,7 @@ import { NaLodopModule } from './lodop/lodop.module';
 import { NaQuickMenuModule } from './quick-menu/quick-menu.module';
 import { NaQRModule } from './qr/qr.module';
 import { AdSHFModule } from './simple-html-form/module';
+import { NaViewModule } from './view/view.module';
 
 const MODULES = [
   NaErrorCollectModule,
@@ -59,6 +60,7 @@ const MODULES = [
   NaQuickMenuModule,
   NaQRModule,
   AdSHFModule,
+  NaViewModule
 ];
 
 // endregion
@@ -93,6 +95,7 @@ const MODULES = [
     NaQuickMenuModule.forRoot(),
     NaQRModule.forRoot(),
     AdSHFModule.forRoot(),
+    NaViewModule.forRoot()
   ],
   exports: MODULES,
 })

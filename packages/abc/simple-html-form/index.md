@@ -1,11 +1,13 @@
 ---
-type: CURD
+type: Deprecated
 title: simple-html-form
 subtitle: 简易HTML模板表单
 cols: 1
 module: AdSHFModule
 config: AdSHFConfig
 ---
+
+请使用 [na-form-row](/components/form-row) 替代。
 
 简化HTML模板表单的构建方式。
 

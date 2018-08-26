@@ -26,4 +26,6 @@ export * from './number-to-chinese/index';
 export * from './lodop/index';
 export * from './quick-menu/index';
 export * from './qr/index';
+export * from './view/index';
+
 export * from './simple-html-form/index';

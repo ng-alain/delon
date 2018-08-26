@@ -3,7 +3,7 @@ type: Other
 title: page-header
 subtitle: 页头
 cols: 1
-module: NaProHeaderModule
+module: NaPageHeaderModule
 config: NaPageHeaderConfig
 ---
 

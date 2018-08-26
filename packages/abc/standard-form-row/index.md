@@ -1,10 +1,12 @@
 ---
-type: CURD
+type: Deprecated
 title: standard-form-row
 subtitle: 标准表单行
 cols: 1
 module: AdStandardFormRowModule
 ---
+
+请使用 [na-form-row](/components/form-row) 替代。
 
 一般用在搜索框需要左右结构时。
 

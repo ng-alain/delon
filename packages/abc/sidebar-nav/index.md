@@ -55,7 +55,7 @@ target | `_blank,_self,_parent,_top` | 链接 target
 icon | `string` | 图标，指[示例](https://cipchk.github.io/ng-alain/)中的【仪表盘】前图标，只对一级菜单有效
 badge | `number` | 徽标数，展示的数字，指[示例](https://cipchk.github.io/ng-alain/)中的【小部件】后的红色块。（注：`group:true` 时无效）
 badge_dot | `boolean` | 徽标数，显示小红点
-badge_status | `string` | 徽标 Badge 颜色 （默认：error， 所有颜色值见：https://github.com/cipchk/ng-alain/blob/master/_documents/utils.md#色彩）
+badge_status | `string` | 徽标 Badge 颜色 （默认：error， 所有[颜色值](https://next.ng-alain.com/theme/tool#%E8%89%B2%E5%BD%A9)
 hide | `boolean` | 是否隐藏菜单
 hideInBreadcrumb | `boolean` | 隐藏面包屑，指 `page-header` 组件的自动生成面包屑时有效
 acl | `any` | ACL配置，若导入 `@delon/acl` 时自动有效，等同于 `ACLService.can(roleOrAbility: ACLCanType)` 参数值

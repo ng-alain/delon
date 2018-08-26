@@ -3,6 +3,7 @@ type: CURD
 title: table
 subtitle: 表格
 cols: 1
+order: 1
 module: NaTableModule
 config: NaTableConfig
 ---

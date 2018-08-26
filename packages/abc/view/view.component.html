@@ -1,0 +1,7 @@
+<div class="na-view__label" [class.na-view__label-empty]="!_label && !_labelTpl"
+  [style.width.px]="parent.labelWidth">
+  <ng-container *ngIf="_label; else _labelTpl">{{_label}}</ng-container>
+</div>
+<div class="na-view__detail" (cdkObserveContent)="checkContent()" #conEl>
+  <ng-content></ng-content>
+</div>

@@ -1,8 +1,8 @@
 ---
+type: Other
 title: na-down-file
 subtitle: 下载文件
 cols: 1
-type: Directive
 module: NaDownFileModule
 ---
 
