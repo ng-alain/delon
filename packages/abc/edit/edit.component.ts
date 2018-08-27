@@ -14,7 +14,7 @@ import {
   OnDestroy,
   HostBinding,
 } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { NgModel, FormControlName, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { toNumber, toBoolean, deepGet } from '@delon/util';
@@ -36,6 +36,8 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
   private status$: Subscription;
   @ContentChild(NgModel)
   private readonly ngModel: NgModel;
+  @ContentChild(FormControlName)
+  private readonly formControlName: FormControlName;
   private clsMap: string[] = [];
   private inited = false;
   private onceFlag = false;
@@ -112,6 +114,10 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.invalid && this.parent.size !== 'compact' && !!this.error;
   }
 
+  private get ngControl(): NgControl {
+    return this.ngModel || this.formControlName;
+  }
+
   constructor(
     @Optional()
     @Host()
@@ -142,9 +148,9 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private bindModel() {
-    if (!this.ngModel || this.status$) return;
+    if (!this.ngControl || this.status$) return;
 
-    this.status$ = this.ngModel.statusChanges.subscribe(res => {
+    this.status$ = this.ngControl.statusChanges.subscribe(res => {
       const status = res !== 'VALID';
       if (!this.onceFlag || this.invalid === status) {
         this.onceFlag = true;
@@ -155,7 +161,7 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
     });
     if (this._autoId) {
       const control = deepGet(
-        this.ngModel.valueAccessor,
+        this.ngControl.valueAccessor,
         '_elementRef.nativeElement',
       ) as HTMLElement;
       if (control) {

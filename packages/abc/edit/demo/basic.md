@@ -1,9 +1,17 @@
 ---
 order: 1
-title: 基础
+title:
+  zh-CN: 基础
+  en-US: Basic
 ---
 
+## zh-CN
+
 一行两列表单。
+
+## en-US
+
+1 rows & 2 columns layout form.
 
 ```ts
 import { Component } from '@angular/core';

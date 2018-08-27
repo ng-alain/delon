@@ -1,9 +1,18 @@
 ---
-order: 1
-title: 行内排列
+order: 5
+title:
+  zh-CN: 内联布局
+  en-US: Inline Layout
 ---
 
+## zh-CN
+
 若 `nzLayout: inline` 时强制使用紧凑型，一般用于搜索框。
+
+## en-US
+
+If `nzLayout: inline` is forced to use compact, generally used in the search box.
+
 
 ```ts
 import { Component } from '@angular/core';

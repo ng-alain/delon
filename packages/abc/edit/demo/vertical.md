@@ -1,9 +1,17 @@
 ---
-order: 1
-title: 垂直排列
+order: 6
+title:
+  zh-CN: 垂直布局
+  en-US: Vertical Layout
 ---
 
-垂直排列表单。
+## zh-CN
+
+垂直布局表单。
+
+## en-US
+
+Vertical layout form.
 
 ```ts
 import { Component } from '@angular/core';

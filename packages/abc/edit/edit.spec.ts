@@ -6,7 +6,8 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule, NgModel, FormControlName, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { REP_MAX_COL } from '../core/responsive';
@@ -180,6 +181,24 @@ describe('abc: edit', () => {
       fixture.detectChanges();
       page.expect('#ipt');
     });
+    it('should be reactive form', () => {
+      TestBed.configureTestingModule({
+        imports: [NaEditModule.forRoot(), FormsModule, ReactiveFormsModule, NoopAnimationsModule],
+        declarations: [TestReactiveComponent],
+      });
+      const fixture2 = TestBed.createComponent(TestReactiveComponent);
+      dl = fixture2.debugElement;
+      fixture2.detectChanges();
+      page = new PageObject();
+      const formControlName = dl.query(By.directive(FormControlName)).injector.get(FormControlName);
+      const changes = formControlName.statusChanges as EventEmitter<any>;
+      // mock statusChanges
+      changes.emit('VALID');
+      page.expect('na-edit-error', 0);
+      // mock statusChanges
+      changes.emit('INVALID');
+      page.expect('na-edit-error');
+    });
   });
 
   describe('[logic]', () => {
@@ -286,4 +305,23 @@ class TestComponent {
 
   val = '';
   showModel = true;
+}
+
+@Component({
+  template: `
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" na-edit-wrap gutter="32">
+    <na-edit label="App Key" error="Please input your username!">
+      <input formControlName="userName" nz-input placeholder="Username">
+    </na-edit>
+  </form>`,
+})
+class TestReactiveComponent {
+  validateForm: FormGroup;
+  constructor(fb: FormBuilder) {
+    this.validateForm = fb.group({
+      userName: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+      remember: [true],
+    });
+  }
 }

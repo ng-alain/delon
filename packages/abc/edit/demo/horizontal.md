@@ -1,9 +1,17 @@
 ---
-order: 1
-title: 水平排列
+order: 4
+title:
+  zh-CN: 水平排列
+  en-US: Horizontal Layout
 ---
 
+## zh-CN
+
 一行一列表单。
+
+## en-US
+
+Horizontal layout form.
 
 ```ts
 import { Component } from '@angular/core';

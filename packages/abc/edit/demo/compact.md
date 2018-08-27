@@ -1,9 +1,17 @@
 ---
-order: 1
-title: 紧凑型
+order: 3
+title:
+  zh-CN: 紧凑型
+  en-US: Compact Layout
 ---
 
-强制忽略 `error`、`extra` 展示
+## zh-CN
+
+强制忽略 `error`、`extra` 展示。
+
+## en-US
+
+Force ignored `error`, `extra` display.
 
 ```ts
 import { Component } from '@angular/core';

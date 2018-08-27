@@ -8,7 +8,11 @@ module: NaEditModule
 config: NaEditConfig
 ---
 
-简化HTML模板表单的构建方式，且支持自动化响应式布局。
+简化表单的HTML模板的构建方式是 `na-edit` 系列组件的目标。在此基础上，进一步优化了一些细节，包括：
+
+- 更友好的表单检验状态监听
+- 自动化响应式布局
+- 自动维护表单 `id`
 
 它由 `na-edit-wrap` 容器（指令）和 `na-edit-item` 组件来表示一个表单，一个简单HTML模板表单是这么写的：
 
