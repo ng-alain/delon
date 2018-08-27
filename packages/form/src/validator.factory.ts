@@ -38,7 +38,8 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
     );
     this.ajv.addFormat(
       'mobile',
-      /^(0|\+?86|17951)?(13[0-9]|15[0-9]|17[0678]|18[0-9]|14[57])[0-9]{8}$/,
+      /^(0|\+?86|17951)?1[0-9]{10}$/,
+      // /^(0|\+?86|17951)?(13[0-9]|15[0-9]|17[0678]|18[0-9]|14[57])[0-9]{8}$/,
     );
     this.ajv.addFormat(
       'id-card',

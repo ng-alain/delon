@@ -78,8 +78,6 @@ this.NzModalRef.destroy();
         if (options.exact === true) {
           if (res != null) {
             observer.next(res);
-          } else {
-            observer.error(res);
           }
         } else {
           observer.next(res);

@@ -7,7 +7,7 @@ module: AdSidebarNavModule
 
 ng-alain 左边主菜单，依赖于 `@delon/theme`。
 
-组件的数据来自 `MenuService`，其结构为 [Menu](https://github.com/cipchk/delon/blob/master/packages/theme/services/menu/interface.ts)，同时对 `MenuService` 的操作会直接同步主菜单组件。
+组件的数据来自 `MenuService`，其结构为 [Menu](https://github.com/cipchk/delon/blob/master/packages/theme/src/services/menu/interface.ts)，同时对 `MenuService` 的操作会直接同步主菜单组件。
 
 ## 常见问题
 
@@ -46,7 +46,7 @@ ng-alain 左边主菜单，依赖于 `@delon/theme`。
 ----|------|-----
 text | `string` | 文本，必填项
 i18n | `string` | i18n主键
-group | `string` | 是否菜单组，指[示例](https://cipchk.github.io/ng-alain/)中的【主导航】字样
+group | `string` | 是否显示分组名，默认：`true`，指[示例](https://cipchk.github.io/ng-alain/)中的【主导航】字样
 link | `string` | 路由，`link`、`externalLink` 二选其一
 linkExact | `boolean` | 路由是否精准匹配，默认：`false` [#344](https://github.com/cipchk/ng-alain/issues/344)
 externalLink | `string` | 外部链接，`link`、`externalLink` 二选其一

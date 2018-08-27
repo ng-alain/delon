@@ -279,6 +279,23 @@ Ant Design 是以 `12px` 为基准字号。
 | `hidden-md` | <992px |
 | `hidden-lg` | <1200px |
 
+## 旋转
+
+```
+.rotate-[360 / 15]
+```
+
+例如：
+
+```css
+// 旋转15度
+.rotate-15
+// 旋转90度
+.rotate-90
+// 旋转360度
+.rotate-360
+```
+
 ## Other
 
 | 名称 | 说明 |

@@ -85,6 +85,9 @@ export class MenuService implements OnDestroy {
       item.text =
         item.i18n && this.i18nSrv ? this.i18nSrv.fanyi(item.i18n) : item.text;
 
+      // group
+      item.group = typeof item.group !== 'boolean' ? true : item.group;
+
       // hidden
       item._hidden = typeof item.hide === 'undefined' ? false : item.hide;
 

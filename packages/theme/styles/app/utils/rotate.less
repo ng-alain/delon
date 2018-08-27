@@ -1,0 +1,10 @@
+@rotate-count: 24;
+.rotate-loop (@i) when (@i > 0) {
+  @num: @i * 15;
+  .rotate-@{num} {
+    transform: rotate(~'@{num}deg');
+  }
+  .rotate-loop(@i - 1);
+}
+
+.rotate-loop(@rotate-count);

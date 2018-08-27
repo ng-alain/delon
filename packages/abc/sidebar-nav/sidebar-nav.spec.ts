@@ -89,7 +89,15 @@ describe('abc: sidebar-nav', () => {
       expect(context.select).toHaveBeenCalled();
       expect(router.navigateByUrl).toHaveBeenCalled();
     });
-
+    it('should be hide group name', () => {
+      createComp();
+      page.checkCount('.ad-nav__group-title');
+      const data = deepCopy(MOCKMENUS) as Nav[];
+      data[0].group = false;
+      menuSrv.add(data);
+      fixture.detectChanges();
+      page.checkCount('.ad-nav__group-title', 0);
+    });
     it('should be toggle open', () => {
       createComp();
       const data = deepCopy(MOCKMENUS);
@@ -332,6 +340,10 @@ describe('abc: sidebar-nav', () => {
     checkText(cls: string, value: any) {
       const el = this.getEl<HTMLElement>(cls);
       expect(el ? el.innerText.trim() : '').toBe(value);
+    }
+    checkCount(cls: string, count = 1) {
+      expect(dl.queryAll(By.css(cls)).length).toBe(count);
+      return this;
     }
     /** 期望显示子菜单，默认：`true` */
     showSubMenu(resultExpectShow = true) {
