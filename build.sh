@@ -20,9 +20,10 @@ NODE_PACKAGES=(schematics)
 
 buildLess() {
   rsync -a ${SRC_DIST_DIR}/theme/styles ${DIST_DIR}/packages-dist/theme
-  node ./scripts/build/generate-abc-less.js
+  node ./scripts/build/generate-less.js
   echo 'fix abc components import paths...'
   sed -i -r "s/..\/..\/..\/theme/..\/..\/..\/..\/theme/g" `grep ..\/..\/..\/theme -rl ${DIST_DIR}/packages-dist/abc/`
+  sed -i -r "s/..\/..\/..\/theme/..\/..\/..\/..\/theme/g" `grep ..\/..\/..\/theme -rl ${DIST_DIR}/packages-dist/chart/`
   # echo 'fix zorro paths...'
   sed -i -r "s/~ng-zorro-antd/..\/..\/..\/..\/node_modules\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl ${DIST_DIR}/packages-dist/theme/styles/`
   echo 'build full css...'
@@ -87,86 +88,87 @@ UGLIFY=${PWD}/node_modules/.bin/uglifyjs
 PACKAGES_DIR=${PWD}/packages/
 DIST_DIR=${PWD}/dist
 SRC_DIST_DIR=${DIST_DIR}/packages
-rm -rf ${SRC_DIST_DIR}
+# rm -rf ${SRC_DIST_DIR}
 # rm -rf ${SRC_DIST_DIR}-dist
 
 echo "====== Copy source [exclude: schematics]"
 
-mkdir -p ${SRC_DIST_DIR}
-rsync -a --exclude="schematics/" --exclude="test.ts" ${PACKAGES_DIR} ${SRC_DIST_DIR}
-node ./scripts/build/inline-template.js
+# mkdir -p ${SRC_DIST_DIR}
+# rsync -a --exclude="schematics/" --exclude="test.ts" ${PACKAGES_DIR} ${SRC_DIST_DIR}
+# node ./scripts/build/inline-template.js
 
-for PACKAGE in ${PACKAGES[@]}
-do
-  echo "====== BUNDLING ${PACKAGE}"
+# for PACKAGE in ${PACKAGES[@]}
+# do
+#   echo "====== BUNDLING ${PACKAGE}"
 
-  rm -rf ${SRC_DIST_DIR}-dist/${PACKAGE}
+#   rm -rf ${SRC_DIST_DIR}-dist/${PACKAGE}
 
-  ROOT_DIR=${PWD}/dist/packages
-  SRC_DIR=${ROOT_DIR}/${PACKAGE}
-  ROOT_OUT_DIR=${PWD}/dist/@delon
-  OUT_DIR=${ROOT_OUT_DIR}/${PACKAGE}
-  NPM_DIR=${PWD}/dist/packages-dist/${PACKAGE}
-  ES2015_DIR=${NPM_DIR}/_es2015
-  ES5_DIR=${NPM_DIR}/_es5
-  PUBLIC_DIR=${NPM_DIR}/_public
+#   ROOT_DIR=${PWD}/dist/packages
+#   SRC_DIR=${ROOT_DIR}/${PACKAGE}
+#   ROOT_OUT_DIR=${PWD}/dist/@delon
+#   OUT_DIR=${ROOT_OUT_DIR}/${PACKAGE}
+#   NPM_DIR=${PWD}/dist/packages-dist/${PACKAGE}
+#   ES2015_DIR=${NPM_DIR}/_es2015
+#   ES5_DIR=${NPM_DIR}/_es5
+#   PUBLIC_DIR=${NPM_DIR}/_public
 
-  LICENSE_BANNER=${ROOT_DIR}/license-banner.txt
+#   LICENSE_BANNER=${ROOT_DIR}/license-banner.txt
 
-  if ! containsElement "${PACKAGE}" "${NODE_PACKAGES[@]}"; then
+#   if ! containsElement "${PACKAGE}" "${NODE_PACKAGES[@]}"; then
 
-    updateVersionReferences ${SRC_DIR}
+#     updateVersionReferences ${SRC_DIR}
 
-    echo '======    Compiling to es2015 via Angular compiler'
-    $NGC -p ${SRC_DIR}/tsconfig-build.json --t es2015 --outDir ${ES2015_DIR}/src
+#     echo '======    Compiling to es2015 via Angular compiler'
+#     $NGC -p ${SRC_DIR}/tsconfig-build.json --t es2015 --outDir ${ES2015_DIR}/src
 
-    echo '======    Bundling to es module of es2015'
-    export ROLLUP_TARGET=esm
-    $ROLLUP -c ${SRC_DIR}/rollup.config.js -f es -i ${ES2015_DIR}/src/index.js -o ${ES2015_DIR}/esm2015/${PACKAGE}.js
+#     echo '======    Bundling to es module of es2015'
+#     export ROLLUP_TARGET=esm
+#     $ROLLUP -c ${SRC_DIR}/rollup.config.js -f es -i ${ES2015_DIR}/src/index.js -o ${ES2015_DIR}/esm2015/${PACKAGE}.js
 
-    echo '======    Compiling to es5 via Angular compiler'
-    $NGC -p ${SRC_DIR}/tsconfig-build.json --t es5 --outDir ${ES5_DIR}/src
+#     echo '======    Compiling to es5 via Angular compiler'
+#     $NGC -p ${SRC_DIR}/tsconfig-build.json --t es5 --outDir ${ES5_DIR}/src
 
-    echo '======    Bundling to es module of es5'
-    export ROLLUP_TARGET=esm
-    $ROLLUP -c ${SRC_DIR}/rollup.config.js -f es -i ${ES5_DIR}/src/index.js -o ${ES5_DIR}/esm5/${PACKAGE}.js
+#     echo '======    Bundling to es module of es5'
+#     export ROLLUP_TARGET=esm
+#     $ROLLUP -c ${SRC_DIR}/rollup.config.js -f es -i ${ES5_DIR}/src/index.js -o ${ES5_DIR}/esm5/${PACKAGE}.js
 
-    echo '======    Bundling to umd module of es5'
-    export ROLLUP_TARGET=umd
-    $ROLLUP -c ${SRC_DIR}/rollup.config.js -f umd -i ${ES5_DIR}/esm5/${PACKAGE}.js -o ${ES5_DIR}/bundles/${PACKAGE}.umd.js
+#     echo '======    Bundling to umd module of es5'
+#     export ROLLUP_TARGET=umd
+#     $ROLLUP -c ${SRC_DIR}/rollup.config.js -f umd -i ${ES5_DIR}/esm5/${PACKAGE}.js -o ${ES5_DIR}/bundles/${PACKAGE}.umd.js
 
-    echo '======    Bundling to minified umd module of es5'
-    export ROLLUP_TARGET=mumd
-    $ROLLUP -c ${SRC_DIR}/rollup.config.js -f umd -i ${ES5_DIR}/esm5/${PACKAGE}.js -o ${ES5_DIR}/bundles/${PACKAGE}.umd.min.js
+#     echo '======    Bundling to minified umd module of es5'
+#     export ROLLUP_TARGET=mumd
+#     $ROLLUP -c ${SRC_DIR}/rollup.config.js -f umd -i ${ES5_DIR}/esm5/${PACKAGE}.js -o ${ES5_DIR}/bundles/${PACKAGE}.umd.min.js
 
-    echo '======    Unifying publish folder'
-    mv ${ES5_DIR} ${PUBLIC_DIR}
-    mv ${ES2015_DIR}/esm2015 ${PUBLIC_DIR}/esm2015
-    sed -e "s/from '.\//from '.\/src\//g" ${PUBLIC_DIR}/src/index.d.ts > ${PUBLIC_DIR}/${PACKAGE}.d.ts
-    sed -e "s/\":\".\//\":\".\/src\//g" ${PUBLIC_DIR}/src/index.metadata.json > ${PUBLIC_DIR}/${PACKAGE}.metadata.json
-    rm ${PUBLIC_DIR}/src/index.d.ts ${PUBLIC_DIR}/src/index.metadata.json
+#     echo '======    Unifying publish folder'
+#     mv ${ES5_DIR} ${PUBLIC_DIR}
+#     mv ${ES2015_DIR}/esm2015 ${PUBLIC_DIR}/esm2015
+#     sed -e "s/from '.\//from '.\/src\//g" ${PUBLIC_DIR}/src/index.d.ts > ${PUBLIC_DIR}/${PACKAGE}.d.ts
+#     sed -e "s/\":\".\//\":\".\/src\//g" ${PUBLIC_DIR}/src/index.metadata.json > ${PUBLIC_DIR}/${PACKAGE}.metadata.json
+#     rm ${PUBLIC_DIR}/src/index.d.ts ${PUBLIC_DIR}/src/index.metadata.json
 
-    cp ${SRC_DIR}/package.json ${PUBLIC_DIR}/package.json
-    cp ${SRC_DIR}/README.md ${PUBLIC_DIR}/README.md
-    cp ./LICENSE ${PUBLIC_DIR}/LICENSE
+#     cp ${SRC_DIR}/package.json ${PUBLIC_DIR}/package.json
+#     cp ${SRC_DIR}/README.md ${PUBLIC_DIR}/README.md
+#     cp ./LICENSE ${PUBLIC_DIR}/LICENSE
 
-    addBanners ${PUBLIC_DIR}/bundles
-  else
-    echo "not yet!!!"
-  fi
+#     addBanners ${PUBLIC_DIR}/bundles
+#   else
+#     echo "not yet!!!"
+#   fi
 
-  if [[ -d ${PUBLIC_DIR} ]]; then
-      updateVersionReferences ${PUBLIC_DIR} ${PACKAGE}
-  fi
+#   if [[ -d ${PUBLIC_DIR} ]]; then
+#       updateVersionReferences ${PUBLIC_DIR} ${PACKAGE}
+#   fi
 
-  mv ${PUBLIC_DIR}/** ${PWD}/dist/packages-dist/${PACKAGE}
-  rm -rf ${PUBLIC_DIR}
-  rm -rf ${ES2015_DIR}
+#   mv ${PUBLIC_DIR}/** ${PWD}/dist/packages-dist/${PACKAGE}
+#   rm -rf ${PUBLIC_DIR}
+#   rm -rf ${ES2015_DIR}
 
-done
+# done
 
-if containsElement "theme" "${PACKAGES[@]}"; then
-  buildLess
-fi
+# if containsElement "theme" "${PACKAGES[@]}"; then
+#   buildLess
+# fi
 
+buildLess
 echo 'FINISHED!'

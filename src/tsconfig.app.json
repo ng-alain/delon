@@ -12,9 +12,9 @@
     "baseUrl": ".",
     "types": [],
     "paths": {
-            "@shared": [ "app/shared" ],
-            "@shared/*": [ "app/shared/*" ],
-            "@delon/*": [ "../packages/*" ]
+      "@shared": ["app/shared"],
+      "@shared/*": ["app/shared/*"],
+      "@delon/*": ["../packages/*"]
     }
   },
   "exclude": ["test.ts", "**/*.spec.ts", "templates/*.ts"]

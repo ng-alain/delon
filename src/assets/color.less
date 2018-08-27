@@ -9132,20 +9132,41 @@ code {
   border: 1px solid #eee;
   border-radius: 4px;
 }
+.na-view__title {
+  color: rgba(0, 0, 0, 0.85);
+}
+.na-view__label {
+  color: rgba(0, 0, 0, 0.85);
+}
+.na-view__detail {
+  color: rgba(0, 0, 0, 0.65);
+}
+.na-view__type-primary .na-view__detail {
+  color: @primary-color;
+}
+.na-view__type-success .na-view__detail {
+  color: #52c41a;
+}
+.na-view__type-danger .na-view__detail {
+  color: #f5222d;
+}
+.na-view__type-warning .na-view__detail {
+  color: #faad14;
+}
+.na-view__small .na-view__title {
+  color: rgba(0, 0, 0, 0.65);
+}
+.na-edit__title {
+  color: rgba(0, 0, 0, 0.85);
+}
+.na-edit__label {
+  color: rgba(0, 0, 0, 0.85);
+}
+.na-edit__label-optional {
+  color: rgba(0, 0, 0, 0.45);
+}
 .na-avatar-list__item .ant-avatar {
   border: 1px solid #fff;
-}
-.ad-desc-list__title {
-  color: rgba(0, 0, 0, 0.85);
-}
-.ad-desc-list__term {
-  color: rgba(0, 0, 0, 0.85);
-}
-.ad-desc-list__detail {
-  color: rgba(0, 0, 0, 0.65);
-}
-.ad-desc-list.small .ad-desc-list__title {
-  color: rgba(0, 0, 0, 0.65);
 }
 .na-error-collect {
   color: #f5222d;
@@ -9328,9 +9349,6 @@ code {
 .na-trend__reverse .na-trend__down {
   color: #f5222d;
 }
-.ad-shf__label {
-  color: rgba(0, 0, 0, 0.85);
-}
 body {
   color: #314659;
   background: #fff !important;
@@ -9417,79 +9435,21 @@ body {
   border-radius: 3px;
   border: 1px solid #eee;
 }
-.grid-demo .demo-row,
-[id^='components-grid-demo-'] .demo-row,
-.grid-demo .code-box-demo .demo-row,
-[id^='components-grid-demo-'] .code-box-demo .demo-row {
-  background-image: linear-gradient(90deg, #f5f5f5 4.16666667%, transparent 4.16666667%, transparent 8.33333333%, #f5f5f5 8.33333333%, #f5f5f5 12.5%, transparent 12.5%, transparent 16.66666667%, #f5f5f5 16.66666667%, #f5f5f5 20.83333333%, transparent 20.83333333%, transparent 25%, #f5f5f5 25%, #f5f5f5 29.16666667%, transparent 29.16666667%, transparent 33.33333333%, #f5f5f5 33.33333333%, #f5f5f5 37.5%, transparent 37.5%, transparent 41.66666667%, #f5f5f5 41.66666667%, #f5f5f5 45.83333333%, transparent 45.83333333%, transparent 50%, #f5f5f5 50%, #f5f5f5 54.16666667%, transparent 54.16666667%, transparent 58.33333333%, #f5f5f5 58.33333333%, #f5f5f5 62.5%, transparent 62.5%, transparent 66.66666667%, #f5f5f5 66.66666667%, #f5f5f5 70.83333333%, transparent 70.83333333%, transparent 75%, #f5f5f5 75%, #f5f5f5 79.16666667%, transparent 79.16666667%, transparent 83.33333333%, #f5f5f5 83.33333333%, #f5f5f5 87.5%, transparent 87.5%, transparent 91.66666667%, #f5f5f5 91.66666667%, #f5f5f5 95.83333333%, transparent 95.83333333%);
-}
-.grid-demo .ant-row-flex,
-[id^='components-grid-demo-'] .ant-row-flex,
-.grid-demo .code-box-demo .ant-row-flex,
-[id^='components-grid-demo-'] .code-box-demo .ant-row-flex {
-  background: #f5f5f5;
-}
-.grid-demo .ant-row > div,
-[id^='components-grid-demo-'] .ant-row > div,
-.grid-demo .code-box-demo .ant-row > div,
-[id^='components-grid-demo-'] .code-box-demo .ant-row > div,
-.grid-demo .ant-row-flex > div,
-[id^='components-grid-demo-'] .ant-row-flex > div,
-.grid-demo .code-box-demo .ant-row-flex > div,
-[id^='components-grid-demo-'] .code-box-demo .ant-row-flex > div {
-  border-radius: 0;
+.markdown .component,
+.markdown .directive {
+  border-radius: 4px;
   color: #fff;
 }
-.grid-demo .code-box-demo .ant-row > div:not(.gutter-row),
-[id^='components-grid-demo-'] .code-box-demo .ant-row > div:not(.gutter-row),
-.grid-demo .code-box-demo .ant-row-flex > div:not(.gutter-row),
-[id^='components-grid-demo-'] .code-box-demo .ant-row-flex > div:not(.gutter-row) {
-  background: #00a0e9;
+.markdown .component {
+  color: @primary-color;
+  border: 2px solid @primary-color;
 }
-.grid-demo .code-box-demo .ant-row > div:not(.gutter-row):nth-child(2n + 1),
-[id^='components-grid-demo-'] .code-box-demo .ant-row > div:not(.gutter-row):nth-child(2n + 1),
-.grid-demo .code-box-demo .ant-row-flex > div:not(.gutter-row):nth-child(2n + 1),
-[id^='components-grid-demo-'] .code-box-demo .ant-row-flex > div:not(.gutter-row):nth-child(2n + 1) {
-  background: rgba(0, 160, 233, 0.7);
+.markdown .directive {
+  color: #eb2f96;
+  border: 2px solid #eb2f96;
 }
-.grid-demo .ant-row .demo-col,
-[id^='components-grid-demo-'] .ant-row .demo-col,
-.grid-demo .code-box-demo .ant-row .demo-col,
-[id^='components-grid-demo-'] .code-box-demo .ant-row .demo-col {
-  color: #fff;
-  border: none;
-}
-.grid-demo .ant-row .demo-col-1,
-[id^='components-grid-demo-'] .ant-row .demo-col-1,
-.grid-demo .ant-row .demo-col-1,
-[id^='components-grid-demo-'] .ant-row .demo-col-1 {
-  background: rgba(0, 160, 233, 0.7);
-}
-.grid-demo .ant-row .demo-col-2,
-[id^='components-grid-demo-'] .ant-row .demo-col-2,
-.grid-demo .code-box-demo .ant-row .demo-col-2,
-[id^='components-grid-demo-'] .code-box-demo .ant-row .demo-col-2 {
-  background: rgba(0, 160, 233, 0.5);
-}
-.grid-demo .ant-row .demo-col-3,
-[id^='components-grid-demo-'] .ant-row .demo-col-3,
-.grid-demo .code-box-demo .ant-row .demo-col-3,
-[id^='components-grid-demo-'] .code-box-demo .ant-row .demo-col-3 {
-  background: rgba(255, 255, 255, 0.2);
-  color: #999;
-}
-.grid-demo .ant-row .demo-col-4,
-[id^='components-grid-demo-'] .ant-row .demo-col-4,
-.grid-demo .code-box-demo .ant-row .demo-col-4,
-[id^='components-grid-demo-'] .code-box-demo .ant-row .demo-col-4 {
-  background: rgba(0, 160, 233, 0.6);
-}
-.grid-demo .ant-row .demo-col-5,
-[id^='components-grid-demo-'] .ant-row .demo-col-5,
-.grid-demo .code-box-demo .ant-row .demo-col-5,
-[id^='components-grid-demo-'] .code-box-demo .ant-row .demo-col-5 {
-  background: rgba(255, 255, 255, 0.5);
-  color: #999;
+.markdown .deprecated {
+  color: #f50;
 }
 .toc {
   border-left: 1px solid #ebedf0;
