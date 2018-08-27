@@ -87,7 +87,8 @@ export class HeaderComponent implements OnInit {
   }
 
   to(item: MetaSearchGroupItem) {
-    if (item.url)
+    if (item.url) {
       this.router.navigateByUrl(item.url);
+    }
   }
 }

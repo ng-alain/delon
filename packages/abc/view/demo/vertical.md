@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 4
 title:
   zh-CN: 垂直布局
   en-US: Vertical

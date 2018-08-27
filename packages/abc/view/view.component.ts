@@ -8,9 +8,12 @@ import {
   TemplateRef,
   ViewChild,
   AfterViewInit,
+  HostBinding,
+  Optional,
 } from '@angular/core';
-import { toNumber, updateHostClass, isEmpty } from '@delon/util';
+import { toNumber, toBoolean, isEmpty } from '@delon/util';
 import { NaViewComponent } from './view-wrap.component';
+import { GenStanRepCls } from '../../core/responsive';
 
 const prefixCls = `na-view`;
 
@@ -23,6 +26,8 @@ export class NaViewItemComponent implements AfterViewInit, OnChanges {
   @ViewChild('conEl')
   private conEl: ElementRef;
   private el: HTMLElement;
+  private clsMap: string[] = [];
+
   //#region fields
 
   _label = '';
@@ -39,20 +44,33 @@ export class NaViewItemComponent implements AfterViewInit, OnChanges {
 
   @Input()
   set col(value: any) {
-    this._col = toNumber(value);
+    this._col = toNumber(value, null);
   }
   private _col: number;
 
   @Input()
-  default: boolean;
+  set default(value: any) {
+    this._default = toBoolean(value, null);
+  }
+  private _default: boolean;
 
   @Input()
   type: 'primary' | 'success' | 'danger' | 'warning';
 
   //#endregion
 
+  @HostBinding('style.padding-left.px')
+  get paddingLeft(): number {
+    return this.parent && this.parent.gutter / 2;
+  }
+
+  @HostBinding('style.padding-right.px')
+  get paddingRight(): number {
+    return this.parent && this.parent.gutter / 2;
+  }
+
   constructor(
-    @Host() public parent: NaViewComponent,
+    @Host() @Optional() public parent: NaViewComponent,
     el: ElementRef,
     private ren: Renderer2,
   ) {
@@ -63,32 +81,14 @@ export class NaViewItemComponent implements AfterViewInit, OnChanges {
   }
 
   private setClass() {
-    const { gutter, col } = this.parent;
-    const { el, ren, _col } = this;
-    const count = typeof _col !== 'undefined' ? _col : col;
-    const maxCol = 6;
-    const responsive = {
-      1: { xs: 24 },
-      2: { xs: 24, sm: 12 },
-      3: { xs: 24, sm: 12, md: 8 },
-      4: { xs: 24, sm: 12, md: 8, lg: 6 },
-      5: { xs: 24, sm: 12, md: 8, lg: 6, xl: 4 },
-      6: { xs: 24, sm: 12, md: 8, lg: 6, xl: 4, xxl: 2 },
-    }[count > maxCol ? maxCol : count];
-    const antColClass = 'ant-col';
-    updateHostClass(el, ren, {
-      [`${antColClass}-xs-${responsive.xs}`]: !!responsive.xs,
-      [`${antColClass}-sm-${responsive.sm}`]: !!responsive.sm,
-      [`${antColClass}-md-${responsive.md}`]: !!responsive.md,
-      [`${antColClass}-lg-${responsive.lg}`]: !!responsive.lg,
-      [`${antColClass}-xl-${responsive.xl}`]: !!responsive.xl,
-      [`${antColClass}-xxl-${responsive.xxl}`]: !!responsive.xxl,
-      [`${prefixCls}__item`]: true,
-      [`${prefixCls}__item-fixed`]: this.parent.labelWidth,
-      [`${prefixCls}__type-${this.type}`]: this.type,
-    });
-    this.ren.setStyle(el, 'padding-left', `${gutter / 2}px`);
-    this.ren.setStyle(el, 'padding-right', `${gutter / 2}px`);
+    const { el, ren, _col, clsMap, type } = this;
+    clsMap.forEach(cls => ren.removeClass(el, cls));
+    clsMap.length = 0;
+    clsMap.push(...GenStanRepCls(_col != null ? _col : this.parent.col));
+    clsMap.push(`${prefixCls}__item`);
+    if (this.parent.labelWidth) clsMap.push(`${prefixCls}__item-fixed`);
+    if (type) clsMap.push(`${prefixCls}__type-${type}`);
+    clsMap.forEach(cls => ren.addClass(el, cls));
   }
 
   ngAfterViewInit() {
@@ -101,15 +101,15 @@ export class NaViewItemComponent implements AfterViewInit, OnChanges {
   }
 
   checkContent() {
+    const { _default, conEl } = this;
+    if (!(_default != null ? _default : this.parent.default)) return;
+    const el = conEl.nativeElement as HTMLElement;
     const cls = `na-view__default`;
-    const d =
-      typeof this.default !== 'undefined' ? this.default : this.parent.default;
-    if (!d) return;
-    const el = this.conEl.nativeElement as HTMLElement;
+    if (el.classList.contains(cls)) {
+      el.classList.remove(cls);
+    }
     if (isEmpty(el)) {
-      this.ren.addClass(el, cls);
-    } else {
-      this.ren.removeClass(el, cls);
+      el.classList.add(cls);
     }
   }
 }

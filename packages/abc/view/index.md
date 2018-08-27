@@ -19,7 +19,7 @@ config: NaViewConfig
 | `[size]`       | 大小                 | `small | large`         | `large`      |
 | `[layout]`     | 布局                 | `horizontal | vertical` | `horizontal` |
 | `[gutter]`     | 间距                 | `number`                | `32`         |
-| `[col]`        | 默认列数             | `number`                | `3`          |
+| `[col]`        | 指定信息最多分几列展示，最终一行几列由 col 配置结合响应式规则决定         | `number(0 < col <= 6)`                | `3`          |
 | `[labelWidth]` | 默认标签文本宽度     | `number`                | `null`       |
 | `[default]`    | 默认是否显示默认文本 | `boolean`               | `true`       |
 
@@ -27,8 +27,8 @@ config: NaViewConfig
 
 | 参数           | 类型                                  | 说明                                   |
 | -------------- | ------------------------------------- | -------------------------------------- |
+| `[col]`        | 指定信息最多分几列展示，最终一行几列由 col 配置结合响应式规则决定，继承 `na-view-wrap`         | `number(0 < col <= 6)`                               | - |
 | `[label]`      | 标签                                  | `string | TemplateRef<any>`            | - |
-| `[col]`        | 列数，继承 `na-view-wrap`             | `number`                               | - |
 | `[labelWidth]` | 标签文本宽度，继承 `na-view-wrap`     | `number`                               | - |
 | `[default]`    | 是否显示默认文本，继承 `na-view-wrap` | `boolean`                              | - |
 | `[type]`       | 默认是否显示默认文本                  | `primary | success | danger | warning` | - |

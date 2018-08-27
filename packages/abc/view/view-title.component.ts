@@ -4,7 +4,7 @@ import {
   ElementRef,
   Renderer2,
   OnInit,
-  OnChanges,
+  Optional,
 } from '@angular/core';
 import { NaViewComponent } from './view-wrap.component';
 
@@ -15,10 +15,12 @@ import { NaViewComponent } from './view-wrap.component';
     '[class.na-view__title]': 'true',
   },
 })
-export class NaViewTitleComponent implements OnInit, OnChanges {
+export class NaViewTitleComponent implements OnInit {
   private el: HTMLElement;
   constructor(
-    @Host() private parent: NaViewComponent,
+    @Host()
+    @Optional()
+    private parent: NaViewComponent,
     el: ElementRef,
     private ren: Renderer2,
   ) {
@@ -36,10 +38,6 @@ export class NaViewTitleComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.setClass();
-  }
-
-  ngOnChanges() {
     this.setClass();
   }
 }

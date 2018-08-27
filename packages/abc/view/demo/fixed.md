@@ -1,4 +1,19 @@
+---
+order: 2
+title:
+  zh-CN: 固定标签宽度
+  en-US: Fixed Label Width
+---
 
+## zh-CN
+
+固定标签宽度让布局看起来更加整洁。
+
+## en-US
+
+Use `labelWidth` to make the layout look cleaner
+
+```ts
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 
@@ -26,3 +41,4 @@ export class DemoComponent {
   constructor(public msg: NzMessageService) {
   }
 }
+```
