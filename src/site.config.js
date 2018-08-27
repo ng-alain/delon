@@ -80,7 +80,7 @@ module.exports = {
         },
       ],
       module: '@delon/abc',
-      defaultRoute: 'avatar-list',
+      defaultRoute: 'view',
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
         meta: './src/templates/meta.ts',
