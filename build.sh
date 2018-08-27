@@ -14,7 +14,8 @@ PACKAGES=(acl
   chart
   mock
   form)
-PACKAGES=(util chart)
+# acl util theme
+# PACKAGES=(abc)
 NODE_PACKAGES=(schematics)
 
 buildLess() {
@@ -87,7 +88,7 @@ PACKAGES_DIR=${PWD}/packages/
 DIST_DIR=${PWD}/dist
 SRC_DIST_DIR=${DIST_DIR}/packages
 rm -rf ${SRC_DIST_DIR}
-rm -rf ${SRC_DIST_DIR}-dist
+# rm -rf ${SRC_DIST_DIR}-dist
 
 echo "====== Copy source [exclude: schematics]"
 
@@ -98,6 +99,8 @@ node ./scripts/build/inline-template.js
 for PACKAGE in ${PACKAGES[@]}
 do
   echo "====== BUNDLING ${PACKAGE}"
+
+  rm -rf ${SRC_DIST_DIR}-dist/${PACKAGE}
 
   ROOT_DIR=${PWD}/dist/packages
   SRC_DIR=${ROOT_DIR}/${PACKAGE}

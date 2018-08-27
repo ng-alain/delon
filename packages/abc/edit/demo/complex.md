@@ -1,3 +1,11 @@
+---
+order: 10
+title: 复杂布局
+---
+
+利用 `col` 可以构建复杂不规则布局。
+
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -47,3 +55,4 @@ export class DemoComponent {
     agree: true
   };
 }
+```

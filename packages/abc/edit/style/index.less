@@ -1,0 +1,75 @@
+@import '../../../theme/styles/default';
+
+@na-edit-prefix: ~'.na-edit';
+@na-edit-label-color: rgba(0, 0, 0, 0.85);
+@na-edit-compact-bottom: @layout-gutter;
+
+@{na-edit-prefix} {
+  &__title {
+    display: block;
+    font-size: 14px;
+    color: @heading-color;
+    font-weight: 500;
+    line-height: 39.9999px;
+  }
+  &__item {
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+  &__label {
+    text-align: right;
+    color: @na-edit-label-color;
+    white-space: nowrap;
+    display: table-cell;
+    flex: 0 0 auto;
+    &-optional {
+      color: rgba(0,0,0,.45);
+    }
+  }
+  &__control {
+    flex: 1 0 0;
+  }
+  &__compact {
+    @{na-edit-prefix}__title,
+    @{na-edit-prefix}__item {
+      margin-bottom: @na-edit-compact-bottom;
+    }
+    .ant-form-extra {
+      display: none;
+    }
+  }
+  &__inline,
+  &__vertical {
+    @{na-edit-prefix}__nolabel {
+      display: none !important;
+    }
+  }
+  &__horizontal {
+    @{na-edit-prefix}__item {
+      display: flex;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  &__vertical {
+    @{na-edit-prefix}__item {
+      display: block;
+    }
+  }
+  &__inline {
+    @{na-edit-prefix}__label,
+    @{na-edit-prefix}__control, {
+      text-align: left;
+      width: initial;
+      flex: none;
+    }
+    @{na-edit-prefix}__item {
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

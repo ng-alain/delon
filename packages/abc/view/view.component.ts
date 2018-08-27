@@ -12,8 +12,8 @@ import {
   Optional,
 } from '@angular/core';
 import { toNumber, toBoolean, isEmpty } from '@delon/util';
-import { NaViewComponent } from './view-wrap.component';
-import { GenStanRepCls } from '../../core/responsive';
+import { NaViewWrapComponent } from './view-wrap.component';
+import { GenStanRepCls } from '../core/responsive';
 
 const prefixCls = `na-view`;
 
@@ -22,7 +22,7 @@ const prefixCls = `na-view`;
   templateUrl: './view.component.html',
   preserveWhitespaces: false,
 })
-export class NaViewItemComponent implements AfterViewInit, OnChanges {
+export class NaViewComponent implements AfterViewInit, OnChanges {
   @ViewChild('conEl')
   private conEl: ElementRef;
   private el: HTMLElement;
@@ -70,7 +70,7 @@ export class NaViewItemComponent implements AfterViewInit, OnChanges {
   }
 
   constructor(
-    @Host() @Optional() public parent: NaViewComponent,
+    @Host() @Optional() public parent: NaViewWrapComponent,
     el: ElementRef,
     private ren: Renderer2,
   ) {

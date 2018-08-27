@@ -63,7 +63,7 @@ module.exports = {
         {
           name: 'form',
           route: '/form',
-          order: 3,
+          order: 4,
           i18n: true,
           meta: {
             'zh-CN': {

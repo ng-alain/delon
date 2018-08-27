@@ -1,0 +1,19 @@
+<div class="ant-form-item-label na-edit__label"
+  [class.na-edit__nolabel]="!_label && !_labelTpl" [style.width.px]="labelWidth">
+  <label *ngIf="_label; else _labelTpl" [attr.for]="_id" [ngClass]="{'ant-form-item-required': required}">
+    {{_label}}
+    <span class="na-edit__label-optional">
+      {{ optional }}
+      <nz-tooltip *ngIf="optionalHelp" [nzTitle]="optionalHelp">
+        <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+      </nz-tooltip>
+    </span>
+  </label>
+</div>
+<div class="ant-form-item-control-wrapper na-edit__control">
+  <div class="ant-form-item-control {{controlClass}}" [class.has-error]="invalid">
+    <ng-content></ng-content>
+    <na-edit-error *ngIf="showErr">{{error}}</na-edit-error>
+    <div *ngIf="extra" class="ant-form-extra">{{extra}}</div>
+  </div>
+</div>

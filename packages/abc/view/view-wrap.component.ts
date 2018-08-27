@@ -16,7 +16,7 @@ const prefixCls = `na-view`;
   templateUrl: './view-wrap.component.html',
   preserveWhitespaces: false,
 })
-export class NaViewComponent implements OnInit, OnChanges {
+export class NaViewWrapComponent implements OnInit, OnChanges {
   private el: HTMLElement;
   //#region fields
 

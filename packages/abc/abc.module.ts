@@ -1,13 +1,15 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 // region: all modules
+import { NaTableModule } from './table/table.module';
+import { NaViewModule } from './view/view.module';
+import { NaEditModule } from './edit/edit.module';
 import { NaErrorCollectModule } from './error-collect/error-collect.module';
 import { NaFooterToolbarModule } from './footer-toolbar/footer-toolbar.module';
 import { NaSidebarNavModule } from './sidebar-nav/sidebar-nav.module';
 import { NaDownFileModule } from './down-file/down-file.module';
 import { NaImageModule } from './image/image.module';
 import { NaAvatarListModule } from './avatar-list/avatar-list.module';
-import { AdDescListModule } from './desc-list/desc-list.module';
 import { NaEllipsisModule } from './ellipsis/ellipsis.module';
 import { NaGlobalFooterModule } from './global-footer/global-footer.module';
 import { NaExceptionModule } from './exception/exception.module';
@@ -15,11 +17,9 @@ import { NaNoticeIconModule } from './notice-icon/notice-icon.module';
 import { NaNumberInfoModule } from './number-info/number-info.module';
 import { NaPageHeaderModule } from './page-header/page-header.module';
 import { NaResultModule } from './result/result.module';
-import { AdStandardFormRowModule } from './standard-form-row/standard-form-row.module';
 import { NaTagSelectModule } from './tag-select/tag-select.module';
 import { NaTrendModule } from './trend/trend.module';
 import { NaCountDownModule } from './count-down/count-down.module';
-import { NaTableModule } from './table/table.module';
 import { NaReuseTabModule } from './reuse-tab/reuse-tab.module';
 import { NaFullContentModule } from './full-content/full-content.module';
 import { NaXlsxModule } from './xlsx/xlsx.module';
@@ -28,8 +28,7 @@ import { NaNumberToChineseModule } from './number-to-chinese/number-to-chinese.m
 import { NaLodopModule } from './lodop/lodop.module';
 import { NaQuickMenuModule } from './quick-menu/quick-menu.module';
 import { NaQRModule } from './qr/qr.module';
-import { AdSHFModule } from './simple-html-form/module';
-import { NaViewModule } from './view/view.module';
+import { AdStandardFormRowModule } from './standard-form-row/standard-form-row.module';
 
 const MODULES = [
   NaErrorCollectModule,
@@ -38,7 +37,6 @@ const MODULES = [
   NaDownFileModule,
   NaImageModule,
   NaAvatarListModule,
-  AdDescListModule,
   NaEllipsisModule,
   NaGlobalFooterModule,
   NaExceptionModule,
@@ -46,7 +44,6 @@ const MODULES = [
   NaNumberInfoModule,
   NaPageHeaderModule,
   NaResultModule,
-  AdStandardFormRowModule,
   NaTagSelectModule,
   NaTrendModule,
   NaCountDownModule,
@@ -59,8 +56,9 @@ const MODULES = [
   NaLodopModule,
   NaQuickMenuModule,
   NaQRModule,
-  AdSHFModule,
-  NaViewModule
+  NaViewModule,
+  NaEditModule,
+  AdStandardFormRowModule,
 ];
 
 // endregion
@@ -73,7 +71,6 @@ const MODULES = [
     NaDownFileModule.forRoot(),
     NaImageModule.forRoot(),
     NaAvatarListModule.forRoot(),
-    AdDescListModule.forRoot(),
     NaEllipsisModule.forRoot(),
     NaExceptionModule.forRoot(),
     NaExceptionModule.forRoot(),
@@ -94,8 +91,8 @@ const MODULES = [
     NaLodopModule.forRoot(),
     NaQuickMenuModule.forRoot(),
     NaQRModule.forRoot(),
-    AdSHFModule.forRoot(),
-    NaViewModule.forRoot()
+    NaViewModule.forRoot(),
+    NaEditModule.forRoot(),
   ],
   exports: MODULES,
 })

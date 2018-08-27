@@ -2,9 +2,9 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { REP_MAX_COL } from '../../core/responsive';
+import { REP_MAX_COL } from '../core/responsive';
 import { NaViewModule } from './view.module';
-import { NaViewItemComponent } from './view.component';
+import { NaViewComponent } from './view.component';
 
 const prefixCls = `.na-view__`;
 
@@ -190,7 +190,7 @@ describe('abc: view', () => {
 })
 class TestComponent {
   @ViewChild('viewComp')
-  viewComp: NaViewItemComponent;
+  viewComp: NaViewComponent;
   parent_size: 'small' | 'large' = 'large';
   parent_layout: 'horizontal' | 'vertical' = 'horizontal';
   parent_labelWidth: number = null;
