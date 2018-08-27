@@ -39,6 +39,7 @@ config: NaEditConfig
 `[labelWidth]` | 表单元素默认标签文本宽度，单位：`px` | `number` | `150`
 `[nzLayout]` | 表单布局，当 `inline` 时强制大小为 `compact` | `horizontal,vertical,inline` | `horizontal`
 `[size]` | 大小 `compact` 紧凑型，强制忽略 `error`、`extra` 展示 | `default | compact` | `default`
+`[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false`
 
 ### na-edit
 

@@ -1,5 +1,10 @@
-import { Component, DebugElement, ViewChild, EventEmitter } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick, inject } from '@angular/core/testing';
+import {
+  Component,
+  DebugElement,
+  ViewChild,
+  EventEmitter,
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule, NgModel } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +40,30 @@ describe('abc: edit', () => {
   describe('[property]', () => {
     beforeEach(() => genModule());
     describe('#wrap', () => {
+      describe('#firstVisual', () => {
+        let ngModel: NgModel;
+        let changes: EventEmitter<any>;
+        beforeEach(() => {
+          ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
+          changes = ngModel.statusChanges as EventEmitter<any>;
+        });
+        it('with true', () => {
+          context.label = 'a';
+          context.parent_firstVisual = true;
+          fixture.detectChanges();
+          // mock statusChanges
+          changes.emit('INVALID');
+          page.expect('.has-error', 1);
+        });
+        it('with false', () => {
+          context.label = 'a';
+          context.parent_firstVisual = false;
+          fixture.detectChanges();
+          // mock statusChanges
+          changes.emit('INVALID');
+          page.expect('.has-error', 0);
+        });
+      });
       it('#gutter', () => {
         const gutter = 24;
         const halfGutter = gutter / 2;
@@ -129,10 +158,10 @@ describe('abc: edit', () => {
       genModule();
       ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
       const changes = ngModel.statusChanges as EventEmitter<any>;
-      // mock valid
+      // mock statusChanges
       changes.emit('VALID');
       page.expect('na-edit-error', 0);
-      // mock invalid
+      // mock statusChanges
       changes.emit('INVALID');
       page.expect('na-edit-error');
     });
@@ -222,6 +251,7 @@ describe('abc: edit', () => {
 @Component({
   template: `
   <form nz-form [na-edit-wrap]="parent_col"
+    [firstVisual]="parent_firstVisual"
     [size]="parent_size" [nzLayout]="parent_layout" [labelWidth]="parent_labelWidth" [gutter]="parent_gutter">
 
     <na-edit-title>title</na-edit-title>
@@ -243,6 +273,7 @@ class TestComponent {
   parent_labelWidth: number = null;
   parent_layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
   parent_size: 'default' | 'compact' = 'default';
+  parent_firstVisual = true;
 
   optional: string;
   optionalHelp: string;

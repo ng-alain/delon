@@ -24,4 +24,8 @@ export class NaEditConfig {
    * 标签文本宽度，单位：`px`，默认：`150`
    */
   labelWidth? = 150;
+  /**
+   * 是否立即呈现错误视觉
+   */
+  firstVisual? = false;
 }

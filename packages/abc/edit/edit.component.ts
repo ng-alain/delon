@@ -38,6 +38,7 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
   private readonly ngModel: NgModel;
   private clsMap: string[] = [];
   private inited = false;
+  private onceFlag = false;
   invalid = false;
   labelWidth = null;
 
@@ -145,7 +146,10 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     this.status$ = this.ngModel.statusChanges.subscribe(res => {
       const status = res !== 'VALID';
-      if (this.invalid === status) return;
+      if (!this.onceFlag || this.invalid === status) {
+        this.onceFlag = true;
+        return;
+      }
       this.invalid = status;
       this.cd.detectChanges();
     });
@@ -161,6 +165,7 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngOnChanges() {
+    this.onceFlag = this.parent.firstVisual;
     if (this.inited) this.setClass().bindModel();
   }
 

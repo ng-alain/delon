@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { toNumber } from '@delon/util';
+import { toNumber, toBoolean } from '@delon/util';
 import { NaEditConfig } from './edit.config';
 
 @Component({
@@ -53,6 +53,15 @@ export class NaEditWrapComponent {
 
   @Input()
   size: 'default' | 'compact';
+
+  @Input()
+  set firstVisual(value: any) {
+    this._firstVisual = toBoolean(value);
+  }
+  get firstVisual() {
+    return this._firstVisual;
+  }
+  private _firstVisual: boolean;
 
   //#endregion
 
