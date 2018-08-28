@@ -39,7 +39,7 @@ export abstract class FormProperty {
     this.schema = schema;
     this.ui = ui;
     this.schemaValidator = schemaValidatorFactory.createValidatorFn(schema, {
-      ingoreKeywords: this.ui.ingoreKeywords,
+      ingoreKeywords: this.ui.ingoreKeywords as string[],
     });
     this.formData = formData || schema.default;
     this._parent = parent;
