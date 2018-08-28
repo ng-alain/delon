@@ -426,7 +426,7 @@ describe('abc: table: data-souce', () => {
           options.multiSort = {
             key: 'SORT',
             separator: '-',
-            name_separator: '.',
+            nameSeparator: '.',
           };
           options.columns = [
             {

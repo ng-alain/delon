@@ -69,9 +69,9 @@ config: NaTableConfig
 
 名称 | 返回值 | 说明
 ----|-----|-----
-`load(pi = 1, extraParams?: any)` | `void` | 根据页码重新加载数据<br>`pi` 指定当前页码，`-1` 表示不重置页码，只对当前页进行刷新，默认：`1`
-`reload(extraParams?: any)` | `void` | 刷新当前页
-`reset(extraParams?: any)` | `void` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除）
+`load(pi = 1, extraParams?: any, options?: NaTableLoadOptions)` | `void` | 根据页码重新加载数据<br>`pi` 指定当前页码，`-1` 表示不重置页码，只对当前页进行刷新，默认：`1`
+`reload(extraParams?: any, options?: NaTableLoadOptions)` | `void` | 刷新当前页
+`reset(extraParams?: any, options?: NaTableLoadOptions)` | `void` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除）
 `clearCheck()` | `void` | 清除所有 `checkbox`
 `clearRadio()` | `void` | 清除所有 `radio`
 `export(urlOrData?: string | any[], opt?: STExportOptions)` | `void` | 导出Excel，确保已经注册 `AdXlsxModule`
@@ -79,6 +79,7 @@ config: NaTableConfig
 一些细节：
 
 - `extraParams` 若不传递表示保留原始值
+- `NaTableLoadOptions.merge` 是否合并模式，即 `extraParams` 跟新值合并而非替代
 - `urlOrData` 一般用于需要导出所有页时重新指定带有所有数据的URL地址或本地数据数组，当所有参数都不指定时自动读书当前页数据。
 
 **使用方式**
@@ -187,7 +188,7 @@ class TestComponent {
 ----|------|-----|------
 `[key]` | 请求参数名 | `string` | `sort`
 `[separator]` | 不同属性间分隔符 | `string` | `-`
-`[name_separator]` | 列名与状态间分隔符 | `string` | `.`
+`[nameSeparator]` | 列名与状态间分隔符 | `string` | `.`
 
 ### NaTableData
 

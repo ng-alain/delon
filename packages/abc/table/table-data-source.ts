@@ -254,7 +254,7 @@ export class NaTableDataSource {
       // 合并处理
       ret = {
         [multiSort.key]: Object.keys(ret)
-          .map(key => key + multiSort.name_separator + ret[key])
+          .map(key => key + multiSort.nameSeparator + ret[key])
           .join(multiSort.separator),
       };
     } else {

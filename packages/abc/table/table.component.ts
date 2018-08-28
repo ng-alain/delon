@@ -213,7 +213,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
       <NaTableMultiSort>{
         key: 'sort',
         separator: '-',
-        name_separator: '.',
+        nameSeparator: '.',
       },
       typeof value === 'object' ? value : {},
     );

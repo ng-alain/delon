@@ -495,7 +495,7 @@ export interface NaTableMultiSort {
   /** 不同属性间分隔符，默认：`-` */
   separator?: string;
   /** 列名与状态间分隔符，默认：`.` */
-  name_separator?: string;
+  nameSeparator?: string;
 }
 
 /**
