@@ -1,7 +1,7 @@
 <nz-affix [nzOffsetTop]="16" class="toc-affix" *ngIf="data.con.toc?.length">
   <ul class="toc">
     <li *ngFor="let t of data.con.toc" class="depth-{{t.h}}">
-      <a (click)="goTo($event, t)" id="toc-{{t.title}}" title="{{t.title}}">{{t.title}}</a>
+      <a (click)="goTo($event, t)" id="toc-{{t.id}}" title="{{t.title}}">{{t.title}}</a>
     </li>
   </ul>
 </nz-affix>

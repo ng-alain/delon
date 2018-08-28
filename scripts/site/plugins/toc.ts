@@ -10,7 +10,7 @@ export function toc(markdownData: any, siteConfig: SiteConfig) {
       }).map((node: any) => {
         const slugged = generateSluggedId(JsonML.getChildren(node));
         return {
-            href: `#${slugged.id}`,
+            id: `${slugged.id}`,
             title: slugged.text,
             h: +JsonML.getTagName(node).charAt(1)
         };

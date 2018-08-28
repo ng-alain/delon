@@ -1,9 +1,17 @@
 ---
 order: 10
-title: 复杂布局
+title:
+  zh-CN: 不规则布局
+  en-US: Irregular Layout
 ---
 
+## zh-CN
+
 利用 `col` 可以构建复杂不规则布局。
+
+## en-US
+
+Use `col` to build complex irregular layouts.
 
 ```ts
 import { Component } from '@angular/core';

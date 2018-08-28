@@ -59,14 +59,14 @@ export class DocsComponent implements OnInit, OnDestroy {
         ...[
           {
             h: 2,
-            href: `#${this.demoStr}`,
+            id: `${this.demoStr}`,
             title: this.demoStr,
           },
         ].concat(
           this.codes.map((a: any) => {
             return {
               h: 3,
-              href: '#' + a.id,
+              id: a.id,
               title: this.i18n.get(a.meta.title),
             };
           }),
@@ -91,17 +91,18 @@ export class DocsComponent implements OnInit, OnDestroy {
 
   goTo(e: Event, item: any) {
     let targetEl: any;
+    const href = '#' + item.id;
     try {
-      targetEl = document.querySelector(item.href);
+      targetEl = document.querySelector(href);
     } catch (e) {
-      console.warn(`查找目标元素异常：${item.href}`, e);
+      console.warn(`查找目标元素异常：${href}`, e);
     }
 
     if (targetEl) {
       targetEl.scrollIntoView();
-      if (environment.production) location.hash = item.href;
+      if (environment.production) location.hash = href;
     } else {
-      console.warn(`无法获取目标元素：${item.href}`);
+      console.warn(`无法获取目标元素：${item.id}`);
     }
     e.preventDefault();
     e.stopPropagation();

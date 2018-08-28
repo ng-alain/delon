@@ -14,7 +14,7 @@ import { I18NService } from '../../core/i18n/service';
 })
 export class FooterComponent {
   constructor(
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,
     private msg: NzMessageService,
   ) {}
 

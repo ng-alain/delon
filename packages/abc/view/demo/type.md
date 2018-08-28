@@ -5,7 +5,13 @@ title:
   en-US: Content Type
 ---
 
-一般用于展示页，对正常、异常、警告等字段展示。
+## zh-CN
+
+通常用于展示页，成功、异常、警告等字段展示。
+
+## en-US
+
+Usually used to view pages, success, danger, warning, and other fields.
 
 ```ts
 import { Component } from '@angular/core';

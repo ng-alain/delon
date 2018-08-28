@@ -5,7 +5,13 @@ title:
   en-US: Vertical
 ---
 
+## zh-CN
+
 垂直布局。
+
+## en-US
+
+Vertical layout.
 
 ```ts
 import { Component } from '@angular/core';
