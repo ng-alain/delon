@@ -17,7 +17,9 @@ const routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', component: HomeComponent, data: { titleI18n: 'slogan' } },
+      { path: '', redirectTo: 'zh', pathMatch: 'full' },
+      { path: 'zh', component: HomeComponent, data: { titleI18n: 'slogan' } },
+      { path: 'en', component: HomeComponent, data: { titleI18n: 'slogan' } },
       { path: 'tools', loadChildren: './tools/tools.module#ToolsModule' },
       // region: region routers
       { path: 'docs', loadChildren: './gen/docs/docs.module#DocsModule' },

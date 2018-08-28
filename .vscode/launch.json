@@ -20,7 +20,7 @@
       "internalConsoleOptions": "openOnSessionStart",
       "args": [
         "${workspaceFolder}/scripts/site/generate.ts",
-        "architecture"
+        "table"
       ]
     },
     {

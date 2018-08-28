@@ -4,7 +4,7 @@ import { filter } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd';
 import { copy } from '@delon/util';
 
-import { I18NService } from '../../core/i18n/service';
+import { I18NService, LangType } from '../../core/i18n/service';
 import { MobileService } from '../../core/mobile.service';
 import { MetaService } from '../../core/meta.service';
 import { MetaSearchGroup, MetaSearchGroupItem } from '../../interfaces';
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private msg: NzMessageService,
     private mobileSrv: MobileService,
-    private meta: MetaService
+    private meta: MetaService,
   ) {
     router.events
       .pipe(filter(evt => evt instanceof NavigationEnd))
@@ -37,15 +37,15 @@ export class HeaderComponent implements OnInit {
     this.changeQ('');
   }
 
-  @ViewChild('searchIpt') searchIpt: HTMLInputElement;
+  @ViewChild('searchIpt')
+  searchIpt: HTMLInputElement;
 
   initDocSearch() {
-    const lang = this.i18n.isZh ? 'cn' : 'en';
     docsearch({
       apiKey: '6356fe022dba23c6bfc63427b2042bf8',
       indexName: 'ng_alain',
       inputSelector: '#search-box input',
-      algoliaOptions: { facetFilters: [`tags:${lang}`] },
+      algoliaOptions: { facetFilters: [`tags:${this.i18n.zone}`] },
       transformData(hits) {
         hits.forEach(hit => {
           hit.url = hit.url.replace('ant.design', location.host);
@@ -57,11 +57,10 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  langChange() {
-    let url = this.router.url.split('#')[0].split('?')[0];
-    url += `?lang=${this.i18n.isZh ? 'en-US' : 'zh-CN'}`;
-
-    this.router.navigateByUrl(url);
+  langChange(language: LangType) {
+    this.router.navigateByUrl(
+      this.i18n.getRealUrl(this.router.url) + '/' + language,
+    );
   }
 
   onCopy(value: string) {

@@ -1,55 +1,37 @@
-<nz-affix [nzOffsetTop]="16" class="toc-affix" *ngIf="item.con.toc?.length">
-    <ul class="toc">
-        <li *ngFor="let t of item.con.toc" class="depth-{{t.h}}">
-            <a (click)="goTo($event, t)" id="toc-{{t.title}}" title="{{t.title}}">{{t.title}}</a>
-        </li>
-    </ul>
+<nz-affix [nzOffsetTop]="16" class="toc-affix" *ngIf="data.con.toc?.length">
+  <ul class="toc">
+    <li *ngFor="let t of data.con.toc" class="depth-{{t.h}}">
+      <a (click)="goTo($event, t)" id="toc-{{t.title}}" title="{{t.title}}">{{t.title}}</a>
+    </li>
+  </ul>
 </nz-affix>
 <nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message">
-    <ng-template #message>
-        This article has not been translated, hope that your can PR to translated it.
-        <a href="//github.com/cipchk/ng-alain/issues/74" target="_blank"> Help us!</a>
-    </ng-template>
+  <ng-template #message>
+    This article has not been translated, hope that your can PR to translated it.
+    <a href="//github.com/cipchk/ng-alain/issues/74" target="_blank"> Help us!</a>
+  </ng-template>
 </nz-alert>
 <section class="markdown">
-    <h1>
-        {{meta.item.title}}
-        <span *ngIf="meta.item.subtitle" class="subtitle">{{meta.item.subtitle}}</span>
-        <edit-button [item]="item"></edit-button>
-    </h1>
-    <div *ngIf="item.con.content" [innerHTML]="item.con.content" routeTransfer></div>
-    <ng-container *ngIf="meta.item.module">
-        <strong>{{'app.component.refer.title' | translate}}</strong>
-        <pre class="typescript hljs"><span class="hljs-section">import</span> &#123; <span class="hljs-attribute">{{meta.item.module}}</span> &#125; from <span class="hljs-string">'{{meta.item.module_name}}'</span>;</pre>
-        <p>
-            {{'app.component.refer.desc' | translate}}
-            <a routerLink="/docs/use-components-alone">
-                {{'app.component.refer.link' | translate}}
-            </a>
-        </p>
-        <ng-container *ngIf="meta.item.config">
-            <strong>{{'app.component.config.title' | translate}}</strong>
-            <pre class="lang-typescript">import &#123; {{ meta.item.config }} &#125; from '{{meta.item.module_name}}';
-export function fn{{ meta.item.config }}(): {{ meta.item.config }} &#123;
-  return Object.assign(new {{ meta.item.config }}(), <{{ meta.item.config }}>&#123;
-    // values
-  &#125;);
-&#125;
-
-@NgModule(&#123; &#125;)
-export class DelonModule &#123;
-  static forRoot(): ModuleWithProviders &#123;
-    return &#123;
-      ngModule: DelonModule,
-      providers: [
-        &#123; provide: {{ meta.item.config }}, useFactory: fn{{ meta.item.config }} &#125;
-      ]
-    &#125;;
-  &#125;
-&#125;</pre>
-        </ng-container>
-    </ng-container>
-    <h2 *ngIf="item.demo" id="{{demoStr}}" style="margin-bottom: 32px;" [innerHTML]="demoContent"></h2>
+  <h1>
+    {{meta.item.title}}
+    <span *ngIf="meta.item.subtitle" class="subtitle">{{meta.item.subtitle}}</span>
+    <config-button *ngIf="meta.item.config"></config-button>
+    <edit-button [item]="item"></edit-button>
+  </h1>
+  <div *ngIf="data.con.content" [innerHTML]="data.con.content" routeTransfer></div>
+  <ng-container *ngIf="false">
+    <strong>{{'app.component.refer.title' | translate}}</strong>
+    <pre class="typescript hljs"><span class="hljs-section">import</span> &#123; <span class="hljs-attribute">{{meta.item.module}}</span> &#125; from <span class="hljs-string">'{{meta.item.module_name}}'</span>;</pre>
+    <p>
+      {{'app.component.refer.desc' | translate}}
+      <a routerLink="/docs/use-components-alone">
+        {{'app.component.refer.link' | translate}}
+      </a>
+    </p>
+  </ng-container>
+  <h2 *ngIf="data.demo" id="{{demoStr}}" style="margin-bottom: 32px;" [innerHTML]="demoContent"></h2>
 </section>
-<ng-container *ngIf="item.demo"><ng-content></ng-content></ng-container>
-<div class="markdown api-container" *ngIf="item.con.api" [innerHTML]="item.con.api" routeTransfer></div>
+<ng-container *ngIf="data.demo">
+  <ng-content></ng-content>
+</ng-container>
+<div class="markdown api-container" *ngIf="data.con.api" [innerHTML]="data.con.api" routeTransfer></div>

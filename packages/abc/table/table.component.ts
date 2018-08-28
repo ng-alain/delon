@@ -316,7 +316,9 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   ) {
     Object.assign(this, deepCopy(cog));
     if (i18nSrv) {
-      this.i18n$ = i18nSrv.change.subscribe(() => this.updateColumns());
+      this.i18n$ = i18nSrv.change
+        .pipe(filter(() => this._columns.length > 0))
+        .subscribe(() => this.updateColumns());
     }
   }
 

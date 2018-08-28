@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { META as DocsMeta } from '../routes/gen/docs/meta';
 import { META as ComponentsMeta } from '../routes/gen/components/meta';
 import { META as AuthMeta } from '../routes/gen/auth/meta';
@@ -32,9 +33,9 @@ const FULLMETAS: Meta[] = [
   ThemeMeta,
 ];
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MetaService {
-  constructor(private i18n: I18NService) {
+  constructor(@Inject(ALAIN_I18N_TOKEN) private i18n: I18NService) {
     // plat titles
     for (const g of FULLMETAS) {
       for (const item of g.list) {
@@ -192,7 +193,9 @@ export class MetaService {
         group.push(groupItem);
       }
       const entry: any = Object.assign({
-        url: item.route || `/${category.name}/${item.name}`,
+        url:
+          (item.route || `/${category.name}/${item.name}`) +
+          `/${this.i18n.zone}`,
         title: this.i18n.get(meta.title),
         subtitle: meta.subtitle,
         order: item.order,
@@ -240,7 +243,7 @@ export class MetaService {
   }
 
   search(q: string, childrenMax = 5): MetaSearchGroup[] {
-    const lan = this.i18n.lang;
+    const zone = this.i18n.zone;
     const res: MetaSearchGroup[] = [];
     for (const g of FULLMETAS) {
       const type = g.name.toLowerCase();
@@ -250,7 +253,7 @@ export class MetaService {
           return {
             title: item._t,
             name: item.name,
-            url: item.route || `/${type}/${item.name}`,
+            url: (item.route || `/${type}/${item.name}`) + `/${zone}`,
           };
         });
       if (children != null && children.length) {

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { _HttpClient } from '@delon/theme';
+import { Component, OnInit, Inject } from '@angular/core';
+import { _HttpClient, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 import { copy } from '@delon/util';
@@ -65,7 +65,7 @@ export class FormValidatorComponent implements OnInit {
   expand = true;
 
   constructor(
-    private i18n: I18NService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private codeSrv: CodeService,
     private http: _HttpClient,
     private msg: NzMessageService,

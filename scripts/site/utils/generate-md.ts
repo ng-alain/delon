@@ -8,6 +8,7 @@ import {
 import { highlight } from '../converters/highlight';
 const JsonML = require('jsonml.js/lib/utils');
 
+let headingList = [];
 const converters = [highlight()].concat([
   [
     (node: any) => typeof node === 'string',
@@ -104,13 +105,23 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
       },
     );
   } else {
-    if (/\[Na([^\]]+)]/.test(ret)) {
-      const linkCode = ret.replace(
-        /\[(Na[^\]]+)\]/g,
-        '<a data-toc="$1">$1</a>',
-      );
-      return linkCode;
+    //  && ~headingList.indexOf(ret)
+    if (/^<code>/g.test(ret) && ~ret.indexOf('Na')) {
+      return ret.replace(/(Na[a-zA-Z]+)/g, (word: string) => {
+        if (headingList.indexOf(word) !== -1) {
+          return `<a data-toc="${word}">${word}</a>`;
+        }
+        return word;
+      });
+      // return `<a data-toc="${ret}">${ret}</a>`;
     }
+    // if (/\[Na([^\]]+)]/.test(ret)) {
+    //   const linkCode = ret.replace(
+    //     /\[(Na[^\]]+)\]/g,
+    //     '<a data-toc="$1">$1</a>',
+    //   );
+    //   return linkCode;
+    // }
   }
   return ret;
 }
@@ -120,9 +131,10 @@ function fixAngular(html: string): string {
     /<code>(.*?)<\/code>/gim,
     (fullWord: string, content: string) => {
       if (/(Observable|TemplateRef|EventEmitter)</.test(content)) {
-        return `<code>${content
-          .replace(/(Observable|TemplateRef|EventEmitter)</g, '$1&lt;')
-          }</code>`;
+        return `<code>${content.replace(
+          /(Observable|TemplateRef|EventEmitter)</g,
+          '$1&lt;',
+        )}</code>`;
       }
       return fullWord;
     },
@@ -131,6 +143,12 @@ function fixAngular(html: string): string {
 
 export function generateMd(markdownData: any) {
   const contentChildren = JsonML.getChildren(markdownData.content);
+  headingList = contentChildren
+    .filter(node => JsonML.isElement(node) && isHeading(node))
+    .filter(arr => arr.length === 2)
+    .map(arr => arr[1])
+    .filter(key => key && key.startsWith('Na'));
+
   const apiStartIndex = contentChildren.findIndex(
     (node: any) =>
       JsonML.getTagName(node) === 'h2' &&

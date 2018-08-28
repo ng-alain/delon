@@ -62,7 +62,7 @@ module.exports = {
       extraRouteMeta: [
         {
           name: 'form',
-          route: '/form',
+          route: '/form/getting-started',
           order: 4,
           i18n: true,
           meta: {

@@ -1,6 +1,7 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 
 // angular i18n
@@ -13,7 +14,6 @@ import { RoutesModule } from './routes/routes.module';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from './core/i18n/service';
-import { CoreModule } from './core/core.module';
 import { StartupService } from './core/startup.service';
 
 import { AppComponent } from './app.component';
@@ -38,7 +38,7 @@ export function StartupServiceFactory(
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    CoreModule,
+    HttpClientModule,
     DelonModule.forRoot(),
     SharedModule,
     JsonSchemaModule,
@@ -59,8 +59,8 @@ export function StartupServiceFactory(
       },
     }),
     SimplemdeModule.forRoot({
-      delay: 300
-    })
+      delay: 300,
+    }),
   ],
   providers: [
     { provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false },

@@ -1,6 +1,9 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Inject, OnDestroy } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { copy } from '@delon/util';
+import { copy, deepCopy } from '@delon/util';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { I18NService } from './../../../core/i18n/service';
 import { CodeService } from '../../../core/code.service';
@@ -13,10 +16,15 @@ import { CodeService } from '../../../core/code.service';
     '[class.expand]': 'expand',
   },
 })
-export class CodeBoxComponent implements OnInit, OnDestroy {
+export class CodeBoxComponent implements OnDestroy {
+  private i18n$: Subscription;
   private _item: any;
+  private _orgItem: any;
   @Input()
   set item(value: any) {
+    if (!this._orgItem) {
+      this._orgItem = deepCopy(value);
+    }
     const ret: any = {
       meta: value.meta,
       code: value.code.trim(),
@@ -32,27 +40,24 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
     return this._item;
   }
 
-  @Input() expand: boolean = false;
+  @Input()
+  expand: boolean = false;
 
   constructor(
-    public i18n: I18NService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private msg: NzMessageService,
     private codeSrv: CodeService,
-  ) {}
+  ) {
+    this.i18n$ = this.i18n.change
+      .pipe(filter(w => !!this._orgItem))
+      .subscribe(() => {
+        this.item.title = this.i18n.get(this._orgItem.meta.title);
+        this.item.summary = this.i18n.get(this._orgItem.summary);
+      });
+  }
 
   handle() {
     this.expand = !this.expand;
-  }
-
-  private initHLJS() {
-    setTimeout(() => {
-      const elements = document.querySelectorAll(
-        'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code',
-      );
-      for (let i = 0, element; (element = elements[i++]); ) {
-        hljs.highlightBlock(element);
-      }
-    }, 250);
   }
 
   openOnStackBlitz() {
@@ -69,15 +74,7 @@ export class CodeBoxComponent implements OnInit, OnDestroy {
     );
   }
 
-  i18NChange$: any;
-  ngOnInit(): void {
-    this.i18NChange$ = this.i18n.change.subscribe(() => {
-      this.initHLJS();
-    });
-    this.initHLJS();
-  }
-
-  ngOnDestroy(): void {
-    if (this.i18NChange$) this.i18NChange$.unsubscribe();
+  ngOnDestroy() {
+    this.i18n$.unsubscribe();
   }
 }

@@ -1,6 +1,11 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { deepCopy } from '@delon/util';
 
 import { environment } from '../../../../environments/environment';
 import { I18NService } from '../../../core/i18n/service';
@@ -11,20 +16,36 @@ import { MetaService } from '../../../core/meta.service';
   templateUrl: './docs.component.html',
 })
 export class DocsComponent implements OnInit, OnDestroy {
-  private _item: any;
+  private i18NChange$: Subscription;
   demoStr: string;
   demoContent: SafeHtml;
+  data: any = {};
 
   @Input()
   codes: any[];
 
   @Input()
-  set item(value: any) {
+  item: any;
+
+  constructor(
+    public meta: MetaService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private router: Router,
+    private sanitizer: DomSanitizer,
+  ) {
+    this.i18NChange$ = this.i18n.change
+      .pipe(filter(() => !!this.item))
+      .subscribe(() => {
+        this.init();
+      });
+  }
+
+  private genData() {
+    const item = deepCopy(this.item);
     const ret: any = {
-      demo: value.demo,
-      urls: value.urls, // [this.i18n.lang] || value.urls[this.i18n.defaultLang],
-      con:
-        value.content[this.i18n.lang] || value.content[this.i18n.defaultLang],
+      demo: item.demo,
+      urls: item.urls,
+      con: item.content[this.i18n.lang] || item.content[this.i18n.defaultLang],
     };
 
     // region: demo toc
@@ -42,11 +63,11 @@ export class DocsComponent implements OnInit, OnDestroy {
             title: this.demoStr,
           },
         ].concat(
-          this.codes.map((item: any) => {
+          this.codes.map((a: any) => {
             return {
               h: 3,
-              href: '#' + item.id,
-              title: this.i18n.get(item.meta.title),
+              href: '#' + a.id,
+              title: this.i18n.get(a.meta.title),
             };
           }),
         ),
@@ -59,7 +80,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     if (ret.con.api)
       ret.con.api = this.sanitizer.bypassSecurityTrustHtml(ret.con.api);
 
-    this._item = ret;
+    this.data = ret;
 
     // goTo
     setTimeout(() => {
@@ -67,16 +88,6 @@ export class DocsComponent implements OnInit, OnDestroy {
       if (toc) document.querySelector(`#${toc}`).scrollIntoView();
     }, 200);
   }
-  get item(): any {
-    return this._item;
-  }
-
-  constructor(
-    public i18n: I18NService,
-    public meta: MetaService,
-    private router: Router,
-    private sanitizer: DomSanitizer,
-  ) {}
 
   goTo(e: Event, item: any) {
     let targetEl: any;
@@ -108,6 +119,7 @@ export class DocsComponent implements OnInit, OnDestroy {
   }
 
   private init() {
+    this.genData();
     this.genDemoTitle();
     setTimeout(() => {
       const elements = document.querySelectorAll(
@@ -119,15 +131,11 @@ export class DocsComponent implements OnInit, OnDestroy {
     }, 250);
   }
 
-  i18NChange$: any;
   ngOnInit(): void {
-    this.i18NChange$ = this.i18n.change.subscribe(() => {
-      this.init();
-    });
     this.init();
   }
 
   ngOnDestroy(): void {
-    if (this.i18NChange$) this.i18NChange$.unsubscribe();
+    this.i18NChange$.unsubscribe();
   }
 }

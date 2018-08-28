@@ -13,9 +13,9 @@ import { I18NService } from './core/i18n/service';
   template: `<router-outlet></router-outlet>`,
 })
 export class AppComponent implements OnDestroy {
-  @HostBinding('class.mobile') isMobile = false;
+  @HostBinding('class.mobile')
+  isMobile = false;
 
-  private prevUrl: string;
   private query = 'only screen and (max-width: 991.99px)';
 
   constructor(
@@ -27,8 +27,13 @@ export class AppComponent implements OnDestroy {
   ) {
     // egg
     if (environment.production) {
-      console.log(`恩……如果你觉得 ng-alain 不错，可以考虑自愿为本站打赏或捐助。`);
-      console.log(`%c`, `padding-left:500px;padding-bottom:300px;line-height:120px;background:url('https://ng-alain.com/assets/donate.png') no-repeat;`);
+      console.log(
+        `恩……如果你觉得 ng-alain 不错，可以考虑自愿为本站打赏或捐助。`,
+      );
+      console.log(
+        `%c`,
+        `padding-left:500px;padding-bottom:300px;line-height:120px;background:url('https://ng-alain.com/assets/donate.png') no-repeat;`,
+      );
     }
 
     enquire.register(this.query, {
@@ -45,25 +50,24 @@ export class AppComponent implements OnDestroy {
     this.router.events
       .pipe(
         filter(evt => evt instanceof NavigationEnd),
-        map(() => this.router.url.split('#')[0]),
+        map(() => this.router.url),
       )
       .subscribe(url => {
-        const urlLang = this.router.parseUrl(url).queryParams['lang'];
-        const hasLang = typeof urlLang !== 'undefined';
+        const urlLang = url
+          .split('#')[0]
+          .split('?')[0]
+          .split('/')
+          .pop();
+        if (!!urlLang && ~['zh', 'en'].indexOf(urlLang)) {
+          const lang = this.i18n.getFullLang(urlLang);
 
-        if (!hasLang && url === this.prevUrl) return;
-        this.prevUrl = url;
-
-        // update i18n
-        if (hasLang) {
-          const lang = urlLang || this.i18n.defaultLang;
+          // update i18n
           if (this.i18n.lang !== lang) {
             this.i18n.use(<any>lang);
             this.meta.clearMenu();
           }
+          this.meta.refMenu(url);
         }
-        this.meta.refMenu(url);
-
         if (this.meta.set(url)) {
           this.router.navigateByUrl('/404');
           return;

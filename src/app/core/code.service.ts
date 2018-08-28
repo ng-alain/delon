@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
 import sdk from '@stackblitz/sdk';
-import { NzModalService } from 'ng-zorro-antd';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CodeService {
-  constructor(private modal: NzModalService) {}
-
   openOnStackBlitz(code: string, title: string, summary: string) {
     let selector = '',
       componentName = '';

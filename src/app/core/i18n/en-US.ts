@@ -38,7 +38,7 @@ export const ENUS = {
     'app.component.refer.title': 'Usage:',
     'app.component.refer.desc': 'Learning more to visit: ',
     'app.component.refer.link': 'Using ABC Components Alone',
-    'app.component.config.title': 'General configuration',
+    'app.component.config.title': 'General Configuration',
     'app.demo.copy': 'Copy code',
     'app.demo.copied': 'Copied!',
     'app.demo.stackblitz': 'Open in StackBlitz'
