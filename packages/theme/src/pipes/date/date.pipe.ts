@@ -1,12 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as format from 'date-fns/format';
 import * as distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import * as format from 'date-fns/format';
 
 /**
  * @see http://ng-alain.com/docs/service-pipe#%E6%97%A5%E6%9C%9F-_date
  */
 @Pipe({ name: '_date' })
 export class DatePipe implements PipeTransform {
+
   transform(
     value: Date | string | number,
     formatString: string = 'YYYY-MM-DD HH:mm',
@@ -17,6 +18,12 @@ export class DatePipe implements PipeTransform {
           locale: (window as any).__locale__,
         });
       }
+
+      // support timestamp of string type
+      if (typeof value === 'string' && /^\d+$/.test(value)) {
+        value = Number(value);
+      }
+
       return format(value, formatString);
     } else {
       return '';
