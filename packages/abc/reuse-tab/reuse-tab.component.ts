@@ -240,7 +240,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     const item = this.list[index];
     this.router.navigateByUrl(item.url).then(res => {
       if (!res) return;
-      this.pos = index;
+      // #647 should be repaire tab position because the maxinum of limits will cause misalignment
+      this.pos = this.list.findIndex(w => w.url === item.url);
+      item.index = this.pos;
       this.item = item;
       this.refStatus();
       this.change.emit(item);

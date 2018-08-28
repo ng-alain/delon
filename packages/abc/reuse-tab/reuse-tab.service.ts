@@ -380,7 +380,6 @@ export class ReuseTabService implements OnDestroy {
    * 存储
    */
   store(_snapshot: ActivatedRouteSnapshot, _handle: any) {
-    if (this.count >= this._max) this._cached.shift();
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);
 
@@ -393,6 +392,7 @@ export class ReuseTabService implements OnDestroy {
     };
     if (idx === -1) {
       this._cached.push(item);
+      if (this.count > this._max) this._cached.shift();
     } else {
       this._cached[idx] = item;
     }
