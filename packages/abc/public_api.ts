@@ -15,7 +15,6 @@ export * from './notice-icon/index';
 export * from './number-info/index';
 export * from './page-header/index';
 export * from './result/index';
-export * from './standard-form-row/index';
 export * from './tag-select/index';
 export * from './trend/index';
 export * from './count-down/index';

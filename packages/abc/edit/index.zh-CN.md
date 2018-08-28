@@ -44,6 +44,7 @@ config: NaEditConfig
 `[nzLayout]` | 表单布局，当 `inline` 时强制大小为 `compact` | `horizontal,vertical,inline` | `horizontal`
 `[size]` | 大小 `compact` 紧凑型，强制忽略 `error`、`extra` 展示 | `default | compact` | `default`
 `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false`
+`[line]` | 分隔线 | `boolean` | `false`
 
 ### na-edit
 
@@ -58,6 +59,7 @@ config: NaEditConfig
 `[required]` | 是否必填项标识符 | `string` | -
 `[controlClass]` | 控件区域样式名 | `string` | -
 `[id]` | 自定义组件 `id` | `string` | -
+`[line]` | 分隔线 | `boolean` | -
 
 ### na-edit-title
 

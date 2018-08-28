@@ -28,7 +28,6 @@ import { NaNumberToChineseModule } from './number-to-chinese/number-to-chinese.m
 import { NaLodopModule } from './lodop/lodop.module';
 import { NaQuickMenuModule } from './quick-menu/quick-menu.module';
 import { NaQRModule } from './qr/qr.module';
-import { AdStandardFormRowModule } from './standard-form-row/standard-form-row.module';
 
 const MODULES = [
   NaErrorCollectModule,
@@ -58,7 +57,6 @@ const MODULES = [
   NaQRModule,
   NaViewModule,
   NaEditModule,
-  AdStandardFormRowModule,
 ];
 
 // endregion
@@ -78,7 +76,6 @@ const MODULES = [
     NaNumberInfoModule.forRoot(),
     NaPageHeaderModule.forRoot(),
     NaResultModule.forRoot(),
-    AdStandardFormRowModule.forRoot(),
     NaTagSelectModule.forRoot(),
     NaTrendModule.forRoot(),
     NaCountDownModule.forRoot(),

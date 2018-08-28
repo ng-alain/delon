@@ -25,10 +25,16 @@ import { Component } from '@angular/core';
       <input type="text" nz-input [(ngModel)]="i.user_name" name="user_name" required>
     </na-edit>
     <na-edit label="Age" required col="3">
-      <input type="text" nz-input [(ngModel)]="i.user_age" name="user_age" required>
+      <nz-select [(ngModel)]="i.user_age" name="user_age" nzAllowClear nzPlaceHolder="Choose">
+        <nz-option [nzValue]="1" nzLabel="1"></nz-option>
+        <nz-option [nzValue]="2" nzLabel="2"></nz-option>
+        <nz-option [nzValue]="3" nzLabel="3"></nz-option>
+        <nz-option [nzValue]="4" nzLabel="4"></nz-option>
+        <nz-option [nzValue]="5" nzLabel="5"></nz-option>
+      </nz-select>
     </na-edit>
     <na-edit label="Brithday" required col="3">
-      <input type="text" nz-input [(ngModel)]="i.user_birthday" name="user_birthday" required>
+      <nz-date-picker [(ngModel)]="i.user_birthday" name="user_birthday" nzShowTime></nz-date-picker>
     </na-edit>
     <na-edit label="App Key" required>
       <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required>
@@ -53,6 +59,9 @@ import { Component } from '@angular/core';
       </label>
     </na-edit>
     <na-edit col="1">
+      <textarea [(ngModel)]="i.comment" name="comment" nz-input rows="2" placeholder="write any thing"></textarea>
+    </na-edit>
+    <na-edit col="1">
       <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
     </na-edit>
   </form>`,
@@ -60,7 +69,8 @@ import { Component } from '@angular/core';
 export class DemoComponent {
   i: any = {
     phoneNumberPrefix: '+86',
-    agree: true
+    agree: true,
+    user_age: 3
   };
 }
 ```

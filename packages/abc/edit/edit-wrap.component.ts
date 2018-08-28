@@ -63,6 +63,15 @@ export class NaEditWrapComponent {
   }
   private _firstVisual: boolean;
 
+  @Input()
+  set line(value: any) {
+    this._line = toBoolean(value);
+  }
+  get line() {
+    return this._line;
+  }
+  private _line = false;
+
   //#endregion
 
   constructor(cog: NaEditConfig) {

@@ -40,6 +40,16 @@
       display: none;
     }
   }
+  &__line {
+    border-bottom: 1px dashed #e8e8e8;
+    @{na-edit-prefix}__label,
+    @{na-edit-prefix}__control {
+      padding-bottom: @na-edit-compact-bottom;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
   &__inline,
   &__vertical {
     @{na-edit-prefix}__nolabel {

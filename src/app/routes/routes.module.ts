@@ -55,7 +55,7 @@ const routes = [
       environment.production
         ? { preloadingStrategy: PreloadAllModules }
         : {
-            useHash: true,
+            useHash: false,
           },
     ),
   ],

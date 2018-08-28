@@ -150,6 +150,12 @@ describe('abc: edit', () => {
         page.expect(prefixCls + 'inline');
         page.expect('.ant-col-xs-24', 0);
       });
+      it('#line', () => {
+        context.parent_line = true;
+        context.line = null;
+        fixture.detectChanges();
+        page.expect(prefixCls + 'line');
+      });
     });
   });
 
@@ -270,14 +276,14 @@ describe('abc: edit', () => {
 @Component({
   template: `
   <form nz-form [na-edit-wrap]="parent_col"
-    [firstVisual]="parent_firstVisual"
+    [firstVisual]="parent_firstVisual" [line]="parent_line"
     [size]="parent_size" [nzLayout]="parent_layout" [labelWidth]="parent_labelWidth" [gutter]="parent_gutter">
 
     <na-edit-title>title</na-edit-title>
     <na-edit #viewComp
       [optional]="optional" [optionalHelp]="optionalHelp"
       [error]="error" [extra]="extra" [controlClass]="controlClass"
-      [label]="label" [col]="col" [required]="required">
+      [label]="label" [col]="col" [required]="required" [line]="line">
       <input type="text" [(ngModel)]="val" name="val" required>
     </na-edit>
 
@@ -293,6 +299,7 @@ class TestComponent {
   parent_layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
   parent_size: 'default' | 'compact' = 'default';
   parent_firstVisual = true;
+  parent_line = false;
 
   optional: string;
   optionalHelp: string;
@@ -300,6 +307,7 @@ class TestComponent {
   extra: string;
   label: string;
   required: boolean;
+  line: boolean;
   col: number;
   controlClass = '';
 

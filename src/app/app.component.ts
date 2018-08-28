@@ -17,6 +17,7 @@ export class AppComponent implements OnDestroy {
   isMobile = false;
 
   private query = 'only screen and (max-width: 991.99px)';
+  private prevUrl = '';
 
   constructor(
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
@@ -50,9 +51,12 @@ export class AppComponent implements OnDestroy {
     this.router.events
       .pipe(
         filter(evt => evt instanceof NavigationEnd),
-        map(() => this.router.url),
+        map(() => this.router.url.split('#')[0]),
       )
       .subscribe(url => {
+        if (this.prevUrl === url) return ;
+        this.prevUrl = url;
+
         const urlLang = url
           .split('#')[0]
           .split('?')[0]

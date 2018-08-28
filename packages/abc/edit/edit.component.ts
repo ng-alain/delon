@@ -97,6 +97,15 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
   _id = `_na-edit-${nextUniqueId++}`;
   _autoId = true;
 
+  @Input()
+  set line(value: any) {
+    this._line = toBoolean(value, null);
+  }
+  get line() {
+    return this._line;
+  }
+  private _line: boolean;
+
   // #endregion
 
   @HostBinding('style.padding-left.px')
@@ -142,6 +151,9 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
         ? GenStanRepCls(_col != null ? _col : parent.col, REP_MAX_COL)
         : [];
     clsMap.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
+    if (this.line || parent.line) {
+      clsMap.push(`${prefixCls}__line`);
+    }
     clsMap.forEach(cls => ren.addClass(el, cls));
     cd.detectChanges();
     return this;

@@ -44,6 +44,7 @@ Property | Description | Type | Default
 `[nzLayout]` | type of layout when `inline` forced size is `compact` | `horizontal,vertical,inline` | `horizontal`
 `[size]` | size of edit, forced ingores `error`, `extra` | `default | compact` | `default`
 `[firstVisual]` | Immediately show validation error message | `boolean` | `false`
+`[line]` | whether separation line style | `boolean` | `false`
 
 ### na-edit
 
@@ -56,6 +57,7 @@ Property | Description | Type | Default
 `[error]` | validation error message | `string` | -
 `[extra]` | The extra prompt message. It is similar to help. | `string` | -
 `[required]` | whether required identifier | `string` | -
+`[line]` | whether separation line style | `boolean` | -
 `[controlClass]` | Control area classes | `string` | -
 `[id]` | Custom `id` value of component | `string` | -
 
