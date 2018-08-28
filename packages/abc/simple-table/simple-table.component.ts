@@ -45,6 +45,7 @@ import {
   ReqReNameType,
   SimpleTableMultiSort,
   SimpleTableRowClick,
+  SimpleTableLoadOptions,
 } from './interface';
 import { AdSimpleTableConfig } from './simple-table.config';
 import { SimpleTableExport } from './simple-table-export';
@@ -408,10 +409,13 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
    * @param pi 指定当前页码，默认：`1`
    * @param extraParams 重新指定 `extraParams` 值
    */
-  load(pi = 1, extraParams?: any) {
+  load(pi = 1, extraParams?: any, options?: SimpleTableLoadOptions) {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
-      this.extraParams = extraParams;
+      this.extraParams =
+        options && options.merge
+          ? Object.assign(this.extraParams, extraParams)
+          : extraParams;
     }
     this._change('pi');
   }
@@ -420,8 +424,8 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
    * 重新刷新当前页
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reload(extraParams?: any) {
-    this.load(-1, extraParams);
+  reload(extraParams?: any, options?: SimpleTableLoadOptions) {
+    this.load(-1, extraParams, options);
   }
 
   /**
@@ -433,12 +437,12 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
    *
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reset(extraParams?: any) {
+  reset(extraParams?: any, options?: SimpleTableLoadOptions) {
     this.clearCheck();
     this.clearRadio();
     this.clearFilter();
     this.clearSort();
-    this.load(1, extraParams);
+    this.load(1, extraParams, options);
   }
 
   private getAjaxData(url?: string): Observable<any> {

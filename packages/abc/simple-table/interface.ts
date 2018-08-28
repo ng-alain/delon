@@ -3,6 +3,11 @@ import { ModalHelperOptions } from '@delon/theme';
 
 export type CompareFn = ((a: any, b: any) => number);
 
+export interface SimpleTableLoadOptions {
+  /** 是否合并，默认：`false` */
+  merge?: boolean;
+}
+
 /**
  * 数据源
  */
