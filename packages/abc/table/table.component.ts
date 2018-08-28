@@ -47,6 +47,7 @@ import {
   NaTableChangeRowClick,
   NaTableRes,
   NaTablePage,
+  NaTableLoadOptions,
 } from './interface';
 import { NaTableConfig } from './table.config';
 import { NaTableExport } from './table-export';
@@ -251,9 +252,11 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   //#endregion
 
   //#region compatible
+
   /**
    * checkbox变化时回调，参数为当前所选清单
    * @deprecated 使用 `change` 替代
+   * @deprecated as of v3
    */
   @Output()
   readonly checkboxChange: EventEmitter<NaTableData[]> = new EventEmitter<
@@ -262,6 +265,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * radio变化时回调，参数为当前所选
    * @deprecated 使用 `change` 替代
+   * @deprecated as of v3
    */
   @Output()
   readonly radioChange: EventEmitter<NaTableData> = new EventEmitter<
@@ -270,12 +274,14 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * 排序回调
    * @deprecated 使用 `change` 替代
+   * @deprecated as of v3
    */
   @Output()
   readonly sortChange: EventEmitter<any> = new EventEmitter<any>();
   /**
    * 过滤变化时回调
    * @deprecated 使用 `change` 替代
+   * @deprecated as of v3
    */
   @Output()
   readonly filterChange: EventEmitter<NaTableColumn> = new EventEmitter<
@@ -284,6 +290,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * 行单击回调
    * @deprecated 使用 `change` 替代
+   * @deprecated as of v3
    */
   @Output()
   readonly rowClick: EventEmitter<NaTableChangeRowClick> = new EventEmitter<
@@ -292,6 +299,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * 行双击回调
    * @deprecated 使用 `change` 替代
+   * @deprecated as of v3
    */
   @Output()
   readonly rowDblClick: EventEmitter<NaTableChangeRowClick> = new EventEmitter<
@@ -387,11 +395,15 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    *
    * @param pi 指定当前页码，默认：`1`
    * @param extraParams 重新指定 `extraParams` 值
+   * @param options 选项
    */
-  load(pi = 1, extraParams?: any) {
+  load(pi = 1, extraParams?: any, options?: NaTableLoadOptions) {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
-      this._req.params = extraParams;
+      this._req.params =
+        options && options.merge
+          ? Object.assign(this._req.params, extraParams)
+          : extraParams;
     }
     this._change('pi');
   }
@@ -400,8 +412,8 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    * 重新刷新当前页
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reload(extraParams?: any) {
-    this.load(-1, extraParams);
+  reload(extraParams?: any, options?: NaTableLoadOptions) {
+    this.load(-1, extraParams, options);
   }
 
   /**
@@ -413,12 +425,12 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    *
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reset(extraParams?: any) {
+  reset(extraParams?: any, options?: NaTableLoadOptions) {
     this.clearCheck()
       .clearRadio()
       .clearFilter()
       .clearSort();
-    this.load(1, extraParams);
+    this.load(1, extraParams, options);
   }
 
   private _toTop() {
@@ -459,11 +471,11 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
       const data = { e, item, index };
       if (this.rowClickCount === 1) {
         this.changeEmit('click', data);
-        // compatible
+        // @deprecated as of v3
         this.rowClick.emit(data);
       } else {
         this.changeEmit('dblClick', data);
-        // compatible
+        // @deprecated as of v3
         this.rowDblClick.emit(data);
       }
       this.rowClickCount = 0;
@@ -489,7 +501,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
       column: col,
     };
     this.changeEmit('sort', res);
-    // compatible
+    // @deprecated as of v3
     this.sortChange.emit(res);
   }
 
@@ -505,7 +517,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     col.filter.default = col.filter.menus.findIndex(w => w.checked) !== -1;
     this._load();
     this.changeEmit('filter', col);
-    // compatible
+    // @deprecated as of v3
     this.filterChange.emit(col);
   }
 
@@ -576,7 +588,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   _checkNotify(): this {
     const res = this._data.filter(w => !w.disabled && w.checked === true);
     this.changeEmit('checkbox', res);
-    // compatible
+    // @deprecated as of v3
     this.checkboxChange.emit(res);
     return this;
   }
@@ -589,7 +601,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   clearRadio(): this {
     this._data.filter(w => w.checked).forEach(item => (item.checked = false));
     this.changeEmit('radio', null);
-    // compatible
+    // @deprecated as of v3
     this.radioChange.emit(null);
     return this;
   }
@@ -599,7 +611,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._data.filter(w => !w.disabled).forEach(i => (i.checked = false));
     item.checked = checked;
     this.changeEmit('radio', item);
-    // compatible
+    // @deprecated as of v3
     this.radioChange.emit(item);
     return this;
   }

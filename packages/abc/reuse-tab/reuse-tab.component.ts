@@ -52,7 +52,7 @@ export class NaReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   item: NaReuseItem;
   pos = 0;
 
-  // region: properties
+  // #region fields
   /** 设置匹配模式 */
   @Input() mode: NaReuseTabMatchMode = NaReuseTabMatchMode.Menu;
   /** 选项文本国际化 */
@@ -108,7 +108,7 @@ export class NaReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Output() change: EventEmitter<NaReuseItem> = new EventEmitter<NaReuseItem>();
   /** 关闭回调 */
   @Output() close: EventEmitter<NaReuseItem> = new EventEmitter<NaReuseItem>();
-  // endregion
+  // #endregion
 
   constructor(
     public srv: ReuseTabService,
@@ -128,8 +128,9 @@ export class NaReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     this.sub$ = combineLatest(this.srv.change, route$).subscribe(([res, e]) =>
       this.genList(res as any),
     );
-    if (this.i18nSrv)
+    if (this.i18nSrv) {
       this.i18n$ = this.i18nSrv.change.pipe(debounceTime(100)).subscribe(() => this.genList());
+    }
   }
 
   private genTit(title: NaReuseTitle): string {

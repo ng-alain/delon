@@ -1083,6 +1083,12 @@ describe('abc: table', () => {
         comp.load(1);
         expect(comp.req.params.a).toBe(1);
       });
+      it('shoule be merge extra params', () => {
+        comp.load(1, { a: 1 });
+        comp.load(1, { b: 2 }, { merge: true });
+        expect(comp.req.params.a).toBe(1);
+        expect(comp.req.params.b).toBe(2);
+      });
     });
     describe('#reload', () => {
       beforeEach(() => genModule({ minColumn: true }));
@@ -1107,6 +1113,12 @@ describe('abc: table', () => {
         comp.reload({ a: 1 });
         expect(context.change).toHaveBeenCalled();
         expect(comp.req.params.a).toBe(1);
+      });
+      it('merge extra params', () => {
+        comp.reload({ a: 1 });
+        comp.reload({ b: 2 }, { merge: true });
+        expect(comp.req.params.a).toBe(1);
+        expect(comp.req.params.b).toBe(2);
       });
     });
     describe('#reset', () => {
@@ -1134,6 +1146,12 @@ describe('abc: table', () => {
         expect(context.change).toHaveBeenCalled();
         expect(comp.req.params.a).toBe(1);
         expect(comp.pi).toBe(1);
+      });
+      it('merge extra params', () => {
+        comp.reset({ a: 1 });
+        comp.reset({ b: 2 }, { merge: true });
+        expect(comp.req.params.a).toBe(1);
+        expect(comp.req.params.b).toBe(2);
       });
       it('should be clean check, radio, filter, sort', fakeAsync(() => {
         spyOn(comp, 'clearCheck').and.returnValue(comp);

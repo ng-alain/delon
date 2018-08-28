@@ -25,6 +25,11 @@ export interface NaTableReq {
   allInBody?: boolean;
 }
 
+export interface NaTableLoadOptions {
+  /** 是否合并，默认：`false` */
+  merge?: boolean;
+}
+
 export interface NaTableRes {
   /**
    * 重命名返回参数 `total`、`list`
