@@ -93,16 +93,6 @@ function generateModule(config: ModuleConfig) {
         const filePath = item.data[lang];
         content[lang] = parseMd(filePath, siteConfig);
         urls[lang] = genUrl(rootDir, filePath);
-        // // split langs in meta
-        // if (typeof content[lang].meta.title === 'object') {
-        //     Object.keys(content[lang].meta.title).forEach(titleLang => {
-        //         if (!titleBuffer[titleLang]) {
-        //             titleBuffer[titleLang] = content[lang].meta.title[titleLang];
-        //         }
-        //     });
-        // }
-        // content[lang].meta.title = typeof content[lang].meta.title === 'string' ?
-        //                                 content[lang].meta.title : titleBuffer[lang];
         contentMetas[lang] = content[lang].meta as MetaOriginal;
       });
 

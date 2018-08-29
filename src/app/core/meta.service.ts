@@ -194,7 +194,7 @@ export class MetaService {
       }
       const entry: any = Object.assign({
         url:
-          (item.route || `/${category.name}/${item.name}`) +
+          (meta.url || item.route || `/${category.name}/${item.name}`) +
           `/${this.i18n.zone}`,
         title: this.i18n.get(meta.title),
         subtitle: meta.subtitle,

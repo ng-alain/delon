@@ -113,15 +113,7 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
         }
         return word;
       });
-      // return `<a data-toc="${ret}">${ret}</a>`;
     }
-    // if (/\[Na([^\]]+)]/.test(ret)) {
-    //   const linkCode = ret.replace(
-    //     /\[(Na[^\]]+)\]/g,
-    //     '<a data-toc="$1">$1</a>',
-    //   );
-    //   return linkCode;
-    // }
   }
   return ret;
 }
