@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Business
 title: notice-icon
 subtitle: 通知菜单
 cols: 1

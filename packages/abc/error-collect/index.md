@@ -1,8 +1,8 @@
 ---
-type: Other
+type: Form
 title: error-collect
 subtitle: 表单异常消息采集器
-cols: 1
+cols: 2
 module: NaErrorCollectModule
 config: NaErrorCollectConfig
 ---

@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Layout
 title: page-header
 subtitle: 页头
 cols: 1

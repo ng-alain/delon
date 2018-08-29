@@ -76,7 +76,7 @@ describe('abc: sidebar-nav', () => {
   afterEach(() => context.comp.ngOnDestroy());
 
   describe('[default]', () => {
-    xit('should be navigate url', () => {
+    it('should be navigate url', () => {
       createComp();
       spyOn(context, 'select');
       const data = deepCopy(MOCKMENUS);
@@ -100,7 +100,7 @@ describe('abc: sidebar-nav', () => {
       page.checkCount('.na-nav__group-title', 0);
     });
 
-    xit('should be toggle open', () => {
+    it('should be toggle open', () => {
       createComp();
       const data = deepCopy(MOCKMENUS);
       menuSrv.add(data);
@@ -111,7 +111,7 @@ describe('abc: sidebar-nav', () => {
       expect(data[0].children[0]._open).toBe(true);
     });
 
-    xit('should be reset menu when service is changed', () => {
+    it('should be reset menu when service is changed', () => {
       createComp();
       page.checkText('.na-nav__group-title', MOCKMENUS[0].text);
       const newMenu = deepCopy(MOCKMENUS);
@@ -121,7 +121,7 @@ describe('abc: sidebar-nav', () => {
       page.checkText('.na-nav__group-title', newMenu[0].text);
     });
 
-    xdescribe('should be exact highlighting item', () => {
+    describe('should be exact highlighting item', () => {
       beforeEach(() => {
         injector = TestBed.configureTestingModule({
           imports: [
@@ -181,7 +181,7 @@ describe('abc: sidebar-nav', () => {
     });
   });
 
-  xdescribe('[collapsed]', () => {
+  describe('[collapsed]', () => {
     describe('#default', () => {
       beforeEach(() => {
         createComp();
@@ -287,7 +287,7 @@ describe('abc: sidebar-nav', () => {
     });
   });
 
-  xdescribe('[underPad]', () => {
+  describe('[underPad]', () => {
     it(
       'should be auto collapsed when less than pad',
       fakeAsync(() => {

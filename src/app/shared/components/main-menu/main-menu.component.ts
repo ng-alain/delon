@@ -14,6 +14,7 @@ import { MetaService } from '../../../core/meta.service';
           [routerLinkActive]="['ant-menu-item-selected']" style="padding-left: 54px;">
           {{item.title}}
           <span class="chinese" *ngIf="item.subtitle">{{item.subtitle}}</span>
+          <nz-tag *ngIf="item.lib" [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
         </li>
       </ul>
     </li>

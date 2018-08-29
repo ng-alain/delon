@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Business
 title: sidebar-nav
 subtitle: 主菜单
 cols: 1

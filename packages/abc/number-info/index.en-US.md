@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Basic
 title: number-info
 subtitle: NumberInfo
 cols: 2

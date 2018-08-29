@@ -1,6 +1,7 @@
 ---
-type: Other
+type: Basic
 title: zip
+order: 7
 subtitle: Zip 操作
 cols: 1
 module: NaZipModule

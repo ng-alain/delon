@@ -1,5 +1,6 @@
 ---
-type: Other
+type: Basic
+order: 5
 title: number-to-chinese
 subtitle: 人民币大写
 cols: 1

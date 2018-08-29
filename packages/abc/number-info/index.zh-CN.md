@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Basic
 title: number-info
 subtitle: 数据文本
 cols: 2

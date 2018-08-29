@@ -1,5 +1,6 @@
 ---
-type: Other
+type: Basic
+order: 2
 title: na-src
 subtitle: 显示图像
 cols: 1

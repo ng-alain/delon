@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Basic
 title: avatar-list
 subtitle: AvatarList
 cols: 1

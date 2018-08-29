@@ -51,12 +51,20 @@ module.exports = {
           'en-US': 'CURD',
         },
         {
-          'zh-CN': '其他',
-          'en-US': 'Other',
+          'zh-CN': '基础',
+          'en-US': 'Basic',
         },
         {
-          'zh-CN': '已过期',
-          'en-US': 'Deprecated',
+          'zh-CN': '表单',
+          'en-US': 'Form',
+        },
+        {
+          'zh-CN': '布局',
+          'en-US': 'Layout',
+        },
+        {
+          'zh-CN': '业务',
+          'en-US': 'Business',
         },
       ],
       extraRouteMeta: [
@@ -65,16 +73,150 @@ module.exports = {
           route: '/form/getting-started',
           order: 4,
           i18n: true,
+          lib: true,
           meta: {
             'zh-CN': {
               type: 'CURD',
-              title: 'form',
+              title: '',
               subtitle: '动态表单',
             },
             'en-US': {
               type: 'CURD',
-              title: 'form',
+              title: '',
               subtitle: 'Dynamic Form',
+            },
+          },
+        },
+        {
+          name: 'chart',
+          route: '/chart/getting-started',
+          order: 100,
+          i18n: true,
+          lib: true,
+          meta: {
+            'zh-CN': {
+              type: 'Basic',
+              title: '',
+              subtitle: '图表',
+            },
+            'en-US': {
+              type: 'Basic',
+              title: '',
+              subtitle: 'Chart',
+            },
+          },
+        },
+        {
+          name: 'auth',
+          route: '/auth/getting-started',
+          order: 100,
+          i18n: true,
+          lib: true,
+          meta: {
+            'zh-CN': {
+              type: 'Business',
+              title: '',
+              subtitle: '用户认证',
+            },
+            'en-US': {
+              type: 'Business',
+              title: '',
+              subtitle: 'Authentication',
+            },
+          },
+        },
+        {
+          name: 'acl',
+          route: '/acl/getting-started',
+          order: 110,
+          i18n: true,
+          lib: true,
+          meta: {
+            'zh-CN': {
+              type: 'Business',
+              title: '',
+              subtitle: '访问控制列表',
+            },
+            'en-US': {
+              type: 'Business',
+              title: '',
+              subtitle: 'Access Control List',
+            },
+          },
+        },
+        {
+          name: 'cache',
+          route: '/cache/getting-started',
+          order: 120,
+          i18n: true,
+          lib: true,
+          meta: {
+            'zh-CN': {
+              type: 'Business',
+              title: '',
+              subtitle: '缓存',
+            },
+            'en-US': {
+              type: 'Business',
+              title: '',
+              subtitle: 'Cache',
+            },
+          },
+        },
+        {
+          name: 'mock',
+          route: '/mock/getting-started',
+          order: 130,
+          i18n: true,
+          lib: true,
+          meta: {
+            'zh-CN': {
+              type: 'Business',
+              title: '',
+              subtitle: 'Mock模拟数据',
+            },
+            'en-US': {
+              type: 'Business',
+              title: '',
+              subtitle: 'Mock',
+            },
+          },
+        },
+        {
+          name: 'util',
+          route: '/util/getting-started',
+          order: 120,
+          i18n: true,
+          lib: true,
+          meta: {
+            'zh-CN': {
+              type: 'Basic',
+              title: '',
+              subtitle: '工具集',
+            },
+            'en-US': {
+              type: 'Basic',
+              title: '',
+              subtitle: 'Utils',
+            },
+          },
+        },
+        {
+          name: 'theme',
+          route: '/theme/getting-started',
+          order: 110,
+          i18n: true,
+          lib: true,
+          meta: {
+            'zh-CN': {
+              type: 'Basic',
+              title: '',
+              subtitle: '主题系统',
+            },
+            'en-US': {
+              type: 'Basic',
+              title: '',
+              subtitle: 'Theme System',
             },
           },
         },

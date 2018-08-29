@@ -199,6 +199,7 @@ export class MetaService {
         title: this.i18n.get(meta.title),
         subtitle: meta.subtitle,
         order: item.order,
+        lib: typeof item.lib === 'boolean' ? item.lib : false,
       });
       groupItem.list.push(entry);
     });

@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Layout
 title: exception
 subtitle: 异常
 cols: 1

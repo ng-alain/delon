@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Layout
 title: tag-select
 subtitle: 标签选择器
 cols: 1

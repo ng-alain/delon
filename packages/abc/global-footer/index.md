@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Layout
 title: global-footer
 subtitle: 全局页脚
 cols: 1

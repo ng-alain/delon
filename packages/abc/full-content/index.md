@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Layout
 title: full-content
 subtitle: 全屏工作区
 cols: 1

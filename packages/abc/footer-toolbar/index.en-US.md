@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Layout
 title: footer-toolbar
 subtitle: FooterToolbar
 cols: 1

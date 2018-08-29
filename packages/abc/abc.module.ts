@@ -28,6 +28,7 @@ import { NaNumberToChineseModule } from './number-to-chinese/number-to-chinese.m
 import { NaLodopModule } from './lodop/lodop.module';
 import { NaQuickMenuModule } from './quick-menu/quick-menu.module';
 import { NaQRModule } from './qr/qr.module';
+import { NaDatePickerModule } from './date-picker/date-picker.module';
 
 const MODULES = [
   NaErrorCollectModule,
@@ -57,6 +58,7 @@ const MODULES = [
   NaQRModule,
   NaViewModule,
   NaEditModule,
+  NaDatePickerModule
 ];
 
 // endregion
@@ -90,6 +92,7 @@ const MODULES = [
     NaQRModule.forRoot(),
     NaViewModule.forRoot(),
     NaEditModule.forRoot(),
+    NaDatePickerModule.forRoot()
   ],
   exports: MODULES,
 })

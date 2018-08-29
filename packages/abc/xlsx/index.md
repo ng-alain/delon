@@ -1,6 +1,7 @@
 ---
-type: Other
+type: Basic
 title: xlsx
+order: 6
 subtitle: Excel 操作
 cols: 1
 module: NaXlsxModule

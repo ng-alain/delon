@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Layout
 title: ellipsis
 subtitle: 文本自动省略号
 cols: 1

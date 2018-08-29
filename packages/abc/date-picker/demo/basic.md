@@ -1,4 +1,11 @@
+---
+order: 0
+title: 基础
+---
 
+使用 `ngModel`、`ngModelEnd` 来表示开始与结束值。
+
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -11,3 +18,4 @@ import { Component } from '@angular/core';
 export class DemoComponent {
   i: any = {};
 }
+```

@@ -1,5 +1,6 @@
 ---
-type: Other
+type: Basic
+order: 4
 title: lodop
 subtitle: Lodop打印
 cols: 1

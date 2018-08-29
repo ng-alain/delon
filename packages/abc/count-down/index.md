@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Basic
 title: count-down
 subtitle: 倒计时
 cols: 3

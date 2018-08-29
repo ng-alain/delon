@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Basic
 title: trend
 subtitle: 趋势标记
 cols: 1

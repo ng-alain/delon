@@ -1,5 +1,6 @@
 ---
-type: Other
+type: Basic
+order: 3
 title: qr
 subtitle: 二维码
 cols: 1

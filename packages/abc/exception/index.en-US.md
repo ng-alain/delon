@@ -1,5 +1,5 @@
 ---
-type: Other
+type: Layout
 title: exception
 subtitle: Exception
 cols: 1
