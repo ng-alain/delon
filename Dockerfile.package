@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:stable-alpine
 
 COPY /usr/src/app/_nginx/default.conf /etc/nginx/conf.d/
 
