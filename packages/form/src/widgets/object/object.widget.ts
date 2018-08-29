@@ -9,7 +9,7 @@ import { FormProperty } from '../../model/form.property';
   <ng-container *ngIf="grid; else noGrid">
     <nz-row [nzGutter]="grid.gutter">
       <ng-container *ngFor="let i of list">
-        <ng-container *ngIf="i.property.visible">
+        <ng-container *ngIf="i.property.visible && i.show">
           <nz-col
             [nzSpan]="i.grid.span" [nzOffset]="i.grid.offset"
             [nzXs]="i.grid.xs" [nzSm]="i.grid.sm" [nzMd]="i.grid.md"
@@ -22,7 +22,7 @@ import { FormProperty } from '../../model/form.property';
   </ng-container>
   <ng-template #noGrid>
     <ng-container *ngFor="let i of list">
-      <ng-container *ngIf="i.property.visible">
+      <ng-container *ngIf="i.property.visible && i.show">
         <sf-item [formProperty]="i.property" [fixed-label]="i.spanLabelFixed"></sf-item>
       </ng-container>
     </ng-container>
@@ -42,6 +42,7 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
         property,
         grid: property.ui.grid || this.grid || {},
         spanLabelFixed: property.ui.spanLabelFixed,
+        show: property.ui.hidden === false
       };
       list.push(item);
     }

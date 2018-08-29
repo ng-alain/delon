@@ -24,7 +24,7 @@ import { ArrayLayoutWidget } from '../../widget';
 
         <nz-row class="sf-array-container">
           <ng-container *ngFor="let i of formProperty.properties; let idx=index">
-            <nz-col [nzSpan]="arraySpan" *ngIf="i.visible" [attr.data-index]="idx" class="sf-array-item">
+            <nz-col *ngIf="i.visible && !i.ui.hidden" [nzSpan]="arraySpan" [attr.data-index]="idx" class="sf-array-item">
               <nz-card>
                 <sf-item [formProperty]="i"></sf-item>
                 <span *ngIf="removeTitle" class="remove" (click)="removeItem(idx)" [attr.title]="removeTitle">
@@ -41,7 +41,7 @@ import { ArrayLayoutWidget } from '../../widget';
       </div>
     </nz-col>
   </nz-form-item>
-  `
+  `,
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addTitle: string;

@@ -7,7 +7,7 @@ module: NaDataRangeModule
 config: DatePickerConfig
 ---
 
-在原 `nz-range-picker` 的基础改进，使开始与结束日期扁平化。
+基于 `nz-range-picker` 进一步优化，更好的服务于开始与结束日期。
 
 ## API
 

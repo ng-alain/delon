@@ -206,6 +206,7 @@ UI Schema 结构由通用性和小部件API两部分组成，以下是通用性�
 | `[debug]`           | 调试模式             | `boolean`                                              | -      |   |
 | `[order]`           | 属性顺序             | `string[]`                                             | -      |   |
 | `[asyncData]`       | 异步静态数据源       | `(input?: any) => Observable<SFSchemaEnumType[]>`      | -      |   |
+| `[hidden]`          | 是否隐藏渲染       | `boolean`      | `false`      |   |
 | `[visibleIf]`       | 指定条件时才显示     | `{ [key: string]: any[] | ((value: any) => boolean) }` | -      |   |
 
 **visibleIf**

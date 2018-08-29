@@ -2,7 +2,6 @@ import { PropertyGroup } from './form.property';
 import { FormPropertyFactory } from './form.property.factory';
 import { SchemaValidatorFactory } from '../validator.factory';
 import { DelonFormConfig } from '../config';
-import { ErrorData } from '../errors';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { orderProperties } from '../utils';
 
@@ -34,7 +33,7 @@ export class ObjectProperty extends PropertyGroup {
     try {
       orderedProperties = orderProperties(
         Object.keys(this.schema.properties),
-        this.ui.order,
+        this.ui.order as string[],
       );
     } catch (e) {
       console.error(
@@ -43,7 +42,6 @@ export class ObjectProperty extends PropertyGroup {
       );
     }
     orderedProperties.forEach(propertyId => {
-      const propertySchema = this.schema.properties[propertyId];
       this.properties[propertyId] = this.formPropertyFactory.createProperty(
         this.schema.properties[propertyId],
         this.ui['$' + propertyId],

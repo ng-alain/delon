@@ -3,9 +3,7 @@ import {
   OnInit,
   OnChanges,
   OnDestroy,
-  SimpleChanges,
   Input,
-  SimpleChange,
   Output,
   EventEmitter,
   TemplateRef,
@@ -19,12 +17,7 @@ import { DelonFormConfig } from './config';
 import { di, retrieveSchema, FORMATMAPS, resolveIf } from './utils';
 import { TerminatorService } from './terminator.service';
 import { SFSchema } from './schema/index';
-import {
-  SFUISchema,
-  SFUISchemaItem,
-  SFRenderSchema,
-  SFUISchemaItemRun,
-} from './schema/ui';
+import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 import { FormProperty } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import { SchemaValidatorFactory } from './validator.factory';
@@ -89,19 +82,23 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private _defUi: SFUISchemaItem;
   private _inited = false;
 
-  // region: fields
+  // #region fields
 
   /** 表单布局，等同 `nzLayout`，默认：horizontal */
-  @Input() layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
+  @Input()
+  layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
 
   /** JSON Schema */
-  @Input() schema: SFSchema;
+  @Input()
+  schema: SFSchema;
 
   /** UI Schema */
-  @Input() ui: SFUISchema;
+  @Input()
+  ui: SFUISchema;
 
   /** 表单默认值 */
-  @Input() formData: {};
+  @Input()
+  formData: {};
 
   /**
    * 按钮
@@ -109,7 +106,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * - 值为 `none` 表示手动添加按钮，且不保留容器
    * - 使用固定 `label` 标签宽度时，若无 `render.class` 则默认为居中状态
    */
-  @Input() button: SFButton | 'none' = {};
+  @Input()
+  button: SFButton | 'none' = {};
 
   /**
    * 是否实时校验，默认：`true`
@@ -126,7 +124,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private _liveValidate = true;
 
   /** 指定表单 `autocomplete` 值 */
-  @Input() autocomplete: 'on' | 'off';
+  @Input()
+  autocomplete: 'on' | 'off';
 
   /** 立即显示错误视觉 */
   @Input()
@@ -163,18 +162,22 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private _mode: 'default' | 'search' | 'edit';
 
   /** 数据变更时回调 */
-  @Output() formChange = new EventEmitter<{}>();
+  @Output()
+  formChange = new EventEmitter<{}>();
 
   /** 提交表单时回调 */
-  @Output() formSubmit = new EventEmitter<{}>();
+  @Output()
+  formSubmit = new EventEmitter<{}>();
 
   /** 重置表单时回调 */
-  @Output() formReset = new EventEmitter<{}>();
+  @Output()
+  formReset = new EventEmitter<{}>();
 
   /** 表单校验结果回调 */
-  @Output() formError = new EventEmitter<ErrorData[]>();
+  @Output()
+  formError = new EventEmitter<ErrorData[]>();
 
-  // endregion
+  // #endregion
 
   /** 表单校验状态 */
   get valid(): boolean {
@@ -264,6 +267,15 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           ui.spanControl = null;
           ui.offsetControl = null;
         }
+        if (ui.widget === 'date' && ui.end != null && parentSchema) {
+          const dateEndProperty = parentSchema.properties[ui.end];
+          if (dateEndProperty) {
+            dateEndProperty.ui = Object.assign({}, dateEndProperty.ui, { hidden: true });
+          } else {
+            ui.end = '';
+          }
+        }
+        ui.hidden = typeof ui.hidden === 'boolean' ? ui.hidden : false;
 
         uiRes[uiKey] = ui;
         delete property.ui;
@@ -323,7 +335,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     this._schema = _schema;
 
-    if (this._ui.debug) di('cover schema & ui', this._ui, _schema);
+    if (this._ui.debug) {
+      di('cover schema & ui', this._ui, _schema);
+    }
   }
 
   private coverButtonProperty() {
@@ -360,9 +374,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.validator();
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
+  ngOnChanges(): void {
     this.refreshSchema();
   }
 
