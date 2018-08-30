@@ -52,9 +52,9 @@ config: NaTableConfig
 `[scroll]` | 固定表头，纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px' }` | `{ y: string }` | -
 `[multiSort]` | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, NaTableMultiSort` | `false`
 `[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200`
-`#header` | `footer` 标题 | `TemplateRef<void>` | -
+`[header]` | `header` 标题 | `string | TemplateRef<void>` | -
+`[footer]` | `footer` 底部 | `string | TemplateRef<void>` | -
 `#body` | 额外 `body` 内容，一般用于添加合计行 | `TemplateRef<void>` | -
-`#footer` | `footer` 底部 | `TemplateRef<void>` | -
 `#expand` | `expand` 可展开，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | -
 `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动 | `EventEmitter<NaTableChange>` | -
 `(error)` | 异常时回调 | `EventEmitter<NaTableError>` | -
@@ -203,7 +203,7 @@ class TestComponent {
 ----|------|-----|------
 `[title]` | 表格标题 | `string` | -
 `[i18n]` | 表格标题i18n | `string` | -
-`[type]` | `checkbox` 多选；`radio` 单选；`link` 链接，可触发 `click`；`img` 图像且居中；`number` 数字且居右；`currency` 货币且居右；`date` 日期格式且居中；`badge` [徽标](https://ng.ant.design/components/badge/zh)；`tag` [标签](https://ng.ant.design/components/tag/zh)；`yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn) | `string` | -
+`[type]` | `checkbox` 多选；`radio` 单选；`link` 链接，可触发 `click`；`img` 图像且居中；`number` 数字且居右；`currency` 货币且居右；`date` 日期格式且居中；`badge` [徽标](https://ng.ant.design/components/badge/zh)；`tag` [标签](https://ng.ant.design/components/tag/zh)；`yn` 将`boolean`类型徽章化 [document](/theme/yn/zh) | `string` | -
 `[index]` | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | -
 `[render]` | 自定义渲染ID | `string` | -
 `[renderTitle]` | 标题自定义渲染ID | `string` | -

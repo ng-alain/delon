@@ -76,6 +76,7 @@
           [attr.colspan]="c.colSpan">
           <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
           <ng-container *ngIf="!c.__render; else render">
+            <span class="ant-table-rep__title" [innerHTML]="c.title"></span>
             <ng-container *ngIf="c.index" [ngSwitch]="c.type">
               <ng-container *ngSwitchCase="'checkbox'">
                 <label nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkSelection(i, $event)"></label>

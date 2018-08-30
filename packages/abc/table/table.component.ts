@@ -30,7 +30,7 @@ import {
   AlainI18NService,
   ModalHelperOptions,
 } from '@delon/theme';
-import { deepCopy, toBoolean, toNumber, updateHostClass } from '@delon/util';
+import { deepCopy, toBoolean, toNumber, updateHostClass, InputBoolean } from '@delon/util';
 
 import {
   NaTableColumn,
@@ -80,7 +80,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   _indeterminate = false;
   _columns: NaTableColumn[] = [];
 
-  //#region fields
+  // #region fields
 
   /** 数据源 */
   @Input()
@@ -220,14 +220,14 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   private _multiSort: NaTableMultiSort;
   /** `header` 标题 */
-  @ContentChild('header')
-  header: TemplateRef<void>;
+  @Input()
+  header: string | TemplateRef<void>;
+  /** `footer` 底部 */
+  @Input()
+  footer: string | TemplateRef<void>;
   /** 额外 `body` 内容 */
   @ContentChild('body')
   body: TemplateRef<void>;
-  /** `footer` 底部 */
-  @ContentChild('footer')
-  footer: TemplateRef<void>;
   /** `expand` 可展开，当数据源中包括 `expand` 表示展开状态 */
   @ContentChild('expand')
   expand: TemplateRef<{ $implicit: any; column: NaTableColumn }>;
@@ -249,9 +249,11 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input()
   rowClickTime = 200;
 
-  //#endregion
+  @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
 
-  //#region compatible
+  // #endregion
+
+  // #region compatible
 
   /**
    * checkbox变化时回调，参数为当前所选清单
@@ -698,6 +700,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     updateHostClass(this.el.nativeElement, this.renderer, {
       [`na-table`]: true,
       [`na-table__p-${this.page.placement}`]: this.page.placement,
+      [`ant-table-rep__hide-header-footer`]: this.responsiveHideHeaderFooter,
     });
   }
 

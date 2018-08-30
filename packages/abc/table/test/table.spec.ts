@@ -966,6 +966,17 @@ describe('abc: table', () => {
         });
       });
     });
+    describe('#responsiveHideHeaderFooter', () => {
+      beforeEach(() => genModule({ minColumn: true }));
+      it('should working', done => {
+        context.responsiveHideHeaderFooter = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          page.expectElCount(`.ant-table-rep__hide-header-footer`, 1);
+          done();
+        });
+      });
+    });
     describe('#toTop', () => {
       beforeEach(() => {
         genModule({ minColumn: true });
@@ -1614,6 +1625,7 @@ describe('abc: table', () => {
         [columns]="columns"
         [ps]="ps" [pi]="pi" [total]="total"
         [page]="page"
+        [responsiveHideHeaderFooter]="responsiveHideHeaderFooter"
 
         [loading]="loading" [loadingDelay]="loadingDelay"
         [bordered]="bordered" [size]="size"
@@ -1656,6 +1668,7 @@ class TestComponent {
   noResult = 'noResult';
   widthConfig: string[];
   rowClickTime = 200;
+  responsiveHideHeaderFooter = false;
 
   error() {}
   change() {}

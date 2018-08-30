@@ -25,6 +25,10 @@ export class NaTableConfig {
    * table大小
    */
   size?: 'small' | 'middle' | 'default' = 'default';
+  /**
+   * 是否隐藏头和尾，当小屏幕下才显示，默认：`false`
+   */
+  responsiveHideHeaderFooter? = false;
   /** 请求体配置 */
   req?: NaTableReq = {
     method: 'GET',
