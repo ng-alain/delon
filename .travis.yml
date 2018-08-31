@@ -15,7 +15,7 @@ git:
   depth: 1
 
 cache:
-  npm: true
+  yarn: true
   directories:
      - ./node_modules
 

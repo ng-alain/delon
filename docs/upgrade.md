@@ -33,7 +33,7 @@ type: Dev
 最后，重新安装依赖包。
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 > 遇到问题请阅读 [常见问题](/cli/faq)
@@ -49,6 +49,6 @@ $ npm install
 要想采用这种更新方式需要按以下步骤进行：
 
 - 移除 `node_modules` 文件夹及 `package-lock.json` 文件
-- 执行 `npm install`
+- 执行 `yarn`
 
 **注意：** 这种方式会对所有类库按比较新的版本安装，但有可能会导致由于第三方类型的破坏性变更会导致一些不必要的麻烦。

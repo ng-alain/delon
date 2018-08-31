@@ -20,7 +20,7 @@ Mock 是指通过生成模拟数据让前端开发人员独立于后端进行开
 安装 `@delon/mock` 依赖包：
 
 ```bash
-npm install @delon/mock --save-dev
+yarn add @delon/mock -D
 ```
 
 在根模块 `AppModule` 导入 [Mock 规则数据](/mock/rule)和 `DelonMockModule`；

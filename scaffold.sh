@@ -61,7 +61,7 @@ if [[ ${BUILD} == true ]]; then
     echo '===== need mock'
     sed -i "s/const MOCKMODULE = !environment.production/const MOCKMODULE = true/g" ${ROOT_DIR}/src/app/delon.module.ts
 
-    npm i
+    yarn
 
     echo '===== build...'
     $(npm bin)/ng build --prod --build-optimizer --base-href /ng-alain/

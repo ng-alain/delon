@@ -1,9 +1,7 @@
-import { TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { NaLazyService } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
-import { Component, DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import * as fs from 'file-saver';
 
 import { NaZipModule, NaZipService, NaZipConfig } from './index';

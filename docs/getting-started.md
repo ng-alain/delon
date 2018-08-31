@@ -75,15 +75,13 @@ ng-alain 是一个标准的 Angular CLI 构建的项目，因此你会非常熟�
 安装依赖。
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 > 遇到问题请阅读 [常见问题](/cli/faq)
 
-如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速。
-
 ```bash
-$ npm start
+$ ng serve
 ```
 
 启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，若你看到如下页面则代表成功了。

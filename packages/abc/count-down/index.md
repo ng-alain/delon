@@ -11,7 +11,7 @@ module: NaCountDownModule
 ## 依赖
 
 ```
-npm install --save ngx-countdown
+yarn add ngx-countdown
 ```
 
 ## API

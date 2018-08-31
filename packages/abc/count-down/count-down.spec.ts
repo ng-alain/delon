@@ -76,12 +76,9 @@ class TestComponent {
   config: any;
   target: number | Date;
   notify(val: number) {
-    console.log(val);
   }
   begin() {
-    console.log('begin');
   }
   end() {
-    console.log('end');
   }
 }

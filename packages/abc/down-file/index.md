@@ -11,7 +11,7 @@ module: NaDownFileModule
 ## 依赖
 
 ```
-npm install --save file-saver
+yarn add file-saver
 ```
 
 ## API

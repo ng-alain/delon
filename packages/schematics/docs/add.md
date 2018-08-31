@@ -20,7 +20,8 @@ ng add ng-alain <project name>
 `--codeStyle` | `false` | 是否需要代码风格
 `--i18n` | `false` | 是否需要国际化支持
 `--g2` | `false` | 是否需要 G2 图表
-`--npm` | `false` | 是否需要淘宝镜像配置文件
+`--npm` | `false` | 是否需要 npm 淘宝镜像配置文件
+`--yarn` | `false` | 是否需要 yarn 淘宝镜像配置文件
 
 例如生成一个带有国际化和HMR热替换项目：
 

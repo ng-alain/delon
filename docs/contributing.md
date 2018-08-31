@@ -53,7 +53,7 @@ Ng Alain 会关注所有的 pull request，我们会 review 以及合并你的�
 
 ## 开发流程
 
-在你 clone 了 ng-alain 或 delon 的代码并且使用 `npm install` 安装完依赖后，你还可以运行下面几个常用的命令：
+在你 clone 了 ng-alain 或 delon 的代码并且使用 `yarn` 安装完依赖后，你还可以运行下面几个常用的命令：
 
 ### delon 基建类库
 

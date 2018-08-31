@@ -85,24 +85,17 @@ ng g ng-alain:plugin docker
 ng g ng-alain:plugin docker -t=remove
 ```
 
-### npm
+### networkEnv
 
-在国内使用 npm 始终是一个“痛”，因此你可以增加一个使用淘宝镜像配置文件 `.npmrc`，来解决网络问题。
-
-```bash
-# add
-ng g ng-alain:plugin npm
-# remove
-ng g ng-alain:plugin npm -t=remove
-```
-
-### yarn
-
-修复由于降级 Less 导致无法使用 `yarn` 安装依赖包问题。
+在国内使用 npm 或 yarn 始终是一个“痛”，因此你可以增加一个使用淘宝镜像配置文件 `.npmrc` 或 `.yarnrc`，来解决网络问题。
 
 ```bash
-# add
-ng g ng-alain:plugin yarn
-# remove
-ng g ng-alain:plugin yarn -t=remove
+# add npm
+ng g ng-alain:plugin networkEnv -packageManager=npm
+# add yarn
+ng g ng-alain:plugin networkEnv -packageManager=yarn
+# remove npm
+ng g ng-alain:plugin networkEnv -packageManager=npm -t=remove
+# remove yarn
+ng g ng-alain:plugin networkEnv -packageManager=yarn -t=remove
 ```

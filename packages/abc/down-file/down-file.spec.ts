@@ -85,7 +85,6 @@ describe('abc: down-file', () => {
     });
 
     it('should be using header filename when repseon has [x-filename]', () => {
-      console.log(_http);
       let fn: string;
       const filename = 'x-newfile.docx';
       spyOn(fs, 'saveAs').and.callFake(

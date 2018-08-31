@@ -19,14 +19,14 @@ export function getIndexHtmlPath(host: Tree, project: Project): string {
  */
 export function getTag(host: Tree, src: string, tagName: string) {
   const document = parse5.parse(src, {
-    locationInfo: true,
-  }) as parse5.AST.Default.Document;
+    sourceCodeLocationInfo: true
+  }) as parse5.DefaultTreeDocument;
 
-  let resNode;
-  const visit = (nodes: parse5.AST.Default.Node[]) => {
+  let resNode: parse5.DefaultTreeElement;
+  const visit = (nodes: parse5.Node[]) => {
     nodes.forEach(node => {
-      const element = <parse5.AST.Default.Element>node;
-      if (element.tagName === tagName) {
+      const element = <parse5.DefaultTreeElement>node;
+      if (element.nodeName === tagName) {
         resNode = element;
       } else {
         if (element.childNodes) {
@@ -43,8 +43,8 @@ export function getTag(host: Tree, src: string, tagName: string) {
   }
 
   return {
-    startOffset: resNode.__location.startTag.endOffset,
-    endOffset: resNode.__location.endTag.startOffset,
+    startOffset: resNode.sourceCodeLocation.startTag.endOffset,
+    endOffset: resNode.sourceCodeLocation.endTag.startOffset,
   };
 }
 

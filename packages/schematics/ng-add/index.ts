@@ -1,13 +1,4 @@
-import {
-  Rule,
-  chain,
-  mergeWith,
-  Tree,
-  SchematicContext,
-  apply,
-  schematic,
-  empty,
-} from '@angular-devkit/schematics';
+import { Rule, chain, schematic } from '@angular-devkit/schematics';
 import { Schema as ApplicationOptions } from '../application/schema';
 import { Schema as NgAddOptions } from './schema';
 
@@ -26,11 +17,23 @@ export default function(options: NgAddOptions): Rule {
   }
 
   if (options.npm) {
-    rules.push(schematic('plugin', { name: 'npm', type: 'add' }));
+    rules.push(
+      schematic('plugin', {
+        name: 'networkEnv',
+        type: 'add',
+        packageManager: 'npm',
+      }),
+    );
   }
 
   if (options.yarn) {
-    rules.push(schematic('plugin', { name: 'yarn', type: 'add' }));
+    rules.push(
+      schematic('plugin', {
+        name: 'networkEnv',
+        type: 'add',
+        packageManager: 'yarn',
+      }),
+    );
   }
 
   if (options.hmr) {

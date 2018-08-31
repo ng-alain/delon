@@ -36,7 +36,7 @@
     },
     "yarn": {
       "type": "boolean",
-      "description": "usage yarn install dependencies",
+      "description": "Generates .yarnrc proxy to taobao.",
       "default": false
     },
     "hmr": {

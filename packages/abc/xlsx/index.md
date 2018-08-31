@@ -14,7 +14,7 @@ module: NaXlsxModule
 ## 依赖
 
 ```
-npm install --save file-saver
+yarn add file-saver
 ```
 
 由于 sheetjs 脚本大小以及对 Excel 的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式。在导入 `NaXlsxModule` 模块时允许你指定个 URL、CDN 路径，默认情况下使用 `//cdn.bootcss.com/xlsx/0.12.13/xlsx.full.min.js`。

@@ -10,4 +10,6 @@ export interface PluginOptions {
   sourceRoot: string;
   /** 命令行指定项目名，使用时务必采用 @name 参数 */
   project?: string;
+  /** 包管理类型 */
+  packageManager?: 'npm' | 'yarn';
 }
