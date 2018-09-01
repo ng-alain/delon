@@ -170,5 +170,5 @@ if containsElement "theme" "${PACKAGES[@]}"; then
   buildLess
 fi
 
-buildLess
+# buildLess
 echo 'FINISHED!'

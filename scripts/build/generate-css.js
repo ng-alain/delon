@@ -18,12 +18,19 @@ const content = `
 
 const plugins = [];
 if (min) {
-  const cleanCSSPlugin = new LessPluginCleanCSS({advanced: true});
+  const cleanCSSPlugin = new LessPluginCleanCSS({ advanced: true });
   plugins.push(cleanCSSPlugin);
 }
 less.render
-  .call(less, content, { plugins, paths: [ '/node_modules/ng-zorro-antd/src/'] })
+  .call(less, content, {
+    plugins,
+    paths: ['/node_modules/ng-zorro-antd/src/'],
+    javascriptEnabled: true,
+  })
   .then(({ css }) => {
-    fs.writeFileSync(path.join(ROOT_DIR, `theme/styles/ng-alain${min ? '.min' : ''}.css`), css);
+    fs.writeFileSync(
+      path.join(ROOT_DIR, `theme/styles/ng-alain${min ? '.min' : ''}.css`),
+      css,
+    );
   })
   .catch(err => console.warn(err));
