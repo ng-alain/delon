@@ -1,0 +1,13 @@
+<div class="img-block">
+  <div class="img" [ngStyle]="{'background-image': 'url(' + _img + ')'}"></div>
+</div>
+<div class="cont">
+  <h1 [innerHTML]="_title"></h1>
+  <div class="desc" [innerHTML]="_desc"></div>
+  <div class="actions">
+    <div (cdkObserveContent)="checkContent()" #conTpl>
+      <ng-content></ng-content>
+    </div>
+    <button *ngIf="!hasCon" nz-button [routerLink]="['/']" [nzType]="'primary'">返回首页</button>
+  </div>
+</div>

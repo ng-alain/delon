@@ -35,7 +35,7 @@ describe('abc: exception', () => {
   });
 
   it('should be custom img&title&desc', () => {
-    context.img = '1.svg';
+    context.img = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
     context.title = 'custom title';
     context.desc = 'custom desc';
     fixture.detectChanges();
@@ -55,13 +55,11 @@ describe('abc: exception', () => {
 
 @Component({
   template: `
-    <exception [type]="type" [img]="img" [title]="title" [desc]="desc">
-        <button id="btn">查看详情</button>
-        <ng-template #actions>
-            <div id="action-edit">action-edit</div>
-        </ng-template>
-    </exception>
-    `,
+  <exception [type]="type" [img]="img" [title]="title" [desc]="desc">
+    <button id="btn">查看详情</button>
+    <div id="action-edit">action-edit</div>
+  </exception>
+  `,
 })
 class TestComponent {
   type: 403 | 404 | 500;
