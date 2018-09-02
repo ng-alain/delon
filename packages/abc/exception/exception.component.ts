@@ -1,4 +1,5 @@
-import { Component, Input, ContentChild, TemplateRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewChecked, OnInit } from '@angular/core';
+import { isEmpty } from '@delon/util';
 
 @Component({
   selector: 'na-exception',
@@ -9,20 +10,19 @@ import { Component, Input, ContentChild, TemplateRef } from '@angular/core';
   <div class="na-exception__cont">
     <h1 class="na-exception__cont-title" [innerHTML]="_title"></h1>
     <div class="na-exception__cont-desc" [innerHTML]="_desc"></div>
-    <ng-template #defaultActions>
-      <button nz-button [routerLink]="['/']" [nzType]="'primary'">返回首页</button>
-      <ng-content></ng-content>
-    </ng-template>
-    <div class="na-exception__cont-actions" *ngIf="actions; else defaultActions">
-      <ng-template [ngTemplateOutlet]="actions"></ng-template>
-      <ng-content></ng-content>
+    <div class="na-exception__cont-actions">
+      <div (cdkObserveContent)="checkContent()" #conTpl><ng-content></ng-content></div>
+      <button *ngIf="!hasCon" nz-button [routerLink]="['/']" [nzType]="'primary'">返回首页</button>
     </div>
   </div>
   `,
   host: { '[class.na-exception]': 'true' },
   preserveWhitespaces: false,
 })
-export class NaExceptionComponent {
+export class NaExceptionComponent implements OnInit {
+  @ViewChild('conTpl') private conTpl: ElementRef;
+  hasCon = false;
+
   _img = '';
   _title = '';
   _desc = '';
@@ -70,5 +70,11 @@ export class NaExceptionComponent {
     this._desc = value;
   }
 
-  @ContentChild('actions') actions: TemplateRef<any>;
+  checkContent() {
+    this.hasCon = !isEmpty(this.conTpl.nativeElement);
+  }
+
+  ngOnInit() {
+    this.checkContent();
+  }
 }

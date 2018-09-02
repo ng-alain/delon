@@ -16,4 +16,4 @@ Property | Description | Type | Default
 `[title]` | title | `string` | -
 `[desc]` | supplementary description | `string` | -
 `[img]` | the url of background image | `string` | -
-`[actions]`, `ng-content` | suggested operations, a default 'Home' link will show if not set | `TemplateRef<any>` | -
+`ng-content` | suggested operations, a default 'Home' link will show if not set | `TemplateRef<any>` | -
