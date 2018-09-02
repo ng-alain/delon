@@ -1,5 +1,5 @@
 ---
-type: Basic
+type: Components
 title: number-info
 subtitle: NumberInfo
 cols: 2

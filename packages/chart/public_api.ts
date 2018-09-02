@@ -10,5 +10,7 @@ export * from './src/radar/index';
 export * from './src/tag-cloud/index';
 export * from './src/timeline/index';
 export * from './src/water-wave/index';
+export * from './src/number-info/index';
+export * from './src/trend/index';
 
 export * from './chart.module';

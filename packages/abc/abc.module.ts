@@ -14,11 +14,9 @@ import { NaEllipsisModule } from './ellipsis/ellipsis.module';
 import { NaGlobalFooterModule } from './global-footer/global-footer.module';
 import { NaExceptionModule } from './exception/exception.module';
 import { NaNoticeIconModule } from './notice-icon/notice-icon.module';
-import { NaNumberInfoModule } from './number-info/number-info.module';
 import { NaPageHeaderModule } from './page-header/page-header.module';
 import { NaResultModule } from './result/result.module';
 import { NaTagSelectModule } from './tag-select/tag-select.module';
-import { NaTrendModule } from './trend/trend.module';
 import { NaCountDownModule } from './count-down/count-down.module';
 import { NaReuseTabModule } from './reuse-tab/reuse-tab.module';
 import { NaFullContentModule } from './full-content/full-content.module';
@@ -41,11 +39,9 @@ const MODULES = [
   NaGlobalFooterModule,
   NaExceptionModule,
   NaNoticeIconModule,
-  NaNumberInfoModule,
   NaPageHeaderModule,
   NaResultModule,
   NaTagSelectModule,
-  NaTrendModule,
   NaCountDownModule,
   NaTableModule,
   NaReuseTabModule,
@@ -75,11 +71,9 @@ const MODULES = [
     NaExceptionModule.forRoot(),
     NaExceptionModule.forRoot(),
     NaNoticeIconModule.forRoot(),
-    NaNumberInfoModule.forRoot(),
     NaPageHeaderModule.forRoot(),
     NaResultModule.forRoot(),
     NaTagSelectModule.forRoot(),
-    NaTrendModule.forRoot(),
     NaCountDownModule.forRoot(),
     NaTableModule.forRoot(),
     NaReuseTabModule.forRoot(),

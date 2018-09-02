@@ -1,5 +1,5 @@
 ---
-type: Basic
+type: Components
 title: number-info
 subtitle: 数据文本
 cols: 2

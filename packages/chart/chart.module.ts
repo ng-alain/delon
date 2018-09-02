@@ -14,6 +14,8 @@ import { AdG2RadarModule } from './src/radar/radar.module';
 import { AdG2TagCloudModule } from './src/tag-cloud/tag-cloud.module';
 import { AdG2TimelineModule } from './src/timeline/timeline.module';
 import { AdG2WaterWaveModule } from './src/water-wave/water-wave.module';
+import { NaNumberInfoModule } from './src/number-info/number-info.module';
+import { NaTrendModule } from './src/trend/trend.module';
 
 const MODULES = [
   AdG2BarModule,
@@ -27,7 +29,9 @@ const MODULES = [
   AdG2RadarModule,
   AdG2TagCloudModule,
   AdG2TimelineModule,
-  AdG2WaterWaveModule
+  AdG2WaterWaveModule,
+  NaNumberInfoModule,
+  NaTrendModule
 ];
 
 // endregion
@@ -45,7 +49,9 @@ const MODULES = [
     AdG2RadarModule.forRoot(),
     AdG2TagCloudModule.forRoot(),
     AdG2TimelineModule.forRoot(),
-    AdG2WaterWaveModule.forRoot()
+    AdG2WaterWaveModule.forRoot(),
+    NaNumberInfoModule.forRoot(),
+    NaTrendModule.forRoot()
   ],
   exports: MODULES,
 })
