@@ -38,6 +38,7 @@ import { CheckboxWidget } from './widgets/checkbox/checkbox.widget';
 import { BooleanWidget } from './widgets/boolean/boolean.widget';
 import { TextareaWidget } from './widgets/textarea/textarea.widget';
 import { SelectWidget } from './widgets/select/select.widget';
+import { TreeSelectWidget } from './widgets/tree-select/tree-select.widget';
 import { TagWidget } from './widgets/tag/tag.widget';
 import { UploadWidget } from './widgets/upload/upload.widget';
 import { TransferWidget } from './widgets/transfer/transfer.widget';
@@ -61,6 +62,7 @@ const WIDGETS = [
   BooleanWidget,
   TextareaWidget,
   SelectWidget,
+  TreeSelectWidget,
   TagWidget,
   UploadWidget,
   TransferWidget,
