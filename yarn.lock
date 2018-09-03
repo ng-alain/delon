@@ -5708,9 +5708,9 @@ ng-github-button@^1.0.0:
     rxjs "^6.0.0"
     zone.js "^0.8.26"
 
-ng-zorro-antd@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/ng-zorro-antd/-/ng-zorro-antd-1.4.0.tgz#c618542c2922a35b2b14801743949b3c92d85fca"
+ng-zorro-antd@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/ng-zorro-antd/-/ng-zorro-antd-1.4.1.tgz#99daf0e2c9e36ee42e0c3617f1473506de433b56"
   dependencies:
     "@angular/cdk" "^6.0.0"
     date-fns "^1.29.0"

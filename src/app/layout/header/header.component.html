@@ -50,7 +50,8 @@
   <nz-col class="header-menu" nz-col nzXs="0" nzSm="0" nzMd="18" nzLg="19" nzXl="19" nzXXl="20">
     <div id="search-box">
       <i class="anticon anticon-search"></i>
-      <nz-select style="width: 300px;" [ngModel]="q" (ngModelChange)="to($event)" nzAllowClear nzShowSearch [nzServerSearch]="true" (nzOnSearch)="changeQ($event)" [nzPlaceHolder]="'app.header.search' | translate">
+      <input *ngIf="useDocsearch" nz-input #searchInput [placeholder]="'app.header.search' | translate">
+      <nz-select *ngIf="!useDocsearch" style="width: 300px;" [ngModel]="q" (ngModelChange)="to($event)" nzAllowClear nzShowSearch [nzServerSearch]="true" (nzOnSearch)="changeQ($event)" [nzPlaceHolder]="'app.header.search' | translate">
         <nz-option-group *ngFor="let group of list" [nzLabel]="group.title">
           <nz-option *ngFor="let option of group.children"
             [nzValue]="option" [nzLabel]="option.title"></nz-option>

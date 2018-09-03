@@ -1,7 +1,8 @@
 import { Component, HostBinding, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
+
 import { environment } from '../environments/environment';
 
 import { MetaService } from './core/meta.service';
@@ -59,16 +60,23 @@ export class AppComponent implements OnDestroy {
         if (urlLang && ['zh', 'en'].indexOf(urlLang) === -1) {
           urlLang = this.i18n.zone;
         }
-        const redirectLang = evt.urlAfterRedirects.split('#')[0].split('?')[0].split('/').pop();
+        const redirectLang = evt.urlAfterRedirects
+          .split('#')[0]
+          .split('?')[0]
+          .split('/')
+          .pop();
         if (urlLang !== redirectLang) {
           let newUrl = '';
           if (~evt.urlAfterRedirects.indexOf('#')) {
-            newUrl = evt.urlAfterRedirects.replace(`/${redirectLang}#`, `/${urlLang}#`);
+            newUrl = evt.urlAfterRedirects.replace(
+              `/${redirectLang}#`,
+              `/${urlLang}#`,
+            );
           } else {
             newUrl = evt.url + (evt.url.endsWith('/') ? '' : '/') + urlLang;
           }
           this.router.navigateByUrl(newUrl, { replaceUrl: true });
-          return ;
+          return;
         }
 
         if (urlLang) {
@@ -92,6 +100,7 @@ export class AppComponent implements OnDestroy {
         document.body.scrollIntoView();
       });
   }
+
   ngOnDestroy(): void {
     enquire.unregister(this.query);
   }
