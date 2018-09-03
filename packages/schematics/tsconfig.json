@@ -12,5 +12,11 @@
     "target": "es6",
     "types": ["jasmine", "node"]
   },
-  "exclude": ["*/files/**/*", "**/*.spec.ts", "test.ts"]
+  "exclude": [
+    "test.ts",
+    "*/files/**/*",
+    "test-setup/**/*",
+    "**/*.spec.ts",
+    "update/test/**/*"
+  ]
 }
