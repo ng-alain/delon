@@ -72,7 +72,7 @@ export class NaTableExport {
 
   export(opt: NaTableExportOptions) {
     if (!this.xlsxSrv)
-      throw new Error(`muse be import 'AdXlsxModule' module, but got null`);
+      throw new Error(`muse be import 'NaXlsxModule' module, but got null`);
     const sheets = this.genSheet(opt);
     return this.xlsxSrv.export({
       sheets,

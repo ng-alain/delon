@@ -8,7 +8,6 @@ import { ENUS } from './en-US';
 import { ZHCN } from './zh-CN';
 
 export type LangType = 'en-US' | 'zh-CN';
-const DEFAULT_LANG = 'zh-CN';
 
 @Injectable({ providedIn: 'root' })
 export class I18NService implements AlainI18NService {
@@ -26,7 +25,29 @@ export class I18NService implements AlainI18NService {
     this.translate.setTranslation('en-US', ENUS);
     this.translate.setTranslation('zh-CN', ZHCN);
     this.translate.setDefaultLang('en-US');
-    this.use(DEFAULT_LANG, false);
+    // from browser
+    const lang = (this.getBrowserLang() || this.defaultLang) as LangType;
+    this.use(lang, false);
+  }
+
+  private getBrowserLang(): string {
+    const winNav: any = window.navigator;
+    if (typeof window === 'undefined' || typeof winNav === 'undefined') {
+      return undefined;
+    }
+
+    let browserLang: any = winNav.languages ? winNav.languages[0] : null;
+    browserLang = browserLang || winNav.language || winNav.browserLanguage || winNav.userLanguage;
+
+    if (browserLang.indexOf('-') !== -1) {
+      browserLang = browserLang.split('-')[0];
+    }
+
+    if (browserLang.indexOf('_') !== -1) {
+      browserLang = browserLang.split('_')[0];
+    }
+
+    return this.getFullLang(browserLang);
   }
 
   get change() {
@@ -44,7 +65,7 @@ export class I18NService implements AlainI18NService {
   }
 
   get defaultLang(): LangType {
-    return DEFAULT_LANG;
+    return 'zh-CN';
   }
 
   get lang() {
@@ -71,7 +92,7 @@ export class I18NService implements AlainI18NService {
 
   getFullLang(lang: string) {
     const res = this._langs.filter(l => l.code.split('-')[0] === lang);
-    return res.length > 0 ? res[0].code : this.defaultLang.split('-')[0];
+    return res.length > 0 ? res[0].code : this.defaultLang;
   }
 
   getRealUrl(url: string) {

@@ -675,7 +675,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   //#region export
 
   /**
-   * 导出当前页，确保已经注册 `AdXlsxModule`
+   * 导出当前页，确保已经注册 `NaXlsxModule`
    * @param urlOrData 重新指定数据，例如希望导出所有数据非常有用
    * @param opt 额外参数
    */

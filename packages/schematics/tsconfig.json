@@ -12,5 +12,5 @@
     "target": "es6",
     "types": ["jasmine", "node"]
   },
-  "exclude": ["*/files/**/*", "*/overwrites/**/*", "**/*_spec.ts", "test.ts"]
+  "exclude": ["*/files/**/*", "**/*.spec.ts", "test.ts"]
 }

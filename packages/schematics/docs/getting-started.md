@@ -28,7 +28,7 @@ ng new demo --style less
 ng add ng-alain
 ```
 
-> 遇到问题请阅读 [常见问题](/cli/faq)
+> 遇到问题请阅读 [常见问题](/docs/faq)
 
 3、运行项目
 

@@ -7,6 +7,7 @@ export class StartupService {
 
   load(): Promise<any> {
     return new Promise((resolve) => {
+      console.log('startup');
       this.injector.get(TitleService).suffix = 'Ng Alain';
       resolve();
     });

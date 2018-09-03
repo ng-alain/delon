@@ -122,11 +122,11 @@ describe('abc: table: export', () => {
     });
   });
 
-  it('should be throw error when not load AdXlsxModule', () => {
+  it('should be throw error when not load NaXlsxModule', () => {
     expect(() => {
       (TestBed.configureTestingModule({
         providers: [NaTableExport],
       }).get(NaTableExport) as NaTableExport).export(null);
-    }).toThrowError(`muse be import 'AdXlsxModule' module, but got null`);
+    }).toThrowError(`muse be import 'NaXlsxModule' module, but got null`);
   });
 });

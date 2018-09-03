@@ -134,7 +134,7 @@ fi
 
 if [[ ${TEST} == true ]]; then
   echo "jasmine"
-  $JASMINE ${DIST}/**/*_spec.js
+  $JASMINE ${DIST}/**/*.spec.js
 fi
 
 echo "Finished test-schematics"

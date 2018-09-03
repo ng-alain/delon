@@ -74,7 +74,7 @@ config: NaTableConfig
 `reset(extraParams?: any, options?: NaTableLoadOptions)` | `void` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除）
 `clearCheck()` | `void` | 清除所有 `checkbox`
 `clearRadio()` | `void` | 清除所有 `radio`
-`export(urlOrData?: string | any[], opt?: STExportOptions)` | `void` | 导出Excel，确保已经注册 `AdXlsxModule`
+`export(urlOrData?: string | any[], opt?: STExportOptions)` | `void` | 导出Excel，确保已经注册 `NaXlsxModule`
 
 一些细节：
 

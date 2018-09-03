@@ -20,7 +20,7 @@ type: Other
 
 ### 如何正确使用淘宝源？
 
-最简单是使用 [networkEnv](/cli/plugin/zh#networkEnv) 插件。
+最简单是使用 [networkEnv](/cli/plugin#networkEnv) 插件。
 
 或手动修复：
 

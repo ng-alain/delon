@@ -49,20 +49,29 @@ export class AppComponent implements OnDestroy {
     });
 
     this.router.events
-      .pipe(
-        filter(evt => evt instanceof NavigationEnd),
-        map(() => this.router.url.split('#')[0]),
-      )
-      .subscribe(url => {
-        if (this.prevUrl === url) return ;
+      .pipe(filter(evt => evt instanceof NavigationEnd))
+      .subscribe((evt: NavigationEnd) => {
+        const url = evt.url.split('#')[0].split('?')[0];
+        if (this.prevUrl === url) return;
         this.prevUrl = url;
 
-        const urlLang = url
-          .split('#')[0]
-          .split('?')[0]
-          .split('/')
-          .pop();
-        if (!!urlLang && ~['zh', 'en'].indexOf(urlLang)) {
+        let urlLang = url.split('/').pop();
+        if (urlLang && ['zh', 'en'].indexOf(urlLang) === -1) {
+          urlLang = this.i18n.zone;
+        }
+        const redirectLang = evt.urlAfterRedirects.split('#')[0].split('?')[0].split('/').pop();
+        if (urlLang !== redirectLang) {
+          let newUrl = '';
+          if (~evt.urlAfterRedirects.indexOf('#')) {
+            newUrl = evt.urlAfterRedirects.replace(`/${redirectLang}#`, `/${urlLang}#`);
+          } else {
+            newUrl = evt.url + (evt.url.endsWith('/') ? '' : '/') + urlLang;
+          }
+          this.router.navigateByUrl(newUrl, { replaceUrl: true });
+          return ;
+        }
+
+        if (urlLang) {
           const lang = this.i18n.getFullLang(urlLang);
 
           // update i18n
@@ -72,6 +81,7 @@ export class AppComponent implements OnDestroy {
           }
           this.meta.refMenu(url);
         }
+
         if (this.meta.set(url)) {
           this.router.navigateByUrl('/404');
           return;

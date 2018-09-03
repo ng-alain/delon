@@ -36,7 +36,7 @@ type: Dev
 $ yarn
 ```
 
-> 遇到问题请阅读 [常见问题](/cli/faq)
+> 遇到问题请阅读 [常见问题](/docs/faq)
 
 如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速。
 

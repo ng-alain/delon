@@ -1,7 +1,6 @@
 <ng-template #menu>
   <button nz-button nzGhost nzSize="small" (click)="langChange(i18n.zone==='zh'?'en':'zh')" class="header-lang-button">{{ 'app.header.lang' | translate}}</button>
   <ul nz-menu [nzMode]="isMobile ? 'inline' : 'horizontal'" class="menu-site" id="nav">
-    <li nz-menu-item routerLink="/{{i18n.zone}}">{{'app.header.menu.home' | translate}}</li>
     <li nz-menu-item routerLink="/docs/getting-started/{{i18n.zone}}">{{'app.header.menu.docs' | translate}}</li>
     <li nz-menu-item routerLink="/components/view/{{i18n.zone}}">{{'app.header.menu.components' | translate}}</li>
     <li nz-menu-item>
