@@ -403,6 +403,66 @@ describe('theme: http.client', () => {
         expect(ret.request.body).toBe(BODY);
         ret.flush(OK);
       });
+
+      it(`specified params`, (done: () => void) => {
+        http.patch(URL, BODY, PARAMS).subscribe(res => {
+          expect(res).toBe(OK);
+          done();
+        });
+        const ret = backend.expectOne(
+          req => req.method === 'PATCH' && req.url === URL,
+        ) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        for (const key in PARAMS)
+          expect(ret.request.params.get(key)).toBe(
+            PARAMS[key],
+            `param "${key}" muse be "${PARAMS[key]}"`,
+          );
+        ret.flush(OK);
+      });
+
+      it(`return a string`, (done: () => void) => {
+        http
+          .patch(URL, BODY, PARAMS, { responseType: 'text' })
+          .subscribe(res => {
+            expect(typeof res).toBe('string');
+            expect(res).toBe(OK);
+            done();
+          });
+        const ret = backend.expectOne(
+          req => req.method === 'PATCH' && req.url === URL,
+        ) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        for (const key in PARAMS)
+          expect(ret.request.params.get(key)).toBe(
+            PARAMS[key],
+            `param "${key}" muse be "${PARAMS[key]}"`,
+          );
+        ret.flush(OK);
+      });
+
+      it(`return a HttpResponse<Object>`, (done: () => void) => {
+        http
+          .patch(URL, BODY, PARAMS, {
+            observe: 'response',
+            responseType: 'json',
+          })
+          .subscribe(res => {
+            expect(res.status).toBe(200);
+            expect(res.body).toBe(OK);
+            done();
+          });
+        const ret = backend.expectOne(
+          req => req.method === 'PATCH' && req.url === URL,
+        ) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        for (const key in PARAMS)
+          expect(ret.request.params.get(key)).toBe(
+            PARAMS[key],
+            `param "${key}" muse be "${PARAMS[key]}"`,
+          );
+        ret.flush(OK);
+      });
     });
 
     describe('[put]', () => {
@@ -425,6 +485,66 @@ describe('theme: http.client', () => {
           req => req.method === 'PUT' && req.url === URL,
         ) as TestRequest;
         expect(ret.request.body).toBe(BODY);
+        ret.flush(OK);
+      });
+
+      it(`specified params`, (done: () => void) => {
+        http.put(URL, BODY, PARAMS).subscribe(res => {
+          expect(res).toBe(OK);
+          done();
+        });
+        const ret = backend.expectOne(
+          req => req.method === 'PUT' && req.url === URL,
+        ) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        for (const key in PARAMS)
+          expect(ret.request.params.get(key)).toBe(
+            PARAMS[key],
+            `param "${key}" muse be "${PARAMS[key]}"`,
+          );
+        ret.flush(OK);
+      });
+
+      it(`return a string`, (done: () => void) => {
+        http
+          .put(URL, BODY, PARAMS, { responseType: 'text' })
+          .subscribe(res => {
+            expect(typeof res).toBe('string');
+            expect(res).toBe(OK);
+            done();
+          });
+        const ret = backend.expectOne(
+          req => req.method === 'PUT' && req.url === URL,
+        ) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        for (const key in PARAMS)
+          expect(ret.request.params.get(key)).toBe(
+            PARAMS[key],
+            `param "${key}" muse be "${PARAMS[key]}"`,
+          );
+        ret.flush(OK);
+      });
+
+      it(`return a HttpResponse<Object>`, (done: () => void) => {
+        http
+          .put(URL, BODY, PARAMS, {
+            observe: 'response',
+            responseType: 'json',
+          })
+          .subscribe(res => {
+            expect(res.status).toBe(200);
+            expect(res.body).toBe(OK);
+            done();
+          });
+        const ret = backend.expectOne(
+          req => req.method === 'PUT' && req.url === URL,
+        ) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        for (const key in PARAMS)
+          expect(ret.request.params.get(key)).toBe(
+            PARAMS[key],
+            `param "${key}" muse be "${PARAMS[key]}"`,
+          );
         ret.flush(OK);
       });
     });
