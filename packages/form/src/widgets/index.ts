@@ -9,6 +9,7 @@ export * from './checkbox/checkbox.widget';
 export * from './boolean/boolean.widget';
 export * from './textarea/textarea.widget';
 export * from './select/select.widget';
+export * from './tree-select/tree-select.widget';
 export * from './tag/tag.widget';
 export * from './upload/upload.widget';
 export * from './transfer/transfer.widget';

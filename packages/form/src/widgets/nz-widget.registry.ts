@@ -11,6 +11,7 @@ import { CheckboxWidget } from './checkbox/checkbox.widget';
 import { BooleanWidget } from './boolean/boolean.widget';
 import { TextareaWidget } from './textarea/textarea.widget';
 import { SelectWidget } from './select/select.widget';
+import { TreeSelectWidget } from './tree-select/tree-select.widget';
 import { TagWidget } from './tag/tag.widget';
 import { UploadWidget } from './upload/upload.widget';
 import { TransferWidget } from './transfer/transfer.widget';
@@ -40,6 +41,7 @@ export class NzWidgetRegistry extends WidgetRegistry {
     this.register('boolean', BooleanWidget);
     this.register('textarea', TextareaWidget);
     this.register('select', SelectWidget);
+    this.register('tree-select', TreeSelectWidget);
     this.register('tag', TagWidget);
     this.register('upload', UploadWidget);
     this.register('transfer', TransferWidget);
