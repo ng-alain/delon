@@ -197,7 +197,7 @@ export class _HttpClient {
   ): Observable<string>;
 
   /**
-   * POST：返回一个 `JSON` 类型
+   * POST：返回一个 `HttpResponse<JSON>` 类型
    */
   post(
     url: string,
@@ -292,7 +292,7 @@ export class _HttpClient {
   ): Observable<string>;
 
   /**
-   * POST：返回一个 `JSON` 类型
+   * DELETE：返回一个 `JSON` 类型
    */
   delete(
     url: string,
@@ -307,7 +307,7 @@ export class _HttpClient {
   ): Observable<HttpResponse<Object>>;
 
   /**
-   * POST：返回一个 `any` 类型
+   * DELETE：返回一个 `any` 类型
    */
   delete(
     url: string,
@@ -322,7 +322,7 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
-   * POST 请求
+   * DELETE 请求
    */
   delete(
     url: string,
@@ -372,39 +372,197 @@ export class _HttpClient {
     );
   }
 
+  // #region patch
+
   /**
-   * `patch` 请求
-   *
-   * @param url URL地址
-   * @param body 请求参数
+   * PATCH：返回一个 `string` 类型
    */
-  patch(url: string, body?: any, params?: any): Observable<any> {
+  patch(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe?: 'body';
+      reportProgress?: boolean;
+      responseType: 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<string>;
+
+  /**
+   * PATCH：返回一个 `HttpResponse<JSON>` 类型
+   */
+  patch(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<HttpResponse<Object>>;
+
+  /**
+   * PATCH：返回一个 `JSON` 类型
+   */
+  patch<T>(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<T>;
+
+  /**
+   * PATCH：返回一个 `any` 类型
+   */
+  patch(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe?: 'body' | 'events' | 'response';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<any>;
+
+  /**
+   * PATCH 请求
+   */
+  patch(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe?: 'body' | 'events' | 'response';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<any> {
     return this.request(
       'PATCH',
       url,
-      Object.assign({
-        params,
-        body: body || null,
-      }),
+      Object.assign(
+        {
+          body,
+          params,
+        },
+        options,
+      ),
     );
   }
 
+  // #endregion
+
+  // #region put
+
   /**
-   * `put` 请求
-   *
-   * @param url URL地址
-   * @param body 请求参数
+   * PUT：返回一个 `string` 类型
    */
-  put(url: string, body?: any, params?: any): Observable<any> {
+  put(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe?: 'body';
+      reportProgress?: boolean;
+      responseType: 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<string>;
+
+  /**
+   * PUT：返回一个 `HttpResponse<JSON>` 类型
+   */
+  put(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<HttpResponse<Object>>;
+
+  /**
+   * PUT：返回一个 `JSON` 类型
+   */
+  put<T>(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<T>;
+
+  /**
+   * PUT：返回一个 `any` 类型
+   */
+  put(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe?: 'body' | 'events' | 'response';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<any>;
+
+  /**
+   * PUT 请求
+   */
+  put(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe?: 'body' | 'events' | 'response';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<any> {
     return this.request(
       'PUT',
       url,
-      Object.assign({
-        params,
-        body: body || null,
-      }),
+      Object.assign(
+        {
+          body,
+          params,
+        },
+        options,
+      ),
     );
   }
+
+  // #endregion
 
   /**
    * `request` 请求
