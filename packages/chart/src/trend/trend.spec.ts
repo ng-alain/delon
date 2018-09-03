@@ -43,12 +43,12 @@ describe('abc: trend', () => {
     it('width true', () => {
       context.colorful = true;
       fixture.detectChanges();
-      isExists('.na-trend__grey', false);
+      isExists('.trend__grey', false);
     });
     it('width false', () => {
       context.colorful = false;
       fixture.detectChanges();
-      isExists('.na-trend__grey', true);
+      isExists('.trend__grey', true);
     });
   });
 
@@ -57,28 +57,28 @@ describe('abc: trend', () => {
       context.colorful = true;
       context.reverseColor = true;
       fixture.detectChanges();
-      isExists('.na-trend__reverse', true);
+      isExists('.trend__reverse', true);
     });
     it('width false', () => {
       context.colorful = true;
       context.reverseColor = false;
       fixture.detectChanges();
-      isExists('.na-trend__reverse', false);
+      isExists('.trend__reverse', false);
     });
     it('should be muse is colorful: true', () => {
       context.reverseColor = true;
       fixture.detectChanges();
-      isExists('.na-trend__reverse', false);
+      isExists('.trend__reverse', false);
     });
   });
 });
 
 @Component({
   template: `
-    <na-trend #comp
+    <trend #comp
         [flag]="flag"
         [colorful]="colorful"
-        [reverseColor]="reverseColor"></na-trend>`,
+        [reverseColor]="reverseColor"></trend>`,
 })
 class TestComponent {
   @ViewChild('comp') comp: NaTrendComponent;

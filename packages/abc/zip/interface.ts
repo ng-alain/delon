@@ -14,7 +14,7 @@ export interface NaZipConfig {
   utils?: string[];
 }
 
-export interface NaZipWriteOptions {
+export interface ZipWriteOptions {
   /** save file name, default: `download.zip` */
   filename?: string;
   options?: any;
@@ -24,7 +24,7 @@ export interface NaZipWriteOptions {
   callback?: () => void;
 }
 
-export interface NaZipSaveOptions {
+export interface ZipSaveOptions {
   /**
    * 指定保存文件名，默认 `download.zip`
    */

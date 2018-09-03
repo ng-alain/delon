@@ -7,14 +7,14 @@ title: 自定义按钮组
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc';
 import { NzMessageService } from 'ng-zorro-antd';
 import { DemoModalComponent } from 'app/shared/components/modal/demo.component';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <na-table [data]="users" [columns]="columns"></na-table>
+  <st [data]="users" [columns]="columns"></st>
   `,
 })
 export class DemoComponent {
@@ -29,7 +29,7 @@ export class DemoComponent {
         age: Math.ceil(Math.random() * 10) + 20,
       };
     });
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '姓名', index: 'name' },
     { title: '年龄', index: 'age' },

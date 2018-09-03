@@ -3,7 +3,7 @@ order: 0
 title: 基础样例
 ---
 
-结合 `nz-checkable-tag` 的 `na-tag-select` 组件，方便的应用于筛选类目的业务场景中。
+结合 `nz-checkable-tag` 的 `tag-select` 组件，方便的应用于筛选类目的业务场景中。
 
 ```ts
 import { Component } from '@angular/core';
@@ -11,10 +11,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <na-tag-select>
+  <tag-select>
     <nz-tag *ngFor="let i of categories; let idx = index" nzMode="checkable"
         [(nzChecked)]="i.value" (nzCheckedChange)="change(i)">{{i.text}}</nz-tag>
-  </na-tag-select>
+  </tag-select>
   `
 })
 export class DemoComponent {

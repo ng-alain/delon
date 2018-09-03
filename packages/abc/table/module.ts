@@ -5,11 +5,11 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { DelonUtilModule } from '@delon/util';
 
-import { NaTableComponent } from './table.component';
-import { NaTableRowDirective } from './table-row.directive';
-import { NaTableConfig } from './table.config';
+import { STComponent } from './table.component';
+import { STRowDirective } from './table-row.directive';
+import { NaTableConfig } from './config';
 
-const COMPONENTS = [NaTableComponent, NaTableRowDirective];
+const COMPONENTS = [STComponent, STRowDirective];
 
 @NgModule({
   schemas: [NO_ERRORS_SCHEMA],

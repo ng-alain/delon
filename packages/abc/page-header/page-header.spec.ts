@@ -73,12 +73,12 @@ describe('abc: page-header', () => {
 
     describe('#title', () => {
       it('with string', () => {
-        isExists('.na-ph__title');
+        isExists('.page-header__title');
       });
       it('with null', () => {
         context.title = null;
         fixture.detectChanges();
-        isExists('.na-ph__title', false);
+        isExists('.page-header__title', false);
       });
     });
 
@@ -92,7 +92,7 @@ describe('abc: page-header', () => {
   describe('[generation breadcrumb]', () => {
     beforeEach(() => {
       genModule({
-        template: `<na-page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb"></na-page-header>`,
+        template: `<page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb"></page-header>`,
       });
 
       menuSrv.add([
@@ -164,11 +164,11 @@ describe('abc: page-header', () => {
   describe('#title', () => {
     it('should be custom title template', () => {
       genModule({
-        template: `<na-page-header #comp [title]="titleTpl">
+        template: `<page-header #comp [title]="titleTpl">
           <ng-template #titleTpl>
             <div class="custom-title">title</div>
           </ng-template>
-        </na-page-header>`,
+        </page-header>`,
       });
       expect(dl.queryAll(By.css('.custom-title')).length).toBe(1);
     });
@@ -197,7 +197,7 @@ describe('abc: page-header', () => {
         const text = 'asdf';
         spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text }]);
         fixture.detectChanges();
-        checkValue('.na-ph__title', text);
+        checkValue('.page-header__title', text);
       });
     });
 
@@ -250,9 +250,9 @@ describe('abc: page-header', () => {
     beforeEach(() => {
       genModule({
         created: false,
-        template: `<na-page-header #comp [title]="title"
+        template: `<page-header #comp [title]="title"
         [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink"
-        [autoBreadcrumb]="autoBreadcrumb"></na-page-header>`,
+        [autoBreadcrumb]="autoBreadcrumb"></page-header>`,
         providers: [
           {
             provide: ALAIN_I18N_TOKEN,
@@ -300,7 +300,7 @@ describe('abc: page-header', () => {
       context.autoBreadcrumb = true;
       spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
       fixture.detectChanges();
-      checkValue('.na-ph__title', i18n);
+      checkValue('.page-header__title', i18n);
     });
     it('in home', () => {
       menuSrv.add([
@@ -332,7 +332,7 @@ describe('abc: page-header', () => {
 
 @Component({
   template: `
-    <na-page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
+    <page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
         [autoBreadcrumb]="autoBreadcrumb" [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
@@ -340,7 +340,7 @@ describe('abc: page-header', () => {
         <ng-template #content><div class="content">content</div></ng-template>
         <ng-template #extra><div class="extra">extra</div></ng-template>
         <ng-template #tab><div class="tab">tab</div></ng-template>
-    </na-page-header>
+    </page-header>
     `,
 })
 class TestComponent {

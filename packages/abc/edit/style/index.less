@@ -1,10 +1,10 @@
 @import '../../../theme/styles/default';
 
-@na-edit-prefix: ~'.na-edit';
-@na-edit-label-color: rgba(0, 0, 0, 0.85);
-@na-edit-compact-bottom: @layout-gutter;
+@se-prefix: ~'.se';
+@se-label-color: rgba(0, 0, 0, 0.85);
+@se-compact-bottom: @layout-gutter;
 
-@{na-edit-prefix} {
+@{se-prefix} {
   &__title {
     display: block;
     font-size: 14px;
@@ -20,7 +20,7 @@
   }
   &__label {
     text-align: right;
-    color: @na-edit-label-color;
+    color: @se-label-color;
     white-space: nowrap;
     display: table-cell;
     flex: 0 0 auto;
@@ -32,9 +32,9 @@
     flex: 1 0 0;
   }
   &__compact {
-    @{na-edit-prefix}__title,
-    @{na-edit-prefix}__item {
-      margin-bottom: @na-edit-compact-bottom;
+    @{se-prefix}__title,
+    @{se-prefix}__item {
+      margin-bottom: @se-compact-bottom;
     }
     .ant-form-extra {
       display: none;
@@ -42,9 +42,9 @@
   }
   &__line {
     border-bottom: 1px dashed #e8e8e8;
-    @{na-edit-prefix}__label,
-    @{na-edit-prefix}__control {
-      padding-bottom: @na-edit-compact-bottom;
+    @{se-prefix}__label,
+    @{se-prefix}__control {
+      padding-bottom: @se-compact-bottom;
     }
     &:last-child {
       border-bottom: none;
@@ -52,12 +52,12 @@
   }
   &__inline,
   &__vertical {
-    @{na-edit-prefix}__nolabel {
+    @{se-prefix}__nolabel {
       display: none !important;
     }
   }
   &__horizontal {
-    @{na-edit-prefix}__item {
+    @{se-prefix}__item {
       display: flex;
       &:last-child {
         margin-bottom: 0;
@@ -65,18 +65,18 @@
     }
   }
   &__vertical {
-    @{na-edit-prefix}__item {
+    @{se-prefix}__item {
       display: block;
     }
   }
   &__inline {
-    @{na-edit-prefix}__label,
-    @{na-edit-prefix}__control, {
+    @{se-prefix}__label,
+    @{se-prefix}__control, {
       text-align: left;
       width: initial;
       flex: none;
     }
-    @{na-edit-prefix}__item {
+    @{se-prefix}__item {
       &:last-child {
         margin-right: 0;
       }

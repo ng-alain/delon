@@ -12,12 +12,12 @@ import { NaQRService } from './qr.service';
 import { NaQRConfig } from './qr.config';
 
 @Component({
-  selector: 'na-qr',
+  selector: 'qr',
   template: `
-  <img class="na-qr__img" src="{{dataURL}}">
+  <img class="qr__img" src="{{dataURL}}">
   `,
   preserveWhitespaces: false,
-  host: { '[class.na-qr]': 'true' },
+  host: { '[class.qr]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NaQRComponent implements OnChanges {

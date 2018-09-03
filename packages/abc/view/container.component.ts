@@ -7,16 +7,16 @@ import {
   OnChanges,
 } from '@angular/core';
 import { toNumber, updateHostClass } from '@delon/util';
-import { NaViewConfig } from './view.config';
+import { NaViewConfig } from './config';
 
-const prefixCls = `na-view`;
+const prefixCls = `sv`;
 
 @Component({
-  selector: 'na-view-wrap, [na-view-wrap]',
-  templateUrl: './view-wrap.component.html',
+  selector: 'sv-container, [sv-container]',
+  templateUrl: './container.component.html',
   preserveWhitespaces: false,
 })
-export class NaViewWrapComponent implements OnInit, OnChanges {
+export class SVContainerComponent implements OnInit, OnChanges {
   private el: HTMLElement;
   //#region fields
 

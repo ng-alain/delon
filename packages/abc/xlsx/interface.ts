@@ -15,13 +15,13 @@ export interface NaXlsxConfig {
   modules?: string[];
 }
 
-export interface NaXlsxExportOptions {
+export interface XlsxExportOptions {
   /**
    * worksheets in the workbook, e.g:
    * - `{ Sheet1: { A1: { t:"n", v:10000 } } }`
    * - `[['1'], [1]]`
    */
-  sheets: { [sheet: string]: any } | NaXlsxExportSheet[];
+  sheets: { [sheet: string]: any } | XlsxExportSheet[];
   /** save file name, default: `export.xlsx` */
   filename?: string;
   opts?: any;
@@ -29,7 +29,7 @@ export interface NaXlsxExportOptions {
   callback?: (wb: any) => void;
 }
 
-export interface NaXlsxExportSheet {
+export interface XlsxExportSheet {
   /** arrays to a worksheet */
   data: any[][];
   /** sheet name */

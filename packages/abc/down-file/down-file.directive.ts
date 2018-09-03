@@ -15,10 +15,10 @@ import { _HttpClient } from '@delon/theme';
  * 文件下载
  *
  * ```html
- * <button nz-button na-down-file http-url="assets/demo{{i}}" file-name="demo中文">{{i}}</button>
+ * <button nz-button down-file http-url="assets/demo{{i}}" file-name="demo中文">{{i}}</button>
  * ```
  */
-@Directive({ selector: '[na-down-file]' })
+@Directive({ selector: '[down-file]' })
 export class NaDownFileDirective {
   /** URL请求参数 */
   @Input('http-data')

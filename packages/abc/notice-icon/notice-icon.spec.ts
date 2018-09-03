@@ -45,7 +45,7 @@ describe('abc: notice-icon', () => {
     });
     it('should be popover list via click', () => {
       expect(context.popoverVisible).toBeUndefined();
-      (dl.query(By.css('.na-notice-icon__item')).nativeElement as HTMLElement).click();
+      (dl.query(By.css('.notice-icon__item')).nativeElement as HTMLElement).click();
       fixture.detectChanges();
       expect(context.popoverVisible).toBe(true);
     });
@@ -71,7 +71,7 @@ describe('abc: notice-icon', () => {
       context.popoverVisible = true;
       fixture.detectChanges();
       expect(context.clear).not.toHaveBeenCalled();
-      (dl.query(By.css('.na-notice-icon__clear')).nativeElement as HTMLElement).click();
+      (dl.query(By.css('.notice-icon__clear')).nativeElement as HTMLElement).click();
       fixture.detectChanges();
       expect(context.clear).toHaveBeenCalled();
     });
@@ -80,14 +80,14 @@ describe('abc: notice-icon', () => {
 
 @Component({
   template: `
-    <na-notice-icon #comp
+    <notice-icon #comp
         [data]="data"
         [count]="count"
         [loading]="loading"
         (select)="select($event)"
         (clear)="clear($event)"
         [(popoverVisible)]="popoverVisible"
-        (popoverVisibleChange)="popupVisibleChange($event)"></na-notice-icon>
+        (popoverVisibleChange)="popupVisibleChange($event)"></notice-icon>
     `,
 })
 class TestComponent {

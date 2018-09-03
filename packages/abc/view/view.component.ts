@@ -12,13 +12,13 @@ import {
   Optional,
 } from '@angular/core';
 import { toNumber, toBoolean, isEmpty } from '@delon/util';
-import { NaViewWrapComponent } from './view-wrap.component';
 import { GenStanRepCls } from '../core/responsive';
+import { SVContainerComponent } from './container.component';
 
-const prefixCls = `na-view`;
+const prefixCls = `sv`;
 
 @Component({
-  selector: 'na-view, [na-view]',
+  selector: 'sv, [sv]',
   templateUrl: './view.component.html',
   preserveWhitespaces: false,
 })
@@ -70,12 +70,12 @@ export class NaViewComponent implements AfterViewInit, OnChanges {
   }
 
   constructor(
-    @Host() @Optional() public parent: NaViewWrapComponent,
+    @Host() @Optional() public parent: SVContainerComponent,
     el: ElementRef,
     private ren: Renderer2,
   ) {
     if (parent == null) {
-      throw new Error(`[na-view] must include 'na-view-wrap' component`);
+      throw new Error(`[sv] must include 'sv-container' component`);
     }
     this.el = el.nativeElement;
   }
@@ -104,7 +104,7 @@ export class NaViewComponent implements AfterViewInit, OnChanges {
     const { _default, conEl } = this;
     if (!(_default != null ? _default : this.parent.default)) return;
     const el = conEl.nativeElement as HTMLElement;
-    const cls = `na-view__default`;
+    const cls = `sv__default`;
     if (el.classList.contains(cls)) {
       el.classList.remove(cls);
     }

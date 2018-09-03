@@ -21,16 +21,16 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-demo',
   template: `
-  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" na-edit-wrap gutter="32">
-    <na-edit label="App Key" error="Please input your username!">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" se-container gutter="32">
+    <se label="App Key" error="Please input your username!">
       <input formControlName="userName" nz-input placeholder="Username">
-    </na-edit>
-    <na-edit label="App Secret" error="Please input your Password!">
+    </se>
+    <se label="App Secret" error="Please input your Password!">
       <input formControlName="password" nz-input type="password" placeholder="Password">
-    </na-edit>
-    <na-edit>
+    </se>
+    <se>
       <button nz-button nzType="primary" [disabled]="!validateForm.valid">Log in</button>
-    </na-edit>
+    </se>
   </form>`,
 })
 export class DemoComponent {

@@ -1,6 +1,6 @@
 ---
 type: CURD
-title: edit
+title: se
 subtitle: Edit
 cols: 1
 order: 3
@@ -14,19 +14,19 @@ A higher-order components of the form HTML template. And optimized some details:
 - Automated responsive layout
 - Automatic maintenance `id`
 
-The form HTML template consists of `na-edit-wrap` container (directive) and `na-edit-item` component, like this:
+The form HTML template consists of `se-container` container (directive) and `se-item` component, like this:
 
 ```html
-<form nz-form #f="ngForm" na-edit-wrap>
-  <na-edit label="App Key">
+<form nz-form #f="ngForm" se-container>
+  <se label="App Key">
     <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required>
-  </na-edit>
-  <na-edit label="App Secret">
+  </se>
+  <se label="App Secret">
     <input type="text" nz-input [(ngModel)]="i.sk" name="sk" required maxlength="32">
-  </na-edit>
-  <na-edit>
+  </se>
+  <se>
     <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
-  </na-edit>
+  </se>
 </form>
 ```
 
@@ -34,19 +34,19 @@ Also, automatically processed all Angular built-in validation, such as `required
 
 ## API
 
-### na-edit-wrap
+### se-container
 
 Property | Description | Type | Default
 ----|------|-----|------
 `[gutter]` | specify the distance between two items, unit is `px`, only `nzLayout:horizontal` | `number` | `32`
-`[na-edit-wrap]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](#Responsive Rules) | `number(0 < col <= 6)` | -
+`[se-container]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](#Responsive Rules) | `number(0 < col <= 6)` | -
 `[labelWidth]` | label text of width, unit is `px` | `number` | `150`
 `[nzLayout]` | type of layout when `inline` forced size is `compact` | `horizontal,vertical,inline` | `horizontal`
 `[size]` | size of edit, forced ingores `error`, `extra` | `default | compact` | `default`
 `[firstVisual]` | Immediately show validation error message | `boolean` | `false`
 `[line]` | whether separation line style | `boolean` | `false`
 
-### na-edit
+### se
 
 Property | Description | Type | Default
 ----|------|-----
@@ -61,7 +61,7 @@ Property | Description | Type | Default
 `[controlClass]` | Control area classes | `string` | -
 `[id]` | Custom `id` value of component | `string` | -
 
-### na-edit-title
+### se-title
 
 Display title.
 

@@ -20,11 +20,11 @@ import { MenuService, SettingsService, Menu } from '@delon/theme';
 
 import { Nav } from './interface';
 
-const SHOWCLS = 'na-nav__floating-show';
-const FLOATINGCLS = 'na-nav__floating';
+const SHOWCLS = 'sidebar-nav__floating-show';
+const FLOATINGCLS = 'sidebar-nav__floating';
 
 @Component({
-  selector: 'na-sidebar-nav',
+  selector: 'sidebar-nav',
   templateUrl: './sidebar-nav.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,

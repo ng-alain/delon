@@ -8,10 +8,6 @@ const a = By.css('mat-input-container');
     <mat-input-container>
       <input matInput placeholder="Test">
     </mat-input-container>
-    <na-avatar-list>
-      <na-avatar-list-item></na-avatar-list-item>
-      <na-avatar-list-item></na-avatar-list-item>
-    </na-avatar-list>
 
     <style>
       mat-input-container {

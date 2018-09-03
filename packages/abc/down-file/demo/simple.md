@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
   <button nz-button *ngFor="let i of fileTypes" class="mr-sm"
-    na-down-file [http-data]="data" http-url="./assets/demo{{i}}" file-name="demo中文">{{i}}</button>
+    down-file [http-data]="data" http-url="./assets/demo{{i}}" file-name="demo中文">{{i}}</button>
   `
 })
 export class DemoComponent {

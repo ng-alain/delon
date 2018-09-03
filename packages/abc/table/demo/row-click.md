@@ -9,20 +9,20 @@ title: 行事件
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn, NaTableChange } from '@delon/abc';
+import { STColumn, STChange } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <na-table [data]="url"
+  <st [data]="url"
     [req]="{params: params}" [columns]="columns"
-    (change)="_click($event)"></na-table>`,
+    (change)="_click($event)"></st>`,
 })
 export class DemoComponent {
   url = `/users?results=3`;
   params = { a: 1, b: 2 };
   // mock
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '邮箱', index: 'email' },
     { title: '电话', index: 'phone' },
@@ -38,7 +38,7 @@ export class DemoComponent {
     },
   ];
 
-  _click(e: NaTableChange) {
+  _click(e: STChange) {
     console.log(e);
   }
 }

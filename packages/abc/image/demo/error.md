@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
   template: `
   <button nz-button (click)="src='//a.com/1.png'">Load an error image</button>
   <div style="margin-top: 8px;">
-    <img [na-src]="src" error="./assets/img/logo-color.svg"
+    <img [_src]="src" error="./assets/img/logo-color.svg"
       style="max-height: 32px;">
   </div>
   `

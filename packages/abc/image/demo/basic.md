@@ -11,9 +11,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'demo',
   template: `
-  <img [na-src]="src" size="46">
-  <img [na-src]="src" size="64">
-  <img [na-src]="src" size="96">
+  <img [_src]="src" size="46">
+  <img [_src]="src" size="64">
+  <img [_src]="src" size="96">
   `
 })
 export class DemoComponent {

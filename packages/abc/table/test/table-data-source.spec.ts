@@ -4,11 +4,11 @@ import { CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
 import {
-  NaTableDataSource,
-  NaTableDataSourceOptions,
+  STDataSource,
+  STDataSourceOptions,
 } from '../table-data-source';
-import { NaTableConfig } from '../table.config';
-import { NaTableColumnFilterMenu } from '../interface';
+import { NaTableConfig } from '../config';
+import { STColumnFilterMenu } from '../interface';
 import { of, throwError } from 'rxjs';
 
 const DEFAULT = {
@@ -32,8 +32,8 @@ function genData(count = DEFAULT.total, whetherRandom = false) {
 }
 
 describe('abc: table: data-souce', () => {
-  let srv: NaTableDataSource;
-  let options: NaTableDataSourceOptions;
+  let srv: STDataSource;
+  let options: STDataSourceOptions;
   let http: MockHttpClient;
   let currentyPipe: CNCurrencyPipe;
   let datePipe: DatePipe;
@@ -64,7 +64,7 @@ describe('abc: table: data-souce', () => {
     ynPipe = new YNPipe();
     decimalPipe = new DecimalPipe('zh-CN');
     http = new MockHttpClient();
-    srv = new NaTableDataSource(
+    srv = new STDataSource(
       http as any,
       currentyPipe,
       datePipe,
@@ -185,7 +185,7 @@ describe('abc: table: data-souce', () => {
         options.data = genData();
         options.columns[0].filter = {
           menus: [{ text: '', value: '1', checked: true }],
-          fn: (filter: NaTableColumnFilterMenu, record: any) =>
+          fn: (filter: STColumnFilterMenu, record: any) =>
             record.name.includes(filter.value),
         };
       });
@@ -489,7 +489,7 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be re-name`, (done: () => void) => {
         options.columns[0].filter.reName = (
-          list: NaTableColumnFilterMenu[],
+          list: STColumnFilterMenu[],
         ) => {
           return { id: list.map(i => i.value + '1').join(',') };
         };

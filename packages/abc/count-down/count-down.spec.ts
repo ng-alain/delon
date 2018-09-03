@@ -58,18 +58,18 @@ describe('abc: count-down', () => {
 @Component({
   template: `
     <div *ngIf="config">
-        <na-count-down
+        <count-down
             [config]="config"
             (begin)="begin()"
             (end)="end()"
-            (notify)="notify($event)" style="font-size: 20px"></na-count-down>
+            (notify)="notify($event)" style="font-size: 20px"></count-down>
     </div>
     <div *ngIf="target">
-        <na-count-down
+        <count-down
             [target]="target"
             (begin)="begin()"
             (end)="end()"
-            (notify)="notify($event)" style="font-size: 20px"></na-count-down>
+            (notify)="notify($event)" style="font-size: 20px"></count-down>
     </div>`,
 })
 class TestComponent {

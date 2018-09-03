@@ -1,9 +1,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 // region: all modules
-import { NaTableModule } from './table/table.module';
-import { NaViewModule } from './view/view.module';
-import { NaEditModule } from './edit/edit.module';
+import { NaTableModule } from './table/module';
+import { NaViewModule } from './view/module';
+import { NaEditModule } from './edit/module';
 import { NaErrorCollectModule } from './error-collect/error-collect.module';
 import { NaFooterToolbarModule } from './footer-toolbar/footer-toolbar.module';
 import { NaSidebarNavModule } from './sidebar-nav/sidebar-nav.module';

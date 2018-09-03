@@ -7,7 +7,7 @@ title: 解压
 
 ```ts
 import { Component } from '@angular/core';
-import { NaZipService } from '@delon/abc';
+import { ZipService } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
@@ -20,7 +20,7 @@ import { NaZipService } from '@delon/abc';
   `
 })
 export class DemoComponent {
-  constructor(private zip: NaZipService) {}
+  constructor(private zip: ZipService) {}
   data: any;
 
   private format(data: any) {

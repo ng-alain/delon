@@ -25,7 +25,7 @@ describe('abc: exception', () => {
       context.type = type;
       fixture.detectChanges();
       expect(
-        (dl.query(By.css('.na-exception__cont-title')).nativeElement as HTMLElement).innerText,
+        (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText,
       ).toBe('' + type);
     });
   });
@@ -40,25 +40,25 @@ describe('abc: exception', () => {
     context.desc = 'custom desc';
     fixture.detectChanges();
     expect(
-      (dl.query(By.css('.na-exception__img')).nativeElement as HTMLElement).style[
+      (dl.query(By.css('.exception__img')).nativeElement as HTMLElement).style[
         'background-image'
       ],
     ).toContain(context.img);
     expect(
-      (dl.query(By.css('.na-exception__cont-title')).nativeElement as HTMLElement).innerText,
+      (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText,
     ).toBe(context.title);
     expect(
-      (dl.query(By.css('.na-exception__cont-desc')).nativeElement as HTMLElement).innerText,
+      (dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText,
     ).toBe(context.desc);
   });
 });
 
 @Component({
   template: `
-    <na-exception [type]="type" [img]="img" [title]="title" [desc]="desc">
+    <exception [type]="type" [img]="img" [title]="title" [desc]="desc">
       <button id="btn">查看详情</button>
       <div id="action-edit">action-edit</div>
-    </na-exception>
+    </exception>
     `,
 })
 class TestComponent {

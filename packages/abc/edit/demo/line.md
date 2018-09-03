@@ -19,16 +19,16 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <form nz-form #f="ngForm" na-edit-wrap="1" size="compact" gutter="32" line>
-    <na-edit label="所属类目">头像</na-edit>
-    <na-edit label="图片">
+  <form nz-form #f="ngForm" se-container="1" size="compact" gutter="32" line>
+    <se label="所属类目">头像</se>
+    <se label="图片">
       <nz-input-group nzSearch [nzSuffix]="suffixButton">
         <input type="text" nz-input placeholder="请贴入网络图片地址">
         <ng-template #suffixButton>
           <button nz-button nzType="primary" nzSearch>提取</button>
         </ng-template>
       </nz-input-group>
-    </na-edit>
+    </se>
   </form>`,
 })
 export class DemoComponent {

@@ -4,23 +4,23 @@ import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
 import {
-  NaTableColumn,
-  NaTableColumnButton,
-  NaTableColumnSort,
-  NaTableColumnFilter,
+  STColumn,
+  STColumnButton,
+  STColumnSort,
+  STColumnFilter,
 } from './interface';
-import { NaTableRowSource } from './table-row.directive';
-import { NaTableConfig } from './table.config';
+import { STRowSource } from './table-row.directive';
+import { NaTableConfig } from './config';
 
-export interface NaTableSortMap extends NaTableColumnSort {
+export interface STSortMap extends STColumnSort {
   /** 是否启用排序 */
   enabled?: boolean;
 }
 
 @Injectable()
-export class NaTableColumnSource {
+export class STColumnSource {
   constructor(
-    @Host() private rowSource: NaTableRowSource,
+    @Host() private rowSource: STRowSource,
     @Optional() private acl: ACLService,
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
@@ -28,9 +28,9 @@ export class NaTableColumnSource {
     private cog: NaTableConfig,
   ) {}
 
-  private btnCoerce(list: NaTableColumnButton[]): NaTableColumnButton[] {
+  private btnCoerce(list: STColumnButton[]): STColumnButton[] {
     if (!list) return [];
-    const ret: NaTableColumnButton[] = [];
+    const ret: STColumnButton[] = [];
     const { modal, popTitle } = this.cog;
 
     for (const item of list) {
@@ -50,7 +50,7 @@ export class NaTableColumnSource {
           };
         }
         if (item.modal == null || item.modal.component == null) {
-          console.warn(`[na-table] Should specify modal parameter`);
+          console.warn(`[st] Should specify modal parameter`);
           item.type = 'none';
         } else {
           item.modal = Object.assign({}, modal, item.modal);
@@ -86,7 +86,7 @@ export class NaTableColumnSource {
     return ret;
   }
 
-  private btnCoerceIf(list: NaTableColumnButton[]) {
+  private btnCoerceIf(list: STColumnButton[]) {
     for (const item of list) {
       if (!item.iif) item.iif = () => true;
       if (!item.children) {
@@ -97,8 +97,8 @@ export class NaTableColumnSource {
     }
   }
 
-  private fixedCoerce(list: NaTableColumn[]) {
-    const countReduce = (a: number, b: NaTableColumn) =>
+  private fixedCoerce(list: STColumn[]) {
+    const countReduce = (a: number, b: STColumn) =>
       a + +b.width.toString().replace('px', '');
     // left width
     list
@@ -118,7 +118,7 @@ export class NaTableColumnSource {
       );
   }
 
-  private sortCoerce(item: NaTableColumn): NaTableSortMap {
+  private sortCoerce(item: STColumn): STSortMap {
     // compatible
     if (item.sorter && typeof item.sorter === 'function') {
       return {
@@ -134,7 +134,7 @@ export class NaTableColumnSource {
       return { enabled: false };
     }
 
-    let res: NaTableSortMap = {};
+    let res: STSortMap = {};
 
     if (typeof item.sort === 'string') {
       res.key = item.sort;
@@ -151,8 +151,8 @@ export class NaTableColumnSource {
     return res;
   }
 
-  private filterCoerce(item: NaTableColumn): NaTableColumnFilter {
-    let res: NaTableColumnFilter = null;
+  private filterCoerce(item: STColumn): STColumnFilter {
+    let res: STColumnFilter = null;
     // compatible
     if (item.filters && item.filters.length > 0) {
       res = {
@@ -203,7 +203,7 @@ export class NaTableColumnSource {
     return res;
   }
 
-  private restoreRender(item: NaTableColumn) {
+  private restoreRender(item: STColumn) {
     if (item.renderTitle) {
       item.__renderTitle = this.rowSource.getTitle(item.renderTitle);
     }
@@ -212,14 +212,14 @@ export class NaTableColumnSource {
     }
   }
 
-  process(list: NaTableColumn[]): NaTableColumn[] {
+  process(list: STColumn[]): STColumn[] {
     if (!list || list.length === 0)
-      throw new Error(`[na-table]: the columns property muse be define!`);
+      throw new Error(`[st]: the columns property muse be define!`);
 
     let checkboxCount = 0;
     let radioCount = 0;
-    const columns: NaTableColumn[] = [];
-    const copyColumens = deepCopy(list) as NaTableColumn[];
+    const columns: STColumn[] = [];
+    const copyColumens = deepCopy(list) as STColumn[];
     for (const item of copyColumens) {
       if (this.acl && item.acl && !this.acl.can(item.acl)) {
         continue;
@@ -292,16 +292,16 @@ export class NaTableColumnSource {
       columns.push(item);
     }
     if (checkboxCount > 1)
-      throw new Error(`[na-table]: just only one column checkbox`);
+      throw new Error(`[st]: just only one column checkbox`);
     if (radioCount > 1)
-      throw new Error(`[na-table]: just only one column radio`);
+      throw new Error(`[st]: just only one column radio`);
 
     this.fixedCoerce(columns);
 
     return columns;
   }
 
-  restoreAllRender(columns: NaTableColumn[]) {
+  restoreAllRender(columns: STColumn[]) {
     columns.forEach(i => this.restoreRender(i));
   }
 }

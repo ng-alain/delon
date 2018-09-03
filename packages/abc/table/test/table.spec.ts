@@ -19,23 +19,23 @@ import { deepCopy, deepGet } from '@delon/util';
 import { of, Observable, Subject } from 'rxjs';
 
 import {
-  NaTableColumn,
-  NaTableMultiSort,
-  NaTableColumnBadge,
-  NaTableColumnTag,
-  NaTablePage,
-  NaTableRes,
-  NaTableColumnFilter,
+  STColumn,
+  STMultiSort,
+  STColumnBadge,
+  STColumnTag,
+  STPage,
+  STRes,
+  STColumnFilter,
 } from '../interface';
-import { NaTableModule } from '../table.module';
-import { NaTableComponent } from '../table.component';
+import { NaTableModule } from '../module';
+import { STComponent } from '../table.component';
 import {
   AlainI18NServiceFake,
   AlainI18NService,
 } from '../../../theme/src/services/i18n/i18n';
 import { dispatchDropDown } from '../../../testing';
-import { NaTableExport } from '../table-export';
-import { NaTableDataSource } from '../table-data-source';
+import { STExport } from '../table-export';
+import { STDataSource } from '../table-data-source';
 
 const MOCKDATE = new Date();
 const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
@@ -81,7 +81,7 @@ describe('abc: table', () => {
   let context: TestComponent;
   let dl: DebugElement;
   let page: PageObject;
-  let comp: NaTableComponent;
+  let comp: STComponent;
 
   function genModule(other: {
     template?: string;
@@ -143,12 +143,12 @@ describe('abc: table', () => {
               .then(() => {
                 page
                   .expectElCount(
-                    '.na-table__checkall',
+                    '.st__checkall',
                     1,
                     'muse be a check all',
                   )
                   .expectElCount(
-                    '.na-table__body .ant-checkbox-wrapper',
+                    '.st__body .ant-checkbox-wrapper',
                     PS,
                     `muse be ${PS} check in body`,
                   );
@@ -167,10 +167,10 @@ describe('abc: table', () => {
             page
               .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
               .then(() => {
-                page.click('.na-table__checkall');
+                page.click('.st__checkall');
                 expect(comp._data.filter(w => w.checked).length).toBe(PS);
                 expect(context.checkboxChange).toHaveBeenCalled();
-                page.click('.na-table__checkall');
+                page.click('.st__checkall');
                 expect(comp._data.filter(w => w.checked).length).toBe(0);
                 done();
               });
@@ -181,9 +181,9 @@ describe('abc: table', () => {
               .then(() => {
                 page
                   .expectData(1, 'checked', undefined)
-                  .click('.na-table__body .ant-checkbox-wrapper')
+                  .click('.st__body .ant-checkbox-wrapper')
                   .expectData(1, 'checked', true)
-                  .click('.na-table__body .ant-checkbox-wrapper')
+                  .click('.st__body .ant-checkbox-wrapper')
                   .expectData(1, 'checked', false);
                 done();
               });
@@ -217,7 +217,7 @@ describe('abc: table', () => {
               .then(() => {
                 page
                   .expectData(1, 'checked', undefined)
-                  .click('.na-table__body .ant-checkbox-wrapper')
+                  .click('.st__body .ant-checkbox-wrapper')
                   .expectData(1, 'checked', true);
                 comp.clearCheck();
                 page.expectData(1, 'checked', false);
@@ -233,7 +233,7 @@ describe('abc: table', () => {
                 page
                   .expectHead('RADIOname', 'id')
                   .expectElCount(
-                    '.na-table__body .ant-radio-wrapper',
+                    '.st__body .ant-radio-wrapper',
                     PS,
                     `muse be ${PS} radio in body`,
                   );
@@ -254,10 +254,10 @@ describe('abc: table', () => {
               .then(() => {
                 page
                   .expectData(1, 'checked', undefined)
-                  .click('.na-table__body .ant-radio-wrapper')
+                  .click('.st__body .ant-radio-wrapper')
                   .expectData(1, 'checked', true)
                   .click(
-                    '.na-table__body tr[data-index="1"] .ant-radio-wrapper',
+                    '.st__body tr[data-index="1"] .ant-radio-wrapper',
                   )
                   .expectData(1, 'checked', false);
                 done();
@@ -269,7 +269,7 @@ describe('abc: table', () => {
               .then(() => {
                 page
                   .expectData(1, 'checked', undefined)
-                  .click('.na-table__body .ant-radio-wrapper')
+                  .click('.st__body .ant-radio-wrapper')
                   .expectData(1, 'checked', true);
                 comp.clearRadio();
                 page.expectData(1, 'checked', false);
@@ -469,7 +469,7 @@ describe('abc: table', () => {
         });
       });
       describe('with badge', () => {
-        const BADGE: NaTableColumnBadge = {
+        const BADGE: STColumnBadge = {
           1: { text: '成功', color: 'success' },
           2: { text: '错误', color: 'error' },
           3: { text: '进行中', color: 'processing' },
@@ -498,7 +498,7 @@ describe('abc: table', () => {
         });
       });
       describe('with tag', () => {
-        const TAG: NaTableColumnTag = {
+        const TAG: STColumnTag = {
           1: { text: '成功', color: 'green' },
           2: { text: '错误', color: 'red' },
           3: { text: '进行中', color: 'blue' },
@@ -562,7 +562,7 @@ describe('abc: table', () => {
       });
       describe('[buttons]', () => {
         it(`should be pop confirm when type=del`, (done: () => void) => {
-          const columns: NaTableColumn[] = [
+          const columns: STColumn[] = [
             {
               title: '',
               buttons: [
@@ -595,7 +595,7 @@ describe('abc: table', () => {
           });
         });
         it('should custom render text via format', (done: () => void) => {
-          const columns: NaTableColumn[] = [
+          const columns: STColumn[] = [
             {
               title: '',
               buttons: [
@@ -612,7 +612,7 @@ describe('abc: table', () => {
           });
         });
         it('#614', (done: () => void) => {
-          const columns: NaTableColumn[] = [
+          const columns: STColumn[] = [
             {
               title: '',
               buttons: [
@@ -634,7 +634,7 @@ describe('abc: table', () => {
         });
         describe('[condition]', () => {
           it('should be hide menu in first row', (done: () => void) => {
-            const columns: NaTableColumn[] = [
+            const columns: STColumn[] = [
               {
                 title: '',
                 buttons: [{ text: 'a', iif: (item: any) => item.id !== 1 }],
@@ -648,7 +648,7 @@ describe('abc: table', () => {
         });
         describe('[events]', () => {
           it('#reload', (done: () => void) => {
-            const columns: NaTableColumn[] = [
+            const columns: STColumn[] = [
               {
                 title: '',
                 buttons: [{ text: 'a', click: 'reload' }],
@@ -663,7 +663,7 @@ describe('abc: table', () => {
             });
           });
           it('#load', (done: () => void) => {
-            const columns: NaTableColumn[] = [
+            const columns: STColumn[] = [
               {
                 title: '',
                 buttons: [{ text: 'a', click: 'load' }],
@@ -679,7 +679,7 @@ describe('abc: table', () => {
           });
           describe('#modal', () => {
             it('is normal mode', (done: () => void) => {
-              const columns: NaTableColumn[] = [
+              const columns: STColumn[] = [
                 {
                   title: '',
                   buttons: [
@@ -710,7 +710,7 @@ describe('abc: table', () => {
               });
             });
             it('is static mode', (done: () => void) => {
-              const columns: NaTableColumn[] = [
+              const columns: STColumn[] = [
                 {
                   title: '',
                   buttons: [
@@ -743,7 +743,7 @@ describe('abc: table', () => {
           });
           describe('#link', () => {
             it('should be trigger click', (done: () => void) => {
-              const columns: NaTableColumn[] = [
+              const columns: STColumn[] = [
                 {
                   title: '',
                   buttons: [{ text: 'a', type: 'link', click: () => null }],
@@ -759,7 +759,7 @@ describe('abc: table', () => {
               });
             });
             it('should be navigate when return a string value', (done: () => void) => {
-              const columns: NaTableColumn[] = [
+              const columns: STColumn[] = [
                 {
                   title: '',
                   buttons: [
@@ -867,20 +867,20 @@ describe('abc: table', () => {
       it('with true', () => {
         context.multiSort = true;
         fixture.detectChanges();
-        const ms: NaTableMultiSort = comp.multiSort;
+        const ms: STMultiSort = comp.multiSort;
         expect(typeof ms).toBe('object');
         expect(ms.key).toBe('sort');
       });
       it('with false', () => {
         context.multiSort = false;
         fixture.detectChanges();
-        const ms: NaTableMultiSort = comp.multiSort;
+        const ms: STMultiSort = comp.multiSort;
         expect(ms).toBeNull();
       });
       it('with object', () => {
         context.multiSort = { key: 'aa' };
         fixture.detectChanges();
-        const ms: NaTableMultiSort = comp.multiSort;
+        const ms: STMultiSort = comp.multiSort;
         expect(typeof ms).toBe('object');
         expect(ms.key).toBe('aa');
       });
@@ -960,7 +960,7 @@ describe('abc: table', () => {
           context.page.placement = pos as any;
           fixture.detectChanges();
           fixture.whenStable().then(() => {
-            page.expectElCount(`.na-table__p-${pos}`, 1);
+            page.expectElCount(`.st__p-${pos}`, 1);
             done();
           });
         });
@@ -985,7 +985,7 @@ describe('abc: table', () => {
       it('with true', (done: () => void) => {
         context.page.toTop = true;
         fixture.detectChanges();
-        const el = page.getEl('na-table');
+        const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
         fixture
           .whenStable()
@@ -998,7 +998,7 @@ describe('abc: table', () => {
       it('with false', (done: () => void) => {
         context.page.toTop = false;
         fixture.detectChanges();
-        const el = page.getEl('na-table');
+        const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
         fixture
           .whenStable()
@@ -1012,7 +1012,7 @@ describe('abc: table', () => {
         context.scroll = { x: '1300px' };
         context.page.toTop = true;
         fixture.detectChanges();
-        const el = page.getEl('na-table');
+        const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
         fixture
           .whenStable()
@@ -1027,9 +1027,9 @@ describe('abc: table', () => {
     describe('[custom render template]', () => {
       it('with column title', (done: () => void) => {
         genModule({
-          template: `<na-table #st [data]="data" [columns]="columns">
-            <ng-template na-table-row="id" type="title"><div class="id-title">ID</div></ng-template>
-          </na-table>`,
+          template: `<st #st [data]="data" [columns]="columns">
+            <ng-template st-row="id" type="title"><div class="id-title">ID</div></ng-template>
+          </st>`,
         });
         page
           .newColumn([{ title: '', index: 'id', renderTitle: 'id' }])
@@ -1042,9 +1042,9 @@ describe('abc: table', () => {
       });
       it('should be custom row', (done: () => void) => {
         genModule({
-          template: `<na-table #st [data]="data" [columns]="columns">
-            <ng-template na-table-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
-          </na-table>`,
+          template: `<st #st [data]="data" [columns]="columns">
+            <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
+          </st>`,
         });
         page.newColumn([{ title: '', index: 'id', render: 'id' }]).then(() => {
           expect(page.getCell().querySelector('.j-id').textContent).toBe('id1');
@@ -1053,9 +1053,9 @@ describe('abc: table', () => {
       });
       it('allow invalid id', (done: () => void) => {
         genModule({
-          template: `<na-table #st [data]="data" [columns]="columns">
-            <ng-template na-table-row="invalid-id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
-          </na-table>`,
+          template: `<st #st [data]="data" [columns]="columns">
+            <ng-template st-row="invalid-id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
+          </st>`,
         });
         page.newColumn([{ title: '', index: 'id', render: 'id' }]).then(() => {
           expect(page.getCell().querySelector('.j-id')).toBeNull();
@@ -1177,9 +1177,9 @@ describe('abc: table', () => {
       }));
     });
     describe('#export', () => {
-      let exportSrv: NaTableExport;
+      let exportSrv: STExport;
       beforeEach(() => {
-        genModule({ minColumn: true, providers: [NaTableExport] });
+        genModule({ minColumn: true, providers: [STExport] });
         fixture.detectChanges();
         exportSrv = comp['exportSrv'];
         spyOn(exportSrv, 'export');
@@ -1286,7 +1286,7 @@ describe('abc: table', () => {
   describe('[data source]', () => {
     it('should only restore data', () => {
       genModule({ minColumn: true });
-      let dataSource: NaTableDataSource = comp['dataSource'];
+      let dataSource: STDataSource = comp['dataSource'];
       spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({}));
       fixture.detectChanges();
       expect(comp.ps).toBe(PS);
@@ -1356,8 +1356,8 @@ describe('abc: table', () => {
 
   describe('[filter]', () => {
     describe('in local-data', () => {
-      let filter: NaTableColumnFilter;
-      let firstCol: NaTableColumn;
+      let filter: STColumnFilter;
+      let firstCol: STColumn;
       beforeEach(() => {
         genModule({});
         context.columns = [
@@ -1475,7 +1475,7 @@ describe('abc: table', () => {
      */
     getCell(row: number = 1, column: number = 1) {
       const cell = (dl.nativeElement as HTMLElement).querySelector(
-        `.na-table__body tr[data-index="${row - 1}"] td:nth-child(${column})`,
+        `.st__body tr[data-index="${row - 1}"] td:nth-child(${column})`,
       ) as HTMLElement;
       return cell;
     }
@@ -1541,7 +1541,7 @@ describe('abc: table', () => {
       fixture.detectChanges();
       return fixture.whenStable();
     }
-    newColumn(columns: NaTableColumn[], pi = 1, ps = PS) {
+    newColumn(columns: STColumn[], pi = 1, ps = PS) {
       context.columns = columns;
       context.pi = pi;
       context.ps = ps;
@@ -1603,7 +1603,7 @@ describe('abc: table', () => {
     }
     openDropDownInRow(row: number = 1) {
       dispatchDropDown(
-        dl.query(By.css(`.na-table__body tr[data-index="${row - 1}"]`)),
+        dl.query(By.css(`.st__body tr[data-index="${row - 1}"]`)),
         'mouseleave',
       );
       fixture.detectChanges();
@@ -1618,7 +1618,7 @@ describe('abc: table', () => {
 
 @Component({
   template: `
-    <na-table #st
+    <st #st
         [data]="data"
         [req]="req"
         [res]="res"
@@ -1646,25 +1646,25 @@ describe('abc: table', () => {
         (rowClick)="rowClick()"
         (rowDblClick)="rowDblClick()"
     >
-    </na-table>`,
+    </st>`,
 })
 class TestComponent {
   @ViewChild('st')
-  comp: NaTableComponent;
+  comp: STComponent;
   data: string | any[] | Observable<any[]> = deepCopy(USERS);
-  res: NaTableRes = {};
-  req: NaTableRes = {};
-  columns: NaTableColumn[];
+  res: STRes = {};
+  req: STRes = {};
+  columns: STColumn[];
   ps = PS;
   pi: number;
   total: number;
-  page: NaTablePage = {};
+  page: STPage = {};
   loading: boolean;
   loadingDelay: number;
   bordered: boolean;
   size: 'small' | 'middle' | 'default';
   scroll: { y?: string; x?: string };
-  multiSort: boolean | NaTableMultiSort;
+  multiSort: boolean | STMultiSort;
   noResult = 'noResult';
   widthConfig: string[];
   rowClickTime = 200;

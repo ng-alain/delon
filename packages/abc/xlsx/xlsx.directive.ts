@@ -1,12 +1,12 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { NaXlsxService } from './xlsx.service';
-import { NaXlsxExportOptions } from './interface';
+import { XlsxService } from './xlsx.service';
+import { XlsxExportOptions } from './interface';
 
-@Directive({ selector: '[na-xlsx]' })
-export class NaXlsxDirective {
-  @Input('na-xlsx') data: NaXlsxExportOptions;
+@Directive({ selector: '[xlsx]' })
+export class XlsxDirective {
+  @Input('xlsx') data: XlsxExportOptions;
 
-  constructor(private srv: NaXlsxService) {}
+  constructor(private srv: XlsxService) {}
 
   @HostListener('click')
   _click() {

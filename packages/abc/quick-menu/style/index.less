@@ -1,16 +1,16 @@
 @import '../../../theme/styles/default';
 
-@na-quick-menu-border-width: 1px;
-@na-quick-menu-ctrl-hw: 50px;
-@na-quick-menu-border-color: #fff;
+@quick-menu-border-width: 1px;
+@quick-menu-ctrl-hw: 50px;
+@quick-menu-border-color: #fff;
 
-.na-quick-menu {
+.quick-menu {
   display: block;
   position: fixed;
-  right: -@na-quick-menu-border-width;
+  right: -@quick-menu-border-width;
   left: auto;
   backface-visibility: hidden;
-  border: @na-quick-menu-border-width solid @na-quick-menu-border-color;
+  border: @quick-menu-border-width solid @quick-menu-border-color;
   z-index: @zindex + 2;
   transition: margin 0.3s cubic-bezier(1, 0, 0, 1);
   &__inner {
@@ -20,21 +20,21 @@
   &__ctrl {
     position: absolute;
     top: -1px;
-    left: -@na-quick-menu-ctrl-hw;
-    width: @na-quick-menu-ctrl-hw;
-    height: @na-quick-menu-ctrl-hw;
-    border: @na-quick-menu-border-width solid @na-quick-menu-border-color;
+    left: -@quick-menu-ctrl-hw;
+    width: @quick-menu-ctrl-hw;
+    height: @quick-menu-ctrl-hw;
+    border: @quick-menu-border-width solid @quick-menu-border-color;
     border-right: 0;
     text-align: center;
     cursor: pointer;
     border-radius: 3px 0 0 3px;
     &-icon {
-      line-height: @na-quick-menu-ctrl-hw - 1;
+      line-height: @quick-menu-ctrl-hw - 1;
       font-size: 20px;
     }
   }
 
   @media (max-width: @screen-md) {
-    right: -(@content-padding + @na-quick-menu-border-width);
+    right: -(@content-padding + @quick-menu-border-width);
   }
 }

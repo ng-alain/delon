@@ -70,7 +70,7 @@ describe('abc: error-collect', () => {
         const el = dl.query(By.css('.has-error')).nativeElement as HTMLElement;
         spyOn(el, 'scrollIntoView');
         expect(el.scrollIntoView).not.toHaveBeenCalled();
-        (dl.query(By.css('na-error-collect'))
+        (dl.query(By.css('error-collect'))
           .nativeElement as HTMLElement).click();
         expect(el.scrollIntoView).toHaveBeenCalled();
         done();
@@ -81,7 +81,7 @@ describe('abc: error-collect', () => {
   it('should be not to error element when not errores', () => {
     TestBed.overrideTemplate(
       TestComponent,
-      `<form nz-form [formGroup]="validateForm"><na-error-collect #ec [freq]="freq"></na-error-collect></form>`,
+      `<form nz-form [formGroup]="validateForm"><error-collect #ec [freq]="freq"></error-collect></form>`,
     );
     getPropertiesAndCreate();
     let count = 0;
@@ -90,7 +90,7 @@ describe('abc: error-collect', () => {
       return 0;
     });
     expect(count).toBe(0);
-    (dl.query(By.css('na-error-collect')).nativeElement as HTMLElement).click();
+    (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
     expect(count).toBe(0);
   });
 
@@ -98,7 +98,7 @@ describe('abc: error-collect', () => {
     expect(() => {
       TestBed.overrideTemplate(
         TestComponent,
-        `<na-error-collect #ec [freq]="freq"></na-error-collect>`,
+        `<error-collect #ec [freq]="freq"></error-collect>`,
       )
         .createComponent(TestComponent)
         .detectChanges();
@@ -114,7 +114,7 @@ describe('abc: error-collect', () => {
                 <input nz-input formControlName="email" id="email">
             </nz-form-control>
         </nz-form-item>
-        <na-error-collect #ec [freq]="freq" [offsetTop]="offsetTop"></na-error-collect>
+        <error-collect #ec [freq]="freq" [offsetTop]="offsetTop"></error-collect>
     </form>
     `,
 })

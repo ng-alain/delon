@@ -1,6 +1,6 @@
 ---
 type: CURD
-title: view
+title: sv
 subtitle: View
 cols: 1
 order: 2
@@ -12,7 +12,7 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 
 ## API
 
-### na-view-wrap
+### sv-container
 
 | Property           | Description                 | Type                    | Default       |
 | -------------- | -------------------- | ----------------------- | ------------ |
@@ -23,17 +23,17 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[labelWidth]` | label text of width  | `number`                | `null`       |
 | `[default]`    | whether default text | `boolean`               | `true`       |
 
-### na-view
+### sv
 
 | Property       | Description                           | Type             | Default |
 | -------------- | ------------------------------------- | -------------------------------------- |
 | `[col]`        | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](#Responsive Rules) | - |
 | `[label]`      | label of view                                  | `string | TemplateRef<any>`            | - |
-| `[labelWidth]` | label text of width, inherit `na-view-wrap`     | `number`                               | - |
-| `[default]`    | whether default text, inherit `na-view-wrap` | `boolean`                              | - |
+| `[labelWidth]` | label text of width, inherit `sv-container`     | `number`                               | - |
+| `[default]`    | whether default text, inherit `sv-container` | `boolean`                              | - |
 | `[type]`       | type of view                  | `primary | success | danger | warning` | - |
 
-### na-view-title
+### sv-title
 
 Display title.
 

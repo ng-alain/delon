@@ -15,19 +15,19 @@ Table columns are displayed as stacked in responsive mode if the screen size bec
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <na-table [data]="url" [req]="{params: params}" [columns]="columns"
+  <st [data]="url" [req]="{params: params}" [columns]="columns"
     header="The header" footer="The footer" responsiveHideHeaderFooter>
-  </na-table>`,
+  </st>`,
 })
 export class DemoComponent {
   url = `/users?total=100`;
   params = { a: 1, b: 2 };
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '头像', type: 'img', width: '50px', index: 'picture.thumbnail' },
     { title: '邮箱', index: 'email' },

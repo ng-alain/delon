@@ -17,9 +17,9 @@ import { NaImageConfig } from './image.config';
  * + 支持移除http&https协议http
  * + 支持增加onerror事件
  */
-@Directive({ selector: '[na-src]' })
+@Directive({ selector: '[_src]' })
 export class NaImageDirective implements OnChanges, OnInit {
-  @Input('na-src') src: string;
+  @Input('_src') src: string;
 
   @Input() size = 64;
 

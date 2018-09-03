@@ -1,21 +1,21 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 
-import { NaLazyService } from '@delon/util';
+import { LazyService } from '@delon/util';
 
-import { NaLodop, NaLodopResult, NaLodopPrintResult } from './interface';
+import { Lodop, LodopResult, LodopPrintResult } from './interface';
 import { NaLodopConfig } from './lodop.config';
 
 // TODO: zone
 @Injectable()
-export class NaLodopService implements OnDestroy {
+export class LodopService implements OnDestroy {
   private _cog: NaLodopConfig;
   private pending = false;
-  private _lodop: NaLodop = null;
-  private _init: Subject<NaLodopResult> = new Subject<NaLodopResult>();
-  private _events: Subject<NaLodopPrintResult> = new Subject<NaLodopPrintResult>();
+  private _lodop: Lodop = null;
+  private _init: Subject<LodopResult> = new Subject<LodopResult>();
+  private _events: Subject<LodopPrintResult> = new Subject<LodopPrintResult>();
 
-  constructor(private defCog: NaLodopConfig, private scriptSrv: NaLazyService) {
+  constructor(private defCog: NaLodopConfig, private scriptSrv: LazyService) {
     this.cog = defCog;
   }
 
@@ -41,7 +41,7 @@ export class NaLodopService implements OnDestroy {
   }
 
   /** 事件变更通知 */
-  get events(): Observable<NaLodopPrintResult> {
+  get events(): Observable<LodopPrintResult> {
     return this._events.asObservable();
   }
 
@@ -83,7 +83,7 @@ export class NaLodopService implements OnDestroy {
       }
       this._lodop =
         window.hasOwnProperty(this.cog.name) &&
-        (window[this.cog.name] as NaLodop);
+        (window[this.cog.name] as Lodop);
       if (this._lodop === null) {
         onResolve('load-variable-name-error', { name: this.cog.name });
         return;
@@ -106,8 +106,8 @@ export class NaLodopService implements OnDestroy {
   }
 
   /** 获取 lodop 对象 */
-  get lodop(): Observable<NaLodopResult> {
-    if (this._lodop) return of(<NaLodopResult>{ ok: true, lodop: this._lodop });
+  get lodop(): Observable<LodopResult> {
+    if (this._lodop) return of(<LodopResult>{ ok: true, lodop: this._lodop });
     if (this.pending) return this._init.asObservable();
 
     this.request();
@@ -192,7 +192,7 @@ export class NaLodopService implements OnDestroy {
       this._lodop.On_Return = null;
       this._events.next(
         Object.assign(
-          <NaLodopPrintResult>{
+          <LodopPrintResult>{
             ok: value === true,
             error: value === true ? null : value,
           },

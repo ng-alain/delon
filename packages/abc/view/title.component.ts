@@ -6,26 +6,26 @@ import {
   OnInit,
   Optional,
 } from '@angular/core';
-import { NaViewWrapComponent } from './view-wrap.component';
+import { SVContainerComponent } from './container.component';
 
 @Component({
-  selector: 'na-view-title, [na-view-title]',
+  selector: 'sv-title, [sv-title]',
   template: '<ng-content></ng-content>',
   host: {
-    '[class.na-view__title]': 'true',
+    '[class.sv__title]': 'true',
   },
 })
-export class NaViewTitleComponent implements OnInit {
+export class SVTitleComponent implements OnInit {
   private el: HTMLElement;
   constructor(
     @Host()
     @Optional()
-    private parent: NaViewWrapComponent,
+    private parent: SVContainerComponent,
     el: ElementRef,
     private ren: Renderer2,
   ) {
     if (parent == null) {
-      throw new Error(`[na-view-title] must include 'na-view-wrap' component`);
+      throw new Error(`[sv-title] must include 'sv-container' component`);
     }
     this.el = el.nativeElement;
   }

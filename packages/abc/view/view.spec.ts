@@ -3,10 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { REP_MAX_COL } from '../core/responsive';
-import { NaViewModule } from './view.module';
 import { NaViewComponent } from './view.component';
+import { NaViewModule } from './module';
 
-const prefixCls = `.na-view__`;
+const prefixCls = `.sv__`;
 
 describe('abc: view', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -136,28 +136,28 @@ describe('abc: view', () => {
   describe('[logic]', () => {
     it('should be custom label', () => {
       genModule(
-        `<na-view-wrap>
-          <na-view [label]="label">
+        `<sv-container>
+          <sv [label]="label">
             <ng-template #label>
               <a id="tip">tip</a>
             </ng-template>
             Custom label
-          </na-view>
-        </na-view-wrap>`,
+          </sv>
+        </sv-container>`,
       );
       page.expect('#tip');
     });
-    it(`should be must include 'na-view-wrap' component in na-view`, () => {
+    it(`should be must include 'sv-container' component in sv`, () => {
       expect(() => {
         genModule(`
-        <na-view></na-view>
+        <sv></sv>
         `);
       }).toThrowError();
     });
-    it(`should be must include 'na-view-wrap' component in na-view-title`, () => {
+    it(`should be must include 'sv-container' component in sv-title`, () => {
       expect(() => {
         genModule(`
-        <na-view-title></na-view-title>
+        <sv-title></sv-title>
         `);
       }).toThrowError();
     });
@@ -179,14 +179,14 @@ describe('abc: view', () => {
 
 @Component({
   template: `
-  <na-view-wrap
+  <sv-container
     [size]="parent_size" [layout]="parent_layout" [labelWidth]="parent_labelWidth"
     [gutter]="parent_gutter" [col]="parent_col" [default]="parent_default">
 
-    <na-view-title>title</na-view-title>
-    <na-view #viewComp [label]="label" [col]="col" [type]="type" [default]="default">{{content}}</na-view>
+    <sv-title>title</sv-title>
+    <sv #viewComp [label]="label" [col]="col" [type]="type" [default]="default">{{content}}</sv>
 
-  </na-view-wrap>`,
+  </sv-container>`,
 })
 class TestComponent {
   @ViewChild('viewComp')

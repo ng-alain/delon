@@ -54,7 +54,7 @@ describe('abc: result', () => {
 
     describe('#title', () => {
         it('with string', () => {
-            isText('.na-result__title', context.title);
+            isText('.result__title', context.title);
         });
         it('with template', () => {
             context.title = context.titleTpl;
@@ -65,7 +65,7 @@ describe('abc: result', () => {
 
     describe('#description', () => {
         it('with string', () => {
-            isText('.na-result__desc', context.description);
+            isText('.result__desc', context.description);
         });
         it('with template', () => {
             context.description = context.descriptionTpl;
@@ -76,7 +76,7 @@ describe('abc: result', () => {
 
     describe('#extra', () => {
         it('with string', () => {
-            isText('.na-result__extra', context.extra);
+            isText('.result__extra', context.extra);
         });
         it('with template', () => {
             context.extra = context.extraTpl;
@@ -88,11 +88,11 @@ describe('abc: result', () => {
 
 @Component({
     template: `
-    <na-result #comp
+    <result #comp
         [type]="type"
         [title]="title"
         [description]="description"
-        [extra]="extra"></na-result>
+        [extra]="extra"></result>
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #descriptionTpl><p id="descriptionTpl">descriptionTpl</p></ng-template>
     <ng-template #extraTpl><p id="extraTpl">extraTpl</p></ng-template>

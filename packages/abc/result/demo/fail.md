@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-<na-result
+<result
   type="error"
   [title]="'提交失败'"
   description="请核对并修改以下信息后，再重新提交。"
@@ -28,7 +28,7 @@ import { Component } from '@angular/core';
     </div>
   </ng-template>
   <button nz-button [nzType]="'primary'">返回修改</button>
-</na-result>
+</result>
   `
 })
 export class DemoComponent {

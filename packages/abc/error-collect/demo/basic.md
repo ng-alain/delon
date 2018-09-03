@@ -18,7 +18,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
         <input nz-input formControlName="email" id="email">
       </nz-form-control>
     </nz-form-item>
-    <na-error-collect></na-error-collect>
+    <error-collect></error-collect>
   </form>
   `
 })

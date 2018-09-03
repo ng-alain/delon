@@ -7,16 +7,16 @@ title: 可展开
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <na-table [data]="users" [columns]="columns">
+  <st [data]="users" [columns]="columns">
     <ng-template #expand let-item let-index="index" let-column="column">
       {{ item.description }}
     </ng-template>
-  </na-table>
+  </st>
   `,
 })
 export class DemoComponent {
@@ -31,7 +31,7 @@ export class DemoComponent {
           1}. My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.`,
       };
     });
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '姓名', index: 'name' },
     { title: '年龄', index: 'age' },

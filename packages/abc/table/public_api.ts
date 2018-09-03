@@ -1,5 +1,5 @@
 export * from './interface';
-export { NaTableComponent } from './table.component';
-export { NaTableRowDirective } from './table-row.directive';
-export { NaTableConfig } from './table.config';
-export { NaTableModule } from './table.module';
+export { STComponent } from './table.component';
+export { STRowDirective } from './table-row.directive';
+export { NaTableConfig } from './config';
+export { NaTableModule } from './module';

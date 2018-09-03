@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-demo',
-  template: `<na-qr value="https://ng-alain.com/"></na-qr>`,
+  template: `<qr value="https://ng-alain.com/"></qr>`,
 })
 export class DemoComponent {}
 ```

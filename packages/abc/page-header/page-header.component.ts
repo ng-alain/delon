@@ -28,11 +28,11 @@ import { NaPageHeaderConfig } from './page-header.config';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'na-page-header',
+  selector: 'page-header',
   templateUrl: './page-header.component.html',
   host: {
     '[class.content__title]': 'true',
-    '[class.na-ph]': 'true',
+    '[class.page-header]': 'true',
   },
   preserveWhitespaces: false,
 })

@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
   result: {{i | json}}<br>
-  <na-range-picker [(ngModel)]="i.start" [(ngModelEnd)]="i.end"></na-range-picker>
+  <range-picker [(ngModel)]="i.start" [(ngModelEnd)]="i.end"></range-picker>
   `,
 })
 export class DemoComponent {

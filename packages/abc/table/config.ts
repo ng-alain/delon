@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  NaTableMultiSort,
-  NaTableReq,
-  NaTableRes,
-  NaTablePage,
-  NaTableColumnButtonModalConfig,
+  STMultiSort,
+  STReq,
+  STRes,
+  STPage,
+  STColumnButtonModalConfig,
 } from './interface';
 
 @Injectable()
@@ -30,17 +30,17 @@ export class NaTableConfig {
    */
   responsiveHideHeaderFooter? = false;
   /** 请求体配置 */
-  req?: NaTableReq = {
+  req?: STReq = {
     method: 'GET',
     allInBody: false,
     reName: { pi: 'pi', ps: 'ps' },
   };
   /** 返回体配置 */
-  res?: NaTableRes = {
+  res?: STRes = {
     reName: { list: ['list'], total: ['total'] },
   };
   /** 返回体配置 */
-  page?: NaTablePage = {
+  page?: STPage = {
     front: true,
     zeroIndexed: false,
     placement: 'right',
@@ -60,11 +60,11 @@ export class NaTableConfig {
   /**
    * 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用
    */
-  multiSort?: boolean | NaTableMultiSort = false;
+  multiSort?: boolean | STMultiSort = false;
   /**
    * 按钮模态框配置
    */
-  modal?: NaTableColumnButtonModalConfig = {
+  modal?: STColumnButtonModalConfig = {
     paramsName: 'record',
     size: 'lg',
     exact: true,

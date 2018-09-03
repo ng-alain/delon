@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 @Injectable()
-export class NaTableRowSource {
+export class STRowSource {
   private titles: { [key: string]: TemplateRef<any> } = {};
   private rows: { [key: string]: TemplateRef<any> } = {};
 
@@ -25,9 +25,9 @@ export class NaTableRowSource {
   }
 }
 
-@Directive({ selector: '[na-table-row]' })
-export class NaTableRowDirective implements OnInit {
-  @Input('na-table-row')
+@Directive({ selector: '[st-row]' })
+export class STRowDirective implements OnInit {
+  @Input('st-row')
   id: string;
 
   @Input()
@@ -35,7 +35,7 @@ export class NaTableRowDirective implements OnInit {
 
   constructor(
     private ref: TemplateRef<any>,
-    @Host() private source: NaTableRowSource,
+    @Host() private source: STRowSource,
   ) {}
 
   ngOnInit(): void {

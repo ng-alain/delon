@@ -33,36 +33,36 @@ import {
 import { deepCopy, toBoolean, toNumber, updateHostClass, InputBoolean } from '@delon/util';
 
 import {
-  NaTableColumn,
-  NaTableChange,
-  NaTableColumnSelection,
-  NaTableColumnFilterMenu,
-  NaTableData,
-  NaTableColumnButton,
-  NaTableExportOptions,
-  NaTableMultiSort,
-  NaTableReq,
-  NaTableError,
-  NaTableChangeType,
-  NaTableChangeRowClick,
-  NaTableRes,
-  NaTablePage,
-  NaTableLoadOptions,
+  STColumn,
+  STChange,
+  STColumnSelection,
+  STColumnFilterMenu,
+  STData,
+  STColumnButton,
+  STExportOptions,
+  STMultiSort,
+  STReq,
+  STError,
+  STChangeType,
+  STChangeRowClick,
+  STRes,
+  STPage,
+  STLoadOptions,
 } from './interface';
-import { NaTableConfig } from './table.config';
-import { NaTableExport } from './table-export';
-import { NaTableColumnSource } from './table-column-source';
-import { NaTableRowSource } from './table-row.directive';
-import { NaTableDataSource } from './table-data-source';
+import { NaTableConfig } from './config';
+import { STExport } from './table-export';
+import { STColumnSource } from './table-column-source';
+import { STRowSource } from './table-row.directive';
+import { STDataSource } from './table-data-source';
 
 @Component({
-  selector: 'na-table',
+  selector: 'st',
   templateUrl: './table.component.html',
   providers: [
-    NaTableDataSource,
-    NaTableRowSource,
-    NaTableColumnSource,
-    NaTableExport,
+    STDataSource,
+    STRowSource,
+    STColumnSource,
+    STExport,
     CNCurrencyPipe,
     DatePipe,
     YNPipe,
@@ -71,26 +71,26 @@ import { NaTableDataSource } from './table-data-source';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private i18n$: Subscription;
   private totalTpl = ``;
-  _data: NaTableData[] = [];
+  _data: STData[] = [];
   _isPagination = true;
   _allChecked = false;
   _indeterminate = false;
-  _columns: NaTableColumn[] = [];
+  _columns: STColumn[] = [];
 
   // #region fields
 
   /** 数据源 */
   @Input()
-  data: string | NaTableData[] | Observable<NaTableData[]>;
+  data: string | STData[] | Observable<STData[]>;
   /** 请求体配置 */
   @Input()
   get req() {
     return this._req;
   }
-  set req(value: NaTableReq) {
+  set req(value: STReq) {
     const { req } = this.cog;
     const item = Object.assign({}, req, value);
     if (item.reName == null) {
@@ -98,13 +98,13 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
     this._req = item;
   }
-  private _req: NaTableReq;
+  private _req: STReq;
   /** 返回体配置 */
   @Input()
   get res() {
     return this._res;
   }
-  set res(value: NaTableRes) {
+  set res(value: STRes) {
     const { res } = this.cog;
     const item = Object.assign({}, res, value);
     if (item.reName == null) {
@@ -116,10 +116,10 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
       item.reName.total = item.reName.total.split('.');
     this._res = item;
   }
-  private _res: NaTableRes;
+  private _res: STRes;
   /** 列描述  */
   @Input()
-  columns: NaTableColumn[] = [];
+  columns: STColumn[] = [];
   /** 每页数量，当设置为 `0` 表示不分页，默认：`10` */
   @Input()
   get ps() {
@@ -152,7 +152,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   get page() {
     return this._page;
   }
-  set page(value: NaTablePage) {
+  set page(value: STPage) {
     const { page } = this.cog;
     const item = Object.assign({}, deepCopy(page), value);
     const { total } = item;
@@ -165,7 +165,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
     this._page = item;
   }
-  private _page: NaTablePage;
+  private _page: STPage;
   /** 是否显示Loading */
   @Input()
   get loading() {
@@ -210,7 +210,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
       return;
     }
     this._multiSort = Object.assign(
-      <NaTableMultiSort>{
+      <STMultiSort>{
         key: 'sort',
         separator: '-',
         nameSeparator: '.',
@@ -218,7 +218,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
       typeof value === 'object' ? value : {},
     );
   }
-  private _multiSort: NaTableMultiSort;
+  private _multiSort: STMultiSort;
   /** `header` 标题 */
   @Input()
   header: string | TemplateRef<void>;
@@ -230,20 +230,20 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
   body: TemplateRef<void>;
   /** `expand` 可展开，当数据源中包括 `expand` 表示展开状态 */
   @ContentChild('expand')
-  expand: TemplateRef<{ $implicit: any; column: NaTableColumn }>;
+  expand: TemplateRef<{ $implicit: any; column: STColumn }>;
   @Input()
   noResult: string | TemplateRef<void>;
   @Input()
   widthConfig: string[];
   /** 请求异常时回调 */
   @Output()
-  readonly error: EventEmitter<NaTableError> = new EventEmitter<NaTableError>();
+  readonly error: EventEmitter<STError> = new EventEmitter<STError>();
   /**
    * 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动
    */
   @Output()
-  readonly change: EventEmitter<NaTableChange> = new EventEmitter<
-    NaTableChange
+  readonly change: EventEmitter<STChange> = new EventEmitter<
+    STChange
   >();
   /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
   @Input()
@@ -261,8 +261,8 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @deprecated as of v3
    */
   @Output()
-  readonly checkboxChange: EventEmitter<NaTableData[]> = new EventEmitter<
-    NaTableData[]
+  readonly checkboxChange: EventEmitter<STData[]> = new EventEmitter<
+    STData[]
   >();
   /**
    * radio变化时回调，参数为当前所选
@@ -270,8 +270,8 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @deprecated as of v3
    */
   @Output()
-  readonly radioChange: EventEmitter<NaTableData> = new EventEmitter<
-    NaTableData
+  readonly radioChange: EventEmitter<STData> = new EventEmitter<
+    STData
   >();
   /**
    * 排序回调
@@ -286,8 +286,8 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @deprecated as of v3
    */
   @Output()
-  readonly filterChange: EventEmitter<NaTableColumn> = new EventEmitter<
-    NaTableColumn
+  readonly filterChange: EventEmitter<STColumn> = new EventEmitter<
+    STColumn
   >();
   /**
    * 行单击回调
@@ -295,8 +295,8 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @deprecated as of v3
    */
   @Output()
-  readonly rowClick: EventEmitter<NaTableChangeRowClick> = new EventEmitter<
-    NaTableChangeRowClick
+  readonly rowClick: EventEmitter<STChangeRowClick> = new EventEmitter<
+    STChangeRowClick
   >();
   /**
    * 行双击回调
@@ -304,8 +304,8 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @deprecated as of v3
    */
   @Output()
-  readonly rowDblClick: EventEmitter<NaTableChangeRowClick> = new EventEmitter<
-    NaTableChangeRowClick
+  readonly rowDblClick: EventEmitter<STChangeRowClick> = new EventEmitter<
+    STChangeRowClick
   >();
   //#endregion
 
@@ -315,14 +315,14 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     private router: Router,
     private el: ElementRef,
     private renderer: Renderer2,
-    private exportSrv: NaTableExport,
+    private exportSrv: STExport,
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     i18nSrv: AlainI18NService,
     private modalHelper: ModalHelper,
     @Inject(DOCUMENT) private doc: any,
-    private columnSource: NaTableColumnSource,
-    private dataSource: NaTableDataSource,
+    private columnSource: STColumnSource,
+    private dataSource: STDataSource,
   ) {
     Object.assign(this, deepCopy(cog));
     if (i18nSrv) {
@@ -341,8 +341,8 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
       : '';
   }
 
-  private changeEmit(type: NaTableChangeType, data?: any) {
-    const res: NaTableChange = {
+  private changeEmit(type: STChangeType, data?: any) {
+    const res: STChange = {
       type,
       pi: this.pi,
       ps: this.ps,
@@ -399,7 +399,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param extraParams 重新指定 `extraParams` 值
    * @param options 选项
    */
-  load(pi = 1, extraParams?: any, options?: NaTableLoadOptions) {
+  load(pi = 1, extraParams?: any, options?: STLoadOptions) {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
       this._req.params =
@@ -414,7 +414,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    * 重新刷新当前页
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reload(extraParams?: any, options?: NaTableLoadOptions) {
+  reload(extraParams?: any, options?: STLoadOptions) {
     this.load(-1, extraParams, options);
   }
 
@@ -427,7 +427,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    *
    * @param extraParams 重新指定 `extraParams` 值
    */
-  reset(extraParams?: any, options?: NaTableLoadOptions) {
+  reset(extraParams?: any, options?: STLoadOptions) {
     this.clearCheck()
       .clearRadio()
       .clearFilter()
@@ -454,7 +454,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit(type);
   }
 
-  _click(e: Event, item: any, col: NaTableColumn) {
+  _click(e: Event, item: any, col: STColumn) {
     e.preventDefault();
     e.stopPropagation();
     const res = col.click(item, this);
@@ -488,7 +488,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   //#region sort
 
-  sort(col: NaTableColumn, idx: number, value: any) {
+  sort(col: STColumn, idx: number, value: any) {
     if (this.multiSort) {
       col._sort.default = value;
     } else {
@@ -515,7 +515,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   //#region filter
 
-  private handleFilter(col: NaTableColumn) {
+  private handleFilter(col: STColumn) {
     col.filter.default = col.filter.menus.findIndex(w => w.checked) !== -1;
     this._load();
     this.changeEmit('filter', col);
@@ -523,18 +523,18 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.filterChange.emit(col);
   }
 
-  _filterConfirm(col: NaTableColumn) {
+  _filterConfirm(col: STColumn) {
     this.handleFilter(col);
   }
 
-  _filterClear(col: NaTableColumn) {
+  _filterClear(col: STColumn) {
     col.filter.menus.forEach(i => (i.checked = false));
     this.handleFilter(col);
   }
 
   _filterRadio(
-    col: NaTableColumn,
-    item: NaTableColumnFilterMenu,
+    col: STColumn,
+    item: STColumnFilterMenu,
     checked: boolean,
   ) {
     col.filter.menus.forEach(i => (i.checked = false));
@@ -577,12 +577,12 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._refCheck()._checkNotify();
   }
 
-  _checkSelection(i: NaTableData, value: boolean) {
+  _checkSelection(i: STData, value: boolean) {
     i.checked = value;
     return this._refCheck()._checkNotify();
   }
 
-  _rowSelection(row: NaTableColumnSelection): this {
+  _rowSelection(row: STColumnSelection): this {
     row.select(this._data);
     return this._refCheck()._checkNotify();
   }
@@ -608,7 +608,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  _refRadio(checked: boolean, item: NaTableData): this {
+  _refRadio(checked: boolean, item: STData): this {
     // if (item.disabled === true) return;
     this._data.filter(w => !w.disabled).forEach(i => (i.checked = false));
     item.checked = checked;
@@ -622,7 +622,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   //#region buttons
 
-  _btnClick(e: Event, record: any, btn: NaTableColumnButton) {
+  _btnClick(e: Event, record: any, btn: STColumnButton) {
     if (e) e.stopPropagation();
     if (btn.type === 'modal' || btn.type === 'static') {
       const obj = {};
@@ -649,7 +649,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.btnCallback(record, btn);
   }
 
-  private btnCallback(record: any, btn: NaTableColumnButton, modal?: any) {
+  private btnCallback(record: any, btn: STColumnButton, modal?: any) {
     if (!btn.click) return;
     if (typeof btn.click === 'string') {
       switch (btn.click) {
@@ -665,7 +665,7 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
   }
 
-  _btnText(record: any, btn: NaTableColumnButton) {
+  _btnText(record: any, btn: STColumnButton) {
     if (btn.format) return btn.format(record, btn);
     return btn.text;
   }
@@ -679,10 +679,10 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @param urlOrData 重新指定数据，例如希望导出所有数据非常有用
    * @param opt 额外参数
    */
-  export(urlOrData?: any[], opt?: NaTableExportOptions) {
+  export(urlOrData?: any[], opt?: STExportOptions) {
     (urlOrData ? of(urlOrData) : of(this._data)).subscribe((res: any[]) =>
       this.exportSrv.export(
-        Object.assign({}, opt, <NaTableExportOptions>{
+        Object.assign({}, opt, <STExportOptions>{
           _d: res,
           _c: this._columns,
         }),
@@ -698,8 +698,8 @@ export class NaTableComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   private setClass() {
     updateHostClass(this.el.nativeElement, this.renderer, {
-      [`na-table`]: true,
-      [`na-table__p-${this.page.placement}`]: this.page.placement,
+      [`st`]: true,
+      [`st__p-${this.page.placement}`]: this.page.placement,
       [`ant-table-rep__hide-header-footer`]: this.responsiveHideHeaderFooter,
     });
   }

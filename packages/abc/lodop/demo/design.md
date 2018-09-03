@@ -8,7 +8,7 @@ title: 打印设计
 ```ts
 import { Component } from '@angular/core';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
-import { NaLodopService, NaLodop } from '@delon/abc';
+import { LodopService, Lodop } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
@@ -51,7 +51,7 @@ import { NaLodopService, NaLodop } from '@delon/abc';
 export class DemoComponent {
   doing = false;
   error = false;
-  lodop: NaLodop = null;
+  lodop: Lodop = null;
   context: any = {
     标题: '自定义标题',
     费用: '100.00 元'
@@ -63,7 +63,7 @@ LODOP.SET_PRINT_STYLEA(0,"FontColor","#800000");
 LODOP.SET_PRINT_STYLEA(0,"Alignment",2);
 LODOP.ADD_PRINT_TEXT(259,579,100,23,"{{费用}}");
 LODOP.ADD_PRINT_TEXT(260,520,58,24,"合计：");`;
-  constructor(public lodopSrv: NaLodopService, private msg: NzMessageService) {
+  constructor(public lodopSrv: LodopService, private msg: NzMessageService) {
     this.lodopSrv.lodop.subscribe(({ lodop, ok }) => {
       if (!ok) {
         this.error = true;

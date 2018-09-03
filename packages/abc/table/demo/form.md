@@ -7,7 +7,7 @@ title: 搜索表单
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
@@ -17,14 +17,14 @@ import { NaTableColumn } from '@delon/abc';
     <button nz-button (click)="st.load(1)" [nzType]="'primary'">搜索</button>
     <button nz-button (click)="params = {}; st.reset()">重置</button>
   </div>
-  <na-table #st [data]="url" [req]="{params: params}" [columns]="columns"></na-table>
+  <st #st [data]="url" [req]="{params: params}" [columns]="columns"></st>
   `,
 })
 export class DemoComponent {
   url = `/users?total=100`;
   params: any = { name: 'asdf' };
   // mock
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id', default: '-' },
     { title: '头像', type: 'img', width: '50px', index: 'picture.thumbnail' },
     { title: '邮箱', index: 'email' },

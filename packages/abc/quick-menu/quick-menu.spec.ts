@@ -21,7 +21,7 @@ describe('abc: quick-menu', () => {
     fixture.detectChanges();
   });
 
-  function getEl(cls: string = `na-quick-menu`): HTMLElement {
+  function getEl(cls: string = `quick-menu`): HTMLElement {
     return dl.query(By.css(cls)).nativeElement as HTMLElement;
   }
 
@@ -55,7 +55,7 @@ describe('abc: quick-menu', () => {
 
 @Component({
   template: `
-    <na-quick-menu #comp [width]="width"></na-quick-menu>
+    <quick-menu #comp [width]="width"></quick-menu>
     `,
 })
 class TestComponent {

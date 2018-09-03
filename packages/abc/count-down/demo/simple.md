@@ -21,8 +21,8 @@ import { addMinutes } from 'date-fns';
 @Component({
   selector: 'app-demo',
   template: `
-  <p class="mb-sm">10s: <na-count-down [target]="10" (end)="onEnd()" style="font-size: 20px;"></na-count-down></p>
-  <p>10m: <na-count-down [target]="target"></na-count-down></p>
+  <p class="mb-sm">10s: <count-down [target]="10" (end)="onEnd()" style="font-size: 20px;"></count-down></p>
+  <p>10m: <count-down [target]="target"></count-down></p>
   `
 })
 export class DemoComponent {

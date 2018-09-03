@@ -19,14 +19,6 @@ export const elementSelectors = transformChanges<DelonElementSelectorData>([
   {
     pr: '',
     changes: [
-      {
-        replace: 'avatar-list',
-        replaceWith: 'na-avatar-list'
-      },
-      {
-        replace: 'count-down',
-        replaceWith: 'na-count-down'
-      }
     ]
   }
 ]);

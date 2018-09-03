@@ -4,12 +4,12 @@ import { TestBed } from '@angular/core/testing';
 import { concat } from 'rxjs';
 import { tap, filter, flatMap } from 'rxjs/operators';
 
-import { NaLazyService } from '@delon/util';
+import { LazyService } from '@delon/util';
 
-import { NaLodopService } from './lodop.service';
+import { LodopService } from './lodop.service';
 import { NaLodopConfig } from './lodop.config';
 import { NaLodopModule } from './lodop.module';
-import { NaLodop } from './interface';
+import { Lodop } from './interface';
 
 const cog: NaLodopConfig = {
   license: '',
@@ -32,7 +32,7 @@ class MockLazyService {
 
 describe('abc: lodop', () => {
   let injector: Injector;
-  let srv: NaLodopService;
+  let srv: LodopService;
 
   function fnNaLodopConfig(): NaLodopConfig {
     return cog;
@@ -41,11 +41,11 @@ describe('abc: lodop', () => {
     injector = TestBed.configureTestingModule({
       imports: [NaLodopModule.forRoot()],
       providers: [
-        { provide: NaLazyService, useClass: MockLazyService },
+        { provide: LazyService, useClass: MockLazyService },
         { provide: NaLodopConfig, useFactory: fnNaLodopConfig },
       ],
     });
-    srv = injector.get(NaLodopService);
+    srv = injector.get(LodopService);
     isErrRequest = false;
     loadCount = 0;
     isNullLodop = false;
@@ -89,7 +89,7 @@ describe('abc: lodop', () => {
         },
       };
       setTimeout(() => {
-        const obj = window[cog.name] as NaLodop;
+        const obj = window[cog.name] as Lodop;
         (obj.webskt as any).readyState = 1;
       }, 30);
       srv.lodop.subscribe(res => {

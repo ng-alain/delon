@@ -62,7 +62,7 @@ export class NaReuseTabContextService {
       .withPositions(positions);
     this.ref = this.overlay.create({
       positionStrategy,
-      panelClass: 'na-rt__cm',
+      panelClass: 'reuse-tab__cm',
       scrollStrategy: this.overlay.scrollStrategies.close(),
     });
     const comp = this.ref.attach(

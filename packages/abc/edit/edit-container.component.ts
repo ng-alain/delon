@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { toNumber, toBoolean } from '@delon/util';
-import { NaEditConfig } from './edit.config';
+import { NaEditConfig } from './config';
 
 @Component({
-  selector: 'na-edit-wrap, [na-edit-wrap]',
-  templateUrl: './edit-wrap.component.html',
+  selector: 'se-container, [se-container]',
+  templateUrl: './edit-container.component.html',
   preserveWhitespaces: false,
 })
-export class NaEditWrapComponent {
+export class SEContainerComponent {
   //#region fields
 
   @Input()
@@ -19,7 +19,7 @@ export class NaEditWrapComponent {
   }
   private _gutter: number;
 
-  @Input('na-edit-wrap')
+  @Input('se-container')
   set col(value: any) {
     const a = toNumber(value, 0);
     if (a <= 0) return;

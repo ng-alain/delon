@@ -11,8 +11,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <na-trend flag="up" reverseColor>12%</na-trend>
-  <na-trend flag="down" reverseColor class="ml-sm">11%</na-trend>
+  <trend flag="up" reverseColor>12%</trend>
+  <trend flag="down" reverseColor class="ml-sm">11%</trend>
   `
 })
 export class DemoComponent {

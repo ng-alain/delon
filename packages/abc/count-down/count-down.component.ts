@@ -3,7 +3,7 @@ import * as format from 'date-fns/format';
 import * as addSeconds from 'date-fns/add_seconds';
 
 @Component({
-  selector: 'na-count-down',
+  selector: 'count-down',
   template: `
     <countdown *ngIf="config" [config]="config"
       (start)="_start()"

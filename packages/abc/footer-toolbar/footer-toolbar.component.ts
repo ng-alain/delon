@@ -12,14 +12,14 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { toBoolean } from '@delon/util';
 
-const CLS = 'na-footer-toolbar';
+const CLS = 'footer-toolbar';
 
 @Component({
-  selector: 'na-footer-toolbar',
+  selector: 'footer-toolbar',
   template: `
-  <div class="na-footer-toolbar__left"><ng-container *ngIf="extra" [ngTemplateOutlet]="extra"></ng-container></div>
-  <div class="na-footer-toolbar__right">
-    <na-error-collect *ngIf="errorCollect"></na-error-collect>
+  <div class="footer-toolbar__left"><ng-container *ngIf="extra" [ngTemplateOutlet]="extra"></ng-container></div>
+  <div class="footer-toolbar__right">
+    <error-collect *ngIf="errorCollect"></error-collect>
     <ng-content></ng-content>
   </div>
   `,

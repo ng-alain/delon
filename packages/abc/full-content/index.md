@@ -25,5 +25,5 @@ module: NaFullContentModule
 有三种方式可以控制是否完整全屏，包括：
 
 - 使用 `fullscreen` 双向绑定
-- 使用 `[na-full-toggle]` 指令
+- 使用 `[full-toggle]` 指令
 - 使用 `NaFullContentService.toggle()` 服务

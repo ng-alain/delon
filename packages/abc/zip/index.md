@@ -19,7 +19,7 @@ yarn add file-saver
 
 ## API
 
-### NaZipService
+### ZipService
 
 方法 | 说明 |
 ----|------

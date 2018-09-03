@@ -1,8 +1,8 @@
 @import '../../../theme/styles/default';
 
-@na-full-content-prefix: ~'.na-full-content';
+@full-content-prefix: ~'.full-content';
 
-@{na-full-content-prefix} {
+@{full-content-prefix} {
   display: block;
   height: 100%;
   overflow: hidden;
@@ -21,7 +21,7 @@
   &__fs {
     .header,
     .aside,
-    na-reuse-tab {
+    reuse-tab {
       display: none !important;
     }
     .content {
@@ -30,7 +30,7 @@
   }
   &__ht {
     .content__title,
-    .na-ph {
+    .page-header {
       display: none !important;
     }
   }

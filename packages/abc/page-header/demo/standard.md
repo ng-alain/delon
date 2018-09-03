@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-demo',
     template: `
-<na-page-header [title]="'单号：234231029431'">
+<page-header [title]="'单号：234231029431'">
     <ng-template #breadcrumb>
         <nz-breadcrumb>
             <nz-breadcrumb-item><a>一级菜单</a></nz-breadcrumb-item>
@@ -39,14 +39,14 @@ import { Component } from '@angular/core';
         <button nz-button [nzType]="'primary'">主操作</button>
     </ng-template>
     <ng-template #content>
-        <na-view-wrap size="small" col="2">
-            <na-view label="创建人">曲丽丽</na-view>
-            <na-view label="订购产品">XX 服务</na-view>
-            <na-view label="创建时间">2017-07-07</na-view>
-            <na-view label="关联单据"><a (click)="msg.success('yes')">12421</a></na-view>
-            <na-view label="生效日期">2017-07-07 ~ 2017-08-08</na-view>
-            <na-view label="备注">请于两个工作日内确认</na-view>
-        </na-view-wrap>
+      <sv-container size="small" col="2">
+        <sv label="创建人">曲丽丽</sv>
+        <sv label="订购产品">XX 服务</sv>
+        <sv label="创建时间">2017-07-07</sv>
+        <sv label="关联单据"><a (click)="msg.success('yes')">12421</a></sv>
+        <sv label="生效日期">2017-07-07 ~ 2017-08-08</sv>
+        <sv label="备注">请于两个工作日内确认</sv>
+      </sv-container>
     </ng-template>
     <ng-template #extra>
         <div nz-row>
@@ -66,7 +66,7 @@ import { Component } from '@angular/core';
             <nz-tab nzTitle="规则"></nz-tab>
         </nz-tabset>
     </ng-template>
-</na-page-header>
+</page-header>
     `
 })
 export class DemoComponent {

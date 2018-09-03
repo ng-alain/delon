@@ -11,9 +11,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <na-ellipsis lines="3" style="width: 200px;">
+  <ellipsis lines="3" style="width: 200px;">
     There were injuries alleged in three <a href="#cover">cases in 2015</a>, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.
-  </na-ellipsis>
+  </ellipsis>
   `
 })
 export class DemoComponent {

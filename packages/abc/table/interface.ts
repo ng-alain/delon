@@ -1,8 +1,8 @@
-import { NaTableComponent } from './table.component';
+import { STComponent } from './table.component';
 import { ModalHelperOptions } from '@delon/theme';
 import { ModalOptionsForService } from 'ng-zorro-antd';
 
-export interface NaTableReq {
+export interface STReq {
   /**
    * 额外请求参数，默认自动附加 `pi`、`ps` 至URL
    * - `{ status: 'new' }` => `url?pi=1&ps=10&status=new`
@@ -18,34 +18,34 @@ export interface NaTableReq {
    * 重命名参数 `pi`、`ps`，默认：`{ pi: 'pi', ps: 'ps' }`
    * - `{ pi: 'Page' }` => `pi` 会被替换成 Page
    */
-  reName?: NaTableReqReNameType;
+  reName?: STReqReNameType;
   /**
    * 是否将请求所有参数数据都放入 `body` 当中（`url` 地址本身参数除外），仅当 `method: 'POST'` 时有效，默认：`false`
    */
   allInBody?: boolean;
 }
 
-export interface NaTableLoadOptions {
+export interface STLoadOptions {
   /** 是否合并，默认：`false` */
   merge?: boolean;
 }
 
-export interface NaTableRes {
+export interface STRes {
   /**
    * 重命名返回参数 `total`、`list`
    * - `{ total: 'Total' }` => Total 会被当作 `total`
    */
-  reName?: NaTableResReNameType;
+  reName?: STResReNameType;
   /**
    * 数据预处理
    */
-  process?: (data: NaTableData[]) => NaTableData[];
+  process?: (data: STData[]) => STData[];
 }
 
-export interface NaTablePage {
+export interface STPage {
   /**
    * 前端分页，当 `data` 为`any[]` 或 `Observable<any[]>` 有效，默认：`true`
-   * - `true` 由 `na-table` 根据 `data` 长度受控分页，包括：排序、过滤等
+   * - `true` 由 `st` 根据 `data` 长度受控分页，包括：排序、过滤等
    * - `false` 由用户通过 `total` 和 `data` 参数受控分页，并维护 `(change)` 当分页变更时重新加载数据
    */
   front?: boolean;
@@ -100,7 +100,7 @@ export interface NaTablePage {
 /**
  * 数据源
  */
-export interface NaTableData {
+export interface STData {
   /**
    * 选择框或单选框状态值
    */
@@ -116,7 +116,7 @@ export interface NaTableData {
 /**
  * 列描述
  */
-export interface NaTableColumn {
+export interface STColumn {
   /**
    * 列标题
    */
@@ -159,11 +159,11 @@ export interface NaTableColumn {
   /**
    * 链接回调，若返回一个字符串表示导航URL会自动触发 `router.navigateByUrl`
    */
-  click?: (record: any, instance?: NaTableComponent) => any;
+  click?: (record: any, instance?: STComponent) => any;
   /**
    * 按钮组
    */
-  buttons?: NaTableColumnButton[];
+  buttons?: STColumnButton[];
   /**
    * 自定义渲染ID
    * @example
@@ -191,11 +191,11 @@ export interface NaTableColumn {
    * - `true` 表示允许排序
    * - `string` 表示远程数据排序相对应 `key` 值
    */
-  sort?: true | string | NaTableColumnSort;
+  sort?: true | string | STColumnSort;
   /**
    * 过滤配置项
    */
-  filter?: NaTableColumnFilter;
+  filter?: STColumnFilter;
   /**
    * 格式化列值
    */
@@ -203,7 +203,7 @@ export interface NaTableColumn {
   /**
    * 自定义全/反选选择项
    */
-  selections?: NaTableColumnSelection[];
+  selections?: STColumnSelection[];
   /**
    * 列 `class` 属性值（注：无须 `.` 点），例如：
    * - `text-center` 居中
@@ -227,7 +227,7 @@ export interface NaTableColumn {
   /**
    * 当 `type=yn` 有效
    */
-  yn?: NaTableColumnYn;
+  yn?: STColumnYn;
   /**
    * 是否允许导出，默认 `true`
    */
@@ -246,16 +246,16 @@ export interface NaTableColumn {
   /**
    * 徽标配置项
    */
-  badge?: NaTableColumnBadge;
+  badge?: STColumnBadge;
   /**
    * 标签配置项
    */
-  tag?: NaTableColumnTag;
+  tag?: STColumnTag;
 
   [key: string]: any;
 }
 
-export interface NaTableColumnSort {
+export interface STColumnSort {
   /**
    * 排序的默认受控属性
    */
@@ -267,7 +267,7 @@ export interface NaTableColumnSort {
   /**
    * 远程数据的排序时后端相对应的KEY，默认使用 `index` 属性
    * - 若 `multiSort: false` 时：`key: 'name' => ?name=1&pi=1`
-   * - 若 `multiSort: true` 允许多个排序 key 存在，或使用 `NaTableMultiSort` 指定多列排序key合并规则
+   * - 若 `multiSort: true` 允许多个排序 key 存在，或使用 `STMultiSort` 指定多列排序key合并规则
    */
   key?: string;
   /**
@@ -278,15 +278,15 @@ export interface NaTableColumnSort {
   reName?: { ascend?: string; descend?: string };
 }
 
-export interface NaTableColumnFilter {
+export interface STColumnFilter {
   /**
    * 表头的筛选菜单项，至少一项才会生效
    */
-  menus: NaTableColumnFilterMenu[];
+  menus: STColumnFilterMenu[];
   /**
    * 本地数据的筛选函数
    */
-  fn?: (filter: NaTableColumnFilterMenu, record: any) => boolean;
+  fn?: (filter: STColumnFilterMenu, record: any) => boolean;
   /**
    * 标识数据是否已过滤，筛选图标会高亮
    */
@@ -317,10 +317,10 @@ export interface NaTableColumnFilter {
    * - 默认当 `multiple: true` 时以英文逗号拼接的字符串
    * @return 返回为 Object 对象
    */
-  reName?: (list: NaTableColumnFilterMenu[], col: NaTableColumn) => Object;
+  reName?: (list: STColumnFilterMenu[], col: STColumn) => Object;
 }
 
-export interface NaTableColumnFilterMenu {
+export interface STColumnFilterMenu {
   /**
    * 文本
    */
@@ -339,7 +339,7 @@ export interface NaTableColumnFilterMenu {
   [key: string]: any;
 }
 
-export interface NaTableColumnSelection {
+export interface STColumnSelection {
   /**
    * 选择项显示的文字
    */
@@ -347,13 +347,13 @@ export interface NaTableColumnSelection {
   /**
    * 选择项点击回调，允许对参数 `data.checked` 进行操作
    */
-  select: (data: NaTableData[]) => void;
+  select: (data: STData[]) => void;
   /** 权限，等同 `can()` 参数值 */
   acl?: any;
 }
 
 /** 当 `type=yn` 有效 */
-export interface NaTableColumnYn {
+export interface STColumnYn {
   /**
    * 真值条件，（默认：`true`）
    */
@@ -371,7 +371,7 @@ export interface NaTableColumnYn {
 /**
  * 按钮配置
  */
-export interface NaTableColumnButton {
+export interface STColumnButton {
   /**
    * 文本
    */
@@ -383,7 +383,7 @@ export interface NaTableColumnButton {
   /**
    * 格式化文本，较高调用频率，请勿过多复杂计算免得产生性能问题
    */
-  format?: (record: any, btn: NaTableColumnButton) => string;
+  format?: (record: any, btn: STColumnButton) => string;
   /**
    * 按钮类型
    * - `none` 无任何互动
@@ -403,7 +403,7 @@ export interface NaTableColumnButton {
   click?:
     | 'reload'
     | 'load'
-    | ((record: any, modal?: any, instance?: NaTableComponent) => any);
+    | ((record: any, modal?: any, instance?: STComponent) => any);
   /**
    * 是否需要气泡确认框
    */
@@ -415,12 +415,12 @@ export interface NaTableColumnButton {
   /**
    * 对话框参数
    */
-  modal?: NaTableColumnButtonModal;
+  modal?: STColumnButtonModal;
   /**
    * 下拉菜单，当存在时以 `dropdown` 形式渲染
    * - 只支持一级
    */
-  children?: NaTableColumnButton[];
+  children?: STColumnButton[];
   /**
    * 权限，等同 `can()` 参数值
    */
@@ -430,14 +430,14 @@ export interface NaTableColumnButton {
    */
   iif?: (
     item: any,
-    btn: NaTableColumnButton,
-    column: NaTableColumn,
+    btn: STColumnButton,
+    column: STColumn,
   ) => boolean;
 
   [key: string]: any;
 }
 
-export interface NaTableColumnButtonModal extends ModalHelperOptions {
+export interface STColumnButtonModal extends ModalHelperOptions {
   /**
    * 对话框组件对象，务必在 `entryComponents` 注册
    */
@@ -452,7 +452,7 @@ export interface NaTableColumnButtonModal extends ModalHelperOptions {
   paramsName?: string;
 }
 
-export interface NaTableColumnButtonModalConfig {
+export interface STColumnButtonModalConfig {
   /**
    * 指定模态框目标组件的接收参数名，默认：`record`
    */
@@ -465,19 +465,19 @@ export interface NaTableColumnButtonModalConfig {
   exact?: boolean;
 }
 
-export interface NaTableReqReNameType {
+export interface STReqReNameType {
   pi?: string;
   ps?: string;
 }
 
-export interface NaTableResReNameType {
+export interface STResReNameType {
   total?: string | string[];
   list?: string | string[];
 }
 
-export interface NaTableExportOptions {
+export interface STExportOptions {
   _d?: any[];
-  _c?: NaTableColumn[];
+  _c?: STColumn[];
   /** 工作溥名 */
   sheetname?: string;
   /** 文件名 */
@@ -489,7 +489,7 @@ export interface NaTableExportOptions {
 /**
  * 多排序相同排序 key 时合并规则
  */
-export interface NaTableMultiSort {
+export interface STMultiSort {
   /** 请求参数名，默认：`sort` */
   key?: string;
   /** 不同属性间分隔符，默认：`-` */
@@ -501,12 +501,12 @@ export interface NaTableMultiSort {
 /**
  * 徽标信息
  */
-export interface NaTableColumnBadge {
-  [key: number]: NaTableColumnBadgeValue;
-  [key: string]: NaTableColumnBadgeValue;
+export interface STColumnBadge {
+  [key: number]: STColumnBadgeValue;
+  [key: string]: STColumnBadgeValue;
 }
 
-export interface NaTableColumnBadgeValue {
+export interface STColumnBadgeValue {
   /**
    * 文本
    */
@@ -520,12 +520,12 @@ export interface NaTableColumnBadgeValue {
 /**
  * 标签信息
  */
-export interface NaTableColumnTag {
-  [key: number]: NaTableColumnTagValue;
-  [key: string]: NaTableColumnTagValue;
+export interface STColumnTag {
+  [key: number]: STColumnTagValue;
+  [key: string]: STColumnTagValue;
 }
 
-export interface NaTableColumnTagValue {
+export interface STColumnTagValue {
   /**
    * 文本
    */
@@ -550,16 +550,16 @@ export interface NaTableColumnTagValue {
     | string;
 }
 
-export type NaTableChangeType = 'pi' | 'ps' | 'checkbox' | 'radio' | 'sort' | 'filter' | 'click' | 'dblClick';
+export type STChangeType = 'pi' | 'ps' | 'checkbox' | 'radio' | 'sort' | 'filter' | 'click' | 'dblClick';
 
 /**
  * 回调数据
  */
-export interface NaTableChange {
+export interface STChange {
   /**
    * 回调类型
    */
-  type: NaTableChangeType;
+  type: STChangeType;
   /**
    * 当前页码
    */
@@ -575,40 +575,40 @@ export interface NaTableChange {
   /**
    * `checkbox` 参数
    */
-  checkbox?: NaTableData[];
+  checkbox?: STData[];
   /**
    * `radio` 参数
    */
-  radio?: NaTableData;
+  radio?: STData;
   /**
    * 排序参数
    */
-  sort?: NaTableChangeSort;
+  sort?: STChangeSort;
   /**
    * 过滤参数
    */
-  filter?: NaTableColumn;
+  filter?: STColumn;
   /**
    * 行点击或双击参数
    */
-  click?: NaTableChangeRowClick;
+  click?: STChangeRowClick;
 }
 
 /** 行单击参数 */
-export interface NaTableChangeSort {
+export interface STChangeSort {
   value?: 'ascend' | 'descend';
   map?: { [key: string]: string };
-  column?: NaTableColumn;
+  column?: STColumn;
 }
 
 /** 行单击参数 */
-export interface NaTableChangeRowClick {
+export interface STChangeRowClick {
   e?: Event;
-  item?: NaTableData;
+  item?: STData;
   index?: number;
 }
 
-export interface NaTableError {
+export interface STError {
   type?: 'req';
   error?: any;
 }

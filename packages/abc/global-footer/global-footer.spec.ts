@@ -40,7 +40,7 @@ describe('abc: global-footer', () => {
       },
     ];
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('.na-global-footer__links-item')).length).toBe(context.links.length);
+    expect(dl.queryAll(By.css('.global-footer__links-item')).length).toBe(context.links.length);
   });
 
   it('should be custom copyright template', () => {
@@ -51,9 +51,9 @@ describe('abc: global-footer', () => {
 @Component({
   template: `
     <div style="background:#f5f5f5; height: 100%;">
-        <na-global-footer [links]="links">
+        <global-footer [links]="links">
             <div id="copyright">copyright</div>
-        </na-global-footer>
+        </global-footer>
     </div>
     `,
 })

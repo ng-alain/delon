@@ -10,13 +10,13 @@ A list of user's avatar for project or group member list frequently. If a large 
 
 ## API
 
-### na-avatar-list
+### avatar-list
 
 | Property | Description  | Type                                | Default   |
 | -------- | ------------ | ----------------------------------- | --------- |
 | `[size]` | size of list | `large`、`small`、`mini`、`default` | `default` |
 
-### na-avatar-list-item
+### avatar-list-item
 
 | Property | Description                                  | Type     | Default |
 | -------- | -------------------------------------------- | -------- | ------- |

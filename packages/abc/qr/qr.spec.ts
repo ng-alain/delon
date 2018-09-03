@@ -60,7 +60,7 @@ describe('abc: qr', () => {
 
 @Component({
   template: `
-  <na-qr #comp
+  <qr #comp
     [value]="value"
     [background]="background"
     [backgroundAlpha]="backgroundAlpha"
@@ -70,7 +70,7 @@ describe('abc: qr', () => {
     [mime]="mime"
     [padding]="padding"
     [size]="size"
-    (change)="change($event)"></na-qr>
+    (change)="change($event)"></qr>
     `,
 })
 class TestComponent {

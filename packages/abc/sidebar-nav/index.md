@@ -34,7 +34,7 @@ ng-alain 左边主菜单，依赖于 `@delon/theme`。
 
 ## API
 
-### na-sidebar-nav
+### sidebar-nav
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------

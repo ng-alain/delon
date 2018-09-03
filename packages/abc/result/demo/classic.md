@@ -12,7 +12,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-demo',
   template: `
-<na-result
+<result
   type="success"
   [title]="'提交成功'"
   description="提交结果页用于反馈一系列操作任务的处理结果，如果仅是简单操作，使用 Message 全局提示反馈即可。本文字区域可以展示简单的补充说明，如果有类似展示x“单据”的需求，下面这个灰色区域可以呈现比较复杂的内容。"
@@ -62,7 +62,7 @@ import { NzMessageService } from 'ng-zorro-antd';
   <button nz-button [nzType]="'primary'">返回列表</button>
   <button nz-button>查看项目</button>
   <button nz-button>打 印</button>
-</na-result>
+</result>
   `
 })
 export class DemoComponent {

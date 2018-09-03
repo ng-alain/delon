@@ -3,19 +3,19 @@ order: 6
 title: 自定义列
 ---
 
-利用在 `ng-template` 定义 `na-table-row="custom"` 指定的名称，与列描述中的 `render: 'custom'` 关联；允许接收 `item`、`index`、`column` 三个值。
+利用在 `ng-template` 定义 `st-row="custom"` 指定的名称，与列描述中的 `render: 'custom'` 关联；允许接收 `item`、`index`、`column` 三个值。
 
 其中若指定 `type="title"` 表示是对标题自定义列。附加可实现：表头分组。
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <na-table #st [data]="users" [columns]="columns">
-    <ng-template na-table-row="custom" type="title" let-c>
+  <st #st [data]="users" [columns]="columns">
+    <ng-template st-row="custom" type="title" let-c>
       {{ c.title }}
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
         <i class="anticon anticon-smile-o ant-table-filter-icon" nz-dropdown></i>
@@ -25,12 +25,12 @@ import { NaTableColumn } from '@delon/abc';
         </div>
       </nz-dropdown>
     </ng-template>
-    <ng-template na-table-row="custom" let-item let-index="index">
+    <ng-template st-row="custom" let-item let-index="index">
       <nz-tooltip [nzTitle]="'年龄：' + item.age">
         <span nz-tooltip>tooltip: {{item.age}}-{{index}}</span>
       </nz-tooltip>
     </ng-template>
-  </na-table>
+  </st>
   `,
 })
 export class DemoComponent {
@@ -43,7 +43,7 @@ export class DemoComponent {
         age: Math.ceil(Math.random() * 10) + 20,
       };
     });
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '姓名', index: 'name' },
     { title: '年龄', index: 'age' },

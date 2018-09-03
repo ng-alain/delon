@@ -1,17 +1,17 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 
 @Component({
-  selector: 'na-result',
+  selector: 'result',
   template: `
-  <div class="na-result__icon"><i class="anticon anticon-{{_icon}} na-result__icon-{{_type}}"></i></div>
-  <div class="na-result__title"><ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container></div>
-  <div *ngIf="_description || _descriptionTpl" class="na-result__desc"><ng-container *ngIf="_description; else _descriptionTpl">{{_description}}</ng-container></div>
-  <div *ngIf="_extra || _extraTpl" class="na-result__extra">
+  <div class="result__icon"><i class="anticon anticon-{{_icon}} result__icon-{{_type}}"></i></div>
+  <div class="result__title"><ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container></div>
+  <div *ngIf="_description || _descriptionTpl" class="result__desc"><ng-container *ngIf="_description; else _descriptionTpl">{{_description}}</ng-container></div>
+  <div *ngIf="_extra || _extraTpl" class="result__extra">
     <ng-container *ngIf="_extra; else _extraTpl">{{_extra}}</ng-container>
   </div>
-  <div class="na-result__actions"><ng-content></ng-content></div>
+  <div class="result__actions"><ng-content></ng-content></div>
   `,
-  host: { '[class.na-result]': 'true' },
+  host: { '[class.result]': 'true' },
   preserveWhitespaces: false,
 })
 export class NaResultComponent {

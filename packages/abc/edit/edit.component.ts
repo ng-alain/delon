@@ -19,19 +19,19 @@ import { Subscription } from 'rxjs';
 
 import { toNumber, toBoolean, deepGet } from '@delon/util';
 
-import { NaEditWrapComponent } from './edit-wrap.component';
 import { GenStanRepCls, REP_MAX_COL } from '../core/responsive';
+import { SEContainerComponent } from './edit-container.component';
 
-const prefixCls = `na-edit`;
+const prefixCls = `se`;
 let nextUniqueId = 0;
 
 @Component({
-  selector: 'na-edit',
+  selector: 'se',
   templateUrl: './edit.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class SEItemComponent implements OnChanges, AfterViewInit, OnDestroy {
   private el: HTMLElement;
   private status$: Subscription;
   @ContentChild(NgModel)
@@ -94,7 +94,7 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
     this._autoId = false;
   }
 
-  _id = `_na-edit-${nextUniqueId++}`;
+  _id = `_se-${nextUniqueId++}`;
   _autoId = true;
 
   @Input()
@@ -130,13 +130,13 @@ export class NaEditComponent implements OnChanges, AfterViewInit, OnDestroy {
   constructor(
     @Optional()
     @Host()
-    private parent: NaEditWrapComponent,
+    private parent: SEContainerComponent,
     el: ElementRef,
     private ren: Renderer2,
     private cd: ChangeDetectorRef,
   ) {
     if (parent == null) {
-      throw new Error(`[na-edit] must include 'na-edit-wrap' component`);
+      throw new Error(`[se] must include 'se-container' component`);
     }
     this.el = el.nativeElement;
   }

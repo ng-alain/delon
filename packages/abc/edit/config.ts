@@ -1,6 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class NaEditConfig {
   /**
    * 大小，默认：`default`

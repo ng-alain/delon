@@ -8,7 +8,7 @@ title: 压缩
 ```ts
 import { NzMessageService } from 'ng-zorro-antd';
 import { Component } from '@angular/core';
-import { NaZipService } from '@delon/abc';
+import { ZipService } from '@delon/abc';
 import * as JSZip from 'jszip';
 
 @Component({
@@ -43,7 +43,7 @@ export class DemoComponent {
     { path: '小程序标志.zip', url: 'https://wximg.gtimg.com/shake_tv/mina/standard_logo.zip' }
   ];
 
-  constructor(private zip: NaZipService, private msg: NzMessageService) {
+  constructor(private zip: ZipService, private msg: NzMessageService) {
     this.zip.create().then(ret => this.instance = ret);
   }
 

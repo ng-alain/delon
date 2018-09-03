@@ -8,7 +8,7 @@ title: 基础信息
 ```ts
 import { Component } from '@angular/core';
 import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
-import { NaLodopService, NaLodop } from '@delon/abc';
+import { LodopService, Lodop } from '@delon/abc';
 
 @Component({
     selector: 'app-demo',
@@ -90,10 +90,10 @@ export class DemoComponent {
         `
     };
     error = false;
-    lodop: NaLodop = null;
+    lodop: Lodop = null;
     pinters: any[] = [];
     papers: string[] = [];
-    constructor(public lodopSrv: NaLodopService, private msg: NzMessageService, private notify: NzNotificationService) {
+    constructor(public lodopSrv: LodopService, private msg: NzMessageService, private notify: NzNotificationService) {
         this.lodopSrv.lodop.subscribe(({ lodop, ok }) => {
             if (!ok) {
                 this.error = true;

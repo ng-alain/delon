@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <na-notice-icon count="5"></na-notice-icon>
+  <notice-icon count="5"></notice-icon>
   `
 })
 export class DemoComponent {

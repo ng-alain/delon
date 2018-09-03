@@ -10,7 +10,7 @@ export interface LazyResult {
 }
 
 @Injectable({ providedIn: 'root' })
-export class NaLazyService {
+export class LazyService {
   private list: any = {};
   private cached: any = {};
   private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<

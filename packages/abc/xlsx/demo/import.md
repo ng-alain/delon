@@ -7,7 +7,7 @@ title: 导入
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn, NaXlsxService } from '@delon/abc';
+import { STColumn, XlsxService } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
@@ -18,7 +18,7 @@ import { NaTableColumn, NaXlsxService } from '@delon/abc';
     `,
 })
 export class DemoComponent {
-  constructor(private xlsx: NaXlsxService) {}
+  constructor(private xlsx: XlsxService) {}
   data: any;
   url() {
     this.xlsx.import(`./assets/demo.xlsx`).then(res => this.data = res);

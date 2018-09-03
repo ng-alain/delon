@@ -1,7 +1,7 @@
 ---
 type: Basic
 order: 2
-title: na-src
+title: _src
 subtitle: 显示图像
 cols: 1
 module: NaImageModule

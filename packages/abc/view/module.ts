@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ObserversModule } from '@angular/cdk/observers';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { NaViewWrapComponent } from './view-wrap.component';
+import { SVContainerComponent } from './container.component';
 import { NaViewComponent } from './view.component';
-import { NaViewTitleComponent } from './view-title.component';
-import { NaViewConfig } from './view.config';
+import { SVTitleComponent } from './title.component';
+import { NaViewConfig } from './config';
 
-const COMPONENTS = [NaViewWrapComponent, NaViewComponent, NaViewTitleComponent];
+const COMPONENTS = [SVContainerComponent, NaViewComponent, SVTitleComponent];
 
 @NgModule({
   imports: [CommonModule, ObserversModule, NgZorroAntdModule],

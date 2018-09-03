@@ -11,7 +11,7 @@ import { NaReuseContextI18n, NaReuseContextCloseEvent } from './interface';
 import { NaReuseTabContextService } from './reuse-tab-context.service';
 
 @Component({
-  selector: 'na-reuse-tab-context',
+  selector: 'reuse-tab-context',
   template: ``,
   preserveWhitespaces: false,
 })

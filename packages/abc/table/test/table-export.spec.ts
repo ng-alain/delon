@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { Injector } from '@angular/core';
-import { NaXlsxService } from '../../xlsx/xlsx.service';
-import { NaXlsxExportOptions } from '../../xlsx/interface';
-import { NaTableExport } from '../table-export';
-import { NaTableColumn } from '../interface';
+import { XlsxService } from '../../xlsx/xlsx.service';
+import { XlsxExportOptions } from '../../xlsx/interface';
+import { STExport } from '../table-export';
+import { STColumn } from '../interface';
 
 class MockXlsxService {
-  export(options: NaXlsxExportOptions) {
+  export(options: XlsxExportOptions) {
     return options;
   }
 }
-const columns: NaTableColumn[] = [
+const columns: STColumn[] = [
   { title: 'id', index: ['id'], type: 'checkbox' },
   { title: 'name', index: ['name'] },
   { title: 'img', index: ['img'], type: 'img', exported: false },
@@ -65,17 +65,17 @@ const data: any[] = [
 
 describe('abc: table: export', () => {
   let injector: Injector;
-  let srv: NaTableExport;
+  let srv: STExport;
 
   describe('[default]', () => {
     beforeEach(() => {
       injector = TestBed.configureTestingModule({
         providers: [
-          { provide: NaXlsxService, useClass: MockXlsxService },
-          NaTableExport,
+          { provide: XlsxService, useClass: MockXlsxService },
+          STExport,
         ],
       });
-      srv = injector.get(NaTableExport);
+      srv = injector.get(STExport);
     });
 
     it('should be export a excel', () => {
@@ -125,8 +125,8 @@ describe('abc: table: export', () => {
   it('should be throw error when not load NaXlsxModule', () => {
     expect(() => {
       (TestBed.configureTestingModule({
-        providers: [NaTableExport],
-      }).get(NaTableExport) as NaTableExport).export(null);
+        providers: [STExport],
+      }).get(STExport) as STExport).export(null);
     }).toThrowError(`muse be import 'NaXlsxModule' module, but got null`);
   });
 });

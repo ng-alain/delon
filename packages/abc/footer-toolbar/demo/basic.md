@@ -16,9 +16,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     <nz-form-control [nzValidateStatus]="name">
       <input nz-input formControlName="name" placeholder="required">
     </nz-form-control>
-    <na-footer-toolbar errorCollect>
+    <footer-toolbar errorCollect>
       <button nz-button [nzType]="'primary'">Submit</button>
-    </na-footer-toolbar>
+    </footer-toolbar>
   </form>
     `
 })

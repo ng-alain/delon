@@ -28,7 +28,7 @@ providers: [
 
 ## 匹配模式
 
-在项目的任何位置（建议：`startup.service.ts`）注入 `NaReuseTabService` 类，并设置 `mode` 属性，或通过 `<na-reuse-tab [mode]="0"></na-reuse-tab>` 重新设置值，包括：
+在项目的任何位置（建议：`startup.service.ts`）注入 `NaReuseTabService` 类，并设置 `mode` 属性，或通过 `<reuse-tab [mode]="0"></reuse-tab>` 重新设置值，包括：
 
 **0、（推荐，默认值）Menu**
 

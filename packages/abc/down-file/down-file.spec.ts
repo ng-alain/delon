@@ -184,7 +184,7 @@ describe('abc: down-file', () => {
 @Component({
   template: `
     <button *ngFor="let i of fileTypes" id="down-{{i}}" class="mr-sm"
-        na-down-file
+        down-file
         [http-data]="data"
         http-method="get"
         http-url="/demo.{{i}}"

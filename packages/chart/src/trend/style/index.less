@@ -1,8 +1,8 @@
 @import '../../../../theme/styles/default';
 
-@na-trend-prefix: ~'.na-trend';
+@trend-prefix: ~'.trend';
 
-@{na-trend-prefix} {
+@{trend-prefix} {
   display: inline-block;
   font-size: @font-size-base;
   line-height: 22px;
@@ -24,16 +24,16 @@
     top: -1px;
   }
   &__grey {
-    @{na-trend-prefix}__up,
-    @{na-trend-prefix}__down {
+    @{trend-prefix}__up,
+    @{trend-prefix}__down {
       color: @text-color;
     }
   }
   &__reverse {
-    @{na-trend-prefix}__up {
+    @{trend-prefix}__up {
       color: @green-6;
     }
-    @{na-trend-prefix}__down {
+    @{trend-prefix}__down {
       color: @red-6;
     }
   }

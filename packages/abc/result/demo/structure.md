@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-<na-result
+<result
   type="success"
   [title]="title"
   [description]="description"
@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
   <ng-template #title><div style="background:#7dbcea; color: #fff;">标题</div></ng-template>
   <ng-template #description><div style="background:rgba(16, 142, 233, 1); color: #fff;">结果描述</div></ng-template>
   <div style="background: #3ba0e9; color:#fff">操作建议，一般放置按钮组</div>
-</na-result>
+</result>
   `
 })
 export class DemoComponent {

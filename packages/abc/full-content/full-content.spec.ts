@@ -49,7 +49,7 @@ describe('abc: full-content', () => {
     fixture.detectChanges();
     doc = injector.get(DOCUMENT);
     bodyEl = document.querySelector('body');
-    el = dl.query(By.css('na-full-content')).nativeElement as HTMLElement;
+    el = dl.query(By.css('full-content')).nativeElement as HTMLElement;
   }
 
   afterEach(() => {
@@ -61,12 +61,12 @@ describe('abc: full-content', () => {
     it('with true', () => {
       context.fullscreen = true;
       fixture.detectChanges();
-      expect(doc.body.classList.contains('na-full-content__fs')).toBe(true);
+      expect(doc.body.classList.contains('full-content__fs')).toBe(true);
     });
     it('with false', () => {
       context.fullscreen = false;
       fixture.detectChanges();
-      expect(doc.body.classList.contains('na-full-content__fs')).toBe(false);
+      expect(doc.body.classList.contains('full-content__fs')).toBe(false);
     });
   });
 
@@ -77,12 +77,12 @@ describe('abc: full-content', () => {
       it('when fullscreen', () => {
         context.fullscreen = true;
         fixture.detectChanges();
-        expect(doc.body.classList.contains('na-full-content__ht')).toBe(true);
+        expect(doc.body.classList.contains('full-content__ht')).toBe(true);
       });
       it('when not fullscreen', () => {
         context.fullscreen = false;
         fixture.detectChanges();
-        expect(doc.body.classList.contains('na-full-content__ht')).toBe(false);
+        expect(doc.body.classList.contains('full-content__ht')).toBe(false);
       });
     });
     describe('#with [false]', () => {
@@ -90,12 +90,12 @@ describe('abc: full-content', () => {
       it('when fullscreen', () => {
         context.fullscreen = true;
         fixture.detectChanges();
-        expect(doc.body.classList.contains('na-full-content__ht')).toBe(false);
+        expect(doc.body.classList.contains('full-content__ht')).toBe(false);
       });
       it('when not fullscreen', () => {
         context.fullscreen = false;
         fixture.detectChanges();
-        expect(doc.body.classList.contains('na-full-content__ht')).toBe(false);
+        expect(doc.body.classList.contains('full-content__ht')).toBe(false);
       });
     });
   });
@@ -147,10 +147,10 @@ describe('abc: full-content', () => {
 
       context.comp._onReuseInit();
       fixture.detectChanges();
-      expect(bodyEl.classList.contains('na-full-content__fs')).toBe(true);
+      expect(bodyEl.classList.contains('full-content__fs')).toBe(true);
       context.comp._onReuseDestroy();
       fixture.detectChanges();
-      expect(bodyEl.classList.contains('na-full-content__fs')).toBe(false);
+      expect(bodyEl.classList.contains('full-content__fs')).toBe(false);
     });
     it('should be clear class when go to other route', () => {
       const eventsSub = new BehaviorSubject<any>(null);
@@ -169,20 +169,20 @@ describe('abc: full-content', () => {
 
       eventsSub.next(new ActivationEnd(null));
       eventsSub.complete();
-      expect(bodyEl.classList.contains('na-full-content')).toBe(false);
+      expect(bodyEl.classList.contains('full-content')).toBe(false);
     });
   });
 });
 
 @Component({
   template: `
-    <na-full-content #comp
+    <full-content #comp
         [(fullscreen)]="fullscreen"
         [hideTitle]="hideTitle"
         [padding]="padding"
         (fullscreenChange)="change()">
-        <button na-full-toggle>Full</button>
-    </na-full-content>
+        <button full-toggle>Full</button>
+    </full-content>
     `,
 })
 class TestComponent {

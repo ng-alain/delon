@@ -10,13 +10,13 @@ module: NaAvatarListModule
 
 ## API
 
-### na-avatar-list
+### avatar-list
 
 | 参数     | 说明     | 类型                                | 默认值    |
 | -------- | -------- | ----------------------------------- | --------- |
 | `[size]` | 头像大小 | `large`、`small`、`mini`、`default` | `default` |
 
-### na-avatar-list-item
+### avatar-list-item
 
 | 参数     | 说明         | 类型     | 默认值 |
 | -------- | ------------ | -------- | ------ |

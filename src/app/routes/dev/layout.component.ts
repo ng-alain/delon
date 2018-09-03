@@ -39,11 +39,11 @@ import { NzMessageService } from 'ng-zorro-antd';
                 <li nz-menu-item (click)="msgSrv.success('profile')">profile</li>
               </ul>
             </nz-dropdown>
-            <na-sidebar-nav class="d-block py-lg"></na-sidebar-nav>
+            <sidebar-nav class="d-block py-lg"></sidebar-nav>
           </div>
       </div>
       <section class="content">
-          <na-reuse-tab [mode]="2"></na-reuse-tab>
+          <reuse-tab [mode]="2"></reuse-tab>
           <router-outlet></router-outlet>
       </section>
   </div>`,

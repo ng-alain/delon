@@ -11,16 +11,16 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'na-quick-menu',
+  selector: 'quick-menu',
   template: `
-  <div class="na-quick-menu__inner">
-    <div class="na-quick-menu__ctrl" [ngStyle]="ctrlStyle">
-      <i class="na-quick-menu__ctrl-icon" [ngClass]="icon"></i>
+  <div class="quick-menu__inner">
+    <div class="quick-menu__ctrl" [ngStyle]="ctrlStyle">
+      <i class="quick-menu__ctrl-icon" [ngClass]="icon"></i>
     </div>
     <ng-content></ng-content>
   </div>
   `,
-  host: { '[class.na-quick-menu]': 'true' },
+  host: { '[class.quick-menu]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

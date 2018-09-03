@@ -7,21 +7,21 @@ title: 导出Excel
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="st.export()">Export</button>
     <button nz-button (click)="st.export(exportData, { filename: 'via-data.xlsx', sheetname: 'user' })">Export via data</button>
-    <na-table #st [data]="url" [req]="{params: params}" [columns]="columns" class="mt-sm"></na-table>
+    <st #st [data]="url" [req]="{params: params}" [columns]="columns" class="mt-sm"></st>
     `,
 })
 export class DemoComponent {
   url = `/users?total=100`;
   params = { a: 1, b: 2 };
   // mock
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id' },
     {
       title: '头像',

@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-<na-quick-menu>
+<quick-menu>
   <nz-list [nzBordered]="false" [nzSplit]="false">
     <nz-list-item><a href="#">Link1</a></nz-list-item>
     <nz-list-item><a href="#">Link2</a></nz-list-item>
@@ -20,7 +20,7 @@ import { Component } from '@angular/core';
     <nz-list-item><a href="#">Link4</a></nz-list-item>
     <nz-list-item><a href="#">Link5</a></nz-list-item>
   </nz-list>
-</na-quick-menu>
+</quick-menu>
   `
 })
 export class DemoComponent {

@@ -7,17 +7,17 @@ title: 自定义数据
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { NaTableColumn, NaTableChange } from '@delon/abc';
+import { STColumn, STChange } from '@delon/abc';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demo',
-  template: `<na-table [data]="users" [columns]="columns" (change)="change($event)"></na-table>`,
+  template: `<st [data]="users" [columns]="columns" (change)="change($event)"></st>`,
 })
 export class DemoComponent implements OnInit {
   users: any[] = [];
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     {
       title: '编号',
       index: 'id',
@@ -80,7 +80,7 @@ export class DemoComponent implements OnInit {
       },
     },
   ];
-  change(e: NaTableChange) {
+  change(e: STChange) {
     console.log(e);
   }
   ngOnInit(): void {

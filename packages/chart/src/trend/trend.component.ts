@@ -2,15 +2,15 @@ import { Component, Input } from '@angular/core';
 import { toBoolean } from '@delon/util';
 
 @Component({
-  selector: 'na-trend',
+  selector: 'trend',
   template: `
   <ng-content></ng-content>
-  <span *ngIf="flag" class="na-trend__{{flag}}"><i class="anticon anticon-caret-{{flag}}"></i></span>
+  <span *ngIf="flag" class="trend__{{flag}}"><i class="anticon anticon-caret-{{flag}}"></i></span>
   `,
   host: {
-    '[class.na-trend]': 'true',
-    '[class.na-trend__grey]': '!colorful',
-    '[class.na-trend__reverse]': 'colorful && reverseColor',
+    '[class.trend]': 'true',
+    '[class.trend__grey]': '!colorful',
+    '[class.trend__reverse]': 'colorful && reverseColor',
   },
   preserveWhitespaces: false,
 })

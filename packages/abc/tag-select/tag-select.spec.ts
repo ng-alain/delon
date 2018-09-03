@@ -25,17 +25,17 @@ describe('abc: tag-select', () => {
     it('with true', () => {
       context.expandable = true;
       fixture.detectChanges();
-      expect(dl.query(By.css('.na-tag-select__has-expand'))).not.toBeNull();
+      expect(dl.query(By.css('.tag-select__has-expand'))).not.toBeNull();
     });
     it('with false', () => {
       context.expandable = false;
       fixture.detectChanges();
-      expect(dl.query(By.css('.na-tag-select__has-expand'))).toBeNull();
+      expect(dl.query(By.css('.tag-select__has-expand'))).toBeNull();
     });
   });
   it('should be switch states via click trigger', () => {
     spyOn(context, 'change');
-    const triEl = dl.query(By.css('.na-tag-select__trigger')).nativeElement as HTMLElement;
+    const triEl = dl.query(By.css('.tag-select__trigger')).nativeElement as HTMLElement;
     expect(context.change).not.toHaveBeenCalled();
     expect(triEl.innerHTML).toContain('展开');
     expect(triEl.querySelector('.anticon-up')).toBeNull();
@@ -51,9 +51,9 @@ describe('abc: tag-select', () => {
 
 @Component({
   template: `
-    <na-tag-select [expandable]="expandable" (change)="change()">
+    <tag-select [expandable]="expandable" (change)="change()">
         <li *ngFor="let i of categories; let idx = index" style="width: 30%">{{i.text}}</li>
-    </na-tag-select>
+    </tag-select>
     `,
 })
 class TestComponent {

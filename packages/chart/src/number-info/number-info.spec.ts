@@ -34,7 +34,7 @@ describe('abc: number-info', () => {
 
   describe('#title', () => {
     it('with string', () => {
-      isText('.na-number-info__title', context.title);
+      isText('.number-info__title', context.title);
     });
     it('with template', () => {
       context.title = context.titleTpl;
@@ -45,7 +45,7 @@ describe('abc: number-info', () => {
 
   describe('#subTitle', () => {
     it('with string', () => {
-      isText('.na-number-info__title-sub', context.subTitle);
+      isText('.number-info__title-sub', context.subTitle);
     });
     it('with template', () => {
       context.subTitle = context.subTitleTpl;
@@ -67,7 +67,7 @@ describe('abc: number-info', () => {
 
   describe('#subTotal', () => {
     it('with string', () => {
-      isExists('.na-number-info__value-sub');
+      isExists('.number-info__value-sub');
     });
     it('with template', () => {
       context.subTotal = context.subTotalTpl;
@@ -77,23 +77,23 @@ describe('abc: number-info', () => {
   });
 
   it('should be change theme', () => {
-    isExists('.na-number-info__light');
+    isExists('.number-info__light');
     context.theme = '';
     fixture.detectChanges();
-    isExists('.na-number-info__light', false);
+    isExists('.number-info__light', false);
   });
 
   it('should be change gap', () => {
     context.gap = 10;
     fixture.detectChanges();
-    const el = dl.query(By.css('.na-number-info__value')).nativeElement as HTMLElement;
+    const el = dl.query(By.css('.number-info__value')).nativeElement as HTMLElement;
     expect(+el.style.marginTop.replace('px', '')).toBe(10);
   });
 });
 
 @Component({
   template: `
-    <na-number-info #ni
+    <number-info #ni
         [title]="title"
         [subTitle]="subTitle"
         [total]="total"
@@ -101,7 +101,7 @@ describe('abc: number-info', () => {
         suffix="suffix"
         [status]="status"
         [theme]="theme"
-        [gap]="gap"></na-number-info>
+        [gap]="gap"></number-info>
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #subTitleTpl><p id="subTitleTpl">subTitleTpl</p></ng-template>
     <ng-template #totalTpl><p id="totalTpl">totalTpl</p></ng-template>

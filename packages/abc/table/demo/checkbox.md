@@ -7,29 +7,29 @@ title: 可选择
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn, NaTableData, NaTableChange } from '@delon/abc';
+import { STColumn, STData, STChange } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
-  template: `<na-table [data]="url" [columns]="columns"
+  template: `<st [data]="url" [columns]="columns"
         [req]="{params: params}" [res]="{process: dataProcess}"
-        (change)="change($event)"></na-table>`,
+        (change)="change($event)"></st>`,
 })
 export class DemoComponent {
   url = `/users?total=100`;
   params = { a: 1, b: 2 };
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id.value', type: 'checkbox' },
     { title: '头像', type: 'img', width: '50px', index: 'picture.thumbnail' },
     { title: '邮箱', index: 'email' },
     { title: '电话', index: 'phone' },
     { title: '注册时间', type: 'date', index: 'registered' },
   ];
-  change(e: NaTableChange) {
+  change(e: STChange) {
     console.log('change', e);
   }
-  dataProcess(data: NaTableData[]) {
-    return data.map((i: NaTableData, index: number) => {
+  dataProcess(data: STData[]) {
+    return data.map((i: STData, index: number) => {
       i.disabled = index === 0;
       return i;
     });

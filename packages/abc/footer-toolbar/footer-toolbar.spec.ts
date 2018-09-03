@@ -25,13 +25,13 @@ describe('abc: footer-toolbar', () => {
   });
 
   it('should be create', () => {
-    expect(dl.queryAll(By.css('.na-footer-toolbar')).length).toBe(1);
+    expect(dl.queryAll(By.css('.footer-toolbar')).length).toBe(1);
   });
 
   it('should be load error-collect', () => {
     context.errorCollect = true;
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('na-error-collect')).length).toBe(1);
+    expect(dl.queryAll(By.css('error-collect')).length).toBe(1);
   });
 
   it('should be custom extra template', () => {
@@ -42,12 +42,12 @@ describe('abc: footer-toolbar', () => {
 @Component({
   template: `
     <form>
-        <na-footer-toolbar [errorCollect]="errorCollect">
+        <footer-toolbar [errorCollect]="errorCollect">
             <ng-template #extra>
                 <p id="extra">extra</p>
             </ng-template>
             <button>Submit</button>
-        </na-footer-toolbar>
+        </footer-toolbar>
     </form>
     `,
 })

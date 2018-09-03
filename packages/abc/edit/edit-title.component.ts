@@ -6,26 +6,26 @@ import {
   OnInit,
   Optional,
 } from '@angular/core';
-import { NaEditWrapComponent } from './edit-wrap.component';
+import { SEContainerComponent } from './edit-container.component';
 
 @Component({
-  selector: 'na-edit-title, [na-edit-title]',
+  selector: 'se-title, [se-title]',
   template: '<ng-content></ng-content>',
   host: {
-    '[class.na-edit__title]': 'true',
+    '[class.se__title]': 'true',
   },
 })
-export class NaEditTitleComponent implements OnInit {
+export class SETitleComponent implements OnInit {
   private el: HTMLElement;
   constructor(
     @Host()
     @Optional()
-    private parent: NaEditWrapComponent,
+    private parent: SEContainerComponent,
     el: ElementRef,
     private ren: Renderer2,
   ) {
     if (parent == null) {
-      throw new Error(`[na-edit-title] must include 'na-edit-wrap' component`);
+      throw new Error(`[se-title] must include 'se-container' component`);
     }
     this.el = el.nativeElement;
   }

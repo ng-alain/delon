@@ -18,9 +18,10 @@ export function findAllSubstringIndices(input: string, search: string): number[]
   const result: number[] = [];
   let i = -1;
   while ((i = input.indexOf(search, i + 1)) !== -1) {
-    if (i > 3 && !input.substr(i - 3, i).startsWith('na-')) {
-      result.push(i);
-    }
+    result.push(i);
+    // if (i > 3 && !input.substr(i - 3, i).startsWith('')) {
+    //   result.push(i);
+    // }
   }
   return result;
 }

@@ -10,7 +10,7 @@ import { InputBoolean } from '@delon/util';
 import { DatePickerConfig, DateRangePickerConfig } from './date-picker.config';
 
 @Component({
-  selector: 'na-range-picker',
+  selector: 'range-picker',
   templateUrl: './range.component.html',
   providers: [
     {

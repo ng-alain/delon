@@ -23,7 +23,7 @@ describe('abc: ellipsis', () => {
 
   it('should be ellipsis', () => {
     const ret = ((dl.nativeElement as HTMLElement).querySelector(
-      'na-ellipsis',
+      'ellipsis',
     ) as HTMLElement).style['-webkit-line-clamp'];
     expect(ret).not.toBeUndefined();
     expect(+ret).toBe(context.lines);
@@ -32,9 +32,9 @@ describe('abc: ellipsis', () => {
 
 @Component({
   template: `
-    <na-ellipsis [lines]="lines" style="width: 200px">
+    <ellipsis [lines]="lines" style="width: 200px">
         <p>There were injuries alleged in three <a href="#cover">cases in 2015</a>, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.</p>
-    </na-ellipsis>`,
+    </ellipsis>`,
 })
 class TestComponent {
   lines = 3;

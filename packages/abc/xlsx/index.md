@@ -21,7 +21,7 @@ yarn add file-saver
 
 ## API
 
-### NaLazyService
+### LazyService
 
 方法 | 说明 |
 ----|------
@@ -37,10 +37,10 @@ yarn add file-saver
 `[opts]` | Excel写入选项，见 [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | -
 `[callback]` | 保存前触发 | `(wb: WorkBook) => void` | -
 
-### na-xlsx 指令
+### xlsx 指令
 
 ```html
-<div [na-xlsx]="NaXlsxExportOptions">导出</div>
+<div [xlsx]="NaXlsxExportOptions">导出</div>
 ```
 
 ## 常见问题

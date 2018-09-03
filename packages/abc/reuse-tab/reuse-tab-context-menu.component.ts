@@ -14,7 +14,7 @@ import {
 } from './interface';
 
 @Component({
-  selector: 'na-reuse-tab-context-menu',
+  selector: 'reuse-tab-context-menu',
   template: `
   <ul nz-menu>
       <li nz-menu-item (click)="click($event, 'close')" data-type="close" [nzDisabled]="!item.closable" [innerHTML]="i18n.close"></li>

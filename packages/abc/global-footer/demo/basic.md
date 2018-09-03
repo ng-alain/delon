@@ -14,11 +14,11 @@ import { Component } from '@angular/core';
   template: `
   <div style="background:#f5f5f5; height: 100%;">
     <div style="height: 280px;"></div>
-    <na-global-footer [links]="links">
+    <global-footer [links]="links">
       <ng-template #copyright>
         Copyright <i class="anticon anticon-menu-copyright" class="mx-sm"></i>2017<a href="//github.com/cipchk" target="_blank" class="mx-sm">卡色</a>出品
       </ng-template>
-    </na-global-footer>
+    </global-footer>
   </div>
   `,
   styles: [ `:host { display: block; }` ]

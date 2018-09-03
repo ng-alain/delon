@@ -7,19 +7,19 @@ title: 后端筛选和排序
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
   <button nz-button (click)="st.reset()">重置</button>
-  <na-table #st [data]="url" [req]="{params: params}" [columns]="columns" multiSort></na-table>
+  <st #st [data]="url" [req]="{params: params}" [columns]="columns" multiSort></st>
   `,
 })
 export class DemoComponent {
   url = `/users?total=200`;
   params = { a: 1, b: 2 };
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '头像', type: 'img', width: '50px', index: 'picture.thumbnail' },
     {

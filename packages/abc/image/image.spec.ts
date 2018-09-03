@@ -70,7 +70,7 @@ describe('abc: _src', () => {
 });
 
 @Component({
-  template: `<img [na-src]="src" [size]="size" [error]="error" />`,
+  template: `<img [_src]="src" [size]="size" [error]="error" />`,
 })
 class TestComponent {
   src = './assets/img/logo.svg';

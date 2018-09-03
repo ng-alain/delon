@@ -15,13 +15,13 @@ import { NoticeItem, NoticeIconList } from '@delon/abc';
   selector: 'app-demo',
   template: `
   <div style="text-align: right; height: 64px; line-height: 64px; box-shadow: rgba(0, 21, 41, 0.12) 0 1px 4px; padding: 0 32px; width: 400px;">
-    <na-notice-icon
+    <notice-icon
         [data]="data"
         [count]="count"
         [loading]="loading"
         (select)="select($event)"
         (clear)="clear($event)"
-        (popoverVisibleChange)="loadData()"></na-notice-icon>
+        (popoverVisibleChange)="loadData()"></notice-icon>
   </div>
   `
 })

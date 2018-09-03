@@ -2,10 +2,10 @@ import { ACLService } from '@delon/acl';
 import { AlainI18NServiceFake, AlainI18NService } from '@delon/theme';
 import { deepGet } from '@delon/util';
 
-import { NaTableColumnSource } from '../table-column-source';
-import { NaTableRowSource } from '../table-row.directive';
-import { NaTableColumn } from '../interface';
-import { NaTableConfig } from '../table.config';
+import { STColumnSource } from '../table-column-source';
+import { STRowSource } from '../table-row.directive';
+import { STColumn } from '../interface';
+import { NaTableConfig } from '../config';
 
 let i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
@@ -17,15 +17,15 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
 describe('abc: table: column-souce', () => {
   let aclSrv: ACLService;
   let i18nSrv: AlainI18NService;
-  let srv: NaTableColumnSource;
-  let rowSrv: NaTableRowSource;
+  let srv: STColumnSource;
+  let rowSrv: STRowSource;
   let page: PageObject;
 
   function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }) {
     aclSrv = other.acl ? new ACLService() : null;
     i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
-    rowSrv = new NaTableRowSource();
-    srv = new NaTableColumnSource(
+    rowSrv = new STRowSource();
+    srv = new STColumnSource(
       rowSrv,
       aclSrv,
       i18nSrv,
@@ -626,14 +626,14 @@ describe('abc: table: column-souce', () => {
   });
 
   class PageObject {
-    expectValue(columns: NaTableColumn[], value: any, path = 'indexKey'): this {
+    expectValue(columns: STColumn[], value: any, path = 'indexKey'): this {
       const newColumns = srv.process(columns);
       expect(newColumns.length).toBeGreaterThan(0);
       expect(deepGet(newColumns[0], path)).toBe(value);
       return this;
     }
     expectBtnValue(
-      columns: NaTableColumn[],
+      columns: STColumn[],
       value: any,
       path = 'indexKey',
     ): this {
@@ -642,7 +642,7 @@ describe('abc: table: column-souce', () => {
       expect(deepGet(newColumns[0].buttons[0], path)).toBe(value);
       return this;
     }
-    expectCount(columns: NaTableColumn[], count = 1, type = ''): this {
+    expectCount(columns: STColumn[], count = 1, type = ''): this {
       const newColumns = srv.process(columns);
       if (type) {
         expect(newColumns.length).toBe(1);

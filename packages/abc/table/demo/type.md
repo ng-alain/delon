@@ -7,16 +7,16 @@ title: 列类型
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn, NaTableColumnBadge, NaTableColumnTag } from '@delon/abc';
+import { STColumn, STColumnBadge, STColumnTag } from '@delon/abc';
 
-const BADGE: NaTableColumnBadge = {
+const BADGE: STColumnBadge = {
   1: { text: '成功', color: 'success' },
   2: { text: '错误', color: 'error' },
   3: { text: '进行中', color: 'processing' },
   4: { text: '默认', color: 'default' },
   5: { text: '警告', color: 'warning' },
 };
-const TAG: NaTableColumnTag = {
+const TAG: STColumnTag = {
   1: { text: '成功', color: 'green' },
   2: { text: '错误', color: 'red' },
   3: { text: '进行中', color: 'blue' },
@@ -29,12 +29,12 @@ const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 
   selector: 'app-demo',
   template: `
   <button nz-button (click)="reload()">Reload</button>
-  <na-table #st [data]="users" [columns]="columns"></na-table>
+  <st #st [data]="users" [columns]="columns"></st>
   `,
 })
 export class DemoComponent {
   users: any[] = [];
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '姓名', index: 'name' },
     { title: '年龄', index: 'age' },

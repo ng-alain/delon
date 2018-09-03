@@ -19,12 +19,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <na-view-wrap col="4">
-    <na-view label="primary" type="primary">hhhh</na-view>
-    <na-view label="success" type="success">hhhh</na-view>
-    <na-view label="warning" type="warning">hhhh</na-view>
-    <na-view label="danger" type="danger">hhhh</na-view>
-  </na-view-wrap>
+  <sv-container col="4">
+    <sv label="primary" type="primary">hhhh</sv>
+    <sv label="success" type="success">hhhh</sv>
+    <sv label="warning" type="warning">hhhh</sv>
+    <sv label="danger" type="danger">hhhh</sv>
+  </sv-container>
   `,
 })
 export class DemoComponent {

@@ -4,10 +4,10 @@ import { NaReuseTabContextService } from './reuse-tab-context.service';
 import { NaReuseItem } from './interface';
 
 @Directive({
-  selector: '[na-context-menu]',
+  selector: '[reuse-tab-context-menu]',
 })
 export class NaReuseTabContextDirective {
-  @Input('na-context-menu') item: NaReuseItem;
+  @Input('reuse-tab-context-menu') item: NaReuseItem;
 
   constructor(private srv: NaReuseTabContextService) {}
 

@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-demo',
     template: `
-<na-page-header [title]="'title'">
+<page-header [title]="'title'">
     <ng-template #breadcrumb>面包屑</ng-template>
     <ng-template #logo><div class="logo">logo</div></ng-template>
     <ng-template #action><div class="action">action</div></ng-template>
@@ -27,7 +27,7 @@ import { Component } from '@angular/core';
             <nz-tab nzTitle="页签三"></nz-tab>
         </nz-tabset>
     </ng-template>
-</na-page-header>
+</page-header>
     `,
     styles: [`
     :host ::ng-deep .logo {

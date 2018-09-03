@@ -178,7 +178,7 @@ describe('abc: reuse-tab', () => {
           .expectCount(1)
           .close(0)
           .expectCount(0);
-        expect(page.getEl('na-reuse-tab').style.display).toBe('none');
+        expect(page.getEl('reuse-tab').style.display).toBe('none');
       }));
       it('should show next tab when closed a has next tab', fakeAsync(() => {
         srv.max = 10;
@@ -299,7 +299,7 @@ describe('abc: reuse-tab', () => {
           expect(document.querySelector('body').classList).toContain(
             'has-ad-rt',
           );
-          expect(dl.query(By.css('.na-rt__fixed'))).not.toBeNull();
+          expect(dl.query(By.css('.reuse-tab__fixed'))).not.toBeNull();
         });
         it(`with false`, () => {
           layoutComp.fixed = false;
@@ -307,7 +307,7 @@ describe('abc: reuse-tab', () => {
           expect(document.querySelector('body').classList).not.toContain(
             'has-ad-rt',
           );
-          expect(dl.query(By.css('.na-rt__fixed'))).toBeNull();
+          expect(dl.query(By.css('.reuse-tab__fixed'))).toBeNull();
         });
       });
     });
@@ -458,20 +458,20 @@ describe('abc: reuse-tab', () => {
           .to('#b')
           .openContextMenu(1)
           .expectCount(2);
-        expect(document.querySelectorAll('.na-rt__cm').length).toBe(1);
+        expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(1);
         document.dispatchEvent(new Event('click'));
         page.advance();
-        expect(document.querySelectorAll('.na-rt__cm').length).toBe(0);
+        expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(0);
       }));
       it('should be allow multi context menu', fakeAsync(() => {
         page
           .to('#b')
           .openContextMenu(1)
           .expectCount(2);
-        expect(document.querySelectorAll('.na-rt__cm').length).toBe(1);
+        expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(1);
         document.dispatchEvent(new MouseEvent('click', { button: 2 }));
         page.advance();
-        expect(document.querySelectorAll('.na-rt__cm').length).toBe(1);
+        expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(1);
       }));
       it('should be include non-closeable when push ctrl key', fakeAsync(() => {
         page
@@ -479,14 +479,14 @@ describe('abc: reuse-tab', () => {
           .openContextMenu(1)
           .tap(() =>
             expect(
-              document.querySelector(`.na-rt__cm li[data-type="close"]`)
+              document.querySelector(`.reuse-tab__cm li[data-type="close"]`)
                 .classList,
             ).toContain('ant-menu-item-disabled'),
           )
           .openContextMenu(1, { ctrlKey: true })
           .tap(() =>
             expect(
-              document.querySelector(`.na-rt__cm li[data-type="close"]`)
+              document.querySelector(`.reuse-tab__cm li[data-type="close"]`)
                 .classList,
             ).not.toContain('ant-menu-item-disabled'),
           )
@@ -612,7 +612,7 @@ describe('abc: reuse-tab', () => {
       return this;
     }
     clickContentMenu(type: string): this {
-      const el = document.querySelector(`.na-rt__cm li[data-type="${type}"]`);
+      const el = document.querySelector(`.reuse-tab__cm li[data-type="${type}"]`);
       expect(el).not.toBeNull(
         `the ${type} is invalid element of content menu container`,
       );
@@ -639,7 +639,7 @@ class AppComponent {}
 
 @Component({
   template: `
-    <na-reuse-tab #comp
+    <reuse-tab #comp
         [mode]="mode"
         [debug]="debug"
         [max]="max"
@@ -650,7 +650,7 @@ class AppComponent {}
         [showCurrent]="showCurrent"
         (change)="change($event)"
         (close)="close($event)">
-    </na-reuse-tab>
+    </reuse-tab>
     <div id="children"><router-outlet></router-outlet></div>
     `,
 })

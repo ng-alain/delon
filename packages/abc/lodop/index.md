@@ -14,7 +14,7 @@ Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时�
 
 ## API
 
-### NaLodopService
+### LodopService
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------

@@ -35,14 +35,14 @@ import {
 import { NaReuseTabContextService } from './reuse-tab-context.service';
 
 @Component({
-  selector: 'na-reuse-tab',
+  selector: 'reuse-tab',
   templateUrl: './reuse-tab.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
   providers: [NaReuseTabContextService],
   host: {
-    '[class.na-rt]': 'true',
-    '[class.na-rt__fixed]': 'fixed',
+    '[class.reuse-tab]': 'true',
+    '[class.reuse-tab__fixed]': 'fixed',
   },
 })
 export class NaReuseTabComponent implements OnInit, OnChanges, OnDestroy {

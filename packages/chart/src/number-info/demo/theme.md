@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <na-number-info subTitle="本周访问" total="12,321" subTotal="17.1" status="down" theme="default"></na-number-info>
+  <number-info subTitle="本周访问" total="12,321" subTotal="17.1" status="down" theme="default"></number-info>
   `
 })
 export class DemoComponent {

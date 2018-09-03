@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { NaLazyService } from '@delon/util';
+import { LazyService } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { Component, DebugElement } from '@angular/core';
@@ -8,9 +8,9 @@ import * as fs from 'file-saver';
 
 import {
   NaXlsxModule,
-  NaXlsxService,
+  XlsxService,
   NaXlsxConfig,
-  NaXlsxExportOptions,
+  XlsxExportOptions,
 } from './index';
 
 class MockLazyService {
@@ -53,17 +53,17 @@ class MockHttpClient {
 }
 
 describe('abc: xlsx', () => {
-  let srv: NaXlsxService;
+  let srv: XlsxService;
   function genModule(options?: NaXlsxConfig) {
     const injector = TestBed.configureTestingModule({
       imports: [NaXlsxModule.forRoot(options)],
       declarations: [TestComponent],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
-        { provide: NaLazyService, useClass: MockLazyService },
+        { provide: LazyService, useClass: MockLazyService },
       ],
     });
-    srv = injector.get(NaXlsxService);
+    srv = injector.get(XlsxService);
   }
 
   beforeEach(() => {
@@ -121,7 +121,7 @@ describe('abc: xlsx', () => {
     });
     it('should be export xlsx via array', (done: () => void) => {
       srv
-        .export(<NaXlsxExportOptions>{
+        .export(<XlsxExportOptions>{
           sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }],
         })
         .then(() => {
@@ -131,7 +131,7 @@ describe('abc: xlsx', () => {
     });
     it('should be export xlsx via object', (done: () => void) => {
       srv
-        .export(<NaXlsxExportOptions>{
+        .export(<XlsxExportOptions>{
           sheets: {
             name: 'asdf',
           },
@@ -144,7 +144,7 @@ describe('abc: xlsx', () => {
     it('should be call callback', (done: () => void) => {
       let count = 0;
       srv
-        .export(<NaXlsxExportOptions>{
+        .export(<XlsxExportOptions>{
           sheets: {
             name: 'asdf',
           },
@@ -180,7 +180,7 @@ describe('abc: xlsx', () => {
 });
 
 @Component({
-  template: `<button [na-xlsx]="data"></button>`,
+  template: `<button [xlsx]="data"></button>`,
 })
 class TestComponent {
   data: any = {};

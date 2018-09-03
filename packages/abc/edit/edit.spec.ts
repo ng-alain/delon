@@ -9,13 +9,13 @@ import { By } from '@angular/platform-browser';
 import { FormsModule, NgModel, FormControlName, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
-import { REP_MAX_COL } from '../core/responsive';
-import { NaEditModule } from './edit.module';
-import { NaEditComponent } from './edit.component';
 import * as UTIL from '@delon/util';
 
-const prefixCls = `.na-edit__`;
+import { REP_MAX_COL } from '../core/responsive';
+import { NaEditModule } from './module';
+import { SEItemComponent } from './edit.component';
+
+const prefixCls = `.se__`;
 
 describe('abc: edit', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -167,17 +167,17 @@ describe('abc: edit', () => {
       const changes = ngModel.statusChanges as EventEmitter<any>;
       // mock statusChanges
       changes.emit('VALID');
-      page.expect('na-edit-error', 0);
+      page.expect('se-error', 0);
       // mock statusChanges
       changes.emit('INVALID');
-      page.expect('na-edit-error');
+      page.expect('se-error');
     });
     it('should be only once bind ngModel of status change', () => {
       genModule(`
-      <form nz-form na-edit-wrap>
-        <na-edit #viewComp id="1">
+      <form nz-form se-container>
+        <se #viewComp id="1">
           <input id="ipt" type="text" *ngIf="showModel" [(ngModel)]="val" name="val" required>
-        </na-edit>
+        </se>
       </form>`);
       page.expect('#ipt');
       context.showModel = false;
@@ -200,48 +200,48 @@ describe('abc: edit', () => {
       const changes = formControlName.statusChanges as EventEmitter<any>;
       // mock statusChanges
       changes.emit('VALID');
-      page.expect('na-edit-error', 0);
+      page.expect('se-error', 0);
       // mock statusChanges
       changes.emit('INVALID');
-      page.expect('na-edit-error');
+      page.expect('se-error');
     });
   });
 
   describe('[logic]', () => {
     it('should be custom label', () => {
       genModule(
-        `<na-edit-wrap>
-          <na-edit [label]="label">
+        `<se-container>
+          <se [label]="label">
             <ng-template #label>
               <a id="tip">tip</a>
             </ng-template>
             Custom label
-          </na-edit>
-        </na-edit-wrap>`,
+          </se>
+        </se-container>`,
       );
       page.expect('#tip');
     });
-    it(`should be must include 'na-edit-wrap' component in na-edit`, () => {
+    it(`should be must include 'se-container' component in se`, () => {
       expect(() => {
         genModule(`
-        <na-edit></na-edit>
+        <se></se>
         `);
       }).toThrowError();
     });
-    it(`should be must include 'na-edit-wrap' component in na-edit-title`, () => {
+    it(`should be must include 'se-container' component in se-title`, () => {
       expect(() => {
         genModule(`
-        <na-edit-title></na-edit-title>
+        <se-title></se-title>
         `);
       }).toThrowError();
     });
     it(`should be custom id value`, () => {
       const id = 'aaaa';
       genModule(`
-      <form nz-form na-edit-wrap>
-        <na-edit id="${id}" label="a">
+      <form nz-form se-container>
+        <se id="${id}" label="a">
           <input type="text" [(ngModel)]="val" name="val">
-        </na-edit>
+        </se>
       </form>
       `);
       expect(page.getEl('label').getAttribute('for')).toBe(id);
@@ -249,10 +249,10 @@ describe('abc: edit', () => {
     it(`should be ingored auto id when not found invalid ngModel`, () => {
       spyOn(UTIL, 'deepGet').and.returnValue(null);
       genModule(`
-      <form nz-form na-edit-wrap>
-        <na-edit label="a">
+      <form nz-form se-container>
+        <se label="a">
           <select id="expected" [(ngModel)]="val" name="val"></select>
-        </na-edit>
+        </se>
       </form>
       `);
       expect(page.getEl('#expected').id).toBe('expected');
@@ -275,23 +275,23 @@ describe('abc: edit', () => {
 
 @Component({
   template: `
-  <form nz-form [na-edit-wrap]="parent_col"
+  <form nz-form [se-container]="parent_col"
     [firstVisual]="parent_firstVisual" [line]="parent_line"
     [size]="parent_size" [nzLayout]="parent_layout" [labelWidth]="parent_labelWidth" [gutter]="parent_gutter">
 
-    <na-edit-title>title</na-edit-title>
-    <na-edit #viewComp
+    <se-title>title</se-title>
+    <se #viewComp
       [optional]="optional" [optionalHelp]="optionalHelp"
       [error]="error" [extra]="extra" [controlClass]="controlClass"
       [label]="label" [col]="col" [required]="required" [line]="line">
       <input type="text" [(ngModel)]="val" name="val" required>
-    </na-edit>
+    </se>
 
   </form>`,
 })
 class TestComponent {
   @ViewChild('viewComp')
-  viewComp: NaEditComponent;
+  viewComp: SEItemComponent;
 
   parent_gutter: number = 32;
   parent_col: number = 3;
@@ -317,10 +317,10 @@ class TestComponent {
 
 @Component({
   template: `
-  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" na-edit-wrap gutter="32">
-    <na-edit label="App Key" error="Please input your username!">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" se-container gutter="32">
+    <se label="App Key" error="Please input your username!">
       <input formControlName="userName" nz-input placeholder="Username">
-    </na-edit>
+    </se>
   </form>`,
 })
 class TestReactiveComponent {

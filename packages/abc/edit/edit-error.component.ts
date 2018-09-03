@@ -2,7 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'na-edit-error',
+  selector: 'se-error',
   preserveWhitespaces: false,
   animations: [
     trigger('errorAnt', [
@@ -49,4 +49,4 @@ import { Component } from '@angular/core';
     `,
   ],
 })
-export class NaEditErrorComponent {}
+export class SEErrorComponent {}

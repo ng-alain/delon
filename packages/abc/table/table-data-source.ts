@@ -7,29 +7,29 @@ import { deepGet } from '@delon/util';
 import { CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
 
 import {
-  NaTableData,
-  NaTablePage,
-  NaTableReq,
-  NaTableRes,
-  NaTableColumn,
-  NaTableMultiSort,
+  STData,
+  STPage,
+  STReq,
+  STRes,
+  STColumn,
+  STMultiSort,
 } from './interface';
-import { NaTableSortMap } from './table-column-source';
+import { STSortMap } from './table-column-source';
 import { DecimalPipe } from '@angular/common';
 
-export interface NaTableDataSourceOptions {
+export interface STDataSourceOptions {
   pi?: number;
   ps?: number;
-  data?: string | NaTableData[] | Observable<NaTableData[]>;
+  data?: string | STData[] | Observable<STData[]>;
   total?: number;
-  req?: NaTableReq;
-  res?: NaTableRes;
-  page?: NaTablePage;
-  columns?: NaTableColumn[];
-  multiSort?: NaTableMultiSort;
+  req?: STReq;
+  res?: STRes;
+  page?: STPage;
+  columns?: STColumn[];
+  multiSort?: STMultiSort;
 }
 
-export interface NaTableDataSourceResult {
+export interface STDataSourceResult {
   /** 是否需要显示分页器 */
   pageShow?: boolean;
   /** 新 `pi`，若返回 `undefined` 表示用户受控 */
@@ -37,11 +37,11 @@ export interface NaTableDataSourceResult {
   /** 新 `total`，若返回 `undefined` 表示用户受控 */
   total?: number;
   /** 数据 */
-  list?: NaTableData[];
+  list?: STData[];
 }
 
 @Injectable()
-export class NaTableDataSource {
+export class STDataSource {
   constructor(
     private http: HttpClient,
     @Host() private currenty: CNCurrencyPipe,
@@ -50,13 +50,13 @@ export class NaTableDataSource {
     @Host() private number: DecimalPipe,
   ) {}
 
-  process(options: NaTableDataSourceOptions): Promise<NaTableDataSourceResult> {
+  process(options: STDataSourceOptions): Promise<STDataSourceResult> {
     return new Promise((resolvePromise, rejectPromise) => {
-      let data$: Observable<NaTableData[]>;
+      let data$: Observable<STData[]>;
       let isRemote = false;
       const { data, res, total, page, pi, ps, columns } = options;
       let retTotal: number;
-      let retList: NaTableData[];
+      let retList: STData[];
       let retPi: number;
 
       if (typeof data === 'string') {
@@ -73,7 +73,7 @@ export class NaTableDataSource {
               res.reName.total &&
               deepGet(result, res.reName.total as string[], null);
             retTotal = resultTotal == null ? total || 0 : +resultTotal;
-            return <NaTableData[]>ret;
+            return <STData[]>ret;
           }),
           catchError(err => {
             rejectPromise(err);
@@ -90,7 +90,7 @@ export class NaTableDataSource {
       if (!isRemote) {
         data$ = data$.pipe(
           // sort
-          map((result: NaTableData[]) => {
+          map((result: STData[]) => {
             let copyResult = result.slice(0);
             const sorterFn = this.getSorterFn(columns);
             if (sorterFn) {
@@ -99,13 +99,13 @@ export class NaTableDataSource {
             return copyResult;
           }),
           // filter
-          map((result: NaTableData[]) => {
+          map((result: STData[]) => {
             columns.filter(w => w.filter).forEach(c => {
               const values = c.filter.menus.filter(w => w.checked);
               if (values.length === 0) return;
               const onFilter = c.filter.fn;
               if (typeof onFilter !== 'function') {
-                console.warn(`[na-table] Muse provide the fn function in filter`);
+                console.warn(`[st] Muse provide the fn function in filter`);
                 return ;
               }
               result = result.filter(record =>
@@ -115,7 +115,7 @@ export class NaTableDataSource {
             return result;
           }),
           // paging
-          map((result: NaTableData[]) => {
+          map((result: STData[]) => {
             if (page.front) {
               const maxPageIndex = Math.ceil(result.length / ps);
               retPi = Math.max(1, pi > maxPageIndex ? maxPageIndex : pi);
@@ -143,7 +143,7 @@ export class NaTableDataSource {
         }),
       );
 
-      data$.forEach((result: NaTableData[]) => (retList = result)).then(() => {
+      data$.forEach((result: STData[]) => (retList = result)).then(() => {
         resolvePromise({
           pi: retPi,
           total: retTotal,
@@ -157,7 +157,7 @@ export class NaTableDataSource {
     });
   }
 
-  private get(item: any, col: NaTableColumn) {
+  private get(item: any, col: STColumn) {
     if (col.format) return col.format(item, col);
 
     const value = deepGet(item, col.index as string[], col.default);
@@ -185,7 +185,7 @@ export class NaTableDataSource {
 
   private getByHttp(
     url: string,
-    options: NaTableDataSourceOptions,
+    options: STDataSourceOptions,
   ): Observable<any> {
     const { req, page, pi, ps, multiSort, columns } = options;
     const method = (req.method || 'GET').toUpperCase();
@@ -214,19 +214,19 @@ export class NaTableDataSource {
 
   //#region sort
 
-  private getValidSort(columns: NaTableColumn[]): NaTableSortMap[] {
+  private getValidSort(columns: STColumn[]): STSortMap[] {
     return columns
       .filter(item => item._sort && item._sort.enabled && item._sort.default)
       .map(item => item._sort);
   }
 
-  private getSorterFn(columns: NaTableColumn[]) {
+  private getSorterFn(columns: STColumn[]) {
     const sortList = this.getValidSort(columns);
     if (sortList.length === 0) {
       return;
     }
     if (typeof sortList[0].compare !== 'function') {
-      console.warn(`[na-table] Muse provide the compare function in sort`);
+      console.warn(`[st] Muse provide the compare function in sort`);
       return ;
     }
 
@@ -240,8 +240,8 @@ export class NaTableDataSource {
   }
 
   getReqSortMap(
-    multiSort: NaTableMultiSort,
-    columns: NaTableColumn[],
+    multiSort: STMultiSort,
+    columns: STColumn[],
   ): { [key: string]: string } {
     let ret: { [key: string]: string } = {};
     const sortList = this.getValidSort(columns);
@@ -269,7 +269,7 @@ export class NaTableDataSource {
 
   //#region filter
 
-  private getReqFilterMap(columns: NaTableColumn[]): { [key: string]: string } {
+  private getReqFilterMap(columns: STColumn[]): { [key: string]: string } {
     let ret = {};
     columns.filter(w => w.filter && w.filter.default === true).forEach(col => {
       const values = col.filter.menus.filter(f => f.checked === true);

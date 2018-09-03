@@ -2,21 +2,21 @@ import { Component, Input, ViewChild, ElementRef, AfterViewChecked, OnInit } fro
 import { isEmpty } from '@delon/util';
 
 @Component({
-  selector: 'na-exception',
+  selector: 'exception',
   template: `
-  <div class="na-exception__img-block">
-    <div class="na-exception__img" [ngStyle]="{'background-image': 'url(' + _img + ')'}"></div>
+  <div class="exception__img-block">
+    <div class="exception__img" [ngStyle]="{'background-image': 'url(' + _img + ')'}"></div>
   </div>
-  <div class="na-exception__cont">
-    <h1 class="na-exception__cont-title" [innerHTML]="_title"></h1>
-    <div class="na-exception__cont-desc" [innerHTML]="_desc"></div>
-    <div class="na-exception__cont-actions">
+  <div class="exception__cont">
+    <h1 class="exception__cont-title" [innerHTML]="_title"></h1>
+    <div class="exception__cont-desc" [innerHTML]="_desc"></div>
+    <div class="exception__cont-actions">
       <div (cdkObserveContent)="checkContent()" #conTpl><ng-content></ng-content></div>
       <button *ngIf="!hasCon" nz-button [routerLink]="['/']" [nzType]="'primary'">返回首页</button>
     </div>
   </div>
   `,
-  host: { '[class.na-exception]': 'true' },
+  host: { '[class.exception]': 'true' },
   preserveWhitespaces: false,
 })
 export class NaExceptionComponent implements OnInit {

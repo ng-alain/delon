@@ -1,30 +1,30 @@
 @import '../../../theme/styles/default';
 
-@na-view-prefix: ~'.na-view';
-@na-view-label-color: @heading-color;
-@na-view-detail-color: @text-color;
-@na-view-type-primary-color: @primary-color;
-@na-view-type-success-color: @success-color;
-@na-view-type-danger-color: @error-color;
-@na-view-type-warning-color: @warning-color;
-@na-view-bottom: 8px;
-@na-view-default-text: '-';
+@sv-prefix: ~'.sv';
+@sv-label-color: @heading-color;
+@sv-detail-color: @text-color;
+@sv-type-primary-color: @primary-color;
+@sv-type-success-color: @success-color;
+@sv-type-danger-color: @error-color;
+@sv-type-warning-color: @warning-color;
+@sv-bottom: 8px;
+@sv-default-text: '-';
 
-@{na-view-prefix} {
+@{sv-prefix} {
   display: block;
-  + @{na-view-prefix} {
-    margin-top: @na-view-bottom;
+  + @{sv-prefix} {
+    margin-top: @sv-bottom;
   }
   &__item {
     &-fixed {
       display: flex;
-      @{na-view-prefix}__label {
+      @{sv-prefix}__label {
         text-align: right;
         flex: 0 0 auto;
         text-overflow: ellipsis;
         overflow: hidden;
       }
-      @{na-view-prefix}__detail {
+      @{sv-prefix}__detail {
         flex: 1 0 0;
       }
     }
@@ -34,21 +34,21 @@
     font-size: 14px;
     color: @heading-color;
     font-weight: 500;
-    margin-bottom: @na-view-bottom;
+    margin-bottom: @sv-bottom;
   }
   // offset the padding-bottom of last row
   .ant-row {
-    margin-bottom: -@na-view-bottom;
+    margin-bottom: -@sv-bottom;
     overflow: hidden;
   }
   &__label {
     line-height: 22px;
-    padding-bottom: @na-view-bottom;
+    padding-bottom: @sv-bottom;
     margin-right: 8px;
-    color: @na-view-label-color;
+    color: @sv-label-color;
     white-space: nowrap;
     display: table-cell;
-    &:not(@{na-view-prefix}__label-empty) {
+    &:not(@{sv-prefix}__label-empty) {
       &:after {
         content: ':';
         margin: 0 8px 0 2px;
@@ -60,28 +60,28 @@
   &__detail {
     line-height: 22px;
     width: 100%;
-    padding-bottom: @na-view-bottom;
-    color: @na-view-detail-color;
+    padding-bottom: @sv-bottom;
+    color: @sv-detail-color;
     display: table-cell;
     word-break: break-all;
   }
   &__type {
-    &-primary @{na-view-prefix}__detail {
-      color: @na-view-type-primary-color;
+    &-primary @{sv-prefix}__detail {
+      color: @sv-type-primary-color;
     }
-    &-success @{na-view-prefix}__detail {
-      color: @na-view-type-success-color;
+    &-success @{sv-prefix}__detail {
+      color: @sv-type-success-color;
     }
-    &-danger @{na-view-prefix}__detail {
-      color: @na-view-type-danger-color;
+    &-danger @{sv-prefix}__detail {
+      color: @sv-type-danger-color;
     }
-    &-warning @{na-view-prefix}__detail {
-      color: @na-view-type-warning-color;
+    &-warning @{sv-prefix}__detail {
+      color: @sv-type-warning-color;
     }
   }
   &__default {
     &:before {
-      content: @na-view-default-text;
+      content: @sv-default-text;
     }
   }
   &__small {
@@ -89,27 +89,27 @@
     .ant-row {
       margin-bottom: -8px;
     }
-    @{na-view-prefix}__title {
+    @{sv-prefix}__title {
       margin-bottom: 12px;
       color: @text-color;
     }
-    @{na-view-prefix}__label,
-    @{na-view-prefix}__detail {
+    @{sv-prefix}__label,
+    @{sv-prefix}__detail {
       padding-bottom: 8px;
     }
   }
   &__large {
-    @{na-view-prefix}__title {
+    @{sv-prefix}__title {
       font-size: 16px;
     }
   }
   &__vertical {
-    @{na-view-prefix}__label {
+    @{sv-prefix}__label {
       padding-bottom: 8px;
     }
 
-    @{na-view-prefix}__label,
-    @{na-view-prefix}__detail {
+    @{sv-prefix}__label,
+    @{sv-prefix}__detail {
       display: block;
     }
   }

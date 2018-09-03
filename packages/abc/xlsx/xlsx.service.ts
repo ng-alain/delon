@@ -1,22 +1,22 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
-import { NaLazyService, LazyResult } from '@delon/util';
+import { LazyService, LazyResult } from '@delon/util';
 import {
-  NaXlsxExportOptions,
+  XlsxExportOptions,
   DA_XLSX_CONFIG,
   NaXlsxConfig,
-  NaXlsxExportSheet,
+  XlsxExportSheet,
 } from './interface';
 
 declare var XLSX: any;
 
 @Injectable()
-export class NaXlsxService {
+export class XlsxService {
   constructor(
     @Inject(DA_XLSX_CONFIG) private config: NaXlsxConfig,
     private http: HttpClient,
-    private lazy: NaLazyService,
+    private lazy: LazyService,
   ) {}
 
   private init(): Promise<LazyResult[]> {
@@ -77,12 +77,12 @@ export class NaXlsxService {
   }
 
   /** 导出 */
-  export(options: NaXlsxExportOptions): Promise<void> {
+  export(options: XlsxExportOptions): Promise<void> {
     return this.init().then(() => {
       const wb: any = XLSX.utils.book_new();
       if (Array.isArray(options.sheets)) {
-        (<NaXlsxExportSheet[]>options.sheets).forEach(
-          (value: NaXlsxExportSheet, index: number) => {
+        (<XlsxExportSheet[]>options.sheets).forEach(
+          (value: XlsxExportSheet, index: number) => {
             const ws: any = XLSX.utils.aoa_to_sheet(value.data);
             XLSX.utils.book_append_sheet(
               wb,

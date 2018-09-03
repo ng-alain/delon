@@ -10,12 +10,12 @@ title: 固定列
 
 ```ts
 import { Component } from '@angular/core';
-import { NaTableColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <na-table [data]="users" [columns]="columns" [scroll]="{x: '1300px'}"></na-table>
+    <st [data]="users" [columns]="columns" [scroll]="{x: '1300px'}"></st>
   `,
 })
 export class DemoComponent {
@@ -28,7 +28,7 @@ export class DemoComponent {
         age: Math.ceil(Math.random() * 10) + 20,
       };
     });
-  columns: NaTableColumn[] = [
+  columns: STColumn[] = [
     { title: '编号1', index: 'id', fixed: 'left', width: '100px' },
     { title: '编号2', index: 'id', fixed: 'left', width: '100px' },
     { title: '编号3', index: 'id', fixed: 'left', width: '100px' },

@@ -19,11 +19,11 @@ import { NaErrorCollectConfig } from './error-collect.config';
  * PS：虽然此法并不好看，但对响应式表单&模板表单有很好的效果。
  */
 @Component({
-  selector: 'na-error-collect, [na-error-collect]',
+  selector: 'error-collect, [error-collect]',
   template: `
   <i class="anticon anticon-exclamation-circle"></i>
   <span class="pl-sm">{{count}}</span>`,
-  host: { '[class.na-error-collect]': 'true' },
+  host: { '[class.error-collect]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })

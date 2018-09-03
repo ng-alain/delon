@@ -17,7 +17,7 @@ import { NaSidebarNavComponent } from './sidebar-nav.component';
 import { Nav } from './interface';
 import { RouterTestingModule } from '@angular/router/testing';
 
-const floatingShowCls = '.na-nav__floating-show';
+const floatingShowCls = '.sidebar-nav__floating-show';
 const MOCKMENUS = <Nav[]>[
   {
     text: '主导航',
@@ -83,7 +83,7 @@ describe('abc: sidebar-nav', () => {
       menuSrv.add(data);
       expect(context.select).not.toHaveBeenCalled();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
-      const itemEl = page.getEl<HTMLElement>('.na-nav__depth1 a');
+      const itemEl = page.getEl<HTMLElement>('.sidebar-nav__depth1 a');
       itemEl.click();
       fixture.detectChanges();
       expect(context.select).toHaveBeenCalled();
@@ -92,12 +92,12 @@ describe('abc: sidebar-nav', () => {
 
     it('should be hide group name', () => {
       createComp();
-      page.checkCount('.na-nav__group-title');
+      page.checkCount('.sidebar-nav__group-title');
       const data = deepCopy(MOCKMENUS) as Nav[];
       data[0].group = false;
       menuSrv.add(data);
       fixture.detectChanges();
-      page.checkCount('.na-nav__group-title', 0);
+      page.checkCount('.sidebar-nav__group-title', 0);
     });
 
     it('should be toggle open', () => {
@@ -105,7 +105,7 @@ describe('abc: sidebar-nav', () => {
       const data = deepCopy(MOCKMENUS);
       menuSrv.add(data);
       expect(data[0].children[0]._open).toBeUndefined();
-      const subTitleEl = page.getEl<HTMLElement>('.na-nav__sub-title');
+      const subTitleEl = page.getEl<HTMLElement>('.sidebar-nav__sub-title');
       subTitleEl.click();
       fixture.detectChanges();
       expect(data[0].children[0]._open).toBe(true);
@@ -113,12 +113,12 @@ describe('abc: sidebar-nav', () => {
 
     it('should be reset menu when service is changed', () => {
       createComp();
-      page.checkText('.na-nav__group-title', MOCKMENUS[0].text);
+      page.checkText('.sidebar-nav__group-title', MOCKMENUS[0].text);
       const newMenu = deepCopy(MOCKMENUS);
       newMenu[0].text = 'new主导航';
       menuSrv.add(newMenu);
       fixture.detectChanges();
-      page.checkText('.na-nav__group-title', newMenu[0].text);
+      page.checkText('.sidebar-nav__group-title', newMenu[0].text);
     });
 
     describe('should be exact highlighting item', () => {
@@ -156,7 +156,7 @@ describe('abc: sidebar-nav', () => {
         router = injector.get(Router);
         router.navigateByUrl('/group/type').then((res: any) => {
           fixture.detectChanges();
-          expect(dl.queryAll(By.css('.na-nav__selected')).length).toBe(2);
+          expect(dl.queryAll(By.css('.sidebar-nav__selected')).length).toBe(2);
           done();
         });
       });
@@ -174,7 +174,7 @@ describe('abc: sidebar-nav', () => {
         router = injector.get(Router);
         router.navigateByUrl('/group/type').then((res: any) => {
           fixture.detectChanges();
-          expect(dl.queryAll(By.css('.na-nav__selected')).length).toBe(1);
+          expect(dl.queryAll(By.css('.sidebar-nav__selected')).length).toBe(1);
           done();
         });
       });
@@ -294,7 +294,7 @@ describe('abc: sidebar-nav', () => {
         // create test component
         TestBed.overrideTemplate(
           TestComponent,
-          `<na-sidebar-nav #comp [autoCloseUnderPad]="true"></na-sidebar-nav>`,
+          `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
         );
         const defaultCollapsed = false;
         createComp(false, () => {
@@ -314,7 +314,7 @@ describe('abc: sidebar-nav', () => {
         // create test component
         TestBed.overrideTemplate(
           TestComponent,
-          `<na-sidebar-nav #comp [autoCloseUnderPad]="true"></na-sidebar-nav>`,
+          `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
         );
         const defaultCollapsed = false;
         createComp(false, () => {
@@ -351,7 +351,7 @@ describe('abc: sidebar-nav', () => {
     showSubMenu(resultExpectShow = true) {
       let conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       expect(conEl).toBeNull();
-      const subTitleEl = this.getEl<HTMLElement>('.na-nav__sub-title');
+      const subTitleEl = this.getEl<HTMLElement>('.sidebar-nav__sub-title');
       subTitleEl.dispatchEvent(new Event('mouseenter'));
       fixture.detectChanges();
       conEl = this.getEl<HTMLElement>(floatingShowCls, true);
@@ -376,7 +376,7 @@ describe('abc: sidebar-nav', () => {
 
 @Component({
   template: `
-    <na-sidebar-nav #comp [autoCloseUnderPad]="autoCloseUnderPad" (select)="select()"></na-sidebar-nav>
+    <sidebar-nav #comp [autoCloseUnderPad]="autoCloseUnderPad" (select)="select()"></sidebar-nav>
     `,
 })
 class TestComponent {

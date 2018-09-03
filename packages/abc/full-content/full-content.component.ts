@@ -19,14 +19,14 @@ import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { NaFullContentService } from './full-content.service';
 
-const cls = `na-full-content__wrap`;
-const fsCls = `na-full-content__fs`;
-const hideTitleCls = `na-full-content__ht`;
+const cls = `full-content__wrap`;
+const fsCls = `full-content__fs`;
+const hideTitleCls = `full-content__ht`;
 
 @Component({
-  selector: 'na-full-content',
+  selector: 'full-content',
   template: `<ng-content></ng-content>`,
-  host: { '[class.na-full-content]': 'true' },
+  host: { '[class.full-content]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NaFullContentComponent

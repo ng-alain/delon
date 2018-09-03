@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { DOCUMENT } from '@angular/platform-browser';
 import { DelonUtilModule } from '../../util.module';
-import { NaLazyService } from './lazy.service';
+import { LazyService } from './lazy.service';
 
 let isIE = false;
 let testStatus = 'ok';
@@ -35,7 +35,7 @@ class MockDocument {
 }
 
 describe('utils: lazy', () => {
-  let srv: NaLazyService;
+  let srv: LazyService;
   let doc: Document;
   beforeEach(() => {
     isIE = false;
@@ -44,7 +44,7 @@ describe('utils: lazy', () => {
       imports: [DelonUtilModule.forRoot()],
       providers: [{ provide: DOCUMENT, useClass: MockDocument }],
     });
-    srv = injector.get(NaLazyService);
+    srv = injector.get(LazyService);
     srv.clear();
     doc = injector.get(DOCUMENT);
   });

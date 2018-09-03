@@ -1,7 +1,7 @@
 @import '../../../theme/styles/default';
 
-@na-exception-prefix: ~'.na-exception';
-@{na-exception-prefix} {
+@exception-prefix: ~'.exception';
+@{exception-prefix} {
   display: flex;
   align-items: center;
   height: 100%;
@@ -55,7 +55,7 @@
 }
 
 @media screen and (max-width: @screen-xl) {
-  @{na-exception-prefix} {
+  @{exception-prefix} {
     &__img-block {
       padding-right: 88px;
     }
@@ -63,7 +63,7 @@
 }
 
 @media screen and (max-width: @screen-sm) {
-  @{na-exception-prefix} {
+  @{exception-prefix} {
     display: block;
     text-align: center;
     &__img-block {
@@ -74,7 +74,7 @@
 }
 
 @media screen and (max-width: @screen-xs) {
-  @{na-exception-prefix} {
+  @{exception-prefix} {
     &__img-block {
       margin-bottom: -24px;
       overflow: hidden;

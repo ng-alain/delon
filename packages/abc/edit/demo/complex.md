@@ -19,12 +19,12 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <form nz-form #f="ngForm" na-edit-wrap size="compact" gutter="24">
-    <na-edit label="ID" col="1">1000</na-edit>
-    <na-edit label="Name" required col="3">
+  <form nz-form #f="ngForm" se-container size="compact" gutter="24">
+    <se label="ID" col="1">1000</se>
+    <se label="Name" required col="3">
       <input type="text" nz-input [(ngModel)]="i.user_name" name="user_name" required>
-    </na-edit>
-    <na-edit label="Age" required col="3">
+    </se>
+    <se label="Age" required col="3">
       <nz-select [(ngModel)]="i.user_age" name="user_age" nzAllowClear nzPlaceHolder="Choose">
         <nz-option [nzValue]="1" nzLabel="1"></nz-option>
         <nz-option [nzValue]="2" nzLabel="2"></nz-option>
@@ -32,17 +32,17 @@ import { Component } from '@angular/core';
         <nz-option [nzValue]="4" nzLabel="4"></nz-option>
         <nz-option [nzValue]="5" nzLabel="5"></nz-option>
       </nz-select>
-    </na-edit>
-    <na-edit label="Brithday" required col="3">
+    </se>
+    <se label="Brithday" required col="3">
       <nz-date-picker [(ngModel)]="i.user_birthday" name="user_birthday" nzShowTime></nz-date-picker>
-    </na-edit>
-    <na-edit label="App Key" required>
+    </se>
+    <se label="App Key" required>
       <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required>
-    </na-edit>
-    <na-edit label="App Secret" required>
+    </se>
+    <se label="App Secret" required>
       <input type="text" nz-input [(ngModel)]="i.sk" name="sk" required maxlength="32">
-    </na-edit>
-    <na-edit label="Phone Number" required>
+    </se>
+    <se label="Phone Number" required>
       <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
         <ng-template #addOnBeforeTemplate>
           <nz-select [(ngModel)]="i.phoneNumberPrefix" name="phoneNumberPrefix" style="width: 70px;">
@@ -52,18 +52,18 @@ import { Component } from '@angular/core';
         </ng-template>
         <input type="text" nz-input [(ngModel)]="i.phoneNumber" name="phoneNumber" required maxlength="32">
       </nz-input-group>
-    </na-edit>
-    <na-edit>
+    </se>
+    <se>
       <label nz-checkbox [(ngModel)]="i.agree" name="agree">
         <span>I have read the <a>agreement</a></span>
       </label>
-    </na-edit>
-    <na-edit col="1">
+    </se>
+    <se col="1">
       <textarea [(ngModel)]="i.comment" name="comment" nz-input rows="2" placeholder="write any thing"></textarea>
-    </na-edit>
-    <na-edit col="1">
+    </se>
+    <se col="1">
       <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
-    </na-edit>
+    </se>
   </form>`,
 })
 export class DemoComponent {

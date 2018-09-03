@@ -20,21 +20,21 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-demo',
   template: `
-  <na-view-wrap labelWidth="100">
-    <na-view label="ID">1</na-view>
-    <na-view label="Name">asdf</na-view>
-    <na-view label="Age">25</na-view>
-    <na-view label="Reject" type="danger" col="1">
+  <sv-container labelWidth="100">
+    <sv label="ID">1</sv>
+    <sv label="Name">asdf</sv>
+    <sv label="Age">25</sv>
+    <sv label="Reject" type="danger" col="1">
       OMG <a class="ml-sm" (click)="msg.success('to')">Fixed</a>
-    </na-view>
-    <na-view label="Default"></na-view>
-    <na-view [label]="label">
+    </sv>
+    <sv label="Default"></sv>
+    <sv [label]="label">
       <ng-template #label>
         <a nz-tooltip="test">tip</a>
       </ng-template>
       Custom label
-    </na-view>
-  </na-view-wrap>
+    </sv>
+  </sv-container>
   `,
 })
 export class DemoComponent {

@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-demo',
-  template: `<na-count-down [config]="config"></na-count-down>`
+  template: `<count-down [config]="config"></count-down>`
 })
 export class DemoComponent {
   config: any = {

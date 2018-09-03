@@ -1,6 +1,6 @@
 ---
 type: Basic
-title: na-down-file
+title: down-file
 subtitle: 下载文件
 cols: 1
 module: NaDownFileModule
