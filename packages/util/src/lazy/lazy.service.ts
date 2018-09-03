@@ -20,9 +20,10 @@ export class LazyService {
   constructor(@Inject(DOCUMENT) private doc: any) {}
 
   get change(): Observable<LazyResult[]> {
-    return this._notify
-      .asObservable()
-      .pipe(share(), filter(ls => ls.length !== 0));
+    return this._notify.asObservable().pipe(
+      share(),
+      filter(ls => ls.length !== 0),
+    );
   }
 
   clear(): void {
@@ -35,8 +36,11 @@ export class LazyService {
 
     const promises: Promise<LazyResult>[] = [];
     paths.forEach(path => {
-      if (path.includes('.js')) promises.push(this.loadScript(path));
-      else promises.push(this.loadStyle(path));
+      if (path.endsWith('.js')) {
+        promises.push(this.loadScript(path));
+      } else {
+        promises.push(this.loadStyle(path));
+      }
     });
 
     return Promise.all(promises).then(res => {
