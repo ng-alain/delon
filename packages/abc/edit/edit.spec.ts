@@ -12,7 +12,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import * as UTIL from '@delon/util';
 
 import { REP_MAX_COL } from '../core/responsive';
-import { NaEditModule } from './module';
+import { NaSEModule } from './edit.module';
 import { SEItemComponent } from './edit.component';
 
 const prefixCls = `.se__`;
@@ -25,7 +25,7 @@ describe('abc: edit', () => {
 
   function genModule(template?: string) {
     TestBed.configureTestingModule({
-      imports: [NaEditModule.forRoot(), FormsModule, NoopAnimationsModule],
+      imports: [NaSEModule.forRoot(), FormsModule, NoopAnimationsModule],
       declarations: [TestComponent],
     });
     if (template) {
@@ -189,7 +189,7 @@ describe('abc: edit', () => {
     });
     it('should be reactive form', () => {
       TestBed.configureTestingModule({
-        imports: [NaEditModule.forRoot(), FormsModule, ReactiveFormsModule, NoopAnimationsModule],
+        imports: [NaSEModule.forRoot(), FormsModule, ReactiveFormsModule, NoopAnimationsModule],
         declarations: [TestReactiveComponent],
       });
       const fixture2 = TestBed.createComponent(TestReactiveComponent);

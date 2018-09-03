@@ -49,7 +49,7 @@ import {
   STPage,
   STLoadOptions,
 } from './interface';
-import { NaTableConfig } from './config';
+import { NaSTConfig } from './table.config';
 import { STExport } from './table-export';
 import { STColumnSource } from './table-column-source';
 import { STRowSource } from './table-row.directive';
@@ -311,7 +311,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private cog: NaTableConfig,
+    private cog: NaSTConfig,
     private router: Router,
     private el: ElementRef,
     private renderer: Renderer2,

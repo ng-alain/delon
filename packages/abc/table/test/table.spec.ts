@@ -27,7 +27,7 @@ import {
   STRes,
   STColumnFilter,
 } from '../interface';
-import { NaTableModule } from '../module';
+import { NaSTModule } from '../table.module';
 import { STComponent } from '../table.component';
 import {
   AlainI18NServiceFake,
@@ -96,7 +96,7 @@ describe('abc: table', () => {
       HttpClientTestingModule,
       RouterTestingModule.withRoutes([]),
       NgZorroAntdModule.forRoot(),
-      NaTableModule.forRoot(),
+      NaSTModule.forRoot(),
     ];
     const providers = [];
     if (other.providers && other.providers.length) {

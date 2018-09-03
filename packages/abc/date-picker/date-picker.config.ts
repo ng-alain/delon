@@ -1,4 +1,4 @@
-export class DateRangePickerConfig {
+export class NaDateRangePickerConfig {
   nzFormat? = 'yyyy-MM-dd';
   nzClassName?: string;
   nzSize?: string;
@@ -19,6 +19,6 @@ export class DateRangePickerConfig {
   nzRanges?: any;
 }
 
-export class DatePickerConfig {
-  range?: DateRangePickerConfig;
+export class NaDatePickerConfig {
+  range?: NaDateRangePickerConfig;
 }

@@ -4,7 +4,7 @@ title: range-picker
 subtitle: Data Range
 cols: 1
 module: NaDataRangeModule
-config: DatePickerConfig
+config: NaDatePickerConfig
 ---
 
 Based on the `nz-range-picker` further optimization, better service to start and end dates.

@@ -7,13 +7,13 @@ import {
   OnChanges,
 } from '@angular/core';
 import { toNumber, updateHostClass } from '@delon/util';
-import { NaViewConfig } from './config';
+import { NaSVConfig } from './view.config';
 
 const prefixCls = `sv`;
 
 @Component({
   selector: 'sv-container, [sv-container]',
-  templateUrl: './container.component.html',
+  templateUrl: './view-container.component.html',
   preserveWhitespaces: false,
 })
 export class SVContainerComponent implements OnInit, OnChanges {
@@ -59,7 +59,7 @@ export class SVContainerComponent implements OnInit, OnChanges {
 
   //#endregion
 
-  constructor(el: ElementRef, private ren: Renderer2, cog: NaViewConfig) {
+  constructor(el: ElementRef, private ren: Renderer2, cog: NaSVConfig) {
     this.el = el.nativeElement;
     Object.assign(this, cog);
   }

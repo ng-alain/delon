@@ -6,7 +6,7 @@ import {
   OnInit,
   Optional,
 } from '@angular/core';
-import { SVContainerComponent } from './container.component';
+import { SVContainerComponent } from './view-container.component';
 
 @Component({
   selector: 'sv-title, [sv-title]',

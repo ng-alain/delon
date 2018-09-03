@@ -77,12 +77,12 @@ module.exports = {
           meta: {
             'zh-CN': {
               type: 'CURD',
-              title: '',
+              title: 'sf',
               subtitle: '动态表单',
             },
             'en-US': {
               type: 'CURD',
-              title: '',
+              title: 'sf',
               subtitle: 'Dynamic Form',
             },
           },

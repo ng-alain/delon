@@ -1,4 +1,4 @@
-export class NaViewConfig {
+export class NaSVConfig {
   /** 大小，默认：`large` */
   size = 'large';
   /** 间距，默认：`32` */

@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { REP_MAX_COL } from '../core/responsive';
-import { NaViewComponent } from './view.component';
-import { NaViewModule } from './module';
+import { SVComponent } from './view.component';
+import { NaSVModule } from './view.module';
 
 const prefixCls = `.sv__`;
 
@@ -16,7 +16,7 @@ describe('abc: view', () => {
 
   function genModule(template?: string) {
     TestBed.configureTestingModule({
-      imports: [NaViewModule.forRoot()],
+      imports: [NaSVModule.forRoot()],
       declarations: [TestComponent],
     });
     if (template) {
@@ -190,7 +190,7 @@ describe('abc: view', () => {
 })
 class TestComponent {
   @ViewChild('viewComp')
-  viewComp: NaViewComponent;
+  viewComp: SVComponent;
   parent_size: 'small' | 'large' = 'large';
   parent_layout: 'horizontal' | 'vertical' = 'horizontal';
   parent_labelWidth: number = null;

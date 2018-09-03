@@ -1,5 +1,5 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { Component } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'se-error',

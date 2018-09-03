@@ -1,9 +1,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 // region: all modules
-import { NaTableModule } from './table/module';
-import { NaViewModule } from './view/module';
-import { NaEditModule } from './edit/module';
+import { NaSTModule } from './table/table.module';
+import { NaSVModule } from './view/view.module';
+import { NaSEModule } from './edit/edit.module';
 import { NaErrorCollectModule } from './error-collect/error-collect.module';
 import { NaFooterToolbarModule } from './footer-toolbar/footer-toolbar.module';
 import { NaSidebarNavModule } from './sidebar-nav/sidebar-nav.module';
@@ -43,7 +43,7 @@ const MODULES = [
   NaResultModule,
   NaTagSelectModule,
   NaCountDownModule,
-  NaTableModule,
+  NaSTModule,
   NaReuseTabModule,
   NaFullContentModule,
   NaXlsxModule,
@@ -52,8 +52,8 @@ const MODULES = [
   NaLodopModule,
   NaQuickMenuModule,
   NaQRModule,
-  NaViewModule,
-  NaEditModule,
+  NaSVModule,
+  NaSEModule,
   NaDatePickerModule
 ];
 
@@ -75,7 +75,7 @@ const MODULES = [
     NaResultModule.forRoot(),
     NaTagSelectModule.forRoot(),
     NaCountDownModule.forRoot(),
-    NaTableModule.forRoot(),
+    NaSTModule.forRoot(),
     NaReuseTabModule.forRoot(),
     NaFullContentModule.forRoot(),
     NaXlsxModule.forRoot(),
@@ -84,8 +84,8 @@ const MODULES = [
     NaLodopModule.forRoot(),
     NaQuickMenuModule.forRoot(),
     NaQRModule.forRoot(),
-    NaViewModule.forRoot(),
-    NaEditModule.forRoot(),
+    NaSVModule.forRoot(),
+    NaSEModule.forRoot(),
     NaDatePickerModule.forRoot()
   ],
   exports: MODULES,

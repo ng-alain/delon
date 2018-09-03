@@ -19,8 +19,8 @@ Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时�
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `cog` | 获取或设置配置项 | `NaLodopConfig` | -
-`events` | 打印过程通知 | `Observable<NaLodopPrintResult>` | -
-`lodop` | 获取 Lodop 对象 | `Observable<NaLodopResult>` | -
+`events` | 打印过程通知 | `Observable<LodopPrintResult>` | -
+`lodop` | 获取 Lodop 对象 | `Observable<LodopResult>` | -
 
 **受控 Lodop 对象加载成功后辅助API**
 
@@ -31,7 +31,7 @@ Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时�
 `design()` | 打开打印设计关闭后自动返回代码 | `string[]` | -
 `print()` | 立即打印，一般用于批量套打 | `void` | -
 
-### NaLodopPrintResult
+### LodopPrintResult
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -41,7 +41,7 @@ Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时�
 `item` | 动态参数上下文对象 | `any` | -
 `parser` | 代码解析表达式 | `RegExp` | -
 
-### NaLodopResult
+### LodopResult
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------

@@ -8,7 +8,7 @@ import {
 } from './interface';
 
 @Injectable()
-export class NaTableConfig {
+export class NaSTConfig {
   /**
    * 起始页码，默认为：`1`
    */

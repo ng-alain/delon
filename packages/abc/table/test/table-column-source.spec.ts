@@ -5,7 +5,7 @@ import { deepGet } from '@delon/util';
 import { STColumnSource } from '../table-column-source';
 import { STRowSource } from '../table-row.directive';
 import { STColumn } from '../interface';
-import { NaTableConfig } from '../config';
+import { NaSTConfig } from '../table.config';
 
 let i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
@@ -29,7 +29,7 @@ describe('abc: table: column-souce', () => {
       rowSrv,
       aclSrv,
       i18nSrv,
-      other.cog || new NaTableConfig(),
+      other.cog || new NaSTConfig(),
     );
     page = new PageObject();
   }

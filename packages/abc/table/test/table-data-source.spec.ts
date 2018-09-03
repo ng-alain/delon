@@ -7,7 +7,7 @@ import {
   STDataSource,
   STDataSourceOptions,
 } from '../table-data-source';
-import { NaTableConfig } from '../config';
+import { NaSTConfig } from '../table.config';
 import { STColumnFilterMenu } from '../interface';
 import { of, throwError } from 'rxjs';
 
@@ -48,7 +48,7 @@ describe('abc: table: data-souce', () => {
   }
 
   function genModule() {
-    const def = new NaTableConfig();
+    const def = new NaSTConfig();
     options = {
       pi: DEFAULT.pi,
       ps: DEFAULT.ps,

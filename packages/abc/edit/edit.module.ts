@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { NaEditConfig } from './config';
+import { NaSEConfig } from './edit.config';
 import { SEContainerComponent } from './edit-container.component';
 import { SEItemComponent } from './edit.component';
 import { SEErrorComponent } from './edit-error.component';
@@ -20,8 +20,8 @@ const COMPONENTS = [
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaEditModule {
+export class NaSEModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaEditModule, providers: [NaEditConfig] };
+    return { ngModule: NaSEModule, providers: [NaSEConfig] };
   }
 }

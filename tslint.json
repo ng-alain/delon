@@ -100,10 +100,10 @@
   "linterOptions": {
     "exclude": [
       "packages/**/*.spec.ts",
-      "packages/cli/**/*",
       "packages/testing/**/*",
       "packages/schematics/**/files/**/*",
       "packages/schematics/utils/devkit-utils/**/*",
+      "packages/schematics/update/**/*",
       "src/app/routes/gen/**/*"
     ]
   }

@@ -10,7 +10,7 @@ import {
   STColumnFilter,
 } from './interface';
 import { STRowSource } from './table-row.directive';
-import { NaTableConfig } from './config';
+import { NaSTConfig } from './table.config';
 
 export interface STSortMap extends STColumnSort {
   /** 是否启用排序 */
@@ -25,7 +25,7 @@ export class STColumnSource {
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
-    private cog: NaTableConfig,
+    private cog: NaSTConfig,
   ) {}
 
   private btnCoerce(list: STColumnButton[]): STColumnButton[] {

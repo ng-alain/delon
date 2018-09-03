@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { InputBoolean } from '@delon/util';
-import { DatePickerConfig, DateRangePickerConfig } from './date-picker.config';
+import { NaDatePickerConfig, NaDateRangePickerConfig } from './date-picker.config';
 
 @Component({
   selector: 'range-picker',
@@ -80,8 +80,8 @@ export class NaRangePickerComponent implements ControlValueAccessor {
 
   // #endregion
 
-  constructor(cog: DatePickerConfig) {
-    Object.assign(this, new DateRangePickerConfig(), cog && cog.range);
+  constructor(cog: NaDatePickerConfig) {
+    Object.assign(this, new NaDateRangePickerConfig(), cog && cog.range);
   }
 
   _nzOnOpenChange(e: any) {

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { toNumber, toBoolean } from '@delon/util';
-import { NaEditConfig } from './config';
+import { NaSEConfig } from './edit.config';
 
 @Component({
   selector: 'se-container, [se-container]',
@@ -74,7 +74,7 @@ export class SEContainerComponent {
 
   //#endregion
 
-  constructor(cog: NaEditConfig) {
+  constructor(cog: NaSEConfig) {
     Object.assign(this, cog);
   }
 }

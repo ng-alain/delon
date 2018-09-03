@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { NaRangePickerComponent } from './range.component';
-import { DatePickerConfig } from './date-picker.config';
+import { NaDatePickerConfig } from './date-picker.config';
 
 const COMPONENTS = [NaRangePickerComponent];
 
@@ -17,7 +17,7 @@ export class NaDatePickerModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: NaDatePickerModule,
-      providers: [DatePickerConfig],
+      providers: [NaDatePickerConfig],
     };
   }
 }

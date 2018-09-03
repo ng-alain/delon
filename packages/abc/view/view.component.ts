@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { toNumber, toBoolean, isEmpty } from '@delon/util';
 import { GenStanRepCls } from '../core/responsive';
-import { SVContainerComponent } from './container.component';
+import { SVContainerComponent } from './view-container.component';
 
 const prefixCls = `sv`;
 
@@ -22,7 +22,7 @@ const prefixCls = `sv`;
   templateUrl: './view.component.html',
   preserveWhitespaces: false,
 })
-export class NaViewComponent implements AfterViewInit, OnChanges {
+export class SVComponent implements AfterViewInit, OnChanges {
   @ViewChild('conEl')
   private conEl: ElementRef;
   private el: HTMLElement;

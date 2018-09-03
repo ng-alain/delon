@@ -1,4 +1,4 @@
-export class NaEditConfig {
+export class NaSEConfig {
   /**
    * 大小，默认：`default`
    * - `compact` 紧凑型，强制忽略 `error`、`extra` 展示

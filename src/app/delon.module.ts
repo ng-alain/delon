@@ -17,10 +17,10 @@ import * as MOCKDATA from '../../_mock';
 
 // region: global config functions
 
-import { NaLodopConfig, NaTableConfig, DelonABCModule } from '@delon/abc';
+import { NaLodopConfig, NaSTConfig, DelonABCModule } from '@delon/abc';
 
-export function fnNaTableConfig(): NaTableConfig {
-  return Object.assign(new NaTableConfig(), {
+export function fnNaSTConfig(): NaSTConfig {
+  return Object.assign(new NaSTConfig(), {
     ps: 3,
   });
 }
@@ -58,7 +58,7 @@ export class DelonModule {
     return {
       ngModule: DelonModule,
       providers: [
-        { provide: NaTableConfig, useFactory: fnNaTableConfig },
+        { provide: NaSTConfig, useFactory: fnNaSTConfig },
         { provide: NaLodopConfig, useFactory: fnNaLodopConfig },
       ],
     };
