@@ -1,5 +1,7 @@
 @import '../../../theme/styles/default';
+
 @notice-icon-prefix: ~'.notice-icon';
+
 @{notice-icon-prefix} {
   &__btn {
     cursor: pointer;
@@ -79,6 +81,9 @@
     }
   }
   &__item {
+    .ant-badge-count {
+      top: -10px;
+    }
     &-read {
       opacity: 0.4;
     }

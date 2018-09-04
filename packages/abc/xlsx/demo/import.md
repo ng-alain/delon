@@ -1,9 +1,17 @@
 ---
 order: 1
-title: 导入
+title:
+  zh-CN: 导入
+  en-US: Import
 ---
 
-导入Excel并输出JSON，支持 File、URL 形式
+## zh-CN
+
+导入Excel并输出JSON，支持 File、URL 格式。
+
+## en-US
+
+Import Excel and output JSON, support File, URL.
 
 ```ts
 import { Component } from '@angular/core';

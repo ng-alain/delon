@@ -12,6 +12,9 @@
     lg @screen-lg,
     xl @screen-xl;
 
+@mobile-min: @screen-sm-min;
+@mobile-max: @screen-sm;
+
 // spaceing
 @spacings:
     0  0,
@@ -25,6 +28,7 @@
 // position
 @zindex-base:       @zindex-back-top - 1;
 @zindex-fixed:      @zindex-base;
+@zindex:            @zindex-base;
 
 // 文本
 @text-sm:       @font-size-base + 0; // 12px

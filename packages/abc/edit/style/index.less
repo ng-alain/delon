@@ -10,7 +10,7 @@
     font-size: 14px;
     color: @heading-color;
     font-weight: 500;
-    line-height: 39.9999px;
+    line-height: @form-component-max-height - 0.0001px;
   }
   &__item {
     &:last-child {
@@ -24,12 +24,14 @@
     white-space: nowrap;
     display: table-cell;
     flex: 0 0 auto;
+    width: initial;
     &-optional {
-      color: rgba(0,0,0,.45);
+      color: rgba(0, 0, 0, 0.45);
     }
   }
   &__control {
     flex: 1 0 0;
+    width: 100%;
   }
   &__compact {
     @{se-prefix}__title,
@@ -45,9 +47,6 @@
     @{se-prefix}__label,
     @{se-prefix}__control {
       padding-bottom: @se-compact-bottom;
-    }
-    &:last-child {
-      border-bottom: none;
     }
   }
   &__inline,
@@ -71,7 +70,7 @@
   }
   &__inline {
     @{se-prefix}__label,
-    @{se-prefix}__control, {
+    @{se-prefix}__control {
       text-align: left;
       width: initial;
       flex: none;
@@ -79,6 +78,26 @@
     @{se-prefix}__item {
       &:last-child {
         margin-right: 0;
+      }
+    }
+  }
+}
+
+@media (min-width: @mobile-min) {
+}
+
+@media (max-width: @mobile-max) {
+  @{se-prefix} {
+    &__horizontal {
+      @{se-prefix}__item {
+        display: block;
+      }
+    }
+    &__horizontal,
+    &__vertical {
+      @{se-prefix}__label,
+      @{se-prefix}__control {
+        width: 100% !important;
       }
     }
   }

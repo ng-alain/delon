@@ -21,12 +21,12 @@ let isErrRequest = false;
 let loadCount = 0;
 let isNullLodop = false;
 class MockLazyService {
-  load() {
+  loadScript() {
     ++loadCount;
-    if (isErrRequest) return Promise.resolve([{ status: 'error' }]);
+    if (isErrRequest) return Promise.resolve({ status: 'error' });
 
     window[cog.name] = isNullLodop ? null : mockLodop;
-    return Promise.resolve([{ status: 'ok' }]);
+    return Promise.resolve({ status: 'ok' });
   }
 }
 

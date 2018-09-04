@@ -107,9 +107,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   set res(value: STRes) {
     const { res } = this.cog;
     const item = Object.assign({}, res, value);
-    if (item.reName == null) {
-      item.reName = deepCopy(res.reName);
-    }
+    item.reName = Object.assign({}, res.reName, item.reName);
     if (!Array.isArray(item.reName.list))
       item.reName.list = item.reName.list.split('.');
     if (!Array.isArray(item.reName.total))

@@ -1,9 +1,17 @@
 ---
 order: 1
-title: 基础信息
+title:
+  zh-CN: 基础
+  en-US: Basic
 ---
 
-用于获取打印服务器（包括：远程）信息。
+## zh-CN
+
+获取打印服务器（包括：远程）信息。
+
+## en-US
+
+Get print server information (including: remote).
 
 ```ts
 import { Component } from '@angular/core';

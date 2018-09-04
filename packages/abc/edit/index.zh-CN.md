@@ -45,6 +45,7 @@ config: NaSEConfig
 `[size]` | 大小 `compact` 紧凑型，强制忽略 `error`、`extra` 展示 | `default | compact` | `default`
 `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false`
 `[line]` | 分隔线 | `boolean` | `false`
+`[title]` | 标题 | `string | TemplateRef<any>` | -
 
 ### se
 

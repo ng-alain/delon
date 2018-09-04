@@ -22,6 +22,7 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[col]`        | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](#Responsive Rules)   | `number(0 < col <= 6)`                | `3`          |
 | `[labelWidth]` | label text of width  | `number`                | `null`       |
 | `[default]`    | whether default text | `boolean`               | `true`       |
+| `[title]`      | Display title        | `string | TemplateRef<any>`            | - |
 
 ### sv
 

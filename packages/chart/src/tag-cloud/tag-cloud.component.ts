@@ -139,6 +139,10 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     this.chart = chart;
   }
 
+  private runInstall() {
+    this.zone.runOutsideAngular(() => setTimeout(() => this.renderChart()));
+  }
+
   private uninstall() {
     if (this.chart) {
       this.chart.destroy();
@@ -151,14 +155,14 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     this.zone.runOutsideAngular(() =>
       setTimeout(() => {
         this.initTagCloud();
-        this.renderChart();
+        this.runInstall();
       }),
     );
   }
 
   ngOnChanges(): void {
     if (this.initFlag) {
-      this.zone.runOutsideAngular(() => this.renderChart());
+      this.runInstall();
     }
   }
 

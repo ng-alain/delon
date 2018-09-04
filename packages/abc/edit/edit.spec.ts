@@ -41,6 +41,11 @@ describe('abc: edit', () => {
   describe('[property]', () => {
     beforeEach(() => genModule());
     describe('#wrap', () => {
+      it('#title', () => {
+        context.parent_title = `parent_title`;
+        fixture.detectChanges();
+        expect(page.getEl(prefixCls + 'title').textContent).toContain(`parent_title`);
+      });
       describe('#firstVisual', () => {
         let ngModel: NgModel;
         let changes: EventEmitter<any>;
@@ -208,6 +213,16 @@ describe('abc: edit', () => {
   });
 
   describe('[logic]', () => {
+    it('should be custom title in se-container', () => {
+      genModule(
+        `<se-container [title]="title">
+          <ng-template #title>
+            <a id="tip">tip</a>
+          </ng-template>
+        </se-container>`,
+      );
+      page.expect('#tip');
+    });
     it('should be custom label', () => {
       genModule(
         `<se-container>
@@ -276,8 +291,10 @@ describe('abc: edit', () => {
 @Component({
   template: `
   <form nz-form [se-container]="parent_col"
+    [title]="parent_title"
     [firstVisual]="parent_firstVisual" [line]="parent_line"
-    [size]="parent_size" [nzLayout]="parent_layout" [labelWidth]="parent_labelWidth" [gutter]="parent_gutter">
+    [size]="parent_size" [nzLayout]="parent_layout"
+    [labelWidth]="parent_labelWidth" [gutter]="parent_gutter">
 
     <se-title>title</se-title>
     <se #viewComp
@@ -300,6 +317,7 @@ class TestComponent {
   parent_size: 'default' | 'compact' = 'default';
   parent_firstVisual = true;
   parent_line = false;
+  parent_title = "title";
 
   optional: string;
   optionalHelp: string;

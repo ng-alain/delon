@@ -7,13 +7,21 @@
 @sv-type-success-color: @success-color;
 @sv-type-danger-color: @error-color;
 @sv-type-warning-color: @warning-color;
-@sv-bottom: 8px;
+@sv-bottom: @layout-gutter * 2;
 @sv-default-text: '-';
 
 @{sv-prefix} {
   display: block;
   + @{sv-prefix} {
     margin-top: @sv-bottom;
+  }
+  &__wrap {
+    display: inline-block;
+    // offset the padding-bottom of last row
+    .ant-row {
+      margin-bottom: -@sv-bottom;
+      overflow: hidden;
+    }
   }
   &__item {
     &-fixed {
@@ -35,11 +43,6 @@
     color: @heading-color;
     font-weight: 500;
     margin-bottom: @sv-bottom;
-  }
-  // offset the padding-bottom of last row
-  .ant-row {
-    margin-bottom: -@sv-bottom;
-    overflow: hidden;
   }
   &__label {
     line-height: 22px;

@@ -5,6 +5,7 @@ import {
   Renderer2,
   OnInit,
   OnChanges,
+  TemplateRef,
 } from '@angular/core';
 import { toNumber, updateHostClass } from '@delon/util';
 import { NaSVConfig } from './view.config';
@@ -19,6 +20,18 @@ const prefixCls = `sv`;
 export class SVContainerComponent implements OnInit, OnChanges {
   private el: HTMLElement;
   //#region fields
+
+  _title = '';
+  _titleTpl: TemplateRef<any>;
+  @Input()
+  set title(value: string | TemplateRef<any>) {
+    if (value instanceof TemplateRef) {
+      this._title = null;
+      this._titleTpl = value;
+    } else {
+      this._title = value;
+    }
+  }
 
   @Input()
   size: 'small' | 'large';

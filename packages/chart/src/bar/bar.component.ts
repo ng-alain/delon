@@ -8,7 +8,6 @@ import {
   OnChanges,
   NgZone,
   TemplateRef,
-  OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
@@ -25,7 +24,7 @@ import { toBoolean, toNumber } from '@delon/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
+export class G2BarComponent implements OnDestroy, OnChanges {
   private autoHideXLabels = false;
   private resize$: Subscription = null;
   private chart: any;
@@ -147,12 +146,9 @@ export class G2BarComponent implements OnDestroy, OnChanges, OnInit {
       .subscribe(() => this.runInstall());
   }
 
-  ngOnInit(): void {
-    this.runInstall();
-  }
-
   ngOnChanges(): void {
     this.installResizeEvent();
+    this.runInstall();
   }
 
   ngOnDestroy(): void {

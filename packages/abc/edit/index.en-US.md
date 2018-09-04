@@ -45,6 +45,7 @@ Property | Description | Type | Default
 `[size]` | size of edit, forced ingores `error`, `extra` | `default | compact` | `default`
 `[firstVisual]` | Immediately show validation error message | `boolean` | `false`
 `[line]` | whether separation line style | `boolean` | `false`
+`[title]` | Display title | `string | TemplateRef<any>` | -
 
 ### se
 

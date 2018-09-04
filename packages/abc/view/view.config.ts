@@ -1,6 +1,6 @@
 export class NaSVConfig {
-  /** 大小，默认：`large` */
-  size = 'large';
+  /** 大小 */
+  size: 'small' | 'large';
   /** 间距，默认：`32` */
   gutter = 32;
   /** 布局，默认：`horizontal` */

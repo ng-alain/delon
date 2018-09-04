@@ -32,6 +32,11 @@ describe('abc: view', () => {
   describe('[property]', () => {
     beforeEach(() => genModule());
     describe('#wrap', () => {
+      it('#title', () => {
+        context.parent_title = `parent_title`;
+        fixture.detectChanges();
+        expect(page.getEl(prefixCls + 'title').textContent).toContain(`parent_title`);
+      });
       it('#size', () => {
         context.parent_size = 'large';
         fixture.detectChanges();
@@ -134,6 +139,16 @@ describe('abc: view', () => {
   });
 
   describe('[logic]', () => {
+    it('should be custom title in sv-container', () => {
+      genModule(
+        `<sv-container [title]="title">
+          <ng-template #title>
+            <a id="tip">tip</a>
+          </ng-template>
+        </sv-container>`,
+      );
+      page.expect('#tip');
+    });
     it('should be custom label', () => {
       genModule(
         `<sv-container>
@@ -180,6 +195,7 @@ describe('abc: view', () => {
 @Component({
   template: `
   <sv-container
+    [title]="parent_title"
     [size]="parent_size" [layout]="parent_layout" [labelWidth]="parent_labelWidth"
     [gutter]="parent_gutter" [col]="parent_col" [default]="parent_default">
 
@@ -197,6 +213,7 @@ class TestComponent {
   parent_gutter: number = 32;
   parent_col: number = 3;
   parent_default: boolean = true;
+  parent_title = "title";
 
   label: string;
   content = '1';

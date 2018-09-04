@@ -74,9 +74,9 @@
         <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand"></td>
         <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right" [nzCheckbox]="c.type === 'checkbox'" [ngClass]="c.className"
           [attr.colspan]="c.colSpan">
+          <span class="ant-table-rep__title" [innerHTML]="c.title"></span>
           <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
           <ng-container *ngIf="!c.__render; else render">
-            <span class="ant-table-rep__title" [innerHTML]="c.title"></span>
             <ng-container *ngIf="c.index" [ngSwitch]="c.type">
               <ng-container *ngSwitchCase="'checkbox'">
                 <label nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkSelection(i, $event)"></label>

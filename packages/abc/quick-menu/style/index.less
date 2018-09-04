@@ -1,10 +1,11 @@
 @import '../../../theme/styles/default';
 
+@quick-menu-prefix: ~'.quick-menu';
 @quick-menu-border-width: 1px;
 @quick-menu-ctrl-hw: 50px;
 @quick-menu-border-color: #fff;
 
-.quick-menu {
+@{quick-menu-prefix} {
   display: block;
   position: fixed;
   right: -@quick-menu-border-width;
@@ -32,9 +33,5 @@
       line-height: @quick-menu-ctrl-hw - 1;
       font-size: 20px;
     }
-  }
-
-  @media (max-width: @screen-md) {
-    right: -(@content-padding + @quick-menu-border-width);
   }
 }

@@ -1,9 +1,17 @@
 ---
 order: 2
-title: 打印设计
+title:
+  zh-CN: 打印设计
+  en-US: Print design
 ---
 
-使用打印设计对字体、字号、对象排版等，并利用 `attachCode` 方法自动附加设计生成的代码至 Lodop 对象，且支持动态参数。调用 `print` 压制打印数据并监听 `events` 可进行无限制批量套打。
+## zh-CN
+
+使用打印设计对字体、字号、对象排版等，并利用 `attachCode` 方法自动附加设计生成的代码至 Lodop 对象，且支持动态参数。调用 `print` 方法来打印数据并通过监听 `events` 判断进行下一个打印，从而实现无限制批量套打。
+
+## en-US
+
+Use print design for font, font size, object layout, etc., and use `attachCode` method to automatically append the generated code to the Lodop instance(support dynamic parameters). Call the `print` method to print the data, and make the next print by listening `events`, that achieve unlimited batch printing.
 
 ```ts
 import { Component } from '@angular/core';

@@ -7,7 +7,7 @@ cols: 1
 module: NaXlsxModule
 ---
 
-一个基于 [sheetjs](https://docs.sheetjs.com) 的Excel文件操作，它是目前在浏览器中包含最全的Excel操作的脚本库。
+一个基于 [SheetJS](http://sheetjs.com/) 的Excel文件操作，它是目前在浏览器中包含最全的Excel操作的脚本库。
 
 > 注：你也可以使用 [js-xlsx](https://github.com/protobi/js-xlsx) 是另一个 Fork sheetjs 的类库，它提供包括：图片、样式等额外选项。最后你利用 `callback` 选项重要渲染你的 excel。
 
@@ -23,10 +23,10 @@ yarn add file-saver
 
 ### LazyService
 
-方法 | 说明 |
-----|------
-`import(fileOrUrl: File | string): Promise<{ [key: string]: any[][] }>` | 导入Excel，返回 JSON
-`export(options: NaXlsxExportOptions): Promise<void>` | 导出Excel
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`import(fileOrUrl: File | string)` | 导入Excel，返回 JSON | `Promise<{ [key: string]: any[][] }>` | -
+`export(options: NaXlsxExportOptions)` | 导出Excel | `Promise<void>` | -
 
 ### NaXlsxExportOptions
 
@@ -47,4 +47,4 @@ yarn add file-saver
 
 ### csv格式
 
-需要 UTF8 with BOM 格式才能解析。
+文件编码格式必须是 UTF8 with BOM 才能解析。

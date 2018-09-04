@@ -31,7 +31,6 @@ import { Subscription } from 'rxjs';
   selector: 'page-header',
   templateUrl: './page-header.component.html',
   host: {
-    '[class.content__title]': 'true',
     '[class.page-header]': 'true',
   },
   preserveWhitespaces: false,

@@ -92,6 +92,10 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     this.chart.changeData(data);
   }
 
+  private runInstall() {
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
+  }
+
   private install() {
     this.node.nativeElement.innerHTML = '';
     const Shape = G2.Shape;
@@ -190,7 +194,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit(): void {
     this.initFlag = true;
-    this.zone.runOutsideAngular(() => this.install());
+    this.runInstall();
   }
 
   ngOnChanges(): void {

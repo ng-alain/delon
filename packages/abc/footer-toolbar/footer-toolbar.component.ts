@@ -13,6 +13,7 @@ import { DOCUMENT } from '@angular/common';
 import { toBoolean } from '@delon/util';
 
 const CLS = 'footer-toolbar';
+const CLSBODY = 'footer-toolbar__body';
 
 @Component({
   selector: 'footer-toolbar',
@@ -44,12 +45,11 @@ export class NaFooterToolbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    (this.el.nativeElement as HTMLElement).classList.add(CLS);
     this.renderer.addClass(this.el.nativeElement, CLS);
-    this.doc.querySelector('body').classList.add(`has-${CLS}`);
+    this.doc.querySelector('body').classList.add(CLSBODY);
   }
 
   ngOnDestroy() {
-    this.doc.querySelector('body').classList.remove(`has-${CLS}`);
+    this.doc.querySelector('body').classList.remove(CLSBODY);
   }
 }

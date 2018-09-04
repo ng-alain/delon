@@ -8,7 +8,6 @@ import {
   OnChanges,
   NgZone,
   TemplateRef,
-  OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
@@ -34,7 +33,7 @@ import { toNumber, toBoolean } from '@delon/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
+export class G2RadarComponent implements OnDestroy, OnChanges {
   // #region fields
 
   _title = '';
@@ -118,7 +117,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   private runInstall() {
-    this.zone.runOutsideAngular(() => this.install());
+    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
   }
 
   private install() {
@@ -216,11 +215,6 @@ export class G2RadarComponent implements OnDestroy, OnChanges, OnInit {
       this.chart.destroy();
       this.chart = null;
     }
-  }
-
-  ngOnInit(): void {
-    // this.initFlag = true;
-    // this.runInstall();
   }
 
   ngOnChanges(): void {

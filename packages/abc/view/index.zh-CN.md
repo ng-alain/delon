@@ -22,6 +22,7 @@ config: NaViewConfig
 | `[col]`        | 指定信息最多分几列展示，最终一行几列由 col 配置结合[响应式规则](#响应式规则)决定         | `number(0 < col <= 6)`                | `3`          |
 | `[labelWidth]` | 默认标签文本宽度     | `number`                | `null`       |
 | `[default]`    | 默认是否显示默认文本 | `boolean`               | `true`       |
+| `[title]`      | 标题                                  | `string | TemplateRef<any>`            | - |
 
 ### sv
 

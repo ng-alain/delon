@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { toNumber, toBoolean } from '@delon/util';
 import { NaSEConfig } from './edit.config';
 
@@ -9,6 +9,18 @@ import { NaSEConfig } from './edit.config';
 })
 export class SEContainerComponent {
   //#region fields
+
+  _title = '';
+  _titleTpl: TemplateRef<any>;
+  @Input()
+  set title(value: string | TemplateRef<any>) {
+    if (value instanceof TemplateRef) {
+      this._title = null;
+      this._titleTpl = value;
+    } else {
+      this._title = value;
+    }
+  }
 
   @Input()
   get gutter() {
@@ -32,7 +44,7 @@ export class SEContainerComponent {
 
   @Input()
   set labelWidth(value: any) {
-    this._labelWidth = toNumber(value, 0);
+    this._labelWidth = toNumber(value, null);
   }
   get labelWidth() {
     return this._labelWidth;

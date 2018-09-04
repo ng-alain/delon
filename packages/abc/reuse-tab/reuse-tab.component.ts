@@ -270,7 +270,7 @@ export class NaReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
   private setClass() {
     const body = this.doc.querySelector('body');
-    const bodyCls = `has-ad-rt`;
+    const bodyCls = `reuse-tab__body`;
     if (this.fixed) {
       this.render.addClass(body, bodyCls);
     } else {

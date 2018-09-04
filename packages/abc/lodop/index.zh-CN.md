@@ -8,9 +8,9 @@ module: NaLodopModule
 config: NaLodopConfig
 ---
 
-Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时感谢 [lodop](http://c-lodop.com/) 为 ng-alain 免费提供正版KEY。
+[Lodop](http://c-lodop.com/) 打印的基础实现，商用需要购买KEY。（同时感谢 lodop 为 ng-alain 免费提供正版KEY）
 
-> 示例的**运行前提必须安装**[Lodop插件](http://c-lodop.com/download.html)。
+> 运行示例的**前提条件**必须安装[Lodop](http://c-lodop.com/download.html)。
 
 ## API
 
@@ -22,13 +22,13 @@ Lodop 打印的基础实现，若需要商用还需要单独购买KEY。同时�
 `events` | 打印过程通知 | `Observable<LodopPrintResult>` | -
 `lodop` | 获取 Lodop 对象 | `Observable<LodopResult>` | -
 
-**受控 Lodop 对象加载成功后辅助API**
+**Lodop加载成功后辅助API**
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `printer` | 获取打印机列表  | `string[]` | -
 `attachCode()` | 附加代码至 `lodop` 对象上  | `void` | -
-`design()` | 打开打印设计关闭后自动返回代码 | `string[]` | -
+`design()` | 运行打印设计手动关闭后返回代码 | `Promise<string>` | -
 `print()` | 立即打印，一般用于批量套打 | `void` | -
 
 ### LodopPrintResult

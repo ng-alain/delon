@@ -1,9 +1,17 @@
 ---
 order: 2
-title: 导出
+title:
+  zh-CN: 导出
+  en-US: Export
 ---
 
+## zh-CN
+
 导出Excel并自动弹出保存对话框。
+
+## en-US
+
+Export Excel and automatically pop save dialog.
 
 ```ts
 import { Component } from '@angular/core';

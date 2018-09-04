@@ -13,7 +13,7 @@ import { NoticeItem } from './interface';
     [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)" nzTrigger="click"
     nzPlacement="bottomRight"
     nzOverlayClassName="notice-icon">
-    <div nz-popover class="notice-icon__item">
+    <div nz-popover class="alain-default__nav-item notice-icon__item">
       <nz-badge [nzCount]="count">
         <i class="anticon anticon-bell"></i>
       </nz-badge>

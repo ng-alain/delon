@@ -53,7 +53,7 @@ export class AppComponent implements OnDestroy {
       .pipe(filter(evt => evt instanceof NavigationEnd))
       .subscribe((evt: NavigationEnd) => {
         const url = evt.url.split('#')[0].split('?')[0];
-        if (this.prevUrl === url) return;
+        if (url.includes('/dev') || this.prevUrl === url) return;
         this.prevUrl = url;
 
         let urlLang = url.split('/').pop();
