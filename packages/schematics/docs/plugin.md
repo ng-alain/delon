@@ -98,6 +98,8 @@ ng g ng-alain:plugin npm -t=remove
 
 ### yarn
 
+> 限 `@angular-devkit/build-angular < 0.7.5`
+
 修复由于降级 Less 导致无法使用 `yarn` 安装依赖包问题。
 
 ```bash

@@ -34,11 +34,6 @@
       "description": "Generates .npmrc proxy to taobao.",
       "default": false
     },
-    "yarn": {
-      "type": "boolean",
-      "description": "usage yarn install dependencies",
-      "default": false
-    },
     "hmr": {
       "type": "boolean",
       "description": "Generates hmr files and configuration",
