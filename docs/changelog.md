@@ -6,6 +6,23 @@ title:
 type: Other
 ---
 
+### 1.4.0
+
+`2018-9-4`
+
+- 脚手架
+  - 取消 less 降级，参考 [36668e](https://github.com/cipchk/ng-alain/commit/36668e) 变更纪录
+- @delon/abc
+  - 增加 `simple-table` 所有重置方法对 `extraParams` 合并选项，[#652](https://github.com/cipchk/ng-alain/issues/652)
+  - 修复 `reuse-tab` 最大标签超限时引起高亮错位，[#647](https://github.com/cipchk/ng-alain/issues/647)
+  - 移除 `exception` 无效 `actions` 属性，[#658](https://github.com/cipchk/ng-alain/issues/658)
+- @delon/theme
+  - 增加 `patch`、`put` 方法的扩展，[#662](https://github.com/cipchk/ng-alain/issues/662)
+- @delon/form
+  - 增加 `tree-select` 小部件
+
+> 此版本将是 [2.x](https://next.ng-alain.com/) 最后一个次版本号
+
 ### 1.3.3
 
 `2018-8-25`
