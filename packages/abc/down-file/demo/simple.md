@@ -1,9 +1,17 @@
 ---
 order: 0
-title: 基础样例
+title:
+  zh-CN: 基础
+  en-US: Basic
 ---
 
-需要配合后端。
+## zh-CN
+
+下载一个文件。
+
+## en-US
+
+Download a file.
 
 ```ts
 import { Component } from '@angular/core';

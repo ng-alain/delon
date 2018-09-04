@@ -1,9 +1,17 @@
 ---
 order: 2
-title: 无法加载图像
+title:
+  zh-CN: 无法加载图像
+  en-US: Fail load
 ---
 
-自动替换无法加载图像。
+## zh-CN
+
+自动替换加载失败图像。
+
+## en-US
+
+Automatically replaces the failed image.
 
 ```ts
 import { Component } from '@angular/core';

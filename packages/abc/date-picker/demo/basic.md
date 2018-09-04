@@ -1,9 +1,17 @@
 ---
 order: 0
-title: 基础
+title:
+  zh-CN: 基础
+  en-US: Basic
 ---
 
+## zh-CN
+
 使用 `ngModel`、`ngModelEnd` 来表示开始与结束值。
+
+## en-US
+
+Start and end values with `ngModel`, `ngModelEnd`.
 
 ```ts
 import { Component } from '@angular/core';

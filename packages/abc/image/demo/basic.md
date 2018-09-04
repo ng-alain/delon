@@ -1,9 +1,17 @@
 ---
 order: 1
-title: 基础
+title:
+  zh-CN: 基础
+  en-US: Basic
 ---
 
+## zh-CN
+
 设置 `size` 自动对微信图像加载缩略图。
+
+## en-US
+
+Used `size` to automatically load thumbnails for WeChat images.
 
 ```ts
 import { Component } from '@angular/core';
