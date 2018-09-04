@@ -75,8 +75,8 @@ export class LodopService implements OnDestroy {
       }
     };
 
-    this.scriptSrv.load(url).then((res: any[]) => {
-      if (res.length === 1 && res[0].status !== 'ok') {
+    this.scriptSrv.loadScript(url).then((res) => {
+      if (res.status !== 'ok') {
         this.pending = false;
         onResolve('script-load-error', res[0]);
         return;
