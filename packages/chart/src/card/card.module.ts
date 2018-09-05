@@ -11,8 +11,8 @@ const COMPONENTS = [G2CardComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2CardModule {
+export class G2CardModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2CardModule, providers: [] };
+    return { ngModule: G2CardModule, providers: [] };
   }
 }

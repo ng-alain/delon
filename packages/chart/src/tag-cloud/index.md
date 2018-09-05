@@ -2,7 +2,7 @@
 title: g2-tag-cloud
 subtitle: 标签云
 cols: 1
-module: AdG2TagCloudModule
+module: G2TagCloudModule
 type: Components
 ---
 

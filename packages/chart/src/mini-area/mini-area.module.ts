@@ -10,8 +10,8 @@ const COMPONENTS = [G2MiniAreaComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2MiniAreaModule {
+export class G2MiniAreaModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2MiniAreaModule, providers: [] };
+    return { ngModule: G2MiniAreaModule, providers: [] };
   }
 }

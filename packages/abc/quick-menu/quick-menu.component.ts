@@ -24,7 +24,7 @@ import {
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NaQuickMenuComponent implements OnInit, OnChanges {
+export class QuickMenuComponent implements OnInit, OnChanges {
   // region: fields
 
   @Input()

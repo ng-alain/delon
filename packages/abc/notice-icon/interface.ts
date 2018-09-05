@@ -30,3 +30,8 @@ export interface NoticeIconList {
   /** 是否已读状态 */
   read?: boolean;
 }
+
+export interface NoticeIconSelect {
+  title: string;
+  item: NoticeItem;
+}

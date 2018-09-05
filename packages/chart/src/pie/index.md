@@ -2,7 +2,7 @@
 title: g2-pie
 subtitle: 饼状图
 cols: 1
-module: AdG2PieModule
+module: G2PieModule
 type: Components
 ---
 

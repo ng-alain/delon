@@ -4,15 +4,15 @@ order: 3
 title: qr
 subtitle: QR
 cols: 1
-module: NaQRModule
-config: NaQRConfig
+module: QRModule
+config: QRConfig
 ---
 
 Generate a QR code based on [qrious](https://neocotic.com/qrious).
 
 ## Notice
 
-The default `NaQRModule` don't mandatory dependence `qrious`, so you need to additionally reference it in the `scripts` of `angular.json`, like this:
+The default `QRModule` don't mandatory dependence `qrious`, so you need to additionally reference it in the `scripts` of `angular.json`, like this:
 
 ```bash
 npm i --save qrious

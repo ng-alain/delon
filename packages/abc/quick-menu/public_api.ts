@@ -1,2 +1,2 @@
-export { NaQuickMenuComponent } from './quick-menu.component';
-export { NaQuickMenuModule } from './quick-menu.module';
+export { QuickMenuComponent } from './quick-menu.component';
+export { QuickMenuModule } from './quick-menu.module';

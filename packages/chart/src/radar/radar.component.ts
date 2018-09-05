@@ -15,21 +15,8 @@ import { toNumber, toBoolean } from '@delon/util';
 
 @Component({
   selector: 'g2-radar',
-  template: `
-  <h4 *ngIf="_title; else _titleTpl">{{ _title }}</h4>
-  <div #container></div>
-  <div nz-row class="legend" *ngIf="hasLegend">
-    <div nz-col [nzSpan]="24 / legendData.length" *ngFor="let i of legendData; let idx = index" (click)="_click(idx)">
-      <div class="legend-item">
-        <p>
-          <i class="dot" [ngStyle]="{'background-color': !i.checked ? '#aaa' : i.color}"></i>
-          <span>{{i.name}}</span>
-        </p>
-        <h6>{{i.value}}</h6>
-      </div>
-    </div>
-  </div>`,
-  host: { '[class.ad-radar]': 'true' },
+  templateUrl: './radar.component.html',
+  host: { '[class.g2-radar]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })

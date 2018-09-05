@@ -2,8 +2,8 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NaResultModule } from './result.module';
-import { NaResultComponent } from './result.component';
+import { ResultModule } from './result.module';
+import { ResultComponent } from './result.component';
 
 describe('abc: result', () => {
     let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: result', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ NaResultModule.forRoot() ],
+            imports: [ ResultModule.forRoot() ],
             declarations: [ TestComponent ]
         });
         fixture = TestBed.createComponent(TestComponent);
@@ -99,7 +99,7 @@ describe('abc: result', () => {
     `
 })
 class TestComponent {
-    @ViewChild('comp') comp: NaResultComponent;
+    @ViewChild('comp') comp: ResultComponent;
     type = 'custom';
     @ViewChild('titleTpl') titleTpl: TemplateRef<void>;
     @ViewChild('descriptionTpl') descriptionTpl: TemplateRef<void>;

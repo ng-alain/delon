@@ -3,7 +3,7 @@ type: Components
 title: trend
 subtitle: 趋势标记
 cols: 1
-module: NaTrendModule
+module: TrendModule
 ---
 
 趋势符号，标记上升和下降趋势。通常用绿色代表“好”，红色代表“不好”，股票涨跌场景除外。

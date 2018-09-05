@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { share } from 'rxjs/operators';
 
 @Injectable()
-export class NaFullContentService {
+export class FullContentService {
   private _change: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   /** 切换全屏工作区状态 */

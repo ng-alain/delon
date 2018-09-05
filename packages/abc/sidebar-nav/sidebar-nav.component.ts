@@ -29,7 +29,7 @@ const FLOATINGCLS = 'sidebar-nav__floating';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class NaSidebarNavComponent implements OnInit, OnDestroy {
+export class SidebarNavComponent implements OnInit, OnDestroy {
   private rootEl: HTMLDivElement;
   /** @inner */
   floatingEl: HTMLDivElement;

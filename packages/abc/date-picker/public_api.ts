@@ -1,3 +1,3 @@
-export { NaRangePickerComponent } from './range.component';
-export { NaDatePickerConfig, NaDateRangePickerConfig } from './date-picker.config';
-export { NaDatePickerModule } from './date-picker.module';
+export { RangePickerComponent } from './range.component';
+export { DatePickerConfig, DateRangePickerConfig } from './date-picker.config';
+export { DatePickerModule } from './date-picker.module';

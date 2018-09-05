@@ -1,2 +1,2 @@
-export { NaFooterToolbarComponent } from './footer-toolbar.component';
-export { NaFooterToolbarModule } from './footer-toolbar.module';
+export { FooterToolbarComponent } from './footer-toolbar.component';
+export { FooterToolbarModule } from './footer-toolbar.module';

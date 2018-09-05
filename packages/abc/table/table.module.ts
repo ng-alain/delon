@@ -7,7 +7,7 @@ import { DelonUtilModule } from '@delon/util';
 
 import { STComponent } from './table.component';
 import { STRowDirective } from './table-row.directive';
-import { NaSTConfig } from './table.config';
+import { STConfig } from './table.config';
 
 const COMPONENTS = [STComponent, STRowDirective];
 
@@ -17,8 +17,8 @@ const COMPONENTS = [STComponent, STRowDirective];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaSTModule {
+export class STModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaSTModule, providers: [NaSTConfig] };
+    return { ngModule: STModule, providers: [STConfig] };
   }
 }

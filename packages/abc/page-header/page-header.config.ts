@@ -1,7 +1,4 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class NaPageHeaderConfig {
+export class PageHeaderConfig {
   /**
    * 首页文本，若指定空表示不显示
    */

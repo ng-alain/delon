@@ -1,17 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NaTagSelectComponent } from './tag-select.component';
+import { TagSelectComponent } from './tag-select.component';
 
-const COMPONENTS = [NaTagSelectComponent];
+const COMPONENTS = [TagSelectComponent];
 
 @NgModule({
   imports: [CommonModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaTagSelectModule {
+export class TagSelectModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaTagSelectModule, providers: [] };
+    return { ngModule: TagSelectModule, providers: [] };
   }
 }

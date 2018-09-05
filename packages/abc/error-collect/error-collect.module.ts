@@ -1,21 +1,21 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NaErrorCollectComponent } from './error-collect.component';
-import { NaErrorCollectConfig } from './error-collect.config';
+import { ErrorCollectComponent } from './error-collect.component';
+import { ErrorCollectConfig } from './error-collect.config';
 
-const COMPONENTS = [NaErrorCollectComponent];
+const COMPONENTS = [ErrorCollectComponent];
 
 @NgModule({
   imports: [CommonModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaErrorCollectModule {
+export class ErrorCollectModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: NaErrorCollectModule,
-      providers: [NaErrorCollectConfig],
+      ngModule: ErrorCollectModule,
+      providers: [ErrorCollectConfig],
     };
   }
 }

@@ -1,11 +1,11 @@
 import { Directive, HostListener } from '@angular/core';
-import { NaFullContentComponent } from './full-content.component';
+import { FullContentComponent } from './full-content.component';
 
 @Directive({
   selector: '[full-toggle]',
 })
-export class NaFullContentToggleDirective {
-  constructor(private parent: NaFullContentComponent) {}
+export class FullContentToggleDirective {
+  constructor(private parent: FullContentComponent) {}
 
   @HostListener('click')
   _click() {

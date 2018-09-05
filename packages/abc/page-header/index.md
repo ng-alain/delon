@@ -3,8 +3,8 @@ type: Layout
 title: page-header
 subtitle: 页头
 cols: 1
-module: NaPageHeaderModule
-config: NaPageHeaderConfig
+module: PageHeaderModule
+config: PageHeaderConfig
 ---
 
 页头用来声明页面的主题，包含了用户所关注的最重要的信息，使用户可以快速理解当前页面是什么以及它的功能。
@@ -13,7 +13,7 @@ config: NaPageHeaderConfig
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[title]` | 标题名 | `string \| TemplateRef<any>` | -
+`[title]` | 标题名 | `string | TemplateRef<any>` | -
 `[autoTitle]` | 自动生成标题，以当前路由从主菜单中定位  | `boolean` | `true`
 `[syncTitle]` | 是否自动将标题同步至 `TitleService`、`ReuseService` 下，仅 `title` 为 `string` 类型时有效  | `boolean` | `true`
 `[home]` | 首页文本，若指定空表示不显示  | `string` | `首页`

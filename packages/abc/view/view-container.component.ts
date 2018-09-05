@@ -8,7 +8,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { toNumber, updateHostClass } from '@delon/util';
-import { NaSVConfig } from './view.config';
+import { SVConfig } from './view.config';
 
 const prefixCls = `sv`;
 
@@ -72,7 +72,7 @@ export class SVContainerComponent implements OnInit, OnChanges {
 
   //#endregion
 
-  constructor(el: ElementRef, private ren: Renderer2, cog: NaSVConfig) {
+  constructor(el: ElementRef, private ren: Renderer2, cog: SVConfig) {
     this.el = el.nativeElement;
     Object.assign(this, cog);
   }

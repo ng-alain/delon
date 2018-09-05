@@ -1,2 +1,2 @@
-export { NaResultComponent } from './result.component';
-export { NaResultModule } from './result.module';
+export { ResultComponent } from './result.component';
+export { ResultModule } from './result.module';

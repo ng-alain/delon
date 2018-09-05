@@ -2,7 +2,7 @@
 title: g2-mini-area
 subtitle: 迷你区域图
 cols: 2
-module: AdG2GaugeModule
+module: G2GaugeModule
 type: Components
 ---
 

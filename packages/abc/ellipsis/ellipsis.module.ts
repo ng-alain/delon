@@ -1,17 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NaEllipsisComponent } from './ellipsis.component';
+import { EllipsisComponent } from './ellipsis.component';
 
-const COMPONENTS = [NaEllipsisComponent];
+const COMPONENTS = [EllipsisComponent];
 
 @NgModule({
   imports: [CommonModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaEllipsisModule {
+export class EllipsisModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaEllipsisModule, providers: [] };
+    return { ngModule: EllipsisModule, providers: [] };
   }
 }

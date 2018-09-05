@@ -17,7 +17,7 @@ import { toBoolean } from '@delon/util';
   host: { '[class.tag-select]': 'true' },
   preserveWhitespaces: false,
 })
-export class NaTagSelectComponent {
+export class TagSelectComponent {
   /** 是否启用 `展开与收进` */
   @HostBinding('class.tag-select__has-expand')
   @Input()

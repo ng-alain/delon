@@ -11,8 +11,8 @@ const COMPONENTS = [G2WaterWaveComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2WaterWaveModule {
+export class G2WaterWaveModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2WaterWaveModule, providers: [] };
+    return { ngModule: G2WaterWaveModule, providers: [] };
   }
 }

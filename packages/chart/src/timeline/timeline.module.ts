@@ -11,8 +11,8 @@ const COMPONENTS = [G2TimelineComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2TimelineModule {
+export class G2TimelineModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2TimelineModule, providers: [] };
+    return { ngModule: G2TimelineModule, providers: [] };
   }
 }

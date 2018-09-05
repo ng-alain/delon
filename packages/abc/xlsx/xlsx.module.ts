@@ -12,10 +12,10 @@ const COMPONENTS = [XlsxDirective];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaXlsxModule {
+export class XlsxModule {
   static forRoot(config?: NaXlsxConfig): ModuleWithProviders {
     return {
-      ngModule: NaXlsxModule,
+      ngModule: XlsxModule,
       providers: [XlsxService, { provide: DA_XLSX_CONFIG, useValue: config }],
     };
   }

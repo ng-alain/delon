@@ -7,34 +7,8 @@ import { toBoolean } from '@delon/util';
 
 @Component({
   selector: 'g2-card',
-  template: `
-  <nz-card [nzBodyStyle]="{padding: '20px 24px 8px 24px'}" [nzBordered]="bordered">
-    <nz-spin [nzSpinning]="loading">
-      <div class="chart-card">
-        <div class="chart-top">
-          <div class="avatar"><ng-container *ngIf="_avatar; else _avatarTpl">{{ _avatar }}</ng-container></div>
-          <div class="meta-wrap">
-            <div class="meta">
-              <span class="title" *ngIf="_title; else _titleTpl">{{ _title }}</span>
-              <span class="action" *ngIf="_action || _actionTpl">
-                <ng-container *ngIf="_action; else _actionTpl">{{ _action }}</ng-container>
-              </span>
-            </div>
-            <p *ngIf="total" class="total" [innerHTML]="total"></p>
-          </div>
-        </div>
-        <div class="desc" [ngStyle]="{'height':_height}">
-          <div [ngClass]="{'fixed': !!_orgHeight }">
-            <ng-content></ng-content>
-          </div>
-        </div>
-        <div class="footer" *ngIf="_footer || _footerTpl">
-          <ng-container *ngIf="_footer; else _footerTpl">{{ _footer }}</ng-container>
-        </div>
-      </div>
-    </nz-spin>
-  </nz-card>`,
-  host: { '[class.ad-g2-card]': 'true' },
+  templateUrl: './card.component.html',
+  host: { '[class.g2-card]': 'true' },
   preserveWhitespaces: false,
 })
 export class G2CardComponent {

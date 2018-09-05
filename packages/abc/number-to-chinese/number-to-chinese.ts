@@ -1,9 +1,9 @@
-import { NaNumberToChineseOptions } from './interface';
+import { NumberToChineseOptions } from './interface';
 
 export function numberToChinese(
   value: number | string,
   rmb = true,
-  options?: NaNumberToChineseOptions,
+  options?: NumberToChineseOptions,
 ): string {
   options = Object.assign(
     {

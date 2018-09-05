@@ -3,7 +3,7 @@ type: Layout
 title: full-content
 subtitle: 全屏工作区
 cols: 1
-module: NaFullContentModule
+module: FullContentModule
 ---
 
 全屏工作区，常用于带有滚动条表格。
@@ -26,4 +26,4 @@ module: NaFullContentModule
 
 - 使用 `fullscreen` 双向绑定
 - 使用 `[full-toggle]` 指令
-- 使用 `NaFullContentService.toggle()` 服务
+- 使用 `FullContentService.toggle()` 服务

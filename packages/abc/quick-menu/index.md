@@ -3,7 +3,7 @@ type: Business
 title: quick-menu
 subtitle: 快速菜单
 cols: 1
-module: NaQuickMenuModule
+module: QuickMenuModule
 ---
 
 快速菜单，用于右侧隐式辅助列表。

@@ -10,8 +10,8 @@ const COMPONENTS = [G2BarComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2BarModule {
+export class G2BarModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2BarModule, providers: [] };
+    return { ngModule: G2BarModule, providers: [] };
   }
 }

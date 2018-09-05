@@ -2,18 +2,18 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { NaNoticeIconComponent } from './notice-icon.component';
-import { NaNoticeIconTabComponent } from './notice-icon-tab.component';
+import { NoticeIconComponent } from './notice-icon.component';
+import { NoticeIconTabComponent } from './notice-icon-tab.component';
 
-const COMPONENTS = [NaNoticeIconComponent];
+const COMPONENTS = [NoticeIconComponent];
 
 @NgModule({
   imports: [CommonModule, NgZorroAntdModule],
-  declarations: [...COMPONENTS, NaNoticeIconTabComponent],
+  declarations: [...COMPONENTS, NoticeIconTabComponent],
   exports: [...COMPONENTS],
 })
-export class NaNoticeIconModule {
+export class NoticeIconModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaNoticeIconModule, providers: [] };
+    return { ngModule: NoticeIconModule, providers: [] };
   }
 }

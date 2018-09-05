@@ -10,8 +10,8 @@ const PIPES = [NaNumberToChinesePipe];
   declarations: PIPES,
   exports: PIPES,
 })
-export class NaNumberToChineseModule {
+export class NumberToChineseModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaNumberToChineseModule, providers: [] };
+    return { ngModule: NumberToChineseModule, providers: [] };
   }
 }

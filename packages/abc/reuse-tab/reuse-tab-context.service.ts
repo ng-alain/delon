@@ -8,20 +8,20 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { Subscription, Subject } from 'rxjs';
 
 import {
-  NaReuseContextEvent,
-  NaReuseContextI18n,
-  NaReuseContextCloseEvent,
+  ReuseContextEvent,
+  ReuseContextI18n,
+  ReuseContextCloseEvent,
 } from './interface';
-import { NaReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
+import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
 
 @Injectable()
-export class NaReuseTabContextService {
+export class ReuseTabContextService {
   private ref: OverlayRef;
-  i18n: NaReuseContextI18n;
+  i18n: ReuseContextI18n;
 
-  show: Subject<NaReuseContextEvent> = new Subject<NaReuseContextEvent>();
-  close: Subject<NaReuseContextCloseEvent> = new Subject<
-    NaReuseContextCloseEvent
+  show: Subject<ReuseContextEvent> = new Subject<ReuseContextEvent>();
+  close: Subject<ReuseContextCloseEvent> = new Subject<
+    ReuseContextCloseEvent
   >();
 
   constructor(private overlay: Overlay) {}
@@ -33,7 +33,7 @@ export class NaReuseTabContextService {
     this.ref = null;
   }
 
-  open(context: NaReuseContextEvent) {
+  open(context: ReuseContextEvent) {
     this.remove();
     const { event, item } = context;
     const fakeElement = new ElementRef({
@@ -66,7 +66,7 @@ export class NaReuseTabContextService {
       scrollStrategy: this.overlay.scrollStrategies.close(),
     });
     const comp = this.ref.attach(
-      new ComponentPortal(NaReuseTabContextMenuComponent),
+      new ComponentPortal(ReuseTabContextMenuComponent),
     );
     const instance = comp.instance;
     instance.i18n = this.i18n;
@@ -75,7 +75,7 @@ export class NaReuseTabContextService {
 
     const sub$ = new Subscription();
     sub$.add(
-      instance.close.subscribe((res: NaReuseContextCloseEvent) => {
+      instance.close.subscribe((res: ReuseContextCloseEvent) => {
         this.close.next(res);
         this.remove();
       }),

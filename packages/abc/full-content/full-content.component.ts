@@ -17,7 +17,7 @@ import { DOCUMENT } from '@angular/common';
 import { toBoolean, toNumber } from '@delon/util';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
-import { NaFullContentService } from './full-content.service';
+import { FullContentService } from './full-content.service';
 import { Router, ActivationStart, ActivationEnd } from '@angular/router';
 
 const wrapCls = `full-content__body`;
@@ -30,7 +30,7 @@ const hideTitleCls = `full-content__hidden-title`;
   host: { '[class.full-content]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NaFullContentComponent
+export class FullContentComponent
   implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   private bodyEl: HTMLElement;
   private inited = false;
@@ -81,7 +81,7 @@ export class NaFullContentComponent
   constructor(
     private el: ElementRef,
     private cd: ChangeDetectorRef,
-    private srv: NaFullContentService,
+    private srv: FullContentService,
     private router: Router,
     @Inject(DOCUMENT) private doc: any,
   ) {}

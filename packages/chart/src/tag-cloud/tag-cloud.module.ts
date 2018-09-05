@@ -11,8 +11,8 @@ const COMPONENTS = [G2TagCloudComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2TagCloudModule {
+export class G2TagCloudModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2TagCloudModule, providers: [] };
+    return { ngModule: G2TagCloudModule, providers: [] };
   }
 }

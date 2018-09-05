@@ -11,9 +11,9 @@ import {
   AlainI18NService,
 } from '@delon/theme';
 
-import { NaPageHeaderModule } from './page-header.module';
-import { NaPageHeaderComponent } from './page-header.component';
-import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
+import { PageHeaderModule } from './page-header.module';
+import { PageHeaderComponent } from './page-header.component';
+import { NaReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(key: string) {
@@ -34,7 +34,7 @@ describe('abc: page-header', () => {
     providers?: any[];
     created?: boolean;
   }) {
-    const imports = [RouterModule.forRoot([]), NaPageHeaderModule.forRoot()];
+    const imports = [RouterModule.forRoot([]), PageHeaderModule.forRoot()];
     const providers = [{ provide: APP_BASE_HREF, useValue: '/' }];
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
@@ -182,7 +182,7 @@ describe('abc: page-header', () => {
               useFactory: () => null
             },
             {
-              provide: ReuseTabService,
+              provide: NaReuseTabService,
               useFactory: () => null
             },
           ],
@@ -212,7 +212,7 @@ describe('abc: page-header', () => {
         }
       }
       let titleSrv: TitleService;
-      let reuseSrv: ReuseTabService;
+      let reuseSrv: NaReuseTabService;
       beforeEach(() => {
         genModule({
           providers: [
@@ -221,13 +221,13 @@ describe('abc: page-header', () => {
               useClass: MockTitle,
             },
             {
-              provide: ReuseTabService,
+              provide: NaReuseTabService,
               useClass: MockReuse,
             },
           ],
         });
         titleSrv = injector.get(TitleService);
-        reuseSrv = injector.get(ReuseTabService);
+        reuseSrv = injector.get(NaReuseTabService);
         context.syncTitle = true;
       });
 
@@ -345,7 +345,7 @@ describe('abc: page-header', () => {
 })
 class TestComponent {
   @ViewChild('comp')
-  comp: NaPageHeaderComponent;
+  comp: PageHeaderComponent;
   title = '所属类目';
   autoBreadcrumb: boolean;
   autoTitle: boolean;

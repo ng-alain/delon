@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { REP_MAX_COL } from '../core/responsive';
 import { SVComponent } from './view.component';
-import { NaSVModule } from './view.module';
+import { SVModule } from './view.module';
 
 const prefixCls = `.sv__`;
 
@@ -16,7 +16,7 @@ describe('abc: view', () => {
 
   function genModule(template?: string) {
     TestBed.configureTestingModule({
-      imports: [NaSVModule.forRoot()],
+      imports: [SVModule.forRoot()],
       declarations: [TestComponent],
     });
     if (template) {

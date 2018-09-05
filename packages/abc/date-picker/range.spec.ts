@@ -2,8 +2,8 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NaDatePickerModule } from './date-picker.module';
-import { NaRangePickerComponent } from './range.component';
+import { DatePickerModule } from './date-picker.module';
+import { RangePickerComponent } from './range.component';
 import { By } from '@angular/platform-browser';
 
 describe('abc: date-picker: range', () => {
@@ -13,7 +13,7 @@ describe('abc: date-picker: range', () => {
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
-      imports: [NaDatePickerModule.forRoot(), FormsModule],
+      imports: [DatePickerModule.forRoot(), FormsModule],
       declarations: [TestComponent],
     }).createComponent(TestComponent);
     dl = fixture.debugElement;
@@ -97,7 +97,7 @@ describe('abc: date-picker: range', () => {
 })
 class TestComponent {
   @ViewChild('comp')
-  comp: NaRangePickerComponent;
+  comp: RangePickerComponent;
   i: any = {};
   _nzOnOpenChange() {}
   _nzOnPanelChange() {}

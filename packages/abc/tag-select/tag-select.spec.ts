@@ -2,8 +2,8 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NaTagSelectModule } from './tag-select.module';
-import { NaTagSelectComponent } from './tag-select.component';
+import { TagSelectModule } from './tag-select.module';
+import { TagSelectComponent } from './tag-select.component';
 
 describe('abc: tag-select', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: tag-select', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NaTagSelectModule.forRoot()],
+      imports: [TagSelectModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -57,7 +57,7 @@ describe('abc: tag-select', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: NaTagSelectComponent;
+  @ViewChild('comp') comp: TagSelectComponent;
   categories = [
     { id: 0, text: '全部', value: false },
     { id: 1, text: '类目一', value: false },

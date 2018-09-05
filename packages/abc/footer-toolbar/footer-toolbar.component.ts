@@ -26,7 +26,7 @@ const CLSBODY = 'footer-toolbar__body';
   `,
   preserveWhitespaces: false,
 })
-export class NaFooterToolbarComponent implements OnInit, OnDestroy {
+export class FooterToolbarComponent implements OnInit, OnDestroy {
   @Input()
   get errorCollect() {
     return this._errorCollect;

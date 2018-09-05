@@ -1,3 +1,3 @@
-export { NaErrorCollectComponent } from './error-collect.component';
-export { NaErrorCollectConfig } from './error-collect.config';
-export { NaErrorCollectModule } from './error-collect.module';
+export { ErrorCollectComponent } from './error-collect.component';
+export { ErrorCollectConfig } from './error-collect.config';
+export { ErrorCollectModule } from './error-collect.module';

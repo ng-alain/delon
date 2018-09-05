@@ -4,18 +4,18 @@ import { Observable, of, Subject } from 'rxjs';
 import { LazyService } from '@delon/util';
 
 import { Lodop, LodopResult, LodopPrintResult } from './interface';
-import { NaLodopConfig } from './lodop.config';
+import { LodopConfig } from './lodop.config';
 
 // TODO: zone
 @Injectable()
 export class LodopService implements OnDestroy {
-  private _cog: NaLodopConfig;
+  private _cog: LodopConfig;
   private pending = false;
   private _lodop: Lodop = null;
   private _init: Subject<LodopResult> = new Subject<LodopResult>();
   private _events: Subject<LodopPrintResult> = new Subject<LodopPrintResult>();
 
-  constructor(private defCog: NaLodopConfig, private scriptSrv: LazyService) {
+  constructor(private defCog: LodopConfig, private scriptSrv: LazyService) {
     this.cog = defCog;
   }
 
@@ -27,7 +27,7 @@ export class LodopService implements OnDestroy {
   get cog() {
     return this._cog;
   }
-  set cog(value: NaLodopConfig) {
+  set cog(value: LodopConfig) {
     this._cog = Object.assign(
       {
         url: 'https://localhost:8443/CLodopfuncs.js',

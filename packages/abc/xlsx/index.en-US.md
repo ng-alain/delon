@@ -4,7 +4,7 @@ title: xlsx
 order: 6
 subtitle: Excel
 cols: 1
-module: NaXlsxModule
+module: XlsxModule
 ---
 
 An Excel file operation based on [sheetjs](http://sheetjs.com/).
@@ -17,7 +17,7 @@ An Excel file operation based on [sheetjs](http://sheetjs.com/).
 yarn add file-saver
 ```
 
-The sheetjs script file takes the form of lazy loading. Allows you to specify a CDN URL in `NaXlsxModule.forRoot({})` module. The default is `//cdn.bootcss.com/xlsx/0.12.13/xlsx.full.min.js`.
+The sheetjs script file takes the form of lazy loading. Allows you to specify a CDN URL in `XlsxModule.forRoot({})` module. The default is `//cdn.bootcss.com/xlsx/0.12.13/xlsx.full.min.js`.
 
 ## API
 
@@ -28,11 +28,11 @@ Property | Description | Type | Default
 `import(fileOrUrl: File | string)` | Import Excel, return JSON  | `Promise<{ [key: string]: any[][] }>` | -
 `export(options: NaXlsxExportOptions)` | Export Excel  | `Promise<void>` | -
 
-### NaXlsxExportOptions
+### XlsxExportOptions
 
 Property | Description | Type | Default
 ----|------|-----|------
-`[sheets]` | Data source | `{ [sheet: string]: WorkSheet } | NaXlsxExportSheet[]` | -
+`[sheets]` | Data source | `{ [sheet: string]: WorkSheet } | XlsxExportSheet[]` | -
 `[filename]` | file name of excel | `string` | `export.xlsx`
 `[opts]` | Excel options, see [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | -
 `[callback]` | Trigger before saving | `(wb: WorkBook) => void` | -
@@ -40,7 +40,7 @@ Property | Description | Type | Default
 ### xlsx directive
 
 ```html
-<div [xlsx]="NaXlsxExportOptions">Export</div>
+<div [xlsx]="XlsxExportOptions">Export</div>
 ```
 
 ## FAQ

@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'avatar-list-item, [avatar-list-item]',
   template: `<ng-content></ng-content>`,
 })
-export class NaAvatarListItemComponent {
+export class AvatarListItemComponent {
   @Input() src: string;
   @Input() text: string;
   @Input() icon: string;

@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { toNumber } from '@delon/util';
-import { NaErrorCollectConfig } from './error-collect.config';
+import { ErrorCollectConfig } from './error-collect.config';
 
 /**
  * 错误消息采集器
@@ -27,7 +27,7 @@ import { NaErrorCollectConfig } from './error-collect.config';
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
-export class NaErrorCollectComponent implements OnInit, OnDestroy {
+export class ErrorCollectComponent implements OnInit, OnDestroy {
   private $time = null;
   private formEl: HTMLFormElement;
 
@@ -55,7 +55,7 @@ export class NaErrorCollectComponent implements OnInit, OnDestroy {
   count = 0;
 
   constructor(
-    cog: NaErrorCollectConfig,
+    cog: ErrorCollectConfig,
     private el: ElementRef,
     private cd: ChangeDetectorRef,
     @Inject(DOCUMENT) private doc: any,

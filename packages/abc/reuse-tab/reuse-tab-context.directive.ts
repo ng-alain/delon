@@ -1,15 +1,15 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
-import { NaReuseTabContextService } from './reuse-tab-context.service';
-import { NaReuseItem } from './interface';
+import { ReuseTabContextService } from './reuse-tab-context.service';
+import { ReuseItem } from './interface';
 
 @Directive({
   selector: '[reuse-tab-context-menu]',
 })
-export class NaReuseTabContextDirective {
-  @Input('reuse-tab-context-menu') item: NaReuseItem;
+export class ReuseTabContextDirective {
+  @Input('reuse-tab-context-menu') item: ReuseItem;
 
-  constructor(private srv: NaReuseTabContextService) {}
+  constructor(private srv: ReuseTabContextService) {}
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(event: MouseEvent): void {

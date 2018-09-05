@@ -8,8 +8,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { NaQRService } from './qr.service';
-import { NaQRConfig } from './qr.config';
+import { QRService } from './qr.service';
+import { QRConfig } from './qr.config';
 
 @Component({
   selector: 'qr',
@@ -20,7 +20,7 @@ import { NaQRConfig } from './qr.config';
   host: { '[class.qr]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NaQRComponent implements OnChanges {
+export class QRComponent implements OnChanges {
   dataURL: string;
   // region: fields
 
@@ -50,8 +50,8 @@ export class NaQRComponent implements OnChanges {
   // endregion
 
   constructor(
-    cog: NaQRConfig,
-    private srv: NaQRService,
+    cog: QRConfig,
+    private srv: QRService,
     private cd: ChangeDetectorRef,
   ) {
     Object.assign(this, cog);

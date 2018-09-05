@@ -4,8 +4,8 @@ order: 4
 title: lodop
 subtitle: Lodop Print
 cols: 1
-module: NaLodopModule
-config: NaLodopConfig
+module: LodopModule
+config: LodopConfig
 ---
 
 The basic implementation of [Lodop](http://c-lodop.com/) printing, commercial needs to buy lodop license. (Also thanks lodop for free ng-alain for genuine KEY)
@@ -18,7 +18,7 @@ The basic implementation of [Lodop](http://c-lodop.com/) printing, commercial ne
 
 Property | Description | Type | Default
 ----|------|-----|------
-`cog` | Get or set config | `NaLodopConfig` | -
+`cog` | Get or set config | `LodopConfig` | -
 `events` | process notification | `Observable<LodopPrintResult>` | -
 `lodop` | Get the Lodop instance | `Observable<LodopResult>` | -
 
@@ -50,7 +50,7 @@ Property | Description | Type | Default
 `lodop` | Lodop instance | `Lodop` | -
 `error` | Error message | `any` | -
 
-### NaLodopConfig
+### LodopConfig
 
 Property | Description | Type | Default
 ----|------|-----|------

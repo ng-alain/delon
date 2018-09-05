@@ -1,10 +1,10 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { NaReuseTabContextComponent } from './reuse-tab-context.component';
+import { ReuseTabContextComponent } from './reuse-tab-context.component';
 
 /**
  * 复用匹配模式
  */
-export enum NaReuseTabMatchMode {
+export enum ReuseTabMatchMode {
   /**
    * （推荐）按菜单 `Menu` 配置
    *
@@ -33,17 +33,17 @@ export enum NaReuseTabMatchMode {
   URL,
 }
 
-export interface NaReuseTitle {
+export interface ReuseTitle {
   text: string;
   i18n?: string;
 }
 
-export interface NaReuseTabCached {
-  title: NaReuseTitle;
+export interface ReuseTabCached {
+  title: ReuseTitle;
 
   url: string;
 
-  /** 是否可关闭，默认：`true` */
+  /** 是否允许关闭，默认：`true` */
   closable?: boolean;
 
   _snapshot: ActivatedRouteSnapshot;
@@ -51,14 +51,14 @@ export interface NaReuseTabCached {
   _handle: any;
 }
 
-export interface NaReuseTabNotify {
+export interface ReuseTabNotify {
   /** 事件类型 */
   active: string;
 
   [key: string]: any;
 }
 
-export interface NaReuseItem {
+export interface ReuseItem {
   url: string;
   title: string;
   closable: boolean;
@@ -67,21 +67,21 @@ export interface NaReuseItem {
   last: boolean;
 }
 
-export interface NaReuseContextEvent {
+export interface ReuseContextEvent {
   event: MouseEvent;
-  item: NaReuseItem;
-  comp?: NaReuseTabContextComponent;
+  item: ReuseItem;
+  comp?: ReuseTabContextComponent;
 }
 
-export type NaCloseType = 'close' | 'closeOther' | 'closeRight' | 'clear' | null;
+export type CloseType = 'close' | 'closeOther' | 'closeRight' | 'clear' | null;
 
-export interface NaReuseContextCloseEvent {
-  type: NaCloseType;
-  item: NaReuseItem;
+export interface ReuseContextCloseEvent {
+  type: CloseType;
+  item: ReuseItem;
   includeNonCloseable: boolean;
 }
 
-export interface NaReuseContextI18n {
+export interface ReuseContextI18n {
   close?: string;
   closeOther?: string;
   closeRight?: string;

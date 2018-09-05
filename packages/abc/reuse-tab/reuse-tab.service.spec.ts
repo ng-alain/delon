@@ -5,9 +5,9 @@ import { filter } from 'rxjs/operators';
 
 import { MenuService } from '@delon/theme';
 
-import { ReuseTabService } from './reuse-tab.service';
+import { NaReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
-import { NaReuseTabMatchMode, NaReuseTitle } from './interface';
+import { ReuseTabMatchMode, ReuseTitle } from './interface';
 
 const TITLE = `标题`;
 let reuse: boolean = true;
@@ -23,7 +23,7 @@ class MockRouter {
 
 describe('abc: reuse-tab(service)', () => {
   let injector: Injector;
-  let srv: ReuseTabService;
+  let srv: NaReuseTabService;
   let menuSrv: MenuService;
   let router: Router;
 
@@ -34,17 +34,17 @@ describe('abc: reuse-tab(service)', () => {
   ) {
     injector = TestBed.configureTestingModule({
       providers: [
-        ReuseTabService,
+        NaReuseTabService,
         {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,
-          deps: [ReuseTabService],
+          deps: [NaReuseTabService],
         },
         { provide: ActivatedRoute, useValue: { snapshot: { url: [] } } },
         { provide: Router, useFactory: () => new MockRouter() }
       ].concat(providers),
     });
-    srv = injector.get(ReuseTabService);
+    srv = injector.get(NaReuseTabService);
     menuSrv = injector.get(MenuService, null);
     router = injector.get(Router);
     reuse = true;
@@ -77,7 +77,7 @@ describe('abc: reuse-tab(service)', () => {
     });
     describe('#mode', () => {
       describe('when ReuseTabMatchMode.Menu', () => {
-        beforeEach(() => (srv.mode = NaReuseTabMatchMode.Menu));
+        beforeEach(() => (srv.mode = ReuseTabMatchMode.Menu));
         it('can hit because menu data not allow', () => {
           const snapshot = getSnapshot(1);
           expect(srv.can(snapshot)).toBe(true);
@@ -93,7 +93,7 @@ describe('abc: reuse-tab(service)', () => {
         });
       });
       describe('when ReuseTabMatchMode.MenuForce', () => {
-        beforeEach(() => (srv.mode = NaReuseTabMatchMode.MenuForce));
+        beforeEach(() => (srv.mode = ReuseTabMatchMode.MenuForce));
         it('can hit because menu data muse allow', () => {
           // url: /a/1
           const snapshot = getSnapshot(1);
@@ -110,7 +110,7 @@ describe('abc: reuse-tab(service)', () => {
         });
       });
       describe('when ReuseTabMatchMode.URL', () => {
-        beforeEach(() => (srv.mode = NaReuseTabMatchMode.URL));
+        beforeEach(() => (srv.mode = ReuseTabMatchMode.URL));
         it('can hit because not exclude', () => {
           const snapshot = getSnapshot(1);
           expect(srv.can(snapshot)).toBe(true);
@@ -139,7 +139,7 @@ describe('abc: reuse-tab(service)', () => {
       });
     });
     describe('#excludes', () => {
-      beforeEach(() => (srv.mode = NaReuseTabMatchMode.URL));
+      beforeEach(() => (srv.mode = ReuseTabMatchMode.URL));
       it('can hit because not exclude', () => {
         srv.excludes = null;
         const snapshot = getSnapshot(1);
@@ -205,7 +205,7 @@ describe('abc: reuse-tab(service)', () => {
       it('should used ReuseTitle set title via service', () => {
         genCached(1, '/');
         expect(srv.getTitle('/').text).toBe('标题');
-        srv.title = <NaReuseTitle>{ text: 'a' };
+        srv.title = <ReuseTitle>{ text: 'a' };
         expect(srv.getTitle('/').text).toBe('a');
       });
       it('should use url as title when can be no found title', () => {
@@ -362,7 +362,7 @@ describe('abc: reuse-tab(service)', () => {
   describe('##boundary##', () => {
     it(`can't neve hit without MenuService in ReuseTabMatchMode.Menu mode`, () => {
       genModule([]);
-      srv.mode = NaReuseTabMatchMode.Menu;
+      srv.mode = ReuseTabMatchMode.Menu;
       expect(srv.can(getSnapshot(1))).toBe(false);
     });
   });
@@ -370,7 +370,7 @@ describe('abc: reuse-tab(service)', () => {
   describe('#shouldDetach', () => {
     beforeEach(() => {
       genModule();
-      srv.mode = NaReuseTabMatchMode.URL;
+      srv.mode = ReuseTabMatchMode.URL;
     });
     it(`can hit when target route`, () => {
       expect(srv.shouldDetach(getSnapshot(0))).toBe(true);
@@ -409,7 +409,7 @@ describe('abc: reuse-tab(service)', () => {
   describe('#store', () => {
     beforeEach(() => {
       genModule();
-      srv.mode = NaReuseTabMatchMode.URL;
+      srv.mode = ReuseTabMatchMode.URL;
       genCached(2);
     });
     it(`should be store a new route`, () => {
@@ -444,7 +444,7 @@ describe('abc: reuse-tab(service)', () => {
   describe('#shouldAttach', () => {
     beforeEach(() => {
       genModule();
-      srv.mode = NaReuseTabMatchMode.URL;
+      srv.mode = ReuseTabMatchMode.URL;
     });
     it('should be attached when is cached', () => {
       genCached(1);
@@ -460,7 +460,7 @@ describe('abc: reuse-tab(service)', () => {
   describe('#retrieve', () => {
     beforeEach(() => {
       genModule();
-      srv.mode = NaReuseTabMatchMode.URL;
+      srv.mode = ReuseTabMatchMode.URL;
     });
     it('should be retrieve when is cached', () => {
       genCached(1);

@@ -4,8 +4,8 @@ title: st
 subtitle: 表格
 cols: 1
 order: 1
-module: NaSTModule
-config: NaSTConfig
+module: STModule
+config: STConfig
 ---
 
 `st` 并不是在创造另一个表格组件，而是在 `nz-table` 基础上以**可配置**形式渲染表格，在中后台里这种方式可以满足绝大多数场景，但又可以更易地管理表格渲染动作。
@@ -74,7 +74,7 @@ config: NaSTConfig
 `reset(extraParams?: any, options?: STLoadOptions)` | `void` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除）
 `clearCheck()` | `void` | 清除所有 `checkbox`
 `clearRadio()` | `void` | 清除所有 `radio`
-`export(urlOrData?: string | any[], opt?: STExportOptions)` | `void` | 导出Excel，确保已经注册 `NaXlsxModule`
+`export(urlOrData?: string | any[], opt?: STExportOptions)` | `void` | 导出Excel，确保已经注册 `XlsxModule`
 
 一些细节：
 

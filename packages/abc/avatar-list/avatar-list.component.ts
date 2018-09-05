@@ -1,5 +1,5 @@
 import { Component, Input, QueryList, ContentChildren } from '@angular/core';
-import { NaAvatarListItemComponent } from './avatar-list-item.component';
+import { AvatarListItemComponent } from './avatar-list-item.component';
 
 @Component({
   selector: 'avatar-list',
@@ -16,7 +16,7 @@ import { NaAvatarListItemComponent } from './avatar-list-item.component';
   host: { '[class.avatar-list]': 'true' },
   preserveWhitespaces: false,
 })
-export class NaAvatarListComponent {
+export class AvatarListComponent {
   _size = '';
 
   _avatarSize = '';
@@ -36,6 +36,6 @@ export class NaAvatarListComponent {
     }
   }
 
-  @ContentChildren(NaAvatarListItemComponent)
-  _items: QueryList<NaAvatarListItemComponent>;
+  @ContentChildren(AvatarListItemComponent)
+  _items: QueryList<AvatarListItemComponent>;
 }

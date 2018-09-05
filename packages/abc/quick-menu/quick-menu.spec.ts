@@ -2,8 +2,8 @@ import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NaQuickMenuModule } from './quick-menu.module';
-import { NaQuickMenuComponent } from './quick-menu.component';
+import { QuickMenuModule } from './quick-menu.module';
+import { QuickMenuComponent } from './quick-menu.component';
 
 describe('abc: quick-menu', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: quick-menu', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NaQuickMenuModule.forRoot()],
+      imports: [QuickMenuModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -60,6 +60,6 @@ describe('abc: quick-menu', () => {
 })
 class TestComponent {
   @ViewChild('comp')
-  comp: NaQuickMenuComponent;
+  comp: QuickMenuComponent;
   width = 200;
 }

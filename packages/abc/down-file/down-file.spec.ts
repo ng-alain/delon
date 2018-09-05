@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as fs from 'file-saver';
 import { _HttpClient } from '@delon/theme';
 
-import { NaDownFileModule } from './down-file.module';
+import { DownFileModule } from './down-file.module';
 
 function genFile(ext: string, isRealFile = true): Blob {
   const blob = new Blob([
@@ -32,7 +32,7 @@ describe('abc: down-file', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, NaDownFileModule.forRoot()],
+      imports: [HttpClientTestingModule, DownFileModule.forRoot()],
       declarations: [TestComponent],
     });
   });

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { toNumber, toBoolean } from '@delon/util';
 
-import { NoticeItem } from './interface';
+import { NoticeItem, NoticeIconSelect } from './interface';
 
 @Component({
   selector: 'notice-icon',
@@ -35,7 +35,7 @@ import { NoticeItem } from './interface';
   host: { '[class.notice-icon__btn]': 'true' },
   preserveWhitespaces: false,
 })
-export class NaNoticeIconComponent {
+export class NoticeIconComponent {
   @Input() data: NoticeItem[] = [];
 
   /** 图标上的消息总数 */
@@ -58,7 +58,7 @@ export class NaNoticeIconComponent {
   }
   private _loading = false;
 
-  @Output() select = new EventEmitter<any>();
+  @Output() select = new EventEmitter<NoticeIconSelect>();
   @Output() clear = new EventEmitter<string>();
 
   /** 手动控制Popover显示 */

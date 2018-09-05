@@ -4,7 +4,7 @@ title: zip
 order: 7
 subtitle: Zip
 cols: 1
-module: NaZipModule
+module: ZipModule
 ---
 
 A Zip file operation based on [jszip](http://stuk.github.io/jszip/).
@@ -26,4 +26,4 @@ Property | Description | Type | Default
 `read(fileOrUrl: File | string, options?: JSZip.JSZipLoadOptions)` | Decompression  | `Promise<JSZip>` | -
 `create()` | Create a Zip instance for creating a compressed file  | `Promise<JSZip>` | -
 `pushUrl(zip: JSZip, path: string, url: string)` | Download the URL resource and write it to zip  | `Promise<void>` | -
-`save(zip: JSZip, options?: NaZipWriteOptions)` | Save  | `Promise<void>` | -
+`save(zip: JSZip, options?: ZipWriteOptions)` | Save  | `Promise<void>` | -

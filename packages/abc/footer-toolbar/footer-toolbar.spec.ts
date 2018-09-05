@@ -2,8 +2,8 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NaFooterToolbarModule } from './footer-toolbar.module';
-import { NaErrorCollectModule } from '../error-collect/error-collect.module';
+import { FooterToolbarModule } from './footer-toolbar.module';
+import { ErrorCollectModule } from '../error-collect/error-collect.module';
 
 describe('abc: footer-toolbar', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -13,8 +13,8 @@ describe('abc: footer-toolbar', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        NaErrorCollectModule.forRoot(),
-        NaFooterToolbarModule.forRoot(),
+        ErrorCollectModule.forRoot(),
+        FooterToolbarModule.forRoot(),
       ],
       declarations: [TestComponent],
     });

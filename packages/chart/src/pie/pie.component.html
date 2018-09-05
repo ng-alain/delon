@@ -1,0 +1,16 @@
+<div class="g2-pie__chart">
+  <div #container></div>
+  <div *ngIf="subTitle || total" class="g2-pie__total">
+    <h4 *ngIf="subTitle" class="g2-pie__total-title" [innerHTML]="subTitle"></h4>
+    <div *ngIf="total" class="g2-pie__total-stat" [innerHTML]="total"></div>
+  </div>
+</div>
+<ul *ngIf="hasLegend && legendData?.length" class="g2-pie__legend">
+  <li *ngFor="let item of legendData; let index = index" (click)="_click(index)" class="g2-pie__legend-item">
+    <span class="g2-pie__legend-dot" [ngStyle]="{'background-color': !item.checked ? '#aaa' : item.color}"></span>
+    <span class="g2-pie__legend-title">{{item.x}}</span>
+    <nz-divider nzType="vertical"></nz-divider>
+    <span class="g2-pie__legend-percent">{{item.percent}}%</span>
+    <span class="g2-pie__legend-value" [innerHTML]="valueFormat ? valueFormat(item.y) : item.y"></span>
+  </li>
+</ul>

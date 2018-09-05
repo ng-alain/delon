@@ -14,7 +14,7 @@ import { toBoolean } from '@delon/util';
   },
   preserveWhitespaces: false,
 })
-export class NaTrendComponent {
+export class TrendComponent {
   /** 上升下降标识 */
   @Input() flag: 'up' | 'down';
 

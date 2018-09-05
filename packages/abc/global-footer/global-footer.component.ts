@@ -1,5 +1,11 @@
 import { Component, Input } from '@angular/core';
 
+export interface GlobalFooterLink {
+  title: string;
+  href: string;
+  blankTarget?: boolean;
+}
+
 @Component({
   selector: 'global-footer',
   template: `
@@ -11,6 +17,7 @@ import { Component, Input } from '@angular/core';
   host: { '[class.global-footer]': 'true' },
   preserveWhitespaces: false,
 })
-export class NaGlobalFooterComponent {
-  @Input() links: { title: string; href: string; blankTarget?: boolean }[];
+export class GlobalFooterComponent {
+  @Input()
+  links: GlobalFooterLink[];
 }

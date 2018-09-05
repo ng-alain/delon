@@ -3,7 +3,7 @@ type: Business
 title: sidebar-nav
 subtitle: 主菜单
 cols: 1
-module: NaSidebarNavModule
+module: SidebarNavModule
 ---
 
 ng-alain 左边主菜单，依赖于 `@delon/theme`。
@@ -41,7 +41,7 @@ ng-alain 左边主菜单，依赖于 `@delon/theme`。
 `[autoCloseUnderPad]` | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true`
 `(select)` | 切换时回调 | `EventEmitter<Menu>` | -
 
-### 菜单数据结构
+### Menu
 
 参数 | 类型 | 说明
 ----|------|-----

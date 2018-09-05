@@ -3,7 +3,7 @@ type: Layout
 title: footer-toolbar
 subtitle: 底部工具栏
 cols: 1
-module: NaFooterToolbarModule
+module: FooterToolbarModule
 ---
 
 固定在底部的工具栏。

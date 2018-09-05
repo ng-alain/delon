@@ -3,7 +3,7 @@ type: Layout
 title: ellipsis
 subtitle: 文本自动省略号
 cols: 1
-module: NaEllipsisModule
+module: EllipsisModule
 ---
 
 一个简单的文本自动省略号。

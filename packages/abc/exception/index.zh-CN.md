@@ -3,7 +3,7 @@ type: Layout
 title: exception
 subtitle: 异常
 cols: 1
-module: NaExceptionModule
+module: ExceptionModule
 ---
 
 异常页用于对页面特定的异常状态进行反馈。通常，它包含对错误状态的阐述，并向用户提供建议或操作，避免用户感到迷失和困惑。

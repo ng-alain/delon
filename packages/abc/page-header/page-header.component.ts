@@ -22,9 +22,9 @@ import {
   Menu,
   TitleService,
 } from '@delon/theme';
-import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
+import { NaReuseTabService } from '../reuse-tab/reuse-tab.service';
 
-import { NaPageHeaderConfig } from './page-header.config';
+import { PageHeaderConfig } from './page-header.config';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -35,7 +35,7 @@ import { Subscription } from 'rxjs';
   },
   preserveWhitespaces: false,
 })
-export class NaPageHeaderComponent
+export class PageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
   private i18n$: Subscription;
@@ -124,7 +124,7 @@ export class NaPageHeaderComponent
   // endregion
 
   constructor(
-    cog: NaPageHeaderConfig,
+    cog: PageHeaderConfig,
     private renderer: Renderer2,
     private route: Router,
     private menuSrv: MenuService,
@@ -135,8 +135,8 @@ export class NaPageHeaderComponent
     @Inject(TitleService)
     private titleSrv: TitleService,
     @Optional()
-    @Inject(ReuseTabService)
-    private reuseSrv: ReuseTabService,
+    @Inject(NaReuseTabService)
+    private reuseSrv: NaReuseTabService,
   ) {
     Object.assign(this, cog);
     if (this.i18nSrv)

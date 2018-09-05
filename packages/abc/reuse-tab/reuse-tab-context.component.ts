@@ -7,25 +7,25 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { NaReuseContextI18n, NaReuseContextCloseEvent } from './interface';
-import { NaReuseTabContextService } from './reuse-tab-context.service';
+import { ReuseContextI18n, ReuseContextCloseEvent } from './interface';
+import { ReuseTabContextService } from './reuse-tab-context.service';
 
 @Component({
   selector: 'reuse-tab-context',
   template: ``,
   preserveWhitespaces: false,
 })
-export class NaReuseTabContextComponent implements OnDestroy {
+export class ReuseTabContextComponent implements OnDestroy {
   private sub$: Subscription = new Subscription();
 
   @Input()
-  set i18n(value: NaReuseContextI18n) {
+  set i18n(value: ReuseContextI18n) {
     this.srv.i18n = value;
   }
 
-  @Output() change = new EventEmitter<NaReuseContextCloseEvent>();
+  @Output() change = new EventEmitter<ReuseContextCloseEvent>();
 
-  constructor(private srv: NaReuseTabContextService) {
+  constructor(private srv: ReuseTabContextService) {
     this.sub$.add(srv.show.subscribe(context => this.srv.open(context)));
     this.sub$.add(srv.close.subscribe(res => this.change.emit(res)));
   }

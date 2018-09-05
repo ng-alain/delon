@@ -17,23 +17,7 @@ import { toNumber, toBoolean, updateHostClass } from '@delon/util';
 
 @Component({
   selector: 'g2-pie',
-  template: `
-  <div class="chart">
-    <div #container></div>
-    <div *ngIf="subTitle || total" class="total">
-      <h4 *ngIf="subTitle" class="pie-sub-title" [innerHTML]="subTitle"></h4>
-      <div *ngIf="total" class="pie-stat" [innerHTML]="total"></div>
-    </div>
-  </div>
-  <ul *ngIf="hasLegend && legendData?.length" class="legend">
-    <li *ngFor="let item of legendData; let index = index" (click)="_click(index)">
-      <span class="dot" [ngStyle]="{'background-color': !item.checked ? '#aaa' : item.color}"></span>
-      <span class="legend-title">{{item.x}}</span>
-      <nz-divider nzType="vertical"></nz-divider>
-      <span class="percent">{{item.percent}}%</span>
-      <span class="value" [innerHTML]="valueFormat ? valueFormat(item.y) : item.y"></span>
-    </li>
-  </ul>`,
+  templateUrl: './pie.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -147,9 +131,10 @@ export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
       this.el.nativeElement,
       this.rend,
       {
-        'ad-pie': true,
-        'has-legend': this.hasLegend,
-        'legend-block': this._legendBlock,
+        'g2-pie': true,
+        'g2-pie__legend-has': this.hasLegend,
+        'g2-pie__legend-block': this._legendBlock,
+        'g2-pie__mini': typeof this.percent !== 'undefined',
       },
       true,
     );

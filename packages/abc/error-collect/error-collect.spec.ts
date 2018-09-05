@@ -16,8 +16,8 @@ import {
 
 import { NzFormModule, NzInputModule } from 'ng-zorro-antd';
 
-import { NaErrorCollectModule } from './error-collect.module';
-import { NaErrorCollectComponent } from './error-collect.component';
+import { ErrorCollectModule } from './error-collect.module';
+import { ErrorCollectComponent } from './error-collect.component';
 
 describe('abc: error-collect', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -28,7 +28,7 @@ describe('abc: error-collect', () => {
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
       imports: [
-        NaErrorCollectModule.forRoot(),
+        ErrorCollectModule.forRoot(),
         ReactiveFormsModule,
         NzFormModule,
         NzInputModule,
@@ -122,7 +122,7 @@ class TestComponent implements OnInit {
   freq = 20;
   offsetTop = 65 + 8 * 2;
   @ViewChild('ec')
-  comp: NaErrorCollectComponent;
+  comp: ErrorCollectComponent;
   validateForm: FormGroup;
   constructor(fb: FormBuilder) {
     this.validateForm = fb.group({

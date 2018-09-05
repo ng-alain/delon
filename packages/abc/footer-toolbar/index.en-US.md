@@ -3,7 +3,7 @@ type: Layout
 title: footer-toolbar
 subtitle: FooterToolbar
 cols: 1
-module: NaFooterToolbarModule
+module: FooterToolbarModule
 ---
 
 A toolbar fixed at the bottom.

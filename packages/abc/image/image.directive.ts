@@ -9,7 +9,7 @@ import {
   SimpleChange,
 } from '@angular/core';
 import { deepCopy } from '@delon/util';
-import { NaImageConfig } from './image.config';
+import { ImageConfig } from './image.config';
 
 /**
  * img标签
@@ -18,7 +18,7 @@ import { NaImageConfig } from './image.config';
  * + 支持增加onerror事件
  */
 @Directive({ selector: '[_src]' })
-export class NaImageDirective implements OnChanges, OnInit {
+export class ImageDirective implements OnChanges, OnInit {
   @Input('_src') src: string;
 
   @Input() size = 64;
@@ -30,7 +30,7 @@ export class NaImageDirective implements OnChanges, OnInit {
   constructor(
     private el: ElementRef,
     private render: Renderer2,
-    DEF: NaImageConfig,
+    DEF: ImageConfig,
   ) {
     Object.assign(this, deepCopy(DEF));
   }

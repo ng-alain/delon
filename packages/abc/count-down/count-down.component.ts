@@ -12,7 +12,7 @@ import * as addSeconds from 'date-fns/add_seconds';
   `,
   preserveWhitespaces: false,
 })
-export class NaCountDownComponent {
+export class CountDownComponent {
   @Input() config: any;
 
   /**

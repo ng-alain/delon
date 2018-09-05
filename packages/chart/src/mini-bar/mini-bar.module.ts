@@ -10,8 +10,8 @@ const COMPONENTS = [G2MiniBarComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2MiniBarModule {
+export class G2MiniBarModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2MiniBarModule, providers: [] };
+    return { ngModule: G2MiniBarModule, providers: [] };
   }
 }

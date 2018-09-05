@@ -1,2 +1,2 @@
-export { NaExceptionComponent } from './exception.component';
-export { NaExceptionModule } from './exception.module';
+export { ExceptionComponent } from './exception.component';
+export { ExceptionModule } from './exception.module';

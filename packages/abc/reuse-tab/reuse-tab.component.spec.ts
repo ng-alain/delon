@@ -25,10 +25,10 @@ import {
 
 import { MenuService, ALAIN_I18N_TOKEN } from '@delon/theme';
 
-import { NaReuseTabModule } from './reuse-tab.module';
-import { NaReuseTabComponent } from './reuse-tab.component';
-import { NaReuseTabMatchMode } from './interface';
-import { ReuseTabService } from './reuse-tab.service';
+import { ReuseTabModule } from './reuse-tab.module';
+import { ReuseTabComponent } from './reuse-tab.component';
+import { ReuseTabMatchMode } from './interface';
+import { NaReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 
@@ -44,8 +44,8 @@ describe('abc: reuse-tab', () => {
   let fixture: ComponentFixture<AppComponent>;
   let dl: DebugElement;
   let layoutComp: LayoutComponent;
-  let rtComp: NaReuseTabComponent;
-  let srv: ReuseTabService;
+  let rtComp: ReuseTabComponent;
+  let srv: NaReuseTabService;
   let page: PageObject;
 
   function genModule(needI18n = false) {
@@ -60,7 +60,7 @@ describe('abc: reuse-tab', () => {
         EComponent,
       ],
       imports: [
-        NaReuseTabModule.forRoot(),
+        ReuseTabModule.forRoot(),
         RouterTestingModule.withRoutes([
           {
             path: '',
@@ -86,7 +86,7 @@ describe('abc: reuse-tab', () => {
         {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,
-          deps: [ReuseTabService],
+          deps: [NaReuseTabService],
         },
         {
           provide: 'CanDeactivate',
@@ -109,7 +109,7 @@ describe('abc: reuse-tab', () => {
     tick();
     fixture.detectChanges();
 
-    srv = injector.get(ReuseTabService);
+    srv = injector.get(NaReuseTabService);
     const router = injector.get(Router) as Router;
     router.routeReuseStrategy = new ReuseTabStrategy(srv);
 
@@ -118,8 +118,8 @@ describe('abc: reuse-tab', () => {
       .query(By.directive(LayoutComponent))
       .injector.get(LayoutComponent);
     rtComp = dl
-      .query(By.directive(NaReuseTabComponent))
-      .injector.get(NaReuseTabComponent);
+      .query(By.directive(ReuseTabComponent))
+      .injector.get(ReuseTabComponent);
     spyOn(layoutComp, 'change');
     spyOn(layoutComp, 'close');
   }
@@ -238,9 +238,9 @@ describe('abc: reuse-tab', () => {
       });
       describe('#mode', () => {
         [
-          NaReuseTabMatchMode.Menu,
-          NaReuseTabMatchMode.MenuForce,
-          NaReuseTabMatchMode.URL,
+          ReuseTabMatchMode.Menu,
+          ReuseTabMatchMode.MenuForce,
+          ReuseTabMatchMode.URL,
         ].forEach(type => {
           it(`with ${type}`, () => {
             layoutComp.mode = type;
@@ -656,8 +656,8 @@ class AppComponent {}
 })
 class LayoutComponent {
   @ViewChild('comp')
-  comp: NaReuseTabComponent;
-  mode: NaReuseTabMatchMode = NaReuseTabMatchMode.URL;
+  comp: ReuseTabComponent;
+  mode: ReuseTabMatchMode = ReuseTabMatchMode.URL;
   debug = false;
   max: number = 3;
   excludes: RegExp[] = [];
@@ -695,7 +695,7 @@ class BComponent {
 })
 class CComponent {
   time = +new Date();
-  constructor(private srv: ReuseTabService) {
+  constructor(private srv: NaReuseTabService) {
     this.srv.title = 'new c title';
   }
 }
@@ -714,7 +714,7 @@ class DComponent {
 })
 class EComponent {
   time = +new Date();
-  constructor(private reuse: ReuseTabService) {
+  constructor(private reuse: NaReuseTabService) {
     reuse.closable = false;
   }
 }

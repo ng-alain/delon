@@ -20,9 +20,9 @@ import {
 import { APP_BASE_HREF } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 
-import { NaFullContentModule } from './full-content.module';
-import { NaFullContentComponent } from './full-content.component';
-import { NaFullContentService } from './full-content.service';
+import { FullContentModule } from './full-content.module';
+import { FullContentComponent } from './full-content.component';
+import { FullContentService } from './full-content.service';
 
 describe('abc: full-content', () => {
   let injector: Injector;
@@ -35,7 +35,7 @@ describe('abc: full-content', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [NaFullContentModule.forRoot(), RouterModule.forRoot([])],
+      imports: [FullContentModule.forRoot(), RouterModule.forRoot([])],
       declarations: [TestComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
@@ -113,7 +113,7 @@ describe('abc: full-content', () => {
     });
     it('should be switch fullscreen via service', () => {
       createComp();
-      const srv = injector.get(NaFullContentService);
+      const srv = injector.get(FullContentService);
       expect(context.fullscreen).toBe(false);
       srv.toggle();
       fixture.detectChanges();
@@ -174,7 +174,7 @@ describe('abc: full-content', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: NaFullContentComponent;
+  @ViewChild('comp') comp: FullContentComponent;
   fullscreen: boolean = false;
   hideTitle: boolean;
   padding = 24;

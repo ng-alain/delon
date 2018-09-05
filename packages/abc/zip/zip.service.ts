@@ -2,14 +2,14 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { LazyService, LazyResult } from '@delon/util';
-import { NaZipConfig, DA_ZIP_CONFIG, ZipSaveOptions } from './interface';
+import { ZipConfig, DA_ZIP_CONFIG, ZipSaveOptions } from './interface';
 
 declare var JSZip: any;
 
 @Injectable()
 export class ZipService {
   constructor(
-    @Inject(DA_ZIP_CONFIG) private config: NaZipConfig,
+    @Inject(DA_ZIP_CONFIG) private config: ZipConfig,
     private http: HttpClient,
     private lazy: LazyService,
   ) {}

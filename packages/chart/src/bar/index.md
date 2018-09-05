@@ -2,7 +2,7 @@
 title: g2-bar
 subtitle: 柱状图
 cols: 1
-module: AdG2BarModule
+module: G2BarModule
 type: Components
 ---
 

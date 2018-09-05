@@ -2,8 +2,8 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NaTrendModule } from './trend.module';
-import { NaTrendComponent } from './trend.component';
+import { TrendModule } from './trend.module';
+import { TrendComponent } from './trend.component';
 
 describe('abc: trend', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: trend', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NaTrendModule.forRoot()],
+      imports: [TrendModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -81,7 +81,7 @@ describe('abc: trend', () => {
         [reverseColor]="reverseColor"></trend>`,
 })
 class TestComponent {
-  @ViewChild('comp') comp: NaTrendComponent;
+  @ViewChild('comp') comp: TrendComponent;
   flag: 'up' | 'down';
   colorful: boolean;
   reverseColor: boolean;

@@ -3,7 +3,7 @@ type: Components
 title: number-info
 subtitle: NumberInfo
 cols: 2
-module: NaNumberInfoModule
+module: NumberInfoModule
 ---
 
 Often used in data cards for highlighting the business data.

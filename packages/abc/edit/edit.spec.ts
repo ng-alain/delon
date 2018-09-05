@@ -12,8 +12,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import * as UTIL from '@delon/util';
 
 import { REP_MAX_COL } from '../core/responsive';
-import { NaSEModule } from './edit.module';
-import { SEItemComponent } from './edit.component';
+import { SEModule } from './edit.module';
+import { SEComponent } from './edit.component';
 
 const prefixCls = `.se__`;
 
@@ -25,7 +25,7 @@ describe('abc: edit', () => {
 
   function genModule(template?: string) {
     TestBed.configureTestingModule({
-      imports: [NaSEModule.forRoot(), FormsModule, NoopAnimationsModule],
+      imports: [SEModule.forRoot(), FormsModule, NoopAnimationsModule],
       declarations: [TestComponent],
     });
     if (template) {
@@ -194,7 +194,7 @@ describe('abc: edit', () => {
     });
     it('should be reactive form', () => {
       TestBed.configureTestingModule({
-        imports: [NaSEModule.forRoot(), FormsModule, ReactiveFormsModule, NoopAnimationsModule],
+        imports: [SEModule.forRoot(), FormsModule, ReactiveFormsModule, NoopAnimationsModule],
         declarations: [TestReactiveComponent],
       });
       const fixture2 = TestBed.createComponent(TestReactiveComponent);
@@ -308,7 +308,7 @@ describe('abc: edit', () => {
 })
 class TestComponent {
   @ViewChild('viewComp')
-  viewComp: SEItemComponent;
+  viewComp: SEComponent;
 
   parent_gutter: number = 32;
   parent_col: number = 3;

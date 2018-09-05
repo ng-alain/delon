@@ -17,16 +17,16 @@ import * as MOCKDATA from '../../_mock';
 
 // region: global config functions
 
-import { NaLodopConfig, NaSTConfig, DelonABCModule } from '@delon/abc';
+import { LodopConfig, STConfig, DelonABCModule } from '@delon/abc';
 
-export function fnNaSTConfig(): NaSTConfig {
-  return Object.assign(new NaSTConfig(), {
+export function fnSTConfig(): STConfig {
+  return Object.assign(new STConfig(), {
     ps: 3,
   });
 }
 
-export function fnNaLodopConfig(): NaLodopConfig {
-  return Object.assign(new NaLodopConfig(), {
+export function fnLodopConfig(): LodopConfig {
+  return Object.assign(new LodopConfig(), {
     license: `A59B099A586B3851E0F0D7FDBF37B603`,
     licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`,
   });
@@ -58,8 +58,8 @@ export class DelonModule {
     return {
       ngModule: DelonModule,
       providers: [
-        { provide: NaSTConfig, useFactory: fnNaSTConfig },
-        { provide: NaLodopConfig, useFactory: fnNaLodopConfig },
+        { provide: STConfig, useFactory: fnSTConfig },
+        { provide: LodopConfig, useFactory: fnLodopConfig },
       ],
     };
   }

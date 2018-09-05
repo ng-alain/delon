@@ -11,8 +11,8 @@ const COMPONENTS = [G2RadarComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2RadarModule {
+export class G2RadarModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2RadarModule, providers: [] };
+    return { ngModule: G2RadarModule, providers: [] };
   }
 }

@@ -1,22 +1,22 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NaFullContentComponent } from './full-content.component';
-import { NaFullContentToggleDirective } from './full-content-toggle.directive';
-import { NaFullContentService } from './full-content.service';
+import { FullContentComponent } from './full-content.component';
+import { FullContentToggleDirective } from './full-content-toggle.directive';
+import { FullContentService } from './full-content.service';
 
-const COMPONENTS = [NaFullContentComponent, NaFullContentToggleDirective];
+const COMPONENTS = [FullContentComponent, FullContentToggleDirective];
 
 @NgModule({
   imports: [CommonModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaFullContentModule {
+export class FullContentModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: NaFullContentModule,
-      providers: [NaFullContentService],
+      ngModule: FullContentModule,
+      providers: [FullContentService],
     };
   }
 }

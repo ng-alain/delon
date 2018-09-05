@@ -2,17 +2,17 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { NaGlobalFooterComponent } from './global-footer.component';
+import { GlobalFooterComponent } from './global-footer.component';
 
-const COMPONENTS = [NaGlobalFooterComponent];
+const COMPONENTS = [GlobalFooterComponent];
 
 @NgModule({
   imports: [CommonModule, RouterModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaGlobalFooterModule {
+export class GlobalFooterModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaGlobalFooterModule, providers: [] };
+    return { ngModule: GlobalFooterModule, providers: [] };
   }
 }

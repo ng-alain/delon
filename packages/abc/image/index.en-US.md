@@ -4,8 +4,8 @@ order: 2
 title: _src
 subtitle: Image
 cols: 1
-module: NaImageModule
-config: NaImageConfig
+module: ImageModule
+config: ImageConfig
 ---
 
 like `src`, but more features:

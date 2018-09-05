@@ -11,8 +11,8 @@ const COMPONENTS = [G2ProgressComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2MiniProgressModule {
+export class G2MiniProgressModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2MiniProgressModule, providers: [] };
+    return { ngModule: G2MiniProgressModule, providers: [] };
   }
 }

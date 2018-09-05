@@ -12,8 +12,8 @@ import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { AlainThemeModule, MenuService, SettingsService } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
-import { NaSidebarNavModule } from './sidebar-nav.module';
-import { NaSidebarNavComponent } from './sidebar-nav.component';
+import { SidebarNavModule } from './sidebar-nav.module';
+import { SidebarNavComponent } from './sidebar-nav.component';
 import { Nav } from './interface';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -51,7 +51,7 @@ describe('abc: sidebar-nav', () => {
       imports: [
         RouterModule.forRoot([]),
         AlainThemeModule.forRoot(),
-        NaSidebarNavModule.forRoot(),
+        SidebarNavModule.forRoot(),
       ],
       declarations: [TestComponent],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
@@ -127,7 +127,7 @@ describe('abc: sidebar-nav', () => {
           imports: [
             RouterModule.forRoot([]),
             AlainThemeModule.forRoot(),
-            NaSidebarNavModule.forRoot(),
+            SidebarNavModule.forRoot(),
             RouterTestingModule.withRoutes([
               { path: 'group', component: TestRouteComponent },
               { path: 'group/type', component: TestRouteComponent },
@@ -380,7 +380,7 @@ describe('abc: sidebar-nav', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: NaSidebarNavComponent;
+  @ViewChild('comp') comp: SidebarNavComponent;
   autoCloseUnderPad = false;
   select() {}
 }

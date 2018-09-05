@@ -4,8 +4,8 @@ order: 2
 title: _src
 subtitle: 显示图像
 cols: 1
-module: NaImageModule
-config: NaImageConfig
+module: ImageModule
+config: ImageConfig
 ---
 
 等同于 `src`，但相比较更多功能：

@@ -10,8 +10,8 @@ const COMPONENTS = [G2GaugeComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2GaugeModule {
+export class G2GaugeModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2GaugeModule, providers: [] };
+    return { ngModule: G2GaugeModule, providers: [] };
   }
 }

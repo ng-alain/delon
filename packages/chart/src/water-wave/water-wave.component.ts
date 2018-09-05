@@ -20,13 +20,13 @@ import { toNumber } from '@delon/util';
   selector: 'g2-water-wave',
   template: `
   <div [ngStyle]="{'height.px': height, 'width.px': height, 'overflow': 'hidden'}">
-    <canvas #container class="canvas-wrap" width="{{height*2}}" height="{{height*2}}"></canvas>
+    <canvas #container class="g2-water-wave__canvas" width="{{height*2}}" height="{{height*2}}"></canvas>
   </div>
-  <div class="text" [ngStyle]="{'width.px': height}">
-    <ng-container *ngIf="_title; else _titleTpl"><span>{{_title}}</span></ng-container>
-    <h4>{{percent}}%</h4>
+  <div class="g2-water-wave__desc" [ngStyle]="{'width.px': height}">
+    <ng-container *ngIf="_title; else _titleTpl"><span class="g2-water-wave__desc-title">{{_title}}</span></ng-container>
+    <h4 class="g2-water-wave__desc-percent">{{percent}}%</h4>
   </div>`,
-  host: { '[class.ad-water-wave]': 'true' },
+  host: { '[class.g2-water-wave]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })

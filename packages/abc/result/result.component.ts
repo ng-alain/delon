@@ -14,7 +14,7 @@ import { Component, Input, TemplateRef } from '@angular/core';
   host: { '[class.result]': 'true' },
   preserveWhitespaces: false,
 })
-export class NaResultComponent {
+export class ResultComponent {
   _type = '';
   _icon = '';
   @Input()

@@ -19,7 +19,7 @@ import { isEmpty } from '@delon/util';
   host: { '[class.exception]': 'true' },
   preserveWhitespaces: false,
 })
-export class NaExceptionComponent implements OnInit {
+export class ExceptionComponent implements OnInit {
   @ViewChild('conTpl') private conTpl: ElementRef;
   hasCon = false;
 

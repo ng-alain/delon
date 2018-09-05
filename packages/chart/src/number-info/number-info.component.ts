@@ -26,7 +26,7 @@ import { toNumber, updateHostClass } from '@delon/util';
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NaNumberInfoComponent implements OnChanges {
+export class NumberInfoComponent implements OnChanges {
   _title = '';
   _titleTpl: TemplateRef<any>;
   /** 标题 */

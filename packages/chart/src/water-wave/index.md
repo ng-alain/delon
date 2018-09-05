@@ -2,7 +2,7 @@
 title: g2-water-wave
 subtitle: 水波图
 cols: 1
-module: AdG2WaterWaveModule
+module: G2WaterWaveModule
 type: Components
 ---
 
@@ -12,7 +12,7 @@ type: Components
 
 | 参数      | 说明                                      | 类型         | 默认值 |
 |----------|------------------------------------------|-------------|-------|
-| `[title]` | 图表标题 | `string` \| `TemplateRef<any>` | - |
+| `[title]` | 图表标题 | `string | TemplateRef<any>` | - |
 | `[height]` | 图表高度 | `number` | `160` |
 | `[color]` | 图表颜色 | `string` | `#1890FF` |
 | `[percent]` | 进度比例 | `number` | - |

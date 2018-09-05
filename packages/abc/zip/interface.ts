@@ -1,8 +1,8 @@
 import { InjectionToken } from '@angular/core';
 
-export const DA_ZIP_CONFIG = new InjectionToken<NaZipConfig>('Na_ZIP_CONFIG');
+export const DA_ZIP_CONFIG = new InjectionToken<ZipConfig>('Na_ZIP_CONFIG');
 
-export interface NaZipConfig {
+export interface ZipConfig {
   /**
    * Zip library path
    * @default //cdn.bootcss.com/jszip/3.1.5/jszip.min.js

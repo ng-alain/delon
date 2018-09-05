@@ -31,7 +31,7 @@ let nextUniqueId = 0;
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SEItemComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   private el: HTMLElement;
   private status$: Subscription;
   @ContentChild(NgModel)

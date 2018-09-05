@@ -2,7 +2,7 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NaImageModule } from './image.module';
+import { ImageModule } from './image.module';
 
 describe('abc: _src', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -11,7 +11,7 @@ describe('abc: _src', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NaImageModule.forRoot()],
+      imports: [ImageModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

@@ -10,8 +10,8 @@ const COMPONENTS = [G2ChartComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2ChartModule {
+export class G2ChartModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2ChartModule, providers: [] };
+    return { ngModule: G2ChartModule, providers: [] };
   }
 }

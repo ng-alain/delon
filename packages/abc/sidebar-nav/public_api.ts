@@ -1,2 +1,2 @@
-export { NaSidebarNavComponent } from './sidebar-nav.component';
-export { NaSidebarNavModule } from './sidebar-nav.module';
+export { SidebarNavComponent } from './sidebar-nav.component';
+export { SidebarNavModule } from './sidebar-nav.module';

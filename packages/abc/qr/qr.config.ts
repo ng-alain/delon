@@ -1,4 +1,4 @@
-export class NaQRConfig {
+export class QRConfig {
   /** 背景，默认：`white` */
   background = 'white';
   /** 背景透明级别，范围：`0-1` 之间，默认：`1.0` */

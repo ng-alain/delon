@@ -8,7 +8,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdG2BarModule } from './bar.module';
+import { G2BarModule } from './bar.module';
 import { G2BarComponent } from './bar.component';
 
 xdescribe('chart: bar', () => {
@@ -18,7 +18,7 @@ xdescribe('chart: bar', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AdG2BarModule.forRoot()],
+      imports: [G2BarModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

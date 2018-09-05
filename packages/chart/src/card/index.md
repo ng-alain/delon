@@ -2,7 +2,7 @@
 title: g2-card
 subtitle: 图表卡片
 cols: 2
-module: AdG2CardModule
+module: G2CardModule
 type: Components
 ---
 

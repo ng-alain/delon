@@ -1,4 +1,4 @@
-export class NaSVConfig {
+export class SVConfig {
   /** 大小 */
   size: 'small' | 'large';
   /** 间距，默认：`32` */

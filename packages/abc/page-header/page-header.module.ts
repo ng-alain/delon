@@ -4,18 +4,18 @@ import { RouterModule } from '@angular/router';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonUtilModule } from '@delon/util';
 
-import { NaPageHeaderComponent } from './page-header.component';
-import { NaPageHeaderConfig } from './page-header.config';
+import { PageHeaderComponent } from './page-header.component';
+import { PageHeaderConfig } from './page-header.config';
 
-const COMPONENTS = [NaPageHeaderComponent];
+const COMPONENTS = [PageHeaderComponent];
 
 @NgModule({
   imports: [CommonModule, RouterModule, DelonUtilModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaPageHeaderModule {
+export class PageHeaderModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaPageHeaderModule, providers: [NaPageHeaderConfig] };
+    return { ngModule: PageHeaderModule, providers: [PageHeaderConfig] };
   }
 }

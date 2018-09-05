@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import { NaAvatarListModule } from './avatar-list.module';
+import { AvatarListModule } from './avatar-list.module';
 import { By } from '@angular/platform-browser';
 
 describe('abc: avatar-list', () => {
@@ -10,7 +10,7 @@ describe('abc: avatar-list', () => {
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
-      imports: [NaAvatarListModule.forRoot()],
+      imports: [AvatarListModule.forRoot()],
       declarations: [TestComponent],
     }).createComponent(TestComponent);
     dl = fixture.debugElement;

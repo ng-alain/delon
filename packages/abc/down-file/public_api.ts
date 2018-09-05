@@ -1,2 +1,2 @@
-export { NaDownFileDirective } from './down-file.directive';
-export { NaDownFileModule } from './down-file.module';
+export { DownFileDirective } from './down-file.directive';
+export { DownFileModule } from './down-file.module';

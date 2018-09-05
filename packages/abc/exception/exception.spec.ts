@@ -2,7 +2,7 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NaExceptionModule } from './exception.module';
+import { ExceptionModule } from './exception.module';
 
 describe('abc: exception', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -11,7 +11,7 @@ describe('abc: exception', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NaExceptionModule.forRoot()],
+      imports: [ExceptionModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

@@ -4,8 +4,8 @@ title: sv
 subtitle: 查看
 cols: 1
 order: 2
-module: NaViewModule
-config: NaViewConfig
+module: SVModule
+config: SVConfig
 ---
 
 查看栅格系统是在原 [Grid 栅格](https://ng.ant.design/components/grid/zh) 基础上构建更高阶的组件，用于简化查看页布局。

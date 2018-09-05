@@ -2,17 +2,17 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CountdownModule } from 'ngx-countdown';
 
-import { NaCountDownComponent } from './count-down.component';
+import { CountDownComponent } from './count-down.component';
 
-const COMPONENTS = [NaCountDownComponent];
+const COMPONENTS = [CountDownComponent];
 
 @NgModule({
   imports: [CommonModule, CountdownModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaCountDownModule {
+export class CountDownModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaCountDownModule, providers: [] };
+    return { ngModule: CountDownModule, providers: [] };
   }
 }

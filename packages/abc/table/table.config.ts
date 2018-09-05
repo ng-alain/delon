@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import {
   STMultiSort,
   STReq,
@@ -7,8 +6,7 @@ import {
   STColumnButtonModalConfig,
 } from './interface';
 
-@Injectable()
-export class NaSTConfig {
+export class STConfig {
   /**
    * 起始页码，默认为：`1`
    */

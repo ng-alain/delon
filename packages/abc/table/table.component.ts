@@ -49,7 +49,7 @@ import {
   STPage,
   STLoadOptions,
 } from './interface';
-import { NaSTConfig } from './table.config';
+import { STConfig } from './table.config';
 import { STExport } from './table-export';
 import { STColumnSource } from './table-column-source';
 import { STRowSource } from './table-row.directive';
@@ -309,7 +309,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   constructor(
     private cd: ChangeDetectorRef,
-    private cog: NaSTConfig,
+    private cog: STConfig,
     private router: Router,
     private el: ElementRef,
     private renderer: Renderer2,
@@ -673,7 +673,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   //#region export
 
   /**
-   * 导出当前页，确保已经注册 `NaXlsxModule`
+   * 导出当前页，确保已经注册 `XlsxModule`
    * @param urlOrData 重新指定数据，例如希望导出所有数据非常有用
    * @param opt 额外参数
    */

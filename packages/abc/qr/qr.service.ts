@@ -1,10 +1,10 @@
-import { NaQRConfig } from './qr.config';
+import { QRConfig } from './qr.config';
 import { Injectable } from '@angular/core';
 
 declare var QRious: any;
 
 @Injectable()
-export class NaQRService {
+export class QRService {
   /** 当前qr实例 */
   readonly qr: any;
   /** 背景 */
@@ -26,7 +26,7 @@ export class NaQRService {
   /** 值 */
   value: string;
 
-  constructor(cog: NaQRConfig) {
+  constructor(cog: QRConfig) {
     Object.assign(this, cog);
     this.qr = new QRious();
   }

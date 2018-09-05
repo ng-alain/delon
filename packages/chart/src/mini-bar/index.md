@@ -2,7 +2,7 @@
 title: g2-mini-bar
 subtitle: 迷你柱状图
 cols: 2
-module: AdG2MiniBarModule
+module: G2MiniBarModule
 type: Components
 ---
 

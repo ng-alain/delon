@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 
-import { NaGlobalFooterModule } from './global-footer.module';
+import { GlobalFooterModule } from './global-footer.module';
 
 describe('abc: global-footer', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -13,7 +13,7 @@ describe('abc: global-footer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), NaGlobalFooterModule.forRoot()],
+      imports: [RouterModule.forRoot([]), GlobalFooterModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [TestComponent],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],

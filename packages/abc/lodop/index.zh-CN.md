@@ -4,8 +4,8 @@ order: 4
 title: lodop
 subtitle: Lodop打印
 cols: 1
-module: NaLodopModule
-config: NaLodopConfig
+module: LodopModule
+config: LodopConfig
 ---
 
 [Lodop](http://c-lodop.com/) 打印的基础实现，商用需要购买KEY。（同时感谢 lodop 为 ng-alain 免费提供正版KEY）
@@ -18,7 +18,7 @@ config: NaLodopConfig
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`cog` | 获取或设置配置项 | `NaLodopConfig` | -
+`cog` | 获取或设置配置项 | `LodopConfig` | -
 `events` | 打印过程通知 | `Observable<LodopPrintResult>` | -
 `lodop` | 获取 Lodop 对象 | `Observable<LodopResult>` | -
 
@@ -50,7 +50,7 @@ config: NaLodopConfig
 `lodop` | Lodop 对象 | `Lodop` | -
 `error` | 错误明细 | `any` | -
 
-### NaLodopConfig
+### LodopConfig
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------

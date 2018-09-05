@@ -122,11 +122,11 @@ describe('abc: table: export', () => {
     });
   });
 
-  it('should be throw error when not load NaXlsxModule', () => {
+  it('should be throw error when not load XlsxModule', () => {
     expect(() => {
       (TestBed.configureTestingModule({
         providers: [STExport],
       }).get(STExport) as STExport).export(null);
-    }).toThrowError(`muse be import 'NaXlsxModule' module, but got null`);
+    }).toThrowError(`muse be import 'XlsxModule' module, but got null`);
   });
 });

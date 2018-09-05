@@ -1,17 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NaTrendComponent } from './trend.component';
+import { TrendComponent } from './trend.component';
 
-const COMPONENTS = [NaTrendComponent];
+const COMPONENTS = [TrendComponent];
 
 @NgModule({
   imports: [CommonModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaTrendModule {
+export class TrendModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaTrendModule, providers: [] };
+    return { ngModule: TrendModule, providers: [] };
   }
 }

@@ -2,7 +2,7 @@
 title: g2-gauge
 subtitle: 仪表盘
 cols: 1
-module: AdG2GaugeModule
+module: G2GaugeModule
 type: Components
 ---
 

@@ -4,8 +4,8 @@ title: se
 subtitle: Edit
 cols: 1
 order: 3
-module: NaSEModule
-config: NaSEConfig
+module: SEModule
+config: SEConfig
 ---
 
 A higher-order components of the form HTML template. And optimized some details:

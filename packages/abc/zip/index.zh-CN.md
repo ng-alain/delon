@@ -26,4 +26,4 @@ yarn add file-saver
 `read(fileOrUrl: File | string, options?: JSZip.JSZipLoadOptions)` | 解压  | `Promise<JSZip>` | -
 `create()` | 创建 Zip 实例，用于创建压缩文件  | `Promise<JSZip>` | -
 `pushUrl(zip: JSZip, path: string, url: string)` | 下载URL资源并写入 zip  | `Promise<void>` | -
-`save(zip: JSZip, options?: NaZipWriteOptions)` | 保存Zip  | `Promise<void>` | -
+`save(zip: JSZip, options?: ZipWriteOptions)` | 保存Zip  | `Promise<void>` | -

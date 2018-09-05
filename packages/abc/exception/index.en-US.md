@@ -3,7 +3,7 @@ type: Layout
 title: exception
 subtitle: Exception
 cols: 1
-module: NaExceptionModule
+module: ExceptionModule
 ---
 
 Exceptions page is used to provide feedback on specific abnormal state. Usually, it contains an explanation of the error status, and provides users with suggestions or operations, to prevent users from feeling lost and confused.

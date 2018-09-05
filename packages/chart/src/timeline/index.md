@@ -2,7 +2,7 @@
 title: g2-timeline
 subtitle: 折线图
 cols: 1
-module: AdG2TimelineModule
+module: G2TimelineModule
 type: Components
 ---
 

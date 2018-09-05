@@ -5,16 +5,16 @@ import { toNumber } from '@delon/util';
   selector: 'g2-mini-progress',
   template: `
   <nz-tooltip [nzTitle]="'目标值: ' + target + '%'">
-    <div nz-tooltip class="target" [ngStyle]="{'left.%': target}">
-      <span [ngStyle]="{'background-color': color}"></span>
-      <span [ngStyle]="{'background-color': color}"></span>
+    <div nz-tooltip class="g2-mini-progress__target" [ngStyle]="{'left.%': target}">
+      <span class="g2-mini-progress__target-item" [ngStyle]="{'background-color': color}"></span>
+      <span class="g2-mini-progress__target-item" [ngStyle]="{'background-color': color}"></span>
     </div>
   </nz-tooltip>
-  <div class="progress-wrap">
-    <div class="progress" [ngStyle]="{'background-color': color, 'width.%': percent, 'height.px':strokeWidth}"></div>
+  <div class="g2-mini-progress__wrap">
+    <div class="g2-mini-progress__value" [ngStyle]="{'background-color': color, 'width.%': percent, 'height.px':strokeWidth}"></div>
   </div>
   `,
-  host: { '[class.ad-g2-progress]': 'true' },
+  host: { '[class.g2-mini-progress]': 'true' },
   preserveWhitespaces: false,
 })
 export class G2ProgressComponent {

@@ -7,11 +7,11 @@ import { tap, filter, flatMap } from 'rxjs/operators';
 import { LazyService } from '@delon/util';
 
 import { LodopService } from './lodop.service';
-import { NaLodopConfig } from './lodop.config';
-import { NaLodopModule } from './lodop.module';
+import { LodopConfig } from './lodop.config';
+import { LodopModule } from './lodop.module';
 import { Lodop } from './interface';
 
-const cog: NaLodopConfig = {
+const cog: LodopConfig = {
   license: '',
   licenseA: '',
   name: 'LODOP',
@@ -34,15 +34,15 @@ describe('abc: lodop', () => {
   let injector: Injector;
   let srv: LodopService;
 
-  function fnNaLodopConfig(): NaLodopConfig {
+  function fnLodopConfig(): LodopConfig {
     return cog;
   }
-  function genModule(options?: NaLodopConfig) {
+  function genModule(options?: LodopConfig) {
     injector = TestBed.configureTestingModule({
-      imports: [NaLodopModule.forRoot()],
+      imports: [LodopModule.forRoot()],
       providers: [
         { provide: LazyService, useClass: MockLazyService },
-        { provide: NaLodopConfig, useFactory: fnNaLodopConfig },
+        { provide: LodopConfig, useFactory: fnLodopConfig },
       ],
     });
     srv = injector.get(LodopService);

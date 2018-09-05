@@ -2,7 +2,7 @@
 title: g2-mini-progress
 subtitle: 迷你进度条
 cols: 1
-module: AdG2MiniProgressModule
+module: G2MiniProgressModule
 type: Components
 ---
 

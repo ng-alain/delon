@@ -1,17 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NaQuickMenuComponent } from './quick-menu.component';
+import { QuickMenuComponent } from './quick-menu.component';
 
-const COMPONENTS = [NaQuickMenuComponent];
+const COMPONENTS = [QuickMenuComponent];
 
 @NgModule({
   imports: [CommonModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NaQuickMenuModule {
+export class QuickMenuModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: NaQuickMenuModule, providers: [] };
+    return { ngModule: QuickMenuModule, providers: [] };
   }
 }

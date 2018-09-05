@@ -2,8 +2,8 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NaNumberInfoModule } from './number-info.module';
-import { NaNumberInfoComponent } from './number-info.component';
+import { NumberInfoModule } from './number-info.module';
+import { NumberInfoComponent } from './number-info.component';
 
 describe('abc: number-info', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: number-info', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NaNumberInfoModule.forRoot()],
+      imports: [NumberInfoModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -109,7 +109,7 @@ describe('abc: number-info', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('ni') comp: NaNumberInfoComponent;
+  @ViewChild('ni') comp: NumberInfoComponent;
   @ViewChild('titleTpl') titleTpl: TemplateRef<void>;
   @ViewChild('subTitleTpl') subTitleTpl: TemplateRef<void>;
   @ViewChild('totalTpl') totalTpl: TemplateRef<void>;

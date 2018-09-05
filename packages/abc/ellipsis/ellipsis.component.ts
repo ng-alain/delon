@@ -12,7 +12,7 @@ import { toNumber } from '@delon/util';
   template: `<ng-content></ng-content>`,
   host: { '[class.ellipsis]': 'true' },
 })
-export class NaEllipsisComponent {
+export class EllipsisComponent {
   /** 在按照行数截取下最大的行数，超过则截取省略 */
   @Input()
   @HostBinding('style.-webkit-line-clamp')

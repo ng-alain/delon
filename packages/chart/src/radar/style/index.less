@@ -1,25 +1,17 @@
 @import '../../../../theme/styles/index.less';
-.ad-radar {
+
+@g2-radar-prefix: ~'.g2-radar';
+
+@{g2-radar-prefix} {
   display: block;
-  .legend {
+  &__legend {
     margin-top: 16px;
-    .legend-item {
+    &-item {
       position: relative;
       text-align: center;
       cursor: pointer;
       color: @text-color-secondary;
       line-height: 22px;
-      p {
-        margin: 0;
-      }
-      h6 {
-        color: @heading-color;
-        padding-left: 16px;
-        font-size: 24px;
-        line-height: 32px;
-        margin-top: 4px;
-        margin-bottom: 0;
-      }
       &:after {
         background-color: @border-color-split;
         position: absolute;
@@ -29,11 +21,19 @@
         width: 1px;
         content: '';
       }
+      &:last-child::after {
+        display: none;
+      }
     }
-    > :last-child .legend-item:after {
-      display: none;
+    &-title {
+      color: @heading-color;
+      padding-left: 16px;
+      font-size: 24px;
+      line-height: 32px;
+      margin-top: 4px;
+      margin-bottom: 0;
     }
-    .dot {
+    &-dot {
       border-radius: 6px;
       display: inline-block;
       margin-right: 6px;

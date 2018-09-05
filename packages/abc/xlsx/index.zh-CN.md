@@ -4,7 +4,7 @@ title: xlsx
 order: 6
 subtitle: Excel 操作
 cols: 1
-module: NaXlsxModule
+module: XlsxModule
 ---
 
 一个基于 [SheetJS](http://sheetjs.com/) 的Excel文件操作，它是目前在浏览器中包含最全的Excel操作的脚本库。
@@ -17,7 +17,7 @@ module: NaXlsxModule
 yarn add file-saver
 ```
 
-由于 sheetjs 脚本大小以及对 Excel 的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式。在导入 `NaXlsxModule` 模块时允许你指定个 URL、CDN 路径，默认情况下使用 `//cdn.bootcss.com/xlsx/0.12.13/xlsx.full.min.js`。
+由于 sheetjs 脚本大小以及对 Excel 的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式。在导入 `XlsxModule` 模块时允许你指定个 URL、CDN 路径，默认情况下使用 `//cdn.bootcss.com/xlsx/0.12.13/xlsx.full.min.js`。
 
 ## API
 
@@ -28,11 +28,11 @@ yarn add file-saver
 `import(fileOrUrl: File | string)` | 导入Excel，返回 JSON | `Promise<{ [key: string]: any[][] }>` | -
 `export(options: NaXlsxExportOptions)` | 导出Excel | `Promise<void>` | -
 
-### NaXlsxExportOptions
+### XlsxExportOptions
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[sheets]` | 数据源 | `{ [sheet: string]: WorkSheet } | NaXlsxExportSheet[]` | -
+`[sheets]` | 数据源 | `{ [sheet: string]: WorkSheet } | XlsxExportSheet[]` | -
 `[filename]` | Excel文件名 | `string` | `export.xlsx`
 `[opts]` | Excel写入选项，见 [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | -
 `[callback]` | 保存前触发 | `(wb: WorkBook) => void` | -
@@ -40,7 +40,7 @@ yarn add file-saver
 ### xlsx 指令
 
 ```html
-<div [xlsx]="NaXlsxExportOptions">导出</div>
+<div [xlsx]="XlsxExportOptions">导出</div>
 ```
 
 ## 常见问题

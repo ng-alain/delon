@@ -1,2 +1,2 @@
-export { NaNumberInfoComponent } from './number-info.component';
-export { NaNumberInfoModule } from './number-info.module';
+export { NumberInfoComponent } from './number-info.component';
+export { NumberInfoModule } from './number-info.module';

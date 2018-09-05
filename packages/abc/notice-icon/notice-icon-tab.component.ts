@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NoticeItem } from './interface';
+import { NoticeItem, NoticeIconSelect } from './interface';
 
 @Component({
   selector: 'notice-icon-tab',
@@ -33,13 +33,13 @@ import { NoticeItem } from './interface';
   `,
   preserveWhitespaces: false,
 })
-export class NaNoticeIconTabComponent {
+export class NoticeIconTabComponent {
   @Input() data: NoticeItem;
-  @Output() select = new EventEmitter<any>();
+  @Output() select = new EventEmitter<NoticeIconSelect>();
   @Output() clear = new EventEmitter<string>();
 
   onClick(item: NoticeItem) {
-    this.select.emit({
+    this.select.emit(<NoticeIconSelect>{
       title: this.data.title,
       item,
     });

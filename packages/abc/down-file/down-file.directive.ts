@@ -19,7 +19,7 @@ import { _HttpClient } from '@delon/theme';
  * ```
  */
 @Directive({ selector: '[down-file]' })
-export class NaDownFileDirective {
+export class DownFileDirective {
   /** URL请求参数 */
   @Input('http-data')
   httpData: any;
@@ -34,7 +34,7 @@ export class NaDownFileDirective {
   fileName: string;
   /** 成功回调 */
   @Output()
-  success: EventEmitter<any> = new EventEmitter<any>();
+  success: EventEmitter<HttpResponse<Blob>> = new EventEmitter<HttpResponse<Blob>>();
   /** 错误回调 */
   @Output()
   error: EventEmitter<any> = new EventEmitter<any>();

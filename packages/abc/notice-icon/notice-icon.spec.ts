@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NaNoticeIconModule } from './notice-icon.module';
-import { NaNoticeIconComponent } from './notice-icon.component';
+import { NoticeIconModule } from './notice-icon.module';
+import { NoticeIconComponent } from './notice-icon.component';
 import { NoticeItem } from './interface';
 
 describe('abc: notice-icon', () => {
@@ -14,7 +14,7 @@ describe('abc: notice-icon', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, NaNoticeIconModule.forRoot()],
+      imports: [NoopAnimationsModule, NoticeIconModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -91,7 +91,7 @@ describe('abc: notice-icon', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: NaNoticeIconComponent;
+  @ViewChild('comp') comp: NoticeIconComponent;
   data: NoticeItem[] = [
     {
       title: 'test',

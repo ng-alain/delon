@@ -1,3 +1,3 @@
-export { NaPageHeaderConfig } from './page-header.config';
-export { NaPageHeaderComponent } from './page-header.component';
-export { NaPageHeaderModule } from './page-header.module';
+export { PageHeaderConfig } from './page-header.config';
+export { PageHeaderComponent } from './page-header.component';
+export { PageHeaderModule } from './page-header.module';

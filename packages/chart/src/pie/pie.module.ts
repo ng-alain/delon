@@ -11,8 +11,8 @@ const COMPONENTS = [G2PieComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdG2PieModule {
+export class G2PieModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdG2PieModule, providers: [] };
+    return { ngModule: G2PieModule, providers: [] };
   }
 }

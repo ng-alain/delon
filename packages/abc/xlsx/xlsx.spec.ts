@@ -7,7 +7,7 @@ import { By } from '@angular/platform-browser';
 import * as fs from 'file-saver';
 
 import {
-  NaXlsxModule,
+  XlsxModule,
   XlsxService,
   NaXlsxConfig,
   XlsxExportOptions,
@@ -56,7 +56,7 @@ describe('abc: xlsx', () => {
   let srv: XlsxService;
   function genModule(options?: NaXlsxConfig) {
     const injector = TestBed.configureTestingModule({
-      imports: [NaXlsxModule.forRoot(options)],
+      imports: [XlsxModule.forRoot(options)],
       declarations: [TestComponent],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },

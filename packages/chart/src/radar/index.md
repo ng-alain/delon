@@ -2,7 +2,7 @@
 title: g2-radar
 subtitle: 雷达图
 cols: 1
-module: AdG2RadarModule
+module: G2RadarModule
 type: Components
 ---
 
@@ -12,7 +12,7 @@ type: Components
 
 | 参数      | 说明                                      | 类型         | 默认值 |
 |----------|------------------------------------------|-------------|-------|
-| `[title]` | 图表标题 | `string` \| `TemplateRef<any>` | - |
+| `[title]` | 图表标题 | `string | TemplateRef<any>` | - |
 | `[height]` | 图表高度 | `number` | - |
 | `[hasLegend]` | 是否显示 legend | `boolean` | `false` |
 | `[padding]` | 图表内部间距 | `array` | `[24, 30, 16, 30]` |
