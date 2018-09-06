@@ -3,14 +3,13 @@ import {
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-import { Injector, Optional } from '@angular/core';
+import { Injector } from '@angular/core';
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { deepCopy } from '@delon/util';
-import { HttpClient } from '@angular/common/http';
 
 import { _HttpClient } from './http.client';
 import { HttpClientConfig } from './http.config';
-import { DelonThemeConfig } from '../../theme.config';
+import { AlainThemeConfig } from '../../theme.config';
 
 describe('theme: http.client', () => {
   let injector: Injector;
@@ -27,7 +26,7 @@ describe('theme: http.client', () => {
     const providers: any[] = [_HttpClient];
     if (config) {
       providers.push({
-        provide: DelonThemeConfig,
+        provide: AlainThemeConfig,
         useFactory: () => ({
           http: config,
         }),

@@ -24,14 +24,14 @@ _HttpClient.get(url, { pi: 1 });
 
 剩下的所有部分都同 `HttpClient` 接口一致性。
 
-## DelonThemeConfig
+## AlainThemeConfig
 
 通用配置项，例如统一对 `_HttpClient` 设置空值、时间处理方式。
 
 ```ts
-import { DelonThemeConfig } from '@delon/theme';
-export function fnDelonThemeConfig(): DelonThemeConfig {
-  return Object.assign(new DelonThemeConfig(), <DelonThemeConfig>{
+import { AlainThemeConfig } from '@delon/theme';
+export function fnAlainThemeConfig(): AlainThemeConfig {
+  return Object.assign(new AlainThemeConfig(), <AlainThemeConfig>{
     http: {
       nullValueHandling: 'ignore',
     },
@@ -44,7 +44,7 @@ export class DelonModule {
     return {
       ngModule: DelonModule,
       providers: [
-        { provide: DelonThemeConfig, useFactory: fnDelonThemeConfig },
+        { provide: AlainThemeConfig, useFactory: fnAlainThemeConfig },
       ],
     };
   }

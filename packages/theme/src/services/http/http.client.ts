@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { DelonThemeConfig } from '../../theme.config';
+import { AlainThemeConfig } from '../../theme.config';
 import { HttpClientConfig } from './http.config';
 
 /**
@@ -20,7 +20,7 @@ import { HttpClientConfig } from './http.config';
 // tslint:disable-next-line:class-name
 export class _HttpClient {
   private cog: HttpClientConfig;
-  constructor(private http: HttpClient, cog: DelonThemeConfig) {
+  constructor(private http: HttpClient, cog: AlainThemeConfig) {
     this.cog = Object.assign(
       <HttpClientConfig>{
         nullValueHandling: 'include',
