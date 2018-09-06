@@ -9,6 +9,7 @@ coverage
 site/app/routes/gen
 publish
 .idea
+*.iml
 debug.log
 yarn-error.log
 /yarn.lock
