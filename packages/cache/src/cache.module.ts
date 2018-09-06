@@ -1,13 +1,13 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
-import { DC_STORE_STORAGE_TOKEN } from './src/interface';
+import { DC_STORE_STORAGE_TOKEN } from './interface';
 import { DelonCacheConfig } from './cache.config';
-import { CacheService } from './src/cache.service';
-import { LocalStorageCacheService } from './src/local-storage-cache.service';
+import { CacheService } from './cache.service';
+import { LocalStorageCacheService } from './local-storage-cache.service';
 
 @NgModule({})
 export class DelonCacheModule {
-  static forRoot(options?: DelonCacheConfig): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders {
     return {
       ngModule: DelonCacheModule,
       providers: [

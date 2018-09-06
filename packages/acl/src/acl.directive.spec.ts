@@ -2,13 +2,12 @@ import {
   TestBed,
   ComponentFixtureAutoDetect,
   ComponentFixture,
-  fakeAsync,
-  tick,
 } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import { DelonACLModule } from '../index';
-import { ACLService } from './../services/acl.service';
 import { By } from '@angular/platform-browser';
+
+import { DelonACLModule } from './acl.module';
+import { ACLService } from './acl.service';
 
 const CLS = 'acl__hide';
 describe('acl: directive', () => {

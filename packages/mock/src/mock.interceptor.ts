@@ -14,7 +14,7 @@ import {
 import { Observable, Observer, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { DelonMockConfig } from '../mock.config';
+import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
 import { MockRequest } from './interface';

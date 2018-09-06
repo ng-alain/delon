@@ -1,4 +1,4 @@
 export * from './src/interface';
 export * from './src/cache.service';
-export * from './cache.config';
-export * from './cache.module';
+export * from './src/cache.config';
+export * from './src/cache.module';

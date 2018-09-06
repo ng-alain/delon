@@ -1,6 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class DelonCacheConfig {
   /**
    * 缓存模式，默认：`promise`

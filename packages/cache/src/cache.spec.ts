@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
-  TestRequest,
 } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -10,11 +9,9 @@ import { filter } from 'rxjs/operators';
 
 import { AlainThemeModule } from '@delon/theme';
 
-import { DelonCacheModule } from '../cache.module';
-import { DC_STORE_STORAGE_TOKEN, ICacheStore, ICache } from './interface';
+import { DelonCacheModule } from './cache.module';
+import { ICache } from './interface';
 import { CacheService } from './cache.service';
-import { LocalStorageCacheService } from './local-storage-cache.service';
-import { DelonCacheConfig } from '../cache.config';
 
 describe('cache: service', () => {
   let injector: Injector;
@@ -24,12 +21,16 @@ describe('cache: service', () => {
   beforeEach(() => {
     let data: any = {};
 
-    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
-      return data[key] || null;
-    });
-    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
-      delete data[key];
-    });
+    spyOn(localStorage, 'getItem').and.callFake(
+      (key: string): string => {
+        return data[key] || null;
+      },
+    );
+    spyOn(localStorage, 'removeItem').and.callFake(
+      (key: string): void => {
+        delete data[key];
+      },
+    );
     spyOn(localStorage, 'setItem').and.callFake(
       (key: string, value: string): string => {
         return (data[key] = <string>value);
@@ -40,12 +41,12 @@ describe('cache: service', () => {
     });
   });
 
-  function genModule(options?: DelonCacheConfig) {
+  function genModule() {
     injector = TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         AlainThemeModule.forRoot(),
-        DelonCacheModule.forRoot(options),
+        DelonCacheModule.forRoot(),
       ],
       providers: [],
     });

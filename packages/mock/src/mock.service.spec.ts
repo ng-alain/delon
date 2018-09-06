@@ -2,8 +2,7 @@ import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import * as Mock from 'mockjs';
 import { MockService } from './mock.service';
-import { MockStatusError } from './status.error';
-import { DelonMockConfig } from '../mock.config';
+import { DelonMockConfig } from './mock.config';
 import { DelonMockModule } from '../index';
 import { MockRequest } from './interface';
 

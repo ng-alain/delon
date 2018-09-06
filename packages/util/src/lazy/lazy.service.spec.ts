@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { DOCUMENT } from '@angular/platform-browser';
-import { DelonUtilModule } from '../../util.module';
+import { DelonUtilModule } from '../util.module';
 import { LazyService } from './lazy.service';
 
 let isIE = false;

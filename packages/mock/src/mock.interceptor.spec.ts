@@ -22,10 +22,10 @@ import {
 import * as Mock from 'mockjs';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
-import { DelonMockConfig } from '../mock.config';
+import { DelonMockConfig } from './mock.config';
 import { MockInterceptor } from './mock.interceptor';
 import { MockRequest } from './interface';
-import { DelonMockModule } from '../mock.module';
+import { DelonMockModule } from './mock.module';
 
 const DATA = {
   USERS: {

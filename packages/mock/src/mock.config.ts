@@ -1,6 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class DelonMockConfig {
   /** 规则定义数据 */
   data: any;

@@ -13,7 +13,7 @@ import { map, tap } from 'rxjs/operators';
 
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
-import { DelonACLConfig } from '../acl.config';
+import { DelonACLConfig } from './acl.config';
 
 @Injectable()
 export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {

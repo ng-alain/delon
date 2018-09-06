@@ -11,7 +11,7 @@ import {
   CacheNotifyResult,
   CacheNotifyType,
 } from './interface';
-import { DelonCacheConfig } from '../cache.config';
+import { DelonCacheConfig } from './cache.config';
 
 @Injectable()
 export class CacheService implements OnDestroy {

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { NzTreeNode } from 'ng-zorro-antd';
 import { ArrayService } from './array.service';
 import { deepCopy } from '../other/other';
-import { DelonUtilModule } from '../../util.module';
+import { DelonUtilModule } from '../util.module';
 import { DelonUtilConfig } from '../util.config';
 
 const MOCK_ARR: any[] = [
