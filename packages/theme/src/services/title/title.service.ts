@@ -66,8 +66,8 @@ export class TitleService implements OnDestroy {
 
   private getByElement(): string {
     const el =
-      this.doc.querySelector('.content__title h1') ||
-      this.doc.querySelector('pro-header h1.title');
+      this.doc.querySelector('.alain-default__content-title h1') ||
+      this.doc.querySelector('.page-header__title');
     if (el) {
       return el.firstChild.textContent.trim();
     }

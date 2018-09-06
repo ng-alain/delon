@@ -5,6 +5,8 @@ export * from './src/services/menu/menu.service';
 export { ScrollService } from './src/services/scroll/scroll.service';
 export * from './src/services/settings/interface';
 export * from './src/services/settings/settings.service';
+export * from './src/services/responsive/responsive.config';
+export * from './src/services/responsive/responsive';
 export { TitleService } from './src/services/title/title.service';
 export { ALAIN_I18N_TOKEN, AlainI18NService, AlainI18NServiceFake } from './src/services/i18n/i18n';
 export * from './src/services/modal/modal.helper';

@@ -10,8 +10,8 @@ import { FormsModule, NgModel, FormControlName, ReactiveFormsModule } from '@ang
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import * as UTIL from '@delon/util';
+import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
 
-import { REP_MAX_COL } from '../core/responsive';
 import { SEModule } from './edit.module';
 import { SEComponent } from './edit.component';
 
@@ -127,7 +127,7 @@ describe('abc: edit', () => {
           fixture.detectChanges();
           page.expect('.ant-col-xs-24');
           page.expect('.ant-col-sm-12', 0);
-          context.col = REP_MAX_COL;
+          context.col = REP_MAX;
           fixture.detectChanges();
           page.expect('.ant-col-xs-24');
           page.expect('.ant-col-sm-12');

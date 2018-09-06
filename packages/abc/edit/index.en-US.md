@@ -74,13 +74,11 @@ Matching for and `id` values associate the label with the appropriate form contr
 
 ### Responsive Rules
 
-If `col: 6` the number of columns is displayed as follows:
-
-| Window Width  | Columns Number |
-| --------- | -------- |
-| `≥1600px` | `12`     |
-| `≥1200px` | `6`      |
-| `≥992px`  | `4`      |
-| `≥768px`  | `3`      |
-| `≥576px`  | `2`      |
-| `<576px`  | `1`      |
+| `col` | `<576px` | `≥576px` | `≥768px` | `≥992px` | `≥1200px` | `≥1600px` |
+| ----- | -------- | -------- | -------- | -------- | --------- | --------- |
+| `1`   | 1        | 1        | 1        | 1        | 1         | 1         |
+| `2`   | 1        | 2        | 2        | 2        | 2         | 2         |
+| `3`   | 1        | 2        | 3        | 3        | 3         | 3         |
+| `4`   | 1        | 2        | 3        | 4        | 4         | 4         |
+| `5`   | 1        | 2        | 3        | 4        | 6         | 6         |
+| `6`   | 1        | 2        | 3        | 4        | 6         | 12        |

@@ -17,9 +17,9 @@ import {
 import { NgModel, FormControlName, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
+import { ResponsiveService } from '@delon/theme';
 import { toNumber, toBoolean, deepGet } from '@delon/util';
 
-import { GenStanRepCls, REP_MAX_COL } from '../core/responsive';
 import { SEContainerComponent } from './edit-container.component';
 
 const prefixCls = `se`;
@@ -131,6 +131,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     @Optional()
     @Host()
     private parent: SEContainerComponent,
+    private rep: ResponsiveService,
     el: ElementRef,
     private ren: Renderer2,
     private cd: ChangeDetectorRef,
@@ -148,7 +149,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     clsMap.length = 0;
     const repCls =
       parent.nzLayout === 'horizontal'
-        ? GenStanRepCls(_col != null ? _col : parent.col, REP_MAX_COL)
+        ? this.rep.genCls(_col != null ? _col : parent.col)
         : [];
     clsMap.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
     if (this.line || parent.line) {

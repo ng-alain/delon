@@ -11,8 +11,8 @@ import {
   HostBinding,
   Optional,
 } from '@angular/core';
+import { ResponsiveService } from '@delon/theme';
 import { toNumber, toBoolean, isEmpty } from '@delon/util';
-import { GenStanRepCls } from '../core/responsive';
 import { SVContainerComponent } from './view-container.component';
 
 const prefixCls = `sv`;
@@ -71,6 +71,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
 
   constructor(
     @Host() @Optional() public parent: SVContainerComponent,
+    private rep: ResponsiveService,
     el: ElementRef,
     private ren: Renderer2,
   ) {
@@ -81,10 +82,10 @@ export class SVComponent implements AfterViewInit, OnChanges {
   }
 
   private setClass() {
-    const { el, ren, _col, clsMap, type } = this;
+    const { el, ren, _col, clsMap, type, rep } = this;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
-    clsMap.push(...GenStanRepCls(_col != null ? _col : this.parent.col));
+    clsMap.push(...rep.genCls(_col != null ? _col : this.parent.col));
     clsMap.push(`${prefixCls}__item`);
     if (this.parent.labelWidth) clsMap.push(`${prefixCls}__item-fixed`);
     if (type) clsMap.push(`${prefixCls}__type-${type}`);

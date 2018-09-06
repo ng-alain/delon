@@ -564,6 +564,20 @@ module.exports = {
           },
           hasSubDir: false,
         },
+        {
+          src: ['./packages/theme/src/pipes'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          hasSubDir: true,
+        },
+        {
+          src: ['./packages/theme/src/services'],
+          template: {
+            content: './src/templates/content.ts',
+          },
+          hasSubDir: true,
+        },
       ],
     },
   ],

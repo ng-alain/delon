@@ -1,8 +1,8 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
 
-import { REP_MAX_COL } from '../core/responsive';
 import { SVComponent } from './view.component';
 import { SVModule } from './view.module';
 
@@ -85,7 +85,7 @@ describe('abc: view', () => {
           fixture.detectChanges();
           page.expect('.ant-col-xs-24');
           page.expect('.ant-col-sm-12', 0);
-          context.col = REP_MAX_COL;
+          context.col = REP_MAX;
           fixture.detectChanges();
           page.expect('.ant-col-xs-24');
           page.expect('.ant-col-sm-12');
