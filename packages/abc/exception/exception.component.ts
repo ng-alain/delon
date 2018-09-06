@@ -4,7 +4,7 @@ import { isEmpty } from '@delon/util';
 @Component({
   selector: 'exception',
   templateUrl: './exception.component.html',
-  host: { '[class.na-exception]': 'true' },
+  host: { '[class.ad-exception]': 'true' },
   preserveWhitespaces: false,
 })
 export class ExceptionComponent implements OnInit {
