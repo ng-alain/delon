@@ -146,13 +146,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this.layout = 'inline';
         this.firstVisual = false;
         this.liveValidate = false;
-        if (this._btn) this._btn.submit = '搜索';
+        if (this._btn) this._btn.submit = this._btn.search;
         break;
       case 'edit':
         this.layout = 'horizontal';
         this.firstVisual = false;
         this.liveValidate = true;
-        if (this._btn) this._btn.submit = '保存';
+        if (this._btn) this._btn.submit = this._btn.edit;
         break;
     }
     this._mode = value;
