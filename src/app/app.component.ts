@@ -53,18 +53,18 @@ export class AppComponent implements OnDestroy {
       .pipe(filter(evt => evt instanceof NavigationEnd))
       .subscribe((evt: NavigationEnd) => {
         const url = evt.url.split('#')[0].split('?')[0];
-        if (url.includes('/dev') || this.prevUrl === url) return;
+        if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
         this.prevUrl = url;
 
-        let urlLang = url.split('/').pop();
+        let urlLang = url.split('/').pop() || this.i18n.zone;
         if (urlLang && ['zh', 'en'].indexOf(urlLang) === -1) {
           urlLang = this.i18n.zone;
         }
-        const redirectLang = evt.urlAfterRedirects
+        const redirectArr = evt.urlAfterRedirects
           .split('#')[0]
           .split('?')[0]
-          .split('/')
-          .pop();
+          .split('/');
+        const redirectLang = redirectArr.pop();
         if (urlLang !== redirectLang) {
           let newUrl = '';
           if (~evt.urlAfterRedirects.indexOf('#')) {
@@ -73,7 +73,7 @@ export class AppComponent implements OnDestroy {
               `/${urlLang}#`,
             );
           } else {
-            newUrl = evt.url + (evt.url.endsWith('/') ? '' : '/') + urlLang;
+            newUrl = redirectArr.concat(urlLang).join('/');
           }
           this.router.navigateByUrl(newUrl, { replaceUrl: true });
           return;

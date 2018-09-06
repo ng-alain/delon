@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { I18NService } from '../../core/i18n/service';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +11,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   },
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  constructor(
+    @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,
+  ) {}
+
   ngOnInit() {
     document.querySelector('body').classList.add(`index-page`);
   }
