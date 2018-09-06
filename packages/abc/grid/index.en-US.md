@@ -22,7 +22,7 @@ A higher-order components of grid systems, that consists of `sg-container` (dire
 More friendly:
 
 ```html
-<div se-container="4">
+<div sg-container="4">
   <sg>1</sg>
   <sg>2</sg>
   <sg>3</sg>

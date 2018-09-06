@@ -4,49 +4,11 @@ import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'dev-layout',
-  template: `
-  <div class="wrapper">
-      <div class="header">
-          <div class="logo">
-              <a [routerLink]="['/']">
-                  <img class="expanded" src="./assets/img/logo-full.svg" alt="{{settings.app.name}}" style="max-height:40px;" />
-                  <img class="collapsed" src="./assets/img/logo.svg" alt="{{settings.app.name}}" style="max-height:30px;" />
-              </a>
-          </div>
-          <div class="top-nav-wrap">
-              <ul class="top-nav">
-                  <li>
-                      <div class="item" (click)="toggleCollapsedSideabar()">
-                          <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
-                      </div>
-                  </li>
-              </ul>
-          </div>
-      </div>
-      <div class="aside">
-          <div class="aside-inner">
-            <nz-dropdown nzTrigger="click" class="user-block">
-              <div nz-dropdown class="user-block-dropdown">
-                <nz-avatar class="avatar" [nzSrc]="settings.user.avatar"></nz-avatar>
-                <div class="info">
-                  <strong>{{settings.user.name}}</strong>
-                  <p class="text-truncate mb0">{{settings.user.email}}</p>
-                </div>
-              </div>
-              <ul nz-menu>
-                <li nz-menu-item (click)="msgSrv.success('profile')">profile</li>
-                <li nz-menu-item (click)="msgSrv.success('profile')">profile</li>
-                <li nz-menu-item (click)="msgSrv.success('profile')">profile</li>
-              </ul>
-            </nz-dropdown>
-            <sidebar-nav class="d-block py-lg"></sidebar-nav>
-          </div>
-      </div>
-      <section class="content">
-          <reuse-tab [mode]="2"></reuse-tab>
-          <router-outlet></router-outlet>
-      </section>
-  </div>`,
+  templateUrl: './layout.component.html',
+  host: {
+    '[class.alain-default]': 'true',
+  },
+  preserveWhitespaces: false
 })
 export class DevLayoutComponent implements OnInit {
   @HostBinding('class.layout-fixed')

@@ -22,7 +22,7 @@ config: SGConfig
 替代：
 
 ```html
-<div se-container="4">
+<div sg-container="4">
   <sg>1</sg>
   <sg>2</sg>
   <sg>3</sg>
