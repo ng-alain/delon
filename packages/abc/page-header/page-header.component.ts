@@ -24,7 +24,7 @@ import {
   Menu,
   TitleService,
 } from '@delon/theme';
-import { NaReuseTabService } from '../reuse-tab/reuse-tab.service';
+import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 import { PageHeaderConfig } from './page-header.config';
 
@@ -131,8 +131,8 @@ export class PageHeaderComponent
     @Inject(TitleService)
     private titleSrv: TitleService,
     @Optional()
-    @Inject(NaReuseTabService)
-    private reuseSrv: NaReuseTabService,
+    @Inject(ReuseTabService)
+    private reuseSrv: ReuseTabService,
   ) {
     Object.assign(this, cog);
     if (this.i18nSrv)

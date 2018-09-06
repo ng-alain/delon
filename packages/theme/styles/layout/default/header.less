@@ -124,13 +124,13 @@
     }
   }
 
-  @media (min-width: @screen-sm) {
+  @media (min-width: @mobile-min) {
     @{alain-default-prefix}__nav @{alain-default-prefix}__search-btn {
       display: none;
     }
   }
 
-  @media (max-width: @screen-sm) {
+  @media (max-width: @mobile-max) {
     @{alain-default-prefix}__search {
       align-items: center;
       transition: transform 300ms;
@@ -172,9 +172,9 @@
 }
 
 // Desktop
-// @media (min-width: @screen-sm) {}
+// @media (min-width: @mobile-min) {}
 // Under pad
-@media (max-width: @screen-sm) {
+@media (max-width: @mobile-max) {
   @{alain-default-prefix}__header {
     &-logo {
       width: @alain-default-aside-collapsed-wd;

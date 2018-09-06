@@ -11,7 +11,7 @@ title:
 
 ## en-US
 
-1 rows & 2 columns layout.
+1 rows & 4 columns layout.
 
 ```ts
 import { Component } from '@angular/core';

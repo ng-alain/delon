@@ -26,7 +26,7 @@ body {
   &__unwrap {
     margin-right: -@alain-default-content-padding;
     margin-left: -@alain-default-content-padding;
-    @media (max-width: @screen-md-max) {
+    @media (max-width: @mobile-max) {
       margin-right: 0;
       margin-left: 0;
     }
@@ -61,7 +61,7 @@ body {
 }
 
 // Desktop
-@media (min-width: @screen-md-min) {
+@media (min-width: @mobile-min) {
   @{alain-default-prefix}__content {
     margin-left: (@alain-default-aside-wd + @alain-default-content-padding);
   }

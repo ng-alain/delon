@@ -5,7 +5,7 @@ import { filter } from 'rxjs/operators';
 
 import { MenuService } from '@delon/theme';
 
-import { NaReuseTabService } from './reuse-tab.service';
+import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 import { ReuseTabMatchMode, ReuseTitle } from './interface';
 
@@ -23,7 +23,7 @@ class MockRouter {
 
 describe('abc: reuse-tab(service)', () => {
   let injector: Injector;
-  let srv: NaReuseTabService;
+  let srv: ReuseTabService;
   let menuSrv: MenuService;
   let router: Router;
 
@@ -34,17 +34,17 @@ describe('abc: reuse-tab(service)', () => {
   ) {
     injector = TestBed.configureTestingModule({
       providers: [
-        NaReuseTabService,
+        ReuseTabService,
         {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,
-          deps: [NaReuseTabService],
+          deps: [ReuseTabService],
         },
         { provide: ActivatedRoute, useValue: { snapshot: { url: [] } } },
         { provide: Router, useFactory: () => new MockRouter() }
       ].concat(providers),
     });
-    srv = injector.get(NaReuseTabService);
+    srv = injector.get(ReuseTabService);
     menuSrv = injector.get(MenuService, null);
     router = injector.get(Router);
     reuse = true;

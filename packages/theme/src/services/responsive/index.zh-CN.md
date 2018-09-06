@@ -1,9 +1,7 @@
 ---
 type: Service
 order: 5
-title:
-  en-US: Responsive Service
-  zh-CN: 响应式服务
+title: 响应式服务
 ---
 
 更友好的使用响应式规则，将原 `xs`、`sm` 等属性简化成 `col` 栏，默认响应式规则：
@@ -17,7 +15,7 @@ title:
 | `5`   | 1        | 2        | 3        | 4        | 6         | 6         |
 | `6`   | 1        | 2        | 3        | 4        | 6         | 12        |
 
-为了更好的开发响应式查看、编辑页，这种规则将默认将运用在 `sv`、`se` 等组件中。你也可以利用 `ResponsiveConfig` 来改写默认规则。
+为了更好的开发响应式查看、编辑页，这种规则将默认将运用在 `sg`、`sv`、`se` 等组件中。你也可以利用 `ResponsiveConfig` 来改写默认规则。
 
 ## ResponsiveConfig
 

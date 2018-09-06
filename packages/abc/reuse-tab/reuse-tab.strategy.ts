@@ -1,8 +1,8 @@
 import { RouteReuseStrategy, ActivatedRouteSnapshot } from '@angular/router';
-import { NaReuseTabService } from './reuse-tab.service';
+import { ReuseTabService } from './reuse-tab.service';
 
 export class ReuseTabStrategy implements RouteReuseStrategy {
-  constructor(private srv: NaReuseTabService) {}
+  constructor(private srv: ReuseTabService) {}
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
     return this.srv.shouldDetach(route);

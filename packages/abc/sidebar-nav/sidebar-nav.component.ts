@@ -217,7 +217,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   private underPad() {
-    if (window.innerWidth < 992 && !this.settings.layout.collapsed) {
+    if (window.innerWidth < 768 && !this.settings.layout.collapsed) {
       setTimeout(() => this.settings.setLayout('collapsed', true));
     }
   }

@@ -48,7 +48,7 @@
 }
 
 // Desktop
-@media (min-width: @screen-md-min) {
+@media (min-width: @mobile-min) {
   .aside-collapsed {
     @{alain-default-prefix}__aside {
       width: @alain-default-aside-collapsed-wd;
@@ -57,7 +57,7 @@
 }
 
 // Under pad
-@media (max-width: @screen-sm-max) {
+@media (max-width: @mobile-max) {
   @{alain-default-prefix}__aside,
   @{alain-default-prefix}__content {
     transition: transform 0.3s ease;

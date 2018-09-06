@@ -28,7 +28,7 @@ import { MenuService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabComponent } from './reuse-tab.component';
 import { ReuseTabMatchMode } from './interface';
-import { NaReuseTabService } from './reuse-tab.service';
+import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 
@@ -45,7 +45,7 @@ describe('abc: reuse-tab', () => {
   let dl: DebugElement;
   let layoutComp: LayoutComponent;
   let rtComp: ReuseTabComponent;
-  let srv: NaReuseTabService;
+  let srv: ReuseTabService;
   let page: PageObject;
 
   function genModule(needI18n = false) {
@@ -86,7 +86,7 @@ describe('abc: reuse-tab', () => {
         {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,
-          deps: [NaReuseTabService],
+          deps: [ReuseTabService],
         },
         {
           provide: 'CanDeactivate',
@@ -109,7 +109,7 @@ describe('abc: reuse-tab', () => {
     tick();
     fixture.detectChanges();
 
-    srv = injector.get(NaReuseTabService);
+    srv = injector.get(ReuseTabService);
     const router = injector.get(Router) as Router;
     router.routeReuseStrategy = new ReuseTabStrategy(srv);
 
@@ -695,7 +695,7 @@ class BComponent {
 })
 class CComponent {
   time = +new Date();
-  constructor(private srv: NaReuseTabService) {
+  constructor(private srv: ReuseTabService) {
     this.srv.title = 'new c title';
   }
 }
@@ -714,7 +714,7 @@ class DComponent {
 })
 class EComponent {
   time = +new Date();
-  constructor(private reuse: NaReuseTabService) {
+  constructor(private reuse: ReuseTabService) {
     reuse.closable = false;
   }
 }

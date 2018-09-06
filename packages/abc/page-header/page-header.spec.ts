@@ -13,7 +13,7 @@ import {
 
 import { PageHeaderModule } from './page-header.module';
 import { PageHeaderComponent } from './page-header.component';
-import { NaReuseTabService } from '../reuse-tab/reuse-tab.service';
+import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(key: string) {
@@ -182,7 +182,7 @@ describe('abc: page-header', () => {
               useFactory: () => null
             },
             {
-              provide: NaReuseTabService,
+              provide: ReuseTabService,
               useFactory: () => null
             },
           ],
@@ -212,7 +212,7 @@ describe('abc: page-header', () => {
         }
       }
       let titleSrv: TitleService;
-      let reuseSrv: NaReuseTabService;
+      let reuseSrv: ReuseTabService;
       beforeEach(() => {
         genModule({
           providers: [
@@ -221,13 +221,13 @@ describe('abc: page-header', () => {
               useClass: MockTitle,
             },
             {
-              provide: NaReuseTabService,
+              provide: ReuseTabService,
               useClass: MockReuse,
             },
           ],
         });
         titleSrv = injector.get(TitleService);
-        reuseSrv = injector.get(NaReuseTabService);
+        reuseSrv = injector.get(ReuseTabService);
         context.syncTitle = true;
       });
 

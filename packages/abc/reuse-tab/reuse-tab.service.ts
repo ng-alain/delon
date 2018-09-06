@@ -19,7 +19,7 @@ import {
  * **注：** 所有缓存数据来源于路由离开后才会产生
  */
 @Injectable({ providedIn: 'root' })
-export class NaReuseTabService implements OnDestroy {
+export class ReuseTabService implements OnDestroy {
   private _max = 10;
   private _debug = false;
   private _mode = ReuseTabMatchMode.Menu;

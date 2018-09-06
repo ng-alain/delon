@@ -22,7 +22,7 @@ import { filter, debounceTime } from 'rxjs/operators';
 import { InputNumber, InputBoolean } from '@delon/util';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 
-import { NaReuseTabService } from './reuse-tab.service';
+import { ReuseTabService } from './reuse-tab.service';
 import {
   ReuseTabCached,
   ReuseTabNotify,
@@ -91,7 +91,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   // #endregion
 
   constructor(
-    public srv: NaReuseTabService,
+    public srv: ReuseTabService,
     private cd: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
