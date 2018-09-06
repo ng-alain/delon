@@ -298,7 +298,7 @@ describe('abc: sidebar-nav', () => {
         );
         const defaultCollapsed = false;
         createComp(false, () => {
-          spyOnProperty(window, 'innerWidth').and.returnValue(991);
+          spyOnProperty(window, 'innerWidth').and.returnValue(767);
           setSrv.layout.collapsed = defaultCollapsed;
           fixture.detectChanges();
         });
@@ -318,7 +318,7 @@ describe('abc: sidebar-nav', () => {
         );
         const defaultCollapsed = false;
         createComp(false, () => {
-          spyOnProperty(window, 'innerWidth').and.returnValue(993);
+          spyOnProperty(window, 'innerWidth').and.returnValue(769);
           setSrv.layout.collapsed = defaultCollapsed;
           fixture.detectChanges();
         });
@@ -326,6 +326,25 @@ describe('abc: sidebar-nav', () => {
         fixture.detectChanges();
         tick(20);
         expect(setSrv.layout.collapsed).toBe(defaultCollapsed);
+      }),
+    );
+    it(
+      'should be auto expaned when less than pad trigger click',
+      fakeAsync(() => {
+        // create test component
+        TestBed.overrideTemplate(
+          TestComponent,
+          `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
+        );
+        createComp();
+        setSrv.layout.collapsed = true;
+        fixture.detectChanges();
+        spyOnProperty(window, 'innerWidth').and.returnValue(767);
+        expect(setSrv.layout.collapsed).toBe(true);
+        page.getEl<HTMLElement>('.sidebar-nav').click();
+        fixture.detectChanges();
+        tick(20);
+        expect(setSrv.layout.collapsed).toBe(false);
       }),
     );
   });

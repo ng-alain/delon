@@ -9,8 +9,8 @@
           class="sidebar-nav__item" [class.sidebar-nav__open]="child1._open">
           <!-- link -->
           <a *ngIf="child1._type === 1" (click)="onSelect(child1)" [routerLink]="child1.link" [target]="child1.target">
-            <i *ngIf="!settings.layout.collapsed" class="{{ child1.icon }}"></i>
-            <nz-tooltip *ngIf="settings.layout.collapsed" nzPlacement="right" [nzTitle]="child1.text">
+            <i *ngIf="!collapsed" class="{{ child1.icon }}"></i>
+            <nz-tooltip *ngIf="collapsed" nzPlacement="right" [nzTitle]="child1.text">
               <span nz-tooltip>
                 <i class="{{ child1.icon }}"></i>
               </span>
@@ -19,8 +19,8 @@
           </a>
           <!-- external link -->
           <a *ngIf="child1._type === 2" href="{{ child1.externalLink }}" target="{{child1.target}}" data-type="external">
-            <i *ngIf="!settings.layout.collapsed" class="{{ child1.icon }}"></i>
-            <nz-tooltip *ngIf="settings.layout.collapsed" nzPlacement="right" [nzTitle]="child1.text">
+            <i *ngIf="!collapsed" class="{{ child1.icon }}"></i>
+            <nz-tooltip *ngIf="collapsed" nzPlacement="right" [nzTitle]="child1.text">
               <span nz-tooltip>
                 <i class="{{ child1.icon }}"></i>
               </span>

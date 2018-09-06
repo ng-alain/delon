@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   Renderer2,
   Inject,
   OnInit,
@@ -31,11 +30,11 @@ const FLOATINGCLS = 'sidebar-nav__floating';
   preserveWhitespaces: false,
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
+  private bodyEl: HTMLBodyElement;
+  private change$: Subscription;
   /** @inner */
   floatingEl: HTMLDivElement;
-  private bodyEl: HTMLBodyElement;
   list: Nav[] = [];
-  private change$: Subscription;
 
   @Input()
   @InputBoolean()
@@ -46,13 +45,17 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
   constructor(
     private menuSrv: MenuService,
-    public settings: SettingsService,
+    private settings: SettingsService,
     private router: Router,
     private locationStrategy: LocationStrategy,
     private render: Renderer2,
     private cd: ChangeDetectorRef,
     @Inject(DOCUMENT) private doc: any,
   ) {}
+
+  get collapsed() {
+    return this.settings.layout.collapsed;
+  }
 
   ngOnInit() {
     this.bodyEl = this.doc.querySelector('body');
@@ -91,7 +94,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  clearFloatingContainer() {
+  private clearFloatingContainer() {
     if (!this.floatingEl) return;
     this.floatingEl.removeEventListener(
       'click',
@@ -105,7 +108,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
   }
 
-  genFloatingContainer() {
+  private genFloatingContainer() {
     this.clearFloatingContainer();
     this.floatingEl = this.render.createElement('div');
     this.floatingEl.classList.add(FLOATINGCLS + '-container');
@@ -163,7 +166,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   showSubMenu(e: MouseEvent, item: Nav) {
-    if (this.settings.layout.collapsed !== true) {
+    if (this.collapsed !== true) {
       return;
     }
     e.preventDefault();
@@ -192,8 +195,16 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.cd.markForCheck();
   }
 
-  @HostListener('document:click', ['$event.target'])
-  onClick() {
+  @HostListener('click')
+  _click() {
+    if (this.isPad && this.collapsed) {
+      this.openAside(false);
+      this.hideAll();
+    }
+  }
+
+  @HostListener('document:click')
+  _docClick() {
     this.hideAll();
   }
 
@@ -204,6 +215,10 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   // region: Under pad
+
+  private get isPad(): boolean {
+    return window.innerWidth < 768;
+  }
 
   private route$: Subscription;
   private installUnderPad() {
@@ -217,9 +232,13 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   private underPad() {
-    if (window.innerWidth < 768 && !this.settings.layout.collapsed) {
-      setTimeout(() => this.settings.setLayout('collapsed', true));
+    if (this.isPad && !this.collapsed) {
+      setTimeout(() => this.openAside(true));
     }
+  }
+
+  private openAside(status: boolean) {
+    this.settings.setLayout('collapsed', status);
   }
 
   // endregion
