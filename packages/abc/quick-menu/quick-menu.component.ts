@@ -10,6 +10,8 @@ import {
   ElementRef,
 } from '@angular/core';
 
+import { InputNumber } from '@delon/util';
+
 @Component({
   selector: 'quick-menu',
   template: `
@@ -33,9 +35,9 @@ export class QuickMenuComponent implements OnInit, OnChanges {
     | string[]
     | { [key: string]: string } = 'anticon anticon-question-circle-o';
 
-  @Input() top = 120;
+  @Input() @InputNumber() top = 120;
 
-  @Input() width = 200;
+  @Input() @InputNumber() width = 200;
 
   @Input() bgColor = '#fff';
 

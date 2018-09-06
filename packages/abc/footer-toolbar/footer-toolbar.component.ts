@@ -10,7 +10,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { toBoolean } from '@delon/util';
+import { InputBoolean } from '@delon/util';
 
 const CLS = 'footer-toolbar';
 const CLSBODY = 'footer-toolbar__body';
@@ -28,15 +28,11 @@ const CLSBODY = 'footer-toolbar__body';
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
   @Input()
-  get errorCollect() {
-    return this._errorCollect;
-  }
-  set errorCollect(value: any) {
-    this._errorCollect = toBoolean(value);
-  }
-  private _errorCollect = false;
+  @InputBoolean()
+  errorCollect = false;
 
-  @ContentChild('extra') extra: TemplateRef<any>;
+  @ContentChild('extra')
+  extra: TemplateRef<any>;
 
   constructor(
     private el: ElementRef,

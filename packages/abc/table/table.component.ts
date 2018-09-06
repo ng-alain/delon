@@ -30,7 +30,13 @@ import {
   AlainI18NService,
   ModalHelperOptions,
 } from '@delon/theme';
-import { deepCopy, toBoolean, toNumber, updateHostClass, InputBoolean } from '@delon/util';
+import {
+  deepCopy,
+  toBoolean,
+  updateHostClass,
+  InputBoolean,
+  InputNumber,
+} from '@delon/util';
 
 import {
   STColumn,
@@ -120,31 +126,16 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   columns: STColumn[] = [];
   /** 每页数量，当设置为 `0` 表示不分页，默认：`10` */
   @Input()
-  get ps() {
-    return this._ps;
-  }
-  set ps(value: any) {
-    this._ps = toNumber(value);
-  }
-  private _ps = 10;
+  @InputNumber()
+  ps = 10;
   /** 当前页码 */
   @Input()
-  get pi() {
-    return this._pi;
-  }
-  set pi(value: any) {
-    this._pi = toNumber(value);
-  }
-  private _pi = 1;
+  @InputNumber()
+  pi = 1;
   /** 数据总量 */
   @Input()
-  get total() {
-    return this._total;
-  }
-  set total(value: any) {
-    this._total = toNumber(value);
-  }
-  private _total = 0;
+  @InputNumber()
+  total = 0;
   /** 分页器配置 */
   @Input()
   get page() {
@@ -166,31 +157,16 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private _page: STPage;
   /** 是否显示Loading */
   @Input()
-  get loading() {
-    return this._loading;
-  }
-  set loading(value: any) {
-    this._loading = toBoolean(value);
-  }
-  private _loading = false;
+  @InputBoolean()
+  loading = false;
   /** 延迟显示加载效果的时间（防止闪烁） */
   @Input()
-  get loadingDelay() {
-    return this._loadingDelay;
-  }
-  set loadingDelay(value: any) {
-    this._loadingDelay = toNumber(value);
-  }
-  private _loadingDelay = 0;
+  @InputNumber()
+  loadingDelay = 0;
   /** 是否显示边框 */
   @Input()
-  get bordered() {
-    return this._bordered;
-  }
-  set bordered(value: any) {
-    this._bordered = toBoolean(value);
-  }
-  private _bordered = false;
+  @InputBoolean()
+  bordered = false;
   /** table大小 */
   @Input()
   size: 'small' | 'middle' | 'default';
@@ -240,14 +216,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动
    */
   @Output()
-  readonly change: EventEmitter<STChange> = new EventEmitter<
-    STChange
-  >();
+  readonly change: EventEmitter<STChange> = new EventEmitter<STChange>();
   /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
   @Input()
   rowClickTime = 200;
 
-  @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
+  @Input()
+  @InputBoolean()
+  responsiveHideHeaderFooter: boolean;
 
   // #endregion
 
@@ -268,9 +244,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @deprecated as of v3
    */
   @Output()
-  readonly radioChange: EventEmitter<STData> = new EventEmitter<
-    STData
-  >();
+  readonly radioChange: EventEmitter<STData> = new EventEmitter<STData>();
   /**
    * 排序回调
    * @deprecated 使用 `change` 替代
@@ -284,9 +258,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @deprecated as of v3
    */
   @Output()
-  readonly filterChange: EventEmitter<STColumn> = new EventEmitter<
-    STColumn
-  >();
+  readonly filterChange: EventEmitter<STColumn> = new EventEmitter<STColumn>();
   /**
    * 行单击回调
    * @deprecated 使用 `change` 替代
@@ -530,11 +502,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.handleFilter(col);
   }
 
-  _filterRadio(
-    col: STColumn,
-    item: STColumnFilterMenu,
-    checked: boolean,
-  ) {
+  _filterRadio(col: STColumn, item: STColumnFilterMenu, checked: boolean) {
     col.filter.menus.forEach(i => (i.checked = false));
     item.checked = checked;
   }

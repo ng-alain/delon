@@ -8,6 +8,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { InputNumber } from '@delon/util';
+
 import { QRService } from './qr.service';
 import { QRConfig } from './qr.config';
 
@@ -25,27 +27,39 @@ export class QRComponent implements OnChanges {
   // region: fields
 
   /** 背景 */
-  @Input() background: string;
+  @Input()
+  background: string;
   /** 背景透明级别，范围：`0-1` 之间 */
-  @Input() backgroundAlpha: number;
+  @Input()
+  backgroundAlpha: number;
   /** 前景 */
-  @Input() foreground: string;
+  @Input()
+  foreground: string;
   /** 前景透明级别，范围：`0-1` 之间 */
-  @Input() foregroundAlpha: number;
+  @Input()
+  foregroundAlpha: number;
   /** 误差校正级别 */
-  @Input() level: string;
+  @Input()
+  level: string;
   /** 二维码输出图片MIME类型 */
-  @Input() mime: string;
+  @Input()
+  mime: string;
   /** 内边距（单位：px） */
-  @Input() padding: number;
+  @Input()
+  @InputNumber()
+  padding: number;
   /** 大小（单位：px） */
   @HostBinding('style.height.px')
   @HostBinding('style.width.px')
-  @Input() size: number;
+  @Input()
+  @InputNumber()
+  size: number;
   /** 值 */
-  @Input() value: string;
+  @Input()
+  value: string;
   /** 变更时回调 */
-  @Output() change = new EventEmitter<string>();
+  @Output()
+  change = new EventEmitter<string>();
 
   // endregion
 
@@ -67,7 +81,7 @@ export class QRComponent implements OnChanges {
       mime: this.mime,
       padding: this.padding,
       size: this.size,
-      value: this.value
+      value: this.value,
     });
     this.cd.detectChanges();
     this.change.emit(this.dataURL);

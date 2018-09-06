@@ -14,7 +14,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { toBoolean, toNumber } from '@delon/util';
+import { InputBoolean, InputNumber } from '@delon/util';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { FullContentService } from './full-content.service';
@@ -47,31 +47,16 @@ export class FullContentComponent
   // #region fields
 
   @Input()
-  get fullscreen() {
-    return this._fullscreen;
-  }
-  set fullscreen(value: any) {
-    this._fullscreen = toBoolean(value);
-  }
-  private _fullscreen;
+  @InputBoolean()
+  fullscreen: boolean;
 
   @Input()
-  get hideTitle() {
-    return this._hideTitle;
-  }
-  set hideTitle(value: any) {
-    this._hideTitle = toBoolean(value);
-  }
-  private _hideTitle = true;
+  @InputBoolean()
+  hideTitle = true;
 
   @Input()
-  get padding() {
-    return this._padding;
-  }
-  set padding(value: any) {
-    this._padding = toNumber(value);
-  }
-  private _padding = 24;
+  @InputNumber()
+  padding = 24;
 
   @Output()
   fullscreenChange: EventEmitter<boolean> = new EventEmitter<boolean>();

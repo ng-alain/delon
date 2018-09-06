@@ -11,7 +11,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { toNumber } from '@delon/util';
+import { InputNumber } from '@delon/util';
 import { ErrorCollectConfig } from './error-collect.config';
 
 /**
@@ -32,22 +32,12 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   private formEl: HTMLFormElement;
 
   @Input()
-  get freq() {
-    return this._freq;
-  }
-  set freq(value: any) {
-    this._freq = toNumber(value);
-  }
-  private _freq = 500;
+  @InputNumber()
+  freq: number;
 
   @Input()
-  get offsetTop() {
-    return this._offsetTop;
-  }
-  set offsetTop(value: any) {
-    this._offsetTop = toNumber(value);
-  }
-  private _offsetTop = 65 + 64 + 8 * 2;
+  @InputNumber()
+  offsetTop: number;
 
   @HostBinding('class.d-none')
   _hiden = true;

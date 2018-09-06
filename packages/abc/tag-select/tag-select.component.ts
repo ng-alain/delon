@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { toBoolean } from '@delon/util';
+import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'tag-select',
@@ -19,19 +19,16 @@ import { toBoolean } from '@delon/util';
 })
 export class TagSelectComponent {
   /** 是否启用 `展开与收进` */
-  @HostBinding('class.tag-select__has-expand')
   @Input()
-  get expandable() {
-    return this._expandable;
-  }
-  set expandable(value: any) {
-    this._expandable = toBoolean(value);
-  }
-  private _expandable = true;
+  @InputBoolean()
+  @HostBinding('class.tag-select__has-expand')
+  expandable = true;
 
-  @HostBinding('class.tag-select__expanded') expand = false;
+  @HostBinding('class.tag-select__expanded')
+  expand = false;
 
-  @Output() change: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output()
+  change: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   trigger() {
     this.expand = !this.expand;

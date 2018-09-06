@@ -17,6 +17,7 @@ import { DOCUMENT, LocationStrategy } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { MenuService, SettingsService, Menu } from '@delon/theme';
+import { InputBoolean } from '@delon/util';
 
 import { Nav } from './interface';
 
@@ -30,16 +31,18 @@ const FLOATINGCLS = 'sidebar-nav__floating';
   preserveWhitespaces: false,
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
-  private rootEl: HTMLDivElement;
   /** @inner */
   floatingEl: HTMLDivElement;
   private bodyEl: HTMLBodyElement;
   list: Nav[] = [];
   private change$: Subscription;
 
-  @Input() autoCloseUnderPad = true;
+  @Input()
+  @InputBoolean()
+  autoCloseUnderPad = true;
 
-  @Output() select = new EventEmitter<Menu>();
+  @Output()
+  select = new EventEmitter<Menu>();
 
   constructor(
     private menuSrv: MenuService,
@@ -49,10 +52,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private render: Renderer2,
     private cd: ChangeDetectorRef,
     @Inject(DOCUMENT) private doc: any,
-    el: ElementRef,
-  ) {
-    this.rootEl = el.nativeElement as HTMLDivElement;
-  }
+  ) {}
 
   ngOnInit() {
     this.bodyEl = this.doc.querySelector('body');

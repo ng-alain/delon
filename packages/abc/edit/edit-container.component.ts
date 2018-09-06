@@ -1,5 +1,5 @@
 import { Component, Input, TemplateRef } from '@angular/core';
-import { toNumber, toBoolean } from '@delon/util';
+import { toNumber, InputNumber, InputBoolean } from '@delon/util';
 import { SEConfig } from './edit.config';
 
 @Component({
@@ -43,13 +43,8 @@ export class SEContainerComponent {
   private _col: number;
 
   @Input()
-  set labelWidth(value: any) {
-    this._labelWidth = toNumber(value, null);
-  }
-  get labelWidth() {
-    return this._labelWidth;
-  }
-  private _labelWidth: number;
+  @InputNumber(null)
+  labelWidth: number;
 
   @Input()
   get nzLayout() {
@@ -67,22 +62,12 @@ export class SEContainerComponent {
   size: 'default' | 'compact';
 
   @Input()
-  set firstVisual(value: any) {
-    this._firstVisual = toBoolean(value);
-  }
-  get firstVisual() {
-    return this._firstVisual;
-  }
-  private _firstVisual: boolean;
+  @InputBoolean()
+  firstVisual: boolean;
 
   @Input()
-  set line(value: any) {
-    this._line = toBoolean(value);
-  }
-  get line() {
-    return this._line;
-  }
-  private _line = false;
+  @InputBoolean()
+  line = false;
 
   //#endregion
 

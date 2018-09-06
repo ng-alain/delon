@@ -4,6 +4,7 @@ npm-debug.log
 .tmp
 .ng_build
 .lib
+*.iml
 dist
 coverage
 src/app/routes/gen

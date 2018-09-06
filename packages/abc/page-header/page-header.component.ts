@@ -14,7 +14,9 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { toBoolean, isEmpty } from '@delon/util';
+import { Subscription } from 'rxjs';
+
+import { isEmpty, InputBoolean } from '@delon/util';
 import {
   MenuService,
   ALAIN_I18N_TOKEN,
@@ -25,7 +27,6 @@ import {
 import { NaReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 import { PageHeaderConfig } from './page-header.config';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'page-header',
@@ -39,7 +40,8 @@ export class PageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
   private i18n$: Subscription;
-  @ViewChild('conTpl') private conTpl: ElementRef;
+  @ViewChild('conTpl')
+  private conTpl: ElementRef;
   private _menus: Menu[];
 
   private get menus() {
@@ -65,61 +67,55 @@ export class PageHeaderComponent
     }
   }
 
-  @Input() home: string;
+  @Input()
+  home: string;
 
-  @Input() homeLink: string;
+  @Input()
+  homeLink: string;
 
-  @Input() homeI18n: string;
+  @Input()
+  homeI18n: string;
 
   /**
    * 自动生成导航，以当前路由从主菜单中定位
    */
   @Input()
-  get autoBreadcrumb() {
-    return this._autoBreadcrumb;
-  }
-  set autoBreadcrumb(value: any) {
-    this._autoBreadcrumb = toBoolean(value);
-  }
-  private _autoBreadcrumb = true;
+  @InputBoolean()
+  autoBreadcrumb = true;
 
   /**
    * 自动生成标题，以当前路由从主菜单中定位
    */
   @Input()
-  get autoTitle() {
-    return this._autoTitle;
-  }
-  set autoTitle(value: any) {
-    this._autoTitle = toBoolean(value);
-  }
-  private _autoTitle = true;
+  @InputBoolean()
+  autoTitle = true;
 
   /**
    * 是否自动将标题同步至 `TitleService`、`ReuseService` 下，仅 `title` 为 `string` 类型时有效
    */
   @Input()
-  get syncTitle() {
-    return this._syncTitle;
-  }
-  set syncTitle(value: any) {
-    this._syncTitle = toBoolean(value);
-  }
-  private _syncTitle = false;
+  @InputBoolean()
+  syncTitle = false;
 
   paths: any[] = [];
 
-  @ContentChild('breadcrumb') breadcrumb: TemplateRef<any>;
+  @ContentChild('breadcrumb')
+  breadcrumb: TemplateRef<any>;
 
-  @ContentChild('logo') logo: TemplateRef<any>;
+  @ContentChild('logo')
+  logo: TemplateRef<any>;
 
-  @ContentChild('action') action: TemplateRef<any>;
+  @ContentChild('action')
+  action: TemplateRef<any>;
 
-  @ContentChild('content') content: TemplateRef<any>;
+  @ContentChild('content')
+  content: TemplateRef<any>;
 
-  @ContentChild('extra') extra: TemplateRef<any>;
+  @ContentChild('extra')
+  extra: TemplateRef<any>;
 
-  @ContentChild('tab') tab: TemplateRef<any>;
+  @ContentChild('tab')
+  tab: TemplateRef<any>;
 
   // endregion
 

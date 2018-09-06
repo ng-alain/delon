@@ -10,8 +10,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { toBoolean } from '@delon/util';
-import { deepCopy } from '@delon/util';
+import { deepCopy, InputBoolean } from '@delon/util';
 
 import { DelonFormConfig } from './config';
 import { di, retrieveSchema, FORMATMAPS, resolveIf } from './utils';
@@ -115,13 +114,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * - `false` 提交时校验
    */
   @Input()
-  get liveValidate() {
-    return this._liveValidate;
-  }
-  set liveValidate(value: any) {
-    this._liveValidate = toBoolean(value);
-  }
-  private _liveValidate = true;
+  @InputBoolean()
+  liveValidate = true;
 
   /** 指定表单 `autocomplete` 值 */
   @Input()
@@ -129,13 +123,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   /** 立即显示错误视觉 */
   @Input()
-  get firstVisual() {
-    return this._firstVisual;
-  }
-  set firstVisual(value: any) {
-    this._firstVisual = toBoolean(value);
-  }
-  private _firstVisual = true;
+  @InputBoolean()
+  firstVisual = true;
 
   /** 表单模式 */
   @Input()
@@ -270,7 +259,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         if (ui.widget === 'date' && ui.end != null && parentSchema) {
           const dateEndProperty = parentSchema.properties[ui.end];
           if (dateEndProperty) {
-            dateEndProperty.ui = Object.assign({}, dateEndProperty.ui, { hidden: true });
+            dateEndProperty.ui = Object.assign({}, dateEndProperty.ui, {
+              hidden: true,
+            });
           } else {
             ui.end = '';
           }

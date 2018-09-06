@@ -18,7 +18,13 @@ import { NgModel, FormControlName, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
-import { toNumber, toBoolean, deepGet } from '@delon/util';
+import {
+  toNumber,
+  toBoolean,
+  deepGet,
+  InputNumber,
+  InputBoolean,
+} from '@delon/util';
 
 import { SEContainerComponent } from './edit-container.component';
 
@@ -71,19 +77,12 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   @Input()
-  set col(value: any) {
-    this._col = toNumber(value, null);
-  }
-  private _col: number;
+  @InputNumber(null)
+  col: number;
 
   @Input()
-  set required(value: any) {
-    this._required = toBoolean(value);
-  }
-  get required() {
-    return this._required;
-  }
-  private _required = false;
+  @InputBoolean()
+  required = false;
 
   @Input()
   controlClass: string = '';
@@ -98,13 +97,8 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   _autoId = true;
 
   @Input()
-  set line(value: any) {
-    this._line = toBoolean(value, null);
-  }
-  get line() {
-    return this._line;
-  }
-  private _line: boolean;
+  @InputBoolean(null)
+  line: boolean;
 
   // #endregion
 
@@ -143,13 +137,13 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private setClass(): this {
-    const { el, ren, clsMap, _col, parent, cd } = this;
+    const { el, ren, clsMap, col, parent, cd } = this;
     this.labelWidth = parent.labelWidth;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
     const repCls =
       parent.nzLayout === 'horizontal'
-        ? this.rep.genCls(_col != null ? _col : parent.col)
+        ? this.rep.genCls(col != null ? col : parent.col)
         : [];
     clsMap.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
     if (this.line || parent.line) {

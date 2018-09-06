@@ -8,7 +8,7 @@ import {
   OnInit,
   SimpleChange,
 } from '@angular/core';
-import { deepCopy } from '@delon/util';
+import { deepCopy, InputNumber } from '@delon/util';
 import { ImageConfig } from './image.config';
 
 /**
@@ -21,7 +21,7 @@ import { ImageConfig } from './image.config';
 export class ImageDirective implements OnChanges, OnInit {
   @Input('_src') src: string;
 
-  @Input() size = 64;
+  @Input() @InputNumber() size = 64;
 
   @Input() error = './assets/img/logo.svg';
 

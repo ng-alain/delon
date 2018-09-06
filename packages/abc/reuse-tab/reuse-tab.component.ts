@@ -19,7 +19,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { Subscription, combineLatest } from 'rxjs';
 import { filter, debounceTime } from 'rxjs/operators';
-import { toNumber, toBoolean } from '@delon/util';
+import { InputNumber, InputBoolean } from '@delon/util';
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 
 import { NaReuseTabService } from './reuse-tab.service';
@@ -54,60 +54,40 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
   // #region fields
   /** 设置匹配模式 */
-  @Input() mode: ReuseTabMatchMode = ReuseTabMatchMode.Menu;
+  @Input()
+  mode: ReuseTabMatchMode = ReuseTabMatchMode.Menu;
   /** 选项文本国际化 */
-  @Input() i18n: ReuseContextI18n;
+  @Input()
+  i18n: ReuseContextI18n;
   /** 是否Debug模式 */
   @Input()
-  get debug() {
-    return this._debug;
-  }
-  set debug(value: any) {
-    this._debug = toBoolean(value);
-  }
-  private _debug = false;
+  @InputBoolean()
+  debug = false;
   /** 允许最多复用多少个页面 */
   @Input()
-  get max() {
-    return this._max;
-  }
-  set max(value: any) {
-    this._max = toNumber(value);
-  }
-  private _max: number;
+  @InputNumber()
+  max: number;
   /** 排除规则，限 `mode=URL` */
-  @Input() excludes: RegExp[];
+  @Input()
+  excludes: RegExp[];
   /** 允许关闭 */
   @Input()
-  get allowClose() {
-    return this._allowClose;
-  }
-  set allowClose(value: any) {
-    this._allowClose = toBoolean(value);
-  }
-  private _allowClose = true;
+  @InputBoolean()
+  allowClose = true;
   /** 是否固定 */
   @Input()
-  get fixed() {
-    return this._fixed;
-  }
-  set fixed(value: any) {
-    this._fixed = toBoolean(value);
-  }
-  private _fixed = true;
+  @InputBoolean()
+  fixed = true;
   /** 总是显示当前页 */
   @Input()
-  get showCurrent() {
-    return this._showCurrent;
-  }
-  set showCurrent(value: any) {
-    this._showCurrent = toBoolean(value);
-  }
-  private _showCurrent = true;
+  @InputBoolean()
+  showCurrent = true;
   /** 切换时回调 */
-  @Output() change: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
+  @Output()
+  change: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
   /** 关闭回调 */
-  @Output() close: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
+  @Output()
+  close: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
   // #endregion
 
   constructor(
@@ -129,7 +109,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       this.genList(res as any),
     );
     if (this.i18nSrv) {
-      this.i18n$ = this.i18nSrv.change.pipe(debounceTime(100)).subscribe(() => this.genList());
+      this.i18n$ = this.i18nSrv.change
+        .pipe(debounceTime(100))
+        .subscribe(() => this.genList());
     }
   }
 
