@@ -15,7 +15,7 @@ const routes: Routes = [
     component: ContentComponent,
     children: [
       {
-        path: 'validator',
+        path: 'validator/:lang',
         component: FormValidatorComponent,
         data: { titleI18n: 'app.header.menu.form.validator' },
       },

@@ -21,12 +21,12 @@ const COMPONENTS = [
 
 const routes: Routes = [
   {
-    path: 'theme',
+    path: 'theme/:lang',
     component: ThemeEditorComponent,
     data: { titleI18n: 'app.header.menu.customize-theme' },
   },
   {
-    path: '6to7',
+    path: '6to7/:lang',
     component: SixToSevenEditorComponent,
     data: { titleI18n: 'app.header.menu.upgrade' },
   },

@@ -309,5 +309,21 @@ describe('form: component', () => {
       fixture.detectChanges();
       expect(page.getEl('.ant-btn-primary').textContent).toBe('保存');
     });
+    it('should be custom text of search', () => {
+      context.mode = 'search';
+      context.button = {
+        search: 'SEARCH'
+      };
+      fixture.detectChanges();
+      expect(page.getEl('.ant-btn-primary').textContent).toBe('SEARCH');
+    });
+    it('should be custom text of edit', () => {
+      context.mode = 'edit';
+      context.button = {
+        edit: 'SAVE'
+      };
+      fixture.detectChanges();
+      expect(page.getEl('.ant-btn-primary').textContent).toBe('SAVE');
+    });
   });
 });

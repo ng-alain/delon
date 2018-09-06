@@ -11,6 +11,10 @@ export interface SFButton {
   reset_type?: string;
   /** 按钮样式，主要用于指定按钮 `grid`、`class` 属性 */
   render?: SFRenderButton;
+  /** 搜索按钮文本，默认：`搜索` */
+  search?: string;
+  /** 保存按钮文本，默认：`保存` */
+  edit?: string;
 }
 
 export interface SFRenderButton extends SFHorizontalLayoutSchema, SFRenderSchema {
