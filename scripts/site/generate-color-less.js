@@ -8,6 +8,7 @@ const root = path.resolve(__dirname, '../../');
 
 const allLess = `
 @import './theme/styles/default';
+@import './theme/styles/layout/default/variable';
 @import './theme/styles/app/index';
 @import './abc/index';
 @import '../src/app/styles/index.less';
