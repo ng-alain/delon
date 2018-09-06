@@ -80,7 +80,7 @@ export class SVContainerComponent implements OnInit, OnChanges {
   private setClass() {
     const { el, ren, size, layout } = this;
     updateHostClass(el, ren, {
-      [`${prefixCls}__wrap`]: true,
+      [`${prefixCls}__container`]: true,
       [`${prefixCls}__${size}`]: true,
       [`${prefixCls}__${layout}`]: true,
       [`clearfix`]: true

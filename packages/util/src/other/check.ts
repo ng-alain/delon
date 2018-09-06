@@ -66,3 +66,37 @@ export function toNumber(value: any, fallbackValue = 0) {
     ? Number(value)
     : fallbackValue;
 }
+
+
+/**
+ * Input decorator that handle a prop to do get/set automatically with toNumber
+ * @example
+ * ```typescript
+ * @Input() @InputNumber() visible: number = 1;
+ * @Input() @InputNumber(null) visible: number = 2;
+ * ```
+ */
+export function InputNumber(fallback = 0): any { // tslint:disable-line:no-any
+  return function InputBooleanPropDecorator (target: object, name: string): void {
+    // Add our own private prop
+    const privatePropName = `$$__${name}`;
+
+    if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
+      console.warn(`The prop "${privatePropName}" is already exist, it will be overrided by InputNumber decorator.`);
+    }
+
+    Object.defineProperty(target, privatePropName, {
+      configurable: true,
+      writable: true
+    });
+
+    Object.defineProperty(target, name, {
+      get(): boolean {
+        return this[ privatePropName ]; // tslint:disable-line:no-invalid-this
+      },
+      set(value: any): void {
+        this[ privatePropName ] = toNumber(value, fallback); // tslint:disable-line:no-invalid-this
+      }
+    });
+  };
+}

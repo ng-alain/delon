@@ -2,6 +2,7 @@ export { DelonABCModule } from './abc.module';
 export * from './table/index';
 export * from './view/index';
 export * from './edit/index';
+export * from './grid/index';
 export * from './error-collect/index';
 export * from './footer-toolbar/index';
 export * from './sidebar-nav/index';

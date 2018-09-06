@@ -14,7 +14,7 @@ A higher-order components of the form HTML template. And optimized some details:
 - Automated responsive layout
 - Automatic maintenance `id`
 
-The form HTML template consists of `se-container` container (directive) and `se-item` component, like this:
+The form HTML template consists of `se-container` container (directive) and `se` component, like this:
 
 ```html
 <form nz-form #f="ngForm" se-container>
@@ -39,7 +39,7 @@ Also, automatically processed all Angular built-in validation, such as `required
 Property | Description | Type | Default
 ----|------|-----|------
 `[gutter]` | specify the distance between two items, unit is `px`, only `nzLayout:horizontal` | `number` | `32`
-`[se-container]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](#Responsive Rules) | `number(0 < col <= 6)` | -
+`[se-container]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `number(0 < col <= 6)` | -
 `[labelWidth]` | label text of width, unit is `px` | `number` | `150`
 `[nzLayout]` | type of layout when `inline` forced size is `compact` | `horizontal,vertical,inline` | `horizontal`
 `[size]` | size of edit, forced ingores `error`, `extra` | `default | compact` | `default`
@@ -51,7 +51,7 @@ Property | Description | Type | Default
 
 Property | Description | Type | Default
 ----|------|-----
-`[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](#Responsive Rules) | `number(0 < col <= 6)` | -
+`[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `number(0 < col <= 6)` | -
 `[label]` | Label | `string | TemplateRef<any>` | -
 `[optional]` | Label optional information | `string` | -
 `[optionalHelp]` | Label optional help | `string` | -
@@ -71,14 +71,3 @@ Display title.
 ### When customize the component id?
 
 Matching for and `id` values associate the label with the appropriate form control. Because `id` must be unique, and `ng-alain` automatic maintenance `id`. In most cases, you don't need to care about the binding state of `id`. When you manually specify the `id` value, the priority is higher, but you also need to maintain the corresponding `id` value of the component.
-
-### Responsive Rules
-
-| `col` | `<576px` | `≥576px` | `≥768px` | `≥992px` | `≥1200px` | `≥1600px` |
-| ----- | -------- | -------- | -------- | -------- | --------- | --------- |
-| `1`   | 1        | 1        | 1        | 1        | 1         | 1         |
-| `2`   | 1        | 2        | 2        | 2        | 2         | 2         |
-| `3`   | 1        | 2        | 3        | 3        | 3         | 3         |
-| `4`   | 1        | 2        | 3        | 4        | 4         | 4         |
-| `5`   | 1        | 2        | 3        | 4        | 6         | 6         |
-| `6`   | 1        | 2        | 3        | 4        | 6         | 12        |

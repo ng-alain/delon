@@ -14,7 +14,7 @@ config: SEConfig
 - 自动化响应式布局
 - 自动维护表单 `id`
 
-它由 `se-container` 容器（指令）和 `se-item` 组件来表示一个表单，一个简单HTML模板表单是这么写的：
+它由 `se-container` 容器（指令）和 `se` 组件来表示一个表单，一个简单HTML模板表单是这么写的：
 
 ```html
 <form nz-form #f="ngForm" se-container>
@@ -39,7 +39,7 @@ config: SEConfig
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[gutter]` | 间距，当 `nzLayout:horizontal` 时有效 | `number` | `32`
-`[se-container]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合响应式规则决定， | `number(0 < col <= 6)` | -
+`[se-container]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `number(0 < col <= 6)` | -
 `[labelWidth]` | 表单元素默认标签文本宽度，单位：`px` | `number` | `150`
 `[nzLayout]` | 表单布局，当 `inline` 时强制大小为 `compact` | `horizontal,vertical,inline` | `horizontal`
 `[size]` | 大小 `compact` 紧凑型，强制忽略 `error`、`extra` 展示 | `default | compact` | `default`
@@ -51,7 +51,7 @@ config: SEConfig
 
 参数 | 类型 | 说明
 ----|------|-----
-`[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合响应式规则决定， | `number(0 < col <= 6)` | -
+`[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `number(0 < col <= 6)` | -
 `[label]` | 标签文本 | `string | TemplateRef<any>` | -
 `[optional]` | 标签可选信息 | `string` | -
 `[optionalHelp]` | 标签可选帮助 | `string` | -
@@ -71,15 +71,3 @@ config: SEConfig
 ### 什么时候自定义组件id
 
 点击表单的 Label 会将光标定位至相应组件下，而 `ng-edit` 会自动根据 `ngModel` 状态合理的设定 `id`，绝大多数情况下你无须关心 `id` 的绑定状态，当然若你手动指定 `id` 值则优先级更高但同时你需要自己维护组件对应的 `id` 值。
-
-### 响应式规则
-
-| `col` | `<576px` | `≥576px` | `≥768px` | `≥992px` | `≥1200px` | `≥1600px` |
-| ----- | -------- | -------- | -------- | -------- | --------- | --------- |
-| `1`   | 1        | 1        | 1        | 1        | 1         | 1         |
-| `2`   | 1        | 2        | 2        | 2        | 2         | 2         |
-| `3`   | 1        | 2        | 3        | 3        | 3         | 3         |
-| `4`   | 1        | 2        | 3        | 4        | 4         | 4         |
-| `5`   | 1        | 2        | 3        | 4        | 6         | 6         |
-| `6`   | 1        | 2        | 3        | 4        | 6         | 12        |
-

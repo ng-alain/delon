@@ -27,6 +27,7 @@ import { LodopModule } from './lodop/lodop.module';
 import { QuickMenuModule } from './quick-menu/quick-menu.module';
 import { QRModule } from './qr/qr.module';
 import { DatePickerModule } from './date-picker/date-picker.module';
+import { SGModule } from './grid/grid.module';
 
 const MODULES = [
   ErrorCollectModule,
@@ -54,6 +55,7 @@ const MODULES = [
   QRModule,
   SVModule,
   SEModule,
+  SGModule,
   DatePickerModule
 ];
 
@@ -86,6 +88,7 @@ const MODULES = [
     QRModule.forRoot(),
     SVModule.forRoot(),
     SEModule.forRoot(),
+    SGModule.forRoot(),
     DatePickerModule.forRoot()
   ],
   exports: MODULES,
