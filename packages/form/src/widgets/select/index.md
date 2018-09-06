@@ -21,6 +21,7 @@ type: Widgets
 ----|------|-----|------
 `[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | -
 `[size]` | 大小，等同 `nzSize` | `string` | -
+`[style]` | 设置 nz-select 的 style 属性 | `object` | -
 `[placeholder]` | 在文字框中显示提示讯息 | `string` | -
 `[allowClear]` | 支持清除 | `boolean` | `false`
 `[autoFocus]` | 默认获取焦点 | `boolean` | `false`

@@ -11,6 +11,7 @@ import { getData, toBool } from '../../utils';
     <nz-select
       [nzDisabled]="disabled"
       [nzSize]="ui.size"
+      [ngStyle]="ui.style"
       [ngModel]="value"
       (ngModelChange)="change($event)"
       [nzPlaceHolder]="ui.placeholder"

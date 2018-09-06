@@ -5,7 +5,7 @@ import { SFSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
+  template: `<sf mode="search"  [schema]="schema" (formSubmit)="submit($event)"></sf>`,
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -34,6 +34,22 @@ export class DemoComponent {
         type: 'string',
         format: 'color',
         title: '颜色'
+      },
+      type: {
+        type: 'string',
+        title: '类型',
+        enum: [
+          { label: '电影', value: 'movie' },
+          { label: '电视剧', value: 'tv' },
+        ],
+        ui: {
+          widget: 'select',
+          mode: 'tags',
+          placeholder: '请选择',
+          allowClear: true,
+          style: {width: '200px'}
+        },
+        default: null,
       },
     },
     required: ['name'],
