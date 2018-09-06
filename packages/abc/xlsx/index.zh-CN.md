@@ -5,6 +5,7 @@ order: 6
 subtitle: Excel 操作
 cols: 1
 module: XlsxModule
+config: XlsxConfig
 ---
 
 一个基于 [SheetJS](http://sheetjs.com/) 的Excel文件操作，它是目前在浏览器中包含最全的Excel操作的脚本库。
@@ -26,7 +27,7 @@ yarn add file-saver
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `import(fileOrUrl: File | string)` | 导入Excel，返回 JSON | `Promise<{ [key: string]: any[][] }>` | -
-`export(options: NaXlsxExportOptions)` | 导出Excel | `Promise<void>` | -
+`export(options: XlsxExportOptions)` | 导出Excel | `Promise<void>` | -
 
 ### XlsxExportOptions
 

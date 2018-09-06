@@ -1,20 +1,3 @@
-import { InjectionToken } from '@angular/core';
-
-export const DA_XLSX_CONFIG = new InjectionToken<NaXlsxConfig>('Na_XLSX_CONFIG');
-
-export interface NaXlsxConfig {
-  /**
-   * Xlsx library path
-   * @default //cdn.bootcss.com/xlsx/0.12.13/xlsx.full.min.js
-   */
-  url?: string;
-  /**
-   * Defines which Xlsx optional modules should get loaded, e.g:
-   * `[ '//cdn.bootcss.com/xlsx/0.12.13/cpexcel.js' ]`
-   */
-  modules?: string[];
-}
-
 export interface XlsxExportOptions {
   /**
    * worksheets in the workbook, e.g:

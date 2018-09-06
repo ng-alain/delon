@@ -1,9 +1,10 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DelonUtilModule } from '@delon/util';
+
 import { XlsxService } from './xlsx.service';
 import { XlsxDirective } from './xlsx.directive';
-import { NaXlsxConfig, DA_XLSX_CONFIG } from './interface';
+import { XlsxConfig } from './xlsx.config';
 
 const COMPONENTS = [XlsxDirective];
 
@@ -13,10 +14,10 @@ const COMPONENTS = [XlsxDirective];
   exports: [...COMPONENTS],
 })
 export class XlsxModule {
-  static forRoot(config?: NaXlsxConfig): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders {
     return {
       ngModule: XlsxModule,
-      providers: [XlsxService, { provide: DA_XLSX_CONFIG, useValue: config }],
+      providers: [XlsxService, XlsxConfig],
     };
   }
 }

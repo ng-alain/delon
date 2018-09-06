@@ -1,34 +1,22 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { LazyService, LazyResult } from '@delon/util';
-import {
-  XlsxExportOptions,
-  DA_XLSX_CONFIG,
-  NaXlsxConfig,
-  XlsxExportSheet,
-} from './interface';
+import { XlsxExportOptions, XlsxExportSheet } from './interface';
+import { XlsxConfig } from './xlsx.config';
 
 declare var XLSX: any;
 
 @Injectable()
 export class XlsxService {
   constructor(
-    @Inject(DA_XLSX_CONFIG) private config: NaXlsxConfig,
+    private cog: XlsxConfig,
     private http: HttpClient,
     private lazy: LazyService,
   ) {}
 
   private init(): Promise<LazyResult[]> {
-    const config = Object.assign(
-      {
-        url: `//cdn.bootcss.com/xlsx/0.12.13/xlsx.full.min.js`,
-        modules: [],
-      },
-      this.config,
-    );
-
-    return this.lazy.load([config.url].concat(config.modules));
+    return this.lazy.load([this.cog.url].concat(this.cog.modules));
   }
 
   private read(wb: any): { [key: string]: any[][] } {

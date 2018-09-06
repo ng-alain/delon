@@ -5,6 +5,7 @@ order: 6
 subtitle: Excel
 cols: 1
 module: XlsxModule
+config: XlsxConfig
 ---
 
 An Excel file operation based on [sheetjs](http://sheetjs.com/).
@@ -26,7 +27,7 @@ The sheetjs script file takes the form of lazy loading. Allows you to specify a 
 Property | Description | Type | Default
 ----|------|-----|------
 `import(fileOrUrl: File | string)` | Import Excel, return JSON  | `Promise<{ [key: string]: any[][] }>` | -
-`export(options: NaXlsxExportOptions)` | Export Excel  | `Promise<void>` | -
+`export(options: XlsxExportOptions)` | Export Excel  | `Promise<void>` | -
 
 ### XlsxExportOptions
 

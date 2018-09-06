@@ -38,9 +38,9 @@ class MockHttpClient {
 
 describe('abc: zip', () => {
   let srv: ZipService;
-  function genModule(options?: ZipConfig) {
+  function genModule() {
     const injector = TestBed.configureTestingModule({
-      imports: [ZipModule.forRoot(options)],
+      imports: [ZipModule.forRoot()],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
         { provide: LazyService, useClass: MockLazyService },

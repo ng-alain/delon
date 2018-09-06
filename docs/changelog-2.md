@@ -37,7 +37,14 @@ v2 的主要升级是 `@delon/*` 系列组件，以中后台最基础操作重�
 | ---------------- | ------------ | ---------- | --------- | -------------------------------- |
 | `na-page-header` | `home_link`  | `homeLink` | -         | -                                |
 | `na-page-header` | `home_i18n`  | `homeI18n` | -         | -                                |
-| `st`       | `sortReName` | 移除       | -         | 仅使用 `STColumn.sort.reName` 值 |
+| `st`             | `sortReName` | 移除       | -         | 仅使用 `STColumn.sort.reName` 值 |
+
+### 组件配置变更
+
+| Injection Token  | 新方式       | ng update | 描述 |
+| ---------------- | ------------ | --------- | ---- |
+| `DA_XLSX_CONFIG` | `XlsxConfig` | ×         | -    |
+| `DA_ZIP_CONFIG`  | `ZipConfig`  | ×         | -    |
 
 ### simple-table 变更
 

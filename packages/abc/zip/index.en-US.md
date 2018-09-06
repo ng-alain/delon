@@ -5,6 +5,7 @@ order: 7
 subtitle: Zip
 cols: 1
 module: ZipModule
+config: ZipConfig
 ---
 
 A Zip file operation based on [jszip](http://stuk.github.io/jszip/).
