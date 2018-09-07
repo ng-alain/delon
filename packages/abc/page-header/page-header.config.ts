@@ -23,4 +23,12 @@ export class PageHeaderConfig {
    * 是否自动将标准信息同步至 `TitleService`、`ReuseService` 下
    */
   syncTitle?: boolean = false;
+  /**
+   * 是否固定模式
+   */
+  fixed? = false;
+  /**
+   * 固定偏移值
+   */
+  fixedOffsetTop? = 64;
 }

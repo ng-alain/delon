@@ -14,15 +14,18 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { NzAffixComponent } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
-import { isEmpty, InputBoolean } from '@delon/util';
+import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
 import {
   MenuService,
   ALAIN_I18N_TOKEN,
   AlainI18NService,
   Menu,
   TitleService,
+  SettingsService,
 } from '@delon/theme';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
@@ -31,17 +34,17 @@ import { PageHeaderConfig } from './page-header.config';
 @Component({
   selector: 'page-header',
   templateUrl: './page-header.component.html',
-  host: {
-    '[class.page-header]': 'true',
-  },
   preserveWhitespaces: false,
 })
 export class PageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
   private i18n$: Subscription;
+  private set$: Subscription;
   @ViewChild('conTpl')
   private conTpl: ElementRef;
+  @ViewChild('affix')
+  private affix: NzAffixComponent;
   private _menus: Menu[];
 
   private get menus() {
@@ -81,21 +84,29 @@ export class PageHeaderComponent
    */
   @Input()
   @InputBoolean()
-  autoBreadcrumb = true;
+  autoBreadcrumb: boolean;
 
   /**
    * 自动生成标题，以当前路由从主菜单中定位
    */
   @Input()
   @InputBoolean()
-  autoTitle = true;
+  autoTitle: boolean;
 
   /**
    * 是否自动将标题同步至 `TitleService`、`ReuseService` 下，仅 `title` 为 `string` 类型时有效
    */
   @Input()
   @InputBoolean()
-  syncTitle = false;
+  syncTitle: boolean;
+
+  @Input()
+  @InputBoolean()
+  fixed: boolean;
+
+  @Input()
+  @InputNumber()
+  fixedOffsetTop: number;
 
   paths: any[] = [];
 
@@ -121,6 +132,7 @@ export class PageHeaderComponent
 
   constructor(
     cog: PageHeaderConfig,
+    settings: SettingsService,
     private renderer: Renderer2,
     private route: Router,
     private menuSrv: MenuService,
@@ -135,8 +147,16 @@ export class PageHeaderComponent
     private reuseSrv: ReuseTabService,
   ) {
     Object.assign(this, cog);
-    if (this.i18nSrv)
+    if (this.i18nSrv) {
       this.i18n$ = this.i18nSrv.change.subscribe(() => this.refresh());
+    }
+    this.set$ = settings.notify
+      .pipe(
+        filter(
+          w => this.affix && w.type === 'layout' && w.name === 'collapsed',
+        ),
+      )
+      .subscribe(() => this.affix.updatePosition({}));
   }
 
   refresh() {
@@ -217,5 +237,6 @@ export class PageHeaderComponent
 
   ngOnDestroy(): void {
     if (this.i18n$) this.i18n$.unsubscribe();
+    this.set$.unsubscribe();
   }
 }

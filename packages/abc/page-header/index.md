@@ -20,6 +20,8 @@ config: PageHeaderConfig
 `[homeLink]` | 首页链接  | `string` | `/`
 `[homeI18n]` | 首页链接国际化参数 | `string` | -
 `[autoBreadcrumb]` | 自动生成导航，以当前路由从主菜单中定位  | `boolean` | `true`
+`[fixed]` | 是否固定模式 | `boolean` | `false`
+`[fixedOffsetTop]` | 固定偏移值 | `number` | `64`
 `[breadcrumb]` | 自定义导航区域  | `TemplateRef<any>` | -
 `[logo]` | 自定义LOGO区域  | `TemplateRef<any>` | -
 `[action]` | 自定义操作区域  | `TemplateRef<any>` | -
@@ -27,6 +29,12 @@ config: PageHeaderConfig
 `[extra]` | 自定义额外信息区域  | `TemplateRef<any>` | -
 `[tab]` | 自定义标签区域  | `TemplateRef<any>` | -
 
-**自动生成导航**
+## 常见问题
+
+### 自动生成导航
 
 默认情况下会根据菜单数据自动生成导航，有时你可能希望隐藏某个节点菜单数据时，可以指定菜单的 `hideInBreadcrumb: true`。
+
+### 固定模式
+
+固定模式在滚动过程中会覆盖 `reuse-tab` 组件。

@@ -9,11 +9,13 @@ import {
   TitleService,
   AlainI18NServiceFake,
   AlainI18NService,
+  SettingsService,
 } from '@delon/theme';
 
 import { PageHeaderModule } from './page-header.module';
 import { PageHeaderComponent } from './page-header.component';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
+import { NzAffixComponent } from 'ng-zorro-antd';
 
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(key: string) {
@@ -35,7 +37,7 @@ describe('abc: page-header', () => {
     created?: boolean;
   }) {
     const imports = [RouterModule.forRoot([]), PageHeaderModule.forRoot()];
-    const providers = [{ provide: APP_BASE_HREF, useValue: '/' }];
+    const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
     }
@@ -87,6 +89,23 @@ describe('abc: page-header', () => {
         it('#' + type, () => isExists('.' + type));
       },
     );
+
+    describe('#fixed', () => {
+      beforeEach(() => {
+        context.fixed = true;
+        fixture.detectChanges();
+      });
+      it('should working', () => {
+        isExists('nz-affix', true);
+      });
+      it('should be update position when swithch collapsed', () => {
+        const srv = injector.get(SettingsService);
+        const affixComp = dl.query(By.directive(NzAffixComponent)).injector.get(NzAffixComponent, null);
+        spyOn(affixComp, 'updatePosition');
+        srv.setLayout('collapsed', true);
+        expect(affixComp.updatePosition).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('[generation breadcrumb]', () => {
@@ -333,7 +352,8 @@ describe('abc: page-header', () => {
 @Component({
   template: `
     <page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
-        [autoBreadcrumb]="autoBreadcrumb" [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink">
+        [autoBreadcrumb]="autoBreadcrumb" [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink"
+        [fixed]="fixed">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
         <ng-template #action><div class="action">action</div></ng-template>
@@ -353,4 +373,5 @@ class TestComponent {
   home: string;
   homeLink: string;
   homeI18n: string;
+  fixed: boolean;
 }
