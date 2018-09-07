@@ -38,10 +38,12 @@
     }
   }
   &__fixed {
-    position: fixed;
-    right: 0;
-    margin: 0;
-    z-index: 10;
+    @{reuse-tab-prefix} {
+      position: fixed;
+      right: 0;
+      margin: 0;
+      z-index: 10;
+    }
   }
 }
 

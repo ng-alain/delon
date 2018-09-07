@@ -297,17 +297,15 @@ describe('abc: reuse-tab', () => {
           layoutComp.fixed = true;
           fixture.detectChanges();
           expect(document.querySelector('body').classList).toContain(
-            'reuse-tab__body',
+            'reuse-tab__fixed',
           );
-          expect(dl.query(By.css('.reuse-tab__fixed'))).not.toBeNull();
         });
         it(`with false`, () => {
           layoutComp.fixed = false;
           fixture.detectChanges();
           expect(document.querySelector('body').classList).not.toContain(
-            'reuse-tab__body',
+            'reuse-tab__fixed',
           );
-          expect(dl.query(By.css('.reuse-tab__fixed'))).toBeNull();
         });
       });
     });

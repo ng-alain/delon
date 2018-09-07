@@ -34,6 +34,8 @@ import {
 } from './interface';
 import { ReuseTabContextService } from './reuse-tab-context.service';
 
+const CLS_FIXED = 'reuse-tab__fixed';
+
 @Component({
   selector: 'reuse-tab',
   templateUrl: './reuse-tab.component.html',
@@ -42,10 +44,10 @@ import { ReuseTabContextService } from './reuse-tab-context.service';
   providers: [ReuseTabContextService],
   host: {
     '[class.reuse-tab]': 'true',
-    '[class.reuse-tab__fixed]': 'fixed',
   },
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
+  private el: HTMLElement;
   private sub$: Subscription;
   private i18n$: Subscription;
   list: ReuseItem[] = [];
@@ -53,6 +55,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   pos = 0;
 
   // #region fields
+
   /** 设置匹配模式 */
   @Input()
   mode: ReuseTabMatchMode = ReuseTabMatchMode.Menu;
@@ -88,20 +91,22 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   /** 关闭回调 */
   @Output()
   close: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
+
   // #endregion
 
   constructor(
-    public srv: ReuseTabService,
+    el: ElementRef,
+    private srv: ReuseTabService,
     private cd: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
-    private el: ElementRef,
     private render: Renderer2,
     @Inject(DOCUMENT) private doc: any,
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
   ) {
+    this.el = el.nativeElement;
     const route$ = this.router.events.pipe(
       filter(evt => evt instanceof NavigationEnd),
     );
@@ -181,13 +186,13 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   private visibility() {
     if (this.showCurrent) return;
     this.render.setStyle(
-      this.el.nativeElement,
+      this.el,
       'display',
       this.list.length === 0 ? 'none' : 'block',
     );
   }
 
-  // region: UI
+  // #region UI
 
   cmChange(res: ReuseContextCloseEvent) {
     switch (res.type) {
@@ -242,21 +247,23 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return false;
   }
 
-  // endregion
+  // #endregion
 
   ngOnInit(): void {
     this.setClass();
-
     this.genList();
   }
 
+  private get bodyCls() {
+    return this.doc.querySelector('body').classList;
+  }
+
   private setClass() {
-    const body = this.doc.querySelector('body');
-    const bodyCls = `reuse-tab__body`;
-    if (this.fixed) {
-      this.render.addClass(body, bodyCls);
+    const { fixed, bodyCls } = this;
+    if (fixed) {
+      bodyCls.add(CLS_FIXED);
     } else {
-      this.render.removeClass(body, bodyCls);
+      bodyCls.remove(CLS_FIXED);
     }
   }
 
@@ -273,7 +280,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.sub$.unsubscribe();
-    if (this.i18n$) this.i18n$.unsubscribe();
+    const { i18n$, sub$, bodyCls } = this;
+    bodyCls.remove(CLS_FIXED);
+    sub$.unsubscribe();
+    if (i18n$) i18n$.unsubscribe();
   }
 }
