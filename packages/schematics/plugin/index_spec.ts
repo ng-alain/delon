@@ -94,31 +94,4 @@ describe('NgAlainSchematic: plugin', () => {
       });
     });
   });
-
-  describe(`[yarn]`, () => {
-    beforeEach(() => ({ runner, tree } = createAlainApp({ yarn: true })));
-
-    describe('when add', () => {
-      it(`should add devDependencies`, () => {
-        const json = JSON.parse(tree.readContent('package.json'));
-        expect(json.devDependencies['less']).not.toBeUndefined();
-        expect(json.devDependencies['less-loader']).not.toBeUndefined();
-      });
-    });
-
-    describe('when remove', () => {
-      beforeEach(() =>
-        runner.runSchematic(
-          'plugin',
-          { name: 'yarn', type: 'remove' },
-          tree,
-        ));
-
-      it(`should remove devDependencies`, () => {
-        const json = JSON.parse(tree.readContent('package.json'));
-        expect(json.devDependencies['less']).toBeUndefined();
-        expect(json.devDependencies['less-loader']).toBeUndefined();
-      });
-    });
-  });
 });

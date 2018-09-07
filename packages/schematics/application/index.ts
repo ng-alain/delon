@@ -95,14 +95,6 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
         `@ngx-translate/http-loader@^3.0.1`,
       ]);
     }
-    const devs = [
-      // ISSUES: [#10430](https://github.com/angular/angular-cli/issues/10430)
-      `less@~2.7.0`,
-      `less-loader@~4.0.0`,
-    ];
-    if (devs.length) {
-      addPackageToPackageJson(host, devs, 'devDependencies');
-    }
     return host;
   };
 }
