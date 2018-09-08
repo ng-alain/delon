@@ -6,6 +6,19 @@ title:
 type: Other
 ---
 
+### 1.4.1
+
+`2018-9-8`
+
+- @delon/theme
+  - 修复未导出 `DelonThemeConfig` 并更名为 `AlainThemeConfig`，[#668](https://github.com/cipchk/ng-alain/issues/668)
+- @delon/abc
+  - 修复 `exception` 无效样式，[#147](https://github.com/cipchk/delon/issues/147)
+- @delon/form
+  - 修复 `mode: search` 模式下无法自定义文本，[#146](https://github.com/cipchk/delon/issues/146)
+- Schematics
+  - 移除 less 降级
+
 ### 1.4.0
 
 `2018-9-4`
