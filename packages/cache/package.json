@@ -28,6 +28,5 @@
     "angular",
     "component"
   ],
-  "peerDependencies": {},
   "sideEffects": false
 }

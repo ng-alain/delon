@@ -6,6 +6,8 @@ export enum TargetVersion {
 }
 
 export function updateToV2(): Rule {
+  return () => console.log(
+    'Not yet!');
   return createUpdateRule(TargetVersion.V2);
 }
 
