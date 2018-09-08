@@ -22,7 +22,8 @@ import { SFSchema } from '@delon/form';
   selector: 'app-demo',
   template: `
   <sf [schema]="schema" (formSubmit)="submit($event)">
-    <ng-template sf-template="custom" let-me let-ui="ui" let-schema="schema">
+    <!--sf-template必须与properties下的节点属性名相同-->
+    <ng-template sf-template="property1" let-me let-ui="ui" let-schema="schema">
         自定义内容:
         <input nz-input
                 [attr.id]="id"
@@ -38,7 +39,7 @@ import { SFSchema } from '@delon/form';
 export class DemoComponent {
     schema: SFSchema = {
         properties: {
-            custom: {
+            property1: {
                 type: 'string',
                 title: '自定义内容',
                 ui: {
