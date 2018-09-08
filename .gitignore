@@ -1,6 +1,10 @@
 node_modules
 npm-debug.log
 # package-lock.json
+yarn.lock
+# yarn-error.log
+# /yarn.lock
+
 .tmp
 .ng_build
 .lib
@@ -11,5 +15,3 @@ src/app/routes/gen
 publish
 .idea
 debug.log
-yarn-error.log
-# /yarn.lock

@@ -6,11 +6,15 @@ readonly currentDir=$(cd $(dirname $0); pwd)
 cd ${currentDir}
 
 BUILD=false
+COLOR=false
 DEPLOY=false
 for ARG in "$@"; do
   case "$ARG" in
     -d)
       DEPLOY=true
+      ;;
+    -c)
+      COLOR=true
       ;;
     -b)
       BUILD=true
@@ -46,6 +50,18 @@ SCAFFOLD_DIR=${PWD}/scaffold
 ROOT_DIR=${PWD}/dist/scaffold
 DIST_DIR=${ROOT_DIR}/dist
 
+if [[ ${COLOR} == true ]]; then
+  rm -rf .tmp
+  cp -r packages .tmp
+
+  sed -i "s/@import '..\//\/\/ @import/g" `grep @import\ \'../ -rl .tmp`
+  sed -i "s/~ng-zorro-antd/..\/..\/..\/node_modules\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl .tmp`
+
+  node ./scripts/scaffold/generate-color-less.js
+
+  # rm -rf .tmp
+fi
+
 if [[ ${BUILD} == true ]]; then
 
     echo '===== copy...'
@@ -60,6 +76,7 @@ if [[ ${BUILD} == true ]]; then
 
     echo '===== need mock'
     sed -i "s/const MOCKMODULE = !environment.production/const MOCKMODULE = true/g" ${ROOT_DIR}/src/app/delon.module.ts
+    sed -i "s/if (!environment.production)/if (true)/g" ${ROOT_DIR}/src/app/layout/default/default.component.ts
 
     yarn
 
@@ -67,17 +84,17 @@ if [[ ${BUILD} == true ]]; then
     $(npm bin)/ng build --prod --build-optimizer --base-href /ng-alain/
 fi
 
-echo '===== copy package-lock.json to source scaffold'
-cp -f ${ROOT_DIR}/package-lock.json ${SCAFFOLD_DIR}/package-lock.json
-
 if [[ ${DEPLOY} == true ]]; then
 
-    echo 'copy index.html > 404.html'
-    cp -f ${DIST_DIR}/index.html ${DIST_DIR}/404.html
+  echo '===== copy package-lock.json to source scaffold'
+  cp -f ${ROOT_DIR}/package-lock.json ${SCAFFOLD_DIR}/package-lock.json
 
-    echo 'deploy by gh-pages'
-    # $(npm bin)/gh-pages-clean
-    $(npm bin)/gh-pages -d dist/scaffold/dist -r https://github.com/cipchk/ng-alain/
+  echo 'copy index.html > 404.html'
+  cp -f ${DIST_DIR}/index.html ${DIST_DIR}/404.html
+
+  echo 'deploy by gh-pages'
+  # $(npm bin)/gh-pages-clean
+  $(npm bin)/gh-pages -d dist/scaffold/dist -r https://github.com/cipchk/ng-alain/
 
 fi
 

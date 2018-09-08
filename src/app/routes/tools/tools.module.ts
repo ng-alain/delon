@@ -4,27 +4,12 @@ import { ColorSketchModule } from 'ngx-color/sketch';
 
 import { SharedModule } from '../../shared/shared.module';
 import { SixToSevenEditorComponent } from './6to7/editor/editor.component';
-import { ColorComponent } from './theme/components/color/color.component';
-import { PXComponent } from './theme/components/px/px.component';
-import { EditItemComponent } from './theme/components/edit-item/edit-item.component';
-import { ThemeEditorComponent } from './theme/editor/editor.component';
 
 // region: components
 
-const COMPONENTS = [
-  ColorComponent,
-  PXComponent,
-  EditItemComponent,
-  ThemeEditorComponent,
-  SixToSevenEditorComponent,
-];
+const COMPONENTS = [SixToSevenEditorComponent];
 
 const routes: Routes = [
-  {
-    path: 'theme/:lang',
-    component: ThemeEditorComponent,
-    data: { titleI18n: 'app.header.menu.customize-theme' },
-  },
   {
     path: '6to7/:lang',
     component: SixToSevenEditorComponent,

@@ -33,13 +33,10 @@ export class WidgetRegistry {
 
 @Injectable()
 export class WidgetFactory {
-  private resolver: ComponentFactoryResolver;
-  private registry: WidgetRegistry;
-
-  constructor(registry: WidgetRegistry, resolver: ComponentFactoryResolver) {
-    this.registry = registry;
-    this.resolver = resolver;
-  }
+  constructor(
+    private registry: WidgetRegistry,
+    private resolver: ComponentFactoryResolver,
+  ) {}
 
   createWidget(
     container: ViewContainerRef,

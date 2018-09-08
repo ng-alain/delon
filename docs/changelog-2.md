@@ -1,16 +1,25 @@
 ---
-order: 1001
-title: 2.x升级指引
-type: Other
+order: 15
+title: 2.0升级指引
+type: Basic
 ---
 
-## 写在前面
+现如今中后台不再受限于电脑端的使用，越来越多使用大屏移动端来访问。所以 ng-alain 2.0 针对两个核心点重新定义部分组件：
 
-v2 的主要升级是 `@delon/*` 系列组件，以中后台最基础操作重新定义更“自然”开发体验。
+- 使CURD操作更“自然”开发体验
+- 更容易响应式开发
 
-## 约定
+原 `simpel-table`、`sf` 是受大家喜欢的组件之一，因此 ng-alain 2.0 为此重构并增加三个 Simple 序列组件：
 
-- 除组件名、指令名以后，所有属性、数据定义都采用驼峰式命令规则
+- [st](/components/table) 原 `simple-table`
+  - 输入属性的变更，若你之前**通用配置优先**来使用的话，这些改变会少非常多
+  - 列描述所有的变更都做兼容处理
+- [sf](/form) 动态表单
+- [sv](/components/view) 查看
+- [se](/components/edit) 编辑
+- [sg](/components/grid) 栅格布局
+
+此文档是为了更好将你的项目迁移至 2.0，当前版本还是 Beta 版本，会在正式版后发布部分组件变更的 `ng update` 支持，有关支持细节会在下列中明确指出。
 
 ## 类库变更
 
@@ -20,9 +29,9 @@ v2 的主要升级是 `@delon/*` 系列组件，以中后台最基础操作重�
 | `abc/number-info` | `chart` | -       |
 | `abc/trend`       | `chart` | -       |
 
-## ABC 组件变更
+## @delon/abc
 
-### 组件名变更细节
+### 组件名变更
 
 | 原组件名            | 新组件名 | ng update | 描述 |
 | ------------------- | -------- | --------- | ---- |
@@ -37,7 +46,7 @@ v2 的主要升级是 `@delon/*` 系列组件，以中后台最基础操作重�
 | ---------------- | ------------ | ---------- | --------- | -------------------------------- |
 | `na-page-header` | `home_link`  | `homeLink` | -         | -                                |
 | `na-page-header` | `home_i18n`  | `homeI18n` | -         | -                                |
-| `st`             | `sortReName` | 移除       | -         | 仅使用 `STColumn.sort.reName` 值 |
+| `st`             | `sortReName` | 移除       | ×         | 仅使用 `STColumn.sort.reName` 值 |
 
 ### 组件配置变更
 
@@ -46,7 +55,7 @@ v2 的主要升级是 `@delon/*` 系列组件，以中后台最基础操作重�
 | `DA_XLSX_CONFIG` | `XlsxConfig` | ×         | -    |
 | `DA_ZIP_CONFIG`  | `ZipConfig`  | ×         | -    |
 
-### simple-table 变更
+### simple-table
 
 `simple-table` 组件变更为 `st`，其中包括属性、列描述变更。
 
@@ -117,6 +126,24 @@ v2 的主要升级是 `@delon/*` 系列组件，以中后台最基础操作重�
 
 ## Theme 变更
 
+### 布局
+
+[默认布局](/theme/default)和[全屏布局](/theme/fullscreen)样式命名重新采用 BEM 形式，这倒置布局的样式名都被改变，但很容易升级，有关细节参考 [commit]()。
+
+抽离这两种布局样式成独立的形式存在，因此需要在 `src/styles.less` 单独独立对应布局的样式：
+
+```less
+@import '~@delon/theme/styles/index';
+// 默认布局
+@import '~@delon/theme/styles/layout/default/index';
+// 全屏布局
+@import '~@delon/theme/styles/layout/fullscreen/index';
+// @delon/abc 业务组件库
+@import '~@delon/abc/index';
+// @delon/chart G2图表组件库
+@import '~@delon/chart/index';
+```
+
 ### Menu
 
 | 原属性名        | 新属性名       | ng update | 兼容处理 | 描述 |
@@ -124,12 +151,3 @@ v2 的主要升级是 `@delon/*` 系列组件，以中后台最基础操作重�
 | `badge_dot`     | `badgeDot`     | ×         | ×        | -    |
 | `badge_status`  | `badgeStatus`  | ×         | ×        | -    |
 | `shortcut_root` | `shortcutRoot` | ×         | ×        | -    |
-
-## Cli 变更
-
-### Plugin
-
-| 原插件 | 新插件       | 描述               |
-| ------ | ------------ | ------------------ |
-| `npm`  | `networkEnv` | -                  |
-| `yarn` | ×            | 已移除不再需要降级 |

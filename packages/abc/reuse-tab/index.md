@@ -13,7 +13,9 @@ module: ReuseTabModule
 
 ## 如何使用？
 
-默认 `ReuseTabModule` 并不会注册 `RouteReuseStrategy`，这是因为若默认在模块内注册会导致所有引入 `@delon/abc` 模块都会强制使用路由复用，不管是否模板是否包括 `<reuse-tab>`。因此，除了引入模块以外，还需要在**手动注册** `RouteReuseStrategy`。
+默认 `ReuseTabModule` 并不会注册 `RouteReuseStrategy`，这是因为若默认在模块内注册会导致所有引入 `@delon/abc` 模块都会强制使用路由复用（不管是否模板是否包括 `<reuse-tab>`）。因此：
+
+**注册RouteReuseStrategy**
 
 ```ts
 // delon.module.ts or app.module.ts
@@ -24,6 +26,17 @@ providers: [
     deps: [ReuseTabService],
   }
 ]
+```
+
+**添加组件**
+
+> 位置 `src/app/layout/default/default.component.html`
+
+```html
+<section class="alain-default__content">
+  <reuse-tab></reuse-tab>
+  <router-outlet></router-outlet>
+</section>
 ```
 
 ## 匹配模式
@@ -176,7 +189,6 @@ export class DemoComponent {
 `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | -
 `[allowClose]` | 允许关闭 | `boolean` | `true`
 `[showCurrent]` | 总是显示当前页 | `boolean` | `true`
-`[fixed]` | 是否固定 | `boolean` | `true`
 `(close)` | 关闭回调 | `EventEmitter` | -
 `(change)` | 切换时回调，接收的参数至少包含：`active`、`list` 两个参数 | `EventEmitter` | -
 

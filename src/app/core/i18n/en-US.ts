@@ -18,7 +18,6 @@ export const ENUS = {
     'app.header.menu.form.validator': 'Online Validator',
     'app.header.menu.cli': 'ng-alain Schematics',
     'app.header.menu.tool': 'Tools',
-    'app.header.menu.customize-theme': 'Customize Theme',
     'app.header.menu.upgrade': 'HTML Upgrade Tool',
     'app.header.lang': '中文',
     'app.footer.resources': 'Resources',

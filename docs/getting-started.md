@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 10
 title:
   en-US: Getting Started
   zh-CN: 开始使用

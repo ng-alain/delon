@@ -16,7 +16,6 @@ import {
   Optional,
 } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
 import { Subscription, combineLatest } from 'rxjs';
 import { filter, debounceTime } from 'rxjs/operators';
 import { InputNumber, InputBoolean } from '@delon/util';
@@ -33,8 +32,6 @@ import {
   ReuseTitle,
 } from './interface';
 import { ReuseTabContextService } from './reuse-tab-context.service';
-
-const CLS_FIXED = 'reuse-tab__fixed';
 
 @Component({
   selector: 'reuse-tab',
@@ -77,10 +74,6 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   @InputBoolean()
   allowClose = true;
-  /** 是否固定 */
-  @Input()
-  @InputBoolean()
-  fixed = true;
   /** 总是显示当前页 */
   @Input()
   @InputBoolean()
@@ -101,7 +94,6 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private render: Renderer2,
-    @Inject(DOCUMENT) private doc: any,
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
@@ -250,21 +242,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   // #endregion
 
   ngOnInit(): void {
-    this.setClass();
     this.genList();
-  }
-
-  private get bodyCls() {
-    return this.doc.querySelector('body').classList;
-  }
-
-  private setClass() {
-    const { fixed, bodyCls } = this;
-    if (fixed) {
-      bodyCls.add(CLS_FIXED);
-    } else {
-      bodyCls.remove(CLS_FIXED);
-    }
   }
 
   ngOnChanges(
@@ -275,13 +253,11 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.mode) this.srv.mode = this.mode;
     this.srv.debug = this.debug;
 
-    this.setClass();
     this.cd.detectChanges();
   }
 
   ngOnDestroy(): void {
-    const { i18n$, sub$, bodyCls } = this;
-    bodyCls.remove(CLS_FIXED);
+    const { i18n$, sub$ } = this;
     sub$.unsubscribe();
     if (i18n$) i18n$.unsubscribe();
   }

@@ -15,7 +15,7 @@ PACKAGES=(acl
   mock
   form)
 # acl util theme
-# PACKAGES=(util)
+# PACKAGES=(theme abc)
 NODE_PACKAGES=(schematics)
 
 buildLess() {

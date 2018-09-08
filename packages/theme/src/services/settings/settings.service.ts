@@ -63,13 +63,10 @@ export class SettingsService {
   }
 
   setLayout(name: string, value: any): boolean {
-    if (typeof this.layout[name] !== 'undefined') {
-      this.layout[name] = value;
-      this.set(LAYOUT_KEY, this._layout);
-      this.notify$.next({ type: 'layout', name, value });
-      return true;
-    }
-    return false;
+    this.layout[name] = value;
+    this.set(LAYOUT_KEY, this._layout);
+    this.notify$.next({ type: 'layout', name, value });
+    return true;
   }
 
   setApp(value: App) {

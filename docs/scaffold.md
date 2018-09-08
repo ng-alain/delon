@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 30
 title:
   en-US: Scaffold
   zh-CN: 脚手架结构

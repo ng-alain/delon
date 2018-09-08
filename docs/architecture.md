@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 20
 title:
   en-US: Architecture
   zh-CN: 体系结构

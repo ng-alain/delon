@@ -18,9 +18,8 @@ import { toBoolean, toNumber } from '@delon/util';
 @Component({
   selector: 'g2-bar',
   template: `
-  <ng-container *ngIf="_title; else _titleTpl"><h4>{{_title}}</h4></ng-container>
+  <ng-container *ngIf="_title; else _titleTpl"><h4 style="margin-bottom:20px">{{_title}}</h4></ng-container>
   <div #container></div>`,
-  host: { '[class.g2-chart]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -93,16 +92,12 @@ export class G2BarComponent implements OnDestroy, OnChanges {
     if (!this.data || (this.data && this.data.length < 1)) return;
     this.node.nativeElement.innerHTML = '';
 
-    let padding = Object.assign([], this.padding);
-    if (padding.length <= 0)
-      padding = [32, 0, this.autoHideXLabels ? 8 : 32, 40];
-
     const chart = new G2.Chart({
       container: this.node.nativeElement,
       forceFit: true,
-      height: +this.height - 22,
+      height: this._title || this._titleTpl ? this.height - 41 : this.height,
       legend: null,
-      padding: padding,
+      padding: this.padding || 'auto',
     });
 
     chart.axis('x', !this.autoHideXLabels);

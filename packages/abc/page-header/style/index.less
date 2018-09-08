@@ -1,11 +1,11 @@
 @import '../../../theme/styles/default';
 
-// TIPS: `content` 变更为 `desc`
 @page-header-prefix: ~'.page-header';
+@page-header-bg: #fff;
 
 @{page-header-prefix} {
   display: block;
-  background: @component-background;
+  background-color: @page-header-bg;
   padding: 16px 32px 0 32px;
   border-bottom: @border-width-base @border-style-base @border-color-split;
   .ant-breadcrumb {

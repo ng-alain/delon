@@ -1,7 +1,6 @@
 import {
   Component,
   DebugElement,
-  TemplateRef,
   ViewChild,
   Injector,
 } from '@angular/core';
@@ -10,7 +9,6 @@ import {
   TestBed,
   tick,
   fakeAsync,
-  discardPeriodicTasks,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -291,22 +289,6 @@ describe('abc: reuse-tab', () => {
           page.to('#c');
           expect(dl.queryAll(By.css('.op')).length).toBe(0);
         }));
-      });
-      describe('#fixed', () => {
-        it(`with true`, () => {
-          layoutComp.fixed = true;
-          fixture.detectChanges();
-          expect(document.querySelector('body').classList).toContain(
-            'reuse-tab__fixed',
-          );
-        });
-        it(`with false`, () => {
-          layoutComp.fixed = false;
-          fixture.detectChanges();
-          expect(document.querySelector('body').classList).not.toContain(
-            'reuse-tab__fixed',
-          );
-        });
       });
     });
 
@@ -644,7 +626,6 @@ class AppComponent {}
         [debug]="debug"
         [excludes]="excludes"
         [allowClose]="allowClose"
-        [fixed]="fixed"
         [showCurrent]="showCurrent"
         (change)="change($event)"
         (close)="close($event)">
@@ -660,7 +641,6 @@ class LayoutComponent {
   max: number = 3;
   excludes: RegExp[] = [];
   allowClose = true;
-  fixed = true;
   showCurrent = true;
   change() {}
   close() {}

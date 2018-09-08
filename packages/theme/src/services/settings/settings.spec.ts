@@ -36,10 +36,6 @@ describe('Service: Settings', () => {
       expect(srv.layout.lang).toBe('zh-cn');
     });
 
-    it('should be setting no exists key lang1', () => {
-      expect(srv.setLayout('lang1', 'zh-cn')).toBeFalsy();
-    });
-
     it('should be notify', done => {
       srv.notify.subscribe(res => {
         expect(res.type).toBe('layout');
