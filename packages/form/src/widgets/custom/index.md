@@ -8,7 +8,7 @@ type: Widgets
 
 ## 如何使用？
 
-自定义小部件无须在 Schema 中任何特殊定义，但务必确保 **sf-template** 是一个有效路径值；它等同 Schema 属性名。
+自定义小部件要求 Schema 中相应节点的`ui`中`widget`配置为`widget: 'custom'`，并务必确保 **sf-template** 是一个有效路径值；它等同 Schema 属性名。
 
 ## API
 
