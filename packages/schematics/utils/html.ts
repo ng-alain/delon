@@ -5,7 +5,7 @@ import { Project } from './project';
 
 /** Gets the app index.html file */
 export function getIndexHtmlPath(host: Tree, project: Project): string {
-  const buildTarget = project.architect.build.options;
+  const buildTarget = (project.targets || project.architect).build.options;
 
   if (buildTarget.index && buildTarget.index.endsWith('index.html')) {
     return buildTarget.index;
@@ -18,14 +18,48 @@ export function getIndexHtmlPath(host: Tree, project: Project): string {
  * Parses the index.html file to get the HEAD tag position.
  */
 export function getTag(host: Tree, src: string, tagName: string) {
-  const document = parse5.parse(src, {
+  if ((parse5 as any).treeAdapters) {
+    return getTagInV4(host, src, tagName);
+  }
+  const document = parse5.parse(src, <any>{
+    sourceCodeLocationInfo: true
+  }) as any;
+
+  let resNode: any;
+  const visit = (nodes: any[]) => {
+    nodes.forEach(node => {
+      const element = <any>node;
+      if (element.nodeName === tagName) {
+        resNode = element;
+      } else {
+        if (element.childNodes) {
+          visit(element.childNodes);
+        }
+      }
+    });
+  };
+
+  visit(document.childNodes);
+
+  if (!resNode) {
+    throw new SchematicsException('Head element not found!');
+  }
+
+  return {
+    startOffset: resNode.sourceCodeLocation.startTag.endOffset,
+    endOffset: resNode.sourceCodeLocation.endTag.startOffset,
+  };
+}
+
+export function getTagInV4(host: Tree, src: string, tagName: string) {
+  const document: any = parse5.parse(src, <any>{
     locationInfo: true,
-  }) as parse5.AST.Default.Document;
+  });
 
   let resNode;
-  const visit = (nodes: parse5.AST.Default.Node[]) => {
+  const visit = (nodes: any[]) => {
     nodes.forEach(node => {
-      const element = <parse5.AST.Default.Element>node;
+      const element: any = node;
       if (element.tagName === tagName) {
         resNode = element;
       } else {
@@ -47,6 +81,7 @@ export function getTag(host: Tree, src: string, tagName: string) {
     endOffset: resNode.__location.endTag.startOffset,
   };
 }
+
 
 /**
  * Get index.html content

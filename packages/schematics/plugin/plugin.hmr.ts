@@ -16,7 +16,7 @@ function configToAngularJson(host: Tree, options: PluginOptions) {
   const json = getAngular(host);
   const project = getProjectFromWorkspace(json, options.project);
   // add build config
-  project.architect!.build!.configurations['hmr'] = {
+  (project.targets || project.architect)!.build!.configurations['hmr'] = {
     fileReplacements: [
       {
         replace: `${options.sourceRoot}/environments/environment.ts`,
@@ -25,7 +25,7 @@ function configToAngularJson(host: Tree, options: PluginOptions) {
     ],
   };
   // add serve config
-  project.architect!.serve!.configurations['hmr'] = {
+  (project.targets || project.architect)!.serve!.configurations['hmr'] = {
     browserTarget: `${project.name}:build:hmr`,
     hmr: true,
   };
