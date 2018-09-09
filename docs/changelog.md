@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 1.4.2
+
+`2018-9-9`
+
+- @delon/theme
+  - 修复未导出 `AdDescListConfig`，[#154](https://github.com/ng-alain/delon/issues/154)
+- Schematics
+  - 修复 `build of undefined`
+
 ### 1.4.1
 
 `2018-9-8`
