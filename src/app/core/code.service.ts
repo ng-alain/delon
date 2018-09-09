@@ -31,7 +31,7 @@ export class CodeService {
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
-      "architect": {
+      "targets": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
@@ -122,7 +122,7 @@ export class CodeService {
     "demo-e2e": {
       "root": "e2e/",
       "projectType": "application",
-      "architect": {
+      "targets": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {

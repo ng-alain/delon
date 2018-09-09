@@ -5,7 +5,7 @@ import { Project } from './project';
 
 /** Gets the app index.html file */
 export function getIndexHtmlPath(host: Tree, project: Project): string {
-  const buildTarget = project.architect.build.options;
+  const buildTarget = project.targets.build.options;
 
   if (buildTarget.index && buildTarget.index.endsWith('index.html')) {
     return buildTarget.index;

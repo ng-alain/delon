@@ -93,8 +93,8 @@ export function scriptsToAngularJson(
   const json = getAngular(host);
   const project = getProjectFromWorkspace(json, projectName);
   types.forEach(type => {
-    const scriptsNode = project.architect[type]!.options!.scripts as string[];
-    const stylesNode = project.architect[type]!.options!.styles as string[];
+    const scriptsNode = project.targets[type]!.options!.scripts as string[];
+    const stylesNode = project.targets[type]!.options!.styles as string[];
     for (const path of resources) {
       const list = path.endsWith('.js') ? scriptsNode : stylesNode;
       if (behavior === 'add') {
