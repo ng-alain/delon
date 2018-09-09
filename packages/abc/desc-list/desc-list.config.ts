@@ -1,6 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class AdDescListConfig {
   /**
    * 布局方式
