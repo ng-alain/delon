@@ -4,10 +4,10 @@ import { ReuseTabContextService } from './reuse-tab-context.service';
 import { ReuseItem } from './interface';
 
 @Directive({
-  selector: '[context-menu]',
+  selector: '[reuse-tab-context-menu]',
 })
 export class ReuseTabContextDirective {
-  @Input('context-menu') item: ReuseItem;
+  @Input('reuse-tab-context-menu') item: ReuseItem;
 
   constructor(private srv: ReuseTabContextService) {}
 

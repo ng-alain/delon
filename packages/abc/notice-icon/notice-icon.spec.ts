@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AdNoticeIconModule } from './notice-icon.module';
+import { NoticeIconModule } from './notice-icon.module';
 import { NoticeIconComponent } from './notice-icon.component';
 import { NoticeItem } from './interface';
 
@@ -14,7 +14,7 @@ describe('abc: notice-icon', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AdNoticeIconModule.forRoot()],
+      imports: [NoopAnimationsModule, NoticeIconModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -22,17 +22,6 @@ describe('abc: notice-icon', () => {
     context = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  function isText(cls: string, value: any) {
-    const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
-    if (el) return el.innerText.trim();
-    return '';
-  }
-
-  function isExists(cls: string, stauts: boolean = true) {
-    if (stauts) expect(dl.query(By.css(cls))).not.toBeNull();
-    else expect(dl.query(By.css(cls))).toBeNull();
-  }
 
   describe('when not data', () => {
     beforeEach(() => (context.data = []));
@@ -56,7 +45,7 @@ describe('abc: notice-icon', () => {
     });
     it('should be popover list via click', () => {
       expect(context.popoverVisible).toBeUndefined();
-      (dl.query(By.css('.item')).nativeElement as HTMLElement).click();
+      (dl.query(By.css('.notice-icon__item')).nativeElement as HTMLElement).click();
       fixture.detectChanges();
       expect(context.popoverVisible).toBe(true);
     });
@@ -82,7 +71,7 @@ describe('abc: notice-icon', () => {
       context.popoverVisible = true;
       fixture.detectChanges();
       expect(context.clear).not.toHaveBeenCalled();
-      (dl.query(By.css('.clear')).nativeElement as HTMLElement).click();
+      (dl.query(By.css('.notice-icon__clear')).nativeElement as HTMLElement).click();
       fixture.detectChanges();
       expect(context.clear).toHaveBeenCalled();
     });

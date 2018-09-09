@@ -5,22 +5,25 @@ set -u -e -o pipefail
 readonly currentDir=$(cd $(dirname $0); pwd)
 cd ${currentDir}
 
-# PACKAGES=(theme)
 PACKAGES=(acl
   util
   theme
   abc
   auth
   cache
+  chart
   mock
   form)
+# acl util theme
+# PACKAGES=(theme abc)
 NODE_PACKAGES=(schematics)
 
 buildLess() {
   rsync -a ${SRC_DIST_DIR}/theme/styles ${DIST_DIR}/packages-dist/theme
-  node ./scripts/build/generate-abc-less.js
+  node ./scripts/build/generate-less.js
   echo 'fix abc components import paths...'
   sed -i -r "s/..\/..\/..\/theme/..\/..\/..\/..\/theme/g" `grep ..\/..\/..\/theme -rl ${DIST_DIR}/packages-dist/abc/`
+  sed -i -r "s/..\/..\/..\/theme/..\/..\/..\/..\/theme/g" `grep ..\/..\/..\/theme -rl ${DIST_DIR}/packages-dist/chart/`
   # echo 'fix zorro paths...'
   sed -i -r "s/~ng-zorro-antd/..\/..\/..\/..\/node_modules\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl ${DIST_DIR}/packages-dist/theme/styles/`
   echo 'build full css...'
@@ -85,8 +88,8 @@ UGLIFY=${PWD}/node_modules/.bin/uglifyjs
 PACKAGES_DIR=${PWD}/packages/
 DIST_DIR=${PWD}/dist
 SRC_DIST_DIR=${DIST_DIR}/packages
-rm -rf ${SRC_DIST_DIR}
-rm -rf ${SRC_DIST_DIR}-dist
+# rm -rf ${SRC_DIST_DIR}
+# rm -rf ${SRC_DIST_DIR}-dist
 
 echo "====== Copy source [exclude: schematics]"
 
@@ -97,6 +100,8 @@ node ./scripts/build/inline-template.js
 for PACKAGE in ${PACKAGES[@]}
 do
   echo "====== BUNDLING ${PACKAGE}"
+
+  rm -rf ${SRC_DIST_DIR}-dist/${PACKAGE}
 
   ROOT_DIR=${PWD}/dist/packages
   SRC_DIR=${ROOT_DIR}/${PACKAGE}
@@ -165,4 +170,5 @@ if containsElement "theme" "${PACKAGES[@]}"; then
   buildLess
 fi
 
+# buildLess
 echo 'FINISHED!'

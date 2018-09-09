@@ -1,0 +1,36 @@
+@alain-default-user-block-width: @alain-default-aside-wd - (@layout-gutter * 6);
+@alain-default-user-block-avatar-hw: @avatar-size-lg;
+
+@{alain-default-prefix}__aside-user {
+  padding-top: (@layout-gutter * 3);
+  margin: 0 auto;
+  display: block !important;
+  width: @alain-default-user-block-width;
+  cursor: pointer;
+  .ant-dropdown-trigger {
+    display: flex;
+    align-items: center;
+  }
+  &-info {
+    color: @text-color;
+    width: @alain-default-user-block-width - @alain-default-user-block-avatar-hw - @layout-gutter;
+  }
+  &-avatar {
+    margin-right: @layout-gutter;
+  }
+}
+
+// Desktop
+@media (min-width: @mobile-min) {
+  .aside-collapsed {
+    @{alain-default-prefix}__aside-user {
+      width: @alain-default-aside-collapsed-wd;
+      &-info {
+        display: none;
+      }
+      &-avatar {
+        margin: 0 auto;
+      }
+    }
+  }
+}

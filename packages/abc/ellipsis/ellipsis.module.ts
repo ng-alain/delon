@@ -10,8 +10,8 @@ const COMPONENTS = [EllipsisComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdEllipsisModule {
+export class EllipsisModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdEllipsisModule, providers: [] };
+    return { ngModule: EllipsisModule, providers: [] };
   }
 }

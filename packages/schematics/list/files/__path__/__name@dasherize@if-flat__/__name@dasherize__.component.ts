@@ -1,22 +1,11 @@
 import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { SimpleTableColumn, SimpleTableComponent } from '@delon/abc';
+import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 
 @Component({
-  selector: '<%= selector %>',<% if(inlineTemplate) { %>
-  template: `
-  <page-header>
-    <ng-template #action>
-      <button (click)="add()" nz-button nzType="primary">新建</button>
-    </ng-template>
-  </page-header>
-  <nz-card>
-    <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
-    <simple-table #st [data]="url" [columns]="columns"></simple-table>
-  </nz-card>
-  `,<% } else { %>
-  templateUrl: './<%= dasherize(name) %>.component.html',<% } if(!inlineStyle) { %><% } else { %>
+  selector: '<%= selector %>',
+  templateUrl: './<%= dasherize(name) %>.component.html',<% if(!inlineStyle) { %><% } else { %>
   styleUrls: ['./<%= dasherize(name) %>.component.<%= styleext %>']<% } %><% if(!!viewEncapsulation) { %>,
   encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
   changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
@@ -31,8 +20,8 @@ export class <%= componentName %> implements OnInit {
       }
     }
   };
-  @ViewChild('st') st: SimpleTableComponent;
-  columns: SimpleTableColumn[] = [
+  @ViewChild('st') st: STComponent;
+  columns: STColumn[] = [
     { title: '编号', index: 'no' },
     { title: '调用次数', type: 'number', index: 'callNo' },
     { title: '头像', type: 'img', width: '50px', index: 'avatar' },

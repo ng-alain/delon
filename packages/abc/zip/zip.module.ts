@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { DelonUtilModule } from '@delon/util';
 
 import { ZipService } from './zip.service';
-import { ZipConfig, DA_ZIP_CONFIG } from './interface';
+import { ZipConfig } from './zip.config';
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule],
 })
-export class AdZipModule {
-  static forRoot(config?: ZipConfig): ModuleWithProviders {
+export class ZipModule {
+  static forRoot(): ModuleWithProviders {
     return {
-      ngModule: AdZipModule,
-      providers: [ZipService, { provide: DA_ZIP_CONFIG, useValue: config }],
+      ngModule: ZipModule,
+      providers: [ZipConfig, ZipService],
     };
   }
 }

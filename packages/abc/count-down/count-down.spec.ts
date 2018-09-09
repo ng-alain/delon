@@ -1,8 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { Component, DebugElement } from '@angular/core';
 import * as addSeconds from 'date-fns/add_seconds';
-import { AdCountDownModule } from './count-down.module';
+import { CountDownModule } from './count-down.module';
 
 describe('abc: count-down', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -11,7 +10,7 @@ describe('abc: count-down', () => {
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
-      imports: [AdCountDownModule.forRoot()],
+      imports: [CountDownModule.forRoot()],
       declarations: [TestComponent],
     }).createComponent(TestComponent);
     dl = fixture.debugElement;
@@ -77,12 +76,9 @@ class TestComponent {
   config: any;
   target: number | Date;
   notify(val: number) {
-    console.log(val);
   }
   begin() {
-    console.log('begin');
   }
   end() {
-    console.log('end');
   }
 }

@@ -1,10 +1,22 @@
-import { Component, Input, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewChecked, OnInit } from '@angular/core';
 import { isEmpty } from '@delon/util';
 
 @Component({
   selector: 'exception',
-  templateUrl: './exception.component.html',
-  host: { '[class.ad-exception]': 'true' },
+  template: `
+  <div class="exception__img-block">
+    <div class="exception__img" [ngStyle]="{'background-image': 'url(' + _img + ')'}"></div>
+  </div>
+  <div class="exception__cont">
+    <h1 class="exception__cont-title" [innerHTML]="_title"></h1>
+    <div class="exception__cont-desc" [innerHTML]="_desc"></div>
+    <div class="exception__cont-actions">
+      <div (cdkObserveContent)="checkContent()" #conTpl><ng-content></ng-content></div>
+      <button *ngIf="!hasCon" nz-button [routerLink]="['/']" [nzType]="'primary'">返回首页</button>
+    </div>
+  </div>
+  `,
+  host: { '[class.exception]': 'true' },
   preserveWhitespaces: false,
 })
 export class ExceptionComponent implements OnInit {

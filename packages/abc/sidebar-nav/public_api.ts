@@ -1,2 +1,2 @@
 export { SidebarNavComponent } from './sidebar-nav.component';
-export { AdSidebarNavModule } from './sidebar-nav.module';
+export { SidebarNavModule } from './sidebar-nav.module';

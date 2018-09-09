@@ -1,4 +1,4 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Title, DOCUMENT } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';

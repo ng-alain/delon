@@ -22,6 +22,11 @@
     "project": {
       "type": "string",
       "description": "The name of the project."
+    },
+    "packageManager": {
+      "description": "Specifies the packageManager of project. (only: networkEnv plugin)",
+      "enum": ["npm", "yarn"],
+      "type": "string"
     }
   },
   "required": []

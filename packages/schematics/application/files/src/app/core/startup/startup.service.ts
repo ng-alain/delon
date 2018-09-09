@@ -99,7 +99,7 @@ export class StartupService {
           {
             text: '快捷菜单',
             icon: 'anticon anticon-rocket',
-            shortcut_root: true
+            shortcutRoot: true
           }
         ]
       }

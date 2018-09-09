@@ -1,0 +1,119 @@
+@import '../../../theme/styles/default';
+
+@sv-prefix: ~'.sv';
+@sv-label-color: @heading-color;
+@sv-detail-color: @text-color;
+@sv-type-primary-color: @primary-color;
+@sv-type-success-color: @success-color;
+@sv-type-danger-color: @error-color;
+@sv-type-warning-color: @warning-color;
+@sv-bottom: @layout-gutter * 2;
+@sv-default-text: '-';
+
+@{sv-prefix} {
+  display: block;
+  + @{sv-prefix} {
+    margin-top: @sv-bottom;
+  }
+  &__container {
+    display: inline-block;
+    // offset the padding-bottom of last row
+    .ant-row {
+      margin-bottom: -@sv-bottom;
+      overflow: hidden;
+    }
+  }
+  &__item {
+    &-fixed {
+      display: flex;
+      @{sv-prefix}__label {
+        text-align: right;
+        flex: 0 0 auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      @{sv-prefix}__detail {
+        flex: 1 0 0;
+      }
+    }
+  }
+  &__title {
+    display: block;
+    font-size: 14px;
+    color: @heading-color;
+    font-weight: 500;
+    margin-bottom: @sv-bottom;
+  }
+  &__label {
+    line-height: 22px;
+    padding-bottom: @sv-bottom;
+    margin-right: 8px;
+    color: @sv-label-color;
+    white-space: nowrap;
+    display: table-cell;
+    &:not(@{sv-prefix}__label-empty) {
+      &:after {
+        content: ':';
+        margin: 0 8px 0 2px;
+        position: relative;
+        top: -0.5px;
+      }
+    }
+  }
+  &__detail {
+    line-height: 22px;
+    width: 100%;
+    padding-bottom: @sv-bottom;
+    color: @sv-detail-color;
+    display: table-cell;
+    word-break: break-all;
+  }
+  &__type {
+    &-primary @{sv-prefix}__detail {
+      color: @sv-type-primary-color;
+    }
+    &-success @{sv-prefix}__detail {
+      color: @sv-type-success-color;
+    }
+    &-danger @{sv-prefix}__detail {
+      color: @sv-type-danger-color;
+    }
+    &-warning @{sv-prefix}__detail {
+      color: @sv-type-warning-color;
+    }
+  }
+  &__default {
+    &:before {
+      content: @sv-default-text;
+    }
+  }
+  &__small {
+    // offset the padding-bottom of last row
+    .ant-row {
+      margin-bottom: -8px;
+    }
+    @{sv-prefix}__title {
+      margin-bottom: 12px;
+      color: @text-color;
+    }
+    @{sv-prefix}__label,
+    @{sv-prefix}__detail {
+      padding-bottom: 8px;
+    }
+  }
+  &__large {
+    @{sv-prefix}__title {
+      font-size: 16px;
+    }
+  }
+  &__vertical {
+    @{sv-prefix}__label {
+      padding-bottom: 8px;
+    }
+
+    @{sv-prefix}__label,
+    @{sv-prefix}__detail {
+      display: block;
+    }
+  }
+}

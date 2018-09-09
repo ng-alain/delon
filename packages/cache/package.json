@@ -9,12 +9,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cipchk/delon.git"
+    "url": "git+https://github.com/ng-alain/delon.git"
   },
   "bugs": {
-    "url": "https://github.com/cipchk/delon/issues"
+    "url": "https://github.com/ng-alain/delon/issues"
   },
-  "homepage": "https://github.com/cipchk/delon#readme",
+  "homepage": "https://github.com/ng-alain/delon#readme",
   "keywords": [
     "delon",
     "ng-alain",
@@ -28,6 +28,5 @@
     "angular",
     "component"
   ],
-  "peerDependencies": {},
   "sideEffects": false
 }

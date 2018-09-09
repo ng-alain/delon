@@ -11,8 +11,8 @@ const COMPONENTS = [CountDownComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdCountDownModule {
+export class CountDownModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdCountDownModule, providers: [] };
+    return { ngModule: CountDownModule, providers: [] };
   }
 }

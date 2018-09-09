@@ -7,8 +7,14 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "generate-color-less",
+      "name": "generate-site-color-less",
       "program": "${workspaceFolder}/scripts/site/generate-color-less.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "generate-scaffold-color-less",
+      "program": "${workspaceFolder}/scripts/scaffold/generate-color-less.js"
     },
     {
       "type": "node",
@@ -20,7 +26,7 @@
       "internalConsoleOptions": "openOnSessionStart",
       "args": [
         "${workspaceFolder}/scripts/site/generate.ts",
-        "architecture"
+        "table"
       ]
     },
     {

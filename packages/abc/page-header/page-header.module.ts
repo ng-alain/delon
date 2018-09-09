@@ -1,28 +1,21 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonUtilModule } from '@delon/util';
 
 import { PageHeaderComponent } from './page-header.component';
-import { AdPageHeaderConfig } from './page-header.config';
+import { PageHeaderConfig } from './page-header.config';
 
 const COMPONENTS = [PageHeaderComponent];
 
-// region: zorro modules
-
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-
-const ZORROMODULES = [NgZorroAntdModule];
-
-// endregion
-
 @NgModule({
-  imports: [CommonModule, RouterModule, DelonUtilModule, ...ZORROMODULES],
+  imports: [CommonModule, RouterModule, DelonUtilModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdPageHeaderModule {
+export class PageHeaderModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdPageHeaderModule, providers: [AdPageHeaderConfig] };
+    return { ngModule: PageHeaderModule, providers: [PageHeaderConfig] };
   }
 }

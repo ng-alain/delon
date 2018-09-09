@@ -10,15 +10,15 @@ type: Other
 
 ## 行为准则
 
-我们有一份 [行为准则](https://github.com/cipchk/delon/blob/master/CODE_OF_CONDUCT.md)，希望所有的贡献者都能遵守，请花时间阅读一遍全文以确保你能明白哪些是可以做的，哪些是不可以做的。
+我们有一份 [行为准则](https://github.com/ng-alain/delon/blob/master/CODE_OF_CONDUCT.md)，希望所有的贡献者都能遵守，请花时间阅读一遍全文以确保你能明白哪些是可以做的，哪些是不可以做的。
 
 ## 透明的开发
 
-我们所有的工作都会放在 [ng-alain](https://github.com/cipchk/ng-alain)、[delon](https://github.com/cipchk/delon) 上。不管是核心团队的成员还是外部贡献者的 pull request 都需要经过同样流程的 review。
+我们所有的工作都会放在 [ng-alain](https://github.com/ng-alain/ng-alain)、[delon](https://github.com/ng-alain/delon) 上。不管是核心团队的成员还是外部贡献者的 pull request 都需要经过同样流程的 review。
 
 ## Bugs
 
-我们使用 [GitHub Issues](https://github.com/cipchk/ng-alain/issues) 来做 bug 追踪。 如果你想要你发现的 bug 被快速解决，最好的办法就是按照 issues 呈现的模板认真填写每一项；并且能使用这个 [模板](https://stackblitz.com/edit/ng-alain-setup) 来提供重现。
+我们使用 [GitHub Issues](https://github.com/ng-alain/ng-alain/issues) 来做 bug 追踪。 如果你想要你发现的 bug 被快速解决，最好的办法就是按照 issues 呈现的模板认真填写每一项；并且能使用这个 [模板](https://stackblitz.com/edit/ng-alain-setup) 来提供重现。
 
 在你报告一个 bug 之前，请先确保已经搜索过已有的 issue 和阅读了 [文档站](https://ng-alain.com/)。
 
@@ -32,7 +32,7 @@ type: Other
 
 [如何优雅地在 GitHub 上贡献代码](https://segmentfault.com/a/1190000000736629)
 
-为了能帮助你开始你的第一次尝试，我们用 [good first issues](https://github.com/cipchk/ng-alain/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) 标记了一些比较比较容易修复的 bug 和小功能。这些 issue 可以很好地做为你的首次尝试。
+为了能帮助你开始你的第一次尝试，我们用 [good first issues](https://github.com/ng-alain/ng-alain/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) 标记了一些比较比较容易修复的 bug 和小功能。这些 issue 可以很好地做为你的首次尝试。
 
 如果你打算开始处理一个 issue，请先检查一下 issue 下面的留言以确保没有别人正在处理这个 issue。如果当前没有人在处理的话你可以留言告知其他人你将会处理这个 issue，以免别人重复劳动。
 
@@ -49,11 +49,11 @@ Ng Alain 会关注所有的 pull request，我们会 review 以及合并你的�
 3. 确认所有的测试都是通过的 `npm run test`。
 4. 确保你的代码通过了 lint 检查 `npm run lint`。小贴士: Lint 会在你 `git commit` 的时候自动运行。
 5. 确保你的代码在提交之前经过了正确的 [Rebase](https://www.digitalocean.com/community/tutorials/how-to-rebase-and-update-a-pull-request)
-6. 确保你的提交符合[规范](https://github.com/cipchk/delon/blob/master/CONTRIBUTING.md#-commit-message-guidelines)
+6. 确保你的提交符合[规范](https://github.com/ng-alain/delon/blob/master/CONTRIBUTING.md#-commit-message-guidelines)
 
 ## 开发流程
 
-在你 clone 了 ng-alain 或 delon 的代码并且使用 `npm install` 安装完依赖后，你还可以运行下面几个常用的命令：
+在你 clone 了 ng-alain 或 delon 的代码并且使用 `yarn` 安装完依赖后，你还可以运行下面几个常用的命令：
 
 ### delon 基建类库
 

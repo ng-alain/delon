@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as fs from 'file-saver';
 import { _HttpClient } from '@delon/theme';
 
-import { AdDownFileModule } from './down-file.module';
+import { DownFileModule } from './down-file.module';
 
 function genFile(ext: string, isRealFile = true): Blob {
   const blob = new Blob([
@@ -32,7 +32,7 @@ describe('abc: down-file', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, AdDownFileModule.forRoot()],
+      imports: [HttpClientTestingModule, DownFileModule.forRoot()],
       declarations: [TestComponent],
     });
   });
@@ -85,7 +85,6 @@ describe('abc: down-file', () => {
     });
 
     it('should be using header filename when repseon has [x-filename]', () => {
-      console.log(_http);
       let fn: string;
       const filename = 'x-newfile.docx';
       spyOn(fs, 'saveAs').and.callFake(

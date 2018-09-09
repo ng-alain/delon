@@ -10,8 +10,8 @@ const COMPONENTS = [QuickMenuComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdQuickMenuModule {
+export class QuickMenuModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdQuickMenuModule, providers: [] };
+    return { ngModule: QuickMenuModule, providers: [] };
   }
 }

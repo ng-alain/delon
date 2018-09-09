@@ -1,11 +1,12 @@
 ---
+type: Layout
 title: full-content
 subtitle: 全屏工作区
 cols: 1
-module: AdFullContentModule
+module: FullContentModule
 ---
 
-全屏工作区，常用于带有滚动条表格；[完整示例](https://cipchk.github.io/ng-alain/tables/fs-table)。
+全屏工作区，常用于带有滚动条表格。
 
 ## 何时使用
 

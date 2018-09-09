@@ -31,7 +31,7 @@ cacheService.set('/data/unit', [ '个', '件' ]);
 **安装**
 
 ```bash
-npm install --save @delon/cache
+yarn add @delon/cache
 ```
 
 **注册**

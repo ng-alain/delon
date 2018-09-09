@@ -1,12 +1,21 @@
-// antd
-@import '~ng-zorro-antd/src/ng-zorro-antd.less';
 // alain
 @import '../packages/theme/styles/index';
+@import '../packages/theme/styles/layout/default/index';
 @import '../packages/abc/index';
+@import '../packages/chart/index';
 
-// 例如：内容区域背景色为白色
-// @content-bg:  #fff;
+// docs
+@import './app/styles/index.less';
 
-.ant-btn + .ant-btn {
-  margin-left: 8px;
+.ng-alain-next {
+  #header {
+    background: linear-gradient(145deg,#dd0031,#c3002f);
+    .ant-select-selection__placeholder,
+    .ant-menu,
+    .ant-select-selection,
+    .ant-select-selection__clear {
+      color: #fff;
+      background: transparent;
+    }
+  }
 }

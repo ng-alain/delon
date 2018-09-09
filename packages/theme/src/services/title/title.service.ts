@@ -15,7 +15,7 @@ import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
 
 /**
  * 设置标题
- * @see http://ng-alain.com/docs/service#TitleService
+ * @see https://ng-alain.com/docs/service#TitleService
  */
 @Injectable({ providedIn: 'root' })
 export class TitleService implements OnDestroy {
@@ -66,8 +66,8 @@ export class TitleService implements OnDestroy {
 
   private getByElement(): string {
     const el =
-      this.doc.querySelector('.content__title h1') ||
-      this.doc.querySelector('pro-header h1.title');
+      this.doc.querySelector('.alain-default__content-title h1') ||
+      this.doc.querySelector('.page-header__title');
     if (el) {
       return el.firstChild.textContent.trim();
     }
@@ -94,11 +94,7 @@ export class TitleService implements OnDestroy {
   }
 
   /**
-   * 设置标题，若不指定具体名称，则按以顺序获取：
-   * - 路由配置 `{ data: { title: 'page name' } }`
-   * - 根据当前 URL 解析菜单数据
-   * - 页面 `content__title` 中获取 `h1` 内容
-   * - 默认标题名
+   * 设置标题
    */
   setTitle(title?: string | string[]) {
     if (!title) {

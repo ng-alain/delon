@@ -5,15 +5,17 @@ import {
   Renderer2,
   AfterViewInit,
   OnChanges,
-  SimpleChanges,
 } from '@angular/core';
+import { InputNumber } from '@delon/util';
 
 @Directive({ selector: '[fixed-label]' })
 export class SFFixedDirective implements AfterViewInit, OnChanges {
   private el: HTMLDivElement;
   private _inited = false;
 
-  @Input('fixed-label') num: number;
+  @Input('fixed-label')
+  @InputNumber()
+  num: number;
 
   private init() {
     if (!this._inited || this.num == null || this.num <= 0) return;
@@ -41,7 +43,7 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
     this.init();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this._inited) this.init();
   }
 }

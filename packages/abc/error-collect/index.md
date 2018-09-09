@@ -1,9 +1,10 @@
 ---
+type: Form
 title: error-collect
 subtitle: 表单异常消息采集器
-cols: 1
-module: AdErrorCollectModule
-config: AdErrorCollectConfig
+cols: 2
+module: ErrorCollectModule
+config: ErrorCollectConfig
 ---
 
 一个简单的表单异常消息采集器，点击图标自然跳转相应的位置；必须是一个标准的表单，例如：

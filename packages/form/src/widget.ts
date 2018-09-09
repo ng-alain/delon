@@ -60,8 +60,9 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
 
   setValue(value: any) {
     this.formProperty.setValue(value, false);
-    if (this.ui.debug)
+    if (this.ui.debug) {
       di('valueChanges', this.formProperty.path, this.formProperty);
+    }
   }
 
   get value() {

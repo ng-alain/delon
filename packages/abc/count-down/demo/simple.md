@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 1
 title:
   zh-CN: 基本
   en-US: Basic
@@ -26,11 +26,11 @@ import { addMinutes } from 'date-fns';
   `
 })
 export class DemoComponent {
-    target = addMinutes(new Date, 10);
-    constructor(private msg: NzMessageService) {}
+  target = addMinutes(new Date, 10);
+  constructor(private msg: NzMessageService) {}
 
-    onEnd() {
-        this.msg.success('finised');
-    }
+  onEnd() {
+    this.msg.success('finised');
+  }
 }
 ```

@@ -1,8 +1,9 @@
 ---
+type: Basic
 title: count-down
 subtitle: 倒计时
 cols: 3
-module: AdCountDownModule
+module: CountDownModule
 ---
 
 倒计时组件，依赖 [ngx-countdown](https://github.com/cipchk/ngx-countdown)。
@@ -10,7 +11,7 @@ module: AdCountDownModule
 ## 依赖
 
 ```
-npm install --save ngx-countdown
+yarn add ngx-countdown
 ```
 
 ## API
@@ -19,9 +20,9 @@ npm install --save ngx-countdown
 |----------|---------------|-------------|-------|
 | `[target]` | 目标时间，`number` 表示秒 | `number | Date` | - |
 | `[config]` | 完整参数 | `Object` |  |
-| `(begin)` |  开始时触发 | `EventEmitter` | -|
+| `(begin)` |  开始时触发 | `EventEmitter<void>` | -|
 | `(notify)` |  通知时触发，需要在 `config` 中配置 notify | `EventEmitter<number>` | -|
-| `(end)` |  结束时触发 | `EventEmitter` | -|
+| `(end)` |  结束时触发 | `EventEmitter<void>` | -|
 
 ### config
 

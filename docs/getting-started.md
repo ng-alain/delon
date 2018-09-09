@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 10
 title:
   en-US: Getting Started
   zh-CN: 开始使用
@@ -19,25 +19,22 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，目标�
   - `()` 表示事件
   - `[()]` 表示双向绑定
   - `ng-content` 表示组件内容占位符
-  - `#tpl` 开头表示 `<ng-template #tpl>`
-- 对象相关，一般在类描述时
-  - `[]` 表示属性
-  - `()` 结尾表示方法
+  - `#tpl` 开头表示 `〈ng-template #tpl〉`
 
 ## 二、前序准备
 
-你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.io/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/cipchk/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。
+你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.io/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。
 
 ## 三、安装
 
 ```bash
 ng new demo --style less
 cd demo
-ng add ng-alain
+ng add ng-alain:next
 ng serve
 ```
 
-请参考[命令行工具](/cli)了解更多细节，若遇到问题请阅读 [常见问题](/cli/faq)。
+请参考[命令行工具](/cli)了解更多细节。
 
 ## 四、目录结构
 
@@ -75,15 +72,13 @@ ng-alain 是一个标准的 Angular CLI 构建的项目，因此你会非常熟�
 安装依赖。
 
 ```bash
-$ npm install
+$ yarn
 ```
 
-> 遇到问题请阅读 [常见问题](/cli/faq)
-
-如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速。
+> 遇到问题请阅读 [常见问题](/docs/faq)
 
 ```bash
-$ npm start
+$ ng serve
 ```
 
 启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，若你看到如下页面则代表成功了。

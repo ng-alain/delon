@@ -1,29 +1,22 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { LazyService, LazyResult } from '@delon/util';
-import { ZipConfig, DA_ZIP_CONFIG, ZipSaveOptions } from './interface';
+import { ZipSaveOptions } from './interface';
+import { ZipConfig } from './zip.config';
 
 declare var JSZip: any;
 
 @Injectable()
 export class ZipService {
   constructor(
-    @Inject(DA_ZIP_CONFIG) private config: ZipConfig,
+    private cog: ZipConfig,
     private http: HttpClient,
     private lazy: LazyService,
   ) {}
 
   private init(): Promise<LazyResult[]> {
-    const config = Object.assign(
-      {
-        url: `//cdn.bootcss.com/jszip/3.1.5/jszip.min.js`,
-        utils: [],
-      },
-      this.config,
-    );
-
-    return this.lazy.load([config.url].concat(config.utils));
+    return this.lazy.load([this.cog.url].concat(this.cog.utils));
   }
 
   private check(zip: any) {

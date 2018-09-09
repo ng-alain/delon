@@ -11,7 +11,7 @@ type: Documents
 安装 `@delon/util` 依赖包：
 
 ```bash
-npm install @delon/util --save
+yarn add @delon/util
 ```
 
 导入 `DelonUtilModule` 模块：

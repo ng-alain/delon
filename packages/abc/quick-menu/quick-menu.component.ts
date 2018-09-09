@@ -4,24 +4,25 @@ import {
   HostListener,
   OnInit,
   OnChanges,
-  SimpleChanges,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Renderer2,
   ElementRef,
 } from '@angular/core';
 
+import { InputNumber } from '@delon/util';
+
 @Component({
   selector: 'quick-menu',
   template: `
-  <div class="ad-quick-menu__inner">
-    <div class="ad-quick-menu__ctrl" [ngStyle]="ctrlStyle">
-      <i [ngClass]="icon"></i>
+  <div class="quick-menu__inner">
+    <div class="quick-menu__ctrl" [ngStyle]="ctrlStyle">
+      <i class="quick-menu__ctrl-icon" [ngClass]="icon"></i>
     </div>
     <ng-content></ng-content>
   </div>
   `,
-  host: { '[class.ad-quick-menu]': 'true' },
+  host: { '[class.quick-menu]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -34,9 +35,9 @@ export class QuickMenuComponent implements OnInit, OnChanges {
     | string[]
     | { [key: string]: string } = 'anticon anticon-question-circle-o';
 
-  @Input() top = 120;
+  @Input() @InputNumber() top = 120;
 
-  @Input() width = 200;
+  @Input() @InputNumber() width = 200;
 
   @Input() bgColor = '#fff';
 
@@ -81,7 +82,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
     this.initFlag = true;
     this.setStyle();
   }
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.initFlag) this.setStyle();
   }
 }

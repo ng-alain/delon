@@ -2,7 +2,7 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdTagSelectModule } from './tag-select.module';
+import { TagSelectModule } from './tag-select.module';
 import { TagSelectComponent } from './tag-select.component';
 
 describe('abc: tag-select', () => {
@@ -12,7 +12,7 @@ describe('abc: tag-select', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AdTagSelectModule.forRoot()],
+      imports: [TagSelectModule.forRoot()],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -25,17 +25,17 @@ describe('abc: tag-select', () => {
     it('with true', () => {
       context.expandable = true;
       fixture.detectChanges();
-      expect(dl.query(By.css('.has-expand'))).not.toBeNull();
+      expect(dl.query(By.css('.tag-select__has-expand'))).not.toBeNull();
     });
     it('with false', () => {
       context.expandable = false;
       fixture.detectChanges();
-      expect(dl.query(By.css('.has-expand'))).toBeNull();
+      expect(dl.query(By.css('.tag-select__has-expand'))).toBeNull();
     });
   });
   it('should be switch states via click trigger', () => {
     spyOn(context, 'change');
-    const triEl = dl.query(By.css('.trigger')).nativeElement as HTMLElement;
+    const triEl = dl.query(By.css('.tag-select__trigger')).nativeElement as HTMLElement;
     expect(context.change).not.toHaveBeenCalled();
     expect(triEl.innerHTML).toContain('展开');
     expect(triEl.querySelector('.anticon-up')).toBeNull();

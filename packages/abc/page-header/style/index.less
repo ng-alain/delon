@@ -1,17 +1,13 @@
 @import '../../../theme/styles/default';
-// TIPS: `content` 变更为 `desc`
-.ad-ph {
+
+@page-header-prefix: ~'.page-header';
+@page-header-bg: #fff;
+
+@{page-header-prefix} {
   display: block;
-  background: @component-background;
+  background-color: @page-header-bg;
   padding: 16px 32px 0 32px;
   border-bottom: @border-width-base @border-style-base @border-color-split;
-  .detail {
-    display: flex;
-  }
-  .row {
-    display: flex;
-    width: 100%;
-  }
   .ant-breadcrumb {
     margin-bottom: 16px;
   }
@@ -21,18 +17,25 @@
       border-bottom: @border-width-base @border-style-base @border-color-split;
     }
   }
-  .logo {
+  &__detail {
+    display: flex;
+  }
+  &__row {
+    display: flex;
+    width: 100%;
+  }
+  &__logo {
     flex: 0 1 auto;
     margin-right: 16px;
     padding-top: 1px;
-    > img {
+    img {
       width: 28px;
       height: 28px;
       border-radius: @border-radius-base;
       display: block;
     }
   }
-  .title {
+  &__title {
     font-size: 20px;
     font-weight: 500;
     color: @heading-color;
@@ -42,7 +45,7 @@
       padding-left: @layout-gutter;
     }
   }
-  .action {
+  &__action {
     margin-left: 56px;
     min-width: 266px;
     nz-popconfirm:not(:last-child),
@@ -55,68 +58,68 @@
     }
   }
 
-  .title,
-  .desc {
+  &__title,
+  &__desc {
     flex: auto;
   }
 
-  .action,
-  .extra,
-  .main {
+  &__action,
+  &__extra,
+  &__main {
     flex: 0 1 auto;
   }
 
-  .main {
+  &__main {
     width: 100%;
   }
 
-  .title,
-  .action {
+  &__title,
+  &__action {
     margin-bottom: 16px;
   }
 
-  .logo,
-  .desc,
-  .extra {
+  &__logo,
+  &__desc,
+  &__extra {
     margin-bottom: 16px;
   }
 
-  .action,
-  .extra {
+  &__action,
+  &__extra {
     text-align: right;
   }
 
-  .extra {
+  &__extra {
     margin-left: 88px;
     min-width: 242px;
   }
   @media screen and (max-width: @screen-xl) {
-    .extra {
+    &__extra {
       margin-left: 44px;
     }
   }
   @media screen and (max-width: @screen-lg) {
-    .extra {
+    &__extra {
       margin-left: 20px;
     }
   }
   @media screen and (max-width: @screen-md) {
-    .row {
+    &__row {
       display: block;
     }
-    .action,
-    .extra {
+    &__action,
+    &__extra {
       margin-left: 0;
       text-align: left;
     }
   }
   @media screen and (max-width: @screen-sm) {
-    .detail {
+    &__detail {
       display: block;
     }
   }
   @media screen and (max-width: @screen-xs) {
-    .action {
+    &__action {
       .ant-btn-group,
       .ant-btn {
         display: block;

@@ -10,8 +10,8 @@ const COMPONENTS = [TagSelectComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdTagSelectModule {
+export class TagSelectModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdTagSelectModule, providers: [] };
+    return { ngModule: TagSelectModule, providers: [] };
   }
 }

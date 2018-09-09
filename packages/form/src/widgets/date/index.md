@@ -37,6 +37,7 @@ type: Widgets
 `[placeholder]` | 在文字框中显示提示讯息 | `string` | -
 `[format]`      | 数据格式化             | `string` | -
 `[displayFormat]` | 显示格式化，（等同 [nzFormat](https://ng.ant.design/components/date-picker/zh#api) 值） | `string` | `yyyy-MM-dd HH:mm:ss`
+`[end]` | 日期范围所对应的结束值 `key` | `string` | -
 `[allowClear]` | 是否显示清除按钮 | `boolean` | `true`
 `[className]` | 选择器 className | `string` | -
 `[disabledDate]` | 不可选择的日期 | `(current: Date) => boolean` | -

@@ -6,12 +6,7 @@ import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import * as fs from 'file-saver';
 
-import {
-  AdXlsxModule,
-  XlsxService,
-  XlsxConfig,
-  XlsxExportOptions,
-} from './index';
+import { XlsxModule, XlsxService, XlsxExportOptions } from './index';
 
 class MockLazyService {
   load() {
@@ -54,9 +49,9 @@ class MockHttpClient {
 
 describe('abc: xlsx', () => {
   let srv: XlsxService;
-  function genModule(options?: XlsxConfig) {
+  function genModule() {
     const injector = TestBed.configureTestingModule({
-      imports: [AdXlsxModule.forRoot(options)],
+      imports: [XlsxModule.forRoot()],
       declarations: [TestComponent],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },

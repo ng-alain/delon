@@ -6,29 +6,9 @@ import { _HttpClient } from '@delon/theme';
 import { SFSchema, SFUISchema } from '@delon/form';
 
 @Component({
-  selector: '<%= selector %>',<% if(inlineTemplate) { %>
-  template: `<% if(modal) { %><div class="modal-header">
-    <div class="modal-title">编辑 {{ record.id }} 信息</div>
-  </div>
-  <nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-  <sf *ngIf="i" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">
-    <div class="modal-footer">
-      <button nz-button type="button" (click)="close()">关闭</button>
-      <button nz-button type="submit" [nzType]="'primary'" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">保存</button>
-    </div>
-  </sf><% } else { %><page-header [title]="'编辑 ' + id + ' 信息'"></page-header>
-  <nz-card>
-    <nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-    <sf *ngIf="i" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">
-      <footer-toolbar errorCollect>
-        <button nz-button type="button" (click)="_location.back()" [nzLoading]="http.loading">返回</button>
-        <button nz-button type="submit" [nzType]="'primary'" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">保存</button>
-      </footer-toolbar>
-    </sf>
-  </nz-card><% } %>
-  `,<% } else { %>
-  templateUrl: './<%= dasherize(name) %>.component.html',<% } if(!inlineStyle) { %><% } else { %>
-  styleUrls: ['./<%= dasherize(name) %>.component.<%= styleext %>']<% } %><% if(!!viewEncapsulation) { %>,
+  selector: '<%= selector %>',
+  templateUrl: './<%= dasherize(name) %>.component.html',<% if(!inlineStyle) { %><% } else { %>
+    styleUrls: ['./<%= dasherize(name) %>.component.<%= styleext %>']<% } %><% if(!!viewEncapsulation) { %>,
   encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
   changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
 })
@@ -66,8 +46,8 @@ export class <%= componentName %> implements OnInit {
   constructor(<% if(modal) { %>
     private modal: NzModalRef,<% } else { %>
     private route: ActivatedRoute,
+    private msgSrv: NzMessageService,
     public _location: Location,<% } %>
-    public msgSrv: NzMessageService,
     public http: _HttpClient,
   ) {}
 

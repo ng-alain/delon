@@ -2,7 +2,7 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdResultModule } from './result.module';
+import { ResultModule } from './result.module';
 import { ResultComponent } from './result.component';
 
 describe('abc: result', () => {
@@ -12,7 +12,7 @@ describe('abc: result', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ AdResultModule.forRoot() ],
+            imports: [ ResultModule.forRoot() ],
             declarations: [ TestComponent ]
         });
         fixture = TestBed.createComponent(TestComponent);
@@ -54,7 +54,7 @@ describe('abc: result', () => {
 
     describe('#title', () => {
         it('with string', () => {
-            isText('.title', context.title);
+            isText('.result__title', context.title);
         });
         it('with template', () => {
             context.title = context.titleTpl;
@@ -65,7 +65,7 @@ describe('abc: result', () => {
 
     describe('#description', () => {
         it('with string', () => {
-            isText('.description', context.description);
+            isText('.result__desc', context.description);
         });
         it('with template', () => {
             context.description = context.descriptionTpl;
@@ -76,7 +76,7 @@ describe('abc: result', () => {
 
     describe('#extra', () => {
         it('with string', () => {
-            isText('.extra', context.extra);
+            isText('.result__extra', context.extra);
         });
         it('with template', () => {
             context.extra = context.extraTpl;

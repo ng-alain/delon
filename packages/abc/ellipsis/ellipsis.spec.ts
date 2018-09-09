@@ -1,8 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement, Injector } from '@angular/core';
-import { By } from '@angular/platform-browser';
 
-import { AdEllipsisModule } from './ellipsis.module';
+import { EllipsisModule } from './ellipsis.module';
 
 describe('abc: ellipsis', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +11,7 @@ describe('abc: ellipsis', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [AdEllipsisModule.forRoot()],
+      imports: [EllipsisModule.forRoot()],
       declarations: [TestComponent],
     });
 

@@ -4,8 +4,8 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
 @Component({
   selector: 'avatar-list',
   template: `
-  <ul>
-    <li *ngFor="let i of _items" class="item" [ngClass]="_size">
+  <ul class="avatar-list__wrap">
+    <li *ngFor="let i of _items" class="avatar-list__item{{_size ? ' avatar-list__item-' + _size : ''}}">
       <nz-tooltip *ngIf="i.tips" [nzTitle]="i.tips">
         <nz-avatar nz-tooltip [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="_avatarSize"></nz-avatar>
       </nz-tooltip>
@@ -13,7 +13,7 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
     </li>
   </ul>
   `,
-  host: { '[class.ad-avatar-list]': 'true' },
+  host: { '[class.avatar-list]': 'true' },
   preserveWhitespaces: false,
 })
 export class AvatarListComponent {

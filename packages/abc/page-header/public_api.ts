@@ -1,3 +1,3 @@
-export { AdPageHeaderConfig } from './page-header.config';
+export { PageHeaderConfig } from './page-header.config';
 export { PageHeaderComponent } from './page-header.component';
-export { AdPageHeaderModule } from './page-header.module';
+export { PageHeaderModule } from './page-header.module';

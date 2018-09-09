@@ -1,21 +1,21 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { Observable, of, Subject, Observer } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, of, Subject } from 'rxjs';
 
 import { LazyService } from '@delon/util';
 
 import { Lodop, LodopResult, LodopPrintResult } from './interface';
-import { AdLodopConfig } from './lodop.config';
+import { LodopConfig } from './lodop.config';
 
 // TODO: zone
 @Injectable()
 export class LodopService implements OnDestroy {
-  private _cog: AdLodopConfig;
+  private _cog: LodopConfig;
   private pending = false;
   private _lodop: Lodop = null;
   private _init: Subject<LodopResult> = new Subject<LodopResult>();
   private _events: Subject<LodopPrintResult> = new Subject<LodopPrintResult>();
 
-  constructor(private defCog: AdLodopConfig, private scriptSrv: LazyService) {
+  constructor(private defCog: LodopConfig, private scriptSrv: LazyService) {
     this.cog = defCog;
   }
 
@@ -27,7 +27,7 @@ export class LodopService implements OnDestroy {
   get cog() {
     return this._cog;
   }
-  set cog(value: AdLodopConfig) {
+  set cog(value: LodopConfig) {
     this._cog = Object.assign(
       {
         url: 'https://localhost:8443/CLodopfuncs.js',
@@ -75,8 +75,8 @@ export class LodopService implements OnDestroy {
       }
     };
 
-    this.scriptSrv.load(url).then((res: any[]) => {
-      if (res.length === 1 && res[0].status !== 'ok') {
+    this.scriptSrv.loadScript(url).then((res) => {
+      if (res.status !== 'ok') {
         this.pending = false;
         onResolve('script-load-error', res[0]);
         return;

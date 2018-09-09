@@ -1,5 +1,5 @@
 // tslint:disable:no-use-before-declare
-import { Observable, BehaviorSubject, Subject, combineLatest } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 
 import { SchemaValidatorFactory } from '../validator.factory';

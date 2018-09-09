@@ -10,8 +10,8 @@ const DIRECTIVES = [DownFileDirective];
   declarations: [...DIRECTIVES],
   exports: [...DIRECTIVES],
 })
-export class AdDownFileModule {
+export class DownFileModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdDownFileModule, providers: [] };
+    return { ngModule: DownFileModule, providers: [] };
   }
 }

@@ -10,8 +10,8 @@ const COMPONENTS = [ResultComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdResultModule {
+export class ResultModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdResultModule, providers: [] };
+    return { ngModule: ResultModule, providers: [] };
   }
 }

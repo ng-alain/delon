@@ -11,8 +11,8 @@ const COMPONENTS = [GlobalFooterComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdGlobalFooterModule {
+export class GlobalFooterModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdGlobalFooterModule, providers: [] };
+    return { ngModule: GlobalFooterModule, providers: [] };
   }
 }

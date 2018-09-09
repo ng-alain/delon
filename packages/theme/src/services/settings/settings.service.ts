@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { App, Layout, User } from './interface';
+import { Subject, Observable } from 'rxjs';
+import { App, Layout, User, SettingsNotify } from './interface';
 
 const LAYOUT_KEY = 'layout';
 const USER_KEY = 'user';
@@ -7,6 +8,7 @@ const APP_KEY = 'app';
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
+  private notify$ = new Subject<SettingsNotify>();
   private _app: App = null;
   private _user: User = null;
   private _layout: Layout = null;
@@ -56,22 +58,28 @@ export class SettingsService {
     return this._user;
   }
 
+  get notify(): Observable<SettingsNotify> {
+    return this.notify$.asObservable();
+  }
+
   setLayout(name: string, value: any): boolean {
-    if (typeof this.layout[name] !== 'undefined') {
-      this.layout[name] = value;
-      this.set(LAYOUT_KEY, this._layout);
-      return true;
-    }
-    return false;
+    this.layout[name] = value;
+    this.set(LAYOUT_KEY, this._layout);
+    this.notify$.next({ type: 'layout', name, value });
+    return true;
   }
 
-  setApp(val: App) {
-    this._app = val;
-    this.set(APP_KEY, val);
+  setApp(value: App) {
+    this._app = value;
+    this.set(APP_KEY, value);
+    this.notify$.next({ type: 'app', value });
+    return true;
   }
 
-  setUser(val: User) {
-    this._user = val;
-    this.set(USER_KEY, val);
+  setUser(value: User) {
+    this._user = value;
+    this.set(USER_KEY, value);
+    this.notify$.next({ type: 'user', value });
+    return true;
   }
 }

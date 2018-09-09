@@ -10,7 +10,7 @@ Ueditor富文本。
 
 ## 源代码
 
-[源代码](https://github.com/cipchk/delon/tree/master/packages/form/widgets-third/ueditor)。
+[源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/ueditor)。
 
 ## API
 

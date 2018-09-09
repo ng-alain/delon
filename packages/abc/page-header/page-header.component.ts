@@ -14,33 +14,37 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { toBoolean, isEmpty } from '@delon/util';
+import { NzAffixComponent } from 'ng-zorro-antd';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+
+import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
 import {
   MenuService,
   ALAIN_I18N_TOKEN,
   AlainI18NService,
   Menu,
   TitleService,
+  SettingsService,
 } from '@delon/theme';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
-import { AdPageHeaderConfig } from './page-header.config';
-import { Subscription } from 'rxjs';
+import { PageHeaderConfig } from './page-header.config';
 
 @Component({
   selector: 'page-header',
   templateUrl: './page-header.component.html',
-  host: {
-    '[class.content__title]': 'true',
-    '[class.ad-ph]': 'true',
-  },
   preserveWhitespaces: false,
 })
 export class PageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
   private i18n$: Subscription;
-  @ViewChild('conTpl') private conTpl: ElementRef;
+  private set$: Subscription;
+  @ViewChild('conTpl')
+  private conTpl: ElementRef;
+  @ViewChild('affix')
+  private affix: NzAffixComponent;
   private _menus: Menu[];
 
   private get menus() {
@@ -66,66 +70,69 @@ export class PageHeaderComponent
     }
   }
 
-  @Input() home: string;
+  @Input()
+  home: string;
 
-  @Input() home_link: string;
+  @Input()
+  homeLink: string;
 
-  @Input() home_i18n: string;
+  @Input()
+  homeI18n: string;
 
   /**
    * 自动生成导航，以当前路由从主菜单中定位
    */
   @Input()
-  get autoBreadcrumb() {
-    return this._autoBreadcrumb;
-  }
-  set autoBreadcrumb(value: any) {
-    this._autoBreadcrumb = toBoolean(value);
-  }
-  private _autoBreadcrumb = true;
+  @InputBoolean()
+  autoBreadcrumb: boolean;
 
   /**
    * 自动生成标题，以当前路由从主菜单中定位
    */
   @Input()
-  get autoTitle() {
-    return this._autoTitle;
-  }
-  set autoTitle(value: any) {
-    this._autoTitle = toBoolean(value);
-  }
-  private _autoTitle = true;
+  @InputBoolean()
+  autoTitle: boolean;
 
   /**
    * 是否自动将标题同步至 `TitleService`、`ReuseService` 下，仅 `title` 为 `string` 类型时有效
    */
   @Input()
-  get syncTitle() {
-    return this._syncTitle;
-  }
-  set syncTitle(value: any) {
-    this._syncTitle = toBoolean(value);
-  }
-  private _syncTitle = false;
+  @InputBoolean()
+  syncTitle: boolean;
+
+  @Input()
+  @InputBoolean()
+  fixed: boolean;
+
+  @Input()
+  @InputNumber()
+  fixedOffsetTop: number;
 
   paths: any[] = [];
 
-  @ContentChild('breadcrumb') breadcrumb: TemplateRef<any>;
+  @ContentChild('breadcrumb')
+  breadcrumb: TemplateRef<any>;
 
-  @ContentChild('logo') logo: TemplateRef<any>;
+  @ContentChild('logo')
+  logo: TemplateRef<any>;
 
-  @ContentChild('action') action: TemplateRef<any>;
+  @ContentChild('action')
+  action: TemplateRef<any>;
 
-  @ContentChild('content') content: TemplateRef<any>;
+  @ContentChild('content')
+  content: TemplateRef<any>;
 
-  @ContentChild('extra') extra: TemplateRef<any>;
+  @ContentChild('extra')
+  extra: TemplateRef<any>;
 
-  @ContentChild('tab') tab: TemplateRef<any>;
+  @ContentChild('tab')
+  tab: TemplateRef<any>;
 
   // endregion
 
   constructor(
-    cog: AdPageHeaderConfig,
+    cog: PageHeaderConfig,
+    settings: SettingsService,
     private renderer: Renderer2,
     private route: Router,
     private menuSrv: MenuService,
@@ -140,15 +147,23 @@ export class PageHeaderComponent
     private reuseSrv: ReuseTabService,
   ) {
     Object.assign(this, cog);
-    if (this.i18nSrv)
+    if (this.i18nSrv) {
       this.i18n$ = this.i18nSrv.change.subscribe(() => this.refresh());
+    }
+    this.set$ = settings.notify
+      .pipe(
+        filter(
+          w => this.affix && w.type === 'layout' && w.name === 'collapsed',
+        ),
+      )
+      .subscribe(() => this.affix.updatePosition({}));
   }
 
   refresh() {
     this.setTitle().genBreadcrumb();
   }
 
-  genBreadcrumb() {
+  private genBreadcrumb() {
     if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0)
       return;
     const paths: any[] = [];
@@ -163,18 +178,18 @@ export class PageHeaderComponent
     if (this.home) {
       paths.splice(0, 0, {
         title:
-          (this.home_i18n &&
+          (this.homeI18n &&
             this.i18nSrv &&
-            this.i18nSrv.fanyi(this.home_i18n)) ||
+            this.i18nSrv.fanyi(this.homeI18n)) ||
           this.home,
-        link: [this.home_link],
+        link: [this.homeLink],
       });
     }
     this.paths = paths;
     return this;
   }
 
-  setTitle() {
+  private setTitle() {
     if (
       typeof this._title === 'undefined' &&
       typeof this._titleTpl === 'undefined' &&
@@ -222,5 +237,6 @@ export class PageHeaderComponent
 
   ngOnDestroy(): void {
     if (this.i18n$) this.i18n$.unsubscribe();
+    this.set$.unsubscribe();
   }
 }

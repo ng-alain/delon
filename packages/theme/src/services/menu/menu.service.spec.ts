@@ -1,5 +1,5 @@
 import { Injector } from '@angular/core';
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { filter } from 'rxjs/operators';
 
 import { ACLService } from '@delon/acl';
@@ -39,8 +39,8 @@ describe('Service: Menu', () => {
       text: 'text',
       link: '/demo1',
       badge: 10,
-      badge_dot: true,
-      badge_status: 'success',
+      badgeDot: true,
+      badgeStatus: 'success',
     },
     { text: 'text', externalLink: '//ng-alain.com' },
     { text: 'text', link: '/demo2', i18n: 'text' },
@@ -137,14 +137,14 @@ describe('Service: Menu', () => {
         srv.add(deepCopy(DATA));
         expect(srv.menus[0].children[1].children.length).toBe(1);
       });
-      it('should be use [shortcut_root: true]', () => {
+      it('should be use [shortcutRoot: true]', () => {
         const newMenus = <Menu[]>[
           {
             text: 'new menu',
             children: [
               { text: 'submenu1', link: '/' },
               { text: 'submenu2', link: '/' },
-              { text: 'sc', shortcut_root: true },
+              { text: 'sc', shortcutRoot: true },
             ],
           },
           {
@@ -197,12 +197,12 @@ describe('Service: Menu', () => {
       it('ng-alain #107', () => {
         srv.add(deepCopy(DATA));
         expect(
-          srv.menus[0].children.filter(w => w.shortcut_root === true).length,
+          srv.menus[0].children.filter(w => w.shortcutRoot === true).length,
         ).toBe(1);
         expect(srv.menus[0].children[1].children.length).toBe(1);
         srv.resume();
         expect(
-          srv.menus[0].children.filter(w => w.shortcut_root === true).length,
+          srv.menus[0].children.filter(w => w.shortcutRoot === true).length,
         ).toBe(1);
         expect(srv.menus[0].children[1].children.length).toBe(1);
       });

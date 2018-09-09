@@ -10,15 +10,16 @@ import {
   Renderer2,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { toBoolean } from '@delon/util';
+import { InputBoolean } from '@delon/util';
 
-const CLS = 'ad-footer-toolbar';
+const CLS = 'footer-toolbar';
+const CLSBODY = 'footer-toolbar__body';
 
 @Component({
   selector: 'footer-toolbar',
   template: `
-  <div class="left"><ng-container *ngIf="extra" [ngTemplateOutlet]="extra"></ng-container></div>
-  <div class="right">
+  <div class="footer-toolbar__left"><ng-container *ngIf="extra" [ngTemplateOutlet]="extra"></ng-container></div>
+  <div class="footer-toolbar__right">
     <error-collect *ngIf="errorCollect"></error-collect>
     <ng-content></ng-content>
   </div>
@@ -27,15 +28,11 @@ const CLS = 'ad-footer-toolbar';
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
   @Input()
-  get errorCollect() {
-    return this._errorCollect;
-  }
-  set errorCollect(value: any) {
-    this._errorCollect = toBoolean(value);
-  }
-  private _errorCollect = false;
+  @InputBoolean()
+  errorCollect = false;
 
-  @ContentChild('extra') extra: TemplateRef<any>;
+  @ContentChild('extra')
+  extra: TemplateRef<any>;
 
   constructor(
     private el: ElementRef,
@@ -44,12 +41,11 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    (this.el.nativeElement as HTMLElement).classList.add(CLS);
     this.renderer.addClass(this.el.nativeElement, CLS);
-    this.doc.querySelector('body').classList.add(`has-${CLS}`);
+    this.doc.querySelector('body').classList.add(CLSBODY);
   }
 
   ngOnDestroy() {
-    this.doc.querySelector('body').classList.remove(`has-${CLS}`);
+    this.doc.querySelector('body').classList.remove(CLSBODY);
   }
 }

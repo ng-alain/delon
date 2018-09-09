@@ -13,8 +13,7 @@ import { PluginOptions } from './interface';
 
 import { pluginG2 } from './plugin.g2';
 import { pluginCodeStyle } from './plugin.code-style';
-import { pluginNpm } from './plugin.npm';
-import { pluginYarn } from './plugin.yarn';
+import { pluginNetworkEnv } from './plugin.network-env';
 import { pluginHmr } from './plugin.hmr';
 import { pluginDocker } from './plugin.docker';
 import { pluginAsdf } from './plugin.asdf';
@@ -45,11 +44,14 @@ export default function(options: PluginSchema): Rule {
       case 'codeStyle':
         rules.push(pluginCodeStyle(pluginOptions));
         break;
-      case 'npm':
-        rules.push(pluginNpm(pluginOptions));
-        break;
-      case 'yarn':
-        rules.push(pluginYarn(pluginOptions));
+      case 'networkEnv':
+        rules.push(
+          pluginNetworkEnv(
+            Object.assign(pluginOptions, {
+              packageManager: options.packageManager,
+            }),
+          ),
+        );
         break;
       case 'hmr':
         rules.push(pluginHmr(pluginOptions));

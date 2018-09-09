@@ -65,11 +65,11 @@ export class MenuService implements OnDestroy {
 
       // badge
       if (item.badge) {
-        if (item.badge_dot !== true) {
-          item.badge_dot = false;
+        if (item.badgeDot !== true) {
+          item.badgeDot = false;
         }
-        if (!item.badge_status) {
-          item.badge_status = 'error';
+        if (!item.badgeStatus) {
+          item.badgeStatus = 'error';
         }
       }
 
@@ -79,7 +79,7 @@ export class MenuService implements OnDestroy {
       }
 
       // shortcut
-      if (parent && item.shortcut === true && parent.shortcut_root !== true)
+      if (parent && item.shortcut === true && parent.shortcutRoot !== true)
         shortcuts.push(item);
 
       item.text =
@@ -106,7 +106,7 @@ export class MenuService implements OnDestroy {
   /**
    * 加载快捷菜单，加载位置规则如下：
    * 1、统一在下标0的节点下（即【主导航】节点下方）
-   *      1、若 children 存在 【shortcut_root: true】则最优先【推荐】这种方式
+   *      1、若 children 存在 【shortcutRoot: true】则最优先【推荐】这种方式
    *      2、否则查找带有【dashboard】字样链接，若存在则在此菜单的下方创建快捷入口
    *      3、否则放在0节点位置
    */
@@ -116,7 +116,7 @@ export class MenuService implements OnDestroy {
     }
 
     const ls = this.data[0].children;
-    let pos = ls.findIndex(w => w.shortcut_root === true);
+    let pos = ls.findIndex(w => w.shortcutRoot === true);
     if (pos === -1) {
       pos = ls.findIndex(w => w.link.includes('dashboard'));
       pos = (pos !== -1 ? pos : -1) + 1;
@@ -131,7 +131,7 @@ export class MenuService implements OnDestroy {
     let _data = this.data[0].children[pos];
     if (_data.i18n && this.i18nSrv) _data.text = this.i18nSrv.fanyi(_data.i18n);
     _data = Object.assign(_data, {
-      shortcut_root: true,
+      shortcutRoot: true,
       _type: 3,
       __id: -1,
       _depth: 1,

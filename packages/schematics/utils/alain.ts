@@ -225,6 +225,9 @@ export function buildAlain(schema: CommonSchema): Rule {
 
     schema.componentName = buildComponentName(schema, (project as any).prefix);
 
+    // Don't support inline
+    schema.inlineTemplate = false;
+
     const templateSource = apply(url('./files'), [
       schema.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),
       schema.inlineStyle

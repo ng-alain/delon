@@ -10,8 +10,8 @@ import { SidebarNavComponent } from './sidebar-nav.component';
   declarations: [SidebarNavComponent],
   exports: [SidebarNavComponent],
 })
-export class AdSidebarNavModule {
+export class SidebarNavModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdSidebarNavModule, providers: [] };
+    return { ngModule: SidebarNavModule, providers: [] };
   }
 }

@@ -12,8 +12,8 @@ const COMPONENTS = [ExceptionComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdExceptionModule {
+export class ExceptionModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: AdExceptionModule, providers: [] };
+    return { ngModule: ExceptionModule, providers: [] };
   }
 }

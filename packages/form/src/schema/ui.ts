@@ -1,8 +1,7 @@
 import { TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ErrorSchema, ErrorData } from '../errors';
-import { SFSchemaEnum, SFSchemaEnumType } from './index';
-import { FormProperty, PropertyGroup } from '../model/form.property';
+import { ErrorSchema } from '../errors';
+import { SFSchemaEnumType } from './index';
 
 export interface SFGridSizeSchema {
   span?: number;
@@ -157,7 +156,10 @@ export interface SFUISchemaItem
    * [ 'a', 'b', 'c', 'd' ] + [ 'c', 'b', '*' ] = [ 'c', 'b', 'a', 'd']
    */
   order?: string[];
-
+  /**
+   * 是否隐藏
+   */
+  hidden?: boolean;
   /**
    * 指定条件时才显示，但需要**注意**：
    * - 键值表示监听对象属性名

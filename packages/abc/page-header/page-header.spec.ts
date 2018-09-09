@@ -1,54 +1,58 @@
-import {
-  Component,
-  DebugElement,
-  TemplateRef,
-  ViewChild,
-  CUSTOM_ELEMENTS_SCHEMA,
-  Injector,
-} from '@angular/core';
+import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule, Router } from '@angular/router';
-import { APP_BASE_HREF, I18nSelectPipe } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 import {
   MenuService,
-  AlainThemeModule,
-  AlainI18NService,
   ALAIN_I18N_TOKEN,
   TitleService,
+  AlainI18NServiceFake,
+  AlainI18NService,
+  SettingsService,
 } from '@delon/theme';
-import { DelonACLModule } from '@delon/acl';
 
-import { AdPageHeaderModule } from './page-header.module';
+import { PageHeaderModule } from './page-header.module';
 import { PageHeaderComponent } from './page-header.component';
-import { AdPageHeaderConfig } from './page-header.config';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
+import { NzAffixComponent } from 'ng-zorro-antd';
+
+class MockI18NServiceFake extends AlainI18NServiceFake {
+  fanyi(key: string) {
+    return key;
+  }
+}
 
 describe('abc: page-header', () => {
   let injector: Injector;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
+  let menuSrv: MenuService;
   let context: TestComponent;
+  let route: Router;
 
-  beforeEach(() => {
+  function genModule(other: {
+    template?: string;
+    providers?: any[];
+    created?: boolean;
+  }) {
+    const imports = [RouterModule.forRoot([]), PageHeaderModule.forRoot()];
+    const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
+    if (other.providers && other.providers.length) {
+      providers.push(...other.providers);
+    }
     injector = TestBed.configureTestingModule({
-      imports: [
-        RouterModule.forRoot([]),
-        AlainThemeModule.forRoot(),
-        DelonACLModule.forRoot(),
-        AdPageHeaderModule.forRoot(),
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports,
       declarations: [TestComponent],
-      providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
+      providers,
     });
-  });
-
-  function createComp() {
+    if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
-    fixture.detectChanges();
+    if (other.created !== false) fixture.detectChanges();
+    menuSrv = injector.get(MenuService);
+    route = injector.get(Router);
   }
 
   function isExists(cls: string, stauts: boolean = true) {
@@ -67,16 +71,16 @@ describe('abc: page-header', () => {
   afterEach(() => context.comp.ngOnDestroy());
 
   describe('[property]', () => {
-    beforeEach(() => createComp());
+    beforeEach(() => genModule({}));
 
     describe('#title', () => {
       it('with string', () => {
-        isExists('.title');
+        isExists('.page-header__title');
       });
       it('with null', () => {
         context.title = null;
         fixture.detectChanges();
-        isExists('.title', false);
+        isExists('.page-header__title', false);
       });
     });
 
@@ -85,24 +89,31 @@ describe('abc: page-header', () => {
         it('#' + type, () => isExists('.' + type));
       },
     );
+
+    describe('#fixed', () => {
+      beforeEach(() => {
+        context.fixed = true;
+        fixture.detectChanges();
+      });
+      it('should working', () => {
+        isExists('nz-affix', true);
+      });
+      it('should be update position when swithch collapsed', () => {
+        const srv = injector.get(SettingsService);
+        const affixComp = dl.query(By.directive(NzAffixComponent)).injector.get(NzAffixComponent, null);
+        spyOn(affixComp, 'updatePosition');
+        srv.setLayout('collapsed', true);
+        expect(affixComp.updatePosition).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('[generation breadcrumb]', () => {
-    let menuSrv: MenuService;
-    let route: Router;
-    let i18n: AlainI18NService;
-    let cog: AdPageHeaderConfig;
     beforeEach(() => {
-      TestBed.overrideTemplate(
-        TestComponent,
-        `<page-header #comp [title]="title" [home]="home" [home_i18n]="home_i18n" [autoBreadcrumb]="autoBreadcrumb"></page-header>`,
-      );
-      createComp();
-      route = injector.get(Router);
-      cog = injector.get(AdPageHeaderConfig);
-      i18n = injector.get(ALAIN_I18N_TOKEN);
+      genModule({
+        template: `<page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb"></page-header>`,
+      });
 
-      menuSrv = injector.get(MenuService);
       menuSrv.add([
         {
           text: 'root',
@@ -166,96 +177,46 @@ describe('abc: page-header', () => {
         fixture.detectChanges();
         expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
       });
-      it('shoule be i18n', () => {
-        spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
-        spyOn(i18n, 'fanyi');
-        expect(i18n.fanyi).not.toHaveBeenCalled();
-        context.home = 'home';
-        context.home_i18n = 'home_i18n';
-        context.autoBreadcrumb = true;
-        fixture.detectChanges();
-        expect(i18n.fanyi).toHaveBeenCalled();
-      });
-    });
-
-    describe('[i18n]', () => {
-      it('should be auto fanyi i18n text', () => {
-        menuSrv.add([
-          {
-            text: 'root',
-            i18n: 'root-i18n',
-            children: [
-              {
-                text: '1-1',
-                link: '/1-1',
-                children: [
-                  { text: '1-1-1', link: '/1-1/1-1-1' },
-                  { text: '1-1-2', link: '/1-1/1-1-2' },
-                ],
-              },
-            ],
-          },
-        ]);
-        spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
-        spyOn(i18n, 'fanyi');
-        expect(i18n.fanyi).not.toHaveBeenCalled();
-        context.autoBreadcrumb = true;
-        fixture.detectChanges();
-        expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
-        expect(i18n.fanyi).toHaveBeenCalled();
-      });
-      it('should be refresh when i18n changed', () => {
-        spyOn(context.comp, 'refresh');
-        expect(context.comp.refresh).not.toHaveBeenCalled();
-        i18n.use('en');
-        expect(context.comp.refresh).toHaveBeenCalled();
-      });
     });
   });
 
   describe('#title', () => {
     it('should be custom title template', () => {
-      TestBed.overrideTemplate(
-        TestComponent,
-        `<page-header #comp [title]="titleTpl">
+      genModule({
+        template: `<page-header #comp [title]="titleTpl">
           <ng-template #titleTpl>
             <div class="custom-title">title</div>
           </ng-template>
         </page-header>`,
-      );
-      createComp();
+      });
       expect(dl.queryAll(By.css('.custom-title')).length).toBe(1);
     });
 
     describe('[generateion title]', () => {
-      let menuSrv: MenuService;
-      let route: Router;
-      let i18n: AlainI18NService;
-      let cog: AdPageHeaderConfig;
       beforeEach(() => {
-        createComp();
-        route = injector.get(Router);
-        cog = injector.get(AdPageHeaderConfig);
-        i18n = injector.get(ALAIN_I18N_TOKEN);
-        menuSrv = injector.get(MenuService);
+        genModule({
+          providers: [
+            {
+              provide: TitleService,
+              useFactory: () => null
+            },
+            {
+              provide: ReuseTabService,
+              useFactory: () => null
+            },
+          ],
+        });
 
         context.title = undefined;
         context.autoTitle = true;
+        context.syncTitle = true;
       });
 
       it('should be auto generate title via menu data', () => {
         const text = 'asdf';
         spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text }]);
         fixture.detectChanges();
-        checkValue('.title', text);
-      });
-
-      it('support i18n', () => {
-        const text = 'asdf';
-        const i18n = 'i18n';
-        spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
-        fixture.detectChanges();
-        checkValue('.title', i18n);
+        checkValue('.page-header__title', text);
       });
     });
 
@@ -272,18 +233,20 @@ describe('abc: page-header', () => {
       let titleSrv: TitleService;
       let reuseSrv: ReuseTabService;
       beforeEach(() => {
-        TestBed.overrideProvider(TitleService, {
-          useFactory: () => new MockTitle(),
-          deps: [],
+        genModule({
+          providers: [
+            {
+              provide: TitleService,
+              useClass: MockTitle,
+            },
+            {
+              provide: ReuseTabService,
+              useClass: MockReuse,
+            },
+          ],
         });
-        TestBed.overrideProvider(ReuseTabService, {
-          useFactory: () => new MockReuse(),
-          deps: [],
-        });
-        createComp();
         titleSrv = injector.get(TitleService);
         reuseSrv = injector.get(ReuseTabService);
-
         context.syncTitle = true;
       });
 
@@ -300,12 +263,97 @@ describe('abc: page-header', () => {
       });
     });
   });
+
+  describe('[i18n]', () => {
+    let i18n: AlainI18NService;
+    beforeEach(() => {
+      genModule({
+        created: false,
+        template: `<page-header #comp [title]="title"
+        [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink"
+        [autoBreadcrumb]="autoBreadcrumb"></page-header>`,
+        providers: [
+          {
+            provide: ALAIN_I18N_TOKEN,
+            useClass: MockI18NServiceFake,
+          },
+        ],
+      });
+      i18n = injector.get(ALAIN_I18N_TOKEN);
+    });
+    it('should be refresh when i18n changed', () => {
+      spyOn(context.comp, 'refresh');
+      expect(context.comp.refresh).not.toHaveBeenCalled();
+      i18n.use('en');
+      expect(context.comp.refresh).toHaveBeenCalled();
+    });
+    it('in text', () => {
+      menuSrv.add([
+        {
+          text: 'root',
+          i18n: 'root-i18n',
+          children: [
+            {
+              text: '1-1',
+              link: '/1-1',
+              children: [
+                { text: '1-1-1', link: '/1-1/1-1-1' },
+                { text: '1-1-2', link: '/1-1/1-1-2' },
+              ],
+            },
+          ],
+        },
+      ]);
+      spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
+      spyOn(i18n, 'fanyi');
+      expect(i18n.fanyi).not.toHaveBeenCalled();
+      context.autoBreadcrumb = true;
+      fixture.detectChanges();
+      expect(i18n.fanyi).toHaveBeenCalled();
+    });
+    it('in title', () => {
+      const text = 'asdf';
+      const i18n = 'i18n';
+      context.title = undefined;
+      context.autoTitle = true;
+      context.autoBreadcrumb = true;
+      spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
+      fixture.detectChanges();
+      checkValue('.page-header__title', i18n);
+    });
+    it('in home', () => {
+      menuSrv.add([
+        {
+          text: 'root',
+          children: [
+            {
+              text: '1-1',
+              link: '/1-1',
+              children: [
+                { text: '1-1-1', link: '/1-1/1-1-1' },
+                { text: '1-1-2', link: '/1-1/1-1-2' },
+              ],
+            },
+          ],
+        },
+      ]);
+      context.autoBreadcrumb = true;
+      spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
+      spyOn(i18n, 'fanyi');
+      context.home = 'home';
+      context.homeI18n = 'homeI18n';
+      context.autoBreadcrumb = true;
+      fixture.detectChanges();
+      expect(i18n.fanyi).toHaveBeenCalled();
+    });
+  });
 });
 
 @Component({
   template: `
     <page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
-        [autoBreadcrumb]="autoBreadcrumb" [home]="home" [home_i18n]="home_i18n" [home_link]="home_link">
+        [autoBreadcrumb]="autoBreadcrumb" [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink"
+        [fixed]="fixed">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
         <ng-template #action><div class="action">action</div></ng-template>
@@ -316,12 +364,14 @@ describe('abc: page-header', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: PageHeaderComponent;
+  @ViewChild('comp')
+  comp: PageHeaderComponent;
   title = '所属类目';
   autoBreadcrumb: boolean;
   autoTitle: boolean;
   syncTitle: boolean;
   home: string;
-  home_link: string;
-  home_i18n: string;
+  homeLink: string;
+  homeI18n: string;
+  fixed: boolean;
 }

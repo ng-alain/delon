@@ -1,0 +1,42 @@
+<div class="alain-default__header">
+  <div class="alain-default__header-logo">
+    <a [routerLink]="['/']" class="alain-default__header-logo-link">
+      <img class="alain-default__header-logo-expanded" src="./assets/img/logo-full.svg" alt="{{settings.app.name}}" style="max-height:40px;"
+      />
+      <img class="alain-default__header-logo-collapsed" src="./assets/img/logo.svg" alt="{{settings.app.name}}" style="max-height:30px;"
+      />
+    </a>
+  </div>
+  <div class="alain-default__nav-wrap">
+    <ul class="alain-default__nav">
+      <li>
+        <div class="alain-default__nav-item" (click)="toggleCollapsedSideabar()">
+          <i class="anticon anticon-menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="alain-default__aside">
+  <div class="alain-default__aside-inner">
+    <nz-dropdown nzTrigger="click" class="alain-default__aside-user">
+      <div nz-dropdown class="user-block-dropdown">
+        <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="settings.user.avatar"></nz-avatar>
+        <div class="alain-default__aside-user-info">
+          <strong>{{settings.user.name}}</strong>
+          <p class="text-truncate mb0">{{settings.user.email}}</p>
+        </div>
+      </div>
+      <ul nz-menu>
+        <li nz-menu-item (click)="msgSrv.success('profile')">{{ 'profile' | translate }}</li>
+        <li nz-menu-item (click)="msgSrv.success('settings')">{{ 'settings' | translate }}</li>
+        <li nz-menu-item (click)="msgSrv.success('logout')">{{ 'logout' | translate }}</li>
+      </ul>
+    </nz-dropdown>
+    <sidebar-nav class="d-block py-lg"></sidebar-nav>
+  </div>
+</div>
+<section class="alain-default__content">
+  <reuse-tab [mode]="2"></reuse-tab>
+  <router-outlet></router-outlet>
+</section>

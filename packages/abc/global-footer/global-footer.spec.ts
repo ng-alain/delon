@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 
-import { AdGlobalFooterModule } from './global-footer.module';
+import { GlobalFooterModule } from './global-footer.module';
 
 describe('abc: global-footer', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -13,7 +13,7 @@ describe('abc: global-footer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), AdGlobalFooterModule.forRoot()],
+      imports: [RouterModule.forRoot([]), GlobalFooterModule.forRoot()],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [TestComponent],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
@@ -40,7 +40,7 @@ describe('abc: global-footer', () => {
       },
     ];
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('.links a')).length).toBe(context.links.length);
+    expect(dl.queryAll(By.css('.global-footer__links-item')).length).toBe(context.links.length);
   });
 
   it('should be custom copyright template', () => {

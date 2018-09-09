@@ -1,0 +1,26 @@
+<nz-card [nzBodyStyle]="{padding: '20px 24px 8px 24px'}" [nzBordered]="bordered">
+  <nz-spin [nzSpinning]="loading">
+    <div class="g2-card__top">
+      <div class="g2-card__avatar">
+        <ng-container *ngIf="_avatar; else _avatarTpl">{{ _avatar }}</ng-container>
+      </div>
+      <div class="g2-card__meta-wrap">
+        <div class="g2-card__meta">
+          <span class="g2-card__meta-title" *ngIf="_title; else _titleTpl">{{ _title }}</span>
+          <span class="g2-card__meta-action" *ngIf="_action || _actionTpl">
+            <ng-container *ngIf="_action; else _actionTpl">{{ _action }}</ng-container>
+          </span>
+        </div>
+        <p *ngIf="total" class="g2-card__total" [innerHTML]="total"></p>
+      </div>
+    </div>
+    <div class="g2-card__desc" [ngStyle]="{'height':_height}">
+      <div [ngClass]="{'g2-card__fixed': !!_orgHeight }">
+        <ng-content></ng-content>
+      </div>
+    </div>
+    <div class="g2-card__footer" *ngIf="_footer || _footerTpl">
+      <ng-container *ngIf="_footer; else _footerTpl">{{ _footer }}</ng-container>
+    </div>
+  </nz-spin>
+</nz-card>

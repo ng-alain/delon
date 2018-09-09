@@ -23,10 +23,10 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
   entryComponents: [ReuseTabContextMenuComponent],
   exports: [...COMPONENTS],
 })
-export class AdReuseTabModule {
+export class ReuseTabModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: AdReuseTabModule,
+      ngModule: ReuseTabModule,
     };
   }
 }

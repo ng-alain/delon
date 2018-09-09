@@ -8,8 +8,10 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "target": "es6",
     "types": ["jasmine", "node"]
   },
-  "exclude": ["*/files/**/*", "*/overwrites/**/*"]
+  "exclude": ["*/files/**/*"]
 }

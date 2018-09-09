@@ -43,7 +43,7 @@ export interface ReuseTabCached {
 
   url: string;
 
-  /** 是否可关闭，默认：`true` */
+  /** 是否允许关闭，默认：`true` */
   closable?: boolean;
 
   _snapshot: ActivatedRouteSnapshot;

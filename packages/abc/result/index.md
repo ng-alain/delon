@@ -1,8 +1,9 @@
 ---
+type: Layout
 title: result
 subtitle: 处理结果
 cols: 1
-module: AdResultModule
+module: ResultModule
 ---
 
 结果页用于对用户进行的一系列任务处理结果进行反馈。

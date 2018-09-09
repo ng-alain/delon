@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig-build.json",
+
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@delon/util": ["../../packages-dist/util"]
+    },
+    "outDir": "../../@delon/chart"
+  },
+
+  "files": ["public_api.ts", "../typings.d.ts"],
+
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": true,
+    "skipTemplateCodegen": true,
+    "flatModuleOutFile": "index.js",
+    "flatModuleId": "@delon/chart"
+  }
+}

@@ -5,15 +5,14 @@ import {
   HostBinding,
   OnDestroy,
   ElementRef,
-  Renderer2,
   HostListener,
   Inject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { toNumber } from '@delon/util';
-import { AdErrorCollectConfig } from './error-collect.config';
+import { InputNumber } from '@delon/util';
+import { ErrorCollectConfig } from './error-collect.config';
 
 /**
  * 错误消息采集器
@@ -24,6 +23,7 @@ import { AdErrorCollectConfig } from './error-collect.config';
   template: `
   <i class="anticon anticon-exclamation-circle"></i>
   <span class="pl-sm">{{count}}</span>`,
+  host: { '[class.error-collect]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -32,31 +32,21 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   private formEl: HTMLFormElement;
 
   @Input()
-  get freq() {
-    return this._freq;
-  }
-  set freq(value: any) {
-    this._freq = toNumber(value);
-  }
-  private _freq = 500;
+  @InputNumber()
+  freq: number;
 
   @Input()
-  get offsetTop() {
-    return this._offsetTop;
-  }
-  set offsetTop(value: any) {
-    this._offsetTop = toNumber(value);
-  }
-  private _offsetTop = 65 + 64 + 8 * 2;
+  @InputNumber()
+  offsetTop: number;
 
-  @HostBinding('class.d-none') _hiden = true;
+  @HostBinding('class.d-none')
+  _hiden = true;
 
   count = 0;
 
   constructor(
-    cog: AdErrorCollectConfig,
+    cog: ErrorCollectConfig,
     private el: ElementRef,
-    private renderer: Renderer2,
     private cd: ChangeDetectorRef,
     @Inject(DOCUMENT) private doc: any,
   ) {
@@ -111,12 +101,6 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.formEl = this.findParent(this.el.nativeElement, 'form');
     if (this.formEl === null) throw new Error('未找到有效 form 元素');
-    (this.el.nativeElement as HTMLElement).classList.add(
-      'error-collect',
-      'pr-lg',
-      'text-error',
-      'point',
-    );
     this.install();
   }
 

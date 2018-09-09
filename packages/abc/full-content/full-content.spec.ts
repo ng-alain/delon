@@ -1,7 +1,6 @@
 import {
   Component,
   DebugElement,
-  TemplateRef,
   ViewChild,
   CUSTOM_ELEMENTS_SCHEMA,
   Injector,
@@ -17,12 +16,11 @@ import {
   RouterModule,
   Router,
   ActivationEnd,
-  ActivationStart,
 } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
-import { of, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
-import { AdFullContentModule } from './full-content.module';
+import { FullContentModule } from './full-content.module';
 import { FullContentComponent } from './full-content.component';
 import { FullContentService } from './full-content.service';
 
@@ -37,7 +35,7 @@ describe('abc: full-content', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [AdFullContentModule.forRoot(), RouterModule.forRoot([])],
+      imports: [FullContentModule.forRoot(), RouterModule.forRoot([])],
       declarations: [TestComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
@@ -58,22 +56,17 @@ describe('abc: full-content', () => {
     context.comp.ngOnDestroy();
   });
 
-  function isExists(cls: string, stauts: boolean = true) {
-    if (stauts) expect(dl.query(By.css(cls))).not.toBeNull();
-    else expect(dl.query(By.css(cls))).toBeNull();
-  }
-
   describe('#fullscreen', () => {
     beforeEach(() => createComp());
     it('with true', () => {
       context.fullscreen = true;
       fixture.detectChanges();
-      expect(doc.body.classList.contains('ad-full-content-fs')).toBe(true);
+      expect(doc.body.classList.contains('full-content__opened')).toBe(true);
     });
     it('with false', () => {
       context.fullscreen = false;
       fixture.detectChanges();
-      expect(doc.body.classList.contains('ad-full-content-fs')).toBe(false);
+      expect(doc.body.classList.contains('full-content__opened')).toBe(false);
     });
   });
 
@@ -84,12 +77,12 @@ describe('abc: full-content', () => {
       it('when fullscreen', () => {
         context.fullscreen = true;
         fixture.detectChanges();
-        expect(doc.body.classList.contains('ad-full-content-ht')).toBe(true);
+        expect(doc.body.classList.contains('full-content__hidden-title')).toBe(true);
       });
       it('when not fullscreen', () => {
         context.fullscreen = false;
         fixture.detectChanges();
-        expect(doc.body.classList.contains('ad-full-content-ht')).toBe(false);
+        expect(doc.body.classList.contains('full-content__hidden-title')).toBe(false);
       });
     });
     describe('#with [false]', () => {
@@ -97,12 +90,12 @@ describe('abc: full-content', () => {
       it('when fullscreen', () => {
         context.fullscreen = true;
         fixture.detectChanges();
-        expect(doc.body.classList.contains('ad-full-content-ht')).toBe(false);
+        expect(doc.body.classList.contains('full-content__hidden-title')).toBe(false);
       });
       it('when not fullscreen', () => {
         context.fullscreen = false;
         fixture.detectChanges();
-        expect(doc.body.classList.contains('ad-full-content-ht')).toBe(false);
+        expect(doc.body.classList.contains('full-content__hidden-title')).toBe(false);
       });
     });
   });
@@ -147,23 +140,6 @@ describe('abc: full-content', () => {
         );
       }),
     );
-    it('should be add class when go to include full-content route', () => {
-      const eventsSub = new BehaviorSubject<any>(null);
-      class MockRouter {
-        events = eventsSub;
-      }
-      TestBed.overrideProvider(Router, {
-        useFactory: () => {
-          return new MockRouter();
-        },
-        deps: [],
-      });
-      createComp();
-
-      eventsSub.next(new ActivationStart(null));
-      eventsSub.complete();
-      expect(bodyEl.classList.contains('ad-full-content-wrap')).toBe(true);
-    });
     it('should be clear class when go to other route', () => {
       const eventsSub = new BehaviorSubject<any>(null);
       class MockRouter {
@@ -181,7 +157,7 @@ describe('abc: full-content', () => {
 
       eventsSub.next(new ActivationEnd(null));
       eventsSub.complete();
-      expect(bodyEl.classList.contains('ad-full-content')).toBe(false);
+      expect(bodyEl.classList.contains('full-content')).toBe(false);
     });
   });
 });

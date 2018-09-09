@@ -25,3 +25,10 @@ export interface Layout {
   theme: string;
   [key: string]: any;
 }
+
+export interface SettingsNotify {
+  type: 'layout' | 'app' | 'user';
+  /** 更新 `key`，限 `layout` 有效 */
+  name?: string;
+  value: any;
+}

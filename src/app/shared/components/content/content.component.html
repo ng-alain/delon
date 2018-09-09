@@ -1,0 +1,33 @@
+<nz-row>
+  <nz-col *ngIf="!isMobile" nzXs="24" nzSm="24" nzMd="24" nzLg="6" nzXl="5" nzXXl="4" class="main-menu">
+    <main-menu (click)="to()"></main-menu>
+  </nz-col>
+  <nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="18" nzXl="19" nzXXl="20" class="main-container" [class.pages-container]="meta.isPages">
+    <router-outlet></router-outlet>
+  </nz-col>
+</nz-row>
+<ng-container *ngIf="isMobile">
+  <div class="drawer drawer-left" [class.drawer-open]="opened">
+    <div class="drawer-bg" [hidden]="!opened" (click)="opened=!opened"></div>
+    <div class="drawer-content-wrapper">
+      <div class="drawer-content">
+        <main-menu (click)="to()"></main-menu>
+      </div>
+      <div class="drawer-button" (click)="opened=!opened"><i class="anticon anticon-menu-unfold"></i></div>
+    </div>
+  </div>
+</ng-container>
+<nz-row *ngIf="meta.next || meta.prev">
+  <nz-col nzXs="24" nzSm="24" nzMd="24" [nzLg]="{span:18, offset: 6}" [nzXl]="{span:19, offset: 5}" [nzXXl]="{span:20, offset: 4}">
+    <section class="prev-next-nav">
+      <a class="prev-page" *ngIf="meta.prev" routerLink="{{meta.prev.url}}">
+        <span>{{meta.prev.title}}</span>
+        <span class="chinese">{{meta.prev.subtitle}}</span>
+      </a>
+      <a class="next-page" *ngIf="meta.next" routerLink="{{meta.next.url}}">
+        <span>{{meta.next.title}}</span>
+        <span class="chinese">{{meta.next.subtitle}}</span>
+      </a>
+    </section>
+  </nz-col>
+</nz-row>

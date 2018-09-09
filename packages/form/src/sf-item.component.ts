@@ -7,7 +7,6 @@ import {
   ViewContainerRef,
   ComponentRef,
   OnDestroy,
-  SimpleChanges,
 } from '@angular/core';
 import { FormProperty } from './model/form.property';
 import { Widget } from './widget';
@@ -58,10 +57,10 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.ref = this.widgetFactory.createWidget(
       this.container,
-      this.formProperty.ui.widget || this.formProperty.schema.type,
+      (this.formProperty.ui.widget || this.formProperty.schema.type) as string,
     );
     this.onWidgetInstanciated(this.ref.instance);
   }

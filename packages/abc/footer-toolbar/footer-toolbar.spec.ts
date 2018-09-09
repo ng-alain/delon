@@ -2,8 +2,8 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { AdFooterToolbarModule } from './footer-toolbar.module';
-import { AdErrorCollectModule } from '../error-collect/error-collect.module';
+import { FooterToolbarModule } from './footer-toolbar.module';
+import { ErrorCollectModule } from '../error-collect/error-collect.module';
 
 describe('abc: footer-toolbar', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -13,8 +13,8 @@ describe('abc: footer-toolbar', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        AdErrorCollectModule.forRoot(),
-        AdFooterToolbarModule.forRoot(),
+        ErrorCollectModule.forRoot(),
+        FooterToolbarModule.forRoot(),
       ],
       declarations: [TestComponent],
     });
@@ -25,7 +25,7 @@ describe('abc: footer-toolbar', () => {
   });
 
   it('should be create', () => {
-    expect(dl.queryAll(By.css('.ad-footer-toolbar')).length).toBe(1);
+    expect(dl.queryAll(By.css('.footer-toolbar')).length).toBe(1);
   });
 
   it('should be load error-collect', () => {

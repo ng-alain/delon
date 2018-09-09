@@ -20,7 +20,7 @@ Mock 是指通过生成模拟数据让前端开发人员独立于后端进行开
 安装 `@delon/mock` 依赖包：
 
 ```bash
-npm install @delon/mock --save-dev
+yarn add @delon/mock -D
 ```
 
 在根模块 `AppModule` 导入 [Mock 规则数据](/mock/rule)和 `DelonMockModule`；
@@ -50,11 +50,13 @@ const MOCKMODULE = !environment.production ? [ DelonMockModule.forRoot({ data: M
 | `[force]` | `boolean` | `false` | 是否强制所有请求都Mock，`true` 表示当请求的URL不存在时直接返回 404 错误，`false` 表示未命中时发送真实HTTP请求 |
 | `[log]` | `boolean` | `true` | 是否打印 Mock 请求信息，弥补浏览器无Network信息；当请求经过 Mock 会接收【👽Mock】 |
 
+> 若子模块还需要使用确保HTTP拦截器有效，一般可以直接在 SharedModule 直接使用 `forChild`。
+
 ### 为什么只对开发环境有效？
 
 Mock 并非是真实数据，大部分场景是针对开发本地或测试环境；所以在生产环境中不应该包括 Mock 模块以及规则数据。因此上述才会根据 `!environment.production` 依据环境来决定是否加载 `DelonMockModule`。
 
-当然，你依然可以在生产环境也使用这种规则，就像 https://cipchk.github.io/ng-alain/ 一样，需要一些模拟请求来保证环境的运行。
+当然，你依然可以在生产环境也使用这种规则，就像 //ng-alain.github.io/ng-alain/ 一样，需要一些模拟请求来保证环境的运行。
 
 ```ts
 import { DelonMockModule } from '@delon/mock';

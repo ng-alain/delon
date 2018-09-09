@@ -1,6 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import replace from 'rollup-plugin-replace';
-import uglify from 'rollup-plugin-uglify';
+import { uglify } from 'rollup-plugin-uglify';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const target = process.env.ROLLUP_TARGET || 'esm';
@@ -14,7 +14,6 @@ const globals = {
   '@angular/forms': 'ng.forms',
 
   'ng-zorro-antd': 'ngZorro.antd',
-  'ng-zorro-antd-extra': 'ngZorro.antd_extra',
   'file-saver': 'saveAs',
   'ngx-countdown': 'ngxCountDown',
   xlsx: 'xlsx',

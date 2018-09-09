@@ -24,11 +24,11 @@ CLI 会自动在 `src/app/routes/sys` 下创建 `sys.module.ts` 和 `sys-routing
 
 ```ts
 {
-    path: '',
-    component: LayoutDefaultComponent,
-    children: [
-        { path: 'sys', loadChildren: './sys/sys.module#SysModule' }
-    ]
+  path: '',
+  component: LayoutDefaultComponent,
+  children: [
+    { path: 'sys', loadChildren: './sys/sys.module#SysModule' }
+  ]
 }
 ```
 

@@ -1,26 +1,28 @@
 {
-    "extends": "../tsconfig.json",
     "compilerOptions": {
+      "sourceMap": true,
+      "declaration": false,
+      "moduleResolution": "node",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "allowSyntheticDefaultImports": true,
+      "lib": [
+        "es2016"
+      ],
       "outDir": "../out-tsc/spec",
-      "baseUrl": "./",
       "module": "commonjs",
-      "target": "es5",
+      "target": "es6",
+      "baseUrl": "",
       "types": [
         "jasmine",
         "node"
-      ],
-      "paths": {
-        "@delon/*": [ "../packages/*" ]
-      }
+      ]
     },
     "files": [
-      "test.ts"
-    ],
-    "exclude": [
-      "../packages/cli/**/*"
-    ],
+      "test.ts",
+      "polyfills.ts"
+  ],
     "include": [
-      "**/*.spec.ts",
-      "**/*.d.ts"
+      "**/*.spec.ts"
     ]
   }

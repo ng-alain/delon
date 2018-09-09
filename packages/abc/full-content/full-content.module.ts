@@ -12,10 +12,10 @@ const COMPONENTS = [FullContentComponent, FullContentToggleDirective];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdFullContentModule {
+export class FullContentModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: AdFullContentModule,
+      ngModule: FullContentModule,
       providers: [FullContentService],
     };
   }

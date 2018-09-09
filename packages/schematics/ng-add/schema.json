@@ -34,6 +34,11 @@
       "description": "Generates .npmrc proxy to taobao.",
       "default": false
     },
+    "yarn": {
+      "type": "boolean",
+      "description": "Generates .yarnrc proxy to taobao.",
+      "default": false
+    },
     "hmr": {
       "type": "boolean",
       "description": "Generates hmr files and configuration",

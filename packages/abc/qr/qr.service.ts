@@ -1,4 +1,4 @@
-import { AdQRConfig } from './qr.config';
+import { QRConfig } from './qr.config';
 import { Injectable } from '@angular/core';
 
 declare var QRious: any;
@@ -26,7 +26,7 @@ export class QRService {
   /** 值 */
   value: string;
 
-  constructor(cog: AdQRConfig) {
+  constructor(cog: QRConfig) {
     Object.assign(this, cog);
     this.qr = new QRious();
   }

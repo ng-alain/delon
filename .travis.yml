@@ -1,7 +1,7 @@
 sudo: required
 language: node_js
 node_js:
-  - "8.11"
+  - '8.11'
 
 addons:
   apt:
@@ -15,9 +15,9 @@ git:
   depth: 1
 
 cache:
-  npm: true
+  yarn: true
   directories:
-     - ./node_modules
+    - ./node_modules
 
 before_install:
   - export CHROME_BIN=chromium-browser
@@ -25,18 +25,16 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 env:
-  - TASK=release
+  - TASK=release:ci
   - TASK=test
   - TASK=test:schematics
   - TASK=lint
   - TASK=site:release
-  - TASK=scaffold:release
 
 matrix:
   fast_finish: true
   allow_failures:
-    - env: "TASK=site:release"
-    - env: "TASK=scaffold:release"
+    - env: 'TASK=site:release'
 
 script:
   - npm run $TASK

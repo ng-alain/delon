@@ -1,5 +1,5 @@
 import { MockRequest, MockStatusError } from '@delon/mock';
-// TIPS: mockjs 一些优化细节见：http://ng-alain.com/docs/mock
+// TIPS: mockjs 一些优化细节见：https://ng-alain.com/docs/mock
 // import * as Mock from 'mockjs';
 
 const list = [];

@@ -76,7 +76,7 @@ schema: SFSchema = {
 
 ### keyword
 
-不管采用哪种方式来构建错误文本，都必须通过 `keyword` 来区分错误类型（完整类型见 [ERRORSDEFAULT](https://github.com/cipchk/delon/blob/master/packages/form/src/errors.ts#L4)）。
+不管采用哪种方式来构建错误文本，都必须通过 `keyword` 来区分错误类型（完整类型见 [ERRORSDEFAULT](https://github.com/ng-alain/delon/blob/master/packages/form/src/errors.ts#L4)）。
 
 ## 自定义校验
 

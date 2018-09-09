@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import { AdAvatarListModule } from './avatar-list.module';
+import { AvatarListModule } from './avatar-list.module';
 import { By } from '@angular/platform-browser';
 
 describe('abc: avatar-list', () => {
@@ -10,7 +10,7 @@ describe('abc: avatar-list', () => {
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
-      imports: [AdAvatarListModule.forRoot()],
+      imports: [AvatarListModule.forRoot()],
       declarations: [TestComponent],
     }).createComponent(TestComponent);
     dl = fixture.debugElement;
@@ -33,13 +33,13 @@ describe('abc: avatar-list', () => {
 
 @Component({
   template: `
-    <avatar-list [size]="size">
-        <avatar-list-item tips="Jake" src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png"></avatar-list-item>
-        <avatar-list-item tips="Andy" src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png"></avatar-list-item>
-        <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png"></avatar-list-item>
-        <avatar-list-item tips="Cipchk" text="Cipchk"></avatar-list-item>
-        <avatar-list-item tips="heart-o" icon="heart-o"></avatar-list-item>
-    </avatar-list>`,
+  <avatar-list [size]="size">
+    <avatar-list-item tips="Jake" src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png"></avatar-list-item>
+    <avatar-list-item tips="Andy" src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png"></avatar-list-item>
+    <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png"></avatar-list-item>
+    <avatar-list-item tips="Cipchk" text="Cipchk"></avatar-list-item>
+    <avatar-list-item tips="heart-o" icon="heart-o"></avatar-list-item>
+  </avatar-list>`,
 })
 class TestComponent {
   size: 'large' | 'small' | 'mini' | 'default' = 'default';

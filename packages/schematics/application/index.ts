@@ -262,6 +262,19 @@ function addSchematics() {
   };
 }
 
+function forceLess() {
+  return (host: Tree, context: SchematicContext) => {
+    scriptsToAngularJson(
+      host,
+      ['src/styles.less'],
+      'add',
+      ['build'],
+      null,
+      true,
+    );
+  };
+}
+
 function addStyle(options: ApplicationOptions) {
   return (host: Tree) => {
     addHeadStyle(
@@ -334,8 +347,8 @@ function addFilesToRoot(options: ApplicationOptions) {
         }),
         // move('/')
       ]),
-      MergeStrategy.Overwrite
-    )
+      MergeStrategy.Overwrite,
+    ),
   ]);
 }
 
@@ -362,6 +375,7 @@ export default function(options: ApplicationOptions): Rule {
       removeOrginalFiles(),
       addFilesToRoot(options),
       fixMain(),
+      forceLess(),
       addStyle(options),
       installPackages(),
     ])(host, context);

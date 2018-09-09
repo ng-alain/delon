@@ -13,7 +13,7 @@ type: Dev
 在终端输入下面的命令完成安装：
 
 ```bash
-$ npm install ngx-ueditor --save
+$ yarn add ngx-ueditor
 ```
 
 > 加上 `--save` 参数会自动添加依赖到 package.json 中去。

@@ -23,6 +23,12 @@ export interface Workspace {
     [k: string]: any;
   };
   /** Tool options. */
+  architect?: {
+    /** Link to schema. */
+    $schema?: string;
+    [k: string]: any;
+  };
+  /** Tool options. */
   targets?: {
     /** Link to schema. */
     $schema?: string;
@@ -69,7 +75,7 @@ export interface Project {
   architect?: ProjectBuildOptions;
 }
 
-/** Targets options for an Angular CLI workspace. */
+/** Architect options for an Angular CLI workspace. */
 export interface ProjectBuildOptions {
   /** Link to schema. */
   $schema?: string;

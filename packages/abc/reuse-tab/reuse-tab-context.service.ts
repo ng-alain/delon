@@ -62,7 +62,7 @@ export class ReuseTabContextService {
       .withPositions(positions);
     this.ref = this.overlay.create({
       positionStrategy,
-      panelClass: 'reuse-tab-cm',
+      panelClass: 'reuse-tab__cm',
       scrollStrategy: this.overlay.scrollStrategies.close(),
     });
     const comp = this.ref.attach(
