@@ -104,4 +104,4 @@ export class DelonModule {
 
 ### Missing locale data for the locale "zh-cn"
 
-缺少语言导入，参考[app.module.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/app.module.ts#L20-L22)。
+缺少语言导入，参考[app.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/app.module.ts#L20-L22)。

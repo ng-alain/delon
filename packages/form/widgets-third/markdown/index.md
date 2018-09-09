@@ -32,7 +32,7 @@ Markdown编辑器。
 
 ## 源代码
 
-[源代码](https://github.com/cipchk/delon/tree/master/packages/form/widgets-third/markdown)。
+[源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/markdown)。
 
 ## API
 

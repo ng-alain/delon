@@ -8,7 +8,7 @@ import {
 import { highlight } from '../converters/highlight';
 const JsonML = require('jsonml.js/lib/utils');
 
-let headingList = [];
+let headingList: any[] = [];
 const converters = [highlight()].concat([
   [
     (node: any) => typeof node === 'string',

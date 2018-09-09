@@ -14,8 +14,8 @@ Angular6（后面简称：v6）受限于 Angular Cli 的 BUG，需要额外的�
 - 在你升级之前请先 **务必** 再三确认引用的第三方类库是否已经支持 v6，再考虑升级。
 - `@delon/cli` 不支持 v6，后续会有 `ng add` 支持
 - v6 相关变更分为两个 Commit，可以根据他们了解具体的变更内容
-  - 主要结构：[7927d4](https://github.com/cipchk/ng-alain/commit/7927d48395755ecde8d0c4255be63011aef74d8c)
-  - 示例页：[47a458](https://github.com/cipchk/ng-alain/commit/47a458bc974d05c83b3d07b59caae848884b2fdf)
+  - 主要结构：[7927d4](https://github.com/ng-alain/ng-alain/commit/7927d48395755ecde8d0c4255be63011aef74d8c)
+  - 示例页：[47a458](https://github.com/ng-alain/ng-alain/commit/47a458bc974d05c83b3d07b59caae848884b2fdf)
 
 ## 移除的部分
 
@@ -30,7 +30,7 @@ Angular6（后面简称：v6）受限于 Angular Cli 的 BUG，需要额外的�
 
 ### 2、package.json
 
-修改 `package.json` 类库版本号为最新，若你不清楚如何修改，可以直接使用 [ng-alain](https://github.com/cipchk/ng-alain/blob/master/package.json) 现有的 `dependencies`、`devDependencies` 节点可直接复制，再将你可能引用额外类库加上即可。
+修改 `package.json` 类库版本号为最新，若你不清楚如何修改，可以直接使用 [ng-alain](https://github.com/ng-alain/ng-alain/blob/master/package.json) 现有的 `dependencies`、`devDependencies` 节点可直接复制，再将你可能引用额外类库加上即可。
 
 最后，安装依赖包：
 

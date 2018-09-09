@@ -73,7 +73,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
       return new Observable((observer: Observer<HttpEvent<any>>) => {
         const res = new HttpErrorResponse({
           status: 401,
-          statusText: `From Simple Intercept --> http://ng-alain.com/docs/auth`,
+          statusText: `From Simple Intercept --> https://ng-alain.com/docs/auth`,
         });
         observer.error(res);
       });

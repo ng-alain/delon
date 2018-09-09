@@ -16,7 +16,7 @@ type: Dev
 
 - `@delon` 作为基础建设类库，在更新频率上会略高，一般一周至少更新一次
 - 带有 **BREAKING CHANGES** 至少提升一个次版本号
-- [更新日志](https://github.com/cipchk/ng-alain/releases)
+- [更新日志](https://github.com/ng-alain/ng-alain/releases)
 
 ## 如何升级？
 

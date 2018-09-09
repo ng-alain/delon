@@ -37,8 +37,9 @@ updateVersionReferences() {
     PACKAGE_NAMES=(abc acl auth cache mock form theme util)
     for name in ${PACKAGE_NAMES[@]}
     do
-        sed -i "s/\"@delon\/${name}\":[ ]*\"[^\"]*\"/\"@delon\/${name}\": \"^${VERSION}\"/g" ${PACKAGE_DIR}
+      sed -i "s/\"@delon\/${name}\":[ ]*\"[^\"]*\"/\"@delon\/${name}\": \"^${VERSION}\"/g" ${PACKAGE_DIR}
     done
+    sed -i "s/\"ng-alain\":[ ]*\"[^\"]*\"/\"ng-alain\": \"^${VERSION}\"/g" ${PACKAGE_DIR}
   )
 }
 
@@ -94,7 +95,7 @@ if [[ ${DEPLOY} == true ]]; then
 
   echo 'deploy by gh-pages'
   # $(npm bin)/gh-pages-clean
-  $(npm bin)/gh-pages -d dist/scaffold/dist -r https://github.com/cipchk/ng-alain/
+  $(npm bin)/gh-pages -d dist/scaffold/dist -r https://github.com/ng-alain/ng-alain/
 
 fi
 

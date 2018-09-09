@@ -2,10 +2,10 @@
 
 delon is a production-ready solution for admin business components packages, Built on the design principles developed by Ant Design.
 
-[![Build Status](https://travis-ci.org/cipchk/delon.svg?branch=master)](https://travis-ci.org/cipchk/delon)
-[![Dependency Status](https://david-dm.org/cipchk/delon/status.svg)](https://david-dm.org/cipchk/delon)
-[![DevDependency Status](https://david-dm.org/cipchk/delon/dev-status.svg)](https://david-dm.org/cipchk/delon?type=dev)
-[![codecov](https://codecov.io/gh/cipchk/delon/branch/master/graph/badge.svg)](https://codecov.io/gh/cipchk/delon)
+[![Build Status](https://travis-ci.org/ng-alain/delon.svg?branch=master)](https://travis-ci.org/ng-alain/delon)
+[![Dependency Status](https://david-dm.org/ng-alain/delon/status.svg)](https://david-dm.org/ng-alain/delon)
+[![DevDependency Status](https://david-dm.org/ng-alain/delon/dev-status.svg)](https://david-dm.org/ng-alain/delon?type=dev)
+[![codecov](https://codecov.io/gh/ng-alain/delon/branch/master/graph/badge.svg)](https://codecov.io/gh/ng-alain/delon)
 [![npm](https://img.shields.io/npm/l/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
 [![npm](https://img.shields.io/npm/dm/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
 
@@ -24,29 +24,29 @@ delon is a production-ready solution for admin business components packages, Bui
 
 ## Links
 
-+ [Home Page](http://ng-alain.com)
-+ [@delon](https://github.com/cipchk/delon)
++ [Home Page](https://ng-alain.com)
++ [@delon](https://github.com/ng-alain/delon)
 + [DEMO](https://cipchk.github.io/ng-alain/)
 
 ## Architecture
 
-![Architecture](https://raw.githubusercontent.com/cipchk/delon/master/_screenshot/architecture.png)
+![Architecture](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/architecture.png)
 
 ## App Shots
 
-![desktop](https://raw.githubusercontent.com/cipchk/delon/master/_screenshot/desktop.png)
-![ipad](https://raw.githubusercontent.com/cipchk/delon/master/_screenshot/ipad.png)
-![iphone](https://raw.githubusercontent.com/cipchk/delon/master/_screenshot/iphone.png)
+![desktop](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/desktop.png)
+![ipad](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/ipad.png)
+![iphone](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/iphone.png)
 
 ## Troubleshooting
 
 Please follow this guidelines when reporting bugs and feature requests:
 
-1. Use [GitHub Issues](https://github.com/cipchk/delon/issues) board to report bugs and feature requests (not our email address)
+1. Use [GitHub Issues](https://github.com/ng-alain/delon/issues) board to report bugs and feature requests (not our email address)
 2. Please **always** write steps to reproduce the error. That way we can focus on fixing the bug, not scratching our heads trying to reproduce it.
 
 Thanks for understanding!
 
 ### License
 
-The MIT License (see the [LICENSE](https://github.com/cipchk/delon/blob/master/LICENSE) file for the full text)
+The MIT License (see the [LICENSE](https://github.com/ng-alain/delon/blob/master/LICENSE) file for the full text)

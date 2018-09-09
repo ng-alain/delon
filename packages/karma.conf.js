@@ -12,11 +12,8 @@ module.exports = function(config) {
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
     ],
-    client: {
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
-    },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, 'coverage'),
+      dir: require('path').join(__dirname, '../coverage'),
       reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true,
     },
@@ -25,18 +22,20 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
     singleRun: false,
+    client: { captureConsole: true, clearContext: false, timeout: 180000 },
+    browserDisconnectTimeout: 180000,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 300000,
+    captureTimeout: 180000,
+
+    browsers: ['ChromeHeadlessLocal'],
     customLaunchers: {
       Chrome_travis_ci: {
         base: 'ChromeHeadless',
         flags: ['--disable-translate', '--disable-extensions'],
       },
     },
-    mime: { 'text/x-typescript': ['ts', 'tsx'] },
-    client: { captureConsole: true, clearContext: false },
-    browserNoActivityTimeout: 60000,
-    captureTimeout: 60000,
   };
 
   if (process.env.TRAVIS) {

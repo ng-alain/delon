@@ -1,7 +1,7 @@
 import { PipeTransform, Pipe } from '@angular/core';
 
 /**
- * @see http://ng-alain.com/docs/service-pipe#%E5%BE%BD%E7%AB%A0-yn
+ * @see https://ng-alain.com/docs/service-pipe#%E5%BE%BD%E7%AB%A0-yn
  */
 @Pipe({ name: 'yn' })
 export class YNPipe implements PipeTransform {

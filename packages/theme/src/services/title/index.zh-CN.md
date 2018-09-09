@@ -4,9 +4,9 @@ title: 页面标题服务
 type: Service
 ---
 
-用于设置页面标题，一般监听路由变化并重新刷新标题，例如：[app.component.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/app.component.ts#L54)；同时标题的默认数据来源于 `MenuService`。
+用于设置页面标题，一般监听路由变化并重新刷新标题，例如：[app.component.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/app.component.ts#L54)；同时标题的默认数据来源于 `MenuService`。
 
-**建议：** 在 Angular 启动服务（[startup.service.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/core/startup/startup.service.ts)）过程中设置 `prefix` 或 `suffix` 值来调整统一的标题前后缀。
+**建议：** 在 Angular 启动服务（[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)）过程中设置 `prefix` 或 `suffix` 值来调整统一的标题前后缀。
 
 ## 获取顺序
 

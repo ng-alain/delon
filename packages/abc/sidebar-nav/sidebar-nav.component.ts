@@ -100,7 +100,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       'click',
       this.floatingAreaClickHandle.bind(this),
     );
-    // fix ie: https://github.com/cipchk/delon/issues/52
+    // fix ie: https://github.com/ng-alain/delon/issues/52
     if (this.floatingEl.hasOwnProperty('remove')) {
       this.floatingEl.remove();
     } else if (this.floatingEl.parentNode) {

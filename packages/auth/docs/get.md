@@ -48,7 +48,7 @@ this.socialService.login(`//github.com/login/oauth/authorize?xxxxxx`, '/', {
 
 因此 `@delon/auth` 是从回调页 URL 地址上携带信息作为获取源，当然它会受 URL 本身受限（例如：长度）；但我想对一个 Token 值是足够长的，你可以获取到 Token，再获取用户信息。
 
-需要创建一个用于回调的页面，而页面唯一要做的就是在 `ngOnInit` 时调用 `callback()` 方法（例如：[callback.component.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/routes/callback/callback.component.ts#L24)）：
+需要创建一个用于回调的页面，而页面唯一要做的就是在 `ngOnInit` 时调用 `callback()` 方法（例如：[callback.component.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/callback/callback.component.ts#L24)）：
 
 ```ts
 // 1、默认根据当前URL地址

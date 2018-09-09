@@ -20,14 +20,14 @@ type: Documents
 
 **常见小部件库**
 
-默认情况下 @delon/form 实现了一些常见需求，但需要额外类库支持的，称它为第三方组件小部件，这一部分小部件存在于[widgets-third](https://github.com/cipchk/delon/tree/master/packages/form/widgets-third)目录里；你可以直接复制使用。
+默认情况下 @delon/form 实现了一些常见需求，但需要额外类库支持的，称它为第三方组件小部件，这一部分小部件存在于[widgets-third](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third)目录里；你可以直接复制使用。
 
 这些组件包括：
 
 | 名称 | 描述 | 文档 | 源代码 |
 | --- | ---- | ---- | ---- |
-| `tinymce` | Tinymce 富文本框 | [文档](/form/tinymce) | [源代码](https://github.com/cipchk/delon/tree/master/packages/form/widgets-third/tinymce) |
-| `ueditor` | UEditor 富文本框 | [文档](/form/ueditor) | [源代码](https://github.com/cipchk/delon/tree/master/packages/form/widgets-third/ueditor) |
+| `tinymce` | Tinymce 富文本框 | [文档](/form/tinymce) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/tinymce) |
+| `ueditor` | UEditor 富文本框 | [文档](/form/ueditor) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/ueditor) |
 
 **自己创建小部件**
 
@@ -103,7 +103,7 @@ export class AppModule {
 }
 ```
 
-当然为了更友好的维护，建议在Shared目录下定义一个专属 Json schema 模块，有兴趣可参考 [ng-alain实现](https://github.com/cipchk/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts)。
+当然为了更友好的维护，建议在Shared目录下定义一个专属 Json schema 模块，有兴趣可参考 [ng-alain实现](https://github.com/ng-alain/ng-alain/blob/master/src/app/shared/json-schema/json-schema.module.ts)。
 
 ### 使用自定义小部件
 

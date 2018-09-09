@@ -26,15 +26,15 @@ import { AlainABCModule } from '@delon/abc';
 
 ### 如何删除呢？
 
-透过 [delon.module.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/delon.module.ts) 查找相应模块名称，并将其移除即可。
+透过 [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts) 查找相应模块名称，并将其移除即可。
 
-> `reuse-tab` 组件除了模块导入、导出以外，还在 [default.component.html](https://github.com/cipchk/ng-alain/blob/master/src/app/layout/default/default.component.html) 也有相应组件点位符。
+> `reuse-tab` 组件除了模块导入、导出以外，还在 [default.component.html](https://github.com/ng-alain/ng-alain/blob/master/src/app/layout/default/default.component.html) 也有相应组件点位符。
 
 ## 文档和反馈
 
 你可以在 [组件页面](/components) 找到所有的业务组件，以及相关的演示和 API 文档。
 
-组件会随着脚手架的更新而不断迭代，有任何问题和需求可以反馈到 [这里](https://github.com/cipchk/ng-alain/issues)。
+组件会随着脚手架的更新而不断迭代，有任何问题和需求可以反馈到 [这里](https://github.com/ng-alain/ng-alain/issues)。
 
 - 最新版本：[![@delon/abc](//img.shields.io/npm/v/@delon/abc.svg?style=flat-square)](//www.npmjs.com/package/@delon/abc)
-- [更新日志](https://github.com/cipchk/ng-alain/releases)
+- [更新日志](https://github.com/ng-alain/ng-alain/releases)

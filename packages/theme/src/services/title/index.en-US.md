@@ -4,9 +4,9 @@ title: Title Service
 type: Service
 ---
 
-Used to set page title, generally listen for route changed and refresh title, for example: [app.component.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/app.component.ts#L54); The default data from `MenuService`.
+Used to set page title, generally listen for route changed and refresh title, for example: [app.component.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/app.component.ts#L54); The default data from `MenuService`.
 
-**Suggest:** Set the `prefix` or `suffix` value via Angular startup service ([startup.service.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/core/startup/startup.service.ts)).
+**Suggest:** Set the `prefix` or `suffix` value via Angular startup service ([startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)).
 
 ## Orders
 

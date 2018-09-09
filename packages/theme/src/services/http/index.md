@@ -4,7 +4,7 @@ title: _HttpClient
 type: Service
 ---
 
-`@delon/theme` 包含了一个叫 [\_HttpClient](https://github.com/cipchk/delon/blob/master/packages/theme/services/http/http.client.ts) 类，其本质还是调用 Angular 的 `HttpClient`。
+`@delon/theme` 包含了一个叫 [\_HttpClient](https://github.com/ng-alain/delon/blob/master/packages/theme/services/http/http.client.ts) 类，其本质还是调用 Angular 的 `HttpClient`。
 
 我们知道 ng-zorro-antd 充斥着大量 `nzLoading` 属性，它可以让网络请求的加载有更友好的体验，这样我们无须在每一个业务页面维护一个 `loadind` 变量。
 

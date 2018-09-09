@@ -143,7 +143,7 @@ export interface STColumn {
    * - `number` 数字且居右(若 `className` 存在则优先)
    * - `currency` 货币且居右(若 `className` 存在则优先)
    * - `date` 日期格式且居中(若 `className` 存在则优先)，使用 `dateFormat` 自定义格式
-   * - `yn` 将`boolean`类型徽章化 [document](http://ng-alain.com/docs/data-render#yn)
+   * - `yn` 将`boolean`类型徽章化 [document](https://ng-alain.com/docs/data-render#yn)
    */
   type?:
     | 'checkbox'

@@ -6,10 +6,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cipchk/ng-alain.git"
+    "url": "git+https://github.com/ng-alain/ng-alain.git"
   },
   "bugs": {
-    "url": "https://github.com/cipchk/ng-alain/issues"
+    "url": "https://github.com/ng-alain/ng-alain/issues"
   },
   "homepage": "https://ng-alain.com/",
   "keywords": [

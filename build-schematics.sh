@@ -67,7 +67,8 @@ copyFiles() {
     "${1}src/styles.less|${2}application/files/src/"
     # assets
     "${1}src/assets/*.svg|${2}application/files/src/assets/"
-    "${1}src/assets/*.less|${2}application/files/src/assets/"
+    # TODO: only 2.0
+    # "${1}src/assets/*.less|${2}application/files/src/assets/"
     "${1}src/assets/tmp/img/*|${2}application/files/src/assets/tmp/img/"
     "${1}src/assets/tmp/i18n/*|${2}application/files/src/assets/tmp/i18n/"
     "${1}src/assets/tmp/app-data.json|${2}application/files/src/assets/tmp/"
@@ -83,7 +84,8 @@ copyFiles() {
     # layout
     "${1}src/app/layout/fullscreen|${2}application/files/src/app/layout/"
     "${1}src/app/layout/passport|${2}application/files/src/app/layout/"
-    "${1}src/app/layout/default/setting-drawer|${2}application/files/src/app/layout/default/setting-drawer/"
+    # TODO: only 2.0
+    # "${1}src/app/layout/default/setting-drawer|${2}application/files/src/app/layout/default/setting-drawer/"
     "${1}src/app/layout/default/default.component.html|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/default.component.spec.ts|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/default.component.ts|${2}application/files/src/app/layout/default/"

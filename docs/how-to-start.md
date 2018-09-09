@@ -18,7 +18,7 @@ ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使
 
 ## 二、启动
 
-项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），脚手架的启动始于 [startup.service.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：
+项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），脚手架的启动始于 [startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：
 
 ```ts
 // 应用信息：包括站点名、描述、年份
@@ -45,7 +45,7 @@ this.aclService.setFull(true);
 
 ### 菜单数据
 
-中台的菜单数据大多数是来自后端，但给予的数据务必确保是 [Menu](https://github.com/cipchk/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，有关更多细节请参考[sidebar-nav](/components/sidebar-nav) 的API说明。
+中台的菜单数据大多数是来自后端，但给予的数据务必确保是 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，有关更多细节请参考[sidebar-nav](/components/sidebar-nav) 的API说明。
 
 ### 页面标题
 
@@ -63,7 +63,7 @@ this.aclService.setFull(true);
 
 ## 三、路由
 
-脚手架顶层路由从 [routes-routing.module.ts](https://github.com/cipchk/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) 开始，其结构如下：
+脚手架顶层路由从 [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) 开始，其结构如下：
 
 ```ts
 const routes: Routes = [

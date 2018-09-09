@@ -25,15 +25,15 @@ ng-alain 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 ### 拦截器
 
-默认情况下在根模块注册了两个拦截器 [SimpleInterceptor](https://github.com/cipchk/delon/blob/master/packages/auth/token/simple/simple.interceptor.ts) 和 [DefaultInterceptor](https://github.com/cipchk/ng-alain/blob/master/src/app/core/net/default.interceptor.ts)，且执行顺序按注册顺序执行。
+默认情况下在根模块注册了两个拦截器 [SimpleInterceptor](https://github.com/ng-alain/delon/blob/master/packages/auth/token/simple/simple.interceptor.ts) 和 [DefaultInterceptor](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts)，且执行顺序按注册顺序执行。
 
 **SimpleInterceptor**
 
-[用户认证](/docs/auth)内置用于自动为请求添加 `token` 参数的拦截器。这里还有一个叫 [JWTInterceptor](https://github.com/cipchk/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) 拦截器，是一个标准 JWT 规范，若后端采用标准JWT可以直接换成JWTInterceptor拦截器。
+[用户认证](/docs/auth)内置用于自动为请求添加 `token` 参数的拦截器。这里还有一个叫 [JWTInterceptor](https://github.com/ng-alain/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) 拦截器，是一个标准 JWT 规范，若后端采用标准JWT可以直接换成JWTInterceptor拦截器。
 
 **DefaultInterceptor**
 
-[DefaultInterceptor](https://github.com/cipchk/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 拦截器只是提供一个拦截器的写法，默认包含了统一处理服务器请求前缀、处理请求异常及业务异常的示例代码，你可以根据你自己的需求做调整。
+[DefaultInterceptor](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 拦截器只是提供一个拦截器的写法，默认包含了统一处理服务器请求前缀、处理请求异常及业务异常的示例代码，你可以根据你自己的需求做调整。
 
 **注意点**
 
@@ -41,7 +41,7 @@ ng-alain 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 ## 开发环境
 
-正常情况下开发环境和生产环境不是同一个后端请求源，实际可以通过配置 [environment](https://github.com/cipchk/ng-alain/tree/master/src/environments) 目录下 [environment.ts](https://github.com/cipchk/ng-alain/blob/master/src/environments/environment.ts) 和 [environment.prod.ts](https://github.com/cipchk/ng-alain/blob/master/src/environments/environment.prod.ts) 改变不同环境的请求源。
+正常情况下开发环境和生产环境不是同一个后端请求源，实际可以通过配置 [environment](https://github.com/ng-alain/ng-alain/tree/master/src/environments) 目录下 [environment.ts](https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.ts) 和 [environment.prod.ts](https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.prod.ts) 改变不同环境的请求源。
 
 > environment 实际是一个JSON对象，你可以组织不同形式来满足多请求源的问题。
 

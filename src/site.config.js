@@ -5,7 +5,7 @@ module.exports = {
   modules: [
     {
       name: 'docs',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/docs',
       types: [
         {
@@ -43,7 +43,7 @@ module.exports = {
     },
     {
       name: 'components',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/components',
       types: [
         {
@@ -241,7 +241,7 @@ module.exports = {
     },
     {
       name: 'auth',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/auth',
       types: [
         {
@@ -269,7 +269,7 @@ module.exports = {
     },
     {
       name: 'acl',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/acl',
       types: [
         {
@@ -297,7 +297,7 @@ module.exports = {
     },
     {
       name: 'cache',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/cache',
       types: [
         {
@@ -325,7 +325,7 @@ module.exports = {
     },
     {
       name: 'mock',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/mock',
       types: [
         {
@@ -353,7 +353,7 @@ module.exports = {
     },
     {
       name: 'util',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/util',
       types: [
         {
@@ -393,7 +393,7 @@ module.exports = {
     },
     {
       name: 'form',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/form',
       types: [
         {
@@ -461,7 +461,7 @@ module.exports = {
     },
     {
       name: 'chart',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/chart',
       types: [
         {
@@ -500,7 +500,7 @@ module.exports = {
     },
     {
       name: 'cli',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/cli',
       types: [
         {
@@ -528,7 +528,7 @@ module.exports = {
     },
     {
       name: 'theme',
-      github: 'https://github.com/cipchk/delon',
+      github: 'https://github.com/ng-alain/delon',
       dist: './src/app/routes/gen/theme',
       types: [
         {

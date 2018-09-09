@@ -23,7 +23,7 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，目标�
 
 ## 二、前序准备
 
-你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.io/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/cipchk/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。
+你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.io/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。
 
 ## 三、安装
 
