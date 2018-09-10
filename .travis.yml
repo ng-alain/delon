@@ -29,12 +29,7 @@ env:
   - TASK=test
   - TASK=test:schematics
   - TASK=lint
-  - TASK=site:release
-
-matrix:
-  fast_finish: true
-  allow_failures:
-    - env: 'TASK=site:release'
+  - TASK=site:build
 
 script:
   - npm run $TASK

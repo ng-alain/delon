@@ -28,7 +28,3 @@ ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到�
 ### 如何覆盖参数
 
 脚手架里有一个叫 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) LESS文件，允许你在注册 ng-alain 主题样式**之前**重新覆盖参数数值，我们也提供一个简单的[自定义主题](/tools/theme)工具，可以简单配置并将生成主题参数粘贴至 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) 可以实时变化 ng-alain 的主题效果。
-
-## 动态主题
-
-这里的动态主题是指**颜色**部分，ng-alain 里默认并没有这一选项，你可以下载 [color.less](https://github.com/ng-alain/delon/blob/master/src/assets/color.less) 至 `./assets/` 目录下，并且参考 ng-alain.com 的做法应用颜色方法 [apply()](https://github.com/ng-alain/delon/blob/master/src/app/routes/tools/theme/editor/editor.component.ts#L74) 来动态改变颜色。

@@ -31,7 +31,7 @@ export class CodeService {
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
-      "targets": {
+      "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
@@ -122,7 +122,7 @@ export class CodeService {
     "demo-e2e": {
       "root": "e2e/",
       "projectType": "application",
-      "targets": {
+      "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -157,17 +157,19 @@ export class CodeService {
           `<${selector}>loading</${selector}>`,
         ].join(''),
         'src/main.ts': `import './polyfills';
-  import { enableProdMode } from '@angular/core';
-  import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-  import { AppModule } from './app/app.module';
-  platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
-    // Ensure Angular destroys itself on hot reloads.
-    if (window['ngRef']) {
-      window['ngRef'].destroy();
-    }
-    window['ngRef'] = ref;
-    // Otherise, log the boot error
-  }).catch(err => console.error(err));`,
+
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
+  // Ensure Angular destroys itself on hot reloads.
+  if (window['ngRef']) {
+    window['ngRef'].destroy();
+  }
+  window['ngRef'] = ref;
+  // Otherise, log the boot error
+}).catch(err => console.error(err));`,
         'src/polyfills.ts': `/** IE9, IE10 and IE11 requires all of the following polyfills. **/
 // import 'core-js/es6/symbol';
 // import 'core-js/es6/object';
@@ -205,6 +207,7 @@ registerLocaleData(localeZh);
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { AlainThemeModule } from '@delon/theme';
 import { DelonABCModule } from '@delon/abc';
+import { DelonChartModule } from '@delon/chart';
 import { DelonFormModule } from '@delon/form';
 import { DelonAuthModule } from '@delon/auth';
 import { DelonACLModule } from '@delon/acl';
@@ -239,6 +242,7 @@ imports: [
     NgZorroAntdModule.forRoot(),
     AlainThemeModule.forRoot(),
     DelonABCModule.forRoot(),
+    DelonChartModule.forRoot(),
     DelonAuthModule.forRoot(),
     DelonACLModule.forRoot(),
     DelonCacheModule.forRoot(),
@@ -277,17 +281,20 @@ export class AppModule { }
         'file-saver': '^1.3.3',
         'ngx-countdown': '*',
         'ng-zorro-antd': '*',
-        '@delon/theme': '*',
-        '@delon/abc': '*',
-        '@delon/acl': '*',
-        '@delon/auth': '*',
-        '@delon/cache': '*',
-        '@delon/mock': '*',
-        '@delon/form': '*',
-        '@delon/util': '*',
+        '@delon/theme': '^2.0.0-beta.0',
+        '@delon/abc': '^2.0.0-beta.0',
+        '@delon/chart': '^2.0.0-beta.0',
+        '@delon/acl': '^2.0.0-beta.0',
+        '@delon/auth': '^2.0.0-beta.0',
+        '@delon/cache': '^2.0.0-beta.0',
+        '@delon/mock': '^2.0.0-beta.0',
+        '@delon/form': '^2.0.0-beta.0',
+        '@delon/util': '^2.0.0-beta.0',
         'extend': '*',
-        'rxjs-compat': '*',
+        'qrious': '*',
       },
+    }, {
+      openFile: `src/app/app.component.ts`
     });
   }
 }
