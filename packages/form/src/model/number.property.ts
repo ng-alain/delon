@@ -11,7 +11,7 @@ export class NumberProperty extends AtomicProperty {
         value =
           value.indexOf('.') > -1 ? parseFloat(value) : parseInt(value, 10);
       } else {
-        value = null;
+        value = undefined;
       }
     }
     this._value = value;
