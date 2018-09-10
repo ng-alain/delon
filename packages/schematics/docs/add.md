@@ -7,7 +7,7 @@ type: Documents
 ## 命令格式
 
 ```bash
-ng add ng-alain:next <project name>
+ng add ng-alain@next <project name>
 ```
 
 ## 额外参数
@@ -26,7 +26,7 @@ ng add ng-alain:next <project name>
 例如生成一个带有国际化和HMR热替换项目：
 
 ```bash
-ng add ng-alain:next demo --i18n --hmr
+ng add ng-alain@next demo --i18n --hmr
 ```
 
 查看更多[插件](/cli/plugin)。
