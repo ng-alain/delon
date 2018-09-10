@@ -25,7 +25,7 @@ ng new demo --style less
 2、添加 ng-alain 脚手架
 
 ```bash
-ng add ng-alain:next
+ng add ng-alain@next
 ```
 
 > 遇到问题请阅读 [常见问题](/docs/faq)

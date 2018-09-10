@@ -30,7 +30,7 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，目标�
 ```bash
 ng new demo --style less
 cd demo
-ng add ng-alain:next
+ng add ng-alain@next
 ng serve
 ```
 
