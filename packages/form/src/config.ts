@@ -1,4 +1,4 @@
-import { SFRenderSchema, SFUISchemaItem } from './schema/ui';
+import { SFUISchemaItem } from './schema/ui';
 import { ERRORSDEFAULT } from './errors';
 import { SFButton } from './interface';
 
@@ -48,12 +48,8 @@ export class DelonFormConfig {
    * 按钮风格
    */
   button?: SFButton = {
-    submit: '提交',
     submit_type: 'primary',
-    reset: '重置',
     reset_type: 'default',
-    search: '搜索',
-    edit: '保存',
   };
   /**
    * date小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`YYYY-MM-DD HH:mm:ss`

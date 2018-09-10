@@ -4,20 +4,26 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import { InputBoolean } from '@delon/util';
+import { DelonI18nService } from '@delon/theme';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tag-select',
   template: `
   <ng-content></ng-content>
   <a *ngIf="expandable" class="tag-select__trigger" (click)="trigger()">
-    {{expand ? '收起' : '展开'}}<i class="anticon anticon-{{expand ? 'up' : 'down'}} tag-select__trigger-icon"></i>
+    {{expand ? locale.collapse : locale.expand}}<i class="anticon anticon-{{expand ? 'up' : 'down'}} tag-select__trigger-icon"></i>
   </a>`,
   host: { '[class.tag-select]': 'true' },
   preserveWhitespaces: false,
 })
-export class TagSelectComponent {
+export class TagSelectComponent implements OnDestroy {
+  private i18n$: Subscription;
+  locale: any = {};
+
   /** 是否启用 `展开与收进` */
   @Input()
   @InputBoolean()
@@ -30,8 +36,18 @@ export class TagSelectComponent {
   @Output()
   change: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  constructor(private i18n: DelonI18nService) {
+    this.i18n$ = this.i18n.change.subscribe(
+      () => (this.locale = this.i18n.getData('tagSelect')),
+    );
+  }
+
   trigger() {
     this.expand = !this.expand;
     this.change.emit(this.expand);
+  }
+
+  ngOnDestroy() {
+    this.i18n$.unsubscribe();
   }
 }

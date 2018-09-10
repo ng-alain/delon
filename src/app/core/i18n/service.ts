@@ -3,7 +3,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
 import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd';
-import { AlainI18NService } from '@delon/theme';
+import { AlainI18NService, DelonI18nService } from '@delon/theme';
+import { default as delonEnUS } from '@delon/theme/locales/en-US';
+import { default as delonZhCn } from '@delon/theme/locales/zh-CN';
+
 import { ENUS } from './en-US';
 import { ZHCN } from './zh-CN';
 
@@ -19,7 +22,8 @@ export class I18NService implements AlainI18NService {
   ];
 
   constructor(
-    private nzLocalService: NzI18nService,
+    private zorroI18n: NzI18nService,
+    private delonI18n: DelonI18nService,
     private translate: TranslateService,
   ) {
     this.translate.setTranslation('en-US', ENUS);
@@ -56,7 +60,8 @@ export class I18NService implements AlainI18NService {
 
   use(lang: LangType, emit = true) {
     this.translate.use(lang);
-    this.nzLocalService.setLocale(lang === 'en-US' ? en_US : zh_CN);
+    this.zorroI18n.setLocale(lang === 'en-US' ? en_US : zh_CN);
+    this.delonI18n.setLocale(lang === 'en-US' ? delonEnUS : delonZhCn);
     if (emit) this.change$.next(lang);
   }
 

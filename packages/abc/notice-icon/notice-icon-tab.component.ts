@@ -1,4 +1,13 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DelonI18nService } from '@delon/theme';
 import { NoticeItem, NoticeIconSelect } from './interface';
 
 @Component({
@@ -6,7 +15,7 @@ import { NoticeItem, NoticeIconSelect } from './interface';
   template: `
   <div *ngIf="data.list?.length === 0; else listTpl" class="notice-icon__notfound">
     <img class="notice-icon__notfound-img" *ngIf="data.emptyImage" src="{{data.emptyImage}}" alt="not found" />
-    <p>{{data.emptyText || '无通知'}}</p>
+    <p>{{data.emptyText || locale.emptyText}}</p>
   </div>
   <ng-template #listTpl>
     <nz-list [nzDataSource]="data.list" [nzRenderItem]="item">
@@ -28,15 +37,23 @@ import { NoticeItem, NoticeIconSelect } from './interface';
         </nz-list-item>
       </ng-template>
     </nz-list>
-    <div class="notice-icon__clear" (click)="onClear()">{{ data.clearText || '清空' }}</div>
+    <div class="notice-icon__clear" (click)="onClear()">{{ data.clearText || locale.clearText }}</div>
   </ng-template>
   `,
   preserveWhitespaces: false,
 })
-export class NoticeIconTabComponent {
-  @Input() data: NoticeItem;
-  @Output() select = new EventEmitter<NoticeIconSelect>();
-  @Output() clear = new EventEmitter<string>();
+export class NoticeIconTabComponent implements OnInit, OnDestroy {
+  private i18n$: Subscription;
+  locale: any = {};
+
+  @Input()
+  data: NoticeItem;
+  @Output()
+  select = new EventEmitter<NoticeIconSelect>();
+  @Output()
+  clear = new EventEmitter<string>();
+
+  constructor(private i18n: DelonI18nService) {}
 
   onClick(item: NoticeItem) {
     this.select.emit(<NoticeIconSelect>{
@@ -47,5 +64,15 @@ export class NoticeIconTabComponent {
 
   onClear() {
     this.clear.emit(this.data.title);
+  }
+
+  ngOnInit() {
+    this.i18n$ = this.i18n.change.subscribe(
+      () => (this.locale = this.i18n.getData('noticeIcon')),
+    );
+  }
+
+  ngOnDestroy() {
+    this.i18n$.unsubscribe();
   }
 }
