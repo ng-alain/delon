@@ -2,7 +2,7 @@ import { AtomicProperty } from './atomic.property';
 
 export class NumberProperty extends AtomicProperty {
   fallbackValue() {
-    return null;
+    return undefined;
   }
 
   setValue(value: any, onlySelf: boolean) {
