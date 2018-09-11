@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { WINDOW } from './win_tokens';
-import zh_CN from '../locales/zh-CN';
-import { DELON_I18N } from './locale/tokens';
+
+import { DelonLocaleModule } from './locale/locale.module';
 
 // region: import
 import { ALAIN_I18N_TOKEN, AlainI18NServiceFake } from './services/i18n/i18n';
@@ -27,14 +27,13 @@ const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe];
 @NgModule({
   imports: [CommonModule, RouterModule],
   declarations: [...COMPONENTS, ...PIPES],
-  exports: [...COMPONENTS, ...PIPES],
+  exports: [...COMPONENTS, ...PIPES, DelonLocaleModule],
 })
 export class AlainThemeModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AlainThemeModule,
       providers: [
-        { provide: DELON_I18N, useValue: zh_CN },
         { provide: WINDOW, useValue: window },
         { provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake },
         ...HELPERS,

@@ -7,7 +7,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { InputBoolean } from '@delon/util';
-import { DelonI18nService } from '@delon/theme';
+import { DelonLocaleService } from '@delon/theme';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -36,7 +36,7 @@ export class TagSelectComponent implements OnDestroy {
   @Output()
   change: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private i18n: DelonI18nService) {
+  constructor(private i18n: DelonLocaleService) {
     this.i18n$ = this.i18n.change.subscribe(
       () => (this.locale = this.i18n.getData('tagSelect')),
     );

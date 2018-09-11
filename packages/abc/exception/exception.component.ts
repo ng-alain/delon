@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { isEmpty } from '@delon/util';
-import { DelonI18nService } from '@delon/theme';
+import { DelonLocaleService } from '@delon/theme';
 
 @Component({
   selector: 'exception',
@@ -85,7 +85,7 @@ export class ExceptionComponent implements OnInit, OnDestroy {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
   }
 
-  constructor(private i18n: DelonI18nService) {}
+  constructor(private i18n: DelonLocaleService) {}
 
   ngOnInit() {
     this.i18n$ = this.i18n.change.subscribe(

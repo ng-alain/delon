@@ -6,7 +6,7 @@ import {
   HostListener,
   OnInit,
 } from '@angular/core';
-import { DelonI18nService } from '@delon/theme';
+import { DelonLocaleService } from '@delon/theme';
 
 import {
   ReuseContextI18n,
@@ -49,7 +49,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
     return this.event.ctrlKey;
   }
 
-  constructor(private i18nSrv: DelonI18nService) {}
+  constructor(private i18nSrv: DelonLocaleService) {}
 
   private notify(type: CloseType, item: ReuseItem) {
     this.close.next({

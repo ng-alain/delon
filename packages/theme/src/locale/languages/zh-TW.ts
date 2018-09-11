@@ -1,4 +1,4 @@
-import { LocaleData } from '../src/locale/locale.types';
+import { LocaleData } from '../locale.types';
 
 export default <LocaleData>{
   abbr: 'zh-TW',

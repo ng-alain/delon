@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { toNumber } from '@delon/util';
-import { DelonI18nService } from '@delon/theme';
+import { DelonLocaleService } from '@delon/theme';
 
 @Component({
   selector: 'g2-mini-progress',
@@ -49,5 +49,5 @@ export class G2ProgressComponent {
   }
   private _percent: number;
 
-  constructor(public i18n: DelonI18nService) {}
+  constructor(public i18n: DelonLocaleService) {}
 }

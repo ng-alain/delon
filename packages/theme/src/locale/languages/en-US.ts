@@ -1,4 +1,4 @@
-import { LocaleData } from '../src/locale/locale.types';
+import { LocaleData } from '../locale.types';
 
 export default <LocaleData>{
   abbr: 'en-US',
@@ -6,7 +6,7 @@ export default <LocaleData>{
     403: `Sorry, you don't have access to this page`,
     404: `Sorry, that page don't exist`,
     500: `Sorry, server error`,
-    backToHome: 'Back To Home'
+    backToHome: 'Back To Home',
   },
   noticeIcon: {
     emptyText: 'No data',
@@ -23,7 +23,7 @@ export default <LocaleData>{
     collapse: 'Collapse',
   },
   miniProgress: {
-    target: 'Target: '
+    target: 'Target: ',
   },
   sf: {
     submit: 'Submit',

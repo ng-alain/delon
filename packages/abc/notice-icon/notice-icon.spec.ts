@@ -2,9 +2,7 @@ import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DELON_I18N, DelonI18nService } from '@delon/theme';
-import zh_CN from '@delon/theme/locales/zh-CN';
-import en_US from '@delon/theme/locales/en-US';
+import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/theme';
 
 import { NoticeIconModule } from './notice-icon.module';
 import { NoticeIconComponent } from './notice-icon.component';
@@ -18,8 +16,7 @@ describe('abc: notice-icon', () => {
 
   beforeEach(async(() => {
     injector = TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, NoticeIconModule.forRoot()],
-      providers: [{ provide: DELON_I18N, useValue: zh_CN }],
+      imports: [NoopAnimationsModule, NoticeIconModule.forRoot(), DelonLocaleModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -93,7 +90,7 @@ describe('abc: notice-icon', () => {
     const a = dl.query(By.css('.notice-icon__notfound'))
       .nativeElement as HTMLElement;
     expect(a.innerText).toBe(zh_CN.noticeIcon.emptyText);
-    injector.get(DelonI18nService).setLocale(en_US);
+    injector.get(DelonLocaleService).setLocale(en_US);
     fixture.detectChanges();
     expect(a.innerText).toBe(en_US.noticeIcon.emptyText);
   });

@@ -1,35 +1,35 @@
-import zh_CN from '../../locales/zh-CN';
-import en_US from '../../locales/en-US';
-import { DelonI18nService } from './locale.service';
+import zhCN from './languages/zh-CN';
+import enUS from './languages/en-US';
+import { DelonLocaleService } from './locale.service';
 import { filter } from 'rxjs/operators';
 
 describe('theme: locale', () => {
-  let locale: DelonI18nService;
-  beforeEach(() => (locale = new DelonI18nService(zh_CN)));
+  let locale: DelonLocaleService;
+  beforeEach(() => (locale = new DelonLocaleService(zhCN)));
 
   describe('#setLocale', () => {
     it('should working', () => {
-      locale.setLocale(en_US);
-      expect(locale.locale.abbr).toBe(en_US.abbr);
+      locale.setLocale(enUS);
+      expect(locale.locale.abbr).toBe(enUS.abbr);
     });
     it('should be ingore change when new and old are the same', () => {
-      expect(locale.locale.abbr).toBe(zh_CN.abbr);
-      locale.setLocale(zh_CN);
-      expect(locale.locale.abbr).toBe(zh_CN.abbr);
+      expect(locale.locale.abbr).toBe(zhCN.abbr);
+      locale.setLocale(zhCN);
+      expect(locale.locale.abbr).toBe(zhCN.abbr);
     });
   });
 
   it('#getData', () => {
     expect(locale.getData('exception').backToHome).toBe(
-      zh_CN.exception.backToHome,
+      zhCN.exception.backToHome,
     );
   });
 
   it('#change', done => {
-    locale.change.pipe(filter(l => l.abbr === en_US.abbr)).subscribe(() => {
+    locale.change.pipe(filter(l => l.abbr === enUS.abbr)).subscribe(() => {
       expect(true).toBe(true);
       done();
     });
-    locale.setLocale(en_US);
+    locale.setLocale(enUS);
   });
 });

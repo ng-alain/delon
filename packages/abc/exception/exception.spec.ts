@@ -1,9 +1,7 @@
 import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DELON_I18N, DelonI18nService } from '@delon/theme';
-import zh_CN from '@delon/theme/locales/zh-CN';
-import en_US from '@delon/theme/locales/en-US';
+import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/theme';
 
 import { ExceptionModule } from './exception.module';
 import { ExceptionComponent } from './exception.component';
@@ -16,8 +14,7 @@ describe('abc: exception', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [ExceptionModule.forRoot()],
-      providers: [{ provide: DELON_I18N, useValue: zh_CN }],
+      imports: [ExceptionModule.forRoot(), DelonLocaleModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -65,7 +62,7 @@ describe('abc: exception', () => {
   });
 
   it('#i18n', () => {
-    injector.get(DelonI18nService).setLocale(en_US);
+    injector.get(DelonLocaleService).setLocale(en_US);
     context.type = 403;
     fixture.detectChanges();
     expect(

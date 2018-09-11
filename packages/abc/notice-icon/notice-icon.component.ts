@@ -6,7 +6,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DelonI18nService } from '@delon/theme';
+import { DelonLocaleService } from '@delon/theme';
 import { InputNumber, InputBoolean } from '@delon/util';
 
 import { NoticeItem, NoticeIconSelect } from './interface';
@@ -74,7 +74,7 @@ export class NoticeIconComponent implements OnDestroy {
   @Output()
   popoverVisibleChange = new EventEmitter<boolean>();
 
-  constructor(private i18n: DelonI18nService) {
+  constructor(private i18n: DelonLocaleService) {
     this.i18n$ = this.i18n.change.subscribe(
       () => (this.locale = this.i18n.getData('noticeIcon')),
     );

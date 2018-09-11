@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { deepCopy, InputBoolean } from '@delon/util';
-import { DelonI18nService } from '@delon/theme';
+import { DelonLocaleService } from '@delon/theme';
 
 import { DelonFormConfig } from './config';
 import { di, retrieveSchema, FORMATMAPS, resolveIf } from './utils';
@@ -35,7 +35,8 @@ export function useFactory(
 
 @Component({
   selector: 'sf, [sf]',
-  templateUrl: `./sf.component.html`,
+  templateUrl: './sf.component.html',
+  preserveWhitespaces: false,
   providers: [
     WidgetFactory,
     {
@@ -177,7 +178,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     private terminator: TerminatorService,
     private options: DelonFormConfig,
     private cd: ChangeDetectorRef,
-    private i18n: DelonI18nService,
+    private i18n: DelonLocaleService,
   ) {
     this.liveValidate = options.liveValidate;
     this.firstVisual = options.firstVisual;
