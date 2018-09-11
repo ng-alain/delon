@@ -38,6 +38,7 @@ const globals = {
   'date-fns/sub_years': 'date-fns/sub_years/index',
   'date-fns/add_days': 'date-fns/add_days/index',
 
+  '@delon/theme': 'delon.theme',
   '@delon/util': 'delon.util',
 };
 

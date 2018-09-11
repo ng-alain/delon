@@ -1,27 +1,34 @@
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DELON_I18N, DelonI18nService } from '@delon/theme';
+import zh_CN from '@delon/theme/locales/zh-CN';
+import en_US from '@delon/theme/locales/en-US';
 
 import { NoticeIconModule } from './notice-icon.module';
 import { NoticeIconComponent } from './notice-icon.component';
 import { NoticeItem } from './interface';
 
 describe('abc: notice-icon', () => {
+  let injector: Injector;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async(() => {
+    injector = TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, NoticeIconModule.forRoot()],
+      providers: [{ provide: DELON_I18N, useValue: zh_CN }],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }));
+
+  afterEach(() => context.comp.ngOnDestroy());
 
   describe('when not data', () => {
     beforeEach(() => (context.data = []));
@@ -45,7 +52,8 @@ describe('abc: notice-icon', () => {
     });
     it('should be popover list via click', () => {
       expect(context.popoverVisible).toBeUndefined();
-      (dl.query(By.css('.notice-icon__item')).nativeElement as HTMLElement).click();
+      (dl.query(By.css('.notice-icon__item'))
+        .nativeElement as HTMLElement).click();
       fixture.detectChanges();
       expect(context.popoverVisible).toBe(true);
     });
@@ -71,10 +79,23 @@ describe('abc: notice-icon', () => {
       context.popoverVisible = true;
       fixture.detectChanges();
       expect(context.clear).not.toHaveBeenCalled();
-      (dl.query(By.css('.notice-icon__clear')).nativeElement as HTMLElement).click();
+      (dl.query(By.css('.notice-icon__clear'))
+        .nativeElement as HTMLElement).click();
       fixture.detectChanges();
       expect(context.clear).toHaveBeenCalled();
     });
+  });
+
+  it('#i18n', () => {
+    context.popoverVisible = true;
+    context.data = [{ title: 'a1', list: [] }];
+    fixture.detectChanges();
+    const a = dl.query(By.css('.notice-icon__notfound'))
+      .nativeElement as HTMLElement;
+    expect(a.innerText).toBe(zh_CN.noticeIcon.emptyText);
+    injector.get(DelonI18nService).setLocale(en_US);
+    fixture.detectChanges();
+    expect(a.innerText).toBe(en_US.noticeIcon.emptyText);
   });
 });
 
@@ -91,7 +112,8 @@ describe('abc: notice-icon', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: NoticeIconComponent;
+  @ViewChild('comp')
+  comp: NoticeIconComponent;
   data: NoticeItem[] = [
     {
       title: 'test',

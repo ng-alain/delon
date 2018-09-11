@@ -1,18 +1,23 @@
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { DELON_I18N, DelonI18nService } from '@delon/theme';
+import zh_CN from '@delon/theme/locales/zh-CN';
+import en_US from '@delon/theme/locales/en-US';
 
 import { TagSelectModule } from './tag-select.module';
 import { TagSelectComponent } from './tag-select.component';
 
 describe('abc: tag-select', () => {
+  let injector: Injector;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
+    injector = TestBed.configureTestingModule({
       imports: [TagSelectModule.forRoot()],
+      providers: [{ provide: DELON_I18N, useValue: zh_CN }],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -20,6 +25,8 @@ describe('abc: tag-select', () => {
     context = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+  afterAll(() => context.comp.ngOnDestroy());
 
   describe('#expandable', () => {
     it('with true', () => {
@@ -35,7 +42,8 @@ describe('abc: tag-select', () => {
   });
   it('should be switch states via click trigger', () => {
     spyOn(context, 'change');
-    const triEl = dl.query(By.css('.tag-select__trigger')).nativeElement as HTMLElement;
+    const triEl = dl.query(By.css('.tag-select__trigger'))
+      .nativeElement as HTMLElement;
     expect(context.change).not.toHaveBeenCalled();
     expect(triEl.innerHTML).toContain('展开');
     expect(triEl.querySelector('.anticon-up')).toBeNull();
@@ -47,17 +55,26 @@ describe('abc: tag-select', () => {
     expect(triEl.querySelector('.anticon-down')).toBeNull();
     expect(context.change).toHaveBeenCalled();
   });
+  it('#i18n', () => {
+    const triEl = dl.query(By.css('.tag-select__trigger'))
+      .nativeElement as HTMLElement;
+    expect(triEl.innerText).toContain(zh_CN.tagSelect.expand);
+    injector.get(DelonI18nService).setLocale(en_US);
+    fixture.detectChanges();
+    expect(triEl.innerText).toBe(en_US.tagSelect.expand);
+  });
 });
 
 @Component({
   template: `
-    <tag-select [expandable]="expandable" (change)="change()">
+    <tag-select #comp [expandable]="expandable" (change)="change()">
         <li *ngFor="let i of categories; let idx = index" style="width: 30%">{{i.text}}</li>
     </tag-select>
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: TagSelectComponent;
+  @ViewChild('comp')
+  comp: TagSelectComponent;
   categories = [
     { id: 0, text: '全部', value: false },
     { id: 1, text: '类目一', value: false },

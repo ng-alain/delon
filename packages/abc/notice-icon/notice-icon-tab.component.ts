@@ -1,13 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnDestroy,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
-import { DelonI18nService } from '@delon/theme';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NoticeItem, NoticeIconSelect } from './interface';
 
 @Component({
@@ -42,18 +33,15 @@ import { NoticeItem, NoticeIconSelect } from './interface';
   `,
   preserveWhitespaces: false,
 })
-export class NoticeIconTabComponent implements OnInit, OnDestroy {
-  private i18n$: Subscription;
+export class NoticeIconTabComponent {
+  @Input()
   locale: any = {};
-
   @Input()
   data: NoticeItem;
   @Output()
   select = new EventEmitter<NoticeIconSelect>();
   @Output()
   clear = new EventEmitter<string>();
-
-  constructor(private i18n: DelonI18nService) {}
 
   onClick(item: NoticeItem) {
     this.select.emit(<NoticeIconSelect>{
@@ -64,15 +52,5 @@ export class NoticeIconTabComponent implements OnInit, OnDestroy {
 
   onClear() {
     this.clear.emit(this.data.title);
-  }
-
-  ngOnInit() {
-    this.i18n$ = this.i18n.change.subscribe(
-      () => (this.locale = this.i18n.getData('noticeIcon')),
-    );
-  }
-
-  ngOnDestroy() {
-    this.i18n$.unsubscribe();
   }
 }

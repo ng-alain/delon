@@ -1,4 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DelonI18nService } from '@delon/theme';
 import { InputNumber, InputBoolean } from '@delon/util';
 
 import { NoticeItem, NoticeIconSelect } from './interface';
@@ -23,6 +31,7 @@ import { NoticeItem, NoticeIconSelect } from './interface';
         <nz-tabset>
           <nz-tab *ngFor="let i of data" [nzTitle]="i.title">
             <notice-icon-tab
+              [locale]="locale"
               [data]="i"
               (select)="onSelect($event)"
               (clear)="onClear($event)"></notice-icon-tab>
@@ -35,7 +44,10 @@ import { NoticeItem, NoticeIconSelect } from './interface';
   host: { '[class.notice-icon__btn]': 'true' },
   preserveWhitespaces: false,
 })
-export class NoticeIconComponent {
+export class NoticeIconComponent implements OnDestroy {
+  private i18n$: Subscription;
+  locale: any = {};
+
   @Input()
   data: NoticeItem[] = [];
 
@@ -62,6 +74,12 @@ export class NoticeIconComponent {
   @Output()
   popoverVisibleChange = new EventEmitter<boolean>();
 
+  constructor(private i18n: DelonI18nService) {
+    this.i18n$ = this.i18n.change.subscribe(
+      () => (this.locale = this.i18n.getData('noticeIcon')),
+    );
+  }
+
   onVisibleChange(result: boolean) {
     this.popoverVisibleChange.emit(result);
   }
@@ -72,5 +90,9 @@ export class NoticeIconComponent {
 
   onClear(title: string) {
     this.clear.emit(title);
+  }
+
+  ngOnDestroy() {
+    this.i18n$.unsubscribe();
   }
 }

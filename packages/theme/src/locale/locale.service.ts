@@ -31,17 +31,6 @@ export class DelonI18nService {
   }
 
   getData(path: string) {
-    return this._getObjectPath(path);
-  }
-
-  private _getObjectPath(path: string): string | object | any {
-    let res = this._locale;
-    const paths = path.split('.');
-    const depth = paths.length;
-    let index = 0;
-    while (res && index < depth) {
-      res = res[paths[index++]];
-    }
-    return index === depth ? res : null;
+    return this._locale[path] || {};
   }
 }
