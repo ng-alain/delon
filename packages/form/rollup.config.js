@@ -22,6 +22,7 @@ const globals = {
 
   'date-fns/format': 'date-fns/format/index',
 
+  '@delon/theme': 'delon.theme',
   '@delon/util': 'delon.util',
 };
 

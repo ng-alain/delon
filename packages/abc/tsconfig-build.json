@@ -5,9 +5,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@delon/theme": ["../../packages-dist/theme"],
-      "@delon/acl": ["../../packages-dist/acl"],
-      "@delon/util": ["../../packages-dist/util"]
+      "@delon/*": ["../../packages-dist/*"]
     },
     "outDir": "../../@delon/abc"
   },
