@@ -34,7 +34,7 @@
     "test:schematics": "bash build-schematics.sh -b -t -travis",
     "site:gen": "node scripts/site/main init",
     "site:build": "npm run site:gen && ng build --prod --build-optimizer --base-href /",
-    "site": "ng serve -c=hmr",
+    "site": "npm run site:gen && ng serve -c=hmr",
     "release": "bash ./build.sh && bash build-schematics.sh -b",
     "release:ci": "bash ./build.sh && bash build-schematics.sh -b -travis",
     "publish:next": "npm run release && bash ./scripts/release/publish-next && bash ./scripts/release/sync-taobao",
