@@ -19,6 +19,11 @@
       "description": "Generates mock.",
       "default": true
     },
+    "defaultLanguage": {
+      "type": "string",
+      "description": "Specify default language [https://ng-alain.com/docs/i18n].",
+      "default": "zh-Hans"
+    },
     "i18n": {
       "type": "boolean",
       "description": "Generates i18n.",

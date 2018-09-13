@@ -13,6 +13,7 @@ import { PluginOptions } from './interface';
 
 import { pluginG2 } from './plugin.g2';
 import { pluginCodeStyle } from './plugin.code-style';
+import { pluginDefaultLanguage } from './plugin.default-language';
 import { pluginNetworkEnv } from './plugin.network-env';
 import { pluginHmr } from './plugin.hmr';
 import { pluginDocker } from './plugin.docker';
@@ -58,6 +59,15 @@ export default function(options: PluginSchema): Rule {
         break;
       case 'docker':
         rules.push(pluginDocker(pluginOptions));
+        break;
+      case 'defaultLanguage':
+        rules.push(
+          pluginDefaultLanguage(
+            Object.assign(pluginOptions, {
+              defaultLanguage: options.defaultLanguage,
+            }),
+          ),
+        );
         break;
       case 'asdf':
         rules.push(pluginAsdf(pluginOptions));
