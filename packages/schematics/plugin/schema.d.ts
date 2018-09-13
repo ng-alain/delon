@@ -3,4 +3,5 @@ export interface Schema {
   type: 'add' | 'remove';
   project?: string;
   packageManager?: 'npm' | 'yarn';
+  defaultLanguage?: string;
 }

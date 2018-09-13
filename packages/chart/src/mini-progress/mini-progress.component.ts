@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { toNumber } from '@delon/util';
+import { DelonLocaleService } from '@delon/theme';
 
 @Component({
   selector: 'g2-mini-progress',
   template: `
-  <nz-tooltip [nzTitle]="'目标值: ' + target + '%'">
+  <nz-tooltip [nzTitle]="i18n.getData('miniProgress').target + target + '%'">
     <div nz-tooltip class="g2-mini-progress__target" [ngStyle]="{'left.%': target}">
       <span class="g2-mini-progress__target-item" [ngStyle]="{'background-color': color}"></span>
       <span class="g2-mini-progress__target-item" [ngStyle]="{'background-color': color}"></span>
@@ -18,7 +19,8 @@ import { toNumber } from '@delon/util';
   preserveWhitespaces: false,
 })
 export class G2ProgressComponent {
-  @Input() color = '#1890FF';
+  @Input()
+  color = '#1890FF';
 
   @Input()
   get target() {
@@ -46,4 +48,6 @@ export class G2ProgressComponent {
     this._percent = Math.min(Math.max(toNumber(value), 0), 100);
   }
   private _percent: number;
+
+  constructor(public i18n: DelonLocaleService) {}
 }

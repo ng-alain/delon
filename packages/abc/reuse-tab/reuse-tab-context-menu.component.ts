@@ -6,6 +6,8 @@ import {
   HostListener,
   OnInit,
 } from '@angular/core';
+import { DelonLocaleService } from '@delon/theme';
+
 import {
   ReuseContextI18n,
   ReuseContextCloseEvent,
@@ -28,29 +30,26 @@ export class ReuseTabContextMenuComponent implements OnInit {
   private _i18n: ReuseContextI18n;
   @Input()
   set i18n(value: ReuseContextI18n) {
-    this._i18n = Object.assign(
-      {
-        close: '关闭标签',
-        closeOther: '关闭其它标签',
-        closeRight: '关闭右侧标签',
-        clear: '清空',
-      },
-      value,
-    );
+    this._i18n = Object.assign({}, this.i18nSrv.getData('reuseTab'), value);
   }
   get i18n() {
     return this._i18n;
   }
 
-  @Input() item: ReuseItem;
+  @Input()
+  item: ReuseItem;
 
-  @Input() event: MouseEvent;
+  @Input()
+  event: MouseEvent;
 
-  @Output() close = new EventEmitter<ReuseContextCloseEvent>();
+  @Output()
+  close = new EventEmitter<ReuseContextCloseEvent>();
 
   get includeNonCloseable() {
     return this.event.ctrlKey;
   }
+
+  constructor(private i18nSrv: DelonLocaleService) {}
 
   private notify(type: CloseType, item: ReuseItem) {
     this.close.next({

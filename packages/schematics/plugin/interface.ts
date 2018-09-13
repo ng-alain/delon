@@ -12,4 +12,5 @@ export interface PluginOptions {
   project?: string;
   /** 包管理类型 */
   packageManager?: 'npm' | 'yarn';
+  defaultLanguage?: string;
 }

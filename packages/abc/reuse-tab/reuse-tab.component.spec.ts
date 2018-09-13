@@ -1,9 +1,4 @@
-import {
-  Component,
-  DebugElement,
-  ViewChild,
-  Injector,
-} from '@angular/core';
+import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import {
   ComponentFixture,
   TestBed,
@@ -21,7 +16,14 @@ import {
   RouteReuseStrategy,
 } from '@angular/router';
 
-import { MenuService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import {
+  MenuService,
+  ALAIN_I18N_TOKEN,
+  DelonLocaleModule,
+  en_US,
+  zh_CN,
+  DelonLocaleService,
+} from '@delon/theme';
 
 import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabComponent } from './reuse-tab.component';
@@ -58,6 +60,7 @@ describe('abc: reuse-tab', () => {
         EComponent,
       ],
       imports: [
+        DelonLocaleModule,
         ReuseTabModule.forRoot(),
         RouterTestingModule.withRoutes([
           {
@@ -501,6 +504,19 @@ describe('abc: reuse-tab', () => {
       tick(101);
       page.expectAttr(1, 'title', 'en');
     }));
+    it('#context-menu-text', fakeAsync(() => {
+      genModule();
+      page.to('#b').openContextMenu(1);
+      expect(document.querySelector('[data-type="close"]').textContent).toBe(
+        zh_CN.reuseTab.close,
+      );
+      injector.get(DelonLocaleService).setLocale(en_US);
+      fixture.detectChanges();
+      page.to('#a').openContextMenu(1);
+      expect(document.querySelector('[data-type="close"]').textContent).toBe(
+        en_US.reuseTab.close,
+      );
+    }));
   });
 
   class PageObject {
@@ -592,7 +608,9 @@ describe('abc: reuse-tab', () => {
       return this;
     }
     clickContentMenu(type: string): this {
-      const el = document.querySelector(`.reuse-tab__cm li[data-type="${type}"]`);
+      const el = document.querySelector(
+        `.reuse-tab__cm li[data-type="${type}"]`,
+      );
       expect(el).not.toBeNull(
         `the ${type} is invalid element of content menu container`,
       );

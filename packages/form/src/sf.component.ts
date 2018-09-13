@@ -10,7 +10,9 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { deepCopy, InputBoolean } from '@delon/util';
+import { DelonLocaleService } from '@delon/theme';
 
 import { DelonFormConfig } from './config';
 import { di, retrieveSchema, FORMATMAPS, resolveIf } from './utils';
@@ -33,26 +35,8 @@ export function useFactory(
 
 @Component({
   selector: 'sf, [sf]',
-  template: `
-  <ng-template #con><ng-content></ng-content></ng-template>
-  <form nz-form [nzLayout]="layout" (submit)="onSubmit($event)" [attr.autocomplete]="autocomplete">
-    <sf-item [formProperty]="rootProperty"></sf-item>
-    <ng-container *ngIf="button !== 'none'; else con">
-      <nz-form-item [ngClass]="_btn.render.class" class="sf-btns" [fixed-label]="_btn.render.spanLabelFixed">
-        <nz-col class="ant-form-item-control-wrapper"
-          [nzSpan]="_btn.render.grid.span" [nzOffset]="_btn.render.grid.offset"
-          [nzXs]="_btn.render.grid.xs" [nzSm]="_btn.render.grid.sm" [nzMd]="_btn.render.grid.md"
-          [nzLg]="_btn.render.grid.lg" [nzXl]="_btn.render.grid.xl">
-          <div class="ant-form-item-control">
-            <ng-container *ngIf="button; else con">
-              <button type="submit" nz-button [nzType]="_btn.submit_type" [disabled]="liveValidate && !valid">{{_btn.submit}}</button>
-              <button *ngIf="_btn.reset" (click)="reset(true)" type="button" nz-button [nzType]="_btn.reset_type">{{_btn.reset}}</button>
-            </ng-container>
-          </div>
-        </nz-col>
-      </nz-form-item>
-    </ng-container>
-  </form>`,
+  templateUrl: './sf.component.html',
+  preserveWhitespaces: false,
   providers: [
     WidgetFactory,
     {
@@ -70,16 +54,19 @@ export function useFactory(
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
-  rootProperty: FormProperty = null;
-  _formData: any;
-  _btn: SFButton;
-  _schema: SFSchema;
-  _ui: SFUISchema;
+  private i18n$: Subscription;
+  private locale: any = {};
   private _renders = new Map<string, TemplateRef<any>>();
   private _item: any;
   private _valid = true;
   private _defUi: SFUISchemaItem;
   private _inited = false;
+
+  rootProperty: FormProperty = null;
+  _formData: any;
+  _btn: SFButton;
+  _schema: SFSchema;
+  _ui: SFUISchema;
 
   // #region fields
 
@@ -191,10 +178,18 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     private terminator: TerminatorService,
     private options: DelonFormConfig,
     private cd: ChangeDetectorRef,
+    private i18n: DelonLocaleService,
   ) {
     this.liveValidate = options.liveValidate;
     this.firstVisual = options.firstVisual;
     this.autocomplete = options.autocomplete;
+    this.i18n$ = this.i18n.change.subscribe(() => {
+      this.locale = this.i18n.getData('sf');
+      if (this._inited) {
+        this.coverButtonProperty();
+        this.cd.detectChanges();
+      }
+    });
   }
 
   private coverProperty() {
@@ -332,7 +327,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private coverButtonProperty() {
-    this._btn = Object.assign({ render: {} }, this.options.button, this.button);
+    this._btn = Object.assign(
+      { render: {} },
+      this.locale,
+      this.options.button,
+      this.button,
+    );
     const firstKey = Object.keys(this._ui).find(w => w.startsWith('$'));
     if (this.layout === 'horizontal') {
       const btnUi = firstKey ? this._ui[firstKey] : this._defUi;
@@ -356,7 +356,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this._btn.render.grid = {};
     }
-    if (this._mode) this.mode = this._mode;
+    if (this._mode) {
+      this.mode = this._mode;
+    }
     if (this._ui.debug) di('button property', this._btn);
   }
 
@@ -455,5 +457,6 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.terminator.destroy();
+    this.i18n$.unsubscribe();
   }
 }

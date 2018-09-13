@@ -27,6 +27,10 @@
       "description": "Specifies the packageManager of project. (only: networkEnv plugin)",
       "enum": ["npm", "yarn"],
       "type": "string"
+    },
+    "defaultLanguage": {
+      "type": "string",
+      "description": "Specify default language [https://ng-alain.com/docs/i18n]."
     }
   },
   "required": []

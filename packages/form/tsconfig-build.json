@@ -5,7 +5,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@delon/util": ["../../packages-dist/util"]
+      "@delon/*": ["../../packages-dist/*"]
     },
     "outDir": "../../@delon/form"
   },

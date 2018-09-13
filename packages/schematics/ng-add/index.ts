@@ -16,6 +16,16 @@ export default function(options: NgAddOptions): Rule {
     rules.push(schematic('plugin', { name: 'codeStyle', type: 'add' }));
   }
 
+  if (options.defaultLanguage) {
+    rules.push(
+      schematic('plugin', {
+        name: 'defaultLanguage',
+        type: 'add',
+        defaultLanguage: options.defaultLanguage,
+      }),
+    );
+  }
+
   if (options.npm) {
     rules.push(
       schematic('plugin', {

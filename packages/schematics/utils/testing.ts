@@ -3,6 +3,7 @@ import {
   SchematicTestRunner,
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
+import { Schema as NgAddSchema } from '../ng-add/schema.d';
 
 export const APPNAME = 'foo';
 
@@ -21,7 +22,7 @@ export function createAlainRunner() {
 }
 
 export function createAlainApp(
-  ngAddOptions?: object,
+  ngAddOptions?: NgAddSchema,
 ): {
   runner: SchematicTestRunner;
   tree: UnitTestTree;
