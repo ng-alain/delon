@@ -64,7 +64,7 @@ copyFiles() {
     "${1}README.md|${2}application/files/root"
     "${1}README-zh_CN.md|${2}application/files/root"
     # src
-    # "${1}src/typings.d.ts|${2}application/files/src/"
+    "${1}src/typings.d.ts|${2}application/files/src/"
     "${1}src/environments|${2}application/files/src/"
     "${1}src/styles|${2}application/files/src/"
     "${1}src/main.ts|${2}application/files/src/"

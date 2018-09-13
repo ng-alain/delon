@@ -6,8 +6,25 @@ import {
   scriptsToAngularJson,
 } from '../utils/json';
 
+function g2Typing(host: Tree, options: PluginOptions) {
+  const typingsPath = '/src/typings.d.ts';
+  if (!host.exists(typingsPath)) {
+    host.create(typingsPath, '');
+  }
+  let content = host.get(typingsPath).content.toString('UTF-8');
+  if (content.includes('G2')) return ;
+
+  content += `\n// G2
+declare var G2: any;
+declare var DataSet: any;
+declare var Slider: any;`;
+  host.overwrite(typingsPath, content);
+}
+
 export function pluginG2(options: PluginOptions): any {
   return (host: Tree, context: SchematicContext) => {
+    // typing
+    g2Typing(host, options);
     // package
     (options.type === 'add'
       ? addPackageToPackageJson

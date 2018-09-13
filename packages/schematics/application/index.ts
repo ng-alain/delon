@@ -88,6 +88,8 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
         pkg => `@delon/${pkg}@${VERSION}`,
       ),
     );
+    // ng-alain
+    addPackageToPackageJson(host, `ng-alain@${VERSION}`, 'devDependencies');
     // i18n
     if (options.i18n) {
       addPackageToPackageJson(host, [
