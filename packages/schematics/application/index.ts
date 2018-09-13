@@ -84,10 +84,12 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     // @delon/*
     addPackageToPackageJson(
       host,
-      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util'].map(
+      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(
         pkg => `@delon/${pkg}@${VERSION}`,
       ),
     );
+    // ng-alain
+    addPackageToPackageJson(host, `ng-alain@${VERSION}`, 'devDependencies');
     // i18n
     if (options.i18n) {
       addPackageToPackageJson(host, [

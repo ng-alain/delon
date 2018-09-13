@@ -5,7 +5,13 @@ title:
   en-US: Basic
 ---
 
+## zh-CN
+
 模仿自 [antv基础漏斗图](https://antv.alipay.com/zh-cn/g2/3.x/demo/funnel/basic.html)。
+
+## en-US
+
+Copy [Basic Funnel Chart](https://antv.alipay.com/zh-cn/g2/3.x/demo/funnel/basic.html)。
 
 ```ts
 import { Component, ElementRef } from '@angular/core';

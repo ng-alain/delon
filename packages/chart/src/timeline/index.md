@@ -12,7 +12,7 @@ type: Components
 
 | 参数      | 说明                                      | 类型         | 默认值 |
 |----------|------------------------------------------|-------------|-------|
-| `[title]` | 图表标题 | `string` \| `TemplateRef<any>` | - |
+| `[title]` | 图表标题 | `string | TemplateRef<any>` | - |
 | `[data]` | 数据 | `Array<{ x: Date, y1: number , y2: number, [key: string]: any }>` | - |
 | `[titleMap]` | 指标别名 | `{ y1: string , y2: string }` | - |
 | `[colorMap]` | 颜色 | `{ y1: string , y2: string }` | `{ y1: '#1890FF', y2: '#2FC25B' }` |
