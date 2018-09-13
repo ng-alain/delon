@@ -1,10 +1,6 @@
 {
   "name": "@delon/cache",
   "version": "0.0.0-PLACEHOLDER",
-  "main": "./bundles/cache.umd.js",
-  "module": "./esm5/cache.js",
-  "es2015": "./esm2015/cache.js",
-  "typings": "./cache.d.ts",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
   "repository": {

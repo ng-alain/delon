@@ -1,0 +1,14 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/packages-dist/form",
+  "deleteDestPath": true,
+  "lib": {
+    "flatModuleFile": "form",
+    "entryFile": "public_api.ts",
+    "umdModuleIds": {
+      "ng-zorro-antd": "ngZorro.antd",
+      "@delon/theme": "delon.theme",
+      "@delon/util": "delon.util"
+    }
+  }
+}

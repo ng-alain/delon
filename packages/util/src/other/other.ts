@@ -1,4 +1,4 @@
-import * as deepExtend from 'extend';
+import extend from 'extend';
 
 /**
  * 类似 `_.get`，根据 `path` 获取安全值
@@ -21,7 +21,7 @@ export function deepGet(obj: any, path: string | string[], defaultValue?: any) {
 }
 
 export function deepCopy(obj: any) {
-  const result = deepExtend(true, { }, { _: obj });
+  const result = extend(true, { }, { _: obj });
   return result._;
 }
 

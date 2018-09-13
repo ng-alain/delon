@@ -9,7 +9,7 @@ title:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import * as format from 'date-fns/format';
+import format from 'date-fns/format';
 
 @Component({
   selector: 'app-demo',
