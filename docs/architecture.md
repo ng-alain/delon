@@ -22,6 +22,10 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 
 脚手架内提供了一套默认[业务组件](/components/)，这些组件抽象了控制台业务中的一些常见区块。我们将持续维护和迭代这些组件，为中后台业务提供比 Ant Design 基础组件更高级别的抽象。
 
+**@delon/chart**
+
+[@delon/chart](/chart) 图表是基于 G2 (3.0) 的基础上二次封装，提供了业务中常用的图表套件，可以单独使用，也可以组合起来实现复杂的展示效果。
+
 **@delon/form**
 
 [@delon/form](/form) 是一个基于 [JSON Schema](http://json-schema.org/) 标准的动态构建表单。

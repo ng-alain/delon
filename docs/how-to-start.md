@@ -16,90 +16,126 @@ type: Dev
 
 ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很详细的 [API](//ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
 
-## 二、启动
+## 二、启动流程
 
-项目从启动开始就需要从远程获取到一些配置信息（例如：菜单数据、用户数据等），脚手架的启动始于 [startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，因此你可以在这个方法体内做你想做的事，默认情况下做了很多有意思的事：
+ng-alain 是一个可直接用于生产环境脚手架，要了解这些细节的前提条件是你对 Angular 有一定的知识储备，在开始之前下列文档可能对你有帮助：
+
+- ng-alain 入门视频（[YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[腾讯视频](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[B站](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）
+- [知乎专栏](https://zhuanlan.zhihu.com/ng-alain)
+
+当通过 `ng serve` 运行应用后，一个完整的 Angular 启动流程大概是这样：
+
+1. 触发 `APP_INITIALIZER`（脚手架具体实现在 `StartupService.load`） 获取应用信息
+2. 触发业务路由（脚手架的 `src/app/routes/routes-routing.module.ts`）
+3. 渲染组件
+
+### 1、APP_INITIALIZER
+
+以中后台角度出发，ng-alain 始终认为在 Angular 启动之前需要一次网络请求来获取一些应用信息（例如：菜单数据、用户数据等），具体实现细节[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，不管怎么样始终都需要调用：`resolve()` 才能确保 Angular 正常启动。
+
+> 网络请求可能会遇到 403 错误，这是因为脚手架默认使用了用户认证模块，并始终认为所有请求务必是一个有效用户授权，更多文档见：
+> - [和服务端进行交互](/docs/server)
+> - [Auth 用户认证](/auth)
+
+当获取应用信息后，需要对脚手架内置的一些服务做赋值，包含：
+
+**应用信息**
+
+包括：应用名称、描述、年份，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
 
 ```ts
-// 应用信息：包括站点名、描述、年份
 this.settingService.setApp(res.app);
-// 用户信息：包括姓名、头像、邮箱地址
+```
+
+**用户信息**
+
+包括：姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
+
+```ts
 this.settingService.setUser(res.user);
-// 初始化菜单
+```
+
+**布局信息**
+
+包括：姓名、头像、邮箱地址等，信息可以直接注入 `SettingsService`（[API](/theme/settings)）后直接在HTML模板中访问。
+
+```ts
+// 是否固定顶部菜单
+this.settingService.setLayout(`fixed`, false);
+// 是否折叠右边菜单
+this.settingService.setLayout(`collapsed`, false);
+```
+
+**菜单数据**
+
+ng-alain 认为菜单数据也是来自远程，也可以任意位置注入 `MenuService`（[API](/theme/menu)）来改变菜单数据，当然在 Angular 启动之前执行菜单赋值更为合理。
+
+菜单数据**务必**确保 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，菜单数据贯穿整个应用，例如：主菜单组件 [sidebar-nav](/components/sidebar-nav)，页头自动导航 [page-header](/components/page-header)，页标题文本 [TitleService](/theme/title) 等。
+
+```ts
 this.menuService.add(res.menu);
+```
+
+**页面标题**
+
+若页面标题总希望加上应用名称为后缀时，可以注入 `TitleService`（[API](/theme/title)）重新调整 `suffix` 属性值。
+
+```ts
 // 设置页面标题的后缀
 this.titleService.suffix = res.app.name;
-// i18n：设置默认语言
-this.tr.use(this.settingService.layout.lang);
-// ACL：设置权限为全量
+```
+
+**ACL**
+
+```ts
 this.aclService.setFull(true);
 ```
 
-以上这些是中台一些必备数据，有关任何应用启动前一些必要数据建议都在这里获取。
+建议在启动前加载ACL访问控制权限数据，有关更多细节可参考 [访问控制列表](/acl)。
 
-### 应用信息
+**国际化**
 
-用于贯穿整个应用，其包括应用基本信息、布局信息、用户信息。这些信息并没有任何功能性，只是单纯方便于页面渲染。为了更好的管理这类通用信息，建议依然保持这种规则，并在启动前给予相应合理的值。
+建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。更多细节参考[国际化](/docs/i18n)。
 
-布局信息会依布局结构的变化自动更新，例如：收缩侧边栏其值 `collapsed` 会自动更新。
-
-### 菜单数据
-
-中台的菜单数据大多数是来自后端，但给予的数据务必确保是 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，有关更多细节请参考[sidebar-nav](/components/sidebar-nav) 的API说明。
-
-### 页面标题
-
-统一设置标题前后缀。
-
-### 国际化
-
-建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。
-
-### ACL
-
-建议在启动前加载ACL访问控制权限数据，有关更多细节可参考 [ACL](/acl)。
-
-最后，调用 `resolve(res)` 告诉Angular可以进行组件渲染了。
-
-## 三、路由
+### 2、业务路由
 
 脚手架顶层路由从 [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) 开始，其结构如下：
 
 ```ts
 const routes: Routes = [
-    {
-        path: '',
-        component: LayoutDefaultComponent,
-        children: [
-            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-            { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
-            // 业务子模块
-            // { path: 'trade', loadChildren: './trade/trade.module#TradeModule' }
-        ]
-    },
-    // 全屏布局
-    {
-        path: 'fullscreen',
-        component: LayoutFullScreenComponent,
-        children: [
-        ]
-    },
-    // passport
-    {
-        path: 'passport',
-        component: LayoutPassportComponent,
-        children: [
-            { path: 'login', component: UserLoginComponent },
-            { path: 'register', component: UserRegisterComponent },
-            { path: 'register-result', component: UserRegisterResultComponent }
-        ]
-    },
-    // 单页不包裹Layout
-    { path: 'callback/:type', component: CallbackComponent },
-    { path: '403', component: Exception403Component },
-    { path: '404', component: Exception404Component },
-    { path: '500', component: Exception500Component },
-    { path: '**', redirectTo: 'dashboard' }
+  {
+    path: '',
+    component: LayoutDefaultComponent,
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
+      // 业务子模块
+      // { path: 'trade', loadChildren: './trade/trade.module#TradeModule' }
+    ]
+  },
+  // 全屏布局
+  {
+    path: 'fullscreen',
+    component: LayoutFullScreenComponent,
+    children: [
+    ]
+  },
+  // passport
+  {
+    path: 'passport',
+    component: LayoutPassportComponent,
+    children: [
+      { path: 'login', component: UserLoginComponent },
+      { path: 'register', component: UserRegisterComponent },
+      { path: 'register-result', component: UserRegisterResultComponent }
+    ]
+  },
+  // 单页不包裹Layout
+  { path: 'callback/:type', component: CallbackComponent },
+  { path: '403', component: Exception403Component },
+  { path: '404', component: Exception404Component },
+  { path: '500', component: Exception500Component },
+  { path: '**', redirectTo: 'dashboard' }
 ];
 ```
 

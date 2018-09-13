@@ -38,8 +38,6 @@ $ yarn
 
 > 遇到问题请阅读 [常见问题](/docs/faq)
 
-如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速。
-
 ### 方式二：更新所有类库
 
 脚手架在 `package.json` 里多数类库都是使用宽松的版本号，例如：
@@ -48,7 +46,7 @@ $ yarn
 
 要想采用这种更新方式需要按以下步骤进行：
 
-- 移除 `node_modules` 文件夹及 `package-lock.json` 文件
+- 移除 `node_modules` 文件夹及 `yarn.lock` 文件
 - 执行 `yarn`
 
 **注意：** 这种方式会对所有类库按比较新的版本安装，但有可能会导致由于第三方类型的破坏性变更会导致一些不必要的麻烦。
