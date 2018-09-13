@@ -84,7 +84,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     // @delon/*
     addPackageToPackageJson(
       host,
-      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util'].map(
+      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(
         pkg => `@delon/${pkg}@${VERSION}`,
       ),
     );
