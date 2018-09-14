@@ -1,4 +1,5 @@
 import { Injectable, Host } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -13,9 +14,8 @@ import {
   STRes,
   STColumn,
   STMultiSort,
-} from './interface';
+} from './table.interfaces';
 import { STSortMap } from './table-column-source';
-import { DecimalPipe } from '@angular/common';
 
 export interface STDataSourceOptions {
   pi?: number;

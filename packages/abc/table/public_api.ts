@@ -1,4 +1,4 @@
-export * from './interface';
+export * from './table.interfaces';
 export { STComponent } from './table.component';
 export { STRowDirective } from './table-row.directive';
 export { STConfig } from './table.config';

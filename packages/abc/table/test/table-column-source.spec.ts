@@ -4,7 +4,7 @@ import { deepGet } from '@delon/util';
 
 import { STColumnSource } from '../table-column-source';
 import { STRowSource } from '../table-row.directive';
-import { STColumn } from '../interface';
+import { STColumn } from '../table.interfaces';
 import { STConfig } from '../table.config';
 
 let i18nResult = 'zh';

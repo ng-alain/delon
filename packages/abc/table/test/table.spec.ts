@@ -26,7 +26,7 @@ import {
   STPage,
   STRes,
   STColumnFilter,
-} from '../interface';
+} from '../table.interfaces';
 import { STModule } from '../table.module';
 import { STComponent } from '../table.component';
 import {

@@ -8,7 +8,7 @@ import {
   STDataSourceOptions,
 } from '../table-data-source';
 import { STConfig } from '../table.config';
-import { STColumnFilterMenu } from '../interface';
+import { STColumnFilterMenu } from '../table.interfaces';
 import { of, throwError } from 'rxjs';
 
 const DEFAULT = {
