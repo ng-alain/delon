@@ -1,7 +1,7 @@
 {
   "ngPackage": {
     "lib": {
-      "flatModuleFile": "chart",
+      "flatModuleFile": "custom",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
         "@delon/util": "delon.util"

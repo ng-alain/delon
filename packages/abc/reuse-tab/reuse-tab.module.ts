@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { NzTabsModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonLocaleModule } from '@delon/theme';
 
 import { ReuseTabComponent } from './reuse-tab.component';
@@ -22,7 +22,7 @@ const NOEXPORTS = [
     CommonModule,
     RouterModule,
     DelonLocaleModule,
-    NzTabsModule,
+    NgZorroAntdModule,
     OverlayModule,
   ],
   declarations: [...COMPONENTS, ...NOEXPORTS],

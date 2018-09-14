@@ -1,13 +1,13 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NzToolTipModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonUtilModule } from '@delon/util';
 
 import { SidebarNavComponent } from './sidebar-nav.component';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, NzToolTipModule, DelonUtilModule],
+  imports: [CommonModule, RouterModule, NgZorroAntdModule, DelonUtilModule],
   declarations: [SidebarNavComponent],
   exports: [SidebarNavComponent],
 })

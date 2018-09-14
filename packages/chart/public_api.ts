@@ -12,3 +12,5 @@ export * from '@delon/chart/timeline';
 export * from '@delon/chart/water-wave';
 export * from '@delon/chart/number-info';
 export * from '@delon/chart/trend';
+
+export * from './chart.module';

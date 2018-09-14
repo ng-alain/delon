@@ -1,17 +1,7 @@
 import { NgModule, ModuleWithProviders, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  NzTableModule,
-  NzDropDownModule,
-  NzCheckboxModule,
-  NzRadioModule,
-  NzMenuModule,
-  NzTagModule,
-  NzBadgeModule,
-  NzPopconfirmModule,
-  NzDividerModule,
-} from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { DelonUtilModule } from '@delon/util';
 import { DelonACLModule } from '@delon/acl';
@@ -29,15 +19,7 @@ const COMPONENTS = [STComponent, STRowDirective];
     FormsModule,
     DelonUtilModule,
     DelonACLModule,
-    NzTableModule,
-    NzDropDownModule,
-    NzCheckboxModule,
-    NzRadioModule,
-    NzMenuModule,
-    NzTagModule,
-    NzBadgeModule,
-    NzPopconfirmModule,
-    NzDividerModule,
+    NgZorroAntdModule,
   ],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],

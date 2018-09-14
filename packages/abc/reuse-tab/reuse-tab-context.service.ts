@@ -11,7 +11,7 @@ import {
   ReuseContextEvent,
   ReuseContextI18n,
   ReuseContextCloseEvent,
-} from './interface';
+} from './reuse-tab.interfaces';
 import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
 
 @Injectable()

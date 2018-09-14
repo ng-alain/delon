@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NzDatePickerModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { RangePickerComponent } from './range.component';
 import { DatePickerConfig } from './date-picker.config';
@@ -9,7 +9,7 @@ import { DatePickerConfig } from './date-picker.config';
 const COMPONENTS = [RangePickerComponent];
 
 @NgModule({
-  imports: [CommonModule, FormsModule, NzDatePickerModule],
+  imports: [CommonModule, FormsModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })

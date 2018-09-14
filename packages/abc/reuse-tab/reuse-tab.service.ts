@@ -11,7 +11,7 @@ import {
   ReuseTabMatchMode,
   ReuseTabNotify,
   ReuseTitle,
-} from './interface';
+} from './reuse-tab.interfaces';
 
 /**
  * 路由复用类，提供复用所需要一些基本接口

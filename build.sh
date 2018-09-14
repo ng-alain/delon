@@ -1,4 +1,5 @@
 ﻿#!/usr/bin/env bash
+#!/usr/bin/env node --max-old-space-size=4096
 
 set -u -e -o pipefail
 
@@ -72,7 +73,6 @@ N="
 "
 PWD=`pwd`
 
-TSNODE=${PWD}/node_modules/.bin/ts-node
 SOURCE=${PWD}/packages
 DIST=${PWD}/dist/packages-dist
 
@@ -87,7 +87,7 @@ do
 
   if ! containsElement "${NAME}" "${NODE_PACKAGES[@]}"; then
     # packaging
-    $TSNODE ${PWD}/scripts/build/packing.ts ${NAME}
+    node --max_old_space_size=4096 ${PWD}/scripts/build/packing ${NAME}
     # license banner
     addBanners ${DIST}/${NAME}/bundles
     # license file

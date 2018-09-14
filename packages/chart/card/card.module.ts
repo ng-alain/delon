@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NzCardModule, NzSpinModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonUtilModule } from '@delon/util';
 
 import { G2CardComponent } from './card.component';
@@ -8,7 +8,7 @@ import { G2CardComponent } from './card.component';
 const COMPONENTS = [G2CardComponent];
 
 @NgModule({
-  imports: [CommonModule, DelonUtilModule, NzCardModule, NzSpinModule],
+  imports: [CommonModule, DelonUtilModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })

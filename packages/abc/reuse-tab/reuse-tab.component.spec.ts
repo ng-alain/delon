@@ -27,7 +27,7 @@ import {
 
 import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabComponent } from './reuse-tab.component';
-import { ReuseTabMatchMode } from './interface';
+import { ReuseTabMatchMode } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';

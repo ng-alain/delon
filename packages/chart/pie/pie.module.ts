@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NzDividerModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonUtilModule } from '@delon/util';
 
 import { G2PieComponent } from './pie.component';
@@ -8,7 +8,7 @@ import { G2PieComponent } from './pie.component';
 const COMPONENTS = [G2PieComponent];
 
 @NgModule({
-  imports: [CommonModule, DelonUtilModule, NzDividerModule],
+  imports: [CommonModule, DelonUtilModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })

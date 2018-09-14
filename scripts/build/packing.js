@@ -1,10 +1,15 @@
-import * as path from 'path';
-import { ngPackagr } from 'ng-packagr';
+const path = require('path');
+const ngPackage= require('ng-packagr');
 
 const name = process.argv[2];
 const target = path.resolve(__dirname, `../../packages/${name}`);
 
-ngPackagr()
+ngPackage
+  .ngPackagr()
   .forProject(path.resolve(target, `ng-package.json`))
   .withTsConfig(path.resolve(target, 'tsconfig.lib.json'))
-  .build();
+  .build()
+  .catch(error => {
+    console.error(error);
+    process.exit(1);
+  });

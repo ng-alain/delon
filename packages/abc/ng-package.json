@@ -1,7 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/packages-dist/abc",
-  "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "abc",
     "entryFile": "public_api.ts",
@@ -19,6 +18,9 @@
   "whitelistedNonPeerDependencies": [
     "tslib",
     "file-saver",
-    "ngx-countdown"
+    "ngx-countdown",
+    "ng-zorro-antd",
+    "date-fns",
+    "qrious"
   ]
 }

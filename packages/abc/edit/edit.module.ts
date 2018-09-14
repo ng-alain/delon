@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NzToolTipModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonUtilModule } from '@delon/util';
 
 import { SEConfig } from './edit.config';
@@ -17,7 +17,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, DelonUtilModule, NzToolTipModule],
+  imports: [CommonModule, DelonUtilModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })

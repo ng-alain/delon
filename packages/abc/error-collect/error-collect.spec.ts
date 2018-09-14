@@ -14,7 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { NzFormModule, NzInputModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { ErrorCollectModule } from './error-collect.module';
 import { ErrorCollectComponent } from './error-collect.component';
@@ -30,8 +30,7 @@ describe('abc: error-collect', () => {
       imports: [
         ErrorCollectModule.forRoot(),
         ReactiveFormsModule,
-        NzFormModule,
-        NzInputModule,
+        NgZorroAntdModule,
       ],
       declarations: [TestComponent],
     });
