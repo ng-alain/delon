@@ -1,10 +1,6 @@
 {
   "name": "@delon/chart",
   "version": "0.0.0-PLACEHOLDER",
-  "main": "./bundles/chart.umd.js",
-  "module": "./esm5/chart.js",
-  "es2015": "./esm2015/chart.js",
-  "typings": "./chart.d.ts",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
   "repository": {

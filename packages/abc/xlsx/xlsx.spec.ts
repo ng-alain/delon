@@ -5,8 +5,9 @@ import { of, throwError } from 'rxjs';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import * as fs from 'file-saver';
-
-import { XlsxModule, XlsxService, XlsxExportOptions } from './index';
+import { XlsxModule } from './xlsx.module';
+import { XlsxService } from './xlsx.service';
+import { XlsxExportOptions } from './xlsx.types';
 
 class MockLazyService {
   load() {

@@ -17,7 +17,8 @@
     "inlineSources": true,
     "importHelpers": true
   },
-  "files": ["public_api.ts"],
+  "files": ["public_api.ts", "typings.d.ts"],
+  "exclude": ["*.spec.ts"],
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "skipTemplateCodegen": true,

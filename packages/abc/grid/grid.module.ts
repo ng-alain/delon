@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { DelonUtilModule } from '@delon/util';
 
 import { SGConfig } from './grid.config';
 import { SGContainerComponent } from './grid-container.component';
@@ -9,7 +9,7 @@ import { SGComponent } from './grid.component';
 const COMPONENTS = [SGContainerComponent, SGComponent];
 
 @NgModule({
-  imports: [CommonModule, NgZorroAntdModule],
+  imports: [CommonModule, DelonUtilModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })

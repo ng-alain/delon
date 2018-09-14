@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NoticeItem, NoticeIconSelect } from './interface';
+import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
 
 @Component({
   selector: 'notice-icon-tab',

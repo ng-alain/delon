@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DelonUtilModule } from '@delon/util';
 
 import { FullContentComponent } from './full-content.component';
 import { FullContentToggleDirective } from './full-content-toggle.directive';
@@ -8,7 +9,7 @@ import { FullContentService } from './full-content.service';
 const COMPONENTS = [FullContentComponent, FullContentToggleDirective];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, DelonUtilModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })

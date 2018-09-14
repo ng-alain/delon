@@ -1,0 +1,13 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "grid",
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "@delon/abc/error-collect": "delon.theme.errorCollect",
+        "@delon/theme": "delon.theme",
+        "@delon/util": "delon.util"
+      }
+    }
+  }
+}

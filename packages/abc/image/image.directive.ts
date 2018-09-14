@@ -9,6 +9,7 @@ import {
   SimpleChange,
 } from '@angular/core';
 import { deepCopy, InputNumber } from '@delon/util';
+
 import { ImageConfig } from './image.config';
 
 /**

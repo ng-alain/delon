@@ -14,11 +14,12 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { Router, ActivationStart, ActivationEnd } from '@angular/router';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
+import { InputBoolean, InputNumber } from '@delon/util';
+
 import { FullContentService } from './full-content.service';
-import { Router, ActivationStart, ActivationEnd } from '@angular/router';
 
 const wrapCls = `full-content__body`;
 const openedCls = `full-content__opened`;

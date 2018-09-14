@@ -6,10 +6,11 @@ let sourcePath = path.resolve(__dirname, `../../packages`);
 let targetPath = path.resolve(__dirname, `../../dist/packages-dist`);
 let componentsLessContent = '';
 
-['abc', 'chart'].forEach(key => {
+// copy index.less
+['abc', 'chart'].forEach(name => {
   fse.copySync(
-    `${sourcePath}/${key}/index.less`,
-    `${targetPath}/${key}/index.less`,
+    `${sourcePath}/${name}/index.less`,
+    `${targetPath}/${name}/index.less`,
   );
 });
 
@@ -18,14 +19,14 @@ let componentsLessContent = '';
 sourcePath = path.resolve(__dirname, '../../packages/abc');
 targetPath = path.resolve(__dirname, '../../dist/packages-dist/abc/src');
 
-fs.readdirSync(targetPath).forEach(dir => {
-  if (fs.existsSync(`${sourcePath}/${dir}/style/index.less`)) {
+fs.readdirSync(targetPath).forEach(name => {
+  if (fs.existsSync(`${sourcePath}/${name}/style/index.less`)) {
     componentsLessContent += `@import "./src/${path.join(
-      dir,
+      name,
       'style',
       'index.less',
     )}";\n`;
-    fse.copySync(`${sourcePath}/${dir}/style`, `${targetPath}/${dir}/style`);
+    fse.copySync(`${sourcePath}/${name}/style`, `${targetPath}/${name}/style`);
   }
 });
 

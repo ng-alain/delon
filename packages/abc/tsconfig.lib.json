@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.lib.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@delon/abc/*": ["../../dist/packages-dist/abc/*"],
+      "@delon/*": ["../../dist/packages-dist/*"]
+    }
+  },
+  "files": ["public_api.ts", "../typings.d.ts"],
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": false,
+    "skipTemplateCodegen": true
+  }
+}

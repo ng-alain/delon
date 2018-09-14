@@ -14,7 +14,7 @@ import { deepCopy } from '@delon/util';
 
 import { SidebarNavModule } from './sidebar-nav.module';
 import { SidebarNavComponent } from './sidebar-nav.component';
-import { Nav } from './interface';
+import { Nav } from './sidebar-nav.types';
 import { RouterTestingModule } from '@angular/router/testing';
 
 const floatingShowCls = '.sidebar-nav__floating-show';

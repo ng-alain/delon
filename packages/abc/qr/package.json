@@ -1,0 +1,11 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "qr",
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "@delon/util": "delon.util"
+      }
+    }
+  }
+}

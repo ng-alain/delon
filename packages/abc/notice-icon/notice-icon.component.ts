@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 import { DelonLocaleService } from '@delon/theme';
 import { InputNumber, InputBoolean } from '@delon/util';
 
-import { NoticeItem, NoticeIconSelect } from './interface';
+import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
 
 @Component({
   selector: 'notice-icon',

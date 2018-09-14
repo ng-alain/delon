@@ -3,8 +3,8 @@ import { LazyService } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import * as fs from 'file-saver';
-
-import { ZipModule, ZipService, ZipConfig } from './index';
+import { ZipModule } from './zip.module';
+import { ZipService } from './zip.service';
 
 let isErrorRequest = false;
 let isClassZIP = false;

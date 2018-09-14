@@ -1,0 +1,15 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "reuseTab",
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "@angular/cdk/overlay": "ng.cdk.overlay",
+        "@angular/cdk/portal": "ng.cdk.portal",
+        "ng-zorro-antd": "ngZorro.antd",
+        "@delon/theme": "delon.theme",
+        "@delon/util": "delon.util"
+      }
+    }
+  }
+}

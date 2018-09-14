@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { InputNumber } from '@delon/util';
+
 import { ErrorCollectConfig } from './error-collect.config';
 
 /**

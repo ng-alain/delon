@@ -1,0 +1,13 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "count-down",
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "ngx-countdown": "ngxCountDown",
+        "date-fns": "DateFns",
+        "@delon/util": "delon.util"
+      }
+    }
+  }
+}
