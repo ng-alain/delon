@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 1.4.3
+
+`2018-9-16`
+
+- @delon/form
+  - 修复 select 小部件在 Search 模式下不支持 `width` 问题
+  - 修复 select 小部件若存在初始值则无法清空，[#674](https://github.com/ng-alain/ng-alain/issues/674)
+  - 修复 number 类型若存在初始值则无法清空，[#675](https://github.com/ng-alain/ng-alain/issues/675)
+
 ### 1.4.2
 
 `2018-9-9`

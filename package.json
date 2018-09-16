@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for ng-alain.",
   "repository": {
@@ -62,7 +62,7 @@
     "file-saver": "^1.3.8",
     "marked": "^0.3.19",
     "ng-github-button": "^1.0.0",
-    "ng-zorro-antd": "^1.4.1",
+    "ng-zorro-antd": "^1.5.0",
     "ng2-ace-editor": "^0.3.8",
     "ngx-color": "^1.3.1",
     "ngx-countdown": "^3.0.0",
