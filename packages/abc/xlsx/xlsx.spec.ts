@@ -113,7 +113,7 @@ describe('abc: xlsx', () => {
 
   describe('[#export]', () => {
     beforeEach(() => {
-      spyOn(fs, 'saveAs');
+      spyOn(fs.default, 'saveAs');
     });
     it('should be export xlsx via array', (done: () => void) => {
       srv
@@ -121,7 +121,7 @@ describe('abc: xlsx', () => {
           sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }],
         })
         .then(() => {
-          expect(fs.saveAs).toHaveBeenCalled();
+          expect(fs.default.saveAs).toHaveBeenCalled();
           done();
         });
     });
@@ -133,7 +133,7 @@ describe('abc: xlsx', () => {
           },
         })
         .then(() => {
-          expect(fs.saveAs).toHaveBeenCalled();
+          expect(fs.default.saveAs).toHaveBeenCalled();
           done();
         });
     });
