@@ -7,7 +7,7 @@ module: ErrorCollectModule
 config: ErrorCollectConfig
 ---
 
-A simple form exception messages collector that jump to element location via click icon; it must be a standard `<form>`.
+A simple form exception messages collector that jump to element location via click icon; it must be a standard `form`.
 
 ## API
 

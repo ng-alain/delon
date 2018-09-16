@@ -7,7 +7,7 @@ module: ErrorCollectModule
 config: ErrorCollectConfig
 ---
 
-一个简单的表单异常消息采集器，点击图标跳转相应的位置；必须是一个标准 `<form>` 表单。
+一个简单的表单异常消息采集器，点击图标跳转相应的位置；必须是一个标准 `form` 表单。
 
 ## API
 
