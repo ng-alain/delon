@@ -15,7 +15,7 @@ PACKAGES=(acl
   chart
   mock
   form)
-NODE_PACKAGES=(schematics)
+NODE_PACKAGES=(cli)
 
 for ARG in "$@"; do
   case "$ARG" in
@@ -26,13 +26,10 @@ for ARG in "$@"; do
 done
 
 buildLess() {
-  rsync -a ${SRC_DIST_DIR}/theme/styles ${DIST_DIR}/packages-dist/theme
+  echo 'copy styles...'
   node ./scripts/build/generate-less.js
-  echo 'fix abc components import paths...'
-  sed -i -r "s/..\/..\/..\/theme/..\/..\/..\/..\/theme/g" `grep ..\/..\/..\/theme -rl ${DIST_DIR}/packages-dist/abc/`
-  sed -i -r "s/..\/..\/..\/theme/..\/..\/..\/..\/theme/g" `grep ..\/..\/..\/theme -rl ${DIST_DIR}/packages-dist/chart/`
-  # echo 'fix zorro paths...'
-  sed -i -r "s/~ng-zorro-antd/..\/..\/..\/..\/node_modules\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl ${DIST_DIR}/packages-dist/theme/styles/`
+  echo 'fix zorro paths...'
+  sed -i -r "s/~ng-zorro-antd/..\/..\/..\/..\/node_modules\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl ${DIST}/theme/styles/`
   echo 'build full css...'
   node ./scripts/build/generate-css.js
   node ./scripts/build/generate-css.js min
@@ -104,5 +101,4 @@ if containsElement "theme" "${PACKAGES[@]}"; then
   buildLess
 fi
 
-# buildLess
 echo 'FINISHED!'
