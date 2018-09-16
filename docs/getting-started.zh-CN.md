@@ -6,9 +6,9 @@ title:
 type: Basic
 ---
 
-## 一、写在前面
+## 写在前面
 
-ng-alain 是一个企业级中后台前端/设计解决方案脚手架，目标也非常简单，希望在Angular上面开发企业后台更简单、更快速。随着『设计者』的不断反馈，将持续迭代，逐步沉淀和总结出更多设计模式和相应的代码实现，阐述中后台产品模板/组件/业务场景的最佳实践，也十分期待你的参与和共建。
+ng-alain 是一个企业级中后台前端/设计解决方案脚手架，我们秉承 [Ant Design](https://ant.design/) 的设计价值观，目标也非常简单，希望在Angular上面开发企业后台更简单、更快速。随着『设计者』的不断反馈，将持续迭代，逐步沉淀和总结出更多设计模式和相应的代码实现，阐述中后台产品模板/组件/业务场景的最佳实践，也十分期待你的参与和共建。
 
 **如何阅读文档**
 
@@ -21,11 +21,11 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，目标�
   - `ng-content` 表示组件内容占位符
   - `#tpl` 开头表示 `〈ng-template #tpl〉`
 
-## 二、前序准备
+## 前序准备
 
-你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.io/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。
+你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.cn/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。
 
-## 三、安装
+## 安装
 
 ```bash
 ng new demo --style less
@@ -36,9 +36,9 @@ ng serve
 
 请参考[命令行工具](/cli)了解更多细节。
 
-## 四、目录结构
+## 目录结构
 
-ng-alain 是一个标准的 Angular CLI 构建的项目，因此你会非常熟悉结构的组成。在此基础上提供了很多典型的模板，利用这些模板你可以快速地构建产品。
+ng-alain 是一个标准的 Angular CLI 构建的项目，并提供了涵盖中后台开发的各类功能和坑位，下面是整个项目的目录结构。
 
 ```
 ├── _mock                                       # Mock 数据规则
@@ -67,7 +67,7 @@ ng-alain 是一个标准的 Angular CLI 构建的项目，因此你会非常熟�
 └── └── style.less                              # 样式引导入口
 ```
 
-## 五、本地开发
+## 本地开发
 
 安装依赖。
 
@@ -85,7 +85,13 @@ $ ng serve
 
 ![](./assets/screenshot/desktop.png | width=700)
 
-## 六、社区互助
+## 如何贡献
+
+在任何形式的参与前，请先阅读 [贡献者文档](/docs/contributing)。如果你希望参与贡献，欢迎 [Pull Request](https://github.com/ng-alain/ng-alain/pulls)，或给我们 [报告 Bug](https://github.com/ng-alain/ng-alain/issues)。
+
+> 强烈推荐阅读 [《提问的智慧》](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way)(本指南不提供此项目的实际支持服务！)、[《如何向开源社区提问题》](https://github.com/seajs/seajs/issues/545) 和 [《如何有效地报告 Bug》](http://www.chiark.greenend.org.uk/%7Esgtatham/bugs-cn.html)、[《如何向开源项目提交无法解答的问题》](https://zhuanlan.zhihu.com/p/25795393)，更好的问题更容易获得帮助。
+
+## 社区互助
 
 如果您在使用的过程中碰到问题，可以通过下面几个途径寻求帮助，同时我们也鼓励资深用户通过下面的途径给新人提供帮助。
 
@@ -97,7 +103,7 @@ $ ng serve
 
 ![](https://i.ng-alain.com/static/qq-group.png)
 
-## 七、捐助
+## 捐助
 
 如果你觉得 ng-alain 不错，可以考虑自愿为本站打赏或捐助。
 
