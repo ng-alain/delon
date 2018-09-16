@@ -82,4 +82,13 @@
       margin-left: 0;
     }
   }
+  // fix select width when inline mode
+  .ant-form-inline {
+    .ant-form-item {
+      display: inline-flex;
+      > .ant-form-item-control-wrapper {
+        flex: 1 0 0;
+      }
+    }
+  }
 }
