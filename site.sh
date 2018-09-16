@@ -35,10 +35,10 @@ if [[ ${BUILD} == true ]]; then
 
     rm -rf .tmp
 
-    echo 'build...'
-    $(npm bin)/ng build site --prod --build-optimizer --base-href /
+    # echo 'build...'
+    # $(npm bin)/ng build site --prod --build-optimizer --base-href /
     # github pages
-    # $(npm bin)/ng build site --prod --build-optimizer --base-href /1.x-doc/
+    $(npm bin)/ng build site --prod --build-optimizer --base-href /1.x-doc/
 fi
 
 if [[ ${DEPLOY} == true ]]; then
