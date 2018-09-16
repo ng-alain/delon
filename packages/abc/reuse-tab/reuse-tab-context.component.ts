@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { ReuseContextI18n, ReuseContextCloseEvent } from './interface';
+import { ReuseContextI18n, ReuseContextCloseEvent } from './reuse-tab.interfaces';
 import { ReuseTabContextService } from './reuse-tab-context.service';
 
 @Component({

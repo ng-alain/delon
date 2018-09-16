@@ -1,4 +1,4 @@
-import { NumberToChineseOptions } from './interface';
+import { NumberToChineseOptions } from './number-to-chinese.interfaces';
 
 export function numberToChinese(
   value: number | string,

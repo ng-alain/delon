@@ -9,7 +9,7 @@ import { LazyService } from '@delon/util';
 import { LodopService } from './lodop.service';
 import { LodopConfig } from './lodop.config';
 import { LodopModule } from './lodop.module';
-import { Lodop } from './interface';
+import { Lodop } from './lodop.types';
 
 const cog: LodopConfig = {
   license: '',

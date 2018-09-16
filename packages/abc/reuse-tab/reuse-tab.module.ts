@@ -1,7 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { OverlayModule } from '@angular/cdk/overlay';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonLocaleModule } from '@delon/theme';
 
 import { ReuseTabComponent } from './reuse-tab.component';
@@ -16,11 +17,14 @@ const NOEXPORTS = [
   ReuseTabContextDirective,
 ];
 
-import { OverlayModule } from '@angular/cdk/overlay';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-
 @NgModule({
-  imports: [CommonModule, RouterModule, DelonLocaleModule, NgZorroAntdModule, OverlayModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    DelonLocaleModule,
+    NgZorroAntdModule,
+    OverlayModule,
+  ],
   declarations: [...COMPONENTS, ...NOEXPORTS],
   entryComponents: [ReuseTabContextMenuComponent],
   exports: [...COMPONENTS],

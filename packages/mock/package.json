@@ -1,10 +1,6 @@
 {
   "name": "@delon/mock",
   "version": "0.0.0-PLACEHOLDER",
-  "main": "./bundles/mock.umd.js",
-  "module": "./esm5/mock.js",
-  "es2015": "./esm2015/mock.js",
-  "typings": "./mock.d.ts",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
   "repository": {

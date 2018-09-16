@@ -1,6 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { DelonUtilModule } from '@delon/util';
 
 import { SEConfig } from './edit.config';
 import { SEContainerComponent } from './edit-container.component';
@@ -16,7 +17,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, NgZorroAntdModule],
+  imports: [CommonModule, DelonUtilModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })

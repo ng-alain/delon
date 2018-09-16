@@ -8,7 +8,7 @@ import {
   STColumnButton,
   STColumnSort,
   STColumnFilter,
-} from './interface';
+} from './table.interfaces';
 import { STRowSource } from './table-row.directive';
 import { STConfig } from './table.config';
 

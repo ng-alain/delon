@@ -1,0 +1,30 @@
+@import '../../../theme/styles/index.less';
+
+@g2-water-wave-prefix: ~'.g2-water-wave';
+
+@{g2-water-wave-prefix} {
+  display: inline-block;
+  position: relative;
+  transform-origin: left;
+  &__desc {
+    position: absolute;
+    left: 0;
+    top: 32px;
+    text-align: center;
+    width: 100%;
+    &-title {
+      color: @text-color-secondary;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    &-percent {
+      color: @heading-color;
+      line-height: 32px;
+      font-size: 24px;
+    }
+  }
+  &__canvas {
+    transform: scale(0.5);
+    transform-origin: 0 0;
+  }
+}

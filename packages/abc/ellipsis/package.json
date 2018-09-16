@@ -1,0 +1,12 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "ellipsis",
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "ng-zorro-antd": "ngZorro.antd",
+        "@delon/util": "delon.util"
+      }
+    }
+  }
+}

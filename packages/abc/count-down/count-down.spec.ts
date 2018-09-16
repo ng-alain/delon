@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import * as addSeconds from 'date-fns/add_seconds';
+import addSeconds from 'date-fns/add_seconds';
 import { CountDownModule } from './count-down.module';
 
 describe('abc: count-down', () => {

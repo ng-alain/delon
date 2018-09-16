@@ -2,70 +2,28 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const path = require('path');
 
-let sourcePath = path.resolve(__dirname, `../../packages`);
-let targetPath = path.resolve(__dirname, `../../dist/packages-dist`);
-let componentsLessContent = '';
+let root = path.resolve(__dirname, `../..`);
 
-['abc', 'chart'].forEach(key => {
-  fse.copySync(
-    `${sourcePath}/${key}/index.less`,
-    `${targetPath}/${key}/index.less`,
-  );
-});
+function copyLess(name) {
+  let sourcePath = path.join(root, `packages/${name}`);
+  let targetPath = path.join(root, `dist/packages-dist/${name}`);
+  // index.less
+  fse.copySync(`${sourcePath}/index.less`, `${targetPath}/index.less`);
+  // modules less
+  fs.readdirSync(targetPath).forEach(name => {
+    if (fs.existsSync(`${sourcePath}/${name}/style/index.less`)) {
+      fse.copySync(
+        `${sourcePath}/${name}/style`,
+        `${targetPath}/${name}/style`,
+      );
+    }
+  });
+}
 
-// #region abc
+['abc', 'chart'].forEach(name => copyLess(name));
 
-sourcePath = path.resolve(__dirname, '../../packages/abc');
-targetPath = path.resolve(__dirname, '../../dist/packages-dist/abc/src');
-
-fs.readdirSync(targetPath).forEach(dir => {
-  if (fs.existsSync(`${sourcePath}/${dir}/style/index.less`)) {
-    componentsLessContent += `@import "./src/${path.join(
-      dir,
-      'style',
-      'index.less',
-    )}";\n`;
-    fse.copySync(`${sourcePath}/${dir}/style`, `${targetPath}/${dir}/style`);
-  }
-});
-
-fs.writeFileSync(
-  `${path.resolve(__dirname, '../../dist/packages-dist/abc')}/index.less`,
-  componentsLessContent,
-);
-
-// #endregion
-
-// #region chart
-
-sourcePath = path.resolve(__dirname, '../../packages/chart/src');
-targetPath = path.resolve(__dirname, '../../dist/packages-dist/chart/src/src');
-
-// chart.less
-componentsLessContent = '@import "./src/src/chart.less";\n';
-
+// copy theme
 fse.copySync(
-  `${sourcePath}/chart.less`,
-  `${targetPath}/chart.less`,
+  path.join(root, `packages/theme/styles`),
+  path.join(root, `dist/packages-dist/theme/styles`),
 );
-
-fs.readdirSync(targetPath).forEach(dir => {
-  if (fs.existsSync(`${sourcePath}/${dir}/style/index.less`)) {
-    componentsLessContent += `@import "./src/src/${path.join(
-      dir,
-      'style',
-      'index.less',
-    )}";\n`;
-    fse.copySync(
-      `${sourcePath}/${dir}/style`,
-      `${targetPath}/${dir}/style`,
-    );
-  }
-});
-
-fs.writeFileSync(
-  `${path.resolve(__dirname, '../../dist/packages-dist/chart')}/index.less`,
-  componentsLessContent,
-);
-
-// #endregion

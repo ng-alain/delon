@@ -1,0 +1,66 @@
+@import '../../../theme/styles/index.less';
+
+@g2-card-prefix: ~'.g2-card';
+
+@{g2-card-prefix} {
+  position: relative;
+  &__top {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    &-margin {
+      margin-bottom: 12px;
+    }
+    &-has-margin {
+      margin-bottom: 20px;
+    }
+  }
+  &__meta {
+    &-wrap {
+      float: left;
+    }
+    color: @text-color-secondary;
+    font-size: @font-size-base;
+    line-height: 22px;
+    height: 22px;
+    &-action {
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  &__avatar {
+    position: relative;
+    top: 4px;
+    float: left;
+    margin-right: 20px;
+    img {
+      border-radius: 100%;
+    }
+  }
+  &__total {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    white-space: nowrap;
+    color: @heading-color;
+    margin-top: 4px;
+    margin-bottom: 0;
+    font-size: 30px;
+    line-height: 38px;
+    height: 38px;
+  }
+  &__desc {
+    margin-bottom: 12px;
+    width: 100%;
+  }
+  &__footer {
+    border-top: 1px solid @border-color-split;
+    padding-top: 9px;
+    margin-top: 8px;
+    & > * {
+      position: relative;
+    }
+  }
+}

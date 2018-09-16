@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { DelonUtilModule } from '@delon/util';
+import { DelonACLModule } from '@delon/acl';
 
 import { STComponent } from './table.component';
 import { STRowDirective } from './table-row.directive';
@@ -13,7 +14,13 @@ const COMPONENTS = [STComponent, STRowDirective];
 
 @NgModule({
   schemas: [NO_ERRORS_SCHEMA],
-  imports: [CommonModule, FormsModule, DelonUtilModule, NgZorroAntdModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DelonUtilModule,
+    DelonACLModule,
+    NgZorroAntdModule,
+  ],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })

@@ -6,7 +6,7 @@ import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/them
 
 import { NoticeIconModule } from './notice-icon.module';
 import { NoticeIconComponent } from './notice-icon.component';
-import { NoticeItem } from './interface';
+import { NoticeItem } from './notice-icon.types';
 
 describe('abc: notice-icon', () => {
   let injector: Injector;

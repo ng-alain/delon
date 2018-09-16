@@ -19,6 +19,16 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "debug build",
+      "sourceMaps": false,
+      "program": "${workspaceFolder}/scripts/build/packing.js",
+      "args": [
+        "chart"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "site generate",
       "runtimeArgs": ["-r", "ts-node/register"],
       "cwd": "${workspaceRoot}",

@@ -30,7 +30,7 @@ import {
   ReuseContextI18n,
   ReuseContextCloseEvent,
   ReuseTitle,
-} from './interface';
+} from './reuse-tab.interfaces';
 import { ReuseTabContextService } from './reuse-tab-context.service';
 
 @Component({

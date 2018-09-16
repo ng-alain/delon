@@ -131,7 +131,7 @@
       <tr [nzExpand]="i.expand">
         <td></td>
         <td [attr.colspan]="_columns.length">
-          <ng-template [ngTemplateOutlet]="expand" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
+          <ng-template [ngTemplateOutlet]="expand" [ngTemplateOutletContext]="{$implicit: i, index: index }"></ng-template>
         </td>
       </tr>
     </ng-container>

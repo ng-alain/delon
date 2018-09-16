@@ -1,10 +1,6 @@
 {
   "name": "@delon/auth",
   "version": "0.0.0-PLACEHOLDER",
-  "main": "./bundles/auth.umd.js",
-  "module": "./esm5/auth.js",
-  "es2015": "./esm2015/auth.js",
-  "typings": "./auth.d.ts",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
   "repository": {

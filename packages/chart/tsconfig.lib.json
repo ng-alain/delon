@@ -1,0 +1,18 @@
+{
+  "extends": "../tsconfig.lib.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@delon/chart/*": ["../../dist/packages-dist/chart/*"],
+      "@delon/*": ["../../dist/packages-dist/*"]
+    }
+  },
+  "files": ["public_api.ts", "../typings.d.ts"],
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": false,
+    "fullTemplateTypeCheck": true,
+    "skipTemplateCodegen": true
+  }
+}

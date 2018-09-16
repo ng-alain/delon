@@ -490,7 +490,7 @@ module.exports = {
           hasSubDir: false,
         },
         {
-          src: ['./packages/chart/src'],
+          src: ['./packages/chart'],
           template: {
             content: './src/templates/content.ts',
           },

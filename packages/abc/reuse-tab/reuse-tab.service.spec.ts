@@ -7,7 +7,7 @@ import { MenuService } from '@delon/theme';
 
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
-import { ReuseTabMatchMode, ReuseTitle } from './interface';
+import { ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
 
 const TITLE = `标题`;
 let reuse: boolean = true;

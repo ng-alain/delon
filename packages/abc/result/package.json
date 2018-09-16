@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "result",
+      "entryFile": "public_api.ts"
+    }
+  }
+}

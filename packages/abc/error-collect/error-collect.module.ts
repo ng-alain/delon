@@ -1,5 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DelonUtilModule } from '@delon/util';
 
 import { ErrorCollectComponent } from './error-collect.component';
 import { ErrorCollectConfig } from './error-collect.config';
@@ -7,7 +8,7 @@ import { ErrorCollectConfig } from './error-collect.config';
 const COMPONENTS = [ErrorCollectComponent];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, DelonUtilModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })

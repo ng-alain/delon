@@ -1,6 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
 export class LodopConfig {
   /**
    * 注册信息：主注册号

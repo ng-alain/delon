@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import * as format from 'date-fns/format';
-import * as addSeconds from 'date-fns/add_seconds';
+import format from 'date-fns/format';
+import addSeconds from 'date-fns/add_seconds';
 
 @Component({
   selector: 'count-down',

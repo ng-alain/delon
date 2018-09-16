@@ -3,7 +3,7 @@ import { Observable, of, Subject } from 'rxjs';
 
 import { LazyService } from '@delon/util';
 
-import { Lodop, LodopResult, LodopPrintResult } from './interface';
+import { Lodop, LodopResult, LodopPrintResult } from './lodop.types';
 import { LodopConfig } from './lodop.config';
 
 // TODO: zone

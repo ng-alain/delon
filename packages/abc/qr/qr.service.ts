@@ -1,5 +1,5 @@
-import { QRConfig } from './qr.config';
 import { Injectable } from '@angular/core';
+import { QRConfig } from './qr.config';
 
 declare var QRious: any;
 

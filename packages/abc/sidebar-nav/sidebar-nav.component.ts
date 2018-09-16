@@ -15,10 +15,11 @@ import { Router, NavigationEnd } from '@angular/router';
 import { DOCUMENT, LocationStrategy } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
 import { MenuService, SettingsService, Menu } from '@delon/theme';
 import { InputBoolean } from '@delon/util';
 
-import { Nav } from './interface';
+import { Nav } from './sidebar-nav.types';
 
 const SHOWCLS = 'sidebar-nav__floating-show';
 const FLOATINGCLS = 'sidebar-nav__floating';

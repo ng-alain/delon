@@ -4,7 +4,7 @@ import {
   STRes,
   STPage,
   STColumnButtonModalConfig,
-} from './interface';
+} from './table.interfaces';
 
 export class STConfig {
   /**

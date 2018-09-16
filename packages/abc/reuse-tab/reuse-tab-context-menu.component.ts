@@ -13,7 +13,7 @@ import {
   ReuseContextCloseEvent,
   ReuseItem,
   CloseType,
-} from './interface';
+} from './reuse-tab.interfaces';
 
 @Component({
   selector: 'reuse-tab-context-menu',

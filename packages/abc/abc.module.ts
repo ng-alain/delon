@@ -1,33 +1,33 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
 // region: all modules
-import { STModule } from './table/table.module';
-import { SVModule } from './view/view.module';
-import { SEModule } from './edit/edit.module';
-import { ErrorCollectModule } from './error-collect/error-collect.module';
-import { FooterToolbarModule } from './footer-toolbar/footer-toolbar.module';
-import { SidebarNavModule } from './sidebar-nav/sidebar-nav.module';
-import { DownFileModule } from './down-file/down-file.module';
-import { ImageModule } from './image/image.module';
-import { AvatarListModule } from './avatar-list/avatar-list.module';
-import { EllipsisModule } from './ellipsis/ellipsis.module';
-import { GlobalFooterModule } from './global-footer/global-footer.module';
-import { ExceptionModule } from './exception/exception.module';
-import { NoticeIconModule } from './notice-icon/notice-icon.module';
-import { PageHeaderModule } from './page-header/page-header.module';
-import { ResultModule } from './result/result.module';
-import { TagSelectModule } from './tag-select/tag-select.module';
-import { CountDownModule } from './count-down/count-down.module';
-import { ReuseTabModule } from './reuse-tab/reuse-tab.module';
-import { FullContentModule } from './full-content/full-content.module';
-import { XlsxModule } from './xlsx/xlsx.module';
-import { ZipModule } from './zip/zip.module';
-import { NumberToChineseModule } from './number-to-chinese/number-to-chinese.module';
-import { LodopModule } from './lodop/lodop.module';
-import { QuickMenuModule } from './quick-menu/quick-menu.module';
-import { QRModule } from './qr/qr.module';
-import { DatePickerModule } from './date-picker/date-picker.module';
-import { SGModule } from './grid/grid.module';
+import { STModule } from '@delon/abc/table';
+import { SVModule } from '@delon/abc/view';
+import { SEModule } from '@delon/abc/edit';
+import { ErrorCollectModule } from '@delon/abc/error-collect';
+import { FooterToolbarModule } from '@delon/abc/footer-toolbar';
+import { SidebarNavModule } from '@delon/abc/sidebar-nav';
+import { DownFileModule } from '@delon/abc/down-file';
+import { ImageModule } from '@delon/abc/image';
+import { AvatarListModule } from '@delon/abc/avatar-list';
+import { EllipsisModule } from '@delon/abc/ellipsis';
+import { GlobalFooterModule } from '@delon/abc/global-footer';
+import { ExceptionModule } from '@delon/abc/exception';
+import { NoticeIconModule } from '@delon/abc/notice-icon';
+import { PageHeaderModule } from '@delon/abc/page-header';
+import { ResultModule } from '@delon/abc/result';
+import { TagSelectModule } from '@delon/abc/tag-select';
+import { CountDownModule } from '@delon/abc/count-down';
+import { ReuseTabModule } from '@delon/abc/reuse-tab';
+import { FullContentModule } from '@delon/abc/full-content';
+import { XlsxModule } from '@delon/abc/xlsx';
+import { ZipModule } from '@delon/abc/zip';
+import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
+import { LodopModule } from '@delon/abc/lodop';
+import { QuickMenuModule } from '@delon/abc/quick-menu';
+import { QRModule } from '@delon/abc/qr';
+import { DatePickerModule } from '@delon/abc/date-picker';
+import { SGModule } from '@delon/abc/grid';
 
 const MODULES = [
   ErrorCollectModule,
@@ -56,7 +56,7 @@ const MODULES = [
   SVModule,
   SEModule,
   SGModule,
-  DatePickerModule
+  DatePickerModule,
 ];
 
 // endregion
@@ -89,7 +89,7 @@ const MODULES = [
     SVModule.forRoot(),
     SEModule.forRoot(),
     SGModule.forRoot(),
-    DatePickerModule.forRoot()
+    DatePickerModule.forRoot(),
   ],
   exports: MODULES,
 })

@@ -1,10 +1,6 @@
 {
   "name": "@delon/acl",
   "version": "0.0.0-PLACEHOLDER",
-  "main": "./bundles/acl.umd.js",
-  "module": "./esm5/acl.js",
-  "es2015": "./esm2015/acl.js",
-  "typings": "./acl.d.ts",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
   "repository": {

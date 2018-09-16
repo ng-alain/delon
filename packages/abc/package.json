@@ -1,10 +1,6 @@
 {
   "name": "@delon/abc",
   "version": "0.0.0-PLACEHOLDER",
-  "main": "./bundles/abc.umd.js",
-  "module": "./esm5/abc.js",
-  "es2015": "./esm2015/abc.js",
-  "typings": "./abc.d.ts",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
   "repository": {

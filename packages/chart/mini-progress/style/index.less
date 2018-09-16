@@ -1,0 +1,36 @@
+@import '../../../theme/styles/index.less';
+@g2-mini-progress-prefix: ~'.g2-mini-progress';
+@{g2-mini-progress-prefix} {
+  display: block;
+  padding: 5px 0;
+  position: relative;
+  width: 100%;
+  &__wrap {
+    background-color: @background-color-base;
+    position: relative;
+  }
+  &__value {
+    transition: all 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+    border-radius: 1px 0 0 1px;
+    background-color: @primary-color;
+    width: 0;
+    height: 100%;
+  }
+  &__target {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    &-item {
+      border-radius: 100px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 2px;
+      &:last-child {
+        top: auto;
+        bottom: 0;
+      }
+    }
+  }
+}

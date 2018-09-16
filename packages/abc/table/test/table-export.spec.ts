@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Injector } from '@angular/core';
 import { XlsxService } from '../../xlsx/xlsx.service';
-import { XlsxExportOptions } from '../../xlsx/interface';
+import { XlsxExportOptions } from '../../xlsx/xlsx.types';
 import { STExport } from '../table-export';
-import { STColumn } from '../interface';
+import { STColumn } from '../table.interfaces';
 
 class MockXlsxService {
   export(options: XlsxExportOptions) {

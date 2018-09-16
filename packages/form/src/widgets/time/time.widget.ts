@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlWidget } from '../../widget';
-import * as format from 'date-fns/format';
+import format from 'date-fns/format';
 import { toBool } from '../../utils';
 
 @Component({

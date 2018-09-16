@@ -5,8 +5,9 @@ import { of, throwError } from 'rxjs';
 import { Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import * as fs from 'file-saver';
-
-import { XlsxModule, XlsxService, XlsxExportOptions } from './index';
+import { XlsxModule } from './xlsx.module';
+import { XlsxService } from './xlsx.service';
+import { XlsxExportOptions } from './xlsx.types';
 
 class MockLazyService {
   load() {
@@ -112,7 +113,7 @@ describe('abc: xlsx', () => {
 
   describe('[#export]', () => {
     beforeEach(() => {
-      spyOn(fs, 'saveAs');
+      spyOn(fs.default, 'saveAs');
     });
     it('should be export xlsx via array', (done: () => void) => {
       srv
@@ -120,7 +121,7 @@ describe('abc: xlsx', () => {
           sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }],
         })
         .then(() => {
-          expect(fs.saveAs).toHaveBeenCalled();
+          expect(fs.default.saveAs).toHaveBeenCalled();
           done();
         });
     });
@@ -132,7 +133,7 @@ describe('abc: xlsx', () => {
           },
         })
         .then(() => {
-          expect(fs.saveAs).toHaveBeenCalled();
+          expect(fs.default.saveAs).toHaveBeenCalled();
           done();
         });
     });

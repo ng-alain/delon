@@ -1,0 +1,13 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "view",
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "@angular/cdk/observers": "ng.cdk.observers",
+        "@delon/theme": "delon.theme",
+        "@delon/util": "delon.util"
+      }
+    }
+  }
+}

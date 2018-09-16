@@ -1,10 +1,6 @@
 {
   "name": "@delon/util",
   "version": "0.0.0-PLACEHOLDER",
-  "main": "./bundles/util.umd.js",
-  "module": "./esm5/util.js",
-  "es2015": "./esm2015/util.js",
-  "typings": "./util.d.ts",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
   "repository": {

@@ -54,7 +54,7 @@ import {
   STRes,
   STPage,
   STLoadOptions,
-} from './interface';
+} from './table.interfaces';
 import { STConfig } from './table.config';
 import { STExport } from './table-export';
 import { STColumnSource } from './table-column-source';

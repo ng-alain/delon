@@ -6,9 +6,10 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { InputBoolean } from '@delon/util';
 import { DelonLocaleService } from '@delon/theme';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tag-select',

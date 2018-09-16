@@ -27,7 +27,7 @@ import {
   TitleService,
   SettingsService,
 } from '@delon/theme';
-import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
+import { ReuseTabService } from '@delon/abc/reuse-tab';
 
 import { PageHeaderConfig } from './page-header.config';
 
