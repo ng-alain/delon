@@ -19,7 +19,7 @@ import { Component, ElementRef } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <g2-chart (render)="render($event)"></g2-chart>
+  <g2-custom (render)="render($event)"></g2-custom>
   `,
 })
 export class DemoComponent {

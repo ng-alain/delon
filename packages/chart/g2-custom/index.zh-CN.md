@@ -2,11 +2,11 @@
 title: g2-chart
 subtitle: 自定义图表
 cols: 1
-module: G2ChartModule
+module: G2CustomModule
 type: Components
 ---
 
-使用 `g2-chart` 组件可以更快速的封装自己的图表组件。
+使用 `g2-custom` 组件可以更快速的封装自己的图表组件。
 
 ## 如何使用
 
@@ -18,7 +18,7 @@ import { Component, ElementRef } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <g2-chart (render)="render($event)"></g2-chart>
+  <g2-custom (render)="render($event)"></g2-custom>
   `,
 })
 export class DemoComponent {

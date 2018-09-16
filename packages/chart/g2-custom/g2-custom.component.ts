@@ -14,11 +14,11 @@ import { debounceTime } from 'rxjs/operators';
 import { toNumber } from '@delon/util';
 
 @Component({
-  selector: 'g2-chart',
+  selector: 'g2,g2-custom',
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class G2ChartComponent implements OnInit, OnDestroy {
+export class G2CustomComponent implements OnInit, OnDestroy {
 
   private resize$: Subscription = null;
 

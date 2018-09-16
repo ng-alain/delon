@@ -2,11 +2,11 @@
 title: g2-chart
 subtitle: Custom Chart
 cols: 1
-module: G2ChartModule
+module: G2CustomModule
 type: Components
 ---
 
-Use `g2-chart` component to package your G2 chart.
+Use `g2-custom` component to package your G2 chart.
 
 ## How to use
 
@@ -18,7 +18,7 @@ import { Component, ElementRef } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <g2-chart (render)="render($event)"></g2-chart>
+  <g2-custom (render)="render($event)"></g2-custom>
   `,
 })
 export class DemoComponent {

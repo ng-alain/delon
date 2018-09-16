@@ -2,17 +2,17 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DelonUtilModule } from '@delon/util';
 
-import { G2ChartComponent } from './chart.component';
+import { G2CustomComponent } from './g2-custom.component';
 
-const COMPONENTS = [G2ChartComponent];
+const COMPONENTS = [G2CustomComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2ChartModule {
+export class G2CustomModule {
   static forRoot(): ModuleWithProviders {
-    return { ngModule: G2ChartModule, providers: [] };
+    return { ngModule: G2CustomModule, providers: [] };
   }
 }

@@ -168,6 +168,12 @@ Because of the BEM style naming, you need to modify style name of `src/app/layou
 | ---------------- | --------------- | --------- | -------- | ---- |
 | `name_separator` | `nameSeparator` | ×         | ×        | -    |
 
+### chart 类库组件名变更
+
+| 原组件名   | 新组件名    | ng update | 描述 |
+| ---------- | ----------- | --------- | ---- |
+| `g2-chart` | `g2-custom` | -         | -    |
+
 ## theme类库变更
 
 ### 布局

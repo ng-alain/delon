@@ -4,7 +4,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { G2BarModule } from '@delon/chart/bar';
 import { G2CardModule } from '@delon/chart/card';
-import { G2ChartModule } from '@delon/chart/chart';
+import { G2CustomModule } from '@delon/chart/g2-custom';
 import { G2GaugeModule } from '@delon/chart/gauge';
 import { G2MiniAreaModule } from '@delon/chart/mini-area';
 import { G2MiniBarModule } from '@delon/chart/mini-bar';
@@ -20,7 +20,7 @@ import { TrendModule } from '@delon/chart/trend';
 const MODULES = [
   G2BarModule,
   G2CardModule,
-  G2ChartModule,
+  G2CustomModule,
   G2GaugeModule,
   G2MiniAreaModule,
   G2MiniBarModule,
@@ -40,7 +40,7 @@ const MODULES = [
   imports: [
     G2BarModule.forRoot(),
     G2CardModule.forRoot(),
-    G2ChartModule.forRoot(),
+    G2CustomModule.forRoot(),
     G2GaugeModule.forRoot(),
     G2MiniAreaModule.forRoot(),
     G2MiniBarModule.forRoot(),

@@ -1,6 +1,6 @@
 export * from '@delon/chart/bar';
 export * from '@delon/chart/card';
-export * from '@delon/chart/chart';
+export * from '@delon/chart/g2-custom';
 export * from '@delon/chart/gauge';
 export * from '@delon/chart/mini-area';
 export * from '@delon/chart/mini-bar';
