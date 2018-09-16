@@ -87,7 +87,7 @@ ng g ng-alain:plugin docker -t=remove
 
 ### defaultLanguage
 
-变更当前默认语言，参考：[国际化-不需要国际化](/docs/i18n#不需要国际化)
+变更当前默认语言，参考：[国际化-默认语言](/docs/i18n#默认语言)
 
 ```bash
 # change to [en]
