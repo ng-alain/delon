@@ -101,10 +101,10 @@ $ ng serve
 2. [![Segment Fault](https://gw.alipayobjects.com/zos/rmsportal/hfYFfCvHTQTUKntlJbMF.svg | width=140)](https://segmentfault.com/t/ng-alain)（中文）
 3. 加入 ng-alain 自助服务群（中文）
 
-![](https://i.ng-alain.com/static/qq-group.png)
+![](./assets/qq-group.png)
 
 ## 捐助
 
 如果你觉得 ng-alain 不错，可以考虑自愿为本站打赏或捐助。
 
-![](https://i.ng-alain.com/static/donate.png)
+![](./assets/donate.png)
