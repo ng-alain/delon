@@ -51,6 +51,9 @@ SCAFFOLD_DIR=${PWD}/../ng-alain
 ROOT_DIR=${PWD}/dist/scaffold
 DIST_DIR=${ROOT_DIR}/dist
 
+NG=${PWD}/node_modules/.bin/ng
+GHPAGES=${PWD}/node_modules/.bin/gh-pages
+
 if [[ ${COLOR} == true ]]; then
   rm -rf .tmp
   cp -r packages .tmp
@@ -69,33 +72,34 @@ if [[ ${BUILD} == true ]]; then
 
     rm -rf ${ROOT_DIR}
     mkdir -p ${ROOT_DIR}
-    rsync -a --exclude "node_modules" --exclude "package-lock.json" ${SCAFFOLD_DIR}/ ${ROOT_DIR}
+    rsync -a --exclude "node_modules" --exclude "dist" --exclude "package-lock.json" --exclude "yarn.lock" ${SCAFFOLD_DIR}/ ${ROOT_DIR}
 
     cd ${ROOT_DIR}
     updateVersionReferences ${ROOT_DIR}/package.json
     updateVersionReferences ${SCAFFOLD_DIR}/package.json
 
     echo '===== need mock'
-    sed -i "s/const MOCKMODULE = !environment.production/const MOCKMODULE = true/g" ${ROOT_DIR}/src/app/delon.module.ts
+    sed -i "s/const MOCK_MODULES = !environment.production/const MOCK_MODULES = true/g" ${ROOT_DIR}/src/app/delon.module.ts
     sed -i "s/if (!environment.production)/if (true)/g" ${ROOT_DIR}/src/app/layout/default/default.component.ts
 
     yarn
 
     echo '===== build...'
-    $(npm bin)/ng build --prod --build-optimizer --base-href /ng-alain/
+    echo '===== build...'
+    ng build --prod --build-optimizer --base-href /ng-alain/
 fi
 
 if [[ ${DEPLOY} == true ]]; then
 
-  # echo '===== copy package-lock.json to source scaffold'
-  # cp -f ${ROOT_DIR}/package-lock.json ${SCAFFOLD_DIR}/package-lock.json
+  echo '===== copy yarn.json to source scaffold'
+  cp -f ${ROOT_DIR}/yarn.lock ${SCAFFOLD_DIR}/yarn-taobao.lock
 
-  # echo 'copy index.html > 404.html'
-  # cp -f ${DIST_DIR}/index.html ${DIST_DIR}/404.html
+  echo 'copy index.html > 404.html'
+  cp -f ${DIST_DIR}/index.html ${DIST_DIR}/404.html
 
   echo 'deploy by gh-pages'
-  # $(npm bin)/gh-pages-clean
-  $(npm bin)/gh-pages -d dist/scaffold/dist -r https://github.com/ng-alain/ng-alain/
+  # gh-pages-clean
+  gh-pages -d dist/scaffold/dist -r https://github.com/ng-alain/ng-alain/
 
 fi
 
