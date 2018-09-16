@@ -84,3 +84,21 @@ $ ng serve
 启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，若你看到如下页面则代表成功了。
 
 ![](./assets/screenshot/desktop.png | width=700)
+
+## 六、社区互助
+
+如果您在使用的过程中碰到问题，可以通过下面几个途径寻求帮助，同时我们也鼓励资深用户通过下面的途径给新人提供帮助。
+
+通过 Stack Overflow 或者 Segment Fault 提问时，建议加上 `ng-alain` 标签。
+
+1. [![Stack Overflow](https://cdn.sstatic.net/Sites/stackoverflow/company/img/logos/so/so-logo.svg | width=140)](https://stackoverflow.com/questions/tagged/ng-alain)（English）
+2. [![Segment Fault](https://gw.alipayobjects.com/zos/rmsportal/hfYFfCvHTQTUKntlJbMF.svg | width=140)](https://segmentfault.com/t/ng-alain)（中文）
+3. 加入 ng-alain 自助服务群（中文）
+
+![](https://i.ng-alain.com/static/qq-group.png)
+
+## 七、捐助
+
+如果你觉得 ng-alain 不错，可以考虑自愿为本站打赏或捐助。
+
+![](https://i.ng-alain.com/static/donate.png)
