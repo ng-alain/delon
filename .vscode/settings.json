@@ -14,9 +14,11 @@
     "**/coverage/*/**": true,
     "**/tools/*/**": true,
     "**/.lib/*/**": true,
+    "**/.tmp/*/**": true,
     "**/.ng_build/*/**": true
   },
   "files.exclude": {
+    "**/.tmp/*/**": true,
     "**/.lib/*/**": true,
     "**/.ng_build/*/**": true
   },

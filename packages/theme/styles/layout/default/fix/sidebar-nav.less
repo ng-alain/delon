@@ -1,6 +1,3 @@
-@import '../../../theme/styles/default';
-@import '../../../theme/styles/layout/default/variable';
-
 // Main Nav
 @sidebar-nav-prefix-cls: sidebar-nav;
 
@@ -35,16 +32,14 @@
         color: @alain-default-aside-nav-text-hover-color;
       }
     }
-  }
-  // Selected
+  } // Selected
   &__selected {
     border-left-color: @alain-default-aside-nav-selected-text-color;
     background-color: @alain-default-aside-nav-selected-bg;
     > a {
       color: @alain-default-aside-nav-selected-text-color;
     }
-  }
-  // Open Submenu
+  } // Open Submenu
   &__open {
     > .@{sidebar-nav-prefix-cls}__sub {
       display: block;
@@ -91,8 +86,7 @@
     .@{sidebar-nav-prefix-cls}__item {
       border-left: 0 !important;
     }
-  }
-  // Badge
+  } // Badge
   .badge {
     position: absolute;
     right: @layout-gutter * 2;
@@ -108,8 +102,7 @@
     &-dot {
       top: (@alain-default-aside-nav-item-height - @layout-gutter) / 2;
     }
-  }
-  // Dept
+  } // Dept
   &__depth1 {
     .@{sidebar-nav-prefix-cls}__item > a {
       padding-left: (@layout-gutter * 3) + @alain-default-aside-nav-icon-width;
@@ -129,8 +122,7 @@
     .@{sidebar-nav-prefix-cls}__item > a {
       padding-left: (@layout-gutter * 6) + @alain-default-aside-nav-icon-width;
     }
-  }
-  // Floating
+  } // Floating
   &__floating {
     position: absolute;
     z-index: @zindex + 7;

@@ -7,8 +7,8 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "generate-site-color-less",
-      "program": "${workspaceFolder}/scripts/site/generate-color-less.js"
+      "name": "alain-pro-color-less",
+      "program": "${workspaceFolder}/scripts/scaffold/alain-pro-color-less.js"
     },
     {
       "type": "node",

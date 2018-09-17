@@ -39,7 +39,7 @@
     "release:ci": "bash ./build.sh && bash build-schematics.sh -b -travis",
     "publish:next": "npm run release && bash ./scripts/release/publish-next && bash ./scripts/release/sync-taobao",
     "publish": "npm run release && bash ./scripts/release/publish && bash ./scripts/release/sync-taobao",
-    "scaffold:gh": "bash ./scaffold.sh -b -d"
+    "scaffold:gh": "bash ./scaffold.sh -c -b -d"
   },
   "dependencies": {
     "@angular/animations": "^6.1.0",

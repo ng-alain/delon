@@ -57,13 +57,15 @@ GHPAGES=${PWD}/node_modules/.bin/gh-pages
 if [[ ${COLOR} == true ]]; then
   rm -rf .tmp
   cp -r packages .tmp
+  cp -r ../ng-alain-ent/client/admin/src/app/layout/pro/styles .tmp/theme/styles/layout/pro
 
   sed -i "s/@import '..\//\/\/ @import/g" `grep @import\ \'../ -rl .tmp`
   sed -i "s/~ng-zorro-antd/..\/..\/..\/node_modules\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl .tmp`
 
-  node ./scripts/scaffold/generate-color-less.js
+  node ./scripts/scaffold/alain-pro-color-less.js
+  node ./scripts/scaffold/alain-default-color-less.js
 
-  # rm -rf .tmp
+  rm -rf .tmp
 fi
 
 if [[ ${BUILD} == true ]]; then

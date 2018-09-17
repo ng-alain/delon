@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 const path = require('path');
 const fs = require('fs');
 const { generateTheme } = require('antd-theme-generator');
@@ -24,16 +22,3 @@ bundle({
 }).then(colorsLess => {
   fs.writeFileSync(traget, colorsLess);
 });
-
-// const options = {
-//   antdStylesDir: path.join(root, 'node_modules/ng-zorro-antd/src/'),
-//   stylesDir: path.join(root, '.tmp'),
-//   varFile: path.join(root, '.tmp/all.less'),
-//   themeVariables: [
-//     '@primary-color'
-//   ],
-//   mainLessFile: path.join(root, '.tmp/all.less'),
-//   outputFilePath: path.join(root, '../ng-alain/src/assets/alain-default.less'),
-// };
-
-// generateTheme(options);
