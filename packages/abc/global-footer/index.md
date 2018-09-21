@@ -22,3 +22,11 @@ module: GlobalFooterModule
 | `[title]`       | 标题           | `string`  | -       |
 | `[href]`        | 路由链接       | `string`  | -       |
 | `[blankTarget]` | 是否打开新窗口 | `boolean` | `false` |
+
+### global-footer-item
+
+| 参数            | 说明           | 类型      | 默认值  |
+| --------------- | -------------- | --------- | ------- |
+| `ng-content`    | 标题           | `string`  | -       |
+| `[href]`        | 路由链接       | `string`  | -       |
+| `[blankTarget]` | 是否打开新窗口 | `boolean` | `false` |
