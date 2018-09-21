@@ -12,8 +12,8 @@ import { toBool } from '../../utils';
       [disabled]="disabled"
       [attr.disabled]="disabled"
       [nzSize]="ui.size"
-      [value]="value"
-      (input)="setValue($event.target?.value)"
+      [ngModel]="value"
+      (ngModelChange)="setValue($event)"
       [attr.maxLength]="schema.maxLength || null"
       [attr.placeholder]="ui.placeholder"
       [nzAutosize]="autosize">
