@@ -22,6 +22,7 @@ config: STConfig
 - 通过 `res.reName` 重置数据 `key` 而无须担心后端数据格式是否满足 `simpel-table` 需求
 - 通过 `res.process` 可以对表格渲染前对数据进一步优化
 - 通过 `page.zeroIndexed` 可以调整 http 请求时 `pi` 参数是否遵循 0 基索引，默认情况下为 1 基索引
+- 使用 `_HttpClient` 发起请求，因此满足 [AlainThemeConfig](/theme/http#AlainThemeConfig) 的配置也适用
 
 ### 静态数据
 

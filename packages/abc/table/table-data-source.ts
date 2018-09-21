@@ -1,11 +1,10 @@
 import { Injectable, Host } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { deepGet } from '@delon/util';
-import { CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
+import { CNCurrencyPipe, DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 
 import {
   STData,
@@ -43,7 +42,7 @@ export interface STDataSourceResult {
 @Injectable()
 export class STDataSource {
   constructor(
-    private http: HttpClient,
+    private http: _HttpClient,
     @Host() private currenty: CNCurrencyPipe,
     @Host() private date: DatePipe,
     @Host() private yn: YNPipe,
