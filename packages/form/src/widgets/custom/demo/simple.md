@@ -29,8 +29,8 @@ import { SFSchema } from '@delon/form';
                 [disabled]="me.disabled"
                 [attr.disabled]="me.disabled"
                 [nzSize]="ui.size"
-                [value]="me.formProperty.value"
-                (input)="me.setValue($event.target?.value)">
+                [ngModel]="me.formProperty.value"
+                (ngModelChange)="me.setValue($event)">
     </ng-template>
   </sf>
   `
