@@ -68,7 +68,7 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
         input =>
           this.isAsync ? this.ui.asyncData(input) : this.filterData(input),
       ),
-      map(res => getEnum(res, null)),
+      map(res => getEnum(res, null, this.schema.readOnly)),
     );
   }
 
@@ -76,12 +76,13 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
     if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':
-        this.fixData = getCopyEnum(EMAILSUFFIX, null);
+        this.fixData = getCopyEnum(EMAILSUFFIX, null, this.schema.readOnly);
         break;
       default:
         this.fixData = getCopyEnum(
           this.schema.enum,
           this.formProperty.formData,
+          this.schema.readOnly
         );
         break;
     }
