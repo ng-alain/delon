@@ -107,7 +107,7 @@ export class MentionWidget extends ControlWidget implements OnInit {
 
     this.loading = true;
     (this.ui.loadData(option) as Observable<SFSchemaEnumType[]>)
-      .pipe(tap(() => (this.loading = false)), map(res => getEnum(res, null)))
+      .pipe(tap(() => (this.loading = false)), map(res => getEnum(res, null, this.schema.readOnly)))
       .subscribe(res => {
         this.data = res;
         this.cd.detectChanges();
