@@ -151,7 +151,7 @@ export function orderProperties(properties: string[], order: string[]) {
   return complete;
 }
 
-export function getEnum(list: any[], formData: any): SFSchemaEnum[] {
+export function getEnum(list: any[], formData: any, readOnly: boolean): SFSchemaEnum[] {
   if (isBlank(list) || !Array.isArray(list) || list.length === 0) return [];
   if (typeof list[0] !== 'object') {
     list = list.map((item: any) => {
@@ -164,11 +164,15 @@ export function getEnum(list: any[], formData: any): SFSchemaEnum[] {
       if (~formData.indexOf(item.value)) item.checked = true;
     });
   }
+  // fix disabled status
+  if (readOnly) {
+    list.forEach((item: SFSchemaEnum) => item.disabled = true);
+  }
   return list;
 }
 
-export function getCopyEnum(list: any[], formData: any) {
-  return getEnum(deepCopy(list || []), formData);
+export function getCopyEnum(list: any[], formData: any, readOnly: boolean) {
+  return getEnum(deepCopy(list || []), formData, readOnly);
 }
 
 export function getData(
@@ -182,8 +186,8 @@ export function getData(
       .asyncData(asyncArgs)
       .pipe(
         takeWhile(() => ui.__destroy !== true),
-        map(list => getEnum(list, formData)),
+        map(list => getEnum(list, formData, schema.readOnly)),
       );
   }
-  return of(getCopyEnum(schema.enum, formData));
+  return of(getCopyEnum(schema.enum, formData, schema.readOnly));
 }
