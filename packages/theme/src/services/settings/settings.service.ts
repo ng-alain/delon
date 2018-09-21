@@ -62,10 +62,14 @@ export class SettingsService {
     return this.notify$.asObservable();
   }
 
-  setLayout(name: string, value: any): boolean {
-    this.layout[name] = value;
+  setLayout(name: string | Layout, value?: any): boolean {
+    if (typeof name === 'string') {
+      this.layout[name] = value;
+    } else {
+      this._layout = name;
+    }
     this.set(LAYOUT_KEY, this._layout);
-    this.notify$.next({ type: 'layout', name, value });
+    this.notify$.next({ type: 'layout', name, value } as any);
     return true;
   }
 
