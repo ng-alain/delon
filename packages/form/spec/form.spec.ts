@@ -1,8 +1,7 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { builder, TestFormComponent, SFPage, SCHEMA } from './base.spec';
 import { SFSchema } from '../src/schema/index';
-import { SFUISchemaItem, SFUISchema } from '../src/schema/ui';
 import { deepCopy } from '@delon/util';
 
 describe('form: component', () => {
@@ -278,11 +277,14 @@ describe('form: component', () => {
         })
         .checkCls('input', 'ant-input-lg');
     });
-    it('#disabled', () => {
-      page
+    it('#disabled', fakeAsync(() => {
+      const el = page
         .newSchema({ properties: { name: { type: 'string', readOnly: true } } })
-        .checkCls('input', 'ant-input-disabled');
-    });
+        .getEl('input') as HTMLInputElement;
+      tick();
+      expect(el.disabled).toBe(true);
+      expect(el.classList).toContain('ant-input-disabled');
+    }));
     it('should be custom class', () => {
       page
         .newSchema({
