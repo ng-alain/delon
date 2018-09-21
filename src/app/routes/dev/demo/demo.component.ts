@@ -2,17 +2,40 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-demo',
+  selector: 'components-global-footer-basic',
   template: `
-  <form nz-form #f="ngForm" se-container="1" size="compact" gutter="32" [labelWidth]="null" line>
-    <se label="App Key">
-      <input type="text" nz-input>
-    </se>
-    <se label="App Secret">
-      <input type="text" nz-input>
-    </se>
-  </form>`,
+  <div style="background:#f5f5f5; height: 100%;">
+  <global-footer [links]="links">
+    Copyright <i class="anticon anticon-menu-copyright" class="mx-sm"></i>2017<a href="//github.com/cipchk" target="_blank" class="mx-sm">卡色</a>出品
+  </global-footer>
+  <global-footer>
+    <global-footer-item href="https://ng-alain.com/" blankTarget>帮助</global-footer-item>
+    <global-footer-item href="https://github.com/ng-alain" blankTarget>
+      <i class="anticon anticon-github"></i>
+    </global-footer-item>
+    <global-footer-item href="https://ng-alain.github.io/ng-alain/" blankTarget>预览</global-footer-item>
+    Copyright <i class="anticon anticon-menu-copyright" class="mx-sm"></i>2017<a href="//github.com/cipchk" target="_blank" class="mx-sm">卡色</a>出品
+  </global-footer>
+  </div>
+  `,
+  styles: [ `:host { display: block; }` ]
 })
 export class DemoComponent {
-  i: any = {};
+  links = [
+    {
+      title: '帮助',
+      href: 'https://ng-alain.com/',
+      blankTarget: true
+    },
+    {
+      title: 'Github',
+      href: 'https://github.com/ng-alain',
+      blankTarget: true
+    },
+    {
+      title: '预览',
+      href: 'https://ng-alain.github.io/ng-alain/',
+      blankTarget: true
+    }
+  ];
 }

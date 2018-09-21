@@ -1,23 +1,45 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  ContentChildren,
+  QueryList,
+  ChangeDetectionStrategy,
+  Inject,
+} from '@angular/core';
+import { WINDOW } from '@delon/theme';
+import { Router } from '@angular/router';
 
-export interface GlobalFooterLink {
-  title: string;
-  href: string;
-  blankTarget?: boolean;
-}
+import { GlobalFooterLink } from './global-footer.types';
+import { GlobalFooterItemComponent } from './global-footer-item.component';
 
 @Component({
   selector: 'global-footer',
-  template: `
-  <div *ngIf="links && links.length > 0" class="global-footer__links">
-    <a class="global-footer__links-item" *ngFor="let i of links" routerLink="{{i.href}}" [attr.target]="i.blankTarget">{{i.title}}</a>
-  </div>
-  <div class="global-footer__copyright"><ng-content></ng-content></div>
-  `,
+  templateUrl: './global-footer.component.html',
   host: { '[class.global-footer]': 'true' },
   preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GlobalFooterComponent {
   @Input()
-  links: GlobalFooterLink[];
+  links: GlobalFooterLink[] = [];
+
+  @ContentChildren(GlobalFooterItemComponent)
+  items!: QueryList<GlobalFooterItemComponent>;
+
+  constructor(private router: Router, @Inject(WINDOW) private win: Window) {}
+
+  to(item: GlobalFooterLink) {
+    if (!item.href) {
+      return;
+    }
+    if (item.blankTarget) {
+      this.win.open(item.href);
+      return;
+    }
+    if (/^https?:\/\//.test(item.href)) {
+      this.win.location.href = item.href;
+    } else {
+      this.router.navigateByUrl(item.href);
+    }
+  }
 }
