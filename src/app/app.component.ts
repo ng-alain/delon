@@ -27,17 +27,6 @@ export class AppComponent implements OnDestroy {
     private router: Router,
     private mobileSrv: MobileService,
   ) {
-    // egg
-    if (environment.production) {
-      console.log(
-        `恩……如果你觉得 ng-alain 不错，可以考虑自愿为本站打赏或捐助。`,
-      );
-      console.log(
-        `%c`,
-        `padding-left:500px;padding-bottom:300px;line-height:120px;background:url('https://ng-alain.com/assets/donate.png') no-repeat;`,
-      );
-    }
-
     enquire.register(this.query, {
       match: () => {
         this.mobileSrv.next(true);
