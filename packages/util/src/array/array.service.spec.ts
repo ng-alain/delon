@@ -133,7 +133,7 @@ describe('utils: array', () => {
             [`${key}MapName`]: key,
           };
           const res = srv.arrToTreeNode(
-            [{ id: 1, parent_id: 0, title: 't1', [key]: true }],
+            [{ id: 1, parent_id: 0, title: 't1', [key]: true, isLeaf: key !== 'expanded' }],
             options,
           );
           page = new PageTreeNode(res);
