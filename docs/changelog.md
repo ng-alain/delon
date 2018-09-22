@@ -6,6 +6,15 @@ title:
 type: Other
 ---
 
+### 1.4.4
+
+`2018-9-22`
+
+- @delon/form
+  - 修复固定标签宽度时布局被挤兑
+  - 修复文本框在 Safari 浏览器下会重复录入，[#651](https://github.com/ng-alain/ng-alain/issues/651)
+  - 修复单多选框组 `readOnly` 无效问题，[#167](https://github.com/ng-alain/delon/issues/167)
+
 ### 1.4.3
 
 `2018-9-16`

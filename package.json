@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for ng-alain.",
   "repository": {
@@ -32,8 +32,7 @@
     "test": "ng test --code-coverage --watch=false",
     "test:schematics": "bash build-schematics.sh -b -t",
     "site:gen": "node scripts/site/main",
-    "site:release": "bash ./site.sh -b",
-    "site:gh": "bash ./site.sh -b -d",
+    "site:release": "node scripts/site/main init && bash ./site.sh -b && ng build site --prod --build-optimizer --base-href /1.x-doc/",
     "release": "bash ./build.sh && bash build-schematics.sh -b",
     "publish:next": "npm run release && bash ./scripts/release/publish-next",
     "publish": "npm run release && bash ./scripts/release/publish && bash ./scripts/release/sync-taobao",
