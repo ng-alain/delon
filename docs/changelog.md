@@ -6,6 +6,22 @@ title:
 type: Other
 ---
 
+### 2.0.0-beta.2
+
+`2018-9-22`
+
+- 同步 `ng-zorro-antd` 至 `1.6.0`
+  - 新增 skeleton 组件
+- @delon/abc
+  - 重构 `st` 组件Http请求使用 `_HttpClient`，[#685](https://github.com/ng-alain/ng-alain/issues/685)
+  - 新增 `global-footer` 支持自定义组件
+- @delon/form
+  - 修复固定标签宽度时布局被挤兑
+  - 修复文本框在 Safari 浏览器下会重复录入，[#651](https://github.com/ng-alain/ng-alain/issues/651)
+  - 修复单多选框组 `readOnly` 无效问题，[#167](https://github.com/ng-alain/delon/issues/167)
+- @delon/theme
+  - 增加 `setLayout` 支持对象替换
+
 ### 2.0.0-beta.1
 
 `2018-9-16`

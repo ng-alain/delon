@@ -84,11 +84,10 @@ if [[ ${BUILD} == true ]]; then
     sed -i "s/const MOCK_MODULES = !environment.production/const MOCK_MODULES = true/g" ${ROOT_DIR}/src/app/delon.module.ts
     sed -i "s/if (!environment.production)/if (true)/g" ${ROOT_DIR}/src/app/layout/default/default.component.ts
 
-    yarn
+    # yarn
 
-    echo '===== build...'
-    echo '===== build...'
-    ng build --prod --build-optimizer --base-href /ng-alain/
+    # echo '===== build...'
+    # ng build --prod --build-optimizer --base-href /ng-alain/
 fi
 
 if [[ ${DEPLOY} == true ]]; then
