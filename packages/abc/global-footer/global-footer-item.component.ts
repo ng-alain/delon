@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild, ElementRef } from '@angular/core';
-import { InputBoolean } from 'ng-zorro-antd/src/core/util/convert';
+import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'global-footer-item',
