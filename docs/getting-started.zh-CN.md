@@ -26,6 +26,7 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，我们�
 你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [Typescript](https://www.tslang.cn/)、[Angular](https://angular.cn/)、[g2](http://g2.alipay.com/)、[@delon](https://github.com/ng-alain/delon) 和 [ng-zorro-antd](https://ng.ant.design/)，提前了解和学习这些知识会非常有帮助。
 
 ## 安装
+### 方法 1: 使用 脚手架工具CLI （推荐）
 
 ```bash
 ng new demo --style less
@@ -33,8 +34,16 @@ cd demo
 ng add ng-alain@next
 ng serve
 ```
-
 请参考[命令行工具](/cli)了解更多细节。
+
+### 方法 2: 直接复制 git仓库
+```bash
+git clone --depth=1 https://github.com/cipchk/ng-alain.git demo
+cd demo
+npm install
+ng serve
+```
+注：使用方法一安装项目，只会生产少量组件和页面。而方法二包含所有组件，你可以根据项目需求，删除不需要的组件。
 
 ## 目录结构
 
@@ -84,6 +93,9 @@ $ ng serve
 启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，若你看到如下页面则代表成功了。
 
 ![](./assets/screenshot/desktop.png | width=700)
+
+
+如果您使用方法一安装，则右边只有部分菜单。
 
 ## 如何贡献
 
