@@ -157,7 +157,7 @@ echo "Finished cli!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/packages-dist/schematics/*
-  DEBUG_TO=${PWD}/test-projects/demo/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/demo/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}/application

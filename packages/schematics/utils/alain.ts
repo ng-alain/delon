@@ -14,7 +14,7 @@ import {
   mergeWith,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import { strings } from '@angular-devkit/core';
+import { strings, json } from '@angular-devkit/core';
 import { parseName } from './devkit-utils/parse-name';
 import {
   findModuleFromOptions,
@@ -27,6 +27,7 @@ import { getProject, Project } from './project';
 
 export interface CommonSchema {
   [key: string]: any;
+  _filesPath?: string;
   name?: string;
   path?: string;
   module?: string;
@@ -70,6 +71,9 @@ function buildComponentName(schema: CommonSchema, projectPrefix: string) {
 }
 
 function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
+  if (!schema._filesPath) {
+    schema._filesPath = './files';
+  }
   // module name
   if (!schema.module) {
     throw new SchematicsException(
@@ -228,7 +232,8 @@ export function buildAlain(schema: CommonSchema): Rule {
     // Don't support inline
     schema.inlineTemplate = false;
 
-    const templateSource = apply(url('./files'), [
+    const templateSource = apply(url(schema._filesPath), [
+      filter(path => !path.endsWith('.DS_Store')),
       schema.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),
       schema.inlineStyle
         ? filter(path => !path.endsWith('.__styleext__'))

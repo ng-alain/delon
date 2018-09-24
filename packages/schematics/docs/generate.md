@@ -76,3 +76,53 @@ ng g ng-alain:edit <page name> --modal=false
 ```
 
 > 如果你不小心将收到【No provider for NzModalRef! 】表明你把一个需要使用 `nzModalService` 打开的模态框组件，用了路由注册的方式。打开模态框组件无须注册路由，但需要注册至 `entryComponents`。
+
+## 自定义页
+
+除上述默认业务页以外，也可以自定义属于项目级别业务页，例如我们创建一个自己的编辑页模板，则只需要在项目的根目录创建以下目录结构：
+
+```
+└── _cli-tpl
+│   └── edit                                              // 模板名称
+│       └── __path__                                      // （名称固定值）
+│           └── __name@dasherize@if-flat__                // （名称固定值）
+│               ├── __name@dasherize__.component.ts       // 组件类文件（名称固定值）
+│               ├── __name@dasherize__.component.html     // 组件模板文件（名称固定值）
+│               └── __name@dasherize__.component.spec.ts  // 组件测试文件（名称固定值）
+└── src
+```
+
+之后，只需要运行：
+
+```bash
+ng g ng-alain:tpl <your template name> <name> -m=trade
+```
+
+> 自定义页参数同业务页一致。
+
+### 如何编写模板文件
+
+在自定义页的目录结构里我们看到文件名以 `__` 前缀开头，事实上他们是一些变量点位符，Cli 默认传递一些参数及方法：
+
+| 类型 | 参数名 | 默认 | 描述 |
+| ---- | ---- | ---- | ---- |
+| 变量 | project | - | 项目名 |
+| 变量 | name | - | 名称，相当于命令行的 `<name>` |
+| 变量 | path | - | 目标路径 |
+| 变量 | flat | `false` | 文件是否扁平结构 |
+| 变量 | inlineTemplate | `false` | 是否内联模板（固定值：`false`） |
+| 变量 | selector | - | 组件 `selector` |
+| 变量 | componentName | - | 组件名称 |
+| 变量 | changeDetection | `Default` | 组件 `changeDetection` 值 |
+| 变量 | modal | - | 是否使用 Modal 展示 |
+| 方法 | decamelize | - | 将字母串转换为由下划线分隔的所有小写字母 |
+| 方法 | dasherize | - | 将空格或下划线用破折号替换 |
+| 方法 | camelize | - | 返回字符串的小骆驼拼写法形式 |
+| 方法 | classify | - | 返回字符串的大骆驼拼写法形式 |
+| 方法 | underscore | - | 将字母串转换为由下划线分隔的所有小写字母 |
+| 方法 | capitalize | - | 返回字符串首字母大写 |
+
+这些变更或方法可以在模板中使用，例如：`<%=componentName%>` 表示组件名，任何使用 `<% %>` 内可以使用 JavaScript 代码。有关模板编写可以参考：
+
+- [delon](https://github.com/ng-alain/delon/blob/master/packages/schematics/edit/files/__path__/__name%40dasherize%40if-flat__/__name%40dasherize__.component.html)
+- [material2](https://github.com/angular/material2/blob/master/src/lib/schematics/dashboard/files/__path__/__name%40dasherize%40if-flat__/__name%40dasherize__.component.html)
