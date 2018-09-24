@@ -13,7 +13,7 @@ function genFiles(options: Schema) {
     const project = getProject(host, options.project);
     const tplDir = path.join(process.cwd(), './_cli-tpl');
     try {
-      fs.accessSync(tplDir)
+      fs.accessSync(tplDir);
     } catch {
       throw new SchematicsException(
         `Invalid path [${tplDir}]${REFER}`,
@@ -27,7 +27,7 @@ function genFiles(options: Schema) {
     }
 
     (options as any)._filesPath = path.relative(__dirname, path.join(tplDir, options.tplName));
-  }
+  };
 }
 
 export default function(options: Schema): Rule {
