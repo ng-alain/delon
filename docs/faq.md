@@ -18,6 +18,38 @@ type: Other
 - 使用 `cnpm` 安装依赖包，会遇到无法找到样式文件。这是由于 `cnpm` 采用的是软链接路径形式，导致 `ng-zorro-antd` 文件夹名有所变动，因此建议改用 `npm` 安装依赖包。
 - `ng-zorro-antd` 版本过旧导致部分组件无法加载到相应样式
 
+
+### Module build failed 错误
+- 如果你遇到如下错误，可能是因为没有安装依赖包。
+```
+ERROR in ./src/styles.less (./node_modules/raw-loader!./node_modules/postcss-loader/lib??embedded!./node_modules/less-loader/dist/cjs.js??ref--15-3!./src/styles.less)
+Module build failed: 
+
+// region: PLACEHOLDER, IMPORTANT: don't remove
+@import '~@delon/theme/styles/index';
+```
+
+解决方案： 
+1. 运行 npm install， 你会得到如下结果
+
+
+   * WARN ng-alain@2.0.0-beta.2 requires a peer of @angular-devkit/core@^0.8.1 but none is installed. You must install peer dependencies yourself.
+
+   * WARN ng-alain@2.0.0-beta.2 requires a peer of @angular-devkit/schematics@^0.8.1 but none is installed. You must install peer dependencies yourself.
+   * WARN ng-alain@2.0.0-beta.2 requires a peer of @schematics/angular@^0.8.1 but none is installed. You must install peer dependencies yourself.
+   * WARN ng-zorro-antd@1.6.0 requires a peer of typescript@~2.9.2 but none is installed. You must install peer dependencies yourself.
+   * WARN @delon/abc@2.0.0-beta.2 requires a peer of qrious@^4.0.2 but none is installed. You must install peer dependencies yourself.
+2. 运行 npm install @angular-devkit/core@^0.8.1 安装缺失的依赖包。 
+3. 重复运行以上命令，安装所有缺失的依赖包。
+
+### typescript 版本冲突问题
+
+* @ng-zorro-antd@1.6.0 requires a peer of typescript@~2.9.2 but none is installed. You must install peer dependencies yourself.
+* @ngtools/webpack@6.0.8 requires a peer of typescript@~2.4.0 || ~2.5.0 || ~2.6.0 || ~2.7.0 but none is installed. You must install peer dependencies yourself.
+
+解决方案：运行ng update @angular-devkit/build-angular，@ngtools/webpack会自动升级最新版本支持typescript@~2.9.2。
+
+
 ### 如何正确使用淘宝源？
 
 最简单是使用 [networkEnv](/cli/plugin#networkEnv) 插件。
