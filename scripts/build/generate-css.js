@@ -12,6 +12,8 @@ const min = args.includes('min');
 const ROOT_DIR = `${path.resolve(__dirname, '../../')}/dist/packages-dist`;
 const content = `
 @import "${path.join(ROOT_DIR, 'theme/styles/index.less')}";\n
+@import "${path.join(ROOT_DIR, 'theme/styles/layout/default/index.less')}";\n
+@import "${path.join(ROOT_DIR, 'theme/styles/layout/fullscreen/index.less')}";\n
 @import "${path.join(ROOT_DIR, 'abc/index.less')}";\n
 @import "${path.join(ROOT_DIR, 'chart/index.less')}";\n
 `;
