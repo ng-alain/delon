@@ -14,7 +14,7 @@ import {
   mergeWith,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import { strings, json } from '@angular-devkit/core';
+import { strings } from '@angular-devkit/core';
 import { parseName } from './devkit-utils/parse-name';
 import {
   findModuleFromOptions,
