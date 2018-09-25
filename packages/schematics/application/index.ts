@@ -68,10 +68,6 @@ function fixMain() {
 
 function addDependenciesToPackageJson(options: ApplicationOptions) {
   return (host: Tree, context: SchematicContext) => {
-    // 修复过低 @angular-devkit/build-angular 版本
-    addPackageToPackageJson(host, [
-      `@angular-devkit/build-angular@~0.8.0`
-    ]);
     // 3rd
     addPackageToPackageJson(host, [
       // allow ignore ng-zorro-antd becauce of @delon/theme dependency
