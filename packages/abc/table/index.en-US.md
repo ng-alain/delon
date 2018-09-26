@@ -1,37 +1,37 @@
 ---
 type: CURD
 title: st
-subtitle: 表格
+subtitle: Table
 cols: 1
 order: 1
 module: STModule
 config: STConfig
 ---
 
-`st` 并不是在创造另一个表格组件，而是在 `nz-table` 基础上以**可配置**形式渲染表格，在中后台里这种方式可以满足绝大多数场景，但又可以更易地管理表格渲染动作。
+`st` is not creating another table component, but use **configurable** rendering table on base of `nz-table`. this method can satisfy most scenes in admin interfaces, but it's easier to rendering table.
 
-## 关于数据源
+## Data Source
 
-`data` 支持三种不同格式数据源，整体分为：URL和静态数据两类；但可以透过参数的配置达到不同的效果，同时有非常多参数可通过 `STConfig` 重置默认值，使整个 `st` 组件模板达到极简。
+`data` supports multiple formats of data sources: URL and static data.
 
 ### URL
 
-指的是通过一个 URL 字符串来获取数据。
+The value is URL.
 
-- 通过 `req.params`、`req.method` 等参数解决请求数据格式问题
-- 通过 `res.reName` 重置数据 `key` 而无须担心后端数据格式是否满足 `st` 需求
-- 通过 `res.process` 可以对表格渲染前对数据进一步优化
-- 通过 `page.zeroIndexed` 可以调整 http 请求时 `pi` 参数是否遵循 0 基索引，默认情况下为 1 基索引
-- 使用 `_HttpClient` 发起请求，因此满足 [AlainThemeConfig](/theme/http#AlainThemeConfig) 的配置也适用
+- Resolve request data format problems with parameters such as `req.params`, `req.method`
+- Resolve backend data format through `res.reName` mapping data
+- Use `res.process` to optimize data before rendering table
+- Use `page.zeroIndexed` to adjust the http request when `pi` parameter follows the `0` base index, default is `1` base index
+- Use `_HttpClient` send request, so applies to [AlainThemeConfig](/theme/http#AlainThemeConfig) configuration
 
-### 静态数据
+### Static
 
-指的是通过指定值为 `STData[]` 或 `Observable<STData[]>`，二者都遵循以下规则：
+The value is `STData[]` or `Observable<STData[]>`, both follow the following rules:
 
-- `page.front` 前端分页，默认：`true`
-  - `true` 由 `st` 根据 `data` 长度受控分页，包括：排序、过滤等
-  - `false` 由用户通过 `total` 和 `data` 参数受控分页，并维护 `(change)` 当分页变更时重新加载数据
-- `page.show` 是否显示分页器；当未指定时若 `ps>total` 情况下自动不显示
+- `page.front` Front paging, default is `true`
+  - `true` controlled by `st` according to `data` length, including: sorting, filtering, etc.
+  - `false` controlled by the user through the `total` and `data` parameters, and maintains `(change)` when the page changes to reload data
+- Whether `page.show` displays pager; if not specified, it will not be displayed automatically if `ps>total`
 
 ## API
 
@@ -101,7 +101,7 @@ class TestComponent {
 
 ### STReq
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[params]` | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | -
 `[method]` | 请求方法 | `string` | `GET`
@@ -112,14 +112,14 @@ class TestComponent {
 
 ### STRes
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[reName]` | 重命名返回参数 `total`、`list`，支持 `a.b.c` 的嵌套写法 | `{total:string;list:string}` | -
 `[process]` | 数据预处理 | `(data: STData[]) => STData[]` | -
 
 ### STPage
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[zeroIndexedOnPage]` | 后端分页是否采用`0`基索引，只在`data`类型为`string`时有效 | `boolean` | `false`
 `[frontPagination]` | 前端分页，当 `data` 为 `any[]` 或 `Observable<any[]>` 有效 | `boolean` | `true`
@@ -140,14 +140,14 @@ class TestComponent {
 
 ### STError
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[type]` | 异常类型，`req` 表示HTTP请求 | `req` | -
 `[error]` | 异常内容 | `any` | -
 
 ### STChange
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[type]` | 变更类型，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` | `STChangeType` | -
 `[pi]` | 当前页码 | `number` | -
@@ -161,7 +161,7 @@ class TestComponent {
 
 ### STChangeSort
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[value]` | 当前列排序状态 | `ascend,descend` | -
 `[map]` | 所有列排序状态 | `{ [key: string]: string }` | -
@@ -169,7 +169,7 @@ class TestComponent {
 
 ### STChangeRowClick
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[e]` | 当前行事件 | `Event` | -
 `[item]` | 当前行数据 | `STData` | -
@@ -177,7 +177,7 @@ class TestComponent {
 
 ### STExportOptions
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[sheetname]` | 工作溥名 | `string` | `Sheet1`
 `[filename]` | 保存的文件名 | `string` | `export.xslx`
@@ -185,7 +185,7 @@ class TestComponent {
 
 ### STMultiSort
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[key]` | 请求参数名 | `string` | `sort`
 `[separator]` | 不同属性间分隔符 | `string` | `-`
@@ -193,14 +193,14 @@ class TestComponent {
 
 ### STData
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[checked]` | 选择框或单选框状态值 | `boolean` | -
 `[disabled]` | 选择框或单选框 `disabled` 值 | `boolean` | -
 
 ### STColumn
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[title]` | 表格标题 | `string` | -
 `[i18n]` | 表格标题i18n | `string` | -
@@ -229,7 +229,7 @@ class TestComponent {
 
 ### STColumnSort
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[default]` | 排序的受控属性 | `ascend,descend` | -
 `[compare]` | 本地数据的排序函数，使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction) | `(a: any, b: any) => number` | -
@@ -238,7 +238,7 @@ class TestComponent {
 
 ### STColumnFilter
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[menus]` | 表头的筛选菜单项，至少一项才会生效 | `STColumnFilterMenu[]` | -
 `[fn]` | 本地数据的筛选函数 | `(filter: STColumnFilterMenu, record: any) => boolean` | -
@@ -252,7 +252,7 @@ class TestComponent {
 
 ### STColumnFilterMenu
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
 `[value]` | 值 | `any` | -
@@ -261,7 +261,7 @@ class TestComponent {
 
 ### STColumnButton
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
 `[i18n]` | 文本i18n | `string` | -
@@ -277,7 +277,7 @@ class TestComponent {
 
 ### STColumnButtonModal
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[component]` | 对话框组件对象，务必在 `entryComponents` 注册 | `any` | -
 `[params]` | 对话框参数 | `(record: any) => Object` | -
@@ -289,7 +289,7 @@ class TestComponent {
 
 ### STColumnSelection
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
 `[select]` | 选择项点击回调，允许对参数 `data.checked` 进行操作 | `(data: STData[]) => void` | -
@@ -297,7 +297,7 @@ class TestComponent {
 
 ### STColumnYn
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[truth]` | 真值条件 | `any` | `true`
 `[yes]` | 徽章 `true` 时文本 | `string` | `是`
@@ -305,14 +305,14 @@ class TestComponent {
 
 ### STColumnBadge
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
 `[color]` | 徽标颜色值 | `success,processing,default,error,warning` | -
 
 ### STColumnTag
 
-参数 | 说明 | 类型 | 默认值
+Property | Description | Type | Default
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
 `[color]` | Tag颜色值 | `string` | -
