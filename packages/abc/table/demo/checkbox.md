@@ -1,9 +1,17 @@
 ---
 order: 3
-title: 可选择
+title:
+  zh-CN: 可选择
+  en-US: Checkbox
 ---
 
-利用 `change` 监听所选的数据清单。
+## zh-CN
+
+利用 `change` 监听所选的数据。
+
+## en-US
+
+Use `change` event get selected data.
 
 ```ts
 import { Component } from '@angular/core';
