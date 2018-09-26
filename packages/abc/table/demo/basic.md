@@ -1,9 +1,17 @@
 ---
 order: 1
-title: 基础
+title:
+  zh-CN: 基本
+  en-US: Basic
 ---
 
+## zh-CN
+
 快速生成表格；利用 `res` 可以适配后端数据格式。
+
+## en-US
+
+Quickly generate tables; use `res` to adapted backend data format.
 
 ```ts
 import { Component } from '@angular/core';

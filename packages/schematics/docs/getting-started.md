@@ -19,6 +19,7 @@ type: Documents
 1、创建一个空 angular 项目
 
 ```bash
+# 确保使用的是最新版本 Angular cli
 ng new demo --style less
 ```
 

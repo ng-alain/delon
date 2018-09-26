@@ -29,6 +29,7 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，我们�
 ### 方法 1: 使用 脚手架工具CLI （推荐）
 
 ```bash
+# 确保使用的是最新版本 Angular cli
 ng new demo --style less
 cd demo
 ng add ng-alain@next
