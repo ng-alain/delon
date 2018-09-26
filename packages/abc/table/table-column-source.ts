@@ -31,7 +31,7 @@ export class STColumnSource {
   private btnCoerce(list: STColumnButton[]): STColumnButton[] {
     if (!list) return [];
     const ret: STColumnButton[] = [];
-    const { modal, popTitle } = this.cog;
+    const { modal, drawer, popTitle } = this.cog;
 
     for (const item of list) {
       if (this.acl && item.acl && !this.acl.can(item.acl)) {
@@ -54,6 +54,15 @@ export class STColumnSource {
           item.type = 'none';
         } else {
           item.modal = Object.assign({}, modal, item.modal);
+        }
+      }
+
+      if (item.type === 'drawer') {
+        if (item.drawer == null || item.drawer.component == null) {
+          console.warn(`[st] Should specify drawer parameter`);
+          item.type = 'none';
+        } else {
+          item.drawer = Object.assign({}, drawer, item.drawer);
         }
       }
 

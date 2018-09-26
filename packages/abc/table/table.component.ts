@@ -26,9 +26,11 @@ import {
   DatePipe,
   YNPipe,
   ModalHelper,
+  ModalHelperOptions,
   ALAIN_I18N_TOKEN,
   AlainI18NService,
-  ModalHelperOptions,
+  DrawerHelper,
+  DrawerHelperOptions
 } from '@delon/theme';
 import {
   deepCopy,
@@ -237,7 +239,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Output()
   readonly checkboxChange: EventEmitter<STData[]> = new EventEmitter<
     STData[]
-  >();
+    >();
   /**
    * radio变化时回调，参数为当前所选
    * @deprecated 使用 `change` 替代
@@ -267,7 +269,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Output()
   readonly rowClick: EventEmitter<STChangeRowClick> = new EventEmitter<
     STChangeRowClick
-  >();
+    >();
   /**
    * 行双击回调
    * @deprecated 使用 `change` 替代
@@ -276,7 +278,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Output()
   readonly rowDblClick: EventEmitter<STChangeRowClick> = new EventEmitter<
     STChangeRowClick
-  >();
+    >();
   //#endregion
 
   constructor(
@@ -290,6 +292,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Inject(ALAIN_I18N_TOKEN)
     i18nSrv: AlainI18NService,
     private modalHelper: ModalHelper,
+    private drawerHelper: DrawerHelper,
     @Inject(DOCUMENT) private doc: any,
     private columnSource: STColumnSource,
     private dataSource: STDataSource,
@@ -305,9 +308,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   renderTotal(total: string, range: string[]) {
     return this.totalTpl
       ? this.totalTpl
-          .replace('{{total}}', total)
-          .replace('{{range[0]}}', range[0])
-          .replace('{{range[1]}}', range[1])
+        .replace('{{total}}', total)
+        .replace('{{range[0]}}', range[0])
+        .replace('{{range[1]}}', range[1])
       : '';
   }
 
@@ -601,6 +604,20 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         modal.component,
         Object.assign(obj, modal.params && modal.params(record)),
         options,
+      )
+        .pipe(filter(w => typeof w !== 'undefined'))
+        .subscribe(res => this.btnCallback(record, btn, res));
+      return;
+    } else if (btn.type === 'drawer') {
+      const obj = {};
+      const { drawer } = btn;
+      obj[drawer.paramsName] = record;
+      const options: DrawerHelperOptions = Object.assign({}, drawer);
+      this.drawerHelper.create(
+        drawer.title,
+        drawer.component,
+        Object.assign(obj, drawer.params && drawer.params(record)),
+        Object.assign({}, drawer)
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
