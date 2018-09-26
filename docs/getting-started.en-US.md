@@ -28,6 +28,7 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 ## Installation
 
 ```bash
+# Make sure you are using the latest version of Angular cli
 ng new demo --style less
 cd demo
 ng add ng-alain@next
