@@ -1,9 +1,17 @@
 ---
 order: 4
-title: 单选框
+title:
+  zh-CN: 单选框
+  en-US: Radio
 ---
 
-利用 `change` 监听所选的数据清单。
+## zh-CN
+
+利用 `change` 监听所选的数据。
+
+## en-US
+
+Use `change` event get selected data.
 
 ```ts
 import { Component } from '@angular/core';

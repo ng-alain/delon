@@ -1,9 +1,17 @@
 ---
 order: 5
-title: 后端筛选和排序
+title:
+  zh-CN: 后端筛选和排序
+  en-US: Backend filtering and sorting
 ---
 
+## zh-CN
+
 利用 `multiSort` 支持多字段排序。
+
+## en-US
+
+Using `multiSort` supported multi-field sorting.
 
 ```ts
 import { Component } from '@angular/core';

@@ -1,9 +1,17 @@
 ---
 order: 7
-title: 自定义按钮组
+title:
+  zh-CN: 自定义按钮组
+  en-US: Custom Buttons
 ---
 
-透过简单的配置产生一组日常按钮组。
+## zh-CN
+
+使用 `buttons` 属性构建按钮组。
+
+## en-US
+
+Build a button group with the `buttons` property.
 
 ```ts
 import { Component } from '@angular/core';

@@ -1,11 +1,21 @@
 ---
 order: 6
-title: 自定义列
+title:
+  zh-CN: 自定义列
+  en-US: Custom columns
 ---
 
-利用在 `ng-template` 定义 `st-row="custom"` 指定的名称，与列描述中的 `render: 'custom'` 关联；允许接收 `item`、`index`、`column` 三个值。
+## zh-CN
 
-其中若指定 `type="title"` 表示是对标题自定义列。附加可实现：表头分组。
+创建一个带有 `st-row="custom-name"` 的 `ng-template`，并在列描述 `render: 'custom-name'` 指定名称；模板允许接收 `item`、`index`、`column` 三个值。
+
+如果指定 `type="title"` 表示是对标题自定义列。附加可实现：表头分组。
+
+## en-US
+
+Create a `ng-template` with `st-row="custom-name"` and specify the name in the column description `render: 'custom-name'`; template receive `item`, `index`, `column` three values.
+
+Specifying `type="title"` means to customize the column for the title. Additional achievable: header grouping.
 
 ```ts
 import { Component } from '@angular/core';
