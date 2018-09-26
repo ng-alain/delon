@@ -4,7 +4,7 @@ title: _date-Date
 type: Pipe
 ---
 
-Based on date-fns date formatting, see more details [date-fns](https://date-fns.org/v1.29.0/docs/format) (China mirror: [moment format](http:// Momentjs.cn/docs/#/displaying/format/))
+Based on date-fns date formatting, see more details [date-fns](https://date-fns.org/v1.29.0/docs/format) (China mirror: [moment format](http://Momentjs.cn/docs/#/displaying/format/))
 
 date-fns supports different kinds of time formats, such as:
 
