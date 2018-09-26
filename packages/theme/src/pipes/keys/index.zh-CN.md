@@ -1,8 +1,6 @@
 ---
 order: 1
-title:
-  en-US: keys-Keys
-  zh-CN: keys-可迭代对象
+title: keys-可迭代对象
 type: Pipe
 ---
 
@@ -32,4 +30,4 @@ const data = { 1: '正常', 2: '删除' };
 <div *ngFor="let item of data | keys: true">{{item.key}} {{item.value | json}}</div>
 ```
 
-> Angular `6.1.0` 以后原生支持 [KeyValuePipe](https://next.angular.io/api/common/KeyValuePipe)，用法有点类似。
+> Angular `6.1.0` 以后原生支持 [KeyValuePipe](https://angular.io/api/common/KeyValuePipe)，用法有点类似。
