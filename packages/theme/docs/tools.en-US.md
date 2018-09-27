@@ -310,103 +310,50 @@ DEMO:
 | `no-resize` | Setting does not allow adjustment elements |
 | `bg-center` | Background image is vertically centered |
 
-## Zorro组件补丁类
+## Widgets
 
-<table>
-  <thead>
-    <tr>
-      <th>名称</th>
-      <th style="width: 30%">类名</th>
-      <th>描述</th>
-      <th>状态</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>nz-button</code></td>
-      <td><code>.ant-btn__block</code></td>
-      <td>强制按钮为块元素<code>display: block; width: 100%;</code></td>
-      <td></td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td rowspan="4"><code>nz-card</code></td>
-      <td><code>.ant-card__title-img</code></td>
-      <td>标题为图片时设置 <code>valign</code> 为内容与对象中部对齐</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>.ant-card__img</code></td>
-      <td>图片类型卡片强制设置 <code>ant-card-body</code> 无间距且支持内部 <code>img</code> 样式为自动100%大小</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>.ant-card__body-nopadding</code></td>
-      <td>强制内容无间距</td>
-      <td>过期，使用 <code>[nzNoPadding]</code> 替代</td>
-    </tr>
-    <tr>
-      <td><code>.ant-card__{{color}}</code></td>
-      <td>设置标题背景色</td>
-      <td></td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td><code>nz-breadcrumb</code></td>
-      <td><code>.ant-breadcrumb__last-item-no-bold</code></td>
-      <td>强制最后一项字体粗细为正常 <code>font-weight: normal</code></td>
-      <td></td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td rowspan="3">纯CSS瀑布流</td>
-      <td><code>.row-masonry</code></td>
-      <td>行</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>.row-masonry-{xs|sm|md|lg|xl}-{1-10}</code></td>
-      <td>列，响应式样式</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>.col-masonry</code></td>
-      <td>列</td>
-      <td></td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td><code>nz-carousel</code></td>
-      <td><code>.nz-carousel__dot-{{color}}</code></td>
-      <td>设置指示点颜色</td>
-      <td></td>
-    </tr>
-  </tbody>
-  <tbody>
-    <tr>
-      <td rowspan="3"><code>nz-modal</code></td>
-      <td><code>.modal-{sm|md|lg|xl}</code></td>
-      <td>设置Modal的大小 <code>wrapClassName: 'modal-lg'</code></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>.modal-header</code></td>
-      <td>自定义Modal时非常有效，<a href="//ng-alain.github.io/ng-alain/#/elements/modal" target="_blank">DEMO</a></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>.modal-footer</code></td>
-      <td>自定义Modal时非常有效</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>.modal-body-nopadding</code></td>
-      <td>内容无内边距</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+### Masonry
+
+Online [DEMO](https://ng-alain.github.io/ng-alain/#/style/gridmasonry)。
+
+| Name | Description |
+| ---- | --- |
+| `row-masonry` | Rows |
+| `row-masonry-{xs|sm|md|lg|xl}-{1-10}` | Rows, Responsive style |
+| `col-masonry` | Columns |
+
+### Other
+
+| Name | Description |
+| ---- | --- |
+| `no-data` | No result |
+| `color-weak` | Weak mode |
+
+## ng-zorro
+
+### nz-card
+
+| Name | Description |
+| ---- | --- |
+| `ant-card__body-nopadding` | Force body without spacing |
+
+### nz-modal
+
+| Name | Description |
+| ---- | --- |
+| `modal-{sm|md|lg|xl}` | Set size of modal, `wrapClassName: 'modal-lg'` |
+| `modal-body-nopadding` | Without padding in body element |
+| `modal-header` | Use html template to custom modal, [DEMO](https://ng-alain.github.io/ng-alain/#/extras/poi) |
+| `modal-footer` | Use html template to custom modal, [DEMO](https://ng-alain.github.io/ng-alain/#/extras/poi) |
+
+### nz-table
+
+| Name | Description |
+| ---- | --- |
+| `ant-table-rep` | Table responsive |
+
+### nz-tag
+
+| Name | Description |
+| ---- | --- |
+| `ant-tag__plus` | Add button style |
