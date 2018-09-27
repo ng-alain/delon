@@ -28,6 +28,7 @@ import { SFSchemaEnum } from '../../schema';
       [nzPlaceHolder]="ui.placeholder"
       [nzShowArrow]="showArrow"
       [nzShowInput]="showInput"
+      [nzShowSearch]="ui.showSearch"
       (nzClear)="_clear($event)"
       (nzVisibleChange)="_visibleChange($event)"
       (nzSelect)="_select($event)"

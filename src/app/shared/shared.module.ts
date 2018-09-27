@@ -25,8 +25,14 @@ import { ConfigButtonComponent } from './components/config-button/config-button.
 import { EditButtonComponent } from './components/edit-button/edit-button.component';
 import { DocsComponent } from './components/docs/docs.component';
 import { CodeBoxComponent } from './components/code-box/code-box.component';
-import { DemoModalComponent } from './components/modal/demo.component';
+import { DemoModalComponent } from './components/dialog/modal.component';
+import { DemoDrawerComponent } from './components/dialog/drawer.component';
 import { RouteTransferDirective } from './components/route-transfer/route-transfer.directive';
+
+const DIALOG_COMPONENTS = [
+  DemoModalComponent,
+  DemoDrawerComponent,
+];
 
 const COMPONENTS = [
   MainMenuComponent,
@@ -35,8 +41,8 @@ const COMPONENTS = [
   EditButtonComponent,
   DocsComponent,
   CodeBoxComponent,
-  DemoModalComponent,
   RouteTransferDirective,
+  ...DIALOG_COMPONENTS
 ];
 
 const THIRDS = [
@@ -64,7 +70,7 @@ const THIRDS = [
     ...THIRDS,
   ],
   declarations: COMPONENTS,
-  entryComponents: [DemoModalComponent],
+  entryComponents: DIALOG_COMPONENTS,
   exports: [
     CommonModule,
     FormsModule,
