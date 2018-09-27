@@ -32,8 +32,9 @@ export function getTimeDistance(
 
   switch (type) {
     case 'today':
-    case '-today':
       return [time, time];
+    case '-today':
+      return [addDays(time, -1), time];
     case 'week':
       return [startOfWeek(time), endOfWeek(time)];
     case '-week':
