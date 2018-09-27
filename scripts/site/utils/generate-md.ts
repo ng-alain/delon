@@ -128,7 +128,12 @@ function fixAngular(html: string): string {
           '$1&lt;',
         )}</code>`;
       }
-      return fullWord;
+      return fullWord
+        .replace(`<ng-content`, `&lt;ng-content`)
+        .replace(`</ng-content`, `&lt;/ng-content`)
+        .replace(`<ng-template`, `&lt;ng-template`)
+        .replace(`</ng-template`, `&lt;/ng-template`)
+        ;
     },
   );
 }

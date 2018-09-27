@@ -19,7 +19,7 @@ This document uses the following conventions:
   - `()` Output Event
   - `[()]` Two-way binding
   - `ng-content` Component content placeholders
-  - `#tpl` Refers `〈ng-template #tpl〉`
+  - `#tpl` Refers `<ng-template #tpl></ng-template>`
 
 ## Preparation
 
