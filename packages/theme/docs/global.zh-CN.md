@@ -29,6 +29,11 @@ title: 全局参数
 | `@modal-sm` | `300px` | 小号对话框 |
 | `@modal-md` | `500px` | 中号对话框 |
 | `@modal-lg` | `900px` | 大号对话框 |
+| `@modal-xl` | `1200px` | 超大号对话框 |
+| `@drawer-sm` | `300px` | 小号抽屉 |
+| `@drawer-md` | `500px` | 中号抽屉 |
+| `@drawer-lg` | `900px` | 大号抽屉 |
+| `@drawer-xl` | `1200px` | 超大号抽屉 |
 | `@code-border-color` | `#eee` | `<code>` 边框颜色 |
 | `@code-bg` | `#f7f7f7` | `<code>` 背景颜色 |
 | `@widths`  | `sm @layout-gutter * 20` <br> `md @layout-gutter * 30`<br>`lg @layout-gutter * 40` | 宽度 |

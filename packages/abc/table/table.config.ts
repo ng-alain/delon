@@ -4,6 +4,7 @@ import {
   STRes,
   STPage,
   STColumnButtonModalConfig,
+  STColumnButtonDrawerConfig,
 } from './table.interfaces';
 
 export class STConfig {
@@ -66,6 +67,15 @@ export class STConfig {
     paramsName: 'record',
     size: 'lg',
     exact: true,
+  };
+  /**
+   * 按钮抽屉配置
+   */
+  drawer?: STColumnButtonDrawerConfig = {
+    paramsName: 'record',
+    size: 'md',
+    footer: true,
+    footerHeight: 55
   };
   /**
    * 气泡确认框内容

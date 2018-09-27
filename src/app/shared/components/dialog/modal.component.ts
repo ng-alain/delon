@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd';
 
 @Component({
-  selector: `app-demo-modal`,
+  selector: `app-demo-dialog-modal`,
   template: `
     <div class="modal-header">
         <div class="modal-title">Custom component</div>

@@ -1,6 +1,6 @@
 import { STComponent } from './table.component';
-import { ModalHelperOptions } from '@delon/theme';
-import { ModalOptionsForService } from 'ng-zorro-antd';
+import { ModalHelperOptions, DrawerHelperOptions } from '@delon/theme';
+import { ModalOptionsForService, NzDrawerOptions } from 'ng-zorro-antd';
 
 export interface STReq {
   /**
@@ -390,9 +390,10 @@ export interface STColumnButton {
    * - `del` 删除，默认开启 `pop: true`
    * - `modal` 对话框，需要指定 `component` 才会生效
    * - `static` 静态对话框，需要指定 `component` 才会生效
+   * - `drawer` 抽屉，需要指定 `component` 才会生效
    * - `link` 链接，当 `click` 返回字符串时自动调用 `navigateByUrl` 导航
    */
-  type?: 'none' | 'del' | 'modal' | 'static' | 'link';
+  type?: 'none' | 'del' | 'modal' | 'static' | 'drawer' | 'link';
   /**
    * 点击回调
    * - Function
@@ -416,6 +417,7 @@ export interface STColumnButton {
    * 对话框参数
    */
   modal?: STColumnButtonModal;
+  drawer?: STColumnButtonDrawer;
   /**
    * 下拉菜单，当存在时以 `dropdown` 形式渲染
    * - 只支持一级
@@ -447,7 +449,7 @@ export interface STColumnButtonModal extends ModalHelperOptions {
    */
   params?: (record: any) => Object;
   /**
-   * 指定模态框目标组件的接收参数名，默认：`record`
+   * 对话框目标组件的接收参数名，默认：`record`
    */
   paramsName?: string;
 }
@@ -463,6 +465,55 @@ export interface STColumnButtonModalConfig {
   modalOptions?: ModalOptionsForService;
   /** 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 */
   exact?: boolean;
+}
+
+export interface STColumnButtonDrawer extends DrawerHelperOptions {
+  /**
+   * 标题
+   */
+  title?: string;
+  /**
+   * 抽屉组件对象，务必在 `entryComponents` 注册
+   */
+  component?: any;
+  /**
+   * 抽屉参数
+   */
+  params?: (record: any) => Object;
+  /**
+   * 抽屉目标组件的接收参数名，默认：`record`
+   */
+  paramsName?: string;
+}
+
+export interface STColumnButtonDrawerConfig {
+  /**
+   * 抽屉目标组件的接收参数名，默认：`record`
+   */
+  paramsName?: string;
+  /**
+   * 大小；例如：lg、600，默认：`md`
+   * 
+   * | 类型 | 默认大小 |
+   * | --- | ------ |
+   * | `sm` | `300` |
+   * | `md` | `600` |
+   * | `lg` | `900` |
+   * | `xl` | `1200` |
+   * 
+   * > 以上值，可通过覆盖相应的LESS参数自行调整
+   */
+  size?: 'sm' | 'md' | 'lg' | 'xl' | number;
+  /**
+   * 是否包含底部工具条，默认：`true`
+   */
+  footer?: boolean;
+  /**
+   * 底部工具条高度，默认：`55`
+   */
+  footerHeight?: number;
+  /** 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 */
+  drawerOptions?: NzDrawerOptions;
 }
 
 export interface STReqReNameType {
