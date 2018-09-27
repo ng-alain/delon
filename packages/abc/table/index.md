@@ -49,6 +49,7 @@ config: STConfig
 `[noResult]` | 无数据时显示内容 | `string | TemplateRef<void>` | -
 `[bordered]` | 是否显示边框 | `boolean` | `false`
 `[size]` | table大小 | `small,middle,default` | `default`
+`[loading]` | 是否显示加载中状态。如果设置为true，则加载时显示[spin](https://ng.ant.design/components/spin/zh) | `boolean` | `false`
 `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0`
 `[scroll]` | 固定表头，纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px' }` | `{ y: string }` | -
 `[multiSort]` | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, STMultiSort` | `false`
