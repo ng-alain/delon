@@ -1,6 +1,6 @@
 ---
 order: 10
-title: ng-add
+title: ng add
 subtitle: Create scaffold
 type: Documents
 ---

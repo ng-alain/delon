@@ -29,12 +29,10 @@ export const USERS = {
   'POST /users/1': null,
   // 路由参数
   '/users/:id': null,
-  // 使用 () 表示：正则表达式
+  // 正则表达式需要用 `()` 包裹
   '/data/(.*)': null
 };
 ```
-
-> 路由参数值通过 `MockRequest` 来获取。
 
 ## Value 响应内容
 

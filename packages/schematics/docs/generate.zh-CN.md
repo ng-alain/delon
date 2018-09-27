@@ -1,6 +1,7 @@
 ---
 order: 20
-title: 业务页
+title: ng g
+subtitle: 业务页
 type: Documents
 ---
 

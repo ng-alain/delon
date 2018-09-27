@@ -1,6 +1,6 @@
 ---
 order: 10
-title: ng-add
+title: ng add
 subtitle: 创建脚手架
 type: Documents
 ---
