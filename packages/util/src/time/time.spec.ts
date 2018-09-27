@@ -1,31 +1,35 @@
 import { getTimeDistance } from './time';
 import * as format from 'date-fns/format';
+import * as addDays from 'date-fns/add_days';
 
 describe('util: time', () => {
   describe('#getTimeDistance', () => {
     let time: Date;
     const FORMAT = 'YYYY-MM-DD';
     const NOW = '2018-03-05';
+    const YESTERDAY = '2018-03-04';
     beforeEach(() => {
       time = new Date(2018, 2, 5, 0, 0, 0, 0);
     });
     it('should be now when no-specity', () => {
       const ret = getTimeDistance('-today');
       expect(ret.length).toBe(2);
-      expect(format(ret[0], FORMAT)).toBe(format(new Date(), FORMAT));
-      expect(format(ret[1], FORMAT)).toBe(format(new Date(), FORMAT));
+      const t = new Date;
+      expect(format(ret[0], FORMAT)).toBe(format(addDays(t, -1), FORMAT));
+      expect(format(ret[1], FORMAT)).toBe(format(t, FORMAT));
     });
     it('should be now when a bad date', () => {
       const ret = getTimeDistance('-today', -NaN);
       expect(ret.length).toBe(2);
-      expect(format(ret[0], FORMAT)).toBe(format(new Date(), FORMAT));
-      expect(format(ret[1], FORMAT)).toBe(format(new Date(), FORMAT));
+      const t = new Date;
+      expect(format(ret[0], FORMAT)).toBe(format(addDays(t, -1), FORMAT));
+      expect(format(ret[1], FORMAT)).toBe(format(t, FORMAT));
     });
     describe('[today]', () => {
       it('past', () => {
         const ret = getTimeDistance('-today', time);
         expect(ret.length).toBe(2);
-        expect(format(ret[0], FORMAT)).toBe(NOW);
+        expect(format(ret[0], FORMAT)).toBe(YESTERDAY);
         expect(format(ret[1], FORMAT)).toBe(NOW);
       });
       it('feture', () => {
