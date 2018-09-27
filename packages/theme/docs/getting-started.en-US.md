@@ -4,7 +4,7 @@ title: Getting Started
 type: Documents
 ---
 
-`@delon/theme` is the only ng-alain scaffold must be imported. It contains a lot of [style parameters](/theme/global), customize theme by overriding the parameters; and several generalities [services](/theme/menu), [pipes](/theme/date) .
+`@delon/theme` is the only must be imported to ng-alain scaffold. It contains a lot of [style parameters](/theme/global) and several generalities [services](/theme/menu), [pipes](/theme/date).
 
 ## Style
 
@@ -12,11 +12,11 @@ ng-alain defaults to using less as the style language, we recommend that you lea
 
 ## Layout
 
-Scaffolding offers two layouts: [default layout](/theme/default), [fullscreen layout](/theme/fullscreen), scaffolding does not contain this style files, it's in the `@delon/theme` class library.
+Scaffolding include two layouts: [default layout](/theme/default), [fullscreen layout](/theme/fullscreen), scaffolding does not contain these style files, it's in the `@delon/theme` library.
 
 ## Scaffold Style
 
-You can use the toolset provided by ng-alain to adjust spacing, color, size, borders, etc. It's a set of like bootstrap tools.
+You can use the toolset provided by ng-alain to adjust spacing, color, size, borders, etc. It's a set of like bootstrap style tools.
 
 Or customize your styles with *src/styles/index.less*, which will work in global applications, in the style development process, there are two prominent problems:
 
