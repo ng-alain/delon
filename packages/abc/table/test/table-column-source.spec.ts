@@ -469,6 +469,22 @@ describe('abc: table: column-souce', () => {
             });
           });
         });
+        describe('with drawer', () => {
+          it('should specify drawer parameter', () => {
+            spyOn(console, 'warn');
+            const res = srv.process([
+              { title: '', buttons: [{ text: '', type: 'drawer', drawer: {} }] },
+            ])[0].buttons[0];
+            expect(console.warn).toHaveBeenCalled();
+            expect(res.type).toBe('none');
+          });
+          it('should be apply default values', () => {
+            const res = srv.process([
+              { title: '', buttons: [{ text: '', type: 'drawer', drawer: { component: {} } }] },
+            ])[0].buttons[0];
+            expect(res.drawer.paramsName).toBe('record');
+          });
+        });
       });
     });
     describe('[render]', () => {

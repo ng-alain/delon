@@ -11,6 +11,7 @@ export { TitleService } from './src/services/title/title.service';
 export { ALAIN_I18N_TOKEN, AlainI18NService, AlainI18NServiceFake } from './src/services/i18n/i18n';
 export * from './src/locale/index';
 export * from './src/services/modal/modal.helper';
+export * from './src/services/drawer/drawer.helper';
 export { _HttpClient } from './src/services/http/http.client';
 export { HttpClientConfig } from './src/services/http/http.config';
 export { DatePipe } from './src/pipes/date/date.pipe';

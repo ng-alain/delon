@@ -29,6 +29,11 @@ title: Global Parameters
 | `@modal-sm` | `300px` | Small modal |
 | `@modal-md` | `500px` | Medium modal |
 | `@modal-lg` | `900px` | Large modal |
+| `@modal-lg` | `1200px` | Extra large modal |
+| `@drawer-sm` | `300px` | Small drawer |
+| `@drawer-md` | `500px` | Medium drawer |
+| `@drawer-lg` | `900px` | Large drawer |
+| `@drawer-lg` | `1200px` | Extra large drawer |
 | `@code-border-color` | `#eee` | `<code>` border color |
 | `@code-bg` | `#f7f7f7` | `<code>` background color |
 | `@widths`  | `sm @layout-gutter * 20` <br> `md @layout-gutter * 30`<br>`lg @layout-gutter * 40` | width |

@@ -3,13 +3,16 @@ order: 7
 title: 自定义按钮组
 ---
 
-透过简单的配置产生一组日常按钮组。
+透过简单的配置产生一组日常按钮组（目标组件示例：[DemoModalComponent](https://github.com/ng-alain/delon/blob/master/src/app/shared/components/dialog/modal.component.ts)、[DemoDrawerComponent](https://github.com/ng-alain/delon/blob/master/src/app/shared/components/dialog/drawer.component.ts)）。
+
+> 对话框由[ModalHelper](/theme/modal)处理，抽屉由[DrawerHelper](/theme/drawer)处理。
 
 ```ts
 import { Component } from '@angular/core';
 import { STColumn } from '@delon/abc';
 import { NzMessageService } from 'ng-zorro-antd';
-import { DemoModalComponent } from 'app/shared/components/modal/demo.component';
+import { DemoModalComponent } from '@shared/components/dialog/modal.component';
+import { DemoDrawerComponent } from '@shared/components/dialog/drawer.component';
 
 @Component({
   selector: 'app-demo',
@@ -46,7 +49,21 @@ export class DemoComponent {
         {
           text: '编辑',
           type: 'modal',
-          component: DemoModalComponent,
+          modal: {
+            component: DemoModalComponent
+          },
+          click: (record: any, modal: any) =>
+            this.message.success(
+              `重新加载页面，回传值：${JSON.stringify(modal)}`,
+            ),
+        },
+        {
+          text: 'Drawer',
+          type: 'drawer',
+          drawer: {
+            title: '编辑',
+            component: DemoDrawerComponent
+          },
           click: (record: any, modal: any) =>
             this.message.success(
               `重新加载页面，回传值：${JSON.stringify(modal)}`,
