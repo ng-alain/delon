@@ -38,7 +38,7 @@ export class _HttpClient {
   }
 
   parseParams(params: any): HttpParams {
-    let ret = new HttpParams();
+    const newParams = {};
     Object.keys(params).forEach(key => {
       let _data = params[key];
       // 忽略空值
@@ -47,9 +47,9 @@ export class _HttpClient {
       if (this.cog.dateValueHandling === 'timestamp' && _data instanceof Date) {
         _data = _data.valueOf();
       }
-      ret = ret.set(key, _data);
+      newParams[key] = _data;
     });
-    return ret;
+    return new HttpParams({ fromObject: newParams });
   }
 
   appliedUrl(url: string, params?: any) {
