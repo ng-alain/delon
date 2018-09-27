@@ -15,6 +15,6 @@ type: Components
 | `[title]` | 图表标题 | `string` | - |
 | `[height]` | 图表高度 | `number` | - |
 | `[color]` | 图表颜色 | `string` | `#2F9CFF` |
-| `[bgColor]` | 图表北京颜色 | `string` | `#F0F2F5` |
+| `[bgColor]` | 图表背景色 | `string` | `#F0F2F5` |
 | `[percent]` | 进度比例 | `number` | - |
 | `[format]` | 坐标轴格式 | `Function` | - |

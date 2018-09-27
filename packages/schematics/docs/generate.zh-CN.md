@@ -16,7 +16,7 @@ ng-alain 在此基础上增加了很多很酷的骚操作。
 ng g ng-alain:<command name> <name> [options]
 ```
 
-ng-alain 有自己的一套文件组织结构，当你破坏这些结构时，可能会导致下列指令产生异常。
+> ng-alain 有自己的一套文件组织结构，当你破坏这些结构时，可能会导致下列指令产生异常。
 
 ## Module 模块
 
@@ -34,7 +34,7 @@ ng g ng-alain:module trade
 
 目前包含的业务组件页，包括：
 
-- `empty` 空白页（待发布）
+- `empty` 空白页
 - `list` 列表页
 - `edit` 编辑页
 - `view` 查看页
@@ -102,27 +102,27 @@ ng g ng-alain:tpl <your template name> <name> -m=trade
 
 ### 如何编写模板文件
 
-在自定义页的目录结构里我们看到文件名以 `__` 前缀开头，事实上他们是一些变量点位符，Cli 默认传递一些参数及方法：
+在自定义页的目录结构里我们看到文件名以 `__` 前缀开头，事实上他们是一些变量占位符，Cli 默认传递一些参数及方法：
 
-| 类型 | 参数名 | 默认 | 描述 |
-| ---- | ---- | ---- | ---- |
-| 变量 | project | - | 项目名 |
-| 变量 | name | - | 名称，相当于命令行的 `<name>` |
-| 变量 | path | - | 目标路径 |
-| 变量 | flat | `false` | 文件是否扁平结构 |
-| 变量 | inlineTemplate | `false` | 是否内联模板（固定值：`false`） |
-| 变量 | selector | - | 组件 `selector` |
-| 变量 | componentName | - | 组件名称 |
-| 变量 | changeDetection | `Default` | 组件 `changeDetection` 值 |
-| 变量 | modal | - | 是否使用 Modal 展示 |
-| 方法 | decamelize | - | 将字母串转换为由下划线分隔的所有小写字母 |
-| 方法 | dasherize | - | 将空格或下划线用破折号替换 |
-| 方法 | camelize | - | 返回字符串的小骆驼拼写法形式 |
-| 方法 | classify | - | 返回字符串的大骆驼拼写法形式 |
-| 方法 | underscore | - | 将字母串转换为由下划线分隔的所有小写字母 |
-| 方法 | capitalize | - | 返回字符串首字母大写 |
+| 类型 | 参数名          | 默认      | 描述                                     |
+| ---- | --------------- | --------- | ---------------------------------------- |
+| 变量 | project         | -         | 项目名                                   |
+| 变量 | name            | -         | 名称，相当于命令行的 `<name>`            |
+| 变量 | path            | -         | 目标路径                                 |
+| 变量 | flat            | `false`   | 文件是否扁平结构                         |
+| 变量 | inlineTemplate  | `false`   | 是否内联模板（固定值：`false`）          |
+| 变量 | selector        | -         | 组件 `selector`                          |
+| 变量 | componentName   | -         | 组件名称                                 |
+| 变量 | changeDetection | `Default` | 组件 `changeDetection` 值                |
+| 变量 | modal           | -         | 是否使用 Modal 展示                      |
+| 方法 | decamelize      | -         | 将字母串转换为由下划线分隔的所有小写字母 |
+| 方法 | dasherize       | -         | 将空格或下划线用破折号替换               |
+| 方法 | camelize        | -         | 返回字符串的小骆驼拼写法形式             |
+| 方法 | classify        | -         | 返回字符串的大骆驼拼写法形式             |
+| 方法 | underscore      | -         | 将字母串转换为由下划线分隔的所有小写字母 |
+| 方法 | capitalize      | -         | 返回字符串首字母大写                     |
 
-这些变更或方法可以在模板中使用，例如：`<%=componentName%>` 表示组件名，任何使用 `<% %>` 内可以使用 JavaScript 代码。有关模板编写可以参考：
+这些变量或方法可以在模板中使用，例如：`<%=componentName%>` 表示组件名，任何使用 `<% %>` 内可以使用 JavaScript 代码。有关模板编写可以参考：
 
 - [delon](https://github.com/ng-alain/delon/blob/master/packages/schematics/edit/files/__path__/__name%40dasherize%40if-flat__/__name%40dasherize__.component.html)
 - [material2](https://github.com/angular/material2/blob/master/src/lib/schematics/dashboard/files/__path__/__name%40dasherize%40if-flat__/__name%40dasherize__.component.html)
