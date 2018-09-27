@@ -27,11 +27,30 @@ this.subject.destroy();
 
 There are includes `create` & `createStatic` methods to open the normal & static modal. Add a few parameters based on `NzModalService`.
 
+**Custom component HTML template**
+
+```html
+<div class="modal-header">
+    <div class="modal-title">Title</div>
+</div>
+
+Your body content
+
+<div class="modal-footer">
+  <button nz-button [nzType]="'default'" (click)="cancel()">
+    Cancel
+  </button>
+  <button nz-button [nzType]="'primary'" (click)="ok()">
+    OK
+  </button>
+</div>
+```
+
 ### API
 
 | Property | Description  | Type  | Default   |
 | --- | --- | --- | --- |
-| `size` | `sm,md,lg,xl,number` | `lg` | Specify dialog size |
-| `exact` | `boolean` | `true` | exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. |
-| `includeTabs` | `boolean` | `false` | Whether to wrap the tab page |
-| `modalOptions` | `ModalOptionsForService` | - | nz-modal dialog raw parameters |
+| `size` | Specify modal size | `sm,md,lg,xl,number` | `lg` |
+| `exact` | exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true` |
+| `includeTabs` | Whether to wrap the tab page | `boolean` | `false` |
+| `modalOptions` | nz-modal raw parameters | `ModalOptionsForService` | - |

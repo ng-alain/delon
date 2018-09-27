@@ -1,12 +1,10 @@
 ---
 order: 3
-title:
-  en-US: Drawer Helper
-  zh-CN: 抽屉辅助类
+title: 抽屉辅助类
 type: Service
 ---
 
-这是对 `NzDrawerService` 进一步封装，它解决一些已知问题：
+基于 `NzDrawerService` 封装，它解决一些已知问题：
 
 - 更友好的处理回调
 - 自动管理 `z-index` 值
@@ -34,21 +32,21 @@ this.NzDrawerRef.close(false);
 <div class="drawer-footer">
   // 底部工具条由 `drawer-footer` 包裹
   <button nz-button [nzType]="'default'" (click)="cancel()">
-      Cancel
+    Cancel
   </button>
   <button nz-button [nzType]="'primary'" (click)="ok()">
-      OK
+    OK
   </button>
 </div>
 ```
 
 若无需要底部工具条，需要指定参数 `footer: false`。
 
-### API
+## API
 
 | 名称 | 类型 | 默认值 | 功能 |
 | --- | --- | --- | --- |
-| `size` | `sm,md,lg,xl,number` | `md` | 指定抽屉大小，响应式只支持非数字值 |
-| `footer` | `boolean` | `true` | 是否需要工具条 |
-| `footerHeight` | `number` | `55` | 工具条高度 |
-| `drawerOptions` | `NzDrawerOptions` | - | 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 |
+| `size` | 指定抽屉大小，响应式只支持非数字值 | `sm,md,lg,xl,number` | `md` |
+| `footer` | 是否需要工具条 | `boolean` | `true` |
+| `footerHeight` | 工具条高度 | `number` | `55` |
+| `drawerOptions` 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 | | `NzDrawerOptions` | - |
