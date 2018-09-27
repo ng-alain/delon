@@ -4,7 +4,7 @@ title: 开始使用
 type: Documents
 ---
 
-`@delon/theme` 是 ng-alain 架手脚唯一必须引入的模块。它包含了几十种[参数](/theme/global)，通过覆盖参数数值进而定制一些特别的需求；以及若干通过性[服务](/theme/menu)、[管道](/theme/date)。
+`@delon/theme` 是 ng-alain 架手脚唯一必须引入的模块。它包含了非常多[主题样式参数](/theme/global)，通过覆盖参数数值进而定制一些特别的需求；以及若干通用性[服务](/theme/menu)、[管道](/theme/date)。
 
 ## 样式
 
@@ -25,6 +25,30 @@ ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到�
 
 因此，除非设计师明确需求以外，我们应该尽可能使用组件 `styles` 属性创建组件样式，有关如何Angular样式请参考《[关于Angular样式封装](https://zhuanlan.zhihu.com/p/31235358)》。
 
-### 如何覆盖参数
+## 样式文件类别
 
-脚手架里有一个叫 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) LESS文件，允许你在注册 ng-alain 主题样式**之前**重新覆盖参数数值，我们也提供一个简单的[自定义主题](/tools/theme)工具，可以简单配置并将生成主题参数粘贴至 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) 可以实时变化 ng-alain 的主题效果。
+在一个项目中，样式文件根据功能不同，可以划分为不同的类别。
+
+### src/styles/index.less
+
+全局样式文件，在这里你可以进行一些通用设置。
+
+### 工具集
+
+请参考 [工具集样式](/theme/tools)。
+
+### 页面级
+
+具体页面相关的样式，例如 [monitor.component.less](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/dashboard/monitor/monitor.component.less)，里面的内容仅和本页面的内容相关。一般情况下，如果不是页面内容特别复杂，有了前面全局样式、工具集样式的配合，这里要写的应该不多。
+
+## 如何覆盖参数
+
+ng-alain 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，并定义了一系列全局/组件的样式变量，你可以根据需求进行相应调整。
+
+要改变的参数统一放在 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) LESS文件中，所有参数包括：
+
+- [全局参数](/theme/global)
+- [默认布局](/theme/default)
+- [全屏布局](/theme/fullscreen)
+
+如果以上变量不能满足你的定制需求，可以给我们提 issue。

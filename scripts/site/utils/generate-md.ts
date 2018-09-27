@@ -106,8 +106,8 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
     );
   } else {
     //  && ~headingList.indexOf(ret)
-    if (/^<code>/g.test(ret) && ~ret.indexOf('Na')) {
-      return ret.replace(/(Na[a-zA-Z]+)/g, (word: string) => {
+    if (/^<code>/g.test(ret)) {
+      return ret.replace(/([a-zA-Z]+)/g, (word: string) => {
         if (headingList.indexOf(word) !== -1) {
           return `<a data-toc="${word}">${word}</a>`;
         }
@@ -128,7 +128,12 @@ function fixAngular(html: string): string {
           '$1&lt;',
         )}</code>`;
       }
-      return fullWord;
+      return fullWord
+        .replace(`<ng-content`, `&lt;ng-content`)
+        .replace(`</ng-content`, `&lt;/ng-content`)
+        .replace(`<ng-template`, `&lt;ng-template`)
+        .replace(`</ng-template`, `&lt;/ng-template`)
+        ;
     },
   );
 }
@@ -138,8 +143,7 @@ export function generateMd(markdownData: any) {
   headingList = contentChildren
     .filter(node => JsonML.isElement(node) && isHeading(node))
     .filter(arr => arr.length === 2)
-    .map(arr => arr[1])
-    .filter(key => key && key.startsWith('Na'));
+    .map(arr => arr[1]);
 
   const apiStartIndex = contentChildren.findIndex(
     (node: any) =>

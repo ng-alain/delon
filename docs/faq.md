@@ -87,8 +87,10 @@ export class DelonModule {
 最后，在 `src/styles/theme.less` 重新定义新的路径：
 
 ```less
-@icon-url: "./assets/iconfont";
+@icon-url: "/assets/iconfont";
 ```
+
+> 使用绝对路径或CDN地址。
 
 ### Missing locale data for the locale "zh-cn"
 

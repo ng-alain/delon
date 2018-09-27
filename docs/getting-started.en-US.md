@@ -19,7 +19,7 @@ This document uses the following conventions:
   - `()` Output Event
   - `[()]` Two-way binding
   - `ng-content` Component content placeholders
-  - `#tpl` Refers `〈ng-template #tpl〉`
+  - `#tpl` Refers `<ng-template #tpl></ng-template>`
 
 ## Preparation
 
@@ -27,14 +27,28 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 
 ## Installation
 
+### CLI (Recommend)
+
 ```bash
-ng new demo --style less
-cd demo
+# Make sure you are using the latest version of Angular cli
+ng new my-project --style less
+cd my-project
 ng add ng-alain@next
 ng serve
 ```
 
 Please refer to [Schematics](/cli) for more details.
+
+### Clone the Git Repository
+
+```bash
+git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
+cd my-project
+yarn
+ng serve
+```
+
+> Note: Installing with the CLI is a clean scaffolding; using clone the git repository include all example pages.
 
 ## Scaffolding
 

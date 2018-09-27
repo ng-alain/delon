@@ -1,9 +1,17 @@
 ---
 order: 6
-title: 可展开
+title:
+  zh-CN: 可展开
+  en-US: Expandable Row
 ---
 
-利用在 `ng-template` 定义 `#expand` 模板等于实现可展开，允许接收 `item`、`index`、`column` 三个值。附加可实现：嵌套子表格。
+## zh-CN
+
+使用 `#expand` 模板实现可展开，允许接收 `item`、`index`、`column` 三个值。附加可实现：嵌套子表格。
+
+## en-US
+
+Use `#expand` template implement expandable, allowing you to receive three values: `item`, `index`, `column`. Additional achievable: nested subtables.
 
 ```ts
 import { Component } from '@angular/core';

@@ -1,9 +1,17 @@
 ---
 order: 3
-title: 搜索表单
+title:
+  zh-CN: 搜索表单
+  en-US: Search form
 ---
 
-配合 `load()` & `reset()` 完成搜索表单。
+## zh-CN
+
+配合 `load()` & `reset()` 实现搜索表单。
+
+## en-US
+
+Implement search form with `load()` & `reset()`.
 
 ```ts
 import { Component } from '@angular/core';

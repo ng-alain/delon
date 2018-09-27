@@ -1,9 +1,17 @@
 ---
 order: 10
-title: 导出Excel
+title:
+  zh-CN: 导出Excel
+  en-US: Export Excel
 ---
 
+## zh-CN
+
 将表格数据保存为 Excel。
+
+## en-US
+
+Save the table data as Excel.
 
 ```ts
 import { Component } from '@angular/core';

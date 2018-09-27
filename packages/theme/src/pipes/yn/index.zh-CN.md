@@ -1,12 +1,10 @@
 ---
 order: 1
-title:
-  en-US: yn-Badge
-  zh-CN: yn-徽章
+title: yn-徽章
 type: Pipe
 ---
 
-`yn` 将boolean类型徽章化
+`yn` 将boolean类型徽章化。
 
 ```html
 <td [innerHTML]="enabled | yn"></td>

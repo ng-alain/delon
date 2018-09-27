@@ -1,9 +1,17 @@
 ---
 order: 2
-title: 自定义数据
+title:
+  zh-CN: 自定义数据
+  en-US: Custom Data
 ---
 
-利用 `data` 属性由外部传递数据。
+## zh-CN
+
+`data` 属性支持 `STData[]`、`Observable<STData[]>` 数据类型。
+
+## en-US
+
+`data` property supports `STData[]`、`Observable<STData[]>` data types.
 
 ```ts
 import { Component, OnInit } from '@angular/core';

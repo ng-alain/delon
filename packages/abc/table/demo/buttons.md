@@ -1,11 +1,23 @@
 ---
 order: 7
-title: 自定义按钮组
+title:
+  zh-CN: 自定义按钮组
+  en-US: Custom Buttons
 ---
+
+## zh-CN
 
 透过简单的配置产生一组日常按钮组（目标组件示例：[DemoModalComponent](https://github.com/ng-alain/delon/blob/master/src/app/shared/components/dialog/modal.component.ts)、[DemoDrawerComponent](https://github.com/ng-alain/delon/blob/master/src/app/shared/components/dialog/drawer.component.ts)）。
 
 > 对话框由[ModalHelper](/theme/modal)处理，抽屉由[DrawerHelper](/theme/drawer)处理。
+
+## en-US
+
+Build a button group with the `buttons` property.
+
+Generate a set of button group with a simple configuration (example code: [DemoModalComponent](https://github.com/ng-alain/delon/blob/master/src/app/shared/components/dialog/modal. Component.ts), [DemoDrawerComponent](https://github.com/ng-alain/delon/blob/master/src/app/shared/components/dialog/drawer.component.ts)).
+
+> The modal is handled by [ModalHelper](/theme/modal) and the drawer is handled by [DrawerHelper](/theme/drawer).
 
 ```ts
 import { Component } from '@angular/core';
