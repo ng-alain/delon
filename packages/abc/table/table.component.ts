@@ -221,6 +221,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   readonly change: EventEmitter<STChange> = new EventEmitter<STChange>();
   /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
   @Input()
+  @InputNumber()
   rowClickTime = 200;
 
   @Input()
@@ -659,11 +660,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   /**
    * 导出当前页，确保已经注册 `XlsxModule`
-   * @param urlOrData 重新指定数据，例如希望导出所有数据非常有用
+   * @param newData 重新指定数据，例如希望导出所有数据非常有用
    * @param opt 额外参数
    */
-  export(urlOrData?: any[], opt?: STExportOptions) {
-    (urlOrData ? of(urlOrData) : of(this._data)).subscribe((res: any[]) =>
+  export(newData?: any[], opt?: STExportOptions) {
+    (newData ? of(newData) : of(this._data)).subscribe((res: any[]) =>
       this.exportSrv.export(
         Object.assign({}, opt, <STExportOptions>{
           _d: res,
