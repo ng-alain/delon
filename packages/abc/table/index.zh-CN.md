@@ -46,7 +46,7 @@ config: STConfig
 `[pi]` | 当前页码 | `number` | `1`
 `[ps]` | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10`
 `[page]` | 分页器配置 | `STPage` | -
-`[noResult]` | 无数据时显示内容 | `string | TemplateRef<void>` | -
+`[noResult]` | 无数据时显示内容 | `string,TemplateRef<void>` | -
 `[bordered]` | 是否显示边框 | `boolean` | `false`
 `[size]` | table大小 | `small,middle,default` | `default`
 `[loading]` | 页面是否加载中 | `boolean` | `false`
@@ -54,8 +54,8 @@ config: STConfig
 `[scroll]` | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：`{ x: "300px", y: "300px" }` | `{ y?: string; x?: string }` | -
 `[multiSort]` | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, STMultiSort` | `false`
 `[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200`
-`[header]` | 表格标题 | `string | TemplateRef<void>` | -
-`[footer]` | 表格底部 | `string | TemplateRef<void>` | -
+`[header]` | 表格标题 | `string,TemplateRef<void>` | -
+`[footer]` | 表格底部 | `string,TemplateRef<void>` | -
 `#body` | 表格额外内容，一般用于添加合计行 | `TemplateRef<void>` | -
 `#expand` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | -
 `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动 | `EventEmitter<STChange>` | -

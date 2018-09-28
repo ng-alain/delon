@@ -122,18 +122,19 @@ function fixAngular(html: string): string {
   return html.replace(
     /<code>(.*?)<\/code>/gim,
     (fullWord: string, content: string) => {
-      if (/(Observable|TemplateRef|EventEmitter)</.test(content)) {
-        return `<code>${content.replace(
-          /(Observable|TemplateRef|EventEmitter)</g,
-          '$1&lt;',
-        )}</code>`;
-      }
-      return fullWord
-        .replace(`<ng-content`, `&lt;ng-content`)
-        .replace(`</ng-content`, `&lt;/ng-content`)
-        .replace(`<ng-template`, `&lt;ng-template`)
-        .replace(`</ng-template`, `&lt;/ng-template`)
-        ;
+      return ~content.indexOf(`</a>`) ? fullWord : `<code>${content.replace(`<`, `&lt;`)}</code>`;
+      // if (/(Observable|TemplateRef|EventEmitter)</.test(content)) {
+      //   return `<code>${content.replace(
+      //     /(Observable|TemplateRef|EventEmitter)</g,
+      //     '$1&lt;',
+      //   )}</code>`;
+      // }
+      // return fullWord
+      //   .replace(`<ng-content`, `&lt;ng-content`)
+      //   .replace(`</ng-content`, `&lt;/ng-content`)
+      //   .replace(`<ng-template`, `&lt;ng-template`)
+      //   .replace(`</ng-template`, `&lt;/ng-template`)
+      //   ;
     },
   );
 }

@@ -46,7 +46,7 @@ Property | Description | Type | Default
 `[pi]` | Page index | `number` | `1`
 `[ps]` | Page size, `0` is no page, default is `10` | `number` | `10`
 `[page]` | Pager configuration | `STPage` | -
-`[noResult]` | Custom no result content | `string | TemplateRef<void>` | -
+`[noResult]` | Custom no result content | `string,TemplateRef<void>` | -
 `[bordered]` | Whether to show all table borders | `boolean` | `false`
 `[size]` | Size of table | `small,middle,default` | `default`
 `[loading]` | Loading status of table | `boolean` | `false`
@@ -54,8 +54,8 @@ Property | Description | Type | Default
 `[scroll]` | Whether table can be scrolled in x/y direction, x or y can be a string that indicates the width and height of table body | `{ y?: string; x?: string }` | -
 `[multiSort]` | Whether to mulit-sort, recommended use in URL data source | `boolean, STMultiSort` | `false`
 `[rowClickTime]` | Click twice in the time range for double click, unit is millisecond | `number` | `200`
-`[header]` | Table header renderer | `string | TemplateRef<void>` | -
-`[footer]` | Table footer renderer | `string | TemplateRef<void>` | -
+`[header]` | Table header renderer | `string,TemplateRef<void>` | -
+`[footer]` | Table footer renderer | `string,TemplateRef<void>` | -
 `#body` | Table extra body renderer, generally used to add total rows | `TemplateRef<void>` | -
 `#expand` | Whether current column include expand icon | `TemplateRef<void>` | -
 `(change)` | Events | `EventEmitter<STChange>` | -
