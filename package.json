@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0-beta.3",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for ng-alain.",
   "repository": {
@@ -38,8 +38,7 @@
     "release": "bash ./build.sh && bash build-schematics.sh -b",
     "release:ci": "bash ./build.sh && bash build-schematics.sh -b -travis",
     "publish:next": "npm run release && bash ./scripts/release/publish-next && bash ./scripts/release/sync-taobao",
-    "publish": "npm run release && bash ./scripts/release/publish && bash ./scripts/release/sync-taobao",
-    "scaffold:gh": "bash ./scaffold.sh -c -b && yarn && ng build --prod --build-optimizer --base-href /ng-alain/ && bash ./scaffold.sh -d"
+    "scaffold:gh": "bash ./scaffold.sh -c -b && cd dist/scaffold && yarn && ng build --prod --build-optimizer --base-href /ng-alain/ && bash ../../scaffold.sh -d"
   },
   "dependencies": {
     "@angular/animations": "^6.1.0",
