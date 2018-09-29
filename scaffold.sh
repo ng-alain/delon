@@ -34,7 +34,7 @@ updateVersionReferences() {
   (
     echo "======    VERSION: Updating version references in ${PACKAGE_DIR}"
     sed -i "s/\"version\":[ ]*\"[^\"]*\"/\"version\": \"${VERSION}\"/g" ${PACKAGE_DIR}
-    PACKAGE_NAMES=(abc acl auth cache mock form theme util)
+    PACKAGE_NAMES=(abc acl auth chart cache mock form theme util)
     for name in ${PACKAGE_NAMES[@]}
     do
       sed -i "s/\"@delon\/${name}\":[ ]*\"[^\"]*\"/\"@delon\/${name}\": \"^${VERSION}\"/g" ${PACKAGE_DIR}

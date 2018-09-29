@@ -6,6 +6,30 @@ title:
 type: Other
 ---
 
+### 2.0.0-beta.3
+
+`2018-9-29`
+
+- @delon/theme
+  - 新增 [DrawerHelper](https://ng-alain.com/theme/drawer/zh) 辅助类
+  - 修复 `_HttpClient` 对象 `param` 参数解析不标准，[#694](https://github.com/ng-alain/ng-alain/issues/694)
+  - 移除一些已过期样式，[#commit](https://github.com/ng-alain/ng-alain/pull/691)
+    - 使用 `nzBlock` 替代 `.ant-btn__block`
+    - 使用 `nzCover` 替代 `.ant-card__img`
+    - 移除多余 `.ant-card__title-img`，antd 已修复
+    - 移除 `.nz-carousel__dot-{color}` 由手工自定义
+    - 移除 `.box-placeholder` 由手工自定义
+- @delon/abc
+  - 新增 `st` 按钮类型 `drawer` 打开一个抽屉目标组件
+  - 修复 `_HttpClient` 对象 `param` 参数解析不标准，[#694](https://github.com/ng-alain/ng-alain/issues/694)
+- @delon/form
+  - 修复 `cascader` 小部件不支持 `showSearch` 参数，[#695](https://github.com/ng-alain/ng-alain/issues/695)
+  - 修复 `g2-custom` 默认应该块模型
+- @delon/util
+  - 修复 `getTimeDistance` 参数 `-today` 应是昨天至今天，[#696](https://github.com/ng-alain/ng-alain/issues/696)
+- cli
+  - 增加[自定义业务页模板](https://ng-alain.com/cli/generate/zh#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5)功能
+
 ### 2.0.0-beta.2
 
 `2018-9-22`
