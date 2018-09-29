@@ -6,6 +6,17 @@ title:
 type: Other
 ---
 
+### 1.4.5
+
+`2018-9-29`
+
+- @delon/theme
+  - 修复 `_HttpClient` 对象 `param` 参数解析不标准，[#694](https://github.com/ng-alain/ng-alain/issues/694)
+- @delon/form
+  - 修复 `cascader` 小部件不支持 `showSearch` 参数，[#695](https://github.com/ng-alain/ng-alain/issues/695)
+- @delon/util
+  - 修复 `getTimeDistance` 参数 `-today` 应是昨天至今天，[#696](https://github.com/ng-alain/ng-alain/issues/696)
+
 ### 1.4.4
 
 `2018-9-22`

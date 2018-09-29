@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for ng-alain.",
   "repository": {
@@ -129,7 +129,6 @@
     "typescript": "2.9.x",
     "webpack-bundle-analyzer": "^2.11.2",
     "xlsx": "^0.12.12",
-    "less": "~2.7.0",
     "less-plugin-clean-css": "^1.5.1"
   },
   "lint-staged": {
