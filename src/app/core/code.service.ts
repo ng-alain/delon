@@ -14,6 +14,16 @@ export class CodeService {
     if (componentNameRe) {
       componentName = componentNameRe[1];
     }
+    const isG2 = ~code.indexOf('<g2');
+
+    if (isG2) {
+      code = `// G2
+declare var G2: any;
+declare var DataSet: any;
+declare var Slider: any;
+
+` + code;
+    }
 
     sdk.openProject({
       title,
@@ -146,7 +156,7 @@ export class CodeService {
 }
 `,
         'src/index.html': [
-          ~code.indexOf('<g2')
+          ~isG2
             ? `
 <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/g2/3.0.5-beta.5/g2.min.js"></script>
 <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/data-set/0.8.5/data-set.min.js"></script>

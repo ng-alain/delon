@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { toNumber } from '@delon/util';
+import { InputNumber } from '@delon/util';
 
 @Component({
   selector: 'g2,g2-custom',
@@ -26,19 +26,12 @@ export class G2CustomComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.height.px')
   @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-  }
-  private _height;
+  @InputNumber()
+  height: number;
 
   @Input()
-  set resizeTime(value: any) {
-    this._resizeTime = toNumber(value);
-  }
-  private _resizeTime = 0;
+  @InputNumber()
+  resizeTime = 0;
 
   @Output()
   render: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
@@ -60,10 +53,10 @@ export class G2CustomComponent implements OnInit, OnDestroy {
   }
 
   private installResizeEvent() {
-    if (this._resizeTime <= 0 || !this.resize$) return;
+    if (this.resizeTime <= 0 || !this.resize$) return;
 
     this.resize$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(Math.min(200, this._resizeTime)))
+      .pipe(debounceTime(Math.min(200, this.resizeTime)))
       .subscribe(() => this.resize.emit(this.el));
   }
 

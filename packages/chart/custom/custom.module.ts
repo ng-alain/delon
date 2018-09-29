@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DelonUtilModule } from '@delon/util';
 
-import { G2CustomComponent } from './g2-custom.component';
+import { G2CustomComponent } from './custom.component';
 
 const COMPONENTS = [G2CustomComponent];
 

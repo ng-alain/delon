@@ -4,7 +4,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 import { G2BarModule } from '@delon/chart/bar';
 import { G2CardModule } from '@delon/chart/card';
-import { G2CustomModule } from '@delon/chart/g2-custom';
+import { G2CustomModule } from '@delon/chart/custom';
 import { G2GaugeModule } from '@delon/chart/gauge';
 import { G2MiniAreaModule } from '@delon/chart/mini-area';
 import { G2MiniBarModule } from '@delon/chart/mini-bar';
