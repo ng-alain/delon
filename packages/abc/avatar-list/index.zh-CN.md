@@ -12,9 +12,9 @@ module: AvatarListModule
 
 ### avatar-list
 
-| 参数     | 说明     | 类型                                | 默认值    |
-| -------- | -------- | ----------------------------------- | --------- |
-| `[size]` | 头像大小 | `large`、`small`、`mini`、`default` | `default` |
+| 参数     | 说明     | 类型                       | 默认值    |
+| -------- | -------- | -------------------------- | --------- |
+| `[size]` | 头像大小 | `large,small,mini,default` | `default` |
 
 ### avatar-list-item
 

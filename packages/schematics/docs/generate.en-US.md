@@ -1,6 +1,7 @@
 ---
 order: 20
-title: Business page
+title: ng g
+subtitle: Business page
 type: Documents
 ---
 

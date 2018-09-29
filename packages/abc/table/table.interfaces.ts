@@ -50,7 +50,7 @@ export interface STPage {
    */
   front?: boolean;
   /**
-   * 后端分页是否采用`1`基索引，只在`data`类型为`string`时有效，默认：`false`
+   * 后端分页是否采用`0`基索引，只在`data`类型为`string`时有效，默认：`false`
    */
   zeroIndexed?: boolean;
   /**
@@ -70,7 +70,7 @@ export interface STPage {
    */
   pageSizes?: number[];
   /**
-   * 是否显示pagination中快速跳转，默认：`false`
+   * 是否显示分页器中快速跳转，默认：`false`
    */
   showQuickJumper?: boolean;
   /**
@@ -109,6 +109,10 @@ export interface STData {
    * 选择框或单选框 `disabled` 值
    */
   disabled?: boolean;
+  /**
+   * 是否展开状态
+   */
+  expand?: boolean;
 
   [key: string]: any;
 }
@@ -417,6 +421,9 @@ export interface STColumnButton {
    * 对话框参数
    */
   modal?: STColumnButtonModal;
+  /**
+   * 抽屉参数
+   */
   drawer?: STColumnButtonDrawer;
   /**
    * 下拉菜单，当存在时以 `dropdown` 形式渲染

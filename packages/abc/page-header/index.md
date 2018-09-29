@@ -13,7 +13,7 @@ config: PageHeaderConfig
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[title]` | 标题名 | `string | TemplateRef<any>` | -
+`[title]` | 标题名 | `string,TemplateRef<any>` | -
 `[autoTitle]` | 自动生成标题，以当前路由从主菜单中定位  | `boolean` | `true`
 `[syncTitle]` | 是否自动将标题同步至 `TitleService`、`ReuseService` 下，仅 `title` 为 `string` 类型时有效  | `boolean` | `true`
 `[home]` | 首页文本，若指定空表示不显示  | `string` | `首页`

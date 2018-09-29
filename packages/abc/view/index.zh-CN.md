@@ -16,20 +16,20 @@ config: SVConfig
 
 | 参数           | 说明                 | 类型                    | 默认值       |
 | -------------- | -------------------- | ----------------------- | ------------ |
-| `[size]`       | 大小                 | `small | large`         | `large`      |
-| `[layout]`     | 布局                 | `horizontal | vertical` | `horizontal` |
+| `[size]`       | 大小                 | `small,arge`         | `large`      |
+| `[layout]`     | 布局                 | `horizontal,vertical` | `horizontal` |
 | `[gutter]`     | 间距                 | `number`                | `32`         |
 | `[col]`        | 指定信息最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定         | `number(0 < col <= 6)`                | `3`          |
 | `[labelWidth]` | 默认标签文本宽度     | `number`                | `null`       |
 | `[default]`    | 默认是否显示默认文本 | `boolean`               | `true`       |
-| `[title]`      | 标题                                  | `string | TemplateRef<any>`            | - |
+| `[title]`      | 标题                                  | `string,TemplateRef<any>`            | - |
 
 ### sv
 
 | 参数           | 类型                                  | 说明                                   |默认值       |
 | -------------- | ------------------------------------- | -------------------------------------- |
 | `[col]`        | 指定信息最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定，继承 `sv-container`         | `number(0 < col <= 6)`                               | - |
-| `[label]`      | 标签                                  | `string | TemplateRef<any>`            | - |
+| `[label]`      | 标签                                  | `string,TemplateRef<any>`            | - |
 | `[labelWidth]` | 标签文本宽度，继承 `sv-container`     | `number`                               | - |
 | `[default]`    | 是否显示默认文本，继承 `sv-container` | `boolean`                              | - |
 | `[type]`       | 类型                  | `primary | success | danger | warning` | - |

@@ -12,7 +12,7 @@ type: Components
 
 | 参数      | 说明                                      | 类型         | 默认值 |
 |----------|------------------------------------------|-------------|-------|
-| `[title]` | 图表标题 | `string | TemplateRef<any>` | - |
+| `[title]` | 图表标题 | `string,TemplateRef<any>` | - |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.85)` |
 | `[padding]` | 图表内部间距 | `array` | \[32, 0, 32, 40\] |
 | `[height]` | 图表高度 | `number` | - |

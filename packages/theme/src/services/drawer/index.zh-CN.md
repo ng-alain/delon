@@ -49,4 +49,4 @@ this.NzDrawerRef.close(false);
 | `size` | 指定抽屉大小，响应式只支持非数字值 | `sm,md,lg,xl,number` | `md` |
 | `footer` | 是否需要工具条 | `boolean` | `true` |
 | `footerHeight` | 工具条高度 | `number` | `55` |
-| `drawerOptions` 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 | | `NzDrawerOptions` | - |
+| `drawerOptions` | 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 | `NzDrawerOptions` | - |

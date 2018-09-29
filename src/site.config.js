@@ -96,13 +96,13 @@ module.exports = {
           meta: {
             'zh-CN': {
               type: 'Basic',
-              title: '',
-              subtitle: '图表',
+              title: '图表',
+              subtitle: 'G2',
             },
             'en-US': {
               type: 'Basic',
-              title: '',
-              subtitle: 'Chart',
+              title: 'Chart',
+              subtitle: 'G2',
             },
           },
         },
@@ -115,13 +115,11 @@ module.exports = {
           meta: {
             'zh-CN': {
               type: 'Business',
-              title: '',
-              subtitle: '用户认证',
+              title: '用户认证',
             },
             'en-US': {
               type: 'Business',
-              title: '',
-              subtitle: 'Authentication',
+              title: 'Authentication',
             },
           },
         },
@@ -134,13 +132,11 @@ module.exports = {
           meta: {
             'zh-CN': {
               type: 'Business',
-              title: '',
-              subtitle: '访问控制列表',
+              title: '访问控制列表',
             },
             'en-US': {
               type: 'Business',
-              title: '',
-              subtitle: 'Access Control List',
+              title: 'Access Control List',
             },
           },
         },
@@ -153,13 +149,11 @@ module.exports = {
           meta: {
             'zh-CN': {
               type: 'Business',
-              title: '',
-              subtitle: '缓存',
+              title: '缓存',
             },
             'en-US': {
               type: 'Business',
-              title: '',
-              subtitle: 'Cache',
+              title: 'Cache',
             },
           },
         },
@@ -172,13 +166,11 @@ module.exports = {
           meta: {
             'zh-CN': {
               type: 'Business',
-              title: '',
-              subtitle: 'Mock模拟数据',
+              title: 'Mock模拟数据',
             },
             'en-US': {
               type: 'Business',
-              title: '',
-              subtitle: 'Mock',
+              title: 'Mock',
             },
           },
         },
@@ -191,13 +183,11 @@ module.exports = {
           meta: {
             'zh-CN': {
               type: 'Basic',
-              title: '',
-              subtitle: '工具集',
+              title: '工具集',
             },
             'en-US': {
               type: 'Basic',
-              title: '',
-              subtitle: 'Utils',
+              title: 'Utils',
             },
           },
         },
@@ -210,13 +200,11 @@ module.exports = {
           meta: {
             'zh-CN': {
               type: 'Basic',
-              title: '',
-              subtitle: '主题系统',
+              title: '主题系统',
             },
             'en-US': {
               type: 'Basic',
-              title: '',
-              subtitle: 'Theme System',
+              title: 'Theme System',
             },
           },
         },
