@@ -21,7 +21,7 @@ type: Documents
 | 地图类 | - | -
 | 其它 | 标签云：`tag-cloud`<br>图表卡片：`chart-card`<br>自定义图表：`chart` | -
 
-## 如何使用？
+## 如何使用
 
 ```bash
 # add

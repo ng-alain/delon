@@ -34,7 +34,7 @@ type: Documents
 
 目前它衍生两种不同校验风格：Simple Web Token、Json Web Token，相对应为 `SimpleTokenModel`、`JWTTokenModel`，后者具有解析 `payload` 能力，当然有任何特殊都可以自行实现 `ITokenModel` 接口。
 
-## 如何使用？
+## 如何使用
 
 安装 `@delon/auth` 依赖包：
 

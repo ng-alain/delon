@@ -10,7 +10,7 @@ type: Documents
 
 ## 一、利用 `custom` 小部件进行扩展
 
-细节请参考 [custom-自定义](/form/custom)。
+细节请参考 [自定义小部件](/form/custom)。
 
 ## 二、完全自定义
 

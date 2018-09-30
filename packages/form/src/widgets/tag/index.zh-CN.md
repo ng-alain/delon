@@ -1,10 +1,10 @@
 ---
 title: tag
-subtitle: 热门标签
+subtitle: 标签
 type: Widgets
 ---
 
-进行标记标签，**注：** 只支持 `checkable` 标签模式。
+进行标记和分类的小标签，**注：** 只支持 `checkable` 标签模式。
 
 ## API
 

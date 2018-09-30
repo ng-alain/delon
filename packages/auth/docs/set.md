@@ -4,7 +4,7 @@ title: 存储Token
 type: Documents
 ---
 
-## 如何使用？
+## 如何使用
 
 `ITokenService` 接口（默认实现 `TokenService`），只有四个方法及 `login_url` 属性：
 

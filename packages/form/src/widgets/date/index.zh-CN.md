@@ -4,13 +4,13 @@ subtitle: 日期
 type: Widgets
 ---
 
-输入或选择日期的控件；`ng-zorro-antd` 未提供日期时间类组件，暂时以原生替代。
+输入或选择日期的控件。
 
 ## 注意事项
 
 - 格式化分为：**数据格式化**表示表单数据和**显示格式化**显示数据（等同 [nzFormat](https://ng.ant.design/components/date-picker/zh#api) 值）
 - 所有 **数据格式化** 单位，参考 [date-fns format](https://date-fns.org/v1.29.0/docs/format)（国内镜像：[moment format](http://momentjs.cn/docs/#/displaying/format/)）
-- 指定 `schema.format` 则必须遵守 [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.6) 时间格式，否则都视为格式错误，默认的数据格式化：
+- 指定 `schema.format` 则必须遵守 [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.6) 时间格式，否则都视为格式错误，默认的数据格式化规则：
   - `date-time` 默认 `YYYY-MM-DDTHH:mm:ssZ`，注意这里采用的是 `type="datetime-local"` 因此会涉及到**时区问题**
   - `date`、`full-date` 默认 `YYYY-MM-DD`
   - `time`、`full-time` 默认 `HH:mm:ss`
@@ -40,7 +40,6 @@ type: Widgets
 `[end]` | 日期范围所对应的结束值 `key` | `string` | -
 `[allowClear]` | 是否显示清除按钮 | `boolean` | `true`
 `[className]` | 选择器 className | `string` | -
-`[disabledDate]` | 不可选择的日期 | `(current: Date) => boolean` | -
 `[locale]` | 国际化配置 | `object` | -
 `[popupStyle]` | 额外的弹出日历样式 | `object` | -
 `[dropdownClassName]` | 额外的弹出日历 className | `string` | -
