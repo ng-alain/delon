@@ -8,13 +8,13 @@ type: Documents
 
 `@delon/form` 尽可能满足不同需求，除现有内置的十几种基础组件小部件外，可以通过以下两种方式进一步扩展需求：
 
-## 一、利用 `custom` 小部件进行扩展
+## 自定义小部件
 
 细节请参考 [自定义小部件](/form/custom)。
 
-## 二、完全自定义
+## 制作小部件
 
-当 `custom` 小部件无法满足你的扩展时，可以使用更宽松的扩展方式。
+制作一套项目需求的小部件，可以更快速的开发工作。
 
 ### 编写小部件
 
@@ -26,6 +26,7 @@ type: Documents
 
 | 名称 | 描述 | 文档 | 源代码 |
 | --- | ---- | ---- | ---- |
+| `markdown` | Markdown 编辑器 | [文档](/form/markdown) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/markdown) |
 | `tinymce` | Tinymce 富文本框 | [文档](/form/tinymce) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/tinymce) |
 | `ueditor` | UEditor 富文本框 | [文档](/form/ueditor) | [源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/ueditor) |
 
@@ -82,7 +83,7 @@ export class TinymceWidget extends ControlWidget implements OnInit {
 
 **变更检测**
 
-小部件在渲染过程是手动变更检测，大部分情况下 `ControlWidget` 已经很好的管理什么时机应该执行变更检测，在自定义小部件过程中可能会遇到异步操作导致界面并未渲染，此时可以调用 `detectChanges` 来触发一次小部件节点的变更检测。
+小部件在渲染过程是手动变更检测，大部分情况下 `ControlWidget` 已经很好的管理什么时机应该执行变更检测，在自定义小部件过程中可能会遇到异步操作导致界面并未渲染，此时可以调用 `detectChanges()` 方法来触发一次小部件节点的变更检测。
 
 ### 注册小部件
 
