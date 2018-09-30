@@ -26,6 +26,8 @@ type: Widgets
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
+`[prefix]` | 前缀，简化 `nzFormatter`、`nzParser` 的使用 | - | -
+`[unit]` | 单位，简化 `nzFormatter`、`nzParser` 的使用 | - | -
 `[formatter]` | 等同 `nzFormatter` | - | -
 `[parser]` | 等同 `nzParser` | - | -
 `[precision]` | 等同 `nzPrecision` | - | -

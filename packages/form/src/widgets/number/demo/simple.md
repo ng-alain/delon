@@ -27,6 +27,8 @@ export class DemoComponent {
     properties: {
       number: { type: 'number', minimum: 18, maximum: 100, multipleOf: 2 },
       integer: { type: 'integer', default: 10 },
+      unit: { type: 'number', default: 10, ui: { unit: '%' } },
+      prefix: { type: 'number', default: 10, ui: { prefix: '$' } },
     },
   };
   constructor(public msg: NzMessageService) {}
