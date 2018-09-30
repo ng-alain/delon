@@ -131,7 +131,7 @@ export class DateWidget extends ControlWidget implements OnInit {
 
   reset(value: any) {
     if (this.flatRange) {
-      this.displayValue = [value, this.endProperty.formData];
+      this.displayValue = value == null ? [] : [value, this.endProperty.formData];
     } else {
       this.displayValue = value;
     }
@@ -148,7 +148,7 @@ export class DateWidget extends ControlWidget implements OnInit {
       ? value.map(d => format(d, this.format))
       : format(value, this.format);
 
-    if (Array.isArray(res)) {
+    if (this.flatRange) {
       this.setEnd(res[1]);
       this.setValue(res[0]);
     } else {
