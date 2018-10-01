@@ -93,21 +93,21 @@ e.g:
 
 | Component        | Old ContentChild | New Property | ng update | Description |
 |------------------|------------------|--------------|-----------|-------------|
-| `st`             | `body`           | `body`       | ×         | -           |
-| `st`             | `expand`         | `expand`     | ×         | -           |
-| `footer-toolbar` | `extra`          | `extra`      | ×         | -           |
-| `page-header`    | `breadcrumb`     | `breadcrumb` | ×         | -           |
-| `page-header`    | `logo`           | `logo`       | ×         | -           |
-| `page-header`    | `action`         | `action`     | ×         | -           |
-| `page-header`    | `content`        | `content`    | ×         | -           |
-| `page-header`    | `extra`          | `extra`      | ×         | -           |
-| `page-header`    | `tab`            | `tab`        | ×         | -           |
+| `st`             | `body`           | `body`       | √         | -           |
+| `st`             | `expand`         | `expand`     | √         | -           |
+| `footer-toolbar` | `extra`          | `extra`      | √         | -           |
+| `page-header`    | `breadcrumb`     | `breadcrumb` | √         | -           |
+| `page-header`    | `logo`           | `logo`       | √         | -           |
+| `page-header`    | `action`         | `action`     | √         | -           |
+| `page-header`    | `content`        | `content`    | √         | -           |
+| `page-header`    | `extra`          | `extra`      | √         | -           |
+| `page-header`    | `tab`            | `tab`        | √         | -           |
 
 e.g:
 
 ```diff
 - <page-header>
-+ <page-header [body]="body">
++ <page-header [action]="action">
 -   <ng-template #action></ng-template>
 - </page-header>
 ```
