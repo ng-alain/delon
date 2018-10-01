@@ -106,6 +106,18 @@ describe('abc: page-header', () => {
         expect(affixComp.updatePosition).toHaveBeenCalled();
       });
     });
+
+    it('#wide', () => {
+      context.wide = true;
+      fixture.detectChanges();
+      isExists('.page-header__wide');
+    });
+
+    it('#loading', () => {
+      context.loading = true;
+      fixture.detectChanges();
+      isExists('.ant-skeleton');
+    });
   });
 
   describe('[generation breadcrumb]', () => {
@@ -353,7 +365,7 @@ describe('abc: page-header', () => {
   template: `
     <page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
         [autoBreadcrumb]="autoBreadcrumb" [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink"
-        [fixed]="fixed"
+        [fixed]="fixed" [loading]="loading" [wide]="wide"
         [breadcrumb]="breadcrumb" [logo]="logo" [action]="action" [extra]="extra" [content]="content" [tab]="tab">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
@@ -375,4 +387,6 @@ class TestComponent {
   homeLink: string;
   homeI18n: string;
   fixed: boolean;
+  loading = false;
+  wide = false;
 }

@@ -2,12 +2,17 @@
 
 @page-header-prefix: ~'.page-header';
 @page-header-bg: #fff;
+@page-header-wide: 1200px;
 
 @{page-header-prefix} {
   display: block;
   background-color: @page-header-bg;
   padding: 16px 32px 0 32px;
   border-bottom: @border-width-base @border-style-base @border-color-split;
+  &__wide {
+    max-width: @page-header-wide;
+    margin: auto;
+  }
   .ant-breadcrumb {
     margin-bottom: 16px;
   }

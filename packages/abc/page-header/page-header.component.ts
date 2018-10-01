@@ -71,6 +71,14 @@ export class PageHeaderComponent
   }
 
   @Input()
+  @InputBoolean()
+  loading = false;
+
+  @Input()
+  @InputBoolean()
+  wide = false;
+
+  @Input()
   home: string;
 
   @Input()
