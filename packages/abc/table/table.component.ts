@@ -202,10 +202,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input()
   footer: string | TemplateRef<void>;
   /** 额外 `body` 内容 */
-  @ContentChild('body')
+  @Input()
   body: TemplateRef<void>;
   /** `expand` 可展开，当数据源中包括 `expand` 表示展开状态 */
-  @ContentChild('expand')
+  @Input()
   expand: TemplateRef<{ $implicit: any; column: STColumn }>;
   @Input()
   noResult: string | TemplateRef<void>;

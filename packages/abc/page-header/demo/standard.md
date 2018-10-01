@@ -14,7 +14,8 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-demo',
     template: `
-<page-header [title]="'单号：234231029431'">
+<page-header [title]="'单号：234231029431'"
+    [breadcrumb]="breadcrumb" [logo]="logo" [action]="action" [extra]="extra" [content]="content" [tab]="tab">
     <ng-template #breadcrumb>
         <nz-breadcrumb>
             <nz-breadcrumb-item><a>一级菜单</a></nz-breadcrumb-item>

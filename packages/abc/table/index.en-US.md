@@ -56,8 +56,8 @@ Property | Description | Type | Default
 `[rowClickTime]` | Click twice in the time range for double click, unit is millisecond | `number` | `200`
 `[header]` | Table header renderer | `string,TemplateRef<void>` | -
 `[footer]` | Table footer renderer | `string,TemplateRef<void>` | -
-`#body` | Table extra body renderer, generally used to add total rows | `TemplateRef<void>` | -
-`#expand` | Whether current column include expand icon | `TemplateRef<void>` | -
+`[body]` | Table extra body renderer, generally used to add total rows | `TemplateRef<void>` | -
+`[expand]` | Whether current column include expand icon | `TemplateRef<void>` | -
 `(change)` | Events | `EventEmitter<STChange>` | -
 `(error)` | Error event | `EventEmitter<STError>` | -
 (deprecated)`(sortChange)` | Sort event | `EventEmitter` | -
