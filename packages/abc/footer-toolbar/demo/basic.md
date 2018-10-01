@@ -16,8 +16,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     <nz-form-control [nzValidateStatus]="name">
       <input nz-input formControlName="name" placeholder="required">
     </nz-form-control>
-    <footer-toolbar errorCollect>
-      <button nz-button [nzType]="'primary'">Submit</button>
+    <footer-toolbar errorCollect extra="This is extra area">
+      <button nz-button nzType="primary">Submit</button>
     </footer-toolbar>
   </form>
     `

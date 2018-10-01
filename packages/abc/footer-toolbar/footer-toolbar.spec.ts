@@ -12,45 +12,58 @@ describe('abc: footer-toolbar', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ErrorCollectModule.forRoot(),
-        FooterToolbarModule.forRoot(),
-      ],
+      imports: [ErrorCollectModule.forRoot(), FooterToolbarModule.forRoot()],
       declarations: [TestComponent],
     });
+  });
+
+  function create() {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }
 
   it('should be create', () => {
+    create();
     expect(dl.queryAll(By.css('.footer-toolbar')).length).toBe(1);
   });
 
   it('should be load error-collect', () => {
+    create();
     context.errorCollect = true;
     fixture.detectChanges();
     expect(dl.queryAll(By.css('error-collect')).length).toBe(1);
   });
 
-  it('should be custom extra template', () => {
-    expect(dl.queryAll(By.css('#extra')).length).toBe(1);
+  describe('#extra', () => {
+    it('with string', () => {
+      create();
+      const left = dl.query(By.css('.footer-toolbar__left'))
+        .nativeElement as HTMLElement;
+      expect(left.textContent.trim()).toBe(`1`);
+    });
+    it('with custom template', () => {
+      TestBed.overrideTemplate(
+        TestComponent,
+        `
+      <footer-toolbar [extra]="extra">
+        <ng-template #extra><div id="extra">1</div></ng-template>
+      </footer-toolbar>
+      `,
+      );
+      create();
+      expect(dl.queryAll(By.css('#extra')).length).toBe(1);
+    });
   });
 });
 
 @Component({
   template: `
-    <form>
-        <footer-toolbar [errorCollect]="errorCollect">
-            <ng-template #extra>
-                <p id="extra">extra</p>
-            </ng-template>
-            <button>Submit</button>
-        </footer-toolbar>
-    </form>
-    `,
+  <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra"></footer-toolbar></form>
+  `,
 })
 class TestComponent {
   errorCollect = true;
+  extra = '1';
 }

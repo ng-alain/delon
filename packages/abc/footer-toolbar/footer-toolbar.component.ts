@@ -5,7 +5,6 @@ import {
   OnDestroy,
   Inject,
   TemplateRef,
-  ContentChild,
   ElementRef,
   Renderer2,
 } from '@angular/core';
@@ -17,13 +16,7 @@ const CLSBODY = 'footer-toolbar__body';
 
 @Component({
   selector: 'footer-toolbar',
-  template: `
-  <div class="footer-toolbar__left"><ng-container *ngIf="extra" [ngTemplateOutlet]="extra"></ng-container></div>
-  <div class="footer-toolbar__right">
-    <error-collect *ngIf="errorCollect"></error-collect>
-    <ng-content></ng-content>
-  </div>
-  `,
+  templateUrl: './footer-toolbar.component.html',
   preserveWhitespaces: false,
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
@@ -31,8 +24,17 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
   @InputBoolean()
   errorCollect = false;
 
-  @ContentChild('extra')
-  extra: TemplateRef<any>;
+  _extra = '';
+  _extraTpl: TemplateRef<any>;
+  @Input()
+  set extra(value: string | TemplateRef<any>) {
+    if (value instanceof TemplateRef) {
+      this._extra = null;
+      this._extraTpl = value;
+    } else {
+      this._extra = value;
+    }
+  }
 
   constructor(
     private el: ElementRef,
