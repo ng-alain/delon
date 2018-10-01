@@ -54,6 +54,10 @@ export class DemoComponent {
         type: 'string',
         ui: { widget: 'date', end: 'end' },
       },
+      end: {
+        type: 'string',
+        ui: { widget: 'date', end: 'end' },
+      },
     },
   };
 
