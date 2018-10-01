@@ -110,22 +110,22 @@ export class PageHeaderComponent
 
   paths: any[] = [];
 
-  @ContentChild('breadcrumb')
+  @Input()
   breadcrumb: TemplateRef<any>;
 
-  @ContentChild('logo')
+  @Input()
   logo: TemplateRef<any>;
 
-  @ContentChild('action')
+  @Input()
   action: TemplateRef<any>;
 
-  @ContentChild('content')
+  @Input()
   content: TemplateRef<any>;
 
-  @ContentChild('extra')
+  @Input()
   extra: TemplateRef<any>;
 
-  @ContentChild('tab')
+  @Input()
   tab: TemplateRef<any>;
 
   // endregion

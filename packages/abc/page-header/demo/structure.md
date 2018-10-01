@@ -14,20 +14,21 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-demo',
     template: `
-<page-header [title]="'title'">
+  <page-header [title]="'title'"
+    [breadcrumb]="breadcrumb" [logo]="logo" [action]="action" [extra]="extra" [content]="content" [tab]="tab">
     <ng-template #breadcrumb>面包屑</ng-template>
     <ng-template #logo><div class="logo">logo</div></ng-template>
     <ng-template #action><div class="action">action</div></ng-template>
     <ng-template #content><div class="desc">content</div></ng-template>
     <ng-template #extra><div class="extra">extra</div></ng-template>
     <ng-template #tab>
-        <nz-tabset [nzSize]="'default'">
-            <nz-tab nzTitle="页签一"></nz-tab>
-            <nz-tab nzTitle="页签二"></nz-tab>
-            <nz-tab nzTitle="页签三"></nz-tab>
-        </nz-tabset>
+      <nz-tabset [nzSize]="'default'">
+        <nz-tab nzTitle="页签一"></nz-tab>
+        <nz-tab nzTitle="页签二"></nz-tab>
+        <nz-tab nzTitle="页签三"></nz-tab>
+      </nz-tabset>
     </ng-template>
-</page-header>
+  </page-header>
     `,
     styles: [`
     :host ::ng-deep .logo {

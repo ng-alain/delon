@@ -82,13 +82,50 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 | `simple-html-form`  | `se`     | -         | -    |
 | `standard-form-row` | `se`     | -         | -    |
 
+例如：
+
+```diff
+- <simple-table></simple-table>
++ <st></st>
+```
+
+### 使用 `Input` 替代 `ContentChild`
+
+| 所属组件         | 原ContentChild | 新属性名     | ng update | 描述 |
+|------------------|----------------|--------------|-----------|------|
+| `st`             | `body`         | `body`       | ×         | -    |
+| `st`             | `expand`       | `expand`     | ×         | -    |
+| `footer-toolbar` | `extra`        | `extra`      | ×         | -    |
+| `page-header`    | `breadcrumb`   | `breadcrumb` | ×         | -    |
+| `page-header`    | `logo`         | `logo`       | ×         | -    |
+| `page-header`    | `action`       | `action`     | ×         | -    |
+| `page-header`    | `content`      | `content`    | ×         | -    |
+| `page-header`    | `extra`        | `extra`      | ×         | -    |
+| `page-header`    | `tab`          | `tab`        | ×         | -    |
+
+例如：
+
+```diff
+- <page-header>
++ <page-header [body]="body">
+-   <ng-template #action></ng-template>
+- </page-header>
+```
+
 ### abc 类库组件属性名变更
 
-| 所属组件         | 原属性名     | 新属性名   | ng update | 描述                             |
-| ---------------- | ------------ | ---------- | --------- | -------------------------------- |
-| `na-page-header` | `home_link`  | `homeLink` | -         | -                                |
-| `na-page-header` | `home_i18n`  | `homeI18n` | -         | -                                |
-| `st`             | `sortReName` | 移除       | ×         | 仅使用 `STColumn.sort.reName` 值 |
+| 所属组件      | 原属性名     | 新属性名   | ng update | 描述                             |
+|---------------|--------------|------------|-----------|----------------------------------|
+| `page-header` | `home_link`  | `homeLink` | -         | -                                |
+| `page-header` | `home_i18n`  | `homeI18n` | -         | -                                |
+| `st`          | `sortReName` | 移除       | ×         | 仅使用 `STColumn.sort.reName` 值 |
+
+例如：
+
+```diff
+- <page-header home_link="/">
++ <page-header homeLink="/">
+```
 
 ### abc 类库组件配置变更
 
@@ -131,6 +168,13 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 | `(rowDblClick)`       | `(change)` | -                 | ×         | √        | -    |
 
 > 一个示例说明 [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-f573fc0900f21b377dac432f1668c584L164)
+
+例如：
+
+```diff
+- <simple-table [extraParams]="params" [reqReName]="reqReName">
++ <st [req]="{params: params, reName: reqReName}">
+```
 
 #### 列描述
 

@@ -12,7 +12,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <page-header [title]="'页面标题'">
+  <page-header [title]="'页面标题'" [breadcrumb]="breadcrumb">
     <ng-template #breadcrumb>
       <nz-breadcrumb>
         <nz-breadcrumb-item><a>一级菜单</a></nz-breadcrumb-item>

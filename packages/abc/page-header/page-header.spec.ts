@@ -353,7 +353,8 @@ describe('abc: page-header', () => {
   template: `
     <page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
         [autoBreadcrumb]="autoBreadcrumb" [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink"
-        [fixed]="fixed">
+        [fixed]="fixed"
+        [breadcrumb]="breadcrumb" [logo]="logo" [action]="action" [extra]="extra" [content]="content" [tab]="tab">
         <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
         <ng-template #logo><div class="logo">logo</div></ng-template>
         <ng-template #action><div class="action">action</div></ng-template>
