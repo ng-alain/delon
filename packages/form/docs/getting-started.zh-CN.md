@@ -88,7 +88,7 @@ export class DelonModule {
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[ajv]` | [ajv](http://epoberezkin.github.io/ajv/#options) 参数 | `Ajv.Options` | -
-`[ingoreKeywords]` | 是否忽略某些数据类型校验 `ERRORSDEFAULT` | `string[]` | `[ 'type', 'enum' ]`
+`[ingoreKeywords]` | 是否忽略某些数据类型校验（[所有类型](https://github.com/ng-alain/delon/blob/master/packages/form/src/errors.ts#L4)） | `string[]` | `[ 'type', 'enum' ]`
 `[liveValidate]` | 是否实时校验 | `boolean` | `true`
 `[autocomplete]` | 指定表单 `autocomplete` 值 | `on,off` | `null`
 `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false`
@@ -134,7 +134,7 @@ export class HomeComponent {
 }
 ```
 
-## sf 组件接口
+## API
 
 | 参数         | 说明                            | 类型                        | 默认值       |
 |--------------|---------------------------------|-----------------------------|--------------|
@@ -185,9 +185,9 @@ export class HomeComponent {
 
 ### mode有什么作用？
 
-`mode` 只是快捷作用，**且设置属性的优先级高于一切**，一共分三种模式：
+`mode` 只是快捷作用，**且优先级高于一切**，规则如下：
 
-- `default` 默认模式，什么也不做
+- `default` 默认模式，什么也不做
 - `search` 搜索模式，自动设置 `layout: inline`、`firstVisual: false`、`liveValidate: false`、`button.submit: '搜索'`
 - `edit` 编辑模式，自动设置 `layout: horizontal`、`firstVisual: false`、`liveValidate: true`、`button.submit: '保存'`
 
