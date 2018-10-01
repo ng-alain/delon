@@ -8,6 +8,7 @@ import {
   Overlay,
   OverlayRef,
   ConnectionPositionPair,
+  OverlayConfig,
 } from '@angular/cdk/overlay';
 import {
   TemplatePortal,
@@ -27,14 +28,7 @@ export class ContextMenuService {
 
   constructor(private overlay: Overlay) {}
 
-  close() {
-    if (!this.ref) return;
-    this.ref.detach();
-    this.ref.dispose();
-    this.ref = null;
-  }
-
-  private create(event: MouseEvent) {
+  private create(event: MouseEvent, options?: OverlayConfig) {
     const fakeElement = new ElementRef({
       getBoundingClientRect: (): ClientRect => ({
         bottom: event.clientY,
@@ -59,11 +53,16 @@ export class ContextMenuService {
       .position()
       .flexibleConnectedTo(fakeElement)
       .withPositions(positions);
-    this.ref = this.overlay.create({
-      positionStrategy,
-      hasBackdrop: true,
-      scrollStrategy: this.overlay.scrollStrategies.close(),
-    });
+    this.ref = this.overlay.create(
+      Object.assign(
+        {
+          positionStrategy,
+          hasBackdrop: true,
+          scrollStrategy: this.overlay.scrollStrategies.close(),
+        },
+        options,
+      ),
+    );
     if (this.type instanceof TemplateRef) {
       this.ref.attach(new TemplatePortal(this.type, this.containerRef));
     } else {
@@ -72,14 +71,25 @@ export class ContextMenuService {
     this.ref.backdropClick().subscribe(() => this.close());
   }
 
-  show(
+  open(
     event: MouseEvent,
     ref: ContextMenuType,
     containerRef: ViewContainerRef,
-  ) {
-    if (this.type !== ref) this.close();
+    options?: OverlayConfig,
+  ): false {
+    this.close();
     this.type = ref;
     this.containerRef = containerRef;
-    this.create(event);
+    this.create(event, options);
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  }
+
+  close() {
+    if (!this.ref) return;
+    this.ref.detach();
+    this.ref.dispose();
+    this.ref = null;
   }
 }

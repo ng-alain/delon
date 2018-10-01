@@ -1,6 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { WINDOW } from './win_tokens';
 
@@ -25,7 +26,7 @@ const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe];
 // endregion
 
 @NgModule({
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, OverlayModule],
   declarations: [...COMPONENTS, ...PIPES],
   exports: [...COMPONENTS, ...PIPES, DelonLocaleModule],
 })
