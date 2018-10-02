@@ -9,7 +9,7 @@ const LessPluginCleanCSS = require('less-plugin-clean-css');
 const args = process.argv.slice(2);
 const min = args.includes('min');
 
-const ROOT_DIR = `${path.resolve(__dirname, '../../')}/dist/packages-dist`;
+const ROOT_DIR = `${path.resolve(__dirname, '../../')}/dist/@delon`;
 const content = `
 @import "${path.join(ROOT_DIR, 'theme/styles/index.less')}";\n
 @import "${path.join(ROOT_DIR, 'theme/styles/layout/default/index.less')}";\n

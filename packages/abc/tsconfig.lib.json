@@ -4,8 +4,8 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@delon/abc/*": ["../../dist/packages-dist/abc/*"],
-      "@delon/*": ["../../dist/packages-dist/*"]
+      "@delon/abc/*": ["../../dist/@delon/abc/*"],
+      "@delon/*": ["../../dist/@delon/*"]
     }
   },
   "files": ["public_api.ts", "../typings.d.ts"],

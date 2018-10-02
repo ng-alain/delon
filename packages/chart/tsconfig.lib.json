@@ -4,8 +4,8 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@delon/chart/*": ["../../dist/packages-dist/chart/*"],
-      "@delon/*": ["../../dist/packages-dist/*"]
+      "@delon/chart/*": ["../../dist/@delon/chart/*"],
+      "@delon/*": ["../../dist/@delon/*"]
     }
   },
   "files": ["public_api.ts", "../typings.d.ts"],

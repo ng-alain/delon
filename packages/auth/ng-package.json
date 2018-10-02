@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/packages-dist/auth",
+  "dest": "../../dist/@delon/auth",
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "auth",

@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@delon/*": ["../../dist/packages-dist/*"]
+      "@delon/*": ["../../dist/@delon/*"]
     }
   },
   "angularCompilerOptions": {

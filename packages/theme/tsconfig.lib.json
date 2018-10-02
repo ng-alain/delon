@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "rootDir": ".",
     "paths": {
-      "@delon/acl": ["../../dist/packages-dist/acl"]
+      "@delon/acl": ["../../dist/@delon/acl"]
     }
   },
   "angularCompilerOptions": {

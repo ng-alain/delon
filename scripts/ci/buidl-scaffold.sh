@@ -2,13 +2,11 @@
 
 set -u -e -o pipefail
 
-readonly currentDir=$(cd $(dirname $0); pwd)
-cd ${currentDir}
+cd $(dirname $0)/../..
 
 BUILD=false
 COLOR=false
 DEPLOY=false
-TRAVIS=false
 for ARG in "$@"; do
   case "$ARG" in
     -d)
@@ -19,9 +17,6 @@ for ARG in "$@"; do
       ;;
     -b)
       BUILD=true
-      ;;
-    -travis)
-      TRAVIS=true
       ;;
   esac
 done
@@ -48,14 +43,10 @@ updateVersionReferences() {
 }
 
 VERSION=$(node -p "require('./package.json').version")
-echo "Version ${VERSION}, BUILD(-b): ${BUILD}, DEPLOY(-d): ${DEPLOY}"
+echo "Version ${VERSION}"
 
 PWD=`pwd`
-if [[ ${TRAVIS} == true ]]; then
-  SCAFFOLD_DIR=${PWD}/ng-alain
-else
-  SCAFFOLD_DIR=${PWD}/../ng-alain
-fi
+SCAFFOLD_DIR=${PWD}/ng-alain
 ROOT_DIR=${PWD}/dist/scaffold
 DIST_DIR=${ROOT_DIR}/dist
 
@@ -65,46 +56,40 @@ GHPAGES=${PWD}/node_modules/.bin/gh-pages
 if [[ ${COLOR} == true ]]; then
   rm -rf .tmp
   cp -r packages .tmp
-  # cp -r ../ng-alain-ent/client/admin/src/app/layout/pro/styles .tmp/theme/styles/layout/pro
 
   sed -i "s/@import '..\//\/\/ @import/g" `grep @import\ \'../ -rl .tmp`
   sed -i "s/~ng-zorro-antd/..\/..\/..\/node_modules\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl .tmp`
 
   node ./scripts/scaffold/alain-default-color-less.js
-  # node ./scripts/scaffold/alain-pro-color-less.js
 
   rm -rf .tmp
 fi
 
 if [[ ${BUILD} == true ]]; then
 
-    echo '===== copy...'
+  echo '===== copy...'
 
-    rm -rf ${ROOT_DIR}
-    mkdir -p ${ROOT_DIR}
-    rsync -a --exclude "node_modules" --exclude "dist" --exclude "package-lock.json" --exclude "yarn.lock" ${SCAFFOLD_DIR}/ ${ROOT_DIR}
+  rm -rf ${ROOT_DIR}
+  mkdir -p ${ROOT_DIR}
+  rsync -a --exclude "node_modules" --exclude "dist" --exclude "package-lock.json" --exclude "yarn.lock" ${SCAFFOLD_DIR}/ ${ROOT_DIR}
 
-    cd ${ROOT_DIR}
-    updateVersionReferences ${ROOT_DIR}/package.json
-    updateVersionReferences ${SCAFFOLD_DIR}/package.json
+  cd ${ROOT_DIR}
+  updateVersionReferences ${ROOT_DIR}/package.json
 
-    echo '===== need mock'
-    sed -i "s/const MOCK_MODULES = !environment.production/const MOCK_MODULES = true/g" ${ROOT_DIR}/src/app/delon.module.ts
-    sed -i "s/if (!environment.production)/if (true)/g" ${ROOT_DIR}/src/app/layout/default/default.component.ts
+  echo '===== need mock'
+  sed -i "s/const MOCK_MODULES = !environment.production/const MOCK_MODULES = true/g" ${ROOT_DIR}/src/app/delon.module.ts
+  sed -i "s/if (!environment.production)/if (true)/g" ${ROOT_DIR}/src/app/layout/default/default.component.ts
 
-    # yarn
+  yarn
 
-    # echo '===== build...'
-    # ng build --prod --build-optimizer --base-href /ng-alain/
-fi
-
-if [[ ${DEPLOY} == true ]]; then
-
-  echo '===== copy yarn.json to source scaffold'
-  cp -f ${ROOT_DIR}/yarn.lock ${SCAFFOLD_DIR}/yarn-taobao.lock
+  echo '===== build...'
+  ng build --prod --build-optimizer --base-href /ng-alain/
 
   echo 'copy index.html > 404.html'
   cp -f ${DIST_DIR}/index.html ${DIST_DIR}/404.html
+fi
+
+if [[ ${DEPLOY} == true ]]; then
 
   echo 'deploy by gh-pages'
   # gh-pages-clean
