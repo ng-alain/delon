@@ -25,10 +25,13 @@
     "precommit": "npm run lint-staged",
     "prepush": "bash scripts/ci/lint.sh",
     "lint-staged": "lint-staged",
+    "lint": "bash scripts/ci/lint.sh",
+    "test": "ng test --code-coverage --watch=false && bash scripts/ci/build-schematics.sh -b -t",
+    "release": "bash scripts/ci/build-lib.sh && bash scripts/ci/build-schematics.sh -b",
     "site:gen": "node scripts/site/main init",
     "site": "npm run site:gen && ng serve -c=hmr",
     "site:build": "npm run site:gen && ng build --prod --build-optimizer --base-href /",
-    "publish:next": "bash ./scripts/publish/publish.sh -next"
+    "publish:next": "bash scripts/publish/publish.sh -next"
   },
   "dependencies": {
     "@angular/animations": "^6.1.0",
