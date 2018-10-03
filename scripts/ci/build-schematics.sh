@@ -160,8 +160,8 @@ fi
 echo "Finished cli!"
 
 # TODO: just only cipchk
-# clear | npm run test:schematics
-# clear | bash build-schematics.sh -b -debug -dev -copy
+# clear | bash ./scripts/ci/build-schematics.sh -b -t
+# clear | bash ./scripts/ci/build-schematics.sh -b -debug -dev -copy
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*

@@ -5,8 +5,6 @@ set -e
 readonly thisDir=$(cd $(dirname $0); pwd)
 source ${thisDir}/_travis-fold.sh
 
-cd $(dirname $0)/../..
-
 ${thisDir}/build-all.sh
 
 if [ -z ${DELON_BUILDS_TOKEN} ]; then
@@ -14,6 +12,10 @@ if [ -z ${DELON_BUILDS_TOKEN} ]; then
        "Please set the environment variable 'DELON_BUILDS_TOKEN'."
   exit 1
 fi
+
+cd $(dirname $0)/../..
+
+DIST="$(pwd)/dist"
 
 travisFoldStart "publish.dist"
   buildDir=${DIST}/publish

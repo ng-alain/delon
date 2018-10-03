@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-(cd dist/@delon; for p in `ls .`; do curl -X PUT https://npm.taobao.org/sync/@delon/$p?sync_upstream=true; done)
-
-curl -X PUT https://npm.taobao.org/sync/ng-alain?sync_upstream=true

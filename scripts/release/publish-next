@@ -1,6 +1,0 @@
-﻿#!/usr/bin/env bash
-
-# Use for BETA and RC releases
-# Publish all packages in `dist/@delon` to npm (as next)
-
-(cd dist/@delon; for p in `ls .`; do npm publish $p --access public --tag next; done)

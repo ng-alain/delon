@@ -14,12 +14,12 @@ testing() {
   echo "Building sources and running tests. Running mode: ${MODE}"
   echo ""
   if is_lint; then
-    npm run lint
+    ./lint.sh
   elif is_lib_test; then
-    npm run test
+    $(npm bin)/ng test --code-coverage --watch=false
     uploadCoverage
   elif is_cli_test; then
-    npm run test:schematics
+    ./build-schematics.sh -b -t -travis
   elif is_site; then
     npm run site:build
   fi
