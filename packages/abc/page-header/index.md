@@ -20,6 +20,8 @@ config: PageHeaderConfig
 `[homeLink]` | 首页链接  | `string` | `/`
 `[homeI18n]` | 首页链接国际化参数 | `string` | -
 `[autoBreadcrumb]` | 自动生成导航，以当前路由从主菜单中定位  | `boolean` | `true`
+`[loading]` | 是否加载中 | `boolean` | `false`
+`[wide]` | 是否定宽 | `boolean` | `false`
 `[fixed]` | 是否固定模式 | `boolean` | `false`
 `[fixedOffsetTop]` | 固定偏移值 | `number` | `64`
 `[breadcrumb]` | 自定义导航区域  | `TemplateRef<any>` | -
