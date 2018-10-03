@@ -19,3 +19,11 @@ is_unit() {
 is_site() {
   [[ "${MODE}" = site ]]
 }
+
+is_build() {
+  [[ "${DEPLOY_MODE}" = build ]]
+}
+
+is_artifacts() {
+  [[ "${DEPLOY_MODE}" = build_artifacts ]]
+}

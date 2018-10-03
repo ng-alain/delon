@@ -22,8 +22,9 @@ jobs:
     - env: "MODE=cli_test"
     - env: "MODE=lint"
     - env: "MODE=site"
-    - env: "DEPLOY_MODE=build-artifacts"
-      if: type = push
+    - env: "DEPLOY_MODE=build"
+    - env: "DEPLOY_MODE=build_artifacts"
+      # if: branch = master
 
 before_install:
   - export CHROME_BIN=chromium-browser

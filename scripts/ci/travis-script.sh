@@ -39,8 +39,10 @@ deploy() {
   echo "Starting the deployment script. Running mode: ${DEPLOY_MODE}"
   echo ""
 
-  if [[ "${DEPLOY_MODE}" == "build-artifacts" ]]; then
-    ./build-artifacts.sh
+  if is_artifacts; then
+    ./deploy.sh
+  elif is_build; then
+    ./build-all.sh
   fi
 }
 

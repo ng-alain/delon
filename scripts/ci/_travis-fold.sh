@@ -42,16 +42,6 @@ function travisFoldEnd() {
   local lastFoldArray=(${lastFoldString//\|/ })
   local lastSanitizedFoldName=${lastFoldArray[0]}
 
-  if [[ ${TRAVIS:-} ]]; then
-    local lastFoldStartTime=${lastFoldArray[1]}
-    local foldFinishTime=$(date +%s%N)
-    local foldDuration=$(expr ${foldFinishTime} - ${lastFoldStartTime})
-
-    # write into build-perf.log file
-    local logIndent=$(expr ${lastFoldIndex} \* 2)
-    printf "%6ss%${logIndent}s: %s\n" $(expr ${foldDuration} / 1000000000) " " "${foldName}" >> ${LOGS_DIR}/build-perf.log
-  fi
-
   # pop
   travisFoldStack=(${travisFoldStack[@]:0:lastFoldIndex})
 
