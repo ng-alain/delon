@@ -76,7 +76,12 @@ travisFoldStart "publish.dist"
   fi
 
   # 替换版本号
-  sed -i "s/${buildVersion}/${buildVersionName}/g" $(find . -type f -not -path '*\/.*')
+  if [[ $commitMessage =~ "release" ]]; then
+    echo "===== Release version does not need to change version ====="
+  else
+    echo "Replace build version..."
+    sed -i "s/${buildVersion}/${buildVersionName}/g" $(find . -type f -not -path '*\/.*')
+  fi
 
   echo "Updated the build version in every file to include the SHA of the latest commit."
 

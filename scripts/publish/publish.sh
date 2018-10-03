@@ -20,6 +20,7 @@ done
 
 clone() {
   rm -rf ${ROOT}
+  mkdir -p ${ROOT}
   cd ${DIST}
   echo ">>> Clone delon & cli dist..."
   git clone --depth 1 https://github.com/ng-alain/delon-builds.git
