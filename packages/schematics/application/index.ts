@@ -89,7 +89,11 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       ),
     );
     // ng-alain
-    addPackageToPackageJson(host, `ng-alain@${VERSION}`, 'devDependencies');
+    addPackageToPackageJson(host, [
+      `ng-alain@${VERSION}`,
+      // color-less
+      `less-bundle-promise@^1.0.7`,
+    ], 'devDependencies');
     // i18n
     if (options.i18n) {
       addPackageToPackageJson(host, [
@@ -109,6 +113,7 @@ function addRunScriptToPackageJson() {
     json.scripts['build'] = `ng build --prod --build-optimizer`;
     json.scripts['analyze'] = `ng build --prod --build-optimizer --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
+    json.scripts['color-less'] = `node scripts/color-less.js`;
     overwritePackage(host, json);
     return host;
   };
@@ -168,6 +173,7 @@ function addCodeStylesToPackageJson() {
       ],
       '*.ts': ['npm run lint:ts', 'prettier --write', 'git add'],
       '*.less': ['npm run lint:style', 'prettier --write', 'git add'],
+      'ignore': ['src/assets/*'],
     };
     overwritePackage(host, json);
     // tslint

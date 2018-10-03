@@ -101,3 +101,6 @@ travisFoldStart "publish.dist"
 
   echo "Published package artifacts for ${packageName}#${buildVersionName} into ${branchName}"
 travisFoldEnd "publish.dist"
+
+echo "Download link:"
+echo "https://github.com/ng-alain/delon-builds/archive/${buildTagName}.zip"
