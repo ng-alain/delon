@@ -3,7 +3,7 @@
     "lib": ["es2017", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "../../dist/packages-dist/schematics",
+    "outDir": "../../dist/ng-alain",
     "noEmitOnError": false,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,

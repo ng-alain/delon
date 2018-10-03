@@ -3,8 +3,7 @@
 
 set -u -e -o pipefail
 
-readonly currentDir=$(cd $(dirname $0); pwd)
-cd ${currentDir}
+cd $(dirname $0)/../..
 
 PACKAGES=(acl
   util
@@ -71,7 +70,7 @@ N="
 PWD=`pwd`
 
 SOURCE=${PWD}/packages
-DIST=${PWD}/dist/packages-dist
+DIST=${PWD}/dist/@delon
 
 # fix linux
 # npm rebuild node-sass

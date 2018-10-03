@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/packages-dist/form",
+  "dest": "../../dist/@delon/form",
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "form",

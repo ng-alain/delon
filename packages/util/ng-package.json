@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/packages-dist/util",
+  "dest": "../../dist/@delon/util",
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "util",

@@ -2,13 +2,13 @@
 
 set -u -e -o pipefail
 
-readonly currentDir=$(cd $(dirname $0); pwd)
-cd ${currentDir}
+cd $(dirname $0)/../..
 
 BUILD=false
 TEST=false
 DEBUG=false
-COPY=true
+TRAVIS=false
+COPY=false
 for ARG in "$@"; do
   case "$ARG" in
     -t)
@@ -18,7 +18,10 @@ for ARG in "$@"; do
       BUILD=true
       ;;
     -travis)
-      COPY=false
+      TRAVIS=true
+      ;;
+    -copy)
+      COPY=true
       ;;
     -debug)
       DEBUG=true
@@ -36,8 +39,8 @@ PWD=`pwd`
 TSC=${PWD}/node_modules/.bin/tsc
 JASMINE=${PWD}/node_modules/.bin/jasmine
 
-SOURCE=${PWD}/packages/schematics/
-DIST=${PWD}/dist/packages-dist/schematics/
+SOURCE=${PWD}/packages/schematics
+DIST=${PWD}/dist/ng-alain/
 
 updateVersionReferences() {
   NPM_DIR="$1"
@@ -132,8 +135,13 @@ if [[ ${BUILD} == true ]]; then
   rm ${DIST}/test.ts ${DIST}/tsconfig.json ${DIST}/tsconfig.spec.json
 
   if [[ ${COPY} == true ]]; then
-    echo "== need copy files!"
-    copyFiles '../ng-alain/' ${DIST}/
+    if [[ ${TRAVIS} == true ]]; then
+      echo "== copy ng-alain files via travis mode"
+      copyFiles 'ng-alain/' ${DIST}/
+    else
+      echo "== copy ng-alain files via dev mode"
+      copyFiles '../ng-alain/' ${DIST}/
+    fi
   else
     echo "== can't copy files!"
   fi
@@ -152,11 +160,11 @@ fi
 echo "Finished cli!"
 
 # TODO: just only cipchk
-# clear | npm run test:schematics
-# clear | bash build-schematics.sh -b -debug -dev
+# clear | bash ./scripts/ci/build-schematics.sh -b -t
+# clear | bash ./scripts/ci/build-schematics.sh -b -debug -dev -copy
 if [[ ${DEBUG} == true ]]; then
   cd ../../
-  DEBUG_FROM=${PWD}/work/delon/dist/packages-dist/schematics/*
+  DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
   DEBUG_TO=${PWD}/work/demo/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"

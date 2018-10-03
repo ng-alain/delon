@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/packages-dist/abc",
+  "dest": "../../dist/@delon/abc",
   "lib": {
     "flatModuleFile": "abc",
     "entryFile": "public_api.ts",
