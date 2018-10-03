@@ -62,6 +62,7 @@ copyFiles() {
     "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
     # ci
     "${1}.vscode|${2}application/files/root/__dot__vscode"
+    "${1}scripts/color-less.js|${2}application/files/root/scripts"
     # LICENSE
     "${1}LICENSE|${2}application/files/root"
     "${1}README.md|${2}application/files/root"
