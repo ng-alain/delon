@@ -39,6 +39,6 @@ ng serve
 
 ## 如何升级
 
-建议 Start 或 Watch [源代码](https://github.com/ng-alain/ng-alain)仓库，有助于你更好的在第一时间了解变更细节。
+建议 Star 或 Watch [源代码](https://github.com/ng-alain/ng-alain)仓库，有助于你更好的在第一时间了解变更细节。
 
 除DEMO示例页以外，会有一些影响外，对于大版本会提供 `ng update` 来解决破坏性变更，对于其他情况的升级请参考 [升级脚手架](/docs/upgrade)。
