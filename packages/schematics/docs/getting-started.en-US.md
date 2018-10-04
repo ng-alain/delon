@@ -41,6 +41,6 @@ ng serve
 
 ## How to upgrade
 
-Suggest Start or Watch [source code](https://github.com/ng-alain/ng-alain) repository to help you better understand change log.
+Suggest Star or Watch [source code](https://github.com/ng-alain/ng-alain) repository to help you better understand change log.
 
 please refer to [upgrade](/docs/upgrade).
