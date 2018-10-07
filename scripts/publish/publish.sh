@@ -18,6 +18,9 @@ for ARG in "$@"; do
   esac
 done
 
+VERSION=$(node -p "require('./package.json').version")
+echo "Version ${VERSION}"
+
 clone() {
   rm -rf ${ROOT}
   mkdir -p ${ROOT}
@@ -43,11 +46,10 @@ syncTaobao() {
   curl -X PUT https://npm.taobao.org/sync/ng-alain?sync_upstream=true
 }
 
-# clone
-node ${thisDir}/publish.js
-# if [[ ${NEXT} == true ]]; then
-#   publishToNext
-# else
-#   publishToMaster
-# fi
-# syncTaobao
+clone
+if [[ ${NEXT} == true ]]; then
+  publishToNext
+else
+  publishToMaster
+fi
+syncTaobao

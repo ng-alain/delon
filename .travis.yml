@@ -24,7 +24,7 @@ jobs:
     - env: "MODE=site"
     - env: "DEPLOY_MODE=build"
     - env: "DEPLOY_MODE=build_artifacts"
-      if: branch = master AND type = push
+      if: (commit_message !~ /(release\()/ && type = push) or (branch = master)
 
 before_install:
   - export CHROME_BIN=chromium-browser

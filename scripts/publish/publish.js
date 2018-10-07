@@ -9,18 +9,18 @@ const root = path.resolve(__dirname, `../..`);
 const execSync = require('child_process').execSync;
 const print = console.log;
 const log = {
-  info   : (msg) => {
+  info: msg => {
     print(chalk.bgBlue.black('INFO'), chalk.blue(msg));
   },
-  warn   : (msg) => {
+  warn: msg => {
     print(chalk.bgYellow.black('WARN'), chalk.yellow(msg));
   },
-  error  : (msg) => {
+  error: msg => {
     print(chalk.bgRed.black('ERROR'), chalk.red(msg));
   },
-  success: (msg) => {
+  success: msg => {
     print(chalk.bgGreen.black('SUCCESS'), chalk.green(msg));
-  }
+  },
 };
 
 /* The whole process */
@@ -42,13 +42,17 @@ function fetchOlderVersions() {
 
 function generatingPublishNote() {
   log.info('Generating changelog...');
-  execSync("conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json");
+  execSync('npm run changelog');
   log.success('Changelog generated!');
 
   let completeEditing = false;
 
   while (!completeEditing) {
-    const result = read.question(chalk.bgYellow.black('Please manually update docs/changelog. Press [Y] if you are done:') + '  ');
+    const result = read.question(
+      chalk.bgYellow.black(
+        'Please manually update docs/changelog. Press [Y] if you are done:',
+      ) + '  ',
+    );
     if (result.trim().toLowerCase() === 'y') {
       completeEditing = true;
     }
