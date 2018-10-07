@@ -122,7 +122,9 @@ function fixAngular(html: string): string {
   return html.replace(
     /<code>(.*?)<\/code>/gim,
     (fullWord: string, content: string) => {
-      return ~content.indexOf(`</a>`) ? fullWord : `<code>${content.replace(`<`, `&lt;`)}</code>`;
+      return ~content.indexOf(`</a>`)
+        ? fullWord
+        : `<code>${content.replace(`<`, `&lt;`)}</code>`;
       // if (/(Observable|TemplateRef|EventEmitter)</.test(content)) {
       //   return `<code>${content.replace(
       //     /(Observable|TemplateRef|EventEmitter)</g,
