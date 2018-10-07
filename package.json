@@ -30,6 +30,7 @@
     "site": "npm run site:gen && ng serve -c=hmr",
     "site:build": "npm run site:gen && ng build --prod --build-optimizer --base-href /",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
+    "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
     "publish:next": "bash scripts/publish/publish.sh -next"
   },
   "dependencies": {
