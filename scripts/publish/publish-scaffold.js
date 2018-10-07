@@ -31,7 +31,7 @@ const log = {
 log.info('Starting publishing process...');
 
 fetchOlderVersions();
-// fixVersion();
+fixVersion();
 checkout();
 log.success(`Use commit message:`);
 log.success(`release(${nextVersion}): release ${nextVersion}`);
@@ -40,20 +40,20 @@ function fixVersion() {
   const packagePath = path.join(root, './package.json');
   const json = fs.readJSONSync(packagePath);
   json.version = nextVersion;
-  [
-    'abc',
-    'acl',
-    'auth',
-    'chart',
-    'cache',
-    'mock',
-    'form',
-    'theme',
-    'util',
-  ].forEach(v => {
-    json.dependencies[`@delon/${v}`] = nextVersion;
-  });
-  json.devDependencies[`ng-alain`] = nextVersion;
+  // [
+  //   'abc',
+  //   'acl',
+  //   'auth',
+  //   'chart',
+  //   'cache',
+  //   'mock',
+  //   'form',
+  //   'theme',
+  //   'util',
+  // ].forEach(v => {
+  //   json.dependencies[`@delon/${v}`] = nextVersion;
+  // });
+  // json.devDependencies[`ng-alain`] = nextVersion;
   fs.writeJSONSync(packagePath, json, { spaces: 2 });
 }
 
