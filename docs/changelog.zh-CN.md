@@ -11,7 +11,8 @@ type: Other
 ### Bug Fixes
 
 * **form:date:** 修复扁平模式下无效初始值 ([#187](https://github.com/ng-alain/delon/issues/187)) ([d2c89ca](https://github.com/ng-alain/delon/commit/d2c89ca))
-* **theme:** 移除重复空白间距代码 ([#193](https://github.com/ng-alain/delon/issues/193)) ([1545178](https://github.com/ng-alain/delon/commit/1545178))
+* **theme:styles** 移除重复空白间距代码 ([#193](https://github.com/ng-alain/delon/issues/193)) ([1545178](https://github.com/ng-alain/delon/commit/1545178))
+* **theme:drawer** 应导入至 `forChild` ([1545178](https://github.com/ng-alain/delon/commit/09516ea))
 
 
 ### Features
