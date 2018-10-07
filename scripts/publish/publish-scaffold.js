@@ -31,7 +31,7 @@ const log = {
 log.info('Starting publishing process...');
 
 fetchOlderVersions();
-fixVersion();
+// fixVersion();
 checkout();
 log.success(`Use commit message:`);
 log.success(`release(${nextVersion}): release ${nextVersion}`);
