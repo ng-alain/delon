@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
-import { NzDrawerService, NzDrawerPlacement, NzDrawerOptions } from 'ng-zorro-antd';
+import { NzDrawerService, NzDrawerOptions } from 'ng-zorro-antd';
 
 export interface DrawerHelperOptions {
   /**
    * 大小；例如：lg、600，默认：`md`
-   * 
+   *
    * | 类型 | 默认大小 |
    * | --- | ------ |
    * | `sm` | `300` |
    * | `md` | `600` |
    * | `lg` | `900` |
    * | `xl` | `1200` |
-   * 
+   *
    * > 以上值，可通过覆盖相应的LESS参数自行调整
    */
   size?: 'sm' | 'md' | 'lg' | 'xl' | number;
@@ -30,9 +30,9 @@ export interface DrawerHelperOptions {
 
 /**
  * 抽屉辅助类
- * 
+ *
  * **注意：** 构建结果都可被订阅，但永远都不会触发 `observer.error`
- * 
+ *
  * 示例：
 ```ts
 this.drawerHelper.create('Edit', FormEditComponent, { i }).subscribe(res => this.load());

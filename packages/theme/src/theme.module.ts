@@ -11,7 +11,8 @@ import { DelonLocaleModule } from './locale/locale.module';
 import { ALAIN_I18N_TOKEN, AlainI18NServiceFake } from './services/i18n/i18n';
 
 import { ModalHelper } from './services/modal/modal.helper';
-const HELPERS = [ModalHelper];
+import { DrawerHelper } from './services/drawer/drawer.helper';
+const HELPERS = [ModalHelper, DrawerHelper];
 
 // components
 const COMPONENTS = [];
