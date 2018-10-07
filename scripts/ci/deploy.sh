@@ -32,6 +32,7 @@ travisFoldStart "publish.dist"
   commitAuthorName=$(git --no-pager show -s --format='%an' HEAD)
   commitAuthorEmail=$(git --no-pager show -s --format='%ae' HEAD)
   commitMessage=$(git log --oneline -n 1)
+  commitMessageCheck=$(git log --oneline -n 2)
 
   buildVersionName="${buildVersion}-${commitSha}"
   buildTagName="${branchName}-${commitSha}"
@@ -76,7 +77,7 @@ travisFoldStart "publish.dist"
   fi
 
   # 替换版本号
-  if [[ $commitMessage =~ "release(" ]]; then
+  if [[ $commitMessageCheck =~ "release(" ]]; then
     echo "===== Release version does not need to change version ====="
   else
     echo "Replace build version..."
@@ -102,8 +103,9 @@ travisFoldStart "publish.dist"
   echo "Published package artifacts for ${packageName}#${buildVersionName} into ${branchName}"
 travisFoldEnd "publish.dist"
 
-if [[ $commitMessage =~ "release(" ]]; then
+if [[ $commitMessageCheck =~ "release(" ]]; then
   echo "Release version does not need to change version ====="
+  echo "COMMIT SOURCE: ${commitMessageCheck}"
 fi
 
 echo "Download link:"
