@@ -76,7 +76,7 @@ travisFoldStart "publish.dist"
   fi
 
   # 替换版本号
-  if [[ $commitMessage =~ "release" ]]; then
+  if [[ $commitMessage =~ "release(" ]]; then
     echo "===== Release version does not need to change version ====="
   else
     echo "Replace build version..."
@@ -101,6 +101,10 @@ travisFoldStart "publish.dist"
 
   echo "Published package artifacts for ${packageName}#${buildVersionName} into ${branchName}"
 travisFoldEnd "publish.dist"
+
+if [[ $commitMessage =~ "release(" ]]; then
+  echo "Release version does not need to change version ====="
+fi
 
 echo "Download link:"
 echo "https://github.com/ng-alain/delon-builds/archive/${buildTagName}.zip"
