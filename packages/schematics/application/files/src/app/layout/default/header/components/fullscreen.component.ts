@@ -5,7 +5,7 @@ import * as screenfull from 'screenfull';
   selector: 'header-fullscreen',
   template: `
   <i class="anticon anticon-{{status ? 'shrink' : 'arrows-alt'}}"></i>
-  <% if (!i18n) { %>{{ status ? '退出全屏' : '全屏' }}<% } %><% if (i18n) { %>{{(status ? 'fullscreen-exit' : 'fullscreen') | translate }}<% } %>
+  <% if (!i18n) { %>{{ status ? '退出全屏' : '全屏' }}<% } %><% if (i18n) { %>{{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}<% } %>
   `
 })
 export class HeaderFullScreenComponent {

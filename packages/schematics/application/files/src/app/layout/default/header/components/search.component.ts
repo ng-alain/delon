@@ -5,7 +5,7 @@ import { Component, HostBinding, Input, ElementRef, AfterViewInit } from '@angul
   template: `
   <nz-input-group nzAddOnBeforeIcon="anticon anticon-search">
     <input nz-input [(ngModel)]="q" (focus)="qFocus()" (blur)="qBlur()"
-      [placeholder]="<% if (!i18n) { %>'搜索：员工、文件、照片等'<% } %><% if (i18n) { %>'top-search-ph' | translate<% } %>">
+      [placeholder]="<% if (!i18n) { %>'搜索：员工、文件、照片等'<% } %><% if (i18n) { %>'menu.search.placeholder' | translate<% } %>">
   </nz-input-group>
   `
 })

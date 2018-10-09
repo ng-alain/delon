@@ -8,9 +8,8 @@
       </div>
     </div>
     <ul nz-menu>
-      <li nz-menu-item (click)="msgSrv.success('profile')"><% if (!i18n) { %>个人资料<% } %><% if (i18n) { %>{{ 'profile' | translate }}<% } %></li>
-      <li nz-menu-item (click)="msgSrv.success('settings')"><% if (!i18n) { %>设置<% } %><% if (i18n) { %>{{ 'settings' | translate }}<% } %></li>
-      <li nz-menu-item (click)="msgSrv.success('logout')"><% if (!i18n) { %>登出<% } %><% if (i18n) { %>{{ 'logout' | translate }}<% } %></li>
+      <li nz-menu-item routerLink="/pro/account/center"><% if (!i18n) { %>个人中心<% } %><% if (i18n) { %>{{ 'menu.account.center' | translate }}<% } %></li>
+      <li nz-menu-item routerLink="/pro/account/settings"><% if (!i18n) { %>个人设置<% } %><% if (i18n) { %>{{ 'menu.account.settings' | translate }}<% } %></li>
     </ul>
   </nz-dropdown>
   <sidebar-nav class="d-block py-lg"></sidebar-nav>
