@@ -25,6 +25,9 @@ export default <LocaleData>{
   miniProgress: {
     target: '目標值：',
   },
+  st: {
+    total: '共 {{total}} 條',
+  },
   sf: {
     submit: '提交',
     reset: '重置',

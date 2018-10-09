@@ -11,7 +11,6 @@ import {
   ElementRef,
   TemplateRef,
   SimpleChange,
-  ContentChild,
   Optional,
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -30,7 +29,8 @@ import {
   ALAIN_I18N_TOKEN,
   AlainI18NService,
   DrawerHelper,
-  DrawerHelperOptions
+  DrawerHelperOptions,
+  DelonLocaleService,
 } from '@delon/theme';
 import {
   deepCopy,
@@ -81,7 +81,10 @@ import { STDataSource } from './table-data-source';
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private i18n$: Subscription;
+  private delonI18n$: Subscription;
   private totalTpl = ``;
+  private locale: any = {};
+  private clonePage: STPage;
   _data: STData[] = [];
   _isPagination = true;
   _allChecked = false;
@@ -144,13 +147,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._page;
   }
   set page(value: STPage) {
+    this.clonePage = value;
     const { page } = this.cog;
     const item = Object.assign({}, deepCopy(page), value);
     const { total } = item;
     if (typeof total === 'string' && total.length) {
       this.totalTpl = total;
     } else if (toBoolean(total)) {
-      this.totalTpl = `共 {{total}} 条`;
+      this.totalTpl = this.locale.total;
     } else {
       this.totalTpl = '';
     }
@@ -240,7 +244,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Output()
   readonly checkboxChange: EventEmitter<STData[]> = new EventEmitter<
     STData[]
-    >();
+  >();
   /**
    * radio变化时回调，参数为当前所选
    * @deprecated 使用 `change` 替代
@@ -270,7 +274,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Output()
   readonly rowClick: EventEmitter<STChangeRowClick> = new EventEmitter<
     STChangeRowClick
-    >();
+  >();
   /**
    * 行双击回调
    * @deprecated 使用 `change` 替代
@@ -279,7 +283,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Output()
   readonly rowDblClick: EventEmitter<STChangeRowClick> = new EventEmitter<
     STChangeRowClick
-    >();
+  >();
   //#endregion
 
   constructor(
@@ -297,7 +301,17 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Inject(DOCUMENT) private doc: any,
     private columnSource: STColumnSource,
     private dataSource: STDataSource,
+    private delonI18n: DelonLocaleService,
   ) {
+    this.delonI18n$ = this.delonI18n.change.subscribe(
+      () => {
+        this.locale = this.delonI18n.getData('st');
+        if (this._columns.length > 0) {
+          this.page = this.clonePage;
+          this.cd.detectChanges();
+        }
+      },
+    );
     Object.assign(this, deepCopy(cog));
     if (i18nSrv) {
       this.i18n$ = i18nSrv.change
@@ -309,9 +323,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   renderTotal(total: string, range: string[]) {
     return this.totalTpl
       ? this.totalTpl
-        .replace('{{total}}', total)
-        .replace('{{range[0]}}', range[0])
-        .replace('{{range[1]}}', range[1])
+          .replace('{{total}}', total)
+          .replace('{{range[0]}}', range[0])
+          .replace('{{range[1]}}', range[1])
       : '';
   }
 
@@ -614,12 +628,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       const { drawer } = btn;
       obj[drawer.paramsName] = record;
       const options: DrawerHelperOptions = Object.assign({}, drawer);
-      this.drawerHelper.create(
-        drawer.title,
-        drawer.component,
-        Object.assign(obj, drawer.params && drawer.params(record)),
-        Object.assign({}, drawer)
-      )
+      this.drawerHelper
+        .create(
+          drawer.title,
+          drawer.component,
+          Object.assign(obj, drawer.params && drawer.params(record)),
+          Object.assign({}, drawer),
+        )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
       return;
@@ -705,6 +720,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.delonI18n$.unsubscribe();
     if (this.i18n$) this.i18n$.unsubscribe();
   }
 }
