@@ -11,15 +11,15 @@ import { NzMessageService } from 'ng-zorro-antd';
   preserveWhitespaces: false
 })
 export class DevLayoutComponent implements OnInit {
-  @HostBinding('class.layout-fixed')
+  @HostBinding('class.alain-default__fixed')
   get isFixed() {
     return this.settings.layout.fixed;
   }
-  @HostBinding('class.layout-boxed')
+  @HostBinding('class.alain-default__boxed')
   get isBoxed() {
     return this.settings.layout.boxed;
   }
-  @HostBinding('class.aside-collapsed')
+  @HostBinding('class.alain-default__collapsed')
   get isCollapsed() {
     return this.settings.layout.collapsed;
   }

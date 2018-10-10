@@ -2,7 +2,7 @@
   margin: 0 -@alain-default-content-padding 0 -@alain-default-content-padding;
 }
 
-.layout-fixed {
+@{alain-default-prefix}__fixed {
   @{reuse-tab-prefix} {
     position: fixed;
     top: @alain-default-header-hg;
@@ -12,7 +12,7 @@
 }
 
 @media (min-width: @mobile-min) {
-  .layout-fixed {
+  @{alain-default-prefix}__fixed {
     @{reuse-tab-prefix} {
       + router-outlet {
         display: block;
@@ -23,7 +23,7 @@
 }
 
 @media (max-width: @mobile-max) {
-  .layout-fixed {
+  @{alain-default-prefix}__fixed {
     @{reuse-tab-prefix} {
       position: unset;
       margin-top: @reuse-tab-height;
