@@ -137,10 +137,10 @@ if [[ ${BUILD} == true ]]; then
 
   if [[ ${COPY} == true ]]; then
     if [[ ${TRAVIS} == true ]]; then
-      echo "== copy ng-alain files via travis mode"
+      echo "== copy delon/ng-alain files via travis mode"
       copyFiles 'ng-alain/' ${DIST}/
     else
-      echo "== copy ng-alain files via dev mode"
+      echo "== copy work/ng-alain files via dev mode"
       copyFiles '../ng-alain/' ${DIST}/
     fi
   else
