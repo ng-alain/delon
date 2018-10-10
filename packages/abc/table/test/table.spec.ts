@@ -12,11 +12,12 @@ import {
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
+import { of, Observable, Subject } from 'rxjs';
 
 import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 import { ModalHelper, ALAIN_I18N_TOKEN, DatePipe } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
-import { of, Observable, Subject } from 'rxjs';
+import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/theme';
 
 import {
   STColumn,
@@ -97,6 +98,7 @@ describe('abc: table', () => {
       RouterTestingModule.withRoutes([]),
       NgZorroAntdModule.forRoot(),
       STModule.forRoot(),
+      DelonLocaleModule
     ];
     const providers = [];
     if (other.providers && other.providers.length) {
@@ -1270,6 +1272,16 @@ describe('abc: table', () => {
       genModule({ i18n: true });
       i18nSrv = injector.get(ALAIN_I18N_TOKEN);
       spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
+    });
+    it('should working', (done: () => void) => {
+      page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
+        const el = page.getEl('.ant-pagination-total-text');
+        expect(el.textContent.trim()).toContain(`共`);
+        injector.get(DelonLocaleService).setLocale(en_US);
+        fixture.detectChanges();
+        expect(el.textContent.trim()).toContain(`of`);
+        done();
+      });
     });
     it('should be re-render columns when i18n changed', (done: () => void) => {
       page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {

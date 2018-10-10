@@ -25,6 +25,9 @@ export default <LocaleData>{
   miniProgress: {
     target: 'Target: ',
   },
+  st: {
+    total: '{{range[0]}} - {{range[1]}} of {{total}}',
+  },
   sf: {
     submit: 'Submit',
     reset: 'Reset',
