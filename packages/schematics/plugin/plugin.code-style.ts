@@ -3,17 +3,25 @@ import { PluginOptions } from './interface';
 import {
   addPackageToPackageJson,
   removePackageFromPackageJson,
+  getJSON,
+  overwritePackage,
 } from '../utils/json';
 
 export function pluginCodeStyle(options: PluginOptions): any {
   return (host: Tree, context: SchematicContext) => {
-    // package
-    (options.type === 'add'
-      ? addPackageToPackageJson
-      : removePackageFromPackageJson)(
-      host,
-      ['precommit@npm run lint-staged'],
-      'scripts',
-    );
+    const json = getJSON(host, 'package.json');
+    if (json == null) return;
+
+    if (options.type === 'add') {
+      json.husky = {
+        hooks: {
+          'pre-commit': 'npm run lint-staged',
+        },
+      };
+    } else {
+      delete json.husky;
+    }
+
+    overwritePackage(host, json);
   };
 }

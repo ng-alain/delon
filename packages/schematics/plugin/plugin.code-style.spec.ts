@@ -13,7 +13,7 @@ describe('NgAlainSchematic: plugin: codeStyle', () => {
   describe('when add', () => {
     it(`should add precommit`, () => {
       const json = JSON.parse(tree.readContent('package.json'));
-      expect(json.scripts.precommit).not.toBeUndefined();
+      expect(json.husky).not.toBeUndefined();
     });
   });
 
@@ -27,7 +27,7 @@ describe('NgAlainSchematic: plugin: codeStyle', () => {
 
     it(`should remove precommit`, () => {
       const json = JSON.parse(tree.readContent('package.json'));
-      expect(json.scripts.precommit).toBeUndefined();
+      expect(json.husky).toBeUndefined();
     });
   });
 });
