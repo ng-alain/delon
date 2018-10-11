@@ -61,6 +61,17 @@ export class StartupService {
     });
   }
 
+  private viaMockI18n(resolve: any, reject: any) {
+    this.httpClient
+      .get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`)
+      .subscribe(langData => {
+        this.translate.setTranslation(this.i18n.defaultLang, langData);
+        this.translate.setDefaultLang(this.i18n.defaultLang);
+
+        this.viaMock(resolve, reject);
+      });
+  }
+
   private viaMock(resolve: any, reject: any) {
     // const tokenData = this.tokenService.get();
     // if (!tokenData.token) {
@@ -117,7 +128,8 @@ export class StartupService {
       // http
       // this.viaHttp(resolve, reject);
       // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
-      this.viaMock(resolve, reject);
+      <% if (i18n) { %>this.viaMockI18n(resolve, reject);<% } else { %>this.viaMock(resolve, reject);<% } %>
+
     });
   }
 }
