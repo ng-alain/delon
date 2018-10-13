@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '../../widget';
 import format from 'date-fns/format';
+import { ControlWidget } from '../../widget';
 import { toBool } from '../../utils';
 import { FormProperty } from '../../model/form.property';
 
@@ -130,8 +130,9 @@ export class DateWidget extends ControlWidget implements OnInit {
   }
 
   reset(value: any) {
+    value = this.toDate(value);
     if (this.flatRange) {
-      this.displayValue = value == null ? [] : [value, this.endProperty.formData];
+      this.displayValue = value == null ? [] : [value, this.toDate(this.endProperty.formData)];
     } else {
       this.displayValue = value;
     }
@@ -170,5 +171,12 @@ export class DateWidget extends ControlWidget implements OnInit {
 
   private setEnd(value: any) {
     this.endProperty.setValue(value, true);
+  }
+
+  private toDate(value: any) {
+    if (typeof value === 'number' || (typeof value === 'string' && !isNaN(+value))) {
+      value = new Date(+value);
+    }
+    return value;
   }
 }
