@@ -30,8 +30,7 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
   }
 
   get disabled(): boolean {
-    if (typeof this.schema.readOnly !== 'undefined')
-      return this.schema.readOnly;
+    if (this.schema.readOnly === true) return true;
 
     return null;
   }
