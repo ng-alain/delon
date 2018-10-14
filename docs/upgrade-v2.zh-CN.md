@@ -118,7 +118,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 |---------------|--------------|------------|-----------|----------------------------------|
 | `page-header` | `home_link`  | `homeLink` | -         | -                                |
 | `page-header` | `home_i18n`  | `homeI18n` | -         | -                                |
-| `st`          | `sortReName` | 移除       | ×         | 仅使用 `STColumn.sort.reName` 值 |
+| `st`          | `sortReName` | 移除       | √         | 过期提醒，仅使用 `STColumn.sort.reName` 值 |
 
 例如：
 
@@ -160,12 +160,12 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 | `[isPageIndexReset]`  | `page`     | `indexReset`      | -         | -        | -    |
 | `[toTopInChange]`     | `page`     | `toTop`           | -         | -        | -    |
 | `[toTopOffset]`       | `page`     | `toTopOffset`     | -         | -        | -    |
-| `(checkboxChange)`    | `(change)` | -                 | ×         | -        | -    |
-| `(radioChange)`       | `(change)` | -                 | ×         | -        | -    |
-| `(sortChange)`        | `(change)` | -                 | ×         | -        | -    |
-| `(filterChange)`      | `(change)` | -                 | ×         | -        | -    |
-| `(rowClick)`          | `(change)` | -                 | ×         | -        | -    |
-| `(rowDblClick)`       | `(change)` | -                 | ×         | -        | -    |
+| `(checkboxChange)`    | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(radioChange)`       | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(sortChange)`        | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(filterChange)`      | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(rowClick)`          | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(rowDblClick)`       | `(change)` | -                 | √         | -        | 过期提醒    |
 
 > 一个示例说明 [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-f573fc0900f21b377dac432f1668c584L164)
 
@@ -222,7 +222,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 ### 布局
 
-[默认布局](/theme/default)和[全屏布局](/theme/fullscreen)样式命名重新采用 BEM 形式，这倒置布局的样式名都被改变，但很容易升级，有关细节参考 [commit]()。
+[默认布局](/theme/default)和[全屏布局](/theme/fullscreen)样式命名重新采用 BEM 形式，这倒置布局的样式名都被改变，但很容易升级，有关细节参考 [commit](https://github.com/ng-alain/ng-alain/pull/673/files)。
 
 抽离这两种布局样式成独立的形式存在，因此需要在 `src/styles.less` 单独独立对应布局的样式：
 

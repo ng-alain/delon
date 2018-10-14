@@ -13,4 +13,4 @@ const a = By.css('.content__title');
 </div>
   `
 })
-class F {}
+class B {}

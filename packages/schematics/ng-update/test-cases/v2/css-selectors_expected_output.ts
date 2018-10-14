@@ -13,4 +13,4 @@ const a = By.css('.alain-default__content-title');
 </div>
   `
 })
-class F {}
+class B {}
