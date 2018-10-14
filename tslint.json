@@ -50,7 +50,6 @@
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "prefer-const": true,
-    "radix": true,
     "triple-equals": [true, "allow-null-check"],
     "unified-signatures": true,
     "variable-name": false,
@@ -72,7 +71,7 @@
       "packages/testing/**/*",
       "packages/schematics/**/files/**/*",
       "packages/schematics/utils/devkit-utils/**/*",
-      "packages/schematics/update/**/*",
+      "packages/schematics/ng-update/**/*",
       "src/app/routes/gen/**/*"
     ]
   }

@@ -1,14 +1,14 @@
 {
   "$schema": "./node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "migration-01": {
+    "migration-v2": {
       "version": "2",
-      "description": "Updates Angular ng-alain to v2",
-      "factory": "./update/index#updateToV2"
+      "description": "Updates ng-alain to v2",
+      "factory": "./ng-update/index#updateToV2"
     },
     "ng-post-update": {
       "description": "Performs cleanup after ng-update.",
-      "factory": "./update/index#postUpdate",
+      "factory": "./ng-update/index#postUpdate",
       "private": true
     }
   }

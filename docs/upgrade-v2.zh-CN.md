@@ -93,15 +93,15 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 所属组件         | 原ContentChild | 新属性名     | ng update | 描述 |
 |------------------|----------------|--------------|-----------|------|
-| `st`             | `body`         | `body`       | √         | -    |
-| `st`             | `expand`       | `expand`     | √         | -    |
-| `footer-toolbar` | `extra`        | `extra`      | √         | -    |
-| `page-header`    | `breadcrumb`   | `breadcrumb` | √         | -    |
-| `page-header`    | `logo`         | `logo`       | √         | -    |
-| `page-header`    | `action`       | `action`     | √         | -    |
-| `page-header`    | `content`      | `content`    | √         | -    |
-| `page-header`    | `extra`        | `extra`      | √         | -    |
-| `page-header`    | `tab`          | `tab`        | √         | -    |
+| `st`             | `body`         | `body`       | -         | -    |
+| `st`             | `expand`       | `expand`     | -         | -    |
+| `footer-toolbar` | `extra`        | `extra`      | -         | -    |
+| `page-header`    | `breadcrumb`   | `breadcrumb` | -         | -    |
+| `page-header`    | `logo`         | `logo`       | -         | -    |
+| `page-header`    | `action`       | `action`     | -         | -    |
+| `page-header`    | `content`      | `content`    | -         | -    |
+| `page-header`    | `extra`        | `extra`      | -         | -    |
+| `page-header`    | `tab`          | `tab`        | -         | -    |
 
 例如：
 
@@ -160,12 +160,12 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 | `[isPageIndexReset]`  | `page`     | `indexReset`      | -         | -        | -    |
 | `[toTopInChange]`     | `page`     | `toTop`           | -         | -        | -    |
 | `[toTopOffset]`       | `page`     | `toTopOffset`     | -         | -        | -    |
-| `(checkboxChange)`    | `(change)` | -                 | ×         | √        | -    |
-| `(radioChange)`       | `(change)` | -                 | ×         | √        | -    |
-| `(sortChange)`        | `(change)` | -                 | ×         | √        | -    |
-| `(filterChange)`      | `(change)` | -                 | ×         | √        | -    |
-| `(rowClick)`          | `(change)` | -                 | ×         | √        | -    |
-| `(rowDblClick)`       | `(change)` | -                 | ×         | √        | -    |
+| `(checkboxChange)`    | `(change)` | -                 | ×         | -        | -    |
+| `(radioChange)`       | `(change)` | -                 | ×         | -        | -    |
+| `(sortChange)`        | `(change)` | -                 | ×         | -        | -    |
+| `(filterChange)`      | `(change)` | -                 | ×         | -        | -    |
+| `(rowClick)`          | `(change)` | -                 | ×         | -        | -    |
+| `(rowDblClick)`       | `(change)` | -                 | ×         | -        | -    |
 
 > 一个示例说明 [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-f573fc0900f21b377dac432f1668c584L164)
 
@@ -184,27 +184,27 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 原属性名               | 新属性名                     | ng update | 兼容处理 | 描述 |
 | ---------------------- | ---------------------------- | --------- | -------- | ---- |
-| `sort`                 | `sort.default`               | ×         | √        | -    |
-| `sorter`               | `sort.compare`               | ×         | √        | -    |
-| `sortKey`              | `sort.key`                   | ×         | √        | -    |
-| `sortReName`           | `sort.reName`                | ×         | √        | -    |
-| `filter`               | `fitler`                     | ×         | √        | -    |
-| `filters`              | `fitler.menus`               | ×         | √        | -    |
-| `filtered`             | `fitler.default`             | ×         | √        | -    |
-| `filterIcon`           | `fitler.icon`                | ×         | √        | -    |
-| `filterConfirmText`    | `fitler.confirmText`         | ×         | √        | -    |
-| `filterClearText`      | `fitler.clearText`           | ×         | √        | -    |
-| `filterMultiple`       | `fitler.multiple`            | ×         | √        | -    |
-| `filterKey`            | `fitler.key`                 | ×         | √        | -    |
-| `filterReName`         | `fitler.reName`              | ×         | √        | -    |
-| `ynTruth`              | `yn.truth`                   | ×         | √        | -    |
-| `ynYes`                | `yn.yes`                     | ×         | √        | -    |
-| `ynNo`                 | `yn.no`                      | ×         | √        | -    |
-| `buttons.component`    | `buttons.modal.component`    | ×         | √        | -    |
-| `buttons.params`       | `buttons.modal.params`       | ×         | √        | -    |
-| `buttons.paramName`    | `buttons.modal.paramsName`   | ×         | √        | -    |
-| `buttons.size`         | `buttons.modal.size`         | ×         | √        | -    |
-| `buttons.modalOptions` | `buttons.modal.modalOptions` | ×         | √        | -    |
+| `sort`                 | `sort.default`               | ×         | -        | -    |
+| `sorter`               | `sort.compare`               | ×         | -        | -    |
+| `sortKey`              | `sort.key`                   | ×         | -        | -    |
+| `sortReName`           | `sort.reName`                | ×         | -        | -    |
+| `filter`               | `fitler`                     | ×         | -        | -    |
+| `filters`              | `fitler.menus`               | ×         | -        | -    |
+| `filtered`             | `fitler.default`             | ×         | -        | -    |
+| `filterIcon`           | `fitler.icon`                | ×         | -        | -    |
+| `filterConfirmText`    | `fitler.confirmText`         | ×         | -        | -    |
+| `filterClearText`      | `fitler.clearText`           | ×         | -        | -    |
+| `filterMultiple`       | `fitler.multiple`            | ×         | -        | -    |
+| `filterKey`            | `fitler.key`                 | ×         | -        | -    |
+| `filterReName`         | `fitler.reName`              | ×         | -        | -    |
+| `ynTruth`              | `yn.truth`                   | ×         | -        | -    |
+| `ynYes`                | `yn.yes`                     | ×         | -        | -    |
+| `ynNo`                 | `yn.no`                      | ×         | -        | -    |
+| `buttons.component`    | `buttons.modal.component`    | ×         | -        | -    |
+| `buttons.params`       | `buttons.modal.params`       | ×         | -        | -    |
+| `buttons.paramName`    | `buttons.modal.paramsName`   | ×         | -        | -    |
+| `buttons.size`         | `buttons.modal.size`         | ×         | -        | -    |
+| `buttons.modalOptions` | `buttons.modal.modalOptions` | ×         | -        | -    |
 
 #### SimpleTableMultiSort
 
@@ -245,3 +245,17 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 | `badge_dot`     | `badgeDot`     | ×         | ×        | -    |
 | `badge_status`  | `badgeStatus`  | ×         | ×        | -    |
 | `shortcut_root` | `shortcutRoot` | ×         | ×        | -    |
+
+## ng update
+
+2.0 提供的 `ng update` 升级是基于 [1.x](https://github.com/ng-alain/ng-alain/tree/1.x) 分支模板，事实上，多多少少已经会有一些变更，因此，`ng update` 命令是无法保证脚手架这一部分的准确性，因此在升级之前请**确保签入所有代码**，以便更好的观察变更纪录。
+
+**顺序**
+
+```bash
+# 1、删除 node_modules、package-lock.json 或 yarn.lock
+# 2、安装 ng-alain@next 版本
+yarn add ng-alain@next -D
+# 3、运行命令
+ng update ng-alain@next
+```

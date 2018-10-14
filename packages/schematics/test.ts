@@ -11,8 +11,8 @@ require('source-map-support').install({
 const Jasmine = require('jasmine');
 const runner = new Jasmine({ projectBaseDir: projectBaseDir });
 
-const files = `packages/schematics/**/*.spec.ts`;
-// const files = `packages/schematics/update/test/index.spec.ts`;
+// const files = `packages/schematics/**/*.spec.ts`;
+const files = `packages/schematics/ng-update/test-cases/v2-test-cases.spec.ts`;
 
 const tests = glob.sync(files).map(p => relative(projectBaseDir, p));
 
