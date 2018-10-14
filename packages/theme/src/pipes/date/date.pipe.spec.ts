@@ -26,12 +26,14 @@ describe('Pipe: _date', () => {
 
   [
     { date, result: `2017-10-17 15:35` },
+    { date: +date, result: `2017-10-17 15:35` },
+    { date: (+date).toString(), result: `2017-10-17 15:35` },
     { date, result: `2017年10月17日`, format: 'YYYY年MM月DD日' },
     { date: null, result: `` },
     { date: undefined, result: `` },
     { date, result: ``, format: 'fn' },
   ].forEach((item: any) => {
-    it(`${'' + item.date} muse be ${item.result}${
+    it(`${typeof item.date}:${'' + item.date} muse be ${item.result}${
       item.format ? `(format: ${item.format})` : ''
     }`, () => {
       fixture.componentInstance.value = item.date;
