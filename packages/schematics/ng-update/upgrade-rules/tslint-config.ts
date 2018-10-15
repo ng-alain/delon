@@ -21,6 +21,14 @@ export interface UpgradeTSLintConfig {
 /** Type for the configuration list of upgrade rules. */
 export type UpgradeRules = (string | (string | TargetVersion)[])[];
 
+/**
+ * List of upgrade rules that will be always enabled because the upgrade data for these rules
+ * can be swapped out dynamically.
+ *
+ * Rules which are specific to CDK breaking changes and are not based on the upgrade data,
+ * shouldn't be listed here because those cannot be disabled if Angular Material runs its
+ * update schematic using these base rules.
+ */
 const baseUpgradeRules: UpgradeRules = [
   // // Attribute selector update rules.
   // 'attribute-selectors-string-literal',

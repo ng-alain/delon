@@ -1,31 +1,9 @@
-/**
- * @license
- * Copyright Google LLC All Rights Reserved.
- *
- * Use of this source code is governed by an MIT-style license that can be
- * found in the LICENSE file at https://angular.io/license
- */
-
 import {RuleWalker} from 'tslint';
 import {
   cssSelectors,
   CssSelectorUpgradeData,
-  // attributeSelectors,
-  // AttributeSelectorUpgradeData,
-  // classNames,
-  // ClassNameUpgradeData,
-  // constructorChecks,
-  // ConstructorChecksUpgradeData,
-  // elementSelectors,
-  // ElementSelectorUpgradeData,
-  // inputNames,
-  // InputNameUpgradeData,
-  // methodCallChecks,
-  // MethodCallUpgradeData,
-  // outputNames,
-  // OutputNameUpgradeData,
-  // propertyNames,
-  // PropertyNameUpgradeData,
+  v2Element,
+  V2ElementUpgradeData,
 } from './data';
 import {TargetVersion} from './target-version';
 
@@ -47,26 +25,12 @@ type ValueOfChanges<T> = T extends VersionChanges<infer X> ? X : null;
  */
 export interface RuleUpgradeData {
   cssSelectors: VersionChanges<CssSelectorUpgradeData>;
-  // attributeSelectors: VersionChanges<AttributeSelectorUpgradeData>;
-  // classNames: VersionChanges<ClassNameUpgradeData>;
-  // constructorChecks: VersionChanges<ConstructorChecksUpgradeData>;
-  // elementSelectors: VersionChanges<ElementSelectorUpgradeData>;
-  // inputNames: VersionChanges<InputNameUpgradeData>;
-  // methodCallChecks: VersionChanges<MethodCallUpgradeData>;
-  // outputNames: VersionChanges<OutputNameUpgradeData>;
-  // propertyNames: VersionChanges<PropertyNameUpgradeData>;
+  v2Element: VersionChanges<V2ElementUpgradeData>;
 }
 
 export const delonUpgradeData: RuleUpgradeData = {
   cssSelectors,
-  // attributeSelectors,
-  // classNames,
-  // constructorChecks,
-  // elementSelectors,
-  // inputNames,
-  // methodCallChecks,
-  // outputNames,
-  // propertyNames,
+  v2Element
 };
 
 

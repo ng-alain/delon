@@ -35,8 +35,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 升级 `@angular` 和 `@delon` 依赖包至最新版本
 
-1. 取消降级 less [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-b9cfc7f2cdf78a7f4b91a753d10865a2)
-2. 使用 `targets` 替代 `architect` [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-24e9645f54bc8704f0daa8780c492a3f)
++ 取消降级 less [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-b9cfc7f2cdf78a7f4b91a753d10865a2)
 
 ### 2、布局
 
@@ -93,15 +92,15 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 所属组件         | 原ContentChild | 新属性名     | ng update | 描述 |
 |------------------|----------------|--------------|-----------|------|
-| `st`             | `body`         | `body`       | -         | -    |
-| `st`             | `expand`       | `expand`     | -         | -    |
-| `footer-toolbar` | `extra`        | `extra`      | -         | -    |
-| `page-header`    | `breadcrumb`   | `breadcrumb` | -         | -    |
-| `page-header`    | `logo`         | `logo`       | -         | -    |
-| `page-header`    | `action`       | `action`     | -         | -    |
-| `page-header`    | `content`      | `content`    | -         | -    |
-| `page-header`    | `extra`        | `extra`      | -         | -    |
-| `page-header`    | `tab`          | `tab`        | -         | -    |
+| `st`             | `body`         | `body`       | √         | -    |
+| `st`             | `expand`       | `expand`     | √         | -    |
+| `footer-toolbar` | `extra`        | `extra`      | √         | -    |
+| `page-header`    | `breadcrumb`   | `breadcrumb` | √         | -    |
+| `page-header`    | `logo`         | `logo`       | √         | -    |
+| `page-header`    | `action`       | `action`     | √         | -    |
+| `page-header`    | `content`      | `content`    | √         | -    |
+| `page-header`    | `extra`        | `extra`      | √         | -    |
+| `page-header`    | `tab`          | `tab`        | √         | -    |
 
 例如：
 
@@ -116,8 +115,8 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 所属组件      | 原属性名     | 新属性名   | ng update | 描述                             |
 |---------------|--------------|------------|-----------|----------------------------------|
-| `page-header` | `home_link`  | `homeLink` | -         | -                                |
-| `page-header` | `home_i18n`  | `homeI18n` | -         | -                                |
+| `page-header` | `home_link`  | `homeLink` | √         | -                                |
+| `page-header` | `home_i18n`  | `homeI18n` | √         | -                                |
 | `st`          | `sortReName` | 移除       | √         | 过期提醒，仅使用 `STColumn.sort.reName` 值 |
 
 例如：

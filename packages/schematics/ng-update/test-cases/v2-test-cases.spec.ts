@@ -35,8 +35,13 @@ describe('v2 upgrade test cases', () => {
       const output = readFileContent(
         join(testCasesOutputPath, `${testCaseName}.ts`),
       );
-      const input = readFileContent(expectedOutputPath);
-      expect(output).toBe(input);
+      const expected = readFileContent(expectedOutputPath);
+      if (output === expected) {
+        debugger;
+      } else {
+        debugger;
+      }
+      expect(output).toBe(expected);
     });
   });
 });
