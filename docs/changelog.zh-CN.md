@@ -4,6 +4,31 @@ title: 更新日志
 type: Other
 ---
 
+## 2.0.0-beta.5
+
+`2018-10-15`
+
+### Bug Fixes
+
+* **form:** 修复 `readOnly` 无法呈现 ([#212](https://github.com/ng-alain/delon/issues/212)) ([6a68def](https://github.com/ng-alain/delon/commit/6a68def))
+* **scaffold:** 使用 `zh` 替代 `zh-Hans` ([6972e58](https://github.com/ng-alain/ng-alain/commit/6972e58))
+
+### Features
+
+* **code-style:** 升级 husky 配置 ([#208](https://github.com/ng-alain/delon/issues/208)) ([61c6214](https://github.com/ng-alain/delon/commit/61c6214))
+  - 脚手架变更 ([dd1cc90](https://github.com/ng-alain/ng-alain/commit/dd1cc90))
+* **abc.st:** 增加 `total` 国际化 ([#203](https://github.com/ng-alain/delon/issues/203)) ([ec0b0df](https://github.com/ng-alain/delon/commit/ec0b0df))
+* **theme:** 增加 `page-loading` 加载状态容器样式 ([#207](https://github.com/ng-alain/delon/issues/207)) ([ad43622](https://github.com/ng-alain/delon/commit/ad43622))
+  - 脚手架变更：优化国际化切换风格 ([8b6f318](https://github.com/ng-alain/ng-alain/commit/8b6f318))
+
+### BREAKING CHANGES
+
+* **theme:** ([6b8168f](https://github.com/ng-alain/ng-alain/commit/6b8168f))
+  + `layout-fixed` was changed to `alain-default__fixed`
+  + `layout-boxed` was changed to `alain-default__boxed`
+  + `aside-collapsed` was changed to `alain-default__collapsed`
+
+
 ## 2.0.0-beta.4
 
 `2018-10-07`

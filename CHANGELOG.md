@@ -1,3 +1,28 @@
+<a name="2.0.0-beta.5"></a>
+# [2.0.0-beta.5](https://github.com/ng-alain/delon/compare/2.0.0-beta.4...2.0.0-beta.5) (2018-10-15)
+
+
+### Bug Fixes
+
+* **module:code-style:** upgrade husky ([#208](https://github.com/ng-alain/delon/issues/208)) ([61c6214](https://github.com/ng-alain/delon/commit/61c6214))
+* **module:form:** fix invalid disabled status when is readOnly ([#212](https://github.com/ng-alain/delon/issues/212)) ([6a68def](https://github.com/ng-alain/delon/commit/6a68def))
+
+
+### Features
+
+* **module:abc.st:** add total i18n ([#203](https://github.com/ng-alain/delon/issues/203)) ([ec0b0df](https://github.com/ng-alain/delon/commit/ec0b0df))
+* **module:theme:** add page loading styles ([#207](https://github.com/ng-alain/delon/issues/207)) ([ad43622](https://github.com/ng-alain/delon/commit/ad43622))
+* **module:theme:alain-default:** refactor layout component ([#201](https://github.com/ng-alain/delon/issues/201)) ([8231e65](https://github.com/ng-alain/delon/commit/8231e65))
+
+
+### BREAKING CHANGES
+
+* **module:theme:alain-default:** + `layout-fixed` was changed to `alain-default__fixed`
++ `layout-boxed` was changed to `alain-default__boxed`
++ `aside-collapsed` was changed to `alain-default__collapsed`
+
+
+
 <a name="2.0.0-beta.4"></a>
 # [2.0.0-beta.4](https://github.com/ng-alain/delon/compare/1.4.5...2.0.0-beta.4) (2018-10-07)
 

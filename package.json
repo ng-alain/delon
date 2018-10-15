@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0-beta.5",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for ng-alain.",
   "repository": {
