@@ -9,7 +9,24 @@ const a = By.css('.content__title');
     Dashboard
     <small>Welcome !</small>
   </h1>
-  <simple-table>
+  <simple-table showTotal="a-{{total}}-b"></simple-table>
+  <simple-table [extraParams]="params"
+    [reqReName]="{pi: 'PI'}"
+    [resReName]="{total: 'PI'}"
+    [preDataChange]="preChange"
+    reqMethod="POST"
+    frontPagination
+    zeroIndexedOnPage
+    pagePlacement="left"
+    showPagination
+    showSizeChanger
+    [pageSizeOptions]="[1, 2, 3]"
+    showQuickJumper
+    showTotal
+    isPageIndexReset
+    toTopInChange
+    toTopOffset="10"
+    >
     <ng-template #body>body</ng-template>
     <ng-template #expand>expand</ng-template>
   </simple-table>

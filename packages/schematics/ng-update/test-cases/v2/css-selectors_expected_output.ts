@@ -10,7 +10,8 @@ const a = By.css('.alain-default__content-title');
     Dashboard
     <small>Welcome !</small>
   </h1>
-  <st [body]="body" [expand]="expand">
+  <st [page]="{showTotal: 'a-{{total}}-b'}"></st>
+  <st [body]="body" [expand]="expand" [req]="{params: params, reName: {pi: 'PI'}, method: 'POST'}" [res]="{reName: {total: 'PI'}, process: preChange}" [page]="{front: true, zeroIndexed: true, placement: 'left', show: true, showSize: true, pageSizes: [1, 2, 3], showQuickJumper: true, showTotal: true, indexReset: true, toTop: true, toTopOffset: 10}">
     <ng-template #body>body</ng-template>
     <ng-template #expand>expand</ng-template>
   </st>
