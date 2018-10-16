@@ -6,6 +6,7 @@ import { ComponentWalker } from '../../tslint/component-walker';
 import {
   findElementHasAttributes,
   findElementHasAttribute,
+  findElements,
 } from '../../html-parsing/elements';
 
 export class Rule extends Rules.AbstractRule {
@@ -52,7 +53,7 @@ export class Walker extends ComponentWalker {
           )}" component. ` +
           `Use the "${green(
             '(change)',
-          )}" output property instead. Document: https://ng-alain.com/components/table#STChange`,
+          )}" output property instead, Document: https://ng-alain.com/components/table#STChange`,
       });
     });
 
@@ -79,7 +80,19 @@ export class Walker extends ComponentWalker {
           )}" component. ` +
           `Use the "${green(
             '[type]',
-          )}" output property instead. Document: https://ng-alain.com/components/view#sv`,
+          )}" output property instead, Document: https://ng-alain.com/components/view#sv`,
+      });
+    });
+
+    findElements(content, 'standard-form-row').forEach(offset => {
+      failures.push({
+        start: node.getStart() + offset,
+        end: node.getStart() + offset + 'standard-form-row'.length,
+        message: `Found deprecated component "${red(
+          '[standard-form-row]',
+        )}" which has been removed, you can use "${green(
+          '[se]',
+        )}" instead, Document: https://ng-alain.com/components/edit`,
       });
     });
 

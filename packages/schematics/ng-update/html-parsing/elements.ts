@@ -90,6 +90,15 @@ export function findAttributeOnElementWithAttrs(
 }
 
 /** 查找元素是否包含属性，返回开始位置集合 */
+export function findElements(
+  html: string,
+  tagName: string,
+): number[] {
+  return findElementsWithTagName(html, tagName)
+    .map(element => element.sourceCodeLocation.startOffset);
+}
+
+/** 查找元素是否包含属性，返回开始位置集合 */
 export function findElementHasAttribute(
   html: string,
   tagName: string,

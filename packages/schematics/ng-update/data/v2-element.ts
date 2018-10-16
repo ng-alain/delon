@@ -60,6 +60,7 @@ export const v2Element: VersionChanges<V2ElementUpgradeData> = {
       pr: '',
       changes: [
         {
+          type: 'tag',
           name: 'simple-table',
           rules: [
             { type: 'name', value: 'st' },
@@ -168,10 +169,12 @@ export const v2Element: VersionChanges<V2ElementUpgradeData> = {
           },
         },
         {
+          type: 'tag',
           name: 'footer-toolbar',
           rules: [{ type: 'add-template-atrr', value: 'extra' }],
         },
         {
+          type: 'tag',
           name: 'desc-list-item',
           rules: [
             { type: 'name', value: 'sv' },
@@ -179,10 +182,12 @@ export const v2Element: VersionChanges<V2ElementUpgradeData> = {
           ],
         },
         {
+          type: 'tag',
           name: 'desc-list',
           rules: [{ type: 'name', value: 'sv-container' }],
         },
         {
+          type: 'tag',
           name: 'page-header',
           rules: [
             { type: 'attr-name', value: 'home_link', newValue: 'homeLink' },
@@ -196,6 +201,19 @@ export const v2Element: VersionChanges<V2ElementUpgradeData> = {
           ],
         },
         {
+          type: 'attr',
+          name: '',
+          rules: [
+            { type: 'attr-name', value: 'shf-wrap', newValue: 'se-container' },
+          ],
+        },
+        {
+          type: 'tag',
+          name: 'shf-item',
+          rules: [{ type: 'name', value: 'se' }],
+        },
+        {
+          type: 'tag',
           name: 'g2-chart',
           rules: [{ type: 'name', value: 'g2-custom' }],
         },

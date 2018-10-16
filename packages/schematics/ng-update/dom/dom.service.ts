@@ -45,6 +45,7 @@ export class DomService {
         }
 
         this.resolveTagName(item);
+        this.resolveTagAttr(item);
 
         if (item && item.children && item.children.length > 0) {
           inFn(item.children);
@@ -57,12 +58,25 @@ export class DomService {
 
   private resolveTagName(dom: VDom) {
     if (!dom.name) return;
-    const action = this.rules.find(w => w.name === dom.name);
+    const action = this.rules.find(w => w.type === 'tag' && w.name === dom.name);
     if (!action) return;
     for (const rule of action.rules) {
       this.resolveRule(dom, rule, action);
     }
     if (action.custom) action.custom(dom);
+  }
+
+  private resolveTagAttr(dom: VDom) {
+    if (!dom.attribs) return;
+    const keys = Object.keys(dom.attribs);
+    if (keys.length === 0) return;
+    const action = this.rules.find(
+      w => w.type === 'attr' && keys.indexOf(w.name) !== -1,
+    );
+    if (!action) return;
+    for (const rule of action.rules) {
+      this.resolveRule(dom, rule, action);
+    }
   }
 
   private resolveRule(dom: VDom, rule: ConvertRule, action: ConvertAction) {

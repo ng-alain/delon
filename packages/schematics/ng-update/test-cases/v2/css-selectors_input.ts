@@ -12,6 +12,9 @@ const a = By.css('.content__title');
   <desc-list size="large" title="title" layout="vertical">
     <desc-list-item term="Firefox" detailClass="text-danger">1</desc-list-item>
   </desc-list>
+  <form shf-wrap>
+    <shf-item label="App Key">1</shf-item>
+  </form>
   <simple-table showTotal="a-{{total}}-b"></simple-table>
   <simple-table [extraParams]="params"
     [reqReName]="{pi: 'PI'}"

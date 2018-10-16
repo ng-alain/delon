@@ -78,8 +78,8 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 | ------------------- | -------- | --------- | ---- |
 | `simple-table`      | `st`     | √         | -    |
 | `desc-list`         | `sv`     | √         | -    |
-| `simple-html-form`  | `se`     | -         | -    |
-| `standard-form-row` | `se`     | -         | -    |
+| `simple-html-form`  | `se`     | √         | -    |
+| `standard-form-row` | `se`     | √         | 过期提醒    |
 
 例如：
 

@@ -13,6 +13,9 @@ const a = By.css('.alain-default__content-title');
   <sv-container size="large" title="title" layout="vertical">
     <sv detailClass="text-danger" label="Firefox">1</sv>
   </sv-container>
+  <form shf-wrap>
+    <se label="App Key">1</se>
+  </form>
   <st [page]="{showTotal: 'a-{{total}}-b'}"></st>
   <st [body]="body" [expand]="expand" [req]="{params: params, reName: {pi: 'PI'}, method: 'POST'}" [res]="{reName: {total: 'PI'}, process: preChange}" [page]="{front: true, zeroIndexed: true, placement: 'left', show: true, showSize: true, pageSizes: [1, 2, 3], showQuickJumper: true, showTotal: true, indexReset: true, toTop: true, toTopOffset: 10}">
     <ng-template #body>body</ng-template>
