@@ -9,6 +9,7 @@ describe('v2 deprecated property checks', () => {
 
     expect(logOutput).toContain(`(checkboxChange)`);
     expect(logOutput).toContain(`STColumn.sort.reName`);
+    expect(logOutput).toContain(`desc-list-item (sv)`);
   });
 });
 

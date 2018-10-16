@@ -76,8 +76,8 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 原组件名            | 新组件名 | ng update | 描述 |
 | ------------------- | -------- | --------- | ---- |
-| `simple-table`      | `st`     | -         | -    |
-| `desc-list`         | `sv`     | -         | -    |
+| `simple-table`      | `st`     | √         | -    |
+| `desc-list`         | `sv`     | √         | -    |
 | `simple-html-form`  | `se`     | -         | -    |
 | `standard-form-row` | `se`     | -         | -    |
 

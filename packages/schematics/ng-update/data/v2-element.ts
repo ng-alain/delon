@@ -172,6 +172,17 @@ export const v2Element: VersionChanges<V2ElementUpgradeData> = {
           rules: [{ type: 'add-template-atrr', value: 'extra' }],
         },
         {
+          name: 'desc-list-item',
+          rules: [
+            { type: 'name', value: 'sv' },
+            { type: 'attr-name', value: 'term', newValue: 'label' },
+          ],
+        },
+        {
+          name: 'desc-list',
+          rules: [{ type: 'name', value: 'sv-container' }],
+        },
+        {
           name: 'page-header',
           rules: [
             { type: 'attr-name', value: 'home_link', newValue: 'homeLink' },

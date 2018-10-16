@@ -9,6 +9,9 @@ const a = By.css('.content__title');
     Dashboard
     <small>Welcome !</small>
   </h1>
+  <desc-list size="large" title="title" layout="vertical">
+    <desc-list-item term="Firefox" detailClass="text-danger">1</desc-list-item>
+  </desc-list>
   <simple-table showTotal="a-{{total}}-b"></simple-table>
   <simple-table [extraParams]="params"
     [reqReName]="{pi: 'PI'}"
