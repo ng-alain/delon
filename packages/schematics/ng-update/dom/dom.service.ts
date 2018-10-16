@@ -22,7 +22,7 @@ export class DomService {
       this.dom = dom;
       this.parseRule();
 
-      callback(dom);
+      callback(this.dom);
     });
 
     const parser = new htmlparser2.Parser(handler, <htmlparser2.Options>{
@@ -58,10 +58,14 @@ export class DomService {
 
   private resolveTagName(dom: VDom) {
     if (!dom.name) return;
-    const action = this.rules.find(w => w.type === 'tag' && w.name === dom.name);
+    const action = this.rules.find(
+      w => w.type === 'tag' && w.name === dom.name,
+    );
     if (!action) return;
-    for (const rule of action.rules) {
-      this.resolveRule(dom, rule, action);
+    if (action.rules && action.rules.length > 0) {
+      for (const rule of action.rules) {
+        this.resolveRule(dom, rule, action);
+      }
     }
     if (action.custom) action.custom(dom);
   }
@@ -90,6 +94,9 @@ export class DomService {
       case 'remove-child':
         this.resolveRemoveChild(dom, rule.value);
         break;
+      case 'remove-wrap-element-by-class':
+        this.resolveRemoveWrapElementByClass(dom, rule.value);
+        break;
       case 'remove-child-template-attr':
         this.resolveRemoveChildTemplateAttr(dom, rule.value);
         break;
@@ -110,6 +117,9 @@ export class DomService {
         break;
       case 'add-prefix-name-template':
         this.resolveAddPrefixToTemplate(dom, action.name, rule);
+        break;
+      case 'class-name':
+        this.resolveClassName(dom, rule);
         break;
       case 'extra':
         this.resolveExtra(dom, rule);
@@ -142,6 +152,12 @@ export class DomService {
     if (!dom.children || dom.children.length === 0) return;
     const has = dom.children.find(w => w.name === name);
     if (has) dom.children = has.children;
+  }
+
+  private resolveRemoveWrapElementByClass(dom: VDom, name: string) {
+    const classes = (dom.attribs['class'] || '').split(' ') as string[];
+    if (!classes.includes(name)) return;
+    this.dom = dom.children;
   }
 
   private resolveRemoveChildTemplateAttr(dom: VDom, attrName: string) {
@@ -248,6 +264,20 @@ export class DomService {
     });
   }
 
+  private resolveClassName(dom: VDom, rule: ConvertRule) {
+    let classes = (dom.attribs['class'] || '').split(' ') as string[];
+    const idx = classes.indexOf(rule.value);
+    if (idx !== -1) {
+      classes.splice(idx, 1, rule.newValue);
+    }
+    classes = classes.filter(w => !!w);
+    if (classes.length === 0) {
+      delete dom.attribs['class'];
+    } else {
+      dom.attribs['class'] = classes.join(' ');
+    }
+  }
+
   private resolveExtra(dom: VDom, rule: ConvertRule) {
     if (rule.extra_insert_attrs) {
       dom.attribs = Object.assign(dom.attribs, rule.extra_insert_attrs);
@@ -284,6 +314,11 @@ export class DomService {
         if (item.type === 'text') {
           if (item.data.trim().length === 0) continue;
           result.push(`${this.genTab(deep)}${item.data.trim()}`);
+          continue;
+        }
+        if (item.type === 'comment') {
+          if (item.data.trim().length === 0) continue;
+          result.push(`${this.genTab(deep)}<!--${item.data.trim()}-->`);
           continue;
         }
 

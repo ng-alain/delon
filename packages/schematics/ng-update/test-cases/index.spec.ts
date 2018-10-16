@@ -16,7 +16,7 @@ import {
 } from '@angular-devkit/schematics';
 
 /** Path to the schematic collection that includes the delon migrations. */
-const migrationCollection = require.resolve('../../migration.json');
+export const migrationCollection = require.resolve('../../migration.json');
 
 /** Module name suffix for data files of the `jasmine_node_test` Bazel rule. */
 const bazelModuleSuffix =

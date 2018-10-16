@@ -20,13 +20,14 @@ export interface ConvertAction {
   type: 'tag' | 'attr';
   name: string;
   custom?: (dom: VDom) => void;
-  rules: ConvertRule[];
+  rules?: ConvertRule[];
 }
 
 export type ConvertRuleType =
   | 'name'
   | 'attr-name'
   | 'remove-child'
+  | 'remove-wrap-element-by-class'
   | 'remove-child-template-attr'
   | 'change-tag-to-text'
   | 'name-to-attr'
@@ -34,6 +35,7 @@ export type ConvertRuleType =
   | 'add-template-atrr'
   | 'add-content-to-template'
   | 'add-prefix-name-template'
+  | 'class-name'
   | 'extra';
 
 export interface ConvertRule {

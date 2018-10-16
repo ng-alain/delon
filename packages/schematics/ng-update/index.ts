@@ -1,9 +1,10 @@
-import { Rule } from '@angular-devkit/schematics';
-import {sync as globSync} from 'glob';
+import { Rule, chain } from '@angular-devkit/schematics';
+import { sync as globSync } from 'glob';
 import { TargetVersion } from './target-version';
 import { createUpgradeRule } from './upgrade-rules';
 import { UpgradeTSLintConfig } from './upgrade-rules/tslint-config';
 import { delonUpgradeData } from './upgrade-data';
+import { v2LayoutRule } from './upgrade-rules/v2/v2LayoutRule';
 
 /** List of additional upgrade rules which are specifically for the CDK. */
 const extraUpgradeRules = [
@@ -14,7 +15,10 @@ const extraUpgradeRules = [
   ['v2-element-template', TargetVersion.V2],
 ];
 
-const ruleDirectories = globSync('upgrade-rules/**/', {cwd: __dirname, absolute: true});
+const ruleDirectories = globSync('upgrade-rules/**/', {
+  cwd: __dirname,
+  absolute: true,
+});
 
 /** TSLint upgrade configuration that will be passed to the CDK ng-update rule. */
 const tslintUpgradeConfig: UpgradeTSLintConfig = {
@@ -24,7 +28,10 @@ const tslintUpgradeConfig: UpgradeTSLintConfig = {
 };
 
 export function updateToV2(): Rule {
-  return createUpgradeRule(TargetVersion.V2, tslintUpgradeConfig);
+  return chain([
+    v2LayoutRule,
+    createUpgradeRule(TargetVersion.V2, tslintUpgradeConfig),
+  ]);
 }
 
 export function postUpdate(): Rule {
