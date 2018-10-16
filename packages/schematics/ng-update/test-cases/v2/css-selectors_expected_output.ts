@@ -25,6 +25,7 @@ const a = By.css('.alain-default__content-title');
     <ng-template #tab>tab</ng-template>
     <ng-template #extra>extra</ng-template>
   </page-header>
+  <g2-custom (render)="render($event)"></g2-custom>
 </div>
 `
 })

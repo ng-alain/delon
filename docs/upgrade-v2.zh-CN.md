@@ -215,7 +215,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 原组件名   | 新组件名    | ng update | 描述 |
 | ---------- | ----------- | --------- | ---- |
-| `g2-chart` | `g2-custom` | -         | -    |
+| `g2-chart` | `g2-custom` | √         | -    |
 
 ## theme 类库变更
 

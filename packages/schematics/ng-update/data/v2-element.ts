@@ -1,6 +1,6 @@
 import { TargetVersion } from '../target-version';
 import { VersionChanges } from '../upgrade-data';
-import { ConvertAction } from '../html-parsing/interfaces';
+import { ConvertAction } from '../dom/interfaces';
 
 export interface V2ElementUpgradeData extends ConvertAction {}
 
@@ -34,6 +34,12 @@ export const v2Element: VersionChanges<V2ElementUpgradeData> = {
             { type: 'add-template-atrr', value: 'content' },
             { type: 'add-template-atrr', value: 'tab' },
             { type: 'add-template-atrr', value: 'extra' },
+          ],
+        },
+        {
+          name: 'g2-chart',
+          rules: [
+            { type: 'name', value: 'g2-custom' },
           ],
         },
       ],

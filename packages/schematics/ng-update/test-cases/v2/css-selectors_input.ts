@@ -24,6 +24,7 @@ const a = By.css('.content__title');
     <ng-template #tab>tab</ng-template>
     <ng-template #extra>extra</ng-template>
   </page-header>
+  <g2-chart (render)="render($event)"></g2-chart>
 </div>
   `
 })
