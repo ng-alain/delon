@@ -42,17 +42,22 @@ export class Walker extends ComponentWalker {
       replacement: Replacement;
     }[] = [];
 
-    this.dom.replace(templateContent, this.data as ConvertAction[], dom => {
-      const newHtml = this.dom.prettify(dom);
-      replacements.push({
-        replacement: new Replacement(
-          node.getStart(),
-          templateContent.length,
-          newHtml,
-        ),
-        failureMessage: ``,
-      });
-    });
+    this.dom.replace(
+      templateContent,
+      this.data as ConvertAction[],
+      (dom, count) => {
+        if (count === 0) return;
+        const newHtml = this.dom.prettify(dom);
+        replacements.push({
+          replacement: new Replacement(
+            node.getStart(),
+            templateContent.length,
+            newHtml,
+          ),
+          failureMessage: ``,
+        });
+      },
+    );
 
     return replacements;
   }

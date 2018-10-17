@@ -6,23 +6,25 @@ export class DomService {
   private dom: VDom[];
   private rules: ConvertAction[] = [];
   private ingoreClosedTag = ['input', 'img', 'br', 'hr', 'col'];
+  private count = 0;
 
   replace(
     html: string,
     rules: ConvertAction[],
-    callback: (dom: VDom[]) => void,
+    callback: (dom: VDom[], count: number) => void,
   ) {
     this.rules = rules;
+    this.count = 0;
     const handler = new DOMHandler((error, dom) => {
       if (error) {
-        callback(null);
+        callback(null, 0);
         return;
       }
 
       this.dom = dom;
       this.parseRule();
 
-      callback(this.dom);
+      callback(this.dom, this.count);
     });
 
     const parser = new htmlparser2.Parser(handler, <htmlparser2.Options>{
@@ -64,10 +66,14 @@ export class DomService {
     if (!action) return;
     if (action.rules && action.rules.length > 0) {
       for (const rule of action.rules) {
+        ++this.count;
         this.resolveRule(dom, rule, action);
       }
     }
-    if (action.custom) action.custom(dom);
+    if (action.custom) {
+      ++this.count;
+      action.custom(dom);
+    }
   }
 
   private resolveTagAttr(dom: VDom) {
@@ -79,6 +85,7 @@ export class DomService {
     );
     if (!action) return;
     for (const rule of action.rules) {
+      ++this.count;
       this.resolveRule(dom, rule, action);
     }
   }
