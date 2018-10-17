@@ -20,10 +20,7 @@ describe('v2', () => {
      * Name of test cases that will be used to verify that update schematics properly update
      * a developers application.
      */
-    const testCases = [
-      'v2/class-names',
-      'v2/css-selectors'
-    ];
+    const testCases = ['v2/class-names', 'v2/css-selectors'];
 
     let testCasesOutputPath: string;
 
@@ -69,6 +66,8 @@ describe('v2', () => {
     });
 
     it('should working', () => {
+      const style = tree.readContent('src/styles.less');
+      expect(style).toContain(`~@delon/theme/styles/layout/default/index`);
       const defaultCompHTML = tree.readContent(
         'src/app/layout/default/default.component.html',
       );

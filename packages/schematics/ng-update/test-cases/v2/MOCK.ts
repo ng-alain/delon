@@ -1,4 +1,13 @@
 export const MOCK = {
+  'src/styles.less': `
+// region: PLACEHOLDER, IMPORTANT: don't remove
+@import '~@delon/theme/styles/index';
+@import '~@delon/abc/index';
+
+@import './styles/index';
+@import './styles/theme';
+// endregion
+  `,
   'src/app/layout/default/default.component.html': `
     <div class="router-progress-bar" *ngIf="isFetching"></div>
     <layout-header class="header"></layout-header>

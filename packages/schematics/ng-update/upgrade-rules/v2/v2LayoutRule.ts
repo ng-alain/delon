@@ -24,6 +24,35 @@ function fixVersion(host: Tree, context: SchematicContext) {
   );
 }
 
+function fixStyles(host: Tree, context: SchematicContext) {
+  const filePath = 'src/styles.less';
+  if (!host.exists(filePath)) {
+    console.log(`Not found in [${filePath}]`);
+    return;
+  }
+  let content = host.read(filePath).toString();
+
+  [
+    {
+      key: `theme/styles/index';`,
+      insert: `
+@import '~@delon/theme/styles/layout/default/index';
+@import '~@delon/theme/styles/layout/fullscreen/index';`,
+    },
+    {
+      key: `abc/index';`,
+      insert: `
+@import '~@delon/chart/index';`,
+    },
+  ].forEach(item => {
+    const pos = content.indexOf(item.key);
+    if (pos === -1) return;
+    content = content.replace(item.key, item.key + item.insert);
+  });
+
+  host.overwrite(filePath, content);
+}
+
 function fixDefaultHtml(host: Tree, context: SchematicContext) {
   const filePath = 'src/app/layout/default/default.component.html';
   if (!host.exists(filePath)) {
@@ -235,6 +264,7 @@ export function v2LayoutRule(): Rule {
   return (host: Tree, context: SchematicContext) => {
     fixVersion(host, context);
 
+    fixStyles(host, context);
     fixDefaultHtml(host, context);
     fixDefaultTs(host, context);
     fixHeaderHtml(host, context);

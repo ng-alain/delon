@@ -33,6 +33,10 @@ export const classNames: VersionChanges<ClassNameUpgradeData> = {
           replace: 'SimpleTableChange',
           replaceWith: 'STChange'
         },
+        {
+          replace: 'AdPageHeaderConfig',
+          replaceWith: 'PageHeaderConfig'
+        },
       ]
     },
   ]
