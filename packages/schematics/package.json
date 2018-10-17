@@ -20,25 +20,9 @@
     "code generation",
     "schematics"
   ],
-  "peerDependencies": {
-    "@angular-devkit/core": "^0.8.1",
-    "@angular-devkit/schematics": "^0.8.1",
-    "@schematics/angular": "^0.8.1"
-  },
   "schematics": "./collection.json",
   "ng-update": {
-    "migrations": "./migration.json",
-    "packageGroup": [
-      "@delon/acl",
-      "@delon/theme",
-      "@delon/abc",
-      "@delon/util",
-      "@delon/auth",
-      "@delon/cache",
-      "@delon/mock",
-      "@delon/form",
-      "@delon/chart"
-    ]
+    "migrations": "./migration.json"
   },
   "sideEffects": false
 }

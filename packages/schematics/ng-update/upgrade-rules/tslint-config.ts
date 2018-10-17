@@ -30,40 +30,13 @@ export type UpgradeRules = (string | (string | TargetVersion)[])[];
  * update schematic using these base rules.
  */
 const baseUpgradeRules: UpgradeRules = [
-  // // Attribute selector update rules.
-  // 'attribute-selectors-string-literal',
-  // 'attribute-selectors-stylesheet',
-  // 'attribute-selectors-template',
-
-  // // Class inheritance
-  // 'class-inheritance-check',
-
-  // // Class name update rules
-  // 'class-names-identifier',
+  // Class name update rules
+  'class-names-identifier',
 
   // CSS selectors update rules
   'css-selectors-string-literal',
   'css-selectors-stylesheet',
   'css-selectors-template',
-
-  // // Element selector update rules
-  // 'element-selectors-string-literal',
-  // 'element-selectors-stylesheet',
-  // 'element-selectors-template',
-
-  // // Input name update rules
-  // 'input-names-stylesheet',
-  // 'input-names-template',
-
-  // // Output name update rules
-  // 'output-names-template',
-
-  // // Property name update rules
-  // 'property-names-access',
-
-  // // Signature and method call checks
-  // 'constructor-signature-check',
-  // 'method-calls-check',
 ];
 
 /** List of absolute paths that refer to directories that contain the upgrade rules. */

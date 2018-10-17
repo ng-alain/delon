@@ -15,12 +15,15 @@ import { MOCK } from './v2/MOCK';
 describe('v2', () => {
   const migrationName = 'migration-v2';
 
-  xdescribe('upgrade test cases', () => {
+  describe('upgrade test cases', () => {
     /**
      * Name of test cases that will be used to verify that update schematics properly update
      * a developers application.
      */
-    const testCases = ['v2/css-selectors'];
+    const testCases = [
+      'v2/class-names',
+      'v2/css-selectors'
+    ];
 
     let testCasesOutputPath: string;
 

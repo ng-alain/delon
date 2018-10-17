@@ -249,12 +249,20 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 2.0 提供的 `ng update` 升级是基于 [1.x](https://github.com/ng-alain/ng-alain/tree/1.x) 分支模板，事实上，多多少少已经会有一些变更，因此，`ng update` 命令是无法保证脚手架这一部分的准确性，因此在升级之前请**确保签入所有代码**，以便更好的观察变更纪录。
 
-**顺序**
+**注意：**
+
+- 受项目大小执行时间会越长，但由于无法（受限Angular Cli）报告通知，会看起来像是假死状态
+- 不要手动变更 `package.json` 任何 `@delon/*`、`ng-alain` 版本信息至 `2.x`，命令行会自行完成所有的一切
+- 升级之前可以尝试运行 `ng update` 了解当前项目是否支持
+- 当HTML文件被变更后，会自动进行格式化，因此可能会更多 Git Diff 信息
 
 ```bash
 # 1、删除 node_modules、package-lock.json 或 yarn.lock
-# 2、安装 ng-alain@next 版本
-yarn add ng-alain@next -D
-# 3、运行命令
-ng update ng-alain@next
+yarn
+# 2、执行安装
+ng update ng-alain --next
 ```
+
+**未覆盖部分**
+
+- 若使用 `g2`，需要 `shared.module.ts` 导入 `DelonChartModule`

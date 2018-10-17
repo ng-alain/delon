@@ -2,18 +2,37 @@ import { Rule, Tree, SchematicContext } from '@angular-devkit/schematics';
 import { DomService } from '../../dom/dom.service';
 import { updateComponentMetadata } from '../../../utils/ast';
 import { InsertChange } from '../../../utils/devkit-utils/change';
+import { addPackageToPackageJson } from '../../../utils/json';
+import { VERSION } from '../../../utils/lib-versions';
 
 const DOM = new DomService();
 
-function fixDefaultHtml(tree: Tree, context: SchematicContext) {
+function fixVersion(host: Tree, context: SchematicContext) {
+  addPackageToPackageJson(
+    host,
+    [
+      'abc',
+      'acl',
+      'auth',
+      'cache',
+      'form',
+      'mock',
+      'theme',
+      'util',
+      'chart',
+    ].map(pkg => `@delon/${pkg}@${VERSION}`),
+  );
+}
+
+function fixDefaultHtml(host: Tree, context: SchematicContext) {
   const filePath = 'src/app/layout/default/default.component.html';
-  if (!tree.exists(filePath)) {
+  if (!host.exists(filePath)) {
     console.log(`Default layout not found in [${filePath}]`);
     return;
   }
 
   DOM.replace(
-    tree.read(filePath).toString(),
+    host.read(filePath).toString(),
     [
       {
         type: 'attr',
@@ -47,19 +66,19 @@ function fixDefaultHtml(tree: Tree, context: SchematicContext) {
       },
     ],
     dom => {
-      tree.overwrite(filePath, DOM.prettify(dom));
+      host.overwrite(filePath, DOM.prettify(dom));
     },
   );
 }
 
-function fixDefaultTs(tree: Tree, context: SchematicContext) {
+function fixDefaultTs(host: Tree, context: SchematicContext) {
   const filePath = 'src/app/layout/default/default.component.ts';
-  if (!tree.exists(filePath)) {
+  if (!host.exists(filePath)) {
     console.log(`Default layout not found in [${filePath}]`);
     return;
   }
 
-  updateComponentMetadata(tree, filePath, nodes => {
+  updateComponentMetadata(host, filePath, nodes => {
     let children = (nodes[0] as any)!.properties;
     const end = children[children.length - 1].end;
     const toInsert = `,
@@ -71,14 +90,14 @@ function fixDefaultTs(tree: Tree, context: SchematicContext) {
   });
 }
 
-function fixFullScreenTs(tree: Tree, context: SchematicContext) {
+function fixFullScreenTs(host: Tree, context: SchematicContext) {
   const filePath = 'src/app/layout/fullscreen/fullscreen.component.ts';
-  if (!tree.exists(filePath)) {
+  if (!host.exists(filePath)) {
     console.log(`FullScreen layout not found in [${filePath}]`);
     return;
   }
 
-  updateComponentMetadata(tree, filePath, nodes => {
+  updateComponentMetadata(host, filePath, nodes => {
     let children = (nodes[0] as any)!.properties;
     const end = children[children.length - 1].end;
     const toInsert = `,
@@ -89,15 +108,15 @@ function fixFullScreenTs(tree: Tree, context: SchematicContext) {
   });
 }
 
-function fixHeaderHtml(tree: Tree, context: SchematicContext) {
+function fixHeaderHtml(host: Tree, context: SchematicContext) {
   const filePath = 'src/app/layout/default/header/header.component.html';
-  if (!tree.exists(filePath)) {
+  if (!host.exists(filePath)) {
     console.log(`Default layout not found in [${filePath}]`);
     return;
   }
 
   DOM.replace(
-    tree.read(filePath).toString(),
+    host.read(filePath).toString(),
     [
       {
         type: 'attr',
@@ -159,20 +178,20 @@ function fixHeaderHtml(tree: Tree, context: SchematicContext) {
       },
     ],
     dom => {
-      tree.overwrite(filePath, DOM.prettify(dom));
+      host.overwrite(filePath, DOM.prettify(dom));
     },
   );
 }
 
-function fixSidebarHtml(tree: Tree, context: SchematicContext) {
+function fixSidebarHtml(host: Tree, context: SchematicContext) {
   const filePath = 'src/app/layout/default/sidebar/sidebar.component.html';
-  if (!tree.exists(filePath)) {
+  if (!host.exists(filePath)) {
     console.log(`Default layout not found in [${filePath}]`);
     return;
   }
 
   DOM.replace(
-    tree.read(filePath).toString(),
+    host.read(filePath).toString(),
     [
       {
         type: 'attr',
@@ -207,18 +226,20 @@ function fixSidebarHtml(tree: Tree, context: SchematicContext) {
       },
     ],
     dom => {
-      tree.overwrite(filePath, DOM.prettify(dom));
+      host.overwrite(filePath, DOM.prettify(dom));
     },
   );
 }
 
 export function v2LayoutRule(): Rule {
-  return (tree: Tree, context: SchematicContext) => {
-    fixDefaultHtml(tree, context);
-    fixDefaultTs(tree, context);
-    fixHeaderHtml(tree, context);
-    fixSidebarHtml(tree, context);
+  return (host: Tree, context: SchematicContext) => {
+    fixVersion(host, context);
 
-    fixFullScreenTs(tree, context);
+    fixDefaultHtml(host, context);
+    fixDefaultTs(host, context);
+    fixHeaderHtml(host, context);
+    fixSidebarHtml(host, context);
+
+    fixFullScreenTs(host, context);
   };
 }

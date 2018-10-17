@@ -7,7 +7,7 @@
  */
 
 import {Rule, SchematicContext, TaskId, Tree} from '@angular-devkit/schematics';
-import {RunSchematicTask, TslintFixTask} from '@angular-devkit/schematics/tasks';
+import {RunSchematicTask, TslintFixTask, NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
 import {sync as globSync} from 'glob';
 import {getProjectTsConfigPaths} from './project-tsconfig-paths';
 import {TargetVersion} from '../target-version';
@@ -48,5 +48,6 @@ export function createUpgradeRule(targetVersion: TargetVersion,
 
     // Delete the temporary schematics directory.
     context.addTask(new RunSchematicTask('ng-post-update', {}), tslintFixTasks);
+    context.addTask(new NodePackageInstallTask());
   };
 }
