@@ -56,14 +56,18 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
     );
   }
 
+  get l() {
+    return this.formProperty.root.widget.sfComp.locale;
+  }
+
   ngOnInit(): void {
     if (this.ui.grid && this.ui.grid.arraySpan)
       this.arraySpan = this.ui.grid.arraySpan;
 
-    this.addTitle = this.ui.addTitle || '添加';
+    this.addTitle = this.ui.addTitle || this.l['addText'];
     this.addType = this.ui.addType || 'dashed';
     this.removeTitle =
-      this.ui.removable === false ? null : this.ui.removeTitle || '移除';
+      this.ui.removable === false ? null : this.ui.removeTitle || this.l['removeText'];
   }
 
   addItem() {

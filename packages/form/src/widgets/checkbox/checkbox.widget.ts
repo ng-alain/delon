@@ -5,69 +5,7 @@ import { SFSchemaEnum } from '../../schema';
 
 @Component({
   selector: 'sf-checkbox',
-  template: `
-  <ng-template #all>
-    <label *ngIf="ui.checkAll" nz-checkbox class="mr-sm"
-      [(ngModel)]="allChecked"
-      [nzIndeterminate]="indeterminate"
-      (click)="onAllChecked($event)">
-      {{ ui.checkAllText || '全选' }}
-    </label>
-  </ng-template>
-  <nz-form-item [style.width.px]="ui.width">
-    <nz-col *ngIf="data.length > 0" [nzSpan]="label" class="ant-form-item-label">
-      <label [attr.for]="id" [class.ant-form-item-required]="ui._required">
-        {{ schema.title }}
-        <span class="optional">
-          {{ ui.optional }}
-          <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
-            <i nz-tooltip class="anticon anticon-question-circle-o"></i>
-          </nz-tooltip>
-        </span>
-      </label>
-    </nz-col>
-    <nz-col class="ant-form-item-control-wrapper" [nzSpan]="control" [nzOffset]="offset">
-      <div class="ant-form-item-control" [class.has-error]="showError">
-
-          <ng-container *ngIf="data.length === 0">
-            <label nz-checkbox
-              [nzDisabled]="disabled"
-              [ngModel]="value"
-              (ngModelChange)="_setValue($event)">
-              <span [innerHTML]="schema.title"></span>
-              <span class="optional">
-                {{ ui.optional }}
-                <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
-                  <i nz-tooltip class="anticon anticon-question-circle-o"></i>
-                </nz-tooltip>
-              </span>
-            </label>
-          </ng-container>
-          <ng-container *ngIf="data.length > 0">
-            <ng-container *ngIf="grid_span === 0">
-              <ng-template [ngTemplateOutlet]="all"></ng-template>
-              <nz-checkbox-group [ngModel]="data" (ngModelChange)="notifySet()"></nz-checkbox-group>
-            </ng-container>
-            <ng-container *ngIf="grid_span !== 0">
-              <nz-checkbox-wrapper class="checkbox-grid-list" (nzOnChange)="groupInGridChange($event)">
-                <nz-row>
-                  <nz-col [nzSpan]="grid_span" *ngIf="ui.checkAll">
-                    <ng-template [ngTemplateOutlet]="all"></ng-template>
-                  </nz-col>
-                  <nz-col [nzSpan]="grid_span" *ngFor="let i of data">
-                    <label nz-checkbox [nzValue]="i.value" [ngModel]="i.checked" [nzDisabled]="i.disabled">{{i.label}}</label>
-                  </nz-col>
-                </nz-row>
-              </nz-checkbox-wrapper>
-            </ng-container>
-          </ng-container>
-
-          <nz-form-extra *ngIf="schema.description" [innerHTML]="schema.description"></nz-form-extra>
-          <nz-form-explain *ngIf="!ui.onlyVisual && showError">{{error}}</nz-form-explain>
-      </div>
-    </nz-col>
-  </nz-form-item>
-  `,
+  templateUrl: './checkbox.widget.html',
   preserveWhitespaces: false,
 })
 export class CheckboxWidget extends ControlWidget {
@@ -75,22 +13,26 @@ export class CheckboxWidget extends ControlWidget {
   allChecked = false;
   indeterminate = false;
   grid_span: number;
-  label: number;
-  control: number;
-  offset: number;
+  title = ``;
+
+  get l() {
+    return this.formProperty.root.widget.sfComp.locale;
+  }
 
   reset(value: any) {
+
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => {
         this.data = list;
+        this.allChecked = false;
+        this.indeterminate = false;
+        this.title = this.schema.title;
 
-        this.label = this.ui.spanLabel;
-        this.control = this.ui.spanControl;
         if (list.length === 0) {
-          this.label = null;
-          this.offset = this.ui.spanLabel;
+          this.schema.title = '';
         }
         this.grid_span = this.ui.span && this.ui.span > 0 ? this.ui.span : 0;
+
         this.updateAllChecked();
       },
     );

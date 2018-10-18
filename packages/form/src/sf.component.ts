@@ -55,7 +55,7 @@ export function useFactory(
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private i18n$: Subscription;
-  private locale: any = {};
+  public locale: any = {};
   private _renders = new Map<string, TemplateRef<any>>();
   private _item: any;
   private _valid = true;
