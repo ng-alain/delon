@@ -33,5 +33,8 @@ export default <LocaleData>{
     reset: '重置',
     search: '搜索',
     edit: '保存',
+    addText: '添加',
+    removeText: '移除',
+    checkAllText: '全选',
   },
 };

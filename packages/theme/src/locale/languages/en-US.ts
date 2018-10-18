@@ -33,5 +33,8 @@ export default <LocaleData>{
     reset: 'Reset',
     search: 'Search',
     edit: 'Save',
+    addText: 'Add',
+    removeText: 'Remove',
+    checkAllText: 'Check all',
   },
 };

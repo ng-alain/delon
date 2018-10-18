@@ -45,6 +45,7 @@ export class DemoComponent {
         ui: {
           widget: 'checkbox',
           span: 8, // 指定每一项 8 个单元的布局
+          checkAll: true
         },
         default: ['Apple'],
       },
