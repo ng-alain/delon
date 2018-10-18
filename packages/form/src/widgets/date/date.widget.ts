@@ -65,6 +65,7 @@ const DEFAULTFORMAT = 'YYYY-MM-DD HH:mm:ss';
         [nzDisabledTime]="ui.disabledTime"
         [nzRenderExtraFooter]="ui.renderExtraFooter"
         [nzRanges]="ui.ranges"
+        [nzShowTime]="ui.showTime"
         (nzOnOk)="_ok($event)"
       ></nz-range-picker>
 
