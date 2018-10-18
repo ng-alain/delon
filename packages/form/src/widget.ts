@@ -69,7 +69,6 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
   }
 
   detectChanges() {
-    this.cd.detectChanges();
     this.formProperty.root.widget.cd.markForCheck();
   }
 
