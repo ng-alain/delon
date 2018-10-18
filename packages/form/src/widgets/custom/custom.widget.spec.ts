@@ -21,6 +21,7 @@ describe('form: widget: custom', () => {
 
   function detectChanges(path = '/a') {
     context.comp.rootProperty.searchProperty(path).widget.detectChanges();
+    fixture.detectChanges();
     return page;
   }
 
