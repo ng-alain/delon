@@ -22,7 +22,10 @@
   ],
   "schematics": "./collection.json",
   "ng-update": {
-    "migrations": "./migration.json"
+    "migrations": "./migration.json",
+    "packageGroup": [
+      "ng-alain"
+    ]
   },
   "sideEffects": false
 }

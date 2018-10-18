@@ -24,6 +24,7 @@ import { validateName, validateHtmlSelector } from './devkit-utils/validation';
 import { InsertChange } from './devkit-utils/change';
 import { findNode, insertImport } from './devkit-utils/ast-utils';
 import { getProject, Project } from './project';
+import { getSourceFile } from './ast';
 
 export interface CommonSchema {
   [key: string]: any;
@@ -111,22 +112,13 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   validateHtmlSelector(schema.selector);
 }
 
-function getTsSource(host: Tree, path: string): ts.SourceFile {
-  const text = host.read(path);
-  if (text === null) {
-    throw new SchematicsException(`File ${path} does not exist.`);
-  }
-  const sourceText = text.toString('utf-8');
-  return ts.createSourceFile(path, sourceText, ts.ScriptTarget.Latest, true);
-}
-
 function addImportToModule(
   host: Tree,
   path: string,
   symbolName: string,
   fileName: string,
 ) {
-  const source = getTsSource(host, path);
+  const source = getSourceFile(host, path);
   const change = insertImport(
     source,
     path,
@@ -144,7 +136,7 @@ export function addValueToVariable(
   variableName: string,
   text: string,
 ) {
-  const source = getTsSource(host, path);
+  const source = getSourceFile(host, path);
   const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
     throw new SchematicsException(

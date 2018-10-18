@@ -28,7 +28,7 @@ export function createUpgradeRule(targetVersion: TargetVersion,
     // In some applications, developers will have global stylesheets which are not specified in any
     // Angular component. Therefore we glob up all CSS and SCSS files outside of node_modules and
     // dist. The files will be read by the individual stylesheet rules and checked.
-    const extraStyleFiles = globSync('!(node_modules|dist)/**/*.+(css|scss)', {absolute: true});
+    const extraStyleFiles = globSync('!(node_modules|dist)/**/*.+(css|scss|less)', {absolute: true});
     const tslintConfig = createTslintConfig(targetVersion, {
       // Default options that can be overwritten if specified explicitly. e.g. if the
       // Material update schematic wants to specify a different upgrade data.

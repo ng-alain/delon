@@ -4,9 +4,9 @@ import * as ts from 'typescript';
 import { ExternalResource } from '../../tslint/component-file';
 import { ComponentWalker } from '../../tslint/component-walker';
 import {
+  findElements,
   findElementHasAttributes,
   findElementHasAttribute,
-  findElements,
 } from '../../html-parsing/elements';
 
 export class Rule extends Rules.AbstractRule {
@@ -48,12 +48,12 @@ export class Walker extends ComponentWalker {
         start: node.getStart() + list.offset,
         end: node.getStart() + list.offset + list.attr.length,
         message:
-          `Found deprecated output property "${red(list.attr)}" of "${bold(
-            'simple-table (st)',
-          )}" component. ` +
-          `Use the "${green(
+          `Found deprecated @Output() "${red(list.attr)}" on "${bold(
+            'st(simple-table)',
+          )}". ` +
+          `Use "${green(
             '(change)',
-          )}" output property instead, Document: https://ng-alain.com/components/table#STChange`,
+          )}" instead, Document: https://ng-alain.com/components/table#STChange`,
       });
     });
 
@@ -61,9 +61,11 @@ export class Walker extends ComponentWalker {
       failures.push({
         start: node.getStart() + offset,
         end: node.getStart() + offset + '[sortReName]'.length,
-        message: `Found deprecated property "${red(
+        message: `Found deprecated @Input() "${red(
           '[sortReName]',
-        )}" which has been removed, Just only via "STColumn.sort.reName"`,
+        )}" which has been removed, Use "${green(
+          'STColumn.sort.reName',
+        )}" instead.`,
       });
     });
 
@@ -75,12 +77,12 @@ export class Walker extends ComponentWalker {
         start: node.getStart() + list.offset,
         end: node.getStart() + list.offset + list.attr.length,
         message:
-          `Found deprecated output property "${red(list.attr)}" of "${bold(
-            'desc-list-item (sv)',
-          )}" component. ` +
-          `Use the "${green(
+          `Found deprecated @Input() "${red(list.attr)}" on "${bold(
+            'sv(desc-list-item)',
+          )}". ` +
+          `Use "${green(
             '[type]',
-          )}" output property instead, Document: https://ng-alain.com/components/view#sv`,
+          )}" instead, Document: https://ng-alain.com/components/view#sv`,
       });
     });
 

@@ -4,8 +4,6 @@ import {
   CssSelectorUpgradeData,
   classNames,
   ClassNameUpgradeData,
-  v2Element,
-  V2ElementUpgradeData,
 } from './data';
 import {TargetVersion} from './target-version';
 
@@ -28,13 +26,11 @@ type ValueOfChanges<T> = T extends VersionChanges<infer X> ? X : null;
 export interface RuleUpgradeData {
   classNames: VersionChanges<ClassNameUpgradeData>;
   cssSelectors: VersionChanges<CssSelectorUpgradeData>;
-  v2Element: VersionChanges<V2ElementUpgradeData>;
 }
 
 export const delonUpgradeData: RuleUpgradeData = {
   classNames,
   cssSelectors,
-  v2Element
 };
 
 

@@ -183,27 +183,27 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 原属性名               | 新属性名                     | ng update | 兼容处理 | 描述 |
 | ---------------------- | ---------------------------- | --------- | -------- | ---- |
-| `sort`                 | `sort.default`               | ×         | -        | -    |
-| `sorter`               | `sort.compare`               | ×         | -        | -    |
-| `sortKey`              | `sort.key`                   | ×         | -        | -    |
-| `sortReName`           | `sort.reName`                | ×         | -        | -    |
-| `filter`               | `fitler`                     | ×         | -        | -    |
-| `filters`              | `fitler.menus`               | ×         | -        | -    |
-| `filtered`             | `fitler.default`             | ×         | -        | -    |
-| `filterIcon`           | `fitler.icon`                | ×         | -        | -    |
-| `filterConfirmText`    | `fitler.confirmText`         | ×         | -        | -    |
-| `filterClearText`      | `fitler.clearText`           | ×         | -        | -    |
-| `filterMultiple`       | `fitler.multiple`            | ×         | -        | -    |
-| `filterKey`            | `fitler.key`                 | ×         | -        | -    |
-| `filterReName`         | `fitler.reName`              | ×         | -        | -    |
-| `ynTruth`              | `yn.truth`                   | ×         | -        | -    |
-| `ynYes`                | `yn.yes`                     | ×         | -        | -    |
-| `ynNo`                 | `yn.no`                      | ×         | -        | -    |
-| `buttons.component`    | `buttons.modal.component`    | ×         | -        | -    |
-| `buttons.params`       | `buttons.modal.params`       | ×         | -        | -    |
-| `buttons.paramName`    | `buttons.modal.paramsName`   | ×         | -        | -    |
-| `buttons.size`         | `buttons.modal.size`         | ×         | -        | -    |
-| `buttons.modalOptions` | `buttons.modal.modalOptions` | ×         | -        | -    |
+| `sort`                 | `sort.default`               | ×         | √        | -    |
+| `sorter`               | `sort.compare`               | ×         | √        | -    |
+| `sortKey`              | `sort.key`                   | ×         | √        | -    |
+| `sortReName`           | `sort.reName`                | ×         | √        | -    |
+| `filter`               | `fitler`                     | ×         | √        | -    |
+| `filters`              | `fitler.menus`               | ×         | √        | -    |
+| `filtered`             | `fitler.default`             | ×         | √        | -    |
+| `filterIcon`           | `fitler.icon`                | ×         | √        | -    |
+| `filterConfirmText`    | `fitler.confirmText`         | ×         | √        | -    |
+| `filterClearText`      | `fitler.clearText`           | ×         | √        | -    |
+| `filterMultiple`       | `fitler.multiple`            | ×         | √        | -    |
+| `filterKey`            | `fitler.key`                 | ×         | √        | -    |
+| `filterReName`         | `fitler.reName`              | ×         | √        | -    |
+| `ynTruth`              | `yn.truth`                   | ×         | √        | -    |
+| `ynYes`                | `yn.yes`                     | ×         | √        | -    |
+| `ynNo`                 | `yn.no`                      | ×         | √        | -    |
+| `buttons.component`    | `buttons.modal.component`    | ×         | √        | -    |
+| `buttons.params`       | `buttons.modal.params`       | ×         | √        | -    |
+| `buttons.paramName`    | `buttons.modal.paramsName`   | ×         | √        | -    |
+| `buttons.size`         | `buttons.modal.size`         | ×         | √        | -    |
+| `buttons.modalOptions` | `buttons.modal.modalOptions` | ×         | √        | -    |
 
 #### SimpleTableMultiSort
 
@@ -254,15 +254,23 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 - 受项目大小执行时间会越长，但由于无法（受限Angular Cli）报告通知，会看起来像是假死状态
 - 不要手动变更 `package.json` 任何 `@delon/*`、`ng-alain` 版本信息至 `2.x`，命令行会自行完成所有的一切
 - 升级之前可以尝试运行 `ng update` 了解当前项目是否支持
-- 当HTML文件被变更后，会自动进行格式化，因此可能会更多 Git Diff 信息
+- 当HTML文件被变更后，会自动HTML格式化，因此可能会更多 Git Diff 信息
+- 日志说明
+  - `Fixed 1 error(s) in` 表示正确修复了几项错误
+  - `ERROR:` 表示需要手动处理该错误（例如已移除组件｀standard-form-row｀）
 
 ```bash
 # 1、删除 node_modules、package-lock.json 或 yarn.lock
 yarn
-# 2、执行安装
+# 2、强制指定 `parse5` 版本
+yarn add parse5@^5.0.0 -D
+# 3、执行安装
 ng update ng-alain --next
 ```
 
 **未覆盖部分**
 
-- 若使用 `g2`，需要 `shared.module.ts` 导入 `DelonChartModule`
+- 上述文档所有在 ng update 列标识为 `×` 都需要手动处理
+- 若使用 `g2`，需要导入 `DelonChartModule` 至 `shared.module.ts`
+- 顶部右边部分业务菜单组件 `header/components` 下需要将 `item` 样式名变更为 `alain-default__nav-item`
+- 部分示例页相对应的样式变更自行参考 [ng-alain](https://github.com/ng-alain/ng-alain) 仓库

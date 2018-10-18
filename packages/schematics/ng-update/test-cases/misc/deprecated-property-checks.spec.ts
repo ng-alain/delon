@@ -7,9 +7,10 @@ describe('v2 deprecated property checks', () => {
       'import-checks': resolveBazelDataFile(`misc/deprecated-property-checks_input.ts`)
     });
 
-    expect(logOutput).toContain(`(checkboxChange)`);
+    expect(logOutput).toContain(`checkboxChange`);
+    expect(logOutput).toContain(`filterChange`);
     expect(logOutput).toContain(`STColumn.sort.reName`);
-    expect(logOutput).toContain(`desc-list-item (sv)`);
+    expect(logOutput).toContain(`detailClass`);
     expect(logOutput).toContain(`standard-form-row`);
   });
 });

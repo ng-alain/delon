@@ -5,14 +5,12 @@ import { createUpgradeRule } from './upgrade-rules';
 import { UpgradeTSLintConfig } from './upgrade-rules/tslint-config';
 import { delonUpgradeData } from './upgrade-data';
 import { v2LayoutRule } from './upgrade-rules/v2/v2LayoutRule';
+import { v2DomRule } from './upgrade-rules/v2/v2DomRule';
 
 /** List of additional upgrade rules which are specifically for the CDK. */
 const extraUpgradeRules = [
   // Misc check rules
   'check-property-names-misc',
-
-  // v2
-  ['v2-element-template', TargetVersion.V2],
 ];
 
 const ruleDirectories = globSync('upgrade-rules/**/', {
@@ -30,6 +28,7 @@ const tslintUpgradeConfig: UpgradeTSLintConfig = {
 export function updateToV2(): Rule {
   return chain([
     v2LayoutRule,
+    v2DomRule,
     createUpgradeRule(TargetVersion.V2, tslintUpgradeConfig)
   ]);
 }

@@ -1,8 +1,6 @@
 ---
 order: 10
-title:
-  en-US: Getting Started
-  zh-CN: 开始使用
+title: 开始使用
 type: Basic
 ---
 

@@ -8,10 +8,14 @@
 
 import { DefaultTreeDocument, DefaultTreeElement, parseFragment } from 'parse5';
 
-export function findElementsWithTagName(html: string, tagName: string) {
-  const document = parseFragment(html, {
+export function parseDocument(html: string): any {
+  return parseFragment(html, {
     sourceCodeLocationInfo: true,
   }) as DefaultTreeDocument;
+}
+
+export function findElementsWithTagName(html: string, tagName: string) {
+  const document = parseDocument(html);
   const elements: DefaultTreeElement[] = [];
 
   const visitNodes = nodes => {
@@ -36,9 +40,7 @@ export function findElementsWithTagName(html: string, tagName: string) {
  * include the specified attribute.
  */
 export function findElementsWithAttribute(html: string, attributeName: string) {
-  const document = parseFragment(html, {
-    sourceCodeLocationInfo: true,
-  }) as DefaultTreeDocument;
+  const document = parseDocument(html);
   const elements: DefaultTreeElement[] = [];
 
   const visitNodes = nodes => {
@@ -90,12 +92,10 @@ export function findAttributeOnElementWithAttrs(
 }
 
 /** 查找元素是否包含属性，返回开始位置集合 */
-export function findElements(
-  html: string,
-  tagName: string,
-): number[] {
-  return findElementsWithTagName(html, tagName)
-    .map(element => element.sourceCodeLocation.startOffset);
+export function findElements(html: string, tagName: string): number[] {
+  return findElementsWithTagName(html, tagName).map(
+    element => element.sourceCodeLocation.startOffset,
+  );
 }
 
 /** 查找元素是否包含属性，返回开始位置集合 */

@@ -135,13 +135,17 @@ export async function runTestCases(
   // Write each test-case input to the file-system. This is necessary because otherwise
   // TSLint won't be able to pick up the test cases.
   inputNames.forEach(inputName => {
+    const inputFullName = `projects/ng-alain/src/test-cases/${inputName}.ts`;
     const tempInputPath = join(
       tempPath,
-      `projects/ng-alain/src/test-cases/${inputName}.ts`,
+      inputFullName,
     );
 
     mkdirpSync(dirname(tempInputPath));
     writeFileSync(tempInputPath, readFileContent(inputs[inputName]));
+
+    // TODO: add to tree
+    appTree.create(inputFullName, readFileContent(inputs[inputName]))
   });
 
   runner.runSchematic(migrationName, {}, appTree);
@@ -157,5 +161,5 @@ export async function runTestCases(
   // Switch back to the initial working directory.
   process.chdir(initialWorkingDir);
 
-  return { tempPath, logOutput };
+  return { tempPath, logOutput, appTree };
 }

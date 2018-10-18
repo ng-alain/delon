@@ -36,7 +36,6 @@ Scaffolding has some **BREAKING CHANGES**, We refactoring layout styles using BE
 Upgrade `@angular` and `@delon` dependencies to the latest version.
 
 1. Cancel downgrade less [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-b9cfc7f2cdf78a7f4b91a753d10865a2)
-2. Use `targets` instead of `architect` [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-24e9645f54bc8704f0daa8780c492a3f)
 
 ### 2. Layout
 
@@ -76,11 +75,11 @@ Because of the BEM style naming, you need to modify style name of `src/app/layou
 ### Component name of abc
 
 | Old                 | New  | ng update | Description |
-|---------------------|------|-----------|-------------|
-| `simple-table`      | `st` | -         | -           |
-| `desc-list`         | `sv` | -         | -           |
-| `simple-html-form`  | `se` | -         | -           |
-| `standard-form-row` | `se` | -         | -           |
+| ------------------- | -------- | --------- | ---- |
+| `simple-table`      | `st`     | √         | -    |
+| `desc-list`         | `sv`     | √         | -    |
+| `simple-html-form`  | `se`     | √         | -    |
+| `standard-form-row` | `se`     | √         | Error reminder    |
 
 e.g:
 
@@ -116,9 +115,9 @@ e.g:
 
 | Component     | Old          | New        | ng update | Description                          |
 |---------------|--------------|------------|-----------|--------------------------------------|
-| `page-header` | `home_link`  | `homeLink` | -         | -                                    |
-| `page-header` | `home_i18n`  | `homeI18n` | -         | -                                    |
-| `st`          | `sortReName` | removed    | ×         | Just only via `STColumn.sort.reName` |
+| `page-header` | `home_link`  | `homeLink` | √         | -                                    |
+| `page-header` | `home_i18n`  | `homeI18n` | √         | -                                    |
+| `st`          | `sortReName` | Removed    | √         | Error reminder, Just only via `STColumn.sort.reName` |
 
 e.g:
 
@@ -142,30 +141,30 @@ e.g:
 
 | Old Property          | New Property | Sub Property      | ng update | Compatible 1.x | Description |
 |-----------------------|--------------|-------------------|-----------|----------------|-------------|
-| `[extraParams]`       | `req`        | `params`          | -         | -              | -           |
-| `[reqReName]`         | `req`        | `reName`          | -         | -              | -           |
-| `[reqMethod]`         | `req`        | `method`          | -         | -              | -           |
-| `[reqHeader]`         | `req`        | `header`          | -         | -              | -           |
-| `[reqBody]`           | `req`        | `body`            | -         | -              | -           |
-| `[resReName]`         | `res`        | `reName`          | -         | -              | -           |
-| `[preDataChange]`     | `res`        | `process`         | -         | -              | -           |
-| `[frontPagination]`   | `page`       | `front`           | -         | -              | -           |
-| `[zeroIndexedOnPage]` | `page`       | `zeroIndexed`     | -         | -              | -           |
-| `[pagePlacement]`     | `page`       | `placement`       | -         | -              | -           |
-| `[showPagination]`    | `page`       | `show`            | -         | -              | -           |
-| `[showSizeChanger]`   | `page`       | `showSize`        | -         | -              | -           |
-| `[pageSizeOptions]`   | `page`       | `pageSizes`       | -         | -              | -           |
-| `[showQuickJumper]`   | `page`       | `showQuickJumper` | -         | -              | -           |
-| `[showTotal]`         | `page`       | `total`           | -         | -              | -           |
-| `[isPageIndexReset]`  | `page`       | `indexReset`      | -         | -              | -           |
-| `[toTopInChange]`     | `page`       | `toTop`           | -         | -              | -           |
-| `[toTopOffset]`       | `page`       | `toTopOffset`     | -         | -              | -           |
-| `(checkboxChange)`    | `(change)`   | -                 | ×         | √              | -           |
-| `(radioChange)`       | `(change)`   | -                 | ×         | √              | -           |
-| `(sortChange)`        | `(change)`   | -                 | ×         | √              | -           |
-| `(filterChange)`      | `(change)`   | -                 | ×         | √              | -           |
-| `(rowClick)`          | `(change)`   | -                 | ×         | √              | -           |
-| `(rowDblClick)`       | `(change)`   | -                 | ×         | √              | -           |
+| `[extraParams]`       | `req`      | `params`          | √         | -        | -    |
+| `[reqReName]`         | `req`      | `reName`          | √         | -        | -    |
+| `[reqMethod]`         | `req`      | `method`          | √         | -        | -    |
+| `[reqHeader]`         | `req`      | `header`          | √         | -        | -    |
+| `[reqBody]`           | `req`      | `body`            | √         | -        | -    |
+| `[resReName]`         | `res`      | `reName`          | √         | -        | -    |
+| `[preDataChange]`     | `res`      | `process`         | √         | -        | -    |
+| `[frontPagination]`   | `page`     | `front`           | √         | -        | -    |
+| `[zeroIndexedOnPage]` | `page`     | `zeroIndexed`     | √         | -        | -    |
+| `[pagePlacement]`     | `page`     | `placement`       | √         | -        | -    |
+| `[showPagination]`    | `page`     | `show`            | √         | -        | -    |
+| `[showSizeChanger]`   | `page`     | `showSize`        | √         | -        | -    |
+| `[pageSizeOptions]`   | `page`     | `pageSizes`       | √         | -        | -    |
+| `[showQuickJumper]`   | `page`     | `showQuickJumper` | √         | -        | -    |
+| `[showTotal]`         | `page`     | `total`           | √         | -        | -    |
+| `[isPageIndexReset]`  | `page`     | `indexReset`      | √         | -        | -    |
+| `[toTopInChange]`     | `page`     | `toTop`           | √         | -        | -    |
+| `[toTopOffset]`       | `page`     | `toTopOffset`     | √         | -        | -    |
+| `(checkboxChange)`    | `(change)` | -                 | √         | √        | Error reminder    |
+| `(radioChange)`       | `(change)` | -                 | √         | √        | Error reminder    |
+| `(sortChange)`        | `(change)` | -                 | √         | √        | Error reminder    |
+| `(filterChange)`      | `(change)` | -                 | √         | √        | Error reminder    |
+| `(rowClick)`          | `(change)` | -                 | √         | √        | Error reminder    |
+| `(rowDblClick)`       | `(change)` | -                 | √         | √        | Error reminder    |
 
 > A demo [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-f573fc0900f21b377dac432f1668c584L164)
 
@@ -176,35 +175,35 @@ e.g:
 + <st [req]="{params: params, reName: reqReName}">
 ```
 
-#### Column
+#### Column Schema
 
 将所有 `type` 所对应的属性重新定义为独立子属性使其列描述的定义更内聚，原 `SimpleTableColumn` 替换 `STColumn`。
 
 > 同时保持 `simple-table` 列描述的兼容性，且兼容会在 `3.x` 时被移除。
 
-| Old Property           | New Property                 | ng update | Compatible 1.x | Description |
-|------------------------|------------------------------|-----------|----------------|-------------|
-| `sort`                 | `sort.default`               | ×         | √              | -           |
-| `sorter`               | `sort.compare`               | ×         | √              | -           |
-| `sortKey`              | `sort.key`                   | ×         | √              | -           |
-| `sortReName`           | `sort.reName`                | ×         | √              | -           |
-| `filter`               | `fitler`                     | ×         | √              | -           |
-| `filters`              | `fitler.menus`               | ×         | √              | -           |
-| `filtered`             | `fitler.default`             | ×         | √              | -           |
-| `filterIcon`           | `fitler.icon`                | ×         | √              | -           |
-| `filterConfirmText`    | `fitler.confirmText`         | ×         | √              | -           |
-| `filterClearText`      | `fitler.clearText`           | ×         | √              | -           |
-| `filterMultiple`       | `fitler.multiple`            | ×         | √              | -           |
-| `filterKey`            | `fitler.key`                 | ×         | √              | -           |
-| `filterReName`         | `fitler.reName`              | ×         | √              | -           |
-| `ynTruth`              | `yn.truth`                   | ×         | √              | -           |
-| `ynYes`                | `yn.yes`                     | ×         | √              | -           |
-| `ynNo`                 | `yn.no`                      | ×         | √              | -           |
-| `buttons.component`    | `buttons.modal.component`    | ×         | √              | -           |
-| `buttons.params`       | `buttons.modal.params`       | ×         | √              | -           |
-| `buttons.paramName`    | `buttons.modal.paramsName`   | ×         | √              | -           |
-| `buttons.size`         | `buttons.modal.size`         | ×         | √              | -           |
-| `buttons.modalOptions` | `buttons.modal.modalOptions` | ×         | √              | -           |
+| 原属性名               | 新属性名                     | ng update | 兼容处理 | 描述 |
+| ---------------------- | ---------------------------- | --------- | -------- | ---- |
+| `sort`                 | `sort.default`               | ×         | √        | -    |
+| `sorter`               | `sort.compare`               | ×         | √        | -    |
+| `sortKey`              | `sort.key`                   | ×         | √        | -    |
+| `sortReName`           | `sort.reName`                | ×         | √        | -    |
+| `filter`               | `fitler`                     | ×         | √        | -    |
+| `filters`              | `fitler.menus`               | ×         | √        | -    |
+| `filtered`             | `fitler.default`             | ×         | √        | -    |
+| `filterIcon`           | `fitler.icon`                | ×         | √        | -    |
+| `filterConfirmText`    | `fitler.confirmText`         | ×         | √        | -    |
+| `filterClearText`      | `fitler.clearText`           | ×         | √        | -    |
+| `filterMultiple`       | `fitler.multiple`            | ×         | √        | -    |
+| `filterKey`            | `fitler.key`                 | ×         | √        | -    |
+| `filterReName`         | `fitler.reName`              | ×         | √        | -    |
+| `ynTruth`              | `yn.truth`                   | ×         | √        | -    |
+| `ynYes`                | `yn.yes`                     | ×         | √        | -    |
+| `ynNo`                 | `yn.no`                      | ×         | √        | -    |
+| `buttons.component`    | `buttons.modal.component`    | ×         | √        | -    |
+| `buttons.params`       | `buttons.modal.params`       | ×         | √        | -    |
+| `buttons.paramName`    | `buttons.modal.paramsName`   | ×         | √        | -    |
+| `buttons.size`         | `buttons.modal.size`         | ×         | √        | -    |
+| `buttons.modalOptions` | `buttons.modal.modalOptions` | ×         | √        | -    |
 
 #### SimpleTableMultiSort
 
@@ -212,29 +211,29 @@ e.g:
 |------------------|-----------------|-----------|----------------|-------------|
 | `name_separator` | `nameSeparator` | ×         | ×              | -           |
 
-### chart 类库组件名变更
+### chart library
 
 | Old Name   | New Name    | ng update | Description |
 |------------|-------------|-----------|-------------|
 | `g2-chart` | `g2-custom` | -         | -           |
 
-## theme类库变更
+## theme library
 
-### 布局
+### Layout
 
-[默认布局](/theme/default)和[全屏布局](/theme/fullscreen)样式命名重新采用 BEM 形式，这倒置布局的样式名都被改变，但很容易升级，有关细节参考 [commit]()。
+[Default layout](/theme/default) and [fullscreen layout](/theme/fullscreen) style naming refactored to BEM format, refer to [commit](https://github.com/ng-alain/ng-alain/pull/673/files) for details.
 
-抽离这两种布局样式成独立的形式存在，因此需要在 `src/styles.less` 单独独立对应布局的样式：
+So you need to specify the layout style in `src/styles.less`:
 
 ```less
 @import '~@delon/theme/styles/index';
-// 默认布局
+// Defualt layout
 @import '~@delon/theme/styles/layout/default/index';
-// 全屏布局
+// Fullscreen layout
 @import '~@delon/theme/styles/layout/fullscreen/index';
-// @delon/abc 业务组件库
+// @delon/abc library
 @import '~@delon/abc/index';
-// @delon/chart G2图表组件库
+// @delon/chart G2 Chart library
 @import '~@delon/chart/index';
 ```
 
@@ -245,3 +244,33 @@ e.g:
 | `badge_dot`     | `badgeDot`     | ×         | ×              | -           |
 | `badge_status`  | `badgeStatus`  | ×         | ×              | -           |
 | `shortcut_root` | `shortcutRoot` | ×         | ×              | -           |
+
+## ng update
+
+The `ng update` upgrade provided by 2.0 is based on the [1.x](https://github.com/ng-alain/ng-alain/tree/1.x) branch, please make sure commit you changing codes before running `ng update` command.
+
+**NOTE:**
+
+- Project size determines execution time, but can't (Just Angular Cli question) report notification
+- Do't changes `@delon/*`, `ng-alain` version information of `package.json`, the command line will automatically fix it
+- You can run `ng update` before upgrading to check if it's supported
+- When the HTML file is changed, it will be automatically HTML formatted
+- Log
+  - `Fixed 1 error(s) in` Correct changed repair log
+  - `ERROR:` Need manual processing (e.g: `standard-form-row` component has been removed)
+
+```bash
+# 1. Removes node_modules, package-lock.json, yarn.lock
+yarn
+# 2.Forced installation of `parse5`
+yarn add parse5@^5.0.0 -D
+# 3. Running
+ng update ng-alain --next
+```
+
+**Uncovered part**
+
+- All of the above documents are identified as `x` in the ng update column
+- If you use `g2` components, you need import `DelonChartModule` to `shared.module.ts`
+- Top business menu components directory `header/components`, need to change the `item` style name to `alain-default__nav-item`
+- Demo pages corresponding style changed reference [ng-alain](https://github.com/ng-alain/ng-alain) repository

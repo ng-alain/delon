@@ -1,4 +1,6 @@
 import { Rule, Tree, SchematicContext } from '@angular-devkit/schematics';
+import * as ts from 'typescript';
+
 import { DomService } from '../../dom/dom.service';
 import { updateComponentMetadata } from '../../../utils/ast';
 import { InsertChange } from '../../../utils/devkit-utils/change';
@@ -6,6 +8,18 @@ import { addPackageToPackageJson } from '../../../utils/json';
 import { VERSION } from '../../../utils/lib-versions';
 
 const DOM = new DomService();
+
+function fixClass(host: Tree, src: string, classes: Object) {
+  if (!host.exists(src)) {
+    console.log(`Not found in [${src}]`);
+    return;
+  }
+  let content = host.read(src).toString();
+  Object.keys(classes).forEach(key => {
+    content = content.replace(key, classes[key]);
+  });
+  host.overwrite(src, content);
+}
 
 function fixVersion(host: Tree, context: SchematicContext) {
   addPackageToPackageJson(
@@ -107,9 +121,8 @@ function fixDefaultTs(host: Tree, context: SchematicContext) {
     return;
   }
 
-  updateComponentMetadata(host, filePath, nodes => {
-    let children = (nodes[0] as any)!.properties;
-    const end = children[children.length - 1].end;
+  updateComponentMetadata(host, filePath, (node: ts.ObjectLiteralExpression) => {
+    const end = node.properties[node.properties.length - 1].end;
     const toInsert = `,
   preserveWhitespaces: false,
   host: {
@@ -126,9 +139,8 @@ function fixFullScreenTs(host: Tree, context: SchematicContext) {
     return;
   }
 
-  updateComponentMetadata(host, filePath, nodes => {
-    let children = (nodes[0] as any)!.properties;
-    const end = children[children.length - 1].end;
+  updateComponentMetadata(host, filePath, (node: ts.ObjectLiteralExpression) => {
+    const end = node.properties[node.properties.length - 1].end;
     const toInsert = `,
   host: {
     '[class.alain-fullscreen]': 'true',
@@ -185,6 +197,11 @@ function fixHeaderHtml(host: Tree, context: SchematicContext) {
             type: 'class-name',
             value: 'hidden-xs',
             newValue: 'hidden-mobile',
+          },
+          {
+            type: 'class-name',
+            value: 'header-search',
+            newValue: 'alain-default__search',
           },
         ],
       },
@@ -268,6 +285,14 @@ export function v2LayoutRule(): Rule {
     fixDefaultHtml(host, context);
     fixDefaultTs(host, context);
     fixHeaderHtml(host, context);
+    fixClass(
+      host,
+      `src/app/layout/default/header/components/search.component.ts`,
+      {
+        'header-search__focus': 'alain-default__search-focus',
+        'header-search__toggled': 'alain-default__search-toggled',
+      },
+    );
     fixSidebarHtml(host, context);
 
     fixFullScreenTs(host, context);
