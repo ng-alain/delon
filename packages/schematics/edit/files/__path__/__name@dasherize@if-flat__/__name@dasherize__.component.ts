@@ -46,8 +46,8 @@ export class <%= componentName %> implements OnInit {
   constructor(<% if(modal) { %>
     private modal: NzModalRef,<% } else { %>
     private route: ActivatedRoute,
+    public location: Location,<% } %>
     private msgSrv: NzMessageService,
-    public _location: Location,<% } %>
     public http: _HttpClient,
   ) {}
 
