@@ -35,8 +35,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 升级 `@angular` 和 `@delon` 依赖包至最新版本
 
-1. 取消降级 less [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-b9cfc7f2cdf78a7f4b91a753d10865a2)
-2. 使用 `targets` 替代 `architect` [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-24e9645f54bc8704f0daa8780c492a3f)
++ 取消降级 less [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-b9cfc7f2cdf78a7f4b91a753d10865a2)
 
 ### 2、布局
 
@@ -77,10 +76,10 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 原组件名            | 新组件名 | ng update | 描述 |
 | ------------------- | -------- | --------- | ---- |
-| `simple-table`      | `st`     | -         | -    |
-| `desc-list`         | `sv`     | -         | -    |
-| `simple-html-form`  | `se`     | -         | -    |
-| `standard-form-row` | `se`     | -         | -    |
+| `simple-table`      | `st`     | √         | -    |
+| `desc-list`         | `sv`     | √         | -    |
+| `simple-html-form`  | `se`     | √         | -    |
+| `standard-form-row` | `se`     | √         | 过期提醒    |
 
 例如：
 
@@ -116,9 +115,9 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 所属组件      | 原属性名     | 新属性名   | ng update | 描述                             |
 |---------------|--------------|------------|-----------|----------------------------------|
-| `page-header` | `home_link`  | `homeLink` | -         | -                                |
-| `page-header` | `home_i18n`  | `homeI18n` | -         | -                                |
-| `st`          | `sortReName` | 移除       | ×         | 仅使用 `STColumn.sort.reName` 值 |
+| `page-header` | `home_link`  | `homeLink` | √         | -                                |
+| `page-header` | `home_i18n`  | `homeI18n` | √         | -                                |
+| `st`          | `sortReName` | 移除       | √         | 过期提醒，仅使用 `STColumn.sort.reName` 值 |
 
 例如：
 
@@ -142,30 +141,30 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 原属性名              | 新属性名   | 子参数            | ng update | 兼容处理 | 描述 |
 | --------------------- | ---------- | ----------------- | --------- | -------- | ---- |
-| `[extraParams]`       | `req`      | `params`          | -         | -        | -    |
-| `[reqReName]`         | `req`      | `reName`          | -         | -        | -    |
-| `[reqMethod]`         | `req`      | `method`          | -         | -        | -    |
-| `[reqHeader]`         | `req`      | `header`          | -         | -        | -    |
-| `[reqBody]`           | `req`      | `body`            | -         | -        | -    |
-| `[resReName]`         | `res`      | `reName`          | -         | -        | -    |
-| `[preDataChange]`     | `res`      | `process`         | -         | -        | -    |
-| `[frontPagination]`   | `page`     | `front`           | -         | -        | -    |
-| `[zeroIndexedOnPage]` | `page`     | `zeroIndexed`     | -         | -        | -    |
-| `[pagePlacement]`     | `page`     | `placement`       | -         | -        | -    |
-| `[showPagination]`    | `page`     | `show`            | -         | -        | -    |
-| `[showSizeChanger]`   | `page`     | `showSize`        | -         | -        | -    |
-| `[pageSizeOptions]`   | `page`     | `pageSizes`       | -         | -        | -    |
-| `[showQuickJumper]`   | `page`     | `showQuickJumper` | -         | -        | -    |
-| `[showTotal]`         | `page`     | `total`           | -         | -        | -    |
-| `[isPageIndexReset]`  | `page`     | `indexReset`      | -         | -        | -    |
-| `[toTopInChange]`     | `page`     | `toTop`           | -         | -        | -    |
-| `[toTopOffset]`       | `page`     | `toTopOffset`     | -         | -        | -    |
-| `(checkboxChange)`    | `(change)` | -                 | ×         | √        | -    |
-| `(radioChange)`       | `(change)` | -                 | ×         | √        | -    |
-| `(sortChange)`        | `(change)` | -                 | ×         | √        | -    |
-| `(filterChange)`      | `(change)` | -                 | ×         | √        | -    |
-| `(rowClick)`          | `(change)` | -                 | ×         | √        | -    |
-| `(rowDblClick)`       | `(change)` | -                 | ×         | √        | -    |
+| `[extraParams]`       | `req`      | `params`          | √         | -        | -    |
+| `[reqReName]`         | `req`      | `reName`          | √         | -        | -    |
+| `[reqMethod]`         | `req`      | `method`          | √         | -        | -    |
+| `[reqHeader]`         | `req`      | `header`          | √         | -        | -    |
+| `[reqBody]`           | `req`      | `body`            | √         | -        | -    |
+| `[resReName]`         | `res`      | `reName`          | √         | -        | -    |
+| `[preDataChange]`     | `res`      | `process`         | √         | -        | -    |
+| `[frontPagination]`   | `page`     | `front`           | √         | -        | -    |
+| `[zeroIndexedOnPage]` | `page`     | `zeroIndexed`     | √         | -        | -    |
+| `[pagePlacement]`     | `page`     | `placement`       | √         | -        | -    |
+| `[showPagination]`    | `page`     | `show`            | √         | -        | -    |
+| `[showSizeChanger]`   | `page`     | `showSize`        | √         | -        | -    |
+| `[pageSizeOptions]`   | `page`     | `pageSizes`       | √         | -        | -    |
+| `[showQuickJumper]`   | `page`     | `showQuickJumper` | √         | -        | -    |
+| `[showTotal]`         | `page`     | `total`           | √         | -        | -    |
+| `[isPageIndexReset]`  | `page`     | `indexReset`      | √         | -        | -    |
+| `[toTopInChange]`     | `page`     | `toTop`           | √         | -        | -    |
+| `[toTopOffset]`       | `page`     | `toTopOffset`     | √         | -        | -    |
+| `(checkboxChange)`    | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(radioChange)`       | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(sortChange)`        | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(filterChange)`      | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(rowClick)`          | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(rowDblClick)`       | `(change)` | -                 | √         | -        | 过期提醒    |
 
 > 一个示例说明 [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-f573fc0900f21b377dac432f1668c584L164)
 
@@ -216,13 +215,13 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 | 原组件名   | 新组件名    | ng update | 描述 |
 | ---------- | ----------- | --------- | ---- |
-| `g2-chart` | `g2-custom` | -         | -    |
+| `g2-chart` | `g2-custom` | √         | -    |
 
 ## theme 类库变更
 
 ### 布局
 
-[默认布局](/theme/default)和[全屏布局](/theme/fullscreen)样式命名重新采用 BEM 形式，这倒置布局的样式名都被改变，但很容易升级，有关细节参考 [commit]()。
+[默认布局](/theme/default)和[全屏布局](/theme/fullscreen)样式命名重新采用 BEM 形式，这倒置布局的样式名都被改变，但很容易升级，有关细节参考 [commit](https://github.com/ng-alain/ng-alain/pull/673/files)。
 
 抽离这两种布局样式成独立的形式存在，因此需要在 `src/styles.less` 单独独立对应布局的样式：
 
@@ -245,3 +244,33 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 | `badge_dot`     | `badgeDot`     | ×         | ×        | -    |
 | `badge_status`  | `badgeStatus`  | ×         | ×        | -    |
 | `shortcut_root` | `shortcutRoot` | ×         | ×        | -    |
+
+## ng update
+
+2.0 提供的 `ng update` 升级是基于 [1.x](https://github.com/ng-alain/ng-alain/tree/1.x) 分支模板，事实上，多多少少已经会有一些变更，因此，`ng update` 命令是无法保证脚手架这一部分的准确性，因此在升级之前请**确保签入所有代码**，以便更好的观察变更纪录。
+
+**注意：**
+
+- 受项目大小执行时间会越长，但由于无法（受限Angular Cli）报告通知，会看起来像是假死状态
+- 不要手动变更 `package.json` 任何 `@delon/*`、`ng-alain` 版本信息至 `2.x`，命令行会自行完成所有的一切
+- 升级之前可以尝试运行 `ng update` 了解当前项目是否支持
+- 当HTML文件被变更后，会自动HTML格式化，因此可能会更多 Git Diff 信息
+- 日志说明
+  - `Fixed 1 error(s) in` 表示正确修复了几项错误
+  - `ERROR:` 表示需要手动处理该错误（例如已移除组件｀standard-form-row｀）
+
+```bash
+# 1、删除 node_modules、package-lock.json 或 yarn.lock
+yarn
+# 2、强制指定 `parse5` 版本
+yarn add parse5@^5.0.0 -D
+# 3、执行安装
+ng update ng-alain --next
+```
+
+**未覆盖部分**
+
+- 上述文档所有在 ng update 列标识为 `×` 都需要手动处理
+- 若使用 `g2`，需要导入 `DelonChartModule` 至 `shared.module.ts`
+- 顶部右边部分业务菜单组件 `header/components` 下需要将 `item` 样式名变更为 `alain-default__nav-item`
+- 部分示例页相对应的样式变更自行参考 [ng-alain](https://github.com/ng-alain/ng-alain) 仓库

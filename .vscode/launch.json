@@ -46,6 +46,7 @@
       "runtimeArgs": ["-r", "ts-node/register"],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
+      "sourceMaps": true,
       "internalConsoleOptions": "openOnSessionStart",
       "args": [
         "${workspaceFolder}/packages/schematics/test.ts"

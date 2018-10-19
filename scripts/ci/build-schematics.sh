@@ -155,7 +155,7 @@ fi
 
 if [[ ${TEST} == true ]]; then
   echo "jasmine"
-  $JASMINE ${DIST}/**/*.spec.js
+  $JASMINE "${DIST}/**/*.spec.js"
 fi
 
 echo "Finished cli!"

@@ -1,4 +1,4 @@
-import { Tree } from '@angular-devkit/schematics';
+import { Tree, SchematicsException } from '@angular-devkit/schematics';
 import * as fs from 'fs';
 import { join } from 'path';
 
