@@ -8,7 +8,7 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "outDir": "../out-tsc/app",
-    "target": "es2015",
+    "target": "es5",
     "module": "es2015",
     "baseUrl": ".",
     "types": [],

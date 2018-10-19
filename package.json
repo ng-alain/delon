@@ -67,7 +67,7 @@
     "qrious": "^4.0.2",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26",
-    "document-register-element": "^1.7.2"
+    "@webcomponents/custom-elements": "^1.2.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",
