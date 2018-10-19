@@ -1,6 +1,8 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {createCustomElement} from '@angular/elements';
+
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -28,6 +30,8 @@ import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
 import { SimplemdeModule } from 'ngx-simplemde';
 
+import { ExampleModule, EXAMPLE_COMPONENTS } from './routes/gen/examples';
+
 export function StartupServiceFactory(
   startupService: StartupService,
 ): Function {
@@ -43,6 +47,7 @@ export function StartupServiceFactory(
     SharedModule,
     JsonSchemaModule,
     RoutesModule,
+    ExampleModule,
     // i18n
     TranslateModule.forRoot(),
     NgxTinymceModule.forRoot({
@@ -80,4 +85,13 @@ export function StartupServiceFactory(
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(injector: Injector) {
+    Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
+      const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {
+        injector,
+      });
+      customElements.define(key, element);
+    });
+  }
+}

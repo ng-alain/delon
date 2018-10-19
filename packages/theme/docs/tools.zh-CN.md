@@ -350,7 +350,10 @@ Ant Design 是以 `14px` 为基准字号。
 
 | 名称 | 说明 |
 | ---- | --- |
-| `ant-table-rep` | 表格响应式 |
+| `ant-table-rep__title` | 标题 |
+| `ant-table-rep__hide-header-footer` | 小屏幕时才显示标题或底部 |
+
+[comment]: <demo(table-rep)>
 
 ### nz-tag
 
