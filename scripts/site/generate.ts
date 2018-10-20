@@ -77,6 +77,13 @@ function generateModule(config: ModuleConfig) {
     }
   }
 
+  function fixMDClass(fileObject: any) {
+    const contentObj = fileObject.item.content;
+    Object.keys(contentObj).forEach(lan => {
+      contentObj[lan].content = `<section class="markdown">${contentObj[lan].content}</section>`;
+    });
+  }
+
   function fixDemo(fileObject: any, demos: any) {
     const demoHTML: string[] = [];
     demoHTML.push(`<nz-row [nzGutter]="16">`);
@@ -98,10 +105,7 @@ function generateModule(config: ModuleConfig) {
     demoHTML.push('</nz-row>');
     fileObject.demos = demoHTML.join('');
 
-    const contentObj = fileObject.item.content;
-    Object.keys(contentObj).forEach(lan => {
-      contentObj[lan].content = `<section class="markdown">${contentObj[lan].content}</section>`;
-    });
+    fixMDClass(fileObject);
   }
 
   function fixExample(fileObject: any, demos: any) {
@@ -201,6 +205,8 @@ function generateModule(config: ModuleConfig) {
         fixDemo(fileObject, demos);
       } else if (isExample) {
         fixExample(fileObject, demos);
+      } else {
+        fixMDClass(fileObject);
       }
       fileObject.codes = JSON.stringify(demoList);
       fileObject.item = JSON.stringify(fileObject.item);
