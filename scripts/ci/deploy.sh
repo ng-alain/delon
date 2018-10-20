@@ -7,15 +7,26 @@ source ${thisDir}/_travis-fold.sh
 
 ${thisDir}/build-all.sh
 
+cd $(dirname $0)/../..
+
+DIST="$(pwd)/dist"
+
+commitSha=$(git rev-parse --short HEAD)
+commitAuthorName=$(git --no-pager show -s --format='%an' HEAD)
+commitAuthorEmail=$(git --no-pager show -s --format='%ae' HEAD)
+commitMessage=$(git log --oneline -n 1)
+commitMessageCheck=$(git log --oneline -n 2)
+
+if [ ${commitAuthorName} != 'cipchk' ]; then
+  echo "Warning: Just only cipchk user (current: ${commitAuthorName})"
+  exit 0
+fi
+
 if [ -z ${DELON_BUILDS_TOKEN} ]; then
   echo "Error: No access token for GitHub could be found." \
        "Please set the environment variable 'DELON_BUILDS_TOKEN'."
   exit 1
 fi
-
-cd $(dirname $0)/../..
-
-DIST="$(pwd)/dist"
 
 travisFoldStart "publish.dist"
   buildDir=${DIST}/publish
@@ -27,12 +38,6 @@ travisFoldStart "publish.dist"
   packageRepo=delon-builds
   buildVersion=$(node -pe "require('./package.json').version")
   branchName=${TRAVIS_BRANCH:-'master'}
-
-  commitSha=$(git rev-parse --short HEAD)
-  commitAuthorName=$(git --no-pager show -s --format='%an' HEAD)
-  commitAuthorEmail=$(git --no-pager show -s --format='%ae' HEAD)
-  commitMessage=$(git log --oneline -n 1)
-  commitMessageCheck=$(git log --oneline -n 2)
 
   buildVersionName="${buildVersion}-${commitSha}"
   buildTagName="${branchName}-${commitSha}"
