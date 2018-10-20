@@ -7,11 +7,11 @@ type: example
 
 ## zh-CN
 
-最简单的用法。
+小屏幕查看效果。
 
 ## en-US
 
-Simplest of usage.
+Mobile screen view effect.
 
 ```ts
 import { Component } from '@angular/core';

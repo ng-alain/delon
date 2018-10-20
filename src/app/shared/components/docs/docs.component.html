@@ -18,10 +18,10 @@
     <config-button *ngIf="meta.item.config"></config-button>
     <edit-button [item]="item"></edit-button>
   </h1>
-  <div *ngIf="data.con.content" [innerHTML]="data.con.content" routeTransfer></div>
-  <h2 *ngIf="data.demo" id="{{demoStr}}" style="margin-bottom: 32px;" [innerHTML]="demoContent"></h2>
 </section>
+<div *ngIf="data.con.content" [innerHTML]="data.con.content" routeTransfer></div>
 <ng-container *ngIf="data.demo">
+  <h2 id="{{demoStr}}" style="margin-bottom: 32px;" [innerHTML]="demoContent"></h2>
   <ng-content></ng-content>
 </ng-container>
-<div class="markdown api-container" *ngIf="data.con.api" [innerHTML]="data.con.api" routeTransfer></div>
+<div *ngIf="data.con.api" class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>
