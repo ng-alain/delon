@@ -7,7 +7,7 @@ import { WINDOW } from './win_tokens';
 
 import { DelonLocaleModule } from './locale/locale.module';
 
-// region: import
+// #region import
 import { ALAIN_I18N_TOKEN, AlainI18NServiceFake } from './services/i18n/i18n';
 
 import { ModalHelper } from './services/modal/modal.helper';
@@ -24,7 +24,7 @@ import { KeysPipe } from './pipes/keys/keys.pipe';
 import { YNPipe } from './pipes/yn/yn.pipe';
 const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe];
 
-// endregion
+// #endregion
 
 @NgModule({
   imports: [CommonModule, RouterModule, OverlayModule],

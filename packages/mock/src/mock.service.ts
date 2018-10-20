@@ -11,7 +11,7 @@ export class MockService implements OnDestroy {
     delete this.config.data;
   }
 
-  // region: parse rule
+  // #region parse rule
 
   private applyMock() {
     this.cached = [];
@@ -118,7 +118,7 @@ export class MockService implements OnDestroy {
     throw error;
   }
 
-  // endregion
+  // #endregion
 
   getRule(method: string, url: string): MockRule {
     method = (method || 'GET').toUpperCase();

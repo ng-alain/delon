@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
-// region: all modules
+// #region all modules
 import { STModule } from '@delon/abc/table';
 import { SVModule } from '@delon/abc/view';
 import { SEModule } from '@delon/abc/edit';
@@ -59,7 +59,7 @@ const MODULES = [
   DatePickerModule,
 ];
 
-// endregion
+// #endregion
 
 @NgModule({
   imports: [

@@ -32,7 +32,7 @@ export class ReuseTabService implements OnDestroy {
   private _closableCached: { [url: string]: boolean } = {};
   private removeUrlBuffer: string;
 
-  // region: public
+  // #region public
 
   /** 当前路由地址 */
   get curUrl() {
@@ -335,9 +335,9 @@ export class ReuseTabService implements OnDestroy {
   refresh(data?: any) {
     this._cachedChange.next({ active: 'refresh', data });
   }
-  // endregion
+  // #endregion
 
-  // region: privates
+  // #region privates
 
   private destroy(_handle: any) {
     if (_handle && _handle.componentRef && _handle.componentRef.destroy)
@@ -350,7 +350,7 @@ export class ReuseTabService implements OnDestroy {
     console.warn(...args);
   }
 
-  // endregion
+  // #endregion
 
   constructor(private injector: Injector, private menuService: MenuService) {}
 

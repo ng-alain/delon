@@ -24,7 +24,7 @@ const COMPONENTS = [
   SFFixedDirective,
 ];
 
-// region: widgets
+// #region widgets
 
 import { WidgetRegistry } from './widget.factory';
 import { NzWidgetRegistry } from './widgets/nz-widget.registry';
@@ -76,7 +76,7 @@ const WIDGETS = [
   TextWidget,
 ];
 
-// endregion
+// #endregion
 
 @NgModule({
   imports: [CommonModule, FormsModule, DelonUtilModule, DelonLocaleModule, NgZorroAntdModule],

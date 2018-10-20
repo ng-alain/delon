@@ -223,7 +223,7 @@ function generateModule(config: ModuleConfig) {
     });
   });
 
-  // region: generate meta file
+  // #region generate meta file
 
   const metaObj = Object.assign({ types: [] }, includeAttributes(config, {}));
   metaObj.list = metas;
@@ -233,9 +233,9 @@ function generateModule(config: ModuleConfig) {
     fs.readFileSync(path.join(rootDir, config.template.meta)).toString('utf8'),
     path.join(distPath, `meta.ts`),
   );
-  // endregion
+  // #endregion
 
-  // region: generate module file
+  // #region generate module file
   const moduleObj: ModuleTemplateData = {
     name: config.name,
     moduleName: genUpperName(config.name),
@@ -250,7 +250,7 @@ function generateModule(config: ModuleConfig) {
       .toString('utf8'),
     path.join(distPath, `${config.name}.module.ts`),
   );
-  // endregion
+  // #endregion
 }
 
 for (const m of siteConfig.modules) {

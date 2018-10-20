@@ -27,7 +27,7 @@ import { InputNumber } from '@delon/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
-  // region: fields
+  // #region fields
 
   @Input()
   icon:
@@ -43,7 +43,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
 
   @Input() borderColor = '#ddd';
 
-  // endregion
+  // #endregion
 
   constructor(
     private cd: ChangeDetectorRef,

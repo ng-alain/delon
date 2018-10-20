@@ -43,16 +43,16 @@ export class STExport {
     );
     const cc = colData.length,
       dc = opt._d.length;
-    // region: column
+
+    // column
     for (let i = 0; i < cc; i++) {
       sheet[`${String.fromCharCode(65 + i)}1`] = {
         t: 's',
         v: colData[i].title,
       };
     }
-    // endregion
 
-    // region: content
+    // content
     for (let i = 0; i < dc; i++) {
       for (let j = 0; j < cc; j++) {
         sheet[`${String.fromCharCode(65 + j)}${i + 2}`] = this._stGet(
@@ -61,7 +61,6 @@ export class STExport {
         );
       }
     }
-    // endregion
 
     if (cc > 0 && dc > 0) {
       sheet['!ref'] = `A1:${String.fromCharCode(65 + cc - 1)}${dc + 1}`;

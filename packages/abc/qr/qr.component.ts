@@ -24,7 +24,8 @@ import { QRConfig } from './qr.config';
 })
 export class QRComponent implements OnChanges {
   dataURL: string;
-  // region: fields
+
+  // #region fields
 
   /** 背景 */
   @Input()
@@ -61,7 +62,7 @@ export class QRComponent implements OnChanges {
   @Output()
   change = new EventEmitter<string>();
 
-  // endregion
+  // #endregion
 
   constructor(
     cog: QRConfig,

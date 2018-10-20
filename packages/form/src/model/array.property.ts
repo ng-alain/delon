@@ -84,7 +84,7 @@ export class ArrayProperty extends PropertyGroup {
     else this._objErrors = {};
   }
 
-  // region: actions
+  // #region actions
 
   add(value: any): FormProperty {
     const newProperty = this.addProperty(value);
@@ -99,5 +99,5 @@ export class ArrayProperty extends PropertyGroup {
     this.updateValueAndValidity(false, true);
   }
 
-  // endregion
+  // #endregion
 }

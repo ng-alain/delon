@@ -169,7 +169,7 @@ export abstract class FormProperty {
     return <PropertyGroup>property;
   }
 
-  // region: process errors
+  // #region process errors
 
   private isEmptyData(value: any) {
     if (isBlank(value)) return true;
@@ -285,9 +285,9 @@ export abstract class FormProperty {
     this.setErrors(platErrors, false);
   }
 
-  // endregion
+  // #endregion
 
-  // region: condition
+  // #region condition
 
   private setVisible(visible: boolean) {
     this._visible = visible;
@@ -342,7 +342,7 @@ export abstract class FormProperty {
     }
   }
 
-  // endregion
+  // #endregion
 }
 
 export abstract class PropertyGroup extends FormProperty {

@@ -73,7 +73,7 @@ export class _HttpClient {
     setTimeout(() => (this._loading = false));
   }
 
-  // region: get
+  // #region get
 
   /**
    * GET：返回一个 `T` 类型
@@ -176,9 +176,9 @@ export class _HttpClient {
     );
   }
 
-  // endregion
+  // #endregion
 
-  // region: post
+  // #region post
 
   /**
    * POST：返回一个 `string` 类型
@@ -272,9 +272,9 @@ export class _HttpClient {
     );
   }
 
-  // endregion
+  // #endregion
 
-  // region: delete
+  // #region delete
 
   /**
    * DELETE：返回一个 `string` 类型
@@ -347,7 +347,7 @@ export class _HttpClient {
     );
   }
 
-  // endregion
+  // #endregion
 
   /**
    * `jsonp` 请求

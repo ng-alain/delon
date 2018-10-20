@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../../../shared/shared.module';
 import { ContentComponent } from '../../../shared/components/content/content.component';
 
-// region: components
+// #region components
 {{{imports}}}
 const COMPONENTS = [{{{components}}}];
 
@@ -16,7 +16,7 @@ const routes: Routes = [
         ]
     }
 ];
-// endregion
+// #endregion
 
 @NgModule({
     imports: [

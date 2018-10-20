@@ -33,14 +33,11 @@ export const setUpTestBed = (moduleDef: TestModuleMetadata) => {
       resetTestingModule();
       preventAngularFromResetting();
 
-      // region: schemas
       if (!moduleDef.schemas) {
         moduleDef.schemas = [];
       }
       moduleDef.schemas.push(CUSTOM_ELEMENTS_SCHEMA);
-      // endregion
 
-      // region: imports
       if (!moduleDef.imports) {
         moduleDef.imports = [];
       }
@@ -60,9 +57,7 @@ export const setUpTestBed = (moduleDef: TestModuleMetadata) => {
           },
         }),
       );<% } %>
-      // endregion
 
-      // region: providers
       if (!moduleDef.providers) {
         moduleDef.providers = [];
       }<% if (i18n) { %>
@@ -81,7 +76,6 @@ export const setUpTestBed = (moduleDef: TestModuleMetadata) => {
           moduleDef.providers.push(item);
         },
       );
-      // endregion
 
       TestBed.configureTestingModule(moduleDef);
       await TestBed.compileComponents();

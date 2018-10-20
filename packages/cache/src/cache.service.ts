@@ -42,7 +42,7 @@ export class CacheService implements OnDestroy {
     return path.reduce((o, k) => o[k], obj) || defaultValue;
   }
 
-  // region: meta
+  // #region meta
 
   private pushMeta(key: string) {
     if (this.meta.has(key)) return;
@@ -73,9 +73,9 @@ export class CacheService implements OnDestroy {
     return this.meta;
   }
 
-  // endregion
+  // #endregion
 
-  // region: set
+  // #region set
 
   /**
    * 持久化缓存 `Observable` 对象，例如：
@@ -158,9 +158,9 @@ export class CacheService implements OnDestroy {
     this.runNotify(key, 'set');
   }
 
-  // endregion
+  // #endregion
 
-  // region: get
+  // #region get
 
   /** 获取缓存数据，若 `key` 不存在则 `key` 作为HTTP请求缓存后返回 */
   get<T>(
@@ -286,18 +286,18 @@ export class CacheService implements OnDestroy {
     return of(ret);
   }
 
-  // endregion
+  // #endregion
 
-  // region: has
+  // #region has
 
   /** 是否缓存 `key` */
   has(key: string): boolean {
     return this.memory.has(key) || this.meta.has(key);
   }
 
-  // endregion
+  // #endregion
 
-  // region: remove
+  // #region remove
 
   private _remove(key: string, needNotify: boolean) {
     if (needNotify) this.runNotify(key, 'remove');
@@ -321,9 +321,9 @@ export class CacheService implements OnDestroy {
     this.meta.forEach(key => this.store.remove(this.options.prefix + key));
   }
 
-  // endregion
+  // #endregion
 
-  // region: notify
+  // #region notify
 
   /**
    * 设置监听频率，单位：毫秒且最低 `20ms`，默认：`3000ms`
@@ -400,7 +400,7 @@ export class CacheService implements OnDestroy {
     this.notifyBuffer.clear();
   }
 
-  // endregion
+  // #endregion
 
   ngOnDestroy(): void {
     this.memory.clear();

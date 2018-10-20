@@ -24,14 +24,10 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   private ref: ComponentRef<any>;
   widget: Widget<any> = null;
 
-  // region: fields
-
   @Input() formProperty: FormProperty;
 
   @ViewChild('target', { read: ViewContainerRef })
   container: ViewContainerRef;
-
-  // endregion
 
   constructor(
     private widgetFactory: WidgetFactory,

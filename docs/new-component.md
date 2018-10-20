@@ -86,13 +86,14 @@ export class ImageWrapperComponent {
 
 ```ts
 // shared.module.ts
-// region: your componets & directives
+
+// #region your componets & directives
 import { ImageWrapperComponent } from './image-wrapper';
 const COMPONENTS = [
     ImageWrapperComponent
 ];
 const DIRECTIVES = [];
-// endregion
+// #endregion
 ```
 
 ## 使用

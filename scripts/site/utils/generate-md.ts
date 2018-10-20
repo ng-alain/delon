@@ -104,7 +104,7 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
   const ret: string = pair[1](markdownData);
   if (codeEscape) {
     return ret.replace(
-      /<pre class="hljs language-([html|ts|typescript]+)"><code>([\s\S]*)<\/code><\/pre>/g,
+      /<pre class="hljs language-([html|ts|typescript|diff]+)"><code>([\s\S]*)<\/code><\/pre>/g,
       (fullWord: any, lang: any, code: any) => {
         return `<pre class="hljs language-$1"><code>${escapeHTML(
           code,

@@ -215,7 +215,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.clearFloatingContainer();
   }
 
-  // region: Under pad
+  // #region Under pad
 
   private get isPad(): boolean {
     return window.innerWidth < 768;
@@ -242,5 +242,5 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.settings.setLayout('collapsed', status);
   }
 
-  // endregion
+  // #endregion
 }

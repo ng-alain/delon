@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
-// region: all modules
+// #region all modules
 
 import { G2BarModule } from '@delon/chart/bar';
 import { G2CardModule } from '@delon/chart/card';
@@ -34,7 +34,7 @@ const MODULES = [
   TrendModule,
 ];
 
-// endregion
+// #endregion
 
 @NgModule({
   imports: [

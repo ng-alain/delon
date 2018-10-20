@@ -16,7 +16,7 @@ import { DelonCacheModule } from '@delon/cache';
 import { DelonMockModule } from '@delon/mock';
 import * as MOCKDATA from '../../_mock';
 
-// region: global config functions
+// #region global config functions
 
 import { LodopConfig, STConfig, DelonABCModule } from '@delon/abc';
 
@@ -33,7 +33,7 @@ export function fnLodopConfig(): LodopConfig {
   });
 }
 
-// endregion
+// #endregion
 
 @NgModule({
   imports: [
