@@ -6,13 +6,6 @@ title:
 type: Advance
 ---
 
-## Web 图标
-
-默认除了 ng-zorro-antd 自带 Web 图标，额外增加了 [font-awesome](//fontawesome.io/)、[simple-line-icons](//simplelineicons.com/)、[weather-icons](//erikflowers.github.io/weather-icons/) 三个图标库，如果你明确不需要，可以删除：
-
-+ 移除 `src/styles.less` 引用样式文件
-+ 移除相应包体
-
 ## IE 优化
 
 ng-alain 默认开启了对 IE 的支持，这给包体及样式增加了一定大小，倘若你很在意并且不需要 `IE10` 及以下的版本支持的话，可以调整两项配置：

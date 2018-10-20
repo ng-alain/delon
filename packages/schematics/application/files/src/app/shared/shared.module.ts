@@ -10,19 +10,19 @@ import { DelonACLModule } from '@delon/acl';
 // i18n
 import { TranslateModule } from '@ngx-translate/core';<% } %>
 
-// region: third libs
+// #region third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule
 ];
-// endregion
+// #endregion
 
-// region: your componets & directives
+// #region your componets & directives
 const COMPONENTS = [];
 const DIRECTIVES = [];
-// endregion
+// #endregion
 
 @NgModule({
   imports: [

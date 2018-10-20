@@ -48,7 +48,6 @@ export class DocsComponent implements OnInit, OnDestroy {
       con: item.content[this.i18n.lang] || item.content[this.i18n.defaultLang],
     };
 
-    // region: demo toc
     if (ret.demo && this.codes && this.codes.length) {
       this.genDemoTitle();
       const toc = ret.con.toc as any[];
@@ -73,7 +72,6 @@ export class DocsComponent implements OnInit, OnDestroy {
         ),
       );
     }
-    // endregion
 
     if (ret.con.content)
       ret.con.content = this.sanitizer.bypassSecurityTrustHtml(ret.con.content);

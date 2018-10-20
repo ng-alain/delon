@@ -5,7 +5,6 @@ import { ColorSketchModule } from 'ngx-color/sketch';
 import { SharedModule } from '../../shared/shared.module';
 import { SixToSevenEditorComponent } from './6to7/editor/editor.component';
 
-// region: components
 
 const COMPONENTS = [SixToSevenEditorComponent];
 
@@ -16,7 +15,6 @@ const routes: Routes = [
     data: { titleI18n: 'app.header.menu.upgrade' },
   },
 ];
-// endregion
 
 @NgModule({
   imports: [SharedModule, ColorSketchModule, RouterModule.forChild(routes)],

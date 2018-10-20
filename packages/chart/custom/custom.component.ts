@@ -22,7 +22,7 @@ export class G2CustomComponent implements OnInit, OnDestroy {
 
   private resize$: Subscription = null;
 
-  // region: fields
+  // #region fields
 
   @HostBinding('style.height.px')
   @Input()
@@ -42,7 +42,7 @@ export class G2CustomComponent implements OnInit, OnDestroy {
   @Output()
   destroy: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
 
-  // endregion
+  // #endregion
 
   constructor(private el: ElementRef) {}
 

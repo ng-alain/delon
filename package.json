@@ -27,7 +27,7 @@
     "test": "ng test --code-coverage --watch=false && bash scripts/ci/build-schematics.sh -b -t",
     "release": "bash scripts/ci/build-lib.sh && bash scripts/ci/build-schematics.sh -b",
     "site:gen": "node scripts/site/main init",
-    "site": "npm run site:gen && ng serve -c=hmr",
+    "site": "npm run site:gen && ng serve",
     "site:build": "npm run site:gen && ng build --prod --build-optimizer --base-href /",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
@@ -38,6 +38,7 @@
     "@angular/common": "^6.1.0",
     "@angular/compiler": "^6.1.0",
     "@angular/core": "^6.1.0",
+    "@angular/elements": "^6.0.0",
     "@angular/forms": "^6.1.0",
     "@angular/http": "^6.1.0",
     "@angular/platform-browser": "^6.1.0",
@@ -65,7 +66,8 @@
     "ngx-ueditor": "^2.1.0",
     "qrious": "^4.0.2",
     "rxjs": "^6.0.0",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "@webcomponents/custom-elements": "^1.2.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",

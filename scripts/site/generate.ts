@@ -19,7 +19,9 @@ import {
   ModuleTemplateData,
   MetaOriginal,
   ContentTemplateData,
+  ExampleModules,
 } from './interfaces';
+import { generateExampleModule } from './utils/generate-example';
 
 const target = process.argv[2];
 const isSyncSpecific = !!target && target !== 'init';
@@ -33,6 +35,10 @@ const siteConfig = require(path.join(
   'src/site.config.js',
 )) as SiteConfig;
 const defaultLang = siteConfig.defaultLang;
+
+const exampleModules: ExampleModules = {
+  list: [],
+};
 
 function generateModule(config: ModuleConfig) {
   const distPath = path.join(rootDir, config.dist);
@@ -62,9 +68,70 @@ function generateModule(config: ModuleConfig) {
           }/zh', pathMatch: 'full' }`,
         );
       }
-      modules.routes.push(`{ path: '${name}', redirectTo: '${name}/zh', pathMatch: 'full' }`);
-      modules.routes.push(`{ path: '${name}/:lang', component: ${componentName} }`);
+      modules.routes.push(
+        `{ path: '${name}', redirectTo: '${name}/zh', pathMatch: 'full' }`,
+      );
+      modules.routes.push(
+        `{ path: '${name}/:lang', component: ${componentName} }`,
+      );
     }
+  }
+
+  function fixMDClass(fileObject: any) {
+    const contentObj = fileObject.item.content;
+    Object.keys(contentObj).forEach(lan => {
+      contentObj[lan].content = `<section class="markdown">${contentObj[lan].content}</section>`;
+    });
+  }
+
+  function fixDemo(fileObject: any, demos: any) {
+    const demoHTML: string[] = [];
+    demoHTML.push(`<nz-row [nzGutter]="16">`);
+    if (demos.tpl.left.length > 0 && demos.tpl.right.length > 0) {
+      demoHTML.push(
+        `<nz-col nzSpan="12">${demos.tpl.left.join('')}</nz-col>`,
+      );
+      demoHTML.push(
+        `<nz-col nzSpan="12">${demos.tpl.right.join('')}</nz-col>`,
+      );
+    } else {
+      demoHTML.push(
+        `<nz-col nzSpan="24">${demos.tpl.left.join(
+          '',
+        )}${demos.tpl.right.join('')}</nz-col>`,
+      );
+    }
+
+    demoHTML.push('</nz-row>');
+    fileObject.demos = demoHTML.join('');
+
+    fixMDClass(fileObject);
+  }
+
+  function fixExample(fileObject: any, demos: any) {
+    const contentObj = fileObject.item.content;
+    Object.keys(contentObj).forEach(lan => {
+      const demoArr = contentObj[lan].content.split(/(<!--demo\([^)]+\)-->)/g);
+      if (demoArr.length > 1) {
+        contentObj[lan].content = demoArr.map(html => {
+          if (html.startsWith('<!--')) return html;
+          return `<section class="markdown">${html}</section>`;
+        }).join('').replace(
+          /<!--demo\(([^)]+)\)-->/g,
+          '<example-$1-index></example-$1-index>',
+        );
+      } else {
+        contentObj[lan].content = `<section class="markdown">${contentObj[lan].content}</section>`;
+      }
+    });
+
+    const newList = demos.data.filter(
+      w =>
+        w.type === 'example' &&
+        exampleModules.list.filter(ew => ew.urls === w.urls).length === 0,
+    );
+
+    exampleModules.list.push(...newList);
   }
 
   config.dir.forEach(dirConfig => {
@@ -81,7 +148,7 @@ function generateModule(config: ModuleConfig) {
     );
 
     files.forEach(item => {
-      // region: generate document file
+      // #region generate document file
 
       const content = {};
       const urls = {};
@@ -105,9 +172,9 @@ function generateModule(config: ModuleConfig) {
       };
       metas.push(meta);
 
-      // endregion
+      // #endregion
 
-      // region: generate demo files
+      // #region generate demo files
       const demos = generateDemo(
         rootDir,
         item.key,
@@ -116,56 +183,47 @@ function generateModule(config: ModuleConfig) {
         config,
         siteConfig,
       );
-      // endregion
+      // #endregion
 
-      // region: generate document file
+      // #region generate document file
+      const demoList = demos.data.filter(w => w.type !== 'example');
+      const isDemo = demoList.length > 0;
+      const isExample = demos.data.filter(w => w.type === 'example').length > 0;
       const fileObject: ContentTemplateData = {
         componentName: genComponentName(config.name, meta.name),
         selector: genSelector(config.name, meta.name),
-        item: JSON.stringify({
+        item: {
           cols: meta.cols,
           urls,
           content,
-          demo: demos.data.length > 0,
-        }),
-        demo: demos.tpl.left.length > 0 || demos.tpl.right.length > 0,
+          demo: isDemo,
+        } as any,
+        demos: '',
+        demo: isDemo,
       };
-      const demoHTML: string[] = [];
       if (fileObject.demo) {
-        demoHTML.push(`<nz-row [nzGutter]="16">`);
-        if (demos.tpl.left.length > 0 && demos.tpl.right.length > 0) {
-          demoHTML.push(
-            `<nz-col nzSpan="12">${demos.tpl.left.join('')}</nz-col>`,
-          );
-          demoHTML.push(
-            `<nz-col nzSpan="12">${demos.tpl.right.join('')}</nz-col>`,
-          );
-        } else {
-          demoHTML.push(
-            `<nz-col nzSpan="24">${demos.tpl.left.join(
-              '',
-            )}${demos.tpl.right.join('')}</nz-col>`,
-          );
-        }
-
-        demoHTML.push('</nz-row>');
+        fixDemo(fileObject, demos);
+      } else if (isExample) {
+        fixExample(fileObject, demos);
+      } else {
+        fixMDClass(fileObject);
       }
-      fileObject.demos = demoHTML.join('');
-      fileObject.codes = JSON.stringify(demos.data);
+      fileObject.codes = JSON.stringify(demoList);
+      fileObject.item = JSON.stringify(fileObject.item);
       generateDoc(fileObject, tpl, path.join(distPath, item.key, `index.ts`));
-      // endregion
+      // #endregion
 
-      // region: register module
+      // #region register module
       appendToModule(fileObject.componentName, item.key, 'index');
       // demo
-      demos.data.forEach(demo => {
+      demoList.forEach(demo => {
         appendToModule(demo.componentName, item.key, demo.name, false);
       });
-      // endregion
+      // #endregion
     });
   });
 
-  // region: generate meta file
+  // #region generate meta file
 
   const metaObj = Object.assign({ types: [] }, includeAttributes(config, {}));
   metaObj.list = metas;
@@ -175,9 +233,9 @@ function generateModule(config: ModuleConfig) {
     fs.readFileSync(path.join(rootDir, config.template.meta)).toString('utf8'),
     path.join(distPath, `meta.ts`),
   );
-  // endregion
+  // #endregion
 
-  // region: generate module file
+  // #region generate module file
   const moduleObj: ModuleTemplateData = {
     name: config.name,
     moduleName: genUpperName(config.name),
@@ -192,9 +250,13 @@ function generateModule(config: ModuleConfig) {
       .toString('utf8'),
     path.join(distPath, `${config.name}.module.ts`),
   );
-  // endregion
+  // #endregion
 }
 
 for (const m of siteConfig.modules) {
   generateModule(m);
+}
+
+if (exampleModules.list.length > 0) {
+  generateExampleModule(rootDir, siteConfig, exampleModules);
 }

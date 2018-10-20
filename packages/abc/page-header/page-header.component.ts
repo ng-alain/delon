@@ -56,7 +56,7 @@ export class PageHeaderComponent
     return this._menus;
   }
 
-  // region fields
+  // #region fields
 
   _title: string;
   _titleTpl: TemplateRef<any>;
@@ -136,7 +136,7 @@ export class PageHeaderComponent
   @Input()
   tab: TemplateRef<any>;
 
-  // endregion
+  // #endregion
 
   constructor(
     cog: PageHeaderConfig,

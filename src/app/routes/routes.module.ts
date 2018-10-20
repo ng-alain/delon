@@ -21,7 +21,7 @@ const routes = [
       { path: 'zh', component: HomeComponent, data: { titleI18n: 'slogan' } },
       { path: 'en', component: HomeComponent, data: { titleI18n: 'slogan' } },
       { path: 'tools', loadChildren: './tools/tools.module#ToolsModule' },
-      // region: region routers
+      // #region region routers
       { path: 'docs', loadChildren: './gen/docs/docs.module#DocsModule' },
       {
         path: 'components',
@@ -40,7 +40,7 @@ const routes = [
         loadChildren: './form-pages/form-pages.module#FormPagesModule',
       },
       { path: 'cli', loadChildren: './gen/cli/cli.module#CliModule' },
-      // endregion
+      // #endregion
     ],
   },
   { path: '404', component: NotFoundComponent },

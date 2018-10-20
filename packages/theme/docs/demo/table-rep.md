@@ -1,3 +1,19 @@
+---
+title:
+  zh-CN: 基础样例
+  en-US: Basic Usage
+type: example
+---
+
+## zh-CN
+
+小屏幕查看效果。
+
+## en-US
+
+Mobile screen view effect.
+
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -53,3 +69,4 @@ export class DemoComponent {
     },
   ];
 }
+```

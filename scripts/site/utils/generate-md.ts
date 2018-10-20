@@ -75,6 +75,13 @@ const converters = [highlight()].concat([
     },
   ],
   [
+    (node: any) => !Array.isArray(node),
+    (node: any, index: number) => {
+      if (!node.url) return '';
+      return `<!--${node.url}-->`;
+    }
+  ],
+  [
     () => true,
     (node: any) => {
       const tagName = JsonML.getTagName(node);
@@ -97,7 +104,7 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
   const ret: string = pair[1](markdownData);
   if (codeEscape) {
     return ret.replace(
-      /<pre class="hljs language-([html|ts|typescript]+)"><code>([\s\S]*)<\/code><\/pre>/g,
+      /<pre class="hljs language-([html|ts|typescript|diff]+)"><code>([\s\S]*)<\/code><\/pre>/g,
       (fullWord: any, lang: any, code: any) => {
         return `<pre class="hljs language-$1"><code>${escapeHTML(
           code,
@@ -125,18 +132,6 @@ function fixAngular(html: string): string {
       return ~content.indexOf(`</a>`)
         ? fullWord
         : `<code>${content.replace(`<`, `&lt;`)}</code>`;
-      // if (/(Observable|TemplateRef|EventEmitter)</.test(content)) {
-      //   return `<code>${content.replace(
-      //     /(Observable|TemplateRef|EventEmitter)</g,
-      //     '$1&lt;',
-      //   )}</code>`;
-      // }
-      // return fullWord
-      //   .replace(`<ng-content`, `&lt;ng-content`)
-      //   .replace(`</ng-content`, `&lt;/ng-content`)
-      //   .replace(`<ng-template`, `&lt;ng-template`)
-      //   .replace(`</ng-template`, `&lt;/ng-template`)
-      //   ;
     },
   );
 }

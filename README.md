@@ -6,8 +6,10 @@ delon is a production-ready solution for admin business components packages, Bui
 [![Dependency Status](https://david-dm.org/ng-alain/delon/status.svg)](https://david-dm.org/ng-alain/delon)
 [![DevDependency Status](https://david-dm.org/ng-alain/delon/dev-status.svg)](https://david-dm.org/ng-alain/delon?type=dev)
 [![codecov](https://codecov.io/gh/ng-alain/delon/branch/master/graph/badge.svg)](https://codecov.io/gh/ng-alain/delon)
+[![GitHub Release Date](https://img.shields.io/github/release-date/ng-alain/ng-alain.svg?style=flat-square)](https://github.com/ng-alain/ng-alain/releases)
 [![npm](https://img.shields.io/npm/l/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
-[![npm](https://img.shields.io/npm/dm/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
+[![Gitter](https://img.shields.io/gitter/room/cipchk/ng-alain.svg?style=flat-square)](https://gitter.im/cipchk/ng-alain)
+[![extension-for-VSCode](https://img.shields.io/badge/extension%20for-VSCode-blue.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
 
 | package name | npm version | npm next version | taobao version |
 | ------------ |:-----:|:----------:|:----------:|

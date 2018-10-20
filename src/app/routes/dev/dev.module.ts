@@ -7,8 +7,6 @@ import { DevLayoutComponent } from './layout.component';
 import { DevHomeComponent } from './home/home.component';
 import { DevPageComponent } from './pages/page.component';
 
-// region: components
-
 const COMPONENTS = [
   DevLayoutComponent,
   DevHomeComponent,
@@ -38,7 +36,6 @@ const routes: Routes = [
     ],
   },
 ];
-// endregion
 
 @NgModule({
   imports: [SharedModule, RouterModule.forChild(routes)],

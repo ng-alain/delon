@@ -11,11 +11,12 @@ import { AlainThemeModule } from '@delon/theme';
 import { DelonFormModule } from '@delon/form';
 import { DelonUtilModule } from '@delon/util';
 import { DelonChartModule } from '@delon/chart';
+import { DelonCacheModule } from '@delon/cache';
 // mock
 import { DelonMockModule } from '@delon/mock';
 import * as MOCKDATA from '../../_mock';
 
-// region: global config functions
+// #region global config functions
 
 import { LodopConfig, STConfig, DelonABCModule } from '@delon/abc';
 
@@ -32,7 +33,7 @@ export function fnLodopConfig(): LodopConfig {
   });
 }
 
-// endregion
+// #endregion
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ export function fnLodopConfig(): LodopConfig {
     DelonABCModule.forRoot(),
     DelonChartModule.forRoot(),
     DelonFormModule.forRoot(),
+    DelonCacheModule.forRoot(),
     DelonUtilModule.forRoot(),
     DelonMockModule.forRoot({ data: MOCKDATA }),
   ],

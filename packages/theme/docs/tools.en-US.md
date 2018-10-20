@@ -350,7 +350,10 @@ Online [DEMO](https://ng-alain.github.io/ng-alain/#/style/gridmasonry)。
 
 | Name | Description |
 | ---- | --- |
-| `ant-table-rep` | Table responsive |
+| `ant-table-rep__title` | Title |
+| `ant-table-rep__hide-header-footer` | Show title or bottom when mobile screen |
+
+[comment]: <demo(table-rep)>
 
 ### nz-tag
 

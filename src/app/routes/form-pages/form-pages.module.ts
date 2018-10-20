@@ -6,7 +6,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { ContentComponent } from '../../shared/components/content/content.component';
 import { FormValidatorComponent } from './validator/validator.component';
 
-// region: components
 const COMPONENTS = [FormValidatorComponent];
 
 const routes: Routes = [
@@ -22,7 +21,6 @@ const routes: Routes = [
     ],
   },
 ];
-// endregion
 
 @NgModule({
   imports: [SharedModule, AceEditorModule, RouterModule.forChild(routes)],
