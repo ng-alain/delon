@@ -8,20 +8,14 @@ import {
   ChangeDetectorRef,
   Renderer2,
   ElementRef,
+  TemplateRef,
 } from '@angular/core';
 
 import { InputNumber } from '@delon/util';
 
 @Component({
   selector: 'quick-menu',
-  template: `
-  <div class="quick-menu__inner">
-    <div class="quick-menu__ctrl" [ngStyle]="ctrlStyle">
-      <i class="quick-menu__ctrl-icon" [ngClass]="icon"></i>
-    </div>
-    <ng-content></ng-content>
-  </div>
-  `,
+  templateUrl: './quick-menu.component.html',
   host: { '[class.quick-menu]': 'true' },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,11 +23,17 @@ import { InputNumber } from '@delon/util';
 export class QuickMenuComponent implements OnInit, OnChanges {
   // #region fields
 
+  _icon = 'question-circle';
+  _iconTpl: TemplateRef<any>;
   @Input()
-  icon:
-    | string
-    | string[]
-    | { [key: string]: string } = 'anticon anticon-question-circle-o';
+  set icon(value: string | TemplateRef<any>) {
+    if (value instanceof TemplateRef) {
+      this._icon = null;
+      this._iconTpl = value;
+    } else {
+      this._icon = value;
+    }
+  }
 
   @Input() @InputNumber() top = 120;
 

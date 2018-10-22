@@ -2,7 +2,7 @@
   <nz-tab *ngFor="let i of list; let index = index" [nzTitle]="titleTemplate">
     <ng-template #titleTemplate>
       <span [reuse-tab-context-menu]="i" (click)="to($event, index)" class="name">{{i.title}}</span>
-      <i *ngIf="i.closable" class="anticon anticon-close op" (click)="_close($event, index, false)"></i>
+      <i *ngIf="i.closable" nz-icon type="close" class="reuse-tab__op" (click)="_close($event, index, false)"></i>
     </ng-template>
   </nz-tab>
 </nz-tabset>

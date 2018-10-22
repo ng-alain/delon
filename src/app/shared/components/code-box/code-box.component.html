@@ -24,10 +24,10 @@
   <div class="highlight">
     <div class="code-box-actions">
       <nz-tooltip [nzTitle]="'app.demo.stackblitz' | translate">
-        <i nz-tooltip class="anticon anticon-form code-box-code-copy" (click)="openOnStackBlitz()"></i>
+        <i nz-tooltip (click)="openOnStackBlitz()" nz-icon type="form" class="code-box-code-copy"></i>
       </nz-tooltip>
       <nz-tooltip [nzTitle]="'app.demo.copy' | translate">
-        <i nz-tooltip (click)="onCopy(item.code)" class="anticon anticon-copy code-box-code-copy"></i>
+        <i nz-tooltip (click)="onCopy(item.code)" nz-icon type="copy" class="code-box-code-copy"></i>
       </nz-tooltip>
     </div>
     <pre class="hljs language-ts"><code>{{item.code}}</code></pre>

@@ -25,7 +25,7 @@ import { deepCopy } from '@delon/util';
       [nzAsyncData]="i.asyncData"
       [nzNodes]="data"
       [nzDefaultExpandAll]="i.defaultExpandAll"
-      [nzDefaultExpandedKeys]="ui.defaultExpandedKeys"
+      [nzDefaultExpandedKeys]="i.defaultExpandedKeys"
       [nzDisplayWith]="i.displayWith"
       [ngModel]="value"
       (ngModelChange)="change($event)"
@@ -42,12 +42,8 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
 
   private dc() {
     // Muse wait `nz-tree-select` write values
-    return new Promise(resolve => {
-      setTimeout(() => {
-        this.detectChanges();
-        resolve();
-      }, 101);
-    });
+    // https://github.com/NG-ZORRO/ng-zorro-antd/issues/2316
+    setTimeout(() => this.detectChanges(), 1000);
   }
 
   private tranData(list: SFSchemaEnum[]) {
@@ -66,6 +62,7 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
       showLine: toBool(ui.showLine, false),
       asyncData: typeof ui.expandChange === 'function',
       defaultExpandAll: toBool(ui.defaultExpandAll, false),
+      defaultExpandedKeys: ui.defaultExpandedKeys || [],
       displayWith: ui.displayWith || ((node: NzTreeNode) => node.title),
     };
   }

@@ -32,7 +32,6 @@ export class DemoComponent {
           addOnAfter: 'RMB',
           placeholder: 'RMB结算',
         },
-        format: 'mobile',
       },
       mobile: {
         type: 'string',

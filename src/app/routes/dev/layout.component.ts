@@ -32,13 +32,13 @@ export class DevLayoutComponent implements OnInit {
         {
           text: 'Dashboard',
           link: '/',
-          icon: 'anticon anticon-appstore-o',
+          icon: 'appstore',
           badge: 5,
         },
         {
           text: 'Level1',
           link: '#',
-          icon: 'anticon anticon-appstore-o',
+          icon: 'appstore',
           children: [
             {
               text: 'Level2',
@@ -53,7 +53,7 @@ export class DevLayoutComponent implements OnInit {
         },
         {
           text: 'ABC',
-          icon: 'anticon anticon-appstore',
+          icon: 'appstore',
           children: [
             { text: 'Reuse Tab7', link: '/dev/l1' },
             { text: 'Reuse Tab6', link: '/dev/l2' },

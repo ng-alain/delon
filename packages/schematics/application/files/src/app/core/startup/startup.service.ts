@@ -105,11 +105,11 @@ export class StartupService {
           {
             text: '仪表盘',
             link: '/dashboard',
-            icon: 'anticon anticon-appstore-o'
+            icon: 'appstore'
           },
           {
             text: '快捷菜单',
-            icon: 'anticon anticon-rocket',
+            icon: 'rocket',
             shortcutRoot: true
           }
         ]

@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators';
 
 import { I18NService } from './../../../core/i18n/service';
 import { CodeService } from '../../../core/code.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'code-box',
@@ -29,7 +30,7 @@ export class CodeBoxComponent implements OnDestroy {
       meta: value.meta,
       code: value.code.trim(),
       title: this.i18n.get(value.meta.title),
-      summary: this.i18n.get(value.summary),
+      summary: this.sanitizer.bypassSecurityTrustHtml(this.i18n.get(value.summary)),
       browser: +value.meta.browser > 0 ? +value.meta.browser : null,
       bg: value.meta.bg,
       urls: value.urls,
@@ -47,6 +48,7 @@ export class CodeBoxComponent implements OnDestroy {
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private msg: NzMessageService,
     private codeSrv: CodeService,
+    private sanitizer: DomSanitizer,
   ) {
     this.i18n$ = this.i18n.change
       .pipe(filter(w => !!this._orgItem))

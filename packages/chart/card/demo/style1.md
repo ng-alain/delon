@@ -17,7 +17,7 @@ import { yuan } from '@delon/util';
   <g2-card [title]="'销售额'" [bordered]="true" [total]="yuan(126560)" footer="日访问量 12,423" contentHeight="46" [action]="action">
     <ng-template #action>
       <nz-tooltip [nzTitle]="'指标说明'">
-        <i nz-tooltip class="anticon anticon-info-circle-o"></i>
+        <i nz-tooltip nz-icon type="info-circle"></i>
       </nz-tooltip>
     </ng-template>
     周同比<trend flag="up" style="margin: 0 16px 0 8px; color: rgba(0,0,0,.85)">12%</trend>

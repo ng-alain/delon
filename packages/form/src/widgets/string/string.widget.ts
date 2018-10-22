@@ -51,4 +51,10 @@ export class StringWidget extends ControlWidget implements OnInit {
       ? 'addon'
       : '';
   }
+
+  reset(value: any) {
+    if (this.schema.format === 'color' && !value) {
+      this.setValue('#000000');
+    }
+  }
 }

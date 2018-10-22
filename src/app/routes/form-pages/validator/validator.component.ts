@@ -41,6 +41,8 @@ export class DemoComponent {
     }
 }`;
 
+declare var ace: any;
+
 @Component({
   selector: 'form-validator',
   templateUrl: './validator.component.html',
@@ -73,6 +75,7 @@ export class FormValidatorComponent implements OnInit {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
     this.title = this.files[defaultIndex].title;
+    ace.config.set("workerPath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/")
   }
 
   ngOnInit(): void {

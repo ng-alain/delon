@@ -1384,7 +1384,7 @@ describe('abc: table', () => {
               ],
               confirmText: 'ok',
               clearText: 'reset',
-              icon: 'anticon anticon-aa',
+              icon: 'aa',
               fn: () => true,
             },
           },

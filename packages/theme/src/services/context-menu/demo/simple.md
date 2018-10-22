@@ -29,12 +29,22 @@ import { ContextMenuService } from '@delon/theme';
     Area
   </div>
   <ng-template #menu>
-    <ul nz-menu>
-      <li nz-menu-item>菜单项</li>
+    <ul nz-menu nzInDropDown>
+      <li nz-menu-item>1st menu item</li>
+      <li nz-menu-item>2nd menu item</li>
+      <li nz-menu-item nzDisabled>disabled menu item</li>
       <li nz-submenu>
-        <span title>子菜单</span>
+        <span title>sub menu</span>
         <ul>
-          <li nz-menu-item>子菜单项</li>
+          <li nz-menu-item>3rd menu item</li>
+          <li nz-menu-item>4th menu item</li>
+        </ul>
+      </li>
+      <li nz-submenu nzDisabled>
+        <span title>disabled sub menu</span>
+        <ul>
+          <li nz-menu-item>3rd menu item</li>
+          <li nz-menu-item>4th menu item</li>
         </ul>
       </li>
     </ul>

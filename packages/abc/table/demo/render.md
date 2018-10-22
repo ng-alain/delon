@@ -28,7 +28,7 @@ import { STColumn } from '@delon/abc';
     <ng-template st-row="custom" type="title" let-c>
       {{ c.title }}
       <nz-dropdown nzTrigger="click" [nzClickHide]="false">
-        <i class="anticon anticon-smile-o ant-table-filter-icon" nz-dropdown></i>
+        <i nz-dropdown nz-icon type="smile" theme="outline" class="ant-table-filter-icon"></i>
         <div class="ant-table-filter-dropdown p-sm">
           <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" class="width-sm mr-sm">
           <button nz-button [nzType]="'primary'" (click)="st.load(2)">Search</button>

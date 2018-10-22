@@ -11,7 +11,7 @@ import { ArrayLayoutWidget } from '../../widget';
         <span class="optional">
           {{ ui.optional }}
           <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
-            <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            <i nz-tooltip nz-icon type="question-circle"></i>
           </nz-tooltip>
         </span>
       </label>
@@ -28,7 +28,7 @@ import { ArrayLayoutWidget } from '../../widget';
               <nz-card>
                 <sf-item [formProperty]="i"></sf-item>
                 <span *ngIf="removeTitle" class="remove" (click)="removeItem(idx)" [attr.title]="removeTitle">
-                  <i class="anticon anticon-delete"></i>
+                  <i nz-icon type="delete"></i>
                 </span>
               </nz-card>
             </nz-col>

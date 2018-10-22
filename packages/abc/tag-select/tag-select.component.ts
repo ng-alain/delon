@@ -16,7 +16,7 @@ import { DelonLocaleService } from '@delon/theme';
   template: `
   <ng-content></ng-content>
   <a *ngIf="expandable" class="tag-select__trigger" (click)="trigger()">
-    {{expand ? locale.collapse : locale.expand}}<i class="anticon anticon-{{expand ? 'up' : 'down'}} tag-select__trigger-icon"></i>
+    {{expand ? locale.collapse : locale.expand}}<i nz-icon [type]="expand ? 'up' : 'down'" class="tag-select__trigger-icon"></i>
   </a>`,
   host: { '[class.tag-select]': 'true' },
   preserveWhitespaces: false,

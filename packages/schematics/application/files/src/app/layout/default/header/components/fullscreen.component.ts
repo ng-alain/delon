@@ -4,7 +4,7 @@ import * as screenfull from 'screenfull';
 @Component({
   selector: 'header-fullscreen',
   template: `
-  <i class="anticon anticon-{{status ? 'shrink' : 'arrows-alt'}}"></i>
+  <i nz-icon [type]="status ? 'shrink' : 'arrows-alt'"></i>
   <% if (!i18n) { %>{{ status ? '退出全屏' : '全屏' }}<% } %><% if (i18n) { %>{{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}<% } %>
   `
 })

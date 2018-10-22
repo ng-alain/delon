@@ -30,17 +30,17 @@ import { getData, toBool } from '../../utils';
       (nzChange)="change($event)">
       <ng-container [ngSwitch]="btnType">
         <ng-container *ngSwitchCase="'plus'">
-          <i class="anticon anticon-plus"></i>
+          <i nz-icon type="plus"></i>
           <div class="ant-upload-text" [innerHTML]="i.text"></div>
         </ng-container>
         <ng-container *ngSwitchCase="'drag'">
-          <p class="ant-upload-drag-icon"><i class="anticon anticon-inbox"></i></p>
+          <p class="ant-upload-drag-icon"><i nz-icon type="inbox"></i></p>
           <p class="ant-upload-text" [innerHTML]="i.text"></p>
           <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
         </ng-container>
         <ng-container *ngSwitchDefault>
           <button type="button" nz-button>
-            <i class="anticon anticon-upload"></i><span [innerHTML]="i.text"></span>
+            <i nz-icon type="upload"></i><span [innerHTML]="i.text"></span>
           </button>
         </ng-container>
       </ng-container>

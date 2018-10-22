@@ -238,7 +238,7 @@ class TestComponent {
 `[menus]` | 表头的筛选菜单项，至少一项才会生效 | `STColumnFilterMenu[]` | -
 `[fn]` | 本地数据的筛选函数 | `(filter: STColumnFilterMenu, record: any) => boolean` | -
 `[default]` | 标识数据是否经过过滤，筛选图标会高亮 | `boolean` | -
-`[icon]` | 自定义 fiter 图标 | `string` | `anticon anticon-filter`
+`[icon]` | 自定义 fiter 图标 | `string` | `filter`
 `[multiple]` | 是否多选 | `boolean` | `true`
 `[confirmText]` | filter 确认按钮文本 | `string` | `确认`
 `[clearText]` | filter 清除按钮文本 | `string` | `重置`

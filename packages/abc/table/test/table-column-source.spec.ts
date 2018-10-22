@@ -357,11 +357,11 @@ describe('abc: table: column-souce', () => {
         });
       });
       describe('#icon', () => {
-        it('should be default to [anticon anticon-filter] when is null', () => {
+        it('should be default to [filter] when is null', () => {
           const res = srv.process([
             { title: '', filter: { menus: [{ text: '' }] } },
           ])[0].filter;
-          expect(res.icon).toBe('anticon anticon-filter');
+          expect(res.icon).toBe('filter');
         });
         it('should be specify value', () => {
           const res = srv.process([
