@@ -100,7 +100,6 @@ copyFiles() {
     "${1}src/app/layout/default/header/components/icon.component.ts|${2}application/files/src/app/layout/default/header/components/"
     "${1}src/app/layout/default/header/components/notify.component.ts|${2}application/files/src/app/layout/default/header/components/"
     "${1}src/app/layout/default/header/components/task.component.ts|${2}application/files/src/app/layout/default/header/components/"
-    "${1}src/app/layout/default/header/components/user.component.ts|${2}application/files/src/app/layout/default/header/components/"
     # router
     "${1}src/app/routes/callback|${2}application/files/src/app/routes/"
     "${1}src/app/routes/exception|${2}application/files/src/app/routes/"
