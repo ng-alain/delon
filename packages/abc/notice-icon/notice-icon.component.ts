@@ -23,7 +23,7 @@ import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
     nzOverlayClassName="notice-icon">
     <div nz-popover class="alain-default__nav-item notice-icon__item">
       <nz-badge [nzCount]="count">
-        <i nz-icon type="bell"></i>
+        <i nz-icon type="bell" class="alain-default__nav-item-icon"></i>
       </nz-badge>
     </div>
     <ng-template #nzTemplate>
