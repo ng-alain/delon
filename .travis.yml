@@ -24,6 +24,7 @@ jobs:
     - env: "MODE=site"
     - env: "DEPLOY_MODE=build"
     - env: "DEPLOY_MODE=build_artifacts"
+      if: branch = master
 matrix:
   allow_failures:
     - env: "DEPLOY_MODE=build_artifacts"
