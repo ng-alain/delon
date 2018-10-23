@@ -32,7 +32,7 @@ type: Documents
 
 ### 认证风格
 
-目前它衍生两种不同校验风格：Simple Web Token、Json Web Token，相对应为 `SimpleTokenModel`、`JWTTokenModel`，后者具有解析 `payload` 能力，当然有任何特殊都可以自行实现 `ITokenModel` 接口。
+目前它衍生两种不同校验风格：Simple Web Token、Json Web Token，相对应为 `SimpleTokenModel`、`JWTTokenModel`，后者具有解析 `payload` 能力，当然有任何特殊需求都可以自行实现 `ITokenModel` 接口。
 
 ## 如何使用
 
@@ -61,7 +61,7 @@ export class AppModule { }
 
 **为什么需要HTTP_INTERCEPTORS**
 
-默认 `DelonAuthModule` 并不会注册任何HTTP拦截器，主要是因为 `@delon/auth` 提供了多种不同[认证风格](/auth/style)。
+默认 `DelonAuthModule` 并不会注册任何HTTP拦截器，主要是因为 `@delon/auth` 提供了多种不同[认证风格](/auth/getting-started#认证风格)。
 
 ## 配置信息
 
