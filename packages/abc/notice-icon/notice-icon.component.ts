@@ -15,7 +15,7 @@ import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
   selector: 'notice-icon',
   template: `
   <nz-badge *ngIf="data?.length === 0" [nzCount]="count">
-    <i class="anticon anticon-bell"></i>
+    <i nz-icon type="bell"></i>
   </nz-badge>
   <nz-popover *ngIf="data?.length > 0"
     [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)" nzTrigger="click"
@@ -23,7 +23,7 @@ import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
     nzOverlayClassName="notice-icon">
     <div nz-popover class="alain-default__nav-item notice-icon__item">
       <nz-badge [nzCount]="count">
-        <i class="anticon anticon-bell"></i>
+        <i nz-icon type="bell" class="alain-default__nav-item-icon"></i>
       </nz-badge>
     </div>
     <ng-template #nzTemplate>

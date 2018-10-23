@@ -105,7 +105,7 @@ describe('abc: sidebar-nav', () => {
       const data = deepCopy(MOCKMENUS);
       menuSrv.add(data);
       expect(data[0].children[0]._open).toBeUndefined();
-      const subTitleEl = page.getEl<HTMLElement>('.sidebar-nav__sub-title');
+      const subTitleEl = page.getEl<HTMLElement>('.sidebar-nav__item-link');
       subTitleEl.click();
       fixture.detectChanges();
       expect(data[0].children[0]._open).toBe(true);
@@ -370,7 +370,7 @@ describe('abc: sidebar-nav', () => {
     showSubMenu(resultExpectShow = true) {
       let conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       expect(conEl).toBeNull();
-      const subTitleEl = this.getEl<HTMLElement>('.sidebar-nav__sub-title');
+      const subTitleEl = this.getEl<HTMLElement>('.sidebar-nav__item-link');
       subTitleEl.dispatchEvent(new Event('mouseenter'));
       fixture.detectChanges();
       conEl = this.getEl<HTMLElement>(floatingShowCls, true);

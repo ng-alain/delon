@@ -2,8 +2,46 @@ import { Component, HostBinding, OnDestroy, Inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { NzIconService } from 'ng-zorro-antd';
 
-import { environment } from '../environments/environment';
+// #region ng-zorro-antd icons
+
+import {
+  SearchOutline,
+  // site used
+  EditOutline,
+  CopyOutline,
+  FormOutline,
+  HeartOutline,
+  VerticalRightOutline,
+  VerticalLeftOutline,
+  StarOutline,
+  StarFill,
+  InboxOutline,
+  DashboardOutline,
+  GithubOutline,
+  EllipsisOutline,
+  DingdingOutline,
+} from '@ant-design/icons-angular/icons';
+const ICONS = [
+  SearchOutline,
+  // site used
+  FormOutline,
+  EditOutline,
+  CopyOutline,
+  HeartOutline,
+  VerticalRightOutline,
+  VerticalLeftOutline,
+  StarOutline,
+  StarFill,
+  InboxOutline,
+  DashboardOutline,
+  GithubOutline,
+  EllipsisOutline,
+  DingdingOutline,
+];
+
+// #endregion
 
 import { MetaService } from './core/meta.service';
 import { MobileService } from './core/mobile.service';
@@ -26,6 +64,7 @@ export class AppComponent implements OnDestroy {
     private title: TitleService,
     private router: Router,
     private mobileSrv: MobileService,
+    private _iconService: NzIconService,
   ) {
     enquire.register(this.query, {
       match: () => {
@@ -42,7 +81,12 @@ export class AppComponent implements OnDestroy {
       .pipe(filter(evt => evt instanceof NavigationEnd))
       .subscribe((evt: NavigationEnd) => {
         const url = evt.url.split('#')[0].split('?')[0];
-        if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
+        if (
+          url.includes('/dev') ||
+          url.includes('/404') ||
+          this.prevUrl === url
+        )
+          return;
         this.prevUrl = url;
 
         let urlLang = url.split('/').pop() || this.i18n.zone;
@@ -88,6 +132,8 @@ export class AppComponent implements OnDestroy {
         // scroll to top
         document.body.scrollIntoView();
       });
+
+    this._iconService.addIcon(...ICONS);
   }
 
   ngOnDestroy(): void {

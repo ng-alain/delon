@@ -280,17 +280,17 @@ describe('abc: reuse-tab', () => {
           layoutComp.allowClose = true;
           fixture.detectChanges();
           page.to('#b');
-          expect(dl.queryAll(By.css('.op')).length).toBe(2);
+          expect(dl.queryAll(By.css('.reuse-tab__op')).length).toBe(2);
           page.to('#c');
-          expect(dl.queryAll(By.css('.op')).length).toBe(3);
+          expect(dl.queryAll(By.css('.reuse-tab__op')).length).toBe(3);
         }));
         it('with false', fakeAsync(() => {
           layoutComp.allowClose = false;
           fixture.detectChanges();
           page.to('#b');
-          expect(dl.queryAll(By.css('.op')).length).toBe(0);
+          expect(dl.queryAll(By.css('.reuse-tab__op')).length).toBe(0);
           page.to('#c');
-          expect(dl.queryAll(By.css('.op')).length).toBe(0);
+          expect(dl.queryAll(By.css('.reuse-tab__op')).length).toBe(0);
         }));
       });
     });

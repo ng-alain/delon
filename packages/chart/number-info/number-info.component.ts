@@ -19,7 +19,7 @@ import { toNumber, updateHostClass } from '@delon/util';
     <span class="number-info__value-text"><ng-container *ngIf="_total; else _totalTpl">{{_total}}</ng-container><em class="number-info__value-suffix" *ngIf="suffix">{{suffix}}</em></span>
     <span *ngIf="status || _isSubTotal" class="number-info__value-text number-info__value-sub">
       <ng-container *ngIf="_subTotal; else _subTotalTpl">{{_subTotal}}</ng-container>
-      <i *ngIf="status" class="anticon anticon-caret-{{status}}"></i>
+      <i *ngIf="status" nz-icon type="caret-{{status}}"></i>
     </span>
   </div>
   `,

@@ -193,7 +193,7 @@ export class STColumnSource {
       res.clearText = this.cog.filterClearText;
     }
     if (!res.icon) {
-      res.icon = `anticon anticon-filter`;
+      res.icon = `filter`;
     }
     if (!res.key) {
       res.key = item.indexKey;

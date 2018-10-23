@@ -3,7 +3,7 @@ import { Component, Input, TemplateRef } from '@angular/core';
 @Component({
   selector: 'result',
   template: `
-  <div class="result__icon"><i class="anticon anticon-{{_icon}} result__icon-{{_type}}"></i></div>
+  <div class="result__icon"><i nz-icon class="anticon anticon-{{_icon}} result__icon-{{_type}}"></i></div>
   <div class="result__title"><ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container></div>
   <div *ngIf="_description || _descriptionTpl" class="result__desc"><ng-container *ngIf="_description; else _descriptionTpl">{{_description}}</ng-container></div>
   <div *ngIf="_extra || _extraTpl" class="result__extra">

@@ -25,19 +25,19 @@ import { Component } from '@angular/core';
     </ng-template>
     <ng-template #logo><img src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"></ng-template>
     <ng-template #action>
-        <nz-button-group>
-            <button nz-button>操作</button>
-            <button nz-button>操作</button>
-        </nz-button-group>
-        <nz-dropdown class="mx-sm">
-            <button nz-button nz-dropdown><i class="anticon anticon-ellipsis"></i></button>
-            <ul nz-menu>
-                <li nz-menu-item>选项一</li>
-                <li nz-menu-item>选项二</li>
-                <li nz-menu-item>选项三</li>
-            </ul>
-        </nz-dropdown>
-        <button nz-button [nzType]="'primary'">主操作</button>
+      <nz-button-group>
+        <button nz-button>操作</button>
+        <button nz-button>操作</button>
+      </nz-button-group>
+      <nz-dropdown class="mx-sm">
+        <button nz-button nz-dropdown><i nz-icon type="ellipsis"></i></button>
+        <ul nz-menu>
+          <li nz-menu-item>选项一</li>
+          <li nz-menu-item>选项二</li>
+          <li nz-menu-item>选项三</li>
+        </ul>
+      </nz-dropdown>
+      <button nz-button [nzType]="'primary'">主操作</button>
     </ng-template>
     <ng-template #content>
       <sv-container size="small" col="2">

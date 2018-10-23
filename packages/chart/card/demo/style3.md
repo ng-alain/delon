@@ -19,7 +19,7 @@ import { yuan } from '@delon/util';
     <ng-template #avatar><img style="width:56px; height: 56px" src="./assets/img/logo-color.svg"/></ng-template>
     <ng-template #action>
       <nz-tooltip [nzTitle]="'指标说明'">
-        <i nz-tooltip class="anticon anticon-info-circle-o"></i>
+        <i nz-tooltip nz-icon type="info-circle"></i>
       </nz-tooltip>
     </ng-template>
   </g2-card>

@@ -12,7 +12,7 @@ import { SFUISchemaItem } from './schema/ui';
         <span class="optional">
           {{ ui.optional }}
           <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
-            <i nz-tooltip class="anticon anticon-question-circle-o"></i>
+            <i nz-tooltip nz-icon type="question-circle"></i>
           </nz-tooltip>
         </span>
       </label>

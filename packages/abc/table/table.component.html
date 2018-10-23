@@ -27,7 +27,7 @@
               <label nz-checkbox class="st__checkall" [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll()"></label>
               <nz-dropdown *ngIf="c.selections.length" class="st__checkselection">
                 <span nz-dropdown>
-                  <i class="anticon anticon-down"></i>
+                  <i nz-icon type="down"></i>
                 </span>
                 <ul nz-menu>
                   <li nz-menu-item *ngFor="let rw of c.selections" (click)="_rowSelection(rw)" [innerHTML]="rw.text">
@@ -106,7 +106,7 @@
                   <nz-dropdown>
                     <a class="ant-dropdown-link" nz-dropdown>
                       <span [innerHTML]="_btnText(i, btn)"></span>
-                      <i class="anticon anticon-down"></i>
+                      <i nz-icon type="down"></i>
                     </a>
                     <ul nz-menu>
                       <ng-container *ngFor="let subBtn of btn.children">

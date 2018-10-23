@@ -296,7 +296,7 @@ export interface STColumnFilter {
    */
   default?: boolean;
   /**
-   * 自定义 filter 图标，默认 `anticon anticon-filter`
+   * 自定义 filter 图标，默认 `filter`
    */
   icon?: string;
   /**
@@ -500,14 +500,14 @@ export interface STColumnButtonDrawerConfig {
   paramsName?: string;
   /**
    * 大小；例如：lg、600，默认：`md`
-   * 
+   *
    * | 类型 | 默认大小 |
    * | --- | ------ |
    * | `sm` | `300` |
    * | `md` | `600` |
    * | `lg` | `900` |
    * | `xl` | `1200` |
-   * 
+   *
    * > 以上值，可通过覆盖相应的LESS参数自行调整
    */
   size?: 'sm' | 'md' | 'lg' | 'xl' | number;

@@ -7,7 +7,9 @@ import { I18NService } from '../../../core/i18n/service';
   selector: 'edit-button',
   template: `
     <nz-tooltip nzTitle="{{'app.content.edit-page' | translate}}">
-      <a href="{{_full}}" target="_blank" class="edit-button" nz-tooltip><i class="anticon anticon-edit"></i></a>
+      <a href="{{_full}}" target="_blank" class="edit-button" nz-tooltip>
+        <i nz-icon type="edit"></i>
+      </a>
     </nz-tooltip>
     `,
 })

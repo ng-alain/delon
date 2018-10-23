@@ -21,25 +21,27 @@ import { NzMessageService } from 'ng-zorro-antd';
     \`
 })
 export class DemoComponent {
-    schema = {schema};
-    formData = {formData};
-    ui = {ui};
-    layout = '{layout}';
+  schema = {schema};
+  formData = {formData};
+  ui = {ui};
+  layout = '{layout}';
 
-    constructor(private msg: NzMessageService) { }
+  constructor(private msg: NzMessageService) { }
 
-    submit(value: any) {
-        this.msg.success(JSON.stringify(value));
-    }
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 
-    change(value: any) {
-        console.log('formChange', value);
-    }
+  change(value: any) {
+    console.log('formChange', value);
+  }
 
-    error(value: any) {
-        console.log('formError', value);
-    }
+  error(value: any) {
+    console.log('formError', value);
+  }
 }`;
+
+declare var ace: any;
 
 @Component({
   selector: 'form-validator',
@@ -73,6 +75,7 @@ export class FormValidatorComponent implements OnInit {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
     this.title = this.files[defaultIndex].title;
+    ace.config.set("workerPath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/")
   }
 
   ngOnInit(): void {
@@ -114,7 +117,7 @@ export class FormValidatorComponent implements OnInit {
     };
     const componentCode = stackBlitzTpl.replace(
       /\{(\w+)\}/g,
-      (match: string, offset: any) => obj[offset],
+      (match: string, offset: any) => (obj[offset] || '').trim(),
     );
     this.codeSrv.openOnStackBlitz(
       componentCode,

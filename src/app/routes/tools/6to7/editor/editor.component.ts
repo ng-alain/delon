@@ -248,7 +248,7 @@ export class SixToSevenEditorComponent implements OnInit {
                 </tbody>
             </nz-table>
             <button *ngIf="editIndex===-1" nz-button [nzType]="'dashed'" [nzSize]="'large'" (click)="add()" class="ant-btn__block mt-md">
-                <i class="anticon anticon-plus"></i>
+                <i nz-icon type="plus"></i>
                 <span>新增成员</span>
             </button>
         </nz-card>

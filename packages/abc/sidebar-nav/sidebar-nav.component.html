@@ -1,86 +1,94 @@
+<ng-template #icon let-i>
+  <ng-container *ngIf="i" [ngSwitch]="i.type">
+    <i *ngSwitchCase="'icon'" nz-icon [type]="i.value" class="sidebar-nav__item-icon"></i>
+    <img *ngSwitchCase="'img'" src="{{ i.value }}" class="sidebar-nav__item-icon">
+    <i *ngSwitchDefault class="sidebar-nav__item-icon {{ i.value }}"></i>
+  </ng-container>
+</ng-template>
 <ul class="sidebar-nav">
   <ng-container *ngFor="let group of list">
-    <ng-template [ngIf]="group._hidden !== true">
+    <ng-container *ngIf="group._hidden !== true">
       <li class="sidebar-nav__item sidebar-nav__group-title" *ngIf="group.group">
         <span>{{ group.text }}</span>
       </li>
       <ng-container *ngFor="let child1 of group.children">
-        <li *ngIf="child1._hidden !== true" routerLinkActive="sidebar-nav__selected"
-            [routerLinkActiveOptions]="{exact: child1.linkExact}" class="sidebar-nav__item"
-            [class.sidebar-nav__open]="child1._open">
+        <li *ngIf="child1._hidden !== true" routerLinkActive="sidebar-nav__selected" [routerLinkActiveOptions]="{exact: child1.linkExact}"
+          class="sidebar-nav__item" [class.sidebar-nav__open]="child1._open">
           <!-- link -->
-          <a *ngIf="child1._type === 1" (click)="onSelect(child1)" [routerLink]="child1.link"
-             [target]="child1.target">
-            <i *ngIf="!collapsed" class="{{ child1.icon }}"></i>
+          <a *ngIf="child1._type === 1" (click)="onSelect(child1)" [routerLink]="child1.link" [target]="child1.target"
+            class="sidebar-nav__item-link">
+            <ng-container *ngIf="!collapsed">
+              <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
+            </ng-container>
             <nz-tooltip *ngIf="collapsed" nzPlacement="right" [nzTitle]="child1.text">
               <span nz-tooltip>
-                <i class="{{ child1.icon }}"></i>
+                <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
               </span>
             </nz-tooltip>
-            <span>{{ child1.text }}</span>
+            <span class="sidebar-nav__item-text">{{ child1.text }}</span>
           </a>
           <!-- external link -->
-          <a *ngIf="child1._type === 2" href="{{ child1.externalLink }}" target="{{child1.target}}"
-             data-type="external">
-            <i *ngIf="!collapsed" class="{{ child1.icon }}"></i>
+          <a *ngIf="child1._type === 2" href="{{ child1.externalLink }}" target="{{child1.target}}" data-type="external"
+            class="sidebar-nav__item-link">
+            <ng-container *ngIf="!collapsed">
+              <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
+            </ng-container>
             <nz-tooltip *ngIf="collapsed" nzPlacement="right" [nzTitle]="child1.text">
               <span nz-tooltip>
-                <i class="{{ child1.icon }}"></i>
+                <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
               </span>
             </nz-tooltip>
-            <span>{{ child1.text }}</span>
+            <span class="sidebar-nav__item-text">{{ child1.text }}</span>
           </a>
           <!-- has children link -->
-          <a *ngIf="child1._type === 3" class="sidebar-nav__sub-title" (click)="toggleOpen(child1)"
-             (mouseenter)="showSubMenu($event, child1)">
-            <i class="{{ child1.icon }}"></i>
-            <span>{{ child1.text }}</span>
+          <a *ngIf="child1._type === 3" (click)="toggleOpen(child1)" (mouseenter)="showSubMenu($event, child1)" class="sidebar-nav__item-link">
+            <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
+            <span class="sidebar-nav__item-text">{{ child1.text }}</span>
+            <i class="sidebar-nav__sub-arrow"></i>
           </a>
           <!-- badge -->
           <div *ngIf="child1.badge" title="{{child1.badge}}" class="badge badge-{{child1.badgeStatus}}"
-               [class.badge-dot]="child1.badgeDot">
+            [class.badge-dot]="child1.badgeDot">
             <em>{{child1.badge}}</em>
           </div>
           <!-- Level 2 -->
           <ul *ngIf="child1._type === 3" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{child1._depth}}">
             <ng-container *ngFor="let child2 of child1.children">
-              <li *ngIf="child2._hidden !== true" routerLinkActive="sidebar-nav__selected"
-                  [routerLinkActiveOptions]="{exact: child2.linkExact}" class="sidebar-nav__item"
-                  [class.sidebar-nav__open]="child2._open">
+              <li *ngIf="child2._hidden !== true" routerLinkActive="sidebar-nav__selected" [routerLinkActiveOptions]="{exact: child2.linkExact}"
+                class="sidebar-nav__item" [class.sidebar-nav__open]="child2._open">
                 <!-- link -->
-                <a *ngIf="child2._type === 1" (click)="onSelect(child2)" [routerLink]="child2.link"
-                   [target]="child2.target">{{
-                  child2.text }}</a>
+                <a *ngIf="child2._type === 1" (click)="onSelect(child2)" [routerLink]="child2.link" [target]="child2.target"
+                  class="sidebar-nav__item-link">{{ child2.text }}</a>
                 <!-- external link -->
-                <a *ngIf="child2._type === 2" href="{{ child2.externalLink }}" target="{{ child2.target }}"
-                   data-type="external">{{
-                  child2.text }}</a>
+                <a *ngIf="child2._type === 2" href="{{ child2.externalLink }}" target="{{ child2.target }}" data-type="external"
+                  class="sidebar-nav__item-link">{{ child2.text }}</a>
                 <!-- has children link -->
-                <a *ngIf="child2._type === 3" class="sidebar-nav__sub-title" (click)="toggleOpen(child2)">
+                <a *ngIf="child2._type === 3" (click)="toggleOpen(child2)" class="sidebar-nav__item-link">
                   {{ child2.text }}
+                  <i class="sidebar-nav__sub-arrow"></i>
                 </a>
                 <!-- badge -->
                 <div *ngIf="child2.badge" title="{{child2.badge}}" class="badge badge-{{child2.badgeStatus}}"
-                     [class.badge-dot]="child2.badgeDot">
+                  [class.badge-dot]="child2.badgeDot">
                   <em>{{child2.badge}}</em>
                 </div>
                 <!-- Level 3 -->
                 <ul *ngIf="child2._type === 3" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{child2._depth}}">
                   <ng-container *ngFor="let child3 of child2.children">
                     <li *ngIf="child3._hidden !== true" routerLinkActive="sidebar-nav__selected"
-                        [routerLinkActiveOptions]="{exact: child3.linkExact}" class="sidebar-nav__item"
-                        [class.sidebar-nav__open]="child3._open">
+                      [routerLinkActiveOptions]="{exact: child3.linkExact}" class="sidebar-nav__item"
+                      [class.sidebar-nav__open]="child3._open">
                       <!-- link -->
-                      <a *ngIf="child3._type === 1" (click)="onSelect(child3)" [routerLink]="child3.link"
-                         [target]="child3.target">{{
+                      <a *ngIf="child3._type === 1" (click)="onSelect(child3)" [routerLink]="child3.link" [target]="child3.target"
+                        class="sidebar-nav__item-link">{{
                         child3.text }}</a>
                       <!-- external link -->
                       <a *ngIf="child3._type === 2" href="{{ child3.externalLink }}" target="{{ child3.target }}"
-                         data-type="external">{{
+                        data-type="external" class="sidebar-nav__item-link">{{
                         child3.text }}</a>
                       <!-- badge -->
                       <div *ngIf="child3.badge" title="{{child3.badge}}" class="badge badge-{{child3.badgeStatus}}"
-                           [class.badge-dot]="child3.badgeDot">
+                        [class.badge-dot]="child3.badgeDot">
                         <em>{{child3.badge}}</em>
                       </div>
                     </li>
@@ -91,6 +99,6 @@
           </ul>
         </li>
       </ng-container>
-    </ng-template>
+    </ng-container>
   </ng-container>
 </ul>

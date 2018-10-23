@@ -13,17 +13,17 @@
     <nz-button-group>
       <nz-tooltip [nzTitle]="expand ? 'Hide Code' : 'Show Code'">
         <button nz-tooltip nz-button (click)="expand=!expand">
-          <i class="anticon anticon-verticle-{{ expand ? 'right' : 'left'}}"></i>
+          <i nz-icon type="vertical-{{ expand ? 'right' : 'left'}}"></i>
         </button>
       </nz-tooltip>
       <nz-tooltip [nzTitle]="'app.demo.stackblitz' | translate">
         <button nz-tooltip nz-button (click)="openOnStackBlitz()" class="ml-sm">
-          <i class="anticon anticon-form"></i>
+          <i nz-icon type="form"></i>
         </button>
       </nz-tooltip>
       <nz-tooltip [nzTitle]="'app.demo.copy' | translate">
         <button nz-tooltip nz-button (click)="onCopy()" class="ml-sm">
-          <i class="anticon anticon-copy"></i>
+          <i nz-icon type="copy"></i>
         </button>
       </nz-tooltip>
     </nz-button-group>

@@ -238,7 +238,7 @@ Property | Description | Type | Default
 `[menus]` | Filter menu config | `STColumnFilterMenu[]` | -
 `[fn]` | Filter function for local data | `(filter: STColumnFilterMenu, record: any) => boolean` | -
 `[default]` | Whether the `data` is filtered | `boolean` | -
-`[icon]` | Customized filter icon | `string` | `anticon anticon-filter`
+`[icon]` | Customized filter icon | `string` | `filter`
 `[multiple]` | Whether multiple filters can be selected | `boolean` | `true`
 `[confirmText]` | Text of the confirm button | `string` | `确认`
 `[clearText]` | Text of the clear button | `string` | `重置`
