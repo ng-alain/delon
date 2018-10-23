@@ -61,7 +61,7 @@ export class AppModule { }
 
 **为什么需要HTTP_INTERCEPTORS**
 
-默认 `DelonAuthModule` 并不会注册任何HTTP拦截器，主要是因为 `@delon/auth` 提供了多种不同[认证风格](/auth/getting-started/en#认证风格)。
+默认 `DelonAuthModule` 并不会注册任何HTTP拦截器，主要是因为 `@delon/auth` 提供了多种不同[认证风格](/auth/getting-started#认证风格)。
 
 ## 配置信息
 
