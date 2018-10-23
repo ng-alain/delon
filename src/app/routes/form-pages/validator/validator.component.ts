@@ -21,24 +21,24 @@ import { NzMessageService } from 'ng-zorro-antd';
     \`
 })
 export class DemoComponent {
-    schema = {schema};
-    formData = {formData};
-    ui = {ui};
-    layout = '{layout}';
+  schema = {schema};
+  formData = {formData};
+  ui = {ui};
+  layout = '{layout}';
 
-    constructor(private msg: NzMessageService) { }
+  constructor(private msg: NzMessageService) { }
 
-    submit(value: any) {
-        this.msg.success(JSON.stringify(value));
-    }
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 
-    change(value: any) {
-        console.log('formChange', value);
-    }
+  change(value: any) {
+    console.log('formChange', value);
+  }
 
-    error(value: any) {
-        console.log('formError', value);
-    }
+  error(value: any) {
+    console.log('formError', value);
+  }
 }`;
 
 declare var ace: any;
@@ -117,7 +117,7 @@ export class FormValidatorComponent implements OnInit {
     };
     const componentCode = stackBlitzTpl.replace(
       /\{(\w+)\}/g,
-      (match: string, offset: any) => obj[offset],
+      (match: string, offset: any) => (obj[offset] || '').trim(),
     );
     this.codeSrv.openOnStackBlitz(
       componentCode,
