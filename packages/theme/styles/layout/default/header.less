@@ -81,6 +81,7 @@
     display: flex;
     align-items: center;
     .ant-input {
+      padding-left: 0;
       &:focus {
         box-shadow: none;
       }
@@ -90,7 +91,7 @@
       background-color: rgba(255, 255, 255, 0.2);
       color: #fff;
       border: none;
-      &::-webkit-input-placeholder {
+      &::placeholder {
         color: #fff;
         opacity: 1;
       }
@@ -114,19 +115,10 @@
       }
       .ant-input-group-addon {
         i {
-          transform: rotate(180deg);
+          transform: rotate(90deg);
           color: @grey-8;
-          &:before {
-            content: '\E61B';
-          }
         }
       }
-    }
-  }
-
-  @media (min-width: @mobile-min) {
-    @{alain-default-prefix}__nav @{alain-default-prefix}__search-btn {
-      display: none;
     }
   }
 
