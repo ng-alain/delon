@@ -78,6 +78,20 @@ export class MenuService implements OnDestroy {
         item._type = 3;
       }
 
+      // icon
+      if (typeof item.icon === 'string') {
+        let type = 'class';
+        let value = item.icon;
+        // compatible `anticon anticon-user`
+        if (~item.icon.indexOf(`anticon-`)) {
+          type = 'icon';
+          value = value.split('-').slice(1).join('-');
+        } else if (/^https?:\/\//.test(item.icon)) {
+          type = 'img';
+        }
+        item.icon = { type, value } as any;
+      }
+
       // shortcut
       if (parent && item.shortcut === true && parent.shortcutRoot !== true)
         shortcuts.push(item);

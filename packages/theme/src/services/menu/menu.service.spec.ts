@@ -207,6 +207,68 @@ describe('Service: Menu', () => {
         expect(srv.menus[0].children[1].children.length).toBe(1);
       });
     });
+
+    describe('icon', () => {
+      it('should be null', () => {
+        srv.add([{
+          text: 'dashboard',
+          link: '/dashboard',
+          icon: null
+        }]);
+        const icon: any = srv.menus[0].icon;
+        expect(icon).toBeNull();
+      });
+      it('should be undefined', () => {
+        srv.add([{
+          text: 'dashboard',
+          link: '/dashboard',
+          icon: undefined
+        }]);
+        const icon: any = srv.menus[0].icon;
+        expect(icon).toBeUndefined();
+      });
+      it('should be type is string', () => {
+        srv.add([{
+          text: 'dashboard',
+          link: '/dashboard',
+          icon: 'aa'
+        }]);
+        const icon: any = srv.menus[0].icon;
+        expect(typeof icon).toBe('object');
+        expect(icon.type).toBe('class');
+      });
+      it('should be type is object', () => {
+        srv.add([{
+          text: 'dashboard',
+          link: '/dashboard',
+          icon: { type: 'icon', value: 'user' }
+        }]);
+        const icon: any = srv.menus[0].icon;
+        expect(typeof icon).toBe('object');
+        expect(icon.type).toBe('icon');
+      });
+      it('should be anticon anticon-user', () => {
+        srv.add([{
+          text: 'dashboard',
+          link: '/dashboard',
+          icon: `anticon anticon-user`
+        }]);
+        const icon: any = srv.menus[0].icon;
+        expect(typeof icon).toBe('object');
+        expect(icon.type).toBe('icon');
+        expect(icon.value).toBe('user');
+      });
+      it('should be image', () => {
+        srv.add([{
+          text: 'dashboard',
+          link: '/dashboard',
+          icon: `http://ng-alain.com/1.jpg`
+        }]);
+        const icon: any = srv.menus[0].icon;
+        expect(typeof icon).toBe('object');
+        expect(icon.type).toBe('img');
+      });
+    });
   });
 
   describe('[i18n changed]', () => {

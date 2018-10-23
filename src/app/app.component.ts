@@ -8,9 +8,6 @@ import { NzIconService } from 'ng-zorro-antd';
 
 import {
   SearchOutline,
-  FilterOutline,
-  CaretUpOutline,
-  CaretDownOutline,
   // site used
   EditOutline,
   CopyOutline,
@@ -21,12 +18,13 @@ import {
   StarOutline,
   StarFill,
   InboxOutline,
+  DashboardOutline,
+  GithubOutline,
+  EllipsisOutline,
+  DingdingOutline,
 } from '@ant-design/icons-angular/icons';
 const ICONS = [
   SearchOutline,
-  FilterOutline,
-  CaretUpOutline,
-  CaretDownOutline,
   // site used
   FormOutline,
   EditOutline,
@@ -37,6 +35,10 @@ const ICONS = [
   StarOutline,
   StarFill,
   InboxOutline,
+  DashboardOutline,
+  GithubOutline,
+  EllipsisOutline,
+  DingdingOutline,
 ];
 
 // #endregion

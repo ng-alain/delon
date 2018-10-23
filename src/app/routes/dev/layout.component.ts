@@ -1,6 +1,48 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { MenuService, SettingsService, Menu } from '@delon/theme';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzIconService } from 'ng-zorro-antd';
+
+// #region icons
+
+import {
+  MenuFoldOutline,
+  MenuUnfoldOutline,
+  SearchOutline,
+  SettingOutline,
+  FullscreenOutline,
+  FullscreenExitOutline,
+  BellOutline,
+  LockOutline,
+  PlusOutline,
+  UserOutline,
+  LogoutOutline,
+  EllipsisOutline,
+  GlobalOutline,
+  // Optional
+  GithubOutline,
+  AppstoreOutline,
+} from '@ant-design/icons-angular/icons';
+
+const ICONS = [
+  MenuFoldOutline,
+  MenuUnfoldOutline,
+  SearchOutline,
+  SettingOutline,
+  FullscreenOutline,
+  FullscreenExitOutline,
+  BellOutline,
+  LockOutline,
+  PlusOutline,
+  UserOutline,
+  LogoutOutline,
+  EllipsisOutline,
+  GlobalOutline,
+  // Optional
+  GithubOutline,
+  AppstoreOutline,
+];
+
+// #endregion
 
 @Component({
   selector: 'dev-layout',
@@ -32,13 +74,13 @@ export class DevLayoutComponent implements OnInit {
         {
           text: 'Dashboard',
           link: '/',
-          icon: 'appstore',
+          icon: 'anticon anticon-dashboard',
           badge: 5,
         },
         {
           text: 'Level1',
           link: '#',
-          icon: 'appstore',
+          icon: 'anticon anticon-appstore',
           children: [
             {
               text: 'Level2',
@@ -53,7 +95,7 @@ export class DevLayoutComponent implements OnInit {
         },
         {
           text: 'ABC',
-          icon: 'appstore',
+          icon: 'anticon anticon-appstore',
           children: [
             { text: 'Reuse Tab7', link: '/dev/l1' },
             { text: 'Reuse Tab6', link: '/dev/l2' },
@@ -70,10 +112,13 @@ export class DevLayoutComponent implements OnInit {
   ];
 
   constructor(
+    iconSrv: NzIconService,
     private menuSrv: MenuService,
     public settings: SettingsService,
     public msgSrv: NzMessageService,
-  ) {}
+  ) {
+    iconSrv.addIcon(...ICONS);
+  }
 
   toggleCollapsedSideabar() {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);

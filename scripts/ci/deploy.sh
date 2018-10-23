@@ -17,8 +17,8 @@ commitAuthorEmail=$(git --no-pager show -s --format='%ae' HEAD)
 commitMessage=$(git log --oneline -n 1)
 commitMessageCheck=$(git log --oneline -n 2)
 
-if [ ${commitAuthorName} != 'cipchk' ]; then
-  echo "Warning: Just only cipchk user (current: ${commitAuthorName})"
+if [ ${commitAuthorName} != '卡色' ]; then
+  echo "Warning: Just only 卡色 user (current: ${commitAuthorName})"
   exit 0
 fi
 

@@ -1,3 +1,8 @@
+export interface MenuIcon {
+  type: 'class' | 'icon' | 'img';
+  value: string;
+}
+
 export interface Menu {
   [key: string]: any;
   /** 文本 */
@@ -19,7 +24,7 @@ export interface Menu {
   /** 链接 target */
   target?: '_blank' | '_self' | '_parent' | '_top';
   /** 图标 */
-  icon?: string;
+  icon?: string | MenuIcon;
   /** 徽标数，展示的数字。（注：`group:true` 无效） */
   badge?: number;
   /** 徽标数，显示小红点 */
