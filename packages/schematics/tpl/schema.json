@@ -40,8 +40,7 @@
     },
     "inlineTemplate": {
       "description": "Specifies if the template will be in the ts file.",
-      "type": "boolean",
-      "alias": "t"
+      "type": "boolean"
     },
     "viewEncapsulation": {
       "description": "Specifies the view encapsulation strategy.",
@@ -85,11 +84,6 @@
       "format": "html-selector",
       "description": "The selector to use for the component."
     },
-    "module":  {
-      "type": "string",
-      "description": "Allows specification of the declaring module.",
-      "alias": "m"
-    },
     "export": {
       "type": "boolean",
       "default": false,
@@ -104,6 +98,11 @@
       "type": "boolean",
       "description": "Without prefix to selectors",
       "default": false
+    },
+    "module":  {
+      "type": "string",
+      "description": "Allows specification of the declaring module.",
+      "alias": "m"
     },
     "target": {
       "type": "string",
