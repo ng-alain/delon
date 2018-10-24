@@ -23,12 +23,39 @@ const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe];
 
 // endregion
 
+// #region all delon used icons
+import { NzIconService } from 'ng-zorro-antd';
+import {
+  BellOutline,
+  FilterOutline,
+  CaretUpOutline,
+  CaretDownOutline,
+  DeleteOutline,
+  PlusOutline,
+  InboxOutline,
+} from '@ant-design/icons-angular/icons';
+const ICONS = [
+  BellOutline,
+  FilterOutline,
+  CaretUpOutline,
+  CaretDownOutline,
+  DeleteOutline,
+  PlusOutline,
+  InboxOutline,
+];
+// #endregion
+
 @NgModule({
   imports: [CommonModule, RouterModule],
   declarations: [...COMPONENTS, ...PIPES],
   exports: [...COMPONENTS, ...PIPES],
 })
 export class AlainThemeModule {
+
+  constructor(iconSrv: NzIconService) {
+    iconSrv.addIcon(...ICONS);
+  }
+
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AlainThemeModule,

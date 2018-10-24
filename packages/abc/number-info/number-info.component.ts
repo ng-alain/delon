@@ -19,7 +19,7 @@ import { toNumber } from '@delon/util';
     <span><ng-container *ngIf="_total; else _totalTpl">{{_total}}</ng-container><em class="suffix" *ngIf="suffix">{{suffix}}</em></span>
     <span *ngIf="status || _isSubTotal" class="sub-total">
       <ng-container *ngIf="_subTotal; else _subTotalTpl">{{_subTotal}}</ng-container>
-      <i *ngIf="status" class="anticon anticon-caret-{{status}}"></i>
+      <i *ngIf="status" nz-icon type="caret-{{status}}"></i>
     </span>
   </div>
   `,

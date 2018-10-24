@@ -60,9 +60,11 @@
     &:hover {
       background-color: rgba(255, 255, 255, 0.2) !important;
     }
-    i {
-      font-size: 18px;
-      line-height: 100%;
+    > i,
+    &-icon {
+      font-size: 18px !important;
+      // TODO: fix ant-dropdown-trigger
+      transform: none !important;
     }
   }
   .item,
@@ -81,6 +83,7 @@
     display: flex;
     align-items: center;
     .ant-input {
+      padding-left: 0;
       &:focus {
         box-shadow: none;
       }
@@ -90,7 +93,7 @@
       background-color: rgba(255, 255, 255, 0.2);
       color: #fff;
       border: none;
-      &::-webkit-input-placeholder {
+      &::placeholder {
         color: #fff;
         opacity: 1;
       }
@@ -114,11 +117,8 @@
       }
       .ant-input-group-addon {
         i {
-          transform: rotate(180deg);
+          transform: rotate(90deg);
           color: @grey-8;
-          &:before {
-            content: '\E61B';
-          }
         }
       }
     }

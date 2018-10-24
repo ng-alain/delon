@@ -1090,7 +1090,7 @@ describe('abc: simple-table', () => {
             filterMultiple: true,
             filterConfirmText: 'ok',
             filterClearText: 'reset',
-            filterIcon: 'anticon anticon-aa',
+            filterIcon: 'anticon anticon-filter',
           },
         ];
         describe('#filterMultiple', () => {

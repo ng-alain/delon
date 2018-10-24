@@ -5,41 +5,34 @@ import { SFSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
+  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`
 })
 export class DemoComponent {
-  schema: SFSchema = {
-    properties: {
-      name: {
-        type: 'string',
-        title: 'Name',
-        ui: {
-          addOnAfter: 'RMB',
-          placeholder: 'RMB结算',
-        },
-        format: 'mobile',
-      },
-      mobile: {
-        type: 'string',
-        format: 'mobile',
-        title: '手机号',
-        readOnly: true
-      },
-      sfz: {
-        type: 'string',
-        format: 'id-card',
-        title: '身份证号'
-      },
-      color: {
-        type: 'string',
-        format: 'color',
-        title: '颜色'
-      },
-    },
-    required: ['name'],
-  };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
-    this.msg.success(JSON.stringify(value));
-  }
+    schema: SFSchema = {
+        properties: {
+            product: {
+                type: 'array',
+                title: '产品清单',
+                maxItems: 4,
+                items: {
+                    type: 'object',
+                    properties: {
+                        name: {
+                            type: 'string',
+                            title: '名称'
+                        },
+                        price: {
+                            type: 'number',
+                            title: '单价',
+                            minimum: 1
+                        }
+                    },
+                    required: [ 'name', 'price' ]
+                },
+                ui: { grid: { arraySpan: 12 } }
+            }
+        }
+    };
+    constructor(public msg: NzMessageService) { }
+    submit(value: any) { this.msg.success(JSON.stringify(value)); }
 }

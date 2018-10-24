@@ -7,7 +7,7 @@
       <th *ngIf="expand" [nzShowExpand]="expand"></th>
       <th *ngFor="let c of _columns; let index=index" [nzWidth]="c.width" [nzLeft]="c._left" [nzRight]="c._right" [ngClass]="c.className"
         [attr.colspan]="c.colSpan" [attr.data-col]="c.indexKey" [nzShowSort]="_sortMap[index].enabled" [nzSort]="_sortMap[index].v"
-        (nzSortChange)="sort(index, $event)">
+        (nzSortChange)="sort(index, $event)" [nzCustomFilter]="c.filters.length > 0">
         <ng-template #renderTitle [ngTemplateOutlet]="c.__renderTitle" [ngTemplateOutletContext]="{$implicit: c, index: index }"></ng-template>
         <ng-container *ngIf="!c.__renderTitle; else renderTitle">
           <ng-container [ngSwitch]="c.type">
@@ -29,7 +29,9 @@
           </ng-container>
           <nz-dropdown class="ad-st-filter" *ngIf="c.filters.length > 0" nzTrigger="click" [hasFilterButton]="true" [nzClickHide]="false"
             [(nzVisible)]="c.filterVisible">
-            <i class="{{c.filterIcon}}" [ngClass]="{'ant-table-filter-selected': c.filtered}" nz-dropdown></i>
+            <i nz-icon class="{{c.filterIcon}}"
+              [ngClass]="{'ant-table-filter-selected': c.filtered}"
+              [class.ant-table-filter-open]="c.filterVisible" nz-dropdown></i>
             <ul nz-menu>
               <ng-container *ngIf="c.filterMultiple">
                 <li nz-menu-item *ngFor="let filter of c.filters">

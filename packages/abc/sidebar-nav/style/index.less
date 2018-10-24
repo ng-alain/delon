@@ -52,41 +52,52 @@
         }
       }
     }
+    > a {
+      .@{nav-prefix-cls}__sub-arrow {
+        transform: translateY(-2px);
+        &:before {
+          transform: rotate(45deg) translateX(2px);
+        }
+        &:after {
+          transform: rotate(-45deg) translateX(-2px);
+        }
+      }
+    }
   }
   &__group-title {
     color: @aside-nav-group-text-color;
     padding: @aside-nav-padding-top-bottom @layout-gutter * 2;
   }
   &__sub {
-    &-title {
-      @fix-aside-icon-top: (
-          (
-              (@aside-nav-fs * @line-height-base) +
-                (@aside-nav-padding-top-bottom * 2)
-            ) - 18
-        ) / 2;
-      &:after {
-        content: '\E61D';
-        font-family: anticon !important;
-        font-style: normal;
-        vertical-align: baseline;
-        text-align: center;
-        text-transform: none;
-        text-rendering: auto;
-        position: absolute;
-        right: @layout-gutter * 2;
-        top: @fix-aside-icon-top;
-        display: inline-block;
-        font-size: 12px;
-        transform: scale(0.66666667) rotate(0deg);
-        transition: transform 0.3s @ease-in-out;
-        zoom: 1;
-      }
-    }
     display: none;
     overflow: hidden;
     .@{nav-prefix-cls}__item {
       border-left: 0 !important;
+    }
+    &-arrow {
+      transition: transform .3s @ease-in-out;
+      position: absolute;
+      top: 50%;
+      right: @layout-gutter * 2;
+      width: 10px;
+      &:before,
+      &:after {
+        content: '';
+        position: absolute;
+        vertical-align: baseline;
+        background: #fff;
+        background-image: linear-gradient(to right, @menu-item-color, @menu-item-color);
+        width: 6px;
+        height: 1.5px;
+        border-radius: 2px;
+        transition: background .3s @ease-in-out, transform .3s @ease-in-out, top .3s @ease-in-out;
+      }
+      &:before {
+        transform: rotate(-45deg) translateX(2px);
+      }
+      &:after {
+        transform: rotate(45deg) translateX(-2px);
+      }
     }
   }
   // Badge
@@ -146,10 +157,11 @@
     }
     .@{nav-prefix-cls}__sub {
       display: block;
+      &-arrow {
+        display: none;
+      }
     }
-    .@{nav-prefix-cls}__sub-title::after {
-      display: none;
-    } // Dept
+    // Dept
     .@{nav-prefix-cls}__depth2 {
       .@{nav-prefix-cls}__item > a {
         padding-left: @layout-gutter * 3;
@@ -194,10 +206,8 @@
     .@{nav-prefix-cls} {
       &__sub {
         display: none !important;
-        &-title {
-          &:after {
-            display: none;
-          }
+        &-arrow {
+          display: none;
         }
       }
     }

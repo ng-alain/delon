@@ -15,7 +15,7 @@ import { NoticeItem } from './interface';
     nzOverlayClassName="ad-notice-icon-con">
     <div nz-popover class="item">
       <nz-badge [nzCount]="count">
-        <i class="anticon anticon-bell"></i>
+        <i class="anticon anticon-bell item-icon"></i>
       </nz-badge>
     </div>
     <ng-template #nzTemplate>

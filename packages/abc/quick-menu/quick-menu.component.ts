@@ -16,7 +16,7 @@ import {
   template: `
   <div class="ad-quick-menu__inner">
     <div class="ad-quick-menu__ctrl" [ngStyle]="ctrlStyle">
-      <i [ngClass]="icon"></i>
+      <i nz-icon [ngClass]="icon"></i>
     </div>
     <ng-content></ng-content>
   </div>

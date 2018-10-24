@@ -38,8 +38,10 @@ module.exports = function(config) {
     },
     mime: { 'text/x-typescript': ['ts', 'tsx'] },
     client: { captureConsole: true, clearContext: false },
-    browserNoActivityTimeout: 60000,
-    captureTimeout: 60000,
+    browserDisconnectTimeout: 180000,
+    browserDisconnectTolerance: 3,
+    browserNoActivityTimeout: 300000,
+    captureTimeout: 180000,
   };
 
   if (process.env.TRAVIS) {

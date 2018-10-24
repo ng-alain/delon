@@ -12,10 +12,12 @@ export function dispatchDropDown(dl: DebugElement, trigger: 'mouseleave' | 'clic
   if (allowNull && directive == null) {
     return false;
   }
+  const srv = directive.injector.get(NzDropDownDirective);
+  const mokeMouse = new MouseEvent(trigger);
   if (trigger === 'click') {
-    directive.injector.get(NzDropDownDirective).onClick(null);
+    srv.onClick(mokeMouse);
   } else {
-    directive.injector.get(NzDropDownDirective).onMouseEnter(null);
+    srv.onMouseEnter(mokeMouse);
   }
   tick(DROPDOWN_MIN_TIME);
   return true;

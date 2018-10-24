@@ -8,28 +8,29 @@
         <li *ngIf="child1._hidden !== true" routerLinkActive="ad-nav__selected" [routerLinkActiveOptions]="{exact: child1.linkExact}" class="ad-nav__item" [class.ad-nav__open]="child1._open">
           <!-- link -->
           <a *ngIf="child1._type === 1" (click)="onSelect(child1)" [routerLink]="child1.link" [target]="child1.target">
-            <i *ngIf="!settings.layout.collapsed" class="{{ child1.icon }}"></i>
+            <i *ngIf="!settings.layout.collapsed" nz-icon class="{{ child1.icon }}"></i>
             <nz-tooltip *ngIf="settings.layout.collapsed" nzPlacement="right" [nzTitle]="child1.text">
               <span nz-tooltip>
-                <i class="{{ child1.icon }}"></i>
+                <i nz-icon class="{{ child1.icon }}"></i>
               </span>
             </nz-tooltip>
             <span>{{ child1.text }}</span>
           </a>
           <!-- external link -->
           <a *ngIf="child1._type === 2" href="{{ child1.externalLink }}" target="{{child1.target}}" data-type="external">
-            <i *ngIf="!settings.layout.collapsed" class="{{ child1.icon }}"></i>
+            <i *ngIf="!settings.layout.collapsed" nz-icon class="{{ child1.icon }}"></i>
             <nz-tooltip *ngIf="settings.layout.collapsed" nzPlacement="right" [nzTitle]="child1.text">
               <span nz-tooltip>
-                <i class="{{ child1.icon }}"></i>
+                <i nz-icon class="{{ child1.icon }}"></i>
               </span>
             </nz-tooltip>
             <span>{{ child1.text }}</span>
           </a>
           <!-- has children link -->
           <a *ngIf="child1._type === 3" class="ad-nav__sub-title" (click)="toggleOpen(child1)" (mouseenter)="showSubMenu($event, child1)">
-            <i class="{{ child1.icon }}"></i>
+            <i nz-icon class="{{ child1.icon }}"></i>
             <span>{{ child1.text }}</span>
+            <span class="ad-nav__sub-arrow"></span>
           </a>
           <!-- badge -->
           <div *ngIf="child1.badge" title="{{child1.badge}}" class="badge badge-{{child1.badge_status}}" [class.badge-dot]="child1.badge_dot">
@@ -46,6 +47,7 @@
                 <!-- has children link -->
                 <a *ngIf="child2._type === 3" class="ad-nav__sub-title" (click)="toggleOpen(child2)">
                   {{ child2.text }}
+                  <span class="ad-nav__sub-arrow"></span>
                 </a>
                 <!-- badge -->
                 <div *ngIf="child2.badge" title="{{child2.badge}}" class="badge badge-{{child2.badge_status}}" [class.badge-dot]="child2.badge_dot">
