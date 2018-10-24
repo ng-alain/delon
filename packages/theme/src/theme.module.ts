@@ -31,7 +31,7 @@ const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe];
 import { NzIconService } from 'ng-zorro-antd';
 import {
   BellOutline,
-  FilterOutline,
+  FilterFill,
   CaretUpOutline,
   CaretDownOutline,
   DeleteOutline,
@@ -40,7 +40,7 @@ import {
 } from '@ant-design/icons-angular/icons';
 const ICONS = [
   BellOutline,
-  FilterOutline,
+  FilterFill,
   CaretUpOutline,
   CaretDownOutline,
   DeleteOutline,

@@ -251,7 +251,7 @@ export class STColumnSource {
       if (item.type === 'checkbox') {
         ++checkboxCount;
         if (!item.width) {
-          item.width = `${item.selections.length > 0 ? 60 : 50}px`;
+          item.width = `${item.selections.length > 0 ? 62 : 50}px`;
         }
       }
       if (this.acl) {

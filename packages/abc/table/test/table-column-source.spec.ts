@@ -91,7 +91,7 @@ describe('abc: table: column-souce', () => {
             'width',
           );
         });
-        it('should auto 60px width when specifyied selections and without specified with value', () => {
+        it('should auto 62px width when specifyied selections and without specified with value', () => {
           page.expectValue(
             [
               {
@@ -101,7 +101,7 @@ describe('abc: table: column-souce', () => {
                 selections: [{ text: '', select: () => true }],
               },
             ],
-            '60px',
+            '62px',
             'width',
           );
         });

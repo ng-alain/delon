@@ -18,14 +18,15 @@
     <tr>
       <th *ngIf="expand" [nzShowExpand]="expand"></th>
       <th *ngFor="let c of _columns; let index=index" [nzWidth]="c.width" [nzLeft]="c._left" [nzRight]="c._right" [ngClass]="c.className"
-        [attr.colspan]="c.colSpan" [attr.data-col]="c.indexKey" [nzShowSort]="c._sort.enabled" [nzSort]="c._sort.default"
-        (nzSortChange)="sort(c, index, $event)">
+        [attr.colspan]="c.colSpan" [attr.data-col]="c.indexKey"
+        [nzShowSort]="c._sort.enabled" [nzSort]="c._sort.default" (nzSortChange)="sort(c, index, $event)"
+        nzCustomFilter>
         <ng-template #renderTitle [ngTemplateOutlet]="c.__renderTitle" [ngTemplateOutletContext]="{$implicit: c, index: index }"></ng-template>
         <ng-container *ngIf="!c.__renderTitle; else renderTitle">
           <ng-container [ngSwitch]="c.type">
             <ng-container *ngSwitchCase="'checkbox'">
               <label nz-checkbox class="st__checkall" [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll()"></label>
-              <nz-dropdown *ngIf="c.selections.length" class="st__checkselection">
+              <nz-dropdown *ngIf="c.selections.length" class="st__selection">
                 <span nz-dropdown>
                   <i nz-icon type="down"></i>
                 </span>
@@ -42,7 +43,9 @@
           <nz-dropdown *ngIf="c.filter"
             class="st__filter" nzTrigger="click" [hasFilterButton]="true" [nzClickHide]="false"
             [(nzVisible)]="c.filter.visible">
-            <i class="{{c.filter.icon}}" [ngClass]="{'ant-table-filter-selected': c.filter.default}" nz-dropdown></i>
+            <i nz-icon [type]="c.filter.icon" theme="fill"
+              [class.ant-table-filter-selected]="c.filter.default"
+              [class.ant-table-filter-open]="c.filter.visible" nz-dropdown></i>
             <ul nz-menu>
               <ng-container *ngIf="c.filter.multiple">
                 <li nz-menu-item *ngFor="let filter of c.filter.menus">
