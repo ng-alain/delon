@@ -73,7 +73,7 @@ export class StartupService {
       resolve(null);
     });
   }
-
+  <% if (i18n) { %>
   private viaMockI18n(resolve: any, reject: any) {
     this.httpClient
       .get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`)
@@ -84,7 +84,7 @@ export class StartupService {
         this.viaMock(resolve, reject);
       });
   }
-
+  <% } %>
   private viaMock(resolve: any, reject: any) {
     // const tokenData = this.tokenService.get();
     // if (!tokenData.token) {

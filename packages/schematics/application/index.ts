@@ -55,6 +55,21 @@ function removeOrginalFiles() {
   };
 }
 
+function fixedNg6() {
+  return (host: Tree) => {
+    const pkg = getPackage(host);
+    // all @angular/*
+    [ 'dependencies', 'devDependencies' ].forEach(type => {
+      Object.keys(pkg[type]).filter(key => key.startsWith('@angular/')).forEach(key => {
+        pkg[type][key] = "^6.1.10";
+      });
+    });
+    pkg.devDependencies['@angular-devkit/build-angular'] = '~0.10.2';
+    pkg.devDependencies['typescript'] = '~2.9.2';
+    overwritePackage(host, pkg);
+  };
+}
+
 function fixMain() {
   return (host: Tree) => {
     // fix: main.ts using no hmr file
@@ -383,6 +398,7 @@ export default function(options: ApplicationOptions): Rule {
       removeOrginalFiles(),
       addFilesToRoot(options),
       fixMain(),
+      fixedNg6(),
       forceLess(),
       addStyle(options),
       installPackages(),
