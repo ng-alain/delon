@@ -62,7 +62,7 @@ sys
   sys.module.ts
 ```
 
-因此，当你希望生成的查看应该是在 `log` 组件下面时，你可以这样子：
+因此，当你希望生成的查看应该是在 `log` 组件（支持 `log/list` 多级写法）下面时，你可以这样子：
 
 ```bash
 ng g ng-alain:view view -m=sys -t=log
@@ -96,7 +96,7 @@ ng g ng-alain:edit <page name> --modal=false
 之后，只需要运行：
 
 ```bash
-ng g ng-alain:tpl <your template name> <name> -m=trade
+ng g ng-alain:tpl [your template name] [name] -m=trade
 ```
 
 > 自定义页参数同业务页一致。

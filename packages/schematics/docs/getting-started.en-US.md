@@ -14,8 +14,6 @@ Using ng-alain scaffolding should as use as possible the `ng` command set provid
 
 ## Installation
 
-我们不建议直接克隆 Github 源代码，而应该使用 `ng add` 来构建 ng-alain 项目，而构建一个空 ng-alain 只需要简单几个动作：
-
 We don't recommend directly cloning the git repository, but instead using `ng add` to build the ng-alain project, there are a few simple steps:
 
 1. Create an empty angular project
