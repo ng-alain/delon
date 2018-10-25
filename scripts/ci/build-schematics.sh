@@ -61,7 +61,7 @@ copyFiles() {
     "${1}.prettierrc|${2}application/files/root/__dot__prettierrc"
     "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
     # cli
-    "${1}_cli-tpl|${2}application/files/root/"
+    # "${1}_cli-tpl|${2}application/files/root/"
     # ci
     "${1}.vscode|${2}application/files/root/__dot__vscode"
     "${1}scripts/color-less.js|${2}application/files/root/scripts/"
