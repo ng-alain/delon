@@ -62,7 +62,7 @@ copyFiles() {
     "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
     # ci
     "${1}.vscode|${2}application/files/root/__dot__vscode"
-    "${1}scripts/color-less.js|${2}application/files/root/scripts"
+    "${1}scripts/color-less.js|${2}application/files/root/scripts/"
     # LICENSE
     "${1}LICENSE|${2}application/files/root"
     "${1}README.md|${2}application/files/root"
@@ -73,6 +73,8 @@ copyFiles() {
     "${1}src/styles|${2}application/files/src/"
     "${1}src/main.ts|${2}application/files/src/"
     "${1}src/styles.less|${2}application/files/src/"
+    "${1}src/style-icons-auto.ts|${2}application/files/src/"
+    "${1}src/style-icons.ts|${2}application/files/src/"
     # assets
     "${1}src/assets/*.svg|${2}application/files/src/assets/"
     "${1}src/assets/*.less|${2}application/files/src/assets/"
