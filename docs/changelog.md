@@ -6,6 +6,19 @@ title:
 type: Other
 ---
 
+### 1.5.0
+
+`2018-10-25`
+
+- 脚手架
+  - 同步 ng-zorro-antd 1.7.1，受限于图标变更，部分顶部小图标需要额外增加 `item-icon` 样式，参考 [e76e631](https://github.com/ng-alain/ng-alain/commit/e76e6312b748aeabb6b22cd7d96582333e8a75cf)
+- @delon/form
+  - 新增 `icon` 图标插件，自动分析并生成图标引导文件 [文档](https://ng-alain.com/cli/plugin#icon)
+  - 修复 `readOnly` 部分小部件无法禁用 [#211](https://github.com/ng-alain/delon/issues/211)
+  - 修复范围日期小部件 `nzShowTime` 丢失 [#219](https://github.com/ng-alain/delon/issues/219)
+  - 修复重复调用变更检测 [#220](https://github.com/ng-alain/delon/issues/220)
+  - 修复 Checkbox 小部件错位 [#725](https://github.com/ng-alain/ng-alain/issues/725)
+
 ### 1.4.5
 
 `2018-9-29`
