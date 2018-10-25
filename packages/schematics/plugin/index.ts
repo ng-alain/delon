@@ -17,6 +17,7 @@ import { pluginNpm } from './plugin.npm';
 import { pluginYarn } from './plugin.yarn';
 import { pluginHmr } from './plugin.hmr';
 import { pluginDocker } from './plugin.docker';
+import { pluginIcon } from './plugin.icon';
 import { pluginAsdf } from './plugin.asdf';
 
 function installPackages() {
@@ -56,6 +57,9 @@ export default function(options: PluginSchema): Rule {
         break;
       case 'docker':
         rules.push(pluginDocker(pluginOptions));
+        break;
+      case 'icon':
+        rules.push(pluginIcon(pluginOptions));
         break;
       case 'asdf':
         rules.push(pluginAsdf(pluginOptions));
