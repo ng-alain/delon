@@ -4,7 +4,7 @@ title: Change Log
 type: Other
 ---
 
-## 2.0.0-rc.0
+## 2.0.0-rc.1
 
 `2018-10-25`
 
