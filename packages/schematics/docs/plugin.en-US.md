@@ -116,3 +116,29 @@ ng g ng-alain:plugin networkEnv -packageManager=npm -t=remove
 # remove yarn
 ng g ng-alain:plugin networkEnv -packageManager=yarn -t=remove
 ```
+
+### icon
+
+From the project to analyze and generate static load Icon, The plugin will automatically generate two files in the `src` directory:
+
+- `src/style-icons.ts` Custom Icon (e.g: remote menu icon)
+- `src/style-icons-auto.ts` command automatically generates files
+
+```bash
+ng g ng-alain:plugin icon
+```
+
+Also, you need to manually import in `startup.service.ts`:
+
+```ts
+import { ICONS_AUTO } from '../../../style-icons-auto';
+import { ICONS } from '../../../style-icons';
+
+@Injectable()
+export class StartupService {
+  constructor(iconSrv: NzIconService) {
+    iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
+  }
+}
+```
+

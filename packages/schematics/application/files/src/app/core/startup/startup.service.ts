@@ -9,15 +9,9 @@ import { ACLService } from '@delon/acl';<% if (i18n) { %>
 import { TranslateService } from '@ngx-translate/core';
 import { I18NService } from '../i18n/i18n.service';<% } %>
 
-// #region static loading icons
-// @see http://ng.ant.design/components/icon/zh#%E9%9D%99%E6%80%81%E5%8A%A0%E8%BD%BD%E4%B8%8E%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD
-
 import { NzIconService } from 'ng-zorro-antd';
-import {} from '@ant-design/icons-angular/icons';
-
-const ICONS = [];
-
-// #endregion
+import { ICONS_AUTO } from '../../../style-icons-auto';
+import { ICONS } from '../../../style-icons';
 
 /**
  * 用于应用启动时
@@ -37,7 +31,7 @@ export class StartupService {
     private httpClient: HttpClient,
     private injector: Injector
   ) {
-    iconSrv.addIcon(...ICONS);
+    iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
 
   private viaHttp(resolve: any, reject: any) {

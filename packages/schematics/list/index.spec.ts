@@ -35,4 +35,9 @@ describe('Schematic: list', () => {
   it('shuold be exclude style', () => {
     expect(tree.readContent(tsPath)).not.toContain(`styleUrls`);
   });
+
+  it('should be support targets (like: list/edit)', () => {
+    tree = runner.runSchematic('list', { name: 'list2', module: 'trade', target: 'list/edit' }, tree);
+    expect(tree.exists(`/foo/src/app/routes/trade/list/edit/list2/list2.component.html`)).toBe(true);
+  });
 });
