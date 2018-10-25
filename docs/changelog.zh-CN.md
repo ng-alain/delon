@@ -4,6 +4,32 @@ title: 更新日志
 type: Other
 ---
 
+## 2.0.0-rc.0
+
+`2018-10-25`
+
+### Bug Fixes
+
+* **form:** 修复重复调用变更检测 ([#224](https://github.com/ng-alain/delon/issues/224)) ([a9f2db6](https://github.com/ng-alain/delon/commit/a9f2db6))
+* **form:checkbox:** 修复 Checkbox 小部件错位 ([#226](https://github.com/ng-alain/delon/issues/226)) ([d75600e](https://github.com/ng-alain/delon/commit/d75600e))
+* **form:date:** 修复范围日期小部件 `nzShowTime` 丢失 ([#223](https://github.com/ng-alain/delon/issues/223)) ([a40bc13](https://github.com/ng-alain/delon/commit/a40bc13))
+* **st:** 修复标题错位 ([#229](https://github.com/ng-alain/delon/issues/229)) ([0d70d26](https://github.com/ng-alain/delon/commit/0d70d26))
+* **schematics:** 修复 `tpl` 自定义模板无法使用 `-t` 参数 ([#231](https://github.com/ng-alain/delon/issues/231)) ([829f11e](https://github.com/ng-alain/delon/commit/829f11e))
+* **schematics:** 修复 `edit` 模板包含无效 `msgSrv` 属性 ([#225](https://github.com/ng-alain/delon/issues/225)) ([e3270e4](https://github.com/ng-alain/delon/commit/e3270e4))
+* **schematics:** 修复 `ng add` 非I18N包含相关代码 ([#230](https://github.com/ng-alain/delon/issues/230)) ([93163a9](https://github.com/ng-alain/delon/commit/93163a9))
+
+### Features
+
+* **schematics:** 新增 `-t` 参数支持子目录 ([#231](https://github.com/ng-alain/delon/issues/231)) ([829f11e](https://github.com/ng-alain/delon/commit/829f11e))
+* **schematics:** 新增 `ng udpate` 将 1.x 升级至 2.0 [文档](https://ng-alain.com/docs/upgrade-v2#ng-update)
+* **schematics:plugin:** 新增 `icon` 图标插件，自动分析并生成图标引导文件 [文档](https://ng-alain.com/cli/plugin#icon)
+* 同步 ng-zorro-antd 1.7.1 ([#228](https://github.com/ng-alain/delon/issues/228)) ([9a62ea3](https://github.com/ng-alain/delon/commit/9a62ea3))
+
+### BREAKING CHANGES
+
+* **module:theme:** 使用 `NzDropdownService` 替代 `ContextMenuService` ([#234](https://github.com/ng-alain/delon/pull/234))
+
+
 ## 2.0.0-beta.5
 
 `2018-10-15`
