@@ -1,5 +1,5 @@
-<a name="2.0.0-rc.0"></a>
-# [2.0.0-rc.0](https://github.com/ng-alain/delon/compare/2.0.0-beta.5...2.0.0-rc.0) (2018-10-25)
+<a name="2.0.0-rc.1"></a>
+# [2.0.0-rc.1](https://github.com/ng-alain/delon/compare/2.0.0-beta.5...2.0.0-rc.1) (2018-10-25)
 
 
 ### Bug Fixes
