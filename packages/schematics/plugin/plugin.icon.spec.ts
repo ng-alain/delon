@@ -53,8 +53,8 @@ describe('NgAlainSchematic: plugin: icon', () => {
     expect(tree.exists(path)).toBe(true);
     const content = tree.readContent(path);
     // ingore custom icons
-    expect(content).toContain(`FilterOutline`);
-    expect(content).toContain(`StepBackwardFill`);
+    expect(content).not.toContain(`FilterOutline`);
+    expect(content).not.toContain(`StepBackwardFill`);
     // white icons
     expect(content).not.toContain(`LoadingOutline`);
     // type="{{value ? 'icon' : 'icon' }}"
