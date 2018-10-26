@@ -16,8 +16,8 @@ A Slider component for displaying current value and intervals in range.
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
-`[minimum]` | The maximum value the slider can slide to	| `number` | -
-`[maximum]` | The minimum value the slider can slide to | `number` | -
+`[minimum]` | The minimum value the slider can slide to	| `number` | -
+`[maximum]` | The maximum value the slider can slide to | `number` | -
 `[multipleOf]` | The granularity the slider can step through values. Must greater than 0, and be divided by (max - min). When `ui.marks` no null, `step` can be null. | `number` | `1`
 
 ### ui

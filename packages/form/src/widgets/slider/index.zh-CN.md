@@ -17,7 +17,7 @@ type: Widgets
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[minimum]` | 最小值 | `number` | -
-`[maximum]` | 最小值 | `number` | -
+`[maximum]` | 最大值 | `number` | -
 `[multipleOf]` | 倍数 | `number` | `1`
 
 ### ui 属性
