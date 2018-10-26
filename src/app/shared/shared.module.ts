@@ -29,10 +29,12 @@ import { CodeBoxComponent } from './components/code-box/code-box.component';
 import { DemoModalComponent } from './components/dialog/modal.component';
 import { DemoDrawerComponent } from './components/dialog/drawer.component';
 import { RouteTransferDirective } from './components/route-transfer/route-transfer.directive';
+import { IconComponent } from './components/icon/icon.component';
 
 const DIALOG_COMPONENTS = [
   DemoModalComponent,
   DemoDrawerComponent,
+  IconComponent,
 ];
 
 const COMPONENTS = [

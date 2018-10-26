@@ -116,3 +116,45 @@ ng g ng-alain:plugin networkEnv -packageManager=npm -t=remove
 # remove yarn
 ng g ng-alain:plugin networkEnv -packageManager=yarn -t=remove
 ```
+
+### icon
+
+From the project to analyze and generate static load Icon, The plugin will automatically generate two files in the `src` directory:
+
+- `src/style-icons.ts` Custom Icon (e.g: remote menu icon)
+- `src/style-icons-auto.ts` command automatically generates files
+
+> Automatically exclude [ng-zorro-antd](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts#L6) and [@delon](https://github.com/ng-alain/delon/blob/master/packages/theme/src/theme.module.ts#L33) already loaded icons.
+
+```bash
+ng g ng-alain:plugin icon
+```
+
+Also, you need to manually import in `startup.service.ts`:
+
+```ts
+import { ICONS_AUTO } from '../../../style-icons-auto';
+import { ICONS } from '../../../style-icons';
+
+@Injectable()
+export class StartupService {
+  constructor(iconSrv: NzIconService) {
+    iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
+  }
+}
+```
+
+**Valid Grammar**
+
+```html
+<i class="anticon anticon-user"></i>
+<i class="anticon anticon-question-circle-o"></i>
+<i class="anticon anticon-spin anticon-loading"></i>
+<i nz-icon class="anticon anticon-user"></i>
+<i nz-icon type="align-{{type ? 'left' : 'right'}}"></i>
+<i nz-icon [type]="type ? 'menu-fold' : 'menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
+<i nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"></i>
+<i nz-icon type="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
+<i nz-icon type="filter" theme="outline"></i>
+<nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
+```

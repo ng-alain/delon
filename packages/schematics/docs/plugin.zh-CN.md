@@ -120,3 +120,45 @@ ng g ng-alain:plugin networkEnv -packageManager=npm -t=remove
 # remove yarn
 ng g ng-alain:plugin networkEnv -packageManager=yarn -t=remove
 ```
+
+### icon
+
+**尽可能**从项目中分析并生成静态 Icon，插件会自动在 `src` 目录下生成两个文件：
+
+- `src/style-icons.ts` 自定义部分无法解析（例如：远程菜单图标）
+- `src/style-icons-auto.ts` 命令自动生成文件
+
+> 自动排除 [ng-zorro-antd](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts#L6) 和 [@delon](https://github.com/ng-alain/delon/blob/master/packages/theme/src/theme.module.ts#L33) 已经加载的图标。
+
+```bash
+ng g ng-alain:plugin icon
+```
+
+同时，需要手动在 `startup.service.ts` 中导入：
+
+```ts
+import { ICONS_AUTO } from '../../../style-icons-auto';
+import { ICONS } from '../../../style-icons';
+
+@Injectable()
+export class StartupService {
+  constructor(iconSrv: NzIconService) {
+    iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
+  }
+}
+```
+
+**有效语法**
+
+```html
+<i class="anticon anticon-user"></i>
+<i class="anticon anticon-question-circle-o"></i>
+<i class="anticon anticon-spin anticon-loading"></i>
+<i nz-icon class="anticon anticon-user"></i>
+<i nz-icon type="align-{{type ? 'left' : 'right'}}"></i>
+<i nz-icon [type]="type ? 'menu-fold' : 'menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
+<i nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"></i>
+<i nz-icon type="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
+<i nz-icon type="filter" theme="outline"></i>
+<nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
+```
