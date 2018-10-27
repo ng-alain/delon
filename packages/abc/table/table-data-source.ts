@@ -187,9 +187,6 @@ export class STDataSource {
         ret = this.yn.transform(value === col.yn.truth, col.yn.yes, col.yn.no);
         break;
     }
-    if (~ret.indexOf('<')) {
-      return this.dom.bypassSecurityTrustHtml(ret);
-    }
     return ret;
   }
 
