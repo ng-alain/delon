@@ -1,5 +1,6 @@
 import { Injectable, Host } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -47,6 +48,7 @@ export class STDataSource {
     @Host() private date: DatePipe,
     @Host() private yn: YNPipe,
     @Host() private number: DecimalPipe,
+    private dom: DomSanitizer
   ) {}
 
   process(options: STDataSourceOptions): Promise<STDataSourceResult> {
@@ -157,7 +159,13 @@ export class STDataSource {
   }
 
   private get(item: any, col: STColumn) {
-    if (col.format) return col.format(item, col);
+    if (col.format) {
+      const formatRes = col.format(item, col) as string;
+      if (~formatRes.indexOf('<')) {
+        return this.dom.bypassSecurityTrustHtml(formatRes);
+      }
+      return formatRes;
+    }
 
     const value = deepGet(item, col.index as string[], col.default);
 
@@ -178,6 +186,9 @@ export class STDataSource {
       case 'yn':
         ret = this.yn.transform(value === col.yn.truth, col.yn.yes, col.yn.no);
         break;
+    }
+    if (~ret.indexOf('<')) {
+      return this.dom.bypassSecurityTrustHtml(ret);
     }
     return ret;
   }
