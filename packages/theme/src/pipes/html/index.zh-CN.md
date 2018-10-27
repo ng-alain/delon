@@ -1,13 +1,7 @@
 ---
 order: 1
-title: yn-徽章
+title: html-安全HTML
 type: Pipe
 ---
 
-`yn` 将boolean类型徽章化。
-
-```html
-<td [innerHTML]="enabled | yn"></td>
-Output:
-<td><span class="badge badge-success">是</span></td>
-```
+简化 `bypassSecurityTrustHtml` 的使用。
