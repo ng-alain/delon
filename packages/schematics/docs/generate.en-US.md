@@ -63,7 +63,7 @@ sys
   sys.module.ts
 ```
 
-So when you want to generate a view page that should be under the `log` directory:
+So when you want to generate a view page that should be under the `log` directory (could be set like `log/list`):
 
 ```bash
 ng g ng-alain:view view -m=sys -t=log
@@ -99,7 +99,7 @@ For example, to create a custom edit page template, you only need to create the 
 After that, just run:
 
 ```bash
-ng g ng-alain:tpl <Your template name> <name> -m=trade
+ng g ng-alain:tpl [your template name] [name] -m=trade
 ```
 
 ### How to write a template file

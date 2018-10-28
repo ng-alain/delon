@@ -22,7 +22,8 @@ import { DatePipe } from './pipes/date/date.pipe';
 import { CNCurrencyPipe } from './pipes/currency/cn-currency.pipe';
 import { KeysPipe } from './pipes/keys/keys.pipe';
 import { YNPipe } from './pipes/yn/yn.pipe';
-const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe];
+import { HTMLPipe } from './pipes/html/html.pipe';
+const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe, HTMLPipe];
 
 // #endregion
 

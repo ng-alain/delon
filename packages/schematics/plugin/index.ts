@@ -18,6 +18,7 @@ import { pluginNetworkEnv } from './plugin.network-env';
 import { pluginHmr } from './plugin.hmr';
 import { pluginDocker } from './plugin.docker';
 import { pluginAsdf } from './plugin.asdf';
+import { pluginIcon } from './plugin.icon';
 
 function installPackages() {
   return (host: Tree, context: SchematicContext) => {
@@ -68,6 +69,9 @@ export default function(options: PluginSchema): Rule {
             }),
           ),
         );
+        break;
+      case 'icon':
+        rules.push(pluginIcon(pluginOptions));
         break;
       case 'asdf':
         rules.push(pluginAsdf(pluginOptions));
