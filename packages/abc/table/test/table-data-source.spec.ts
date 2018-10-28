@@ -67,7 +67,7 @@ describe('abc: table: data-souce', () => {
     };
     currentyPipe = new CNCurrencyPipe('zh-CN');
     datePipe = new DatePipe();
-    ynPipe = new YNPipe();
+    ynPipe = new YNPipe(new MockDomSanitizer() as any);
     decimalPipe = new DecimalPipe('zh-CN');
     http = new MockHttpClient();
     srv = new STDataSource(

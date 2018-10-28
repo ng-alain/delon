@@ -434,7 +434,7 @@ describe('abc: table', () => {
             page
               .newColumn([{ title: '', index: 'yn', type: 'yn' }])
               .then(() => {
-                page.expectCell('是', 1, 1).expectCell('否', 2, 1);
+                page.expectCell('是', 1, 1, '', true).expectCell('否', 2, 1, '', true);
                 done();
               });
           });
@@ -444,7 +444,7 @@ describe('abc: table', () => {
                 { title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' },
               ])
               .then(() => {
-                page.expectCell('Y', 1, 1).expectCell('N', 2, 1);
+                page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
                 done();
               });
           });
@@ -462,9 +462,9 @@ describe('abc: table', () => {
               ])
               .then(() => {
                 page
-                  .expectCell('Y', 1, 1)
-                  .expectCell('N', 2, 1)
-                  .expectCell('N', 3, 1);
+                  .expectCell('Y', 1, 1, '', true)
+                  .expectCell('N', 2, 1, '', true)
+                  .expectCell('N', 3, 1, '', true);
                 done();
               });
           });
@@ -1495,19 +1495,27 @@ describe('abc: table', () => {
      * 断言单元格内容，下标从 `1` 开始
      * @param value 当 `null` 时，表示无单元格
      * @param cls 对单元格进一步筛选
+     * @param isContain 是否包含条件
      */
     expectCell(
       value: string,
       row: number = 1,
       column: number = 1,
       cls?: string,
+      isContain?: boolean
     ): this {
       let cell = this.getCell(row, column);
-      if (cls) cell = cell.querySelector(cls);
+      if (cls) {
+        cell = cell.querySelector(cls);
+      }
       if (value == null) {
         expect(cell).toBeNull();
       } else {
-        expect(cell.innerText.trim()).toBe(value);
+        if (isContain === true) {
+          expect(cell.innerHTML).toContain(value);
+        } else {
+          expect(cell.innerText.trim()).toBe(value);
+        }
       }
       return this;
     }
