@@ -17,17 +17,17 @@ describe('Pipe: yn', () => {
   });
 
   [
-    { value: true, result: `<span class="badge badge-success">是</span>` },
-    { value: false, result: `<span class="badge badge-error">否</span>` },
+    { value: true, result: `是` },
+    { value: false, result: `否` },
     {
       value: true,
-      result: `<span class="badge badge-success">好</span>`,
+      result: `好`,
       yes: '好',
       no: '坏',
     },
     {
       value: false,
-      result: `<span class="badge badge-error">坏</span>`,
+      result: `坏`,
       yes: '好',
       no: '坏',
     },
@@ -40,7 +40,7 @@ describe('Pipe: yn', () => {
       expect(
         (fixture.debugElement.query(By.css('#result'))
           .nativeElement as HTMLElement).innerHTML,
-      ).toBe(item.result);
+      ).toContain(item.result);
     });
   });
 });
