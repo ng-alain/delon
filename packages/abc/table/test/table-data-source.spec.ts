@@ -47,6 +47,12 @@ describe('abc: table: data-souce', () => {
     }
   }
 
+  class MockDomSanitizer {
+    bypassSecurityTrustHtml(val: any) {
+      return val;
+    }
+  }
+
   function genModule() {
     const def = new STConfig();
     options = {
@@ -70,6 +76,7 @@ describe('abc: table: data-souce', () => {
       datePipe,
       ynPipe,
       decimalPipe,
+      new MockDomSanitizer() as any
     );
   }
 
