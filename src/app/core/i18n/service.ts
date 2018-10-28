@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd';
 import {
@@ -28,6 +29,7 @@ export class I18NService implements AlainI18NService {
     private zorroI18n: NzI18nService,
     private delonI18n: DelonLocaleService,
     private translate: TranslateService,
+    private dom: DomSanitizer,
   ) {
     this.translate.setTranslation('en-US', ENUS);
     this.translate.setTranslation('zh-CN', ZHCN);
@@ -92,8 +94,12 @@ export class I18NService implements AlainI18NService {
     return ['zh-CN', 'en-US'];
   }
 
-  fanyi(key: string) {
-    return this.translate.instant(key);
+  fanyi(key: string, interpolateParams?: Object, isSafe?: boolean) {
+    const res = this.translate.instant(key, interpolateParams);
+    if (isSafe === true) {
+      return this.dom.bypassSecurityTrustHtml(res);
+    }
+    return res;
   }
 
   get(i: any) {
