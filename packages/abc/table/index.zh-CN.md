@@ -259,6 +259,7 @@ class TestComponent {
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
+`[icon]` | 图标 | `string | STIcon` | -
 `[i18n]` | 文本i18n | `string` | -
 `[format]` | 格式化文本 | `(record: any, btn: STColumnButton) => string` | -
 `[type]` | 按钮类型 | `none,del,modal,static,drawer,link` | -
@@ -270,6 +271,16 @@ class TestComponent {
 `[children]` | 下拉菜单，当存在时以 `dropdown` 形式渲染；只支持一级 | `STColumnButton[]` | -
 `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | -
 `[iif]` | 自定义条件表达式 | `boolean` | `() => true`
+
+### STIcon
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[type]` | 图标类型 | `string` | -
+`[theme]` | 图标主题风格 | `outline | twotone | fill` | `outline`
+`[spin]` | 是否有旋转动画 | `boolean` | `false`
+`[twoToneColor]` | 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 | `string` | -
+`[iconfont]` | 指定来自 IconFont 的图标类型 | `string` | -
 
 ### STColumnButtonModal
 

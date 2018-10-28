@@ -100,12 +100,16 @@
             </ng-container>
             <ng-container *ngFor="let btn of c.buttons; let last=last">
               <ng-container *ngIf="btn.iif(i, btn, c)" [ngSwitch]="btn._type">
-                <ng-container *ngSwitchCase="2">
+                <ng-container *ngSwitchCase="'pop'">
                   <nz-popconfirm [nzTitle]="btn.popTitle" (nzOnConfirm)="_btnClick($event, i, btn)">
-                    <a nz-popconfirm [innerHTML]="_btnText(i, btn)"></a>
+                    <a nz-popconfirm *ngIf="btn._type !== 'icon'" [innerHTML]="_btnText(i, btn)"></a>
+                    <a nz-popconfirm *ngIf="btn._type === 'icon'">
+                      <i nz-icon [type]="btn.icon.type" [theme]="btn.icon.theme" [spin]="btn.icon.spin" [twoToneColor]="btn.icon.twoToneColor"
+                        [iconfont]="btn.icon.iconfont"></i>
+                    </a>
                   </nz-popconfirm>
                 </ng-container>
-                <ng-container *ngSwitchCase="3">
+                <ng-container *ngSwitchCase="'sub'">
                   <nz-dropdown>
                     <a class="ant-dropdown-link" nz-dropdown>
                       <span [innerHTML]="_btnText(i, btn)"></span>
@@ -114,16 +118,26 @@
                     <ul nz-menu>
                       <ng-container *ngFor="let subBtn of btn.children">
                         <li nz-menu-item *ngIf="subBtn.iif(i, subBtn, c)">
-                          <nz-popconfirm *ngIf="subBtn._type === 2" [nzTitle]="subBtn.popTitle" (nzOnConfirm)="_btnClick($event, i, subBtn)">
-                            <span nz-popconfirm [innerHTML]="_btnText(i, subBtn)"></span>
-                          </nz-popconfirm>
-                          <span *ngIf="subBtn._type !== 2" (click)="_btnClick($event, i, subBtn)" [innerHTML]="_btnText(i, subBtn)"></span>
+                          <ng-container [ngSwitch]="subBtn._type">
+                            <ng-container *ngSwitchCase="'pop'">
+                              <nz-popconfirm [nzTitle]="subBtn.popTitle" (nzOnConfirm)="_btnClick($event, i, subBtn)">
+                                <span nz-popconfirm [innerHTML]="_btnText(i, subBtn)"></span>
+                              </nz-popconfirm>
+                            </ng-container>
+                            <span *ngSwitchDefault (click)="_btnClick($event, i, subBtn)" [innerHTML]="_btnText(i, subBtn)"></span>
+                          </ng-container>
                         </li>
                       </ng-container>
                     </ul>
                   </nz-dropdown>
                 </ng-container>
-                <a *ngSwitchDefault (click)="_btnClick($event, i, btn)" [innerHTML]="_btnText(i, btn)"></a>
+                <ng-container *ngSwitchDefault>
+                  <a *ngIf="btn._type !== 'icon'" (click)="_btnClick($event, i, btn)" [innerHTML]="_btnText(i, btn)"></a>
+                  <a *ngIf="btn._type === 'icon'" (click)="_btnClick($event, i, btn)">
+                    <i nz-icon [type]="btn.icon.type" [theme]="btn.icon.theme" [spin]="btn.icon.spin" [twoToneColor]="btn.icon.twoToneColor"
+                      [iconfont]="btn.icon.iconfont"></i>
+                  </a>
+                </ng-container>
                 <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
               </ng-container>
             </ng-container>

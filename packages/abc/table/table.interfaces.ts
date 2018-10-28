@@ -372,6 +372,19 @@ export interface STColumnYn {
   no?: string;
 }
 
+export interface STIcon {
+  /** 图标类型 */
+  type: string;
+  /** 图标主题风格，默认：`outline` */
+  theme?: 'outline' | 'twotone' | 'fill';
+  /** 是否有旋转动画，默认：`false` */
+  spin?: boolean;
+  /** 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 */
+  twoToneColor?: string;
+  /** 指定来自 IconFont 的图标类型 */
+  iconfont?: string;
+}
+
 /**
  * 按钮配置
  */
@@ -379,11 +392,15 @@ export interface STColumnButton {
   /**
    * 文本
    */
-  text: string;
+  text?: string;
   /**
    * 文本 i18n
    */
   i18n?: string;
+  /**
+   * 图标
+   */
+  icon?: string | STIcon;
   /**
    * 格式化文本，较高调用频率，请勿过多复杂计算免得产生性能问题
    */

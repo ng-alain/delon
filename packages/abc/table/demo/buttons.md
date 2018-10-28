@@ -52,14 +52,14 @@ export class DemoComponent {
       title: '操作区',
       buttons: [
         {
-          text: '删除',
+          icon: 'delete',
           type: 'del',
           click: (record: any) =>
             this.message.success(`成功删除【${record.name}】`),
           iif: (item: any) => item.id % 2 === 0,
         },
         {
-          text: '编辑',
+          icon: 'edit',
           type: 'modal',
           modal: {
             component: DemoModalComponent

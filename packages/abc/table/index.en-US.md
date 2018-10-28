@@ -254,11 +254,22 @@ Property | Description | Type | Default
 `[checked]` | Whether checked | `boolean` | -
 `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | -
 
+### STIcon
+
+Property | Description | Type | Default
+-------- | ----------- | ---- | -------
+`[type]` | Type of the ant design icon | `string` | -
+`[theme]` | Type of the ant design icon | `outline | twotone | fill` | `outline`
+`[spin]` | Rotate icon with animation | `boolean` | `false`
+`[twoToneColor]` | Only support the two-tone icon. Specific the primary color. | `string` | -
+`[iconfont]` | Type of the icon from iconfont | `string` | -
+
 ### STColumnButton
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[text]` | Text of button | `string` | -
+`[icon]` | Icon of button | `string | STIcon` | -
 `[i18n]` | I18n key of button | `string` | -
 `[format]` | Format value of button text | `(record: any, btn: STColumnButton) => string` | -
 `[type]` | Type of button | `none,del,modal,static,drawer,link` | -
