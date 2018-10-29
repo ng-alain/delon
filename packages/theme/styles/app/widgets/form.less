@@ -7,15 +7,13 @@
 }
 
 .form-state-visual-feedback-mixin(@enabled) when(@enabled = true) {
-  .ng-invalid:not(form) {
-    input {
-      &:focus {
-        box-shadow: 0 0 @outline-blur-size @outline-width fade-out(@error-color, .8);
-      }
-      &,
-      &:hover {
-        border-color: @error-color;
-      }
+  .ng-invalid {
+    &:focus {
+      box-shadow: 0 0 @outline-blur-size @outline-width fade-out(@error-color, .8);
+    }
+    &,
+    &:hover {
+      border-color: @error-color;
     }
   }
 }
