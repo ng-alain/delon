@@ -108,13 +108,13 @@ Allow chinese users to add a taobao mirror configuration file `.npmrc` or `.yarn
 
 ```bash
 # add npm
-ng g ng-alain:plugin networkEnv -packageManager=npm
+ng g ng-alain:plugin networkEnv --packageManager=npm
 # add yarn
-ng g ng-alain:plugin networkEnv -packageManager=yarn
+ng g ng-alain:plugin networkEnv --packageManager=yarn
 # remove npm
-ng g ng-alain:plugin networkEnv -packageManager=npm -t=remove
+ng g ng-alain:plugin networkEnv --packageManager=npm -t=remove
 # remove yarn
-ng g ng-alain:plugin networkEnv -packageManager=yarn -t=remove
+ng g ng-alain:plugin networkEnv --packageManager=yarn -t=remove
 ```
 
 ### icon
