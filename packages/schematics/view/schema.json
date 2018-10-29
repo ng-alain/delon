@@ -34,7 +34,8 @@
     "inlineTemplate": {
       "description": "Specifies if the template will be in the ts file.",
       "type": "boolean",
-      "default": false
+      "default": false,
+      "alias": "t"
     },
     "viewEncapsulation": {
       "description": "Specifies the view encapsulation strategy.",
@@ -88,30 +89,40 @@
       "format": "html-selector",
       "description": "The selector to use for the component."
     },
-    "module":  {
-      "type": "string",
-      "description": "Allows specification of the declaring module.",
-      "alias": "m"
-    },
     "export": {
       "type": "boolean",
       "default": false,
       "description": "Specifies if declaring module exports the component."
     },
-    "withoutPrefix": {
+    "entryComponent": {
       "type": "boolean",
-      "description": "Without prefix to selectors",
-      "default": false
+      "default": false,
+      "description": "Specifies if the component is an entry component of declaring module."
+    },
+    "lintFix": {
+      "type": "boolean",
+      "default": false,
+      "description": "Specifies whether to apply lint fixes after generating the component."
+    },
+    "module":  {
+      "type": "string",
+      "description": "Allows specification of the declaring module. (e.g., -m=trade)",
+      "alias": "m"
     },
     "target": {
       "type": "string",
-      "description": "Specifies relative path.",
+      "description": "指定目标路径，支持 `bus/list` 写法 (Specifies relative path, could be set like `bus/list`.)",
       "alias": "t"
+    },
+    "withoutPrefix": {
+      "type": "boolean",
+      "description": "组件名不加前缀 (Without prefix to selectors)",
+      "default": false
     },
     "modal": {
       "type": "boolean",
       "default": true,
-      "description": "Specifies using modal mode."
+      "description": "指定是否使用模态框 (Specifies using modal mode)"
     }
   },
   "required": []

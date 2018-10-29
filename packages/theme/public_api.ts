@@ -2,7 +2,6 @@ export { WINDOW } from './src/win_tokens';
 export { preloaderFinished } from './src/services/preloader/preloader';
 export * from './src/services/menu/interface';
 export * from './src/services/menu/menu.service';
-export * from './src/services/context-menu/context-menu.service';
 export * from './src/services/scroll/scroll.service';
 export * from './src/services/settings/interface';
 export * from './src/services/settings/settings.service';

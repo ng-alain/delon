@@ -607,7 +607,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   //#region buttons
 
   _btnClick(e: Event, record: any, btn: STColumnButton) {
-    if (e) e.stopPropagation();
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
     if (btn.type === 'modal' || btn.type === 'static') {
       const obj = {};
       const { modal } = btn;
@@ -627,7 +630,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       const obj = {};
       const { drawer } = btn;
       obj[drawer.paramsName] = record;
-      const options: DrawerHelperOptions = Object.assign({}, drawer);
       this.drawerHelper
         .create(
           drawer.title,

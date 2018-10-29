@@ -56,7 +56,7 @@ function buildSelector(schema: CommonSchema, projectPrefix: string) {
   }
   // target name
   if (schema.target) {
-    ret.push(schema.target);
+    ret.push(...schema.target.split('/'));
   }
   // name
   ret.push(strings.dasherize(schema.name));
@@ -65,7 +65,9 @@ function buildSelector(schema: CommonSchema, projectPrefix: string) {
 
 function buildComponentName(schema: CommonSchema, projectPrefix: string) {
   const ret: string[] = [schema.module];
-  if (schema.target && schema.target.length > 0) ret.push(schema.target);
+  if (schema.target && schema.target.length > 0) {
+    ret.push(...schema.target.split('/'));
+  }
   ret.push(schema.name);
   ret.push(`Component`);
   return strings.classify(ret.join('-'));
