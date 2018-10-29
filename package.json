@@ -136,12 +136,6 @@
     "webpack-bundle-analyzer": "^2.13.0",
     "xlsx": "^0.14.0"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint-staged",
-      "commit-msg": "node ./scripts/git/commit-msg.js -E HUSKY_GIT_PARAMS"
-    }
-  },
   "lint-staged": {
     "*.{cmd,html,json,md,sh,txt,xml,yml}": [
       "editorconfig-tools fix",
