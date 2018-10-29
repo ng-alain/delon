@@ -343,7 +343,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         };
       }
       // fixed label
-      if (!this._btn.render.spanLabelFixed) {
+      if (this._btn.render.spanLabelFixed == null) {
         this._btn.render.spanLabelFixed = btnUi.spanLabelFixed;
       }
       // 固定标签宽度时，若不指定样式，则默认居中

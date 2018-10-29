@@ -5,16 +5,16 @@
   <sf-item [formProperty]="rootProperty"></sf-item>
   <ng-container *ngIf="button !== 'none'; else con">
     <nz-form-item [ngClass]="_btn.render.class" class="sf-btns" [fixed-label]="_btn.render.spanLabelFixed">
-      <nz-col class="ant-form-item-control-wrapper" [nzSpan]="_btn.render.grid.span" [nzOffset]="_btn.render.grid.offset"
+      <div nz-col class="ant-form-item-control-wrapper" [nzSpan]="_btn.render.grid.span" [nzOffset]="_btn.render.grid.offset"
               [nzXs]="_btn.render.grid.xs" [nzSm]="_btn.render.grid.sm" [nzMd]="_btn.render.grid.md"
-              [nzLg]="_btn.render.grid.lg" [nzXl]="_btn.render.grid.xl">
+              [nzLg]="_btn.render.grid.lg" [nzXl]="_btn.render.grid.xl" [nzXXl]="_btn.render.grid.xxl">
         <div class="ant-form-item-control">
           <ng-container *ngIf="button; else con">
             <button type="submit" nz-button [nzType]="_btn.submit_type" [disabled]="liveValidate && !valid">{{_btn.submit}}</button>
             <button *ngIf="_btn.reset" (click)="reset(true)" type="button" nz-button [nzType]="_btn.reset_type">{{_btn.reset}}</button>
           </ng-container>
         </div>
-      </nz-col>
+      </div>
     </nz-form-item>
   </ng-container>
 </form>
