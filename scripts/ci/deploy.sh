@@ -76,11 +76,6 @@ travisFoldStart "publish.dist"
 
   echo "Removed everything from ${packageRepo}#${branchName} and added the new build output."
 
-  if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
-    echo "Skipping publish because tag is already published"
-    exit 0
-  fi
-
   # 替换版本号
   if [[ $commitMessageCheck =~ "release(" ]]; then
     echo "===== Release version does not need to change version ====="
@@ -97,6 +92,11 @@ travisFoldStart "publish.dist"
   git config credential.helper "store --file=.git/credentials"
 
   echo "https://${DELON_BUILDS_TOKEN}:@github.com" > .git/credentials
+
+  if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
+    echo "removed tag because tag is already published"
+    git push origin :refs/tags/${buildTagName}
+  fi
 
   echo "Git configuration has been updated to match the last commit author. Publishing now.."
 
