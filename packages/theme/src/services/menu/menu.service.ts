@@ -198,7 +198,7 @@ export class MenuService implements OnDestroy {
   /**
    * 根据URL设置菜单 `_open` 属性
    * - 若 `recursive: true` 则会自动向上递归查找
-   *  - `/ec/ware`、`/ec/ware/1` 表示同一个地址
+   *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
    */
   openedByUrl(url: string, recursive = false) {
     if (!url) return;
@@ -215,7 +215,7 @@ export class MenuService implements OnDestroy {
   /**
    * 根据url获取菜单列表
    * - 若 `recursive: true` 则会自动向上递归查找
-   *  - `/ec/ware`、`/ec/ware/1` 表示同一个地址
+   *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
    */
   getPathByUrl(url: string, recursive = false): Menu[] {
     const ret: Menu[] = [];
