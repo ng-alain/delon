@@ -7,18 +7,18 @@ import { FormProperty } from '../../model/form.property';
   selector: 'sf-object',
   template: `
   <ng-container *ngIf="grid; else noGrid">
-    <nz-row [nzGutter]="grid.gutter">
+    <div nz-row [nzGutter]="grid.gutter">
       <ng-container *ngFor="let i of list">
         <ng-container *ngIf="i.property.visible && i.show">
-          <nz-col
+          <div nz-col
             [nzSpan]="i.grid.span" [nzOffset]="i.grid.offset"
             [nzXs]="i.grid.xs" [nzSm]="i.grid.sm" [nzMd]="i.grid.md"
             [nzLg]="i.grid.lg" [nzXl]="i.grid.xl" [nzXXl]="i.grid.xxl">
             <sf-item [formProperty]="i.property" [fixed-label]="i.spanLabelFixed"></sf-item>
-          </nz-col>
+          </div>
         </ng-container>
       </ng-container>
-    </nz-row>
+    </div>
   </ng-container>
   <ng-template #noGrid>
     <ng-container *ngFor="let i of list">
