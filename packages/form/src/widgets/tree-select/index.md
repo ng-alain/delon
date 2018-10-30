@@ -6,6 +6,10 @@ type: Widgets
 
 树型选择控件。
 
+**注意：**
+
+- `tree-select` 的数据源必须包含 `title`、`key` 键名
+
 ## API
 
 ### schema 属性
