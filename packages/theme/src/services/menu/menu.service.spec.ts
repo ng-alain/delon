@@ -116,6 +116,11 @@ describe('Service: Menu', () => {
         srv.openedByUrl(null);
         expect(srv.menus.filter(w => w._open === false).length).toBe(0);
       });
+      it('recursive up find', () => {
+        srv.add(deepCopy(DATA));
+        srv.openedByUrl(`/dashboard/v1/1`, true);
+        expect(srv.menus[0]._open).toBe(true);
+      });
     });
 
     describe('#getPathByUrl', () => {
@@ -129,6 +134,11 @@ describe('Service: Menu', () => {
         srv.add(deepCopy(DATA));
         const menus = srv.getPathByUrl(`/dashboard/v1111`);
         expect(menus.length).toBe(0);
+      });
+      it('recursive up find', () => {
+        srv.add(deepCopy(DATA));
+        expect(srv.getPathByUrl(`/dashboard/1`).length).toBe(0);
+        expect(srv.getPathByUrl(`/dashboard/1`, true).length).toBe(1);
       });
     });
 

@@ -85,7 +85,10 @@ export class MenuService implements OnDestroy {
         // compatible `anticon anticon-user`
         if (~item.icon.indexOf(`anticon-`)) {
           type = 'icon';
-          value = value.split('-').slice(1).join('-');
+          value = value
+            .split('-')
+            .slice(1)
+            .join('-');
         } else if (/^https?:\/\//.test(item.icon)) {
           type = 'img';
         }
@@ -168,23 +171,39 @@ export class MenuService implements OnDestroy {
     this._change$.next(this.data);
   }
 
+  private getHit(url: string, recursive = false, cb: (i: Menu) => void = null) {
+    let item: Menu = null;
+
+    while (!item && url) {
+      this.visit(i => {
+        if (cb) {
+          cb(i);
+        }
+        if (i.link != null && i.link === url) {
+          item = i;
+        }
+      });
+
+      if (!recursive) break;
+
+      url = url
+        .split('/')
+        .slice(0, -1)
+        .join('/');
+    }
+
+    return item;
+  }
+
   /**
    * 根据URL设置菜单 `_open` 属性
-   * @param url URL地址
+   * - 若 `recursive: true` 则会自动向上递归查找
+   *  - `/ec/ware`、`/ec/ware/1` 表示同一个地址
    */
-  openedByUrl(url: string) {
+  openedByUrl(url: string, recursive = false) {
     if (!url) return;
 
-    let findItem: Menu = null;
-    this.visit(item => {
-      item._open = false;
-      if (!item.link) {
-        return;
-      }
-      if (!findItem && url.startsWith(item.link)) {
-        findItem = item;
-      }
-    });
+    let findItem = this.getHit(url, recursive, i => (i._open = false));
     if (!findItem) return;
 
     do {
@@ -195,17 +214,13 @@ export class MenuService implements OnDestroy {
 
   /**
    * 根据url获取菜单列表
-   * @param url
+   * - 若 `recursive: true` 则会自动向上递归查找
+   *  - `/ec/ware`、`/ec/ware/1` 表示同一个地址
    */
-  getPathByUrl(url: string): Menu[] {
-    let item: Menu = null;
-    this.visit((i, parent, depth) => {
-      if (i.link === url) {
-        item = i;
-      }
-    });
-
+  getPathByUrl(url: string, recursive = false): Menu[] {
     const ret: Menu[] = [];
+    let item = this.getHit(url, recursive);
+
     if (!item) return ret;
 
     do {
