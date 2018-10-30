@@ -31,7 +31,7 @@ export class STColumnSource {
   private btnCoerce(list: STColumnButton[]): STColumnButton[] {
     if (!list) return [];
     const ret: STColumnButton[] = [];
-    const { modal, drawer, popTitle } = this.cog;
+    const { modal, drawer, popTitle, btnIcon } = this.cog;
 
     for (const item of list) {
       if (this.acl && item.acl && !this.acl.can(item.acl)) {
@@ -71,17 +71,25 @@ export class STColumnSource {
       }
 
       if (item.pop === true) {
-        item._type = 2;
+        item._type = 'pop';
         if (typeof item.popTitle === 'undefined') {
           item.popTitle = popTitle;
         }
       }
+      if (item.icon) {
+        item._type = 'icon';
+        item.icon = Object.assign(
+          {},
+          btnIcon,
+          typeof item.icon === 'string' ? { type: item.icon } : item.icon,
+        );
+      }
       if (item.children && item.children.length > 0) {
-        item._type = 3;
+        item._type = 'sub';
         item.children = this.btnCoerce(item.children);
       }
       if (!item._type) {
-        item._type = 1;
+        item._type = '';
       }
 
       // i18n
@@ -300,10 +308,12 @@ export class STColumnSource {
 
       columns.push(item);
     }
-    if (checkboxCount > 1)
+    if (checkboxCount > 1) {
       throw new Error(`[st]: just only one column checkbox`);
-    if (radioCount > 1)
+    }
+    if (radioCount > 1) {
       throw new Error(`[st]: just only one column radio`);
+    }
 
     this.fixedCoerce(columns);
 

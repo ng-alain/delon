@@ -5,6 +5,7 @@ import {
   STPage,
   STColumnButtonModalConfig,
   STColumnButtonDrawerConfig,
+  STIcon,
 } from './table.interfaces';
 
 export class STConfig {
@@ -75,7 +76,7 @@ export class STConfig {
     paramsName: 'record',
     size: 'md',
     footer: true,
-    footerHeight: 55
+    footerHeight: 55,
   };
   /**
    * 气泡确认框内容
@@ -93,4 +94,12 @@ export class STConfig {
    * 过滤按钮重置文本，默认：`重置`
    */
   filterClearText? = '重置';
+  /**
+   * 按钮图标
+   */
+  btnIcon?: STIcon = {
+    type: '',
+    theme: 'outline',
+    spin: false,
+  };
 }

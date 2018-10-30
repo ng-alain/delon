@@ -407,6 +407,22 @@ describe('abc: table: column-souce', () => {
           'popTitle',
         );
       });
+      describe('#icon', () => {
+        it('should be string', () => {
+          page.expectBtnValue(
+            [{ title: '', buttons: [{ text: '', icon: 'edit', type: 'del', popTitle: 'aa' }] }],
+            'edit',
+            'icon.type',
+          );
+        });
+        it('should be object', () => {
+          page.expectBtnValue(
+            [{ title: '', buttons: [{ text: '', icon: { type: 'edit', theme: 'fill' }, type: 'del', popTitle: 'aa' }] }],
+            'fill',
+            'icon.theme',
+          );
+        });
+      });
       describe('#iif', () => {
         it('should be running', () => {
           const res = srv.process([
