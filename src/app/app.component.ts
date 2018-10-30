@@ -1,8 +1,10 @@
-import { Component, HostBinding, OnDestroy, Inject } from '@angular/core';
+import { Component, HostBinding, OnDestroy, Inject, ElementRef, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { NzIconService } from 'ng-zorro-antd';
+import { VERSION as VERSION_ALAIN } from '@delon/theme';
+import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd';
 
 // #region ng-zorro-antd icons
 
@@ -59,6 +61,8 @@ export class AppComponent implements OnDestroy {
   private prevUrl = '';
 
   constructor(
+    el: ElementRef,
+    renderer: Renderer2,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private meta: MetaService,
     private title: TitleService,
@@ -66,6 +70,17 @@ export class AppComponent implements OnDestroy {
     private mobileSrv: MobileService,
     private _iconService: NzIconService,
   ) {
+    renderer.setAttribute(
+      el.nativeElement,
+      'ng-alain-version',
+      VERSION_ALAIN.full,
+    );
+    renderer.setAttribute(
+      el.nativeElement,
+      'ng-zorro-version',
+      VERSION_ZORRO.full,
+    );
+
     enquire.register(this.query, {
       match: () => {
         this.mobileSrv.next(true);
