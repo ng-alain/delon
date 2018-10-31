@@ -43,7 +43,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
   event: MouseEvent;
 
   @Output()
-  close = new EventEmitter<ReuseContextCloseEvent>();
+  readonly close = new EventEmitter<ReuseContextCloseEvent>();
 
   get includeNonCloseable() {
     return this.event.ctrlKey;

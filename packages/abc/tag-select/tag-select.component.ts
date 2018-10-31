@@ -35,7 +35,7 @@ export class TagSelectComponent implements OnDestroy {
   expand = false;
 
   @Output()
-  change: EventEmitter<boolean> = new EventEmitter<boolean>();
+  readonly change = new EventEmitter<boolean>();
 
   constructor(private i18n: DelonLocaleService) {
     this.i18n$ = this.i18n.change.subscribe(

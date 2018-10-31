@@ -34,13 +34,13 @@ export class G2CustomComponent implements OnInit, OnDestroy {
   resizeTime = 0;
 
   @Output()
-  render: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  readonly render = new EventEmitter<ElementRef>();
 
   @Output()
-  resize: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  readonly resize = new EventEmitter<ElementRef>();
 
   @Output()
-  destroy: EventEmitter<ElementRef> = new EventEmitter<ElementRef>();
+  readonly destroy = new EventEmitter<ElementRef>();
 
   // #endregion
 

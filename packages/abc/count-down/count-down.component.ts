@@ -29,9 +29,9 @@ export class CountDownComponent {
     };
   }
 
-  @Output() begin = new EventEmitter();
-  @Output() notify = new EventEmitter<number>();
-  @Output() end = new EventEmitter();
+  @Output() readonly begin = new EventEmitter();
+  @Output() readonly notify = new EventEmitter<number>();
+  @Output() readonly end = new EventEmitter();
 
   _start() {
     this.begin.emit();

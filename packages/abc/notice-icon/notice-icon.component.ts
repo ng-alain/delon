@@ -62,9 +62,9 @@ export class NoticeIconComponent implements OnDestroy {
   loading = false;
 
   @Output()
-  select = new EventEmitter<NoticeIconSelect>();
+  readonly select = new EventEmitter<NoticeIconSelect>();
   @Output()
-  clear = new EventEmitter<string>();
+  readonly clear = new EventEmitter<string>();
 
   /** 手动控制Popover显示 */
   @Input()
@@ -72,7 +72,7 @@ export class NoticeIconComponent implements OnDestroy {
   popoverVisible = false;
 
   @Output()
-  popoverVisibleChange = new EventEmitter<boolean>();
+  readonly popoverVisibleChange = new EventEmitter<boolean>();
 
   constructor(private i18n: DelonLocaleService) {
     this.i18n$ = this.i18n.change.subscribe(

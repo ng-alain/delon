@@ -60,7 +60,7 @@ export class QRComponent implements OnChanges {
   value: string;
   /** 变更时回调 */
   @Output()
-  change = new EventEmitter<string>();
+  readonly change = new EventEmitter<string>();
 
   // #endregion
 

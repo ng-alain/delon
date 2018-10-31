@@ -139,19 +139,19 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   /** 数据变更时回调 */
   @Output()
-  formChange = new EventEmitter<{}>();
+  readonly formChange = new EventEmitter<{}>();
 
   /** 提交表单时回调 */
   @Output()
-  formSubmit = new EventEmitter<{}>();
+  readonly formSubmit = new EventEmitter<{}>();
 
   /** 重置表单时回调 */
   @Output()
-  formReset = new EventEmitter<{}>();
+  readonly formReset = new EventEmitter<{}>();
 
   /** 表单校验结果回调 */
   @Output()
-  formError = new EventEmitter<ErrorData[]>();
+  readonly formError = new EventEmitter<ErrorData[]>();
 
   // #endregion
 
