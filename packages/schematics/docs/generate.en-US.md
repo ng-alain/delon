@@ -14,7 +14,7 @@ ng-alain adds cool operations based on this.
 ## Command format
 
 ```bash
-ng g ng-alain:<command name> <name> [options]
+ng g ng-alain:[command name] [name] [options]
 ```
 
 > ng-alain has own file structure specification, which can cause exceptions when you break this file structure.
@@ -74,7 +74,7 @@ ng g ng-alain:view view -m=sys -t=log
 For `edit`, `view`, the default is modal render, you can use the page render:
 
 ```bash
-ng g ng-alain:edit <page name> --modal=false
+ng g ng-alain:edit [page name] --modal=false
 ```
 
 > If you receive `No provider for NzModalRef!` error, because of modal component must be opened with `nzModalService`, and does not need to register into route.

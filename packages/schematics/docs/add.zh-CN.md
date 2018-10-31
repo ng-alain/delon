@@ -8,7 +8,7 @@ type: Documents
 ## 命令格式
 
 ```bash
-ng add ng-alain@next <project name>
+ng add ng-alain@next [project name]
 ```
 
 ## 额外参数
