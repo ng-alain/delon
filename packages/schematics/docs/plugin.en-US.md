@@ -87,11 +87,11 @@ Change the current default language, refer to: [I18n - Default Language](/docs/i
 
 ```bash
 # change to [en]
-ng g ng-alain:plugin defaultLanguage -defaultLanguage=en
+ng g ng-alain:plugin defaultLanguage --defaultLanguage=en
 # change to [zh]
-ng g ng-alain:plugin defaultLanguage -defaultLanguage=zh
+ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh
 # change to [zh-tw]
-ng g ng-alain:plugin defaultLanguage -defaultLanguage=zh-tw
+ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 ```
 
 #### Supported language list

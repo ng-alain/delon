@@ -91,11 +91,11 @@ ng g ng-alain:plugin docker -t=remove
 
 ```bash
 # change to [en]
-ng g ng-alain:plugin defaultLanguage -defaultLanguage=en
+ng g ng-alain:plugin defaultLanguage --defaultLanguage=en
 # change to [zh]
-ng g ng-alain:plugin defaultLanguage -defaultLanguage=zh
+ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh
 # change to [zh-tw]
-ng g ng-alain:plugin defaultLanguage -defaultLanguage=zh-tw
+ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 ```
 
 #### 支持语言列表
