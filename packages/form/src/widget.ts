@@ -83,7 +83,9 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty>
   reset(value: any) {}
 
   ngAfterViewInit() {
-    this.formProperty.errorsChanges.subscribe(() => this.cd.detectChanges());
+    this.formProperty.errorsChanges
+      .pipe(filter(() => this.ui.__destroy !== true))
+      .subscribe(() => this.cd.detectChanges());
   }
 }
 
@@ -92,6 +94,8 @@ export class ObjectLayoutWidget extends Widget<ObjectProperty>
   reset(value: any) {}
 
   ngAfterViewInit() {
-    this.formProperty.errorsChanges.subscribe(() => this.cd.detectChanges());
+    this.formProperty.errorsChanges
+      .pipe(filter(() => this.ui.__destroy !== true))
+      .subscribe(() => this.cd.detectChanges());
   }
 }
