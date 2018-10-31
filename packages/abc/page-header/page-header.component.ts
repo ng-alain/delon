@@ -51,7 +51,7 @@ export class PageHeaderComponent
     if (this._menus) {
       return this._menus;
     }
-    this._menus = this.menuSrv.getPathByUrl(this.route.url.split('?')[0]);
+    this._menus = this.menuSrv.getPathByUrl(this.route.url.split('?')[0], this.recursiveBreadcrumb);
 
     return this._menus;
   }
@@ -120,6 +120,10 @@ export class PageHeaderComponent
 
   @Input()
   breadcrumb: TemplateRef<any>;
+
+  @Input()
+  @InputBoolean()
+  recursiveBreadcrumb: boolean;
 
   @Input()
   logo: TemplateRef<any>;

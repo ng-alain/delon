@@ -16,6 +16,11 @@ export class PageHeaderConfig {
    */
   autoBreadcrumb?: boolean = true;
   /**
+   * 自动向上递归查找
+   *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
+   */
+  recursiveBreadcrumb?: boolean = false;
+  /**
    * 自动生成标题，以当前路由从主菜单中定位
    */
   autoTitle?: boolean = true;

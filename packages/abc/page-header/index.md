@@ -20,6 +20,7 @@ config: PageHeaderConfig
 `[homeLink]` | 首页链接  | `string` | `/`
 `[homeI18n]` | 首页链接国际化参数 | `string` | -
 `[autoBreadcrumb]` | 自动生成导航，以当前路由从主菜单中定位  | `boolean` | `true`
+`[recursiveBreadcrumb]` | 自动向上递归查找，菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项 | `boolean` | `false`
 `[loading]` | 是否加载中 | `boolean` | `false`
 `[wide]` | 是否定宽 | `boolean` | `false`
 `[fixed]` | 是否固定模式 | `boolean` | `false`
