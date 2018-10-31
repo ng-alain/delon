@@ -87,11 +87,11 @@ Change the current default language, refer to: [I18n - Default Language](/docs/i
 
 ```bash
 # change to [en]
-ng g ng-alain:plugin defaultLanguage -defaultLanguage=en
+ng g ng-alain:plugin defaultLanguage --defaultLanguage=en
 # change to [zh]
-ng g ng-alain:plugin defaultLanguage -defaultLanguage=zh
+ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh
 # change to [zh-tw]
-ng g ng-alain:plugin defaultLanguage -defaultLanguage=zh-tw
+ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 ```
 
 #### Supported language list
@@ -108,13 +108,13 @@ Allow chinese users to add a taobao mirror configuration file `.npmrc` or `.yarn
 
 ```bash
 # add npm
-ng g ng-alain:plugin networkEnv -packageManager=npm
+ng g ng-alain:plugin networkEnv --packageManager=npm
 # add yarn
-ng g ng-alain:plugin networkEnv -packageManager=yarn
+ng g ng-alain:plugin networkEnv --packageManager=yarn
 # remove npm
-ng g ng-alain:plugin networkEnv -packageManager=npm -t=remove
+ng g ng-alain:plugin networkEnv --packageManager=npm -t=remove
 # remove yarn
-ng g ng-alain:plugin networkEnv -packageManager=yarn -t=remove
+ng g ng-alain:plugin networkEnv --packageManager=yarn -t=remove
 ```
 
 ### icon
@@ -123,6 +123,8 @@ From the project to analyze and generate static load Icon, The plugin will autom
 
 - `src/style-icons.ts` Custom Icon (e.g: remote menu icon)
 - `src/style-icons-auto.ts` command automatically generates files
+
+> Automatically exclude [ng-zorro-antd](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts#L6) and [@delon](https://github.com/ng-alain/delon/blob/master/packages/theme/src/theme.module.ts#L33) already loaded icons.
 
 ```bash
 ng g ng-alain:plugin icon
@@ -142,3 +144,17 @@ export class StartupService {
 }
 ```
 
+**Valid Grammar**
+
+```html
+<i class="anticon anticon-user"></i>
+<i class="anticon anticon-question-circle-o"></i>
+<i class="anticon anticon-spin anticon-loading"></i>
+<i nz-icon class="anticon anticon-user"></i>
+<i nz-icon type="align-{{type ? 'left' : 'right'}}"></i>
+<i nz-icon [type]="type ? 'menu-fold' : 'menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
+<i nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"></i>
+<i nz-icon type="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
+<i nz-icon type="filter" theme="outline"></i>
+<nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
+```

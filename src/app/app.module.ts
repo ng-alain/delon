@@ -1,7 +1,7 @@
 import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {createCustomElement} from '@angular/elements';
+import { createCustomElement } from '@angular/elements';
 
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,6 +31,7 @@ import { UEditorModule } from 'ngx-ueditor';
 import { SimplemdeModule } from 'ngx-simplemde';
 
 import { ExampleModule, EXAMPLE_COMPONENTS } from './routes/gen/examples';
+import { IconComponent } from './shared/components/icon/icon.component';
 
 export function StartupServiceFactory(
   startupService: StartupService,
@@ -93,5 +94,7 @@ export class AppModule {
       });
       customElements.define(key, element);
     });
+    // icon
+    customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
   }
 }
