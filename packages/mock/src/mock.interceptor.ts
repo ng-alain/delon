@@ -61,7 +61,17 @@ export class MockInterceptor implements HttpInterceptor {
         if (urlParams.length > 1) {
           urlParams[1].split('&').forEach(item => {
             const itemArr = item.split('=');
-            mockRequest.queryString[itemArr[0]] = itemArr[1];
+            const key = itemArr[0];
+            const value = itemArr[1];
+            // is array
+            if (Object.keys(mockRequest.queryString).includes(key)) {
+              if (!Array.isArray(mockRequest.queryString[key])) {
+                mockRequest.queryString[key] = [ mockRequest.queryString[key] ];
+              }
+              mockRequest.queryString[key].push(value);
+            } else {
+              mockRequest.queryString[key] = value;
+            }
           });
         }
         req.params

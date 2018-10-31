@@ -176,6 +176,15 @@ describe('mock: interceptor', () => {
       });
       httpMock.expectOne('/non-mock').flush('ok!');
     });
+    it('should be array of queryString', (done: () => void) => {
+      const key = '/fn/queryString?a=1&b=1&b=2&b=3';
+      http.get(key).subscribe((res: any) => {
+        expect(Array.isArray(res.b)).toBe(true);
+        expect(+res.b[0]).toBe(1);
+        expect(+res.b[1]).toBe(2);
+        done();
+      });
+    });
   });
   describe('[disabled log]', () => {
     it('with request', (done: () => void) => {
