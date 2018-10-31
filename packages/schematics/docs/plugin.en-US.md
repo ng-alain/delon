@@ -21,10 +21,10 @@ ng g ng-alain:plugin codeStyle
 ## Command format
 
 ```bash
-ng g ng-alain:plugin <plugin name> -t=[add | remove]
+ng g ng-alain:plugin [plugin name] -t=[add | remove]
 ```
 
-The `<plugin name>` is plugin name, `-t` supports two values `add` (default) and `remove`.
+The `[plugin name]` is plugin name, `-t` supports two values `add` (default) and `remove`.
 
 ## List of plugins
 

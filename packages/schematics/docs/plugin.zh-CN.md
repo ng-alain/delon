@@ -21,10 +21,10 @@ ng g ng-alain:plugin codeStyle
 ## 命令格式
 
 ```bash
-ng g ng-alain:plugin <plugin name> -t=[add | remove]
+ng g ng-alain:plugin [plugin name] -t=[add | remove]
 ```
 
-其中 `<plugin name>` 插件名称，从插件列表中获取，`-t` 支持两种值 `add`（默认） 和 `remove`。
+其中 `[plugin name]` 插件名称，从插件列表中获取，`-t` 支持两种值 `add`（默认） 和 `remove`。
 
 ## 插件列表
 

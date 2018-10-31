@@ -8,7 +8,7 @@ type: Documents
 ## Overview
 
 ```bash
-ng add ng-alain@next <project name>
+ng add ng-alain@next [project name]
 ```
 
 ## Options

@@ -14,7 +14,7 @@ ng-alain 在此基础上增加了很多很酷的骚操作。
 ## 命令格式
 
 ```bash
-ng g ng-alain:<command name> <name> [options]
+ng g ng-alain:[command name] [name] [options]
 ```
 
 > ng-alain 有自己的一套文件组织结构，当你破坏这些结构时，可能会导致下列指令产生异常。
@@ -73,7 +73,7 @@ ng g ng-alain:view view -m=sys -t=log
 对于 `edit`、`view` 默认是以模态框展示来生成，你可以改用页面展示则：
 
 ```bash
-ng g ng-alain:edit <page name> --modal=false
+ng g ng-alain:edit [page name] --modal=false
 ```
 
 > 如果你不小心将收到【No provider for NzModalRef! 】表明你把一个需要使用 `nzModalService` 打开的模态框组件，用了路由注册的方式。打开模态框组件无须注册路由，但需要注册至 `entryComponents`。
