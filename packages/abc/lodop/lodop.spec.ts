@@ -254,6 +254,7 @@ describe('abc: lodop', () => {
     const code = `LODOP.PRINT_INITA(0, 0, 100, 100, 'test');`;
     let isPrintError = false;
     beforeEach(() => {
+      isPrintError = false;
       genModule(cog);
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
