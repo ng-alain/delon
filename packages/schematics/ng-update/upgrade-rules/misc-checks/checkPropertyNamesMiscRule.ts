@@ -1,4 +1,4 @@
-import { green, red, bold } from 'chalk';
+import chalk from 'chalk';
 import { RuleFailure, Rules } from 'tslint';
 import * as ts from 'typescript';
 import { ExternalResource } from '../../tslint/component-file';
@@ -48,10 +48,10 @@ export class Walker extends ComponentWalker {
         start: node.getStart() + list.offset,
         end: node.getStart() + list.offset + list.attr.length,
         message:
-          `Found deprecated @Output() "${red(list.attr)}" on "${bold(
+          `Found deprecated @Output() "${chalk.red(list.attr)}" on "${chalk.bold(
             'st(simple-table)',
           )}". ` +
-          `Use "${green(
+          `Use "${chalk.green(
             '(change)',
           )}" instead, Document: https://ng-alain.com/components/table#STChange`,
       });
@@ -61,9 +61,9 @@ export class Walker extends ComponentWalker {
       failures.push({
         start: node.getStart() + offset,
         end: node.getStart() + offset + '[sortReName]'.length,
-        message: `Found deprecated @Input() "${red(
+        message: `Found deprecated @Input() "${chalk.red(
           '[sortReName]',
-        )}" which has been removed, Use "${green(
+        )}" which has been removed, Use "${chalk.green(
           'STColumn.sort.reName',
         )}" instead.`,
       });
@@ -77,10 +77,10 @@ export class Walker extends ComponentWalker {
         start: node.getStart() + list.offset,
         end: node.getStart() + list.offset + list.attr.length,
         message:
-          `Found deprecated @Input() "${red(list.attr)}" on "${bold(
+          `Found deprecated @Input() "${chalk.red(list.attr)}" on "${chalk.bold(
             'sv(desc-list-item)',
           )}". ` +
-          `Use "${green(
+          `Use "${chalk.green(
             '[type]',
           )}" instead, Document: https://ng-alain.com/components/view#sv`,
       });
@@ -90,9 +90,9 @@ export class Walker extends ComponentWalker {
       failures.push({
         start: node.getStart() + offset,
         end: node.getStart() + offset + 'standard-form-row'.length,
-        message: `Found deprecated component "${red(
+        message: `Found deprecated component "${chalk.red(
           '[standard-form-row]',
-        )}" which has been removed, you can use "${green(
+        )}" which has been removed, you can use "${chalk.green(
           '[se]',
         )}" instead, Document: https://ng-alain.com/components/edit`,
       });
