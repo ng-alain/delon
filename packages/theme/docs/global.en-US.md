@@ -53,6 +53,8 @@ title: Global Parameters
 | Name | Default | Description |
 | --- | --- | --- |
 | `@preserve-white-spaces-enabled` | `true` | Enabled `preserveWhitespaces` |
+| `@preserve-sf-and-st-spaces` | `16px` | Spacing between `sf` and `st` |
+| `@preserve-buttons-spaces` | Spacing between `button` and `button`(incluldes: `button`,`button-group`,`popconfirm`) |
 | `@router-animation-duration` | `antFadeIn` | Route switching animation name |
 | `@router-animation-duration` | `1s` | Animation duration |
 
@@ -83,3 +85,13 @@ By `nz-table`。
 | `@nz-table-rep-column-name-text-align` | `right` | Table responsive: Column name text alignment |
 | `@nz-table-rep-column-name-padding-right` | `right` | Table responsive: Column name right spacing |
 | `@nz-table-rep-column-name-color` | `rgba(0, 0, 0, 0.5)` | Table responsive: Column name color |
+
+## Widgets
+
+| Name | Default | Description |
+| --- | --- | --- |
+| `@badge-enabled` | `true` | Whether bootstrap badge |
+| `@hafl-enabled` | `true` | Whether hafl image |
+| `@abs-enabled` | `true` | Whether abs element|
+| `@masonry-enabled` | `true` | Whether css masonry |
+| `@setting-drawer-enabled` | `true` | Whether setting drawer css |

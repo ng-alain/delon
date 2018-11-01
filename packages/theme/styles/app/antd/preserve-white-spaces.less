@@ -1,13 +1,8 @@
 .preserve-white-spaces-mixin(@enabled) when(@enabled=true) {
-  // 搜索框与表格
-  @sf-and-st-white-spacing: @layout-gutter * 2;
 
   sf + st {
-    margin-top: @sf-and-st-white-spacing;
+    margin-top: @preserve-sf-and-st-spaces;
   }
-
-  // 按钮间间距
-  @button-and-button-white-spacing: @layout-gutter;
 
   .ant-btn + .ant-btn,
   .ant-btn + nz-popconfirm,
@@ -15,7 +10,7 @@
   nz-popconfirm + nz-popconfirm,
   .ant-btn + nz-button-group,
   nz-popconfirm + nz-button-group {
-    margin-left: @button-and-button-white-spacing;
+    margin-left: @preserve-buttons-spaces;
   }
   .ant-btn-group {
     .ant-btn + .ant-btn {

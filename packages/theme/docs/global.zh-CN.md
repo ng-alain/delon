@@ -53,6 +53,8 @@ title: 全局参数
 | 名称 | 默认值 | 功能 |
 | --- | --- | --- |
 | `@preserve-white-spaces-enabled` | `true` | 开启 `preserveWhitespaces` |
+| `@preserve-sf-and-st-spaces` | `16px` | `sf` 与 `st` 间间距 |
+| `@preserve-buttons-spaces` | 按钮间间距（包括：button、button-group、popconfirm） |
 | `@router-animation-duration` | `antFadeIn` | 路由切换动画 |
 | `@router-animation-duration` | `1s` | 路由切换动画时长 |
 
@@ -83,3 +85,13 @@ title: 全局参数
 | `@nz-table-rep-column-name-text-align` | `right` | 表格响应式：列名文本对齐方式 |
 | `@nz-table-rep-column-name-padding-right` | `right` | 表格响应式：列名右间距 |
 | `@nz-table-rep-column-name-color` | `rgba(0, 0, 0, 0.5)` | 表格响应式：列名颜色 |
+
+## 小部件
+
+| 名称 | 默认值 | 功能 |
+| --- | --- | --- |
+| `@badge-enabled` | `true` | bootstrap徽章 |
+| `@hafl-enabled` | `true` | 半图 |
+| `@abs-enabled` | `true` | 中心元素 |
+| `@masonry-enabled` | `true` | CSS瀑布流列 |
+| `@setting-drawer-enabled` | `true` | 主题设置 |
