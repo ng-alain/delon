@@ -26,7 +26,7 @@ export class RangePickerComponent implements ControlValueAccessor {
   @Input()
   ngModelEnd: Date;
   @Output()
-  ngModelEndChange = new EventEmitter<Date>();
+  readonly ngModelEndChange = new EventEmitter<Date>();
 
   // #region Native properties
 
@@ -53,7 +53,7 @@ export class RangePickerComponent implements ControlValueAccessor {
   @Input()
   nzPlaceHolder: any;
   @Output()
-  nzOnOpenChange = new EventEmitter<boolean>();
+  readonly nzOnOpenChange = new EventEmitter<boolean>();
 
   // range
   @Input()
@@ -74,9 +74,9 @@ export class RangePickerComponent implements ControlValueAccessor {
   @Input()
   nzRanges: any;
   @Output()
-  nzOnPanelChange = new EventEmitter<any>();
+  readonly nzOnPanelChange = new EventEmitter<any>();
   @Output()
-  nzOnOk = new EventEmitter<any>();
+  readonly nzOnOk = new EventEmitter<any>();
 
   // #endregion
 

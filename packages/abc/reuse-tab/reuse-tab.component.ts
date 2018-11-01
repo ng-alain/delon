@@ -80,10 +80,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   showCurrent = true;
   /** 切换时回调 */
   @Output()
-  change: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
+  readonly change = new EventEmitter<ReuseItem>();
   /** 关闭回调 */
   @Output()
-  close: EventEmitter<ReuseItem> = new EventEmitter<ReuseItem>();
+  readonly close = new EventEmitter<ReuseItem>();
 
   // #endregion
 

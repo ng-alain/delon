@@ -60,7 +60,7 @@ export class FullContentComponent
   padding = 24;
 
   @Output()
-  fullscreenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  readonly fullscreenChange = new EventEmitter<boolean>();
 
   // #endregion
 

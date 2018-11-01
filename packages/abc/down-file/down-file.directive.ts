@@ -34,10 +34,10 @@ export class DownFileDirective {
   fileName: string;
   /** 成功回调 */
   @Output()
-  success: EventEmitter<HttpResponse<Blob>> = new EventEmitter<HttpResponse<Blob>>();
+  readonly success = new EventEmitter<HttpResponse<Blob>>();
   /** 错误回调 */
   @Output()
-  error: EventEmitter<any> = new EventEmitter<any>();
+  readonly error = new EventEmitter<any>();
 
   private getDisposition(data: string) {
     const arr: any = (data || '')

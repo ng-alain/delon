@@ -23,7 +23,7 @@ export class ReuseTabContextComponent implements OnDestroy {
     this.srv.i18n = value;
   }
 
-  @Output() change = new EventEmitter<ReuseContextCloseEvent>();
+  @Output() readonly change = new EventEmitter<ReuseContextCloseEvent>();
 
   constructor(private srv: ReuseTabContextService) {
     this.sub$.add(srv.show.subscribe(context => this.srv.open(context)));

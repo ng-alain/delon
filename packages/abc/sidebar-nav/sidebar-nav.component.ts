@@ -42,7 +42,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   autoCloseUnderPad = true;
 
   @Output()
-  select = new EventEmitter<Menu>();
+  readonly select = new EventEmitter<Menu>();
 
   constructor(
     private menuSrv: MenuService,

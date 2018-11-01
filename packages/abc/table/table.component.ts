@@ -217,12 +217,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   widthConfig: string[];
   /** 请求异常时回调 */
   @Output()
-  readonly error: EventEmitter<STError> = new EventEmitter<STError>();
+  readonly error = new EventEmitter<STError>();
   /**
    * 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动
    */
   @Output()
-  readonly change: EventEmitter<STChange> = new EventEmitter<STChange>();
+  readonly change = new EventEmitter<STChange>();
   /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
   @Input()
   @InputNumber()
@@ -242,48 +242,42 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    * @deprecated as of v3
    */
   @Output()
-  readonly checkboxChange: EventEmitter<STData[]> = new EventEmitter<
-    STData[]
-  >();
+  readonly checkboxChange = new EventEmitter<STData[]>();
   /**
    * radio变化时回调，参数为当前所选
    * @deprecated 使用 `change` 替代
    * @deprecated as of v3
    */
   @Output()
-  readonly radioChange: EventEmitter<STData> = new EventEmitter<STData>();
+  readonly radioChange = new EventEmitter<STData>();
   /**
    * 排序回调
    * @deprecated 使用 `change` 替代
    * @deprecated as of v3
    */
   @Output()
-  readonly sortChange: EventEmitter<any> = new EventEmitter<any>();
+  readonly sortChange = new EventEmitter<any>();
   /**
    * 过滤变化时回调
    * @deprecated 使用 `change` 替代
    * @deprecated as of v3
    */
   @Output()
-  readonly filterChange: EventEmitter<STColumn> = new EventEmitter<STColumn>();
+  readonly filterChange = new EventEmitter<STColumn>();
   /**
    * 行单击回调
    * @deprecated 使用 `change` 替代
    * @deprecated as of v3
    */
   @Output()
-  readonly rowClick: EventEmitter<STChangeRowClick> = new EventEmitter<
-    STChangeRowClick
-  >();
+  readonly rowClick = new EventEmitter<STChangeRowClick>();
   /**
    * 行双击回调
    * @deprecated 使用 `change` 替代
    * @deprecated as of v3
    */
   @Output()
-  readonly rowDblClick: EventEmitter<STChangeRowClick> = new EventEmitter<
-    STChangeRowClick
-  >();
+  readonly rowDblClick = new EventEmitter<STChangeRowClick>();
   //#endregion
 
   constructor(
@@ -303,15 +297,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
   ) {
-    this.delonI18n$ = this.delonI18n.change.subscribe(
-      () => {
-        this.locale = this.delonI18n.getData('st');
-        if (this._columns.length > 0) {
-          this.page = this.clonePage;
-          this.cd.detectChanges();
-        }
-      },
-    );
+    this.delonI18n$ = this.delonI18n.change.subscribe(() => {
+      this.locale = this.delonI18n.getData('st');
+      if (this._columns.length > 0) {
+        this.page = this.clonePage;
+        this.cd.detectChanges();
+      }
+    });
     Object.assign(this, deepCopy(cog));
     if (i18nSrv) {
       this.i18n$ = i18nSrv.change
