@@ -4,6 +4,28 @@ title: 更新日志
 type: Other
 ---
 
+## 2.0.0-rc.2
+
+`2018-11-01`
+
+
+### Bug Fixes
+
+* **module:sf:** 修复 `attempt to use a destroyed` 异常 ([#248](https://github.com/ng-alain/delon/issues/248)) ([3e470e7](https://github.com/ng-alain/delon/commit/3e470e7))
+* **module:sf:** 修复按钮 `spanLabelFixed` 为 `0` 时无效问题 ([#242](https://github.com/ng-alain/delon/issues/242)) ([1f601e2](https://github.com/ng-alain/delon/commit/1f601e2))
+* **module:theme:** 修复错误的灰色系代码 ([#249](https://github.com/ng-alain/delon/issues/249)) ([6234538](https://github.com/ng-alain/delon/commit/6234538))
+* **module:theme:** 修复 `ng-invalid` 样式风格 ([#243](https://github.com/ng-alain/delon/issues/243)) ([fe6d104](https://github.com/ng-alain/delon/commit/fe6d104))
+* **schematics:** 修复 `-t` 重复别名导致无效问题 ([#247](https://github.com/ng-alain/delon/issues/247)) ([4f744fa](https://github.com/ng-alain/delon/commit/4f744fa))
+
+### Features
+
+* **module:mock:** QueryString 支持数组类型 ([#246](https://github.com/ng-alain/delon/issues/246)) ([f0135ce](https://github.com/ng-alain/delon/commit/f0135ce))
+* **module:st:** 增加按钮 Icon ([#240](https://github.com/ng-alain/delon/issues/240)) ([1145d47](https://github.com/ng-alain/delon/commit/1145d47))
+* **module:theme:MenuService** 增加向上查找能力 ([#244](https://github.com/ng-alain/delon/issues/244)) ([c391d3a](https://github.com/ng-alain/delon/commit/c391d3a))
+* **module:theme:html:** 安全HTML，增加 `| html` 管道 ([#239](https://github.com/ng-alain/delon/issues/239)) ([0298665](https://github.com/ng-alain/delon/commit/0298665))
+* **module:theme:i18n:** 增加 `| i18n` 管道 ([#238](https://github.com/ng-alain/delon/issues/238)) ([423c9c3](https://github.com/ng-alain/delon/commit/423c9c3))
+
+
 ## 2.0.0-rc.1
 
 `2018-10-25`

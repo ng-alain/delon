@@ -156,6 +156,7 @@ describe('mock: service', () => {
   });
 
   it('#clearCache', () => {
+    genModule({ data: DATA });
     srv.clearCache();
     const rule = srv.getRule('POST', '/users/1');
     expect(rule).toBeNull();

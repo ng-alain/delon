@@ -1,5 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { LazyService } from '@delon/util';
+import { LazyService, deepCopy } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { Component, DebugElement } from '@angular/core';
@@ -8,9 +8,11 @@ import * as fs from 'file-saver';
 import { XlsxModule } from './xlsx.module';
 import { XlsxService } from './xlsx.service';
 import { XlsxExportOptions } from './xlsx.types';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 class MockLazyService {
   load() {
+    (window as any).XLSX = deepCopy(DEFAULTMOCKXLSX);
     return Promise.resolve();
   }
 }
@@ -43,7 +45,6 @@ const DEFAULTMOCKXLSX = {
 let isErrorRequest = false;
 class MockHttpClient {
   request() {
-    (window as any).XLSX = DEFAULTMOCKXLSX;
     return isErrorRequest ? throwError(null) : of(null);
   }
 }
@@ -52,7 +53,7 @@ describe('abc: xlsx', () => {
   let srv: XlsxService;
   function genModule() {
     const injector = TestBed.configureTestingModule({
-      imports: [XlsxModule.forRoot()],
+      imports: [XlsxModule.forRoot(), HttpClientTestingModule],
       declarations: [TestComponent],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
@@ -114,6 +115,7 @@ describe('abc: xlsx', () => {
   describe('[#export]', () => {
     beforeEach(() => {
       spyOn(fs.default, 'saveAs');
+      genModule();
     });
     it('should be export xlsx via array', (done: () => void) => {
       srv
