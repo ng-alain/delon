@@ -13,6 +13,7 @@ title: Global Parameters
 | `@primary-color` | Blue | antd primary color |
 | `@mobile-min` | `768px` | PC of width |
 | `@mobile-max` | `768px` | Mobile of width |
+| `@text-tiny` | `@font-size-base - 2` | Ultra small text |
 | `@text-sm` | `@font-size-base + 0` | Small text |
 | `@text-md` | `@font-size-base + 2` | Medium text |
 | `@text-lg` | `@font-size-base + 4` | Large text |

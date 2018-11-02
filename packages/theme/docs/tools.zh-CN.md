@@ -197,6 +197,7 @@ Ant Design 是以 `14px` 为基准字号。
 
 | 名称 | 说明 |
 | ---- | --- |
+| `text-tiny` | `12px` |
 | `text-sm` | `14px` |
 | `text-md` | `16px` |
 | `text-lg` | `18px` |
@@ -234,6 +235,12 @@ Ant Design 是以 `14px` 为基准字号。
 | `font-weight-normal` | `font-weight: normal` |
 | `font-weight-bold` | `font-weight: 700` |
 | `font-italic` | `font-style: italic` |
+
+### Other
+
+| 名称 | 说明 |
+| ---- | --- |
+| `text-hover` | `*:hover { color: @primary-color; }` |
 
 ## Borders
 

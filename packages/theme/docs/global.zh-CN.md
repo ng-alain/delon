@@ -13,6 +13,7 @@ title: 全局参数
 | `@primary-color` | 蓝色 | antd 主色 |
 | `@mobile-min` | `768px` | PC端 |
 | `@mobile-max` | `768px` | 移动端 |
+| `@text-tiny` | `@font-size-base - 2` | 超小号文本 |
 | `@text-sm` | `@font-size-base + 0` | 小号文本 |
 | `@text-md` | `@font-size-base + 2` | 中号文本 |
 | `@text-lg` | `@font-size-base + 4` | 大号文本 |

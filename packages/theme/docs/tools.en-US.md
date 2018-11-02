@@ -197,6 +197,7 @@ Ant Design is based on `14px`.
 
 | Name | Description |
 | ---- | --- |
+| `text-tiny` | `12px` |
 | `text-sm` | `14px` |
 | `text-md` | `16px` |
 | `text-lg` | `18px` |
@@ -234,6 +235,12 @@ Ant Design is based on `14px`.
 | `font-weight-normal` | `font-weight: normal` |
 | `font-weight-bold` | `font-weight: 700` |
 | `font-italic` | `font-style: italic` |
+
+### Other
+
+| Name | Description |
+| ---- | --- |
+| `text-hover` | `*:hover { color: @primary-color; }` |
 
 ## Borders
 
