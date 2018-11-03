@@ -14,6 +14,7 @@ ng-alain 认为这些工具类只会运用在内容区域，且秉承 Ant Design
 
 | 名称 | 公式 | 尺寸 | 说明 |
 | ---- | --- | --- | --- |
+| `xs` | $gutter / 2 | 4px | 超小号 |
 | `sm` | $gutter | 8px | 小号 |
 | `md` | $gutter * 2 | 16px | 中号 |
 | `lg` | $gutter * 3 | 24px | 大号 |
@@ -186,6 +187,8 @@ Ant Design 的基础色板共计 120 个颜色，包含 12 个主色以及衍生
 
 | 名称 | 说明 |
 | ---- | --- |
+| `overflow-auto` | `overflow: auto` |
+| `overflow-hidden` | `overflow: hidden` |
 | `fixed-top` | 固定顶部 |
 | `fixed-bottom` | 固定底部 |
 
@@ -197,10 +200,11 @@ Ant Design 是以 `14px` 为基准字号。
 
 | 名称 | 说明 |
 | ---- | --- |
-| `text-tiny` | `12px` |
+| `text-xs` | `12px` |
 | `text-sm` | `14px` |
 | `text-md` | `16px` |
 | `text-lg` | `18px` |
+| `text-xl` | `22px` |
 
 ### 对齐
 

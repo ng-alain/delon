@@ -14,6 +14,7 @@ ng-alain believes that these styles tool only using in the content area. Built o
 
 | Name | Formula | Size | Description |
 | ---- | --- | --- | --- |
+| `xs` | $gutter / 2 | 4px | Smaller |
 | `sm` | $gutter | 8px | Small |
 | `md` | $gutter * 2 | 16px | Medium |
 | `lg` | $gutter * 3 | 24px | Large |
@@ -186,6 +187,8 @@ Clear floats `.clearfix`.
 
 | Name | Description |
 | ---- | --- |
+| `overflow-auto` | `overflow: auto` |
+| `overflow-hidden` | `overflow: hidden` |
 | `fixed-top` | Fixed top |
 | `fixed-bottom` | Fixed bottom |
 
@@ -197,10 +200,11 @@ Ant Design is based on `14px`.
 
 | Name | Description |
 | ---- | --- |
-| `text-tiny` | `12px` |
+| `text-xs` | `12px` |
 | `text-sm` | `14px` |
 | `text-md` | `16px` |
 | `text-lg` | `18px` |
+| `text-xl` | `22px` |
 
 ### Alignment
 

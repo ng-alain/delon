@@ -1,6 +1,7 @@
 // Layout Gutter
 @layout-gutter: 8px;
 
+@xs:    @layout-gutter / 2;
 @sm:    @layout-gutter;
 @md:    @layout-gutter * 2;
 @lg:    @layout-gutter * 3;
@@ -18,6 +19,7 @@
 // spaceing
 @spacings:
     0  0,
+    xs @xs,
     sm @sm,
     md @md,
     lg @lg;
@@ -29,6 +31,9 @@
 @zindex-base:       @zindex-back-top - 1;
 @zindex-fixed:      @zindex-base;
 @zindex:            @zindex-base;
+
+@overflows:     auto, hidden;
+@positions:     static, relative, absolute, fixed, sticky;
 
 // 文本
 @text-xs:       @font-size-base - 2; // 12px
