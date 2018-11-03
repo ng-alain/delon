@@ -138,9 +138,9 @@ function addRunScriptToPackageJson() {
   return (host: Tree, context: SchematicContext) => {
     const json = getPackage(host, 'scripts');
     if (json == null) return host;
-    json.scripts['start'] = `ng serve -o`;
-    json.scripts['build'] = `ng build --prod --build-optimizer`;
-    json.scripts['analyze'] = `ng build --prod --build-optimizer --stats-json`;
+    json.scripts['start'] = `npm run color-less && ng serve -o`;
+    json.scripts['build'] = `npm run color-less && ng build --prod --build-optimizer`;
+    json.scripts['analyze'] = `npm run color-less && ng build --prod --build-optimizer --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `node scripts/color-less.js`;
     overwritePackage(host, json);
