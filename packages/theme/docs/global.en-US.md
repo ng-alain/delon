@@ -13,10 +13,11 @@ title: Global Parameters
 | `@primary-color` | Blue | antd primary color |
 | `@mobile-min` | `768px` | PC of width |
 | `@mobile-max` | `768px` | Mobile of width |
-| `@text-tiny` | `@font-size-base - 2` | Ultra small text |
-| `@text-sm` | `@font-size-base + 0` | Small text |
-| `@text-md` | `@font-size-base + 2` | Medium text |
-| `@text-lg` | `@font-size-base + 4` | Large text |
+| `@text-xs` | `@font-size-base - 2` | Text of xs size |
+| `@text-sm` | `@font-size-base + 0` | Text of sm size |
+| `@text-md` | `@font-size-base + 2` | Text of md size |
+| `@text-lg` | `@font-size-base + 4` | Text of lg size |
+| `@text-xl` | `@font-size-base + 8` | Text of xl size |
 | `@icon-sm` | `@font-size-base * 2` | Small icon |
 | `@icon-md` | `@font-size-base * 4` | Medium icon |
 | `@icon-lg` | `@font-size-base * 6` | Large icon |
