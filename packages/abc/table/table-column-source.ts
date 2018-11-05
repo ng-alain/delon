@@ -71,26 +71,20 @@ export class STColumnSource {
       }
 
       if (item.pop === true) {
-        item._type = 'pop';
-        if (typeof item.popTitle === 'undefined') {
-          item.popTitle = popTitle;
-        }
+        item.popTitle = item.popTitle || popTitle;
+      } else {
+        item.pop = false;
       }
+
       if (item.icon) {
-        item._type = 'icon';
         item.icon = Object.assign(
           {},
           btnIcon,
           typeof item.icon === 'string' ? { type: item.icon } : item.icon,
         );
       }
-      if (item.children && item.children.length > 0) {
-        item._type = 'sub';
-        item.children = this.btnCoerce(item.children);
-      }
-      if (!item._type) {
-        item._type = '';
-      }
+
+      item.children = item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
 
       // i18n
       if (item.i18n && this.i18nSrv) {
