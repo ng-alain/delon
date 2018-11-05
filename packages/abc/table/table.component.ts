@@ -464,6 +464,19 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }, this.rowClickTime);
   }
 
+  /** 移除某行数据 */
+  removeRow(data: STData | STData[]) {
+    if (!Array.isArray(data)) {
+      data = [ data ];
+    }
+
+    (data as STData[]).map(item => this._data.indexOf(item))
+        .filter(pos => pos !== -1)
+        .forEach(pos => this._data.splice(pos, 1));
+
+    this.cd.detectChanges();
+  }
+
   //#endregion
 
   //#region sort

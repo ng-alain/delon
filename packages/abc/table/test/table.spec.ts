@@ -17,7 +17,12 @@ import { of, Observable, Subject } from 'rxjs';
 import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 import { ModalHelper, ALAIN_I18N_TOKEN, DatePipe } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
-import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/theme';
+import {
+  DelonLocaleModule,
+  en_US,
+  zh_CN,
+  DelonLocaleService,
+} from '@delon/theme';
 
 import {
   STColumn,
@@ -98,7 +103,7 @@ describe('abc: table', () => {
       RouterTestingModule.withRoutes([]),
       NgZorroAntdModule.forRoot(),
       STModule.forRoot(),
-      DelonLocaleModule
+      DelonLocaleModule,
     ];
     const providers = [];
     if (other.providers && other.providers.length) {
@@ -144,11 +149,7 @@ describe('abc: table', () => {
               .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
               .then(() => {
                 page
-                  .expectElCount(
-                    '.st__checkall',
-                    1,
-                    'muse be a check all',
-                  )
+                  .expectElCount('.st__checkall', 1, 'muse be a check all')
                   .expectElCount(
                     '.st__body .ant-checkbox-wrapper',
                     PS,
@@ -258,9 +259,7 @@ describe('abc: table', () => {
                   .expectData(1, 'checked', undefined)
                   .click('.st__body .ant-radio-wrapper')
                   .expectData(1, 'checked', true)
-                  .click(
-                    '.st__body tr[data-index="1"] .ant-radio-wrapper',
-                  )
+                  .click('.st__body tr[data-index="1"] .ant-radio-wrapper')
                   .expectData(1, 'checked', false);
                 done();
               });
@@ -434,7 +433,9 @@ describe('abc: table', () => {
             page
               .newColumn([{ title: '', index: 'yn', type: 'yn' }])
               .then(() => {
-                page.expectCell('是', 1, 1, '', true).expectCell('否', 2, 1, '', true);
+                page
+                  .expectCell('是', 1, 1, '', true)
+                  .expectCell('否', 2, 1, '', true);
                 done();
               });
           });
@@ -444,7 +445,9 @@ describe('abc: table', () => {
                 { title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' },
               ])
               .then(() => {
-                page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
+                page
+                  .expectCell('Y', 1, 1, '', true)
+                  .expectCell('N', 2, 1, '', true);
                 done();
               });
           });
@@ -1210,6 +1213,28 @@ describe('abc: table', () => {
         });
       });
     });
+    describe('#removeRow', () => {
+      beforeEach(() => {
+        genModule({ minColumn: true });
+        fixture.detectChanges();
+      });
+      it('shoule be working', done => {
+        fixture.whenStable().then(() => {
+          page.expectCurrentPageTotal(PS);
+          comp.removeRow(comp._data[0]);
+          page.expectCurrentPageTotal(PS - 1);
+          done();
+        });
+      });
+      it('shoule be ingored invalid data', done => {
+        fixture.whenStable().then(() => {
+          page.expectCurrentPageTotal(PS);
+          comp.removeRow([null]);
+          page.expectCurrentPageTotal(PS);
+          done();
+        });
+      });
+    });
   });
 
   describe('[row events]', () => {
@@ -1502,7 +1527,7 @@ describe('abc: table', () => {
       row: number = 1,
       column: number = 1,
       cls?: string,
-      isContain?: boolean
+      isContain?: boolean,
     ): this {
       let cell = this.getCell(row, column);
       if (cls) {
