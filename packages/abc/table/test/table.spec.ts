@@ -1213,24 +1213,24 @@ describe('abc: table', () => {
         });
       });
     });
-    describe('#remove', () => {
+    describe('#removeRow', () => {
       beforeEach(() => {
         genModule({ minColumn: true });
         fixture.detectChanges();
       });
       it('shoule be working', done => {
         fixture.whenStable().then(() => {
-          expect(comp._data.length).toBe(PS);
-          comp.remove(comp._data[0]);
-          expect(comp._data.length).toBe(PS - 1);
+          page.expectCurrentPageTotal(PS);
+          comp.removeRow(comp._data[0]);
+          page.expectCurrentPageTotal(PS - 1);
           done();
         });
       });
       it('shoule be ingored invalid data', done => {
         fixture.whenStable().then(() => {
-          expect(comp._data.length).toBe(PS);
-          comp.remove(null);
-          expect(comp._data.length).toBe(PS);
+          page.expectCurrentPageTotal(PS);
+          comp.removeRow([null]);
+          page.expectCurrentPageTotal(PS);
           done();
         });
       });
