@@ -6,7 +6,7 @@ title: Style Tools
 
 ng-alain builds a set of style tools for size, spacing, color, and more based on Ant Design.
 
-> Install [IntelliSense for CSS class names in HTML](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion) plugin in VSCode for intellisense these class names.
+> Install [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode) plugin in VSCode for intellisense these class names.
 
 ## Spacing
 

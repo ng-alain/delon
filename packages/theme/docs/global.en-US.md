@@ -4,6 +4,13 @@ order: 1
 title: Global Parameters
 ---
 
+**Optimization:** All variables with the `-enabled` suffix allow you to [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) set to `false`, which can reduce css file size.
+
+```less
+// I don't need masonry style
+@masonry-enabled: false
+```
+
 ## Public
 
 | Name | Default | Description |

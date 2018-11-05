@@ -4,6 +4,13 @@ order: 1
 title: 全局参数
 ---
 
+**优化：** 所有 `-enabled` 后缀的变量，允许你在 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) 中设置为 `false`，可以有效减少 css 文件大小。
+
+```less
+// 不需要 masonry 样式
+@masonry-enabled: false
+```
+
 ## 公共类
 
 | 名称 | 默认值 | 功能 |

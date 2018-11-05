@@ -6,7 +6,7 @@ title: 样式工具类
 
 ng-alain 在 Ant Design 的基础上生产一套尺寸、间距、颜色等工具类。
 
-> 在 VSCode 安装 [IntelliSense for CSS class names in HTML](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion) 插件，可以对所有工具集样式名称的智能提醒。
+> 在 VSCode 安装 [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode) 插件，可以对所有工具集样式名称的智能提醒。
 
 ## 间距
 

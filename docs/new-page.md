@@ -76,7 +76,7 @@ ng g ng-alain:view view -m=sys -t=log
 
 ng-alain 内置了大量的工具集样式（[API](/theme/tools)），安装以下插件可以直接在HTML模板里直接访问到它们。
 
-- [IntelliSense for CSS class names in HTML](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion)
+- [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
 
 ### 其它
 

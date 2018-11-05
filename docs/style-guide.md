@@ -76,7 +76,6 @@ ng-alain 使用 [Prettier](https://prettier.io/) 来优化代码风格，并且�
 - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 - [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis)
-- [IntelliSense for CSS class names in HTML](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion)
 
 > 可以通过配置 `.vscode/settings.json` 的 `formatOnSave` 在文件保存时自动修复代码风格。
 
