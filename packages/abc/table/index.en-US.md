@@ -269,8 +269,8 @@ Property | Description | Type | Default
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
-`[text]` | Text of button | `string` | -
-`[icon]` | Icon of button | `string | STIcon` | -
+`[text]` | Text of button, coexist with icon | `string` | -
+`[icon]` | Icon of button, coexist with text | `string | STIcon` | -
 `[i18n]` | I18n key of button | `string` | -
 `[format]` | Format value of button text | `(record: any, btn: STColumnButton) => string` | -
 `[type]` | Type of button | `none,del,modal,static,drawer,link` | -
