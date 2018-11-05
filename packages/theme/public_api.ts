@@ -18,6 +18,8 @@ export { DatePipe } from './src/pipes/date/date.pipe';
 export { CNCurrencyPipe } from './src/pipes/currency/cn-currency.pipe';
 export { KeysPipe } from './src/pipes/keys/keys.pipe';
 export { YNPipe } from './src/pipes/yn/yn.pipe';
+export { HTMLPipe } from './src/pipes/safe/html.pipe';
+export { URLPipe } from './src/pipes/safe/url.pipe';
 export { AlainThemeConfig } from './src/theme.config';
 export { AlainThemeModule } from './src/theme.module';
 export { VERSION } from './src/version';
