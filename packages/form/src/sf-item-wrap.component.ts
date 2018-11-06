@@ -7,8 +7,8 @@ import { SFUISchemaItem } from './schema/ui';
   template: `
   <nz-form-item [style.width.px]="ui.width">
     <nz-col *ngIf="showTitle" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
-      <label *ngIf="schema.title" [attr.for]="id" [class.ant-form-item-required]="ui._required">
-        {{ schema.title }}
+      <label *ngIf="t" [attr.for]="id" [class.ant-form-item-required]="ui._required">
+        {{ t }}
         <span class="optional">
           {{ ui.optional }}
           <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
@@ -33,4 +33,9 @@ export class SFItemWrapComponent {
   @Input() showError: boolean;
   @Input() error: string;
   @Input() showTitle: boolean;
+  @Input() title: string = null;
+
+  get t() {
+    return this.title === null ? this.schema.title : this.title;
+  }
 }

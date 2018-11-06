@@ -2,10 +2,11 @@
   <label *ngIf="ui.checkAll" nz-checkbox class="mr-sm" [(ngModel)]="allChecked" [nzIndeterminate]="indeterminate"
     (click)="onAllChecked($event)">{{ ui.checkAllText || l.checkAllText }}</label>
 </ng-template>
-<sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="true">
+<sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError"
+  [error]="error" [showTitle]="true" [title]="labelTitle">
   <ng-container *ngIf="data.length === 0">
     <label nz-checkbox [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="_setValue($event)">
-      <span [innerHTML]="title"></span>
+      {{schema.title}}
       <span class="optional">
         {{ ui.optional }}
         <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">

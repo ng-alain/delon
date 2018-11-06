@@ -13,7 +13,7 @@ export class CheckboxWidget extends ControlWidget {
   allChecked = false;
   indeterminate = false;
   grid_span: number;
-  title = ``;
+  labelTitle = ``;
 
   reset(value: any) {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
@@ -21,11 +21,7 @@ export class CheckboxWidget extends ControlWidget {
         this.data = list;
         this.allChecked = false;
         this.indeterminate = false;
-        this.title = this.schema.title;
-
-        if (list.length === 0) {
-          this.schema.title = '';
-        }
+        this.labelTitle = list.length === 0 ? '' : this.schema.title;
         this.grid_span = this.ui.span && this.ui.span > 0 ? this.ui.span : 0;
 
         this.updateAllChecked();
