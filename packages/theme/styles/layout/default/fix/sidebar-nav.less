@@ -1,5 +1,5 @@
 // Main Nav
-@sidebar-nav-prefix-cls: sidebar-nav;
+@sidebar-nav-prefix-cls:      sidebar-nav;
 
 .@{sidebar-nav-prefix-cls} {
   display: block;
@@ -12,13 +12,14 @@
     transition: border-left-color 0.4s ease;
     &-link {
       color: @alain-default-aside-nav-text-color;
-      text-decoration: none;
+      text-decoration: none !important;
       padding: @alain-default-aside-nav-padding-top-bottom @layout-gutter * 2;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       position: relative;
-      display: block;
+      display: flex;
+      align-items: center;
       user-select: none;
       &:hover {
         color: @alain-default-aside-nav-text-hover-color;
@@ -29,6 +30,10 @@
       display: inline-block;
       margin-right: @layout-gutter;
       transition: font-size 0.15s @ease-out, margin 0.3s @ease-in-out;
+    }
+    &-img {
+      height: @alain-default-aside-nav-img-wh;
+      width: @alain-default-aside-nav-img-wh;
     }
     &-text {
       transition: opacity 0.3s @ease-in-out, width 0.3s @ease-in-out;

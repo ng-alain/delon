@@ -24,6 +24,8 @@ title: 默认布局
 | `@alain-default-aside-scrollbar-track-color`   | `transparent`                  | 侧边栏滚动条的轨道颜色   |
 | `@alain-default-aside-scrollbar-thumb-color`   | `transparent`                  | 侧边栏滚动条小方块颜色   |
 | `@alain-default-aside-nav-fs`                  | `14px`                         | 侧边栏菜单字号           |
+| `@alain-default-aside-nav-icon-width`          | `14px`                         | 侧边栏菜单 ICON 宽度     |
+| `@alain-default-aside-nav-img-wh`              | `14px`                         | 侧边栏菜单图像宽高       |
 | `@alain-default-aside-nav-padding-top-bottom`  | `@layout-gutter`               | 侧边栏菜单项上下内边距   |
 | `@alain-default-aside-nav-item-height`         | `38px`                         | 侧边栏菜单项高度         |
 | `@alain-default-aside-nav-text-color`          | `rgba(0, 0, 0, 0.65)`          | 侧边栏菜单文本颜色       |

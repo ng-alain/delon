@@ -9,7 +9,12 @@ import { By } from '@angular/platform-browser';
 import { RouterModule, Router } from '@angular/router';
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 
-import { AlainThemeModule, MenuService, SettingsService } from '@delon/theme';
+import {
+  AlainThemeModule,
+  MenuService,
+  SettingsService,
+  MenuIcon,
+} from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
 import { SidebarNavModule } from './sidebar-nav.module';
@@ -29,7 +34,11 @@ const MOCKMENUS = <Nav[]>[
           { text: 'v1', link: '/v1' },
           { text: 'v2', link: '#/v2', i18n: 'v2-i18n' },
           { text: 'v3' },
-          { text: 'externalLink', externalLink: '//ng-alain.com', target: '_blank' },
+          {
+            text: 'externalLink',
+            externalLink: '//ng-alain.com',
+            target: '_blank',
+          },
         ],
       },
     ],
@@ -181,6 +190,50 @@ describe('abc: sidebar-nav', () => {
     });
   });
 
+  describe('#icon', () => {
+    function updateIcon(icon: string | MenuIcon) {
+      createComp();
+
+      menuSrv.add(<Nav[]>[
+        {
+          text: '',
+          group: true,
+          children: [
+            {
+              text: '',
+              icon,
+            },
+          ],
+        },
+      ]);
+
+      fixture.detectChanges();
+    }
+    describe('with icon', () => {
+      it('when is string and includes [anticon-]', () => {
+        updateIcon('anticon-edit');
+        const el = page.getEl('.sidebar-nav__item-icon') as HTMLElement;
+        expect(el.classList).toContain('anticon-edit');
+      });
+      it('when is string and http prefix', () => {
+        updateIcon('http://ng-alain/1.jpg');
+        page.checkCount('.sidebar-nav__item-img', 1);
+      });
+      it('when is class string', () => {
+        updateIcon('demo-class');
+        page.checkCount('.demo-class', 1);
+      });
+    });
+    it('with className', () => {
+      updateIcon({ type: 'class', value: 'demo-class' });
+      page.checkCount('.demo-class', 1);
+    });
+    it('with img', () => {
+      updateIcon({ type: 'img', value: '1.jpg' });
+      page.checkCount('.sidebar-nav__item-img', 1);
+    });
+  });
+
   describe('[collapsed]', () => {
     describe('#default', () => {
       beforeEach(() => {
@@ -197,8 +250,14 @@ describe('abc: sidebar-nav', () => {
         page.showSubMenu();
       });
       it('should be displayed full submenu', () => {
-        const clientHeight = spyOnProperty(doc.documentElement, 'clientHeight').and.returnValue(0);
-        spyOnProperty(doc.querySelector('body'), 'clientHeight').and.returnValue(0);
+        const clientHeight = spyOnProperty(
+          doc.documentElement,
+          'clientHeight',
+        ).and.returnValue(0);
+        spyOnProperty(
+          doc.querySelector('body'),
+          'clientHeight',
+        ).and.returnValue(0);
         expect(clientHeight).not.toHaveBeenCalled();
         page.showSubMenu();
         expect(clientHeight).toHaveBeenCalled();
@@ -240,9 +299,9 @@ describe('abc: sidebar-nav', () => {
         setSrv.layout.collapsed = true;
         fixture.detectChanges();
         page.showSubMenu();
-        page.getEl<HTMLElement>(floatingShowCls, true).dispatchEvent(
-          new Event('mouseleave'),
-        );
+        page
+          .getEl<HTMLElement>(floatingShowCls, true)
+          .dispatchEvent(new Event('mouseleave'));
         fixture.detectChanges();
         expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
       });
@@ -288,65 +347,56 @@ describe('abc: sidebar-nav', () => {
   });
 
   describe('[underPad]', () => {
-    it(
-      'should be auto collapsed when less than pad',
-      fakeAsync(() => {
-        // create test component
-        TestBed.overrideTemplate(
-          TestComponent,
-          `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
-        );
-        const defaultCollapsed = false;
-        createComp(false, () => {
-          spyOnProperty(window, 'innerWidth').and.returnValue(767);
-          setSrv.layout.collapsed = defaultCollapsed;
-          fixture.detectChanges();
-        });
-        router.navigateByUrl('/');
-        fixture.detectChanges();
-        tick(20);
-        expect(setSrv.layout.collapsed).toBe(!defaultCollapsed);
-      }),
-    );
-    it(
-      `should be won't collapsed when more than pad`,
-      fakeAsync(() => {
-        // create test component
-        TestBed.overrideTemplate(
-          TestComponent,
-          `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
-        );
-        const defaultCollapsed = false;
-        createComp(false, () => {
-          spyOnProperty(window, 'innerWidth').and.returnValue(769);
-          setSrv.layout.collapsed = defaultCollapsed;
-          fixture.detectChanges();
-        });
-        router.navigateByUrl('/');
-        fixture.detectChanges();
-        tick(20);
-        expect(setSrv.layout.collapsed).toBe(defaultCollapsed);
-      }),
-    );
-    it(
-      'should be auto expaned when less than pad trigger click',
-      fakeAsync(() => {
-        // create test component
-        TestBed.overrideTemplate(
-          TestComponent,
-          `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
-        );
-        createComp();
-        setSrv.layout.collapsed = true;
-        fixture.detectChanges();
+    it('should be auto collapsed when less than pad', fakeAsync(() => {
+      // create test component
+      TestBed.overrideTemplate(
+        TestComponent,
+        `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
+      );
+      const defaultCollapsed = false;
+      createComp(false, () => {
         spyOnProperty(window, 'innerWidth').and.returnValue(767);
-        expect(setSrv.layout.collapsed).toBe(true);
-        page.getEl<HTMLElement>('.sidebar-nav').click();
+        setSrv.layout.collapsed = defaultCollapsed;
         fixture.detectChanges();
-        tick(20);
-        expect(setSrv.layout.collapsed).toBe(false);
-      }),
-    );
+      });
+      router.navigateByUrl('/');
+      fixture.detectChanges();
+      tick(20);
+      expect(setSrv.layout.collapsed).toBe(!defaultCollapsed);
+    }));
+    it(`should be won't collapsed when more than pad`, fakeAsync(() => {
+      // create test component
+      TestBed.overrideTemplate(
+        TestComponent,
+        `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
+      );
+      const defaultCollapsed = false;
+      createComp(false, () => {
+        spyOnProperty(window, 'innerWidth').and.returnValue(769);
+        setSrv.layout.collapsed = defaultCollapsed;
+        fixture.detectChanges();
+      });
+      router.navigateByUrl('/');
+      fixture.detectChanges();
+      tick(20);
+      expect(setSrv.layout.collapsed).toBe(defaultCollapsed);
+    }));
+    it('should be auto expaned when less than pad trigger click', fakeAsync(() => {
+      // create test component
+      TestBed.overrideTemplate(
+        TestComponent,
+        `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
+      );
+      createComp();
+      setSrv.layout.collapsed = true;
+      fixture.detectChanges();
+      spyOnProperty(window, 'innerWidth').and.returnValue(767);
+      expect(setSrv.layout.collapsed).toBe(true);
+      page.getEl<HTMLElement>('.sidebar-nav').click();
+      fixture.detectChanges();
+      tick(20);
+      expect(setSrv.layout.collapsed).toBe(false);
+    }));
   });
 
   class PageObject {
@@ -399,7 +449,8 @@ describe('abc: sidebar-nav', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: SidebarNavComponent;
+  @ViewChild('comp')
+  comp: SidebarNavComponent;
   autoCloseUnderPad = false;
   select() {}
 }

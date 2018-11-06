@@ -24,6 +24,8 @@ The default layout all parameters are prefixed with `@alain-default-`.
 | `@alain-default-aside-scrollbar-track-color` | `transparent` | Scrollbar track color of aside |
 | `@alain-default-aside-scrollbar-thumb-color` | `transparent` | Scrollbar thumb color of aside |
 | `@alain-default-aside-nav-fs` | `14px` | Font size of nav name |
+| `@alain-default-aside-nav-icon-width`          | `14px`                         | Width of nav icon     |
+| `@alain-default-aside-nav-img-wh`              | `14px`                         | Width & height of nav image |
 | `@alain-default-aside-nav-padding-top-bottom` | `@layout-gutter` | Vertical padding of nav |
 | `@alain-default-aside-nav-item-height` | `38px` | Item height of nav |
 | `@alain-default-aside-nav-text-color` | `rgba(0, 0, 0, 0.65)` | Nav text color |
