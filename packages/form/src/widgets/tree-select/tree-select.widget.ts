@@ -87,6 +87,7 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
     ui.expandChange(e)
       .pipe(map((list: SFSchemaEnum[]) => this.tranData(list)))
       .subscribe(res => {
+        e.node.clearChildren();
         e.node.addChildren(res);
         this.dc();
       });
