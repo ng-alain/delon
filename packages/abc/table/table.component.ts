@@ -676,6 +676,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return btn.text;
   }
 
+  _validBtns(item: STData, col: STColumn): STColumnButton[] {
+    return col.buttons.filter(btn => btn.iif(item, btn, col));
+  }
+
   //#endregion
 
   //#region export

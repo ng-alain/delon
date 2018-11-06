@@ -259,8 +259,8 @@ class TestComponent {
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[text]` | 文本 | `string` | -
-`[icon]` | 图标 | `string | STIcon` | -
+`[text]` | 文本与图标共存 | `string` | -
+`[icon]` | 图标与文本共存 | `string | STIcon` | -
 `[i18n]` | 文本i18n | `string` | -
 `[format]` | 格式化文本 | `(record: any, btn: STColumnButton) => string` | -
 `[type]` | 按钮类型 | `none,del,modal,static,drawer,link` | -
