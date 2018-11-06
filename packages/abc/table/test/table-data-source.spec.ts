@@ -535,6 +535,24 @@ describe('abc: table: data-souce', () => {
           done();
         });
       });
+      describe('via no', () => {
+        it('with start 1', (done: () => void) => {
+          options.columns[0].type = 'no';
+          options.columns[0].noIndex = 1;
+          srv.process(options).then(res => {
+            expect(res.list[0]._values[0]).toBe(1);
+            done();
+          });
+        });
+        it('with start 0', (done: () => void) => {
+          options.columns[0].type = 'no';
+          options.columns[0].noIndex = 0;
+          srv.process(options).then(res => {
+            expect(res.list[0]._values[0]).toBe(0);
+            done();
+          });
+        });
+      });
       describe('via img', () => {
         it('with value', (done: () => void) => {
           options.columns[0].type = 'img';

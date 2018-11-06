@@ -137,8 +137,8 @@ export class STDataSource {
       // data accelerator
       data$ = data$.pipe(
         map(result => {
-          for (const i of result) {
-            i._values = columns.map(c => this.get(i, c));
+          for (let i = 0, len = result.length; i < len; i++) {
+            result[i]._values = columns.map(c => this.get(result[i], c, i));
           }
           return result;
         }),
@@ -158,7 +158,7 @@ export class STDataSource {
     });
   }
 
-  private get(item: any, col: STColumn) {
+  private get(item: any, col: STColumn, idx: number) {
     if (col.format) {
       const formatRes = col.format(item, col) as string;
       if (~formatRes.indexOf('<')) {
@@ -171,6 +171,9 @@ export class STDataSource {
 
     let ret = value;
     switch (col.type) {
+      case 'no':
+        ret = col.noIndex + idx;
+        break;
       case 'img':
         ret = value ? `<img src="${value}" class="img">` : '';
         break;

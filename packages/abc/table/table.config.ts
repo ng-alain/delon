@@ -102,4 +102,9 @@ export class STConfig {
     theme: 'outline',
     spin: false,
   };
+  /**
+   * 行号索引，默认：`1`
+   * - 计算规则为：`index + noIndex`
+   */
+  noIndex? = 1;
 }

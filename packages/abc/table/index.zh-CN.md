@@ -200,7 +200,7 @@ class TestComponent {
 ----|------|-----|------
 `[title]` | 列名 | `string` | -
 `[i18n]` | 列名i18n | `string` | -
-`[type]` | `checkbox` 多选；`radio` 单选；`link` 链接，可触发 `click`；`img` 图像且居中；`number` 数字且居右；`currency` 货币且居右；`date` 日期格式且居中；`badge` [徽标](https://ng.ant.design/components/badge/zh)；`tag` [标签](https://ng.ant.design/components/tag/zh)；`yn` 将`boolean`类型徽章化 [document](/theme/yn) | `string` | -
+`[type]` | `no` 行号<br>`checkbox` 多选<br>`radio` 单选<br>`link` 链接，可触发 `click`<br>`img` 图像且居中<br>`number` 数字且居右<br>`currency` 货币且居右<br>`date` 日期格式且居中<br>`badge` [徽标](https://ng.ant.design/components/badge/zh)<br>`tag` [标签](https://ng.ant.design/components/tag/zh)<br>`yn` 将`boolean`类型徽章化 [document](/theme/yn) | `string` | -
 `[index]` | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | -
 `[render]` | 自定义渲染ID | `string` | -
 `[renderTitle]` | 标题自定义渲染ID | `string` | -
@@ -222,6 +222,7 @@ class TestComponent {
 `[click]` | 链接回调 | `(record: any, instance?: STComponent) => void` | -
 `[badge]` | 徽标配置项 | `STColumnBadge` | -
 `[tag]` | 徽标配置项 | `STColumnTag` | -
+`[noIndex]` | 行号索引开始值 | `STColumnTag` | `1`
 
 ### STColumnSort
 
