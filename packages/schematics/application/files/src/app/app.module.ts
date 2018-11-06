@@ -66,7 +66,7 @@ const INTERCEPTOR_PROVIDES = [
 // #endregion
 
 // #region global third module
-const GLOBAL_THIRD_MDOULES = [
+const GLOBAL_THIRD_MODULES = [
 ];
 // #endregion
 
@@ -108,7 +108,7 @@ import { LayoutModule } from './layout/layout.module';
     RoutesModule,<% if (i18n) { %>
     ...I18NSERVICE_MODULES,<% } %><% if (form) { %>
     ...FORM_MODULES,<% } %>
-    ...GLOBAL_THIRD_MDOULES
+    ...GLOBAL_THIRD_MODULES
   ],
   providers: [
     ...LANG_PROVIDES,
