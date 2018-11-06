@@ -6,7 +6,7 @@ title: Style Tools
 
 ng-alain builds a set of style tools for size, spacing, color, and more based on Ant Design.
 
-> Install [IntelliSense for CSS class names in HTML](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion) plugin in VSCode for intellisense these class names.
+> Install [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode) plugin in VSCode for intellisense these class names.
 
 ## Spacing
 
@@ -14,6 +14,7 @@ ng-alain believes that these styles tool only using in the content area. Built o
 
 | Name | Formula | Size | Description |
 | ---- | --- | --- | --- |
+| `xs` | $gutter / 2 | 4px | Smaller |
 | `sm` | $gutter | 8px | Small |
 | `md` | $gutter * 2 | 16px | Medium |
 | `lg` | $gutter * 3 | 24px | Large |
@@ -186,6 +187,8 @@ Clear floats `.clearfix`.
 
 | Name | Description |
 | ---- | --- |
+| `overflow-auto` | `overflow: auto` |
+| `overflow-hidden` | `overflow: hidden` |
 | `fixed-top` | Fixed top |
 | `fixed-bottom` | Fixed bottom |
 
@@ -197,9 +200,11 @@ Ant Design is based on `14px`.
 
 | Name | Description |
 | ---- | --- |
+| `text-xs` | `12px` |
 | `text-sm` | `14px` |
 | `text-md` | `16px` |
 | `text-lg` | `18px` |
+| `text-xl` | `22px` |
 
 ### Alignment
 
@@ -234,6 +239,12 @@ Ant Design is based on `14px`.
 | `font-weight-normal` | `font-weight: normal` |
 | `font-weight-bold` | `font-weight: 700` |
 | `font-italic` | `font-style: italic` |
+
+### Other
+
+| Name | Description |
+| ---- | --- |
+| `text-hover` | `*:hover { color: @primary-color; }` |
 
 ## Borders
 

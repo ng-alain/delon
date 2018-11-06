@@ -6,7 +6,7 @@ title: 样式工具类
 
 ng-alain 在 Ant Design 的基础上生产一套尺寸、间距、颜色等工具类。
 
-> 在 VSCode 安装 [IntelliSense for CSS class names in HTML](https://marketplace.visualstudio.com/items?itemName=Zignd.html-css-class-completion) 插件，可以对所有工具集样式名称的智能提醒。
+> 在 VSCode 安装 [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode) 插件，可以对所有工具集样式名称的智能提醒。
 
 ## 间距
 
@@ -14,6 +14,7 @@ ng-alain 认为这些工具类只会运用在内容区域，且秉承 Ant Design
 
 | 名称 | 公式 | 尺寸 | 说明 |
 | ---- | --- | --- | --- |
+| `xs` | $gutter / 2 | 4px | 超小号 |
 | `sm` | $gutter | 8px | 小号 |
 | `md` | $gutter * 2 | 16px | 中号 |
 | `lg` | $gutter * 3 | 24px | 大号 |
@@ -186,6 +187,8 @@ Ant Design 的基础色板共计 120 个颜色，包含 12 个主色以及衍生
 
 | 名称 | 说明 |
 | ---- | --- |
+| `overflow-auto` | `overflow: auto` |
+| `overflow-hidden` | `overflow: hidden` |
 | `fixed-top` | 固定顶部 |
 | `fixed-bottom` | 固定底部 |
 
@@ -197,9 +200,11 @@ Ant Design 是以 `14px` 为基准字号。
 
 | 名称 | 说明 |
 | ---- | --- |
+| `text-xs` | `12px` |
 | `text-sm` | `14px` |
 | `text-md` | `16px` |
 | `text-lg` | `18px` |
+| `text-xl` | `22px` |
 
 ### 对齐
 
@@ -234,6 +239,12 @@ Ant Design 是以 `14px` 为基准字号。
 | `font-weight-normal` | `font-weight: normal` |
 | `font-weight-bold` | `font-weight: 700` |
 | `font-italic` | `font-style: italic` |
+
+### Other
+
+| 名称 | 说明 |
+| ---- | --- |
+| `text-hover` | `*:hover { color: @primary-color; }` |
 
 ## Borders
 

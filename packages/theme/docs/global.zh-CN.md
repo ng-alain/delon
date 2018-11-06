@@ -4,6 +4,13 @@ order: 1
 title: 全局参数
 ---
 
+**优化：** 所有 `-enabled` 后缀的变量，允许你在 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) 中设置为 `false`，可以有效减少 css 文件大小。
+
+```less
+// 不需要 masonry 样式
+@masonry-enabled: false
+```
+
 ## 公共类
 
 | 名称 | 默认值 | 功能 |
@@ -13,9 +20,11 @@ title: 全局参数
 | `@primary-color` | 蓝色 | antd 主色 |
 | `@mobile-min` | `768px` | PC端 |
 | `@mobile-max` | `768px` | 移动端 |
-| `@text-sm` | `@font-size-base + 0` | 小号文本 |
-| `@text-md` | `@font-size-base + 2` | 中号文本 |
-| `@text-lg` | `@font-size-base + 4` | 大号文本 |
+| `@text-xs` | `@font-size-base - 2` | xs 文本大小 |
+| `@text-sm` | `@font-size-base + 0` | sm 文本大小 |
+| `@text-md` | `@font-size-base + 2` | md 文本大小 |
+| `@text-lg` | `@font-size-base + 4` | lg 文本大小 |
+| `@text-xl` | `@font-size-base + 8` | xl 文本大小 |
 | `@icon-sm` | `@font-size-base * 2` | 小号图标 |
 | `@icon-md` | `@font-size-base * 4` | 中号图标 |
 | `@icon-lg` | `@font-size-base * 6` | 大号图标 |
@@ -53,6 +62,8 @@ title: 全局参数
 | 名称 | 默认值 | 功能 |
 | --- | --- | --- |
 | `@preserve-white-spaces-enabled` | `true` | 开启 `preserveWhitespaces` |
+| `@preserve-sf-and-st-spaces` | `16px` | `sf` 与 `st` 间间距 |
+| `@preserve-buttons-spaces` | 按钮间间距（包括：button、button-group、popconfirm） |
 | `@router-animation-duration` | `antFadeIn` | 路由切换动画 |
 | `@router-animation-duration` | `1s` | 路由切换动画时长 |
 
@@ -83,3 +94,13 @@ title: 全局参数
 | `@nz-table-rep-column-name-text-align` | `right` | 表格响应式：列名文本对齐方式 |
 | `@nz-table-rep-column-name-padding-right` | `right` | 表格响应式：列名右间距 |
 | `@nz-table-rep-column-name-color` | `rgba(0, 0, 0, 0.5)` | 表格响应式：列名颜色 |
+
+## 小部件
+
+| 名称 | 默认值 | 功能 |
+| --- | --- | --- |
+| `@badge-enabled` | `true` | bootstrap徽章 |
+| `@hafl-enabled` | `true` | 半图 |
+| `@abs-enabled` | `true` | 中心元素 |
+| `@masonry-enabled` | `true` | CSS瀑布流列 |
+| `@setting-drawer-enabled` | `true` | 主题设置 |

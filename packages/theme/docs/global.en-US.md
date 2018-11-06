@@ -4,6 +4,13 @@ order: 1
 title: Global Parameters
 ---
 
+**Optimization:** All variables with the `-enabled` suffix allow you to [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) set to `false`, which can reduce css file size.
+
+```less
+// I don't need masonry style
+@masonry-enabled: false
+```
+
 ## Public
 
 | Name | Default | Description |
@@ -13,9 +20,11 @@ title: Global Parameters
 | `@primary-color` | Blue | antd primary color |
 | `@mobile-min` | `768px` | PC of width |
 | `@mobile-max` | `768px` | Mobile of width |
-| `@text-sm` | `@font-size-base + 0` | Small text |
-| `@text-md` | `@font-size-base + 2` | Medium text |
-| `@text-lg` | `@font-size-base + 4` | Large text |
+| `@text-xs` | `@font-size-base - 2` | Text of xs size |
+| `@text-sm` | `@font-size-base + 0` | Text of sm size |
+| `@text-md` | `@font-size-base + 2` | Text of md size |
+| `@text-lg` | `@font-size-base + 4` | Text of lg size |
+| `@text-xl` | `@font-size-base + 8` | Text of xl size |
 | `@icon-sm` | `@font-size-base * 2` | Small icon |
 | `@icon-md` | `@font-size-base * 4` | Medium icon |
 | `@icon-lg` | `@font-size-base * 6` | Large icon |
@@ -53,6 +62,8 @@ title: Global Parameters
 | Name | Default | Description |
 | --- | --- | --- |
 | `@preserve-white-spaces-enabled` | `true` | Enabled `preserveWhitespaces` |
+| `@preserve-sf-and-st-spaces` | `16px` | Spacing between `sf` and `st` |
+| `@preserve-buttons-spaces` | Spacing between `button` and `button`(incluldes: `button`,`button-group`,`popconfirm`) |
 | `@router-animation-duration` | `antFadeIn` | Route switching animation name |
 | `@router-animation-duration` | `1s` | Animation duration |
 
@@ -83,3 +94,13 @@ By `nz-table`。
 | `@nz-table-rep-column-name-text-align` | `right` | Table responsive: Column name text alignment |
 | `@nz-table-rep-column-name-padding-right` | `right` | Table responsive: Column name right spacing |
 | `@nz-table-rep-column-name-color` | `rgba(0, 0, 0, 0.5)` | Table responsive: Column name color |
+
+## Widgets
+
+| Name | Default | Description |
+| --- | --- | --- |
+| `@badge-enabled` | `true` | Whether bootstrap badge |
+| `@hafl-enabled` | `true` | Whether hafl image |
+| `@abs-enabled` | `true` | Whether abs element|
+| `@masonry-enabled` | `true` | Whether css masonry |
+| `@setting-drawer-enabled` | `true` | Whether setting drawer css |
