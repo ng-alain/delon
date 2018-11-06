@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-支持十种不同列类型：多选、单选、徽标、标签、图片、数字、货币、日期、布尔徽章。也可以使用自定义列完成更复杂渲染。
+支持十种不同列类型：行号、多选、单选、徽标、标签、图片、数字、货币、日期、布尔徽章。也可以使用自定义列完成更复杂渲染。
 
 ## en-US
 
-Support for ten different column types: checkbox, radio, badge, tag, image, number, currency, date, boolean badge.
+Support for ten different column types: no, checkbox, radio, badge, tag, image, number, currency, date, boolean badge.
 
 ```ts
 import { Component } from '@angular/core';
@@ -43,9 +43,9 @@ const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 
 export class DemoComponent {
   users: any[] = [];
   columns: STColumn[] = [
-    { title: '编号', index: 'id' },
+    { title: '行号', type: 'no' },
     { title: '姓名', index: 'name' },
-    { title: '年龄', index: 'age' },
+    { title: '年龄', index: 'age', type: 'number' },
     { title: 'tag', index: 'tag', type: 'tag', tag: TAG },
     { title: 'badge', index: 'badge', type: 'badge', badge: BADGE },
     { title: 'yn', index: 'yn', type: 'yn' },

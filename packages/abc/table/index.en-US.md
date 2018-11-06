@@ -200,7 +200,7 @@ Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[title]` | Name of this column | `string` | -
 `[i18n]` | I18n key of this column | `string` | -
-`[type]` | `checkbox` selection, `radio` selection, `link` Link that triggers `click`, `img` Align to the center, `number` Align to the right, `currency` Align to the right, `date` Align to the center, `badge` [Nz-Badge](https://ng.ant.design/components/badge/en), `tag` [Nz-Tag](https://ng.ant.design/components/tag/en), `yn` Make boolean as [badge](/theme/yn) | `string` | -
+`[type]` | `no` Rows number<br>`checkbox` selection<br>`radio` selection<br>`link` Link that triggers `click`<br>`img` Align to the center<br>`number` Align to the right<br>`currency` Align to the right<br>`date` Align to the center<br>`badge` [Nz-Badge](https://ng.ant.design/components/badge/en)<br>`tag` [Nz-Tag](https://ng.ant.design/components/tag/en)<br>`yn` Make boolean as [badge](/theme/yn) | `string` | -
 `[index]` | Display field of the data record, could be set like `a.b.c` | `string, string[]` | -
 `[render]` | Custom render template ID | `string` | -
 `[renderTitle]` | Title custom render template ID | `string` | -

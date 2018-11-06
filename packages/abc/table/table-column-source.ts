@@ -227,6 +227,7 @@ export class STColumnSource {
     if (!list || list.length === 0)
       throw new Error(`[st]: the columns property muse be define!`);
 
+    const { noIndex } = this.cog;
     let checkboxCount = 0;
     let radioCount = 0;
     const columns: STColumn[] = [];
@@ -245,6 +246,10 @@ export class STColumnSource {
       // title
       if (item.i18n && this.i18nSrv) {
         item.title = this.i18nSrv.fanyi(item.i18n);
+      }
+      // no
+      if (item.type === 'no') {
+        item.noIndex = item.noIndex == null ? noIndex : item.noIndex;
       }
       // checkbox
       if (item.selections == null) {

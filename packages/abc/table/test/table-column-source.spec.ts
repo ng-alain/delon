@@ -68,6 +68,22 @@ describe('abc: table: column-souce', () => {
       });
     });
     describe('[type]', () => {
+      describe(`with no`, () => {
+        it('should be working', () => {
+          const res = srv.process([
+            { title: '', type: 'no' },
+          ]);
+          expect(res[0].type).toBe('no');
+          expect(res[0].noIndex).toBe(1);
+        });
+        it('should be start zero', () => {
+          const res = srv.process([
+            { title: '', type: 'no', noIndex: 0 },
+          ]);
+          expect(res[0].type).toBe('no');
+          expect(res[0].noIndex).toBe(0);
+        });
+      });
       describe(`with checkbox`, () => {
         it('should be keep an empty list', () => {
           const res = srv.process([
