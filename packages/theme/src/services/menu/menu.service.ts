@@ -94,6 +94,9 @@ export class MenuService implements OnDestroy {
         }
         item.icon = { type, value } as any;
       }
+      if (item.icon != null) {
+        item.icon = Object.assign({ theme: 'outline', spin: false }, item.icon);
+      }
 
       // shortcut
       if (parent && item.shortcut === true && parent.shortcutRoot !== true)

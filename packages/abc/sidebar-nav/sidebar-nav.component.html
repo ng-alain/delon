@@ -1,7 +1,7 @@
 <ng-template #icon let-i>
   <ng-container *ngIf="i" [ngSwitch]="i.type">
-    <i *ngSwitchCase="'icon'" nz-icon [type]="i.value" class="sidebar-nav__item-icon"></i>
-    <img *ngSwitchCase="'img'" src="{{ i.value }}" class="sidebar-nav__item-icon">
+    <i *ngSwitchCase="'icon'" class="sidebar-nav__item-icon" nz-icon [type]="i.value" [theme]="i.theme" [spin]="i.spin" [twoToneColor]="i.twoToneColor" [iconfont]="i.iconfont"></i>
+    <img *ngSwitchCase="'img'" src="{{ i.value }}" class="sidebar-nav__item-icon sidebar-nav__item-img">
     <i *ngSwitchDefault class="sidebar-nav__item-icon {{ i.value }}"></i>
   </ng-container>
 </ng-template>

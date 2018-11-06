@@ -1,6 +1,15 @@
 export interface MenuIcon {
   type: 'class' | 'icon' | 'img';
+  /** 值，包含：类名、图标 `type`、图像 */
   value: string;
+  /** 图标主题风格，默认：`outline` */
+  theme?: 'outline' | 'twotone' | 'fill';
+  /** 是否有旋转动画，默认：`false` */
+  spin?: boolean;
+  /** 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 */
+  twoToneColor?: string;
+  /** 指定来自 IconFont 的图标类型 */
+  iconfont?: string;
 }
 
 export interface Menu {
