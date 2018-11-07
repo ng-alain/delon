@@ -364,7 +364,7 @@ export abstract class PropertyGroup extends FormProperty {
     return property;
   }
 
-  forEachChild(fn: (formProperty: FormProperty, str: String) => void) {
+  forEachChild(fn: (formProperty: FormProperty, str: string) => void) {
     for (const propertyId in this.properties) {
       if (this.properties.hasOwnProperty(propertyId)) {
         const property = this.properties[propertyId];
