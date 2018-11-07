@@ -16,8 +16,7 @@
     "sourceMap": true,
     "inlineSources": true,
     "importHelpers": true,
-    "alwaysStrict": true,
-    "strictFunctionTypes": true
+    "alwaysStrict": true
   },
   "files": ["public_api.ts", "typings.d.ts"],
   "exclude": ["*.spec.ts"],

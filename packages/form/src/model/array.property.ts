@@ -4,7 +4,6 @@ import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { DelonFormConfig } from '../config';
 import { FormPropertyFactory } from './form.property.factory';
 import { ObjectProperty } from './object.property';
-import { ErrorData } from '../errors';
 
 export class ArrayProperty extends PropertyGroup {
   tick = 1;
@@ -53,7 +52,7 @@ export class ArrayProperty extends PropertyGroup {
 
   _updateValue() {
     const value: any[] = [];
-    this.forEachChild((property: ObjectProperty, _) => {
+    this.forEachChild((property: ObjectProperty) => {
       if (property.visible && property._hasValue()) {
         value.push(Object.assign({}, property.formData, property.value));
       }
