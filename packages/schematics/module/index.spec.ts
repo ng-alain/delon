@@ -1,5 +1,4 @@
-import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
-import * as path from 'path';
+import { UnitTestTree } from '@angular-devkit/schematics/testing';
 import { Schema as ApplicationOptions } from '@schematics/angular/application/schema';
 import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
 import { Schema as ModuleOptions } from './schema';
@@ -9,7 +8,6 @@ import { createNgRunner } from '../utils/testing';
 describe('NgAlainSchematic: module', () => {
   const defaultOptions: ModuleOptions = {
     name: 'foo',
-    spec: true,
     module: undefined,
     flat: false,
     project: 'bar',
@@ -41,7 +39,6 @@ describe('NgAlainSchematic: module', () => {
 
     const tree = schematicRunner.runSchematic('module', options, appTree);
     const files = tree.files;
-    expect(files.indexOf('/projects/bar/src/app/foo/foo.module.spec.ts')).toBeGreaterThanOrEqual(0);
     expect(files.indexOf('/projects/bar/src/app/foo/foo.module.ts')).toBeGreaterThanOrEqual(0);
   });
 
@@ -101,8 +98,6 @@ describe('NgAlainSchematic: module', () => {
     const tree = schematicRunner.runSchematic('module', options, appTree);
     const files = tree.files;
     expect(files.indexOf('/projects/bar/src/app/two-word/two-word.module.ts'))
-      .toBeGreaterThanOrEqual(0);
-    expect(files.indexOf('/projects/bar/src/app/two-word/two-word.module.spec.ts'))
       .toBeGreaterThanOrEqual(0);
   });
 });

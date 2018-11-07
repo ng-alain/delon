@@ -12,7 +12,7 @@ const Jasmine = require('jasmine');
 const runner = new Jasmine({ projectBaseDir: projectBaseDir });
 
 // const files = `packages/schematics/**/*.spec.ts`;
-const files = `packages/schematics/plugin/plugin.icon.spec.ts`;
+const files = `packages/schematics/application/index.spec.ts`;
 // const files = `packages/schematics/ng-update/test-cases/v2-test-cases.spec.ts`;
 // const files = `packages/schematics/ng-update/test-cases/misc/deprecated-property-checks.spec.ts`;
 

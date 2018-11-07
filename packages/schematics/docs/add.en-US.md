@@ -8,7 +8,7 @@ type: Documents
 ## Overview
 
 ```bash
-ng add ng-alain@next [project name]
+ng add ng-alain@next
 ```
 
 ## Options
@@ -23,11 +23,5 @@ ng add ng-alain@next [project name]
 | `--g2`        | `false` | Whether include g2                                                      |
 | `--npm`       | `false` | Whether include `npm` taobao mirror configuration file (Chinese users)  |
 | `--yarn`      | `false` | Whether include `yarn` taobao mirror configuration file (Chinese users) |
-
-For example, generate a project with i18n:
-
-```bash
-ng add ng-alain@next demo --i18n
-```
 
 See more [plugins](/cli/plugin).

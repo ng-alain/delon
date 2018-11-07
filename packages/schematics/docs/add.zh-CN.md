@@ -8,7 +8,7 @@ type: Documents
 ## 命令格式
 
 ```bash
-ng add ng-alain@next [project name]
+ng add ng-alain@next
 ```
 
 ## 额外参数
@@ -23,11 +23,5 @@ ng add ng-alain@next [project name]
 | `--g2`        | `false` | 是否需要 G2 图表               |
 | `--npm`       | `false` | 是否需要 npm 淘宝镜像配置文件  |
 | `--yarn`      | `false` | 是否需要 yarn 淘宝镜像配置文件 |
-
-例如生成一个带有国际化项目：
-
-```bash
-ng add ng-alain@next demo --i18n --hmr
-```
 
 查看更多[插件](/cli/plugin)。
