@@ -21,7 +21,8 @@ testing() {
   elif is_cli_test; then
     ./build-schematics.sh -b -t -travis
   elif is_site; then
-    npm run site:build
+    npm run site:gen
+    $(npm bin)/ng build --prod --build-optimizer --base-href /
   fi
 }
 
