@@ -66,7 +66,7 @@ export class MockInterceptor implements HttpInterceptor {
             // is array
             if (Object.keys(mockRequest.queryString).includes(key)) {
               if (!Array.isArray(mockRequest.queryString[key])) {
-                mockRequest.queryString[key] = [ mockRequest.queryString[key] ];
+                mockRequest.queryString[key] = [mockRequest.queryString[key]];
               }
               mockRequest.queryString[key].push(value);
             } else {
@@ -123,14 +123,19 @@ export class MockInterceptor implements HttpInterceptor {
       body: res,
       url: req.url,
     });
-    if (config.log)
+
+    if (config.log) {
       console.log(
-        '%c 👽MOCK ',
+        `%c👽${req.method}->${req.url}->request`,
         'background:#000;color:#bada55',
-        req.url,
-        response,
         req,
       );
+      console.log(
+        `%c👽${req.method}->${req.url}->response`,
+        'background:#000;color:#bada55',
+        response,
+      );
+    }
     return of(response).pipe(delay(config.delay));
   }
 }
