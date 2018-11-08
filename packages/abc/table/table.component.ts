@@ -56,6 +56,7 @@ import {
   STRes,
   STPage,
   STLoadOptions,
+  STRowClassName,
 } from './table.interfaces';
 import { STConfig } from './table.config';
 import { STExport } from './table-export';
@@ -199,6 +200,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     );
   }
   private _multiSort: STMultiSort;
+  @Input()
+  rowClassName: STRowClassName;
   /** `header` 标题 */
   @Input()
   header: string | TemplateRef<void>;
@@ -337,7 +340,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   //#region data
 
   private _load() {
-    const { pi, ps, data, req, res, page, total, multiSort } = this;
+    const { pi, ps, data, req, res, page, total, multiSort, rowClassName } = this;
     this.loading = true;
     return this.dataSource
       .process({
@@ -350,6 +353,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         page,
         columns: this._columns,
         multiSort,
+        rowClassName
       })
       .then(result => {
         this.loading = false;
@@ -434,7 +438,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit(type);
   }
 
-  _click(e: Event, item: any, col: STColumn) {
+  _click(e: Event, item: STData, col: STColumn) {
     e.preventDefault();
     e.stopPropagation();
     const res = col.click(item, this);
@@ -445,7 +449,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private rowClickCount = 0;
-  _rowClick(e: Event, item: any, index: number) {
+  _rowClick(e: Event, item: STData, index: number) {
     if ((e.target as HTMLElement).nodeName === 'INPUT') return;
     ++this.rowClickCount;
     if (this.rowClickCount !== 1) return;
@@ -611,7 +615,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   //#region buttons
 
-  _btnClick(e: Event, record: any, btn: STColumnButton) {
+  _btnClick(e: Event, record: STData, btn: STColumnButton) {
     if (e) {
       e.stopPropagation();
       e.preventDefault();
@@ -655,7 +659,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.btnCallback(record, btn);
   }
 
-  private btnCallback(record: any, btn: STColumnButton, modal?: any) {
+  private btnCallback(record: STData, btn: STColumnButton, modal?: any) {
     if (!btn.click) return;
     if (typeof btn.click === 'string') {
       switch (btn.click) {

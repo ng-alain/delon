@@ -95,7 +95,7 @@
   </thead>
   <tbody class="st__body">
     <ng-container *ngFor="let i of _data; let index=index">
-      <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)">
+      <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [class]="i._rowClassName">
         <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand"></td>
         <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right" [nzCheckbox]="c.type === 'checkbox'" [ngClass]="c.className"
           [attr.colspan]="c.colSpan">

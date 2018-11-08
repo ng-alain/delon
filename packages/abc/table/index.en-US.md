@@ -35,7 +35,7 @@ The value is `STData[]` or `Observable<STData[]>`, both follow the following rul
 
 ## API
 
-### Input & Output
+### STComponent
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
@@ -49,6 +49,7 @@ Property | Description | Type | Default
 `[noResult]` | Custom no result content | `string,TemplateRef<void>` | -
 `[bordered]` | Whether to show all table borders | `boolean` | `false`
 `[size]` | Size of table | `small,middle,default` | `default`
+`[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | -
 `[loading]` | Loading status of table | `boolean` | `false`
 `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0`
 `[scroll]` | Whether table can be scrolled in x/y direction, x or y can be a string that indicates the width and height of table body | `{ y?: string; x?: string }` | -
@@ -219,7 +220,7 @@ Property | Description | Type | Default
 `[yn]` | Config of type is yn | `STColumnYn` | -
 `[exported]` | Whether to allow export | `boolean` | `true`
 `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | -
-`[click]` | Callback of type is link | `(record: any, instance?: STComponent) => void` | -
+`[click]` | Callback of type is link | `(record: STData, instance?: STComponent) => void` | -
 `[badge]` | Config of type is badge | `STColumnBadge` | -
 `[tag]` | Config of type is tag | `STColumnTag` | -
 
@@ -228,7 +229,7 @@ Property | Description | Type | Default
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[default]` | Default order of sorted values | `ascend,descend` | -
-`[compare]` | Sort function for local sort, see [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)'s compareFunction. | `(a: any, b: any) => number` | -
+`[compare]` | Sort function for local sort, see [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)'s compareFunction. | `(a: STData, b: STData) => number` | -
 `[key]` | Unique key of this column, default is `index` property value<br>`multiSort: false` => `key: 'name' => ?name=1&pi=1`<br>`multiSort: true` allow multiple sort keys, or use `STMultiSort` to specify multi-column sort key merge rule | `string` | -
 `[reName]` | Map name<br>`{ ascend: '0', descend: '1' }` => `?name=1&pi=1`<br>`{ ascend: 'asc', descend: 'desc' }` => `?name=desc&pi=1` | `{ ascend?: string, descend?: string }` | -
 
@@ -237,7 +238,7 @@ Property | Description | Type | Default
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[menus]` | Filter menu config | `STColumnFilterMenu[]` | -
-`[fn]` | Filter function for local data | `(filter: STColumnFilterMenu, record: any) => boolean` | -
+`[fn]` | Filter function for local data | `(filter: STColumnFilterMenu, record: STData) => boolean` | -
 `[default]` | Whether the `data` is filtered | `boolean` | -
 `[icon]` | Customized filter icon | `string` | `filter`
 `[multiple]` | Whether multiple filters can be selected | `boolean` | `true`
@@ -272,23 +273,23 @@ Property | Description | Type | Default
 `[text]` | Text of button, coexist with icon | `string` | -
 `[icon]` | Icon of button, coexist with text | `string | STIcon` | -
 `[i18n]` | I18n key of button | `string` | -
-`[format]` | Format value of button text | `(record: any, btn: STColumnButton) => string` | -
+`[format]` | Format value of button text | `(record: STData, btn: STColumnButton) => string` | -
 `[type]` | Type of button | `none,del,modal,static,drawer,link` | -
-`[click]` | Click callback; <br>**function** when `type=modal` will only fire when `confirmed`<br>**reload** Refresh current page<br>**load** load `1` page | `(record: any, modal?: any, instance?: STComponent) => void | reload` | -
+`[click]` | Click callback; <br>**function** when `type=modal` will only fire when `confirmed`<br>**reload** Refresh current page<br>**load** load `1` page | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | -
 `[pop]` | Whether to pop confirm | `string` | -
 `[popTitle]` | Title of pop confirm | `string` | `确认删除吗？`
 `[modal]` | Config of type is modal or static | `STColumnButtonModal` | -
 `[drawer]` | Config of type is drawer | `STColumnButtonDrawer` | -
 `[children]` | Drop-down menu, only supports level 1| `STColumnButton[]` | -
 `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | -
-`[iif]` | Custom conditional expression | `boolean` | `() => true`
+`[iif]` | Custom conditional expression | `(item: STData, btn: STColumnButton, column: STColumn) => boolean` | `() => true`
 
 ### STColumnButtonModal
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[component]` | Modal component class, be sure to register in `entryComponents` | `any` | -
-`[params]` | Dialog parameter | `(record: any) => Object` | -
+`[params]` | Dialog parameter | `(record: STData) => Object` | -
 `[paramsName]` | Receive parameter name of the target component | `string` | record
 `[size]` | Size of modal | `sm, md, lg, xl, '', number` | `lg`
 `[exact]` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true`
@@ -301,7 +302,7 @@ Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[title]` | Title of drawer | `string` | -
 `[component]` | Drawer component class, be sure to register in `entryComponents` | `any` | -
-`[params]` | Dialog parameter | `(record: any) => Object` | -
+`[params]` | Dialog parameter | `(record: STData) => Object` | -
 `[paramsName]` | Receive parameter name of the target component | `string` | record
 `[size]` | Size of drawer | `sm, md, lg, xl, number` | `md`
 `[drawerOptions]` | nz-drawer raw parameters [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) | `any` | -
