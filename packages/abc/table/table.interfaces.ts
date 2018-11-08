@@ -165,7 +165,7 @@ export interface STColumn {
   /**
    * 链接回调，若返回一个字符串表示导航URL会自动触发 `router.navigateByUrl`
    */
-  click?: (record: any, instance?: STComponent) => any;
+  click?: (record: STData, instance?: STComponent) => any;
   /**
    * 按钮组
    */
@@ -274,7 +274,7 @@ export interface STColumnSort {
   /**
    * 本地数据的排序函数，使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction)
    */
-  compare?: (a: any, b: any) => number;
+  compare?: (a: STData, b: STData) => number;
   /**
    * 远程数据的排序时后端相对应的KEY，默认使用 `index` 属性
    * - 若 `multiSort: false` 时：`key: 'name' => ?name=1&pi=1`
@@ -297,7 +297,7 @@ export interface STColumnFilter {
   /**
    * 本地数据的筛选函数
    */
-  fn?: (filter: STColumnFilterMenu, record: any) => boolean;
+  fn?: (filter: STColumnFilterMenu, record: STData) => boolean;
   /**
    * 标识数据是否已过滤，筛选图标会高亮
    */
@@ -411,7 +411,7 @@ export interface STColumnButton {
   /**
    * 格式化文本，较高调用频率，请勿过多复杂计算免得产生性能问题
    */
-  format?: (record: any, btn: STColumnButton) => string;
+  format?: (record: STData, btn: STColumnButton) => string;
   /**
    * 按钮类型
    * - `none` 无任何互动
@@ -432,7 +432,7 @@ export interface STColumnButton {
   click?:
     | 'reload'
     | 'load'
-    | ((record: any, modal?: any, instance?: STComponent) => any);
+    | ((record: STData, modal?: any, instance?: STComponent) => any);
   /**
    * 是否需要气泡确认框
    */
@@ -461,11 +461,7 @@ export interface STColumnButton {
   /**
    * 条件表达式，较高调用频率，请勿过多复杂计算免得产生性能问题
    */
-  iif?: (
-    item: any,
-    btn: STColumnButton,
-    column: STColumn,
-  ) => boolean;
+  iif?: (item: STData, btn: STColumnButton, column: STColumn) => boolean;
 
   [key: string]: any;
 }
@@ -478,7 +474,7 @@ export interface STColumnButtonModal extends ModalHelperOptions {
   /**
    * 对话框参数
    */
-  params?: (record: any) => Object;
+  params?: (record: STData) => Object;
   /**
    * 对话框目标组件的接收参数名，默认：`record`
    */
@@ -510,7 +506,7 @@ export interface STColumnButtonDrawer extends DrawerHelperOptions {
   /**
    * 抽屉参数
    */
-  params?: (record: any) => Object;
+  params?: (record: STData) => Object;
   /**
    * 抽屉目标组件的接收参数名，默认：`record`
    */
@@ -632,7 +628,15 @@ export interface STColumnTagValue {
     | string;
 }
 
-export type STChangeType = 'pi' | 'ps' | 'checkbox' | 'radio' | 'sort' | 'filter' | 'click' | 'dblClick';
+export type STChangeType =
+  | 'pi'
+  | 'ps'
+  | 'checkbox'
+  | 'radio'
+  | 'sort'
+  | 'filter'
+  | 'click'
+  | 'dblClick';
 
 /**
  * 回调数据
@@ -694,3 +698,5 @@ export interface STError {
   type?: 'req';
   error?: any;
 }
+
+export type STRowClassName = (record: STData, index: number) => string;

@@ -14,6 +14,7 @@ import {
   STRes,
   STColumn,
   STMultiSort,
+  STRowClassName,
 } from './table.interfaces';
 import { STSortMap } from './table-column-source';
 
@@ -27,6 +28,7 @@ export interface STDataSourceOptions {
   page?: STPage;
   columns?: STColumn[];
   multiSort?: STMultiSort;
+  rowClassName?: STRowClassName;
 }
 
 export interface STDataSourceResult {
@@ -48,7 +50,7 @@ export class STDataSource {
     @Host() private date: DatePipe,
     @Host() private yn: YNPipe,
     @Host() private number: DecimalPipe,
-    private dom: DomSanitizer
+    private dom: DomSanitizer,
   ) {}
 
   process(options: STDataSourceOptions): Promise<STDataSourceResult> {
@@ -107,7 +109,7 @@ export class STDataSource {
               const onFilter = c.filter.fn;
               if (typeof onFilter !== 'function') {
                 console.warn(`[st] Muse provide the fn function in filter`);
-                return ;
+                return;
               }
               result = result.filter(record =>
                 values.some(v => onFilter(v, record)),
@@ -139,6 +141,9 @@ export class STDataSource {
         map(result => {
           for (let i = 0, len = result.length; i < len; i++) {
             result[i]._values = columns.map(c => this.get(result[i], c, i));
+            if (options.rowClassName) {
+              result[i]._rowClassName = options.rowClassName(result[i], i);
+            }
           }
           return result;
         }),
@@ -237,10 +242,10 @@ export class STDataSource {
     }
     if (typeof sortList[0].compare !== 'function') {
       console.warn(`[st] Muse provide the compare function in sort`);
-      return ;
+      return;
     }
 
-    return (a: any, b: any) => {
+    return (a: STData, b: STData) => {
       const result = sortList[0].compare(a, b);
       if (result !== 0) {
         return sortList[0].default === 'descend' ? -result : result;
