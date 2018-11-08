@@ -179,6 +179,26 @@ describe('Service: Menu', () => {
         srv.add(newMenus);
         expect(srv.menus[0].children[0].children.length).toBe(1);
       });
+      it('should be clean children', () => {
+        const newMenus = <Menu[]>[
+          {
+            text: 'new menu',
+            children: [
+              { text: 'submenu1', link: '/' },
+              { text: 'submenu2', link: '/' },
+              { text: 'sc', shortcutRoot: true },
+            ],
+          },
+          {
+            text: 'text',
+            children: [{ text: 'sub text', link: '/text/sub', shortcut: true }],
+          },
+        ];
+        srv.add(newMenus);
+        const shortcutList = srv.menus[0].children[2].children;
+        expect(shortcutList.length).toBe(1);
+        expect(shortcutList[0].__parent).toBe(srv.menus[0].children[2]);
+      });
     });
 
     it('ACL', () => {
