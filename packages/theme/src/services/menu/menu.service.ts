@@ -57,6 +57,7 @@ export class MenuService implements OnDestroy {
     const shortcuts: Menu[] = [];
     this.visit((item, parent, depth) => {
       item.__id = i++;
+      item.__parent = parent;
       item._depth = depth;
 
       if (!item.link) item.link = '';
@@ -114,10 +115,8 @@ export class MenuService implements OnDestroy {
 
       // shortcut
       if (parent && item.shortcut === true && parent.shortcutRoot !== true) {
-        shortcuts.push(deepCopy(item));
+        shortcuts.push(item);
       }
-
-      item.__parent = parent;
 
       if (callback) callback(item, parent, depth);
     });
@@ -158,6 +157,7 @@ export class MenuService implements OnDestroy {
       _type: 3,
       __id: -1,
       _depth: 1,
+      __parent: null
     });
     _data.children = shortcuts.map(i => {
       i._depth = 2;
