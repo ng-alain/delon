@@ -19,9 +19,7 @@ declare var G2: any;
 
 @Component({
   selector: 'g2-bar',
-  template: `
-  <ng-container *ngIf="_title; else _titleTpl"><h4 style="margin-bottom:20px">{{_title}}</h4></ng-container>
-  <div #container></div>`,
+  templateUrl: './bar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })
@@ -44,7 +42,8 @@ export class G2BarComponent implements OnDestroy, OnChanges {
     this.cd.detectChanges();
   }
 
-  @Input() color = 'rgba(24, 144, 255, 0.85)';
+  @Input()
+  color = 'rgba(24, 144, 255, 0.85)';
 
   @HostBinding('style.height.px')
   @Input()
@@ -56,8 +55,10 @@ export class G2BarComponent implements OnDestroy, OnChanges {
   }
   private _height = 0;
 
-  @Input() padding: number[];
-  @Input() data: Array<{ x: any; y: any; [key: string]: any }>;
+  @Input()
+  padding: number[];
+  @Input()
+  data: Array<{ x: any; y: any; [key: string]: any }>;
 
   @Input()
   set autoLabel(value: any) {
@@ -67,7 +68,8 @@ export class G2BarComponent implements OnDestroy, OnChanges {
 
   // #endregion
 
-  @ViewChild('container') private node: ElementRef;
+  @ViewChild('container')
+  private node: ElementRef;
 
   constructor(
     private el: ElementRef,

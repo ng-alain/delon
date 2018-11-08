@@ -3,16 +3,7 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
 
 @Component({
   selector: 'avatar-list',
-  template: `
-  <ul class="avatar-list__wrap">
-    <li *ngFor="let i of _items" class="avatar-list__item{{_size ? ' avatar-list__item-' + _size : ''}}">
-      <nz-tooltip *ngIf="i.tips" [nzTitle]="i.tips">
-        <nz-avatar nz-tooltip [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="_avatarSize"></nz-avatar>
-      </nz-tooltip>
-      <nz-avatar *ngIf="!i.tips" [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="_avatarSize"></nz-avatar>
-    </li>
-  </ul>
-  `,
+  templateUrl: './avatar-list.component.html',
   host: { '[class.avatar-list]': 'true' },
   preserveWhitespaces: false,
 })

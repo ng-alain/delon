@@ -15,9 +15,7 @@ import { QRConfig } from './qr.config';
 
 @Component({
   selector: 'qr',
-  template: `
-  <img class="qr__img" src="{{dataURL}}">
-  `,
+  template: `<img class="qr__img" src="{{dataURL}}">`,
   preserveWhitespaces: false,
   host: { '[class.qr]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,

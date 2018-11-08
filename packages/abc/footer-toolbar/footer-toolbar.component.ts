@@ -11,7 +11,6 @@ import {
 import { DOCUMENT } from '@angular/common';
 import { InputBoolean } from '@delon/util';
 
-const CLS = 'footer-toolbar';
 const CLSBODY = 'footer-toolbar__body';
 
 @Component({
@@ -42,12 +41,16 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private doc: any,
   ) {}
 
+  private get bodyCls() {
+    return this.doc.querySelector('body').classList;
+  }
+
   ngOnInit() {
-    this.renderer.addClass(this.el.nativeElement, CLS);
-    this.doc.querySelector('body').classList.add(CLSBODY);
+    this.renderer.addClass(this.el.nativeElement, 'footer-toolbar');
+    this.bodyCls.add(CLSBODY);
   }
 
   ngOnDestroy() {
-    this.doc.querySelector('body').classList.remove(CLSBODY);
+    this.bodyCls.remove(CLSBODY);
   }
 }

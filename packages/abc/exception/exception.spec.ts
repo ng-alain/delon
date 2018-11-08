@@ -1,7 +1,7 @@
 import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/theme';
+import { DelonLocaleModule, en_US, DelonLocaleService } from '@delon/theme';
 
 import { ExceptionModule } from './exception.module';
 import { ExceptionComponent } from './exception.component';

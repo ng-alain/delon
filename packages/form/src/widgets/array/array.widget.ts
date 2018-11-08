@@ -3,45 +3,8 @@ import { ArrayLayoutWidget } from '../../widget';
 
 @Component({
   selector: 'sf-array',
-  template: `
-  <nz-form-item>
-    <nz-col *ngIf="schema.title" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
-      <label>
-        {{ schema.title }}
-        <span class="optional">
-          {{ ui.optional }}
-          <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
-            <i nz-tooltip nz-icon type="question-circle"></i>
-          </nz-tooltip>
-        </span>
-      </label>
-      <div class="add">
-        <button nz-button [nzType]="addType" [disabled]="addDisabled" (click)="addItem()" [innerHTML]="addTitle"></button>
-      </div>
-    </nz-col>
-    <nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl" [nzOffset]="ui.offsetControl">
-      <div class="ant-form-item-control" [class.has-error]="showError">
-
-        <nz-row class="sf-array-container">
-          <ng-container *ngFor="let i of formProperty.properties; let idx=index">
-            <nz-col *ngIf="i.visible && !i.ui.hidden" [nzSpan]="arraySpan" [attr.data-index]="idx" class="sf-array-item">
-              <nz-card>
-                <sf-item [formProperty]="i"></sf-item>
-                <span *ngIf="removeTitle" class="remove" (click)="removeItem(idx)" [attr.title]="removeTitle">
-                  <i nz-icon type="delete"></i>
-                </span>
-              </nz-card>
-            </nz-col>
-          </ng-container>
-        </nz-row>
-
-        <nz-form-extra *ngIf="schema.description" [innerHTML]="schema.description"></nz-form-extra>
-        <nz-form-explain *ngIf="!ui.onlyVisual && showError">{{error}}</nz-form-explain>
-
-      </div>
-    </nz-col>
-  </nz-form-item>
-  `,
+  templateUrl: './array.widget.html',
+  preserveWhitespaces: false
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addTitle: string;

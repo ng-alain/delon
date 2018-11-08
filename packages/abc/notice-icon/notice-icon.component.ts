@@ -13,34 +13,7 @@ import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
 
 @Component({
   selector: 'notice-icon',
-  template: `
-  <nz-badge *ngIf="data?.length === 0" [nzCount]="count">
-    <i nz-icon type="bell"></i>
-  </nz-badge>
-  <nz-popover *ngIf="data?.length > 0"
-    [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)" nzTrigger="click"
-    nzPlacement="bottomRight"
-    nzOverlayClassName="notice-icon">
-    <div nz-popover class="alain-default__nav-item notice-icon__item">
-      <nz-badge [nzCount]="count">
-        <i nz-icon type="bell" class="alain-default__nav-item-icon"></i>
-      </nz-badge>
-    </div>
-    <ng-template #nzTemplate>
-      <nz-spin [nzSpinning]="loading" [nzDelay]="0">
-        <nz-tabset>
-          <nz-tab *ngFor="let i of data" [nzTitle]="i.title">
-            <notice-icon-tab
-              [locale]="locale"
-              [data]="i"
-              (select)="onSelect($event)"
-              (clear)="onClear($event)"></notice-icon-tab>
-          </nz-tab>
-        </nz-tabset>
-      </nz-spin>
-    </ng-template>
-  </nz-popover>
-  `,
+  templateUrl: './notice-icon.component.html',
   host: { '[class.notice-icon__btn]': 'true' },
   preserveWhitespaces: false,
 })

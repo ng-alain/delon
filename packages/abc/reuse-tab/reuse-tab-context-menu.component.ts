@@ -17,13 +17,7 @@ import {
 
 @Component({
   selector: 'reuse-tab-context-menu',
-  template: `
-  <ul nz-menu>
-      <li nz-menu-item (click)="click($event, 'close')" data-type="close" [nzDisabled]="!item.closable" [innerHTML]="i18n.close"></li>
-      <li nz-menu-item (click)="click($event, 'closeOther')" data-type="closeOther" [innerHTML]="i18n.closeOther"></li>
-      <li nz-menu-item (click)="click($event, 'closeRight')" data-type="closeRight" [nzDisabled]="item.last" [innerHTML]="i18n.closeRight"></li>
-      <li nz-menu-item (click)="click($event, 'clear')" data-type="clear" [innerHTML]="i18n.clear"></li>
-  </ul>`,
+  templateUrl: './reuse-tab-context-menu.component.html',
   preserveWhitespaces: false,
 })
 export class ReuseTabContextMenuComponent implements OnInit {

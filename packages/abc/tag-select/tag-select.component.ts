@@ -13,11 +13,7 @@ import { DelonLocaleService } from '@delon/theme';
 
 @Component({
   selector: 'tag-select',
-  template: `
-  <ng-content></ng-content>
-  <a *ngIf="expandable" class="tag-select__trigger" (click)="trigger()">
-    {{expand ? locale.collapse : locale.expand}}<i nz-icon [type]="expand ? 'up' : 'down'" class="tag-select__trigger-icon"></i>
-  </a>`,
+  templateUrl: './tag-select.component.html',
   host: { '[class.tag-select]': 'true' },
   preserveWhitespaces: false,
 })

@@ -12,17 +12,7 @@ import { toNumber, updateHostClass } from '@delon/util';
 
 @Component({
   selector: 'number-info',
-  template: `
-  <div *ngIf="_title || _titleTpl" class="number-info__title"><ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container></div>
-  <div *ngIf="_subTitle || _subTitleTpl" class="number-info__title-sub"><ng-container *ngIf="_subTitle; else _subTitleTpl">{{_subTitle}}</ng-container></div>
-  <div class="number-info__value" [ngStyle]="{'margin-top.px': gap}">
-    <span class="number-info__value-text"><ng-container *ngIf="_total; else _totalTpl">{{_total}}</ng-container><em class="number-info__value-suffix" *ngIf="suffix">{{suffix}}</em></span>
-    <span *ngIf="status || _isSubTotal" class="number-info__value-text number-info__value-sub">
-      <ng-container *ngIf="_subTotal; else _subTotalTpl">{{_subTotal}}</ng-container>
-      <i *ngIf="status" nz-icon type="caret-{{status}}"></i>
-    </span>
-  </div>
-  `,
+  templateUrl: './number-info.component.html',
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

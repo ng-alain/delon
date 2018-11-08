@@ -19,10 +19,7 @@ declare var Slider: any;
 
 @Component({
   selector: 'g2-timeline',
-  template: `
-  <ng-container *ngIf="_title; else _titleTpl"><h4>{{_title}}</h4></ng-container>
-  <div #container></div>
-  <div #slider></div>`,
+  templateUrl: './timeline.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   preserveWhitespaces: false,
 })

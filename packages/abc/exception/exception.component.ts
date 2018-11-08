@@ -13,19 +13,7 @@ import { DelonLocaleService } from '@delon/theme';
 
 @Component({
   selector: 'exception',
-  template: `
-  <div class="exception__img-block">
-    <div class="exception__img" [ngStyle]="{'background-image': 'url(' + _img + ')'}"></div>
-  </div>
-  <div class="exception__cont">
-    <h1 class="exception__cont-title" [innerHTML]="_title"></h1>
-    <div class="exception__cont-desc" [innerHTML]="_desc || locale[_type]"></div>
-    <div class="exception__cont-actions">
-      <div (cdkObserveContent)="checkContent()" #conTpl><ng-content></ng-content></div>
-      <button *ngIf="!hasCon" nz-button [routerLink]="['/']" [nzType]="'primary'">{{locale.backToHome}}</button>
-    </div>
-  </div>
-  `,
+  templateUrl: './exception.component.html',
   host: { '[class.exception]': 'true' },
   preserveWhitespaces: false,
 })

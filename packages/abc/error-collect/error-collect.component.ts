@@ -15,10 +15,6 @@ import { InputNumber } from '@delon/util';
 
 import { ErrorCollectConfig } from './error-collect.config';
 
-/**
- * 错误消息采集器
- * PS：虽然此法并不好看，但对响应式表单&模板表单有很好的效果。
- */
 @Component({
   selector: 'error-collect, [error-collect]',
   template: `

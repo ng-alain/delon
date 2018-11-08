@@ -3,10 +3,7 @@ import { toBoolean } from '@delon/util';
 
 @Component({
   selector: 'trend',
-  template: `
-  <ng-content></ng-content>
-  <span *ngIf="flag" class="trend__{{flag}}"><i nz-icon type="caret-{{flag}}"></i></span>
-  `,
+  templateUrl: './trend.component.html',
   host: {
     '[class.trend]': 'true',
     '[class.trend__grey]': '!colorful',
