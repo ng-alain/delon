@@ -10,7 +10,8 @@
       "@angular/cdk/portal": "ng.cdk.portal",
       "ng-zorro-antd": "ngZorro.antd",
       "date-fns": "DateFns",
-      "@delon/acl": "delon.acl"
+      "@delon/acl": "delon.acl",
+      "@delon/util": "delon.util"
     }
   }
 }

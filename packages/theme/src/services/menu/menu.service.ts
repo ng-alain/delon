@@ -3,6 +3,7 @@ import { Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { share } from 'rxjs/operators';
 
 import { ACLService } from '@delon/acl';
+import { deepCopy } from '@delon/util';
 
 import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
 import { Menu } from './interface';
@@ -56,7 +57,6 @@ export class MenuService implements OnDestroy {
     const shortcuts: Menu[] = [];
     this.visit((item, parent, depth) => {
       item.__id = i++;
-      item.__parent = parent;
       item._depth = depth;
 
       if (!item.link) item.link = '';
@@ -98,10 +98,6 @@ export class MenuService implements OnDestroy {
         item.icon = Object.assign({ theme: 'outline', spin: false }, item.icon);
       }
 
-      // shortcut
-      if (parent && item.shortcut === true && parent.shortcutRoot !== true)
-        shortcuts.push(item);
-
       item.text =
         item.i18n && this.i18nSrv ? this.i18nSrv.fanyi(item.i18n) : item.text;
 
@@ -115,6 +111,13 @@ export class MenuService implements OnDestroy {
       if (item.acl && this.aclService) {
         item._hidden = !this.aclService.can(item.acl);
       }
+
+      // shortcut
+      if (parent && item.shortcut === true && parent.shortcutRoot !== true) {
+        shortcuts.push(deepCopy(item));
+      }
+
+      item.__parent = parent;
 
       if (callback) callback(item, parent, depth);
     });
@@ -158,6 +161,7 @@ export class MenuService implements OnDestroy {
     });
     _data.children = shortcuts.map(i => {
       i._depth = 2;
+      i.__parent = _data;
       return i;
     });
   }
