@@ -39,7 +39,7 @@ install:
   - yarn
 
 script:
-  - ./scripts/ci/travis-script.sh
+  - travis_wait 30 ./scripts/ci/travis-script.sh
 
 cache:
   yarn: true
