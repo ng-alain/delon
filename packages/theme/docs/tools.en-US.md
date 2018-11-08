@@ -320,6 +320,7 @@ DEMO:
 | `point` | `cursor: pointer` |
 | `no-resize` | Setting does not allow adjustment elements |
 | `bg-center` | Background image is vertically centered |
+| `scrollbar` | Custom scrollbar for a div |
 
 ## Widgets
 

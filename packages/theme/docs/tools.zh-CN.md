@@ -320,6 +320,7 @@ Ant Design 是以 `14px` 为基准字号。
 | `point` | `cursor: pointer` |
 | `no-resize` | 设置不允许调整元素 |
 | `bg-center` | 背景图垂直居中 |
+| `scrollbar` | 美化 div 滚动条 |
 
 ## 小部件
 
