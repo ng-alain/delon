@@ -81,7 +81,7 @@ travisFoldStart "publish.dist"
     echo "===== Release version does not need to change version ====="
   else
     echo "Replace build version..."
-    sed -i "s/${buildVersion}/${buildVersionName}/g" $(find . -type f -not -path '*\/.*')
+    sed -i "s/${buildVersion}/${buildVersionName}/g" $(find . -type f -not -path '*\/.*' -name 'theme.js' -o -name 'package.json')
   fi
 
   echo "Updated the build version in every file to include the SHA of the latest commit."
