@@ -1,3 +1,27 @@
+# [2.0.0-rc.3](https://github.com/ng-alain/delon/compare/2.0.0-rc.2...2.0.0-rc.3) (2018-11-09)
+
+
+### Bug Fixes
+
+* **module:sf:** fix missing title ([#259](https://github.com/ng-alain/delon/issues/259)) ([b78f38a](https://github.com/ng-alain/delon/commit/b78f38a)), closes [#258](https://github.com/ng-alain/delon/issues/258)
+* **module:sf:tree-select:** fix children repeat data when expand changes ([#260](https://github.com/ng-alain/delon/issues/260)) ([2bfd75f](https://github.com/ng-alain/delon/commit/2bfd75f))
+* **module:st:** fix invalid trigger when used icon & pop ([#256](https://github.com/ng-alain/delon/issues/256)) ([598f9ab](https://github.com/ng-alain/delon/commit/598f9ab))
+* GLOBAL_THIRD_MDOULES changed to GLOBAL_THIRD_MODULES ([#262](https://github.com/ng-alain/delon/issues/262)) ([d001642](https://github.com/ng-alain/delon/commit/d001642))
+* **module:theme:menu:** fix shortcut children polluted ([#265](https://github.com/ng-alain/delon/issues/265)) ([a255fe0](https://github.com/ng-alain/delon/commit/a255fe0))
+
+
+### Features
+
+* **module:sidebar-nav:** add icon more properties ([#263](https://github.com/ng-alain/delon/issues/263)) ([5b696f5](https://github.com/ng-alain/delon/commit/5b696f5))
+* **module:st:** add no type ([#261](https://github.com/ng-alain/delon/issues/261)) ([8fc29ce](https://github.com/ng-alain/delon/commit/8fc29ce))
+* **module:st:** add remove method ([#255](https://github.com/ng-alain/delon/issues/255)) ([13a3a21](https://github.com/ng-alain/delon/commit/13a3a21))
+* **module:st:** add rowClassName property ([#268](https://github.com/ng-alain/delon/issues/268)) ([0af1484](https://github.com/ng-alain/delon/commit/0af1484))
+* **module:theme:** add scrollbar style service of div ([#267](https://github.com/ng-alain/delon/issues/267)) ([161d328](https://github.com/ng-alain/delon/commit/161d328))
+* **module:theme:** add url pipe ([#254](https://github.com/ng-alain/delon/issues/254)) ([62724a0](https://github.com/ng-alain/delon/commit/62724a0))
+* **schematics:** add color less when running ng commend ([#253](https://github.com/ng-alain/delon/issues/253)) ([145e4a9](https://github.com/ng-alain/delon/commit/145e4a9))
+
+
+
 <a name="2.0.0-rc.2"></a>
 # [2.0.0-rc.2](https://github.com/ng-alain/delon/compare/2.0.0-rc.1...2.0.0-rc.2) (2018-11-01)
 
