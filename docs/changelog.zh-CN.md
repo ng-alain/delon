@@ -4,10 +4,36 @@ title: 更新日志
 type: Other
 ---
 
+## 2.0.0-rc.3
+
+`2018-11-09`
+
+### Scaffold
+
+* 修复命名错误 `GLOBAL_THIRD_MDOULES` 变更为 `GLOBAL_THIRD_MODULES` ([#762](https://github.com/ng-alain/ng-alain/pull/762))
+
+### Bug Fixes
+
+* **module:sf:checkbox:** 修复丢失 title 问题 ([#259](https://github.com/ng-alain/delon/issues/259)) ([b78f38a](https://github.com/ng-alain/delon/commit/b78f38a)), closes [#258](https://github.com/ng-alain/delon/issues/258)
+* **module:sf:tree-select:** 修复异步展示会重复渲染子项 ([#260](https://github.com/ng-alain/delon/issues/260)) ([2bfd75f](https://github.com/ng-alain/delon/commit/2bfd75f))
+* **module:st:** 修复 icon 无法触发 pop 问题 ([#256](https://github.com/ng-alain/delon/issues/256)) ([598f9ab](https://github.com/ng-alain/delon/commit/598f9ab))
+* **module:theme:menu:** 修复快捷菜单项污染原始菜单数据，导致重复高亮 ([#265](https://github.com/ng-alain/delon/issues/265)) ([a255fe0](https://github.com/ng-alain/delon/commit/a255fe0))
+
+### Features
+
+* **module:sidebar-nav:** 新增所有 icon 组件的属性 ([#263](https://github.com/ng-alain/delon/issues/263)) ([5b696f5](https://github.com/ng-alain/delon/commit/5b696f5))
+* **module:st:** 新增行号 `no` 类型 ([#261](https://github.com/ng-alain/delon/issues/261)) ([8fc29ce](https://github.com/ng-alain/delon/commit/8fc29ce))
+* **module:st:** 新增 `removeRow` 移除行方法 ([#255](https://github.com/ng-alain/delon/issues/255)) ([13a3a21](https://github.com/ng-alain/delon/commit/13a3a21))
+* **module:st:** 新增 `rowClassName` 组件属性 ([#268](https://github.com/ng-alain/delon/issues/268)) ([0af1484](https://github.com/ng-alain/delon/commit/0af1484))
+* **module:st:** 新增按钮允许 icon & text 并存 ([#256](https://github.com/ng-alain/delon/issues/256)) ([598f9ab](https://github.com/ng-alain/delon/commit/598f9ab))
+* **module:theme:** 新增 `.scrollbar` 美化 div 滚动条样式 ([#267](https://github.com/ng-alain/delon/issues/267)) ([161d328](https://github.com/ng-alain/delon/commit/161d328))
+* **module:theme:** 新增安全 URL `| url` 管道 ([#254](https://github.com/ng-alain/delon/issues/254)) ([62724a0](https://github.com/ng-alain/delon/commit/62724a0))
+* **schematics:** 新增运行 `ng` 命令时优先执行 color less 生成 ([#253](https://github.com/ng-alain/delon/issues/253)) ([145e4a9](https://github.com/ng-alain/delon/commit/145e4a9))
+
+
 ## 2.0.0-rc.2
 
 `2018-11-01`
-
 
 ### Bug Fixes
 
