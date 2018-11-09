@@ -19,6 +19,8 @@ import {
   RouterTestingModule,
   SpyNgModuleFactoryLoader,
 } from '@angular/router/testing';
+import { AlainThemeModule, _HttpClient } from '@delon/theme';
+
 import * as Mock from 'mockjs';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
@@ -52,7 +54,11 @@ describe('mock: interceptor', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  function genModule(options: DelonMockConfig) {
+  function genModule(
+    options: DelonMockConfig,
+    imports: any[] = [],
+    spyConsole = true,
+  ) {
     options = Object.assign(new DelonMockConfig(), options);
     injector = TestBed.configureTestingModule({
       declarations: [RootCmp],
@@ -65,7 +71,7 @@ describe('mock: interceptor', () => {
           },
         ]),
         DelonMockModule.forRoot(options),
-      ],
+      ].concat(imports),
       providers: [
         { provide: HTTP_INTERCEPTORS, useClass: MockInterceptor, multi: true },
       ],
@@ -73,9 +79,10 @@ describe('mock: interceptor', () => {
     srv = injector.get(MockService);
     http = injector.get(HttpClient);
     httpMock = injector.get(HttpTestingController);
-    spyOn(console, 'log');
-    spyOn(console, 'warn');
-    spyOn(console, 'error');
+    if (spyConsole) {
+      spyOn(console, 'log');
+      spyOn(console, 'warn');
+    }
   }
 
   describe('[default]', () => {
@@ -153,7 +160,7 @@ describe('mock: interceptor', () => {
           done();
         },
         () => {
-          expect(console.error).toHaveBeenCalled();
+          expect(console.log).toHaveBeenCalled();
           expect(true).toBe(true);
           done();
         },
@@ -255,6 +262,19 @@ describe('mock: interceptor', () => {
         },
       ),
     ));
+  });
+  describe('[_HttpClient]', () => {
+    it('should be set to load status', (done: () => void) => {
+      genModule({ data: DATA, delay: 1 }, [AlainThemeModule.forRoot()], false);
+      const hc = injector.get(_HttpClient);
+      spyOn(hc, 'begin');
+      spyOn(hc, 'end');
+      hc.get('/users').subscribe(() => {
+        expect(hc.begin).toHaveBeenCalled();
+        expect(hc.end).toHaveBeenCalled();
+        done();
+      });
+    });
   });
 });
 

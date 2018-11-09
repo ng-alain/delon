@@ -4,6 +4,9 @@
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "mock",
-    "entryFile": "public_api.ts"
+    "entryFile": "public_api.ts",
+    "umdModuleIds": {
+      "@delon/theme": "delon.theme"
+    }
   }
 }
