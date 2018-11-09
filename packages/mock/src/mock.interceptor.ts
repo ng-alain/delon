@@ -12,7 +12,9 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 import { Observable, Observer, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, tap } from 'rxjs/operators';
+
+import { _HttpClient } from '@delon/theme';
 
 import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
@@ -95,14 +97,15 @@ export class MockInterceptor implements HttpInterceptor {
             });
             if (config.log)
               console.log(
-                `%c 👽MOCK ${e.status} STATUS `,
+                `%c💀${req.method}->${req.url}`,
                 'background:#000;color:#bada55',
-                req.url,
                 errRes,
                 req,
               );
           } else {
-            console.error(
+            console.log(
+              `%c💀${req.method}->${req.url}`,
+              'background:#000;color:#bada55',
               `Please use MockStatusError to throw status error`,
               e,
               req,
@@ -136,6 +139,17 @@ export class MockInterceptor implements HttpInterceptor {
         response,
       );
     }
-    return of(response).pipe(delay(config.delay));
+    const hc = this.injector.get(_HttpClient, null);
+    if (hc) {
+      hc.begin();
+    }
+    return of(response).pipe(
+      delay(config.delay),
+      tap(() => {
+        if (hc) {
+          hc.end();
+        }
+      }),
+    );
   }
 }
