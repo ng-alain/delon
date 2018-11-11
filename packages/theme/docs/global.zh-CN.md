@@ -19,7 +19,7 @@ title: 全局参数
 | `@font-size-base` | `14px` | antd字号 |
 | `@primary-color` | 蓝色 | antd 主色 |
 | `@mobile-min` | `768px` | PC端 |
-| `@mobile-max` | `768px` | 移动端 |
+| `@mobile-max` | `767px` | 移动端 |
 | `@text-xs` | `@font-size-base - 2` | xs 文本大小 |
 | `@text-sm` | `@font-size-base + 0` | sm 文本大小 |
 | `@text-md` | `@font-size-base + 2` | md 文本大小 |

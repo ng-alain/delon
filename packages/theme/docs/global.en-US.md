@@ -19,7 +19,7 @@ title: Global Parameters
 | `@font-size-base` | `14px` | Antd font size (unchageable) |
 | `@primary-color` | Blue | antd primary color |
 | `@mobile-min` | `768px` | PC of width |
-| `@mobile-max` | `768px` | Mobile of width |
+| `@mobile-max` | `767px` | Mobile of width |
 | `@text-xs` | `@font-size-base - 2` | Text of xs size |
 | `@text-sm` | `@font-size-base + 0` | Text of sm size |
 | `@text-md` | `@font-size-base + 2` | Text of md size |
