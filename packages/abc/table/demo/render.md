@@ -25,10 +25,10 @@ import { STColumn } from '@delon/abc';
   selector: 'app-demo',
   template: `
   <st #st [data]="users" [columns]="columns">
-    <ng-template st-row="custom" type="title" let-c>
+    <ng-template st-row="customTitle" type="title" let-c>
       {{ c.title }}
-      <nz-dropdown nzTrigger="click" [nzClickHide]="false">
-        <i nz-dropdown nz-icon type="smile" theme="outline" class="ant-table-filter-icon"></i>
+      <nz-dropdown nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomRight">
+        <i nz-dropdown nz-icon type="down" class="ant-table-filter-icon"></i>
         <div class="ant-table-filter-dropdown p-sm">
           <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" class="width-sm mr-sm">
           <button nz-button [nzType]="'primary'" (click)="st.load(2)">Search</button>
@@ -59,6 +59,7 @@ export class DemoComponent {
     { title: '年龄', index: 'age' },
     {
       title: '自定义',
+      renderTitle: 'customTitle',
       render: 'custom',
     },
   ];
