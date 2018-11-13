@@ -66,7 +66,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
       action: this.ui.action || '',
       accept: this.ui.accept || '',
       limit: this.ui.limit == null ? 0 : +this.ui.limit,
-      size: this.ui.size == null ? 0 : +this.ui.size,
+      size: this.ui.fileSize == null ? 0 : +this.ui.fileSize,
       fileType: this.ui.fileType || '',
       listType: this.ui.listType || 'text',
       multiple: toBool(this.ui.multiple, false),
