@@ -2,7 +2,7 @@ import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>(
-  'DELON_AUTH_TOKEN_SERVICE_TOKEN',
+  'DA_SERVICE_TOKEN',
 );
 
 export interface ITokenModel {
