@@ -34,7 +34,7 @@ type: Widgets
 `[action]` | 必选参数, 上传的地址 | `string` | -
 `[accept]` | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | `string` | -
 `[limit]` | 限制单次最多上传数量，`multiple` 打开时有效；`0` 表示不限  | `number` | `0`
-`[size]` | 限制文件大小，单位：KB；`0` 表示不限  | `number` | `0`
+`[fileSize]` | 限制文件大小，单位：KB；`0` 表示不限  | `number` | `0`
 `[fileType]` | 限制文件类型，例如：`image/png,image/jpeg,image/gif,image/bmp` | `string` | -
 `[headers]` | 设置上传的请求头部 | `Object, (file: UploadFile) => Object` | -
 `[listType]` | 上传列表的内建样式 | `text,picture,picture-card` | `text`
