@@ -38,10 +38,11 @@ export function builder(options?: {
   detectChanges?: boolean;
   template?: string;
   ingoreAntd?: boolean;
+  imports?: any[];
 }) {
   options = Object.assign({ detectChanges: true }, options);
   TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, DelonFormModule.forRoot()],
+    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(options.imports || []),
     declarations: [TestFormComponent],
   });
   if (options.template) {
