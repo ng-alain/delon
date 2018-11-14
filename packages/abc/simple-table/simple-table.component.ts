@@ -627,7 +627,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
         ret = this.yn.transform(value === col.ynTruth, col.ynYes, col.ynNo);
         break;
     }
-    return ret;
+    return ret == null ? '' : ret;
   }
 
   _click(e: Event, item: any, col: SimpleTableColumn) {
@@ -934,7 +934,7 @@ export class SimpleTableComponent implements OnInit, OnChanges, OnDestroy {
 
   _btnText(record: any, btn: SimpleTableButton) {
     if (btn.format) return btn.format(record, btn);
-    return btn.text;
+    return btn.text || '';
   }
 
   //#endregion
