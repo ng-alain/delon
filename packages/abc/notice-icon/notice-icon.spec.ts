@@ -66,7 +66,7 @@ describe('abc: notice-icon', () => {
       fixture.detectChanges();
       const el = dl.query(By.css('.ant-spin-container'))
         .nativeElement as HTMLElement;
-      expect(el.hidden).toBe(true);
+      expect(el.style.display).toBe('');
     });
     it('should be select item', () => {
       spyOn(context, 'select');

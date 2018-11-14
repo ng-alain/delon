@@ -8,6 +8,7 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { deepGet, deepCopy } from '@delon/util';
+import { AlainThemeModule } from '@delon/theme';
 
 import { SFSchema } from '../src/schema';
 import { SFUISchema } from '../src/schema/ui';
