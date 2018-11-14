@@ -352,8 +352,7 @@ describe('abc: table', () => {
             page
               .newColumn([{ title: '', index: 'id', type: 'currency' }])
               .then(() => {
-                page;
-                page.getCell().classList.contains('text-right');
+                expect(page.getCell().classList).toContain('text-right');
                 done();
               });
           });
@@ -386,8 +385,7 @@ describe('abc: table', () => {
             page
               .newColumn([{ title: '', index: 'num', type: 'number' }])
               .then(() => {
-                page;
-                page.getCell().classList.contains('text-right');
+                expect(page.getCell().classList).toContain('text-right');
                 done();
               });
           });
@@ -422,8 +420,7 @@ describe('abc: table', () => {
             page
               .newColumn([{ title: '', index: 'date', type: 'date' }])
               .then(() => {
-                page;
-                page.getCell().classList.contains('text-right');
+                expect(page.getCell().classList).toContain('text-center');
                 done();
               });
           });
@@ -560,7 +557,7 @@ describe('abc: table', () => {
           page
             .newColumn([{ title: '', index: 'id', className: 'asdf' }])
             .then(() => {
-              page.getCell().classList.contains('asdf');
+              expect(page.getCell().classList).toContain('asdf');
               done();
             });
         });
@@ -573,7 +570,6 @@ describe('abc: table', () => {
               buttons: [
                 { text: 'del', type: 'del' },
                 {
-                  text: 'del',
                   type: 'del',
                   click: jasmine.createSpy(),
                   popTitle: 'confirm?',
@@ -634,6 +630,7 @@ describe('abc: table', () => {
           page.newColumn(columns).then(() => {
             // mock trigger
             comp._btnClick(null, comp._data[0], comp._columns[0].buttons[0]);
+            expect(true).toBe(true);
             done();
           });
         });

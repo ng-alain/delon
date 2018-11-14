@@ -195,7 +195,7 @@ export class STDataSource {
         ret = this.yn.transform(value === col.yn.truth, col.yn.yes, col.yn.no);
         break;
     }
-    return ret;
+    return ret == null ? '' : ret;
   }
 
   private getByHttp(
