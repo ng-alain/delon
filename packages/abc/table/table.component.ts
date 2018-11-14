@@ -677,7 +677,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   _btnText(record: any, btn: STColumnButton) {
     if (btn.format) return btn.format(record, btn);
-    return btn.text;
+    return btn.text || '';
   }
 
   _validBtns(item: STData, col: STColumn): STColumnButton[] {
