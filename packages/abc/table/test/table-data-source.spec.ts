@@ -607,5 +607,13 @@ describe('abc: table: data-souce', () => {
         done();
       });
     });
+    it('should be return empty string when is null or undefined', (done: () => void) => {
+      options.data = genData(1);
+      options.columns = [{ title: '', index: 'aa' }];
+      srv.process(options).then(res => {
+        expect(res.list[0]._values[0]).toBe('');
+        done();
+      });
+    });
   });
 });
