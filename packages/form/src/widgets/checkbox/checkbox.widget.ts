@@ -14,8 +14,10 @@ export class CheckboxWidget extends ControlWidget {
   indeterminate = false;
   grid_span: number;
   labelTitle = ``;
+  inited = false;
 
   reset(value: any) {
+    this.inited = false;
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => {
         this.data = list;
@@ -25,6 +27,8 @@ export class CheckboxWidget extends ControlWidget {
         this.grid_span = this.ui.span && this.ui.span > 0 ? this.ui.span : 0;
 
         this.updateAllChecked();
+        this.inited = true;
+        this.cd.detectChanges();
       },
     );
   }
@@ -64,7 +68,8 @@ export class CheckboxWidget extends ControlWidget {
     } else {
       this.indeterminate = true;
     }
-    this.detectChanges();
+    // issues: https://github.com/NG-ZORRO/ng-zorro-antd/issues/2025
+    setTimeout(() => this.detectChanges());
     return this;
   }
 
