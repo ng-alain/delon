@@ -1,6 +1,6 @@
 <ng-template #menu>
   <div class="header-menu">
-    <ul nz-menu [nzMode]="isMobile ? 'inline' : 'horizontal'" class="menu-site" id="nav">
+    <ul nz-menu [nzMode]="isMobile ? 'vertical' : 'horizontal'" class="menu-site" id="nav">
       <li nz-menu-item routerLink="/docs/getting-started/{{i18n.zone}}">{{'app.header.menu.docs' |
         translate}}</li>
       <li nz-menu-item routerLink="/components/view/{{i18n.zone}}">{{'app.header.menu.components' |
@@ -30,6 +30,9 @@
           </ul>
         </nz-dropdown>
       </li>
+      <li nz-menu-item>
+        <a href="https://e.ng-alain.com/" target="_blank">{{'app.header.menu.themes' | translate}}</a>
+      </li>
     </ul>
     <nz-select nzSize="small" class="version" style="width: 68px;" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)">
       <nz-option *ngFor="let version of oldVersionList" [nzLabel]="version" [nzValue]="version"></nz-option>
@@ -39,12 +42,13 @@
       'app.header.lang' | translate}}</button>
   </div>
 </ng-template>
-<nz-popover *ngIf="isMobile" nzOverlayClassName="popover-menu" nzPlacement="bottomRight" nzTrigger="click" [nzVisible]="menuVisible">
-  <i nz-popover class="anticon anticon-menu nav-phone-icon" (click)="showMenu()"></i>
-  <ng-template #nzTemplate>
+<ng-container *ngIf="isMobile">
+  <i nz-icon type="menu" class="header-menu-icon" (click)="menuVisible=true"></i>
+  <nz-drawer *ngIf="isMobile" [nzVisible]="menuVisible"
+    [nzClosable]="false" nzPlacement="left" (nzOnClose)="menuVisible=false">
     <ng-template [ngTemplateOutlet]="menu"></ng-template>
-  </ng-template>
-</nz-popover>
+  </nz-drawer>
+</ng-container>
 <nz-row>
   <nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5" nzXl="5" nzXXl="4">
     <a routerLink="/{{i18n.zone}}">

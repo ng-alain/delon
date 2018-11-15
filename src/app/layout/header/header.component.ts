@@ -29,9 +29,7 @@ declare const algoliasearch: any;
 export class HeaderComponent implements OnInit, AfterViewInit {
   isMobile: boolean;
   useDocsearch = false;
-  oldVersionList = [
-    `1.x`
-  ];
+  oldVersionList = [`1.x`];
   currentVersion = 'next';
 
   constructor(
@@ -44,7 +42,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ) {
     router.events
       .pipe(filter(evt => evt instanceof NavigationEnd))
-      .subscribe(() => this.hideMenu());
+      .subscribe(() => (this.menuVisible = false));
     this.mobileSrv.change.subscribe(res => (this.isMobile = res));
   }
 
@@ -100,7 +98,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       },
       transformData(hits) {
         hits.forEach(hit => {
-          debugger;
           hit.url = hit.url.replace('ng.ant.design', location.host);
           hit.url = hit.url.replace('https:', location.protocol);
         });
@@ -123,14 +120,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   menuVisible = false;
-
-  showMenu() {
-    this.menuVisible = true;
-  }
-
-  hideMenu() {
-    this.menuVisible = false;
-  }
 
   q: string;
   list: MetaSearchGroup[] = [];
