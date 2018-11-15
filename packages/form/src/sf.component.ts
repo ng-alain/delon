@@ -420,6 +420,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     if (this._inited) this.terminator.destroy();
 
+    this.cleanRootSub();
+
     this.coverProperty();
     this.coverButtonProperty();
 
@@ -455,7 +457,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  private cleanRootSub() {
+    if (!this.rootProperty) return ;
+    this.rootProperty.errorsChanges.unsubscribe();
+    this.rootProperty.valueChanges.unsubscribe();
+  }
+
   ngOnDestroy(): void {
+    this.cleanRootSub();
     this.terminator.destroy();
     this.i18n$.unsubscribe();
   }
