@@ -41,6 +41,7 @@ export class PageHeaderComponent
   private inited = false;
   private i18n$: Subscription;
   private set$: Subscription;
+  private routerEvent$: Subscription;
   @ViewChild('conTpl')
   private conTpl: ElementRef;
   @ViewChild('affix')
@@ -169,6 +170,16 @@ export class PageHeaderComponent
         ),
       )
       .subscribe(() => this.affix.updatePosition({}));
+    this.routerEvent$ = this.router.events
+      .pipe(
+        filter((event: RouterEvent) => event instanceof NavigationEnd)
+      )
+      .subscribe(
+        (event: RouterEvent) => {
+          this._menus = null;
+          this.refresh();
+        }
+      );
   }
 
   refresh() {
@@ -237,12 +248,6 @@ export class PageHeaderComponent
   ngOnInit() {
     this.refresh();
     this.inited = true;
-    this.router.events.subscribe((event: RouterEvent) => {
-      if (event instanceof NavigationEnd) {
-        this._menus = [];
-        this.refresh();
-      }
-    });
   }
 
   ngAfterViewInit(): void {
@@ -256,5 +261,6 @@ export class PageHeaderComponent
   ngOnDestroy(): void {
     if (this.i18n$) this.i18n$.unsubscribe();
     this.set$.unsubscribe();
+    this.routerEvent$.unsubscribe();
   }
 }
