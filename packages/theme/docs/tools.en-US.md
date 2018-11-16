@@ -318,9 +318,11 @@ DEMO:
 | ---- | --- |
 | `block-center` | `margin: 0 auto` |
 | `point` | `cursor: pointer` |
+| `no-data` | No result |
 | `no-resize` | Setting does not allow adjustment elements |
 | `bg-center` | Background image is vertically centered |
 | `scrollbar` | Custom scrollbar for a div |
+| `color-weak` | Weak mode |
 
 ## Widgets
 
@@ -333,13 +335,6 @@ Online [DEMO](https://ng-alain.github.io/ng-alain/#/style/gridmasonry)。
 | `row-masonry` | Rows |
 | `row-masonry-{xs|sm|md|lg|xl}-{1-10}` | Rows, Responsive style |
 | `col-masonry` | Columns |
-
-### Other
-
-| Name | Description |
-| ---- | --- |
-| `no-data` | No result |
-| `color-weak` | Weak mode |
 
 ## ng-zorro
 
