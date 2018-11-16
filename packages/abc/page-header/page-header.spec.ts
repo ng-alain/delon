@@ -1,7 +1,8 @@
 import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { APP_BASE_HREF } from '@angular/common';
 import {
   MenuService,
@@ -29,21 +30,23 @@ describe('abc: page-header', () => {
   let dl: DebugElement;
   let menuSrv: MenuService;
   let context: TestComponent;
-  let route: Router;
+  let router: Router;
 
   function genModule(other: {
     template?: string;
     providers?: any[];
     created?: boolean;
   }) {
-    const imports = [RouterModule.forRoot([]), PageHeaderModule.forRoot()];
-    const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
+    const imports = [RouterTestingModule.withRoutes([
+      { path: '1-1/:name', component: TestComponent }
+    ]), PageHeaderModule.forRoot()];
+    const providers = [ { provide: APP_BASE_HREF, useValue: '/' }, SettingsService ];
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
     }
     injector = TestBed.configureTestingModule({
       imports,
-      declarations: [TestComponent],
+      declarations: [ TestComponent ],
       providers,
     });
     if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
@@ -52,7 +55,7 @@ describe('abc: page-header', () => {
     context = fixture.componentInstance;
     if (other.created !== false) fixture.detectChanges();
     menuSrv = injector.get(MenuService);
-    route = injector.get(Router);
+    router = injector.get(Router);
   }
 
   function isExists(cls: string, stauts: boolean = true) {
@@ -144,7 +147,7 @@ describe('abc: page-header', () => {
     });
 
     it('should be', () => {
-      spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
+      spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
       context.home = '';
       context.autoBreadcrumb = true;
       fixture.detectChanges();
@@ -152,7 +155,7 @@ describe('abc: page-header', () => {
     });
 
     it('should be no breadcrumb when invalid url', () => {
-      spyOnProperty(route, 'url').and.returnValue('/1-1/a-1-1-2');
+      spyOnProperty(router, 'url').and.returnValue('/1-1/a-1-1-2');
       context.autoBreadcrumb = true;
       fixture.detectChanges();
       expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(0);
@@ -175,7 +178,7 @@ describe('abc: page-header', () => {
           ],
         },
       ]);
-      spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
+      spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
       context.autoBreadcrumb = true;
       fixture.detectChanges();
       expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(2);
@@ -183,13 +186,31 @@ describe('abc: page-header', () => {
 
     describe('#home', () => {
       it('shoule be hide home', () => {
-        spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
+        spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
         context.home = '';
         context.autoBreadcrumb = true;
         fixture.detectChanges();
         expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
       });
     });
+
+    it('shoule be different breadcrumb by paths', fakeAsync(() => {
+      context.home = '';
+      context.autoBreadcrumb = true;
+      const urlSpy = spyOnProperty(router, 'url');
+      urlSpy.and.returnValue('/1-1/1-1-2');
+      fixture.detectChanges();
+      const firstPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
+      urlSpy.and.returnValue('/1-1/1-1-1');
+      fixture.ngZone.run(() => {
+        router.navigateByUrl('/1-1/1-1-1');
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+          const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
+          expect(firstPath.innerText).not.toBe(secondPath.innerText);
+        })
+      });
+    }));
   });
 
   describe('#title', () => {
@@ -316,7 +337,7 @@ describe('abc: page-header', () => {
           ],
         },
       ]);
-      spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
+      spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
       spyOn(i18n, 'fanyi');
       expect(i18n.fanyi).not.toHaveBeenCalled();
       context.autoBreadcrumb = true;
@@ -350,7 +371,7 @@ describe('abc: page-header', () => {
         },
       ]);
       context.autoBreadcrumb = true;
-      spyOnProperty(route, 'url').and.returnValue('/1-1/1-1-2');
+      spyOnProperty(router, 'url').and.returnValue('/1-1/1-1-2');
       spyOn(i18n, 'fanyi');
       context.home = 'home';
       context.homeI18n = 'homeI18n';
