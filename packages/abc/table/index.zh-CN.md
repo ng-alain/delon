@@ -76,6 +76,8 @@ config: STConfig
 `reload(extraParams?: any, options?: STLoadOptions)` | 刷新当前页
 `reset(extraParams?: any, options?: STLoadOptions)` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除）
 `removeRow(data: STData | STData[])` | 移除行
+`clear(cleanStatus = true)` | 清空所有数据
+`clearStatus()` | 清空所有状态（包含单多选、排序、过滤状态）
 `clearCheck()` | 清除所有 `checkbox`
 `clearRadio()` | 清除所有 `radio`
 `export(newData?: any[], opt?: STExportOptions)` | 导出Excel，确保已经导入 `XlsxModule`

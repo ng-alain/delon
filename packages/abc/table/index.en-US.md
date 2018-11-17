@@ -76,6 +76,8 @@ Name | Description
 `reload(extraParams?: any, options?: STLoadOptions)` | Refresh current page
 `reset(extraParams?: any, options?: STLoadOptions)` | Reset data and `pi` to `1`, including single multi-select, sort, filter status (Covered default state)
 `removeRow(data: STData | STData[])` | Remove row
+`clear(cleanStatus = true)` | Clear all data
+`clearStatus()` | Clean all status (like this: single multi-select, sort, filter status)
 `clearCheck()` | Clear all `checkbox`
 `clearRadio()` | Clear all `radio`
 `export(newData?: any[], opt?: STExportOptions)` | Export Excel and make sure you have imported `XlsxModule`
