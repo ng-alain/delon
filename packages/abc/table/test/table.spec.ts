@@ -8,6 +8,7 @@ import {
   ComponentFixture,
   fakeAsync,
   discardPeriodicTasks,
+  tick,
 } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -32,6 +33,7 @@ import {
   STPage,
   STRes,
   STColumnFilter,
+  STChange,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
 import { STComponent } from '../table.component';
@@ -1234,50 +1236,37 @@ describe('abc: table', () => {
   });
 
   describe('[row events]', () => {
-    beforeEach((done: () => void) => {
+    beforeEach(fakeAsync(() => {
       genModule({ minColumn: true });
       context.rowClickTime = 10;
       fixture.detectChanges();
-      fixture.whenStable().then(() => done());
-    });
-    it(`should be row click`, (done: () => void) => {
-      expect(context.change).not.toHaveBeenCalled();
+      tick();
+    }));
+    it(`should be row click`, fakeAsync(() => {
       (page.getCell() as HTMLElement).click();
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        setTimeout(() => {
-          expect(context.change).toHaveBeenCalled();
-          done();
-        }, 25);
-      });
-    });
-    it(`should be row double click`, (done: () => void) => {
-      expect(context.change).not.toHaveBeenCalled();
+      tick(100);
+      expect(page._changeData.type).toBe('click');
+    }));
+    it(`should be row double click`, fakeAsync(() => {
       const cell = page.getCell() as HTMLElement;
       cell.click();
       cell.click();
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        setTimeout(() => {
-          expect(context.change).not.toHaveBeenCalled();
-          done();
-        }, 25);
-      });
-    });
-    it('should be ingore input', (done: () => void) => {
+      tick(100);
+      expect(page._changeData.type).toBe('dblClick');
+      console.log('2', page._changeData);
+    }));
+    it('should be ingore input', fakeAsync(() => {
       expect(context.change).not.toHaveBeenCalled();
       const el = page.getCell() as HTMLElement;
       // mock input nodeName
       spyOnProperty(el, 'nodeName', 'get').and.returnValue('INPUT');
       el.click();
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        setTimeout(() => {
-          expect(context.change).not.toHaveBeenCalled();
-          done();
-        }, 25);
-      });
-    });
+      tick(100);
+      expect(context.change).not.toHaveBeenCalled();
+    }));
   });
 
   describe('[i18n]', () => {
@@ -1464,9 +1453,10 @@ describe('abc: table', () => {
   });
 
   class PageObject {
+    _changeData: STChange;
     constructor() {
       spyOn(context, 'error');
-      spyOn(context, 'change');
+      spyOn(context, 'change').and.callFake(e => this._changeData = e);
       comp = context.comp;
     }
     get(cls: string): DebugElement {
@@ -1665,7 +1655,7 @@ describe('abc: table', () => {
         [widthConfig]="widthConfig"
         [rowClickTime]="rowClickTime"
 
-        (change)="change()"
+        (change)="change($event)"
         (error)="error()"
     >
     </st>`,
