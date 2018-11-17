@@ -565,6 +565,18 @@ export interface STExportOptions {
 }
 
 /**
+ * 单排序规则
+ * - 若不指定，则返回：`columnName=ascend|descend`
+ * - 若指定，则返回：`sort=columnName.(ascend|descend)`
+ */
+export interface STSingleSort {
+  /** 请求参数名，默认：`sort` */
+  key?: string;
+  /** 列名与状态间分隔符，默认：`.` */
+  nameSeparator?: string;
+}
+
+/**
  * 多排序相同排序 key 时合并规则
  */
 export interface STMultiSort {

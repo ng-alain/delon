@@ -53,6 +53,7 @@ config: STConfig
 `[loading]` | 页面是否加载中 | `boolean` | `false`
 `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0`
 `[scroll]` | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：`{ x: "300px", y: "300px" }` | `{ y?: string; x?: string }` | -
+`[singleSort]` | 单排序规则<br>若不指定，则返回：`columnName=ascend|descend`<br>若指定，则返回：`sort=columnName.(ascend|descend)` | `STSingleSort` | `null`
 `[multiSort]` | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, STMultiSort` | `false`
 `[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200`
 `[header]` | 表格标题 | `string,TemplateRef<void>` | -
@@ -174,6 +175,13 @@ class TestComponent {
 `[sheetname]` | 工作薄名称 | `string` | `Sheet1`
 `[filename]` | 保存的文件名 | `string` | `export.xslx`
 `[callback]` | 保存前的回调 | `(wb: WorkBook) => void` | -
+
+### STMultiSort
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[key]` | 请求参数名 | `string` | `sort`
+`[nameSeparator]` | 列名与状态间分隔符 | `string` | `.`
 
 ### STMultiSort
 

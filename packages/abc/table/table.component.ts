@@ -29,7 +29,6 @@ import {
   ALAIN_I18N_TOKEN,
   AlainI18NService,
   DrawerHelper,
-  DrawerHelperOptions,
   DelonLocaleService,
 } from '@delon/theme';
 import {
@@ -52,11 +51,11 @@ import {
   STReq,
   STError,
   STChangeType,
-  STChangeRowClick,
   STRes,
   STPage,
   STLoadOptions,
   STRowClassName,
+  STSingleSort,
 } from './table.interfaces';
 import { STConfig } from './table.config';
 import { STExport } from './table-export';
@@ -180,6 +179,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px', x: '300px' }` */
   @Input()
   scroll: { y?: string; x?: string };
+  /**
+   * 单排序规则
+   * - 若不指定，则返回：`columnName=ascend|descend`
+   * - 若指定，则返回：`sort=columnName.(ascend|descend)`
+   */
+  @Input()
+  singleSort: STSingleSort = null;
+  private _multiSort: STMultiSort;
   /** 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 */
   @Input()
   get multiSort() {
@@ -199,7 +206,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       typeof value === 'object' ? value : {},
     );
   }
-  private _multiSort: STMultiSort;
   @Input()
   rowClassName: STRowClassName;
   /** `header` 标题 */
@@ -298,7 +304,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   //#region data
 
   private _load() {
-    const { pi, ps, data, req, res, page, total, multiSort, rowClassName } = this;
+    const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
     this.loading = true;
     return this.dataSource
       .process({
@@ -310,6 +316,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         res,
         page,
         columns: this._columns,
+        singleSort,
         multiSort,
         rowClassName
       })
@@ -463,7 +470,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._load();
     const res = {
       value,
-      map: this.dataSource.getReqSortMap(this.multiSort, this._columns),
+      map: this.dataSource.getReqSortMap(this.singleSort, this.multiSort, this._columns),
       column: col,
     };
     this.changeEmit('sort', res);
