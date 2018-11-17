@@ -61,12 +61,6 @@ Property | Description | Type | Default
 `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | -
 `(change)` | Events | `EventEmitter<STChange>` | -
 `(error)` | Error event | `EventEmitter<STError>` | -
-(deprecated)`(sortChange)` | Sort event | `EventEmitter` | -
-(deprecated)`(checkboxChange)` | Checkbox event | `EventEmitter` | -
-(deprecated)`(radioChange)` | Radio event | `EventEmitter` | -
-(deprecated)`(filterChange)` | Filter event | `EventEmitter` | -
-(deprecated)`(rowClick)` | Rows click event | `EventEmitter<STRowClick>` | -
-(deprecated)`(rowDblClick)` | Rows double click event | `EventEmitter<STRowClick>` | -
 
 ### Methods
 

@@ -61,12 +61,6 @@ config: STConfig
 `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | -
 `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动 | `EventEmitter<STChange>` | -
 `(error)` | 异常时回调 | `EventEmitter<STError>` | -
-(deprecated)`(sortChange)` | 排序回调 | `EventEmitter` | -
-(deprecated)`(checkboxChange)` | checkbox变化时回调，参数为当前所选清单 | `EventEmitter` | -
-(deprecated)`(radioChange)` | radio变化时回调，参数为当前所选 | `EventEmitter` | -
-(deprecated)`(filterChange)` | Filter回调 | `EventEmitter` | -
-(deprecated)`(rowClick)` | 行单击回调 | `EventEmitter<STRowClick>` | -
-(deprecated)`(rowDblClick)` | 行双击回调 | `EventEmitter<STRowClick>` | -
 
 ### 组件方法
 

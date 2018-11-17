@@ -159,12 +159,12 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 | `[isPageIndexReset]`  | `page`     | `indexReset`      | √         | -        | -    |
 | `[toTopInChange]`     | `page`     | `toTop`           | √         | -        | -    |
 | `[toTopOffset]`       | `page`     | `toTopOffset`     | √         | -        | -    |
-| `(checkboxChange)`    | `(change)` | -                 | √         | -        | 过期提醒    |
-| `(radioChange)`       | `(change)` | -                 | √         | -        | 过期提醒    |
-| `(sortChange)`        | `(change)` | -                 | √         | -        | 过期提醒    |
-| `(filterChange)`      | `(change)` | -                 | √         | -        | 过期提醒    |
-| `(rowClick)`          | `(change)` | -                 | √         | -        | 过期提醒    |
-| `(rowDblClick)`       | `(change)` | -                 | √         | -        | 过期提醒    |
+| `(checkboxChange)`    | `(change)` | -                 | √         | ×        | 过期提醒    |
+| `(radioChange)`       | `(change)` | -                 | √         | ×        | 过期提醒    |
+| `(sortChange)`        | `(change)` | -                 | √         | ×        | 过期提醒    |
+| `(filterChange)`      | `(change)` | -                 | √         | ×        | 过期提醒    |
+| `(rowClick)`          | `(change)` | -                 | √         | ×        | 过期提醒    |
+| `(rowDblClick)`       | `(change)` | -                 | √         | ×        | 过期提醒    |
 
 > 一个示例说明 [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-f573fc0900f21b377dac432f1668c584L164)
 

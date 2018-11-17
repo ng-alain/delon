@@ -237,52 +237,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #endregion
 
-  // #region compatible
-
-  /**
-   * checkbox变化时回调，参数为当前所选清单
-   * @deprecated 使用 `change` 替代
-   * @deprecated as of v3
-   */
-  @Output()
-  readonly checkboxChange = new EventEmitter<STData[]>();
-  /**
-   * radio变化时回调，参数为当前所选
-   * @deprecated 使用 `change` 替代
-   * @deprecated as of v3
-   */
-  @Output()
-  readonly radioChange = new EventEmitter<STData>();
-  /**
-   * 排序回调
-   * @deprecated 使用 `change` 替代
-   * @deprecated as of v3
-   */
-  @Output()
-  readonly sortChange = new EventEmitter<any>();
-  /**
-   * 过滤变化时回调
-   * @deprecated 使用 `change` 替代
-   * @deprecated as of v3
-   */
-  @Output()
-  readonly filterChange = new EventEmitter<STColumn>();
-  /**
-   * 行单击回调
-   * @deprecated 使用 `change` 替代
-   * @deprecated as of v3
-   */
-  @Output()
-  readonly rowClick = new EventEmitter<STChangeRowClick>();
-  /**
-   * 行双击回调
-   * @deprecated 使用 `change` 替代
-   * @deprecated as of v3
-   */
-  @Output()
-  readonly rowDblClick = new EventEmitter<STChangeRowClick>();
-  //#endregion
-
   constructor(
     private cdRef: ChangeDetectorRef,
     private cog: STConfig,
@@ -474,12 +428,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       const data = { e, item, index };
       if (this.rowClickCount === 1) {
         this.changeEmit('click', data);
-        // @deprecated as of v3
-        this.rowClick.emit(data);
       } else {
         this.changeEmit('dblClick', data);
-        // @deprecated as of v3
-        this.rowDblClick.emit(data);
       }
       this.rowClickCount = 0;
     }, this.rowClickTime);
@@ -517,8 +467,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       column: col,
     };
     this.changeEmit('sort', res);
-    // @deprecated as of v3
-    this.sortChange.emit(res);
   }
 
   clearSort() {
@@ -534,8 +482,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     col.filter.default = col.filter.menus.findIndex(w => w.checked) !== -1;
     this._load();
     this.changeEmit('filter', col);
-    // @deprecated as of v3
-    this.filterChange.emit(col);
   }
 
   _filterConfirm(col: STColumn) {
@@ -601,8 +547,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _checkNotify(): this {
     const res = this._data.filter(w => !w.disabled && w.checked === true);
     this.changeEmit('checkbox', res);
-    // @deprecated as of v3
-    this.checkboxChange.emit(res);
     return this;
   }
 
@@ -614,8 +558,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   clearRadio(): this {
     this._data.filter(w => w.checked).forEach(item => (item.checked = false));
     this.changeEmit('radio', null);
-    // @deprecated as of v3
-    this.radioChange.emit(null);
     return this;
   }
 
@@ -624,8 +566,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._data.filter(w => !w.disabled).forEach(i => (i.checked = false));
     item.checked = checked;
     this.changeEmit('radio', item);
-    // @deprecated as of v3
-    this.radioChange.emit(item);
     return this;
   }
 
