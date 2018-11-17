@@ -67,14 +67,17 @@ export abstract class BaseInterceptor implements HttpInterceptor {
       req = this.setReq(req, options);
     } else {
       ToLogin(options, this.injector);
-      // observer.error：会导倒后续拦截器无法触发，因此，需要处理 `_HttpClient` 状态问题
+      // Unable to guarantee interceptor execution order
+      // So cancel the loading state as much as possible
       const hc = this.injector.get(_HttpClient, null);
       if (hc) hc.end();
+      // Interrupt Http request, so need to generate a new Observable
       return new Observable((observer: Observer<HttpEvent<any>>) => {
         const res = new HttpErrorResponse({
           url: req.url,
+          headers: req.headers,
           status: 401,
-          statusText: `From Simple Intercept --> https://ng-alain.com/docs/auth`,
+          statusText: `From Auth Intercept --> https://ng-alain.com/docs/auth`,
         });
         observer.error(res);
       });

@@ -39,6 +39,8 @@ ng g ng-alain:plugin g2
 ng g ng-alain:plugin g2 -t=remove
 ```
 
+> 更多请参考G2[开发文档](/chart)。
+
 ### codeStyle
 
 代码风格，有几个规则：
