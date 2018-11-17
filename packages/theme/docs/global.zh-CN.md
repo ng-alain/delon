@@ -4,13 +4,6 @@ order: 1
 title: 全局参数
 ---
 
-**优化：** 所有 `-enabled` 后缀的变量，允许你在 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) 中设置为 `false`，可以有效减少 css 文件大小。
-
-```less
-// 不需要 masonry 样式
-@masonry-enabled: false
-```
-
 ## 公共类
 
 | 名称 | 默认值 | 功能 |
@@ -61,7 +54,7 @@ title: 全局参数
 
 | 名称 | 默认值 | 功能 |
 | --- | --- | --- |
-| `@preserve-white-spaces-enabled` | `true` | 开启 `preserveWhitespaces` |
+| `@preserve-white-spaces-enabled` | `true` | 解决开启 [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) 时按钮间可能会出现无缝  |
 | `@preserve-sf-and-st-spaces` | `16px` | `sf` 与 `st` 间间距 |
 | `@preserve-buttons-spaces` | 按钮间间距（包括：button、button-group、popconfirm） |
 | `@router-animation-duration` | `antFadeIn` | 路由切换动画 |

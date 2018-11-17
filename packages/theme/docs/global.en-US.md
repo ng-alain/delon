@@ -4,13 +4,6 @@ order: 1
 title: Global Parameters
 ---
 
-**Optimization:** All variables with the `-enabled` suffix allow you to [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) set to `false`, which can reduce css file size.
-
-```less
-// I don't need masonry style
-@masonry-enabled: false
-```
-
 ## Public
 
 | Name | Default | Description |
@@ -61,7 +54,7 @@ title: Global Parameters
 
 | Name | Default | Description |
 | --- | --- | --- |
-| `@preserve-white-spaces-enabled` | `true` | Enabled `preserveWhitespaces` |
+| `@preserve-white-spaces-enabled` | `true` | Fixed between buttons spacing when enabled [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) is true |
 | `@preserve-sf-and-st-spaces` | `16px` | Spacing between `sf` and `st` |
 | `@preserve-buttons-spaces` | Spacing between `button` and `button`(incluldes: `button`,`button-group`,`popconfirm`) |
 | `@router-animation-duration` | `antFadeIn` | Route switching animation name |
