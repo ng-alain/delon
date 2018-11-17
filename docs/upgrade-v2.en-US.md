@@ -159,12 +159,12 @@ e.g:
 | `[isPageIndexReset]`  | `page`     | `indexReset`      | √         | -        | -    |
 | `[toTopInChange]`     | `page`     | `toTop`           | √         | -        | -    |
 | `[toTopOffset]`       | `page`     | `toTopOffset`     | √         | -        | -    |
-| `(checkboxChange)`    | `(change)` | -                 | √         | √        | Error reminder    |
-| `(radioChange)`       | `(change)` | -                 | √         | √        | Error reminder    |
-| `(sortChange)`        | `(change)` | -                 | √         | √        | Error reminder    |
-| `(filterChange)`      | `(change)` | -                 | √         | √        | Error reminder    |
-| `(rowClick)`          | `(change)` | -                 | √         | √        | Error reminder    |
-| `(rowDblClick)`       | `(change)` | -                 | √         | √        | Error reminder    |
+| `(checkboxChange)`    | `(change)` | -                 | √         | ×        | Error reminder    |
+| `(radioChange)`       | `(change)` | -                 | √         | ×        | Error reminder    |
+| `(sortChange)`        | `(change)` | -                 | √         | ×        | Error reminder    |
+| `(filterChange)`      | `(change)` | -                 | √         | ×        | Error reminder    |
+| `(rowClick)`          | `(change)` | -                 | √         | ×        | Error reminder    |
+| `(rowDblClick)`       | `(change)` | -                 | √         | ×        | Error reminder    |
 
 > A demo [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-f573fc0900f21b377dac432f1668c584L164)
 

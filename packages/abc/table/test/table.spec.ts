@@ -8,6 +8,7 @@ import {
   ComponentFixture,
   fakeAsync,
   discardPeriodicTasks,
+  tick,
 } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -32,6 +33,7 @@ import {
   STPage,
   STRes,
   STColumnFilter,
+  STChange,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
 import { STComponent } from '../table.component';
@@ -172,7 +174,6 @@ describe('abc: table', () => {
               .then(() => {
                 page.click('.st__checkall');
                 expect(comp._data.filter(w => w.checked).length).toBe(PS);
-                expect(context.checkboxChange).toHaveBeenCalled();
                 page.click('.st__checkall');
                 expect(comp._data.filter(w => w.checked).length).toBe(0);
                 done();
@@ -1232,59 +1233,73 @@ describe('abc: table', () => {
         });
       });
     });
+    describe('#clean', () => {
+      beforeEach(() => {
+        genModule({ minColumn: true });
+        spyOn(comp, 'clearCheck').and.returnValue(comp);
+        spyOn(comp, 'clearRadio').and.returnValue(comp);
+        spyOn(comp, 'clearFilter').and.returnValue(comp);
+        spyOn(comp, 'clearSort').and.returnValue(comp);
+        fixture.detectChanges();
+      });
+      it('#clear', (done) => {
+        fixture.whenStable().then(() => {
+          expect(comp._data.length).toBe(PS);
+          comp.clear();
+          expect(comp._data.length).toBe(0);
+          done();
+        });
+      });
+      it('#clear, excludes clean status', (done) => {
+        fixture.whenStable().then(() => {
+          expect(comp._data.length).toBe(PS);
+          expect(comp.clearCheck).not.toHaveBeenCalled();
+          comp.clear(false);
+          expect(comp._data.length).toBe(0);
+          expect(comp.clearCheck).not.toHaveBeenCalled();
+          done();
+        });
+      });
+      it('#clearStatus', () => {
+        expect(comp.clearCheck).not.toHaveBeenCalled();
+        comp.clearStatus();
+        expect(comp.clearCheck).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('[row events]', () => {
-    beforeEach((done: () => void) => {
+    beforeEach(fakeAsync(() => {
       genModule({ minColumn: true });
       context.rowClickTime = 10;
       fixture.detectChanges();
-      fixture.whenStable().then(() => done());
-    });
-    it(`should be row click`, (done: () => void) => {
-      expect(context.rowClick).not.toHaveBeenCalled();
-      expect(context.rowDblClick).not.toHaveBeenCalled();
+      tick();
+    }));
+    it(`should be row click`, fakeAsync(() => {
       (page.getCell() as HTMLElement).click();
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        setTimeout(() => {
-          expect(context.rowClick).toHaveBeenCalled();
-          expect(context.rowDblClick).not.toHaveBeenCalled();
-          done();
-        }, 25);
-      });
-    });
-    it(`should be row double click`, (done: () => void) => {
-      expect(context.rowClick).not.toHaveBeenCalled();
-      expect(context.rowDblClick).not.toHaveBeenCalled();
+      tick(100);
+      expect(page._changeData.type).toBe('click');
+    }));
+    it(`should be row double click`, fakeAsync(() => {
       const cell = page.getCell() as HTMLElement;
       cell.click();
       cell.click();
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        setTimeout(() => {
-          expect(context.rowClick).not.toHaveBeenCalled();
-          expect(context.rowDblClick).toHaveBeenCalled();
-          done();
-        }, 25);
-      });
-    });
-    it('should be ingore input', (done: () => void) => {
-      expect(context.rowClick).not.toHaveBeenCalled();
-      expect(context.rowDblClick).not.toHaveBeenCalled();
+      tick(100);
+      expect(page._changeData.type).toBe('dblClick');
+      console.log('2', page._changeData);
+    }));
+    it('should be ingore input', fakeAsync(() => {
+      expect(context.change).not.toHaveBeenCalled();
       const el = page.getCell() as HTMLElement;
       // mock input nodeName
       spyOnProperty(el, 'nodeName', 'get').and.returnValue('INPUT');
       el.click();
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        setTimeout(() => {
-          expect(context.rowClick).not.toHaveBeenCalled();
-          expect(context.rowDblClick).not.toHaveBeenCalled();
-          done();
-        }, 25);
-      });
-    });
+      tick(100);
+      expect(context.change).not.toHaveBeenCalled();
+    }));
   });
 
   describe('[i18n]', () => {
@@ -1471,15 +1486,10 @@ describe('abc: table', () => {
   });
 
   class PageObject {
+    _changeData: STChange;
     constructor() {
       spyOn(context, 'error');
-      spyOn(context, 'change');
-      spyOn(context, 'checkboxChange');
-      spyOn(context, 'radioChange');
-      spyOn(context, 'sortChange');
-      spyOn(context, 'filterChange');
-      spyOn(context, 'rowClick');
-      spyOn(context, 'rowDblClick');
+      spyOn(context, 'change').and.callFake(e => this._changeData = e);
       comp = context.comp;
     }
     get(cls: string): DebugElement {
@@ -1678,15 +1688,8 @@ describe('abc: table', () => {
         [widthConfig]="widthConfig"
         [rowClickTime]="rowClickTime"
 
-        (change)="change()"
+        (change)="change($event)"
         (error)="error()"
-
-        (checkboxChange)="checkboxChange()"
-        (radioChange)="radioChange()"
-        (sortChange)="sortChange()"
-        (filterChange)="filterChange()"
-        (rowClick)="rowClick()"
-        (rowDblClick)="rowDblClick()"
     >
     </st>`,
 })
@@ -1714,11 +1717,4 @@ class TestComponent {
 
   error() {}
   change() {}
-
-  checkboxChange() {}
-  radioChange() {}
-  sortChange() {}
-  filterChange() {}
-  rowClick() {}
-  rowDblClick() {}
 }

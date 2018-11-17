@@ -4,7 +4,7 @@
 </ng-template>
 <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError"
   [error]="error" [showTitle]="true" [title]="labelTitle">
-  <ng-container *ngIf="data.length === 0">
+  <ng-container *ngIf="inited && data.length === 0">
     <label nz-checkbox [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="_setValue($event)">
       {{schema.title}}
       <span class="optional">
@@ -15,7 +15,7 @@
       </span>
     </label>
   </ng-container>
-  <ng-container *ngIf="data.length > 0">
+  <ng-container *ngIf="inited && data.length > 0">
     <ng-container *ngIf="grid_span === 0">
       <ng-template [ngTemplateOutlet]="all"></ng-template>
       <nz-checkbox-group [ngModel]="data" (ngModelChange)="notifySet()"></nz-checkbox-group>

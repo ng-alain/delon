@@ -15,7 +15,6 @@ import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
 
-
 const COMPONENTS = [
   DashboardComponent,
   // passport pages

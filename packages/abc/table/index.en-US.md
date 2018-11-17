@@ -61,12 +61,6 @@ Property | Description | Type | Default
 `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | -
 `(change)` | Events | `EventEmitter<STChange>` | -
 `(error)` | Error event | `EventEmitter<STError>` | -
-(deprecated)`(sortChange)` | Sort event | `EventEmitter` | -
-(deprecated)`(checkboxChange)` | Checkbox event | `EventEmitter` | -
-(deprecated)`(radioChange)` | Radio event | `EventEmitter` | -
-(deprecated)`(filterChange)` | Filter event | `EventEmitter` | -
-(deprecated)`(rowClick)` | Rows click event | `EventEmitter<STRowClick>` | -
-(deprecated)`(rowDblClick)` | Rows double click event | `EventEmitter<STRowClick>` | -
 
 ### Methods
 
@@ -76,6 +70,8 @@ Name | Description
 `reload(extraParams?: any, options?: STLoadOptions)` | Refresh current page
 `reset(extraParams?: any, options?: STLoadOptions)` | Reset data and `pi` to `1`, including single multi-select, sort, filter status (Covered default state)
 `removeRow(data: STData | STData[])` | Remove row
+`clear(cleanStatus = true)` | Clear all data
+`clearStatus()` | Clean all status (like this: single multi-select, sort, filter status)
 `clearCheck()` | Clear all `checkbox`
 `clearRadio()` | Clear all `radio`
 `export(newData?: any[], opt?: STExportOptions)` | Export Excel and make sure you have imported `XlsxModule`

@@ -61,12 +61,6 @@ config: STConfig
 `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | -
 `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动 | `EventEmitter<STChange>` | -
 `(error)` | 异常时回调 | `EventEmitter<STError>` | -
-(deprecated)`(sortChange)` | 排序回调 | `EventEmitter` | -
-(deprecated)`(checkboxChange)` | checkbox变化时回调，参数为当前所选清单 | `EventEmitter` | -
-(deprecated)`(radioChange)` | radio变化时回调，参数为当前所选 | `EventEmitter` | -
-(deprecated)`(filterChange)` | Filter回调 | `EventEmitter` | -
-(deprecated)`(rowClick)` | 行单击回调 | `EventEmitter<STRowClick>` | -
-(deprecated)`(rowDblClick)` | 行双击回调 | `EventEmitter<STRowClick>` | -
 
 ### 组件方法
 
@@ -76,6 +70,8 @@ config: STConfig
 `reload(extraParams?: any, options?: STLoadOptions)` | 刷新当前页
 `reset(extraParams?: any, options?: STLoadOptions)` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除）
 `removeRow(data: STData | STData[])` | 移除行
+`clear(cleanStatus = true)` | 清空所有数据
+`clearStatus()` | 清空所有状态（包含单多选、排序、过滤状态）
 `clearCheck()` | 清除所有 `checkbox`
 `clearRadio()` | 清除所有 `radio`
 `export(newData?: any[], opt?: STExportOptions)` | 导出Excel，确保已经导入 `XlsxModule`
