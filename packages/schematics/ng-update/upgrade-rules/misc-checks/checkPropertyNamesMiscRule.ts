@@ -48,7 +48,7 @@ export class Walker extends ComponentWalker {
         start: node.getStart() + list.offset,
         end: node.getStart() + list.offset + list.attr.length,
         message:
-          `Found deprecated @Output() "${chalk.red(list.attr)}" on "${chalk.bold(
+          `Found removed @Output() "${chalk.red(list.attr)}" on "${chalk.bold(
             'st(simple-table)',
           )}". ` +
           `Use "${chalk.green(

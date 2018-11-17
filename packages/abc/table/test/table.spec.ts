@@ -172,7 +172,6 @@ describe('abc: table', () => {
               .then(() => {
                 page.click('.st__checkall');
                 expect(comp._data.filter(w => w.checked).length).toBe(PS);
-                expect(context.checkboxChange).toHaveBeenCalled();
                 page.click('.st__checkall');
                 expect(comp._data.filter(w => w.checked).length).toBe(0);
                 done();
@@ -1242,36 +1241,31 @@ describe('abc: table', () => {
       fixture.whenStable().then(() => done());
     });
     it(`should be row click`, (done: () => void) => {
-      expect(context.rowClick).not.toHaveBeenCalled();
-      expect(context.rowDblClick).not.toHaveBeenCalled();
+      expect(context.change).not.toHaveBeenCalled();
       (page.getCell() as HTMLElement).click();
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         setTimeout(() => {
-          expect(context.rowClick).toHaveBeenCalled();
-          expect(context.rowDblClick).not.toHaveBeenCalled();
+          expect(context.change).toHaveBeenCalled();
           done();
         }, 25);
       });
     });
     it(`should be row double click`, (done: () => void) => {
-      expect(context.rowClick).not.toHaveBeenCalled();
-      expect(context.rowDblClick).not.toHaveBeenCalled();
+      expect(context.change).not.toHaveBeenCalled();
       const cell = page.getCell() as HTMLElement;
       cell.click();
       cell.click();
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         setTimeout(() => {
-          expect(context.rowClick).not.toHaveBeenCalled();
-          expect(context.rowDblClick).toHaveBeenCalled();
+          expect(context.change).not.toHaveBeenCalled();
           done();
         }, 25);
       });
     });
     it('should be ingore input', (done: () => void) => {
-      expect(context.rowClick).not.toHaveBeenCalled();
-      expect(context.rowDblClick).not.toHaveBeenCalled();
+      expect(context.change).not.toHaveBeenCalled();
       const el = page.getCell() as HTMLElement;
       // mock input nodeName
       spyOnProperty(el, 'nodeName', 'get').and.returnValue('INPUT');
@@ -1279,8 +1273,7 @@ describe('abc: table', () => {
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         setTimeout(() => {
-          expect(context.rowClick).not.toHaveBeenCalled();
-          expect(context.rowDblClick).not.toHaveBeenCalled();
+          expect(context.change).not.toHaveBeenCalled();
           done();
         }, 25);
       });
@@ -1474,12 +1467,6 @@ describe('abc: table', () => {
     constructor() {
       spyOn(context, 'error');
       spyOn(context, 'change');
-      spyOn(context, 'checkboxChange');
-      spyOn(context, 'radioChange');
-      spyOn(context, 'sortChange');
-      spyOn(context, 'filterChange');
-      spyOn(context, 'rowClick');
-      spyOn(context, 'rowDblClick');
       comp = context.comp;
     }
     get(cls: string): DebugElement {
@@ -1680,13 +1667,6 @@ describe('abc: table', () => {
 
         (change)="change()"
         (error)="error()"
-
-        (checkboxChange)="checkboxChange()"
-        (radioChange)="radioChange()"
-        (sortChange)="sortChange()"
-        (filterChange)="filterChange()"
-        (rowClick)="rowClick()"
-        (rowDblClick)="rowDblClick()"
     >
     </st>`,
 })
@@ -1714,11 +1694,4 @@ class TestComponent {
 
   error() {}
   change() {}
-
-  checkboxChange() {}
-  radioChange() {}
-  sortChange() {}
-  filterChange() {}
-  rowClick() {}
-  rowDblClick() {}
 }
