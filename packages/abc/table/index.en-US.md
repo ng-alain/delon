@@ -53,6 +53,7 @@ Property | Description | Type | Default
 `[loading]` | Loading status of table | `boolean` | `false`
 `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0`
 `[scroll]` | Whether table can be scrolled in x/y direction, x or y can be a string that indicates the width and height of table body | `{ y?: string; x?: string }` | -
+`[singleSort]` | Single sort config<br>If not specified, return: `columnName=ascend|descend`<br>If specified, return: `sort=columnName.(ascend|descend)` | `STSingleSort` | `null`
 `[multiSort]` | Whether to mulit-sort, recommended use in URL data source | `boolean, STMultiSort` | `false`
 `[rowClickTime]` | Click twice in the time range for double click, unit is millisecond | `number` | `200`
 `[header]` | Table header renderer | `string,TemplateRef<void>` | -
@@ -174,6 +175,13 @@ Property | Description | Type | Default
 `[sheetname]` | Sheet name | `string` | `Sheet1`
 `[filename]` | Save file name | `string` | `export.xslx`
 `[callback]` | Callback before saving | `(wb: WorkBook) => void` | -
+
+### STSingleSort
+
+Property | Description | Type | Default
+-------- | ----------- | ---- | -------
+`[key]` | Request parameter name | `string` | `sort`
+`[nameSeparator]` | Column name and state separator | `string` | `.`
 
 ### STMultiSort
 
