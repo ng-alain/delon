@@ -13,7 +13,7 @@ import {
   Renderer2,
   OnDestroy,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { NzAffixComponent } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -41,6 +41,7 @@ export class PageHeaderComponent
   private inited = false;
   private i18n$: Subscription;
   private set$: Subscription;
+  private routerEvent$: Subscription;
   @ViewChild('conTpl')
   private conTpl: ElementRef;
   @ViewChild('affix')
@@ -51,7 +52,7 @@ export class PageHeaderComponent
     if (this._menus) {
       return this._menus;
     }
-    this._menus = this.menuSrv.getPathByUrl(this.route.url.split('?')[0], this.recursiveBreadcrumb);
+    this._menus = this.menuSrv.getPathByUrl(this.router.url.split('?')[0], this.recursiveBreadcrumb);
 
     return this._menus;
   }
@@ -146,7 +147,7 @@ export class PageHeaderComponent
     cog: PageHeaderConfig,
     settings: SettingsService,
     private renderer: Renderer2,
-    private route: Router,
+    private router: Router,
     private menuSrv: MenuService,
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
@@ -169,6 +170,16 @@ export class PageHeaderComponent
         ),
       )
       .subscribe(() => this.affix.updatePosition({}));
+    this.routerEvent$ = this.router.events
+      .pipe(
+        filter((event: RouterEvent) => event instanceof NavigationEnd)
+      )
+      .subscribe(
+        (event: RouterEvent) => {
+          this._menus = null;
+          this.refresh();
+        }
+      );
   }
 
   refresh() {
@@ -250,5 +261,6 @@ export class PageHeaderComponent
   ngOnDestroy(): void {
     if (this.i18n$) this.i18n$.unsubscribe();
     this.set$.unsubscribe();
+    this.routerEvent$.unsubscribe();
   }
 }

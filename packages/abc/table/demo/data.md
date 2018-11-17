@@ -21,7 +21,12 @@ import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demo',
-  template: `<st [data]="users" [columns]="columns" (change)="change($event)"></st>`,
+  template: `
+  <div class="mb-md">
+    <button (click)="st.clear()" nz-button>Clear Data</button>
+    <button (click)="st.clearStatus()" nz-button>Clear Status</button>
+  </div>
+  <st #st [data]="users" [columns]="columns" (change)="change($event)"></st>`,
 })
 export class DemoComponent implements OnInit {
   users: any[] = [];
@@ -88,9 +93,7 @@ export class DemoComponent implements OnInit {
       },
     },
   ];
-  change(e: STChange) {
-    console.log(e);
-  }
+
   ngOnInit(): void {
     of(
       Array(100)
@@ -106,6 +109,10 @@ export class DemoComponent implements OnInit {
     )
       .pipe(delay(500))
       .subscribe(res => (this.users = res));
+  }
+
+  change(e: STChange) {
+    console.log(e);
   }
 }
 ```
