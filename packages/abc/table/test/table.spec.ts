@@ -1232,6 +1232,39 @@ describe('abc: table', () => {
         });
       });
     });
+    describe('#clean', () => {
+      beforeEach(() => {
+        genModule({ minColumn: true });
+        spyOn(comp, 'clearCheck').and.returnValue(comp);
+        spyOn(comp, 'clearRadio').and.returnValue(comp);
+        spyOn(comp, 'clearFilter').and.returnValue(comp);
+        spyOn(comp, 'clearSort').and.returnValue(comp);
+        fixture.detectChanges();
+      });
+      it('#clear', (done) => {
+        fixture.whenStable().then(() => {
+          expect(comp._data.length).toBe(PS);
+          comp.clear();
+          expect(comp._data.length).toBe(0);
+          done();
+        });
+      });
+      it('#clear, excludes clean status', (done) => {
+        fixture.whenStable().then(() => {
+          expect(comp._data.length).toBe(PS);
+          expect(comp.clearCheck).not.toHaveBeenCalled();
+          comp.clear(false);
+          expect(comp._data.length).toBe(0);
+          expect(comp.clearCheck).not.toHaveBeenCalled();
+          done();
+        });
+      });
+      it('#clearStatus', () => {
+        expect(comp.clearCheck).not.toHaveBeenCalled();
+        comp.clearStatus();
+        expect(comp.clearCheck).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('[row events]', () => {
