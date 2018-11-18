@@ -14,6 +14,7 @@ export * from './src/services/modal/modal.helper';
 export * from './src/services/drawer/drawer.helper';
 export { _HttpClient } from './src/services/http/http.client';
 export { HttpClientConfig } from './src/services/http/http.config';
+export * from './src/services/http/http.decorator';
 export { DatePipe } from './src/pipes/date/date.pipe';
 export { CNCurrencyPipe } from './src/pipes/currency/cn-currency.pipe';
 export { KeysPipe } from './src/pipes/keys/keys.pipe';
