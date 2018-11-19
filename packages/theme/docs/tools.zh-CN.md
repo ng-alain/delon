@@ -318,9 +318,11 @@ Ant Design 是以 `14px` 为基准字号。
 | ---- | --- |
 | `block-center` | `margin: 0 auto` |
 | `point` | `cursor: pointer` |
+| `no-data` | 空数据行 |
 | `no-resize` | 设置不允许调整元素 |
 | `bg-center` | 背景图垂直居中 |
 | `scrollbar` | 美化 div 滚动条 |
+| `color-weak` | 色弱模式 |
 
 ## 小部件
 
@@ -333,13 +335,6 @@ Ant Design 是以 `14px` 为基准字号。
 | `row-masonry` | 行 |
 | `row-masonry-{xs|sm|md|lg|xl}-{1-10}` | 列，响应式样式 |
 | `col-masonry` | 列 |
-
-### 其他
-
-| 名称 | 说明 |
-| ---- | --- |
-| `no-data` | 空数据行 |
-| `color-weak` | 色弱模式 |
 
 ## ng-zorro
 

@@ -4,13 +4,6 @@ order: 1
 title: Global Parameters
 ---
 
-**Optimization:** All variables with the `-enabled` suffix allow you to [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) set to `false`, which can reduce css file size.
-
-```less
-// I don't need masonry style
-@masonry-enabled: false
-```
-
 ## Public
 
 | Name | Default | Description |
@@ -19,7 +12,7 @@ title: Global Parameters
 | `@font-size-base` | `14px` | Antd font size (unchageable) |
 | `@primary-color` | Blue | antd primary color |
 | `@mobile-min` | `768px` | PC of width |
-| `@mobile-max` | `768px` | Mobile of width |
+| `@mobile-max` | `767px` | Mobile of width |
 | `@text-xs` | `@font-size-base - 2` | Text of xs size |
 | `@text-sm` | `@font-size-base + 0` | Text of sm size |
 | `@text-md` | `@font-size-base + 2` | Text of md size |
@@ -61,7 +54,7 @@ title: Global Parameters
 
 | Name | Default | Description |
 | --- | --- | --- |
-| `@preserve-white-spaces-enabled` | `true` | Enabled `preserveWhitespaces` |
+| `@preserve-white-spaces-enabled` | `true` | Fixed between buttons spacing when enabled [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) is true |
 | `@preserve-sf-and-st-spaces` | `16px` | Spacing between `sf` and `st` |
 | `@preserve-buttons-spaces` | Spacing between `button` and `button`(incluldes: `button`,`button-group`,`popconfirm`) |
 | `@router-animation-duration` | `antFadeIn` | Route switching animation name |
@@ -104,3 +97,5 @@ By `nz-table`。
 | `@abs-enabled` | `true` | Whether abs element|
 | `@masonry-enabled` | `true` | Whether css masonry |
 | `@setting-drawer-enabled` | `true` | Whether setting drawer css |
+| `@search-form-enabled` | `true` | Simple style search form, [DEMO](https://ng-alain.github.io/ng-alain/) |
+| `@search__form-enabled` | `true` | Pro style search form, [DEMO](https://ng-alain.github.io/ng-alain/) |
