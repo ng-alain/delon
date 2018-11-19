@@ -8,26 +8,29 @@ type: Documents
 ## Overview
 
 ```bash
-ng add ng-alain@next [project name]
+ng add ng-alain@next
+# If you want to create an English version, then:
+ng add ng-alain@next --defaultLanguage=en
 ```
 
 ## Options
 
-| Name          | Default | Description                                                             |
-| ------------- | ------- | ----------------------------------------------------------------------- |
-| `--form`      | `true`  | Whether include dynamic form                                            |
-| `--mock`      | `true`  | Whether include mock                                                    |
-| `--hmr`       | `true`  | Whether include HMR                                                     |
-| `--codeStyle` | `false` | Whether include code style                                              |
-| `--i18n`      | `false` | Whether include i18n                                                    |
-| `--g2`        | `false` | Whether include g2                                                      |
-| `--npm`       | `false` | Whether include `npm` taobao mirror configuration file (Chinese users)  |
-| `--yarn`      | `false` | Whether include `yarn` taobao mirror configuration file (Chinese users) |
+| Name                | Default | Description                                                             |
+| ------------------- | ------- | ----------------------------------------------------------------------- |
+| `--form`            | `true`  | Whether include dynamic form                                            |
+| `--mock`            | `true`  | Whether include mock                                                    |
+| `--hmr`             | `true`  | Whether include HMR                                                     |
+| `--defaultLanguage` | `zh`    | Default language                                                        |
+| `--codeStyle`       | `false` | Whether include code style                                              |
+| `--i18n`            | `false` | Whether include i18n                                                    |
+| `--g2`              | `false` | Whether include g2                                                      |
+| `--npm`             | `false` | Whether include `npm` taobao mirror configuration file (Chinese users)  |
+| `--yarn`            | `false` | Whether include `yarn` taobao mirror configuration file (Chinese users) |
 
 For example, generate a project with i18n:
 
 ```bash
-ng add ng-alain@next demo --i18n
+ng add ng-alain@next --i18n --defaultLanguage=en
 ```
 
 See more [plugins](/cli/plugin).

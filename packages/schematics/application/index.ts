@@ -15,6 +15,7 @@ import {
 import { strings } from '@angular-devkit/core';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as path from 'path';
+import * as fs from 'fs';
 
 import { Schema as ApplicationOptions } from './schema';
 import {
@@ -31,6 +32,7 @@ import { Project, getProject } from '../utils/project';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import { tryAddFile } from '../utils/alain';
 import { HMR_CONTENT } from '../utils/contents';
+import { getLangConfig } from '../core/lang.config';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
 let project: Project;
@@ -377,7 +379,7 @@ export class <%= componentName %> implements OnInit {
 
 }
 `,
-  '__name@dasherize__.component.spec.ts': `import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+    '__name@dasherize__.component.spec.ts': `import { async, ComponentFixture, TestBed } from '@angular/core/testing';
   import { <%= componentName %> } from './<%= dasherize(name) %>.component';
 
   describe('<%= componentName %>', () => {
@@ -450,6 +452,69 @@ function addFilesToRoot(options: ApplicationOptions) {
   ]);
 }
 
+function fixLang(options: ApplicationOptions) {
+  return (host: Tree) => {
+    if (options.i18n) return ;
+    let langCog = getLangConfig(options.defaultLanguage);
+    if (!langCog || !langCog.fileName) {
+      langCog = getLangConfig('zh');
+    }
+    const langFilePath = path.join(__dirname, `files/i18n/${langCog.fileName}`);
+    if (!fs.existsSync(langFilePath)) {
+      console.log(`未找到任何语言文件`);
+      return;
+    }
+
+    const langs = JSON.parse(fs.readFileSync(langFilePath).toString('utf8'));
+    if (!langs) return ;
+
+    host.visit(p => {
+      if (~p.indexOf(`/node_modules/`)) return ;
+
+      fixLangInHtml(host, p, langs);
+    });
+  };
+}
+
+function fixLangInHtml(host: Tree, p: string, langs: Object) {
+  let html = host.get(p).content.toString('utf8');
+  let matchCount = 0;
+  // {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
+  html = html.replace(/\{\{\(status \? '([^']+)' : '([^']+)'\) \| translate \}\}/g, (word, key1, key2) => {
+    ++matchCount;
+    return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
+  });
+  // {{ 'app.register-result.msg' | translate:params }}
+  html = html.replace(/\{\{[ ]?'([^']+)'[ ]? \| translate:[^ ]+ \}\}/g, (word, key) => {
+    ++matchCount;
+    return langs[key] || key;
+  });
+  // {{ 'Please enter mobile number!' | translate }}
+  html = html.replace(/\{\{[ ]?'([^']+)' \| translate[ ]?\}\}/g, (word, key) => {
+    ++matchCount;
+    return langs[key] || key;
+  });
+  // [nzTitle]="'app.login.tab-login-credentials' | translate"
+  html = html.replace(/'([^']+)' \| translate[ ]?/g, (word, key) => {
+    ++matchCount;
+    const value = langs[key] || key;
+    return `'${value}'`;
+  });
+  // 'app.register.get-verification-code' | translate
+  html = html.replace(/'([^']+)' \| translate/g, (word, key) => {
+    ++matchCount;
+    return langs[key] || key;
+  });
+  // removed `header-i18n`
+  if (~html.indexOf(`<header-i18n [showLang]="false" class="langs"></header-i18n>`)) {
+    ++matchCount;
+    html = html.replace(`<header-i18n [showLang]="false" class="langs"></header-i18n>`, ``);
+  }
+  if (matchCount> 0) {
+    host.overwrite(p, html);
+  }
+}
+
 function installPackages() {
   return (host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
@@ -477,6 +542,7 @@ export default function(options: ApplicationOptions): Rule {
       fixedNg6(),
       forceLess(),
       addStyle(options),
+      fixLang(options),
       installPackages(),
     ])(host, context);
   };
