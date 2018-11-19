@@ -13,7 +13,7 @@ import {
   Renderer2,
   OnDestroy,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { toBoolean, isEmpty } from '@delon/util';
 import {
   MenuService,
@@ -26,6 +26,7 @@ import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 
 import { AdPageHeaderConfig } from './page-header.config';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'page-header',
@@ -40,14 +41,16 @@ export class PageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
   private i18n$: Subscription;
-  @ViewChild('conTpl') private conTpl: ElementRef;
+  private router$: Subscription;
+  @ViewChild('conTpl')
+  private conTpl: ElementRef;
   private _menus: Menu[];
 
   private get menus() {
     if (this._menus) {
       return this._menus;
     }
-    this._menus = this.menuSrv.getPathByUrl(this.route.url.split('?')[0]);
+    this._menus = this.menuSrv.getPathByUrl(this.router.url.split('?')[0]);
 
     return this._menus;
   }
@@ -66,11 +69,14 @@ export class PageHeaderComponent
     }
   }
 
-  @Input() home: string;
+  @Input()
+  home: string;
 
-  @Input() home_link: string;
+  @Input()
+  home_link: string;
 
-  @Input() home_i18n: string;
+  @Input()
+  home_i18n: string;
 
   /**
    * 自动生成导航，以当前路由从主菜单中定位
@@ -110,24 +116,30 @@ export class PageHeaderComponent
 
   paths: any[] = [];
 
-  @ContentChild('breadcrumb') breadcrumb: TemplateRef<any>;
+  @ContentChild('breadcrumb')
+  breadcrumb: TemplateRef<any>;
 
-  @ContentChild('logo') logo: TemplateRef<any>;
+  @ContentChild('logo')
+  logo: TemplateRef<any>;
 
-  @ContentChild('action') action: TemplateRef<any>;
+  @ContentChild('action')
+  action: TemplateRef<any>;
 
-  @ContentChild('content') content: TemplateRef<any>;
+  @ContentChild('content')
+  content: TemplateRef<any>;
 
-  @ContentChild('extra') extra: TemplateRef<any>;
+  @ContentChild('extra')
+  extra: TemplateRef<any>;
 
-  @ContentChild('tab') tab: TemplateRef<any>;
+  @ContentChild('tab')
+  tab: TemplateRef<any>;
 
   // endregion
 
   constructor(
     cog: AdPageHeaderConfig,
     private renderer: Renderer2,
-    private route: Router,
+    private router: Router,
     private menuSrv: MenuService,
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
@@ -142,6 +154,13 @@ export class PageHeaderComponent
     Object.assign(this, cog);
     if (this.i18nSrv)
       this.i18n$ = this.i18nSrv.change.subscribe(() => this.refresh());
+
+    this.router$ = router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this._menus = null;
+        this.refresh();
+      });
   }
 
   refresh() {
@@ -222,5 +241,6 @@ export class PageHeaderComponent
 
   ngOnDestroy(): void {
     if (this.i18n$) this.i18n$.unsubscribe();
+    this.router$.unsubscribe();
   }
 }
