@@ -6,6 +6,24 @@ title:
 type: Other
 ---
 
+### 1.5.2
+
+`2018-11-19`
+
+* **module:sf:checkbox:** 修复丢失 title 问题 [#259](https://github.com/ng-alain/delon/issues/259)
+* **module:sf:checkbox:** 修复延迟状态问题
+* **module:sf:upload:** 修复 size 属性被占用
+* **module:st:** 修复在ie、edge下会渲染null字符
+* **module:page-header:** 修复路由变更时应刷新导航栏
+
+
+### 1.5.1
+
+`2018-11-1`
+
+* **module:sf:** fix attempt to use a destroyed error ([#248](https://github.com/ng-alain/delon/issues/248)) ([3e470e7](https://github.com/ng-alain/delon/commit/3e470e7))
+* **module:theme:** fix grey color values ([#249](https://github.com/ng-alain/delon/issues/249)) ([6234538](https://github.com/ng-alain/delon/commit/6234538))
+
 ### 1.5.0
 
 `2018-10-25`
