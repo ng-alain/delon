@@ -1,3 +1,6 @@
+import * as path from 'path';
+import * as fs from 'fs';
+
 export const LANGS_CONFIG = [
   {
     langs: ['zh-Hans', 'zh-cn', 'zh-Hans-CN', 'zh'],
@@ -16,4 +19,21 @@ export const LANGS_CONFIG = [
 
 export function getLangConfig(lang: string): any {
   return LANGS_CONFIG.find(w => w.langs.includes(lang));
+}
+
+export function getLangData(lang: string) {
+  let langCog = getLangConfig(lang);
+  if (!langCog || !langCog.fileName) {
+    langCog = getLangConfig('zh');
+  }
+
+  console.log(`Currently using translation files: ${langCog.fileName}`);
+
+  const langFilePath = path.join(__dirname, `../application/files/i18n/${langCog.fileName}`);
+  if (!fs.existsSync(langFilePath)) {
+    console.log(`No found language files`);
+    return null;
+  }
+
+  return JSON.parse(fs.readFileSync(langFilePath).toString('utf8')) || null;
 }

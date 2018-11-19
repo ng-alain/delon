@@ -15,7 +15,6 @@ import {
 import { strings } from '@angular-devkit/core';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as path from 'path';
-import * as fs from 'fs';
 
 import { Schema as ApplicationOptions } from './schema';
 import {
@@ -32,7 +31,7 @@ import { Project, getProject } from '../utils/project';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import { tryAddFile } from '../utils/alain';
 import { HMR_CONTENT } from '../utils/contents';
-import { getLangConfig } from '../core/lang.config';
+import { getLangConfig, getLangData } from '../core/lang.config';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
 let project: Project;
@@ -455,17 +454,7 @@ function addFilesToRoot(options: ApplicationOptions) {
 function fixLang(options: ApplicationOptions) {
   return (host: Tree) => {
     if (options.i18n) return ;
-    let langCog = getLangConfig(options.defaultLanguage);
-    if (!langCog || !langCog.fileName) {
-      langCog = getLangConfig('zh');
-    }
-    const langFilePath = path.join(__dirname, `files/i18n/${langCog.fileName}`);
-    if (!fs.existsSync(langFilePath)) {
-      console.log(`未找到任何语言文件`);
-      return;
-    }
-
-    const langs = JSON.parse(fs.readFileSync(langFilePath).toString('utf8'));
+    const langs = getLangData(options.defaultLanguage);
     if (!langs) return ;
 
     host.visit(p => {

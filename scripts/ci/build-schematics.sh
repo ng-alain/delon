@@ -57,7 +57,7 @@ copyFiles() {
   mkdir -p ${2}
   readonly paths=(
     # i18n data
-    "${1}src/assets/tmp/i18n|${2}application/files/"
+    "${1}src/assets/tmp/i18n|${2}application/files/i18n"
     # code styles
     "${1}.prettierignore|${2}application/files/root/__dot__prettierignore"
     "${1}.prettierrc|${2}application/files/root/__dot__prettierrc"

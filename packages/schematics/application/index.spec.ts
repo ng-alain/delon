@@ -2,6 +2,7 @@ import {
   SchematicTestRunner,
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
+import * as LANG from '../core/lang.config';
 import { createAlainApp, createNgRunner, APPNAME, createAlainRunner } from '../utils/testing';
 
 describe('NgAlainSchematic: application', () => {
@@ -39,6 +40,10 @@ describe('NgAlainSchematic: application', () => {
     });
     describe('default language', () => {
       it(`with use zh`, () => {
+        spyOn(LANG, 'getLangData').and.returnValue(JSON.stringify({
+          key1: 'Key1',
+          key2: 'KEY2'
+        }));
         const baseRunner = createNgRunner();
         const workspaceTree = baseRunner.runSchematic('workspace', {
           name: 'workspace',
@@ -59,11 +64,11 @@ describe('NgAlainSchematic: application', () => {
           workspaceTree,
         );
         appTree.create('/demo.html', `
-        {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
-        [placeholder]="'menu.search.placeholder' | translate">
-        <nz-tab [nzTitle]="'app.login.tab-login-credentials' | translate">
+        {{(status ? 'key1' : 'key2') | translate }}
+        [placeholder]="'key1' | translate">
+        <nz-tab [nzTitle]="'key1' | translate">
         {{ 'Please enter mobile number!' | translate }}
-        <button>{{ count ? count + 's' : 'app.register.get-verification-code' | translate }}</button>
+        <button>{{ count ? count + 's' : 'key1' | translate }}</button>
         `);
 
         const alainRunner = createAlainRunner();
@@ -78,12 +83,13 @@ describe('NgAlainSchematic: application', () => {
           appTree,
         );
 
-        expect(tree.readContent('/demo.html')).toBe(`
-        {{ status ? '退出全屏' : '全屏' }}
-        [placeholder]="'搜索：员工、文件、照片等'">
-        <nz-tab [nzTitle]="'账户密码登录'">
+        const res = tree.readContent('/demo.html');
+        expect(res).toBe(`
+        {{ status ? 'key1' : 'key2' }}
+        [placeholder]="'key1'">
+        <nz-tab [nzTitle]="'key1'">
         Please enter mobile number!
-        <button>{{ count ? count + 's' : '获取验证码'}}</button>
+        <button>{{ count ? count + 's' : 'key1'}}</button>
         `);
       });
     });

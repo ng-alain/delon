@@ -20,7 +20,7 @@ ng add ng-alain@next --defaultLanguage=en
 | `--form`            | `true`  | Whether include dynamic form                                            |
 | `--mock`            | `true`  | Whether include mock                                                    |
 | `--hmr`             | `true`  | Whether include HMR                                                     |
-| `--defaultLanguage` | `zh`    | Default language                                                        |
+| `--defaultLanguage` | `zh`    | Default language, [Supported language list](/cli/plugin/en#Supported-language-list)  |
 | `--codeStyle`       | `false` | Whether include code style                                              |
 | `--i18n`            | `false` | Whether include i18n                                                    |
 | `--g2`              | `false` | Whether include g2                                                      |
