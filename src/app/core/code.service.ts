@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { VERSION as VERSION_ALAIN } from '@delon/theme';
 import sdk from '@stackblitz/sdk';
 
 @Injectable({ providedIn: 'root' })
@@ -164,7 +165,9 @@ declare var Slider: any;
 `
             : ``,
 
-          `<${selector}>loading</${selector}>`,
+          `<${selector}>loading</${selector}>
+<div style="position: fixed; top: 8px; right: 8px; z-index: 8888;">@delon version: ${VERSION_ALAIN.full}</div>
+          `,
         ].join(''),
         'src/main.ts': `import './polyfills';
 
@@ -209,6 +212,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 import { registerLocaleData } from '@angular/common';
 import localeZh from '@angular/common/locales/zh';
@@ -223,6 +227,8 @@ import { DelonAuthModule } from '@delon/auth';
 import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
 import { DelonUtilModule, LazyService } from '@delon/util';
+import { DelonMockModule } from '@delon/mock';
+import * as MOCKDATA from '../../_mock';
 
 @Injectable()
 export class StartupService {
@@ -249,6 +255,7 @@ imports: [
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    RouterModule.forRoot([]),
     NgZorroAntdModule.forRoot(),
     AlainThemeModule.forRoot(),
     DelonABCModule.forRoot(),
@@ -258,6 +265,7 @@ imports: [
     DelonCacheModule.forRoot(),
     DelonFormModule.forRoot(),
     DelonUtilModule.forRoot(),
+    DelonMockModule.forRoot({ data: MOCKDATA }),
 ],
 providers: [
   StartupService,
@@ -274,6 +282,8 @@ bootstrap:    [ ${componentName} ]
 export class AppModule { }
   `,
         'src/styles.less': ``,
+        '_mock/user.ts': require('!!raw-loader!../../../_mock/user.ts'),
+        '_mock/index.ts': `export * from './user';`
       },
       template: 'angular-cli',
       dependencies: {
@@ -287,6 +297,7 @@ export class AppModule { }
         '@angular/common': '*',
         '@angular/router': '*',
         '@angular/animations': '*',
+        '@ant-design/icons-angular': '*',
         'date-fns': '*',
         'file-saver': '^1.3.3',
         'ngx-countdown': '*',
