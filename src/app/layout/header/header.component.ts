@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isMobile: boolean;
   useDocsearch = false;
   oldVersionList = [`1.x`];
-  currentVersion = 'next';
+  currentVersion = 'stable';
 
   constructor(
     public i18n: I18NService,
