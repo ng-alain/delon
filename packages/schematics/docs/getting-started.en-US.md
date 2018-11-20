@@ -26,7 +26,7 @@ ng new demo --style less
 2, add ng-alain scaffolding
 
 ```bash
-ng add ng-alain@next --defaultLanguage=en
+ng add ng-alain --defaultLanguage=en
 ```
 
 > If you any querstion, please refer to [FAQ](/docs/faq)

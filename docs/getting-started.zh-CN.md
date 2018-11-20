@@ -31,9 +31,9 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，我们�
 # 确保使用的是最新版本 Angular cli
 ng new my-project --style less
 cd my-project
-ng add ng-alain@next
+ng add ng-alain
 # 如果你想创建一个英文版本，则：
-ng add ng-alain@next --defaultLanguage=en
+ng add ng-alain --defaultLanguage=en
 ng serve
 ```
 

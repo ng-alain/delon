@@ -26,9 +26,9 @@ ng new demo --style less
 2、添加 ng-alain 脚手架
 
 ```bash
-ng add ng-alain@next
+ng add ng-alain
 # 如果你想创建一个英文版本，则：
-ng add ng-alain@next --defaultLanguage=en
+ng add ng-alain --defaultLanguage=en
 ```
 
 > 遇到问题请阅读 [常见问题](/docs/faq)
