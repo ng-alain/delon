@@ -22,7 +22,7 @@
     "defaultLanguage": {
       "type": "string",
       "description": "Specify default language [https://ng-alain.com/docs/i18n].",
-      "default": "zh-Hans"
+      "default": "zh"
     },
     "i18n": {
       "type": "boolean",
