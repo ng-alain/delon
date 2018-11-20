@@ -5,7 +5,6 @@ import { I18NService } from '../../core/i18n/service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.less'],
   host: {
     '[class.home-wrapper]': 'true',
   },
