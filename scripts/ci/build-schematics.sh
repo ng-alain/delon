@@ -56,6 +56,8 @@ updateVersionReferences() {
 copyFiles() {
   mkdir -p ${2}
   readonly paths=(
+    # i18n data
+    "${1}src/assets/tmp/i18n|${2}application/files/i18n"
     # code styles
     "${1}.prettierignore|${2}application/files/root/__dot__prettierignore"
     "${1}.prettierrc|${2}application/files/root/__dot__prettierrc"
@@ -69,6 +71,8 @@ copyFiles() {
     "${1}LICENSE|${2}application/files/root"
     "${1}README.md|${2}application/files/root"
     "${1}README-zh_CN.md|${2}application/files/root"
+    # mock
+    "${1}_mock/_user.ts|${2}application/files/root/_mock/"
     # src
     "${1}src/typings.d.ts|${2}application/files/src/"
     "${1}src/environments|${2}application/files/src/"
@@ -100,10 +104,10 @@ copyFiles() {
     "${1}src/app/layout/default/default.component.spec.ts|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/default.component.ts|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/header/index.md|${2}application/files/src/app/layout/default/header/"
-    "${1}src/app/layout/default/header/components/i18n.component.ts|${2}application/files/src/app/layout/default/header/components/"
-    "${1}src/app/layout/default/header/components/icon.component.ts|${2}application/files/src/app/layout/default/header/components/"
-    "${1}src/app/layout/default/header/components/notify.component.ts|${2}application/files/src/app/layout/default/header/components/"
-    "${1}src/app/layout/default/header/components/task.component.ts|${2}application/files/src/app/layout/default/header/components/"
+    "${1}src/app/layout/default/header/components|${2}application/files/src/app/layout/default/header/"
+    "${1}src/app/layout/default/header/header.component.spec.ts|${2}application/files/src/app/layout/default/header/"
+    "${1}src/app/layout/default/header/header.component.ts|${2}application/files/src/app/layout/default/header/"
+    "${1}src/app/layout/default/sidebar|${2}application/files/src/app/layout/default/"
     # router
     "${1}src/app/routes/callback|${2}application/files/src/app/routes/"
     "${1}src/app/routes/exception|${2}application/files/src/app/routes/"
@@ -169,7 +173,7 @@ echo "Finished cli!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng-alain/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/demo/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}/application

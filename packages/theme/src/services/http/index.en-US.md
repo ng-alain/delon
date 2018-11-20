@@ -12,6 +12,7 @@ type: Service
 - Maintain `loading` attribute
 - Handling null values
 - Unified time format is timestamp
+- Support decorator @GET, @POST etc
 
 ## DEMO
 
@@ -56,7 +57,73 @@ export class DelonModule {
 
 ### API
 
-| Property | Description  | Type                                | Default   |
-| --------------------- | ---------- | ------------------ | ----------- |
-| `nullValueHandling` | Null processing   | `include,ignore`   | `include`   |
+| Property            | Description     | Type               | Default     |
+| ------------------- | --------------- | ------------------ | ----------- |
+| `nullValueHandling` | Null processing | `include,ignore`   | `include`   |
 | `dateValueHandling` | Time processing | `timestamp,ignore` | `timestamp` |
+
+## Decorators
+
+The target service must inherit `BaseApi` abstract class.
+
+### Usage
+
+```ts
+@BaseUrl('/user')
+@BaseHeaders({ bh: 'a' })
+class RestService extends BaseApi {
+  @GET()
+  query(@Query('pi') pi: number, @Query('ps') ps: number): Observable<any> {
+    return;
+  }
+
+  @GET(':id')
+  GET(@Path('id') id: number): Observable<any> {
+    return;
+  }
+
+  @POST(':id')
+  save(@Path('id') id: number, @Body data: Object): Observable<any> {
+    return;
+  }
+
+  // If authorization is invalid, will be thrown directly `401` error and will not be sent.
+  @GET('', { acl: 'admin' })
+  ACL(): Observable<any> {
+    return;
+  }
+}
+```
+
+### Class decorators
+
+- `@BaseUrl(url: string)`
+- `@BaseHeaders(headers: HttpHeaders | { [header: string]: string | string[] })`
+
+### Method decorators
+
+- `@GET(url: string = '', options?: HttpOptions)`
+- `@POST(url: string = '', options?: HttpOptions)`
+- `@DELETE(url: string = '', options?: HttpOptions)`
+- `@PUT(url: string = '', options?: HttpOptions)`
+- `@HEAD(url: string = '', options?: HttpOptions)`
+- `@PATCH(url: string = '', options?: HttpOptions)`
+- `@JSONP(url: string = '', options?: HttpOptions)`
+- `@OPTIONS(url: string = '', options?: HttpOptions)`
+
+#### HttpOptions
+
+| Property          | Description                         | Type                         | Default |
+| ----------------- | ----------------------------------- | ---------------------------- | ------- |
+| `acl`             | ACL config, depends on `@delon/acl` | `any`                        | -       |
+| `observe`         | Specify response content            | `body,events,response`       | -       |
+| `responseType`    | Specify content format              | `arraybuffer,blob,json,text` | -       |
+| `reportProgress`  | Whether monitor progress events     | `boolean`                    | -       |
+| `withCredentials` | Set withCredentials                 | `boolean`                    | -       |
+
+### Parameter decorators
+
+- `@Path(key?: string)` URL path parameters
+- `@Query(key?: string)` QueryString of URL
+- `@Body` Body of URL
+- `@Headers(key?: string)` Headers of URL

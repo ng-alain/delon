@@ -28,6 +28,11 @@
       "type": "boolean",
       "description": "Generates g2.",
       "default": false
+    },
+    "defaultLanguage": {
+      "type": "string",
+      "description": "Specify default language [https://ng-alain.com/docs/i18n].",
+      "default": "zh"
     }
   },
   "required": []

@@ -5,4 +5,5 @@ export interface Schema {
   g2?: boolean;
   codeStyle?: boolean;
   project?: string;
+  defaultLanguage?: string;
 }
