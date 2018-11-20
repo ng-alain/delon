@@ -8,9 +8,9 @@ type: Documents
 ## 命令格式
 
 ```bash
-ng add ng-alain@next
+ng add ng-alain
 # 如果你想创建一个英文版本，则：
-ng add ng-alain@next --defaultLanguage=en
+ng add ng-alain --defaultLanguage=en
 ```
 
 ## 额外参数
@@ -30,7 +30,7 @@ ng add ng-alain@next --defaultLanguage=en
 例如生成一个带有国际化项目：
 
 ```bash
-ng add ng-alain@next --i18n --defaultLanguage=en
+ng add ng-alain --i18n --defaultLanguage=en
 ```
 
 查看更多[插件](/cli/plugin)。

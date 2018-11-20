@@ -8,9 +8,9 @@ type: Documents
 ## Overview
 
 ```bash
-ng add ng-alain@next
+ng add ng-alain
 # If you want to create an English version, then:
-ng add ng-alain@next --defaultLanguage=en
+ng add ng-alain --defaultLanguage=en
 ```
 
 ## Options
@@ -30,7 +30,7 @@ ng add ng-alain@next --defaultLanguage=en
 For example, generate a project with i18n:
 
 ```bash
-ng add ng-alain@next --i18n --defaultLanguage=en
+ng add ng-alain --i18n --defaultLanguage=en
 ```
 
 See more [plugins](/cli/plugin).

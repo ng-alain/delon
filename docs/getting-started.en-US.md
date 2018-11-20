@@ -31,7 +31,7 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 # Make sure you are using the latest version of Angular cli
 ng new my-project --style less
 cd my-project
-ng add ng-alain@next --defaultLanguage=en
+ng add ng-alain --defaultLanguage=en
 ng serve
 ```
 
