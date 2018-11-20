@@ -1,6 +1,6 @@
 ---
 type: Theme
-order: 10
+order: 100
 title: Default Layout
 ---
 

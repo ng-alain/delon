@@ -2,10 +2,24 @@
   cursor: pointer;
 }
 
-.no-resize {
-  resize: none;
-  max-width: 100%;
-  min-width: 100%;
+.no {
+  &-resize {
+    resize: none;
+    max-width: 100%;
+    min-width: 100%;
+  }
+  &-data {
+    color: rgba(0, 0, 0, 0.25);
+    text-align: center;
+    line-height: 64px;
+    font-size: 16px;
+    i {
+      font-size: 24px;
+      margin-right: 16px;
+      position: relative;
+      top: 3px;
+    }
+  }
 }
 
 .block-center {
@@ -28,4 +42,9 @@
   bottom: 0;
   padding-top: 200px;
   text-align: center;
+}
+
+.color-weak {
+  filter: invert(80%);
+  display: block;
 }

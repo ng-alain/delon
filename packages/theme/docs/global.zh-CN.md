@@ -4,13 +4,6 @@ order: 1
 title: 全局参数
 ---
 
-**优化：** 所有 `-enabled` 后缀的变量，允许你在 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) 中设置为 `false`，可以有效减少 css 文件大小。
-
-```less
-// 不需要 masonry 样式
-@masonry-enabled: false
-```
-
 ## 公共类
 
 | 名称 | 默认值 | 功能 |
@@ -19,7 +12,7 @@ title: 全局参数
 | `@font-size-base` | `14px` | antd字号 |
 | `@primary-color` | 蓝色 | antd 主色 |
 | `@mobile-min` | `768px` | PC端 |
-| `@mobile-max` | `768px` | 移动端 |
+| `@mobile-max` | `767px` | 移动端 |
 | `@text-xs` | `@font-size-base - 2` | xs 文本大小 |
 | `@text-sm` | `@font-size-base + 0` | sm 文本大小 |
 | `@text-md` | `@font-size-base + 2` | md 文本大小 |
@@ -61,7 +54,7 @@ title: 全局参数
 
 | 名称 | 默认值 | 功能 |
 | --- | --- | --- |
-| `@preserve-white-spaces-enabled` | `true` | 开启 `preserveWhitespaces` |
+| `@preserve-white-spaces-enabled` | `true` | 解决开启 [preserveWhitespaces](https://angular.io/api/core/Component#preserveWhitespaces) 时按钮间可能会出现无缝  |
 | `@preserve-sf-and-st-spaces` | `16px` | `sf` 与 `st` 间间距 |
 | `@preserve-buttons-spaces` | 按钮间间距（包括：button、button-group、popconfirm） |
 | `@router-animation-duration` | `antFadeIn` | 路由切换动画 |
@@ -104,3 +97,5 @@ title: 全局参数
 | `@abs-enabled` | `true` | 中心元素 |
 | `@masonry-enabled` | `true` | CSS瀑布流列 |
 | `@setting-drawer-enabled` | `true` | 主题设置 |
+| `@search-form-enabled` | `true` | 简化搜索框，[DEMO](https://ng-alain.github.io/ng-alain/) |
+| `@search__form-enabled` | `true` | Pro搜索框，[DEMO](https://ng-alain.github.io/ng-alain/) |

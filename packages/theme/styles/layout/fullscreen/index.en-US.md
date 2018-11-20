@@ -1,6 +1,6 @@
 ---
 type: Theme
-order: 11
+order: 110
 title: Fullscreen Layout
 ---
 

@@ -7,6 +7,7 @@ import {
   STColumnButtonDrawerConfig,
   STIcon,
   STRowClassName,
+  STSingleSort,
 } from './table.interfaces';
 
 export class STConfig {
@@ -58,6 +59,12 @@ export class STConfig {
    * 重命名排序值，`columns` 的重命名高于属性
    */
   sortReName?: { ascend?: string; descend?: string };
+  /**
+   * 单排序规则
+   * - 若不指定，则返回：`columnName=ascend|descend`
+   * - 若指定，则返回：`sort=columnName.(ascend|descend)`
+   */
+  singleSort?: STSingleSort = null;
   /**
    * 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用
    */

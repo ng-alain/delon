@@ -33,6 +33,11 @@
       "description": "Generate g2 chart plugin",
       "default": false,
       "x-prompt": "Would you like to add g2 chart plugin? (default: N)"
+    },
+    "defaultLanguage": {
+      "type": "string",
+      "description": "Specify default language [https://ng-alain.com/docs/i18n].",
+      "default": "zh"
     }
   },
   "required": []

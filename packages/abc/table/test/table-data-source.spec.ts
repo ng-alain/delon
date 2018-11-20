@@ -233,11 +233,11 @@ describe('abc: table: data-souce', () => {
   });
 
   describe('[remote data]', () => {
-    beforeEach(() => {
-      genModule();
-      options.data = '/mockurl';
-    });
     describe('[request params]', () => {
+      beforeEach(() => {
+        genModule();
+        options.data = '/mockurl';
+      });
       it('should be default method to GET', (done: () => void) => {
         options.req.method = undefined;
         let resMethod = '';
@@ -296,6 +296,10 @@ describe('abc: table: data-souce', () => {
       });
     });
     describe('[response]', () => {
+      beforeEach(() => {
+        genModule();
+        options.data = '/mockurl';
+      });
       it('should be re-name total & list', (done: () => void) => {
         options.res.reName = { total: 'T', list: 'L' };
         spyOn(http, 'request').and.callFake(
@@ -384,6 +388,8 @@ describe('abc: table: data-souce', () => {
     describe('[sort]', () => {
       let resParams: any;
       beforeEach(() => {
+        genModule();
+        options.data = '/mockurl';
         options.columns[0]._sort = {
           enabled: true,
           key: 'id',
@@ -466,10 +472,30 @@ describe('abc: table: data-souce', () => {
           });
         });
       });
+      describe('[singleSort]', () => {
+        it(`should working`, (done: () => void) => {
+          options.columns[0]._sort.default = 'ascend';
+          options.singleSort = {};
+          srv.process(options).then(res => {
+            expect(resParams.sort).toBe('id.ascend');
+            done();
+          });
+        });
+        it(`should specify options`, (done: () => void) => {
+          options.columns[0]._sort.default = 'ascend';
+          options.singleSort = { key: 'SORT', nameSeparator: '-' };
+          srv.process(options).then(res => {
+            expect(resParams.SORT).toBe('id-ascend');
+            done();
+          });
+        });
+      });
     });
     describe('[filter]', () => {
       let resParams: any;
       beforeEach(() => {
+        genModule();
+        options.data = '/mockurl';
         options.columns[0].filter = {
           default: true,
           key: 'id',
