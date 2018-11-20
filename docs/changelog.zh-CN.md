@@ -4,6 +4,39 @@ title: 更新日志
 type: Other
 ---
 
+## 2.0.0
+
+`2018-11-20`
+
+### **支持使用工具将 1.x 升级至 2.x，请参考[升级指南](https://ng-alain.com/docs/upgrade-v2/zh)**
+
+### Scaffold
+
+* **all:** 重构部分页面优先使用 `OnPush` 模式，提供更好的性能体验 ([#772](https://github.com/ng-alain/ng-alain/pull/772))
+* **router:** 根路由添加 `SimpleGuard` ([#774](https://github.com/ng-alain/ng-alain/pull/774))
+* **i18n:** 重构系列授权页，增加多语言版本 ([#777](https://github.com/ng-alain/ng-alain/pull/777))
+
+### Bug Fixes
+
+* **module:mock:** 修复 `_HttClient` 的 `loading` 状态值 ([#270](https://github.com/ng-alain/delon/pull/270))
+* **module:sf:upload:** 修复 size 属性被占用 ([#274](https://github.com/ng-alain/delon/pull/274))
+* **module:sf:checkbox:** 修复延迟状态问题 ([#278](https://github.com/ng-alain/delon/pull/278))
+* **module:st:** 修复在ie、edge下会渲染null字符 ([#275](https://github.com/ng-alain/delon/pull/275))
+* **module:page-header:** 修复路由切换无法刷新导航数据 ([#276](https://github.com/ng-alain/delon/pull/276))
+
+### Features
+
+* **schematics:** Support for dynamic build ng-alain of specified language versions ([#286](https://github.com/ng-alain/delon/issues/286)) ([f0bff6d](https://github.com/ng-alain/delon/commit/f0bff6d))
+* **module:st:** 新增 `clear` & `clearStatus` 清除数据方法 ([#282](https://github.com/ng-alain/delon/pull/282))
+* **module:st:** 新增单排序配置项 [#775](https://github.com/ng-alain/ng-alain/issues/775) ([#283](https://github.com/ng-alain/delon/pull/283))
+* **module:http:** 新增系列 `@GET`, `@POST` 等修饰器，[文档](https://ng-alain.com/theme/http/zh#%E4%BD%BF%E7%94%A8%E4%BF%AE%E9%A5%B0%E5%99%A8) ([#284](https://github.com/ng-alain/delon/pull/284))
+* **schematics:** 新增 `ng add` 额外按 `defaultLanguage` 指定语言的示例代码 ([#286](https://github.com/ng-alain/delon/pull/286))
+
+### BREAKING CHANGES
+
+* **module:st:** 移除所有 `checkboxChange`、`radioChange`、`sortChange` 等过期事件，使用 `change` 替代 ([#281](https://github.com/ng-alain/delon/pull/281))
+
+
 ## 2.0.0-rc.3
 
 `2018-11-09`

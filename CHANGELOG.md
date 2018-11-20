@@ -1,3 +1,33 @@
+# [2.0.0](https://github.com/ng-alain/delon/compare/1.5.2...2.0.0) (2018-11-20)
+
+
+### Scaffold
+
+* **all:** `OnPush` mode priority ([#772](https://github.com/ng-alain/ng-alain/pull/772))
+* **router:** add SimpleGuard of root router ([#774](https://github.com/ng-alain/ng-alain/pull/774))
+* **i18n:** add passport pages ([#777](https://github.com/ng-alain/ng-alain/pull/777))
+
+### Bug Fixes
+
+* **module:mock:** fix loading status of _HttClient ([#270](https://github.com/ng-alain/delon/pull/270))
+* **module:sf:upload:** fix missing size property of upload widget ([#274](https://github.com/ng-alain/delon/pull/274))
+* **module:sf:checkbox:** fix delayed rendering when onpush strategy ([#278](https://github.com/ng-alain/delon/pull/278))
+* **module:st:** fix render null when is value is null in edge or ie ([#275](https://github.com/ng-alain/delon/pull/275))
+* **module:page-header:** should be refresh breadcrumb when router changed ([#276](https://github.com/ng-alain/delon/pull/276))
+
+### Features
+
+* **schematics:** Support for dynamic build ng-alain of specified language versions ([#286](https://github.com/ng-alain/delon/issues/286)) ([f0bff6d](https://github.com/ng-alain/delon/commit/f0bff6d))
+* **module:st:** add clear & clearStatus methods ([#282](https://github.com/ng-alain/delon/pull/282))
+* **module:st:** add single sort config [#775](https://github.com/ng-alain/ng-alain/issues/775) ([#283](https://github.com/ng-alain/delon/pull/283))
+* **module:http:** support decorator `@GET`, `@POST` etc, [Document](https://ng-alain.com/theme/http/en#Decorators) ([#284](https://github.com/ng-alain/delon/pull/284))
+* **schematics:** Support for dynamic build ng-alain of specified language versions ([#286](https://github.com/ng-alain/delon/pull/286))
+
+### BREAKING CHANGES
+
+* **module:st:** remove deprecated events: `checkboxChange`, `radioChange`, `sortChange` etc ([#281](https://github.com/ng-alain/delon/pull/281))
+
+
 # [2.0.0-rc.3](https://github.com/ng-alain/delon/compare/2.0.0-rc.2...2.0.0-rc.3) (2018-11-09)
 
 
