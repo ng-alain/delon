@@ -15,6 +15,7 @@ export const LANGS_CONFIG = [
     fileName: 'zh-TW.json',
   },
   { langs: ['en'], zorro: 'en_US', delon: 'en_US', fileName: 'en-US.json' },
+  { langs: ['tr'], zorro: 'tr_TR', delon: 'tr_TR' },
 ];
 
 export function getLangConfig(lang: string): any {
