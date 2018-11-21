@@ -37,7 +37,6 @@ describe('form: widget: autocomplete', () => {
           a: { type: 'string', ui: { widget }, enum: data },
         },
       };
-      const typeValue = 'a';
       page
         .newSchema(s)
         .typeEvent('focusin')
@@ -62,12 +61,7 @@ describe('form: widget: autocomplete', () => {
       page.newSchema(s);
       const comp = page.getWidget<AutoCompleteWidget>('sf-autocomplete');
       comp.list.subscribe(res => {
-        const a = dl
-          .query(By.directive(AutoCompleteWidget))
-          .query(By.directive(NzAutocompleteComponent))
-          .injector.get(NzAutocompleteComponent);
-        expect(res[0].label).toBe('label1');
-        expect(a.options.first.nzValue).toBe('1');
+        expect(res[0].value).toBe('1');
       });
     });
     it('with email of format', fakeAsync(() => {
@@ -87,11 +81,6 @@ describe('form: widget: autocomplete', () => {
         .click('nz-auto-option')
         .checkValue('a', `${typeValue}@${EMAILSUFFIX[0]}`)
         .asyncEnd(150);
-      // TIP: 一个非常不要脸的校验数据正确性的代码
-      // 当测试用例需要依赖第三方组件时，如何更好的校验这是一个问题？
-      // const autoComp = page.getWidget<NzAutocompleteComponent>('nz-autocomplete');
-      // expect(autoComp.options.length).toBeGreaterThan(0);
-      // expect(autoComp.options.first.nzValue).toBe('asdf@qq.com');
     }));
   });
 
