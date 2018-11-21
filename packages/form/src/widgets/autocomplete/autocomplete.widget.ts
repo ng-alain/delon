@@ -32,7 +32,7 @@ export const EMAILSUFFIX = [
         [nzDefaultActiveFirstOption]="i.defaultActiveFirstOption"
         [nzWidth]="i.width"
         (selectionChange)="setValue($event?.nzValue)">
-        <nz-auto-option *ngFor="let i of list | async" [nzValue]="i.label">{{i.label}}</nz-auto-option>
+        <nz-auto-option *ngFor="let i of list | async" [nzValue]="i.value">{{i.label}}</nz-auto-option>
       </nz-autocomplete>
     </sf-item-wrap>
     `,
