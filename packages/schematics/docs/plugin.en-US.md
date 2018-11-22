@@ -100,9 +100,10 @@ ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 
 | Name     | Language pack name                  | [Angular](https://github.com/angular/angular/tree/master/packages/common/locales) pack         | [Zorro](http://ng.ant.design/docs/i18n/zh#%E6%94%AF%E6%8C%81%E8%AF%AD%E8%A8%80) pack | [Delon](/theme/locale) pack |
 | -------- | --------------------------- | --------------------------- | ----------------- | ----------------- |
-| Simplified Chinese | zh-Hans,zh-cn,zh-Hans-CN,zh | zh-Hans,zh-cn,zh-Hans-CN,zh | zh_CN             | zh_CN             |
-| Traditional Chinese | zh-Hant,zh-tw,zh-Hant-TW    | zh-Hant,zh-tw,zh-Hant-TW    | zh_TW             | zh_TW             |
-| English (American) | en                          | en                          | en_US             | en_US             |
+| Simplified Chinese | zh-Hans,zh-cn,zh-Hans-CN,zh | zh-Hans,zh-cn,zh-Hans-CN,zh | zh_CN   | zh_CN  |
+| Traditional Chinese | zh-Hant,zh-tw,zh-Hant-TW    | zh-Hant,zh-tw,zh-Hant-TW    | zh_TW  | zh_TW  |
+| English (American) | en        | en           | en_US             | en_US        |
+| Turkish    | tr     | tr        | tr_TR            | tr_TR       |
 
 ### networkEnv
 
