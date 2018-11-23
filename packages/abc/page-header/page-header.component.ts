@@ -60,14 +60,14 @@ export class PageHeaderComponent
   // #region fields
 
   _title: string;
+  _titleText: string;
   _titleTpl: TemplateRef<any>;
   @Input()
   set title(value: string | TemplateRef<any>) {
     if (value instanceof TemplateRef) {
-      this._title = null;
       this._titleTpl = value;
     } else {
-      this._title = value;
+      this._titleText = value;
     }
   }
 
@@ -176,7 +176,6 @@ export class PageHeaderComponent
       )
       .subscribe(
         (event: RouterEvent) => {
-          this._title = null;
           this._menus = null;
           this.refresh();
         }
@@ -215,7 +214,7 @@ export class PageHeaderComponent
 
   private setTitle() {
     if (
-      typeof this._title === 'undefined' &&
+      typeof this._titleText === 'undefined' &&
       typeof this._titleTpl === 'undefined' &&
       this.autoTitle &&
       this.menus.length > 0
@@ -224,6 +223,8 @@ export class PageHeaderComponent
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
       this._title = title;
+    } else if (typeof this._titleText !== 'undefined') {
+      this._title = this._titleText;
     }
 
     if (this._title && this.syncTitle) {
