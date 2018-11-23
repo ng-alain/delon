@@ -135,6 +135,18 @@ describe('form: component', () => {
         );
       });
     });
+    describe('#size', () => {
+      it('with small', () => {
+        context.button = { render: { size: 'small' } };
+        fixture.detectChanges();
+        page.checkCount('.ant-btn-sm', 2);
+      });
+      it('with large', () => {
+        context.button = { render: { size: 'large' } };
+        fixture.detectChanges();
+        page.checkCount('.ant-btn-lg', 2);
+      });
+    });
   });
 
   describe('properites', () => {
