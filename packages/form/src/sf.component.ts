@@ -328,7 +328,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   private coverButtonProperty() {
     this._btn = Object.assign(
-      { render: {} },
+      <SFButton>{ render: { size: 'default' } },
       this.locale,
       this.options.button,
       this.button,
