@@ -176,6 +176,7 @@ export class PageHeaderComponent
       )
       .subscribe(
         (event: RouterEvent) => {
+          this._title = null;
           this._menus = null;
           this.refresh();
         }
