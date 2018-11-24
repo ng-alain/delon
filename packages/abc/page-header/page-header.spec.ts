@@ -193,24 +193,6 @@ describe('abc: page-header', () => {
         expect(dl.queryAll(By.css('nz-breadcrumb-item')).length).toBe(3);
       });
     });
-
-    it('shoule be different breadcrumb by paths', fakeAsync(() => {
-      context.home = '';
-      context.autoBreadcrumb = true;
-      const urlSpy = spyOnProperty(router, 'url');
-      urlSpy.and.returnValue('/1-1/1-1-2');
-      fixture.detectChanges();
-      const firstPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
-      urlSpy.and.returnValue('/1-1/1-1-1');
-      fixture.ngZone.run(() => {
-        router.navigateByUrl('/1-1/1-1-1');
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
-          const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
-          expect(firstPath.innerText).not.toBe(secondPath.innerText);
-        })
-      });
-    }));
   });
 
   describe('#title', () => {
@@ -295,6 +277,53 @@ describe('abc: page-header', () => {
         expect(spyReuseTitle).toHaveBeenCalled();
       });
     });
+  });
+
+  describe('[auto render]', () => {
+    beforeEach(() => {
+      genModule({
+        template: `<page-header #comp [home]="home" [autoTitle]="autoTitle" [autoBreadcrumb]="autoBreadcrumb"></page-header>`,
+      });
+      context.home = '';
+      context.autoTitle = true;
+      context.autoBreadcrumb = true;
+
+      menuSrv.add([
+        {
+          text: 'root',
+          children: [
+            {
+              text: '1-1',
+              link: '/1-1',
+              children: [
+                { text: '1-1-1', link: '/1-1/1-1-1' },
+                { text: '1-1-2', link: '/1-1/1-1-2' },
+              ],
+            },
+          ],
+        },
+      ]);
+    });
+
+    it('shoule be different when router changed', fakeAsync(() => {
+      const urlSpy = spyOnProperty(router, 'url');
+      urlSpy.and.returnValue('/1-1/1-1-2');
+      fixture.detectChanges();
+      const firstPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
+      const titleElement: HTMLElement = dl.query(By.css('h1[class="page-header__title"]')).nativeElement;
+      const firstTitle = titleElement.innerText;
+      urlSpy.and.returnValue('/1-1/1-1-1');
+      fixture.ngZone.run(() => {
+        router.navigateByUrl('/1-1/1-1-1');
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+          const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
+          const secondTitle = titleElement.innerText;
+          expect(firstPath.innerText).not.toBe(secondPath.innerText);
+          expect(firstTitle).not.toBe(secondTitle);
+        })
+      });
+    }));
   });
 
   describe('[i18n]', () => {
