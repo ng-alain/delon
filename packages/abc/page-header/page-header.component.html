@@ -22,8 +22,8 @@
           </div>
           <div class="page-header__main">
             <div class="page-header__row">
-              <h1 *ngIf="_title || _titleTpl" class="page-header__title">
-                <ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container>
+              <h1 *ngIf="_titleVal || _titleTpl" class="page-header__title">
+                <ng-container *ngIf="_titleVal; else _titleTpl">{{_titleVal}}</ng-container>
               </h1>
               <div *ngIf="action" class="page-header__action">
                 <ng-template [ngTemplateOutlet]="action"></ng-template>

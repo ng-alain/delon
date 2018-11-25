@@ -1,5 +1,5 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
-import { MenuService, SettingsService, Menu } from '@delon/theme';
+import { Component, OnInit, HostBinding, Inject } from '@angular/core';
+import { MenuService, SettingsService, Menu, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { NzMessageService, NzIconService } from 'ng-zorro-antd';
 
 // #region icons
@@ -22,6 +22,7 @@ import {
   GithubOutline,
   AppstoreOutline,
 } from '@ant-design/icons-angular/icons';
+import { I18NService, LangType } from 'app/core/i18n/service';
 
 const ICONS = [
   MenuFoldOutline,
@@ -66,6 +67,8 @@ export class DevLayoutComponent implements OnInit {
     return this.settings.layout.collapsed;
   }
 
+  lang: LangType = 'zh-CN';
+
   menus: Menu[] = [
     {
       text: 'test',
@@ -73,8 +76,9 @@ export class DevLayoutComponent implements OnInit {
       children: [
         {
           text: 'Dashboard',
-          link: '/',
+          link: '/dev',
           icon: 'anticon anticon-dashboard',
+          i18n: 'app.header.menu.home',
           badge: 5,
         },
         {
@@ -97,7 +101,7 @@ export class DevLayoutComponent implements OnInit {
           text: 'ABC',
           icon: 'anticon anticon-appstore',
           children: [
-            { text: 'Reuse Tab7', link: '/dev/l1' },
+            { text: 'Reuse Tab7', link: '/dev/l1', i18n: 'app.header.menu.docs' },
             { text: 'Reuse Tab6', link: '/dev/l2' },
             { text: 'Reuse Tab5', link: '/dev/l3' },
             { text: 'Reuse Tab4', link: '/dev/l4' },
@@ -116,12 +120,19 @@ export class DevLayoutComponent implements OnInit {
     private menuSrv: MenuService,
     public settings: SettingsService,
     public msgSrv: NzMessageService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService
+
   ) {
     iconSrv.addIcon(...ICONS);
   }
 
   toggleCollapsedSideabar() {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
+  }
+
+  toggleLang() {
+    this.lang = this.lang === 'zh-CN' ? 'en-US' : 'zh-CN';
+    this.i18n.use(this.lang);
   }
 
   ngOnInit(): void {

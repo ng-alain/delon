@@ -1,5 +1,5 @@
 import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -224,6 +224,27 @@ describe('abc: page-header', () => {
       });
       expect(dl.queryAll(By.css('.custom-title')).length).toBe(1);
     });
+
+    it('should be refresh title when route changed of auto generate title', fakeAsync(() => {
+      genModule({ created: false });
+      context.title = undefined;
+      context.autoTitle = true;
+      menuSrv.add([
+        { text: '1', link: '/1-1/p1' },
+        { text: '2', link: '/1-1/p2' },
+      ]);
+      const urlSpy = spyOnProperty(router, 'url');
+      urlSpy.and.returnValue('/1-1/p1');
+      tick();
+      fixture.detectChanges();
+      checkValue('.page-header__title', '1');
+
+      urlSpy.and.returnValue('/1-1/p2');
+      router.navigateByUrl('/1-1/p2');
+      tick();
+      fixture.detectChanges();
+      checkValue('.page-header__title', '2');
+    }));
 
     describe('[generateion title]', () => {
       beforeEach(() => {
