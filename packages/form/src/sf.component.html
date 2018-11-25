@@ -10,8 +10,12 @@
               [nzLg]="_btn.render.grid.lg" [nzXl]="_btn.render.grid.xl" [nzXXl]="_btn.render.grid.xxl">
         <div class="ant-form-item-control">
           <ng-container *ngIf="button; else con">
-            <button type="submit" nz-button [nzType]="_btn.submit_type" [disabled]="liveValidate && !valid">{{_btn.submit}}</button>
-            <button *ngIf="_btn.reset" (click)="reset(true)" type="button" nz-button [nzType]="_btn.reset_type">{{_btn.reset}}</button>
+            <button type="submit" nz-button [nzType]="_btn.submit_type" [nzSize]="_btn.render.size"
+              [disabled]="liveValidate && !valid">{{_btn.submit}}</button>
+            <button *ngIf="_btn.reset" type="button" nz-button
+              [nzType]="_btn.reset_type" [nzSize]="_btn.render.size" (click)="reset(true)">
+              {{_btn.reset}}
+            </button>
           </ng-container>
         </div>
       </div>

@@ -4,12 +4,22 @@
     margin-top: @preserve-sf-and-st-spaces;
   }
 
+  // button + button
   .ant-btn + .ant-btn,
+  // button + popconfirm
   .ant-btn + nz-popconfirm,
   nz-popconfirm + .ant-btn,
+  // popconfirm + popconfirm
   nz-popconfirm + nz-popconfirm,
+  // button + button group
   .ant-btn + nz-button-group,
-  nz-popconfirm + nz-button-group {
+  nz-button-group + .ant-btn,
+  // dropdown + button
+  .ant-btn + nz-dropdown,
+  nz-dropdown +.ant-btn,
+  // popconfirm + button group
+  nz-popconfirm + nz-button-group,
+  nz-button-group + nz-popconfirm {
     margin-left: @preserve-buttons-spaces;
   }
   .ant-btn-group {
