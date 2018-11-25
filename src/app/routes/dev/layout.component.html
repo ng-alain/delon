@@ -14,6 +14,11 @@
           <i nz-icon type="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
         </div>
       </li>
+      <li>
+        <div class="alain-default__nav-item" (click)="toggleLang()">
+          {{ lang }}
+        </div>
+      </li>
     </ul>
   </div>
 </div>

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'dev-page',
   template: `
-  <page-header [autoBreadcrumb]="false"></page-header>
+  <page-header></page-header>
   page: {{ router.url | json }}
   `
 })
