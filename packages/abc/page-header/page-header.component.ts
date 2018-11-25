@@ -187,8 +187,10 @@ export class PageHeaderComponent
   }
 
   private genBreadcrumb() {
-    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0)
-      return;
+    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0) {
+      this.paths = [];
+      return ;
+    }
     const paths: any[] = [];
     this.menus.forEach(item => {
       if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb)

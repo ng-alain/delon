@@ -73,7 +73,7 @@ export class DevLayoutComponent implements OnInit {
       children: [
         {
           text: 'Dashboard',
-          link: '/',
+          link: '/dev',
           icon: 'anticon anticon-dashboard',
           badge: 5,
         },
