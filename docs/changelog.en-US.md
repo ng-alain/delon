@@ -4,6 +4,23 @@ title: Change Log
 type: Other
 ---
 
+## 2.0.1
+
+`2018-11-25`
+
+### Bug Fixes
+
+* **module:page-header:** should be clean old breadcrumb data when changes ([#296](https://github.com/ng-alain/delon/issues/296)) ([862aa9d](https://github.com/ng-alain/delon/commit/862aa9d)), closes [#293](https://github.com/ng-alain/delon/issues/293)
+* **module:sf:autocomplete:** fix missing value ([#291](https://github.com/ng-alain/delon/issues/291)) ([ac17fb3](https://github.com/ng-alain/delon/commit/ac17fb3)), closes [#290](https://github.com/ng-alain/delon/issues/290)
+* **module:sf:button:** fix invalid button size ([#294](https://github.com/ng-alain/delon/issues/294)) ([96f8adc](https://github.com/ng-alain/delon/commit/96f8adc))
+* **module:theme:style:** fix dropdown + button spacing when closed preserve ([#292](https://github.com/ng-alain/delon/issues/292)) ([d330e5e](https://github.com/ng-alain/delon/commit/d330e5e))
+* **module:theme:title:** fix default property should  be not read-only ([#295](https://github.com/ng-alain/delon/issues/295)) ([a882507](https://github.com/ng-alain/delon/commit/a882507))
+
+### Features
+
+* **module:theme:** add tr-TR locale ([#289](https://github.com/ng-alain/delon/issues/289)) ([9df6f0e](https://github.com/ng-alain/delon/commit/9df6f0e)), closes [#288](https://github.com/ng-alain/delon/issues/288)
+
+
 ## 2.0.0
 
 `2018-11-20`
