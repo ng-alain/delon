@@ -2,7 +2,6 @@ import {
   Component,
   Input,
   TemplateRef,
-  ContentChild,
   OnInit,
   OnChanges,
   Inject,
@@ -15,7 +14,7 @@ import {
 } from '@angular/core';
 import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { NzAffixComponent } from 'ng-zorro-antd';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, merge } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
@@ -39,9 +38,8 @@ import { PageHeaderConfig } from './page-header.config';
 export class PageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
-  private i18n$: Subscription;
+  private ref$: Subscription;
   private set$: Subscription;
-  private routerEvent$: Subscription;
   @ViewChild('conTpl')
   private conTpl: ElementRef;
   @ViewChild('affix')
@@ -52,10 +50,15 @@ export class PageHeaderComponent
     if (this._menus) {
       return this._menus;
     }
-    this._menus = this.menuSrv.getPathByUrl(this.router.url.split('?')[0], this.recursiveBreadcrumb);
+    this._menus = this.menuSrv.getPathByUrl(
+      this.router.url.split('?')[0],
+      this.recursiveBreadcrumb,
+    );
 
     return this._menus;
   }
+
+  _titleVal: string;
 
   // #region fields
 
@@ -69,6 +72,7 @@ export class PageHeaderComponent
     } else {
       this._title = value;
     }
+    this._titleVal = this._title;
   }
 
   @Input()
@@ -160,9 +164,6 @@ export class PageHeaderComponent
     private reuseSrv: ReuseTabService,
   ) {
     Object.assign(this, cog);
-    if (this.i18nSrv) {
-      this.i18n$ = this.i18nSrv.change.subscribe(() => this.refresh());
-    }
     this.set$ = settings.notify
       .pipe(
         filter(
@@ -170,16 +171,19 @@ export class PageHeaderComponent
         ),
       )
       .subscribe(() => this.affix.updatePosition({}));
-    this.routerEvent$ = this.router.events
-      .pipe(
-        filter((event: RouterEvent) => event instanceof NavigationEnd)
-      )
-      .subscribe(
-        (event: RouterEvent) => {
-          this._menus = null;
-          this.refresh();
-        }
-      );
+
+    const data$: Observable<any>[] = [
+      this.router.events.pipe(
+        filter((event: RouterEvent) => event instanceof NavigationEnd),
+      ),
+    ];
+    if (this.i18nSrv) {
+      data$.push(this.i18nSrv.change);
+    }
+    this.ref$ = merge(...data$).subscribe(() => {
+      this._menus = null;
+      this.refresh();
+    });
   }
 
   refresh() {
@@ -187,8 +191,10 @@ export class PageHeaderComponent
   }
 
   private genBreadcrumb() {
-    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0)
+    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0) {
+      this.paths = [];
       return;
+    }
     const paths: any[] = [];
     this.menus.forEach(item => {
       if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb)
@@ -222,15 +228,15 @@ export class PageHeaderComponent
       const item = this.menus[this.menus.length - 1];
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-      this._title = title;
+      this._titleVal = title;
     }
 
-    if (this._title && this.syncTitle) {
+    if (this._titleVal && this.syncTitle) {
       if (this.titleSrv) {
-        this.titleSrv.setTitle(this._title);
+        this.titleSrv.setTitle(this._titleVal);
       }
       if (this.reuseSrv) {
-        this.reuseSrv.title = this._title;
+        this.reuseSrv.title = this._titleVal;
       }
     }
 
@@ -259,8 +265,7 @@ export class PageHeaderComponent
   }
 
   ngOnDestroy(): void {
-    if (this.i18n$) this.i18n$.unsubscribe();
     this.set$.unsubscribe();
-    this.routerEvent$.unsubscribe();
+    this.ref$.unsubscribe();
   }
 }
