@@ -23,7 +23,6 @@ export class TitleService implements OnDestroy {
   private _suffix = '';
   private _separator = ' - ';
   private _reverse = false;
-  private _default = 'Not Page Name';
   private i18n$: Subscription;
 
   constructor(
@@ -35,8 +34,9 @@ export class TitleService implements OnDestroy {
     private i18nSrv: AlainI18NService,
     @Inject(DOCUMENT) private doc: any,
   ) {
-    if (this.i18nSrv)
+    if (this.i18nSrv) {
       this.i18n$ = this.i18nSrv.change.subscribe(() => this.setTitle());
+    }
   }
 
   /** 设置分隔符 */
@@ -60,9 +60,7 @@ export class TitleService implements OnDestroy {
   }
 
   /** 设置默认标题名 */
-  set default(value: string) {
-    this._default = value;
-  }
+  default = `Not Page Name`;
 
   private getByElement(): string {
     const el =
@@ -102,7 +100,7 @@ export class TitleService implements OnDestroy {
         this.getByRoute() ||
         this.getByMenu() ||
         this.getByElement() ||
-        this._default;
+        this.default;
     }
     if (title && !Array.isArray(title)) {
       title = [title];
