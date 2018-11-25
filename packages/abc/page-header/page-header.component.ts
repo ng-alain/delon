@@ -58,6 +58,8 @@ export class PageHeaderComponent
     return this._menus;
   }
 
+  _titleVal: string;
+
   // #region fields
 
   _title: string;
@@ -70,6 +72,7 @@ export class PageHeaderComponent
     } else {
       this._title = value;
     }
+    this._titleVal = this._title;
   }
 
   @Input()
@@ -225,15 +228,15 @@ export class PageHeaderComponent
       const item = this.menus[this.menus.length - 1];
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-      this._title = title;
+      this._titleVal = title;
     }
 
-    if (this._title && this.syncTitle) {
+    if (this._titleVal && this.syncTitle) {
       if (this.titleSrv) {
-        this.titleSrv.setTitle(this._title);
+        this.titleSrv.setTitle(this._titleVal);
       }
       if (this.reuseSrv) {
-        this.reuseSrv.title = this._title;
+        this.reuseSrv.title = this._titleVal;
       }
     }
 
