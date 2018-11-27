@@ -16,3 +16,15 @@ Get the `title` value according to the following order:
 2. Parse the menu data based on the current URL
 3. Get `h1` content in page `alain-default__content-title` or `page-header__title`
 4. Default title
+
+## API
+
+| Name                                           | Type       | Description                     |
+| ---------------------------------------------- | ---------- | ------------------------------- |
+| `default`                                      | `property` | Default title of document title |
+| `separator`                                    | `property` | Separator                       |
+| `prefix`                                       | `property` | Prefix of document title        |
+| `suffix`                                       | `property` | Suffix of document title        |
+| `reverse`                                      | `property` | Whether to reverse              |
+| `setTitle(title?: string | string[])`          | `method`   | Set document title              |
+| `setTitleByI18n(key: string, params?: Object)` | `method`   | Set i18n document title         |
