@@ -8,7 +8,7 @@ import { ArrayLayoutWidget } from '../../widget';
     <nz-col *ngIf="schema.title" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
       <label>
         {{ schema.title }}
-        <span class="optional">
+        <span class="sf__optional">
           {{ ui.optional }}
           <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
             <i nz-tooltip nz-icon type="question-circle"></i>

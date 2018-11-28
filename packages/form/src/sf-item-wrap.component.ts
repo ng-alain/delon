@@ -9,7 +9,7 @@ import { SFUISchemaItem } from './schema/ui';
     <nz-col *ngIf="showTitle" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
       <label *ngIf="t" [attr.for]="id" [class.ant-form-item-required]="ui._required">
         {{ t }}
-        <span class="optional">
+        <span class="sf__optional">
           {{ ui.optional }}
           <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
             <i nz-tooltip nz-icon type="question-circle"></i>
