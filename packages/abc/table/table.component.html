@@ -42,7 +42,7 @@
       <th *ngFor="let c of _columns; let index=index" [nzWidth]="c.width" [nzLeft]="c._left" [nzRight]="c._right" [ngClass]="c.className"
         [attr.colspan]="c.colSpan" [attr.data-col]="c.indexKey"
         [nzShowSort]="c._sort.enabled" [nzSort]="c._sort.default" (nzSortChange)="sort(c, index, $event)"
-        nzCustomFilter>
+        [nzCustomFilter]="c.filter">
         <ng-template #renderTitle [ngTemplateOutlet]="c.__renderTitle" [ngTemplateOutletContext]="{$implicit: c, index: index }"></ng-template>
         <ng-container *ngIf="!c.__renderTitle; else renderTitle">
           <ng-container [ngSwitch]="c.type">
