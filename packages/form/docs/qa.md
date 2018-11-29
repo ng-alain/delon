@@ -12,7 +12,7 @@ type: Documents
 
 一般分为两种情形：
 
-**1、Scheam 定义后可能受限于某个数据来自远程**
+**1、Schema 定义后可能受限于某个数据来自远程**
 
 ```ts
 @ViewChild('sf') sf: SFComponent;
