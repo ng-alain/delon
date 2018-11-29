@@ -13,7 +13,7 @@ export interface SFButton {
   render?: SFRenderButton;
   /** 搜索按钮文本，默认：`搜索` */
   search?: string;
-  /** 保存按钮文本，默认：`保存` */
+  /** 编辑按钮文本，默认：`保存` */
   edit?: string;
 }
 
