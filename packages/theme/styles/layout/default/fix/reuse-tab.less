@@ -1,5 +1,3 @@
-@alain-default-reuse-tab-gutter: 24px;
-
 @{reuse-tab-prefix} {
   margin: 0 -@alain-default-content-padding 0 -@alain-default-content-padding;
 }
@@ -8,15 +6,15 @@
   @{reuse-tab-prefix} {
     position: fixed;
     top: @alain-default-header-hg;
-    left: @alain-default-aside-wd + @alain-default-reuse-tab-gutter;
-    right: @alain-default-reuse-tab-gutter;
+    left: @alain-default-aside-wd + @alain-default-content-padding;
+    right: @alain-default-content-padding;
     z-index: @zindex-fixed + 1;
   }
 }
 
 @{alain-default-prefix}__collapsed {
   @{reuse-tab-prefix} {
-    left: @alain-default-aside-collapsed-wd + @alain-default-reuse-tab-gutter;
+    left: @alain-default-aside-collapsed-wd + @alain-default-content-padding;
   }
 }
 
