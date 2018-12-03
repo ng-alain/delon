@@ -28,7 +28,6 @@ const FLOATINGCLS = 'sidebar-nav__floating';
   selector: 'sidebar-nav',
   templateUrl: './sidebar-nav.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
   private bodyEl: HTMLBodyElement;

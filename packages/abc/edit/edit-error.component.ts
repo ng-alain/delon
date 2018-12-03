@@ -3,7 +3,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'se-error',
-  preserveWhitespaces: false,
   animations: [
     trigger('errorAnt', [
       transition('void => *', [

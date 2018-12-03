@@ -21,7 +21,6 @@ declare var Slider: any;
   selector: 'g2-timeline',
   templateUrl: './timeline.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class G2TimelineComponent
   implements OnDestroy, OnChanges, AfterViewInit {

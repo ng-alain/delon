@@ -13,7 +13,6 @@ import { toNumber, updateHostClass } from '@delon/util';
 @Component({
   selector: 'number-info',
   templateUrl: './number-info.component.html',
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NumberInfoComponent implements OnChanges {

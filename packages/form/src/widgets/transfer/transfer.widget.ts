@@ -28,7 +28,6 @@ import { SFSchemaEnum } from '../../schema';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class TransferWidget extends ControlWidget implements OnInit {
   list: any[] = [];

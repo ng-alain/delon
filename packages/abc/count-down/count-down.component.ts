@@ -10,7 +10,6 @@ import addSeconds from 'date-fns/add_seconds';
       (finished)="_finished()"
       (notify)="_notify($event)"></countdown>
   `,
-  preserveWhitespaces: false,
 })
 export class CountDownComponent {
   @Input() config: any;

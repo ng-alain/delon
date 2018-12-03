@@ -14,7 +14,6 @@ import { ControlWidget } from '@delon/form';
     </ueditor>
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
   styles: [`:host ueditor { line-height:normal; }`],
 })
 // tslint:disable-next-line:component-class-suffix

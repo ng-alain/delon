@@ -21,7 +21,6 @@ import { toNumber } from '@delon/util';
   templateUrl: './water-wave.component.html',
   host: { '[class.g2-water-wave]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   // #region fields

@@ -15,7 +15,6 @@ import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
   selector: 'notice-icon',
   templateUrl: './notice-icon.component.html',
   host: { '[class.notice-icon__btn]': 'true' },
-  preserveWhitespaces: false,
 })
 export class NoticeIconComponent implements OnDestroy {
   private i18n$: Subscription;

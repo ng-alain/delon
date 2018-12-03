@@ -27,7 +27,6 @@ import { FormProperty } from '../../model/form.property';
       </ng-container>
     </ng-container>
   </ng-template>`,
-  preserveWhitespaces: false,
 })
 export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   grid: SFGridSchema;

@@ -9,7 +9,6 @@ import { SGConfig } from './grid.config';
     '[class.ant-row]': 'true',
     '[class.sg__wrap]': 'true',
   },
-  preserveWhitespaces: false,
 })
 export class SGContainerComponent {
   //#region fields

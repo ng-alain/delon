@@ -33,7 +33,6 @@ import { PageHeaderConfig } from './page-header.config';
 @Component({
   selector: 'page-header',
   templateUrl: './page-header.component.html',
-  preserveWhitespaces: false,
 })
 export class PageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {

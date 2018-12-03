@@ -4,7 +4,6 @@ import { Component, Input, TemplateRef } from '@angular/core';
   selector: 'result',
   templateUrl: './result.component.html',
   host: { '[class.result]': 'true' },
-  preserveWhitespaces: false,
 })
 export class ResultComponent {
   _type = '';

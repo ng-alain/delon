@@ -48,7 +48,6 @@ import { getData, toBool } from '../../utils';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class SelectWidget extends ControlWidget implements OnInit {
   i: any;

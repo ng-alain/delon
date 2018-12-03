@@ -37,7 +37,6 @@ import { SFSchemaEnum } from '../../schema';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class CascaderWidget extends ControlWidget implements OnInit {
   clearText: string;

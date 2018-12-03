@@ -17,7 +17,6 @@ import { InputNumber } from '@delon/util';
   selector: 'quick-menu',
   templateUrl: './quick-menu.component.html',
   host: { '[class.quick-menu]': 'true' },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuickMenuComponent implements OnInit, OnChanges {

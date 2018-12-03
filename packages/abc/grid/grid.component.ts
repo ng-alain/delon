@@ -20,7 +20,6 @@ const prefixCls = `sg`;
 @Component({
   selector: 'sg',
   template: `<ng-content></ng-content>`,
-  preserveWhitespaces: false,
 })
 export class SGComponent implements OnChanges, AfterViewInit {
   private el: HTMLElement;

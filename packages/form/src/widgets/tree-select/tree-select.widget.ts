@@ -34,7 +34,6 @@ import { deepCopy } from '@delon/util';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class TreeSelectWidget extends ControlWidget implements OnInit {
   i: any;

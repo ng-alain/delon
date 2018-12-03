@@ -53,7 +53,6 @@ import { NzMentionComponent } from 'ng-zorro-antd';
 
     </sf-item-wrap>
     `,
-  preserveWhitespaces: false,
 })
 export class MentionWidget extends ControlWidget implements OnInit {
   @ViewChild('mentions') mentionChild: NzMentionComponent;

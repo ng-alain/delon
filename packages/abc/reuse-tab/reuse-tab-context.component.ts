@@ -13,7 +13,6 @@ import { ReuseTabContextService } from './reuse-tab-context.service';
 @Component({
   selector: 'reuse-tab-context',
   template: ``,
-  preserveWhitespaces: false,
 })
 export class ReuseTabContextComponent implements OnDestroy {
   private sub$: Subscription = new Subscription();

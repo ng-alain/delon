@@ -20,7 +20,6 @@ import { toBool } from '../../utils';
     </textarea>
 
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
 })
 export class TextareaWidget extends ControlWidget implements OnInit {
   autosize: any = true;

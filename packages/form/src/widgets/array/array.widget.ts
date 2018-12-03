@@ -4,7 +4,6 @@ import { ArrayLayoutWidget } from '../../widget';
 @Component({
   selector: 'sf-array',
   templateUrl: './array.widget.html',
-  preserveWhitespaces: false
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addTitle: string;

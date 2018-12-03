@@ -5,7 +5,6 @@ import { SFUISchemaItem } from './schema/ui';
 @Component({
   selector: 'sf-item-wrap',
   templateUrl: './sf-item-wrap.component.html',
-  preserveWhitespaces: false
 })
 export class SFItemWrapComponent {
   @Input() id: string;

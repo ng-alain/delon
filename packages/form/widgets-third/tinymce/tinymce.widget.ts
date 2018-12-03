@@ -13,7 +13,6 @@ import { ControlWidget } from '@delon/form';
     </tinymce>
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 // tslint:disable-next-line:component-class-suffix
 export class TinymceWidget extends ControlWidget implements OnInit {

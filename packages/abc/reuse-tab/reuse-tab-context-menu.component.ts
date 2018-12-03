@@ -18,7 +18,6 @@ import {
 @Component({
   selector: 'reuse-tab-context-menu',
   templateUrl: './reuse-tab-context-menu.component.html',
-  preserveWhitespaces: false,
 })
 export class ReuseTabContextMenuComponent implements OnInit {
   private _i18n: ReuseContextI18n;

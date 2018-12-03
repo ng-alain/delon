@@ -88,7 +88,6 @@ import { FormProperty } from '../../model/form.property';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class DateWidget extends ControlWidget implements OnInit {
   mode: string;

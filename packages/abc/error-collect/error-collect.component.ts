@@ -22,7 +22,6 @@ import { ErrorCollectConfig } from './error-collect.config';
   <span class="pl-sm">{{count}}</span>`,
   host: { '[class.error-collect]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
   private $time = null;

@@ -24,7 +24,6 @@ import { ControlWidget } from '../../widget';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class SliderWidget extends ControlWidget implements OnInit {
   min: number;

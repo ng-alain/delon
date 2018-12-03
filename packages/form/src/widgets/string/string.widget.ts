@@ -32,7 +32,6 @@ import { ControlWidget } from '../../widget';
     </ng-container>
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class StringWidget extends ControlWidget implements OnInit {
   type: string;

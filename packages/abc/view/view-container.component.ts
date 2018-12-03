@@ -15,7 +15,6 @@ const prefixCls = `sv`;
 @Component({
   selector: 'sv-container, [sv-container]',
   templateUrl: './view-container.component.html',
-  preserveWhitespaces: false,
 })
 export class SVContainerComponent implements OnInit, OnChanges {
   private el: HTMLElement;

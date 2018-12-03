@@ -20,7 +20,6 @@ declare var G2: any;
   templateUrl: './radar.component.html',
   host: { '[class.g2-radar]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class G2RadarComponent implements OnDestroy, OnChanges {
   // #region fields

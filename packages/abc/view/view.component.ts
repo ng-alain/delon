@@ -21,7 +21,6 @@ const prefixCls = `sv`;
 @Component({
   selector: 'sv, [sv]',
   templateUrl: './view.component.html',
-  preserveWhitespaces: false,
 })
 export class SVComponent implements AfterViewInit, OnChanges {
   @ViewChild('conEl')

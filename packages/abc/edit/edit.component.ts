@@ -28,7 +28,6 @@ let nextUniqueId = 0;
 @Component({
   selector: 'se',
   templateUrl: './edit.component.html',
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {

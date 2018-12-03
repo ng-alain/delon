@@ -76,7 +76,6 @@ import { STDataSource } from './table-data-source';
     YNPipe,
     DecimalPipe,
   ],
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {

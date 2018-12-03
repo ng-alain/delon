@@ -6,7 +6,6 @@ import { SFSchemaEnum } from '../../schema';
 @Component({
   selector: 'sf-checkbox',
   templateUrl: './checkbox.widget.html',
-  preserveWhitespaces: false,
 })
 export class CheckboxWidget extends ControlWidget {
   data: SFSchemaEnum[] = [];

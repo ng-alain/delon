@@ -5,7 +5,6 @@ import { SEConfig } from './edit.config';
 @Component({
   selector: 'se-container, [se-container]',
   templateUrl: './edit-container.component.html',
-  preserveWhitespaces: false,
 })
 export class SEContainerComponent {
   //#region fields

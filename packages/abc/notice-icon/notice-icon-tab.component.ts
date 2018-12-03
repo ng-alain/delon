@@ -4,7 +4,6 @@ import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
 @Component({
   selector: 'notice-icon-tab',
   templateUrl: './notice-icon-tab.component.html',
-  preserveWhitespaces: false,
 })
 export class NoticeIconTabComponent {
   @Input()

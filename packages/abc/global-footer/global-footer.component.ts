@@ -16,7 +16,6 @@ import { GlobalFooterItemComponent } from './global-footer-item.component';
   selector: 'global-footer',
   templateUrl: './global-footer.component.html',
   host: { '[class.global-footer]': 'true' },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GlobalFooterComponent {

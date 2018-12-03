@@ -9,7 +9,6 @@ import { toBoolean } from '@delon/util';
   selector: 'g2-card',
   templateUrl: './card.component.html',
   host: { '[class.g2-card]': 'true' },
-  preserveWhitespaces: false,
 })
 export class G2CardComponent {
 

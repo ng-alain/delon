@@ -14,6 +14,5 @@ import { ControlWidget } from '../../widget';
       [nzUnCheckedChildren]="ui.unCheckedChildren">
     </nz-switch>
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
 })
 export class BooleanWidget extends ControlWidget {}

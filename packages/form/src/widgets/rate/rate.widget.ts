@@ -19,7 +19,6 @@ import { toBool } from '../../utils';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class RateWidget extends ControlWidget implements OnInit {
   count: number;

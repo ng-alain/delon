@@ -20,7 +20,6 @@ import { getData } from '../../utils';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class TagWidget extends ControlWidget {
   data: SFSchemaEnum[];

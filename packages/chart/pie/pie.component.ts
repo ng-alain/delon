@@ -22,7 +22,6 @@ declare var DataSet: any;
   selector: 'g2-pie',
   templateUrl: './pie.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
   private scroll$: Subscription = null;

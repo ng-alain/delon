@@ -15,7 +15,6 @@ import { DelonLocaleService } from '@delon/theme';
   selector: 'exception',
   templateUrl: './exception.component.html',
   host: { '[class.exception]': 'true' },
-  preserveWhitespaces: false,
 })
 export class ExceptionComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;

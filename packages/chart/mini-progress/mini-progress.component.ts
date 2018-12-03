@@ -6,7 +6,6 @@ import { DelonLocaleService } from '@delon/theme';
   selector: 'g2-mini-progress',
   templateUrl: './mini-progress.component.html',
   host: { '[class.g2-mini-progress]': 'true' },
-  preserveWhitespaces: false,
 })
 export class G2ProgressComponent {
   @Input()

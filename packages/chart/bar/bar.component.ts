@@ -21,7 +21,6 @@ declare var G2: any;
   selector: 'g2-bar',
   templateUrl: './bar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class G2BarComponent implements OnDestroy, OnChanges {
   private autoHideXLabels = false;

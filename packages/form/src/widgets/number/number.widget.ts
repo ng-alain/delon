@@ -19,7 +19,6 @@ import { ControlWidget } from '../../widget';
       [nzPlaceHolder]="ui.placeholder || ''">
     </nz-input-number>
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
 })
 export class NumberWidget extends ControlWidget implements OnInit {
   min: number;

@@ -9,7 +9,6 @@ import { toBoolean } from '@delon/util';
     '[class.trend__grey]': '!colorful',
     '[class.trend__reverse]': 'colorful && reverseColor',
   },
-  preserveWhitespaces: false,
 })
 export class TrendComponent {
   /** 上升下降标识 */

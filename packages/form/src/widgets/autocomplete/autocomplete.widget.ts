@@ -36,7 +36,6 @@ export const EMAILSUFFIX = [
       </nz-autocomplete>
     </sf-item-wrap>
     `,
-  preserveWhitespaces: false,
 })
 export class AutoCompleteWidget extends ControlWidget implements OnInit {
   i: any;

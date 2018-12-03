@@ -16,7 +16,6 @@ const CLSBODY = 'footer-toolbar__body';
 @Component({
   selector: 'footer-toolbar',
   templateUrl: './footer-toolbar.component.html',
-  preserveWhitespaces: false,
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
   @Input()

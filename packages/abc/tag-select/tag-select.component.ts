@@ -15,7 +15,6 @@ import { DelonLocaleService } from '@delon/theme';
   selector: 'tag-select',
   templateUrl: './tag-select.component.html',
   host: { '[class.tag-select]': 'true' },
-  preserveWhitespaces: false,
 })
 export class TagSelectComponent implements OnDestroy {
   private i18n$: Subscription;

@@ -37,7 +37,6 @@ import { ReuseTabContextService } from './reuse-tab-context.service';
   selector: 'reuse-tab',
   templateUrl: './reuse-tab.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
   providers: [ReuseTabContextService],
   host: {
     '[class.reuse-tab]': 'true',
