@@ -21,10 +21,10 @@ export interface AlainI18NService {
 
   /**
    * 翻译
-   * - `interpolateParams` 模板所需要的参数对象
+   * - `params` 模板所需要的参数对象
    * - `isSafe` 是否返回安全字符，自动调用 `bypassSecurityTrustHtml`
    */
-  fanyi(key: string, interpolateParams?: {}, isSafe?: boolean): string;
+  fanyi(key: string, params?: {}, isSafe?: boolean): string;
 
   /**
    * 调用 `use` 触发变更通知

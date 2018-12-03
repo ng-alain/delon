@@ -121,6 +121,13 @@ export class TitleService implements OnDestroy {
     this.title.setTitle(newTitles.join(this._separator));
   }
 
+  /**
+   * 设置国际化标题
+   */
+  setTitleByI18n(key: string, params?: Object) {
+    this.setTitle(this.i18nSrv.fanyi(key, params));
+  }
+
   ngOnDestroy(): void {
     if (this.i18n$) this.i18n$.unsubscribe();
   }

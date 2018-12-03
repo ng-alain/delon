@@ -1,5 +1,5 @@
-<page-header>
-  <ng-template #action>
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
     <button (click)="add()" nz-button nzType="primary">新建</button>
   </ng-template>
 </page-header>

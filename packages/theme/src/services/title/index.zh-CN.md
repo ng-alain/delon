@@ -16,3 +16,15 @@ type: Service
 2. 根据当前 URL 解析菜单数据
 3. 页面 `alain-default__content-title` 或 `page-header__title` 中获取 `h1` 内容
 4. 默认标题名
+
+## API
+
+| 名称                                           | 类型       | 描述           |
+| ---------------------------------------------- | ---------- | -------------- |
+| `default`                                      | `property` | 设置默认标题名 |
+| `separator`                                    | `property` | 设置分隔符     |
+| `prefix`                                       | `property` | 设置前缀       |
+| `suffix`                                       | `property` | 设置后缀       |
+| `reverse`                                      | `property` | 设置是否反转   |
+| `setTitle(title?: string | string[])`          | `method`   | 设置标题       |
+| `setTitleByI18n(key: string, params?: Object)` | `method`   | 设置国际化标题 |

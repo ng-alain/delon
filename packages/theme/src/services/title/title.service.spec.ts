@@ -40,14 +40,16 @@ describe('Service: Title', () => {
   const notPageName = 'Not Page Name';
 
   function genModule(providers: any[] = [], loadI18n = true) {
-    const i18nProvider: any[] = loadI18n ? [ { provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake } ] : [];
+    const i18nProvider: any[] = loadI18n
+      ? [{ provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake }]
+      : [];
     TestBed.configureTestingModule({
       imports: [AlainThemeModule, RouterTestingModule],
       providers: [
         TitleService,
         MenuService,
         { provide: Title, useClass: TestTitleService },
-        ...i18nProvider
+        ...i18nProvider,
       ].concat(providers),
     });
     title = TestBed.get(Title);
@@ -204,6 +206,13 @@ describe('Service: Title', () => {
       spyOn(srv, 'setTitle');
       i18n.use('en');
       expect(srv.setTitle).toHaveBeenCalled();
+    });
+    it('#setTitleByI18n', () => {
+      genModule([], true);
+      srv.suffix = alain;
+      const key = 'aa';
+      srv.setTitleByI18n(key);
+      expect(title.setTitle).toHaveBeenCalledWith(key + ' - ' + alain);
     });
   });
 });
