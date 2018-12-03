@@ -1,10 +1,16 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  TemplateRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { toNumber, InputNumber, InputBoolean } from '@delon/util';
 import { SEConfig } from './edit.config';
 
 @Component({
   selector: 'se-container, [se-container]',
   templateUrl: './edit-container.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SEContainerComponent {
   //#region fields

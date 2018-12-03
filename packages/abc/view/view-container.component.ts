@@ -6,6 +6,7 @@ import {
   OnInit,
   OnChanges,
   TemplateRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { updateHostClass, InputNumber } from '@delon/util';
 import { SVConfig } from './view.config';
@@ -15,6 +16,7 @@ const prefixCls = `sv`;
 @Component({
   selector: 'sv-container, [sv-container]',
   templateUrl: './view-container.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SVContainerComponent implements OnInit, OnChanges {
   private el: HTMLElement;

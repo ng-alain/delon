@@ -5,6 +5,7 @@ import {
   Renderer2,
   OnInit,
   Optional,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { SVContainerComponent } from './view-container.component';
 
@@ -14,6 +15,7 @@ import { SVContainerComponent } from './view-container.component';
   host: {
     '[class.sv__title]': 'true',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SVTitleComponent implements OnInit {
   private el: HTMLElement;

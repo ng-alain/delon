@@ -8,6 +8,7 @@ import {
   Optional,
   AfterViewInit,
   HostBinding,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { ResponsiveService } from '@delon/theme';
@@ -19,7 +20,10 @@ const prefixCls = `sg`;
 
 @Component({
   selector: 'sg',
-  template: `<ng-content></ng-content>`,
+  template: `
+    <ng-content></ng-content>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SGComponent implements OnChanges, AfterViewInit {
   private el: HTMLElement;

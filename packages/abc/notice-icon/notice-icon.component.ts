@@ -4,6 +4,8 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
+  ChangeDetectorRef,
+  OnInit,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DelonLocaleService } from '@delon/theme';
@@ -16,7 +18,7 @@ import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
   templateUrl: './notice-icon.component.html',
   host: { '[class.notice-icon__btn]': 'true' },
 })
-export class NoticeIconComponent implements OnDestroy {
+export class NoticeIconComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
   locale: any = {};
 
@@ -46,11 +48,10 @@ export class NoticeIconComponent implements OnDestroy {
   @Output()
   readonly popoverVisibleChange = new EventEmitter<boolean>();
 
-  constructor(private i18n: DelonLocaleService) {
-    this.i18n$ = this.i18n.change.subscribe(
-      () => (this.locale = this.i18n.getData('noticeIcon')),
-    );
-  }
+  constructor(
+    private i18n: DelonLocaleService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   onVisibleChange(result: boolean) {
     this.popoverVisibleChange.emit(result);
@@ -62,6 +63,13 @@ export class NoticeIconComponent implements OnDestroy {
 
   onClear(title: string) {
     this.clear.emit(title);
+  }
+
+  ngOnInit() {
+    this.i18n$ = this.i18n.change.subscribe(() => {
+      this.locale = this.i18n.getData('noticeIcon');
+      this.cdr.detectChanges();
+    });
   }
 
   ngOnDestroy() {

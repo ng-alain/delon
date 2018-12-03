@@ -7,6 +7,7 @@ import {
   TemplateRef,
   ElementRef,
   Renderer2,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { InputBoolean } from '@delon/util';
@@ -16,6 +17,7 @@ const CLSBODY = 'footer-toolbar__body';
 @Component({
   selector: 'footer-toolbar',
   templateUrl: './footer-toolbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
   @Input()

@@ -5,6 +5,9 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
+  OnInit,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -15,8 +18,9 @@ import { DelonLocaleService } from '@delon/theme';
   selector: 'tag-select',
   templateUrl: './tag-select.component.html',
   host: { '[class.tag-select]': 'true' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TagSelectComponent implements OnDestroy {
+export class TagSelectComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
   locale: any = {};
 
@@ -32,10 +36,16 @@ export class TagSelectComponent implements OnDestroy {
   @Output()
   readonly change = new EventEmitter<boolean>();
 
-  constructor(private i18n: DelonLocaleService) {
-    this.i18n$ = this.i18n.change.subscribe(
-      () => (this.locale = this.i18n.getData('tagSelect')),
-    );
+  constructor(
+    private i18n: DelonLocaleService,
+    private cdr: ChangeDetectorRef,
+  ) {}
+
+  ngOnInit() {
+    this.i18n$ = this.i18n.change.subscribe(() => {
+      this.locale = this.i18n.getData('tagSelect');
+      this.cdr.detectChanges();
+    });
   }
 
   trigger() {

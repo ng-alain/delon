@@ -1,14 +1,22 @@
-import { Component, Input, HostBinding } from '@angular/core';
+import {
+  Component,
+  Input,
+  HostBinding,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { toNumber, InputNumber } from '@delon/util';
 import { SGConfig } from './grid.config';
 
 @Component({
   selector: 'sg-container, [sg-container]',
-  template: `<ng-content></ng-content>`,
+  template: `
+    <ng-content></ng-content>
+  `,
   host: {
     '[class.ant-row]': 'true',
     '[class.sg__wrap]': 'true',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SGContainerComponent {
   //#region fields

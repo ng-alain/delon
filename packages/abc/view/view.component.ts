@@ -10,6 +10,7 @@ import {
   AfterViewInit,
   HostBinding,
   Optional,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty, InputNumber, InputBoolean } from '@delon/util';
@@ -21,6 +22,7 @@ const prefixCls = `sv`;
 @Component({
   selector: 'sv, [sv]',
   templateUrl: './view.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SVComponent implements AfterViewInit, OnChanges {
   @ViewChild('conEl')

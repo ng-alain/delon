@@ -18,8 +18,9 @@ import { ErrorCollectConfig } from './error-collect.config';
 @Component({
   selector: 'error-collect, [error-collect]',
   template: `
-  <i nz-icon type="exclamation-circle"></i>
-  <span class="pl-sm">{{count}}</span>`,
+    <i nz-icon type="exclamation-circle"></i>
+    <span class="pl-sm">{{ count }}</span>
+  `,
   host: { '[class.error-collect]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

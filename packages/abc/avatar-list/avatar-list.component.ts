@@ -3,14 +3,12 @@ import {
   Input,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  ViewEncapsulation,
 } from '@angular/core';
 
 @Component({
   selector: 'avatar-list',
   templateUrl: './avatar-list.component.html',
   host: { '[class.avatar-list]': 'true' },
-  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarListComponent {

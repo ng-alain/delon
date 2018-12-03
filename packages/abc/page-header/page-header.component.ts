@@ -11,6 +11,8 @@ import {
   AfterViewInit,
   Renderer2,
   OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { NzAffixComponent } from 'ng-zorro-antd';
@@ -33,6 +35,7 @@ import { PageHeaderConfig } from './page-header.config';
 @Component({
   selector: 'page-header',
   templateUrl: './page-header.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
@@ -161,6 +164,7 @@ export class PageHeaderComponent
     @Optional()
     @Inject(ReuseTabService)
     private reuseSrv: ReuseTabService,
+    private cdr: ChangeDetectorRef,
   ) {
     Object.assign(this, cog);
     this.set$ = settings.notify
@@ -187,6 +191,7 @@ export class PageHeaderComponent
 
   refresh() {
     this.setTitle().genBreadcrumb();
+    this.cdr.detectChanges();
   }
 
   private genBreadcrumb() {

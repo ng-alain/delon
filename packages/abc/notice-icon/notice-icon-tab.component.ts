@@ -1,9 +1,16 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
 
 @Component({
   selector: 'notice-icon-tab',
   templateUrl: './notice-icon-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoticeIconTabComponent {
   @Input()
