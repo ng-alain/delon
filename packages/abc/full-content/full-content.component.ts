@@ -31,15 +31,12 @@ const hideTitleCls = `full-content__hidden-title`;
   host: { '[class.full-content]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FullContentComponent
-  implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   private bodyEl: HTMLElement;
   private inited = false;
   private srv$: Subscription;
   private route$: Subscription;
-  private id = `_full-content-${Math.random()
-    .toString(36)
-    .substring(2)}`;
+  private id = `_full-content-${Math.random().toString(36).substring(2)}`;
   private scroll$: Subscription = null;
 
   @HostBinding('style.height.px')
@@ -47,20 +44,10 @@ export class FullContentComponent
 
   // #region fields
 
-  @Input()
-  @InputBoolean()
-  fullscreen: boolean;
-
-  @Input()
-  @InputBoolean()
-  hideTitle = true;
-
-  @Input()
-  @InputNumber()
-  padding = 24;
-
-  @Output()
-  readonly fullscreenChange = new EventEmitter<boolean>();
+  @Input() @InputBoolean() fullscreen: boolean;
+  @Input() @InputBoolean() hideTitle = true;
+  @Input() @InputNumber() padding = 24;
+  @Output() readonly fullscreenChange = new EventEmitter<boolean>();
 
   // #endregion
 
@@ -95,10 +82,7 @@ export class FullContentComponent
   }
 
   private updateHeight() {
-    this._height =
-      this.bodyEl.getBoundingClientRect().height -
-      (this.el.nativeElement as HTMLElement).getBoundingClientRect().top -
-      this.padding;
+    this._height = this.bodyEl.getBoundingClientRect().height - (this.el.nativeElement as HTMLElement).getBoundingClientRect().top - this.padding;
     this.cd.detectChanges();
   }
 
