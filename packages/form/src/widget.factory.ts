@@ -12,11 +12,13 @@ export class WidgetRegistry {
 
   private defaultWidget: Widget<FormProperty>;
 
-  setDefault(widget: Widget<FormProperty>) {
+  // tslint:disable-next-line:no-any
+  setDefault(widget: any) {
     this.defaultWidget = widget;
   }
 
-  register(type: string, widget: Widget<FormProperty>) {
+  // tslint:disable-next-line:no-any
+  register(type: string, widget: any) {
     this.widgets[type] = widget;
   }
 

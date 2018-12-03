@@ -28,16 +28,10 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   private $time = null;
   private formEl: HTMLFormElement;
 
-  @Input()
-  @InputNumber()
-  freq: number;
+  @Input() @InputNumber() freq: number;
+  @Input() @InputNumber() offsetTop: number;
 
-  @Input()
-  @InputNumber()
-  offsetTop: number;
-
-  @HostBinding('class.d-none')
-  _hiden = true;
+  @HostBinding('class.d-none') _hiden = true;
 
   count = 0;
 

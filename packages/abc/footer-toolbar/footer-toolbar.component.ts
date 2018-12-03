@@ -20,21 +20,8 @@ const CLSBODY = 'footer-toolbar__body';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
-  @Input()
-  @InputBoolean()
-  errorCollect = false;
-
-  _extra = '';
-  _extraTpl: TemplateRef<void>;
-  @Input()
-  set extra(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._extra = null;
-      this._extraTpl = value;
-    } else {
-      this._extra = value;
-    }
-  }
+  @Input() @InputBoolean() errorCollect = false;
+  @Input() extra: string | TemplateRef<void>;
 
   constructor(
     private el: ElementRef,

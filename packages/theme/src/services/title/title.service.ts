@@ -124,7 +124,7 @@ export class TitleService implements OnDestroy {
   /**
    * 设置国际化标题
    */
-  setTitleByI18n(key: string, params?: Object) {
+  setTitleByI18n(key: string, params?: {}) {
     this.setTitle(this.i18nSrv.fanyi(key, params));
   }
 

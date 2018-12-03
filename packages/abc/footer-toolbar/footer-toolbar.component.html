@@ -1,5 +1,5 @@
 <div class="footer-toolbar__left">
-  <ng-container *ngIf="_extra; else _extraTpl">{{_extra}}</ng-container>
+  <ng-container *stringTemplateOutlet="extra">{{ extra }}</ng-container>
 </div>
 <div class="footer-toolbar__right">
   <error-collect *ngIf="errorCollect"></error-collect>

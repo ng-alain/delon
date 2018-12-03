@@ -15,17 +15,7 @@ import { SEConfig } from './edit.config';
 export class SEContainerComponent {
   //#region fields
 
-  _title = '';
-  _titleTpl: TemplateRef<void>;
-  @Input()
-  set title(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._title = null;
-      this._titleTpl = value;
-    } else {
-      this._title = value;
-    }
-  }
+  @Input() title: string | TemplateRef<void>;
 
   @Input()
   get gutter(): number {
@@ -47,9 +37,7 @@ export class SEContainerComponent {
   }
   private _col: number;
 
-  @Input()
-  @InputNumber(null)
-  labelWidth: number;
+  @Input() @InputNumber(null) labelWidth: number;
 
   @Input()
   get nzLayout() {
@@ -63,16 +51,9 @@ export class SEContainerComponent {
   }
   private _nzLayout: string;
 
-  @Input()
-  size: 'default' | 'compact';
-
-  @Input()
-  @InputBoolean()
-  firstVisual: boolean;
-
-  @Input()
-  @InputBoolean()
-  line = false;
+  @Input() size: 'default' | 'compact';
+  @Input() @InputBoolean() firstVisual: boolean;
+  @Input() @InputBoolean() line = false;
 
   //#endregion
 

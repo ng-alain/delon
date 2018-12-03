@@ -45,40 +45,15 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // #region fields
 
-  @Input()
-  optional: string;
-
-  @Input()
-  optionalHelp: string;
-
-  @Input()
-  error: string;
-
-  @Input()
-  extra: string;
-
-  _label = '';
-  _labelTpl: TemplateRef<void>;
-  @Input()
-  set label(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._label = null;
-      this._labelTpl = value;
-    } else {
-      this._label = value;
-    }
-  }
-
-  @Input()
-  @InputNumber(null)
-  col: number;
-
-  @Input()
-  @InputBoolean()
-  required = false;
-
-  @Input()
-  controlClass: string = '';
+  @Input() optional: string;
+  @Input() optionalHelp: string;
+  @Input() error: string;
+  @Input() extra: string;
+  @Input() label: string | TemplateRef<void>;
+  @Input() @InputNumber(null) col: number;
+  @Input() @InputBoolean() required = false;
+  @Input() controlClass: string = '';
+  @Input() @InputBoolean(null) line: boolean;
 
   @Input()
   set id(value: string) {
@@ -88,10 +63,6 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   _id = `_se-${nextUniqueId++}`;
   _autoId = true;
-
-  @Input()
-  @InputBoolean(null)
-  line: boolean;
 
   // #endregion
 

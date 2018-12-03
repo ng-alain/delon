@@ -1,6 +1,6 @@
 <div class="ant-row se__container se__{{nzLayout}} se__{{size}}" [ngStyle]="{'margin-left.px': -(gutter / 2), 'margin-right.px': -(gutter / 2)}">
-  <se-title *ngIf="_title || _titleTpl">
-    <ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container>
+  <se-title *ngIf="title">
+    <ng-container *stringTemplateOutlet="title">{{ title }}</ng-container>
   </se-title>
   <ng-content></ng-content>
 </div>
