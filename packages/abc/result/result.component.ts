@@ -24,33 +24,7 @@ export class ResultComponent {
     }
   }
 
-  _title = '';
-  _titleTpl: TemplateRef<void>;
-  @Input()
-  set title(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._title = null;
-      this._titleTpl = value;
-    } else this._title = value;
-  }
-
-  _description = '';
-  _descriptionTpl: TemplateRef<void>;
-  @Input()
-  set description(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._description = null;
-      this._descriptionTpl = value;
-    } else this._description = value;
-  }
-
-  _extra = '';
-  _extraTpl: TemplateRef<void>;
-  @Input()
-  set extra(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._extra = null;
-      this._extraTpl = value;
-    } else this._extra = value;
-  }
+  @Input() title: string | TemplateRef<void>;
+  @Input() description: string | TemplateRef<void>;
+  @Input() extra: string | TemplateRef<void>;
 }

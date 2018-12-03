@@ -32,28 +32,10 @@ export class SVComponent implements AfterViewInit, OnChanges {
 
   //#region fields
 
-  _label = '';
-  _labelTpl: TemplateRef<void>;
-  @Input()
-  set label(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._label = null;
-      this._labelTpl = value;
-    } else {
-      this._label = value;
-    }
-  }
-
-  @Input()
-  @InputNumber(null)
-  col: number;
-
-  @Input()
-  @InputBoolean(null)
-  default: boolean;
-
-  @Input()
-  type: 'primary' | 'success' | 'danger' | 'warning';
+  @Input() label: string | TemplateRef<void>;
+  @Input() @InputNumber(null) col: number;
+  @Input() @InputBoolean(null) default: boolean;
+  @Input() type: 'primary' | 'success' | 'danger' | 'warning';
 
   //#endregion
 

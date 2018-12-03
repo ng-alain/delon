@@ -51,7 +51,8 @@ export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, optio
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private i18n$: Subscription;
-  public locale: {} = {};
+  // tslint:disable-next-line:no-any
+  locale: any = {};
   private _renders = new Map<string, TemplateRef<void>>();
   private _item: {};
   private _valid = true;

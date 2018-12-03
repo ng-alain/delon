@@ -36,12 +36,8 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   floatingEl: HTMLDivElement;
   list: Nav[] = [];
 
-  @Input()
-  @InputBoolean()
-  autoCloseUnderPad = true;
-
-  @Output()
-  readonly select = new EventEmitter<Menu>();
+  @Input() @InputBoolean() autoCloseUnderPad = true;
+  @Output() readonly select = new EventEmitter<Menu>();
 
   constructor(
     private menuSrv: MenuService,

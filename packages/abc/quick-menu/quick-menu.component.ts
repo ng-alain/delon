@@ -22,24 +22,10 @@ import { InputNumber } from '@delon/util';
 export class QuickMenuComponent implements OnInit, OnChanges {
   // #region fields
 
-  _icon = 'question-circle';
-  _iconTpl: TemplateRef<void>;
-  @Input()
-  set icon(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._icon = null;
-      this._iconTpl = value;
-    } else {
-      this._icon = value;
-    }
-  }
-
+  @Input() icon: string | TemplateRef<void> = 'question-circle';
   @Input() @InputNumber() top = 120;
-
   @Input() @InputNumber() width = 200;
-
   @Input() bgColor = '#fff';
-
   @Input() borderColor = '#ddd';
 
   // #endregion

@@ -13,14 +13,10 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoticeIconTabComponent {
-  @Input()
-  locale: {} = {};
-  @Input()
-  data: NoticeItem;
-  @Output()
-  readonly select = new EventEmitter<NoticeIconSelect>();
-  @Output()
-  readonly clear = new EventEmitter<string>();
+  @Input() locale: {} = {};
+  @Input() data: NoticeItem;
+  @Output() readonly select = new EventEmitter<NoticeIconSelect>();
+  @Output() readonly clear = new EventEmitter<string>();
 
   onClick(item: NoticeItem) {
     this.select.emit({

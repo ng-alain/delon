@@ -52,37 +52,15 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
   // #region fields
 
-  /** 设置匹配模式 */
-  @Input()
-  mode: ReuseTabMatchMode = ReuseTabMatchMode.Menu;
-  /** 选项文本国际化 */
-  @Input()
-  i18n: ReuseContextI18n;
-  /** 是否Debug模式 */
-  @Input()
-  @InputBoolean()
-  debug = false;
-  /** 允许最多复用多少个页面 */
-  @Input()
-  @InputNumber()
-  max: number;
-  /** 排除规则，限 `mode=URL` */
-  @Input()
-  excludes: RegExp[];
-  /** 允许关闭 */
-  @Input()
-  @InputBoolean()
-  allowClose = true;
-  /** 总是显示当前页 */
-  @Input()
-  @InputBoolean()
-  showCurrent = true;
-  /** 切换时回调 */
-  @Output()
-  readonly change = new EventEmitter<ReuseItem>();
-  /** 关闭回调 */
-  @Output()
-  readonly close = new EventEmitter<ReuseItem>();
+  @Input() mode: ReuseTabMatchMode = ReuseTabMatchMode.Menu;
+  @Input() i18n: ReuseContextI18n;
+  @Input() @InputBoolean() debug = false;
+  @Input() @InputNumber() max: number;
+  @Input() excludes: RegExp[];
+  @Input() @InputBoolean() allowClose = true;
+  @Input() @InputBoolean() showCurrent = true;
+  @Output() readonly change = new EventEmitter<ReuseItem>();
+  @Output() readonly close = new EventEmitter<ReuseItem>();
 
   // #endregion
 

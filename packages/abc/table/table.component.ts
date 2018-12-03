@@ -93,9 +93,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region fields
 
-  /** 数据源 */
-  @Input()
-  data: string | STData[] | Observable<STData[]>;
+  @Input() data: string | STData[] | Observable<STData[]>;
   /** 请求体配置 */
   @Input()
   get req() {
@@ -126,21 +124,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._res = item;
   }
   private _res: STRes;
-  /** 列描述  */
-  @Input()
-  columns: STColumn[] = [];
-  /** 每页数量，当设置为 `0` 表示不分页，默认：`10` */
-  @Input()
-  @InputNumber()
-  ps = 10;
-  /** 当前页码 */
-  @Input()
-  @InputNumber()
-  pi = 1;
-  /** 数据总量 */
-  @Input()
-  @InputNumber()
-  total = 0;
+  @Input() columns: STColumn[] = [];
+  @Input() @InputNumber() ps = 10;
+  @Input() @InputNumber() pi = 1;
+  @Input() @InputNumber() total = 0;
   /** 分页器配置 */
   @Input()
   get page() {
@@ -162,30 +149,21 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   private _page: STPage;
   /** 是否显示Loading */
-  @Input()
-  @InputBoolean()
-  loading = false;
+  @Input() @InputBoolean() loading = false;
   /** 延迟显示加载效果的时间（防止闪烁） */
-  @Input()
-  @InputNumber()
-  loadingDelay = 0;
+  @Input() @InputNumber() loadingDelay = 0;
   /** 是否显示边框 */
-  @Input()
-  @InputBoolean()
-  bordered = false;
+  @Input() @InputBoolean() bordered = false;
   /** table大小 */
-  @Input()
-  size: 'small' | 'middle' | 'default';
+  @Input() size: 'small' | 'middle' | 'default';
   /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px', x: '300px' }` */
-  @Input()
-  scroll: { y?: string; x?: string };
+  @Input() scroll: { y?: string; x?: string };
   /**
    * 单排序规则
    * - 若不指定，则返回：`columnName=ascend|descend`
    * - 若指定，则返回：`sort=columnName.(ascend|descend)`
    */
-  @Input()
-  singleSort: STSingleSort = null;
+  @Input() singleSort: STSingleSort = null;
   private _multiSort: STMultiSort;
   /** 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 */
   @Input()
@@ -207,40 +185,26 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       ...(typeof value === 'object' ? value : {}),
     };
   }
-  @Input()
-  rowClassName: STRowClassName;
+  @Input() rowClassName: STRowClassName;
   /** `header` 标题 */
-  @Input()
-  header: string | TemplateRef<void>;
+  @Input() header: string | TemplateRef<void>;
   /** `footer` 底部 */
-  @Input()
-  footer: string | TemplateRef<void>;
+  @Input() footer: string | TemplateRef<void>;
   /** 额外 `body` 内容 */
-  @Input()
-  body: TemplateRef<void>;
+  @Input() body: TemplateRef<void>;
   /** `expand` 可展开，当数据源中包括 `expand` 表示展开状态 */
-  @Input()
-  expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
-  @Input()
-  noResult: string | TemplateRef<void>;
-  @Input()
-  widthConfig: string[];
+  @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
+  @Input() noResult: string | TemplateRef<void>;
+  @Input() widthConfig: string[];
+  /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
+  @Input() @InputNumber() rowClickTime = 200;
+  @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
   /** 请求异常时回调 */
-  @Output()
-  readonly error = new EventEmitter<STError>();
+  @Output() readonly error = new EventEmitter<STError>();
   /**
    * 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动
    */
-  @Output()
-  readonly change = new EventEmitter<STChange>();
-  /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
-  @Input()
-  @InputNumber()
-  rowClickTime = 200;
-
-  @Input()
-  @InputBoolean()
-  responsiveHideHeaderFooter: boolean;
+  @Output() readonly change = new EventEmitter<STChange>();
 
   // #endregion
 

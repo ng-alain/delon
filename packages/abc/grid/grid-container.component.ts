@@ -21,9 +21,7 @@ import { SGConfig } from './grid.config';
 export class SGContainerComponent {
   //#region fields
 
-  @Input()
-  @InputNumber()
-  gutter: number;
+  @Input() @InputNumber() gutter: number;
 
   @Input('sg-container')
   set col(value: number) {

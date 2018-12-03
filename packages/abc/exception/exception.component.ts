@@ -22,7 +22,8 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   private conTpl: ElementRef;
 
   _type: number;
-  locale: {} = {};
+  // tslint:disable-next-line:no-any
+  locale: any = {};
   hasCon = false;
 
   _img = '';

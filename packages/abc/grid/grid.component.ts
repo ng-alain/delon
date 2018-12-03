@@ -30,9 +30,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
   private clsMap: string[] = [];
   private inited = false;
 
-  @Input()
-  @InputNumber(null)
-  col: number;
+  @Input() @InputNumber(null) col: number;
 
   @HostBinding('style.padding-left.px')
   get paddingLeft(): number {

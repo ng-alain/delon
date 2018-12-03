@@ -9,10 +9,6 @@ export class GlobalFooterItemComponent {
   @ViewChild('host')
   host: ElementRef;
 
-  @Input()
-  href: string;
-
-  @Input()
-  @InputBoolean()
-  blankTarget: boolean;
+  @Input() href: string;
+  @Input() @InputBoolean() blankTarget: boolean;
 }

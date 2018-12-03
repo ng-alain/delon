@@ -1,6 +1,5 @@
-<div class="sv__label" [class.sv__label-empty]="!_label && !_labelTpl"
-  [style.width.px]="parent.labelWidth">
-  <ng-container *ngIf="_label; else _labelTpl">{{_label}}</ng-container>
+<div class="sv__label" [class.sv__label-empty]="!label" [style.width.px]="parent.labelWidth">
+  <ng-container *stringTemplateOutlet="label">{{label}}</ng-container>
 </div>
 <div class="sv__detail" (cdkObserveContent)="checkContent()" #conEl>
   <ng-content></ng-content>

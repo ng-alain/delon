@@ -21,9 +21,7 @@ import { ImageConfig } from './image.config';
 @Directive({ selector: '[_src]' })
 export class ImageDirective implements OnChanges, OnInit {
   @Input('_src') src: string;
-
   @Input() @InputNumber() size = 64;
-
   @Input() error = './assets/img/logo.svg';
 
   private inited = false;

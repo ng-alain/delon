@@ -22,7 +22,8 @@ import { InputBoolean } from '@delon/util';
 })
 export class TagSelectComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
-  locale: {} = {};
+  // tslint:disable-next-line:no-any
+  locale: any = {};
 
   /** 是否启用 `展开与收进` */
   @Input()

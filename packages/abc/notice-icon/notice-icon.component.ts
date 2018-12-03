@@ -20,38 +20,18 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 })
 export class NoticeIconComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
-  locale: {} = {};
+  // tslint:disable-next-line:no-any
+  locale: any = {};
 
-  @Input()
-  data: NoticeItem[] = [];
+  @Input() data: NoticeItem[] = [];
+  @Input() @InputNumber() count: number;
+  @Input() @InputBoolean() loading = false;
+  @Input() @InputBoolean() popoverVisible = false;
+  @Output() readonly select = new EventEmitter<NoticeIconSelect>();
+  @Output() readonly clear = new EventEmitter<string>();
+  @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
 
-  /** 图标上的消息总数 */
-  @Input()
-  @InputNumber()
-  count: number;
-
-  /** 弹出卡片加载状态 */
-  @Input()
-  @InputBoolean()
-  loading = false;
-
-  @Output()
-  readonly select = new EventEmitter<NoticeIconSelect>();
-  @Output()
-  readonly clear = new EventEmitter<string>();
-
-  /** 手动控制Popover显示 */
-  @Input()
-  @InputBoolean()
-  popoverVisible = false;
-
-  @Output()
-  readonly popoverVisibleChange = new EventEmitter<boolean>();
-
-  constructor(
-    private i18n: DelonLocaleService,
-    private cdr: ChangeDetectorRef,
-  ) { }
+  constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) { }
 
   onVisibleChange(result: boolean) {
     this.popoverVisibleChange.emit(result);

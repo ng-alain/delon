@@ -66,6 +66,7 @@ export class PageHeaderComponent
   }
 
   _titleVal: string;
+  paths: PageHeaderPath[] = [];
 
   // #region fields
 
@@ -82,75 +83,23 @@ export class PageHeaderComponent
     this._titleVal = this._title;
   }
 
-  @Input()
-  @InputBoolean()
-  loading = false;
-
-  @Input()
-  @InputBoolean()
-  wide = false;
-
-  @Input()
-  home: string;
-
-  @Input()
-  homeLink: string;
-
-  @Input()
-  homeI18n: string;
-
-  /**
-   * 自动生成导航，以当前路由从主菜单中定位
-   */
-  @Input()
-  @InputBoolean()
-  autoBreadcrumb: boolean;
-
-  /**
-   * 自动生成标题，以当前路由从主菜单中定位
-   */
-  @Input()
-  @InputBoolean()
-  autoTitle: boolean;
-
-  /**
-   * 是否自动将标题同步至 `TitleService`、`ReuseService` 下，仅 `title` 为 `string` 类型时有效
-   */
-  @Input()
-  @InputBoolean()
-  syncTitle: boolean;
-
-  @Input()
-  @InputBoolean()
-  fixed: boolean;
-
-  @Input()
-  @InputNumber()
-  fixedOffsetTop: number;
-
-  paths: PageHeaderPath[] = [];
-
-  @Input()
-  breadcrumb: TemplateRef<void>;
-
-  @Input()
-  @InputBoolean()
-  recursiveBreadcrumb: boolean;
-
-  @Input()
-  logo: TemplateRef<void>;
-
-  @Input()
-  action: TemplateRef<void>;
-
-  @Input()
-  content: TemplateRef<void>;
-
-  @Input()
-  extra: TemplateRef<void>;
-
-  @Input()
-  tab: TemplateRef<void>;
+  @Input() @InputBoolean() loading = false;
+  @Input() @InputBoolean() wide = false;
+  @Input() home: string;
+  @Input() homeLink: string;
+  @Input() homeI18n: string;
+  @Input() @InputBoolean() autoBreadcrumb: boolean;
+  @Input() @InputBoolean() autoTitle: boolean;
+  @Input() @InputBoolean() syncTitle: boolean;
+  @Input() @InputBoolean() fixed: boolean;
+  @Input() @InputNumber() fixedOffsetTop: number;
+  @Input() breadcrumb: TemplateRef<void>;
+  @Input() @InputBoolean() recursiveBreadcrumb: boolean;
+  @Input() logo: TemplateRef<void>;
+  @Input() action: TemplateRef<void>;
+  @Input() content: TemplateRef<void>;
+  @Input() extra: TemplateRef<void>;
+  @Input() tab: TemplateRef<void>;
 
   // #endregion
 
