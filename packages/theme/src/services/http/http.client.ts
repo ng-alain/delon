@@ -24,10 +24,8 @@ export class _HttpClient {
   private cog: HttpClientConfig;
   constructor(private http: HttpClient, cog: AlainThemeConfig) {
     this.cog = {
-      ...{
-        nullValueHandling: 'include',
-        dateValueHandling: 'timestamp',
-      } as HttpClientConfig,
+      nullValueHandling: 'include',
+      dateValueHandling: 'timestamp',
       ...cog!.http,
     };
   }

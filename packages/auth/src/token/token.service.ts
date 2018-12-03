@@ -7,10 +7,7 @@ import { ITokenModel, ITokenService } from './interface';
 
 @Injectable()
 export class TokenService implements ITokenService {
-  private change$: BehaviorSubject<ITokenModel> = new BehaviorSubject<
-    ITokenModel
-    >(null);
-  private data: ITokenModel;
+  private change$: BehaviorSubject<ITokenModel> = new BehaviorSubject<ITokenModel>(null);
   private _redirect: string;
 
   constructor(

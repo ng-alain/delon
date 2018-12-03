@@ -63,15 +63,14 @@ export class DrawerHelper {
     options?: DrawerHelperOptions,
   ): Observable<any> {
     options = {
-      ...{
-        size: 'md',
-        footer: true,
-        footerHeight: 55,
-        drawerOptions: {
-          nzPlacement: 'right',
-          nzWrapClassName: '',
-        },
-      } as DrawerHelperOptions, ...options,
+      size: 'md',
+      footer: true,
+      footerHeight: 55,
+      drawerOptions: {
+        nzPlacement: 'right',
+        nzWrapClassName: '',
+      },
+      ...options,
     };
     return new Observable((observer: Observer<any>) => {
       const { size, footer, footerHeight, drawerOptions } = options;

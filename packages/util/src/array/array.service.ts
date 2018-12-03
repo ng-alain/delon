@@ -9,18 +9,16 @@ export class ArrayService {
   private c: ArrayConfig;
   constructor(cog: DelonUtilConfig) {
     this.c = {
-      ...{
-        deepMapName: 'deep',
-        parentMapName: 'parent',
-        idMapName: 'id',
-        parentIdMapName: 'parent_id',
-        childrenMapName: 'children',
-        titleMapName: 'title',
-        checkedMapname: 'checked',
-        selectedMapname: 'selected',
-        expandedMapname: 'expanded',
-        disabledMapname: 'disabled',
-      } as ArrayConfig,
+      deepMapName: 'deep',
+      parentMapName: 'parent',
+      idMapName: 'id',
+      parentIdMapName: 'parent_id',
+      childrenMapName: 'children',
+      titleMapName: 'title',
+      checkedMapname: 'checked',
+      selectedMapname: 'selected',
+      expandedMapname: 'expanded',
+      disabledMapname: 'disabled',
       ...(cog && cog.array),
     };
   }
@@ -222,16 +220,11 @@ export class ArrayService {
     this.visitTree(
       tree,
       (item: NzTreeNode, parent: NzTreeNode, deep: number) => {
-        if (
-          item.isChecked ||
-          (options.includeHalfChecked && item.isHalfChecked)
-        ) {
+        if (item.isChecked || (options.includeHalfChecked && item.isHalfChecked)) {
           keys.push(
-            options.cb
-              ? options.cb(item, parent, deep)
-              : options.keyMapName
-                ? item.origin[options.keyMapName]
-                : item.key,
+            options.cb ?
+              options.cb(item, parent, deep) :
+              options.keyMapName ? item.origin[options.keyMapName] : item.key,
           );
         }
       },

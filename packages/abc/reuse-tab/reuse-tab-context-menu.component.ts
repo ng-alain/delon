@@ -23,7 +23,10 @@ export class ReuseTabContextMenuComponent implements OnInit {
   private _i18n: ReuseContextI18n;
   @Input()
   set i18n(value: ReuseContextI18n) {
-    this._i18n = { ...this.i18nSrv.getData('reuseTab'), ...value };
+    this._i18n = {
+      ...this.i18nSrv.getData('reuseTab'),
+      ...value,
+    };
   }
   get i18n() {
     return this._i18n;

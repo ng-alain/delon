@@ -13,7 +13,8 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoticeIconTabComponent {
-  @Input() locale: {} = {};
+  // tslint:disable-next-line:no-any
+  @Input() locale: any = {};
   @Input() data: NoticeItem;
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();

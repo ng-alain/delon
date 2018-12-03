@@ -37,7 +37,8 @@ import { ControlWidget } from '../../widget';
   `,
 })
 export class TreeSelectWidget extends ControlWidget implements OnInit {
-  i: {};
+  // tslint:disable-next-line:no-any
+  i: any;
   data: SFSchemaEnum[] = [];
 
   private dc() {

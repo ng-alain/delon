@@ -20,8 +20,9 @@ export class MenuService implements OnDestroy {
     private i18nSrv: AlainI18NService,
     @Optional() private aclService: ACLService,
   ) {
-    if (this.i18nSrv)
+    if (this.i18nSrv) {
       this.i18n$ = this.i18nSrv.change.subscribe(() => this.resume());
+    }
   }
 
   get change(): Observable<Menu[]> {
@@ -152,14 +153,14 @@ export class MenuService implements OnDestroy {
     }
     let _data = this.data[0].children[pos];
     if (_data.i18n && this.i18nSrv) _data.text = this.i18nSrv.fanyi(_data.i18n);
-    _data = {
-      ..._data,
+    // tslint:disable-next-line:prefer-object-spread
+    _data = Object.assign(_data, {
       shortcutRoot: true,
       _type: 3,
       __id: -1,
       _depth: 1,
       __parent: null,
-    };
+    });
     _data.children = shortcuts.map(i => {
       i._depth = 2;
       i.__parent = _data;

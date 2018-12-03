@@ -39,7 +39,8 @@ export const EMAILSUFFIX = [
     `,
 })
 export class AutoCompleteWidget extends ControlWidget implements OnInit {
-  i: {};
+  // tslint:disable-next-line:no-any
+  i: any;
   fixData: SFSchemaEnum[] = [];
   list: Observable<SFSchemaEnum[]>;
   private filterOption: (input: string, option: SFSchemaEnum) => boolean;

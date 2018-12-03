@@ -64,16 +64,14 @@ export class ImageDirective implements OnChanges, OnInit {
 
     const isHttp = newSrc.startsWith('http:');
     const isHttps = newSrc.startsWith('https:');
-    if (isHttp || isHttps) newSrc = newSrc.substr(isHttp ? 5 : 6);
+    if (isHttp || isHttps) {
+      newSrc = newSrc.substr(isHttp ? 5 : 6);
+    }
 
     this.render.setAttribute(this.el.nativeElement, 'src', newSrc);
   }
 
   private updateError() {
-    this.render.setAttribute(
-      this.el.nativeElement,
-      'onerror',
-      `this.src='${this.error}';`,
-    );
+    this.render.setAttribute(this.el.nativeElement, 'onerror', `this.src='${this.error}'`);
   }
 }

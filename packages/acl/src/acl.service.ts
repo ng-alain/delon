@@ -10,9 +10,7 @@ export class ACLService {
   private roles: string[] = [];
   private abilities: Array<number | string> = [];
   private full = false;
-  private aclChange: BehaviorSubject<ACLType | boolean> = new BehaviorSubject<
-    ACLType | boolean
-    >(null);
+  private aclChange: BehaviorSubject<ACLType | boolean> = new BehaviorSubject<ACLType | boolean>(null);
 
   /** ACL变更通知 */
   get change(): Observable<ACLType | boolean> {

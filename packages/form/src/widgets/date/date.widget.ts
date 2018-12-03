@@ -95,7 +95,8 @@ export class DateWidget extends ControlWidget implements OnInit {
   displayValue: Date | Date[] = null;
   displayFormat: string;
   format: string;
-  i: {};
+  // tslint:disable-next-line:no-any
+  i: any;
   flatRange = false;
 
   ngOnInit(): void {

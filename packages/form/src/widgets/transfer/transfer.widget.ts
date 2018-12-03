@@ -33,7 +33,8 @@ import { ControlWidget } from '../../widget';
 })
 export class TransferWidget extends ControlWidget implements OnInit {
   list: SFSchemaEnum[] = [];
-  i: {};
+  // tslint:disable-next-line:no-any
+  i: any;
   private _data: SFSchemaEnum[] = [];
 
   ngOnInit(): void {

@@ -57,7 +57,8 @@ import { ControlWidget } from '../../widget';
 export class MentionWidget extends ControlWidget implements OnInit {
   @ViewChild('mentions') mentionChild: NzMentionComponent;
   data: SFSchemaEnum[] = [];
-  i: {};
+  // tslint:disable-next-line:no-any
+  i: any;
   loading = false;
 
   ngOnInit(): void {

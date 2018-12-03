@@ -177,11 +177,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       return;
     }
     this._multiSort = {
-      ...{
-        key: 'sort',
-        separator: '-',
-        nameSeparator: '.',
-      } as STMultiSort,
+      key: 'sort',
+      separator: '-',
+      nameSeparator: '.',
       ...(typeof value === 'object' ? value : {}),
     };
   }
@@ -632,10 +630,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     (newData ? of(newData) : of(this._data)).subscribe((res: STData[]) =>
       this.exportSrv.export(
         {
-          ...opt, ...{
+          ...opt,
+          ...{
             _d: res,
             _c: this._columns,
-          } as STExportOptions,
+          },
         },
       ),
     );

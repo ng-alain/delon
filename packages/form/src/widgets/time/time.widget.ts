@@ -35,7 +35,8 @@ import { ControlWidget } from '../../widget';
 export class TimeWidget extends ControlWidget implements OnInit {
   displayValue: Date = null;
   format: string;
-  i: {};
+  // tslint:disable-next-line:no-any
+  i: any;
 
   ngOnInit(): void {
     const ui = this.ui;

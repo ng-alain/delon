@@ -51,7 +51,8 @@ import { ControlWidget } from '../../widget';
   `,
 })
 export class SelectWidget extends ControlWidget implements OnInit {
-  i: {};
+  // tslint:disable-next-line:no-any
+  i: any;
   data: SFSchemaEnum[];
   hasGroup = false;
 

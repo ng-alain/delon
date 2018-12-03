@@ -14,9 +14,7 @@ export interface LazyResult {
 export class LazyService {
   private list: { [key: string]: boolean } = {};
   private cached: { [key: string]: LazyResult } = {};
-  private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<
-    LazyResult[]
-    >([]);
+  private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
 
   // tslint:disable-next-line:no-any
   constructor(@Inject(DOCUMENT) private doc: any) { }
@@ -75,10 +73,7 @@ export class LazyService {
       if (node.readyState) {
         // IE
         node.onreadystatechange = () => {
-          if (
-            node.readyState === 'loaded' ||
-            node.readyState === 'complete'
-          ) {
+          if (node.readyState === 'loaded' || node.readyState === 'complete') {
             node.onreadystatechange = null;
             onSuccess({
               path,
@@ -88,21 +83,18 @@ export class LazyService {
           }
         };
       } else {
-        node.onload = () => {
-          onSuccess({
-            path,
-            loaded: true,
-            status: 'ok',
-          });
-        };
-      }
-      node.onerror = (error: {}) =>
-        onSuccess({
+        node.onload = () => onSuccess({
           path,
-          loaded: false,
-          status: 'error',
-          error,
+          loaded: true,
+          status: 'ok',
         });
+      }
+      node.onerror = (error: {}) => onSuccess({
+        path,
+        loaded: false,
+        status: 'error',
+        error,
+      });
       this.doc.getElementsByTagName('head')[0].appendChild(node);
     });
   }

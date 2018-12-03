@@ -190,15 +190,11 @@ export class LodopService implements OnDestroy {
     this._lodop.On_Return = (taskID: string, value: boolean | string) => {
       if (tid !== taskID) return;
       this._lodop.On_Return = null;
-      this._events.next(
-        {
-          ...{
-            ok: value === true,
-            error: value === true ? null : value,
-          } as LodopPrintResult,
-          ...data,
-        },
-      );
+      this._events.next({
+        ok: value === true,
+        error: value === true ? null : value,
+        ...data,
+      });
       this.printDo();
     };
   }

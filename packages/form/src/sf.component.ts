@@ -211,11 +211,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           widget: property.type,
           ...(property.format && FORMATMAPS[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
-          ...(!property.ui &&
-            Array.isArray(property.enum) &&
-            property.enum.length > 0
-            ? { widget: 'select' }
-            : null),
+          ...(!property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null),
           ...this._defUi,
           ...(property.ui as SFUISchemaItem),
           ...uiSchema[uiKey],
@@ -297,12 +293,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     if (this.ui == null) this.ui = {};
     this._defUi = {
-      ...{
-        onlyVisual: this.options.onlyVisual,
-        size: this.options.size,
-        liveValidate: this.liveValidate,
-        firstVisual: this.firstVisual,
-      } as SFUISchemaItem,
+      onlyVisual: this.options.onlyVisual,
+      size: this.options.size,
+      liveValidate: this.liveValidate,
+      firstVisual: this.firstVisual,
       ...this.options.ui,
       ..._schema.ui,
       ...this.ui['*'],
@@ -326,7 +320,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   private coverButtonProperty() {
     this._btn = {
-      ...{ render: { size: 'default' } } as SFButton,
+      render: { size: 'default' },
       ...this.locale,
       ...this.options.button,
       ...(this.button as SFButton),

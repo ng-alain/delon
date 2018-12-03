@@ -1288,7 +1288,6 @@ describe('abc: table', () => {
       fixture.detectChanges();
       tick(100);
       expect(page._changeData.type).toBe('dblClick');
-      console.log('2', page._changeData);
     }));
     it('should be ingore input', fakeAsync(() => {
       expect(context.change).not.toHaveBeenCalled();
@@ -1715,6 +1714,6 @@ class TestComponent {
   rowClickTime = 200;
   responsiveHideHeaderFooter = false;
 
-  error() {}
-  change() {}
+  error() { }
+  change() { }
 }

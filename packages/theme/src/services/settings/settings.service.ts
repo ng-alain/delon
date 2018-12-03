@@ -25,12 +25,10 @@ export class SettingsService {
   get layout(): Layout {
     if (!this._layout) {
       this._layout = {
-        ...{
-          fixed: true,
-          collapsed: false,
-          boxed: false,
-          lang: null,
-        } as Layout,
+        fixed: true,
+        collapsed: false,
+        boxed: false,
+        lang: null,
         ...this.get(LAYOUT_KEY),
       };
       this.set(LAYOUT_KEY, this._layout);
@@ -53,7 +51,7 @@ export class SettingsService {
 
   get user(): User {
     if (!this._user) {
-      this._user = { ...{} as User, ...this.get(USER_KEY) };
+      this._user = { ...this.get(USER_KEY) };
       this.set(USER_KEY, this._user);
     }
     return this._user;
