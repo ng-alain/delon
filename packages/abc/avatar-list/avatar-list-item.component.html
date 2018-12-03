@@ -1,0 +1,5 @@
+<nz-tooltip *ngIf="tips" [nzTitle]="tips">
+  <nz-avatar nz-tooltip [nzSrc]="src" [nzText]="text" [nzIcon]="icon" [nzSize]="size"></nz-avatar>
+</nz-tooltip>
+<nz-avatar *ngIf="!tips" [nzSrc]="src" [nzText]="text" [nzIcon]="icon" [nzSize]="size"></nz-avatar>
+<ng-content></ng-content>

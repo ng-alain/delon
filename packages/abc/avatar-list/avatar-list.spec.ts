@@ -19,29 +19,62 @@ describe('abc: avatar-list', () => {
     fixture.detectChanges();
   });
 
-  it('#size, should be [large] size', () => {
-    context.size = 'large';
-    fixture.detectChanges();
-    expect(dl.queryAll(By.css('.ant-avatar-lg')).length).toBe(5);
+  describe('#size', () => {
+    it('with large', () => {
+      context.size = 'large';
+      fixture.detectChanges();
+      expect(dl.queryAll(By.css('.avatar-list__large')).length).toBe(1);
+      expect(dl.queryAll(By.css('.ant-avatar-lg')).length).toBe(5);
+    });
+
+    it('with small', () => {
+      context.size = 'small';
+      fixture.detectChanges();
+      expect(dl.queryAll(By.css('.avatar-list__small')).length).toBe(1);
+      expect(dl.queryAll(By.css('.ant-avatar-sm')).length).toBe(5);
+    });
+
+    it('with mini, and avatar muse be small size', () => {
+      context.size = 'mini';
+      fixture.detectChanges();
+      expect(dl.queryAll(By.css('.avatar-list__mini')).length).toBe(1);
+      expect(dl.queryAll(By.css('.ant-avatar-sm')).length).toBe(5);
+    });
   });
 
-  it('#size, should be [mini] size', () => {
-    context.size = 'mini';
+  it('should be changed text in item', () => {
+    const el = dl.query(By.css('#test')).nativeElement as HTMLElement;
+    expect(el.textContent.trim()).toBe('asdf');
+    context.text = 'newasdf';
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('.ant-avatar-sm')).length).toBe(5);
+    expect(el.textContent.trim()).toBe('newasdf');
   });
 });
 
 @Component({
   template: `
-  <avatar-list [size]="size">
-    <avatar-list-item tips="Jake" src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png"></avatar-list-item>
-    <avatar-list-item tips="Andy" src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png"></avatar-list-item>
-    <avatar-list-item tips="Niko" src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png"></avatar-list-item>
-    <avatar-list-item tips="Cipchk" text="Cipchk"></avatar-list-item>
-    <avatar-list-item tips="heart-o" icon="heart-o"></avatar-list-item>
-  </avatar-list>`,
+    <avatar-list [size]="size">
+      <avatar-list-item
+        tips="Jake"
+        src="https://gw.alipayobjects.com/zos/rmsportal/zOsKZmFRdUtvpqCImOVY.png"
+      ></avatar-list-item>
+      <avatar-list-item
+        tips="Andy"
+        src="https://gw.alipayobjects.com/zos/rmsportal/sfjbOqnsXXJgNCjCzDBL.png"
+      ></avatar-list-item>
+      <avatar-list-item
+        tips="Niko"
+        src="https://gw.alipayobjects.com/zos/rmsportal/kZzEzemZyKLKFsojXItE.png"
+      ></avatar-list-item>
+      <avatar-list-item tips="Cipchk" text="Cipchk"></avatar-list-item>
+      <avatar-list-item tips="heart-o" icon="heart-o"></avatar-list-item>
+    </avatar-list>
+    <avatar-list id="test">
+      <avatar-list-item [text]="text"></avatar-list-item>
+    </avatar-list>
+  `,
 })
 class TestComponent {
   size: 'large' | 'small' | 'mini' | 'default' = 'default';
+  text = 'asdf';
 }

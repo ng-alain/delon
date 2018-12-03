@@ -1,11 +1,17 @@
-import { Component, Input, QueryList, ContentChildren } from '@angular/core';
-import { AvatarListItemComponent } from './avatar-list-item.component';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ViewEncapsulation,
+} from '@angular/core';
 
 @Component({
   selector: 'avatar-list',
   templateUrl: './avatar-list.component.html',
   host: { '[class.avatar-list]': 'true' },
-  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarListComponent {
   _size = '';
@@ -25,8 +31,8 @@ export class AvatarListComponent {
         this._avatarSize = 'small';
         break;
     }
+    this.cdr.markForCheck();
   }
 
-  @ContentChildren(AvatarListItemComponent)
-  _items: QueryList<AvatarListItemComponent>;
+  constructor(private cdr: ChangeDetectorRef) {}
 }

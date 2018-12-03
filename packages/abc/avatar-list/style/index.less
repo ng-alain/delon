@@ -18,22 +18,28 @@
     .ant-avatar {
       border: 1px solid #fff;
     }
-    &-large {
+  }
+  &__large {
+    @{avatar-list-prefix} {
       width: @avatar-size-lg;
       height: @avatar-size-lg;
     }
-    &-small {
+  }
+  &__small {
+    @{avatar-list-prefix} {
       width: @avatar-size-sm;
       height: @avatar-size-sm;
     }
-    &-mini {
+  }
+  &__mini {
+    @{avatar-list-prefix} {
       width: 20px;
       height: 20px;
-      .ant-avatar {
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-      }
+    }
+    .ant-avatar {
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
     }
   }
 }
