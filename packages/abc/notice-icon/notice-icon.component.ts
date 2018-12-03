@@ -1,17 +1,17 @@
 import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnDestroy,
   ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
   OnInit,
+  Output,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { DelonLocaleService } from '@delon/theme';
-import { InputNumber, InputBoolean } from '@delon/util';
+import { InputBoolean, InputNumber } from '@delon/util';
+import { Subscription } from 'rxjs';
 
-import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
+import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
   selector: 'notice-icon',
@@ -20,7 +20,7 @@ import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
 })
 export class NoticeIconComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
-  locale: any = {};
+  locale: {} = {};
 
   @Input()
   data: NoticeItem[] = [];
@@ -51,13 +51,13 @@ export class NoticeIconComponent implements OnInit, OnDestroy {
   constructor(
     private i18n: DelonLocaleService,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   onVisibleChange(result: boolean) {
     this.popoverVisibleChange.emit(result);
   }
 
-  onSelect(i: any) {
+  onSelect(i: NoticeIconSelect) {
     this.select.emit(i);
   }
 

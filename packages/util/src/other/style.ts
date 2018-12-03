@@ -3,7 +3,7 @@ import { Renderer2 } from '@angular/core';
 function removeClass(
   el: HTMLElement,
   classMap: object,
-  renderer: Renderer2
+  renderer: Renderer2,
 ): void {
   // tslint:disable-next-line:forin
   for (const i in classMap) {
@@ -14,7 +14,7 @@ function removeClass(
 function addClass(
   el: HTMLElement,
   classMap: object,
-  renderer: Renderer2
+  renderer: Renderer2,
 ): void {
   for (const i in classMap) {
     if (classMap[i]) {
@@ -44,7 +44,7 @@ export function updateHostClass(
   el: HTMLElement,
   renderer: Renderer2,
   classMap: object,
-  cleanAll: boolean = false
+  cleanAll: boolean = false,
 ): void {
   if (cleanAll === true) {
     renderer.removeAttribute(el, 'class');

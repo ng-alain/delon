@@ -21,7 +21,7 @@ export function isEmpty(element: HTMLElement): boolean {
 
 export function toBoolean(
   value: any,
-  allowUndefined: boolean = false
+  allowUndefined: boolean = false,
 ): boolean {
   return allowUndefined && typeof value === 'undefined'
     ? undefined
@@ -47,7 +47,7 @@ export function InputBoolean(allowUndefined: boolean = false): any { // tslint:d
 
     Object.defineProperty(target, privatePropName, {
       configurable: true,
-      writable: true
+      writable: true,
     });
 
     Object.defineProperty(target, name, {
@@ -56,7 +56,7 @@ export function InputBoolean(allowUndefined: boolean = false): any { // tslint:d
       },
       set(value: any): void {
         this[privatePropName] = toBoolean(value, allowUndefined); // tslint:disable-line:no-invalid-this
-      }
+      },
     });
   };
 }
@@ -88,7 +88,7 @@ export function InputNumber(fallback: number = 0): any { // tslint:disable-line:
 
     Object.defineProperty(target, privatePropName, {
       configurable: true,
-      writable: true
+      writable: true,
     });
 
     Object.defineProperty(target, name, {
@@ -97,7 +97,7 @@ export function InputNumber(fallback: number = 0): any { // tslint:disable-line:
       },
       set(value: any): void {
         this[privatePropName] = toNumber(value, fallback); // tslint:disable-line:no-invalid-this
-      }
+      },
     });
   };
 }

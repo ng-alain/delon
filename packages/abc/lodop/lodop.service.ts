@@ -1,10 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { of, Observable, Subject } from 'rxjs';
 
 import { LazyService } from '@delon/util';
 
-import { Lodop, LodopResult, LodopPrintResult } from './lodop.types';
 import { LodopConfig } from './lodop.config';
+import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 
 // TODO: zone
 @Injectable()
@@ -28,16 +28,14 @@ export class LodopService implements OnDestroy {
     return this._cog;
   }
   set cog(value: LodopConfig) {
-    this._cog = Object.assign(
-      {
-        url: 'https://localhost:8443/CLodopfuncs.js',
-        name: 'CLODOP',
-        companyName: '',
-        checkMaxCount: 100,
-      },
-      this.defCog,
-      value,
-    );
+    this._cog = {
+      url: 'https://localhost:8443/CLodopfuncs.js',
+      name: 'CLODOP',
+      companyName: '',
+      checkMaxCount: 100,
+      ...this.defCog,
+      ...value,
+    };
   }
 
   /** 事件变更通知 */
@@ -54,7 +52,7 @@ export class LodopService implements OnDestroy {
 
     const url = `${this.cog.url}?name=${this.cog.name}`;
     let checkMaxCount = this.cog.checkMaxCount;
-    const onResolve = (status, error?: any) => {
+    const onResolve = (status, error?: {}) => {
       this._init.next({
         ok: status === 'ok',
         status,
@@ -107,7 +105,7 @@ export class LodopService implements OnDestroy {
 
   /** 获取 lodop 对象 */
   get lodop(): Observable<LodopResult> {
-    if (this._lodop) return of(<LodopResult>{ ok: true, lodop: this._lodop });
+    if (this._lodop) return of({ ok: true, lodop: this._lodop } as LodopResult);
     if (this.pending) return this._init.asObservable();
 
     this.request();
@@ -135,7 +133,7 @@ export class LodopService implements OnDestroy {
    * @param contextObj 动态参数上下文对象
    * @param parser 自定义解析表达式，默认：`/LODOP\.([^(]+)\(([^\n]+)\);/i`
    */
-  attachCode(code: string, contextObj?: Object, parser?: RegExp): void {
+  attachCode(code: string, contextObj?: {}, parser?: RegExp): void {
     this.check();
     if (!parser) parser = /LODOP\.([^(]+)\(([^\n]+)\);/i;
     code.split('\n').forEach(line => {
@@ -143,11 +141,12 @@ export class LodopService implements OnDestroy {
       if (!res) return;
       const fn = this._lodop[res[1]];
       if (fn) {
-        let arr: Array<any>;
+        // tslint:disable-next-line:no-any
+        let arr: any[];
         try {
           const fakeFn = new Function(`return [${res[2]}]`);
-          arr = fakeFn() as any[];
-        } catch {}
+          arr = fakeFn();
+        } catch { }
 
         if (Array.isArray(arr) && contextObj) {
           for (let i = 0; i < arr.length; i++) {
@@ -181,6 +180,7 @@ export class LodopService implements OnDestroy {
     });
   }
 
+  // tslint:disable-next-line:no-any
   private printBuffer: any[] = [];
   private printDo() {
     const data = this.printBuffer.shift();
@@ -191,13 +191,13 @@ export class LodopService implements OnDestroy {
       if (tid !== taskID) return;
       this._lodop.On_Return = null;
       this._events.next(
-        Object.assign(
-          <LodopPrintResult>{
+        {
+          ...{
             ok: value === true,
             error: value === true ? null : value,
-          },
-          data,
-        ),
+          } as LodopPrintResult,
+          ...data,
+        },
       );
       this.printDo();
     };
@@ -210,7 +210,7 @@ export class LodopService implements OnDestroy {
    * @param contextObj 动态参数上下文对象
    * @param parser 自定义解析表达式，默认：`/LODOP\.([^(]+)\(([^\n]+)\);/i`
    */
-  print(code: string, contextObj: Object | Object[], parser?: RegExp): void {
+  print(code: string, contextObj: {} | Array<{}>, parser?: RegExp): void {
     this.check();
     if (contextObj) {
       this.printBuffer.push(

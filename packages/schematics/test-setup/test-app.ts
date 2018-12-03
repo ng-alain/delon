@@ -6,8 +6,8 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {SchematicTestRunner, UnitTestTree} from '@angular-devkit/schematics/testing';
-import {join} from 'path';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+import { join } from 'path';
 
 /** Path to the collection file for the Material schematics */
 export const collectionPath = join(__dirname, '..', 'collection.json');
@@ -26,7 +26,7 @@ export function createTestApp(appOptions = {}): UnitTestTree {
   });
 
   const res = baseRunner.runExternalSchematic('@schematics/angular', 'application',
-      {...appOptions, name: 'alain'}, workspaceTree);
+    { ...appOptions, name: 'alain' }, workspaceTree);
 
   return res;
 }

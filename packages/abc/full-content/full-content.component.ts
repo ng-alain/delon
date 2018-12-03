@@ -1,23 +1,23 @@
+import { DOCUMENT } from '@angular/common';
 import {
-  Component,
-  ElementRef,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Input,
-  Output,
+  Component,
+  ElementRef,
   EventEmitter,
-  OnChanges,
-  OnInit,
-  Inject,
   HostBinding,
+  Inject,
+  Input,
+  OnChanges,
   OnDestroy,
-  AfterViewInit,
+  OnInit,
+  Output,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { Router, ActivationStart, ActivationEnd } from '@angular/router';
-import { Subscription, fromEvent } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
+import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
 import { InputBoolean, InputNumber } from '@delon/util';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
 import { FullContentService } from './full-content.service';
 
@@ -69,8 +69,9 @@ export class FullContentComponent
     private cd: ChangeDetectorRef,
     private srv: FullContentService,
     private router: Router,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
-  ) {}
+  ) { }
 
   private updateCls() {
     const clss = this.bodyEl.classList;
@@ -126,13 +127,10 @@ export class FullContentComponent
     // when router changed
     this.route$ = this.router.events
       .pipe(
-        filter(
-          (e: any) =>
-            e instanceof ActivationStart || e instanceof ActivationEnd,
-        ),
+        filter((e: Event) => e instanceof ActivationStart || e instanceof ActivationEnd),
         debounceTime(200),
       )
-      .subscribe(e => {
+      .subscribe(() => {
         if (!!this.doc.querySelector('#' + this.id)) {
           this.bodyEl.classList.add(wrapCls);
           this.updateCls();

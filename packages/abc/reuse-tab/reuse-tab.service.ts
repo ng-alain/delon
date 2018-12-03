@@ -1,11 +1,11 @@
-import { Injectable, OnDestroy, Injector } from '@angular/core';
+import { Injectable, Injector, OnDestroy } from '@angular/core';
 import {
-  ActivatedRouteSnapshot,
   ActivatedRoute,
+  ActivatedRouteSnapshot,
   Router,
 } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { MenuService } from '@delon/theme';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ReuseTabCached,
   ReuseTabMatchMode,
@@ -26,7 +26,7 @@ export class ReuseTabService implements OnDestroy {
   private _excludes: RegExp[] = [];
   private _cachedChange: BehaviorSubject<
     ReuseTabNotify
-  > = new BehaviorSubject<ReuseTabNotify>(null);
+    > = new BehaviorSubject<ReuseTabNotify>(null);
   private _cached: ReuseTabCached[] = [];
   private _titleCached: { [url: string]: ReuseTitle } = {};
   private _closableCached: { [url: string]: boolean } = {};
@@ -227,10 +227,10 @@ export class ReuseTabService implements OnDestroy {
     if (this._titleCached[url]) return this._titleCached[url];
 
     if (route && route.data && (route.data.titleI18n || route.data.title))
-      return <ReuseTitle>{
+      return {
         text: route.data.title,
         i18n: route.data.titleI18n,
-      };
+      } as ReuseTitle;
 
     const menu =
       this.mode !== ReuseTabMatchMode.URL ? this.getMenu(url) : null;
@@ -332,6 +332,7 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 刷新，触发一个 refresh 类型事件
    */
+  // tslint:disable-next-line:no-any
   refresh(data?: any) {
     this._cachedChange.next({ active: 'refresh', data });
   }
@@ -339,6 +340,7 @@ export class ReuseTabService implements OnDestroy {
 
   // #region privates
 
+  // tslint:disable-next-line:no-any
   private destroy(_handle: any) {
     if (_handle && _handle.componentRef && _handle.componentRef.destroy)
       _handle.componentRef.destroy();
@@ -352,7 +354,7 @@ export class ReuseTabService implements OnDestroy {
 
   // #endregion
 
-  constructor(private injector: Injector, private menuService: MenuService) {}
+  constructor(private injector: Injector, private menuService: MenuService) { }
 
   private getMenu(url: string) {
     const menus = this.menuService.getPathByUrl(url);
@@ -360,6 +362,7 @@ export class ReuseTabService implements OnDestroy {
     return menus.pop();
   }
 
+  // tslint:disable-next-line:no-any
   private runHook(method: string, url: string, comp: any) {
     if (comp.instance && typeof comp.instance[method] === 'function')
       comp.instance[method]();
@@ -385,6 +388,7 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 存储
    */
+  // tslint:disable-next-line:no-any
   store(_snapshot: ActivatedRouteSnapshot, _handle: any) {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);

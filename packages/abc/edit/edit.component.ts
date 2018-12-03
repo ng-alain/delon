@@ -1,24 +1,24 @@
 import {
-  Component,
-  Input,
-  TemplateRef,
-  OnChanges,
-  ElementRef,
-  Renderer2,
-  ContentChild,
-  Host,
-  Optional,
   AfterViewInit,
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
-  OnDestroy,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  Host,
   HostBinding,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Optional,
+  Renderer2,
+  TemplateRef,
 } from '@angular/core';
-import { NgModel, FormControlName, NgControl } from '@angular/forms';
+import { FormControlName, NgControl, NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
-import { deepGet, InputNumber, InputBoolean } from '@delon/util';
+import { deepGet, InputBoolean, InputNumber } from '@delon/util';
 
 import { SEContainerComponent } from './edit-container.component';
 
@@ -58,9 +58,9 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   extra: string;
 
   _label = '';
-  _labelTpl: TemplateRef<any>;
+  _labelTpl: TemplateRef<void>;
   @Input()
-  set label(value: string | TemplateRef<any>) {
+  set label(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._label = null;
       this._labelTpl = value;

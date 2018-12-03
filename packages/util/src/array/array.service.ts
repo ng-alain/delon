@@ -19,9 +19,9 @@ export class ArrayService {
         checkedMapname: 'checked',
         selectedMapname: 'selected',
         expandedMapname: 'expanded',
-        disabledMapname: 'disabled'
+        disabledMapname: 'disabled',
       } as ArrayConfig,
-      ...(cog && cog.array)
+      ...(cog && cog.array),
     };
   }
   /**
@@ -40,7 +40,7 @@ export class ArrayService {
       clearChildren?: boolean;
       /** 转换成数组结构时回调 */
       cb?(item: any, parent: any, deep: number): void;
-    }
+    },
   ): any[] {
     options = {
       deepMapName: this.c.deepMapName,
@@ -48,7 +48,7 @@ export class ArrayService {
       childrenMapName: this.c.childrenMapName,
       clearChildren: true,
       cb: null,
-      ...options
+      ...options,
     };
     const result: any[] = [];
     const inFn = (list: any[], parent: any, deep: number) => {
@@ -86,14 +86,14 @@ export class ArrayService {
       childrenMapName?: string;
       /** 转换成树数据时回调 */
       cb?(item: any): void;
-    }
+    },
   ): any[] {
     options = {
       idMapName: this.c.idMapName,
       parentIdMapName: this.c.parentIdMapName,
       childrenMapName: this.c.childrenMapName,
       cb: null,
-      ...options
+      ...options,
     };
     const tree: any[] = [];
     const childrenOf = {};
@@ -137,7 +137,7 @@ export class ArrayService {
       disabledMapname?: string;
       /** 转换成树数据后，执行的递归回调 */
       cb?(item: any, parent: any, deep: number): void;
-    }
+    },
   ): NzTreeNode[] {
     options = {
       idMapName: this.c.idMapName,
@@ -149,12 +149,12 @@ export class ArrayService {
       expandedMapname: this.c.expandedMapname,
       disabledMapname: this.c.disabledMapname,
       cb: null,
-      ...options
+      ...options,
     };
     const tree = this.arrToTree(arr, {
       idMapName: options.idMapName,
       parentIdMapName: options.parentIdMapName,
-      childrenMapName: 'children'
+      childrenMapName: 'children',
     });
     this.visitTree(tree, (item: any, parent: any, deep: number) => {
       item.key = item[options.idMapName];
@@ -182,11 +182,11 @@ export class ArrayService {
     options?: {
       /** 子项名，默认：`'children'` */
       childrenMapName?: string;
-    }
+    },
   ): void {
     options = {
       childrenMapName: this.c.childrenMapName,
-      ...options
+      ...options,
     };
     const inFn = (data: any[], parent: any, deep: number) => {
       for (const item of data) {
@@ -212,11 +212,11 @@ export class ArrayService {
       keyMapName?: string;
       /** 回调，返回一个值 `key` 值，优先级高于其他 */
       cb?(item: NzTreeNode, parent: NzTreeNode, deep: number): any;
-    }
+    },
   ): any[] {
     options = {
       includeHalfChecked: true,
-      ...options
+      ...options,
     };
     const keys: any[] = [];
     this.visitTree(
@@ -231,10 +231,10 @@ export class ArrayService {
               ? options.cb(item, parent, deep)
               : options.keyMapName
                 ? item.origin[options.keyMapName]
-                : item.key
+                : item.key,
           );
         }
-      }
+      },
     );
     return keys;
   }

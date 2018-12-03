@@ -1,8 +1,8 @@
 import {
-  Component,
-  Input,
-  HostBinding,
   ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  Input,
 } from '@angular/core';
 import { toNumber, InputNumber } from '@delon/util';
 import { SGConfig } from './grid.config';
@@ -26,7 +26,7 @@ export class SGContainerComponent {
   gutter: number;
 
   @Input('sg-container')
-  set col(value: any) {
+  set col(value: number) {
     const a = toNumber(value, 0);
     if (a <= 0) return;
     this._col = toNumber(value, 0);

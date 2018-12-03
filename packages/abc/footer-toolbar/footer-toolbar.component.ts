@@ -1,15 +1,15 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  Inject,
-  TemplateRef,
-  ElementRef,
-  Renderer2,
-  ChangeDetectionStrategy,
-} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  TemplateRef,
+} from '@angular/core';
 import { InputBoolean } from '@delon/util';
 
 const CLSBODY = 'footer-toolbar__body';
@@ -25,9 +25,9 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
   errorCollect = false;
 
   _extra = '';
-  _extraTpl: TemplateRef<any>;
+  _extraTpl: TemplateRef<void>;
   @Input()
-  set extra(value: string | TemplateRef<any>) {
+  set extra(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._extra = null;
       this._extraTpl = value;
@@ -39,8 +39,9 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
-  ) {}
+  ) { }
 
   private get bodyCls() {
     return this.doc.querySelector('body').classList;

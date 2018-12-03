@@ -1,10 +1,10 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonLocaleModule } from '@delon/theme';
 import { DelonUtilModule } from '@delon/util';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { ExceptionComponent } from './exception.component';
 

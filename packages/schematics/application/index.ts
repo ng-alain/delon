@@ -1,37 +1,37 @@
-import {
-  Rule,
-  Tree,
-  SchematicContext,
-  chain,
-  noop,
-  mergeWith,
-  apply,
-  url,
-  template,
-  move,
-  filter,
-  MergeStrategy,
-} from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
+import {
+  apply,
+  chain,
+  filter,
+  mergeWith,
+  move,
+  noop,
+  template,
+  url,
+  MergeStrategy,
+  Rule,
+  SchematicContext,
+  Tree,
+} from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as path from 'path';
 
-import { Schema as ApplicationOptions } from './schema';
+import { getLangConfig, getLangData } from '../core/lang.config';
+import { tryAddFile } from '../utils/alain';
+import { HMR_CONTENT } from '../utils/contents';
+import { addFiles } from '../utils/file';
+import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import {
   addPackageToPackageJson,
-  getPackage,
-  overwritePackage,
   getJSON,
+  getPackage,
   overwriteJSON,
+  overwritePackage,
   scriptsToAngularJson,
 } from '../utils/json';
 import { VERSION, ZORROVERSION } from '../utils/lib-versions';
-import { addFiles } from '../utils/file';
-import { Project, getProject } from '../utils/project';
-import { addHeadStyle, addHtmlToBody } from '../utils/html';
-import { tryAddFile } from '../utils/alain';
-import { HMR_CONTENT } from '../utils/contents';
-import { getLangConfig, getLangData } from '../core/lang.config';
+import { getProject, Project } from '../utils/project';
+import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
 let project: Project;
@@ -122,9 +122,9 @@ function addRunScriptToPackageJson() {
   return (host: Tree, context: SchematicContext) => {
     const json = getPackage(host, 'scripts');
     if (json == null) return host;
-    json.scripts['start'] = `npm run color-less && ng serve -o`;
-    json.scripts['build'] = `npm run color-less && ng build --prod --build-optimizer`;
-    json.scripts['analyze'] = `npm run color-less && ng build --prod --build-optimizer --stats-json`;
+    json.scripts.start = `npm run color-less && ng serve -o`;
+    json.scripts.build = `npm run color-less && ng build --prod --build-optimizer`;
+    json.scripts.analyze = `npm run color-less && ng build --prod --build-optimizer --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `node scripts/color-less.js`;
     overwritePackage(host, json);
@@ -172,7 +172,7 @@ function addCodeStylesToPackageJson() {
   return (host: Tree, context: SchematicContext) => {
     const json = getPackage(host);
     if (json == null) return host;
-    json.scripts['lint'] = `npm run lint:ts && npm run lint:style`;
+    json.scripts.lint = `npm run lint:ts && npm run lint:style`;
     json.scripts[
       'lint:ts'
     ] = `tslint -p src/tsconfig.app.json -c tslint.json 'src/**/*.ts'`;
@@ -186,12 +186,12 @@ function addCodeStylesToPackageJson() {
       ],
       '*.ts': ['npm run lint:ts', 'prettier --write', 'git add'],
       '*.less': ['npm run lint:style', 'prettier --write', 'git add'],
-      ignore: ['src/assets/*'],
+      'ignore': ['src/assets/*'],
     };
     overwritePackage(host, json);
     // tslint
     const tsLint = getJSON(host, 'tslint.json', 'rules');
-    tsLint.rules['curly'] = false;
+    tsLint.rules.curly = false;
     tsLint.rules['use-host-property-decorator'] = false;
     tsLint.rules['directive-selector'] = [
       true,
@@ -385,7 +385,7 @@ export class <%= componentName %> implements OnInit {
       expect(component).toBeTruthy();
     });
   });
-  `
+  `,
   };
   return (host: Tree) => {
     const prefix = `${project.root}/_cli-tpl/test/__path__/__name@dasherize@if-flat__/`;
@@ -436,19 +436,19 @@ function addFilesToRoot(options: ApplicationOptions) {
 
 function fixLang(options: ApplicationOptions) {
   return (host: Tree) => {
-    if (options.i18n) return ;
+    if (options.i18n) return;
     const langs = getLangData(options.defaultLanguage);
-    if (!langs) return ;
+    if (!langs) return;
 
     host.visit(p => {
-      if (~p.indexOf(`/node_modules/`)) return ;
+      if (~p.indexOf(`/node_modules/`)) return;
 
       fixLangInHtml(host, p, langs);
     });
   };
 }
 
-function fixLangInHtml(host: Tree, p: string, langs: Object) {
+function fixLangInHtml(host: Tree, p: string, langs: {}) {
   let html = host.get(p).content.toString('utf8');
   let matchCount = 0;
   // {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
@@ -482,7 +482,7 @@ function fixLangInHtml(host: Tree, p: string, langs: Object) {
     ++matchCount;
     html = html.replace(`<header-i18n [showLang]="false" class="langs"></header-i18n>`, ``);
   }
-  if (matchCount> 0) {
+  if (matchCount > 0) {
     host.overwrite(p, html);
   }
 }
@@ -493,7 +493,7 @@ function installPackages() {
   };
 }
 
-export default function(options: ApplicationOptions): Rule {
+export default function (options: ApplicationOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     project = getProject(host, options.project);
 

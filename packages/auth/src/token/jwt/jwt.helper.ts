@@ -24,21 +24,22 @@ export function urlBase64Decode(str: string): string {
 function b64decode(str: string): string {
   const chars =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-  let output: string = '';
+  let output = '';
 
   str = String(str).replace(/=+$/, '');
 
   for (
     // initialize result and counters
-    let bc: number = 0, bs: any, buffer: any, idx: number = 0;
+    // tslint:disable:no-any no-conditional-assignment binary-expression-operand-order
+    let bc = 0, bs: any, buffer: any, idx = 0;
     // get next character
     (buffer = str.charAt(idx++));
     // character found in table? initialize bit storage and add its ascii value;
     ~buffer &&
-    ((bs = bc % 4 ? bs * 64 + buffer : buffer),
-    // and if not first of each 4 characters,
-    // convert the first 8 bits to one ascii character
-    bc++ % 4)
+      ((bs = bc % 4 ? bs * 64 + buffer : buffer),
+        // and if not first of each 4 characters,
+        // convert the first 8 bits to one ascii character
+        bc++ % 4)
       ? (output += String.fromCharCode(255 & (bs >> ((-2 * bc) & 6))))
       : 0
   ) {
@@ -49,10 +50,10 @@ function b64decode(str: string): string {
 }
 
 // https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
-function b64DecodeUnicode(str: any) {
+function b64DecodeUnicode(str: string) {
   return decodeURIComponent(
     Array.prototype.map
-      .call(b64decode(str), (c: any) => {
+      .call(b64decode(str), (c: string) => {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       })
       .join(''),

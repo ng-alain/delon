@@ -45,14 +45,14 @@ Property | Description | Type | Default
 `[size]` | size of edit, forced ingores `error`, `extra` | `default | compact` | `default`
 `[firstVisual]` | Immediately show validation error message | `boolean` | `false`
 `[line]` | whether separation line style | `boolean` | `false`
-`[title]` | Display title | `string,TemplateRef<any>` | -
+`[title]` | Display title | `string,TemplateRef<void>` | -
 
 ### se
 
 Property | Description | Type | Default
 ----|------|-----
 `[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `number(0 < col <= 6)` | -
-`[label]` | Label | `string,TemplateRef<any>` | -
+`[label]` | Label | `string,TemplateRef<void>` | -
 `[optional]` | Label optional information | `string` | -
 `[optionalHelp]` | Label optional help | `string` | -
 `[error]` | validation error message | `string` | -

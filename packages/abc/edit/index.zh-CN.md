@@ -45,14 +45,14 @@ config: SEConfig
 `[size]` | 大小 `compact` 紧凑型，强制忽略 `error`、`extra` 展示 | `default | compact` | `default`
 `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false`
 `[line]` | 分隔线 | `boolean` | `false`
-`[title]` | 标题 | `string,TemplateRef<any>` | -
+`[title]` | 标题 | `string,TemplateRef<void>` | -
 
 ### se
 
 参数 | 类型 | 说明
 ----|------|-----
 `[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `number(0 < col <= 6)` | -
-`[label]` | 标签文本 | `string,TemplateRef<any>` | -
+`[label]` | 标签文本 | `string,TemplateRef<void>` | -
 `[optional]` | 标签可选信息 | `string` | -
 `[optionalHelp]` | 标签可选帮助 | `string` | -
 `[error]` | 错误描述 | `string` | -

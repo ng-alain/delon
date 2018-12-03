@@ -1,14 +1,14 @@
 import {
-  Component,
-  TemplateRef,
-  Input,
-  ElementRef,
-  Renderer2,
-  OnChanges,
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  Renderer2,
+  TemplateRef,
 } from '@angular/core';
-import { toNumber, updateHostClass } from '@delon/util';
+import { updateHostClass, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'number-info',
@@ -17,10 +17,10 @@ import { toNumber, updateHostClass } from '@delon/util';
 })
 export class NumberInfoComponent implements OnChanges {
   _title = '';
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   /** 标题 */
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -28,10 +28,10 @@ export class NumberInfoComponent implements OnChanges {
   }
 
   _subTitle = '';
-  _subTitleTpl: TemplateRef<any>;
+  _subTitleTpl: TemplateRef<void>;
   /** 子标题 */
   @Input()
-  set subTitle(value: string | TemplateRef<any>) {
+  set subTitle(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._subTitle = null;
       this._subTitleTpl = value;
@@ -39,10 +39,10 @@ export class NumberInfoComponent implements OnChanges {
   }
 
   _total = '';
-  _totalTpl: TemplateRef<any>;
+  _totalTpl: TemplateRef<void>;
   /** 总量 */
   @Input()
-  set total(value: string | TemplateRef<any>) {
+  set total(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._total = null;
       this._totalTpl = value;
@@ -51,10 +51,10 @@ export class NumberInfoComponent implements OnChanges {
 
   _isSubTotal = false;
   _subTotal = '';
-  _subTotalTpl: TemplateRef<any>;
+  _subTotalTpl: TemplateRef<void>;
   /** 总量后缀 */
   @Input()
-  set subTotal(value: string | TemplateRef<any>) {
+  set subTotal(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._subTotal = null;
       this._subTotalTpl = value;
@@ -76,20 +76,13 @@ export class NumberInfoComponent implements OnChanges {
   theme: 'light' | 'default' = 'light';
 
   /** 设置数字和描述直接的间距（像素） */
-  @Input()
-  get gap() {
-    return this._gap;
-  }
-  set gap(value: any) {
-    this._gap = toNumber(value);
-  }
-  private _gap = 8;
+  @Input() @InputNumber() gap = 8;
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
     private cd: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   _classMap: string[] = [];
   setClass() {
@@ -98,7 +91,7 @@ export class NumberInfoComponent implements OnChanges {
       this.renderer,
       {
         'number-info': true,
-        [`number-info__${this.theme}`]: true
+        [`number-info__${this.theme}`]: true,
       },
       true,
     );

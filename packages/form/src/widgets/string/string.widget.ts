@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SFValue } from '../../interface';
 import { ControlWidget } from '../../widget';
 
 @Component({
@@ -51,7 +52,7 @@ export class StringWidget extends ControlWidget implements OnInit {
       : '';
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     if (this.schema.format === 'color' && !value) {
       this.setValue('#000000');
     }

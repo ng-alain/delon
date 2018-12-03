@@ -1,17 +1,17 @@
+import { DOCUMENT } from '@angular/common';
 import {
-  Injectable,
   Inject,
-  Optional,
+  Injectable,
   Injector,
   OnDestroy,
+  Optional,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { MenuService } from '../menu/menu.service';
-import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
 
 /**
  * 设置标题
@@ -32,6 +32,7 @@ export class TitleService implements OnDestroy {
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
     if (this.i18nSrv) {

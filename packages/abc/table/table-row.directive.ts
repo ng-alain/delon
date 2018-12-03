@@ -1,18 +1,18 @@
 import {
   Directive,
-  Input,
-  TemplateRef,
-  OnInit,
-  Injectable,
   Host,
+  Injectable,
+  Input,
+  OnInit,
+  TemplateRef,
 } from '@angular/core';
 
 @Injectable()
 export class STRowSource {
-  private titles: { [key: string]: TemplateRef<any> } = {};
-  private rows: { [key: string]: TemplateRef<any> } = {};
+  private titles: { [key: string]: TemplateRef<void> } = {};
+  private rows: { [key: string]: TemplateRef<void> } = {};
 
-  add(type: string, path: string, ref: TemplateRef<any>) {
+  add(type: string, path: string, ref: TemplateRef<void>) {
     this[type === 'title' ? 'titles' : 'rows'][path] = ref;
   }
 
@@ -34,9 +34,9 @@ export class STRowDirective implements OnInit {
   type: 'title';
 
   constructor(
-    private ref: TemplateRef<any>,
+    private ref: TemplateRef<void>,
     @Host() private source: STRowSource,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.source.add(this.type, this.id, this.ref);

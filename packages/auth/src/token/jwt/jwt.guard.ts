@@ -1,9 +1,9 @@
-import { Injectable, Inject, Injector } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad } from '@angular/router';
-import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
-import { JWTTokenModel } from './jwt.model';
 import { DelonAuthConfig } from '../../auth.config';
 import { CheckJwt, ToLogin } from '../helper';
+import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
+import { JWTTokenModel } from './jwt.model';
 
 @Injectable()
 export class JWTGuard implements CanActivate, CanActivateChild, CanLoad {

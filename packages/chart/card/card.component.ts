@@ -1,9 +1,9 @@
 import {
   Component,
-  TemplateRef,
   Input,
+  TemplateRef,
 } from '@angular/core';
-import { toBoolean } from '@delon/util';
+import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'g2-card',
@@ -13,19 +13,12 @@ import { toBoolean } from '@delon/util';
 export class G2CardComponent {
 
   /** 是否显示边框 */
-  @Input()
-  get bordered() {
-    return this._bordered;
-  }
-  set bordered(value: any) {
-    this._bordered = toBoolean(value);
-  }
-  private _bordered = false;
+  @Input() @InputBoolean() bordered = false;
 
   _avatar = '';
-  _avatarTpl: TemplateRef<any>;
+  _avatarTpl: TemplateRef<void>;
   @Input()
-  set avatar(value: string | TemplateRef<any>) {
+  set avatar(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._avatar = null;
       this._avatarTpl = value;
@@ -33,9 +26,9 @@ export class G2CardComponent {
   }
 
   _title = '';
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -43,9 +36,9 @@ export class G2CardComponent {
   }
 
   _action = '';
-  _actionTpl: TemplateRef<any>;
+  _actionTpl: TemplateRef<void>;
   @Input()
-  set action(value: string | TemplateRef<any>) {
+  set action(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._action = null;
       this._actionTpl = value;
@@ -55,7 +48,7 @@ export class G2CardComponent {
   @Input() total = '';
 
   _height = 'auto';
-  _orgHeight: any;
+  _orgHeight: number | string;
   @Input()
   set contentHeight(value: number | string) {
     this._orgHeight = value;
@@ -64,9 +57,9 @@ export class G2CardComponent {
   }
 
   _footer = '';
-  _footerTpl: TemplateRef<any>;
+  _footerTpl: TemplateRef<void>;
   @Input()
-  set footer(value: string | TemplateRef<any>) {
+  set footer(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._footer = null;
       this._footerTpl = value;
@@ -74,13 +67,6 @@ export class G2CardComponent {
   }
 
   /** 是否显示Loading */
-  @Input()
-  get loading() {
-    return this._loading;
-  }
-  set loading(value: any) {
-    this._loading = toBoolean(value);
-  }
-  private _loading = false;
+  @Input() @InputBoolean() loading = false;
 
 }

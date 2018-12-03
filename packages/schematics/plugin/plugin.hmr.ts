@@ -1,22 +1,22 @@
-import { Tree, SchematicContext } from '@angular-devkit/schematics';
-import { PluginOptions } from './interface';
-import { tryAddFile, addValueToVariable, tryDelFile } from '../utils/alain';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { addValueToVariable, tryAddFile, tryDelFile } from '../utils/alain';
+import { HMR_CONTENT } from '../utils/contents';
 import {
   addPackageToPackageJson,
-  removePackageFromPackageJson,
   getAngular,
-  overwriteAngular,
   getJSON,
+  overwriteAngular,
   overwriteJSON,
+  removePackageFromPackageJson,
 } from '../utils/json';
 import { getProjectFromWorkspace } from '../utils/project';
-import { HMR_CONTENT } from '../utils/contents';
+import { PluginOptions } from './interface';
 
 function configToAngularJson(host: Tree, options: PluginOptions) {
   const json = getAngular(host);
   const project = getProjectFromWorkspace(json, options.project);
   // add build config
-  (project.targets || project.architect)!.build!.configurations['hmr'] = {
+  (project.targets || project.architect)!.build!.configurations.hmr = {
     fileReplacements: [
       {
         replace: `${options.sourceRoot}/environments/environment.ts`,
@@ -25,7 +25,7 @@ function configToAngularJson(host: Tree, options: PluginOptions) {
     ],
   };
   // add serve config
-  (project.targets || project.architect)!.serve!.configurations['hmr'] = {
+  (project.targets || project.architect)!.serve!.configurations.hmr = {
     browserTarget: `${project.name}:build:hmr`,
     hmr: true,
   };
@@ -68,16 +68,16 @@ function addNodeTypeToTsconfig(host: Tree, options: PluginOptions) {
   overwriteJSON(host, tsConfigPath, json);
 }
 
-export function pluginHmr(options: PluginOptions): any {
+export function pluginHmr(options: PluginOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     // 1. add package
     (options.type === 'add'
       ? addPackageToPackageJson
       : removePackageFromPackageJson)(
-      host,
-      ['@angularclass/hmr@^2.1.3'],
-      'devDependencies',
-    );
+        host,
+        ['@angularclass/hmr@^2.1.3'],
+        'devDependencies',
+      );
     // 2. add run scripts
     (options.type === 'add'
       ? addPackageToPackageJson

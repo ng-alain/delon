@@ -1,8 +1,10 @@
 import { Inject, Optional } from '@angular/core';
 import { DelonFormConfig } from './config';
 import { ErrorData } from './errors';
+import { SFValue } from './interface';
 import { SFSchema } from './schema';
 
+// tslint:disable-next-line:no-any
 declare var Ajv: any;
 
 export abstract class SchemaValidatorFactory {
@@ -13,6 +15,7 @@ export abstract class SchemaValidatorFactory {
 }
 
 export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
+  // tslint:disable-next-line:no-any
   protected ajv: any;
 
   constructor(
@@ -22,11 +25,12 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
   ) {
     super();
     this.ajv = new Ajv(
-      Object.assign({}, options.ajv, {
+      {
+        ...options.ajv,
         errorDataPath: 'property',
         allErrors: true,
         jsonPointers: true,
-      }),
+      },
     );
     this.ajv.addFormat(
       'data-url',
@@ -49,12 +53,12 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
   createValidatorFn(
     schema: SFSchema,
     extraOptions: { ingoreKeywords: string[] },
-  ): (value: any) => ErrorData[] {
+  ): (value: SFValue) => ErrorData[] {
     const ingoreKeywords: string[] = []
       .concat(this.options.ingoreKeywords)
       .concat(extraOptions.ingoreKeywords);
 
-    return (value: any): ErrorData[] => {
+    return (value: SFValue): ErrorData[] => {
       try {
         this.ajv.validate(schema, value);
       } catch (e) {

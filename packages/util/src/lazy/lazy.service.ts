@@ -24,7 +24,7 @@ export class LazyService {
   get change(): Observable<LazyResult[]> {
     return this._notify.asObservable().pipe(
       share(),
-      filter(ls => ls.length !== 0)
+      filter(ls => ls.length !== 0),
     );
   }
 
@@ -83,7 +83,7 @@ export class LazyService {
             onSuccess({
               path,
               loaded: true,
-              status: 'ok'
+              status: 'ok',
             });
           }
         };
@@ -92,7 +92,7 @@ export class LazyService {
           onSuccess({
             path,
             loaded: true,
-            status: 'ok'
+            status: 'ok',
           });
         };
       }
@@ -101,7 +101,7 @@ export class LazyService {
           path,
           loaded: false,
           status: 'error',
-          error
+          error,
         });
       this.doc.getElementsByTagName('head')[0].appendChild(node);
     });
@@ -127,7 +127,7 @@ export class LazyService {
       const item: LazyResult = {
         path,
         loaded: true,
-        status: 'ok'
+        status: 'ok',
       };
       this.cached[path] = item;
       resolve(item);

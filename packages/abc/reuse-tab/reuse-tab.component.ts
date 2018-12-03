@@ -1,37 +1,37 @@
 import {
-  Component,
-  Input,
-  Output,
-  OnChanges,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  EventEmitter,
-  OnInit,
-  SimpleChanges,
-  SimpleChange,
-  OnDestroy,
+  Component,
   ElementRef,
-  Renderer2,
+  EventEmitter,
   Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
   Optional,
+  Output,
+  Renderer2,
+  SimpleChange,
+  SimpleChanges,
 } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { Subscription, combineLatest } from 'rxjs';
-import { filter, debounceTime } from 'rxjs/operators';
-import { InputNumber, InputBoolean } from '@delon/util';
-import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { InputBoolean, InputNumber } from '@delon/util';
+import { combineLatest, Subscription } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
-import { ReuseTabService } from './reuse-tab.service';
+import { ReuseTabContextService } from './reuse-tab-context.service';
 import {
-  ReuseTabCached,
-  ReuseTabNotify,
-  ReuseTabMatchMode,
-  ReuseItem,
-  ReuseContextI18n,
   ReuseContextCloseEvent,
+  ReuseContextI18n,
+  ReuseItem,
+  ReuseTabCached,
+  ReuseTabMatchMode,
+  ReuseTabNotify,
   ReuseTitle,
 } from './reuse-tab.interfaces';
-import { ReuseTabContextService } from './reuse-tab-context.service';
+import { ReuseTabService } from './reuse-tab.service';
 
 @Component({
   selector: 'reuse-tab',
@@ -102,7 +102,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       filter(evt => evt instanceof NavigationEnd),
     );
     this.sub$ = combineLatest(this.srv.change, route$).subscribe(([res, e]) =>
-      this.genList(res as any),
+      this.genList(res),
     );
     if (this.i18nSrv) {
       this.i18n$ = this.i18nSrv.change
@@ -123,14 +123,14 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       ? this.list.findIndex(w => w.url === notify.url)
       : -1;
     const ls = this.srv.items.map((item: ReuseTabCached, index: number) => {
-      return <ReuseItem>{
+      return {
         url: item.url,
         title: this.genTit(item.title),
         closable: this.allowClose && item.closable && this.srv.count > 0,
         index,
         active: false,
         last: false,
-      };
+      } as ReuseItem;
     });
     if (this.showCurrent) {
       const snapshot = this.route.snapshot;
@@ -139,14 +139,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       // jump directly when the current exists in the list
       // or create a new current item and jump
       if (idx !== -1 || (isClosed && notify.url === url)) {
-        this.pos = isClosed
-          ? idx >= beforeClosePos
-            ? this.pos - 1
-            : this.pos
-          : idx;
+        this.pos = isClosed ? idx >= beforeClosePos ? this.pos - 1 : this.pos : idx;
       } else {
         const snapshotTrue = this.srv.getTruthRoute(snapshot);
-        ls.push(<ReuseItem>{
+        ls.push({
           url,
           title: this.genTit(this.srv.getTitle(url, snapshotTrue)),
           closable:
@@ -156,7 +152,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           index: ls.length,
           active: false,
           last: false,
-        });
+        } as ReuseItem);
         this.pos = ls.length - 1;
       }
       // fix unabled close last item

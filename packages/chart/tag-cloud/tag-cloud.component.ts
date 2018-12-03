@@ -1,16 +1,17 @@
+// tslint:disable:no-any
 import {
-  Component,
-  Input,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  OnChanges,
-  NgZone,
-  OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
-import { toNumber } from '@delon/util';
+import { InputNumber } from '@delon/util';
 
 declare var G2: any;
 declare var DataSet: any;
@@ -23,21 +24,13 @@ declare var DataSet: any;
 export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   // #region fields
 
-  @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-    this.cd.detectChanges();
-  }
-  private _height = 0;
+  @Input() @InputNumber() height = 0;
 
   @Input()
   padding = 0;
 
   @Input()
-  data: { name: string; value: number; category?: any; [key: string]: any }[];
+  data: Array<{ name: string; value: number; category?: any; [key: string]: any }>;
 
   // #endregion
 
@@ -51,31 +44,25 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     private el: ElementRef,
     private cd: ChangeDetectorRef,
     private zone: NgZone,
-  ) {}
+  ) { }
 
   private initTagCloud() {
     // 给point注册一个词云的shape
     G2.Shape.registerShape('point', 'cloud', {
       drawShape(cfg, container) {
-        const attrs = Object.assign(
-          {},
-          {
-            fillOpacity: cfg.opacity,
-            fontSize: cfg.origin._origin.size,
-            rotate: cfg.origin._origin.rotate,
-            text: cfg.origin._origin.text,
-            textAlign: 'center',
-            fontFamily: cfg.origin._origin.font,
-            fill: cfg.color,
-            textBaseline: 'Alphabetic',
-          },
-          cfg.style,
-        );
+        const attrs = {
+          fillOpacity: cfg.opacity,
+          fontSize: cfg.origin._origin.size,
+          rotate: cfg.origin._origin.rotate,
+          text: cfg.origin._origin.text,
+          textAlign: 'center',
+          fontFamily: cfg.origin._origin.font,
+          fill: cfg.color,
+          textBaseline: 'Alphabetic',
+          ...cfg.style,
+        };
         return container.addShape('text', {
-          attrs: Object.assign(attrs, {
-            x: cfg.x,
-            y: cfg.y,
-          }),
+          attrs: { ...attrs, x: cfg.x, y: cfg.y },
         });
       },
     });
@@ -115,8 +102,8 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     });
     const chart = new G2.Chart({
       container: this.node.nativeElement,
-      width: width,
-      height: height,
+      width,
+      height,
       padding: this.padding,
       forceFit: true,
     });
@@ -166,6 +153,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   ngOnChanges(): void {
     if (this.initFlag) {
       this.runInstall();
+      this.cd.detectChanges();
     }
   }
 

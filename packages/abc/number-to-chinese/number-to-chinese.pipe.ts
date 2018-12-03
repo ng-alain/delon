@@ -1,4 +1,4 @@
-import { PipeTransform, Pipe } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { numberToChinese } from './number-to-chinese';
 
 @Pipe({ name: 'n2c' })

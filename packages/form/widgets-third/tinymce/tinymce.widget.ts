@@ -18,7 +18,7 @@ import { ControlWidget } from '@delon/form';
 export class TinymceWidget extends ControlWidget implements OnInit {
   static readonly KEY = 'tinymce';
 
-  config: any;
+  config: {};
   loading: string;
 
   ngOnInit(): void {

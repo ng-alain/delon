@@ -1,10 +1,10 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { DelonACLConfig } from './acl.config';
 import { ACLGuard } from './acl-guard';
-import { ACLService } from './acl.service';
+import { DelonACLConfig } from './acl.config';
 import { ACLDirective } from './acl.directive';
+import { ACLService } from './acl.service';
 
 const SERVICES = [ACLService, ACLGuard];
 const COMPONENTS = [ACLDirective];

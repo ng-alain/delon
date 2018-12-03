@@ -1,27 +1,28 @@
+// tslint:disable:no-any
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpHeaderResponse,
+  HttpInterceptor,
+  HttpProgressEvent,
+  HttpRequest,
+  HttpResponse,
+  HttpSentEvent,
+  HttpUserEvent,
+} from '@angular/common/http';
 import { Injector, Optional } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpSentEvent,
-  HttpHeaderResponse,
-  HttpProgressEvent,
-  HttpResponse,
-  HttpUserEvent,
-  HttpEvent,
-  HttpErrorResponse,
-} from '@angular/common/http';
 import { Observable, Observer } from 'rxjs';
 
 import { _HttpClient } from '@delon/theme';
 
-import { ITokenModel } from './interface';
 import { DelonAuthConfig } from '../auth.config';
 import { ToLogin } from './helper';
+import { ITokenModel } from './interface';
 
 export abstract class BaseInterceptor implements HttpInterceptor {
-  constructor(@Optional() protected injector: Injector) {}
+  constructor(@Optional() protected injector: Injector) { }
 
   protected model: ITokenModel;
 
@@ -36,11 +37,11 @@ export abstract class BaseInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<
-    | HttpSentEvent
-    | HttpHeaderResponse
-    | HttpProgressEvent
-    | HttpResponse<any>
-    | HttpUserEvent<any>
+  | HttpSentEvent
+  | HttpHeaderResponse
+  | HttpProgressEvent
+  | HttpResponse<any>
+  | HttpUserEvent<any>
   > {
     const options = Object.assign(
       new DelonAuthConfig(),

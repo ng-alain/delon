@@ -1,17 +1,17 @@
 import {
-  Component,
-  Input,
   ChangeDetectionStrategy,
-  OnChanges,
   ChangeDetectorRef,
-  HostBinding,
-  Output,
+  Component,
   EventEmitter,
+  HostBinding,
+  Input,
+  OnChanges,
+  Output,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
-import { QRService } from './qr.service';
 import { QRConfig } from './qr.config';
+import { QRService } from './qr.service';
 
 @Component({
   selector: 'qr',

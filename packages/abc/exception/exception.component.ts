@@ -1,15 +1,15 @@
 import {
   Component,
-  Input,
-  ViewChild,
   ElementRef,
-  OnInit,
+  Input,
   OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { isEmpty } from '@delon/util';
 import { DelonLocaleService } from '@delon/theme';
+import { isEmpty } from '@delon/util';
 
 @Component({
   selector: 'exception',
@@ -22,7 +22,7 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   private conTpl: ElementRef;
 
   _type: number;
-  locale: any = {};
+  locale: {} = {};
   hasCon = false;
 
   _img = '';
@@ -73,7 +73,7 @@ export class ExceptionComponent implements OnInit, OnDestroy {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
   }
 
-  constructor(private i18n: DelonLocaleService) {}
+  constructor(private i18n: DelonLocaleService) { }
 
   ngOnInit() {
     this.i18n$ = this.i18n.change.subscribe(

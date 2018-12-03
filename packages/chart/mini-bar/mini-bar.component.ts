@@ -1,15 +1,16 @@
+// tslint:disable:no-any
 import {
-  Component,
-  Input,
-  HostBinding,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  OnChanges,
   ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
   NgZone,
+  OnChanges,
+  OnDestroy,
+  ViewChild,
 } from '@angular/core';
-import { toNumber } from '@delon/util';
+import { InputNumber } from '@delon/util';
 
 declare var G2: any;
 
@@ -25,20 +26,9 @@ export class G2MiniBarComponent implements OnDestroy, OnChanges {
   color = '#1890FF';
 
   @HostBinding('style.height.px')
-  @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-  }
-  private _height = 0;
+  @Input() @InputNumber() height = 0;
 
-  @Input()
-  set borderWidth(value: any) {
-    this._borderWidth = toNumber(value);
-  }
-  private _borderWidth = 5;
+  @Input() @InputNumber() borderWidth = 5;
 
   @Input()
   padding: number[] = [8, 8, 8, 8];
@@ -56,7 +46,7 @@ export class G2MiniBarComponent implements OnDestroy, OnChanges {
 
   private chart: any;
 
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone) { }
 
   private install() {
     if (!this.data || (this.data && this.data.length < 1)) return;
@@ -83,16 +73,16 @@ export class G2MiniBarComponent implements OnDestroy, OnChanges {
     });
 
     chart.tooltip({
-      showTitle: false,
-      hideMarkders: false,
-      crosshairs: false,
+      'showTitle': false,
+      'hideMarkders': false,
+      'crosshairs': false,
       'g2-tooltip': { padding: 4 },
       'g2-tooltip-list-item': { margin: `0px 4px` },
     });
     chart
       .interval()
       .position('x*y')
-      .size(this._borderWidth)
+      .size(this.borderWidth)
       .color(this.color)
       .tooltip('x*y', (x, y) => {
         return {

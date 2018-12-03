@@ -12,8 +12,8 @@ Often used in data cards for highlighting the business data.
 
 | Property     | Description                                               | Type               | Default |
 | ------------ | --------------------------------------------------------- | ------------------ | ------- |
-| `[title]`    | title                                                     | `TemplateRef<any>` | -       |
-| `[subTitle]` | subtitle                                                  | `TemplateRef<any>` | -       |
+| `[title]`    | title                                                     | `TemplateRef<void>` | -       |
+| `[subTitle]` | subtitle                                                  | `TemplateRef<void>` | -       |
 | `[total]`    | total amount                                              | `string`           | -       |
 | `[suffix]`   | total amount suffix                                       | `string`           | -       |
 | `[subTotal]` | total amount of additional information                    | `string`           | -       |

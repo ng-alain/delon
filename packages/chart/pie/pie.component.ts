@@ -1,19 +1,20 @@
+// tslint:disable:no-any
 import {
-  Component,
-  Input,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  OnChanges,
-  NgZone,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
   Renderer2,
+  ViewChild,
 } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
+import { toBoolean, toNumber, updateHostClass, InputBoolean, InputNumber } from '@delon/util';
+import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { toNumber, toBoolean, updateHostClass } from '@delon/util';
 
 declare var G2: any;
 declare var DataSet: any;
@@ -34,11 +35,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
 
   // #region fields
 
-  @Input()
-  set animate(value: any) {
-    this._animate = toBoolean(value);
-  }
-  private _animate = true;
+  @Input() @InputBoolean() animate = true;
 
   @Input()
   color = 'rgba(24, 144, 255, 0.85)';
@@ -47,74 +44,29 @@ export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
   @Input()
   total: string;
 
-  @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-  }
-  private _height = 0;
+  @Input() @InputNumber() height = 0;
 
-  @Input()
-  get hasLegend() {
-    return this._hasLegend;
-  }
-  set hasLegend(value: any) {
-    this._hasLegend = toBoolean(value);
-  }
-  private _hasLegend = false;
+  @Input() @InputBoolean() hasLegend = false;
 
-  @Input()
-  set legendBlock(value: any) {
-    this._legendBlock = toBoolean(value);
-  }
-  private _legendBlock = false;
+  @Input() @InputBoolean() legendBlock = false;
 
   @Input()
   inner = 0.75;
   @Input()
   padding: number[] = [12, 0, 12, 0];
 
-  @Input()
-  get percent() {
-    return this._percent;
-  }
-  set percent(value: any) {
-    this._percent = toNumber(value);
-  }
-  private _percent: number;
+  @Input() @InputNumber() percent: number;
 
-  @Input()
-  get tooltip() {
-    return this._tooltip;
-  }
-  set tooltip(value: any) {
-    this._tooltip = toBoolean(value);
-  }
-  private _tooltip = true;
+  @Input() @InputBoolean() tooltip = true;
 
-  @Input()
-  get lineWidth() {
-    return this._lineWidth;
-  }
-  set lineWidth(value: any) {
-    this._lineWidth = toNumber(value);
-  }
-  private _lineWidth = 0;
+  @Input() @InputNumber() lineWidth = 0;
 
-  @Input()
-  get select() {
-    return this._select;
-  }
-  set select(value: any) {
-    this._select = toBoolean(value);
-  }
-  private _select = true;
+  @Input() @InputBoolean() select = true;
 
   @Input()
   data: Array<{ x: number | string; y: number; [key: string]: any }>;
   @Input()
+  // tslint:disable-next-line:ban-types
   valueFormat: Function;
   @Input()
   colors: any[];
@@ -126,7 +78,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
     private rend: Renderer2,
     private cd: ChangeDetectorRef,
     private zone: NgZone,
-  ) {}
+  ) { }
 
   private setCls() {
     updateHostClass(
@@ -135,7 +87,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
       {
         'g2-pie': true,
         'g2-pie__legend-has': this.hasLegend,
-        'g2-pie__legend-block': this._legendBlock,
+        'g2-pie__legend-block': this.legendBlock,
         'g2-pie__mini': typeof this.percent !== 'undefined',
       },
       true,
@@ -180,7 +132,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
       forceFit: true,
       height: this.height,
       padding: this.padding,
-      animate: this._animate,
+      animate: this.animate,
     });
 
     if (!this.tooltip) {

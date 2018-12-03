@@ -1,16 +1,16 @@
+import { DOCUMENT } from '@angular/common';
 import {
-  Component,
-  OnInit,
-  Input,
-  HostBinding,
-  OnDestroy,
-  ElementRef,
-  HostListener,
-  Inject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { InputNumber } from '@delon/util';
 
 import { ErrorCollectConfig } from './error-collect.config';
@@ -45,6 +45,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     cog: ErrorCollectConfig,
     private el: ElementRef,
     private cd: ChangeDetectorRef,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
     Object.assign(this, cog);
@@ -83,7 +84,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     clearInterval(this.$time);
   }
 
-  private findParent(el: any, selector: string) {
+  private findParent(el: Element, selector: string) {
     let retEl = null;
     while (el) {
       if (el.querySelector(selector)) {

@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'se-error',

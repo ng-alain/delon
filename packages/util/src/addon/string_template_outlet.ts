@@ -3,11 +3,11 @@ import {
   EmbeddedViewRef,
   Input,
   TemplateRef,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
 
 @Directive({
-  selector: '[stringTemplateOutlet]'
+  selector: '[stringTemplateOutlet]',
 })
 export class StringTemplateOutletDirective {
   private isTemplate: boolean;

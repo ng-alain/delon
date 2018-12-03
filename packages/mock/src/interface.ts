@@ -1,3 +1,4 @@
+// tslint:disable:no-any
 import { HttpRequest } from '@angular/common/http';
 
 export interface MockCachedRule {
@@ -11,7 +12,7 @@ export interface MockCachedRule {
 
   segments: string[];
 
-  callback: (req: MockRequest) => any;
+  callback(req: MockRequest): any;
 }
 
 export interface MockRule {
@@ -24,7 +25,7 @@ export interface MockRule {
   /** 路由参数 */
   params?: any;
 
-  callback: (req: MockRequest) => any;
+  callback(req: MockRequest): any;
 }
 
 export interface MockRequest {

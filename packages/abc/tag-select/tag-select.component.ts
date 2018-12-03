@@ -1,18 +1,18 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  EventEmitter,
   HostBinding,
   Input,
-  Output,
-  EventEmitter,
   OnDestroy,
   OnInit,
-  ChangeDetectorRef,
-  ChangeDetectionStrategy,
+  Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { InputBoolean } from '@delon/util';
 import { DelonLocaleService } from '@delon/theme';
+import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'tag-select',
@@ -22,7 +22,7 @@ import { DelonLocaleService } from '@delon/theme';
 })
 export class TagSelectComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
-  locale: any = {};
+  locale: {} = {};
 
   /** 是否启用 `展开与收进` */
   @Input()
@@ -39,7 +39,7 @@ export class TagSelectComponent implements OnInit, OnDestroy {
   constructor(
     private i18n: DelonLocaleService,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.i18n$ = this.i18n.change.subscribe(() => {

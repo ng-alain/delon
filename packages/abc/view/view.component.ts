@@ -1,19 +1,19 @@
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
-  Input,
-  Host,
   ElementRef,
-  Renderer2,
+  Host,
+  HostBinding,
+  Input,
   OnChanges,
+  Optional,
+  Renderer2,
   TemplateRef,
   ViewChild,
-  AfterViewInit,
-  HostBinding,
-  Optional,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ResponsiveService } from '@delon/theme';
-import { isEmpty, InputNumber, InputBoolean } from '@delon/util';
+import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
 
 import { SVContainerComponent } from './view-container.component';
 
@@ -33,9 +33,9 @@ export class SVComponent implements AfterViewInit, OnChanges {
   //#region fields
 
   _label = '';
-  _labelTpl: TemplateRef<any>;
+  _labelTpl: TemplateRef<void>;
   @Input()
-  set label(value: string | TemplateRef<any>) {
+  set label(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._label = null;
       this._labelTpl = value;

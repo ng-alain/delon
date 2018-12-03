@@ -1,15 +1,16 @@
+// tslint:disable:no-any
 import {
-  Component,
-  Input,
-  HostBinding,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  OnChanges,
   ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
   NgZone,
+  OnChanges,
+  OnDestroy,
+  ViewChild,
 } from '@angular/core';
-import { toNumber, toBoolean } from '@delon/util';
+import { toBoolean, toNumber } from '@delon/util';
 
 declare var G2: any;
 
@@ -80,7 +81,7 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
 
   private chart: any;
 
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone) { }
 
   private install() {
     if (!this.data || (this.data && this.data.length < 1)) return;
@@ -125,8 +126,8 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
     };
 
     chart.tooltip({
-      showTitle: false,
-      hideMarkders: false,
+      'showTitle': false,
+      'hideMarkders': false,
       'g2-tooltip': { padding: 4 },
       'g2-tooltip-list-item': { margin: `0px 4px` },
     });

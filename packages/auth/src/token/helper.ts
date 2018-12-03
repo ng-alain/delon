@@ -1,9 +1,9 @@
 import { Injector } from '@angular/core';
 import { Router } from '@angular/router';
-import { SimpleTokenModel } from './simple/simple.model';
-import { JWTTokenModel } from './jwt/jwt.model';
 import { DelonAuthConfig } from '../auth.config';
 import { WINDOW } from '../win_tokens';
+import { JWTTokenModel } from './jwt/jwt.model';
+import { SimpleTokenModel } from './simple/simple.model';
 
 export function CheckSimple(model: SimpleTokenModel): boolean {
   return (

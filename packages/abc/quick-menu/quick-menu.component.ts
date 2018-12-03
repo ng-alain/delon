@@ -1,13 +1,13 @@
 import {
-  Component,
-  Input,
-  HostListener,
-  OnInit,
-  OnChanges,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Renderer2,
+  Component,
   ElementRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Renderer2,
   TemplateRef,
 } from '@angular/core';
 
@@ -23,9 +23,9 @@ export class QuickMenuComponent implements OnInit, OnChanges {
   // #region fields
 
   _icon = 'question-circle';
-  _iconTpl: TemplateRef<any>;
+  _iconTpl: TemplateRef<void>;
   @Input()
-  set icon(value: string | TemplateRef<any>) {
+  set icon(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._icon = null;
       this._iconTpl = value;
@@ -48,7 +48,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
     private cd: ChangeDetectorRef,
     private el: ElementRef,
     private render: Renderer2,
-  ) {}
+  ) { }
 
   private show = false;
 

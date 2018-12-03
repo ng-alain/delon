@@ -1,49 +1,48 @@
-import { Injectable, Injector } from '@angular/core';
+// tslint:disable:no-any
 import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpSentEvent,
-  HttpHeaderResponse,
-  HttpProgressEvent,
-  HttpResponse,
-  HttpUserEvent,
   HttpErrorResponse,
   HttpEvent,
+  HttpHandler,
+  HttpHeaderResponse,
+  HttpInterceptor,
+  HttpProgressEvent,
+  HttpRequest,
+  HttpResponse,
+  HttpSentEvent,
+  HttpUserEvent,
 } from '@angular/common/http';
-import { Observable, Observer, of } from 'rxjs';
+import { Injectable, Injector } from '@angular/core';
+import { of, Observable, Observer } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 
 import { _HttpClient } from '@delon/theme';
 
+import { MockRequest } from './interface';
 import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
-import { MockRequest } from './interface';
 
 @Injectable()
 export class MockInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) { }
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<
-    | HttpSentEvent
-    | HttpHeaderResponse
-    | HttpProgressEvent
-    | HttpResponse<any>
-    | HttpUserEvent<any>
+  | HttpSentEvent
+  | HttpHeaderResponse
+  | HttpProgressEvent
+  | HttpResponse<any>
+  | HttpUserEvent<any>
   > {
     const src = this.injector.get(MockService);
-    const config = Object.assign(
-      {
-        delay: 300,
-        force: false,
-        log: true,
-      },
-      this.injector.get(DelonMockConfig, null),
-    );
+    const config = {
+      delay: 300,
+      force: false,
+      log: true,
+      ...this.injector.get(DelonMockConfig, null),
+    };
     const rule = src.getRule(req.method, req.url.split('?')[0]);
     if (!rule && !config.force) {
       return next.handle(req);

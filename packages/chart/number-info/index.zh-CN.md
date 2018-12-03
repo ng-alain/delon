@@ -12,8 +12,8 @@ module: NumberInfoModule
 
 | 参数         | 说明                             | 类型               | 默认值  |
 | ------------ | -------------------------------- | ------------------ | ------- |
-| `[title]`    | 标题                             | `TemplateRef<any>` | -       |
-| `[subTitle]` | 子标题                           | `TemplateRef<any>` | -       |
+| `[title]`    | 标题                             | `TemplateRef<void>` | -       |
+| `[subTitle]` | 子标题                           | `TemplateRef<void>` | -       |
 | `[total]`    | 总量                             | `string`           | -       |
 | `[suffix]`   | 总量后缀                         | `string`           | -       |
 | `[subTotal]` | 子总量                           | `string`           | -       |

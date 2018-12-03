@@ -5,17 +5,16 @@ export function numberToChinese(
   rmb = true,
   options?: NumberToChineseOptions,
 ): string {
-  options = Object.assign(
-    {
-      minusSymbol: '负',
-      validThrow: false,
-    },
-    options,
-  );
+  options = {
+    minusSymbol: '负',
+    validThrow: false,
+    ...options,
+  };
   if (typeof value === 'number') value = value.toString();
   if (!/^-?\d+(\.\d+)?$/.test(value) && options.validThrow)
     throw new Error(`${value} is invalid number type`);
-  let integer: number | string, decimal: number | string;
+  let integer: number | string;
+  let decimal: number | string;
   [integer, decimal] = value.split('.');
   let symbol = '';
   if (integer.startsWith('-')) {
@@ -30,49 +29,49 @@ export function numberToChinese(
       : ['', '一', '二', '三', '四', '五', '六', '七', '八', '九', '点'],
     radice: rmb
       ? [
-          '',
-          '拾',
-          '佰',
-          '仟',
-          '万',
-          '拾',
-          '佰',
-          '仟',
-          '亿',
-          '拾',
-          '佰',
-          '仟',
-          '万亿',
-          '拾',
-          '佰',
-          '仟',
-          '兆',
-          '拾',
-          '佰',
-          '仟',
-        ]
+        '',
+        '拾',
+        '佰',
+        '仟',
+        '万',
+        '拾',
+        '佰',
+        '仟',
+        '亿',
+        '拾',
+        '佰',
+        '仟',
+        '万亿',
+        '拾',
+        '佰',
+        '仟',
+        '兆',
+        '拾',
+        '佰',
+        '仟',
+      ]
       : [
-          '',
-          '十',
-          '百',
-          '千',
-          '万',
-          '十',
-          '百',
-          '千',
-          '亿',
-          '十',
-          '百',
-          '千',
-          '万亿',
-          '十',
-          '百',
-          '千',
-          '兆',
-          '十',
-          '百',
-          '千',
-        ],
+        '',
+        '十',
+        '百',
+        '千',
+        '万',
+        '十',
+        '百',
+        '千',
+        '亿',
+        '十',
+        '百',
+        '千',
+        '万亿',
+        '十',
+        '百',
+        '千',
+        '兆',
+        '十',
+        '百',
+        '千',
+      ],
     dec: ['角', '分', '厘', '毫'],
   };
   if (rmb) value = (+value).toFixed(5).toString();
@@ -83,13 +82,12 @@ export function numberToChinese(
   } else {
     let cnDesc = '';
     for (let i = 0; i < integerCount; i++) {
-      const n = +integer[i],
-        j = integerCount - i - 1,
-        isZero = i > 1 && n !== 0 && integer[i - 1] === '0',
-        cnZero = isZero ? '零' : '',
-        isEmpptyUnit =
-          (n === 0 && j % 4 !== 0) || integer.substr(i - 3, 4) === '0000',
-        descMark = cnDesc;
+      const n = +integer[i];
+      const j = integerCount - i - 1;
+      const isZero = i > 1 && n !== 0 && integer[i - 1] === '0';
+      const cnZero = isZero ? '零' : '';
+      const isEmpptyUnit = (n === 0 && j % 4 !== 0) || integer.substr(i - 3, 4) === '0000';
+      const descMark = cnDesc;
       let cnNum = unit.num[n];
 
       cnDesc = isEmpptyUnit ? '' : unit.radice[j];
@@ -115,10 +113,10 @@ export function numberToChinese(
   } else {
     for (let i = 0; i < decimalCount; i++) {
       if (rmb && i > unit.dec.length - 1) break;
-      const n = decimal[i],
-        cnZero = n === '0' ? '零' : '',
-        cnNum = unit.num[n],
-        cnDesc = rmb ? unit.dec[i] : '';
+      const n = decimal[i];
+      const cnZero = n === '0' ? '零' : '';
+      const cnNum = unit.num[n];
+      const cnDesc = rmb ? unit.dec[i] : '';
       decimalRes += cnZero + cnNum + cnDesc;
     }
   }

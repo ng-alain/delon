@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { DelonAuthConfig } from '../../auth.config';
-import { SimpleTokenModel } from './simple.model';
 import { BaseInterceptor } from '../base.interceptor';
-import { DA_SERVICE_TOKEN } from '../interface';
 import { CheckSimple } from '../helper';
+import { DA_SERVICE_TOKEN } from '../interface';
+import { SimpleTokenModel } from './simple.model';
 
 @Injectable()
 export class SimpleInterceptor extends BaseInterceptor {
@@ -14,6 +14,7 @@ export class SimpleInterceptor extends BaseInterceptor {
     return CheckSimple(this.model as SimpleTokenModel);
   }
 
+  // tslint:disable-next-line:no-any
   setReq(req: HttpRequest<any>, options: DelonAuthConfig): HttpRequest<any> {
     const token = options.token_send_template.replace(
       /\$\{([\w]+)\}/g,
@@ -31,7 +32,7 @@ export class SimpleInterceptor extends BaseInterceptor {
         const body = req.body || {};
         body[options.token_send_key] = token;
         req = req.clone({
-          body: body,
+          body,
         });
         break;
       case 'url':

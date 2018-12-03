@@ -15,7 +15,7 @@ export function format(str: string, obj: {}, needDeepGet: boolean = false): stri
     (work: string, key: string) =>
       needDeepGet
         ? deepGet(obj, key.split('.'), '')
-        : (obj || {})[key] || ''
+        : (obj || {})[key] || '',
   );
 }
 

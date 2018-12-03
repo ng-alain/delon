@@ -7,14 +7,15 @@ export function preloaderFinished() {
   function remove() {
     // preloader value null when running --hmr
     if (!preloader) return;
-    preloader.addEventListener('transitionend', function() {
+    preloader.addEventListener('transitionend', function () {
       preloader.className = 'preloader-hidden';
     });
 
     preloader.className += ' preloader-hidden-add preloader-hidden-add-active';
   }
 
-  (<any>window).appBootstrap = () => {
+  // tslint:disable-next-line:no-any
+  (window as any).appBootstrap = () => {
     setTimeout(() => {
       remove();
       body.style.overflow = '';

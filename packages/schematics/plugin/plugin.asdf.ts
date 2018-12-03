@@ -1,4 +1,4 @@
-import { Tree, SchematicContext, Rule } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { PluginOptions } from './interface';
 
 export function pluginAsdf(options: PluginOptions): Rule {

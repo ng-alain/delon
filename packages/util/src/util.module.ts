@@ -5,12 +5,12 @@ import { StringTemplateOutletDirective } from './addon/string_template_outlet';
 @NgModule({
   imports: [CommonModule],
   declarations: [StringTemplateOutletDirective],
-  exports: [StringTemplateOutletDirective]
+  exports: [StringTemplateOutletDirective],
 })
 export class DelonUtilModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: DelonUtilModule
+      ngModule: DelonUtilModule,
     };
   }
 }

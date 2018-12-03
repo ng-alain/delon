@@ -1,10 +1,10 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DelonUtilModule } from '@delon/util';
 
-import { GlobalFooterComponent } from './global-footer.component';
 import { GlobalFooterItemComponent } from './global-footer-item.component';
+import { GlobalFooterComponent } from './global-footer.component';
 
 const COMPONENTS = [GlobalFooterComponent, GlobalFooterItemComponent];
 

@@ -1,8 +1,8 @@
 import {
-  Component,
-  Input,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  Input,
 } from '@angular/core';
 
 @Component({
@@ -32,5 +32,5 @@ export class AvatarListComponent {
     this.cdr.markForCheck();
   }
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 }

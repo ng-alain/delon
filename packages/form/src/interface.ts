@@ -1,4 +1,7 @@
-import { SFRenderSchema, SFHorizontalLayoutSchema } from './schema/ui';
+import { SFHorizontalLayoutSchema, SFRenderSchema } from './schema/ui';
+
+// tslint:disable-next-line:no-any
+export type SFValue = any;
 
 export interface SFButton {
   /** 提交按钮文本，默认：`提交` */

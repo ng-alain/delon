@@ -1,11 +1,11 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ObserversModule } from '@angular/cdk/observers';
+import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { SVConfig } from './view.config';
 import { SVContainerComponent } from './view-container.component';
 import { SVTitleComponent } from './view-title.component';
 import { SVComponent } from './view.component';
+import { SVConfig } from './view.config';
 
 const COMPONENTS = [SVContainerComponent, SVComponent, SVTitleComponent];
 

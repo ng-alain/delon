@@ -1,17 +1,18 @@
+// tslint:disable:no-any
 import {
-  Component,
-  Input,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  OnChanges,
-  NgZone,
-  TemplateRef,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
-import { toNumber } from '@delon/util';
+import { InputNumber } from '@delon/util';
 
 declare var G2: any;
 declare var DataSet: any;
@@ -27,9 +28,9 @@ export class G2TimelineComponent
   // #region fields
 
   _title = '';
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -51,23 +52,12 @@ export class G2TimelineComponent
   @Input()
   position: 'top' | 'right' | 'bottom' | 'left' = 'top';
 
-  @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-  }
-  private _height = 400;
+  @Input() @InputNumber() height = 400;
 
   @Input()
   padding: number[] = [60, 20, 40, 40];
 
-  @Input()
-  set borderWidth(value: any) {
-    this._borderWidth = toNumber(value);
-  }
-  private _borderWidth = 2;
+  @Input() @InputNumber() borderWidth = 2;
 
   // #endregion
 
@@ -80,7 +70,7 @@ export class G2TimelineComponent
   private initFlag = false;
   private slider: any;
 
-  constructor(private cd: ChangeDetectorRef, private zone: NgZone) {}
+  constructor(private cd: ChangeDetectorRef, private zone: NgZone) { }
 
   ngAfterViewInit(): void {
     this.initFlag = true;
@@ -169,15 +159,15 @@ export class G2TimelineComponent
       .line()
       .position('x*y1')
       .color(this.colorMap.y1)
-      .size(this._borderWidth);
+      .size(this.borderWidth);
     chart
       .line()
       .position('x*y2')
       .color(this.colorMap.y2)
-      .size(this._borderWidth);
+      .size(this.borderWidth);
     chart.render();
 
-    const sliderPadding = Object.assign([], this.padding);
+    const sliderPadding = { ...[], ...this.padding };
     sliderPadding[0] = 0;
     const slider = new Slider({
       container: this.sliderNode.nativeElement,

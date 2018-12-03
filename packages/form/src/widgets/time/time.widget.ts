@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '../../widget';
 import format from 'date-fns/format';
+import { SFValue } from '../../interface';
 import { toBool } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-time',
@@ -34,7 +35,7 @@ import { toBool } from '../../utils';
 export class TimeWidget extends ControlWidget implements OnInit {
   displayValue: Date = null;
   format: string;
-  i: any;
+  i: {};
 
   ngOnInit(): void {
     const ui = this.ui;
@@ -55,7 +56,7 @@ export class TimeWidget extends ControlWidget implements OnInit {
     };
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     if (value instanceof Date) {
       this.displayValue = value;
       return;
@@ -76,16 +77,7 @@ export class TimeWidget extends ControlWidget implements OnInit {
       return;
     }
     if (this.ui.utcEpoch === true) {
-      this.setValue(
-        Date.UTC(
-          1970,
-          0,
-          1,
-          value.getHours(),
-          value.getMinutes(),
-          value.getSeconds(),
-        ),
-      );
+      this.setValue(Date.UTC(1970, 0, 1, value.getHours(), value.getMinutes(), value.getSeconds()));
       return;
     }
     this.setValue(format(value, this.format));

@@ -1,20 +1,20 @@
 import {
-  Component,
-  Input,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  OnChanges,
-  NgZone,
-  TemplateRef,
-  OnInit,
-  Renderer2,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
+import { InputNumber } from '@delon/util';
+import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-water-wave',
@@ -26,9 +26,9 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   // #region fields
 
   _title = '';
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -40,23 +40,9 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   @Input()
   color = '#1890FF';
 
-  @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-  }
-  private _height = 160;
+  @Input() @InputNumber() height = 160;
 
-  @Input()
-  get percent() {
-    return this._percent;
-  }
-  set percent(value: any) {
-    this._percent = toNumber(value);
-  }
-  private _percent: number;
+  @Input() @InputNumber() percent: number;
 
   // #endregion
 
@@ -65,14 +51,14 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   private node: ElementRef;
 
   private initFlag = false;
-  private timer: any;
+  private timer;
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
     private cd: ChangeDetectorRef,
     private zone: NgZone,
-  ) {}
+  ) { }
 
   private renderChart() {
     const data = this.percent / 100;
@@ -109,8 +95,8 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
     for (
       let i = circleOffset;
-      i < circleOffset + 2 * Math.PI;
-      i += 1 / (8 * Math.PI)
+      i < circleOffset + (Math.PI * 2);
+      i += 1 / (Math.PI * 8)
     ) {
       arcStack.push([radius + bR * Math.cos(i), radius + bR * Math.sin(i)]);
     }
@@ -128,7 +114,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
         const x = sp + (xOffset + i) / unit;
         const y = Math.sin(x) * currRange;
         const dx = i;
-        const dy = 2 * cR * (1 - currData) + (radius - cR) - unit * y;
+        const dy = cR * 2 * (1 - currData) + (radius - cR) - unit * y;
 
         ctx.lineTo(dx, dy);
         sinStack.push([dx, dy]);
@@ -164,11 +150,11 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
           ctx.globalCompositeOperation = 'destination-over';
           ctx.beginPath();
           ctx.lineWidth = lineWidth;
-          ctx.arc(radius, radius, bR, 0, 2 * Math.PI, true);
+          ctx.arc(radius, radius, bR, 0, Math.PI * 2, true);
 
           ctx.beginPath();
           ctx.save();
-          ctx.arc(radius, radius, radius - 3 * lineWidth, 0, 2 * Math.PI, true);
+          ctx.arc(radius, radius, (radius - lineWidth) * 3, 0, Math.PI * 2, true);
 
           ctx.restore();
           ctx.clip();

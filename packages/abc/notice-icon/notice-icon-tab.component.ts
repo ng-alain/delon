@@ -1,11 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
 } from '@angular/core';
-import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
+import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
   selector: 'notice-icon-tab',
@@ -14,7 +14,7 @@ import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
 })
 export class NoticeIconTabComponent {
   @Input()
-  locale: any = {};
+  locale: {} = {};
   @Input()
   data: NoticeItem;
   @Output()
@@ -23,10 +23,10 @@ export class NoticeIconTabComponent {
   readonly clear = new EventEmitter<string>();
 
   onClick(item: NoticeItem) {
-    this.select.emit(<NoticeIconSelect>{
+    this.select.emit({
       title: this.data.title,
       item,
-    });
+    } as NoticeIconSelect);
   }
 
   onClear() {

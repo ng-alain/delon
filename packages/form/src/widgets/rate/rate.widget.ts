@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '../../widget';
 import { toBool } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-rate',

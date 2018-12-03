@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
-import { App, Layout, User, SettingsNotify } from './interface';
+import { Observable, Subject } from 'rxjs';
+import { App, Layout, SettingsNotify, User } from './interface';
 
 const LAYOUT_KEY = 'layout';
 const USER_KEY = 'user';
@@ -17,21 +17,22 @@ export class SettingsService {
     return JSON.parse(localStorage.getItem(key) || 'null') || null;
   }
 
+  // tslint:disable-next-line:no-any
   private set(key: string, value: any) {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
   get layout(): Layout {
     if (!this._layout) {
-      this._layout = Object.assign(
-        <Layout>{
+      this._layout = {
+        ...{
           fixed: true,
           collapsed: false,
           boxed: false,
           lang: null,
-        },
-        this.get(LAYOUT_KEY),
-      );
+        } as Layout,
+        ...this.get(LAYOUT_KEY),
+      };
       this.set(LAYOUT_KEY, this._layout);
     }
     return this._layout;
@@ -40,9 +41,9 @@ export class SettingsService {
   get app(): App {
     if (!this._app) {
       this._app = Object.assign(
-        <App>{
+        {
           year: new Date().getFullYear(),
-        },
+        } as App,
         this.get(APP_KEY),
       );
       this.set(APP_KEY, this._app);
@@ -52,7 +53,7 @@ export class SettingsService {
 
   get user(): User {
     if (!this._user) {
-      this._user = Object.assign(<User>{}, this.get(USER_KEY));
+      this._user = { ...{} as User, ...this.get(USER_KEY) };
       this.set(USER_KEY, this._user);
     }
     return this._user;
@@ -62,6 +63,7 @@ export class SettingsService {
     return this.notify$.asObservable();
   }
 
+  // tslint:disable-next-line:no-any
   setLayout(name: string | Layout, value?: any): boolean {
     if (typeof name === 'string') {
       this.layout[name] = value;
@@ -69,6 +71,7 @@ export class SettingsService {
       this._layout = name;
     }
     this.set(LAYOUT_KEY, this._layout);
+    // tslint:disable-next-line:no-any
     this.notify$.next({ type: 'layout', name, value } as any);
     return true;
   }

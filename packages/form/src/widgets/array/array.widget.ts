@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
 
 @Component({
@@ -14,7 +15,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   get addDisabled() {
     return (
       this.schema.maxItems &&
-      (this.formProperty.properties as any[]).length >= this.schema.maxItems
+      (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems
     );
   }
 
@@ -26,10 +27,10 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
     if (this.ui.grid && this.ui.grid.arraySpan)
       this.arraySpan = this.ui.grid.arraySpan;
 
-    this.addTitle = this.ui.addTitle || this.l['addText'];
+    this.addTitle = this.ui.addTitle || this.l.addText;
     this.addType = this.ui.addType || 'dashed';
     this.removeTitle =
-      this.ui.removable === false ? null : this.ui.removeTitle || this.l['removeText'];
+      this.ui.removable === false ? null : this.ui.removeTitle || this.l.removeText;
   }
 
   addItem() {

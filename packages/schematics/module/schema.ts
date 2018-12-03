@@ -1,3 +1,4 @@
 import { Schema as ModuleSchema } from '@schematics/angular/module/schema';
 
-export interface Schema extends ModuleSchema {}
+// tslint:disable-next-line:no-empty-interface
+export interface Schema extends ModuleSchema { }

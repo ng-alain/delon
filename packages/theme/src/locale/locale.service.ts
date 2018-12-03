@@ -1,9 +1,9 @@
-import { Injectable, Inject, Provider, Optional, SkipSelf } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Inject, Injectable, Optional, Provider, SkipSelf } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-import { LocaleData } from './locale.types';
-import { DELON_LOCALE } from './locale.tokens';
 import zhCN from './languages/zh-CN';
+import { DELON_LOCALE } from './locale.tokens';
+import { LocaleData } from './locale.types';
 
 @Injectable()
 export class DelonLocaleService {
@@ -40,7 +40,7 @@ export function DELON_LOCALE_SERVICE_PROVIDER_FACTORY(exist: DelonLocaleService,
 }
 
 export const DELON_LOCALE_SERVICE_PROVIDER: Provider = {
-  provide   : DelonLocaleService,
+  provide: DelonLocaleService,
   useFactory: DELON_LOCALE_SERVICE_PROVIDER_FACTORY,
-  deps      : [ [ new Optional(), new SkipSelf(), DelonLocaleService ], DELON_LOCALE ]
+  deps: [[new Optional(), new SkipSelf(), DelonLocaleService], DELON_LOCALE],
 };

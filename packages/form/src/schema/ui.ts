@@ -1,5 +1,7 @@
+// tslint:disable:no-any
 import { TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { ErrorSchema } from '../errors';
 import { SFSchemaEnumType } from './index';
 
@@ -130,17 +132,17 @@ export interface SFDataSchema {
    * - `input` 可能根据不同部件的情况存在值，例如：`autocomplete` 表示当前键入的值
    * - 参数、返回值：可能根据不同部件需求而定，具体参阅相应小部件独立说明
    */
-  asyncData?: (input?: any) => Observable<SFSchemaEnumType[]>;
+  asyncData?(input?: any): Observable<SFSchemaEnumType[]>;
 }
 
 /** 指定如何渲染 `Schema` */
 export interface SFUISchemaItem
   extends SFRenderSchema,
-    SFArraySchema,
-    SFHorizontalLayoutSchema,
-    SFDataSchema,
-    SFInputSchema,
-    ErrorSchema {
+  SFArraySchema,
+  SFHorizontalLayoutSchema,
+  SFDataSchema,
+  SFInputSchema,
+  ErrorSchema {
   [key: string]: any;
 
   /** 是否开启调试模式，在数据变更、校验会打印出相信信息，不建议在生产环境中使用 */
@@ -187,7 +189,7 @@ export interface SFUISchema {
  */
 export interface SFUISchemaItemRun extends SFUISchemaItem {
   /** @internal 自定义模板 */
-  _render?: TemplateRef<{}>;
+  _render?: TemplateRef<void>;
   /** @internal 是否必填 */
   _required?: boolean;
 }

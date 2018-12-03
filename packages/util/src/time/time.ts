@@ -26,7 +26,7 @@ export function getTimeDistance(
     | 'year'
     | '-year'
     | number,
-  time?: Date | string | number
+  time?: Date | string | number,
 ): [Date, Date] {
   time = parse(time || new Date());
 

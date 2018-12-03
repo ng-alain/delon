@@ -1,12 +1,13 @@
+// tslint:disable:no-any no-invalid-this
+import { HttpHeaders } from '@angular/common/http';
 import { Inject, Injector } from '@angular/core';
-import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
 import { ACLService } from '@delon/acl';
+import { throwError, Observable } from 'rxjs';
 
 import { _HttpClient } from './http.client';
 
 export abstract class BaseApi {
-  constructor(@Inject(Injector) protected injector: Injector) {}
+  constructor(@Inject(Injector) protected injector: Injector) { }
 }
 
 export interface HttpOptions {
@@ -40,7 +41,7 @@ function setParam(target: any, key = paramKey) {
  * - 有效范围：类
  */
 export function BaseUrl(url: string) {
-  return function<TClass extends { new (...args: any[]): BaseApi }>(
+  return function <TClass extends { new(...args: any[]): BaseApi }>(
     target: TClass,
   ): TClass {
     const params = setParam(target.prototype);
@@ -57,10 +58,10 @@ export function BaseHeaders(
   headers:
     | HttpHeaders
     | {
-        [header: string]: string | string[];
-      },
+      [header: string]: string | string[];
+    },
 ) {
-  return function<TClass extends { new (...args: any[]): BaseApi }>(
+  return function <TClass extends { new(...args: any[]): BaseApi }>(
     target: TClass,
   ): TClass {
     const params = setParam(target.prototype);
@@ -70,8 +71,8 @@ export function BaseHeaders(
 }
 
 function makeParam(paramName: string) {
-  return function(key?: string, ...extraOptions: any[]) {
-    return function(target: BaseApi, propertyKey: string, index: number) {
+  return function (key?: string, ...extraOptions: any[]) {
+    return function (target: BaseApi, propertyKey: string, index: number) {
       const params = setParam(setParam(target), propertyKey);
       let tParams = params[paramName];
       if (typeof tParams === 'undefined') {
@@ -112,13 +113,13 @@ export const Body = makeParam('body')();
 export const Headers = makeParam('headers');
 
 function makeMethod(method: string) {
-  return function(url: string = '', options?: HttpOptions) {
+  return function (url: string = '', options?: HttpOptions) {
     return (
       target: BaseApi,
       targetKey?: string,
       descriptor?: PropertyDescriptor,
     ) => {
-      descriptor.value = function(...args: any[]): Observable<any> {
+      descriptor.value = function (...args: any[]): Observable<any> {
         options = options || {};
 
         const http = this.injector.get(_HttpClient, null);
@@ -174,7 +175,7 @@ function makeMethod(method: string) {
           body:
             data.body && data.body.length > 0 ? args[data.body[0].index] : null,
           params,
-          headers: Object.assign({}, baseData.baseHeaders, headers),
+          headers: { ...baseData.baseHeaders, ...headers },
           ...options,
         });
       };

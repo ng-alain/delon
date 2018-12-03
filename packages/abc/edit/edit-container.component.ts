@@ -1,10 +1,10 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   TemplateRef,
-  ChangeDetectionStrategy,
 } from '@angular/core';
-import { toNumber, InputNumber, InputBoolean } from '@delon/util';
+import { toNumber, InputBoolean, InputNumber } from '@delon/util';
 import { SEConfig } from './edit.config';
 
 @Component({
@@ -16,9 +16,9 @@ export class SEContainerComponent {
   //#region fields
 
   _title = '';
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -28,21 +28,21 @@ export class SEContainerComponent {
   }
 
   @Input()
-  get gutter() {
+  get gutter(): number {
     return this.nzLayout === 'horizontal' ? this._gutter : 0;
   }
-  set gutter(value: any) {
+  set gutter(value: number) {
     this._gutter = toNumber(value);
   }
   private _gutter: number;
 
   @Input('se-container')
-  set col(value: any) {
+  set col(value: number) {
     const a = toNumber(value, 0);
     if (a <= 0) return;
     this._col = toNumber(value, 0);
   }
-  get col() {
+  get col(): number {
     return this._col;
   }
   private _col: number;

@@ -1,15 +1,16 @@
+// tslint:disable:no-any
 export class DateRangePickerConfig {
-  nzFormat? = 'yyyy-MM-dd';
+  nzFormat ?= 'yyyy-MM-dd';
   nzClassName?: string;
   nzSize?: string;
   nzStyle?: string;
-  nzAllowClear? = true;
-  nzAutoFocus? = false;
-  nzDisabled? = false;
+  nzAllowClear ?= true;
+  nzAutoFocus ?= false;
+  nzDisabled ?= false;
   nzDisabledDate?: any;
   nzDisabledTime?: any;
   nzLocale?: any;
-  nzPopupStyle? = { 'position': 'relative' };
+  nzPopupStyle ?= { 'position': 'relative' };
   nzDropdownClassName?: any;
   nzRenderExtraFooter?: any;
   nzPlaceHolder?: any;

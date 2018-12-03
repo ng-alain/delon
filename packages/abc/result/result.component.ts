@@ -25,9 +25,9 @@ export class ResultComponent {
   }
 
   _title = '';
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -35,9 +35,9 @@ export class ResultComponent {
   }
 
   _description = '';
-  _descriptionTpl: TemplateRef<any>;
+  _descriptionTpl: TemplateRef<void>;
   @Input()
-  set description(value: string | TemplateRef<any>) {
+  set description(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._description = null;
       this._descriptionTpl = value;
@@ -45,9 +45,9 @@ export class ResultComponent {
   }
 
   _extra = '';
-  _extraTpl: TemplateRef<any>;
+  _extraTpl: TemplateRef<void>;
   @Input()
-  set extra(value: string | TemplateRef<any>) {
+  set extra(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._extra = null;
       this._extraTpl = value;

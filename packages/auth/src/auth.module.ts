@@ -1,12 +1,12 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { DelonAuthConfig } from './auth.config';
 import { DA_STORE_TOKEN } from './store/interface';
-import { DA_SERVICE_TOKEN } from './token/interface';
 import { LocalStorageStore } from './store/local-storage.service';
-import { TokenService } from './token/token.service';
-import { SimpleGuard } from './token/simple/simple.guard';
+import { DA_SERVICE_TOKEN } from './token/interface';
 import { JWTGuard } from './token/jwt/jwt.guard';
+import { SimpleGuard } from './token/simple/simple.guard';
+import { TokenService } from './token/token.service';
 import { WINDOW } from './win_tokens';
 
 @NgModule({})

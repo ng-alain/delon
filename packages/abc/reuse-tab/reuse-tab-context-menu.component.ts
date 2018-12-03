@@ -1,18 +1,18 @@
 import {
   Component,
-  Input,
   EventEmitter,
-  Output,
   HostListener,
+  Input,
   OnInit,
+  Output,
 } from '@angular/core';
 import { DelonLocaleService } from '@delon/theme';
 
 import {
-  ReuseContextI18n,
-  ReuseContextCloseEvent,
-  ReuseItem,
   CloseType,
+  ReuseContextCloseEvent,
+  ReuseContextI18n,
+  ReuseItem,
 } from './reuse-tab.interfaces';
 
 @Component({
@@ -23,7 +23,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
   private _i18n: ReuseContextI18n;
   @Input()
   set i18n(value: ReuseContextI18n) {
-    this._i18n = Object.assign({}, this.i18nSrv.getData('reuseTab'), value);
+    this._i18n = { ...this.i18nSrv.getData('reuseTab'), ...value };
   }
   get i18n() {
     return this._i18n;
@@ -42,7 +42,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
     return this.event.ctrlKey;
   }
 
-  constructor(private i18nSrv: DelonLocaleService) {}
+  constructor(private i18nSrv: DelonLocaleService) { }
 
   private notify(type: CloseType, item: ReuseItem) {
     this.close.next({

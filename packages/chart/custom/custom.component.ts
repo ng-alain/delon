@@ -1,22 +1,22 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  OnInit,
   ElementRef,
+  EventEmitter,
+  HostBinding,
   Input,
   OnDestroy,
-  EventEmitter,
+  OnInit,
   Output,
-  HostBinding,
-  ChangeDetectionStrategy
 } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import { InputNumber } from '@delon/util';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'g2,g2-custom',
   template: `<ng-content></ng-content>`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2CustomComponent implements OnInit, OnDestroy {
 
@@ -44,7 +44,7 @@ export class G2CustomComponent implements OnInit, OnDestroy {
 
   // #endregion
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) { }
 
   private renderChart() {
     this.el.nativeElement.innerHTML = '';

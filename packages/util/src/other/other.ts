@@ -1,5 +1,4 @@
 // tslint:disable:no-any
-
 import extend from 'extend';
 
 /**

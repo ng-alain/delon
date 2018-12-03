@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { toNumber } from '@delon/util';
 import { DelonLocaleService } from '@delon/theme';
+import { toNumber, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-mini-progress',
@@ -15,28 +15,23 @@ export class G2ProgressComponent {
   get target() {
     return this._target;
   }
+  // tslint:disable-next-line:no-any
   set target(value: any) {
     this._target = Math.min(Math.max(toNumber(value), 0), 100);
   }
   private _target: number;
 
-  @Input()
-  get strokeWidth() {
-    return this._strokeWidth;
-  }
-  set strokeWidth(value: any) {
-    this._strokeWidth = toNumber(value);
-  }
-  private _strokeWidth: number;
+  @Input() @InputNumber() strokeWidth: number;
 
   @Input()
   get percent() {
     return this._percent;
   }
+  // tslint:disable-next-line:no-any
   set percent(value: any) {
     this._percent = Math.min(Math.max(toNumber(value), 0), 100);
   }
   private _percent: number;
 
-  constructor(public i18n: DelonLocaleService) {}
+  constructor(public i18n: DelonLocaleService) { }
 }

@@ -1,11 +1,12 @@
+// tslint:disable:no-any
 import {
   forwardRef,
   Component,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InputBoolean } from '@delon/util';
 import { DatePickerConfig, DateRangePickerConfig } from './date-picker.config';
 

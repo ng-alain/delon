@@ -1,12 +1,12 @@
 import {
-  Component,
-  Input,
-  ElementRef,
-  Renderer2,
-  OnInit,
-  OnChanges,
-  TemplateRef,
   ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnInit,
+  Renderer2,
+  TemplateRef,
 } from '@angular/core';
 import { updateHostClass, InputNumber } from '@delon/util';
 import { SVConfig } from './view.config';
@@ -23,9 +23,9 @@ export class SVContainerComponent implements OnInit, OnChanges {
   //#region fields
 
   _title = '';
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;

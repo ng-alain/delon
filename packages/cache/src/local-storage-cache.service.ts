@@ -1,4 +1,4 @@
-import { ICacheStore, ICache } from './interface';
+import { ICache, ICacheStore } from './interface';
 
 export class LocalStorageCacheService implements ICacheStore {
   get(key: string): ICache {

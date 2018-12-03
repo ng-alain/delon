@@ -1,10 +1,10 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DelonLocaleModule } from '@delon/theme';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { NoticeIconComponent } from './notice-icon.component';
 import { NoticeIconTabComponent } from './notice-icon-tab.component';
+import { NoticeIconComponent } from './notice-icon.component';
 
 const COMPONENTS = [NoticeIconComponent];
 

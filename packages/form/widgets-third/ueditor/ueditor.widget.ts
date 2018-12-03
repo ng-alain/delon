@@ -20,7 +20,7 @@ import { ControlWidget } from '@delon/form';
 export class UeditorWidget extends ControlWidget implements OnInit {
   static readonly KEY = 'ueditor';
 
-  config: any;
+  config: {};
   loading: string;
   delay: number;
 

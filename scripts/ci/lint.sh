@@ -23,8 +23,6 @@ containsElement () {
   return 1
 }
 
-$(npm bin)/tslint-config-prettier-check ./tslint.json
-
 if containsElement "ts" "${LINT_TYPES[@]}"; then
   travisFoldStart "lint.ts"
     $(npm bin)/tslint -p tsconfig.json -c tslint.json 'packages/**/*.ts'

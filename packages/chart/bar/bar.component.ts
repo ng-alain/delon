@@ -1,19 +1,20 @@
+// tslint:disable:no-any
 import {
-  Component,
-  Input,
-  HostBinding,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  OnChanges,
-  NgZone,
-  TemplateRef,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import { toBoolean, toNumber } from '@delon/util';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 declare var G2: any;
 
@@ -25,13 +26,14 @@ declare var G2: any;
 export class G2BarComponent implements OnDestroy, OnChanges {
   private autoHideXLabels = false;
   private resize$: Subscription = null;
+  // tslint:disable-next-line:no-any
   private chart: any;
 
   // #region fields
   _title = '';
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -49,7 +51,7 @@ export class G2BarComponent implements OnDestroy, OnChanges {
   get height() {
     return this._height;
   }
-  set height(value: any) {
+  set height(value: number) {
     this._height = toNumber(value);
   }
   private _height = 0;
@@ -74,7 +76,7 @@ export class G2BarComponent implements OnDestroy, OnChanges {
     private el: ElementRef,
     private cd: ChangeDetectorRef,
     private zone: NgZone,
-  ) {}
+  ) { }
 
   private runInstall() {
     this.zone.runOutsideAngular(() => setTimeout(() => this.install()));

@@ -1,5 +1,5 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { ErrorCollectModule } from '@delon/abc/error-collect';
 import { DelonUtilModule } from '@delon/util';

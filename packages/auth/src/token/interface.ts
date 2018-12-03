@@ -6,6 +6,7 @@ export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>(
 );
 
 export interface ITokenModel {
+  // tslint:disable-next-line:no-any
   [key: string]: any;
 
   token: string;
@@ -19,6 +20,7 @@ export interface ITokenService {
    * - `get()` 获取 Simple Token
    * - `get<JWTTokenModel>(JWTTokenModel)` 获取 JWT Token
    */
+  // tslint:disable-next-line:no-any
   get(type?: any): ITokenModel;
 
   /**
@@ -26,6 +28,7 @@ export interface ITokenService {
    * - `get()` 获取 Simple Token
    * - `get<JWTTokenModel>(JWTTokenModel)` 获取 JWT Token
    */
+  // tslint:disable-next-line:no-any
   get<T extends ITokenModel>(type?: any): T;
 
   clear(): void;

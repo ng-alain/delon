@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {findAttributeOnElementWithAttrs, findAttributeOnElementWithTag} from './elements';
+import { findAttributeOnElementWithAttrs, findAttributeOnElementWithTag } from './elements';
 
 /** Finds the specified Angular @Input in the given elements with tag name. */
 export function findInputsOnElementWithTag(html: string, inputName: string, tagNames: string[]) {

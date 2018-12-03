@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { ControlWidget } from '../../widget';
+import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-tag',
@@ -24,7 +25,7 @@ import { getData } from '../../utils';
 export class TagWidget extends ControlWidget {
   data: SFSchemaEnum[];
 
-  reset(value: any) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => {
         this.data = list;
@@ -43,7 +44,7 @@ export class TagWidget extends ControlWidget {
     if (this.ui.afterClose) this.ui.afterClose();
   }
 
-  _close(e: any) {
+  _close(e: MouseEvent) {
     if (this.ui.onClose) this.ui.onClose(e);
   }
 

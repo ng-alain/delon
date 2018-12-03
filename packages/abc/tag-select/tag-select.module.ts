@@ -1,8 +1,8 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DelonLocaleModule } from '@delon/theme';
 import { DelonUtilModule } from '@delon/util';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { TagSelectComponent } from './tag-select.component';
 

@@ -1,13 +1,14 @@
+// tslint:disable:no-any
 import {
-  Component,
-  Input,
-  ViewChild,
-  ElementRef,
-  OnInit,
-  OnDestroy,
-  OnChanges,
-  NgZone,
   ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import { toNumber } from '@delon/util';
 
@@ -33,6 +34,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   private _height;
   @Input() color = '#2F9CFF';
   @Input() bgColor = '#F0F2F5';
+  // tslint:disable-next-line:ban-types
   @Input() format: Function;
 
   @Input()
@@ -48,7 +50,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   private chart: any;
   private initFlag = false;
 
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone) { }
 
   private createData() {
     return [{ name: this.title, value: +this._percent }];
@@ -89,7 +91,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
         <p style="font-size: 24px;color: rgba(0,0,0,0.85);margin: 0;">
           ${data[0].value}%
         </p>
-      </div>`
+      </div>`,
     });
     this.chart.changeData(data);
   }
@@ -158,8 +160,8 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     chart.source(data);
 
     chart.coord('polar', {
-      startAngle: -1.2 * Math.PI,
-      endAngle: 0.2 * Math.PI,
+      startAngle: Math.PI * -1.2,
+      endAngle: Math.PI * 0.2,
     });
     chart.scale('value', {
       min: 0,

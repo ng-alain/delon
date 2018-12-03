@@ -1,11 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  Host,
   ElementRef,
-  Renderer2,
+  Host,
   OnInit,
   Optional,
-  ChangeDetectionStrategy,
+  Renderer2,
 } from '@angular/core';
 import { SEContainerComponent } from './edit-container.component';
 

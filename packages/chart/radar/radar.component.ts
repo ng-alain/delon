@@ -1,17 +1,18 @@
+// tslint:disable:no-any
 import {
-  Component,
-  Input,
-  HostBinding,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  OnChanges,
-  NgZone,
-  TemplateRef,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
-import { toNumber, toBoolean } from '@delon/util';
+import { toNumber, InputBoolean, InputNumber } from '@delon/util';
 
 declare var G2: any;
 
@@ -25,9 +26,9 @@ export class G2RadarComponent implements OnDestroy, OnChanges {
   // #region fields
 
   _title = '';
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -35,32 +36,14 @@ export class G2RadarComponent implements OnDestroy, OnChanges {
   }
 
   @HostBinding('style.height.px')
-  @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-  }
-  private _height = 0;
+  @Input() @InputNumber() height = 0;
 
   @Input()
   padding: number[] = [44, 30, 16, 30];
 
-  @Input()
-  get hasLegend() {
-    return this._hasLegend;
-  }
-  set hasLegend(value: any) {
-    this._hasLegend = toBoolean(value);
-  }
-  private _hasLegend = true;
+  @Input() @InputBoolean() hasLegend = true;
 
-  @Input()
-  set tickCount(value: any) {
-    this._tickCount = toNumber(value);
-  }
-  private _tickCount = 4;
+  @Input() @InputNumber() tickCount = 4;
 
   @Input()
   data: Array<{
@@ -89,7 +72,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges {
   private chart: any;
   legendData: any[] = [];
 
-  constructor(private cd: ChangeDetectorRef, private zone: NgZone) {}
+  constructor(private cd: ChangeDetectorRef, private zone: NgZone) { }
 
   _click(i: number) {
     this.legendData[i].checked = !this.legendData[i].checked;
@@ -123,7 +106,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges {
     chart.source(this.data, {
       value: {
         min: 0,
-        tickCount: this._tickCount,
+        tickCount: this.tickCount,
       },
     });
 

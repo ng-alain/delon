@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { deepGet } from '@delon/util';
-import { UploadFile, UploadChangeParam, NzModalService } from 'ng-zorro-antd';
-import { ControlWidget } from '../../widget';
+import { NzModalService, UploadChangeParam, UploadFile } from 'ng-zorro-antd';
+import { SFValue } from '../../interface';
 import { getData, toBool } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-upload',
@@ -50,6 +51,7 @@ import { getData, toBool } from '../../utils';
   `,
 })
 export class UploadWidget extends ControlWidget implements OnInit {
+  // tslint:disable-next-line:no-any
   i: any;
   fileList: UploadFile[] = [];
   btnType = '';
@@ -90,7 +92,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
     this.notify(args.fileList);
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => {
         this.fileList = list as UploadFile[];
@@ -118,5 +120,5 @@ export class UploadWidget extends ControlWidget implements OnInit {
         nzFooter: null,
       })
       .afterClose.subscribe(() => this.detectChanges());
-  };
+  }
 }

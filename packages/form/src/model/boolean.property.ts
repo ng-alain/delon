@@ -1,7 +1,8 @@
+import { SFValue } from '../interface';
 import { AtomicProperty } from './atomic.property';
 
 export class BooleanProperty extends AtomicProperty {
-  fallbackValue(): any {
+  fallbackValue(): SFValue {
     return null;
   }
 }
