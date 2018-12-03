@@ -1,28 +1,30 @@
-import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { share, filter } from 'rxjs/operators';
+import { Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, share } from 'rxjs/operators';
 
 export interface LazyResult {
   path: string;
   loaded: boolean;
   status: 'ok' | 'error';
+  error?: {};
 }
 
 @Injectable({ providedIn: 'root' })
 export class LazyService {
-  private list: any = {};
-  private cached: any = {};
+  private list: { [key: string]: boolean } = {};
+  private cached: { [key: string]: LazyResult } = {};
   private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<
     LazyResult[]
-  >([]);
+    >([]);
 
-  constructor(@Inject(DOCUMENT) private doc: any) {}
+  // tslint:disable-next-line:no-any
+  constructor(@Inject(DOCUMENT) private doc: any) { }
 
   get change(): Observable<LazyResult[]> {
     return this._notify.asObservable().pipe(
       share(),
-      filter(ls => ls.length !== 0),
+      filter(ls => ls.length !== 0)
     );
   }
 
@@ -32,9 +34,9 @@ export class LazyService {
   }
 
   load(paths: string | string[]): Promise<LazyResult[]> {
-    if (!Array.isArray(paths)) paths = [paths];
+    if (!Array.isArray(paths)) { paths = [paths]; }
 
-    const promises: Promise<LazyResult>[] = [];
+    const promises: Array<Promise<LazyResult>> = [];
     paths.forEach(path => {
       if (path.endsWith('.js')) {
         promises.push(this.loadScript(path));
@@ -57,57 +59,55 @@ export class LazyService {
       }
 
       this.list[path] = true;
-      const onSuccess = (item: any) => {
+      const onSuccess = (item: LazyResult) => {
         this.cached[path] = item;
         resolve(item);
       };
 
-      const node = this.doc.createElement('script') as HTMLScriptElement;
+      // tslint:disable-next-line:no-any
+      const node = this.doc.createElement('script') as any;
       node.type = 'text/javascript';
       node.src = path;
       node.charset = 'utf-8';
       if (innerContent) {
         node.innerHTML = innerContent;
       }
-      if ((<any>node).readyState) {
+      if (node.readyState) {
         // IE
-        (<any>node).onreadystatechange = () => {
+        node.onreadystatechange = () => {
           if (
-            (<any>node).readyState === 'loaded' ||
-            (<any>node).readyState === 'complete'
+            node.readyState === 'loaded' ||
+            node.readyState === 'complete'
           ) {
-            (<any>node).onreadystatechange = null;
+            node.onreadystatechange = null;
             onSuccess({
-              path: path,
+              path,
               loaded: true,
-              status: 'ok',
+              status: 'ok'
             });
           }
         };
       } else {
         node.onload = () => {
           onSuccess({
-            path: path,
+            path,
             loaded: true,
-            status: 'ok',
+            status: 'ok'
           });
         };
       }
-      node.onerror = (error: any) =>
+      node.onerror = (error: {}) =>
         onSuccess({
-          path: path,
+          path,
           loaded: false,
           status: 'error',
+          error
         });
       this.doc.getElementsByTagName('head')[0].appendChild(node);
     });
   }
 
-  loadStyle(
-    path: string,
-    rel = 'stylesheet',
-    innerContent?: string,
-  ): Promise<LazyResult> {
+  loadStyle(path: string, rel: string = 'stylesheet', innerContent?: string): Promise<LazyResult> {
     return new Promise(resolve => {
       if (this.list[path] === true) {
         resolve(this.cached[path]);
@@ -125,9 +125,9 @@ export class LazyService {
       }
       this.doc.getElementsByTagName('head')[0].appendChild(node);
       const item: LazyResult = {
-        path: path,
+        path,
         loaded: true,
-        status: 'ok',
+        status: 'ok'
       };
       this.cached[path] = item;
       resolve(item);

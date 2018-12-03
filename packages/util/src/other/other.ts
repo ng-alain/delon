@@ -1,3 +1,5 @@
+// tslint:disable:no-any
+
 import extend from 'extend';
 
 /**
@@ -8,10 +10,10 @@ import extend from 'extend';
  * @param path 若 `null`、`[]`、未定义及未找到时返回 `defaultValue` 值
  * @param defaultValue 默认值
  */
-export function deepGet(obj: any, path: string | string[], defaultValue?: any) {
+export function deepGet(obj: any, path: string | string[], defaultValue?: any): any {
   if (!obj || path == null || path.length === 0) return defaultValue;
   if (!Array.isArray(path)) {
-    path = ~path.indexOf('.') ? path.split('.') : [ path ];
+    path = ~path.indexOf('.') ? path.split('.') : [path];
   }
   if (path.length === 1) {
     const checkObj = obj[path[0]];
@@ -20,8 +22,8 @@ export function deepGet(obj: any, path: string | string[], defaultValue?: any) {
   return path.reduce((o, k) => (o || {})[k], obj) || defaultValue;
 }
 
-export function deepCopy(obj: any) {
-  const result = extend(true, { }, { _: obj });
+export function deepCopy(obj: any): any {
+  const result = extend(true, {}, { _: obj });
   return result._;
 }
 
