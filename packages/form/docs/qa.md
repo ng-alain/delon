@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 99
 title: 常见问题
 type: Documents
 ---
@@ -12,26 +12,26 @@ type: Documents
 
 一般分为两种情形：
 
-**1、Scheam 定义后可能受限于某个数据来自远程**
+**1、Schema 定义后可能受限于某个数据来自远程**
 
 ```ts
 @ViewChild('sf') sf: SFComponent;
 schema: SFSchema = {
-    properties: {
-        app: {
-            type: 'string',
-            title: '附属应用',
-            ui: 'select',
-            enum: []
-        }
+  properties: {
+    app: {
+      type: 'string',
+      title: '附属应用',
+      ui: 'select',
+      enum: []
     }
+  }
 };
 
 ngOnInit() {
-    this.http.get('/apps').subscribe((res: any) => {
-        this.schema.properties.app.enum = res;
-        this.sf.refreshSchema();
-    });
+  this.http.get('/apps').subscribe((res: any) => {
+    this.schema.properties.app.enum = res;
+    this.sf.refreshSchema();
+  });
 }
 ```
 
@@ -39,11 +39,11 @@ ngOnInit() {
 
 ```ts
 schema: SFSchema = {
-    properties: {}
+  properties: {}
 };
 
 ngOnInit() {
-    this.http.get('/schema').subscribe((res: any) => this.sf.refreshSchema(res));
+  this.http.get('/schema').subscribe((res: any) => this.sf.refreshSchema(res));
 }
 ```
 

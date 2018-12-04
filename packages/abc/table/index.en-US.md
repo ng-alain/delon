@@ -295,7 +295,7 @@ Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[component]` | Modal component class, be sure to register in `entryComponents` | `any` | -
 `[params]` | Dialog parameter | `(record: STData) => Object` | -
-`[paramsName]` | Receive parameter name of the target component | `string` | record
+`[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) Global settings | `string` | record
 `[size]` | Size of modal | `sm, md, lg, xl, '', number` | `lg`
 `[exact]` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true`
 `[includeTabs]` | Whether to wrap the nz-tabset, fix content spacing problem | `boolean` | -
@@ -308,7 +308,7 @@ Property | Description | Type | Default
 `[title]` | Title of drawer | `string` | -
 `[component]` | Drawer component class, be sure to register in `entryComponents` | `any` | -
 `[params]` | Dialog parameter | `(record: STData) => Object` | -
-`[paramsName]` | Receive parameter name of the target component | `string` | record
+`[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) Global settings | `string` | record
 `[size]` | Size of drawer | `sm, md, lg, xl, number` | `md`
 `[drawerOptions]` | nz-drawer raw parameters [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) | `any` | -
 

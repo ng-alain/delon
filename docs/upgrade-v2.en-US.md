@@ -10,7 +10,7 @@ The ng-alain 2.0 changed is mainly demonstrated from two aspects:
 - Make CURD operations more "natural" development experience([#588](https://github.com/ng-alain/ng-alain/issues/588))
 - More friendly responsive development
 
-Original `simpel-table`, `sf` is popular with developer, so ng-alain 2.0 refactors and new three Simple series components:
+Original `simple-table`, `sf` is popular with developer, so ng-alain 2.0 refactors and new three Simple series components:
 
 - [st](/components/table) <= `simple-table`
   - Input attribute changes, if you use **general configuration priority**, that changes will be much less

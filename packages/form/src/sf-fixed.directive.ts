@@ -20,7 +20,7 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
   private init() {
     if (!this._inited || this.num == null || this.num <= 0) return;
     const widgetEl = this.el.querySelector('.ant-row') || this.el;
-    this.render.addClass(widgetEl, 'sf-fixed');
+    this.render.addClass(widgetEl, 'sf__fixed');
     const labelEl = widgetEl.querySelector('.ant-form-item-label');
     const unit = this.num + 'px';
     if (labelEl) {

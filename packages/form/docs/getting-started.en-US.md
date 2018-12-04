@@ -152,6 +152,18 @@ export class HomeComponent {
 | `(formReset)`    | Callback when resetting the form         | `EventEmitter<{}>`           | -            |
 | `(formError)`    | Callback when form check                 | `EventEmitter<ErrorData[]>`  | -            |
 
+### SFButton
+
+| Property        | Description           | Type             | Default   |
+|-----------------|-----------------------|------------------|-----------|
+| `[submit]`      | Submit text of button | `string`         | `提交`    |
+| `[submit_type]` | Submit type of button | `string`         | `primary` |
+| `[reset]`       | Reset text of button  | `string`         | `重置`    |
+| `[reset_type]`  | Reset type of button  | `string`         | `default` |
+| `[search]`      | Search text of button | `string`         | `搜索`    |
+| `[edit]`        | Edit text of button   | `string`         | `保存`    |
+| `[render]`      | Button layout         | `SFRenderButton` | -         |
+
 ### Methods
 
 | Method Name       | Description                   | Return Value |
