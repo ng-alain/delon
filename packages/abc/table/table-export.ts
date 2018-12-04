@@ -69,8 +69,6 @@ export class STExport {
   }
 
   export(opt: STExportOptions) {
-    if (!this.xlsxSrv)
-      throw new Error(`muse be import 'XlsxModule' module, but got null`);
     const sheets = this.genSheet(opt);
     return this.xlsxSrv.export({
       sheets,

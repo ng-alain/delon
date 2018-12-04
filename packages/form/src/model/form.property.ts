@@ -1,4 +1,3 @@
-// tslint:disable:no-use-before-declare
 import { combineLatest, BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 

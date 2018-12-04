@@ -207,15 +207,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   // #endregion
 
   constructor(
-    private cdRef: ChangeDetectorRef,
+    @Optional() @Inject(ALAIN_I18N_TOKEN) i18nSrv: AlainI18NService,
+    private cdr: ChangeDetectorRef,
     private cog: STConfig,
     private router: Router,
     private el: ElementRef,
     private renderer: Renderer2,
     private exportSrv: STExport,
-    @Optional()
-    @Inject(ALAIN_I18N_TOKEN)
-    i18nSrv: AlainI18NService,
     private modalHelper: ModalHelper,
     private drawerHelper: DrawerHelper,
     // tslint:disable-next-line:no-any
@@ -240,7 +238,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   cd() {
-    this.cdRef.detectChanges();
+    this.cdr.detectChanges();
   }
 
   renderTotal(total: string, range: string[]) {
