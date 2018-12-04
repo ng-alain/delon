@@ -33,16 +33,3 @@ ng g ng-alain:plugin g2 -t=remove
 ## 自定义 G2 组件
 
 使用 [g2-chart](/chart/chart) 组件快速自定义一个图表，可以减少不必要的组件渲染过程中所产生的奇怪问题。
-
-## 为什么会有 `kcart.alipay.com` 请求？
-
-为了更好服务用户，G2 会将 URL 和版本信息发送回 AntV 服务器。你可以通过以下代码关闭：
-
-```ts
-// app.components
-export class AppComponent {
-  constructor() {
-    if (typeof G2 !== 'undefined') G2.track(false);
-  }
-}
-```

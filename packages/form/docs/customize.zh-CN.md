@@ -1,5 +1,5 @@
 ---
-order: 3
+order: 4
 title: 自定义小部件
 type: Documents
 ---

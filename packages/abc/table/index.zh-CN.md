@@ -295,7 +295,7 @@ class TestComponent {
 ----|------|-----|------
 `[component]` | 目标组件对象，务必在 `entryComponents` 注册 | `any` | -
 `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | -
-`[paramsName]` | 目标组件的接收参数名 | `string` | record
+`[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) 全局设置 | `string` | record
 `[size]` | 对话框大小 | `sm, md, lg, xl, '', number` | `lg`
 `[exact]` | 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 | `boolean` | `true`
 `[includeTabs]` | 是否包裹标签页，修复模态包含标签间距问题 | `boolean` | -
@@ -308,7 +308,7 @@ class TestComponent {
 `[title]` | 标题 | `any` | -
 `[component]` | 目标组件对象，务必在 `entryComponents` 注册 | `any` | -
 `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | -
-`[paramsName]` | 目标组件的接收参数名 | `string` | record
+`[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) 全局设置 | `string` | record
 `[size]` | 抽屉大小 | `sm, md, lg, xl, number` | `md`
 `[drawerOptions]` | 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 | `any` | -
 
