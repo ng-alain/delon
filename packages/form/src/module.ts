@@ -5,7 +5,6 @@ import { DelonLocaleModule } from '@delon/theme';
 import { DelonUtilModule } from '@delon/util';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { DelonFormConfig } from './config';
 import { SFFixedDirective } from './sf-fixed.directive';
 import { SFItemWrapComponent } from './sf-item-wrap.component';
 import { SFItemComponent } from './sf-item.component';
@@ -89,7 +88,6 @@ export class DelonFormModule {
     return {
       ngModule: DelonFormModule,
       providers: [
-        DelonFormConfig,
         {
           provide: SchemaValidatorFactory,
           useClass: AjvSchemaValidatorFactory,

@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
 export class DelonAuthConfig {
   /**
    * 存储KEY值

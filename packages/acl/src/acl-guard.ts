@@ -15,13 +15,13 @@ import { DelonACLConfig } from './acl.config';
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private srv: ACLService,
     private router: Router,
     private options: DelonACLConfig,
-  ) {}
+  ) { }
 
   private process(
     guard: ACLCanType | Observable<ACLCanType>,
@@ -29,10 +29,10 @@ export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
     return (guard && guard instanceof Observable
       ? guard
       : of(
-          typeof guard !== 'undefined' && guard !== null
-            ? (guard as ACLCanType)
-            : null,
-        )
+        typeof guard !== 'undefined' && guard !== null
+          ? (guard as ACLCanType)
+          : null,
+      )
     ).pipe(
       map(v => this.srv.can(v)),
       tap(v => {

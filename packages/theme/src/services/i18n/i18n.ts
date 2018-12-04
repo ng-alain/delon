@@ -34,7 +34,15 @@ export interface AlainI18NService {
 
 export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>(
   'alainTranslatorToken',
+  {
+    providedIn: 'root',
+    factory: ALAIN_I18N_TOKEN_FACTORY,
+  },
 );
+
+export function ALAIN_I18N_TOKEN_FACTORY() {
+  return new AlainI18NServiceFake();
+}
 
 @Injectable({ providedIn: 'root' })
 export class AlainI18NServiceFake implements AlainI18NService {

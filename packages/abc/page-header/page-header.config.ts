@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
 export class PageHeaderConfig {
   /**
    * 首页文本，若指定空表示不显示

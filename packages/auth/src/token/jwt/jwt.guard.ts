@@ -5,7 +5,7 @@ import { CheckJwt, ToLogin } from '../helper';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { JWTTokenModel } from './jwt.model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class JWTGuard implements CanActivate, CanActivateChild, CanLoad {
   private cog: DelonAuthConfig;
   constructor(

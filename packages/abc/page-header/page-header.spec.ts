@@ -39,14 +39,14 @@ describe('abc: page-header', () => {
   }) {
     const imports = [RouterTestingModule.withRoutes([
       { path: '1-1/:name', component: TestComponent }
-    ]), PageHeaderModule.forRoot()];
-    const providers = [ { provide: APP_BASE_HREF, useValue: '/' }, SettingsService ];
+    ]), PageHeaderModule];
+    const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
     }
     injector = TestBed.configureTestingModule({
       imports,
-      declarations: [ TestComponent ],
+      declarations: [TestComponent],
       providers,
     });
     if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
@@ -279,7 +279,7 @@ describe('abc: page-header', () => {
         setTitle = jasmine.createSpy();
       }
       class MockReuse {
-        set title(val: string) {}
+        set title(val: string) { }
         get title(): string {
           return '';
         }

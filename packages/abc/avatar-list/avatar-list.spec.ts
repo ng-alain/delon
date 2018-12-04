@@ -11,7 +11,7 @@ describe('abc: avatar-list', () => {
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
-      imports: [AvatarListModule.forRoot()],
+      imports: [AvatarListModule],
       declarations: [TestComponent],
     }).createComponent(TestComponent);
     dl = fixture.debugElement;

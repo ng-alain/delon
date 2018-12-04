@@ -2,6 +2,8 @@
 order: 1
 title: 开始使用
 type: Documents
+module: AlainThemeModule
+config: AlainThemeConfig
 ---
 
 `@delon/theme` 是 ng-alain 架手脚唯一必须引入的模块。它包含了非常多[主题样式参数](/theme/global)，通过覆盖参数数值进而定制一些特别的需求；以及若干通用性[服务](/theme/menu)、[管道](/theme/date)。

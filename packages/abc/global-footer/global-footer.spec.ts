@@ -39,7 +39,7 @@ describe('abc: global-footer', () => {
     injector = TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([]),
-        GlobalFooterModule.forRoot(),
+        GlobalFooterModule,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [TestComponent],

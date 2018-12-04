@@ -12,7 +12,7 @@ describe('abc: _src', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ImageModule.forRoot()],
+      imports: [ImageModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

@@ -2,6 +2,8 @@
 order: 1
 title: Getting Started
 type: Documents
+module: AlainThemeModule
+config: AlainThemeConfig
 ---
 
 `@delon/theme` is the only must be imported to ng-alain scaffold. It contains a lot of [style parameters](/theme/global) and several generalities [services](/theme/menu), [pipes](/theme/date).

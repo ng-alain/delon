@@ -7,7 +7,7 @@ import { LodopConfig } from './lodop.config';
 import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 
 // TODO: zone
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LodopService implements OnDestroy {
   private _cog: LodopConfig;
   private pending = false;

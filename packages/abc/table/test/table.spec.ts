@@ -103,8 +103,8 @@ describe('abc: table', () => {
       FormsModule,
       HttpClientTestingModule,
       RouterTestingModule.withRoutes([]),
-      NgZorroAntdModule.forRoot(),
-      STModule.forRoot(),
+      NgZorroAntdModule,
+      STModule,
       DelonLocaleModule,
     ];
     const providers = [];

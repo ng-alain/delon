@@ -3,13 +3,9 @@ import {
   HttpErrorResponse,
   HttpEvent,
   HttpHandler,
-  HttpHeaderResponse,
   HttpInterceptor,
-  HttpProgressEvent,
   HttpRequest,
   HttpResponse,
-  HttpSentEvent,
-  HttpUserEvent,
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { of, Observable, Observer } from 'rxjs';
@@ -26,16 +22,7 @@ import { MockStatusError } from './status.error';
 export class MockInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) { }
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler,
-  ): Observable<
-  | HttpSentEvent
-  | HttpHeaderResponse
-  | HttpProgressEvent
-  | HttpResponse<any>
-  | HttpUserEvent<any>
-  > {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const src = this.injector.get(MockService);
     const config = {
       delay: 300,
@@ -95,20 +82,9 @@ export class MockInterceptor implements HttpInterceptor {
               error: e.error,
             });
             if (config.log)
-              console.log(
-                `%c💀${req.method}->${req.url}`,
-                'background:#000;color:#bada55',
-                errRes,
-                req,
-              );
+              console.log(`%c💀${req.method}->${req.url}`, 'background:#000;color:#bada55', errRes, req);
           } else {
-            console.log(
-              `%c💀${req.method}->${req.url}`,
-              'background:#000;color:#bada55',
-              `Please use MockStatusError to throw status error`,
-              e,
-              req,
-            );
+            console.log(`%c💀${req.method}->${req.url}`, 'background:#000;color:#bada55', `Please use MockStatusError to throw status error`, e, req);
           }
           return new Observable((observer: Observer<HttpEvent<any>>) => {
             observer.error(errRes);
@@ -127,27 +103,15 @@ export class MockInterceptor implements HttpInterceptor {
     });
 
     if (config.log) {
-      console.log(
-        `%c👽${req.method}->${req.url}->request`,
-        'background:#000;color:#bada55',
-        req,
-      );
-      console.log(
-        `%c👽${req.method}->${req.url}->response`,
-        'background:#000;color:#bada55',
-        response,
-      );
+      console.log(`%c👽${req.method}->${req.url}->request`, 'background:#000;color:#bada55', req);
+      console.log(`%c👽${req.method}->${req.url}->response`, 'background:#000;color:#bada55', response);
     }
     const hc = this.injector.get(_HttpClient, null);
-    if (hc) {
-      hc.begin();
-    }
+    if (hc) hc.begin();
     return of(response).pipe(
       delay(config.delay),
       tap(() => {
-        if (hc) {
-          hc.end();
-        }
+        if (hc) hc.end();
       }),
     );
   }

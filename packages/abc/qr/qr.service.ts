@@ -4,7 +4,7 @@ import { QRConfig } from './qr.config';
 // tslint:disable-next-line:no-any
 declare var QRious: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class QRService {
   /** 当前qr实例 */
   // tslint:disable-next-line:no-any

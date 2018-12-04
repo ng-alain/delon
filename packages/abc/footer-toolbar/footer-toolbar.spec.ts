@@ -12,7 +12,7 @@ describe('abc: footer-toolbar', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ErrorCollectModule.forRoot(), FooterToolbarModule.forRoot()],
+      imports: [ErrorCollectModule, FooterToolbarModule],
       declarations: [TestComponent],
     });
   });

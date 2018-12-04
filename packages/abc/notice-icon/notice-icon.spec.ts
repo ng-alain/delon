@@ -16,7 +16,7 @@ describe('abc: notice-icon', () => {
 
   beforeEach(async(() => {
     injector = TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, NoticeIconModule.forRoot(), DelonLocaleModule],
+      imports: [NoopAnimationsModule, NoticeIconModule, DelonLocaleModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

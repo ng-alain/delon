@@ -1,4 +1,4 @@
-import { Inject, Optional } from '@angular/core';
+import { Inject } from '@angular/core';
 import { DelonFormConfig } from './config';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
@@ -8,21 +8,14 @@ import { SFSchema } from './schema';
 declare var Ajv: any;
 
 export abstract class SchemaValidatorFactory {
-  abstract createValidatorFn(
-    schema: SFSchema,
-    extraOptions: { ingoreKeywords: string[] },
-  ): (value: SFSchema) => ErrorData[];
+  abstract createValidatorFn(schema: SFSchema, extraOptions: { ingoreKeywords: string[] }): (value: SFSchema) => ErrorData[];
 }
 
 export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
   // tslint:disable-next-line:no-any
   protected ajv: any;
 
-  constructor(
-    @Optional()
-    @Inject(DelonFormConfig)
-    private options: DelonFormConfig,
-  ) {
+  constructor(@Inject(DelonFormConfig) private options: DelonFormConfig) {
     super();
     this.ajv = new Ajv(
       {
@@ -50,13 +43,8 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
     );
   }
 
-  createValidatorFn(
-    schema: SFSchema,
-    extraOptions: { ingoreKeywords: string[] },
-  ): (value: SFValue) => ErrorData[] {
-    const ingoreKeywords: string[] = []
-      .concat(this.options.ingoreKeywords)
-      .concat(extraOptions.ingoreKeywords);
+  createValidatorFn(schema: SFSchema, extraOptions: { ingoreKeywords: string[] }): (value: SFValue) => ErrorData[] {
+    const ingoreKeywords: string[] = [].concat(this.options.ingoreKeywords).concat(extraOptions.ingoreKeywords);
 
     return (value: SFValue): ErrorData[] => {
       try {

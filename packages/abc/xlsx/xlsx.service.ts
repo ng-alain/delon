@@ -9,7 +9,7 @@ import { XlsxExportOptions, XlsxExportSheet } from './xlsx.types';
 
 declare var XLSX: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class XlsxService {
   constructor(
     private cog: XlsxConfig,

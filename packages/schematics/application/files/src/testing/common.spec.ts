@@ -46,7 +46,7 @@ export const setUpTestBed = (moduleDef: TestModuleMetadata) => {
       moduleDef.imports.push(DelonModule);
       moduleDef.imports.push(SharedModule);
       // auth
-      moduleDef.imports.push(DelonAuthModule.forRoot());<% if (i18n) { %>
+      moduleDef.imports.push(DelonAuthModule);<% if (i18n) { %>
       // i18n
       moduleDef.imports.push(
         TranslateModule.forRoot({

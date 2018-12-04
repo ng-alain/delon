@@ -5,7 +5,6 @@ import { of } from 'rxjs';
 import { ACLGuard } from './acl-guard';
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
-import { DelonACLConfig } from './acl.config';
 import { DelonACLModule } from './acl.module';
 
 describe('acl: guard', () => {
@@ -15,7 +14,7 @@ describe('acl: guard', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([]), DelonACLModule.forRoot()],
+      imports: [RouterTestingModule.withRoutes([]), DelonACLModule],
     });
     srv = injector.get(ACLGuard);
     acl = injector.get(ACLService);

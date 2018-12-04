@@ -10,7 +10,7 @@ describe('abc: count-down', () => {
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
-      imports: [CountDownModule.forRoot()],
+      imports: [CountDownModule],
       declarations: [TestComponent],
     }).createComponent(TestComponent);
     dl = fixture.debugElement;

@@ -14,7 +14,7 @@ describe('abc: exception', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [ExceptionModule.forRoot(), DelonLocaleModule],
+      imports: [ExceptionModule, DelonLocaleModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

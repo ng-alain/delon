@@ -35,7 +35,7 @@ describe('abc: full-content', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [FullContentModule.forRoot(), RouterModule.forRoot([])],
+      imports: [FullContentModule, RouterModule.forRoot([])],
       declarations: [TestComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],

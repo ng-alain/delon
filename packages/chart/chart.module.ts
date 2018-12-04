@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 // #region all modules
 
@@ -36,30 +36,5 @@ const MODULES = [
 
 // #endregion
 
-@NgModule({
-  imports: [
-    G2BarModule.forRoot(),
-    G2CardModule.forRoot(),
-    G2CustomModule.forRoot(),
-    G2GaugeModule.forRoot(),
-    G2MiniAreaModule.forRoot(),
-    G2MiniBarModule.forRoot(),
-    G2MiniProgressModule.forRoot(),
-    G2PieModule.forRoot(),
-    G2RadarModule.forRoot(),
-    G2TagCloudModule.forRoot(),
-    G2TimelineModule.forRoot(),
-    G2WaterWaveModule.forRoot(),
-    NumberInfoModule.forRoot(),
-    TrendModule.forRoot(),
-  ],
-  exports: MODULES,
-})
-export class DelonChartRootModule { }
-
 @NgModule({ exports: MODULES })
-export class DelonChartModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: DelonChartRootModule };
-  }
-}
+export class DelonChartModule { }

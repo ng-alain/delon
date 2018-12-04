@@ -3,6 +3,7 @@ import { SFSchema } from '../schema';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { retrieveSchema } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
+
 import { ArrayProperty } from './array.property';
 import { BooleanProperty } from './boolean.property';
 import { FormProperty, PropertyGroup } from './form.property';
@@ -11,10 +12,7 @@ import { ObjectProperty } from './object.property';
 import { StringProperty } from './string.property';
 
 export class FormPropertyFactory {
-  constructor(
-    private schemaValidatorFactory: SchemaValidatorFactory,
-    private options: DelonFormConfig,
-  ) { }
+  constructor(private schemaValidatorFactory: SchemaValidatorFactory, private options: DelonFormConfig) { }
 
   createProperty(
     schema: SFSchema,

@@ -12,7 +12,7 @@ describe('abc: result', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ResultModule.forRoot()],
+      imports: [ResultModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

@@ -9,7 +9,7 @@ import { ZipSaveOptions } from './zip.types';
 
 declare var JSZip: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ZipService {
   constructor(
     private cog: ZipConfig,
@@ -92,10 +92,10 @@ export class ZipService {
    */
   save(zip: any, options?: ZipSaveOptions): Promise<void> {
     this.check(zip);
-    const opt = {...options};
+    const opt = { ...options };
     return new Promise<void>((resolve, reject) => {
       zip
-        .generateAsync({ type: 'blob', ...opt.options}, opt.update)
+        .generateAsync({ type: 'blob', ...opt.options }, opt.update)
         .then(
           (data: Blob) => {
             if (opt.callback) opt.callback(data);

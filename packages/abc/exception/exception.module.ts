@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { DelonLocaleModule } from '@delon/theme';
@@ -21,8 +21,4 @@ const COMPONENTS = [ExceptionComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class ExceptionModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: ExceptionModule, providers: [] };
-  }
-}
+export class ExceptionModule { }

@@ -1,9 +1,6 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DelonAuthConfig } from '../auth.config';
-import { DA_STORE_TOKEN } from '../store/interface';
-import { LocalStorageStore } from '../store/local-storage.service';
-import { TokenService } from './token.service';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
 
@@ -41,8 +38,6 @@ describe('auth: token.service', () => {
           provide: DelonAuthConfig,
           useValue: { store_key: 'token', login_url: '/login' },
         },
-        { provide: DA_STORE_TOKEN, useClass: LocalStorageStore },
-        { provide: DA_SERVICE_TOKEN, useClass: TokenService },
       ],
     });
 

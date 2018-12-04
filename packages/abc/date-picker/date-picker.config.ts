@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+
 // tslint:disable:no-any
 export class DateRangePickerConfig {
   nzFormat ?= 'yyyy-MM-dd';
@@ -20,6 +22,7 @@ export class DateRangePickerConfig {
   nzRanges?: any;
 }
 
+@Injectable({ providedIn: 'root' })
 export class DatePickerConfig {
   range?: DateRangePickerConfig;
 }

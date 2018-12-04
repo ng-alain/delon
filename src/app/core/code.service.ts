@@ -5,8 +5,8 @@ import sdk from '@stackblitz/sdk';
 @Injectable({ providedIn: 'root' })
 export class CodeService {
   openOnStackBlitz(code: string, title: string, summary: string) {
-    let selector = '',
-      componentName = '';
+    let selector = '';
+    let componentName = '';
     const selectorRe = /selector:[ ]?(['|"|`])([^'"`]+)/g.exec(code);
     if (selectorRe) {
       selector = selectorRe[2];
@@ -256,15 +256,15 @@ imports: [
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([]),
-    NgZorroAntdModule.forRoot(),
+    NgZorroAntdModule,
     AlainThemeModule.forRoot(),
-    DelonABCModule.forRoot(),
-    DelonChartModule.forRoot(),
-    DelonAuthModule.forRoot(),
-    DelonACLModule.forRoot(),
-    DelonCacheModule.forRoot(),
+    DelonABCModule,
+    DelonChartModule,
+    DelonACLModule,
+    DelonCacheModule,
+    DelonUtilModule,
+    DelonAuthModule,
     DelonFormModule.forRoot(),
-    DelonUtilModule.forRoot(),
     DelonMockModule.forRoot({ data: MOCKDATA }),
 ],
 providers: [
@@ -283,7 +283,7 @@ export class AppModule { }
   `,
         'src/styles.less': ``,
         '_mock/user.ts': require('!!raw-loader!../../../_mock/user.ts'),
-        '_mock/index.ts': `export * from './user';`
+        '_mock/index.ts': `export * from './user';`,
       },
       template: 'angular-cli',
       dependencies: {
@@ -315,7 +315,7 @@ export class AppModule { }
         'qrious': '*',
       },
     }, {
-      openFile: `src/app/app.component.ts`
-    });
+        openFile: `src/app/app.component.ts`,
+      });
   }
 }

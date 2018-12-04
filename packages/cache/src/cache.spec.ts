@@ -46,7 +46,7 @@ describe('cache: service', () => {
       imports: [
         HttpClientTestingModule,
         AlainThemeModule.forRoot(),
-        DelonCacheModule.forRoot(),
+        DelonCacheModule,
       ],
       providers: [],
     });

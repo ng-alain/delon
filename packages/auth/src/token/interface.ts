@@ -1,8 +1,13 @@
 import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DA_SERVICE_TOKEN_FACTORY } from './token.service';
 
 export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>(
   'DA_SERVICE_TOKEN',
+  {
+    providedIn: 'root',
+    factory: DA_SERVICE_TOKEN_FACTORY,
+  },
 );
 
 export interface ITokenModel {

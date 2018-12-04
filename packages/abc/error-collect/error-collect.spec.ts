@@ -28,7 +28,7 @@ describe('abc: error-collect', () => {
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
       imports: [
-        ErrorCollectModule.forRoot(),
+        ErrorCollectModule,
         ReactiveFormsModule,
         NgZorroAntdModule,
       ],

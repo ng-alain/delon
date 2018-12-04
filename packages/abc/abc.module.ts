@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 // #region all modules
 import { AvatarListModule } from '@delon/abc/avatar-list';
@@ -59,45 +59,5 @@ const MODULES = [
   DatePickerModule,
 ];
 
-// #endregion
-
-@NgModule({
-  imports: [
-    ErrorCollectModule.forRoot(),
-    FooterToolbarModule.forRoot(),
-    SidebarNavModule.forRoot(),
-    DownFileModule.forRoot(),
-    ImageModule.forRoot(),
-    AvatarListModule.forRoot(),
-    EllipsisModule.forRoot(),
-    ExceptionModule.forRoot(),
-    ExceptionModule.forRoot(),
-    NoticeIconModule.forRoot(),
-    PageHeaderModule.forRoot(),
-    ResultModule.forRoot(),
-    TagSelectModule.forRoot(),
-    CountDownModule.forRoot(),
-    STModule.forRoot(),
-    ReuseTabModule.forRoot(),
-    FullContentModule.forRoot(),
-    XlsxModule.forRoot(),
-    ZipModule.forRoot(),
-    NumberToChineseModule.forRoot(),
-    LodopModule.forRoot(),
-    QuickMenuModule.forRoot(),
-    QRModule.forRoot(),
-    SVModule.forRoot(),
-    SEModule.forRoot(),
-    SGModule.forRoot(),
-    DatePickerModule.forRoot(),
-  ],
-  exports: MODULES,
-})
-export class DelonABCRootModule { }
-
 @NgModule({ exports: MODULES })
-export class DelonABCModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: DelonABCRootModule };
-  }
-}
+export class DelonABCModule { }

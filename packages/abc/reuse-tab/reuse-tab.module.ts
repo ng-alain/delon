@@ -1,6 +1,6 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DelonLocaleModule } from '@delon/theme';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -29,10 +29,4 @@ const NOEXPORTS = [
   entryComponents: [ReuseTabContextMenuComponent],
   exports: [...COMPONENTS],
 })
-export class ReuseTabModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: ReuseTabModule,
-    };
-  }
-}
+export class ReuseTabModule { }

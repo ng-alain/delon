@@ -9,12 +9,12 @@ import { DelonCacheConfig } from './cache.config';
 import {
   CacheNotifyResult,
   CacheNotifyType,
-  DC_STORE_STORAGE_TOKEN,
   ICache,
   ICacheStore,
 } from './interface';
+import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CacheService implements OnDestroy {
   private readonly memory: Map<string, ICache> = new Map<string, ICache>();
   private readonly notifyBuffer: Map<string, BehaviorSubject<CacheNotifyResult>> = new Map<string, BehaviorSubject<CacheNotifyResult>>();

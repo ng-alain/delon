@@ -20,7 +20,7 @@ describe('utils: array', () => {
   describe('#treeToArr', () => {
     beforeEach(() => {
       srv = TestBed.configureTestingModule({
-        imports: [DelonUtilModule.forRoot()],
+        imports: [DelonUtilModule],
       }).get(ArrayService);
     });
     it('should be tree to array', () => {
@@ -69,7 +69,7 @@ describe('utils: array', () => {
   describe('#arrToTree', () => {
     beforeEach(() => {
       srv = TestBed.configureTestingModule({
-        imports: [DelonUtilModule.forRoot()],
+        imports: [DelonUtilModule],
       }).get(ArrayService);
     });
     it('should be array to tree', () => {
@@ -92,7 +92,7 @@ describe('utils: array', () => {
   describe('[NzTreeNode]', () => {
     beforeEach(() => {
       srv = TestBed.configureTestingModule({
-        imports: [DelonUtilModule.forRoot()],
+        imports: [DelonUtilModule],
       }).get(ArrayService);
       page = new PageTreeNode();
     });
@@ -200,7 +200,7 @@ describe('utils: array', () => {
   describe('[config]', () => {
     beforeEach(() => {
       srv = TestBed.configureTestingModule({
-        imports: [DelonUtilModule.forRoot()],
+        imports: [DelonUtilModule],
         providers: [
           {
             provide: DelonUtilConfig,
@@ -230,9 +230,9 @@ describe('utils: array', () => {
       this.data = data
         ? data
         : srv.arrToTreeNode(deepCopy(MOCK_ARR), {
-            parentIdMapName: 'pid',
-            titleMapName: 'name',
-          });
+          parentIdMapName: 'pid',
+          titleMapName: 'name',
+        });
     }
     check(path: string, field: string, value: any): this {
       const pathArr = path.split('/');

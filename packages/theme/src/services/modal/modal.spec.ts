@@ -15,13 +15,13 @@ describe('theme: ModalHelper', () => {
     @NgModule({
       imports: [
         CommonModule,
-        NgZorroAntdModule.forRoot(),
+        NgZorroAntdModule,
         AlainThemeModule.forChild(),
       ],
       declarations: [TestModalComponent, TestComponent],
       entryComponents: [TestModalComponent],
     })
-    class TestModule {}
+    class TestModule { }
 
     injector = TestBed.configureTestingModule({ imports: [TestModule] });
     fixture = TestBed.createComponent(TestComponent);
@@ -251,4 +251,4 @@ class TestModalComponent {
 }
 
 @Component({ template: `` })
-class TestComponent {}
+class TestComponent { }

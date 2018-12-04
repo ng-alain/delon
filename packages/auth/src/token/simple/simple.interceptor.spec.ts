@@ -60,7 +60,7 @@ describe('auth: simple.interceptor', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([]),
-        DelonAuthModule.forRoot(),
+        DelonAuthModule,
       ],
       providers: [
         { provide: DelonAuthConfig, useValue: options },

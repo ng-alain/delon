@@ -40,7 +40,7 @@ describe('abc: zip', () => {
   let srv: ZipService;
   function genModule() {
     const injector = TestBed.configureTestingModule({
-      imports: [ZipModule.forRoot()],
+      imports: [ZipModule],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
         { provide: LazyService, useClass: MockLazyService },

@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
 export class QRConfig {
   /** 背景，默认：`white` */
   background = 'white';

@@ -39,7 +39,7 @@ describe('abc: lodop', () => {
   }
   function genModule(options?: LodopConfig) {
     injector = TestBed.configureTestingModule({
-      imports: [LodopModule.forRoot()],
+      imports: [LodopModule],
       providers: [
         { provide: LazyService, useClass: MockLazyService },
         { provide: LodopConfig, useFactory: fnLodopConfig },

@@ -1,7 +1,9 @@
+import { Injectable } from '@angular/core';
 import { ERRORSDEFAULT } from './errors';
 import { SFButton } from './interface';
 import { SFUISchemaItem } from './schema/ui';
 
+@Injectable({ providedIn: 'root' })
 export class DelonFormConfig {
   /**
    * 是否忽略某些数据类型校验 `ERRORSDEFAULT`，默认：`[ 'type', 'enum' ]`

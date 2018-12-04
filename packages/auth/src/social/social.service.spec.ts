@@ -63,7 +63,7 @@ describe('auth: social.service', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([]),
-        DelonAuthModule.forRoot(),
+        DelonAuthModule,
       ],
       providers: [
         SocialService,
@@ -102,7 +102,7 @@ describe('auth: social.service', () => {
             injector.get(DA_SERVICE_TOKEN).set(item.model);
             return { closed: true };
           });
-          srv.login(item.url).subscribe(res => {});
+          srv.login(item.url).subscribe(res => { });
           tick(130);
           expect(window.open).toHaveBeenCalled();
           const token = injector.get(DA_SERVICE_TOKEN).get();
@@ -122,7 +122,7 @@ describe('auth: social.service', () => {
           injector.get(DA_SERVICE_TOKEN).set(null);
           return { closed: true };
         });
-        srv.login(MockAuth0.url).subscribe(res => {});
+        srv.login(MockAuth0.url).subscribe(res => { });
         tick(130);
         expect(window.open).toHaveBeenCalled();
         discardPeriodicTasks();
@@ -137,7 +137,7 @@ describe('auth: social.service', () => {
           injector.get(DA_SERVICE_TOKEN).set(null);
           return { closed: false };
         });
-        srv.login(MockAuth0.url).subscribe(res => {});
+        srv.login(MockAuth0.url).subscribe(res => { });
         tick(130);
         expect(window.open).toHaveBeenCalled();
         expect(srv.ngOnDestroy).not.toHaveBeenCalled();

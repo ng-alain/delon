@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { StringTemplateOutletDirective } from './addon/string_template_outlet';
 
 @NgModule({
@@ -7,10 +7,4 @@ import { StringTemplateOutletDirective } from './addon/string_template_outlet';
   declarations: [StringTemplateOutletDirective],
   exports: [StringTemplateOutletDirective],
 })
-export class DelonUtilModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: DelonUtilModule,
-    };
-  }
-}
+export class DelonUtilModule { }

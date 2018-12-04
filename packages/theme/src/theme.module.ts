@@ -8,7 +8,6 @@ import { WINDOW } from './win_tokens';
 import { DelonLocaleModule } from './locale/locale.module';
 
 // #region import
-import { AlainI18NServiceFake, ALAIN_I18N_TOKEN } from './services/i18n/i18n';
 
 import { DrawerHelper } from './services/drawer/drawer.helper';
 import { ModalHelper } from './services/modal/modal.helper';
@@ -68,7 +67,6 @@ export class AlainThemeModule {
       ngModule: AlainThemeModule,
       providers: [
         { provide: WINDOW, useValue: window },
-        { provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake },
         ...HELPERS,
       ],
     };

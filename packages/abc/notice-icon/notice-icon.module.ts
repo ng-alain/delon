@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { DelonLocaleModule } from '@delon/theme';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
@@ -13,8 +13,4 @@ const COMPONENTS = [NoticeIconComponent];
   declarations: [...COMPONENTS, NoticeIconTabComponent],
   exports: [...COMPONENTS],
 })
-export class NoticeIconModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: NoticeIconModule, providers: [] };
-  }
-}
+export class NoticeIconModule { }

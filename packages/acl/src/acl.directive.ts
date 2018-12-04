@@ -10,9 +10,7 @@ import { Subscription } from 'rxjs';
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
 
-@Directive({
-  selector: '[acl]',
-})
+@Directive({ selector: '[acl]' })
 export class ACLDirective implements OnDestroy {
   private _value: ACLCanType;
   private change$: Subscription;
