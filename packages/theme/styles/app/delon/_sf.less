@@ -4,17 +4,18 @@
   &-search + .ad-st {
     margin-top: @layout-gutter * 2;
   }
-  .optional {
+  &__optional {
     color: rgba(0, 0, 0, 0.45);
   }
   // 固定 label
-  &-fixed {
+  &__fixed {
     display: flex !important;
     nz-form-control,
     .ant-form-item-control-wrapper {
       flex: 1;
     }
   }
+  // Array
   &-array-container {
     nz-card {
       margin: 0 16px 0 0;
@@ -80,10 +81,12 @@
   }
   // fix select width when inline mode
   .ant-form-inline {
-    .ant-form-item {
-      display: inline-flex;
-      > .ant-form-item-control-wrapper {
-        flex: 1 0 0;
+    sf-select {
+      .ant-form-item {
+        display: inline-flex;
+        > .ant-form-item-control-wrapper {
+          flex: 1 0 0;
+        }
       }
     }
   }
