@@ -587,6 +587,12 @@ export interface STMultiSort {
   separator?: string;
   /** 列名与状态间分隔符，默认：`.` */
   nameSeparator?: string;
+  /**
+   * 是否全局多排序模式，默认：`true`
+   * - `true` 表示所有 `st` 默认为多排序
+   * - `false` 表示需要为每个 `st` 添加 `multiSort` 才会视为多排序模式
+   */
+  global?: boolean;
 }
 
 /**

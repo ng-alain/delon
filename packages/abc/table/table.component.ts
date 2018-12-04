@@ -177,9 +177,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       return;
     }
     this._multiSort = {
-      key: 'sort',
-      separator: '-',
-      nameSeparator: '.',
       ...(typeof value === 'object' ? value : {}),
     };
   }
@@ -222,6 +219,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
   ) {
+    const copyCog = deepCopy(cog) as STConfig;
+    Object.keys(copyCog)
+      .filter(key => !['multiSort'].includes(key))
+      .forEach(key => this[key] = copyCog[key]);
+    if (copyCog.multiSort && copyCog.multiSort.global !== false) {
+      this.multiSort = copyCog.multiSort;
+    }
+
     this.delonI18n$ = this.delonI18n.change.subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
@@ -229,7 +234,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.cd();
       }
     });
-    Object.assign(this, deepCopy(cog));
     if (i18nSrv) {
       this.i18n$ = i18nSrv.change
         .pipe(filter(() => this._columns.length > 0))

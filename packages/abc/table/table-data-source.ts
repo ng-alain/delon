@@ -265,14 +265,20 @@ export class STDataSource {
     if (!multiSort && sortList.length === 0) return ret;
 
     if (multiSort) {
+      const ms = {
+        key: 'sort',
+        separator: '-',
+        nameSeparator: '.',
+        ...multiSort,
+      };
       sortList.forEach(item => {
         ret[item.key] = (item.reName || {})[item.default] || item.default;
       });
       // 合并处理
       ret = {
-        [multiSort.key]: Object.keys(ret)
-          .map(key => key + multiSort.nameSeparator + ret[key])
-          .join(multiSort.separator),
+        [ms.key]: Object.keys(ret)
+          .map(key => key + ms.nameSeparator + ret[key])
+          .join(ms.separator),
       };
     } else {
       const mapData = sortList[0];

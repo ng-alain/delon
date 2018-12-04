@@ -181,15 +181,9 @@ class TestComponent {
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[key]` | 请求参数名 | `string` | `sort`
-`[nameSeparator]` | 列名与状态间分隔符 | `string` | `.`
-
-### STMultiSort
-
-参数 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[key]` | 请求参数名 | `string` | `sort`
 `[separator]` | 不同属性间分隔符 | `string` | `-`
 `[nameSeparator]` | 列名与状态间分隔符 | `string` | `.`
+`[global]` | 是否全局多排序模式<br>`true` 表示所有 `st` 默认为多排序<br>`false` 表示需要为每个 `st` 添加 `multiSort` 才会视为多排序模式 | `boolean` | `true`
 
 ### STData
 

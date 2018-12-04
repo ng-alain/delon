@@ -190,6 +190,7 @@ Property | Description | Type | Default
 `[key]` | Request parameter name | `string` | `sort`
 `[separator]` | Separator between attributes | `string` | `-`
 `[nameSeparator]` | Column name and state separator | `string` | `.`
+`[global]` | Whether global multi sort mode<br>`true` all `st` defaults multi-sort<br>`false` all `st` non-multiple sorting, just only configurable for rule | `boolean` | `true`
 
 ### STData
 
