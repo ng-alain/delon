@@ -34,6 +34,7 @@ import {
   STRes,
   STColumnFilter,
   STChange,
+  STReq,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
 import { STComponent } from '../table.component';
@@ -1103,6 +1104,15 @@ describe('abc: table', () => {
         expect(comp.req.params.a).toBe(1);
         expect(comp.req.params.b).toBe(2);
       });
+      it('can\'t contaminate raw data', () => {
+        const params: any = { a: 1 };
+        context.req = { params };
+        fixture.detectChanges();
+        comp.load(1, { b: 2 }, { merge: true });
+        expect(comp.req.params.a).toBe(1);
+        expect(comp.req.params.b).toBe(2);
+        expect(params.b).toBeUndefined();
+      });
     });
     describe('#reload', () => {
       beforeEach(() => genModule({ minColumn: true }));
@@ -1697,7 +1707,7 @@ class TestComponent {
   comp: STComponent;
   data: string | any[] | Observable<any[]> = deepCopy(USERS);
   res: STRes = {};
-  req: STRes = {};
+  req: STReq = {};
   columns: STColumn[];
   ps = PS;
   pi: number;
