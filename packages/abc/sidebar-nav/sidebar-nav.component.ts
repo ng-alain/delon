@@ -45,7 +45,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private router: Router,
     private locationStrategy: LocationStrategy,
     private render: Renderer2,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) { }
@@ -60,7 +60,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.genFloatingContainer();
     this.change$ = this.menuSrv.change.subscribe(res => {
       this.list = res;
-      this.cd.detectChanges();
+      this.cdr.detectChanges();
     });
     this.installUnderPad();
   }
@@ -190,7 +190,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       pItem = pItem.__parent;
     }
     item._open = !item._open;
-    this.cd.markForCheck();
+    this.cdr.markForCheck();
   }
 
   @HostListener('click')

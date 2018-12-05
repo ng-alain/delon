@@ -67,7 +67,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     el: ElementRef,
     private srv: ReuseTabService,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private router: Router,
     private route: ActivatedRoute,
     private render: Renderer2,
@@ -145,7 +145,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
     this.refStatus(false);
     this.visibility();
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
   }
 
   private visibility() {
@@ -181,7 +181,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       this.list[this.list.length - 1].last = true;
       this.list.forEach((i, idx) => (i.active = this.pos === idx));
     }
-    if (dc) this.cd.detectChanges();
+    if (dc) this.cdr.detectChanges();
   }
 
   to(e: Event, index: number) {
@@ -208,7 +208,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     const item = this.list[idx];
     this.srv.close(item.url, includeNonCloseable);
     this.close.emit(item);
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
     return false;
   }
 
@@ -226,7 +226,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.mode) this.srv.mode = this.mode;
     this.srv.debug = this.debug;
 
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {

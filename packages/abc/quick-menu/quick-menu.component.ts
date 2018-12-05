@@ -31,7 +31,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
   // #endregion
 
   constructor(
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private el: ElementRef,
     private render: Renderer2,
   ) { }
@@ -59,7 +59,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
       `margin-right:-${this.show ? 0 : this.width}px`,
     ];
     this.render.setAttribute(this.el.nativeElement, 'style', res.join(';'));
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
   }
 
   private initFlag = false;

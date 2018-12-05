@@ -92,7 +92,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     private rep: ResponsiveService,
     el: ElementRef,
     private ren: Renderer2,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
   ) {
     if (parent == null) {
       throw new Error(`[se] must include 'se-container' component`);
@@ -101,7 +101,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private setClass(): this {
-    const { el, ren, clsMap, col, parent, cd } = this;
+    const { el, ren, clsMap, col, parent, cdr } = this;
     this.labelWidth = parent.labelWidth;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
@@ -114,7 +114,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
       clsMap.push(`${prefixCls}__line`);
     }
     clsMap.forEach(cls => ren.addClass(el, cls));
-    cd.detectChanges();
+    cdr.detectChanges();
     return this;
   }
 
@@ -128,7 +128,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
         return;
       }
       this.invalid = status;
-      this.cd.detectChanges();
+      this.cdr.detectChanges();
     });
     if (this._autoId) {
       const control = deepGet(

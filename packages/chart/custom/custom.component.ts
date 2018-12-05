@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -6,7 +7,6 @@ import {
   HostBinding,
   Input,
   OnDestroy,
-  OnInit,
   Output,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
@@ -18,29 +18,17 @@ import { debounceTime } from 'rxjs/operators';
   template: `<ng-content></ng-content>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class G2CustomComponent implements OnInit, OnDestroy {
+export class G2CustomComponent implements AfterViewInit, OnDestroy {
 
   private resize$: Subscription = null;
 
   // #region fields
 
-  @HostBinding('style.height.px')
-  @Input()
-  @InputNumber()
-  height: number;
-
-  @Input()
-  @InputNumber()
-  resizeTime = 0;
-
-  @Output()
-  readonly render = new EventEmitter<ElementRef>();
-
-  @Output()
-  readonly resize = new EventEmitter<ElementRef>();
-
-  @Output()
-  readonly destroy = new EventEmitter<ElementRef>();
+  @HostBinding('style.height.px') @Input() @InputNumber() height: number;
+  @Input() @InputNumber() resizeTime = 0;
+  @Output() readonly render = new EventEmitter<ElementRef>();
+  @Output() readonly resize = new EventEmitter<ElementRef>();
+  @Output() readonly destroy = new EventEmitter<ElementRef>();
 
   // #endregion
 
@@ -53,15 +41,15 @@ export class G2CustomComponent implements OnInit, OnDestroy {
   }
 
   private installResizeEvent() {
-    if (this.resizeTime <= 0 || !this.resize$) return;
+    if (this.resizeTime <= 0 || this.resize$) return;
 
     this.resize$ = fromEvent(window, 'resize')
       .pipe(debounceTime(Math.min(200, this.resizeTime)))
       .subscribe(() => this.resize.emit(this.el));
   }
 
-  ngOnInit(): void {
-    setTimeout(() => this.renderChart());
+  ngAfterViewInit(): void {
+    this.renderChart();
   }
 
   ngOnDestroy(): void {

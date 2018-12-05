@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -17,6 +18,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   selector: 'notice-icon',
   templateUrl: './notice-icon.component.html',
   host: { '[class.notice-icon__btn]': 'true' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoticeIconComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;

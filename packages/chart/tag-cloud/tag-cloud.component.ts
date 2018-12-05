@@ -42,7 +42,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   constructor(
     private el: ElementRef,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private zone: NgZone,
   ) { }
 
@@ -153,7 +153,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   ngOnChanges(): void {
     if (this.initFlag) {
       this.runInstall();
-      this.cd.detectChanges();
+      this.cdr.detectChanges();
     }
   }
 

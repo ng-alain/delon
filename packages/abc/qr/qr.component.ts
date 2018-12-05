@@ -41,7 +41,7 @@ export class QRComponent implements OnChanges {
   constructor(
     cog: QRConfig,
     private srv: QRService,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
   ) {
     Object.assign(this, cog);
   }
@@ -58,7 +58,7 @@ export class QRComponent implements OnChanges {
       size: this.size,
       value: this.value,
     });
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
     this.change.emit(this.dataURL);
   }
 }

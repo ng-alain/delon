@@ -72,7 +72,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges {
   private chart: any;
   legendData: any[] = [];
 
-  constructor(private cd: ChangeDetectorRef, private zone: NgZone) { }
+  constructor(private cdr: ChangeDetectorRef, private zone: NgZone) { }
 
   _click(i: number) {
     this.legendData[i].checked = !this.legendData[i].checked;
@@ -176,7 +176,7 @@ export class G2RadarComponent implements OnDestroy, OnChanges {
 
             return result;
           });
-        this.cd.detectChanges();
+        this.cdr.detectChanges();
       });
     }
   }

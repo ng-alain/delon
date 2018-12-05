@@ -53,7 +53,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
   constructor(
     private el: ElementRef,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private srv: FullContentService,
     private router: Router,
     // tslint:disable-next-line:no-any
@@ -83,7 +83,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
   private updateHeight() {
     this._height = this.bodyEl.getBoundingClientRect().height - (this.el.nativeElement as HTMLElement).getBoundingClientRect().top - this.padding;
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
   }
 
   private removeInBody() {

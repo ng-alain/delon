@@ -1,17 +1,17 @@
-import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
+import { of, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { AlainThemeModule } from '@delon/theme';
 
 import { DelonCacheModule } from './cache.module';
-import { ICache } from './interface';
 import { CacheService } from './cache.service';
+import { ICache } from './interface';
 
 describe('cache: service', () => {
   let injector: Injector;
@@ -33,7 +33,7 @@ describe('cache: service', () => {
     );
     spyOn(localStorage, 'setItem').and.callFake(
       (key: string, value: string): string => {
-        return (data[key] = <string>value);
+        return (data[key] = value as string);
       },
     );
     spyOn(localStorage, 'clear').and.callFake(() => {
@@ -66,7 +66,7 @@ describe('cache: service', () => {
       });
       it('should be set array', () => {
         srv.set(KEY, [1, 2]);
-        const ret = srv.getNone(KEY) as Array<number>;
+        const ret = srv.getNone(KEY) as number[];
         expect(ret.length).toBe(2);
         expect(ret[0]).toBe(1);
         expect(ret[1]).toBe(2);
@@ -115,7 +115,7 @@ describe('cache: service', () => {
       });
       it('should be return array', () => {
         srv.set(KEY, [1, 2]);
-        const ret = srv.getNone(KEY) as Array<number>;
+        const ret = srv.getNone(KEY) as number[];
         expect(ret.length).toBe(2);
         expect(ret[0]).toBe(1);
         expect(ret[1]).toBe(2);
@@ -126,10 +126,10 @@ describe('cache: service', () => {
       it('should be return null if expired', () => {
         localStorage.setItem(
           KEY,
-          JSON.stringify(<ICache>{
+          JSON.stringify({
             e: 1000,
             v: 1,
-          }),
+          } as ICache),
         );
         expect(srv.getNone(KEY)).toBeNull();
       });

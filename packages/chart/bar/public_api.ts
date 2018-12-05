@@ -1,2 +1,2 @@
-export { G2BarComponent } from './bar.component';
-export { G2BarModule } from './bar.module';
+export * from './bar.component';
+export * from './bar.module';

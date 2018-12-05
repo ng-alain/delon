@@ -76,7 +76,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
   constructor(
     private el: ElementRef,
     private rend: Renderer2,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private zone: NgZone,
   ) { }
 
@@ -194,7 +194,7 @@ export class G2PieComponent implements OnDestroy, OnChanges, AfterViewInit {
             origin.percent = (origin.percent * 100).toFixed(2);
             return origin;
           });
-        this.cd.detectChanges();
+        this.cdr.detectChanges();
       });
     }
   }

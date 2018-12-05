@@ -18,8 +18,8 @@ G2 虽然内置 TypeScript 定义文件，事实上 G2 并无法单独使用，�
 为了更好服务用户，G2 会将 URL 和版本信息发送回 AntV 服务器。你可以通过以下代码关闭：
 
 ```ts
-// app.components
-export class AppComponent {
+// startup.service.ts
+export class StartupService {
   constructor() {
     if (typeof G2 !== 'undefined') {
       G2.track(false);

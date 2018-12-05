@@ -4,13 +4,12 @@ import {
   Component,
   ElementRef,
   Input,
-  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { toNumber } from '@delon/util';
+import { InputNumber } from '@delon/util';
 
 declare var G2: any;
 
@@ -23,25 +22,12 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   // #region fields
 
   @Input() title: string;
-
-  @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-  }
-  private _height;
+  @Input() @InputNumber() height;
   @Input() color = '#2F9CFF';
   @Input() bgColor = '#F0F2F5';
   // tslint:disable-next-line:ban-types
   @Input() format: Function;
-
-  @Input()
-  set percent(value: any) {
-    this._percent = toNumber(value);
-  }
-  private _percent: number;
+  @Input() @InputNumber() percent: number;
 
   // #endregion
 
@@ -50,10 +36,8 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   private chart: any;
   private initFlag = false;
 
-  constructor(private zone: NgZone) { }
-
   private createData() {
-    return [{ name: this.title, value: +this._percent }];
+    return [{ name: this.title, value: this.percent }];
   }
 
   private draw() {
@@ -96,11 +80,8 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     this.chart.changeData(data);
   }
 
-  private runInstall() {
-    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
-  }
-
   private install() {
+    this.uninstall();
     this.node.nativeElement.innerHTML = '';
     const Shape = G2.Shape;
     // 自定义Shape 部分
@@ -196,9 +177,13 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     this.draw();
   }
 
+  private uninstall() {
+    if (this.chart) this.chart.destroy();
+  }
+
   ngOnInit(): void {
     this.initFlag = true;
-    this.runInstall();
+    this.install();
   }
 
   ngOnChanges(): void {
@@ -206,6 +191,6 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) this.chart.destroy();
+    this.uninstall();
   }
 }

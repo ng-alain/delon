@@ -38,7 +38,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   constructor(
     cog: ErrorCollectConfig,
     private el: ElementRef,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
@@ -54,7 +54,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     if (count === this.count) return;
     this.count = count;
     this._hiden = count === 0;
-    this.cd.markForCheck();
+    this.cdr.markForCheck();
   }
 
   @HostListener('click')

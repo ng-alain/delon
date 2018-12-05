@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-demo',
-  template: `<g2-bar height="200" [title]="'销售额趋势'" [data]="salesData"></g2-bar>`
+  template: `<g2-bar height="200" [title]="'销售额趋势'" [data]="salesData"></g2-bar>`,
 })
 export class DemoComponent implements OnInit {
   salesData: any[] = [];
@@ -20,7 +20,7 @@ export class DemoComponent implements OnInit {
     for (let i = 0; i < 12; i += 1) {
       this.salesData.push({
         x: `${i + 1}月`,
-        y: Math.floor(Math.random() * 1000) + 200
+        y: Math.floor(Math.random() * 1000) + 200,
       });
     }
   }

@@ -174,7 +174,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     private formPropertyFactory: FormPropertyFactory,
     private terminator: TerminatorService,
     private options: DelonFormConfig,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private i18n: DelonLocaleService,
   ) {
     this.liveValidate = options.liveValidate;
@@ -184,7 +184,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       this.locale = this.i18n.getData('sf');
       if (this._inited) {
         this.coverButtonProperty();
-        this.cd.detectChanges();
+        this.cdr.detectChanges();
       }
     });
   }
@@ -391,7 +391,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     const errors = this.rootProperty.errors;
     this._valid = !(errors && errors.length);
     if (!this._valid) this.formError.emit(errors);
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
   }
 
   /**
@@ -431,7 +431,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.rootProperty.errorsChanges.subscribe(errors => {
       this._valid = !(errors && errors.length);
       this.formError.emit(errors);
-      this.cd.detectChanges();
+      this.cdr.detectChanges();
     });
 
     this.reset();
@@ -443,7 +443,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    */
   reset(emit = false) {
     this.rootProperty.resetValue(this.formData, false);
-    Promise.resolve().then(() => this.cd.detectChanges());
+    Promise.resolve().then(() => this.cdr.detectChanges());
     if (emit) {
       this.formReset.emit(this.value);
     }

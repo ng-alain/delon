@@ -56,7 +56,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private zone: NgZone,
   ) { }
 
@@ -221,7 +221,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   ngOnInit(): void {
     this.initFlag = true;
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
     this.zone.runOutsideAngular(() => {
       this.updateRadio(1);
       this.installResizeEvent();
@@ -231,7 +231,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   ngOnChanges(): void {
     if (this.initFlag) {
-      this.cd.detectChanges();
+      this.cdr.detectChanges();
       this.zone.runOutsideAngular(() => this.renderChart());
     }
   }

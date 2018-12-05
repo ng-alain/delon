@@ -1,7 +1,7 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/0.13/config/configuration-file.html
 
-module.exports = function(config) {
+module.exports = function (config) {
   const configuration = {
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -28,10 +28,10 @@ module.exports = function(config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
-    browserDisconnectTimeout: 180000,
+    browserDisconnectTimeout: 1800000,
     browserDisconnectTolerance: 3,
-    browserNoActivityTimeout: 300000,
-    captureTimeout: 180000,
+    browserNoActivityTimeout: 3000000,
+    captureTimeout: 1800000,
   };
 
   if (process.env.TRAVIS) {

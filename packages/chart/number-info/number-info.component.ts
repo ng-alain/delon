@@ -81,7 +81,7 @@ export class NumberInfoComponent implements OnChanges {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   _classMap: string[] = [];
@@ -95,7 +95,7 @@ export class NumberInfoComponent implements OnChanges {
       },
       true,
     );
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
   }
 
   ngOnChanges(): void {

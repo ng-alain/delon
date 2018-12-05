@@ -18,8 +18,8 @@ Of course, the above [g2 plugin](/cli/plugin#g2) can be used in one step.
 In order to serve the users better, G2 will send the URL and version information back to the AntV server:
 
 ```ts
-// app.components
-export class AppComponent {
+// startup.service.ts
+export class StartupService {
   constructor() {
     if (typeof G2 !== 'undefined') {
       G2.track(false);

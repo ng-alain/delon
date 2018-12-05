@@ -37,7 +37,7 @@ export class G2TimelineComponent
     } else {
       this._title = value;
     }
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
   }
 
   @Input()
@@ -70,7 +70,7 @@ export class G2TimelineComponent
   private initFlag = false;
   private slider: any;
 
-  constructor(private cd: ChangeDetectorRef, private zone: NgZone) { }
+  constructor(private cdr: ChangeDetectorRef, private zone: NgZone) { }
 
   ngAfterViewInit(): void {
     this.initFlag = true;
