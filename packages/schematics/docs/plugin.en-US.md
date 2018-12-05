@@ -104,6 +104,7 @@ ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 | Traditional Chinese | zh-Hant,zh-tw,zh-Hant-TW    | zh-Hant,zh-tw,zh-Hant-TW    | zh_TW  | zh_TW  |
 | English (American) | en        | en           | en_US             | en_US        |
 | Turkish    | tr     | tr        | tr_TR            | tr_TR       |
+| Polish    | pl     | pl        | pl_PL            | pl_PL       |
 
 ### networkEnv
 
