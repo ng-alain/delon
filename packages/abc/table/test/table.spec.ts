@@ -874,7 +874,6 @@ describe('abc: table', () => {
         fixture.detectChanges();
         const ms: STMultiSort = comp.multiSort;
         expect(typeof ms).toBe('object');
-        expect(ms.key).toBe('sort');
       });
       it('with false', () => {
         genModule({ minColumn: true });
