@@ -17,29 +17,29 @@
     height: @avatar-size-base;
     .ant-avatar {
       border: 1px solid #fff;
+      cursor: pointer;
     }
   }
   &__large {
-    @{avatar-list-prefix} {
-      width: @avatar-size-lg;
-      height: @avatar-size-lg;
-    }
+    width: @avatar-size-lg;
+    height: @avatar-size-lg;
   }
   &__small {
-    @{avatar-list-prefix} {
-      width: @avatar-size-sm;
-      height: @avatar-size-sm;
-    }
+    width: @avatar-size-sm;
+    height: @avatar-size-sm;
   }
   &__mini {
-    @{avatar-list-prefix} {
-      width: 20px;
-      height: 20px;
-    }
+    width: 20px;
+    height: 20px;
     .ant-avatar {
       width: 20px;
       height: 20px;
       line-height: 20px;
+
+      .ant-avatar-string {
+        font-size: 12px;
+        line-height: 18px;
+      }
     }
   }
 }

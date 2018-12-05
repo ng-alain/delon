@@ -6,15 +6,17 @@ cols: 1
 module: AvatarListModule
 ---
 
-A list of user's avatar for project or group member list frequently. If a large or small AvatarList is desired, set the size property to either large or small and mini respectively. Omit the size property for a AvatarList with the default size.
+A list of user's avatar for project or group member list frequently. If a large or small avatar-list is desired, set the `size` property to either `large` or `small` and `mini` respectively. Omit the `size` property for a avatar-list with the default size.
 
 ## API
 
 ### avatar-list
 
-| Property | Description  | Type                       | Default   |
-| -------- | ------------ | -------------------------- | --------- |
-| `[size]` | size of list | `large,small,mini,default` | `default` |
+| Property             | Description           | Type                       | Default   |
+|----------------------|-----------------------|----------------------------|-----------|
+| `[size]`             | size of list          | `large,small,mini,default` | `default` |
+| `[maxLength]`        | max items to show     | `number`                   | -         |
+| `[excessItemsStyle]` | the excess item style | `CSSProperties`            | -         |
 
 ### avatar-list-item
 
