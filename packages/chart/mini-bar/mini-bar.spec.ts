@@ -15,13 +15,13 @@ describe('chart: mini-bar', () => {
 
   it('should be working', () => {
     page
-      .isDataCount('views', 2)
+      .isDataCount('geoms', 2)
       .newData([
         { x: 1, y: 10 },
         { x: 2, y: 20 },
         { x: 3, y: 30 },
       ])
-      .isDataCount('views', 3);
+      .isDataCount('geoms', 3);
   });
 
 });

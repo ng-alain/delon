@@ -53,6 +53,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputBoolean() tooltip = true;
   @Input() @InputNumber() lineWidth = 0;
   @Input() @InputBoolean() select = true;
+  @Input() valueFormat: (y: number) => string;
   @Input() data: G2PieData[] = [];
   @Input() colors: any[];
 

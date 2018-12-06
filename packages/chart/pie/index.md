@@ -25,6 +25,7 @@ type: Components
 | `[select]`    | 几何标记的选中模式 | `boolean`     | `true`                     |
 | `[subTitle]`  | 图表子标题         | `string | TemplateRef<void>`      | -                          |
 | `[total]`     | 总量               | `string | TemplateRef<void>`      | -                          |
+| `[valueFormat]` | y轴格式化      | `(y: number) => string`      | -                          |
 | `[data]`      | 数据               | `G2PieData[]` | -                          |
 
 ### G2PieData
