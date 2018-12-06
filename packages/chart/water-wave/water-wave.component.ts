@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   Input,
-  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -23,53 +22,37 @@ import { debounceTime } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
+  private resize$: Subscription = null;
+  @ViewChild('container') private node: ElementRef;
+  private timer;
+
   // #region fields
 
-  _title = '';
-  _titleTpl: TemplateRef<void>;
-  @Input()
-  set title(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._title = null;
-      this._titleTpl = value;
-    } else {
-      this._title = value;
-    }
-  }
-
-  @Input()
-  color = '#1890FF';
-
+  @Input() @InputNumber() delay = 0;
+  @Input() title: string | TemplateRef<void>;
+  @Input() color = '#1890FF';
   @Input() @InputNumber() height = 160;
-
   @Input() @InputNumber() percent: number;
 
   // #endregion
-
-  private resize$: Subscription = null;
-  @ViewChild('container')
-  private node: ElementRef;
-
-  private initFlag = false;
-  private timer;
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
     private cdr: ChangeDetectorRef,
-    private zone: NgZone,
   ) { }
 
-  private renderChart() {
-    const data = this.percent / 100;
-    if (!data) return;
+  private renderChart(type: string) {
+    if (!this.resize$) return ;
 
-    this.node.nativeElement.innerHTML = '';
+    const { percent, color, node } = this;
+
+    const data = Math.min(Math.max(percent / 100, 0), 100);
     const self = this;
+    cancelAnimationFrame(this.timer);
 
-    const canvas = this.node.nativeElement as HTMLCanvasElement;
+    const canvas = node.nativeElement as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
-
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
     const radius = canvasWidth / 2;
@@ -93,16 +76,13 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     const circleOffset = -(Math.PI / 2);
     let circleLock = true;
 
-    for (
-      let i = circleOffset;
-      i < circleOffset + (Math.PI * 2);
-      i += 1 / (Math.PI * 8)
-    ) {
+    // tslint:disable-next-line:binary-expression-operand-order
+    for (let i = circleOffset; i < circleOffset + 2 * Math.PI; i += 1 / (8 * Math.PI)) {
       arcStack.push([radius + bR * Math.cos(i), radius + bR * Math.sin(i)]);
     }
 
     const cStartPoint = arcStack.shift();
-    ctx.strokeStyle = this.color;
+    ctx.strokeStyle = color;
     ctx.moveTo(cStartPoint[0], cStartPoint[1]);
 
     function drawSin() {
@@ -114,7 +94,8 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
         const x = sp + (xOffset + i) / unit;
         const y = Math.sin(x) * currRange;
         const dx = i;
-        const dy = cR * 2 * (1 - currData) + (radius - cR) - unit * y;
+        // tslint:disable-next-line:binary-expression-operand-order
+        const dy = 2 * cR * (1 - currData) + (radius - cR) - unit * y;
 
         ctx.lineTo(dx, dy);
         sinStack.push([dx, dy]);
@@ -128,7 +109,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
       const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
       gradient.addColorStop(0, '#ffffff');
-      gradient.addColorStop(1, '#1890FF');
+      gradient.addColorStop(1, color);
       ctx.fillStyle = gradient;
       ctx.fill();
       ctx.restore();
@@ -136,7 +117,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
     function render() {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-      if (circleLock) {
+      if (circleLock && type !== 'update') {
         if (arcStack.length) {
           const temp = arcStack.shift();
           ctx.lineTo(temp[0], temp[1]);
@@ -150,15 +131,17 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
           ctx.globalCompositeOperation = 'destination-over';
           ctx.beginPath();
           ctx.lineWidth = lineWidth;
-          ctx.arc(radius, radius, bR, 0, Math.PI * 2, true);
+          // tslint:disable-next-line:binary-expression-operand-order
+          ctx.arc(radius, radius, bR, 0, 2 * Math.PI, true);
 
           ctx.beginPath();
           ctx.save();
-          ctx.arc(radius, radius, (radius - lineWidth) * 3, 0, Math.PI * 2, true);
+          // tslint:disable-next-line:binary-expression-operand-order
+          ctx.arc(radius, radius, radius - 3 * lineWidth, 0, 2 * Math.PI, true);
 
           ctx.restore();
           ctx.clip();
-          ctx.fillStyle = '#1890FF';
+          ctx.fillStyle = color;
         }
       } else {
         if (data >= 0.85) {
@@ -209,31 +192,22 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     if (this.resize$) return;
 
     this.resize$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(500))
-      .subscribe(() => this.resize());
-  }
-
-  private resize() {
-    const { offsetWidth } = this.el.nativeElement.parentNode;
-    this.updateRadio(offsetWidth < this.height ? offsetWidth / this.height : 1);
-    this.renderChart();
+      .pipe(debounceTime(200))
+      .subscribe(() => {
+        const { offsetWidth } = this.el.nativeElement.parentNode;
+        this.updateRadio(offsetWidth < this.height ? offsetWidth / this.height : 1);
+      });
   }
 
   ngOnInit(): void {
-    this.initFlag = true;
-    this.cdr.detectChanges();
-    this.zone.runOutsideAngular(() => {
-      this.updateRadio(1);
-      this.installResizeEvent();
-      setTimeout(() => this.resize(), 130);
-    });
+    this.updateRadio(1);
+    this.installResizeEvent();
+    setTimeout(() => this.renderChart(''), this.delay);
   }
 
   ngOnChanges(): void {
-    if (this.initFlag) {
-      this.cdr.detectChanges();
-      this.zone.runOutsideAngular(() => this.renderChart());
-    }
+    this.renderChart('update');
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {

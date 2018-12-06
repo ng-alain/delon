@@ -9,6 +9,7 @@ xdescribe('chart: tag-cloud (killed karma)', () => {
   beforeEach(fakeAsync(() => {
     page = new PageG2<TestComponent>().makeModule(G2TagCloudModule, TestComponent);
   }));
+  afterEach(() => page.context.comp.ngOnDestroy());
 
   it('should be working', () => {
     page.isCanvas();

@@ -9,6 +9,7 @@ describe('chart: timeline', () => {
   beforeEach(fakeAsync(() => {
     page = new PageG2<TestComponent>().makeModule(G2TimelineModule, TestComponent);
   }));
+  afterEach(() => page.context.comp.ngOnDestroy());
 
   it('should be working', () => {
     page.isCanvas().isExists('h4');

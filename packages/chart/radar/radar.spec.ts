@@ -10,6 +10,8 @@ describe('chart: radar', () => {
     page = new PageG2<TestComponent>().makeModule(G2RadarModule, TestComponent);
   }));
 
+  afterEach(() => page.context.comp.ngOnDestroy());
+
   it('should be working', () => {
     page.isCanvas().isExists('.g2-radar__legend');
     page.context.hasLegend = false;
