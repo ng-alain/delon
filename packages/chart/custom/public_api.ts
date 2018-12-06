@@ -1,2 +1,2 @@
-export { G2CustomComponent } from './custom.component';
-export { G2CustomModule } from './custom.module';
+export * from './custom.component';
+export * from './custom.module';

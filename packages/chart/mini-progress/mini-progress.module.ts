@@ -4,9 +4,9 @@ import { DelonLocaleModule } from '@delon/theme';
 import { DelonUtilModule } from '@delon/util';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { G2ProgressComponent } from './mini-progress.component';
+import { G2MiniProgressComponent } from './mini-progress.component';
 
-const COMPONENTS = [G2ProgressComponent];
+const COMPONENTS = [G2MiniProgressComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule, DelonLocaleModule, NgZorroAntdModule],

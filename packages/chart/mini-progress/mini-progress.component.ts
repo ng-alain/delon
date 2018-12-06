@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
 import { DelonLocaleService } from '@delon/theme';
 import { toNumber, InputNumber } from '@delon/util';
 
@@ -6,32 +6,24 @@ import { toNumber, InputNumber } from '@delon/util';
   selector: 'g2-mini-progress',
   templateUrl: './mini-progress.component.html',
   host: { '[class.g2-mini-progress]': 'true' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class G2ProgressComponent {
-  @Input()
-  color = '#1890FF';
+export class G2MiniProgressComponent implements OnChanges {
 
-  @Input()
-  get target() {
-    return this._target;
-  }
-  // tslint:disable-next-line:no-any
-  set target(value: any) {
-    this._target = Math.min(Math.max(toNumber(value), 0), 100);
-  }
-  private _target: number;
-
+  @Input() color = '#1890FF';
+  @Input() @InputNumber() target: number;
+  @Input() @InputNumber() percent: number;
   @Input() @InputNumber() strokeWidth: number;
 
-  @Input()
-  get percent() {
-    return this._percent;
-  }
-  // tslint:disable-next-line:no-any
-  set percent(value: any) {
-    this._percent = Math.min(Math.max(toNumber(value), 0), 100);
-  }
-  private _percent: number;
+  constructor(public i18n: DelonLocaleService, private cdr: ChangeDetectorRef) { }
 
-  constructor(public i18n: DelonLocaleService) { }
+  private fixNum(value: number) {
+    return Math.min(Math.max(toNumber(value), 0), 100);
+  }
+
+  ngOnChanges() {
+    this.target = this.fixNum(this.target);
+    this.percent = this.fixNum(this.percent);
+    this.cdr.detectChanges();
+  }
 }

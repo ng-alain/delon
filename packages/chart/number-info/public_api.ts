@@ -1,2 +1,2 @@
-export { NumberInfoComponent } from './number-info.component';
-export { NumberInfoModule } from './number-info.module';
+export * from './number-info.component';
+export * from './number-info.module';

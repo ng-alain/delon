@@ -1,2 +1,2 @@
-export { TrendComponent } from './trend.component';
-export { TrendModule } from './trend.module';
+export * from './trend.component';
+export * from './trend.module';

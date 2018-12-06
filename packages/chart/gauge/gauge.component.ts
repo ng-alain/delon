@@ -7,7 +7,6 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
@@ -15,74 +14,74 @@ declare var G2: any;
 
 @Component({
   selector: 'g2-gauge',
-  template: `<div #container></div>`,
+  template: ``,
+  host: {
+    '[class.g2-gauge]': 'true',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
+  private chart: any;
+
   // #region fields
 
+  @Input() @InputNumber() delay = 0;
   @Input() title: string;
   @Input() @InputNumber() height;
   @Input() color = '#2F9CFF';
   @Input() bgColor = '#F0F2F5';
-  // tslint:disable-next-line:ban-types
-  @Input() format: Function;
+  @Input() format: (text: string, item: {}, index: number) => string;
   @Input() @InputNumber() percent: number;
+  @Input() padding: Array<number | string> = [10, 10, 30, 10];
 
   // #endregion
 
-  @ViewChild('container') private node: ElementRef;
-
-  private chart: any;
-  private initFlag = false;
+  constructor(private el: ElementRef) { }
 
   private createData() {
     return [{ name: this.title, value: this.percent }];
   }
 
   private draw() {
-    if (!this.chart) return;
-    this.chart.guide().clear();
+    const { chart, bgColor, color, title } = this;
+    if (!chart) return;
+    const guide = chart.guide();
+    guide.clear();
     const data = this.createData();
     // 绘制仪表盘背景
-    this.chart.guide().arc({
+    guide.arc({
       zIndex: 0,
       top: false,
       start: [0, 0.95],
       end: [100, 0.95],
       style: {
         // 底灰色
-        stroke: this.bgColor,
+        stroke: bgColor,
         lineWidth: 12,
       },
     });
     // 绘制指标
-    this.chart.guide().arc({
+    guide.arc({
       zIndex: 1,
       start: [0, 0.95],
       end: [data[0].value, 0.95],
       style: {
-        stroke: this.color,
+        stroke: color,
         lineWidth: 12,
       },
     });
     // 绘制数字
-    this.chart.guide().html({
+    guide.html({
       position: ['50%', '95%'],
-      html: `
-      <div style="width: 300px;text-align: center;font-size: 12px!important;">
-        <p style="font-size: 14px; color: rgba(0,0,0,0.43);margin: 0;">${this.title}</p>
-        <p style="font-size: 24px;color: rgba(0,0,0,0.85);margin: 0;">
-          ${data[0].value}%
-        </p>
+      html: `<div class="g2-gauge__desc">
+        <div class="g2-gauge__title">${title}</div>
+        <div class="g2-gauge__percent">${data[0].value}%</div>
       </div>`,
     });
     this.chart.changeData(data);
   }
 
   private install() {
-    this.uninstall();
-    this.node.nativeElement.innerHTML = '';
     const Shape = G2.Shape;
     // 自定义Shape 部分
     Shape.registerShape('point', 'pointer', {
@@ -131,14 +130,15 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
       },
     });
 
-    const data = this.createData();
-    const chart = new G2.Chart({
-      container: this.node.nativeElement,
+    const { el, height, padding, format, color } = this;
+
+    const chart = this.chart = new G2.Chart({
+      container: el.nativeElement,
       forceFit: true,
-      height: this.height,
-      padding: [10, 10, 30, 10],
+      height,
+      padding,
     });
-    chart.source(data);
+    chart.source(this.createData());
 
     chart.coord('polar', {
       startAngle: Math.PI * -1.2,
@@ -158,7 +158,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
       line: null,
       label: {
         offset: -12,
-        formatter: this.format,
+        formatter: format,
       },
       tickLine: null,
       grid: null,
@@ -170,27 +170,23 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
       })
       .position('value*1')
       .shape('pointer')
-      .color(this.color)
+      .color(color)
       .active(false);
 
-    this.chart = chart;
     this.draw();
   }
 
-  private uninstall() {
-    if (this.chart) this.chart.destroy();
-  }
-
   ngOnInit(): void {
-    this.initFlag = true;
-    this.install();
+    setTimeout(() => this.install(), this.delay);
   }
 
   ngOnChanges(): void {
-    if (this.initFlag) this.draw();
+    this.draw();
   }
 
   ngOnDestroy(): void {
-    this.uninstall();
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 }

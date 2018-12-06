@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
 import { G2BarComponent } from './bar.component';
 import { G2BarModule } from './bar.module';
@@ -8,23 +9,16 @@ const COUNT = 2;
 describe('chart: bar', () => {
   let page: PageG2<TestComponent>;
 
-  beforeEach(() => {
+  beforeEach(fakeAsync(() => {
     page = new PageG2<TestComponent>().makeModule(G2BarModule, TestComponent);
-  });
+  }));
 
   afterEach(() => page.context.comp.ngOnDestroy());
 
-  it('should working', () => {
-    page
-      .isYCount(COUNT)
-      .newData(null)
-      .isCanvas(false);
-  });
-
-  it('should be change data', () => {
+  it('should be working', () => {
     page
       .newData([{ x: `1月`, y: 10 }])
-      .isYCount(1);
+      .isYScalesCount(1);
   });
 
   describe('#title', () => {
@@ -46,7 +40,7 @@ describe('chart: bar', () => {
     const color = '#f50';
     page.context.color = color;
     page.dc();
-    page.checkAttrOptions('color', color);
+    page.checkAttrOptions('geoms', 'color', color);
   });
 
   it('#padding', () => {

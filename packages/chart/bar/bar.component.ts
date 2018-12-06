@@ -31,34 +31,28 @@ export interface G2BarData {
 })
 export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   private resize$: Subscription = null;
-  private inited = false;
   // tslint:disable-next-line:no-any
   private chart: any;
+  @ViewChild('container') private node: ElementRef;
 
   // #region fields
+  @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
   @Input() color = 'rgba(24, 144, 255, 0.85)';
   @HostBinding('style.height.px') @Input() @InputNumber() height = 0;
-  @Input() padding: number[];
-  @Input() data: G2BarData[];
+  @Input() padding: Array<number | string> | string = 'auto';
+  @Input() data: G2BarData[] = [];
   @Input() @InputBoolean() autoLabel = true;
   // #endregion
 
-  @ViewChild('container') private node: ElementRef;
-
   private install() {
-    this.uninstall();
     const container = this.node.nativeElement as HTMLElement;
-    container.innerHTML = '';
-
-    if (!this.data || (this.data && this.data.length < 1)) return;
-
     const chart = this.chart = new G2.Chart({
       container,
       forceFit: true,
-      height: this.title ? this.height - TITLE_HEIGHT : this.height,
       legend: null,
-      padding: this.padding || 'auto',
+      height: this.getHeight(),
+      padding: this.padding,
     });
 
     this.updatelabel();
@@ -91,11 +85,22 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
     chart.render();
   }
 
-  private uninstall() {
-    if (this.chart) {
-      this.chart.destroy();
-    }
-    this.chart = null;
+  private getHeight() {
+    return this.title ? this.height - TITLE_HEIGHT : this.height;
+  }
+
+  private attachChart() {
+    const { chart, padding, data } = this;
+    if (!chart) return;
+    this.installResizeEvent();
+    chart
+      .changeHeight(this.getHeight())
+      .changeData(data);
+    // color
+    chart.get('geoms')[0].color(this.color);
+
+    chart.set('padding', padding);
+    chart.repaint();
   }
 
   private updatelabel() {
@@ -116,20 +121,19 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    this.installResizeEvent();
-    this.install();
-    this.inited = true;
+    setTimeout(() => this.install(), this.delay);
   }
 
   ngOnChanges(): void {
-    if (this.inited) {
-      this.installResizeEvent();
-      this.install();
-    }
+    this.attachChart();
   }
 
   ngOnDestroy(): void {
-    if (this.resize$) this.resize$.unsubscribe();
-    this.uninstall();
+    if (this.resize$) {
+      this.resize$.unsubscribe();
+    }
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 }

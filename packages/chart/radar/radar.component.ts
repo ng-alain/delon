@@ -6,15 +6,22 @@ import {
   ElementRef,
   HostBinding,
   Input,
-  NgZone,
   OnChanges,
   OnDestroy,
+  OnInit,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { toNumber, InputBoolean, InputNumber } from '@delon/util';
+import { InputBoolean, InputNumber } from '@delon/util';
 
 declare var G2: any;
+
+export interface G2RadarData {
+  name: string;
+  label: string;
+  value: number;
+  [key: string]: any;
+}
 
 @Component({
   selector: 'g2-radar',
@@ -22,37 +29,20 @@ declare var G2: any;
   host: { '[class.g2-radar]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class G2RadarComponent implements OnDestroy, OnChanges {
+export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
+  @ViewChild('container') private node: ElementRef;
+  private chart: any;
+  legendData: any[] = [];
+
   // #region fields
 
-  _title = '';
-  _titleTpl: TemplateRef<void>;
-  @Input()
-  set title(value: string | TemplateRef<void>) {
-    if (value instanceof TemplateRef) {
-      this._title = null;
-      this._titleTpl = value;
-    } else this._title = value;
-  }
-
-  @HostBinding('style.height.px')
-  @Input() @InputNumber() height = 0;
-
-  @Input()
-  padding: number[] = [44, 30, 16, 30];
-
+  @Input() @InputNumber() delay = 0;
+  @Input() title: string | TemplateRef<void>;
+  @HostBinding('style.height.px') @Input() @InputNumber() height = 0;
+  @Input() padding: number[] = [44, 30, 16, 30];
   @Input() @InputBoolean() hasLegend = true;
-
   @Input() @InputNumber() tickCount = 4;
-
-  @Input()
-  data: Array<{
-    name: string;
-    label: string;
-    value: number;
-    [key: string]: any;
-  }> = [];
-
+  @Input() data: G2RadarData[] = [];
   @Input() colors = [
     '#1890FF',
     '#FACC14',
@@ -66,48 +56,22 @@ export class G2RadarComponent implements OnDestroy, OnChanges {
 
   // #endregion
 
-  @ViewChild('container')
-  private node: ElementRef;
-
-  private chart: any;
-  legendData: any[] = [];
-
-  constructor(private cdr: ChangeDetectorRef, private zone: NgZone) { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   _click(i: number) {
-    this.legendData[i].checked = !this.legendData[i].checked;
-
-    if (this.chart) {
-      // const filterItem = this.legendData.filter(l => l.checked).map(l => l.name);
-      this.chart.filter(
-        'name',
-        (val: any) => this.legendData.find(w => w.name === val).checked,
-      );
-      this.chart.repaint();
-    }
-  }
-
-  private runInstall() {
-    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
+    const { legendData, chart } = this;
+    legendData[i].checked = !legendData[i].checked;
+    chart.repaint();
   }
 
   private install() {
-    if (!this.data || (this.data && this.data.length < 1)) return;
+    const { node, height, hasLegend, padding, colors } = this;
 
-    this.uninstall();
-    this.node.nativeElement.innerHTML = '';
-
-    const chart = new G2.Chart({
-      container: this.node.nativeElement,
+    const chart = this.chart = new G2.Chart({
+      container: node.nativeElement,
       forceFit: true,
-      height: +this.height - (this.hasLegend ? 80 : 22),
-      padding: this.padding,
-    });
-    chart.source(this.data, {
-      value: {
-        min: 0,
-        tickCount: this.tickCount,
-      },
+      height: height - (hasLegend ? 80 : 22),
+      padding,
     });
 
     chart.coord('polar');
@@ -146,53 +110,85 @@ export class G2RadarComponent implements OnDestroy, OnChanges {
       },
     });
 
+    chart.filter(
+      'name',
+      (name: string) => {
+        const legendItem = this.legendData.find(w => w.name === name);
+        return legendItem ? legendItem.checked !== false : true;
+      },
+    );
+
     chart
       .line()
       .position('label*value')
-      .color('name', this.colors);
+      .color('name', colors);
+
     chart
       .point()
       .position('label*value')
-      .color('name', this.colors)
+      .color('name', colors)
       .shape('circle')
       .size(3);
 
     chart.render();
 
-    this.chart = chart;
-
-    if (this.hasLegend) {
-      this.zone.run(() => {
-        this.legendData = chart
-          .getAllGeoms()[0]
-          ._attrs.dataArray.map((item: any) => {
-            const origin = item[0]._origin;
-            const result = {
-              name: origin.name,
-              color: item[0].color,
-              checked: true,
-              value: item.reduce((p, n) => p + n._origin.value, 0),
-            };
-
-            return result;
-          });
-        this.cdr.detectChanges();
-      });
-    }
+    this.attachChart();
   }
 
-  private uninstall() {
-    if (this.chart) {
-      this.chart.destroy();
-      this.chart = null;
-    }
+  private attachChart() {
+    const { chart, height, hasLegend, padding, data, colors, tickCount } = this;
+    if (!chart) return ;
+
+    chart.set('height', height - (hasLegend ? 80 : 22));
+    chart.set('padding', padding);
+
+    chart.source(data, {
+      value: {
+        min: 0,
+        tickCount,
+      },
+    });
+
+    chart.get('geoms').forEach(g => {
+      g.color('name', colors);
+    });
+
+    chart.repaint();
+
+    this.genLegend();
+  }
+
+  private genLegend() {
+    const { hasLegend, cdr, chart } = this;
+    if (!hasLegend) return;
+
+    this.legendData = chart.get('geoms')[0].get('dataArray').map((item: any) => {
+      const origin = item[0]._origin;
+      const result = {
+        name: origin.name,
+        color: item[0].color,
+        checked: true,
+        value: item.reduce((p, n) => p + n._origin.value, 0),
+      };
+
+      return result;
+    });
+
+    cdr.detectChanges();
+  }
+
+  ngOnInit(): void {
+    setTimeout(() => this.install(), this.delay);
   }
 
   ngOnChanges(): void {
-    this.runInstall();
+    this.legendData.forEach(i => i.checked = true);
+    this.attachChart();
   }
 
   ngOnDestroy(): void {
-    this.uninstall();
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 }

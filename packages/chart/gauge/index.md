@@ -10,11 +10,13 @@ type: Components
 
 ## API
 
-| 参数      | 说明                                      | 类型         | 默认值 |
-|----------|------------------------------------------|-------------|-------|
+| 参数      | 说明           | 类型         | 默认值 |
+|----------|----------------|-------------|-------|
+| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string` | - |
 | `[height]` | 图表高度 | `number` | - |
 | `[color]` | 图表颜色 | `string` | `#2F9CFF` |
 | `[bgColor]` | 图表背景色 | `string` | `#F0F2F5` |
 | `[percent]` | 进度比例 | `number` | - |
-| `[format]` | 坐标轴格式 | `Function` | - |
+| `[padding]` | 内边距 | `Array<number | string>` | `[10, 10, 30, 10]` |
+| `[format]` | 坐标轴格式 | `(text: string, item: {}, index: number) => string` | - |

@@ -5,110 +5,71 @@ import {
   ElementRef,
   HostBinding,
   Input,
-  NgZone,
   OnChanges,
   OnDestroy,
-  ViewChild,
+  OnInit,
 } from '@angular/core';
-import { toBoolean, toNumber } from '@delon/util';
+import { InputBoolean, InputNumber } from '@delon/util';
 
 declare var G2: any;
 
+export interface G2MiniAreaData {
+  x: any;
+  y: any;
+  [key: string]: any;
+}
+
 @Component({
   selector: 'g2-mini-area',
-  template: `<div #container></div>`,
+  template: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class G2MiniAreaComponent implements OnDestroy, OnChanges {
+export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
+  private chart: any;
+
   // #region fields
 
-  @Input()
-  color = 'rgba(24, 144, 255, 0.2)';
-  @Input()
-  borderColor = '#1890FF';
-  @Input()
-  set borderWidth(value: any) {
-    this._borderWidth = toNumber(value);
-  }
-  private _borderWidth = 2;
-
-  @HostBinding('style.height.px')
-  @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-  }
-  private _height;
-
-  @Input()
-  set fit(value: any) {
-    this._fit = toBoolean(value);
-  }
-  private _fit = true;
-
-  @Input()
-  set line(value: any) {
-    this._line = toBoolean(value);
-  }
-  private _line = false;
-
-  @Input()
-  get animate() {
-    return this._animate;
-  }
-  set animate(value: any) {
-    this._animate = toBoolean(value);
-  }
-  private _animate = true;
-
-  @Input()
-  xAxis: any;
-  @Input()
-  yAxis: any;
-  @Input()
-  padding: number[] = [8, 8, 8, 8];
-  @Input()
-  data: Array<{ x: number; y: number; [key: string]: any }>;
-  @Input()
-  yTooltipSuffix = '';
+  @Input() @InputNumber() delay = 0;
+  @Input() color = 'rgba(24, 144, 255, 0.2)';
+  @Input() borderColor = '#1890FF';
+  @Input() @InputNumber() borderWidth = 2;
+  @HostBinding('style.height.px') @Input() @InputNumber() height;
+  @Input() @InputBoolean() fit = true;
+  @Input() @InputBoolean() line = false;
+  @Input() @InputBoolean() animate = true;
+  @Input() xAxis: any;
+  @Input() yAxis: any;
+  @Input() padding: number[] = [8, 8, 8, 8];
+  @Input() data: G2MiniAreaData[] = [];
+  @Input() yTooltipSuffix = '';
 
   // #endregion
 
-  @ViewChild('container')
-  private node: ElementRef;
-
-  private chart: any;
-
-  constructor(private zone: NgZone) { }
+  constructor(private el: ElementRef) { }
 
   private install() {
-    if (!this.data || (this.data && this.data.length < 1)) return;
-
-    this.node.nativeElement.innerHTML = '';
-
+    const { el, fit, height, animate, padding, xAxis, yAxis, yTooltipSuffix, data, color, line, borderColor, borderWidth } = this;
     const chart = new G2.Chart({
-      container: this.node.nativeElement,
-      forceFit: this._fit,
-      height: +this.height,
-      animate: this.animate,
-      padding: this.padding,
+      container: el.nativeElement,
+      forceFit: fit,
+      height,
+      animate,
+      padding,
       legend: null,
     });
 
-    if (!this.xAxis && !this.yAxis) {
+    if (!xAxis && !yAxis) {
       chart.axis(false);
     }
 
-    if (this.xAxis) {
-      chart.axis('x', this.xAxis);
+    if (xAxis) {
+      chart.axis('x', xAxis);
     } else {
       chart.axis('x', false);
     }
 
-    if (this.yAxis) {
-      chart.axis('y', this.yAxis);
+    if (yAxis) {
+      chart.axis('y', yAxis);
     } else {
       chart.axis('y', false);
     }
@@ -117,11 +78,11 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
       x: {
         type: 'cat',
         range: [0, 1],
-        xAxis: this.xAxis,
+        xAxis,
       },
       y: {
         min: 0,
-        yAxis: this.yAxis,
+        yAxis,
       },
     };
 
@@ -133,29 +94,29 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
     });
 
     const view = chart.view();
-    view.source(this.data, dataConfig);
+    view.source(data, dataConfig);
 
     view
       .area()
       .position('x*y')
-      .color(this.color)
+      .color(color)
       .tooltip('x*y', (x, y) => {
         return {
           name: x,
-          value: y + this.yTooltipSuffix,
+          value: y + yTooltipSuffix,
         };
       })
       .shape('smooth')
       .style({ fillOpacity: 1 });
 
-    if (this._line) {
+    if (line) {
       const view2 = chart.view();
-      view2.source(this.data, dataConfig);
+      view2.source(data, dataConfig);
       view2
         .line()
         .position('x*y')
-        .color(this.borderColor)
-        .size(this._borderWidth)
+        .color(borderColor)
+        .size(borderWidth)
         .shape('smooth');
       view2.tooltip(false);
     }
@@ -163,14 +124,35 @@ export class G2MiniAreaComponent implements OnDestroy, OnChanges {
     this.chart = chart;
   }
 
+  private attachChart() {
+    const { chart, padding, data, color, borderColor, borderWidth } = this;
+    if (!chart) return;
+
+    const views = chart.get('views');
+    views.forEach(v => {
+      v.changeData(data);
+    });
+    views[0].get('geoms')[0].color(color);
+    // line
+    if (views.length > 1) {
+      views[1].get('geoms')[0].color(borderColor).size(borderWidth);
+    }
+
+    chart.set('padding', padding);
+    chart.repaint();
+  }
+
+  ngOnInit() {
+    setTimeout(() => this.install(), this.delay);
+  }
+
   ngOnChanges(): void {
-    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
+    this.attachChart();
   }
 
   ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();
-      this.chart = null;
     }
   }
 }

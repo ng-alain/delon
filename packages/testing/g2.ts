@@ -1,8 +1,10 @@
 import { Type } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, flush, discardPeriodicTasks } from "@angular/core/testing";
+
+export type PageG2Type = 'geoms' | 'views';
 
 export class PageG2<T> {
-  constructor(private fixture: ComponentFixture<T> = null) { }
+  constructor(public fixture: ComponentFixture<T> = null) { }
 
   get dl() {
     return this.fixture.debugElement;
@@ -16,6 +18,10 @@ export class PageG2<T> {
     return this.context['comp'];
   }
 
+  get chart() {
+    return this.comp['chart'];
+  }
+
   makeModule<M>(module: M, comp: Type<T>, options = { dc: true }): PageG2<T> {
     TestBed.configureTestingModule({
       imports: [module],
@@ -23,12 +29,20 @@ export class PageG2<T> {
     });
     this.fixture = TestBed.createComponent(comp);
     if (options.dc) {
-      this.dc();
+      this.dcFirst();
     }
     return this;
   }
 
+  dcFirst() {
+    this.dc();
+    flush();
+    discardPeriodicTasks();
+    return this;
+  }
+
   dc() {
+    this.fixture.changeDetectorRef.markForCheck();
     this.fixture.detectChanges();
     return this;
   }
@@ -60,26 +74,33 @@ export class PageG2<T> {
   }
 
   checkOptions(key: string, value: any) {
-    expect(this.comp['chart'].get(key)).toBe(value);
+    expect(this.chart.get(key)).toBe(value);
     return this;
   }
 
-  checkAttrOptions(key: string, value: any) {
-    const x = this.comp['chart'].get('geoms')[0].get('attrOptions')[key];
+  checkAttrOptions(type: PageG2Type, key: string, value: any) {
+    const x = this.chart.get(type)[0].get('attrOptions')[key];
     expect(x.field).toBe(value);
     return this;
   }
 
-  isXCount(num: number) {
-    const x = this.comp['chart'].getXScales();
+  isXScalesCount(num: number) {
+    const x = this.chart.getXScales();
     expect(x[0].values.length).toBe(num);
     return this;
   }
 
-  isYCount(num: number) {
-    const y = this.comp['chart'].getYScales();
+  isYScalesCount(num: number) {
+    const y = this.chart.getYScales();
     expect(y.length).toBe(1);
     expect(y[0].values.length).toBe(num);
+    return this;
+  }
+
+  isDataCount(type: PageG2Type, num: number) {
+    const results = this.chart.get(type);
+    expect(results.length).toBeGreaterThan(0);
+    expect(results[0].get('data').length).toBe(num);
     return this;
   }
 }

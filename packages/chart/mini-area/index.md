@@ -10,8 +10,9 @@ type: Components
 
 ## API
 
-| 参数      | 说明                                      | 类型         | 默认值 |
-|----------|------------------------------------------|-------------|-------|
+| 参数      | 说明                   | 类型         | 默认值 |
+|----------|------------------------|-------------|-------|
+| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.2)` |
 | `[borderColor]` | 图表边颜色 | `string` | `#1890FF` |
 | `[height]` | 图表高度 | `number` | - |
@@ -21,4 +22,11 @@ type: Components
 | `[xAxis]` | [x 轴配置](https://antv.alipay.com/g2/doc/tutorial/start/axis.html) | `object` | - |
 | `[yAxis]` | [y 轴配置](https://antv.alipay.com/g2/doc/tutorial/start/axis.html) | `object` | - |
 | `[yTooltipSuffix]` | y 轴Tooltip后缀，一般指定单位 | `string` | - |
-| `[data]` | 数据 | `Array<{ x: number, y: number, [key: string]: any }>` | - |
+| `[data]` | 数据 | `G2MiniAreaData[]` | - |
+
+### G2MiniAreaData
+
+| 参数  | 说明 | 类型     | 默认值 |
+|-------|-----|----------|--------|
+| `[x]` | x轴  | `any` | -      |
+| `[y]` | y轴  | `any` | -      |

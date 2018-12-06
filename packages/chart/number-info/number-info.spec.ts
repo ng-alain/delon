@@ -58,7 +58,7 @@ describe('abc: number-info', () => {
 
   describe('#total', () => {
     it('with string', () => {
-      expect(context.total).toBe(context.comp._total);
+      expect(context.total).toBe(context.comp.total);
     });
     it('with template', () => {
       context.total = context.totalTpl;

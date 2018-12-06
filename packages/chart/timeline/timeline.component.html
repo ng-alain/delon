@@ -1,5 +1,3 @@
-<ng-container *ngIf="_title; else _titleTpl">
-  <h4>{{_title}}</h4>
-</ng-container>
+<ng-container *stringTemplateOutlet="title"><h4>{{title}}</h4></ng-container>
 <div #container></div>
 <div #slider></div>

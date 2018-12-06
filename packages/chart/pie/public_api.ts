@@ -1,2 +1,2 @@
-export { G2PieComponent } from './pie.component';
-export { G2PieModule } from './pie.module';
+export * from './pie.component';
+export * from './pie.module';

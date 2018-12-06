@@ -1,50 +1,45 @@
 // tslint:disable:no-any
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
+  HostBinding,
   Input,
-  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
 declare var G2: any;
 declare var DataSet: any;
 
+export interface G2TagCloudData {
+  name: string;
+  value: number;
+  category?: any;
+  [key: string]: any;
+}
+
 @Component({
   selector: 'g2-tag-cloud',
-  template: `<div #container [ngStyle]="{'height.px': height}"></div>`,
+  template: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
+
+  private chart: any;
+
   // #region fields
 
-  @Input() @InputNumber() height = 0;
-
-  @Input()
-  padding = 0;
-
-  @Input()
-  data: Array<{ name: string; value: number; category?: any; [key: string]: any }>;
+  @Input() @InputNumber() delay = 0;
+  @HostBinding('style.height.px') @Input() @InputNumber() height = 100;
+  @Input() padding = 0;
+  @Input() data: G2TagCloudData[] = [];
 
   // #endregion
 
-  @ViewChild('container')
-  private node: ElementRef;
-
-  private chart: any;
-  private initFlag = false;
-
-  constructor(
-    private el: ElementRef,
-    private cdr: ChangeDetectorRef,
-    private zone: NgZone,
-  ) { }
+  constructor(private el: ElementRef) { }
 
   private initTagCloud() {
     // 给point注册一个词云的shape
@@ -68,48 +63,17 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     });
   }
 
-  private renderChart() {
-    if (!this.data || (this.data && this.data.length < 1)) return;
+  private install() {
+    const { el, padding, height } = this;
+    const container = el.nativeElement as HTMLElement;
+    const width = container.offsetWidth;
 
-    this.uninstall();
-    this.node.nativeElement.innerHTML = '';
-    const dv = new DataSet.View().source(this.data);
-    const range = dv.range('value');
-    const min = range[0];
-    const max = range[1];
-    const height = +this.height;
-    const width = +this.el.nativeElement.offsetWidth;
-
-    dv.transform({
-      type: 'tag-cloud',
-      fields: ['x', 'value'],
-      size: [width, height],
-      padding: this.padding,
-      timeInterval: 5000, // max execute time
-      rotate() {
-        let random = ~~(Math.random() * 4) % 4;
-        if (random === 2) {
-          random = 0;
-        }
-        return random * 90; // 0, 90, 270
-      },
-      fontSize(d) {
-        if (d.value) {
-          return ((d.value - min) / (max - min)) * (80 - 24) + 24;
-        }
-        return 0;
-      },
-    });
-    const chart = new G2.Chart({
-      container: this.node.nativeElement,
+    const chart = this.chart = new G2.Chart({
+      container: el.nativeElement,
+      forceFit: true,
+      padding,
       width,
       height,
-      padding: this.padding,
-      forceFit: true,
-    });
-    chart.source(dv, {
-      x: { nice: false },
-      y: { nice: false },
     });
     chart.legend(false);
     chart.axis(false);
@@ -126,38 +90,65 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
     chart.render();
 
-    this.chart = chart;
+    this.attachChart();
   }
 
-  private runInstall() {
-    this.zone.runOutsideAngular(() => setTimeout(() => this.renderChart()));
-  }
+  private attachChart() {
+    const { chart, el, height, padding, data } = this;
+    if (!chart) return ;
 
-  private uninstall() {
-    if (this.chart) {
-      this.chart.destroy();
-      this.chart = null;
-    }
+    const container = el.nativeElement as HTMLElement;
+    const width = container.offsetWidth;
+
+    chart.set('height', height);
+    chart.set('width', width);
+    chart.set('padding', padding);
+
+    const dv = new DataSet.View().source(data);
+    const range = dv.range('value');
+    const min = range[0];
+    const max = range[1];
+
+    dv.transform({
+      type: 'tag-cloud',
+      fields: ['x', 'value'],
+      size: [width, height],
+      padding,
+      timeInterval: 5000, // max execute time
+      rotate() {
+        let random = ~~(Math.random() * 4) % 4;
+        if (random === 2) {
+          random = 0;
+        }
+        return random * 90; // 0, 90, 270
+      },
+      fontSize(d) {
+        if (d.value) {
+          return ((d.value - min) / (max - min)) * (80 - 24) + 24;
+        }
+        return 0;
+      },
+    });
+    chart.source(dv, {
+      x: { nice: false },
+      y: { nice: false },
+    });
+
+    chart.repaint();
   }
 
   ngOnInit(): void {
-    this.initFlag = true;
-    this.zone.runOutsideAngular(() =>
-      setTimeout(() => {
-        this.initTagCloud();
-        this.runInstall();
-      }),
-    );
+    this.initTagCloud();
+    setTimeout(() => this.install(), this.delay);
   }
 
   ngOnChanges(): void {
-    if (this.initFlag) {
-      this.runInstall();
-      this.cdr.detectChanges();
-    }
+    this.attachChart();
   }
 
   ngOnDestroy(): void {
-    this.uninstall();
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 }
