@@ -49,7 +49,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
 
   private install() {
     const { el, fit, height, animate, padding, xAxis, yAxis, yTooltipSuffix, data, color, line, borderColor, borderWidth } = this;
-    const chart = new G2.Chart({
+    const chart = this.chart = new G2.Chart({
       container: el.nativeElement,
       forceFit: fit,
       height,
@@ -74,18 +74,6 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
       chart.axis('y', false);
     }
 
-    const dataConfig = {
-      x: {
-        type: 'cat',
-        range: [0, 1],
-        xAxis,
-      },
-      y: {
-        min: 0,
-        yAxis,
-      },
-    };
-
     chart.tooltip({
       'showTitle': false,
       'hideMarkders': false,
@@ -94,7 +82,6 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     const view = chart.view();
-    view.source(data, dataConfig);
 
     view
       .area()
@@ -111,7 +98,6 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
 
     if (line) {
       const view2 = chart.view();
-      view2.source(data, dataConfig);
       view2
         .line()
         .position('x*y')
@@ -121,16 +107,28 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
       view2.tooltip(false);
     }
     chart.render();
-    this.chart = chart;
+
+    this.attachChart();
   }
 
   private attachChart() {
-    const { chart, padding, data, color, borderColor, borderWidth } = this;
+    const { chart, xAxis, yAxis, padding, data, color, borderColor, borderWidth } = this;
     if (!chart) return;
 
+    const dataConfig = {
+      x: {
+        type: 'cat',
+        range: [0, 1],
+        xAxis,
+      },
+      y: {
+        min: 0,
+        yAxis,
+      },
+    };
     const views = chart.get('views');
     views.forEach(v => {
-      v.changeData(data);
+      v.changeData(data, dataConfig);
     });
     views[0].get('geoms')[0].color(color);
     // line

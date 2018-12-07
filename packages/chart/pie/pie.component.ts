@@ -64,14 +64,13 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   private setCls() {
     const { el, rend, hasLegend, isPercent } = this;
     const ne = el.nativeElement as HTMLElement;
-    console.log('ne.clientWidth', ne.clientWidth);
     updateHostClass(
       ne,
       rend,
       {
         'g2-pie': true,
         'g2-pie__legend-has': hasLegend,
-        'g2-pie__legend-block': ne.clientWidth <= 380,
+        'g2-pie__legend-block': hasLegend && ne.clientWidth <= 380,
         'g2-pie__mini': isPercent,
       },
       true,
