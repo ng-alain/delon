@@ -3,6 +3,7 @@ import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
 import { G2TimelineModule } from './timeline.module';
 import { G2TimelineComponent, G2TimelineData } from './timeline.component';
+import { By } from '@angular/platform-browser';
 
 describe('chart: timeline', () => {
   let page: PageG2<TestComponent>;
@@ -17,6 +18,12 @@ describe('chart: timeline', () => {
     page.dc();
     expect(page.chart.get('legendController').options.position).toBe('left');
   });
+
+  it('should be disabled slider', () => {
+    page.context.slider = false;
+    page.dc();
+    expect(page.getEls('canvas').length).toBe(1);
+  });
 });
 
 @Component({
@@ -29,6 +36,7 @@ describe('chart: timeline', () => {
     [position]="position"
     [borderWidth]="borderWidth"
     [data]="data"
+    [slider]="slider"
   >
   </g2-timeline>
   `,
@@ -41,6 +49,7 @@ class TestComponent {
   mask: string = 'HH:mm';
   position: 'top' | 'right' | 'bottom' | 'left' = 'top';
   borderWidth = 2;
+  slider = true;
   data: G2TimelineData[] = new Array(9).fill({}).map((v, i) => ({
     x: (new Date().getTime()) + (1000 * 60 * 30 * i),
     y1: Math.floor(Math.random() * 100) + 1000,

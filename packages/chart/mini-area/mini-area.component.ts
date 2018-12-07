@@ -26,8 +26,6 @@ export interface G2MiniAreaData {
 })
 export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   private chart: any;
-  private view: any;
-  private viewLine: any;
 
   // #region fields
 
@@ -127,13 +125,6 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { chart, view, viewLine } = this;
-    if (!chart) return;
-
-    view.destroy();
-    if (viewLine) {
-      viewLine.destroy();
-    }
-    chart.destroy();
+    if (this.chart) this.chart.destroy();
   }
 }

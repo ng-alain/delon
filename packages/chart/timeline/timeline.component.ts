@@ -10,7 +10,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { InputNumber } from '@delon/util';
+import { InputBoolean, InputNumber } from '@delon/util';
 
 declare var G2: any;
 declare var DataSet: any;
@@ -34,9 +34,9 @@ export class G2TimelineData {
 export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('container') private node: ElementRef;
-  @ViewChild('slider') private sliderNode: ElementRef;
+  @ViewChild('sliderContainer') private sliderNode: ElementRef;
   private chart: any;
-  private slider: any;
+  private _slider: any;
 
   // #region fields
 
@@ -50,6 +50,8 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() height = 400;
   @Input() padding: number[] = [60, 20, 40, 40];
   @Input() @InputNumber() borderWidth = 2;
+  @Input() @InputNumber() tickCount = 8;
+  @Input() @InputBoolean() slider = true;
 
   // #endregion
 
@@ -58,7 +60,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private install() {
-    const { node, sliderNode, height, padding, mask } = this;
+    const { node, sliderNode, height, padding, mask, tickCount, slider } = this;
     const chart = this.chart = new G2.Chart({
       container: node.nativeElement,
       forceFit: true,
@@ -76,34 +78,36 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
     const sliderPadding = { ...[], ...padding };
     sliderPadding[0] = 0;
-    const slider = this.slider = new Slider({
-      container: sliderNode.nativeElement,
-      width: 'auto',
-      height: 26,
-      padding: sliderPadding,
-      scales: {
-        x: {
-          type: 'time',
-          tickCount: 16,
-          mask,
+    if (slider) {
+      const _slider = this._slider = new Slider({
+        container: sliderNode.nativeElement,
+        width: 'auto',
+        height: 26,
+        padding: sliderPadding,
+        scales: {
+          x: {
+            type: 'time',
+            tickCount,
+            mask,
+          },
         },
-      },
-      backgroundChart: {
-        type: 'line',
-      },
-      xAxis: 'x',
-      yAxis: 'y1',
-      data: [],
-    });
+        backgroundChart: {
+          type: 'line',
+        },
+        xAxis: 'x',
+        yAxis: 'y1',
+        data: [],
+      });
 
-    slider.render();
+      _slider.render();
+    }
 
     this.attachChart();
   }
 
   private attachChart() {
-    const { chart, slider, height, padding, data, mask, titleMap, position, colorMap, borderWidth } = this;
-    if (!chart) return ;
+    const { chart, _slider, slider, height, padding, data, mask, titleMap, position, colorMap, borderWidth, tickCount } = this;
+    if (!chart) return;
 
     chart.legend({
       position,
@@ -127,13 +131,12 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     chart.set('height', height);
     chart.set('padding', padding);
 
-    const MAX = 8;
-    const begin = Math.ceil(data.length > MAX ? (data.length - MAX) / 2 : 0);
+    const begin = Math.ceil(data.length > tickCount ? (data.length - tickCount) / 2 : 0);
 
     const ds = new DataSet({
       state: {
         start: data[begin - 1].x,
-        end: data[begin - 1 + MAX].x,
+        end: data[begin - 1 + tickCount].x,
       },
     });
     const dv = ds.createView().source(data);
@@ -154,7 +157,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     chart.source(dv, {
       x: {
         type: 'timeCat',
-        tickCount: MAX,
+        tickCount,
         mask,
         range: [0, 1],
       },
@@ -171,13 +174,18 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     });
     chart.repaint();
 
-    slider.start = new Date(ds.state.start);
-    slider.end = new Date(ds.state.end);
-    slider.onChange = ({ startValue, endValue }) => {
-      ds.setState('start', startValue);
-      ds.setState('end', endValue);
-    },
-    slider.changeData(data);
+    if (slider) {
+      _slider.start = ds.state.start;
+      _slider.end = ds.state.end;
+      _slider.onChange = ({ startValue, endValue }) => {
+        // TODO: https://github.com/antvis/g2-plugin-slider/pull/19
+        _slider.start = startValue;
+        _slider.end = endValue;
+        ds.setState('start', startValue);
+        ds.setState('end', endValue);
+      };
+      _slider.changeData(data);
+    }
   }
 
   ngOnChanges(): void {
@@ -186,6 +194,6 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnDestroy(): void {
     if (this.chart) this.chart.destroy();
-    if (this.slider) this.slider.destroy();
+    if (this._slider) this._slider.destroy();
   }
 }

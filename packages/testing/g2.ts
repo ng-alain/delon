@@ -57,6 +57,10 @@ export class PageG2<T> {
     return this;
   }
 
+  getEls(cls: string): NodeListOf<HTMLElement> {
+    return (this.dl.nativeElement as HTMLElement).querySelectorAll(cls);
+  }
+
   getEl(cls: string): HTMLElement {
     return (this.dl.nativeElement as HTMLElement).querySelector(cls);
   }

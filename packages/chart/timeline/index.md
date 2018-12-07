@@ -14,7 +14,8 @@ type: Components
 |-----------------|------------------|-------------------------------|------------------------------------|
 | `[delay]`       | 延迟渲染，单位：毫秒 | `number`                      | `0`                                |
 | `[title]`       | 图表标题           | `string,TemplateRef<void>`    | -                                  |
-| `[data]`        | 数据，至少8条数据以上      | `G2TimelineData[]`            | -                                  |
+| `[tickCount]`   | 坐标轴上刻度点的个数  | `number`            | `8`                                  |
+| `[data]`        | 数据，至少`tickCount`条数据以上      | `G2TimelineData[]`            | -     |
 | `[titleMap]`    | 指标别名           | `{ y1: string , y2: string }` | -                                  |
 | `[colorMap]`    | 颜色               | `{ y1: string , y2: string }` | `{ y1: '#1890FF', y2: '#2FC25B' }` |
 | `[height]`      | 高度值             | `number`                      | `400`                              |
@@ -22,6 +23,7 @@ type: Components
 | `[borderWidth]` | 线条               | `number`                      | `2`                                |
 | `[mask]`        | 日期格式           | `string`                      | `HH:mm`                            |
 | `[position]`    | 标题位置           | `top,right,bottom,left`       | `'top'`                            |
+| `[slider]`    | 是否需要滑动条           | `boolean`       | `true`                            |
 
 ### G2TimelineData
 
