@@ -1,3 +1,13 @@
+---
+order: 0
+title:
+  zh-CN: 基础
+  en-US: Basic
+---
+
+基础用法。
+
+```ts
 import { Component } from '@angular/core';
 
 @Component({
@@ -39,3 +49,4 @@ export class DemoComponent {
     other: Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100),
   }));
 }
+```

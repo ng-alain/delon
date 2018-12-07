@@ -26,6 +26,8 @@ export interface G2MiniAreaData {
 })
 export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   private chart: any;
+  private view: any;
+  private viewLine: any;
 
   // #region fields
 
@@ -42,20 +44,19 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   @Input() padding: number[] = [8, 8, 8, 8];
   @Input() data: G2MiniAreaData[] = [];
   @Input() yTooltipSuffix = '';
+  @Input() tooltipType: 'mini' | 'default' = 'default';
 
   // #endregion
 
   constructor(private el: ElementRef) { }
 
   private install() {
-    const { el, fit, height, animate, padding, xAxis, yAxis, yTooltipSuffix, data, color, line, borderColor, borderWidth } = this;
+    const { el, fit, height, padding, xAxis, yAxis, yTooltipSuffix, tooltipType, line } = this;
     const chart = this.chart = new G2.Chart({
       container: el.nativeElement,
       forceFit: fit,
       height,
-      animate,
       padding,
-      legend: null,
     });
 
     if (!xAxis && !yAxis) {
@@ -74,70 +75,47 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
       chart.axis('y', false);
     }
 
+    chart.legend(false);
     chart.tooltip({
+      'type': tooltipType === 'mini' ? 'mini' : null,
       'showTitle': false,
       'hideMarkders': false,
       'g2-tooltip': { padding: 4 },
       'g2-tooltip-list-item': { margin: `0px 4px` },
     });
 
-    const view = chart.view();
-
-    view
+    chart
       .area()
       .position('x*y')
-      .color(color)
-      .tooltip('x*y', (x, y) => {
-        return {
-          name: x,
-          value: y + yTooltipSuffix,
-        };
-      })
+      .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix }))
       .shape('smooth')
-      .style({ fillOpacity: 1 });
+      .opacity(1);
 
     if (line) {
-      const view2 = chart.view();
-      view2
-        .line()
-        .position('x*y')
-        .color(borderColor)
-        .size(borderWidth)
-        .shape('smooth');
-      view2.tooltip(false);
+      chart.line().position('x*y').shape('smooth').opacity(1).tooltip(false);
     }
+
     chart.render();
 
     this.attachChart();
   }
 
   private attachChart() {
-    const { chart, xAxis, yAxis, padding, data, color, borderColor, borderWidth } = this;
+    const { chart, line, fit, height, animate, padding, data, color, borderColor, borderWidth } = this;
     if (!chart) return;
 
-    const dataConfig = {
-      x: {
-        type: 'cat',
-        range: [0, 1],
-        xAxis,
-      },
-      y: {
-        min: 0,
-        yAxis,
-      },
-    };
-    const views = chart.get('views');
-    views.forEach(v => {
-      v.changeData(data, dataConfig);
-    });
-    views[0].get('geoms')[0].color(color);
-    // line
-    if (views.length > 1) {
-      views[1].get('geoms')[0].color(borderColor).size(borderWidth);
+    const geoms = chart.get('geoms');
+    geoms.forEach(g => g.color(color));
+    if (line) {
+      geoms[1].color(borderColor).size(borderWidth);
     }
 
+    chart.set('forceFit', fit);
+    chart.set('height', height);
+    chart.set('animate', animate);
     chart.set('padding', padding);
-    chart.repaint();
+
+    chart.changeData(data);
   }
 
   ngOnInit() {
@@ -149,8 +127,13 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) {
-      this.chart.destroy();
+    const { chart, view, viewLine } = this;
+    if (!chart) return;
+
+    view.destroy();
+    if (viewLine) {
+      viewLine.destroy();
     }
+    chart.destroy();
   }
 }

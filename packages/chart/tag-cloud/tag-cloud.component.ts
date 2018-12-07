@@ -10,6 +10,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
 declare var G2: any;
 declare var DataSet: any;
@@ -27,7 +29,7 @@ export interface G2TagCloudData {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
-
+  private resize$: Subscription;
   private chart: any;
 
   // #region fields
@@ -65,14 +67,10 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   private install() {
     const { el, padding, height } = this;
-    const container = el.nativeElement as HTMLElement;
-    const width = container.offsetWidth;
 
     const chart = this.chart = new G2.Chart({
       container: el.nativeElement,
-      forceFit: true,
       padding,
-      width,
       height,
     });
     chart.legend(false);
@@ -94,15 +92,12 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   private attachChart() {
-    const { chart, el, height, padding, data } = this;
+    const { chart, height, padding, data } = this;
     if (!chart) return ;
 
-    const container = el.nativeElement as HTMLElement;
-    const width = container.offsetWidth;
-
     chart.set('height', height);
-    chart.set('width', width);
     chart.set('padding', padding);
+    chart.forceFit();
 
     const dv = new DataSet.View().source(data);
     const range = dv.range('value');
@@ -112,7 +107,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     dv.transform({
       type: 'tag-cloud',
       fields: ['x', 'value'],
-      size: [width, height],
+      size: [chart.get('width'), chart.get('height')],
       padding,
       timeInterval: 5000, // max execute time
       rotate() {
@@ -137,8 +132,20 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     chart.repaint();
   }
 
+  private installResizeEvent() {
+    if (this.resize$) return;
+
+    this.resize$ = fromEvent(window, 'resize')
+      .pipe(
+        filter(() => this.chart),
+        debounceTime(200),
+      )
+      .subscribe(() => this.attachChart());
+  }
+
   ngOnInit(): void {
     this.initTagCloud();
+    this.installResizeEvent();
     setTimeout(() => this.install(), this.delay);
   }
 
@@ -147,6 +154,9 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnDestroy(): void {
+    if (this.resize$) {
+      this.resize$.unsubscribe();
+    }
     if (this.chart) {
       this.chart.destroy();
     }

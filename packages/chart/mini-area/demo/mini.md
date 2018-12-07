@@ -1,11 +1,9 @@
 ---
-order: 0
-title:
-  zh-CN: 基础
-  en-US: Basic
+order: 2
+title: Mini tooltip
 ---
 
-基础用法。
+指定 `tooltipType` 值来表示简化tooltip，可以更好的运用于表格。
 
 ```ts
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +12,7 @@ import format from 'date-fns/format';
 @Component({
   selector: 'app-demo',
   template: `
-  <g2-mini-bar height="45" [data]="visitData"></g2-mini-bar>
+  <g2-mini-area line color="#cceafe" height="45" [data]="visitData" tooltipType="mini"></g2-mini-area>
   `
 })
 export class DemoComponent implements OnInit {

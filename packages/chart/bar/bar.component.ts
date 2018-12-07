@@ -30,12 +30,13 @@ export interface G2BarData {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
-  private resize$: Subscription = null;
+  private resize$: Subscription;
   // tslint:disable-next-line:no-any
   private chart: any;
   @ViewChild('container') private node: ElementRef;
 
   // #region fields
+
   @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
   @Input() color = 'rgba(24, 144, 255, 0.85)';
@@ -43,26 +44,31 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() padding: Array<number | string> | string = 'auto';
   @Input() data: G2BarData[] = [];
   @Input() @InputBoolean() autoLabel = true;
+
   // #endregion
 
+  private getHeight() {
+    return this.title ? this.height - TITLE_HEIGHT : this.height;
+  }
+
   private install() {
-    const container = this.node.nativeElement as HTMLElement;
+    const { node, padding } = this;
+
+    const container = node.nativeElement as HTMLElement;
     const chart = this.chart = new G2.Chart({
       container,
       forceFit: true,
       legend: null,
       height: this.getHeight(),
-      padding: this.padding,
+      padding,
     });
-
     this.updatelabel();
     chart.axis('y', {
       title: false,
       line: false,
       tickLine: false,
     });
-
-    chart.source(this.data, {
+    chart.source([], {
       x: {
         type: 'cat',
       },
@@ -70,43 +76,39 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
         min: 0,
       },
     });
-
     chart.tooltip({
       showTitle: false,
     });
     chart
       .interval()
       .position('x*y')
-      .color(this.color)
-      .tooltip('x*y', (x, y) => ({
-        name: x,
-        value: y,
-      }));
-    chart.render();
-  }
+      .tooltip('x*y', (x, y) => ({ name: x, value: y }));
 
-  private getHeight() {
-    return this.title ? this.height - TITLE_HEIGHT : this.height;
+    chart.render();
+
+    this.attachChart();
   }
 
   private attachChart() {
-    const { chart, padding, data } = this;
+    const { chart, padding, data, color } = this;
     if (!chart) return;
     this.installResizeEvent();
-    chart
-      .changeHeight(this.getHeight())
-      .changeData(data);
+    const height = this.getHeight();
+    if (chart.get('height') !== height) {
+      chart.changeHeight(height);
+    }
     // color
-    chart.get('geoms')[0].color(this.color);
-
+    chart.get('geoms')[0].color(color);
     chart.set('padding', padding);
-    chart.repaint();
+
+    chart.changeData(data);
   }
 
   private updatelabel() {
-    const canvasWidth = this.node.nativeElement.clientWidth;
-    const minWidth = this.data.length * 30;
-    this.chart.axis('x', canvasWidth > minWidth);
+    const { node, data, chart } = this;
+    const canvasWidth = node.nativeElement.clientWidth;
+    const minWidth = data.length * 30;
+    chart.axis('x', canvasWidth > minWidth).repaint();
   }
 
   private installResizeEvent() {

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, PreloadAllModules } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
-import { LayoutComponent } from '../layout/layout.component';
-import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './404/404.component';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { LayoutComponent } from '../layout/layout.component';
+import { SharedModule } from '../shared/shared.module';
+import { NotFoundComponent } from './404/404.component';
+import { HomeComponent } from './home/home.component';
 
 const COMPONENTS = [HomeComponent, NotFoundComponent];
 
@@ -52,11 +52,7 @@ const routes = [
     SharedModule,
     RouterModule.forRoot(
       routes,
-      environment.production
-        ? { preloadingStrategy: PreloadAllModules }
-        : {
-            useHash: false,
-          },
+      environment.production ? { preloadingStrategy: PreloadAllModules } : { useHash: true },
     ),
   ],
   declarations: [...COMPONENTS],

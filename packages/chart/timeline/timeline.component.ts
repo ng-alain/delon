@@ -66,9 +66,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       padding,
     });
     chart.axis('x', { title: false });
-    chart.axis('y1', {
-      title: false,
-    });
+    chart.axis('y1', { title: false });
     chart.axis('y2', false);
 
     chart.line().position('x*y1');
@@ -80,6 +78,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     sliderPadding[0] = 0;
     const slider = this.slider = new Slider({
       container: sliderNode.nativeElement,
+      width: 'auto',
       height: 26,
       padding: sliderPadding,
       scales: {
@@ -172,15 +171,13 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     });
     chart.repaint();
 
-    slider.start = ds.state.start;
-    slider.end = ds.state.end;
+    slider.start = new Date(ds.state.start);
+    slider.end = new Date(ds.state.end);
     slider.onChange = ({ startValue, endValue }) => {
       ds.setState('start', startValue);
       ds.setState('end', endValue);
     },
     slider.changeData(data);
-    slider.repaint();
-
   }
 
   ngOnChanges(): void {

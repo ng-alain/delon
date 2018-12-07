@@ -58,25 +58,22 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(private cdr: ChangeDetectorRef) { }
 
-  _click(i: number) {
-    const { legendData, chart } = this;
-    legendData[i].checked = !legendData[i].checked;
-    chart.repaint();
+  private getHeight() {
+    return this.height - (this.hasLegend ? 80 : 22);
   }
 
   private install() {
-    const { node, height, hasLegend, padding, colors } = this;
+    const { node, padding } = this;
 
     const chart = this.chart = new G2.Chart({
       container: node.nativeElement,
       forceFit: true,
-      height: height - (hasLegend ? 80 : 22),
+      height: this.getHeight(),
       padding,
     });
 
     chart.coord('polar');
     chart.legend(false);
-
     chart.axis('label', {
       line: null,
       labelOffset: 8,
@@ -93,7 +90,6 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
         },
       },
     });
-
     chart.axis('value', {
       grid: {
         type: 'polygon',
@@ -109,24 +105,18 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
         },
       },
     });
-
-    chart.filter(
-      'name',
-      (name: string) => {
-        const legendItem = this.legendData.find(w => w.name === name);
-        return legendItem ? legendItem.checked !== false : true;
-      },
-    );
+    chart.filter('name', (name: string) => {
+      const legendItem = this.legendData.find(w => w.name === name);
+      return legendItem ? legendItem.checked !== false : true;
+    });
 
     chart
       .line()
-      .position('label*value')
-      .color('name', colors);
+      .position('label*value');
 
     chart
       .point()
       .position('label*value')
-      .color('name', colors)
       .shape('circle')
       .size(3);
 
@@ -136,10 +126,10 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const { chart, height, hasLegend, padding, data, colors, tickCount } = this;
+    const { chart, padding, data, colors, tickCount } = this;
     if (!chart) return ;
 
-    chart.set('height', height - (hasLegend ? 80 : 22));
+    chart.set('height', this.getHeight());
     chart.set('padding', padding);
 
     chart.source(data, {
@@ -175,6 +165,12 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
     });
 
     cdr.detectChanges();
+  }
+
+  _click(i: number) {
+    const { legendData, chart } = this;
+    legendData[i].checked = !legendData[i].checked;
+    chart.repaint();
   }
 
   ngOnInit(): void {

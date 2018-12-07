@@ -36,24 +36,21 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() padding: Array<string | number> = [8, 8, 8, 8];
   @Input() data: G2MiniBarData[] = [];
   @Input() yTooltipSuffix = '';
+  @Input() tooltipType: 'mini' | 'default' = 'default';
 
   // #endregion
 
   constructor(private el: ElementRef) { }
 
   private install() {
-    const { el, height, padding, data, color, borderWidth, yTooltipSuffix } = this;
+    const { el, height, padding, yTooltipSuffix, tooltipType } = this;
     const chart = this.chart = new G2.Chart({
       container: el.nativeElement,
       forceFit: true,
       height,
       padding,
-      legend: null,
     });
-
-    chart.axis(false);
-
-    chart.source(data, {
+    chart.source([], {
       x: {
         type: 'cat',
       },
@@ -61,8 +58,10 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
         min: 0,
       },
     });
-
+    chart.legend(false);
+    chart.axis(false);
     chart.tooltip({
+      'type': tooltipType === 'mini' ? 'mini' : null,
       'showTitle': false,
       'hideMarkders': false,
       'crosshairs': false,
@@ -72,27 +71,20 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
     chart
       .interval()
       .position('x*y')
-      .size(borderWidth)
-      .color(color)
-      .tooltip('x*y', (x, y) => {
-        return {
-          name: x,
-          value: y + yTooltipSuffix,
-        };
-      });
+      .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix }));
 
     chart.render();
 
-    this.chart = chart;
+    this.attachChart();
   }
 
   private attachChart() {
     const { chart, height, padding, data, color, borderWidth } = this;
     if (!chart) return;
-    chart.changeData(data).get('geoms')[0].size(borderWidth).color(color);
+    chart.get('geoms')[0].size(borderWidth).color(color);
     chart.set('height', height);
     chart.set('padding', padding);
-    chart.repaint();
+    chart.changeData(data);
   }
 
   ngOnInit() {

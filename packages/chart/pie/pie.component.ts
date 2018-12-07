@@ -129,31 +129,12 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     chart
       .intervalStack()
       .position('y')
-      .tooltip('x*percent', (name, p) => {
-        return {
-          name,
-          value: hasLegend ? p : (p * 100).toFixed(2),
-        };
-      })
+      .tooltip('x*percent', (name, p) => ({ name, value: hasLegend ? p : (p * 100).toFixed(2) }))
       .select(this.select);
 
     chart.render();
 
     this.attachChart();
-  }
-
-  private installResizeEvent() {
-    if (this.resize$ || !this.hasLegend) return;
-
-    this.resize$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(200))
-      .subscribe(() => this.setCls());
-  }
-
-  _click(i: number) {
-    const { legendData, chart } = this;
-    legendData[i].checked = !legendData[i].checked;
-    chart.repaint();
   }
 
   private attachChart() {
@@ -164,27 +145,26 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     chart.set('padding', padding);
     chart.set('animate', animate);
 
-    const dv = new DataSet.DataView();
-    dv.source(data).transform({
-      type: 'percent',
-      field: 'y',
-      dimension: 'x',
-      as: 'percent',
-    });
-    chart.source(dv, {
-      x: {
-        type: 'cat',
-        range: [0, 1],
-      },
-      y: {
-        min: 0,
-      },
-    });
-
     chart.get('geoms')[0]
       .style({ lineWidth, stroke: '#fff' })
       .color('x', isPercent ? percentColor : colors);
 
+    const dv = new DataSet.DataView();
+    dv.source(data).transform({
+        type: 'percent',
+        field: 'y',
+        dimension: 'x',
+        as: 'percent',
+      });
+    chart.source(dv, {
+        x: {
+          type: 'cat',
+          range: [0, 1],
+        },
+        y: {
+          min: 0,
+        },
+      });
     chart.repaint();
 
     this.genLegend();
@@ -203,6 +183,20 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     });
 
     cdr.detectChanges();
+  }
+
+  _click(i: number) {
+    const { legendData, chart } = this;
+    legendData[i].checked = !legendData[i].checked;
+    chart.repaint();
+  }
+
+  private installResizeEvent() {
+    if (this.resize$ || !this.hasLegend) return;
+
+    this.resize$ = fromEvent(window, 'resize')
+      .pipe(debounceTime(200))
+      .subscribe(() => this.setCls());
   }
 
   ngOnInit(): void {
