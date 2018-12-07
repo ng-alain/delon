@@ -23,7 +23,7 @@ describe('abc: exception', () => {
     fixture.detectChanges();
   });
 
-  afterAll(() => context.comp.ngOnDestroy());
+  afterEach(() => context.comp.ngOnDestroy());
 
   [403, 404, 500].forEach((type: any) => {
     it(`#type=${type}`, () => {

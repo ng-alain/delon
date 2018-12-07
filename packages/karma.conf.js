@@ -8,6 +8,7 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('karma-summary-reporter'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -21,7 +22,15 @@ module.exports = function (config) {
       reports: ['html', 'lcovonly'],
       fixWebpackSourcePaths: true
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ['progress', 'kjhtml', 'summary'],
+    summaryReporter: {
+      // 'failed', 'skipped' or 'all'
+      show: 'failed',
+      // Limit the spec label to this length
+      specLength: 50,
+      // Show an 'all' column as a summary
+      overviewColumn: true
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

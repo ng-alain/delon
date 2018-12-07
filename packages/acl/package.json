@@ -8,9 +8,9 @@
     "url": "git+https://github.com/ng-alain/delon.git"
   },
   "bugs": {
-    "url": "https://github.com/ng-alain/delon/issues"
+    "url": "https://github.com/ng-alain/ng-alain/issues"
   },
-  "homepage": "https://github.com/ng-alain/delon#readme",
+  "homepage": "https://ng-alain.com",
   "keywords": [
     "@delon/acl",
     "angular acl",

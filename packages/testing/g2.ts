@@ -47,6 +47,10 @@ export class PageG2<T> {
     return this;
   }
 
+  destroy() {
+    this.comp.ngOnDestroy();
+  }
+
   newData(data: any): this {
     this.context['data'] = data;
     this.dc()
