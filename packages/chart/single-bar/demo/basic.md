@@ -17,7 +17,6 @@ import { Component } from '@angular/core';
     <thead>
       <tr>
         <th>序号</th>
-        <th>服务器 ID</th>
         <th nzWidth="350px">服务调用次数</th>
         <th nzWidth="350px">数据有负值</th>
       </tr>
@@ -25,7 +24,6 @@ import { Component } from '@angular/core';
     <tbody>
       <tr *ngFor="let i of list; let idx=index">
         <td>{{idx + 1}}</td>
-        <td>{{idx * 10000}}</td>
         <td>
           <g2-single-bar height="24" [value]="i.value"></g2-single-bar>
         </td>
