@@ -68,48 +68,30 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   // #region fields
 
   /** 表单布局，等同 `nzLayout`，默认：horizontal */
-  @Input()
-  layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
-
+  @Input() layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
   /** JSON Schema */
-  @Input()
-  schema: SFSchema;
-
+  @Input() schema: SFSchema;
   /** UI Schema */
-  @Input()
-  ui: SFUISchema;
-
+  @Input() ui: SFUISchema;
   /** 表单默认值 */
-  @Input()
-  formData: {};
-
+  @Input() formData: {};
   /**
    * 按钮
    * - 值为 `null` 或 `undefined` 表示手动添加按钮，但保留容器
    * - 值为 `none` 表示手动添加按钮，且不保留容器
    * - 使用 `spanLabelFixed` 固定标签宽度时，若无 `render.class` 则默认为居中状态
    */
-  @Input()
-  button: SFButton | 'none' = {};
-
+  @Input() button: SFButton | 'none' = {};
   /**
    * 是否实时校验，默认：`true`
    * - `true` 每一次都校验
    * - `false` 提交时校验
    */
-  @Input()
-  @InputBoolean()
-  liveValidate = true;
-
+  @Input() @InputBoolean() liveValidate = true;
   /** 指定表单 `autocomplete` 值 */
-  @Input()
-  autocomplete: 'on' | 'off';
-
+  @Input() autocomplete: 'on' | 'off';
   /** 立即显示错误视觉 */
-  @Input()
-  @InputBoolean()
-  firstVisual = true;
-
+  @Input() @InputBoolean() firstVisual = true;
   /** 表单模式 */
   @Input()
   set mode(value: 'default' | 'search' | 'edit') {
@@ -135,21 +117,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private _mode: 'default' | 'search' | 'edit';
 
   /** 数据变更时回调 */
-  @Output()
-  readonly formChange = new EventEmitter<{}>();
-
+  @Output() readonly formChange = new EventEmitter<{}>();
   /** 提交表单时回调 */
-  @Output()
-  readonly formSubmit = new EventEmitter<{}>();
-
+  @Output() readonly formSubmit = new EventEmitter<{}>();
   /** 重置表单时回调 */
-  @Output()
-  readonly formReset = new EventEmitter<{}>();
-
+  @Output() readonly formReset = new EventEmitter<{}>();
   /** 表单校验结果回调 */
-  @Output()
-  readonly formError = new EventEmitter<ErrorData[]>();
-
+  @Output() readonly formError = new EventEmitter<ErrorData[]>();
   // #endregion
 
   /** 表单校验状态 */
@@ -158,8 +132,39 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /** 表单值 */
-  get value(): {} {
+  // tslint:disable-next-line:no-any
+  get value(): { [key: string]: any } {
     return this._item;
+  }
+
+  /**
+   * 根据路径获取表单元素属性
+   */
+  getProperty(path: string): FormProperty {
+    return this.rootProperty.searchProperty(path);
+  }
+
+  /**
+   * 根据路径获取表单元素当前值
+   */
+  // tslint:disable-next-line:no-any
+  getValue(path: string): any {
+    return this.getProperty(path)!.value;
+  }
+
+  /**
+   * 根据路径设置某个表单元素属性值
+   * @param path 路径
+   * @param value 新值
+   */
+  // tslint:disable-next-line:no-any
+  setValue(path: string, value: any): this {
+    const item = this.getProperty(path);
+    if (!item) {
+      throw new Error(`Invalid path: ${path}`);
+    }
+    item.resetValue(value, false);
+    return this;
   }
 
   onSubmit(e: Event) {

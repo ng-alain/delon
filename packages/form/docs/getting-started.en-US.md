@@ -166,13 +166,16 @@ export class HomeComponent {
 
 ### Methods
 
-| Method Name       | Description                   | Return Value |
-|-------------------|-------------------------------|--------------|
-| `valid`           | Form is valid                 | `boolean`    |
-| `value`           | The current value of the form | `any`        |
-| `refreshSchema()` | Refresh JSON Schema           | `void`       |
-| `reset()`         | Resets the form               | `void`       |
-| `validator()`     | Manually verify a form        | `void`       |
+| Method Name     | Description                                                 | Return Value   |
+|-----------------|-------------------------------------------------------------|----------------|
+| `valid`         | Form is valid                                               | `boolean`      |
+| `value`         | The current value of the form                               | `any`          |
+| `refreshSchema` | Refresh JSON Schema                                         | `void`         |
+| `reset`         | Resets the form                                             | `void`         |
+| `validator`     | Manually verify a form                                      | `void`         |
+| `getProperty`   | Get a form property via path                                | `FormProperty` |
+| `getValue`      | Get value via path                                          | `any`          |
+| `setValue`      | Set value via path, shoudl be throw error when invalid path | `this`         |
 
 ### Button
 

@@ -168,13 +168,16 @@ export class HomeComponent {
 
 ### 组件方法
 
-| 参数          | 说明             | 返回值    |
-|---------------|------------------|-----------|
-| `valid`         | 表单是否有效     | `boolean` |
-| `value`         | 表单值         | `any`     |
-| `refreshSchema` | 刷新 JSON Schema | `void`    |
-| `reset`         | 重置表单         | `void`    |
-| `validator`     | 手动校验一次表单         | `void`    |
+| 参数            | 说明                                                  | 返回值         |
+|-----------------|-----------------------------------------------------|----------------|
+| `valid`         | 表单是否有效                                          | `boolean`      |
+| `value`         | 表单值                                                | `any`          |
+| `refreshSchema` | 刷新 JSON Schema                                      | `void`         |
+| `reset`         | 重置表单                                              | `void`         |
+| `validator`     | 手动校验一次表单                                      | `void`         |
+| `getProperty`   | 根据路径获取表单元素属性                              | `FormProperty` |
+| `getValue`      | 根据路径获取表单元素当前值                            | `any`          |
+| `setValue`      | 根据路径设置某个表单元素属性值，若路径不存在会产生异常 | `this`         |
 
 ### 按钮说明
 
