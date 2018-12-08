@@ -7,18 +7,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "alain-pro-color-less",
-      "program": "${workspaceFolder}/scripts/scaffold/alain-pro-color-less.js"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "generate-scaffold-color-less",
-      "program": "${workspaceFolder}/scripts/scaffold/generate-color-less.js"
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "debug build",
       "sourceMaps": false,
       "program": "${workspaceFolder}/scripts/build/packing.js",

@@ -29,9 +29,9 @@ export function pluginG2(options: PluginOptions): Rule {
     (options.type === 'add'
       ? addPackageToPackageJson
       : removePackageFromPackageJson)(host, [
-        '@antv/data-set@^0.8.8',
-        '@antv/g2@^3.0.11',
-        '@antv/g2-plugin-slider@^2.0.2',
+        '@antv/data-set@DEP-0.0.0-PLACEHOLDER',
+        '@antv/g2@DEP-0.0.0-PLACEHOLDER',
+        '@antv/g2-plugin-slider@DEP-0.0.0-PLACEHOLDER',
       ]);
     // angular
     scriptsToAngularJson(

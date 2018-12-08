@@ -74,8 +74,8 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       // allow ignore ng-zorro-antd becauce of @delon/theme dependency
       `ng-zorro-antd@${ZORROVERSION}`,
       // ng-zorro-antd need
-      'screenfull@^3.3.1',
-      'ajv@^6.4.0',
+      'screenfull@DEP-0.0.0-PLACEHOLDER',
+      'ajv@DEP-0.0.0-PLACEHOLDER',
     ]);
     // add ajv
     scriptsToAngularJson(host, ['node_modules/ajv/dist/ajv.bundle.js'], 'add', [
@@ -103,15 +103,15 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       [
         `ng-alain@${VERSION}`,
         // color-less
-        `less-bundle-promise@^1.0.7`,
+        `less-bundle-promise@DEP-0.0.0-PLACEHOLDER`,
       ],
       'devDependencies',
     );
     // i18n
     if (options.i18n) {
       addPackageToPackageJson(host, [
-        `@ngx-translate/core@^10.0.1`,
-        `@ngx-translate/http-loader@^3.0.1`,
+        `@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`,
+        `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`,
       ]);
     }
     return host;
@@ -226,15 +226,15 @@ function addCodeStylesToPackageJson() {
     }
     // dependencies
     addPackageToPackageJson(host, [
-      `tslint-config-prettier@^1.12.0`,
-      `tslint-language-service@^0.9.9`,
-      `editorconfig-tools@^0.1.1`,
-      `lint-staged@^7.1.2`,
-      `husky@^0.14.3`,
-      `prettier@^1.12.1`,
-      `prettier-stylelint@^0.4.2`,
-      `stylelint@^9.2.0`,
-      `stylelint-config-standard@^18.2.0`,
+      `tslint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
+      `tslint-language-service@DEP-0.0.0-PLACEHOLDER`,
+      `editorconfig-tools@DEP-0.0.0-PLACEHOLDER`,
+      `lint-staged@DEP-0.0.0-PLACEHOLDER`,
+      `husky@DEP-0.0.0-PLACEHOLDER`,
+      `prettier@DEP-0.0.0-PLACEHOLDER`,
+      `prettier-stylelint@DEP-0.0.0-PLACEHOLDER`,
+      `stylelint@DEP-0.0.0-PLACEHOLDER`,
+      `stylelint-config-standard@DEP-0.0.0-PLACEHOLDER`,
     ]);
     return host;
   };

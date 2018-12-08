@@ -75,7 +75,7 @@ export function pluginHmr(options: PluginOptions): Rule {
       ? addPackageToPackageJson
       : removePackageFromPackageJson)(
         host,
-        ['@angularclass/hmr@^2.1.3'],
+        ['@angularclass/hmr@DEP-0.0.0-PLACEHOLDER'],
         'devDependencies',
       );
     // 2. add run scripts
