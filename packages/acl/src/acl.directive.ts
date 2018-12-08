@@ -36,11 +36,7 @@ export class ACLDirective implements OnDestroy {
     this._value = value;
   }
 
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    private srv: ACLService,
-  ) {
+  constructor(private el: ElementRef, private renderer: Renderer2, private srv: ACLService) {
     this.change$ = this.srv.change.subscribe(() => this.set(this._value));
   }
 

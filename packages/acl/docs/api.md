@@ -24,6 +24,12 @@ type: Documents
 | `can(roleOrAbility: ACLCanType)` | 当前用户是否有对应角色 |
 | `canAbility(ability: ACLCanType)` | 当前用户是否有对应权限点 |
 
+### ACLCanType
+
+```ts
+type ACLCanType = number | number[] | string | string[] | ACLType
+```
+
 ### ACLType
 
 | 属性 | 类型 | 说明 | 默认 |

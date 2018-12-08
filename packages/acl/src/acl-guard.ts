@@ -23,9 +23,7 @@ export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
     private options: DelonACLConfig,
   ) { }
 
-  private process(
-    guard: ACLCanType | Observable<ACLCanType>,
-  ): Observable<boolean> {
+  private process(guard: ACLCanType | Observable<ACLCanType>): Observable<boolean> {
     return (guard && guard instanceof Observable
       ? guard
       : of(
