@@ -38,7 +38,7 @@ import { Component } from '@angular/core';
   `,
   styles: [`
   :host .ant-table-tbody > tr > td {
-    padding: 0 16px;
+    padding: 0;
   }
   `],
 })
