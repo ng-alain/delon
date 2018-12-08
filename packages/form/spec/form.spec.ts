@@ -2,7 +2,6 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { builder, TestFormComponent, SFPage, SCHEMA } from './base.spec';
 import { SFSchema } from '../src/schema/index';
-import { SFUISchemaItem, SFUISchema } from '../src/schema/ui';
 import { deepCopy } from '@delon/util';
 
 describe('form: component', () => {
@@ -341,4 +340,27 @@ describe('form: component', () => {
       expect(page.getEl('.ant-btn-primary').textContent).toBe('SAVE');
     });
   });
+
+  describe('public methods', () => {
+    beforeEach(() => ({ fixture, dl, context, page } = builder({})));
+    it('#getProperty', () => {
+      expect(context.comp.getProperty('/name')).not.toBeNull();
+    });
+    it('#getValue', () => {
+      const name = 'asdf';
+      page.newSchema({ properties: { name: { type: 'string' } } }, null, { name })
+      expect(context.comp.getValue('/name')).toBe(name);
+    });
+    it('#setValue', () => {
+      const name = 'new-asdf';
+      context.comp.setValue('/name', name);
+      expect(context.comp.value.name).toBe(name);
+    });
+    it('#setValue, shoule be throw error when invlaid path', () => {
+      expect(() => {
+        context.comp.setValue('/invalid-path', name);
+      }).toThrow();
+    });
+  });
+
 });

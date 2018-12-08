@@ -19,7 +19,7 @@ describe('abc: tag-select', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [TagSelectModule.forRoot(), DelonLocaleModule],
+      imports: [TagSelectModule, DelonLocaleModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -28,7 +28,7 @@ describe('abc: tag-select', () => {
     fixture.detectChanges();
   });
 
-  afterAll(() => context.comp.ngOnDestroy());
+  afterEach(() => context.comp.ngOnDestroy());
 
   describe('#expandable', () => {
     it('with true', () => {

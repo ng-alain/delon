@@ -15,14 +15,14 @@ export function isDecimal(value: string | number): boolean {
 }
 
 /** 是否为身份证 */
-export function isIdCard(value: any): boolean {
+export function isIdCard(value: string): boolean {
   return (
     typeof value === 'string' && /(^\d{15}$)|(^\d{17}([0-9]|X)$)/i.test(value)
   );
 }
 
 /** 是否为手机号 */
-export function isMobile(value: any): boolean {
+export function isMobile(value: string): boolean {
   return (
     typeof value === 'string' &&
     /^(0|\+?86|17951)?(13[0-9]|15[0-9]|17[0678]|18[0-9]|14[57])[0-9]{8}$/.test(

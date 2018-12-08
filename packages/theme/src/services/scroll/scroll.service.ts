@@ -1,5 +1,6 @@
-import { Injectable, Inject } from '@angular/core';
+// tslint:disable:no-any
 import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import { WINDOW } from '../../win_tokens';
 
 @Injectable({ providedIn: 'root' })
@@ -7,7 +8,7 @@ export class ScrollService {
   constructor(
     @Inject(WINDOW) private win: any,
     @Inject(DOCUMENT) private doc: any,
-  ) {}
+  ) { }
 
   /**
    * 设置滚动条至指定元素

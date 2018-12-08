@@ -1,53 +1,29 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NoticeItem, NoticeIconSelect } from './notice-icon.types';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
   selector: 'notice-icon-tab',
-  template: `
-  <div *ngIf="data.list?.length === 0; else listTpl" class="notice-icon__notfound">
-    <img class="notice-icon__notfound-img" *ngIf="data.emptyImage" src="{{data.emptyImage}}" alt="not found" />
-    <p>{{data.emptyText || locale.emptyText}}</p>
-  </div>
-  <ng-template #listTpl>
-    <nz-list [nzDataSource]="data.list" [nzRenderItem]="item">
-      <ng-template #item let-item>
-        <nz-list-item (click)="onClick(item)" [ngClass]="{'notice-icon__item-read': item.read}">
-          <nz-list-item-meta
-            [nzTitle]="nzTitle"
-            [nzDescription]="nzDescription"
-            [nzAvatar]="item.avatar">
-            <ng-template #nzTitle>
-              {{item.title}}
-              <div class="notice-icon__item-extra" *ngIf="item.extra"><nz-tag [nzColor]="item.color">{{item.extra}}</nz-tag></div>
-            </ng-template>
-            <ng-template #nzDescription>
-              <div *ngIf="item.description" class="notice-icon__item-desc">{{item.description}}</div>
-              <div *ngIf="item.datetime" class="notice-icon__item-time">{{item.datetime}}</div>
-            </ng-template>
-          </nz-list-item-meta>
-        </nz-list-item>
-      </ng-template>
-    </nz-list>
-    <div class="notice-icon__clear" (click)="onClear()">{{ data.clearText || locale.clearText }}</div>
-  </ng-template>
-  `,
-  preserveWhitespaces: false,
+  templateUrl: './notice-icon-tab.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoticeIconTabComponent {
-  @Input()
-  locale: any = {};
-  @Input()
-  data: NoticeItem;
-  @Output()
-  readonly select = new EventEmitter<NoticeIconSelect>();
-  @Output()
-  readonly clear = new EventEmitter<string>();
+  // tslint:disable-next-line:no-any
+  @Input() locale: any = {};
+  @Input() data: NoticeItem;
+  @Output() readonly select = new EventEmitter<NoticeIconSelect>();
+  @Output() readonly clear = new EventEmitter<string>();
 
   onClick(item: NoticeItem) {
-    this.select.emit(<NoticeIconSelect>{
+    this.select.emit({
       title: this.data.title,
       item,
-    });
+    } as NoticeIconSelect);
   }
 
   onClear() {

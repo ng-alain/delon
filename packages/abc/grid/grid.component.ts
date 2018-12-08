@@ -1,13 +1,14 @@
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
+  ElementRef,
+  Host,
+  HostBinding,
   Input,
   OnChanges,
-  ElementRef,
-  Renderer2,
-  Host,
   Optional,
-  AfterViewInit,
-  HostBinding,
+  Renderer2,
 } from '@angular/core';
 
 import { ResponsiveService } from '@delon/theme';
@@ -19,17 +20,17 @@ const prefixCls = `sg`;
 
 @Component({
   selector: 'sg',
-  template: `<ng-content></ng-content>`,
-  preserveWhitespaces: false,
+  template: `
+    <ng-content></ng-content>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SGComponent implements OnChanges, AfterViewInit {
   private el: HTMLElement;
   private clsMap: string[] = [];
   private inited = false;
 
-  @Input()
-  @InputNumber(null)
-  col: number;
+  @Input() @InputNumber(null) col: number;
 
   @HostBinding('style.padding-left.px')
   get paddingLeft(): number {

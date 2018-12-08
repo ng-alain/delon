@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ObjectLayoutWidget } from '../../widget';
-import { SFGridSchema } from '../../schema/ui';
 import { FormProperty } from '../../model/form.property';
+import { SFGridSchema } from '../../schema/ui';
+import { ObjectLayoutWidget } from '../../widget';
 
 @Component({
   selector: 'sf-object',
@@ -27,22 +27,21 @@ import { FormProperty } from '../../model/form.property';
       </ng-container>
     </ng-container>
   </ng-template>`,
-  preserveWhitespaces: false,
 })
 export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   grid: SFGridSchema;
-  list: any[] = [];
+  list: Array<{}> = [];
 
   ngOnInit(): void {
     this.grid = this.ui.grid;
-    const list: any[] = [];
+    const list: Array<{}> = [];
     for (const key of this.formProperty.propertiesId) {
       const property = this.formProperty.properties[key] as FormProperty;
       const item = {
         property,
         grid: property.ui.grid || this.grid || {},
         spanLabelFixed: property.ui.spanLabelFixed,
-        show: property.ui.hidden === false
+        show: property.ui.hidden === false,
       };
       list.push(item);
     }

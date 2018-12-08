@@ -61,7 +61,7 @@ describe('abc: reuse-tab', () => {
       ],
       imports: [
         DelonLocaleModule,
-        ReuseTabModule.forRoot(),
+        ReuseTabModule,
         RouterTestingModule.withRoutes([
           {
             path: '',

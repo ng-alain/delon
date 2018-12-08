@@ -1,49 +1,35 @@
-import { Injectable, Injector } from '@angular/core';
+// tslint:disable:no-any
 import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpSentEvent,
-  HttpHeaderResponse,
-  HttpProgressEvent,
-  HttpResponse,
-  HttpUserEvent,
   HttpErrorResponse,
   HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
 } from '@angular/common/http';
-import { Observable, Observer, of } from 'rxjs';
+import { Injectable, Injector } from '@angular/core';
+import { of, Observable, Observer } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 
 import { _HttpClient } from '@delon/theme';
 
+import { MockRequest } from './interface';
 import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
-import { MockRequest } from './interface';
 
 @Injectable()
 export class MockInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) { }
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler,
-  ): Observable<
-    | HttpSentEvent
-    | HttpHeaderResponse
-    | HttpProgressEvent
-    | HttpResponse<any>
-    | HttpUserEvent<any>
-  > {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const src = this.injector.get(MockService);
-    const config = Object.assign(
-      {
-        delay: 300,
-        force: false,
-        log: true,
-      },
-      this.injector.get(DelonMockConfig, null),
-    );
+    const config = {
+      delay: 300,
+      force: false,
+      log: true,
+      ...this.injector.get(DelonMockConfig, null),
+    };
     const rule = src.getRule(req.method, req.url.split('?')[0]);
     if (!rule && !config.force) {
       return next.handle(req);
@@ -96,20 +82,9 @@ export class MockInterceptor implements HttpInterceptor {
               error: e.error,
             });
             if (config.log)
-              console.log(
-                `%c💀${req.method}->${req.url}`,
-                'background:#000;color:#bada55',
-                errRes,
-                req,
-              );
+              console.log(`%c💀${req.method}->${req.url}`, 'background:#000;color:#bada55', errRes, req);
           } else {
-            console.log(
-              `%c💀${req.method}->${req.url}`,
-              'background:#000;color:#bada55',
-              `Please use MockStatusError to throw status error`,
-              e,
-              req,
-            );
+            console.log(`%c💀${req.method}->${req.url}`, 'background:#000;color:#bada55', `Please use MockStatusError to throw status error`, e, req);
           }
           return new Observable((observer: Observer<HttpEvent<any>>) => {
             observer.error(errRes);
@@ -128,27 +103,15 @@ export class MockInterceptor implements HttpInterceptor {
     });
 
     if (config.log) {
-      console.log(
-        `%c👽${req.method}->${req.url}->request`,
-        'background:#000;color:#bada55',
-        req,
-      );
-      console.log(
-        `%c👽${req.method}->${req.url}->response`,
-        'background:#000;color:#bada55',
-        response,
-      );
+      console.log(`%c👽${req.method}->${req.url}->request`, 'background:#000;color:#bada55', req);
+      console.log(`%c👽${req.method}->${req.url}->response`, 'background:#000;color:#bada55', response);
     }
     const hc = this.injector.get(_HttpClient, null);
-    if (hc) {
-      hc.begin();
-    }
+    if (hc) hc.begin();
     return of(response).pipe(
       delay(config.delay),
       tap(() => {
-        if (hc) {
-          hc.end();
-        }
+        if (hc) hc.end();
       }),
     );
   }

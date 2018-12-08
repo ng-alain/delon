@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-import { isNum, isInt, isDecimal, isIdCard, isMobile } from './validate';
+import { isDecimal, isIdCard, isInt, isMobile, isNum } from './validate';
 
 /** 一套日常验证器 */
 // tslint:disable-next-line:class-name

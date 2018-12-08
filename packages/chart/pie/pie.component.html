@@ -1,8 +1,12 @@
 <div class="g2-pie__chart">
   <div #container></div>
   <div *ngIf="subTitle || total" class="g2-pie__total">
-    <h4 *ngIf="subTitle" class="g2-pie__total-title" [innerHTML]="subTitle"></h4>
-    <div *ngIf="total" class="g2-pie__total-stat" [innerHTML]="total"></div>
+    <h4 *ngIf="subTitle" class="g2-pie__total-title">
+      <ng-container *stringTemplateOutlet="subTitle"><div [innerHTML]="subTitle"></div></ng-container>
+    </h4>
+    <div *ngIf="total" class="g2-pie__total-stat">
+      <ng-container *stringTemplateOutlet="total"><div [innerHTML]="total"></div></ng-container>
+    </div>
   </div>
 </div>
 <ul *ngIf="hasLegend && legendData?.length" class="g2-pie__legend">

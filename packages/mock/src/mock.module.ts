@@ -1,9 +1,9 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { DelonMockConfig } from './mock.config';
-import { MockService } from './mock.service';
 import { MockInterceptor } from './mock.interceptor';
+import { MockService } from './mock.service';
 
 @NgModule({})
 export class DelonMockModule {

@@ -6,11 +6,12 @@
     "baseUrl": ".",
     "paths": {
       "@delon/chart/*": ["./*"],
-      "@delon/*": [ "../*" ]
+      "@delon/*": ["../*"]
     }
   },
   "files": [
-    "public_api.ts"
+    "public_api.ts",
+    "../typings.d.ts"
   ],
   "include": ["./**/*.ts"]
 }

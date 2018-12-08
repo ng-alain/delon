@@ -53,7 +53,7 @@ describe('abc: xlsx', () => {
   let srv: XlsxService;
   function genModule() {
     const injector = TestBed.configureTestingModule({
-      imports: [XlsxModule.forRoot(), HttpClientTestingModule],
+      imports: [XlsxModule, HttpClientTestingModule],
       declarations: [TestComponent],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '../../widget';
 import { toBool } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-rate',
@@ -19,7 +19,6 @@ import { toBool } from '../../utils';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class RateWidget extends ControlWidget implements OnInit {
   count: number;

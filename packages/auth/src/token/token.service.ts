@@ -1,22 +1,22 @@
-import { Injectable, Inject } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { inject, Inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
-import { ITokenService, ITokenModel } from './interface';
-import { DA_STORE_TOKEN, IStore } from '../store/interface';
 import { DelonAuthConfig } from '../auth.config';
+import { DA_STORE_TOKEN, IStore } from '../store/interface';
+import { ITokenModel, ITokenService } from './interface';
 
-@Injectable()
+export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
+  return new TokenService(inject(DelonAuthConfig), inject(DA_STORE_TOKEN));
+}
+
 export class TokenService implements ITokenService {
-  private change$: BehaviorSubject<ITokenModel> = new BehaviorSubject<
-    ITokenModel
-  >(null);
-  private data: ITokenModel;
+  private change$: BehaviorSubject<ITokenModel> = new BehaviorSubject<ITokenModel>(null);
   private _redirect: string;
 
   constructor(
     private options: DelonAuthConfig,
     @Inject(DA_STORE_TOKEN) private store: IStore,
-  ) {}
+  ) { }
 
   get login_url(): string {
     return this.options.login_url;
@@ -35,8 +35,9 @@ export class TokenService implements ITokenService {
     return this.store.set(this.options.store_key, data);
   }
 
+  // tslint:disable-next-line:no-any
   get(type?: any);
-  get<T extends ITokenModel>(type?: { new (): T }): T {
+  get<T extends ITokenModel>(type?: { new(): T }): T {
     const data = this.store.get(this.options.store_key);
     return type ? (Object.assign(new type(), data) as T) : (data as T);
   }

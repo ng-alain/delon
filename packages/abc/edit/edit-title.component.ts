@@ -1,10 +1,11 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  Host,
   ElementRef,
-  Renderer2,
+  Host,
   OnInit,
   Optional,
+  Renderer2,
 } from '@angular/core';
 import { SEContainerComponent } from './edit-container.component';
 
@@ -14,6 +15,7 @@ import { SEContainerComponent } from './edit-container.component';
   host: {
     '[class.se__title]': 'true',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SETitleComponent implements OnInit {
   private el: HTMLElement;

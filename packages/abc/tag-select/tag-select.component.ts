@@ -1,28 +1,28 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  EventEmitter,
   HostBinding,
   Input,
-  Output,
-  EventEmitter,
   OnDestroy,
+  OnInit,
+  Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { InputBoolean } from '@delon/util';
 import { DelonLocaleService } from '@delon/theme';
+import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'tag-select',
-  template: `
-  <ng-content></ng-content>
-  <a *ngIf="expandable" class="tag-select__trigger" (click)="trigger()">
-    {{expand ? locale.collapse : locale.expand}}<i nz-icon [type]="expand ? 'up' : 'down'" class="tag-select__trigger-icon"></i>
-  </a>`,
+  templateUrl: './tag-select.component.html',
   host: { '[class.tag-select]': 'true' },
-  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TagSelectComponent implements OnDestroy {
+export class TagSelectComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
+  // tslint:disable-next-line:no-any
   locale: any = {};
 
   /** 是否启用 `展开与收进` */
@@ -37,10 +37,16 @@ export class TagSelectComponent implements OnDestroy {
   @Output()
   readonly change = new EventEmitter<boolean>();
 
-  constructor(private i18n: DelonLocaleService) {
-    this.i18n$ = this.i18n.change.subscribe(
-      () => (this.locale = this.i18n.getData('tagSelect')),
-    );
+  constructor(
+    private i18n: DelonLocaleService,
+    private cdr: ChangeDetectorRef,
+  ) { }
+
+  ngOnInit() {
+    this.i18n$ = this.i18n.change.subscribe(() => {
+      this.locale = this.i18n.getData('tagSelect');
+      this.cdr.detectChanges();
+    });
   }
 
   trigger() {

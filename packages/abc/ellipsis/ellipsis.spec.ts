@@ -11,7 +11,7 @@ describe('abc: ellipsis', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [EllipsisModule.forRoot()],
+      imports: [EllipsisModule],
       declarations: [TestComponent],
     });
 

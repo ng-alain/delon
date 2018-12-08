@@ -1,9 +1,11 @@
-import { PropertyGroup } from './form.property';
-import { FormPropertyFactory } from './form.property.factory';
-import { SchemaValidatorFactory } from '../validator.factory';
 import { DelonFormConfig } from '../config';
+import { SFValue } from '../interface';
+import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { orderProperties } from '../utils';
+import { SchemaValidatorFactory } from '../validator.factory';
+import { PropertyGroup } from './form.property';
+import { FormPropertyFactory } from './form.property.factory';
 
 export class ObjectProperty extends PropertyGroup {
   private _propertiesId: string[] = [];
@@ -15,7 +17,7 @@ export class ObjectProperty extends PropertyGroup {
   constructor(
     private formPropertyFactory: FormPropertyFactory,
     schemaValidatorFactory: SchemaValidatorFactory,
-    schema: any,
+    schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
     formData: {},
     parent: PropertyGroup,
@@ -53,7 +55,7 @@ export class ObjectProperty extends PropertyGroup {
     });
   }
 
-  setValue(value: any, onlySelf: boolean) {
+  setValue(value: SFValue, onlySelf: boolean) {
     for (const propertyId in value) {
       if (value.hasOwnProperty(propertyId)) {
         this.properties[propertyId].setValue(value[propertyId], true);
@@ -61,7 +63,8 @@ export class ObjectProperty extends PropertyGroup {
     }
     this.updateValueAndValidity(onlySelf, true);
   }
-  resetValue(value: any, onlySelf: boolean) {
+
+  resetValue(value: SFValue, onlySelf: boolean) {
     value = value || this.schema.default || {};
     // tslint:disable-next-line:forin
     for (const propertyId in this.schema.properties) {
@@ -69,12 +72,14 @@ export class ObjectProperty extends PropertyGroup {
     }
     this.updateValueAndValidity(onlySelf, true);
   }
+
   _hasValue(): boolean {
     return this.value != null && !!Object.keys(this.value).length;
   }
+
   _updateValue() {
-    const value: any = {};
-    this.forEachChild((property: any, propertyId: string) => {
+    const value: SFValue = {};
+    this.forEachChild((property, propertyId) => {
       if (property.visible && property._hasValue()) {
         value[propertyId] = property.value;
       }

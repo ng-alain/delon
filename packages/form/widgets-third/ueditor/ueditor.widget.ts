@@ -14,14 +14,13 @@ import { ControlWidget } from '@delon/form';
     </ueditor>
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
   styles: [`:host ueditor { line-height:normal; }`],
 })
 // tslint:disable-next-line:component-class-suffix
 export class UeditorWidget extends ControlWidget implements OnInit {
   static readonly KEY = 'ueditor';
 
-  config: any;
+  config: {};
   loading: string;
   delay: number;
 

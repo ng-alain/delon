@@ -1,50 +1,43 @@
-import { Component, Input, TemplateRef } from '@angular/core';
-import { toNumber, InputNumber, InputBoolean } from '@delon/util';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  TemplateRef,
+} from '@angular/core';
+import { toNumber, InputBoolean, InputNumber } from '@delon/util';
 import { SEConfig } from './edit.config';
 
 @Component({
   selector: 'se-container, [se-container]',
   templateUrl: './edit-container.component.html',
-  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SEContainerComponent {
   //#region fields
 
-  _title = '';
-  _titleTpl: TemplateRef<any>;
-  @Input()
-  set title(value: string | TemplateRef<any>) {
-    if (value instanceof TemplateRef) {
-      this._title = null;
-      this._titleTpl = value;
-    } else {
-      this._title = value;
-    }
-  }
+  @Input() title: string | TemplateRef<void>;
 
   @Input()
-  get gutter() {
+  get gutter(): number {
     return this.nzLayout === 'horizontal' ? this._gutter : 0;
   }
-  set gutter(value: any) {
+  set gutter(value: number) {
     this._gutter = toNumber(value);
   }
   private _gutter: number;
 
   @Input('se-container')
-  set col(value: any) {
+  set col(value: number) {
     const a = toNumber(value, 0);
     if (a <= 0) return;
     this._col = toNumber(value, 0);
   }
-  get col() {
+  get col(): number {
     return this._col;
   }
   private _col: number;
 
-  @Input()
-  @InputNumber(null)
-  labelWidth: number;
+  @Input() @InputNumber(null) labelWidth: number;
 
   @Input()
   get nzLayout() {
@@ -58,16 +51,9 @@ export class SEContainerComponent {
   }
   private _nzLayout: string;
 
-  @Input()
-  size: 'default' | 'compact';
-
-  @Input()
-  @InputBoolean()
-  firstVisual: boolean;
-
-  @Input()
-  @InputBoolean()
-  line = false;
+  @Input() size: 'default' | 'compact';
+  @Input() @InputBoolean() firstVisual: boolean;
+  @Input() @InputBoolean() line = false;
 
   //#endregion
 

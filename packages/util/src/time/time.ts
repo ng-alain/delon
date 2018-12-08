@@ -1,14 +1,14 @@
-import parse from 'date-fns/parse';
-import startOfWeek from 'date-fns/start_of_week';
-import endOfWeek from 'date-fns/end_of_week';
-import subWeeks from 'date-fns/sub_weeks';
-import startOfMonth from 'date-fns/start_of_month';
-import endOfMonth from 'date-fns/end_of_month';
-import subMonths from 'date-fns/sub_months';
-import startOfYear from 'date-fns/start_of_year';
-import endOfYear from 'date-fns/end_of_year';
-import subYears from 'date-fns/sub_years';
 import addDays from 'date-fns/add_days';
+import endOfMonth from 'date-fns/end_of_month';
+import endOfWeek from 'date-fns/end_of_week';
+import endOfYear from 'date-fns/end_of_year';
+import parse from 'date-fns/parse';
+import startOfMonth from 'date-fns/start_of_month';
+import startOfWeek from 'date-fns/start_of_week';
+import startOfYear from 'date-fns/start_of_year';
+import subMonths from 'date-fns/sub_months';
+import subWeeks from 'date-fns/sub_weeks';
+import subYears from 'date-fns/sub_years';
 
 /**
  * 获取时间范围

@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { ACLType, ACLCanType } from './acl.type';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ACLCanType, ACLType } from './acl.type';
 
 /**
  * 访问控制服务
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ACLService {
   private roles: string[] = [];
-  private abilities: (number | string)[] = [];
+  private abilities: Array<number | string> = [];
   private full = false;
-  private aclChange: BehaviorSubject<ACLType | boolean> = new BehaviorSubject<
-    ACLType | boolean
-  >(null);
+  private aclChange: BehaviorSubject<ACLType | boolean> = new BehaviorSubject<ACLType | boolean>(null);
 
   /** ACL变更通知 */
   get change(): Observable<ACLType | boolean> {
@@ -30,14 +28,14 @@ export class ACLService {
 
   private parseACLType(val: string | string[] | ACLType): ACLType {
     if (typeof val !== 'string' && !Array.isArray(val)) {
-      return <ACLType>val;
+      return val as ACLType;
     }
     if (Array.isArray(val)) {
-      return <ACLType>{ role: <string[]>val };
+      return { role: val as string[] } as ACLType;
     }
-    return <ACLType>{
+    return {
       role: [val],
-    };
+    } as ACLType;
   }
 
   /**
@@ -61,15 +59,15 @@ export class ACLService {
   /**
    * 设置当前用户权限能力（会先清除所有）
    */
-  setAbility(abilities: (number | string)[]) {
-    this.set(<ACLType>{ ability: abilities });
+  setAbility(abilities: Array<number | string>) {
+    this.set({ ability: abilities } as ACLType);
   }
 
   /**
    * 设置当前用户角色（会先清除所有）
    */
   setRole(roles: string[]) {
-    this.set(<ACLType>{ role: roles });
+    this.set({ role: roles } as ACLType);
   }
 
   /**
@@ -99,7 +97,7 @@ export class ACLService {
   /**
    * 为当前用户附加权限
    */
-  attachAbility(abilities: (number | string)[]) {
+  attachAbility(abilities: Array<number | string>) {
     for (const val of abilities) {
       if (!this.abilities.includes(val)) {
         this.abilities.push(val);
@@ -124,7 +122,7 @@ export class ACLService {
   /**
    * 为当前用户移除权限
    */
-  removeAbility(abilities: (number | string)[]) {
+  removeAbility(abilities: Array<number | string>) {
     for (const val of abilities) {
       const idx = this.abilities.indexOf(val);
       if (idx !== -1) {
@@ -163,9 +161,13 @@ export class ACLService {
       else return t.role.some(v => this.roles.includes(v));
     }
     if (t.ability) {
-      if (t.mode === 'allOf')
+      if (t.mode === 'allOf') {
+        // tslint:disable-next-line:no-any
         return (t.ability as any[]).every(v => this.abilities.includes(v));
-      else return (t.ability as any[]).some(v => this.abilities.includes(v));
+      } else {
+        // tslint:disable-next-line:no-any
+        return (t.ability as any[]).some(v => this.abilities.includes(v));
+      }
     }
     return false;
   }
@@ -177,7 +179,7 @@ export class ACLService {
       typeof value === 'string' ||
       Array.isArray(value)
     ) {
-      value = <ACLType>{ ability: Array.isArray(value) ? value : [value] };
+      value = { ability: Array.isArray(value) ? value : [value] } as ACLType;
     }
     delete value.role;
     return value;

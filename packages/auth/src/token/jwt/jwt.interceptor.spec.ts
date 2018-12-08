@@ -41,7 +41,7 @@ describe('auth: jwt.interceptor', () => {
             component: MockComponent,
           },
         ]),
-        DelonAuthModule.forRoot(),
+        DelonAuthModule,
       ],
       providers: [
         { provide: DelonAuthConfig, useValue: options },

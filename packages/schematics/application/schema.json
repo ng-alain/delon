@@ -1,33 +1,38 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsWeUIShell",
-  "title": "WeUI Shell Options Schema",
+  "id": "SchematicsNgAlainShell",
+  "title": "Ng Alain Shell Options Schema",
   "type": "object",
   "properties": {
     "codeStyle": {
       "type": "boolean",
       "default": true,
-      "description": "Do not add code styles (e.g., --codeStyle)"
+      "description": "Generate code style plugin",
+      "x-prompt": "Would you like to add code style plugin? (default: Y)"
     },
     "form": {
       "type": "boolean",
-      "description": "Generates form.",
-      "default": true
+      "description": "Generate dynamic form (sf component) plugin",
+      "default": true,
+      "x-prompt": "Would you like to add dynamic form (sf component) plugin? (default: Y)"
     },
     "mock": {
       "type": "boolean",
-      "description": "Generates mock.",
-      "default": true
+      "description": "Generate mock plugin",
+      "default": true,
+      "x-prompt": "Would you like to add mock plugin? (default: Y)"
     },
     "i18n": {
       "type": "boolean",
-      "description": "Generates i18n.",
-      "default": false
+      "description": "Generate i18n plugin",
+      "default": false,
+      "x-prompt": "Would you like to add i18n plugin? (default: N)"
     },
     "g2": {
       "type": "boolean",
-      "description": "Generates g2.",
-      "default": false
+      "description": "Generate g2 chart plugin",
+      "default": false,
+      "x-prompt": "Would you like to add g2 chart plugin? (default: N)"
     },
     "defaultLanguage": {
       "type": "string",

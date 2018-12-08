@@ -2,8 +2,8 @@ import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { NumberInfoModule } from './number-info.module';
 import { NumberInfoComponent } from './number-info.component';
+import { NumberInfoModule } from './number-info.module';
 
 describe('abc: number-info', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: number-info', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NumberInfoModule.forRoot()],
+      imports: [NumberInfoModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -21,20 +21,22 @@ describe('abc: number-info', () => {
     fixture.detectChanges();
   });
 
-  function isText(cls: string, value: any) {
+  function isText(cls: string, value: string) {
     const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
-    if (el) return el.innerText.trim();
-    return '';
+    expect(el ? el.textContent.trim() : '').toBe(value);
   }
 
   function isExists(cls: string, stauts: boolean = true) {
-    if (stauts) expect(dl.query(By.css(cls))).not.toBeNull();
-    else expect(dl.query(By.css(cls))).toBeNull();
+    if (stauts) {
+      expect(dl.query(By.css(cls))).not.toBeNull();
+    } else {
+      expect(dl.query(By.css(cls))).toBeNull();
+    }
   }
 
   describe('#title', () => {
     it('with string', () => {
-      isText('.number-info__title', context.title);
+      isText('.number-info__title', context.title as string);
     });
     it('with template', () => {
       context.title = context.titleTpl;
@@ -45,7 +47,7 @@ describe('abc: number-info', () => {
 
   describe('#subTitle', () => {
     it('with string', () => {
-      isText('.number-info__title-sub', context.subTitle);
+      isText('.number-info__title-sub', context.subTitle as string);
     });
     it('with template', () => {
       context.subTitle = context.subTitleTpl;
@@ -56,7 +58,7 @@ describe('abc: number-info', () => {
 
   describe('#total', () => {
     it('with string', () => {
-      expect(context.total).toBe(context.comp._total);
+      expect(context.total).toBe(context.comp.total);
     });
     it('with template', () => {
       context.total = context.totalTpl;

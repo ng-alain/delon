@@ -1,9 +1,9 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { AvatarListComponent } from './avatar-list.component';
 import { AvatarListItemComponent } from './avatar-list-item.component';
+import { AvatarListComponent } from './avatar-list.component';
 
 const COMPONENTS = [AvatarListComponent, AvatarListItemComponent];
 
@@ -13,7 +13,4 @@ const COMPONENTS = [AvatarListComponent, AvatarListItemComponent];
   exports: [...COMPONENTS],
 })
 export class AvatarListModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: AvatarListModule, providers: [] };
-  }
 }

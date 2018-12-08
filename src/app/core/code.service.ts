@@ -5,8 +5,8 @@ import sdk from '@stackblitz/sdk';
 @Injectable({ providedIn: 'root' })
 export class CodeService {
   openOnStackBlitz(code: string, title: string, summary: string) {
-    let selector = '',
-      componentName = '';
+    let selector = '';
+    let componentName = '';
     const selectorRe = /selector:[ ]?(['|"|`])([^'"`]+)/g.exec(code);
     if (selectorRe) {
       selector = selectorRe[2];
@@ -256,15 +256,15 @@ imports: [
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([]),
-    NgZorroAntdModule.forRoot(),
+    NgZorroAntdModule,
     AlainThemeModule.forRoot(),
-    DelonABCModule.forRoot(),
-    DelonChartModule.forRoot(),
-    DelonAuthModule.forRoot(),
-    DelonACLModule.forRoot(),
-    DelonCacheModule.forRoot(),
+    DelonABCModule,
+    DelonChartModule,
+    DelonACLModule,
+    DelonCacheModule,
+    DelonUtilModule,
+    DelonAuthModule,
     DelonFormModule.forRoot(),
-    DelonUtilModule.forRoot(),
     DelonMockModule.forRoot({ data: MOCKDATA }),
 ],
 providers: [
@@ -283,39 +283,39 @@ export class AppModule { }
   `,
         'src/styles.less': ``,
         '_mock/user.ts': require('!!raw-loader!../../../_mock/user.ts'),
-        '_mock/index.ts': `export * from './user';`
+        '_mock/index.ts': `export * from './user';`,
       },
       template: 'angular-cli',
       dependencies: {
-        '@angular/cdk': '^6.0.0',
-        '@angular/core': '^6.0.0',
-        '@angular/forms': '^6.0.0',
-        '@angular/http': '^6.0.0',
-        '@angular/language-service': '^6.0.0',
-        '@angular/platform-browser': '^6.0.0',
-        '@angular/platform-browser-dynamic': '^6.0.0',
-        '@angular/common': '^6.0.0',
-        '@angular/router': '^6.0.0',
-        '@angular/animations': '^6.0.0',
+        '@angular/cdk': '*',
+        '@angular/core': '*',
+        '@angular/forms': '*',
+        '@angular/http': '*',
+        '@angular/language-service': '*',
+        '@angular/platform-browser': '*',
+        '@angular/platform-browser-dynamic': '*',
+        '@angular/common': '*',
+        '@angular/router': '*',
+        '@angular/animations': '*',
         '@ant-design/icons-angular': '*',
         'date-fns': '*',
         'file-saver': '^1.3.3',
         'ngx-countdown': '*',
-        'ng-zorro-antd': '*',
-        '@delon/theme': '^2.0.0',
-        '@delon/abc': '^2.0.0',
-        '@delon/chart': '^2.0.0',
-        '@delon/acl': '^2.0.0',
-        '@delon/auth': '^2.0.0',
-        '@delon/cache': '^2.0.0',
-        '@delon/mock': '^2.0.0',
-        '@delon/form': '^2.0.0',
-        '@delon/util': '^2.0.0',
+        'ng-zorro-antd': '^1.9.0-rc.0',
+        '@delon/theme': '*',
+        '@delon/abc': '*',
+        '@delon/chart': '*',
+        '@delon/acl': '*',
+        '@delon/auth': '*',
+        '@delon/cache': '*',
+        '@delon/mock': '*',
+        '@delon/form': '*',
+        '@delon/util': '*',
         'extend': '*',
         'qrious': '*',
       },
     }, {
-      openFile: `src/app/app.component.ts`
-    });
+        openFile: `src/app/app.component.ts`,
+      });
   }
 }

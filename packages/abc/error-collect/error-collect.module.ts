@@ -1,9 +1,8 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
 
 import { ErrorCollectComponent } from './error-collect.component';
-import { ErrorCollectConfig } from './error-collect.config';
 
 const COMPONENTS = [ErrorCollectComponent];
 
@@ -13,10 +12,4 @@ const COMPONENTS = [ErrorCollectComponent];
   exports: [...COMPONENTS],
 })
 export class ErrorCollectModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: ErrorCollectModule,
-      providers: [ErrorCollectConfig],
-    };
-  }
 }

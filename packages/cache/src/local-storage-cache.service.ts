@@ -1,4 +1,17 @@
-import { ICacheStore, ICache } from './interface';
+import { InjectionToken } from '@angular/core';
+import { ICache, ICacheStore } from './interface';
+
+export const DC_STORE_STORAGE_TOKEN = new InjectionToken<ICacheStore>(
+  'DC_STORE_STORAGE_TOKEN',
+  {
+    providedIn: 'root',
+    factory: DC_STORE_STORAGE_TOKEN_FACTORY,
+  },
+);
+
+export function DC_STORE_STORAGE_TOKEN_FACTORY() {
+  return new LocalStorageCacheService();
+}
 
 export class LocalStorageCacheService implements ICacheStore {
   get(key: string): ICache {

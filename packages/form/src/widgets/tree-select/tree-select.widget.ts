@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '../../widget';
-import { SFSchemaEnum } from '../../schema';
-import { toBool, getData } from '../../utils';
-import { NzTreeNode, NzFormatEmitEvent } from 'ng-zorro-antd';
-import { map } from 'rxjs/operators';
 import { deepCopy } from '@delon/util';
+import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd';
+import { map } from 'rxjs/operators';
+import { SFValue } from '../../interface';
+import { SFSchemaEnum } from '../../schema';
+import { getData, toBool } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-tree-select',
@@ -34,9 +35,9 @@ import { deepCopy } from '@delon/util';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class TreeSelectWidget extends ControlWidget implements OnInit {
+  // tslint:disable-next-line:no-any
   i: any;
   data: SFSchemaEnum[] = [];
 
@@ -47,6 +48,7 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
   }
 
   private tranData(list: SFSchemaEnum[]) {
+    // tslint:disable-next-line:no-any
     return list.map(node => new NzTreeNode(deepCopy(node) as any));
   }
 
@@ -67,7 +69,7 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
     };
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData)
       .pipe(map(list => this.tranData(list)))
       .subscribe(list => {
@@ -76,7 +78,7 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
       });
   }
 
-  change(value: any) {
+  change(value: string[] | string) {
     if (this.ui.change) this.ui.change(value);
     this.setValue(value);
   }

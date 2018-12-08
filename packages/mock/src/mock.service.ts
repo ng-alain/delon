@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { DelonMockConfig } from './mock.config';
 import { MockCachedRule, MockRule } from './interface';
+import { DelonMockConfig } from './mock.config';
 
 @Injectable()
 export class MockService implements OnDestroy {
@@ -67,6 +67,7 @@ export class MockService implements OnDestroy {
     );
   }
 
+  // tslint:disable-next-line:no-any
   private genRule(key: string, callback: any): MockCachedRule {
     let method = 'GET';
     let url = key;
@@ -102,6 +103,7 @@ export class MockService implements OnDestroy {
     };
   }
 
+  // tslint:disable-next-line:no-any
   private outputError(error: any) {
     const filePath = error.message.split(': ')[0];
     const errors = error.stack
@@ -122,7 +124,7 @@ export class MockService implements OnDestroy {
 
   getRule(method: string, url: string): MockRule {
     method = (method || 'GET').toUpperCase();
-    const params: any = {};
+    const params = {};
     const list =
       this.cached.filter(
         w =>

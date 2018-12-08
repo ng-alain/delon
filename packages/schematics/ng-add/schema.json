@@ -4,35 +4,63 @@
   "title": "NgAlain Add Options Schema",
   "type": "object",
   "properties": {
-    "codeStyle": {
-      "type": "boolean",
-      "default": false,
-      "description": "Do not add code styles (e.g., --codeStyle)"
-    },
-    "form": {
-      "type": "boolean",
-      "description": "Generates form.",
-      "default": true
-    },
-    "mock": {
-      "type": "boolean",
-      "description": "Generates mock.",
-      "default": true
-    },
     "defaultLanguage": {
       "type": "string",
       "description": "Specify default language [https://ng-alain.com/docs/i18n].",
-      "default": "zh"
+      "default": "zh",
+      "x-prompt": {
+        "message": "Which default language would you like to use?",
+        "type": "list",
+        "items": [{
+            "value": "zh",
+            "label": "简体中文"
+          },
+          {
+            "value": "zh-Hant",
+            "label": "繁体中文"
+          },
+          {
+            "value": "en",
+            "label": "English"
+          }
+        ]
+      }
+    },
+    "hmr": {
+      "type": "boolean",
+      "description": "Generates hmr files and configuration",
+      "default": true,
+      "x-prompt": "Would you like to add hmr plugin? (default: Y)"
+    },
+    "codeStyle": {
+      "type": "boolean",
+      "default": true,
+      "description": "Generate code style plugin",
+      "x-prompt": "Would you like to add code style plugin? (default: Y)"
+    },
+    "form": {
+      "type": "boolean",
+      "description": "Generate dynamic form (sf component) plugin",
+      "default": true,
+      "x-prompt": "Would you like to add dynamic form (sf component) plugin? (default: Y)"
+    },
+    "mock": {
+      "type": "boolean",
+      "description": "Generate mock plugin",
+      "default": true,
+      "x-prompt": "Would you like to add mock plugin? (default: Y)"
     },
     "i18n": {
       "type": "boolean",
-      "description": "Generates i18n.",
-      "default": false
+      "description": "Generate i18n plugin",
+      "default": false,
+      "x-prompt": "Would you like to add i18n plugin? (default: N)"
     },
     "g2": {
       "type": "boolean",
-      "description": "Generates g2.",
-      "default": false
+      "description": "Generate g2 chart plugin",
+      "default": false,
+      "x-prompt": "Would you like to add g2 chart plugin? (default: N)"
     },
     "npm": {
       "type": "boolean",
@@ -43,11 +71,6 @@
       "type": "boolean",
       "description": "Generates .yarnrc proxy to taobao.",
       "default": false
-    },
-    "hmr": {
-      "type": "boolean",
-      "description": "Generates hmr files and configuration",
-      "default": true
     }
   }
 }

@@ -1,5 +1,5 @@
-import {TargetVersion} from '../target-version';
-import {VersionChanges} from '../upgrade-data';
+import { TargetVersion } from '../target-version';
+import { VersionChanges } from '../upgrade-data';
 
 export interface ClassNameUpgradeData {
   /** The Class name to replace. */

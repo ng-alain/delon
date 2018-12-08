@@ -1,5 +1,5 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { CountdownModule } from 'ngx-countdown';
 
 import { CountDownComponent } from './count-down.component';
@@ -12,7 +12,4 @@ const COMPONENTS = [CountDownComponent];
   exports: [...COMPONENTS],
 })
 export class CountDownModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: CountDownModule, providers: [] };
-  }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Marks, SliderValue } from 'ng-zorro-antd';
 import { ControlWidget } from '../../widget';
 
 @Component({
@@ -24,13 +25,12 @@ import { ControlWidget } from '../../widget';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class SliderWidget extends ControlWidget implements OnInit {
   min: number;
   max: number;
   step: number;
-  marks: any;
+  marks: Marks;
   included: boolean;
 
   ngOnInit(): void {
@@ -43,12 +43,12 @@ export class SliderWidget extends ControlWidget implements OnInit {
     this.included = typeof included === 'undefined' ? true : included;
   }
 
-  _formatter = (value: any) => {
+  _formatter = (value: number) => {
     if (this.ui.formatter) return this.ui.formatter(value);
     return value;
   }
 
-  _afterChange(value: any) {
+  _afterChange(value: SliderValue) {
     if (this.ui.afterChange) this.ui.afterChange(value);
   }
 }

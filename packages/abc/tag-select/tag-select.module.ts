@@ -1,8 +1,8 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NgModule } from '@angular/core';
 import { DelonLocaleModule } from '@delon/theme';
 import { DelonUtilModule } from '@delon/util';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { TagSelectComponent } from './tag-select.component';
 
@@ -13,8 +13,4 @@ const COMPONENTS = [TagSelectComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class TagSelectModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: TagSelectModule, providers: [] };
-  }
-}
+export class TagSelectModule { }

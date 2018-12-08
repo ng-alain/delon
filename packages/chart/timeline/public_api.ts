@@ -1,2 +1,2 @@
-export { G2TimelineComponent } from './timeline.component';
-export { G2TimelineModule } from './timeline.module';
+export * from './timeline.component';
+export * from './timeline.module';

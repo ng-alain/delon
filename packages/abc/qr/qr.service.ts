@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { QRConfig } from './qr.config';
 
+// tslint:disable-next-line:no-any
 declare var QRious: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class QRService {
   /** 当前qr实例 */
+  // tslint:disable-next-line:no-any
   readonly qr: any;
   /** 背景 */
   background: string;
   /** 背景透明级别，范围：`0-1` 之间 */
-  backgroundAlpha = 1.0;
+  backgroundAlpha = 1;
   /** 前景 */
   foreground: string;
   /** 前景透明级别，范围：`0-1` 之间 */
@@ -36,7 +38,7 @@ export class QRService {
    *
    * @param [value] 重新指定值
    */
-  refresh(value?: string | Object): string {
+  refresh(value?: string | {}): string {
     this.qr.set(typeof value === 'object' ? value : {
       background: this.background,
       backgroundAlpha: this.backgroundAlpha,

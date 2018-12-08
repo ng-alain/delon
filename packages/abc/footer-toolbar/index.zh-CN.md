@@ -18,4 +18,4 @@ module: FooterToolbarModule
 ----|------|-----|------
 `ng-content` | 工具栏内容，向右对齐 | `-` | -
 `[errorCollect]` | 是否需要 `error-collect`，务必包裹在 `<form>` 元素内 | `boolean` | `false`
-`[extra]` | 额外信息，向左对齐 | `string,TemplateRef<any>` | -
+`[extra]` | 额外信息，向左对齐 | `string,TemplateRef<void>` | -

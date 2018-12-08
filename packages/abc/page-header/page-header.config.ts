@@ -1,3 +1,6 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
 export class PageHeaderConfig {
   /**
    * 首页文本，若指定空表示不显示
@@ -31,9 +34,9 @@ export class PageHeaderConfig {
   /**
    * 是否固定模式
    */
-  fixed? = false;
+  fixed ?= false;
   /**
    * 固定偏移值
    */
-  fixedOffsetTop? = 64;
+  fixedOffsetTop ?= 64;
 }

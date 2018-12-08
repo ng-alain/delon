@@ -59,8 +59,8 @@ describe('abc: sidebar-nav', () => {
     injector = TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
-        AlainThemeModule.forRoot(),
-        SidebarNavModule.forRoot(),
+        AlainThemeModule,
+        SidebarNavModule,
       ],
       declarations: [TestComponent],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
@@ -135,8 +135,8 @@ describe('abc: sidebar-nav', () => {
         injector = TestBed.configureTestingModule({
           imports: [
             RouterModule.forRoot([]),
-            AlainThemeModule.forRoot(),
-            SidebarNavModule.forRoot(),
+            AlainThemeModule,
+            SidebarNavModule,
             RouterTestingModule.withRoutes([
               { path: 'group', component: TestRouteComponent },
               { path: 'group/type', component: TestRouteComponent },

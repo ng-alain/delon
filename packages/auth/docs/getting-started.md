@@ -2,6 +2,8 @@
 order: 1
 title: 开始使用
 type: Documents
+module: DelonAuthModule
+config: DelonAuthConfig
 ---
 
 ## 写在前面
@@ -49,7 +51,7 @@ import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
 
 @NgModule({
   imports: [
-    DelonAuthModule.forRoot()
+    DelonAuthModule
   ],
   providers: [
     // 相应的HTTP拦截器

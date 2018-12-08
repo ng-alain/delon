@@ -1,15 +1,15 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import {
   Directive,
   ElementRef,
-  Input,
-  HostListener,
   EventEmitter,
-  Output,
+  HostListener,
+  Input,
   Optional,
+  Output,
 } from '@angular/core';
-import { HttpResponse, HttpClient } from '@angular/common/http';
-import { saveAs } from 'file-saver';
 import { _HttpClient } from '@delon/theme';
+import { saveAs } from 'file-saver';
 
 /**
  * 文件下载
@@ -22,7 +22,7 @@ import { _HttpClient } from '@delon/theme';
 export class DownFileDirective {
   /** URL请求参数 */
   @Input('http-data')
-  httpData: any;
+  httpData: {};
   /** 请求类型 */
   @Input('http-method')
   httpMethod: string = 'get';
@@ -37,10 +37,11 @@ export class DownFileDirective {
   readonly success = new EventEmitter<HttpResponse<Blob>>();
   /** 错误回调 */
   @Output()
-  readonly error = new EventEmitter<any>();
+  readonly error = new EventEmitter<{}>();
 
   private getDisposition(data: string) {
-    const arr: any = (data || '')
+    // tslint:disable-next-line:no-any
+    const arr: any[] = (data || '')
       .split(';')
       .filter(i => i.includes('='))
       .map(v => {
@@ -50,6 +51,7 @@ export class DownFileDirective {
         if (value.startsWith(utfId)) value = value.substr(utfId.length);
         return { [strArr[0].trim()]: value };
       });
+    // tslint:disable-next-line:no-any
     return arr.reduce((o, item: any) => item, {});
   }
 
@@ -57,11 +59,12 @@ export class DownFileDirective {
     private el: ElementRef,
     private http: HttpClient,
     @Optional() private _http: _HttpClient,
-  ) {}
+  ) { }
 
   @HostListener('click')
   _click() {
     this.el.nativeElement.disabled = true;
+    // tslint:disable-next-line:no-any
     ((this._http || this.http) as any)
       .request(this.httpMethod, this.httpUrl, {
         params: this.httpData || {},
@@ -74,7 +77,7 @@ export class DownFileDirective {
             this.error.emit(res);
             return;
           }
-          const disposition: any = this.getDisposition(
+          const disposition = this.getDisposition(
             res.headers.get('content-disposition'),
           );
           const fileName =

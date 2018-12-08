@@ -1,22 +1,22 @@
+import { DOCUMENT, LocationStrategy } from '@angular/common';
 import {
-  Component,
-  Renderer2,
-  Inject,
-  OnInit,
-  OnDestroy,
-  HostListener,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Input,
-  Output,
+  Component,
   EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
 } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { DOCUMENT, LocationStrategy } from '@angular/common';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { MenuService, SettingsService, Menu } from '@delon/theme';
+import { Menu, MenuService, SettingsService } from '@delon/theme';
 import { InputBoolean } from '@delon/util';
 
 import { Nav } from './sidebar-nav.types';
@@ -28,7 +28,6 @@ const FLOATINGCLS = 'sidebar-nav__floating';
   selector: 'sidebar-nav',
   templateUrl: './sidebar-nav.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
   private bodyEl: HTMLBodyElement;
@@ -37,12 +36,8 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   floatingEl: HTMLDivElement;
   list: Nav[] = [];
 
-  @Input()
-  @InputBoolean()
-  autoCloseUnderPad = true;
-
-  @Output()
-  readonly select = new EventEmitter<Menu>();
+  @Input() @InputBoolean() autoCloseUnderPad = true;
+  @Output() readonly select = new EventEmitter<Menu>();
 
   constructor(
     private menuSrv: MenuService,
@@ -50,9 +45,10 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private router: Router,
     private locationStrategy: LocationStrategy,
     private render: Renderer2,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
-  ) {}
+  ) { }
 
   get collapsed() {
     return this.settings.layout.collapsed;
@@ -62,9 +58,9 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.bodyEl = this.doc.querySelector('body');
     this.menuSrv.openedByUrl(this.router.url);
     this.genFloatingContainer();
-    this.change$ = <any>this.menuSrv.change.subscribe(res => {
+    this.change$ = this.menuSrv.change.subscribe(res => {
       this.list = res;
-      this.cd.detectChanges();
+      this.cdr.detectChanges();
     });
     this.installUnderPad();
   }
@@ -141,6 +137,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
   private hideAll() {
     const allNode = this.floatingEl.querySelectorAll('.' + FLOATINGCLS);
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < allNode.length; i++) {
       allNode[i].classList.remove(SHOWCLS);
     }
@@ -193,7 +190,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       pItem = pItem.__parent;
     }
     item._open = !item._open;
-    this.cd.markForCheck();
+    this.cdr.markForCheck();
   }
 
   @HostListener('click')
@@ -224,11 +221,10 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   private route$: Subscription;
   private installUnderPad() {
     if (!this.autoCloseUnderPad) return;
-    this.route$ = <any>(
-      this.router.events
-        .pipe(filter(e => e instanceof NavigationEnd))
-        .subscribe(s => this.underPad())
-    );
+    this.route$ = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(s => this.underPad());
+
     this.underPad();
   }
 

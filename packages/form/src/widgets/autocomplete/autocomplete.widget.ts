@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { startWith, map, flatMap, debounceTime } from 'rxjs/operators';
-import { ControlWidget } from '../../widget';
+import { of, Observable } from 'rxjs';
+import { debounceTime, flatMap, map, startWith } from 'rxjs/operators';
+import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum, toBool } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 export const EMAILSUFFIX = [
   'qq.com',
@@ -36,9 +37,9 @@ export const EMAILSUFFIX = [
       </nz-autocomplete>
     </sf-item-wrap>
     `,
-  preserveWhitespaces: false,
 })
 export class AutoCompleteWidget extends ControlWidget implements OnInit {
+  // tslint:disable-next-line:no-any
   i: any;
   fixData: SFSchemaEnum[] = [];
   list: Observable<SFSchemaEnum[]>;
@@ -72,7 +73,7 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
     );
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':
@@ -82,7 +83,7 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
         this.fixData = getCopyEnum(
           this.schema.enum,
           this.formProperty.formData,
-          this.schema.readOnly
+          this.schema.readOnly,
         );
         break;
     }

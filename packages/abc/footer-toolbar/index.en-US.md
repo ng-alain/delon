@@ -18,4 +18,4 @@ Property | Description | Type | Default
 ----|------|-----|------
 `ng-content` | toolbar content, align to the right | `-` | -
 `[errorCollect]` | Whether `error-collect`, make sure to wrap inside the `<form>` element | `boolean` | `false`
-`[extra]` | extra information, align to the left | `string,TemplateRef<any>` | -
+`[extra]` | extra information, align to the left | `string,TemplateRef<void>` | -

@@ -1,26 +1,26 @@
-// tslint:disable:no-use-before-declare
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { map, distinctUntilChanged } from 'rxjs/operators';
+import { combineLatest, BehaviorSubject, Observable } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
-import { SchemaValidatorFactory } from '../validator.factory';
-import { SFSchema } from '../schema';
-import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from '../schema/ui';
 import { DelonFormConfig } from '../config';
 import { ErrorData } from '../errors';
-import { Widget } from '../widget';
+import { SFValue } from '../interface';
+import { SFSchema } from '../schema';
+import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from '../schema/ui';
 import { isBlank } from '../utils';
+import { SchemaValidatorFactory } from '../validator.factory';
+import { Widget } from '../widget';
 
 export abstract class FormProperty {
-  schemaValidator: (value: any) => ErrorData[];
+  schemaValidator: (value: SFValue) => ErrorData[];
   schema: SFSchema;
   ui: SFUISchema | SFUISchemaItemRun;
   formData: {};
-  _value: any = null;
-  widget: Widget<any>;
+  _value: SFValue = null;
+  widget: Widget<FormProperty>;
   private _errors: ErrorData[] = null;
   protected _objErrors: { [key: string]: ErrorData[] } = {};
-  private _valueChanges = new BehaviorSubject<any>(null);
-  private _errorsChanges = new BehaviorSubject<any>(null);
+  private _valueChanges = new BehaviorSubject<SFValue>(null);
+  private _errorsChanges = new BehaviorSubject<ErrorData[]>(null);
   private _visible = true;
   private _visibilityChanges = new BehaviorSubject<boolean>(true);
   private _root: PropertyGroup;
@@ -46,7 +46,7 @@ export abstract class FormProperty {
     if (parent) {
       this._root = parent.root;
     } else if (this instanceof PropertyGroup) {
-      this._root = <PropertyGroup>(<any>this);
+      this._root = this as PropertyGroup;
     }
     this._path = path;
   }
@@ -68,18 +68,19 @@ export abstract class FormProperty {
   }
 
   get root(): PropertyGroup {
-    return this._root || <PropertyGroup>(<any>this);
+    // tslint:disable-next-line:no-any
+    return this._root || (this as any) as PropertyGroup;
   }
 
   get path(): string {
     return this._path;
   }
 
-  get value() {
+  get value(): SFValue {
     return this._value;
   }
 
-  get errors() {
+  get errors(): ErrorData[] {
     return this._errors;
   }
 
@@ -96,14 +97,14 @@ export abstract class FormProperty {
    *
    * @param onlySelf `true` 只对当前字段更新值和校验；`false` 包含上级字段
    */
-  abstract setValue(value: any, onlySelf: boolean): any;
+  abstract setValue(value: SFValue, onlySelf: boolean): void;
 
   /**
    * 重置值，默认值为 `schema.default`
    *
    * @param onlySelf `true` 只对当前字段更新值和校验；`false` 包含上级字段
    */
-  abstract resetValue(value: any, onlySelf: boolean): any;
+  abstract resetValue(value: SFValue, onlySelf: boolean): void;
 
   /**
    * @internal
@@ -113,7 +114,7 @@ export abstract class FormProperty {
   /**
    *  @internal
    */
-  abstract _updateValue(): any;
+  abstract _updateValue(): void;
 
   /**
    * 更新值且校验数据
@@ -166,12 +167,12 @@ export abstract class FormProperty {
     while (property.parent !== null) {
       property = property.parent;
     }
-    return <PropertyGroup>property;
+    return property as PropertyGroup;
   }
 
   // #region process errors
 
-  private isEmptyData(value: any) {
+  private isEmptyData(value: {}) {
     if (isBlank(value)) return true;
     switch (this.type) {
       case 'string':
@@ -248,8 +249,8 @@ export abstract class FormProperty {
           err._custom === true && err.message
             ? err.message
             : (this.ui.errors || {})[err.keyword] ||
-              this.options.errors[err.keyword] ||
-              ``;
+            this.options.errors[err.keyword] ||
+            ``;
 
         if (message && typeof message === 'function')
           message = message(err) as string;
@@ -302,13 +303,13 @@ export abstract class FormProperty {
     if (typeof visibleIf === 'object' && Object.keys(visibleIf).length === 0) {
       this.setVisible(false);
     } else if (visibleIf !== undefined) {
-      const propertiesBinding: Observable<boolean>[] = [];
+      const propertiesBinding: Array<Observable<boolean>> = [];
       for (const dependencyPath in visibleIf) {
         if (visibleIf.hasOwnProperty(dependencyPath)) {
           const property = this.searchProperty(dependencyPath);
           if (property) {
             const valueCheck = property.valueChanges.pipe(
-              map((value: any) => {
+              map((value: SFValue) => {
                 const vi = visibleIf[dependencyPath];
                 if (typeof vi === 'function') return vi(value);
                 if (vi.indexOf('$ANY$') !== -1) {
@@ -320,13 +321,13 @@ export abstract class FormProperty {
             );
             const visibilityCheck = property._visibilityChanges;
             const and = combineLatest(
-              valueCheck, visibilityCheck
+              valueCheck, visibilityCheck,
             ).pipe(map(results => results[0] && results[1]));
             propertiesBinding.push(and);
           } else {
             console.warn(
               `Can't find property ${dependencyPath} for visibility check of ${
-                this.path
+              this.path
               }`,
             );
           }
@@ -336,7 +337,7 @@ export abstract class FormProperty {
       combineLatest(propertiesBinding)
         .pipe(
           map(values => values.indexOf(true) !== -1),
-          distinctUntilChanged()
+          distinctUntilChanged(),
         )
         .subscribe(visible => this.setVisible(visible));
     }
@@ -359,12 +360,12 @@ export abstract class PropertyGroup extends FormProperty {
       property instanceof PropertyGroup
     ) {
       const subPath = path.substr(subPathIdx + 1);
-      property = (<PropertyGroup>property).getProperty(subPath);
+      property = (property as PropertyGroup).getProperty(subPath);
     }
     return property;
   }
 
-  forEachChild(fn: (formProperty: FormProperty, str: String) => void) {
+  forEachChild(fn: (formProperty: FormProperty, str: string) => void) {
     for (const propertyId in this.properties) {
       if (this.properties.hasOwnProperty(propertyId)) {
         const property = this.properties[propertyId];
@@ -377,7 +378,7 @@ export abstract class PropertyGroup extends FormProperty {
     this.forEachChild(child => {
       fn(child);
       if (child instanceof PropertyGroup) {
-        (<PropertyGroup>child).forEachChildRecursive(fn);
+        (child as PropertyGroup).forEachChildRecursive(fn);
       }
     });
   }

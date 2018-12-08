@@ -1,2 +1,2 @@
-export { G2RadarComponent } from './radar.component';
-export { G2RadarModule } from './radar.module';
+export * from './radar.component';
+export * from './radar.module';

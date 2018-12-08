@@ -34,6 +34,7 @@ import {
   STRes,
   STColumnFilter,
   STChange,
+  STReq,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
 import { STComponent } from '../table.component';
@@ -44,6 +45,7 @@ import {
 import { dispatchDropDown } from '../../../testing';
 import { STExport } from '../table-export';
 import { STDataSource } from '../table-data-source';
+import { STConfig } from '../table.config';
 
 const MOCKDATE = new Date();
 const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
@@ -103,8 +105,8 @@ describe('abc: table', () => {
       FormsModule,
       HttpClientTestingModule,
       RouterTestingModule.withRoutes([]),
-      NgZorroAntdModule.forRoot(),
-      STModule.forRoot(),
+      NgZorroAntdModule,
+      STModule,
       DelonLocaleModule,
     ];
     const providers = [];
@@ -866,26 +868,47 @@ describe('abc: table', () => {
       });
     });
     describe('#multiSort', () => {
-      beforeEach(() => genModule({ minColumn: true }));
       it('with true', () => {
+        genModule({ minColumn: true });
         context.multiSort = true;
         fixture.detectChanges();
         const ms: STMultiSort = comp.multiSort;
         expect(typeof ms).toBe('object');
-        expect(ms.key).toBe('sort');
       });
       it('with false', () => {
+        genModule({ minColumn: true });
         context.multiSort = false;
         fixture.detectChanges();
         const ms: STMultiSort = comp.multiSort;
         expect(ms).toBeNull();
       });
       it('with object', () => {
+        genModule({ minColumn: true });
         context.multiSort = { key: 'aa' };
         fixture.detectChanges();
         const ms: STMultiSort = comp.multiSort;
         expect(typeof ms).toBe('object');
         expect(ms.key).toBe('aa');
+      });
+      it('should default is mulit sorting by config', () => {
+        genModule({
+          minColumn: true, providers: [{
+            provide: STConfig,
+            useValue: Object.assign(new STConfig(), <STConfig>{ multiSort: { global: true } }),
+          }]
+        });
+        const ms: STMultiSort = comp.multiSort;
+        expect(ms).not.toBeUndefined();
+      });
+      it('should default non-mulit sorting by config', () => {
+        genModule({
+          minColumn: true, providers: [{
+            provide: STConfig,
+            useValue: Object.assign(new STConfig(), <STConfig>{ multiSort: { global: false } }),
+          }]
+        });
+        const ms: STMultiSort = comp.multiSort;
+        expect(ms).toBeUndefined();
       });
     });
     describe('#showTotal', () => {
@@ -1103,6 +1126,15 @@ describe('abc: table', () => {
         expect(comp.req.params.a).toBe(1);
         expect(comp.req.params.b).toBe(2);
       });
+      it('can\'t contaminate raw data', () => {
+        const params: any = { a: 1 };
+        context.req = { params };
+        fixture.detectChanges();
+        comp.load(1, { b: 2 }, { merge: true });
+        expect(comp.req.params.a).toBe(1);
+        expect(comp.req.params.b).toBe(2);
+        expect(params.b).toBeUndefined();
+      });
     });
     describe('#reload', () => {
       beforeEach(() => genModule({ minColumn: true }));
@@ -1288,7 +1320,6 @@ describe('abc: table', () => {
       fixture.detectChanges();
       tick(100);
       expect(page._changeData.type).toBe('dblClick');
-      console.log('2', page._changeData);
     }));
     it('should be ingore input', fakeAsync(() => {
       expect(context.change).not.toHaveBeenCalled();
@@ -1698,7 +1729,7 @@ class TestComponent {
   comp: STComponent;
   data: string | any[] | Observable<any[]> = deepCopy(USERS);
   res: STRes = {};
-  req: STRes = {};
+  req: STReq = {};
   columns: STColumn[];
   ps = PS;
   pi: number;
@@ -1715,6 +1746,6 @@ class TestComponent {
   rowClickTime = 200;
   responsiveHideHeaderFooter = false;
 
-  error() {}
-  change() {}
+  error() { }
+  change() { }
 }

@@ -32,7 +32,7 @@ token_send_place = 'header';
 
 ## 如何加载
 
-默认情况下 `DelonAuthModule.forRoot()` 是不会加载任何HTTP拦截器，这需要你手工在你的相应的模块中加上：
+默认情况下 `DelonAuthModule` 是不会加载任何HTTP拦截器，这需要你手工在你的相应的模块中加上：
 
 ```ts
 { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true }

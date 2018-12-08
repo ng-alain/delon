@@ -1,47 +1,31 @@
-import { Injector, Optional } from '@angular/core';
-import { Router } from '@angular/router';
+// tslint:disable:no-any
 import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpSentEvent,
-  HttpHeaderResponse,
-  HttpProgressEvent,
-  HttpResponse,
-  HttpUserEvent,
-  HttpEvent,
-  HttpErrorResponse,
 } from '@angular/common/http';
+import { Injector, Optional } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Observer } from 'rxjs';
 
 import { _HttpClient } from '@delon/theme';
 
-import { ITokenModel } from './interface';
 import { DelonAuthConfig } from '../auth.config';
 import { ToLogin } from './helper';
+import { ITokenModel } from './interface';
 
 export abstract class BaseInterceptor implements HttpInterceptor {
-  constructor(@Optional() protected injector: Injector) {}
+  constructor(@Optional() protected injector: Injector) { }
 
   protected model: ITokenModel;
 
   abstract isAuth(options: DelonAuthConfig): boolean;
 
-  abstract setReq(
-    req: HttpRequest<any>,
-    options: DelonAuthConfig,
-  ): HttpRequest<any>;
+  abstract setReq(req: HttpRequest<any>, options: DelonAuthConfig): HttpRequest<any>;
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler,
-  ): Observable<
-    | HttpSentEvent
-    | HttpHeaderResponse
-    | HttpProgressEvent
-    | HttpResponse<any>
-    | HttpUserEvent<any>
-  > {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const options = Object.assign(
       new DelonAuthConfig(),
       this.injector.get(DelonAuthConfig, null),
@@ -54,11 +38,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
 
     if (
       options.allow_anonymous_key &&
-      (req.params.has(options.allow_anonymous_key) ||
-        this.injector
-          .get(Router)
-          .parseUrl(req.urlWithParams)
-          .queryParamMap.has(options.allow_anonymous_key))
+      (req.params.has(options.allow_anonymous_key) || this.injector.get(Router).parseUrl(req.urlWithParams).queryParamMap.has(options.allow_anonymous_key))
     ) {
       return next.handle(req);
     }

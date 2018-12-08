@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlWidget } from '../../widget';
-import { toBool } from '../../utils';
 
 @Component({
   selector: 'sf-textarea',
@@ -20,10 +19,11 @@ import { toBool } from '../../utils';
     </textarea>
 
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
 })
 export class TextareaWidget extends ControlWidget implements OnInit {
+  // tslint:disable-next-line:no-any
   autosize: any = true;
+
   ngOnInit(): void {
     if (this.ui.autosize != null) {
       this.autosize = this.ui.autosize;

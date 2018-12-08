@@ -18,7 +18,7 @@ describe('abc: grid', () => {
 
   function genModule(template?: string) {
     TestBed.configureTestingModule({
-      imports: [SGModule.forRoot(), NoopAnimationsModule],
+      imports: [SGModule, NoopAnimationsModule],
       declarations: [TestComponent],
     });
     if (template) {

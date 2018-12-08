@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -11,32 +11,26 @@ source ${thisDir}/_mode.sh
 
 testing() {
   echo ""
-  echo "Building sources and running tests. Running mode: ${MODE}"
+  echo "Building sources and running tests"
   echo ""
   if is_lint; then
     ./lint.sh
   elif is_lib_test; then
     $(npm bin)/ng test --code-coverage --watch=false
-    uploadCoverage
+    $(npm bin)/codecov
   elif is_cli_test; then
     ./build-schematics.sh -b -t -travis
   elif is_site; then
-    npm run site:build
-  fi
-}
-
-uploadCoverage() {
-  if [ -f coverage/lcov.info ]; then
-    echo "Uploading coverage report"
-    $(npm bin)/codecov
-  else
-    echo "Not found coverage/lcov.info file"
+    echo ">> starting gen site"
+    node ../site/main init
+    echo ">> starting ng build"
+    $(npm bin)/ng build --prod --build-optimizer --base-href /
   fi
 }
 
 deploy() {
   echo ""
-  echo "Starting the deployment script. Running mode: ${DEPLOY_MODE}"
+  echo "Starting the deployment script"
   echo ""
 
   if is_artifacts; then
@@ -45,6 +39,10 @@ deploy() {
     ./build-all.sh
   fi
 }
+
+echo ""
+echo "Running mode: ${MODE}${DEPLOY_MODE}"
+echo ""
 
 if [[ "${MODE}" ]]; then
   testing

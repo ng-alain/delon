@@ -1,16 +1,16 @@
-import { Injectable, Optional, Inject, Host } from '@angular/core';
+import { Host, Inject, Injectable, Optional } from '@angular/core';
 import { ACLService } from '@delon/acl';
-import { ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
+import { STRowSource } from './table-row.directive';
+import { STConfig } from './table.config';
 import {
   STColumn,
   STColumnButton,
-  STColumnSort,
   STColumnFilter,
+  STColumnSort,
 } from './table.interfaces';
-import { STRowSource } from './table-row.directive';
-import { STConfig } from './table.config';
 
 export interface STSortMap extends STColumnSort {
   /** 是否启用排序 */
@@ -26,7 +26,7 @@ export class STColumnSource {
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
     private cog: STConfig,
-  ) {}
+  ) { }
 
   private btnCoerce(list: STColumnButton[]): STColumnButton[] {
     if (!list) return [];
@@ -53,7 +53,7 @@ export class STColumnSource {
           console.warn(`[st] Should specify modal parameter`);
           item.type = 'none';
         } else {
-          item.modal = Object.assign({}, modal, item.modal);
+          item.modal = { ...modal, ...item.modal };
         }
       }
 
@@ -62,7 +62,7 @@ export class STColumnSource {
           console.warn(`[st] Should specify drawer parameter`);
           item.type = 'none';
         } else {
-          item.drawer = Object.assign({}, drawer, item.drawer);
+          item.drawer = { ...drawer, ...item.drawer };
         }
       }
 
@@ -77,11 +77,10 @@ export class STColumnSource {
       }
 
       if (item.icon) {
-        item.icon = Object.assign(
-          {},
-          btnIcon,
-          typeof item.icon === 'string' ? { type: item.icon } : item.icon,
-        );
+        item.icon = {
+          ...btnIcon,
+          ...(typeof item.icon === 'string' ? { type: item.icon } : item.icon),
+        };
       }
 
       item.children = item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
@@ -134,6 +133,7 @@ export class STColumnSource {
     if (item.sorter && typeof item.sorter === 'function') {
       return {
         enabled: true,
+        // tslint:disable-next-line:no-any
         default: item.sort as any,
         compare: item.sorter,
         key: item.sortKey || item.indexKey,
@@ -170,6 +170,7 @@ export class STColumnSource {
         confirmText: item.filterConfirmText,
         clearText: item.filterClearText,
         default: item.filtered,
+        // tslint:disable-next-line:no-any
         fn: item.filter as any,
         icon: item.filterIcon,
         key: item.filterKey || item.indexKey,
@@ -274,7 +275,7 @@ export class STColumnSource {
       }
       // types
       if (item.type === 'yn') {
-        item.yn = Object.assign({ truth: true }, item.yn);
+        item.yn = { truth: true, ...item.yn };
         // compatible
         if (item.ynTruth != null) item.yn.truth = item.ynTruth;
         if (item.ynYes != null) item.yn.yes = item.ynYes;
@@ -285,6 +286,7 @@ export class STColumnSource {
         (item.type === 'badge' && item.badge == null) ||
         (item.type === 'tag' && item.tag == null)
       ) {
+        // tslint:disable-next-line:no-any
         (item as any).type = '';
       }
       // className

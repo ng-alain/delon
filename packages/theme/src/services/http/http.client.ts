@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
+
+// tslint:disable:no-any
 import {
   HttpClient,
   HttpHeaders,
   HttpParams,
   HttpResponse,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { throwError, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { AlainThemeConfig } from '../../theme.config';
 import { HttpClientConfig } from './http.config';
 
@@ -21,13 +23,11 @@ import { HttpClientConfig } from './http.config';
 export class _HttpClient {
   private cog: HttpClientConfig;
   constructor(private http: HttpClient, cog: AlainThemeConfig) {
-    this.cog = Object.assign(
-      <HttpClientConfig>{
-        nullValueHandling: 'include',
-        dateValueHandling: 'timestamp',
-      },
-      cog!.http,
-    );
+    this.cog = {
+      nullValueHandling: 'include',
+      dateValueHandling: 'timestamp',
+      ...cog!.http,
+    };
   }
 
   private _loading = false;
@@ -37,7 +37,7 @@ export class _HttpClient {
     return this._loading;
   }
 
-  parseParams(params: any): HttpParams {
+  parseParams(params: {}): HttpParams {
     const newParams = {};
     Object.keys(params).forEach(key => {
       let _data = params[key];
@@ -52,7 +52,7 @@ export class _HttpClient {
     return new HttpParams({ fromObject: newParams });
   }
 
-  appliedUrl(url: string, params?: any) {
+  appliedUrl(url: string, params?: {}) {
     if (!params) return url;
     url += ~url.indexOf('?') ? '' : '?';
     const arr: string[] = [];
@@ -118,7 +118,7 @@ export class _HttpClient {
       responseType?: 'json';
       withCredentials?: boolean;
     },
-  ): Observable<HttpResponse<Object>>;
+  ): Observable<HttpResponse<{}>>;
 
   /**
    * GET：返回一个 `JSON` 类型
@@ -167,12 +167,10 @@ export class _HttpClient {
     return this.request(
       'GET',
       url,
-      Object.assign(
-        {
-          params,
-        },
-        options,
-      ),
+      {
+        params,
+        ...options,
+      },
     );
   }
 
@@ -210,7 +208,7 @@ export class _HttpClient {
       responseType?: 'json';
       withCredentials?: boolean;
     },
-  ): Observable<HttpResponse<Object>>;
+  ): Observable<HttpResponse<{}>>;
 
   /**
    * POST：返回一个 `JSON` 类型
@@ -262,13 +260,11 @@ export class _HttpClient {
     return this.request(
       'POST',
       url,
-      Object.assign(
-        {
-          body,
-          params,
-        },
-        options,
-      ),
+      {
+        body,
+        params,
+        ...options,
+      },
     );
   }
 
@@ -304,7 +300,7 @@ export class _HttpClient {
       responseType?: 'json';
       withCredentials?: boolean;
     },
-  ): Observable<HttpResponse<Object>>;
+  ): Observable<HttpResponse<{}>>;
 
   /**
    * DELETE：返回一个 `any` 类型
@@ -338,12 +334,10 @@ export class _HttpClient {
     return this.request(
       'DELETE',
       url,
-      Object.assign(
-        {
-          params,
-        },
-        options,
-      ),
+      {
+        params,
+        ...options,
+      },
     );
   }
 
@@ -404,7 +398,7 @@ export class _HttpClient {
       responseType?: 'json';
       withCredentials?: boolean;
     },
-  ): Observable<HttpResponse<Object>>;
+  ): Observable<HttpResponse<{}>>;
 
   /**
    * PATCH：返回一个 `JSON` 类型
@@ -456,13 +450,11 @@ export class _HttpClient {
     return this.request(
       'PATCH',
       url,
-      Object.assign(
-        {
-          body,
-          params,
-        },
-        options,
-      ),
+      {
+        body,
+        params,
+        ...options,
+      },
     );
   }
 
@@ -500,7 +492,7 @@ export class _HttpClient {
       responseType?: 'json';
       withCredentials?: boolean;
     },
-  ): Observable<HttpResponse<Object>>;
+  ): Observable<HttpResponse<{}>>;
 
   /**
    * PUT：返回一个 `JSON` 类型
@@ -552,13 +544,11 @@ export class _HttpClient {
     return this.request(
       'PUT',
       url,
-      Object.assign(
-        {
-          body,
-          params,
-        },
-        options,
-      ),
+      {
+        body,
+        params,
+        ...options,
+      },
     );
   }
 
@@ -577,16 +567,16 @@ export class _HttpClient {
     options?: {
       body?: any;
       headers?:
-        | HttpHeaders
-        | {
-            [header: string]: string | string[];
-          };
+      | HttpHeaders
+      | {
+        [header: string]: string | string[];
+      };
       observe?: 'body' | 'events' | 'response';
       params?:
-        | HttpParams
-        | {
-            [param: string]: string | string[];
-          };
+      | HttpParams
+      | {
+        [param: string]: string | string[];
+      };
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       reportProgress?: boolean;
       withCredentials?: boolean;
@@ -605,16 +595,16 @@ export class _HttpClient {
     options?: {
       body?: any;
       headers?:
-        | HttpHeaders
-        | {
-            [header: string]: string | string[];
-          };
+      | HttpHeaders
+      | {
+        [header: string]: string | string[];
+      };
       observe?: 'body' | 'events' | 'response';
       params?:
-        | HttpParams
-        | {
-            [param: string]: string | string[];
-          };
+      | HttpParams
+      | {
+        [param: string]: string | string[];
+      };
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       reportProgress?: boolean;
       withCredentials?: boolean;

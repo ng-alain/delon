@@ -1,53 +1,45 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  Inject,
-  TemplateRef,
-  ElementRef,
-  Renderer2,
-} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  TemplateRef,
+} from '@angular/core';
 import { InputBoolean } from '@delon/util';
 
-const CLS = 'footer-toolbar';
 const CLSBODY = 'footer-toolbar__body';
 
 @Component({
   selector: 'footer-toolbar',
   templateUrl: './footer-toolbar.component.html',
-  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
-  @Input()
-  @InputBoolean()
-  errorCollect = false;
-
-  _extra = '';
-  _extraTpl: TemplateRef<any>;
-  @Input()
-  set extra(value: string | TemplateRef<any>) {
-    if (value instanceof TemplateRef) {
-      this._extra = null;
-      this._extraTpl = value;
-    } else {
-      this._extra = value;
-    }
-  }
+  @Input() @InputBoolean() errorCollect = false;
+  @Input() extra: string | TemplateRef<void>;
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
-  ) {}
+  ) { }
+
+  private get bodyCls() {
+    return this.doc.querySelector('body').classList;
+  }
 
   ngOnInit() {
-    this.renderer.addClass(this.el.nativeElement, CLS);
-    this.doc.querySelector('body').classList.add(CLSBODY);
+    this.renderer.addClass(this.el.nativeElement, 'footer-toolbar');
+    this.bodyCls.add(CLSBODY);
   }
 
   ngOnDestroy() {
-    this.doc.querySelector('body').classList.remove(CLSBODY);
+    this.bodyCls.remove(CLSBODY);
   }
 }

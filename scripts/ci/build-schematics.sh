@@ -30,6 +30,30 @@ for ARG in "$@"; do
 done
 
 VERSION=$(node -p "require('./package.json').version")
+DEPENDENCIES=$(node -p "
+  const vs = require('./package.json').dependencies;
+  const dvs = require('./package.json').devDependencies;
+  [
+    'screenfull',
+    'ajv',
+    'less-bundle-promise',
+    '@ngx-translate/core',
+    '@ngx-translate/http-loader',
+    'tslint-config-prettier',
+    'tslint-language-service',
+    'editorconfig-tools',
+    'lint-staged',
+    'husky',
+    'prettier',
+    'prettier-stylelint',
+    'stylelint',
+    'stylelint-config-standard',
+    '@antv/data-set',
+    '@antv/g2',
+    '@antv/g2-plugin-slider',
+    '@angularclass/hmr'
+  ].map(key => key.replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
+")
 ZORROVERSION=$(node -p "require('./package.json').dependencies['ng-zorro-antd']")
 echo "=====BUILDING: Version ${VERSION}, Zorro Version ${ZORROVERSION}"
 
@@ -45,8 +69,18 @@ DIST=${PWD}/dist/ng-alain/
 updateVersionReferences() {
   NPM_DIR="$1"
   (
-    echo "======    VERSION: Updating version references in ${NPM_DIR}"
     cd ${NPM_DIR}
+
+    echo "======    VERSION: Updating dependencies version references in ${NPM_DIR}"
+    local lib version
+    for dependencie in ${DEPENDENCIES[@]}
+    do
+      IFS=$'|' read -r lib version <<< "$dependencie"
+      echo "============ update ${lib}: ${version}"
+      perl -p -i -e "s/${lib}\@DEP\-0\.0\.0\-PLACEHOLDER/${lib}\@${version}/g" $(grep -ril ${lib}\@DEP\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
+    done
+
+    echo "======    VERSION: Updating version references in ${NPM_DIR}"
     perl -p -i -e "s/ZORRO\-0\.0\.0\-PLACEHOLDER/${ZORROVERSION}/g" $(grep -ril ZORRO\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
     perl -p -i -e "s/PEER\-0\.0\.0\-PLACEHOLDER/^${VERSION}/g" $(grep -ril PEER\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
     perl -p -i -e "s/0\.0\.0\-PLACEHOLDER/${VERSION}/g" $(grep -ril 0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
@@ -173,7 +207,7 @@ echo "Finished cli!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/demo/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng7/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}/application

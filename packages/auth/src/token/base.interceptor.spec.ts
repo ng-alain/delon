@@ -15,10 +15,10 @@ import { DelonAuthConfig } from '../auth.config';
 import { SimpleTokenModel } from './simple/simple.model';
 import { ITokenModel, DA_SERVICE_TOKEN, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
-import { WINDOW } from '../win_tokens';
+import { DOCUMENT } from '@angular/common';
 
 function genModel<T extends ITokenModel>(
-  modelType: { new (): T },
+  modelType: { new(): T },
   token: string = `123`,
 ) {
   const model = new modelType();
@@ -51,7 +51,6 @@ class MockTokenService implements ITokenService {
 
 describe('auth: base.interceptor', () => {
   let injector: Injector;
-  let window: any;
   let http: HttpClient;
   let httpBed: HttpTestingController;
   const MockRouter = {
@@ -60,7 +59,7 @@ describe('auth: base.interceptor', () => {
       return new DefaultUrlSerializer().parse(value);
     }),
   };
-  const MockWindow = {
+  const MockDoc = {
     location: {
       href: '',
     },
@@ -75,10 +74,10 @@ describe('auth: base.interceptor', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([]),
-        DelonAuthModule.forRoot(),
+        DelonAuthModule,
       ],
       providers: [
-        { provide: WINDOW, useValue: MockWindow },
+        { provide: DOCUMENT, useValue: MockDoc },
         { provide: DelonAuthConfig, useValue: options },
         { provide: Router, useValue: MockRouter },
         {
@@ -91,7 +90,6 @@ describe('auth: base.interceptor', () => {
     });
     if (tokenData) injector.get(DA_SERVICE_TOKEN).set(tokenData);
 
-    window = injector.get(WINDOW);
     http = injector.get(HttpClient);
     httpBed = injector.get(HttpTestingController);
   }
@@ -191,7 +189,7 @@ describe('auth: base.interceptor', () => {
           (err: any) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
-              expect(window.location.href).toBe(login_url);
+              expect(injector.get(DOCUMENT).location.href).toBe(login_url);
               done();
             }, 20);
           },
@@ -220,7 +218,7 @@ describe('auth: base.interceptor', () => {
       genModule(
         { token_invalid_redirect: false },
         genModel(SimpleTokenModel, null),
-        [{ provide: _HttpClient, useValue: { end: () => {} } }],
+        [{ provide: _HttpClient, useValue: { end: () => { } } }],
       );
       http.get('/test', { responseType: 'text' }).subscribe(
         () => {

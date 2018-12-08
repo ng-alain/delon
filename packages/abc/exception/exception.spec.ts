@@ -1,7 +1,7 @@
 import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/theme';
+import { DelonLocaleModule, en_US, DelonLocaleService } from '@delon/theme';
 
 import { ExceptionModule } from './exception.module';
 import { ExceptionComponent } from './exception.component';
@@ -14,7 +14,7 @@ describe('abc: exception', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [ExceptionModule.forRoot(), DelonLocaleModule],
+      imports: [ExceptionModule, DelonLocaleModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -23,7 +23,7 @@ describe('abc: exception', () => {
     fixture.detectChanges();
   });
 
-  afterAll(() => context.comp.ngOnDestroy());
+  afterEach(() => context.comp.ngOnDestroy());
 
   [403, 404, 500].forEach((type: any) => {
     it(`#type=${type}`, () => {

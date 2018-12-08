@@ -1,7 +1,7 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { TrendComponent } from './trend.component';
 
@@ -12,8 +12,4 @@ const COMPONENTS = [TrendComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class TrendModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: TrendModule, providers: [] };
-  }
-}
+export class TrendModule { }

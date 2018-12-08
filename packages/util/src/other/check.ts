@@ -1,3 +1,5 @@
+// tslint:disable:no-any
+
 export function isEmpty(element: HTMLElement): boolean {
   const nodes = element.childNodes;
   for (let i = 0; i < nodes.length; i++) {
@@ -19,7 +21,7 @@ export function isEmpty(element: HTMLElement): boolean {
 
 export function toBoolean(
   value: any,
-  allowUndefined = false,
+  allowUndefined: boolean = false,
 ): boolean {
   return allowUndefined && typeof value === 'undefined'
     ? undefined
@@ -34,8 +36,8 @@ export function toBoolean(
  * @Input() @InputBoolean(null) visible: boolean = false;
  * ```
  */
-export function InputBoolean(allowUndefined = false): any { // tslint:disable-line:no-any
-  return function InputBooleanPropDecorator (target: object, name: string): void {
+export function InputBoolean(allowUndefined: boolean = false): any { // tslint:disable-line:no-any
+  return function InputBooleanPropDecorator(target: object, name: string): void {
     // Add our own private prop
     const privatePropName = `$$__${name}`;
 
@@ -45,28 +47,27 @@ export function InputBoolean(allowUndefined = false): any { // tslint:disable-li
 
     Object.defineProperty(target, privatePropName, {
       configurable: true,
-      writable: true
+      writable: true,
     });
 
     Object.defineProperty(target, name, {
       get(): boolean {
-        return this[ privatePropName ]; // tslint:disable-line:no-invalid-this
+        return this[privatePropName]; // tslint:disable-line:no-invalid-this
       },
       set(value: any): void {
-        this[ privatePropName ] = toBoolean(value, allowUndefined); // tslint:disable-line:no-invalid-this
-      }
+        this[privatePropName] = toBoolean(value, allowUndefined); // tslint:disable-line:no-invalid-this
+      },
     });
   };
 }
 
 export function toNumber(value: any): number;
 export function toNumber<D>(value: any, fallback: D): number | D;
-export function toNumber(value: any, fallbackValue = 0) {
+export function toNumber(value: any, fallbackValue: number = 0): number {
   return !isNaN(parseFloat(value as any)) && !isNaN(Number(value))
     ? Number(value)
     : fallbackValue;
 }
-
 
 /**
  * Input decorator that handle a prop to do get/set automatically with toNumber
@@ -76,8 +77,8 @@ export function toNumber(value: any, fallbackValue = 0) {
  * @Input() @InputNumber(null) visible: number = 2;
  * ```
  */
-export function InputNumber(fallback = 0): any { // tslint:disable-line:no-any
-  return function InputBooleanPropDecorator (target: object, name: string): void {
+export function InputNumber(fallback: number = 0): any { // tslint:disable-line:no-any
+  return function InputBooleanPropDecorator(target: object, name: string): void {
     // Add our own private prop
     const privatePropName = `$$__${name}`;
 
@@ -87,16 +88,16 @@ export function InputNumber(fallback = 0): any { // tslint:disable-line:no-any
 
     Object.defineProperty(target, privatePropName, {
       configurable: true,
-      writable: true
+      writable: true,
     });
 
     Object.defineProperty(target, name, {
       get(): boolean {
-        return this[ privatePropName ]; // tslint:disable-line:no-invalid-this
+        return this[privatePropName]; // tslint:disable-line:no-invalid-this
       },
       set(value: any): void {
-        this[ privatePropName ] = toNumber(value, fallback); // tslint:disable-line:no-invalid-this
-      }
+        this[privatePropName] = toNumber(value, fallback); // tslint:disable-line:no-invalid-this
+      },
     });
   };
 }

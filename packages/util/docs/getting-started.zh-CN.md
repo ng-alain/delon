@@ -2,6 +2,8 @@
 order: 1
 title: 开始使用
 type: Documents
+module: DelonUtilModule
+config: DelonUtilConfig
 ---
 
 @delon/util 是一组日常普通使用的工具函数的集合。
@@ -21,7 +23,7 @@ import { DelonUtilModule } from '@delon/util';
 
 @NgModule({
   imports: [
-    DelonUtilModule.forRoot()
+    DelonUtilModule
   ]
 })
 export class AppModule { }

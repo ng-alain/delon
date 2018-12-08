@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+// tslint:disable:no-any
 import { HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { DelonAuthConfig } from '../../auth.config';
 import { BaseInterceptor } from '../base.interceptor';
+import { CheckJwt } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 import { JWTTokenModel } from './jwt.model';
-import { CheckJwt } from '../helper';
 
 @Injectable()
 export class JWTInterceptor extends BaseInterceptor {

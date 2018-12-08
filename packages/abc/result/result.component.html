@@ -1,0 +1,13 @@
+<div class="result__icon"><i nz-icon class="anticon anticon-{{_icon}} result__icon-{{_type}}"></i></div>
+<div class="result__title">
+  <ng-container *stringTemplateOutlet="title">{{title}}</ng-container>
+</div>
+<div *ngIf="description" class="result__desc">
+  <ng-container *stringTemplateOutlet="description">{{description}}</ng-container>
+</div>
+<div *ngIf="extra" class="result__extra">
+  <ng-container *stringTemplateOutlet="extra">{{extra}}</ng-container>
+</div>
+<div class="result__actions">
+  <ng-content></ng-content>
+</div>

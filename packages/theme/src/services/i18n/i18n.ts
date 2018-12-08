@@ -1,8 +1,9 @@
-import { InjectionToken, Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Injectable, InjectionToken } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 export interface AlainI18NService {
+  // tslint:disable-next-line:no-any
   [key: string]: any;
 
   /**
@@ -15,6 +16,7 @@ export interface AlainI18NService {
   /**
    * 返回当前语言列表
    */
+  // tslint:disable-next-line:no-any
   getLangs(): any[];
 
   /**
@@ -22,7 +24,7 @@ export interface AlainI18NService {
    * - `params` 模板所需要的参数对象
    * - `isSafe` 是否返回安全字符，自动调用 `bypassSecurityTrustHtml`
    */
-  fanyi(key: string, params?: Object, isSafe?: boolean): string;
+  fanyi(key: string, params?: {}, isSafe?: boolean): string;
 
   /**
    * 调用 `use` 触发变更通知
@@ -32,7 +34,15 @@ export interface AlainI18NService {
 
 export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>(
   'alainTranslatorToken',
+  {
+    providedIn: 'root',
+    factory: ALAIN_I18N_TOKEN_FACTORY,
+  },
 );
+
+export function ALAIN_I18N_TOKEN_FACTORY() {
+  return new AlainI18NServiceFake();
+}
 
 @Injectable({ providedIn: 'root' })
 export class AlainI18NServiceFake implements AlainI18NService {
@@ -46,6 +56,7 @@ export class AlainI18NServiceFake implements AlainI18NService {
     this.change$.next(lang);
   }
 
+  // tslint:disable-next-line:no-any
   getLangs(): any[] {
     return [];
   }

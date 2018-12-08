@@ -18,15 +18,15 @@ import format from 'date-fns/format';
   `
 })
 export class DemoComponent implements OnInit {
-    visitData: any[] = [];
-    ngOnInit(): void {
-        const beginDay = new Date().getTime();
-        for (let i = 0; i < 20; i += 1) {
-            this.visitData.push({
-                x: format(new Date(beginDay + (1000 * 60 * 60 * 24 * i)), 'YYYY-MM-DD'),
-                y: Math.floor(Math.random() * 100) + 10,
-            });
-        }
+  visitData: any[] = [];
+  ngOnInit(): void {
+    const beginDay = new Date().getTime();
+    for (let i = 0; i < 20; i += 1) {
+      this.visitData.push({
+        x: format(new Date(beginDay + (1000 * 60 * 60 * 24 * i)), 'YYYY-MM-DD'),
+        y: Math.floor(Math.random() * 100) + 10,
+      });
     }
+  }
 }
 ```

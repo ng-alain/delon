@@ -1,10 +1,10 @@
-import { Injectable, Inject, Injector } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad } from '@angular/router';
-import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
-import { CheckSimple, ToLogin } from '../helper';
 import { DelonAuthConfig } from '../../auth.config';
+import { CheckSimple, ToLogin } from '../helper';
+import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
   private cog: DelonAuthConfig;
 

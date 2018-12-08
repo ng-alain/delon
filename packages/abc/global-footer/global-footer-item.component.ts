@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { InputBoolean } from '@delon/util';
 
 @Component({
@@ -9,10 +9,6 @@ export class GlobalFooterItemComponent {
   @ViewChild('host')
   host: ElementRef;
 
-  @Input()
-  href: string;
-
-  @Input()
-  @InputBoolean()
-  blankTarget: boolean;
+  @Input() href: string;
+  @Input() @InputBoolean() blankTarget: boolean;
 }

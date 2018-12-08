@@ -1,39 +1,46 @@
 import {
-  Component,
-  Input,
-  TemplateRef,
-  OnInit,
-  OnChanges,
-  Inject,
-  Optional,
-  ViewChild,
-  ElementRef,
   AfterViewInit,
-  Renderer2,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnChanges,
   OnDestroy,
+  OnInit,
+  Optional,
+  Renderer2,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
-import { Router, RouterEvent, NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { NzAffixComponent } from 'ng-zorro-antd';
-import { Subscription, Observable, merge } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
-import {
-  MenuService,
-  ALAIN_I18N_TOKEN,
-  AlainI18NService,
-  Menu,
-  TitleService,
-  SettingsService,
-} from '@delon/theme';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
+import {
+  AlainI18NService,
+  ALAIN_I18N_TOKEN,
+  Menu,
+  MenuService,
+  SettingsService,
+  TitleService,
+} from '@delon/theme';
+import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
 
 import { PageHeaderConfig } from './page-header.config';
+
+interface PageHeaderPath {
+  title?: string;
+  link?: string[];
+}
 
 @Component({
   selector: 'page-header',
   templateUrl: './page-header.component.html',
-  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageHeaderComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy {
@@ -59,13 +66,14 @@ export class PageHeaderComponent
   }
 
   _titleVal: string;
+  paths: PageHeaderPath[] = [];
 
   // #region fields
 
   _title: string;
-  _titleTpl: TemplateRef<any>;
+  _titleTpl: TemplateRef<void>;
   @Input()
-  set title(value: string | TemplateRef<any>) {
+  set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
@@ -75,75 +83,23 @@ export class PageHeaderComponent
     this._titleVal = this._title;
   }
 
-  @Input()
-  @InputBoolean()
-  loading = false;
-
-  @Input()
-  @InputBoolean()
-  wide = false;
-
-  @Input()
-  home: string;
-
-  @Input()
-  homeLink: string;
-
-  @Input()
-  homeI18n: string;
-
-  /**
-   * 自动生成导航，以当前路由从主菜单中定位
-   */
-  @Input()
-  @InputBoolean()
-  autoBreadcrumb: boolean;
-
-  /**
-   * 自动生成标题，以当前路由从主菜单中定位
-   */
-  @Input()
-  @InputBoolean()
-  autoTitle: boolean;
-
-  /**
-   * 是否自动将标题同步至 `TitleService`、`ReuseService` 下，仅 `title` 为 `string` 类型时有效
-   */
-  @Input()
-  @InputBoolean()
-  syncTitle: boolean;
-
-  @Input()
-  @InputBoolean()
-  fixed: boolean;
-
-  @Input()
-  @InputNumber()
-  fixedOffsetTop: number;
-
-  paths: any[] = [];
-
-  @Input()
-  breadcrumb: TemplateRef<any>;
-
-  @Input()
-  @InputBoolean()
-  recursiveBreadcrumb: boolean;
-
-  @Input()
-  logo: TemplateRef<any>;
-
-  @Input()
-  action: TemplateRef<any>;
-
-  @Input()
-  content: TemplateRef<any>;
-
-  @Input()
-  extra: TemplateRef<any>;
-
-  @Input()
-  tab: TemplateRef<any>;
+  @Input() @InputBoolean() loading = false;
+  @Input() @InputBoolean() wide = false;
+  @Input() home: string;
+  @Input() homeLink: string;
+  @Input() homeI18n: string;
+  @Input() @InputBoolean() autoBreadcrumb: boolean;
+  @Input() @InputBoolean() autoTitle: boolean;
+  @Input() @InputBoolean() syncTitle: boolean;
+  @Input() @InputBoolean() fixed: boolean;
+  @Input() @InputNumber() fixedOffsetTop: number;
+  @Input() breadcrumb: TemplateRef<void>;
+  @Input() @InputBoolean() recursiveBreadcrumb: boolean;
+  @Input() logo: TemplateRef<void>;
+  @Input() action: TemplateRef<void>;
+  @Input() content: TemplateRef<void>;
+  @Input() extra: TemplateRef<void>;
+  @Input() tab: TemplateRef<void>;
 
   // #endregion
 
@@ -162,17 +118,17 @@ export class PageHeaderComponent
     @Optional()
     @Inject(ReuseTabService)
     private reuseSrv: ReuseTabService,
+    private cdr: ChangeDetectorRef,
   ) {
     Object.assign(this, cog);
     this.set$ = settings.notify
       .pipe(
-        filter(
-          w => this.affix && w.type === 'layout' && w.name === 'collapsed',
-        ),
+        filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed'),
       )
       .subscribe(() => this.affix.updatePosition({}));
 
-    const data$: Observable<any>[] = [
+    // tslint:disable-next-line:no-any
+    const data$: Array<Observable<any>> = [
       this.router.events.pipe(
         filter((event: RouterEvent) => event instanceof NavigationEnd),
       ),
@@ -188,6 +144,7 @@ export class PageHeaderComponent
 
   refresh() {
     this.setTitle().genBreadcrumb();
+    this.cdr.detectChanges();
   }
 
   private genBreadcrumb() {
@@ -195,7 +152,7 @@ export class PageHeaderComponent
       this.paths = [];
       return;
     }
-    const paths: any[] = [];
+    const paths: PageHeaderPath[] = [];
     this.menus.forEach(item => {
       if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb)
         return;
@@ -206,11 +163,7 @@ export class PageHeaderComponent
     // add home
     if (this.home) {
       paths.splice(0, 0, {
-        title:
-          (this.homeI18n &&
-            this.i18nSrv &&
-            this.i18nSrv.fanyi(this.homeI18n)) ||
-          this.home,
+        title: (this.homeI18n && this.i18nSrv && this.i18nSrv.fanyi(this.homeI18n)) || this.home,
         link: [this.homeLink],
       });
     }

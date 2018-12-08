@@ -1,18 +1,8 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
-
-import { ZipService } from './zip.service';
-import { ZipConfig } from './zip.config';
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule],
 })
-export class ZipModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: ZipModule,
-      providers: [ZipConfig, ZipService],
-    };
-  }
-}
+export class ZipModule { }

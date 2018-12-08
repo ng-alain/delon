@@ -22,14 +22,14 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[col]`        | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `number(0 < col <= 6)`                | `3`          |
 | `[labelWidth]` | label text of width  | `number`                | `null`       |
 | `[default]`    | whether default text | `boolean`               | `true`       |
-| `[title]`      | Display title        | `string,TemplateRef<any>`            | - |
+| `[title]`      | Display title        | `string,TemplateRef<void>`            | - |
 
 ### sv
 
 | Property       | Description                           | Type             | Default |
 | -------------- | ------------------------------------- | -------------------------------------- |
 | `[col]`        | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | - |
-| `[label]`      | label of view                                  | `string,TemplateRef<any>`            | - |
+| `[label]`      | label of view                                  | `string,TemplateRef<void>`            | - |
 | `[labelWidth]` | label text of width, inherit `sv-container`     | `number`                               | - |
 | `[default]`    | whether default text, inherit `sv-container` | `boolean`                              | - |
 | `[type]`       | type of view                  | `primary | success | danger | warning` | - |

@@ -65,7 +65,7 @@ describe('abc: number-to-chinese', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [NumberToChineseModule.forRoot()],
+        imports: [NumberToChineseModule],
         declarations: [TestComponent],
       });
       fixture = TestBed.createComponent(TestComponent);

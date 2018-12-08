@@ -13,7 +13,7 @@ describe('abc: date-picker: range', () => {
 
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
-      imports: [DatePickerModule.forRoot(), FormsModule],
+      imports: [DatePickerModule, FormsModule],
       declarations: [TestComponent],
     }).createComponent(TestComponent);
     dl = fixture.debugElement;

@@ -1,20 +1,18 @@
 import {
   Directive,
-  Input,
   ElementRef,
-  Renderer2,
+  Input,
   OnDestroy,
+  Renderer2,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
 
-@Directive({
-  selector: '[acl]',
-})
+@Directive({ selector: '[acl]' })
 export class ACLDirective implements OnDestroy {
-  private _value: any;
+  private _value: ACLCanType;
   private change$: Subscription;
 
   @Input('acl')
@@ -38,12 +36,8 @@ export class ACLDirective implements OnDestroy {
     this._value = value;
   }
 
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    private srv: ACLService,
-  ) {
-    this.change$ = <any>this.srv.change.subscribe(() => this.set(this._value));
+  constructor(private el: ElementRef, private renderer: Renderer2, private srv: ACLService) {
+    this.change$ = this.srv.change.subscribe(() => this.set(this._value));
   }
 
   ngOnDestroy(): void {

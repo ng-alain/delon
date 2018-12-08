@@ -1,13 +1,13 @@
 import {
-  Component,
-  Input,
-  HostListener,
-  OnInit,
-  OnChanges,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Renderer2,
+  Component,
   ElementRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Renderer2,
   TemplateRef,
 } from '@angular/core';
 
@@ -17,39 +17,24 @@ import { InputNumber } from '@delon/util';
   selector: 'quick-menu',
   templateUrl: './quick-menu.component.html',
   host: { '[class.quick-menu]': 'true' },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
   // #region fields
 
-  _icon = 'question-circle';
-  _iconTpl: TemplateRef<any>;
-  @Input()
-  set icon(value: string | TemplateRef<any>) {
-    if (value instanceof TemplateRef) {
-      this._icon = null;
-      this._iconTpl = value;
-    } else {
-      this._icon = value;
-    }
-  }
-
+  @Input() icon: string | TemplateRef<void> = 'question-circle';
   @Input() @InputNumber() top = 120;
-
   @Input() @InputNumber() width = 200;
-
   @Input() bgColor = '#fff';
-
   @Input() borderColor = '#ddd';
 
   // #endregion
 
   constructor(
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private el: ElementRef,
     private render: Renderer2,
-  ) {}
+  ) { }
 
   private show = false;
 
@@ -74,7 +59,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
       `margin-right:-${this.show ? 0 : this.width}px`,
     ];
     this.render.setAttribute(this.el.nativeElement, 'style', res.join(';'));
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
   }
 
   private initFlag = false;

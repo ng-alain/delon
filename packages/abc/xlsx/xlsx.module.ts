@@ -1,10 +1,8 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
 
-import { XlsxService } from './xlsx.service';
 import { XlsxDirective } from './xlsx.directive';
-import { XlsxConfig } from './xlsx.config';
 
 const COMPONENTS = [XlsxDirective];
 
@@ -13,11 +11,4 @@ const COMPONENTS = [XlsxDirective];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class XlsxModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: XlsxModule,
-      providers: [XlsxService, XlsxConfig],
-    };
-  }
-}
+export class XlsxModule { }

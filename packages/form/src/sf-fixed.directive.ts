@@ -1,10 +1,10 @@
 import {
-  Directive,
-  Input,
-  ElementRef,
-  Renderer2,
   AfterViewInit,
+  Directive,
+  ElementRef,
+  Input,
   OnChanges,
+  Renderer2,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
@@ -27,9 +27,7 @@ export class SFFixedDirective implements AfterViewInit, OnChanges {
       this.render.setStyle(labelEl, 'width', unit);
       this.render.setStyle(labelEl, 'flex', `0 0 ${unit}`);
     } else {
-      const controlEl = widgetEl.querySelector(
-        '.ant-form-item-control-wrapper',
-      );
+      const controlEl = widgetEl.querySelector('.ant-form-item-control-wrapper');
       this.render.setStyle(controlEl, 'margin-left', unit);
     }
   }

@@ -1,0 +1,11 @@
+<ul class="avatar-list__wrap">
+  <li *ngFor="let i of items" [class]="cls">
+    <nz-tooltip *ngIf="i.tips" [nzTitle]="i.tips">
+      <nz-avatar nz-tooltip [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="avatarSize"></nz-avatar>
+    </nz-tooltip>
+    <nz-avatar *ngIf="!i.tips" [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="avatarSize"></nz-avatar>
+  </li>
+  <li *ngIf="exceedCount > 0" [class]="cls">
+    <nz-avatar [nzSize]="avatarSize" style="cursor: auto" [ngStyle]="excessItemsStyle" [nzText]="'+' + exceedCount"></nz-avatar>
+  </li>
+</ul>

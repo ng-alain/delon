@@ -1,12 +1,11 @@
-import { Injectable, Inject, Optional, OnDestroy } from '@angular/core';
-import { Observable, Subscription, BehaviorSubject } from 'rxjs';
+import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { share } from 'rxjs/operators';
 
 import { ACLService } from '@delon/acl';
-import { deepCopy } from '@delon/util';
 
-import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
-import { Menu } from './interface';
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
+import { Menu, MenuIcon } from './interface';
 
 @Injectable({ providedIn: 'root' })
 export class MenuService implements OnDestroy {
@@ -21,8 +20,9 @@ export class MenuService implements OnDestroy {
     private i18nSrv: AlainI18NService,
     @Optional() private aclService: ACLService,
   ) {
-    if (this.i18nSrv)
+    if (this.i18nSrv) {
       this.i18n$ = this.i18nSrv.change.subscribe(() => this.resume());
+    }
   }
 
   get change(): Observable<Menu[]> {
@@ -93,10 +93,11 @@ export class MenuService implements OnDestroy {
         } else if (/^https?:\/\//.test(item.icon)) {
           type = 'img';
         }
+        // tslint:disable-next-line:no-any
         item.icon = { type, value } as any;
       }
       if (item.icon != null) {
-        item.icon = Object.assign({ theme: 'outline', spin: false }, item.icon);
+        item.icon = { theme: 'outline', spin: false, ...(item.icon as MenuIcon) };
       }
 
       item.text =
@@ -142,22 +143,23 @@ export class MenuService implements OnDestroy {
     if (pos === -1) {
       pos = ls.findIndex(w => w.link.includes('dashboard'));
       pos = (pos !== -1 ? pos : -1) + 1;
-      const shortcutMenu = <Menu>{
+      const shortcutMenu = {
         text: '快捷菜单',
         i18n: 'shortcut',
         icon: 'icon-rocket',
         children: [],
-      };
+      } as Menu;
       this.data[0].children.splice(pos, 0, shortcutMenu);
     }
     let _data = this.data[0].children[pos];
     if (_data.i18n && this.i18nSrv) _data.text = this.i18nSrv.fanyi(_data.i18n);
+    // tslint:disable-next-line:prefer-object-spread
     _data = Object.assign(_data, {
       shortcutRoot: true,
       _type: 3,
       __id: -1,
       _depth: 1,
-      __parent: null
+      __parent: null,
     });
     _data.children = shortcuts.map(i => {
       i._depth = 2;

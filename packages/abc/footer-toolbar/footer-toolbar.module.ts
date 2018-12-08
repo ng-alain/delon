@@ -1,5 +1,5 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 import { ErrorCollectModule } from '@delon/abc/error-collect';
 import { DelonUtilModule } from '@delon/util';
@@ -13,8 +13,4 @@ const COMPONENTS = [FooterToolbarComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class FooterToolbarModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: FooterToolbarModule, providers: [] };
-  }
-}
+export class FooterToolbarModule { }

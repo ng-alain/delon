@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'se-error',
-  preserveWhitespaces: false,
   animations: [
     trigger('errorAnt', [
       transition('void => *', [
@@ -35,18 +34,11 @@ import { animate, style, transition, trigger } from '@angular/animations';
     ]),
   ],
   template: `
-  <div [@errorAnt]>
-    <ng-content></ng-content>
-  </div>`,
+    <div [@errorAnt]><ng-content></ng-content></div>
+  `,
   host: {
     '[class.ant-form-explain]': 'true',
   },
-  styles: [
-    `
-      :host {
-        display: block;
-      }
-    `,
-  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SEErrorComponent {}

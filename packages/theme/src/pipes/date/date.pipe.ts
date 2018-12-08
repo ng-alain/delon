@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import format from 'date-fns/format';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import format from 'date-fns/format';
 
 @Pipe({ name: '_date' })
 export class DatePipe implements PipeTransform {
@@ -11,6 +11,7 @@ export class DatePipe implements PipeTransform {
     if (value) {
       if (formatString === 'fn') {
         return distanceInWordsToNow(value, {
+          // tslint:disable-next-line:no-any
           locale: (window as any).__locale__,
         });
       }

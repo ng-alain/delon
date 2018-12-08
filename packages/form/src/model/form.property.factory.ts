@@ -1,20 +1,18 @@
 import { DelonFormConfig } from '../config';
-import { SchemaValidatorFactory } from '../validator.factory';
-import { PropertyGroup, FormProperty } from './form.property';
-import { NumberProperty } from './number.property';
-import { StringProperty } from './string.property';
-import { BooleanProperty } from './boolean.property';
-import { ArrayProperty } from './array.property';
-import { ObjectProperty } from './object.property';
 import { SFSchema } from '../schema';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { retrieveSchema } from '../utils';
+import { SchemaValidatorFactory } from '../validator.factory';
+
+import { ArrayProperty } from './array.property';
+import { BooleanProperty } from './boolean.property';
+import { FormProperty, PropertyGroup } from './form.property';
+import { NumberProperty } from './number.property';
+import { ObjectProperty } from './object.property';
+import { StringProperty } from './string.property';
 
 export class FormPropertyFactory {
-  constructor(
-    private schemaValidatorFactory: SchemaValidatorFactory,
-    private options: DelonFormConfig,
-  ) {}
+  constructor(private schemaValidatorFactory: SchemaValidatorFactory, private options: DelonFormConfig) { }
 
   createProperty(
     schema: SFSchema,
@@ -37,7 +35,7 @@ export class FormPropertyFactory {
       } else {
         throw new Error(
           'Instanciation of a FormProperty with an unknown parent type: ' +
-            parent.type,
+          parent.type,
         );
       }
     } else {

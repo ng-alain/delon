@@ -1,14 +1,15 @@
+import { SFValue } from '../interface';
 import { FormProperty } from './form.property';
 
 export abstract class AtomicProperty extends FormProperty {
-  abstract fallbackValue(): any;
+  abstract fallbackValue(): SFValue;
 
-  setValue(value: any, onlySelf: boolean) {
+  setValue(value: SFValue, onlySelf: boolean) {
     this._value = value;
     this.updateValueAndValidity(onlySelf, true);
   }
 
-  resetValue(value: any, onlySelf: boolean) {
+  resetValue(value: SFValue, onlySelf: boolean) {
     if (value == null) {
       if (this.schema.default !== undefined) {
         value = this.schema.default;
@@ -27,5 +28,5 @@ export abstract class AtomicProperty extends FormProperty {
     return this.fallbackValue() !== this.value;
   }
 
-  _updateValue() {}
+  _updateValue() { }
 }

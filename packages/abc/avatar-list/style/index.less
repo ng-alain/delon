@@ -17,22 +17,28 @@
     height: @avatar-size-base;
     .ant-avatar {
       border: 1px solid #fff;
+      cursor: pointer;
     }
-    &-large {
-      width: @avatar-size-lg;
-      height: @avatar-size-lg;
-    }
-    &-small {
-      width: @avatar-size-sm;
-      height: @avatar-size-sm;
-    }
-    &-mini {
+  }
+  &__large {
+    width: @avatar-size-lg;
+    height: @avatar-size-lg;
+  }
+  &__small {
+    width: @avatar-size-sm;
+    height: @avatar-size-sm;
+  }
+  &__mini {
+    width: 20px;
+    height: 20px;
+    .ant-avatar {
       width: 20px;
       height: 20px;
-      .ant-avatar {
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
+      line-height: 20px;
+
+      .ant-avatar-string {
+        font-size: 12px;
+        line-height: 18px;
       }
     }
   }

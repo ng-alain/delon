@@ -47,6 +47,8 @@ describe('Service: Menu', () => {
     { text: 'sub', children: [] },
   ];
 
+  afterEach(() => srv.ngOnDestroy());
+
   describe('[default]', () => {
     beforeEach(() => {
       injector = TestBed.configureTestingModule({
@@ -58,8 +60,6 @@ describe('Service: Menu', () => {
       });
       srv = injector.get(MenuService);
     });
-
-    afterEach(() => srv.ngOnDestroy());
 
     it('should create an instance', () => {
       expect(srv).toBeTruthy();
@@ -209,7 +209,6 @@ describe('Service: Menu', () => {
       srv.add(newMenus);
       expect(srv.menus[0]._hidden).toBe(false);
       expect(srv.menus[1]._hidden).toBe(true);
-      srv.ngOnDestroy();
     });
 
     it('#change', (done: () => void) => {
@@ -217,7 +216,6 @@ describe('Service: Menu', () => {
       srv.change.pipe(filter(ls => ls.length > 0)).subscribe(res => {
         expect(res.length).toBe(1);
         expect(res[0].text).toBe(newMenus[0].text);
-        srv.ngOnDestroy();
         done();
       });
       srv.add(newMenus);
@@ -315,7 +313,6 @@ describe('Service: Menu', () => {
       expect(srv.resume).not.toHaveBeenCalled();
       injector.get(ALAIN_I18N_TOKEN).use('en');
       expect(srv.resume).toHaveBeenCalled();
-      srv.ngOnDestroy();
     });
 
     it('without ALAIN_I18N_TOKEN', () => {
@@ -326,7 +323,6 @@ describe('Service: Menu', () => {
         ],
       });
       srv = injector.get(MenuService);
-      srv.ngOnDestroy();
       expect(true).toBe(true);
     });
   });

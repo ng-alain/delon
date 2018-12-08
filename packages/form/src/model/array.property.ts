@@ -1,10 +1,11 @@
-import { PropertyGroup, FormProperty } from './form.property';
-import { SchemaValidatorFactory } from '../validator.factory';
-import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { DelonFormConfig } from '../config';
+import { SFValue } from '../interface';
+import { SFSchema } from '../schema/index';
+import { SFUISchema, SFUISchemaItem } from '../schema/ui';
+import { SchemaValidatorFactory } from '../validator.factory';
+import { FormProperty, PropertyGroup } from './form.property';
 import { FormPropertyFactory } from './form.property.factory';
 import { ObjectProperty } from './object.property';
-import { ErrorData } from '../errors';
 
 export class ArrayProperty extends PropertyGroup {
   tick = 1;
@@ -12,7 +13,7 @@ export class ArrayProperty extends PropertyGroup {
   constructor(
     private formPropertyFactory: FormPropertyFactory,
     schemaValidatorFactory: SchemaValidatorFactory,
-    schema: any,
+    schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
     formData: {},
     parent: PropertyGroup,
@@ -32,14 +33,14 @@ export class ArrayProperty extends PropertyGroup {
     return list[pos].getProperty(subPath);
   }
 
-  setValue(value: any, onlySelf: boolean) {
+  setValue(value: SFValue, onlySelf: boolean) {
     this.properties = [];
     this.clearErrors();
     this.resetProperties(value);
     this.updateValueAndValidity(onlySelf, true);
   }
 
-  resetValue(value: any, onlySelf: boolean) {
+  resetValue(value: SFValue, onlySelf: boolean) {
     this._value = value || this.schema.default || [];
     this.properties = [];
     this.clearErrors();
@@ -52,28 +53,29 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   _updateValue() {
+    // tslint:disable-next-line:no-any
     const value: any[] = [];
-    this.forEachChild((property: ObjectProperty, _) => {
+    this.forEachChild((property: ObjectProperty) => {
       if (property.visible && property._hasValue()) {
-        value.push(Object.assign({}, property.formData, property.value));
+        value.push({ ...property.formData, ...property.value });
       }
     });
     this._value = value;
   }
 
-  private addProperty(value: any) {
+  private addProperty(formData: {}) {
     const newProperty = this.formPropertyFactory.createProperty(
       this.schema.items,
       this.ui.$items,
-      value,
+      formData,
       this,
     ) as ObjectProperty;
-    (<FormProperty[]>this.properties).push(newProperty);
+    (this.properties as FormProperty[]).push(newProperty);
     return newProperty;
   }
 
-  private resetProperties(value: any[]) {
-    for (const item of value) {
+  private resetProperties(formDatas: Array<{}>) {
+    for (const item of formDatas) {
       const property = this.addProperty(item);
       property.resetValue(item, true);
     }
@@ -86,14 +88,14 @@ export class ArrayProperty extends PropertyGroup {
 
   // #region actions
 
-  add(value: any): FormProperty {
-    const newProperty = this.addProperty(value);
-    newProperty.resetValue(value, false);
+  add(formData: {}): FormProperty {
+    const newProperty = this.addProperty(formData);
+    newProperty.resetValue(formData, false);
     return newProperty;
   }
 
   remove(index: number) {
-    const list = <FormProperty[]>this.properties;
+    const list = this.properties as FormProperty[];
     this.clearErrors(list[index].path);
     list.splice(index, 1);
     this.updateValueAndValidity(false, true);

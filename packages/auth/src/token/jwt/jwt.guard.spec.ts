@@ -44,7 +44,7 @@ describe('auth: JWTGuard', () => {
             component: MockComponent,
           },
         ]),
-        DelonAuthModule.forRoot(),
+        DelonAuthModule,
       ],
     });
     srv = injector.get(DA_SERVICE_TOKEN);

@@ -1,18 +1,18 @@
 import {
   Component,
-  OnInit,
-  OnChanges,
+  ComponentRef,
   Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
   ViewChild,
   ViewContainerRef,
-  ComponentRef,
-  OnDestroy,
 } from '@angular/core';
 import { FormProperty } from './model/form.property';
+import { SFUISchemaItem } from './schema/ui';
+import { TerminatorService } from './terminator.service';
 import { Widget } from './widget';
 import { WidgetFactory } from './widget.factory';
-import { TerminatorService } from './terminator.service';
-import { SFUISchemaItem } from './schema/ui';
 
 let nextUniqueId = 0;
 
@@ -21,8 +21,8 @@ let nextUniqueId = 0;
   template: `<ng-template #target></ng-template>`,
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
-  private ref: ComponentRef<any>;
-  widget: Widget<any> = null;
+  private ref: ComponentRef<Widget<FormProperty>>;
+  widget: Widget<FormProperty> = null;
 
   @Input() formProperty: FormProperty;
 
@@ -32,9 +32,9 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private widgetFactory: WidgetFactory,
     private terminator: TerminatorService,
-  ) {}
+  ) { }
 
-  onWidgetInstanciated(widget: Widget<any>) {
+  onWidgetInstanciated(widget: Widget<FormProperty>) {
     this.widget = widget;
     const id = `_sf-${nextUniqueId++}`;
 

@@ -1,23 +1,23 @@
+import { DOCUMENT } from '@angular/common';
 import {
-  Component,
-  ElementRef,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Input,
-  Output,
+  Component,
+  ElementRef,
   EventEmitter,
-  OnChanges,
-  OnInit,
-  Inject,
   HostBinding,
+  Inject,
+  Input,
+  OnChanges,
   OnDestroy,
-  AfterViewInit,
+  OnInit,
+  Output,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { Router, ActivationStart, ActivationEnd } from '@angular/router';
-import { Subscription, fromEvent } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
+import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
 import { InputBoolean, InputNumber } from '@delon/util';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
 import { FullContentService } from './full-content.service';
 
@@ -31,15 +31,12 @@ const hideTitleCls = `full-content__hidden-title`;
   host: { '[class.full-content]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FullContentComponent
-  implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   private bodyEl: HTMLElement;
   private inited = false;
   private srv$: Subscription;
   private route$: Subscription;
-  private id = `_full-content-${Math.random()
-    .toString(36)
-    .substring(2)}`;
+  private id = `_full-content-${Math.random().toString(36).substring(2)}`;
   private scroll$: Subscription = null;
 
   @HostBinding('style.height.px')
@@ -47,30 +44,21 @@ export class FullContentComponent
 
   // #region fields
 
-  @Input()
-  @InputBoolean()
-  fullscreen: boolean;
-
-  @Input()
-  @InputBoolean()
-  hideTitle = true;
-
-  @Input()
-  @InputNumber()
-  padding = 24;
-
-  @Output()
-  readonly fullscreenChange = new EventEmitter<boolean>();
+  @Input() @InputBoolean() fullscreen: boolean;
+  @Input() @InputBoolean() hideTitle = true;
+  @Input() @InputNumber() padding = 24;
+  @Output() readonly fullscreenChange = new EventEmitter<boolean>();
 
   // #endregion
 
   constructor(
     private el: ElementRef,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private srv: FullContentService,
     private router: Router,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
-  ) {}
+  ) { }
 
   private updateCls() {
     const clss = this.bodyEl.classList;
@@ -94,11 +82,8 @@ export class FullContentComponent
   }
 
   private updateHeight() {
-    this._height =
-      this.bodyEl.getBoundingClientRect().height -
-      (this.el.nativeElement as HTMLElement).getBoundingClientRect().top -
-      this.padding;
-    this.cd.detectChanges();
+    this._height = this.bodyEl.getBoundingClientRect().height - (this.el.nativeElement as HTMLElement).getBoundingClientRect().top - this.padding;
+    this.cdr.detectChanges();
   }
 
   private removeInBody() {
@@ -126,13 +111,10 @@ export class FullContentComponent
     // when router changed
     this.route$ = this.router.events
       .pipe(
-        filter(
-          (e: any) =>
-            e instanceof ActivationStart || e instanceof ActivationEnd,
-        ),
+        filter((e: Event) => e instanceof ActivationStart || e instanceof ActivationEnd),
         debounceTime(200),
       )
-      .subscribe(e => {
+      .subscribe(() => {
         if (!!this.doc.querySelector('#' + this.id)) {
           this.bodyEl.classList.add(wrapCls);
           this.updateCls();

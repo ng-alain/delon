@@ -15,7 +15,7 @@ describe('abc: qr', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [QRModule.forRoot()],
+      imports: [QRModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

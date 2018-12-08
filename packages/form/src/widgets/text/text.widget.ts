@@ -8,7 +8,6 @@ import { ControlWidget } from '../../widget';
     {{ value || ui.defaultText || '-' }}
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class TextWidget extends ControlWidget implements OnInit {
   ngOnInit(): void {

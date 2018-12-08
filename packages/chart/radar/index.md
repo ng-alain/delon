@@ -10,11 +10,21 @@ type: Components
 
 ## API
 
-| 参数      | 说明                                      | 类型         | 默认值 |
-|----------|------------------------------------------|-------------|-------|
-| `[title]` | 图表标题 | `string,TemplateRef<any>` | - |
-| `[height]` | 图表高度 | `number` | - |
-| `[hasLegend]` | 是否显示 legend | `boolean` | `false` |
-| `[padding]` | 图表内部间距 | `array` | `[24, 30, 16, 30]` |
-| `[colors]` | 颜色列表 | `string[]` | - |
-| `[data]` | 数据 | `Array<{ name: string, label: string, value: number, [key: string]: any }>` | - |
+| 参数          | 说明               | 类型                       | 默认值             |
+|---------------|------------------|----------------------------|--------------------|
+| `[delay]`     | 延迟渲染，单位：毫秒 | `number`                   | `0`                |
+| `[title]`     | 图表标题           | `string,TemplateRef<void>` | -                  |
+| `[height]`    | 图表高度           | `number`                   | -                  |
+| `[hasLegend]` | 是否显示 legend    | `boolean`                  | `false`            |
+| `[padding]`   | 图表内部间距       | `array`                    | `[24, 30, 16, 30]` |
+| `[colors]`    | 颜色列表           | `string[]`                 | -                  |
+| `[data]`      | 数据               | `G2RadarData[]`            | -                  |
+
+### G2RadarData
+
+| 参数      | 说明 | 类型     | 默认值 |
+|-----------|-----|----------|--------|
+| `[name]`  | 名称 | `string` | -      |
+| `[label]` | 标签 | `string` | -      |
+| `[value]` | 值   | `number` | -      |
+

@@ -1,5 +1,5 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
 
 import { G2GaugeComponent } from './gauge.component';
@@ -11,8 +11,4 @@ const COMPONENTS = [G2GaugeComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2GaugeModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: G2GaugeModule, providers: [] };
-  }
-}
+export class G2GaugeModule { }

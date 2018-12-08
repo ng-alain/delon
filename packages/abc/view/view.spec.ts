@@ -16,7 +16,7 @@ describe('abc: view', () => {
 
   function genModule(template?: string) {
     TestBed.configureTestingModule({
-      imports: [SVModule.forRoot()],
+      imports: [SVModule],
       declarations: [TestComponent],
     });
     if (template) {

@@ -1,6 +1,6 @@
 <div class="ant-row" [ngStyle]="{'margin-left.px': -(gutter / 2), 'margin-right.px': -(gutter / 2)}">
-  <sv-title *ngIf="_title || _titleTpl">
-    <ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container>
+  <sv-title *ngIf="title">
+    <ng-container *stringTemplateOutlet="title">{{title}}</ng-container>
   </sv-title>
   <ng-content></ng-content>
 </div>

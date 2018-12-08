@@ -1,3 +1,4 @@
+// tslint:disable:no-any
 export interface XlsxExportOptions {
   /**
    * worksheets in the workbook, e.g:
@@ -9,7 +10,7 @@ export interface XlsxExportOptions {
   filename?: string;
   opts?: any;
   /** triggers when saveas */
-  callback?: (wb: any) => void;
+  callback?(wb: any): void;
 }
 
 export interface XlsxExportSheet {

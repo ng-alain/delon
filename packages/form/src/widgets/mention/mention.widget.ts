@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
-import { ControlWidget } from '../../widget';
-import { getData, getEnum } from '../../utils';
-import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
-import { FormProperty, PropertyGroup } from '../../model/form.property';
 import { NzMentionComponent } from 'ng-zorro-antd';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { SFValue } from '../../interface';
+import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
+import { getData, getEnum } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-mention',
@@ -53,11 +53,11 @@ import { NzMentionComponent } from 'ng-zorro-antd';
 
     </sf-item-wrap>
     `,
-  preserveWhitespaces: false,
 })
 export class MentionWidget extends ControlWidget implements OnInit {
   @ViewChild('mentions') mentionChild: NzMentionComponent;
   data: SFSchemaEnum[] = [];
+  // tslint:disable-next-line:no-any
   i: any;
   loading = false;
 
@@ -69,16 +69,11 @@ export class MentionWidget extends ControlWidget implements OnInit {
       placement: this.ui.placement || 'bottom',
       prefix: this.ui.prefix || '@',
     };
-    const min =
-        typeof this.schema.minimum !== 'undefined' ? this.schema.minimum : -1,
-      max =
-        typeof this.schema.maximum !== 'undefined' ? this.schema.maximum : -1;
+    const min = typeof this.schema.minimum !== 'undefined' ? this.schema.minimum : -1;
+    const max = typeof this.schema.maximum !== 'undefined' ? this.schema.maximum : -1;
+
     if (!this.ui.validator && (min !== -1 || max !== -1)) {
-      this.ui.validator = (
-        value: any,
-        formProperty: FormProperty,
-        form: PropertyGroup,
-      ) => {
+      this.ui.validator = () => {
         const count = this.mentionChild.getMentions().length;
         if (min !== -1 && count < min) {
           return [{ keyword: 'mention', message: `最少提及 ${min} 次` }];
@@ -91,17 +86,19 @@ export class MentionWidget extends ControlWidget implements OnInit {
     }
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, null).subscribe(list => {
       this.data = list;
       this.detectChanges();
     });
   }
 
+  // tslint:disable-next-line:no-any
   _select(options: any) {
     if (this.ui.select) this.ui.select(options);
   }
 
+  // tslint:disable-next-line:no-any
   _search(option: any) {
     if (typeof this.ui.loadData !== 'function') return;
 

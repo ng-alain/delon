@@ -1,11 +1,10 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { DelonUtilModule } from '@delon/util';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { PageHeaderComponent } from './page-header.component';
-import { PageHeaderConfig } from './page-header.config';
 
 const COMPONENTS = [PageHeaderComponent];
 
@@ -14,8 +13,4 @@ const COMPONENTS = [PageHeaderComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class PageHeaderModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: PageHeaderModule, providers: [PageHeaderConfig] };
-  }
-}
+export class PageHeaderModule { }

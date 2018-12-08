@@ -1,41 +1,70 @@
-import { Component, Input, QueryList, ContentChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  Input,
+  OnChanges,
+  QueryList,
+} from '@angular/core';
+import { InputNumber } from '@delon/util';
+
 import { AvatarListItemComponent } from './avatar-list-item.component';
 
 @Component({
   selector: 'avatar-list',
-  template: `
-  <ul class="avatar-list__wrap">
-    <li *ngFor="let i of _items" class="avatar-list__item{{_size ? ' avatar-list__item-' + _size : ''}}">
-      <nz-tooltip *ngIf="i.tips" [nzTitle]="i.tips">
-        <nz-avatar nz-tooltip [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="_avatarSize"></nz-avatar>
-      </nz-tooltip>
-      <nz-avatar *ngIf="!i.tips" [nzSrc]="i.src" [nzText]="i.text" [nzIcon]="i.icon" [nzSize]="_avatarSize"></nz-avatar>
-    </li>
-  </ul>
-  `,
+  templateUrl: './avatar-list.component.html',
   host: { '[class.avatar-list]': 'true' },
-  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AvatarListComponent {
-  _size = '';
+export class AvatarListComponent implements AfterViewInit, OnChanges {
+  private inited = false;
+  @ContentChildren(AvatarListItemComponent, { descendants: false })
+  private _items !: QueryList<AvatarListItemComponent>;
 
-  _avatarSize = '';
+  items: AvatarListItemComponent[] = [];
+  exceedCount = 0;
 
+  cls = '';
+  avatarSize = '';
   @Input()
   set size(value: 'large' | 'small' | 'mini' | 'default') {
-    this._size = value === 'default' ? '' : value;
+    this.cls = 'avatar-list__item' + (value === 'default' ? '' : ` avatar-list__${value}`);
     switch (value) {
       case 'large':
       case 'small':
       case 'default':
-        this._avatarSize = value;
+        this.avatarSize = value;
         break;
       default:
-        this._avatarSize = 'small';
+        this.avatarSize = 'small';
         break;
     }
   }
+  @Input() @InputNumber() maxLength = 0;
+  @Input() excessItemsStyle: {};
 
-  @ContentChildren(AvatarListItemComponent)
-  _items: QueryList<AvatarListItemComponent>;
+  constructor(private cdr: ChangeDetectorRef) { }
+
+  private gen() {
+    const { _items } = this;
+    const maxLength = this.maxLength > 0 ? this.maxLength : _items.length;
+    const numOfChildren = _items.length;
+    const numToShow = maxLength > 0 && maxLength >= numOfChildren ? numOfChildren : maxLength;
+    this.items = _items.toArray().slice(0, numToShow);
+    this.exceedCount = numToShow < numOfChildren ? numOfChildren - maxLength : 0;
+    this.cdr.detectChanges();
+  }
+
+  ngAfterViewInit() {
+    this.gen();
+    this.inited = true;
+  }
+
+  ngOnChanges() {
+    if (this.inited) {
+      this.gen();
+    }
+  }
 }

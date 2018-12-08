@@ -8,7 +8,7 @@ describe('Schematic: tpl', () => {
   let tree: UnitTestTree;
 
   function run() {
-    tree = runner.runSchematic('tpl', { name: 'edit', module: 'trade' }, tree);
+    tree = runner.runSchematic('tpl', { name: 'edit', module: 'trade', modal: true }, tree);
   }
 
   beforeEach(() => ({ runner, tree } = createAlainAndModuleApp()));

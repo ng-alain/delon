@@ -1,22 +1,21 @@
 import {
-  Component,
-  Input,
-  ContentChildren,
-  QueryList,
   ChangeDetectionStrategy,
+  Component,
+  ContentChildren,
   Inject,
+  Input,
+  QueryList,
 } from '@angular/core';
-import { WINDOW } from '@delon/theme';
 import { Router } from '@angular/router';
+import { WINDOW } from '@delon/theme';
 
-import { GlobalFooterLink } from './global-footer.types';
 import { GlobalFooterItemComponent } from './global-footer-item.component';
+import { GlobalFooterLink } from './global-footer.types';
 
 @Component({
   selector: 'global-footer',
   templateUrl: './global-footer.component.html',
   host: { '[class.global-footer]': 'true' },
-  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GlobalFooterComponent {

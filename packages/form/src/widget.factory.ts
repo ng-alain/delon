@@ -1,20 +1,23 @@
 import {
-  Injectable,
   ComponentFactoryResolver,
-  ViewContainerRef,
   ComponentRef,
+  Injectable,
+  ViewContainerRef,
 } from '@angular/core';
+import { FormProperty } from './model/form.property';
 import { Widget } from './widget';
 
 export class WidgetRegistry {
-  private widgets: { [type: string]: any } = {};
+  private widgets: { [type: string]: Widget<FormProperty> } = {};
 
-  private defaultWidget: any;
+  private defaultWidget: Widget<FormProperty>;
 
+  // tslint:disable-next-line:no-any
   setDefault(widget: any) {
     this.defaultWidget = widget;
   }
 
+  // tslint:disable-next-line:no-any
   register(type: string, widget: any) {
     this.widgets[type] = widget;
   }
@@ -23,7 +26,7 @@ export class WidgetRegistry {
     return this.widgets.hasOwnProperty(type);
   }
 
-  getType(type: string): any {
+  getType(type: string): Widget<FormProperty> {
     if (this.has(type)) {
       return this.widgets[type];
     }
@@ -36,18 +39,19 @@ export class WidgetFactory {
   constructor(
     private registry: WidgetRegistry,
     private resolver: ComponentFactoryResolver,
-  ) {}
+  ) { }
 
   createWidget(
     container: ViewContainerRef,
     type: string,
-  ): ComponentRef<Widget<any>> {
+  ): ComponentRef<Widget<FormProperty>> {
     if (!this.registry.has(type)) {
       console.warn(`No widget for type "${type}"`);
     }
 
-    const componentClass = this.registry.getType(type);
-    const componentFactory = this.resolver.resolveComponentFactory<Widget<any>>(
+    // tslint:disable-next-line:no-any
+    const componentClass = this.registry.getType(type) as any;
+    const componentFactory = this.resolver.resolveComponentFactory<Widget<FormProperty>>(
       componentClass,
     );
     return container.createComponent(componentFactory);

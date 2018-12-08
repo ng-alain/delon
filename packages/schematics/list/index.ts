@@ -1,7 +1,7 @@
-import { Rule, chain } from '@angular-devkit/schematics';
-import { Schema } from './schema';
+import { chain, Rule } from '@angular-devkit/schematics';
 import { buildAlain } from '../utils/alain';
+import { Schema } from './schema';
 
-export default function(options: Schema): Rule {
+export default function (options: Schema): Rule {
   return chain([buildAlain(options)]);
 }

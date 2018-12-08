@@ -12,7 +12,7 @@ describe('abc: result', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ResultModule.forRoot()],
+      imports: [ResultModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -23,8 +23,7 @@ describe('abc: result', () => {
 
   function isText(cls: string, value: any) {
     const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
-    if (el) return el.innerText.trim();
-    return '';
+    expect(el ? el.innerText.trim() : '').toBe(value);
   }
 
   function isExists(cls: string, stauts: boolean = true) {

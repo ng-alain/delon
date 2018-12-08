@@ -1,115 +1,74 @@
+// tslint:disable:no-any
 import {
-  Component,
-  Input,
-  HostBinding,
-  ViewChild,
-  ElementRef,
-  OnDestroy,
-  OnChanges,
-  NgZone,
-  TemplateRef,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { toBoolean, toNumber } from '@delon/util';
+import { InputBoolean, InputNumber } from '@delon/util';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
 declare var G2: any;
+const TITLE_HEIGHT = 41;
+
+export interface G2BarData {
+  x: any;
+  y: any;
+  [key: string]: any;
+}
 
 @Component({
   selector: 'g2-bar',
-  template: `
-  <ng-container *ngIf="_title; else _titleTpl"><h4 style="margin-bottom:20px">{{_title}}</h4></ng-container>
-  <div #container></div>`,
+  templateUrl: './bar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
-export class G2BarComponent implements OnDestroy, OnChanges {
-  private autoHideXLabels = false;
-  private resize$: Subscription = null;
+export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
+  private resize$: Subscription;
+  // tslint:disable-next-line:no-any
   private chart: any;
+  @ViewChild('container') private node: ElementRef;
 
   // #region fields
-  _title = '';
-  _titleTpl: TemplateRef<any>;
-  @Input()
-  set title(value: string | TemplateRef<any>) {
-    if (value instanceof TemplateRef) {
-      this._title = null;
-      this._titleTpl = value;
-    } else {
-      this._title = value;
-    }
-    this.cd.detectChanges();
-  }
 
+  @Input() @InputNumber() delay = 0;
+  @Input() title: string | TemplateRef<void>;
   @Input() color = 'rgba(24, 144, 255, 0.85)';
-
-  @HostBinding('style.height.px')
-  @Input()
-  get height() {
-    return this._height;
-  }
-  set height(value: any) {
-    this._height = toNumber(value);
-  }
-  private _height = 0;
-
-  @Input() padding: number[];
-  @Input() data: Array<{ x: any; y: any; [key: string]: any }>;
-
-  @Input()
-  set autoLabel(value: any) {
-    this._autoLabel = toBoolean(value);
-  }
-  private _autoLabel = true;
+  @HostBinding('style.height.px') @Input() @InputNumber() height = 0;
+  @Input() padding: Array<number | string> | string = 'auto';
+  @Input() data: G2BarData[] = [];
+  @Input() @InputBoolean() autoLabel = true;
 
   // #endregion
 
-  @ViewChild('container') private node: ElementRef;
-
-  constructor(
-    private el: ElementRef,
-    private cd: ChangeDetectorRef,
-    private zone: NgZone,
-  ) {}
-
-  private runInstall() {
-    this.zone.runOutsideAngular(() => setTimeout(() => this.install()));
+  private getHeight() {
+    return this.title ? this.height - TITLE_HEIGHT : this.height;
   }
 
   private install() {
-    const canvasWidth = this.el.nativeElement.clientWidth;
-    const minWidth = this.data.length * 30;
+    const { node, padding } = this;
 
-    if (canvasWidth <= minWidth) {
-      if (!this.autoHideXLabels) {
-        this.autoHideXLabels = true;
-      }
-    } else if (this.autoHideXLabels) {
-      this.autoHideXLabels = false;
-    }
-
-    if (!this.data || (this.data && this.data.length < 1)) return;
-    this.node.nativeElement.innerHTML = '';
-
-    const chart = new G2.Chart({
-      container: this.node.nativeElement,
+    const container = node.nativeElement as HTMLElement;
+    const chart = this.chart = new G2.Chart({
+      container,
       forceFit: true,
-      height: this._title || this._titleTpl ? this.height - 41 : this.height,
       legend: null,
-      padding: this.padding || 'auto',
+      height: this.getHeight(),
+      padding,
     });
-
-    chart.axis('x', !this.autoHideXLabels);
+    this.updatelabel();
     chart.axis('y', {
       title: false,
       line: false,
       tickLine: false,
     });
-
-    chart.source(this.data, {
+    chart.source([], {
       x: {
         type: 'cat',
       },
@@ -117,42 +76,66 @@ export class G2BarComponent implements OnDestroy, OnChanges {
         min: 0,
       },
     });
-
     chart.tooltip({
       showTitle: false,
     });
     chart
       .interval()
       .position('x*y')
-      .color(this.color)
-      .tooltip('x*y', (x, y) => {
-        return {
-          name: x,
-          value: y,
-        };
-      });
+      .tooltip('x*y', (x, y) => ({ name: x, value: y }));
+
     chart.render();
-    this.chart = chart;
+
+    this.attachChart();
+  }
+
+  private attachChart() {
+    const { chart, padding, data, color } = this;
+    if (!chart) return;
+    this.installResizeEvent();
+    const height = this.getHeight();
+    if (chart.get('height') !== height) {
+      chart.changeHeight(height);
+    }
+    // color
+    chart.get('geoms')[0].color(color);
+    chart.set('padding', padding);
+
+    chart.changeData(data);
+  }
+
+  private updatelabel() {
+    const { node, data, chart } = this;
+    const canvasWidth = node.nativeElement.clientWidth;
+    const minWidth = data.length * 30;
+    chart.axis('x', canvasWidth > minWidth).repaint();
   }
 
   private installResizeEvent() {
-    if (!this._autoLabel || this.resize$) return;
+    if (!this.autoLabel || this.resize$) return;
 
     this.resize$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(200))
-      .subscribe(() => this.runInstall());
+      .pipe(
+        filter(() => this.chart),
+        debounceTime(200),
+      )
+      .subscribe(() => this.updatelabel());
+  }
+
+  ngOnInit() {
+    setTimeout(() => this.install(), this.delay);
   }
 
   ngOnChanges(): void {
-    this.installResizeEvent();
-    this.runInstall();
+    this.attachChart();
   }
 
   ngOnDestroy(): void {
-    if (this.resize$) this.resize$.unsubscribe();
+    if (this.resize$) {
+      this.resize$.unsubscribe();
+    }
     if (this.chart) {
       this.chart.destroy();
-      this.chart = null;
     }
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '../../widget';
-import { getData, toBool } from '../../utils';
+import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
+import { getData, toBool } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-cascader',
@@ -37,7 +38,6 @@ import { SFSchemaEnum } from '../../schema';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class CascaderWidget extends ControlWidget implements OnInit {
   clearText: string;
@@ -45,6 +45,7 @@ export class CascaderWidget extends ControlWidget implements OnInit {
   showInput: boolean;
   triggerAction: string[];
   data: SFSchemaEnum[] = [];
+  // tslint:disable-next-line:no-any
   loadData: any;
 
   ngOnInit(): void {
@@ -53,12 +54,12 @@ export class CascaderWidget extends ControlWidget implements OnInit {
     this.showInput = toBool(this.ui.showInput, true);
     this.triggerAction = this.ui.triggerAction || ['click'];
     if (!!this.ui.asyncData) {
-      this.loadData = (node: any, index: number) =>
-        (this.ui.asyncData as any)(node, index, this);
+      // tslint:disable-next-line:no-any
+      this.loadData = (node: any, index: number) => (this.ui.asyncData as any)(node, index, this);
     }
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => {
         this.data = list;
@@ -68,23 +69,26 @@ export class CascaderWidget extends ControlWidget implements OnInit {
   }
 
   _visibleChange(status: boolean) {
-    this.ui.visibleChange && this.ui.visibleChange(status);
+    if (this.ui.visibleChange) this.ui.visibleChange(status);
   }
 
   _change(value: string) {
     this.setValue(value);
-    this.ui.change && this.ui.change(value);
+    if (this.ui.change) this.ui.change(value);
   }
 
+  // tslint:disable-next-line:no-any
   _selectionChange(options: any) {
-    this.ui.selectionChange && this.ui.selectionChange(options);
+    if (this.ui.selectionChange) this.ui.selectionChange(options);
   }
 
+  // tslint:disable-next-line:no-any
   _select(options: any) {
-    this.ui.select && this.ui.select(options);
+    if (this.ui.select) this.ui.select(options);
   }
 
+  // tslint:disable-next-line:no-any
   _clear(options: any) {
-    this.ui.clear && this.ui.clear(options);
+    if (this.ui.clear) this.ui.clear(options);
   }
 }

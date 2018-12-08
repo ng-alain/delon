@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { ControlWidget } from '../../widget';
-import { getData } from '../../utils';
+import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
+import { getData } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-checkbox',
   templateUrl: './checkbox.widget.html',
-  preserveWhitespaces: false,
 })
 export class CheckboxWidget extends ControlWidget {
   data: SFSchemaEnum[] = [];
@@ -20,7 +20,7 @@ export class CheckboxWidget extends ControlWidget {
     return this.formProperty.root.widget.sfComp.locale;
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     this.inited = false;
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => {
@@ -37,7 +37,7 @@ export class CheckboxWidget extends ControlWidget {
     );
   }
 
-  _setValue(value: any) {
+  _setValue(value: SFValue) {
     this.setValue(value);
     this.detectChanges();
     this.notifyChange(value);
@@ -49,7 +49,7 @@ export class CheckboxWidget extends ControlWidget {
     this.notifyChange(checkList);
   }
 
-  groupInGridChange(values: any[]) {
+  groupInGridChange(values: SFValue[]) {
     this.data.forEach(
       item => (item.checked = values.indexOf(item.value) !== -1),
     );

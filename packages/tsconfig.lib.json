@@ -15,7 +15,8 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "inlineSources": true,
-    "importHelpers": true
+    "importHelpers": true,
+    "alwaysStrict": true
   },
   "files": ["public_api.ts", "typings.d.ts"],
   "exclude": ["*.spec.ts"],

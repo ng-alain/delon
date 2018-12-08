@@ -1,16 +1,16 @@
-import { Tree, SchematicContext, Rule } from '@angular-devkit/schematics';
 import { strings } from '@angular-devkit/core';
-import * as ts from 'typescript';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import {
-  DefaultTreeDocument,
-  DefaultTreeElement,
   parseFragment,
   Attribute,
+  DefaultTreeDocument,
+  DefaultTreeElement,
 } from 'parse5';
+import * as ts from 'typescript';
 
-import { PluginOptions } from './interface';
-import { updateComponentMetadata, getSourceFile } from '../utils/ast';
+import { getSourceFile, updateComponentMetadata } from '../utils/ast';
 import { findNodes } from '../utils/devkit-utils/ast-utils';
+import { PluginOptions } from './interface';
 
 // includes ng-zorro-antd & @delon/*
 // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts#L6
@@ -297,7 +297,7 @@ export function pluginIcon(options: PluginOptions): Rule {
     genCustomIcons(options, host);
     const icons = getIcons(host);
     genIconFile(options, host, icons);
-    console.log( `\n生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`);
-    console.log( `\nFinished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`);
+    console.log(`\n生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`);
+    console.log(`\nFinished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`);
   };
 }

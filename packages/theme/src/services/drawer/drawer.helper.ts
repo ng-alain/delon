@@ -1,6 +1,7 @@
+// tslint:disable:no-any
 import { Injectable } from '@angular/core';
+import { NzDrawerOptions, NzDrawerService } from 'ng-zorro-antd';
 import { Observable, Observer } from 'rxjs';
-import { NzDrawerService, NzDrawerOptions } from 'ng-zorro-antd';
 
 export interface DrawerHelperOptions {
   /**
@@ -59,31 +60,32 @@ export class DrawerHelper {
     title: string,
     comp: any,
     params?: any,
-    options?: DrawerHelperOptions
+    options?: DrawerHelperOptions,
   ): Observable<any> {
-    options = Object.assign(<DrawerHelperOptions>{
+    options = {
       size: 'md',
       footer: true,
       footerHeight: 55,
       drawerOptions: {
         nzPlacement: 'right',
-        nzWrapClassName: ''
-      }
-    }, options);
+        nzWrapClassName: '',
+      },
+      ...options,
+    };
     return new Observable((observer: Observer<any>) => {
       const { size, footer, footerHeight, drawerOptions } = options;
       const defaultOptions: NzDrawerOptions = {
         nzContent: comp,
         nzContentParams: params,
         nzZIndex: ++this.zIndex,
-        nzTitle: title
+        nzTitle: title,
       };
 
       if (footer) {
         defaultOptions.nzBodyStyle = {
-          height: `calc(100% - ${footerHeight}px)`,
-          overflow: 'auto',
-          'padding-bottom': `${footerHeight - 2}px`
+          'height': `calc(100% - ${footerHeight}px)`,
+          'overflow': 'auto',
+          'padding-bottom': `${footerHeight - 2}px`,
         };
       }
 
@@ -95,7 +97,7 @@ export class DrawerHelper {
       }
 
       const subject = this.srv.create(
-        Object.assign(defaultOptions, drawerOptions),
+        { ...defaultOptions, ...drawerOptions },
       );
       const afterClose$ = subject.afterClose.subscribe((res: any) => {
         if (res != null && res !== false) {
@@ -114,12 +116,12 @@ export class DrawerHelper {
     title: string,
     comp: any,
     params?: any,
-    options?: DrawerHelperOptions
+    options?: DrawerHelperOptions,
   ): Observable<any> {
-    const drawerOptions = Object.assign(
-      { nzMaskClosable: false },
-      options && options.drawerOptions,
-    );
-    return this.create(title, comp, params, Object.assign({}, options, { drawerOptions }));
+    const drawerOptions = {
+      nzMaskClosable: false,
+      ...(options && options.drawerOptions),
+    };
+    return this.create(title, comp, params, { ...options, drawerOptions });
   }
 }

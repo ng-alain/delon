@@ -48,6 +48,7 @@ export interface ReuseTabCached {
 
   _snapshot: ActivatedRouteSnapshot;
 
+  // tslint:disable-next-line:no-any
   _handle: any;
 }
 
@@ -55,6 +56,7 @@ export interface ReuseTabNotify {
   /** 事件类型 */
   active: string;
 
+  // tslint:disable-next-line:no-any
   [key: string]: any;
 }
 

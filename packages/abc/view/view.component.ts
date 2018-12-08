@@ -1,18 +1,19 @@
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
-  Input,
-  Host,
   ElementRef,
-  Renderer2,
+  Host,
+  HostBinding,
+  Input,
   OnChanges,
+  Optional,
+  Renderer2,
   TemplateRef,
   ViewChild,
-  AfterViewInit,
-  HostBinding,
-  Optional,
 } from '@angular/core';
 import { ResponsiveService } from '@delon/theme';
-import { isEmpty, InputNumber, InputBoolean } from '@delon/util';
+import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
 
 import { SVContainerComponent } from './view-container.component';
 
@@ -21,7 +22,7 @@ const prefixCls = `sv`;
 @Component({
   selector: 'sv, [sv]',
   templateUrl: './view.component.html',
-  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SVComponent implements AfterViewInit, OnChanges {
   @ViewChild('conEl')
@@ -31,28 +32,10 @@ export class SVComponent implements AfterViewInit, OnChanges {
 
   //#region fields
 
-  _label = '';
-  _labelTpl: TemplateRef<any>;
-  @Input()
-  set label(value: string | TemplateRef<any>) {
-    if (value instanceof TemplateRef) {
-      this._label = null;
-      this._labelTpl = value;
-    } else {
-      this._label = value;
-    }
-  }
-
-  @Input()
-  @InputNumber(null)
-  col: number;
-
-  @Input()
-  @InputBoolean(null)
-  default: boolean;
-
-  @Input()
-  type: 'primary' | 'success' | 'danger' | 'warning';
+  @Input() label: string | TemplateRef<void>;
+  @Input() @InputNumber(null) col: number;
+  @Input() @InputBoolean(null) default: boolean;
+  @Input() type: 'primary' | 'success' | 'danger' | 'warning';
 
   //#endregion
 

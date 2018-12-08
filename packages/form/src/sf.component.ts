@@ -1,47 +1,43 @@
 import {
-  Component,
-  OnInit,
-  OnChanges,
-  OnDestroy,
-  Input,
-  Output,
-  EventEmitter,
-  TemplateRef,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { deepCopy, InputBoolean } from '@delon/util';
 import { DelonLocaleService } from '@delon/theme';
+import { deepCopy, InputBoolean } from '@delon/util';
+import { Subscription } from 'rxjs';
 
 import { DelonFormConfig } from './config';
-import { di, retrieveSchema, FORMATMAPS, resolveIf } from './utils';
-import { TerminatorService } from './terminator.service';
-import { SFSchema } from './schema/index';
-import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import { ErrorData } from './errors';
+import { SFButton } from './interface';
 import { FormProperty } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
+import { SFSchema } from './schema/index';
+import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import { TerminatorService } from './terminator.service';
+import { di, resolveIf, retrieveSchema, FORMATMAPS } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
-import { SFButton } from './interface';
-import { ErrorData } from './errors';
 
-export function useFactory(
-  schemaValidatorFactory: any,
-  options: DelonFormConfig,
-) {
+export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, options: DelonFormConfig) {
   return new FormPropertyFactory(schemaValidatorFactory, options);
 }
 
 @Component({
   selector: 'sf, [sf]',
   templateUrl: './sf.component.html',
-  preserveWhitespaces: false,
   providers: [
     WidgetFactory,
     {
       provide: FormPropertyFactory,
-      useFactory: useFactory,
+      useFactory,
       deps: [SchemaValidatorFactory, DelonFormConfig],
     },
     TerminatorService,
@@ -55,15 +51,16 @@ export function useFactory(
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private i18n$: Subscription;
-  public locale: any = {};
-  private _renders = new Map<string, TemplateRef<any>>();
-  private _item: any;
+  // tslint:disable-next-line:no-any
+  locale: any = {};
+  private _renders = new Map<string, TemplateRef<void>>();
+  private _item: {};
   private _valid = true;
   private _defUi: SFUISchemaItem;
   private _inited = false;
 
   rootProperty: FormProperty = null;
-  _formData: any;
+  _formData: {};
   _btn: SFButton;
   _schema: SFSchema;
   _ui: SFUISchema;
@@ -71,48 +68,30 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   // #region fields
 
   /** 表单布局，等同 `nzLayout`，默认：horizontal */
-  @Input()
-  layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
-
+  @Input() layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
   /** JSON Schema */
-  @Input()
-  schema: SFSchema;
-
+  @Input() schema: SFSchema;
   /** UI Schema */
-  @Input()
-  ui: SFUISchema;
-
+  @Input() ui: SFUISchema;
   /** 表单默认值 */
-  @Input()
-  formData: {};
-
+  @Input() formData: {};
   /**
    * 按钮
    * - 值为 `null` 或 `undefined` 表示手动添加按钮，但保留容器
    * - 值为 `none` 表示手动添加按钮，且不保留容器
    * - 使用 `spanLabelFixed` 固定标签宽度时，若无 `render.class` 则默认为居中状态
    */
-  @Input()
-  button: SFButton | 'none' = {};
-
+  @Input() button: SFButton | 'none' = {};
   /**
    * 是否实时校验，默认：`true`
    * - `true` 每一次都校验
    * - `false` 提交时校验
    */
-  @Input()
-  @InputBoolean()
-  liveValidate = true;
-
+  @Input() @InputBoolean() liveValidate = true;
   /** 指定表单 `autocomplete` 值 */
-  @Input()
-  autocomplete: 'on' | 'off';
-
+  @Input() autocomplete: 'on' | 'off';
   /** 立即显示错误视觉 */
-  @Input()
-  @InputBoolean()
-  firstVisual = true;
-
+  @Input() @InputBoolean() firstVisual = true;
   /** 表单模式 */
   @Input()
   set mode(value: 'default' | 'search' | 'edit') {
@@ -138,21 +117,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private _mode: 'default' | 'search' | 'edit';
 
   /** 数据变更时回调 */
-  @Output()
-  readonly formChange = new EventEmitter<{}>();
-
+  @Output() readonly formChange = new EventEmitter<{}>();
   /** 提交表单时回调 */
-  @Output()
-  readonly formSubmit = new EventEmitter<{}>();
-
+  @Output() readonly formSubmit = new EventEmitter<{}>();
   /** 重置表单时回调 */
-  @Output()
-  readonly formReset = new EventEmitter<{}>();
-
+  @Output() readonly formReset = new EventEmitter<{}>();
   /** 表单校验结果回调 */
-  @Output()
-  readonly formError = new EventEmitter<ErrorData[]>();
-
+  @Output() readonly formError = new EventEmitter<ErrorData[]>();
   // #endregion
 
   /** 表单校验状态 */
@@ -161,8 +132,39 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /** 表单值 */
-  get value(): any {
+  // tslint:disable-next-line:no-any
+  get value(): { [key: string]: any } {
     return this._item;
+  }
+
+  /**
+   * 根据路径获取表单元素属性
+   */
+  getProperty(path: string): FormProperty {
+    return this.rootProperty.searchProperty(path);
+  }
+
+  /**
+   * 根据路径获取表单元素当前值
+   */
+  // tslint:disable-next-line:no-any
+  getValue(path: string): any {
+    return this.getProperty(path)!.value;
+  }
+
+  /**
+   * 根据路径设置某个表单元素属性值
+   * @param path 路径
+   * @param value 新值
+   */
+  // tslint:disable-next-line:no-any
+  setValue(path: string, value: any): this {
+    const item = this.getProperty(path);
+    if (!item) {
+      throw new Error(`Invalid path: ${path}`);
+    }
+    item.resetValue(value, false);
+    return this;
   }
 
   onSubmit(e: Event) {
@@ -177,7 +179,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     private formPropertyFactory: FormPropertyFactory,
     private terminator: TerminatorService,
     private options: DelonFormConfig,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private i18n: DelonLocaleService,
   ) {
     this.liveValidate = options.liveValidate;
@@ -187,7 +189,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       this.locale = this.i18n.getData('sf');
       if (this._inited) {
         this.coverButtonProperty();
-        this.cd.detectChanges();
+        this.cdr.detectChanges();
       }
     });
   }
@@ -210,19 +212,15 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           schema.properties[key] as SFSchema,
           definitions,
         );
-        const ui = Object.assign(
-          { widget: property.type },
-          property.format && FORMATMAPS[property.format],
-          typeof property.ui === 'string' ? { widget: property.ui } : null,
-          !property.ui &&
-          Array.isArray(property.enum) &&
-          property.enum.length > 0
-            ? { widget: 'select' }
-            : null,
-          this._defUi,
-          property.ui,
-          uiSchema[uiKey],
-        ) as SFUISchemaItemRun;
+        const ui = {
+          widget: property.type,
+          ...(property.format && FORMATMAPS[property.format]),
+          ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
+          ...(!property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null),
+          ...this._defUi,
+          ...(property.ui as SFUISchemaItem),
+          ...uiSchema[uiKey],
+        } as SFUISchemaItemRun;
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
@@ -254,9 +252,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         if (ui.widget === 'date' && ui.end != null && parentSchema) {
           const dateEndProperty = parentSchema.properties[ui.end];
           if (dateEndProperty) {
-            dateEndProperty.ui = Object.assign({}, dateEndProperty.ui, {
+            dateEndProperty.ui = {
+              ...(dateEndProperty.ui as SFUISchemaItem),
               hidden: true,
-            });
+            };
           } else {
             ui.end = '';
           }
@@ -267,13 +266,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         delete property.ui;
 
         if (property.items) {
-          uiRes[uiKey]['$items'] = uiRes[uiKey]['$items'] || {};
+          uiRes[uiKey].$items = uiRes[uiKey].$items || {};
           inFn(
             property.items,
             property.items,
-            (uiSchema[uiKey] || {})['$items'] || {},
+            (uiSchema[uiKey] || {}).$items || {},
             ui,
-            uiRes[uiKey]['$items'],
+            uiRes[uiKey].$items,
           );
         }
 
@@ -298,20 +297,18 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     };
 
     if (this.ui == null) this.ui = {};
-    this._defUi = Object.assign(
-      <SFUISchemaItem>{
-        onlyVisual: this.options.onlyVisual,
-        size: this.options.size,
-        liveValidate: this.liveValidate,
-        firstVisual: this.firstVisual,
-      },
-      this.options.ui,
-      _schema.ui,
-      this.ui['*'],
-    );
+    this._defUi = {
+      onlyVisual: this.options.onlyVisual,
+      size: this.options.size,
+      liveValidate: this.liveValidate,
+      firstVisual: this.firstVisual,
+      ...this.options.ui,
+      ..._schema.ui,
+      ...this.ui['*'],
+    };
 
     // root
-    this._ui = Object.assign({}, this._defUi);
+    this._ui = { ...this._defUi };
 
     inFn(_schema, _schema, this.ui, this.ui, this._ui);
 
@@ -327,12 +324,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private coverButtonProperty() {
-    this._btn = Object.assign(
-      <SFButton>{ render: { size: 'default' } },
-      this.locale,
-      this.options.button,
-      this.button,
-    );
+    this._btn = {
+      render: { size: 'default' },
+      ...this.locale,
+      ...this.options.button,
+      ...(this.button as SFButton),
+    };
     const firstKey = Object.keys(this._ui).find(w => w.startsWith('$'));
     if (this.layout === 'horizontal') {
       const btnUi = firstKey ? this._ui[firstKey] : this._defUi;
@@ -372,7 +369,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /** @internal */
-  _addTpl(path: string, templateRef: TemplateRef<{}>) {
+  _addTpl(path: string, templateRef: TemplateRef<void>) {
     const property = this.rootProperty.searchProperty(path);
     if (!property) {
       console.warn(`未找到路径：${path}`);
@@ -399,7 +396,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     const errors = this.rootProperty.errors;
     this._valid = !(errors && errors.length);
     if (!this._valid) this.formError.emit(errors);
-    this.cd.detectChanges();
+    this.cdr.detectChanges();
   }
 
   /**
@@ -433,13 +430,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.attachCustomRender();
 
     this.rootProperty.valueChanges.subscribe(value => {
-      this._item = Object.assign({}, this.formData, value);
+      this._item = { ...this.formData, ...value };
       this.formChange.emit(this._item);
     });
     this.rootProperty.errorsChanges.subscribe(errors => {
       this._valid = !(errors && errors.length);
       this.formError.emit(errors);
-      this.cd.detectChanges();
+      this.cdr.detectChanges();
     });
 
     this.reset();
@@ -451,14 +448,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    */
   reset(emit = false) {
     this.rootProperty.resetValue(this.formData, false);
-    Promise.resolve().then(() => this.cd.detectChanges());
+    Promise.resolve().then(() => this.cdr.detectChanges());
     if (emit) {
       this.formReset.emit(this.value);
     }
   }
 
   private cleanRootSub() {
-    if (!this.rootProperty) return ;
+    if (!this.rootProperty) return;
     this.rootProperty.errorsChanges.unsubscribe();
     this.rootProperty.valueChanges.unsubscribe();
   }

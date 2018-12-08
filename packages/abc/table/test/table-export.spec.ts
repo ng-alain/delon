@@ -84,7 +84,7 @@ describe('abc: table: export', () => {
         _c: columns,
         sheetname: 'sn',
         filename: 'filename.xlsx',
-        callback: (wb: any) => {},
+        callback: (wb: any) => { },
       });
       expect(ret).not.toBeNull();
       expect(ret.sheets).not.toBeNull();
@@ -106,7 +106,7 @@ describe('abc: table: export', () => {
         _d: data,
         _c: columns,
         filename: 'filename.xlsx',
-        callback: (wb: any) => {},
+        callback: (wb: any) => { },
       });
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets)).toContain('Sheet1');
@@ -120,13 +120,5 @@ describe('abc: table: export', () => {
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets.Sheet1).length).toBe(0);
     });
-  });
-
-  it('should be throw error when not load XlsxModule', () => {
-    expect(() => {
-      (TestBed.configureTestingModule({
-        providers: [STExport],
-      }).get(STExport) as STExport).export(null);
-    }).toThrowError(`muse be import 'XlsxModule' module, but got null`);
   });
 });

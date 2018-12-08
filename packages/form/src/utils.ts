@@ -1,8 +1,9 @@
-import { Observable, of } from 'rxjs';
-import { map, takeWhile } from 'rxjs/operators';
+// tslint:disable:no-any
 import { deepCopy } from '@delon/util';
-import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import { of, Observable } from 'rxjs';
+import { map, takeWhile } from 'rxjs/operators';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
+import { SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 
 export const FORMATMAPS = {
   'date-time': {
@@ -10,15 +11,15 @@ export const FORMATMAPS = {
     showTime: true,
     format: 'YYYY-MM-DDTHH:mm:ssZ',
   },
-  date: { widget: 'date', format: 'YYYY-MM-DD' },
+  'date': { widget: 'date', format: 'YYYY-MM-DD' },
   'full-date': { widget: 'date', format: 'YYYY-MM-DD' },
-  time: { widget: 'time' },
+  'time': { widget: 'time' },
   'full-time': { widget: 'time' },
-  week: { widget: 'date', mode: 'week', format: 'YYYY-WW' },
-  month: { widget: 'date', mode: 'month', format: 'YYYY-MM' },
-  uri: { widget: 'upload' },
-  email: { widget: 'autocomplete', type: 'email' },
-  color: { widget: 'string', type: 'color' },
+  'week': { widget: 'date', mode: 'week', format: 'YYYY-WW' },
+  'month': { widget: 'date', mode: 'month', format: 'YYYY-MM' },
+  'uri': { widget: 'upload' },
+  'email': { widget: 'autocomplete', type: 'email' },
+  'color': { widget: 'string', type: 'color' },
   '': { widget: 'string' },
 };
 
@@ -78,8 +79,8 @@ export function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema {
   if (!schema.if.properties)
     throw new Error(`if: does not contain 'properties'`);
 
-  const allKeys = Object.keys(schema.properties),
-    ifKeys = Object.keys(schema.if.properties);
+  const allKeys = Object.keys(schema.properties);
+  const ifKeys = Object.keys(schema.if.properties);
   detectKey(allKeys, ifKeys);
   detectKey(allKeys, schema.then.required);
   schema.required = schema.required.concat(schema.then.required);
@@ -155,7 +156,7 @@ export function getEnum(list: any[], formData: any, readOnly: boolean): SFSchema
   if (isBlank(list) || !Array.isArray(list) || list.length === 0) return [];
   if (typeof list[0] !== 'object') {
     list = list.map((item: any) => {
-      return <SFSchemaEnum>{ label: item, value: item };
+      return { label: item, value: item } as SFSchemaEnum;
     });
   }
   if (formData) {

@@ -25,7 +25,7 @@ describe('abc: edit', () => {
 
   function genModule(template?: string) {
     TestBed.configureTestingModule({
-      imports: [SEModule.forRoot(), FormsModule, NoopAnimationsModule],
+      imports: [SEModule, FormsModule, NoopAnimationsModule],
       declarations: [TestComponent],
     });
     if (template) {
@@ -194,7 +194,7 @@ describe('abc: edit', () => {
     });
     it('should be reactive form', () => {
       TestBed.configureTestingModule({
-        imports: [SEModule.forRoot(), FormsModule, ReactiveFormsModule, NoopAnimationsModule],
+        imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
         declarations: [TestReactiveComponent],
       });
       const fixture2 = TestBed.createComponent(TestReactiveComponent);

@@ -1,6 +1,7 @@
+// tslint:disable:no-any
 import { Injectable } from '@angular/core';
+import { ModalOptionsForService, NzModalService } from 'ng-zorro-antd';
 import { Observable, Observer } from 'rxjs';
-import { NzModalService, ModalOptionsForService } from 'ng-zorro-antd';
 
 export interface ModalHelperOptions {
   /** 大小；例如：lg、600，默认：`lg` */
@@ -20,7 +21,7 @@ export interface ModalHelperOptions {
 export class ModalHelper {
   private zIndex = 500;
 
-  constructor(private srv: NzModalService) {}
+  constructor(private srv: NzModalService) { }
 
   /**
    * 构建一个对话框
@@ -40,19 +41,15 @@ this.NzModalRef.close();
 this.NzModalRef.destroy();
 ```
    */
-  create(
-    comp: any,
-    params?: any,
-    options?: ModalHelperOptions
-  ): Observable<any> {
-    options = Object.assign({
+  create(comp: any, params?: any, options?: ModalHelperOptions): Observable<any> {
+    options = {
       size: 'lg',
       exact: true,
-      includeTabs: false,
-    }, options);
+      includeTabs: false, ...options,
+    };
     return new Observable((observer: Observer<any>) => {
-      let cls = '',
-        width = '';
+      let cls = '';
+      let width = '';
       if (options.size) {
         if (typeof options.size === 'number') {
           width = `${options.size}px`;
@@ -72,7 +69,7 @@ this.NzModalRef.destroy();
         nzZIndex: ++this.zIndex,
       };
       const subject = this.srv.create(
-        Object.assign(defaultOptions, options.modalOptions),
+        { ...defaultOptions, ...options.modalOptions },
       );
       const afterClose$ = subject.afterClose.subscribe((res: any) => {
         if (options.exact === true) {
@@ -106,16 +103,12 @@ this.NzModalRef.close();
 this.NzModalRef.destroy();
 ```
    */
-  createStatic(
-    comp: any,
-    params?: any,
-    options?: ModalHelperOptions
-  ): Observable<any> {
-    const modalOptions = Object.assign(
-      { nzMaskClosable: false },
-      options && options.modalOptions,
-    );
-    return this.create(comp, params, Object.assign({}, options, { modalOptions }));
+  createStatic(comp: any, params?: any, options?: ModalHelperOptions): Observable<any> {
+    const modalOptions = {
+      nzMaskClosable: false,
+      ...(options && options.modalOptions),
+    };
+    return this.create(comp, params, { ...options, modalOptions });
   }
 
   /**
@@ -177,12 +170,10 @@ this.NzModalRef.destroy();
       comp,
       params,
       size,
-      Object.assign(
-        {
-          nzMaskClosable: false,
-        },
-        options,
-      ),
+      {
+        nzMaskClosable: false,
+        ...options,
+      },
     );
   }
 }

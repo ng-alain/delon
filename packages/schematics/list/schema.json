@@ -23,7 +23,8 @@
       "$default": {
         "$source": "argv",
         "index": 0
-      }
+      },
+      "x-prompt": "What name would you like to use for the component:"
     },
     "inlineStyle": {
       "description": "Specifies if the style will be in the ts file.",
@@ -38,7 +39,7 @@
     },
     "viewEncapsulation": {
       "description": "Specifies the view encapsulation strategy.",
-      "enum": ["Emulated", "Native", "None"],
+      "enum": ["Emulated", "Native", "None", "ShadowDom"],
       "type": "string",
       "alias": "v"
     },
@@ -75,7 +76,7 @@
     },
     "flat": {
       "type": "boolean",
-      "description": "Flag to indicate if a dir is created.",
+      "description": "Flag to indicate if a directory is created.",
       "default": false
     },
     "skipImport": {
@@ -103,21 +104,26 @@
       "default": false,
       "description": "Specifies whether to apply lint fixes after generating the component."
     },
-    "module":  {
-      "type": "string",
-      "description": "Allows specification of the declaring module. (e.g., -m=trade)",
-      "alias": "m"
-    },
-    "target": {
-      "type": "string",
-      "description": "指定目标路径，支持 `bus/list` 写法 (Specifies relative path, could be set like `bus/list`.)",
-      "alias": "t"
-    },
     "withoutPrefix": {
       "type": "boolean",
       "description": "组件名不加前缀 (Without prefix to selectors)",
       "default": false
+    },
+    "module":  {
+      "type": "string",
+      "description": "Allows specification of the declaring module.",
+      "alias": "m",
+      "x-prompt": "Specify which module name:"
+    },
+    "target": {
+      "type": "string",
+      "description": "指定目标路径，支持 `bus/list` 写法 (Specifies relative path, could be set like `bus/list`.)",
+      "alias": "t",
+      "x-prompt": "Specifies relative path(could be set like `bus/list`):"
     }
   },
-  "required": []
+  "required": [
+    "name",
+    "module"
+  ]
 }

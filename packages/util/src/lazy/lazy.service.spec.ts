@@ -27,7 +27,7 @@ class MockDocument {
   createElement = () => {
     const ret: any = {
       testStatus,
-      onload: () => {},
+      onload: () => { },
     };
     if (isIE) ret.readyState = 'loading';
     return ret;
@@ -41,7 +41,7 @@ describe('utils: lazy', () => {
     isIE = false;
     testStatus = 'ok';
     const injector = TestBed.configureTestingModule({
-      imports: [DelonUtilModule.forRoot()],
+      imports: [DelonUtilModule],
       providers: [{ provide: DOCUMENT, useClass: MockDocument }],
     });
     srv = injector.get(LazyService);
@@ -107,7 +107,7 @@ describe('utils: lazy', () => {
     });
     it('should be custom content', () => {
       const res: any = {
-        onerror() {}
+        onerror() { }
       };
       const content = 'var a = 1;';
       spyOn(doc, 'createElement').and.callFake(() => res);

@@ -1,15 +1,17 @@
 import { Injectable, Optional } from '@angular/core';
-import { deepGet } from '@delon/util';
 import { XlsxService } from '@delon/abc/xlsx';
+import { deepGet } from '@delon/util';
 
 import { STColumn, STExportOptions } from './table.interfaces';
 
 @Injectable()
 export class STExport {
-  constructor(@Optional() private xlsxSrv: XlsxService) {}
+  constructor(@Optional() private xlsxSrv: XlsxService) { }
 
+  // tslint:disable-next-line:no-any
   private _stGet(item: any, col: STColumn): any {
-    const ret: any = { t: 's', v: '' };
+    // tslint:disable-next-line:no-any
+    const ret: { [key: string]: any } = { t: 's', v: '' };
 
     if (col.format) {
       ret.v = col.format(item, col);
@@ -32,8 +34,8 @@ export class STExport {
     return ret;
   }
 
-  private genSheet(opt: STExportOptions): { [sheet: string]: any } {
-    const sheets: { [sheet: string]: any } = {};
+  private genSheet(opt: STExportOptions): { [sheet: string]: {} } {
+    const sheets: { [sheet: string]: {} } = {};
     const sheet = (sheets[opt.sheetname || 'Sheet1'] = {});
     const colData = opt._c.filter(
       w =>
@@ -41,12 +43,12 @@ export class STExport {
         w.index &&
         (!w.buttons || w.buttons.length === 0),
     );
-    const cc = colData.length,
-      dc = opt._d.length;
+    const cc = colData.length;
+    const dc = opt._d.length;
 
     // column
     for (let i = 0; i < cc; i++) {
-      sheet[`${String.fromCharCode(65 + i)}1`] = {
+      sheet[`${String.fromCharCode(i + 65)}1`] = {
         t: 's',
         v: colData[i].title,
       };
@@ -55,23 +57,18 @@ export class STExport {
     // content
     for (let i = 0; i < dc; i++) {
       for (let j = 0; j < cc; j++) {
-        sheet[`${String.fromCharCode(65 + j)}${i + 2}`] = this._stGet(
-          opt._d[i],
-          colData[j],
-        );
+        sheet[`${String.fromCharCode(j + 65)}${i + 2}`] = this._stGet(opt._d[i], colData[j]);
       }
     }
 
     if (cc > 0 && dc > 0) {
-      sheet['!ref'] = `A1:${String.fromCharCode(65 + cc - 1)}${dc + 1}`;
+      sheet['!ref'] = `A1:${String.fromCharCode(cc + 65 - 1)}${dc + 1}`;
     }
 
     return sheets;
   }
 
   export(opt: STExportOptions) {
-    if (!this.xlsxSrv)
-      throw new Error(`muse be import 'XlsxModule' module, but got null`);
     const sheets = this.genSheet(opt);
     return this.xlsxSrv.export({
       sheets,

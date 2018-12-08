@@ -32,7 +32,7 @@ describe('abc: down-file', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, DownFileModule.forRoot()],
+      imports: [HttpClientTestingModule, DownFileModule],
       declarations: [TestComponent],
     });
   });

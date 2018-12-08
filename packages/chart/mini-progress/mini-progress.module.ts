@@ -1,20 +1,16 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { DelonUtilModule } from '@delon/util';
+import { NgModule } from '@angular/core';
 import { DelonLocaleModule } from '@delon/theme';
+import { DelonUtilModule } from '@delon/util';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { G2ProgressComponent } from './mini-progress.component';
+import { G2MiniProgressComponent } from './mini-progress.component';
 
-const COMPONENTS = [G2ProgressComponent];
+const COMPONENTS = [G2MiniProgressComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule, DelonLocaleModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2MiniProgressModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: G2MiniProgressModule, providers: [] };
-  }
-}
+export class G2MiniProgressModule { }

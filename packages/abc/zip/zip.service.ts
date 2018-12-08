@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
+// tslint:disable:no-any
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { LazyResult, LazyService } from '@delon/util';
 import { saveAs } from 'file-saver';
-import { LazyService, LazyResult } from '@delon/util';
 
-import { ZipSaveOptions } from './zip.types';
 import { ZipConfig } from './zip.config';
+import { ZipSaveOptions } from './zip.types';
 
 declare var JSZip: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ZipService {
   constructor(
     private cog: ZipConfig,
     private http: HttpClient,
     private lazy: LazyService,
-  ) {}
+  ) { }
 
   private init(): Promise<LazyResult[]> {
     return this.lazy.load([this.cog.url].concat(this.cog.utils));
@@ -47,7 +48,7 @@ export class ZipService {
         reader.onload = (e: any) => {
           JSZip.loadAsync(e.target.result, options).then(ret => resolve(ret));
         };
-        reader.readAsBinaryString(<File>fileOrUrl);
+        reader.readAsBinaryString(fileOrUrl as File);
       });
     });
   }
@@ -91,10 +92,10 @@ export class ZipService {
    */
   save(zip: any, options?: ZipSaveOptions): Promise<void> {
     this.check(zip);
-    const opt = Object.assign({}, options);
+    const opt = { ...options };
     return new Promise<void>((resolve, reject) => {
       zip
-        .generateAsync(Object.assign({ type: 'blob' }, opt.options), opt.update)
+        .generateAsync({ type: 'blob', ...opt.options }, opt.update)
         .then(
           (data: Blob) => {
             if (opt.callback) opt.callback(data);

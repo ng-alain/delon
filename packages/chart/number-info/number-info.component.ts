@@ -1,119 +1,50 @@
 import {
-  Component,
-  TemplateRef,
-  Input,
-  ElementRef,
-  Renderer2,
-  OnChanges,
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  Renderer2,
+  TemplateRef,
 } from '@angular/core';
-import { toNumber, updateHostClass } from '@delon/util';
+import { updateHostClass, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'number-info',
-  template: `
-  <div *ngIf="_title || _titleTpl" class="number-info__title"><ng-container *ngIf="_title; else _titleTpl">{{_title}}</ng-container></div>
-  <div *ngIf="_subTitle || _subTitleTpl" class="number-info__title-sub"><ng-container *ngIf="_subTitle; else _subTitleTpl">{{_subTitle}}</ng-container></div>
-  <div class="number-info__value" [ngStyle]="{'margin-top.px': gap}">
-    <span class="number-info__value-text"><ng-container *ngIf="_total; else _totalTpl">{{_total}}</ng-container><em class="number-info__value-suffix" *ngIf="suffix">{{suffix}}</em></span>
-    <span *ngIf="status || _isSubTotal" class="number-info__value-text number-info__value-sub">
-      <ng-container *ngIf="_subTotal; else _subTotalTpl">{{_subTotal}}</ng-container>
-      <i *ngIf="status" nz-icon type="caret-{{status}}"></i>
-    </span>
-  </div>
-  `,
-  preserveWhitespaces: false,
+  templateUrl: './number-info.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NumberInfoComponent implements OnChanges {
-  _title = '';
-  _titleTpl: TemplateRef<any>;
   /** 标题 */
-  @Input()
-  set title(value: string | TemplateRef<any>) {
-    if (value instanceof TemplateRef) {
-      this._title = null;
-      this._titleTpl = value;
-    } else this._title = value;
-  }
-
-  _subTitle = '';
-  _subTitleTpl: TemplateRef<any>;
+  @Input() title: string | TemplateRef<void>;
   /** 子标题 */
-  @Input()
-  set subTitle(value: string | TemplateRef<any>) {
-    if (value instanceof TemplateRef) {
-      this._subTitle = null;
-      this._subTitleTpl = value;
-    } else this._subTitle = value;
-  }
-
-  _total = '';
-  _totalTpl: TemplateRef<any>;
+  @Input() subTitle: string | TemplateRef<void>;
   /** 总量 */
-  @Input()
-  set total(value: string | TemplateRef<any>) {
-    if (value instanceof TemplateRef) {
-      this._total = null;
-      this._totalTpl = value;
-    } else this._total = '' + value;
-  }
-
-  _isSubTotal = false;
-  _subTotal = '';
-  _subTotalTpl: TemplateRef<any>;
+  @Input() total: string | TemplateRef<void>;
   /** 总量后缀 */
-  @Input()
-  set subTotal(value: string | TemplateRef<any>) {
-    if (value instanceof TemplateRef) {
-      this._subTotal = null;
-      this._subTotalTpl = value;
-    } else this._subTotal = value;
-
-    this._isSubTotal = !!value;
-  }
-
+  @Input() subTotal: string | TemplateRef<void>;
   /** 子总量 */
-  @Input()
-  suffix: string;
-
+  @Input() suffix: string;
   /** 增加状态 */
-  @Input()
-  status: 'up' | 'down';
-
+  @Input() status: 'up' | 'down';
   /** 状态样式 */
-  @Input()
-  theme: 'light' | 'default' = 'light';
-
+  @Input() theme: 'light' | 'default' = 'light';
   /** 设置数字和描述直接的间距（像素） */
-  @Input()
-  get gap() {
-    return this._gap;
-  }
-  set gap(value: any) {
-    this._gap = toNumber(value);
-  }
-  private _gap = 8;
+  @Input() @InputNumber() gap = 8;
 
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    private cd: ChangeDetectorRef,
-  ) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) { }
 
-  _classMap: string[] = [];
   setClass() {
+    const { el, renderer, theme } = this;
     updateHostClass(
-      this.el.nativeElement,
-      this.renderer,
+      el.nativeElement,
+      renderer,
       {
         'number-info': true,
-        [`number-info__${this.theme}`]: true
+        [`number-info__${theme}`]: true,
       },
       true,
     );
-    this.cd.detectChanges();
   }
 
   ngOnChanges(): void {

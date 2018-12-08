@@ -12,7 +12,7 @@ describe('abc: quick-menu', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [QuickMenuModule.forRoot()],
+      imports: [QuickMenuModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

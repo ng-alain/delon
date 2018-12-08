@@ -2,8 +2,8 @@ import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { TrendModule } from './trend.module';
 import { TrendComponent } from './trend.component';
+import { TrendModule } from './trend.module';
 
 describe('abc: trend', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -12,7 +12,7 @@ describe('abc: trend', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TrendModule.forRoot()],
+      imports: [TrendModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);
@@ -22,8 +22,11 @@ describe('abc: trend', () => {
   });
 
   function isExists(cls: string, stauts: boolean = true) {
-    if (stauts) expect(dl.query(By.css(cls))).not.toBeNull();
-    else expect(dl.query(By.css(cls))).toBeNull();
+    if (stauts) {
+      expect(dl.query(By.css(cls))).not.toBeNull();
+    } else {
+      expect(dl.query(By.css(cls))).toBeNull();
+    }
   }
 
   describe('#flag', () => {

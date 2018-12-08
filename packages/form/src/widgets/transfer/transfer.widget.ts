@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { ControlWidget } from '../../widget';
-import { getData } from '../../utils';
+import { TransferCanMove, TransferChange, TransferItem, TransferSearchChange, TransferSelectChange } from 'ng-zorro-antd';
+import { of, Observable } from 'rxjs';
+import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
+import { getData } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-transfer',
@@ -28,12 +30,12 @@ import { SFSchemaEnum } from '../../schema';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class TransferWidget extends ControlWidget implements OnInit {
-  list: any[] = [];
+  list: SFSchemaEnum[] = [];
+  // tslint:disable-next-line:no-any
   i: any;
-  private _data: any[] = [];
+  private _data: SFSchemaEnum[] = [];
 
   ngOnInit(): void {
     this.i = {
@@ -44,11 +46,12 @@ export class TransferWidget extends ControlWidget implements OnInit {
     };
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, null).subscribe(list => {
       let formData = this.formProperty.formData;
       if (!Array.isArray(formData)) formData = [formData];
       list.forEach((item: SFSchemaEnum) => {
+        // tslint:disable-next-line:no-any
         if (~(formData as any[]).indexOf(item.value)) item.direction = 'right';
       });
       this.list = list;
@@ -62,25 +65,26 @@ export class TransferWidget extends ControlWidget implements OnInit {
     this.formProperty.setValue(this._data.map(i => i.value), false);
   }
 
-  _canMove = (arg: any): Observable<any[]> => {
+  _canMove = (arg: TransferCanMove): Observable<TransferItem[]> => {
     return this.ui.canMove ? this.ui.canMove(arg) : of(arg.list);
-  };
+  }
 
-  _change(options: any) {
+  _change(options: TransferChange) {
     if (options.to === 'right') {
       this._data = this._data.concat(...options.list);
     } else {
-      this._data = this._data.filter(w => options.list.indexOf(w) === -1);
+      // tslint:disable-next-line:no-any
+      this._data = this._data.filter((w: any) => options.list.indexOf(w) === -1);
     }
     if (this.ui.change) this.ui.change(options);
     this.notify();
   }
 
-  _searchChange(options: any) {
+  _searchChange(options: TransferSearchChange) {
     if (this.ui.searchChange) this.ui.searchChange(options);
   }
 
-  _selectChange(options: any) {
+  _selectChange(options: TransferSelectChange) {
     if (this.ui.selectChange) this.ui.selectChange(options);
     this.cd.detectChanges();
   }

@@ -1,16 +1,20 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  Input,
-  HostBinding,
-  Renderer2,
   ElementRef,
+  HostBinding,
+  Input,
+  Renderer2,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
 @Component({
   selector: 'ellipsis',
-  template: `<ng-content></ng-content>`,
+  template: `
+    <ng-content></ng-content>
+  `,
   host: { '[class.ellipsis]': 'true' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EllipsisComponent {
   /** 在按照行数截取下最大的行数，超过则截取省略 */

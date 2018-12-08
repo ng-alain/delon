@@ -1,2 +1,2 @@
-export { G2GaugeComponent } from './gauge.component';
-export { G2GaugeModule } from './gauge.module';
+export * from './gauge.component';
+export * from './gauge.module';

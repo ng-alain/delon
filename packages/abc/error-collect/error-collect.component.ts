@@ -1,54 +1,45 @@
+import { DOCUMENT } from '@angular/common';
 import {
-  Component,
-  OnInit,
-  Input,
-  HostBinding,
-  OnDestroy,
-  ElementRef,
-  HostListener,
-  Inject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { InputNumber } from '@delon/util';
 
 import { ErrorCollectConfig } from './error-collect.config';
 
-/**
- * 错误消息采集器
- * PS：虽然此法并不好看，但对响应式表单&模板表单有很好的效果。
- */
 @Component({
   selector: 'error-collect, [error-collect]',
   template: `
-  <i nz-icon type="exclamation-circle"></i>
-  <span class="pl-sm">{{count}}</span>`,
+    <i nz-icon type="exclamation-circle"></i>
+    <span class="pl-sm">{{ count }}</span>
+  `,
   host: { '[class.error-collect]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
   private $time = null;
   private formEl: HTMLFormElement;
 
-  @Input()
-  @InputNumber()
-  freq: number;
+  @Input() @InputNumber() freq: number;
+  @Input() @InputNumber() offsetTop: number;
 
-  @Input()
-  @InputNumber()
-  offsetTop: number;
-
-  @HostBinding('class.d-none')
-  _hiden = true;
+  @HostBinding('class.d-none') _hiden = true;
 
   count = 0;
 
   constructor(
     cog: ErrorCollectConfig,
     private el: ElementRef,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
     Object.assign(this, cog);
@@ -63,7 +54,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     if (count === this.count) return;
     this.count = count;
     this._hiden = count === 0;
-    this.cd.markForCheck();
+    this.cdr.markForCheck();
   }
 
   @HostListener('click')
@@ -87,7 +78,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     clearInterval(this.$time);
   }
 
-  private findParent(el: any, selector: string) {
+  private findParent(el: Element, selector: string) {
     let retEl = null;
     while (el) {
       if (el.querySelector(selector)) {

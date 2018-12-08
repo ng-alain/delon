@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
+// tslint:disable:no-any
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { LazyResult, LazyService } from '@delon/util';
 import { saveAs } from 'file-saver';
-import { LazyService, LazyResult } from '@delon/util';
 
-import { XlsxExportOptions, XlsxExportSheet } from './xlsx.types';
 import { XlsxConfig } from './xlsx.config';
+import { XlsxExportOptions, XlsxExportSheet } from './xlsx.types';
 
 declare var XLSX: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class XlsxService {
   constructor(
     private cog: XlsxConfig,
     private http: HttpClient,
     private lazy: LazyService,
-  ) {}
+  ) { }
 
   private init(): Promise<LazyResult[]> {
     return this.lazy.load([this.cog.url].concat(this.cog.modules));
@@ -70,7 +71,7 @@ export class XlsxService {
     return this.init().then(() => {
       const wb: any = XLSX.utils.book_new();
       if (Array.isArray(options.sheets)) {
-        (<XlsxExportSheet[]>options.sheets).forEach(
+        (options.sheets as XlsxExportSheet[]).forEach(
           (value: XlsxExportSheet, index: number) => {
             const ws: any = XLSX.utils.aoa_to_sheet(value.data);
             XLSX.utils.book_append_sheet(
@@ -89,14 +90,12 @@ export class XlsxService {
 
       const wbout: ArrayBuffer = XLSX.write(
         wb,
-        Object.assign(
-          {
-            bookType: 'xlsx',
-            bookSST: false,
-            type: 'array',
-          },
-          options.opts,
-        ),
+        {
+          bookType: 'xlsx',
+          bookSST: false,
+          type: 'array',
+          ...options.opts,
+        },
       );
       saveAs(
         new Blob([wbout], { type: 'application/octet-stream' }),
