@@ -22,7 +22,7 @@ testing() {
     ./build-schematics.sh -b -t -travis
   elif is_site; then
     echo ">> starting gen site"
-    node ../scripts/site/main init
+    node ../site/main init
     echo ">> starting ng build"
     $(npm bin)/ng build --prod --build-optimizer --base-href /
   fi
