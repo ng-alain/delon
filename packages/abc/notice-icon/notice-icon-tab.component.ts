@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -10,7 +9,6 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 @Component({
   selector: 'notice-icon-tab',
   templateUrl: './notice-icon-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NoticeIconTabComponent {
   // tslint:disable-next-line:no-any
@@ -20,10 +18,7 @@ export class NoticeIconTabComponent {
   @Output() readonly clear = new EventEmitter<string>();
 
   onClick(item: NoticeItem) {
-    this.select.emit({
-      title: this.data.title,
-      item,
-    } as NoticeIconSelect);
+    this.select.emit({ title: this.data.title, item });
   }
 
   onClear() {

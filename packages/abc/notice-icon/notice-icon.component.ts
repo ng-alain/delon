@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
@@ -20,7 +21,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   host: { '[class.notice-icon__btn]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NoticeIconComponent implements OnInit, OnDestroy {
+export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   private i18n$: Subscription;
   // tslint:disable-next-line:no-any
   locale: any = {};
@@ -52,6 +53,10 @@ export class NoticeIconComponent implements OnInit, OnDestroy {
       this.locale = this.i18n.getData('noticeIcon');
       this.cdr.detectChanges();
     });
+  }
+
+  ngOnChanges() {
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy() {
