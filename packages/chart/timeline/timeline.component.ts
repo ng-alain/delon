@@ -179,9 +179,6 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       _slider.start = ds.state.start;
       _slider.end = ds.state.end;
       _slider.onChange = ({ startValue, endValue }) => {
-        // TODO: https://github.com/antvis/g2-plugin-slider/pull/19
-        _slider.start = startValue;
-        _slider.end = endValue;
         ds.setState('start', startValue);
         ds.setState('end', endValue);
       };
