@@ -33,6 +33,8 @@ export class NoticeIconComponent implements OnInit, AfterViewInit, OnChanges, On
   @Input() @InputNumber() count: number;
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() popoverVisible = false;
+  @Input() btnClass = '';
+  @Input() btnIconClass = '';
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
@@ -56,16 +58,17 @@ export class NoticeIconComponent implements OnInit, AfterViewInit, OnChanges, On
   ngOnInit() {
     this.i18n$ = this.i18n.change.subscribe(() => {
       this.locale = this.i18n.getData('noticeIcon');
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
     });
   }
 
   ngAfterViewInit() {
+    if (!this.ddc) return;
     this.ddc.cdkOverlay.panelClass = ['header-dropdown', 'notice-icon'];
   }
 
   ngOnChanges() {
-    this.cdr.detectChanges();
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy() {

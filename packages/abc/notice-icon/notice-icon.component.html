@@ -1,6 +1,6 @@
 <ng-template #badgeTpl>
-  <nz-badge [nzCount]="count" class="alain-default__nav-item" [nzStyle]="{ 'box-shadow': 'none' }">
-    <i nz-icon type="bell" class="alain-default__nav-item-icon"></i>
+  <nz-badge [nzCount]="count" [ngClass]="btnClass" [nzStyle]="{ 'box-shadow': 'none' }">
+    <i nz-icon type="bell" [ngClass]="btnIconClass"></i>
   </nz-badge>
 </ng-template>
 <div *ngIf="data?.length === 0">
@@ -12,7 +12,7 @@
     <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
   </div>
   <nz-spin [nzSpinning]="loading" [nzDelay]="0">
-    <nz-tabset>
+    <nz-tabset nzSelectedIndex="0">
       <nz-tab *ngFor="let i of data" [nzTitle]="i.title">
         <notice-icon-tab [locale]="locale" [data]="i" (select)="onSelect($event)" (clear)="onClear($event)"></notice-icon-tab>
       </nz-tab>
