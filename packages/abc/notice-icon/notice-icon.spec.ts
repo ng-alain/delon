@@ -54,7 +54,7 @@ describe('abc: notice-icon', () => {
       });
       it('via click', (done) => {
         expect(context.popoverVisible).toBeUndefined();
-        (dl.query(By.css('.alain-default__nav-item')).nativeElement as HTMLElement).click();
+        (dl.query(By.css('.ant-badge')).nativeElement as HTMLElement).click();
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           expect(context.popoverVisible).toBe(true);
