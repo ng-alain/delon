@@ -49,7 +49,7 @@ title: Global Parameters
 | `@scrollbar-thumb-color` | `#6e6e6e` | Scrollbar thumb color |
 | `@scrollbar-table-enabled` | `false` | Enable landscaping scrollbars of nz-table |
 
-## Zorro patch
+## Ng patch
 
 ### General
 
@@ -60,6 +60,14 @@ title: Global Parameters
 | `@preserve-buttons-spaces` | Spacing between `button` and `button`(incluldes: `button`,`button-group`,`popconfirm`) |
 | `@router-animation-duration` | `antFadeIn` | Route switching animation name |
 | `@router-animation-duration` | `1s` | Animation duration |
+
+## Zorro patch
+
+### General
+
+| Name | Default | Description |
+| --- | --- | --- |
+| `@forced-turn-off-nz-modal-animation-enabled` | `false` |Forced to turn off `nz-modal` animation |
 
 ### Form
 
