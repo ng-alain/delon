@@ -22,7 +22,6 @@ describe('abc: notice-icon', () => {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
-    fixture.detectChanges();
   }));
 
   afterEach(() => context.comp.ngOnDestroy());
@@ -41,6 +40,8 @@ describe('abc: notice-icon', () => {
   });
 
   describe('when has data', () => {
+    beforeEach(() => (fixture.detectChanges()));
+
     describe('should be show dropdown', () => {
       it('via popoverVisible property', (done) => {
         spyOn(context, 'popupVisibleChange');
