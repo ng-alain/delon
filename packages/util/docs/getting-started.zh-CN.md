@@ -56,22 +56,3 @@ export class DelonModule {
   }
 }
 ```
-
-## 常见问题
-
-### 如何在HTML模板中调用
-
-```ts
-import { Component } from '@angular/core';
-import { yuan } from '@delon/util';
-
-@Component({
-  selector: 'app-demo',
-  template: `
-  {{yuan(11111)}}
-  `
-})
-export class DemoComponent {
-  yuan = yuan;
-}
-```

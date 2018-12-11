@@ -9,7 +9,6 @@ title:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { yuan } from '@delon/util';
 
 @Component({
   selector: 'app-demo',
@@ -52,10 +51,10 @@ export class DemoComponent implements OnInit {
   ];
   total: string;
   ngOnInit(): void {
-    this.total = yuan(this.salesPieData.reduce((pre, now) => now.y + pre, 0));
+    this.total = `&yen ${this.salesPieData.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
   }
   format(val: number) {
-    return yuan(val);
+    return `&yen ${val.toFixed(2)}`;
   }
 }
 ```
