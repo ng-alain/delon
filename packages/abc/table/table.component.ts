@@ -495,8 +495,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private _refCheck(): this {
     const validData = this._data.filter(w => !w.disabled);
     const checkedList = validData.filter(w => w.checked === true);
-    this._allChecked =
-      checkedList.length > 0 && checkedList.length === validData.length;
+    this._allChecked = checkedList.length > 0 && checkedList.length === validData.length;
     const allUnChecked = validData.every(value => !value.checked);
     this._indeterminate = !this._allChecked && !allUnChecked;
     this.cd();

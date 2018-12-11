@@ -142,7 +142,9 @@
         </td>
       </tr>
     </ng-container>
-    <ng-template [ngIf]="!loading" [ngTemplateOutlet]="body"></ng-template>
+    <ng-container *ngIf="!loading">
+      <ng-template [ngTemplateOutlet]="body"></ng-template>
+    </ng-container>
   </tbody>
   <ng-template #totalTpl let-range="range" let-total>{{ renderTotal(total, range) }}</ng-template>
 </nz-table>
