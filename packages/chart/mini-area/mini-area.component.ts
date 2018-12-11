@@ -100,7 +100,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
 
   private attachChart() {
     const { chart, line, fit, height, animate, padding, data, color, borderColor, borderWidth } = this;
-    if (!chart) return;
+    if (!chart || !data || data.length <= 0) return ;
 
     const geoms = chart.get('geoms');
     geoms.forEach(g => g.color(color));

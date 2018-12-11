@@ -107,7 +107,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
   private attachChart() {
     const { chart, _slider, slider, height, padding, data, mask, titleMap, position, colorMap, borderWidth, tickCount } = this;
-    if (!chart) return;
+    if (!chart || !data || data.length <= 0) return ;
 
     chart.legend({
       position,

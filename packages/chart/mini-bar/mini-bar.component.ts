@@ -80,7 +80,7 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
 
   private attachChart() {
     const { chart, height, padding, data, color, borderWidth } = this;
-    if (!chart) return;
+    if (!chart || !data || data.length <= 0) return ;
     chart.get('geoms')[0].size(borderWidth).color(color);
     chart.set('height', height);
     chart.set('padding', padding);
