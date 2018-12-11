@@ -9,21 +9,21 @@
     padding-left: 2px;
   }
   &__p-left {
-    .ant-table-pagination {
+    .@{ant-prefix}-table-pagination {
       float: none;
       display: block;
       text-align: left;
     }
   }
   &__p-center {
-    .ant-table-pagination {
+    .@{ant-prefix}-table-pagination {
       float: none;
       display: block;
       text-align: center;
     }
   }
   // 清除页码底部间距，在大部分列表中会包裹 `nz-card` 导致底部间距过大，若有需求可自行使用 `mb-md` 来调整
-  .ant-table-pagination.ant-pagination {
+  .@{ant-prefix}-table-pagination.@{ant-prefix}-pagination {
     margin-bottom: 0;
   }
 }

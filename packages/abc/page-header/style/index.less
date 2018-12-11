@@ -13,12 +13,12 @@
     max-width: @page-header-wide;
     margin: auto;
   }
-  .ant-breadcrumb {
+  .@{ant-prefix}-breadcrumb {
     margin-bottom: 16px;
   }
-  .ant-tabs {
+  .@{ant-prefix}-tabs {
     margin: 0 0 -17px -8px;
-    .ant-tabs-bar {
+    &-bar {
       border-bottom: @border-width-base @border-style-base @border-color-split;
     }
   }
@@ -117,17 +117,17 @@
   }
   @media screen and (max-width: @screen-xs) {
     &__action {
-      .ant-btn-group,
-      .ant-btn {
+      .@{ant-prefix}-btn-group,
+      .@{ant-prefix}-btn {
         display: block;
         margin-bottom: 8px;
       }
-      .ant-input-search-enter-button {
-        .ant-btn {
+      .@{ant-prefix}-input-search-enter-button {
+        .@{ant-prefix}-btn {
           margin-bottom: 0;
         }
       }
-      .ant-btn-group > .ant-btn {
+      .@{ant-prefix}-btn-group > .@{ant-prefix}-btn {
         display: inline-block;
         margin-bottom: 0;
       }

@@ -80,14 +80,14 @@
     position: relative;
     display: flex;
     align-items: center;
-    .ant-input {
+    .@{ant-prefix}-input {
       padding-left: 0;
       &:focus {
         box-shadow: none;
       }
     }
-    .ant-input,
-    .ant-input-group-addon {
+    .@{ant-prefix}-input,
+    .@{ant-prefix}-input-group-addon {
       background-color: rgba(255, 255, 255, 0.2);
       color: #fff;
       border: none;
@@ -96,7 +96,7 @@
         opacity: 1;
       }
     }
-    .ant-input-group-addon {
+    .@{ant-prefix}-input-group-addon {
       i {
         transition: color 300ms, transform 400ms;
         font-size: 18px;
@@ -104,8 +104,8 @@
       }
     }
     &-focus {
-      .ant-input,
-      .ant-input-group-addon {
+      .@{ant-prefix}-input,
+      .@{ant-prefix}-input-group-addon {
         background-color: #f3f3f3;
         color: @grey-8;
         &::placeholder {
@@ -113,7 +113,7 @@
           opacity: 1;
         }
       }
-      .ant-input-group-addon {
+      .@{ant-prefix}-input-group-addon {
         i {
           transform: rotate(90deg);
           color: @grey-8;

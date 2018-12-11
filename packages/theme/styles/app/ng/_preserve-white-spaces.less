@@ -5,25 +5,25 @@
   }
 
   // button + button
-  .ant-btn + .ant-btn,
+  .@{ant-prefix}-btn + .@{ant-prefix}-btn,
   // button + popconfirm
-  .ant-btn + nz-popconfirm,
-  nz-popconfirm + .ant-btn,
+  .@{ant-prefix}-btn + nz-popconfirm,
+  nz-popconfirm + .@{ant-prefix}-btn,
   // popconfirm + popconfirm
   nz-popconfirm + nz-popconfirm,
   // button + button group
-  .ant-btn + nz-button-group,
-  nz-button-group + .ant-btn,
+  .@{ant-prefix}-btn + nz-button-group,
+  nz-button-group + .@{ant-prefix}-btn,
   // dropdown + button
-  .ant-btn + nz-dropdown,
-  nz-dropdown +.ant-btn,
+  .@{ant-prefix}-btn + nz-dropdown,
+  nz-dropdown +.@{ant-prefix}-btn,
   // popconfirm + button group
   nz-popconfirm + nz-button-group,
   nz-button-group + nz-popconfirm {
     margin-left: @preserve-buttons-spaces;
   }
-  .ant-btn-group {
-    .ant-btn + .ant-btn {
+  .@{ant-prefix}-btn-group {
+    .@{ant-prefix}-btn + .@{ant-prefix}-btn {
       margin-left: -1px;
     }
   }

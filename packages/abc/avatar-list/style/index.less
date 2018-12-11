@@ -15,7 +15,7 @@
     margin-left: -8px;
     width: @avatar-size-base;
     height: @avatar-size-base;
-    .ant-avatar {
+    .@{ant-prefix}-avatar {
       border: 1px solid #fff;
       cursor: pointer;
     }
@@ -31,12 +31,11 @@
   &__mini {
     width: 20px;
     height: 20px;
-    .ant-avatar {
+    .@{ant-prefix}-avatar {
       width: 20px;
       height: 20px;
       line-height: 20px;
-
-      .ant-avatar-string {
+      &-string {
         font-size: 12px;
         line-height: 18px;
       }
