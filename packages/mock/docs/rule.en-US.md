@@ -48,6 +48,8 @@ export const USERS = {
   '/users': { uid: 1 },
   // Function
   '/qs': (req: MockRequest) => req.queryString.pi,
+  // Support HttpResponse
+  '/http': (req: MockRequest) => new HttpResponse({ body: 'Body', headers: new HttpHeaders({ 'token': '1' }) }),
   // Send Status Error
   '/404': () => { throw new MockStatusError(404); }
 };

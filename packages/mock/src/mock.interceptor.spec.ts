@@ -14,6 +14,7 @@ import {
   HTTP_INTERCEPTORS,
   HttpClient,
   HttpResponse,
+  HttpHeaders,
 } from '@angular/common/http';
 import {
   RouterTestingModule,
@@ -37,6 +38,7 @@ const DATA = {
     '/array': [1, 2],
     '/fn/queryString': (req: MockRequest) => req.queryString,
     '/fn/header': (req: MockRequest) => req.headers,
+    '/HttpResponse': () => new HttpResponse({ body: 'Body', headers: new HttpHeaders({ 'token': '1' }) }),
     'POST /fn/body': (req: MockRequest) => req.body,
     'POST /users/1': { uid: 1, action: 'add' },
     '/404': () => {
@@ -54,11 +56,7 @@ describe('mock: interceptor', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  function genModule(
-    options: DelonMockConfig,
-    imports: any[] = [],
-    spyConsole = true,
-  ) {
+  function genModule(options: DelonMockConfig, imports: any[] = [], spyConsole = true) {
     options = Object.assign(new DelonMockConfig(), options);
     injector = TestBed.configureTestingModule({
       declarations: [RootCmp],
@@ -138,6 +136,15 @@ describe('mock: interceptor', () => {
       http.get(key, { headers: { token: 'asdf' } }).subscribe((res: any) => {
         expect(res).not.toBeNull();
         expect(res.token).toBe('asdf');
+        done();
+      });
+    });
+    it('should return HttpResponse', (done: () => void) => {
+      const key = '/HttpResponse';
+      http.get(key, { observe: 'response' }).subscribe((res: HttpResponse<any>) => {
+        expect(res).not.toBeNull();
+        expect(res.body).toBe('Body');
+        expect(res.headers.get('token')).toBe('1');
         done();
       });
     });

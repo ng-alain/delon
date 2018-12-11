@@ -96,11 +96,14 @@ export class MockInterceptor implements HttpInterceptor {
         break;
     }
 
-    const response: HttpResponse<any> = new HttpResponse({
-      status: 200,
-      body: res,
-      url: req.url,
-    });
+    const response =
+      res instanceof HttpResponse ?
+        res :
+        new HttpResponse({
+          status: 200,
+          url: req.url,
+          body: res,
+        });
 
     if (config.log) {
       console.log(`%c👽${req.method}->${req.url}->request`, 'background:#000;color:#bada55', req);
