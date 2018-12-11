@@ -47,6 +47,7 @@ title: Global Parameters
 | `@scrollbar-height` | `6px` | Scroll bar height |
 | `@scrollbar-track-color` | `rgba(0, 0, 0, 0.3)` | Scrollbar track color |
 | `@scrollbar-thumb-color` | `#6e6e6e` | Scrollbar thumb color |
+| `@scrollbar-table-enabled` | `false` | Enable landscaping scrollbars of nz-table |
 
 ## Zorro patch
 

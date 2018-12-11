@@ -47,6 +47,7 @@ title: 全局参数
 | `@scrollbar-height` | `6px` | 美化滚动条高度 |
 | `@scrollbar-track-color` | `rgba(0, 0, 0, 0.3)` | 美化滚动条的轨道颜色 |
 | `@scrollbar-thumb-color` | `#6e6e6e` | 美化滚动条小方块颜色 |
+| `@scrollbar-table-enabled` | `false` | 启用美化表格滚动条 |
 
 ## Zorro组件补丁
 
