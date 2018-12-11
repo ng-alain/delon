@@ -30,3 +30,8 @@ export function isMobile(value: string): boolean {
     )
   );
 }
+
+/** 是否URL地址 */
+export function isUrl(url: string): boolean {
+  return /(((^https?:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)$/.test(url);
+}
