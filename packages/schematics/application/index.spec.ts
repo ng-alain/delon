@@ -27,14 +27,14 @@ describe('NgAlainSchematic: application', () => {
     describe('with true', () => {
       beforeEach(() => ({ runner, tree } = createAlainApp({ i18n: true })));
       it(`can add i18n related`, () => {
-        const specTs = tree.readContent('/foo/src/testing/common.spec.ts');
+        const specTs = tree.readContent('/foo/src/app/app.module.ts');
         expect(specTs).toContain(`@core/i18n/`);
       });
     });
     describe('with false', () => {
       beforeEach(() => ({ runner, tree } = createAlainApp({ i18n: false })));
       it(`can't add i18n related`, () => {
-        const specTs = tree.readContent('/foo/src/testing/common.spec.ts');
+        const specTs = tree.readContent('/foo/src/app/app.module.ts');
         expect(specTs).not.toContain(`@core/i18n/`);
       });
     });
