@@ -4,7 +4,7 @@ import { tick } from '@angular/core/testing';
 
 import { NzDropDownDirective } from 'ng-zorro-antd';
 
-// https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/dropdown/nz-dropdown.component.ts#L196
+// https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/dropdown/nz-dropdown.component.ts#L159
 export const DROPDOWN_MIN_TIME = 51;
 
 export function dispatchDropDown(dl: DebugElement, trigger: 'mouseleave' | 'click', allowNull = true) {
