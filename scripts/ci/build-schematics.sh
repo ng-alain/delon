@@ -126,6 +126,8 @@ copyFiles() {
     "${1}src/app/core/net|${2}application/files/src/app/core/"
     "${1}src/app/core/module-import-guard.ts|${2}application/files/src/app/core/"
     "${1}src/app/core/README.md|${2}application/files/src/app/core/"
+    # shared
+    "${1}src/app/shared/utils|${2}application/files/src/app/shared/"
     # app.component
     "${1}src/app/delon.module.ts|${2}application/files/src/app/"
     "${1}src/app/app.component.spec.ts|${2}application/files/src/app/"
