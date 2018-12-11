@@ -17,6 +17,7 @@ The default layout all parameters are prefixed with `@alain-default-`.
 | `@alain-default-header-padding` | `@layout-gutter * 2` | Horizontal padding of header |
 | `@alain-default-header-search-enabled` | `true` | Whether top search |
 | `@alain-default-header-search-height` | `34px` | Height of top search |
+| `@alain-default-header-icon-fs` | `18px` | Font size of icon |
 | `@alain-default-aside-wd` | `200px` | Width of aside |
 | `@alain-default-aside-bg` | `#fff` | Background-color of aside |
 | `@alain-default-aside-scrollbar-width` | `0` | Scrollbar width of aside |
