@@ -105,10 +105,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.labelWidth = parent.labelWidth;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
-    const repCls =
-      parent.nzLayout === 'horizontal'
-        ? this.rep.genCls(col != null ? col : parent.col)
-        : [];
+    const repCls = parent.nzLayout === 'horizontal' ? this.rep.genCls(col != null ? col : parent.col || parent.colInCon) : [];
     clsMap.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
     if (this.line || parent.line) {
       clsMap.push(`${prefixCls}__line`);

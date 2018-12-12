@@ -43,12 +43,10 @@ export class SGComponent implements OnChanges, AfterViewInit {
   }
 
   constructor(
-    @Optional()
-    @Host()
-    private parent: SGContainerComponent,
-    private rep: ResponsiveService,
     el: ElementRef,
     private ren: Renderer2,
+    @Optional() @Host() private parent: SGContainerComponent,
+    private rep: ResponsiveService,
   ) {
     if (parent == null) {
       throw new Error(`[sg] must include 'sg-container' component`);
@@ -61,7 +59,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
     clsMap.push(
-      ...this.rep.genCls(col != null ? col : parent.col),
+      ...this.rep.genCls(col != null ? col : parent.col || parent.colInCon),
       `${prefixCls}__item`,
     );
     clsMap.forEach(cls => ren.addClass(el, cls));

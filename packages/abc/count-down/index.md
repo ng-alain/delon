@@ -16,13 +16,13 @@ yarn add ngx-countdown
 
 ## API
 
-| 参数      | 说明          | 类型         | 默认值 |
-|----------|---------------|-------------|-------|
-| `[target]` | 目标时间，`number` 表示秒 | `number | Date` | - |
-| `[config]` | 完整参数 | `Object` |  |
-| `(begin)` |  开始时触发 | `EventEmitter<void>` | -|
-| `(notify)` |  通知时触发，需要在 `config` 中配置 notify | `EventEmitter<number>` | -|
-| `(end)` |  结束时触发 | `EventEmitter<void>` | -|
+| 参数       | 说明                                     | 类型                   | 默认值 |
+|------------|----------------------------------------|------------------------|--------|
+| `[target]` | 目标时间，`number` 表示秒                 | `number | Date`        | -      |
+| `[config]` | 完整参数                                 | `Object`               |        |
+| `(begin)`  | 开始时触发                               | `EventEmitter<void>`   | -      |
+| `(notify)` | 通知时触发，需要在 `config` 中配置 notify | `EventEmitter<number>` | -      |
+| `(end)`    | 结束时触发                               | `EventEmitter<void>`   | -      |
 
 ### config
 

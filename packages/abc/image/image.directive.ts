@@ -40,15 +40,12 @@ export class ImageDirective implements OnChanges, OnInit {
     this.inited = true;
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
-    if (this.inited) {
-      if (changes.error) {
-        this.updateError();
-      } else {
-        this.update();
-      }
+  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (!this.inited) return;
+    if (changes.error) {
+      this.updateError();
+    } else {
+      this.update();
     }
   }
 

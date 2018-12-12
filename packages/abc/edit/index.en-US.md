@@ -17,7 +17,7 @@ A higher-order components of the form HTML template. And optimized some details:
 The form HTML template consists of `se-container` container (directive) and `se` component, like this:
 
 ```html
-<form nz-form #f="ngForm" se-container>
+<form nz-form #f="ngForm" se-container="2">
   <se label="App Key">
     <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required>
   </se>
@@ -39,7 +39,8 @@ Also, automatically processed all Angular built-in validation, such as `required
 Property | Description | Type | Default
 ----|------|-----|------
 `[gutter]` | specify the distance between two items, unit is `px`, only `nzLayout:horizontal` | `number` | `32`
-`[se-container]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `number(0 < col <= 6)` | -
+`[se-container]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `1,2,3,4,5,6` | -
+`[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `1,2,3,4,5,6` | -
 `[labelWidth]` | label text of width, unit is `px` | `number` | `150`
 `[nzLayout]` | type of layout when `inline` forced size is `compact` | `horizontal,vertical,inline` | `horizontal`
 `[size]` | size of edit, forced ingores `error`, `extra` | `default | compact` | `default`
@@ -51,7 +52,7 @@ Property | Description | Type | Default
 
 Property | Description | Type | Default
 ----|------|-----
-`[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `number(0 < col <= 6)` | -
+`[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `1,2,3,4,5,6` | -
 `[label]` | Label | `string,TemplateRef<void>` | -
 `[optional]` | Label optional information | `string` | -
 `[optionalHelp]` | Label optional help | `string` | -

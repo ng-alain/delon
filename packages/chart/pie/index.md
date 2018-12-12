@@ -23,8 +23,8 @@ type: Components
 | `[inner]`     | 内部极坐标系的半径 | `number`      | `0.75`                     |
 | `[tooltip]`   | 是否显示 tooltip   | `boolean`     | `true`                     |
 | `[select]`    | 几何标记的选中模式 | `boolean`     | `true`                     |
-| `[subTitle]`  | 图表子标题         | `string | TemplateRef<void>`      | -                          |
-| `[total]`     | 总量               | `string | TemplateRef<void>`      | -                          |
+| `[subTitle]`  | 图表子标题         | `string,TemplateRef<void><void>`      | -                          |
+| `[total]`     | 总量               | `string,TemplateRef<void><void>`      | -                          |
 | `[valueFormat]` | y轴格式化      | `(y: number) => string`      | -                          |
 | `[data]`      | 数据               | `G2PieData[]` | -                          |
 

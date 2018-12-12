@@ -4,7 +4,8 @@ import {
   HostBinding,
   Input,
 } from '@angular/core';
-import { toNumber, InputNumber } from '@delon/util';
+import { REP_TYPE } from '@delon/theme';
+import { InputNumber } from '@delon/util';
 import { SGConfig } from './grid.config';
 
 @Component({
@@ -22,17 +23,8 @@ export class SGContainerComponent {
   //#region fields
 
   @Input() @InputNumber() gutter: number;
-
-  @Input('sg-container')
-  set col(value: number) {
-    const a = toNumber(value, 0);
-    if (a <= 0) return;
-    this._col = toNumber(value, 0);
-  }
-  get col() {
-    return this._col;
-  }
-  private _col: number;
+  @Input('sg-container') @InputNumber(null) colInCon: REP_TYPE;
+  @Input() @InputNumber(null) col: REP_TYPE;
 
   //#endregion
 

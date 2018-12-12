@@ -37,10 +37,11 @@ config: SGConfig
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[gutter]` | 间距，当 `nzLayout:horizontal` 时有效 | `number` | `32`
-`[sg-container]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `number(0 < col <= 6)` | -
+`[sg-container]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `1,2,3,4,5,6` | -
+`[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `1,2,3,4,5,6` | -
 
 ### sg
 
 参数 | 类型 | 说明
 ----|------|-----
-`[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `number(0 < col <= 6)` | -
+`[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `1,2,3,4,5,6` | -
