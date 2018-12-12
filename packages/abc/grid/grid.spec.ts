@@ -69,12 +69,23 @@ describe('abc: grid', () => {
           page.expect('.ant-col-sm-12');
         });
         it('should be inherit parent col value', () => {
+          context.parent_colInCon = null;
           context.parent_col = 2;
           context.col = null;
           fixture.detectChanges();
           page.expect('.ant-col-xs-24');
           page.expect('.ant-col-sm-12');
           page.expect('.ant-col-md-8', 0);
+        });
+        it('should be inherit parent col value via container', () => {
+          context.parent_colInCon = 4;
+          context.parent_col = null;
+          context.col = null;
+          fixture.detectChanges();
+          page.expect('.ant-col-xs-24');
+          page.expect('.ant-col-sm-12');
+          page.expect('.ant-col-md-8');
+          page.expect('.ant-col-lg-6');
         });
       });
     });
@@ -106,7 +117,7 @@ describe('abc: grid', () => {
 
 @Component({
   template: `
-  <div [sg-container]="parent_col" [gutter]="parent_gutter">
+  <div [sg-container]="parent_colInCon" [col]="parent_col" [gutter]="parent_gutter">
     <sg #viewComp [col]="col"></sg>
   </div>`,
 })
@@ -115,6 +126,7 @@ class TestComponent {
   viewComp: SGComponent;
 
   parent_gutter: number = 32;
+  parent_colInCon: number;
   parent_col: number = 3;
 
   col: number;

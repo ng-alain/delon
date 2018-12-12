@@ -133,12 +133,23 @@ describe('abc: edit', () => {
           page.expect('.ant-col-sm-12');
         });
         it('should be inherit parent col value', () => {
+          context.parent_colInCon = null;
           context.parent_col = 2;
           context.col = null;
           fixture.detectChanges();
           page.expect('.ant-col-xs-24');
           page.expect('.ant-col-sm-12');
           page.expect('.ant-col-md-8', 0);
+        });
+        it('should be inherit parent col value via container', () => {
+          context.parent_colInCon = 4;
+          context.parent_col = null;
+          context.col = null;
+          fixture.detectChanges();
+          page.expect('.ant-col-xs-24');
+          page.expect('.ant-col-sm-12');
+          page.expect('.ant-col-md-8');
+          page.expect('.ant-col-lg-6');
         });
       });
       it('#label', () => {
@@ -290,7 +301,7 @@ describe('abc: edit', () => {
 
 @Component({
   template: `
-  <form nz-form [se-container]="parent_col"
+  <form nz-form [se-container]="parent_colInCon" [col]="parent_col"
     [title]="parent_title"
     [firstVisual]="parent_firstVisual" [line]="parent_line"
     [size]="parent_size" [nzLayout]="parent_layout"
@@ -311,6 +322,7 @@ class TestComponent {
   viewComp: SEComponent;
 
   parent_gutter: number = 32;
+  parent_colInCon: number;
   parent_col: number = 3;
   parent_labelWidth: number = null;
   parent_layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';

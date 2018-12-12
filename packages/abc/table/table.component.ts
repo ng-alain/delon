@@ -36,8 +36,8 @@ import {
   InputBoolean,
   InputNumber,
 } from '@delon/util';
-import { of, Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { of, Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 import { STColumnSource } from './table-column-source';
 import { STDataSource } from './table-data-source';
@@ -79,8 +79,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
-  private i18n$: Subscription;
-  private delonI18n$: Subscription;
+  private unsubscribe$ = new Subject<void>();
   private totalTpl = ``;
   // tslint:disable-next-line:no-any
   private locale: any = {};
@@ -227,18 +226,19 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.multiSort = copyCog.multiSort;
     }
 
-    this.delonI18n$ = this.delonI18n.change.subscribe(() => {
+    this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
         this.page = this.clonePage;
         this.cd();
       }
     });
-    if (i18nSrv) {
-      this.i18n$ = i18nSrv.change
-        .pipe(filter(() => this._columns.length > 0))
-        .subscribe(() => this.updateColumns());
-    }
+
+    i18nSrv.change
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter(() => this._columns.length > 0)
+      ).subscribe(() => this.updateColumns());
   }
 
   cd() {
@@ -672,7 +672,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.delonI18n$.unsubscribe();
-    if (this.i18n$) this.i18n$.unsubscribe();
+    const { unsubscribe$ } = this;
+    unsubscribe$.next();
+    unsubscribe$.complete();
   }
 }
