@@ -237,7 +237,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     i18nSrv.change
       .pipe(
         takeUntil(this.unsubscribe$),
-        filter(() => this._columns.length > 0)
+        filter(() => this._columns.length > 0),
       ).subscribe(() => this.updateColumns());
   }
 
