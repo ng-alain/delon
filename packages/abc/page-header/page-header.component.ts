@@ -16,8 +16,8 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { NzAffixComponent } from 'ng-zorro-antd';
-import { merge, Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { merge, Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import {
@@ -42,11 +42,9 @@ interface PageHeaderPath {
   templateUrl: './page-header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PageHeaderComponent
-  implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
-  private ref$: Subscription;
-  private set$: Subscription;
+  private unsubscribe$ = new Subject<void>();
   @ViewChild('conTpl')
   private conTpl: ElementRef;
   @ViewChild('affix')
@@ -121,22 +119,22 @@ export class PageHeaderComponent
     private cdr: ChangeDetectorRef,
   ) {
     Object.assign(this, cog);
-    this.set$ = settings.notify
+    settings.notify
       .pipe(
+        takeUntil(this.unsubscribe$),
         filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed'),
       )
       .subscribe(() => this.affix.updatePosition({}));
 
     // tslint:disable-next-line:no-any
     const data$: Array<Observable<any>> = [
-      this.router.events.pipe(
-        filter((event: RouterEvent) => event instanceof NavigationEnd),
-      ),
+      menuSrv.change.pipe(filter(() => this.inited)),
+      router.events.pipe(filter((event: RouterEvent) => event instanceof NavigationEnd)),
     ];
-    if (this.i18nSrv) {
-      data$.push(this.i18nSrv.change);
+    if (i18nSrv) {
+      data$.push(i18nSrv.change);
     }
-    this.ref$ = merge(...data$).subscribe(() => {
+    merge(...data$).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this._menus = null;
       this.refresh();
     });
@@ -218,7 +216,8 @@ export class PageHeaderComponent
   }
 
   ngOnDestroy(): void {
-    this.set$.unsubscribe();
-    this.ref$.unsubscribe();
+    const { unsubscribe$ } = this;
+    unsubscribe$.next();
+    unsubscribe$.complete();
   }
 }

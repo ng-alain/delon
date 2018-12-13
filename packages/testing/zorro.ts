@@ -1,6 +1,6 @@
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { NzDropDownDirective } from 'ng-zorro-antd';
 

@@ -1,13 +1,11 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/0.13/config/configuration-file.html
+const karmaParallel = require('karma-parallel');
 
 module.exports = function (config) {
-  const executors = (Math.ceil(require('os').cpus().length / 2));
-  console.log(`executors cpus: `, executors);
   const configuration = {
     basePath: '',
     frameworks: [
-      'parallel',
       'jasmine',
       '@angular-devkit/build-angular'
     ],
@@ -17,13 +15,8 @@ module.exports = function (config) {
       require('karma-summary-reporter'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
-      require('karma-parallel'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
-    parallelOptions: {
-      executors,
-      shardStrategy: 'round-robin'
-    },
     client: {
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
       timeout: 180000
@@ -55,6 +48,14 @@ module.exports = function (config) {
   };
 
   if (process.env.TRAVIS) {
+    const executors = (Math.ceil(require('os').cpus().length / 2));
+    console.log(`executors cpus: `, executors);
+    configuration.frameworks.splice(0, 0, 'parallel');
+    configuration.plugins.push(karmaParallel);
+    configuration.parallelOptions = {
+      executors,
+      shardStrategy: 'round-robin'
+    };
     configuration.browsers = ['ChromeHeadless'];
   }
 

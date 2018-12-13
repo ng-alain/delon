@@ -10,7 +10,8 @@ import { FormsModule, NgModel, FormControlName, ReactiveFormsModule } from '@ang
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import * as UTIL from '@delon/util';
-import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
+import { configureTestSuite, createTestContext } from '@delon/testing/suite';
+import { REP_MAX } from '@delon/theme';
 
 import { SEModule } from './edit.module';
 import { SEComponent } from './edit.component';
@@ -23,11 +24,174 @@ describe('abc: edit', () => {
   let context: TestComponent;
   let page: PageObject;
 
-  function genModule(template?: string) {
+  const moduleAction = () => {
     TestBed.configureTestingModule({
       imports: [SEModule, FormsModule, NoopAnimationsModule],
       declarations: [TestComponent],
     });
+  };
+
+  describe('', () => {
+    configureTestSuite(moduleAction);
+
+    beforeEach(() => {
+      ({ fixture, dl, context } = createTestContext(TestComponent));
+      fixture.detectChanges();
+      page = new PageObject();
+    });
+
+    describe('[property]', () => {
+      describe('#wrap', () => {
+        it('#title', () => {
+          context.parent_title = `parent_title`;
+          fixture.detectChanges();
+          expect(page.getEl(prefixCls + 'title').textContent).toContain(`parent_title`);
+        });
+        describe('#firstVisual', () => {
+          let ngModel: NgModel;
+          let changes: EventEmitter<any>;
+          beforeEach(() => {
+            ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
+            changes = ngModel.statusChanges as EventEmitter<any>;
+          });
+          it('with true', () => {
+            context.label = 'a';
+            context.parent_firstVisual = true;
+            fixture.detectChanges();
+            // mock statusChanges
+            changes.emit('INVALID');
+            page.expect('.has-error', 1);
+          });
+          it('with false', () => {
+            context.label = 'a';
+            context.parent_firstVisual = false;
+            fixture.detectChanges();
+            // mock statusChanges
+            changes.emit('INVALID');
+            page.expect('.has-error', 0);
+          });
+        });
+        it('#gutter', () => {
+          const gutter = 24;
+          const halfGutter = gutter / 2;
+          context.parent_gutter = gutter;
+          fixture.detectChanges();
+          expect(page.getEl('.ant-row').style.marginLeft).toBe(
+            `-${halfGutter}px`,
+          );
+          expect(page.getEl('.ant-row').style.marginRight).toBe(
+            `-${halfGutter}px`,
+          );
+          const itemCls = prefixCls + 'item';
+          expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
+          expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
+        });
+        it('#labelWidth', () => {
+          context.parent_labelWidth = 20;
+          context.label = 'aa';
+          fixture.detectChanges();
+          expect(page.getEl(prefixCls + 'label').style.width).toBe(
+            `${context.parent_labelWidth}px`,
+          );
+        });
+        it('#layout', () => {
+          context.parent_layout = 'horizontal';
+          fixture.detectChanges();
+          page.expect(prefixCls + 'horizontal');
+          context.parent_layout = 'vertical';
+          fixture.detectChanges();
+          page.expect(prefixCls + 'vertical');
+          context.parent_layout = 'inline';
+          fixture.detectChanges();
+          page.expect(prefixCls + 'inline');
+          page.expect(prefixCls + 'compact');
+        });
+        it('#size', () => {
+          context.parent_size = 'default';
+          fixture.detectChanges();
+          page.expect(prefixCls + 'default');
+          context.parent_size = 'compact';
+          fixture.detectChanges();
+          page.expect(prefixCls + 'compact');
+        });
+        it('should be ingroed less than 0', () => {
+          context.parent_col = 0;
+          fixture.detectChanges();
+          page.expect('.ant-col-xs-24');
+          page.expect('.ant-col-sm-12');
+        });
+      });
+      describe('#item', () => {
+        describe('#col', () => {
+          it('should working', () => {
+            context.col = 1;
+            fixture.detectChanges();
+            page.expect('.ant-col-xs-24');
+            page.expect('.ant-col-sm-12', 0);
+            context.col = REP_MAX;
+            fixture.detectChanges();
+            page.expect('.ant-col-xs-24');
+            page.expect('.ant-col-sm-12');
+          });
+          it('should be inherit parent col value', () => {
+            context.parent_colInCon = null;
+            context.parent_col = 2;
+            context.col = null;
+            fixture.detectChanges();
+            page.expect('.ant-col-xs-24');
+            page.expect('.ant-col-sm-12');
+            page.expect('.ant-col-md-8', 0);
+          });
+          it('should be inherit parent col value via container', () => {
+            context.parent_colInCon = 4;
+            context.parent_col = null;
+            context.col = null;
+            fixture.detectChanges();
+            page.expect('.ant-col-xs-24');
+            page.expect('.ant-col-sm-12');
+            page.expect('.ant-col-md-8');
+            page.expect('.ant-col-lg-6');
+          });
+        });
+        it('#label', () => {
+          context.label = 'test-label';
+          fixture.detectChanges();
+          expect(page.getEl(prefixCls + 'label').textContent).toContain(
+            'test-label',
+          );
+        });
+        it('should be only horizontal will increase the responsive', () => {
+          context.parent_layout = 'inline';
+          context.label = 'aa';
+          fixture.detectChanges();
+          page.expect(prefixCls + 'inline');
+          page.expect('.ant-col-xs-24', 0);
+        });
+        it('#line', () => {
+          context.parent_line = true;
+          context.line = null;
+          fixture.detectChanges();
+          page.expect(prefixCls + 'line');
+        });
+      });
+    });
+    describe('[validate]', () => {
+      let ngModel: NgModel;
+      it('should be show error', () => {
+        ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
+        const changes = ngModel.statusChanges as EventEmitter<any>;
+        // mock statusChanges
+        changes.emit('VALID');
+        page.expect('se-error', 0);
+        // mock statusChanges
+        changes.emit('INVALID');
+        page.expect('se-error');
+      });
+    });
+  });
+
+  function genModule(template?: string) {
+    moduleAction();
     if (template) {
       TestBed.overrideTemplate(TestComponent, template);
     }
@@ -38,156 +202,8 @@ describe('abc: edit', () => {
     page = new PageObject();
   }
 
-  describe('[property]', () => {
-    beforeEach(() => genModule());
-    describe('#wrap', () => {
-      it('#title', () => {
-        context.parent_title = `parent_title`;
-        fixture.detectChanges();
-        expect(page.getEl(prefixCls + 'title').textContent).toContain(`parent_title`);
-      });
-      describe('#firstVisual', () => {
-        let ngModel: NgModel;
-        let changes: EventEmitter<any>;
-        beforeEach(() => {
-          ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
-          changes = ngModel.statusChanges as EventEmitter<any>;
-        });
-        it('with true', () => {
-          context.label = 'a';
-          context.parent_firstVisual = true;
-          fixture.detectChanges();
-          // mock statusChanges
-          changes.emit('INVALID');
-          page.expect('.has-error', 1);
-        });
-        it('with false', () => {
-          context.label = 'a';
-          context.parent_firstVisual = false;
-          fixture.detectChanges();
-          // mock statusChanges
-          changes.emit('INVALID');
-          page.expect('.has-error', 0);
-        });
-      });
-      it('#gutter', () => {
-        const gutter = 24;
-        const halfGutter = gutter / 2;
-        context.parent_gutter = gutter;
-        fixture.detectChanges();
-        expect(page.getEl('.ant-row').style.marginLeft).toBe(
-          `-${halfGutter}px`,
-        );
-        expect(page.getEl('.ant-row').style.marginRight).toBe(
-          `-${halfGutter}px`,
-        );
-        const itemCls = prefixCls + 'item';
-        expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
-        expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
-      });
-      it('#labelWidth', () => {
-        context.parent_labelWidth = 20;
-        context.label = 'aa';
-        fixture.detectChanges();
-        expect(page.getEl(prefixCls + 'label').style.width).toBe(
-          `${context.parent_labelWidth}px`,
-        );
-      });
-      it('#layout', () => {
-        context.parent_layout = 'horizontal';
-        fixture.detectChanges();
-        page.expect(prefixCls + 'horizontal');
-        context.parent_layout = 'vertical';
-        fixture.detectChanges();
-        page.expect(prefixCls + 'vertical');
-        context.parent_layout = 'inline';
-        fixture.detectChanges();
-        page.expect(prefixCls + 'inline');
-        page.expect(prefixCls + 'compact');
-      });
-      it('#size', () => {
-        context.parent_size = 'default';
-        fixture.detectChanges();
-        page.expect(prefixCls + 'default');
-        context.parent_size = 'compact';
-        fixture.detectChanges();
-        page.expect(prefixCls + 'compact');
-      });
-      it('should be ingroed less than 0', () => {
-        context.parent_col = 0;
-        fixture.detectChanges();
-        page.expect('.ant-col-xs-24');
-        page.expect('.ant-col-sm-12');
-      });
-    });
-    describe('#item', () => {
-      describe('#col', () => {
-        it('should working', () => {
-          context.col = 1;
-          fixture.detectChanges();
-          page.expect('.ant-col-xs-24');
-          page.expect('.ant-col-sm-12', 0);
-          context.col = REP_MAX;
-          fixture.detectChanges();
-          page.expect('.ant-col-xs-24');
-          page.expect('.ant-col-sm-12');
-        });
-        it('should be inherit parent col value', () => {
-          context.parent_colInCon = null;
-          context.parent_col = 2;
-          context.col = null;
-          fixture.detectChanges();
-          page.expect('.ant-col-xs-24');
-          page.expect('.ant-col-sm-12');
-          page.expect('.ant-col-md-8', 0);
-        });
-        it('should be inherit parent col value via container', () => {
-          context.parent_colInCon = 4;
-          context.parent_col = null;
-          context.col = null;
-          fixture.detectChanges();
-          page.expect('.ant-col-xs-24');
-          page.expect('.ant-col-sm-12');
-          page.expect('.ant-col-md-8');
-          page.expect('.ant-col-lg-6');
-        });
-      });
-      it('#label', () => {
-        context.label = 'test-label';
-        fixture.detectChanges();
-        expect(page.getEl(prefixCls + 'label').textContent).toContain(
-          'test-label',
-        );
-      });
-      it('should be only horizontal will increase the responsive', () => {
-        context.parent_layout = 'inline';
-        context.label = 'aa';
-        fixture.detectChanges();
-        page.expect(prefixCls + 'inline');
-        page.expect('.ant-col-xs-24', 0);
-      });
-      it('#line', () => {
-        context.parent_line = true;
-        context.line = null;
-        fixture.detectChanges();
-        page.expect(prefixCls + 'line');
-      });
-    });
-  });
-
   describe('[validate]', () => {
     let ngModel: NgModel;
-    it('should be show error', () => {
-      genModule();
-      ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
-      const changes = ngModel.statusChanges as EventEmitter<any>;
-      // mock statusChanges
-      changes.emit('VALID');
-      page.expect('se-error', 0);
-      // mock statusChanges
-      changes.emit('INVALID');
-      page.expect('se-error');
-    });
     it('should be only once bind ngModel of status change', () => {
       genModule(`
       <form nz-form se-container>
@@ -279,16 +295,12 @@ describe('abc: edit', () => {
     });
     it(`should be must include 'se-container' component in se`, () => {
       expect(() => {
-        genModule(`
-        <se></se>
-        `);
+        genModule(`<se></se>`);
       }).toThrowError();
     });
     it(`should be must include 'se-container' component in se-title`, () => {
       expect(() => {
-        genModule(`
-        <se-title></se-title>
-        `);
+        genModule(`<se-title></se-title>`);
       }).toThrowError();
     });
     it(`should be custom id value`, () => {

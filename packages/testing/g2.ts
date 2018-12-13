@@ -1,5 +1,5 @@
-import { Type } from "@angular/core";
-import { ComponentFixture, TestBed, flush, discardPeriodicTasks } from "@angular/core/testing";
+import { Type } from '@angular/core';
+import { discardPeriodicTasks, flush, ComponentFixture, TestBed } from '@angular/core/testing';
 
 export type PageG2Type = 'geoms' | 'views';
 
@@ -15,11 +15,12 @@ export class PageG2<T> {
   }
 
   get comp() {
+    // tslint:disable-next-line:no-string-literal
     return this.context['comp'];
   }
 
   get chart() {
-    return this.comp['chart'];
+    return this.comp.chart;
   }
 
   makeModule<M>(module: M, comp: Type<T>, options = { dc: true }): PageG2<T> {
@@ -52,8 +53,9 @@ export class PageG2<T> {
   }
 
   newData(data: any): this {
+    // tslint:disable-next-line:no-string-literal
     this.context['data'] = data;
-    this.dc()
+    this.dc();
     return this;
   }
 

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/theme';
+import { configureTestSuite, createTestContext } from '@delon/testing/suite';
 
 import { NoticeIconModule } from './notice-icon.module';
 import { NoticeIconComponent } from './notice-icon.component';
@@ -14,15 +15,14 @@ describe('abc: notice-icon', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(async(() => {
+  configureTestSuite(() => {
     injector = TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, NoticeIconModule, DelonLocaleModule],
       declarations: [TestComponent],
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
-  }));
+  });
+
+  beforeEach(() => ({ fixture, dl, context } = createTestContext(TestComponent)));
 
   afterEach(() => context.comp.ngOnDestroy());
 

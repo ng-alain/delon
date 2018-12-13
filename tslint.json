@@ -107,7 +107,7 @@
     "new-parens": true,
     "no-angle-bracket-type-assertion": true,
     "member-access": false,
-    "no-any": true,
+    "no-any": false,
     "no-arg": true,
     "no-bitwise": false,
     "no-consecutive-blank-lines": [
@@ -254,7 +254,6 @@
       "packages/typings.d.ts",
       "packages/test.ts",
       "packages/**/*.spec.ts",
-      "packages/testing/**/*",
       "packages/schematics/**/files/**/*",
       "packages/schematics/utils/**/*",
       "packages/schematics/test.ts",
