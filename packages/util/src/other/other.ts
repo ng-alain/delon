@@ -47,3 +47,31 @@ export function copy(value: string): Promise<string> {
     }
   });
 }
+
+export function deepMerge(original: any, ...objects: any[]): void {
+  if (Array.isArray(original) || typeof original !== 'object') return original;
+
+  const isObject = (v: any) => typeof v === 'object' || typeof v === 'function';
+
+  const merge = (target: any, obj: {}) => {
+    Object
+      .keys(obj)
+      .filter(key => key !== '__proto__' && Object.prototype.hasOwnProperty.call(obj, key))
+      .forEach(key => {
+        const oldValue = obj[key];
+        const newValue = target[key];
+        if (Array.isArray(newValue)) {
+          target[key] = [ ...newValue, ...oldValue ];
+        } else if (oldValue != null && isObject(oldValue) && newValue != null && isObject(newValue)) {
+          target[key] = merge(newValue, oldValue);
+        } else {
+          target[key] = deepCopy(oldValue);
+        }
+      });
+    return target;
+  };
+
+  objects.filter(v => isObject(v)).forEach(v => merge(original, v));
+
+  return original;
+}

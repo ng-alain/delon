@@ -42,6 +42,16 @@ const source = { a: 1, user: { name: 'cipchk' } };
 const obj = deepCopy(source);
 ```
 
+## deepMerge
+
+深度合并。
+
+```ts
+let original = { a: 1, b: { c: 'c' } };
+deepMerge(original, { b: { d: 'd' }, arr: [ 1 ] });
+// output: { a: 1, b: { c: 'c', d: 'd' }, arr: [ 1 ] }
+```
+
 ## copy
 
 复制内容至剪贴板。

@@ -154,13 +154,14 @@ export class MenuService implements OnDestroy {
     let _data = this.data[0].children[pos];
     if (_data.i18n && this.i18nSrv) _data.text = this.i18nSrv.fanyi(_data.i18n);
     // tslint:disable-next-line:prefer-object-spread
-    _data = Object.assign(_data, {
+    _data = {
+      ..._data,
       shortcutRoot: true,
       _type: 3,
       __id: -1,
       _depth: 1,
       __parent: null,
-    });
+    };
     _data.children = shortcuts.map(i => {
       i._depth = 2;
       i.__parent = _data;

@@ -1,41 +1,8 @@
 import { DecimalPipe, DOCUMENT } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Inject,
-  Input,
-  OnChanges,
-  OnDestroy,
-  Optional,
-  Output,
-  Renderer2,
-  SimpleChange,
-  SimpleChanges,
-  TemplateRef,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, Optional, Output, Renderer2, SimpleChange, SimpleChanges, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  AlainI18NService,
-  ALAIN_I18N_TOKEN,
-  CNCurrencyPipe,
-  DatePipe,
-  DelonLocaleService,
-  DrawerHelper,
-  ModalHelper,
-  ModalHelperOptions,
-  YNPipe,
-} from '@delon/theme';
-import {
-  deepCopy,
-  toBoolean,
-  updateHostClass,
-  InputBoolean,
-  InputNumber,
-} from '@delon/util';
+import { AlainI18NService, ALAIN_I18N_TOKEN, CNCurrencyPipe, DatePipe, DelonLocaleService, DrawerHelper, ModalHelper, ModalHelperOptions, YNPipe } from '@delon/theme';
+import { deepCopy, deepMerge, toBoolean, updateHostClass, InputBoolean, InputNumber } from '@delon/util';
 import { of, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -44,38 +11,12 @@ import { STDataSource } from './table-data-source';
 import { STExport } from './table-export';
 import { STRowSource } from './table-row.directive';
 import { STConfig } from './table.config';
-import {
-  STChange,
-  STChangeType,
-  STColumn,
-  STColumnButton,
-  STColumnFilterMenu,
-  STColumnSelection,
-  STData,
-  STError,
-  STExportOptions,
-  STLoadOptions,
-  STMultiSort,
-  STPage,
-  STReq,
-  STRes,
-  STRowClassName,
-  STSingleSort,
-} from './table.interfaces';
+import { STChange, STChangeType, STColumn, STColumnButton, STColumnFilterMenu, STColumnSelection, STData, STError, STExportOptions, STLoadOptions, STMultiSort, STPage, STReq, STRes, STRowClassName, STSingleSort } from './table.interfaces';
 
 @Component({
   selector: 'st',
   templateUrl: './table.component.html',
-  providers: [
-    STDataSource,
-    STRowSource,
-    STColumnSource,
-    STExport,
-    CNCurrencyPipe,
-    DatePipe,
-    YNPipe,
-    DecimalPipe,
-  ],
+  providers: [ STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
@@ -218,12 +159,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
   ) {
-    const copyCog = deepCopy(cog) as STConfig;
-    Object.keys(copyCog)
-      .filter(key => !['multiSort'].includes(key))
-      .forEach(key => this[key] = copyCog[key]);
-    if (copyCog.multiSort && copyCog.multiSort.global !== false) {
-      this.multiSort = copyCog.multiSort;
+    const copyCog = { ...cog };
+    delete copyCog.multiSort;
+    deepMerge(this, copyCog);
+    if (cog.multiSort && cog.multiSort.global !== false) {
+      this.multiSort = { ...cog.multiSort };
     }
 
     this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
@@ -553,25 +493,20 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       e.preventDefault();
     }
     if (btn.type === 'modal' || btn.type === 'static') {
-      const obj = {};
       const { modal } = btn;
-      obj[modal.paramsName] = record;
-      const options: ModalHelperOptions = { ...modal };
-      (this.modalHelper[
-        btn.type === 'modal' ? 'create' : 'createStatic'
-        // tslint:disable-next-line:no-any
-      ] as any)(
+      const obj = { [modal.paramsName]: record };
+      // tslint:disable-next-line:no-any
+      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         modal.component,
         { ...obj, ...(modal.params && modal.params(record)) },
-        options,
+        { ...modal },
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
       return;
     } else if (btn.type === 'drawer') {
-      const obj = {};
       const { drawer } = btn;
-      obj[drawer.paramsName] = record;
+      const obj = { [drawer.paramsName]: record };
       this.drawerHelper
         .create(
           drawer.title,

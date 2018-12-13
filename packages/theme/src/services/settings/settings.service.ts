@@ -38,12 +38,10 @@ export class SettingsService {
 
   get app(): App {
     if (!this._app) {
-      this._app = Object.assign(
-        {
-          year: new Date().getFullYear(),
-        } as App,
-        this.get(APP_KEY),
-      );
+      this._app = {
+        year: new Date().getFullYear(),
+        ...this.get(APP_KEY),
+      };
       this.set(APP_KEY, this._app);
     }
     return this._app;
