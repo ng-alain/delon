@@ -14,7 +14,7 @@ import {
   Renderer2,
   TemplateRef,
 } from '@angular/core';
-import { FormControlName, NgControl, NgModel } from '@angular/forms';
+import { FormControlName, NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
@@ -33,10 +33,8 @@ let nextUniqueId = 0;
 export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   private el: HTMLElement;
   private status$: Subscription;
-  @ContentChild(NgModel)
-  private readonly ngModel: NgModel;
-  @ContentChild(FormControlName)
-  private readonly formControlName: FormControlName;
+  @ContentChild(NgModel) private readonly ngModel: NgModel;
+  @ContentChild(FormControlName) private readonly formControlName: FormControlName;
   private clsMap: string[] = [];
   private inited = false;
   private onceFlag = false;
@@ -81,16 +79,14 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.invalid && this.parent.size !== 'compact' && !!this.error;
   }
 
-  private get ngControl(): NgControl {
+  private get ngControl(): NgModel | FormControlName {
     return this.ngModel || this.formControlName;
   }
 
   constructor(
-    @Optional()
-    @Host()
-    private parent: SEContainerComponent,
-    private rep: ResponsiveService,
     el: ElementRef,
+    @Optional() @Host() private parent: SEContainerComponent,
+    private rep: ResponsiveService,
     private ren: Renderer2,
     private cdr: ChangeDetectorRef,
   ) {
@@ -119,10 +115,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (!this.ngControl || this.status$) return;
 
     this.status$ = this.ngControl.statusChanges.subscribe(res => {
-      if (
-        (this.ngControl instanceof NgModel && this.ngControl.isDisabled) ||
-        (this.ngControl instanceof FormControlName && this.ngControl.isDisabled)
-      ) {
+      if (this.ngControl.isDisabled) {
         return ;
       }
       const status = res !== 'VALID';
@@ -134,10 +127,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.cdr.detectChanges();
     });
     if (this._autoId) {
-      const control = deepGet(
-        this.ngControl.valueAccessor,
-        '_elementRef.nativeElement',
-      ) as HTMLElement;
+      const control = deepGet(this.ngControl.valueAccessor, '_elementRef.nativeElement') as HTMLElement;
       if (control) {
         control.id = this._id;
       }

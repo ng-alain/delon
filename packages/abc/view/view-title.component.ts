@@ -20,10 +20,8 @@ import { SVContainerComponent } from './view-container.component';
 export class SVTitleComponent implements OnInit {
   private el: HTMLElement;
   constructor(
-    @Host()
-    @Optional()
-    private parent: SVContainerComponent,
     el: ElementRef,
+    @Host() @Optional() private parent: SVContainerComponent,
     private ren: Renderer2,
   ) {
     if (parent == null) {

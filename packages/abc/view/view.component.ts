@@ -50,11 +50,9 @@ export class SVComponent implements AfterViewInit, OnChanges {
   }
 
   constructor(
-    @Host()
-    @Optional()
-    public parent: SVContainerComponent,
-    private rep: ResponsiveService,
     el: ElementRef,
+    @Host() @Optional() public parent: SVContainerComponent,
+    private rep: ResponsiveService,
     private ren: Renderer2,
   ) {
     if (parent == null) {
