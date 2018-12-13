@@ -16,18 +16,18 @@ addons:
 git:
   depth: 1
 
-jobs:
-  include:
-    - env: "MODE=lib_test"
-    - env: "MODE=cli_test"
-    - env: "MODE=lint"
-    - env: "MODE=site"
-    - env: "DEPLOY_MODE=build"
-    - env: "DEPLOY_MODE=build_artifacts"
-      if: branch = master
+env:
+  - TASK=test:ng
+  - TASK=test:cli
+  - TASK=lint
+  - TASK=site:build
+  - TASK=build
+  - TASK=build_artifacts
+    if: branch = master
+
 matrix:
   allow_failures:
-    - env: "DEPLOY_MODE=build_artifacts"
+    - env: "TASK=build_artifacts"
 
 before_install:
   - export CHROME_BIN=chromium-browser
@@ -39,7 +39,11 @@ install:
   - yarn
 
 script:
-  - travis_wait 30 ./scripts/ci/travis-script.sh
+  - npm run $TASK
+  - |
+    if [ "$TASK" = "test:ng" ]; then
+      cat ./coverage/lcov.info | ./node_modules/.bin/codecov
+    fi
 
 cache:
   yarn: true
