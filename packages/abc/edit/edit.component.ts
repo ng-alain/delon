@@ -119,6 +119,12 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (!this.ngControl || this.status$) return;
 
     this.status$ = this.ngControl.statusChanges.subscribe(res => {
+      if (
+        (this.ngControl instanceof NgModel && this.ngControl.isDisabled) ||
+        (this.ngControl instanceof FormControlName && this.ngControl.isDisabled)
+      ) {
+        return ;
+      }
       const status = res !== 'VALID';
       if (!this.onceFlag || this.invalid === status) {
         this.onceFlag = true;

@@ -221,6 +221,36 @@ describe('abc: edit', () => {
       changes.emit('INVALID');
       page.expect('se-error');
     });
+    describe('should be ingore error visual when is disabled', () => {
+      it('in ngModel', () => {
+        genModule();
+        context.disabled = true;
+        fixture.detectChanges();
+        ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
+        const changes = ngModel.statusChanges as EventEmitter<any>;
+        changes.emit('INVALID');
+        page.expect('se-error', 0);
+      });
+      it('in reactive form', () => {
+        TestBed.configureTestingModule({
+          imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
+          declarations: [TestReactiveComponent],
+        });
+        const fixture2 = TestBed.createComponent(TestReactiveComponent);
+        dl = fixture2.debugElement;
+        fixture2.detectChanges();
+        page = new PageObject();
+        const allControls = dl.queryAll(By.directive(FormControlName));
+        const formControlName = allControls[1].injector.get(FormControlName);
+        const changes = formControlName.statusChanges as EventEmitter<any>;
+        // mock statusChanges
+        changes.emit('VALID');
+        page.expect('se-error', 0);
+        // mock statusChanges
+        changes.emit('INVALID');
+        page.expect('se-error', 0);
+      });
+    });
   });
 
   describe('[logic]', () => {
@@ -312,7 +342,7 @@ describe('abc: edit', () => {
       [optional]="optional" [optionalHelp]="optionalHelp"
       [error]="error" [extra]="extra" [controlClass]="controlClass"
       [label]="label" [col]="col" [required]="required" [line]="line">
-      <input type="text" [(ngModel)]="val" name="val" required>
+      <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled">
     </se>
 
   </form>`,
@@ -343,6 +373,7 @@ class TestComponent {
 
   val = '';
   showModel = true;
+  disabled = false;
 }
 
 @Component({
@@ -351,6 +382,9 @@ class TestComponent {
     <se label="App Key" error="Please input your username!">
       <input formControlName="userName" nz-input placeholder="Username">
     </se>
+    <se label="dis" id="dis">
+      <input formControlName="dis" nz-input>
+    </se>
   </form>`,
 })
 class TestReactiveComponent {
@@ -358,8 +392,7 @@ class TestReactiveComponent {
   constructor(fb: FormBuilder) {
     this.validateForm = fb.group({
       userName: [null, [Validators.required]],
-      password: [null, [Validators.required]],
-      remember: [true],
+      dis: { value: '', disabled: true }
     });
   }
 }
