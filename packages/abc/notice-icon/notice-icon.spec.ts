@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/theme';
-import { configureTestSuite, createTestContext } from '@delon/testing/suite';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { NoticeIconModule } from './notice-icon.module';
 import { NoticeIconComponent } from './notice-icon.component';

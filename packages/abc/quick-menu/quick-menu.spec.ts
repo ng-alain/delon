@@ -1,7 +1,7 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite, createTestContext } from '@delon/testing/suite';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { QuickMenuModule } from './quick-menu.module';
 import { QuickMenuComponent } from './quick-menu.component';

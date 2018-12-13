@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http/testing';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as fs from 'file-saver';
-import { configureTestSuite, createTestContext } from '@delon/testing/suite';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 import { _HttpClient } from '@delon/theme';
 
 import { DownFileModule } from './down-file.module';

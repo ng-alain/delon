@@ -12,7 +12,7 @@ import {
   AlainI18NService,
   SettingsService,
 } from '@delon/theme';
-import { configureTestSuite, createTestContext } from '@delon/testing/suite';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { PageHeaderModule } from './page-header.module';
 import { PageHeaderComponent } from './page-header.component';

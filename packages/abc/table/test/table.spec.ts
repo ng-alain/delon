@@ -42,7 +42,7 @@ import {
   AlainI18NServiceFake,
   AlainI18NService,
 } from '../../../theme/src/services/i18n/i18n';
-import { dispatchDropDown } from '../../../testing';
+import { dispatchDropDown, configureTestSuite, createTestContext } from '@delon/testing';
 import { STExport } from '../table-export';
 import { STDataSource } from '../table-data-source';
 import { STConfig } from '../table.config';

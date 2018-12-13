@@ -10,7 +10,7 @@ import { FormsModule, NgModel, FormControlName, ReactiveFormsModule } from '@ang
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import * as UTIL from '@delon/util';
-import { configureTestSuite, createTestContext } from '@delon/testing/suite';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
 
 import { SEModule } from './edit.module';
