@@ -673,6 +673,14 @@ describe('abc: table: column-souce', () => {
     });
   });
 
+  it('should be merge default config', () => {
+    genModule({ cog: { size: 'lg'} });
+    const res = srv.process([
+      { title: '', buttons: [ { text: '', type: 'modal', modal: { component: {} } } ] },
+    ]);
+    expect(res[0].buttons[0].modal.paramsName).toBe('record');
+  });
+
   class PageObject {
     expectValue(columns: STColumn[], value: any, path = 'indexKey'): this {
       const newColumns = srv.process(columns);

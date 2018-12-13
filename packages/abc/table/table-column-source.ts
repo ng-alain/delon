@@ -22,9 +22,7 @@ export class STColumnSource {
   constructor(
     @Host() private rowSource: STRowSource,
     @Optional() private acl: ACLService,
-    @Optional()
-    @Inject(ALAIN_I18N_TOKEN)
-    private i18nSrv: AlainI18NService,
+    @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     private cog: STConfig,
   ) { }
 
@@ -53,7 +51,7 @@ export class STColumnSource {
           console.warn(`[st] Should specify modal parameter`);
           item.type = 'none';
         } else {
-          item.modal = { ...modal, ...item.modal };
+          item.modal = { ...{ paramsName: 'record', size: 'lg' }, ...modal, ...item.modal };
         }
       }
 
@@ -62,7 +60,7 @@ export class STColumnSource {
           console.warn(`[st] Should specify drawer parameter`);
           item.type = 'none';
         } else {
-          item.drawer = { ...drawer, ...item.drawer };
+          item.drawer = { ...{ paramsName: 'record', size: 'lg' }, ...drawer, ...item.drawer };
         }
       }
 
