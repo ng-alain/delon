@@ -15,9 +15,9 @@ describe('abc: qr', () => {
   let srv: QRService;
 
   configureTestSuite(() => {
-    TestBed.configureTestingModule({
+    injector = TestBed.configureTestingModule({
       imports: [QRModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
   });
 
