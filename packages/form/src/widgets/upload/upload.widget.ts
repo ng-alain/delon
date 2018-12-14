@@ -81,8 +81,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
       this.i.listType = null;
       this.btnType = 'drag';
       this.i.text = this.ui.text || `单击或拖动文件到该区域上传`;
-      this.i.hint =
-        this.ui.hint || `支持单个或批量，严禁上传公司数据或其他安全文件`;
+      this.i.hint = this.ui.hint || `支持单个或批量，严禁上传公司数据或其他安全文件`;
     }
   }
 
@@ -115,8 +114,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
   handlePreview = (file: UploadFile) => {
     this.modalSrv
       .create({
-        nzContent: `<img src="${file.url ||
-          file.thumbUrl}" class="img-fluid" />`,
+        nzContent: `<img src="${file.url || file.thumbUrl}" class="img-fluid" />`,
         nzFooter: null,
       })
       .afterClose.subscribe(() => this.detectChanges());

@@ -4,18 +4,26 @@ import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NzUploadComponent } from 'ng-zorro-antd';
 
-import { builder, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { createTestContext } from '@delon/testing';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: upload', () => {
   let fixture: ComponentFixture<TestFormComponent>;
   let page: SFPage;
+  let context: TestFormComponent;
   let dl: DebugElement;
   const widget = 'upload';
 
-  beforeEach(() => ({ fixture, page, dl } = builder({ detectChanges: false, imports: [ HttpClientTestingModule ] })));
+  configureSFTestSuite();
 
-  it('#working', () => {
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    page = new SFPage(context.comp);
+    page.prop(dl, context, fixture);
+  });
+
+  it('should working', () => {
     const s: SFSchema = {
       properties: { a: { type: 'string', ui: { widget }, default: true } },
     };

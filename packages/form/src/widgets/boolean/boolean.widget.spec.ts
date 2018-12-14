@@ -1,8 +1,9 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 
+import { createTestContext } from '@delon/testing';
 import {
-  builder,
+  configureSFTestSuite,
   SFPage,
   TestFormComponent,
 } from '../../../spec/base.spec';
@@ -16,8 +17,13 @@ describe('form: widget: boolean', () => {
   const widget = 'boolean';
   const clickCls = '.ant-switch';
 
-  beforeEach(() =>
-    ({ fixture, dl, context, page } = builder({ detectChanges: false })));
+  configureSFTestSuite();
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    page = new SFPage(context.comp);
+    page.prop(dl, context, fixture);
+  });
 
   it('should be default true via schema.default', () => {
     const s: SFSchema = {

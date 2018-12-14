@@ -10,7 +10,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlainThemeModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
 
-import { dispatchFakeEvent, typeInElement } from '../../testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { configureTestSuite, dispatchFakeEvent, typeInElement } from '@delon/testing';
 import { ErrorData } from '../src/errors';
 import { SFButton } from '../src/interface';
 import { DelonFormModule } from '../src/module';
@@ -41,7 +42,7 @@ export function builder(options?: {
   ingoreAntd?: boolean;
   imports?: any[];
 }) {
-  options = { detectChanges: true, ...options};
+  options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
     imports: [
       NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(),
@@ -68,6 +69,15 @@ export function builder(options?: {
     context,
     page,
   };
+}
+
+export function configureSFTestSuite() {
+  configureTestSuite(() => {
+    TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
+      declarations: [TestFormComponent],
+    });
+  });
 }
 
 export class SFPage {
@@ -151,8 +161,10 @@ export class SFPage {
 
   /** 强制指定 `a` 节点 */
   chainSchema(schema: SFSchema, overObject: SFSchema): this {
-    context.schema = {...deepCopy(schema),
-      properties: { a: overObject }};
+    context.schema = {
+      ...deepCopy(schema),
+      properties: { a: overObject },
+    };
     fixture.detectChanges();
     return this;
   }
@@ -288,8 +300,8 @@ export class TestFormComponent {
   autocomplete: 'on' | 'off';
   firstVisual = true;
 
-  formChange(value: {}) {}
-  formSubmit(value: {}) {}
-  formReset(value: {}) {}
-  formError(value: ErrorData[]) {}
+  formChange(value: {}) { }
+  formSubmit(value: {}) { }
+  formReset(value: {}) { }
+  formError(value: ErrorData[]) { }
 }

@@ -1,8 +1,9 @@
 import { DebugElement } from '@angular/core';
 import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 
+import { createTestContext } from '@delon/testing';
 import {
-  builder,
+  configureSFTestSuite,
   SFPage,
   TestFormComponent,
 } from '../../../spec/base.spec';
@@ -15,8 +16,13 @@ describe('form: widget: number', () => {
   let page: SFPage;
   const widget = 'number';
 
-  beforeEach(() =>
-    ({ fixture, dl, context, page } = builder({ detectChanges: false })));
+  configureSFTestSuite();
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    page = new SFPage(context.comp);
+    page.prop(dl, context, fixture);
+  });
 
   it('should be default true via schema.default', () => {
     const s: SFSchema = {

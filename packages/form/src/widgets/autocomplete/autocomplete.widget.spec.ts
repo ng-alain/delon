@@ -2,8 +2,9 @@ import { DebugElement } from '@angular/core';
 import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { of } from 'rxjs';
 
+import { createTestContext } from '@delon/testing';
 import {
-  builder,
+  configureSFTestSuite,
   SFPage,
   TestFormComponent,
 } from '../../../spec/base.spec';
@@ -17,9 +18,13 @@ describe('form: widget: autocomplete', () => {
   let page: SFPage;
   const widget = 'autocomplete';
 
-  beforeEach(
-    () => ({ fixture, dl, context, page } = builder({ detectChanges: false })),
-  );
+  configureSFTestSuite();
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    page = new SFPage(context.comp);
+    page.prop(dl, context, fixture);
+  });
 
   describe('[data source]', () => {
     it('with enum', fakeAsync(() => {
