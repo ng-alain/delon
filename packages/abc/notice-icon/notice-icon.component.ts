@@ -63,7 +63,7 @@ export class NoticeIconComponent implements OnInit, AfterViewInit, OnChanges, On
   }
 
   ngAfterViewInit() {
-    if (!this.ddc) return;
+    // TODO: https://github.com/NG-ZORRO/ng-zorro-antd/issues/2634
     this.ddc.cdkOverlay.panelClass = ['header-dropdown', 'notice-icon'];
   }
 

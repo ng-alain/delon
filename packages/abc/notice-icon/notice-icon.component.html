@@ -6,7 +6,7 @@
 <div *ngIf="data?.length === 0">
   <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
 </div>
-<nz-dropdown *ngIf="data?.length > 0" [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)"
+<nz-dropdown [hidden]="data?.length === 0" [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)"
   nzTrigger="click" nzPlacement="bottomRight">
   <div nz-dropdown>
     <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
