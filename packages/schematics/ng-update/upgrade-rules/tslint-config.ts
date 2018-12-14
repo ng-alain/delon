@@ -6,9 +6,9 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {sync as globSync} from 'glob';
-import {TargetVersion} from '../target-version';
-import {RuleUpgradeData} from '../upgrade-data';
+import {sync as globSync } from 'glob';
+import { TargetVersion } from '../target-version';
+import { RuleUpgradeData } from '../upgrade-data';
 
 /** Optional upgrade configuration for TSLint. */
 export interface UpgradeTSLintConfig {
@@ -19,7 +19,7 @@ export interface UpgradeTSLintConfig {
 }
 
 /** Type for the configuration list of upgrade rules. */
-export type UpgradeRules = (string | (string | TargetVersion)[])[];
+export type UpgradeRules = Array<string | Array<string | TargetVersion>>;
 
 /**
  * List of upgrade rules that will be always enabled because the upgrade data for these rules
@@ -69,6 +69,6 @@ export function createTslintConfig(target: TargetVersion, config: UpgradeTSLintC
 
   return {
     rulesDirectory: configuredRuleDirs,
-    rules: enabledRules
+    rules: enabledRules,
   };
 }

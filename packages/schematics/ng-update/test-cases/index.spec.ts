@@ -1,19 +1,20 @@
+// tslint:disable:no-string-literal
 import { getSystemPath, normalize } from '@angular-devkit/core';
 import { TempScopedNodeJsSyncHost } from '@angular-devkit/core/node/testing';
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
 import * as virtualFs from '@angular-devkit/core/src/virtual-fs/host';
-import { readFileSync, writeFileSync, mkdirpSync } from 'fs-extra';
-import { join, dirname } from 'path';
-import { from as observableFrom, Observable } from 'rxjs';
-import { concatMap, filter, last } from 'rxjs/operators';
 import {
   EngineHost,
   TaskExecutor,
   TaskScheduler,
 } from '@angular-devkit/schematics';
+import {
+  SchematicTestRunner,
+  UnitTestTree,
+} from '@angular-devkit/schematics/testing';
+import { mkdirpSync, readFileSync, writeFileSync } from 'fs-extra';
+import { dirname, join } from 'path';
+import { from as observableFrom, Observable } from 'rxjs';
+import { concatMap, filter, last } from 'rxjs/operators';
 
 /** Path to the schematic collection that includes the delon migrations. */
 export const migrationCollection = require.resolve('../../migration.json');
@@ -145,7 +146,7 @@ export async function runTestCases(
     writeFileSync(tempInputPath, readFileContent(inputs[inputName]));
 
     // TODO: add to tree
-    appTree.create(inputFullName, readFileContent(inputs[inputName]))
+    appTree.create(inputFullName, readFileContent(inputs[inputName]));
   });
 
   runner.runSchematic(migrationName, {}, appTree);

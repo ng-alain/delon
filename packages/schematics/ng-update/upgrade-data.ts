@@ -1,19 +1,19 @@
-import {RuleWalker} from 'tslint';
+import { RuleWalker } from 'tslint';
 import {
-  cssSelectors,
-  CssSelectorUpgradeData,
   classNames,
+  cssSelectors,
   ClassNameUpgradeData,
+  CssSelectorUpgradeData,
 } from './data';
-import {TargetVersion} from './target-version';
+import { TargetVersion } from './target-version';
 
 export type VersionChanges<T> = {
-  [target in TargetVersion]?: ReadableChange<T>[];
+  [target in TargetVersion]?: Array<ReadableChange<T>>;
 };
 
 export interface ReadableChange<T> {
   pr: string;
-  changes: T[]
+  changes: T[];
 }
 
 /** Conditional type that unwraps the value of a version changes type. */
@@ -32,7 +32,6 @@ export const delonUpgradeData: RuleUpgradeData = {
   classNames,
   cssSelectors,
 };
-
 
 /**
  * Gets the changes for a given target version from the specified version changes object.
@@ -61,7 +60,7 @@ export function getChangesForTarget<T>(target: TargetVersion, data: VersionChang
  */
 export function getAllChanges<T>(data: VersionChanges<T>): T[] {
   return Object.keys(data)
-    .map(targetVersion => getChangesForTarget(parseInt(targetVersion), data))
+    .map(targetVersion => getChangesForTarget(parseInt(targetVersion, 10), data))
     .reduce((result, versionData) => result.concat(versionData), []);
 }
 

@@ -10,6 +10,7 @@
 export function findAllSubstringIndices(input: string, search: string): number[] {
   const result: number[] = [];
   let i = -1;
+  // tslint:disable-next-line:no-conditional-assignment
   while ((i = input.indexOf(search, i + 1)) !== -1) {
     result.push(i);
   }

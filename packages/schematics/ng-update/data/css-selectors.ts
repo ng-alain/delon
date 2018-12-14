@@ -35,10 +35,10 @@ export const cssSelectors: VersionChanges<CssSelectorUpgradeData> = {
           replaceWith: 'alain-default__content-title',
           whitelist: {
             html: true,
-            strings: true
-          }
-        }
-      ]
-    }
+            strings: true,
+          },
+        },
+      ],
+    },
   ],
 };

@@ -1,23 +1,9 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  DebugElement,
-  Injector,
-  ViewChild,
-} from '@angular/core';
-import {
-  fakeAsync,
-  tick,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, Injector, ViewChild } from '@angular/core';
+import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivationEnd,
-  Router,
-  RouterModule,
-} from '@angular/router';
+import { ActivationEnd, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
 
 import { FullContentComponent } from './full-content.component';
@@ -35,7 +21,7 @@ describe('abc: full-content', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [FullContentModule, RouterModule.forRoot([])],
+      imports: [FullContentModule, RouterTestingModule.withRoutes([])],
       declarations: [TestComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
@@ -52,7 +38,7 @@ describe('abc: full-content', () => {
     el = dl.query(By.css('full-content')).nativeElement as HTMLElement;
   }
 
-  afterEach(() => context.comp.ngOnDestroy());
+  afterEach(() => context && context.comp && context.comp.ngOnDestroy());
 
   describe('#fullscreen', () => {
     beforeEach(() => createComp());

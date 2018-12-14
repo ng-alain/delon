@@ -1,6 +1,6 @@
-import { Tree, SchematicsException } from '@angular-devkit/schematics';
+import { SchematicsException, Tree } from '@angular-devkit/schematics';
+import { InsertChange } from '@schematics/angular/utility/change';
 import * as parse5 from 'parse5';
-import { InsertChange } from './devkit-utils/change';
 import { Project } from './project';
 
 /** Gets the app index.html file */
@@ -21,14 +21,14 @@ export function getTag(host: Tree, src: string, tagName: string) {
   if ((parse5 as any).treeAdapters) {
     return getTagInV4(host, src, tagName);
   }
-  const document = parse5.parse(src, <any>{
-    sourceCodeLocationInfo: true
-  }) as any;
+  const document = parse5.parse(src, {
+    sourceCodeLocationInfo: true,
+  } as any) as any;
 
   let resNode: any;
   const visit = (nodes: any[]) => {
     nodes.forEach(node => {
-      const element = <any>node;
+      const element = node as any;
       if (element.nodeName === tagName) {
         resNode = element;
       } else {
@@ -52,9 +52,9 @@ export function getTag(host: Tree, src: string, tagName: string) {
 }
 
 export function getTagInV4(host: Tree, src: string, tagName: string) {
-  const document: any = parse5.parse(src, <any>{
+  const document: any = parse5.parse(src, {
     locationInfo: true,
-  });
+  } as any);
 
   let resNode;
   const visit = (nodes: any[]) => {
@@ -82,7 +82,6 @@ export function getTagInV4(host: Tree, src: string, tagName: string) {
   };
 }
 
-
 /**
  * Get index.html content
  */
@@ -95,7 +94,7 @@ export function getIndexHtmlContent(host: Tree, project: Project) {
 
   return {
     indexPath,
-    src: buffer.toString()
+    src: buffer.toString(),
   };
 }
 

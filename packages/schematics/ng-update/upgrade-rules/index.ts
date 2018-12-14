@@ -6,12 +6,12 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Rule, SchematicContext, TaskId, Tree} from '@angular-devkit/schematics';
-import {RunSchematicTask, TslintFixTask, NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
-import {sync as globSync} from 'glob';
-import {getProjectTsConfigPaths} from './project-tsconfig-paths';
-import {TargetVersion} from '../target-version';
-import {createTslintConfig, UpgradeTSLintConfig} from './tslint-config';
+import { Rule, SchematicContext, TaskId, Tree } from '@angular-devkit/schematics';
+import { NodePackageInstallTask, RunSchematicTask, TslintFixTask } from '@angular-devkit/schematics/tasks';
+import {sync as globSync } from 'glob';
+import { TargetVersion } from '../target-version';
+import { getProjectTsConfigPaths } from './project-tsconfig-paths';
+import { createTslintConfig, UpgradeTSLintConfig } from './tslint-config';
 
 /** Creates a Angular schematic rule that runs the upgrade for the specified target version. */
 export function createUpgradeRule(targetVersion: TargetVersion,
@@ -32,7 +32,7 @@ export function createUpgradeRule(targetVersion: TargetVersion,
     const tslintConfig = createTslintConfig(targetVersion, {
       // Default options that can be overwritten if specified explicitly. e.g. if the
       // Material update schematic wants to specify a different upgrade data.
-      extraStyleFiles: extraStyleFiles,
+      extraStyleFiles,
       // Custom upgrade configuration options.
       ...upgradeConfig,
     });

@@ -27,12 +27,12 @@ import {
   SchematicContext,
   Tree,
 } from '@angular-devkit/schematics';
+import { addImportToModule } from '@schematics/angular/utility/ast-utils';
+import { InsertChange } from '@schematics/angular/utility/change';
+import { getWorkspace } from '@schematics/angular/utility/config';
+import { findModuleFromOptions } from '@schematics/angular/utility/find-module';
+import { parseName } from '@schematics/angular/utility/parse-name';
 import * as ts from 'typescript';
-import { addImportToModule } from '../utils/devkit-utils/ast-utils';
-import { InsertChange } from '../utils/devkit-utils/change';
-import { getWorkspace } from '../utils/devkit-utils/config';
-import { findModuleFromOptions } from '../utils/devkit-utils/find-module';
-import { parseName } from '../utils/devkit-utils/parse-name';
 import { Schema as ModuleSchema } from './schema';
 
 function addDeclarationToNgModule(options: ModuleSchema): Rule {

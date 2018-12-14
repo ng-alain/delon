@@ -1,14 +1,14 @@
-import { join } from 'path';
 import {
   SchematicTestRunner,
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
+import { join } from 'path';
 import {
+  createFileSystemTestApp,
+  migrationCollection,
   readFileContent,
   resolveBazelDataFile,
   runTestCases,
-  migrationCollection,
-  createFileSystemTestApp,
 } from './index.spec';
 import { MOCK_LAYOUT } from './v2/MOCK_LAYOUT';
 
@@ -51,11 +51,6 @@ describe('v2', () => {
           join(testCasesOutputPath, `${testCaseName}.ts`),
         );
         const expected = readFileContent(expectedOutputPath);
-        if (output === expected) {
-          debugger;
-        } else {
-          debugger;
-        }
         expect(output).toBe(expected);
       });
     });
@@ -121,11 +116,6 @@ describe('v2', () => {
       it(`should apply update schematics to test case: ${testCaseName}`, () => {
         const output = tree.readContent(`src/app/${testCaseName}.ts`);
         const expected = readFileContent(expectedOutputPath);
-        if (output === expected) {
-          debugger;
-        } else {
-          debugger;
-        }
         expect(output).toBe(expected);
       });
     });

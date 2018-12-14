@@ -5,7 +5,7 @@ export interface VDom {
   /** tag name */
   name?: string;
   /** tag attributes list */
-  attribs?: Object;
+  attribs?: {};
 
   parent?: VDom;
 
@@ -19,7 +19,7 @@ export interface VDom {
 export interface ConvertAction {
   type: 'tag' | 'attr';
   name: string;
-  custom?: (dom: VDom) => void;
+  custom?(dom: VDom): void;
   rules?: ConvertRule[];
 }
 
@@ -47,10 +47,10 @@ export interface ConvertRule {
   newValue?: string;
   extra_name?: string;
   /** 条件式 */
-  condition?: (dom: VDom) => boolean;
+  condition?(dom: VDom): boolean;
   extra_remove_attrs?: string[];
-  extra_insert_attrs?: Object;
-  extra_replace_attrs?: Object;
+  extra_insert_attrs?: {};
+  extra_replace_attrs?: {};
   /** {0} 表示属性值点位符 */
-  extra_update_attrs?: Object;
+  extra_update_attrs?: {};
 }

@@ -1,5 +1,6 @@
 import { strings } from '@angular-devkit/core';
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { findNodes } from '@schematics/angular/utility/ast-utils';
 import {
   parseFragment,
   Attribute,
@@ -9,7 +10,6 @@ import {
 import * as ts from 'typescript';
 
 import { getSourceFile, updateComponentMetadata } from '../utils/ast';
-import { findNodes } from '../utils/devkit-utils/ast-utils';
 import { PluginOptions } from './interface';
 
 // includes ng-zorro-antd & @delon/*

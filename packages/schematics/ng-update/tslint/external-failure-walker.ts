@@ -6,8 +6,8 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Fix, Replacement, RuleFailure, RuleWalker} from 'tslint';
-import {ExternalResource} from './component-file';
+import { Fix, Replacement, RuleFailure, RuleWalker } from 'tslint';
+import { ExternalResource } from './component-file';
 
 /**
  * Enhanced TSLint rule walker that makes it easier to create rule failures that don't belong to

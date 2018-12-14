@@ -6,11 +6,11 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {existsSync, readFileSync} from 'fs';
-import {dirname, resolve} from 'path';
+import { existsSync, readFileSync } from 'fs';
+import { dirname, resolve } from 'path';
 import * as ts from 'typescript';
-import {createComponentFile, ExternalResource} from './component-file';
-import {ExternalFailureWalker} from './external-failure-walker';
+import { createComponentFile, ExternalResource } from './component-file';
+import { ExternalFailureWalker } from './external-failure-walker';
 
 /**
  * Custom TSLint rule walker that identifies Angular components and visits specific parts of

@@ -251,8 +251,6 @@
   "linterOptions": {
     "exclude": [
       "packages/schematics/**/files/**/*",
-      "packages/schematics/utils/**/*",
-      "packages/schematics/ng-update/**/*",
       "src/app/routes/gen/**/*"
     ]
   }
