@@ -7,11 +7,11 @@
  */
 
 import chalk from 'chalk';
-import {Replacement, RuleFailure, Rules, RuleWalker} from 'tslint';
+import { Replacement, Rules, RuleFailure, RuleWalker } from 'tslint';
 import * as ts from 'typescript';
-import {CssSelectorUpgradeData} from '../../data/css-selectors';
-import {findAllSubstringIndices} from '../../typescript/literal';
-import {getUpgradeDataFromWalker} from '../../upgrade-data';
+import { CssSelectorUpgradeData } from '../../data/css-selectors';
+import { findAllSubstringIndices } from '../../typescript/literal';
+import { getUpgradeDataFromWalker } from '../../upgrade-data';
 
 /**
  * Rule that walks through every string literal that is wrapped inside of a call expression.

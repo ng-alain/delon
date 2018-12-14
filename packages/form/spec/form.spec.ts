@@ -1,12 +1,12 @@
-import { DebugElement, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, tick, TestBed } from '@angular/core/testing';
+import { Component, DebugElement } from '@angular/core';
+import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 import { AlainThemeModule } from '@delon/theme';
 import { deepCopy } from '@delon/util';
-import { configureTestSuite, createTestContext } from '@delon/testing';
-import { TestFormComponent, SFPage, SCHEMA } from './base.spec';
-import { SFSchema } from '../src/schema/index';
 import { DelonFormModule } from '../src/module';
+import { SFSchema } from '../src/schema/index';
+import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
 
 describe('form: component', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -326,7 +326,7 @@ describe('form: component', () => {
       });
       it('#getValue', () => {
         const name = 'asdf';
-        page.newSchema({ properties: { name: { type: 'string' } } }, null, { name })
+        page.newSchema({ properties: { name: { type: 'string' } } }, null, { name });
         expect(context.comp.getValue('/name')).toBe(name);
       });
       it('#setValue', () => {
@@ -362,7 +362,7 @@ describe('form: component', () => {
     it('should be custom text of search', () => {
       context.mode = 'search';
       context.button = {
-        search: 'SEARCH'
+        search: 'SEARCH',
       };
       fixture.detectChanges();
       expect(page.getEl('.ant-btn-primary').textContent).toBe('SEARCH');
@@ -370,7 +370,7 @@ describe('form: component', () => {
     it('should be custom text of edit', () => {
       context.mode = 'edit';
       context.button = {
-        edit: 'SAVE'
+        edit: 'SAVE',
       };
       fixture.detectChanges();
       expect(page.getEl('.ant-btn-primary').textContent).toBe('SAVE');
@@ -380,6 +380,6 @@ describe('form: component', () => {
 });
 
 @Component({
-  template: `<sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode"></sf>`
+  template: `<sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode"></sf>`,
 })
 class TestModeComponent extends TestFormComponent {}

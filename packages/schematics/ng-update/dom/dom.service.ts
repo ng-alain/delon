@@ -1,6 +1,7 @@
+// tslint:disable:no-string-literal
 import * as htmlparser2 from 'htmlparser2';
 const DOMHandler = require('domhandler');
-import { VDom, ConvertRule, ConvertAction } from './interfaces';
+import { ConvertAction, ConvertRule, VDom } from './interfaces';
 
 export class DomService {
   private dom: VDom[];
@@ -27,10 +28,10 @@ export class DomService {
       callback(this.dom, this.count);
     });
 
-    const parser = new htmlparser2.Parser(handler, <htmlparser2.Options>{
+    const parser = new htmlparser2.Parser(handler, {
       lowerCaseTags: false,
       lowerCaseAttributeNames: false,
-    });
+    } as htmlparser2.Options);
 
     parser.write(html.replace(/\n|\s\s/g, ' ').trim());
     parser.done();
@@ -162,6 +163,7 @@ export class DomService {
   }
 
   private resolveRemoveWrapElementByClass(dom: VDom, name: string) {
+    // tslint:disable-next-line:no-string-literal
     const classes = (dom.attribs['class'] || '').split(' ') as string[];
     if (!classes.includes(name)) return;
     this.dom = dom.children;
@@ -371,7 +373,7 @@ export class DomService {
     return result.join('\n');
   }
 
-  private genAttr(attr: Object): string {
+  private genAttr(attr: {}): string {
     const keys = Object.keys(attr || {});
     if (keys.length === 0) return '';
     const result = [];

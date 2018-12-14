@@ -17,7 +17,10 @@ describe('abc: avatar-list', () => {
     });
   });
 
-  beforeEach(() => ({ fixture, dl, context } = createTestContext(TestComponent)));
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
+    fixture.detectChanges();
+  });
 
   describe('#size', () => {
     it('with large', () => {

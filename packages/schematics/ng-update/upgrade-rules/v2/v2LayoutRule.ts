@@ -1,15 +1,16 @@
-import { Rule, Tree, SchematicContext } from '@angular-devkit/schematics';
+// tslint:disable:no-string-literal
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { InsertChange } from '@schematics/angular/utility/change';
 import * as ts from 'typescript';
 
-import { DomService } from '../../dom/dom.service';
 import { updateComponentMetadata } from '../../../utils/ast';
-import { InsertChange } from '../../../utils/devkit-utils/change';
 import { addPackageToPackageJson } from '../../../utils/json';
 import { VERSION } from '../../../utils/lib-versions';
+import { DomService } from '../../dom/dom.service';
 
 const DOM = new DomService();
 
-function fixClass(host: Tree, src: string, classes: Object) {
+function fixClass(host: Tree, src: string, classes: {}) {
   if (!host.exists(src)) {
     console.log(`Not found in [${src}]`);
     return;

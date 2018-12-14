@@ -23,7 +23,7 @@
   "homepage": "https://ng-alain.com",
   "scripts": {
     "lint": "bash scripts/ci/lint.sh",
-    "test:ng": "ng test --code-coverage --watch=false",
+    "test": "ng test --code-coverage --watch=false",
     "test:cli": "bash scripts/ci/build-schematics.sh -b -t -travis",
     "build": "bash scripts/ci/build-all.sh",
     "build_artifacts": "bash scripts/ci/deploy.sh",

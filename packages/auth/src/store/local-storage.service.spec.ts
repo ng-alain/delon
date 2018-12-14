@@ -1,12 +1,12 @@
-import { LocalStorageStore } from './local-storage.service';
 import { ITokenModel } from '../token/interface';
+import { LocalStorageStore } from './local-storage.service';
 
 describe('auth: local-storage', () => {
   const store = new LocalStorageStore();
   const KEY = 'token';
-  const VALUE: ITokenModel = <ITokenModel>{
+  const VALUE: ITokenModel = {
     token: 'token data',
-  };
+  } as ITokenModel;
 
   beforeEach(() => {
     let data = {};
@@ -19,7 +19,7 @@ describe('auth: local-storage', () => {
     });
     spyOn(localStorage, 'setItem').and.callFake(
       (key: string, value: string): string => {
-        return (data[key] = <string>value);
+        return (data[key] = value as string);
       },
     );
     spyOn(localStorage, 'clear').and.callFake(() => {

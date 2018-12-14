@@ -28,7 +28,7 @@ before_install:
 
 jobs:
   include:
-    - env: "TASK=test:ng"
+    - env: "TASK=test"
     - env: "TASK=test:cli"
     - env: "TASK=lint"
     - env: "TASK=site:build"
@@ -47,6 +47,6 @@ install:
 script:
   - npm run $TASK
   - |
-    if [ "$TASK" = "test:ng" ]; then
+    if [ "$TASK" = "test" ]; then
       cat ./coverage/lcov.info | ./node_modules/.bin/codecov
     fi

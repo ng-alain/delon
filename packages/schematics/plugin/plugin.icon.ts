@@ -1,5 +1,6 @@
 import { strings } from '@angular-devkit/core';
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { findNodes } from '@schematics/angular/utility/ast-utils';
 import {
   parseFragment,
   Attribute,
@@ -9,7 +10,6 @@ import {
 import * as ts from 'typescript';
 
 import { getSourceFile, updateComponentMetadata } from '../utils/ast';
-import { findNodes } from '../utils/devkit-utils/ast-utils';
 import { PluginOptions } from './interface';
 
 // includes ng-zorro-antd & @delon/*
@@ -17,19 +17,27 @@ import { PluginOptions } from './interface';
 // - @delon: https://github.com/ng-alain/delon/blob/master/packages/theme/src/theme.module.ts#L33
 const WHITE_ICONS = [
   // zorro
+  'BarsOutline',
   'CalendarOutline',
+  'CaretDownFill',
+  'CaretDownOutline',
   'CheckCircleFill',
   'CheckCircleOutline',
   'CheckOutline',
   'ClockCircleOutline',
-  'CloseCircleOutline',
   'CloseCircleFill',
+  'CloseCircleOutline',
   'CloseOutline',
   'DoubleLeftOutline',
   'DoubleRightOutline',
   'DownOutline',
+  'EllipsisOutline',
   'ExclamationCircleFill',
   'ExclamationCircleOutline',
+  'EyeOutline',
+  'FileFill',
+  'FileOutline',
+  'FilterFill',
   'InfoCircleFill',
   'InfoCircleOutline',
   'LeftOutline',
@@ -37,6 +45,7 @@ const WHITE_ICONS = [
   'PaperClipOutline',
   'QuestionCircleOutline',
   'RightOutline',
+  'SearchOutline',
   'UploadOutline',
   'UpOutline',
   // delon

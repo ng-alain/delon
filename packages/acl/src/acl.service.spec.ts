@@ -12,7 +12,7 @@ describe('acl: service', () => {
 
   beforeEach(() => {
     srv = new ACLService();
-    srv.set(<ACLType>{ role: [ADMIN] });
+    srv.set({ role: [ADMIN] } as ACLType);
   });
 
   it(`#set()`, () => {
@@ -87,7 +87,7 @@ describe('acl: service', () => {
     expect(srv.can(ABILITY_NUMBER)).toBe(true, 'ability muse be true');
     expect(srv.can([ABILITY_NUMBER])).toBe(true, 'ability array muse be true');
     expect(srv.can([ADMIN])).toBe(true, 'role array muse be true');
-    expect(srv.can(<ACLType>{ role: [ADMIN] })).toBe(
+    expect(srv.can({ role: [ADMIN] } as ACLType)).toBe(
       true,
       'ACLType item muse be true',
     );

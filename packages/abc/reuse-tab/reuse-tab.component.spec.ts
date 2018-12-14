@@ -1,36 +1,36 @@
-import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
 import {
+  fakeAsync,
+  tick,
   ComponentFixture,
   TestBed,
-  tick,
-  fakeAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
 import {
-  Router,
   ActivatedRoute,
   ActivatedRouteSnapshot,
+  Router,
   RouterStateSnapshot,
   RouteReuseStrategy,
 } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Observable } from 'rxjs';
 
 import {
-  MenuService,
-  ALAIN_I18N_TOKEN,
-  DelonLocaleModule,
   en_US,
   zh_CN,
+  ALAIN_I18N_TOKEN,
+  DelonLocaleModule,
   DelonLocaleService,
+  MenuService,
 } from '@delon/theme';
 
-import { ReuseTabModule } from './reuse-tab.module';
+import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
 import { ReuseTabMatchMode } from './reuse-tab.interfaces';
+import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
-import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 
 let i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
@@ -102,7 +102,7 @@ describe('abc: reuse-tab', () => {
       ].concat(
         !needI18n
           ? []
-          : [<any>{ provide: ALAIN_I18N_TOKEN, useClass: MockI18NServiceFake }],
+          : [{ provide: ALAIN_I18N_TOKEN, useClass: MockI18NServiceFake } as any],
       ),
     });
     fixture = TestBed.createComponent(AppComponent);

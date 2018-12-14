@@ -7,12 +7,12 @@
  */
 
 import chalk from 'chalk';
-import {IOptions, Replacement, RuleFailure, Rules} from 'tslint';
+import { IOptions, Replacement, Rules, RuleFailure } from 'tslint';
 import * as ts from 'typescript';
-import {ExternalResource} from '../../tslint/component-file';
-import {ComponentWalker} from '../../tslint/component-walker';
-import {findAllSubstringIndices} from '../../typescript/literal';
-import {getUpgradeDataFromWalker} from '../../upgrade-data';
+import { ExternalResource } from '../../tslint/component-file';
+import { ComponentWalker } from '../../tslint/component-walker';
+import { findAllSubstringIndices } from '../../typescript/literal';
+import { getUpgradeDataFromWalker } from '../../upgrade-data';
 
 /**
  * Rule that walks through every inline or external CSs stylesheet and updates outdated
@@ -51,7 +51,7 @@ export class Walker extends ComponentWalker {
    * with the according messages that can be added to a rule failure.
    */
   private _createReplacementsForContent(node: ts.Node, stylesheetContent: string) {
-    const replacements: {failureMessage: string, replacement: Replacement}[] = [];
+    const replacements: Array<{failureMessage: string, replacement: Replacement}> = [];
 
     this.data.forEach(data => {
       if (data.whitelist && !data.whitelist.stylesheet) {

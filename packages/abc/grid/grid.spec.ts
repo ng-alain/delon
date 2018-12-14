@@ -5,8 +5,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
 
-import { SGModule } from './grid.module';
 import { SGComponent } from './grid.component';
+import { SGModule } from './grid.module';
 
 const prefixCls = `.sg__`;
 

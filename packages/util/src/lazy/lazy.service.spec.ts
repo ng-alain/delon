@@ -1,5 +1,5 @@
+import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
-import { DOCUMENT } from '@angular/platform-browser';
 import { DelonUtilModule } from '../util.module';
 import { LazyService } from './lazy.service';
 
@@ -23,7 +23,7 @@ class MockDocument {
         },
       },
     ];
-  };
+  }
   createElement = () => {
     const ret: any = {
       testStatus,
@@ -31,7 +31,7 @@ class MockDocument {
     };
     if (isIE) ret.readyState = 'loading';
     return ret;
-  };
+  }
 }
 
 describe('utils: lazy', () => {
@@ -107,7 +107,7 @@ describe('utils: lazy', () => {
     });
     it('should be custom content', () => {
       const res: any = {
-        onerror() { }
+        onerror() { },
       };
       const content = 'var a = 1;';
       spyOn(doc, 'createElement').and.callFake(() => res);

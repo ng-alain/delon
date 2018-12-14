@@ -1,9 +1,10 @@
-import { Rule, Tree, SchematicContext } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { ReplaceChange } from '@schematics/angular/utility/change';
 import * as ts from 'typescript';
-import { DomService } from '../../dom/dom.service';
+
 import { updateComponentMetadata } from '../../../utils/ast';
+import { DomService } from '../../dom/dom.service';
 import { ConvertAction } from '../../dom/interfaces';
-import { ReplaceChange } from '../../../utils/devkit-utils/change';
 
 const DOM = new DomService();
 
@@ -16,7 +17,7 @@ function bondingAttr(
     };
   },
   keys: string[],
-  attribs: Object,
+  attribs: {},
 ) {
   if (keys.length <= 0) return;
   const res: string[] = [];

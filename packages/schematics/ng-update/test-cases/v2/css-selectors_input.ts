@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {By} from '@angular/platform-browser';
+import { Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 const a = By.css('.content__title');
 
@@ -10,6 +10,6 @@ const a = By.css('.content__title');
     <small>Welcome !</small>
   </h1>
 </div>
-  `
+  `,
 })
 class B {}

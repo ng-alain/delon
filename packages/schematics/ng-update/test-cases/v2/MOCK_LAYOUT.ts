@@ -219,5 +219,5 @@ export class LayoutDefaultComponent {
     templateUrl: './fullscreen.component.html',
   })
   export class LayoutFullScreenComponent {}
-`
+`,
 };

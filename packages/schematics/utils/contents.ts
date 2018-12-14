@@ -103,5 +103,5 @@ services:
       NODE_ENV: production
     ports:
       - 80:80
-`
+`,
 };

@@ -162,7 +162,7 @@
     "no-var-keyword": true,
     "number-literal-format": true,
     "object-literal-key-quotes": [
-      true,
+      false,
       "consistent"
     ],
     "object-literal-shorthand": true,
@@ -250,15 +250,7 @@
   },
   "linterOptions": {
     "exclude": [
-      "packages/polyfills.ts",
-      "packages/typings.d.ts",
-      "packages/test.ts",
-      "packages/**/*.spec.ts",
       "packages/schematics/**/files/**/*",
-      "packages/schematics/utils/**/*",
-      "packages/schematics/test.ts",
-      "packages/schematics/ng-update/**/*",
-      "packages/theme/src/locale/languages/**/*",
       "src/app/routes/gen/**/*"
     ]
   }

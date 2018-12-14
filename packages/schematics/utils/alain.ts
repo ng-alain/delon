@@ -14,16 +14,13 @@ import {
   SchematicContext,
   Tree,
 } from '@angular-devkit/schematics';
+import { findNode, insertImport } from '@schematics/angular/utility/ast-utils';
+import { InsertChange } from '@schematics/angular/utility/change';
+import { buildRelativePath, findModuleFromOptions } from '@schematics/angular/utility/find-module';
+import { parseName } from '@schematics/angular/utility/parse-name';
+import { validateHtmlSelector, validateName } from '@schematics/angular/utility/validation';
 import * as ts from 'typescript';
 import { getSourceFile } from './ast';
-import { findNode, insertImport } from './devkit-utils/ast-utils';
-import { InsertChange } from './devkit-utils/change';
-import {
-  buildRelativePath,
-  findModuleFromOptions,
-} from './devkit-utils/find-module';
-import { parseName } from './devkit-utils/parse-name';
-import { validateHtmlSelector, validateName } from './devkit-utils/validation';
 import { getProject, Project } from './project';
 
 export interface CommonSchema {

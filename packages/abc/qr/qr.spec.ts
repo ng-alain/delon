@@ -1,10 +1,10 @@
-import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 
-import { QRModule } from './qr.module';
 import { QRComponent } from './qr.component';
+import { QRModule } from './qr.module';
 import { QRService } from './qr.service';
 
 describe('abc: qr', () => {
@@ -17,7 +17,7 @@ describe('abc: qr', () => {
   configureTestSuite(() => {
     injector = TestBed.configureTestingModule({
       imports: [QRModule],
-      declarations: [TestComponent]
+      declarations: [TestComponent],
     });
   });
 
@@ -77,8 +77,10 @@ class TestComponent {
 
   value = 'https://ng-alain.com/';
   background = 'white';
+  // tslint:disable-next-line:number-literal-format
   backgroundAlpha = 1.0;
   foreground = 'black';
+  // tslint:disable-next-line:number-literal-format
   foregroundAlpha = 1.0;
   level = 'L';
   mime = 'image/png';

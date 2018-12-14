@@ -1,8 +1,8 @@
 import { UnitTestTree } from '@angular-devkit/schematics/testing';
 import { Schema as ApplicationOptions } from '@schematics/angular/application/schema';
 import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
-import { Schema as ModuleOptions } from './schema';
 import { createNgRunner } from '../utils/testing';
+import { Schema as ModuleOptions } from './schema';
 
 // tslint:disable:max-line-length
 describe('NgAlainSchematic: module', () => {

@@ -1,6 +1,6 @@
 import { LocaleData } from '../locale.types';
 
-export default <LocaleData>{
+export default {
   abbr: 'zh-TW',
   exception: {
     403: '抱歉，妳無權訪問該頁面',
@@ -37,4 +37,4 @@ export default <LocaleData>{
     removeText: '移除',
     checkAllText: '全選',
   },
-};
+} as LocaleData;

@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 
-import { QuickMenuModule } from './quick-menu.module';
 import { QuickMenuComponent } from './quick-menu.component';
+import { QuickMenuModule } from './quick-menu.module';
 
 describe('abc: quick-menu', () => {
   let fixture: ComponentFixture<TestComponent>;

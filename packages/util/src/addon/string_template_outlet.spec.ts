@@ -11,7 +11,7 @@ describe('utils: string_template_outlet', () => {
   beforeEach(() => {
     fixture = TestBed.configureTestingModule({
       imports: [DelonUtilModule],
-      declarations: [TestComponent]
+      declarations: [TestComponent],
     }).createComponent(TestComponent);
     dl = fixture.debugElement;
     context = fixture.componentInstance;
@@ -77,7 +77,7 @@ describe('utils: string_template_outlet', () => {
     <ng-template #tpl1>tpl1</ng-template>
     <ng-template #tpl2>tpl2</ng-template>
     <ng-container *stringTemplateOutlet="value">{{value}}</ng-container>
-  `
+  `,
 })
 class TestComponent {
   @ViewChild('tpl1') tpl1: TemplateRef<void>;

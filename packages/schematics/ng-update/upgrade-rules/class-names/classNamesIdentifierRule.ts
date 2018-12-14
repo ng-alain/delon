@@ -7,7 +7,7 @@
  */
 
 import chalk from 'chalk';
-import { RuleFailure, Rules, RuleWalker } from 'tslint';
+import { Rules, RuleFailure, RuleWalker } from 'tslint';
 import * as ts from 'typescript';
 import {
   isExportSpecifierNode,

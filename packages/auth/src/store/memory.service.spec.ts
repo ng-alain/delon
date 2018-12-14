@@ -1,12 +1,12 @@
-import { MemoryStore } from './memory.service';
 import { ITokenModel } from '../token/interface';
+import { MemoryStore } from './memory.service';
 
 describe('auth: memory', () => {
   const store = new MemoryStore();
   const KEY = 'token';
-  const VALUE: ITokenModel = <ITokenModel>{
+  const VALUE: ITokenModel = {
     token: 'token data',
-  };
+  } as ITokenModel;
 
   it('#get', () => {
     store.set(KEY, VALUE);

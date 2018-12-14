@@ -1,29 +1,29 @@
-import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
 import {
+  fakeAsync,
+  tick,
   ComponentFixture,
   TestBed,
-  tick,
-  fakeAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterModule, Router } from '@angular/router';
-import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 import {
   AlainThemeModule,
+  MenuIcon,
   MenuService,
   SettingsService,
-  MenuIcon,
 } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
-import { SidebarNavModule } from './sidebar-nav.module';
-import { SidebarNavComponent } from './sidebar-nav.component';
-import { Nav } from './sidebar-nav.types';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SidebarNavComponent } from './sidebar-nav.component';
+import { SidebarNavModule } from './sidebar-nav.module';
+import { Nav } from './sidebar-nav.types';
 
 const floatingShowCls = '.sidebar-nav__floating-show';
-const MOCKMENUS = <Nav[]>[
+const MOCKMENUS = [
   {
     text: '主导航',
     group: true,
@@ -43,7 +43,7 @@ const MOCKMENUS = <Nav[]>[
       },
     ],
   },
-];
+] as Nav[];
 describe('abc: sidebar-nav', () => {
   let injector: Injector;
   let fixture: ComponentFixture<TestComponent>;
@@ -152,7 +152,7 @@ describe('abc: sidebar-nav', () => {
         fixture.detectChanges();
       });
       it('when linkExact is [false]', (done: () => void) => {
-        const data = <Nav[]>[
+        const data = [
           {
             text: '',
             children: [
@@ -160,7 +160,7 @@ describe('abc: sidebar-nav', () => {
               { text: 'group/type', link: '/group/type' },
             ],
           },
-        ];
+        ] as Nav[];
         menuSrv.add(data);
         router = injector.get(Router);
         router.navigateByUrl('/group/type').then((res: any) => {
@@ -170,7 +170,7 @@ describe('abc: sidebar-nav', () => {
         });
       });
       it('when linkExact is [true]', (done: () => void) => {
-        const data = <Nav[]>[
+        const data = [
           {
             text: '',
             children: [
@@ -178,7 +178,7 @@ describe('abc: sidebar-nav', () => {
               { text: 'group/type', link: '/group/type', linkExact: true },
             ],
           },
-        ];
+        ] as Nav[];
         menuSrv.add(data);
         router = injector.get(Router);
         router.navigateByUrl('/group/type').then((res: any) => {
@@ -194,7 +194,7 @@ describe('abc: sidebar-nav', () => {
     function updateIcon(icon: string | MenuIcon) {
       createComp();
 
-      menuSrv.add(<Nav[]>[
+      menuSrv.add([
         {
           text: '',
           group: true,
@@ -205,7 +205,7 @@ describe('abc: sidebar-nav', () => {
             },
           ],
         },
-      ]);
+      ] as Nav[]);
 
       fixture.detectChanges();
     }

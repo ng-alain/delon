@@ -1,7 +1,7 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import addSeconds from 'date-fns/add_seconds';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite, createTestContext } from '@delon/testing';
+import addSeconds from 'date-fns/add_seconds';
 
 import { CountDownModule } from './count-down.module';
 

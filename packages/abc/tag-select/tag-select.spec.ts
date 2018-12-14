@@ -1,16 +1,16 @@
-import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 import {
-  DelonLocaleModule,
   en_US,
   zh_CN,
+  DelonLocaleModule,
   DelonLocaleService,
 } from '@delon/theme';
-import { configureTestSuite, createTestContext } from '@delon/testing';
 
-import { TagSelectModule } from './tag-select.module';
 import { TagSelectComponent } from './tag-select.component';
+import { TagSelectModule } from './tag-select.module';
 
 describe('abc: tag-select', () => {
   let injector: Injector;
@@ -21,7 +21,7 @@ describe('abc: tag-select', () => {
   configureTestSuite(() => {
     injector = TestBed.configureTestingModule({
       imports: [TagSelectModule, DelonLocaleModule],
-      declarations: [TestComponent]
+      declarations: [TestComponent],
     });
   });
 

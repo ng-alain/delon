@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 
-import { ResultModule } from './result.module';
 import { ResultComponent } from './result.component';
+import { ResultModule } from './result.module';
 
 describe('abc: result', () => {
   let fixture: ComponentFixture<TestComponent>;

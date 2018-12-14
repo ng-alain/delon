@@ -1,13 +1,12 @@
-import { en_US } from 'ng-zorro-antd';
-import {
-  AlainI18NServiceFake,
-  AlainI18NService,
-  ALAIN_I18N_TOKEN,
-} from './i18n';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AlainThemeModule } from '../../theme.module';
 import { By } from '@angular/platform-browser';
+import { AlainThemeModule } from '../../theme.module';
+import {
+  AlainI18NService,
+  AlainI18NServiceFake,
+  ALAIN_I18N_TOKEN,
+} from './i18n';
 
 describe('theme: i18n', () => {
   const i18n = new AlainI18NServiceFake();
@@ -38,12 +37,11 @@ describe('theme: i18n', () => {
           html: '<i>asdf</i>',
         };
       }
-      fanyi(key: string, data?: Object, isSafe?: boolean) {
+      fanyi(key: string, data?: {}, isSafe?: boolean) {
         let res = this.data[key] || '';
         if (data) {
           Object.keys(data).forEach(
-            key =>
-              (res = res.replace(new RegExp(`{{${key}}}`, 'g'), data[key])),
+            k => (res = res.replace(new RegExp(`{{${k}}}`, 'g'), data[k])),
           );
         }
         return res;

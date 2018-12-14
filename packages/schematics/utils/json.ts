@@ -89,7 +89,7 @@ export function scriptsToAngularJson(
   behavior: string,
   types: string[] = ['build', 'test'],
   projectName?: string,
-  clean = false
+  clean = false,
 ): Tree {
   const json = getAngular(host);
   const project = getProjectFromWorkspace(json, projectName);

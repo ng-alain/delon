@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
-import { G2TimelineModule } from './timeline.module';
 import { G2TimelineComponent, G2TimelineData } from './timeline.component';
-import { By } from '@angular/platform-browser';
+import { G2TimelineModule } from './timeline.module';
 
 describe('chart: timeline', () => {
   let page: PageG2<TestComponent>;
@@ -54,5 +53,5 @@ class TestComponent {
     x: (new Date().getTime()) + (1000 * 60 * 30 * i),
     y1: Math.floor(Math.random() * 100) + 1000,
     y2: Math.floor(Math.random() * 100) + 10,
-  }))
+  }));
 }

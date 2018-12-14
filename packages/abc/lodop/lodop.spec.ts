@@ -2,13 +2,13 @@ import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { concat } from 'rxjs';
-import { tap, filter, flatMap } from 'rxjs/operators';
+import { filter, flatMap, tap } from 'rxjs/operators';
 
 import { LazyService } from '@delon/util';
 
-import { LodopService } from './lodop.service';
 import { LodopConfig } from './lodop.config';
 import { LodopModule } from './lodop.module';
+import { LodopService } from './lodop.service';
 import { Lodop } from './lodop.types';
 
 const cog: LodopConfig = {
@@ -231,7 +231,9 @@ describe('abc: lodop', () => {
     mockLodop = {
       SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
       PRINT_DESIGN: jasmine.createSpy('PRINT_DESIGN').and.callFake(function() {
+        // tslint:disable-next-line:no-invalid-this
         setTimeout(() => this.On_Return(0, code), 30);
+        // tslint:disable-next-line:no-invalid-this
         setTimeout(() => this.On_Return(1, code), 31);
         return 1;
       }),
@@ -261,9 +263,12 @@ describe('abc: lodop', () => {
         PRINT_INITA: jasmine.createSpy('PRINT_INITA'),
         PRINT: jasmine.createSpy('PRINT').and.callFake(function() {
           if (isPrintError) {
+            // tslint:disable-next-line:no-invalid-this
             setTimeout(() => this.On_Return(0, '缺纸'), 10);
           } else {
+            // tslint:disable-next-line:no-invalid-this
             setTimeout(() => this.On_Return(1, true), 10);
+            // tslint:disable-next-line:no-invalid-this
             setTimeout(() => this.On_Return(0, true), 30);
           }
           return 0;

@@ -73,6 +73,6 @@ describe('NgAlainSchematic: plugin: icon', () => {
     expect(content).toContain(`MenuUnfoldOutline`);
     // attributes
     expect(content).toContain(`ArrowDownOutline`);
-    expect(content).toContain(`SearchOutline`);
+    // expect(content).toContain(`SearchOutline`);
   });
 });

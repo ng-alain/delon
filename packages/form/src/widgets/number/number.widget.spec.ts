@@ -1,17 +1,13 @@
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
-import { of } from 'rxjs';
-import { deepCopy } from '@delon/util';
+import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 
+import { createTestContext } from '@delon/testing';
 import {
-  builder,
-  TestFormComponent,
+  configureSFTestSuite,
   SFPage,
-  SCHEMA,
+  TestFormComponent,
 } from '../../../spec/base.spec';
-import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
-import { SFUISchemaItem, SFUISchema } from '../../../src/schema/ui';
+import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: number', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -20,8 +16,13 @@ describe('form: widget: number', () => {
   let page: SFPage;
   const widget = 'number';
 
-  beforeEach(() =>
-    ({ fixture, dl, context, page } = builder({ detectChanges: false })));
+  configureSFTestSuite();
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    page = new SFPage(context.comp);
+    page.prop(dl, context, fixture);
+  });
 
   it('should be default true via schema.default', () => {
     const s: SFSchema = {
@@ -33,8 +34,8 @@ describe('form: widget: number', () => {
     it(
       'should be limit via schema.minimum & maximum',
       fakeAsync(() => {
-        const minimum = 10,
-          maximum = 100;
+        const minimum = 10;
+        const maximum = 100;
         const s: SFSchema = {
           properties: { a: { type: 'number', minimum, maximum, default: 1 } },
         };
@@ -51,8 +52,8 @@ describe('form: widget: number', () => {
     it(
       'should be exclusive min(max)imum via exclusive',
       fakeAsync(() => {
-        const minimum = 10,
-          maximum = 100;
+        const minimum = 10;
+        const maximum = 100;
         const s: SFSchema = {
           properties: {
             a: {
@@ -78,8 +79,8 @@ describe('form: widget: number', () => {
     it(
       'should be trunc value when schema type is integer',
       fakeAsync(() => {
-        const minimum = 10.8,
-          maximum = 100.8;
+        const minimum = 10.8;
+        const maximum = 100.8;
         const s: SFSchema = {
           properties: { a: { type: 'integer', minimum, maximum, default: 1 } },
         };
@@ -109,8 +110,8 @@ describe('form: widget: number', () => {
           .newSchema(s)
           .typeChar(10)
           .typeEvent('blur');
-          expect(ui.formatter).toHaveBeenCalled();
-          expect(ui.parser).toHaveBeenCalled();
+        expect(ui.formatter).toHaveBeenCalled();
+        expect(ui.parser).toHaveBeenCalled();
       }),
     );
   });

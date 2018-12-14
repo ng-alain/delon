@@ -1,7 +1,8 @@
-import zhCN from './languages/zh-CN';
-import enUS from './languages/en-US';
-import { DelonLocaleService } from './locale.service';
 import { filter } from 'rxjs/operators';
+import { DelonLocaleService } from './locale.service';
+
+import enUS from './languages/en-US';
+import zhCN from './languages/zh-CN';
 
 describe('theme: locale', () => {
   let locale: DelonLocaleService;

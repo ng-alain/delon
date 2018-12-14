@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import { DefaultTreeDocument, DefaultTreeElement, parseFragment } from 'parse5';
+import { parseFragment, DefaultTreeDocument, DefaultTreeElement } from 'parse5';
 
 export function parseDocument(html: string): any {
   return parseFragment(html, {
@@ -114,8 +114,8 @@ export function findElementHasAttributes(
   html: string,
   tagName: string,
   attrs: string[],
-): { attr: string; offset: number }[] {
-  const res: { attr: string; offset: number }[] = [];
+): Array<{ attr: string; offset: number }> {
+  const res: Array<{ attr: string; offset: number }> = [];
   findElementsWithTagName(html, tagName).forEach(node => {
     attrs.filter(attr => hasElementAttribute(node, attr)).forEach(attr => {
       res.push({ attr, offset: getStartOffsetOfAttribute(node, attr) });

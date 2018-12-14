@@ -1,12 +1,12 @@
-import { SessionStorageStore } from './session-storage.service';
 import { ITokenModel } from '../token/interface';
+import { SessionStorageStore } from './session-storage.service';
 
 describe('auth: session-storage', () => {
   const store = new SessionStorageStore();
   const KEY = 'token';
-  const VALUE: ITokenModel = <ITokenModel>{
+  const VALUE: ITokenModel = {
     token: 'token data',
-  };
+  } as ITokenModel;
 
   beforeEach(() => {
     let data = {};
@@ -19,7 +19,7 @@ describe('auth: session-storage', () => {
     });
     spyOn(sessionStorage, 'setItem').and.callFake(
       (key: string, value: string): string => {
-        return (data[key] = <string>value);
+        return (data[key] = value as string);
       },
     );
     spyOn(sessionStorage, 'clear').and.callFake(() => {

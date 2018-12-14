@@ -1,21 +1,14 @@
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { of } from 'rxjs';
-import {
-  NzAutocompleteComponent,
-  NzAutocompleteOptionComponent,
-} from 'ng-zorro-antd';
-import { deepCopy } from '@delon/util';
 
+import { createTestContext } from '@delon/testing';
 import {
-  builder,
-  TestFormComponent,
+  configureSFTestSuite,
   SFPage,
-  SCHEMA,
+  TestFormComponent,
 } from '../../../spec/base.spec';
 import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
-import { SFUISchemaItem, SFUISchema } from '../../../src/schema/ui';
 import { AutoCompleteWidget, EMAILSUFFIX } from './autocomplete.widget';
 
 describe('form: widget: autocomplete', () => {
@@ -25,9 +18,13 @@ describe('form: widget: autocomplete', () => {
   let page: SFPage;
   const widget = 'autocomplete';
 
-  beforeEach(
-    () => ({ fixture, dl, context, page } = builder({ detectChanges: false })),
-  );
+  configureSFTestSuite();
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    page = new SFPage(context.comp);
+    page.prop(dl, context, fixture);
+  });
 
   describe('[data source]', () => {
     it('with enum', fakeAsync(() => {
