@@ -4,6 +4,37 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.0](https://github.com/ng-alain/delon/compare/2.0.1...7.0.0-rc.0) (2018-12-14)
+
+`ng-alain` will track the major version of `@angular/core` from `7.0.0-rc.0` like other angular libraries.
+
+- 支持 Angular 7.0
+- 重构整个 `@delon/*` 系列库，重点两项变更请参考：
+  - 移除部分类库 `.forRoot()`，[commit](https://github.com/ng-alain/ng-alain/pull/764/files#diff-e6d91e942371baa2d86bc42c2fa9ede8L85)
+  - `notify-icon` 组件需要额外增加 `btnClass`、`btnIconClass` 类名，[commit](https://github.com/ng-alain/ng-alain/pull/764/files#diff-b526c13479119e1a38465bdaa867009bR16)
+- 重构默认主题及所有示例页使用 OnPush 模式，参考 [#764](https://github.com/ng-alain/ng-alain/pull/764)
+
+### Bug Fixes
+
+* **module:st:** 修复无过滤时依然显示过滤状态 ([#303](https://github.com/ng-alain/delon/issues/303)) ([96430d1](https://github.com/ng-alain/delon/commit/96430d1))
+* **module:st:** 修复无效 `body`
+* **module:st:** 修复丢失配置参数，[#815](https://github.com/ng-alain/ng-alain/issues/815)
+* **module:se:** 修复禁止状态时依然显示错误视觉, [#312](https://github.com/ng-alain/delon/issues/312)
+* **schematics:** 修复 `list` 模式使用过期代码 ([#302](https://github.com/ng-alain/delon/issues/302)) ([839147e](https://github.com/ng-alain/delon/commit/839147e))
+
+### Features
+
+* **module:theme:title:** 增加 `setTitleByI18n` 方法 ([#299](https://github.com/ng-alain/delon/issues/299)) ([80a9636](https://github.com/ng-alain/delon/commit/80a9636))
+* **module:utils:** 增加 `isUrl` 校验
+* **module:mock:** 增加允许舞台 `HttpResponse`, [#813](https://github.com/ng-alain/ng-alain/issues/813)
+* **module:theme:** 增加 `@forced-turn-off-nz-modal-animation-enabled` 强制关闭 `nzModel` 动画效果
+* **module:utils:** 增加 `deepMerge` 深度合并
+
+### BREAKING CHANGES
+
+* **module:utils:** 移除 `yuan`
+
+
 ## 2.0.1
 
 `2018-11-25`
