@@ -250,14 +250,9 @@
   },
   "linterOptions": {
     "exclude": [
-      "packages/polyfills.ts",
-      "packages/typings.d.ts",
-      "packages/test.ts",
       "packages/schematics/**/files/**/*",
       "packages/schematics/utils/**/*",
-      "packages/schematics/test.ts",
       "packages/schematics/ng-update/**/*",
-      "packages/theme/src/locale/languages/**/*",
       "src/app/routes/gen/**/*"
     ]
   }

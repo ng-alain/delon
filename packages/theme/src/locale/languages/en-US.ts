@@ -1,6 +1,6 @@
 import { LocaleData } from '../locale.types';
 
-export default <LocaleData>{
+export default {
   abbr: 'en-US',
   exception: {
     403: `Sorry, you don't have access to this page`,
@@ -37,4 +37,4 @@ export default <LocaleData>{
     removeText: 'Remove',
     checkAllText: 'Check all',
   },
-};
+} as LocaleData;

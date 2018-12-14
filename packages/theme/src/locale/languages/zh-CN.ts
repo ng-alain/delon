@@ -1,6 +1,6 @@
 import { LocaleData } from '../locale.types';
 
-export default <LocaleData>{
+export default {
   abbr: 'zh-CN',
   exception: {
     403: '抱歉，你无权访问该页面',
@@ -23,7 +23,7 @@ export default <LocaleData>{
     collapse: '收起',
   },
   miniProgress: {
-    target: '目标值：'
+    target: '目标值：',
   },
   st: {
     total: '共 {{total}} 条',
@@ -37,4 +37,4 @@ export default <LocaleData>{
     removeText: '移除',
     checkAllText: '全选',
   },
-};
+} as LocaleData;

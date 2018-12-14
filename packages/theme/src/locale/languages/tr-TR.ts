@@ -1,12 +1,12 @@
 import { LocaleData } from '../locale.types';
 
-export default <LocaleData>{
+export default {
   abbr: 'tr-TR',
   exception: {
     403: `Üzgünüz, bu sayfaya erişiminiz yok`,
     404: `Maalesef bu sayfa mevcut değil`,
     500: `Üzgünüz, sunucu hatası`,
-    backToHome: "Ana Sayfa'ya geri dön",
+    backToHome: 'Ana Sayfa\'ya geri dön',
   },
   noticeIcon: {
     emptyText: 'Veri yok',
@@ -37,4 +37,4 @@ export default <LocaleData>{
     removeText: 'Kaldır',
     checkAllText: 'Tümünü kontrol et',
   },
-};
+} as LocaleData;
