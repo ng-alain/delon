@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -24,7 +23,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   host: { '[class.notice-icon__btn]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NoticeIconComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   private i18n$: Subscription;
   // tslint:disable-next-line:no-any
   locale: any = {};
@@ -39,12 +38,17 @@ export class NoticeIconComponent implements OnInit, AfterViewInit, OnChanges, On
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
 
-  @ViewChild(NzDropDownComponent) ddc: NzDropDownComponent;
+  @ViewChild('dd') ddc: NzDropDownComponent;
 
   constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) { }
 
   onVisibleChange(result: boolean) {
     this.popoverVisibleChange.emit(result);
+  }
+
+  fixCls() {
+    // TODO: https://github.com/NG-ZORRO/ng-zorro-antd/issues/2634
+    this.ddc.cdkOverlay.panelClass = ['header-dropdown', 'notice-icon'];
   }
 
   onSelect(i: NoticeIconSelect) {
@@ -60,11 +64,6 @@ export class NoticeIconComponent implements OnInit, AfterViewInit, OnChanges, On
       this.locale = this.i18n.getData('noticeIcon');
       this.cdr.markForCheck();
     });
-  }
-
-  ngAfterViewInit() {
-    if (!this.ddc) return;
-    this.ddc.cdkOverlay.panelClass = ['header-dropdown', 'notice-icon'];
   }
 
   ngOnChanges() {
