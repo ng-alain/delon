@@ -1,9 +1,12 @@
 import { Component, DebugElement } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
-import { createTestContext } from '@delon/testing';
+import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { configureTestSuite, createTestContext } from '@delon/testing';
+import { AlainThemeModule } from '@delon/theme';
 import { deepCopy } from '@delon/util';
+import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
-import { SCHEMA, SFPage, TestFormComponent, configureSFTestSuite } from './base.spec';
+import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
 
 describe('form: component', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -11,7 +14,12 @@ describe('form: component', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  configureSFTestSuite();
+  configureTestSuite(() => {
+    TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()],
+      declarations: [TestFormComponent, TestModeComponent],
+    });
+  });
 
   describe('', () => {
     beforeEach(() => {
