@@ -4,6 +4,37 @@ title: Change Log
 type: Other
 ---
 
+# [7.0.0-rc.0](https://github.com/ng-alain/delon/compare/2.0.1...7.0.0-rc.0) (2018-12-14)
+
+`ng-alain` will track the major version of `@angular/core` from `7.0.0-rc.0` like other angular libraries.
+
+- Support Angular 7.0
+- Refactor `@delon/*` libraries, pls refer to the two changes:
+  - Remove `.forRoot()`, [commit](https://github.com/ng-alain/ng-alain/pull/764/files#diff-e6d91e942371baa2d86bc42c2fa9ede8L85)
+  - `notify-icon` component need to be added `btnClass`、`btnIconClass` property, [commit](https://github.com/ng-alain/ng-alain/pull/764/files#diff-b526c13479119e1a38465bdaa867009bR16)
+- Refactor default theme and sample pages using OnPush mode, pls refer to [#764](https://github.com/ng-alain/ng-alain/pull/764)
+
+### Bug Fixes
+
+* **module:st:** should clean filter style when not filter ([#303](https://github.com/ng-alain/delon/issues/303)) ([96430d1](https://github.com/ng-alain/delon/commit/96430d1))
+* **module:st:** fix missing body in table
+* **module:st:** fix missing merge config in modal or drawer, [#815](https://github.com/ng-alain/ng-alain/issues/815)
+* **module:se:** fix ingore error visual when is disabled, [#312](https://github.com/ng-alain/delon/issues/312)
+* **schematics:** fix template in list command ([#302](https://github.com/ng-alain/delon/issues/302)) ([839147e](https://github.com/ng-alain/delon/commit/839147e))
+
+### Features
+
+* **module:theme:title:** add setTitleByI18n method ([#299](https://github.com/ng-alain/delon/issues/299)) ([80a9636](https://github.com/ng-alain/delon/commit/80a9636))
+* **module:utils:** add `isUrl` validate
+* **module:mock:** support `HttpResponse`, [#813](https://github.com/ng-alain/ng-alain/issues/813)
+* **module:theme:** add `@forced-turn-off-nz-modal-animation-enabled`
+* **module:utils:** add `deepMerge` function
+
+### BREAKING CHANGES
+
+* **module:utils:** remove `yuan`
+
+
 ## 2.0.1
 
 `2018-11-25`
