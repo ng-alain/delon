@@ -1,3 +1,19 @@
+# [7.0.0-rc.0](https://github.com/ng-alain/delon/compare/2.0.1...7.0.0-rc.0) (2018-12-14)
+
+
+### Bug Fixes
+
+* **module:notice-icon:** fix missing class ([#317](https://github.com/ng-alain/delon/issues/317)) ([8cb86b5](https://github.com/ng-alain/delon/commit/8cb86b5))
+* **module:st:** should clean filter style when not filter ([#303](https://github.com/ng-alain/delon/issues/303)) ([96430d1](https://github.com/ng-alain/delon/commit/96430d1))
+* **schematics:** fix template in list command ([#302](https://github.com/ng-alain/delon/issues/302)) ([839147e](https://github.com/ng-alain/delon/commit/839147e))
+
+
+### Features
+
+* **module:theme:title:** add setTitleByI18n method ([#299](https://github.com/ng-alain/delon/issues/299)) ([80a9636](https://github.com/ng-alain/delon/commit/80a9636))
+
+
+
 ## [2.0.1](https://github.com/ng-alain/delon/compare/2.0.0...2.0.1) (2018-11-25)
 
 
