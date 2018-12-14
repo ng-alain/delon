@@ -6,9 +6,9 @@
 <div *ngIf="data?.length === 0">
   <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
 </div>
-<nz-dropdown [hidden]="data?.length === 0" [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)"
+<nz-dropdown #dd *ngIf="data?.length > 0" [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)"
   nzTrigger="click" nzPlacement="bottomRight">
-  <div nz-dropdown>
+  <div nz-dropdown (click)="fixCls()">
     <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
   </div>
   <nz-spin [nzSpinning]="loading" [nzDelay]="0">
