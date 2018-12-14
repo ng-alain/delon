@@ -36,7 +36,7 @@ export const USERS = {
 
 ## Value 响应内容
 
-响应内容只支持三种类型：`Object`、`Array`、`(req: MockRequest) => any`。
+响应内容支持三种类型：`Object`、`Array`、`(req: MockRequest) => any`。
 
 ```ts
 import { MockStatusError } from '@delon/mock';
@@ -48,6 +48,8 @@ export const USERS = {
   '/users': { uid: 1 },
   // Function
   '/qs': (req: MockRequest) => req.queryString.pi,
+  // 支持返回完整的 HttpResponse
+  '/http': (req: MockRequest) => new HttpResponse({ body: 'Body', headers: new HttpHeaders({ 'token': '1' }) }),
   // 发送 Status 错误
   '/404': () => { throw new MockStatusError(404); }
 };

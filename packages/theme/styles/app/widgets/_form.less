@@ -19,26 +19,26 @@
   .search {
     &__form {
       // BUG: https://github.com/NG-ZORRO/ng-zorro-antd/issues/1202
-      &.ant-form-inline {
-        .ant-form-item-label,
-        .ant-form-item-control-wrapper {
+      &.@{ant-prefix}-form-inline {
+        .@{ant-prefix}-form-item-label,
+        .@{ant-prefix}-form-item-control-wrapper {
           padding: 0 !important;
         }
       }
-      .ant-form-item {
+      .@{ant-prefix}-form-item {
         margin-bottom: 24px;
         margin-right: 0;
         display: flex;
-        > .ant-form-item-label {
+        > .@{ant-prefix}-form-item-label {
           width: auto;
           line-height: 32px;
           padding-right: 8px;
         }
-        .ant-form-item-control {
+        .@{ant-prefix}-form-item-control {
           line-height: 32px;
         }
       }
-      .ant-form-item-control-wrapper {
+      .@{ant-prefix}-form-item-control-wrapper {
         flex: 1;
       }
     }

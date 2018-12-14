@@ -17,7 +17,7 @@ config: SEConfig
 它由 `se-container` 容器（指令）和 `se` 组件来表示一个表单，一个简单HTML模板表单是这么写的：
 
 ```html
-<form nz-form #f="ngForm" se-container>
+<form nz-form #f="ngForm" se-container="2">
   <se label="App Key">
     <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required>
   </se>
@@ -39,7 +39,8 @@ config: SEConfig
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[gutter]` | 间距，当 `nzLayout:horizontal` 时有效 | `number` | `32`
-`[se-container]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `number(0 < col <= 6)` | -
+`[se-container]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定 | `1,2,3,4,5,6` | -
+`[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定 | `1,2,3,4,5,6` | -
 `[labelWidth]` | 表单元素默认标签文本宽度，单位：`px` | `number` | `150`
 `[nzLayout]` | 表单布局，当 `inline` 时强制大小为 `compact` | `horizontal,vertical,inline` | `horizontal`
 `[size]` | 大小 `compact` 紧凑型，强制忽略 `error`、`extra` 展示 | `default | compact` | `default`
@@ -51,7 +52,7 @@ config: SEConfig
 
 参数 | 类型 | 说明
 ----|------|-----
-`[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定， | `number(0 < col <= 6)` | -
+`[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定 | `1,2,3,4,5,6` | -
 `[label]` | 标签文本 | `string,TemplateRef<void>` | -
 `[optional]` | 标签可选信息 | `string` | -
 `[optionalHelp]` | 标签可选帮助 | `string` | -

@@ -127,7 +127,7 @@ class TestComponent {
 `[showSize]` | 是否显示分页器中改变页数 | `boolean` | `false`
 `[pageSizes]` | 分页器中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]`
 `[showQuickJumper]` | 是否显示分页器中快速跳转 | `boolean` | `false`
-`[total]` | 是否显示总数据量，字符串表示自定义模板（支持三个变量名：`total` 表示数据总量、`range[0]` 和 `range[1]` 表示当前数据范围；**变量名**统一使用双引号包裹） | `boolean, string` | `false`
+`[total]` | 是否显示总数据量，字符串表示自定义模板（支持三个变量名：`total` 表示数据总量、`range[0]` 和 `range[1]` 表示当前数据范围；**变量名**统一使用双花括号包裹） | `boolean, string` | `false`
 `[toTop]` | 切换分页时返回顶部 | `boolean` | `true`
 `[toTopOffset]` | 返回顶部偏移值 | `number` | `100`
 

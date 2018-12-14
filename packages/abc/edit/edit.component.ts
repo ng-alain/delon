@@ -14,7 +14,7 @@ import {
   Renderer2,
   TemplateRef,
 } from '@angular/core';
-import { FormControlName, NgControl, NgModel } from '@angular/forms';
+import { FormControlName, NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
@@ -33,10 +33,8 @@ let nextUniqueId = 0;
 export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   private el: HTMLElement;
   private status$: Subscription;
-  @ContentChild(NgModel)
-  private readonly ngModel: NgModel;
-  @ContentChild(FormControlName)
-  private readonly formControlName: FormControlName;
+  @ContentChild(NgModel) private readonly ngModel: NgModel;
+  @ContentChild(FormControlName) private readonly formControlName: FormControlName;
   private clsMap: string[] = [];
   private inited = false;
   private onceFlag = false;
@@ -81,16 +79,14 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this.invalid && this.parent.size !== 'compact' && !!this.error;
   }
 
-  private get ngControl(): NgControl {
+  private get ngControl(): NgModel | FormControlName {
     return this.ngModel || this.formControlName;
   }
 
   constructor(
-    @Optional()
-    @Host()
-    private parent: SEContainerComponent,
-    private rep: ResponsiveService,
     el: ElementRef,
+    @Optional() @Host() private parent: SEContainerComponent,
+    private rep: ResponsiveService,
     private ren: Renderer2,
     private cdr: ChangeDetectorRef,
   ) {
@@ -105,10 +101,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     this.labelWidth = parent.labelWidth;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
-    const repCls =
-      parent.nzLayout === 'horizontal'
-        ? this.rep.genCls(col != null ? col : parent.col)
-        : [];
+    const repCls = parent.nzLayout === 'horizontal' ? this.rep.genCls(col != null ? col : parent.col || parent.colInCon) : [];
     clsMap.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
     if (this.line || parent.line) {
       clsMap.push(`${prefixCls}__line`);
@@ -122,6 +115,9 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     if (!this.ngControl || this.status$) return;
 
     this.status$ = this.ngControl.statusChanges.subscribe(res => {
+      if (this.ngControl.isDisabled) {
+        return ;
+      }
       const status = res !== 'VALID';
       if (!this.onceFlag || this.invalid === status) {
         this.onceFlag = true;
@@ -131,10 +127,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
       this.cdr.detectChanges();
     });
     if (this._autoId) {
-      const control = deepGet(
-        this.ngControl.valueAccessor,
-        '_elementRef.nativeElement',
-      ) as HTMLElement;
+      const control = deepGet(this.ngControl.valueAccessor, '_elementRef.nativeElement') as HTMLElement;
       if (control) {
         control.id = this._id;
       }

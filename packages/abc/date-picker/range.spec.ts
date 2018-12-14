@@ -1,23 +1,26 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { DatePickerModule } from './date-picker.module';
 import { RangePickerComponent } from './range.component';
-import { By } from '@angular/platform-browser';
 
 describe('abc: date-picker: range', () => {
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
-    fixture = TestBed.configureTestingModule({
+  configureTestSuite(() => {
+    TestBed.configureTestingModule({
       imports: [DatePickerModule, FormsModule],
       declarations: [TestComponent],
-    }).createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+    });
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
     spyOn(context, '_nzOnOpenChange');
     spyOn(context, '_nzOnPanelChange');

@@ -1,4 +1,4 @@
-@import '../../../theme/styles/default';
+@import '../../../theme/styles/default.less';
 
 @sv-prefix: ~'.sv';
 @sv-label-color: rgba(0, 0, 0, 0.5);
@@ -18,7 +18,7 @@
   &__container {
     display: block;
     // offset the padding-bottom of last row
-    .ant-row {
+    .@{ant-prefix}-row {
       margin-bottom: -@sv-bottom;
       overflow: hidden;
     }
@@ -89,7 +89,7 @@
   }
   &__small {
     // offset the padding-bottom of last row
-    .ant-row {
+    .@{ant-prefix}-row {
       margin-bottom: -8px;
     }
     @{sv-prefix}__title {

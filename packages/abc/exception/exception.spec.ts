@@ -2,6 +2,7 @@ import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DelonLocaleModule, en_US, DelonLocaleService } from '@delon/theme';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { ExceptionModule } from './exception.module';
 import { ExceptionComponent } from './exception.component';
@@ -12,14 +13,15 @@ describe('abc: exception', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     injector = TestBed.configureTestingModule({
       imports: [ExceptionModule, DelonLocaleModule],
       declarations: [TestComponent],
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
 

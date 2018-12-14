@@ -4,6 +4,7 @@ import {
   Input,
   TemplateRef,
 } from '@angular/core';
+import { REP_TYPE } from '@delon/theme';
 import { toNumber, InputBoolean, InputNumber } from '@delon/util';
 import { SEConfig } from './edit.config';
 
@@ -15,6 +16,9 @@ import { SEConfig } from './edit.config';
 export class SEContainerComponent {
   //#region fields
 
+  @Input('se-container') @InputNumber(null) colInCon: REP_TYPE;
+  @Input() @InputNumber(null) col: REP_TYPE;
+  @Input() @InputNumber(null) labelWidth: number;
   @Input() title: string | TemplateRef<void>;
 
   @Input()
@@ -25,19 +29,6 @@ export class SEContainerComponent {
     this._gutter = toNumber(value);
   }
   private _gutter: number;
-
-  @Input('se-container')
-  set col(value: number) {
-    const a = toNumber(value, 0);
-    if (a <= 0) return;
-    this._col = toNumber(value, 0);
-  }
-  get col(): number {
-    return this._col;
-  }
-  private _col: number;
-
-  @Input() @InputNumber(null) labelWidth: number;
 
   @Input()
   get nzLayout() {

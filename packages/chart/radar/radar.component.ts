@@ -127,7 +127,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
 
   private attachChart() {
     const { chart, padding, data, colors, tickCount } = this;
-    if (!chart) return ;
+    if (!chart || !data || data.length <= 0) return ;
 
     chart.set('height', this.getHeight());
     chart.set('padding', padding);

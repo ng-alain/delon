@@ -126,20 +126,19 @@ copyFiles() {
     "${1}src/app/core/net|${2}application/files/src/app/core/"
     "${1}src/app/core/module-import-guard.ts|${2}application/files/src/app/core/"
     "${1}src/app/core/README.md|${2}application/files/src/app/core/"
+    # shared
+    "${1}src/app/shared/utils/*|${2}application/files/src/app/shared/utils/"
     # app.component
     "${1}src/app/delon.module.ts|${2}application/files/src/app/"
-    "${1}src/app/app.component.spec.ts|${2}application/files/src/app/"
     "${1}src/app/app.component.ts|${2}application/files/src/app/"
     # layout
     "${1}src/app/layout/fullscreen|${2}application/files/src/app/layout/"
     "${1}src/app/layout/passport|${2}application/files/src/app/layout/"
     "${1}src/app/layout/default/setting-drawer|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/default.component.html|${2}application/files/src/app/layout/default/"
-    "${1}src/app/layout/default/default.component.spec.ts|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/default.component.ts|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/header/index.md|${2}application/files/src/app/layout/default/header/"
     "${1}src/app/layout/default/header/components|${2}application/files/src/app/layout/default/header/"
-    "${1}src/app/layout/default/header/header.component.spec.ts|${2}application/files/src/app/layout/default/header/"
     "${1}src/app/layout/default/header/header.component.ts|${2}application/files/src/app/layout/default/header/"
     "${1}src/app/layout/default/sidebar|${2}application/files/src/app/layout/default/"
     # router
@@ -153,6 +152,13 @@ copyFiles() {
     IFS=$'|' read -r from to <<< "$fields"
     if [[ ${to:(-1):1} == '/' ]]; then
       mkdir -p $to
+    fi
+    local fromLen=${#from}-2
+    if [[ ${from:(-2):2} == '/*' ]]; then
+      if [[ ! -d "${from:0:fromLen}" ]]; then
+        echo "未找到 ${from:0:fromLen} 目录"
+        continue
+      fi
     fi
     if [[ ${from} != '' ]]; then
       cp -fr $from $to
@@ -203,7 +209,8 @@ echo "Finished cli!"
 
 # TODO: just only cipchk
 # clear | bash ./scripts/ci/build-schematics.sh -b -t
-# clear | bash ./scripts/ci/build-schematics.sh -b -debug -dev -copy
+# clear | bash ./scripts/ci/build-schematics.sh -b -copy
+# clear | bash ./scripts/ci/build-schematics.sh -b -copy -debug -dev
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*

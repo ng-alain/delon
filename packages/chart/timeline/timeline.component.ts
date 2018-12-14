@@ -107,7 +107,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
   private attachChart() {
     const { chart, _slider, slider, height, padding, data, mask, titleMap, position, colorMap, borderWidth, tickCount } = this;
-    if (!chart) return;
+    if (!chart || !data || data.length <= 0) return ;
 
     chart.legend({
       position,
@@ -179,9 +179,6 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       _slider.start = ds.state.start;
       _slider.end = ds.state.end;
       _slider.onChange = ({ startValue, endValue }) => {
-        // TODO: https://github.com/antvis/g2-plugin-slider/pull/19
-        _slider.start = startValue;
-        _slider.end = endValue;
         ds.setState('start', startValue);
         ds.setState('end', endValue);
       };

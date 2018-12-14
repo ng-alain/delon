@@ -93,7 +93,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   private attachChart() {
     const { chart, height, padding, data } = this;
-    if (!chart) return ;
+    if (!chart || !data || data.length <= 0) return ;
 
     chart.set('height', height);
     chart.set('padding', padding);

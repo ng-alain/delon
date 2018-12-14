@@ -1,17 +1,21 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { DelonLocaleService } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
 import { Subscription } from 'rxjs';
 
+import { NzDropDownComponent } from 'ng-zorro-antd';
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
@@ -20,7 +24,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   host: { '[class.notice-icon__btn]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NoticeIconComponent implements OnInit, OnDestroy {
+export class NoticeIconComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   private i18n$: Subscription;
   // tslint:disable-next-line:no-any
   locale: any = {};
@@ -29,9 +33,13 @@ export class NoticeIconComponent implements OnInit, OnDestroy {
   @Input() @InputNumber() count: number;
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() popoverVisible = false;
+  @Input() btnClass = '';
+  @Input() btnIconClass = '';
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
+
+  @ViewChild(NzDropDownComponent) ddc: NzDropDownComponent;
 
   constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) { }
 
@@ -50,8 +58,17 @@ export class NoticeIconComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.i18n$ = this.i18n.change.subscribe(() => {
       this.locale = this.i18n.getData('noticeIcon');
-      this.cdr.detectChanges();
+      this.cdr.markForCheck();
     });
+  }
+
+  ngAfterViewInit() {
+    if (!this.ddc) return;
+    this.ddc.cdkOverlay.panelClass = ['header-dropdown', 'notice-icon'];
+  }
+
+  ngOnChanges() {
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy() {

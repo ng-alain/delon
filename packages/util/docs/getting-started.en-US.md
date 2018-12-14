@@ -56,22 +56,3 @@ export class DelonModule {
   }
 }
 ```
-
-## FAQ
-
-### How to call in an HTML template
-
-```ts
-import { Component } from '@angular/core';
-import { yuan } from '@delon/util';
-
-@Component({
-  selector: 'app-demo',
-  template: `
-  {{yuan(11111)}}
-  `
-})
-export class DemoComponent {
-  yuan = yuan;
-}
-```

@@ -21,16 +21,13 @@ export class CountDownComponent {
   set target(value: number | Date) {
     this.config = {
       template: `$!h!:$!m!:$!s!`,
-      stopTime:
-        typeof value === 'number'
-          ? addSeconds(new Date(), value).valueOf()
-          : format(value, 'x'),
+      stopTime: typeof value === 'number' ? addSeconds(new Date(), value).valueOf() : format(value, 'x'),
     };
   }
 
-  @Output() readonly begin = new EventEmitter();
+  @Output() readonly begin = new EventEmitter<void>();
   @Output() readonly notify = new EventEmitter<number>();
-  @Output() readonly end = new EventEmitter();
+  @Output() readonly end = new EventEmitter<void>();
 
   _start() {
     this.begin.emit();

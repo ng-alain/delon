@@ -1,6 +1,7 @@
 import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { QRModule } from './qr.module';
 import { QRComponent } from './qr.component';
@@ -13,14 +14,15 @@ describe('abc: qr', () => {
   let context: TestComponent;
   let srv: QRService;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     injector = TestBed.configureTestingModule({
       imports: [QRModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
     srv = injector.get(QRService);
   });

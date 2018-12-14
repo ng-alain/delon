@@ -1,10 +1,14 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { deepCopy } from '@delon/util';
-import { builder, TestFormComponent, SFPage, SCHEMA } from './base.spec';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { AlainThemeModule } from '@delon/theme';
+import { configureTestSuite, createTestContext } from '@delon/testing';
+import { TestFormComponent, SFPage } from './base.spec';
 import { SFSchema } from '../src/schema/index';
 import { SFUISchemaItem, SFUISchema } from '../src/schema/ui';
 import { ObjectProperty } from '../src/model/object.property';
+import { DelonFormModule } from '../src/module';
 
 describe('form: schema', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -12,7 +16,19 @@ describe('form: schema', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  beforeEach(() => ({ fixture, dl, context, page } = builder()));
+  configureTestSuite(() => {
+    TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()],
+      declarations: [TestFormComponent],
+    });
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    fixture.detectChanges();
+    page = new SFPage(context.comp);
+    page.prop(dl, context, fixture);
+  });
 
   describe('[cover schema]', () => {
     it('should be using select widget when not ui and enum exists', () => {

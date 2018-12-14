@@ -37,10 +37,7 @@ export class TagSelectComponent implements OnInit, OnDestroy {
   @Output()
   readonly change = new EventEmitter<boolean>();
 
-  constructor(
-    private i18n: DelonLocaleService,
-    private cdr: ChangeDetectorRef,
-  ) { }
+  constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.i18n$ = this.i18n.change.subscribe(() => {

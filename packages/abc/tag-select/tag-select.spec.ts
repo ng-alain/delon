@@ -7,6 +7,7 @@ import {
   zh_CN,
   DelonLocaleService,
 } from '@delon/theme';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { TagSelectModule } from './tag-select.module';
 import { TagSelectComponent } from './tag-select.component';
@@ -17,14 +18,15 @@ describe('abc: tag-select', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     injector = TestBed.configureTestingModule({
       imports: [TagSelectModule, DelonLocaleModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent]
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
 

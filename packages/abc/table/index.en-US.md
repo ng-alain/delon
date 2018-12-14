@@ -127,7 +127,7 @@ Property | Description | Type | Default
 `[showSize]` | Determine whether `ps` can be changed | `boolean` | `false`
 `[pageSizes]` | Specify the sizeChanger options | `number[]` | `[10, 20, 30, 40, 50]`
 `[showQuickJumper]` | Determine whether you can jump to pages directly | `boolean` | `false`
-`[total]` | To display the total number and range, support custom string template (Three variable names: `total` for total data, `range[0]` and `range[1]` for current data range; **Variable name** must be double quotes wrapper) | `boolean, string` | `false`
+`[total]` | To display the total number and range, support custom string template (Three variable names: `total` for total data, `range[0]` and `range[1]` for current data range; **Variable name** must be double curly braces wrapper) | `boolean, string` | `false`
 `[toTop]` | To top when pager changed | `boolean` | `true`
 `[toTopOffset]` | To top offset value | `number` | `100`
 

@@ -43,7 +43,9 @@ export function builder(options?: {
 }) {
   options = Object.assign({ detectChanges: true }, options);
   TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(options.imports || []),
+    imports: [
+      NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()
+    ].concat(options.imports || []),
     declarations: [TestFormComponent],
   });
   if (options.template) {
@@ -69,7 +71,17 @@ export function builder(options?: {
 }
 
 export class SFPage {
-  constructor(private comp: SFComponent) {}
+  constructor(private comp: SFComponent) { }
+
+  prop(_dl: DebugElement, _context: TestFormComponent, _fixture: ComponentFixture<TestFormComponent>) {
+    dl = _dl;
+    context = _context;
+    fixture = _fixture;
+    spyOn(context, 'formChange');
+    spyOn(context, 'formSubmit');
+    spyOn(context, 'formReset');
+    spyOn(context, 'formError');
+  }
 
   getDl(cls: string): DebugElement {
     return dl.query(By.css(cls));

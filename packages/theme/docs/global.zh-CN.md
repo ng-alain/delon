@@ -47,8 +47,9 @@ title: 全局参数
 | `@scrollbar-height` | `6px` | 美化滚动条高度 |
 | `@scrollbar-track-color` | `rgba(0, 0, 0, 0.3)` | 美化滚动条的轨道颜色 |
 | `@scrollbar-thumb-color` | `#6e6e6e` | 美化滚动条小方块颜色 |
+| `@scrollbar-table-enabled` | `false` | 启用美化表格滚动条 |
 
-## Zorro组件补丁
+## Ng补丁
 
 ### 通用
 
@@ -59,6 +60,14 @@ title: 全局参数
 | `@preserve-buttons-spaces` | 按钮间间距（包括：button、button-group、popconfirm） |
 | `@router-animation-duration` | `antFadeIn` | 路由切换动画 |
 | `@router-animation-duration` | `1s` | 路由切换动画时长 |
+
+## Zorro组件补丁
+
+### 通用
+
+| 名称 | 默认值 | 功能 |
+| --- | --- | --- |
+| `@forced-turn-off-nz-modal-animation-enabled` | `false` | 强制关闭 `nz-modal` 动画效果 |
 
 ### 表单
 

@@ -9,12 +9,11 @@ title:
 
 ```ts
 import { Component } from '@angular/core';
-import { yuan } from '@delon/util';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <g2-card [title]="'销售额'" [bordered]="true" [total]="yuan(126560)" footer="日访问量 12,423" contentHeight="46" [action]="action">
+  <g2-card [title]="'销售额'" [bordered]="true" [total]="'¥ 126,560.00'" footer="日访问量 12,423" contentHeight="46" [action]="action">
     <ng-template #action>
       <nz-tooltip [nzTitle]="'指标说明'">
         <i nz-tooltip nz-icon type="info-circle"></i>
@@ -26,6 +25,5 @@ import { yuan } from '@delon/util';
   `
 })
 export class DemoComponent {
-  yuan = yuan;
 }
 ```

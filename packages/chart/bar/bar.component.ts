@@ -91,7 +91,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
 
   private attachChart() {
     const { chart, padding, data, color } = this;
-    if (!chart) return;
+    if (!chart || !data || data.length <= 0) return ;
     this.installResizeEvent();
     const height = this.getHeight();
     if (chart.get('height') !== height) {

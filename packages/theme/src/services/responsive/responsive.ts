@@ -4,6 +4,8 @@ import { ResponsiveConfig } from './responsive.config';
 
 export const REP_MAX = 6;
 
+export type REP_TYPE = 1 | 2 | 3 | 4 | 5 | 6;
+
 @Injectable({ providedIn: 'root' })
 export class ResponsiveService {
   private cog: ResponsiveConfig;

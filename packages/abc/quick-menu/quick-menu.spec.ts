@@ -1,6 +1,7 @@
-import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
+import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { QuickMenuModule } from './quick-menu.module';
 import { QuickMenuComponent } from './quick-menu.component';
@@ -10,14 +11,15 @@ describe('abc: quick-menu', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [QuickMenuModule],
       declarations: [TestComponent],
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
 

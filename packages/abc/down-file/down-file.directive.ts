@@ -11,33 +11,20 @@ import {
 import { _HttpClient } from '@delon/theme';
 import { saveAs } from 'file-saver';
 
-/**
- * 文件下载
- *
- * ```html
- * <button nz-button down-file http-url="assets/demo{{i}}" file-name="demo中文">{{i}}</button>
- * ```
- */
 @Directive({ selector: '[down-file]' })
 export class DownFileDirective {
   /** URL请求参数 */
-  @Input('http-data')
-  httpData: {};
+  @Input('http-data') httpData: {};
   /** 请求类型 */
-  @Input('http-method')
-  httpMethod: string = 'get';
+  @Input('http-method') httpMethod: string = 'get';
   /** 下载地址 */
-  @Input('http-url')
-  httpUrl: string;
+  @Input('http-url') httpUrl: string;
   /** 指定文件名，若为空从服务端返回的 `header` 中获取 `filename`、`x-filename` */
-  @Input('file-name')
-  fileName: string;
+  @Input('file-name') fileName: string;
   /** 成功回调 */
-  @Output()
-  readonly success = new EventEmitter<HttpResponse<Blob>>();
+  @Output() readonly success = new EventEmitter<HttpResponse<Blob>>();
   /** 错误回调 */
-  @Output()
-  readonly error = new EventEmitter<{}>();
+  @Output() readonly error = new EventEmitter<{}>();
 
   private getDisposition(data: string) {
     // tslint:disable-next-line:no-any
@@ -51,15 +38,10 @@ export class DownFileDirective {
         if (value.startsWith(utfId)) value = value.substr(utfId.length);
         return { [strArr[0].trim()]: value };
       });
-    // tslint:disable-next-line:no-any
-    return arr.reduce((o, item: any) => item, {});
+    return arr.reduce((o, item) => item, {});
   }
 
-  constructor(
-    private el: ElementRef,
-    private http: HttpClient,
-    @Optional() private _http: _HttpClient,
-  ) { }
+  constructor(private el: ElementRef, private http: HttpClient, @Optional() private _http: _HttpClient) { }
 
   @HostListener('click')
   _click() {

@@ -11,7 +11,7 @@
   &__fixed {
     display: flex !important;
     nz-form-control,
-    .ant-form-item-control-wrapper {
+    .@{ant-prefix}-form-item-control-wrapper {
       flex: 1;
     }
   }
@@ -58,15 +58,15 @@
     }
   }
   // upload
-  .ant-upload-select-picture-card i {
+  .@{ant-prefix}-upload-select-picture-card i {
     font-size: 32px;
     color: #999;
   }
-  .ant-upload.ant-upload-drag {
+  .@{ant-prefix}-upload.@{ant-prefix}-upload-drag {
     height: 180px;
   }
   // transfer
-  .ant-transfer {
+  .@{ant-prefix}-transfer {
     &-list {
       background: #fff;
       &-header {
@@ -75,23 +75,23 @@
         }
       }
     }
-    .ant-btn + .ant-btn {
+    .@{ant-prefix}-btn + .@{ant-prefix}-btn {
       margin-left: 0;
     }
   }
   // fix select width when inline mode
-  .ant-form-inline {
+  .@{ant-prefix}-form-inline {
     sf-select {
-      .ant-form-item {
+      .@{ant-prefix}-form-item {
         display: inline-flex;
-        > .ant-form-item-control-wrapper {
+        > .@{ant-prefix}-form-item-control-wrapper {
           flex: 1 0 0;
         }
       }
     }
   }
   &__no-error {
-    .ant-form-item {
+    .@{ant-prefix}-form-item {
       margin-bottom: 8px;
     }
   }

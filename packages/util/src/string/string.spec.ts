@@ -1,4 +1,4 @@
-import { yuan, format } from './string';
+import { format } from './string';
 
 describe('util: string', () => {
   describe('#format', () => {
@@ -24,17 +24,6 @@ describe('util: string', () => {
     });
     it('should be deep get value', () => {
       expect(format('this is ${user.name}', { user: { name: 'asdf' } }, true)).toBe('this is asdf');
-    });
-  });
-  describe('#yuan', () => {
-    it('should be', () => {
-      expect(yuan(100)).toBe(`&yen 100.00`);
-    });
-    it('should be a string', () => {
-      expect(yuan('100')).toBe(`&yen 100`);
-    });
-    it('should be keeping only two decimals', () => {
-      expect(yuan(100.456, 2)).toBe(`&yen 100.46`);
     });
   });
 });

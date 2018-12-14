@@ -9,7 +9,7 @@ title: 默认布局
 ## 参数
 
 | 名称                                           | 默认值                         | 功能                     |
-| ---------------------------------------------- | ------------------------------ | ------------------------ |
+|------------------------------------------------|--------------------------------|------------------------|
 | `@alain-default-prefix`                        | `.alain-default`               | 布局样式前缀             |
 | `@alain-default-ease`                          | `cubic-bezier(.25, 0, .15, 1)` | 动画过滤函数             |
 | `@alain-default-header-hg`                     | `64px`                         | 顶部高度                 |
@@ -17,6 +17,7 @@ title: 默认布局
 | `@alain-default-header-padding`                | `@layout-gutter * 2`           | 顶部左右内边距           |
 | `@alain-default-header-search-enabled`         | `true`                         | 是否开启顶部搜索框       |
 | `@alain-default-header-search-height`          | `34px`                         | 顶部搜索框高度           |
+| `@alain-default-header-icon-fs`                | `18px`                         | 顶部 Icon 大小           |
 | `@alain-default-aside-wd`                      | `200px`                        | 侧边栏宽度               |
 | `@alain-default-aside-bg`                      | `#fff`                         | 侧边栏背景色             |
 | `@alain-default-aside-scrollbar-width`         | `0`                            | 侧边栏滚动条宽度         |

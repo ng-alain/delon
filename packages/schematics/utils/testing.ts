@@ -49,12 +49,10 @@ export function createAlainApp(
   const alainRunner = createAlainRunner();
   const tree = alainRunner.runSchematic(
     'ng-add',
-    Object.assign(
-      {
-        skipPackageJson: false,
-      },
-      ngAddOptions,
-    ),
+    {
+      skipPackageJson: false,
+      ...ngAddOptions
+    },
     appTree,
   );
   return { runner: alainRunner, tree };

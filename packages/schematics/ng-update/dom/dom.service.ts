@@ -287,7 +287,7 @@ export class DomService {
 
   private resolveExtra(dom: VDom, rule: ConvertRule) {
     if (rule.extra_insert_attrs) {
-      dom.attribs = Object.assign(dom.attribs, rule.extra_insert_attrs);
+      dom.attribs = { ...dom.attribs, ...rule.extra_insert_attrs };
     }
     if (rule.extra_replace_attrs) {
       Object.keys(dom.attribs).forEach(key => {

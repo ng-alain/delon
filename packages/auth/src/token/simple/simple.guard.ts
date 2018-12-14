@@ -13,7 +13,7 @@ export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
     private injector: Injector,
     cog: DelonAuthConfig,
   ) {
-    this.cog = Object.assign(new DelonAuthConfig(), cog);
+    this.cog = { ...new DelonAuthConfig(), ...cog };
   }
 
   private process(): boolean {

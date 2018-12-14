@@ -42,7 +42,7 @@ import {
   AlainI18NServiceFake,
   AlainI18NService,
 } from '../../../theme/src/services/i18n/i18n';
-import { dispatchDropDown } from '../../../testing';
+import { dispatchDropDown, configureTestSuite, createTestContext } from '@delon/testing';
 import { STExport } from '../table-export';
 import { STDataSource } from '../table-data-source';
 import { STConfig } from '../table.config';
@@ -92,13 +92,23 @@ describe('abc: table', () => {
   let dl: DebugElement;
   let page: PageObject;
   let comp: STComponent;
+  let i18nSrv: AlainI18NService;
 
   function genModule(other: {
     template?: string;
     i18n?: boolean;
     minColumn?: boolean;
     providers?: any[];
+    createComp?: boolean;
   }) {
+    other = {
+      template: '',
+      i18n: false,
+      minColumn: false,
+      providers: [],
+      createComp: true,
+      ...other
+    };
     const imports = [
       NoopAnimationsModule,
       CommonModule,
@@ -110,7 +120,7 @@ describe('abc: table', () => {
       DelonLocaleModule,
     ];
     const providers = [];
-    if (other.providers && other.providers.length) {
+    if (other.providers.length > 0) {
       providers.push(...other.providers);
     }
     if (other.i18n) {
@@ -125,11 +135,19 @@ describe('abc: table', () => {
       providers,
     });
     if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
+    // ALAIN_I18N_TOKEN 默认为 root 会导致永远都会存在
+    i18nSrv = injector.get(ALAIN_I18N_TOKEN);
+    if (other.createComp) {
+      createComp(other.minColumn);
+    }
+  }
+
+  function createComp(minColumn = false) {
     fixture = TestBed.createComponent(TestComponent);
     dl = fixture.debugElement;
     context = dl.componentInstance;
     context.data = deepCopy(USERS);
-    if (other.minColumn) {
+    if (minColumn) {
       context.columns = [{ title: '', index: 'id' }];
     }
     page = new PageObject();
@@ -140,12 +158,6 @@ describe('abc: table', () => {
   describe('[property]', () => {
     describe('#columns', () => {
       beforeEach(() => genModule({}));
-      it('should be render', (done: () => void) => {
-        page.newColumn([{ title: '', index: 'id' }]).then(() => {
-          page.expectCell('1');
-          done();
-        });
-      });
       describe('[type]', () => {
         describe(`with checkbox`, () => {
           it(`should be render checkbox`, (done: () => void) => {
@@ -1334,11 +1346,9 @@ describe('abc: table', () => {
   });
 
   describe('[i18n]', () => {
-    let i18nSrv: AlainI18NService;
     let curLang = 'en';
     beforeEach(() => {
       genModule({ i18n: true });
-      i18nSrv = injector.get(ALAIN_I18N_TOKEN);
       spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
     });
     it('should working', (done: () => void) => {

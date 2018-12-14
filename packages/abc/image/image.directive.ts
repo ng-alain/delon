@@ -8,7 +8,7 @@ import {
   SimpleChange,
   SimpleChanges,
 } from '@angular/core';
-import { deepCopy, InputNumber } from '@delon/util';
+import { InputNumber } from '@delon/util';
 
 import { ImageConfig } from './image.config';
 
@@ -27,11 +27,11 @@ export class ImageDirective implements OnChanges, OnInit {
   private inited = false;
 
   constructor(
+    cog: ImageConfig,
     private el: ElementRef,
     private render: Renderer2,
-    DEF: ImageConfig,
   ) {
-    Object.assign(this, deepCopy(DEF));
+    Object.assign(this, cog);
   }
 
   ngOnInit(): void {
@@ -40,15 +40,12 @@ export class ImageDirective implements OnChanges, OnInit {
     this.inited = true;
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
-    if (this.inited) {
-      if (changes.error) {
-        this.updateError();
-      } else {
-        this.update();
-      }
+  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (!this.inited) return;
+    if (changes.error) {
+      this.updateError();
+    } else {
+      this.update();
     }
   }
 

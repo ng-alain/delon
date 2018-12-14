@@ -1,6 +1,7 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { AvatarListModule } from './avatar-list.module';
 
@@ -9,15 +10,14 @@ describe('abc: avatar-list', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
-    fixture = TestBed.configureTestingModule({
+  configureTestSuite(() => {
+    TestBed.configureTestingModule({
       imports: [AvatarListModule],
       declarations: [TestComponent],
-    }).createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
-    fixture.detectChanges();
+    });
   });
+
+  beforeEach(() => ({ fixture, dl, context } = createTestContext(TestComponent)));
 
   describe('#size', () => {
     it('with large', () => {

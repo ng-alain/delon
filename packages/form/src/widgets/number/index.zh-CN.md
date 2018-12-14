@@ -8,7 +8,7 @@ type: Widgets
 
 ## 注意事项
 
-- 若 `type="integer"` 会**强制**移除小数部分。
+- 若 `type="integer"` 会**强制**移除 `minimum`、`maximum`、`multipleOf` 参数的小数部分。
 
 ## API
 
