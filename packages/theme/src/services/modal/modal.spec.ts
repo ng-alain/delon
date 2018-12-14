@@ -1,9 +1,9 @@
-import { Injector, Component, NgModule } from '@angular/core';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { NzModalService, NzModalRef, NgZorroAntdModule } from 'ng-zorro-antd';
-import { ModalHelper } from './modal.helper';
+import { Component, Injector, NgModule } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgZorroAntdModule, NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AlainThemeModule } from '../../theme.module';
+import { ModalHelper } from './modal.helper';
 
 describe('theme: ModalHelper', () => {
   let injector: Injector;
@@ -119,7 +119,7 @@ describe('theme: ModalHelper', () => {
             () => {
               expect(true).toBeTruthy();
               done();
-            }
+            },
           );
         fixture.detectChanges();
       });

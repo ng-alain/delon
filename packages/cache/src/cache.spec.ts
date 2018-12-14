@@ -3,7 +3,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { of, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -14,7 +14,7 @@ import { CacheService } from './cache.service';
 import { ICache } from './interface';
 
 describe('cache: service', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let srv: CacheService;
   const KEY = 'a';
 

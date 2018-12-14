@@ -3,16 +3,15 @@ import {
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-import { Injector } from '@angular/core';
-import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { fakeAsync, tick, TestBed, TestBedStatic } from '@angular/core/testing';
 import { deepCopy } from '@delon/util';
 
+import { AlainThemeConfig } from '../../theme.config';
 import { _HttpClient } from './http.client';
 import { HttpClientConfig } from './http.config';
-import { AlainThemeConfig } from '../../theme.config';
 
 describe('theme: http.client', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let http: _HttpClient;
   let backend: HttpTestingController;
   const time = new Date();

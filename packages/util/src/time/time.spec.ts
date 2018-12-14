@@ -1,6 +1,6 @@
-import { getTimeDistance } from './time';
-import format from 'date-fns/format';
 import addDays from 'date-fns/add_days';
+import format from 'date-fns/format';
+import { getTimeDistance } from './time';
 
 describe('util: time', () => {
   describe('#getTimeDistance', () => {
@@ -14,14 +14,14 @@ describe('util: time', () => {
     it('should be now when no-specity', () => {
       const ret = getTimeDistance('-today');
       expect(ret.length).toBe(2);
-      const t = new Date;
+      const t = new Date();
       expect(format(ret[0], FORMAT)).toBe(format(addDays(t, -1), FORMAT));
       expect(format(ret[1], FORMAT)).toBe(format(t, FORMAT));
     });
     it('should be now when a bad date', () => {
       const ret = getTimeDistance('-today', -NaN);
       expect(ret.length).toBe(2);
-      const t = new Date;
+      const t = new Date();
       expect(format(ret[0], FORMAT)).toBe(format(addDays(t, -1), FORMAT));
       expect(format(ret[1], FORMAT)).toBe(format(t, FORMAT));
     });

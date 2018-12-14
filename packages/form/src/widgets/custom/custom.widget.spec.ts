@@ -1,6 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
-import { builder, TestFormComponent, SFPage } from '../../../spec/base.spec';
+import { builder, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: custom', () => {

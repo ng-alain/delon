@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
-import { G2MiniAreaModule } from './mini-area.module';
 import { G2MiniAreaComponent } from './mini-area.component';
+import { G2MiniAreaModule } from './mini-area.module';
 
 describe('chart: mini-area', () => {
   let page: PageG2<TestComponent>;

@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { isNum, isInt, isDecimal, isIdCard, isMobile, isUrl } from './validate';
+import { isDecimal, isIdCard, isInt, isMobile, isNum, isUrl } from './validate';
 import { _Validators } from './validators';
 
 describe('utils: validate', () => {

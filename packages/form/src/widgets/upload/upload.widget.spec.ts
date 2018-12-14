@@ -1,10 +1,10 @@
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { ComponentFixture } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { DebugElement } from '@angular/core';
+import { ComponentFixture } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { NzUploadComponent } from 'ng-zorro-antd';
 
-import { builder, TestFormComponent, SFPage } from '../../../spec/base.spec';
+import { builder, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: upload', () => {

@@ -1,7 +1,7 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+import * as fs from 'fs';
 import { createAlainAndModuleApp } from '../utils/testing';
 import { Schema as NgAddOptions } from './schema';
-import * as fs from 'fs';
 
 describe('Schematic: tpl', () => {
   let runner: SchematicTestRunner;

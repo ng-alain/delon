@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
-import { G2TagCloudModule } from './tag-cloud.module';
 import { G2TagCloudComponent, G2TagCloudData } from './tag-cloud.component';
+import { G2TagCloudModule } from './tag-cloud.module';
 
 xdescribe('chart: tag-cloud (killed karma)', () => {
   let page: PageG2<TestComponent>;
@@ -36,7 +36,7 @@ class TestComponent {
     {
       name: 'n',
       label: 'l',
-      value: 10
-    }
+      value: 10,
+    },
   ];
 }

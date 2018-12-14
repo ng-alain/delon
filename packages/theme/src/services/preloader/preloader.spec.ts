@@ -26,7 +26,7 @@ describe('theme: preloader', () => {
     preloaderFinished();
     expect(body.style.overflow).toBe('hidden');
 
-    (<any>window).appBootstrap();
+    (window as any).appBootstrap();
     setTimeout(() => {
       expect(body.style.overflow).toBe('');
       expect(preloader.className).toContain('preloader-hidden');
@@ -51,7 +51,7 @@ describe('theme: preloader', () => {
     });
 
     preloaderFinished();
-    (<any>window).appBootstrap();
+    (window as any).appBootstrap();
     setTimeout(() => {
       expect(document.querySelector('.preloader')).toBeNull();
       done();

@@ -1,4 +1,3 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
 import {
   Component,
   DebugElement,
@@ -6,18 +5,19 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { ErrorCollectModule } from './error-collect.module';
 import { ErrorCollectComponent } from './error-collect.component';
+import { ErrorCollectModule } from './error-collect.module';
 
 describe('abc: error-collect', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -119,7 +119,7 @@ describe('abc: error-collect', () => {
 })
 class TestComponent implements OnInit {
   freq = 20;
-  offsetTop = 65 + 8 * 2;
+  offsetTop = 65 + 16;
   @ViewChild('ec')
   comp: ErrorCollectComponent;
   validateForm: FormGroup;

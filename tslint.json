@@ -162,7 +162,7 @@
     "no-var-keyword": true,
     "number-literal-format": true,
     "object-literal-key-quotes": [
-      true,
+      false,
       "consistent"
     ],
     "object-literal-shorthand": true,
@@ -253,7 +253,6 @@
       "packages/polyfills.ts",
       "packages/typings.d.ts",
       "packages/test.ts",
-      "packages/**/*.spec.ts",
       "packages/schematics/**/files/**/*",
       "packages/schematics/utils/**/*",
       "packages/schematics/test.ts",

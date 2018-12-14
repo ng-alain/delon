@@ -1,5 +1,5 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement, Injector } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EllipsisModule } from './ellipsis.module';
 

@@ -3,12 +3,11 @@ import { ComponentFixture } from '@angular/core/testing';
 import { deepCopy } from '@delon/util';
 import {
   builder,
-  TestFormComponent,
-  SFPage,
   SCHEMA,
+  SFPage,
+  TestFormComponent,
 } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
-import { SFUISchemaItem, SFUISchema } from '../../../src/schema/ui';
 
 describe('form: widget: array', () => {
   let fixture: ComponentFixture<TestFormComponent>;

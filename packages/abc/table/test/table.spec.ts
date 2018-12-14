@@ -1,51 +1,50 @@
-import { Injector, Component, DebugElement, ViewChild } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {
-  TestBed,
-  ComponentFixture,
-  fakeAsync,
-  discardPeriodicTasks,
-  tick,
-} from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
+import {
+  discardPeriodicTasks,
+  fakeAsync,
+  tick,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of, Observable, Subject } from 'rxjs';
 
-import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
-import { ModalHelper, ALAIN_I18N_TOKEN, DatePipe } from '@delon/theme';
-import { deepCopy, deepGet } from '@delon/util';
-import {
+import { en_US, zh_CN, ALAIN_I18N_TOKEN,
+  DatePipe,
   DelonLocaleModule,
-  en_US,
-  zh_CN,
   DelonLocaleService,
+  ModalHelper,
 } from '@delon/theme';
+import { deepCopy, deepGet } from '@delon/util';
+import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 
+import { configureTestSuite, createTestContext, dispatchDropDown } from '@delon/testing';
 import {
-  STColumn,
-  STMultiSort,
-  STColumnBadge,
-  STColumnTag,
-  STPage,
-  STRes,
-  STColumnFilter,
+  AlainI18NService,
+  AlainI18NServiceFake,
+} from '../../../theme/src/services/i18n/i18n';
+import { STDataSource } from '../table-data-source';
+import { STExport } from '../table-export';
+import { STComponent } from '../table.component';
+import { STConfig } from '../table.config';
+import {
   STChange,
+  STColumn,
+  STColumnBadge,
+  STColumnFilter,
+  STColumnTag,
+  STMultiSort,
+  STPage,
   STReq,
+  STRes,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
-import { STComponent } from '../table.component';
-import {
-  AlainI18NServiceFake,
-  AlainI18NService,
-} from '../../../theme/src/services/i18n/i18n';
-import { dispatchDropDown, configureTestSuite, createTestContext } from '@delon/testing';
-import { STExport } from '../table-export';
-import { STDataSource } from '../table-data-source';
-import { STConfig } from '../table.config';
 
 const MOCKDATE = new Date();
 const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
@@ -78,7 +77,7 @@ const PS = 3;
 const DEFAULTCOUNT = PS + 1;
 const USERS: any[] = genData(DEFAULTCOUNT);
 
-let i18nResult = 'zh';
+const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(key: string) {
     return i18nResult;
@@ -107,7 +106,7 @@ describe('abc: table', () => {
       minColumn: false,
       providers: [],
       createComp: true,
-      ...other
+      ...other,
     };
     const imports = [
       NoopAnimationsModule,
@@ -124,10 +123,10 @@ describe('abc: table', () => {
       providers.push(...other.providers);
     }
     if (other.i18n) {
-      providers.push(<any>{
+      providers.push({
         provide: ALAIN_I18N_TOKEN,
         useClass: MockI18NServiceFake,
-      });
+      } as any);
     }
     injector = TestBed.configureTestingModule({
       imports,
@@ -906,8 +905,8 @@ describe('abc: table', () => {
         genModule({
           minColumn: true, providers: [{
             provide: STConfig,
-            useValue: Object.assign(new STConfig(), <STConfig>{ multiSort: { global: true } }),
-          }]
+            useValue: Object.assign(new STConfig(), { multiSort: { global: true } } as STConfig),
+          }],
         });
         const ms: STMultiSort = comp.multiSort;
         expect(ms).not.toBeUndefined();
@@ -916,8 +915,8 @@ describe('abc: table', () => {
         genModule({
           minColumn: true, providers: [{
             provide: STConfig,
-            useValue: Object.assign(new STConfig(), <STConfig>{ multiSort: { global: false } }),
-          }]
+            useValue: Object.assign(new STConfig(), { multiSort: { global: false } } as STConfig),
+          }],
         });
         const ms: STMultiSort = comp.multiSort;
         expect(ms).toBeUndefined();
@@ -1228,6 +1227,7 @@ describe('abc: table', () => {
       beforeEach(() => {
         genModule({ minColumn: true, providers: [STExport] });
         fixture.detectChanges();
+        // tslint:disable-next-line:no-string-literal
         exportSrv = comp['exportSrv'];
         spyOn(exportSrv, 'export');
       });
@@ -1376,7 +1376,8 @@ describe('abc: table', () => {
   describe('[data source]', () => {
     it('should only restore data', () => {
       genModule({ minColumn: true });
-      let dataSource: STDataSource = comp['dataSource'];
+      // tslint:disable-next-line:no-string-literal
+      const dataSource: STDataSource = comp['dataSource'];
       spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({}));
       fixture.detectChanges();
       expect(comp.ps).toBe(PS);

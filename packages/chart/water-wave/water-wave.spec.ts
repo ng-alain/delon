@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
-import { G2WaterWaveModule } from './water-wave.module';
 import { G2WaterWaveComponent } from './water-wave.component';
+import { G2WaterWaveModule } from './water-wave.module';
 
 describe('chart: water-wave', () => {
   let page: PageG2<TestComponent>;

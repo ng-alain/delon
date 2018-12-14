@@ -1,12 +1,12 @@
-import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DelonLocaleModule, en_US, zh_CN, DelonLocaleService } from '@delon/theme';
 import { configureTestSuite, createTestContext } from '@delon/testing';
+import { en_US, zh_CN, DelonLocaleModule, DelonLocaleService } from '@delon/theme';
 
-import { NoticeIconModule } from './notice-icon.module';
 import { NoticeIconComponent } from './notice-icon.component';
+import { NoticeIconModule } from './notice-icon.module';
 import { NoticeItem } from './notice-icon.types';
 
 describe('abc: notice-icon', () => {

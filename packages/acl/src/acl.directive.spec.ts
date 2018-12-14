@@ -1,9 +1,9 @@
-import {
-  TestBed,
-  ComponentFixtureAutoDetect,
-  ComponentFixture,
-} from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
+import {
+  ComponentFixture,
+  ComponentFixtureAutoDetect,
+  TestBed,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { DelonACLModule } from './acl.module';

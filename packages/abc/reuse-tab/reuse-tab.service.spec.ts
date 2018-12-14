@@ -1,24 +1,24 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRoute, RouteReuseStrategy, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 import { MenuService } from '@delon/theme';
 
+import { ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
-import { ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
 
 const TITLE = `标题`;
-let reuse: boolean = true;
-let reuseClosable: boolean = true;
+let reuse = true;
+let reuseClosable = true;
 class MockMenuService {
   getPathByUrl(url: string) {
     return url === '/a/0' ? [] : [{ text: TITLE, reuse, reuseClosable }];
   }
 }
 class MockRouter {
-  navigateByUrl = jasmine.createSpy()
+  navigateByUrl = jasmine.createSpy();
 }
 
 describe('abc: reuse-tab(service)', () => {
@@ -41,7 +41,7 @@ describe('abc: reuse-tab(service)', () => {
           deps: [ReuseTabService],
         },
         { provide: ActivatedRoute, useValue: { snapshot: { url: [] } } },
-        { provide: Router, useFactory: () => new MockRouter() }
+        { provide: Router, useFactory: () => new MockRouter() },
       ].concat(providers),
     });
     srv = injector.get(ReuseTabService);
@@ -61,10 +61,10 @@ describe('abc: reuse-tab(service)', () => {
   }
 
   function getSnapshot(index: number, urlTpl: string = `a/{index}`) {
-    return <any>{
+    return {
       routeConfig: {},
       url: [urlTpl.replace(`{index}`, index + '')],
-    };
+    } as any;
   }
 
   describe('[property]', () => {
@@ -200,12 +200,12 @@ describe('abc: reuse-tab(service)', () => {
       });
       it('should get title from route data', () => {
         const title = 'aa';
-        expect(srv.getTitle('/', <any>{ data: { title } }).text).toBe(title);
+        expect(srv.getTitle('/', { data: { title } } as any).text).toBe(title);
       });
       it('should used ReuseTitle set title via service', () => {
         genCached(1, '/');
         expect(srv.getTitle('/').text).toBe('标题');
-        srv.title = <ReuseTitle>{ text: 'a' };
+        srv.title = { text: 'a' } as ReuseTitle;
         expect(srv.getTitle('/').text).toBe('a');
       });
       it('should use url as title when can be no found title', () => {
@@ -227,7 +227,7 @@ describe('abc: reuse-tab(service)', () => {
       it('should get closable from route data', () => {
         const closable = false;
         expect(
-          srv.getClosable('/', <any>{ data: { reuseClosable: closable } }),
+          srv.getClosable('/', { data: { reuseClosable: closable } } as any),
         ).toBe(closable);
       });
       it('should get closable from menu data', () => {
@@ -305,8 +305,8 @@ describe('abc: reuse-tab(service)', () => {
       const INITCOUNT = 5;
       beforeEach(() => genCached(INITCOUNT));
       it('should be [/a/1] from 0 to 2', () => {
-        const source = '/a/1',
-          target = '/a/3';
+        const source = '/a/1';
+        const target = '/a/3';
         expect(srv.items[0].url).toBe(source);
         expect(srv.items[2].url).toBe(target);
         srv.move(source, 2);
@@ -315,8 +315,8 @@ describe('abc: reuse-tab(service)', () => {
         expect(srv.items[2].url).toBe(source);
       });
       it('should be [/a/1] from 0 to -1', () => {
-        const source = '/a/1',
-          target = '/a/5';
+        const source = '/a/1';
+        const target = '/a/5';
         expect(srv.items[0].url).toBe(source);
         expect(srv.items[INITCOUNT - 1].url).toBe(target);
         srv.move(source, -1);
@@ -325,9 +325,9 @@ describe('abc: reuse-tab(service)', () => {
         expect(srv.items[INITCOUNT - 1].url).toBe(source);
       });
       it('should be move a invalid url', () => {
-        const source = '/a/1',
-          target = '/a/3',
-          invalidUrl = '/a/a';
+        const source = '/a/1';
+        const target = '/a/3';
+        const invalidUrl = '/a/a';
         expect(srv.items[0].url).toBe(source);
         expect(srv.items[2].url).toBe(target);
         srv.move(invalidUrl, 2);

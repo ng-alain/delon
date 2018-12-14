@@ -1,21 +1,21 @@
-import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
-  HttpTestingController,
   HttpClientTestingModule,
+  HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
+import { Injector } from '@angular/core';
+import { TestBed, TestBedStatic } from '@angular/core/testing';
+import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router, DefaultUrlSerializer } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 
-import { DelonAuthModule } from '../auth.module';
-import { DelonAuthConfig } from '../auth.config';
-import { SimpleTokenModel } from './simple/simple.model';
-import { ITokenModel, DA_SERVICE_TOKEN, ITokenService } from './interface';
-import { SimpleInterceptor } from './simple/simple.interceptor';
 import { DOCUMENT } from '@angular/common';
+import { DelonAuthConfig } from '../auth.config';
+import { DelonAuthModule } from '../auth.module';
+import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
+import { SimpleInterceptor } from './simple/simple.interceptor';
+import { SimpleTokenModel } from './simple/simple.model';
 
 function genModel<T extends ITokenModel>(
   modelType: { new(): T },
@@ -50,7 +50,7 @@ class MockTokenService implements ITokenService {
 }
 
 describe('auth: base.interceptor', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let http: HttpClient;
   let httpBed: HttpTestingController;
   const MockRouter = {

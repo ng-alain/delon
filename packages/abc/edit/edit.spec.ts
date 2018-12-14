@@ -1,20 +1,19 @@
 import {
   Component,
   DebugElement,
-  ViewChild,
   EventEmitter,
+  ViewChild,
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {  FormsModule, FormBuilder, FormControlName, FormGroup, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormsModule, NgModel, FormControlName, ReactiveFormsModule } from '@angular/forms';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import * as UTIL from '@delon/util';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
+import * as UTIL from '@delon/util';
 
-import { SEModule } from './edit.module';
 import { SEComponent } from './edit.component';
+import { SEModule } from './edit.module';
 
 const prefixCls = `.se__`;
 
@@ -371,7 +370,7 @@ class TestComponent {
   parent_size: 'default' | 'compact' = 'default';
   parent_firstVisual = true;
   parent_line = false;
-  parent_title = "title";
+  parent_title = 'title';
 
   optional: string;
   optionalHelp: string;
@@ -404,7 +403,7 @@ class TestReactiveComponent {
   constructor(fb: FormBuilder) {
     this.validateForm = fb.group({
       userName: [null, [Validators.required]],
-      dis: { value: '', disabled: true }
+      dis: { value: '', disabled: true },
     });
   }
 }

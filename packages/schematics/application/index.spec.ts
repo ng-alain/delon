@@ -3,7 +3,7 @@ import {
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as LANG from '../core/lang.config';
-import { createAlainApp, createNgRunner, APPNAME, createAlainRunner } from '../utils/testing';
+import { createAlainApp, createAlainRunner, createNgRunner, APPNAME } from '../utils/testing';
 
 describe('NgAlainSchematic: application', () => {
   let runner: SchematicTestRunner;
@@ -42,7 +42,7 @@ describe('NgAlainSchematic: application', () => {
       it(`with use zh`, () => {
         spyOn(LANG, 'getLangData').and.returnValue(JSON.stringify({
           key1: 'Key1',
-          key2: 'KEY2'
+          key2: 'KEY2',
         }));
         const baseRunner = createNgRunner();
         const workspaceTree = baseRunner.runSchematic('workspace', {
@@ -72,14 +72,13 @@ describe('NgAlainSchematic: application', () => {
         `);
 
         const alainRunner = createAlainRunner();
+        // tslint:disable-next-line:no-shadowed-variable
         const tree = alainRunner.runSchematic(
           'ng-add',
-          Object.assign(
-            {
+          {
               skipPackageJson: false,
               defaultLanguage: 'zh',
-            },
-          ),
+          },
           appTree,
         );
 

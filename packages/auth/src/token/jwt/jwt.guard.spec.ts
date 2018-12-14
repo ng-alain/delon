@@ -1,10 +1,10 @@
 import {
-  Injector,
   Component,
+  Injector,
   NgModule,
   NgModuleFactoryLoader,
 } from '@angular/core';
-import { TestBed, inject, fakeAsync } from '@angular/core/testing';
+import { fakeAsync, inject, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import {
   RouterTestingModule,

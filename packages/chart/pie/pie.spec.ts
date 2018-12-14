@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync, tick } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
-import { G2PieModule } from './pie.module';
 import { G2PieComponent } from './pie.component';
+import { G2PieModule } from './pie.module';
 
 describe('chart: pie', () => {
   let page: PageG2<TestMiniComponent | TestFullComponent>;

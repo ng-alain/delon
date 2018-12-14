@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
-import { G2GaugeModule } from './gauge.module';
 import { G2GaugeComponent } from './gauge.component';
+import { G2GaugeModule } from './gauge.module';
 
 describe('chart: gauge', () => {
   let page: PageG2<TestComponent>;

@@ -18,7 +18,7 @@ describe('Service: Settings', () => {
     );
     spyOn(localStorage, 'setItem').and.callFake(
       (key: string, value: string): string => {
-        return (data[key] = <string>value);
+        return (data[key] = value as string);
       },
     );
     spyOn(localStorage, 'clear').and.callFake(() => {
@@ -35,7 +35,7 @@ describe('Service: Settings', () => {
   describe('#layout', () => {
     it('should be reset all', () => {
       srv.setLayout({
-        a: 1
+        a: 1,
       } as any);
       expect(srv.layout.a).toBe(1);
     });

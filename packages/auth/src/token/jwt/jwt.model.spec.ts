@@ -1,4 +1,3 @@
-import { urlBase64Decode } from './jwt.helper';
 import { JWTTokenModel } from './jwt.model';
 
 describe('auth: jwt.model', () => {

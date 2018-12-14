@@ -46,6 +46,7 @@ describe('abc: _src', () => {
     context.error = 'error.png';
     fixture.detectChanges();
     const imgEl = dl.query(By.css('div')).nativeElement as HTMLImageElement;
+    // tslint:disable-next-line:no-string-literal
     expect(imgEl.attributes['onerror'].nodeValue).toContain(context.error);
   });
 });

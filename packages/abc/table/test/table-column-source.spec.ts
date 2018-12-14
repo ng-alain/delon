@@ -1,13 +1,13 @@
 import { ACLService } from '@delon/acl';
-import { AlainI18NServiceFake, AlainI18NService } from '@delon/theme';
+import { AlainI18NService, AlainI18NServiceFake } from '@delon/theme';
 import { deepGet } from '@delon/util';
 
 import { STColumnSource } from '../table-column-source';
 import { STRowSource } from '../table-row.directive';
-import { STColumn } from '../table.interfaces';
 import { STConfig } from '../table.config';
+import { STColumn } from '../table.interfaces';
 
-let i18nResult = 'zh';
+const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(key: string) {
     return i18nResult;
@@ -526,11 +526,13 @@ describe('abc: table: column-souce', () => {
       });
       it('should be restore render row elementref', () => {
         expect(rowSrv.getRow).not.toHaveBeenCalled();
+        // tslint:disable-next-line:no-unused-expression
         srv.process([{ title: '', render: 'a' }])[0];
         expect(rowSrv.getRow).toHaveBeenCalled();
       });
       it('should be restore render title elementref', () => {
         expect(rowSrv.getTitle).not.toHaveBeenCalled();
+        // tslint:disable-next-line:no-unused-expression
         srv.process([{ title: '', renderTitle: 'a' }])[0];
         expect(rowSrv.getTitle).toHaveBeenCalled();
       });
@@ -650,7 +652,7 @@ describe('abc: table: column-souce', () => {
   });
 
   describe('[i18n]', () => {
-    let curLang = 'en';
+    const curLang = 'en';
     beforeEach(() => {
       genModule({ i18n: true });
       spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);

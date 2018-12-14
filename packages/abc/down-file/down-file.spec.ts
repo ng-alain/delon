@@ -1,15 +1,15 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component, DebugElement, Injector } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import * as fs from 'file-saver';
+import { Component, DebugElement, Injector } from '@angular/core';
+import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { _HttpClient } from '@delon/theme';
+import * as fs from 'file-saver';
 
 import { DownFileModule } from './down-file.module';
 
@@ -26,7 +26,7 @@ describe('abc: down-file', () => {
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
-  let injector: Injector;
+  let injector: TestBedStatic;
   let http: HttpClient;
   let _http: _HttpClient;
   let httpBed: HttpTestingController;

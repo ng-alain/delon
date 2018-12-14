@@ -8,9 +8,9 @@ describe('theme: responsive', () => {
       srv = new ResponsiveService({
         responsive: {
           rules: {
-            10: {}
-          }
-        }
+            10: {},
+          },
+        },
       });
     }).toThrow();
   });

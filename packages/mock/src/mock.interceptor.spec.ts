@@ -1,34 +1,34 @@
 import {
-  Injector,
-  NgModuleFactoryLoader,
-  Component,
-  NgModule,
-} from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
+  HttpClient,
+  HttpHeaders,
+  HttpResponse,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import {
-  HttpTestingController,
   HttpClientTestingModule,
+  HttpTestingController,
 } from '@angular/common/http/testing';
 import {
-  HTTP_INTERCEPTORS,
-  HttpClient,
-  HttpResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+  Component,
+  Injector,
+  NgModule,
+  NgModuleFactoryLoader,
+} from '@angular/core';
+import { fakeAsync, inject, tick, TestBed, TestBedStatic } from '@angular/core/testing';
+import { Router, RouterModule } from '@angular/router';
 import {
   RouterTestingModule,
   SpyNgModuleFactoryLoader,
 } from '@angular/router/testing';
-import { AlainThemeModule, _HttpClient } from '@delon/theme';
+import { _HttpClient, AlainThemeModule } from '@delon/theme';
 
 import * as Mock from 'mockjs';
-import { MockService } from './mock.service';
-import { MockStatusError } from './status.error';
+import { MockRequest } from './interface';
 import { DelonMockConfig } from './mock.config';
 import { MockInterceptor } from './mock.interceptor';
-import { MockRequest } from './interface';
 import { DelonMockModule } from './mock.module';
+import { MockService } from './mock.service';
+import { MockStatusError } from './status.error';
 
 const DATA = {
   USERS: {
@@ -51,7 +51,7 @@ const DATA = {
 };
 
 describe('mock: interceptor', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let srv: MockService = null;
   let http: HttpClient;
   let httpMock: HttpTestingController;

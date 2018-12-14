@@ -1,4 +1,4 @@
-import { deepGet, deepCopy, copy, deepMerge } from './other';
+import { copy, deepCopy, deepGet, deepMerge } from './other';
 
 describe('abc: utils', () => {
   describe('#deepGet', () => {
@@ -83,7 +83,7 @@ describe('abc: utils', () => {
     let original: any;
     it('should working', () => {
       const fn = () => {};
-      const time = new Date;
+      const time = new Date();
       original = { a: 1, b: { c: 'c' }, fn, arr2: [], str: 'str', time, bool: true };
 
       deepMerge(original, { b: { d: 'd' }, arr: [ 2 ] });

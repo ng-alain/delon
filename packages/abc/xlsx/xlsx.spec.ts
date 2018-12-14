@@ -1,14 +1,14 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { LazyService, deepCopy } from '@delon/util';
 import { HttpClient } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { deepCopy, LazyService } from '@delon/util';
 import * as fs from 'file-saver';
+import { of, throwError } from 'rxjs';
 import { XlsxModule } from './xlsx.module';
 import { XlsxService } from './xlsx.service';
 import { XlsxExportOptions } from './xlsx.types';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 class MockLazyService {
   load() {
@@ -119,9 +119,9 @@ describe('abc: xlsx', () => {
     });
     it('should be export xlsx via array', (done: () => void) => {
       srv
-        .export(<XlsxExportOptions>{
+        .export({
           sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }],
-        })
+        } as XlsxExportOptions)
         .then(() => {
           expect(fs.default.saveAs).toHaveBeenCalled();
           done();
@@ -129,11 +129,11 @@ describe('abc: xlsx', () => {
     });
     it('should be export xlsx via object', (done: () => void) => {
       srv
-        .export(<XlsxExportOptions>{
+        .export({
           sheets: {
             name: 'asdf',
           },
-        })
+        } as XlsxExportOptions)
         .then(() => {
           expect(fs.default.saveAs).toHaveBeenCalled();
           done();
@@ -142,14 +142,14 @@ describe('abc: xlsx', () => {
     it('should be call callback', (done: () => void) => {
       let count = 0;
       srv
-        .export(<XlsxExportOptions>{
+        .export({
           sheets: {
             name: 'asdf',
           },
           callback: () => {
             ++count;
           },
-        })
+        } as XlsxExportOptions)
         .then(() => {
           expect(count).toBe(1);
           done();

@@ -1,14 +1,14 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { deepCopy } from '@delon/util';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AlainThemeModule } from '@delon/theme';
 import { configureTestSuite, createTestContext } from '@delon/testing';
-import { TestFormComponent, SFPage } from './base.spec';
-import { SFSchema } from '../src/schema/index';
-import { SFUISchemaItem, SFUISchema } from '../src/schema/ui';
+import { AlainThemeModule } from '@delon/theme';
+import { deepCopy } from '@delon/util';
 import { ObjectProperty } from '../src/model/object.property';
 import { DelonFormModule } from '../src/module';
+import { SFSchema } from '../src/schema/index';
+import { SFUISchema, SFUISchemaItem } from '../src/schema/ui';
+import { SFPage, TestFormComponent } from './base.spec';
 
 describe('form: schema', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -416,7 +416,7 @@ describe('form: schema', () => {
           page.newSchema({
             properties: {
               a: { type: 'string' },
-              b: { type: 'string' }
+              b: { type: 'string' },
             },
             ui: {
               order: ['c', 'a'],
@@ -429,7 +429,7 @@ describe('form: schema', () => {
           page.newSchema({
             properties: {
               a: { type: 'string' },
-              b: { type: 'string' }
+              b: { type: 'string' },
             },
             ui: {
               order: ['a'],
@@ -442,7 +442,7 @@ describe('form: schema', () => {
           page.newSchema({
             properties: {
               a: { type: 'string' },
-              b: { type: 'string' }
+              b: { type: 'string' },
             },
             ui: {
               order: ['a', '*', '*', '*', '*'],

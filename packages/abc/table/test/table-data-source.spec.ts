@@ -1,4 +1,5 @@
 import { DecimalPipe } from '@angular/common';
+import { of, throwError } from 'rxjs';
 
 import { CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
 import { deepCopy } from '@delon/util';
@@ -6,7 +7,6 @@ import { deepCopy } from '@delon/util';
 import { STDataSource, STDataSourceOptions } from '../table-data-source';
 import { STConfig } from '../table.config';
 import { STColumnFilterMenu } from '../table.interfaces';
-import { of, throwError } from 'rxjs';
 
 const DEFAULT = {
   pi: 1,
@@ -36,10 +36,11 @@ describe('abc: table: data-souce', () => {
   let datePipe: DatePipe;
   let ynPipe: YNPipe;
   let decimalPipe: DecimalPipe;
+  // tslint:disable-next-line:prefer-const
   let httpResponse: any;
 
   class MockHttpClient {
-    request(method: string, url: string, options: any) {
+    request(method: string, url: string, opt: any) {
       return of(httpResponse);
     }
   }
@@ -254,8 +255,8 @@ describe('abc: table: data-souce', () => {
         options.req.reName = { pi: 'PI', ps: 'PS' };
         let resParams: any = {};
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
-            resParams = options.params;
+          (method: string, url: string, opt: any) => {
+            resParams = opt.params;
             return of([]);
           },
         );
@@ -269,8 +270,8 @@ describe('abc: table: data-souce', () => {
         options.page.zeroIndexed = true;
         let resParams: any = {};
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
-            resParams = options.params;
+          (method: string, url: string, opt: any) => {
+            resParams = opt.params;
             return of([]);
           },
         );
@@ -284,8 +285,8 @@ describe('abc: table: data-souce', () => {
         options.req.method = 'post';
         let resBody: any = {};
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
-            resBody = options.body;
+          (method: string, url: string, opt: any) => {
+            resBody = opt.body;
             return of([]);
           },
         );
@@ -303,7 +304,7 @@ describe('abc: table: data-souce', () => {
       it('should be re-name total & list', (done: () => void) => {
         options.res.reName = { total: 'T', list: 'L' };
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
+          (method: string, url: string, opt: any) => {
             return of({ L: genData(DEFAULT.ps), T: DEFAULT.ps });
           },
         );
@@ -316,7 +317,7 @@ describe('abc: table: data-souce', () => {
       it('should be invalid re-name config', (done: () => void) => {
         options.res.reName = { total: 'T', list: 'L1' };
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
+          (method: string, url: string, opt: any) => {
             return of({ L: genData(DEFAULT.ps), T: DEFAULT.ps });
           },
         );
@@ -329,7 +330,7 @@ describe('abc: table: data-souce', () => {
       it('should be return empty when result is not array', (done: () => void) => {
         options.res.reName = { total: 'T', list: 'L' };
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
+          (method: string, url: string, opt: any) => {
             return of({ L: 1, T: DEFAULT.ps });
           },
         );
@@ -343,7 +344,7 @@ describe('abc: table: data-souce', () => {
         options.res.reName = { total: 'T1', list: '1L' };
         options.total = 4;
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
+          (method: string, url: string, opt: any) => {
             return of({ L: 1, T: DEFAULT.ps });
           },
         );
@@ -357,7 +358,7 @@ describe('abc: table: data-souce', () => {
         options.res.reName = { total: 'T1', list: '1L' };
         options.total = undefined;
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
+          (method: string, url: string, opt: any) => {
             return of({ L: 1, T: DEFAULT.ps });
           },
         );
@@ -369,7 +370,7 @@ describe('abc: table: data-souce', () => {
       });
       it('should be catch response error', (done: () => void) => {
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
+          (method: string, url: string, opt: any) => {
             return throwError('aa');
           },
         );
@@ -395,8 +396,8 @@ describe('abc: table: data-souce', () => {
           key: 'id',
         };
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
-            resParams = options.params;
+          (method: string, url: string, opt: any) => {
+            resParams = opt.params;
             return of([]);
           },
         );
@@ -505,8 +506,8 @@ describe('abc: table: data-souce', () => {
           ],
         };
         spyOn(http, 'request').and.callFake(
-          (method: string, url: string, options: any) => {
-            resParams = options.params;
+          (method: string, url: string, opt: any) => {
+            resParams = opt.params;
             return of([]);
           },
         );

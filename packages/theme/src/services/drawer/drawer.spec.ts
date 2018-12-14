@@ -1,7 +1,7 @@
-import { Injector, Component, NgModule } from '@angular/core';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import { NzDrawerService, NgZorroAntdModule, NzDrawerRef } from 'ng-zorro-antd';
+import { Component, Injector, NgModule } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgZorroAntdModule, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd';
 import { AlainThemeModule } from '../../theme.module';
 import { DrawerHelper } from './drawer.helper';
 
@@ -84,9 +84,9 @@ describe('theme: DrawerHelper', () => {
           {
             size: 'sm',
             drawerOptions: {
-              nzWrapClassName: 'aaa'
-            }
-          }
+              nzWrapClassName: 'aaa',
+            },
+          },
         )
         .subscribe();
       fixture.detectChanges();
@@ -104,9 +104,9 @@ describe('theme: DrawerHelper', () => {
           {
             size: 100,
             drawerOptions: {
-              nzWrapClassName: 'bbb'
-            }
-          }
+              nzWrapClassName: 'bbb',
+            },
+          },
         )
         .subscribe();
       fixture.detectChanges();
@@ -129,9 +129,9 @@ describe('theme: DrawerHelper', () => {
             footer: true,
             footerHeight: 100,
             drawerOptions: {
-              nzWrapClassName: 'ccc'
-            }
-          }
+              nzWrapClassName: 'ccc',
+            },
+          },
         )
         .subscribe();
       fixture.detectChanges();
@@ -151,9 +151,9 @@ describe('theme: DrawerHelper', () => {
             size: 100,
             footer: false,
             drawerOptions: {
-              nzWrapClassName: 'ddd'
-            }
-          }
+              nzWrapClassName: 'ddd',
+            },
+          },
         )
         .subscribe();
       fixture.detectChanges();

@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
-import { G2MiniBarModule } from './mini-bar.module';
 import { G2MiniBarComponent } from './mini-bar.component';
+import { G2MiniBarModule } from './mini-bar.module';
 
 describe('chart: mini-bar', () => {
   let page: PageG2<TestComponent>;

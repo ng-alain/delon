@@ -1,17 +1,12 @@
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
-import { of } from 'rxjs';
-import { deepCopy } from '@delon/util';
+import { ComponentFixture } from '@angular/core/testing';
 
 import {
   builder,
-  TestFormComponent,
   SFPage,
-  SCHEMA,
+  TestFormComponent,
 } from '../../../spec/base.spec';
-import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
-import { SFUISchemaItem, SFUISchema } from '../../../src/schema/ui';
+import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: boolean', () => {
   let fixture: ComponentFixture<TestFormComponent>;

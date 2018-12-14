@@ -7,12 +7,12 @@ import { JWTTokenModel } from './jwt/jwt.model';
 describe('auth: token.service', () => {
   let injector: Injector;
   let service: ITokenService;
-  const VALUE: ITokenModel = <ITokenModel>{
+  const VALUE: ITokenModel = {
     token: 'token data',
-  };
-  const JWTVALUE: ITokenModel = <ITokenModel>{
+  } as ITokenModel;
+  const JWTVALUE: ITokenModel = {
     token: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ`,
-  };
+  } as ITokenModel;
 
   beforeEach(() => {
     let data = {};
@@ -25,7 +25,7 @@ describe('auth: token.service', () => {
     });
     spyOn(localStorage, 'setItem').and.callFake(
       (key: string, value: string): string => {
-        return (data[key] = <string>value);
+        return (data[key] = value as string);
       },
     );
     spyOn(localStorage, 'clear').and.callFake(() => {

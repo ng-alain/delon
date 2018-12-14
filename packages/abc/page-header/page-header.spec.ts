@@ -1,23 +1,23 @@
-import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { APP_BASE_HREF } from '@angular/common';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
+import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { APP_BASE_HREF } from '@angular/common';
-import {
-  MenuService,
-  ALAIN_I18N_TOKEN,
-  TitleService,
-  AlainI18NServiceFake,
-  AlainI18NService,
-  SettingsService,
-} from '@delon/theme';
 import { configureTestSuite, createTestContext } from '@delon/testing';
+import {
+  AlainI18NService,
+  AlainI18NServiceFake,
+  ALAIN_I18N_TOKEN,
+  MenuService,
+  SettingsService,
+  TitleService,
+} from '@delon/theme';
 
-import { PageHeaderModule } from './page-header.module';
-import { PageHeaderComponent } from './page-header.component';
-import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { NzAffixComponent } from 'ng-zorro-antd';
+import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
+import { PageHeaderComponent } from './page-header.component';
+import { PageHeaderModule } from './page-header.module';
 
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(key: string) {
@@ -39,7 +39,7 @@ describe('abc: page-header', () => {
     created?: boolean;
   }) {
     const imports = [RouterTestingModule.withRoutes([
-      { path: '1-1/:name', component: TestComponent }
+      { path: '1-1/:name', component: TestComponent },
     ]), PageHeaderModule];
     const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
     if (other.providers && other.providers.length) {
@@ -78,7 +78,7 @@ describe('abc: page-header', () => {
     configureTestSuite(() => {
       injector = TestBed.configureTestingModule({
         imports: [RouterTestingModule.withRoutes([
-          { path: '1-1/:name', component: TestComponent }
+          { path: '1-1/:name', component: TestComponent },
         ]), PageHeaderModule],
         providers: [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService],
         declarations: [TestComponent, TestAutoBreadcrumbComponent, TestI18nComponent],
@@ -225,7 +225,7 @@ describe('abc: page-header', () => {
             fixture.detectChanges();
             const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
             expect(firstPath.innerText).not.toBe(secondPath.innerText);
-          })
+          });
         });
       }));
     });
@@ -234,7 +234,7 @@ describe('abc: page-header', () => {
       let i18n: AlainI18NService;
       beforeEach(() => {
         TestBed.overrideProvider(ALAIN_I18N_TOKEN, {
-          useFactory: () => new MockI18NServiceFake,
+          useFactory: () => new MockI18NServiceFake(),
         });
         ({ fixture, dl, context } = createTestContext(TestI18nComponent));
         i18n = injector.get(ALAIN_I18N_TOKEN);
@@ -274,6 +274,7 @@ describe('abc: page-header', () => {
       });
       it('in title', () => {
         const text = 'asdf';
+        // tslint:disable-next-line:no-shadowed-variable
         const i18n = 'i18n';
         context.title = undefined;
         context.autoTitle = true;
@@ -349,11 +350,11 @@ describe('abc: page-header', () => {
           providers: [
             {
               provide: TitleService,
-              useFactory: () => null
+              useFactory: () => null,
             },
             {
               provide: ReuseTabService,
-              useFactory: () => null
+              useFactory: () => null,
             },
           ],
         });
@@ -415,7 +416,6 @@ describe('abc: page-header', () => {
     });
   });
 });
-
 
 class TestBaseComponent {
   @ViewChild('comp')

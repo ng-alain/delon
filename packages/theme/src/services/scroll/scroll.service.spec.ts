@@ -1,14 +1,14 @@
-import { ReflectiveInjector } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
+import { Injector, StaticProvider } from '@angular/core';
 
-import { ScrollService } from './scroll.service';
 import { WINDOW } from '../../win_tokens';
+import { ScrollService } from './scroll.service';
 
 describe('Service: Scroll', () => {
   const topOfPageElem = {} as Element;
-  let injector: ReflectiveInjector;
+  let injector: Injector;
   let window: any;
-  let document: MockDocument;
+  let doc: MockDocument;
   let scrollService: ScrollService;
 
   class MockElement {
@@ -31,13 +31,14 @@ describe('Service: Scroll', () => {
       scrollBy() {}
     }
     beforeEach(() => {
-      injector = ReflectiveInjector.resolveAndCreate([
-        ScrollService,
-        { provide: WINDOW, useClass: MockWindow },
-        { provide: DOCUMENT, useClass: MockDocument },
-      ]);
+      const providers = [
+        { provide: ScrollService, useClass: ScrollService, deps: [WINDOW, DOCUMENT] },
+        { provide: WINDOW, useClass: MockWindow, deps: [] },
+        { provide: DOCUMENT, useClass: MockDocument, deps: [] },
+      ] as StaticProvider[];
+      injector = Injector.create({ providers });
       window = injector.get(WINDOW);
-      document = injector.get(DOCUMENT);
+      doc = injector.get(DOCUMENT) as any;
       scrollService = injector.get(ScrollService);
 
       spyOn(window, 'scrollBy');
@@ -108,13 +109,14 @@ describe('Service: Scroll', () => {
       scrollBy = null;
     }
     beforeEach(() => {
-      injector = ReflectiveInjector.resolveAndCreate([
-        ScrollService,
-        { provide: WINDOW, useClass: MockWindow },
-        { provide: DOCUMENT, useClass: MockDocument },
-      ]);
+      const providers = [
+        { provide: ScrollService, useClass: ScrollService, deps: [WINDOW, DOCUMENT] },
+        { provide: WINDOW, useClass: MockWindow, deps: [] },
+        { provide: DOCUMENT, useClass: MockDocument, deps: [] },
+      ] as StaticProvider[];
+      injector = Injector.create({ providers });
       window = injector.get(WINDOW);
-      document = injector.get(DOCUMENT);
+      doc = injector.get(DOCUMENT) as any;
       scrollService = injector.get(ScrollService);
     });
     it('should only use scrollIntoView', () => {

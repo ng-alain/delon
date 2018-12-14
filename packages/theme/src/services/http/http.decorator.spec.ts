@@ -1,24 +1,24 @@
 import { Observable } from 'rxjs';
 
+import { HttpParams } from '@angular/common/http';
 import { _HttpClient } from './http.client';
 import {
   BaseApi,
-  BaseUrl,
   BaseHeaders,
-  Path,
-  Query,
+  BaseUrl,
   Body,
-  Headers,
-  OPTIONS,
-  GET,
-  POST,
   DELETE,
-  PUT,
+  GET,
+  Headers,
   HEAD,
-  PATCH,
   JSONP,
+  OPTIONS,
+  Path,
+  PATCH,
+  POST,
+  PUT,
+  Query,
 } from './http.decorator';
-import { HttpParams } from '@angular/common/http';
 
 @BaseUrl('/user')
 @BaseHeaders({ bh: 'a' })
@@ -48,7 +48,7 @@ class MockService extends BaseApi {
   }
 
   @POST(':id')
-  save(@Path('id') id: number, @Body data: Object): Observable<any> {
+  save(@Path('id') id: number, @Body data: {}): Observable<any> {
     return;
   }
 
@@ -105,19 +105,19 @@ class MockEmptyService extends BaseApi {
 }
 
 describe('theme: http.decorator', () => {
-  let request: jasmine.Spy,
-    srv: MockService,
-    injector: MockInjector,
-    tokens: any;
+  let request: jasmine.Spy;
+  let srv: MockService;
+  let injector: MockInjector;
+  let tokens: any;
 
   class MockInjector {
     get(token: any, notFoundValue = null) {
       const tokenStr = token + '';
       if (tokenStr.includes('_HttpClient')) {
-        return tokens['_HttpClient'];
+        return tokens._HttpClient;
       }
       if (tokenStr.includes('ACLService')) {
-        return tokens['ACLService'];
+        return tokens.ACLService;
       }
       return notFoundValue;
     }
@@ -145,7 +145,7 @@ describe('theme: http.decorator', () => {
 
   it('should be throw error when not import AlainThemeModule', () => {
     expect(() => {
-      delete tokens['_HttpClient'];
+      delete tokens._HttpClient;
       srv.GET(1);
     }).toThrowError();
   });
@@ -210,7 +210,7 @@ describe('theme: http.decorator', () => {
 
   describe('[acl]', () => {
     it('should be request when user authorized', () => {
-      tokens['ACLService'] = {
+      tokens.ACLService = {
         can: () => true,
       };
       srv.ACL_Admin();
@@ -221,7 +221,7 @@ describe('theme: http.decorator', () => {
     });
 
     it('should be throw 401 when user not authorize', done => {
-      tokens['ACLService'] = {
+      tokens.ACLService = {
         can: () => false,
       };
       srv.ACL_User().subscribe(

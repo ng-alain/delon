@@ -1,10 +1,10 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import * as Mock from 'mockjs';
-import { MockService } from './mock.service';
-import { DelonMockConfig } from './mock.config';
 import { DelonMockModule } from '../index';
 import { MockRequest } from './interface';
+import { DelonMockConfig } from './mock.config';
+import { MockService } from './mock.service';
 
 const DATA = {
   USERS: {

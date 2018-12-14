@@ -40,10 +40,10 @@ describe('util: style', () => {
     fakeRender: any = {
       removeClass: (el, value) => delete this.fakeEl[value],
       addClass: (el, value) => (this.fakeEl[value] = ''),
-      removeAttribute: () => this.fakeEl = {}
+      removeAttribute: () => this.fakeEl = {},
     };
 
-    run(obj: Object, cleanAll?: boolean): this {
+    run(obj: {}, cleanAll?: boolean): this {
       if (typeof cleanAll === 'undefined') {
         updateHostClass(this.fakeEl, this.fakeRender, obj);
       } else {

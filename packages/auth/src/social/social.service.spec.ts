@@ -1,24 +1,24 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
 import {
-  TestBed,
+  discardPeriodicTasks,
   fakeAsync,
   tick,
-  discardPeriodicTasks,
+  TestBed,
 } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Router, DefaultUrlSerializer } from '@angular/router';
-import { DOCUMENT } from '@angular/platform-browser';
 
+import { DOCUMENT } from '@angular/common';
 import { DelonAuthConfig } from '../auth.config';
-import { SimpleTokenModel } from '../token/simple/simple.model';
+import { DelonAuthModule } from '../auth.module';
 import {
   DA_SERVICE_TOKEN,
-  ITokenService,
   ITokenModel,
+  ITokenService,
 } from '../token/interface';
+import { SimpleTokenModel } from '../token/simple/simple.model';
 import { SocialService } from './social.service';
-import { DelonAuthModule } from '../auth.module';
 
 const mockRouter = {
   url: '',

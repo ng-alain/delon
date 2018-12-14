@@ -1,11 +1,11 @@
-import { Component, DebugElement, ViewChild, Injector } from '@angular/core';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DelonLocaleModule, en_US, DelonLocaleService } from '@delon/theme';
 import { configureTestSuite, createTestContext } from '@delon/testing';
+import { en_US, DelonLocaleModule, DelonLocaleService } from '@delon/theme';
 
-import { ExceptionModule } from './exception.module';
 import { ExceptionComponent } from './exception.component';
+import { ExceptionModule } from './exception.module';
 
 describe('abc: exception', () => {
   let injector: Injector;

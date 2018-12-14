@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import localeZhHans from '@angular/common/locales/zh-Hans';
 import { registerLocaleData } from '@angular/common';
+import localeZhHans from '@angular/common/locales/zh-Hans';
 registerLocaleData(localeZhHans);
 
 import { distanceInWordsToNow } from 'date-fns';

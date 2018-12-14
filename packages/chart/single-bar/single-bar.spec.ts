@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
-import { G2SingleBarModule } from './single-bar.module';
 import { G2SingleBarComponent } from './single-bar.component';
+import { G2SingleBarModule } from './single-bar.module';
 
 describe('chart: single-bar', () => {
   let page: PageG2<TestComponent>;

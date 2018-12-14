@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
 import { PageG2 } from '../../testing/g2';
-import { G2RadarModule } from './radar.module';
 import { G2RadarComponent, G2RadarData } from './radar.component';
+import { G2RadarModule } from './radar.module';
 
 describe('chart: radar', () => {
   let page: PageG2<TestComponent>;
@@ -47,7 +47,7 @@ class TestComponent {
     {
       name: 'n',
       label: 'l',
-      value: 10
-    }
+      value: 10,
+    },
   ];
 }

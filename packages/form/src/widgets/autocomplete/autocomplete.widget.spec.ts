@@ -1,21 +1,13 @@
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { of } from 'rxjs';
-import {
-  NzAutocompleteComponent,
-  NzAutocompleteOptionComponent,
-} from 'ng-zorro-antd';
-import { deepCopy } from '@delon/util';
 
 import {
   builder,
-  TestFormComponent,
   SFPage,
-  SCHEMA,
+  TestFormComponent,
 } from '../../../spec/base.spec';
 import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
-import { SFUISchemaItem, SFUISchema } from '../../../src/schema/ui';
 import { AutoCompleteWidget, EMAILSUFFIX } from './autocomplete.widget';
 
 describe('form: widget: autocomplete', () => {

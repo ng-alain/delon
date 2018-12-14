@@ -1,27 +1,27 @@
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import {
   Component,
-  DebugElement,
-  ViewChild,
   CUSTOM_ELEMENTS_SCHEMA,
+  DebugElement,
   Injector,
+  ViewChild,
 } from '@angular/core';
 import {
-  ComponentFixture,
-  TestBed,
   fakeAsync,
   tick,
+  ComponentFixture,
+  TestBed,
 } from '@angular/core/testing';
-import { By, DOCUMENT } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import {
-  RouterModule,
-  Router,
   ActivationEnd,
+  Router,
+  RouterModule,
 } from '@angular/router';
-import { APP_BASE_HREF } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 
-import { FullContentModule } from './full-content.module';
 import { FullContentComponent } from './full-content.component';
+import { FullContentModule } from './full-content.module';
 import { FullContentService } from './full-content.service';
 
 describe('abc: full-content', () => {
