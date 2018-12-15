@@ -8,4 +8,8 @@ export class DelonMockConfig {
   force ?= false;
   /** 是否打印 Mock 请求信息，弥补浏览器无Network信息 */
   log ?= true;
+  /**
+   * 是否拦截命中后继续调用后续拦截器的 `intercept` 方法，默认：`true`
+   */
+  executeOtherInterceptors ?= true;
 }
