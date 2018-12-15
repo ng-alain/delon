@@ -1,22 +1,21 @@
 // tslint:disable:no-any
-import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpBackend, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpResponseBase, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { of, Observable, Observer } from 'rxjs';
-import { delay, tap } from 'rxjs/operators';
-
-import { _HttpClient } from '@delon/theme';
+import { of, throwError, Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 import { MockRequest } from './interface';
 import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
+
+class HttpMockInterceptorHandler implements HttpHandler {
+  constructor(private next: HttpHandler, private interceptor: HttpInterceptor) { }
+
+  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+    return this.interceptor.intercept(req, this.next);
+  }
+}
 
 @Injectable()
 export class MockInterceptor implements HttpInterceptor {
@@ -28,6 +27,7 @@ export class MockInterceptor implements HttpInterceptor {
       delay: 300,
       force: false,
       log: true,
+      executeOtherInterceptors: true,
       ...this.injector.get(DelonMockConfig, null),
     };
     const rule = src.getRule(req.method, req.url.split('?')[0]);
@@ -72,23 +72,16 @@ export class MockInterceptor implements HttpInterceptor {
         try {
           res = rule.callback.call(this, mockRequest);
         } catch (e) {
-          let errRes: HttpErrorResponse;
-          if (e instanceof MockStatusError) {
-            errRes = new HttpErrorResponse({
-              url: req.url,
-              headers: req.headers,
-              status: e.status,
-              statusText: e.statusText || 'Unknown Error',
-              error: e.error,
-            });
-            if (config.log)
-              console.log(`%c💀${req.method}->${req.url}`, 'background:#000;color:#bada55', errRes, req);
-          } else {
-            console.log(`%c💀${req.method}->${req.url}`, 'background:#000;color:#bada55', `Please use MockStatusError to throw status error`, e, req);
-          }
-          return new Observable((observer: Observer<HttpEvent<any>>) => {
-            observer.error(errRes);
+          res = new HttpErrorResponse({
+            url: req.url,
+            headers: req.headers,
+            status: 400,
+            statusText: e.statusText || 'Unknown Error',
+            error: e.error,
           });
+          if (e instanceof MockStatusError) {
+            res.status = e.status;
+          }
         }
         break;
       default:
@@ -96,26 +89,34 @@ export class MockInterceptor implements HttpInterceptor {
         break;
     }
 
-    const response =
-      res instanceof HttpResponse ?
-        res :
-        new HttpResponse({
-          status: 200,
-          url: req.url,
-          body: res,
-        });
+    if (!(res instanceof HttpResponseBase)) {
+      res = new HttpResponse({
+        status: 200,
+        url: req.url,
+        body: res,
+      });
+    }
 
     if (config.log) {
       console.log(`%c👽${req.method}->${req.url}->request`, 'background:#000;color:#bada55', req);
-      console.log(`%c👽${req.method}->${req.url}->response`, 'background:#000;color:#bada55', response);
+      console.log(`%c👽${req.method}->${req.url}->response`, 'background:#000;color:#bada55', res);
     }
-    const hc = this.injector.get(_HttpClient, null);
-    if (hc) hc.begin();
-    return of(response).pipe(
-      delay(config.delay),
-      tap(() => {
-        if (hc) hc.end();
-      }),
-    );
+
+    const res$ = res instanceof HttpErrorResponse ? throwError(res) : of(res);
+
+    if (config.executeOtherInterceptors) {
+      const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
+      const lastInterceptors = interceptors.slice(interceptors.indexOf(this) + 1);
+      if (lastInterceptors.length > 0) {
+        const chain = lastInterceptors.reduceRight(
+          (_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor), {
+            handle: () => res$,
+          } as HttpBackend,
+        );
+        return chain.handle(req).pipe(delay(config.delay));
+      }
+    }
+
+    return res$.pipe(delay(config.delay));
   }
 }
