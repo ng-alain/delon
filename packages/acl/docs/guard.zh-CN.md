@@ -1,8 +1,6 @@
 ---
 order: 3
-title:
-  en-US: Guard
-  zh-CN: 路由守卫
+title: 路由守卫
 type: Documents
 ---
 
