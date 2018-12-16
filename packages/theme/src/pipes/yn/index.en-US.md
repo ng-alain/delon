@@ -1,6 +1,7 @@
 ---
 order: 1
-title: yn-Badge
+title: yn
+subtitle: Badge
 type: Pipe
 ---
 

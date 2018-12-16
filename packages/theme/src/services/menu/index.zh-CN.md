@@ -1,8 +1,7 @@
 ---
 order: 2
-title:
-  en-US: Menu Service
-  zh-CN: 菜单服务
+title: MenuService
+subtitle: 菜单服务
 type: Service
 ---
 

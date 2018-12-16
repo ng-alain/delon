@@ -1,6 +1,7 @@
 ---
 order: 1
-title: yn-徽章
+title: yn
+subtitle: 徽章
 type: Pipe
 ---
 

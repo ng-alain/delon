@@ -1,6 +1,7 @@
 ---
 order: 5
-title: Scroll Service
+title: ScrollService
+subtitle: Scroll Service
 type: Service
 ---
 

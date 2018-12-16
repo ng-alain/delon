@@ -1,6 +1,7 @@
 ---
 order: 4
-title: Title Service
+title: TitleService
+subtitle: Title Service
 type: Service
 ---
 

@@ -1,6 +1,7 @@
 ---
 order: 3
-title: 对话框辅助类
+title: ModalHelper
+subtitle: 对话框辅助类
 type: Service
 ---
 

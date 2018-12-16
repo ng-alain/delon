@@ -1,6 +1,7 @@
 ---
 order: 1
-title: safe-XSS
+title: safe
+subtitle: 安全HTML等
 type: Pipe
 ---
 

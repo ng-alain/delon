@@ -1,7 +1,8 @@
 ---
 type: Service
 order: 5
-title: 响应式服务
+title: ResponsiveService
+subtitle: 响应式服务
 ---
 
 更友好的使用响应式规则，将原 `xs`、`sm` 等属性简化成 `col` 栏，默认响应式规则：

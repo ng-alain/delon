@@ -13,10 +13,6 @@ import { Subscription } from 'rxjs';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { MenuService } from '../menu/menu.service';
 
-/**
- * 设置标题
- * @see https://ng-alain.com/docs/service#TitleService
- */
 @Injectable({ providedIn: 'root' })
 export class TitleService implements OnDestroy {
   private _prefix = '';
