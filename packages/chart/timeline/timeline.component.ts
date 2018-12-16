@@ -50,7 +50,6 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() height = 400;
   @Input() padding: number[] = [60, 20, 40, 40];
   @Input() @InputNumber() borderWidth = 2;
-  @Input() @InputNumber() tickCount = 8;
   @Input() @InputBoolean() slider = true;
 
   // #endregion
@@ -60,7 +59,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private install() {
-    const { node, sliderNode, height, padding, mask, tickCount, slider } = this;
+    const { node, sliderNode, height, padding, mask, slider } = this;
     const chart = this.chart = new G2.Chart({
       container: node.nativeElement,
       forceFit: true,
@@ -87,7 +86,8 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
         scales: {
           x: {
             type: 'time',
-            tickCount,
+            tickInterval: 60 * 60 * 1000,
+            range: [0, 1],
             mask,
           },
         },
@@ -106,7 +106,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const { chart, _slider, slider, height, padding, data, mask, titleMap, position, colorMap, borderWidth, tickCount } = this;
+    const { chart, _slider, slider, height, padding, data, mask, titleMap, position, colorMap, borderWidth } = this;
     if (!chart || !data || data.length <= 0) return ;
 
     chart.legend({
@@ -123,42 +123,39 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     chart.get('geoms').forEach((v, idx) => {
       v.color(colorMap[`y${idx + 1}`]).size(borderWidth);
     });
+    chart.set('height', height);
+    chart.set('padding', padding);
 
     data.filter(v => !(v.x instanceof Number)).forEach(v => {
       v.x = +new Date(v.x);
     });
     data.sort((a, b) => +a.x - +b.x);
-
-    chart.set('height', height);
-    chart.set('padding', padding);
-
-    const begin = Math.ceil(data.length > tickCount ? (data.length - tickCount) / 2 : 0);
-
-    const ds = new DataSet({
-      state: {
-        start: data[begin - 1].x,
-        end: data[begin - 1 + tickCount].x,
-      },
-    });
-    const dv = ds.createView().source(data);
-    dv.source(data).transform({
-      type: 'filter',
-      callback: (val: G2TimelineData) => {
-        const time = +val.x; // !注意：时间格式，建议转换为时间戳进行比较
-        return time >= ds.state.start && time <= ds.state.end;
-      },
-    });
     let max;
     if (data[0] && data[0].y1 && data[0].y2) {
       max = Math.max(
-        data.sort((a, b) => b.y1 - a.y1)[0].y1,
-        data.sort((a, b) => b.y2 - a.y2)[0].y2,
+        [...data].sort((a, b) => b.y1 - a.y1)[0].y1,
+        [...data].sort((a, b) => b.y2 - a.y2)[0].y2,
       );
     }
+    const ds = new DataSet({
+      state: {
+        start: data[0].x,
+        end: data[data.length - 1].x,
+      },
+    });
+    const dv = ds.createView();
+    dv.source(data)
+      .transform({
+        type: 'filter',
+        callback: (val: G2TimelineData) => {
+          const time = +val.x;
+          return time >= ds.state.start && time <= ds.state.end;
+        },
+      })
+    ;
     chart.source(dv, {
       x: {
         type: 'timeCat',
-        tickCount,
         mask,
         range: [0, 1],
       },
