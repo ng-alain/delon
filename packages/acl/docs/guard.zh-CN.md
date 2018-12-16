@@ -6,11 +6,11 @@ type: Documents
 
 ## 写在前面
 
-路由守卫是指，当用户进入路由前若不满足权限时是无法进入。
+路由守卫可以防止未授权用户访问页面。
 
-路由守卫需要单独对每一个路由进行设置，很多时候这看起来很繁琐，`@delon/acl` 实现了一个通过守卫类 `ACLGuard`，可以在路由注册时透过简单的配置完成一些复杂的操作，甚至支持 `Observable` 类型。
+路由守卫需要单独对每一个路由进行设置，很多时候这看起来很繁琐，`@delon/acl` 实现了通用守卫类 `ACLGuard`，可以在路由注册时透过简单的配置完成一些复杂的操作，甚至支持 `Observable` 类型。
 
-指定 `canActivate: [ ACLGuard ]` 加载路由守卫，并通过 `data` 属性的 `guard` 来指定 `ACLCanType` 参数：
+使用固定属性 `guard` 来指定 `ACLCanType` 参数，例如：
 
 ```ts
 const routes: Routes = [
@@ -33,7 +33,7 @@ const routes: Routes = [
 ]
 ```
 
-> `guard` 的值必须符合 [ACLCanType](/acl/api#ACLCanType) 类型值。
+> `guard` 的值必须符合 [ACLCanType](/acl/getting-started#ACLCanType) 类型值。
 
 ## 示例
 
