@@ -1,6 +1,7 @@
 ---
 order: 3
-title: Modal Helper
+title: ModalHelper
+subtitle: Modal Helper
 type: Service
 ---
 

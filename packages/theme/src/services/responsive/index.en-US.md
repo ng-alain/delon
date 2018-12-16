@@ -1,7 +1,8 @@
 ---
 type: Service
 order: 5
-title: Responsive Service
+title: ResponsiveService
+subtitle: Responsive Service
 ---
 
 More friendly use responsive rules, the original `xs`, `sm` etc. reduced to `col` property, the default response rule:

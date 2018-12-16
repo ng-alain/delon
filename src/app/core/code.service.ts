@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { VERSION as VERSION_ALAIN } from '@delon/theme';
 import sdk from '@stackblitz/sdk';
 
 @Injectable({ providedIn: 'root' })
@@ -159,14 +158,14 @@ declare var Slider: any;
         'src/index.html': [
           ~isG2
             ? `
-<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/g2/3.0.5-beta.5/g2.min.js"></script>
-<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/data-set/0.8.5/data-set.min.js"></script>
+<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g2-3.4.1/dist/g2.min.js"></script>
+<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.10.1/dist/data-set.min.js"></script>
 <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/g2-plugin-slider/2.0.0/g2-plugin-slider.js"></script>
 `
             : ``,
 
           `<${selector}>loading</${selector}>
-<div style="position: fixed; top: 8px; right: 8px; z-index: 8888;">@delon version: ${VERSION_ALAIN.full}</div>
+<div id="VERSION" style="position: fixed; bottom: 8px; right: 8px; z-index: 8888;"></div>
           `,
         ].join(''),
         'src/main.ts': `import './polyfills';
@@ -236,7 +235,7 @@ export class StartupService {
   load(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.lazy.load([
-        'https://cdn.bootcss.com/ajv/6.4.0/ajv.min.js'
+        'https://cdn.bootcss.com/ajv/6.6.1/ajv.min.js'
       ])
         .then(() => resolve(null));
     });
@@ -247,6 +246,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
   return () => startupService.load();
 }
 
+import { VERSION as VERSION_ALAIN } from '@delon/theme';
 import { ${componentName} } from './app.component';
 
 @NgModule({
@@ -279,7 +279,13 @@ providers: [
 declarations: [ ${componentName} ],
 bootstrap:    [ ${componentName} ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    setTimeout(() => {
+      document.querySelector('#VERSION').innerHTML = \`@delon version: \${VERSION_ALAIN.full}\`;
+    }, 1000);
+  }
+}
   `,
         'src/styles.less': ``,
         '_mock/user.ts': require('!!raw-loader!../../../_mock/user.ts'),
@@ -301,16 +307,16 @@ export class AppModule { }
         'date-fns': '*',
         'file-saver': '^1.3.3',
         'ngx-countdown': '*',
-        'ng-zorro-antd': '^1.9.0-rc.0',
-        '@delon/theme': '*',
-        '@delon/abc': '*',
-        '@delon/chart': '*',
-        '@delon/acl': '*',
-        '@delon/auth': '*',
-        '@delon/cache': '*',
-        '@delon/mock': '*',
-        '@delon/form': '*',
-        '@delon/util': '*',
+        'ng-zorro-antd': '^7.0.0-rc.1',
+        '@delon/theme': 'latest',
+        '@delon/abc': 'latest',
+        '@delon/chart': 'latest',
+        '@delon/acl': 'latest',
+        '@delon/auth': 'latest',
+        '@delon/cache': 'latest',
+        '@delon/mock': 'latest',
+        '@delon/form': 'latest',
+        '@delon/util': 'latest',
         'extend': '*',
         'qrious': '*',
       },

@@ -1,6 +1,7 @@
 ---
 order: 1
-title: Settings Service
+title: SettingsService
+subtitle: Project configuration
 type: Service
 ---
 

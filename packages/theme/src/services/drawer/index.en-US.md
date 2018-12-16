@@ -1,6 +1,7 @@
 ---
 order: 3
-title: Drawer Helper
+title: DrawerHelper
+subtitle: Drawer Helper
 type: Service
 ---
 

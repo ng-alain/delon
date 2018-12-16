@@ -1,6 +1,7 @@
 ---
 order: 1
-title: _currenty-货币
+title: _currenty
+subtitle: 货币
 type: Pipe
 ---
 

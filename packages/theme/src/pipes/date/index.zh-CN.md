@@ -1,6 +1,7 @@
 ---
 order: 1
-title: _date-日期
+title: _date
+subtitle: 日期
 type: Pipe
 ---
 

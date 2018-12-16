@@ -1,6 +1,7 @@
 ---
 order: 4
-title: 页面标题服务
+title: TitleService
+subtitle: 页面标题服务
 type: Service
 ---
 

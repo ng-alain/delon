@@ -1,6 +1,7 @@
 ---
 order: 1
-title: _currenty-Currenty
+title: _currenty
+subtitle: Currenty
 type: Pipe
 ---
 

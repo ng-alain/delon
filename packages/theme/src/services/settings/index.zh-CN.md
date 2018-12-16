@@ -1,6 +1,7 @@
 ---
 order: 1
-title: 项目配置项服务
+title: SettingsService
+subtitle: 项目配置项服务
 type: Service
 ---
 
