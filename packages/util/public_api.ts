@@ -1,3 +1,4 @@
+export * from './src/addon/string_template_outlet';
 export * from './src/string/string';
 
 export * from './src/time/time';

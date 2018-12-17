@@ -356,6 +356,10 @@ module.exports = {
           'zh-CN': '类型',
           'en-US': 'Type',
         },
+        {
+          'zh-CN': '模板',
+          'en-US': 'Template',
+        },
       ],
       module: '@delon/util',
       defaultRoute: 'getting-started',
