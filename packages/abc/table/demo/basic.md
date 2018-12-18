@@ -20,10 +20,10 @@ import { STColumn } from '@delon/abc';
 @Component({
   selector: 'app-demo',
   template: `
-  <st [data]="url" [ps]="3" [req]="{params: params}" [columns]="columns"></st>`,
+  <st [data]="url" [req]="{params: params}" [columns]="columns"></st>`,
 })
 export class DemoComponent {
-  url = `/users?total=5&field=list`;
+  url = `/users?total=2&field=list`;
   params = { a: 1, b: 2 };
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
