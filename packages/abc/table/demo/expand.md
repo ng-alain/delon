@@ -20,7 +20,7 @@ import { STColumn } from '@delon/abc';
 @Component({
   selector: 'app-demo',
   template: `
-  <st [data]="users" [columns]="columns" [expand]="expand">
+  <st [data]="users" [columns]="columns" [expand]="expand" expandRowByClick>
     <ng-template #expand let-item let-index="index" let-column="column">
       {{ item.description }}
     </ng-template>
