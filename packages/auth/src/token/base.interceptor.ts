@@ -7,7 +7,6 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injector, Optional } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable, Observer } from 'rxjs';
 
 import { _HttpClient } from '@delon/theme';
@@ -35,7 +34,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
 
     if (
       options.allow_anonymous_key &&
-      (req.params.has(options.allow_anonymous_key) || this.injector.get(Router).parseUrl(req.urlWithParams).queryParamMap.has(options.allow_anonymous_key))
+      (req.params.has(options.allow_anonymous_key) || new RegExp(`[\?|&]${options.allow_anonymous_key}=[^&]+`).test(req.urlWithParams))
     ) {
       return next.handle(req);
     }
