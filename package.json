@@ -31,7 +31,8 @@
     "site:gen": "node scripts/site/main init",
     "site": "npm run site:gen && ng s -o",
     "site:build": "npm run site:gen && ng build --prod --build-optimizer --base-href /",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
+    "changelog": "node scripts/publish/changelog.js",
+    "changelog2": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
     "publish:next": "bash scripts/publish/publish.sh -next",
     "publish": "bash scripts/publish/publish.sh"
@@ -136,7 +137,9 @@
     "screenfull": "^3.3.3",
     "less-bundle-promise": "^1.0.7",
     "@ngx-translate/http-loader": "^4.0.0",
-    "lint-staged": "^8.1.0"
+    "lint-staged": "^8.1.0",
+    "git-raw-commits": "^2.0.0",
+    "conventional-commits-parser": "^3.0.1"
   },
   "husky": {
     "hooks": {
