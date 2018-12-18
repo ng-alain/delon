@@ -59,6 +59,7 @@ Property | Description | Type | Default
 `[header]` | Table header renderer | `string,TemplateRef<void>` | -
 `[footer]` | Table footer renderer | `string,TemplateRef<void>` | -
 `[body]` | Table extra body renderer, generally used to add total rows | `TemplateRef<void>` | -
+`[expandRowByClick]` | Whether to expand row by clicking anywhere in the whole row | `boolean` | `false`
 `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | -
 `(change)` | Events | `EventEmitter<STChange>` | -
 `(error)` | Error event | `EventEmitter<STError>` | -

@@ -127,6 +127,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() footer: string | TemplateRef<void>;
   /** 额外 `body` 内容 */
   @Input() body: TemplateRef<void>;
+  @Input() @InputBoolean() expandRowByClick = false;
   /** `expand` 可展开，当数据源中包括 `expand` 表示展开状态 */
   @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
   @Input() noResult: string | TemplateRef<void>;
@@ -336,6 +337,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private rowClickCount = 0;
   _rowClick(e: Event, item: STData, index: number) {
     if ((e.target as HTMLElement).nodeName === 'INPUT') return;
+    const { expand, expandRowByClick, rowClickTime } = this;
+    if (!!expand && expandRowByClick) {
+      item.expand = !item.expand;
+      return;
+    }
     ++this.rowClickCount;
     if (this.rowClickCount !== 1) return;
     setTimeout(() => {
@@ -346,7 +352,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.changeEmit('dblClick', data);
       }
       this.rowClickCount = 0;
-    }, this.rowClickTime);
+    }, rowClickTime);
   }
 
   /** 移除某行数据 */

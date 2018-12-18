@@ -156,10 +156,7 @@ export class STDataSource {
           pi: retPi,
           total: retTotal,
           list: retList,
-          pageShow:
-            typeof page.show === 'undefined'
-              ? (retTotal || total) > ps
-              : page.show,
+          pageShow: typeof page.show === 'undefined' ? (retTotal || total) > ps : page.show,
         });
       });
     });
