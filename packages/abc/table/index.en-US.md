@@ -22,7 +22,7 @@ The value is URL.
 - Resolve backend data format through `res.reName` mapping data
 - Use `res.process` to optimize data before rendering table
 - Use `page.zeroIndexed` to adjust the http request when `pi` parameter follows the `0` base index, default is `1` base index
-- Automatically cancel paging when the returned body value is an array type
+- Automatically cancel paging when the response body value is an array type
 - Use `_HttpClient` send request, so applies to [AlainThemeConfig](/theme/http#AlainThemeConfig) configuration
 
 ### Static
