@@ -24,6 +24,7 @@ import { en_US, zh_CN, ALAIN_I18N_TOKEN,
 import { deepCopy, deepGet } from '@delon/util';
 import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 
+import { XlsxService } from '@delon/abc/xlsx';
 import { configureTestSuite, createTestContext, dispatchDropDown } from '@delon/testing';
 import {
   AlainI18NService,
@@ -118,15 +119,12 @@ describe('abc: table', () => {
       STModule,
       DelonLocaleModule,
     ];
-    const providers = [];
+    const providers = [{
+      provide: ALAIN_I18N_TOKEN,
+      useClass: MockI18NServiceFake,
+    }];
     if (other.providers.length > 0) {
       providers.push(...other.providers);
-    }
-    if (other.i18n) {
-      providers.push({
-        provide: ALAIN_I18N_TOKEN,
-        useClass: MockI18NServiceFake,
-      } as any);
     }
     injector = TestBed.configureTestingModule({
       imports,
@@ -154,12 +152,13 @@ describe('abc: table', () => {
 
   afterEach(() => comp.ngOnDestroy());
 
-  describe('[property]', () => {
+  describe('', () => {
+    configureTestSuite(() => genModule({ createComp: false }));
+    beforeEach(() => createComp(true, TestComponent));
     describe('#columns', () => {
-      beforeEach(() => genModule({}));
       describe('[type]', () => {
         describe(`with checkbox`, () => {
-          xit(`should be render checkbox`, (done: () => void) => {
+          it(`should be render checkbox`, (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
               .then(() => {
@@ -173,7 +172,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit('should auto column width', (done: () => void) => {
+          it('should auto column width', (done: () => void) => {
             page
               .newColumn([{ title: 'id', index: 'id', type: 'checkbox' }])
               .then(() => {
@@ -181,7 +180,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit('should be check all current page', (done: () => void) => {
+          it('should be check all current page', (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
               .then(() => {
@@ -192,7 +191,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit('should be checked in row', (done: () => void) => {
+          it('should be checked in row', (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
               .then(() => {
@@ -205,7 +204,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit('should selected id value less than 2 rows', (done: () => void) => {
+          it('should selected id value less than 2 rows', (done: () => void) => {
             const selections = [
               {
                 text: '<div class="j-s1"></div>',
@@ -228,7 +227,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit('should be unchecked via clearCheck', (done: () => void) => {
+          it('should be unchecked via clearCheck', (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
               .then(() => {
@@ -243,7 +242,7 @@ describe('abc: table', () => {
           });
         });
         describe('with radio', () => {
-          xit(`should be render checkbox`, (done: () => void) => {
+          it(`should be render checkbox`, (done: () => void) => {
             page
               .newColumn([{ title: 'RADIOname', index: 'id', type: 'radio' }])
               .then(() => {
@@ -257,7 +256,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit('should auto column width', (done: () => void) => {
+          it('should auto column width', (done: () => void) => {
             page
               .newColumn([{ title: 'id', index: 'id', type: 'radio' }])
               .then(() => {
@@ -265,7 +264,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit('should be checked in row', (done: () => void) => {
+          it('should be checked in row', (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'id', type: 'radio' }])
               .then(() => {
@@ -278,7 +277,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit('should be unchecked via clearRadio', (done: () => void) => {
+          it('should be unchecked via clearRadio', (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'id', type: 'radio' }])
               .then(() => {
@@ -293,7 +292,7 @@ describe('abc: table', () => {
           });
         });
         describe('with link', () => {
-          xit(`should be render anchor link`, (done: () => void) => {
+          it(`should be render anchor link`, (done: () => void) => {
             const columns = [
               {
                 title: '',
@@ -308,7 +307,7 @@ describe('abc: table', () => {
               done();
             });
           });
-          xit(`should be text when not specify click`, (done: () => void) => {
+          it(`should be text when not specify click`, (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'id', type: 'link' }])
               .then(() => {
@@ -316,7 +315,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit('should be navigate url when click is string value', (done: () => void) => {
+          it('should be navigate url when click is string value', (done: () => void) => {
             const router = injector.get(Router);
             spyOn(router, 'navigateByUrl');
             context.data = [{ link: '/a' }];
@@ -337,14 +336,14 @@ describe('abc: table', () => {
           });
         });
         describe('with img', () => {
-          xit(`should be render img`, (done: () => void) => {
+          it(`should be render img`, (done: () => void) => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
             page.newColumn(columns as any).then(() => {
               page.expectCell('', 1, 1, 'img');
               done();
             });
           });
-          xit('should not render img when is empty data', (done: () => void) => {
+          it('should not render img when is empty data', (done: () => void) => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
             context.data = [{ img: MOCKIMG }, { img: '' }];
             page.newColumn(columns as any).then(() => {
@@ -354,7 +353,7 @@ describe('abc: table', () => {
           });
         });
         describe('with currency', () => {
-          xit(`should be render currency`, (done: () => void) => {
+          it(`should be render currency`, (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'id', type: 'currency' }])
               .then(() => {
@@ -362,7 +361,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit(`should be text right`, (done: () => void) => {
+          it(`should be text right`, (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'id', type: 'currency' }])
               .then(() => {
@@ -372,7 +371,7 @@ describe('abc: table', () => {
           });
         });
         describe('with number', () => {
-          xit(`should be render number`, (done: () => void) => {
+          it(`should be render number`, (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'num', type: 'number' }])
               .then(() => {
@@ -380,7 +379,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit(`should be custom render number digits`, (done: () => void) => {
+          it(`should be custom render number digits`, (done: () => void) => {
             page
               .newColumn([
                 {
@@ -395,7 +394,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit(`should be text right`, (done: () => void) => {
+          it(`should be text right`, (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'num', type: 'number' }])
               .then(() => {
@@ -405,7 +404,7 @@ describe('abc: table', () => {
           });
         });
         describe('with date', () => {
-          xit(`should be render date`, (done: () => void) => {
+          it(`should be render date`, (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'date', type: 'date' }])
               .then(() => {
@@ -415,7 +414,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit(`should be custom render date format`, (done: () => void) => {
+          it(`should be custom render date format`, (done: () => void) => {
             page
               .newColumn([
                 {
@@ -430,7 +429,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit(`should be text center`, (done: () => void) => {
+          it(`should be text center`, (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'date', type: 'date' }])
               .then(() => {
@@ -440,7 +439,7 @@ describe('abc: table', () => {
           });
         });
         describe('with yn', () => {
-          xit(`should be render yn`, (done: () => void) => {
+          it(`should be render yn`, (done: () => void) => {
             page
               .newColumn([{ title: '', index: 'yn', type: 'yn' }])
               .then(() => {
@@ -450,7 +449,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit(`should be custom render yn`, (done: () => void) => {
+          it(`should be custom render yn`, (done: () => void) => {
             page
               .newColumn([
                 { title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' },
@@ -462,7 +461,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          xit(`should be custom truth value`, (done: () => void) => {
+          it(`should be custom truth value`, (done: () => void) => {
             page
               .newColumn([
                 {
@@ -492,7 +491,7 @@ describe('abc: table', () => {
           4: { text: '默认', color: 'default' },
           5: { text: '警告', color: 'warning' },
         };
-        xit(`should be render badge`, (done: () => void) => {
+        it(`should be render badge`, (done: () => void) => {
           page
             .newColumn([
               { title: '', index: 'status', type: 'badge', badge: BADGE },
@@ -502,7 +501,7 @@ describe('abc: table', () => {
               done();
             });
         });
-        xit(`should be render text when badge is undefined or null`, (done: () => void) => {
+        it(`should be render text when badge is undefined or null`, (done: () => void) => {
           page
             .newColumn([
               { title: '', index: 'status', type: 'badge', badge: null },
@@ -521,7 +520,7 @@ describe('abc: table', () => {
           4: { text: '默认', color: '' },
           5: { text: '警告', color: 'orange' },
         };
-        xit(`should be render tag`, (done: () => void) => {
+        it(`should be render tag`, (done: () => void) => {
           page
             .newColumn([{ title: 'tag', index: 'tag', type: 'tag', tag: TAG }])
             .then(() => {
@@ -529,7 +528,7 @@ describe('abc: table', () => {
               done();
             });
         });
-        xit(`should be render text when tag is undefined or null`, (done: () => void) => {
+        it(`should be render text when tag is undefined or null`, (done: () => void) => {
           page
             .newColumn([{ title: '', index: 'status', type: 'tag', tag: null }])
             .then(() => {
@@ -539,7 +538,7 @@ describe('abc: table', () => {
         });
       });
       describe('[other]', () => {
-        xit('should custom render via format', (done: () => void) => {
+        it('should custom render via format', (done: () => void) => {
           page
             .newColumn([
               {
@@ -553,7 +552,7 @@ describe('abc: table', () => {
               done();
             });
         });
-        xit('should default render via default', (done: () => void) => {
+        it('should default render via default', (done: () => void) => {
           page
             .newColumn([
               {
@@ -567,7 +566,7 @@ describe('abc: table', () => {
               done();
             });
         });
-        xit('should be custom class in cell', (done: () => void) => {
+        it('should be custom class in cell', (done: () => void) => {
           page
             .newColumn([{ title: '', index: 'id', className: 'asdf' }])
             .then(() => {
@@ -577,7 +576,7 @@ describe('abc: table', () => {
         });
       });
       describe('[buttons]', () => {
-        xit(`should be pop confirm when type=del`, (done: () => void) => {
+        it(`should be pop confirm when type=del`, (done: () => void) => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -609,7 +608,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        xit('should custom render text via format', (done: () => void) => {
+        it('should custom render text via format', (done: () => void) => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -626,7 +625,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        xit('#614', (done: () => void) => {
+        it('#614', (done: () => void) => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -649,7 +648,7 @@ describe('abc: table', () => {
           });
         });
         describe('[condition]', () => {
-          xit('should be hide menu in first row', (done: () => void) => {
+          it('should be hide menu in first row', (done: () => void) => {
             const columns: STColumn[] = [
               {
                 title: '',
@@ -663,7 +662,7 @@ describe('abc: table', () => {
           });
         });
         describe('[events]', () => {
-          xit('#reload', (done: () => void) => {
+          it('#reload', (done: () => void) => {
             const columns: STColumn[] = [
               {
                 title: '',
@@ -678,7 +677,7 @@ describe('abc: table', () => {
               done();
             });
           });
-          xit('#load', (done: () => void) => {
+          it('#load', (done: () => void) => {
             const columns: STColumn[] = [
               {
                 title: '',
@@ -694,7 +693,7 @@ describe('abc: table', () => {
             });
           });
           describe('#modal', () => {
-            xit('is normal mode', (done: () => void) => {
+            it('is normal mode', (done: () => void) => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -725,7 +724,7 @@ describe('abc: table', () => {
                 done();
               });
             });
-            xit('is static mode', (done: () => void) => {
+            it('is static mode', (done: () => void) => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -758,7 +757,7 @@ describe('abc: table', () => {
             });
           });
           describe('#link', () => {
-            xit('should be trigger click', (done: () => void) => {
+            it('should be trigger click', (done: () => void) => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -774,7 +773,7 @@ describe('abc: table', () => {
                 done();
               });
             });
-            xit('should be navigate when return a string value', (done: () => void) => {
+            it('should be navigate when return a string value', (done: () => void) => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -796,7 +795,7 @@ describe('abc: table', () => {
         });
       });
       describe('[fixed]', () => {
-        xit('should be fixed left column', (done: () => void) => {
+        it('should be fixed left column', (done: () => void) => {
           page
             .newColumn([
               { title: '1', index: 'id', fixed: 'left', width: '100px' },
@@ -810,7 +809,7 @@ describe('abc: table', () => {
               done();
             });
         });
-        xit('should be fixed right column', (done: () => void) => {
+        it('should be fixed right column', (done: () => void) => {
           page
             .newColumn([
               { title: '1', index: 'id', fixed: 'right', width: '100px' },
@@ -827,8 +826,7 @@ describe('abc: table', () => {
       });
     });
     describe('#data', () => {
-      xit('support null data', (done: () => void) => {
-        genModule({ minColumn: true });
+      it('support null data', (done: () => void) => {
         context.data = null;
         fixture.detectChanges();
         fixture
@@ -846,8 +844,7 @@ describe('abc: table', () => {
       });
     });
     describe('#req', () => {
-      beforeEach(() => genModule({ minColumn: true }));
-      xit('should be keep reName valid', () => {
+      it('should be keep reName valid', () => {
         context.req = { reName: null };
         fixture.detectChanges();
         expect(comp.req.reName).not.toBeNull();
@@ -856,8 +853,7 @@ describe('abc: table', () => {
       });
     });
     describe('#res', () => {
-      beforeEach(() => genModule({ minColumn: true }));
-      xit('should be keep reName valid', () => {
+      it('should be keep reName valid', () => {
         context.res = { reName: null };
         fixture.detectChanges();
         expect(comp.res.reName).not.toBeNull();
@@ -866,7 +862,7 @@ describe('abc: table', () => {
         expect(comp.res.reName.total[0]).toBe('total');
         expect(comp.res.reName.list[0]).toBe('list');
       });
-      xit('support a.b', () => {
+      it('support a.b', () => {
         context.res = { reName: { total: 'a.b', list: 'c.d' } };
         fixture.detectChanges();
         expect(comp.res.reName).not.toBeNull();
@@ -878,53 +874,8 @@ describe('abc: table', () => {
         expect(comp.res.reName.list[1]).toBe('d');
       });
     });
-    describe('#multiSort', () => {
-      xit('with true', () => {
-        genModule({ minColumn: true });
-        context.multiSort = true;
-        fixture.detectChanges();
-        const ms: STMultiSort = comp.multiSort;
-        expect(typeof ms).toBe('object');
-      });
-      xit('with false', () => {
-        genModule({ minColumn: true });
-        context.multiSort = false;
-        fixture.detectChanges();
-        const ms: STMultiSort = comp.multiSort;
-        expect(ms).toBeNull();
-      });
-      xit('with object', () => {
-        genModule({ minColumn: true });
-        context.multiSort = { key: 'aa' };
-        fixture.detectChanges();
-        const ms: STMultiSort = comp.multiSort;
-        expect(typeof ms).toBe('object');
-        expect(ms.key).toBe('aa');
-      });
-      xit('should default is mulit sorting by config', () => {
-        genModule({
-          minColumn: true, providers: [{
-            provide: STConfig,
-            useValue: Object.assign(new STConfig(), { multiSort: { global: true } } as STConfig),
-          }],
-        });
-        const ms: STMultiSort = comp.multiSort;
-        expect(ms).not.toBeUndefined();
-      });
-      xit('should default non-mulit sorting by config', () => {
-        genModule({
-          minColumn: true, providers: [{
-            provide: STConfig,
-            useValue: Object.assign(new STConfig(), { multiSort: { global: false } } as STConfig),
-          }],
-        });
-        const ms: STMultiSort = comp.multiSort;
-        expect(ms).toBeUndefined();
-      });
-    });
     describe('#showTotal', () => {
-      beforeEach(() => genModule({ minColumn: true }));
-      xit('with true', (done: () => void) => {
+      it('with true', (done: () => void) => {
         context.page.total = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -935,7 +886,7 @@ describe('abc: table', () => {
           done();
         });
       });
-      xit('with false', (done: () => void) => {
+      it('with false', (done: () => void) => {
         context.page.total = false;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -943,7 +894,7 @@ describe('abc: table', () => {
           done();
         });
       });
-      xit('should be custom template', (done: () => void) => {
+      it('should be custom template', (done: () => void) => {
         context.pi = 1;
         context.ps = 3;
         context.page.total = `{{total}}/{{range[0]}}/{{range[1]}}`;
@@ -958,13 +909,12 @@ describe('abc: table', () => {
       });
     });
     describe('#showPagination', () => {
-      beforeEach(() => genModule({ minColumn: true }));
       describe('with undefined', () => {
         beforeEach(() => {
           context.ps = 2;
           context.page.show = undefined;
         });
-        xit('should auto hide when total less than ps', (done: () => void) => {
+        it('should auto hide when total less than ps', (done: () => void) => {
           context.data = deepCopy(USERS).slice(0, 1);
           fixture.detectChanges();
           fixture.whenStable().then(() => {
@@ -972,7 +922,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        xit('should auto show when ps less than total', (done: () => void) => {
+        it('should auto show when ps less than total', (done: () => void) => {
           context.data = deepCopy(USERS).slice(0, 3);
           fixture.detectChanges();
           fixture.whenStable().then(() => {
@@ -981,7 +931,7 @@ describe('abc: table', () => {
           });
         });
       });
-      xit('should always show when with true', (done: () => void) => {
+      it('should always show when with true', (done: () => void) => {
         context.page.show = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -991,9 +941,8 @@ describe('abc: table', () => {
       });
     });
     describe('#pagePlacement', () => {
-      beforeEach(() => genModule({ minColumn: true }));
       ['left', 'center', 'right'].forEach(pos => {
-        xit(`with ${pos}`, (done: () => void) => {
+        it(`with ${pos}`, (done: () => void) => {
           context.page.placement = pos as any;
           fixture.detectChanges();
           fixture.whenStable().then(() => {
@@ -1004,8 +953,7 @@ describe('abc: table', () => {
       });
     });
     describe('#responsiveHideHeaderFooter', () => {
-      beforeEach(() => genModule({ minColumn: true }));
-      xit('should working', done => {
+      it('should working', done => {
         context.responsiveHideHeaderFooter = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -1016,10 +964,9 @@ describe('abc: table', () => {
     });
     describe('#toTop', () => {
       beforeEach(() => {
-        genModule({ minColumn: true });
         context.page.toTopOffset = 10;
       });
-      xit('with true', (done: () => void) => {
+      it('with true', (done: () => void) => {
         context.page.toTop = true;
         fixture.detectChanges();
         const el = page.getEl('st');
@@ -1032,7 +979,7 @@ describe('abc: table', () => {
             done();
           });
       });
-      xit('with false', (done: () => void) => {
+      it('with false', (done: () => void) => {
         context.page.toTop = false;
         fixture.detectChanges();
         const el = page.getEl('st');
@@ -1045,7 +992,7 @@ describe('abc: table', () => {
             done();
           });
       });
-      xit('should scroll to .ant-table-body when used scroll', (done: () => void) => {
+      it('should scroll to .ant-table-body when used scroll', (done: () => void) => {
         context.scroll = { x: '1300px' };
         context.page.toTop = true;
         fixture.detectChanges();
@@ -1061,48 +1008,8 @@ describe('abc: table', () => {
           });
       });
     });
-    describe('[custom render template]', () => {
-      xit('with column title', (done: () => void) => {
-        genModule({
-          template: `<st #st [data]="data" [columns]="columns">
-            <ng-template st-row="id" type="title"><div class="id-title">ID</div></ng-template>
-          </st>`,
-        });
-        page
-          .newColumn([{ title: '', index: 'id', renderTitle: 'id' }])
-          .then(() => {
-            expect(
-              page.getHead('id').querySelector('.id-title').textContent,
-            ).toBe('ID');
-            done();
-          });
-      });
-      xit('should be custom row', (done: () => void) => {
-        genModule({
-          template: `<st #st [data]="data" [columns]="columns">
-            <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
-          </st>`,
-        });
-        page.newColumn([{ title: '', index: 'id', render: 'id' }]).then(() => {
-          expect(page.getCell().querySelector('.j-id').textContent).toBe('id1');
-          done();
-        });
-      });
-      xit('allow invalid id', (done: () => void) => {
-        genModule({
-          template: `<st #st [data]="data" [columns]="columns">
-            <ng-template st-row="invalid-id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
-          </st>`,
-        });
-        page.newColumn([{ title: '', index: 'id', render: 'id' }]).then(() => {
-          expect(page.getCell().querySelector('.j-id')).toBeNull();
-          done();
-        });
-      });
-    });
     describe('#expand', () => {
       beforeEach(() => {
-        genModule({ minColumn: false });
         createComp(true, TestExpandComponent);
       });
       describe('should be expanded when click row if expandRowByClick', () => {
@@ -1130,146 +1037,373 @@ describe('abc: table', () => {
         });
       });
     });
-  });
-
-  describe('[public method]', () => {
-    describe('#load', () => {
-      beforeEach(() => genModule({ minColumn: true }));
-      xit('nothing specified', () => {
-        expect(context.change).not.toHaveBeenCalled();
+    describe('[data source]', () => {
+      it('should only restore data', () => {
+        // tslint:disable-next-line:no-string-literal
+        const dataSource: STDataSource = comp['dataSource'];
+        spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({}));
         fixture.detectChanges();
-        comp.load();
-        expect(context.change).toHaveBeenCalled();
-      });
-      xit(`can specify page number`, () => {
-        expect(context.change).not.toHaveBeenCalled();
-        fixture.detectChanges();
-        comp.load(2);
-        expect(context.change).toHaveBeenCalled();
-        expect(comp.pi).toBe(2);
-      });
-      xit(`can specify extra params`, () => {
-        expect(context.change).not.toHaveBeenCalled();
-        fixture.detectChanges();
-        comp.load(1, { a: 1 });
-        expect(context.change).toHaveBeenCalled();
-        expect(comp.req.params.a).toBe(1);
-      });
-      xit('shoule be keeping extra params when do not passed', () => {
-        comp.load(1, { a: 1 });
-        expect(comp.req.params.a).toBe(1);
-        comp.load(1);
-        expect(comp.req.params.a).toBe(1);
-      });
-      xit('shoule be merge extra params', () => {
-        comp.load(1, { a: 1 });
-        comp.load(1, { b: 2 }, { merge: true });
-        expect(comp.req.params.a).toBe(1);
-        expect(comp.req.params.b).toBe(2);
-      });
-      xit('can\'t contaminate raw data', () => {
-        const params: any = { a: 1 };
-        context.req = { params };
-        fixture.detectChanges();
-        comp.load(1, { b: 2 }, { merge: true });
-        expect(comp.req.params.a).toBe(1);
-        expect(comp.req.params.b).toBe(2);
-        expect(params.b).toBeUndefined();
+        expect(comp.ps).toBe(PS);
       });
     });
-    describe('#reload', () => {
-      beforeEach(() => genModule({ minColumn: true }));
-      xit('keeping current page index', () => {
-        fixture.detectChanges();
-        comp.load(2);
-        expect(comp.pi).toBe(2);
-        comp.reload();
-        expect(comp.pi).toBe(2);
-      });
-      xit('without extra params', () => {
-        expect(context.change).not.toHaveBeenCalled();
-        const orgExtraParams = comp.req.params;
-        fixture.detectChanges();
-        comp.reload();
-        expect(context.change).toHaveBeenCalled();
-        expect(comp.req.params).toBe(orgExtraParams);
-      });
-      xit(`with extra params`, () => {
-        expect(context.change).not.toHaveBeenCalled();
-        fixture.detectChanges();
-        comp.reload({ a: 1 });
-        expect(context.change).toHaveBeenCalled();
-        expect(comp.req.params.a).toBe(1);
-      });
-      xit('merge extra params', () => {
-        comp.reload({ a: 1 });
-        comp.reload({ b: 2 }, { merge: true });
-        expect(comp.req.params.a).toBe(1);
-        expect(comp.req.params.b).toBe(2);
+    describe('[filter]', () => {
+      describe('in local-data', () => {
+        let filter: STColumnFilter;
+        let firstCol: STColumn;
+        beforeEach(() => {
+          context.columns = [
+            {
+              title: '',
+              index: 'i',
+              filter: {
+                multiple: true,
+                menus: [
+                  { text: 'f1', value: 'fv1' },
+                  { text: 'f2', value: 'fv2' },
+                ],
+                confirmText: 'ok',
+                clearText: 'reset',
+                icon: 'aa',
+                fn: () => true,
+              },
+            },
+          ];
+        });
+        it('muse provide the fn function', (done: () => void) => {
+          spyOn(console, 'warn');
+          context.columns[0].filter.fn = null;
+          fixture.detectChanges();
+          firstCol = comp._columns[0];
+          filter = firstCol.filter;
+          comp._filterRadio(firstCol, filter.menus[0], true);
+          comp._filterRadio(firstCol, filter.menus[1], true);
+          comp._filterConfirm(firstCol);
+          fixture.detectChanges();
+          fixture.whenStable().then(() => {
+            expect(console.warn).toHaveBeenCalled();
+            done();
+          });
+        });
+        describe('when is single', () => {
+          beforeEach(() => {
+            context.columns[0].filter.multiple = false;
+            fixture.detectChanges();
+            firstCol = comp._columns[0];
+            filter = firstCol.filter;
+            comp._filterRadio(firstCol, filter.menus[0], true);
+            comp._filterRadio(firstCol, filter.menus[1], true);
+            comp._filterConfirm(firstCol);
+          });
+          it('should be filter', () => {
+            const res = filter.menus.filter(w => w.checked);
+            expect(res.length).toBe(1);
+          });
+          it('should be clean', () => {
+            comp.clearFilter();
+            const res = filter.menus.filter(w => w.checked);
+            expect(res.length).toBe(0);
+          });
+        });
+        describe('when is multiple', () => {
+          beforeEach(() => {
+            context.columns[0].filter.multiple = true;
+            fixture.detectChanges();
+            firstCol = comp._columns[0];
+            filter = firstCol.filter;
+            filter.menus[0].checked = true;
+            filter.menus[1].checked = true;
+            comp._filterConfirm(firstCol);
+          });
+          it('should be filter', () => {
+            const res = filter.menus.filter(w => w.checked);
+            expect(res.length).toBe(2);
+          });
+          it('should be clean', () => {
+            comp._filterClear(firstCol);
+            const res = filter.menus.filter(w => w.checked);
+            expect(res.length).toBe(0);
+          });
+        });
       });
     });
-    describe('#reset', () => {
-      beforeEach(() => genModule({ minColumn: true }));
-      xit('always the first page', () => {
+    describe('[sort]', () => {
+      describe('in local-data', () => {
+        beforeEach(() => {
+          context.columns = [
+            {
+              title: '',
+              index: 'i',
+              sort: { default: 'ascend', compare: () => 1 },
+            },
+            {
+              title: '',
+              index: 'i',
+              sort: { default: 'descend', compare: () => 1 },
+            },
+          ];
+        });
+        describe('when single-sort', () => {
+          beforeEach(() => (context.multiSort = false));
+          it('muse provide the compare function', (done: () => void) => {
+            spyOn(console, 'warn');
+            context.columns = [{ title: '', index: 'i', sort: true }];
+            fixture.detectChanges();
+            comp.sort(comp._columns[0], 0, 'descend');
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
+              expect(console.warn).toHaveBeenCalled();
+              done();
+            });
+          });
+          it('should be sorting', () => {
+            fixture.detectChanges();
+            comp.sort(comp._columns[0], 0, 'descend');
+            const sortList = comp._columns
+              .filter(
+                item => item._sort && item._sort.enabled && item._sort.default,
+              )
+              .map(item => item._sort);
+            expect(sortList.length).toBe(1);
+            expect(sortList[0].default).toBe('descend');
+          });
+        });
+        describe('when multi-sort', () => {
+          beforeEach(() => (context.multiSort = true));
+          it('should be sorting', () => {
+            fixture.detectChanges();
+            comp.sort(comp._columns[0], 0, 'descend');
+            comp.sort(comp._columns[1], 0, 'ascend');
+            const sortList = comp._columns
+              .filter(
+                item => item._sort && item._sort.enabled && item._sort.default,
+              )
+              .map(item => item._sort);
+            expect(sortList.length).toBe(2);
+            expect(sortList[0].default).toBe('descend');
+            expect(sortList[1].default).toBe('ascend');
+          });
+        });
+      });
+    });
+    describe('[row events]', () => {
+      beforeEach(fakeAsync(() => {
+        context.rowClickTime = 10;
         fixture.detectChanges();
-        comp.load(2);
-        expect(comp.pi).toBe(2);
-        comp.reset();
-        expect(comp.pi).toBe(1);
-      });
-      xit('without extra params', () => {
-        expect(context.change).not.toHaveBeenCalled();
-        const orgExtraParams = comp.req.params;
-        fixture.detectChanges();
-        comp.reset();
-        expect(context.change).toHaveBeenCalled();
-        expect(comp.req.params).toBe(orgExtraParams);
-        expect(comp.pi).toBe(1);
-      });
-      xit(`with extra params`, () => {
-        expect(context.change).not.toHaveBeenCalled();
-        fixture.detectChanges();
-        comp.reset({ a: 1 });
-        expect(context.change).toHaveBeenCalled();
-        expect(comp.req.params.a).toBe(1);
-        expect(comp.pi).toBe(1);
-      });
-      xit('merge extra params', () => {
-        comp.reset({ a: 1 });
-        comp.reset({ b: 2 }, { merge: true });
-        expect(comp.req.params.a).toBe(1);
-        expect(comp.req.params.b).toBe(2);
-      });
-      xit('should be clean check, radio, filter, sort', fakeAsync(() => {
-        spyOn(comp, 'clearCheck').and.returnValue(comp);
-        spyOn(comp, 'clearRadio').and.returnValue(comp);
-        spyOn(comp, 'clearFilter').and.returnValue(comp);
-        spyOn(comp, 'clearSort').and.returnValue(comp);
-        comp.reset();
-        expect(comp.clearCheck).toHaveBeenCalled();
-        expect(comp.clearRadio).toHaveBeenCalled();
-        expect(comp.clearFilter).toHaveBeenCalled();
-        expect(comp.clearSort).toHaveBeenCalled();
+        tick();
       }));
+      it(`should be row click`, fakeAsync(() => {
+        (page.getCell() as HTMLElement).click();
+        fixture.detectChanges();
+        tick(100);
+        expect(page._changeData.type).toBe('click');
+      }));
+      it(`should be row double click`, fakeAsync(() => {
+        const cell = page.getCell() as HTMLElement;
+        cell.click();
+        cell.click();
+        fixture.detectChanges();
+        tick(100);
+        expect(page._changeData.type).toBe('dblClick');
+      }));
+      it('should be ingore input', fakeAsync(() => {
+        expect(context.change).not.toHaveBeenCalled();
+        const el = page.getCell() as HTMLElement;
+        // mock input nodeName
+        spyOnProperty(el, 'nodeName', 'get').and.returnValue('INPUT');
+        el.click();
+        fixture.detectChanges();
+        tick(100);
+        expect(context.change).not.toHaveBeenCalled();
+      }));
+    });
+    describe('[public method]', () => {
+      describe('#load', () => {
+        it('nothing specified', () => {
+          expect(context.change).not.toHaveBeenCalled();
+          fixture.detectChanges();
+          comp.load();
+          expect(context.change).toHaveBeenCalled();
+        });
+        it(`can specify page number`, () => {
+          expect(context.change).not.toHaveBeenCalled();
+          fixture.detectChanges();
+          comp.load(2);
+          expect(context.change).toHaveBeenCalled();
+          expect(comp.pi).toBe(2);
+        });
+        it(`can specify extra params`, () => {
+          expect(context.change).not.toHaveBeenCalled();
+          fixture.detectChanges();
+          comp.load(1, { a: 1 });
+          expect(context.change).toHaveBeenCalled();
+          expect(comp.req.params.a).toBe(1);
+        });
+        it('shoule be keeping extra params when do not passed', () => {
+          comp.load(1, { a: 1 });
+          expect(comp.req.params.a).toBe(1);
+          comp.load(1);
+          expect(comp.req.params.a).toBe(1);
+        });
+        it('shoule be merge extra params', () => {
+          comp.load(1, { a: 1 });
+          comp.load(1, { b: 2 }, { merge: true });
+          expect(comp.req.params.a).toBe(1);
+          expect(comp.req.params.b).toBe(2);
+        });
+        it('can\'t contaminate raw data', () => {
+          const params: any = { a: 1 };
+          context.req = { params };
+          fixture.detectChanges();
+          comp.load(1, { b: 2 }, { merge: true });
+          expect(comp.req.params.a).toBe(1);
+          expect(comp.req.params.b).toBe(2);
+          expect(params.b).toBeUndefined();
+        });
+      });
+      describe('#reload', () => {
+        it('keeping current page index', () => {
+          fixture.detectChanges();
+          comp.load(2);
+          expect(comp.pi).toBe(2);
+          comp.reload();
+          expect(comp.pi).toBe(2);
+        });
+        it('without extra params', () => {
+          expect(context.change).not.toHaveBeenCalled();
+          const orgExtraParams = comp.req.params;
+          fixture.detectChanges();
+          comp.reload();
+          expect(context.change).toHaveBeenCalled();
+          expect(comp.req.params).toBe(orgExtraParams);
+        });
+        it(`with extra params`, () => {
+          expect(context.change).not.toHaveBeenCalled();
+          fixture.detectChanges();
+          comp.reload({ a: 1 });
+          expect(context.change).toHaveBeenCalled();
+          expect(comp.req.params.a).toBe(1);
+        });
+        it('merge extra params', () => {
+          comp.reload({ a: 1 });
+          comp.reload({ b: 2 }, { merge: true });
+          expect(comp.req.params.a).toBe(1);
+          expect(comp.req.params.b).toBe(2);
+        });
+      });
+      describe('#reset', () => {
+        it('always the first page', () => {
+          fixture.detectChanges();
+          comp.load(2);
+          expect(comp.pi).toBe(2);
+          comp.reset();
+          expect(comp.pi).toBe(1);
+        });
+        it('without extra params', () => {
+          expect(context.change).not.toHaveBeenCalled();
+          const orgExtraParams = comp.req.params;
+          fixture.detectChanges();
+          comp.reset();
+          expect(context.change).toHaveBeenCalled();
+          expect(comp.req.params).toBe(orgExtraParams);
+          expect(comp.pi).toBe(1);
+        });
+        it(`with extra params`, () => {
+          expect(context.change).not.toHaveBeenCalled();
+          fixture.detectChanges();
+          comp.reset({ a: 1 });
+          expect(context.change).toHaveBeenCalled();
+          expect(comp.req.params.a).toBe(1);
+          expect(comp.pi).toBe(1);
+        });
+        it('merge extra params', () => {
+          comp.reset({ a: 1 });
+          comp.reset({ b: 2 }, { merge: true });
+          expect(comp.req.params.a).toBe(1);
+          expect(comp.req.params.b).toBe(2);
+        });
+        it('should be clean check, radio, filter, sort', fakeAsync(() => {
+          spyOn(comp, 'clearCheck').and.returnValue(comp);
+          spyOn(comp, 'clearRadio').and.returnValue(comp);
+          spyOn(comp, 'clearFilter').and.returnValue(comp);
+          spyOn(comp, 'clearSort').and.returnValue(comp);
+          comp.reset();
+          expect(comp.clearCheck).toHaveBeenCalled();
+          expect(comp.clearRadio).toHaveBeenCalled();
+          expect(comp.clearFilter).toHaveBeenCalled();
+          expect(comp.clearSort).toHaveBeenCalled();
+        }));
+      });
+      describe('#removeRow', () => {
+        beforeEach(() => {
+          fixture.detectChanges();
+        });
+        it('shoule be working', done => {
+          fixture.whenStable().then(() => {
+            page.expectCurrentPageTotal(PS);
+            comp.removeRow(comp._data[0]);
+            page.expectCurrentPageTotal(PS - 1);
+            done();
+          });
+        });
+        it('shoule be ingored invalid data', done => {
+          fixture.whenStable().then(() => {
+            page.expectCurrentPageTotal(PS);
+            comp.removeRow([null]);
+            page.expectCurrentPageTotal(PS);
+            done();
+          });
+        });
+      });
+      describe('#clean', () => {
+        beforeEach(() => {
+          spyOn(comp, 'clearCheck').and.returnValue(comp);
+          spyOn(comp, 'clearRadio').and.returnValue(comp);
+          spyOn(comp, 'clearFilter').and.returnValue(comp);
+          spyOn(comp, 'clearSort').and.returnValue(comp);
+          fixture.detectChanges();
+        });
+        it('#clear', (done) => {
+          fixture.whenStable().then(() => {
+            expect(comp._data.length).toBe(PS);
+            comp.clear();
+            expect(comp._data.length).toBe(0);
+            done();
+          });
+        });
+        it('#clear, excludes clean status', (done) => {
+          fixture.whenStable().then(() => {
+            expect(comp._data.length).toBe(PS);
+            expect(comp.clearCheck).not.toHaveBeenCalled();
+            comp.clear(false);
+            expect(comp._data.length).toBe(0);
+            expect(comp.clearCheck).not.toHaveBeenCalled();
+            done();
+          });
+        });
+        it('#clearStatus', () => {
+          expect(comp.clearCheck).not.toHaveBeenCalled();
+          comp.clearStatus();
+          expect(comp.clearCheck).toHaveBeenCalled();
+        });
+      });
     });
     describe('#export', () => {
       let exportSrv: STExport;
       beforeEach(() => {
-        genModule({ minColumn: true, providers: [STExport] });
-        fixture.detectChanges();
         // tslint:disable-next-line:no-string-literal
-        exportSrv = comp['exportSrv'];
-        spyOn(exportSrv, 'export');
+        exportSrv = comp['exportSrv'] = {
+          export: jasmine.createSpy('export'),
+        } as any;
       });
       describe('without specified data', () => {
-        xit('when data is array data', () => {
+        it('when data is array data', () => {
           context.data = genData(1);
           fixture.detectChanges();
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export();
           expect(exportSrv.export).toHaveBeenCalled();
         });
-        xit('when data is observable data', () => {
+        it('when data is observable data', () => {
           context.data = of(genData(1));
           fixture.detectChanges();
           expect(exportSrv.export).not.toHaveBeenCalled();
@@ -1278,280 +1412,123 @@ describe('abc: table', () => {
         });
       });
       describe('with specified data', () => {
-        xit('should be specified array data', () => {
+        it('should be specified array data', () => {
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export([], {});
           expect(exportSrv.export).toHaveBeenCalled();
         });
       });
     });
-    describe('#removeRow', () => {
-      beforeEach(() => {
-        genModule({ minColumn: true });
+    describe('#multiSort', () => {
+      it('with true', () => {
+        context.multiSort = true;
         fixture.detectChanges();
+        const ms: STMultiSort = comp.multiSort;
+        expect(typeof ms).toBe('object');
       });
-      xit('shoule be working', done => {
-        fixture.whenStable().then(() => {
-          page.expectCurrentPageTotal(PS);
-          comp.removeRow(comp._data[0]);
-          page.expectCurrentPageTotal(PS - 1);
-          done();
-        });
-      });
-      xit('shoule be ingored invalid data', done => {
-        fixture.whenStable().then(() => {
-          page.expectCurrentPageTotal(PS);
-          comp.removeRow([null]);
-          page.expectCurrentPageTotal(PS);
-          done();
-        });
-      });
-    });
-    describe('#clean', () => {
-      beforeEach(() => {
-        genModule({ minColumn: true });
-        spyOn(comp, 'clearCheck').and.returnValue(comp);
-        spyOn(comp, 'clearRadio').and.returnValue(comp);
-        spyOn(comp, 'clearFilter').and.returnValue(comp);
-        spyOn(comp, 'clearSort').and.returnValue(comp);
+      it('with false', () => {
+        context.multiSort = false;
         fixture.detectChanges();
+        const ms: STMultiSort = comp.multiSort;
+        expect(ms).toBeNull();
       });
-      xit('#clear', (done) => {
-        fixture.whenStable().then(() => {
-          expect(comp._data.length).toBe(PS);
-          comp.clear();
-          expect(comp._data.length).toBe(0);
-          done();
-        });
-      });
-      xit('#clear, excludes clean status', (done) => {
-        fixture.whenStable().then(() => {
-          expect(comp._data.length).toBe(PS);
-          expect(comp.clearCheck).not.toHaveBeenCalled();
-          comp.clear(false);
-          expect(comp._data.length).toBe(0);
-          expect(comp.clearCheck).not.toHaveBeenCalled();
-          done();
-        });
-      });
-      xit('#clearStatus', () => {
-        expect(comp.clearCheck).not.toHaveBeenCalled();
-        comp.clearStatus();
-        expect(comp.clearCheck).toHaveBeenCalled();
+      it('with object', () => {
+        context.multiSort = { key: 'aa' };
+        fixture.detectChanges();
+        const ms: STMultiSort = comp.multiSort;
+        expect(typeof ms).toBe('object');
+        expect(ms.key).toBe('aa');
       });
     });
   });
 
-  describe('[row events]', () => {
-    beforeEach(fakeAsync(() => {
-      genModule({ minColumn: true });
-      context.rowClickTime = 10;
-      fixture.detectChanges();
-      tick();
-    }));
-    xit(`should be row click`, fakeAsync(() => {
-      (page.getCell() as HTMLElement).click();
-      fixture.detectChanges();
-      tick(100);
-      expect(page._changeData.type).toBe('click');
-    }));
-    xit(`should be row double click`, fakeAsync(() => {
-      const cell = page.getCell() as HTMLElement;
-      cell.click();
-      cell.click();
-      fixture.detectChanges();
-      tick(100);
-      expect(page._changeData.type).toBe('dblClick');
-    }));
-    xit('should be ingore input', fakeAsync(() => {
-      expect(context.change).not.toHaveBeenCalled();
-      const el = page.getCell() as HTMLElement;
-      // mock input nodeName
-      spyOnProperty(el, 'nodeName', 'get').and.returnValue('INPUT');
-      el.click();
-      fixture.detectChanges();
-      tick(100);
-      expect(context.change).not.toHaveBeenCalled();
-    }));
-  });
-
-  describe('[i18n]', () => {
-    let curLang = 'en';
-    beforeEach(() => {
-      genModule({ i18n: true });
-      spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
-    });
-    xit('should working', (done: () => void) => {
-      page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
-        const el = page.getEl('.ant-pagination-total-text');
-        expect(el.textContent.trim()).toContain(`共`);
-        injector.get(DelonLocaleService).setLocale(en_US);
-        fixture.detectChanges();
-        expect(el.textContent.trim()).toContain(`of`);
-        done();
+  describe('**slow**', () => {
+    describe('#multiSort', () => {
+      it('should default is mulit sorting by config', () => {
+        genModule({
+          minColumn: true, providers: [{
+            provide: STConfig,
+            useValue: Object.assign(new STConfig(), { multiSort: { global: true } } as STConfig),
+          }],
+        });
+        const ms: STMultiSort = comp.multiSort;
+        expect(ms).not.toBeUndefined();
+      });
+      it('should default non-mulit sorting by config', () => {
+        genModule({
+          minColumn: true, providers: [{
+            provide: STConfig,
+            useValue: Object.assign(new STConfig(), { multiSort: { global: false } } as STConfig),
+          }],
+        });
+        const ms: STMultiSort = comp.multiSort;
+        expect(ms).toBeUndefined();
       });
     });
-    xit('should be re-render columns when i18n changed', (done: () => void) => {
-      page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
-        page.expectHead(curLang, 'id');
-        curLang = 'zh';
-        i18nSrv.use(curLang);
-        fixture.detectChanges();
-        page.expectHead(curLang, 'id');
-        done();
-      });
-    });
-  });
-
-  describe('[data source]', () => {
-    xit('should only restore data', () => {
-      genModule({ minColumn: true });
-      // tslint:disable-next-line:no-string-literal
-      const dataSource: STDataSource = comp['dataSource'];
-      spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({}));
-      fixture.detectChanges();
-      expect(comp.ps).toBe(PS);
-    });
-  });
-
-  describe('[sort]', () => {
-    describe('in local-data', () => {
-      beforeEach(() => {
-        genModule({});
-        context.columns = [
-          {
-            title: '',
-            index: 'i',
-            sort: { default: 'ascend', compare: () => 1 },
-          },
-          {
-            title: '',
-            index: 'i',
-            sort: { default: 'descend', compare: () => 1 },
-          },
-        ];
-      });
-      describe('when single-sort', () => {
-        beforeEach(() => (context.multiSort = false));
-        xit('muse provide the compare function', (done: () => void) => {
-          spyOn(console, 'warn');
-          context.columns = [{ title: '', index: 'i', sort: true }];
-          fixture.detectChanges();
-          comp.sort(comp._columns[0], 0, 'descend');
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            expect(console.warn).toHaveBeenCalled();
+    describe('[custom render template]', () => {
+      it('with column title', (done: () => void) => {
+        genModule({
+          template: `<st #st [data]="data" [columns]="columns">
+            <ng-template st-row="id" type="title"><div class="id-title">ID</div></ng-template>
+          </st>`,
+        });
+        page
+          .newColumn([{ title: '', index: 'id', renderTitle: 'id' }])
+          .then(() => {
+            expect(
+              page.getHead('id').querySelector('.id-title').textContent,
+            ).toBe('ID');
             done();
           });
-        });
-        xit('should be sorting', () => {
-          fixture.detectChanges();
-          comp.sort(comp._columns[0], 0, 'descend');
-          const sortList = comp._columns
-            .filter(
-              item => item._sort && item._sort.enabled && item._sort.default,
-            )
-            .map(item => item._sort);
-          expect(sortList.length).toBe(1);
-          expect(sortList[0].default).toBe('descend');
-        });
       });
-      describe('when multi-sort', () => {
-        beforeEach(() => (context.multiSort = true));
-        xit('should be sorting', () => {
-          fixture.detectChanges();
-          comp.sort(comp._columns[0], 0, 'descend');
-          comp.sort(comp._columns[1], 0, 'ascend');
-          const sortList = comp._columns
-            .filter(
-              item => item._sort && item._sort.enabled && item._sort.default,
-            )
-            .map(item => item._sort);
-          expect(sortList.length).toBe(2);
-          expect(sortList[0].default).toBe('descend');
-          expect(sortList[1].default).toBe('ascend');
+      it('should be custom row', (done: () => void) => {
+        genModule({
+          template: `<st #st [data]="data" [columns]="columns">
+            <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
+          </st>`,
         });
-      });
-    });
-  });
-
-  describe('[filter]', () => {
-    describe('in local-data', () => {
-      let filter: STColumnFilter;
-      let firstCol: STColumn;
-      beforeEach(() => {
-        genModule({});
-        context.columns = [
-          {
-            title: '',
-            index: 'i',
-            filter: {
-              multiple: true,
-              menus: [
-                { text: 'f1', value: 'fv1' },
-                { text: 'f2', value: 'fv2' },
-              ],
-              confirmText: 'ok',
-              clearText: 'reset',
-              icon: 'aa',
-              fn: () => true,
-            },
-          },
-        ];
-      });
-      xit('muse provide the fn function', (done: () => void) => {
-        spyOn(console, 'warn');
-        context.columns[0].filter.fn = null;
-        fixture.detectChanges();
-        firstCol = comp._columns[0];
-        filter = firstCol.filter;
-        comp._filterRadio(firstCol, filter.menus[0], true);
-        comp._filterRadio(firstCol, filter.menus[1], true);
-        comp._filterConfirm(firstCol);
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          expect(console.warn).toHaveBeenCalled();
+        page.newColumn([{ title: '', index: 'id', render: 'id' }]).then(() => {
+          expect(page.getCell().querySelector('.j-id').textContent).toBe('id1');
           done();
         });
       });
-      describe('when is single', () => {
-        beforeEach(() => {
-          context.columns[0].filter.multiple = false;
-          fixture.detectChanges();
-          firstCol = comp._columns[0];
-          filter = firstCol.filter;
-          comp._filterRadio(firstCol, filter.menus[0], true);
-          comp._filterRadio(firstCol, filter.menus[1], true);
-          comp._filterConfirm(firstCol);
+      it('allow invalid id', (done: () => void) => {
+        genModule({
+          template: `<st #st [data]="data" [columns]="columns">
+            <ng-template st-row="invalid-id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
+          </st>`,
         });
-        xit('should be filter', () => {
-          const res = filter.menus.filter(w => w.checked);
-          expect(res.length).toBe(1);
-        });
-        xit('should be clean', () => {
-          comp.clearFilter();
-          const res = filter.menus.filter(w => w.checked);
-          expect(res.length).toBe(0);
+        page.newColumn([{ title: '', index: 'id', render: 'id' }]).then(() => {
+          expect(page.getCell().querySelector('.j-id')).toBeNull();
+          done();
         });
       });
-      describe('when is multiple', () => {
-        beforeEach(() => {
-          context.columns[0].filter.multiple = true;
+    });
+    describe('[i18n]', () => {
+      let curLang = 'en';
+      beforeEach(() => {
+        genModule({ i18n: true });
+        spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
+      });
+      it('should working', (done: () => void) => {
+        page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
+          const el = page.getEl('.ant-pagination-total-text');
+          expect(el.textContent.trim()).toContain(`共`);
+          injector.get(DelonLocaleService).setLocale(en_US);
           fixture.detectChanges();
-          firstCol = comp._columns[0];
-          filter = firstCol.filter;
-          filter.menus[0].checked = true;
-          filter.menus[1].checked = true;
-          comp._filterConfirm(firstCol);
+          expect(el.textContent.trim()).toContain(`of`);
+          done();
         });
-        xit('should be filter', () => {
-          const res = filter.menus.filter(w => w.checked);
-          expect(res.length).toBe(2);
-        });
-        xit('should be clean', () => {
-          comp._filterClear(firstCol);
-          const res = filter.menus.filter(w => w.checked);
-          expect(res.length).toBe(0);
+      });
+      it('should be re-render columns when i18n changed', (done: () => void) => {
+        curLang = 'en';
+        page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
+          page.expectHead(curLang, 'id');
+          curLang = 'zh';
+          i18nSrv.use(curLang);
+          fixture.detectChanges();
+          page.expectHead(curLang, 'id');
+          done();
         });
       });
     });
