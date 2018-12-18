@@ -385,6 +385,19 @@ describe('abc: table: data-souce', () => {
             done();
           });
       });
+      it('should be support array data', (done: () => void) => {
+        spyOn(http, 'request').and.callFake(
+          (method: string, url: string, opt: any) => {
+            return of(genData(DEFAULT.ps));
+          },
+        );
+        srv.process(options).then(res => {
+          expect(res.total).toBe(DEFAULT.ps);
+          expect(res.list.length).toBe(DEFAULT.ps);
+          expect(res.ps).toBe(res.total);
+          done();
+        });
+      });
     });
     describe('[sort]', () => {
       let resParams: any;

@@ -23,7 +23,7 @@ import { STColumn } from '@delon/abc';
   <st [data]="url" [req]="{params: params}" [columns]="columns"></st>`,
 })
 export class DemoComponent {
-  url = `/users?total=100`;
+  url = `/users?total=2&field=list`;
   params = { a: 1, b: 2 };
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
