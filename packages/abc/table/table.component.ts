@@ -233,6 +233,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         if (typeof result.pi !== 'undefined') {
           this.pi = result.pi;
         }
+        if (typeof result.ps !== 'undefined') {
+          this.ps = result.ps;
+        }
         if (typeof result.total !== 'undefined') {
           this.total = result.total;
         }

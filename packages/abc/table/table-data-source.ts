@@ -38,6 +38,8 @@ export interface STDataSourceResult {
   pageShow?: boolean;
   /** 新 `pi`，若返回 `undefined` 表示用户受控 */
   pi?: number;
+  /** 新 `ps`，若返回 `undefined` 表示用户受控 */
+  ps?: number;
   /** 新 `total`，若返回 `undefined` 表示用户受控 */
   total?: number;
   /** 数据 */
@@ -61,24 +63,32 @@ export class STDataSource {
       let isRemote = false;
       const { data, res, total, page, pi, ps, columns } = options;
       let retTotal: number;
+      let retPs: number;
       let retList: STData[];
       let retPi: number;
+      let showPage = page.show;
 
       if (typeof data === 'string') {
         isRemote = true;
         data$ = this.getByHttp(data, options).pipe(
           map((result) => {
-            // list
-            let ret = deepGet(result, res.reName.list as string[], []);
-            if (ret == null || !Array.isArray(ret)) {
-              ret = [];
+            let ret: STData[];
+            if (Array.isArray(result)) {
+              ret = result;
+              retTotal = ret.length;
+              retPs = retTotal;
+              showPage = false;
+            } else {
+              // list
+              ret = deepGet(result, res.reName.list as string[], []);
+              if (ret == null || !Array.isArray(ret)) {
+                ret = [];
+              }
+              // total
+              const resultTotal = res.reName.total && deepGet(result, res.reName.total as string[], null);
+              retTotal = resultTotal == null ? total || 0 : +resultTotal;
             }
-            // total
-            const resultTotal =
-              res.reName.total &&
-              deepGet(result, res.reName.total as string[], null);
-            retTotal = resultTotal == null ? total || 0 : +resultTotal;
-            return ret as STData[];
+            return ret;
           }),
           catchError(err => {
             rejectPromise(err);
@@ -152,11 +162,14 @@ export class STDataSource {
       );
 
       data$.forEach((result: STData[]) => (retList = result)).then(() => {
+        const realTotal = retTotal || total;
+        const realPs = retPs || ps;
         resolvePromise({
           pi: retPi,
+          ps: retPs,
           total: retTotal,
           list: retList,
-          pageShow: typeof page.show === 'undefined' ? (retTotal || total) > ps : page.show,
+          pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
         });
       });
     });
