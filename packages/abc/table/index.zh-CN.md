@@ -59,6 +59,7 @@ config: STConfig
 `[header]` | 表格标题 | `string,TemplateRef<void>` | -
 `[footer]` | 表格底部 | `string,TemplateRef<void>` | -
 `[body]` | 表格额外内容，一般用于添加合计行 | `TemplateRef<void>` | -
+`[expandRowByClick]` | 通过点击行来展开子行 | `boolean` | `false`
 `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | -
 `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动 | `EventEmitter<STChange>` | -
 `(error)` | 异常时回调 | `EventEmitter<STError>` | -
