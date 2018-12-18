@@ -8,6 +8,7 @@ import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
 import { DelonChartModule } from '@delon/chart';
 import { DelonFormModule } from '@delon/form';
+import { AlainThemeModule } from '@delon/theme';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { GithubButtonModule } from 'ng-github-button';
