@@ -4,7 +4,7 @@
       "flatModuleFile": "table",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "ng-zorro-antd": "ngZorro.antd",
+        "ng-zorro-antd": "ng-zorro-antd",
         "@delon/abc/xlsx": "delon.abc.xlsx",
         "@delon/theme": "delon.theme",
         "@delon/acl": "delon.acl",

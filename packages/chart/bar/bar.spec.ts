@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
-import { PageG2 } from '../../testing/g2';
+import { PageG2 } from '@delon/testing';
 import { G2BarComponent } from './bar.component';
 import { G2BarModule } from './bar.module';
 
