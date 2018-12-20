@@ -4,9 +4,14 @@ import { By } from '@angular/platform-browser';
 
 import { NzDropDownDirective } from 'ng-zorro-antd';
 
-// https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/dropdown/nz-dropdown.component.ts#L159
+/**
+ * [nz-dropdown](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/dropdown/nz-dropdown.component.ts#L159) 抖动合理值
+ */
 export const DROPDOWN_MIN_TIME = 51;
 
+/**
+ * 触发 dropdown
+ */
 export function dispatchDropDown(dl: DebugElement, trigger: 'mouseleave' | 'click', allowNull = true) {
   const directive = dl.query(By.directive(NzDropDownDirective));
   if (allowNull && directive == null) {

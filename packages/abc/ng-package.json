@@ -5,7 +5,7 @@
     "flatModuleFile": "abc",
     "entryFile": "public_api.ts",
     "umdModuleIds": {
-      "ng-zorro-antd": "ngZorro.antd",
+      "ng-zorro-antd": "ng-zorro-antd",
       "date-fns": "DateFns",
       "qrious": "Qrious",
       "file-saver": "saveAs",

@@ -1,6 +1,6 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PageG2 } from '../../testing/g2';
+import { PageG2 } from '@delon/testing';
 import { G2MiniProgressComponent } from './mini-progress.component';
 import { G2MiniProgressModule } from './mini-progress.module';
 

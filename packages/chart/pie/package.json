@@ -4,7 +4,7 @@
       "flatModuleFile": "pie",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "ng-zorro-antd": "ngZorro.antd",
+        "ng-zorro-antd": "ng-zorro-antd",
         "@delon/util": "delon.util"
       }
     }

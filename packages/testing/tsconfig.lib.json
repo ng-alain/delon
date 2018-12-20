@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.lib.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": ".",
+    "typeRoots": ["../../node_modules/@types"],
+    "paths": {
+      "@delon/*": ["../../dist/@delon/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "annotateForClosureCompiler": true,
+    "strictMetadataEmit": false,
+    "skipTemplateCodegen": true
+  }
+}

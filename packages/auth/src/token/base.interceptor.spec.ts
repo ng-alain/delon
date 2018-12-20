@@ -101,9 +101,7 @@ describe('auth: base.interceptor', () => {
       it(`should be ignore /login`, (done: () => void) => {
         genModule({ ignores: [/assets\//, /\/login/] }, basicModel);
 
-        http.get('/login', { responseType: 'text' }).subscribe(value => {
-          done();
-        });
+        http.get('/login', { responseType: 'text' }).subscribe(done);
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBeNull();
         req.flush('ok!');
@@ -111,9 +109,7 @@ describe('auth: base.interceptor', () => {
 
       it('should be non-ignore', (done: () => void) => {
         genModule({ ignores: null }, basicModel);
-        http.get('/login', { responseType: 'text' }).subscribe(value => {
-          done();
-        });
+        http.get('/login', { responseType: 'text' }).subscribe(done);
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBe('123');
         req.flush('ok!');
@@ -123,32 +119,29 @@ describe('auth: base.interceptor', () => {
     describe('#with allow_anonymous_key', () => {
       it(`in params`, (done: () => void) => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http
-          .get('/user', {
-            responseType: 'text',
-            params: { _allow_anonymous: '' },
-          })
-          .subscribe(value => {
-            done();
-          });
-        const ret = httpBed.expectOne(
-          req => req.method === 'GET' && req.url === '/user',
-        ) as TestRequest;
+        http.get('/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(done);
+        const ret = httpBed.expectOne(() => true);
+        expect(ret.request.headers.get('Authorization')).toBeNull();
+        ret.flush('ok!');
+      });
+      it(`in params (full url)`, (done: () => void) => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        http.get('https://ng-alain.com/api/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(done);
+        const ret = httpBed.expectOne(() => true);
         expect(ret.request.headers.get('Authorization')).toBeNull();
         ret.flush('ok!');
       });
       it(`in url`, (done: () => void) => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http
-          .get('/user?_allow_anonymous=1', {
-            responseType: 'text',
-          })
-          .subscribe(value => {
-            done();
-          });
-        const ret = httpBed.expectOne(
-          req => req.method === 'GET',
-        ) as TestRequest;
+        http.get('/user?_allow_anonymous=1', { responseType: 'text' }).subscribe(done);
+        const ret = httpBed.expectOne(() => true);
+        expect(ret.request.headers.get('Authorization')).toBeNull();
+        ret.flush('ok!');
+      });
+      it(`in url (full url)`, (done: () => void) => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        http.get('https://ng-alain.com/api/user?_allow_anonymous=1', { responseType: 'text' }).subscribe(done);
+        const ret = httpBed.expectOne(() => true);
         expect(ret.request.headers.get('Authorization')).toBeNull();
         ret.flush('ok!');
       });
@@ -175,12 +168,7 @@ describe('auth: base.interceptor', () => {
       });
       it('with location', (done: () => void) => {
         const login_url = 'https://ng-alain.com/login';
-        genModule(
-          {
-            login_url,
-          },
-          genModel(SimpleTokenModel, null),
-        );
+        genModule({ login_url }, genModel(SimpleTokenModel, null));
         http.get('/test', { responseType: 'text' }).subscribe(
           () => {
             expect(false).toBe(true);
@@ -198,10 +186,7 @@ describe('auth: base.interceptor', () => {
     });
 
     it('should be not navigate to login when token_invalid_redirect: false', (done: () => void) => {
-      genModule(
-        { token_invalid_redirect: false },
-        genModel(SimpleTokenModel, null),
-      );
+      genModule({ token_invalid_redirect: false }, genModel(SimpleTokenModel, null));
       http.get('/test', { responseType: 'text' }).subscribe(
         () => {
           expect(false).toBe(true);

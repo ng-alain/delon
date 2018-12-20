@@ -233,6 +233,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         if (typeof result.pi !== 'undefined') {
           this.pi = result.pi;
         }
+        if (typeof result.ps !== 'undefined') {
+          this.ps = result.ps;
+        }
         if (typeof result.total !== 'undefined') {
           this.total = result.total;
         }
@@ -364,6 +367,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     (data as STData[]).map(item => this._data.indexOf(item))
       .filter(pos => pos !== -1)
       .forEach(pos => this._data.splice(pos, 1));
+
+    // recalculate no
+    this._columns
+        .filter(w => w.type === 'no')
+        .forEach(c => this._data.forEach((i, idx) => i._values[c.__point] = c.noIndex + idx));
 
     this.cd();
   }

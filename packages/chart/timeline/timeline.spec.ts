@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
-import { PageG2 } from '../../testing/g2';
+import { PageG2 } from '@delon/testing';
 import { G2TimelineComponent, G2TimelineData } from './timeline.component';
 import { G2TimelineModule } from './timeline.module';
 

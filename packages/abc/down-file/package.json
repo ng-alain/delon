@@ -5,7 +5,7 @@
       "entryFile": "public_api.ts",
       "umdModuleIds": {
         "file-saver": "saveAs",
-        "ng-zorro-antd": "ngZorro.antd",
+        "ng-zorro-antd": "ng-zorro-antd",
         "@delon/theme": "delon.theme"
       }
     }

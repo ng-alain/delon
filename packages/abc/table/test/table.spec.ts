@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Component, DebugElement, Injector, Type, ViewChild } from '@angular/core';
 import {
   discardPeriodicTasks,
@@ -825,7 +825,11 @@ describe('abc: table', () => {
         });
       });
     });
-    describe('#data', () => {
+    describe('[data source]', () => {
+      let httpBed: HttpTestingController;
+      beforeEach(() => {
+        httpBed = injector.get(HttpTestingController);
+      });
       it('support null data', (done: () => void) => {
         context.data = null;
         fixture.detectChanges();
@@ -841,6 +845,26 @@ describe('abc: table', () => {
             expect(comp._data.length).toBe(PS);
             done();
           });
+      });
+      it('should only restore data', () => {
+        // tslint:disable-next-line:no-string-literal
+        const dataSource: STDataSource = comp['dataSource'];
+        spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({}));
+        fixture.detectChanges();
+        expect(comp.ps).toBe(PS);
+      });
+      it('should be automatically cancel paging when the returned body value is an array type', (done) => {
+        context.pi = 1;
+        context.ps = 2;
+        context.data = '/mock';
+        fixture.detectChanges();
+        httpBed.expectOne(req => true).flush([ {}, {}, {} ]);
+        fixture.whenStable().then(() => {
+          expect(comp.pi).toBe(1);
+          expect(comp.ps).toBe(3);
+          expect(comp._isPagination).toBe(false);
+          done();
+        });
       });
     });
     describe('#req', () => {
@@ -1035,15 +1059,6 @@ describe('abc: table', () => {
             done();
           });
         });
-      });
-    });
-    describe('[data source]', () => {
-      it('should only restore data', () => {
-        // tslint:disable-next-line:no-string-literal
-        const dataSource: STDataSource = comp['dataSource'];
-        spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({}));
-        fixture.detectChanges();
-        expect(comp.ps).toBe(PS);
       });
     });
     describe('[filter]', () => {
@@ -1334,10 +1349,8 @@ describe('abc: table', () => {
         }));
       });
       describe('#removeRow', () => {
-        beforeEach(() => {
-          fixture.detectChanges();
-        });
         it('shoule be working', done => {
+          fixture.detectChanges();
           fixture.whenStable().then(() => {
             page.expectCurrentPageTotal(PS);
             comp.removeRow(comp._data[0]);
@@ -1345,7 +1358,17 @@ describe('abc: table', () => {
             done();
           });
         });
+        it('shoule be recalculate no value', done => {
+          page.newColumn([ { title: '', type: 'no' } ]).then(() => {
+            page.expectCurrentPageTotal(PS);
+            comp._data.forEach((v, idx) => expect(v._values[0]).toBe(idx + 1));
+            comp.removeRow(comp._data[0]);
+            comp._data.forEach((v, idx) => expect(v._values[0]).toBe(idx + 1));
+            done();
+          });
+        });
         it('shoule be ingored invalid data', done => {
+          fixture.detectChanges();
           fixture.whenStable().then(() => {
             page.expectCurrentPageTotal(PS);
             comp.removeRow([null]);
