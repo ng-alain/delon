@@ -57,6 +57,15 @@ describe('form: widget: date', () => {
         expect(format(comp.value)).toBe(format(time));
       });
     });
+    it('should be set value', () => {
+      const s: SFSchema = {
+        properties: { a: { type: 'string', format: 'date-time', ui: { widget } } },
+      };
+      page.newSchema(s)
+          .checkValue('a', null)
+          .setValue('a', new Date());
+      expect(page.getValue('a') instanceof Date).toBe(true);
+    });
   });
 
   describe('#mode', () => {
