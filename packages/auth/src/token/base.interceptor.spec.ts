@@ -1,18 +1,16 @@
-import { HttpClient, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest,
-} from '@angular/common/http/testing';
+import { DOCUMENT } from '@angular/common';
+import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { _HttpClient } from '@delon/theme';
+import { throwError, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { DOCUMENT } from '@angular/common';
 import { DelonAuthConfig } from '../auth.config';
 import { DelonAuthModule } from '../auth.module';
-import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
+import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
 
@@ -45,7 +43,18 @@ class MockTokenService implements ITokenService {
   get login_url() {
     return '/login';
   }
-  referrer: HttpRequest<any>;
+  referrer: AuthReferrer = {};
+}
+
+let otherRes = new HttpResponse();
+class OtherInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req.clone()).pipe(
+      catchError(() => {
+        return throwError(otherRes);
+      }),
+    );
+  }
 }
 
 describe('auth: base.interceptor', () => {
@@ -236,7 +245,7 @@ describe('auth: base.interceptor', () => {
 
   describe('[referrer]', () => {
     it('should working', (done: () => void) => {
-      genModule({}, genModel(SimpleTokenModel, null));
+      genModule({ executeOtherInterceptors: false }, genModel(SimpleTokenModel, null));
       const url = '/to-test';
       http.get(url, { responseType: 'text' }).subscribe(
         () => {
@@ -244,9 +253,36 @@ describe('auth: base.interceptor', () => {
           done();
         },
         () => {
-          const tokenSrv = injector.get(DA_SERVICE_TOKEN, null) as ITokenService;
+          const tokenSrv = injector.get(DA_SERVICE_TOKEN, null) as MockTokenService;
           expect(tokenSrv.referrer).not.toBeNull();
           expect(tokenSrv.referrer.url).toBe(url);
+          done();
+        },
+      );
+    });
+  });
+
+  describe('[executeOtherInterceptors]', () => {
+    beforeEach(() => {
+      genModule(
+        { executeOtherInterceptors: true },
+        genModel(SimpleTokenModel, null),
+        [
+          { provide: HTTP_INTERCEPTORS, useClass: OtherInterceptor, multi: true },
+        ],
+      );
+    });
+
+    it('shoul working', (done) => {
+      otherRes = new HttpResponse({ body: { a: 1 } });
+      const url = '/to-test';
+      http.get(url, { responseType: 'text' }).subscribe(
+        () => {
+          expect(false).toBe(true);
+          done();
+        },
+        (err) => {
+          expect(err.body.a).toBe(1);
           done();
         },
       );
