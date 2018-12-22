@@ -4,7 +4,6 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { _HttpClient } from '@delon/theme';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -195,41 +194,6 @@ describe('auth: base.interceptor', () => {
 
     it('should be not navigate to login when token_invalid_redirect: false', (done: () => void) => {
       genModule({ token_invalid_redirect: false }, genModel(SimpleTokenModel, null));
-      http.get('/test', { responseType: 'text' }).subscribe(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        (err: any) => {
-          expect(err.status).toBe(401);
-          done();
-        },
-      );
-    });
-
-    it('should be call _HttpClient.end', (done: () => void) => {
-      genModule(
-        { token_invalid_redirect: false },
-        genModel(SimpleTokenModel, null),
-        [{ provide: _HttpClient, useValue: { end: () => { } } }],
-      );
-      http.get('/test', { responseType: 'text' }).subscribe(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        (err: any) => {
-          expect(err.status).toBe(401);
-          done();
-        },
-      );
-    });
-    it(`can import _HttpClient`, (done: () => void) => {
-      genModule(
-        { token_invalid_redirect: false },
-        genModel(SimpleTokenModel, null),
-        [{ provide: _HttpClient, useValue: null }],
-      );
       http.get('/test', { responseType: 'text' }).subscribe(
         () => {
           expect(false).toBe(true);
