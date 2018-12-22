@@ -21,7 +21,7 @@ constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
 | 参数名        | 类型               | 描述                                  |
 |---------------|--------------------|-------------------------------------|
 | `[login_url]` | `string`           | 获取 `DelonAuthConfig` 配置的登录地址 |
-| `[referrer]`  | `HttpRequest<any>` | 获取授权失败前路由信息                |
+| `[referrer]`  | `HttpRequest<any> | ActivatedRouteSnapshot` | 获取授权失败前路由信息                |
 
 ### 方法
 

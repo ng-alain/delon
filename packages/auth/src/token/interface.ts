@@ -1,5 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 import { InjectionToken } from '@angular/core';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DA_SERVICE_TOKEN_FACTORY } from './token.service';
 
@@ -45,5 +46,5 @@ export interface ITokenService {
   readonly login_url: string;
 
   /** 获取授权失败前路由信息 */
-  readonly referrer?: HttpRequest<any>;
+  readonly referrer?: HttpRequest<any> | ActivatedRouteSnapshot;
 }
