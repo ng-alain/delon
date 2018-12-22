@@ -8,7 +8,7 @@
     "umdModuleIds": {
       "@angular/cdk/overlay": "ng.cdk.overlay",
       "@angular/cdk/portal": "ng.cdk.portal",
-      "ng-zorro-antd": "ngZorro.antd",
+      "ng-zorro-antd": "ng-zorro-antd",
       "date-fns": "DateFns",
       "@delon/acl": "delon.acl",
       "@delon/util": "delon.util"

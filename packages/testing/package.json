@@ -1,5 +1,5 @@
 {
-  "name": "@delon/auth",
+  "name": "@delon/testing",
   "version": "0.0.0-PLACEHOLDER",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
@@ -12,17 +12,10 @@
   },
   "homepage": "https://ng-alain.com",
   "keywords": [
-    "angular auth",
-    "ng auth",
-    "ngx auth",
-    "angular jwt",
-    "ng jwt",
-    "ngx jwt",
     "delon",
     "ng-alain",
-    "alain",
-    "antd",
-    "ng-zorro-antd"
+    "angular",
+    "testing"
   ],
   "sideEffects": false
 }

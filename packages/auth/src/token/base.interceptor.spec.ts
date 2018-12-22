@@ -1,19 +1,15 @@
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest,
-} from '@angular/common/http/testing';
-import { Injector } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { _HttpClient } from '@delon/theme';
+import { throwError, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { DOCUMENT } from '@angular/common';
 import { DelonAuthConfig } from '../auth.config';
 import { DelonAuthModule } from '../auth.module';
-import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
+import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
 
@@ -46,7 +42,18 @@ class MockTokenService implements ITokenService {
   get login_url() {
     return '/login';
   }
-  redirect: string;
+  referrer: AuthReferrer = {};
+}
+
+let otherRes = new HttpResponse();
+class OtherInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req.clone()).pipe(
+      catchError(() => {
+        return throwError(otherRes);
+      }),
+    );
+  }
 }
 
 describe('auth: base.interceptor', () => {
@@ -101,9 +108,7 @@ describe('auth: base.interceptor', () => {
       it(`should be ignore /login`, (done: () => void) => {
         genModule({ ignores: [/assets\//, /\/login/] }, basicModel);
 
-        http.get('/login', { responseType: 'text' }).subscribe(value => {
-          done();
-        });
+        http.get('/login', { responseType: 'text' }).subscribe(done);
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBeNull();
         req.flush('ok!');
@@ -111,9 +116,7 @@ describe('auth: base.interceptor', () => {
 
       it('should be non-ignore', (done: () => void) => {
         genModule({ ignores: null }, basicModel);
-        http.get('/login', { responseType: 'text' }).subscribe(value => {
-          done();
-        });
+        http.get('/login', { responseType: 'text' }).subscribe(done);
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBe('123');
         req.flush('ok!');
@@ -123,32 +126,29 @@ describe('auth: base.interceptor', () => {
     describe('#with allow_anonymous_key', () => {
       it(`in params`, (done: () => void) => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http
-          .get('/user', {
-            responseType: 'text',
-            params: { _allow_anonymous: '' },
-          })
-          .subscribe(value => {
-            done();
-          });
-        const ret = httpBed.expectOne(
-          req => req.method === 'GET' && req.url === '/user',
-        ) as TestRequest;
+        http.get('/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(done);
+        const ret = httpBed.expectOne(() => true);
+        expect(ret.request.headers.get('Authorization')).toBeNull();
+        ret.flush('ok!');
+      });
+      it(`in params (full url)`, (done: () => void) => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        http.get('https://ng-alain.com/api/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(done);
+        const ret = httpBed.expectOne(() => true);
         expect(ret.request.headers.get('Authorization')).toBeNull();
         ret.flush('ok!');
       });
       it(`in url`, (done: () => void) => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http
-          .get('/user?_allow_anonymous=1', {
-            responseType: 'text',
-          })
-          .subscribe(value => {
-            done();
-          });
-        const ret = httpBed.expectOne(
-          req => req.method === 'GET',
-        ) as TestRequest;
+        http.get('/user?_allow_anonymous=1', { responseType: 'text' }).subscribe(done);
+        const ret = httpBed.expectOne(() => true);
+        expect(ret.request.headers.get('Authorization')).toBeNull();
+        ret.flush('ok!');
+      });
+      it(`in url (full url)`, (done: () => void) => {
+        genModule({}, genModel(SimpleTokenModel, null));
+        http.get('https://ng-alain.com/api/user?_allow_anonymous=1', { responseType: 'text' }).subscribe(done);
+        const ret = httpBed.expectOne(() => true);
         expect(ret.request.headers.get('Authorization')).toBeNull();
         ret.flush('ok!');
       });
@@ -175,12 +175,7 @@ describe('auth: base.interceptor', () => {
       });
       it('with location', (done: () => void) => {
         const login_url = 'https://ng-alain.com/login';
-        genModule(
-          {
-            login_url,
-          },
-          genModel(SimpleTokenModel, null),
-        );
+        genModule({ login_url }, genModel(SimpleTokenModel, null));
         http.get('/test', { responseType: 'text' }).subscribe(
           () => {
             expect(false).toBe(true);
@@ -198,10 +193,7 @@ describe('auth: base.interceptor', () => {
     });
 
     it('should be not navigate to login when token_invalid_redirect: false', (done: () => void) => {
-      genModule(
-        { token_invalid_redirect: false },
-        genModel(SimpleTokenModel, null),
-      );
+      genModule({ token_invalid_redirect: false }, genModel(SimpleTokenModel, null));
       http.get('/test', { responseType: 'text' }).subscribe(
         () => {
           expect(false).toBe(true);
@@ -211,39 +203,50 @@ describe('auth: base.interceptor', () => {
           expect(err.status).toBe(401);
           done();
         },
+      );
+    });
+  });
+
+  describe('[referrer]', () => {
+    it('should working', (done: () => void) => {
+      genModule({ executeOtherInterceptors: false }, genModel(SimpleTokenModel, null));
+      const url = '/to-test';
+      http.get(url, { responseType: 'text' }).subscribe(
+        () => {
+          expect(false).toBe(true);
+          done();
+        },
+        () => {
+          const tokenSrv = injector.get(DA_SERVICE_TOKEN, null) as MockTokenService;
+          expect(tokenSrv.referrer).not.toBeNull();
+          expect(tokenSrv.referrer.url).toBe(url);
+          done();
+        },
+      );
+    });
+  });
+
+  describe('[executeOtherInterceptors]', () => {
+    beforeEach(() => {
+      genModule(
+        { executeOtherInterceptors: true },
+        genModel(SimpleTokenModel, null),
+        [
+          { provide: HTTP_INTERCEPTORS, useClass: OtherInterceptor, multi: true },
+        ],
       );
     });
 
-    it('should be call _HttpClient.end', (done: () => void) => {
-      genModule(
-        { token_invalid_redirect: false },
-        genModel(SimpleTokenModel, null),
-        [{ provide: _HttpClient, useValue: { end: () => { } } }],
-      );
-      http.get('/test', { responseType: 'text' }).subscribe(
+    it('shoul working', (done) => {
+      otherRes = new HttpResponse({ body: { a: 1 } });
+      const url = '/to-test';
+      http.get(url, { responseType: 'text' }).subscribe(
         () => {
           expect(false).toBe(true);
           done();
         },
-        (err: any) => {
-          expect(err.status).toBe(401);
-          done();
-        },
-      );
-    });
-    it(`can import _HttpClient`, (done: () => void) => {
-      genModule(
-        { token_invalid_redirect: false },
-        genModel(SimpleTokenModel, null),
-        [{ provide: _HttpClient, useValue: null }],
-      );
-      http.get('/test', { responseType: 'text' }).subscribe(
-        () => {
-          expect(false).toBe(true);
-          done();
-        },
-        (err: any) => {
-          expect(err.status).toBe(401);
+        (err) => {
+          expect(err.body.a).toBe(1);
           done();
         },
       );

@@ -368,6 +368,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       .filter(pos => pos !== -1)
       .forEach(pos => this._data.splice(pos, 1));
 
+    // recalculate no
+    this._columns
+        .filter(w => w.type === 'no')
+        .forEach(c => this._data.forEach((i, idx) => i._values[c.__point] = c.noIndex + idx));
+
     this.cd();
   }
 

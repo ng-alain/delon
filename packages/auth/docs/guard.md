@@ -1,5 +1,5 @@
 ---
-order: 5
+order: 25
 title: 路由守卫
 type: Documents
 ---

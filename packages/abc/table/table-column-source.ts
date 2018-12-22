@@ -222,6 +222,7 @@ export class STColumnSource {
     const { noIndex } = this.cog;
     let checkboxCount = 0;
     let radioCount = 0;
+    let point = 0;
     const columns: STColumn[] = [];
     const copyColumens = deepCopy(list) as STColumn[];
     for (const item of copyColumens) {
@@ -298,6 +299,7 @@ export class STColumnSource {
       // restore custom row
       this.restoreRender(item);
 
+      item.__point = point++;
       columns.push(item);
     }
     if (checkboxCount > 1) {

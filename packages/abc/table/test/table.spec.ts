@@ -1349,10 +1349,8 @@ describe('abc: table', () => {
         }));
       });
       describe('#removeRow', () => {
-        beforeEach(() => {
-          fixture.detectChanges();
-        });
         it('shoule be working', done => {
+          fixture.detectChanges();
           fixture.whenStable().then(() => {
             page.expectCurrentPageTotal(PS);
             comp.removeRow(comp._data[0]);
@@ -1360,7 +1358,17 @@ describe('abc: table', () => {
             done();
           });
         });
+        it('shoule be recalculate no value', done => {
+          page.newColumn([ { title: '', type: 'no' } ]).then(() => {
+            page.expectCurrentPageTotal(PS);
+            comp._data.forEach((v, idx) => expect(v._values[0]).toBe(idx + 1));
+            comp.removeRow(comp._data[0]);
+            comp._data.forEach((v, idx) => expect(v._values[0]).toBe(idx + 1));
+            done();
+          });
+        });
         it('shoule be ingored invalid data', done => {
+          fixture.detectChanges();
           fixture.whenStable().then(() => {
             page.expectCurrentPageTotal(PS);
             comp.removeRow([null]);

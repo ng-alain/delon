@@ -45,6 +45,7 @@ export class DemoComponent {
       };
     });
   columns: STColumn[] = [
+    { title: '序号', type: 'no' },
     { title: '编号', index: 'id' },
     { title: '姓名', index: 'name' },
     { title: '年龄', index: 'age' },

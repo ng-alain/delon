@@ -46,6 +46,11 @@ export class DateWidget extends ControlWidget implements OnInit {
     };
   }
 
+  private compCd() {
+    // TODO: removed after nz-datepick support OnPush mode
+    setTimeout(() => this.detectChanges());
+  }
+
   reset(value: SFValue) {
     value = this.toDate(value);
     if (this.flatRange) {
@@ -53,6 +58,7 @@ export class DateWidget extends ControlWidget implements OnInit {
     } else {
       this.displayValue = value;
     }
+    this.compCd();
   }
 
   _change(value: Date | Date[]) {

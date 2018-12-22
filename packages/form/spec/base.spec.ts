@@ -111,11 +111,14 @@ export class SFPage {
     return path.startsWith('/') ? path : '/' + path;
   }
 
+  getValue(path: string): any {
+    path = this.fixPath(path);
+    return this.comp.getValue(path);
+  }
+
   setValue(path: string, value: any): this {
     path = this.fixPath(path);
-    const property = this.comp.rootProperty.searchProperty(path);
-    expect(property).not.toBeNull(`can't found ${path}`);
-    property.widget.setValue(value);
+    this.comp.setValue(path, value);
     return this;
   }
 
