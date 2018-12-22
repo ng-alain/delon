@@ -1,19 +1,19 @@
 // tslint:disable:no-any
-import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injector, Optional } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
-
-import { _HttpClient } from '@delon/theme';
 
 import { DelonAuthConfig } from '../auth.config';
 import { ToLogin } from './helper';
 import { ITokenModel } from './interface';
+
+class HttpAuthInterceptorHandler implements HttpHandler {
+  constructor(private next: HttpHandler, private interceptor: HttpInterceptor) { }
+
+  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+    return this.interceptor.intercept(req, this.next);
+  }
+}
 
 export abstract class BaseInterceptor implements HttpInterceptor {
   constructor(@Optional() protected injector: Injector) { }
@@ -42,13 +42,9 @@ export abstract class BaseInterceptor implements HttpInterceptor {
     if (this.isAuth(options)) {
       req = this.setReq(req, options);
     } else {
-      ToLogin(options, this.injector);
-      // Unable to guarantee interceptor execution order
-      // So cancel the loading state as much as possible
-      const hc = this.injector.get(_HttpClient, null);
-      if (hc) hc.end();
+      ToLogin(options, this.injector, req.urlWithParams);
       // Interrupt Http request, so need to generate a new Observable
-      return new Observable((observer: Observer<HttpEvent<any>>) => {
+      const err$ = new Observable((observer: Observer<HttpEvent<any>>) => {
         const res = new HttpErrorResponse({
           url: req.url,
           headers: req.headers,
@@ -57,6 +53,18 @@ export abstract class BaseInterceptor implements HttpInterceptor {
         });
         observer.error(res);
       });
+      if (options.executeOtherInterceptors) {
+        const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
+        const lastInterceptors = interceptors.slice(interceptors.indexOf(this) + 1);
+        if (lastInterceptors.length > 0) {
+          const chain = lastInterceptors.reduceRight(
+            (_next, _interceptor) => new HttpAuthInterceptorHandler(_next, _interceptor),
+            { handle: (_: HttpRequest<any>) => err$ },
+          );
+          return chain.handle(req);
+        }
+      }
+      return err$;
     }
     return next.handle(req);
   }

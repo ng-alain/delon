@@ -74,6 +74,7 @@ export class AppModule { }
 | `[login_url]` | `string` | `/login` | Login page routing address |
 | `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | Ignore the list of URL addresses |
 | `[allow_anonymous_key]` | `string` | `_allow_anonymous` | Anonymous login KEY identification, if the request parameter with the KEY is to ignore token |
+| `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after token missing |
 
 You can override them, for example:
 
