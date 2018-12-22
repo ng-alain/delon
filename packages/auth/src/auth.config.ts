@@ -43,4 +43,8 @@ export class DelonAuthConfig {
    * 允许匿名登录KEY，若请求参数中带有该KEY表示忽略TOKEN
    */
   allow_anonymous_key ?= `_allow_anonymous`;
+  /**
+   * 是否校验失效时命中后继续调用后续拦截器的 `intercept` 方法，默认：`true`
+   */
+  executeOtherInterceptors ?= true;
 }

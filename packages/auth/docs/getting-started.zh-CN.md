@@ -78,6 +78,7 @@ export class AppModule { }
 | `[login_url]` | `string` | `/login` | 登录页路由地址 |
 | `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略 URL 地址清单 |
 | `[allow_anonymous_key]` | `string` | `_allow_anonymous` | 允许匿名登录标识号，若请求参数中带有该KEY表示忽略TOKEN |
+| `[executeOtherInterceptors]` | `boolean` | `true` | 是否校验失效时命中后继续调用后续拦截器的 `intercept` 方法 |
 
 你可以覆盖它们，例如：
 
