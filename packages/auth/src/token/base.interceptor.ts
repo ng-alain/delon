@@ -43,8 +43,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
     if (this.isAuth(options)) {
       req = this.setReq(req, options);
     } else {
-      (this.injector.get(DA_SERVICE_TOKEN) as TokenService).referrer = req;
-      ToLogin(options, this.injector);
+      ToLogin(options, this.injector, req.urlWithParams);
       // Unable to guarantee interceptor execution order
       // So cancel the loading state as much as possible
       const hc = this.injector.get(_HttpClient, null);

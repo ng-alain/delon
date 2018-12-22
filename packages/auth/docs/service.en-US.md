@@ -18,10 +18,10 @@ constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
 
 ### Property
 
-| Name          | Type               | Description                                              |
-|---------------|--------------------|----------------------------------------------------------|
-| `[login_url]` | `string`           | Get the login address of `DelonAuthConfig` configuration |
-| `[referrer]`  | `HttpRequest<any>` | Get routing before authorization failure                 |
+| Name          | Type           | Description                                              |
+|---------------|----------------|----------------------------------------------------------|
+| `[login_url]` | `string`       | Get the login address of `DelonAuthConfig` configuration |
+| `[referrer]`  | `AuthReferrer` | Get routing before authorization failure                 |
 
 ### Method
 

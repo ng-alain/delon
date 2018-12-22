@@ -1,11 +1,9 @@
-import { HttpRequest } from '@angular/common/http';
 import { inject, Inject } from '@angular/core';
-import { ActivatedRouteSnapshot } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { DelonAuthConfig } from '../auth.config';
 import { DA_STORE_TOKEN, IStore } from '../store/interface';
-import { ITokenModel, ITokenService } from './interface';
+import { AuthReferrer, ITokenModel, ITokenService } from './interface';
 
 export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
   return new TokenService(inject(DelonAuthConfig), inject(DA_STORE_TOKEN));
@@ -13,7 +11,7 @@ export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
 
 export class TokenService implements ITokenService {
   private change$: BehaviorSubject<ITokenModel> = new BehaviorSubject<ITokenModel>(null);
-  private _referrer: HttpRequest<any> | ActivatedRouteSnapshot;
+  private _referrer: AuthReferrer = {};
 
   constructor(private options: DelonAuthConfig, @Inject(DA_STORE_TOKEN) private store: IStore) { }
 
@@ -25,7 +23,7 @@ export class TokenService implements ITokenService {
     return this._referrer;
   }
 
-  set referrer(val: HttpRequest<any> | ActivatedRouteSnapshot) {
+  set referrer(val: AuthReferrer) {
     this._referrer = val;
   }
 

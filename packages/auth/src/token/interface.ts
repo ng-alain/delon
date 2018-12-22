@@ -19,6 +19,10 @@ export interface ITokenModel {
   token: string;
 }
 
+export interface AuthReferrer {
+  url?: string;
+}
+
 export interface ITokenService {
   set(data: ITokenModel): boolean;
 
@@ -46,5 +50,5 @@ export interface ITokenService {
   readonly login_url: string;
 
   /** 获取授权失败前路由信息 */
-  readonly referrer?: HttpRequest<any> | ActivatedRouteSnapshot;
+  readonly referrer?: AuthReferrer;
 }
