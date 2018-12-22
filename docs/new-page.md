@@ -24,11 +24,11 @@ CLI 会自动在 `src/app/routes/sys` 下创建 `sys.module.ts` 和 `sys-routing
 
 ```ts
 {
-    path: '',
-    component: LayoutDefaultComponent,
-    children: [
-        { path: 'sys', loadChildren: './sys/sys.module#SysModule' }
-    ]
+  path: '',
+  component: LayoutDefaultComponent,
+  children: [
+    { path: 'sys', loadChildren: './sys/sys.module#SysModule' }
+  ]
 }
 ```
 
@@ -53,3 +53,32 @@ ng g ng-alain:view view -m=sys -t=log
 ```
 
 `-t=log` 表示希望把创建的文件放进至 `sys/log/view` 下面。
+
+## 三、IDE
+
+除了 ng-alain 提供的 cli 命令行以外，推荐使用 [Visual Studio Code](https://code.visualstudio.com/) IDE，因为 ng-alain 针对 VSCode 增加一些额外的特性，可以更好的帮助你开发。
+
+### 代码片断
+
+- [ng-zorro snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
+- [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
+
+### 代码风格
+
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+
+### 代码注释
+
+- [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis)
+
+### Class样式智能提醒
+
+ng-alain 内置了大量的工具集样式（[API](/theme/tools)），安装以下插件可以直接在HTML模板里直接访问到它们。
+
+- [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
+
+### 其它
+
+- [Path Autocomplete](https://marketplace.visualstudio.com/items?itemName=ionutvmi.path-autocomplete)
+- [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)

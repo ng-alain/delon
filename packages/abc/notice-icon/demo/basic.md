@@ -9,10 +9,10 @@ title: 通知图标
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-demo',
-    template: `
-    <notice-icon count="5"></notice-icon>
-    `
+  selector: 'app-demo',
+  template: `
+  <notice-icon count="5"></notice-icon>
+  `
 })
 export class DemoComponent {
 }

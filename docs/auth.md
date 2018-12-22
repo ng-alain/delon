@@ -4,6 +4,5 @@ title:
   en-US: Auth
   zh-CN: 用户认证
 type: Advance
+url: /auth/getting-started
 ---
-
-[用户认证文档](/auth)。

@@ -1,62 +1,69 @@
+import { strings } from '@angular-devkit/core';
 import {
-  Rule,
-  Tree,
-  SchematicContext,
-  chain,
-  noop,
-  mergeWith,
   apply,
-  url,
-  template,
-  move,
+  chain,
   filter,
-  SchematicsException,
+  mergeWith,
+  move,
+  noop,
+  template,
+  url,
+  MergeStrategy,
+  Rule,
+  SchematicContext,
+  Tree,
 } from '@angular-devkit/schematics';
-import { strings, join } from '@angular-devkit/core';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as path from 'path';
 
-import { Schema as ApplicationOptions } from './schema';
+import { getLangConfig, getLangData } from '../core/lang.config';
+import { tryAddFile } from '../utils/alain';
+import { HMR_CONTENT } from '../utils/contents';
+import { addFiles } from '../utils/file';
+import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import {
   addPackageToPackageJson,
-  getPackage,
-  overwritePackage,
   getJSON,
+  getPackage,
   overwriteJSON,
+  overwritePackage,
   scriptsToAngularJson,
 } from '../utils/json';
 import { VERSION, ZORROVERSION } from '../utils/lib-versions';
-import { overwriteFiles, addFiles } from '../utils/file';
-import {
-  getWorkspace,
-  getProjectFromWorkspace,
-  Project,
-} from '../utils/devkit-utils/config';
-import { addHeadStyle, addHtmlToBody } from '../utils/html';
+import { getProject, Project } from '../utils/project';
+import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
 let project: Project;
-let projectPrefix = 'app';
-let appRoot = '/';
-let appSourceRoot = '/src';
 
 /** Remove files to be overwrite */
 function removeOrginalFiles() {
   return (host: Tree) => {
     [
-      `${appRoot}/README.md`,
-      `${appSourceRoot}/main.ts`,
-      `${appSourceRoot}/environments/environment.prod.ts`,
-      `${appSourceRoot}/environments/environment.ts`,
-      `${appSourceRoot}/styles.less`,
-      `${appSourceRoot}/app/app.module.ts`,
-      `${appSourceRoot}/app/app.component.spec.ts`,
-      `${appSourceRoot}/app/app.component.ts`,
-      `${appSourceRoot}/app/app.component.html`,
-      `${appSourceRoot}/app/app.component.less`,
+      `${project.root}/README.md`,
+      `${project.sourceRoot}/main.ts`,
+      `${project.sourceRoot}/environments/environment.prod.ts`,
+      `${project.sourceRoot}/environments/environment.ts`,
+      `${project.sourceRoot}/styles.less`,
+      `${project.sourceRoot}/app/app.module.ts`,
+      `${project.sourceRoot}/app/app.component.spec.ts`,
+      `${project.sourceRoot}/app/app.component.ts`,
+      `${project.sourceRoot}/app/app.component.html`,
+      `${project.sourceRoot}/app/app.component.less`,
     ]
       .filter(p => host.exists(p))
       .forEach(p => host.delete(p));
+  };
+}
+
+function fixMain() {
+  return (host: Tree) => {
+    // fix: main.ts using no hmr file
+    tryAddFile(
+      host,
+      `${project.sourceRoot}/main.ts`,
+      HMR_CONTENT.NO_HMR_MAIN_DOT_TS,
+    );
   };
 }
 
@@ -67,40 +74,45 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       // allow ignore ng-zorro-antd becauce of @delon/theme dependency
       `ng-zorro-antd@${ZORROVERSION}`,
       // ng-zorro-antd need
-      `rxjs-compat@^6.1.0`,
-      'screenfull@^3.3.1',
-      'ajv@^6.4.0',
+      'screenfull@DEP-0.0.0-PLACEHOLDER',
+      'ajv@DEP-0.0.0-PLACEHOLDER',
     ]);
     // add ajv
-    scriptsToAngularJson(
-      host,
-      [
-        'node_modules/ajv/dist/ajv.bundle.js'
-      ],
-      'add',
-      ['build', 'test']
-    );
+    scriptsToAngularJson(host, ['node_modules/ajv/dist/ajv.bundle.js'], 'add', [
+      'build',
+      'test',
+    ]);
     // @delon/*
     addPackageToPackageJson(
       host,
-      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util'].map(
-        pkg => `@delon/${pkg}@${VERSION}`,
-      ),
+      [
+        'abc',
+        'acl',
+        'auth',
+        'cache',
+        'form',
+        'mock',
+        'theme',
+        'util',
+        'chart',
+      ].map(pkg => `@delon/${pkg}@${VERSION}`),
+    );
+    // ng-alain
+    addPackageToPackageJson(
+      host,
+      [
+        `ng-alain@${VERSION}`,
+        // color-less
+        `less-bundle-promise@DEP-0.0.0-PLACEHOLDER`,
+      ],
+      'devDependencies',
     );
     // i18n
     if (options.i18n) {
       addPackageToPackageJson(host, [
-        `@ngx-translate/core@^10.0.1`,
-        `@ngx-translate/http-loader@^3.0.1`,
+        `@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`,
+        `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`,
       ]);
-    }
-    const devs = [
-      // ISSUES: [#10430](https://github.com/angular/angular-cli/issues/10430)
-      `less@~2.7.0`,
-      `less-loader@~4.0.0`
-    ];
-    if (devs.length) {
-      addPackageToPackageJson(host, devs, 'devDependencies');
     }
     return host;
   };
@@ -110,10 +122,11 @@ function addRunScriptToPackageJson() {
   return (host: Tree, context: SchematicContext) => {
     const json = getPackage(host, 'scripts');
     if (json == null) return host;
-    json.scripts['start'] = `ng serve -o`;
-    json.scripts['build'] = `ng build --prod --build-optimizer`;
-    json.scripts['analyze'] = `ng build --prod --build-optimizer --stats-json`;
+    json.scripts.start = `npm run color-less && ng serve -o`;
+    json.scripts.build = `npm run color-less && ng build --prod --build-optimizer`;
+    json.scripts.analyze = `npm run color-less && ng build --prod --build-optimizer --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
+    json.scripts['color-less'] = `node scripts/color-less.js`;
     overwritePackage(host, json);
     return host;
   };
@@ -124,14 +137,14 @@ function addPathsToTsConfig() {
     [
       {
         path: 'tsconfig.json',
-        baseUrl: `${appSourceRoot}/`,
+        baseUrl: `${project.sourceRoot}/`,
       },
       {
-        path: `${appSourceRoot}/tsconfig.app.json`,
+        path: `${project.sourceRoot}/tsconfig.app.json`,
         baseUrl: './',
       },
       {
-        path: `${appSourceRoot}/tsconfig.spec.json`,
+        path: `${project.sourceRoot}/tsconfig.spec.json`,
         baseUrl: './',
       },
     ].forEach(item => {
@@ -141,13 +154,8 @@ function addPathsToTsConfig() {
       if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
       json.compilerOptions.baseUrl = item.baseUrl;
       const paths = json.compilerOptions.paths;
-      paths['@shared'] = ['app/shared'];
       paths['@shared/*'] = ['app/shared/*'];
-      paths['@core'] = ['app/core'];
       paths['@core/*'] = ['app/core/*'];
-      paths['@testing'] = ['testing'];
-      paths['@testing/*'] = ['testing/*'];
-      paths['@env'] = ['environments'];
       paths['@env/*'] = ['environments/*'];
       overwriteJSON(host, item.path, json);
     });
@@ -159,7 +167,7 @@ function addCodeStylesToPackageJson() {
   return (host: Tree, context: SchematicContext) => {
     const json = getPackage(host);
     if (json == null) return host;
-    json.scripts['lint'] = `npm run lint:ts && npm run lint:style`;
+    json.scripts.lint = `npm run lint:ts && npm run lint:style`;
     json.scripts[
       'lint:ts'
     ] = `tslint -p src/tsconfig.app.json -c tslint.json 'src/**/*.ts'`;
@@ -173,54 +181,55 @@ function addCodeStylesToPackageJson() {
       ],
       '*.ts': ['npm run lint:ts', 'prettier --write', 'git add'],
       '*.less': ['npm run lint:style', 'prettier --write', 'git add'],
+      'ignore': ['src/assets/*'],
     };
     overwritePackage(host, json);
     // tslint
     const tsLint = getJSON(host, 'tslint.json', 'rules');
-    tsLint.rules['curly'] = false;
+    tsLint.rules.curly = false;
     tsLint.rules['use-host-property-decorator'] = false;
     tsLint.rules['directive-selector'] = [
       true,
       'attribute',
-      [projectPrefix, 'passport', 'exception', 'layout', 'header'],
+      [project.prefix, 'passport', 'exception', 'layout', 'header'],
       'camelCase',
     ];
     tsLint.rules['component-selector'] = [
       true,
       'element',
-      [projectPrefix, 'passport', 'exception', 'layout', 'header'],
+      [project.prefix, 'passport', 'exception', 'layout', 'header'],
       'kebab-case',
     ];
     overwriteJSON(host, 'tslint.json', tsLint);
     // app tslint
-    const sourceTslint = `${appSourceRoot}/tslint.json`;
+    const sourceTslint = `${project.sourceRoot}/tslint.json`;
     if (host.exists(sourceTslint)) {
       const appTsLint = getJSON(host, sourceTslint, 'rules');
       appTsLint.rules['directive-selector'] = [
         true,
         'attribute',
-        [projectPrefix, 'passport', 'exception', 'layout', 'header'],
+        [project.prefix, 'passport', 'exception', 'layout', 'header'],
         'camelCase',
       ];
       appTsLint.rules['component-selector'] = [
         true,
         'element',
-        [projectPrefix, 'passport', 'exception', 'layout', 'header'],
+        [project.prefix, 'passport', 'exception', 'layout', 'header'],
         'kebab-case',
       ];
       overwriteJSON(host, sourceTslint, appTsLint);
     }
     // dependencies
     addPackageToPackageJson(host, [
-      `tslint-config-prettier@^1.12.0`,
-      `tslint-language-service@^0.9.9`,
-      `editorconfig-tools@^0.1.1`,
-      `lint-staged@^7.1.2`,
-      `husky@^0.14.3`,
-      `prettier@^1.12.1`,
-      `prettier-stylelint@^0.4.2`,
-      `stylelint@^9.2.0`,
-      `stylelint-config-standard@^18.2.0`,
+      `tslint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
+      `tslint-language-service@DEP-0.0.0-PLACEHOLDER`,
+      `editorconfig-tools@DEP-0.0.0-PLACEHOLDER`,
+      `lint-staged@DEP-0.0.0-PLACEHOLDER`,
+      `husky@DEP-0.0.0-PLACEHOLDER`,
+      `prettier@DEP-0.0.0-PLACEHOLDER`,
+      `prettier-stylelint@DEP-0.0.0-PLACEHOLDER`,
+      `stylelint@DEP-0.0.0-PLACEHOLDER`,
+      `stylelint-config-standard@DEP-0.0.0-PLACEHOLDER`,
     ]);
     return host;
   };
@@ -269,6 +278,19 @@ function addSchematics() {
   };
 }
 
+function forceLess() {
+  return (host: Tree, context: SchematicContext) => {
+    scriptsToAngularJson(
+      host,
+      ['src/styles.less'],
+      'add',
+      ['build'],
+      null,
+      true,
+    );
+  };
+}
+
 function addStyle(options: ApplicationOptions) {
   return (host: Tree) => {
     addHeadStyle(
@@ -285,13 +307,91 @@ function addStyle(options: ApplicationOptions) {
     addFiles(
       host,
       [
-        `${appSourceRoot}/styles/index.less`,
-        `${appSourceRoot}/styles/theme.less`,
+        `${project.sourceRoot}/styles/index.less`,
+        `${project.sourceRoot}/styles/theme.less`,
       ],
       overwriteDataFileRoot,
     );
 
     return host;
+  };
+}
+
+function mergeFiles(options: ApplicationOptions, from: string, to: string) {
+  return mergeWith(
+    apply(url(from), [
+      options.i18n ? noop() : filter(p => p.indexOf('i18n') === -1),
+      options.form ? noop() : filter(p => p.indexOf('json-schema') === -1),
+      template({
+        utils: strings,
+        ...options,
+        dot: '.',
+        VERSION,
+        ZORROVERSION,
+      }),
+      move(to),
+    ]),
+  );
+}
+
+function addCliTpl(options: ApplicationOptions) {
+  const TPLS = {
+    '__name@dasherize__.component.html': `<page-header></page-header>`,
+    '__name@dasherize__.component.ts': `import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
+import { _HttpClient } from '@delon/theme';
+import { NzMessageService } from 'ng-zorro-antd';
+
+@Component({
+  selector: '<%= selector %>',
+  templateUrl: './<%= dasherize(name) %>.component.html',<% if(!inlineStyle) { %><% } else { %>
+  styleUrls: ['./<%= dasherize(name) %>.component.<%= styleext %>']<% } %><% if(!!viewEncapsulation) { %>,
+  encapsulation: ViewEncapsulation.<%= viewEncapsulation %><% } if (changeDetection !== 'Default') { %>,
+  changeDetection: ChangeDetectionStrategy.<%= changeDetection %><% } %>
+})
+export class <%= componentName %> implements OnInit {
+
+  constructor(private http: _HttpClient, private msg: NzMessageService) { }
+
+  ngOnInit() { }
+
+}
+`,
+    '__name@dasherize__.component.spec.ts': `import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+  import { <%= componentName %> } from './<%= dasherize(name) %>.component';
+
+  describe('<%= componentName %>', () => {
+    let component: <%= componentName %>;
+    let fixture: ComponentFixture<<%= componentName %>>;
+
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        declarations: [ <%= componentName %> ]
+      })
+      .compileComponents();
+    }));
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(<%= componentName %>);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+  });
+  `,
+  };
+  return (host: Tree) => {
+    const prefix = `${project.root}/_cli-tpl/test/__path__/__name@dasherize@if-flat__/`;
+    Object.keys(TPLS).forEach(name => {
+      const realPath = prefix + name;
+      if (host.exists(realPath)) {
+        host.overwrite(realPath, TPLS[name]);
+      } else {
+        host.create(realPath, TPLS[name]);
+      }
+    });
   };
 }
 
@@ -308,7 +408,7 @@ function addFilesToRoot(options: ApplicationOptions) {
           VERSION,
           ZORROVERSION,
         }),
-        move(appSourceRoot),
+        move(project.sourceRoot),
       ]),
     ),
     mergeWith(
@@ -322,25 +422,79 @@ function addFilesToRoot(options: ApplicationOptions) {
           VERSION,
           ZORROVERSION,
         }),
-        move('/'),
+        // move('/')
       ]),
+      MergeStrategy.Overwrite,
     ),
   ]);
 }
 
+function fixLang(options: ApplicationOptions) {
+  return (host: Tree) => {
+    if (options.i18n) return;
+    const langs = getLangData(options.defaultLanguage);
+    if (!langs) return;
+
+    console.log(`Translating, please wait...`);
+
+    host.visit(p => {
+      if (~p.indexOf(`/node_modules/`)) return;
+
+      fixLangInHtml(host, p, langs);
+    });
+  };
+}
+
+function fixLangInHtml(host: Tree, p: string, langs: {}) {
+  let html = host.get(p).content.toString('utf8');
+  let matchCount = 0;
+  // {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
+  html = html.replace(/\{\{\(status \? '([^']+)' : '([^']+)'\) \| translate \}\}/g, (word, key1, key2) => {
+    ++matchCount;
+    return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
+  });
+  // {{ 'app.register-result.msg' | translate:params }}
+  html = html.replace(/\{\{[ ]?'([^']+)'[ ]? \| translate:[^ ]+ \}\}/g, (word, key) => {
+    ++matchCount;
+    return langs[key] || key;
+  });
+  // {{ 'Please enter mobile number!' | translate }}
+  html = html.replace(/\{\{[ ]?'([^']+)' \| translate[ ]?\}\}/g, (word, key) => {
+    ++matchCount;
+    return langs[key] || key;
+  });
+  // [nzTitle]="'app.login.tab-login-credentials' | translate"
+  html = html.replace(/'([^']+)' \| translate[ ]?/g, (word, key) => {
+    ++matchCount;
+    const value = langs[key] || key;
+    return `'${value}'`;
+  });
+  // 'app.register.get-verification-code' | translate
+  html = html.replace(/'([^']+)' \| translate/g, (word, key) => {
+    ++matchCount;
+    return langs[key] || key;
+  });
+  // removed `header-i18n`
+  if (~html.indexOf(`<header-i18n [showLang]="false" class="langs"></header-i18n>`)) {
+    ++matchCount;
+    html = html.replace(`<header-i18n [showLang]="false" class="langs"></header-i18n>`, ``);
+  }
+  if (matchCount > 0) {
+    host.overwrite(p, html);
+  }
+}
+
 function installPackages() {
   return (host: Tree, context: SchematicContext) => {
+    console.log(`Start installing dependencies, please wait...`);
+
     context.addTask(new NodePackageInstallTask());
   };
 }
 
-export default function(options: ApplicationOptions): Rule {
+export default function (options: ApplicationOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const workspace = getWorkspace(host);
-    project = getProjectFromWorkspace(workspace);
-    appRoot = (project as any).root;
-    appSourceRoot = (project as any).sourceRoot;
-    projectPrefix = (project as any).prefix || 'app';
+    project = getProject(host, options.project);
 
     return chain([
       // @delon/* dependencies
@@ -354,7 +508,11 @@ export default function(options: ApplicationOptions): Rule {
       // files
       removeOrginalFiles(),
       addFilesToRoot(options),
+      addCliTpl(options),
+      fixMain(),
+      forceLess(),
       addStyle(options),
+      fixLang(options),
       installPackages(),
     ])(host, context);
   };

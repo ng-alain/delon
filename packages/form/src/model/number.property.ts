@@ -1,3 +1,4 @@
+import { SFValue } from '../interface';
 import { AtomicProperty } from './atomic.property';
 
 export class NumberProperty extends AtomicProperty {
@@ -5,13 +6,12 @@ export class NumberProperty extends AtomicProperty {
     return null;
   }
 
-  setValue(value: any, onlySelf: boolean) {
+  setValue(value: SFValue, onlySelf: boolean) {
     if (typeof value === 'string') {
       if (value.length) {
-        value =
-          value.indexOf('.') > -1 ? parseFloat(value) : parseInt(value, 10);
+        value = value.indexOf('.') > -1 ? parseFloat(value) : parseInt(value, 10);
       } else {
-        value = null;
+        value = undefined;
       }
     }
     this._value = value;

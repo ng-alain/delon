@@ -1,36 +1,43 @@
-@import '../../../theme/styles/default';
-.ad-avatar-list {
+@import '../../../theme/styles/default.less';
+@avatar-list-prefix: ~'.avatar-list';
+
+@{avatar-list-prefix} {
   display: inline-block;
-  ul {
+  &__wrap {
     display: inline-block;
     margin-left: 8px;
     font-size: 0;
     padding: 0;
   }
-  .item {
+  &__item {
     display: inline-block;
     font-size: @font-size-base;
     margin-left: -8px;
     width: @avatar-size-base;
     height: @avatar-size-base;
-    .ant-avatar {
+    .@{ant-prefix}-avatar {
       border: 1px solid #fff;
+      cursor: pointer;
     }
-    &.large {
-      width: @avatar-size-lg;
-      height: @avatar-size-lg;
-    }
-    &.small {
-      width: @avatar-size-sm;
-      height: @avatar-size-sm;
-    }
-    &.mini {
+  }
+  &__large {
+    width: @avatar-size-lg;
+    height: @avatar-size-lg;
+  }
+  &__small {
+    width: @avatar-size-sm;
+    height: @avatar-size-sm;
+  }
+  &__mini {
+    width: 20px;
+    height: 20px;
+    .@{ant-prefix}-avatar {
       width: 20px;
       height: 20px;
-      .ant-avatar {
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
+      line-height: 20px;
+      &-string {
+        font-size: 12px;
+        line-height: 18px;
       }
     }
   }

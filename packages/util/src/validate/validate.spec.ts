@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { isNum, isInt, isDecimal, isIdCard, isMobile } from './validate';
+import { isDecimal, isIdCard, isInt, isMobile, isNum, isUrl } from './validate';
 import { _Validators } from './validators';
 
 describe('utils: validate', () => {
@@ -20,8 +20,11 @@ describe('utils: validate', () => {
       );
 
       const ctr = new FormControl(item.k);
-      if (item.v) expect(_Validators.num(ctr)).toBeNull();
-      else expect(_Validators.num(ctr)).toEqual({ num: true });
+      if (item.v) {
+        expect(_Validators.num(ctr)).toBeNull();
+      } else {
+        expect(_Validators.num(ctr)).toEqual({ num: true });
+      }
     }
   });
 
@@ -39,8 +42,11 @@ describe('utils: validate', () => {
       );
 
       const ctr = new FormControl(item.k);
-      if (item.v) expect(_Validators.int(ctr)).toBeNull();
-      else expect(_Validators.int(ctr)).toEqual({ int: true });
+      if (item.v) {
+        expect(_Validators.int(ctr)).toBeNull();
+      } else {
+        expect(_Validators.int(ctr)).toEqual({ int: true });
+      }
     }
   });
 
@@ -61,8 +67,11 @@ describe('utils: validate', () => {
         `${item.k}=${typeof item.k} must be ${item.v}`,
       );
       const ctr = new FormControl(item.k);
-      if (item.v) expect(_Validators.decimal(ctr)).toBeNull();
-      else expect(_Validators.decimal(ctr)).toEqual({ decimal: true });
+      if (item.v) {
+        expect(_Validators.decimal(ctr)).toBeNull();
+      } else {
+        expect(_Validators.decimal(ctr)).toEqual({ decimal: true });
+      }
     }
   });
 
@@ -78,8 +87,11 @@ describe('utils: validate', () => {
       );
 
       const ctr = new FormControl(item.k);
-      if (item.v) expect(_Validators.idCard(ctr)).toBeNull();
-      else expect(_Validators.idCard(ctr)).toEqual({ idCard: true });
+      if (item.v) {
+        expect(_Validators.idCard(ctr)).toBeNull();
+      } else {
+        expect(_Validators.idCard(ctr)).toEqual({ idCard: true });
+      }
     }
   });
 
@@ -98,8 +110,34 @@ describe('utils: validate', () => {
       );
 
       const ctr = new FormControl(item.k);
-      if (item.v) expect(_Validators.mobile(ctr)).toBeNull();
-      else expect(_Validators.mobile(ctr)).toEqual({ mobile: true });
+      if (item.v) {
+        expect(_Validators.mobile(ctr)).toBeNull();
+      } else {
+        expect(_Validators.mobile(ctr)).toEqual({ mobile: true });
+      }
+    }
+  });
+
+  it('#isUrl', () => {
+    const data = [
+      { k: 'http://ng-alain.com', v: true },
+      { k: 'https://ng-alain.com', v: true },
+      { k: '//ng-alain.com', v: false },
+      { k: 'ng-alain.com', v: false },
+      { k: '中国.com', v: false },
+    ];
+    for (const item of data) {
+      expect(isUrl(item.k)).toBe(
+        item.v,
+        `${item.k}=${typeof item.k} must be ${item.v}`,
+      );
+
+      const ctr = new FormControl(item.k);
+      if (item.v) {
+        expect(_Validators.url(ctr)).toBeNull();
+      } else {
+        expect(_Validators.url(ctr)).toEqual({ url: true });
+      }
     }
   });
 });

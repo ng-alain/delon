@@ -1,0 +1,32 @@
+.preserve-white-spaces-mixin(@enabled) when(@enabled=true) {
+
+  sf + st {
+    margin-top: @preserve-sf-and-st-spaces;
+  }
+
+  // button + button
+  .@{ant-prefix}-btn + .@{ant-prefix}-btn,
+  // button + popconfirm
+  .@{ant-prefix}-btn + nz-popconfirm,
+  nz-popconfirm + .@{ant-prefix}-btn,
+  // popconfirm + popconfirm
+  nz-popconfirm + nz-popconfirm,
+  // button + button group
+  .@{ant-prefix}-btn + nz-button-group,
+  nz-button-group + .@{ant-prefix}-btn,
+  // dropdown + button
+  .@{ant-prefix}-btn + nz-dropdown,
+  nz-dropdown +.@{ant-prefix}-btn,
+  // popconfirm + button group
+  nz-popconfirm + nz-button-group,
+  nz-button-group + nz-popconfirm {
+    margin-left: @preserve-buttons-spaces;
+  }
+  .@{ant-prefix}-btn-group {
+    .@{ant-prefix}-btn + .@{ant-prefix}-btn {
+      margin-left: -1px;
+    }
+  }
+}
+
+.preserve-white-spaces-mixin(@preserve-white-spaces-enabled);

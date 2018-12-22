@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SFValue } from '../../interface';
 import { ControlWidget } from '../../widget';
 
 @Component({
@@ -10,9 +11,10 @@ import { ControlWidget } from '../../widget';
       <input nz-input
         [attr.id]="id"
         [disabled]="disabled"
+        [attr.disabled]="disabled"
         [nzSize]="ui.size"
-        [value]="value"
-        (input)="setValue($event.target?.value)"
+        [ngModel]="value"
+        (ngModelChange)="setValue($event)"
         [attr.maxLength]="schema.maxLength || null"
         [attr.type]="ui.type || 'text'"
         [attr.placeholder]="ui.placeholder"
@@ -31,7 +33,6 @@ import { ControlWidget } from '../../widget';
     </ng-container>
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class StringWidget extends ControlWidget implements OnInit {
   type: string;
@@ -49,5 +50,11 @@ export class StringWidget extends ControlWidget implements OnInit {
     )
       ? 'addon'
       : '';
+  }
+
+  reset(value: SFValue) {
+    if (this.schema.format === 'color' && !value) {
+      this.setValue('#000000');
+    }
   }
 }

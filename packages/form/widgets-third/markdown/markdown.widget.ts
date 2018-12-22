@@ -11,7 +11,6 @@ import { ControlWidget } from '@delon/form';
       [delay]="ui.delay || 300"></simplemde>
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 // tslint:disable-next-line:component-class-suffix
 export class MarkdownWidget extends ControlWidget {

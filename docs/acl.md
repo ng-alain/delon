@@ -2,6 +2,5 @@
 order: 50
 title: ACL
 type: Advance
+url: /acl/getting-started
 ---
-
-[ACL 文档](/acl)。

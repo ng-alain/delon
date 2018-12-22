@@ -10,33 +10,34 @@ browser: 400
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'components-global-footer-basic',
-    template: `
-    <div style="background:#f5f5f5; height: 100%;">
-        <div style="height: 280px;"></div>
-        <global-footer [links]="links">
-            <ng-template #copyright>
-                Copyright <i class="anticon anticon-menu-copyright" class="mx-sm"></i>2017<a href="//github.com/cipchk" target="_blank" class="mx-sm">卡色</a>出品
-            </ng-template>
-        </global-footer>
-    </div>
-    `,
-    styles: [ `:host { display: block; }` ]
+  selector: 'components-global-footer-basic',
+  template: `
+  <div style="background:#f5f5f5; height: 100%;">
+    <div style="height: 280px;"></div>
+    <global-footer [links]="links">
+      Copyright<i nz-icon type="copyright" class="mx-sm"></i>2018<a href="//github.com/cipchk" target="_blank" class="mx-sm">卡色</a>出品
+    </global-footer>
+  </div>
+  `,
+  styles: [ `:host { display: block; }` ]
 })
 export class DemoComponent {
-    links = [
-        {
-            title: '帮助',
-            href: ''
-        },
-        {
-            title: '隐私',
-            href: ''
-        },
-        {
-            title: '条款',
-            href: ''
-        }
-    ];
+  links = [
+    {
+      title: '帮助',
+      href: 'https://ng-alain.com/',
+      blankTarget: true
+    },
+    {
+      title: 'Github',
+      href: 'https://github.com/ng-alain',
+      blankTarget: true
+    },
+    {
+      title: '预览',
+      href: 'https://ng-alain.github.io/ng-alain/',
+      blankTarget: true
+    }
+  ];
 }
 ```

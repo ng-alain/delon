@@ -1,18 +1,16 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { DelonUtilModule } from '@delon/util';
 
+import { GlobalFooterItemComponent } from './global-footer-item.component';
 import { GlobalFooterComponent } from './global-footer.component';
 
-const COMPONENTS = [GlobalFooterComponent];
+const COMPONENTS = [GlobalFooterComponent, GlobalFooterItemComponent];
 
 @NgModule({
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, DelonUtilModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdGlobalFooterModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: AdGlobalFooterModule, providers: [] };
-  }
-}
+export class GlobalFooterModule { }

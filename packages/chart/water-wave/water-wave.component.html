@@ -1,0 +1,9 @@
+<div [ngStyle]="{'height.px': height, 'width.px': height, 'overflow': 'hidden'}">
+  <canvas #container class="g2-water-wave__canvas" width="{{height*2}}" height="{{height*2}}"></canvas>
+</div>
+<div class="g2-water-wave__desc" [ngStyle]="{'width.px': height}">
+  <span *ngIf="title" class="g2-water-wave__desc-title">
+    <ng-container *stringTemplateOutlet="title">{{title}}</ng-container>
+  </span>
+  <h4 class="g2-water-wave__desc-percent">{{percent}}%</h4>
+</div>

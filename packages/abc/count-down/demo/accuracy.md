@@ -1,5 +1,5 @@
 ---
-order: 0
+order: 2
 title:
   zh-CN: 精度
   en-US: Accuracy
@@ -21,9 +21,9 @@ import { Component } from '@angular/core';
   template: `<count-down [config]="config"></count-down>`
 })
 export class DemoComponent {
-    config: any = {
-        template: `$!s-ext!秒`,
-        leftTime: 30
-    };
+  config: any = {
+    template: `$!s-ext!秒`,
+    leftTime: 30
+  };
 }
 ```

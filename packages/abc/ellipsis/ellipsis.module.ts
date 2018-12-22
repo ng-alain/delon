@@ -1,17 +1,15 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { DelonUtilModule } from '@delon/util';
 
 import { EllipsisComponent } from './ellipsis.component';
 
 const COMPONENTS = [EllipsisComponent];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, DelonUtilModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdEllipsisModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: AdEllipsisModule, providers: [] };
-  }
+export class EllipsisModule {
 }

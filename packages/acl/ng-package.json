@@ -1,0 +1,9 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/@delon/acl",
+  "deleteDestPath": true,
+  "lib": {
+    "flatModuleFile": "acl",
+    "entryFile": "public_api.ts"
+  }
+}

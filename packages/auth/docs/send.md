@@ -32,7 +32,7 @@ token_send_place = 'header';
 
 ## 如何加载
 
-默认情况下 `DelonAuthModule.forRoot()` 是不会加载任何HTTP拦截器，这需要你手工在你的相应的模块中加上：
+默认情况下 `DelonAuthModule` 是不会加载任何HTTP拦截器，这需要你手工在你的相应的模块中加上：
 
 ```ts
 { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true }
@@ -40,4 +40,4 @@ token_send_place = 'header';
 
 ## 示例
 
-[DEMO](https://cipchk.github.io/ng-alain/passport/login)，账密或其他登录方式登录，并观察浏览器 localStorage 存储数据的变化。
+[DEMO](//ng-alain.github.io/ng-alain/#/passport/login)，账密或其他登录方式登录，并观察浏览器 localStorage 存储数据的变化。

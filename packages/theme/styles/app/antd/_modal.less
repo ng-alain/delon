@@ -1,0 +1,78 @@
+// Small screen / tablet
+@media (min-width: @screen-sm) {
+  .modal-sm .@{ant-prefix}-modal {
+    max-width: @modal-sm;
+    width: auto !important;
+  }
+}
+
+// Medium screen / desktop
+@media (min-width: @screen-md) {
+  .modal-md .@{ant-prefix}-modal {
+    max-width: @modal-md;
+    width: auto !important;
+  }
+}
+
+// Large screen / wide desktop
+@media (min-width: @screen-lg) {
+  .modal-lg .@{ant-prefix}-modal {
+    max-width: @modal-lg;
+    width: auto !important;
+  }
+}
+
+// Extra large screen / large descktop
+@media (min-width: @screen-xxl) {
+  .modal-xl .@{ant-prefix}-modal {
+    max-width: @modal-xl;
+    width: auto !important;
+  }
+}
+
+// 自定义模态框时非常有用，主要运用于查看、编辑页
+.modal {
+  &-header {
+    padding: 16px 24px;
+    margin: -24px -24px 24px -24px;
+    border-radius: @border-radius-base @border-radius-base 0 0;
+    background: @component-background;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+    display: flex;
+    justify-content: space-between;
+  }
+  &-title {
+    font-size: @font-size-lg;
+    font-weight: 500;
+    line-height: 22px;
+    color: @heading-color;
+    small {
+      color: @muted-color;
+      font-size: 12px;
+      margin-left: @layout-gutter;
+    }
+  }
+  &-spin {
+    display: block;
+    min-height: 150px;
+    line-height: 150px;
+    text-align: center;
+  }
+  &-footer {
+    border-top: @border-width-base @border-style-base @border-color-split;
+    padding: 10px 16px;
+    text-align: right;
+    border-radius: 0 0 @border-radius-base @border-radius-base;
+    margin: 24px -24px -24px -24px;
+  }
+  &-include-tabs {
+    nz-tabset {
+      margin-top: -16px;
+    }
+  }
+  &-body-nopadding {
+    .@{ant-prefix}-modal-body {
+      padding: 0 !important;
+    }
+  }
+}

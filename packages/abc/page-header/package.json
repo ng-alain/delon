@@ -1,0 +1,14 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "pageHeader",
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "ng-zorro-antd": "ng-zorro-antd",
+        "@delon/abc/reuse-tab": "delon.abc.reuseTab",
+        "@delon/theme": "delon.theme",
+        "@delon/util": "delon.util"
+      }
+    }
+  }
+}

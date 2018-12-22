@@ -1,27 +1,20 @@
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import {
   Directive,
   ElementRef,
-  Input,
-  HostListener,
   EventEmitter,
-  Output,
+  HostListener,
+  Input,
   Optional,
+  Output,
 } from '@angular/core';
-import { HttpResponse, HttpClient } from '@angular/common/http';
-import { saveAs } from 'file-saver';
 import { _HttpClient } from '@delon/theme';
+import { saveAs } from 'file-saver';
 
-/**
- * 文件下载
- *
- * ```html
- * <button nz-button down-file http-url="assets/demo{{i}}" file-name="demo中文">{{i}}</button>
- * ```
- */
 @Directive({ selector: '[down-file]' })
 export class DownFileDirective {
   /** URL请求参数 */
-  @Input('http-data') httpData: any;
+  @Input('http-data') httpData: {};
   /** 请求类型 */
   @Input('http-method') httpMethod: string = 'get';
   /** 下载地址 */
@@ -29,12 +22,13 @@ export class DownFileDirective {
   /** 指定文件名，若为空从服务端返回的 `header` 中获取 `filename`、`x-filename` */
   @Input('file-name') fileName: string;
   /** 成功回调 */
-  @Output() success: EventEmitter<any> = new EventEmitter<any>();
+  @Output() readonly success = new EventEmitter<HttpResponse<Blob>>();
   /** 错误回调 */
-  @Output() error: EventEmitter<any> = new EventEmitter<any>();
+  @Output() readonly error = new EventEmitter<{}>();
 
   private getDisposition(data: string) {
-    const arr: any = (data || '')
+    // tslint:disable-next-line:no-any
+    const arr: any[] = (data || '')
       .split(';')
       .filter(i => i.includes('='))
       .map(v => {
@@ -44,20 +38,17 @@ export class DownFileDirective {
         if (value.startsWith(utfId)) value = value.substr(utfId.length);
         return { [strArr[0].trim()]: value };
       });
-    return arr.reduce((o, item: any) => item, {});
+    return arr.reduce((o, item) => item, {});
   }
 
-  constructor(
-    private el: ElementRef,
-    private http: HttpClient,
-    @Optional() private _http: _HttpClient,
-  ) {
-  }
+  constructor(private el: ElementRef, private http: HttpClient, @Optional() private _http: _HttpClient) { }
 
   @HostListener('click')
   _click() {
     this.el.nativeElement.disabled = true;
-    ((this._http || this.http) as any).request(this.httpMethod, this.httpUrl, {
+    // tslint:disable-next-line:no-any
+    ((this._http || this.http) as any)
+      .request(this.httpMethod, this.httpUrl, {
         params: this.httpData || {},
         responseType: 'blob',
         observe: 'response',
@@ -68,7 +59,7 @@ export class DownFileDirective {
             this.error.emit(res);
             return;
           }
-          const disposition: any = this.getDisposition(
+          const disposition = this.getDisposition(
             res.headers.get('content-disposition'),
           );
           const fileName =

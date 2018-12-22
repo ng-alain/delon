@@ -1,0 +1,26 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/@delon/abc",
+  "lib": {
+    "flatModuleFile": "abc",
+    "entryFile": "public_api.ts",
+    "umdModuleIds": {
+      "ng-zorro-antd": "ng-zorro-antd",
+      "date-fns": "DateFns",
+      "qrious": "Qrious",
+      "file-saver": "saveAs",
+      "ngx-countdown": "ngxCountDown",
+      "@delon/theme": "delon.theme",
+      "@delon/util": "delon.util",
+      "@delon/acl": "delon.acl"
+    }
+  },
+  "whitelistedNonPeerDependencies": [
+    "tslib",
+    "file-saver",
+    "ngx-countdown",
+    "ng-zorro-antd",
+    "date-fns",
+    "qrious"
+  ]
+}

@@ -1,15 +1,16 @@
 import {
   Directive,
+  ElementRef,
   Input,
   OnChanges,
-  ElementRef,
-  Renderer2,
-  SimpleChanges,
   OnInit,
+  Renderer2,
   SimpleChange,
+  SimpleChanges,
 } from '@angular/core';
-import { deepCopy } from '@delon/util';
-import { AdImageConfig } from './image.config';
+import { InputNumber } from '@delon/util';
+
+import { ImageConfig } from './image.config';
 
 /**
  * img标签
@@ -20,19 +21,17 @@ import { AdImageConfig } from './image.config';
 @Directive({ selector: '[_src]' })
 export class ImageDirective implements OnChanges, OnInit {
   @Input('_src') src: string;
-
-  @Input() size = 64;
-
+  @Input() @InputNumber() size = 64;
   @Input() error = './assets/img/logo.svg';
 
   private inited = false;
 
   constructor(
+    cog: ImageConfig,
     private el: ElementRef,
     private render: Renderer2,
-    DEF: AdImageConfig,
   ) {
-    Object.assign(this, deepCopy(DEF));
+    Object.assign(this, cog);
   }
 
   ngOnInit(): void {
@@ -41,46 +40,35 @@ export class ImageDirective implements OnChanges, OnInit {
     this.inited = true;
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
-    if (this.inited) {
-      if (changes.error) {
-        this.updateError();
-      } else {
-        this.update();
-      }
+  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (!this.inited) return;
+    if (changes.error) {
+      this.updateError();
+    } else {
+      this.update();
     }
   }
 
   private update() {
     let newSrc = this.src;
 
-    // region: fix weixin & qq avatar size
     if (newSrc.includes('qlogo.cn')) {
-      const arr = newSrc.split('/'),
-        size = arr[arr.length - 1];
-      arr[arr.length - 1] =
-        size === '0' || +size !== this.size ? this.size.toString() : size;
+      const arr = newSrc.split('/');
+      const size = arr[arr.length - 1];
+      arr[arr.length - 1] = size === '0' || +size !== this.size ? this.size.toString() : size;
       newSrc = arr.join('/');
     }
-    // endregion
 
-    // region: remove https & http
-    const isHttp = newSrc.startsWith('http:'),
-      isHttps = newSrc.startsWith('https:');
-    if (isHttp || isHttps) newSrc = newSrc.substr(isHttp ? 5 : 6);
-
-    // endregion
+    const isHttp = newSrc.startsWith('http:');
+    const isHttps = newSrc.startsWith('https:');
+    if (isHttp || isHttps) {
+      newSrc = newSrc.substr(isHttp ? 5 : 6);
+    }
 
     this.render.setAttribute(this.el.nativeElement, 'src', newSrc);
   }
 
   private updateError() {
-    this.render.setAttribute(
-      this.el.nativeElement,
-      'onerror',
-      `this.src='${this.error}';`,
-    );
+    this.render.setAttribute(this.el.nativeElement, 'onerror', `this.src='${this.error}'`);
   }
 }

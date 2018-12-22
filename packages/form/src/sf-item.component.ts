@@ -1,19 +1,18 @@
 import {
   Component,
-  OnInit,
-  OnChanges,
+  ComponentRef,
   Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
   ViewChild,
   ViewContainerRef,
-  ComponentRef,
-  OnDestroy,
-  SimpleChanges,
 } from '@angular/core';
 import { FormProperty } from './model/form.property';
+import { SFUISchemaItem } from './schema/ui';
+import { TerminatorService } from './terminator.service';
 import { Widget } from './widget';
 import { WidgetFactory } from './widget.factory';
-import { TerminatorService } from './terminator.service';
-import { SFUISchemaItem } from './schema/ui';
 
 let nextUniqueId = 0;
 
@@ -22,24 +21,20 @@ let nextUniqueId = 0;
   template: `<ng-template #target></ng-template>`,
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
-  private ref: ComponentRef<any>;
-  widget: Widget<any> = null;
-
-  // region: fields
+  private ref: ComponentRef<Widget<FormProperty>>;
+  widget: Widget<FormProperty> = null;
 
   @Input() formProperty: FormProperty;
 
   @ViewChild('target', { read: ViewContainerRef })
   container: ViewContainerRef;
 
-  // endregion
-
   constructor(
     private widgetFactory: WidgetFactory,
     private terminator: TerminatorService,
-  ) {}
+  ) { }
 
-  onWidgetInstanciated(widget: Widget<any>) {
+  onWidgetInstanciated(widget: Widget<FormProperty>) {
     this.widget = widget;
     const id = `_sf-${nextUniqueId++}`;
 
@@ -58,10 +53,10 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.ref = this.widgetFactory.createWidget(
       this.container,
-      this.formProperty.ui.widget || this.formProperty.schema.type,
+      (this.formProperty.ui.widget || this.formProperty.schema.type) as string,
     );
     this.onWidgetInstanciated(this.ref.instance);
   }

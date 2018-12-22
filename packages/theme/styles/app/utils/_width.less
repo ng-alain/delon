@@ -1,0 +1,13 @@
+.for-each(@widths, {
+  .width-@{adKey}  { width: @adValue !important; }
+  .max-width-@{adKey}  { max-width: @adValue !important; }
+  .min-width-@{adKey}  { min-width: @adValue !important; }
+});
+
+@media (max-width: @mobile-max) {
+  .width-sm,
+  .max-width-sm,
+  .min-width-sm {
+    width: 100% !important;
+  }
+}

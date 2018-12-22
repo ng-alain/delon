@@ -1,30 +1,29 @@
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
 import {
-  Component,
-  DebugElement,
-  TemplateRef,
-  ViewChild,
-  Injector,
-} from '@angular/core';
-import {
+  fakeAsync,
+  tick,
   ComponentFixture,
   TestBed,
-  tick,
-  fakeAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterModule, Router } from '@angular/router';
-import { APP_BASE_HREF } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
-import { AlainThemeModule, MenuService, SettingsService } from '@delon/theme';
+import {
+  AlainThemeModule,
+  MenuIcon,
+  MenuService,
+  SettingsService,
+} from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
-import { AdSidebarNavModule } from './sidebar-nav.module';
-import { SidebarNavComponent } from './sidebar-nav.component';
-import { Nav } from './interface';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SidebarNavComponent } from './sidebar-nav.component';
+import { SidebarNavModule } from './sidebar-nav.module';
+import { Nav } from './sidebar-nav.types';
 
-const floatingShowCls = '.nav-floating-show';
-const MOCKMENUS = <Nav[]>[
+const floatingShowCls = '.sidebar-nav__floating-show';
+const MOCKMENUS = [
   {
     text: '主导航',
     group: true,
@@ -35,11 +34,16 @@ const MOCKMENUS = <Nav[]>[
           { text: 'v1', link: '/v1' },
           { text: 'v2', link: '#/v2', i18n: 'v2-i18n' },
           { text: 'v3' },
+          {
+            text: 'externalLink',
+            externalLink: '//ng-alain.com',
+            target: '_blank',
+          },
         ],
       },
     ],
   },
-];
+] as Nav[];
 describe('abc: sidebar-nav', () => {
   let injector: Injector;
   let fixture: ComponentFixture<TestComponent>;
@@ -49,13 +53,14 @@ describe('abc: sidebar-nav', () => {
   let setSrv: SettingsService;
   let menuSrv: MenuService;
   let page: PageObject;
+  let doc: Document;
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([]),
-        AlainThemeModule.forRoot(),
-        AdSidebarNavModule.forRoot(),
+        AlainThemeModule,
+        SidebarNavModule,
       ],
       declarations: [TestComponent],
       providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
@@ -70,6 +75,7 @@ describe('abc: sidebar-nav', () => {
     router = injector.get(Router);
     setSrv = injector.get(SettingsService);
     menuSrv = injector.get(MenuService);
+    doc = injector.get(DOCUMENT);
     menuSrv.add(deepCopy(MOCKMENUS));
     page = new PageObject();
     if (needMockNavigateByUrl) spyOn(router, 'navigateByUrl');
@@ -77,21 +83,6 @@ describe('abc: sidebar-nav', () => {
   }
 
   afterEach(() => context.comp.ngOnDestroy());
-
-  function getEl<T>(cls: string, body = false) {
-    const el = body
-      ? document.querySelector(cls)
-      : dl.query(By.css(cls))
-        ? dl.query(By.css(cls)).nativeElement
-        : null;
-    return el ? (el as T) : null;
-  }
-
-  function isText(cls: string, value: any) {
-    const el = getEl<HTMLElement>(cls);
-    if (el) return el.innerText.trim();
-    return '';
-  }
 
   describe('[default]', () => {
     it('should be navigate url', () => {
@@ -101,11 +92,21 @@ describe('abc: sidebar-nav', () => {
       menuSrv.add(data);
       expect(context.select).not.toHaveBeenCalled();
       expect(router.navigateByUrl).not.toHaveBeenCalled();
-      const itemEl = getEl<HTMLElement>('.nav-depth1 a');
+      const itemEl = page.getEl<HTMLElement>('.sidebar-nav__depth1 a');
       itemEl.click();
       fixture.detectChanges();
       expect(context.select).toHaveBeenCalled();
       expect(router.navigateByUrl).toHaveBeenCalled();
+    });
+
+    it('should be hide group name', () => {
+      createComp();
+      page.checkCount('.sidebar-nav__group-title');
+      const data = deepCopy(MOCKMENUS) as Nav[];
+      data[0].group = false;
+      menuSrv.add(data);
+      fixture.detectChanges();
+      page.checkCount('.sidebar-nav__group-title', 0);
     });
 
     it('should be toggle open', () => {
@@ -113,7 +114,7 @@ describe('abc: sidebar-nav', () => {
       const data = deepCopy(MOCKMENUS);
       menuSrv.add(data);
       expect(data[0].children[0]._open).toBeUndefined();
-      const subTitleEl = getEl<HTMLElement>('.nav-sub-title');
+      const subTitleEl = page.getEl<HTMLElement>('.sidebar-nav__item-link');
       subTitleEl.click();
       fixture.detectChanges();
       expect(data[0].children[0]._open).toBe(true);
@@ -121,12 +122,12 @@ describe('abc: sidebar-nav', () => {
 
     it('should be reset menu when service is changed', () => {
       createComp();
-      isText('.nav-group-title', MOCKMENUS[0].text);
+      page.checkText('.sidebar-nav__group-title', MOCKMENUS[0].text);
       const newMenu = deepCopy(MOCKMENUS);
       newMenu[0].text = 'new主导航';
       menuSrv.add(newMenu);
       fixture.detectChanges();
-      isText('.nav-group-title', newMenu[0].text);
+      page.checkText('.sidebar-nav__group-title', newMenu[0].text);
     });
 
     describe('should be exact highlighting item', () => {
@@ -134,8 +135,8 @@ describe('abc: sidebar-nav', () => {
         injector = TestBed.configureTestingModule({
           imports: [
             RouterModule.forRoot([]),
-            AlainThemeModule.forRoot(),
-            AdSidebarNavModule.forRoot(),
+            AlainThemeModule,
+            SidebarNavModule,
             RouterTestingModule.withRoutes([
               { path: 'group', component: TestRouteComponent },
               { path: 'group/type', component: TestRouteComponent },
@@ -151,7 +152,7 @@ describe('abc: sidebar-nav', () => {
         fixture.detectChanges();
       });
       it('when linkExact is [false]', (done: () => void) => {
-        const data = <Nav[]>[
+        const data = [
           {
             text: '',
             children: [
@@ -159,17 +160,17 @@ describe('abc: sidebar-nav', () => {
               { text: 'group/type', link: '/group/type' },
             ],
           },
-        ];
+        ] as Nav[];
         menuSrv.add(data);
         router = injector.get(Router);
         router.navigateByUrl('/group/type').then((res: any) => {
           fixture.detectChanges();
-          expect(dl.queryAll(By.css('.nav-item-selected')).length).toBe(2);
+          expect(dl.queryAll(By.css('.sidebar-nav__selected')).length).toBe(2);
           done();
         });
       });
       it('when linkExact is [true]', (done: () => void) => {
-        const data = <Nav[]>[
+        const data = [
           {
             text: '',
             children: [
@@ -177,15 +178,59 @@ describe('abc: sidebar-nav', () => {
               { text: 'group/type', link: '/group/type', linkExact: true },
             ],
           },
-        ];
+        ] as Nav[];
         menuSrv.add(data);
         router = injector.get(Router);
         router.navigateByUrl('/group/type').then((res: any) => {
           fixture.detectChanges();
-          expect(dl.queryAll(By.css('.nav-item-selected')).length).toBe(1);
+          expect(dl.queryAll(By.css('.sidebar-nav__selected')).length).toBe(1);
           done();
         });
       });
+    });
+  });
+
+  describe('#icon', () => {
+    function updateIcon(icon: string | MenuIcon) {
+      createComp();
+
+      menuSrv.add([
+        {
+          text: '',
+          group: true,
+          children: [
+            {
+              text: '',
+              icon,
+            },
+          ],
+        },
+      ] as Nav[]);
+
+      fixture.detectChanges();
+    }
+    describe('with icon', () => {
+      it('when is string and includes [anticon-]', () => {
+        updateIcon('anticon-edit');
+        const el = page.getEl('.sidebar-nav__item-icon') as HTMLElement;
+        expect(el.classList).toContain('anticon-edit');
+      });
+      it('when is string and http prefix', () => {
+        updateIcon('http://ng-alain/1.jpg');
+        page.checkCount('.sidebar-nav__item-img', 1);
+      });
+      it('when is class string', () => {
+        updateIcon('demo-class');
+        page.checkCount('.demo-class', 1);
+      });
+    });
+    it('with className', () => {
+      updateIcon({ type: 'class', value: 'demo-class' });
+      page.checkCount('.demo-class', 1);
+    });
+    it('with img', () => {
+      updateIcon({ type: 'img', value: '1.jpg' });
+      page.checkCount('.sidebar-nav__item-img', 1);
     });
   });
 
@@ -203,6 +248,27 @@ describe('abc: sidebar-nav', () => {
       });
       it('should be show sub-menu', () => {
         page.showSubMenu();
+      });
+      it('should be displayed full submenu', () => {
+        const clientHeight = spyOnProperty(
+          doc.documentElement,
+          'clientHeight',
+        ).and.returnValue(0);
+        spyOnProperty(
+          doc.querySelector('body'),
+          'clientHeight',
+        ).and.returnValue(0);
+        expect(clientHeight).not.toHaveBeenCalled();
+        page.showSubMenu();
+        expect(clientHeight).toHaveBeenCalled();
+      });
+      it('should be navigate to external', () => {
+        page.showSubMenu();
+        const containerEl = page.getEl<HTMLElement>(floatingShowCls, true);
+        const externalEl = containerEl.querySelector('[data-type="external"]');
+        expect(externalEl).not.toBeNull();
+        (externalEl as HTMLElement).click();
+        fixture.detectChanges();
       });
     });
     describe('should be hide sub-menu in floating container', () => {
@@ -233,18 +299,18 @@ describe('abc: sidebar-nav', () => {
         setSrv.layout.collapsed = true;
         fixture.detectChanges();
         page.showSubMenu();
-        getEl<HTMLElement>(floatingShowCls, true).dispatchEvent(
-          new Event('mouseleave'),
-        );
+        page
+          .getEl<HTMLElement>(floatingShowCls, true)
+          .dispatchEvent(new Event('mouseleave'));
         fixture.detectChanges();
-        expect(getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
+        expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
       });
       it('muse be not hide via click except menu link area', () => {
         createComp();
         setSrv.layout.collapsed = true;
         fixture.detectChanges();
         page.showSubMenu();
-        const containerEl = getEl<HTMLElement>(floatingShowCls, true);
+        const containerEl = page.getEl<HTMLElement>(floatingShowCls, true);
         containerEl.querySelectorAll('li')[1].click();
         fixture.detectChanges();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
@@ -261,7 +327,7 @@ describe('abc: sidebar-nav', () => {
           setSrv.layout.collapsed = true;
           fixture.detectChanges();
           page.showSubMenu();
-          const containerEl = getEl<HTMLElement>(floatingShowCls, true);
+          const containerEl = page.getEl<HTMLElement>(floatingShowCls, true);
           expect(containerEl).not.toBeNull();
           expect(containerEl.querySelector('a').href).toContain(baseHref);
           page.hideSubMenu();
@@ -276,62 +342,88 @@ describe('abc: sidebar-nav', () => {
       page.showSubMenu();
       spyOn(context.comp.floatingEl, 'remove');
       page.hideSubMenu();
-      expect(getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
+      expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
     });
   });
 
   describe('[underPad]', () => {
-    it(
-      'should be auto collapsed when less than pad',
-      fakeAsync(() => {
-        // create test component
-        TestBed.overrideTemplate(
-          TestComponent,
-          `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
-        );
-        const defaultCollapsed = false;
-        createComp(false, () => {
-          spyOnProperty(window, 'innerWidth').and.returnValue(991);
-          setSrv.layout.collapsed = defaultCollapsed;
-          fixture.detectChanges();
-        });
-        router.navigateByUrl('/');
+    it('should be auto collapsed when less than pad', fakeAsync(() => {
+      // create test component
+      TestBed.overrideTemplate(
+        TestComponent,
+        `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
+      );
+      const defaultCollapsed = false;
+      createComp(false, () => {
+        spyOnProperty(window, 'innerWidth').and.returnValue(767);
+        setSrv.layout.collapsed = defaultCollapsed;
         fixture.detectChanges();
-        tick(20);
-        expect(setSrv.layout.collapsed).toBe(!defaultCollapsed);
-      }),
-    );
-    it(
-      `should be won't collapsed when more than pad`,
-      fakeAsync(() => {
-        // create test component
-        TestBed.overrideTemplate(
-          TestComponent,
-          `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
-        );
-        const defaultCollapsed = false;
-        createComp(false, () => {
-          spyOnProperty(window, 'innerWidth').and.returnValue(993);
-          setSrv.layout.collapsed = defaultCollapsed;
-          fixture.detectChanges();
-        });
-        router.navigateByUrl('/');
+      });
+      router.navigateByUrl('/');
+      fixture.detectChanges();
+      tick(20);
+      expect(setSrv.layout.collapsed).toBe(!defaultCollapsed);
+    }));
+    it(`should be won't collapsed when more than pad`, fakeAsync(() => {
+      // create test component
+      TestBed.overrideTemplate(
+        TestComponent,
+        `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
+      );
+      const defaultCollapsed = false;
+      createComp(false, () => {
+        spyOnProperty(window, 'innerWidth').and.returnValue(769);
+        setSrv.layout.collapsed = defaultCollapsed;
         fixture.detectChanges();
-        tick(20);
-        expect(setSrv.layout.collapsed).toBe(defaultCollapsed);
-      }),
-    );
+      });
+      router.navigateByUrl('/');
+      fixture.detectChanges();
+      tick(20);
+      expect(setSrv.layout.collapsed).toBe(defaultCollapsed);
+    }));
+    it('should be auto expaned when less than pad trigger click', fakeAsync(() => {
+      // create test component
+      TestBed.overrideTemplate(
+        TestComponent,
+        `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
+      );
+      createComp();
+      setSrv.layout.collapsed = true;
+      fixture.detectChanges();
+      spyOnProperty(window, 'innerWidth').and.returnValue(767);
+      expect(setSrv.layout.collapsed).toBe(true);
+      page.getEl<HTMLElement>('.sidebar-nav').click();
+      fixture.detectChanges();
+      tick(20);
+      expect(setSrv.layout.collapsed).toBe(false);
+    }));
   });
 
   class PageObject {
+    getEl<T>(cls: string, body = false) {
+      const el = body
+        ? document.querySelector(cls)
+        : dl.query(By.css(cls))
+          ? dl.query(By.css(cls)).nativeElement
+          : null;
+      return el ? (el as T) : null;
+    }
+    checkText(cls: string, value: any) {
+      const el = this.getEl<HTMLElement>(cls);
+      expect(el ? el.innerText.trim() : '').toBe(value);
+    }
+    checkCount(cls: string, count = 1) {
+      expect(dl.queryAll(By.css(cls)).length).toBe(count);
+      return this;
+    }
     /** 期望显示子菜单，默认：`true` */
     showSubMenu(resultExpectShow = true) {
-      let conEl = getEl<HTMLElement>(floatingShowCls, true);
+      let conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       expect(conEl).toBeNull();
-      const subTitleEl = getEl<HTMLElement>('.nav-sub-title');
+      const subTitleEl = this.getEl<HTMLElement>('.sidebar-nav__item-link');
       subTitleEl.dispatchEvent(new Event('mouseenter'));
       fixture.detectChanges();
-      conEl = getEl<HTMLElement>(floatingShowCls, true);
+      conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       if (resultExpectShow) {
         expect(conEl).not.toBeNull();
       } else {
@@ -340,11 +432,11 @@ describe('abc: sidebar-nav', () => {
     }
     /** 期望隐藏子菜单，默认：`true` */
     hideSubMenu(resultExpectHide = true) {
-      const containerEl = getEl<HTMLElement>(floatingShowCls, true);
+      const containerEl = this.getEl<HTMLElement>(floatingShowCls, true);
       expect(containerEl).not.toBeNull();
       containerEl.querySelector(resultExpectHide ? 'a' : 'li').click();
       fixture.detectChanges();
-      const conEl = getEl<HTMLElement>(floatingShowCls, true);
+      const conEl = this.getEl<HTMLElement>(floatingShowCls, true);
       if (resultExpectHide) expect(conEl).toBeNull();
       else expect(conEl).not.toBeNull();
     }
@@ -357,7 +449,8 @@ describe('abc: sidebar-nav', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: SidebarNavComponent;
+  @ViewChild('comp')
+  comp: SidebarNavComponent;
   autoCloseUnderPad = false;
   select() {}
 }

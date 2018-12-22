@@ -1,3 +1,4 @@
+export * from './zip.types';
+export * from './zip.config';
 export { ZipService } from './zip.service';
-export { AdZipModule } from './zip.module';
-export * from './interface';
+export { ZipModule } from './zip.module';

@@ -1,144 +1,127 @@
+import { DOCUMENT } from '@angular/common';
 import {
-  Component,
-  ElementRef,
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Input,
-  Output,
+  Component,
+  ElementRef,
   EventEmitter,
-  OnChanges,
-  SimpleChanges,
-  SimpleChange,
-  OnInit,
-  Inject,
   HostBinding,
+  Inject,
+  Input,
+  OnChanges,
   OnDestroy,
-  AfterViewInit,
+  OnInit,
+  Output,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { toBoolean, toNumber } from '@delon/util';
-import { Subscription, fromEvent } from 'rxjs';
+import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
+import { InputBoolean, InputNumber } from '@delon/util';
+import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
-import { FullContentService } from './full-content.service';
-import { Router, ActivationStart, ActivationEnd } from '@angular/router';
 
-const cls = `ad-full-content-wrap`;
-const fsCls = `ad-full-content-fs`;
-const hideTitleCls = `ad-full-content-ht`;
+import { FullContentService } from './full-content.service';
+
+const wrapCls = `full-content__body`;
+const openedCls = `full-content__opened`;
+const hideTitleCls = `full-content__hidden-title`;
 
 @Component({
   selector: 'full-content',
   template: `<ng-content></ng-content>`,
-  host: { '[class.ad-full-content]': 'true' },
+  host: { '[class.full-content]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FullContentComponent
-  implements AfterViewInit, OnInit, OnChanges, OnDestroy {
+export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   private bodyEl: HTMLElement;
   private inited = false;
   private srv$: Subscription;
   private route$: Subscription;
-  private id = `_full-content-${Math.random()
-    .toString(36)
-    .substring(2)}`;
+  private id = `_full-content-${Math.random().toString(36).substring(2)}`;
+  private scroll$: Subscription = null;
 
-  @HostBinding('style.height.px') _height = 0;
+  @HostBinding('style.height.px')
+  _height = 0;
 
-  // region: fields
+  // #region fields
 
-  @Input()
-  get fullscreen() {
-    return this._fullscreen;
-  }
-  set fullscreen(value: any) {
-    this._fullscreen = toBoolean(value);
-  }
-  private _fullscreen;
+  @Input() @InputBoolean() fullscreen: boolean;
+  @Input() @InputBoolean() hideTitle = true;
+  @Input() @InputNumber() padding = 24;
+  @Output() readonly fullscreenChange = new EventEmitter<boolean>();
 
-  @Input()
-  get hideTitle() {
-    return this._hideTitle;
-  }
-  set hideTitle(value: any) {
-    this._hideTitle = toBoolean(value);
-  }
-  private _hideTitle = true;
-
-  @Input()
-  get padding() {
-    return this._padding;
-  }
-  set padding(value: any) {
-    this._padding = toNumber(value);
-  }
-  private _padding = 24;
-
-  @Output()
-  fullscreenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  // endregion
+  // #endregion
 
   constructor(
     private el: ElementRef,
-    private router: Router,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private srv: FullContentService,
+    private router: Router,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
-  ) {}
+  ) { }
 
-  ngOnInit(): void {
-    this.inited = true;
-    this.bodyEl = this.doc.querySelector('body');
-    this.bodyEl.classList.add(cls);
-    (this.el.nativeElement as HTMLElement).id = this.id;
-    this.update();
-    this.installResizeEvent();
-    this.srv$ = <any>this.srv.change.subscribe(res => {
-      if (res) this.toggle();
-    });
-    this.route$ = <any>this.router.events
-      .pipe(
-        filter(
-          (e: any) =>
-            e instanceof ActivationStart || e instanceof ActivationEnd,
-        ),
-        debounceTime(200),
-      )
-      .subscribe(e => {
-        if (!!document.querySelector('#' + this.id)) {
-          this.bodyEl.classList.add(cls);
-          this.updateFsCls();
-        } else {
-          this.bodyEl.classList.remove(cls, fsCls, hideTitleCls);
-        }
-      });
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => this.updateHeight());
-  }
-
-  private updateFsCls() {
+  private updateCls() {
+    const clss = this.bodyEl.classList;
     if (this.fullscreen) {
-      this.bodyEl.classList.add(fsCls);
-      if (this.hideTitle) this.bodyEl.classList.add(hideTitleCls);
+      clss.add(openedCls);
+      if (this.hideTitle) {
+        clss.add(hideTitleCls);
+      }
     } else {
-      this.bodyEl.classList.remove(fsCls);
-      if (this.hideTitle) this.bodyEl.classList.remove(hideTitleCls);
+      clss.remove(openedCls);
+      if (this.hideTitle) {
+        clss.remove(hideTitleCls);
+      }
     }
   }
 
   private update() {
-    this.updateFsCls();
+    this.updateCls();
+    this.updateHeight();
     this.fullscreenChange.emit(this.fullscreen);
   }
 
   private updateHeight() {
-    this._height =
-      this.bodyEl.getBoundingClientRect().height -
-      (this.el.nativeElement as HTMLElement).getBoundingClientRect().top -
-      this.padding;
-    this.cd.detectChanges();
+    this._height = this.bodyEl.getBoundingClientRect().height - (this.el.nativeElement as HTMLElement).getBoundingClientRect().top - this.padding;
+    this.cdr.detectChanges();
+  }
+
+  private removeInBody() {
+    this.bodyEl.classList.remove(wrapCls, openedCls, hideTitleCls);
+  }
+
+  ngOnInit(): void {
+    this.inited = true;
+    this.bodyEl = this.doc.querySelector('body');
+    this.bodyEl.classList.add(wrapCls);
+    (this.el.nativeElement as HTMLElement).id = this.id;
+
+    this.updateCls();
+
+    // when window resize
+    this.scroll$ = fromEvent(window, 'resize')
+      .pipe(debounceTime(200))
+      .subscribe(() => this.updateHeight());
+
+    // when servier changed
+    this.srv$ = this.srv.change
+      .pipe(filter(res => res !== null))
+      .subscribe(() => this.toggle());
+
+    // when router changed
+    this.route$ = this.router.events
+      .pipe(
+        filter((e: Event) => e instanceof ActivationStart || e instanceof ActivationEnd),
+        debounceTime(200),
+      )
+      .subscribe(() => {
+        if (!!this.doc.querySelector('#' + this.id)) {
+          this.bodyEl.classList.add(wrapCls);
+          this.updateCls();
+        } else {
+          this.removeInBody();
+        }
+      });
   }
 
   toggle() {
@@ -147,31 +130,18 @@ export class FullContentComponent
     this.updateHeight();
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
+  ngAfterViewInit() {
+    setTimeout(() => this.updateHeight());
+  }
+
+  ngOnChanges(): void {
     if (this.inited) this.update();
   }
 
   ngOnDestroy(): void {
-    this.bodyEl.classList.remove(cls, fsCls, hideTitleCls);
-    this.uninstallResizeEvent();
+    this.removeInBody();
+    this.scroll$.unsubscribe();
     this.srv$.unsubscribe();
     this.route$.unsubscribe();
   }
-
-  // region: resize
-
-  private scroll$: Subscription = null;
-  private installResizeEvent() {
-    this.scroll$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(200))
-      .subscribe(() => this.updateHeight());
-  }
-
-  private uninstallResizeEvent() {
-    this.scroll$.unsubscribe();
-  }
-
-  // endregion
 }

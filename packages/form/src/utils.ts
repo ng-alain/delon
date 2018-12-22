@@ -1,8 +1,9 @@
-import { Observable, of } from 'rxjs';
-import { map, takeWhile } from 'rxjs/operators';
+// tslint:disable:no-any
 import { deepCopy } from '@delon/util';
-import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import { of, Observable } from 'rxjs';
+import { map, takeWhile } from 'rxjs/operators';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
+import { SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 
 export const FORMATMAPS = {
   'date-time': {
@@ -10,20 +11,24 @@ export const FORMATMAPS = {
     showTime: true,
     format: 'YYYY-MM-DDTHH:mm:ssZ',
   },
-  date: { widget: 'date', format: 'YYYY-MM-DD' },
+  'date': { widget: 'date', format: 'YYYY-MM-DD' },
   'full-date': { widget: 'date', format: 'YYYY-MM-DD' },
-  time: { widget: 'time' },
+  'time': { widget: 'time' },
   'full-time': { widget: 'time' },
-  week: { widget: 'date', mode: 'week', format: 'YYYY-WW' },
-  month: { widget: 'date', mode: 'month', format: 'YYYY-MM' },
-  uri: { widget: 'upload' },
-  email: { widget: 'autocomplete', type: 'email' },
-  color: { widget: 'string', type: 'color' },
+  'week': { widget: 'date', mode: 'week', format: 'YYYY-WW' },
+  'month': { widget: 'date', mode: 'month', format: 'YYYY-MM' },
+  'uri': { widget: 'upload' },
+  'email': { widget: 'autocomplete', type: 'email' },
+  'color': { widget: 'string', type: 'color' },
   '': { widget: 'string' },
 };
 
 export function isBlank(o: any) {
   return o == null;
+}
+
+export function toBool(value: any, defaultValue: boolean) {
+  return value == null ? defaultValue : `${value}` !== 'false';
 }
 
 export function di(...args) {
@@ -74,8 +79,8 @@ export function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema {
   if (!schema.if.properties)
     throw new Error(`if: does not contain 'properties'`);
 
-  const allKeys = Object.keys(schema.properties),
-    ifKeys = Object.keys(schema.if.properties);
+  const allKeys = Object.keys(schema.properties);
+  const ifKeys = Object.keys(schema.if.properties);
   detectKey(allKeys, ifKeys);
   detectKey(allKeys, schema.then.required);
   schema.required = schema.required.concat(schema.then.required);
@@ -147,11 +152,11 @@ export function orderProperties(properties: string[], order: string[]) {
   return complete;
 }
 
-export function getEnum(list: any[], formData: any): SFSchemaEnum[] {
+export function getEnum(list: any[], formData: any, readOnly: boolean): SFSchemaEnum[] {
   if (isBlank(list) || !Array.isArray(list) || list.length === 0) return [];
   if (typeof list[0] !== 'object') {
     list = list.map((item: any) => {
-      return <SFSchemaEnum>{ label: item, value: item };
+      return { label: item, value: item } as SFSchemaEnum;
     });
   }
   if (formData) {
@@ -160,11 +165,15 @@ export function getEnum(list: any[], formData: any): SFSchemaEnum[] {
       if (~formData.indexOf(item.value)) item.checked = true;
     });
   }
+  // fix disabled status
+  if (readOnly) {
+    list.forEach((item: SFSchemaEnum) => item.disabled = true);
+  }
   return list;
 }
 
-export function getCopyEnum(list: any[], formData: any) {
-  return getEnum(deepCopy(list || []), formData);
+export function getCopyEnum(list: any[], formData: any, readOnly: boolean) {
+  return getEnum(deepCopy(list || []), formData, readOnly);
 }
 
 export function getData(
@@ -178,8 +187,8 @@ export function getData(
       .asyncData(asyncArgs)
       .pipe(
         takeWhile(() => ui.__destroy !== true),
-        map(list => getEnum(list, formData)),
+        map(list => getEnum(list, formData, schema.readOnly)),
       );
   }
-  return of(getCopyEnum(schema.enum, formData));
+  return of(getCopyEnum(schema.enum, formData, schema.readOnly));
 }

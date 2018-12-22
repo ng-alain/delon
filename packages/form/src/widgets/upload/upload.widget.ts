@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { deepGet } from '@delon/util';
-import { UploadFile, UploadChangeParam, NzModalService } from 'ng-zorro-antd';
+import { NzModalService, UploadChangeParam, UploadFile } from 'ng-zorro-antd';
+import { SFValue } from '../../interface';
+import { getData, toBool } from '../../utils';
 import { ControlWidget } from '../../widget';
-import { getData } from '../../utils';
 
 @Component({
   selector: 'sf-upload',
@@ -30,17 +31,17 @@ import { getData } from '../../utils';
       (nzChange)="change($event)">
       <ng-container [ngSwitch]="btnType">
         <ng-container *ngSwitchCase="'plus'">
-          <i class="anticon anticon-plus"></i>
+          <i nz-icon type="plus"></i>
           <div class="ant-upload-text" [innerHTML]="i.text"></div>
         </ng-container>
         <ng-container *ngSwitchCase="'drag'">
-          <p class="ant-upload-drag-icon"><i class="anticon anticon-inbox"></i></p>
+          <p class="ant-upload-drag-icon"><i nz-icon type="inbox"></i></p>
           <p class="ant-upload-text" [innerHTML]="i.text"></p>
           <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
         </ng-container>
         <ng-container *ngSwitchDefault>
           <button type="button" nz-button>
-            <i class="anticon anticon-upload"></i><span [innerHTML]="i.text"></span>
+            <i nz-icon type="upload"></i><span [innerHTML]="i.text"></span>
           </button>
         </ng-container>
       </ng-container>
@@ -48,9 +49,9 @@ import { getData } from '../../utils';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class UploadWidget extends ControlWidget implements OnInit {
+  // tslint:disable-next-line:no-any
   i: any;
   fileList: UploadFile[] = [];
   btnType = '';
@@ -66,13 +67,13 @@ export class UploadWidget extends ControlWidget implements OnInit {
       action: this.ui.action || '',
       accept: this.ui.accept || '',
       limit: this.ui.limit == null ? 0 : +this.ui.limit,
-      size: this.ui.size == null ? 0 : +this.ui.size,
+      size: this.ui.fileSize == null ? 0 : +this.ui.fileSize,
       fileType: this.ui.fileType || '',
       listType: this.ui.listType || 'text',
-      multiple: this.ui.multiple || false,
+      multiple: toBool(this.ui.multiple, false),
       name: this.ui.name || 'file',
-      showUploadList: this.ui.showUploadList || true,
-      withCredentials: this.ui.withCredentials || false,
+      showUploadList: toBool(this.ui.showUploadList, true),
+      withCredentials: toBool(this.ui.withCredentials, false),
       resReName: (this.ui.resReName || '').split('.'),
     };
     if (this.i.listType === 'picture-card') this.btnType = 'plus';
@@ -80,8 +81,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
       this.i.listType = null;
       this.btnType = 'drag';
       this.i.text = this.ui.text || `单击或拖动文件到该区域上传`;
-      this.i.hint =
-        this.ui.hint || `支持单个或批量，严禁上传公司数据或其他安全文件`;
+      this.i.hint = this.ui.hint || `支持单个或批量，严禁上传公司数据或其他安全文件`;
     }
   }
 
@@ -91,7 +91,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
     this.notify(args.fileList);
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => {
         this.fileList = list as UploadFile[];
@@ -114,10 +114,9 @@ export class UploadWidget extends ControlWidget implements OnInit {
   handlePreview = (file: UploadFile) => {
     this.modalSrv
       .create({
-        nzContent: `<img src="${file.url ||
-          file.thumbUrl}" class="img-fluid" />`,
+        nzContent: `<img src="${file.url || file.thumbUrl}" class="img-fluid" />`,
         nzFooter: null,
       })
       .afterClose.subscribe(() => this.detectChanges());
-  };
+  }
 }

@@ -12,13 +12,13 @@ Angular CLI 构建的项目就其目录结构而言已经非常棒了，同时�
 
 ### 区域
 
-将一组相同属性使用 `// region: ` & `// endregion` 自由折叠代码预处理指令（限VSCODE），以 `shared.module.ts` 文件为例：
+将一组相同属性使用 `// #region ` & `// #endregion` 自由折叠代码预处理指令（限VSCODE），以 `shared.module.ts` 文件为例：
 
 ```ts
-// region: third libs
+// #region third libs
 import { NzSchemaFormModule } from 'nz-schema-form';
 const THIRDMODULES = [ NzSchemaFormModule ];
-// endregion
+// #endregion
 ```
 
 将所有第三方模块放在 `third libs` 区域当中，并统一将注册模块放进 `THIRDMODULES` 变量中。你无须再关心导入和导出的问题，因为 `THIRDMODULES` 数组默认加入导入和导出行列中。
@@ -63,13 +63,7 @@ ng-alain 默认配置了不生成样式文件&单元测试，因此，你会看�
 
 ### vscode snippets
 
-vscode 是编写 Angular 最佳的选择，自然 ng-alain 也制作了相应 snippets 扩展插件：[ng-zorro-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)。除了大量的 ng-zorro-antd 组件片断以外，还加入了部分 ng-alain 片断，例如：
-
-```
-nz-button => 构建一个按钮
-nz-alain-content => 构建一个ng-alain页面标题
-nz-alain-pro.header => 构建一个pro版本的页面标题
-```
+vscode 是编写 Angular 最佳的选择，自然 ng-alain 也制作了相应 snippets 扩展插件：[ng-zorro-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode) 和 [ng-alain-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)。
 
 ## 一致的代码风格
 
@@ -78,6 +72,7 @@ ng-alain 使用 [Prettier](https://prettier.io/) 来优化代码风格，并且�
 推荐安装几个插件在 vscode 中更友好的开发：
 
 - [ng-zorro snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
+- [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
 - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
 - [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis)

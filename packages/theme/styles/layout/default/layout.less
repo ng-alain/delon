@@ -1,0 +1,82 @@
+html {
+  direction: ltr;
+  height: 100%; // http://updates.html5rocks.com/2013/12/300ms-tap-delay-gone-away
+  touch-action: manipulation;
+}
+
+html,
+body,
+app-root {
+  // overflow-x: hidden;
+  height: 100%;
+}
+
+body {
+  color: @text-color;
+  background-color: @alain-default-content-bg;
+}
+
+@{alain-default-prefix} {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  &__unwrap {
+    margin-right: -@alain-default-content-padding;
+    margin-left: -@alain-default-content-padding;
+    @media (max-width: @mobile-max) {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+  &__content {
+    margin: 0 @alain-default-content-padding @alain-default-content-padding @alain-default-content-padding;
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #929292;
+      padding: @alain-default-content-padding;
+      padding-top: @alain-default-content-padding - 12;
+      padding-bottom: @alain-default-content-padding - 12;
+      margin-right: -@alain-default-content-padding;
+      margin-left: -@alain-default-content-padding;
+      margin-bottom: @alain-default-content-padding;
+      background-color: @alain-default-content-heading-bg;
+      border-bottom: 1px solid @alain-default-content-heading-border;
+      > h1 {
+        font-size: 18px;
+        font-weight: normal;
+        margin-bottom: 0;
+        > small {
+          display: block;
+          font-size: 12px;
+          color: @muted-color;
+        }
+      }
+    }
+    // fix width
+    nz-input-group {
+      width: auto;
+    }
+  }
+}
+
+// Desktop
+@media (min-width: @mobile-min) {
+  @{alain-default-prefix}__content {
+    margin-left: (@alain-default-aside-wd + @alain-default-content-padding);
+  }
+  @{alain-default-prefix}__collapsed {
+    @{alain-default-prefix} {
+      &__sidebar {
+        width: @alain-default-aside-collapsed-wd;
+      }
+      &__content {
+        margin-left: (@alain-default-aside-collapsed-wd + @alain-default-content-padding);
+      }
+    }
+  }
+}

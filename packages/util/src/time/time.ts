@@ -1,14 +1,14 @@
-import * as parse from 'date-fns/parse';
-import * as startOfWeek from 'date-fns/start_of_week';
-import * as endOfWeek from 'date-fns/end_of_week';
-import * as subWeeks from 'date-fns/sub_weeks';
-import * as startOfMonth from 'date-fns/start_of_month';
-import * as endOfMonth from 'date-fns/end_of_month';
-import * as subMonths from 'date-fns/sub_months';
-import * as startOfYear from 'date-fns/start_of_year';
-import * as endOfYear from 'date-fns/end_of_year';
-import * as subYears from 'date-fns/sub_years';
-import * as addDays from 'date-fns/add_days';
+import addDays from 'date-fns/add_days';
+import endOfMonth from 'date-fns/end_of_month';
+import endOfWeek from 'date-fns/end_of_week';
+import endOfYear from 'date-fns/end_of_year';
+import parse from 'date-fns/parse';
+import startOfMonth from 'date-fns/start_of_month';
+import startOfWeek from 'date-fns/start_of_week';
+import startOfYear from 'date-fns/start_of_year';
+import subMonths from 'date-fns/sub_months';
+import subWeeks from 'date-fns/sub_weeks';
+import subYears from 'date-fns/sub_years';
 
 /**
  * 获取时间范围
@@ -32,8 +32,9 @@ export function getTimeDistance(
 
   switch (type) {
     case 'today':
-    case '-today':
       return [time, time];
+    case '-today':
+      return [addDays(time, -1), time];
     case 'week':
       return [startOfWeek(time), endOfWeek(time)];
     case '-week':

@@ -1,17 +1,14 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { DelonUtilModule } from '@delon/util';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { SidebarNavComponent } from './sidebar-nav.component';
 
 @NgModule({
-  imports: [CommonModule, RouterModule, NgZorroAntdModule],
+  imports: [CommonModule, RouterModule, NgZorroAntdModule, DelonUtilModule],
   declarations: [SidebarNavComponent],
   exports: [SidebarNavComponent],
 })
-export class AdSidebarNavModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: AdSidebarNavModule, providers: [] };
-  }
-}
+export class SidebarNavModule { }

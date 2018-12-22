@@ -1,4 +1,4 @@
 export { QRService } from './qr.service';
 export { QRComponent } from './qr.component';
-export { AdQRConfig } from './qr.config';
-export { AdQRModule } from './qr.module';
+export { QRConfig } from './qr.config';
+export { QRModule } from './qr.module';

@@ -1,33 +1,32 @@
-import {
-  Rule,
-  Tree,
-  SchematicContext,
-  SchematicsException,
-  apply,
-  url,
-  noop,
-  filter,
-  template,
-  move,
-  chain,
-  branchAndMerge,
-  mergeWith,
-} from '@angular-devkit/schematics';
-import * as ts from 'typescript';
 import { strings } from '@angular-devkit/core';
-import { getWorkspace, Project } from './devkit-utils/config';
-import { parseName } from './devkit-utils/parse-name';
 import {
-  findModuleFromOptions,
-  buildRelativePath,
-} from './devkit-utils/find-module';
-import { validateName, validateHtmlSelector } from './devkit-utils/validation';
-import { InsertChange } from './devkit-utils/change';
-import { findNode } from './devkit-utils/ast-utils';
-import { insertImport } from './devkit-utils/route-utils';
+  apply,
+  branchAndMerge,
+  chain,
+  filter,
+  mergeWith,
+  move,
+  noop,
+  template,
+  url,
+  Rule,
+  SchematicsException,
+  SchematicContext,
+  Tree,
+} from '@angular-devkit/schematics';
+import { findNode, insertImport } from '@schematics/angular/utility/ast-utils';
+import { InsertChange } from '@schematics/angular/utility/change';
+import { buildRelativePath, findModuleFromOptions } from '@schematics/angular/utility/find-module';
+import { parseName } from '@schematics/angular/utility/parse-name';
+import { validateHtmlSelector, validateName } from '@schematics/angular/utility/validation';
+import * as ts from 'typescript';
+import { getSourceFile } from './ast';
+import { getProject, Project } from './project';
 
 export interface CommonSchema {
+  // tslint:disable-next-line:no-any
   [key: string]: any;
+  _filesPath?: string;
   name?: string;
   path?: string;
   module?: string;
@@ -55,7 +54,7 @@ function buildSelector(schema: CommonSchema, projectPrefix: string) {
   }
   // target name
   if (schema.target) {
-    ret.push(schema.target);
+    ret.push(...schema.target.split('/'));
   }
   // name
   ret.push(strings.dasherize(schema.name));
@@ -64,13 +63,18 @@ function buildSelector(schema: CommonSchema, projectPrefix: string) {
 
 function buildComponentName(schema: CommonSchema, projectPrefix: string) {
   const ret: string[] = [schema.module];
-  if (schema.target && schema.target.length > 0) ret.push(schema.target);
+  if (schema.target && schema.target.length > 0) {
+    ret.push(...schema.target.split('/'));
+  }
   ret.push(schema.name);
   ret.push(`Component`);
   return strings.classify(ret.join('-'));
 }
 
 function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
+  if (!schema._filesPath) {
+    schema._filesPath = './files';
+  }
   // module name
   if (!schema.module) {
     throw new SchematicsException(
@@ -81,6 +85,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   if (schema.path === undefined) {
     const projectDirName =
       project.projectType === 'application' ? 'app' : 'lib';
+    // tslint:disable-next-line:no-any
     schema.path = `/${(project as any).sourceRoot}/${projectDirName}/routes`;
   }
 
@@ -89,6 +94,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   const parsedPath = parseName(schema.path, schema.name);
   schema.name = parsedPath.name;
   schema.path = parsedPath.path;
+  // tslint:disable-next-line:no-any
   schema.importModulePath = findModuleFromOptions(host, schema as any);
   // fill target
   if (schema.target) {
@@ -102,19 +108,11 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
 
   // html selector
   schema.selector =
+    // tslint:disable-next-line:no-any
     schema.selector || buildSelector(schema, (project as any).prefix);
 
   validateName(schema.name);
   validateHtmlSelector(schema.selector);
-}
-
-function getTsSource(host: Tree, path: string): ts.SourceFile {
-  const text = host.read(path);
-  if (text === null) {
-    throw new SchematicsException(`File ${path} does not exist.`);
-  }
-  const sourceText = text.toString('utf-8');
-  return ts.createSourceFile(path, sourceText, ts.ScriptTarget.Latest, true);
 }
 
 function addImportToModule(
@@ -123,7 +121,7 @@ function addImportToModule(
   symbolName: string,
   fileName: string,
 ) {
-  const source = getTsSource(host, path);
+  const source = getSourceFile(host, path);
   const change = insertImport(
     source,
     path,
@@ -141,13 +139,14 @@ export function addValueToVariable(
   variableName: string,
   text: string,
 ) {
-  const source = getTsSource(host, path);
+  const source = getSourceFile(host, path);
   const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
     throw new SchematicsException(
       `Could not find any [${variableName}] variable.`,
     );
   }
+  // tslint:disable-next-line:no-any
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
 
   const change = new InsertChange(
@@ -162,11 +161,8 @@ export function addValueToVariable(
 }
 
 function getRelativePath(path: string, schema: CommonSchema) {
-  const importPath =
-    `/${schema.path}/` +
-    (schema.flat ? '' : strings.dasherize(schema.name) + '/') +
-    strings.dasherize(schema.name) +
-    '.component';
+  // tslint:disable-next-line:prefer-template
+  const importPath = `/${schema.path}/` + (schema.flat ? '' : strings.dasherize(schema.name) + '/') + strings.dasherize(schema.name) + '.component';
   return buildRelativePath(path, importPath);
 }
 
@@ -220,20 +216,18 @@ function addDeclaration(schema: CommonSchema) {
 
 export function buildAlain(schema: CommonSchema): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const workspace = getWorkspace(host);
-    if (Object.keys(workspace.projects).length <= 0) {
-      throw new SchematicsException('Could not find any project.');
-    }
-    if (!schema.project) {
-      schema.project = Object.keys(workspace.projects)[0];
-    }
-    const project = workspace.projects[schema.project];
+    const project = getProject(host, schema.project);
 
     resolveSchema(host, project, schema);
 
+    // tslint:disable-next-line:no-any
     schema.componentName = buildComponentName(schema, (project as any).prefix);
 
-    const templateSource = apply(url('./files'), [
+    // Don't support inline
+    schema.inlineTemplate = false;
+
+    const templateSource = apply(url(schema._filesPath), [
+      filter(path => !path.endsWith('.DS_Store')),
       schema.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),
       schema.inlineStyle
         ? filter(path => !path.endsWith('.__styleext__'))
@@ -255,9 +249,13 @@ export function buildAlain(schema: CommonSchema): Rule {
   };
 }
 
-export function tryAddFile(host: Tree, path: string, content: string) {
+export function tryDelFile(host: Tree, path: string) {
   if (host.exists(path)) {
     host.delete(path);
   }
+}
+
+export function tryAddFile(host: Tree, path: string, content: string) {
+  tryDelFile(host, path);
   host.create(path, content);
 }

@@ -1,0 +1,24 @@
+<div class="ant-row banner-wrapper">
+  <div class="ant-col-sm-24 ant-col-md-12">
+    <div class="banner-slogan">
+      <h1>Ng Alain</h1>
+      <p>{{'app.home.slogan' | translate}}</p>
+      <div class="button-wrapper">
+        <a routerLink="/docs/getting-started/{{i18n.zone}}">
+          <button nz-button [nzType]="'primary'" [nzSize]="'large'">{{'app.home.start' | translate}}</button>
+        </a>
+        <a href="//ng-alain.github.io/ng-alain/" target="_blank" rel="noopener noreferrer">
+          <button nz-button [nzSize]="'large'">{{'app.home.preview' | translate}}</button>
+        </a>
+        <github-button type="stargazers" size="large" namespace="ng-alain" repo="ng-alain"></github-button>
+      </div>
+    </div>
+  </div>
+  <div class="ant-col-sm-24 ant-col-md-12">
+    <div class="banner-img">
+      <a href="//e.ng-alain.com/" target="_blank">
+        <img src="/assets/pro.png" alt="Ng Alain Pro">
+      </a>
+    </div>
+  </div>
+</div>

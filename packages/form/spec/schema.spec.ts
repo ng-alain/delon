@@ -1,10 +1,11 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
+import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util';
-import { builder, TestFormComponent, SFPage, SCHEMA } from './base.spec';
-import { SFSchema } from '../src/schema/index';
-import { SFUISchemaItem, SFUISchema } from '../src/schema/ui';
 import { ObjectProperty } from '../src/model/object.property';
+import { SFSchema } from '../src/schema/index';
+import { SFUISchema, SFUISchemaItem } from '../src/schema/ui';
+import { configureSFTestSuite, SFPage, TestFormComponent } from './base.spec';
 
 describe('form: schema', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -12,7 +13,14 @@ describe('form: schema', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  beforeEach(() => ({ fixture, dl, context, page } = builder()));
+  configureSFTestSuite();
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestFormComponent));
+    fixture.detectChanges();
+    page = new SFPage(context.comp);
+    page.prop(dl, context, fixture);
+  });
 
   describe('[cover schema]', () => {
     it('should be using select widget when not ui and enum exists', () => {
@@ -400,7 +408,7 @@ describe('form: schema', () => {
           page.newSchema({
             properties: {
               a: { type: 'string' },
-              b: { type: 'string' }
+              b: { type: 'string' },
             },
             ui: {
               order: ['c', 'a'],
@@ -413,7 +421,7 @@ describe('form: schema', () => {
           page.newSchema({
             properties: {
               a: { type: 'string' },
-              b: { type: 'string' }
+              b: { type: 'string' },
             },
             ui: {
               order: ['a'],
@@ -426,7 +434,7 @@ describe('form: schema', () => {
           page.newSchema({
             properties: {
               a: { type: 'string' },
-              b: { type: 'string' }
+              b: { type: 'string' },
             },
             ui: {
               order: ['a', '*', '*', '*', '*'],

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import format from 'date-fns/format';
+import { SFValue } from '../../interface';
+import { toBool } from '../../utils';
 import { ControlWidget } from '../../widget';
-import * as format from 'date-fns/format';
 
 @Component({
   selector: 'sf-time',
@@ -29,11 +31,11 @@ import * as format from 'date-fns/format';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class TimeWidget extends ControlWidget implements OnInit {
   displayValue: Date = null;
   format: string;
+  // tslint:disable-next-line:no-any
   i: any;
 
   ngOnInit(): void {
@@ -45,19 +47,25 @@ export class TimeWidget extends ControlWidget implements OnInit {
         : 'HH:mm:ss';
     this.i = {
       displayFormat: ui.displayFormat || 'HH:mm:ss',
-      allowEmpty: ui.allowEmpty || true,
+      allowEmpty: toBool(ui.allowEmpty, true),
       clearText: ui.clearText || '清除',
       defaultOpenValue: ui.defaultOpenValue || new Date(),
-      hideDisabledOptions: ui.hideDisabledOptions || false,
+      hideDisabledOptions: toBool(ui.hideDisabledOptions, false),
       hourStep: ui.hourStep || 1,
       minuteStep: ui.nzMinuteStep || 1,
       secondStep: ui.secondStep || 1,
     };
   }
 
-  reset(value: any) {
+  private compCd() {
+    // TODO: removed after nz-datepick support OnPush mode
+    setTimeout(() => this.detectChanges());
+  }
+
+  reset(value: SFValue) {
     if (value instanceof Date) {
       this.displayValue = value;
+      this.compCd();
       return;
     }
     let v = value != null && value.toString().length ? new Date(value) : null;
@@ -68,6 +76,7 @@ export class TimeWidget extends ControlWidget implements OnInit {
       v = new Date(`1970-1-1 ` + value);
     }
     this.displayValue = v;
+    this.compCd();
   }
 
   _change(value: Date) {
@@ -76,16 +85,7 @@ export class TimeWidget extends ControlWidget implements OnInit {
       return;
     }
     if (this.ui.utcEpoch === true) {
-      this.setValue(
-        Date.UTC(
-          1970,
-          0,
-          1,
-          value.getHours(),
-          value.getMinutes(),
-          value.getSeconds(),
-        ),
-      );
+      this.setValue(Date.UTC(1970, 0, 1, value.getHours(), value.getMinutes(), value.getSeconds()));
       return;
     }
     this.setValue(format(value, this.format));

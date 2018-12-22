@@ -1,19 +1,14 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { DelonUtilModule } from '@delon/util';
 
-import { AdQRConfig } from './qr.config';
 import { QRComponent } from './qr.component';
-import { QRService } from './qr.service';
 
 const COMPONENTS = [QRComponent];
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, DelonUtilModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AdQRModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: AdQRModule, providers: [AdQRConfig, QRService] };
-  }
-}
+export class QRModule { }

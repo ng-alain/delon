@@ -4,15 +4,15 @@ import {
   OverlayRef,
 } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { DOCUMENT } from '@angular/common';
-import { ElementRef, Inject, Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
+
+import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
 import {
   ReuseContextCloseEvent,
   ReuseContextEvent,
   ReuseContextI18n,
-} from './interface';
-import { ReuseTabContextMenuComponent } from './reuse-tab-context-menu.component';
+} from './reuse-tab.interfaces';
 
 @Injectable()
 export class ReuseTabContextService {
@@ -21,14 +21,9 @@ export class ReuseTabContextService {
   i18n: ReuseContextI18n;
 
   show: Subject<ReuseContextEvent> = new Subject<ReuseContextEvent>();
-  close: Subject<ReuseContextCloseEvent> = new Subject<
-    ReuseContextCloseEvent
-  >();
+  close: Subject<ReuseContextCloseEvent> = new Subject<ReuseContextCloseEvent>();
 
-  constructor(
-    private overlay: Overlay,
-    @Inject(DOCUMENT) private document: any,
-  ) {}
+  constructor(private overlay: Overlay) { }
 
   remove() {
     if (!this.ref) return;
@@ -41,32 +36,33 @@ export class ReuseTabContextService {
   open(context: ReuseContextEvent) {
     this.remove();
     const { event, item } = context;
-    this.createPoint(event);
-    const fakeElement = new ElementRef(this.locatePoint);
+    const fakeElement = new ElementRef({
+      getBoundingClientRect: (): ClientRect => ({
+        bottom: event.clientY,
+        height: 0,
+        left: event.clientX,
+        right: event.clientX,
+        top: event.clientY,
+        width: 0,
+      }),
+    });
+    const positions = [
+      new ConnectionPositionPair(
+        { originX: 'start', originY: 'bottom' },
+        { overlayX: 'start', overlayY: 'top' },
+      ),
+      new ConnectionPositionPair(
+        { originX: 'start', originY: 'top' },
+        { overlayX: 'start', overlayY: 'bottom' },
+      ),
+    ];
     const positionStrategy = this.overlay
       .position()
       .flexibleConnectedTo(fakeElement)
-      .withPositions([
-        new ConnectionPositionPair(
-          { originX: 'start', originY: 'top' },
-          { overlayX: 'start', overlayY: 'top' },
-        ),
-        new ConnectionPositionPair(
-          { originX: 'start', originY: 'top' },
-          { overlayX: 'start', overlayY: 'bottom' },
-        ),
-        new ConnectionPositionPair(
-          { originX: 'start', originY: 'top' },
-          { overlayX: 'end', overlayY: 'bottom' },
-        ),
-        new ConnectionPositionPair(
-          { originX: 'start', originY: 'top' },
-          { overlayX: 'end', overlayY: 'top' },
-        ),
-      ]);
+      .withPositions(positions);
     this.ref = this.overlay.create({
       positionStrategy,
-      panelClass: 'reuse-tab-cm',
+      panelClass: 'reuse-tab__cm',
       scrollStrategy: this.overlay.scrollStrategies.close(),
     });
     const comp = this.ref.attach(
@@ -85,22 +81,5 @@ export class ReuseTabContextService {
       }),
     );
     comp.onDestroy(() => sub$.unsubscribe());
-  }
-  private createPoint(e: MouseEvent): void {
-    if (!this.locatePoint) {
-      const container = this.document.createElement('span');
-      this.document.body.appendChild(container);
-      this.locatePoint = container;
-    }
-    this.locatePoint.style.position = `fixed`;
-    this.locatePoint.style.top = `${e.clientY}px`;
-    this.locatePoint.style.left = `${e.clientX}px`;
-  }
-
-  private removePoint(): void {
-    if (this.locatePoint) {
-      this.document.body.removeChild(this.locatePoint);
-      this.locatePoint = null;
-    }
   }
 }

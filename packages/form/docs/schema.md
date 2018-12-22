@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 2
 title: Schema
 type: Documents
 ---
@@ -91,6 +91,10 @@ JSON Schema 有完整的对每个属性的规范描述，`@delon/form` 当前是
 | `[maximum]`          | 最大值                    | `number`  | -      |
 | `[exclusiveMaximum]` | 约束是否包括 `maximum` 值 | `boolean` | -      |
 | `[multipleOf]`       | 倍数                      | `number`  | -      |
+
+**关于exclusiveMinimum和exclusiveMaximum**
+
+`sf` 的实现机制导致无法很好的处理 `type` 类型的错误捕获，因此默认情况下 `sf` 是忽略了所有 `type` （见 [config.ts](https://github.com/ng-alain/delon/blob/master/packages/form/src/config.ts#L12)）类型错误，而这两种都错误都会被认为 `type` 类型错误，从而倒置触发无效检查的原因。（更多细节请参考 [#676](https://github.com/ng-alain/ng-alain/issues/676#issuecomment-420208459)）
 
 ### 字符串类型
 
@@ -206,6 +210,7 @@ UI Schema 结构由通用性和小部件API两部分组成，以下是通用性�
 | `[debug]`           | 调试模式             | `boolean`                                              | -      |   |
 | `[order]`           | 属性顺序             | `string[]`                                             | -      |   |
 | `[asyncData]`       | 异步静态数据源       | `(input?: any) => Observable<SFSchemaEnumType[]>`      | -      |   |
+| `[hidden]`          | 是否隐藏渲染       | `boolean`      | `false`      |   |
 | `[visibleIf]`       | 指定条件时才显示     | `{ [key: string]: any[] | ((value: any) => boolean) }` | -      |   |
 
 **visibleIf**
@@ -247,14 +252,15 @@ UI Schema 结构由通用性和小部件API两部分组成，以下是通用性�
 
 ### 渲染类
 
-| 参数          | 说明                           | 类型                        | 默认值 |
-|---------------|--------------------------------|-----------------------------|--------|
-| `[widget]`        | 指定采用什么小部件渲染         | `string`                    | -      |
-| `[class]`         | 自定义类，等同 `[ngClass]` 值   | `string or string[]`        | -      |
-| `[size]`          | 元素组件大小                   | `default,large,small`       | -      |
-| `[grid]`          | 响应式属性                     | `SFGridSchema`              | -      |
-| `[optional]`      | 标签可选信息                   | `string`                    | -      |
-| `[optionalHelp]` | 标签可选帮助                   | `string`                    | -      |
+| 参数             | 说明                         | 类型                  | 默认值 |
+|------------------|------------------------------|-----------------------|--------|
+| `[widget]`       | 指定采用什么小部件渲染       | `string`              | -      |
+| `[class]`        | 自定义类，等同 `[ngClass]` 值 | `string,string[]`  | -      |
+| `[width]`        | 指定宽度，单位：`px`           | `number`              | -      |
+| `[size]`         | 元素组件大小                 | `default,large,small` | -      |
+| `[grid]`         | 响应式属性                   | `SFGridSchema`        | -      |
+| `[optional]`     | 标签可选信息                 | `string`              | -      |
+| `[optionalHelp]` | 标签可选帮助                 | `string`              | -      |
 
 ### 响应式属性 SFGridSchema
 

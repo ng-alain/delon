@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class FullContentService {
-  private _change: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private _change: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
 
   /** 切换全屏工作区状态 */
   toggle() {

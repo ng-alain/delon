@@ -1,0 +1,15 @@
+{
+  "ngPackage": {
+    "lib": {
+      "flatModuleFile": "table",
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "ng-zorro-antd": "ng-zorro-antd",
+        "@delon/abc/xlsx": "delon.abc.xlsx",
+        "@delon/theme": "delon.theme",
+        "@delon/acl": "delon.acl",
+        "@delon/util": "delon.util"
+      }
+    }
+  }
+}

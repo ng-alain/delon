@@ -7,8 +7,12 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/scripts/generate-color-less.js"
+      "name": "debug build",
+      "sourceMaps": false,
+      "program": "${workspaceFolder}/scripts/build/packing.js",
+      "args": [
+        "chart"
+      ]
     },
     {
       "type": "node",
@@ -20,7 +24,7 @@
       "internalConsoleOptions": "openOnSessionStart",
       "args": [
         "${workspaceFolder}/scripts/site/generate.ts",
-        "architecture"
+        "table"
       ]
     },
     {
@@ -30,6 +34,7 @@
       "runtimeArgs": ["-r", "ts-node/register"],
       "cwd": "${workspaceRoot}",
       "protocol": "inspector",
+      "sourceMaps": true,
       "internalConsoleOptions": "openOnSessionStart",
       "args": [
         "${workspaceFolder}/packages/schematics/test.ts"

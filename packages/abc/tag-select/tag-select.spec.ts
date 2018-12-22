@@ -1,63 +1,84 @@
-import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
+import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite, createTestContext } from '@delon/testing';
+import {
+  en_US,
+  zh_CN,
+  DelonLocaleModule,
+  DelonLocaleService,
+} from '@delon/theme';
 
-import { AdTagSelectModule } from './tag-select.module';
 import { TagSelectComponent } from './tag-select.component';
+import { TagSelectModule } from './tag-select.module';
 
 describe('abc: tag-select', () => {
+  let injector: Injector;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AdTagSelectModule.forRoot()],
+  configureTestSuite(() => {
+    injector = TestBed.configureTestingModule({
+      imports: [TagSelectModule, DelonLocaleModule],
       declarations: [TestComponent],
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
+
+  afterEach(() => context.comp.ngOnDestroy());
 
   describe('#expandable', () => {
     it('with true', () => {
       context.expandable = true;
       fixture.detectChanges();
-      expect(dl.query(By.css('.has-expand'))).not.toBeNull();
+      expect(dl.query(By.css('.tag-select__has-expand'))).not.toBeNull();
     });
     it('with false', () => {
       context.expandable = false;
       fixture.detectChanges();
-      expect(dl.query(By.css('.has-expand'))).toBeNull();
+      expect(dl.query(By.css('.tag-select__has-expand'))).toBeNull();
     });
   });
   it('should be switch states via click trigger', () => {
     spyOn(context, 'change');
-    const triEl = dl.query(By.css('.trigger')).nativeElement as HTMLElement;
+    const triEl = dl.query(By.css('.tag-select__trigger'))
+      .nativeElement as HTMLElement;
     expect(context.change).not.toHaveBeenCalled();
     expect(triEl.innerHTML).toContain('展开');
-    expect(triEl.querySelector('.anticon-up')).toBeNull();
-    expect(triEl.querySelector('.anticon-down')).not.toBeNull();
+    // expect(triEl.querySelector('.anticon-up')).toBeNull();
+    // expect(triEl.querySelector('.anticon-down')).not.toBeNull();
     triEl.click();
     fixture.detectChanges();
     expect(triEl.innerHTML).toContain('收起');
-    expect(triEl.querySelector('.anticon-up')).not.toBeNull();
-    expect(triEl.querySelector('.anticon-down')).toBeNull();
+    // expect(triEl.querySelector('.anticon-up')).not.toBeNull();
+    // expect(triEl.querySelector('.anticon-down')).toBeNull();
     expect(context.change).toHaveBeenCalled();
+  });
+  it('#i18n', () => {
+    const triEl = dl.query(By.css('.tag-select__trigger'))
+      .nativeElement as HTMLElement;
+    expect(triEl.innerText).toContain(zh_CN.tagSelect.expand);
+    injector.get(DelonLocaleService).setLocale(en_US);
+    fixture.detectChanges();
+    expect(triEl.innerText).toBe(en_US.tagSelect.expand);
   });
 });
 
 @Component({
   template: `
-    <tag-select [expandable]="expandable" (change)="change()">
+    <tag-select #comp [expandable]="expandable" (change)="change()">
         <li *ngFor="let i of categories; let idx = index" style="width: 30%">{{i.text}}</li>
     </tag-select>
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: TagSelectComponent;
+  @ViewChild('comp')
+  comp: TagSelectComponent;
   categories = [
     { id: 0, text: '全部', value: false },
     { id: 1, text: '类目一', value: false },

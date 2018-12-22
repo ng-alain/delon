@@ -2,6 +2,8 @@
 order: 1
 title: 开始使用
 type: Documents
+module: DelonCacheModule
+config: DelonCacheConfig
 ---
 
 ## 写在前面
@@ -31,7 +33,7 @@ cacheService.set('/data/unit', [ '个', '件' ]);
 **安装**
 
 ```bash
-npm install --save @delon/cache
+yarn add @delon/cache
 ```
 
 **注册**
@@ -39,20 +41,18 @@ npm install --save @delon/cache
 在根模块 `AppModule` 导入 `DelonCacheModule`；
 
 ```ts
-import { DelonCacheModule } from '@delon/mock';
+import { DelonCacheModule } from '@delon/cache';
 
 @NgModule({
   imports: [
-    DelonCacheModule.forRoot()
+    DelonCacheModule
   ]
 })
 ```
 
 **注** 建议在根模块中导入，因为它只有 Service 为了防止重复被导入。
 
-### CacheOptions
-
-`DelonCacheModule.forRoot({})` 唯一参数是 `CacheOptions`：
+### DelonCacheConfig
 
 | 参数名 | 类型 | 默认值 | 描述 |
 | ----- | --- | --- | --- |

@@ -1,6 +1,6 @@
-export { ACLService } from './services/acl.service';
-export { ACLDirective } from './directives/acl.directive';
-export * from './acl.config';
-export * from './services/acl.type';
-export * from './services/acl-guard';
-export * from './acl.module';
+export * from './src/acl.service';
+export * from './src/acl.directive';
+export * from './src/acl.config';
+export * from './src/acl.type';
+export * from './src/acl-guard';
+export * from './src/acl.module';

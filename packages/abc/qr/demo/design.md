@@ -1,9 +1,17 @@
 ---
 order: 2
-title: 设计器
+title:
+  zh-CN: 设计器
+  en-US: Designer
 ---
 
+## zh-CN
+
 通过 `QRService` 操作更多参数；`change` 可以回调二维码 dataURL 值。
+
+## en-US
+
+Use `QRService` for more advanced operations, and get QR code (dataURL value) via `change`.
 
 ```ts
 import { Component } from '@angular/core';
@@ -94,9 +102,9 @@ import { Component } from '@angular/core';
 })
 export class DemoComponent {
   value = 'https://ng-alain.com/';
-  background = 'white';
+  background = '#fff';
   backgroundAlpha = 1.0;
-  foreground = 'black';
+  foreground = '#000';
   foregroundAlpha = 1.0;
   level = 'L';
   mime = 'image/png';

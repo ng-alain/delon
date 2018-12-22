@@ -1,17 +1,21 @@
 ---
+type: Basic
+order: 1
 title: reuse-tab
 subtitle: 路由复用标签
 cols: 1
-module: AdReuseTabModule
+module: ReuseTabModule
 ---
 
 复用标签在中台系统非常常见，本质是解决不同路由页切换时组件数据不丢失问题。
 
 最新打开的永远是当前页，而路由复用是指当我们离开当前页时若符合复用条件（即：匹配模式）则保存当前路由所有组件状态（包括子组件），待下一次进入相同路由（即：匹配模式）时再从中缓存中获取到。
 
-## 如何使用？
+## 如何使用
 
-默认 `AdReuseTabModule` 并不会注册 `RouteReuseStrategy`，这是因为若默认在模块内注册会导致所有引入 `@delon/abc` 模块都会强制使用路由复用，不管是否模板是否包括 `<reuse-tab>`。因此，除了引入模块以外，还需要在**手动注册** `RouteReuseStrategy`。
+默认 `ReuseTabModule` 并不会注册 `RouteReuseStrategy`，这是因为若默认在模块内注册会导致所有引入 `@delon/abc` 模块都会强制使用路由复用（不管是否模板是否包括 `<reuse-tab>`）。因此：
+
+**注册RouteReuseStrategy**
 
 ```ts
 // delon.module.ts or app.module.ts
@@ -22,6 +26,17 @@ providers: [
     deps: [ReuseTabService],
   }
 ]
+```
+
+**添加组件**
+
+> 位置 `src/app/layout/default/default.component.html`
+
+```html
+<section class="alain-default__content">
+  <reuse-tab></reuse-tab>
+  <router-outlet></router-outlet>
+</section>
 ```
 
 ## 匹配模式
@@ -130,7 +145,7 @@ export class DemoComponent {
 
 ## API
 
-### ReuseTabService 接口
+### ReuseTabService
 
 **属性**
 
@@ -161,8 +176,9 @@ export class DemoComponent {
 `move(url, position)` | 移动缓存数据，同时触 `change` move事件 | `void`
 `clear()` | 清除所有缓存，同时触 `change` clear事件 | `void`
 `refresh()` | 无任何动作，但会触 `change` refresh事件 | `void`
+`replace(url)` | 强制关闭当前路由（包含不可关闭状态），并重新导航至 `newUrl` 路由 | `void`
 
-### reuse-tab 组件
+### reuse-tab
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
@@ -173,10 +189,32 @@ export class DemoComponent {
 `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | -
 `[allowClose]` | 允许关闭 | `boolean` | `true`
 `[showCurrent]` | 总是显示当前页 | `boolean` | `true`
-`[fixed]` | 是否固定 | `boolean` | `true`
 `(close)` | 关闭回调 | `EventEmitter` | -
 `(change)` | 切换时回调，接收的参数至少包含：`active`、`list` 两个参数 | `EventEmitter` | -
 
 **右击菜单**
 
 当按下键盘 `ctrl` 时会强制移除不可关闭项。
+
+### ReuseTabCached
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[title]` | 标题 | `string` | -
+`[url]` | URL地址 | `string` | -
+`[closable]` | 是否允许关闭 | `boolean` | -
+
+### ReuseTabNotify
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[active]` | 事件类型 | `title,close,closeRight,clear,move,closable,refresh,add` | -
+
+### ReuseContextI18n
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[close]` | 关闭 | `string` | -
+`[closeOther]` | 关闭其它 | `string` | -
+`[closeRight]` | 关闭右边 | `string` | -
+`[clear]` | 清空 | `string` | -

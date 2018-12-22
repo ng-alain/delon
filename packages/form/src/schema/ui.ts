@@ -1,8 +1,9 @@
+// tslint:disable:no-any
 import { TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ErrorSchema, ErrorData } from '../errors';
-import { SFSchemaEnum, SFSchemaEnumType } from './index';
-import { FormProperty, PropertyGroup } from '../model/form.property';
+
+import { ErrorSchema } from '../errors';
+import { SFSchemaEnumType } from './index';
 
 export interface SFGridSizeSchema {
   span?: number;
@@ -50,6 +51,10 @@ export interface SFRenderSchema {
    * 元素组件大小
    */
   size?: 'default' | 'large' | 'small';
+  /**
+   * 指定宽度，单位：`px`
+   */
+  width?: number;
   /**
    * 响应式属性
    */
@@ -113,7 +118,7 @@ export interface SFInputSchema {
   /**
    * **限string** 文字框中显示提示信息
    */
-  placeholder?: string;
+  placeholder?: string | string[];
 
   /**
    * **限string** 加载时是否获得焦点
@@ -127,17 +132,17 @@ export interface SFDataSchema {
    * - `input` 可能根据不同部件的情况存在值，例如：`autocomplete` 表示当前键入的值
    * - 参数、返回值：可能根据不同部件需求而定，具体参阅相应小部件独立说明
    */
-  asyncData?: (input?: any) => Observable<SFSchemaEnumType[]>;
+  asyncData?(input?: any): Observable<SFSchemaEnumType[]>;
 }
 
 /** 指定如何渲染 `Schema` */
 export interface SFUISchemaItem
   extends SFRenderSchema,
-    SFArraySchema,
-    SFHorizontalLayoutSchema,
-    SFDataSchema,
-    SFInputSchema,
-    ErrorSchema {
+  SFArraySchema,
+  SFHorizontalLayoutSchema,
+  SFDataSchema,
+  SFInputSchema,
+  ErrorSchema {
   [key: string]: any;
 
   /** 是否开启调试模式，在数据变更、校验会打印出相信信息，不建议在生产环境中使用 */
@@ -153,7 +158,10 @@ export interface SFUISchemaItem
    * [ 'a', 'b', 'c', 'd' ] + [ 'c', 'b', '*' ] = [ 'c', 'b', 'a', 'd']
    */
   order?: string[];
-
+  /**
+   * 是否隐藏
+   */
+  hidden?: boolean;
   /**
    * 指定条件时才显示，但需要**注意**：
    * - 键值表示监听对象属性名
@@ -181,7 +189,7 @@ export interface SFUISchema {
  */
 export interface SFUISchemaItemRun extends SFUISchemaItem {
   /** @internal 自定义模板 */
-  _render?: TemplateRef<{}>;
+  _render?: TemplateRef<void>;
   /** @internal 是否必填 */
   _required?: boolean;
 }

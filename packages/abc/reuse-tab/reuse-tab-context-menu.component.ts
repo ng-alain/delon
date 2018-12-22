@@ -1,56 +1,51 @@
 import {
   Component,
-  Input,
   EventEmitter,
-  Output,
   HostListener,
+  Input,
   OnInit,
+  Output,
 } from '@angular/core';
+import { DelonLocaleService } from '@delon/theme';
+
 import {
-  ReuseContextI18n,
-  ReuseContextCloseEvent,
-  ReuseItem,
   CloseType,
-} from './interface';
+  ReuseContextCloseEvent,
+  ReuseContextI18n,
+  ReuseItem,
+} from './reuse-tab.interfaces';
 
 @Component({
   selector: 'reuse-tab-context-menu',
-  template: `
-  <ul nz-menu>
-      <li nz-menu-item (click)="click($event, 'close')" data-type="close" [nzDisabled]="!item.closable" [innerHTML]="i18n.close"></li>
-      <li nz-menu-item (click)="click($event, 'closeOther')" data-type="closeOther" [innerHTML]="i18n.closeOther"></li>
-      <li nz-menu-item (click)="click($event, 'closeRight')" data-type="closeRight" [nzDisabled]="item.last" [innerHTML]="i18n.closeRight"></li>
-      <li nz-menu-item (click)="click($event, 'clear')" data-type="clear" [innerHTML]="i18n.clear"></li>
-  </ul>`,
-  preserveWhitespaces: false,
+  templateUrl: './reuse-tab-context-menu.component.html',
 })
 export class ReuseTabContextMenuComponent implements OnInit {
   private _i18n: ReuseContextI18n;
   @Input()
   set i18n(value: ReuseContextI18n) {
-    this._i18n = Object.assign(
-      {
-        close: '关闭标签',
-        closeOther: '关闭其它标签',
-        closeRight: '关闭右侧标签',
-        clear: '清空',
-      },
-      value,
-    );
+    this._i18n = {
+      ...this.i18nSrv.getData('reuseTab'),
+      ...value,
+    };
   }
   get i18n() {
     return this._i18n;
   }
 
-  @Input() item: ReuseItem;
+  @Input()
+  item: ReuseItem;
 
-  @Input() event: MouseEvent;
+  @Input()
+  event: MouseEvent;
 
-  @Output() close = new EventEmitter<ReuseContextCloseEvent>();
+  @Output()
+  readonly close = new EventEmitter<ReuseContextCloseEvent>();
 
   get includeNonCloseable() {
     return this.event.ctrlKey;
   }
+
+  constructor(private i18nSrv: DelonLocaleService) { }
 
   private notify(type: CloseType, item: ReuseItem) {
     this.close.next({

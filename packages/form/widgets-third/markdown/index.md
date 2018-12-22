@@ -6,7 +6,7 @@ type: Third Widgets
 
 Markdown编辑器。
 
-> 注：第三方小部件默认并未注册，细节见[自定义小部件](https://ng-alain.com/form/customize)。
+> 注：第三方小部件默认并未注册，细节见[定制小部件](https://ng-alain.com/form/customize)。
 
 ## 如何使用
 
@@ -32,7 +32,7 @@ Markdown编辑器。
 
 ## 源代码
 
-[源代码](https://github.com/cipchk/delon/tree/master/packages/form/widgets-third/markdown)。
+[源代码](https://github.com/ng-alain/delon/tree/master/packages/form/widgets-third/markdown)。
 
 ## API
 

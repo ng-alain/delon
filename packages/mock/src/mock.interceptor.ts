@@ -1,48 +1,36 @@
+// tslint:disable:no-any
+import { HttpBackend, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpResponseBase, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import {
-  HttpInterceptor,
-  HttpRequest,
-  HttpHandler,
-  HttpSentEvent,
-  HttpHeaderResponse,
-  HttpProgressEvent,
-  HttpResponse,
-  HttpUserEvent,
-  HttpErrorResponse,
-  HttpEvent,
-} from '@angular/common/http';
-import { Observable, Observer, of } from 'rxjs';
+import { of, throwError, Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { DelonMockConfig } from '../mock.config';
+import { MockRequest } from './interface';
+import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
-import { MockRequest } from './interface';
+
+class HttpMockInterceptorHandler implements HttpHandler {
+  constructor(private next: HttpHandler, private interceptor: HttpInterceptor) { }
+
+  handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+    return this.interceptor.intercept(req, this.next);
+  }
+}
 
 @Injectable()
 export class MockInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) { }
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler,
-  ): Observable<
-    | HttpSentEvent
-    | HttpHeaderResponse
-    | HttpProgressEvent
-    | HttpResponse<any>
-    | HttpUserEvent<any>
-  > {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const src = this.injector.get(MockService);
-    const config = Object.assign(
-      {
-        delay: 300,
-        force: false,
-        log: true,
-      },
-      this.injector.get(DelonMockConfig, null),
-    );
-    const rule = src.getRule(req.method, req.url);
+    const config = {
+      delay: 300,
+      force: false,
+      log: true,
+      executeOtherInterceptors: true,
+      ...this.injector.get(DelonMockConfig, null),
+    };
+    const rule = src.getRule(req.method, req.url.split('?')[0]);
     if (!rule && !config.force) {
       return next.handle(req);
     }
@@ -57,7 +45,23 @@ export class MockInterceptor implements HttpInterceptor {
           headers: {},
           params: rule.params,
         };
-
+        const urlParams = req.url.split('?');
+        if (urlParams.length > 1) {
+          urlParams[1].split('&').forEach(item => {
+            const itemArr = item.split('=');
+            const key = itemArr[0];
+            const value = itemArr[1];
+            // is array
+            if (Object.keys(mockRequest.queryString).includes(key)) {
+              if (!Array.isArray(mockRequest.queryString[key])) {
+                mockRequest.queryString[key] = [mockRequest.queryString[key]];
+              }
+              mockRequest.queryString[key].push(value);
+            } else {
+              mockRequest.queryString[key] = value;
+            }
+          });
+        }
         req.params
           .keys()
           .forEach(key => (mockRequest.queryString[key] = req.params.get(key)));
@@ -68,33 +72,16 @@ export class MockInterceptor implements HttpInterceptor {
         try {
           res = rule.callback.call(this, mockRequest);
         } catch (e) {
-          let errRes: HttpErrorResponse;
-          if (e instanceof MockStatusError) {
-            errRes = new HttpErrorResponse({
-              url: req.url,
-              headers: req.headers,
-              status: e.status,
-              statusText: e.statusText || 'Unknown Error',
-              error: e.error,
-            });
-            if (config.log)
-              console.log(
-                `%c 👽MOCK ${e.status} STATUS `,
-                'background:#000;color:#bada55',
-                req.url,
-                errRes,
-                req,
-              );
-          } else {
-            console.error(
-              `Please use MockStatusError to throw status error`,
-              e,
-              req,
-            );
-          }
-          return new Observable((observer: Observer<HttpEvent<any>>) => {
-            observer.error(errRes);
+          res = new HttpErrorResponse({
+            url: req.url,
+            headers: req.headers,
+            status: 400,
+            statusText: e.statusText || 'Unknown Error',
+            error: e.error,
           });
+          if (e instanceof MockStatusError) {
+            res.status = e.status;
+          }
         }
         break;
       default:
@@ -102,19 +89,34 @@ export class MockInterceptor implements HttpInterceptor {
         break;
     }
 
-    const response: HttpResponse<any> = new HttpResponse({
-      status: 200,
-      body: res,
-      url: req.url,
-    });
-    if (config.log)
-      console.log(
-        '%c 👽MOCK ',
-        'background:#000;color:#bada55',
-        req.url,
-        response,
-        req,
-      );
-    return of(response).pipe(delay(config.delay));
+    if (!(res instanceof HttpResponseBase)) {
+      res = new HttpResponse({
+        status: 200,
+        url: req.url,
+        body: res,
+      });
+    }
+
+    if (config.log) {
+      console.log(`%c👽${req.method}->${req.url}->request`, 'background:#000;color:#bada55', req);
+      console.log(`%c👽${req.method}->${req.url}->response`, 'background:#000;color:#bada55', res);
+    }
+
+    const res$ = res instanceof HttpErrorResponse ? throwError(res) : of(res);
+
+    if (config.executeOtherInterceptors) {
+      const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
+      const lastInterceptors = interceptors.slice(interceptors.indexOf(this) + 1);
+      if (lastInterceptors.length > 0) {
+        const chain = lastInterceptors.reduceRight(
+          (_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor), {
+            handle: () => res$,
+          } as HttpBackend,
+        );
+        return chain.handle(req).pipe(delay(config.delay));
+      }
+    }
+
+    return res$.pipe(delay(config.delay));
   }
 }

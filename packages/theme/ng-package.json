@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/@delon/theme",
+  "deleteDestPath": true,
+  "lib": {
+    "flatModuleFile": "theme",
+    "entryFile": "public_api.ts",
+    "umdModuleIds": {
+      "@angular/cdk/overlay": "ng.cdk.overlay",
+      "@angular/cdk/portal": "ng.cdk.portal",
+      "ng-zorro-antd": "ng-zorro-antd",
+      "date-fns": "DateFns",
+      "@delon/acl": "delon.acl",
+      "@delon/util": "delon.util"
+    }
+  }
+}

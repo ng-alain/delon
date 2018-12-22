@@ -1,6 +1,7 @@
 // Layout Gutter
 @layout-gutter: 8px;
 
+@xs:    @layout-gutter / 2;
 @sm:    @layout-gutter;
 @md:    @layout-gutter * 2;
 @lg:    @layout-gutter * 3;
@@ -12,9 +13,13 @@
     lg @screen-lg,
     xl @screen-xl;
 
+@mobile-min: @screen-md-min;
+@mobile-max: @screen-md-min - 1px;
+
 // spaceing
 @spacings:
     0  0,
+    xs @xs,
     sm @sm,
     md @md,
     lg @lg;
@@ -25,11 +30,17 @@
 // position
 @zindex-base:       @zindex-back-top - 1;
 @zindex-fixed:      @zindex-base;
+@zindex:            @zindex-base;
+
+@overflows:     auto, hidden;
+@positions:     static, relative, absolute, fixed, sticky;
 
 // 文本
-@text-sm:       @font-size-base + 0; // 12px
-@text-md:       @font-size-base + 2; // 14px
-@text-lg:       @font-size-base + 4; // 16px
+@text-xs:       @font-size-base - 2; // 12px
+@text-sm:       @font-size-base + 0; // 14px
+@text-md:       @font-size-base + 2; // 16px
+@text-lg:       @font-size-base + 4; // 18px
+@text-xl:       @font-size-base + 8; // 22px
 
 // icon
 @icon-sm:       @font-size-base * 2; // 24px
@@ -63,10 +74,12 @@
 @black:     #000;
 
 // scrollbar
+@scrollbar-enabled:         true;
 @scrollbar-width:           6px;
 @scrollbar-height:          6px;
 @scrollbar-track-color:     rgba(0, 0, 0, 0.3);
 @scrollbar-thumb-color:     #6e6e6e;
+@scrollbar-table-enabled:   false;
 
 // type
 // ==========

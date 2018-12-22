@@ -1,7 +1,5 @@
 import * as path from 'path';
-import * as fs from 'fs';
-import * as fse from 'fs-extra';
-import { ModuleConfig, SiteConfig, ModuleDirConfig } from '../interfaces';
+import { SiteConfig, ModuleDirConfig } from '../interfaces';
 const klawSync = require('klaw-sync');
 
 export function groupFiles(
@@ -24,29 +22,33 @@ export function groupFiles(
           !item.path.includes(`${path.sep}demo${path.sep}`)
         );
       },
-    }).filter(item => path.extname(item.path) === '.md').forEach(item => {
-      const key = path
-        .relative(
-          srcPath,
-          config.hasSubDir ? path.dirname(item.path) : item.path.split('.')[0],
-        )
-        .trim();
-      if (key.length === 0) return;
-      if (isSyncSpecific && key !== target) return;
-      if (config.ignores && ~config.ignores.indexOf(key)) return;
+    })
+      .filter(item => path.extname(item.path) === '.md')
+      .forEach(item => {
+        const key = path
+          .relative(
+            srcPath,
+            config.hasSubDir
+              ? path.dirname(item.path)
+              : item.path.split('.')[0],
+          )
+          .trim();
+        if (key.length === 0) return;
+        if (isSyncSpecific && key !== target) return;
+        if (config.ignores && ~config.ignores.indexOf(key)) return;
 
-      let sourceItem = files.find(w => w.key === key);
-      if (!sourceItem) {
-        sourceItem = {
-          key,
-          data: {},
-        };
-        files.push(sourceItem);
-      }
-      const langMatch = item.path.match(langRe);
-      sourceItem.data[langMatch ? langMatch[1] : siteConfig.defaultLang] =
-        item.path;
-    });
+        let sourceItem = files.find(w => w.key === key);
+        if (!sourceItem) {
+          sourceItem = {
+            key,
+            data: {},
+          };
+          files.push(sourceItem);
+        }
+        const langMatch = item.path.match(langRe);
+        sourceItem.data[langMatch ? langMatch[1] : siteConfig.defaultLang] =
+          item.path;
+      });
   });
   return files;
 }

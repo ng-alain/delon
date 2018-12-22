@@ -21,39 +21,51 @@ import { SFSchema } from '@delon/form';
 @Component({
   selector: 'app-demo',
   template: `<sf [schema]="schema" (formSubmit)="submit($event)"
-  (formChange)="change($event)"></sf>`
+  (formChange)="change($event)"></sf>`,
 })
 export class DemoComponent {
   schema: SFSchema = {
     properties: {
-      'datetime': {
-          'type': 'string',
-          'format': 'date-time'
+      datetime: {
+        type: 'string',
+        format: 'date-time',
       },
-      'date': {
-          'type': 'string',
-          'format': 'date'
+      date: {
+        type: 'string',
+        format: 'date',
       },
-      'date_number': {
-          'type': 'number',
-          ui: { widget: 'date' }
+      date_number: {
+        type: 'number',
+        ui: { widget: 'date' },
       },
-      'month': {
-          'type': 'string',
-          'format': 'month'
+      month: {
+        type: 'string',
+        format: 'month',
       },
-      'week': {
-          'type': 'string',
-          'format': 'week'
+      week: {
+        type: 'string',
+        format: 'week',
       },
-      'range': {
-          'type': 'string',
-          ui: { widget: 'date', mode: 'range' }
-      }
-    }
+      range: {
+        type: 'string',
+        ui: { widget: 'date', mode: 'range' },
+      },
+      start: {
+        type: 'string',
+        ui: { widget: 'date', end: 'end' },
+      },
+      end: {
+        type: 'string',
+        ui: { widget: 'date', end: 'end' },
+      },
+    },
   };
-  constructor(public msg: NzMessageService) { }
-  submit(value: any) { this.msg.success(JSON.stringify(value)); }
+
+  constructor(public msg: NzMessageService) {}
+
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 
   change(value: any) {
     console.log('change', value);

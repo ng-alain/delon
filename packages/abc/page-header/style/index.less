@@ -1,114 +1,133 @@
-@import '../../../theme/styles/default';
-.ad-ph {
+@import '../../../theme/styles/default.less';
+
+@page-header-prefix: ~'.page-header';
+@page-header-bg: #fff;
+@page-header-wide: 1200px;
+
+@{page-header-prefix} {
   display: block;
-  background: @component-background;
-  padding: 16px 32px 0;
+  background-color: @page-header-bg;
+  padding: 16px 32px 0 32px;
   border-bottom: @border-width-base @border-style-base @border-color-split;
-  .detail {
-    display: flex;
+  &__wide {
+    max-width: @page-header-wide;
+    margin: auto;
   }
-  .row {
-    display: flex;
-  }
-  .ant-breadcrumb {
+  .@{ant-prefix}-breadcrumb {
     margin-bottom: 16px;
   }
-  .ant-tabs {
+  .@{ant-prefix}-tabs {
     margin: 0 0 -17px -8px;
-    .ant-tabs-bar {
+    &-bar {
       border-bottom: @border-width-base @border-style-base @border-color-split;
     }
   }
-  .logo {
+  &__detail {
+    display: flex;
+  }
+  &__row {
+    display: flex;
+    width: 100%;
+  }
+  &__logo {
     flex: 0 1 auto;
     margin-right: 16px;
     padding-top: 1px;
-    > img {
+    img {
       width: 28px;
       height: 28px;
       border-radius: @border-radius-base;
       display: block;
     }
   }
-  .title {
+  &__title {
     font-size: 20px;
     font-weight: 500;
     color: @heading-color;
+    small {
+      font-weight: normal;
+      font-size: 14px;
+      padding-left: @layout-gutter;
+    }
   }
-  .action {
+  &__action {
     margin-left: 56px;
     min-width: 266px;
-    nz-popconfirm:not(:last-child),
-    .ant-btn-group:not(:last-child),
-    .ant-btn:not(:last-child) {
-      margin-right: 8px;
-    }
-    .ant-btn-group > .ant-btn {
-      margin-right: 0;
-    }
   }
-  .title,
-  .action,
-  .desc,
-  .extra,
-  .main {
+
+  &__title,
+  &__desc {
     flex: auto;
   }
-  .title,
-  .action {
+
+  &__action,
+  &__extra,
+  &__main {
+    flex: 0 1 auto;
+  }
+
+  &__main {
+    width: 100%;
+  }
+
+  &__title,
+  &__action {
     margin-bottom: 16px;
   }
-  .logo,
-  .desc,
-  .extra {
+
+  &__logo,
+  &__desc,
+  &__extra {
     margin-bottom: 16px;
   }
-  .action,
-  .extra {
+
+  &__action,
+  &__extra {
     text-align: right;
   }
-  .extra {
+
+  &__extra {
     margin-left: 88px;
     min-width: 242px;
   }
-
   @media screen and (max-width: @screen-xl) {
-    .extra {
+    &__extra {
       margin-left: 44px;
     }
   }
-
   @media screen and (max-width: @screen-lg) {
-    .extra {
+    &__extra {
       margin-left: 20px;
     }
   }
-
   @media screen and (max-width: @screen-md) {
-    .row {
+    &__row {
       display: block;
     }
-    .action,
-    .extra {
+    &__action,
+    &__extra {
       margin-left: 0;
       text-align: left;
     }
   }
-
   @media screen and (max-width: @screen-sm) {
-    .detail {
+    &__detail {
       display: block;
     }
   }
-
   @media screen and (max-width: @screen-xs) {
-    .action {
-      .ant-btn-group,
-      .ant-btn {
+    &__action {
+      .@{ant-prefix}-btn-group,
+      .@{ant-prefix}-btn {
         display: block;
         margin-bottom: 8px;
       }
-      .ant-btn-group > .ant-btn {
+      .@{ant-prefix}-input-search-enter-button {
+        .@{ant-prefix}-btn {
+          margin-bottom: 0;
+        }
+      }
+      .@{ant-prefix}-btn-group > .@{ant-prefix}-btn {
         display: inline-block;
         margin-bottom: 0;
       }

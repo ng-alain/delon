@@ -1,50 +1,59 @@
-@import '../../../theme/styles/default';
+@import '../../../theme/styles/default.less';
 
-@ad-result-extra-bg: #fafafa;
+@result-extra-bg: #fafafa;
 
-.ad-result {
+.result {
   display: block;
   text-align: center;
   width: 72%;
   margin: 0 auto;
-  .icon {
+
+  @media screen and (max-width: @screen-xs) {
+    width: 100%;
+  }
+
+  &__icon {
     font-size: 72px;
     line-height: 72px;
     margin-bottom: 24px;
-    & > .success {
+    &-success {
       color: @success-color;
     }
-    & > .error {
+    &-error {
       color: @error-color;
     }
   }
-  .title {
+  &__title {
     font-size: 24px;
     color: @heading-color;
     font-weight: 500;
     line-height: 32px;
     margin-bottom: 16px;
   }
-  .description {
+  &__desc {
     font-size: 14px;
     line-height: 22px;
     color: @text-color-secondary;
     margin-bottom: 24px;
   }
-  .extra {
-    background: @ad-result-extra-bg;
+  &__extra {
+    background: @result-extra-bg;
     padding: 24px 40px;
     border-radius: @border-radius-sm;
     text-align: left;
+
+    @media screen and (max-width: @screen-xs) {
+      padding: 18px 20px;
+    }
   }
-  .actions {
+  &__actions {
     margin-top: 32px;
     button:not(:last-child) {
       margin-right: 8px;
     }
   }
-  .ant-steps .ant-steps-head,
-  .ant-steps .ant-steps-title {
-    background: @ad-result-extra-bg;
+  .@{ant-prefix}-steps .@{ant-prefix}-steps-head,
+  .@{ant-prefix}-steps .@{ant-prefix}-steps-title {
+    background: @result-extra-bg;
   }
 }

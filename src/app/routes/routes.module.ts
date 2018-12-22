@@ -1,52 +1,60 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { PreloadAllModules, RouterModule } from '@angular/router';
+import { environment } from '../../environments/environment';
+import { LayoutComponent } from '../layout/layout.component';
 import { SharedModule } from '../shared/shared.module';
+import { NotFoundComponent } from './404/404.component';
+import { HomeComponent } from './home/home.component';
 
-import { LayoutComponent } from '../layout.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { DemoComponent } from './demo/demo.component';
+const COMPONENTS = [HomeComponent, NotFoundComponent];
 
-import { PassportComponent } from '../passport.component';
-import { LoginComponent } from './passport/login.component';
-import { DemoModalComponent } from './dashboard/modal.component';
+const routes = [
+  {
+    path: 'dev',
+    loadChildren: './dev/dev.module#DevTestModule',
+  },
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: '', redirectTo: 'zh', pathMatch: 'full' },
+      { path: 'zh', component: HomeComponent, data: { titleI18n: 'slogan' } },
+      { path: 'en', component: HomeComponent, data: { titleI18n: 'slogan' } },
+      { path: 'tools', loadChildren: './tools/tools.module#ToolsModule' },
+      // #region region routers
+      { path: 'docs', loadChildren: './gen/docs/docs.module#DocsModule' },
+      {
+        path: 'components',
+        loadChildren: './gen/components/components.module#ComponentsModule',
+      },
+      { path: 'theme', loadChildren: './gen/theme/theme.module#ThemeModule' },
+      { path: 'auth', loadChildren: './gen/auth/auth.module#AuthModule' },
+      { path: 'acl', loadChildren: './gen/acl/acl.module#AclModule' },
+      { path: 'cache', loadChildren: './gen/cache/cache.module#CacheModule' },
+      { path: 'mock', loadChildren: './gen/mock/mock.module#MockModule' },
+      { path: 'util', loadChildren: './gen/util/util.module#UtilModule' },
+      { path: 'chart', loadChildren: './gen/chart/chart.module#ChartModule' },
+      { path: 'form', loadChildren: './gen/form/form.module#FormModule' },
+      {
+        path: 'form-pages',
+        loadChildren: './form-pages/form-pages.module#FormPagesModule',
+      },
+      { path: 'cli', loadChildren: './gen/cli/cli.module#CliModule' },
+      // #endregion
+    ],
+  },
+  { path: '404', component: NotFoundComponent },
+  { path: '**', redirectTo: '404' },
+];
 
 @NgModule({
-    imports: [
-        SharedModule,
-        RouterModule.forRoot([
-            { path: 'demo', component: DemoComponent, data: { title: 'DEMO' } },
-            {
-                path: '',
-                component: LayoutComponent,
-                children: [
-                    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-                    { path: 'dashboard', component: DashboardComponent },
-                    { path: 'abc', loadChildren: './abc/abc.module#DEMOABCModule' },
-                    { path: 'acl', loadChildren: './acl/acl.module#DEMOACLModule' },
-                    { path: 'editor', loadChildren: './editor/editor.module#EditorModule' }
-                ]
-            },
-            {
-                path: 'login',
-                component: PassportComponent,
-                children: [
-                    { path: '', component: LoginComponent, data: { title: 'Login' } }
-                ]
-            }
-        ], { useHash: true })
-    ],
-    declarations: [
-        DashboardComponent,
-        DemoComponent,
-        LoginComponent,
-        DemoModalComponent
-    ],
-    entryComponents: [
-        DemoModalComponent
-    ],
-    exports: [
-        RouterModule
-    ]
+  imports: [
+    SharedModule,
+    RouterModule.forRoot(
+      routes,
+      environment.production ? { preloadingStrategy: PreloadAllModules } : { useHash: true },
+    ),
+  ],
+  declarations: [...COMPONENTS],
 })
-
 export class RoutesModule {}

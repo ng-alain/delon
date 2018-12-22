@@ -4,7 +4,7 @@ title: 存储Token
 type: Documents
 ---
 
-## 如何使用？
+## 如何使用
 
 `ITokenService` 接口（默认实现 `TokenService`），只有四个方法及 `login_url` 属性：
 
@@ -17,7 +17,7 @@ type: Documents
 因此，当登录过程中后端返回相应的认证信息时，只要符合 `ITokenModel` 接口对象，都可以调用　`set` 方法将认证存储至 `IStore` （默认实现 `LocalStorageStore`） 当中。
 
 ```ts
-constructor(@Inject(DELON_AUTH_TOKEN_SERVICE_TOKEN) service: ITokenService) {
+constructor(@Inject(DA_SERVICE_TOKEN) service: ITokenService) {
   service.set({ token: `asdf` });
 
   service.get().token; // output: asdf

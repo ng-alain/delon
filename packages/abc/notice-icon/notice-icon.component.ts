@@ -1,87 +1,76 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { toNumber, toBoolean } from '@delon/util';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { DelonLocaleService } from '@delon/theme';
+import { InputBoolean, InputNumber } from '@delon/util';
+import { Subscription } from 'rxjs';
 
-import { NoticeItem } from './interface';
+import { NzDropDownComponent } from 'ng-zorro-antd';
+import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
   selector: 'notice-icon',
-  template: `
-  <nz-badge *ngIf="data?.length === 0" [nzCount]="count">
-    <i class="anticon anticon-bell"></i>
-  </nz-badge>
-  <nz-popover *ngIf="data?.length > 0"
-    [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)" nzTrigger="click"
-    nzPlacement="bottomRight"
-    nzOverlayClassName="ad-notice-icon-con">
-    <div nz-popover class="item">
-      <nz-badge [nzCount]="count">
-        <i class="anticon anticon-bell"></i>
-      </nz-badge>
-    </div>
-    <ng-template #nzTemplate>
-      <nz-spin [nzSpinning]="loading" [nzDelay]="0">
-        <nz-tabset>
-          <nz-tab *ngFor="let i of data" [nzTitle]="i.title">
-            <notice-icon-tab
-              [data]="i"
-              (select)="onSelect($event)"
-              (clear)="onClear($event)"></notice-icon-tab>
-          </nz-tab>
-        </nz-tabset>
-      </nz-spin>
-    </ng-template>
-  </nz-popover>
-  `,
-  host: { '[class.ad-notice-icon]': 'true' },
-  preserveWhitespaces: false,
+  templateUrl: './notice-icon.component.html',
+  host: { '[class.notice-icon__btn]': 'true' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NoticeIconComponent {
+export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
+  private i18n$: Subscription;
+  // tslint:disable-next-line:no-any
+  locale: any = {};
+
   @Input() data: NoticeItem[] = [];
+  @Input() @InputNumber() count: number;
+  @Input() @InputBoolean() loading = false;
+  @Input() @InputBoolean() popoverVisible = false;
+  @Input() btnClass = '';
+  @Input() btnIconClass = '';
+  @Output() readonly select = new EventEmitter<NoticeIconSelect>();
+  @Output() readonly clear = new EventEmitter<string>();
+  @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
 
-  /** 图标上的消息总数 */
-  @Input()
-  get count() {
-    return this._count;
-  }
-  set count(value: any) {
-    this._count = toNumber(value);
-  }
-  private _count: number;
+  @ViewChild('dd') ddc: NzDropDownComponent;
 
-  /** 弹出卡片加载状态 */
-  @Input()
-  get loading() {
-    return this._loading;
-  }
-  set loading(value: any) {
-    this._loading = toBoolean(value);
-  }
-  private _loading = false;
-
-  @Output() select = new EventEmitter<any>();
-  @Output() clear = new EventEmitter<string>();
-
-  /** 手动控制Popover显示 */
-  @Input()
-  get popoverVisible() {
-    return this._popoverVisible;
-  }
-  set popoverVisible(value: any) {
-    this._popoverVisible = toBoolean(value);
-  }
-  private _popoverVisible = false;
-
-  @Output() popoverVisibleChange = new EventEmitter<boolean>();
+  constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) { }
 
   onVisibleChange(result: boolean) {
     this.popoverVisibleChange.emit(result);
   }
 
-  onSelect(i: any) {
+  fixCls() {
+    // TODO: https://github.com/NG-ZORRO/ng-zorro-antd/issues/2634
+    this.ddc.cdkOverlay.panelClass = ['header-dropdown', 'notice-icon'];
+  }
+
+  onSelect(i: NoticeIconSelect) {
     this.select.emit(i);
   }
 
   onClear(title: string) {
     this.clear.emit(title);
+  }
+
+  ngOnInit() {
+    this.i18n$ = this.i18n.change.subscribe(() => {
+      this.locale = this.i18n.getData('noticeIcon');
+      this.cdr.markForCheck();
+    });
+  }
+
+  ngOnChanges() {
+    this.cdr.markForCheck();
+  }
+
+  ngOnDestroy() {
+    this.i18n$.unsubscribe();
   }
 }

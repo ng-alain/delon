@@ -1,6 +1,6 @@
+import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
-import { DOCUMENT } from '@angular/platform-browser';
-import { DelonUtilModule } from '../../util.module';
+import { DelonUtilModule } from '../util.module';
 import { LazyService } from './lazy.service';
 
 let isIE = false;
@@ -23,15 +23,15 @@ class MockDocument {
         },
       },
     ];
-  };
+  }
   createElement = () => {
     const ret: any = {
       testStatus,
-      onload: () => {},
+      onload: () => { },
     };
     if (isIE) ret.readyState = 'loading';
     return ret;
-  };
+  }
 }
 
 describe('utils: lazy', () => {
@@ -41,19 +41,12 @@ describe('utils: lazy', () => {
     isIE = false;
     testStatus = 'ok';
     const injector = TestBed.configureTestingModule({
-      imports: [DelonUtilModule.forRoot()],
+      imports: [DelonUtilModule],
       providers: [{ provide: DOCUMENT, useClass: MockDocument }],
     });
     srv = injector.get(LazyService);
     srv.clear();
     doc = injector.get(DOCUMENT);
-  });
-
-  it('should be load a js resource', () => {
-    srv.change.subscribe(res => {
-      expect(res[0].status).toBe('ok');
-    });
-    srv.load('/1.js');
   });
 
   describe('#IE', () => {
@@ -84,6 +77,22 @@ describe('utils: lazy', () => {
     });
   });
 
+  describe('Scripts', () => {
+    it('should be load a js resource', () => {
+      srv.change.subscribe(res => {
+        expect(res[0].status).toBe('ok');
+      });
+      srv.load('/1.js');
+    });
+    it('should be custom content', () => {
+      const res: any = {};
+      const content = 'var a = 1;';
+      spyOn(doc, 'createElement').and.callFake(() => res);
+      srv.loadScript('/1.js', content);
+      expect(res.innerHTML).toBe(content);
+    });
+  });
+
   describe('Styles', () => {
     it('should be load a css resource', () => {
       srv.change.subscribe(res => {
@@ -95,6 +104,15 @@ describe('utils: lazy', () => {
       srv.loadStyle('/1.less', 'stylesheet/less').then(res => {
         expect(res.status).toBe('ok');
       });
+    });
+    it('should be custom content', () => {
+      const res: any = {
+        onerror() { },
+      };
+      const content = 'var a = 1;';
+      spyOn(doc, 'createElement').and.callFake(() => res);
+      srv.loadStyle('/1.js', 'stylesheet/less', content);
+      expect(res.innerHTML).toBe(content);
     });
   });
 

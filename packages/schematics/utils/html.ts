@@ -1,21 +1,65 @@
-import { Tree, SchematicsException } from '@angular-devkit/schematics';
+import { SchematicsException, Tree } from '@angular-devkit/schematics';
+import { InsertChange } from '@schematics/angular/utility/change';
 import * as parse5 from 'parse5';
-import { getIndexHtmlPath } from './ast';
-import { InsertChange } from './devkit-utils/change';
-import { Project } from './devkit-utils/config';
+import { Project } from './project';
+
+/** Gets the app index.html file */
+export function getIndexHtmlPath(host: Tree, project: Project): string {
+  const buildTarget = (project.targets || project.architect).build.options;
+
+  if (buildTarget.index && buildTarget.index.endsWith('index.html')) {
+    return buildTarget.index;
+  }
+
+  throw new SchematicsException('No index.html file was found.');
+}
 
 /**
  * Parses the index.html file to get the HEAD tag position.
  */
 export function getTag(host: Tree, src: string, tagName: string) {
+  if ((parse5 as any).treeAdapters) {
+    return getTagInV4(host, src, tagName);
+  }
   const document = parse5.parse(src, {
+    sourceCodeLocationInfo: true,
+  } as any) as any;
+
+  let resNode: any;
+  const visit = (nodes: any[]) => {
+    nodes.forEach(node => {
+      const element = node as any;
+      if (element.nodeName === tagName) {
+        resNode = element;
+      } else {
+        if (element.childNodes) {
+          visit(element.childNodes);
+        }
+      }
+    });
+  };
+
+  visit(document.childNodes);
+
+  if (!resNode) {
+    throw new SchematicsException('Head element not found!');
+  }
+
+  return {
+    startOffset: resNode.sourceCodeLocation.startTag.endOffset,
+    endOffset: resNode.sourceCodeLocation.endTag.startOffset,
+  };
+}
+
+export function getTagInV4(host: Tree, src: string, tagName: string) {
+  const document: any = parse5.parse(src, {
     locationInfo: true,
-  }) as parse5.AST.Default.Document;
+  } as any);
 
   let resNode;
-  const visit = (nodes: parse5.AST.Default.Node[]) => {
+  const visit = (nodes: any[]) => {
     nodes.forEach(node => {
-      const element = <parse5.AST.Default.Element>node;
+      const element: any = node;
       if (element.tagName === tagName) {
         resNode = element;
       } else {
@@ -50,7 +94,7 @@ export function getIndexHtmlContent(host: Tree, project: Project) {
 
   return {
     indexPath,
-    src: buffer.toString()
+    src: buffer.toString(),
   };
 }
 

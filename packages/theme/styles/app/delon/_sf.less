@@ -1,0 +1,98 @@
+.sf {
+  display: block;
+  // mode
+  &-search + .ad-st {
+    margin-top: @layout-gutter * 2;
+  }
+  &__optional {
+    color: rgba(0, 0, 0, 0.45);
+  }
+  // 固定 label
+  &__fixed {
+    display: flex !important;
+    nz-form-control,
+    .@{ant-prefix}-form-item-control-wrapper {
+      flex: 1;
+    }
+  }
+  // Array
+  &-array-container {
+    nz-card {
+      margin: 0 16px 0 0;
+      .remove {
+        display: none;
+        position: absolute;
+        right: -16px;
+        top: -16px;
+        font-size: 20px;
+        text-align: center;
+        height: 32px;
+        line-height: 32px;
+        width: 32px;
+        background: rgba(0, 0, 0, 0.26);
+        border-radius: 50%;
+        cursor: pointer;
+        i {
+          color: #fff;
+        }
+      }
+      &:hover {
+        .remove {
+          display: block;
+        }
+      }
+    }
+  }
+  sf-array {
+    .add {
+      margin-right: 16px;
+    }
+  }
+  &__checkbox-list {
+    width: 100%;
+    display: block;
+    @media (min-width: @mobile-min) {
+      nz-col {
+        margin-top: 8px;
+      }
+    }
+  }
+  // upload
+  .@{ant-prefix}-upload-select-picture-card i {
+    font-size: 32px;
+    color: #999;
+  }
+  .@{ant-prefix}-upload.@{ant-prefix}-upload-drag {
+    height: 180px;
+  }
+  // transfer
+  .@{ant-prefix}-transfer {
+    &-list {
+      background: #fff;
+      &-header {
+        label {
+          position: unset;
+        }
+      }
+    }
+    .@{ant-prefix}-btn + .@{ant-prefix}-btn {
+      margin-left: 0;
+    }
+  }
+  // fix select width when inline mode
+  .@{ant-prefix}-form-inline {
+    sf-select {
+      .@{ant-prefix}-form-item {
+        display: inline-flex;
+        > .@{ant-prefix}-form-item-control-wrapper {
+          flex: 1 0 0;
+        }
+      }
+    }
+  }
+  &__no-error {
+    .@{ant-prefix}-form-item {
+      margin-bottom: 8px;
+    }
+  }
+}

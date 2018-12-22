@@ -1,30 +1,25 @@
-import {
-  Component,
-  DebugElement,
-  TemplateRef,
-  ViewChild,
-  Injector,
-} from '@angular/core';
+import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
-import { AdQuickMenuModule } from './quick-menu.module';
 import { QuickMenuComponent } from './quick-menu.component';
+import { QuickMenuModule } from './quick-menu.module';
 
 describe('abc: quick-menu', () => {
-  let injector: Injector;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
-    injector = TestBed.configureTestingModule({
-      imports: [AdQuickMenuModule.forRoot()],
+  configureTestSuite(() => {
+    TestBed.configureTestingModule({
+      imports: [QuickMenuModule],
       declarations: [TestComponent],
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
 
@@ -66,6 +61,7 @@ describe('abc: quick-menu', () => {
     `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: QuickMenuComponent;
+  @ViewChild('comp')
+  comp: QuickMenuComponent;
   width = 200;
 }

@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/@delon/testing",
+  "deleteDestPath": true,
+  "lib": {
+    "flatModuleFile": "testing",
+    "entryFile": "public_api.ts",
+    "umdModuleIds": {
+      "ng-zorro-antd": "ng-zorro-antd"
+    }
+  }
+}

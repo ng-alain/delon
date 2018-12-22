@@ -1,3 +1,4 @@
+// tslint:disable:no-any
 import { SFUISchemaItem } from './ui';
 
 export interface SFSchemaDefinition {
@@ -19,11 +20,16 @@ export interface SFSchemaEnum {
   /** 值 */
   value?: any;
 
+  /**
+   * 主键，适用部分小部件数据键名，例如：`tree-select`
+   */
+  key?: any;
+
   /** 是否选中 */
   checked?: boolean;
 
   /**
-   * 组名，适用部分允许组列表的小部分，例如：`select`
+   * 组名，适用部分允许组列表的小部件，例如：`select`
    * - 组对应的文本为 `label`
    * - `children` 为子项
    */

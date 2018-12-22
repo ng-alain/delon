@@ -1,28 +1,31 @@
-import { Component, Input, ContentChild, TemplateRef } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { DelonLocaleService } from '@delon/theme';
+import { isEmpty } from '@delon/util';
 
 @Component({
   selector: 'exception',
-  template: `
-  <div class="img-block">
-    <div class="img" [ngStyle]="{'background-image': 'url(' + _img + ')'}"></div>
-  </div>
-  <div class="cont">
-    <h1 [innerHTML]="_title"></h1>
-    <div class="desc" [innerHTML]="_desc"></div>
-    <ng-template #defaultActions>
-      <button nz-button [routerLink]="['/']" [nzType]="'primary'">返回首页</button>
-      <ng-content></ng-content>
-    </ng-template>
-    <div class="actions" *ngIf="actions; else defaultActions">
-      <ng-template [ngTemplateOutlet]="actions"></ng-template>
-      <ng-content></ng-content>
-    </div>
-  </div>
-  `,
-  host: { '[class.ad-exception]': 'true' },
-  preserveWhitespaces: false,
+  templateUrl: './exception.component.html',
+  host: { '[class.exception]': 'true' },
 })
-export class ExceptionComponent {
+export class ExceptionComponent implements OnInit, OnDestroy {
+  private i18n$: Subscription;
+  @ViewChild('conTpl')
+  private conTpl: ElementRef;
+
+  _type: number;
+  // tslint:disable-next-line:no-any
+  locale: any = {};
+  hasCon = false;
+
   _img = '';
   _title = '';
   _desc = '';
@@ -34,27 +37,24 @@ export class ExceptionComponent {
         img:
           'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',
         title: '403',
-        desc: '抱歉，你无权访问该页面',
       },
       404: {
         img:
           'https://gw.alipayobjects.com/zos/rmsportal/KpnpchXsobRgLElEozzI.svg',
         title: '404',
-        desc: '抱歉，你访问的页面不存在',
       },
       500: {
         img:
           'https://gw.alipayobjects.com/zos/rmsportal/RVRUAYdCGeYNBWoKiIwB.svg',
         title: '500',
-        desc: '抱歉，服务器出错了',
       },
     }[value];
 
     if (!item) return;
 
+    this._type = value;
     this._img = item.img;
     this._title = item.title;
-    this._desc = item.desc;
   }
 
   @Input()
@@ -70,5 +70,20 @@ export class ExceptionComponent {
     this._desc = value;
   }
 
-  @ContentChild('actions') actions: TemplateRef<any>;
+  checkContent() {
+    this.hasCon = !isEmpty(this.conTpl.nativeElement);
+  }
+
+  constructor(private i18n: DelonLocaleService) { }
+
+  ngOnInit() {
+    this.i18n$ = this.i18n.change.subscribe(
+      () => (this.locale = this.i18n.getData('exception')),
+    );
+    this.checkContent();
+  }
+
+  ngOnDestroy() {
+    this.i18n$.unsubscribe();
+  }
 }

@@ -1,51 +1,57 @@
-# Delon
+<p align="center">
+  <a href="https://ng-alain.com">
+    <img width="100" src="https://ng-alain.com/assets/img/logo-color.svg">
+  </a>
+</p>
 
-delon is a production-ready solution for admin business components packages, Built on the design principles developed by Ant Design.
+<h1 align="center">
+Delon
+</h1>
 
-[![Build Status](https://travis-ci.org/cipchk/delon.svg?branch=master)](https://travis-ci.org/cipchk/delon)
-[![Dependency Status](https://david-dm.org/cipchk/delon/status.svg)](https://david-dm.org/cipchk/delon)
-[![DevDependency Status](https://david-dm.org/cipchk/delon/dev-status.svg)](https://david-dm.org/cipchk/delon?type=dev)
-[![codecov](https://codecov.io/gh/cipchk/delon/branch/master/graph/badge.svg)](https://codecov.io/gh/cipchk/delon)
-[![npm](https://img.shields.io/npm/l/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
-[![npm](https://img.shields.io/npm/dm/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme)
+<div align="center">
 
-| package name | version | next version |
-| ------------ |:-----:|:----------:|
-| ng-alain | [![NPM version](https://img.shields.io/npm/v/ng-alain.svg)](https://www.npmjs.com/package/ng-alain) | [![NPM version](https://img.shields.io/npm/v/ng-alain/next.svg)](https://www.npmjs.com/package/ng-alain) |
-| @delon/theme | [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme) | [![NPM version](https://img.shields.io/npm/v/@delon/theme/next.svg)](https://www.npmjs.com/package/@delon/theme) |
-| @delon/abc | [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc) | [![NPM version](https://img.shields.io/npm/v/@delon/abc/next.svg)](https://www.npmjs.com/package/@delon/abc) |
-| @delon/form | [![NPM version](https://img.shields.io/npm/v/@delon/form.svg)](https://www.npmjs.com/package/@delon/form) | [![NPM version](https://img.shields.io/npm/v/@delon/form/next.svg)](https://www.npmjs.com/package/@delon/form) |
-| @delon/acl | [![NPM version](https://img.shields.io/npm/v/@delon/acl.svg)](https://www.npmjs.com/package/@delon/acl) | [![NPM version](https://img.shields.io/npm/v/@delon/acl/next.svg)](https://www.npmjs.com/package/@delon/acl) |
-| @delon/auth | [![NPM version](https://img.shields.io/npm/v/@delon/auth.svg)](https://www.npmjs.com/package/@delon/auth) | [![NPM version](https://img.shields.io/npm/v/@delon/auth/next.svg)](https://www.npmjs.com/package/@delon/auth) |
-| @delon/mock | [![NPM version](https://img.shields.io/npm/v/@delon/mock.svg)](https://www.npmjs.com/package/@delon/mock) | [![NPM version](https://img.shields.io/npm/v/@delon/mock/next.svg)](https://www.npmjs.com/package/@delon/mock) |
-| @delon/cache | [![NPM version](https://img.shields.io/npm/v/@delon/cache.svg)](https://www.npmjs.com/package/@delon/cache) | [![NPM version](https://img.shields.io/npm/v/@delon/cache/next.svg)](https://www.npmjs.com/package/@delon/cache) |
-| @delon/util | [![NPM version](https://img.shields.io/npm/v/@delon/util.svg)](https://www.npmjs.com/package/@delon/util) | [![NPM version](https://img.shields.io/npm/v/@delon/util/next.svg)](https://www.npmjs.com/package/@delon/util) |
+  Delon is a set of essential modules for [ng-alain](https://ng-alain.com).
+
+  [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon)
+  [![Dependency Status](https://david-dm.org/ng-alain/ng-alain/status.svg?style=flat-square)](https://david-dm.org/ng-alain/ng-alain)
+  [![GitHub Release Date](https://img.shields.io/github/release-date/ng-alain/ng-alain.svg?style=flat-square)](https://github.com/ng-alain/ng-alain/releases)
+  [![NPM version](https://img.shields.io/npm/v/ng-alain.svg?style=flat-square)](https://www.npmjs.com/package/ng-alain)
+  [![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://prettier.io/)
+  [![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/ng-alain/ng-alain/blob/master/LICENSE)
+  [![Gitter](https://img.shields.io/gitter/room/ng-alain/ng-alain.svg?style=flat-square)](https://gitter.im/ng-alain/ng-alain)
+  [![ng-zorro-vscode](https://img.shields.io/badge/ng--zorro-VSCODE-brightgreen.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
+  [![ng-alain-vscode](https://img.shields.io/badge/ng--alain-VSCODE-brightgreen.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
+  [![Backers on Open Collective](https://opencollective.com/ng-alain/backers/badge.svg?style=flat-square)](#backers)
+  [![Sponsors on Open Collective](https://opencollective.com/ng-alain/sponsors/badge.svg?style=flat-square)](#sponsors)
+
+</div>
 
 ## Links
 
-+ [Home Page](http://ng-alain.com)
-+ [@delon](https://github.com/cipchk/delon)
-+ [DEMO](https://cipchk.github.io/ng-alain/)
++ [Document](https://ng-alain.com)
++ [DEMO](https://ng-alain.github.io/ng-alain/)
 
 ## Architecture
 
-![Architecture](https://raw.githubusercontent.com/cipchk/delon/master/_screenshot/architecture.png)
+![Architecture](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/architecture.png)
 
-## App Shots
+## Donation
 
-![desktop](https://github.com/cipchk/delon/blob/master/_screenshot/desktop.png)
-![ipad](https://github.com/cipchk/delon/blob/master/_screenshot/ipad.png)
-![iphone](https://github.com/cipchk/delon/blob/master/_screenshot/iphone.png)
+ng-alain is an MIT-licensed open source project. In order to achieve better and sustainable development of the project, we expect to gain more backers. You can support us in any of the following ways:
 
-## Troubleshooting
+- [patreon](https://www.patreon.com/cipchk)
+- [opencollective](https://opencollective.com/ng-alain)
+- [paypal](https://www.paypal.me/cipchk)
+- [支付宝或微信](https://ng-alain.com/assets/donate.png)
 
-Please follow this guidelines when reporting bugs and feature requests:
+Or purchasing our [business theme](https://e.ng-alain.com/).
 
-1. Use [GitHub Issues](https://github.com/cipchk/delon/issues) board to report bugs and feature requests (not our email address)
-2. Please **always** write steps to reproduce the error. That way we can focus on fixing the bug, not scratching our heads trying to reproduce it.
+## Backers
 
-Thanks for understanding!
+Thank you to all our backers! 🙏
+
+<a href="https://opencollective.com/ng-alain#backers" target="_blank"><img src="https://opencollective.com/ng-alain/backers.svg?width=890"></a>
 
 ### License
 
-The MIT License (see the [LICENSE](https://github.com/cipchk/delon/blob/master/LICENSE) file for the full text)
+The MIT License (see the [LICENSE](https://github.com/ng-alain/delon/blob/master/LICENSE) file for the full text)

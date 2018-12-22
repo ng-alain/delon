@@ -9,6 +9,10 @@ import { ACLService } from '@delon/acl';<% if (i18n) { %>
 import { TranslateService } from '@ngx-translate/core';
 import { I18NService } from '../i18n/i18n.service';<% } %>
 
+import { NzIconService } from 'ng-zorro-antd';
+import { ICONS_AUTO } from '../../../style-icons-auto';
+import { ICONS } from '../../../style-icons';
+
 /**
  * 用于应用启动时
  * 一般用来获取应用所需要的基础数据等
@@ -16,6 +20,7 @@ import { I18NService } from '../i18n/i18n.service';<% } %>
 @Injectable()
 export class StartupService {
   constructor(
+    iconSrv: NzIconService,
     private menuService: MenuService,<% if (i18n) { %>
     private translate: TranslateService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,<% } %>
@@ -25,7 +30,9 @@ export class StartupService {
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private httpClient: HttpClient,
     private injector: Injector
-  ) { }
+  ) {
+    iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
+  }
 
   private viaHttp(resolve: any, reject: any) {
     zip(<% if (i18n) { %>
@@ -60,7 +67,18 @@ export class StartupService {
       resolve(null);
     });
   }
+  <% if (i18n) { %>
+  private viaMockI18n(resolve: any, reject: any) {
+    this.httpClient
+      .get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`)
+      .subscribe(langData => {
+        this.translate.setTranslation(this.i18n.defaultLang, langData);
+        this.translate.setDefaultLang(this.i18n.defaultLang);
 
+        this.viaMock(resolve, reject);
+      });
+  }
+  <% } %>
   private viaMock(resolve: any, reject: any) {
     // const tokenData = this.tokenService.get();
     // if (!tokenData.token) {
@@ -94,12 +112,12 @@ export class StartupService {
           {
             text: '仪表盘',
             link: '/dashboard',
-            icon: 'anticon anticon-appstore-o'
+            icon: { type: 'icon', value: 'appstore' }
           },
           {
             text: '快捷菜单',
-            icon: 'anticon anticon-rocket',
-            shortcut_root: true
+            icon: { type: 'icon', value: 'rocket' },
+            shortcutRoot: true
           }
         ]
       }
@@ -117,7 +135,8 @@ export class StartupService {
       // http
       // this.viaHttp(resolve, reject);
       // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
-      this.viaMock(resolve, reject);
+      <% if (i18n) { %>this.viaMockI18n(resolve, reject);<% } else { %>this.viaMock(resolve, reject);<% } %>
+
     });
   }
 }

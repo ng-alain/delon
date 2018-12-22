@@ -1,9 +1,9 @@
-<page-header>
-  <ng-template #action>
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
     <button (click)="add()" nz-button nzType="primary">新建</button>
   </ng-template>
 </page-header>
 <nz-card>
-  <sf mode="search" [schema]="searchSchema" [formData]="params" (formSubmit)="st.reset($event)" (formReset)="st.reset(params)"></sf>
-  <simple-table #st [data]="url" [columns]="columns" [extraParams]="params"></simple-table>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
+  <st #st [data]="url" [columns]="columns"></st>
 </nz-card>

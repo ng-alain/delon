@@ -12,6 +12,5 @@ import { ControlWidget } from '../../widget';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
-export class CustomWidget extends ControlWidget {}
+export class CustomWidget extends ControlWidget { }

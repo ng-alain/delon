@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '../../widget';
-import { getData } from '../../utils';
+import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
+import { getData, toBool } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-cascader',
@@ -22,12 +23,13 @@ import { SFSchemaEnum } from '../../schema';
       [nzExpandTrigger]="ui.expandTrigger"
       [nzMenuClassName]="ui.menuClassName"
       [nzMenuStyle]="ui.menuStyle"
-      [nzLabelProperty]="ui.labelProperty"
-      [nzValueProperty]="ui.valueProperty"
+      [nzLabelProperty]="ui.labelProperty || 'label'"
+      [nzValueProperty]="ui.valueProperty || 'value'"
       [nzLoadData]="loadData"
       [nzPlaceHolder]="ui.placeholder"
       [nzShowArrow]="showArrow"
       [nzShowInput]="showInput"
+      [nzShowSearch]="ui.showSearch"
       (nzClear)="_clear($event)"
       (nzVisibleChange)="_visibleChange($event)"
       (nzSelect)="_select($event)"
@@ -36,7 +38,6 @@ import { SFSchemaEnum } from '../../schema';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class CascaderWidget extends ControlWidget implements OnInit {
   clearText: string;
@@ -44,20 +45,21 @@ export class CascaderWidget extends ControlWidget implements OnInit {
   showInput: boolean;
   triggerAction: string[];
   data: SFSchemaEnum[] = [];
+  // tslint:disable-next-line:no-any
   loadData: any;
 
   ngOnInit(): void {
     this.clearText = this.ui.clearText || '清除';
-    this.showArrow = this.ui.showArrow || true;
-    this.showInput = this.ui.showInput || true;
+    this.showArrow = toBool(this.ui.showArrow, true);
+    this.showInput = toBool(this.ui.showInput, true);
     this.triggerAction = this.ui.triggerAction || ['click'];
     if (!!this.ui.asyncData) {
-      this.loadData = (node: any, index: number) =>
-        (this.ui.asyncData as any)(node, index, this);
+      // tslint:disable-next-line:no-any
+      this.loadData = (node: any, index: number) => (this.ui.asyncData as any)(node, index, this);
     }
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => {
         this.data = list;
@@ -67,23 +69,26 @@ export class CascaderWidget extends ControlWidget implements OnInit {
   }
 
   _visibleChange(status: boolean) {
-    this.ui.visibleChange && this.ui.visibleChange(status);
+    if (this.ui.visibleChange) this.ui.visibleChange(status);
   }
 
   _change(value: string) {
     this.setValue(value);
-    this.ui.change && this.ui.change(value);
+    if (this.ui.change) this.ui.change(value);
   }
 
+  // tslint:disable-next-line:no-any
   _selectionChange(options: any) {
-    this.ui.selectionChange && this.ui.selectionChange(options);
+    if (this.ui.selectionChange) this.ui.selectionChange(options);
   }
 
+  // tslint:disable-next-line:no-any
   _select(options: any) {
-    this.ui.select && this.ui.select(options);
+    if (this.ui.select) this.ui.select(options);
   }
 
+  // tslint:disable-next-line:no-any
   _clear(options: any) {
-    this.ui.clear && this.ui.clear(options);
+    if (this.ui.clear) this.ui.clear(options);
   }
 }

@@ -1,0 +1,32 @@
+{
+  "name": "@delon/chart",
+  "version": "0.0.0-PLACEHOLDER",
+  "author": "cipchk<cipchk@qq.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ng-alain/delon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ng-alain/ng-alain/issues"
+  },
+  "homepage": "https://ng-alain.com",
+  "keywords": [
+    "delon",
+    "ng-alain",
+    "alain",
+    "chart",
+    "angular chart",
+    "ng chart",
+    "ngx chart",
+    "antd",
+    "ng-zorro-antd",
+    "angular",
+    "component"
+  ],
+  "peerDependencies": {
+    "@delon/util": "PEER-0.0.0-PLACEHOLDER",
+    "@delon/theme": "PEER-0.0.0-PLACEHOLDER"
+  },
+  "sideEffects": false
+}

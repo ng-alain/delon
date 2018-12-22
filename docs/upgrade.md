@@ -16,7 +16,7 @@ type: Dev
 
 - `@delon` 作为基础建设类库，在更新频率上会略高，一般一周至少更新一次
 - 带有 **BREAKING CHANGES** 至少提升一个次版本号
-- [更新日志](https://github.com/cipchk/ng-alain/releases)
+- [更新日志](https://github.com/ng-alain/ng-alain/releases)
 
 ## 如何升级？
 
@@ -33,12 +33,10 @@ type: Dev
 最后，重新安装依赖包。
 
 ```bash
-$ npm install
+$ yarn
 ```
 
-> 遇到问题请阅读 [常见问题](/cli/faq)
-
-如果网络状况不佳，可以使用 [nrm](https://www.npmjs.com/package/nrm) 并切换国内NPM镜像进行加速。
+> 遇到问题请阅读 [常见问题](/docs/faq)
 
 ### 方式二：更新所有类库
 
@@ -48,7 +46,7 @@ $ npm install
 
 要想采用这种更新方式需要按以下步骤进行：
 
-- 移除 `node_modules` 文件夹及 `package-lock.json` 文件
-- 执行 `npm install`
+- 移除 `node_modules` 文件夹及 `yarn.lock` 文件
+- 执行 `yarn`
 
 **注意：** 这种方式会对所有类库按比较新的版本安装，但有可能会导致由于第三方类型的破坏性变更会导致一些不必要的麻烦。

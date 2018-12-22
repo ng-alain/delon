@@ -1,20 +1,16 @@
 {
   "name": "@delon/util",
   "version": "0.0.0-PLACEHOLDER",
-  "main": "./bundles/util.umd.js",
-  "module": "./esm5/util.js",
-  "es2015": "./esm2015/util.js",
-  "typings": "./util.d.ts",
   "author": "cipchk<cipchk@qq.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cipchk/delon.git"
+    "url": "git+https://github.com/ng-alain/delon.git"
   },
   "bugs": {
-    "url": "https://github.com/cipchk/delon/issues"
+    "url": "https://github.com/ng-alain/ng-alain/issues"
   },
-  "homepage": "https://github.com/cipchk/delon#readme",
+  "homepage": "https://ng-alain.com",
   "keywords": [
     "delon",
     "ng-alain",
@@ -24,6 +20,7 @@
     "angular"
   ],
   "peerDependencies": {
-    "extend": "^3.0.1"
-  }
+    "extend": "^3.0.0"
+  },
+  "sideEffects": false
 }

@@ -27,7 +27,6 @@ type: Widgets
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | -
-`[size]` | 大小，等同 `nzSize` | `string` | -
 `[type]` | 上传类型 | `select,drag` | `select`
 `[text]` | 按钮文本 | `string` | `点击上传`
 `[hint]` | 提醒文本，drag 时有效 | `string` | `支持单个或批量，严禁上传公司数据或其他安全文件`
@@ -35,7 +34,7 @@ type: Widgets
 `[action]` | 必选参数, 上传的地址 | `string` | -
 `[accept]` | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | `string` | -
 `[limit]` | 限制单次最多上传数量，`multiple` 打开时有效；`0` 表示不限  | `number` | `0`
-`[size]` | 限制文件大小，单位：KB；`0` 表示不限  | `number` | `0`
+`[fileSize]` | 限制文件大小，单位：KB；`0` 表示不限  | `number` | `0`
 `[fileType]` | 限制文件类型，例如：`image/png,image/jpeg,image/gif,image/bmp` | `string` | -
 `[headers]` | 设置上传的请求头部 | `Object, (file: UploadFile) => Object` | -
 `[listType]` | 上传列表的内建样式 | `text,picture,picture-card` | `text`

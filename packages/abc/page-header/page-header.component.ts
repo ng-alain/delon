@@ -1,142 +1,111 @@
 import {
-  Component,
-  Input,
-  TemplateRef,
-  ContentChild,
-  OnInit,
-  OnChanges,
-  Inject,
-  Optional,
-  ViewChild,
-  ElementRef,
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Optional,
   Renderer2,
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { toBoolean, isEmpty } from '@delon/util';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { NzAffixComponent } from 'ng-zorro-antd';
+import { merge, Observable, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+
+import { ReuseTabService } from '@delon/abc/reuse-tab';
 import {
-  MenuService,
-  ALAIN_I18N_TOKEN,
   AlainI18NService,
+  ALAIN_I18N_TOKEN,
   Menu,
+  MenuService,
+  SettingsService,
   TitleService,
 } from '@delon/theme';
-import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
+import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
 
-import { AdPageHeaderConfig } from './page-header.config';
+import { PageHeaderConfig } from './page-header.config';
+
+interface PageHeaderPath {
+  title?: string;
+  link?: string[];
+}
 
 @Component({
   selector: 'page-header',
-  template: `
-  <ng-container *ngIf="!breadcrumb; else breadcrumb">
-    <nz-breadcrumb *ngIf="paths && paths.length > 0">
-      <nz-breadcrumb-item *ngFor="let i of paths">
-        <ng-container *ngIf="i.link"><a [routerLink]="i.link">{{i.title}}</a></ng-container>
-        <ng-container *ngIf="!i.link">{{i.title}}</ng-container>
-      </nz-breadcrumb-item>
-    </nz-breadcrumb>
-  </ng-container>
-  <div class="detail">
-    <div *ngIf="logo" class="logo"><ng-template [ngTemplateOutlet]="logo"></ng-template></div>
-    <div class="main">
-      <div class="row">
-        <h1 *ngIf="title" class="title">{{title}}</h1>
-        <div *ngIf="action" class="action"><ng-template [ngTemplateOutlet]="action"></ng-template></div>
-      </div>
-      <div class="row">
-        <div class="desc" (cdkObserveContent)="checkContent()" #conTpl><ng-content></ng-content><ng-template [ngTemplateOutlet]="content"></ng-template></div>
-        <div *ngIf="extra" class="extra"><ng-template [ngTemplateOutlet]="extra"></ng-template></div>
-      </div>
-    </div>
-  </div>
-  <ng-template [ngTemplateOutlet]="tab"></ng-template>
-  `,
-  host: {
-    '[class.content__title]': 'true',
-    '[class.ad-ph]': 'true',
-  },
-  preserveWhitespaces: false,
+  templateUrl: './page-header.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
+export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
-  @ViewChild('conTpl') private conTpl: ElementRef;
+  private unsubscribe$ = new Subject<void>();
+  @ViewChild('conTpl')
+  private conTpl: ElementRef;
+  @ViewChild('affix')
+  private affix: NzAffixComponent;
   private _menus: Menu[];
 
   private get menus() {
     if (this._menus) {
       return this._menus;
     }
-    this._menus = this.menuSrv.getPathByUrl(this.route.url);
+    this._menus = this.menuSrv.getPathByUrl(
+      this.router.url.split('?')[0],
+      this.recursiveBreadcrumb,
+    );
 
     return this._menus;
   }
 
-  // region fields
+  _titleVal: string;
+  paths: PageHeaderPath[] = [];
 
-  @Input() title: string;
+  // #region fields
 
+  _title: string;
+  _titleTpl: TemplateRef<void>;
+  @Input()
+  set title(value: string | TemplateRef<void>) {
+    if (value instanceof TemplateRef) {
+      this._title = null;
+      this._titleTpl = value;
+    } else {
+      this._title = value;
+    }
+    this._titleVal = this._title;
+  }
+
+  @Input() @InputBoolean() loading = false;
+  @Input() @InputBoolean() wide = false;
   @Input() home: string;
+  @Input() homeLink: string;
+  @Input() homeI18n: string;
+  @Input() @InputBoolean() autoBreadcrumb: boolean;
+  @Input() @InputBoolean() autoTitle: boolean;
+  @Input() @InputBoolean() syncTitle: boolean;
+  @Input() @InputBoolean() fixed: boolean;
+  @Input() @InputNumber() fixedOffsetTop: number;
+  @Input() breadcrumb: TemplateRef<void>;
+  @Input() @InputBoolean() recursiveBreadcrumb: boolean;
+  @Input() logo: TemplateRef<void>;
+  @Input() action: TemplateRef<void>;
+  @Input() content: TemplateRef<void>;
+  @Input() extra: TemplateRef<void>;
+  @Input() tab: TemplateRef<void>;
 
-  @Input() home_link: string;
-
-  @Input() home_i18n: string;
-
-  /**
-   * 自动生成导航，以当前路由从主菜单中定位
-   */
-  @Input()
-  get autoBreadcrumb() {
-    return this._autoBreadcrumb;
-  }
-  set autoBreadcrumb(value: any) {
-    this._autoBreadcrumb = toBoolean(value);
-  }
-  private _autoBreadcrumb = true;
-
-  /**
-   * 自动生成标题，以当前路由从主菜单中定位
-   */
-  @Input()
-  get autoTitle() {
-    return this._autoTitle;
-  }
-  set autoTitle(value: any) {
-    this._autoTitle = toBoolean(value);
-  }
-  private _autoTitle = true;
-
-  /**
-   * 是否自动将标准信息同步至 `TitleService`、`ReuseService` 下
-   */
-  @Input()
-  get titleSync() {
-    return this._titleSync;
-  }
-  set titleSync(value: any) {
-    this._titleSync = toBoolean(value);
-  }
-  private _titleSync = false;
-
-  paths: any[] = [];
-
-  @ContentChild('breadcrumb') breadcrumb: TemplateRef<any>;
-
-  @ContentChild('logo') logo: TemplateRef<any>;
-
-  @ContentChild('action') action: TemplateRef<any>;
-
-  @ContentChild('content') content: TemplateRef<any>;
-
-  @ContentChild('extra') extra: TemplateRef<any>;
-
-  @ContentChild('tab') tab: TemplateRef<any>;
-
-  // endregion
+  // #endregion
 
   constructor(
-    cog: AdPageHeaderConfig,
+    cog: PageHeaderConfig,
+    settings: SettingsService,
     private renderer: Renderer2,
-    private route: Router,
+    private router: Router,
     private menuSrv: MenuService,
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
@@ -147,18 +116,41 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     @Optional()
     @Inject(ReuseTabService)
     private reuseSrv: ReuseTabService,
+    private cdr: ChangeDetectorRef,
   ) {
     Object.assign(this, cog);
+    settings.notify
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed'),
+      )
+      .subscribe(() => this.affix.updatePosition({}));
+
+    // tslint:disable-next-line:no-any
+    const data$: Array<Observable<any>> = [
+      menuSrv.change.pipe(filter(() => this.inited)),
+      router.events.pipe(filter((event: RouterEvent) => event instanceof NavigationEnd)),
+    ];
+    if (i18nSrv) {
+      data$.push(i18nSrv.change);
+    }
+    merge(...data$).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+      this._menus = null;
+      this.refresh();
+    });
   }
 
   refresh() {
     this.setTitle().genBreadcrumb();
+    this.cdr.detectChanges();
   }
 
-  genBreadcrumb() {
-    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0)
+  private genBreadcrumb() {
+    if (this.breadcrumb || !this.autoBreadcrumb || this.menus.length <= 0) {
+      this.paths = [];
       return;
-    const paths: any[] = [];
+    }
+    const paths: PageHeaderPath[] = [];
     this.menus.forEach(item => {
       if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb)
         return;
@@ -169,36 +161,33 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
     // add home
     if (this.home) {
       paths.splice(0, 0, {
-        title:
-          (this.home_i18n &&
-            this.i18nSrv &&
-            this.i18nSrv.fanyi(this.home_i18n)) ||
-          this.home,
-        link: [this.home_link],
+        title: (this.homeI18n && this.i18nSrv && this.i18nSrv.fanyi(this.homeI18n)) || this.home,
+        link: [this.homeLink],
       });
     }
     this.paths = paths;
     return this;
   }
 
-  setTitle() {
+  private setTitle() {
     if (
-      typeof this.title === 'undefined' &&
+      typeof this._title === 'undefined' &&
+      typeof this._titleTpl === 'undefined' &&
       this.autoTitle &&
       this.menus.length > 0
     ) {
       const item = this.menus[this.menus.length - 1];
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-      this.title = title;
+      this._titleVal = title;
     }
 
-    if (this.titleSync) {
+    if (this._titleVal && this.syncTitle) {
       if (this.titleSrv) {
-        this.titleSrv.setTitle(this.title);
+        this.titleSrv.setTitle(this._titleVal);
       }
       if (this.reuseSrv) {
-        this.reuseSrv.title = this.title;
+        this.reuseSrv.title = this._titleVal;
       }
     }
 
@@ -224,5 +213,11 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnChanges(): void {
     if (this.inited) this.refresh();
+  }
+
+  ngOnDestroy(): void {
+    const { unsubscribe$ } = this;
+    unsubscribe$.next();
+    unsubscribe$.complete();
   }
 }

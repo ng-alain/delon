@@ -1,19 +1,22 @@
-import { Tree, SchematicContext } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { getJSON, overwritePackage } from '../utils/json';
 import { PluginOptions } from './interface';
-import {
-  addPackageToPackageJson,
-  removePackageFromPackageJson,
-} from '../utils/json';
 
-export function pluginCodeStyle(options: PluginOptions): any {
+export function pluginCodeStyle(options: PluginOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
-    // package
-    (options.type === 'add'
-      ? addPackageToPackageJson
-      : removePackageFromPackageJson)(
-      host,
-      ['precommit@npm run lint-staged'],
-      'scripts',
-    );
+    const json = getJSON(host, 'package.json');
+    if (json == null) return;
+
+    if (options.type === 'add') {
+      json.husky = {
+        hooks: {
+          'pre-commit': 'npm run lint-staged',
+        },
+      };
+    } else {
+      delete json.husky;
+    }
+
+    overwritePackage(host, json);
   };
 }

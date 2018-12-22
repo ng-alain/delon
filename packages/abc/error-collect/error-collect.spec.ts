@@ -1,28 +1,23 @@
 import {
-  TestBed,
-  ComponentFixture,
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
-import {
   Component,
   DebugElement,
   Injector,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-  ReactiveFormsModule,
   FormBuilder,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 
-import { NzFormModule, NzInputModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { AdErrorCollectModule } from './error-collect.module';
 import { ErrorCollectComponent } from './error-collect.component';
+import { ErrorCollectModule } from './error-collect.module';
 
 describe('abc: error-collect', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -33,10 +28,9 @@ describe('abc: error-collect', () => {
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
       imports: [
-        AdErrorCollectModule.forRoot(),
+        ErrorCollectModule,
         ReactiveFormsModule,
-        NzFormModule,
-        NzInputModule,
+        NgZorroAntdModule,
       ],
       declarations: [TestComponent],
     });
@@ -125,8 +119,9 @@ describe('abc: error-collect', () => {
 })
 class TestComponent implements OnInit {
   freq = 20;
-  offsetTop = 65 + 8 * 2;
-  @ViewChild('ec') comp: ErrorCollectComponent;
+  offsetTop = 65 + 16;
+  @ViewChild('ec')
+  comp: ErrorCollectComponent;
   validateForm: FormGroup;
   constructor(fb: FormBuilder) {
     this.validateForm = fb.group({

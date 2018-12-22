@@ -1,13 +1,13 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
 import { ReuseTabContextService } from './reuse-tab-context.service';
-import { ReuseItem } from './interface';
+import { ReuseItem } from './reuse-tab.interfaces';
 
 @Directive({
-  selector: '[context-menu]',
+  selector: '[reuse-tab-context-menu]',
 })
 export class ReuseTabContextDirective {
-  @Input('context-menu') item: ReuseItem;
+  @Input('reuse-tab-context-menu') item: ReuseItem;
 
   constructor(private srv: ReuseTabContextService) {}
 

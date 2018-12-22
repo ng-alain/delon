@@ -1,9 +1,8 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
 
 import { ImageDirective } from './image.directive';
-import { AdImageConfig } from './image.config';
 
 const DIRECTIVES = [ImageDirective];
 
@@ -12,8 +11,4 @@ const DIRECTIVES = [ImageDirective];
   declarations: [...DIRECTIVES],
   exports: [...DIRECTIVES],
 })
-export class AdImageModule {
-  static forRoot(): ModuleWithProviders {
-    return { ngModule: AdImageModule, providers: [AdImageConfig] };
-  }
-}
+export class ImageModule { }

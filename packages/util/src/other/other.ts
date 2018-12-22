@@ -1,4 +1,5 @@
-import * as deepExtend from 'extend';
+// tslint:disable:no-any
+import extend from 'extend';
 
 /**
  * 类似 `_.get`，根据 `path` 获取安全值
@@ -8,10 +9,10 @@ import * as deepExtend from 'extend';
  * @param path 若 `null`、`[]`、未定义及未找到时返回 `defaultValue` 值
  * @param defaultValue 默认值
  */
-export function deepGet(obj: any, path: string | string[], defaultValue?: any) {
+export function deepGet(obj: any, path: string | string[], defaultValue?: any): any {
   if (!obj || path == null || path.length === 0) return defaultValue;
   if (!Array.isArray(path)) {
-    path = ~path.indexOf('.') ? path.split('.') : [ path ];
+    path = ~path.indexOf('.') ? path.split('.') : [path];
   }
   if (path.length === 1) {
     const checkObj = obj[path[0]];
@@ -20,8 +21,8 @@ export function deepGet(obj: any, path: string | string[], defaultValue?: any) {
   return path.reduce((o, k) => (o || {})[k], obj) || defaultValue;
 }
 
-export function deepCopy(obj: any) {
-  const result = deepExtend(true, { }, { _: obj });
+export function deepCopy(obj: any): any {
+  const result = extend(true, {}, { _: obj });
   return result._;
 }
 
@@ -45,4 +46,32 @@ export function copy(value: string): Promise<string> {
       }
     }
   });
+}
+
+export function deepMerge(original: any, ...objects: any[]): void {
+  if (Array.isArray(original) || typeof original !== 'object') return original;
+
+  const isObject = (v: any) => typeof v === 'object' || typeof v === 'function';
+
+  const merge = (target: any, obj: {}) => {
+    Object
+      .keys(obj)
+      .filter(key => key !== '__proto__' && Object.prototype.hasOwnProperty.call(obj, key))
+      .forEach(key => {
+        const oldValue = obj[key];
+        const newValue = target[key];
+        if (Array.isArray(newValue)) {
+          target[key] = [ ...newValue, ...oldValue ];
+        } else if (oldValue != null && isObject(oldValue) && newValue != null && isObject(newValue)) {
+          target[key] = merge(newValue, oldValue);
+        } else {
+          target[key] = deepCopy(oldValue);
+        }
+      });
+    return target;
+  };
+
+  objects.filter(v => isObject(v)).forEach(v => merge(original, v));
+
+  return original;
 }

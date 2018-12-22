@@ -1,28 +1,26 @@
-import { Injectable, OnDestroy, Inject } from '@angular/core';
+// tslint:disable:no-any
 import { HttpClient } from '@angular/common/http';
-import * as addSeconds from 'date-fns/add_seconds';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
+import addSeconds from 'date-fns/add_seconds';
+import { of, BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
+import { DelonCacheConfig } from './cache.config';
 import {
-  DC_STORE_STORAGE_TOKEN,
-  ICacheStore,
-  ICache,
   CacheNotifyResult,
   CacheNotifyType,
+  ICache,
+  ICacheStore,
 } from './interface';
-import { DelonCacheConfig } from '../cache.config';
+import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CacheService implements OnDestroy {
   private readonly memory: Map<string, ICache> = new Map<string, ICache>();
-  private readonly notifyBuffer: Map<
-    string,
-    BehaviorSubject<CacheNotifyResult>
-  > = new Map<string, BehaviorSubject<CacheNotifyResult>>();
+  private readonly notifyBuffer: Map<string, BehaviorSubject<CacheNotifyResult>> = new Map<string, BehaviorSubject<CacheNotifyResult>>();
   private meta: Set<string> = new Set<string>();
-  private freq_tick = 3000;
-  private freq_time: any;
+  private freqTick = 3000;
+  private freqTime;
 
   constructor(
     private options: DelonCacheConfig,
@@ -42,7 +40,7 @@ export class CacheService implements OnDestroy {
     return path.reduce((o, k) => o[k], obj) || defaultValue;
   }
 
-  // region: meta
+  // #region meta
 
   private pushMeta(key: string) {
     if (this.meta.has(key)) return;
@@ -73,9 +71,9 @@ export class CacheService implements OnDestroy {
     return this.meta;
   }
 
-  // endregion
+  // #endregion
 
-  // region: set
+  // #region set
 
   /**
    * 持久化缓存 `Observable` 对象，例如：
@@ -104,7 +102,7 @@ export class CacheService implements OnDestroy {
    */
   set(
     key: string,
-    data: Object,
+    data: {},
     options?: { type?: 's'; expire?: number },
   ): void;
   /**
@@ -114,7 +112,7 @@ export class CacheService implements OnDestroy {
    */
   set(
     key: string,
-    data: Object,
+    data: {},
     options: { type: 'm' | 's'; expire?: number },
   ): void;
   /**
@@ -158,9 +156,9 @@ export class CacheService implements OnDestroy {
     this.runNotify(key, 'set');
   }
 
-  // endregion
+  // #endregion
 
-  // region: get
+  // #region get
 
   /** 获取缓存数据，若 `key` 不存在则 `key` 作为HTTP请求缓存后返回 */
   get<T>(
@@ -207,9 +205,8 @@ export class CacheService implements OnDestroy {
         return this.http
           .get(key)
           .pipe(
-            map((ret: any) =>
-              this._deepGet(ret, this.options.reName as string[], null),
-            ),
+            // tslint:disable-next-line:no-any
+            map((ret: any) => this._deepGet(ret, this.options.reName as string[], null)),
             tap(v => this.set(key, v)),
           );
       }
@@ -247,7 +244,7 @@ export class CacheService implements OnDestroy {
    */
   tryGet(
     key: string,
-    data: Object,
+    data: {},
     options?: { type?: 's'; expire?: number },
   ): any;
   /**
@@ -255,7 +252,7 @@ export class CacheService implements OnDestroy {
    */
   tryGet(
     key: string,
-    data: Object,
+    data: {},
     options: { type: 'm' | 's'; expire?: number },
   ): any;
 
@@ -277,27 +274,27 @@ export class CacheService implements OnDestroy {
     const ret = this.getNone(key);
     if (ret === null) {
       if (!(data instanceof Observable)) {
-        this.set(key, data, <any>options);
+        this.set(key, data, options as any);
         return data;
       }
 
-      return this.set(key, data as Observable<any>, <any>options);
+      return this.set(key, data as Observable<any>, options as any);
     }
     return of(ret);
   }
 
-  // endregion
+  // #endregion
 
-  // region: has
+  // #region has
 
   /** 是否缓存 `key` */
   has(key: string): boolean {
     return this.memory.has(key) || this.meta.has(key);
   }
 
-  // endregion
+  // #endregion
 
-  // region: remove
+  // #region remove
 
   private _remove(key: string, needNotify: boolean) {
     if (needNotify) this.runNotify(key, 'remove');
@@ -321,15 +318,15 @@ export class CacheService implements OnDestroy {
     this.meta.forEach(key => this.store.remove(this.options.prefix + key));
   }
 
-  // endregion
+  // #endregion
 
-  // region: notify
+  // #region notify
 
   /**
    * 设置监听频率，单位：毫秒且最低 `20ms`，默认：`3000ms`
    */
   set freq(value: number) {
-    this.freq_tick = Math.max(20, value);
+    this.freqTick = Math.max(20, value);
     this.abortExpireNotify();
     this.startExpireNotify();
   }
@@ -340,10 +337,10 @@ export class CacheService implements OnDestroy {
   }
 
   private runExpireNotify() {
-    this.freq_time = setTimeout(() => {
+    this.freqTime = setTimeout(() => {
       this.checkExpireNotify();
       this.runExpireNotify();
-    }, this.freq_tick);
+    }, this.freqTick);
   }
 
   private checkExpireNotify() {
@@ -358,7 +355,7 @@ export class CacheService implements OnDestroy {
   }
 
   private abortExpireNotify() {
-    clearTimeout(this.freq_time);
+    clearTimeout(this.freqTime);
   }
 
   private runNotify(key: string, type: CacheNotifyType) {
@@ -400,7 +397,7 @@ export class CacheService implements OnDestroy {
     this.notifyBuffer.clear();
   }
 
-  // endregion
+  // #endregion
 
   ngOnDestroy(): void {
     this.memory.clear();

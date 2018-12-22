@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ControlWidget } from '../../widget';
+import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
-import { getData } from '../../utils';
+import { getData, toBool } from '../../utils';
+import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-select',
@@ -25,7 +26,7 @@ import { getData } from '../../utils';
       [nzShowSearch]="i.showSearch"
       (nzOpenChange)="openChange($event)"
       (nzOnSearch)="searchChange($event)"
-      (nzScrollToBottom)="scrollToBottom($event)">
+      (nzScrollToBottom)="scrollToBottom()">
       <ng-container *ngIf="!hasGroup">
         <nz-option
           *ngFor="let o of data"
@@ -48,9 +49,9 @@ import { getData } from '../../utils';
 
   </sf-item-wrap>
   `,
-  preserveWhitespaces: false,
 })
 export class SelectWidget extends ControlWidget implements OnInit {
+  // tslint:disable-next-line:no-any
   i: any;
   data: SFSchemaEnum[];
   hasGroup = false;
@@ -58,18 +59,18 @@ export class SelectWidget extends ControlWidget implements OnInit {
   ngOnInit(): void {
     this.i = {
       allowClear: this.ui.allowClear,
-      autoFocus: this.ui.autoFocus || false,
+      autoFocus: toBool(this.ui.autoFocus, false),
       dropdownClassName: this.ui.dropdownClassName || null,
-      dropdownMatchSelectWidth: this.ui.dropdownMatchSelectWidth || true,
-      serverSearch: this.ui.serverSearch || false,
+      dropdownMatchSelectWidth: toBool(this.ui.dropdownMatchSelectWidth, true),
+      serverSearch: toBool(this.ui.serverSearch, false),
       maxMultipleCount: this.ui.maxMultipleCount || Infinity,
       mode: this.ui.mode || 'default',
       notFoundContent: this.ui.notFoundContent || '无法找到',
-      showSearch: this.ui.showSearch || true,
+      showSearch: toBool(this.ui.showSearch, true),
     };
   }
 
-  reset(value: any) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => {
         this.data = list;
@@ -79,18 +80,18 @@ export class SelectWidget extends ControlWidget implements OnInit {
     );
   }
 
-  change(values: any) {
+  change(values: SFValue) {
     if (this.ui.change) this.ui.change(values);
     this.setValue(values);
   }
 
-  openChange(value: any) {
+  openChange(value: boolean) {
     if (this.ui.openChange) this.ui.openChange(value);
   }
 
   searchChange(text: string) {
     if (this.ui.onSearch) {
-      this.ui.onSearch(text).then((res: any[]) => {
+      this.ui.onSearch(text).then((res: SFSchemaEnum[]) => {
         this.data = res;
         this.detectChanges();
       });
@@ -99,7 +100,7 @@ export class SelectWidget extends ControlWidget implements OnInit {
     this.detectChanges();
   }
 
-  scrollToBottom(value: any) {
-    if (this.ui.scrollToBottom) this.ui.scrollToBottom(value);
+  scrollToBottom() {
+    if (this.ui.scrollToBottom) this.ui.scrollToBottom();
   }
 }

@@ -1,21 +1,19 @@
-import { Injectable, Injector, Inject } from '@angular/core';
-import { NzI18nService, zh_CN } from 'ng-zorro-antd';
-import * as df_zh_cn from 'date-fns/locale/zh_cn';
-import zh from '@angular/common/locales/zh';
-import { registerLocaleData } from '@angular/common';
+import { Injectable, Injector } from '@angular/core';
+import { TitleService } from '@delon/theme';
+
+import { NzIconService } from 'ng-zorro-antd';
+import { ICONS } from '../../style-icons';
 
 @Injectable()
 export class StartupService {
-    constructor(private injector: Injector) { }
+  constructor(private injector: Injector, iconSrv: NzIconService) {
+    iconSrv.addIcon(...ICONS);
+  }
 
-    load(): Promise<any> {
-        // only works with promises
-        // https://github.com/angular/angular/issues/15088
-        return new Promise((resolve, reject) => {
-            const nzI18n = this.injector.get(NzI18nService);
-            nzI18n.setLocale(zh_CN);
-            registerLocaleData(zh);
-            resolve(null);
-        });
-    }
+  load(): Promise<any> {
+    return new Promise(resolve => {
+      this.injector.get(TitleService).suffix = 'Ng Alain';
+      resolve();
+    });
+  }
 }

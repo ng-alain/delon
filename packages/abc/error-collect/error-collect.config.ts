@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
-export class AdErrorCollectConfig {
+@Injectable({ providedIn: 'root' })
+export class ErrorCollectConfig {
   /**
    * 监听频率
    */

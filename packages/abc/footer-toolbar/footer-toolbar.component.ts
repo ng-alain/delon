@@ -1,55 +1,45 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  Inject,
-  TemplateRef,
-  ContentChild,
-  ElementRef,
-  Renderer2,
-} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { toBoolean } from '@delon/util';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  TemplateRef,
+} from '@angular/core';
+import { InputBoolean } from '@delon/util';
 
-const CLS = 'ad-footer-toolbar';
+const CLSBODY = 'footer-toolbar__body';
 
 @Component({
   selector: 'footer-toolbar',
-  template: `
-  <div class="left"><ng-container *ngIf="extra" [ngTemplateOutlet]="extra"></ng-container></div>
-  <div class="right">
-    <error-collect *ngIf="errorCollect"></error-collect>
-    <ng-content></ng-content>
-  </div>
-  `,
-  preserveWhitespaces: false,
+  templateUrl: './footer-toolbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
-  @Input()
-  get errorCollect() {
-    return this._errorCollect;
-  }
-  set errorCollect(value: any) {
-    this._errorCollect = toBoolean(value);
-  }
-  private _errorCollect = false;
-
-  @ContentChild('extra') extra: TemplateRef<any>;
+  @Input() @InputBoolean() errorCollect = false;
+  @Input() extra: string | TemplateRef<void>;
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
-  ) {}
+  ) { }
+
+  private get bodyCls() {
+    return this.doc.querySelector('body').classList;
+  }
 
   ngOnInit() {
-    (this.el.nativeElement as HTMLElement).classList.add(CLS);
-    this.renderer.addClass(this.el.nativeElement, CLS);
-    this.doc.querySelector('body').classList.add(`has-${CLS}`);
+    this.renderer.addClass(this.el.nativeElement, 'footer-toolbar');
+    this.bodyCls.add(CLSBODY);
   }
 
   ngOnDestroy() {
-    this.doc.querySelector('body').classList.remove(`has-${CLS}`);
+    this.bodyCls.remove(CLSBODY);
   }
 }

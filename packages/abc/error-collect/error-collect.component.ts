@@ -1,63 +1,45 @@
+import { DOCUMENT } from '@angular/common';
 import {
-  Component,
-  OnInit,
-  Input,
-  HostBinding,
-  OnDestroy,
-  ElementRef,
-  Renderer2,
-  HostListener,
-  Inject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { toNumber } from '@delon/util';
-import { AdErrorCollectConfig } from './error-collect.config';
+import { InputNumber } from '@delon/util';
 
-/**
- * 错误消息采集器
- * PS：虽然此法并不好看，但对响应式表单&模板表单有很好的效果。
- */
+import { ErrorCollectConfig } from './error-collect.config';
+
 @Component({
   selector: 'error-collect, [error-collect]',
   template: `
-  <i class="anticon anticon-exclamation-circle"></i>
-  <span class="pl-sm">{{count}}</span>`,
+    <i nz-icon type="exclamation-circle"></i>
+    <span class="pl-sm">{{ count }}</span>
+  `,
+  host: { '[class.error-collect]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  preserveWhitespaces: false,
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
   private $time = null;
   private formEl: HTMLFormElement;
 
-  @Input()
-  get freq() {
-    return this._freq;
-  }
-  set freq(value: any) {
-    this._freq = toNumber(value);
-  }
-  private _freq = 500;
-
-  @Input()
-  get offsetTop() {
-    return this._offsetTop;
-  }
-  set offsetTop(value: any) {
-    this._offsetTop = toNumber(value);
-  }
-  private _offsetTop = 65 + 64 + 8 * 2;
+  @Input() @InputNumber() freq: number;
+  @Input() @InputNumber() offsetTop: number;
 
   @HostBinding('class.d-none') _hiden = true;
 
   count = 0;
 
   constructor(
-    cog: AdErrorCollectConfig,
+    cog: ErrorCollectConfig,
     private el: ElementRef,
-    private renderer: Renderer2,
-    private cd: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
+    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
     Object.assign(this, cog);
@@ -72,7 +54,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     if (count === this.count) return;
     this.count = count;
     this._hiden = count === 0;
-    this.cd.markForCheck();
+    this.cdr.markForCheck();
   }
 
   @HostListener('click')
@@ -96,7 +78,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     clearInterval(this.$time);
   }
 
-  private findParent(el: any, selector: string) {
+  private findParent(el: Element, selector: string) {
     let retEl = null;
     while (el) {
       if (el.querySelector(selector)) {
@@ -111,12 +93,6 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.formEl = this.findParent(this.el.nativeElement, 'form');
     if (this.formEl === null) throw new Error('未找到有效 form 元素');
-    (this.el.nativeElement as HTMLElement).classList.add(
-      'error-collect',
-      'pr-lg',
-      'text-error',
-      'point',
-    );
     this.install();
   }
 

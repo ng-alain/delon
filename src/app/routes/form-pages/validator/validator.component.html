@@ -1,0 +1,50 @@
+<nz-row class="border-bottom-1 pb-sm mb-md">
+  <nz-col [nzSpan]="18">
+    <nz-select [(ngModel)]="name" (ngModelChange)="getSchema()">
+      <nz-option *ngFor="let i of files" [nzValue]="i.name" [nzLabel]="i.title"></nz-option>
+    </nz-select>
+    <nz-radio-group [(ngModel)]="layout" class="ml-sm">
+      <label nz-radio-button nzValue="horizontal">水平</label>
+      <label nz-radio-button nzValue="vertical">垂直</label>
+      <label nz-radio-button nzValue="inline">行内</label>
+    </nz-radio-group>
+  </nz-col>
+  <nz-col [nzSpan]="6" class="text-right">
+    <nz-button-group>
+      <nz-tooltip [nzTitle]="expand ? 'Hide Code' : 'Show Code'">
+        <button nz-tooltip nz-button (click)="expand=!expand">
+          <i nz-icon type="vertical-{{ expand ? 'right' : 'left'}}"></i>
+        </button>
+      </nz-tooltip>
+      <nz-tooltip [nzTitle]="'app.demo.stackblitz' | translate">
+        <button nz-tooltip nz-button (click)="openOnStackBlitz()" class="ml-sm">
+          <i nz-icon type="form"></i>
+        </button>
+      </nz-tooltip>
+      <nz-tooltip [nzTitle]="'app.demo.copy' | translate">
+        <button nz-tooltip nz-button (click)="onCopy()" class="ml-sm">
+          <i nz-icon type="copy"></i>
+        </button>
+      </nz-tooltip>
+    </nz-button-group>
+  </nz-col>
+</nz-row>
+<nz-row class="border-bottom-1 pb-sm mb-md" nzGutter="24">
+  <nz-col [nzSpan]="12" [hidden]="!expand">
+    <nz-tabset>
+      <nz-tab nzTitle="Schema">
+        <ace-editor [(text)]="schema" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '16px'}" [durationBeforeCallback]="1000" (textChanged)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
+      </nz-tab>
+      <nz-tab nzTitle="Form Data">
+        <ace-editor [(text)]="formCode" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '16px'}" [durationBeforeCallback]="1000" (textChanged)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
+      </nz-tab>
+      <nz-tab nzTitle="UI Schema">
+        <ace-editor [(text)]="uiCode" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '16px'}" [durationBeforeCallback]="1000" (textChanged)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
+      </nz-tab>
+    </nz-tabset>
+  </nz-col>
+  <nz-col [nzSpan]="expand ? 12 : 24" *ngIf="schemaData">
+    <sf [schema]="schemaData" [formData]="formData" [ui]="uiSchema" [layout]="layout" (formSubmit)="submit($event)" (formChange)="change($event)"
+      (formError)="error($event)"></sf>
+  </nz-col>
+</nz-row>

@@ -13,33 +13,27 @@ ng-alain 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 在 ng-alain 中，一个完整的前端 UI 交互到服务端处理流程是这样的：
 
-1. UI 组件交互操作；
-2. 使用封装的 _HttpClient 发送请求；
-3. 触发用户认证拦截器，统一加入token参数；
-4. 触发默认拦截器，统一处理前缀等信息；
-5. 获取服务端返回；
-6. 触发默认拦截器，统一处理请求异常、业务异常等；
-7. 数据更新，并刷新 UI。
-
-### _HttpClient
-
-`@delon/theme` 包含了一个叫 [_HttpClient](https://github.com/cipchk/delon/blob/master/packages/theme/services/http/http.client.ts) 类，其本质还是调用 Angular 的 `HttpClient`，只是包裹了一个 `loading`。
-
-我们知道 ng-zorro-antd 充斥着大量 `nzLoading` 属性，它可以让网络请求的加载有更友好的体验，这样我们无须在每一个业务页面维护一个 `loadind` 变量。
-
-当然，不光如此，`_HttpClient` 还统一处理了所有时间数据格式为时间戳，这对于前端后离的状态下保证数据的一致性有很好的作用。
+1. 首次启动 Angular 执行 `APP_INITIALIZER`；
+2. UI 组件交互操作；
+3. 使用封装的 [_HttpClient](/theme/http) 发送请求；
+4. 触发用户认证拦截器 [@delon/auth](/auth/getting-started)，统一加入 `token` 参数；
+    - 若未存在 `token` 或已过期中断后续请求，直接跳转至登录页；
+5. 触发默认拦截器，统一处理前缀等信息；
+6. 获取服务端返回；
+7. 触发默认拦截器，统一处理请求异常、业务异常等；
+8. 数据更新，并刷新 UI。
 
 ### 拦截器
 
-默认情况下在根模块注册了两个拦截器 [SimpleInterceptor](https://github.com/cipchk/delon/blob/master/packages/auth/token/simple/simple.interceptor.ts) 和 [DefaultInterceptor](https://github.com/cipchk/ng-alain/blob/master/src/app/core/net/default.interceptor.ts)，且执行顺序按注册顺序执行。
+默认情况下在根模块注册了两个拦截器 [SimpleInterceptor](https://github.com/ng-alain/delon/blob/master/packages/auth/token/simple/simple.interceptor.ts) 和 [DefaultInterceptor](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts)，且执行顺序按注册顺序执行。
 
 **SimpleInterceptor**
 
-[用户认证](/docs/auth)内置用于自动为请求添加 `token` 参数的拦截器。这里还有一个叫 [JWTInterceptor](https://github.com/cipchk/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) 拦截器，是一个标准 JWT 规范，若后端采用标准JWT可以直接换成JWTInterceptor拦截器。
+[用户认证](/docs/auth)内置用于自动为请求添加 `token` 参数的拦截器。这里还有一个叫 [JWTInterceptor](https://github.com/ng-alain/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) 拦截器，是一个标准 JWT 规范，若后端采用标准JWT可以直接换成JWTInterceptor拦截器。
 
 **DefaultInterceptor**
 
-[DefaultInterceptor](https://github.com/cipchk/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 拦截器只是提供一个拦截器的写法，默认包含了统一处理服务器请求前缀、处理请求异常及业务异常的示例代码，你可以根据你自己的需求做调整。
+[DefaultInterceptor](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) 拦截器只是提供一个拦截器的写法，默认包含了统一处理服务器请求前缀、处理请求异常及业务异常的示例代码，你可以根据你自己的需求做调整。
 
 **注意点**
 
@@ -47,7 +41,7 @@ ng-alain 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 ## 开发环境
 
-正常情况下开发环境和生产环境不是同一个后端请求源，实际可以通过配置 [environment](https://github.com/cipchk/ng-alain/tree/master/src/environments) 目录下 [environment.ts](https://github.com/cipchk/ng-alain/blob/master/src/environments/environment.ts) 和 [environment.prod.ts](https://github.com/cipchk/ng-alain/blob/master/src/environments/environment.prod.ts) 改变不同环境的请求源。
+正常情况下开发环境和生产环境不是同一个后端请求源，实际可以通过配置 [environment](https://github.com/ng-alain/ng-alain/tree/master/src/environments) 目录下 [environment.ts](https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.ts) 和 [environment.prod.ts](https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.prod.ts) 改变不同环境的请求源。
 
 > environment 实际是一个JSON对象，你可以组织不同形式来满足多请求源的问题。
 

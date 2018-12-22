@@ -45,6 +45,11 @@
       "factory": "./curd",
       "schema": "./curd/schema.json",
       "description": "Create a ng alain curd pages (includes: list, edit, view pages)."
+    },
+    "tpl": {
+      "factory": "./tpl",
+      "schema": "./tpl/schema.json",
+      "description": "Create a ng alain custom template pages."
     }
   }
 }

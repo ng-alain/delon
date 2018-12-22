@@ -1,0 +1,47 @@
+@search-form-enabled:   false;
+@search-form-bg:        #fbfbfb;
+@search-form-radius:    4px;
+
+@search__form-enabled:   true;
+
+.search-form-mixin(@enabled) when(@enabled = true) {
+  .search-form {
+    background: @search-form-bg;
+    padding: @layout-gutter;
+    border: @border-width-base @border-style-base @border-color-split;
+    border-radius: @search-form-radius;
+    margin-bottom: @layout-gutter * 2;
+  }
+}
+.search-form-mixin(@search-form-enabled);
+
+.search__form-mixin(@enabled) when(@enabled = true) {
+  .search {
+    &__form {
+      // BUG: https://github.com/NG-ZORRO/ng-zorro-antd/issues/1202
+      &.@{ant-prefix}-form-inline {
+        .@{ant-prefix}-form-item-label,
+        .@{ant-prefix}-form-item-control-wrapper {
+          padding: 0 !important;
+        }
+      }
+      .@{ant-prefix}-form-item {
+        margin-bottom: 24px;
+        margin-right: 0;
+        display: flex;
+        > .@{ant-prefix}-form-item-label {
+          width: auto;
+          line-height: 32px;
+          padding-right: 8px;
+        }
+        .@{ant-prefix}-form-item-control {
+          line-height: 32px;
+        }
+      }
+      .@{ant-prefix}-form-item-control-wrapper {
+        flex: 1;
+      }
+    }
+  }
+}
+.search__form-mixin(@search__form-enabled);

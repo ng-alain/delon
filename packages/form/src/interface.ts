@@ -1,4 +1,7 @@
-import { SFRenderSchema, SFHorizontalLayoutSchema } from './schema/ui';
+import { SFHorizontalLayoutSchema, SFRenderSchema } from './schema/ui';
+
+// tslint:disable-next-line:no-any
+export type SFValue = any;
 
 export interface SFButton {
   /** 提交按钮文本，默认：`提交` */
@@ -11,6 +14,10 @@ export interface SFButton {
   reset_type?: string;
   /** 按钮样式，主要用于指定按钮 `grid`、`class` 属性 */
   render?: SFRenderButton;
+  /** 搜索按钮文本，默认：`搜索` */
+  search?: string;
+  /** 编辑按钮文本，默认：`保存` */
+  edit?: string;
 }
 
 export interface SFRenderButton extends SFHorizontalLayoutSchema, SFRenderSchema {

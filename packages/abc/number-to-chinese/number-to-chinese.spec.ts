@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { numberToChinese } from './number-to-chinese';
-import { AdNumberToChineseModule } from './number-to-chinese.module';
+import { NumberToChineseModule } from './number-to-chinese.module';
 
 describe('abc: number-to-chinese', () => {
   describe('[service]', () => {
@@ -65,7 +65,7 @@ describe('abc: number-to-chinese', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [AdNumberToChineseModule.forRoot()],
+        imports: [NumberToChineseModule],
         declarations: [TestComponent],
       });
       fixture = TestBed.createComponent(TestComponent);

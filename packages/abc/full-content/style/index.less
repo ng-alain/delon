@@ -1,34 +1,16 @@
-@import '../../../theme/styles/default';
-.ad-full-content {
+@import '../../../theme/styles/default.less';
+
+@full-content-prefix: ~'.full-content';
+
+@{full-content-prefix} {
   display: block;
   height: 100%;
   overflow: hidden;
-  &-wrap {
+  &__body {
     overflow: hidden;
-    .content {
-      router-outlet + * {
-        height: 100%;
-        width: 100%;
-      }
-    }
-    .content__title {
-      margin-left: -24px;
-    }
   }
-  &-fs {
-    .header,
-    .aside,
-    reuse-tab {
-      display: none !important;
-    }
-    .content {
-      margin: 24px !important;
-    }
+  &__opened {
   }
-  &-ht {
-    .content__title,
-    pro-header {
-      display: none !important;
-    }
+  &__hidden-title {
   }
 }

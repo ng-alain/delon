@@ -1,14 +1,18 @@
 node_modules
 npm-debug.log
 # package-lock.json
+yarn.lock
+# yarn-error.log
+
 .tmp
-.ng_build
 .lib
+*.iml
 dist
 coverage
-site/app/routes/gen
-publish
 .idea
 debug.log
-yarn-error.log
-/yarn.lock
+
+src/app/routes/gen
+/scaffold
+/_scaffold
+/ng-alain

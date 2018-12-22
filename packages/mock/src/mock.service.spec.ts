@@ -1,11 +1,10 @@
 import { Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import * as Mock from 'mockjs';
-import { MockService } from './mock.service';
-import { MockStatusError } from './status.error';
-import { DelonMockConfig } from '../mock.config';
 import { DelonMockModule } from '../index';
 import { MockRequest } from './interface';
+import { DelonMockConfig } from './mock.config';
+import { MockService } from './mock.service';
 
 const DATA = {
   USERS: {
@@ -35,6 +34,11 @@ describe('mock: service', () => {
       providers: [],
     });
     srv = injector.get(MockService);
+    spyOn(console, 'log');
+    spyOn(console, 'group');
+    spyOn(console, 'groupEnd');
+    spyOn(console, 'warn');
+    spyOn(console, 'error');
   }
 
   describe('#getRule', () => {
@@ -77,8 +81,14 @@ describe('mock: service', () => {
       const editRes = editRule.callback(editRule as any);
       expect(editRes.s).toBe('edit');
       const detailRule = srv.getRule('GET', '/users/1');
-      const detailRes = detailRule.callback(detailRule as any);
-      expect(detailRes.s).toBe('detail');
+      expect((detailRule.callback as any).rank).not.toBeUndefined();
+    });
+
+    it('should be exact match priority', () => {
+      const detail1Rule = srv.getRule('GET', '/users/1');
+      expect((detail1Rule.callback as any).rank).not.toBeUndefined();
+      const detail2Rule = srv.getRule('GET', '/users/2');
+      expect(detail2Rule.callback.name).toBe('/users/:id');
     });
   });
 
@@ -118,6 +128,8 @@ describe('mock: service', () => {
 
     it('should be throw invalid method error', () => {
       expect(() => {
+        spyOn(console, 'log');
+        spyOn(console, 'warn');
         genModule({
           data: {
             USERS: {
@@ -130,6 +142,8 @@ describe('mock: service', () => {
 
     it('should be throw invalid function error', () => {
       expect(() => {
+        spyOn(console, 'log');
+        spyOn(console, 'warn');
         genModule({
           data: {
             USERS: {
@@ -137,11 +151,12 @@ describe('mock: service', () => {
             },
           },
         });
-      }).toThrow();
+      }).toThrowError();
     });
   });
 
   it('#clearCache', () => {
+    genModule({ data: DATA });
     srv.clearCache();
     const rule = srv.getRule('POST', '/users/1');
     expect(rule).toBeNull();

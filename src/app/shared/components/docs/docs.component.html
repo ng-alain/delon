@@ -1,0 +1,27 @@
+<nz-affix [nzOffsetTop]="16" class="toc-affix" *ngIf="data.con.toc?.length">
+  <ul class="toc">
+    <li *ngFor="let t of data.con.toc" class="depth-{{t.h}}">
+      <a (click)="goTo($event, t)" id="toc-{{t.id}}" title="{{t.title}}">{{t.title}}</a>
+    </li>
+  </ul>
+</nz-affix>
+<nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message">
+  <ng-template #message>
+    This article has not been translated, hope that your can PR to translated it.
+    <a href="//github.com/ng-alain/ng-alain/issues/74" target="_blank"> Help us!</a>
+  </ng-template>
+</nz-alert>
+<section class="markdown">
+  <h1>
+    {{meta.item.title}}
+    <span *ngIf="meta.item.subtitle" class="subtitle">{{meta.item.subtitle}}</span>
+    <config-button *ngIf="meta.item.config"></config-button>
+    <edit-button [item]="item"></edit-button>
+  </h1>
+</section>
+<div *ngIf="data.con.content" [innerHTML]="data.con.content" routeTransfer></div>
+<ng-container *ngIf="data.demo">
+  <h2 id="{{demoStr}}" style="margin-bottom: 32px;" [innerHTML]="demoContent"></h2>
+  <ng-content></ng-content>
+</ng-container>
+<div *ngIf="data.con.api" class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>

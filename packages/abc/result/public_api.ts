@@ -1,2 +1,2 @@
 export { ResultComponent } from './result.component';
-export { AdResultModule } from './result.module';
+export { ResultModule } from './result.module';

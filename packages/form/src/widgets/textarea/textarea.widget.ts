@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ControlWidget } from '../../widget';
 
 @Component({
@@ -9,15 +9,24 @@ import { ControlWidget } from '../../widget';
     <textarea nz-input
       [attr.id]="id"
       [disabled]="disabled"
+      [attr.disabled]="disabled"
       [nzSize]="ui.size"
-      [value]="value"
-      (input)="setValue($event.target?.value)"
+      [ngModel]="value"
+      (ngModelChange)="setValue($event)"
       [attr.maxLength]="schema.maxLength || null"
       [attr.placeholder]="ui.placeholder"
-      [nzAutosize]="ui.autosize || true">
+      [nzAutosize]="autosize">
     </textarea>
 
   </sf-item-wrap>`,
-  preserveWhitespaces: false,
 })
-export class TextareaWidget extends ControlWidget {}
+export class TextareaWidget extends ControlWidget implements OnInit {
+  // tslint:disable-next-line:no-any
+  autosize: any = true;
+
+  ngOnInit(): void {
+    if (this.ui.autosize != null) {
+      this.autosize = this.ui.autosize;
+    }
+  }
+}
