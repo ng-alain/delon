@@ -48,16 +48,6 @@ describe('auth: token.service', () => {
     expect(service.login_url).toBe('/login');
   });
 
-  describe('[#redirect]', () => {
-    it('shoud be setting redirect', () => {
-      service.redirect = '/redirect';
-      expect(service.redirect).toBe('/redirect');
-    });
-    it(`shoud be default redirect value /`, () => {
-      expect(service.redirect).toBe('/');
-    });
-  });
-
   it('#set', () => {
     service.set(VALUE);
     expect(service.get()).not.toBeNull();

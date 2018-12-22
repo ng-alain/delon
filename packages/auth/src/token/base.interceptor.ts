@@ -13,7 +13,8 @@ import { _HttpClient } from '@delon/theme';
 
 import { DelonAuthConfig } from '../auth.config';
 import { ToLogin } from './helper';
-import { ITokenModel } from './interface';
+import { DA_SERVICE_TOKEN, ITokenModel } from './interface';
+import { TokenService } from './token.service';
 
 export abstract class BaseInterceptor implements HttpInterceptor {
   constructor(@Optional() protected injector: Injector) { }
@@ -42,6 +43,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
     if (this.isAuth(options)) {
       req = this.setReq(req, options);
     } else {
+      (this.injector.get(DA_SERVICE_TOKEN) as TokenService).referrer = req;
       ToLogin(options, this.injector);
       // Unable to guarantee interceptor execution order
       // So cancel the loading state as much as possible

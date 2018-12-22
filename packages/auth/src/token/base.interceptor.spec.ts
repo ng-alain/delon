@@ -1,10 +1,9 @@
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-import { Injector } from '@angular/core';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -46,7 +45,7 @@ class MockTokenService implements ITokenService {
   get login_url() {
     return '/login';
   }
-  redirect: string;
+  referrer: HttpRequest<any>;
 }
 
 describe('auth: base.interceptor', () => {
@@ -229,6 +228,25 @@ describe('auth: base.interceptor', () => {
         },
         (err: any) => {
           expect(err.status).toBe(401);
+          done();
+        },
+      );
+    });
+  });
+
+  describe('[referrer]', () => {
+    it('should working', (done: () => void) => {
+      genModule({}, genModel(SimpleTokenModel, null));
+      const url = '/to-test';
+      http.get(url, { responseType: 'text' }).subscribe(
+        () => {
+          expect(false).toBe(true);
+          done();
+        },
+        () => {
+          const tokenSrv = injector.get(DA_SERVICE_TOKEN, null) as ITokenService;
+          expect(tokenSrv.referrer).not.toBeNull();
+          expect(tokenSrv.referrer.url).toBe(url);
           done();
         },
       );

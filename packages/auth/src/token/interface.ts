@@ -1,3 +1,4 @@
+import { HttpRequest } from '@angular/common/http';
 import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DA_SERVICE_TOKEN_FACTORY } from './token.service';
@@ -43,6 +44,6 @@ export interface ITokenService {
   /** 获取登录地址 */
   readonly login_url: string;
 
-  /** 登录后跳转地址，未指定时返回 `/` */
-  redirect: string;
+  /** 获取授权失败前路由信息 */
+  readonly referrer?: HttpRequest<any>;
 }

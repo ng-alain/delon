@@ -1,4 +1,5 @@
-import { inject, Inject, Injectable } from '@angular/core';
+import { HttpRequest } from '@angular/common/http';
+import { inject, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { DelonAuthConfig } from '../auth.config';
@@ -11,23 +12,20 @@ export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
 
 export class TokenService implements ITokenService {
   private change$: BehaviorSubject<ITokenModel> = new BehaviorSubject<ITokenModel>(null);
-  private _redirect: string;
+  private _referrer: HttpRequest<any>;
 
-  constructor(
-    private options: DelonAuthConfig,
-    @Inject(DA_STORE_TOKEN) private store: IStore,
-  ) { }
+  constructor(private options: DelonAuthConfig, @Inject(DA_STORE_TOKEN) private store: IStore) { }
 
   get login_url(): string {
     return this.options.login_url;
   }
 
-  set redirect(url: string) {
-    this._redirect = url;
+  get referrer() {
+    return this._referrer;
   }
 
-  get redirect() {
-    return this._redirect || '/';
+  set referrer(val: HttpRequest<any>) {
+    this._referrer = val;
   }
 
   set(data: ITokenModel): boolean {
