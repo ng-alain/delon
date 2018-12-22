@@ -154,7 +154,9 @@ function addPathsToTsConfig() {
       if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
       json.compilerOptions.baseUrl = item.baseUrl;
       const paths = json.compilerOptions.paths;
+      paths['@shared'] = ['app/shared/index'];
       paths['@shared/*'] = ['app/shared/*'];
+      paths['@core'] = ['app/core/index'];
       paths['@core/*'] = ['app/core/*'];
       paths['@env/*'] = ['environments/*'];
       overwriteJSON(host, item.path, json);
