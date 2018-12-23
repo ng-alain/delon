@@ -50,6 +50,10 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 
 [日常工具集](/util)。
 
+**@delon/testing**
+
+常用测试套件。
+
 **CLI Schematics**
 
 [命令行工具](/cli)。
@@ -74,3 +78,4 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 | @delon/cache [Document](https://ng-alain.com/cache) | [![NPM version](https://img.shields.io/npm/v/@delon/cache.svg)](https://www.npmjs.com/package/@delon/cache) | [![NPM version](https://img.shields.io/npm/v/@delon/cache/next.svg)](https://www.npmjs.com/package/@delon/cache) | [![Taobao version](https://npm.taobao.org/badge/v/@delon/cache.svg?style=flat-square)](https://npm.taobao.org/package/@delon/cache)
 | @delon/chart [Document](https://ng-alain.com/chart) | [![NPM version](https://img.shields.io/npm/v/@delon/chart.svg)](https://www.npmjs.com/package/@delon/chart) | [![NPM version](https://img.shields.io/npm/v/@delon/chart/next.svg)](https://www.npmjs.com/package/@delon/chart) | [![Taobao version](https://npm.taobao.org/badge/v/@delon/chart.svg?style=flat-square)](https://npm.taobao.org/package/@delon/chart)
 | @delon/util [Document](https://ng-alain.com/util) | [![NPM version](https://img.shields.io/npm/v/@delon/util.svg)](https://www.npmjs.com/package/@delon/util) | [![NPM version](https://img.shields.io/npm/v/@delon/util/next.svg)](https://www.npmjs.com/package/@delon/util) | [![Taobao version](https://npm.taobao.org/badge/v/@delon/util.svg?style=flat-square)](https://npm.taobao.org/package/@delon/util)
+| @delon/testing | [![NPM version](https://img.shields.io/npm/v/@delon/testing.svg)](https://www.npmjs.com/package/@delon/testing) | [![NPM version](https://img.shields.io/npm/v/@delon/testing/next.svg)](https://www.npmjs.com/package/@delon/testing) | [![Taobao version](https://npm.taobao.org/badge/v/@delon/testing.svg?style=flat-square)](https://npm.taobao.org/package/@delon/testing)

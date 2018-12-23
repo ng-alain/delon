@@ -1,7 +1,7 @@
-import { NgModule, APP_INITIALIZER, Injector } from '@angular/core';
+import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
+import { createCustomElement } from '@angular/elements';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { createCustomElement } from '@angular/elements';
 
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,31 +11,29 @@ import { registerLocaleData } from '@angular/common';
 import localeZh from '@angular/common/locales/zh';
 registerLocaleData(localeZh);
 
-import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
+import { SharedModule } from './shared/shared.module';
 
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from './core/i18n/service';
 import { StartupService } from './core/startup.service';
 
 import { AppComponent } from './app.component';
-import { LayoutComponent } from './layout/layout.component';
-import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { LayoutComponent } from './layout/layout.component';
 
 import { DelonModule } from './delon.module';
 
-import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
+import { SimplemdeModule } from 'ngx-simplemde';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
-import { SimplemdeModule } from 'ngx-simplemde';
+import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
 
 import { ExampleModule, EXAMPLE_COMPONENTS } from './routes/gen/examples';
 import { IconComponent } from './shared/components/icon/icon.component';
 
-export function StartupServiceFactory(
-  startupService: StartupService,
-): Function {
+export function StartupServiceFactory(startupService: StartupService) {
   return () => startupService.load();
 }
 
@@ -52,7 +50,7 @@ export function StartupServiceFactory(
     // i18n
     TranslateModule.forRoot(),
     NgxTinymceModule.forRoot({
-      baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.7.13/',
+      baseURL: 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/',
     }),
     UEditorModule.forRoot({
       // **注：** 建议使用本地路径；以下为了减少 ng-alain 脚手架的包体大小引用了CDN，可能会有部分功能受影响

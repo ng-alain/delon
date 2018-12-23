@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -112,8 +112,8 @@ export class DocsComponent implements OnInit, OnDestroy {
     this.demoContent = this.sanitizer.bypassSecurityTrustHtml(`
             ${this.demoStr}
             <a onclick="window.location.hash='${
-              this.demoStr
-            }'" class="anchor">#</a>
+      this.demoStr
+      }'" class="anchor">#</a>
         `);
   }
 
@@ -124,7 +124,8 @@ export class DocsComponent implements OnInit, OnDestroy {
       const elements = document.querySelectorAll(
         '[class*="language-"], [class*="lang-"]',
       );
-      for (let i = 0, element; (element = elements[i++]); ) {
+      // tslint:disable-next-line:no-conditional-assignment
+      for (let i = 0, element; (element = elements[i++]);) {
         hljs.highlightBlock(element);
       }
     }, 250);

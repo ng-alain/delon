@@ -1,7 +1,7 @@
 export interface Meta {
   name?: string;
   github?: string;
-  types?: { [key: string]: string }[];
+  types?: Array<{ [key: string]: string }>;
   list?: MetaList[];
   module?: string;
 }

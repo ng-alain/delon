@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { _HttpClient, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { Component, Inject, OnInit } from '@angular/core';
 import { SFSchema } from '@delon/form';
-import { NzMessageService } from 'ng-zorro-antd';
+import { _HttpClient, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { copy } from '@delon/util';
-import { I18NService } from '../../../core/i18n/service';
+import { NzMessageService } from 'ng-zorro-antd';
 import { CodeService } from '../../../core/code.service';
+import { I18NService } from '../../../core/i18n/service';
 
 const stackBlitzTpl = `
 import { Component } from '@angular/core';
@@ -75,7 +75,7 @@ export class FormValidatorComponent implements OnInit {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
     this.title = this.files[defaultIndex].title;
-    ace.config.set("workerPath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/")
+    ace.config.set('workerPath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/');
   }
 
   ngOnInit(): void {

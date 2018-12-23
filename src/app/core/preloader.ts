@@ -11,7 +11,7 @@ function remove() {
   preloader.className += ' preloader-hidden-add preloader-hidden-add-active';
 }
 
-(<any>window).appBootstrap = () => {
+(window as any).appBootstrap = () => {
   setTimeout(() => {
     remove();
     body.style.overflow = '';

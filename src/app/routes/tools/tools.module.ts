@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { ColorSketchModule } from 'ngx-color/sketch';
 
 import { SharedModule } from '../../shared/shared.module';
 import { SixToSevenEditorComponent } from './6to7/editor/editor.component';
-
 
 const COMPONENTS = [SixToSevenEditorComponent];
 

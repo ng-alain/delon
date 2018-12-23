@@ -22,7 +22,7 @@ export class DemoModalComponent {
   @Input()
   record: any;
 
-  constructor(private modal: NzModalRef) {}
+  constructor(private modal: NzModalRef) { }
 
   ok() {
     this.modal.close(`new time: ${+new Date()}`);

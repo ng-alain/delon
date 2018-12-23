@@ -6,10 +6,9 @@ import { ActivatedRoute } from '@angular/router';
   template: `
   <page-header></page-header>
   page: {{ router.url | json }}
-  `
+  `,
 })
 export class DevPageComponent {
   constructor(public router: ActivatedRoute) {
-
   }
 }

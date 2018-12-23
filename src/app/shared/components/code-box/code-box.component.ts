@@ -1,13 +1,13 @@
-import { Component, Input, Inject, OnDestroy } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
-import { copy, deepCopy } from '@delon/util';
+import { Component, Inject, Input, OnDestroy } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { copy, deepCopy } from '@delon/util';
+import { NzMessageService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { I18NService } from './../../../core/i18n/service';
 import { CodeService } from '../../../core/code.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { I18NService } from './../../../core/i18n/service';
 
 @Component({
   selector: 'code-box',

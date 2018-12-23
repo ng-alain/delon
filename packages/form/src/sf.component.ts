@@ -391,18 +391,19 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  validator() {
+  validator(): this {
     this.rootProperty._runValidation();
     const errors = this.rootProperty.errors;
     this._valid = !(errors && errors.length);
     if (!this._valid) this.formError.emit(errors);
     this.cdr.detectChanges();
+    return this;
   }
 
   /**
    * 刷新 Schema，一般需要动态修改 Schema 某个值时可以方便调用
    */
-  refreshSchema(newSchema?: SFSchema, newUI?: SFUISchema) {
+  refreshSchema(newSchema?: SFSchema, newUI?: SFUISchema): this {
     if (newSchema) this.schema = newSchema;
     if (newUI) this.ui = newUI;
 
@@ -439,19 +440,20 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       this.cdr.detectChanges();
     });
 
-    this.reset();
+    return this.reset();
   }
 
   /**
    * 重置表单
    * @param [emit] 是否触发 `formReset` 事件，默认：`false`
    */
-  reset(emit = false) {
+  reset(emit = false): this {
     this.rootProperty.resetValue(this.formData, false);
     Promise.resolve().then(() => this.cdr.detectChanges());
     if (emit) {
       this.formReset.emit(this.value);
     }
+    return this;
   }
 
   private cleanRootSub() {
