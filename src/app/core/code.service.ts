@@ -235,7 +235,7 @@ export class StartupService {
   load(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.lazy.load([
-        'https://cdn.bootcss.com/ajv/6.6.1/ajv.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/ajv/6.6.2/ajv.min.js'
       ])
         .then(() => resolve(null));
     });
@@ -247,6 +247,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
 }
 
 import { VERSION as VERSION_ALAIN } from '@delon/theme';
+import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd';
 import { ${componentName} } from './app.component';
 
 @NgModule({
@@ -282,7 +283,9 @@ bootstrap:    [ ${componentName} ]
 export class AppModule {
   constructor() {
     setTimeout(() => {
-      document.querySelector('#VERSION').innerHTML = \`@delon version: \${VERSION_ALAIN.full}\`;
+      document.querySelector('#VERSION').innerHTML = \`
+      VERSIONS: ng-zorro-antd(\${VERSION_ZORRO.full}), @delon(\${VERSION_ALAIN.full})
+      \`;
     }, 1000);
   }
 }

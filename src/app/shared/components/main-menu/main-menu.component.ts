@@ -23,8 +23,7 @@ import { MetaService } from '../../../core/meta.service';
   </ul>`,
 })
 export class MainMenuComponent {
-  @Output()
-  click = new EventEmitter<string>();
+  @Output() readonly click = new EventEmitter<string>();
 
   constructor(public meta: MetaService) {}
 

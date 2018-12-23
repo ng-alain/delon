@@ -30,6 +30,7 @@ const nextVersion = fs.readJSONSync(path.join(root, 'package.json')).version;
 
 fetchOlderVersions();
 generatingPublishNote();
+fixDependenciePath();
 checkout();
 
 function fetchOlderVersions() {
@@ -59,6 +60,18 @@ function generatingPublishNote() {
   }
 
   log.success('Change log finished!');
+}
+
+function fixDependenciePath() {
+  log.info('Fix dependencie paths...');
+  const packageData = fs.readJSONSync(path.join(root, 'package.json'));
+  const versionData = { ...packageData.dependencies, ...packageData.devDependencies };
+  log.info('>> fix ajv version path in code service');
+  const codeServicePath = path.join(root, 'src/app/core/code.service.ts');
+  fs.writeFileSync(codeServicePath,
+    fs.readFileSync(codeServicePath, 'utf-8')
+      .replace(/\/ajv\/[^\/]+\//g, `/ajv/${versionData['ajv'].replace(/\^/g, '').replace(/\~/g, '')}/`)
+  );
 }
 
 function checkout() {

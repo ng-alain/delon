@@ -20,30 +20,10 @@
   }
   &-inner {
     overflow-x: hidden;
-    overflow-y: scroll; // margin-right: -17px;
+    overflow-y: scroll;
     height: 100%;
-    -webkit-overflow-scrolling: touch;
-    /*IE10,IE11*/
-    -ms-scroll-chaining: chained;
-    -ms-overflow-style: none;
-    -ms-content-zooming: zoom;
-    -ms-scroll-rails: none;
-    -ms-content-zoom-limit-min: 100%;
-    -ms-content-zoom-limit-max: 500%;
-    -ms-scroll-snap-type: proximity;
-    -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      height: @alain-default-aside-scrollbar-width;
-      width: @alain-default-aside-scrollbar-height;
-    }
-    &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 @alain-default-aside-scrollbar-width
-        @alain-default-aside-scrollbar-track-color;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: @alain-default-aside-scrollbar-thumb-color;
-    }
+    transition: width 0.2s;
+    width: @alain-default-aside-scroll-width + @alain-default-aside-wd;
   }
 }
 
@@ -52,6 +32,10 @@
   @{alain-default-prefix}__collapsed {
     @{alain-default-prefix}__aside {
       width: @alain-default-aside-collapsed-wd;
+      &-inner {
+        transition: width 0.2s;
+        width: @alain-default-aside-scroll-width + @alain-default-aside-collapsed-wd;
+      }
     }
   }
 }

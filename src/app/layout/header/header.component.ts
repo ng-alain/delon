@@ -1,19 +1,19 @@
 import {
-  Component,
-  OnInit,
   AfterViewInit,
-  HostListener,
-  ViewChild,
+  Component,
   ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NavigationEnd, Router } from '@angular/router';
 import { copy, LazyService } from '@delon/util';
+import { NzMessageService } from 'ng-zorro-antd';
+import { filter } from 'rxjs/operators';
 
 import { I18NService, LangType } from '../../core/i18n/service';
-import { MobileService } from '../../core/mobile.service';
 import { MetaService } from '../../core/meta.service';
+import { MobileService } from '../../core/mobile.service';
 import { MetaSearchGroup, MetaSearchGroupItem } from '../../interfaces';
 
 declare const docsearch: any;
@@ -109,7 +109,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   langChange(language: LangType) {
     this.router.navigateByUrl(
-      this.i18n.getRealUrl(this.router.url) + '/' + language,
+      `${this.i18n.getRealUrl(this.router.url)}/${language}`,
     );
   }
 
