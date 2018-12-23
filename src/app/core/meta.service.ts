@@ -1,16 +1,5 @@
-import { Injectable, Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { META as DocsMeta } from '../routes/gen/docs/meta';
-import { META as ComponentsMeta } from '../routes/gen/components/meta';
-import { META as AuthMeta } from '../routes/gen/auth/meta';
-import { META as ACLMeta } from '../routes/gen/acl/meta';
-import { META as CacheMeta } from '../routes/gen/cache/meta';
-import { META as ChartMeta } from '../routes/gen/chart/meta';
-import { META as MockMeta } from '../routes/gen/mock/meta';
-import { META as UtilMeta } from '../routes/gen/util/meta';
-import { META as FormMeta } from '../routes/gen/form/meta';
-import { META as CliMeta } from '../routes/gen/cli/meta';
-import { META as ThemeMeta } from '../routes/gen/theme/meta';
 import { I18NService } from '../core/i18n/service';
 import {
   Meta,
@@ -18,6 +7,17 @@ import {
   MetaSearchGroup,
   MetaSearchGroupItem,
 } from '../interfaces';
+import { META as ACLMeta } from '../routes/gen/acl/meta';
+import { META as AuthMeta } from '../routes/gen/auth/meta';
+import { META as CacheMeta } from '../routes/gen/cache/meta';
+import { META as ChartMeta } from '../routes/gen/chart/meta';
+import { META as CliMeta } from '../routes/gen/cli/meta';
+import { META as ComponentsMeta } from '../routes/gen/components/meta';
+import { META as DocsMeta } from '../routes/gen/docs/meta';
+import { META as FormMeta } from '../routes/gen/form/meta';
+import { META as MockMeta } from '../routes/gen/mock/meta';
+import { META as ThemeMeta } from '../routes/gen/theme/meta';
+import { META as UtilMeta } from '../routes/gen/util/meta';
 
 const FULLMETAS: Meta[] = [
   DocsMeta,
@@ -84,18 +84,15 @@ export class MetaService {
     const name = this.getPageName(url);
     const data = category.list.find(w => w.name === name) || null;
     if (!data) return true;
-    this._data = Object.assign(
-      {},
-      data.meta[this.i18n.defaultLang],
-      data.meta[this.i18n.lang],
-      {
-        i18n: data.i18n,
-        name: data.name,
-        module_name: category.module || '',
-        github: category.github,
-        list: category.list,
-      },
-    );
+    this._data = {
+      ...data.meta[this.i18n.defaultLang],
+      ...data.meta[this.i18n.lang],
+      i18n: data.i18n,
+      name: data.name,
+      module_name: category.module || '',
+      github: category.github,
+      list: category.list,
+    };
     // fix title
     if (typeof this._data.title === 'object') {
       this._data.title =
@@ -169,7 +166,7 @@ export class MetaService {
     // todo: support level 2
     const group: any[] = category.types.map((item: any, index: number) => {
       return {
-        index: index,
+        index,
         title: item[this.i18n.lang] || item[this.i18n.defaultLang],
         list: [],
       };
@@ -192,7 +189,7 @@ export class MetaService {
         };
         group.push(groupItem);
       }
-      const entry: any = Object.assign({
+      const entry: any = {
         url:
           (meta.url || item.route || `/${category.name}/${item.name}`) +
           `/${this.i18n.zone}`,
@@ -200,8 +197,7 @@ export class MetaService {
         subtitle: meta.subtitle,
         order: item.order,
         hot: typeof meta.hot === 'boolean' ? meta.hot : false,
-        lib: typeof item.lib === 'boolean' ? item.lib : false,
-      });
+        lib: typeof item.lib === 'boolean' ? item.lib : false};
       groupItem.list.push(entry);
     });
 

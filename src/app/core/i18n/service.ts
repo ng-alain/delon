@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { DomSanitizer } from '@angular/platform-browser';
 
-import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd';
 import {
-  AlainI18NService,
-  DelonLocaleService,
   en_US as delonEnUS,
   zh_CN as delonZhCn,
+  AlainI18NService,
+  DelonLocaleService,
 } from '@delon/theme';
+import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd';
 
 import { ENUS } from './en-US';
 import { ZHCN } from './zh-CN';
@@ -94,7 +94,7 @@ export class I18NService implements AlainI18NService {
     return ['zh-CN', 'en-US'];
   }
 
-  fanyi(key: string, interpolateParams?: Object, isSafe?: boolean) {
+  fanyi(key: string, interpolateParams?: {}, isSafe?: boolean) {
     const res = this.translate.instant(key, interpolateParams);
     if (isSafe === true) {
       return this.dom.bypassSecurityTrustHtml(res);

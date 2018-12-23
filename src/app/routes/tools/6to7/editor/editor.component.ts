@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ConverterService } from '../transform/converter.service';
 import { NzMessageService } from 'ng-zorro-antd';
+import { ConverterService } from '../transform/converter.service';
 
 @Component({
     selector: 'app-six-to-seven',
     templateUrl: './editor.component.html',
-    providers: [ ConverterService ]
+    providers: [ ConverterService ],
 })
 export class SixToSevenEditorComponent implements OnInit {
 

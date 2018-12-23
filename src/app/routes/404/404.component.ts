@@ -4,7 +4,7 @@ import { I18NService } from '../../core/i18n/service';
 
 @Component({
     selector: 'not-found',
-    templateUrl: './404.component.html'
+    templateUrl: './404.component.html',
 })
 export class NotFoundComponent {
   constructor(

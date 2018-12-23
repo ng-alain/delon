@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from '../../core/i18n/service';
 
