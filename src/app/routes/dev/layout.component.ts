@@ -75,11 +75,12 @@ export class DevLayoutComponent implements OnInit {
       group: true,
       children: [
         {
-          text: 'Dashboard',
+          text: 'Dashboard-DISABLED',
           link: '/dev',
           icon: 'anticon anticon-dashboard',
           i18n: 'app.header.menu.home',
           badge: 5,
+          disabled: true,
         },
         {
           text: 'Level1',
@@ -90,11 +91,11 @@ export class DevLayoutComponent implements OnInit {
               text: 'Level2',
               link: '#',
               children: [
-                { text: 'Level3', link: '/dev/l1' },
-                { text: 'Level3', link: '/dev/l1' },
+                { text: 'Level3A', link: '/dev/l1' },
+                { text: 'Level3B-DISABLED', link: '/dev/l1', disabled: true },
               ],
             },
-            { text: 'Level2', link: '/dev/l2' },
+            { text: 'Level2-DISABLED', link: '/dev/l2', disabled: true },
           ],
         },
         {
