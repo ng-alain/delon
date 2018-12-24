@@ -1,4 +1,4 @@
-# @delon/util module [![Build Status](https://travis-ci.org/ng-alain/delon.svg?branch=master)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/util.svg)](https://www.npmjs.com/package/@delon/util) [![NPM version](https://img.shields.io/npm/v/@delon/util/next.svg)](https://www.npmjs.com/package/@delon/util) [![Taobao version](https://npm.taobao.org/badge/v/@delon/util.svg?style=flat-square)](https://npm.taobao.org/package/@delon/util)
+# @delon/util module [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/util.svg?style=flat-square)](https://www.npmjs.com/package/@delon/util)
 
 Universal toolset of ng-alain.
 
