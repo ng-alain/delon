@@ -61,7 +61,6 @@ export class MenuService implements OnDestroy {
       item._depth = depth;
 
       if (!item.link) item.link = '';
-      if (typeof item.linkExact === 'undefined') item.linkExact = false;
       if (!item.externalLink) item.externalLink = '';
 
       // badge
@@ -100,8 +99,7 @@ export class MenuService implements OnDestroy {
         item.icon = { theme: 'outline', spin: false, ...(item.icon as MenuIcon) };
       }
 
-      item.text =
-        item.i18n && this.i18nSrv ? this.i18nSrv.fanyi(item.i18n) : item.text;
+      item.text = item.i18n && this.i18nSrv ? this.i18nSrv.fanyi(item.i18n) : item.text;
 
       // group
       item.group = item.group !== false;
@@ -109,10 +107,11 @@ export class MenuService implements OnDestroy {
       // hidden
       item._hidden = typeof item.hide === 'undefined' ? false : item.hide;
 
+      // disabled
+      item.disabled = typeof item.disabled === 'undefined' ? false : item.disabled;
+
       // acl
-      if (item.acl && this.aclService) {
-        item._hidden = !this.aclService.can(item.acl);
-      }
+      item._aclResult = item.acl && this.aclService ? this.aclService.can(item.acl) : true;
 
       // shortcut
       if (parent && item.shortcut === true && parent.shortcutRoot !== true) {
@@ -156,10 +155,10 @@ export class MenuService implements OnDestroy {
     // tslint:disable-next-line:prefer-object-spread
     _data = Object.assign(_data, {
       shortcutRoot: true,
-      _type: 3,
       __id: -1,
-      _depth: 1,
       __parent: null,
+      _type: 3,
+      _depth: 1,
     });
     _data.children = shortcuts.map(i => {
       i._depth = 2;
@@ -180,7 +179,7 @@ export class MenuService implements OnDestroy {
     this._change$.next(this.data);
   }
 
-  private getHit(url: string, recursive = false, cb: (i: Menu) => void = null) {
+  getHit(url: string, recursive = false, cb: (i: Menu) => void = null) {
     let item: Menu = null;
 
     while (!item && url) {
@@ -212,10 +211,14 @@ export class MenuService implements OnDestroy {
   openedByUrl(url: string, recursive = false) {
     if (!url) return;
 
-    let findItem = this.getHit(url, recursive, i => (i._open = false));
+    let findItem = this.getHit(url, recursive, i => {
+      i._selected = false;
+      i._open = false;
+    });
     if (!findItem) return;
 
     do {
+      findItem._selected = true;
       findItem._open = true;
       findItem = findItem.__parent;
     } while (findItem);

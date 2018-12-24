@@ -34,7 +34,7 @@ describe('Service: Menu', () => {
       text: 'text',
       children: [{ text: 'sub text', link: '/text/sub', shortcut: true }],
     },
-    { text: 'text', link: '/test', linkExact: true, badge: 10 },
+    { text: 'text', link: '/test', badge: 10 },
     {
       text: 'text',
       link: '/demo1',
@@ -96,6 +96,13 @@ describe('Service: Menu', () => {
       srv.add(newMenus);
       expect(srv.menus[0].group).toBe(true);
       expect(srv.menus[1].group).toBe(false);
+    });
+
+    it('should be disabed item when setting [disabled] property', () => {
+      const newMenus = [{ text: 'new menu' }, { text: 'new menu', disabled: true }];
+      srv.add(newMenus);
+      expect(srv.menus[0].disabled).toBe(false);
+      expect(srv.menus[1].disabled).toBe(true);
     });
 
     describe('#openedByUrl', () => {
@@ -207,8 +214,8 @@ describe('Service: Menu', () => {
         { text: 'new menu', acl: 'user' },
       ];
       srv.add(newMenus);
-      expect(srv.menus[0]._hidden).toBe(false);
-      expect(srv.menus[1]._hidden).toBe(true);
+      expect(srv.menus[0]._aclResult).toBe(true);
+      expect(srv.menus[1]._aclResult).toBe(false);
     });
 
     it('#change', (done: () => void) => {
