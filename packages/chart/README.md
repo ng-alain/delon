@@ -1,4 +1,4 @@
-# @delon/chart module [![Build Status](https://travis-ci.org/ng-alain/delon.svg?branch=master)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/chart.svg)](https://www.npmjs.com/package/@delon/chart) [![NPM version](https://img.shields.io/npm/v/@delon/chart/next.svg)](https://www.npmjs.com/package/@delon/chart) [![Taobao version](https://npm.taobao.org/badge/v/@delon/chart.svg?style=flat-square)](https://npm.taobao.org/package/@delon/chart)
+# @delon/chart module [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/chart.svg?style=flat-square)](https://www.npmjs.com/package/@delon/chart)
 
 Cache the dictionary, city data etc.
 

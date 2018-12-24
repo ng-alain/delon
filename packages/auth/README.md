@@ -1,4 +1,4 @@
-# @delon/auth module [![Build Status](https://travis-ci.org/ng-alain/delon.svg?branch=master)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/auth.svg)](https://www.npmjs.com/package/@delon/auth) [![NPM version](https://img.shields.io/npm/v/@delon/auth/next.svg)](https://www.npmjs.com/package/@delon/auth) [![Taobao version](https://npm.taobao.org/badge/v/@delon/auth.svg?style=flat-square)](https://npm.taobao.org/package/@delon/auth)
+# @delon/auth module [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/auth.svg?style=flat-square)](https://www.npmjs.com/package/@delon/auth)
 
 Simple user authentication, support Json Web Token & Simple Token.
 

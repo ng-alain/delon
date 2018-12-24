@@ -21,8 +21,6 @@ Delon
   [![Gitter](https://img.shields.io/gitter/room/ng-alain/ng-alain.svg?style=flat-square)](https://gitter.im/ng-alain/ng-alain)
   [![ng-zorro-vscode](https://img.shields.io/badge/ng--zorro-VSCODE-brightgreen.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
   [![ng-alain-vscode](https://img.shields.io/badge/ng--alain-VSCODE-brightgreen.svg?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
-  [![Backers on Open Collective](https://opencollective.com/ng-alain/backers/badge.svg?style=flat-square)](#backers)
-  [![Sponsors on Open Collective](https://opencollective.com/ng-alain/sponsors/badge.svg?style=flat-square)](#sponsors)
 
 </div>
 

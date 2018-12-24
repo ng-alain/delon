@@ -1,4 +1,4 @@
-# @delon/theme module [![Build Status](https://travis-ci.org/ng-alain/delon.svg?branch=master)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg)](https://www.npmjs.com/package/@delon/theme) [![NPM version](https://img.shields.io/npm/v/@delon/theme/next.svg)](https://www.npmjs.com/package/@delon/theme) [![Taobao version](https://npm.taobao.org/badge/v/@delon/theme.svg?style=flat-square)](https://npm.taobao.org/package/@delon/theme)
+# @delon/theme module [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/theme.svg?style=flat-square)](https://www.npmjs.com/package/@delon/theme)
 
 ng-alain theme system library.
 
