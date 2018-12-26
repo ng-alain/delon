@@ -44,4 +44,5 @@ Project config data, includes [App](https://github.com/ng-alain/delon/blob/maste
 |---------------|----------------------|-----------|---------|
 | `[collapsed]` | Whether to fold menu | `boolean` | -       |
 | `[lang]`      | Current language     | `string`  | -       |
+| `[colorWeak]` | Color weak           | `boolean` | `false` |
 

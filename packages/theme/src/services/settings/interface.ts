@@ -25,6 +25,8 @@ export interface Layout {
   collapsed: boolean;
   /** Current language */
   lang: string;
+  /** Color weak */
+  colorWeak: boolean;
 }
 
 export interface SettingsNotify {
