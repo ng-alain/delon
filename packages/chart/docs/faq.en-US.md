@@ -12,20 +12,3 @@ G2 built-in TypeScript definition file, in fact, G2 can't be used alone in Angul
 - Define G2 related type definitions in `src/typings.d.ts`
 
 Of course, the above [g2 plugin](/cli/plugin#g2) can be used in one step.
-
-## About kcart.alipay.com request
-
-In order to serve the users better, G2 will send the URL and version information back to the AntV server:
-
-```ts
-// startup.service.ts
-export class StartupService {
-  constructor() {
-    if (typeof G2 !== 'undefined') {
-      G2.track(false);
-    }
-  }
-}
-```
-
-
