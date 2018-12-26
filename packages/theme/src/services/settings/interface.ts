@@ -1,37 +1,35 @@
 export interface App {
-  name?: string;
-  description?: string;
-  year?: number;
   // tslint:disable-next-line:no-any
   [key: string]: any;
+  /** Name for app */
+  name?: string;
+  /** Description for app */
+  description?: string;
 }
 
 export interface User {
-  name?: string;
-  avatar?: string;
-  email?: string;
   // tslint:disable-next-line:no-any
   [key: string]: any;
+  /** Name for current user */
+  name?: string;
+  /** Avatar for current user */
+  avatar?: string;
+  /** Email for current user */
+  email?: string;
 }
 
 export interface Layout {
-  /** 是否固定顶部菜单 */
-  fixed: boolean;
-  /** 是否折叠右边菜单 */
-  collapsed: boolean;
-  /** 是否固定宽度 */
-  boxed: boolean;
-  /** 语言环境 */
-  lang: string;
-  /** 当前主题 */
-  theme: string;
   // tslint:disable-next-line:no-any
   [key: string]: any;
+  /** Whether to fold menu */
+  collapsed: boolean;
+  /** Current language */
+  lang: string;
 }
 
 export interface SettingsNotify {
   type: 'layout' | 'app' | 'user';
-  /** 更新 `key`，限 `layout` 有效 */
+  /** Update `key` name, limited `layout` type */
   name?: string;
   // tslint:disable-next-line:no-any
   value: any;
