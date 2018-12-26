@@ -10,8 +10,8 @@ type: Dev
 
 当你开始着手在 ng-alain 基础上进行业务开发时，我建议你先了解一下以下文档，这对于团队中每个成员都非常有帮助。
 
-+ [Ant Desig 指引文章](//ant.design/docs/spec/introduce-cn)
-+ [Ant Deisng for Angular](//ng.ant.design/)
++ [Ant Design 指引文章](//ant.design/docs/spec/introduce-cn)
++ [Ant Design for Angular](//ng.ant.design/)
 + [Antv 图表](//antv.alipay.com/zh-cn/index.html)
 
 ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很详细的 [API](//ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
