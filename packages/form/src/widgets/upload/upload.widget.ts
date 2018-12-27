@@ -56,25 +56,22 @@ export class UploadWidget extends ControlWidget implements OnInit {
   fileList: UploadFile[] = [];
   btnType = '';
 
-  constructor(cd: ChangeDetectorRef, private modalSrv: NzModalService) {
-    super(cd);
-  }
-
   ngOnInit(): void {
+    const { type, text, action, accept, limit, fileSize, fileType, listType, multiple, name, showUploadList, withCredentials, resReName } = this.ui;
     this.i = {
-      type: this.ui.type || 'select',
-      text: this.ui.text || '点击上传',
-      action: this.ui.action || '',
-      accept: this.ui.accept || '',
-      limit: this.ui.limit == null ? 0 : +this.ui.limit,
-      size: this.ui.fileSize == null ? 0 : +this.ui.fileSize,
-      fileType: this.ui.fileType || '',
-      listType: this.ui.listType || 'text',
-      multiple: toBool(this.ui.multiple, false),
-      name: this.ui.name || 'file',
-      showUploadList: toBool(this.ui.showUploadList, true),
-      withCredentials: toBool(this.ui.withCredentials, false),
-      resReName: (this.ui.resReName || '').split('.'),
+      type: type || 'select',
+      text: text || '点击上传',
+      action: action || '',
+      accept: accept || '',
+      limit: limit == null ? 0 : +limit,
+      size: fileSize == null ? 0 : +fileSize,
+      fileType: fileType || '',
+      listType: listType || 'text',
+      multiple: toBool(multiple, false),
+      name: name || 'file',
+      showUploadList: toBool(showUploadList, true),
+      withCredentials: toBool(withCredentials, false),
+      resReName: (resReName || '').split('.'),
     };
     if (this.i.listType === 'picture-card') this.btnType = 'plus';
     if (this.i.type === 'drag') {
@@ -112,7 +109,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
   }
 
   handlePreview = (file: UploadFile) => {
-    this.modalSrv
+    this.injector.get(NzModalService)
       .create({
         nzContent: `<img src="${file.url || file.thumbUrl}" class="img-fluid" />`,
         nzFooter: null,

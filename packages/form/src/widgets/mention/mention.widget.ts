@@ -45,7 +45,7 @@ import { ControlWidget } from '../../widget';
             (ngModelChange)="setValue($event)"
             [attr.maxLength]="schema.maxLength || null"
             [attr.placeholder]="ui.placeholder"
-            [nzAutosize]="ui.autosize">
+            [nzAutosize]="i.autosize">
           </textarea>
         </ng-container>
 
@@ -62,12 +62,13 @@ export class MentionWidget extends ControlWidget implements OnInit {
   loading = false;
 
   ngOnInit(): void {
+    const { valueWith, notFoundContent, placement, prefix, autosize } = this.ui;
     this.i = {
-      valueWith: this.ui.valueWith || (item => item.label),
-      notFoundContent:
-        this.ui.notFoundContent || '无匹配结果，轻敲空格完成输入',
-      placement: this.ui.placement || 'bottom',
-      prefix: this.ui.prefix || '@',
+      valueWith: valueWith || (item => item.label),
+      notFoundContent: notFoundContent || '无匹配结果，轻敲空格完成输入',
+      placement: placement || 'bottom',
+      prefix: prefix || '@',
+      autosize: typeof autosize === 'undefined' ? true : this.ui.autosize,
     };
     const min = typeof this.schema.minimum !== 'undefined' ? this.schema.minimum : -1;
     const max = typeof this.schema.maximum !== 'undefined' ? this.schema.maximum : -1;
