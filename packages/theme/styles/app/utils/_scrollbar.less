@@ -1,6 +1,10 @@
 .scrollbar-mixin(@element-name) {
   .scrollbar-inner-mixin(@enabled) when(@enabled=true) {
     @{element-name} {
+      // FireFox
+      scrollbar-color: @scrollbar-track-color @scrollbar-thumb-color;
+      scrollbar-width: thin;
+      // Other
       &::-webkit-scrollbar {
         height: @scrollbar-width;
         width: @scrollbar-height;
@@ -33,8 +37,8 @@
 }
 
 // scrollbar
-// TODO: https://github.com/NG-ZORRO/ng-zorro-antd/pull/2617
-.scrollbar-mixin(~'body, .nz-measure-scrollbar-placeholder, @{scrollbar-prefix}, .@{ant-prefix}-dialog-wrap, .@{ant-prefix}-drawer-body, .@{ant-prefix}-drawer-wrapper-body, .@{ant-prefix}-anchor-wrapper, textarea.@{ant-prefix}-input');
+// TODO: (.nz-measure-scrollbar-placeholder) https://github.com/NG-ZORRO/ng-zorro-antd/pull/2617
+.scrollbar-mixin(~'body, @{scrollbar-prefix}, .@{ant-prefix}-dialog-wrap, .@{ant-prefix}-drawer-body, .@{ant-prefix}-drawer-wrapper-body, .@{ant-prefix}-anchor-wrapper, textarea.@{ant-prefix}-input');
 
 // table
 .scrollbar-table-mixin(@enabled) when(@enabled=true) {

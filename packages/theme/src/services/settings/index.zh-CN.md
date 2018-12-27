@@ -11,6 +11,8 @@ type: Service
 
 ## API
 
+### SettingsService
+
 | 名称                                  | 类型       | 返回值                       | 描述           |
 | ------------------------------------- | ---------- | ---------------------------- | -------------- |
 | `layout`                              | `property` | `Layout`                     | 布局信息       |
@@ -20,3 +22,26 @@ type: Service
 | `setLayout(name: string, value: any)` | `method`   | `boolean`                    | 设置布局属性值 |
 | `setApp(value: App)`                  | `method`   | `boolean`                    | 设置项目信息   |
 | `setUser(value: User)`                | `method`   | `boolean`                    | 设置用户信息   |
+
+### App
+
+| 参数            | 说明     | 类型     | 默认值 |
+|-----------------|--------|----------|--------|
+| `[name]`        | 应用名称 | `string` | -      |
+| `[description]` | 应用描述 | `string` | -      |
+
+### User
+
+| 参数       | 说明         | 类型     | 默认值 |
+|------------|------------|----------|--------|
+| `[name]`   | 当前用户名称 | `string` | -      |
+| `[avatar]` | 当前用户头像 | `string` | -      |
+| `[email]`  | 当前用户邮箱 | `string` | -      |
+
+### Layout
+
+| 参数          | 说明         | 类型      | 默认值  |
+|---------------|------------|-----------|---------|
+| `[collapsed]` | 是否折叠菜单 | `boolean` | -       |
+| `[lang]`      | 当前语言     | `string`  | -       |
+| `[colorWeak]` | 色弱模式     | `boolean` | `false` |

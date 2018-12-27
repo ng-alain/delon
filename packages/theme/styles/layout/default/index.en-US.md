@@ -41,6 +41,8 @@ The default layout all parameters are prefixed with `@alain-default-`.
 | `@alain-default-content-heading-border` | `#efe3e5` | Heading bottom border color of content area |
 | `@alain-default-content-padding` | `@layout-gutter * 3` | Padding of content area |
 | `@alain-default-content-bg` | `#f5f7fa` | Background color of content area |
+| `@alain-default-widget-app-icons-enabled` | `true` | Whether the app-icon widget styles |
+| `@alain-default-aside-user-enabled`       | `true` | Whether the user styles of aside |
 
 ## Usage
 

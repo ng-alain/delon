@@ -1,53 +1,12 @@
-import { Component, HostBinding, OnDestroy, Inject, ElementRef, Renderer2 } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { TitleService, ALAIN_I18N_TOKEN } from '@delon/theme';
-import { NzIconService } from 'ng-zorro-antd';
-import { VERSION as VERSION_ALAIN } from '@delon/theme';
+import { Component, ElementRef, HostBinding, Inject, OnDestroy, Renderer2 } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd';
+import { filter } from 'rxjs/operators';
 
-// #region ng-zorro-antd icons
-
-import {
-  SearchOutline,
-  // site used
-  EditOutline,
-  CopyOutline,
-  FormOutline,
-  HeartOutline,
-  VerticalRightOutline,
-  VerticalLeftOutline,
-  StarOutline,
-  StarFill,
-  InboxOutline,
-  DashboardOutline,
-  GithubOutline,
-  EllipsisOutline,
-  DingdingOutline,
-} from '@ant-design/icons-angular/icons';
-const ICONS = [
-  SearchOutline,
-  // site used
-  FormOutline,
-  EditOutline,
-  CopyOutline,
-  HeartOutline,
-  VerticalRightOutline,
-  VerticalLeftOutline,
-  StarOutline,
-  StarFill,
-  InboxOutline,
-  DashboardOutline,
-  GithubOutline,
-  EllipsisOutline,
-  DingdingOutline,
-];
-
-// #endregion
-
+import { I18NService } from './core/i18n/service';
 import { MetaService } from './core/meta.service';
 import { MobileService } from './core/mobile.service';
-import { I18NService } from './core/i18n/service';
 
 @Component({
   selector: 'app-root',
@@ -68,7 +27,6 @@ export class AppComponent implements OnDestroy {
     private title: TitleService,
     private router: Router,
     private mobileSrv: MobileService,
-    private _iconService: NzIconService,
   ) {
     renderer.setAttribute(
       el.nativeElement,
@@ -132,7 +90,7 @@ export class AppComponent implements OnDestroy {
 
           // update i18n
           if (this.i18n.lang !== lang) {
-            this.i18n.use(<any>lang);
+            this.i18n.use(lang as any);
             this.meta.clearMenu();
           }
           this.meta.refMenu(url);
@@ -147,8 +105,6 @@ export class AppComponent implements OnDestroy {
         // scroll to top
         document.body.scrollIntoView();
       });
-
-    this._iconService.addIcon(...ICONS);
   }
 
   ngOnDestroy(): void {

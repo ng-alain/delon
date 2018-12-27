@@ -1,4 +1,4 @@
-# @delon/abc module [![Build Status](https://travis-ci.org/ng-alain/delon.svg?branch=master)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg)](https://www.npmjs.com/package/@delon/abc) [![NPM version](https://img.shields.io/npm/v/@delon/abc/next.svg)](https://www.npmjs.com/package/@delon/abc) [![Taobao version](https://npm.taobao.org/badge/v/@delon/abc.svg?style=flat-square)](https://npm.taobao.org/package/@delon/abc)
+# @delon/abc module [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg?style=flat-square)](https://www.npmjs.com/package/@delon/abc)
 
 Common business components of ng-alain.
 

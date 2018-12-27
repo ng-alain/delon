@@ -41,6 +41,8 @@ title: 默认布局
 | `@alain-default-content-heading-border`        | `#efe3e5`                      | 内容区域标题底部边框色   |
 | `@alain-default-content-padding`               | `@layout-gutter * 3`           | 内容区域内边距           |
 | `@alain-default-content-bg`                    | `#f5f7fa`                      | 内容区域背景色           |
+| `@alain-default-widget-app-icons-enabled`      | `true`                         | 是否 app-icon 小部件样式  |
+| `@alain-default-aside-user-enabled`            | `true`                         | 是否侧边栏用户信息样式  |
 
 ## 使用方式
 

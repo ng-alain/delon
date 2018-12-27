@@ -8,13 +8,11 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { DelonLocaleService } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
 import { Subscription } from 'rxjs';
 
-import { NzDropDownComponent } from 'ng-zorro-antd';
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
@@ -38,17 +36,10 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
 
-  @ViewChild('dd') ddc: NzDropDownComponent;
-
   constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) { }
 
   onVisibleChange(result: boolean) {
     this.popoverVisibleChange.emit(result);
-  }
-
-  fixCls() {
-    // TODO: https://github.com/NG-ZORRO/ng-zorro-antd/issues/2634
-    this.ddc.cdkOverlay.panelClass = ['header-dropdown', 'notice-icon'];
   }
 
   onSelect(i: NoticeIconSelect) {

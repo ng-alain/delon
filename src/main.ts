@@ -1,9 +1,10 @@
+// tslint:disable:no-import-side-effect
 import './polyfills.ts';
 
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode, ViewEncapsulation } from '@angular/core';
-import { environment } from './environments/environment';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
 
 import './app/core/preloader';
 
@@ -20,14 +21,15 @@ const bootstrap = () => {
       preserveWhitespaces: false,
     })
     .then(res => {
-      if ((<any>window).appBootstrap) {
-        (<any>window).appBootstrap();
+      if ((window as any).appBootstrap) {
+        (window as any).appBootstrap();
       }
       return res;
     });
 };
 
 if (environment.hmr) {
+  // tslint:disable-next-line:no-string-literal
   if (module['hot']) {
     hmrBootstrap(module, bootstrap);
   } else {

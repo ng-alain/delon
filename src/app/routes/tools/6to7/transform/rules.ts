@@ -1,12 +1,12 @@
 import { ConvertAction } from '../interface';
-import { ZORRORULES } from './rules/zorro';
 import { ABCRULES } from './rules/abc';
-import { G2RULES } from './rules/g2';
 import { EXTRARULES } from './rules/extra';
+import { G2RULES } from './rules/g2';
+import { ZORRORULES } from './rules/zorro';
 
 export const RULES: ConvertAction[] = [
-    ...ZORRORULES,
-    ...ABCRULES,
-    ...G2RULES,
-    ...EXTRARULES
+  ...ZORRORULES,
+  ...ABCRULES,
+  ...G2RULES,
+  ...EXTRARULES,
 ];

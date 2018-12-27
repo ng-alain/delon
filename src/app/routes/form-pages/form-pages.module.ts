@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AceEditorModule } from 'ng2-ace-editor';
 
-import { SharedModule } from '../../shared/shared.module';
 import { ContentComponent } from '../../shared/components/content/content.component';
+import { SharedModule } from '../../shared/shared.module';
 import { FormValidatorComponent } from './validator/validator.component';
 
 const COMPONENTS = [FormValidatorComponent];

@@ -42,5 +42,5 @@ export const ENUS = {
     'app.component.config.title': 'General Configuration',
     'app.demo.copy': 'Copy code',
     'app.demo.copied': 'Copied!',
-    'app.demo.stackblitz': 'Open in StackBlitz'
+    'app.demo.stackblitz': 'Open in StackBlitz',
 };

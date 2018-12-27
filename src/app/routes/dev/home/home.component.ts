@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
   <page-header [autoBreadcrumb]="false"></page-header>
   home
-  `
+  `,
 })
 export class DevHomeComponent {
 

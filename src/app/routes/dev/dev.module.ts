@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from '../../shared/shared.module';
 import { DemoComponent } from './demo/demo.component';
-import { DevLayoutComponent } from './layout.component';
 import { DevHomeComponent } from './home/home.component';
+import { DevLayoutComponent } from './layout.component';
 import { DevPageComponent } from './pages/page.component';
 
 const COMPONENTS = [

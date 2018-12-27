@@ -1,26 +1,26 @@
-import { Component, OnInit, HostBinding, Inject } from '@angular/core';
-import { MenuService, SettingsService, Menu, ALAIN_I18N_TOKEN } from '@delon/theme';
-import { NzMessageService, NzIconService } from 'ng-zorro-antd';
+import { Component, HostBinding, Inject, OnInit } from '@angular/core';
+import { ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService } from '@delon/theme';
+import { NzIconService, NzMessageService } from 'ng-zorro-antd';
 
 // #region icons
 
 import {
+  AppstoreOutline,
+  BellOutline,
+  EllipsisOutline,
+  FullscreenExitOutline,
+  FullscreenOutline,
+  GithubOutline,
+  GlobalOutline,
+  LockOutline,
+  LogoutOutline,
   MenuFoldOutline,
   MenuUnfoldOutline,
-  SearchOutline,
-  SettingOutline,
-  FullscreenOutline,
-  FullscreenExitOutline,
-  BellOutline,
-  LockOutline,
   PlusOutline,
-  UserOutline,
-  LogoutOutline,
-  EllipsisOutline,
-  GlobalOutline,
+  SearchOutline,
   // Optional
-  GithubOutline,
-  AppstoreOutline,
+  SettingOutline,
+  UserOutline,
 } from '@ant-design/icons-angular/icons';
 import { I18NService, LangType } from 'app/core/i18n/service';
 
@@ -51,7 +51,7 @@ const ICONS = [
   host: {
     '[class.alain-default]': 'true',
   },
-  preserveWhitespaces: false
+  preserveWhitespaces: false,
 })
 export class DevLayoutComponent implements OnInit {
   @HostBinding('class.alain-default__fixed')
@@ -75,11 +75,12 @@ export class DevLayoutComponent implements OnInit {
       group: true,
       children: [
         {
-          text: 'Dashboard',
+          text: 'Dashboard-DISABLED',
           link: '/dev',
           icon: 'anticon anticon-dashboard',
           i18n: 'app.header.menu.home',
           badge: 5,
+          disabled: true,
         },
         {
           text: 'Level1',
@@ -90,11 +91,11 @@ export class DevLayoutComponent implements OnInit {
               text: 'Level2',
               link: '#',
               children: [
-                { text: 'Level3', link: '/dev/l1' },
-                { text: 'Level3', link: '/dev/l1' },
+                { text: 'Level3A', link: '/dev/l1' },
+                { text: 'Level3B-DISABLED', link: '/dev/l1', disabled: true },
               ],
             },
-            { text: 'Level2', link: '/dev/l2' },
+            { text: 'Level2-DISABLED', link: '/dev/l2', disabled: true },
           ],
         },
         {
@@ -120,7 +121,7 @@ export class DevLayoutComponent implements OnInit {
     private menuSrv: MenuService,
     public settings: SettingsService,
     public msgSrv: NzMessageService,
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
 
   ) {
     iconSrv.addIcon(...ICONS);

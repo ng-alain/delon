@@ -24,6 +24,7 @@ export interface Menu {
   /** 路由 */
   link?: string;
   /**
+   * @deprecated
    * 路由是否精准匹配，默认：`false`，see:
    * - [#344](https://github.com/ng-alain/ng-alain/issues/344)
    * - [RouterLinkActive](https://angular.io/api/router/RouterLinkActive#routerLinkActiveOptions)
@@ -41,6 +42,8 @@ export interface Menu {
   badgeDot?: boolean;
   /** 徽标 Badge 颜色 （默认：error， 所有颜色值见：https://github.com/ng-alain/ng-alain/blob/master/_documents/utils.md#色彩） */
   badgeStatus?: string;
+  /** 是否禁用 */
+  disabled?: boolean;
   /** 是否隐藏菜单 */
   hide?: boolean;
   /** 隐藏面包屑，指 `page-header` 组件的自动生成面包屑时有效 */

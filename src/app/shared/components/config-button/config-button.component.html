@@ -2,9 +2,7 @@
 <nz-modal [(nzVisible)]="isVisible" nzTitle="DEMO" nzWidth="650" [nzFooter]="null" (nzOnCancel)="isVisible=false">
   <pre class="lang-typescript m0">import &#123; {{ meta.item.config }} &#125; from '{{meta.item.module_name}}';
 export function fn{{ meta.item.config }}(): {{ meta.item.config }} &#123;
-  return Object.assign(new {{ meta.item.config }}(), <{{ meta.item.config }}>&#123;
-    // values
-  &#125;);
+  return &#123; ...new {{ meta.item.config }}(), ...&#123; &#125; as {{ meta.item.config }} &#125;;
 &#125;
 
 @NgModule(&#123; &#125;)

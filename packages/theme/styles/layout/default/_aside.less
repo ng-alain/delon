@@ -20,10 +20,10 @@
   }
   &-inner {
     overflow-x: hidden;
-    overflow-y: scroll; // margin-right: -17px;
+    overflow-y: scroll;
     height: 100%;
     -webkit-overflow-scrolling: touch;
-    /*IE10,IE11*/
+    // IE
     -ms-scroll-chaining: chained;
     -ms-overflow-style: none;
     -ms-content-zooming: zoom;
@@ -33,6 +33,9 @@
     -ms-scroll-snap-type: proximity;
     -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
     -ms-overflow-style: none;
+    // Firefox
+    scrollbar-width: none;
+    // Chrome
     &::-webkit-scrollbar {
       height: @alain-default-aside-scrollbar-width;
       width: @alain-default-aside-scrollbar-height;
