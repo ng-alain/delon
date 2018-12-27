@@ -357,10 +357,13 @@ describe('abc: reuse-tab(service)', () => {
       });
     });
     it('#refresh', () => {
-      srv.change
+      const _$ = srv.change
         .pipe(filter(w => w !== null))
         .subscribe(
-          res => expect(res.active).toBe('refresh'),
+          res => {
+            expect(res.active).toBe('refresh');
+            _$.unsubscribe();
+          },
           () => expect(false).toBe(true),
         );
       srv.refresh(true);
