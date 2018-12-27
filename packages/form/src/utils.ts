@@ -1,7 +1,7 @@
 // tslint:disable:no-any
 import { deepCopy } from '@delon/util';
 import { of, Observable } from 'rxjs';
-import { map, takeWhile } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 import { SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 
@@ -185,10 +185,7 @@ export function getData(
   if (typeof ui.asyncData === 'function') {
     return ui
       .asyncData(asyncArgs)
-      .pipe(
-        takeWhile(() => ui.__destroy !== true),
-        map(list => getEnum(list, formData, schema.readOnly)),
-      );
+      .pipe(map(list => getEnum(list, formData, schema.readOnly)));
   }
   return of(getCopyEnum(schema.enum, formData, schema.readOnly));
 }
