@@ -1,6 +1,10 @@
 .scrollbar-mixin(@element-name) {
   .scrollbar-inner-mixin(@enabled) when(@enabled=true) {
     @{element-name} {
+      // FireFox
+      scrollbar-color: @scrollbar-track-color @scrollbar-thumb-color;
+      scrollbar-width: thin;
+      // Other
       &::-webkit-scrollbar {
         height: @scrollbar-width;
         width: @scrollbar-height;
