@@ -195,11 +195,8 @@ export class CacheService implements OnDestroy {
       expire?: number;
     } = {},
   ): Observable<any> | any {
-    const isPromise =
-      options.mode !== 'none' && this.options.mode === 'promise';
-    const value: ICache = this.memory.has(key)
-      ? this.memory.get(key)
-      : this.store.get(this.options.prefix + key);
+    const isPromise = options.mode !== 'none' && this.options.mode === 'promise';
+    const value: ICache = this.memory.has(key) ? this.memory.get(key) : this.store.get(this.options.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
         return this.http
@@ -207,7 +204,7 @@ export class CacheService implements OnDestroy {
           .pipe(
             // tslint:disable-next-line:no-any
             map((ret: any) => this._deepGet(ret, this.options.reName as string[], null)),
-            tap(v => this.set(key, v)),
+            tap(v => this.set(key, v, { type: options.type, expire: options.expire })),
           );
       }
       return null;
