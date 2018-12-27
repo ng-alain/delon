@@ -3,13 +3,7 @@ import { Injectable, Injector, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, ExtraOptions, NavigationEnd, NavigationStart, Router, ROUTER_CONFIGURATION } from '@angular/router';
 import { MenuService } from '@delon/theme';
 import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import {
-  ReuseTabCached,
-  ReuseTabMatchMode,
-  ReuseTabNotify,
-  ReuseTitle,
-} from './reuse-tab.interfaces';
+import { ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
 
 /**
  * 路由复用类，提供复用所需要一些基本接口
@@ -19,7 +13,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class ReuseTabService implements OnDestroy {
   private _max = 10;
-  private _keepingScroll = true;
+  private _keepingScroll = false;
   private _debug = false;
   private _mode = ReuseTabMatchMode.Menu;
   private _excludes: RegExp[] = [];
@@ -27,9 +21,9 @@ export class ReuseTabService implements OnDestroy {
   private _cached: ReuseTabCached[] = [];
   private _titleCached: { [url: string]: ReuseTitle } = {};
   private _closableCached: { [url: string]: boolean } = {};
-  private _router$ !: Unsubscribable;
+  private _router$: Unsubscribable;
   private removeUrlBuffer: string;
-  private positionBuffer: [ number, number ] = [ 0, 0 ];
+  private positionBuffer: { [url: string]: [ number, number ]} = {};
 
   // #region public
 
@@ -401,7 +395,7 @@ export class ReuseTabService implements OnDestroy {
     const item: ReuseTabCached = {
       title: this.getTitle(url, _snapshot),
       closable: this.getClosable(url, _snapshot),
-      position: this.positionBuffer.slice(0) as [ number, number ],
+      position: this.positionBuffer[url],
       url,
       _snapshot,
       _handle,
@@ -417,7 +411,6 @@ export class ReuseTabService implements OnDestroy {
       this._cached[idx] = item;
     }
     this.removeUrlBuffer = null;
-    this.positionBuffer = [ 0, 0 ];
 
     this.di('#store', idx === -1 ? '[new]' : '[override]', url);
 
@@ -496,13 +489,13 @@ export class ReuseTabService implements OnDestroy {
     }
 
     const router = this.injector.get(Router, null);
-    if (!this.keepingScroll || router == null) {
+    if (router == null || !this.keepingScroll || !this.isValidScroll()) {
       return ;
     }
 
-    this._router$ = router.events.pipe(filter(() => this.isValidScroll())).subscribe(e => {
+    this._router$ = router.events.subscribe(e => {
       if (e instanceof NavigationStart) {
-        this.positionBuffer = this.vs.getScrollPosition();
+        this.positionBuffer[this.curUrl] = this.vs.getScrollPosition();
       } else if (e instanceof NavigationEnd) {
         const item = this.get(this.curUrl);
         if (item && item.position) {

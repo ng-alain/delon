@@ -59,7 +59,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() excludes: RegExp[];
   @Input() @InputBoolean() allowClose = true;
   @Input() @InputBoolean() showCurrent = true;
-  @Input() @InputBoolean() keepingScroll = true;
+  @Input() @InputBoolean() keepingScroll = false;
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem>();
 

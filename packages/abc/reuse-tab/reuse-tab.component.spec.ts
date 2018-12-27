@@ -83,7 +83,7 @@ describe('abc: reuse-tab', () => {
               },
             ],
           },
-        ]),
+        ], { scrollPositionRestoration: 'disabled' }),
       ],
       providers: [
         MenuService,
@@ -503,6 +503,7 @@ describe('abc: reuse-tab', () => {
 
     describe('#keepingScroll', () => {
       it('with true', fakeAsync(() => {
+        srv.keepingScroll = true;
         const vs = injector.get(ViewportScroller) as ViewportScroller;
         spyOn(vs, 'getScrollPosition').and.returnValue([0, 666]);
         spyOn(vs, 'scrollToPosition');
@@ -524,46 +525,71 @@ describe('abc: reuse-tab', () => {
       it('with false', fakeAsync(() => {
         srv.keepingScroll = false;
         const vs = injector.get(ViewportScroller) as ViewportScroller;
-        spyOn(vs, 'getScrollPosition').and.returnValue([0, 666]);
-        spyOn(vs, 'scrollToPosition');
+        spyOn(vs, 'getScrollPosition');
         page
           .to('#a') // default page, not trigger store
           .to('#b')
           .tap(() => {
-            expect(srv.items[0].position[0]).toBe(0);
-            expect(srv.items[0].position[1]).toBe(0);
-            expect(vs.scrollToPosition).not.toHaveBeenCalled();
+            expect(vs.getScrollPosition).not.toHaveBeenCalled();
           })
           .to('#a')
           .tap(() => {
-            expect(srv.items[0].position[0]).toBe(0);
-            expect(srv.items[0].position[1]).toBe(0);
-            expect(vs.scrollToPosition).not.toHaveBeenCalled();
+            expect(vs.getScrollPosition).not.toHaveBeenCalled();
           });
       }));
-      it('should be ingore when has setting scrollPositionRestoration', fakeAsync(() => {
-        TestBed.overrideProvider(ROUTER_CONFIGURATION, {
-          useValue: { scrollPositionRestoration: 'enabled' } as ExtraOptions,
-        });
-        srv.keepingScroll = false;
-        const vs = injector.get(ViewportScroller) as ViewportScroller;
-        spyOn(vs, 'getScrollPosition').and.returnValue([0, 666]);
-        spyOn(vs, 'scrollToPosition');
-        page
-          .to('#a') // default page, not trigger store
-          .to('#b')
-          .tap(() => {
-            expect(srv.items[0].position[0]).toBe(0);
-            expect(srv.items[0].position[1]).toBe(0);
-            expect(vs.scrollToPosition).not.toHaveBeenCalled();
-          })
-          .to('#a')
-          .tap(() => {
-            expect(srv.items[0].position[0]).toBe(0);
-            expect(srv.items[0].position[1]).toBe(0);
-            expect(vs.scrollToPosition).not.toHaveBeenCalled();
-          });
-      }));
+      describe('should be ingore when has setting scrollPositionRestoration', () => {
+        it('not keeping with enabled', fakeAsync(() => {
+          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
+          cog.scrollPositionRestoration = 'enabled';
+          srv.keepingScroll = true;
+          const vs = injector.get(ViewportScroller) as ViewportScroller;
+          spyOn(vs, 'getScrollPosition');
+          page
+            .to('#a') // default page, not trigger store
+            .to('#b')
+            .tap(() => {
+              expect(vs.getScrollPosition).not.toHaveBeenCalled();
+            })
+            .to('#a')
+            .tap(() => {
+              expect(vs.getScrollPosition).not.toHaveBeenCalled();
+            });
+        }));
+        it('keeping with disabled', fakeAsync(() => {
+          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
+          cog.scrollPositionRestoration = 'disabled';
+          srv.keepingScroll = true;
+          const vs = injector.get(ViewportScroller) as ViewportScroller;
+          spyOn(vs, 'getScrollPosition');
+          page
+            .to('#a') // default page, not trigger store
+            .to('#b')
+            .tap(() => {
+              expect(vs.getScrollPosition).toHaveBeenCalled();
+            })
+            .to('#a')
+            .tap(() => {
+              expect(vs.getScrollPosition).toHaveBeenCalled();
+            });
+        }));
+        it('not keeping with top', fakeAsync(() => {
+          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
+          cog.scrollPositionRestoration = 'top';
+          srv.keepingScroll = true;
+          const vs = injector.get(ViewportScroller) as ViewportScroller;
+          spyOn(vs, 'getScrollPosition');
+          page
+            .to('#a') // default page, not trigger store
+            .to('#b')
+            .tap(() => {
+              expect(vs.getScrollPosition).not.toHaveBeenCalled();
+            })
+            .to('#a')
+            .tap(() => {
+              expect(vs.getScrollPosition).not.toHaveBeenCalled();
+            });
+        }));
+      });
     });
   });
 
