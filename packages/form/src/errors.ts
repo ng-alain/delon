@@ -76,5 +76,5 @@ export interface ErrorSchema {
   /**
    * 自定义校验
    */
-  validator?(value: SFValue, formProperty: FormProperty, form: PropertyGroup): ErrorData[] | Observable<ErrorData[]>;
+  validator?: (value: SFValue, formProperty: FormProperty, form: PropertyGroup) => ErrorData[] | Observable<ErrorData[]>;
 }
