@@ -69,11 +69,32 @@ describe('abc: reuse-tab(service)', () => {
 
   describe('[property]', () => {
     beforeEach(() => genModule());
-    it('#max', () => {
-      genCached(10);
-      expect(srv.count).toBe(10);
-      srv.max = 5;
-      expect(srv.count).toBe(5);
+    describe('#max', () => {
+      it('should working', () => {
+        genCached(10);
+        expect(srv.count).toBe(10);
+        srv.max = 5;
+        expect(srv.count).toBe(5);
+      });
+      it('should be close oldest page', () => {
+        srv.max = 2;
+        srv.store(getSnapshot(1), {});
+        srv.store(getSnapshot(2), {});
+        srv.store(getSnapshot(3), {});
+        expect(srv.count).toBe(2);
+        srv.store(getSnapshot(4), {});
+        expect(srv.count).toBe(2);
+      });
+      it('should be ingore close when all is not closable', () => {
+        srv.max = 2;
+        srv.store(getSnapshot(1), {});
+        srv.store(getSnapshot(2), {});
+        srv.items.forEach(i => i.closable = false);
+        srv.store(getSnapshot(3), {});
+        expect(srv.count).toBe(3);
+        srv.store(getSnapshot(4), {});
+        expect(srv.count).toBe(3);
+      });
     });
     describe('#mode', () => {
       describe('when ReuseTabMatchMode.Menu', () => {

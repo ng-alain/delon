@@ -39,7 +39,7 @@ export class ReuseTabService implements OnDestroy {
     return this.getUrl(this.injector.get(ActivatedRoute).snapshot);
   }
 
-  /** 允许最多复用多少个页面，取值范围 `2-100` */
+  /** 允许最多复用多少个页面，取值范围 `2-100`，值发生变更时会强制关闭且忽略可关闭条件 */
   set max(value: number) {
     this._max = Math.min(Math.max(value, 2), 100);
     for (let i = this._cached.length; i > this._max; i--) {
@@ -401,8 +401,12 @@ export class ReuseTabService implements OnDestroy {
       _handle,
     };
     if (idx === -1) {
+      if (this.count >= this._max) {
+        // Get the oldest closable location
+        const closeIdx = this._cached.findIndex(w => w.closable);
+        if (closeIdx !== -1) this.remove(closeIdx, false);
+      }
       this._cached.push(item);
-      if (this.count > this._max) this._cached.shift();
     } else {
       this._cached[idx] = item;
     }
