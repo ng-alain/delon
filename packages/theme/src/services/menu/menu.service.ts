@@ -179,11 +179,11 @@ export class MenuService implements OnDestroy {
     this._change$.next(this.data);
   }
 
-  getHit(url: string, recursive = false, cb: (i: Menu) => void = null) {
+  getHit(data: Menu[], url: string, recursive = false, cb: (i: Menu) => void = null) {
     let item: Menu = null;
 
     while (!item && url) {
-      this.visit(this.data, i => {
+      this.visit(data, i => {
         if (cb) {
           cb(i);
         }
@@ -208,7 +208,7 @@ export class MenuService implements OnDestroy {
   openedByUrl(url: string, recursive = false) {
     if (!url) return;
 
-    let findItem = this.getHit(url, recursive, i => {
+    let findItem = this.getHit(this.data, url, recursive, i => {
       i._selected = false;
       i._open = false;
     });
@@ -228,7 +228,7 @@ export class MenuService implements OnDestroy {
    */
   getPathByUrl(url: string, recursive = false): Menu[] {
     const ret: Menu[] = [];
-    let item = this.getHit(url, recursive);
+    let item = this.getHit(this.data, url, recursive);
 
     if (!item) return ret;
 
