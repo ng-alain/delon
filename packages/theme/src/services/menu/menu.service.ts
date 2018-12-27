@@ -29,7 +29,7 @@ export class MenuService implements OnDestroy {
     return this._change$.pipe(share());
   }
 
-  visit(callback: (item: Menu, parentMenum: Menu, depth?: number) => void) {
+  visit(data: Menu[], callback: (item: Menu, parentMenum: Menu, depth?: number) => void) {
     const inFn = (list: Menu[], parentMenu: Menu, depth: number) => {
       for (const item of list) {
         callback(item, parentMenu, depth);
@@ -41,7 +41,7 @@ export class MenuService implements OnDestroy {
       }
     };
 
-    inFn(this.data, null, 0);
+    inFn(data, null, 0);
   }
 
   add(items: Menu[]) {
@@ -55,7 +55,7 @@ export class MenuService implements OnDestroy {
   resume(callback?: (item: Menu, parentMenum: Menu, depth?: number) => void) {
     let i = 1;
     const shortcuts: Menu[] = [];
-    this.visit((item, parent, depth) => {
+    this.visit(this.data, (item, parent, depth) => {
       item.__id = i++;
       item.__parent = parent;
       item._depth = depth;
@@ -183,7 +183,7 @@ export class MenuService implements OnDestroy {
     let item: Menu = null;
 
     while (!item && url) {
-      this.visit(i => {
+      this.visit(this.data, i => {
         if (cb) {
           cb(i);
         }
@@ -194,10 +194,7 @@ export class MenuService implements OnDestroy {
 
       if (!recursive) break;
 
-      url = url
-        .split('/')
-        .slice(0, -1)
-        .join('/');
+      url = url.split('/').slice(0, -1).join('/');
     }
 
     return item;
