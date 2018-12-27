@@ -355,7 +355,7 @@ export class ReuseTabService implements OnDestroy {
 
   // #endregion
 
-  constructor(private injector: Injector,  private router: Router, private menuService: MenuService) { }
+  constructor(private injector: Injector, private menuService: MenuService) { }
 
   init() {
     this.initScroll();
@@ -495,11 +495,12 @@ export class ReuseTabService implements OnDestroy {
       this._router$.unsubscribe();
     }
 
-    if (!this.keepingScroll) {
+    const router = this.injector.get(Router, null);
+    if (!this.keepingScroll || router == null) {
       return ;
     }
 
-    this._router$ = this.router.events.pipe(filter(() => this.isValidScroll())).subscribe(e => {
+    this._router$ = router.events.pipe(filter(() => this.isValidScroll())).subscribe(e => {
       if (e instanceof NavigationStart) {
         this.positionBuffer = this.vs.getScrollPosition();
       } else if (e instanceof NavigationEnd) {
