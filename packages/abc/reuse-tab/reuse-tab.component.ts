@@ -59,6 +59,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() excludes: RegExp[];
   @Input() @InputBoolean() allowClose = true;
   @Input() @InputBoolean() showCurrent = true;
+  @Input() @InputBoolean() keepingScroll = true;
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem>();
 
@@ -216,6 +217,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.genList();
+    this.srv.init();
   }
 
   ngOnChanges(
@@ -224,6 +226,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.max) this.srv.max = this.max;
     if (changes.excludes) this.srv.excludes = this.excludes;
     if (changes.mode) this.srv.mode = this.mode;
+    if (changes.keepingScroll) this.srv.keepingScroll = this.keepingScroll;
     this.srv.debug = this.debug;
 
     this.cdr.detectChanges();

@@ -9,9 +9,11 @@ import { By } from '@angular/platform-browser';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
+  ExtraOptions,
   Router,
   RouterStateSnapshot,
   RouteReuseStrategy,
+  ROUTER_CONFIGURATION,
 } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
@@ -25,6 +27,7 @@ import {
   MenuService,
 } from '@delon/theme';
 
+import { ViewportScroller } from '@angular/common';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
 import { ReuseTabMatchMode } from './reuse-tab.interfaces';
@@ -102,7 +105,12 @@ describe('abc: reuse-tab', () => {
       ].concat(
         !needI18n
           ? []
-          : [{ provide: ALAIN_I18N_TOKEN, useClass: MockI18NServiceFake } as any],
+          : [
+              {
+                provide: ALAIN_I18N_TOKEN,
+                useClass: MockI18NServiceFake,
+              } as any,
+            ],
       ),
     });
     fixture = TestBed.createComponent(AppComponent);
@@ -492,6 +500,71 @@ describe('abc: reuse-tab', () => {
           .expectTime(lTime);
       }));
     });
+
+    describe('#keepingScroll', () => {
+      it('with true', fakeAsync(() => {
+        const vs = injector.get(ViewportScroller) as ViewportScroller;
+        spyOn(vs, 'getScrollPosition').and.returnValue([0, 666]);
+        spyOn(vs, 'scrollToPosition');
+        page
+          .to('#a') // default page, not trigger store
+          .to('#b')
+          .tap(() => {
+            expect(srv.items[0].position != null).toBe(true);
+            expect(srv.items[0].position[1]).toBe(666);
+            expect(vs.scrollToPosition).not.toHaveBeenCalled();
+          })
+          .to('#a')
+          .tap(() => {
+            expect(srv.items[1].position != null).toBe(true);
+            expect(srv.items[1].position[1]).toBe(666);
+            expect(vs.scrollToPosition).toHaveBeenCalled();
+          });
+      }));
+      it('with false', fakeAsync(() => {
+        srv.keepingScroll = false;
+        const vs = injector.get(ViewportScroller) as ViewportScroller;
+        spyOn(vs, 'getScrollPosition').and.returnValue([0, 666]);
+        spyOn(vs, 'scrollToPosition');
+        page
+          .to('#a') // default page, not trigger store
+          .to('#b')
+          .tap(() => {
+            expect(srv.items[0].position[0]).toBe(0);
+            expect(srv.items[0].position[1]).toBe(0);
+            expect(vs.scrollToPosition).not.toHaveBeenCalled();
+          })
+          .to('#a')
+          .tap(() => {
+            expect(srv.items[0].position[0]).toBe(0);
+            expect(srv.items[0].position[1]).toBe(0);
+            expect(vs.scrollToPosition).not.toHaveBeenCalled();
+          });
+      }));
+      it('should be ingore when has setting scrollPositionRestoration', fakeAsync(() => {
+        TestBed.overrideProvider(ROUTER_CONFIGURATION, {
+          useValue: { scrollPositionRestoration: 'enabled' } as ExtraOptions,
+        });
+        srv.keepingScroll = false;
+        const vs = injector.get(ViewportScroller) as ViewportScroller;
+        spyOn(vs, 'getScrollPosition').and.returnValue([0, 666]);
+        spyOn(vs, 'scrollToPosition');
+        page
+          .to('#a') // default page, not trigger store
+          .to('#b')
+          .tap(() => {
+            expect(srv.items[0].position[0]).toBe(0);
+            expect(srv.items[0].position[1]).toBe(0);
+            expect(vs.scrollToPosition).not.toHaveBeenCalled();
+          })
+          .to('#a')
+          .tap(() => {
+            expect(srv.items[0].position[0]).toBe(0);
+            expect(srv.items[0].position[1]).toBe(0);
+            expect(vs.scrollToPosition).not.toHaveBeenCalled();
+          });
+      }));
+    });
   });
 
   describe('[i18n]', () => {
@@ -626,30 +699,31 @@ describe('abc: reuse-tab', () => {
   template: `
     <a id="a" [routerLink]="['/a']">a</a>
     <a id="b" [routerLink]="['/b/1']">b1</a>
-    <a id="c" [routerLink]="['/c']">c</a>
-    <a id="d" [routerLink]="['/d']">d</a>
+    <a id="c" [routerLink]="['/c']">c</a> <a id="d" [routerLink]="['/d']">d</a>
     <a id="e" [routerLink]="['/e']">e</a>
     <a id="leave" [routerLink]="['/leave']">leave</a>
     <router-outlet></router-outlet>
-    `,
+  `,
 })
 class AppComponent {}
 
 @Component({
   template: `
-    <reuse-tab #comp
-        [mode]="mode"
-        [debug]="debug"
-        [max]="max"
-        [debug]="debug"
-        [excludes]="excludes"
-        [allowClose]="allowClose"
-        [showCurrent]="showCurrent"
-        (change)="change($event)"
-        (close)="close($event)">
+    <reuse-tab
+      #comp
+      [mode]="mode"
+      [debug]="debug"
+      [max]="max"
+      [debug]="debug"
+      [excludes]="excludes"
+      [allowClose]="allowClose"
+      [showCurrent]="showCurrent"
+      (change)="change($event)"
+      (close)="close($event)"
+    >
     </reuse-tab>
     <div id="children"><router-outlet></router-outlet></div>
-    `,
+  `,
 })
 class LayoutComponent {
   @ViewChild('comp')
@@ -666,7 +740,10 @@ class LayoutComponent {
 
 @Component({
   selector: 'a-comp',
-  template: `a:<div id="time">{{time}}</div>`,
+  template: `
+    a:
+    <div id="time">{{ time }}</div>
+  `,
 })
 class AComponent {
   time = +new Date();
@@ -675,10 +752,11 @@ class AComponent {
 @Component({
   selector: 'b-comp',
   template: `
-    b:<div id="time">{{time}}</div>
+    b:
+    <div id="time">{{ time }}</div>
     <a id="b2" [routerLink]="['/b/2']">b2</a>
     <a id="b3" [routerLink]="['/b/3']">b3</a>
-    `,
+  `,
 })
 class BComponent {
   time = +new Date();
@@ -687,7 +765,10 @@ class BComponent {
 
 @Component({
   selector: 'c-comp',
-  template: `c:<div id="time">{{time}}</div>`,
+  template: `
+    c:
+    <div id="time">{{ time }}</div>
+  `,
 })
 class CComponent {
   time = +new Date();
@@ -698,7 +779,10 @@ class CComponent {
 
 @Component({
   selector: 'd-comp',
-  template: `d:<div id="time">{{time}}</div>`,
+  template: `
+    d:
+    <div id="time">{{ time }}</div>
+  `,
 })
 class DComponent {
   time = +new Date();
@@ -706,7 +790,10 @@ class DComponent {
 
 @Component({
   selector: 'e-comp',
-  template: `e:<div id="time">{{time}}</div>`,
+  template: `
+    e:
+    <div id="time">{{ time }}</div>
+  `,
 })
 class EComponent {
   time = +new Date();

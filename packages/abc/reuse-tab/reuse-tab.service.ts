@@ -1,11 +1,9 @@
+import { ViewportScroller } from '@angular/common';
 import { Injectable, Injector, OnDestroy } from '@angular/core';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, ExtraOptions, NavigationEnd, NavigationStart, Router, ROUTER_CONFIGURATION } from '@angular/router';
 import { MenuService } from '@delon/theme';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import {
   ReuseTabCached,
   ReuseTabMatchMode,
@@ -21,16 +19,17 @@ import {
 @Injectable({ providedIn: 'root' })
 export class ReuseTabService implements OnDestroy {
   private _max = 10;
+  private _keepingScroll = true;
   private _debug = false;
   private _mode = ReuseTabMatchMode.Menu;
   private _excludes: RegExp[] = [];
-  private _cachedChange: BehaviorSubject<
-    ReuseTabNotify
-    > = new BehaviorSubject<ReuseTabNotify>(null);
+  private _cachedChange: BehaviorSubject<ReuseTabNotify> = new BehaviorSubject<ReuseTabNotify>(null);
   private _cached: ReuseTabCached[] = [];
   private _titleCached: { [url: string]: ReuseTitle } = {};
   private _closableCached: { [url: string]: boolean } = {};
+  private _router$ !: Unsubscribable;
   private removeUrlBuffer: string;
+  private positionBuffer: [ number, number ] = [ 0, 0 ];
 
   // #region public
 
@@ -59,6 +58,13 @@ export class ReuseTabService implements OnDestroy {
   }
   get debug() {
     return this._debug;
+  }
+  set keepingScroll(value: boolean) {
+    this._keepingScroll = value;
+    this.initScroll();
+  }
+  get keepingScroll() {
+    return this._keepingScroll;
   }
   /** 排除规则，限 `mode=URL` */
   set excludes(values: RegExp[]) {
@@ -299,12 +305,7 @@ export class ReuseTabService implements OnDestroy {
       segments.push(next.url.join('/'));
       next = next.parent;
     }
-    const url =
-      '/' +
-      segments
-        .filter(i => i)
-        .reverse()
-        .join('/');
+    const url = '/' + segments.filter(i => i).reverse().join('/');
     return url;
   }
   /**
@@ -354,7 +355,11 @@ export class ReuseTabService implements OnDestroy {
 
   // #endregion
 
-  constructor(private injector: Injector, private menuService: MenuService) { }
+  constructor(private injector: Injector,  private router: Router, private menuService: MenuService) { }
+
+  init() {
+    this.initScroll();
+  }
 
   private getMenu(url: string) {
     const menus = this.menuService.getPathByUrl(url);
@@ -396,6 +401,7 @@ export class ReuseTabService implements OnDestroy {
     const item: ReuseTabCached = {
       title: this.getTitle(url, _snapshot),
       closable: this.getClosable(url, _snapshot),
+      position: this.positionBuffer.slice(0) as [ number, number ],
       url,
       _snapshot,
       _handle,
@@ -411,6 +417,7 @@ export class ReuseTabService implements OnDestroy {
       this._cached[idx] = item;
     }
     this.removeUrlBuffer = null;
+    this.positionBuffer = [ 0, 0 ];
 
     this.di('#store', idx === -1 ? '[new]' : '[override]', url);
 
@@ -451,15 +458,11 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 决定是否应该进行复用路由处理
    */
-  shouldReuseRoute(
-    future: ActivatedRouteSnapshot,
-    curr: ActivatedRouteSnapshot,
-  ): boolean {
+  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     let ret = future.routeConfig === curr.routeConfig;
     if (!ret) return false;
 
-    const path = ((future.routeConfig && future.routeConfig.path) ||
-      '') as string;
+    const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
     if (path.length > 0 && ~path.indexOf(':')) {
       const futureUrl = this.getUrl(future);
       const currUrl = this.getUrl(curr);
@@ -476,8 +479,48 @@ export class ReuseTabService implements OnDestroy {
     return ret;
   }
 
+  // #region scroll
+
+  private isValidScroll(): boolean {
+    const routerConfig: ExtraOptions = this.injector.get(ROUTER_CONFIGURATION, {} as any);
+    return routerConfig.scrollPositionRestoration == null || routerConfig.scrollPositionRestoration === 'disabled';
+  }
+
+  private get vs(): ViewportScroller {
+    return this.injector.get(ViewportScroller);
+  }
+
+  private initScroll() {
+    if (this._router$) {
+      this._router$.unsubscribe();
+    }
+
+    if (!this.keepingScroll) {
+      return ;
+    }
+
+    this._router$ = this.router.events.pipe(filter(() => this.isValidScroll())).subscribe(e => {
+      if (e instanceof NavigationStart) {
+        this.positionBuffer = this.vs.getScrollPosition();
+      } else if (e instanceof NavigationEnd) {
+        const item = this.get(this.curUrl);
+        if (item && item.position) {
+          this.vs.scrollToPosition(item.position);
+        }
+      }
+    });
+  }
+
+  // #endregion
+
   ngOnDestroy(): void {
+    const { _cachedChange, _router$ } = this;
+    this.clear();
     this._cached = [];
-    this._cachedChange.unsubscribe();
+    _cachedChange.complete();
+
+    if (_router$) {
+      _router$.unsubscribe();
+    }
   }
 }

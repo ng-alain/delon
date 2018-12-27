@@ -134,6 +134,10 @@ export class DemoComponent {
 }
 ```
 
+## 滚动条位置
+
+开启 `keepingScroll` 复用后恢复之前的滚动条位置；若路由选项 `scrollPositionRestoration` **优先值高于** `keepingScroll` 的设置。
+
 ## API
 
 ### ReuseTabService
@@ -145,6 +149,7 @@ export class DemoComponent {
 `[max]` | 允许最多复用多少个页面，值发生变更时会强制关闭且忽略可关闭条件 | `number` | `10`
 `[mode]` | 设置匹配模式 | `ReuseTabMatchMode` | `0`
 `[debug]` | 是否Debug模式 | `boolean` | `false`
+`[keepingScroll]` | 保持滚动条位置 | `boolean` | `true`
 `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | -
 `[items]` | 获取已缓存的路由 | `ReuseTabCached[]` | -
 `[count]` | 获取当前缓存的路由总数 | `number` | -
@@ -177,6 +182,7 @@ export class DemoComponent {
 `[mode]` | 设置匹配模式 | `ReuseTabMatchMode` | `0`
 `[debug]` | 是否Debug模式 | `boolean` | `false`
 `[max]` | 允许最多复用多少个页面 | `number` | `10`
+`[keepingScroll]` | 保持滚动条位置 | `boolean` | `true`
 `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | -
 `[allowClose]` | 允许关闭 | `boolean` | `true`
 `[showCurrent]` | 总是显示当前页 | `boolean` | `true`
