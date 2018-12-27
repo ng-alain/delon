@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -46,6 +47,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   private el: HTMLElement;
   private sub$: Subscription;
   private i18n$: Subscription;
+  private _keepingScrollContainer: Element;
   list: ReuseItem[] = [];
   item: ReuseItem;
   pos = 0;
@@ -60,6 +62,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() allowClose = true;
   @Input() @InputBoolean() showCurrent = true;
   @Input() @InputBoolean() keepingScroll = false;
+  @Input()
+  set keepingScrollContainer(value: string | Element) {
+    this._keepingScrollContainer = typeof value === 'string' ? this.doc.querySelector(value) : value;
+  }
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem>();
 
@@ -72,9 +78,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private render: Renderer2,
-    @Optional()
-    @Inject(ALAIN_I18N_TOKEN)
-    private i18nSrv: AlainI18NService,
+    @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
+    @Inject(DOCUMENT) private doc: any,
   ) {
     this.el = el.nativeElement;
     const route$ = this.router.events.pipe(
@@ -226,7 +231,11 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.max) this.srv.max = this.max;
     if (changes.excludes) this.srv.excludes = this.excludes;
     if (changes.mode) this.srv.mode = this.mode;
-    if (changes.keepingScroll) this.srv.keepingScroll = this.keepingScroll;
+    if (changes.keepingScroll) {
+      this.srv.keepingScroll = this.keepingScroll;
+      this.srv.keepingScrollContainer = this._keepingScrollContainer;
+    }
+
     this.srv.debug = this.debug;
 
     this.cdr.detectChanges();

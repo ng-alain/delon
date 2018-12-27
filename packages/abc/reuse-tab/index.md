@@ -150,6 +150,7 @@ export class DemoComponent {
 `[mode]` | 设置匹配模式 | `ReuseTabMatchMode` | `0`
 `[debug]` | 是否Debug模式 | `boolean` | `false`
 `[keepingScroll]` | 保持滚动条位置 | `boolean` | `false`
+`[keepingScrollContainer]` | 保持滚动条容器 | `Element` | `window`
 `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | -
 `[items]` | 获取已缓存的路由 | `ReuseTabCached[]` | -
 `[count]` | 获取当前缓存的路由总数 | `number` | -
@@ -183,6 +184,7 @@ export class DemoComponent {
 `[debug]` | 是否Debug模式 | `boolean` | `false`
 `[max]` | 允许最多复用多少个页面 | `number` | `10`
 `[keepingScroll]` | 保持滚动条位置 | `boolean` | `false`
+`[keepingScrollContainer]` | 保持滚动条容器 | `string | Element` | `window`
 `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | -
 `[allowClose]` | 允许关闭 | `boolean` | `true`
 `[showCurrent]` | 总是显示当前页 | `boolean` | `true`

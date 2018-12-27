@@ -16,6 +16,7 @@ describe('Service: Scroll', () => {
       .createSpy('Element getBoundingClientRect')
       .and.returnValue({ top: 0 });
     scrollIntoView = jasmine.createSpy('Element scrollIntoView');
+    scrollTo = jasmine.createSpy('Element scrollTo');
   }
 
   class MockDocument {
@@ -29,6 +30,7 @@ describe('Service: Scroll', () => {
   describe('[default]', () => {
     class MockWindow {
       scrollBy() {}
+      scrollTo() {}
     }
     beforeEach(() => {
       const providers = [
@@ -42,6 +44,37 @@ describe('Service: Scroll', () => {
       scrollService = injector.get(ScrollService);
 
       spyOn(window, 'scrollBy');
+      spyOn(window, 'scrollTo');
+    });
+
+    describe('#getScrollPosition', () => {
+      it('with HTMLElement', () => {
+        const element: Element = new MockElement() as any;
+        element.scrollLeft = 10;
+        element.scrollTop = 11;
+        const position = scrollService.getScrollPosition(element);
+        expect(position[0]).toBe(10);
+        expect(position[1]).toBe(11);
+      });
+      it('with Window', () => {
+        window.pageXOffset = 10;
+        window.pageYOffset = 11;
+        const position = scrollService.getScrollPosition();
+        expect(position[0]).toBe(10);
+        expect(position[1]).toBe(11);
+      });
+    });
+
+    describe('#scrollToPosition', () => {
+      it('with HTMLElement', () => {
+        const element: Element = new MockElement() as any;
+        scrollService.scrollToPosition(element, [10, 11]);
+        expect(element.scrollTo).toHaveBeenCalledWith(10, 11);
+      });
+      it('with Window', () => {
+        scrollService.scrollToPosition(window, [10, 11]);
+        expect(window.scrollTo).toHaveBeenCalledWith(10, 11);
+      });
     });
 
     describe('#scrollToElement', () => {

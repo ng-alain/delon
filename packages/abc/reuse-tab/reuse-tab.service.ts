@@ -1,8 +1,9 @@
 import { ViewportScroller } from '@angular/common';
 import { Injectable, Injector, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, ExtraOptions, NavigationEnd, NavigationStart, Router, ROUTER_CONFIGURATION } from '@angular/router';
-import { MenuService } from '@delon/theme';
 import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
+
+import { MenuService, ScrollService } from '@delon/theme';
 import { ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
 
 /**
@@ -60,6 +61,7 @@ export class ReuseTabService implements OnDestroy {
   get keepingScroll() {
     return this._keepingScroll;
   }
+  keepingScrollContainer: Element;
   /** 排除规则，限 `mode=URL` */
   set excludes(values: RegExp[]) {
     if (!values) return;
@@ -479,8 +481,8 @@ export class ReuseTabService implements OnDestroy {
     return routerConfig.scrollPositionRestoration == null || routerConfig.scrollPositionRestoration === 'disabled';
   }
 
-  private get vs(): ViewportScroller {
-    return this.injector.get(ViewportScroller);
+  private get ss(): ScrollService {
+    return this.injector.get(ScrollService);
   }
 
   private initScroll() {
@@ -495,11 +497,11 @@ export class ReuseTabService implements OnDestroy {
 
     this._router$ = router.events.subscribe(e => {
       if (e instanceof NavigationStart) {
-        this.positionBuffer[this.curUrl] = this.vs.getScrollPosition();
+        this.positionBuffer[this.curUrl] = this.ss.getScrollPosition(this.keepingScrollContainer);
       } else if (e instanceof NavigationEnd) {
         const item = this.get(this.curUrl);
         if (item && item.position) {
-          this.vs.scrollToPosition(item.position);
+          this.ss.scrollToPosition(this.keepingScrollContainer, item.position);
         }
       }
     });
