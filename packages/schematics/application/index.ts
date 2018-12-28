@@ -102,6 +102,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       host,
       [
         `ng-alain@${VERSION}`,
+        `@delon/testing@${VERSION}`,
         // color-less
         `less-bundle-promise@DEP-0.0.0-PLACEHOLDER`,
       ],
