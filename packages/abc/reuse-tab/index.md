@@ -138,9 +138,10 @@ export class DemoComponent {
 
 开启 `keepingScroll` 复用后恢复之前的滚动条位置，有几项注意细节：
 
+> **务必**使用路由选项 [scrollPositionRestoration](https://angular.io/api/router/ExtraOptions#scrollPositionRestoration) 来管理滚动条位置
+
 - `true`：表示保持之前滚动条位置
 - `false`：表示不对滚动条任何操作
-- **务必**使用路由选项 [scrollPositionRestoration](https://angular.io/api/router/ExtraOptions#scrollPositionRestoration) 来管理滚动条位置
 - 若全站使用路由复用时，则设置 `scrollPositionRestoration: 'disabled'`，避免延迟滚动
 - 若部分页面路由复用时，则受限于 `scrollPositionRestoration` **优先值** ，会有 `1ms` 的延迟滚动条位置恢复
 

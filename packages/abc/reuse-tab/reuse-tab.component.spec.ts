@@ -512,28 +512,28 @@ describe('abc: reuse-tab', () => {
     describe('#keepingScroll', () => {
       const KSTIME = 2;
       let ss: ScrollService;
+      let getScrollPositionSpy: jasmine.Spy;
       beforeEach(() => {
         ss = injector.get(ScrollService) as ScrollService;
-        spyOn(ss, 'getScrollPosition').and.returnValue([0, 666]);
+        getScrollPositionSpy = spyOn(ss, 'getScrollPosition').and.returnValue([0, 666]);
         spyOn(ss, 'scrollToPosition');
       });
-
       it('with true', fakeAsync(() => {
         srv.keepingScroll = true;
         page
           .to('#a') // default page, not trigger store
           .to('#b')
+          .advance(KSTIME)
           .tap(() => {
             expect(srv.items[0].position != null).toBe(true);
             expect(srv.items[0].position[1]).toBe(666);
-            tick(KSTIME);
             expect(ss.scrollToPosition).not.toHaveBeenCalled();
           })
           .to('#a')
+          .advance(KSTIME)
           .tap(() => {
             expect(srv.items[1].position != null).toBe(true);
             expect(srv.items[1].position[1]).toBe(666);
-            tick(KSTIME);
             expect(ss.scrollToPosition).toHaveBeenCalled();
           });
       }));
@@ -542,66 +542,100 @@ describe('abc: reuse-tab', () => {
         page
           .to('#a') // default page, not trigger store
           .to('#b')
+          .advance(KSTIME)
           .tap(() => {
-            tick(KSTIME);
             expect(ss.getScrollPosition).not.toHaveBeenCalled();
           })
           .to('#a')
+          .advance(KSTIME)
           .tap(() => {
-            tick(KSTIME);
             expect(ss.getScrollPosition).not.toHaveBeenCalled();
           });
       }));
-      describe('should be ingore when has setting scrollPositionRestoration', () => {
-        it('not keeping with enabled', fakeAsync(() => {
-          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
-          cog.scrollPositionRestoration = 'enabled';
-          srv.keepingScroll = true;
-          page
-            .to('#a') // default page, not trigger store
-            .to('#b')
-            .tap(() => {
-              tick(KSTIME);
-              expect(ss.getScrollPosition).not.toHaveBeenCalled();
-            })
-            .to('#a')
-            .tap(() => {
-              tick(KSTIME);
-              expect(ss.getScrollPosition).not.toHaveBeenCalled();
-            });
-        }));
-        it('keeping with disabled', fakeAsync(() => {
+      describe('should be delay trigger when has setting scrollPositionRestoration', () => {
+        it('with disabled (not delay)', fakeAsync(() => {
           const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
           cog.scrollPositionRestoration = 'disabled';
           srv.keepingScroll = true;
           page
             .to('#a') // default page, not trigger store
             .to('#b')
-            .tap(() => {
-              tick(KSTIME);
-              expect(ss.getScrollPosition).toHaveBeenCalled();
-            })
             .to('#a')
             .tap(() => {
-              tick(KSTIME);
-              expect(ss.getScrollPosition).toHaveBeenCalled();
+              expect(ss.scrollToPosition).toHaveBeenCalled();
             });
         }));
-        it('not keeping with top', fakeAsync(() => {
+        it('with enabled (must delay)', fakeAsync(() => {
+          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
+          cog.scrollPositionRestoration = 'enabled';
+          srv.keepingScroll = true;
+          page
+            .to('#a') // default page, not trigger store
+            .to('#b')
+            .to('#a')
+            .advance(KSTIME)
+            .tap(() => {
+              expect(ss.scrollToPosition).toHaveBeenCalled();
+            });
+        }));
+        it('with top (must delay)', fakeAsync(() => {
           const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
           cog.scrollPositionRestoration = 'top';
           srv.keepingScroll = true;
           page
             .to('#a') // default page, not trigger store
             .to('#b')
-            .tap(() => {
-              tick(KSTIME);
-              expect(ss.getScrollPosition).not.toHaveBeenCalled();
-            })
             .to('#a')
+            .advance(KSTIME)
             .tap(() => {
-              tick(KSTIME);
-              expect(ss.getScrollPosition).not.toHaveBeenCalled();
+              expect(ss.scrollToPosition).toHaveBeenCalled();
+            });
+        }));
+      });
+      describe('#keepingScrollContainer', () => {
+        beforeEach(() => {
+          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
+          cog.scrollPositionRestoration = 'disabled';
+          layoutComp.keepingScroll = true;
+        });
+        it('with window', fakeAsync(() => {
+          layoutComp.keepingScrollContainer = window;
+          fixture.detectChanges();
+          page
+            .to('#a') // default page, not trigger store
+            .to('#b')
+            .advance(KSTIME)
+            .tap(() => {
+              expect(srv.items[0].position != null).toBe(true);
+              expect(srv.items[0].position[1]).toBe(666);
+              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(window);
+            });
+        }));
+        it('with Element', fakeAsync(() => {
+          const el = document.querySelector('#children');
+          layoutComp.keepingScrollContainer = el;
+          fixture.detectChanges();
+          page
+            .to('#a') // default page, not trigger store
+            .to('#b')
+            .advance(KSTIME)
+            .tap(() => {
+              expect(srv.items[0].position != null).toBe(true);
+              expect(srv.items[0].position[1]).toBe(666);
+              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(el);
+            });
+        }));
+        it('with String', fakeAsync(() => {
+          layoutComp.keepingScrollContainer = '#children';
+          fixture.detectChanges();
+          page
+            .to('#a') // default page, not trigger store
+            .to('#b')
+            .advance(KSTIME)
+            .tap(() => {
+              expect(srv.items[0].position != null).toBe(true);
+              expect(srv.items[0].position[1]).toBe(666);
+              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(document.querySelector('#children'));
             });
         }));
       });
@@ -761,6 +795,8 @@ class AppComponent {}
       [excludes]="excludes"
       [allowClose]="allowClose"
       [showCurrent]="showCurrent"
+      [keepingScroll]="keepingScroll"
+      [keepingScrollContainer]="keepingScrollContainer"
       (change)="change($event)"
       (close)="close($event)"
     >
@@ -777,6 +813,8 @@ class LayoutComponent {
   excludes: RegExp[] = [];
   allowClose = true;
   showCurrent = true;
+  keepingScroll = false;
+  keepingScrollContainer = null;
   change() {}
   close() {}
 }
