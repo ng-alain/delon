@@ -43,7 +43,7 @@ const routes: Routes = [
     children: [
       { path: 'login', component: UserLoginComponent, data: { title: '登录'<% if (!i18n) { %>, titleI18n: 'pro-login'<% } %> } },
       { path: 'register', component: UserRegisterComponent, data: { title: '注册'<% if (!i18n) { %>, titleI18n: 'pro-register'<% } %> } },
-      { path: 'register-result', component: UserRegisterResultComponent, data: { title: '注册结果'<% if (!i18n) { %>, titleI18n: 'pro-register-result'<% } %> } }
+      { path: 'register-result', component: UserRegisterResultComponent, data: { title: '注册结果'<% if (!i18n) { %>, titleI18n: 'pro-register-result'<% } %> } },
       { path: 'lock', component: UserLockComponent, data: { title: '锁屏'<% if (!i18n) { %>, titleI18n: 'lock'<% } %> } },
     ]
   },
