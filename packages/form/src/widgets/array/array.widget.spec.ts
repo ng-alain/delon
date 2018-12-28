@@ -1,8 +1,6 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DelonFormModule } from '@delon/form';
-import { configureTestSuite, createTestContext } from '@delon/testing';
-import { AlainThemeModule } from '@delon/theme';
+import { ComponentFixture } from '@angular/core/testing';
+import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
