@@ -18,6 +18,7 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
 
+import { configureTestSuite } from '@delon/testing';
 import {
   en_US,
   zh_CN,
@@ -25,9 +26,10 @@ import {
   DelonLocaleModule,
   DelonLocaleService,
   MenuService,
+  ScrollService,
+  WINDOW,
 } from '@delon/theme';
 
-import { ViewportScroller } from '@angular/common';
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
 import { ReuseTabMatchMode } from './reuse-tab.interfaces';
@@ -87,6 +89,7 @@ describe('abc: reuse-tab', () => {
       ],
       providers: [
         MenuService,
+        { provide: WINDOW, useValue: window },
         {
           provide: RouteReuseStrategy,
           useClass: ReuseTabStrategy,
@@ -113,6 +116,9 @@ describe('abc: reuse-tab', () => {
             ],
       ),
     });
+  }
+
+  function createComp() {
     fixture = TestBed.createComponent(AppComponent);
     dl = fixture.debugElement;
     tick();
@@ -136,7 +142,9 @@ describe('abc: reuse-tab', () => {
   afterEach(() => rtComp.ngOnDestroy());
 
   describe('', () => {
-    beforeEach(fakeAsync(() => genModule()));
+    configureTestSuite(genModule);
+
+    beforeEach(fakeAsync(() => createComp()));
 
     describe('[default]', () => {
       it('should be create an instance', fakeAsync(() => {
@@ -502,39 +510,46 @@ describe('abc: reuse-tab', () => {
     });
 
     describe('#keepingScroll', () => {
+      const KSTIME = 2;
+      let ss: ScrollService;
+      beforeEach(() => {
+        ss = injector.get(ScrollService) as ScrollService;
+        spyOn(ss, 'getScrollPosition').and.returnValue([0, 666]);
+        spyOn(ss, 'scrollToPosition');
+      });
+
       it('with true', fakeAsync(() => {
         srv.keepingScroll = true;
-        const vs = injector.get(ViewportScroller) as ViewportScroller;
-        spyOn(vs, 'getScrollPosition').and.returnValue([0, 666]);
-        spyOn(vs, 'scrollToPosition');
         page
           .to('#a') // default page, not trigger store
           .to('#b')
           .tap(() => {
             expect(srv.items[0].position != null).toBe(true);
             expect(srv.items[0].position[1]).toBe(666);
-            expect(vs.scrollToPosition).not.toHaveBeenCalled();
+            tick(KSTIME);
+            expect(ss.scrollToPosition).not.toHaveBeenCalled();
           })
           .to('#a')
           .tap(() => {
             expect(srv.items[1].position != null).toBe(true);
             expect(srv.items[1].position[1]).toBe(666);
-            expect(vs.scrollToPosition).toHaveBeenCalled();
+            tick(KSTIME);
+            expect(ss.scrollToPosition).toHaveBeenCalled();
           });
       }));
       it('with false', fakeAsync(() => {
         srv.keepingScroll = false;
-        const vs = injector.get(ViewportScroller) as ViewportScroller;
-        spyOn(vs, 'getScrollPosition');
         page
           .to('#a') // default page, not trigger store
           .to('#b')
           .tap(() => {
-            expect(vs.getScrollPosition).not.toHaveBeenCalled();
+            tick(KSTIME);
+            expect(ss.getScrollPosition).not.toHaveBeenCalled();
           })
           .to('#a')
           .tap(() => {
-            expect(vs.getScrollPosition).not.toHaveBeenCalled();
+            tick(KSTIME);
+            expect(ss.getScrollPosition).not.toHaveBeenCalled();
           });
       }));
       describe('should be ingore when has setting scrollPositionRestoration', () => {
@@ -542,51 +557,51 @@ describe('abc: reuse-tab', () => {
           const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
           cog.scrollPositionRestoration = 'enabled';
           srv.keepingScroll = true;
-          const vs = injector.get(ViewportScroller) as ViewportScroller;
-          spyOn(vs, 'getScrollPosition');
           page
             .to('#a') // default page, not trigger store
             .to('#b')
             .tap(() => {
-              expect(vs.getScrollPosition).not.toHaveBeenCalled();
+              tick(KSTIME);
+              expect(ss.getScrollPosition).not.toHaveBeenCalled();
             })
             .to('#a')
             .tap(() => {
-              expect(vs.getScrollPosition).not.toHaveBeenCalled();
+              tick(KSTIME);
+              expect(ss.getScrollPosition).not.toHaveBeenCalled();
             });
         }));
         it('keeping with disabled', fakeAsync(() => {
           const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
           cog.scrollPositionRestoration = 'disabled';
           srv.keepingScroll = true;
-          const vs = injector.get(ViewportScroller) as ViewportScroller;
-          spyOn(vs, 'getScrollPosition');
           page
             .to('#a') // default page, not trigger store
             .to('#b')
             .tap(() => {
-              expect(vs.getScrollPosition).toHaveBeenCalled();
+              tick(KSTIME);
+              expect(ss.getScrollPosition).toHaveBeenCalled();
             })
             .to('#a')
             .tap(() => {
-              expect(vs.getScrollPosition).toHaveBeenCalled();
+              tick(KSTIME);
+              expect(ss.getScrollPosition).toHaveBeenCalled();
             });
         }));
         it('not keeping with top', fakeAsync(() => {
           const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
           cog.scrollPositionRestoration = 'top';
           srv.keepingScroll = true;
-          const vs = injector.get(ViewportScroller) as ViewportScroller;
-          spyOn(vs, 'getScrollPosition');
           page
             .to('#a') // default page, not trigger store
             .to('#b')
             .tap(() => {
-              expect(vs.getScrollPosition).not.toHaveBeenCalled();
+              tick(KSTIME);
+              expect(ss.getScrollPosition).not.toHaveBeenCalled();
             })
             .to('#a')
             .tap(() => {
-              expect(vs.getScrollPosition).not.toHaveBeenCalled();
+              tick(KSTIME);
+              expect(ss.getScrollPosition).not.toHaveBeenCalled();
             });
         }));
       });
@@ -596,6 +611,7 @@ describe('abc: reuse-tab', () => {
   describe('[i18n]', () => {
     it('should be rendered', fakeAsync(() => {
       genModule(true);
+      createComp();
       page.to('#e').expectAttr(1, 'title', 'zh');
 
       i18nResult = 'en';
@@ -605,6 +621,7 @@ describe('abc: reuse-tab', () => {
     }));
     it('#context-menu-text', fakeAsync(() => {
       genModule();
+      createComp();
       page.to('#b').openContextMenu(1);
       expect(document.querySelector('[data-type="close"]').textContent).toBe(
         zh_CN.reuseTab.close,

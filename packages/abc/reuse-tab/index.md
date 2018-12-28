@@ -243,6 +243,8 @@ export class DemoComponent {
 `[reuseClosable]` | 是否允许关闭 | `boolean` | -
 `[keepingScroll]` | 是否保持滚动条 | `boolean` | -
 
+> **注：** 以上数据也可在 Menu 数据中体现。
+
 ## 常见问题
 
 ### 如何Debug？

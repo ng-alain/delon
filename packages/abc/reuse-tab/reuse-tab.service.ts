@@ -397,7 +397,7 @@ export class ReuseTabService implements OnDestroy {
     const item: ReuseTabCached = {
       title: this.getTitle(url, _snapshot),
       closable: this.getClosable(url, _snapshot),
-      position: this.positionBuffer[url],
+      position: this.getKeepingScroll(url, _snapshot) ? this.positionBuffer[url] : null,
       url,
       _snapshot,
       _handle,
@@ -476,6 +476,24 @@ export class ReuseTabService implements OnDestroy {
 
   // #region scroll
 
+  /**
+   * 获取 `keepingScroll` 状态，顺序如下：
+   *
+   * 1. 路由配置中 data 属性中包含 `keepingScroll`
+   * 2. 菜单数据中 `keepingScroll` 属性
+   * 3. 组件 `keepingScroll` 值
+   */
+  getKeepingScroll(url: string, route?: ActivatedRouteSnapshot): boolean {
+    if (route && route.data && typeof route.data.keepingScroll === 'boolean')
+      return route.data.keepingScroll;
+
+    const menu = this.mode !== ReuseTabMatchMode.URL ? this.getMenu(url) : null;
+    if (menu && typeof menu.keepingScroll === 'boolean')
+      return menu.keepingScroll;
+
+    return this.keepingScroll;
+  }
+
   private isValidScroll(): boolean {
     const routerConfig: ExtraOptions = this.injector.get(ROUTER_CONFIGURATION, {} as any);
     return routerConfig.scrollPositionRestoration == null || routerConfig.scrollPositionRestoration === 'disabled';
@@ -501,7 +519,7 @@ export class ReuseTabService implements OnDestroy {
       } else if (e instanceof NavigationEnd) {
         const item = this.get(this.curUrl);
         if (item && item.position) {
-          this.ss.scrollToPosition(this.keepingScrollContainer, item.position);
+          setTimeout(() => this.ss.scrollToPosition(this.keepingScrollContainer, item.position), 1);
         }
       }
     });
