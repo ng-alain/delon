@@ -17,6 +17,8 @@ module: ReuseTabModule
 
 **注册RouteReuseStrategy**
 
+> ng-alain 使用方式参考：[delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L33)。
+
 ```ts
 // delon.module.ts or app.module.ts
 providers: [
@@ -43,9 +45,9 @@ providers: [
 
 在项目的任何位置（建议：`startup.service.ts`）注入 `ReuseTabService` 类，并设置 `mode` 属性，或通过 `<reuse-tab [mode]="0"></reuse-tab>` 重新设置值，包括：
 
-**0、（推荐，默认值）Menu**
+**0、Menu（推荐，默认值）**
 
-按菜单 `Menu` 配置。
+按菜单 ([Menu](/theme/menu#Menu)) 配置。
 
 可复用：
 
@@ -60,9 +62,9 @@ providers: [
 { text:'Dashboard', reuse: false }
 ```
 
-**1、（推荐）MenuForce**
+**1、MenuForce**
 
-按菜单 `Menu` 强制配置。
+按菜单 ([Menu](/theme/menu#Menu)) 强制配置。
 
 可复用：
 
@@ -81,13 +83,11 @@ providers: [
 
 对所有路由有效，可以配合 `excludes` 过滤无须复用路由。
 
-> 除以上规则以外，路由配置中 `data` 属性若设置 `reuse` 值时优先级高于上述规则。
-
 ## 标签文本
 
 根据以下顺序获取标签文本：
 
-1. 组件内使用 `ReuseTabService.title = 'new title'` 重新指定文本，
+1. 使用 `ReuseTabService.title = 'new title'` 在组件内覆盖文本
 2. 路由配置中 `data` 属性中包含 `reuseTitle` > `title`
 3. 菜单数据中 `text` 属性
 
@@ -110,7 +110,7 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 ## 生命周期
 
-路由复用过程中不会触发现有任何生命周期钩子（例如：`ngOnInit` 等），但是往往需要在复用过程中刷新数据，因此 `reuse-tab` 提供了两种新生命周期钩子用于临时解决这类问题。
+路由复用不会触发现Angular组件生命周期钩子（例如：`ngOnInit` 等），但是往往需要在复用过程中刷新数据，因此提供了两种新生命周期钩子用于临时解决这类问题。
 
 **_onReuseInit()**
 
@@ -120,7 +120,7 @@ export class DemoReuseTabEditComponent implements OnInit {
 
 当目前路由允许复用且进入新路由时触发。
 
-以 `_` 开头希望未来 Angular 会有相应的钩子用于快速替换，一个简单的示例：
+> 以 `_` 开头希望未来 Angular 会有相应的钩子用于快速替换，一个简单的示例：
 
 ```ts
 @Component()
@@ -136,14 +136,14 @@ export class DemoComponent {
 
 ## 滚动条位置
 
-开启 `keepingScroll` 复用后恢复之前的滚动条位置，有几项注意细节：
+开启 `keepingScroll` 会在复用后恢复之前的滚动条位置，有几项注意细节：
 
 > **务必**使用路由选项 [scrollPositionRestoration](https://angular.io/api/router/ExtraOptions#scrollPositionRestoration) 来管理滚动条位置
 
 - `true`：表示保持之前滚动条位置
 - `false`：表示不对滚动条任何操作
 - 若全站使用路由复用时，则设置 `scrollPositionRestoration: 'disabled'`，避免延迟滚动
-- 若部分页面路由复用时，则受限于 `scrollPositionRestoration` **优先值** ，会有 `1ms` 的延迟滚动条位置恢复
+- 若部分页面路由复用时，则受限于 `scrollPositionRestoration` **优先值** ，会有 `1ms` 延迟恢复滚动条位置
 
 ## API
 
@@ -171,7 +171,7 @@ export class DemoComponent {
 ----|------|-----
 `index(url)` | 获取指定路径缓存所在位置，`-1` 表示无缓存 | `number`
 `exists(url)` | 获取指定路径缓存是否存在 | `boolean`
-`get(url)` | 获取指定路径缓存 | `boolean`
+`get(url)` | 获取指定路径缓存 | `ReuseTabCached`
 `getTitle(url, route?: ActivatedRouteSnapshot)` | 获取标题 | `string`
 `clearTitleCached()` | 清空自定义标题数据 | `void`
 `getClosable(url, route?: ActivatedRouteSnapshot)` | 获取 `closable` 状态 | `string`
@@ -244,13 +244,13 @@ export class DemoComponent {
 `[reuseClosable]` | 是否允许关闭 | `boolean` | -
 `[keepingScroll]` | 是否保持滚动条 | `boolean` | -
 
-> **注：** 以上数据也可在 Menu 数据中体现。
+> **注：** 以上数据也可在 [Menu](/theme/menu#Menu) 数据中体现。
 
 ## 常见问题
 
 ### 如何Debug？
 
-路由复用会保留组件状态，这可能会带来另一个弊端；复用过程中组件的生命周期勾子不会重复触发，大部分情况下都能正常运行，但可能需要注意：
+路由复用会保留组件状态，这可能会带来另一个弊端；复用过程中不会触发Angular生命周期勾子，大部分情况下都能正常运行，有几个常见问题：
 
 - `OnDestroy` 可能会处理一些组件外部（例如：`body`）的样式等，可以参考生命周期解决。
 - 开启 `debug` 模式后会在 `console` 很多信息这有助于分析路由复用的过程。
