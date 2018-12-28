@@ -136,7 +136,13 @@ export class DemoComponent {
 
 ## 滚动条位置
 
-开启 `keepingScroll` 复用后恢复之前的滚动条位置；若路由选项 `scrollPositionRestoration` **优先值高于** `keepingScroll` 的设置。
+开启 `keepingScroll` 复用后恢复之前的滚动条位置，有几项注意细节：
+
+- `true`：表示保持之前滚动条位置
+- `false`：表示不对滚动条任何操作
+- **务必**使用路由选项 [scrollPositionRestoration](https://angular.io/api/router/ExtraOptions#scrollPositionRestoration) 来管理滚动条位置
+- 若全站使用路由复用时，则设置 `scrollPositionRestoration: 'disabled'`，避免延迟滚动
+- 若部分页面路由复用时，则受限于 `scrollPositionRestoration` **优先值** ，会有 `1ms` 的延迟滚动条位置恢复
 
 ## API
 
@@ -217,6 +223,25 @@ export class DemoComponent {
 `[closeOther]` | 关闭其它 | `string` | -
 `[closeRight]` | 关闭右边 | `string` | -
 `[clear]` | 清空 | `string` | -
+
+### 路由data
+
+透过路由 `data` 附加数据，可以对部分页面提供覆盖全局配置，例如：
+
+```ts
+// 指定不复路由
+{ path: 'p1', component: DemoComponent, data: { reuse: false } }
+// 指定标签标题
+{ path: 'p1', component: DemoComponent, data: { title: 'New Title' } }
+```
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[reuse]` | 是否复用 | `boolean` | -
+`[title]` | 标题 | `string` | -
+`[titleI18n]` | I18n标题Key | `string` | -
+`[reuseClosable]` | 是否允许关闭 | `boolean` | -
+`[keepingScroll]` | 是否保持滚动条 | `boolean` | -
 
 ## 常见问题
 
