@@ -25,11 +25,15 @@ export class ReuseTabService implements OnDestroy {
   private removeUrlBuffer: string;
   private positionBuffer: { [url: string]: [ number, number ]} = {};
 
+  private get snapshot() {
+    return this.injector.get(ActivatedRoute).snapshot;
+  }
+
   // #region public
 
   /** 当前路由地址 */
   get curUrl() {
-    return this.getUrl(this.injector.get(ActivatedRoute).snapshot);
+    return this.getUrl(this.snapshot);
   }
 
   /** 允许最多复用多少个页面，取值范围 `2-100`，值发生变更时会强制关闭且忽略可关闭条件 */
@@ -510,7 +514,7 @@ export class ReuseTabService implements OnDestroy {
     this._router$ = this.injector.get(Router).events.subscribe(e => {
       if (e instanceof NavigationStart) {
         const url = this.curUrl;
-        if (this.getKeepingScroll(url)) {
+        if (this.getKeepingScroll(url, this.getTruthRoute(this.snapshot))) {
           this.positionBuffer[url] = this.ss.getScrollPosition(this.keepingScrollContainer);
         } else {
           delete this.positionBuffer[url];
@@ -518,7 +522,7 @@ export class ReuseTabService implements OnDestroy {
       } else if (e instanceof NavigationEnd) {
         const url = this.curUrl;
         const item = this.get(url);
-        if (item && item.position && this.getKeepingScroll(url)) {
+        if (item && item.position && this.getKeepingScroll(url, this.getTruthRoute(this.snapshot))) {
           if (this.isDisabledInRouter) {
             this.ss.scrollToPosition(this.keepingScrollContainer, item.position);
           } else {
