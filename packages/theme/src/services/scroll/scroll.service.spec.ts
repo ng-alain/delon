@@ -72,7 +72,7 @@ describe('Service: Scroll', () => {
         expect(element.scrollTo).toHaveBeenCalledWith(10, 11);
       });
       it('with Window', () => {
-        scrollService.scrollToPosition(window, [10, 11]);
+        scrollService.scrollToPosition(null, [10, 11]);
         expect(window.scrollTo).toHaveBeenCalledWith(10, 11);
       });
     });
