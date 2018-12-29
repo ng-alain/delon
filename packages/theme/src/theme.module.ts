@@ -1,17 +1,11 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
-import { WINDOW } from './win_tokens';
 
 import { DelonLocaleModule } from './locale/locale.module';
 
 // #region import
-
-import { DrawerHelper } from './services/drawer/drawer.helper';
-import { ModalHelper } from './services/modal/modal.helper';
-const HELPERS = [ModalHelper, DrawerHelper];
 
 // components
 const COMPONENTS = [];
@@ -60,22 +54,5 @@ const ICONS = [
 export class AlainThemeModule {
   constructor(iconSrv: NzIconService) {
     iconSrv.addIcon(...ICONS);
-  }
-
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: AlainThemeModule,
-      providers: [
-        { provide: WINDOW, useValue: window },
-        ...HELPERS,
-      ],
-    };
-  }
-
-  static forChild(): ModuleWithProviders {
-    return {
-      ngModule: AlainThemeModule,
-      providers: [...HELPERS],
-    };
   }
 }
