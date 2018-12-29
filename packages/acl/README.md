@@ -1,4 +1,4 @@
-# @delon/acl module [![Build Status](https://travis-ci.org/ng-alain/delon.svg?branch=master)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/acl.svg)](https://www.npmjs.com/package/@delon/acl) [![NPM version](https://img.shields.io/npm/v/@delon/acl/next.svg)](https://www.npmjs.com/package/@delon/acl) [![Taobao version](https://npm.taobao.org/badge/v/@delon/acl.svg?style=flat-square)](https://npm.taobao.org/package/@delon/acl)
+# @delon/acl module [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/acl.svg?style=flat-square)](https://www.npmjs.com/package/@delon/acl)
 
 A simple role-based access control.
 

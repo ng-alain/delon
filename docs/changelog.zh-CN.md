@@ -4,6 +4,59 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.2](https://github.com/ng-alain/delon/compare/7.0.0-rc.1...7.0.0-rc.2) (2018-12-28)
+
+### Scaffold
+
+* 路由通配符指向 `/exception/404` ([db3055b](https://github.com/ng-alain/ng-alain/commit/db3055b))
+* 使用 `scrollPositionRestoration` 替代 `ScrollService` 来管理切换路由时滚动条位置 ([135327b](https://github.com/ng-alain/ng-alain/commit/135327b))
+* 优化 `default.interceptor.ts`
+
+### Bug Fixes
+
+* **module:cache:** 修复 `get` 无效指定存储参数 ([#343](https://github.com/ng-alain/delon/issues/343)) ([fd005e5](https://github.com/ng-alain/delon/commit/fd005e5))
+* **module:reuse-tab:** 修复存储时应忽略不可关闭缓存 ([#344](https://github.com/ng-alain/delon/issues/344)) ([fa08c07](https://github.com/ng-alain/delon/commit/fa08c07))
+* **module:se:** 修复重置值时应触发一次变更检测 ([#339](https://github.com/ng-alain/delon/issues/339)) ([7223e85](https://github.com/ng-alain/delon/commit/7223e85))
+* **module:sf:** 修复数组添加按钮会触发提交事件 ([#349](https://github.com/ng-alain/delon/issues/349)) ([8e11729](https://github.com/ng-alain/delon/commit/8e11729)), closes [#348](https://github.com/ng-alain/delon/issues/348)
+* **module:sf:** 修复异步可能会引起丢失数据问题 ([#345](https://github.com/ng-alain/delon/issues/345)) ([2520f11](https://github.com/ng-alain/delon/commit/2520f11))
+
+### Features
+
+* **module:reuse-tab:** 新增保持滚动条 ([#347](https://github.com/ng-alain/delon/issues/347)) ([862d8f4](https://github.com/ng-alain/delon/commit/862d8f4))
+
+
+# [7.0.0-rc.1](https://github.com/ng-alain/delon/compare/7.0.0-rc.0...7.0.0-rc.1) (2018-12-24)
+
+### Scaffold
+
+* 新增异常触发示例页
+* 新增波兰语
+* 优化路径配置 ([#825](https://github.com/ng-alain/ng-alain/pull/825))
+
+### Bug Fixes
+
+* **module:auth:** 修复无法识别完整URL匿名键名 ([#328](https://github.com/ng-alain/delon/issues/328)) ([e223ccb](https://github.com/ng-alain/delon/commit/e223ccb))
+* **module:sf:** 修复重置值时应触发一次变更检测 ([#332](https://github.com/ng-alain/delon/issues/332)) ([ffd365b](https://github.com/ng-alain/delon/commit/ffd365b))
+* **module:sf:cascader:** 修复未指定 `labelProperty`、`valueProperty` 问题 ([#325](https://github.com/ng-alain/delon/issues/325)) ([4d4e53f](https://github.com/ng-alain/delon/commit/4d4e53f))
+* **module:st:** 修复调用 `removeRow` 方法应重新计算序号 ([#331](https://github.com/ng-alain/delon/issues/331)) ([6c8c2d1](https://github.com/ng-alain/delon/commit/6c8c2d1)), closes [#330](https://github.com/ng-alain/delon/issues/330)
+* **module:theme:** 修复主菜单在Firefox下总是显示滚动条 ([#336](https://github.com/ng-alain/delon/issues/336)) ([727d0d7](https://github.com/ng-alain/delon/commit/727d0d7))
+* **module:theme:menu:** 标记过期属性 `linkExact` ([#337](https://github.com/ng-alain/delon/issues/337)) ([ebbeed3](https://github.com/ng-alain/delon/commit/ebbeed3))
+
+### Features
+
+* **module:testing:** 增加 `@delon/testing` 测试套件库 ([#329](https://github.com/ng-alain/delon/issues/329)) ([9d533cf](https://github.com/ng-alain/delon/commit/9d533cf))
+* **module:auth:** 增加 `referrer` 属性，用于获取跳转前URL ([#334](https://github.com/ng-alain/delon/issues/334)) ([0510864](https://github.com/ng-alain/delon/commit/0510864))
+* **module:mock:** 增加 `executeOtherInterceptors` 命中后继续执行后续拦截器 ([#321](https://github.com/ng-alain/delon/issues/321)) ([d77e8e9](https://github.com/ng-alain/delon/commit/d77e8e9))
+* **module:sidebar-nav:** 增加 `disabledAcl` 属性，当 ACL 未授权时以禁用状态显示 ([#337](https://github.com/ng-alain/delon/issues/337)) ([ebbeed3](https://github.com/ng-alain/delon/commit/ebbeed3))
+* **module:st:** 增加 `expandRowByClick` 属性，点击行展开与收缩 ([#326](https://github.com/ng-alain/delon/issues/326)) ([a8a6695](https://github.com/ng-alain/delon/commit/a8a6695))
+* **module:st:** 增加 `url` 模式下支持数组响应体 ([#327](https://github.com/ng-alain/delon/issues/327)) ([4e681dc](https://github.com/ng-alain/delon/commit/4e681dc))
+* **module:util:** 增加 `stringTemplateOutlet` 指令 ([#324](https://github.com/ng-alain/delon/issues/324)) ([e8d9ed1](https://github.com/ng-alain/delon/commit/e8d9ed1))
+* **module:theme:** 新增波兰语 ([#308](https://github.com/ng-alain/delon/issues/308)) ([025282c](https://github.com/ng-alain/delon/commit/025282c))
+
+### BREAKING CHANGES
+
+* **module:chart:timeline:** 移除 `tickCount`，同步 antd 3.4 ([#323](https://github.com/ng-alain/delon/issues/323)) ([20920fc](https://github.com/ng-alain/delon/commit/20920fc))
+
 # [7.0.0-rc.0](https://github.com/ng-alain/delon/compare/2.0.1...7.0.0-rc.0) (2018-12-14)
 
 `ng-alain` will track the major version of `@angular/core` from `7.0.0-rc.0` like other angular libraries.

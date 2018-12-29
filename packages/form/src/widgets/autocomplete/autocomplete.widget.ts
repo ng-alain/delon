@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { of, Observable } from 'rxjs';
-import { debounceTime, flatMap, map, startWith } from 'rxjs/operators';
+import { debounceTime, flatMap, map, startWith, takeUntil } from 'rxjs/operators';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum, toBool } from '../../utils';
@@ -62,7 +62,9 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
     this.isAsync = !!this.ui.asyncData;
     const orgTime = +(this.ui.debounceTime || 0);
     const time = Math.max(0, this.isAsync ? Math.max(50, orgTime) : orgTime);
+
     this.list = this.formProperty.valueChanges.pipe(
+      takeUntil(this.sfItemComp.unsubscribe$),
       debounceTime(time),
       startWith(''),
       flatMap(

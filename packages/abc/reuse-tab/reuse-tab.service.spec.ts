@@ -9,23 +9,27 @@ import { ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 
-const TITLE = `标题`;
-let reuse = true;
-let reuseClosable = true;
 class MockMenuService {
   getPathByUrl(url: string) {
-    return url === '/a/0' ? [] : [{ text: TITLE, reuse, reuseClosable }];
+    return url === '/a/0' ? [] : [{ text: `标题` }];
   }
 }
 class MockRouter {
   navigateByUrl = jasmine.createSpy();
+  get events() {
+    return {
+      subscribe: () => {
+        return { unsubscribe: () => {} };
+      },
+    };
+  }
 }
 
 describe('abc: reuse-tab(service)', () => {
   let injector: Injector;
   let srv: ReuseTabService;
   let menuSrv: MenuService;
-  let router: Router;
+  let router: MockRouter;
 
   afterEach(() => srv.ngOnDestroy());
 
@@ -46,9 +50,7 @@ describe('abc: reuse-tab(service)', () => {
     });
     srv = injector.get(ReuseTabService);
     menuSrv = injector.get(MenuService, null);
-    router = injector.get(Router);
-    reuse = true;
-    reuseClosable = true;
+    router = injector.get(Router) as any;
   }
 
   function genCached(count: number, urlTpl: string = `a/{index}`) {
@@ -60,6 +62,10 @@ describe('abc: reuse-tab(service)', () => {
       });
   }
 
+  /**
+   * 模拟 Snapshot
+   * - 1 => a/1
+   */
   function getSnapshot(index: number, urlTpl: string = `a/{index}`) {
     return {
       routeConfig: {},
@@ -69,11 +75,32 @@ describe('abc: reuse-tab(service)', () => {
 
   describe('[property]', () => {
     beforeEach(() => genModule());
-    it('#max', () => {
-      genCached(10);
-      expect(srv.count).toBe(10);
-      srv.max = 5;
-      expect(srv.count).toBe(5);
+    describe('#max', () => {
+      it('should working', () => {
+        genCached(10);
+        expect(srv.count).toBe(10);
+        srv.max = 5;
+        expect(srv.count).toBe(5);
+      });
+      it('should be close oldest page', () => {
+        srv.max = 2;
+        srv.store(getSnapshot(1), {});
+        srv.store(getSnapshot(2), {});
+        srv.store(getSnapshot(3), {});
+        expect(srv.count).toBe(2);
+        srv.store(getSnapshot(4), {});
+        expect(srv.count).toBe(2);
+      });
+      it('should be ingore close when all is not closable', () => {
+        srv.max = 2;
+        srv.store(getSnapshot(1), {});
+        srv.store(getSnapshot(2), {});
+        srv.items.forEach(i => i.closable = false);
+        srv.store(getSnapshot(3), {});
+        expect(srv.count).toBe(3);
+        srv.store(getSnapshot(4), {});
+        expect(srv.count).toBe(3);
+      });
     });
     describe('#mode', () => {
       describe('when ReuseTabMatchMode.Menu', () => {
@@ -87,26 +114,30 @@ describe('abc: reuse-tab(service)', () => {
           expect(srv.can(snapshot)).toBe(false);
         });
         it(`can't hit because not allowed reuse in menu`, () => {
-          reuse = false;
-          const snapshot = getSnapshot(1);
-          expect(srv.can(snapshot)).toBe(false);
+          const spy = spyOn(menuSrv, 'getPathByUrl');
+          spy.and.returnValue([{ text: '1', link: '/a/1', reuse: false }]);
+          expect(srv.can(getSnapshot(1))).toBe(false);
+          spy.and.returnValue([{ text: '2', link: '/a/2', reuse: true }]);
+          expect(srv.can(getSnapshot(2))).toBe(true);
         });
       });
       describe('when ReuseTabMatchMode.MenuForce', () => {
         beforeEach(() => (srv.mode = ReuseTabMatchMode.MenuForce));
         it('can hit because menu data muse allow', () => {
-          // url: /a/1
-          const snapshot = getSnapshot(1);
-          expect(srv.can(snapshot)).toBe(true);
+          const spy = spyOn(menuSrv, 'getPathByUrl');
+          spy.and.returnValue([{ text: '1', link: '/a/1', reuse: true }]);
+          expect(srv.can(getSnapshot(1))).toBe(true);
         });
         it(`can't hit because not found in menu`, () => {
           const snapshot = getSnapshot(0);
           expect(srv.can(snapshot)).toBe(false);
         });
         it(`can't hit because not allowed reuse in menu`, () => {
-          reuse = false;
-          const snapshot = getSnapshot(1);
-          expect(srv.can(snapshot)).toBe(false);
+          const spy = spyOn(menuSrv, 'getPathByUrl');
+          spy.and.returnValue([{ text: '1', link: '/a/1', reuse: false }]);
+          expect(srv.can(getSnapshot(1))).toBe(false);
+          spy.and.returnValue([{ text: '2', link: '/a/2', reuse: true }]);
+          expect(srv.can(getSnapshot(2))).toBe(true);
         });
       });
       describe('when ReuseTabMatchMode.URL', () => {
@@ -231,8 +262,11 @@ describe('abc: reuse-tab(service)', () => {
         ).toBe(closable);
       });
       it('should get closable from menu data', () => {
-        reuseClosable = false;
-        expect(srv.getClosable('/')).toBe(reuseClosable);
+        const spy = spyOn(menuSrv, 'getPathByUrl');
+        spy.and.returnValue([{ text: '1', link: '/1', reuseClosable: false }]);
+        expect(srv.getClosable('/1')).toBe(false);
+        spy.and.returnValue([{ text: '2', link: '/2', reuseClosable: true }]);
+        expect(srv.getClosable('/2')).toBe(true);
       });
       it('should use url as title when can be no found title', () => {
         const url = '/a/0';
@@ -336,10 +370,13 @@ describe('abc: reuse-tab(service)', () => {
       });
     });
     it('#refresh', () => {
-      srv.change
+      const _$ = srv.change
         .pipe(filter(w => w !== null))
         .subscribe(
-          res => expect(res.active).toBe('refresh'),
+          res => {
+            expect(res.active).toBe('refresh');
+            _$.unsubscribe();
+          },
           () => expect(false).toBe(true),
         );
       srv.refresh(true);
@@ -355,6 +392,25 @@ describe('abc: reuse-tab(service)', () => {
         expect(router.navigateByUrl).not.toHaveBeenCalled();
         srv.replace('/b');
         expect(router.navigateByUrl).toHaveBeenCalled();
+      });
+    });
+    describe('#keepingScroll', () => {
+      it('should get keepingScroll from service', () => {
+        srv.keepingScroll = true;
+        expect(srv.getKeepingScroll('')).toBe(true);
+        srv.keepingScroll = false;
+        expect(srv.getKeepingScroll('')).toBe(false);
+      });
+      it('should get keepingScroll from route data', () => {
+        expect(srv.getKeepingScroll('/', { data: { keepingScroll: false } } as any)).toBe(false);
+        expect(srv.getKeepingScroll('/', { data: { keepingScroll: true } } as any)).toBe(true);
+      });
+      it('should get keepingScroll from menu data', () => {
+        const spy = spyOn(menuSrv, 'getPathByUrl');
+        spy.and.returnValue([{ text: '1', link: '/1', keepingScroll: false }]);
+        expect(srv.getKeepingScroll('/1')).toBe(false);
+        spy.and.returnValue([{ text: '2', link: '/2', keepingScroll: true }]);
+        expect(srv.getKeepingScroll('/2')).toBe(true);
       });
     });
   });

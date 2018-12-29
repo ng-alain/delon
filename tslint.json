@@ -187,7 +187,7 @@
     "prefer-conditional-expression": false,
     "prefer-const": true,
     "prefer-for-of": true,
-    "prefer-method-signature": true,
+    "prefer-method-signature": false,
     "prefer-object-spread": true,
     "prefer-template": [
       true,

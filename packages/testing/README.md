@@ -1,4 +1,4 @@
-# @delon/testing module [![Build Status](https://travis-ci.org/ng-alain/delon.svg?branch=master)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/testing.svg)](https://www.npmjs.com/package/@delon/testing) [![NPM version](https://img.shields.io/npm/v/@delon/testing/next.svg)](https://www.npmjs.com/package/@delon/testing) [![Taobao version](https://npm.taobao.org/badge/v/@delon/testing.svg?style=flat-square)](https://npm.taobao.org/package/@delon/testing)
+# @delon/testing module [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/testing.svg?style=flat-square)](https://www.npmjs.com/package/@delon/testing)
 
 Test suite for ng-alain.
 
