@@ -12,7 +12,7 @@ export class ScrollService {
    * @param element 指定元素，默认 `window`
    */
   getScrollPosition(element?: Element): [ number, number ] {
-    if (element) {
+    if (element && element !== this.win) {
       return [ element.scrollLeft, element.scrollTop ];
     } else {
       return [ this.win.pageXOffset, this.win.pageYOffset ];
