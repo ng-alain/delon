@@ -50,7 +50,7 @@ describe('theme: i18n', () => {
 
     function genModule() {
       TestBed.configureTestingModule({
-        imports: [AlainThemeModule.forRoot()],
+        imports: [AlainThemeModule],
         declarations: [TestComponent],
         providers: [
           {

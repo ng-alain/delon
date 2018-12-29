@@ -30,7 +30,6 @@ const DIRECTIVES = [];
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    AlainThemeModule.forChild(),
     DelonABCModule,
     DelonACLModule,<% if (form) { %>
     DelonFormModule,<% } %>

@@ -16,7 +16,7 @@ describe('form: component', () => {
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()],
+      imports: [NoopAnimationsModule, AlainThemeModule, DelonFormModule.forRoot()],
       declarations: [TestFormComponent, TestModeComponent],
     });
   });

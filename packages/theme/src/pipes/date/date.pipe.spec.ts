@@ -17,7 +17,7 @@ describe('Pipe: _date', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule.forRoot()],
+      imports: [AlainThemeModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

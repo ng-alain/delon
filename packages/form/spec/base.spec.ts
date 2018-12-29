@@ -45,7 +45,7 @@ export function builder(options?: {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
     imports: [
-      NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(),
+      NoopAnimationsModule, AlainThemeModule, DelonFormModule.forRoot(),
     ].concat(options.imports || []),
     declarations: [TestFormComponent],
   });
@@ -74,7 +74,7 @@ export function builder(options?: {
 export function configureSFTestSuite() {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
+      imports: [NoopAnimationsModule, AlainThemeModule, DelonFormModule.forRoot(), HttpClientTestingModule],
       declarations: [TestFormComponent],
     });
   });

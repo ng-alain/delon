@@ -16,7 +16,7 @@ describe('theme: ModalHelper', () => {
       imports: [
         CommonModule,
         NgZorroAntdModule,
-        AlainThemeModule.forChild(),
+        AlainThemeModule,
       ],
       declarations: [TestModalComponent, TestComponent],
       entryComponents: [TestModalComponent],

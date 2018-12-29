@@ -16,7 +16,7 @@ describe('theme: DrawerHelper', () => {
       imports: [
         CommonModule,
         NgZorroAntdModule,
-        AlainThemeModule.forChild(),
+        AlainThemeModule,
       ],
       declarations: [TestDrawerComponent, TestComponent],
       entryComponents: [TestDrawerComponent],

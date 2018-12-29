@@ -62,7 +62,7 @@ const THIRDS = [
     RouterModule,
     ReactiveFormsModule,
     NgZorroAntdModule,
-    AlainThemeModule.forChild(),
+    AlainThemeModule,
     DelonABCModule,
     DelonACLModule,
     DelonFormModule,

@@ -44,7 +44,7 @@ describe('cache: service', () => {
     injector = TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        AlainThemeModule.forRoot(),
+        AlainThemeModule,
         DelonCacheModule,
       ],
       providers: [],

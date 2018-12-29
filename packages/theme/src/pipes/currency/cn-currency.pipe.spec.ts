@@ -13,7 +13,7 @@ describe('Pipe: _currency', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AlainThemeModule.forRoot()],
+      imports: [AlainThemeModule],
       declarations: [TestComponent],
     });
     fixture = TestBed.createComponent(TestComponent);

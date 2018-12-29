@@ -35,7 +35,6 @@ export function fnLodopConfig(): LodopConfig {
 @NgModule({
   imports: [
     NgZorroAntdModule.forRoot(),
-    AlainThemeModule.forRoot(),
     DelonFormModule.forRoot(),
     DelonMockModule.forRoot({ data: MOCKDATA }),
   ],

@@ -258,7 +258,7 @@ imports: [
     BrowserAnimationsModule,
     RouterModule.forRoot([]),
     NgZorroAntdModule,
-    AlainThemeModule.forRoot(),
+    AlainThemeModule,
     DelonABCModule,
     DelonChartModule,
     DelonACLModule,
