@@ -16,6 +16,8 @@ yarn add file-saver
 
 ## API
 
+### [down-file]
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[http-data]` | URL请求参数 | `any` | -

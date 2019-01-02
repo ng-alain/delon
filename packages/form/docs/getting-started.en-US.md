@@ -136,6 +136,8 @@ export class HomeComponent {
 
 ## API
 
+### sf
+
 | Property         | Description                              | Type                         | Default      |
 |------------------|------------------------------------------|------------------------------|--------------|
 | `[layout]`       | layout of the form                       | `horizontal,vertical,inline` | `horizontal` |

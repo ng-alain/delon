@@ -10,6 +10,8 @@ Often used in data cards for highlighting the business data.
 
 ## API
 
+### number-info
+
 | Property     | Description                                               | Type               | Default |
 | ------------ | --------------------------------------------------------- | ------------------ | ------- |
 | `[title]`    | title                                                     | `TemplateRef<void>` | -       |

@@ -26,6 +26,8 @@ npm i --save qrious
 
 ## API
 
+### qr
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[value]` | 值，不支持中文 [#62](https://github.com/neocotic/qrious/issues/62) | `string` | -

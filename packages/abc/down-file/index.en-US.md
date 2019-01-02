@@ -16,6 +16,8 @@ yarn add file-saver
 
 ## API
 
+### [down-file]
+
 Property | Description | Type | Default
 ----|------|-----|------
 `[http-data]` | Parameter of request | `any` | -

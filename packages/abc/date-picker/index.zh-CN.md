@@ -11,6 +11,8 @@ config: DateRangePickerConfig
 
 ## API
 
+### range-picker
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[(ngModel)]` | 开始日期，开始与结束同时有值才会生效 | `Date` | -

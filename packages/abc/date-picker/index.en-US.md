@@ -11,6 +11,8 @@ Based on the `nz-range-picker` further optimization, better service to start and
 
 ## API
 
+### range-picker
+
 | Property         | Description                          | Type   | Default |
 | ---------------- | ------------------------------------ | ------ | ------- |
 | `[(ngModel)]`    | Start date, start and end values at the same time | `Date` | -       |

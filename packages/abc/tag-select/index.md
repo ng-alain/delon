@@ -10,6 +10,8 @@ module: TagSelectModule
 
 ## API
 
+### tag-select
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[expandable]` | 是否启用 `展开与收进` | `boolean` | `true`

@@ -10,6 +10,8 @@ module: ExceptionModule
 
 ## API
 
+### exception
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 页面类型，若配置，则自带对应类型默认的 `title`，`desc`，`img`，此默认设置可以被 `title`，`desc`，`img` 覆盖 | `403,404,500` | -

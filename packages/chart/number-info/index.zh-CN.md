@@ -10,6 +10,8 @@ module: NumberInfoModule
 
 ## API
 
+### number-info
+
 | 参数         | 说明                             | 类型               | 默认值  |
 | ------------ | -------------------------------- | ------------------ | ------- |
 | `[title]`    | 标题                             | `TemplateRef<void>` | -       |

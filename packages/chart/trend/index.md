@@ -10,6 +10,8 @@ module: TrendModule
 
 ## API
 
+### trend
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[colorful]` | 是否彩色标记 | `boolean` | `true`

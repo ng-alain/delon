@@ -26,6 +26,8 @@ npm i --save qrious
 
 ## API
 
+### qr
+
 Property | Description | Type | Default
 ----|------|-----|------
 `[value]` | Value encoded within the QR code | `string` | -

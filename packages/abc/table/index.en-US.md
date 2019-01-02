@@ -36,7 +36,7 @@ The value is `STData[]` or `Observable<STData[]>`, both follow the following rul
 
 ## API
 
-### STComponent
+### st
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
