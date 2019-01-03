@@ -15,42 +15,42 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { of } from 'rxjs';
-import { NzMessageService } from 'ng-zorro-antd';
 import { SFSchema } from '@delon/form';
+import { NzMessageService } from 'ng-zorro-antd';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`
+  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
 })
 export class DemoComponent {
-    schema: SFSchema = {
-        properties: {
-            format: {
-                type: 'string',
-                title: 'Format',
-                format: 'email'
-            },
-            widget: {
-                type: 'string',
-                title: '指定widget',
-                ui: {
-                    widget: 'autocomplete',
-                    type: 'email'
-                }
-            },
-            async: {
-                type: 'string',
-                title: '异步',
-                ui: {
-                    widget: 'autocomplete',
-                    debounceTime: 100,
-                    asyncData: (input: string) => of(input ? [ input, input + input, input + input + input ] : [])
-                }
-            }
-        }
-    };
-    constructor(public msg: NzMessageService) { }
-    submit(value: any) { this.msg.success(JSON.stringify(value)); }
+  schema: SFSchema = {
+    properties: {
+      format: {
+        type: 'string',
+        title: 'Format',
+        format: 'email',
+      },
+      widget: {
+        type: 'string',
+        title: '指定widget',
+        ui: {
+          widget: 'autocomplete',
+          type: 'email',
+        },
+      },
+      async: {
+        type: 'string',
+        title: '异步',
+        ui: {
+          widget: 'autocomplete',
+          debounceTime: 100,
+          asyncData: (input: string) => of(input ? [{ label: input, value: 1 }, { label: input + input, value: 2 }] : []),
+        },
+      },
+    },
+  };
+  constructor(public msg: NzMessageService) { }
+  submit(value: any) { this.msg.success(JSON.stringify(value)); }
 }
 ```
