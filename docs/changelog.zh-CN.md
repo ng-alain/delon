@@ -4,6 +4,34 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.3](https://github.com/ng-alain/delon/compare/7.0.0-rc.2...7.0.0-rc.3) (2018-12-29)
+
+### Bug Fixes
+
+* **module:theme:** 修复未找到 `window` 值 ([#355](https://github.com/ng-alain/delon/issues/355)) ([3be639a](https://github.com/ng-alain/delon/commit/3be639a))
+
+
+# [7.0.0-rc.2](https://github.com/ng-alain/delon/compare/7.0.0-rc.1...7.0.0-rc.2) (2018-12-28)
+
+### Scaffold
+
+* 路由通配符指向 `/exception/404` ([db3055b](https://github.com/ng-alain/ng-alain/commit/db3055b))
+* 使用 `scrollPositionRestoration` 替代 `ScrollService` 来管理切换路由时滚动条位置 ([135327b](https://github.com/ng-alain/ng-alain/commit/135327b))
+* 优化 `default.interceptor.ts`
+
+### Bug Fixes
+
+* **module:cache:** 修复 `get` 无效指定存储参数 ([#343](https://github.com/ng-alain/delon/issues/343)) ([fd005e5](https://github.com/ng-alain/delon/commit/fd005e5))
+* **module:reuse-tab:** 修复存储时应忽略不可关闭缓存 ([#344](https://github.com/ng-alain/delon/issues/344)) ([fa08c07](https://github.com/ng-alain/delon/commit/fa08c07))
+* **module:se:** 修复重置值时应触发一次变更检测 ([#339](https://github.com/ng-alain/delon/issues/339)) ([7223e85](https://github.com/ng-alain/delon/commit/7223e85))
+* **module:sf:** 修复数组添加按钮会触发提交事件 ([#349](https://github.com/ng-alain/delon/issues/349)) ([8e11729](https://github.com/ng-alain/delon/commit/8e11729)), closes [#348](https://github.com/ng-alain/delon/issues/348)
+* **module:sf:** 修复异步可能会引起丢失数据问题 ([#345](https://github.com/ng-alain/delon/issues/345)) ([2520f11](https://github.com/ng-alain/delon/commit/2520f11))
+
+### Features
+
+* **module:reuse-tab:** 新增保持滚动条 ([#347](https://github.com/ng-alain/delon/issues/347)) ([862d8f4](https://github.com/ng-alain/delon/commit/862d8f4))
+
+
 # [7.0.0-rc.1](https://github.com/ng-alain/delon/compare/7.0.0-rc.0...7.0.0-rc.1) (2018-12-24)
 
 ### Scaffold

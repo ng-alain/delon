@@ -44,6 +44,10 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     return this.settings.layout.collapsed;
   }
 
+  private get _d() {
+    return this.menuSrv.menus;
+  }
+
   constructor(
     private menuSrv: MenuService,
     private settings: SettingsService,
@@ -63,7 +67,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
     const id = +linkNode.dataset!.id;
     let item: Nav;
-    this.menuSrv.visit(i => {
+    this.menuSrv.visit(this._d, i => {
       if (!item && i.__id === id) {
         item = i;
       }
@@ -175,7 +179,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   toggleOpen(item: Nav) {
-    this.menuSrv.visit((i, p) => {
+    this.menuSrv.visit(this._d, (i, p) => {
       if (i !== item) i._open = false;
     });
     let pItem = item.__parent;
@@ -205,8 +209,8 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.bodyEl = doc.querySelector('body');
     menuSrv.openedByUrl(router.url);
     this.genFloatingContainer();
-    menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(_ => {
-      menuSrv.visit(i => {
+    menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(data => {
+      menuSrv.visit(data, i => {
         if (i._aclResult) return;
         if (this.disabledAcl) {
           i.disabled = true;

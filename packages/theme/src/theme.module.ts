@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { WINDOW } from './win_tokens';
-
 import { DelonLocaleModule } from './locale/locale.module';
 
 // #region import
@@ -30,21 +28,19 @@ const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe, I18nPipe, HTMLPipe, U
 
 // #region all delon used icons
 
+// - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts#L6
+
 import {
   BellOutline,
-  CaretDownOutline,
   CaretUpOutline,
   DeleteOutline,
-  FilterFill,
   InboxOutline,
   PlusOutline,
 } from '@ant-design/icons-angular/icons';
 import { NzIconService } from 'ng-zorro-antd';
 const ICONS = [
   BellOutline,
-  FilterFill,
   CaretUpOutline,
-  CaretDownOutline,
   DeleteOutline,
   PlusOutline,
   InboxOutline,
@@ -66,7 +62,6 @@ export class AlainThemeModule {
     return {
       ngModule: AlainThemeModule,
       providers: [
-        { provide: WINDOW, useValue: window },
         ...HELPERS,
       ],
     };
