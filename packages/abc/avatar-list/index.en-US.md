@@ -12,11 +12,11 @@ A list of user's avatar for project or group member list frequently. If a large 
 
 ### avatar-list
 
-| Property             | Description           | Type                        | Default   |
-|----------------------|-----------------------|-----------------------------|-----------|
-| `[size]`             | size of list          | `large,small,mini,default`  | `default` |
-| `[maxLength]`        | max items to show     | `number`                    | -         |
-| `[excessItemsStyle]` | the excess item style | `{ [key: string]: string }` | -         |
+| Property             | Description           | Type                               | Default     |
+|----------------------|-----------------------|------------------------------------|-------------|
+| `[size]`             | size of list          | `'large','small','mini','default'` | `'default'` |
+| `[maxLength]`        | max items to show     | `number`                           | -           |
+| `[excessItemsStyle]` | the excess item style | `{ [key: string]: string }`        | -           |
 
 ### avatar-list-item
 

@@ -23,7 +23,7 @@ type: Components
 | `[padding]`     | 图表内部间距       | `number[]`                    | `[60, 20, 40, 40]`                 |
 | `[borderWidth]` | 线条               | `number`                      | `2`                                |
 | `[mask]`        | 日期格式           | `string`                      | `HH:mm`                            |
-| `[position]`    | 标题位置           | `top,right,bottom,left`       | `'top'`                            |
+| `[position]`    | 标题位置           | `'top','right','bottom','left'`  | `'top'`                            |
 | `[slider]`      | 是否需要滑动条     | `boolean`                     | `true`                             |
 
 ### G2TimelineData

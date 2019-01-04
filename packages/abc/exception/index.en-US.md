@@ -14,7 +14,7 @@ Exceptions page is used to provide feedback on specific abnormal state. Usually,
 
 Property | Description | Type | Default
 ----|------|-----|------
-`[type]` | type of exception, the corresponding default `title`, `desc`, `img` will be given if set, which can be overridden by explicit setting of `title`, `desc`, `img` | `403,404,500` | -
+`[type]` | type of exception, the corresponding default `title`, `desc`, `img` will be given if set, which can be overridden by explicit setting of `title`, `desc`, `img` | `'403','404','500'` | -
 `[title]` | title | `string` | -
 `[desc]` | supplementary description | `string` | -
 `[img]` | the url of background image | `string` | -

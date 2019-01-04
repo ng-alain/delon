@@ -49,7 +49,7 @@ config: STConfig
 `[page]` | 分页器配置 | `STPage` | -
 `[noResult]` | 无数据时显示内容 | `string,TemplateRef<void>` | -
 `[bordered]` | 是否显示边框 | `boolean` | `false`
-`[size]` | table大小 | `small,middle,default` | `default`
+`[size]` | table大小 | `'small','middle','default'` | `'default'`
 `[rowClassName]` | 表格行的类名 | `(record: STData, index: number) => string` | -
 `[loading]` | 页面是否加载中 | `boolean` | `false`
 `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0`
@@ -105,7 +105,7 @@ class TestComponent {
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[params]` | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | -
-`[method]` | 请求方法 | `string` | `GET`
+`[method]` | 请求方法 | `'POST','GET','PUT','PATCH'` | `GET`
 `[body]` | 请求体 `body`，当 `method: POST` 时有效 | `any` | -
 `[headers]` | 请求体 `headers` | `any` | -
 `[reName]` | 重命名请求参数 `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps' }`
@@ -124,7 +124,7 @@ class TestComponent {
 ----|------|-----|------
 `[front]` | 前端分页，当 `data` 为 `any[]` 或 `Observable<any[]>` 有效 | `boolean` | `true`
 `[zeroIndexed]` | 后端分页是否采用`0`基索引，只在`data`类型为`string`时有效 | `boolean` | `false`
-`[placement]` | 分页方向 | `left,center,right` | `right`
+`[placement]` | 分页方向 | `'left','center','right'` | `'right'`
 `[show]` | 是否显示分页器 | `boolean` | -
 `[showSize]` | 是否显示分页器中改变页数 | `boolean` | `false`
 `[pageSizes]` | 分页器中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]`
@@ -292,7 +292,7 @@ class TestComponent {
 `[component]` | 目标组件对象，务必在 `entryComponents` 注册 | `any` | -
 `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | -
 `[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) 全局设置 | `string` | record
-`[size]` | 对话框大小 | `sm, md, lg, xl, '', number` | `lg`
+`[size]` | 对话框大小，支持数字类型 | `'sm','md','lg','xl'` | `'lg'`
 `[exact]` | 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 | `boolean` | `true`
 `[includeTabs]` | 是否包裹标签页，修复模态包含标签间距问题 | `boolean` | -
 `[modalOptions]` | 对话框 [ModalOptionsForService](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/nz-modal.type.ts) 参数 | `any` | -
@@ -305,7 +305,7 @@ class TestComponent {
 `[component]` | 目标组件对象，务必在 `entryComponents` 注册 | `any` | -
 `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | -
 `[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) 全局设置 | `string` | record
-`[size]` | 抽屉大小 | `sm, md, lg, xl, number` | `md`
+`[size]` | 抽屉大小，支持数字类型 | `'sm','md','lg','xl'` | `'md'`
 `[drawerOptions]` | 抽屉 [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) 参数 | `any` | -
 
 ### STColumnSelection

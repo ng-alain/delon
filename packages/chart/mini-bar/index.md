@@ -18,7 +18,7 @@ type: Components
 | `[color]` | 图表颜色 | `string` | `#1890FF` |
 | `[height]` | 图表高度 | `number` | - |
 | `[yTooltipSuffix]` | y 轴Tooltip后缀，一般指定单位 | `string` | - |
-| `[tooltipType]` | Tooltip显示类型 | `mini, default` | `default` |
+| `[tooltipType]` | Tooltip显示类型 | `'mini','default'` | `'default'` |
 | `[borderWidth]` | 线条粗细 | `number` | `5` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
 | `[data]` | 数据 | `G2MiniBarData[]` | - |

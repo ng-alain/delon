@@ -24,7 +24,7 @@ type: Components
 | `[xAxis]` | [x 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#frgaiw) | `object` | - |
 | `[yAxis]` | [y 轴配置](https://www.yuque.com/antv/g2-docs/api-chart#frgaiw) | `object` | - |
 | `[yTooltipSuffix]` | y 轴Tooltip后缀，一般指定单位 | `string` | - |
-| `[tooltipType]` | Tooltip显示类型 | `mini, default` | `default` |
+| `[tooltipType]` | Tooltip显示类型 | `'mini','default'` | `'default'` |
 | `[data]` | 数据 | `G2MiniAreaData[]` | - |
 
 ### G2MiniAreaData
