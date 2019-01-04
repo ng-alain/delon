@@ -16,10 +16,12 @@ yarn add file-saver
 
 ## API
 
+### [down-file]
+
 Property | Description | Type | Default
 ----|------|-----|------
 `[http-data]` | Parameter of request | `any` | -
-`[http-method]` | Method of request | `string` | `get`
+`[http-method]` | Method of request | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'`
 `[http-url]` | Url of request | `string` | -
 `[file-name]` | Specify a file name | `string` | -
 `(success)` | Success callback | `EventEmitter<HttpResponse<Blob>>` | -

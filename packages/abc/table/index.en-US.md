@@ -36,7 +36,7 @@ The value is `STData[]` or `Observable<STData[]>`, both follow the following rul
 
 ## API
 
-### STComponent
+### st
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
@@ -49,7 +49,7 @@ Property | Description | Type | Default
 `[page]` | Pager configuration | `STPage` | -
 `[noResult]` | Custom no result content | `string,TemplateRef<void>` | -
 `[bordered]` | Whether to show all table borders | `boolean` | `false`
-`[size]` | Size of table | `small,middle,default` | `default`
+`[size]` | Size of table | `'small','middle','default'` | `'default'`
 `[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | -
 `[loading]` | Loading status of table | `boolean` | `false`
 `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0`
@@ -105,7 +105,7 @@ class TestComponent {
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[params]` | Request parameters, default to auto append `pi`, `ps` to URL | `any` | -
-`[method]` | Request method | `string` | `GET`
+`[method]` | Request method | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'`
 `[body]` | Request body (only method is POST)  | `any` | -
 `[headers]` | Request header | `any` | -
 `[reName]` | Map name `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps' }`
@@ -124,7 +124,7 @@ Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[front]` | Front paging when `data` is `any[]` or `Observable<any[]>` | `boolean` | `true`
 `[zeroIndexed]` | Whether the backend paging uses the `0` base index (only data is url) | `boolean` | `false`
-`[placement]` | Pager direction | `left,center,right` | `right`
+`[placement]` | Pager direction | `'left','center','right'` | `'right'`
 `[show]` | Whether to show pager | `boolean` | -
 `[showSize]` | Determine whether `ps` can be changed | `boolean` | `false`
 `[pageSizes]` | Specify the sizeChanger options | `number[]` | `[10, 20, 30, 40, 50]`
@@ -298,7 +298,7 @@ Property | Description | Type | Default
 `[component]` | Modal component class, be sure to register in `entryComponents` | `any` | -
 `[params]` | Dialog parameter | `(record: STData) => Object` | -
 `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) Global settings | `string` | record
-`[size]` | Size of modal | `sm, md, lg, xl, '', number` | `lg`
+`[size]` | Size of modal, support number type | `'sm','md','lg','xl'` | `'lg'`
 `[exact]` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true`
 `[includeTabs]` | Whether to wrap the nz-tabset, fix content spacing problem | `boolean` | -
 `[modalOptions]` | nz-modal raw parameters [ModalOptionsForService](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/nz-modal.type.ts) | `any` | -
@@ -311,7 +311,7 @@ Property | Description | Type | Default
 `[component]` | Drawer component class, be sure to register in `entryComponents` | `any` | -
 `[params]` | Dialog parameter | `(record: STData) => Object` | -
 `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) Global settings | `string` | record
-`[size]` | Size of drawer | `sm, md, lg, xl, number` | `md`
+`[size]` | Size of drawer, support number type | `'sm','md','lg','xl'` | `'md'`
 `[drawerOptions]` | nz-drawer raw parameters [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) | `any` | -
 
 ### STColumnSelection

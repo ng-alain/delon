@@ -4,6 +4,13 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.3](https://github.com/ng-alain/delon/compare/7.0.0-rc.2...7.0.0-rc.3) (2018-12-29)
+
+### Bug Fixes
+
+* **module:theme:** 修复未找到 `window` 值 ([#355](https://github.com/ng-alain/delon/issues/355)) ([3be639a](https://github.com/ng-alain/delon/commit/3be639a))
+
+
 # [7.0.0-rc.2](https://github.com/ng-alain/delon/compare/7.0.0-rc.1...7.0.0-rc.2) (2018-12-28)
 
 ### Scaffold

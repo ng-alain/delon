@@ -16,6 +16,8 @@ like `src`, but more features:
 
 ## API
 
+### [_src]
+
 | Property  | Description           | Type     | Default                 |
 | --------- | --------------------- | -------- | ----------------------- |
 | `[size]`  | Size of image         | `number` | `64`                    |

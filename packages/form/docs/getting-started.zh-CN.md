@@ -138,17 +138,19 @@ export class HomeComponent {
 
 ## API
 
+### sf
+
 | 参数         | 说明                            | 类型                        | 默认值       |
 |--------------|---------------------------------|-----------------------------|--------------|
-| `[layout]`       | 表单布局，等同 `nzLayout`        | `string`                    | `horizontal` |
+| `[layout]`       | 表单布局，等同 `nzLayout`  | `'horizontal','vertical','inline'`   | `'horizontal'` |
 | `[schema]`       | **必填项** JSON Schema          | `SFSchema`                  | -            |
 | `[ui]`           | UI Schema                       | `SFUISchema`                | -            |
 | `[formData]`     | 表单默认值                      | `any`                       | -            |
-| `[mode]`         | 表单模式，细节见常见问题         | `default,search,edit`       | `default`    |
-| `[button]`       | 按钮                            | `SFButton, 'none'`          | `{}`         |
+| `[mode]`         | 表单模式，细节见常见问题         | `'default','search','edit'`       | `'default'`    |
+| `[button]`       | 按钮                            | `SFButton|'none'`          | `{}`         |
 | `[firstVisual]`  | 是否立即呈现错误视觉            | `boolean`                   | `true`       |
 | `[liveValidate]` | 是否实时校验，`false` 提交时检验 | `boolean`                   | `true`       |
-| `[autocomplete]` | 指定表单 `autocomplete` 值      | `on,off`                    | `null`       |
+| `[autocomplete]` | 指定表单 `autocomplete` 值      | `'on','off'`                    | `null`       |
 | `(formChange)`   | 数据变更时回调                  | `EventEmitter<{}>`          | -            |
 | `(formSubmit)`   | 提交表单时回调                  | `EventEmitter<{}>`          | -            |
 | `(formReset)`    | 重置表单时回调                  | `EventEmitter<{}>`          | -            |
@@ -178,6 +180,8 @@ export class HomeComponent {
 | `getProperty`   | 根据路径获取表单元素属性                              | `FormProperty` |
 | `getValue`      | 根据路径获取表单元素当前值                            | `any`          |
 | `setValue`      | 根据路径设置某个表单元素属性值，若路径不存在会产生异常 | `this`         |
+
+> **注：** 所有 path 采用 `/` 来分隔，例如：`/user/name`。
 
 ### 按钮说明
 

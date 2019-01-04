@@ -10,6 +10,8 @@ module: QuickMenuModule
 
 ## API
 
+### quick-menu
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[icon]` | 图标 | `string,TemplateRef<void>` | `question-circle`

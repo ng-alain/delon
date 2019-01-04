@@ -10,6 +10,8 @@ module: ResultModule
 
 ## API
 
+### result
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 类型，不同类型自带对应的图标 | `string` | -
