@@ -105,7 +105,7 @@ class TestComponent {
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[params]` | Request parameters, default to auto append `pi`, `ps` to URL | `any` | -
-`[method]` | Request method | `'POST','GET','PUT','PATCH'` | `GET`
+`[method]` | Request method | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'`
 `[body]` | Request body (only method is POST)  | `any` | -
 `[headers]` | Request header | `any` | -
 `[reName]` | Map name `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps' }`

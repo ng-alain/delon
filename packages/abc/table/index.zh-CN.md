@@ -105,7 +105,7 @@ class TestComponent {
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[params]` | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | -
-`[method]` | 请求方法 | `'POST','GET','PUT','PATCH'` | `GET`
+`[method]` | 请求方法 | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'`
 `[body]` | 请求体 `body`，当 `method: POST` 时有效 | `any` | -
 `[headers]` | 请求体 `headers` | `any` | -
 `[reName]` | 重命名请求参数 `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps' }`
