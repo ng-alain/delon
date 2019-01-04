@@ -179,6 +179,8 @@ export class HomeComponent {
 | `getValue`      | Get value via path                                          | `any`          |
 | `setValue`      | Set value via path, shoudl be throw error when invalid path | `this`         |
 
+> **Note:** All paths are separated by `/`, for example: `/user/name`.
+
 ### Button
 
 **Notice**
