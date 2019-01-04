@@ -136,6 +136,8 @@ export class HomeComponent {
 
 ## API
 
+### sf
+
 | Property         | Description                              | Type                         | Default      |
 |------------------|------------------------------------------|------------------------------|--------------|
 | `[layout]`       | layout of the form                       | `horizontal,vertical,inline` | `horizontal` |
@@ -176,6 +178,8 @@ export class HomeComponent {
 | `getProperty`   | Get a form property via path                                | `FormProperty` |
 | `getValue`      | Get value via path                                          | `any`          |
 | `setValue`      | Set value via path, shoudl be throw error when invalid path | `this`         |
+
+> **Note:** All paths are separated by `/`, for example: `/user/name`.
 
 ### Button
 

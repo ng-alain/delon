@@ -11,6 +11,8 @@ config: ErrorCollectConfig
 
 ## API
 
+### error-collect
+
 参数          | 说明                 | 类型     | 默认值
 --------------|--------------------|----------|------
 `[freq]`      | 监听频率，单位：毫秒   | `number` | `500`

@@ -41,10 +41,16 @@ export default function (options: PluginSchema): Rule {
     const rules: Rule[] = [];
     switch (options.name) {
       case 'g2':
-        rules.push(pluginG2(pluginOptions));
+        rules.push(
+          pluginG2(pluginOptions),
+          installPackages(),
+        );
         break;
       case 'codeStyle':
-        rules.push(pluginCodeStyle(pluginOptions));
+        rules.push(
+          pluginCodeStyle(pluginOptions),
+          installPackages(),
+        );
         break;
       case 'networkEnv':
         rules.push(
@@ -54,7 +60,10 @@ export default function (options: PluginSchema): Rule {
         );
         break;
       case 'hmr':
-        rules.push(pluginHmr(pluginOptions));
+        rules.push(
+          pluginHmr(pluginOptions),
+          installPackages(),
+        );
         break;
       case 'docker':
         rules.push(pluginDocker(pluginOptions));
@@ -80,8 +89,6 @@ export default function (options: PluginSchema): Rule {
           `Could not find plugin name: ${options.name}`,
         );
     }
-
-    rules.push(installPackages());
 
     return chain(rules)(host, context);
   };

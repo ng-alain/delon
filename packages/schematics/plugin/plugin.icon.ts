@@ -303,6 +303,7 @@ export const ICONS_AUTO = [
 
 export function pluginIcon(options: PluginOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
+    console.log(`Analyzing files...`);
     genCustomIcons(options, host);
     const icons = getIcons(host);
     genIconFile(options, host, icons);

@@ -26,6 +26,8 @@ npm i --save qrious
 
 ## API
 
+### qr
+
 Property | Description | Type | Default
 ----|------|-----|------
 `[value]` | Value encoded within the QR code | `string` | -
@@ -33,7 +35,7 @@ Property | Description | Type | Default
 `[backgroundAlpha]` | Background alpha of the QR code	 | `number` | `1.0`
 `[foreground]` | Foreground colour of the QR code | `string` | `white`
 `[foregroundAlpha]` | Foreground alpha of the QR code | `number` | `1.0`
-`[level]` | Error correction level of the QR code | `L,M,Q,H` | `L`
+`[level]` | Error correction level of the QR code | `'L','M','Q','H'` | `'L'`
 `[mime]` | MIME type used to render the image for the QR code | `string` | `image/png`
 `[padding]` | Padding for the QR code (pixels) | `number` | `10`
 `[size]` | Size of the QR code (pixels) | `number` | `220`
