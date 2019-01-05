@@ -46,6 +46,7 @@ config: STConfig
 `[res]` | 返回体配置 | `STRes` | -
 `[pi]` | 当前页码 | `number` | `1`
 `[ps]` | 每页数量，当设置为 `0` 表示不分页，默认：`10` | `number` | `10`
+`[total]` | 当前总数据，在服务器渲染时需要传入，默认：`0` | `number` | `0`
 `[page]` | 分页器配置 | `STPage` | -
 `[noResult]` | 无数据时显示内容 | `string,TemplateRef<void>` | -
 `[bordered]` | 是否显示边框 | `boolean` | `false`
@@ -60,6 +61,7 @@ config: STConfig
 `[header]` | 表格标题 | `string,TemplateRef<void>` | -
 `[footer]` | 表格底部 | `string,TemplateRef<void>` | -
 `[body]` | 表格额外内容，一般用于添加合计行 | `TemplateRef<void>` | -
+`[widthConfig]` | 表头分组时指定每列宽度，与 STColumn 的 width 不可混用 | `string[]` | -
 `[expandRowByClick]` | 通过点击行来展开子行 | `boolean` | `false`
 `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | -
 `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动 | `EventEmitter<STChange>` | -
