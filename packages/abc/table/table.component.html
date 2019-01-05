@@ -47,7 +47,7 @@
         <ng-container *ngIf="!c.__renderTitle; else renderTitle">
           <ng-container [ngSwitch]="c.type">
             <ng-container *ngSwitchCase="'checkbox'">
-              <label nz-checkbox class="st__checkall" [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll()"></label>
+              <label nz-checkbox class="st__checkall" [nzDisabled]="_allCheckedDisabled" [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll()"></label>
               <nz-dropdown *ngIf="c.selections.length" class="st__selection">
                 <span nz-dropdown>
                   <i nz-icon type="down"></i>
