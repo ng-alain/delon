@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { NgModel } from '@angular/forms';
+import { NzAutocompleteOptionComponent } from 'ng-zorro-antd';
 import { of, Observable } from 'rxjs';
-import { debounceTime, flatMap, map, startWith, takeUntil } from 'rxjs/operators';
+import { debounceTime, flatMap, map, startWith } from 'rxjs/operators';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum, toBool } from '../../utils';
@@ -16,37 +18,24 @@ export const EMAILSUFFIX = [
 
 @Component({
   selector: 'sf-autocomplete',
-  template: `
-    <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-      <input nz-input [nzAutocomplete]="auto"
-        [attr.id]="id"
-        [disabled]="disabled"
-        [attr.disabled]="disabled"
-        [nzSize]="ui.size"
-        [ngModel]="value"
-        (ngModelChange)="setValue($event)"
-        [attr.maxLength]="schema.maxLength || null"
-        [attr.placeholder]="ui.placeholder"
-        autocomplete="off">
-      <nz-autocomplete #auto
-        [nzBackfill]="i.backfill"
-        [nzDefaultActiveFirstOption]="i.defaultActiveFirstOption"
-        [nzWidth]="i.width"
-        (selectionChange)="setValue($event?.nzValue)">
-        <nz-auto-option *ngFor="let i of list | async" [nzValue]="i.value">{{i.label}}</nz-auto-option>
-      </nz-autocomplete>
-    </sf-item-wrap>
-    `,
+  templateUrl: './autocomplete.widget.html',
 })
-export class AutoCompleteWidget extends ControlWidget implements OnInit {
+export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
   // tslint:disable-next-line:no-any
-  i: any;
+  i: any = {};
   fixData: SFSchemaEnum[] = [];
   list: Observable<SFSchemaEnum[]>;
+  typing: string = '';
+  @ViewChild(NgModel) private ngModel: NgModel;
   private filterOption: (input: string, option: SFSchemaEnum) => boolean;
   private isAsync = false;
 
-  ngOnInit(): void {
+  updateValue(item: NzAutocompleteOptionComponent) {
+    this.typing = item.nzLabel;
+    this.setValue(item.nzValue);
+  }
+
+  ngAfterViewInit(): void {
     this.i = {
       backfill: toBool(this.ui.backfill, false),
       defaultActiveFirstOption: toBool(this.ui.defaultActiveFirstOption, true),
@@ -63,14 +52,10 @@ export class AutoCompleteWidget extends ControlWidget implements OnInit {
     const orgTime = +(this.ui.debounceTime || 0);
     const time = Math.max(0, this.isAsync ? Math.max(50, orgTime) : orgTime);
 
-    this.list = this.formProperty.valueChanges.pipe(
-      takeUntil(this.sfItemComp.unsubscribe$),
+    this.list = this.ngModel.valueChanges.pipe(
       debounceTime(time),
       startWith(''),
-      flatMap(
-        input =>
-          this.isAsync ? this.ui.asyncData(input) : this.filterData(input),
-      ),
+      flatMap(input => this.isAsync ? this.ui.asyncData(input) : this.filterData(input)),
       map(res => getEnum(res, null, this.schema.readOnly)),
     );
   }
