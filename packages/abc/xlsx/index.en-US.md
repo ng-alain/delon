@@ -38,7 +38,9 @@ Property | Description | Type | Default
 `[opts]` | Excel options, see [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | -
 `[callback]` | Trigger before saving | `(wb: WorkBook) => void` | -
 
-### xlsx directive
+### [xlsx]
+
+xlsx directive.
 
 ```html
 <div [xlsx]="XlsxExportOptions">Export</div>

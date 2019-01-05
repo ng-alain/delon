@@ -39,6 +39,8 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 ## API
 
+### g2-custom
+
 | Property       | Description                | Type                       | Default |
 | -------------- | -------------------------- | -------------------------- | ------- |
 | `[height]`     | Height of chart container  | `number`                   | -       |

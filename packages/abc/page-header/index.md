@@ -11,6 +11,8 @@ config: PageHeaderConfig
 
 ## API
 
+### page-header
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[title]` | 标题名 | `string,TemplateRef<void>` | -

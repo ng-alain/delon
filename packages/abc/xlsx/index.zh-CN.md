@@ -38,7 +38,9 @@ yarn add file-saver
 `[opts]` | Excel写入选项，见 [WritingOptions](https://docs.sheetjs.com/#writing-options) | `WritingOptions` | -
 `[callback]` | 保存前触发 | `(wb: WorkBook) => void` | -
 
-### xlsx 指令
+### [xlsx]
+
+xlsx 指令。
 
 ```html
 <div [xlsx]="XlsxExportOptions">导出</div>

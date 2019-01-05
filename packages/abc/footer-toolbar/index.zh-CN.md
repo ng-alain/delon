@@ -14,6 +14,8 @@ module: FooterToolbarModule
 
 ## API
 
+### footer-toolbar
+
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `ng-content` | 工具栏内容，向右对齐 | `-` | -
