@@ -17,7 +17,6 @@ import {
 @Injectable()
 export class ReuseTabContextService {
   private ref: OverlayRef;
-  private locatePoint: HTMLElement;
   i18n: ReuseContextI18n;
 
   show: Subject<ReuseContextEvent> = new Subject<ReuseContextEvent>();
@@ -27,7 +26,6 @@ export class ReuseTabContextService {
 
   remove() {
     if (!this.ref) return;
-    this.removePoint();
     this.ref.detach();
     this.ref.dispose();
     this.ref = null;
