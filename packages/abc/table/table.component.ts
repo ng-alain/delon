@@ -28,6 +28,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _data: STData[] = [];
   _isPagination = true;
   _allChecked = false;
+  _allCheckedDisabled = false;
   _indeterminate = false;
   _columns: STColumn[] = [];
 
@@ -179,7 +180,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$),
         filter(() => this._columns.length > 0),
-      ).subscribe(() => this.updateColumns());
+      ).subscribe(() => this.refreshColumns());
   }
 
   cd() {
@@ -452,6 +453,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._allChecked = checkedList.length > 0 && checkedList.length === validData.length;
     const allUnChecked = validData.every(value => !value.checked);
     this._indeterminate = !this._allChecked && !allUnChecked;
+    this._allCheckedDisabled = this._data.length === this._data.filter(w => w.disabled).length;
     this.cd();
     return this;
   }
@@ -592,7 +594,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   //#endregion
 
-  private updateColumns() {
+  private refreshColumns() {
     this._columns = this.columnSource.process(this.columns);
   }
 
@@ -612,7 +614,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
   ): void {
     if (changes.columns) {
-      this.updateColumns();
+      this.refreshColumns();
     }
     if (changes.data && changes.data.currentValue) {
       this._load();

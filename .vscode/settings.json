@@ -1,8 +1,5 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-  // 确保代码片断优先级高于内置
-  // https://github.com/cipchk/ng-zorro-vscode
-  "editor.snippetSuggestions": "top",
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
@@ -15,9 +12,6 @@
   "files.exclude": {
     "**/.tmp/*/**": true,
   },
-  "docthis.includeTypes": false,
-  "docthis.includeMemberOfOnInterfaceMembers": false,
-  "docthis.includeMemberOfOnClassMembers": false,
   "tslint.autoFixOnSave": true,
   "tslint.alwaysShowStatus": true,
 }
