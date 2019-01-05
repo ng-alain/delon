@@ -26,6 +26,7 @@ import { ReuseTabContextService } from './reuse-tab-context.service';
 import {
   ReuseContextCloseEvent,
   ReuseContextI18n,
+  ReuseCustomContextMenu,
   ReuseItem,
   ReuseTabCached,
   ReuseTabMatchMode,
@@ -66,6 +67,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   set keepingScrollContainer(value: string | Element) {
     this._keepingScrollContainer = typeof value === 'string' ? this.doc.querySelector(value) : value;
   }
+  @Input() customContextMenu: ReuseCustomContextMenu[] = [];
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem>();
 

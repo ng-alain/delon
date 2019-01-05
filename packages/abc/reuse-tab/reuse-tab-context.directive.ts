@@ -1,13 +1,14 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
 import { ReuseTabContextService } from './reuse-tab-context.service';
-import { ReuseItem } from './reuse-tab.interfaces';
+import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
 
 @Directive({
   selector: '[reuse-tab-context-menu]',
 })
 export class ReuseTabContextDirective {
   @Input('reuse-tab-context-menu') item: ReuseItem;
+  @Input() customContextMenu: ReuseCustomContextMenu[];
 
   constructor(private srv: ReuseTabContextService) {}
 
@@ -16,6 +17,7 @@ export class ReuseTabContextDirective {
     this.srv.show.next({
       event,
       item: this.item,
+      customContextMenu: this.customContextMenu,
     });
     event.preventDefault();
     event.stopPropagation();

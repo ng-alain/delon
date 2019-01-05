@@ -32,7 +32,7 @@ import {
 
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
-import { ReuseTabMatchMode } from './reuse-tab.interfaces';
+import { ReuseCustomContextMenu, ReuseTabMatchMode } from './reuse-tab.interfaces';
 import { ReuseTabModule } from './reuse-tab.module';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
@@ -491,6 +491,40 @@ describe('abc: reuse-tab', () => {
           )
           .expectCount(2);
       }));
+      describe('custom menu', () => {
+        beforeEach(() => {
+          layoutComp.customContextMenu = [
+            {
+              id: 'custom1',
+              title: '自定义1',
+              fn: jasmine.createSpy('custom.menu.1'),
+            },
+            {
+              id: 'custom2',
+              title: '自定义2',
+              disabled: () => true,
+              fn: jasmine.createSpy('custom.menu.2'),
+            },
+          ];
+          fixture.detectChanges();
+        });
+        it('should working', fakeAsync(() => {
+          expect(layoutComp.customContextMenu[0].fn).not.toHaveBeenCalled();
+          page
+            .to('#b')
+            .openContextMenu(1)
+            .clickContentMenu('custom1');
+          expect(layoutComp.customContextMenu[0].fn).toHaveBeenCalled();
+        }));
+        it('should be disabled', fakeAsync(() => {
+          expect(layoutComp.customContextMenu[1].fn).not.toHaveBeenCalled();
+          page
+            .to('#b')
+            .openContextMenu(1)
+            .clickContentMenu('custom2');
+          expect(layoutComp.customContextMenu[1].fn).not.toHaveBeenCalled();
+        }));
+      });
     });
 
     describe('[routing]', () => {
@@ -797,6 +831,7 @@ class AppComponent {}
       [showCurrent]="showCurrent"
       [keepingScroll]="keepingScroll"
       [keepingScrollContainer]="keepingScrollContainer"
+      [customContextMenu]="customContextMenu"
       (change)="change($event)"
       (close)="close($event)"
     >
@@ -815,6 +850,7 @@ class LayoutComponent {
   showCurrent = true;
   keepingScroll = false;
   keepingScrollContainer = null;
+  customContextMenu: ReuseCustomContextMenu[] = [];
   change() {}
   close() {}
 }

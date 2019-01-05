@@ -194,6 +194,7 @@ Property | Description | Type | Default
 `[excludes]` | Exclusion rules, limited by `mode=URL` | `RegExp[]` | -
 `[allowClose]` | Whether to allow close tab | `boolean` | `true`
 `[showCurrent]` | Always show current page | `boolean` | `true`
+`[customContextMenu]` | Custom context click menu | `ReuseCustomContextMenu[]` | -
 `(close)` | Close callback event | `EventEmitter` | -
 `(change)` | Callback when switching | `EventEmitter` | -
 
@@ -223,6 +224,15 @@ Property | Description | Type | Default
 `[closeOther]` | Close other tabs | `string` | -
 `[closeRight]` | Close tabs to the right  | `string` | -
 `[clear]` | Clear tabs | `string` | -
+
+### ReuseCustomContextMenu
+
+Property | Description | Type | Default
+----|------|-----|------
+`[id]` | Identifier for current context menu | `string` | -
+`[title]` | Title for current context menu | `string` | -
+`[fn]` | Process method for current context menu | `(item: ReuseItem, menu: ReuseCustomContextMenu) => void` | -
+`[disabled]` | Whether to disabled | `(item: ReuseItem) => boolean` | -
 
 ### Route data
 

@@ -33,7 +33,7 @@ export class ReuseTabContextService {
 
   open(context: ReuseContextEvent) {
     this.remove();
-    const { event, item } = context;
+    const { event, item, customContextMenu } = context;
     const fakeElement = new ElementRef({
       getBoundingClientRect: (): ClientRect => ({
         bottom: event.clientY,
@@ -69,6 +69,7 @@ export class ReuseTabContextService {
     const instance = comp.instance;
     instance.i18n = this.i18n;
     instance.item = { ...item };
+    instance.customContextMenu = customContextMenu;
     instance.event = event;
 
     const sub$ = new Subscription();
