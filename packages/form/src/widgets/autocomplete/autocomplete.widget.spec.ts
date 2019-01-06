@@ -73,10 +73,32 @@ describe('form: widget: autocomplete', () => {
       const typeValue = 'a';
       page
         .newSchema(s)
+        .time(100)
         .typeChar(typeValue)
         .checkCount('nz-auto-option', EMAILSUFFIX.length)
         .click('nz-auto-option')
         .checkValue('a', `${typeValue}@${EMAILSUFFIX[0]}`)
+        .asyncEnd(150);
+    }));
+    it('should be used value to result', fakeAsync(() => {
+      const s: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            ui: {
+              widget,
+              asyncData: () => of([{ label: 'label1', value: '1' }]),
+              debounceTime: 1,
+            },
+          },
+        },
+      };
+      const typeValue = '1';
+      page
+        .newSchema(s)
+        .typeChar(typeValue)
+        .click('nz-auto-option')
+        .checkValue('a', `1`)
         .asyncEnd(150);
     }));
   });

@@ -46,6 +46,7 @@ Property | Description | Type | Default
 `[res]` | Http response configuration | `STRes` | -
 `[pi]` | Page index | `number` | `1`
 `[ps]` | Page size, `0` is no page, default is `10` | `number` | `10`
+`[total]` | Total data count, should set when nzServerRender is true, default is `0` | `number` | `0`
 `[page]` | Pager configuration | `STPage` | -
 `[noResult]` | Custom no result content | `string,TemplateRef<void>` | -
 `[bordered]` | Whether to show all table borders | `boolean` | `false`
@@ -60,6 +61,7 @@ Property | Description | Type | Default
 `[header]` | Table header renderer | `string,TemplateRef<void>` | -
 `[footer]` | Table footer renderer | `string,TemplateRef<void>` | -
 `[body]` | Table extra body renderer, generally used to add total rows | `TemplateRef<void>` | -
+`[widthConfig]` | Set col width can not used with width of STColumn | `string[]` | -
 `[expandRowByClick]` | Whether to expand row by clicking anywhere in the whole row | `boolean` | `false`
 `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | -
 `(change)` | Events | `EventEmitter<STChange>` | -

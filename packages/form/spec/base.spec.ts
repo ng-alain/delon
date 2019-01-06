@@ -268,8 +268,13 @@ export class SFPage {
     return this;
   }
 
-  asyncEnd(time = 0) {
+  time(time = 0) {
     tick(time);
+    return this;
+  }
+
+  asyncEnd(time = 0) {
+    this.time(time);
     discardPeriodicTasks();
     return this;
   }

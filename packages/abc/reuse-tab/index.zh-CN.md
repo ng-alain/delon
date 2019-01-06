@@ -195,6 +195,7 @@ export class DemoComponent {
 `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | -
 `[allowClose]` | 允许关闭 | `boolean` | `true`
 `[showCurrent]` | 总是显示当前页 | `boolean` | `true`
+`[customContextMenu]` | 自定义右键菜单 | `ReuseCustomContextMenu[]` | -
 `(close)` | 关闭回调 | `EventEmitter` | -
 `(change)` | 切换时回调，接收的参数至少包含：`active`、`list` 两个参数 | `EventEmitter` | -
 
@@ -224,6 +225,15 @@ export class DemoComponent {
 `[closeOther]` | 关闭其它 | `string` | -
 `[closeRight]` | 关闭右边 | `string` | -
 `[clear]` | 清空 | `string` | -
+
+### ReuseCustomContextMenu
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[id]` | 唯一标识符 | `string` | -
+`[title]` | 标题 | `string` | -
+`[fn]` | 处理方法 | `(item: ReuseItem, menu: ReuseCustomContextMenu) => void` | -
+`[disabled]` | 是否禁用 | `(item: ReuseItem) => boolean` | -
 
 ### 路由data
 
