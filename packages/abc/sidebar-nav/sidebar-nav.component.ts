@@ -38,6 +38,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
   @Input() @InputBoolean() disabledAcl = false;
   @Input() @InputBoolean() autoCloseUnderPad = true;
+  @Input() @InputBoolean() recursivePath = true;
   @Output() readonly select = new EventEmitter<Menu>();
 
   get collapsed() {
@@ -207,7 +208,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const { doc, router, unsubscribe$, menuSrv, cdr } = this;
     this.bodyEl = doc.querySelector('body');
-    menuSrv.openedByUrl(router.url);
+    menuSrv.openedByUrl(router.url, this.recursivePath);
     this.genFloatingContainer();
     menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(data => {
       menuSrv.visit(data, i => {
@@ -227,7 +228,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
         filter(e => e instanceof NavigationEnd),
       )
       .subscribe((e: NavigationEnd) => {
-        this.menuSrv.openedByUrl(e.urlAfterRedirects);
+        this.menuSrv.openedByUrl(e.urlAfterRedirects, this.recursivePath);
         this.underPad();
         this.cdr.detectChanges();
       });
