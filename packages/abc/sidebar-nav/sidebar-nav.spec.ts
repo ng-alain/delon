@@ -201,28 +201,6 @@ describe('abc: sidebar-nav', () => {
         fixture.detectChanges();
         expect(context.select).toHaveBeenCalled();
       });
-
-      describe('should be exact highlighting item', () => {
-        beforeEach(() => {
-          injector = TestBed.configureTestingModule({
-            imports: [
-              RouterModule.forRoot([]),
-              AlainThemeModule,
-              SidebarNavModule,
-              RouterTestingModule.withRoutes([
-                { path: 'group', component: TestRouteComponent },
-                { path: 'group/type', component: TestRouteComponent },
-              ]),
-            ],
-            declarations: [TestComponent, TestRouteComponent],
-          });
-          fixture = TestBed.createComponent(TestComponent);
-          dl = fixture.debugElement;
-          context = fixture.componentInstance;
-          menuSrv = injector.get(MenuService);
-          fixture.detectChanges();
-        });
-      });
     });
 
     describe('#icon', () => {
@@ -423,6 +401,65 @@ describe('abc: sidebar-nav', () => {
     }));
   });
 
+  describe('should be recursive path', () => {
+    configureTestSuite(() => {
+      injector = TestBed.configureTestingModule({
+        imports: [
+          RouterModule.forRoot([]),
+          AlainThemeModule,
+          SidebarNavModule,
+          RouterTestingModule.withRoutes([
+            { path: 'user', component: TestRouteComponent },
+            { path: 'user2', component: TestRouteComponent },
+            { path: 'user/type', component: TestRouteComponent },
+          ]),
+        ],
+        declarations: [TestComponent, TestRouteComponent],
+      });
+    });
+    beforeEach(fakeAsync(() => {
+      fixture = TestBed.createComponent(TestComponent);
+      dl = fixture.debugElement;
+      context = fixture.componentInstance;
+      menuSrv = injector.get(MenuService);
+      fixture.detectChanges();
+      createComp(false);
+      menuSrv.add([
+        {
+          text: '主导航',
+          group: true,
+          children: [
+            { text: 'user', link: '/user' },
+          ],
+        },
+      ]);
+    }));
+    it('with true', fakeAsync(() => {
+      context.recursivePath = true;
+      fixture.detectChanges();
+      router.navigateByUrl('/user2');
+      tick();
+      fixture.detectChanges();
+      page.checkCount('.sidebar-nav__selected', 0);
+      router.navigateByUrl('/user/type');
+      tick();
+      fixture.detectChanges();
+      page.checkCount('.sidebar-nav__selected', 1);
+    }));
+    it('with false', fakeAsync(() => {
+      context.recursivePath = false;
+      fixture.detectChanges();
+      router.navigateByUrl('/user2');
+      tick();
+      fixture.detectChanges();
+      page.checkCount('.sidebar-nav__selected', 0);
+      router.navigateByUrl('/user/type');
+      tick();
+      fixture.detectChanges();
+      page.checkCount('.sidebar-nav__selected', 0);
+    }));
+  });
+
   class PageObject {
     getEl<T>(cls: string, body = false) {
       const el = body
@@ -469,7 +506,7 @@ describe('abc: sidebar-nav', () => {
 
 @Component({
   template: `
-    <sidebar-nav #comp [disabledAcl]="disabledAcl" [autoCloseUnderPad]="autoCloseUnderPad" (select)="select()"></sidebar-nav>
+    <sidebar-nav #comp [disabledAcl]="disabledAcl" [autoCloseUnderPad]="autoCloseUnderPad" [recursivePath]="recursivePath" (select)="select()"></sidebar-nav>
     `,
 })
 class TestComponent {
@@ -477,6 +514,7 @@ class TestComponent {
   comp: SidebarNavComponent;
   disabledAcl = false;
   autoCloseUnderPad = false;
+  recursivePath = false;
   select() {}
 }
 
