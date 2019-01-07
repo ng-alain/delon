@@ -19,8 +19,8 @@ import {
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
-import { combineLatest, Subscription } from 'rxjs';
-import { debounceTime, filter } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import {
@@ -46,8 +46,7 @@ import { ReuseTabService } from './reuse-tab.service';
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   private el: HTMLElement;
-  private sub$: Subscription;
-  private i18n$: Subscription;
+  private unsubscribe$ = new Subject<void>();
   private _keepingScrollContainer: Element;
   list: ReuseItem[] = [];
   item: ReuseItem;
@@ -84,17 +83,6 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     @Inject(DOCUMENT) private doc: any,
   ) {
     this.el = el.nativeElement;
-    const route$ = this.router.events.pipe(
-      filter(evt => evt instanceof NavigationEnd),
-    );
-    this.sub$ = combineLatest(this.srv.change, route$).subscribe(([res, e]) =>
-      this.genList(res),
-    );
-    if (this.i18nSrv) {
-      this.i18n$ = this.i18nSrv.change
-        .pipe(debounceTime(100))
-        .subscribe(() => this.genList());
-    }
   }
 
   private genTit(title: ReuseTitle): string {
@@ -223,6 +211,18 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   // #endregion
 
   ngOnInit(): void {
+    this.router.events.pipe(
+      takeUntil(this.unsubscribe$),
+      filter(evt => evt instanceof NavigationEnd),
+    ).subscribe(() => this.genList());
+
+    this.srv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(res => this.genList(res));
+
+    if (this.i18nSrv) {
+      this.i18nSrv.change
+        .pipe(takeUntil(this.unsubscribe$), debounceTime(100))
+        .subscribe(() => this.genList());
+    }
     this.genList();
     this.srv.init();
   }
@@ -244,8 +244,8 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    const { i18n$, sub$ } = this;
-    sub$.unsubscribe();
-    if (i18n$) i18n$.unsubscribe();
+    const { unsubscribe$ } = this;
+    unsubscribe$.next();
+    unsubscribe$.complete();
   }
 }

@@ -703,6 +703,50 @@ describe('abc: reuse-tab', () => {
     }));
   });
 
+  describe('#issues', () => {
+    it('#361', fakeAsync(() => {
+      injector = TestBed.configureTestingModule({
+        declarations: [
+          AppComponent,
+          LayoutComponent,
+          CComponent,
+          DComponent,
+        ],
+        imports: [
+          DelonLocaleModule,
+          ReuseTabModule,
+          RouterTestingModule.withRoutes([
+            {
+              path: '',
+              component: LayoutComponent,
+              children: [
+                { path: 'a', redirectTo: 'c', pathMatch: 'full' },
+                { path: 'b', component: DComponent, data: { title: 'b', reuse: false } },
+                { path: 'c', component: CComponent, data: { title: 'c', reuse: false } },
+                { path: 'd', component: DComponent, data: { title: 'd', reuse: true } },
+              ],
+            },
+          ]),
+        ],
+        providers: [
+          MenuService,
+          { provide: WINDOW, useValue: window },
+          {
+            provide: RouteReuseStrategy,
+            useClass: ReuseTabStrategy,
+            deps: [ReuseTabService],
+          },
+        ],
+      });
+      createComp();
+
+      page.to('#to-d')
+          .to('#to-c')
+          .close(0)
+          .to('#to-d');
+    }));
+  });
+
   class PageObject {
     constructor() {
       this.to('#a');
@@ -767,7 +811,7 @@ describe('abc: reuse-tab', () => {
       return this;
     }
     go(pos: number): this {
-      const ls = document.querySelectorAll('.name');
+      const ls = document.querySelectorAll('.reuse-tab__name');
       if (pos > ls.length) {
         expect(false).toBe(true, `the pos muse be 0-${ls.length}`);
         return this;
@@ -780,7 +824,7 @@ describe('abc: reuse-tab', () => {
       return this;
     }
     openContextMenu(pos: number, eventArgs?: any): this {
-      const ls = document.querySelectorAll('.name');
+      const ls = document.querySelectorAll('.reuse-tab__name');
       if (pos > ls.length) {
         expect(false).toBe(true, `the pos muse be 0-${ls.length}`);
         return this;
@@ -885,6 +929,7 @@ class BComponent {
   template: `
     c:
     <div id="time">{{ time }}</div>
+    <a id="to-d" routerLink="/d">to-d</a>
   `,
 })
 class CComponent {
@@ -899,6 +944,7 @@ class CComponent {
   template: `
     d:
     <div id="time">{{ time }}</div>
+    <a id="to-c" routerLink="/c">to-c</a>
   `,
 })
 class DComponent {
