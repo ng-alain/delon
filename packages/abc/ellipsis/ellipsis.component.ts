@@ -11,6 +11,7 @@ import {
   Renderer2,
   SimpleChange,
   SimpleChanges,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { InputBoolean, InputNumber } from '@delon/util';
@@ -24,6 +25,8 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
 
   // tslint:disable-next-line:no-string-literal
   private isSupportLineClamp = this.doc.body.style['webkitLineClamp'] !== undefined;
+  @ViewChild('contentEl') contentEl: TemplateRef<void>;
+  @ViewChild('titleEl') titleEl: TemplateRef<void>;
   @ViewChild('shadowEl') shadowEl: ElementRef;
   type = 'default';
   cls = {};
@@ -40,7 +43,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
 
   // #endregion
 
-  constructor(el: ElementRef, render: Renderer2, @Inject(DOCUMENT) private doc: Document, private cdr: ChangeDetectorRef) {
+  constructor(private el: ElementRef, @Inject(DOCUMENT) private doc: Document, private cdr: ChangeDetectorRef) {
   }
 
   private getStrFullLength(str = ''): number {
@@ -110,7 +113,12 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   // }
 
   private genType() {
-    const { lines, length, isSupportLineClamp, shadowEl, fullWidthRecognition, tail } = this;
+    const { lines, length, isSupportLineClamp, fullWidthRecognition, tail, shadowEl } = this;
+    this.cls = {
+      'ellipsis': true,
+      'ellipsis__lines': lines && !isSupportLineClamp,
+      'ellipsis__line-clamp': lines && isSupportLineClamp,
+    };
     if (!lines && !length) {
       this.type = 'default';
     } else if (!lines) {
@@ -133,9 +141,21 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
       }
       this.text = displayText + tail;
     } else if (isSupportLineClamp) {
+      // const coloneNode = (this.shadowEl.nativeElement as HTMLElement).cloneNode();
+      // const titleTplEl = titleTpl.nativeElement as HTMLElement;
+      // titleTplEl.innerHTML = '';
+      // titleTplEl.appendChild(coloneNode);
       this.type = 'line-clamp';
     } else {
       this.type = 'line';
+    }
+  }
+
+  private cloneNode() {
+    const { shadowEl } = this;
+    const el = this.el.nativeElement.querySelector('.ellipsis');
+    if (el) {
+      el.innerHTML = shadowEl.nativeElement.innerHTML;
     }
   }
 
@@ -143,6 +163,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     this.computeLine();
     this.genType();
     this.cdr.detectChanges();
+    this.cloneNode();
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
