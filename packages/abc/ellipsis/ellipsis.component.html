@@ -1,0 +1,18 @@
+<ng-template #contentTpl>
+  <ng-content></ng-content>
+</ng-template>
+<span style="display: none !important;" #shadowEl><ng-template [ngTemplateOutlet]="contentTpl"></ng-template></span>
+<ng-template #tooltipTpl let-con>
+  <span *ngIf="tooltip; else con" nz-tooltip [nzTitle]="contentTpl">
+    <ng-template [ngTemplateOutlet]="con"></ng-template>
+  </span>
+</ng-template>
+<ng-container [ngSwitch]="type">
+  <span *ngSwitchCase="'default'">default</span>
+  <ng-container *ngSwitchCase="'length'">
+    <ng-template [ngTemplateOutlet]="tooltipTpl" [ngTemplateOutletContext]="{$implicit: lengthTpl}"></ng-template>
+    <ng-template #lengthTpl>{{text}}</ng-template>
+  </ng-container>
+  <span *ngSwitchCase="'line-clamp'">line-clamp</span>
+  <span *ngSwitchCase="'line'">line</span>
+</ng-container>
