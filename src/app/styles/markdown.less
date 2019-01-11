@@ -125,7 +125,6 @@
 }
 
 .markdown table {
-  table-layout: fixed;
   border-collapse: collapse;
   border-spacing: 0;
   empty-cells: show;
@@ -136,8 +135,6 @@
   td {
     border: 1px solid @site-border-color-split;
     padding: 8px;
-    text-align: left;
-    word-wrap: break-word;
   }
   th {
     white-space: nowrap;
@@ -212,15 +209,31 @@
 }
 
 .markdown.api-container table {
-  td:first-child {
-    font-weight: 500;
-    width: 20%;
-  }
-  td:nth-child(3) {
-    width: 30%;
-  }
-  td:last-child {
-    width: 20%;
+  td {
+    &:first-child {
+      font-weight: 500;
+      width: 20%;
+      color: #003a8c;
+    }
+    &:nth-child(3) {
+      width: 22%;
+      font-size: 13px;
+      color: #c41d7f;
+      word-break: break-all;
+    }
+    &:last-child {
+      width: 13%;
+      font-size: 13px;
+    }
+    &:nth-child(3),
+    &:last-child {
+      code {
+        margin: 0;
+        padding: 0;
+        background: none;
+        border: none;
+      }
+    }
   }
 }
 

@@ -269,7 +269,7 @@ export const ICONS = [ ];
     return;
   }
   const source = getSourceFile(host, path);
-  const allImports = findNodes(source, ts.SyntaxKind.ImportDeclaration);
+  const allImports = findNodes(source as any, ts.SyntaxKind.ImportDeclaration);
   const iconImport = allImports.find((w: ts.ImportDeclaration) =>
     w.moduleSpecifier.getText().includes('@ant-design/icons-angular/icons'),
   ) as ts.ImportDeclaration;

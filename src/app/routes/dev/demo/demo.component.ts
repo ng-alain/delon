@@ -4,18 +4,16 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-  <form nz-form #f="ngForm" se-container="2" gutter="32">
-    <se label="App Key" error="请填写">
-      <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required>
-    </se>
-    <se label="App Secret" error="请填写，最多32位">
-      <input type="text" nz-input [(ngModel)]="i.sk" name="sk" required maxlength="32">
-    </se>
-    <se>
-      <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
-    </se>
-  </form>`,
+  <ellipsis [lines]="lines" tooltip style="width: 200px">
+    <div [innerHTML]="html"></div>
+  </ellipsis>
+  <button nz-button (click)="newText='asdfasdf'">Update</button>
+  <button nz-button (click)="lines=3">Update Line</button>
+  `,
 })
 export class DemoComponent {
-  i: any = {};
+  newText = '';
+  lines = 2;
+  article = 'There were injuries alleged in three cases in 2015, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.';
+  html = `<p>There were injuries alleged in three <a href="#cover">cases in 2015</a>, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.</p>`;
 }
