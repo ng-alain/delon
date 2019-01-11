@@ -161,13 +161,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
   ) {
-    const copyCog = { ...cog };
-    delete copyCog.multiSort;
-    deepMerge(this, copyCog);
-    if (cog.multiSort && cog.multiSort.global !== false) {
-      this.multiSort = { ...cog.multiSort };
-    }
-
     this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
@@ -175,6 +168,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.cd();
       }
     });
+
+    const copyCog = deepMerge(new STConfig(), cog);
+    delete copyCog.multiSort;
+    deepMerge(this, copyCog);
+    if (cog.multiSort && cog.multiSort.global !== false) {
+      this.multiSort = { ...cog.multiSort };
+    }
 
     i18nSrv.change
       .pipe(

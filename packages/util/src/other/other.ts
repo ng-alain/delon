@@ -48,7 +48,7 @@ export function copy(value: string): Promise<string> {
   });
 }
 
-export function deepMerge(original: any, ...objects: any[]): void {
+export function deepMerge(original: any, ...objects: any[]): any {
   if (Array.isArray(original) || typeof original !== 'object') return original;
 
   const isObject = (v: any) => typeof v === 'object' || typeof v === 'function';
