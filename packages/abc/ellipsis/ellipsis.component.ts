@@ -7,14 +7,13 @@ import {
   ElementRef,
   Inject,
   Input,
+  NgZone,
   OnChanges,
-  Renderer2,
-  SimpleChange,
-  SimpleChanges,
-  TemplateRef,
   ViewChild,
 } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { InputBoolean, InputNumber } from '@delon/util';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'ellipsis',
@@ -25,9 +24,11 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
 
   // tslint:disable-next-line:no-string-literal
   private isSupportLineClamp = this.doc.body.style['webkitLineClamp'] !== undefined;
-  @ViewChild('contentEl') contentEl: TemplateRef<void>;
-  @ViewChild('titleEl') titleEl: TemplateRef<void>;
-  @ViewChild('shadowEl') shadowEl: ElementRef;
+  @ViewChild('orgEl') private orgEl: ElementRef;
+  @ViewChild('shadowOrgEl') private shadowOrgEl: ElementRef;
+  @ViewChild('shadowTextEl') private shadowTextEl: ElementRef;
+  private inited = false;
+  orgHtml: SafeHtml;
   type = 'default';
   cls = {};
   text = '';
@@ -36,17 +37,17 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   // #region fields
 
   @Input() @InputBoolean() tooltip = false;
-  @Input() @InputNumber() length: number;
-  @Input() @InputNumber() lines: number;
+  @Input() @InputNumber(null) length: number;
+  @Input() @InputNumber(null) lines: number;
   @Input() @InputBoolean() fullWidthRecognition = false;
   @Input() tail = '...';
 
   // #endregion
 
-  constructor(private el: ElementRef, @Inject(DOCUMENT) private doc: Document, private cdr: ChangeDetectorRef) {
+  constructor(private el: ElementRef, private ngZone: NgZone, private dom: DomSanitizer, @Inject(DOCUMENT) private doc: Document, private cdr: ChangeDetectorRef) {
   }
 
-  private getStrFullLength(str = ''): number {
+  private getStrFullLength(str: string): number {
     return str.split('').reduce((pre, cur) => {
       const charCode = cur.charCodeAt(0);
       if (charCode >= 0 && charCode <= 128) {
@@ -56,7 +57,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }, 0);
   }
 
-  private cutStrByFullLength(str = '', maxLength: number) {
+  private cutStrByFullLength(str: string, maxLength: number) {
     let showLength = 0;
     return str.split('').reduce((pre, cur) => {
       const charCode = cur.charCodeAt(0);
@@ -72,48 +73,43 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }, '');
   }
 
-  private computeLine(): void {
-    const { lines, isSupportLineClamp } = this;
-    if (!lines || isSupportLineClamp) return;
+  private bisection(th: number, m: number, b: number, e: number, text: string, shadowNode: HTMLElement): number {
+    const suffix = this.tail;
+    let mid = m;
+    let end = e;
+    let begin = b;
+    shadowNode.innerHTML = text.substring(0, mid) + suffix;
+    let sh = shadowNode.offsetHeight;
+
+    if (sh <= th) {
+      shadowNode.innerHTML = text.substring(0, mid + 1) + suffix;
+      sh = shadowNode.offsetHeight;
+      if (sh > th || mid === begin) {
+        return mid;
+      }
+      begin = mid;
+      if (end - begin === 1) {
+        mid = begin + 1;
+      } else {
+        mid = Math.floor((end - begin) / 2) + begin;
+      }
+      return this.bisection(th, mid, begin, end, text, shadowNode);
+    }
+    if (mid - 1 < 0) {
+      return mid;
+    }
+    shadowNode.innerHTML = text.substring(0, mid - 1) + suffix;
+    sh = shadowNode.offsetHeight;
+    if (sh <= th) {
+      return mid - 1;
+    }
+    end = mid;
+    mid = Math.floor((end - begin) / 2) + begin;
+    return this.bisection(th, mid, begin, end, text, shadowNode);
   }
 
-  // private bisection(th, m, b, e, text, shadowNode): void {
-  //   const suffix = '...';
-  //   let mid = m;
-  //   let end = e;
-  //   let begin = b;
-  //   shadowNode.innerHTML = text.substring(0, mid) + suffix;
-  //   let sh = shadowNode.offsetHeight;
-
-  //   if (sh <= th) {
-  //     shadowNode.innerHTML = text.substring(0, mid + 1) + suffix;
-  //     sh = shadowNode.offsetHeight;
-  //     if (sh > th || mid === begin) {
-  //       return mid;
-  //     }
-  //     begin = mid;
-  //     if (end - begin === 1) {
-  //       mid = 1 + begin;
-  //     } else {
-  //       mid = Math.floor((end - begin) / 2) + begin;
-  //     }
-  //     return this.bisection(th, mid, begin, end, text, shadowNode);
-  //   }
-  //   if (mid - 1 < 0) {
-  //     return mid;
-  //   }
-  //   shadowNode.innerHTML = text.substring(0, mid - 1) + suffix;
-  //   sh = shadowNode.offsetHeight;
-  //   if (sh <= th) {
-  //     return mid - 1;
-  //   }
-  //   end = mid;
-  //   mid = Math.floor((end - begin) / 2) + begin;
-  //   return this.bisection(th, mid, begin, end, text, shadowNode);
-  // }
-
   private genType() {
-    const { lines, length, isSupportLineClamp, fullWidthRecognition, tail, shadowEl } = this;
+    const { lines, length, isSupportLineClamp, cdr } = this;
     this.cls = {
       'ellipsis': true,
       'ellipsis__lines': lines && !isSupportLineClamp,
@@ -122,55 +118,97 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     if (!lines && !length) {
       this.type = 'default';
     } else if (!lines) {
-      const el = shadowEl.nativeElement as HTMLElement;
-      if (el.children.length > 0) {
-        throw new Error('Ellipsis content must be string.');
-      }
       this.type = 'length';
-      const text = el.textContent;
-      const textLength = fullWidthRecognition ? this.getStrFullLength(text) : text.length;
-      if (textLength <= length || length < 0) {
-        this.text = text;
-        return ;
-      }
-      let displayText: string;
-      if (length - tail.length <= 0) {
-        displayText = '';
-      } else {
-        displayText = fullWidthRecognition ? this.cutStrByFullLength(text, length) : text.slice(0, length);
-      }
-      this.text = displayText + tail;
     } else if (isSupportLineClamp) {
-      // const coloneNode = (this.shadowEl.nativeElement as HTMLElement).cloneNode();
-      // const titleTplEl = titleTpl.nativeElement as HTMLElement;
-      // titleTplEl.innerHTML = '';
-      // titleTplEl.appendChild(coloneNode);
       this.type = 'line-clamp';
     } else {
       this.type = 'line';
     }
+    cdr.detectChanges();
   }
 
-  private cloneNode() {
-    const { shadowEl } = this;
-    const el = this.el.nativeElement.querySelector('.ellipsis');
-    if (el) {
-      el.innerHTML = shadowEl.nativeElement.innerHTML;
+  private gen() {
+    const { type, lines, length, fullWidthRecognition, tail, orgEl, cdr } = this;
+    if (type === 'length') {
+      const el = orgEl.nativeElement as HTMLElement;
+      if (el.children.length > 0) {
+        throw new Error('Ellipsis content must be string.');
+      }
+      const text = el.textContent;
+      const textLength = fullWidthRecognition ? this.getStrFullLength(text) : text.length;
+      if (textLength <= length || length < 0) {
+        this.text = text;
+      } else {
+        let displayText: string;
+        if (length - tail.length <= 0) {
+          displayText = '';
+        } else {
+          displayText = fullWidthRecognition ? this.cutStrByFullLength(text, length) : text.slice(0, length);
+        }
+        this.text = displayText + tail;
+      }
+      cdr.detectChanges();
+    } else if (type === 'line') {
+      const { shadowOrgEl, shadowTextEl } = this;
+      const orgNode = shadowOrgEl.nativeElement as HTMLElement;
+      const text = orgNode.innerText || orgNode.textContent;
+      const lineHeight = parseInt(getComputedStyle(this.getEl('.ellipsis')).lineHeight, 10);
+      const targetHeight = lines * lineHeight;
+      this.getEl('.ellipsis__handle').style.height = `${targetHeight}px`;
+
+      if (orgNode.offsetHeight <= targetHeight) {
+        this.text = text;
+        this.targetCount = text.length;
+      } else {
+        // bisection
+        const len = text.length;
+        const mid = Math.ceil(len / 2);
+
+        const count = this.bisection(targetHeight, mid, 0, len, text, shadowTextEl.nativeElement.firstChild);
+        this.text = text;
+        this.targetCount = count;
+      }
+      cdr.detectChanges();
     }
   }
 
-  ngAfterViewInit(): void {
-    this.computeLine();
-    this.genType();
-    this.cdr.detectChanges();
-    this.cloneNode();
+  private getEl(cls: string): HTMLElement {
+    return this.el.nativeElement.querySelector(cls);
   }
 
-  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
-    // if (!changes.lines.firstChange) {
-    //   this.computeLine();
-    //   this.genType();
-    //   this.cdr.detectChanges();
-    // }
+  private executeOnStable(fn: () => any): void {
+    if (this.ngZone.isStable) {
+      fn();
+    } else {
+      this.ngZone.onStable.asObservable().pipe(take(1)).subscribe(fn);
+    }
+  }
+
+  refresh(): void {
+    this.genType();
+    this.executeOnStable(() => {
+      const { type, dom, orgEl, cdr } = this;
+      const html = orgEl.nativeElement.innerHTML;
+      this.orgHtml = dom.bypassSecurityTrustHtml(html);
+      cdr.detectChanges();
+      this.gen();
+      if (type !== 'line') {
+        const el = this.getEl('.ellipsis');
+        if (el) {
+          el.innerHTML = html;
+        }
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.inited = true;
+    this.refresh();
+  }
+
+  ngOnChanges(): void {
+    if (this.inited) {
+      this.refresh();
+    }
   }
 }

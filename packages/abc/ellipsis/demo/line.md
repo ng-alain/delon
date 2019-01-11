@@ -1,5 +1,6 @@
 ---
 order: 2
+title:
   zh-CN: 按照行数省略
   en-US: Truncate according to the number of rows
 ---
