@@ -24,6 +24,8 @@ Convert tree structure to array structure.
 
 Convert array structure to tree structure.
 
+> If `parent_id` is a string, the root value **Make Sure** is an empty string.
+
 **options**
 
 | Property          | Description        | Type                  | Default     |

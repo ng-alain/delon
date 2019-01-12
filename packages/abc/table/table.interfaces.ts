@@ -190,7 +190,7 @@ export interface STColumn {
   /**
    * 列宽（数字型表示 `px` 值），例如：`100`、`10%`、`100px`
    *
-   * **注意：** 固定列不支持百分比
+   * **注意：** 若固定列必须是数字
    */
   width?: string | number;
   /**
