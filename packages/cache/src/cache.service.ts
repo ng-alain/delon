@@ -21,12 +21,14 @@ export class CacheService implements OnDestroy {
   private meta: Set<string> = new Set<string>();
   private freqTick = 3000;
   private freqTime;
+  private cog: DelonCacheConfig = {};
 
   constructor(
-    private options: DelonCacheConfig,
+    _: DelonCacheConfig,
     @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore,
     private http: HttpClient,
   ) {
+    Object.assign(this.cog, { ...new DelonCacheConfig(), ..._});
     this.loadMeta();
     this.startExpireNotify();
   }
@@ -55,7 +57,7 @@ export class CacheService implements OnDestroy {
   }
 
   private loadMeta() {
-    const ret = this.store.get(this.options.meta_key);
+    const ret = this.store.get(this.cog.meta_key);
     if (ret && ret.v) {
       (ret.v as string[]).forEach(key => this.meta.add(key));
     }
@@ -64,7 +66,7 @@ export class CacheService implements OnDestroy {
   private saveMeta() {
     const metaData: string[] = [];
     this.meta.forEach(key => metaData.push(key));
-    this.store.set(this.options.meta_key, { v: metaData, e: 0 });
+    this.store.set(this.cog.meta_key, { v: metaData, e: 0 });
   }
 
   getMeta() {
@@ -150,7 +152,7 @@ export class CacheService implements OnDestroy {
     if (type === 'm') {
       this.memory.set(key, value);
     } else {
-      this.store.set(this.options.prefix + key, value);
+      this.store.set(this.cog.prefix + key, value);
       this.pushMeta(key);
     }
     this.runNotify(key, 'set');
@@ -195,15 +197,15 @@ export class CacheService implements OnDestroy {
       expire?: number;
     } = {},
   ): Observable<any> | any {
-    const isPromise = options.mode !== 'none' && this.options.mode === 'promise';
-    const value: ICache = this.memory.has(key) ? this.memory.get(key) : this.store.get(this.options.prefix + key);
+    const isPromise = options.mode !== 'none' && this.cog.mode === 'promise';
+    const value: ICache = this.memory.has(key) ? this.memory.get(key) : this.store.get(this.cog.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
         return this.http
           .get(key)
           .pipe(
             // tslint:disable-next-line:no-any
-            map((ret: any) => this._deepGet(ret, this.options.reName as string[], null)),
+            map((ret: any) => this._deepGet(ret, this.cog.reName as string[], null)),
             tap(v => this.set(key, v, { type: options.type, expire: options.expire })),
           );
       }
@@ -299,7 +301,7 @@ export class CacheService implements OnDestroy {
       this.memory.delete(key);
       return;
     }
-    this.store.remove(this.options.prefix + key);
+    this.store.remove(this.cog.prefix + key);
     this.removeMeta(key);
   }
 
@@ -312,7 +314,7 @@ export class CacheService implements OnDestroy {
   clear() {
     this.notifyBuffer.forEach((v, k) => this.runNotify(k, 'remove'));
     this.memory.clear();
-    this.meta.forEach(key => this.store.remove(this.options.prefix + key));
+    this.meta.forEach(key => this.store.remove(this.cog.prefix + key));
   }
 
   // #endregion

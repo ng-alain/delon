@@ -18,6 +18,7 @@ import { SGConfig } from './grid.config';
     '[class.sg__wrap]': 'true',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
+  exportAs: 'sgContainer',
 })
 export class SGContainerComponent {
   //#region fields
@@ -39,6 +40,6 @@ export class SGContainerComponent {
   }
 
   constructor(cog: SGConfig) {
-    Object.assign(this, cog);
+    Object.assign(this, { ...new SGConfig(), ...cog});
   }
 }

@@ -12,6 +12,7 @@ import { SEConfig } from './edit.config';
   selector: 'se-container, [se-container]',
   templateUrl: './edit-container.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  exportAs: 'seContainer',
 })
 export class SEContainerComponent {
   //#region fields
@@ -49,6 +50,6 @@ export class SEContainerComponent {
   //#endregion
 
   constructor(cog: SEConfig) {
-    Object.assign(this, cog);
+    Object.assign(this, { ...new SEConfig(), ...cog});
   }
 }

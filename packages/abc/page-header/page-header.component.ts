@@ -118,7 +118,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     private reuseSrv: ReuseTabService,
     private cdr: ChangeDetectorRef,
   ) {
-    Object.assign(this, cog);
+    Object.assign(this, { ...new PageHeaderConfig(), ...cog});
     settings.notify
       .pipe(
         takeUntil(this.unsubscribe$),

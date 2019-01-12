@@ -18,7 +18,10 @@ import { ImageConfig } from './image.config';
  * + 支持移除http&https协议http
  * + 支持增加onerror事件
  */
-@Directive({ selector: '[_src]' })
+@Directive({
+  selector: '[_src]',
+  exportAs: 'srcDirective',
+})
 export class ImageDirective implements OnChanges, OnInit {
   @Input('_src') src: string;
   @Input() @InputNumber() size = 64;
@@ -31,7 +34,7 @@ export class ImageDirective implements OnChanges, OnInit {
     private el: ElementRef,
     private render: Renderer2,
   ) {
-    Object.assign(this, cog);
+    Object.assign(this, { ...new ImageConfig(), ...cog});
   }
 
   ngOnInit(): void {

@@ -868,22 +868,22 @@ describe('abc: table', () => {
       });
     });
     describe('#req', () => {
-      it('should be keep reName valid', () => {
-        context.req = { reName: null };
+      it('should fix all paraments when only part parament', () => {
+        context.req = { reName: { pi: 'PI' } };
         fixture.detectChanges();
         expect(comp.req.reName).not.toBeNull();
-        expect(comp.req.reName.pi).toBe('pi');
+        expect(comp.req.reName.pi).toBe('PI');
         expect(comp.req.reName.ps).toBe('ps');
       });
     });
     describe('#res', () => {
-      it('should be keep reName valid', () => {
-        context.res = { reName: null };
+      it('should fix all paraments when only part parament', () => {
+        context.res = { reName: { total: 'a.b' } };
         fixture.detectChanges();
         expect(comp.res.reName).not.toBeNull();
-        expect(Array.isArray(comp.res.reName.total)).toBe(true);
-        expect(Array.isArray(comp.res.reName.list)).toBe(true);
-        expect(comp.res.reName.total[0]).toBe('total');
+        expect(comp.res.reName.total[0]).toBe('a');
+        expect(comp.res.reName.total[1]).toBe('b');
+        expect(comp.res.reName.list.length).toBe(1);
         expect(comp.res.reName.list[0]).toBe('list');
       });
       it('support a.b', () => {
@@ -896,6 +896,14 @@ describe('abc: table', () => {
         expect(comp.res.reName.total[1]).toBe('b');
         expect(comp.res.reName.list[0]).toBe('c');
         expect(comp.res.reName.list[1]).toBe('d');
+      });
+    });
+    describe('#page', () => {
+      it('should fix all paraments when only part parament', () => {
+        context.page = { total: `TO:{{total}}` };
+        fixture.detectChanges();
+        expect(comp.page.placement).toBe(`right`);
+        expect(comp.page.total).toBe(`TO:{{total}}`);
       });
     });
     describe('#showTotal', () => {
