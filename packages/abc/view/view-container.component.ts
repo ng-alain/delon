@@ -17,6 +17,7 @@ const prefixCls = `sv`;
   selector: 'sv-container, [sv-container]',
   templateUrl: './view-container.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  exportAs: 'svContainer',
 })
 export class SVContainerComponent implements OnInit, OnChanges {
   private el: HTMLElement;
@@ -36,7 +37,7 @@ export class SVContainerComponent implements OnInit, OnChanges {
 
   constructor(el: ElementRef, private ren: Renderer2, cog: SVConfig) {
     this.el = el.nativeElement;
-    Object.assign(this, cog);
+    Object.assign(this, { ...new SVConfig(), ...cog});
   }
 
   private setClass() {

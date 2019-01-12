@@ -216,7 +216,7 @@ Property | Description | Type | Default
 `[renderTitle]` | Title custom render template ID | `string` | -
 `[default]` | Replace with default value when no data exists | `string` | -
 `[buttons]` | Buttons of this column | `STColumnButton[]` | -
-`[width]` | Width of this column, e.g: `10%`、`100px` | `string` | -
+`[width]` | Width of this column (**NOTICE:** If the fixed column must be a number), e.g: `100`, `10%`, `100px` | `string,number` | -
 `[fixed]` | Set column to be fixed, must specify `width` | `left,right` | -
 `[format]` | Format value of this column | `function(cell: any, row: any)` | -
 `[className]` | Class name of this column, e.g: `text-center`, `text-right`, `text-danger`, pls refer to [Style Tools](/theme/tools) | `string` | -

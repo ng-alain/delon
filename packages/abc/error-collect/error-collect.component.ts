@@ -23,6 +23,7 @@ import { ErrorCollectConfig } from './error-collect.config';
   `,
   host: { '[class.error-collect]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
+  exportAs: 'errorCollect',
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
   private $time = null;
@@ -42,7 +43,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
-    Object.assign(this, cog);
+    Object.assign(this, { ...new ErrorCollectConfig(), ...cog});
   }
 
   private get errEls() {
@@ -92,7 +93,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formEl = this.findParent(this.el.nativeElement, 'form');
-    if (this.formEl === null) throw new Error('未找到有效 form 元素');
+    if (this.formEl === null) throw new Error('No found form element');
     this.install();
   }
 

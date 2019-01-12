@@ -1,6 +1,6 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, inject, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -17,6 +17,7 @@ import {
 import { NzAffixComponent } from 'ng-zorro-antd';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { PageHeaderComponent } from './page-header.component';
+import { PageHeaderConfig } from './page-header.config';
 import { PageHeaderModule } from './page-header.module';
 
 class MockI18NServiceFake extends AlainI18NServiceFake {
@@ -84,6 +85,15 @@ describe('abc: page-header', () => {
         declarations: [TestComponent, TestAutoBreadcrumbComponent, TestI18nComponent],
       });
     });
+
+    it('General Configuration', inject([PageHeaderConfig], (cog: PageHeaderConfig) => {
+      cog.home = 'H';
+      cog.recursiveBreadcrumb = false;
+      ({ fixture, dl, context } = createTestContext(TestComponent));
+      expect(context.comp.home).toBe('H');
+      expect(context.comp.autoBreadcrumb).toBe(true);
+      expect(context.comp.recursiveBreadcrumb).toBe(false);
+    }));
 
     describe('[property]', () => {
       beforeEach(() => {

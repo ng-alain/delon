@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { inject, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FormBuilder,
   FormGroup,
@@ -17,6 +17,7 @@ import { By } from '@angular/platform-browser';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { ErrorCollectComponent } from './error-collect.component';
+import { ErrorCollectConfig } from './error-collect.config';
 import { ErrorCollectModule } from './error-collect.module';
 
 describe('abc: error-collect', () => {
@@ -53,6 +54,14 @@ describe('abc: error-collect', () => {
   afterEach(() => {
     if (context) context.comp.ngOnDestroy();
   });
+
+  it('General Configuration', inject([ ErrorCollectConfig ], (cog: ErrorCollectConfig) => {
+    cog.offsetTop = 10;
+    fixture = TestBed.createComponent(TestComponent);
+    context = fixture.componentInstance;
+    expect(context.comp.freq).toBe(500);
+    expect(context.comp.offsetTop).toBe(10);
+  }));
 
   describe('[default]', () => {
     beforeEach(() => getPropertiesAndCreate());
@@ -93,7 +102,7 @@ describe('abc: error-collect', () => {
     expect(count).toBe(0);
   });
 
-  it('should be throw [未找到有效 form 元素] if no form element', () => {
+  it('should be throw [No found form element] if no form element', () => {
     expect(() => {
       TestBed.overrideTemplate(
         TestComponent,
@@ -101,7 +110,7 @@ describe('abc: error-collect', () => {
       )
         .createComponent(TestComponent)
         .detectChanges();
-    }).toThrowError('未找到有效 form 元素');
+    }).toThrowError('No found form element');
   });
 });
 

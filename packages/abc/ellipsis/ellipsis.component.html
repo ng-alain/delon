@@ -1,0 +1,30 @@
+<div (cdkObserveContent)="refresh()" #orgEl style="display: none;"><ng-content></ng-content></div>
+<ng-template #tooltipTpl let-con>
+  <span *ngIf="tooltip; else con" nz-tooltip [nzTitle]="titleTpl" [nzOverlayStyle]="{ 'overflow-wrap': 'break-word', 'word-wrap': 'break-word' }">
+    <ng-container *ngTemplateOutlet="con"></ng-container>
+    <ng-template #titleTpl><div [innerHTML]="orgHtml"></div></ng-template>
+  </span>
+</ng-template>
+<ng-container [ngSwitch]="type">
+  <span *ngSwitchCase="'default'" [ngClass]="cls"></span>
+  <ng-container *ngSwitchCase="'length'">
+    <ng-template [ngTemplateOutlet]="tooltipTpl" [ngTemplateOutletContext]="{$implicit: lengthTpl}"></ng-template>
+    <ng-template #lengthTpl>{{text}}</ng-template>
+  </ng-container>
+  <ng-container *ngSwitchCase="'line-clamp'">
+    <ng-template [ngTemplateOutlet]="tooltipTpl" [ngTemplateOutletContext]="{$implicit: lineClampTpl}"></ng-template>
+    <ng-template #lineClampTpl>
+      <div [ngClass]="cls" [ngStyle]="{'-webkit-line-clamp': lines, '-webkit-box-orient': 'vertical'}"></div>
+    </ng-template>
+  </ng-container>
+  <div *ngSwitchCase="'line'" [ngClass]="cls">
+    <div class="ellipsis__handle">
+      <ng-template [ngTemplateOutlet]="tooltipTpl" [ngTemplateOutletContext]="{$implicit: lineTpl}"></ng-template>
+      <ng-template #lineTpl>
+        {{ (targetCount > 0 ? text.substring(0, targetCount) : '') + (targetCount > 0 && targetCount < text.length ? tail : '') }}
+      </ng-template>
+      <div class="ellipsis__shadow" #shadowOrgEl [innerHTML]="orgHtml"></div>
+      <div class="ellipsis__shadow" #shadowTextEl><span>{{text}}</span></div>
+    </div>
+  </div>
+</ng-container>

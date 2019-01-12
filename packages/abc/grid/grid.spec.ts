@@ -1,11 +1,13 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { inject, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
 
+import { SGContainerComponent } from './grid-container.component';
 import { SGComponent } from './grid.component';
+import { SGConfig } from './grid.config';
 import { SGModule } from './grid.module';
 
 const prefixCls = `.sg__`;
@@ -37,14 +39,19 @@ describe('abc: grid', () => {
 
   describe('', () => {
     configureTestSuite(moduleAction);
-
-    beforeEach(() => {
+    it('General Configuration', inject([SGConfig], (cog: SGConfig) => {
+      cog.gutter = 24;
       ({ fixture, dl, context } = createTestContext(TestComponent));
-      fixture.detectChanges();
-      page = new PageObject();
-    });
+      expect(context.sgComp.col).toBe(2);
+      expect(context.sgComp.gutter).toBe(24);
+    }));
 
     describe('[property]', () => {
+      beforeEach(() => {
+        ({ fixture, dl, context } = createTestContext(TestComponent));
+        fixture.detectChanges();
+        page = new PageObject();
+      });
       describe('#wrap', () => {
         it('#gutter', () => {
           const gutter = 24;
@@ -130,11 +137,13 @@ describe('abc: grid', () => {
 
 @Component({
   template: `
-  <div [sg-container]="parent_colInCon" [col]="parent_col" [gutter]="parent_gutter">
+  <div [sg-container]="parent_colInCon" #sgComp="sgContainer" [col]="parent_col" [gutter]="parent_gutter">
     <sg #viewComp [col]="col"></sg>
   </div>`,
 })
 class TestComponent {
+  @ViewChild('sgComp')
+  sgComp: SGContainerComponent;
   @ViewChild('viewComp')
   viewComp: SGComponent;
 
