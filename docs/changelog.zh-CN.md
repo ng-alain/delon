@@ -4,6 +4,26 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.4](https://github.com/ng-alain/delon/compare/7.0.0-rc.3...7.0.0-rc.4) (2019-01-12)
+
+### Scaffold
+
+* 移除 `editor.snippetSuggestions` 配置，由于最新 [ng-zorro-vscode](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode) 版本不再推荐该项配置为 `top` ([#861](https://github.com/ng-alain/ng-alain/pull/861))
+
+### Bug Fixes
+
+* **module:*:** 修复所有无效复杂类型的全局配置 ([#378](https://github.com/ng-alain/delon/issues/378)) ([b58334f](https://github.com/ng-alain/delon/commit/b58334f))
+* **module:reuse-tab:** 修复路由切换时可能产生溢出 ([#369](https://github.com/ng-alain/delon/issues/369)) ([83d7831](https://github.com/ng-alain/delon/commit/83d7831)), closes [#361](https://github.com/ng-alain/delon/issues/361)
+* **module:se:** 修复错误消息样式不正确 ([#371](https://github.com/ng-alain/delon/issues/371)) ([c5431f8](https://github.com/ng-alain/delon/commit/c5431f8)), closes [#370](https://github.com/ng-alain/delon/issues/370)
+* **module:sf:autocomplete:** 修复 `SFSchemaEnum` 无法识别 `value` 值 ([#362](https://github.com/ng-alain/delon/issues/362)) ([9cd179e](https://github.com/ng-alain/delon/commit/9cd179e))
+* **module:st:** 修复所有项都禁用时不应该允许操作全选操作 ([#367](https://github.com/ng-alain/delon/issues/367)) ([20b654e](https://github.com/ng-alain/delon/commit/20b654e)), closes [#363](https://github.com/ng-alain/delon/issues/363)
+
+### Features
+
+* **module:reuse-tab:** 新增支持自定义右键菜单 ([#368](https://github.com/ng-alain/delon/issues/368)) ([2c0eb89](https://github.com/ng-alain/delon/commit/2c0eb89)), closes [#364](https://github.com/ng-alain/delon/issues/364)
+* **module:sidebar-nav:** 新增 `recursivePath` 属性 ([#374](https://github.com/ng-alain/delon/issues/374)) ([e24ee4f](https://github.com/ng-alain/delon/commit/e24ee4f)), closes [#373](https://github.com/ng-alain/delon/issues/373) [#365](https://github.com/ng-alain/delon/issues/365)
+
+
 # [7.0.0-rc.3](https://github.com/ng-alain/delon/compare/7.0.0-rc.2...7.0.0-rc.3) (2018-12-29)
 
 ### Bug Fixes
