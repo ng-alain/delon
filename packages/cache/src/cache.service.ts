@@ -21,7 +21,7 @@ export class CacheService implements OnDestroy {
   private meta: Set<string> = new Set<string>();
   private freqTick = 3000;
   private freqTime;
-  private cog: DelonCacheConfig;
+  private cog: DelonCacheConfig = {};
 
   constructor(
     _: DelonCacheConfig,
