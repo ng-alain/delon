@@ -48,7 +48,7 @@ export function copy(value: string): Promise<string> {
   });
 }
 
-export function deepMerge(original: any, ...objects: any[]): any {
+export function deepMergeKey(original: any, ingoreArray: boolean, ...objects: any[]): any {
   if (Array.isArray(original) || typeof original !== 'object') return original;
 
   const isObject = (v: any) => typeof v === 'object' || typeof v === 'function';
@@ -60,7 +60,7 @@ export function deepMerge(original: any, ...objects: any[]): any {
       .forEach(key => {
         const oldValue = obj[key];
         const newValue = target[key];
-        if (Array.isArray(newValue)) {
+        if (!ingoreArray && Array.isArray(newValue)) {
           target[key] = [ ...newValue, ...oldValue ];
         } else if (oldValue != null && isObject(oldValue) && newValue != null && isObject(newValue)) {
           target[key] = merge(newValue, oldValue);
@@ -74,4 +74,8 @@ export function deepMerge(original: any, ...objects: any[]): any {
   objects.filter(v => isObject(v)).forEach(v => merge(original, v));
 
   return original;
+}
+
+export function deepMerge(original: any, ...objects: any[]): any {
+  return deepMergeKey(original, false, ...objects);
 }

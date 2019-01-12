@@ -2,7 +2,7 @@ import { DecimalPipe, DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, Optional, Output, Renderer2, SimpleChange, SimpleChanges, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlainI18NService, ALAIN_I18N_TOKEN, CNCurrencyPipe, DatePipe, DelonLocaleService, DrawerHelper, ModalHelper, ModalHelperOptions, YNPipe } from '@delon/theme';
-import { deepCopy, deepMerge, toBoolean, updateHostClass, InputBoolean, InputNumber } from '@delon/util';
+import { deepMerge, deepMergeKey, toBoolean, updateHostClass, InputBoolean, InputNumber } from '@delon/util';
 import { of, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -41,12 +41,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._req;
   }
   set req(value: STReq) {
-    const { req } = this.cog;
-    const item = { ...req, ...value };
-    if (item.reName == null) {
-      item.reName = deepCopy(req.reName);
-    }
-    this._req = item;
+    this._req = deepMerge({}, this.cog.req, value);
   }
   private _req: STReq;
   /** 返回体配置 */
@@ -55,13 +50,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._res;
   }
   set res(value: STRes) {
-    const { res } = this.cog;
-    const item = { ...res, ...value };
-    item.reName = { ...res.reName, ...item.reName };
-    if (!Array.isArray(item.reName.list))
-      item.reName.list = item.reName.list.split('.');
-    if (!Array.isArray(item.reName.total))
-      item.reName.total = item.reName.total.split('.');
+    const item =  deepMergeKey({}, true, this.cog.res, value);
+    const reName = item.reName;
+    if (!Array.isArray(reName.list))
+      reName.list = reName.list.split('.');
+    if (!Array.isArray(reName.total))
+      reName.total = reName.total.split('.');
     this._res = item;
   }
   private _res: STRes;
@@ -76,8 +70,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   set page(value: STPage) {
     this.clonePage = value;
-    const { page } = this.cog;
-    const item = { ...deepCopy(page), ...value };
+    const item =  deepMergeKey({}, true, this.cog.page, value);
     const { total } = item;
     if (typeof total === 'string' && total.length) {
       this.totalTpl = total;
@@ -169,9 +162,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       }
     });
 
-    const copyCog = deepMerge(new STConfig(), cog);
+    const copyCog = deepMergeKey(new STConfig(), true, cog);
     delete copyCog.multiSort;
-    deepMerge(this, copyCog);
+    Object.assign(this, copyCog);
     if (cog.multiSort && cog.multiSort.global !== false) {
       this.multiSort = { ...cog.multiSort };
     }

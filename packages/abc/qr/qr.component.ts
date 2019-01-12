@@ -43,7 +43,7 @@ export class QRComponent implements OnChanges {
     private srv: QRService,
     private cdr: ChangeDetectorRef,
   ) {
-    Object.assign(this, cog);
+    Object.assign(this, { ...new QRConfig(), ...cog});
   }
 
   ngOnChanges(): void {

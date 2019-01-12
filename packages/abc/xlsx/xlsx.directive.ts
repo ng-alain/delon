@@ -2,7 +2,10 @@ import { Directive, HostListener, Input } from '@angular/core';
 import { XlsxService } from './xlsx.service';
 import { XlsxExportOptions } from './xlsx.types';
 
-@Directive({ selector: '[xlsx]' })
+@Directive({
+  selector: '[xlsx]',
+  exportAs: 'xlsxDirective',
+})
 export class XlsxDirective {
   @Input('xlsx') data: XlsxExportOptions;
 

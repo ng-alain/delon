@@ -1,19 +1,27 @@
 
 import { Component } from '@angular/core';
+import { STColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <ellipsis [lines]="lines" tooltip style="width: 200px">
-    <div [innerHTML]="html"></div>
-  </ellipsis>
-  <button nz-button (click)="newText='asdfasdf'">Update</button>
-  <button nz-button (click)="lines=3">Update Line</button>
+  <div class="mb-md">
+    <input nz-input [(ngModel)]="params.name" name="name" nzPlaceHolder="请输入姓名" style="width: 100px;" class="mr-sm">
+    <button nz-button (click)="st.load(1)" [nzType]="'primary'">搜索</button>
+    <button nz-button (click)="params = {}; st.reset()">重置</button>
+  </div>
+  <st #st [data]="url" [req]="{params: params}" [columns]="columns"></st>
   `,
 })
 export class DemoComponent {
-  newText = '';
-  lines = 2;
-  article = 'There were injuries alleged in three cases in 2015, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.';
-  html = `<p>There were injuries alleged in three <a href="#cover">cases in 2015</a>, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.</p>`;
+  url = `/users?total=100`;
+  params: any = { name: 'asdf' };
+  // mock
+  columns: STColumn[] = [
+    { title: '编号', index: 'id', default: '-' },
+    { title: '头像', type: 'img', width: '50px', index: 'picture.thumbnail' },
+    { title: '邮箱', index: 'email' },
+    { title: '电话', index: 'phone' },
+    { title: '注册时间', type: 'date', index: 'registered' },
+  ];
 }
