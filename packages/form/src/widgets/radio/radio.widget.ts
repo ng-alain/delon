@@ -14,7 +14,7 @@ import { ControlWidget } from '../../widget';
       [nzSize]="ui.size"
       [nzName]="id"
       [ngModel]="value"
-      (ngModelChange)="setValue($event)">
+      (ngModelChange)="_setValue($event)">
       <ng-container *ngIf="styleType">
         <label *ngFor="let option of data"
           nz-radio
@@ -45,5 +45,10 @@ export class RadioWidget extends ControlWidget {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(
       list => (this.data = list),
     );
+  }
+
+  _setValue(value: SFValue) {
+    this.setValue(value);
+    if (this.ui.change) this.ui.change(value);
   }
 }
