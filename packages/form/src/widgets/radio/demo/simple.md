@@ -21,33 +21,43 @@ import { of } from 'rxjs';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`
+  template: `
+    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+  `,
 })
 export class DemoComponent {
-    schema: SFSchema = {
-        properties: {
-            'sex': {
-                'type': 'string',
-                'title': 'Sex',
-                'enum': [ '男', '女', '未知' ],
-                'ui': {
-                    'widget': 'radio',
-                    'styleType': 'button'
-                },
-                'default': '未知'
-            },
-            // 异步数据
-            'async': {
-                'type': 'string',
-                'title': 'Async',
-                'ui': {
-                    'widget': 'radio',
-                    asyncData: () => of([ '男', '女', '未知' ])
-                }
-            }
-        }
-    };
-    constructor(public msg: NzMessageService) { }
-    submit(value: any) { this.msg.success(JSON.stringify(value)); }
+  schema: SFSchema = {
+    properties: {
+      sex: {
+        type: 'string',
+        title: 'Sex',
+        enum: ['男', '女', '未知'],
+        ui: {
+          widget: 'radio',
+          styleType: 'button',
+          change: console.log,
+        },
+        default: '未知',
+      },
+      // 异步数据
+      async: {
+        type: 'string',
+        title: 'Async',
+        ui: {
+          widget: 'radio',
+          asyncData: () => of([
+            { label: '男', value: 'M' },
+            { label: '女', value: 'F' },
+            { label: '未知', value: 'N' },
+          ]),
+          change: console.log,
+        },
+      },
+    },
+  };
+  constructor(public msg: NzMessageService) {}
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 }
 ```
