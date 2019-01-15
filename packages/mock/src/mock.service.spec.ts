@@ -69,6 +69,10 @@ describe('mock: service', () => {
       expect(rule.url).toBe('/users/2');
     });
 
+    it('should be starts with URL in route param', () => {
+      expect(srv.getRule('GET', '/org/users/2')).toBeNull();
+    });
+
     it('should be support regex', () => {
       const url = '/data/2';
       const rule = srv.getRule('GET', url);
