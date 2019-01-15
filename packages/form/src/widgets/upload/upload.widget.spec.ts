@@ -32,6 +32,15 @@ describe('form: widget: upload', () => {
     expect(upload).not.toBeUndefined();
   });
 
+  it('should be support fileList', () => {
+    const s: SFSchema = {
+      properties: { a: { type: 'string', ui: { widget, fileList: [ {} ] } } },
+    };
+    page.newSchema(s);
+    const upload = dl.query(By.directive(NzUploadComponent)).injector.get(NzUploadComponent);
+    expect(upload.nzFileList.length).toBe(1);
+  });
+
   it('shoule be setting size', () => {
     const s: SFSchema = {
       properties: {

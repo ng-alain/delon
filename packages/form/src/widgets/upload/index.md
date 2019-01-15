@@ -10,7 +10,7 @@ type: Widgets
 
 - **务必** 指定 `resReName` 来获取正确数据
 - `multiple` 决定返回数组或者单体数据
-- `enum`、`asyncData` 最后被转化成 `nzFileList` 值，且**务必**初始保证一个 `response` 属性表示远程数据并 `resReName` 能正确获取，若需要远程删除功能需要指定 `remove` 属性
+- 若指定 `asyncData` 则被转化成 `fileList` (`nzFileList`) 值，且**务必**初始保证一个 `response` 属性表示远程数据并 `resReName` 能正确获取
 - 照片墙模式：预览统一使用 `nzModal` 实现且无法自定义
 
 ## API
@@ -19,7 +19,6 @@ type: Widgets
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[enum]` | 数据源 | `SFSchemaEnumType[]` | -
 `[readOnly]` | 禁用状态  | `boolean` | -
 
 ### ui 属性
@@ -34,6 +33,7 @@ type: Widgets
 `[action]` | 必选参数, 上传的地址 | `string` | -
 `[accept]` | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | `string` | -
 `[limit]` | 限制单次最多上传数量，`multiple` 打开时有效；`0` 表示不限  | `number` | `0`
+`[fileList]` | 文件列表 | `UploadFile[]` | -
 `[fileSize]` | 限制文件大小，单位：KB；`0` 表示不限  | `number` | `0`
 `[fileType]` | 限制文件类型，例如：`image/png,image/jpeg,image/gif,image/bmp` | `string` | -
 `[headers]` | 设置上传的请求头部 | `Object, (file: UploadFile) => Object` | -
@@ -44,4 +44,5 @@ type: Widgets
 `[data]` | 上传所需参数或返回上传参数的方法 | `Object, (file: UploadFile) => Object` | -
 `[withCredentials]` | 上传请求时是否携带 cookie | `boolean` | `false`
 `[remove]` | 点击移除文件时的回调，返回值为 `false` 时不移除 | `(file: UploadFile) => boolean｜Observable` | -
+`[preview]` | 点击文件链接或预览图标时的回调 | `(file: UploadFile) => void` | -
 `[change]` | 上传文件改变时的状态 | `(args: UploadChangeParam) => void` | -
