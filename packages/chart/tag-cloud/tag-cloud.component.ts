@@ -5,6 +5,7 @@ import {
   ElementRef,
   HostBinding,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -41,7 +42,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   // #endregion
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private ngZone: NgZone) { }
 
   private initTagCloud() {
     // 给point注册一个词云的shape
@@ -132,6 +133,10 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     chart.repaint();
   }
 
+  private _attachChart() {
+    this.ngZone.runOutsideAngular(() => this.attachChart());
+  }
+
   private installResizeEvent() {
     if (this.resize$) return;
 
@@ -140,17 +145,17 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
         filter(() => this.chart),
         debounceTime(200),
       )
-      .subscribe(() => this.attachChart());
+      .subscribe(() => this._attachChart());
   }
 
   ngOnInit(): void {
     this.initTagCloud();
     this.installResizeEvent();
-    setTimeout(() => this.install(), this.delay);
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   ngOnChanges(): void {
-    this.attachChart();
+    this._attachChart();
   }
 
   ngOnDestroy(): void {

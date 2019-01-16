@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -36,7 +37,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
 
   // #endregion
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private ngZone: NgZone) { }
 
   private install() {
     const Shape = G2.Shape;
@@ -158,11 +159,11 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    setTimeout(() => this.install(), this.delay);
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   ngOnChanges(): void {
-    this.attachChart();
+    this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
   ngOnDestroy(): void {

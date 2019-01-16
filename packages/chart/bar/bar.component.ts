@@ -5,6 +5,7 @@ import {
   ElementRef,
   HostBinding,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -46,6 +47,8 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() autoLabel = true;
 
   // #endregion
+
+  constructor(private ngZone: NgZone) {}
 
   private getHeight() {
     return this.title ? this.height - TITLE_HEIGHT : this.height;
@@ -119,15 +122,15 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
         filter(() => this.chart),
         debounceTime(200),
       )
-      .subscribe(() => this.updatelabel());
+      .subscribe(() =>  this.ngZone.runOutsideAngular(() => this.updatelabel()));
   }
 
   ngOnInit() {
-    setTimeout(() => this.install(), this.delay);
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   ngOnChanges(): void {
-    this.attachChart();
+    this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
   ngOnDestroy(): void {
