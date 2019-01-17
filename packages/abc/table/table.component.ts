@@ -1,8 +1,42 @@
 import { DecimalPipe, DOCUMENT } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, Optional, Output, Renderer2, SimpleChange, SimpleChanges, TemplateRef } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Optional,
+  Output,
+  Renderer2,
+  SimpleChange,
+  SimpleChanges,
+  TemplateRef,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { AlainI18NService, ALAIN_I18N_TOKEN, CNCurrencyPipe, DatePipe, DelonLocaleService, DrawerHelper, ModalHelper, ModalHelperOptions, YNPipe } from '@delon/theme';
-import { deepMerge, deepMergeKey, toBoolean, updateHostClass, InputBoolean, InputNumber } from '@delon/util';
+import {
+  AlainI18NService,
+  ALAIN_I18N_TOKEN,
+  CNCurrencyPipe,
+  DatePipe,
+  DelonLocaleService,
+  DrawerHelper,
+  ModalHelper,
+  ModalHelperOptions,
+  YNPipe,
+} from '@delon/theme';
+import {
+  deepMerge,
+  deepMergeKey,
+  toBoolean,
+  updateHostClass,
+  InputBoolean,
+  InputNumber,
+} from '@delon/util';
 import { of, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -11,12 +45,38 @@ import { STDataSource } from './table-data-source';
 import { STExport } from './table-export';
 import { STRowSource } from './table-row.directive';
 import { STConfig } from './table.config';
-import { STChange, STChangeType, STColumn, STColumnButton, STColumnFilterMenu, STColumnSelection, STData, STError, STExportOptions, STLoadOptions, STMultiSort, STPage, STReq, STRes, STRowClassName, STSingleSort } from './table.interfaces';
+import {
+  STChange,
+  STChangeType,
+  STColumn,
+  STColumnButton,
+  STColumnFilterMenu,
+  STColumnSelection,
+  STData,
+  STError,
+  STExportOptions,
+  STLoadOptions,
+  STMultiSort,
+  STPage,
+  STReq,
+  STRes,
+  STRowClassName,
+  STSingleSort,
+} from './table.interfaces';
 
 @Component({
   selector: 'st',
   templateUrl: './table.component.html',
-  providers: [ STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe ],
+  providers: [
+    STDataSource,
+    STRowSource,
+    STColumnSource,
+    STExport,
+    CNCurrencyPipe,
+    DatePipe,
+    YNPipe,
+    DecimalPipe,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
@@ -50,12 +110,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._res;
   }
   set res(value: STRes) {
-    const item =  deepMergeKey({}, true, this.cog.res, value);
+    const item = deepMergeKey({}, true, this.cog.res, value);
     const reName = item.reName;
-    if (!Array.isArray(reName.list))
-      reName.list = reName.list.split('.');
-    if (!Array.isArray(reName.total))
-      reName.total = reName.total.split('.');
+    if (!Array.isArray(reName.list)) reName.list = reName.list.split('.');
+    if (!Array.isArray(reName.total)) reName.total = reName.total.split('.');
     this._res = item;
   }
   private _res: STRes;
@@ -70,7 +128,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   set page(value: STPage) {
     this.clonePage = value;
-    const item =  deepMergeKey({}, true, this.cog.page, value);
+    const item = deepMergeKey({}, true, this.cog.page, value);
     const { total } = item;
     if (typeof total === 'string' && total.length) {
       this.totalTpl = total;
@@ -173,7 +231,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe$),
         filter(() => this._columns.length > 0),
-      ).subscribe(() => this.refreshColumns());
+      )
+      .subscribe(() => this.refreshColumns());
   }
 
   cd() {
@@ -184,9 +243,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   renderTotal(total: string, range: string[]) {
     return this.totalTpl
       ? this.totalTpl
-        .replace('{{total}}', total)
-        .replace('{{range[0]}}', range[0])
-        .replace('{{range[1]}}', range[1])
+          .replace('{{total}}', total)
+          .replace('{{range[0]}}', range[0])
+          .replace('{{range[1]}}', range[1])
       : '';
   }
 
@@ -204,10 +263,26 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.change.emit(res);
   }
 
+  private get routerState() {
+    const { pi, ps, total } = this;
+    return { pi, ps, total };
+  }
+
   //#region data
 
   private _load() {
-    const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
+    const {
+      pi,
+      ps,
+      data,
+      req,
+      res,
+      page,
+      total,
+      singleSort,
+      multiSort,
+      rowClassName,
+    } = this;
     this.loading = true;
     return this.dataSource
       .process({
@@ -274,7 +349,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   load(pi = 1, extraParams?: {}, options?: STLoadOptions) {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
-      this._req.params = options && options.merge ? { ...this._req.params, ...extraParams } : extraParams;
+      this._req.params =
+        options && options.merge
+          ? { ...this._req.params, ...extraParams }
+          : extraParams;
     }
     this._change('pi');
     return this;
@@ -326,7 +404,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     e.stopPropagation();
     const res = col.click(item, this);
     if (typeof res === 'string') {
-      this.router.navigateByUrl(res);
+      this.router.navigateByUrl(res, { state: this.routerState });
     }
     return false;
   }
@@ -358,14 +436,17 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       data = [data];
     }
 
-    (data as STData[]).map(item => this._data.indexOf(item))
+    (data as STData[])
+      .map(item => this._data.indexOf(item))
       .filter(pos => pos !== -1)
       .forEach(pos => this._data.splice(pos, 1));
 
     // recalculate no
     this._columns
-        .filter(w => w.type === 'no')
-        .forEach(c => this._data.forEach((i, idx) => i._values[c.__point] = c.noIndex + idx));
+      .filter(w => w.type === 'no')
+      .forEach(c =>
+        this._data.forEach((i, idx) => (i._values[c.__point] = c.noIndex + idx)),
+      );
 
     return this.cd();
   }
@@ -386,7 +467,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._load();
     const res = {
       value,
-      map: this.dataSource.getReqSortMap(this.singleSort, this.multiSort, this._columns),
+      map: this.dataSource.getReqSortMap(
+        this.singleSort,
+        this.multiSort,
+        this._columns,
+      ),
       column: col,
     };
     this.changeEmit('sort', res);
@@ -443,10 +528,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private _refCheck(): this {
     const validData = this._data.filter(w => !w.disabled);
     const checkedList = validData.filter(w => w.checked === true);
-    this._allChecked = checkedList.length > 0 && checkedList.length === validData.length;
+    this._allChecked =
+      checkedList.length > 0 && checkedList.length === validData.length;
     const allUnChecked = validData.every(value => !value.checked);
     this._indeterminate = !this._allChecked && !allUnChecked;
-    this._allCheckedDisabled = this._data.length === this._data.filter(w => w.disabled).length;
+    this._allCheckedDisabled =
+      this._data.length === this._data.filter(w => w.disabled).length;
     this.cd();
     return this;
   }
@@ -505,7 +592,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       const { modal } = btn;
       const obj = { [modal.paramsName]: record };
       // tslint:disable-next-line:no-any
-      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
+      (this.modalHelper[
+        btn.type === 'modal' ? 'create' : 'createStatic'
+      ] as any)(
         modal.component,
         { ...obj, ...(modal.params && modal.params(record)) },
         { ...modal },
@@ -529,7 +618,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     } else if (btn.type === 'link') {
       const clickRes = this.btnCallback(record, btn);
       if (typeof clickRes === 'string') {
-        this.router.navigateByUrl(clickRes);
+        this.router.navigateByUrl(clickRes, { state: this.routerState });
       }
       return;
     }
@@ -573,15 +662,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    */
   export(newData?: STData[], opt?: STExportOptions) {
     (newData ? of(newData) : of(this._data)).subscribe((res: STData[]) =>
-      this.exportSrv.export(
-        {
-          ...opt,
-          ...{
-            _d: res,
-            _c: this._columns,
-          },
+      this.exportSrv.export({
+        ...opt,
+        ...{
+          _d: res,
+          _c: this._columns,
         },
-      ),
+      }),
     );
   }
 

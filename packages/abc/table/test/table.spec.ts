@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Observable, Subject } from 'rxjs';
 
-import { en_US, zh_CN, ALAIN_I18N_TOKEN,
+import { en_US, ALAIN_I18N_TOKEN,
   DatePipe,
   DelonLocaleModule,
   DelonLocaleService,
@@ -24,8 +24,7 @@ import { en_US, zh_CN, ALAIN_I18N_TOKEN,
 import { deepCopy, deepGet } from '@delon/util';
 import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 
-import { XlsxService } from '@delon/abc/xlsx';
-import { configureTestSuite, createTestContext, dispatchDropDown } from '@delon/testing';
+import { configureTestSuite, dispatchDropDown } from '@delon/testing';
 import {
   AlainI18NService,
   AlainI18NServiceFake,
@@ -788,6 +787,23 @@ describe('abc: table', () => {
                 expect(router.navigateByUrl).not.toHaveBeenCalled();
                 page.clickCell('a');
                 expect(router.navigateByUrl).toHaveBeenCalled();
+                done();
+              });
+            });
+            it('should be include route state when return a string value', (done: () => void) => {
+              const columns: STColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    { text: 'a', type: 'link', click: (item: any) => '/a' },
+                  ],
+                },
+              ];
+              const router = injector.get(Router);
+              const spy = spyOn(router, 'navigateByUrl');
+              page.newColumn(columns).then(() => {
+                page.clickCell('a');
+                expect(spy.calls.mostRecent().args[1].state.pi).toBe(1);
                 done();
               });
             });
