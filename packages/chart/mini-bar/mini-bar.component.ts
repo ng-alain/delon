@@ -5,6 +5,7 @@ import {
   ElementRef,
   HostBinding,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -40,7 +41,7 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
 
   // #endregion
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private ngZone: NgZone) { }
 
   private install() {
     const { el, height, padding, yTooltipSuffix, tooltipType } = this;
@@ -88,11 +89,11 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    setTimeout(() => this.install(), this.delay);
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   ngOnChanges(): void {
-    this.attachChart();
+    this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
   ngOnDestroy(): void {

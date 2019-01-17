@@ -5,6 +5,7 @@ import {
   ElementRef,
   HostBinding,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -46,7 +47,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
 
   // #endregion
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private ngZone: NgZone) { }
 
   private install() {
     const { el, fit, height, padding, xAxis, yAxis, yTooltipSuffix, tooltipType, line } = this;
@@ -117,11 +118,11 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    setTimeout(() => this.install(), this.delay);
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   ngOnChanges(): void {
-    this.attachChart();
+    this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
   ngOnDestroy(): void {

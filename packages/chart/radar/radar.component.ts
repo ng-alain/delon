@@ -6,6 +6,7 @@ import {
   ElementRef,
   HostBinding,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -56,7 +57,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
 
   // #endregion
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone) { }
 
   private getHeight() {
     return this.height - (this.hasLegend ? 80 : 22);
@@ -145,7 +146,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
 
     chart.repaint();
 
-    this.genLegend();
+    this.ngZone.run(() => this.genLegend());
   }
 
   private genLegend() {
@@ -174,12 +175,12 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    setTimeout(() => this.install(), this.delay);
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   ngOnChanges(): void {
     this.legendData.forEach(i => i.checked = true);
-    this.attachChart();
+    this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
   ngOnDestroy(): void {

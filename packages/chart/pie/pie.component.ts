@@ -5,6 +5,7 @@ import {
   Component,
   ElementRef,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -59,7 +60,12 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
 
   // #endregion
 
-  constructor(private el: ElementRef, private rend: Renderer2, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private el: ElementRef,
+    private rend: Renderer2,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   private setCls() {
     const { el, rend, hasLegend, isPercent } = this;
@@ -83,7 +89,8 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     if (this.isPercent) {
       this.select = false;
       this.tooltip = false;
-      this.percentColor = value => value === '占比' ? color || 'rgba(24, 144, 255, 0.85)' : '#F0F2F5';
+      this.percentColor = value =>
+        value === '占比' ? color || 'rgba(24, 144, 255, 0.85)' : '#F0F2F5';
       this.data = [
         {
           x: '占比',
@@ -101,13 +108,13 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     this.setCls();
 
     const { node, height, padding, animate, tooltip, inner, hasLegend } = this;
-    const chart = this.chart = new G2.Chart({
+    const chart = (this.chart = new G2.Chart({
       container: node.nativeElement,
       forceFit: true,
       height,
       padding,
       animate,
-    });
+    }));
 
     if (!tooltip) {
       chart.tooltip(false);
@@ -129,7 +136,10 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     chart
       .intervalStack()
       .position('y')
-      .tooltip('x*percent', (name, p) => ({ name, value: hasLegend ? p : (p * 100).toFixed(2) }))
+      .tooltip('x*percent', (name, p) => ({
+        name,
+        value: hasLegend ? p : (p * 100).toFixed(2),
+      }))
       .select(this.select);
 
     chart.render();
@@ -138,49 +148,63 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const { chart, height, padding, animate, data, lineWidth, isPercent, percentColor, colors } = this;
+    const {
+      chart,
+      height,
+      padding,
+      animate,
+      data,
+      lineWidth,
+      isPercent,
+      percentColor,
+      colors,
+    } = this;
     if (!chart) return;
 
     chart.set('height', height);
     chart.set('padding', padding);
     chart.set('animate', animate);
 
-    chart.get('geoms')[0]
+    chart
+      .get('geoms')[0]
       .style({ lineWidth, stroke: '#fff' })
       .color('x', isPercent ? percentColor : colors);
 
     const dv = new DataSet.DataView();
     dv.source(data).transform({
-        type: 'percent',
-        field: 'y',
-        dimension: 'x',
-        as: 'percent',
-      });
+      type: 'percent',
+      field: 'y',
+      dimension: 'x',
+      as: 'percent',
+    });
     chart.source(dv, {
-        x: {
-          type: 'cat',
-          range: [0, 1],
-        },
-        y: {
-          min: 0,
-        },
-      });
+      x: {
+        type: 'cat',
+        range: [0, 1],
+      },
+      y: {
+        min: 0,
+      },
+    });
     chart.repaint();
 
-    this.genLegend();
+    this.ngZone.run(() => this.genLegend());
   }
 
   private genLegend() {
     const { hasLegend, isPercent, cdr, chart } = this;
     if (!hasLegend || isPercent) return;
 
-    this.legendData = chart.get('geoms')[0].get('dataArray').map((item: any) => {
-      const origin = item[0]._origin;
-      origin.color = item[0].color;
-      origin.checked = true;
-      origin.percent = (origin.percent * 100).toFixed(2);
-      return origin;
-    });
+    this.legendData = chart
+      .get('geoms')[0]
+      .get('dataArray')
+      .map((item: any) => {
+        const origin = item[0]._origin;
+        origin.color = item[0].color;
+        origin.checked = true;
+        origin.percent = (origin.percent * 100).toFixed(2);
+        return origin;
+      });
 
     cdr.detectChanges();
   }
@@ -200,13 +224,13 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    setTimeout(() => this.install(), this.delay);
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   ngOnChanges(): void {
     this.fixData();
     this.setCls();
-    this.attachChart();
+    this.ngZone.runOutsideAngular(() => this.attachChart());
     this.installResizeEvent();
   }
 

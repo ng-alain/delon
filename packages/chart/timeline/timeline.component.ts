@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -54,8 +55,10 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
   // #endregion
 
+  constructor(private ngZone: NgZone) {}
+
   ngOnInit(): void {
-    setTimeout(() => this.install(), this.delay);
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   private install() {
@@ -184,7 +187,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(): void {
-    this.attachChart();
+    this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
   ngOnDestroy(): void {
