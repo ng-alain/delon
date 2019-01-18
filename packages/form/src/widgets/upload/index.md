@@ -33,6 +33,7 @@ type: Widgets
 `[action]` | 必选参数, 上传的地址 | `string` | -
 `[accept]` | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | `string` | -
 `[limit]` | 限制单次最多上传数量，`multiple` 打开时有效；`0` 表示不限  | `number` | `0`
+`[filter]` | 自定义过滤器 | `UploadFilter[]` | -
 `[fileList]` | 文件列表 | `UploadFile[]` | -
 `[fileSize]` | 限制文件大小，单位：KB；`0` 表示不限  | `number` | `0`
 `[fileType]` | 限制文件类型，例如：`image/png,image/jpeg,image/gif,image/bmp` | `string` | -
@@ -43,6 +44,10 @@ type: Widgets
 `[name]` | 发到后台的文件参数名 | `string` | `file`
 `[data]` | 上传所需参数或返回上传参数的方法 | `Object, (file: UploadFile) => Object` | -
 `[withCredentials]` | 上传请求时是否携带 cookie | `boolean` | `false`
+`[directory]` | 支持上传文件夹（[caniuse](https://caniuse.com/#feat=input-file-directory)） | `boolean` | `false`
+`[openFileDialogOnClick]` | 点击打开文件对话框 | `boolean` | `true`
+`[beforeUpload]` | 上传文件之前的钩子，参数为上传的文件，若返回 `false` 则停止上传 | `(file: UploadFile, fileList: UploadFile[]) => boolean｜Observable<boolean>` | -
+`[customRequest]` | 通过覆盖默认的上传行为，可以自定义自己的上传实现 | `(item) => Subscription` | -
 `[remove]` | 点击移除文件时的回调，返回值为 `false` 时不移除 | `(file: UploadFile) => boolean｜Observable` | -
 `[preview]` | 点击文件链接或预览图标时的回调 | `(file: UploadFile) => void` | -
 `[change]` | 上传文件改变时的状态 | `(args: UploadChangeParam) => void` | -
