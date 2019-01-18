@@ -1444,6 +1444,7 @@ describe('abc: table', () => {
           page.expectElCount(cls, 1);
           res = false;
           comp.resetColumns();
+          fixture.detectChanges();
           page.expectElCount(cls, 0);
           done();
         });
