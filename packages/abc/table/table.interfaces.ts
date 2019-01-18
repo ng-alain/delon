@@ -655,7 +655,8 @@ export type STChangeType =
   | 'sort'
   | 'filter'
   | 'click'
-  | 'dblClick';
+  | 'dblClick'
+  | 'expand';
 
 /**
  * 回调数据
@@ -697,6 +698,10 @@ export interface STChange {
    * 行点击或双击参数
    */
   click?: STChangeRowClick;
+  /**
+   * `expand` 参数
+   */
+  expand?: STData;
 }
 
 /** 行单击参数 */

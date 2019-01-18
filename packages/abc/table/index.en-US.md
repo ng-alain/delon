@@ -155,6 +155,7 @@ Property | Description | Type | Default
 `[sort]` | Parameters of type `sort` | `STChangeSort` | -
 `[filter]` | Parameters of type `filter` | `STColumn` | -
 `[click]` | Parameters of type `click` or `dblClick` | `STChangeRowClick` | -
+`[expand]` | Parameters of type `expand` | `STData` | -
 
 ### STChangeSort
 
