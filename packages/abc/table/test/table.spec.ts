@@ -1057,9 +1057,7 @@ describe('abc: table', () => {
       });
     });
     describe('#expand', () => {
-      beforeEach(() => {
-        createComp(true, TestExpandComponent);
-      });
+      beforeEach(() => createComp(true, TestExpandComponent));
       describe('should be expanded when click row if expandRowByClick', () => {
         it('with true', (done) => {
           context.expandRowByClick = true;
@@ -1067,8 +1065,10 @@ describe('abc: table', () => {
           fixture.whenStable().then(() => {
             const el = page.getCell(1, 2);
             page.expectData(1, 'expand', undefined);
+            expect(context.change).not.toHaveBeenCalled();
             el.click();
             page.expectData(1, 'expand', true);
+            expect(context.change).toHaveBeenCalled();
             done();
           });
         });
@@ -1822,7 +1822,8 @@ class TestComponent {
         [data]="data"
         [columns]="columns"
         [expand]="expand"
-        [expandRowByClick]="expandRowByClick">
+        [expandRowByClick]="expandRowByClick"
+        (change)="change($event)">
     <ng-template #expand let-item let-index="index" let-column="column">
       {{ item.id }}
     </ng-template>
