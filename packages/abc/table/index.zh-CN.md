@@ -71,6 +71,7 @@ config: STConfig
 
 名称 | 说明
 --- | -----
+`resetColumns()` | 重置列描述
 `load(pi = 1, extraParams?: any, options?: STLoadOptions)` | 加载指定页
 `reload(extraParams?: any, options?: STLoadOptions)` | 刷新当前页
 `reset(extraParams?: any, options?: STLoadOptions)` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除）
@@ -226,6 +227,7 @@ class TestComponent {
 `[badge]` | 徽标配置项 | `STColumnBadge` | -
 `[tag]` | 徽标配置项 | `STColumnTag` | -
 `[noIndex]` | 行号索引开始值 | `STColumnTag` | `1`
+`[iif]` | 条件表达式<br>1、仅赋值 `columns` 时执行一次<br>2、可调用 `resetColumns()` 再一次触发 | `(item: STColumn) => boolean` | -
 
 ### STColumnSort
 

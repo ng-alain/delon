@@ -71,6 +71,7 @@ Property | Description | Type | Default
 
 Name | Description
 ---- | -----------
+`resetColumns()` | Reset columns
 `load(pi = 1, extraParams?: any, options?: STLoadOptions)` | Load specified page
 `reload(extraParams?: any, options?: STLoadOptions)` | Refresh current page
 `reset(extraParams?: any, options?: STLoadOptions)` | Reset data and `pi` to `1`, including single multi-select, sort, filter status (Covered default state)
@@ -232,6 +233,7 @@ Property | Description | Type | Default
 `[click]` | Callback of type is link | `(record: STData, instance?: STComponent) => void` | -
 `[badge]` | Config of type is badge | `STColumnBadge` | -
 `[tag]` | Config of type is tag | `STColumnTag` | -
+`[iif]` | Custom conditional expression<br>1. Execute only once when `columns` is assigned<br>2. Call `resetColumns()` to trigger again | `(item: STColumn) => boolean` | -
 
 ### STColumnSort
 

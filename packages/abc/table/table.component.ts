@@ -232,7 +232,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         takeUntil(this.unsubscribe$),
         filter(() => this._columns.length > 0),
       )
-      .subscribe(() => this.refreshColumns());
+      .subscribe(() => this.resetColumns());
   }
 
   cd() {
@@ -674,7 +674,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   //#endregion
 
-  private refreshColumns() {
+  resetColumns() {
     this._columns = this.columnSource.process(this.columns);
   }
 
@@ -694,7 +694,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
   ): void {
     if (changes.columns) {
-      this.refreshColumns();
+      this.resetColumns();
     }
     if (changes.data && changes.data.currentValue) {
       this._load();

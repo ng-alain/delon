@@ -246,6 +246,16 @@ describe('abc: table: column-souce', () => {
         );
       });
     });
+    describe('[iif]', () => {
+      it('when return true', () => {
+        const res = srv.process([{ title: '', iif: () => true } ]);
+        expect(res.length).toBe(1);
+      });
+      it('when return false', () => {
+        const res = srv.process([{ title: '', iif: () => false } ]);
+        expect(res.length).toBe(0);
+      });
+    });
     describe('[sort]', () => {
       describe('#compatible', () => {
         it('should be enabled', () => {
