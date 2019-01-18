@@ -22,8 +22,11 @@ import { ControlWidget } from '../../widget';
         [nzFileList]="fileList"
         [nzDisabled]="disabled"
         [nzAction]="i.action"
+        [nzDirectory]="i.directory"
+        [nzOpenFileDialogOnClick]="i.openFileDialogOnClick"
         [nzAccept]="i.accept"
         [nzLimit]="i.limit"
+        [nzFilter]="i.filter"
         [nzSize]="i.size"
         [nzFileType]="i.fileType"
         [nzHeaders]="ui.headers"
@@ -33,6 +36,8 @@ import { ControlWidget } from '../../widget';
         [nzName]="i.name"
         [nzShowUploadList]="i.showUploadList"
         [nzWithCredentials]="i.withCredentials"
+        [nzBeforeUpload]="i.beforeUpload"
+        [nzCustomRequest]="i.customRequest"
         [nzRemove]="ui.remove"
         [nzPreview]="handlePreview"
         (nzChange)="change($event)"
@@ -70,6 +75,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
       action,
       accept,
       limit,
+      filter,
       fileSize,
       fileType,
       listType,
@@ -78,13 +84,20 @@ export class UploadWidget extends ControlWidget implements OnInit {
       showUploadList,
       withCredentials,
       resReName,
+      beforeUpload,
+      customRequest,
+      directory,
+      openFileDialogOnClick,
     } = this.ui;
     this.i = {
       type: type || 'select',
       text: text || '点击上传',
       action: action || '',
       accept: accept || '',
+      directory: toBool(directory, false),
+      openFileDialogOnClick: toBool(openFileDialogOnClick, true),
       limit: limit == null ? 0 : +limit,
+      filter: filter == null ? [] : filter,
       size: fileSize == null ? 0 : +fileSize,
       fileType: fileType || '',
       listType: listType || 'text',
@@ -93,6 +106,8 @@ export class UploadWidget extends ControlWidget implements OnInit {
       showUploadList: toBool(showUploadList, true),
       withCredentials: toBool(withCredentials, false),
       resReName: (resReName || '').split('.'),
+      beforeUpload: typeof beforeUpload === 'function' ? beforeUpload : null,
+      customRequest: typeof customRequest === 'function' ? customRequest : null,
     };
     if (this.i.listType === 'picture-card') {
       this.btnType = 'plus';

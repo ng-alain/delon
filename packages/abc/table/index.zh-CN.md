@@ -64,7 +64,7 @@ config: STConfig
 `[widthConfig]` | 表头分组时指定每列宽度，与 STColumn 的 width 不可混用 | `string[]` | -
 `[expandRowByClick]` | 通过点击行来展开子行 | `boolean` | `false`
 `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | -
-`(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动 | `EventEmitter<STChange>` | -
+`(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` 变动 | `EventEmitter<STChange>` | -
 `(error)` | 异常时回调 | `EventEmitter<STError>` | -
 
 ### 组件方法
@@ -147,7 +147,7 @@ class TestComponent {
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[type]` | 变更类型，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` | `STChangeType` | -
+`[type]` | 变更类型，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` | `STChangeType` | -
 `[pi]` | 当前页码 | `number` | -
 `[ps]` | 每页数量 | `number` | -
 `[total]` | 数据总量 | `number` | -
@@ -156,6 +156,7 @@ class TestComponent {
 `[sort]` | 排序参数 | `STChangeSort` | -
 `[filter]` | 过滤参数 | `STColumn` | -
 `[click]` | 行点击或双击参数 | `STChangeRowClick` | -
+`[expand]` | `expand` 参数 | `STData` | -
 
 ### STChangeSort
 
