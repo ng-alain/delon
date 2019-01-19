@@ -675,8 +675,13 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   //#endregion
 
-  private refreshColumns() {
+  resetColumns() {
+    return this.refreshColumns()._load();
+  }
+
+  private refreshColumns(): this {
     this._columns = this.columnSource.process(this.columns);
+    return this;
   }
 
   private setClass() {

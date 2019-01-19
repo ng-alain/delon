@@ -24,11 +24,14 @@ import { STColumn } from '@delon/abc';
 @Component({
   selector: 'app-demo',
   template: `
+  <div class="mb-md">
+    <nz-checkbox-group [(ngModel)]="customColumns" (ngModelChange)="st.resetColumns()"></nz-checkbox-group>
+  </div>
   <st #st [data]="users" [columns]="columns">
     <ng-template st-row="customTitle" type="title" let-c>
       {{ c.title }}
-      <nz-dropdown nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomRight">
-        <i nz-dropdown nz-icon type="down" class="ant-table-filter-icon"></i>
+      <nz-dropdown nzTrigger="click" [nzClickHide]="false" nzPlacement="bottomRight" class="position-relative">
+        <div nz-dropdown class="d-inline-block pl-lg"><i nz-icon type="down" class="ant-table-filter-icon"></i></div>
         <div class="ant-table-filter-dropdown p-sm">
           <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" class="width-sm mr-sm">
           <button nz-button [nzType]="'primary'" (click)="st.load(2)">Search</button>
@@ -55,13 +58,22 @@ export class DemoComponent {
     });
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
-    { title: '姓名', index: 'name' },
-    { title: '年龄', index: 'age' },
+    { title: '姓名', index: 'name', iif: () => this.isChoose('name') },
+    { title: '年龄', index: 'age', iif: () => this.isChoose('age') },
     {
       title: '自定义',
       renderTitle: 'customTitle',
       render: 'custom',
+      iif: () => this.isChoose('custom'),
     },
   ];
+  customColumns = [
+    { label: '姓名', value: 'name', checked: true },
+    { label: '年龄', value: 'age', checked: true },
+    { label: '自定义', value: 'custom', checked: true },
+  ];
+  isChoose(key: string): boolean {
+    return !!this.customColumns.find(w => w.value === key && w.checked);
+  }
 }
 ```

@@ -226,6 +226,9 @@ export class STColumnSource {
     const columns: STColumn[] = [];
     const copyColumens = deepCopy(list) as STColumn[];
     for (const item of copyColumens) {
+      if (item.iif && !item.iif(item)) {
+        continue;
+      }
       if (this.acl && item.acl && !this.acl.can(item.acl)) {
         continue;
       }

@@ -1433,6 +1433,22 @@ describe('abc: table', () => {
           expect(comp.clearCheck).toHaveBeenCalled();
         });
       });
+      it('#resetColumns', (done) => {
+        let res = true;
+        const cls = '.st__body tr[data-index="0"] td';
+        page.newColumn([
+          { title: '', index: 'name', iif: () => res },
+        ]);
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          page.expectElCount(cls, 1);
+          res = false;
+          comp.resetColumns();
+          fixture.detectChanges();
+          page.expectElCount(cls, 0);
+          done();
+        });
+      });
     });
     describe('#export', () => {
       let exportSrv: STExport;
