@@ -18,9 +18,12 @@ title: 全局参数
 | `@text-md` | `@font-size-base + 2` | md 文本大小 |
 | `@text-lg` | `@font-size-base + 4` | lg 文本大小 |
 | `@text-xl` | `@font-size-base + 8` | xl 文本大小 |
-| `@icon-sm` | `@font-size-base * 2` | 小号图标 |
-| `@icon-md` | `@font-size-base * 4` | 中号图标 |
-| `@icon-lg` | `@font-size-base * 6` | 大号图标 |
+| `@text-xxl` | `@font-size-base + 12` | xxl 文本大小 |
+| `@icon-sm` | `@font-size-base * 2` | sm 图标 |
+| `@icon-md` | `@font-size-base * 4` | md 图标 |
+| `@icon-lg` | `@font-size-base * 6` | lg 图标 |
+| `@icon-xl` | `@font-size-base * 8` | xl 图标 |
+| `@icon-xxl` | `@font-size-base * 10` | xxl 图标 |
 | `@h1-font-size` | `32px` | h1字号 |
 | `@h2-font-size` | `24px` | h2字号 |
 | `@h3-font-size` | `20px` | h3字号 |
@@ -38,7 +41,7 @@ title: 全局参数
 | `@drawer-xl` | `1200px` | 超大号抽屉 |
 | `@code-border-color` | `#eee` | `<code>` 边框颜色 |
 | `@code-bg` | `#f7f7f7` | `<code>` 背景颜色 |
-| `@widths`  | `sm @layout-gutter * 20` <br> `md @layout-gutter * 30`<br>`lg @layout-gutter * 40` | 宽度 |
+| `@widths`  | `xs @layout-gutter * 10`<br>`sm @layout-gutter * 20`<br>`md @layout-gutter * 30`<br>`lg @layout-gutter * 40`<br>`xl @layout-gutter * 50`<br>`xxl @layout-gutter * 50` | 宽度 |
 | `@border-radius-md` | `4px` | 中号边框圆角 |
 | `@border-radius-lg` | `6px` | 大号边框圆角 |
 | `@masonry-column-gap` | `@layout-gutter * 2` | CSS瀑布流列与列的间距 |
