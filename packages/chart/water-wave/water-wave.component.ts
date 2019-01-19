@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -39,6 +40,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
+    private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
   ) { }
 
@@ -202,11 +204,11 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   ngOnInit(): void {
     this.updateRadio(1);
     this.installResizeEvent();
-    setTimeout(() => this.renderChart(''), this.delay);
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.renderChart(''), this.delay));
   }
 
   ngOnChanges(): void {
-    this.renderChart('update');
+    this.ngZone.runOutsideAngular(() => this.renderChart('update'));
     this.cdr.detectChanges();
   }
 

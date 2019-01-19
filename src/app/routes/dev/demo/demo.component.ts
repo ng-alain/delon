@@ -1,27 +1,57 @@
-
-import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <div class="mb-md">
-    <input nz-input [(ngModel)]="params.name" name="name" nzPlaceHolder="请输入姓名" style="width: 100px;" class="mr-sm">
-    <button nz-button (click)="st.load(1)" [nzType]="'primary'">搜索</button>
-    <button nz-button (click)="params = {}; st.reset()">重置</button>
-  </div>
-  <st #st [data]="url" [req]="{params: params}" [columns]="columns"></st>
+    <g2-pie
+      [hasLegend]="true"
+      title="销售额"
+      subTitle="销售额"
+      [total]="total"
+      [valueFormat]="format"
+      [data]="salesPieData"
+      height="294"
+    ></g2-pie>
   `,
 })
-export class DemoComponent {
-  url = `/users?total=100`;
-  params: any = { name: 'asdf' };
-  // mock
-  columns: STColumn[] = [
-    { title: '编号', index: 'id', default: '-' },
-    { title: '头像', type: 'img', width: '50px', index: 'picture.thumbnail' },
-    { title: '邮箱', index: 'email' },
-    { title: '电话', index: 'phone' },
-    { title: '注册时间', type: 'date', index: 'registered' },
+export class DemoComponent implements OnInit, AfterViewChecked {
+  salesPieData = [
+    {
+      x: '家用电器',
+      y: 4544,
+    },
+    {
+      x: '食用酒水',
+      y: 3321,
+    },
+    {
+      x: '个护健康',
+      y: 3113,
+    },
+    {
+      x: '服饰箱包',
+      y: 2341,
+    },
+    {
+      x: '母婴产品',
+      y: 1231,
+    },
+    {
+      x: '其他',
+      y: 1231,
+    },
   ];
+  total: string;
+  ngOnInit(): void {
+    this.total = `&yen ${this.salesPieData
+      .reduce((pre, now) => now.y + pre, 0)
+      .toFixed(2)}`;
+  }
+  format(val: number) {
+    return `&yen ${val.toFixed(2)}`;
+  }
+
+  ngAfterViewChecked(): void {
+    console.log('g2-pie view check.');
+  }
 }

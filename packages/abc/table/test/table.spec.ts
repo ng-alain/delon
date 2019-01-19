@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Observable, Subject } from 'rxjs';
 
-import { en_US, zh_CN, ALAIN_I18N_TOKEN,
+import { en_US, ALAIN_I18N_TOKEN,
   DatePipe,
   DelonLocaleModule,
   DelonLocaleService,
@@ -24,8 +24,7 @@ import { en_US, zh_CN, ALAIN_I18N_TOKEN,
 import { deepCopy, deepGet } from '@delon/util';
 import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 
-import { XlsxService } from '@delon/abc/xlsx';
-import { configureTestSuite, createTestContext, dispatchDropDown } from '@delon/testing';
+import { configureTestSuite, dispatchDropDown } from '@delon/testing';
 import {
   AlainI18NService,
   AlainI18NServiceFake,
@@ -791,6 +790,23 @@ describe('abc: table', () => {
                 done();
               });
             });
+            it('should be include route state when return a string value', (done: () => void) => {
+              const columns: STColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    { text: 'a', type: 'link', click: (item: any) => '/a' },
+                  ],
+                },
+              ];
+              const router = injector.get(Router);
+              const spy = spyOn(router, 'navigateByUrl');
+              page.newColumn(columns).then(() => {
+                page.clickCell('a');
+                expect(spy.calls.mostRecent().args[1].state.pi).toBe(1);
+                done();
+              });
+            });
           });
         });
       });
@@ -1041,9 +1057,7 @@ describe('abc: table', () => {
       });
     });
     describe('#expand', () => {
-      beforeEach(() => {
-        createComp(true, TestExpandComponent);
-      });
+      beforeEach(() => createComp(true, TestExpandComponent));
       describe('should be expanded when click row if expandRowByClick', () => {
         it('with true', (done) => {
           context.expandRowByClick = true;
@@ -1051,8 +1065,10 @@ describe('abc: table', () => {
           fixture.whenStable().then(() => {
             const el = page.getCell(1, 2);
             page.expectData(1, 'expand', undefined);
+            expect(context.change).not.toHaveBeenCalled();
             el.click();
             page.expectData(1, 'expand', true);
+            expect(context.change).toHaveBeenCalled();
             done();
           });
         });
@@ -1415,6 +1431,22 @@ describe('abc: table', () => {
           expect(comp.clearCheck).not.toHaveBeenCalled();
           comp.clearStatus();
           expect(comp.clearCheck).toHaveBeenCalled();
+        });
+      });
+      it('#resetColumns', (done) => {
+        let res = true;
+        const cls = '.st__body tr[data-index="0"] td';
+        page.newColumn([
+          { title: '', index: 'name', iif: () => res },
+        ]);
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          page.expectElCount(cls, 1);
+          res = false;
+          comp.resetColumns();
+          fixture.detectChanges();
+          page.expectElCount(cls, 0);
+          done();
         });
       });
     });
@@ -1806,7 +1838,8 @@ class TestComponent {
         [data]="data"
         [columns]="columns"
         [expand]="expand"
-        [expandRowByClick]="expandRowByClick">
+        [expandRowByClick]="expandRowByClick"
+        (change)="change($event)">
     <ng-template #expand let-item let-index="index" let-column="column">
       {{ item.id }}
     </ng-template>
