@@ -129,6 +129,7 @@ function addRunScriptToPackageJson() {
     json.scripts.analyze = `npm run color-less && ng build --prod --build-optimizer --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `node scripts/color-less.js`;
+    json.scripts.icon = `ng g ng-alain:plugin icon`;
     overwritePackage(host, json);
     return host;
   };
