@@ -9,6 +9,7 @@ import {
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { MenuService } from '../menu/menu.service';
@@ -32,7 +33,9 @@ export class TitleService implements OnDestroy {
     @Inject(DOCUMENT) private doc: any,
   ) {
     if (this.i18nSrv) {
-      this.i18n$ = this.i18nSrv.change.subscribe(() => this.setTitle());
+      this.i18n$ = this.i18nSrv.change
+        .pipe(filter(() => !!this.i18n$))
+        .subscribe(() => this.setTitle());
     }
   }
 
