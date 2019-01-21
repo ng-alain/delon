@@ -102,6 +102,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       host,
       [
         `ng-alain@${VERSION}`,
+        `ng-alain-codelyzer@DEP-0.0.0-PLACEHOLDER`,
         `@delon/testing@${VERSION}`,
         // color-less
         `less-bundle-promise@DEP-0.0.0-PLACEHOLDER`,
@@ -128,6 +129,7 @@ function addRunScriptToPackageJson() {
     json.scripts.analyze = `npm run color-less && ng build --prod --build-optimizer --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `node scripts/color-less.js`;
+    json.scripts.icon = `ng g ng-alain:plugin icon`;
     overwritePackage(host, json);
     return host;
   };
