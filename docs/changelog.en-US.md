@@ -6,6 +6,10 @@ type: Other
 
 # [7.0.0-rc.5](https://github.com/ng-alain/delon/compare/7.0.0-rc.4...7.0.0-rc.5) (2019-01-22)
 
+### Scaffold
+
+* **style:** import [ng-alain-codelyzer](https://github.com/ng-alain/ng-alain-codelyzer) & clean repeat tslint rule ([#885](https://github.com/ng-alain/ng-alain/pull/885))
+
 ### Bug Fixes
 
 * **module:mock:** fix `/:id` does not match `user/1` ([#384](https://github.com/ng-alain/delon/issues/384)) ([246934b](https://github.com/ng-alain/delon/commit/246934b))
