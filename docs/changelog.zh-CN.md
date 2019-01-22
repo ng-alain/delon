@@ -4,6 +4,28 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.5](https://github.com/ng-alain/delon/compare/7.0.0-rc.4...7.0.0-rc.5) (2019-01-22)
+
+### Bug Fixes
+
+* **module:mock:** 修复 `/:id` 路由参数会匹配到 `user/1` ([#384](https://github.com/ng-alain/delon/issues/384)) ([246934b](https://github.com/ng-alain/delon/commit/246934b))
+* **module:sf:number:** 修复类型为 `integer` 时依然能使用小数点 ([#385](https://github.com/ng-alain/delon/issues/385)) ([1f0226c](https://github.com/ng-alain/delon/commit/1f0226c)), closes [#381](https://github.com/ng-alain/delon/issues/381)
+* **module:theme:title:** 修复首次引用时触发 `setTitle` 方法 ([#397](https://github.com/ng-alain/delon/issues/397)) ([4411a19](https://github.com/ng-alain/delon/commit/4411a19))
+
+### Features
+
+* **module:sf:radio:** 新增 `change` 事件 ([#383](https://github.com/ng-alain/delon/issues/383)) ([7ebb484](https://github.com/ng-alain/delon/commit/7ebb484))
+* **module:sf:upload:** 新增额外的属性 `beforeUpload`、`filter` 等 ([#395](https://github.com/ng-alain/delon/issues/395)) ([29c66b5](https://github.com/ng-alain/delon/commit/29c66b5)), closes [#389](https://github.com/ng-alain/delon/issues/389)
+* **module:st:** 新增 `iif` 自定义显示列 ([#396](https://github.com/ng-alain/delon/issues/396)) ([066030d](https://github.com/ng-alain/delon/commit/066030d)), closes [#393](https://github.com/ng-alain/delon/issues/393)
+* **module:st:** 新增设置 `expandRowByClick` 时触发 `expand` 事件类型 ([#394](https://github.com/ng-alain/delon/issues/394)) ([84ff628](https://github.com/ng-alain/delon/commit/84ff628))
+* **module:st:** 新增路由跳转时状态值包含 `pi`, `ps`, `total` 数据 ([#391](https://github.com/ng-alain/delon/issues/391)) ([567eadd](https://github.com/ng-alain/delon/commit/567eadd))
+* **module:theme:** 新增文本、图标、宽度的 `xs`、`xl`、`xxl` 尺寸 ([#392](https://github.com/ng-alain/delon/issues/392)) ([5bd9d7e](https://github.com/ng-alain/delon/commit/5bd9d7e))
+
+### Performance Improvements
+
+* **module:chart:** 优化所有 `g2` 性能 ([#388](https://github.com/ng-alain/delon/issues/388)) ([94ef1fe](https://github.com/ng-alain/delon/commit/94ef1fe)), closes [#377](https://github.com/ng-alain/delon/issues/377)
+
+
 # [7.0.0-rc.4](https://github.com/ng-alain/delon/compare/7.0.0-rc.3...7.0.0-rc.4) (2019-01-12)
 
 ### Scaffold
