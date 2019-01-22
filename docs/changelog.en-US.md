@@ -4,6 +4,13 @@ title: Change Log
 type: Other
 ---
 
+# [7.0.0-rc.6](https://github.com/ng-alain/delon/compare/7.0.0-rc.5...7.0.0-rc.6) (2019-01-22)
+
+### Bug Fixes
+
+* **module:schematics:** fix missing version of `ng-alain-codelyzer` ([#401](https://github.com/ng-alain/delon/issues/401)) ([e217940](https://github.com/ng-alain/delon/commit/e217940))
+
+
 # [7.0.0-rc.5](https://github.com/ng-alain/delon/compare/7.0.0-rc.4...7.0.0-rc.5) (2019-01-22)
 
 ### Scaffold
