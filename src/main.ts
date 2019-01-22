@@ -11,13 +11,13 @@ import './app/core/preloader';
 import { hmrBootstrap } from './hmr';
 
 if (environment.production) {
-    enableProdMode();
+  enableProdMode();
 }
 
 const bootstrap = () => {
   return platformBrowserDynamic()
     .bootstrapModule(AppModule, {
-      defaultEncapsulation: ViewEncapsulation.Emulated,
+      defaultEncapsulation: ViewEncapsulation.None,
       preserveWhitespaces: false,
     })
     .then(res => {

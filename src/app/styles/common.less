@@ -20,12 +20,14 @@ a {
   }
 }
 
-ul, ol {
+ul,
+ol {
   margin: 0;
   padding: 0;
 }
 
-ul, ol {
+ul,
+ol {
   list-style: none;
 }
 
@@ -51,6 +53,14 @@ ul, ol {
 
 .main-menu {
   z-index: 1;
+  &-wrap {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    max-height: 100vh;
+    &:hover {
+      overflow-y: auto;
+    }
+  }
   .ant-menu-item {
     outline: none;
   }
