@@ -4,6 +4,13 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.6](https://github.com/ng-alain/delon/compare/7.0.0-rc.5...7.0.0-rc.6) (2019-01-22)
+
+### Bug Fixes
+
+* **module:schematics:** 修复无效 `ng-alain-codelyzer` 版本号 ([#401](https://github.com/ng-alain/delon/issues/401)) ([e217940](https://github.com/ng-alain/delon/commit/e217940))
+
+
 # [7.0.0-rc.5](https://github.com/ng-alain/delon/compare/7.0.0-rc.4...7.0.0-rc.5) (2019-01-22)
 
 ### Scaffold
