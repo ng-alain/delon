@@ -10,10 +10,6 @@ const COMPONENTS = [HomeComponent, NotFoundComponent];
 
 const routes = [
   {
-    path: 'dev',
-    loadChildren: './dev/dev.module#DevTestModule',
-  },
-  {
     path: '',
     component: LayoutComponent,
     children: [
@@ -42,6 +38,10 @@ const routes = [
       { path: 'cli', loadChildren: './gen/cli/cli.module#CliModule' },
       // #endregion
     ],
+  },
+  {
+    path: 'dev',
+    loadChildren: './dev/dev.module#DevTestModule',
   },
   { path: '404', component: NotFoundComponent },
   { path: '**', redirectTo: '404' },

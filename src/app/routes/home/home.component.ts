@@ -1,5 +1,6 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import AOS from 'aos';
 import { I18NService } from '../../core/i18n/service';
 
 @Component({
@@ -9,10 +10,14 @@ import { I18NService } from '../../core/i18n/service';
     '[class.home-wrapper]': 'true',
   },
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,
   ) {}
+
+  ngAfterViewInit(): void {
+    AOS.init();
+  }
 
   ngOnInit() {
     document.querySelector('body').classList.add(`index-page`);
