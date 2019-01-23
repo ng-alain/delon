@@ -28,7 +28,7 @@
     "build": "bash scripts/ci/build-all.sh",
     "build_artifacts": "bash scripts/ci/deploy.sh",
     "release": "bash scripts/ci/build-lib.sh && bash scripts/ci/build-schematics.sh -b",
-    "site:gen": "node scripts/site/main init",
+    "site:gen": "node scripts/site/main init && node scripts/build/generate-only-color.js",
     "site": "npm run site:gen && ng s -o",
     "site:build": "npm run site:gen && ng build --prod --build-optimizer --base-href /",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",

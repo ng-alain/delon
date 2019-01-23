@@ -1,31 +1,32 @@
 .toc {
-    font-size: 12px;
-    margin: 16px 0;
-    padding-left: 0;
-    border-left: 1px solid #ebedf0;
+  font-size: 12px;
+  margin: 16px 0;
+  padding-left: 0;
+  border-left: 1px solid #ebedf0;
+  list-style: none;
+  > li {
     list-style: none;
-    >li {
-        list-style: none;
-        margin-left: 0;
-        padding-left: 0;
-        line-height: 1.5;
-        &:not(:last-child) {
-            margin-bottom: 4px;
-        }
-        &.depth- {
-            &3 { padding-left: 16px; }
-            &4 { padding-left: 32px; }
-        }
+    margin-left: 0;
+    padding-left: 0;
+    line-height: 1.5;
+    &:not(:last-child) {
+      margin-bottom: 4px;
     }
-}
-
-.toc li>ul {
+    &.depth- {
+      &3 {
+        padding-left: 16px;
+      }
+      &4 {
+        padding-left: 32px;
+      }
+    }
+  }
+  li > ul {
     text-indent: 8px;
     font-size: 12px;
     display: none;
-}
-
-.toc a {
+  }
+  a {
     padding-left: 16px;
     display: block;
     transition: all 0.3s ease;
@@ -36,33 +37,35 @@
     width: 110px;
     border-left: 1px solid transparent;
     margin-left: -1px;
-}
-
-.toc a:hover {
-    color: @primary-color;
-}
-
-.toc a.current {
-    border-color: @primary-color;
-    color: @primary-color;
-}
-
-.toc-affix {
+    &:hover {
+      color: @primary-color;
+    }
+    &.current {
+      border-color: @primary-color;
+      color: @primary-color;
+    }
+  }
+  &-affix {
     position: absolute;
     top: 8px;
     right: 20px;
     .ant-affix {
-        background: #fff;
-        overflow: auto;
-        max-height: ~"calc(100vh - 16px)";
+      background: #fff;
+      overflow: auto;
+      max-height: ~'calc(100vh - 16px)';
+      z-index: 9;
     }
-}
+    &-bottom {
+      position: absolute;
+      bottom: 88px;
+      right: 20px;
+      .ant-affix {
+        background: #fff;
+      }
+    }
+  }
 
-.toc-affix-bottom {
-    position: absolute;
-    bottom: 88px;
-    right: 20px;
-    .ant-affix {
-        background: #fff;
-    }
+  @media (max-width: @mobile-max) {
+    display: none;
+  }
 }

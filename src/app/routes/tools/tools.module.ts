@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ColorSketchModule } from 'ngx-color/sketch';
 
 import { SharedModule } from '../../shared/shared.module';
 import { SixToSevenEditorComponent } from './6to7/editor/editor.component';
@@ -16,7 +15,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [SharedModule, ColorSketchModule, RouterModule.forChild(routes)],
+  imports: [SharedModule, RouterModule.forChild(routes)],
   declarations: COMPONENTS,
 })
 export class ToolsModule {}

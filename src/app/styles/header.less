@@ -51,6 +51,9 @@
     justify-content: space-between;
     align-items: center;
   }
+  .ant-menu-item {
+    outline: none;
+  }
 }
 
 #search-box {
@@ -160,6 +163,10 @@
       float: initial;
     }
   }
+  .version {
+    display: block;
+    margin: 29px auto 16px;
+  }
   .header-menu {
     display: block;
     &-icon {
@@ -173,6 +180,22 @@
     }
     .menu-site {
       border: none;
+    }
+  }
+  #nav {
+    &,
+    li {
+      width: 100%;
+      font-size: 14px;
+    }
+    li {
+      line-height: 40px;
+      height: 40px;
+      padding: 0 !important;
+      border: 0;
+      a {
+        color: #333;
+      }
     }
   }
 }

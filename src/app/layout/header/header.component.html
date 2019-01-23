@@ -58,7 +58,7 @@
         </nz-select>
       </div>
       <div *ngIf="!isMobile" class="header-menu">
-        <ul nz-menu [nzMode]="isMobile ? 'vertical' : 'horizontal'" class="menu-site" id="nav">
+        <ul nz-menu nzMode="horizontal" class="menu-site" id="nav">
           <li nz-menu-item routerLink="/docs/getting-started/{{i18n.zone}}">
             {{'app.header.menu.docs' | translate}}
           </li>
