@@ -10,13 +10,15 @@ import { MobileService } from './core/mobile.service';
 
 @Component({
   selector: 'app-root',
-  template: `<router-outlet></router-outlet>`,
+  template: `
+    <router-outlet></router-outlet>
+  `,
 })
 export class AppComponent implements OnDestroy {
   @HostBinding('class.mobile')
   isMobile = false;
 
-  private query = 'only screen and (max-width: 991.99px)';
+  private query = 'only screen and (max-width: 767px)';
   private prevUrl = '';
 
   constructor(
@@ -28,16 +30,8 @@ export class AppComponent implements OnDestroy {
     private router: Router,
     private mobileSrv: MobileService,
   ) {
-    renderer.setAttribute(
-      el.nativeElement,
-      'ng-alain-version',
-      VERSION_ALAIN.full,
-    );
-    renderer.setAttribute(
-      el.nativeElement,
-      'ng-zorro-version',
-      VERSION_ZORRO.full,
-    );
+    renderer.setAttribute(el.nativeElement, 'ng-alain-version', VERSION_ALAIN.full);
+    renderer.setAttribute(el.nativeElement, 'ng-zorro-version', VERSION_ZORRO.full);
 
     enquire.register(this.query, {
       match: () => {
@@ -54,12 +48,7 @@ export class AppComponent implements OnDestroy {
       .pipe(filter(evt => evt instanceof NavigationEnd))
       .subscribe((evt: NavigationEnd) => {
         const url = evt.url.split('#')[0].split('?')[0];
-        if (
-          url.includes('/dev') ||
-          url.includes('/404') ||
-          this.prevUrl === url
-        )
-          return;
+        if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
         this.prevUrl = url;
 
         let urlLang = url.split('/').pop() || this.i18n.zone;
@@ -74,10 +63,7 @@ export class AppComponent implements OnDestroy {
         if (urlLang !== redirectLang) {
           let newUrl = '';
           if (~evt.urlAfterRedirects.indexOf('#')) {
-            newUrl = evt.urlAfterRedirects.replace(
-              `/${redirectLang}#`,
-              `/${urlLang}#`,
-            );
+            newUrl = evt.urlAfterRedirects.replace(`/${redirectLang}#`, `/${urlLang}#`);
           } else {
             newUrl = redirectArr.concat(urlLang).join('/');
           }

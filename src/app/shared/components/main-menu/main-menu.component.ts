@@ -1,33 +1,43 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Inject,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { ALAIN_I18N_TOKEN } from '@delon/theme';
+import { Subscription } from 'rxjs';
+import { I18NService } from '../../../core/i18n/service';
 import { MetaService } from '../../../core/meta.service';
 
 @Component({
   selector: 'main-menu',
-  template: `
-  <ul nz-menu [nzMode]="'inline'" style="padding-bottom: 64px;">
-    <li nz-submenu nzOpen *ngFor="let group of meta.menus">
-      <span title>{{group.title}}</span>
-      <ul>
-        <li nz-menu-item *ngFor="let item of group.list"
-          (click)="to(item.url)"
-          [routerLink]="item.url"
-          [routerLinkActive]="['ant-menu-item-selected']" style="padding-left: 54px;">
-          <nz-badge [nzDot]="item.hot">
-            {{item.title}}
-            <span class="chinese">{{item.subtitle}}</span>
-            <nz-tag *ngIf="item.lib" [nzColor]="'blue'" title="Full Library" class="ml-sm">LIB</nz-tag>
-          </nz-badge>
-        </li>
-      </ul>
-    </li>
-  </ul>`,
+  templateUrl: './main-menu.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainMenuComponent {
+export class MainMenuComponent implements OnInit, OnDestroy {
+  private i18n$: Subscription;
+
   @Output() readonly click = new EventEmitter<string>();
 
-  constructor(public meta: MetaService) {}
+  constructor(
+    public meta: MetaService,
+    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   to(url: string) {
     this.click.next(url);
+  }
+
+  ngOnInit(): void {
+    this.i18n$ = this.i18n.change.subscribe(() => this.cdr.markForCheck());
+  }
+
+  ngOnDestroy(): void {
+    this.i18n$.unsubscribe();
   }
 }

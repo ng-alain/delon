@@ -1,12 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from '../core/i18n/service';
-import {
-  Meta,
-  MetaList,
-  MetaSearchGroup,
-  MetaSearchGroupItem,
-} from '../interfaces';
+import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
 import { META as AuthMeta } from '../routes/gen/auth/meta';
 import { META as CacheMeta } from '../routes/gen/cache/meta';
@@ -96,8 +91,7 @@ export class MetaService {
     // fix title
     if (typeof this._data.title === 'object') {
       this._data.title =
-        this._data.title[this.i18n.lang] ||
-        this._data.title[this.i18n.defaultLang];
+        this._data.title[this.i18n.lang] || this._data.title[this.i18n.defaultLang];
     }
 
     this.refPage(url);
@@ -172,8 +166,7 @@ export class MetaService {
       };
     });
     category.list.forEach((item: any) => {
-      const meta =
-        item.meta[this.i18n.lang] || item.meta[this.i18n.defaultLang];
+      const meta = item.meta[this.i18n.lang] || item.meta[this.i18n.defaultLang];
       let typeIdx = category.types.findIndex(
         w => w['zh-CN'] === meta.type || w['en-US'] === meta.type,
       );
@@ -190,14 +183,13 @@ export class MetaService {
         group.push(groupItem);
       }
       const entry: any = {
-        url:
-          (meta.url || item.route || `/${category.name}/${item.name}`) +
-          `/${this.i18n.zone}`,
+        url: (meta.url || item.route || `/${category.name}/${item.name}`) + `/${this.i18n.zone}`,
         title: this.i18n.get(meta.title),
         subtitle: meta.subtitle,
         order: item.order,
         hot: typeof meta.hot === 'boolean' ? meta.hot : false,
-        lib: typeof item.lib === 'boolean' ? item.lib : false};
+        lib: typeof item.lib === 'boolean' ? item.lib : false,
+      };
       groupItem.list.push(entry);
     });
 
@@ -236,7 +228,7 @@ export class MetaService {
     if (!this._menus) this.genMenus(url);
     const idx = this._platMenus.findIndex(w => w.url === url);
     if (idx === -1) return;
-    if (idx > 1) this.prev = this._platMenus[idx - 1];
+    if (idx > 0) this.prev = this._platMenus[idx - 1];
     if (idx + 1 <= this._platMenus.length) this.next = this._platMenus[idx + 1];
   }
 

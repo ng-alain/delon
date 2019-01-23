@@ -19,7 +19,6 @@ import { I18NService } from './core/i18n/service';
 import { StartupService } from './core/startup.service';
 
 import { AppComponent } from './app.component';
-import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { LayoutComponent } from './layout/layout.component';
 
@@ -76,12 +75,7 @@ export function StartupServiceFactory(startupService: StartupService) {
       multi: true,
     },
   ],
-  declarations: [
-    AppComponent,
-    LayoutComponent,
-    HeaderComponent,
-    FooterComponent,
-  ],
+  declarations: [AppComponent, LayoutComponent, HeaderComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {
