@@ -143,3 +143,36 @@
     right: 16px;
   }
 }
+
+@media only screen and (max-width: 1200px) {
+  .header-menu-container {
+    justify-content: flex-end;
+  }
+  #search-box {
+    display: none;
+  }
+}
+
+@media (max-width: @mobile-max) {
+  #header {
+    text-align: center;
+    #logo {
+      float: initial;
+    }
+  }
+  .header-menu {
+    display: block;
+    &-icon {
+      position: absolute;
+      right: 30px;
+      top: 25px;
+      z-index: 1;
+      width: 16px;
+      height: 22px;
+      cursor: pointer;
+    }
+    .menu-site {
+      border: none;
+    }
+  }
+}
