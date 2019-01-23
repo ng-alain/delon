@@ -4,6 +4,7 @@ import {
   Component,
   Inject,
   Input,
+  NgZone,
   OnInit,
 } from '@angular/core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -29,6 +30,7 @@ export class FooterComponent implements OnInit {
     private msg: NzMessageService,
     private lazy: LazyService,
     private iconSrv: NzIconService,
+    private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
   ) {}
 
@@ -52,17 +54,21 @@ export class FooterComponent implements OnInit {
   lessLoaded = false;
   changeColor(res: any) {
     const changeColor = () => {
-      (window as any).less
-        .modifyVars({
-          '@primary-color': res.color.hex,
-        })
-        .then(() => {
-          this.color = res.color.hex;
-          this.iconSrv.twoToneColor.primaryColor = this.color;
-          this.msg.success(this.i18n.fanyi('app.footer.primary-color-changed'));
-          window.scrollTo(0, 0);
-          this.cdr.detectChanges();
-        });
+      this.ngZone.runOutsideAngular(() => {
+        (window as any).less
+          .modifyVars({
+            '@primary-color': res.color.hex,
+          })
+          .then(() => {
+            window.scrollTo(0, 0);
+            this.ngZone.run(() => {
+              this.color = res.color.hex;
+              this.iconSrv.twoToneColor.primaryColor = this.color;
+              this.msg.success(this.i18n.fanyi('app.footer.primary-color-changed'));
+              this.cdr.detectChanges();
+            });
+          });
+      });
     };
 
     const lessUrl = 'https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js';
