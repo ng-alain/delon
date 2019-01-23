@@ -1,8 +1,7 @@
 ---
-order: 15
+order: 50
+type: Other
 title: 升级到 2.0 版本
-type: Basic
-hot: true
 ---
 
 ng-alain 2.0 变更主要从两个方面：
@@ -66,20 +65,20 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 ### 新类库
 
-| 原所在库          | 新库    | 描述                                                                                                                       |
-| ----------------- | ------- | -------------------------------------------------------------------------------------------------------------------------- |
+| 原所在库          | 新库    | 描述                                                                                                                      |
+|-------------------|---------|---------------------------------------------------------------------------------------------------------------------------|
 | `abc/chart`       | `chart` | G2 图表，需要重新引入 [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-6c960904023c582a766661950a35b283R8) |
-| `abc/number-info` | `chart` | -                                                                                                                          |
-| `abc/trend`       | `chart` | -                                                                                                                          |
+| `abc/number-info` | `chart` | -                                                                                                                         |
+| `abc/trend`       | `chart` | -                                                                                                                         |
 
 ### abc 类库组件名变更
 
-| 原组件名            | 新组件名 | ng update | 描述 |
-| ------------------- | -------- | --------- | ---- |
-| `simple-table`      | `st`     | √         | -    |
-| `desc-list`         | `sv`     | √         | -    |
-| `simple-html-form`  | `se`     | √         | -    |
-| `standard-form-row` | `se`     | √         | 过期提醒    |
+| 原组件名            | 新组件名 | ng update | 描述     |
+|---------------------|----------|-----------|----------|
+| `simple-table`      | `st`     | √         | -        |
+| `desc-list`         | `sv`     | √         | -        |
+| `simple-html-form`  | `se`     | √         | -        |
+| `standard-form-row` | `se`     | √         | 过期提醒 |
 
 例如：
 
@@ -113,10 +112,10 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 ### abc 类库组件属性名变更
 
-| 所属组件      | 原属性名     | 新属性名   | ng update | 描述                             |
-|---------------|--------------|------------|-----------|----------------------------------|
-| `page-header` | `home_link`  | `homeLink` | √         | -                                |
-| `page-header` | `home_i18n`  | `homeI18n` | √         | -                                |
+| 所属组件      | 原属性名     | 新属性名   | ng update | 描述                                      |
+|---------------|--------------|------------|-----------|-------------------------------------------|
+| `page-header` | `home_link`  | `homeLink` | √         | -                                         |
+| `page-header` | `home_i18n`  | `homeI18n` | √         | -                                         |
 | `st`          | `sortReName` | 移除       | √         | 过期提醒，仅使用 `STColumn.sort.reName` 值 |
 
 例如：
@@ -129,7 +128,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 ### abc 类库组件配置变更
 
 | Injection Token  | 新方式       | ng update | 描述 |
-| ---------------- | ------------ | --------- | ---- |
+|------------------|--------------|-----------|------|
 | `DA_XLSX_CONFIG` | `XlsxConfig` | ×         | -    |
 | `DA_ZIP_CONFIG`  | `ZipConfig`  | ×         | -    |
 
@@ -139,32 +138,32 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 #### 属性
 
-| 原属性名              | 新属性名   | 子参数            | ng update | 兼容处理 | 描述 |
-| --------------------- | ---------- | ----------------- | --------- | -------- | ---- |
-| `[extraParams]`       | `req`      | `params`          | √         | -        | -    |
-| `[reqReName]`         | `req`      | `reName`          | √         | -        | -    |
-| `[reqMethod]`         | `req`      | `method`          | √         | -        | -    |
-| `[reqHeader]`         | `req`      | `header`          | √         | -        | -    |
-| `[reqBody]`           | `req`      | `body`            | √         | -        | -    |
-| `[resReName]`         | `res`      | `reName`          | √         | -        | -    |
-| `[preDataChange]`     | `res`      | `process`         | √         | -        | -    |
-| `[frontPagination]`   | `page`     | `front`           | √         | -        | -    |
-| `[zeroIndexedOnPage]` | `page`     | `zeroIndexed`     | √         | -        | -    |
-| `[pagePlacement]`     | `page`     | `placement`       | √         | -        | -    |
-| `[showPagination]`    | `page`     | `show`            | √         | -        | -    |
-| `[showSizeChanger]`   | `page`     | `showSize`        | √         | -        | -    |
-| `[pageSizeOptions]`   | `page`     | `pageSizes`       | √         | -        | -    |
-| `[showQuickJumper]`   | `page`     | `showQuickJumper` | √         | -        | -    |
-| `[showTotal]`         | `page`     | `total`           | √         | -        | -    |
-| `[isPageIndexReset]`  | `page`     | `indexReset`      | √         | -        | -    |
-| `[toTopInChange]`     | `page`     | `toTop`           | √         | -        | -    |
-| `[toTopOffset]`       | `page`     | `toTopOffset`     | √         | -        | -    |
-| `(checkboxChange)`    | `(change)` | -                 | √         | ×        | 过期提醒    |
-| `(radioChange)`       | `(change)` | -                 | √         | ×        | 过期提醒    |
-| `(sortChange)`        | `(change)` | -                 | √         | ×        | 过期提醒    |
-| `(filterChange)`      | `(change)` | -                 | √         | ×        | 过期提醒    |
-| `(rowClick)`          | `(change)` | -                 | √         | ×        | 过期提醒    |
-| `(rowDblClick)`       | `(change)` | -                 | √         | ×        | 过期提醒    |
+| 原属性名              | 新属性名   | 子参数            | ng update | 兼容处理 | 描述     |
+|-----------------------|------------|-------------------|-----------|----------|----------|
+| `[extraParams]`       | `req`      | `params`          | √         | -        | -        |
+| `[reqReName]`         | `req`      | `reName`          | √         | -        | -        |
+| `[reqMethod]`         | `req`      | `method`          | √         | -        | -        |
+| `[reqHeader]`         | `req`      | `header`          | √         | -        | -        |
+| `[reqBody]`           | `req`      | `body`            | √         | -        | -        |
+| `[resReName]`         | `res`      | `reName`          | √         | -        | -        |
+| `[preDataChange]`     | `res`      | `process`         | √         | -        | -        |
+| `[frontPagination]`   | `page`     | `front`           | √         | -        | -        |
+| `[zeroIndexedOnPage]` | `page`     | `zeroIndexed`     | √         | -        | -        |
+| `[pagePlacement]`     | `page`     | `placement`       | √         | -        | -        |
+| `[showPagination]`    | `page`     | `show`            | √         | -        | -        |
+| `[showSizeChanger]`   | `page`     | `showSize`        | √         | -        | -        |
+| `[pageSizeOptions]`   | `page`     | `pageSizes`       | √         | -        | -        |
+| `[showQuickJumper]`   | `page`     | `showQuickJumper` | √         | -        | -        |
+| `[showTotal]`         | `page`     | `total`           | √         | -        | -        |
+| `[isPageIndexReset]`  | `page`     | `indexReset`      | √         | -        | -        |
+| `[toTopInChange]`     | `page`     | `toTop`           | √         | -        | -        |
+| `[toTopOffset]`       | `page`     | `toTopOffset`     | √         | -        | -        |
+| `(checkboxChange)`    | `(change)` | -                 | √         | ×        | 过期提醒 |
+| `(radioChange)`       | `(change)` | -                 | √         | ×        | 过期提醒 |
+| `(sortChange)`        | `(change)` | -                 | √         | ×        | 过期提醒 |
+| `(filterChange)`      | `(change)` | -                 | √         | ×        | 过期提醒 |
+| `(rowClick)`          | `(change)` | -                 | √         | ×        | 过期提醒 |
+| `(rowDblClick)`       | `(change)` | -                 | √         | ×        | 过期提醒 |
 
 > 一个示例说明 [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-f573fc0900f21b377dac432f1668c584L164)
 
@@ -182,7 +181,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 > 同时保持 `simple-table` 列描述的兼容性，且兼容会在 `3.x` 时被移除。
 
 | 原属性名               | 新属性名                     | ng update | 兼容处理 | 描述 |
-| ---------------------- | ---------------------------- | --------- | -------- | ---- |
+|------------------------|------------------------------|-----------|----------|------|
 | `sort`                 | `sort.default`               | ×         | √        | -    |
 | `sorter`               | `sort.compare`               | ×         | √        | -    |
 | `sortKey`              | `sort.key`                   | ×         | √        | -    |
@@ -208,13 +207,13 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 #### SimpleTableMultiSort
 
 | 原属性名         | 新属性名        | ng update | 兼容处理 | 描述 |
-| ---------------- | --------------- | --------- | -------- | ---- |
+|------------------|-----------------|-----------|----------|------|
 | `name_separator` | `nameSeparator` | ×         | ×        | -    |
 
 ### chart 类库组件名变更
 
 | 原组件名   | 新组件名    | ng update | 描述 |
-| ---------- | ----------- | --------- | ---- |
+|------------|-------------|-----------|------|
 | `g2-chart` | `g2-custom` | √         | -    |
 
 ## theme 类库变更
@@ -240,7 +239,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 ### Menu
 
 | 原属性名        | 新属性名       | ng update | 兼容处理 | 描述 |
-| --------------- | -------------- | --------- | -------- | ---- |
+|-----------------|----------------|-----------|----------|------|
 | `badge_dot`     | `badgeDot`     | ×         | ×        | -    |
 | `badge_status`  | `badgeStatus`  | ×         | ×        | -    |
 | `shortcut_root` | `shortcutRoot` | ×         | ×        | -    |

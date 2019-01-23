@@ -1,8 +1,7 @@
 ---
-order: 15
+order: 50
+type: Other
 title: Upgrade to V2
-type: Basic
-hot: true
 ---
 
 The ng-alain 2.0 changed is mainly demonstrated from two aspects:
@@ -66,20 +65,20 @@ Because of the BEM style naming, you need to modify style name of `src/app/layou
 
 ### New library
 
-| Old               | New     | Description |
-|-------------------|---------|-------------|
-| `abc/chart`       | `chart` | G2 chart [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-6c960904023c582a766661950a35b283R8)    |
-| `abc/number-info` | `chart` | -           |
-| `abc/trend`       | `chart` | -           |
+| Old               | New     | Description                                                                                                   |
+|-------------------|---------|---------------------------------------------------------------------------------------------------------------|
+| `abc/chart`       | `chart` | G2 chart [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-6c960904023c582a766661950a35b283R8) |
+| `abc/number-info` | `chart` | -                                                                                                             |
+| `abc/trend`       | `chart` | -                                                                                                             |
 
 ### Component name of abc
 
-| Old                 | New  | ng update | Description |
-| ------------------- | -------- | --------- | ---- |
-| `simple-table`      | `st`     | √         | -    |
-| `desc-list`         | `sv`     | √         | -    |
-| `simple-html-form`  | `se`     | √         | -    |
-| `standard-form-row` | `se`     | √         | Error reminder    |
+| Old                 | New  | ng update | Description    |
+|---------------------|------|-----------|----------------|
+| `simple-table`      | `st` | √         | -              |
+| `desc-list`         | `sv` | √         | -              |
+| `simple-html-form`  | `se` | √         | -              |
+| `standard-form-row` | `se` | √         | Error reminder |
 
 e.g:
 
@@ -113,10 +112,10 @@ e.g:
 
 ### Component property of abc
 
-| Component     | Old          | New        | ng update | Description                          |
-|---------------|--------------|------------|-----------|--------------------------------------|
-| `page-header` | `home_link`  | `homeLink` | √         | -                                    |
-| `page-header` | `home_i18n`  | `homeI18n` | √         | -                                    |
+| Component     | Old          | New        | ng update | Description                                          |
+|---------------|--------------|------------|-----------|------------------------------------------------------|
+| `page-header` | `home_link`  | `homeLink` | √         | -                                                    |
+| `page-header` | `home_i18n`  | `homeI18n` | √         | -                                                    |
 | `st`          | `sortReName` | Removed    | √         | Error reminder, Just only via `STColumn.sort.reName` |
 
 e.g:
@@ -139,32 +138,32 @@ e.g:
 
 #### Attributes
 
-| Old Property          | New Property | Sub Property      | ng update | Compatible 1.x | Description |
-|-----------------------|--------------|-------------------|-----------|----------------|-------------|
-| `[extraParams]`       | `req`      | `params`          | √         | -        | -    |
-| `[reqReName]`         | `req`      | `reName`          | √         | -        | -    |
-| `[reqMethod]`         | `req`      | `method`          | √         | -        | -    |
-| `[reqHeader]`         | `req`      | `header`          | √         | -        | -    |
-| `[reqBody]`           | `req`      | `body`            | √         | -        | -    |
-| `[resReName]`         | `res`      | `reName`          | √         | -        | -    |
-| `[preDataChange]`     | `res`      | `process`         | √         | -        | -    |
-| `[frontPagination]`   | `page`     | `front`           | √         | -        | -    |
-| `[zeroIndexedOnPage]` | `page`     | `zeroIndexed`     | √         | -        | -    |
-| `[pagePlacement]`     | `page`     | `placement`       | √         | -        | -    |
-| `[showPagination]`    | `page`     | `show`            | √         | -        | -    |
-| `[showSizeChanger]`   | `page`     | `showSize`        | √         | -        | -    |
-| `[pageSizeOptions]`   | `page`     | `pageSizes`       | √         | -        | -    |
-| `[showQuickJumper]`   | `page`     | `showQuickJumper` | √         | -        | -    |
-| `[showTotal]`         | `page`     | `total`           | √         | -        | -    |
-| `[isPageIndexReset]`  | `page`     | `indexReset`      | √         | -        | -    |
-| `[toTopInChange]`     | `page`     | `toTop`           | √         | -        | -    |
-| `[toTopOffset]`       | `page`     | `toTopOffset`     | √         | -        | -    |
-| `(checkboxChange)`    | `(change)` | -                 | √         | ×        | Error reminder    |
-| `(radioChange)`       | `(change)` | -                 | √         | ×        | Error reminder    |
-| `(sortChange)`        | `(change)` | -                 | √         | ×        | Error reminder    |
-| `(filterChange)`      | `(change)` | -                 | √         | ×        | Error reminder    |
-| `(rowClick)`          | `(change)` | -                 | √         | ×        | Error reminder    |
-| `(rowDblClick)`       | `(change)` | -                 | √         | ×        | Error reminder    |
+| Old Property          | New Property | Sub Property      | ng update | Compatible 1.x | Description    |
+|-----------------------|--------------|-------------------|-----------|----------------|----------------|
+| `[extraParams]`       | `req`        | `params`          | √         | -              | -              |
+| `[reqReName]`         | `req`        | `reName`          | √         | -              | -              |
+| `[reqMethod]`         | `req`        | `method`          | √         | -              | -              |
+| `[reqHeader]`         | `req`        | `header`          | √         | -              | -              |
+| `[reqBody]`           | `req`        | `body`            | √         | -              | -              |
+| `[resReName]`         | `res`        | `reName`          | √         | -              | -              |
+| `[preDataChange]`     | `res`        | `process`         | √         | -              | -              |
+| `[frontPagination]`   | `page`       | `front`           | √         | -              | -              |
+| `[zeroIndexedOnPage]` | `page`       | `zeroIndexed`     | √         | -              | -              |
+| `[pagePlacement]`     | `page`       | `placement`       | √         | -              | -              |
+| `[showPagination]`    | `page`       | `show`            | √         | -              | -              |
+| `[showSizeChanger]`   | `page`       | `showSize`        | √         | -              | -              |
+| `[pageSizeOptions]`   | `page`       | `pageSizes`       | √         | -              | -              |
+| `[showQuickJumper]`   | `page`       | `showQuickJumper` | √         | -              | -              |
+| `[showTotal]`         | `page`       | `total`           | √         | -              | -              |
+| `[isPageIndexReset]`  | `page`       | `indexReset`      | √         | -              | -              |
+| `[toTopInChange]`     | `page`       | `toTop`           | √         | -              | -              |
+| `[toTopOffset]`       | `page`       | `toTopOffset`     | √         | -              | -              |
+| `(checkboxChange)`    | `(change)`   | -                 | √         | ×              | Error reminder |
+| `(radioChange)`       | `(change)`   | -                 | √         | ×              | Error reminder |
+| `(sortChange)`        | `(change)`   | -                 | √         | ×              | Error reminder |
+| `(filterChange)`      | `(change)`   | -                 | √         | ×              | Error reminder |
+| `(rowClick)`          | `(change)`   | -                 | √         | ×              | Error reminder |
+| `(rowDblClick)`       | `(change)`   | -                 | √         | ×              | Error reminder |
 
 > A demo [#diff](https://github.com/ng-alain/ng-alain/pull/673/files#diff-f573fc0900f21b377dac432f1668c584L164)
 
@@ -182,7 +181,7 @@ e.g:
 > 同时保持 `simple-table` 列描述的兼容性，且兼容会在 `3.x` 时被移除。
 
 | 原属性名               | 新属性名                     | ng update | 兼容处理 | 描述 |
-| ---------------------- | ---------------------------- | --------- | -------- | ---- |
+|------------------------|------------------------------|-----------|----------|------|
 | `sort`                 | `sort.default`               | ×         | √        | -    |
 | `sorter`               | `sort.compare`               | ×         | √        | -    |
 | `sortKey`              | `sort.key`                   | ×         | √        | -    |
