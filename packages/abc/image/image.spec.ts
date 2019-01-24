@@ -6,7 +6,8 @@ import { configureTestSuite, createTestContext } from '@delon/testing';
 import { ImageConfig } from './image.config';
 import { ImageDirective } from './image.directive';
 import { ImageModule } from './image.module';
-const SRC = 'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLL1byctY955Htv9ztzVlIzY9buI9zRLg5QrkpOynrmObArKicy9icIX7aVgv3UqIbeIEo2xuUtsqYw/';
+const SRC =
+  'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLL1byctY955Htv9ztzVlIzY9buI9zRLg5QrkpOynrmObArKicy9icIX7aVgv3UqIbeIEo2xuUtsqYw/';
 
 describe('abc: _src', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -28,7 +29,10 @@ describe('abc: _src', () => {
   }));
 
   describe('', () => {
-    beforeEach(() => ({ fixture, dl, context } = createTestContext(TestComponent)));
+    beforeEach(() => {
+      ({ fixture, dl, context } = createTestContext(TestComponent));
+      fixture.detectChanges();
+    });
 
     it('should be support qlogo auto size', () => {
       context.src = `${SRC}0`;
@@ -59,11 +63,20 @@ describe('abc: _src', () => {
       // tslint:disable-next-line:no-string-literal
       expect(imgEl.attributes['onerror'].nodeValue).toContain(context.error);
     });
+
+    it('should be ingore https', () => {
+      context.src = `https://ng-alain.com/1.png`;
+      fixture.detectChanges();
+      const newSrc = (dl.query(By.css('div')).nativeElement as HTMLElement).getAttribute('src');
+      expect(newSrc).toBe(`//ng-alain.com/1.png`);
+    });
   });
 });
 
 @Component({
-  template: `<div [_src]="src" #comp="srcDirective" [size]="size" [error]="error"></div>`,
+  template: `
+    <div [_src]="src" #comp="srcDirective" [size]="size" [error]="error"></div>
+  `,
 })
 class TestComponent {
   @ViewChild('comp') comp: ImageDirective;
