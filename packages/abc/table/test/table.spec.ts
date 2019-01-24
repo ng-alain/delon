@@ -15,10 +15,13 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Observable, Subject } from 'rxjs';
 
-import { en_US, ALAIN_I18N_TOKEN,
+import {
+  en_US,
+  ALAIN_I18N_TOKEN,
   DatePipe,
   DelonLocaleModule,
   DelonLocaleService,
+  DrawerHelper,
   ModalHelper,
 } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
@@ -747,6 +750,39 @@ describe('abc: table', () => {
                 expect(modalHelp.createStatic).not.toHaveBeenCalled();
                 page.clickCell('a');
                 expect(modalHelp.createStatic).toHaveBeenCalled();
+                expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+                mock$.next({});
+                expect(columns[0].buttons[0].click).toHaveBeenCalled();
+                mock$.unsubscribe();
+                done();
+              });
+            });
+          });
+          describe('#drawer', () => {
+            it('is normal mode', (done: () => void) => {
+              const columns: STColumn[] = [
+                {
+                  title: '',
+                  buttons: [
+                    {
+                      text: 'a',
+                      type: 'drawer',
+                      click: jasmine.createSpy(),
+                      drawer: {
+                        component: {},
+                        params: (record: any) => ({ aa: 1 }),
+                      },
+                    },
+                  ],
+                },
+              ];
+              const drawerHelp = injector.get(DrawerHelper);
+              const mock$ = new Subject();
+              spyOn(drawerHelp, 'create').and.callFake(() => mock$);
+              page.newColumn(columns).then(() => {
+                expect(drawerHelp.create).not.toHaveBeenCalled();
+                page.clickCell('a');
+                expect(drawerHelp.create).toHaveBeenCalled();
                 expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
                 mock$.next({});
                 expect(columns[0].buttons[0].click).toHaveBeenCalled();

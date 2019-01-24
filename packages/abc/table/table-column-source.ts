@@ -5,12 +5,7 @@ import { deepCopy } from '@delon/util';
 
 import { STRowSource } from './table-row.directive';
 import { STConfig } from './table.config';
-import {
-  STColumn,
-  STColumnButton,
-  STColumnFilter,
-  STColumnSort,
-} from './table.interfaces';
+import { STColumn, STColumnButton, STColumnFilter, STColumnSort } from './table.interfaces';
 
 export interface STSortMap extends STColumnSort {
   /** 是否启用排序 */
@@ -24,7 +19,7 @@ export class STColumnSource {
     @Optional() private acl: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     private cog: STConfig,
-  ) { }
+  ) {}
 
   private btnCoerce(list: STColumnButton[]): STColumnButton[] {
     if (!list) return [];
@@ -81,7 +76,8 @@ export class STColumnSource {
         };
       }
 
-      item.children = item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
+      item.children =
+        item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
 
       // i18n
       if (item.i18n && this.i18nSrv) {
@@ -97,17 +93,14 @@ export class STColumnSource {
   private btnCoerceIf(list: STColumnButton[]) {
     for (const item of list) {
       if (!item.iif) item.iif = () => true;
-      if (!item.children) {
-        item.children = [];
-      } else {
+      if (item.children.length > 0) {
         this.btnCoerceIf(item.children);
       }
     }
   }
 
   private fixedCoerce(list: STColumn[]) {
-    const countReduce = (a: number, b: STColumn) =>
-      a + +b.width.toString().replace('px', '');
+    const countReduce = (a: number, b: STColumn) => a + +b.width.toString().replace('px', '');
     // left width
     list
       .filter(w => w.fixed && w.fixed === 'left' && w.width)
@@ -116,7 +109,10 @@ export class STColumnSource {
     list
       .filter(w => w.fixed && w.fixed === 'right' && w.width)
       .reverse()
-      .forEach((item, idx) => (item._right = (idx > 0 ? list.slice(-idx).reduce(countReduce, 0) : 0) + 'px'));
+      .forEach(
+        (item, idx) =>
+          (item._right = (idx > 0 ? list.slice(-idx).reduce(countReduce, 0) : 0) + 'px'),
+      );
   }
 
   private sortCoerce(item: STColumn): STSortMap {
@@ -216,8 +212,7 @@ export class STColumnSource {
   }
 
   process(list: STColumn[]): STColumn[] {
-    if (!list || list.length === 0)
-      throw new Error(`[st]: the columns property muse be define!`);
+    if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
     const { noIndex } = this.cog;
     let checkboxCount = 0;
