@@ -1,17 +1,9 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  Optional,
-  Output,
-} from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { saveAs } from 'file-saver';
 
-@Directive({ selector: '[down-file]' })
+@Directive({ selector: '[down-file]', exportAs: 'downFileDirective' })
 export class DownFileDirective {
   /** URL请求参数 */
   @Input('http-data') httpData: {};
@@ -41,13 +33,12 @@ export class DownFileDirective {
     return arr.reduce((o, item) => item, {});
   }
 
-  constructor(private el: ElementRef, private http: HttpClient, @Optional() private _http: _HttpClient) { }
+  constructor(private el: ElementRef, private http: HttpClient, private _http: _HttpClient) {}
 
   @HostListener('click')
   _click() {
     this.el.nativeElement.disabled = true;
-    // tslint:disable-next-line:no-any
-    ((this._http || this.http) as any)
+    this._http
       .request(this.httpMethod, this.httpUrl, {
         params: this.httpData || {},
         responseType: 'blob',
@@ -59,9 +50,7 @@ export class DownFileDirective {
             this.error.emit(res);
             return;
           }
-          const disposition = this.getDisposition(
-            res.headers.get('content-disposition'),
-          );
+          const disposition = this.getDisposition(res.headers.get('content-disposition'));
           const fileName =
             this.fileName ||
             disposition[`filename*`] ||
