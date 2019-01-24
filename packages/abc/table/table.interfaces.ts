@@ -5,6 +5,12 @@ import { STComponent } from './table.component';
 
 export interface STReq {
   /**
+   * 分页类型，默认：`page`
+   * - `page` 使用 `pi`，`ps` 组合
+   * - `skip` 使用 `skip`，`limit` 组合
+   */
+  type?: 'page' | 'skip';
+  /**
    * 额外请求参数，默认自动附加 `pi`、`ps` 至URL
    * - `{ status: 'new' }` => `url?pi=1&ps=10&status=new`
    */
@@ -553,6 +559,8 @@ export interface STColumnButtonDrawerConfig {
 export interface STReqReNameType {
   pi?: string;
   ps?: string;
+  skip?: string;
+  limit?: string;
 }
 
 export interface STResReNameType {

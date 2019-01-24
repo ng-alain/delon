@@ -55,7 +55,7 @@ export class STDataSource {
     @Host() private ynPipe: YNPipe,
     @Host() private numberPipe: DecimalPipe,
     private dom: DomSanitizer,
-  ) { }
+  ) {}
 
   process(options: STDataSourceOptions): Promise<STDataSourceResult> {
     return new Promise((resolvePromise, rejectPromise) => {
@@ -71,7 +71,7 @@ export class STDataSource {
       if (typeof data === 'string') {
         isRemote = true;
         data$ = this.getByHttp(data, options).pipe(
-          map((result) => {
+          map(result => {
             let ret: STData[];
             if (Array.isArray(result)) {
               ret = result;
@@ -85,7 +85,8 @@ export class STDataSource {
                 ret = [];
               }
               // total
-              const resultTotal = res.reName.total && deepGet(result, res.reName.total as string[], null);
+              const resultTotal =
+                res.reName.total && deepGet(result, res.reName.total as string[], null);
               retTotal = resultTotal == null ? total || 0 : +resultTotal;
             }
             return ret;
@@ -115,18 +116,18 @@ export class STDataSource {
           }),
           // filter
           map((result: STData[]) => {
-            columns.filter(w => w.filter).forEach(c => {
-              const values = c.filter.menus.filter(w => w.checked);
-              if (values.length === 0) return;
-              const onFilter = c.filter.fn;
-              if (typeof onFilter !== 'function') {
-                console.warn(`[st] Muse provide the fn function in filter`);
-                return;
-              }
-              result = result.filter(record =>
-                values.some(v => onFilter(v, record)),
-              );
-            });
+            columns
+              .filter(w => w.filter)
+              .forEach(c => {
+                const values = c.filter.menus.filter(w => w.checked);
+                if (values.length === 0) return;
+                const onFilter = c.filter.fn;
+                if (typeof onFilter !== 'function') {
+                  console.warn(`[st] Muse provide the fn function in filter`);
+                  return;
+                }
+                result = result.filter(record => values.some(v => onFilter(v, record)));
+              });
             return result;
           }),
           // paging
@@ -161,17 +162,19 @@ export class STDataSource {
         }),
       );
 
-      data$.forEach((result: STData[]) => (retList = result)).then(() => {
-        const realTotal = retTotal || total;
-        const realPs = retPs || ps;
-        resolvePromise({
-          pi: retPi,
-          ps: retPs,
-          total: retTotal,
-          list: retList,
-          pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
+      data$
+        .forEach((result: STData[]) => (retList = result))
+        .then(() => {
+          const realTotal = retTotal || total;
+          const realPs = retPs || ps;
+          resolvePromise({
+            pi: retPi,
+            ps: retPs,
+            total: retTotal,
+            list: retList,
+            pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
+          });
         });
-      });
     });
   }
 
@@ -210,19 +213,28 @@ export class STDataSource {
     return ret == null ? '' : ret;
   }
 
-  private getByHttp(
-    url: string,
-    options: STDataSourceOptions,
-  ): Observable<{}> {
+  private getByHttp(url: string, options: STDataSourceOptions): Observable<{}> {
     const { req, page, pi, ps, singleSort, multiSort, columns } = options;
     const method = (req.method || 'GET').toUpperCase();
-    const params = {
-      [req.reName.pi]: page.zeroIndexed ? pi - 1 : pi,
-      [req.reName.ps]: ps,
+    let params = {};
+    if (req.type === 'page') {
+      params = {
+        [req.reName.pi]: page.zeroIndexed ? pi - 1 : pi,
+        [req.reName.ps]: ps,
+      };
+    } else {
+      params = {
+        [req.reName.skip]: (pi - 1) * ps,
+        [req.reName.limit]: ps,
+      };
+    }
+    params = {
+      ...params,
       ...req.params,
       ...this.getReqSortMap(singleSort, multiSort, columns),
       ...this.getReqFilterMap(columns),
     };
+
     // tslint:disable-next-line:no-any
     let reqOptions: any = {
       params,
@@ -309,16 +321,18 @@ export class STDataSource {
 
   private getReqFilterMap(columns: STColumn[]): { [key: string]: string } {
     let ret = {};
-    columns.filter(w => w.filter && w.filter.default === true).forEach(col => {
-      const values = col.filter.menus.filter(f => f.checked === true);
-      let obj: {} = {};
-      if (col.filter.reName) {
-        obj = col.filter.reName(col.filter.menus, col);
-      } else {
-        obj[col.filter.key] = values.map(i => i.value).join(',');
-      }
-      ret = { ...ret, ...obj };
-    });
+    columns
+      .filter(w => w.filter && w.filter.default === true)
+      .forEach(col => {
+        const values = col.filter.menus.filter(f => f.checked === true);
+        let obj: {} = {};
+        if (col.filter.reName) {
+          obj = col.filter.reName(col.filter.menus, col);
+        } else {
+          obj[col.filter.key] = values.map(i => i.value).join(',');
+        }
+        ret = { ...ret, ...obj };
+      });
     return ret;
   }
 

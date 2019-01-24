@@ -32,12 +32,13 @@ export class STConfig {
   /**
    * 是否隐藏头和尾，当小屏幕下才显示，默认：`false`
    */
-  responsiveHideHeaderFooter ?= false;
+  responsiveHideHeaderFooter ? = false;
   /** 请求体配置 */
   req?: STReq = {
+    type: 'page',
     method: 'GET',
     allInBody: false,
-    reName: { pi: 'pi', ps: 'ps' },
+    reName: { pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' },
   };
   /** 返回体配置 */
   res?: STRes = {
@@ -91,19 +92,19 @@ export class STConfig {
   /**
    * 气泡确认框内容
    */
-  popTitle ?= '确认删除吗？';
+  popTitle ? = '确认删除吗？';
   /**
    * 行单击多少时长之类为双击（单位：毫秒），默认：`200`
    */
-  rowClickTime ?= 200;
+  rowClickTime ? = 200;
   /**
    * 过滤按钮确认文本，默认：`确认`
    */
-  filterConfirmText ?= '确认';
+  filterConfirmText ? = '确认';
   /**
    * 过滤按钮重置文本，默认：`重置`
    */
-  filterClearText ?= '重置';
+  filterClearText ? = '重置';
   /**
    * 按钮图标
    */
@@ -116,7 +117,7 @@ export class STConfig {
    * 行号索引，默认：`1`
    * - 计算规则为：`index + noIndex`
    */
-  noIndex ?= 1;
+  noIndex ? = 1;
   /**
    * 表格行的类名
    */
@@ -124,5 +125,5 @@ export class STConfig {
   /**
    * 通过点击行来展开子行
    */
-  expandRowByClick ?= false;
+  expandRowByClick ? = false;
 }
