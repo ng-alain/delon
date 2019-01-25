@@ -25,12 +25,7 @@ describe('abc: table: column-souce', () => {
     aclSrv = other.acl ? new ACLService() : null;
     i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
     rowSrv = new STRowSource();
-    srv = new STColumnSource(
-      rowSrv,
-      aclSrv,
-      i18nSrv,
-      other.cog || new STConfig(),
-    );
+    srv = new STColumnSource(rowSrv, aclSrv, i18nSrv, other.cog || new STConfig());
     page = new PageObject();
   }
 
@@ -58,10 +53,7 @@ describe('abc: table: column-souce', () => {
         page.expectValue([{ title: '', index: 'id' }], 'id');
       });
       it('support array', () => {
-        page.expectValue(
-          [{ title: '', index: ['prices', 'fix'] }],
-          'prices.fix',
-        );
+        page.expectValue([{ title: '', index: ['prices', 'fix'] }], 'prices.fix');
       });
       it('support a.b', () => {
         page.expectValue([{ title: '', index: 'prices.fix' }], 'prices.fix');
@@ -70,25 +62,19 @@ describe('abc: table: column-souce', () => {
     describe('[type]', () => {
       describe(`with no`, () => {
         it('should be working', () => {
-          const res = srv.process([
-            { title: '', type: 'no' },
-          ]);
+          const res = srv.process([{ title: '', type: 'no' }]);
           expect(res[0].type).toBe('no');
           expect(res[0].noIndex).toBe(1);
         });
         it('should be start zero', () => {
-          const res = srv.process([
-            { title: '', type: 'no', noIndex: 0 },
-          ]);
+          const res = srv.process([{ title: '', type: 'no', noIndex: 0 }]);
           expect(res[0].type).toBe('no');
           expect(res[0].noIndex).toBe(0);
         });
       });
       describe(`with checkbox`, () => {
         it('should be keep an empty list', () => {
-          const res = srv.process([
-            { title: '', index: 'id', type: 'checkbox' },
-          ]);
+          const res = srv.process([{ title: '', index: 'id', type: 'checkbox' }]);
           expect(res[0].selections).not.toBeNull();
           expect(res[0].selections.length).toBe(0);
         });
@@ -101,11 +87,7 @@ describe('abc: table: column-souce', () => {
           }).toThrow();
         });
         it('should auto 50px width when without specified with value', () => {
-          page.expectValue(
-            [{ title: '', index: 'id', type: 'checkbox' }],
-            '50px',
-            'width',
-          );
+          page.expectValue([{ title: '', index: 'id', type: 'checkbox' }], '50px', 'width');
         });
         it('should auto 62px width when specifyied selections and without specified with value', () => {
           page.expectValue(
@@ -139,11 +121,7 @@ describe('abc: table: column-souce', () => {
           }).toThrow();
         });
         it('should auto 50px width when without specified with value', () => {
-          page.expectValue(
-            [{ title: '', index: 'id', type: 'radio' }],
-            '50px',
-            'width',
-          );
+          page.expectValue([{ title: '', index: 'id', type: 'radio' }], '50px', 'width');
         });
         it('should be specify width', () => {
           page.expectValue(
@@ -176,16 +154,12 @@ describe('abc: table: column-souce', () => {
           expect(res.yn.truth).toBe(true);
         });
         it('should be spcified yes value', () => {
-          const res = srv.process([
-            { title: '', index: 'id', type: 'yn', yn: { yes: 'Y' } },
-          ])[0];
+          const res = srv.process([{ title: '', index: 'id', type: 'yn', yn: { yes: 'Y' } }])[0];
           expect(res.yn).not.toBeNull();
           expect(res.yn.yes).toBe('Y');
         });
         it('should be spcified no value', () => {
-          const res = srv.process([
-            { title: '', index: 'id', type: 'yn', yn: { no: 'N' } },
-          ])[0];
+          const res = srv.process([{ title: '', index: 'id', type: 'yn', yn: { no: 'N' } }])[0];
           expect(res.yn).not.toBeNull();
           expect(res.yn.no).toBe('N');
         });
@@ -194,20 +168,12 @@ describe('abc: table: column-souce', () => {
         it('when not specify click value', () => {
           page
             .expectValue([{ title: '', type: 'link' }], '', 'type')
-            .expectValue(
-              [{ title: '', type: 'link', click: () => true }],
-              'link',
-              'type',
-            );
+            .expectValue([{ title: '', type: 'link', click: () => true }], 'link', 'type');
         });
         it('when not specify badge value', () => {
           page
             .expectValue([{ title: '', type: 'badge' }], '', 'type')
-            .expectValue(
-              [{ title: '', type: 'badge', badge: {} }],
-              'badge',
-              'type',
-            );
+            .expectValue([{ title: '', type: 'badge', badge: {} }], 'badge', 'type');
         });
         it('when not specify tag value', () => {
           page
@@ -218,59 +184,39 @@ describe('abc: table: column-souce', () => {
     });
     describe('[className]', () => {
       it('should be custom class name', () => {
-        page.expectValue(
-          [{ title: '', type: 'number', className: 'aa' }],
-          'aa',
-          'className',
-        );
+        page.expectValue([{ title: '', type: 'number', className: 'aa' }], 'aa', 'className');
       });
       it('should be auto text-right when type is number', () => {
-        page.expectValue(
-          [{ title: '', type: 'number' }],
-          'text-right',
-          'className',
-        );
+        page.expectValue([{ title: '', type: 'number' }], 'text-right', 'className');
       });
       it('should be auto text-right when type is currency', () => {
-        page.expectValue(
-          [{ title: '', type: 'currency' }],
-          'text-right',
-          'className',
-        );
+        page.expectValue([{ title: '', type: 'currency' }], 'text-right', 'className');
       });
       it('should be auto text-center when type is date', () => {
-        page.expectValue(
-          [{ title: '', type: 'date' }],
-          'text-center',
-          'className',
-        );
+        page.expectValue([{ title: '', type: 'date' }], 'text-center', 'className');
       });
     });
     describe('[iif]', () => {
       it('when return true', () => {
-        const res = srv.process([{ title: '', iif: () => true } ]);
+        const res = srv.process([{ title: '', iif: () => true }]);
         expect(res.length).toBe(1);
       });
       it('when return false', () => {
-        const res = srv.process([{ title: '', iif: () => false } ]);
+        const res = srv.process([{ title: '', iif: () => false }]);
         expect(res.length).toBe(0);
       });
     });
     describe('[sort]', () => {
       describe('#compatible', () => {
         it('should be enabled', () => {
-          expect(
-            srv.process([{ title: '', sorter: () => true }])[0]._sort.enabled,
-          ).toBe(true);
+          expect(srv.process([{ title: '', sorter: () => true }])[0]._sort.enabled).toBe(true);
         });
       });
       it('should be disabled', () => {
         expect(srv.process([{ title: '' }])[0]._sort.enabled).toBe(false);
       });
       it('should be enabled when is true', () => {
-        expect(srv.process([{ title: '', sort: true }])[0]._sort.enabled).toBe(
-          true,
-        );
+        expect(srv.process([{ title: '', sort: true }])[0]._sort.enabled).toBe(true);
       });
       it('should be enabled when is string', () => {
         const res = srv.process([{ title: '', sort: 'true' }])[0]._sort;
@@ -278,15 +224,12 @@ describe('abc: table: column-souce', () => {
         expect(res.key).toBe('true');
       });
       it('should be enabled when is object', () => {
-        const res = srv.process([{ title: '', sort: { default: 'ascend' } }])[0]
-          ._sort;
+        const res = srv.process([{ title: '', sort: { default: 'ascend' } }])[0]._sort;
         expect(res.enabled).toBe(true);
         expect(res.default).toBe('ascend');
       });
       it('should be used index when key is null', () => {
-        const res = srv.process([
-          { title: '', index: 'aa', sort: { key: null } },
-        ])[0]._sort;
+        const res = srv.process([{ title: '', index: 'aa', sort: { key: null } }])[0]._sort;
         expect(res.enabled).toBe(true);
         expect(res.key).toBe('aa');
       });
@@ -294,14 +237,12 @@ describe('abc: table: column-souce', () => {
     describe('[filter]', () => {
       describe('#compatible', () => {
         it('should be enabled', () => {
-          const res = srv.process([{ title: '', filters: [{ text: '' }] }])[0]
-            .filter;
+          const res = srv.process([{ title: '', filters: [{ text: '' }] }])[0].filter;
           expect(res).not.toBeNull();
         });
       });
       it('should be disabled when invalid menus', () => {
-        const res = srv.process([{ title: '', filter: { menus: [] } }])[0]
-          .filter;
+        const res = srv.process([{ title: '', filter: { menus: [] } }])[0].filter;
         expect(res).toBeNull();
       });
       it('should be used index when key is null', () => {
@@ -336,9 +277,7 @@ describe('abc: table: column-souce', () => {
       });
       describe('#multiple', () => {
         it('should be default to true when is null', () => {
-          const res = srv.process([
-            { title: '', filter: { menus: [{ text: '' }] } },
-          ])[0].filter;
+          const res = srv.process([{ title: '', filter: { menus: [{ text: '' }] } }])[0].filter;
           expect(res.multiple).toBe(true);
         });
         it('should be specify value', () => {
@@ -350,9 +289,7 @@ describe('abc: table: column-souce', () => {
       });
       describe('#confirmText', () => {
         it('should be default to 确认 when is null', () => {
-          const res = srv.process([
-            { title: '', filter: { menus: [{ text: '' }] } },
-          ])[0].filter;
+          const res = srv.process([{ title: '', filter: { menus: [{ text: '' }] } }])[0].filter;
           expect(res.confirmText).toBe('确认');
         });
         it('should be specify value', () => {
@@ -367,9 +304,7 @@ describe('abc: table: column-souce', () => {
       });
       describe('#clearText', () => {
         it('should be default to 重置 when is null', () => {
-          const res = srv.process([
-            { title: '', filter: { menus: [{ text: '' }] } },
-          ])[0].filter;
+          const res = srv.process([{ title: '', filter: { menus: [{ text: '' }] } }])[0].filter;
           expect(res.clearText).toBe('重置');
         });
         it('should be specify value', () => {
@@ -384,9 +319,7 @@ describe('abc: table: column-souce', () => {
       });
       describe('#icon', () => {
         it('should be default to [filter] when is null', () => {
-          const res = srv.process([
-            { title: '', filter: { menus: [{ text: '' }] } },
-          ])[0].filter;
+          const res = srv.process([{ title: '', filter: { menus: [{ text: '' }] } }])[0].filter;
           expect(res.icon).toBe('filter');
         });
         it('should be specify value', () => {
@@ -404,20 +337,14 @@ describe('abc: table: column-souce', () => {
           expect(res.default).toBe(true);
         });
         it('when menus non-contain checked', () => {
-          const res = srv.process([
-            { title: '', filter: { menus: [{ text: '' }] } },
-          ])[0].filter;
+          const res = srv.process([{ title: '', filter: { menus: [{ text: '' }] } }])[0].filter;
           expect(res.default).toBe(false);
         });
       });
     });
     describe('[buttons]', () => {
       it('should be pop is true when type of del', () => {
-        page.expectBtnValue(
-          [{ title: '', buttons: [{ text: '', type: 'del' }] }],
-          true,
-          'pop',
-        );
+        page.expectBtnValue([{ title: '', buttons: [{ text: '', type: 'del' }] }], true, 'pop');
       });
       it('should be popTitle default to 确认删除吗？', () => {
         page.expectBtnValue(
@@ -443,7 +370,14 @@ describe('abc: table: column-souce', () => {
         });
         it('should be object', () => {
           page.expectBtnValue(
-            [{ title: '', buttons: [{ text: '', icon: { type: 'edit', theme: 'fill' }, type: 'del', popTitle: 'aa' }] }],
+            [
+              {
+                title: '',
+                buttons: [
+                  { text: '', icon: { type: 'edit', theme: 'fill' }, type: 'del', popTitle: 'aa' },
+                ],
+              },
+            ],
             'fill',
             'icon.theme',
           );
@@ -451,15 +385,18 @@ describe('abc: table: column-souce', () => {
       });
       describe('#iif', () => {
         it('should be running', () => {
-          const res = srv.process([
-            { title: '', buttons: [{ text: '' }] },
-          ])[0].buttons[0];
+          const res = srv.process([{ title: '', buttons: [{ text: '' }] }])[0].buttons[0];
           expect(res.iif(null, null, null)).toBe(true);
         });
         it('should be support condition', () => {
+          const res = srv.process([{ title: '', buttons: [{ text: '', iif: () => false }] }])[0]
+            .buttons[0];
+          expect(res.iif(null, null, null)).toBe(false);
+        });
+        it('should be support children', () => {
           const res = srv.process([
-            { title: '', buttons: [{ text: '', iif: () => false }] },
-          ])[0].buttons[0];
+            { title: '', buttons: [{ text: '', children: [{ text: '', iif: () => false }] }] },
+          ])[0].buttons[0].children[0];
           expect(res.iif(null, null, null)).toBe(false);
         });
       });
@@ -478,9 +415,7 @@ describe('abc: table: column-souce', () => {
           const res = srv.process([
             {
               title: '',
-              buttons: [
-                { text: '', children: [{ text: '', iif: () => false }] },
-              ],
+              buttons: [{ text: '', children: [{ text: '', iif: () => false }] }],
             },
           ])[0].buttons[0];
           expect(res.children[0].iif(null, null, null)).toBe(false);
@@ -643,11 +578,7 @@ describe('abc: table: column-souce', () => {
 
     it('in buttons', () => {
       page
-        .expectCount(
-          [{ title: '', buttons: [{ text: '<p class="j-btn"></p>' }] }],
-          1,
-          'buttons',
-        )
+        .expectCount([{ title: '', buttons: [{ text: '<p class="j-btn"></p>' }] }], 1, 'buttons')
         .expectCount(
           [
             {
@@ -678,17 +609,15 @@ describe('abc: table: column-souce', () => {
     it('in buttons', () => {
       srv.process([{ title: '', index: 'id', buttons: [{ text: '' }] }]);
       expect(i18nSrv.fanyi).not.toHaveBeenCalled();
-      srv.process([
-        { title: '', index: 'id', buttons: [{ text: '', i18n: 'a' }] },
-      ]);
+      srv.process([{ title: '', index: 'id', buttons: [{ text: '', i18n: 'a' }] }]);
       expect(i18nSrv.fanyi).toHaveBeenCalled();
     });
   });
 
   it('should be merge default config', () => {
-    genModule({ cog: { size: 'lg'} });
+    genModule({ cog: { size: 'lg' } });
     const res = srv.process([
-      { title: '', buttons: [ { text: '', type: 'modal', modal: { component: {} } } ] },
+      { title: '', buttons: [{ text: '', type: 'modal', modal: { component: {} } }] },
     ]);
     expect(res[0].buttons[0].modal.paramsName).toBe('record');
   });
@@ -700,11 +629,7 @@ describe('abc: table: column-souce', () => {
       expect(deepGet(newColumns[0], path)).toBe(value);
       return this;
     }
-    expectBtnValue(
-      columns: STColumn[],
-      value: any,
-      path = 'indexKey',
-    ): this {
+    expectBtnValue(columns: STColumn[], value: any, path = 'indexKey'): this {
       const newColumns = srv.process(columns);
       expect(newColumns.length).toBeGreaterThan(0);
       expect(deepGet(newColumns[0].buttons[0], path)).toBe(value);

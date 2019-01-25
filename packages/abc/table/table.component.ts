@@ -26,7 +26,6 @@ import {
   DelonLocaleService,
   DrawerHelper,
   ModalHelper,
-  ModalHelperOptions,
   YNPipe,
 } from '@delon/theme';
 import {
@@ -271,18 +270,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   //#region data
 
   private _load() {
-    const {
-      pi,
-      ps,
-      data,
-      req,
-      res,
-      page,
-      total,
-      singleSort,
-      multiSort,
-      rowClassName,
-    } = this;
+    const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
     this.loading = true;
     return this.dataSource
       .process({
@@ -350,9 +338,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
       this._req.params =
-        options && options.merge
-          ? { ...this._req.params, ...extraParams }
-          : extraParams;
+        options && options.merge ? { ...this._req.params, ...extraParams } : extraParams;
     }
     this._change('pi');
     return this;
@@ -445,9 +431,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c =>
-        this._data.forEach((i, idx) => (i._values[c.__point] = c.noIndex + idx)),
-      );
+      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = c.noIndex + idx)));
 
     return this.cd();
   }
@@ -461,18 +445,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (this.multiSort) {
       col._sort.default = value;
     } else {
-      this._columns.forEach(
-        (item, index) => (item._sort.default = index === idx ? value : null),
-      );
+      this._columns.forEach((item, index) => (item._sort.default = index === idx ? value : null));
     }
     this._load();
     const res = {
       value,
-      map: this.dataSource.getReqSortMap(
-        this.singleSort,
-        this.multiSort,
-        this._columns,
-      ),
+      map: this.dataSource.getReqSortMap(this.singleSort, this.multiSort, this._columns),
       column: col,
     };
     this.changeEmit('sort', res);
@@ -529,12 +507,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private _refCheck(): this {
     const validData = this._data.filter(w => !w.disabled);
     const checkedList = validData.filter(w => w.checked === true);
-    this._allChecked =
-      checkedList.length > 0 && checkedList.length === validData.length;
+    this._allChecked = checkedList.length > 0 && checkedList.length === validData.length;
     const allUnChecked = validData.every(value => !value.checked);
     this._indeterminate = !this._allChecked && !allUnChecked;
-    this._allCheckedDisabled =
-      this._data.length === this._data.filter(w => w.disabled).length;
+    this._allCheckedDisabled = this._data.length === this._data.filter(w => w.disabled).length;
     this.cd();
     return this;
   }
@@ -593,9 +569,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       const { modal } = btn;
       const obj = { [modal.paramsName]: record };
       // tslint:disable-next-line:no-any
-      (this.modalHelper[
-        btn.type === 'modal' ? 'create' : 'createStatic'
-      ] as any)(
+      (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         modal.component,
         { ...obj, ...(modal.params && modal.params(record)) },
         { ...modal },
@@ -696,9 +670,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.columnSource.restoreAllRender(this._columns);
   }
 
-  ngOnChanges(
-    changes: { [P in keyof this]?: SimpleChange } & SimpleChanges,
-  ): void {
+  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
     if (changes.columns) {
       this.refreshColumns();
     }

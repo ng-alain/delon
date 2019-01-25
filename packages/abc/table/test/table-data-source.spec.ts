@@ -190,23 +190,18 @@ describe('abc: table: data-souce', () => {
         options.data = genData();
         options.columns[0].filter = {
           menus: [{ text: '', value: '1', checked: true }],
-          fn: (filter: STColumnFilterMenu, record: any) =>
-            record.name.includes(filter.value),
+          fn: (filter: STColumnFilterMenu, record: any) => record.name.includes(filter.value),
         };
       });
       it(`should be filter [1] in name`, (done: () => void) => {
-        const expectCount = (options.data as any[]).filter(w =>
-          w.name.includes(`1`),
-        ).length;
+        const expectCount = (options.data as any[]).filter(w => w.name.includes(`1`)).length;
         srv.process(options).then(res => {
           expect(res.list.length).toBe(expectCount);
           done();
         });
       });
       it(`should be clean filtered`, (done: () => void) => {
-        const expectCount = (options.data as any[]).filter(w =>
-          w.name.includes(`1`),
-        ).length;
+        const expectCount = (options.data as any[]).filter(w => w.name.includes(`1`)).length;
         srv
           .process(options)
           .then(res => {
@@ -254,12 +249,10 @@ describe('abc: table: data-souce', () => {
       it('should be re-name pi & ps', (done: () => void) => {
         options.req.reName = { pi: 'PI', ps: 'PS' };
         let resParams: any = {};
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            resParams = opt.params;
-            return of([]);
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          resParams = opt.params;
+          return of([]);
+        });
         srv.process(options).then(res => {
           expect(resParams.PI).toBe(options.pi);
           expect(resParams.PS).toBe(options.ps);
@@ -269,12 +262,10 @@ describe('abc: table: data-souce', () => {
       it('should be zero indexed of start index', (done: () => void) => {
         options.page.zeroIndexed = true;
         let resParams: any = {};
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            resParams = opt.params;
-            return of([]);
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          resParams = opt.params;
+          return of([]);
+        });
         srv.process(options).then(res => {
           expect(resParams.pi).toBe(options.pi - 1);
           done();
@@ -284,15 +275,42 @@ describe('abc: table: data-souce', () => {
         options.req.allInBody = true;
         options.req.method = 'post';
         let resBody: any = {};
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            resBody = opt.body;
-            return of([]);
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          resBody = opt.body;
+          return of([]);
+        });
         srv.process(options).then(res => {
           expect(resBody.pi).toBe(options.pi);
           done();
+        });
+      });
+      describe('type is skip', () => {
+        beforeEach(() => (options.req.type = 'skip'));
+        it('should be re-name skip & limit', (done: () => void) => {
+          options.req.reName = { skip: 'SKIP', limit: 'LIMIT' };
+          let resParams: any = {};
+          spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+            resParams = opt.params;
+            return of([]);
+          });
+          srv.process(options).then(res => {
+            expect(resParams.SKIP).toBe(0);
+            expect(resParams.LIMIT).toBe(options.ps);
+            done();
+          });
+        });
+        it('should be changed next page', (done: () => void) => {
+          options.pi = 2;
+          let resParams: any = {};
+          spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+            resParams = opt.params;
+            return of([]);
+          });
+          srv.process(options).then(res => {
+            expect(resParams.skip).toBe(options.ps);
+            expect(resParams.limit).toBe(options.ps);
+            done();
+          });
         });
       });
     });
@@ -303,11 +321,9 @@ describe('abc: table: data-souce', () => {
       });
       it('should be re-name total & list', (done: () => void) => {
         options.res.reName = { total: 'T', list: 'L' };
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            return of({ L: genData(DEFAULT.ps), T: DEFAULT.ps });
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          return of({ L: genData(DEFAULT.ps), T: DEFAULT.ps });
+        });
         srv.process(options).then(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(DEFAULT.ps);
@@ -316,11 +332,9 @@ describe('abc: table: data-souce', () => {
       });
       it('should be invalid re-name config', (done: () => void) => {
         options.res.reName = { total: 'T', list: 'L1' };
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            return of({ L: genData(DEFAULT.ps), T: DEFAULT.ps });
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          return of({ L: genData(DEFAULT.ps), T: DEFAULT.ps });
+        });
         srv.process(options).then(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(0);
@@ -329,11 +343,9 @@ describe('abc: table: data-souce', () => {
       });
       it('should be return empty when result is not array', (done: () => void) => {
         options.res.reName = { total: 'T', list: 'L' };
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            return of({ L: 1, T: DEFAULT.ps });
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          return of({ L: 1, T: DEFAULT.ps });
+        });
         srv.process(options).then(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(0);
@@ -343,11 +355,9 @@ describe('abc: table: data-souce', () => {
       it('should be keep total when total invalid config', (done: () => void) => {
         options.res.reName = { total: 'T1', list: '1L' };
         options.total = 4;
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            return of({ L: 1, T: DEFAULT.ps });
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          return of({ L: 1, T: DEFAULT.ps });
+        });
         srv.process(options).then(res => {
           expect(res.total).toBe(options.total);
           expect(res.list.length).toBe(0);
@@ -357,11 +367,9 @@ describe('abc: table: data-souce', () => {
       it('should be return 0 when total invalid config and unspecified total', (done: () => void) => {
         options.res.reName = { total: 'T1', list: '1L' };
         options.total = undefined;
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            return of({ L: 1, T: DEFAULT.ps });
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          return of({ L: 1, T: DEFAULT.ps });
+        });
         srv.process(options).then(res => {
           expect(res.total).toBe(0);
           expect(res.list.length).toBe(0);
@@ -369,11 +377,9 @@ describe('abc: table: data-souce', () => {
         });
       });
       it('should be catch response error', (done: () => void) => {
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            return throwError('aa');
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          return throwError('aa');
+        });
         srv
           .process(options)
           .then(res => {
@@ -386,11 +392,9 @@ describe('abc: table: data-souce', () => {
           });
       });
       it('should be support array data', (done: () => void) => {
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            return of(genData(DEFAULT.ps));
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          return of(genData(DEFAULT.ps));
+        });
         srv.process(options).then(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(DEFAULT.ps);
@@ -408,12 +412,10 @@ describe('abc: table: data-souce', () => {
           enabled: true,
           key: 'id',
         };
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            resParams = opt.params;
-            return of([]);
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          resParams = opt.params;
+          return of([]);
+        });
       });
       it(`should be decremented`, (done: () => void) => {
         options.columns[0]._sort.default = 'descend';
@@ -513,17 +515,12 @@ describe('abc: table: data-souce', () => {
         options.columns[0].filter = {
           default: true,
           key: 'id',
-          menus: [
-            { text: '', value: 'a', checked: true },
-            { text: '', value: 'b', checked: true },
-          ],
+          menus: [{ text: '', value: 'a', checked: true }, { text: '', value: 'b', checked: true }],
         };
-        spyOn(http, 'request').and.callFake(
-          (method: string, url: string, opt: any) => {
-            resParams = opt.params;
-            return of([]);
-          },
-        );
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          resParams = opt.params;
+          return of([]);
+        });
       });
       it(`should be mulit field`, (done: () => void) => {
         srv.process(options).then(res => {
