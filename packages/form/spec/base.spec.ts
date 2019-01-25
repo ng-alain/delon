@@ -14,6 +14,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { configureTestSuite, dispatchFakeEvent, typeInElement } from '@delon/testing';
 import { ErrorData } from '../src/errors';
 import { SFButton } from '../src/interface';
+import { FormProperty } from '../src/model/form.property';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema';
 import { SFUISchema } from '../src/schema/ui';
@@ -120,6 +121,11 @@ export class SFPage {
     path = this.fixPath(path);
     this.comp.setValue(path, value);
     return this;
+  }
+
+  getProperty(path: string): FormProperty {
+    path = this.fixPath(path);
+    return this.comp.getProperty(path);
   }
 
   submit(result = true): this {

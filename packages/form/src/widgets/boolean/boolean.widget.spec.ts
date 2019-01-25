@@ -2,11 +2,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
-import {
-  configureSFTestSuite,
-  SFPage,
-  TestFormComponent,
-} from '../../../spec/base.spec';
+import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: boolean', () => {
@@ -14,7 +10,6 @@ describe('form: widget: boolean', () => {
   let dl: DebugElement;
   let context: TestFormComponent;
   let page: SFPage;
-  const widget = 'boolean';
   const clickCls = '.ant-switch';
 
   configureSFTestSuite();
@@ -27,7 +22,7 @@ describe('form: widget: boolean', () => {
 
   it('should be default true via schema.default', () => {
     const s: SFSchema = {
-      properties: { a: { type: 'string', ui: { widget }, default: true } },
+      properties: { a: { type: 'boolean', default: true } },
     };
     page.newSchema(s).checkValue('a', true);
   });
@@ -37,8 +32,8 @@ describe('form: widget: boolean', () => {
       const s: SFSchema = {
         properties: {
           a: {
-            type: 'string',
-            ui: { widget, checkedChildren: 'Y', unCheckedChildren: 'N' },
+            type: 'boolean',
+            ui: { checkedChildren: 'Y', unCheckedChildren: 'N' },
           },
         },
       };
