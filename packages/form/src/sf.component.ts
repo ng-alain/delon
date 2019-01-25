@@ -26,7 +26,10 @@ import { di, resolveIf, retrieveSchema, FORMATMAPS } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
-export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, options: DelonFormConfig) {
+export function useFactory(
+  schemaValidatorFactory: SchemaValidatorFactory,
+  options: DelonFormConfig,
+) {
   return new FormPropertyFactory(schemaValidatorFactory, options);
 }
 
@@ -139,6 +142,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   /**
    * 根据路径获取表单元素属性
+   * @param path [路径](https://ng-alain.com/form/qa#path)
    */
   getProperty(path: string): FormProperty {
     return this.rootProperty.searchProperty(path);
@@ -146,6 +150,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   /**
    * 根据路径获取表单元素当前值
+   * @param path [路径](https://ng-alain.com/form/qa#path)
    */
   // tslint:disable-next-line:no-any
   getValue(path: string): any {
@@ -154,7 +159,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   /**
    * 根据路径设置某个表单元素属性值
-   * @param path 路径
+   * @param path [路径](https://ng-alain.com/form/qa#path)
    * @param value 新值
    */
   // tslint:disable-next-line:no-any
@@ -208,15 +213,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     ) => {
       Object.keys(schema.properties).forEach(key => {
         const uiKey = `$${key}`;
-        const property = retrieveSchema(
-          schema.properties[key] as SFSchema,
-          definitions,
-        );
+        const property = retrieveSchema(schema.properties[key] as SFSchema, definitions);
         const ui = {
           widget: property.type,
           ...(property.format && FORMATMAPS[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
-          ...(!property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null),
+          ...(!property.ui && Array.isArray(property.enum) && property.enum.length > 0
+            ? { widget: 'select' }
+            : null),
           ...this._defUi,
           ...(property.ui as SFUISchemaItem),
           ...uiSchema[uiKey],
@@ -230,14 +234,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           } else {
             if (!ui.spanLabel)
               ui.spanLabel =
-                typeof parentUiSchema.spanLabel === 'undefined'
-                  ? 5
-                  : parentUiSchema.spanLabel;
+                typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
             if (!ui.spanControl)
               ui.spanControl =
-                typeof parentUiSchema.spanControl === 'undefined'
-                  ? 19
-                  : parentUiSchema.spanControl;
+                typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
             if (!ui.offsetControl)
               ui.offsetControl =
                 typeof parentUiSchema.offsetControl === 'undefined'
