@@ -1,5 +1,6 @@
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { DelonUtilModule } from '../util.module';
 
@@ -8,13 +9,16 @@ describe('utils: string_template_outlet', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
-    fixture = TestBed.configureTestingModule({
+  configureTestSuite(() => {
+    TestBed.configureTestingModule({
       imports: [DelonUtilModule],
       declarations: [TestComponent],
-    }).createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+    });
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
+    fixture.detectChanges();
   });
 
   function check(str: string): void {
@@ -70,13 +74,46 @@ describe('utils: string_template_outlet', () => {
     fixture.detectChanges();
     check('tpl1');
   });
+
+  it('should be string -> templateRef -> string', () => {
+    context.value = 'asdf';
+    fixture.detectChanges();
+    check('asdf');
+    context.value = context.tpl2;
+    fixture.detectChanges();
+    check('tpl2');
+    context.value = 'asdf1';
+    fixture.detectChanges();
+    check('asdf1');
+  });
+
+  it('should be templateRef -> string -> templateRef', () => {
+    context.value = context.tpl1;
+    fixture.detectChanges();
+    check('tpl1');
+    context.value = 'asdf';
+    fixture.detectChanges();
+    check('asdf');
+    context.value = context.tpl2;
+    fixture.detectChanges();
+    check('tpl2');
+  });
+
+  it('should be templateRef1 -> templateRef2', () => {
+    context.value = context.tpl1;
+    fixture.detectChanges();
+    check('tpl1');
+    context.value = context.tpl2;
+    fixture.detectChanges();
+    check('tpl2');
+  });
 });
 
 @Component({
   template: `
     <ng-template #tpl1>tpl1</ng-template>
     <ng-template #tpl2>tpl2</ng-template>
-    <ng-container *stringTemplateOutlet="value">{{value}}</ng-container>
+    <ng-container *stringTemplateOutlet="value">{{ value }}</ng-container>
   `,
 })
 class TestComponent {
