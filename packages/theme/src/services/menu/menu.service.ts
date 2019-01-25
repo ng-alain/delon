@@ -20,9 +20,7 @@ export class MenuService implements OnDestroy {
     private i18nSrv: AlainI18NService,
     @Optional() private aclService: ACLService,
   ) {
-    if (this.i18nSrv) {
-      this.i18n$ = this.i18nSrv.change.subscribe(() => this.resume());
-    }
+    this.i18n$ = this.i18nSrv.change.subscribe(() => this.resume());
   }
 
   get change(): Observable<Menu[]> {
@@ -194,7 +192,10 @@ export class MenuService implements OnDestroy {
 
       if (!recursive) break;
 
-      url = url.split('/').slice(0, -1).join('/');
+      url = url
+        .split('/')
+        .slice(0, -1)
+        .join('/');
     }
 
     return item;
@@ -242,6 +243,6 @@ export class MenuService implements OnDestroy {
 
   ngOnDestroy(): void {
     this._change$.unsubscribe();
-    if (this.i18n$) this.i18n$.unsubscribe();
+    this.i18n$.unsubscribe();
   }
 }

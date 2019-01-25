@@ -4,10 +4,7 @@ import { filter } from 'rxjs/operators';
 
 import { ACLService } from '@delon/acl';
 import { deepCopy } from '@delon/util';
-import {
-  AlainI18NServiceFake,
-  ALAIN_I18N_TOKEN,
-} from '../i18n/i18n';
+import { AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 
 import { Menu } from './interface';
 import { MenuService } from './menu.service';
@@ -25,10 +22,7 @@ describe('Service: Menu', () => {
     {
       text: 'dashboard',
       link: '/dashboard',
-      children: [
-        { text: 'v1', link: '/dashboard/v1' },
-        { text: 'v2', link: '/dashboard/v2' },
-      ],
+      children: [{ text: 'v1', link: '/dashboard/v1' }, { text: 'v2', link: '/dashboard/v2' }],
     },
     {
       text: 'text',
@@ -114,9 +108,7 @@ describe('Service: Menu', () => {
       it('not found', () => {
         srv.add(deepCopy(DATA));
         srv.openedByUrl(`/notfound`);
-        expect(srv.menus.filter(w => w._open === false).length).toBe(
-          srv.menus.length,
-        );
+        expect(srv.menus.filter(w => w._open === false).length).toBe(srv.menus.length);
       });
       it('invalid url', () => {
         srv.add(deepCopy(DATA));
@@ -127,6 +119,17 @@ describe('Service: Menu', () => {
         srv.add(deepCopy(DATA));
         srv.openedByUrl(`/dashboard/v1/1`, true);
         expect(srv.menus[0]._open).toBe(true);
+      });
+    });
+
+    describe('#getHit', () => {
+      it('when recursive is false', () => {
+        const item = srv.getHit(DATA, '/dashboard/invalid');
+        expect(item == null).toBe(true);
+      });
+      it('when recursive is true', () => {
+        const item = srv.getHit(DATA, '/dashboard/invalid', true);
+        expect(item == null).toBe(false);
       });
     });
 
@@ -209,10 +212,7 @@ describe('Service: Menu', () => {
     });
 
     it('ACL', () => {
-      const newMenus = [
-        { text: 'new menu', acl: 'admin' },
-        { text: 'new menu', acl: 'user' },
-      ];
+      const newMenus = [{ text: 'new menu', acl: 'admin' }, { text: 'new menu', acl: 'user' }];
       srv.add(newMenus);
       expect(srv.menus[0]._aclResult).toBe(true);
       expect(srv.menus[1]._aclResult).toBe(false);
@@ -231,74 +231,82 @@ describe('Service: Menu', () => {
     describe('ISSUES', () => {
       it('ng-alain #107', () => {
         srv.add(deepCopy(DATA));
-        expect(
-          srv.menus[0].children.filter(w => w.shortcutRoot === true).length,
-        ).toBe(1);
+        expect(srv.menus[0].children.filter(w => w.shortcutRoot === true).length).toBe(1);
         expect(srv.menus[0].children[1].children.length).toBe(1);
         srv.resume();
-        expect(
-          srv.menus[0].children.filter(w => w.shortcutRoot === true).length,
-        ).toBe(1);
+        expect(srv.menus[0].children.filter(w => w.shortcutRoot === true).length).toBe(1);
         expect(srv.menus[0].children[1].children.length).toBe(1);
       });
     });
 
     describe('icon', () => {
       it('should be null', () => {
-        srv.add([{
-          text: 'dashboard',
-          link: '/dashboard',
-          icon: null,
-        }]);
+        srv.add([
+          {
+            text: 'dashboard',
+            link: '/dashboard',
+            icon: null,
+          },
+        ]);
         const icon: any = srv.menus[0].icon;
         expect(icon).toBeNull();
       });
       it('should be undefined', () => {
-        srv.add([{
-          text: 'dashboard',
-          link: '/dashboard',
-          icon: undefined,
-        }]);
+        srv.add([
+          {
+            text: 'dashboard',
+            link: '/dashboard',
+            icon: undefined,
+          },
+        ]);
         const icon: any = srv.menus[0].icon;
         expect(icon).toBeUndefined();
       });
       it('should be type is string', () => {
-        srv.add([{
-          text: 'dashboard',
-          link: '/dashboard',
-          icon: 'aa',
-        }]);
+        srv.add([
+          {
+            text: 'dashboard',
+            link: '/dashboard',
+            icon: 'aa',
+          },
+        ]);
         const icon: any = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('class');
       });
       it('should be type is object', () => {
-        srv.add([{
-          text: 'dashboard',
-          link: '/dashboard',
-          icon: { type: 'icon', value: 'user' },
-        }]);
+        srv.add([
+          {
+            text: 'dashboard',
+            link: '/dashboard',
+            icon: { type: 'icon', value: 'user' },
+          },
+        ]);
         const icon: any = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('icon');
       });
       it('should be anticon anticon-user', () => {
-        srv.add([{
-          text: 'dashboard',
-          link: '/dashboard',
-          icon: `anticon anticon-user`,
-        }]);
+        srv.add([
+          {
+            text: 'dashboard',
+            link: '/dashboard',
+            icon: `anticon anticon-user`,
+          },
+        ]);
         const icon: any = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('icon');
         expect(icon.value).toBe('user');
       });
       it('should be image', () => {
-        srv.add([{
-          text: 'dashboard',
-          link: '/dashboard',
-          icon: `http://ng-alain.com/1.jpg`,
-        }]);
+        srv.add([
+          {
+            text: 'dashboard',
+            link: '/dashboard',
+            icon: `http://ng-alain.com/1.jpg`,
+          },
+        ]);
         const icon: any = srv.menus[0].icon;
         expect(typeof icon).toBe('object');
         expect(icon.type).toBe('img');
@@ -324,10 +332,7 @@ describe('Service: Menu', () => {
 
     it('without ALAIN_I18N_TOKEN', () => {
       injector = TestBed.configureTestingModule({
-        providers: [
-          MenuService,
-          { provide: ACLService, useClass: MockACLService },
-        ],
+        providers: [MenuService, { provide: ACLService, useClass: MockACLService }],
       });
       srv = injector.get(MenuService);
       expect(true).toBe(true);

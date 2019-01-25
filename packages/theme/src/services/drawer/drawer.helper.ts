@@ -51,17 +51,12 @@ export class DrawerHelper {
   // 大部分情况下抽屉的层级比 Modal 会更低一些
   private zIndex = 400;
 
-  constructor(private srv: NzDrawerService) { }
+  constructor(private srv: NzDrawerService) {}
 
   /**
    * 构建一个抽屉
    */
-  create(
-    title: string,
-    comp: any,
-    params?: any,
-    options?: DrawerHelperOptions,
-  ): Observable<any> {
+  create(title: string, comp: any, params?: any, options?: DrawerHelperOptions): Observable<any> {
     options = {
       size: 'md',
       footer: true,
@@ -83,22 +78,26 @@ export class DrawerHelper {
 
       if (footer) {
         defaultOptions.nzBodyStyle = {
-          'height': `calc(100% - ${footerHeight}px)`,
-          'overflow': 'auto',
+          height: `calc(100% - ${footerHeight}px)`,
+          overflow: 'auto',
           'padding-bottom': `${footerHeight - 2}px`,
         };
       }
 
       if (typeof size === 'number') {
-        defaultOptions[drawerOptions.nzPlacement === 'top' || drawerOptions.nzPlacement === 'bottom' ? 'nzHeight' : 'nzWidth'] = options.size;
+        defaultOptions[
+          drawerOptions.nzPlacement === 'top' || drawerOptions.nzPlacement === 'bottom'
+            ? 'nzHeight'
+            : 'nzWidth'
+        ] = options.size;
       } else {
-        defaultOptions.nzWrapClassName = (drawerOptions.nzWrapClassName + ` drawer-${options.size}`).trim();
+        defaultOptions.nzWrapClassName = (
+          drawerOptions.nzWrapClassName + ` drawer-${options.size}`
+        ).trim();
         delete drawerOptions.nzWrapClassName;
       }
 
-      const subject = this.srv.create(
-        { ...defaultOptions, ...drawerOptions },
-      );
+      const subject = this.srv.create({ ...defaultOptions, ...drawerOptions });
       const afterClose$ = subject.afterClose.subscribe((res: any) => {
         if (res != null && res !== false) {
           observer.next(res);
@@ -112,12 +111,7 @@ export class DrawerHelper {
   /**
    * 构建一个抽屉，点击蒙层不允许关闭
    */
-  static(
-    title: string,
-    comp: any,
-    params?: any,
-    options?: DrawerHelperOptions,
-  ): Observable<any> {
+  static(title: string, comp: any, params?: any, options?: DrawerHelperOptions): Observable<any> {
     const drawerOptions = {
       nzMaskClosable: false,
       ...(options && options.drawerOptions),
