@@ -1,4 +1,4 @@
-import { isEmpty, toBoolean, toNumber } from './check';
+import { isEmpty, toBoolean, toNumber, InputBoolean, InputNumber } from './check';
 
 describe('#isEmpty', () => {
   it('should empty when only spaces', () => {
@@ -47,15 +47,25 @@ describe('#toBoolean', () => {
     { value: [], ret: true },
   ].forEach(item => {
     const au = typeof item.au !== 'undefined';
-    it(`should coerce [${JSON.stringify(item.value)}] to [${JSON.stringify(
-      item.ret,
-    )}]${au ? ', because allow undefined' : ''}`, () => {
+    it(`should coerce [${JSON.stringify(item.value)}] to [${JSON.stringify(item.ret)}]${
+      au ? ', because allow undefined' : ''
+    }`, () => {
       if (au) {
         expect(toBoolean(item.value, item.au)).toBe(item.ret);
       } else {
         expect(toBoolean(item.value)).toBe(item.ret);
       }
     });
+  });
+});
+
+describe('#InputBoolean', () => {
+  it('should be warn when already exist', () => {
+    spyOn(console, 'warn');
+    const target = {};
+    InputBoolean()(target, 'a');
+    InputBoolean()(target, 'a');
+    expect(console.warn).toHaveBeenCalled();
   });
 });
 
@@ -133,5 +143,15 @@ describe('toNumber', () => {
   it('should coerce an array to 0 or default', () => {
     expect(toNumber([])).toBe(0);
     expect(toNumber([], 111)).toBe(111);
+  });
+});
+
+describe('#InputNumber', () => {
+  it('should be warn when already exist', () => {
+    spyOn(console, 'warn');
+    const target = {};
+    InputNumber()(target, 'a');
+    InputNumber()(target, 'a');
+    expect(console.warn).toHaveBeenCalled();
   });
 });
