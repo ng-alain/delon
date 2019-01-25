@@ -249,15 +249,15 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           ui.spanControl = null;
           ui.offsetControl = null;
         }
-        if (ui.widget === 'date' && ui.end != null && parentSchema) {
-          const dateEndProperty = parentSchema.properties[ui.end];
+        if (ui.widget === 'date' && ui.end != null) {
+          const dateEndProperty = schema.properties[ui.end];
           if (dateEndProperty) {
             dateEndProperty.ui = {
               ...(dateEndProperty.ui as SFUISchemaItem),
               hidden: true,
             };
           } else {
-            ui.end = '';
+            ui.end = null;
           }
         }
         ui.hidden = typeof ui.hidden === 'boolean' ? ui.hidden : false;
