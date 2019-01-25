@@ -13,6 +13,7 @@ Delon
   Delon is a set of essential modules for [ng-alain](https://ng-alain.com).
 
   [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon)
+  [![Codecov](https://img.shields.io/codecov/c/github/ng-alain/delon.svg?style=flat-square)](https://codecov.io/gh/ng-alain/delon)
   [![Dependency Status](https://david-dm.org/ng-alain/ng-alain/status.svg?style=flat-square)](https://david-dm.org/ng-alain/ng-alain)
   [![GitHub Release Date](https://img.shields.io/github/release-date/ng-alain/ng-alain.svg?style=flat-square)](https://github.com/ng-alain/ng-alain/releases)
   [![NPM version](https://img.shields.io/npm/v/ng-alain.svg?style=flat-square)](https://www.npmjs.com/package/ng-alain)
