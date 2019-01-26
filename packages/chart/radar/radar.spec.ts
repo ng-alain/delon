@@ -12,7 +12,7 @@ describe('chart: radar', () => {
       page = new PageG2<TestComponent>().genModule(G2RadarModule, TestComponent);
     });
 
-    beforeEach(() => page.genComp(TestComponent, true));
+    beforeEach(fakeAsync(() => page.genComp(TestComponent, true)));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 
