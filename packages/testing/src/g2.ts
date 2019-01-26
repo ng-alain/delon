@@ -32,15 +32,24 @@ export class PageG2<T> {
     return this.comp.chart;
   }
 
-  makeModule<M>(module: M, comp: Type<T>, options = { dc: true }): PageG2<T> {
+  genModule<M>(module: M, comp: Type<T>) {
     TestBed.configureTestingModule({
       imports: [module],
       declarations: [comp],
     });
+    return this;
+  }
+
+  genComp(comp: Type<T>, dc = false) {
     this.fixture = TestBed.createComponent(comp);
-    if (options.dc) {
+    if (dc) {
       this.dcFirst();
     }
+    return this;
+  }
+
+  makeModule<M>(module: M, comp: Type<T>, options = { dc: true }): PageG2<T> {
+    this.genModule(module, comp).genComp(comp, options.dc);
     return this;
   }
 
@@ -158,8 +167,10 @@ export class PageG2<T> {
   }
 }
 
-export function checkDelay<M, T>(module: M, comp: Type<T>) {
-  const page = new PageG2<T>().makeModule(module, comp, { dc: false });
+export function checkDelay<M, T>(module: M, comp: Type<T>, page: PageG2<T> = null) {
+  if (page == null) {
+    page = new PageG2<T>().makeModule(module, comp, { dc: false });
+  }
   const context = page.context as any;
   if (typeof context.delay === 'undefined') {
     console.warn(`You muse be dinfed "delay" property in test component`);

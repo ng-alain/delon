@@ -1,16 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
-import { discardPeriodicTasks, fakeAsync, tick } from '@angular/core/testing';
-import { checkDelay, PageG2 } from '@delon/testing';
+import { fakeAsync } from '@angular/core/testing';
+import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
 import { G2TimelineComponent, G2TimelineData } from './timeline.component';
 import { G2TimelineModule } from './timeline.module';
 
 describe('chart: timeline', () => {
-  let page: PageG2<TestComponent>;
-
   describe('', () => {
-    beforeEach(() => {
-      page = new PageG2<TestComponent>().makeModule(G2TimelineModule, TestComponent, { dc: false });
+    let page: PageG2<TestComponent>;
+
+    configureTestSuite(() => {
+      page = new PageG2<TestComponent>().genModule(G2TimelineModule, TestComponent);
     });
+
+    beforeEach(() => page.genComp(TestComponent));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 

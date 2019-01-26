@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { fakeAsync } from '@angular/core/testing';
 import { checkDelay, PageG2 } from '@delon/testing';
 import { G2PieComponent } from './pie.component';
 import { G2PieModule } from './pie.module';

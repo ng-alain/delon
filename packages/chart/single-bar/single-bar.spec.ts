@@ -1,18 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
-import { checkDelay, PageG2 } from '@delon/testing';
+import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
 import { G2SingleBarComponent } from './single-bar.component';
 import { G2SingleBarModule } from './single-bar.module';
 
 describe('chart: single-bar', () => {
-  let page: PageG2<TestComponent>;
-
   describe('', () => {
-    beforeEach(() => {
-      page = new PageG2<TestComponent>().makeModule(G2SingleBarModule, TestComponent, {
-        dc: false,
-      });
+    let page: PageG2<TestComponent>;
+
+    configureTestSuite(() => {
+      page = new PageG2<TestComponent>().genModule(G2SingleBarModule, TestComponent);
     });
+
+    beforeEach(() => page.genComp(TestComponent));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 

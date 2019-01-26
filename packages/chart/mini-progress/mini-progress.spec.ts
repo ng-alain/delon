@@ -1,6 +1,7 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PageG2 } from '@delon/testing';
+import { configureTestSuite, createTestContext, PageG2 } from '@delon/testing';
+
 import { G2MiniProgressComponent } from './mini-progress.component';
 import { G2MiniProgressModule } from './mini-progress.module';
 
@@ -10,14 +11,15 @@ describe('chart: mini-progress', () => {
   let context: TestComponent;
   let page: PageG2<TestComponent>;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [G2MiniProgressModule],
       declarations: [TestComponent],
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
     page = new PageG2(fixture);
   });
@@ -41,18 +43,18 @@ describe('chart: mini-progress', () => {
     const el = page.getEl('.g2-mini-progress__value');
     expect(el.style.width).toBe(`100%`);
   });
-
 });
 
 @Component({
   template: `
-  <g2-mini-progress #comp
-    [color]="color"
-    [target]="target"
-    [percent]="percent"
-    [strokeWidth]="strokeWidth"
-  >
-  </g2-mini-progress>
+    <g2-mini-progress
+      #comp
+      [color]="color"
+      [target]="target"
+      [percent]="percent"
+      [strokeWidth]="strokeWidth"
+    >
+    </g2-mini-progress>
   `,
 })
 class TestComponent {

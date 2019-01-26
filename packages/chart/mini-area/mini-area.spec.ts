@@ -1,16 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
-import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
+import { checkDelay, configureTestSuite, PageG2, PageG2Height } from '@delon/testing';
 import { G2MiniAreaComponent } from './mini-area.component';
 import { G2MiniAreaModule } from './mini-area.module';
 
 describe('chart: mini-area', () => {
-  let page: PageG2<TestComponent>;
-
   describe('', () => {
-    beforeEach(fakeAsync(() => {
-      page = new PageG2<TestComponent>().makeModule(G2MiniAreaModule, TestComponent, { dc: false });
-    }));
+    let page: PageG2<TestComponent>;
+
+    configureTestSuite(() => {
+      page = new PageG2<TestComponent>().genModule(G2MiniAreaModule, TestComponent);
+    });
+
+    beforeEach(() => page.genComp(TestComponent));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 

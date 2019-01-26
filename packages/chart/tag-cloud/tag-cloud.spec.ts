@@ -1,16 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
-import { fakeAsync, tick } from '@angular/core/testing';
-import { checkDelay, PageG2 } from '@delon/testing';
+import { fakeAsync } from '@angular/core/testing';
+import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
 import { G2TagCloudComponent, G2TagCloudData } from './tag-cloud.component';
 import { G2TagCloudModule } from './tag-cloud.module';
 
 describe('chart: tag-cloud', () => {
-  let page: PageG2<TestComponent>;
-
   describe('', () => {
-    beforeEach(() => {
-      page = new PageG2<TestComponent>().makeModule(G2TagCloudModule, TestComponent, { dc: false });
+    let page: PageG2<TestComponent>;
+
+    configureTestSuite(() => {
+      page = new PageG2<TestComponent>().genModule(G2TagCloudModule, TestComponent);
     });
+
+    beforeEach(() => page.genComp(TestComponent));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 

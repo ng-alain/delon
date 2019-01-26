@@ -1,16 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
-import { checkDelay, PageG2 } from '@delon/testing';
+import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
 import { G2RadarComponent, G2RadarData } from './radar.component';
 import { G2RadarModule } from './radar.module';
 
 describe('chart: radar', () => {
-  let page: PageG2<TestComponent>;
-
   describe('defualt', () => {
-    beforeEach(fakeAsync(() => {
-      page = new PageG2<TestComponent>().makeModule(G2RadarModule, TestComponent);
-    }));
+    let page: PageG2<TestComponent>;
+
+    configureTestSuite(() => {
+      page = new PageG2<TestComponent>().genModule(G2RadarModule, TestComponent);
+    });
+
+    beforeEach(() => page.genComp(TestComponent));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 
