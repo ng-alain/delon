@@ -25,7 +25,7 @@ import { debounceTime } from 'rxjs/operators';
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   private resize$: Subscription = null;
   @ViewChild('container') private node: ElementRef;
-  private timer;
+  private timer: number;
 
   // #region fields
 
@@ -42,10 +42,10 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     private renderer: Renderer2,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-  ) { }
+  ) {}
 
   private renderChart(type: string) {
-    if (!this.resize$) return ;
+    if (!this.resize$) return;
 
     const { percent, color, node } = this;
 
@@ -182,27 +182,20 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     render();
   }
 
-  private updateRadio(radio: number) {
-    this.renderer.setStyle(
-      this.el.nativeElement,
-      'transform',
-      `scale(${radio})`,
-    );
+  private updateRadio() {
+    const { offsetWidth } = this.el.nativeElement.parentNode;
+    const radio = offsetWidth < this.height ? offsetWidth / this.height : 1;
+    this.renderer.setStyle(this.el.nativeElement, 'transform', `scale(${radio})`);
   }
 
   private installResizeEvent() {
-    if (this.resize$) return;
-
     this.resize$ = fromEvent(window, 'resize')
       .pipe(debounceTime(200))
-      .subscribe(() => {
-        const { offsetWidth } = this.el.nativeElement.parentNode;
-        this.updateRadio(offsetWidth < this.height ? offsetWidth / this.height : 1);
-      });
+      .subscribe(() => this.updateRadio());
   }
 
   ngOnInit(): void {
-    this.updateRadio(1);
+    this.updateRadio();
     this.installResizeEvent();
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.renderChart(''), this.delay));
   }
@@ -213,7 +206,9 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.timer) cancelAnimationFrame(this.timer);
-    if (this.resize$) this.resize$.unsubscribe();
+    if (this.timer) {
+      cancelAnimationFrame(this.timer);
+    }
+    this.resize$.unsubscribe();
   }
 }

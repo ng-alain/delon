@@ -107,7 +107,6 @@
               "node_modules/qrious/dist/qrious.min.js"
             ],
             "codeCoverageExclude": [
-              "packages/chart/**",
               "packages/schematics/**",
               "packages/testing/**"
             ]
