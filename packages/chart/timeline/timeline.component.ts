@@ -33,7 +33,6 @@ export class G2TimelineData {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
-
   @ViewChild('container') private node: ElementRef;
   @ViewChild('sliderContainer') private sliderNode: ElementRef;
   private chart: any;
@@ -63,12 +62,12 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
   private install() {
     const { node, sliderNode, height, padding, mask, slider } = this;
-    const chart = this.chart = new G2.Chart({
+    const chart = (this.chart = new G2.Chart({
       container: node.nativeElement,
       forceFit: true,
       height,
       padding,
-    });
+    }));
     chart.axis('x', { title: false });
     chart.axis('y1', { title: false });
     chart.axis('y2', false);
@@ -81,7 +80,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     const sliderPadding = { ...[], ...padding };
     sliderPadding[0] = 0;
     if (slider) {
-      const _slider = this._slider = new Slider({
+      const _slider = (this._slider = new Slider({
         container: sliderNode.nativeElement,
         width: 'auto',
         height: 26,
@@ -100,7 +99,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
         xAxis: 'x',
         yAxis: 'y1',
         data: [],
-      });
+      }));
 
       _slider.render();
     }
@@ -109,17 +108,26 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const { chart, _slider, slider, height, padding, data, mask, titleMap, position, colorMap, borderWidth } = this;
-    if (!chart || !data || data.length <= 0) return ;
+    const {
+      chart,
+      _slider,
+      slider,
+      height,
+      padding,
+      data,
+      mask,
+      titleMap,
+      position,
+      colorMap,
+      borderWidth,
+    } = this;
+    if (!chart || !data || data.length <= 0) return;
 
     chart.legend({
       position,
       custom: true,
       clickable: false,
-      items: [
-        { value: titleMap.y1, fill: colorMap.y1 },
-        { value: titleMap.y2, fill: colorMap.y2 },
-      ],
+      items: [{ value: titleMap.y1, fill: colorMap.y1 }, { value: titleMap.y2, fill: colorMap.y2 }],
     });
 
     // border
@@ -129,17 +137,16 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     chart.set('height', height);
     chart.set('padding', padding);
 
-    data.filter(v => !(v.x instanceof Number)).forEach(v => {
-      v.x = +new Date(v.x);
-    });
+    data
+      .filter(v => !(v.x instanceof Number))
+      .forEach(v => {
+        v.x = +new Date(v.x);
+      });
     data.sort((a, b) => +a.x - +b.x);
-    let max;
-    if (data[0] && data[0].y1 && data[0].y2) {
-      max = Math.max(
-        [...data].sort((a, b) => b.y1 - a.y1)[0].y1,
-        [...data].sort((a, b) => b.y2 - a.y2)[0].y2,
-      );
-    }
+    const max = Math.max(
+      [...data].sort((a, b) => b.y1 - a.y1)[0].y1,
+      [...data].sort((a, b) => b.y2 - a.y2)[0].y2,
+    );
     const ds = new DataSet({
       state: {
         start: data[0].x,
@@ -147,15 +154,13 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       },
     });
     const dv = ds.createView();
-    dv.source(data)
-      .transform({
-        type: 'filter',
-        callback: (val: G2TimelineData) => {
-          const time = +val.x;
-          return time >= ds.state.start && time <= ds.state.end;
-        },
-      })
-    ;
+    dv.source(data).transform({
+      type: 'filter',
+      callback: (val: G2TimelineData) => {
+        const time = +val.x;
+        return time >= ds.state.start && time <= ds.state.end;
+      },
+    });
     chart.source(dv, {
       x: {
         type: 'timeCat',
@@ -191,7 +196,11 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) this.chart.destroy();
-    if (this._slider) this._slider.destroy();
+    if (this.chart) {
+      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    }
+    if (this._slider) {
+      this.ngZone.runOutsideAngular(() => this._slider.destroy());
+    }
   }
 }

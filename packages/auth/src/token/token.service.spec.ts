@@ -17,12 +17,16 @@ describe('auth: token.service', () => {
   beforeEach(() => {
     let data = {};
 
-    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
-      return data[key] || null;
-    });
-    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
-      delete data[key];
-    });
+    spyOn(localStorage, 'getItem').and.callFake(
+      (key: string): string => {
+        return data[key] || null;
+      },
+    );
+    spyOn(localStorage, 'removeItem').and.callFake(
+      (key: string): void => {
+        delete data[key];
+      },
+    );
     spyOn(localStorage, 'setItem').and.callFake(
       (key: string, value: string): string => {
         return (data[key] = value as string);

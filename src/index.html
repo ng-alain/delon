@@ -33,12 +33,14 @@
 
   </script>
   <script>
-    setTimeout(() => {
-      var el = document.querySelector('#_slow');
-      if (el) {
-        el.style.display = 'flex';
-      }
-    }, 1000 * 5);
+    if (location.host !== 'netlify.ng-alain.com') {
+      setTimeout(() => {
+        var el = document.querySelector('#_slow');
+        if (el) {
+          el.style.display = 'flex';
+        }
+      }, 1000 * 8);
+    }
 
   </script>
   <script src="./assets/highlight.min.js"></script>

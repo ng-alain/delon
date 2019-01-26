@@ -1,10 +1,19 @@
 import { Type } from '@angular/core';
-import { discardPeriodicTasks, flush, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  discardPeriodicTasks,
+  flush,
+  tick,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
 
 export type PageG2Type = 'geoms' | 'views';
 
+export const PageG2DataCount = 2;
+export const PageG2Height = 100;
+
 export class PageG2<T> {
-  constructor(public fixture: ComponentFixture<T> = null) { }
+  constructor(public fixture: ComponentFixture<T> = null) {}
 
   get dl() {
     return this.fixture.debugElement;
@@ -23,15 +32,24 @@ export class PageG2<T> {
     return this.comp.chart;
   }
 
-  makeModule<M>(module: M, comp: Type<T>, options = { dc: true }): PageG2<T> {
+  genModule<M>(module: M, comp: Type<T>) {
     TestBed.configureTestingModule({
       imports: [module],
       declarations: [comp],
     });
+    return this;
+  }
+
+  genComp(comp: Type<T>, dc = false) {
     this.fixture = TestBed.createComponent(comp);
-    if (options.dc) {
+    if (dc) {
       this.dcFirst();
     }
+    return this;
+  }
+
+  makeModule<M>(module: M, comp: Type<T>, options = { dc: true }): PageG2<T> {
+    this.genModule(module, comp).genComp(comp, options.dc);
     return this;
   }
 
@@ -39,12 +57,23 @@ export class PageG2<T> {
     this.dc();
     flush();
     discardPeriodicTasks();
+    // FIX: `Error during cleanup of component`
+    if (this.comp && typeof this.comp.chart !== 'undefined') {
+      spyOn(this.comp.chart, 'destroy');
+    }
     return this;
   }
 
   dc() {
     this.fixture.changeDetectorRef.markForCheck();
     this.fixture.detectChanges();
+    return this;
+  }
+
+  end() {
+    // The 201 value is delay value
+    tick(201);
+    discardPeriodicTasks();
     return this;
   }
 
@@ -113,4 +142,44 @@ export class PageG2<T> {
     expect(results[0].get('data').length).toBe(num);
     return this;
   }
+
+  checkTooltip(includeText: string, point?: { x: number; y: number }) {
+    if (!point) {
+      const g2El = this.dl.nativeElement as HTMLElement;
+      point = {
+        x: g2El.offsetWidth / 2,
+        y: g2El.offsetHeight / 2,
+      };
+    }
+    this.chart.showTooltip(point);
+    const el = this.getEl('.g2-tooltip');
+    if (includeText === null) {
+      expect(el == null).toBe(true, `Shoule be not found g2-tooltip element`);
+    } else {
+      expect(el != null).toBe(true, `Shoule be has g2-tooltip element`);
+      const text = el.textContent.trim();
+      expect(text.includes(includeText)).toBe(
+        true,
+        `Shoule be include "${includeText}" text of tooltip text context "${text}"`,
+      );
+    }
+    return this;
+  }
+}
+
+export function checkDelay<M, T>(module: M, comp: Type<T>, page: PageG2<T> = null) {
+  if (page == null) {
+    page = new PageG2<T>().makeModule(module, comp, { dc: false });
+  }
+  const context = page.context as any;
+  if (typeof context.delay === 'undefined') {
+    console.warn(`You muse be dinfed "delay" property in test component`);
+    return;
+  }
+  context.delay = 100;
+  page.dc();
+  page.comp.ngOnDestroy();
+  expect(page.chart == null).toBe(true);
+  tick(201);
+  discardPeriodicTasks();
 }

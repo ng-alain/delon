@@ -35,7 +35,10 @@ export class DelonLocaleService {
   }
 }
 
-export function DELON_LOCALE_SERVICE_PROVIDER_FACTORY(exist: DelonLocaleService, locale: LocaleData): DelonLocaleService {
+export function DELON_LOCALE_SERVICE_PROVIDER_FACTORY(
+  exist: DelonLocaleService,
+  locale: LocaleData,
+): DelonLocaleService {
   return exist || new DelonLocaleService(locale);
 }
 

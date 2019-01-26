@@ -1,5 +1,6 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 import { G2CustomComponent } from './custom.component';
 import { G2CustomModule } from './custom.module';
 
@@ -8,14 +9,15 @@ describe('chart: custom', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
-      imports: [ G2CustomModule],
+      imports: [G2CustomModule],
       declarations: [TestComponent],
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
 
     spyOn(context, 'render');
     spyOn(context, 'resize');
@@ -37,12 +39,11 @@ describe('chart: custom', () => {
     tick(201);
     expect(context.resize).toHaveBeenCalled();
   }));
-
 });
 
 @Component({
   template: `
-  <g2-custom #comp [resizeTime]="resizeTime" (resize)="resize()" (render)="render()"></g2-custom>
+    <g2-custom #comp [resizeTime]="resizeTime" (resize)="resize()" (render)="render()"></g2-custom>
   `,
 })
 class TestComponent {

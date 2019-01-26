@@ -34,14 +34,11 @@ describe('abc: page-header', () => {
   let context: TestComponent;
   let router: Router;
 
-  function genModule(other: {
-    template?: string;
-    providers?: any[];
-    created?: boolean;
-  }) {
-    const imports = [RouterTestingModule.withRoutes([
-      { path: '1-1/:name', component: TestComponent },
-    ]), PageHeaderModule];
+  function genModule(other: { template?: string; providers?: any[]; created?: boolean }) {
+    const imports = [
+      RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]),
+      PageHeaderModule,
+    ];
     const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
@@ -78,9 +75,10 @@ describe('abc: page-header', () => {
   describe('', () => {
     configureTestSuite(() => {
       injector = TestBed.configureTestingModule({
-        imports: [RouterTestingModule.withRoutes([
-          { path: '1-1/:name', component: TestComponent },
-        ]), PageHeaderModule],
+        imports: [
+          RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]),
+          PageHeaderModule,
+        ],
         providers: [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService],
         declarations: [TestComponent, TestAutoBreadcrumbComponent, TestI18nComponent],
       });
@@ -113,11 +111,9 @@ describe('abc: page-header', () => {
         });
       });
 
-      ['breadcrumb', 'logo', 'action', 'content', 'extra', 'tab'].forEach(
-        type => {
-          it('#' + type, () => isExists('.' + type));
-        },
-      );
+      ['breadcrumb', 'logo', 'action', 'content', 'extra', 'tab'].forEach(type => {
+        it('#' + type, () => isExists('.' + type));
+      });
 
       describe('#fixed', () => {
         beforeEach(() => {
@@ -129,7 +125,9 @@ describe('abc: page-header', () => {
         });
         it('should be update position when switch collapsed', () => {
           const srv = injector.get(SettingsService);
-          const affixComp = dl.query(By.directive(NzAffixComponent)).injector.get(NzAffixComponent, null);
+          const affixComp = dl
+            .query(By.directive(NzAffixComponent))
+            .injector.get(NzAffixComponent, null);
           spyOn(affixComp, 'updatePosition');
           srv.setLayout('collapsed', true);
           expect(affixComp.updatePosition).toHaveBeenCalled();
@@ -227,13 +225,15 @@ describe('abc: page-header', () => {
         const urlSpy = spyOnProperty(router, 'url');
         urlSpy.and.returnValue('/1-1/1-1-2');
         fixture.detectChanges();
-        const firstPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
+        const firstPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)'))
+          .nativeElement;
         urlSpy.and.returnValue('/1-1/1-1-1');
         fixture.ngZone.run(() => {
           router.navigateByUrl('/1-1/1-1-1');
           fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
+            const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)'))
+              .nativeElement;
             expect(firstPath.innerText).not.toBe(secondPath.innerText);
           });
         });
@@ -337,10 +337,7 @@ describe('abc: page-header', () => {
       genModule({ created: false });
       context.title = undefined;
       context.autoTitle = true;
-      menuSrv.add([
-        { text: '1', link: '/1-1/p1' },
-        { text: '2', link: '/1-1/p2' },
-      ]);
+      menuSrv.add([{ text: '1', link: '/1-1/p1' }, { text: '2', link: '/1-1/p2' }]);
       const urlSpy = spyOnProperty(router, 'url');
       urlSpy.and.returnValue('/1-1/p1');
       tick();
@@ -387,7 +384,7 @@ describe('abc: page-header', () => {
         setTitle = jasmine.createSpy();
       }
       class MockReuse {
-        set title(val: string) { }
+        set title(val: string) {}
         get title(): string {
           return '';
         }
@@ -413,11 +410,7 @@ describe('abc: page-header', () => {
       });
 
       it('should be auto sync title of document and result-tab', () => {
-        const spyReuseTitle = spyOnProperty(
-          reuseSrv,
-          'title',
-          'set',
-        ).and.callThrough();
+        const spyReuseTitle = spyOnProperty(reuseSrv, 'title', 'set').and.callThrough();
         context.title = 'test';
         fixture.detectChanges();
         expect(titleSrv.setTitle).toHaveBeenCalled();
@@ -444,32 +437,59 @@ class TestBaseComponent {
 
 @Component({
   template: `
-    <page-header #comp [title]="title" [autoTitle]="autoTitle" [syncTitle]="syncTitle"
-        [autoBreadcrumb]="autoBreadcrumb" [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink"
-        [fixed]="fixed" [loading]="loading" [wide]="wide"
-        [breadcrumb]="breadcrumb" [logo]="logo" [action]="action" [extra]="extra" [content]="content" [tab]="tab">
-        <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
-        <ng-template #logo><div class="logo">logo</div></ng-template>
-        <ng-template #action><div class="action">action</div></ng-template>
-        <ng-template #content><div class="content">content</div></ng-template>
-        <ng-template #extra><div class="extra">extra</div></ng-template>
-        <ng-template #tab><div class="tab">tab</div></ng-template>
+    <page-header
+      #comp
+      [title]="title"
+      [autoTitle]="autoTitle"
+      [syncTitle]="syncTitle"
+      [autoBreadcrumb]="autoBreadcrumb"
+      [home]="home"
+      [homeI18n]="homeI18n"
+      [homeLink]="homeLink"
+      [fixed]="fixed"
+      [loading]="loading"
+      [wide]="wide"
+      [breadcrumb]="breadcrumb"
+      [logo]="logo"
+      [action]="action"
+      [extra]="extra"
+      [content]="content"
+      [tab]="tab"
+    >
+      <ng-template #breadcrumb><div class="breadcrumb">面包屑</div></ng-template>
+      <ng-template #logo><div class="logo">logo</div></ng-template>
+      <ng-template #action><div class="action">action</div></ng-template>
+      <ng-template #content><div class="content">content</div></ng-template>
+      <ng-template #extra><div class="extra">extra</div></ng-template>
+      <ng-template #tab><div class="tab">tab</div></ng-template>
     </page-header>
-    `,
+  `,
 })
 class TestComponent extends TestBaseComponent {}
 
 @Component({
   template: `
-  <page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n"
-    [autoBreadcrumb]="autoBreadcrumb"></page-header>
-    `,
+    <page-header
+      #comp
+      [title]="title"
+      [home]="home"
+      [homeI18n]="homeI18n"
+      [autoBreadcrumb]="autoBreadcrumb"
+    ></page-header>
+  `,
 })
 class TestAutoBreadcrumbComponent extends TestBaseComponent {}
 
 @Component({
-  template: `<page-header #comp [title]="title"
-  [home]="home" [homeI18n]="homeI18n" [homeLink]="homeLink"
-  [autoBreadcrumb]="autoBreadcrumb"></page-header>`,
+  template: `
+    <page-header
+      #comp
+      [title]="title"
+      [home]="home"
+      [homeI18n]="homeI18n"
+      [homeLink]="homeLink"
+      [autoBreadcrumb]="autoBreadcrumb"
+    ></page-header>
+  `,
 })
 class TestI18nComponent extends TestBaseComponent {}

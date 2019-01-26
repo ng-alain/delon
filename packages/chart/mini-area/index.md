@@ -17,7 +17,7 @@ type: Components
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.2)` |
 | `[borderColor]` | 图表边颜色 | `string` | `#1890FF` |
-| `[height]` | 图表高度 | `number` | - |
+| `[height]` | 图表高度 | `number` | `56` |
 | `[line]` | 是否显示描边 | `boolean` | `false` |
 | `[animate]` | 是否显示动画 | `boolean` | `true` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |

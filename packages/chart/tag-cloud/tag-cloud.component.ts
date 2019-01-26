@@ -18,8 +18,8 @@ declare var G2: any;
 declare var DataSet: any;
 
 export interface G2TagCloudData {
-  name: string;
-  value: number;
+  x?: string;
+  value?: number;
   category?: any;
   [key: string]: any;
 }
@@ -42,7 +42,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone) { }
+  constructor(private el: ElementRef, private ngZone: NgZone) {}
 
   private initTagCloud() {
     // 给point注册一个词云的shape
@@ -69,11 +69,11 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   private install() {
     const { el, padding, height } = this;
 
-    const chart = this.chart = new G2.Chart({
+    const chart = (this.chart = new G2.Chart({
       container: el.nativeElement,
       padding,
       height,
-    });
+    }));
     chart.legend(false);
     chart.axis(false);
     chart.tooltip({
@@ -94,7 +94,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   private attachChart() {
     const { chart, height, padding, data } = this;
-    if (!chart || !data || data.length <= 0) return ;
+    if (!chart || !data || data.length <= 0) return;
 
     chart.set('height', height);
     chart.set('padding', padding);
@@ -111,19 +111,14 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       size: [chart.get('width'), chart.get('height')],
       padding,
       timeInterval: 5000, // max execute time
-      rotate() {
+      rotate: () => {
         let random = ~~(Math.random() * 4) % 4;
         if (random === 2) {
           random = 0;
         }
         return random * 90; // 0, 90, 270
       },
-      fontSize(d) {
-        if (d.value) {
-          return ((d.value - min) / (max - min)) * (80 - 24) + 24;
-        }
-        return 0;
-      },
+      fontSize: d => (d.value ? ((d.value - min) / (max - min)) * (80 - 24) + 24 : 0),
     });
     chart.source(dv, {
       x: { nice: false },
@@ -138,8 +133,6 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   private installResizeEvent() {
-    if (this.resize$) return;
-
     this.resize$ = fromEvent(window, 'resize')
       .pipe(
         filter(() => this.chart),
@@ -159,11 +152,9 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.resize$) {
-      this.resize$.unsubscribe();
-    }
+    this.resize$.unsubscribe();
     if (this.chart) {
-      this.chart.destroy();
+      this.ngZone.runOutsideAngular(() => this.chart.destroy());
     }
   }
 }

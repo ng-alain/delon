@@ -22,19 +22,17 @@ export class CheckboxWidget extends ControlWidget {
 
   reset(value: SFValue) {
     this.inited = false;
-    getData(this.schema, this.ui, this.formProperty.formData).subscribe(
-      list => {
-        this.data = list;
-        this.allChecked = false;
-        this.indeterminate = false;
-        this.labelTitle = list.length === 0 ? '' : this.schema.title;
-        this.grid_span = this.ui.span && this.ui.span > 0 ? this.ui.span : 0;
+    getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
+      this.data = list;
+      this.allChecked = false;
+      this.indeterminate = false;
+      this.labelTitle = list.length === 0 ? '' : this.schema.title;
+      this.grid_span = this.ui.span && this.ui.span > 0 ? this.ui.span : 0;
 
-        this.updateAllChecked();
-        this.inited = true;
-        this.cd.detectChanges();
-      },
-    );
+      this.updateAllChecked();
+      this.inited = true;
+      this.cd.detectChanges();
+    });
   }
 
   _setValue(value: SFValue) {
@@ -50,9 +48,7 @@ export class CheckboxWidget extends ControlWidget {
   }
 
   groupInGridChange(values: SFValue[]) {
-    this.data.forEach(
-      item => (item.checked = values.indexOf(item.value) !== -1),
-    );
+    this.data.forEach(item => (item.checked = values.indexOf(item.value) !== -1));
     this.notifySet();
   }
 

@@ -77,12 +77,8 @@ describe('abc: view', () => {
           const halfGutter = gutter / 2;
           context.parent_gutter = gutter;
           fixture.detectChanges();
-          expect(page.getEl('.ant-row').style.marginLeft).toBe(
-            `-${halfGutter}px`,
-          );
-          expect(page.getEl('.ant-row').style.marginRight).toBe(
-            `-${halfGutter}px`,
-          );
+          expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
+          expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
           const itemCls = prefixCls + 'item';
           expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
           expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
@@ -121,18 +117,14 @@ describe('abc: view', () => {
         it('#label', () => {
           context.label = 'test-label';
           fixture.detectChanges();
-          expect(page.getEl(prefixCls + 'label').textContent).toContain(
-            'test-label',
-          );
+          expect(page.getEl(prefixCls + 'label').textContent).toContain('test-label');
         });
         describe('#default', () => {
           beforeEach(() => {
             context.content = '';
             context.parent_default = false;
             // make surce clean because of genModule has generated
-            page
-              .getEl(prefixCls + 'detail')
-              .classList.remove(prefixCls + 'default');
+            page.getEl(prefixCls + 'detail').classList.remove(prefixCls + 'default');
           });
           it('with true', () => {
             context.default = true;
@@ -145,6 +137,16 @@ describe('abc: view', () => {
             context.default = false;
             fixture.detectChanges();
             // mock
+            context.viewComp.checkContent();
+            page.expect(prefixCls + 'default', 0);
+          });
+          it('shoule be from defualt to text', () => {
+            context.default = true;
+            fixture.detectChanges();
+            context.viewComp.checkContent();
+            page.expect(prefixCls + 'default', 1);
+            context.content = 'asdf';
+            fixture.detectChanges();
             context.viewComp.checkContent();
             page.expect(prefixCls + 'default', 0);
           });
@@ -214,15 +216,20 @@ describe('abc: view', () => {
 
 @Component({
   template: `
-  <sv-container #svComp
-    [title]="parent_title"
-    [size]="parent_size" [layout]="parent_layout" [labelWidth]="parent_labelWidth"
-    [gutter]="parent_gutter" [col]="parent_col" [default]="parent_default">
-
-    <sv-title>title</sv-title>
-    <sv #viewComp [label]="label" [col]="col" [type]="type" [default]="default">{{content}}</sv>
-
-  </sv-container>`,
+    <sv-container
+      #svComp
+      [title]="parent_title"
+      [size]="parent_size"
+      [layout]="parent_layout"
+      [labelWidth]="parent_labelWidth"
+      [gutter]="parent_gutter"
+      [col]="parent_col"
+      [default]="parent_default"
+    >
+      <sv-title>title</sv-title>
+      <sv #viewComp [label]="label" [col]="col" [type]="type" [default]="default">{{ content }}</sv>
+    </sv-container>
+  `,
 })
 class TestComponent {
   @ViewChild('svComp')
