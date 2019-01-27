@@ -56,7 +56,7 @@ describe('form: widget: select', () => {
       .newSchema(s)
       .typeEvent('click', 'nz-select')
       .checkCount('.ant-select-disabled', 1)
-      .asyncEnd(1000);
+      .asyncEnd();
   }));
 
   describe('#events', () => {
@@ -90,7 +90,7 @@ describe('form: widget: select', () => {
       page
         .dc()
         .checkValue('/a', 'TRADE_SUCCESS')
-        .asyncEnd(1000);
+        .asyncEnd();
       const item = s.properties.a.ui as any;
       expect(item.change).toHaveBeenCalled();
       expect(item.openChange).toHaveBeenCalled();

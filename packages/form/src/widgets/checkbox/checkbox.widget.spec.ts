@@ -1,4 +1,4 @@
-import { ComponentFixture } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 
 import { DebugElement } from '@angular/core';
 import { createTestContext } from '@delon/testing';
@@ -24,14 +24,13 @@ describe('form: widget: checkbox', () => {
   });
 
   it('#visibleIf', () => {
-    const s: SFSchema = {
-      properties: {
-        a: { type: 'string', ui: { widget } },
-        b: { type: 'string', ui: { widget, visibleIf: { a: [true] } } },
-      },
-    };
     page
-      .newSchema(s)
+      .newSchema({
+        properties: {
+          a: { type: 'string', ui: { widget } },
+          b: { type: 'string', ui: { widget, visibleIf: { a: [true] } } },
+        },
+      })
       .checkCount(chekcWrapCls, 1)
       .click(chekcWrapCls)
       .checkCount(chekcWrapCls, 2);
@@ -39,33 +38,31 @@ describe('form: widget: checkbox', () => {
 
   it('should be ingore title when not array data', () => {
     const title = 'test';
-    const s: SFSchema = {
-      properties: { a: { type: 'string', title, ui: { widget } } },
-    };
     page
-      .newSchema(s)
+      .newSchema({
+        properties: { a: { type: 'string', title, ui: { widget } } },
+      })
       .checkElText(labelCls, '')
       .checkElText(chekcWrapCls, title);
   });
 
-  it('should be show title when is array data', done => {
+  it('should be show title when is array data', fakeAsync(() => {
     const title = 'test';
-    const s: SFSchema = {
-      properties: {
-        a: { type: 'string', title, ui: { widget }, enum: ['item1', 'item2'] },
-      },
-    };
-    page.newSchema(s);
-    fixture.whenStable().then(() => {
-      page.checkElText(labelCls, title);
-      page.checkElText(chekcWrapCls, 'item1');
-      done();
-    });
-  });
+    page
+      .newSchema({
+        properties: {
+          a: { type: 'string', title, ui: { widget }, enum: ['item1', 'item2'] },
+        },
+      })
+      .time(1000)
+      .checkElText(labelCls, title)
+      .checkElText(chekcWrapCls, 'item1')
+      .asyncEnd();
+  }));
 
   describe('#checkAll', () => {
     it('should be working', () => {
-      const s: SFSchema = {
+      page.newSchema({
         properties: {
           a: {
             type: 'string',
@@ -79,8 +76,7 @@ describe('form: widget: checkbox', () => {
             default: ['Apple'],
           },
         },
-      };
-      page.newSchema(s);
+      });
       const comp = page.getWidget<CheckboxWidget>('sf-checkbox');
       const checkAllBtn = page.getEl('.sf__checkbox-list .ant-checkbox-wrapper');
       checkAllBtn.click();

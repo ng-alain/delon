@@ -96,6 +96,7 @@ export class SFPage {
     spyOn(context, 'formSubmit');
     spyOn(context, 'formReset');
     spyOn(context, 'formError');
+    this.cleanOverlay();
   }
 
   cleanOverlay() {
@@ -219,6 +220,20 @@ export class SFPage {
     return this;
   }
 
+  checkCalled(path: string, propertyName: string, result = true): this {
+    path = this.fixPath(path);
+    const property = this.comp.rootProperty.searchProperty(path);
+    expect(property != null).toBe(true);
+    const item = property.ui;
+    const res = deepGet(item, propertyName.split('.'), undefined);
+    if (result) {
+      expect(res).toHaveBeenCalled();
+    } else {
+      expect(res).not.toHaveBeenCalled();
+    }
+    return this;
+  }
+
   checkElText(cls: string, value: any, viaDocument = false): this {
     const node = viaDocument ? document.querySelector(cls) : this.getEl(cls);
     if (value == null) {
@@ -287,8 +302,7 @@ export class SFPage {
   typeEvent(eventName: string, cls = 'input'): this {
     const node = document.querySelector(cls) as HTMLInputElement;
     dispatchFakeEvent(node, eventName);
-    tick();
-    return this.dc();
+    return this.time().dc();
   }
 
   time(time = 0) {
@@ -301,7 +315,7 @@ export class SFPage {
     return this;
   }
 
-  asyncEnd(time = 0) {
+  asyncEnd(time = 500) {
     this.time(time);
     discardPeriodicTasks();
     return this;
