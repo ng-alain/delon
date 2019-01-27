@@ -49,6 +49,7 @@ export function useFactory(
     '[class.sf]': 'true',
     '[class.sf-search]': `mode === 'search'`,
     '[class.sf-edit]': `mode === 'edit'`,
+    '[class.sf__no-error]': `onlyVisual`,
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -95,6 +96,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   @Input() autocomplete: 'on' | 'off';
   /** 立即显示错误视觉 */
   @Input() @InputBoolean() firstVisual = true;
+  /** 是否只展示错误视觉不显示错误文本 */
+  @Input() @InputBoolean() onlyVisual = false;
   /** 表单模式 */
   @Input()
   set mode(value: 'default' | 'search' | 'edit') {
@@ -103,13 +106,17 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this.layout = 'inline';
         this.firstVisual = false;
         this.liveValidate = false;
-        if (this._btn) this._btn.submit = this._btn.search;
+        if (this._btn) {
+          this._btn.submit = this._btn.search;
+        }
         break;
       case 'edit':
         this.layout = 'horizontal';
         this.firstVisual = false;
         this.liveValidate = true;
-        if (this._btn) this._btn.submit = this._btn.edit;
+        if (this._btn) {
+          this._btn.submit = this._btn.edit;
+        }
         break;
     }
     this._mode = value;
@@ -306,6 +313,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       ..._schema.ui,
       ...this.ui['*'],
     };
+    if (this.onlyVisual === true) {
+      this._defUi.onlyVisual = true;
+    }
 
     // root
     this._ui = { ...this._defUi };
@@ -318,9 +328,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     this._schema = _schema;
 
-    if (this._ui.debug) {
-      di('cover schema & ui', this._ui, _schema);
-    }
+    di(this._ui, 'cover schema & ui', this._ui, _schema);
   }
 
   private coverButtonProperty() {
@@ -356,7 +364,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (this._mode) {
       this.mode = this._mode;
     }
-    if (this._ui.debug) di('button property', this._btn);
+
+    di(this._ui, 'button property', this._btn);
   }
 
   ngOnInit(): void {
@@ -370,24 +379,21 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
   /** @internal */
   _addTpl(path: string, templateRef: TemplateRef<void>) {
-    const property = this.rootProperty.searchProperty(path);
-    if (!property) {
-      console.warn(`未找到路径：${path}`);
-      return;
-    }
     if (this._renders.has(path)) {
-      console.warn(`已经存在相同自定义路径：${path}`);
+      console.warn(`Duplicate definition "${path}" custom widget`);
       return;
     }
     this._renders.set(path, templateRef);
-    const pui: SFUISchemaItemRun = this.rootProperty.searchProperty(path).ui;
-    pui._render = templateRef;
+    this.attachCustomRender();
   }
 
   private attachCustomRender() {
     this._renders.forEach((tpl, path) => {
-      const pui: SFUISchemaItemRun = this.rootProperty.searchProperty(path).ui;
-      if (!pui._render) pui._render = tpl;
+      const property = this.rootProperty.searchProperty(path);
+      if (property == null) {
+        return;
+      }
+      property.ui._render = tpl;
     });
   }
 

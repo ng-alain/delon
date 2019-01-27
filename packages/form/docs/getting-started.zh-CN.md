@@ -94,7 +94,7 @@ export class DelonModule {
 `[liveValidate]` | 是否实时校验 | `boolean` | `true`
 `[autocomplete]` | 指定表单 `autocomplete` 值 | `on,off` | `null`
 `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false`
-`[onlyVisual]` | 是否只展示错误视觉不显示错误文本 | `boolean` | `false`
+`[onlyVisual]` | 是否只展示错误视觉不显示错误文本，并取消错误文本间距 | `boolean` | `false`
 `[errors]` | 自定义通用错误信息 | `{ [ key: string ]: string }` | `ERRORSDEFAULT`
 `[ui]` | 默认全局布局 | `SFUISchemaItem` | -
 `[size]` | 元素组件大小，用于 `nzSize` 值 | `default,large,small` | -

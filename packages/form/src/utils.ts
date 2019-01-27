@@ -1,9 +1,9 @@
 // tslint:disable:no-any
-import { deepCopy } from '@delon/util';
+import { deepCopy, toBoolean } from '@delon/util';
 import { of, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
-import { SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 
 export const FORMATMAPS = {
   'date-time': {
@@ -11,15 +11,15 @@ export const FORMATMAPS = {
     showTime: true,
     format: 'YYYY-MM-DDTHH:mm:ssZ',
   },
-  'date': { widget: 'date', format: 'YYYY-MM-DD' },
+  date: { widget: 'date', format: 'YYYY-MM-DD' },
   'full-date': { widget: 'date', format: 'YYYY-MM-DD' },
-  'time': { widget: 'time' },
+  time: { widget: 'time' },
   'full-time': { widget: 'time' },
-  'week': { widget: 'date', mode: 'week', format: 'YYYY-WW' },
-  'month': { widget: 'date', mode: 'month', format: 'YYYY-MM' },
-  'uri': { widget: 'upload' },
-  'email': { widget: 'autocomplete', type: 'email' },
-  'color': { widget: 'string', type: 'color' },
+  week: { widget: 'date', mode: 'week', format: 'YYYY-WW' },
+  month: { widget: 'date', mode: 'month', format: 'YYYY-MM' },
+  uri: { widget: 'upload' },
+  email: { widget: 'autocomplete', type: 'email' },
+  color: { widget: 'string', type: 'color' },
   '': { widget: 'string' },
 };
 
@@ -28,12 +28,14 @@ export function isBlank(o: any) {
 }
 
 export function toBool(value: any, defaultValue: boolean) {
-  return value == null ? defaultValue : `${value}` !== 'false';
+  return toBoolean(value, defaultValue);
 }
 
-export function di(...args) {
-  // tslint:disable-next-line:no-console
-  console.warn(...args);
+export function di(ui: SFUISchema, ...args) {
+  if (ui.debug) {
+    // tslint:disable-next-line:no-console
+    console.warn(...args);
+  }
 }
 
 /** 根据 `$ref` 查找 `definitions` */
@@ -59,10 +61,7 @@ function findSchemaDefinition($ref: string, definitions: SFSchemaDefinition) {
 /**
  * 取回Schema，并处理 `$ref` 的关系
  */
-export function retrieveSchema(
-  schema: SFSchema,
-  definitions: SFSchemaDefinition = {},
-): SFSchema {
+export function retrieveSchema(schema: SFSchema, definitions: SFSchemaDefinition = {}): SFSchema {
   if (schema.hasOwnProperty('$ref')) {
     const $refSchema = findSchemaDefinition(schema.$ref, definitions);
     // remove $ref property
@@ -76,8 +75,7 @@ export function retrieveSchema(
 export function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema {
   if (!(schema.hasOwnProperty('if') && schema.hasOwnProperty('then'))) return;
 
-  if (!schema.if.properties)
-    throw new Error(`if: does not contain 'properties'`);
+  if (!schema.if.properties) throw new Error(`if: does not contain 'properties'`);
 
   const allKeys = Object.keys(schema.properties);
   const ifKeys = Object.keys(schema.if.properties);
@@ -99,10 +97,7 @@ export function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema {
   });
 
   schema.then.required.forEach(key => (ui[`$${key}`].visibleIf = visibleIf));
-  if (hasElse)
-    schema.else.required.forEach(
-      key => (ui[`$${key}`].visibleIf = visibleElse),
-    );
+  if (hasElse) schema.else.required.forEach(key => (ui[`$${key}`].visibleIf = visibleElse));
 
   return schema;
 }
@@ -128,24 +123,18 @@ export function orderProperties(properties: string[], order: string[]) {
   const orderHash = arrayToHash(order);
   const extraneous = order.filter(prop => prop !== '*' && !propertyHash[prop]);
   if (extraneous.length) {
-    throw new Error(
-      `ui schema order list contains extraneous ${errorPropList(extraneous)}`,
-    );
+    throw new Error(`ui schema order list contains extraneous ${errorPropList(extraneous)}`);
   }
   const rest = properties.filter(prop => !orderHash[prop]);
   const restIndex = order.indexOf('*');
   if (restIndex === -1) {
     if (rest.length) {
-      throw new Error(
-        `ui schema order list does not contain ${errorPropList(rest)}`,
-      );
+      throw new Error(`ui schema order list does not contain ${errorPropList(rest)}`);
     }
     return order;
   }
   if (restIndex !== order.lastIndexOf('*')) {
-    throw new Error(
-      'ui schema order list contains more than one wildcard item',
-    );
+    throw new Error('ui schema order list contains more than one wildcard item');
   }
   const complete = [...order];
   complete.splice(restIndex, 1, ...rest);
@@ -167,7 +156,7 @@ export function getEnum(list: any[], formData: any, readOnly: boolean): SFSchema
   }
   // fix disabled status
   if (readOnly) {
-    list.forEach((item: SFSchemaEnum) => item.disabled = true);
+    list.forEach((item: SFSchemaEnum) => (item.disabled = true));
   }
   return list;
 }
@@ -183,9 +172,7 @@ export function getData(
   asyncArgs?: any,
 ): Observable<SFSchemaEnum[]> {
   if (typeof ui.asyncData === 'function') {
-    return ui
-      .asyncData(asyncArgs)
-      .pipe(map(list => getEnum(list, formData, schema.readOnly)));
+    return ui.asyncData(asyncArgs).pipe(map(list => getEnum(list, formData, schema.readOnly)));
   }
   return of(getCopyEnum(schema.enum, formData, schema.readOnly));
 }

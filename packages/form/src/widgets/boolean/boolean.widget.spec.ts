@@ -1,9 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
-
 import { createTestContext } from '@delon/testing';
+
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
 
 describe('form: widget: boolean', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -21,24 +20,24 @@ describe('form: widget: boolean', () => {
   });
 
   it('should be default true via schema.default', () => {
-    const s: SFSchema = {
-      properties: { a: { type: 'boolean', default: true } },
-    };
-    page.newSchema(s).checkValue('a', true);
+    page
+      .newSchema({
+        properties: { a: { type: 'boolean', default: true } },
+      })
+      .checkValue('a', true);
   });
 
   describe('[ui]', () => {
     it('should be custom (un)checked children', () => {
-      const s: SFSchema = {
-        properties: {
-          a: {
-            type: 'boolean',
-            ui: { checkedChildren: 'Y', unCheckedChildren: 'N' },
-          },
-        },
-      };
       page
-        .newSchema(s)
+        .newSchema({
+          properties: {
+            a: {
+              type: 'boolean',
+              ui: { checkedChildren: 'Y', unCheckedChildren: 'N' },
+            },
+          },
+        })
         .click(clickCls)
         .checkElText('.ant-switch-inner', 'Y')
         .click(clickCls)

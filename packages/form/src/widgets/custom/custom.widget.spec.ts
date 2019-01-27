@@ -18,15 +18,6 @@ describe('form: widget: custom', () => {
     return page;
   }
 
-  it('should be custom widget', () => {
-    ({ fixture, dl, context, page } = builder({
-      detectChanges: false,
-      template: `<sf [schema]="schema" #comp><ng-template sf-template="/a">custom:<div class="custom-el">{{ id }}</div></ng-template></sf>`,
-    }));
-    page.newSchema(schema);
-    detectChanges().checkCount('.custom-el', 1);
-  });
-
   it('should be auto fix path when not start with /', () => {
     ({ fixture, dl, context, page } = builder({
       detectChanges: false,
@@ -36,25 +27,31 @@ describe('form: widget: custom', () => {
     detectChanges().checkCount('.custom-el', 1);
   });
 
-  it('should be throw error when not found path', () => {
+  it('should be warn when duplicate definition', () => {
     spyOn(console, 'warn');
     ({ fixture, dl, context, page } = builder({
       detectChanges: false,
-      template: `<sf [schema]="schema" #comp><ng-template sf-template="invalud_a">custom:<div class="custom-el">{{ id }}</div></ng-template></sf>`,
+      template: `<sf [schema]="schema" #comp>
+      <ng-template sf-template="a">custom:<div class="custom-el">{{ id }}</div></ng-template>
+      <ng-template sf-template="a">custom:<div class="custom-el">{{ id }}</div></ng-template>
+      </sf>`,
     }));
     page.newSchema(schema);
     expect(console.warn).toHaveBeenCalled();
   });
 
-  it('#ng-alain-issues-492: should changed default data', () => {
+  it('should be re-attach custom template when refresh schema', () => {
     ({ fixture, dl, context, page } = builder({
       detectChanges: false,
-      template: `<sf [schema]="schema" [formData]="formData" #comp><ng-template sf-template="/a">custom:<div class="custom-el">{{ id }}</div></ng-template></sf>`,
+      template: `<sf [schema]="schema" [formData]="formData" #comp>
+      <ng-template sf-template="/a">custom:<div class="custom-el">{{ id }}</div></ng-template>
+      </sf>`,
     }));
+    page.newSchema({
+      properties: {},
+    });
+    page.checkCount('.custom-el', 0);
     page.newSchema(schema);
-    detectChanges().checkCount('.custom-el', 1);
-    context.formData = { a: 'test' };
-    fixture.detectChanges();
-    detectChanges().checkCount('.custom-el', 1);
+    page.checkCount('.custom-el', 1);
   });
 });

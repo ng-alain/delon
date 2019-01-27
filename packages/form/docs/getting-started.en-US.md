@@ -92,7 +92,7 @@ Property | Description | Type | Default
 `[liveValidate]` | Whether to live validate | `boolean` | `true`
 `[autocomplete]` | autocomplete value of this form | `on,off` | `null`
 `[firstVisual]` | Whether to show visual error immediately | `boolean` | `false`
-`[onlyVisual]` | Whether only show visual error not include text | `boolean` | `false`
+`[onlyVisual]` | Whether only show visual error not include text, and cancel the error text spacing | `boolean` | `false`
 `[errors]` | Customize error messages | `{ [ key: string ]: string }` | `ERRORSDEFAULT`
 `[ui]` | Default global ui property | `SFUISchemaItem` | -
 `[size]` | Size of the all angular element | `default,large,small` | -
