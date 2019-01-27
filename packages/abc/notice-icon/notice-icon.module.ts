@@ -13,4 +13,4 @@ const COMPONENTS = [NoticeIconComponent];
   declarations: [...COMPONENTS, NoticeIconTabComponent],
   exports: [...COMPONENTS],
 })
-export class NoticeIconModule { }
+export class NoticeIconModule {}

@@ -33,9 +33,7 @@ describe('abc: reuse-tab(service)', () => {
 
   afterEach(() => srv.ngOnDestroy());
 
-  function genModule(
-    providers: any[] = [{ provide: MenuService, useClass: MockMenuService }],
-  ) {
+  function genModule(providers: any[] = [{ provide: MenuService, useClass: MockMenuService }]) {
     injector = TestBed.configureTestingModule({
       providers: [
         ReuseTabService,
@@ -95,7 +93,7 @@ describe('abc: reuse-tab(service)', () => {
         srv.max = 2;
         srv.store(getSnapshot(1), {});
         srv.store(getSnapshot(2), {});
-        srv.items.forEach(i => i.closable = false);
+        srv.items.forEach(i => (i.closable = false));
         srv.store(getSnapshot(3), {});
         expect(srv.count).toBe(3);
         srv.store(getSnapshot(4), {});
@@ -191,10 +189,7 @@ describe('abc: reuse-tab(service)', () => {
       expect(srv.index('/a/b')).toBe(-1, `'index' muse be not contain '/a/b'`);
       // exists
       expect(srv.exists('/a/1')).toBe(true, `'exists' muse be contain '/a/1'`);
-      expect(srv.exists('/a/b')).toBe(
-        false,
-        `'exists' muse be not contain '/a/b'`,
-      );
+      expect(srv.exists('/a/b')).toBe(false, `'exists' muse be not contain '/a/b'`);
       // get
       expect(srv.get('/a/1')).not.toBeNull(`'get' muse be return cache data`);
       expect(srv.get('/a/b')).toBeNull(`'get' muse be return null`);
@@ -202,20 +197,11 @@ describe('abc: reuse-tab(service)', () => {
       // remove
       srv.close('/a/1');
       --count;
-      expect(srv.count).toBe(
-        count,
-        `'remove' muse be return ${count} when has removed`,
-      );
+      expect(srv.count).toBe(count, `'remove' muse be return ${count} when has removed`);
       srv.close('/a/b');
-      expect(srv.count).toBe(
-        count,
-        `'remove' muse be return ${count} when invalid url`,
-      );
+      expect(srv.count).toBe(count, `'remove' muse be return ${count} when invalid url`);
       // items
-      expect(srv.items.length).toBe(
-        count,
-        `'items' muse be return ${count} length`,
-      );
+      expect(srv.items.length).toBe(count, `'items' muse be return ${count} length`);
       // count
       expect(srv.count).toBe(count, `'count' muse be return ${count}`);
       // clear
@@ -257,9 +243,7 @@ describe('abc: reuse-tab(service)', () => {
       });
       it('should get closable from route data', () => {
         const closable = false;
-        expect(
-          srv.getClosable('/', { data: { reuseClosable: closable } } as any),
-        ).toBe(closable);
+        expect(srv.getClosable('/', { data: { reuseClosable: closable } } as any)).toBe(closable);
       });
       it('should get closable from menu data', () => {
         const spy = spyOn(menuSrv, 'getPathByUrl');
@@ -370,15 +354,13 @@ describe('abc: reuse-tab(service)', () => {
       });
     });
     it('#refresh', () => {
-      const _$ = srv.change
-        .pipe(filter(w => w !== null))
-        .subscribe(
-          res => {
-            expect(res.active).toBe('refresh');
-            _$.unsubscribe();
-          },
-          () => expect(false).toBe(true),
-        );
+      const _$ = srv.change.pipe(filter(w => w !== null)).subscribe(
+        res => {
+          expect(res.active).toBe('refresh');
+          _$.unsubscribe();
+        },
+        () => expect(false).toBe(true),
+      );
       srv.refresh(true);
     });
     describe('#replace', () => {

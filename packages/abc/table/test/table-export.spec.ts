@@ -23,9 +23,7 @@ const columns: STColumn[] = [
   {
     title: '',
     index: 'id',
-    buttons: [
-      { text: '' },
-    ],
+    buttons: [{ text: '' }],
   },
 ];
 const data: any[] = [
@@ -70,10 +68,7 @@ describe('abc: table: export', () => {
   describe('[default]', () => {
     beforeEach(() => {
       injector = TestBed.configureTestingModule({
-        providers: [
-          { provide: XlsxService, useClass: MockXlsxService },
-          STExport,
-        ],
+        providers: [{ provide: XlsxService, useClass: MockXlsxService }, STExport],
       });
       srv = injector.get(STExport);
     });
@@ -84,17 +79,14 @@ describe('abc: table: export', () => {
         _c: columns,
         sheetname: 'sn',
         filename: 'filename.xlsx',
-        callback: (wb: any) => { },
+        callback: (wb: any) => {},
       });
       expect(ret).not.toBeNull();
       expect(ret.sheets).not.toBeNull();
       const sheet = ret.sheets.sn;
       expect(sheet).not.toBeNull();
       const cc = columns.filter(
-        w =>
-          w.exported !== false &&
-          w.index &&
-          (!w.buttons || w.buttons.length === 0),
+        w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0),
       );
       expect(sheet['!ref']).toBe(
         // tslint:disable-next-line:binary-expression-operand-order
@@ -107,7 +99,7 @@ describe('abc: table: export', () => {
         _d: data,
         _c: columns,
         filename: 'filename.xlsx',
-        callback: (wb: any) => { },
+        callback: (wb: any) => {},
       });
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets)).toContain('Sheet1');

@@ -21,7 +21,7 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
 export class AvatarListComponent implements AfterViewInit, OnChanges {
   private inited = false;
   @ContentChildren(AvatarListItemComponent, { descendants: false })
-  private _items !: QueryList<AvatarListItemComponent>;
+  private _items!: QueryList<AvatarListItemComponent>;
 
   items: AvatarListItemComponent[] = [];
   exceedCount = 0;
@@ -45,7 +45,7 @@ export class AvatarListComponent implements AfterViewInit, OnChanges {
   @Input() @InputNumber() maxLength = 0;
   @Input() excessItemsStyle: {};
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   private gen() {
     const { _items } = this;

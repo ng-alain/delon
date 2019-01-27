@@ -53,17 +53,17 @@ export class ArrayService {
       for (const i of list) {
         i[options.deepMapName] = deep;
         i[options.parentMapName] = parent;
-        if (options.cb) { options.cb(i, parent, deep); }
+        if (options.cb) {
+          options.cb(i, parent, deep);
+        }
         result.push(i);
         const children = i[options.childrenMapName];
-        if (
-          children != null &&
-          Array.isArray(children) &&
-          children.length > 0
-        ) {
+        if (children != null && Array.isArray(children) && children.length > 0) {
           inFn(children, i, deep + 1);
         }
-        if (options.clearChildren) { delete i[options.childrenMapName]; }
+        if (options.clearChildren) {
+          delete i[options.childrenMapName];
+        }
       }
     };
     inFn(tree, 1, null);
@@ -100,7 +100,9 @@ export class ArrayService {
       const pid = item[options.parentIdMapName];
       childrenOf[id] = childrenOf[id] || [];
       item[options.childrenMapName] = childrenOf[id];
-      if (options.cb) { options.cb(item); }
+      if (options.cb) {
+        options.cb(item);
+      }
       if (pid) {
         childrenOf[pid] = childrenOf[pid] || [];
         childrenOf[pid].push(item);
@@ -166,7 +168,9 @@ export class ArrayService {
       } else {
         item.isLeaf = item[options.isLeafMapName];
       }
-      if (options.cb) { options.cb(item, parent, deep); }
+      if (options.cb) {
+        options.cb(item, parent, deep);
+      }
     });
     return tree.map(node => new NzTreeNode(node));
   }
@@ -217,18 +221,17 @@ export class ArrayService {
       ...options,
     };
     const keys: any[] = [];
-    this.visitTree(
-      tree,
-      (item: NzTreeNode, parent: NzTreeNode, deep: number) => {
-        if (item.isChecked || (options.includeHalfChecked && item.isHalfChecked)) {
-          keys.push(
-            options.cb ?
-              options.cb(item, parent, deep) :
-              options.keyMapName ? item.origin[options.keyMapName] : item.key,
-          );
-        }
-      },
-    );
+    this.visitTree(tree, (item: NzTreeNode, parent: NzTreeNode, deep: number) => {
+      if (item.isChecked || (options.includeHalfChecked && item.isHalfChecked)) {
+        keys.push(
+          options.cb
+            ? options.cb(item, parent, deep)
+            : options.keyMapName
+            ? item.origin[options.keyMapName]
+            : item.key,
+        );
+      }
+    });
     return keys;
   }
 }

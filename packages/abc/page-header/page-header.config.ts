@@ -34,9 +34,9 @@ export class PageHeaderConfig {
   /**
    * 是否固定模式
    */
-  fixed ?= false;
+  fixed?: boolean = false;
   /**
    * 固定偏移值
    */
-  fixedOffsetTop ?= 64;
+  fixedOffsetTop?: number = 64;
 }

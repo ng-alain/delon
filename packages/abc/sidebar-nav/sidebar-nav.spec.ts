@@ -1,24 +1,13 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
-import {
-  fakeAsync,
-  tick,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ACLService } from '@delon/acl';
 import { configureTestSuite } from '@delon/testing';
-import {
-  AlainThemeModule,
-  MenuIcon,
-  MenuService,
-  SettingsService,
-  WINDOW,
-} from '@delon/theme';
+import { AlainThemeModule, MenuIcon, MenuService, SettingsService, WINDOW } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
 import { SidebarNavComponent } from './sidebar-nav.component';
@@ -86,11 +75,7 @@ describe('abc: sidebar-nav', () => {
 
   function createModule() {
     injector = TestBed.configureTestingModule({
-      imports: [
-        RouterModule.forRoot([]),
-        AlainThemeModule,
-        SidebarNavModule,
-      ],
+      imports: [RouterModule.forRoot([]), AlainThemeModule, SidebarNavModule],
       declarations: [TestComponent],
       providers: [
         { provide: ACLService, useClass: MockACLService },
@@ -189,9 +174,7 @@ describe('abc: sidebar-nav', () => {
         const newMenus = [
           {
             text: '',
-            children: [
-              { text: 'new menu', disabled: true },
-            ],
+            children: [{ text: 'new menu', disabled: true }],
           },
         ];
         menuSrv.add(newMenus);
@@ -263,14 +246,10 @@ describe('abc: sidebar-nav', () => {
           page.showSubMenu();
         });
         it('should be displayed full submenu', () => {
-          const clientHeight = spyOnProperty(
-            doc.documentElement,
-            'clientHeight',
-          ).and.returnValue(0);
-          spyOnProperty(
-            doc.querySelector('body'),
-            'clientHeight',
-          ).and.returnValue(0);
+          const clientHeight = spyOnProperty(doc.documentElement, 'clientHeight').and.returnValue(
+            0,
+          );
+          spyOnProperty(doc.querySelector('body'), 'clientHeight').and.returnValue(0);
           expect(clientHeight).not.toHaveBeenCalled();
           page.showSubMenu();
           expect(clientHeight).toHaveBeenCalled();
@@ -290,9 +269,7 @@ describe('abc: sidebar-nav', () => {
           setSrv.layout.collapsed = true;
           fixture.detectChanges();
           page.showSubMenu();
-          page
-            .getEl<HTMLElement>(floatingShowCls, true)
-            .dispatchEvent(new Event('mouseleave'));
+          page.getEl<HTMLElement>(floatingShowCls, true).dispatchEvent(new Event('mouseleave'));
           fixture.detectChanges();
           expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
         });
@@ -322,10 +299,7 @@ describe('abc: sidebar-nav', () => {
       const newMenus = [
         {
           text: '',
-          children: [
-            { text: 'new menu', acl: 'admin' },
-            { text: 'new menu', acl: 'user' },
-          ],
+          children: [{ text: 'new menu', acl: 'admin' }, { text: 'new menu', acl: 'user' }],
         },
       ];
       beforeEach(() => createComp());
@@ -428,9 +402,7 @@ describe('abc: sidebar-nav', () => {
         {
           text: '主导航',
           group: true,
-          children: [
-            { text: 'user', link: '/user' },
-          ],
+          children: [{ text: 'user', link: '/user' }],
         },
       ]);
     }));
@@ -465,8 +437,8 @@ describe('abc: sidebar-nav', () => {
       const el = body
         ? document.querySelector(cls)
         : dl.query(By.css(cls))
-          ? dl.query(By.css(cls)).nativeElement
-          : null;
+        ? dl.query(By.css(cls)).nativeElement
+        : null;
       return el ? (el as T) : null;
     }
     checkText(cls: string, value: any) {
@@ -506,8 +478,14 @@ describe('abc: sidebar-nav', () => {
 
 @Component({
   template: `
-    <sidebar-nav #comp [disabledAcl]="disabledAcl" [autoCloseUnderPad]="autoCloseUnderPad" [recursivePath]="recursivePath" (select)="select()"></sidebar-nav>
-    `,
+    <sidebar-nav
+      #comp
+      [disabledAcl]="disabledAcl"
+      [autoCloseUnderPad]="autoCloseUnderPad"
+      [recursivePath]="recursivePath"
+      (select)="select()"
+    ></sidebar-nav>
+  `,
 })
 class TestComponent {
   @ViewChild('comp')

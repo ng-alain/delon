@@ -5,14 +5,16 @@ describe('util: string', () => {
   describe('#format', () => {
     [
       { s: 'this is ${name}', o: { name: 'asdf' }, r: 'this is asdf' },
-      { s: 'this is ${name}, age: ${age}', o: { name: 'asdf', age: 10 }, r: 'this is asdf, age: 10' },
-    ].forEach(
-      item => {
-        it(item.s, () => {
-          expect(format(item.s, item.o)).toBe(item.r);
-        });
+      {
+        s: 'this is ${name}, age: ${age}',
+        o: { name: 'asdf', age: 10 },
+        r: 'this is asdf, age: 10',
       },
-    );
+    ].forEach(item => {
+      it(item.s, () => {
+        expect(format(item.s, item.o)).toBe(item.r);
+      });
+    });
     it('should allow null string', () => {
       expect(format(null, {})).toBe('');
     });

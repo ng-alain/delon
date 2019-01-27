@@ -81,10 +81,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
   private clearFloatingContainer() {
     if (!this.floatingEl) return;
-    this.floatingEl.removeEventListener(
-      'click',
-      this.floatingAreaClickHandle.bind(this),
-    );
+    this.floatingEl.removeEventListener('click', this.floatingAreaClickHandle.bind(this));
     // fix ie: https://github.com/ng-alain/delon/issues/52
     if (this.floatingEl.hasOwnProperty('remove')) {
       this.floatingEl.remove();
@@ -97,19 +94,13 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.clearFloatingContainer();
     this.floatingEl = this.render.createElement('div');
     this.floatingEl.classList.add(FLOATINGCLS + '-container');
-    this.floatingEl.addEventListener(
-      'click',
-      this.floatingAreaClickHandle.bind(this),
-      false,
-    );
+    this.floatingEl.addEventListener('click', this.floatingAreaClickHandle.bind(this), false);
     this.bodyEl.appendChild(this.floatingEl);
   }
 
   private genSubNode(linkNode: HTMLLinkElement, item: Nav): HTMLUListElement {
     const id = `_sidebar-nav-${item.__id}`;
-    const node = linkNode.nextElementSibling.cloneNode(
-      true,
-    ) as HTMLUListElement;
+    const node = linkNode.nextElementSibling.cloneNode(true) as HTMLUListElement;
     node.id = id;
     node.classList.add(FLOATINGCLS);
     node.addEventListener(
@@ -135,14 +126,8 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   private calPos(linkNode: HTMLLinkElement, node: HTMLUListElement) {
     const rect = linkNode.getBoundingClientRect();
     // bug: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/14721015/
-    const scrollTop = Math.max(
-      this.doc.documentElement.scrollTop,
-      this.bodyEl.scrollTop,
-    );
-    const docHeight = Math.max(
-      this.doc.documentElement.clientHeight,
-      this.bodyEl.clientHeight,
-    );
+    const scrollTop = Math.max(this.doc.documentElement.scrollTop, this.bodyEl.scrollTop);
+    const docHeight = Math.max(this.doc.documentElement.clientHeight, this.bodyEl.clientHeight);
     let offsetHeight = 0;
     if (docHeight < rect.top + node.clientHeight) {
       offsetHeight = rect.top + node.clientHeight - docHeight;
@@ -166,7 +151,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
   to(item: Menu) {
     this.select.emit(item);
-    if (item.disabled) return ;
+    if (item.disabled) return;
 
     if (item.externalLink) {
       if (item.target === '_blank') {

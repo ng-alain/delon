@@ -69,7 +69,7 @@ export abstract class FormProperty {
 
   get root(): PropertyGroup {
     // tslint:disable-next-line:no-any
-    return this._root || (this as any) as PropertyGroup;
+    return this._root || ((this as any) as PropertyGroup);
   }
 
   get path(): string {
@@ -122,11 +122,7 @@ export abstract class FormProperty {
    * @param [onlySelf=false] 是否包含上级字段
    * @param [emitValueEvent=true] 是否触发值变更通知
    */
-  updateValueAndValidity(
-    onlySelf = false,
-    emitValueEvent = true,
-    emitValidator = true,
-  ) {
+  updateValueAndValidity(onlySelf = false, emitValueEvent = true, emitValidator = true) {
     this._updateValue();
 
     if (emitValueEvent) {
@@ -221,9 +217,7 @@ export abstract class FormProperty {
     if (hasCustomError) {
       list.forEach((err, idx: number) => {
         if (!err.message)
-          throw new Error(
-            `自定义校验器必须至少返回一个 'message' 属性，用于表示错误文本`,
-          );
+          throw new Error(`自定义校验器必须至少返回一个 'message' 属性，用于表示错误文本`);
         err._custom = true;
       });
     }
@@ -248,12 +242,9 @@ export abstract class FormProperty {
         let message =
           err._custom === true && err.message
             ? err.message
-            : (this.ui.errors || {})[err.keyword] ||
-            this.options.errors[err.keyword] ||
-            ``;
+            : (this.ui.errors || {})[err.keyword] || this.options.errors[err.keyword] || ``;
 
-        if (message && typeof message === 'function')
-          message = message(err) as string;
+        if (message && typeof message === 'function') message = message(err) as string;
 
         if (message) {
           if (~(message as string).indexOf('{')) {
@@ -320,15 +311,13 @@ export abstract class FormProperty {
               }),
             );
             const visibilityCheck = property._visibilityChanges;
-            const and = combineLatest(
-              valueCheck, visibilityCheck,
-            ).pipe(map(results => results[0] && results[1]));
+            const and = combineLatest(valueCheck, visibilityCheck).pipe(
+              map(results => results[0] && results[1]),
+            );
             propertiesBinding.push(and);
           } else {
             console.warn(
-              `Can't find property ${dependencyPath} for visibility check of ${
-              this.path
-              }`,
+              `Can't find property ${dependencyPath} for visibility check of ${this.path}`,
             );
           }
         }
@@ -354,11 +343,7 @@ export abstract class PropertyGroup extends FormProperty {
     const propertyId = subPathIdx !== -1 ? path.substr(0, subPathIdx) : path;
 
     let property = this.properties[propertyId];
-    if (
-      property !== null &&
-      subPathIdx !== -1 &&
-      property instanceof PropertyGroup
-    ) {
+    if (property !== null && subPathIdx !== -1 && property instanceof PropertyGroup) {
       const subPath = path.substr(subPathIdx + 1);
       property = (property as PropertyGroup).getProperty(subPath);
     }

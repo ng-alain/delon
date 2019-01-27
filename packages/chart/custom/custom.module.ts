@@ -11,4 +11,4 @@ const COMPONENTS = [G2CustomComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2CustomModule { }
+export class G2CustomModule {}

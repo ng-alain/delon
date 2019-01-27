@@ -1,0 +1,45 @@
+<sf-item-wrap [id]="id"
+              [schema]="schema"
+              [ui]="ui"
+              [showError]="showError"
+              [error]="error"
+              [showTitle]="schema.title">
+  <nz-mention #mentions
+              [nzSuggestions]="data"
+              [nzValueWith]="i.valueWith"
+              [nzLoading]="loading"
+              [nzNotFoundContent]="i.notFoundContent"
+              [nzPlacement]="i.placement"
+              [nzPrefix]="i.prefix"
+              (nzOnSelect)="_select($event)"
+              (nzOnSearchChange)="_search($event)">
+    <ng-container *ngIf="ui.inputStyle !== 'textarea'">
+      <input nzMentionTrigger
+             nz-input
+             [attr.id]="id"
+             [disabled]="disabled"
+             [attr.disabled]="disabled"
+             [nzSize]="ui.size"
+             [ngModel]="value"
+             (ngModelChange)="setValue($event)"
+             [attr.maxLength]="schema.maxLength || null"
+             [attr.placeholder]="ui.placeholder"
+             autocomplete="off" />
+    </ng-container>
+
+    <ng-container *ngIf="ui.inputStyle === 'textarea'">
+      <textarea nzMentionTrigger
+                nz-input
+                [attr.id]="id"
+                [disabled]="disabled"
+                [attr.disabled]="disabled"
+                [nzSize]="ui.size"
+                [ngModel]="value"
+                (ngModelChange)="setValue($event)"
+                [attr.maxLength]="schema.maxLength || null"
+                [attr.placeholder]="ui.placeholder"
+                [nzAutosize]="i.autosize">
+        </textarea>
+    </ng-container>
+  </nz-mention>
+</sf-item-wrap>

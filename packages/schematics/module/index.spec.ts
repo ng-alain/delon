@@ -54,17 +54,25 @@ describe('NgAlainSchematic: module', () => {
   it('should import into another module (deep)', () => {
     let tree = appTree;
 
-    tree = schematicRunner.runSchematic('module', {
-      ...defaultOptions,
-      path: 'projects/bar/src/app/sub1',
-      name: 'test1',
-    }, tree);
-    tree = schematicRunner.runSchematic('module', {
-      ...defaultOptions,
-      path: 'projects/bar/src/app/sub2',
-      name: 'test2',
-      module: '../sub1/test1',
-    }, tree);
+    tree = schematicRunner.runSchematic(
+      'module',
+      {
+        ...defaultOptions,
+        path: 'projects/bar/src/app/sub1',
+        name: 'test1',
+      },
+      tree,
+    );
+    tree = schematicRunner.runSchematic(
+      'module',
+      {
+        ...defaultOptions,
+        path: 'projects/bar/src/app/sub2',
+        name: 'test2',
+        module: '../sub1/test1',
+      },
+      tree,
+    );
 
     const content = tree.readContent('/projects/bar/src/app/sub1/test1/test1.module.ts');
     expect(content).toMatch(/import { Test2Module } from '..\/..\/sub2\/test2\/test2.module'/);
@@ -76,10 +84,14 @@ describe('NgAlainSchematic: module', () => {
     const tree = schematicRunner.runSchematic('module', options, appTree);
     const files = tree.files;
     expect(files.indexOf('/projects/bar/src/app/foo/foo.module.ts')).toBeGreaterThanOrEqual(0);
-    expect(files.indexOf('/projects/bar/src/app/foo/foo-routing.module.ts')).toBeGreaterThanOrEqual(0);
+    expect(files.indexOf('/projects/bar/src/app/foo/foo-routing.module.ts')).toBeGreaterThanOrEqual(
+      0,
+    );
     const moduleContent = tree.readContent('/projects/bar/src/app/foo/foo.module.ts');
     expect(moduleContent).toMatch(/import { FooRoutingModule } from '.\/foo-routing.module'/);
-    const routingModuleContent = tree.readContent('/projects/bar/src/app/foo/foo-routing.module.ts');
+    const routingModuleContent = tree.readContent(
+      '/projects/bar/src/app/foo/foo-routing.module.ts',
+    );
     expect(routingModuleContent).toMatch(/RouterModule.forChild\(routes\)/);
   });
 
@@ -97,7 +109,8 @@ describe('NgAlainSchematic: module', () => {
 
     const tree = schematicRunner.runSchematic('module', options, appTree);
     const files = tree.files;
-    expect(files.indexOf('/projects/bar/src/app/two-word/two-word.module.ts'))
-      .toBeGreaterThanOrEqual(0);
+    expect(
+      files.indexOf('/projects/bar/src/app/two-word/two-word.module.ts'),
+    ).toBeGreaterThanOrEqual(0);
   });
 });

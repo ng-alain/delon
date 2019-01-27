@@ -6,44 +6,7 @@ import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-cascader',
-  template: `
-    <sf-item-wrap
-      [id]="id"
-      [schema]="schema"
-      [ui]="ui"
-      [showError]="showError"
-      [error]="error"
-      [showTitle]="schema.title"
-    >
-      <nz-cascader
-        [nzDisabled]="disabled"
-        [nzSize]="ui.size"
-        [ngModel]="value"
-        (ngModelChange)="_change($event)"
-        [nzOptions]="data"
-        [nzAllowClear]="ui.allowClear"
-        [nzAutoFocus]="ui.autoFocus"
-        [nzChangeOn]="ui.changeOn"
-        [nzChangeOnSelect]="ui.changeOnSelect"
-        [nzColumnClassName]="ui.columnClassName"
-        [nzExpandTrigger]="ui.expandTrigger"
-        [nzMenuClassName]="ui.menuClassName"
-        [nzMenuStyle]="ui.menuStyle"
-        [nzLabelProperty]="ui.labelProperty || 'label'"
-        [nzValueProperty]="ui.valueProperty || 'value'"
-        [nzLoadData]="loadData"
-        [nzPlaceHolder]="ui.placeholder"
-        [nzShowArrow]="showArrow"
-        [nzShowInput]="showInput"
-        [nzShowSearch]="ui.showSearch"
-        (nzClear)="_clear($event)"
-        (nzVisibleChange)="_visibleChange($event)"
-        (nzSelect)="_select($event)"
-        (nzSelectionChange)="_selectionChange($event)"
-      >
-      </nz-cascader>
-    </sf-item-wrap>
-  `,
+  templateUrl: './cascader.widget.html',
 })
 export class CascaderWidget extends ControlWidget implements OnInit {
   clearText: string;

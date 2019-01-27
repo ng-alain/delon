@@ -12,4 +12,4 @@ const COMPONENTS = [G2PieComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2PieModule { }
+export class G2PieModule {}

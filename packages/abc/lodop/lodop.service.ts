@@ -72,15 +72,13 @@ export class LodopService implements OnDestroy {
       }
     };
 
-    this.scriptSrv.loadScript(url).then((res) => {
+    this.scriptSrv.loadScript(url).then(res => {
       if (res.status !== 'ok') {
         this.pending = false;
         onResolve('script-load-error', res[0]);
         return;
       }
-      this._lodop =
-        window.hasOwnProperty(this.cog.name) &&
-        (window[this.cog.name] as Lodop);
+      this._lodop = window.hasOwnProperty(this.cog.name) && (window[this.cog.name] as Lodop);
       if (this._lodop === null) {
         onResolve('load-variable-name-error', { name: this.cog.name });
         return;
@@ -145,15 +143,12 @@ export class LodopService implements OnDestroy {
         try {
           const fakeFn = new Function(`return [${res[2]}]`);
           arr = fakeFn();
-        } catch { }
+        } catch {}
 
         if (Array.isArray(arr) && contextObj) {
           for (let i = 0; i < arr.length; i++) {
             if (typeof arr[i] === 'string') {
-              arr[i] = arr[i].replace(
-                /{{(.*?)}}/g,
-                (match, key) => contextObj[key.trim()] || '',
-              );
+              arr[i] = arr[i].replace(/{{(.*?)}}/g, (match, key) => contextObj[key.trim()] || '');
             }
           }
         }

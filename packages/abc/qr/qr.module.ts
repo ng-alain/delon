@@ -11,4 +11,4 @@ const COMPONENTS = [QRComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class QRModule { }
+export class QRModule {}

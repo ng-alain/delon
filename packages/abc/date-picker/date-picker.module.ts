@@ -12,5 +12,4 @@ const COMPONENTS = [RangePickerComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class DatePickerModule {
-}
+export class DatePickerModule {}

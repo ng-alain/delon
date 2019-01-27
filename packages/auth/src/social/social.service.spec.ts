@@ -1,22 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Injector } from '@angular/core';
-import {
-  discardPeriodicTasks,
-  fakeAsync,
-  tick,
-  TestBed,
-} from '@angular/core/testing';
+import { discardPeriodicTasks, fakeAsync, tick, TestBed } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { DOCUMENT } from '@angular/common';
 import { DelonAuthConfig } from '../auth.config';
 import { DelonAuthModule } from '../auth.module';
-import {
-  DA_SERVICE_TOKEN,
-  ITokenModel,
-  ITokenService,
-} from '../token/interface';
+import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../token/interface';
 import { SimpleTokenModel } from '../token/simple/simple.model';
 import { SocialService } from './social.service';
 
@@ -60,11 +51,7 @@ describe('auth: social.service', () => {
 
   function genModule(options: DelonAuthConfig, tokenData?: SimpleTokenModel) {
     injector = TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([]),
-        DelonAuthModule,
-      ],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
         SocialService,
         { provide: DelonAuthConfig, useValue: options },
@@ -95,53 +82,46 @@ describe('auth: social.service', () => {
         }
       });
 
-      it(
-        `${item.type} via window`,
-        fakeAsync(() => {
-          spyOn(window, 'open').and.callFake(() => {
-            injector.get(DA_SERVICE_TOKEN).set(item.model);
-            return { closed: true };
-          });
-          srv.login(item.url).subscribe(res => { });
-          tick(130);
-          expect(window.open).toHaveBeenCalled();
-          const token = injector.get(DA_SERVICE_TOKEN).get();
-          // tslint:disable-next-line:forin
-          for (const key in item.be) {
-            expect(token[key]).toContain(item.be[key]);
-          }
-          discardPeriodicTasks();
-        }),
-      );
-    });
-
-    it(
-      `should be return null model if set a null in window`,
-      fakeAsync(() => {
+      it(`${item.type} via window`, fakeAsync(() => {
         spyOn(window, 'open').and.callFake(() => {
-          injector.get(DA_SERVICE_TOKEN).set(null);
+          injector.get(DA_SERVICE_TOKEN).set(item.model);
           return { closed: true };
         });
-        srv.login(MockAuth0.url).subscribe(res => { });
+        srv.login(item.url).subscribe(res => {});
         tick(130);
         expect(window.open).toHaveBeenCalled();
+        const token = injector.get(DA_SERVICE_TOKEN).get();
+        // tslint:disable-next-line:forin
+        for (const key in item.be) {
+          expect(token[key]).toContain(item.be[key]);
+        }
         discardPeriodicTasks();
-      }),
-    );
+      }));
+    });
+
+    it(`should be return null model if set a null in window`, fakeAsync(() => {
+      spyOn(window, 'open').and.callFake(() => {
+        injector.get(DA_SERVICE_TOKEN).set(null);
+        return { closed: true };
+      });
+      srv.login(MockAuth0.url).subscribe(res => {});
+      tick(130);
+      expect(window.open).toHaveBeenCalled();
+      discardPeriodicTasks();
+    }));
 
     it('can\'t get model until closed', fakeAsync(() => {
-        spyOn(srv, 'ngOnDestroy');
-        spyOn(window, 'open').and.callFake(() => {
-          injector.get(DA_SERVICE_TOKEN).set(null);
-          return { closed: false };
-        });
-        srv.login(MockAuth0.url).subscribe(res => { });
-        tick(130);
-        expect(window.open).toHaveBeenCalled();
-        expect(srv.ngOnDestroy).not.toHaveBeenCalled();
-        discardPeriodicTasks();
-      }),
-    );
+      spyOn(srv, 'ngOnDestroy');
+      spyOn(window, 'open').and.callFake(() => {
+        injector.get(DA_SERVICE_TOKEN).set(null);
+        return { closed: false };
+      });
+      srv.login(MockAuth0.url).subscribe(res => {});
+      tick(130);
+      expect(window.open).toHaveBeenCalled();
+      expect(srv.ngOnDestroy).not.toHaveBeenCalled();
+      discardPeriodicTasks();
+    }));
   });
 
   describe('#callback', () => {
@@ -156,8 +136,7 @@ describe('auth: social.service', () => {
     [
       {
         summary: 'swt via url',
-        url:
-          'http://localhost:4200/login/callback?token=40SOJV-L8oOwwUIs&name=cipchk&uid=1',
+        url: 'http://localhost:4200/login/callback?token=40SOJV-L8oOwwUIs&name=cipchk&uid=1',
         be: { token: '40SOJV-L8oOwwUIs', name: 'cipchk', uid: '1' },
       },
       {

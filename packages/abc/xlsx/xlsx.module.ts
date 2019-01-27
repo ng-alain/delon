@@ -11,4 +11,4 @@ const COMPONENTS = [XlsxDirective];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class XlsxModule { }
+export class XlsxModule {}

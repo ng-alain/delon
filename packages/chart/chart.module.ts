@@ -39,4 +39,4 @@ const MODULES = [
 // #endregion
 
 @NgModule({ exports: MODULES })
-export class DelonChartModule { }
+export class DelonChartModule {}

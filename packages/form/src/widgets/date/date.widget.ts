@@ -37,7 +37,11 @@ export class DateWidget extends ControlWidget implements OnInit {
     } else {
       this.displayFormat = ui.displayFormat;
     }
-    this.format = ui.format ? ui.format : this.schema.type === 'number' ? 'x' : 'YYYY-MM-DD HH:mm:ss';
+    this.format = ui.format
+      ? ui.format
+      : this.schema.type === 'number'
+      ? 'x'
+      : 'YYYY-MM-DD HH:mm:ss';
     // 公共API
     this.i = {
       allowClear: toBool(ui.allowClear, true),
@@ -68,7 +72,9 @@ export class DateWidget extends ControlWidget implements OnInit {
       return;
     }
 
-    const res = Array.isArray(value) ? value.map(d => format(d, this.format)) : format(value, this.format);
+    const res = Array.isArray(value)
+      ? value.map(d => format(d, this.format))
+      : format(value, this.format);
 
     if (this.flatRange) {
       this.setEnd(res[1]);

@@ -15,11 +15,12 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'g2,g2-custom',
-  template: `<ng-content></ng-content>`,
+  template: `
+    <ng-content></ng-content>
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2CustomComponent implements AfterViewInit, OnDestroy {
-
   private resize$: Subscription = null;
 
   // #region fields
@@ -32,7 +33,7 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
 
   // #endregion
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef) {}
 
   private renderChart() {
     this.el.nativeElement.innerHTML = '';

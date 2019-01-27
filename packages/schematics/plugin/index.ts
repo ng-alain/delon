@@ -26,7 +26,7 @@ function installPackages() {
   };
 }
 
-export default function (options: PluginSchema): Rule {
+export default function(options: PluginSchema): Rule {
   return (host: Tree, context: SchematicContext) => {
     const project = getProject(host, options.project);
     const pluginOptions: PluginOptions = {
@@ -41,41 +41,26 @@ export default function (options: PluginSchema): Rule {
     const rules: Rule[] = [];
     switch (options.name) {
       case 'g2':
-        rules.push(
-          pluginG2(pluginOptions),
-          installPackages(),
-        );
+        rules.push(pluginG2(pluginOptions), installPackages());
         break;
       case 'codeStyle':
-        rules.push(
-          pluginCodeStyle(pluginOptions),
-          installPackages(),
-        );
+        rules.push(pluginCodeStyle(pluginOptions), installPackages());
         break;
       case 'networkEnv':
-        rules.push(
-          pluginNetworkEnv(
-            { ...pluginOptions, packageManager: options.packageManager },
-          ),
-        );
+        rules.push(pluginNetworkEnv({ ...pluginOptions, packageManager: options.packageManager }));
         break;
       case 'hmr':
-        rules.push(
-          pluginHmr(pluginOptions),
-          installPackages(),
-        );
+        rules.push(pluginHmr(pluginOptions), installPackages());
         break;
       case 'docker':
         rules.push(pluginDocker(pluginOptions));
         break;
       case 'defaultLanguage':
         rules.push(
-          pluginDefaultLanguage(
-            {
-              ...pluginOptions,
-              defaultLanguage: options.defaultLanguage,
-            },
-          ),
+          pluginDefaultLanguage({
+            ...pluginOptions,
+            defaultLanguage: options.defaultLanguage,
+          }),
         );
         break;
       case 'icon':
@@ -85,9 +70,7 @@ export default function (options: PluginSchema): Rule {
         rules.push(pluginAsdf(pluginOptions));
         break;
       default:
-        throw new SchematicsException(
-          `Could not find plugin name: ${options.name}`,
-        );
+        throw new SchematicsException(`Could not find plugin name: ${options.name}`);
     }
 
     return chain(rules)(host, context);

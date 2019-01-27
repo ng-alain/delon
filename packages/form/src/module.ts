@@ -9,10 +9,7 @@ import { SFFixedDirective } from './sf-fixed.directive';
 import { SFItemWrapComponent } from './sf-item-wrap.component';
 import { SFItemComponent } from './sf-item.component';
 import { SFComponent } from './sf.component';
-import {
-  AjvSchemaValidatorFactory,
-  SchemaValidatorFactory,
-} from './validator.factory';
+import { AjvSchemaValidatorFactory, SchemaValidatorFactory } from './validator.factory';
 import { SFTemplateDirective } from './widgets/custom/sf-template.directive';
 
 const COMPONENTS = [

@@ -48,7 +48,7 @@
       "default": true,
       "visible": false
     },
-    "module":  {
+    "module": {
       "type": "string",
       "description": "Allows specification of the declaring module.",
       "alias": "m"

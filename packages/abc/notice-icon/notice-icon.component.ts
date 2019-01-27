@@ -36,7 +36,7 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();
 
-  constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) { }
+  constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
 
   onVisibleChange(result: boolean) {
     this.popoverVisibleChange.emit(result);

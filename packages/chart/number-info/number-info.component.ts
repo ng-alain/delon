@@ -32,7 +32,7 @@ export class NumberInfoComponent implements OnChanges {
   /** 设置数字和描述直接的间距（像素） */
   @Input() @InputNumber() gap = 8;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) { }
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   setClass() {
     const { el, renderer, theme } = this;

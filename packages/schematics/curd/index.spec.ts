@@ -1,6 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainAndModuleApp } from '../utils/testing';
-import { Schema as NgAddOptions } from './schema';
 
 describe('Schematic: curd', () => {
   let runner: SchematicTestRunner;

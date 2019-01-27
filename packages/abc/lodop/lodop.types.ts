@@ -156,10 +156,7 @@ export interface Lodop extends CLodop {
   ADD_PRINT_DATA(strDataStyle: string, varDataValue: any): void;
 
   /** 设置打印项风格 */
-  SET_PRINT_STYLE(
-    strStyleName: LodopStyleValue,
-    varStyleValue: number | string,
-  ): void;
+  SET_PRINT_STYLE(strStyleName: LodopStyleValue, varStyleValue: number | string): void;
 
   /** 打印预览 */
   PREVIEW(): number;
@@ -198,10 +195,7 @@ export interface Lodop extends CLodop {
   SET_SHOW_MODE(strModeType: string, varModeValue: number | string): boolean;
 
   /** 设置打印模式 */
-  SET_PRINT_MODE(
-    strModeType: string,
-    varModeValue: number | string,
-  ): boolean | string;
+  SET_PRINT_MODE(strModeType: string, varModeValue: number | string): boolean | string;
 
   /** 设置打印份数 */
   SET_PRINT_COPIES(intCopies: number): boolean;
@@ -235,11 +229,7 @@ export interface Lodop extends CLodop {
   GET_PAGESIZES_LIST(oPrinterName: number | string, strSplit: string): string;
 
   /** 写本地文件内容 */
-  WRITE_FILE_TEXT(
-    intWriteMode: number | string,
-    strFileName: string,
-    strText: string,
-  ): string;
+  WRITE_FILE_TEXT(intWriteMode: number | string, strFileName: string, strText: string): string;
 
   /** 读本地文件内容 */
   GET_FILE_TEXT(strFileName: string): string | null;

@@ -12,4 +12,4 @@ const COMPONENTS = [ResultComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class ResultModule { }
+export class ResultModule {}

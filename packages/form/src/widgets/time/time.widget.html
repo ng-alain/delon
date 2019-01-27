@@ -1,0 +1,26 @@
+<sf-item-wrap [id]="id"
+              [schema]="schema"
+              [ui]="ui"
+              [showError]="showError"
+              [error]="error"
+              [showTitle]="schema.title">
+
+  <nz-time-picker [(ngModel)]="displayValue"
+                  (ngModelChange)="_change($event)"
+                  [nzDisabled]="disabled"
+                  [nzSize]="ui.size"
+                  [nzFormat]="i.displayFormat"
+                  [nzAllowEmpty]="i.allowEmpty"
+                  [nzClearText]="i.clearText"
+                  [nzDefaultOpenValue]="i.defaultOpenValue"
+                  [nzDisabledHours]="ui.disabledHours"
+                  [nzDisabledMinutes]="ui.disabledMinutes"
+                  [nzDisabledSeconds]="ui.disabledSeconds"
+                  [nzHideDisabledOptions]="i.hideDisabledOptions"
+                  [nzHourStep]="i.hourStep"
+                  [nzMinuteStep]="i.minuteStep"
+                  [nzSecondStep]="i.secondStep"
+                  [nzPopupClassName]="ui.popupClassName">
+  </nz-time-picker>
+
+</sf-item-wrap>

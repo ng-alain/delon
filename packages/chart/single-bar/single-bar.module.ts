@@ -11,4 +11,4 @@ const COMPONENTS = [G2SingleBarComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2SingleBarModule { }
+export class G2SingleBarModule {}

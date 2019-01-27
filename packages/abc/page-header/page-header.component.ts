@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { NzAffixComponent } from 'ng-zorro-antd';
-import { merge, Observable, Subject } from 'rxjs';
+import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';

@@ -1,6 +1,18 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import {
+  HttpClient,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+  TestRequest,
+} from '@angular/common/http/testing';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -13,10 +25,7 @@ import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './in
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
 
-function genModel<T extends ITokenModel>(
-  modelType: { new(): T },
-  token: string = `123`,
-) {
+function genModel<T extends ITokenModel>(modelType: { new (): T }, token: string = `123`) {
   const model = new modelType();
   model.token = token;
   model.uid = 1;
@@ -72,17 +81,9 @@ describe('auth: base.interceptor', () => {
     },
   };
 
-  function genModule(
-    options: DelonAuthConfig,
-    tokenData?: ITokenModel,
-    provider: any[] = [],
-  ) {
+  function genModule(options: DelonAuthConfig, tokenData?: ITokenModel, provider: any[] = []) {
     injector = TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([]),
-        DelonAuthModule,
-      ],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
         { provide: DOCUMENT, useValue: MockDoc },
         { provide: DelonAuthConfig, useValue: options },
@@ -126,14 +127,21 @@ describe('auth: base.interceptor', () => {
     describe('#with allow_anonymous_key', () => {
       it(`in params`, (done: () => void) => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http.get('/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(done);
+        http
+          .get('/user', { responseType: 'text', params: { _allow_anonymous: '' } })
+          .subscribe(done);
         const ret = httpBed.expectOne(() => true);
         expect(ret.request.headers.get('Authorization')).toBeNull();
         ret.flush('ok!');
       });
       it(`in params (full url)`, (done: () => void) => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http.get('https://ng-alain.com/api/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(done);
+        http
+          .get('https://ng-alain.com/api/user', {
+            responseType: 'text',
+            params: { _allow_anonymous: '' },
+          })
+          .subscribe(done);
         const ret = httpBed.expectOne(() => true);
         expect(ret.request.headers.get('Authorization')).toBeNull();
         ret.flush('ok!');
@@ -147,7 +155,9 @@ describe('auth: base.interceptor', () => {
       });
       it(`in url (full url)`, (done: () => void) => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http.get('https://ng-alain.com/api/user?_allow_anonymous=1', { responseType: 'text' }).subscribe(done);
+        http
+          .get('https://ng-alain.com/api/user?_allow_anonymous=1', { responseType: 'text' })
+          .subscribe(done);
         const ret = httpBed.expectOne(() => true);
         expect(ret.request.headers.get('Authorization')).toBeNull();
         ret.flush('ok!');
@@ -228,16 +238,12 @@ describe('auth: base.interceptor', () => {
 
   describe('[executeOtherInterceptors]', () => {
     beforeEach(() => {
-      genModule(
-        { executeOtherInterceptors: true },
-        genModel(SimpleTokenModel, null),
-        [
-          { provide: HTTP_INTERCEPTORS, useClass: OtherInterceptor, multi: true },
-        ],
-      );
+      genModule({ executeOtherInterceptors: true }, genModel(SimpleTokenModel, null), [
+        { provide: HTTP_INTERCEPTORS, useClass: OtherInterceptor, multi: true },
+      ]);
     });
 
-    it('shoul working', (done) => {
+    it('shoul working', done => {
       otherRes = new HttpResponse({ body: { a: 1 } });
       const url = '/to-test';
       http.get(url, { responseType: 'text' }).subscribe(
@@ -245,7 +251,7 @@ describe('auth: base.interceptor', () => {
           expect(false).toBe(true);
           done();
         },
-        (err) => {
+        err => {
           expect(err.body.a).toBe(1);
           done();
         },

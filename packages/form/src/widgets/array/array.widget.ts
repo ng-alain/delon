@@ -25,8 +25,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.ui.grid && this.ui.grid.arraySpan)
-      this.arraySpan = this.ui.grid.arraySpan;
+    if (this.ui.grid && this.ui.grid.arraySpan) this.arraySpan = this.ui.grid.arraySpan;
 
     this.addTitle = this.ui.addTitle || this.l.addText;
     this.addType = this.ui.addType || 'dashed';

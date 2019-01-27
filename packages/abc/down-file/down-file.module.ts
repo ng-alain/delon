@@ -11,5 +11,4 @@ const DIRECTIVES = [DownFileDirective];
   declarations: [...DIRECTIVES],
   exports: [...DIRECTIVES],
 })
-export class DownFileModule {
-}
+export class DownFileModule {}

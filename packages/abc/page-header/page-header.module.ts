@@ -13,4 +13,4 @@ const COMPONENTS = [PageHeaderComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class PageHeaderModule { }
+export class PageHeaderModule {}

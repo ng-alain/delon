@@ -1,9 +1,4 @@
-import {
-  Rule,
-  SchematicsException,
-  SchematicContext,
-  Tree,
-} from '@angular-devkit/schematics';
+import { Rule, SchematicsException, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { PluginOptions } from './interface';
 
 const CONFIG = {
@@ -27,9 +22,7 @@ export function pluginNetworkEnv(options: PluginOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     const item = CONFIG[options.packageManager || ''];
     if (item == null) {
-      throw new SchematicsException(
-        `Must be specified the "packageManager" parameter`,
-      );
+      throw new SchematicsException(`Must be specified the "packageManager" parameter`);
     }
     if (host.exists(item.path)) {
       host.delete(item.path);

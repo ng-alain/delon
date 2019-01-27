@@ -3,7 +3,6 @@ import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
 import { CheckboxWidget } from './checkbox.widget';
 
 describe('form: widget: checkbox', () => {

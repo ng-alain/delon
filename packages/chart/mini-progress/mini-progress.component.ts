@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+} from '@angular/core';
 import { DelonLocaleService } from '@delon/theme';
 import { toNumber, InputNumber } from '@delon/util';
 
@@ -9,13 +15,12 @@ import { toNumber, InputNumber } from '@delon/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2MiniProgressComponent implements OnChanges {
-
   @Input() color = '#1890FF';
   @Input() @InputNumber() target: number;
   @Input() @InputNumber() percent: number;
   @Input() @InputNumber() strokeWidth: number;
 
-  constructor(public i18n: DelonLocaleService, private cdr: ChangeDetectorRef) { }
+  constructor(public i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
 
   private fixNum(value: number) {
     return Math.min(Math.max(toNumber(value), 0), 100);

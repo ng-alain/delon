@@ -47,7 +47,7 @@ export interface ReuseTabCached {
   closable?: boolean;
 
   /** 当前滚动条位置 */
-  position?: [ number, number ];
+  position?: [number, number];
 
   _snapshot: ActivatedRouteSnapshot;
 

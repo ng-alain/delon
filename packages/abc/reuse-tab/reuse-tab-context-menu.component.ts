@@ -43,7 +43,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
     return this.event.ctrlKey;
   }
 
-  constructor(private i18nSrv: DelonLocaleService) { }
+  constructor(private i18nSrv: DelonLocaleService) {}
 
   private notify(type: CloseType) {
     this.close.next({
@@ -64,7 +64,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
     if (type === 'closeRight' && this.item.last) return;
 
     if (custom) {
-      if (this.isDisabled(custom)) return ;
+      if (this.isDisabled(custom)) return;
       custom.fn(this.item, custom);
     }
     this.notify(type);

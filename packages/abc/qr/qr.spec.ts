@@ -68,18 +68,20 @@ describe('abc: qr', () => {
 
 @Component({
   template: `
-  <qr #comp
-    [value]="value"
-    [background]="background"
-    [backgroundAlpha]="backgroundAlpha"
-    [foreground]="foreground"
-    [foregroundAlpha]="foregroundAlpha"
-    [level]="level"
-    [mime]="mime"
-    [padding]="padding"
-    [size]="size"
-    (change)="change($event)"></qr>
-    `,
+    <qr
+      #comp
+      [value]="value"
+      [background]="background"
+      [backgroundAlpha]="backgroundAlpha"
+      [foreground]="foreground"
+      [foregroundAlpha]="foregroundAlpha"
+      [level]="level"
+      [mime]="mime"
+      [padding]="padding"
+      [size]="size"
+      (change)="change($event)"
+    ></qr>
+  `,
 })
 class TestComponent {
   @ViewChild('comp')

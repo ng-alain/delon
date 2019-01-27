@@ -138,11 +138,11 @@ export interface SFDataSchema {
 /** 指定如何渲染 `Schema` */
 export interface SFUISchemaItem
   extends SFRenderSchema,
-  SFArraySchema,
-  SFHorizontalLayoutSchema,
-  SFDataSchema,
-  SFInputSchema,
-  ErrorSchema {
+    SFArraySchema,
+    SFHorizontalLayoutSchema,
+    SFDataSchema,
+    SFInputSchema,
+    ErrorSchema {
   [key: string]: any;
 
   /** 是否开启调试模式，在数据变更、校验会打印出相信信息，不建议在生产环境中使用 */

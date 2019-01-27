@@ -60,27 +60,29 @@ describe('abc: count-down', () => {
 @Component({
   template: `
     <div *ngIf="config">
-        <count-down
-            [config]="config"
-            (begin)="begin()"
-            (end)="end()"
-            (notify)="notify($event)" style="font-size: 20px"></count-down>
+      <count-down
+        [config]="config"
+        (begin)="begin()"
+        (end)="end()"
+        (notify)="notify($event)"
+        style="font-size: 20px"
+      ></count-down>
     </div>
     <div *ngIf="target">
-        <count-down
-            [target]="target"
-            (begin)="begin()"
-            (end)="end()"
-            (notify)="notify($event)" style="font-size: 20px"></count-down>
-    </div>`,
+      <count-down
+        [target]="target"
+        (begin)="begin()"
+        (end)="end()"
+        (notify)="notify($event)"
+        style="font-size: 20px"
+      ></count-down>
+    </div>
+  `,
 })
 class TestComponent {
   config: any;
   target: number | Date;
-  notify(val: number) {
-  }
-  begin() {
-  }
-  end() {
-  }
+  notify(val: number) {}
+  begin() {}
+  end() {}
 }

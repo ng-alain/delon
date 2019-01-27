@@ -45,7 +45,8 @@ describe('mock: service', () => {
     beforeEach(() =>
       genModule({
         data: DATA,
-      }));
+      }),
+    );
 
     afterEach(() => srv.ngOnDestroy());
 

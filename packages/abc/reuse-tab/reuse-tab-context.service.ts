@@ -1,8 +1,4 @@
-import {
-  ConnectionPositionPair,
-  Overlay,
-  OverlayRef,
-} from '@angular/cdk/overlay';
+import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ElementRef, Injectable } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
@@ -22,7 +18,7 @@ export class ReuseTabContextService {
   show: Subject<ReuseContextEvent> = new Subject<ReuseContextEvent>();
   close: Subject<ReuseContextCloseEvent> = new Subject<ReuseContextCloseEvent>();
 
-  constructor(private overlay: Overlay) { }
+  constructor(private overlay: Overlay) {}
 
   remove() {
     if (!this.ref) return;
@@ -63,9 +59,7 @@ export class ReuseTabContextService {
       panelClass: 'reuse-tab__cm',
       scrollStrategy: this.overlay.scrollStrategies.close(),
     });
-    const comp = this.ref.attach(
-      new ComponentPortal(ReuseTabContextMenuComponent),
-    );
+    const comp = this.ref.attach(new ComponentPortal(ReuseTabContextMenuComponent));
     const instance = comp.instance;
     instance.i18n = this.i18n;
     instance.item = { ...item };

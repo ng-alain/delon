@@ -9,32 +9,7 @@ import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-tree-select',
-  template: `
-  <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-    <nz-tree-select
-      [nzAllowClear]="i.allowClear"
-      [nzPlaceHolder]="ui.placeholder"
-      [nzDisabled]="disabled"
-      [nzShowSearch]="i.showSearch"
-      [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth"
-      [nzDropdownStyle]="ui.dropdownStyle"
-      [nzMultiple]="i.multiple"
-      [nzSize]="ui.size"
-      [nzCheckable]="i.checkable"
-      [nzShowExpand]="i.showExpand"
-      [nzShowLine]="i.showLine"
-      [nzAsyncData]="i.asyncData"
-      [nzNodes]="data"
-      [nzDefaultExpandAll]="i.defaultExpandAll"
-      [nzDefaultExpandedKeys]="i.defaultExpandedKeys"
-      [nzDisplayWith]="i.displayWith"
-      [ngModel]="value"
-      (ngModelChange)="change($event)"
-      (nzExpandChange)="expandChange($event)">
-    </nz-tree-select>
-
-  </sf-item-wrap>
-  `,
+  templateUrl: './tree-select.widget.html',
 })
 export class TreeSelectWidget extends ControlWidget implements OnInit {
   // tslint:disable-next-line:no-any

@@ -6,57 +6,7 @@ import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-select',
-  template: `
-    <sf-item-wrap
-      [id]="id"
-      [schema]="schema"
-      [ui]="ui"
-      [showError]="showError"
-      [error]="error"
-      [showTitle]="schema.title"
-    >
-      <nz-select
-        [nzDisabled]="disabled"
-        [nzSize]="ui.size"
-        [ngModel]="value"
-        (ngModelChange)="change($event)"
-        [nzPlaceHolder]="ui.placeholder"
-        [nzAllowClear]="i.allowClear"
-        [nzAutoFocus]="i.autoFocus"
-        [nzDropdownClassName]="i.dropdownClassName"
-        [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth"
-        [nzServerSearch]="i.serverSearch"
-        [nzMaxMultipleCount]="i.maxMultipleCount"
-        [nzMode]="i.mode"
-        [nzNotFoundContent]="i.notFoundContent"
-        [nzShowSearch]="i.showSearch"
-        (nzOpenChange)="openChange($event)"
-        (nzOnSearch)="searchChange($event)"
-        (nzScrollToBottom)="scrollToBottom()"
-      >
-        <ng-container *ngIf="!hasGroup">
-          <nz-option
-            *ngFor="let o of data"
-            [nzLabel]="o.label"
-            [nzValue]="o.value"
-            [nzDisabled]="o.disabled"
-          >
-          </nz-option>
-        </ng-container>
-        <ng-container *ngIf="hasGroup">
-          <nz-option-group *ngFor="let i of data" [nzLabel]="i.label">
-            <nz-option
-              *ngFor="let o of i.children"
-              [nzLabel]="o.label"
-              [nzValue]="o.value"
-              [nzDisabled]="o.disabled"
-            >
-            </nz-option>
-          </nz-option-group>
-        </ng-container>
-      </nz-select>
-    </sf-item-wrap>
-  `,
+  templateUrl: './select.widget.html',
 })
 export class SelectWidget extends ControlWidget implements OnInit {
   // tslint:disable-next-line:no-any

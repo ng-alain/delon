@@ -37,7 +37,7 @@ export class SVContainerComponent implements OnInit, OnChanges {
 
   constructor(el: ElementRef, private ren: Renderer2, cog: SVConfig) {
     this.el = el.nativeElement;
-    Object.assign(this, { ...new SVConfig(), ...cog});
+    Object.assign(this, { ...new SVConfig(), ...cog });
   }
 
   private setClass() {
