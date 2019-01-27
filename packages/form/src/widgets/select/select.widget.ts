@@ -7,47 +7,55 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-select',
   template: `
-  <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-
-    <nz-select
-      [nzDisabled]="disabled"
-      [nzSize]="ui.size"
-      [ngModel]="value"
-      (ngModelChange)="change($event)"
-      [nzPlaceHolder]="ui.placeholder"
-      [nzAllowClear]="i.allowClear"
-      [nzAutoFocus]="i.autoFocus"
-      [nzDropdownClassName]="i.dropdownClassName"
-      [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth"
-      [nzServerSearch]="i.serverSearch"
-      [nzMaxMultipleCount]="i.maxMultipleCount"
-      [nzMode]="i.mode"
-      [nzNotFoundContent]="i.notFoundContent"
-      [nzShowSearch]="i.showSearch"
-      (nzOpenChange)="openChange($event)"
-      (nzOnSearch)="searchChange($event)"
-      (nzScrollToBottom)="scrollToBottom()">
-      <ng-container *ngIf="!hasGroup">
-        <nz-option
-          *ngFor="let o of data"
-          [nzLabel]="o.label"
-          [nzValue]="o.value"
-          [nzDisabled]="o.disabled">
-        </nz-option>
-      </ng-container>
-      <ng-container *ngIf="hasGroup">
-        <nz-option-group *ngFor="let i of data" [nzLabel]="i.label">
+    <sf-item-wrap
+      [id]="id"
+      [schema]="schema"
+      [ui]="ui"
+      [showError]="showError"
+      [error]="error"
+      [showTitle]="schema.title"
+    >
+      <nz-select
+        [nzDisabled]="disabled"
+        [nzSize]="ui.size"
+        [ngModel]="value"
+        (ngModelChange)="change($event)"
+        [nzPlaceHolder]="ui.placeholder"
+        [nzAllowClear]="i.allowClear"
+        [nzAutoFocus]="i.autoFocus"
+        [nzDropdownClassName]="i.dropdownClassName"
+        [nzDropdownMatchSelectWidth]="i.dropdownMatchSelectWidth"
+        [nzServerSearch]="i.serverSearch"
+        [nzMaxMultipleCount]="i.maxMultipleCount"
+        [nzMode]="i.mode"
+        [nzNotFoundContent]="i.notFoundContent"
+        [nzShowSearch]="i.showSearch"
+        (nzOpenChange)="openChange($event)"
+        (nzOnSearch)="searchChange($event)"
+        (nzScrollToBottom)="scrollToBottom()"
+      >
+        <ng-container *ngIf="!hasGroup">
           <nz-option
-            *ngFor="let o of i.children"
+            *ngFor="let o of data"
             [nzLabel]="o.label"
             [nzValue]="o.value"
-            [nzDisabled]="o.disabled">
+            [nzDisabled]="o.disabled"
+          >
           </nz-option>
-        </nz-option-group>
-      </ng-container>
-    </nz-select>
-
-  </sf-item-wrap>
+        </ng-container>
+        <ng-container *ngIf="hasGroup">
+          <nz-option-group *ngFor="let i of data" [nzLabel]="i.label">
+            <nz-option
+              *ngFor="let o of i.children"
+              [nzLabel]="o.label"
+              [nzValue]="o.value"
+              [nzDisabled]="o.disabled"
+            >
+            </nz-option>
+          </nz-option-group>
+        </ng-container>
+      </nz-select>
+    </sf-item-wrap>
   `,
 })
 export class SelectWidget extends ControlWidget implements OnInit {
@@ -71,22 +79,24 @@ export class SelectWidget extends ControlWidget implements OnInit {
   }
 
   reset(value: SFValue) {
-    getData(this.schema, this.ui, this.formProperty.formData).subscribe(
-      list => {
-        this.data = list;
-        this.hasGroup = list.filter(w => w.group === true).length > 0;
-        this.detectChanges();
-      },
-    );
+    getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
+      this.data = list;
+      this.hasGroup = list.filter(w => w.group === true).length > 0;
+      this.detectChanges();
+    });
   }
 
   change(values: SFValue) {
-    if (this.ui.change) this.ui.change(values);
+    if (this.ui.change) {
+      this.ui.change(values);
+    }
     this.setValue(values);
   }
 
   openChange(value: boolean) {
-    if (this.ui.openChange) this.ui.openChange(value);
+    if (this.ui.openChange) {
+      this.ui.openChange(value);
+    }
   }
 
   searchChange(text: string) {
@@ -101,6 +111,8 @@ export class SelectWidget extends ControlWidget implements OnInit {
   }
 
   scrollToBottom() {
-    if (this.ui.scrollToBottom) this.ui.scrollToBottom();
+    if (this.ui.scrollToBottom) {
+      this.ui.scrollToBottom();
+    }
   }
 }

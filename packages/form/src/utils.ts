@@ -156,7 +156,6 @@ export function getEnum(list: any[], formData: any, readOnly: boolean): SFSchema
   }
   // fix disabled status
   if (readOnly) {
-    console.log('1');
     list.forEach((item: SFSchemaEnum) => (item.disabled = true));
   }
   return list;
@@ -173,7 +172,6 @@ export function getData(
   asyncArgs?: any,
 ): Observable<SFSchemaEnum[]> {
   if (typeof ui.asyncData === 'function') {
-    console.log('2');
     return ui.asyncData(asyncArgs).pipe(map(list => getEnum(list, formData, schema.readOnly)));
   }
   return of(getCopyEnum(schema.enum, formData, schema.readOnly));

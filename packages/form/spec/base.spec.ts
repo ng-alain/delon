@@ -98,6 +98,14 @@ export class SFPage {
     spyOn(context, 'formError');
   }
 
+  cleanOverlay() {
+    const els = document.querySelectorAll('.cdk-overlay-container');
+    if (els && els.length > 0) {
+      els.forEach(el => (el.innerHTML = ''));
+    }
+    return this;
+  }
+
   getDl(cls: string): DebugElement {
     return dl.query(By.css(cls));
   }
@@ -166,8 +174,7 @@ export class SFPage {
     context.schema = schema;
     if (typeof ui !== 'undefined') context.ui = ui;
     if (typeof formData !== 'undefined') context.formData = formData;
-    fixture.detectChanges();
-    return this;
+    return this.dc();
   }
 
   /** 强制指定 `a` 节点 */
@@ -176,8 +183,7 @@ export class SFPage {
       ...deepCopy(schema),
       properties: { a: overObject },
     };
-    fixture.detectChanges();
-    return this;
+    return this.dc();
   }
 
   checkSchema(path: string, propertyName: string, value: any): this {
@@ -213,8 +219,8 @@ export class SFPage {
     return this;
   }
 
-  checkElText(cls: string, value: any): this {
-    const node = this.getEl(cls);
+  checkElText(cls: string, value: any, viaDocument = false): this {
+    const node = viaDocument ? document.querySelector(cls) : this.getEl(cls);
     if (value == null) {
       expect(node).toBeNull();
     } else {
@@ -246,9 +252,21 @@ export class SFPage {
     return this;
   }
 
-  checkCount(cls: string, count: number): this {
-    const len = dl.queryAll(By.css(cls)).length;
+  checkCount(cls: string, count: number, viaDocument = false): this {
+    const len = viaDocument
+      ? document.querySelectorAll(cls).length
+      : dl.queryAll(By.css(cls)).length;
     expect(len).toBe(count);
+    return this;
+  }
+
+  checkError(text: string): this {
+    const el = this.getEl('nz-form-explain');
+    if (text == null) {
+      expect(el == null).toBe(true);
+      return this;
+    }
+    expect(el.textContent.trim().includes(text)).toBe(true);
     return this;
   }
 
@@ -256,28 +274,30 @@ export class SFPage {
     const el = this.getEl(cls);
     expect(el).not.toBeNull();
     el.click();
-    fixture.detectChanges();
-    return this;
+    return this.dc();
   }
 
   typeChar(value: any, cls = 'input'): this {
     const node = this.getEl(cls) as HTMLInputElement;
     typeInElement(value, node);
     tick();
-    fixture.detectChanges();
-    return this;
+    return this.dc();
   }
 
   typeEvent(eventName: string, cls = 'input'): this {
-    const node = this.getEl(cls) as HTMLInputElement;
+    const node = document.querySelector(cls) as HTMLInputElement;
     dispatchFakeEvent(node, eventName);
     tick();
-    fixture.detectChanges();
-    return this;
+    return this.dc();
   }
 
   time(time = 0) {
     tick(time);
+    return this;
+  }
+
+  dc() {
+    fixture.detectChanges();
     return this;
   }
 
