@@ -2,15 +2,8 @@
 import { getSystemPath, normalize } from '@angular-devkit/core';
 import { TempScopedNodeJsSyncHost } from '@angular-devkit/core/node/testing';
 import * as virtualFs from '@angular-devkit/core/src/virtual-fs/host';
-import {
-  EngineHost,
-  TaskExecutor,
-  TaskScheduler,
-} from '@angular-devkit/schematics';
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { EngineHost, TaskExecutor, TaskScheduler } from '@angular-devkit/schematics';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { mkdirpSync, readFileSync, writeFileSync } from 'fs-extra';
 import { dirname, join } from 'path';
 import { from as observableFrom, Observable } from 'rxjs';
@@ -20,8 +13,7 @@ import { concatMap, filter, last } from 'rxjs/operators';
 export const migrationCollection = require.resolve('../../migration.json');
 
 /** Module name suffix for data files of the `jasmine_node_test` Bazel rule. */
-const bazelModuleSuffix =
-  'delon/packages/schematics/ng-update/test-cases';
+const bazelModuleSuffix = 'delon/packages/schematics/ng-update/test-cases';
 
 /**
  * Due to the fact that the Angular devkit does not support running scheduled tasks from a
@@ -47,9 +39,7 @@ export function runPostScheduledTasks(
     filter(task => task.configuration.name === taskName),
     concatMap(task => {
       return createTaskExecutor(task.configuration.name).pipe(
-        concatMap(executor =>
-          executor(task.configuration.options, task.context),
-        ),
+        concatMap(executor => executor(task.configuration.options, task.context)),
       );
     }),
     // Only emit the last emitted value because there can be multiple tasks with the same name.
@@ -58,19 +48,12 @@ export function runPostScheduledTasks(
   );
 }
 
-export function createTestApp(
-  runner: SchematicTestRunner,
-  appOptions = {},
-): UnitTestTree {
-  const workspaceTree = runner.runExternalSchematic(
-    '@schematics/angular',
-    'workspace',
-    {
-      name: 'workspace',
-      version: '6.0.0',
-      newProjectRoot: 'projects',
-    },
-  );
+export function createTestApp(runner: SchematicTestRunner, appOptions = {}): UnitTestTree {
+  const workspaceTree = runner.runExternalSchematic('@schematics/angular', 'workspace', {
+    name: 'workspace',
+    version: '6.0.0',
+    newProjectRoot: 'projects',
+  });
 
   return runner.runExternalSchematic(
     '@schematics/angular',
@@ -110,20 +93,16 @@ export function createFileSystemTestApp(runner: SchematicTestRunner) {
 
   // Since the TSLint fix task expects all files to be present on the real file system, we
   // map every file in the app tree to a temporary location on the file system.
-  appTree.files.map(f => normalize(f)).forEach(f => {
-    tempFileSystemHost.sync.write(
-      f,
-      virtualFs.stringToFileBuffer(appTree.readContent(f)),
-    );
-  });
+  appTree.files
+    .map(f => normalize(f))
+    .forEach(f => {
+      tempFileSystemHost.sync.write(f, virtualFs.stringToFileBuffer(appTree.readContent(f)));
+    });
 
   return { appTree, tempPath };
 }
 
-export async function runTestCases(
-  migrationName: string,
-  inputs: { [name: string]: string },
-) {
+export async function runTestCases(migrationName: string, inputs: { [name: string]: string }) {
   const runner = new SchematicTestRunner('schematics', migrationCollection);
   const inputNames = Object.keys(inputs);
   const initialWorkingDir = process.cwd();
@@ -137,10 +116,7 @@ export async function runTestCases(
   // TSLint won't be able to pick up the test cases.
   inputNames.forEach(inputName => {
     const inputFullName = `projects/ng-alain/src/test-cases/${inputName}.ts`;
-    const tempInputPath = join(
-      tempPath,
-      inputFullName,
-    );
+    const tempInputPath = join(tempPath, inputFullName);
 
     mkdirpSync(dirname(tempInputPath));
     writeFileSync(tempInputPath, readFileContent(inputs[inputName]));

@@ -1,7 +1,4 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as LANG from '../core/lang.config';
 import { createAlainApp, createAlainRunner, createNgRunner, APPNAME } from '../utils/testing';
 
@@ -40,10 +37,12 @@ describe('NgAlainSchematic: application', () => {
     });
     describe('default language', () => {
       it(`with use zh`, () => {
-        spyOn(LANG, 'getLangData').and.returnValue(JSON.stringify({
-          key1: 'Key1',
-          key2: 'KEY2',
-        }));
+        spyOn(LANG, 'getLangData').and.returnValue(
+          JSON.stringify({
+            key1: 'Key1',
+            key2: 'KEY2',
+          }),
+        );
         const baseRunner = createNgRunner();
         const workspaceTree = baseRunner.runSchematic('workspace', {
           name: 'workspace',
@@ -63,21 +62,24 @@ describe('NgAlainSchematic: application', () => {
           },
           workspaceTree,
         );
-        appTree.create('/demo.html', `
+        appTree.create(
+          '/demo.html',
+          `
         {{(status ? 'key1' : 'key2') | translate }}
         [placeholder]="'key1' | translate">
         <nz-tab [nzTitle]="'key1' | translate">
         {{ 'Please enter mobile number!' | translate }}
         <button>{{ count ? count + 's' : 'key1' | translate }}</button>
-        `);
+        `,
+        );
 
         const alainRunner = createAlainRunner();
         // tslint:disable-next-line:no-shadowed-variable
         const tree = alainRunner.runSchematic(
           'ng-add',
           {
-              skipPackageJson: false,
-              defaultLanguage: 'zh',
+            skipPackageJson: false,
+            defaultLanguage: 'zh',
           },
           appTree,
         );

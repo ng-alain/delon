@@ -1,12 +1,7 @@
 import { strings } from '@angular-devkit/core';
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { findNodes } from '@schematics/angular/utility/ast-utils';
-import {
-  parseFragment,
-  Attribute,
-  DefaultTreeDocument,
-  DefaultTreeElement,
-} from 'parse5';
+import { parseFragment, Attribute, DefaultTreeDocument, DefaultTreeElement } from 'parse5';
 import * as ts from 'typescript';
 
 import { getSourceFile, updateComponentMetadata } from '../utils/ast';
@@ -59,12 +54,7 @@ const WHITE_ICONS = [
 ];
 
 const ATTRIBUTES = {
-  'nz-input-group': [
-    'nzAddOnBeforeIcon',
-    'nzAddOnAfterIcon',
-    'nzPrefixIcon',
-    'nzSuffixIcon',
-  ],
+  'nz-input-group': ['nzAddOnBeforeIcon', 'nzAddOnAfterIcon', 'nzPrefixIcon', 'nzSuffixIcon'],
   'nz-avatar': ['nzIcon'],
   'quick-menu': ['icon'],
 };
@@ -115,17 +105,13 @@ function genByClass(node: DefaultTreeElement): string {
 function genByComp(node: DefaultTreeElement): string[] {
   if (!node.attrs.find(attr => attr.name === 'nz-icon')) return null;
 
-  const type = node.attrs.find(
-    attr => attr.name === 'type' || attr.name === '[type]',
-  );
+  const type = node.attrs.find(attr => attr.name === 'type' || attr.name === '[type]');
   if (!type) return null;
 
   const types = getNgValue(type);
   if (types == null) return null;
 
-  const theme = node.attrs.find(
-    attr => attr.name === 'theme' || attr.name === '[theme]',
-  );
+  const theme = node.attrs.find(attr => attr.name === 'theme' || attr.name === '[theme]');
   const themes = getNgValue(theme);
   if (themes == null || themes.length === 0) return types;
 
@@ -174,9 +160,7 @@ function fixValue(str: string, prefix: string) {
   // value ? 'icon' : 'icon'
   // focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'
   // 'icon'
-  const types =
-    str.replace(/anticon anticon-/g, '').match(/['|"|`][-A-Za-z]+['|"|`]/g) ||
-    [];
+  const types = str.replace(/anticon anticon-/g, '').match(/['|"|`][-A-Za-z]+['|"|`]/g) || [];
   if (types.length > 0) {
     return types.map(t => prefix + t.replace(/['|"|`]/g, ''));
   }
@@ -274,8 +258,8 @@ export const ICONS = [ ];
     w.moduleSpecifier.getText().includes('@ant-design/icons-angular/icons'),
   ) as ts.ImportDeclaration;
   if (!iconImport) return;
-  (iconImport.importClause.namedBindings as ts.NamedImports)!.elements!.forEach(
-    v => WHITE_ICONS.push(v.getText().trim()),
+  (iconImport.importClause.namedBindings as ts.NamedImports)!.elements!.forEach(v =>
+    WHITE_ICONS.push(v.getText().trim()),
   );
 }
 
@@ -307,7 +291,11 @@ export function pluginIcon(options: PluginOptions): Rule {
     genCustomIcons(options, host);
     const icons = getIcons(host);
     genIconFile(options, host, icons);
-    console.log(`\n生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`);
-    console.log(`\nFinished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`);
+    console.log(
+      `\n生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`,
+    );
+    console.log(
+      `\nFinished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`,
+    );
   };
 }

@@ -72,9 +72,7 @@ RUN npm run build
 # STEP 2: Setup
 FROM nginx:alpine
 
-COPY --from=builder /${
-      options.name
-      }/_nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /${options.name}/_nginx/default.conf /etc/nginx/conf.d/default.conf
 # COPY --from=builder /${options.name}/_nginx/ssl/* /etc/nginx/ssl/
 
 RUN rm -rf /usr/share/nginx/html/*

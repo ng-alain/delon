@@ -22,7 +22,9 @@ describe('Schematic: view', () => {
   });
 
   it('should be has import code', () => {
-    expect(tree.readContent(modulePath)).toContain(`import { TradeViewComponent } from './view/view.component';`);
+    expect(tree.readContent(modulePath)).toContain(
+      `import { TradeViewComponent } from './view/view.component';`,
+    );
   });
 
   it('should not be imported into COMPONENTS', () => {
@@ -33,5 +35,4 @@ describe('Schematic: view', () => {
     tree = runner.runSchematic('view', { name: 'view', module: 'trade', target: 'list' }, tree);
     expect(tree.exists('/foo/src/app/routes/trade/list/view/view.component.ts')).toBe(true);
   });
-
 });

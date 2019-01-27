@@ -14,10 +14,7 @@ describe('utils: validate', () => {
       { k: '123a', v: false },
     ];
     for (const item of data) {
-      expect(isNum(item.k)).toBe(
-        item.v,
-        `${item.k}=${typeof item.k} must be ${item.v}`,
-      );
+      expect(isNum(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
       if (item.v) {
@@ -36,10 +33,7 @@ describe('utils: validate', () => {
       { k: '123.123', v: false },
     ];
     for (const item of data) {
-      expect(isInt(item.k)).toBe(
-        item.v,
-        `${item.k}=${typeof item.k} must be ${item.v}`,
-      );
+      expect(isInt(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
       if (item.v) {
@@ -62,10 +56,7 @@ describe('utils: validate', () => {
       { k: '123a', v: false },
     ];
     for (const item of data) {
-      expect(isDecimal(item.k)).toBe(
-        item.v,
-        `${item.k}=${typeof item.k} must be ${item.v}`,
-      );
+      expect(isDecimal(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
       const ctr = new FormControl(item.k);
       if (item.v) {
         expect(_Validators.decimal(ctr)).toBeNull();
@@ -76,15 +67,9 @@ describe('utils: validate', () => {
   });
 
   it('#isIdCard', () => {
-    const data = [
-      { k: '610102198006042614', v: true },
-      { k: '61010219800604261', v: false },
-    ];
+    const data = [{ k: '610102198006042614', v: true }, { k: '61010219800604261', v: false }];
     for (const item of data) {
-      expect(isIdCard(item.k)).toBe(
-        item.v,
-        `${item.k}=${typeof item.k} must be ${item.v}`,
-      );
+      expect(isIdCard(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
       if (item.v) {
@@ -104,10 +89,7 @@ describe('utils: validate', () => {
       { k: '+8615900000000', v: true },
     ];
     for (const item of data) {
-      expect(isMobile(item.k)).toBe(
-        item.v,
-        `${item.k}=${typeof item.k} must be ${item.v}`,
-      );
+      expect(isMobile(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
       if (item.v) {
@@ -127,10 +109,7 @@ describe('utils: validate', () => {
       { k: '中国.com', v: false },
     ];
     for (const item of data) {
-      expect(isUrl(item.k)).toBe(
-        item.v,
-        `${item.k}=${typeof item.k} must be ${item.v}`,
-      );
+      expect(isUrl(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
       const ctr = new FormControl(item.k);
       if (item.v) {

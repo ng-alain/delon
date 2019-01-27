@@ -1,11 +1,4 @@
-import {
-  Directive,
-  Host,
-  Injectable,
-  Input,
-  OnInit,
-  TemplateRef,
-} from '@angular/core';
+import { Directive, Host, Injectable, Input, OnInit, TemplateRef } from '@angular/core';
 
 @Injectable()
 export class STRowSource {
@@ -33,10 +26,7 @@ export class STRowDirective implements OnInit {
   @Input()
   type: 'title';
 
-  constructor(
-    private ref: TemplateRef<void>,
-    @Host() private source: STRowSource,
-  ) { }
+  constructor(private ref: TemplateRef<void>, @Host() private source: STRowSource) {}
 
   ngOnInit(): void {
     this.source.add(this.type, this.id, this.ref);

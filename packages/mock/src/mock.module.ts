@@ -21,9 +21,7 @@ export class DelonMockModule {
   static forChild(): ModuleWithProviders {
     return {
       ngModule: DelonMockModule,
-      providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: MockInterceptor, multi: true },
-      ],
+      providers: [{ provide: HTTP_INTERCEPTORS, useClass: MockInterceptor, multi: true }],
     };
   }
 }

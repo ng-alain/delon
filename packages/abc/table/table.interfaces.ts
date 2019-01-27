@@ -158,17 +158,17 @@ export interface STColumn {
    * - `yn` 将`boolean`类型徽章化 [document](https://ng-alain.com/docs/data-render#yn)
    */
   type?:
-  | 'checkbox'
-  | 'link'
-  | 'badge'
-  | 'tag'
-  | 'radio'
-  | 'img'
-  | 'currency'
-  | 'number'
-  | 'date'
-  | 'yn'
-  | 'no';
+    | 'checkbox'
+    | 'link'
+    | 'badge'
+    | 'tag'
+    | 'radio'
+    | 'img'
+    | 'currency'
+    | 'number'
+    | 'date'
+    | 'yn'
+    | 'no';
   /**
    * 链接回调，若返回一个字符串表示导航URL会自动触发 `router.navigateByUrl`
    */
@@ -442,10 +442,7 @@ export interface STColumnButton {
    * - reload：重新刷新当前页
    * - load：重新加载数据，并重置页码为：`1`
    */
-  click?:
-  | 'reload'
-  | 'load'
-  | ((record: STData, modal?: any, instance?: STComponent) => any);
+  click?: 'reload' | 'load' | ((record: STData, modal?: any, instance?: STComponent) => any);
   /**
    * 是否需要气泡确认框
    */
@@ -647,18 +644,18 @@ export interface STColumnTagValue {
    * - 色值：#f50,#ff0
    */
   color?:
-  | 'geekblue'
-  | 'blue'
-  | 'purple'
-  | 'success'
-  | 'red'
-  | 'volcano'
-  | 'orange'
-  | 'gold'
-  | 'lime'
-  | 'green'
-  | 'cyan'
-  | string;
+    | 'geekblue'
+    | 'blue'
+    | 'purple'
+    | 'success'
+    | 'red'
+    | 'volcano'
+    | 'orange'
+    | 'gold'
+    | 'lime'
+    | 'green'
+    | 'cyan'
+    | string;
 }
 
 export type STChangeType =

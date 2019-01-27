@@ -32,8 +32,7 @@ describe('abc: exception', () => {
       context.type = type;
       fixture.detectChanges();
       expect(
-        (dl.query(By.css('.exception__cont-title'))
-          .nativeElement as HTMLElement).innerText,
+        (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText,
       ).toBe('' + type);
     });
   });
@@ -49,28 +48,23 @@ describe('abc: exception', () => {
     context.desc = 'custom desc';
     fixture.detectChanges();
     expect(
-      (dl.query(By.css('.exception__img')).nativeElement as HTMLElement).style[
-        'background-image'
-      ],
+      (dl.query(By.css('.exception__img')).nativeElement as HTMLElement).style['background-image'],
     ).toContain(context.img);
     expect(
-      (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement)
-        .innerText,
+      (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText,
     ).toBe(context.title);
-    expect(
-      (dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement)
-        .innerText,
-    ).toBe(context.desc);
+    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(
+      context.desc,
+    );
   });
 
   it('#i18n', () => {
     injector.get(DelonLocaleService).setLocale(en_US);
     context.type = 403;
     fixture.detectChanges();
-    expect(
-      (dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement)
-        .innerText,
-    ).toBe(en_US.exception['403']);
+    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(
+      en_US.exception['403'],
+    );
   });
 });
 
@@ -80,7 +74,7 @@ describe('abc: exception', () => {
       <button id="btn">查看详情</button>
       <div id="action-edit">action-edit</div>
     </exception>
-    `,
+  `,
 })
 class TestComponent {
   @ViewChild('comp')

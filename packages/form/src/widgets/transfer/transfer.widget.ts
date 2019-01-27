@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TransferCanMove, TransferChange, TransferItem, TransferSearchChange, TransferSelectChange } from 'ng-zorro-antd';
+import {
+  TransferCanMove,
+  TransferChange,
+  TransferItem,
+  TransferSearchChange,
+  TransferSelectChange,
+} from 'ng-zorro-antd';
 import { of, Observable } from 'rxjs';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
@@ -8,28 +14,7 @@ import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-transfer',
-  template: `
-  <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-
-    <nz-transfer
-      [nzDataSource]="list"
-      [nzTitles]="i.titles"
-      [nzOperations]="i.operations"
-      [nzListStyle]="ui.listStyle"
-      [nzItemUnit]="i.itemUnit"
-      [nzItemsUnit]="i.itemsUnit"
-      [nzShowSearch]="ui.showSearch"
-      [nzFilterOption]="ui.filterOption"
-      [nzSearchPlaceholder]="ui.searchPlaceholder"
-      [nzNotFoundContent]="ui.notFoundContent"
-      [nzCanMove]="_canMove"
-      (nzChange)="_change($event)"
-      (nzSearchChange)="_searchChange($event)"
-      (nzSelectChange)="_selectChange($event)">
-    </nz-transfer>
-
-  </sf-item-wrap>
-  `,
+  templateUrl: './transfer.widget.html',
 })
 export class TransferWidget extends ControlWidget implements OnInit {
   list: SFSchemaEnum[] = [];

@@ -10,7 +10,7 @@ describe('util: style', () => {
       .run({
         a: true,
         ['aa']: true,
-        [ varCls ]: true,
+        [varCls]: true,
       })
       .has('a')
       .has('aa')
@@ -18,21 +18,23 @@ describe('util: style', () => {
   });
 
   it('should be removed when add new classes', () => {
-    page.run({ a: true, b: false })
-        .has('a', true)
-        .has('b', false)
-        .run({ a: false, b: true })
-        .has('a', false)
-        .has('b', true);
+    page
+      .run({ a: true, b: false })
+      .has('a', true)
+      .has('b', false)
+      .run({ a: false, b: true })
+      .has('a', false)
+      .has('b', true);
   });
 
   it('should be clearn all when add new classes', () => {
-    page.run({ a: true })
-        .has('a', true)
-        .has('b', false)
-        .run({ b: true }, true)
-        .has('a', false)
-        .has('b', true);
+    page
+      .run({ a: true })
+      .has('a', true)
+      .has('b', false)
+      .run({ b: true }, true)
+      .has('a', false)
+      .has('b', true);
   });
 
   class PageObject {
@@ -40,7 +42,7 @@ describe('util: style', () => {
     fakeRender: any = {
       removeClass: (el, value) => delete this.fakeEl[value],
       addClass: (el, value) => (this.fakeEl[value] = ''),
-      removeAttribute: () => this.fakeEl = {},
+      removeAttribute: () => (this.fakeEl = {}),
     };
 
     run(obj: {}, cleanAll?: boolean): this {

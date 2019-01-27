@@ -1,4 +1,4 @@
-import { Component, DebugElement, NgZone, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild } from '@angular/core';
 import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { configureTestSuite } from '@delon/testing';
 
@@ -128,7 +128,10 @@ describe('abc: ellipsis', () => {
     it('should be throw error when include html element', fakeAsync(() => {
       expect(() => {
         genModule();
-        TestBed.overrideTemplate(TestLengthComponent, `<ellipsis length="1"><p>asdf</p></ellipsis>`);
+        TestBed.overrideTemplate(
+          TestLengthComponent,
+          `<ellipsis length="1"><p>asdf</p></ellipsis>`,
+        );
         fixture = TestBed.createComponent(TestLengthComponent);
         dl = fixture.debugElement;
         context = fixture.componentInstance;
@@ -209,18 +212,30 @@ class TestBaseComponent {
 
 @Component({
   template: `
-    <ellipsis #comp [tooltip]="tooltip" [length]="length" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail">{{text}}</ellipsis>
+    <ellipsis
+      #comp
+      [tooltip]="tooltip"
+      [length]="length"
+      [fullWidthRecognition]="fullWidthRecognition"
+      [tail]="tail"
+      >{{ text }}</ellipsis
+    >
   `,
 })
-class TestLengthComponent extends TestBaseComponent {
-}
+class TestLengthComponent extends TestBaseComponent {}
 
 @Component({
   template: `
-    <ellipsis #comp [tooltip]="tooltip" [lines]="lines" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail" style="width: 20px; display: inline-block;">
+    <ellipsis
+      #comp
+      [tooltip]="tooltip"
+      [lines]="lines"
+      [fullWidthRecognition]="fullWidthRecognition"
+      [tail]="tail"
+      style="width: 20px; display: inline-block;"
+    >
       <div [innerHTML]="html"></div>
     </ellipsis>
   `,
 })
-class TestLineComponent extends TestBaseComponent {
-}
+class TestLineComponent extends TestBaseComponent {}

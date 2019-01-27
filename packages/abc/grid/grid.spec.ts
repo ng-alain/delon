@@ -58,12 +58,8 @@ describe('abc: grid', () => {
           const halfGutter = gutter / 2;
           context.parent_gutter = gutter;
           fixture.detectChanges();
-          expect(page.getEl('.ant-row').style.marginLeft).toBe(
-            `-${halfGutter}px`,
-          );
-          expect(page.getEl('.ant-row').style.marginRight).toBe(
-            `-${halfGutter}px`,
-          );
+          expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
+          expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
           const itemCls = prefixCls + 'item';
           expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
           expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
@@ -137,9 +133,15 @@ describe('abc: grid', () => {
 
 @Component({
   template: `
-  <div [sg-container]="parent_colInCon" #sgComp="sgContainer" [col]="parent_col" [gutter]="parent_gutter">
-    <sg #viewComp [col]="col"></sg>
-  </div>`,
+    <div
+      [sg-container]="parent_colInCon"
+      #sgComp="sgContainer"
+      [col]="parent_col"
+      [gutter]="parent_gutter"
+    >
+      <sg #viewComp [col]="col"></sg>
+    </div>
+  `,
 })
 class TestComponent {
   @ViewChild('sgComp')

@@ -25,8 +25,12 @@ export function createTestApp(appOptions = {}): UnitTestTree {
     newProjectRoot: 'projects',
   });
 
-  const res = baseRunner.runExternalSchematic('@schematics/angular', 'application',
-    { ...appOptions, name: 'alain' }, workspaceTree);
+  const res = baseRunner.runExternalSchematic(
+    '@schematics/angular',
+    'application',
+    { ...appOptions, name: 'alain' },
+    workspaceTree,
+  );
 
   return res;
 }

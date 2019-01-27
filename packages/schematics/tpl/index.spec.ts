@@ -1,7 +1,6 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as fs from 'fs';
 import { createAlainAndModuleApp } from '../utils/testing';
-import { Schema as NgAddOptions } from './schema';
 
 describe('Schematic: tpl', () => {
   let runner: SchematicTestRunner;
@@ -19,8 +18,7 @@ describe('Schematic: tpl', () => {
 
   it('should be throw error when not found name', () => {
     spyOn(fs, 'accessSync');
-    spyOn(fs, 'readdirSync').and.returnValue([ 'invalid-name' ]);
+    spyOn(fs, 'readdirSync').and.returnValue(['invalid-name']);
     expect(() => run()).toThrow();
   });
-
 });

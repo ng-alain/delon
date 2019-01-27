@@ -1,9 +1,4 @@
-import {
-  Rule,
-  SchematicsException,
-  SchematicContext,
-  Tree,
-} from '@angular-devkit/schematics';
+import { Rule, SchematicsException, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { getLangConfig } from '../core/lang.config';
 import { getProject } from '../utils/project';
 import { PluginOptions } from './interface';
@@ -12,14 +7,10 @@ import { PluginOptions } from './interface';
 export function pluginDefaultLanguage(options: PluginOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     if (options.type !== 'add') {
-      throw new SchematicsException(
-        `Can't be specified the "type" parameter`,
-      );
+      throw new SchematicsException(`Can't be specified the "type" parameter`);
     }
     if (options.defaultLanguage == null) {
-      throw new SchematicsException(
-        `Must be specified the "defaultLanguage" parameter`,
-      );
+      throw new SchematicsException(`Must be specified the "defaultLanguage" parameter`);
     }
     const project = getProject(host, options.project);
     const modulePath = `${project.sourceRoot}/app/app.module.ts`;
@@ -44,9 +35,7 @@ export function pluginDefaultLanguage(options: PluginOptions): Rule {
       );
       return;
     }
-    console.log(
-      `Changes default languare [${oldLang}] to [${options.defaultLanguage}]`,
-    );
+    console.log(`Changes default languare [${oldLang}] to [${options.defaultLanguage}]`);
     // angular
     content = content
       .replace(
@@ -55,15 +44,9 @@ export function pluginDefaultLanguage(options: PluginOptions): Rule {
       )
       .replace(/abbr: '([^']+)/, `abbr: '${options.defaultLanguage}`);
     // zorro
-    content = content.replace(
-      /NZ_I18N, ([^ ]+)/,
-      `NZ_I18N, ${targetLang.zorro}`,
-    );
+    content = content.replace(/NZ_I18N, ([^ ]+)/, `NZ_I18N, ${targetLang.zorro}`);
     // delon
-    content = content.replace(
-      /DELON_LOCALE, ([^ ]+)/,
-      `DELON_LOCALE, ${targetLang.zorro}`,
-    );
+    content = content.replace(/DELON_LOCALE, ([^ ]+)/, `DELON_LOCALE, ${targetLang.zorro}`);
     host.overwrite(modulePath, content);
   };
 }

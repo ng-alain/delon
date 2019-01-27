@@ -2,12 +2,7 @@ import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite, createTestContext } from '@delon/testing';
-import {
-  en_US,
-  zh_CN,
-  DelonLocaleModule,
-  DelonLocaleService,
-} from '@delon/theme';
+import { en_US, zh_CN, DelonLocaleModule, DelonLocaleService } from '@delon/theme';
 
 import { TagSelectComponent } from './tag-select.component';
 import { TagSelectModule } from './tag-select.module';
@@ -46,8 +41,7 @@ describe('abc: tag-select', () => {
   });
   it('should be switch states via click trigger', () => {
     spyOn(context, 'change');
-    const triEl = dl.query(By.css('.tag-select__trigger'))
-      .nativeElement as HTMLElement;
+    const triEl = dl.query(By.css('.tag-select__trigger')).nativeElement as HTMLElement;
     expect(context.change).not.toHaveBeenCalled();
     expect(triEl.innerHTML).toContain('展开');
     // expect(triEl.querySelector('.anticon-up')).toBeNull();
@@ -60,8 +54,7 @@ describe('abc: tag-select', () => {
     expect(context.change).toHaveBeenCalled();
   });
   it('#i18n', () => {
-    const triEl = dl.query(By.css('.tag-select__trigger'))
-      .nativeElement as HTMLElement;
+    const triEl = dl.query(By.css('.tag-select__trigger')).nativeElement as HTMLElement;
     expect(triEl.innerText).toContain(zh_CN.tagSelect.expand);
     injector.get(DelonLocaleService).setLocale(en_US);
     fixture.detectChanges();
@@ -72,9 +65,9 @@ describe('abc: tag-select', () => {
 @Component({
   template: `
     <tag-select #comp [expandable]="expandable" (change)="change()">
-        <li *ngFor="let i of categories; let idx = index" style="width: 30%">{{i.text}}</li>
+      <li *ngFor="let i of categories; let idx = index" style="width: 30%">{{ i.text }}</li>
     </tag-select>
-    `,
+  `,
 })
 class TestComponent {
   @ViewChild('comp')

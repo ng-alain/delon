@@ -1,15 +1,7 @@
-import {
-  Component,
-  Injector,
-  NgModule,
-  NgModuleFactoryLoader,
-} from '@angular/core';
+import { Component, Injector, NgModule, NgModuleFactoryLoader } from '@angular/core';
 import { fakeAsync, inject, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import {
-  RouterTestingModule,
-  SpyNgModuleFactoryLoader,
-} from '@angular/router/testing';
+import { RouterTestingModule, SpyNgModuleFactoryLoader } from '@angular/router/testing';
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { SimpleGuard } from './simple.guard';

@@ -13,14 +13,8 @@ const COMPONENTS = [STComponent, STRowDirective];
 
 @NgModule({
   schemas: [NO_ERRORS_SCHEMA],
-  imports: [
-    CommonModule,
-    FormsModule,
-    DelonUtilModule,
-    DelonACLModule,
-    NgZorroAntdModule,
-  ],
+  imports: [CommonModule, FormsModule, DelonUtilModule, DelonACLModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class STModule { }
+export class STModule {}

@@ -1,7 +1,4 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainApp } from '../utils/testing';
 
 describe('NgAlainSchematic: plugin: codeStyle', () => {
@@ -18,12 +15,7 @@ describe('NgAlainSchematic: plugin: codeStyle', () => {
   });
 
   describe('when remove', () => {
-    beforeEach(() =>
-      runner.runSchematic(
-        'plugin',
-        { name: 'codeStyle', type: 'remove' },
-        tree,
-      ));
+    beforeEach(() => runner.runSchematic('plugin', { name: 'codeStyle', type: 'remove' }, tree));
 
     it(`should remove precommit`, () => {
       const json = JSON.parse(tree.readContent('package.json'));

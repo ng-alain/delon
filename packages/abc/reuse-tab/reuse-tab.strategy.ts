@@ -2,7 +2,7 @@ import { ActivatedRouteSnapshot, RouteReuseStrategy } from '@angular/router';
 import { ReuseTabService } from './reuse-tab.service';
 
 export class ReuseTabStrategy implements RouteReuseStrategy {
-  constructor(private srv: ReuseTabService) { }
+  constructor(private srv: ReuseTabService) {}
 
   shouldDetach(route: ActivatedRouteSnapshot): boolean {
     return this.srv.shouldDetach(route);
@@ -16,10 +16,7 @@ export class ReuseTabStrategy implements RouteReuseStrategy {
   retrieve(route: ActivatedRouteSnapshot): {} {
     return this.srv.retrieve(route);
   }
-  shouldReuseRoute(
-    future: ActivatedRouteSnapshot,
-    curr: ActivatedRouteSnapshot,
-  ): boolean {
+  shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     return this.srv.shouldReuseRoute(future, curr);
   }
 }

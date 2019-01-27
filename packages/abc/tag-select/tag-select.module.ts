@@ -13,4 +13,4 @@ const COMPONENTS = [TagSelectComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class TagSelectModule { }
+export class TagSelectModule {}

@@ -11,5 +11,4 @@ const COMPONENTS = [ErrorCollectComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class ErrorCollectModule {
-}
+export class ErrorCollectModule {}

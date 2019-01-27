@@ -21,7 +21,6 @@ import { take } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EllipsisComponent implements AfterViewInit, OnChanges {
-
   // tslint:disable-next-line:no-string-literal
   private isSupportLineClamp = this.doc.body.style['webkitLineClamp'] !== undefined;
   @ViewChild('orgEl') private orgEl: ElementRef;
@@ -44,8 +43,13 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone, private dom: DomSanitizer, @Inject(DOCUMENT) private doc: Document, private cdr: ChangeDetectorRef) {
-  }
+  constructor(
+    private el: ElementRef,
+    private ngZone: NgZone,
+    private dom: DomSanitizer,
+    @Inject(DOCUMENT) private doc: Document,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   private getStrFullLength(str: string): number {
     return str.split('').reduce((pre, cur) => {
@@ -73,7 +77,14 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }, '');
   }
 
-  private bisection(th: number, m: number, b: number, e: number, text: string, shadowNode: HTMLElement): number {
+  private bisection(
+    th: number,
+    m: number,
+    b: number,
+    e: number,
+    text: string,
+    shadowNode: HTMLElement,
+  ): number {
     const suffix = this.tail;
     let mid = m;
     let end = e;
@@ -111,8 +122,8 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   private genType() {
     const { lines, length, isSupportLineClamp, cdr } = this;
     this.cls = {
-      'ellipsis': true,
-      'ellipsis__lines': lines && !isSupportLineClamp,
+      ellipsis: true,
+      ellipsis__lines: lines && !isSupportLineClamp,
       'ellipsis__line-clamp': lines && isSupportLineClamp,
     };
     if (!lines && !length) {
@@ -143,7 +154,9 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         if (length - tail.length <= 0) {
           displayText = '';
         } else {
-          displayText = fullWidthRecognition ? this.cutStrByFullLength(text, length) : text.slice(0, length);
+          displayText = fullWidthRecognition
+            ? this.cutStrByFullLength(text, length)
+            : text.slice(0, length);
         }
         this.text = displayText + tail;
       }
@@ -164,7 +177,14 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         const len = text.length;
         const mid = Math.ceil(len / 2);
 
-        const count = this.bisection(targetHeight, mid, 0, len, text, shadowTextEl.nativeElement.firstChild);
+        const count = this.bisection(
+          targetHeight,
+          mid,
+          0,
+          len,
+          text,
+          shadowTextEl.nativeElement.firstChild,
+        );
         this.text = text;
         this.targetCount = count;
       }
@@ -180,7 +200,10 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     if (this.ngZone.isStable) {
       fn();
     } else {
-      this.ngZone.onStable.asObservable().pipe(take(1)).subscribe(fn);
+      this.ngZone.onStable
+        .asObservable()
+        .pipe(take(1))
+        .subscribe(fn);
     }
   }
 

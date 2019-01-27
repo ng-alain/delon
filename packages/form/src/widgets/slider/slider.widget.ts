@@ -4,27 +4,7 @@ import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-slider',
-  template: `
-  <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-
-    <nz-slider
-      [ngModel]="value"
-      (ngModelChange)="setValue($event)"
-      [nzDisabled]="disabled"
-      [nzRange]="ui.range"
-      [nzMin]="min"
-      [nzMax]="max"
-      [nzStep]="step"
-      [nzMarks]="marks"
-      [nzDots]="ui.dots"
-      [nzIncluded]="included"
-      [nzVertical]="ui.vertical"
-      [nzTipFormatter]="_formatter"
-      (nzOnAfterChange)="_afterChange($event)">
-    </nz-slider>
-
-  </sf-item-wrap>
-  `,
+  templateUrl: './slider.widget.html',
 })
 export class SliderWidget extends ControlWidget implements OnInit {
   min: number;

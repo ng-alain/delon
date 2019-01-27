@@ -51,12 +51,7 @@ export function overwriteFiles(
  *
  * @param [overwrite=false] `true` is force, default: `false`
  */
-export function addFiles(
-  host: Tree,
-  files: string[],
-  _filePath: string,
-  overwrite = false,
-): Tree {
+export function addFiles(host: Tree, files: string[], _filePath: string, overwrite = false): Tree {
   files
     .filter(p => overwrite || !host.exists(p))
     .forEach(p => overwriteFile(host, p, join(_filePath, p), true));

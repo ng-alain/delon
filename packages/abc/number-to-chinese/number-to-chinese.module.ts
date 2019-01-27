@@ -10,4 +10,4 @@ const PIPES = [NaNumberToChinesePipe];
   declarations: PIPES,
   exports: PIPES,
 })
-export class NumberToChineseModule { }
+export class NumberToChineseModule {}

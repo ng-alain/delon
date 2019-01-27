@@ -1,0 +1,17 @@
+<sf-item-wrap [id]="id"
+              [schema]="schema"
+              [ui]="ui"
+              [showError]="showError"
+              [error]="error"
+              [showTitle]="schema.title">
+
+  <nz-tag *ngFor="let i of data"
+          nzMode="checkable"
+          [nzChecked]="i.checked"
+          (nzAfterClose)="_afterClose()"
+          (nzOnClose)="_close($event)"
+          (nzCheckedChange)="onChange(i)">
+    {{i.label}}
+  </nz-tag>
+
+</sf-item-wrap>

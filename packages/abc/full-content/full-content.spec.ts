@@ -1,5 +1,11 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, Injector, ViewChild } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  DebugElement,
+  Injector,
+  ViewChild,
+} from '@angular/core';
 import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivationEnd, Router } from '@angular/router';
@@ -165,19 +171,21 @@ describe('abc: full-content', () => {
 
 @Component({
   template: `
-    <full-content #comp
-        [(fullscreen)]="fullscreen"
-        [hideTitle]="hideTitle"
-        [padding]="padding"
-        (fullscreenChange)="change()">
-        <button full-toggle>Full</button>
+    <full-content
+      #comp
+      [(fullscreen)]="fullscreen"
+      [hideTitle]="hideTitle"
+      [padding]="padding"
+      (fullscreenChange)="change()"
+    >
+      <button full-toggle>Full</button>
     </full-content>
-    `,
+  `,
 })
 class TestComponent {
   @ViewChild('comp') comp: FullContentComponent;
   fullscreen: boolean = false;
   hideTitle: boolean;
   padding = 24;
-  change() { }
+  change() {}
 }

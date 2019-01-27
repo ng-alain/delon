@@ -32,7 +32,7 @@ export class G2CardComponent implements OnChanges {
   /** 是否显示Loading */
   @Input() @InputBoolean() loading = false;
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
     this.cdr.detectChanges();

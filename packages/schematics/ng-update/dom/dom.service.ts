@@ -9,11 +9,7 @@ export class DomService {
   private ingoreClosedTag = ['input', 'img', 'br', 'hr', 'col'];
   private count = 0;
 
-  replace(
-    html: string,
-    rules: ConvertAction[],
-    callback: (dom: VDom[], count: number) => void,
-  ) {
+  replace(html: string, rules: ConvertAction[], callback: (dom: VDom[], count: number) => void) {
     this.rules = rules;
     this.count = 0;
     const handler = new DOMHandler((error, dom) => {
@@ -40,10 +36,7 @@ export class DomService {
   private parseRule() {
     const inFn = (list: VDom[]) => {
       for (const item of list) {
-        if (
-          item.type === 'text' &&
-          (!item.next || item.data.trim().length === 0)
-        ) {
+        if (item.type === 'text' && (!item.next || item.data.trim().length === 0)) {
           continue;
         }
 
@@ -61,9 +54,7 @@ export class DomService {
 
   private resolveTagName(dom: VDom) {
     if (!dom.name) return;
-    const action = this.rules.find(
-      w => w.type === 'tag' && w.name === dom.name,
-    );
+    const action = this.rules.find(w => w.type === 'tag' && w.name === dom.name);
     if (!action) return;
     if (action.rules && action.rules.length > 0) {
       for (const rule of action.rules) {
@@ -81,9 +72,7 @@ export class DomService {
     if (!dom.attribs) return;
     const keys = Object.keys(dom.attribs);
     if (keys.length === 0) return;
-    const action = this.rules.find(
-      w => w.type === 'attr' && keys.indexOf(w.name) !== -1,
-    );
+    const action = this.rules.find(w => w.type === 'attr' && keys.indexOf(w.name) !== -1);
     if (!action) return;
     for (const rule of action.rules) {
       ++this.count;
@@ -172,8 +161,7 @@ export class DomService {
   private resolveRemoveChildTemplateAttr(dom: VDom, attrName: string) {
     if (!dom.children || dom.children.length === 0) return;
     const idx = dom.children.findIndex(
-      w =>
-        w.name === 'ng-template' && typeof w.attribs[attrName] !== 'undefined',
+      w => w.name === 'ng-template' && typeof w.attribs[attrName] !== 'undefined',
     );
     if (idx !== -1) {
       dom.children.push(...dom.children[idx].children);
@@ -204,11 +192,7 @@ export class DomService {
   }
 
   /** 添加未指定属性名的 ng-template */
-  private resolveAddTemplateAtrr(
-    dom: VDom,
-    attrName: string,
-    rule: ConvertRule,
-  ) {
+  private resolveAddTemplateAtrr(dom: VDom, attrName: string, rule: ConvertRule) {
     const ngDom = dom.children.find(
       w =>
         w.type === 'tag' &&
@@ -222,11 +206,7 @@ export class DomService {
   }
 
   /** 除 ng-template 以外所有子项都应该包裹至 rule.value 下面 */
-  private resolveAddContentToTemplate(
-    dom: VDom,
-    attrName: string,
-    rule: ConvertRule,
-  ) {
+  private resolveAddContentToTemplate(dom: VDom, attrName: string, rule: ConvertRule) {
     if (dom.children.length === 0) return;
 
     const contentList = dom.children.filter(w => w.name !== 'ng-template');
@@ -248,11 +228,7 @@ export class DomService {
   }
 
   /** 为所有 ng-template 名称增加一个前缀 */
-  private resolveAddPrefixToTemplate(
-    dom: VDom,
-    attrName: string,
-    rule: ConvertRule,
-  ) {
+  private resolveAddPrefixToTemplate(dom: VDom, attrName: string, rule: ConvertRule) {
     Object.keys(dom.attribs).forEach(k => {
       const ngDom = dom.children.find(
         s =>
@@ -262,9 +238,7 @@ export class DomService {
       );
       if (!ngDom) return;
       const name = dom.attribs[k];
-      const newName = `${rule.value}${name
-        .substr(0, 1)
-        .toUpperCase()}${name.substr(1)}`;
+      const newName = `${rule.value}${name.substr(0, 1).toUpperCase()}${name.substr(1)}`;
       // ng-template
       delete ngDom.attribs[`#${name}`];
       ngDom.attribs[`#${newName}`] = '';
@@ -306,10 +280,7 @@ export class DomService {
     if (rule.extra_update_attrs) {
       Object.keys(dom.attribs).forEach(key => {
         if (rule.extra_update_attrs[key]) {
-          dom.attribs[key] = rule.extra_update_attrs[key].replace(
-            '{0}',
-            dom.attribs[key],
-          );
+          dom.attribs[key] = rule.extra_update_attrs[key].replace('{0}', dom.attribs[key]);
         }
       });
     }
@@ -332,20 +303,13 @@ export class DomService {
         }
 
         if (!item.children || item.children.length === 0) {
-          let html = `${this.genTab(deep)}<${item.name}${this.genAttr(
-            item.attribs,
-          )}>`;
-          if (this.ingoreClosedTag.indexOf(item.name) === -1)
-            html += `</${item.name}>`;
+          let html = `${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs)}>`;
+          if (this.ingoreClosedTag.indexOf(item.name) === -1) html += `</${item.name}>`;
           result.push(html);
           continue;
         }
 
-        if (
-          item.children &&
-          item.children.length === 1 &&
-          item.children[0].type === 'text'
-        ) {
+        if (item.children && item.children.length === 1 && item.children[0].type === 'text') {
           result.push(
             `${this.genTab(deep)}<${item.name}${this.genAttr(
               item.attribs,
@@ -354,9 +318,7 @@ export class DomService {
           continue;
         }
 
-        result.push(
-          `${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs)}>`,
-        );
+        result.push(`${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs)}>`);
 
         if (item && item.children && item.children.length > 0) {
           inFn(item.children, deep + 1);

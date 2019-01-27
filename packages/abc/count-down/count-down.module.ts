@@ -11,5 +11,4 @@ const COMPONENTS = [CountDownComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class CountDownModule {
-}
+export class CountDownModule {}

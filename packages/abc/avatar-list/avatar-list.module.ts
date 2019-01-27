@@ -12,5 +12,4 @@ const COMPONENTS = [AvatarListComponent, AvatarListItemComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class AvatarListModule {
-}
+export class AvatarListModule {}

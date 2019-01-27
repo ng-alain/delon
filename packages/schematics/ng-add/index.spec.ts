@@ -1,9 +1,5 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainApp } from '../utils/testing';
-import { Schema as NgAddOptions } from './schema';
 
 describe('Schematic: ng-add', () => {
   let runner: SchematicTestRunner;

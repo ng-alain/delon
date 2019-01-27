@@ -91,11 +91,14 @@ describe('abc: date-picker: range', () => {
 
 @Component({
   template: `
-    <range-picker #comp [(ngModel)]="i.start" [(ngModelEnd)]="i.end"
+    <range-picker
+      #comp
+      [(ngModel)]="i.start"
+      [(ngModelEnd)]="i.end"
       (nzOnOpenChange)="_nzOnOpenChange()"
       (nzOnPanelChange)="_nzOnPanelChange()"
       (nzOnOk)="_nzOnOk()"
-      ></range-picker>
+    ></range-picker>
   `,
 })
 class TestComponent {

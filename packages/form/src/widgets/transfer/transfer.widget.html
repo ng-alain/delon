@@ -1,0 +1,24 @@
+<sf-item-wrap [id]="id"
+              [schema]="schema"
+              [ui]="ui"
+              [showError]="showError"
+              [error]="error"
+              [showTitle]="schema.title">
+
+  <nz-transfer [nzDataSource]="list"
+               [nzTitles]="i.titles"
+               [nzOperations]="i.operations"
+               [nzListStyle]="ui.listStyle"
+               [nzItemUnit]="i.itemUnit"
+               [nzItemsUnit]="i.itemsUnit"
+               [nzShowSearch]="ui.showSearch"
+               [nzFilterOption]="ui.filterOption"
+               [nzSearchPlaceholder]="ui.searchPlaceholder"
+               [nzNotFoundContent]="ui.notFoundContent"
+               [nzCanMove]="_canMove"
+               (nzChange)="_change($event)"
+               (nzSearchChange)="_searchChange($event)"
+               (nzSelectChange)="_selectChange($event)">
+  </nz-transfer>
+
+</sf-item-wrap>

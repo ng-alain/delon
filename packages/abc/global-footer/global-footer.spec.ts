@@ -1,10 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  DebugElement,
-  Injector,
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { WINDOW } from '@delon/theme';
@@ -37,10 +32,7 @@ describe('abc: global-footer', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([]),
-        GlobalFooterModule,
-      ],
+      imports: [RouterTestingModule.withRoutes([]), GlobalFooterModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [TestComponent],
       providers: [
@@ -75,9 +67,7 @@ describe('abc: global-footer', () => {
       },
     ];
     fixture.detectChanges();
-    expect(dl.queryAll(By.css('.global-footer__links-item')).length).toBe(
-      context.links.length,
-    );
+    expect(dl.queryAll(By.css('.global-footer__links-item')).length).toBe(context.links.length);
   });
 
   it('should be custom copyright template', () => {
@@ -164,17 +154,16 @@ describe('abc: global-footer', () => {
 
   class PageObject {
     getFirst(): HTMLAnchorElement {
-      return dl.query(By.css('.global-footer__links-item'))
-        .nativeElement as HTMLAnchorElement;
+      return dl.query(By.css('.global-footer__links-item')).nativeElement as HTMLAnchorElement;
     }
   }
 });
 
 @Component({
   template: `
-  <global-footer [links]="links">
-    <div id="copyright">copyright</div>
-  </global-footer>
+    <global-footer [links]="links">
+      <div id="copyright">copyright</div>
+    </global-footer>
   `,
 })
 class TestComponent {

@@ -11,4 +11,4 @@ const COMPONENTS = [G2GaugeComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2GaugeModule { }
+export class G2GaugeModule {}

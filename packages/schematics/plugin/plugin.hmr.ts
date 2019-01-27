@@ -60,9 +60,7 @@ function addNodeTypeToTsconfig(host: Tree, options: PluginOptions) {
   if (options.type === 'add') {
     json.compilerOptions.types = [TYPENAME];
   } else {
-    const idx = (json.compilerOptions.types as string[]).findIndex(
-      w => w === TYPENAME,
-    );
+    const idx = (json.compilerOptions.types as string[]).findIndex(w => w === TYPENAME);
     if (idx !== -1) (json.compilerOptions.types as string[]).splice(idx, 1);
   }
   overwriteJSON(host, tsConfigPath, json);
@@ -71,37 +69,29 @@ function addNodeTypeToTsconfig(host: Tree, options: PluginOptions) {
 export function pluginHmr(options: PluginOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     // 1. add package
-    (options.type === 'add'
-      ? addPackageToPackageJson
-      : removePackageFromPackageJson)(
-        host,
-        ['@angularclass/hmr@DEP-0.0.0-PLACEHOLDER'],
-        'devDependencies',
-      );
+    (options.type === 'add' ? addPackageToPackageJson : removePackageFromPackageJson)(
+      host,
+      ['@angularclass/hmr@DEP-0.0.0-PLACEHOLDER'],
+      'devDependencies',
+    );
     // 2. add run scripts
-    (options.type === 'add'
-      ? addPackageToPackageJson
-      : removePackageFromPackageJson)(host, ['hmr@ng serve -c=hmr'], 'scripts');
+    (options.type === 'add' ? addPackageToPackageJson : removePackageFromPackageJson)(
+      host,
+      ['hmr@ng serve -c=hmr'],
+      'scripts',
+    );
     // 3. add angular.json
     configToAngularJson(host, options);
     if (options.type === 'add') {
       // 4. create a hmr.ts file
       tryAddFile(host, `${options.sourceRoot}/hmr.ts`, HMR_CONTENT.HMR_DOT_TS);
       // 5. update main.ts
-      tryAddFile(
-        host,
-        `${options.sourceRoot}/main.ts`,
-        HMR_CONTENT.HMR_MAIN_DOT_TS,
-      );
+      tryAddFile(host, `${options.sourceRoot}/main.ts`, HMR_CONTENT.HMR_MAIN_DOT_TS);
     } else {
       // 4. remove a hmr.ts file
       tryDelFile(host, `${options.sourceRoot}/hmr.ts`);
       // 5. update main.ts
-      tryAddFile(
-        host,
-        `${options.sourceRoot}/main.ts`,
-        HMR_CONTENT.NO_HMR_MAIN_DOT_TS,
-      );
+      tryAddFile(host, `${options.sourceRoot}/main.ts`, HMR_CONTENT.NO_HMR_MAIN_DOT_TS);
     }
     // 7. fix not found types
     addNodeTypeToTsconfig(host, options);

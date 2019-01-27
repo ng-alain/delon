@@ -8,17 +8,11 @@ import { SEErrorComponent } from './edit-error.component';
 import { SETitleComponent } from './edit-title.component';
 import { SEComponent } from './edit.component';
 
-const COMPONENTS = [
-  SEContainerComponent,
-  SEComponent,
-  SEErrorComponent,
-  SETitleComponent,
-];
+const COMPONENTS = [SEContainerComponent, SEComponent, SEErrorComponent, SETitleComponent];
 
 @NgModule({
   imports: [CommonModule, DelonUtilModule, NgZorroAntdModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class SEModule {
-}
+export class SEModule {}

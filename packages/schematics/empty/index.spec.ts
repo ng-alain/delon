@@ -1,7 +1,4 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainAndModuleApp } from '../utils/testing';
 import { Schema as NgAddOptions } from './schema';
 
@@ -15,11 +12,7 @@ describe('Schematic: empty', () => {
 
   beforeEach(() => {
     ({ runner, tree } = createAlainAndModuleApp());
-    tree = runner.runSchematic(
-      'empty',
-      { name: 'list', module: 'trade' },
-      tree,
-    );
+    tree = runner.runSchematic('empty', { name: 'list', module: 'trade' }, tree);
   });
 
   it('should be generate list page', () => {

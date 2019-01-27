@@ -6,32 +6,16 @@ import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-tag',
-  template: `
-  <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-
-    <nz-tag
-      *ngFor="let i of data"
-      nzMode="checkable"
-      [nzChecked]="i.checked"
-      (nzAfterClose)="_afterClose()"
-      (nzOnClose)="_close($event)"
-      (nzCheckedChange)="onChange(i)">
-      {{i.label}}
-    </nz-tag>
-
-  </sf-item-wrap>
-  `,
+  templateUrl: './tag.widget.html',
 })
 export class TagWidget extends ControlWidget {
   data: SFSchemaEnum[];
 
   reset(value: SFValue) {
-    getData(this.schema, this.ui, this.formProperty.formData).subscribe(
-      list => {
-        this.data = list;
-        this.detectChanges();
-      },
-    );
+    getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
+      this.data = list;
+      this.detectChanges();
+    });
   }
 
   onChange(item: SFSchemaEnum) {
@@ -49,9 +33,6 @@ export class TagWidget extends ControlWidget {
   }
 
   private updateValue() {
-    this.formProperty.setValue(
-      this.data.filter(w => w.checked).map(i => i.value),
-      false,
-    );
+    this.formProperty.setValue(this.data.filter(w => w.checked).map(i => i.value), false);
   }
 }

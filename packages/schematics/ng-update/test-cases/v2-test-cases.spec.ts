@@ -1,7 +1,4 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { join } from 'path';
 import {
   createFileSystemTestApp,
@@ -31,10 +28,7 @@ describe('v2', () => {
         return inputs;
       }, {});
 
-      const { tempPath, logOutput } = await runTestCases(
-        migrationName,
-        testCaseInputs,
-      );
+      const { tempPath, logOutput } = await runTestCases(migrationName, testCaseInputs);
       testCasesOutputPath = join(tempPath, 'projects/ng-alain/src/test-cases/');
       testCasesLogOutput = logOutput;
     });
@@ -42,14 +36,10 @@ describe('v2', () => {
     // Iterates through every test case directory and generates a jasmine test block that will
     // verify that the update schematics properly updated the test input to the expected output.
     testCases.forEach(testCaseName => {
-      const expectedOutputPath = resolveBazelDataFile(
-        `${testCaseName}_expected_output.ts`,
-      );
+      const expectedOutputPath = resolveBazelDataFile(`${testCaseName}_expected_output.ts`);
 
       it(`should apply update schematics to test case: ${testCaseName}`, () => {
-        const output = readFileContent(
-          join(testCasesOutputPath, `${testCaseName}.ts`),
-        );
+        const output = readFileContent(join(testCasesOutputPath, `${testCaseName}.ts`));
         const expected = readFileContent(expectedOutputPath);
         expect(output).toBe(expected);
       });
@@ -61,18 +51,14 @@ describe('v2', () => {
     beforeEach(() => {
       const runner = new SchematicTestRunner('schematics', migrationCollection);
       tree = createFileSystemTestApp(runner).appTree;
-      Object.keys(MOCK_LAYOUT).forEach(path =>
-        tree.create(path, MOCK_LAYOUT[path]),
-      );
+      Object.keys(MOCK_LAYOUT).forEach(path => tree.create(path, MOCK_LAYOUT[path]));
       runner.runSchematic(migrationName, {}, tree);
     });
 
     it('should working', () => {
       const style = tree.readContent('src/styles.less');
       expect(style).toContain(`~@delon/theme/styles/layout/default/index`);
-      const defaultCompHTML = tree.readContent(
-        'src/app/layout/default/default.component.html',
-      );
+      const defaultCompHTML = tree.readContent('src/app/layout/default/default.component.html');
       expect(defaultCompHTML).toContain(`alain-default__progress-bar`);
 
       const headerCompHTML = tree.readContent(
@@ -109,9 +95,7 @@ describe('v2', () => {
     });
 
     testCases.forEach(testCaseName => {
-      const expectedOutputPath = resolveBazelDataFile(
-        `${testCaseName}_expected_output.ts`,
-      );
+      const expectedOutputPath = resolveBazelDataFile(`${testCaseName}_expected_output.ts`);
 
       it(`should apply update schematics to test case: ${testCaseName}`, () => {
         const output = tree.readContent(`src/app/${testCaseName}.ts`);
@@ -119,6 +103,5 @@ describe('v2', () => {
         expect(output).toBe(expected);
       });
     });
-
   });
 });

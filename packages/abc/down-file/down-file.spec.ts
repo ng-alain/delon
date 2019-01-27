@@ -4,10 +4,10 @@ import {
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite, createTestContext } from '@delon/testing';
+import { configureTestSuite } from '@delon/testing';
 import { _HttpClient } from '@delon/theme';
 import * as fs from 'file-saver';
 

@@ -87,10 +87,7 @@ describe('acl: service', () => {
     expect(srv.can(ABILITY_NUMBER)).toBe(true, 'ability muse be true');
     expect(srv.can([ABILITY_NUMBER])).toBe(true, 'ability array muse be true');
     expect(srv.can([ADMIN])).toBe(true, 'role array muse be true');
-    expect(srv.can({ role: [ADMIN] } as ACLType)).toBe(
-      true,
-      'ACLType item muse be true',
-    );
+    expect(srv.can({ role: [ADMIN] } as ACLType)).toBe(true, 'ACLType item muse be true');
     expect(srv.can(ADMIN + '1')).toBe(false);
     expect(srv.can(null)).toBe(true);
     expect(srv.can({})).toBe(false);
@@ -115,16 +112,12 @@ describe('acl: service', () => {
 
   it('should be valid when all of for is array roles', () => {
     srv.add({ ability: [ABILITY, ABILITY_CREATE] });
-    expect(
-      srv.canAbility({ ability: [ABILITY, ABILITY_CREATE], mode: 'allOf' }),
-    ).toBe(true);
+    expect(srv.canAbility({ ability: [ABILITY, ABILITY_CREATE], mode: 'allOf' })).toBe(true);
   });
 
   it('should be invalid when all of for is array roles', () => {
     srv.add({ ability: [ABILITY] });
-    expect(
-      srv.canAbility({ ability: [ABILITY, ABILITY_CREATE], mode: 'allOf' }),
-    ).toBe(false);
+    expect(srv.canAbility({ ability: [ABILITY, ABILITY_CREATE], mode: 'allOf' })).toBe(false);
   });
 
   it('#change', (done: () => void) => {

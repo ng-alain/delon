@@ -5,10 +5,13 @@ import format from 'date-fns/format';
 @Component({
   selector: 'count-down',
   template: `
-    <countdown *ngIf="config" [config]="config"
+    <countdown
+      *ngIf="config"
+      [config]="config"
       (start)="_start()"
       (finished)="_finished()"
-      (notify)="_notify($event)"></countdown>
+      (notify)="_notify($event)"
+    ></countdown>
   `,
 })
 export class CountDownComponent {
@@ -21,7 +24,8 @@ export class CountDownComponent {
   set target(value: number | Date) {
     this.config = {
       template: `$!h!:$!m!:$!s!`,
-      stopTime: typeof value === 'number' ? addSeconds(new Date(), value).valueOf() : format(value, 'x'),
+      stopTime:
+        typeof value === 'number' ? addSeconds(new Date(), value).valueOf() : format(value, 'x'),
     };
   }
 

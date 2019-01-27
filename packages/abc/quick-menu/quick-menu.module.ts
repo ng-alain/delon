@@ -12,4 +12,4 @@ const COMPONENTS = [QuickMenuComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class QuickMenuModule { }
+export class QuickMenuModule {}

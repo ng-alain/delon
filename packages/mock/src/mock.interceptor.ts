@@ -1,5 +1,15 @@
 // tslint:disable:no-any
-import { HttpBackend, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpResponseBase, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+  HttpResponseBase,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { of, throwError, Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -10,7 +20,7 @@ import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
 
 class HttpMockInterceptorHandler implements HttpHandler {
-  constructor(private next: HttpHandler, private interceptor: HttpInterceptor) { }
+  constructor(private next: HttpHandler, private interceptor: HttpInterceptor) {}
 
   handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
     return this.interceptor.intercept(req, this.next);
@@ -19,7 +29,7 @@ class HttpMockInterceptorHandler implements HttpHandler {
 
 @Injectable()
 export class MockInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) { }
+  constructor(private injector: Injector) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const src = this.injector.get(MockService);
@@ -62,12 +72,8 @@ export class MockInterceptor implements HttpInterceptor {
             }
           });
         }
-        req.params
-          .keys()
-          .forEach(key => (mockRequest.queryString[key] = req.params.get(key)));
-        req.headers
-          .keys()
-          .forEach(key => (mockRequest.headers[key] = req.headers.get(key)));
+        req.params.keys().forEach(key => (mockRequest.queryString[key] = req.params.get(key)));
+        req.headers.keys().forEach(key => (mockRequest.headers[key] = req.headers.get(key)));
 
         try {
           res = rule.callback.call(this, mockRequest);
@@ -109,7 +115,8 @@ export class MockInterceptor implements HttpInterceptor {
       const lastInterceptors = interceptors.slice(interceptors.indexOf(this) + 1);
       if (lastInterceptors.length > 0) {
         const chain = lastInterceptors.reduceRight(
-          (_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor), {
+          (_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor),
+          {
             handle: () => res$,
           } as HttpBackend,
         );

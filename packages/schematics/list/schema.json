@@ -54,8 +54,7 @@
       "type": "string",
       "description": "The prefix to apply to generated selectors.",
       "alias": "p",
-      "oneOf": [
-        {
+      "oneOf": [{
           "maxLength": 0
         },
         {
@@ -109,7 +108,7 @@
       "description": "组件名不加前缀 (Without prefix to selectors)",
       "default": false
     },
-    "module":  {
+    "module": {
       "type": "string",
       "description": "Allows specification of the declaring module.",
       "alias": "m",

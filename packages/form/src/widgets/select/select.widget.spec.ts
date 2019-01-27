@@ -3,12 +3,9 @@ import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { NzSelectComponent } from 'ng-zorro-antd';
 
-import { of } from 'rxjs';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 import { SelectWidget } from './select.widget';
-
-const DATA = ['asdf', 'cipchk', '中文', 'にほんご'];
 
 describe('form: widget: select', () => {
   let fixture: ComponentFixture<TestFormComponent>;

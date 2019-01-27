@@ -11,4 +11,4 @@ const COMPONENTS = [G2TimelineComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2TimelineModule { }
+export class G2TimelineModule {}

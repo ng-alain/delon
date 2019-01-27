@@ -1,17 +1,6 @@
-import {
-  Component,
-  DebugElement,
-  Injector,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, DebugElement, Injector, OnInit, ViewChild } from '@angular/core';
 import { inject, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -28,11 +17,7 @@ describe('abc: error-collect', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [
-        ErrorCollectModule,
-        ReactiveFormsModule,
-        NgZorroAntdModule,
-      ],
+      imports: [ErrorCollectModule, ReactiveFormsModule, NgZorroAntdModule],
       declarations: [TestComponent],
     });
   });
@@ -55,7 +40,7 @@ describe('abc: error-collect', () => {
     if (context) context.comp.ngOnDestroy();
   });
 
-  it('General Configuration', inject([ ErrorCollectConfig ], (cog: ErrorCollectConfig) => {
+  it('General Configuration', inject([ErrorCollectConfig], (cog: ErrorCollectConfig) => {
     cog.offsetTop = 10;
     fixture = TestBed.createComponent(TestComponent);
     context = fixture.componentInstance;
@@ -78,8 +63,7 @@ describe('abc: error-collect', () => {
         const el = dl.query(By.css('.has-error')).nativeElement as HTMLElement;
         spyOn(el, 'scrollIntoView');
         expect(el.scrollIntoView).not.toHaveBeenCalled();
-        (dl.query(By.css('error-collect'))
-          .nativeElement as HTMLElement).click();
+        (dl.query(By.css('error-collect')).nativeElement as HTMLElement).click();
         expect(el.scrollIntoView).toHaveBeenCalled();
         done();
       }, 21);
@@ -104,10 +88,7 @@ describe('abc: error-collect', () => {
 
   it('should be throw [No found form element] if no form element', () => {
     expect(() => {
-      TestBed.overrideTemplate(
-        TestComponent,
-        `<error-collect #ec [freq]="freq"></error-collect>`,
-      )
+      TestBed.overrideTemplate(TestComponent, `<error-collect #ec [freq]="freq"></error-collect>`)
         .createComponent(TestComponent)
         .detectChanges();
     }).toThrowError('No found form element');
@@ -117,14 +98,14 @@ describe('abc: error-collect', () => {
 @Component({
   template: `
     <form nz-form [formGroup]="validateForm">
-        <nz-form-item>
-            <nz-form-control>
-                <input nz-input formControlName="email" id="email">
-            </nz-form-control>
-        </nz-form-item>
-        <error-collect #ec [freq]="freq" [offsetTop]="offsetTop"></error-collect>
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input formControlName="email" id="email" />
+        </nz-form-control>
+      </nz-form-item>
+      <error-collect #ec [freq]="freq" [offsetTop]="offsetTop"></error-collect>
     </form>
-    `,
+  `,
 })
 class TestComponent implements OnInit {
   freq = 20;

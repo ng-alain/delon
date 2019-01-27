@@ -83,8 +83,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   }
   // path
   if (schema.path === undefined) {
-    const projectDirName =
-      project.projectType === 'application' ? 'app' : 'lib';
+    const projectDirName = project.projectType === 'application' ? 'app' : 'lib';
     // tslint:disable-next-line:no-any
     schema.path = `/${(project as any).sourceRoot}/${projectDirName}/routes`;
   }
@@ -101,10 +100,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
     schema.path += '/' + schema.target;
   }
 
-  schema.routerModulePath = schema.importModulePath.replace(
-    '.module.ts',
-    '-routing.module.ts',
-  );
+  schema.routerModulePath = schema.importModulePath.replace('.module.ts', '-routing.module.ts');
 
   // html selector
   schema.selector =
@@ -115,36 +111,19 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   validateHtmlSelector(schema.selector);
 }
 
-function addImportToModule(
-  host: Tree,
-  path: string,
-  symbolName: string,
-  fileName: string,
-) {
+function addImportToModule(host: Tree, path: string, symbolName: string, fileName: string) {
   const source = getSourceFile(host, path);
-  const change = insertImport(
-    source,
-    path,
-    symbolName,
-    fileName,
-  ) as InsertChange;
+  const change = insertImport(source, path, symbolName, fileName) as InsertChange;
   const declarationRecorder = host.beginUpdate(path);
   declarationRecorder.insertLeft(change.pos, change.toAdd);
   host.commitUpdate(declarationRecorder);
 }
 
-export function addValueToVariable(
-  host: Tree,
-  path: string,
-  variableName: string,
-  text: string,
-) {
+export function addValueToVariable(host: Tree, path: string, variableName: string, text: string) {
   const source = getSourceFile(host, path);
   const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
-    throw new SchematicsException(
-      `Could not find any [${variableName}] variable.`,
-    );
+    throw new SchematicsException(`Could not find any [${variableName}] variable.`);
   }
   // tslint:disable-next-line:no-any
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
@@ -161,8 +140,9 @@ export function addValueToVariable(
 }
 
 function getRelativePath(path: string, schema: CommonSchema) {
-  // tslint:disable-next-line:prefer-template
-  const importPath = `/${schema.path}/` + (schema.flat ? '' : strings.dasherize(schema.name) + '/') + strings.dasherize(schema.name) + '.component';
+  const importPath = `/${schema.path}/${
+    schema.flat ? '' : strings.dasherize(schema.name) + '/'
+  }${strings.dasherize(schema.name)}.component`;
   return buildRelativePath(path, importPath);
 }
 
@@ -182,19 +162,9 @@ function addDeclaration(schema: CommonSchema) {
 
     // component
     if (schema.modal === true) {
-      addValueToVariable(
-        host,
-        schema.importModulePath,
-        'COMPONENTS_NOROUNT',
-        schema.componentName,
-      );
+      addValueToVariable(host, schema.importModulePath, 'COMPONENTS_NOROUNT', schema.componentName);
     } else {
-      addValueToVariable(
-        host,
-        schema.importModulePath,
-        'COMPONENTS',
-        schema.componentName,
-      );
+      addValueToVariable(host, schema.importModulePath, 'COMPONENTS', schema.componentName);
       // routing
       addImportToModule(
         host,
@@ -229,9 +199,7 @@ export function buildAlain(schema: CommonSchema): Rule {
     const templateSource = apply(url(schema._filesPath), [
       filter(path => !path.endsWith('.DS_Store')),
       schema.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),
-      schema.inlineStyle
-        ? filter(path => !path.endsWith('.__styleext__'))
-        : noop(),
+      schema.inlineStyle ? filter(path => !path.endsWith('.__styleext__')) : noop(),
       schema.inlineTemplate ? filter(path => !path.endsWith('.html')) : noop(),
       template({
         ...strings,
@@ -241,11 +209,10 @@ export function buildAlain(schema: CommonSchema): Rule {
       move(null, schema.path + '/'),
     ]);
 
-    return chain([
-      branchAndMerge(
-        chain([addDeclaration(schema), mergeWith(templateSource)]),
-      ),
-    ])(host, context);
+    return chain([branchAndMerge(chain([addDeclaration(schema), mergeWith(templateSource)]))])(
+      host,
+      context,
+    );
   };
 }
 

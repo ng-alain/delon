@@ -19,7 +19,9 @@ let nextUniqueId = 0;
 
 @Component({
   selector: 'sf-item',
-  template: `<ng-template #target></ng-template>`,
+  template: `
+    <ng-template #target></ng-template>
+  `,
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   private ref: ComponentRef<Widget<FormProperty>>;
@@ -31,10 +33,7 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('target', { read: ViewContainerRef })
   container: ViewContainerRef;
 
-  constructor(
-    private widgetFactory: WidgetFactory,
-    private terminator: TerminatorService,
-  ) { }
+  constructor(private widgetFactory: WidgetFactory, private terminator: TerminatorService) {}
 
   onWidgetInstanciated(widget: Widget<FormProperty>) {
     this.widget = widget;
@@ -54,10 +53,8 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
-    this.ref = this.widgetFactory.createWidget(
-      this.container,
-      (this.formProperty.ui.widget || this.formProperty.schema.type) as string,
-    );
+    this.ref = this.widgetFactory.createWidget(this.container, (this.formProperty.ui.widget ||
+      this.formProperty.schema.type) as string);
     this.onWidgetInstanciated(this.ref.instance);
   }
 

@@ -51,12 +51,8 @@ describe('abc: lodop', () => {
     isNullLodop = false;
     mockLodop = {
       SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
-      GET_PRINTER_COUNT: jasmine
-        .createSpy('GET_PRINTER_COUNT')
-        .and.returnValue(1),
-      GET_PRINTER_NAME: jasmine
-        .createSpy('GET_PRINTER_NAME')
-        .and.returnValue('1'),
+      GET_PRINTER_COUNT: jasmine.createSpy('GET_PRINTER_COUNT').and.returnValue(1),
+      GET_PRINTER_NAME: jasmine.createSpy('GET_PRINTER_NAME').and.returnValue('1'),
       webskt: {
         readyState: 1,
       },
@@ -306,7 +302,10 @@ describe('abc: lodop', () => {
     });
     it('should be call bat not data', (done: () => void) => {
       srv.lodop
-        .pipe(filter(w => w.ok), tap(() => srv.print(code, null)))
+        .pipe(
+          filter(w => w.ok),
+          tap(() => srv.print(code, null)),
+        )
         .subscribe(res => {
           expect(mockLodop.PRINT).not.toHaveBeenCalled();
           done();

@@ -7,15 +7,9 @@ import { SFComponent } from '../../sf.component';
 export class SFTemplateDirective implements OnInit {
   @Input('sf-template') path: string;
 
-  constructor(
-    private templateRef: TemplateRef<void>,
-    private table: SFComponent,
-  ) { }
+  constructor(private templateRef: TemplateRef<void>, private table: SFComponent) {}
 
   ngOnInit(): void {
-    this.table._addTpl(
-      this.path.startsWith('/') ? this.path : `/` + this.path,
-      this.templateRef,
-    );
+    this.table._addTpl(this.path.startsWith('/') ? this.path : `/` + this.path, this.templateRef);
   }
 }

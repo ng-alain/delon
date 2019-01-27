@@ -7,4 +7,4 @@ import { StringTemplateOutletDirective } from './addon/string_template_outlet';
   declarations: [StringTemplateOutletDirective],
   exports: [StringTemplateOutletDirective],
 })
-export class DelonUtilModule { }
+export class DelonUtilModule {}

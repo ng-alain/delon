@@ -1,7 +1,9 @@
 <div class="quick-menu__inner">
-  <div class="quick-menu__ctrl" [ngStyle]="ctrlStyle">
+  <div class="quick-menu__ctrl"
+       [ngStyle]="ctrlStyle">
     <div class="quick-menu__ctrl-icon">
-      <ng-container *stringTemplateOutlet="icon"><i nz-icon [type]="icon"></i></ng-container>
+      <ng-container *stringTemplateOutlet="icon"><i nz-icon
+           [type]="icon"></i></ng-container>
     </div>
   </div>
   <ng-content></ng-content>

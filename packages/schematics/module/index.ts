@@ -5,13 +5,7 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import {
-  basename,
-  dirname,
-  normalize,
-  relative,
-  strings,
-} from '@angular-devkit/core';
+import { basename, dirname, normalize, relative, strings } from '@angular-devkit/core';
 import {
   apply,
   branchAndMerge,
@@ -48,22 +42,19 @@ function addDeclarationToNgModule(options: ModuleSchema): Rule {
       throw new SchematicsException(`File ${modulePath} does not exist.`);
     }
     const sourceText = text.toString('utf-8');
-    const source = ts.createSourceFile(
-      modulePath,
-      sourceText,
-      ts.ScriptTarget.Latest,
-      true,
+    const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
+
+    const importModulePath = normalize(
+      `/${options.path}/${
+        options.flat ? '' : strings.dasherize(options.name) + '/'
+      }${strings.dasherize(options.name)}.module`,
     );
+    const relativeDir = relative(dirname(modulePath), dirname(importModulePath));
 
     // tslint:disable-next-line:prefer-template
-    const importModulePath = normalize(`/${options.path}/` + (options.flat ? '' : strings.dasherize(options.name) + '/') + strings.dasherize(options.name) + '.module');
-    const relativeDir = relative(
-      dirname(modulePath),
-      dirname(importModulePath),
-    );
-
-    // tslint:disable-next-line:prefer-template
-    const relativePath = (relativeDir.startsWith('.') ? relativeDir : './' + relativeDir) + '/' + basename(importModulePath);
+    const relativePath = `${
+      relativeDir.startsWith('.') ? relativeDir : './' + relativeDir
+    }/${basename(importModulePath)}`;
     const changes = addImportToModule(
       source,
       modulePath,
@@ -83,7 +74,7 @@ function addDeclarationToNgModule(options: ModuleSchema): Rule {
   };
 }
 
-export default function (schema: ModuleSchema): Rule {
+export default function(schema: ModuleSchema): Rule {
   return (host: Tree, context: SchematicContext) => {
     const workspace = getWorkspace(host);
     if (!schema.project) {
@@ -118,9 +109,7 @@ export default function (schema: ModuleSchema): Rule {
     ]);
 
     return chain([
-      branchAndMerge(
-        chain([addDeclarationToNgModule(schema), mergeWith(templateSource)]),
-      ),
+      branchAndMerge(chain([addDeclarationToNgModule(schema), mergeWith(templateSource)])),
     ])(host, context);
   };
 }

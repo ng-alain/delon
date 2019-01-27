@@ -1,7 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-import { CascaderOption } from 'ng-zorro-antd';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { CascaderWidget } from './cascader.widget';
 

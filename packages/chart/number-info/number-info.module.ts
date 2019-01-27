@@ -12,4 +12,4 @@ const COMPONENTS = [NumberInfoComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class NumberInfoModule { }
+export class NumberInfoModule {}

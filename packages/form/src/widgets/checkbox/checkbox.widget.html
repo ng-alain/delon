@@ -1,16 +1,31 @@
 <ng-template #all>
-  <label *ngIf="ui.checkAll" nz-checkbox class="mr-sm" [(ngModel)]="allChecked" [nzIndeterminate]="indeterminate"
-    (click)="onAllChecked($event)">{{ ui.checkAllText || l.checkAllText }}</label>
+  <label *ngIf="ui.checkAll"
+         nz-checkbox
+         class="mr-sm"
+         [(ngModel)]="allChecked"
+         [nzIndeterminate]="indeterminate"
+         (click)="onAllChecked($event)">{{ ui.checkAllText || l.checkAllText }}</label>
 </ng-template>
-<sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError"
-  [error]="error" [showTitle]="true" [title]="labelTitle">
+<sf-item-wrap [id]="id"
+              [schema]="schema"
+              [ui]="ui"
+              [showError]="showError"
+              [error]="error"
+              [showTitle]="true"
+              [title]="labelTitle">
   <ng-container *ngIf="inited && data.length === 0">
-    <label nz-checkbox [nzDisabled]="disabled" [ngModel]="value" (ngModelChange)="_setValue($event)">
+    <label nz-checkbox
+           [nzDisabled]="disabled"
+           [ngModel]="value"
+           (ngModelChange)="_setValue($event)">
       {{schema.title}}
       <span class="sf__optional">
         {{ ui.optional }}
-        <nz-tooltip *ngIf="ui.optionalHelp" [nzTitle]="ui.optionalHelp">
-          <i nz-tooltip nz-icon type="question-circle"></i>
+        <nz-tooltip *ngIf="ui.optionalHelp"
+                    [nzTitle]="ui.optionalHelp">
+          <i nz-tooltip
+             nz-icon
+             type="question-circle"></i>
         </nz-tooltip>
       </span>
     </label>
@@ -18,16 +33,23 @@
   <ng-container *ngIf="inited && data.length > 0">
     <ng-container *ngIf="grid_span === 0">
       <ng-template [ngTemplateOutlet]="all"></ng-template>
-      <nz-checkbox-group [ngModel]="data" (ngModelChange)="notifySet()"></nz-checkbox-group>
+      <nz-checkbox-group [ngModel]="data"
+                         (ngModelChange)="notifySet()"></nz-checkbox-group>
     </ng-container>
     <ng-container *ngIf="grid_span !== 0">
-      <nz-checkbox-wrapper class="sf__checkbox-list" (nzOnChange)="groupInGridChange($event)">
+      <nz-checkbox-wrapper class="sf__checkbox-list"
+                           (nzOnChange)="groupInGridChange($event)">
         <nz-row>
-          <nz-col [nzSpan]="grid_span" *ngIf="ui.checkAll">
+          <nz-col [nzSpan]="grid_span"
+                  *ngIf="ui.checkAll">
             <ng-template [ngTemplateOutlet]="all"></ng-template>
           </nz-col>
-          <nz-col [nzSpan]="grid_span" *ngFor="let i of data">
-            <label nz-checkbox [nzValue]="i.value" [ngModel]="i.checked" [nzDisabled]="i.disabled">{{i.label}}</label>
+          <nz-col [nzSpan]="grid_span"
+                  *ngFor="let i of data">
+            <label nz-checkbox
+                   [nzValue]="i.value"
+                   [ngModel]="i.checked"
+                   [nzDisabled]="i.disabled">{{i.label}}</label>
           </nz-col>
         </nz-row>
       </nz-checkbox-wrapper>
