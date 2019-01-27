@@ -23,6 +23,7 @@ describe('form: schema', () => {
   });
 
   describe('[cover schema]', () => {
+    beforeEach(() => spyOn(console, 'warn'));
     it('should be using select widget when not ui and enum exists', () => {
       page
         .newSchema({
@@ -160,9 +161,7 @@ describe('form: schema', () => {
         it('should be has $items when is array', () => {
           const schema = deepCopy(arrSchema) as SFSchema;
           schema.properties.name.ui = deepCopy(arrUI);
-          page
-            .newSchema(schema)
-            .checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
+          page.newSchema(schema).checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
         });
       });
       describe('[#via ui property]', () => {
@@ -174,9 +173,7 @@ describe('form: schema', () => {
               ...deepCopy(arrUI),
             },
           };
-          page
-            .newSchema(schema, uiSchema)
-            .checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
+          page.newSchema(schema, uiSchema).checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
         });
       });
     });
@@ -228,10 +225,7 @@ describe('form: schema', () => {
             login_type: {
               type: 'string',
               title: '登录方式',
-              enum: [
-                { label: '手机', value: 'mobile' },
-                { label: '账密', value: 'account' },
-              ],
+              enum: [{ label: '手机', value: 'mobile' }, { label: '账密', value: 'account' }],
               default: 'mobile',
               ui: {
                 widget: 'radio',
@@ -262,9 +256,7 @@ describe('form: schema', () => {
         })
         .checkCount('.j-mobile', 1)
         .checkCount('.j-name', 0);
-      const labels = page
-        .getEl('.j-login_type nz-radio-group')
-        .querySelectorAll('label');
+      const labels = page.getEl('.j-login_type nz-radio-group').querySelectorAll('label');
       expect(labels.length).toBe(2);
       labels[1].click();
       page.checkCount('.j-mobile', 0).checkCount('.j-name', 1);
@@ -276,10 +268,7 @@ describe('form: schema', () => {
             login_type: {
               type: 'string',
               title: '登录方式',
-              enum: [
-                { label: '手机', value: 'mobile' },
-                { label: '账密', value: 'account' },
-              ],
+              enum: [{ label: '手机', value: 'mobile' }, { label: '账密', value: 'account' }],
               default: 'mobile',
               ui: {
                 widget: 'radio',
@@ -307,9 +296,7 @@ describe('form: schema', () => {
         })
         .checkCount('.j-mobile', 1)
         .checkCount('.j-name', 1);
-      const labels = page
-        .getEl('.j-login_type nz-radio-group')
-        .querySelectorAll('label');
+      const labels = page.getEl('.j-login_type nz-radio-group').querySelectorAll('label');
       expect(labels.length).toBe(2);
       labels[1].click();
       page.checkCount('.j-mobile', 0).checkCount('.j-name', 1);
@@ -330,10 +317,7 @@ describe('form: schema', () => {
             login_type: {
               type: 'string',
               title: '登录方式',
-              enum: [
-                { label: '手机', value: 'mobile' },
-                { label: '账密', value: 'account' },
-              ],
+              enum: [{ label: '手机', value: 'mobile' }, { label: '账密', value: 'account' }],
               default: 'mobile',
               ui: {
                 widget: 'radio',
@@ -365,9 +349,7 @@ describe('form: schema', () => {
 
   describe('[order]', () => {
     function genKeys() {
-      return JSON.stringify(
-        Object.keys((context.comp.rootProperty as ObjectProperty).properties),
-      );
+      return JSON.stringify(Object.keys((context.comp.rootProperty as ObjectProperty).properties));
     }
 
     function checkOrderKeys(arr: string[]) {
@@ -403,6 +385,7 @@ describe('form: schema', () => {
     });
 
     describe('should be throw error', () => {
+      beforeEach(() => spyOn(console, 'error'));
       it('when has extraneous key', () => {
         expect(() => {
           page.newSchema({

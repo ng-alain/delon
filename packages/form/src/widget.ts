@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  HostBinding,
-  Inject,
-  Injector,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, HostBinding, Inject, Injector } from '@angular/core';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
@@ -42,13 +36,16 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
     @Inject(Injector) public readonly injector: Injector,
     @Inject(SFItemComponent) public readonly sfItemComp?: SFItemComponent,
     @Inject(SFComponent) public readonly sfComp?: SFComponent,
-  ) { }
+  ) {}
 
   ngAfterViewInit(): void {
     this.formProperty.errorsChanges
-      .pipe(takeUntil(this.sfItemComp.unsubscribe$), filter(w => w != null))
+      .pipe(
+        takeUntil(this.sfItemComp.unsubscribe$),
+        filter(w => w != null),
+      )
       .subscribe((errors: ErrorData[]) => {
-        if (this.ui.debug) di('errorsChanges', this.formProperty.path, errors);
+        di(this.ui, 'errorsChanges', this.formProperty.path, errors);
 
         // 不显示首次校验视觉
         if (this.firstVisual) {
@@ -63,9 +60,7 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
 
   setValue(value: SFValue) {
     this.formProperty.setValue(value, false);
-    if (this.ui.debug) {
-      di('valueChanges', this.formProperty.path, this.formProperty);
-    }
+    di(this.ui, 'valueChanges', this.formProperty.path, this.formProperty);
   }
 
   get value() {
@@ -84,12 +79,11 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
 }
 
 export class ControlWidget extends Widget<FormProperty> {
-  reset(value: SFValue) { }
+  reset(value: SFValue) {}
 }
 
-export class ArrayLayoutWidget extends Widget<ArrayProperty>
-  implements AfterViewInit {
-  reset(value: SFValue) { }
+export class ArrayLayoutWidget extends Widget<ArrayProperty> implements AfterViewInit {
+  reset(value: SFValue) {}
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges
@@ -98,9 +92,8 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty>
   }
 }
 
-export class ObjectLayoutWidget extends Widget<ObjectProperty>
-  implements AfterViewInit {
-  reset(value: SFValue) { }
+export class ObjectLayoutWidget extends Widget<ObjectProperty> implements AfterViewInit {
+  reset(value: SFValue) {}
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges

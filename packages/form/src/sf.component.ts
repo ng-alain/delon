@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -14,6 +15,7 @@ import { DelonLocaleService } from '@delon/theme';
 import { deepCopy, InputBoolean } from '@delon/util';
 import { Subscription } from 'rxjs';
 
+import { take } from 'rxjs/operators';
 import { DelonFormConfig } from './config';
 import { ErrorData } from './errors';
 import { SFButton } from './interface';
@@ -193,6 +195,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     private options: DelonFormConfig,
     private cdr: ChangeDetectorRef,
     private i18n: DelonLocaleService,
+    private ngZone: NgZone,
   ) {
     this.liveValidate = options.liveValidate;
     this.firstVisual = options.firstVisual;
@@ -328,9 +331,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     this._schema = _schema;
 
-    if (this._ui.debug) {
-      di('cover schema & ui', this._ui, _schema);
-    }
+    di(this._ui, 'cover schema & ui', this._ui, _schema);
   }
 
   private coverButtonProperty() {
@@ -366,7 +367,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (this._mode) {
       this.mode = this._mode;
     }
-    if (this._ui.debug) di('button property', this._btn);
+
+    di(this._ui, 'button property', this._btn);
   }
 
   ngOnInit(): void {
@@ -456,7 +458,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    */
   reset(emit = false): this {
     this.rootProperty.resetValue(this.formData, false);
-    Promise.resolve().then(() => this.cdr.detectChanges());
+    this.ngZone.onStable
+      .asObservable()
+      .pipe(take(1))
+      .subscribe(() => this.cdr.markForCheck());
     if (emit) {
       this.formReset.emit(this.value);
     }
