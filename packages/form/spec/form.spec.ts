@@ -1,32 +1,37 @@
 import { Component, DebugElement } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { configureTestSuite, createTestContext } from '@delon/testing';
-import { AlainThemeModule } from '@delon/theme';
+import { en_US, AlainThemeModule, DelonLocaleService } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
 import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
 
 describe('form: component', () => {
+  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
   let page: SFPage;
 
   configureTestSuite(() => {
-    TestBed.configureTestingModule({
+    injector = TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()],
       declarations: [TestFormComponent, TestModeComponent],
     });
   });
 
+  function createComp() {
+    fixture.detectChanges();
+    page = new SFPage(context.comp);
+    page.prop(dl, context, fixture);
+  }
+
   describe('', () => {
     beforeEach(() => {
       ({ fixture, dl, context } = createTestContext(TestFormComponent));
-      fixture.detectChanges();
-      page = new SFPage(context.comp);
-      page.prop(dl, context, fixture);
+      createComp();
     });
 
     describe('[default]', () => {
@@ -116,11 +121,7 @@ describe('form: component', () => {
                 },
               },
             })
-            .checkStyle(
-              '.sf-btns .ant-form-item-control-wrapper',
-              'margin-left',
-              '100px',
-            );
+            .checkStyle('.sf-btns .ant-form-item-control-wrapper', 'margin-left', '100px');
         });
         it('should be specified grid', () => {
           const span = 11;
@@ -130,10 +131,7 @@ describe('form: component', () => {
             },
           };
           fixture.detectChanges();
-          page.checkCls(
-            '.sf-btns .ant-form-item-control-wrapper',
-            `ant-col-${span}`,
-          );
+          page.checkCls('.sf-btns .ant-form-item-control-wrapper', `ant-col-${span}`);
         });
         it('should be fixed label', () => {
           const spanLabelFixed = 56;
@@ -162,15 +160,20 @@ describe('form: component', () => {
           page.checkCount('.ant-btn-lg', 2);
         });
       });
+      it('should be update button text when i18n changed', () => {
+        page.checkElText('.ant-btn-primary', '提交');
+        const i18n = injector.get(DelonLocaleService) as DelonLocaleService;
+        i18n.setLocale(en_US);
+        fixture.detectChanges();
+        page.checkElText('.ant-btn-primary', 'Submit');
+      });
     });
 
     describe('properites', () => {
       describe('#validate', () => {
         it('should be validate when submitted and not liveValidate', () => {
           page.submit(false);
-          expect(
-            (page.getEl('.ant-btn-primary') as HTMLButtonElement).disabled,
-          ).toBe(true);
+          expect((page.getEl('.ant-btn-primary') as HTMLButtonElement).disabled).toBe(true);
           context.liveValidate = false;
           fixture.detectChanges();
           page
@@ -268,6 +271,21 @@ describe('form: component', () => {
         });
       });
 
+      describe('#onlyVisual', () => {
+        it('with false', () => {
+          context.onlyVisual = false;
+          fixture.detectChanges();
+          page.checkCount('.sf__no-error', 0);
+          page.checkCount('nz-form-explain', 2);
+        });
+        it('with true', () => {
+          context.onlyVisual = true;
+          fixture.detectChanges();
+          page.checkCount('.sf__no-error', 1);
+          page.checkCount('nz-form-explain', 0);
+        });
+      });
+
       it('#formChange', () => {
         page.setValue('/name', 'cipchk');
         expect(context.formChange).toHaveBeenCalled();
@@ -343,20 +361,15 @@ describe('form: component', () => {
   });
 
   describe('#mode', () => {
-    beforeEach(() => {
-      ({ fixture, dl, context } = createTestContext(TestModeComponent));
-      fixture.detectChanges();
-      page = new SFPage(context.comp);
-      page.prop(dl, context, fixture);
-    });
+    beforeEach(() => ({ fixture, dl, context } = createTestContext(TestModeComponent)));
     it('should be auto 搜索 in submit', () => {
       context.mode = 'search';
-      fixture.detectChanges();
+      createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toBe('搜索');
     });
     it('should be auto 保存 in submit', () => {
       context.mode = 'edit';
-      fixture.detectChanges();
+      createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toBe('保存');
     });
     it('should be custom text of search', () => {
@@ -364,7 +377,7 @@ describe('form: component', () => {
       context.button = {
         search: 'SEARCH',
       };
-      fixture.detectChanges();
+      createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toBe('SEARCH');
     });
     it('should be custom text of edit', () => {
@@ -372,14 +385,15 @@ describe('form: component', () => {
       context.button = {
         edit: 'SAVE',
       };
-      fixture.detectChanges();
+      createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toBe('SAVE');
     });
   });
-
 });
 
 @Component({
-  template: `<sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode"></sf>`,
+  template: `
+    <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode"></sf>
+  `,
 })
 class TestModeComponent extends TestFormComponent {}

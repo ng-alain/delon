@@ -1,10 +1,5 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import {
-  discardPeriodicTasks,
-  tick,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { discardPeriodicTasks, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlainThemeModule } from '@delon/theme';
@@ -45,9 +40,9 @@ export function builder(options?: {
 }) {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
-    imports: [
-      NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(),
-    ].concat(options.imports || []),
+    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(
+      options.imports || [],
+    ),
     declarations: [TestFormComponent],
   });
   if (options.template) {
@@ -75,16 +70,25 @@ export function builder(options?: {
 export function configureSFTestSuite() {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
+      imports: [
+        NoopAnimationsModule,
+        AlainThemeModule.forRoot(),
+        DelonFormModule.forRoot(),
+        HttpClientTestingModule,
+      ],
       declarations: [TestFormComponent],
     });
   });
 }
 
 export class SFPage {
-  constructor(private comp: SFComponent) { }
+  constructor(private comp: SFComponent) {}
 
-  prop(_dl: DebugElement, _context: TestFormComponent, _fixture: ComponentFixture<TestFormComponent>) {
+  prop(
+    _dl: DebugElement,
+    _context: TestFormComponent,
+    _fixture: ComponentFixture<TestFormComponent>,
+  ) {
     dl = _dl;
     context = _context;
     fixture = _fixture;
@@ -154,9 +158,7 @@ export class SFPage {
   }
   /** 下标从 `1` 开始 */
   remove(index = 1): this {
-    this.getEl(
-      `.sf-array-container [data-index="${index - 1}"] .remove`,
-    ).click();
+    this.getEl(`.sf-array-container [data-index="${index - 1}"] .remove`).click();
     return this;
   }
 
@@ -288,19 +290,23 @@ export class SFPage {
 
 @Component({
   template: `
-    <sf [layout]="layout" #comp
-        [schema]="schema"
-        [ui]="ui"
-        [formData]="formData"
-        [button]="button"
-        [liveValidate]="liveValidate"
-        [autocomplete]="autocomplete"
-        [firstVisual]="firstVisual"
-        (formChange)="formChange($event)"
-        (formSubmit)="formSubmit($event)"
-        (formReset)="formReset($event)"
-        (formError)="formError($event)"></sf>
-    `,
+    <sf
+      [layout]="layout"
+      #comp
+      [schema]="schema"
+      [ui]="ui"
+      [formData]="formData"
+      [button]="button"
+      [liveValidate]="liveValidate"
+      [autocomplete]="autocomplete"
+      [firstVisual]="firstVisual"
+      [onlyVisual]="onlyVisual"
+      (formChange)="formChange($event)"
+      (formSubmit)="formSubmit($event)"
+      (formReset)="formReset($event)"
+      (formError)="formError($event)"
+    ></sf>
+  `,
 })
 export class TestFormComponent {
   @ViewChild('comp') comp: SFComponent;
@@ -313,9 +319,10 @@ export class TestFormComponent {
   liveValidate = true;
   autocomplete: 'on' | 'off';
   firstVisual = true;
+  onlyVisual = false;
 
-  formChange(value: {}) { }
-  formSubmit(value: {}) { }
-  formReset(value: {}) { }
-  formError(value: ErrorData[]) { }
+  formChange(value: {}) {}
+  formSubmit(value: {}) {}
+  formReset(value: {}) {}
+  formError(value: ErrorData[]) {}
 }

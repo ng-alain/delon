@@ -5,6 +5,7 @@ import format from 'date-fns/format';
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
+import { SFUISchemaItem } from '../../schema/ui';
 import { DateWidget } from './date.widget';
 
 describe('form: widget: date', () => {
@@ -61,9 +62,10 @@ describe('form: widget: date', () => {
       const s: SFSchema = {
         properties: { a: { type: 'string', format: 'date-time', ui: { widget } } },
       };
-      page.newSchema(s)
-          .checkValue('a', null)
-          .setValue('a', new Date());
+      page
+        .newSchema(s)
+        .checkValue('a', null)
+        .setValue('a', new Date());
       expect(page.getValue('a') instanceof Date).toBe(true);
     });
   });
@@ -152,22 +154,27 @@ describe('form: widget: date', () => {
       const comp = getComp();
       expect(comp.mode).toBe('range');
       const time = new Date();
-      comp._change([ time, time ]);
-      page.checkValue('/start', format(time, comp.format))
-          .checkValue('/end', format(time, comp.format));
+      comp._change([time, time]);
+      page
+        .checkValue('/start', format(time, comp.format))
+        .checkValue('/end', format(time, comp.format));
       comp._change(null);
-      page.checkValue('/start', '')
-          .checkValue('/end', '');
+      page.checkValue('/start', '').checkValue('/end', '');
     });
     it('should be default', () => {
       const copyS = { ...s };
       const time = new Date();
       copyS.properties.start.default = time;
       copyS.properties.end.default = time;
-      page.newSchema(s);
+      page.newSchema(copyS);
       const res = getComp().displayValue;
       expect(Array.isArray(res)).toBe(true);
       expect(res[0]).toBe(time);
+    });
+    it('should be removed ui.end when not found end path', () => {
+      const copyS = { ...s };
+      (copyS.properties.start.ui as SFUISchemaItem).end = 'invalid-end';
+      page.newSchema(copyS).checkUI('/start', 'end', null);
     });
   });
 
