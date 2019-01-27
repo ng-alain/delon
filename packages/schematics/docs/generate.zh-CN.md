@@ -127,3 +127,68 @@ ng g ng-alain:tpl [your template name] [name] -m=trade
 
 - [delon](https://github.com/ng-alain/delon/blob/master/packages/schematics/edit/files/__path__/__name%40dasherize%40if-flat__/__name%40dasherize__.component.html)
 - [material2](https://github.com/angular/material2/blob/master/src/lib/schematics/dashboard/files/__path__/__name%40dasherize%40if-flat__/__name%40dasherize__.component.html)
+
+### 自定义数据
+
+`tpl` 命令在生成文件之前允许你进一步处理数据，命令在执行过程中会检查是否存在 `_cli-tpl/_fix.js` 文件，并调用 `fix` 方法，方法必须返回一个 `Promise` 对象，例如：
+
+> **注：** CLI 是一个 Node JS 程序，因此语法以 Node JS 为准。
+
+```js
+function fix(options) {
+  return new Promise((resolve) => {
+    resolve();
+  });
+}
+
+module.exports = {
+  fix
+};
+```
+
+`fix` 只有一个 `options` 参数，它包含 CLI 产生所有参数数据，哪怕是一些未定义参数，例如：
+
+```bash
+ng g ng-alain:tpl list -m=setting --import-type=UserDto
+```
+
+其中 `import-type` 并不是命令自身的定义参数，但 `options` 会将这些未定义参数转换成 `extraArgs` 对象，因此你接收到的 `options` 会是:
+
+```json
+{
+  "tplName": "test",
+  "modal": true,
+  ...
+  "extraArgs": {
+    "import-type": "UserDto"
+  }
+}
+```
+
+`options` 对象会传递给模板引擎，由此你可以附加一些处理后的数据给 `options`，并在模板文件内使用它们，例如：
+
+```json
+{
+  "tplName": "test",
+  "modal": true,
+  ...
+  "extraArgs": {
+    "import-type": "UserDto",
+    "newData": "asdf"
+  }
+}
+```
+
+你可以将 `newData` 应用到模板当中，例如 `__name@dasherize__.component.html`：
+
+```html
+<page-header></page-header>
+<%= extraArgs.newData %>
+```
+
+结果为：
+
+```html
+<page-header></page-header>
+asdf
+```
