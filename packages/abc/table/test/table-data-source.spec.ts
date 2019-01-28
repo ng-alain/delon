@@ -553,11 +553,20 @@ describe('abc: table: data-souce', () => {
     });
     describe('#accelerator', () => {
       beforeEach(() => (options.data = genData()));
-      it('via format', (done: () => void) => {
-        options.columns[0].format = jasmine.createSpy().and.returnValue('');
-        srv.process(options).then(res => {
-          expect(options.columns[0].format).toHaveBeenCalled();
-          done();
+      describe('via format', () => {
+        it('should be working', done => {
+          options.columns[0].format = jasmine.createSpy().and.returnValue('');
+          srv.process(options).then(res => {
+            expect(options.columns[0].format).toHaveBeenCalled();
+            done();
+          });
+        });
+        it('should be return empty string when is null or undefined', done => {
+          options.columns[0].format = jasmine.createSpy().and.returnValue(null);
+          srv.process(options).then(res => {
+            expect(res.list[0]._values[0].text).toBe(``);
+            done();
+          });
         });
       });
       it('via index', (done: () => void) => {
@@ -660,6 +669,16 @@ describe('abc: table: data-souce', () => {
       options.pi = 1;
       options.ps = 100;
       spyOn(currentyPipe, 'transform');
+    });
+
+    it('should be use key instead of index as result key', done => {
+      options.columns = [{ title: '', index: 'a', key: 'a', statistical: { type: 'sum' } }];
+      options.data = [{ a: 1 }, { a: 2 }];
+
+      srv.process(options).then(res => {
+        expect(res.statistical.a.value).toBe(3);
+        done();
+      });
     });
 
     it('should be custom function', done => {
