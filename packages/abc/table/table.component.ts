@@ -61,6 +61,7 @@ import {
   STRes,
   STRowClassName,
   STSingleSort,
+  STStatisticalResults,
 } from './table.interfaces';
 
 @Component({
@@ -85,6 +86,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private locale: any = {};
   private clonePage: STPage;
   _data: STData[] = [];
+  _statistical: STStatisticalResults = {};
   _isPagination = true;
   _allChecked = false;
   _allCheckedDisabled = false;
@@ -176,8 +178,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() header: string | TemplateRef<void>;
   /** `footer` 底部 */
   @Input() footer: string | TemplateRef<void>;
+  /** 额外 `body` 顶部内容 */
+  @Input() bodyHeader: TemplateRef<STStatisticalResults>;
   /** 额外 `body` 内容 */
-  @Input() body: TemplateRef<void>;
+  @Input() body: TemplateRef<STStatisticalResults>;
   @Input() @InputBoolean() expandRowByClick = false;
   /** `expand` 可展开，当数据源中包括 `expand` 表示展开状态 */
   @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
@@ -301,6 +305,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           this._isPagination = result.pageShow;
         }
         this._data = result.list;
+        this._statistical = result.statistical;
         return this._data;
       })
       .then(() => this._refCheck())
@@ -431,7 +436,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = c.noIndex + idx)));
+      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { text: c.noIndex + idx, org: idx })));
 
     return this.cd();
   }

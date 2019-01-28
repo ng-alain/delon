@@ -60,7 +60,8 @@ Property | Description | Type | Default
 `[rowClickTime]` | Click twice in the time range for double click, unit is millisecond | `number` | `200`
 `[header]` | Table header renderer | `string,TemplateRef<void>` | -
 `[footer]` | Table footer renderer | `string,TemplateRef<void>` | -
-`[body]` | Table extra body renderer, generally used to add total rows | `TemplateRef<void>` | -
+`[bodyHeader]` | Table extra body renderer in header, generally used to add total rows | `TemplateRef<STStatisticalResults>` | -
+`[body]` | Table extra body renderer, generally used to add total rows | `TemplateRef<STStatisticalResults>` | -
 `[widthConfig]` | Set col width can not used with width of STColumn | `string[]` | -
 `[expandRowByClick]` | Whether to expand row by clicking anywhere in the whole row | `boolean` | `false`
 `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | -
@@ -235,7 +236,9 @@ Property | Description | Type | Default
 `[click]` | Callback of type is link | `(record: STData, instance?: STComponent) => void` | -
 `[badge]` | Config of type is badge | `STColumnBadge` | -
 `[tag]` | Config of type is tag | `STColumnTag` | -
+`[noIndex]` | Line number index start value | `number` | `1`
 `[iif]` | Custom conditional expression<br>1. Execute only once when `columns` is assigned<br>2. Call `resetColumns()` to trigger again | `(item: STColumn) => boolean` | -
+`[statistical]` | Statistics | `STStatisticalType,STStatistical` | -
 
 ### STColumnSort
 
@@ -350,3 +353,10 @@ Property | Description | Type | Default
 `[text]` | Tag text | `string` | -
 `[color]` | Tag color value | `string` | -
 
+### STStatistical
+
+Property | Description | Type | Default
+-------- | ----------- | ---- | -------
+`[type]` | Statistic type of current column | `STStatisticalType | STStatisticalFn` | -
+`[digits]` | The number of digits to appear after the decimal point | `number` | `2`
+`[currenty]` | Whether formatting currenty, default to `true` when `type` is `STStatisticalFn`,`sum`,`average`,`max`,`min` | `boolean` | -
