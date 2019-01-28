@@ -563,7 +563,7 @@ describe('abc: table: data-souce', () => {
       it('via index', (done: () => void) => {
         options.columns[0].index = 'name';
         srv.process(options).then(res => {
-          expect(res.list[0]._values[0]).toBe(`name 1`);
+          expect(res.list[0]._values[0].text).toBe(`name 1`);
           done();
         });
       });
@@ -572,7 +572,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = 1;
           srv.process(options).then(res => {
-            expect(res.list[0]._values[0]).toBe(1);
+            expect(res.list[0]._values[0].text).toBe(1);
             done();
           });
         });
@@ -580,7 +580,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = 0;
           srv.process(options).then(res => {
-            expect(res.list[0]._values[0]).toBe(0);
+            expect(res.list[0]._values[0].text).toBe(0);
             done();
           });
         });
@@ -589,7 +589,7 @@ describe('abc: table: data-souce', () => {
         it('with value', (done: () => void) => {
           options.columns[0].type = 'img';
           srv.process(options).then(res => {
-            expect(res.list[0]._values[0]).toContain(`class="img"`);
+            expect(res.list[0]._values[0].text).toContain(`class="img"`);
             done();
           });
         });
@@ -597,7 +597,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'img';
           options.data[0].id = '';
           srv.process(options).then(res => {
-            expect(res.list[0]._values[0]).toBe(``);
+            expect(res.list[0]._values[0].text).toBe(``);
             done();
           });
         });
@@ -648,7 +648,7 @@ describe('abc: table: data-souce', () => {
       options.data = genData(1);
       options.columns = [{ title: '', index: 'aa' }];
       srv.process(options).then(res => {
-        expect(res.list[0]._values[0]).toBe('');
+        expect(res.list[0]._values[0].text).toBe('');
         done();
       });
     });
@@ -737,7 +737,7 @@ describe('abc: table: data-souce', () => {
         });
         it('when include null or undefined', done => {
           options.columns = [{ title: '', index: 'a', statistical: 'distinctCount' }];
-          options.data = [{ b: 1 }, { a: null }, { a: 1 }];
+          options.data = [{ a: 1 }, { a: null }, { a: 1 }];
 
           srv.process(options).then(res => {
             expect(res.statistical[0].value).toBe(2);

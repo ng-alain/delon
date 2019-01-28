@@ -412,12 +412,12 @@ export class STDataSource {
   }
 
   private getValues(index: number, list: STData[]): number[] {
-    return list.map(i => i._values[index].org);
+    return list.map(i => i._values[index].org).map(i => i == null ? 0 : i);
   }
 
   private getSum(index: number, list: STData[]): number {
     return this.getValues(index, list).reduce(
-      (p, i) => (p += parseFloat(String(i.toString() === '' ? 0 : i))),
+      (p, i) => (p += i == null ? 0 : parseFloat(String(i.toString() === '' ? 0 : i))),
       0,
     );
   }
