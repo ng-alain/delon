@@ -13,4 +13,4 @@ const COMPONENTS = [G2MiniProgressComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2MiniProgressModule { }
+export class G2MiniProgressModule {}

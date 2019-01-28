@@ -3,11 +3,7 @@ import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-text',
-  template: `
-  <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-    {{ value || ui.defaultText || '-' }}
-  </sf-item-wrap>
-  `,
+  templateUrl: './text.widget.html',
 })
 export class TextWidget extends ControlWidget implements OnInit {
   ngOnInit(): void {

@@ -1,16 +1,11 @@
-import { HttpRequest } from '@angular/common/http';
 import { InjectionToken } from '@angular/core';
-import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { DA_SERVICE_TOKEN_FACTORY } from './token.service';
 
-export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>(
-  'DA_SERVICE_TOKEN',
-  {
-    providedIn: 'root',
-    factory: DA_SERVICE_TOKEN_FACTORY,
-  },
-);
+export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>('DA_SERVICE_TOKEN', {
+  providedIn: 'root',
+  factory: DA_SERVICE_TOKEN_FACTORY,
+});
 
 export interface ITokenModel {
   // tslint:disable-next-line:no-any

@@ -1,6 +1,7 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { TrendComponent } from './trend.component';
 import { TrendModule } from './trend.module';
@@ -10,14 +11,15 @@ describe('abc: trend', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [TrendModule],
       declarations: [TestComponent],
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
 
@@ -78,10 +80,8 @@ describe('abc: trend', () => {
 
 @Component({
   template: `
-    <trend #comp
-        [flag]="flag"
-        [colorful]="colorful"
-        [reverseColor]="reverseColor"></trend>`,
+    <trend #comp [flag]="flag" [colorful]="colorful" [reverseColor]="reverseColor"></trend>
+  `,
 })
 class TestComponent {
   @ViewChild('comp') comp: TrendComponent;

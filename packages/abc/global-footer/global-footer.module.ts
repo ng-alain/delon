@@ -13,4 +13,4 @@ const COMPONENTS = [GlobalFooterComponent, GlobalFooterItemComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class GlobalFooterModule { }
+export class GlobalFooterModule {}

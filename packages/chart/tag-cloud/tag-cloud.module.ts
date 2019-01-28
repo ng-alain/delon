@@ -11,4 +11,4 @@ const COMPONENTS = [G2TagCloudComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2TagCloudModule { }
+export class G2TagCloudModule {}

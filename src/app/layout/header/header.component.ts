@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   useDocsearch = false;
   oldVersionList = [`1.x`];
   currentVersion = 'stable';
+  delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util', 'cli'];
 
   constructor(
     public i18n: I18NService,
@@ -108,15 +109,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   langChange(language: LangType) {
-    this.router.navigateByUrl(
-      `${this.i18n.getRealUrl(this.router.url)}/${language}`,
-    );
+    this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`);
   }
 
   onCopy(value: string) {
-    copy(value).then(() =>
-      this.msg.success(this.i18n.fanyi('app.demo.copied')),
-    );
+    copy(value).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
 
   menuVisible = false;

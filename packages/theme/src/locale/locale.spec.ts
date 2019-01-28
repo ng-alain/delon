@@ -13,6 +13,10 @@ describe('theme: locale', () => {
       locale.setLocale(enUS);
       expect(locale.locale.abbr).toBe(enUS.abbr);
     });
+    it('should be default language is zh-cn', () => {
+      locale = new DelonLocaleService(null);
+      expect(locale.locale.abbr).toBe(zhCN.abbr);
+    });
     it('should be ingore change when new and old are the same', () => {
       expect(locale.locale.abbr).toBe(zhCN.abbr);
       locale.setLocale(zhCN);
@@ -21,9 +25,8 @@ describe('theme: locale', () => {
   });
 
   it('#getData', () => {
-    expect(locale.getData('exception').backToHome).toBe(
-      zhCN.exception.backToHome,
-    );
+    expect(locale.getData('exception').backToHome).toBe(zhCN.exception.backToHome);
+    expect(Object.keys(locale.getData('invalid-key')).length).toBe(0);
   });
 
   it('#change', done => {

@@ -14,4 +14,4 @@ const COMPONENTS = [SVContainerComponent, SVComponent, SVTitleComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class SVModule { }
+export class SVModule {}

@@ -58,7 +58,7 @@ describe('abc: quick-menu', () => {
 @Component({
   template: `
     <quick-menu #comp [width]="width"></quick-menu>
-    `,
+  `,
 })
 class TestComponent {
   @ViewChild('comp')

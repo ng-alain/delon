@@ -1,11 +1,14 @@
-import {
-  Component,
-  DebugElement,
-  EventEmitter,
-  ViewChild,
-} from '@angular/core';
+import { Component, DebugElement, EventEmitter, ViewChild } from '@angular/core';
 import { inject, ComponentFixture, TestBed } from '@angular/core/testing';
-import {  FormsModule, FormBuilder, FormControlName, FormGroup, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormsModule,
+  FormBuilder,
+  FormControlName,
+  FormGroup,
+  NgModel,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { configureTestSuite, createTestContext } from '@delon/testing';
@@ -87,12 +90,8 @@ describe('abc: edit', () => {
             const halfGutter = gutter / 2;
             context.parent_gutter = gutter;
             fixture.detectChanges();
-            expect(page.getEl('.ant-row').style.marginLeft).toBe(
-              `-${halfGutter}px`,
-            );
-            expect(page.getEl('.ant-row').style.marginRight).toBe(
-              `-${halfGutter}px`,
-            );
+            expect(page.getEl('.ant-row').style.marginLeft).toBe(`-${halfGutter}px`);
+            expect(page.getEl('.ant-row').style.marginRight).toBe(`-${halfGutter}px`);
             const itemCls = prefixCls + 'item';
             expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
             expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
@@ -167,9 +166,7 @@ describe('abc: edit', () => {
           it('#label', () => {
             context.label = 'test-label';
             fixture.detectChanges();
-            expect(page.getEl(prefixCls + 'label').textContent).toContain(
-              'test-label',
-            );
+            expect(page.getEl(prefixCls + 'label').textContent).toContain('test-label');
           });
           it('should be only horizontal will increase the responsive', () => {
             context.parent_layout = 'inline';
@@ -355,21 +352,36 @@ describe('abc: edit', () => {
 
 @Component({
   template: `
-  <form nz-form [se-container]="parent_colInCon" #seComp="seContainer" [col]="parent_col"
-    [title]="parent_title"
-    [firstVisual]="parent_firstVisual" [line]="parent_line"
-    [size]="parent_size" [nzLayout]="parent_layout"
-    [labelWidth]="parent_labelWidth" [gutter]="parent_gutter">
-
-    <se-title>title</se-title>
-    <se #viewComp
-      [optional]="optional" [optionalHelp]="optionalHelp"
-      [error]="error" [extra]="extra" [controlClass]="controlClass"
-      [label]="label" [col]="col" [required]="required" [line]="line">
-      <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled">
-    </se>
-
-  </form>`,
+    <form
+      nz-form
+      [se-container]="parent_colInCon"
+      #seComp="seContainer"
+      [col]="parent_col"
+      [title]="parent_title"
+      [firstVisual]="parent_firstVisual"
+      [line]="parent_line"
+      [size]="parent_size"
+      [nzLayout]="parent_layout"
+      [labelWidth]="parent_labelWidth"
+      [gutter]="parent_gutter"
+    >
+      <se-title>title</se-title>
+      <se
+        #viewComp
+        [optional]="optional"
+        [optionalHelp]="optionalHelp"
+        [error]="error"
+        [extra]="extra"
+        [controlClass]="controlClass"
+        [label]="label"
+        [col]="col"
+        [required]="required"
+        [line]="line"
+      >
+        <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled" />
+      </se>
+    </form>
+  `,
 })
 class TestComponent {
   @ViewChild('seComp')
@@ -404,14 +416,15 @@ class TestComponent {
 
 @Component({
   template: `
-  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" se-container gutter="32">
-    <se label="App Key" error="Please input your username!">
-      <input formControlName="userName" nz-input placeholder="Username">
-    </se>
-    <se label="dis" id="dis">
-      <input formControlName="dis" nz-input>
-    </se>
-  </form>`,
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" se-container gutter="32">
+      <se label="App Key" error="Please input your username!">
+        <input formControlName="userName" nz-input placeholder="Username" />
+      </se>
+      <se label="dis" id="dis">
+        <input formControlName="dis" nz-input />
+      </se>
+    </form>
+  `,
 })
 class TestReactiveComponent {
   validateForm: FormGroup;

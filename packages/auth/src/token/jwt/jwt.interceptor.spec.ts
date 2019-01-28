@@ -60,9 +60,7 @@ describe('auth: jwt.interceptor', () => {
       done();
     });
     const req = httpBed.expectOne('/test') as TestRequest;
-    expect(req.request.headers.get('Authorization')).toBe(
-      `Bearer ${basicModel.token}`,
-    );
+    expect(req.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.token}`);
     req.flush('ok!');
   });
 

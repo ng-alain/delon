@@ -39,16 +39,20 @@ export class QRService {
    * @param [value] 重新指定值
    */
   refresh(value?: string | {}): string {
-    this.qr.set(typeof value === 'object' ? value : {
-      background: this.background,
-      backgroundAlpha: this.backgroundAlpha,
-      foreground: this.foreground,
-      foregroundAlpha: this.foregroundAlpha,
-      level: this.level,
-      padding: this.padding,
-      size: this.size,
-      value: value || this.value,
-    });
+    this.qr.set(
+      typeof value === 'object'
+        ? value
+        : {
+            background: this.background,
+            backgroundAlpha: this.backgroundAlpha,
+            foreground: this.foreground,
+            foregroundAlpha: this.foregroundAlpha,
+            level: this.level,
+            padding: this.padding,
+            size: this.size,
+            value: value || this.value,
+          },
+    );
     return this.dataURL;
   }
 

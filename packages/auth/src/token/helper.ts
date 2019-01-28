@@ -7,9 +7,7 @@ import { JWTTokenModel } from './jwt/jwt.model';
 import { SimpleTokenModel } from './simple/simple.model';
 
 export function CheckSimple(model: SimpleTokenModel): boolean {
-  return (
-    model != null && typeof model.token === 'string' && model.token.length > 0
-  );
+  return model != null && typeof model.token === 'string' && model.token.length > 0;
 }
 
 export function CheckJwt(model: JWTTokenModel, offset: number): boolean {

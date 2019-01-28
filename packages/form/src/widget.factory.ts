@@ -36,15 +36,9 @@ export class WidgetRegistry {
 
 @Injectable()
 export class WidgetFactory {
-  constructor(
-    private registry: WidgetRegistry,
-    private resolver: ComponentFactoryResolver,
-  ) { }
+  constructor(private registry: WidgetRegistry, private resolver: ComponentFactoryResolver) {}
 
-  createWidget(
-    container: ViewContainerRef,
-    type: string,
-  ): ComponentRef<Widget<FormProperty>> {
+  createWidget(container: ViewContainerRef, type: string): ComponentRef<Widget<FormProperty>> {
     if (!this.registry.has(type)) {
       console.warn(`No widget for type "${type}"`);
     }

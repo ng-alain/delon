@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { NzAffixComponent } from 'ng-zorro-antd';
-import { merge, Observable, Subject } from 'rxjs';
+import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
@@ -118,7 +118,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     private reuseSrv: ReuseTabService,
     private cdr: ChangeDetectorRef,
   ) {
-    Object.assign(this, { ...new PageHeaderConfig(), ...cog});
+    Object.assign(this, { ...new PageHeaderConfig(), ...cog });
     settings.notify
       .pipe(
         takeUntil(this.unsubscribe$),
@@ -126,18 +126,16 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       )
       .subscribe(() => this.affix.updatePosition({}));
 
-    // tslint:disable-next-line:no-any
-    const data$: Array<Observable<any>> = [
+    merge(
       menuSrv.change.pipe(filter(() => this.inited)),
       router.events.pipe(filter((event: RouterEvent) => event instanceof NavigationEnd)),
-    ];
-    if (i18nSrv) {
-      data$.push(i18nSrv.change);
-    }
-    merge(...data$).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-      this._menus = null;
-      this.refresh();
-    });
+      i18nSrv.change,
+    )
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this._menus = null;
+        this.refresh();
+      });
   }
 
   refresh() {
@@ -152,8 +150,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     }
     const paths: PageHeaderPath[] = [];
     this.menus.forEach(item => {
-      if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb)
-        return;
+      if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb) return;
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
       paths.push({ title, link: item.link && [item.link] });

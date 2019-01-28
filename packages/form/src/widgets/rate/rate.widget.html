@@ -1,0 +1,16 @@
+<sf-item-wrap [id]="id"
+              [schema]="schema"
+              [ui]="ui"
+              [showError]="showError"
+              [error]="error"
+              [showTitle]="schema.title">
+  <nz-rate [nzDisabled]="disabled"
+           [ngModel]="value"
+           (ngModelChange)="setValue($event)"
+           [nzAllowClear]="allowClear"
+           [nzAllowHalf]="allowHalf"
+           [nzAutoFocus]="autoFocus"
+           [nzCount]="count"></nz-rate>
+  <span *ngIf="hasText && formProperty.value"
+        class="ant-rate-text">{{ text }}</span>
+</sf-item-wrap>

@@ -13,7 +13,7 @@ export class TokenService implements ITokenService {
   private change$: BehaviorSubject<ITokenModel> = new BehaviorSubject<ITokenModel>(null);
   private _referrer: AuthReferrer = {};
 
-  constructor(private options: DelonAuthConfig, @Inject(DA_STORE_TOKEN) private store: IStore) { }
+  constructor(private options: DelonAuthConfig, @Inject(DA_STORE_TOKEN) private store: IStore) {}
 
   get login_url(): string {
     return this.options.login_url;
@@ -23,10 +23,6 @@ export class TokenService implements ITokenService {
     return this._referrer;
   }
 
-  set referrer(val: AuthReferrer) {
-    this._referrer = val;
-  }
-
   set(data: ITokenModel): boolean {
     this.change$.next(data);
     return this.store.set(this.options.store_key, data);
@@ -34,7 +30,7 @@ export class TokenService implements ITokenService {
 
   // tslint:disable-next-line:no-any
   get(type?: any);
-  get<T extends ITokenModel>(type?: { new(): T }): T {
+  get<T extends ITokenModel>(type?: { new (): T }): T {
     const data = this.store.get(this.options.store_key);
     return type ? (Object.assign(new type(), data) as T) : (data as T);
   }

@@ -59,11 +59,7 @@ function removeOrginalFiles() {
 function fixMain() {
   return (host: Tree) => {
     // fix: main.ts using no hmr file
-    tryAddFile(
-      host,
-      `${project.sourceRoot}/main.ts`,
-      HMR_CONTENT.NO_HMR_MAIN_DOT_TS,
-    );
+    tryAddFile(host, `${project.sourceRoot}/main.ts`, HMR_CONTENT.NO_HMR_MAIN_DOT_TS);
   };
 }
 
@@ -78,30 +74,20 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
       'ajv@DEP-0.0.0-PLACEHOLDER',
     ]);
     // add ajv
-    scriptsToAngularJson(host, ['node_modules/ajv/dist/ajv.bundle.js'], 'add', [
-      'build',
-      'test',
-    ]);
+    scriptsToAngularJson(host, ['node_modules/ajv/dist/ajv.bundle.js'], 'add', ['build', 'test']);
     // @delon/*
     addPackageToPackageJson(
       host,
-      [
-        'abc',
-        'acl',
-        'auth',
-        'cache',
-        'form',
-        'mock',
-        'theme',
-        'util',
-        'chart',
-      ].map(pkg => `@delon/${pkg}@${VERSION}`),
+      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(
+        pkg => `@delon/${pkg}@${VERSION}`,
+      ),
     );
     // ng-alain
     addPackageToPackageJson(
       host,
       [
         `ng-alain@${VERSION}`,
+        `ng-alain-codelyzer@DEP-0.0.0-PLACEHOLDER`,
         `@delon/testing@${VERSION}`,
         // color-less
         `less-bundle-promise@DEP-0.0.0-PLACEHOLDER`,
@@ -128,6 +114,7 @@ function addRunScriptToPackageJson() {
     json.scripts.analyze = `npm run color-less && ng build --prod --build-optimizer --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `node scripts/color-less.js`;
+    json.scripts.icon = `ng g ng-alain:plugin icon`;
     overwritePackage(host, json);
     return host;
   };
@@ -171,20 +158,15 @@ function addCodeStylesToPackageJson() {
     const json = getPackage(host);
     if (json == null) return host;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
-    json.scripts[
-      'lint:ts'
-    ] = `tslint -p src/tsconfig.app.json -c tslint.json 'src/**/*.ts'`;
+    json.scripts['lint:ts'] = `tslint -p src/tsconfig.app.json -c tslint.json 'src/**/*.ts'`;
     json.scripts['lint:style'] = `stylelint \"{src}/**/*.less\" --syntax less`;
     json.scripts['lint-staged'] = `lint-staged`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
     json['lint-staged'] = {
-      '*.{cmd,html,json,md,sh,txt,xml,yml}': [
-        'editorconfig-tools fix',
-        'git add',
-      ],
+      '*.{cmd,html,json,md,sh,txt,xml,yml}': ['editorconfig-tools fix', 'git add'],
       '*.ts': ['npm run lint:ts', 'prettier --write', 'git add'],
       '*.less': ['npm run lint:style', 'prettier --write', 'git add'],
-      'ignore': ['src/assets/*'],
+      ignore: ['src/assets/*'],
     };
     overwritePackage(host, json);
     // tslint
@@ -283,14 +265,7 @@ function addSchematics() {
 
 function forceLess() {
   return (host: Tree, context: SchematicContext) => {
-    scriptsToAngularJson(
-      host,
-      ['src/styles.less'],
-      'add',
-      ['build'],
-      null,
-      true,
-    );
+    scriptsToAngularJson(host, ['src/styles.less'], 'add', ['build'], null, true);
   };
 }
 
@@ -309,10 +284,7 @@ function addStyle(options: ApplicationOptions) {
     // add styles
     addFiles(
       host,
-      [
-        `${project.sourceRoot}/styles/index.less`,
-        `${project.sourceRoot}/styles/theme.less`,
-      ],
+      [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`],
       overwriteDataFileRoot,
     );
 
@@ -452,10 +424,13 @@ function fixLangInHtml(host: Tree, p: string, langs: {}) {
   let html = host.get(p).content.toString('utf8');
   let matchCount = 0;
   // {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
-  html = html.replace(/\{\{\(status \? '([^']+)' : '([^']+)'\) \| translate \}\}/g, (word, key1, key2) => {
-    ++matchCount;
-    return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
-  });
+  html = html.replace(
+    /\{\{\(status \? '([^']+)' : '([^']+)'\) \| translate \}\}/g,
+    (word, key1, key2) => {
+      ++matchCount;
+      return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
+    },
+  );
   // {{ 'app.register-result.msg' | translate:params }}
   html = html.replace(/\{\{[ ]?'([^']+)'[ ]? \| translate:[^ ]+ \}\}/g, (word, key) => {
     ++matchCount;
@@ -495,7 +470,7 @@ function installPackages() {
   };
 }
 
-export default function (options: ApplicationOptions): Rule {
+export default function(options: ApplicationOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     project = getProject(host, options.project);
 

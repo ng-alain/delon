@@ -1,7 +1,4 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainApp, APPNAME } from '../utils/testing';
 
 describe('NgAlainSchematic: plugin: docker', () => {
@@ -23,12 +20,9 @@ describe('NgAlainSchematic: plugin: docker', () => {
   });
 
   describe('when remove', () => {
-    beforeEach(() =>
-      (tree = runner.runSchematic(
-        'plugin',
-        { name: 'docker', type: 'remove' },
-        tree,
-      )));
+    beforeEach(
+      () => (tree = runner.runSchematic('plugin', { name: 'docker', type: 'remove' }, tree)),
+    );
     it(`should add fiels`, () => {
       expect(tree.exists(`/${APPNAME}/.dockerignore`)).toBe(false);
       expect(tree.exists(`/${APPNAME}/docker-compose.yml`)).toBe(false);

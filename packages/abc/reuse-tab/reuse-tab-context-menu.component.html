@@ -1,10 +1,29 @@
 <ul nz-menu>
-  <li nz-menu-item (click)="click($event, 'close')" data-type="close" [nzDisabled]="!item.closable" [innerHTML]="i18n.close"></li>
-  <li nz-menu-item (click)="click($event, 'closeOther')" data-type="closeOther" [innerHTML]="i18n.closeOther"></li>
-  <li nz-menu-item (click)="click($event, 'closeRight')" data-type="closeRight" [nzDisabled]="item.last" [innerHTML]="i18n.closeRight"></li>
-  <li nz-menu-item (click)="click($event, 'clear')" data-type="clear" [innerHTML]="i18n.clear"></li>
+  <li nz-menu-item
+      (click)="click($event, 'close')"
+      data-type="close"
+      [nzDisabled]="!item.closable"
+      [innerHTML]="i18n.close"></li>
+  <li nz-menu-item
+      (click)="click($event, 'closeOther')"
+      data-type="closeOther"
+      [innerHTML]="i18n.closeOther"></li>
+  <li nz-menu-item
+      (click)="click($event, 'closeRight')"
+      data-type="closeRight"
+      [nzDisabled]="item.last"
+      [innerHTML]="i18n.closeRight"></li>
+  <li nz-menu-item
+      (click)="click($event, 'clear')"
+      data-type="clear"
+      [innerHTML]="i18n.clear"></li>
   <ng-container *ngIf="customContextMenu!.length > 0">
     <li nz-menu-divider></li>
-    <li *ngFor="let i of customContextMenu" nz-menu-item [attr.data-type]="i.id" [nzDisabled]="isDisabled(i)" (click)="click($event, 'custom', i)" [innerHTML]="i.title"></li>
+    <li *ngFor="let i of customContextMenu"
+        nz-menu-item
+        [attr.data-type]="i.id"
+        [nzDisabled]="isDisabled(i)"
+        (click)="click($event, 'custom', i)"
+        [innerHTML]="i.title"></li>
   </ng-container>
 </ul>

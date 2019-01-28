@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { DelonLocaleService } from '@delon/theme';
@@ -34,18 +27,15 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   set type(value: 403 | 404 | 500) {
     const item = {
       403: {
-        img:
-          'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',
+        img: 'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',
         title: '403',
       },
       404: {
-        img:
-          'https://gw.alipayobjects.com/zos/rmsportal/KpnpchXsobRgLElEozzI.svg',
+        img: 'https://gw.alipayobjects.com/zos/rmsportal/KpnpchXsobRgLElEozzI.svg',
         title: '404',
       },
       500: {
-        img:
-          'https://gw.alipayobjects.com/zos/rmsportal/RVRUAYdCGeYNBWoKiIwB.svg',
+        img: 'https://gw.alipayobjects.com/zos/rmsportal/RVRUAYdCGeYNBWoKiIwB.svg',
         title: '500',
       },
     }[value];
@@ -74,12 +64,10 @@ export class ExceptionComponent implements OnInit, OnDestroy {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
   }
 
-  constructor(private i18n: DelonLocaleService) { }
+  constructor(private i18n: DelonLocaleService) {}
 
   ngOnInit() {
-    this.i18n$ = this.i18n.change.subscribe(
-      () => (this.locale = this.i18n.getData('exception')),
-    );
+    this.i18n$ = this.i18n.change.subscribe(() => (this.locale = this.i18n.getData('exception')));
     this.checkContent();
   }
 

@@ -13,15 +13,11 @@ describe('theme: DrawerHelper', () => {
 
   beforeEach(() => {
     @NgModule({
-      imports: [
-        CommonModule,
-        NgZorroAntdModule,
-        AlainThemeModule.forChild(),
-      ],
+      imports: [CommonModule, NgZorroAntdModule, AlainThemeModule.forChild()],
       declarations: [TestDrawerComponent, TestComponent],
       entryComponents: [TestDrawerComponent],
     })
-    class TestModule { }
+    class TestModule {}
 
     injector = TestBed.configureTestingModule({ imports: [TestModule] });
     fixture = TestBed.createComponent(TestComponent);
@@ -51,13 +47,17 @@ describe('theme: DrawerHelper', () => {
       .create('', TestDrawerComponent, {
         ret: 'destroy',
       })
-      .subscribe(res => {
-        expect(false).toBeTruthy();
-        done();
-      }, () => { }, () => {
-        expect(true).toBeTruthy();
-        done();
-      });
+      .subscribe(
+        res => {
+          expect(false).toBeTruthy();
+          done();
+        },
+        () => {},
+        () => {
+          expect(true).toBeTruthy();
+          done();
+        },
+      );
     fixture.detectChanges();
   });
 
@@ -77,7 +77,8 @@ describe('theme: DrawerHelper', () => {
     it('with sm', () => {
       drawer
         .static(
-          '', TestDrawerComponent,
+          '',
+          TestDrawerComponent,
           {
             ret: 'true',
           },
@@ -94,25 +95,51 @@ describe('theme: DrawerHelper', () => {
       expect(els.length).toBe(1);
       expect((els[0] as HTMLElement).classList).toContain('drawer-sm');
     });
-    it('with 100 value', () => {
-      drawer
-        .static(
-          '', TestDrawerComponent,
-          {
-            ret: 'true',
-          },
-          {
-            size: 100,
-            drawerOptions: {
-              nzWrapClassName: 'bbb',
+    describe('with number value', () => {
+      it('muse be set width when nzPlacement is left', () => {
+        drawer
+          .static(
+            '',
+            TestDrawerComponent,
+            {
+              ret: 'true',
             },
-          },
-        )
-        .subscribe();
-      fixture.detectChanges();
-      const els = document.getElementsByClassName('bbb');
-      expect(els.length).toBe(1);
-      expect((els[0] as HTMLElement).style.width).toBe(`100px`);
+            {
+              size: 100,
+              drawerOptions: {
+                nzWrapClassName: 'bbb',
+                nzPlacement: 'left',
+              },
+            },
+          )
+          .subscribe();
+        fixture.detectChanges();
+        const els = document.getElementsByClassName('bbb');
+        expect(els.length).toBe(1);
+        expect((els[0] as HTMLElement).style.width).toBe(`100px`);
+      });
+      it('muse be set height when nzPlacement is top', () => {
+        drawer
+          .static(
+            '',
+            TestDrawerComponent,
+            {
+              ret: 'true',
+            },
+            {
+              size: 100,
+              drawerOptions: {
+                nzWrapClassName: 'cccc',
+                nzPlacement: 'top',
+              },
+            },
+          )
+          .subscribe();
+        fixture.detectChanges();
+        const els = document.getElementsByClassName('cccc');
+        expect(els.length).toBe(1);
+        expect((els[0] as HTMLElement).style.height).toBe(`100px`);
+      });
     });
   });
 
@@ -120,7 +147,8 @@ describe('theme: DrawerHelper', () => {
     it('with true', () => {
       drawer
         .static(
-          '', TestDrawerComponent,
+          '',
+          TestDrawerComponent,
           {
             ret: 'true',
           },
@@ -143,7 +171,8 @@ describe('theme: DrawerHelper', () => {
     it('with false', () => {
       drawer
         .static(
-          '', TestDrawerComponent,
+          '',
+          TestDrawerComponent,
           {
             ret: 'true',
           },
@@ -165,7 +194,11 @@ describe('theme: DrawerHelper', () => {
   });
 });
 
-@Component({ template: `<div id="drawer{{id}}">drawer{{id}}</div>` })
+@Component({
+  template: `
+    <div id="drawer{{ id }}">drawer{{ id }}</div>
+  `,
+})
 class TestDrawerComponent {
   id: string = '';
   ret: any = 'true';
@@ -182,4 +215,4 @@ class TestDrawerComponent {
 }
 
 @Component({ template: `` })
-class TestComponent { }
+class TestComponent {}

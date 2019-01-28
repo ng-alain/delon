@@ -13,4 +13,4 @@ const COMPONENTS = [FooterToolbarComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class FooterToolbarModule { }
+export class FooterToolbarModule {}

@@ -1,6 +1,7 @@
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { configureTestSuite, createTestContext } from '@delon/testing';
 
 import { NumberInfoComponent } from './number-info.component';
 import { NumberInfoModule } from './number-info.module';
@@ -10,14 +11,15 @@ describe('abc: number-info', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  beforeEach(() => {
+  configureTestSuite(() => {
     TestBed.configureTestingModule({
       imports: [NumberInfoModule],
       declarations: [TestComponent],
     });
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
+  });
+
+  beforeEach(() => {
+    ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });
 
@@ -95,20 +97,22 @@ describe('abc: number-info', () => {
 
 @Component({
   template: `
-    <number-info #ni
-        [title]="title"
-        [subTitle]="subTitle"
-        [total]="total"
-        [subTotal]="subTotal"
-        suffix="suffix"
-        [status]="status"
-        [theme]="theme"
-        [gap]="gap"></number-info>
+    <number-info
+      #ni
+      [title]="title"
+      [subTitle]="subTitle"
+      [total]="total"
+      [subTotal]="subTotal"
+      suffix="suffix"
+      [status]="status"
+      [theme]="theme"
+      [gap]="gap"
+    ></number-info>
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
     <ng-template #subTitleTpl><p id="subTitleTpl">subTitleTpl</p></ng-template>
     <ng-template #totalTpl><p id="totalTpl">totalTpl</p></ng-template>
     <ng-template #subTotalTpl><p id="subTotalTpl">subTotalTpl</p></ng-template>
-    `,
+  `,
 })
 class TestComponent {
   @ViewChild('ni') comp: NumberInfoComponent;

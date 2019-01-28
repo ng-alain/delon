@@ -57,7 +57,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
 
   // #endregion
 
-  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone) { }
+  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone) {}
 
   private getHeight() {
     return this.height - (this.hasLegend ? 80 : 22);
@@ -66,12 +66,12 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   private install() {
     const { node, padding } = this;
 
-    const chart = this.chart = new G2.Chart({
+    const chart = (this.chart = new G2.Chart({
       container: node.nativeElement,
       forceFit: true,
       height: this.getHeight(),
       padding,
-    });
+    }));
 
     chart.coord('polar');
     chart.legend(false);
@@ -111,9 +111,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
       return legendItem ? legendItem.checked !== false : true;
     });
 
-    chart
-      .line()
-      .position('label*value');
+    chart.line().position('label*value');
 
     chart
       .point()
@@ -128,7 +126,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
 
   private attachChart() {
     const { chart, padding, data, colors, tickCount } = this;
-    if (!chart || !data || data.length <= 0) return ;
+    if (!chart || !data || data.length <= 0) return;
 
     chart.set('height', this.getHeight());
     chart.set('padding', padding);
@@ -153,17 +151,20 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
     const { hasLegend, cdr, chart } = this;
     if (!hasLegend) return;
 
-    this.legendData = chart.get('geoms')[0].get('dataArray').map((item: any) => {
-      const origin = item[0]._origin;
-      const result = {
-        name: origin.name,
-        color: item[0].color,
-        checked: true,
-        value: item.reduce((p, n) => p + n._origin.value, 0),
-      };
+    this.legendData = chart
+      .get('geoms')[0]
+      .get('dataArray')
+      .map((item: any) => {
+        const origin = item[0]._origin;
+        const result = {
+          name: origin.name,
+          color: item[0].color,
+          checked: true,
+          value: item.reduce((p, n) => p + n._origin.value, 0),
+        };
 
-      return result;
-    });
+        return result;
+      });
 
     cdr.detectChanges();
   }
@@ -179,13 +180,13 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(): void {
-    this.legendData.forEach(i => i.checked = true);
+    this.legendData.forEach(i => (i.checked = true));
     this.ngZone.runOutsideAngular(() => this.attachChart());
   }
 
   ngOnDestroy(): void {
     if (this.chart) {
-      this.chart.destroy();
+      this.ngZone.runOutsideAngular(() => this.chart.destroy());
     }
   }
 }

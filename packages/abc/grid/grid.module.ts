@@ -12,4 +12,4 @@ const COMPONENTS = [SGContainerComponent, SGComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class SGModule { }
+export class SGModule {}

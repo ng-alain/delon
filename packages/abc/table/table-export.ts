@@ -6,7 +6,7 @@ import { STColumn, STExportOptions } from './table.interfaces';
 
 @Injectable()
 export class STExport {
-  constructor(@Optional() private xlsxSrv: XlsxService) { }
+  constructor(@Optional() private xlsxSrv: XlsxService) {}
 
   // tslint:disable-next-line:no-any
   private _stGet(item: any, col: STColumn): any {
@@ -38,10 +38,7 @@ export class STExport {
     const sheets: { [sheet: string]: {} } = {};
     const sheet = (sheets[opt.sheetname || 'Sheet1'] = {});
     const colData = opt._c.filter(
-      w =>
-        w.exported !== false &&
-        w.index &&
-        (!w.buttons || w.buttons.length === 0),
+      w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0),
     );
     const cc = colData.length;
     const dc = opt._d.length;

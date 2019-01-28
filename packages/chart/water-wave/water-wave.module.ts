@@ -11,4 +11,4 @@ const COMPONENTS = [G2WaterWaveComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2WaterWaveModule { }
+export class G2WaterWaveModule {}

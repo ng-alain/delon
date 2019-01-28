@@ -39,8 +39,7 @@ describe('abc: footer-toolbar', () => {
   describe('#extra', () => {
     it('with string', () => {
       create();
-      const left = dl.query(By.css('.footer-toolbar__left'))
-        .nativeElement as HTMLElement;
+      const left = dl.query(By.css('.footer-toolbar__left')).nativeElement as HTMLElement;
       expect(left.textContent.trim()).toBe(`1`);
     });
     it('with custom template', () => {
@@ -60,7 +59,7 @@ describe('abc: footer-toolbar', () => {
 
 @Component({
   template: `
-  <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra"></footer-toolbar></form>
+    <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra"></footer-toolbar></form>
   `,
 })
 class TestComponent {

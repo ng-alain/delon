@@ -178,7 +178,9 @@ describe('abc: xlsx', () => {
 });
 
 @Component({
-  template: `<button [xlsx]="data"></button>`,
+  template: `
+    <button [xlsx]="data"></button>
+  `,
 })
 class TestComponent {
   data: any = {};

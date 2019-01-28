@@ -1,7 +1,4 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { join } from 'path';
 import { Schema as NgAddSchema } from '../ng-add/schema.d';
 
@@ -15,10 +12,7 @@ export function createNgRunner() {
 }
 
 export function createAlainRunner() {
-  return new SchematicTestRunner(
-    'schematics',
-    join(__dirname, '../collection.json'),
-  );
+  return new SchematicTestRunner('schematics', join(__dirname, '../collection.json'));
 }
 
 export function createAlainApp(
@@ -66,11 +60,7 @@ export function createAlainAndModuleApp(
   tree: UnitTestTree;
 } {
   const res = createAlainApp(ngAddOptions);
-  res.tree = res.runner.runSchematic(
-    'module',
-    { name, project: APPNAME, routing: true },
-    res.tree,
-  );
+  res.tree = res.runner.runSchematic('module', { name, project: APPNAME, routing: true }, res.tree);
   return res;
 }
 

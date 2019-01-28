@@ -1,7 +1,7 @@
-<div class="footer-wrap">
+<div class="footer__wrap">
   <div nz-row>
     <div nz-col nzXs="24" nzSm="24" nzLg="6">
-      <div class="footer-center">
+      <div class="footer__center">
         <h2>ng-alain</h2>
         <div><a href="//github.com/ng-alain/ng-alain" target="_blank">Github</a></div>
         <div><a href="//github.com/ng-alain/delon" target="_blank">@delon</a></div>
@@ -10,7 +10,7 @@
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzLg="6">
-      <div class="footer-center">
+      <div class="footer__center">
         <h2>{{'app.footer.resources' | translate}}</h2>
         <div>
           <a href="//www.angular.cn/" target="_blank">Angular</a>
@@ -40,7 +40,7 @@
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzLg="6">
-      <div class="footer-center">
+      <div class="footer__center">
         <h2>{{'app.footer.community' | translate}}</h2>
         <div><a routerLink="/docs/changelog/{{i18n.zone}}">{{ 'app.footer.change-log' | translate}}</a></div>
         <div><a routerLink="/docs/faq/{{i18n.zone}}">{{ 'app.footer.faq' | translate}}</a></div>
@@ -49,8 +49,18 @@
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzLg="6">
-      <div class="footer-center">
-        Copyright © 2017 <a href="//github.com/cipchk" target="_blank">@卡色</a>
+      <div class="footer__center">
+        Copyright &copy; 2019 <a href="//github.com/cipchk" target="_blank">&copy;卡色</a>
+        <div style="margin-top: 20px;">
+          <nz-popover [nzTrigger]="'click'" nzOverlayClassName="theme-color-content">
+            <div class="theme-color" nz-popover>
+              <div class="theme-color-value" [ngStyle]="{'background': color}"></div>
+            </div>
+            <ng-template #nzTemplate>
+              <color-sketch [color]="color" (onChangeComplete)="changeColor($event)"></color-sketch>
+            </ng-template>
+          </nz-popover>
+        </div>
       </div>
     </div>
   </div>

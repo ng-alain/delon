@@ -12,4 +12,4 @@ const COMPONENTS = [TrendComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class TrendModule { }
+export class TrendModule {}

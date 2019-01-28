@@ -10,4 +10,4 @@ const COMPONENTS = [ACLDirective];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class DelonACLModule { }
+export class DelonACLModule {}

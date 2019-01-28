@@ -43,7 +43,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
-    Object.assign(this, { ...new ErrorCollectConfig(), ...cog});
+    Object.assign(this, { ...new ErrorCollectConfig(), ...cog });
   }
 
   private get errEls() {

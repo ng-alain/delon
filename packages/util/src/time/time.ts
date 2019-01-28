@@ -16,16 +16,7 @@ import subYears from 'date-fns/sub_years';
  * @param time 开始时间
  */
 export function getTimeDistance(
-  type:
-    | 'today'
-    | '-today'
-    | 'week'
-    | '-week'
-    | 'month'
-    | '-month'
-    | 'year'
-    | '-year'
-    | number,
+  type: 'today' | '-today' | 'week' | '-week' | 'month' | '-month' | 'year' | '-year' | number,
   time?: Date | string | number,
 ): [Date, Date] {
   time = parse(time || new Date());
@@ -48,8 +39,6 @@ export function getTimeDistance(
     case '-year':
       return [startOfYear(subYears(time, 1)), endOfYear(subYears(time, 1))];
     default:
-      return type > 0
-        ? [time, addDays(time, type)]
-        : [addDays(time, type), time];
+      return type > 0 ? [time, addDays(time, type)] : [addDays(time, type), time];
   }
 }

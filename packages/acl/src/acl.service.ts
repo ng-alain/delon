@@ -10,7 +10,9 @@ export class ACLService {
   private roles: string[] = [];
   private abilities: Array<number | string> = [];
   private full = false;
-  private aclChange: BehaviorSubject<ACLType | boolean> = new BehaviorSubject<ACLType | boolean>(null);
+  private aclChange: BehaviorSubject<ACLType | boolean> = new BehaviorSubject<ACLType | boolean>(
+    null,
+  );
 
   /** ACL变更通知 */
   get change(): Observable<ACLType | boolean> {
@@ -174,11 +176,7 @@ export class ACLService {
 
   /** @inner */
   parseAbility(value: ACLCanType): ACLCanType {
-    if (
-      typeof value === 'number' ||
-      typeof value === 'string' ||
-      Array.isArray(value)
-    ) {
+    if (typeof value === 'number' || typeof value === 'string' || Array.isArray(value)) {
       value = { ability: Array.isArray(value) ? value : [value] } as ACLType;
     }
     delete value.role;

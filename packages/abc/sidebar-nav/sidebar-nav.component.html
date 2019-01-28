@@ -1,69 +1,125 @@
-<ng-template #icon let-i>
-  <ng-container *ngIf="i" [ngSwitch]="i.type">
-    <i *ngSwitchCase="'icon'" class="sidebar-nav__item-icon" nz-icon [type]="i.value" [theme]="i.theme" [spin]="i.spin" [twoToneColor]="i.twoToneColor" [iconfont]="i.iconfont"></i>
-    <img *ngSwitchCase="'img'" src="{{ i.value }}" class="sidebar-nav__item-icon sidebar-nav__item-img">
-    <i *ngSwitchDefault class="sidebar-nav__item-icon {{ i.value }}"></i>
+<ng-template #icon
+             let-i>
+  <ng-container *ngIf="i"
+                [ngSwitch]="i.type">
+    <i *ngSwitchCase="'icon'"
+       class="sidebar-nav__item-icon"
+       nz-icon
+       [type]="i.value"
+       [theme]="i.theme"
+       [spin]="i.spin"
+       [twoToneColor]="i.twoToneColor"
+       [iconfont]="i.iconfont"></i>
+    <img *ngSwitchCase="'img'"
+         src="{{ i.value }}"
+         class="sidebar-nav__item-icon sidebar-nav__item-img">
+    <i *ngSwitchDefault
+       class="sidebar-nav__item-icon {{ i.value }}"></i>
   </ng-container>
 </ng-template>
 <ul class="sidebar-nav">
   <ng-container *ngFor="let group of list">
     <ng-container *ngIf="group._hidden !== true">
-      <li class="sidebar-nav__item sidebar-nav__group-title" *ngIf="group.group">
+      <li class="sidebar-nav__item sidebar-nav__group-title"
+          *ngIf="group.group">
         <span>{{ group.text }}</span>
       </li>
       <ng-container *ngFor="let child1 of group.children">
-        <li *ngIf="child1._hidden !== true" class="sidebar-nav__item" [class.sidebar-nav__selected]="child1._selected" [class.sidebar-nav__open]="child1._open">
+        <li *ngIf="child1._hidden !== true"
+            class="sidebar-nav__item"
+            [class.sidebar-nav__selected]="child1._selected"
+            [class.sidebar-nav__open]="child1._open">
           <!-- link -->
-          <a *ngIf="child1._type <= 2" (click)="to(child1)" [attr.data-id]="child1.__id" class="sidebar-nav__item-link" [ngClass]="{'sidebar-nav__item-disabled': child1.disabled}">
+          <a *ngIf="child1._type <= 2"
+             (click)="to(child1)"
+             [attr.data-id]="child1.__id"
+             class="sidebar-nav__item-link"
+             [ngClass]="{'sidebar-nav__item-disabled': child1.disabled}">
             <ng-container *ngIf="!collapsed">
-              <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
+              <ng-template [ngTemplateOutlet]="icon"
+                           [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
             </ng-container>
-            <nz-tooltip *ngIf="collapsed" nzPlacement="right" [nzTitle]="child1.text">
+            <nz-tooltip *ngIf="collapsed"
+                        nzPlacement="right"
+                        [nzTitle]="child1.text">
               <span nz-tooltip>
-                <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
+                <ng-template [ngTemplateOutlet]="icon"
+                             [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
               </span>
             </nz-tooltip>
             <span class="sidebar-nav__item-text">{{ child1.text }}</span>
           </a>
           <!-- has children link -->
-          <a *ngIf="child1._type === 3" (click)="toggleOpen(child1)" (mouseenter)="showSubMenu($event, child1)" class="sidebar-nav__item-link">
-            <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
+          <a *ngIf="child1._type === 3"
+             (click)="toggleOpen(child1)"
+             (mouseenter)="showSubMenu($event, child1)"
+             class="sidebar-nav__item-link">
+            <ng-template [ngTemplateOutlet]="icon"
+                         [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
             <span class="sidebar-nav__item-text">{{ child1.text }}</span>
             <i class="sidebar-nav__sub-arrow"></i>
           </a>
           <!-- badge -->
-          <div *ngIf="child1.badge" title="{{child1.badge}}" class="badge badge-{{child1.badgeStatus}}"
-            [class.badge-dot]="child1.badgeDot">
+          <div *ngIf="child1.badge"
+               title="{{child1.badge}}"
+               class="badge badge-{{child1.badgeStatus}}"
+               [class.badge-dot]="child1.badgeDot">
             <em>{{child1.badge}}</em>
           </div>
           <!-- Level 2 -->
-          <ul *ngIf="child1._type === 3" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{child1._depth}}">
+          <ul *ngIf="child1._type === 3"
+              class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{child1._depth}}">
             <ng-container *ngFor="let child2 of child1.children">
-              <li *ngIf="child2._hidden !== true" class="sidebar-nav__item" [class.sidebar-nav__selected]="child2._selected" [class.sidebar-nav__open]="child2._open">
+              <li *ngIf="child2._hidden !== true"
+                  class="sidebar-nav__item"
+                  [class.sidebar-nav__selected]="child2._selected"
+                  [class.sidebar-nav__open]="child2._open">
                 <!-- link -->
-                <a *ngIf="child2._type <= 2" (click)="to(child2)" [attr.data-id]="child2.__id" class="sidebar-nav__item-link" [ngClass]="{'sidebar-nav__item-disabled': child2.disabled}">{{ child2.text }}</a>
+                <a *ngIf="child2._type <= 2"
+                   (click)="to(child2)"
+                   [attr.data-id]="child2.__id"
+                   class="sidebar-nav__item-link"
+                   [ngClass]="{'sidebar-nav__item-disabled': child2.disabled}">{{
+                  child2.text }}</a>
                 <!-- has children link -->
-                <a *ngIf="child2._type === 3" (click)="toggleOpen(child2)" class="sidebar-nav__item-link">
+                <a *ngIf="child2._type === 3"
+                   (click)="toggleOpen(child2)"
+                   class="sidebar-nav__item-link">
                   {{ child2.text }}
                   <i class="sidebar-nav__sub-arrow"></i>
                 </a>
                 <!-- badge -->
-                <div *ngIf="child2.badge" title="{{child2.badge}}" class="badge badge-{{child2.badgeStatus}}"
-                  [class.badge-dot]="child2.badgeDot">
+                <div *ngIf="child2.badge"
+                     title="{{child2.badge}}"
+                     class="badge badge-{{child2.badgeStatus}}"
+                     [class.badge-dot]="child2.badgeDot">
                   <em>{{child2.badge}}</em>
                 </div>
                 <!-- Level 3 -->
-                <ul *ngIf="child2._type === 3" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{child2._depth}}">
+                <ul *ngIf="child2._type === 3"
+                    class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{child2._depth}}">
                   <ng-container *ngFor="let child3 of child2.children">
-                    <li *ngIf="child3._hidden !== true" class="sidebar-nav__item" [class.sidebar-nav__selected]="child3._selected" [class.sidebar-nav__open]="child3._open">
+                    <li *ngIf="child3._hidden !== true"
+                        class="sidebar-nav__item"
+                        [class.sidebar-nav__selected]="child3._selected"
+                        [class.sidebar-nav__open]="child3._open">
                       <!-- link -->
-                      <a *ngIf="child3._type <= 2" (click)="to(child3)" [attr.data-id]="child3.__id" class="sidebar-nav__item-link" [ngClass]="{'sidebar-nav__item-disabled': child3.disabled}">{{ child3.text }}</a>
+                      <a *ngIf="child3._type <= 2"
+                         (click)="to(child3)"
+                         [attr.data-id]="child3.__id"
+                         class="sidebar-nav__item-link"
+                         [ngClass]="{'sidebar-nav__item-disabled': child3.disabled}">{{ child3.text }}</a>
                       <!-- external link -->
-                      <a *ngIf="child3._type === 2" href="{{ child3.externalLink }}" target="{{ child3.target }}"
-                        data-type="external" class="sidebar-nav__item-link">{{ child3.text }}</a>
+                      <a *ngIf="child3._type === 2"
+                         href="{{ child3.externalLink }}"
+                         target="{{ child3.target }}"
+                         data-type="external"
+                         class="sidebar-nav__item-link">{{ child3.text }}</a>
                       <!-- badge -->
-                      <div *ngIf="child3.badge" title="{{child3.badge}}" class="badge badge-{{child3.badgeStatus}}"
-                        [class.badge-dot]="child3.badgeDot">
+                      <div *ngIf="child3.badge"
+                           title="{{child3.badge}}"
+                           class="badge badge-{{child3.badgeStatus}}"
+                           [class.badge-dot]="child3.badgeDot">
                         <em>{{child3.badge}}</em>
                       </div>
                     </li>

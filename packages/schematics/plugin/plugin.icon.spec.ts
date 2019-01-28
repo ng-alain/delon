@@ -1,7 +1,4 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainApp } from '../utils/testing';
 
 const testCases = {
@@ -42,9 +39,7 @@ describe('NgAlainSchematic: plugin: icon', () => {
 
   beforeEach(() => {
     ({ runner, tree } = createAlainApp());
-    Object.keys(testCases).forEach(name =>
-      tree.create(`/foo/src/${name}`, testCases[name]),
-    );
+    Object.keys(testCases).forEach(name => tree.create(`/foo/src/${name}`, testCases[name]));
     tree = runner.runSchematic('plugin', { name: 'icon', type: 'add' }, tree);
   });
 

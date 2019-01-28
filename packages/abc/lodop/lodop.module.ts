@@ -4,4 +4,4 @@ import { DelonUtilModule } from '@delon/util';
 @NgModule({
   imports: [DelonUtilModule],
 })
-export class LodopModule { }
+export class LodopModule {}

@@ -1,7 +1,4 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainApp } from '../utils/testing';
 
 const PATH = '/foo/src/app/app.module.ts';
@@ -10,8 +7,7 @@ describe('NgAlainSchematic: plugin: default-language', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
-  beforeEach(() =>
-    ({ runner, tree } = createAlainApp({ defaultLanguage: 'en' })));
+  beforeEach(() => ({ runner, tree } = createAlainApp({ defaultLanguage: 'en' })));
 
   it(`should working`, () => {
     const content = tree.readContent(PATH);

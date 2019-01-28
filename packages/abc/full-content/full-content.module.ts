@@ -12,5 +12,4 @@ const COMPONENTS = [FullContentComponent, FullContentToggleDirective];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class FullContentModule {
-}
+export class FullContentModule {}

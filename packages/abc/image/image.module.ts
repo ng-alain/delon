@@ -11,4 +11,4 @@ const DIRECTIVES = [ImageDirective];
   declarations: [...DIRECTIVES],
   exports: [...DIRECTIVES],
 })
-export class ImageModule { }
+export class ImageModule {}

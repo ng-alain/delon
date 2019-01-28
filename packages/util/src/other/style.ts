@@ -1,21 +1,13 @@
 import { Renderer2 } from '@angular/core';
 
-function removeClass(
-  el: HTMLElement,
-  classMap: object,
-  renderer: Renderer2,
-): void {
+function removeClass(el: HTMLElement, classMap: object, renderer: Renderer2): void {
   // tslint:disable-next-line:forin
   for (const i in classMap) {
     renderer.removeClass(el, i);
   }
 }
 
-function addClass(
-  el: HTMLElement,
-  classMap: object,
-  renderer: Renderer2,
-): void {
+function addClass(el: HTMLElement, classMap: object, renderer: Renderer2): void {
   for (const i in classMap) {
     if (classMap[i]) {
       renderer.addClass(el, i);

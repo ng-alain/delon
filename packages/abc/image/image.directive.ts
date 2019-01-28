@@ -29,12 +29,8 @@ export class ImageDirective implements OnChanges, OnInit {
 
   private inited = false;
 
-  constructor(
-    cog: ImageConfig,
-    private el: ElementRef,
-    private render: Renderer2,
-  ) {
-    Object.assign(this, { ...new ImageConfig(), ...cog});
+  constructor(cog: ImageConfig, private el: ElementRef, private render: Renderer2) {
+    Object.assign(this, { ...new ImageConfig(), ...cog });
   }
 
   ngOnInit(): void {

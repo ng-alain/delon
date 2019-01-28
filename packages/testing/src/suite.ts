@@ -2,17 +2,27 @@ import { Type } from '@angular/core';
 import { getTestBed, ComponentFixture, TestBed } from '@angular/core/testing';
 
 export class TestContext<T> {
-  constructor(public fixture: ComponentFixture<T>) { }
+  constructor(public fixture: ComponentFixture<T>) {}
 
-  get component() { return this.fixture.componentInstance; }
+  get component() {
+    return this.fixture.componentInstance;
+  }
 
-  get el(): HTMLElement { return this.fixture.debugElement.nativeElement; }
+  get el(): HTMLElement {
+    return this.fixture.debugElement.nativeElement;
+  }
 
-  get dl() { return this.fixture.debugElement; }
+  get dl() {
+    return this.fixture.debugElement;
+  }
 
-  get context() { return this.fixture.componentInstance; }
+  get context() {
+    return this.fixture.componentInstance;
+  }
 
-  detectChanges() { this.fixture.detectChanges(); }
+  detectChanges() {
+    this.fixture.detectChanges();
+  }
 
   resolve<T1>(component: Type<T1>) {
     return this.fixture.debugElement.injector.get(component) as T1;
@@ -29,10 +39,14 @@ export const configureTestSuite = (configureAction?: () => void) => {
   });
 
   if (configureAction) {
-    beforeAll((done: DoneFn) => (async () => {
-      configureAction();
-      await TestBed.compileComponents();
-    })().then(done).catch(done.fail));
+    beforeAll((done: DoneFn) =>
+      (async () => {
+        configureAction();
+        await TestBed.compileComponents();
+      })()
+        .then(done)
+        .catch(done.fail),
+    );
   }
 
   afterEach(() => {

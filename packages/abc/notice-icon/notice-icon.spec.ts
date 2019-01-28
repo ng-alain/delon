@@ -28,7 +28,7 @@ describe('abc: notice-icon', () => {
 
   describe('when not data', () => {
     beforeEach(() => (context.data = []));
-    it('should be count', (done) => {
+    it('should be count', done => {
       context.count = 5;
       fixture.detectChanges();
       const cur = dl.query(By.css('.ant-scroll-number-only .current')).nativeElement as HTMLElement;
@@ -40,10 +40,10 @@ describe('abc: notice-icon', () => {
   });
 
   describe('when has data', () => {
-    beforeEach(() => (fixture.detectChanges()));
+    beforeEach(() => fixture.detectChanges());
 
     describe('should be show dropdown', () => {
-      it('via popoverVisible property', (done) => {
+      it('via popoverVisible property', done => {
         spyOn(context, 'popupVisibleChange');
         expect(context.comp.popoverVisible).toBe(false);
         context.popoverVisible = true;
@@ -53,7 +53,7 @@ describe('abc: notice-icon', () => {
           done();
         });
       });
-      it('via click', (done) => {
+      it('via click', done => {
         expect(context.popoverVisible).toBeUndefined();
         (dl.query(By.css('.ant-badge')).nativeElement as HTMLElement).click();
         fixture.detectChanges();
@@ -94,8 +94,7 @@ describe('abc: notice-icon', () => {
     context.popoverVisible = true;
     context.data = [{ title: 'a1', list: [] }];
     fixture.detectChanges();
-    const a = dl.query(By.css('.notice-icon__notfound'))
-      .nativeElement as HTMLElement;
+    const a = dl.query(By.css('.notice-icon__notfound')).nativeElement as HTMLElement;
     expect(a.innerText).toBe(zh_CN.noticeIcon.emptyText);
     injector.get(DelonLocaleService).setLocale(en_US);
     fixture.detectChanges();
@@ -105,15 +104,17 @@ describe('abc: notice-icon', () => {
 
 @Component({
   template: `
-    <notice-icon #comp
-        [data]="data"
-        [count]="count"
-        [loading]="loading"
-        (select)="select($event)"
-        (clear)="clear($event)"
-        [(popoverVisible)]="popoverVisible"
-        (popoverVisibleChange)="popupVisibleChange($event)"></notice-icon>
-    `,
+    <notice-icon
+      #comp
+      [data]="data"
+      [count]="count"
+      [loading]="loading"
+      (select)="select($event)"
+      (clear)="clear($event)"
+      [(popoverVisible)]="popoverVisible"
+      (popoverVisibleChange)="popupVisibleChange($event)"
+    ></notice-icon>
+  `,
 })
 class TestComponent {
   @ViewChild('comp')
@@ -124,24 +125,21 @@ class TestComponent {
       list: [
         {
           id: '000000001',
-          avatar:
-            'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
           title: '你收到了 14 份新周报',
           datetime: '7 个月前',
           type: '通知',
         },
         {
           id: '000000002',
-          avatar:
-            'https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png',
           title: '你推荐的 曲妮妮 已通过第三轮面试',
           datetime: '7 个月前',
           type: '通知',
         },
         {
           id: '000000003',
-          avatar:
-            'https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png',
           title: '这种模板可以区分多种通知类型',
           datetime: '7 个月前',
           read: true,
@@ -149,16 +147,14 @@ class TestComponent {
         },
         {
           id: '000000004',
-          avatar:
-            'https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png',
           title: '左侧图标用于区分不同的类型',
           datetime: '7 个月前',
           type: '通知',
         },
         {
           id: '000000005',
-          avatar:
-            'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
           title: '内容不要超过两行字，超出时自动截断',
           datetime: '7 个月前',
           type: '通知',

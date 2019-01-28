@@ -129,3 +129,68 @@ These variables or methods can be used in templates, for example: `<%=componentN
 
 - [delon](https://github.com/ng-alain/delon/blob/master/packages/schematics/edit/files/__path__/__name%40dasherize%40if-flat__/__name%40dasherize__.component.html)
 - [material2](https://github.com/angular/material2/blob/master/src/lib/schematics/dashboard/files/__path__/__name%40dasherize%40if-flat__/__name%40dasherize__.component.html)
+
+### Custom Data
+
+The `tpl` command allows you to process the data further before generating the file, The command will check the `_cli-tpl/_fix.js` file during execution and call the `fix` method, which must return a `Promise` object, for example:
+
+> **Note: ** CLI is a Node JS program, so the syntax is based on Node JS.
+
+```js
+function fix(options) {
+  return new Promise((resolve) => {
+    resolve();
+  });
+}
+
+module.exports = {
+  fix
+};
+```
+
+The `fix` method has only an `options` parameter, which contains the CLI used to generate all parameter data, even if it is undefined, for example:
+
+```bash
+ng g ng-alain:tpl list -m=setting --import-type=UserDto
+```
+
+`import-type` is not a defined parameter of the command itself, but `options` will convert these undefined parameters to an `extraArgs` object, so the `options` you receive will be:
+
+```json
+{
+  "tplName": "test",
+  "modal": true,
+  ...
+  "extraArgs": {
+    "import-type": "UserDto"
+  }
+}
+```
+
+The `options` object is passed to the template engine, so you can attach some processed data to `options` and use them in the template file, for example:
+
+```json
+{
+  "tplName": "test",
+  "modal": true,
+  ...
+  "extraArgs": {
+    "import-type": "UserDto",
+    "newData": "asdf"
+  }
+}
+```
+
+You can apply `newData` to the template, for example `__name@dasherize__.component.html`:
+
+```html
+<page-header></page-header>
+<%= extraArgs.newData %>
+```
+
+The result is:
+
+```html
+<page-header></page-header>
+asdf
+```

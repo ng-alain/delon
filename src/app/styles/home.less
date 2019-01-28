@@ -1,43 +1,82 @@
+@index-home-color: #314659;
+@index-home-bg: #49a9ee;
+@index-home-max-width: 1200px;
+
 .index-page {
   color: #697b8c;
 
-  app-header {
+  #header {
     box-shadow: none;
+    max-width: 1200px;
+    width: 100%;
+    margin: 20px auto 0;
+    padding: 0 24px;
   }
 
-  .banner {
+  #nav.ant-menu-horizontal > .ant-menu-item-selected {
+    border-top: none;
+  }
+
+  .page {
+    width: 100%;
+    max-width: @index-home-max-width;
+    margin: auto;
+    position: relative;
+    padding: 0 24px;
     &-wrapper {
-      .ant-btn {
-        min-width: 110px;
-        height: 40px;
-        border-radius: 20px;
-        font-size: 16px;
-        margin-right: 16px;
-        &:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 4px 12px rgba(24, 144, 255, 0.4);
-        }
-      }
-      .ant-btn,
-      github-button {
-        margin-bottom: 16px;
-      }
+      overflow: inherit;
+      position: relative;
+      color: @index-home-color;
+      font-family: Avenir, 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
+        sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      font-variant: tabular-nums;
+      z-index: 1;
     }
-    &-slogan {
-      max-width: 480px;
-      margin: 0 auto;
+    h2 {
+      font-size: 38px;
+      line-height: 46px;
+      color: @index-home-color;
+      text-align: center;
+      font-weight: 400;
+      padding: 80px 0 40px;
+    }
+  }
+
+  .page-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 520px;
+    width: 100%;
+    max-width: @index-home-max-width;
+    margin: auto;
+    position: relative;
+    padding: 0 24px;
+    &__slogan {
+      width: 54%;
+      max-width: 560px;
+      min-width: 420px;
+      min-height: 336px;
+      color: #0d1a26;
       h1 {
-        font-family: 'Futura', 'Helvetica Neue For Number', -apple-system,
-          BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
-          'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica,
-          Arial, sans-serif;
+        font-family: 'Futura', 'Helvetica Neue For Number', -apple-system, BlinkMacSystemFont,
+          'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue',
+          Helvetica, Arial, sans-serif;
         font-size: 54px;
         margin: 12px 0;
       }
       p {
         font-size: 20px;
       }
-      .button-wrapper {
+      .ant-btn {
+        min-width: 110px;
+        height: 40px;
+        border-radius: 20px;
+        font-size: 16px;
+        margin-right: 16px;
+      }
+      &-btn {
         margin-top: 64px;
         line-height: 40px;
         align-items: center;
@@ -47,41 +86,142 @@
         }
       }
     }
-    &-img {
-      max-width: 360px;
-      margin: 0 auto;
+    &__img {
+      width: 46%;
+      max-width: 482px;
+      height: 420px;
+      overflow: hidden;
+      position: absolute;
+      right: 0;
+      bottom: 0;
       img {
-        max-width: 100%;
+        height: 100%;
         border-radius: 8px;
       }
     }
   }
 
-  @media (min-width: @mobile-min) {
-    .banner {
-      &-wrapper {
-        margin: 120px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+  .page-feature {
+    position: relative;
+    padding-bottom: 80px;
+    color: #fff;
+    &__bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: 0;
+      bottom: 0;
+      background: @index-home-bg;
+      transform: skewY(-4.5deg);
+      &-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 200px;
+        background: @index-home-bg;
+      }
+    }
+    h2,
+    h3 {
+      color: #fff;
+    }
+    h2 {
+      padding-top: 100px;
+    }
+    h3 {
+      font-size: 18px;
+    }
+    &__item {
+      display: flex;
+      height: 100px;
+      margin-bottom: 56px;
+    }
+    .anticon {
+      font-size: 36px;
+      padding-top: 8px;
+      margin-right: 16px;
+    }
+  }
+
+  .page-theme {
+    background: #fff;
+    overflow: hidden;
+    margin-bottom: 48px;
+    &__item {
+      display: block;
+      color: @index-home-color;
+      text-align: center;
+      margin-bottom: 32px;
+
+      &:hover {
+        color: @index-home-bg;
+      }
+      img {
+        max-width: 80%;
+      }
+
+      h3,
+      p {
+        margin-top: 16px;
       }
     }
   }
 
-  @media (max-width: @mobile-max) {
-    .banner {
-      &-wrapper {
-        margin: 48px 10px;
-      }
-      &-slogan {
-        margin: 0 0 56px 0;
+  // 768
+  @media (max-width: @screen-md-max) {
+    #logo {
+      padding-left: 0;
+    }
+    .page-banner {
+      &__slogan {
+        width: 100%;
         text-align: center;
-        .button-wrapper {
+        &-btn {
           justify-content: center;
-          margin-top: 24px;
-          flex-wrap: wrap;
+        }
+      }
+      &__img {
+        display: none;
+      }
+    }
+    .page-feature {
+      &__item {
+        flex-direction: column;
+        text-align: center;
+        .anticon {
+          margin: 0 0 16px 0;
         }
       }
     }
   }
+
+  // @media (min-width: @mobile-min) {
+  //   .banner {
+  //     &-wrapper {
+  //       margin: 120px;
+  //       display: flex;
+  //       justify-content: center;
+  //       align-items: center;
+  //     }
+  //   }
+  // }
+
+  // @media (max-width: @mobile-max) {
+  //   .banner {
+  //     &-wrapper {
+  //       margin: 48px 10px;
+  //     }
+  //     &-slogan {
+  //       margin: 0 0 56px 0;
+  //       text-align: center;
+  //       .button-wrapper {
+  //         justify-content: center;
+  //         margin-top: 24px;
+  //         flex-wrap: wrap;
+  //       }
+  //     }
+  //   }
+  // }
 }

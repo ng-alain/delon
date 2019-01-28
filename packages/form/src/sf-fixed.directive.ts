@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  Input,
-  OnChanges,
-  Renderer2,
-} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
 @Directive({ selector: '[fixed-label]' })

@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 
 // tslint:disable:no-any
 export class DateRangePickerConfig {
-  nzFormat ?= 'yyyy-MM-dd';
+  nzFormat?: string = 'yyyy-MM-dd';
   nzClassName?: string;
   nzSize?: string;
   nzStyle?: string;
-  nzAllowClear ?= true;
-  nzAutoFocus ?= false;
-  nzDisabled ?= false;
+  nzAllowClear?: boolean = true;
+  nzAutoFocus?: boolean = false;
+  nzDisabled?: boolean = false;
   nzDisabledDate?: any;
   nzDisabledTime?: any;
   nzLocale?: any;
-  nzPopupStyle ?= { 'position': 'relative' };
+  nzPopupStyle?: any = { position: 'relative' };
   nzDropdownClassName?: any;
   nzRenderExtraFooter?: any;
   nzPlaceHolder?: any;

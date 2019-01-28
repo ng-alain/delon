@@ -17,7 +17,7 @@ const options = {
     '@text-color-secondary'
   ],
   // if provided, file will be created with generated less/styles
-  outputFilePath: path.join(root, './src/assets/alain.less')
+  outputFilePath: path.join(root, './src/assets/color.less')
 }
 
 generateTheme(options).then(less => {

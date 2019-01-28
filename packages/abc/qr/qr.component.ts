@@ -15,7 +15,9 @@ import { QRService } from './qr.service';
 
 @Component({
   selector: 'qr',
-  template: `<img class="qr__img" src="{{dataURL}}">`,
+  template: `
+    <img class="qr__img" src="{{ dataURL }}" />
+  `,
   host: { '[class.qr]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -31,19 +33,18 @@ export class QRComponent implements OnChanges {
   @Input() level: string;
   @Input() mime: string;
   @Input() @InputNumber() padding: number;
-  @HostBinding('style.height.px') @HostBinding('style.width.px')
-  @Input() @InputNumber() size: number;
+  @HostBinding('style.height.px')
+  @HostBinding('style.width.px')
+  @Input()
+  @InputNumber()
+  size: number;
   @Input() value: string;
   @Output() readonly change = new EventEmitter<string>();
 
   // #endregion
 
-  constructor(
-    cog: QRConfig,
-    private srv: QRService,
-    private cdr: ChangeDetectorRef,
-  ) {
-    Object.assign(this, { ...new QRConfig(), ...cog});
+  constructor(cog: QRConfig, private srv: QRService, private cdr: ChangeDetectorRef) {
+    Object.assign(this, { ...new QRConfig(), ...cog });
   }
 
   ngOnChanges(): void {

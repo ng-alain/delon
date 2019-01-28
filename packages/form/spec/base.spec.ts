@@ -1,10 +1,5 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import {
-  discardPeriodicTasks,
-  tick,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { discardPeriodicTasks, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AlainThemeModule } from '@delon/theme';
@@ -14,6 +9,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { configureTestSuite, dispatchFakeEvent, typeInElement } from '@delon/testing';
 import { ErrorData } from '../src/errors';
 import { SFButton } from '../src/interface';
+import { FormProperty } from '../src/model/form.property';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema';
 import { SFUISchema } from '../src/schema/ui';
@@ -44,9 +40,9 @@ export function builder(options?: {
 }) {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
-    imports: [
-      NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(),
-    ].concat(options.imports || []),
+    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(
+      options.imports || [],
+    ),
     declarations: [TestFormComponent],
   });
   if (options.template) {
@@ -74,16 +70,25 @@ export function builder(options?: {
 export function configureSFTestSuite() {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
+      imports: [
+        NoopAnimationsModule,
+        AlainThemeModule.forRoot(),
+        DelonFormModule.forRoot(),
+        HttpClientTestingModule,
+      ],
       declarations: [TestFormComponent],
     });
   });
 }
 
 export class SFPage {
-  constructor(private comp: SFComponent) { }
+  constructor(private comp: SFComponent) {}
 
-  prop(_dl: DebugElement, _context: TestFormComponent, _fixture: ComponentFixture<TestFormComponent>) {
+  prop(
+    _dl: DebugElement,
+    _context: TestFormComponent,
+    _fixture: ComponentFixture<TestFormComponent>,
+  ) {
     dl = _dl;
     context = _context;
     fixture = _fixture;
@@ -91,6 +96,15 @@ export class SFPage {
     spyOn(context, 'formSubmit');
     spyOn(context, 'formReset');
     spyOn(context, 'formError');
+    this.cleanOverlay();
+  }
+
+  cleanOverlay() {
+    const els = document.querySelectorAll('.cdk-overlay-container');
+    if (els && els.length > 0) {
+      els.forEach(el => (el.innerHTML = ''));
+    }
+    return this;
   }
 
   getDl(cls: string): DebugElement {
@@ -122,6 +136,11 @@ export class SFPage {
     return this;
   }
 
+  getProperty(path: string): FormProperty {
+    path = this.fixPath(path);
+    return this.comp.getProperty(path);
+  }
+
   submit(result = true): this {
     this.getEl('.ant-btn-primary').click();
     if (result) expect(context.formSubmit).toHaveBeenCalled();
@@ -148,9 +167,7 @@ export class SFPage {
   }
   /** 下标从 `1` 开始 */
   remove(index = 1): this {
-    this.getEl(
-      `.sf-array-container [data-index="${index - 1}"] .remove`,
-    ).click();
+    this.getEl(`.sf-array-container [data-index="${index - 1}"] .remove`).click();
     return this;
   }
 
@@ -158,8 +175,7 @@ export class SFPage {
     context.schema = schema;
     if (typeof ui !== 'undefined') context.ui = ui;
     if (typeof formData !== 'undefined') context.formData = formData;
-    fixture.detectChanges();
-    return this;
+    return this.dc();
   }
 
   /** 强制指定 `a` 节点 */
@@ -168,8 +184,7 @@ export class SFPage {
       ...deepCopy(schema),
       properties: { a: overObject },
     };
-    fixture.detectChanges();
-    return this;
+    return this.dc();
   }
 
   checkSchema(path: string, propertyName: string, value: any): this {
@@ -205,8 +220,22 @@ export class SFPage {
     return this;
   }
 
-  checkElText(cls: string, value: any): this {
-    const node = this.getEl(cls);
+  checkCalled(path: string, propertyName: string, result = true): this {
+    path = this.fixPath(path);
+    const property = this.comp.rootProperty.searchProperty(path);
+    expect(property != null).toBe(true);
+    const item = property.ui;
+    const res = deepGet(item, propertyName.split('.'), undefined);
+    if (result) {
+      expect(res).toHaveBeenCalled();
+    } else {
+      expect(res).not.toHaveBeenCalled();
+    }
+    return this;
+  }
+
+  checkElText(cls: string, value: any, viaDocument = false): this {
+    const node = viaDocument ? document.querySelector(cls) : this.getEl(cls);
     if (value == null) {
       expect(node).toBeNull();
     } else {
@@ -238,9 +267,21 @@ export class SFPage {
     return this;
   }
 
-  checkCount(cls: string, count: number): this {
-    const len = dl.queryAll(By.css(cls)).length;
+  checkCount(cls: string, count: number, viaDocument = false): this {
+    const len = viaDocument
+      ? document.querySelectorAll(cls).length
+      : dl.queryAll(By.css(cls)).length;
     expect(len).toBe(count);
+    return this;
+  }
+
+  checkError(text: string): this {
+    const el = this.getEl('nz-form-explain');
+    if (text == null) {
+      expect(el == null).toBe(true);
+      return this;
+    }
+    expect(el.textContent.trim().includes(text)).toBe(true);
     return this;
   }
 
@@ -248,24 +289,20 @@ export class SFPage {
     const el = this.getEl(cls);
     expect(el).not.toBeNull();
     el.click();
-    fixture.detectChanges();
-    return this;
+    return this.dc();
   }
 
   typeChar(value: any, cls = 'input'): this {
     const node = this.getEl(cls) as HTMLInputElement;
     typeInElement(value, node);
     tick();
-    fixture.detectChanges();
-    return this;
+    return this.dc();
   }
 
   typeEvent(eventName: string, cls = 'input'): this {
-    const node = this.getEl(cls) as HTMLInputElement;
+    const node = document.querySelector(cls) as HTMLInputElement;
     dispatchFakeEvent(node, eventName);
-    tick();
-    fixture.detectChanges();
-    return this;
+    return this.time().dc();
   }
 
   time(time = 0) {
@@ -273,7 +310,12 @@ export class SFPage {
     return this;
   }
 
-  asyncEnd(time = 0) {
+  dc() {
+    fixture.detectChanges();
+    return this;
+  }
+
+  asyncEnd(time = 500) {
     this.time(time);
     discardPeriodicTasks();
     return this;
@@ -282,19 +324,23 @@ export class SFPage {
 
 @Component({
   template: `
-    <sf [layout]="layout" #comp
-        [schema]="schema"
-        [ui]="ui"
-        [formData]="formData"
-        [button]="button"
-        [liveValidate]="liveValidate"
-        [autocomplete]="autocomplete"
-        [firstVisual]="firstVisual"
-        (formChange)="formChange($event)"
-        (formSubmit)="formSubmit($event)"
-        (formReset)="formReset($event)"
-        (formError)="formError($event)"></sf>
-    `,
+    <sf
+      [layout]="layout"
+      #comp
+      [schema]="schema"
+      [ui]="ui"
+      [formData]="formData"
+      [button]="button"
+      [liveValidate]="liveValidate"
+      [autocomplete]="autocomplete"
+      [firstVisual]="firstVisual"
+      [onlyVisual]="onlyVisual"
+      (formChange)="formChange($event)"
+      (formSubmit)="formSubmit($event)"
+      (formReset)="formReset($event)"
+      (formError)="formError($event)"
+    ></sf>
+  `,
 })
 export class TestFormComponent {
   @ViewChild('comp') comp: SFComponent;
@@ -307,9 +353,10 @@ export class TestFormComponent {
   liveValidate = true;
   autocomplete: 'on' | 'off';
   firstVisual = true;
+  onlyVisual = false;
 
-  formChange(value: {}) { }
-  formSubmit(value: {}) { }
-  formReset(value: {}) { }
-  formError(value: ErrorData[]) { }
+  formChange(value: {}) {}
+  formSubmit(value: {}) {}
+  formReset(value: {}) {}
+  formError(value: ErrorData[]) {}
 }

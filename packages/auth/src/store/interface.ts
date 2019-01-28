@@ -2,13 +2,10 @@ import { InjectionToken } from '@angular/core';
 import { ITokenModel } from '../token/interface';
 import { DA_STORE_TOKEN_LOCAL_FACTORY } from './local-storage.service';
 
-export const DA_STORE_TOKEN = new InjectionToken<IStore>(
-  'AUTH_STORE_TOKEN',
-  {
-    providedIn: 'root',
-    factory: DA_STORE_TOKEN_LOCAL_FACTORY,
-  },
-);
+export const DA_STORE_TOKEN = new InjectionToken<IStore>('AUTH_STORE_TOKEN', {
+  providedIn: 'root',
+  factory: DA_STORE_TOKEN_LOCAL_FACTORY,
+});
 
 export interface IStore {
   get(key: string): ITokenModel;

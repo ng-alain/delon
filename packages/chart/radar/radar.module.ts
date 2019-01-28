@@ -12,4 +12,4 @@ const COMPONENTS = [G2RadarComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2RadarModule { }
+export class G2RadarModule {}

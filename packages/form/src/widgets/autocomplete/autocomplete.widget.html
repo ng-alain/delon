@@ -1,20 +1,28 @@
-<sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
-    <input nz-input [nzAutocomplete]="auto"
-        [attr.id]="id"
-        [disabled]="disabled"
-        [attr.disabled]="disabled"
-        [nzSize]="ui.size"
-        [(ngModel)]="typing"
-        [attr.maxLength]="schema.maxLength || null"
-        [attr.placeholder]="ui.placeholder"
-        autocomplete="off">
-    <nz-autocomplete #auto
-        [nzBackfill]="i.backfill"
-        [nzDefaultActiveFirstOption]="i.defaultActiveFirstOption"
-        [nzWidth]="i.width"
-        (selectionChange)="updateValue($event)">
-        <nz-auto-option *ngFor="let i of list | async" [nzValue]="i.value" [nzLabel]="i.label">
-            {{i.label}}
-        </nz-auto-option>
-    </nz-autocomplete>
+<sf-item-wrap [id]="id"
+              [schema]="schema"
+              [ui]="ui"
+              [showError]="showError"
+              [error]="error"
+              [showTitle]="schema.title">
+  <input nz-input
+         [nzAutocomplete]="auto"
+         [attr.id]="id"
+         [disabled]="disabled"
+         [attr.disabled]="disabled"
+         [nzSize]="ui.size"
+         [(ngModel)]="typing"
+         [attr.maxLength]="schema.maxLength || null"
+         [attr.placeholder]="ui.placeholder"
+         autocomplete="off">
+  <nz-autocomplete #auto
+                   [nzBackfill]="i.backfill"
+                   [nzDefaultActiveFirstOption]="i.defaultActiveFirstOption"
+                   [nzWidth]="i.width"
+                   (selectionChange)="updateValue($event)">
+    <nz-auto-option *ngFor="let i of list | async"
+                    [nzValue]="i.value"
+                    [nzLabel]="i.label">
+      {{i.label}}
+    </nz-auto-option>
+  </nz-autocomplete>
 </sf-item-wrap>

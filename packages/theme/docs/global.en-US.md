@@ -18,9 +18,12 @@ title: Global Parameters
 | `@text-md` | `@font-size-base + 2` | Text of md size |
 | `@text-lg` | `@font-size-base + 4` | Text of lg size |
 | `@text-xl` | `@font-size-base + 8` | Text of xl size |
-| `@icon-sm` | `@font-size-base * 2` | Small icon |
-| `@icon-md` | `@font-size-base * 4` | Medium icon |
-| `@icon-lg` | `@font-size-base * 6` | Large icon |
+| `@text-xxl` | `@font-size-base + 12` | Text of xxl size |
+| `@icon-sm` | `@font-size-base * 2` | Icon of sm size |
+| `@icon-md` | `@font-size-base * 4` | Icon of md size |
+| `@icon-lg` | `@font-size-base * 6` | Icon of lg size |
+| `@icon-xl` | `@font-size-base * 8` | Icon of xl size |
+| `@icon-xxl` | `@font-size-base * 10` | Icon of xxl size |
 | `@h1-font-size` | `32px` | h1 font size |
 | `@h2-font-size` | `24px` | h2 font size |
 | `@h3-font-size` | `20px` | h3 font size |
@@ -38,7 +41,7 @@ title: Global Parameters
 | `@drawer-lg` | `1200px` | Extra large drawer |
 | `@code-border-color` | `#eee` | `<code>` border color |
 | `@code-bg` | `#f7f7f7` | `<code>` background color |
-| `@widths`  | `sm @layout-gutter * 20` <br> `md @layout-gutter * 30`<br>`lg @layout-gutter * 40` | width |
+| `@widths`  | `xs @layout-gutter * 10`<br>`sm @layout-gutter * 20`<br>`md @layout-gutter * 30`<br>`lg @layout-gutter * 40`<br>`xl @layout-gutter * 50`<br>`xxl @layout-gutter * 50` | width |
 | `@border-radius-md` | `4px` | Medium border rounded corner |
 | `@border-radius-lg` | `6px` | Large border rounded corner |
 | `@masonry-column-gap` | `@layout-gutter * 2` | CSS waterfall flow column and column spacing |

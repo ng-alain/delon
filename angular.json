@@ -17,13 +17,16 @@
             "tsConfig": "src/tsconfig.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
-              "src/assets"
+              "src/assets",
+              "src/_redirects"
             ],
             "styles": [
               "node_modules/ngx-simplemde/src/index.css",
+              "node_modules/aos/dist/aos.css",
               "src/styles.less"
             ],
             "scripts": [
+              "node_modules/aos/dist/aos.js",
               "node_modules/simplemde-antd/dist/simplemde.min.js",
               "node_modules/enquire.js/dist/enquire.js",
               "node_modules/@antv/g2/dist/g2.min.js",
@@ -104,7 +107,6 @@
               "node_modules/qrious/dist/qrious.min.js"
             ],
             "codeCoverageExclude": [
-              "packages/chart/**",
               "packages/schematics/**",
               "packages/testing/**"
             ]

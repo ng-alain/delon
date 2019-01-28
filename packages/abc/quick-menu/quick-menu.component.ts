@@ -30,11 +30,7 @@ export class QuickMenuComponent implements OnInit, OnChanges {
 
   // #endregion
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private el: ElementRef,
-    private render: Renderer2,
-  ) { }
+  constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) {}
 
   private show = false;
 

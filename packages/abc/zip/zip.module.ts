@@ -5,4 +5,4 @@ import { DelonUtilModule } from '@delon/util';
 @NgModule({
   imports: [CommonModule, DelonUtilModule],
 })
-export class ZipModule { }
+export class ZipModule {}

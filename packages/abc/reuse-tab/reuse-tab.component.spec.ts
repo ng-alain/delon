@@ -1,10 +1,5 @@
 import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
-import {
-  fakeAsync,
-  tick,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
   ActivatedRoute,
@@ -67,25 +62,28 @@ describe('abc: reuse-tab', () => {
       imports: [
         DelonLocaleModule,
         ReuseTabModule,
-        RouterTestingModule.withRoutes([
-          {
-            path: '',
-            component: LayoutComponent,
-            children: [
-              { path: 'a', component: AComponent },
-              { path: 'b/:id', component: BComponent },
-              { path: 'c', component: CComponent },
-              { path: 'd', component: DComponent },
-              { path: 'e', component: EComponent, data: { titleI18n: 'i18n' } },
-              { path: 'lazy', loadChildren: 'lazy' },
-              {
-                path: 'leave',
-                component: DComponent,
-                canDeactivate: ['CanDeactivate'],
-              },
-            ],
-          },
-        ], { scrollPositionRestoration: 'disabled' }),
+        RouterTestingModule.withRoutes(
+          [
+            {
+              path: '',
+              component: LayoutComponent,
+              children: [
+                { path: 'a', component: AComponent },
+                { path: 'b/:id', component: BComponent },
+                { path: 'c', component: CComponent },
+                { path: 'd', component: DComponent },
+                { path: 'e', component: EComponent, data: { titleI18n: 'i18n' } },
+                { path: 'lazy', loadChildren: 'lazy' },
+                {
+                  path: 'leave',
+                  component: DComponent,
+                  canDeactivate: ['CanDeactivate'],
+                },
+              ],
+            },
+          ],
+          { scrollPositionRestoration: 'disabled' },
+        ),
       ],
       providers: [
         MenuService,
@@ -97,11 +95,7 @@ describe('abc: reuse-tab', () => {
         },
         {
           provide: 'CanDeactivate',
-          useValue: (
-            c: DComponent,
-            a: ActivatedRouteSnapshot,
-            b: RouterStateSnapshot,
-          ) => {
+          useValue: (c: DComponent, a: ActivatedRouteSnapshot, b: RouterStateSnapshot) => {
             return Observable.create((observer: any) => observer.next(false));
           },
         },
@@ -129,12 +123,8 @@ describe('abc: reuse-tab', () => {
     router.routeReuseStrategy = new ReuseTabStrategy(srv);
 
     page = new PageObject();
-    layoutComp = dl
-      .query(By.directive(LayoutComponent))
-      .injector.get(LayoutComponent);
-    rtComp = dl
-      .query(By.directive(ReuseTabComponent))
-      .injector.get(ReuseTabComponent);
+    layoutComp = dl.query(By.directive(LayoutComponent)).injector.get(LayoutComponent);
+    rtComp = dl.query(By.directive(ReuseTabComponent)).injector.get(ReuseTabComponent);
     spyOn(layoutComp, 'change');
     spyOn(layoutComp, 'close');
   }
@@ -254,17 +244,15 @@ describe('abc: reuse-tab', () => {
         }));
       });
       describe('#mode', () => {
-        [
-          ReuseTabMatchMode.Menu,
-          ReuseTabMatchMode.MenuForce,
-          ReuseTabMatchMode.URL,
-        ].forEach(type => {
-          it(`with ${type}`, () => {
-            layoutComp.mode = type;
-            fixture.detectChanges();
-            expect(srv.mode).toBe(type);
-          });
-        });
+        [ReuseTabMatchMode.Menu, ReuseTabMatchMode.MenuForce, ReuseTabMatchMode.URL].forEach(
+          type => {
+            it(`with ${type}`, () => {
+              layoutComp.mode = type;
+              fixture.detectChanges();
+              expect(srv.mode).toBe(type);
+            });
+          },
+        );
       });
       describe('#debug', () => {
         [true, false].forEach(type => {
@@ -478,15 +466,13 @@ describe('abc: reuse-tab', () => {
           .openContextMenu(1)
           .tap(() =>
             expect(
-              document.querySelector(`.reuse-tab__cm li[data-type="close"]`)
-                .classList,
+              document.querySelector(`.reuse-tab__cm li[data-type="close"]`).classList,
             ).toContain('ant-menu-item-disabled'),
           )
           .openContextMenu(1, { ctrlKey: true })
           .tap(() =>
             expect(
-              document.querySelector(`.reuse-tab__cm li[data-type="close"]`)
-                .classList,
+              document.querySelector(`.reuse-tab__cm li[data-type="close"]`).classList,
             ).not.toContain('ant-menu-item-disabled'),
           )
           .expectCount(2);
@@ -669,7 +655,9 @@ describe('abc: reuse-tab', () => {
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
               expect(srv.items[0].position[1]).toBe(666);
-              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(document.querySelector('#children'));
+              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(
+                document.querySelector('#children'),
+              );
             });
         }));
       });
@@ -691,27 +679,18 @@ describe('abc: reuse-tab', () => {
       genModule();
       createComp();
       page.to('#b').openContextMenu(1);
-      expect(document.querySelector('[data-type="close"]').textContent).toBe(
-        zh_CN.reuseTab.close,
-      );
+      expect(document.querySelector('[data-type="close"]').textContent).toBe(zh_CN.reuseTab.close);
       injector.get(DelonLocaleService).setLocale(en_US);
       fixture.detectChanges();
       page.to('#a').openContextMenu(1);
-      expect(document.querySelector('[data-type="close"]').textContent).toBe(
-        en_US.reuseTab.close,
-      );
+      expect(document.querySelector('[data-type="close"]').textContent).toBe(en_US.reuseTab.close);
     }));
   });
 
   describe('#issues', () => {
     it('#361', fakeAsync(() => {
       injector = TestBed.configureTestingModule({
-        declarations: [
-          AppComponent,
-          LayoutComponent,
-          CComponent,
-          DComponent,
-        ],
+        declarations: [AppComponent, LayoutComponent, CComponent, DComponent],
         imports: [
           DelonLocaleModule,
           ReuseTabModule,
@@ -740,10 +719,11 @@ describe('abc: reuse-tab', () => {
       });
       createComp();
 
-      page.to('#to-d')
-          .to('#to-c')
-          .close(0)
-          .to('#to-d');
+      page
+        .to('#to-d')
+        .to('#to-c')
+        .close(0)
+        .to('#to-d');
     }));
   });
 
@@ -829,19 +809,13 @@ describe('abc: reuse-tab', () => {
         expect(false).toBe(true, `the pos muse be 0-${ls.length}`);
         return this;
       }
-      (ls[pos] as HTMLElement).dispatchEvent(
-        new MouseEvent('contextmenu', eventArgs),
-      );
+      (ls[pos] as HTMLElement).dispatchEvent(new MouseEvent('contextmenu', eventArgs));
       this.advance();
       return this;
     }
     clickContentMenu(type: string): this {
-      const el = document.querySelector(
-        `.reuse-tab__cm li[data-type="${type}"]`,
-      );
-      expect(el).not.toBeNull(
-        `the ${type} is invalid element of content menu container`,
-      );
+      const el = document.querySelector(`.reuse-tab__cm li[data-type="${type}"]`);
+      expect(el).not.toBeNull(`the ${type} is invalid element of content menu container`);
       (el as HTMLElement).click();
       this.advance();
       return this;

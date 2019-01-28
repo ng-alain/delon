@@ -60,4 +60,4 @@ const MODULES = [
 ];
 
 @NgModule({ exports: MODULES })
-export class DelonABCModule { }
+export class DelonABCModule {}

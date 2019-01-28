@@ -11,4 +11,4 @@ import { SidebarNavComponent } from './sidebar-nav.component';
   declarations: [SidebarNavComponent],
   exports: [SidebarNavComponent],
 })
-export class SidebarNavModule { }
+export class SidebarNavModule {}

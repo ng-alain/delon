@@ -20,6 +20,4 @@ export interface SFButton {
   edit?: string;
 }
 
-export interface SFRenderButton extends SFHorizontalLayoutSchema, SFRenderSchema {
-
-}
+export interface SFRenderButton extends SFHorizontalLayoutSchema, SFRenderSchema {}

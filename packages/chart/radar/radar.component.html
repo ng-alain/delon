@@ -1,9 +1,17 @@
-<ng-container *stringTemplateOutlet="title"><h4>{{title}}</h4></ng-container>
+<ng-container *stringTemplateOutlet="title">
+  <h4>{{title}}</h4>
+</ng-container>
 <div #container></div>
-<div nz-row class="g2-radar__legend" *ngIf="hasLegend">
-  <div nz-col [nzSpan]="24 / legendData.length" *ngFor="let i of legendData; let idx = index"
-    (click)="_click(idx)" class="g2-radar__legend-item">
-    <i class="g2-radar__legend-dot" [ngStyle]="{'background-color': !i.checked ? '#aaa' : i.color}"></i>
+<div nz-row
+     class="g2-radar__legend"
+     *ngIf="hasLegend">
+  <div nz-col
+       [nzSpan]="24 / legendData.length"
+       *ngFor="let i of legendData; let idx = index"
+       (click)="_click(idx)"
+       class="g2-radar__legend-item">
+    <i class="g2-radar__legend-dot"
+       [ngStyle]="{'background-color': !i.checked ? '#aaa' : i.color}"></i>
     {{i.name}}
     <h6 class="g2-radar__legend-title">{{i.value}}</h6>
   </div>

@@ -13,5 +13,4 @@ const COMPONENTS = [EllipsisComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class EllipsisModule {
-}
+export class EllipsisModule {}

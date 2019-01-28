@@ -12,4 +12,4 @@ const COMPONENTS = [G2CardComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2CardModule { }
+export class G2CardModule {}

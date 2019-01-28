@@ -1,20 +1,33 @@
 <ng-template #badgeTpl>
-  <nz-badge [nzCount]="count" [ngClass]="btnClass" [nzStyle]="{ 'box-shadow': 'none' }">
-    <i nz-icon type="bell" [ngClass]="btnIconClass"></i>
+  <nz-badge [nzCount]="count"
+            [ngClass]="btnClass"
+            [nzStyle]="{ 'box-shadow': 'none' }">
+    <i nz-icon
+       type="bell"
+       [ngClass]="btnIconClass"></i>
   </nz-badge>
 </ng-template>
 <div *ngIf="data?.length === 0">
   <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
 </div>
-<nz-dropdown *ngIf="data?.length > 0" [nzVisible]="popoverVisible" (nzVisibleChange)="onVisibleChange($event)"
-  nzTrigger="click" nzPlacement="bottomRight" [nzOverlayClassName]="['header-dropdown', 'notice-icon']">
+<nz-dropdown *ngIf="data?.length > 0"
+             [nzVisible]="popoverVisible"
+             (nzVisibleChange)="onVisibleChange($event)"
+             nzTrigger="click"
+             nzPlacement="bottomRight"
+             [nzOverlayClassName]="['header-dropdown', 'notice-icon']">
   <div nz-dropdown>
     <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
   </div>
-  <nz-spin [nzSpinning]="loading" [nzDelay]="0">
+  <nz-spin [nzSpinning]="loading"
+           [nzDelay]="0">
     <nz-tabset nzSelectedIndex="0">
-      <nz-tab *ngFor="let i of data" [nzTitle]="i.title">
-        <notice-icon-tab [locale]="locale" [data]="i" (select)="onSelect($event)" (clear)="onClear($event)"></notice-icon-tab>
+      <nz-tab *ngFor="let i of data"
+              [nzTitle]="i.title">
+        <notice-icon-tab [locale]="locale"
+                         [data]="i"
+                         (select)="onSelect($event)"
+                         (clear)="onClear($event)"></notice-icon-tab>
       </nz-tab>
     </nz-tabset>
   </nz-spin>

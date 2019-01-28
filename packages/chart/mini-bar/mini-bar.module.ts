@@ -11,4 +11,4 @@ const COMPONENTS = [G2MiniBarComponent];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class G2MiniBarModule { }
+export class G2MiniBarModule {}

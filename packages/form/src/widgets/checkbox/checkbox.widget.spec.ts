@@ -1,9 +1,9 @@
-import { ComponentFixture } from '@angular/core/testing';
+import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 
 import { DebugElement } from '@angular/core';
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
+import { CheckboxWidget } from './checkbox.widget';
 
 describe('form: widget: checkbox', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -22,22 +22,14 @@ describe('form: widget: checkbox', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('#working', () => {
-    const s: SFSchema = {
-      properties: { a: { type: 'string', ui: { widget }, default: true } },
-    };
-    page.newSchema(s).checkValue('a', true);
-  });
-
   it('#visibleIf', () => {
-    const s: SFSchema = {
-      properties: {
-        a: { type: 'string', ui: { widget } },
-        b: { type: 'string', ui: { widget, visibleIf: { a: [true] } } },
-      },
-    };
     page
-      .newSchema(s)
+      .newSchema({
+        properties: {
+          a: { type: 'string', ui: { widget } },
+          b: { type: 'string', ui: { widget, visibleIf: { a: [true] } } },
+        },
+      })
       .checkCount(chekcWrapCls, 1)
       .click(chekcWrapCls)
       .checkCount(chekcWrapCls, 2);
@@ -45,27 +37,51 @@ describe('form: widget: checkbox', () => {
 
   it('should be ingore title when not array data', () => {
     const title = 'test';
-    const s: SFSchema = {
-      properties: { a: { type: 'string', title, ui: { widget } } },
-    };
     page
-      .newSchema(s)
+      .newSchema({
+        properties: { a: { type: 'string', title, ui: { widget } } },
+      })
       .checkElText(labelCls, '')
       .checkElText(chekcWrapCls, title);
   });
 
-  it('should be show title when is array data', done => {
+  it('should be show title when is array data', fakeAsync(() => {
     const title = 'test';
-    const s: SFSchema = {
-      properties: {
-        a: { type: 'string', title, ui: { widget }, enum: ['item1', 'item2'] },
-      },
-    };
-    page.newSchema(s);
-    fixture.whenStable().then(() => {
-      page.checkElText(labelCls, title);
-      page.checkElText(chekcWrapCls, 'item1');
-      done();
+    page
+      .newSchema({
+        properties: {
+          a: { type: 'string', title, ui: { widget }, enum: ['item1', 'item2'] },
+        },
+      })
+      .time(1000)
+      .checkElText(labelCls, title)
+      .checkElText(chekcWrapCls, 'item1')
+      .asyncEnd();
+  }));
+
+  describe('#checkAll', () => {
+    it('should be working', () => {
+      page.newSchema({
+        properties: {
+          a: {
+            type: 'string',
+            title: 'Mulit',
+            enum: ['Apple', 'Pear', 'Orange'],
+            ui: {
+              widget: 'checkbox',
+              span: 8, // 指定每一项 8 个单元的布局
+              checkAll: true,
+            },
+            default: ['Apple'],
+          },
+        },
+      });
+      const comp = page.getWidget<CheckboxWidget>('sf-checkbox');
+      const checkAllBtn = page.getEl('.sf__checkbox-list .ant-checkbox-wrapper');
+      checkAllBtn.click();
+      expect(comp.allChecked).toBe(true);
+      checkAllBtn.click();
+      expect(comp.allChecked).toBe(false);
     });
   });
 });

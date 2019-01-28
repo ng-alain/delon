@@ -129,13 +129,7 @@ describe('utils: array', () => {
       it('should be auto setting isLeaf value', () => {
         page.check('0', 'isLeaf', false).check('2', 'isLeaf', true);
       });
-      for (const key of [
-        'isLeaf',
-        'checked',
-        'selected',
-        'expanded',
-        'disabled',
-      ]) {
+      for (const key of ['isLeaf', 'checked', 'selected', 'expanded', 'disabled']) {
         it(`should map to ${key}`, () => {
           const options = {
             [`${key}MapName`]: key,
@@ -147,9 +141,7 @@ describe('utils: array', () => {
           page = new PageTreeNode(res);
           page.check(
             '0',
-            key.startsWith('is')
-              ? key
-              : `is` + (key.slice(0, 1).toUpperCase() + key.slice(1)),
+            key.startsWith('is') ? key : `is` + (key.slice(0, 1).toUpperCase() + key.slice(1)),
             true,
           );
         });
@@ -166,30 +158,20 @@ describe('utils: array', () => {
       });
       it('should be include half checked', () => {
         page.data[0].isHalfChecked = true;
-        expect(
-          srv
-            .getKeysByTreeNode(page.data, { includeHalfChecked: true })
-            .join(','),
-        ).toBe(
+        expect(srv.getKeysByTreeNode(page.data, { includeHalfChecked: true }).join(',')).toBe(
           MOCK_ARR.filter(w => w.checked || w.halfChecked)
             .map(i => i.id)
             .join(','),
         );
         page.data[0].isHalfChecked = false;
-        expect(
-          srv
-            .getKeysByTreeNode(page.data, { includeHalfChecked: false })
-            .join(','),
-        ).toBe(
+        expect(srv.getKeysByTreeNode(page.data, { includeHalfChecked: false }).join(',')).toBe(
           MOCK_ARR.filter(w => w.checked)
             .map(i => i.id)
             .join(','),
         );
       });
       it('should be specified name', () => {
-        expect(
-          srv.getKeysByTreeNode(page.data, { keyMapName: 'title' }).join(','),
-        ).toBe(
+        expect(srv.getKeysByTreeNode(page.data, { keyMapName: 'title' }).join(',')).toBe(
           MOCK_ARR.filter(w => w.checked)
             .map(i => i.name)
             .join(','),
@@ -238,9 +220,9 @@ describe('utils: array', () => {
       this.data = data
         ? data
         : srv.arrToTreeNode(deepCopy(MOCK_ARR), {
-          parentIdMapName: 'pid',
-          titleMapName: 'name',
-        });
+            parentIdMapName: 'pid',
+            titleMapName: 'name',
+          });
     }
     check(path: string, field: string, value: any): this {
       const pathArr = path.split('/');

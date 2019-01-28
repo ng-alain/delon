@@ -12,7 +12,10 @@ import { ObjectProperty } from './object.property';
 import { StringProperty } from './string.property';
 
 export class FormPropertyFactory {
-  constructor(private schemaValidatorFactory: SchemaValidatorFactory, private options: DelonFormConfig) { }
+  constructor(
+    private schemaValidatorFactory: SchemaValidatorFactory,
+    private options: DelonFormConfig,
+  ) {}
 
   createProperty(
     schema: SFSchema,
@@ -34,8 +37,7 @@ export class FormPropertyFactory {
         path += (parent as ArrayProperty).tick++;
       } else {
         throw new Error(
-          'Instanciation of a FormProperty with an unknown parent type: ' +
-          parent.type,
+          'Instanciation of a FormProperty with an unknown parent type: ' + parent.type,
         );
       }
     } else {
@@ -47,10 +49,7 @@ export class FormPropertyFactory {
       newProperty = this.createProperty(refSchema, ui, formData, parent, path);
     } else {
       // fix required
-      if (
-        propertyId &&
-        ((parent!.schema.required || []) as string[]).indexOf(propertyId) !== -1
-      ) {
+      if (propertyId && ((parent!.schema.required || []) as string[]).indexOf(propertyId) !== -1) {
         ui._required = true;
       }
       // fix title

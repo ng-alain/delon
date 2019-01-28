@@ -1,7 +1,4 @@
-import {
-  SchematicTestRunner,
-  UnitTestTree,
-} from '@angular-devkit/schematics/testing';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainApp } from '../utils/testing';
 
 describe('NgAlainSchematic: plugin: g2', () => {
@@ -19,15 +16,13 @@ describe('NgAlainSchematic: plugin: g2', () => {
     it(`should add scripts`, () => {
       const json = JSON.parse(tree.readContent('angular.json'));
       const scripts: string[] =
-        (json.projects.foo.targets || json.projects.foo.architect).build.options
-          .scripts || [];
+        (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
       expect(scripts.filter(w => w.includes('g2')).length).toBeGreaterThan(0);
     });
   });
 
   describe('when remove', () => {
-    beforeEach(() =>
-      runner.runSchematic('plugin', { name: 'g2', type: 'remove' }, tree));
+    beforeEach(() => runner.runSchematic('plugin', { name: 'g2', type: 'remove' }, tree));
 
     it(`should add dependencies`, () => {
       const json = JSON.parse(tree.readContent('package.json'));
@@ -37,8 +32,7 @@ describe('NgAlainSchematic: plugin: g2', () => {
     it(`should add scripts`, () => {
       const json = JSON.parse(tree.readContent('angular.json'));
       const scripts: string[] =
-        (json.projects.foo.targets || json.projects.foo.architect).build.options
-          .scripts || [];
+        (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
       expect(scripts.filter(w => w.includes('g2')).length).toBe(0);
     });
   });

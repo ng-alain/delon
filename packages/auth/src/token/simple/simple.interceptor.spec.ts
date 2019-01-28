@@ -4,7 +4,6 @@ import {
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-import { Injector } from '@angular/core';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -56,11 +55,7 @@ describe('auth: simple.interceptor', () => {
 
   function genModule(options: DelonAuthConfig, tokenData?: SimpleTokenModel) {
     injector = TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([]),
-        DelonAuthModule,
-      ],
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
         { provide: DelonAuthConfig, useValue: options },
         { provide: Router, useValue: mockRouter },
@@ -125,11 +120,9 @@ describe('auth: simple.interceptor', () => {
         },
         genModel('123'),
       );
-      http
-        .get('https://ng-alain.com/test', { responseType: 'text' })
-        .subscribe(value => {
-          done();
-        });
+      http.get('https://ng-alain.com/test', { responseType: 'text' }).subscribe(value => {
+        done();
+      });
       const req = httpBed.expectOne(() => true) as TestRequest;
       expect(req.request.params.has('token')).toBe(true);
       expect(req.request.params.get('token')).toBe('123');
@@ -158,9 +151,7 @@ describe('auth: simple.interceptor', () => {
       const ret = httpBed.expectOne(
         r => r.method === 'GET' && (r.url as string).startsWith('/test'),
       ) as TestRequest;
-      expect(ret.request.headers.get('Authorization')).toBe(
-        `Bearer ${basicModel.token}`,
-      );
+      expect(ret.request.headers.get('Authorization')).toBe(`Bearer ${basicModel.token}`);
       ret.flush('ok!');
     });
 

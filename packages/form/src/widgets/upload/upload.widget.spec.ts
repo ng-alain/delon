@@ -1,12 +1,12 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
+import { inject, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NzUploadComponent } from 'ng-zorro-antd';
+import { NzModalService, NzUploadComponent } from 'ng-zorro-antd';
 
 import { createTestContext } from '@delon/testing';
+import { of, Subject } from 'rxjs';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
+import { UploadWidget } from './upload.widget';
 
 describe('form: widget: upload', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -23,32 +23,107 @@ describe('form: widget: upload', () => {
     page.prop(dl, context, fixture);
   });
 
-  it('should working', () => {
-    const s: SFSchema = {
-      properties: { a: { type: 'string', ui: { widget }, default: true } },
-    };
-    page.newSchema(s);
-    const upload = dl.query(By.directive(NzUploadComponent));
-    expect(upload).not.toBeUndefined();
+  function getComp() {
+    return page.getWidget<UploadWidget>('sf-upload');
+  }
+
+  it('should be ingore update value when status is not success', () => {
+    page.newSchema({
+      properties: { a: { type: 'string', ui: { widget } } },
+    });
+    const comp = getComp();
+    spyOn(comp.formProperty, 'setValue');
+    comp.change({ type: 'error', fileList: [] } as any);
+    expect(comp.formProperty.setValue).not.toHaveBeenCalled();
   });
 
-  it('should be support fileList', () => {
-    const s: SFSchema = {
-      properties: { a: { type: 'string', ui: { widget, fileList: [ {} ] } } },
-    };
-    page.newSchema(s);
-    const upload = dl.query(By.directive(NzUploadComponent)).injector.get(NzUploadComponent);
-    expect(upload.nzFileList.length).toBe(1);
-  });
+  describe('property', () => {
+    it('#fileList', () => {
+      page.newSchema({
+        properties: { a: { type: 'string', ui: { widget, fileList: [{}], limit: 1 } } },
+      });
+      const upload = dl.query(By.directive(NzUploadComponent)).injector.get(NzUploadComponent);
+      expect(upload.nzFileList.length).toBe(1);
+    });
 
-  it('shoule be setting size', () => {
-    const s: SFSchema = {
-      properties: {
-        a: { type: 'string', ui: { widget, fileSize: 100 } },
-      },
-    };
-    page.newSchema(s);
-    const upload = dl.query(By.directive(NzUploadComponent)).injector.get(NzUploadComponent);
-    expect(upload.nzSize).toBe(100);
+    it('#size', () => {
+      page.newSchema({
+        properties: {
+          a: { type: 'string', ui: { widget, fileSize: 100, filter: [] } },
+        },
+      });
+      const upload = dl.query(By.directive(NzUploadComponent)).injector.get(NzUploadComponent);
+      expect(upload.nzSize).toBe(100);
+    });
+
+    it('#multiple', () => {
+      page.newSchema({
+        properties: {
+          a: {
+            type: 'string',
+            ui: { widget, fileSize: 100, multiple: true, change: jasmine.createSpy() },
+          },
+        },
+      });
+      const comp = page.getWidget<UploadWidget>('sf-upload');
+      comp.change({ type: 'success', fileList: [] } as any);
+      page.checkCalled('a', 'change');
+    });
+
+    it('#listType, should be btnType is plus when listType is picture-card', () => {
+      page
+        .newSchema({
+          properties: {
+            a: {
+              type: 'string',
+              ui: { widget, fileSize: 100, listType: 'picture-card' },
+            },
+          },
+        })
+        .checkCount('.anticon-plus', 1);
+    });
+
+    it('#drag', () => {
+      page
+        .newSchema({
+          properties: { a: { type: 'string', ui: { widget, type: 'drag' } } },
+        })
+        .checkElText('.ant-upload-text', '单击或拖动文件到该区域上传')
+        .checkElText('.ant-upload-hint', '支持单个或批量，严禁上传公司数据或其他安全文件');
+    });
+
+    describe('preview', () => {
+      it('should be trigger preview', () => {
+        page.newSchema({
+          properties: {
+            a: {
+              type: 'string',
+              ui: { widget, preview: jasmine.createSpy() },
+            },
+          },
+        });
+        const comp = page.getWidget<UploadWidget>('sf-upload');
+        comp.handlePreview(null);
+        page.checkCalled('a', 'preview');
+      });
+      it('should be preview image', inject([NzModalService], (msg: NzModalService) => {
+        page.newSchema({
+          properties: {
+            a: {
+              type: 'string',
+              ui: { widget },
+            },
+          },
+        });
+        const comp = page.getWidget<UploadWidget>('sf-upload');
+        const afterClose = new Subject();
+        spyOn(msg, 'create').and.returnValue({ afterClose });
+        spyOn(comp, 'detectChanges');
+        comp.handlePreview({ thumbUrl: '' } as any);
+        afterClose.next();
+        afterClose.complete();
+        expect(comp.detectChanges).toHaveBeenCalled();
+      }));
+    });
   });
 });

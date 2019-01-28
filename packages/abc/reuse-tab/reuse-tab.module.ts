@@ -18,15 +18,9 @@ const NOEXPORTS = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    DelonLocaleModule,
-    NgZorroAntdModule,
-    OverlayModule,
-  ],
+  imports: [CommonModule, RouterModule, DelonLocaleModule, NgZorroAntdModule, OverlayModule],
   declarations: [...COMPONENTS, ...NOEXPORTS],
   entryComponents: [ReuseTabContextMenuComponent],
   exports: [...COMPONENTS],
 })
-export class ReuseTabModule { }
+export class ReuseTabModule {}
