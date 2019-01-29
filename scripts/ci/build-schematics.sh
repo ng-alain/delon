@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
-set -u -e -o pipefail
+set -e
+
+N="
+"
+PWD=`pwd`
+readonly thisDir=$(cd $(dirname $0); pwd)
+source ${thisDir}/_travis-fold.sh
 
 cd $(dirname $0)/../..
 
@@ -9,6 +15,7 @@ TEST=false
 DEBUG=false
 TRAVIS=false
 COPY=false
+INTEGRATION=false
 for ARG in "$@"; do
   case "$ARG" in
     -t)
@@ -25,6 +32,9 @@ for ARG in "$@"; do
       ;;
     -debug)
       DEBUG=true
+      ;;
+    -integration)
+      INTEGRATION=true
       ;;
   esac
 done
@@ -58,30 +68,28 @@ DEPENDENCIES=$(node -p "
 ZORROVERSION=$(node -p "require('./package.json').dependencies['ng-zorro-antd']")
 echo "=====BUILDING: Version ${VERSION}, Zorro Version ${ZORROVERSION}"
 
-N="
-"
-PWD=`pwd`
 TSC=${PWD}/node_modules/.bin/tsc
 JASMINE=${PWD}/node_modules/.bin/jasmine
 
 SOURCE=${PWD}/packages/schematics
 DIST=${PWD}/dist/ng-alain/
+tsconfigFile=${SOURCE}/tsconfig.json
 
 updateVersionReferences() {
   NPM_DIR="$1"
   (
     cd ${NPM_DIR}
 
-    echo "======    VERSION: Updating dependencies version references in ${NPM_DIR}"
+    echo ">>> VERSION: Updating dependencies version references in ${NPM_DIR}"
     local lib version
     for dependencie in ${DEPENDENCIES[@]}
     do
       IFS=$'|' read -r lib version <<< "$dependencie"
-      echo "============ update ${lib}: ${version}"
+      echo ">>>> update ${lib}: ${version}"
       perl -p -i -e "s/${lib}\@DEP\-0\.0\.0\-PLACEHOLDER/${lib}\@${version}/g" $(grep -ril ${lib}\@DEP\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
     done
 
-    echo "======    VERSION: Updating version references in ${NPM_DIR}"
+    echo ">>> VERSION: Updating version references in ${NPM_DIR}"
     perl -p -i -e "s/ZORRO\-0\.0\.0\-PLACEHOLDER/${ZORROVERSION}/g" $(grep -ril ZORRO\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
     perl -p -i -e "s/PEER\-0\.0\.0\-PLACEHOLDER/^${VERSION}/g" $(grep -ril PEER\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
     perl -p -i -e "s/0\.0\.0\-PLACEHOLDER/${VERSION}/g" $(grep -ril 0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
@@ -167,13 +175,18 @@ copyFiles() {
   done
 }
 
-tsconfigFile=${SOURCE}/tsconfig.json
-if [[ ${TEST} == true ]]; then
-  tsconfigFile=${SOURCE}/tsconfig.spec.json
-  DIST=${PWD}/dist/schematics-test/
-fi
+cloneScaffold() {
+  if [[ ! -d ng-alain ]]; then
+    echo ">>> Not found scaffold source files, must be clone ng-alain ..."
+    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+    echo ">>> removed .git"
+    rm -rf ng-alain/.git
+  else
+    echo ">>> Found scaffold source files"
+  fi
+}
 
-if [[ ${BUILD} == true ]]; then
+buildCLI() {
   rm -rf ${DIST}
 
   echo "Building...${tsconfigFile}"
@@ -185,6 +198,7 @@ if [[ ${BUILD} == true ]]; then
 
   if [[ ${COPY} == true ]]; then
     if [[ ${TRAVIS} == true ]]; then
+      cloneScaffold
       echo "== copy delon/ng-alain files via travis mode"
       copyFiles 'ng-alain/' ${DIST}/
     else
@@ -199,14 +213,67 @@ if [[ ${BUILD} == true ]]; then
   cp ./LICENSE ${DIST}/LICENSE
 
   updateVersionReferences ${DIST}
+}
+
+integrationCli() {
+  echo ">>> Current dir: ${PWD}"
+  # Unable to use `ng new` if the root directory contains `angular.json`
+  rm ${PWD}/angular.json
+  INTEGRATION_SOURCE=${PWD}/integration
+  mkdir -p ${INTEGRATION_SOURCE}
+  cd ${INTEGRATION_SOURCE}
+  echo ">>> Generate a new angular project, Current dir: ${PWD}"
+  ng new integration --style=less --routing=true
+  INTEGRATION_SOURCE=${PWD}/integration
+  cd ${INTEGRATION_SOURCE}
+  echo ">>> Copy ng-alain, Current dir: ${PWD}"
+  rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
+  echo ">>> Running ng g ng-alain:ng-add"
+  ng g ng-alain:ng-add --defaultLanguage=en --hmr=true --codeStyle=true --form=true --mock=true --i18n=true --g2=true
+  echo ">>> Copy again ng-alain"
+  rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
+  echo ">>> Running npm run icon"
+  npm run icon
+  echo ">>> Running build"
+  ng build --prod --build-optimizer
+  cd ../../
+  echo ">>> Current dir: ${PWD}"
+}
+
+if [[ ${BUILD} == true ]]; then
+  travisFoldStart "BUILD"
+  
+    tsconfigFile=${SOURCE}/tsconfig.json
+    DIST=${PWD}/dist/ng-alain/
+    buildCLI
+  
+  travisFoldEnd "BUILD"
 fi
 
 if [[ ${TEST} == true ]]; then
-  echo "jasmine"
-  $JASMINE "${DIST}/**/*.spec.js"
+  travisFoldStart "TEST"
+  
+    tsconfigFile=${SOURCE}/tsconfig.spec.json
+    DIST=${PWD}/dist/schematics-test/
+    buildCLI
+    $JASMINE "${DIST}/**/*.spec.js"
+  
+  travisFoldEnd "TEST"
 fi
 
-echo "Finished cli!"
+if [[ ${INTEGRATION} == true ]]; then
+  travisFoldStart "INTEGRATION"
+  
+    tsconfigFile=${SOURCE}/tsconfig.json
+    DIST=${PWD}/dist/ng-alain/
+    COPY=true
+    buildCLI
+    integrationCli
+  
+  travisFoldEnd "INTEGRATION"
+fi
+
+echo "Finished!!"
 
 # TODO: just only cipchk
 # clear | bash ./scripts/ci/build-schematics.sh -b -t

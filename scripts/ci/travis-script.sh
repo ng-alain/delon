@@ -19,7 +19,7 @@ testing() {
     $(npm bin)/ng test --code-coverage --watch=false
     $(npm bin)/codecov
   elif is_cli_test; then
-    ./build-schematics.sh -b -t -travis
+    ./build-schematics.sh -b -t -travis -integration
   elif is_site; then
     echo ">> starting gen site"
     node ../site/main init
@@ -36,7 +36,7 @@ deploy() {
   if is_artifacts; then
     ./deploy.sh
   elif is_build; then
-    ./build-all.sh
+    ./build.sh
   fi
 }
 
