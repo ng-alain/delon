@@ -187,6 +187,8 @@ buildCLI() {
 
   if [[ ${COPY} == true ]]; then
     if [[ ${TRAVIS} == true ]]; then
+      echo "== clone ng-alain"
+      git clone --depth 1 https://github.com/ng-alain/ng-alain.git
       echo "== copy delon/ng-alain files via travis mode"
       copyFiles 'ng-alain/' ${DIST}/
     else
@@ -222,7 +224,7 @@ integrationCli() {
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
   echo ">>> Running npm run icon"
   npm run icon
-  echo ">>> Running npm run build"
+  echo ">>> Running build"
   ng build --prod --build-optimizer
   cd ../../
   echo ">>> Current dir: ${PWD}"

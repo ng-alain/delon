@@ -24,7 +24,7 @@
   "scripts": {
     "lint": "bash scripts/ci/lint.sh -ts -less",
     "test": "ng test --code-coverage --watch=false",
-    "test:cli": "bash scripts/ci/build-schematics.sh -b -t -travis -integration",
+    "test:cli": "bash scripts/ci/build-schematics.sh -b -t -copy -travis -integration",
     "build": "bash scripts/ci/build.sh",
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
     "site:gen": "node scripts/site/main init && node scripts/build/generate-only-color.js",
