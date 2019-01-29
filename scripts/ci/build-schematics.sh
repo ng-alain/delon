@@ -212,7 +212,7 @@ integrationCli() {
   cd ${INTEGRATION_SOURCE}
   echo ">>> Generate a new angular project, Current dir: ${PWD}"
   ng new integration --style=less --routing=true
-  INTEGRATION_SOURCE=${PWD}/integration/integration
+  INTEGRATION_SOURCE=${PWD}/integration
   cd ${INTEGRATION_SOURCE}
   echo ">>> Copy ng-alain, Current dir: ${PWD}"
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
