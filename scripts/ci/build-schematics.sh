@@ -223,7 +223,7 @@ integrationCli() {
   echo ">>> Running npm run icon"
   npm run icon
   echo ">>> Running npm run build"
-  npm run build
+  ng build --prod --build-optimizer
   cd ../../
   echo ">>> Current dir: ${PWD}"
 }
