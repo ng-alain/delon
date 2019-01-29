@@ -175,6 +175,17 @@ copyFiles() {
   done
 }
 
+cloneScaffold() {
+  if [[ ! -d ng-alain ]]; then
+    echo ">>> Not found scaffold source files, must be clone ng-alain ..."
+    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+    echo ">>> removed .git"
+    rm -rf ng-alain/.git
+  else
+    echo ">>> Found scaffold source files"
+  fi
+}
+
 buildCLI() {
   rm -rf ${DIST}
 
@@ -187,8 +198,7 @@ buildCLI() {
 
   if [[ ${COPY} == true ]]; then
     if [[ ${TRAVIS} == true ]]; then
-      echo "== clone ng-alain"
-      git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+      cloneScaffold
       echo "== copy delon/ng-alain files via travis mode"
       copyFiles 'ng-alain/' ${DIST}/
     else
@@ -246,6 +256,7 @@ if [[ ${INTEGRATION} == true ]]; then
   
     tsconfigFile=${SOURCE}/tsconfig.json
     DIST=${PWD}/dist/ng-alain/
+    COPY=true
     buildCLI
     integrationCli
   
