@@ -240,6 +240,16 @@ integrationCli() {
   echo ">>> Current dir: ${PWD}"
 }
 
+if [[ ${BUILD} == true ]]; then
+  travisFoldStart "BUILD"
+  
+    tsconfigFile=${SOURCE}/tsconfig.json
+    DIST=${PWD}/dist/ng-alain/
+    buildCLI
+  
+  travisFoldEnd "BUILD"
+fi
+
 if [[ ${TEST} == true ]]; then
   travisFoldStart "TEST"
   
