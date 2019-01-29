@@ -1,3 +1,19 @@
+---
+order: 10
+title:
+  zh-CN: 统计
+  en-US: Statistical
+---
+
+## zh-CN
+
+支持 `count`、`distinctCount`、`sum`、`average`、`max`、`min`、自定义统计方法。
+
+## en-US
+
+Support `count`, `distinctCount`, `sum`, `average`, `max`, `min` or custom function statistics methods.
+
+```ts
 import { Component } from '@angular/core';
 import { STColumn } from '@delon/abc';
 
@@ -46,3 +62,4 @@ export class DemoComponent  {
     { title: 'Custom', index: 'price', type: 'currency', statistical: { type: values => ({ value: values[0], text: `**${values[0]}` }), currenty: false }, key: 'custom' },
   ];
 }
+```

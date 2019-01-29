@@ -60,7 +60,8 @@ config: STConfig
 `[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200`
 `[header]` | 表格标题 | `string,TemplateRef<void>` | -
 `[footer]` | 表格底部 | `string,TemplateRef<void>` | -
-`[body]` | 表格额外内容，一般用于添加合计行 | `TemplateRef<void>` | -
+`[bodyHeader]` | 表格顶部额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | -
+`[body]` | 表格额外内容，一般用于添加合计行 | `TemplateRef<STStatisticalResults>` | -
 `[widthConfig]` | 表头分组时指定每列宽度，与 STColumn 的 width 不可混用 | `string[]` | -
 `[expandRowByClick]` | 通过点击行来展开子行 | `boolean` | `false`
 `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | -
@@ -228,8 +229,9 @@ class TestComponent {
 `[click]` | 链接回调 | `(record: STData, instance?: STComponent) => void` | -
 `[badge]` | 徽标配置项 | `STColumnBadge` | -
 `[tag]` | 徽标配置项 | `STColumnTag` | -
-`[noIndex]` | 行号索引开始值 | `STColumnTag` | `1`
+`[noIndex]` | 行号索引开始值 | `number` | `1`
 `[iif]` | 条件表达式<br>1、仅赋值 `columns` 时执行一次<br>2、可调用 `resetColumns()` 再一次触发 | `(item: STColumn) => boolean` | -
+`[statistical]` | 统计信息 | `STStatisticalType,STStatistical` | -
 
 ### STColumnSort
 
@@ -344,3 +346,10 @@ class TestComponent {
 `[text]` | 文本 | `string` | -
 `[color]` | Tag颜色值 | `string` | -
 
+### STStatistical
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[type]` | 统计类型 | `STStatisticalType | STStatisticalFn` | -
+`[digits]` | 保留小数位数 | `number` | `2`
+`[currenty]` | 是否需要货币格式化，默认当 `type` 为 `STStatisticalFn`、 `sum`、`average`、`max`、`min` 时为 `true` | `boolean` | -

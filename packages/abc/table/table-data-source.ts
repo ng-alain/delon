@@ -17,6 +17,10 @@ import {
   STRes,
   STRowClassName,
   STSingleSort,
+  STStatistical,
+  STStatisticalResult,
+  STStatisticalResults,
+  STStatisticalType,
 } from './table.interfaces';
 
 export interface STDataSourceOptions {
@@ -44,6 +48,8 @@ export interface STDataSourceResult {
   total?: number;
   /** 数据 */
   list?: STData[];
+  /** 统计数据 */
+  statistical?: STStatisticalResults;
 }
 
 @Injectable()
@@ -149,6 +155,7 @@ export class STDataSource {
       if (typeof res.process === 'function') {
         data$ = data$.pipe(map(result => res.process(result)));
       }
+
       // data accelerator
       data$ = data$.pipe(
         map(result => {
@@ -172,19 +179,20 @@ export class STDataSource {
             ps: retPs,
             total: retTotal,
             list: retList,
+            statistical: this.genStatistical(columns, retList),
             pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
           });
         });
     });
   }
 
-  private get(item: STData, col: STColumn, idx: number) {
+  private get(item: STData, col: STColumn, idx: number): { text: any; org?: any } {
     if (col.format) {
       const formatRes = col.format(item, col);
-      if (~formatRes.indexOf('<')) {
-        return this.dom.bypassSecurityTrustHtml(formatRes);
+      if (formatRes && ~formatRes.indexOf('</')) {
+        return { text: this.dom.bypassSecurityTrustHtml(formatRes), org: formatRes };
       }
-      return formatRes;
+      return { text: formatRes == null ? '' : formatRes, org: formatRes };
     }
 
     const value = deepGet(item, col.index as string[], col.default);
@@ -210,7 +218,7 @@ export class STDataSource {
         ret = this.ynPipe.transform(value === col.yn.truth, col.yn.yes, col.yn.no);
         break;
     }
-    return ret == null ? '' : ret;
+    return { text: ret == null ? '' : ret, org: value };
   }
 
   private getByHttp(url: string, options: STDataSourceOptions): Observable<{}> {
@@ -337,4 +345,80 @@ export class STDataSource {
   }
 
   //#endregion
+
+  // #region statistical
+
+  private genStatistical(columns: STColumn[], list: STData[]): STStatisticalResults {
+    const res = {};
+    columns.forEach((col, index) => {
+      res[col.key ? col.key : index] =
+        col.statistical == null ? {} : this.getStatistical(col, index, list);
+    });
+    return res;
+  }
+
+  private getStatistical(col: STColumn, index: number, list: STData[]): STStatisticalResult {
+    const val = col.statistical;
+    const item: STStatistical = {
+      digits: 2,
+      currenty: null,
+      ...(typeof val === 'string' ? { type: val as STStatisticalType } : (val as STStatistical)),
+    };
+    let res: STStatisticalResult = { value: 0 };
+    let currenty = false;
+    if (typeof item.type === 'function') {
+      res = item.type(this.getValues(index, list), col, list);
+      currenty = true;
+    } else {
+      switch (item.type) {
+        case 'count':
+          res.value = list.length;
+          break;
+        case 'distinctCount':
+          res.value = this.getValues(index, list).filter(
+            (value, idx, self) => self.indexOf(value) === idx,
+          ).length;
+          break;
+        case 'sum':
+          res.value = this.toFixed(this.getSum(index, list), item.digits);
+          currenty = true;
+          break;
+        case 'average':
+          res.value = this.toFixed(this.getSum(index, list) / list.length, item.digits);
+          currenty = true;
+          break;
+        case 'max':
+          res.value = Math.max(...this.getValues(index, list));
+          currenty = true;
+          break;
+        case 'min':
+          res.value = Math.min(...this.getValues(index, list));
+          currenty = true;
+          break;
+      }
+    }
+    if (item.currenty === true || (item.currenty == null && currenty === true)) {
+      res.text = this.currentyPipe.transform(res.value);
+    } else {
+      res.text = String(res.value);
+    }
+    return res;
+  }
+
+  private toFixed(val: number, digits: number): number {
+    if (isNaN(val) || !isFinite(val)) {
+      return 0;
+    }
+    return parseFloat(val.toFixed(digits));
+  }
+
+  private getValues(index: number, list: STData[]): number[] {
+    return list.map(i => i._values[index].org).map(i => (i === '' || i == null ? 0 : i));
+  }
+
+  private getSum(index: number, list: STData[]): number {
+    return this.getValues(index, list).reduce((p, i) => (p += parseFloat(String(i))), 0);
+  }
+
+  // #endregion
 }

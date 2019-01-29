@@ -553,17 +553,26 @@ describe('abc: table: data-souce', () => {
     });
     describe('#accelerator', () => {
       beforeEach(() => (options.data = genData()));
-      it('via format', (done: () => void) => {
-        options.columns[0].format = jasmine.createSpy().and.returnValue('');
-        srv.process(options).then(res => {
-          expect(options.columns[0].format).toHaveBeenCalled();
-          done();
+      describe('via format', () => {
+        it('should be working', done => {
+          options.columns[0].format = jasmine.createSpy().and.returnValue('');
+          srv.process(options).then(res => {
+            expect(options.columns[0].format).toHaveBeenCalled();
+            done();
+          });
+        });
+        it('should be return empty string when is null or undefined', done => {
+          options.columns[0].format = jasmine.createSpy().and.returnValue(null);
+          srv.process(options).then(res => {
+            expect(res.list[0]._values[0].text).toBe(``);
+            done();
+          });
         });
       });
       it('via index', (done: () => void) => {
         options.columns[0].index = 'name';
         srv.process(options).then(res => {
-          expect(res.list[0]._values[0]).toBe(`name 1`);
+          expect(res.list[0]._values[0].text).toBe(`name 1`);
           done();
         });
       });
@@ -572,7 +581,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = 1;
           srv.process(options).then(res => {
-            expect(res.list[0]._values[0]).toBe(1);
+            expect(res.list[0]._values[0].text).toBe(1);
             done();
           });
         });
@@ -580,7 +589,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = 0;
           srv.process(options).then(res => {
-            expect(res.list[0]._values[0]).toBe(0);
+            expect(res.list[0]._values[0].text).toBe(0);
             done();
           });
         });
@@ -589,7 +598,7 @@ describe('abc: table: data-souce', () => {
         it('with value', (done: () => void) => {
           options.columns[0].type = 'img';
           srv.process(options).then(res => {
-            expect(res.list[0]._values[0]).toContain(`class="img"`);
+            expect(res.list[0]._values[0].text).toContain(`class="img"`);
             done();
           });
         });
@@ -597,7 +606,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'img';
           options.data[0].id = '';
           srv.process(options).then(res => {
-            expect(res.list[0]._values[0]).toBe(``);
+            expect(res.list[0]._values[0].text).toBe(``);
             done();
           });
         });
@@ -648,8 +657,205 @@ describe('abc: table: data-souce', () => {
       options.data = genData(1);
       options.columns = [{ title: '', index: 'aa' }];
       srv.process(options).then(res => {
-        expect(res.list[0]._values[0]).toBe('');
+        expect(res.list[0]._values[0].text).toBe('');
         done();
+      });
+    });
+  });
+
+  describe('[statistical]', () => {
+    beforeEach(() => {
+      genModule();
+      options.pi = 1;
+      options.ps = 100;
+      spyOn(currentyPipe, 'transform');
+    });
+
+    it('should be use key instead of index as result key', done => {
+      options.columns = [{ title: '', index: 'a', key: 'a', statistical: { type: 'sum' } }];
+      options.data = [{ a: 1 }, { a: 2 }];
+
+      srv.process(options).then(res => {
+        expect(res.statistical.a.value).toBe(3);
+        done();
+      });
+    });
+
+    it('should be custom function', done => {
+      options.columns = [{ title: '', index: 'a', statistical: { type: values => ({ value: values[0] }) } }];
+      options.data = [{ a: 1 }, { a: 2 }];
+
+      srv.process(options).then(res => {
+        expect(res.statistical[0].value).toBe(1);
+        done();
+      });
+    });
+
+    it('should be 3 digits', done => {
+      options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', digits: 3 } }];
+      options.data = [{ a: 1 }, { a: 2.5666 }];
+
+      srv.process(options).then(res => {
+        expect(res.statistical[0].value).toBe(3.567);
+        done();
+      });
+    });
+
+    it('should be return 0 when invalid type', done => {
+      options.columns = [{ title: '', index: 'a', statistical: { type: 'invalid-type' as any } }];
+      options.data = [{ a: 1 }, { a: 2 }];
+
+      srv.process(options).then(res => {
+        expect(res.statistical[0].value).toBe(0);
+        done();
+      });
+    });
+
+    describe('#currenty', () => {
+      it('should working', done => {
+        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currenty: true } }];
+        options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
+        expect(currentyPipe.transform).not.toHaveBeenCalled();
+
+        srv.process(options).then(res => {
+          expect(currentyPipe.transform).toHaveBeenCalled();
+          done();
+        });
+      });
+      it('should be ingore currenty', done => {
+        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currenty: false } }];
+        options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
+
+        srv.process(options).then(res => {
+          expect(res.statistical[0].text).toBe('3.1');
+          done();
+        });
+      });
+    });
+
+    describe('#type', () => {
+      it('with count', done => {
+        options.columns = [{ title: '', index: 'a', statistical: 'count' }];
+        options.data = [{ a: 1 }, { a: 1 }, { a: 1 }];
+
+        srv.process(options).then(res => {
+          expect(res.statistical[0].value).toBe(3);
+          done();
+        });
+      });
+
+      describe('with distinctCount', () => {
+        it('should working', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'distinctCount' }];
+          options.data = [{ a: 1 }, { a: 2 }, { a: 1 }];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(2);
+            done();
+          });
+        });
+        it('when include null or undefined', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'distinctCount' }];
+          options.data = [{ a: 1 }, { a: null }, { a: 1 }];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(2);
+            done();
+          });
+        });
+      });
+
+      describe('with sum', () => {
+        it('should working', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'sum' }];
+          options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(3.1);
+            done();
+          });
+        });
+        it('should be return 0 when the value > MAX_VALUE', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'sum' }];
+          options.data = [{ a: Number.MAX_VALUE }, { a: Number.MAX_VALUE }];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(0);
+            done();
+          });
+        });
+        it('should be return 0 when data is empty', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'sum' }];
+          options.data = [];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(0);
+            done();
+          });
+        });
+      });
+
+      describe('with average', () => {
+        it('should working', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'average' }];
+          options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(0.62);
+            done();
+          });
+        });
+        it('should be return 0 when the value > MAX_VALUE', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'average' }];
+          options.data = [{ a: Number.MAX_VALUE }, { a: Number.MAX_VALUE }];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(0);
+            done();
+          });
+        });
+        it('should be return 0 when data is empty', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'average' }];
+          options.data = [];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(0);
+            done();
+          });
+        });
+      });
+
+      describe('with max', () => {
+        it('should working', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'max' }];
+          options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(2);
+            done();
+          });
+        });
+      });
+
+      describe('with min', () => {
+        it('should working', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'min' }];
+          options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(0.1);
+            done();
+          });
+        });
+        it('should be return 0 when include null or undefined value', done => {
+          options.columns = [{ title: '', index: 'a', statistical: 'min' }];
+          options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
+
+          srv.process(options).then(res => {
+            expect(res.statistical[0].value).toBe(0);
+            done();
+          });
+        });
       });
     });
   });

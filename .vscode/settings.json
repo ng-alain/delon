@@ -14,8 +14,9 @@
   },
   "tslint.autoFixOnSave": true,
   "tslint.alwaysShowStatus": true,
-  "html.format.wrapAttributes": "force-aligned",
-  "editor.formatOnSave": true,
+  "html.format.wrapAttributes": "aligned-multiple",
+  "html.format.wrapLineLength": 100,
+  // "editor.formatOnSave": true,
   "[markdown]": {
     "editor.formatOnSave": false
   }
