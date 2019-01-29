@@ -7,9 +7,8 @@ N="
 PWD=`pwd`
 readonly thisDir=$(cd $(dirname $0); pwd)
 source ${thisDir}/_travis-fold.sh
-ROOT=$(dirname $0)/../..
 
-cd ${ROOT}
+cd $(dirname $0)/../..
 
 BUILD=false
 TEST=false
@@ -202,19 +201,22 @@ buildCLI() {
   cp ./LICENSE ${DIST}/LICENSE
 
   updateVersionReferences ${DIST}
+  # Restore to the root directory
+  cd ../../
 }
 
 integrationCli() {
+  echo ">>> Current dir: ${PWD}"
   # Unable to use `ng new` if the root directory contains `angular.json`
-  rm ${ROOT}/angular.json
-  INTEGRATION_SOURCE=${ROOT}/integration
+  rm ${PWD}/angular.json
+  INTEGRATION_SOURCE=${PWD}/integration
   mkdir -p ${INTEGRATION_SOURCE}
   cd ${INTEGRATION_SOURCE}
-  echo ">>> Generate a new angular project"
+  echo ">>> Generate a new angular project, Current dir: ${PWD}"
   ng new integration --style=less --routing=true
-  INTEGRATION_SOURCE=${ROOT}/integration/integration
+  INTEGRATION_SOURCE=${PWD}/integration/integration
   cd ${INTEGRATION_SOURCE}
-  echo ">>> Copy ng-alain"
+  echo ">>> Copy ng-alain, Current dir: ${PWD}"
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
   echo ">>> Running ng g ng-alain:ng-add"
   ng g ng-alain:ng-add --defaultLanguage=en --hmr=true --codeStyle=true --form=true --mock=true --i18n=true --g2=true
@@ -224,6 +226,8 @@ integrationCli() {
   npm run icon
   echo ">>> Running npm run build"
   npm run build
+  cd ../../
+  echo ">>> Current dir: ${PWD}"
 }
 
 if [[ ${TEST} == true ]]; then
@@ -242,7 +246,7 @@ if [[ ${INTEGRATION} == true ]]; then
   
     tsconfigFile=${SOURCE}/tsconfig.json
     DIST=${PWD}/dist/ng-alain/
-    # buildCLI
+    buildCLI
     integrationCli
   
   travisFoldEnd "INTEGRATION"
