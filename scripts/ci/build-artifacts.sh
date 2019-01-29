@@ -5,7 +5,7 @@ set -e
 readonly thisDir=$(cd $(dirname $0); pwd)
 source ${thisDir}/_travis-fold.sh
 
-${thisDir}/build-all.sh
+${thisDir}/build.sh
 
 cd $(dirname $0)/../..
 

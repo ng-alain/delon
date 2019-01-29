@@ -5,6 +5,15 @@ set -e
 readonly thisDir=$(cd $(dirname $0); pwd)
 source ${thisDir}/_travis-fold.sh
 
+TRAVIS=false
+for ARG in "$@"; do
+  case "$ARG" in
+    -travis)
+      TRAVIS=true
+      ;;
+  esac
+done
+
 cd $(dirname $0)/../..
 
 DIST="$(pwd)/dist"
@@ -20,7 +29,7 @@ cloneScaffold() {
 
 buildDelon() {
   travisFoldStart "@delon"
-    ./scripts/ci/build-lib.sh
+    ./scripts/ci/build-delon.sh
   travisFoldEnd "@delon"
 }
 
