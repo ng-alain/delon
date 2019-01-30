@@ -15,7 +15,7 @@ type: Dev
 在终端输入下面的命令完成安装：
 
 ```bash
-$ yarn add ngx-tinymce
+yarn add ngx-tinymce
 ```
 
 ### 注册
@@ -63,7 +63,7 @@ export class AppModule { }
 在终端输入下面的命令完成安装：
 
 ```bash
-$ yarn add qrious
+yarn add qrious
 ```
 
 ### 导入脚本

@@ -11,10 +11,10 @@ type: Dev
 当项目开发完毕，只需要运行一行命令就可以打包你的应用：
 
 ```bash
-$ npm run build
+npm run build
 ```
 
-ng-alain 本身是一个 Angular CLI 项目，因此也可以参照 [WiKi](https://github.com/angular/angular-cli/wiki/build) 完整更复杂的构建需求。构建打包成功之后，会在根目录生成 `dist` 文件夹，里面就是构建打包好的文件，通常是若干 `*.js`、`*.css`、`index.html` 等静态文件。
+ng-alain 本身是一个 Angular CLI 项目，因此也可以参照 [Build](https://angular.io/cli/build) 完成更复杂的构建需求。构建打包成功之后，会在根目录生成 `dist` 文件夹，里面就是构建打包好的文件，包含若干 `*.js`、`*.css`、`index.html` 等静态文件。
 
 ### 环境变量
 
@@ -25,15 +25,15 @@ ng-alain 本身是一个 Angular CLI 项目，因此也可以参照 [WiKi](https
 如果构建文件很大，可以通过 `analyze` 命令构建并分析依赖模块的体积分布，从而优化你的代码。
 
 ```bash
-$ npm run analyze
+npm run analyze
 ```
 
 受限于 [#10589](https://github.com/angular/angular-cli/issues/10589)，需要安装全局 `webpack-bundle-analyzer` 包：
 
 ```bash
-$ npm i -g webpack-bundle-analyzer@latest
-$ cd dist/<project name>
-$ webpack-bundle-analyzer stats.json
+npm i -g webpack-bundle-analyzer@latest
+cd dist/<project name>
+webpack-bundle-analyzer stats.json
 ```
 
 ![](./assets/screenshot/analyzer.png)
@@ -47,7 +47,7 @@ $ webpack-bundle-analyzer stats.json
 如果你的静态资源是部署到其他域名（例如独立的 cdn 地址），你可以透过 `-d` 参数指定一个 cdn 地址。
 
 ```bash
-$ ng build --prod --build-optimizer -d=//cdn.ng-alain.com/
+ng build --prod --build-optimizer -d=//cdn.ng-alain.com/
 ```
 
 这样生成的 `index.html` 内 `*.js`、`*.css` 会自动加上 `//cdn.ng-alain.com/*.js`。
@@ -95,7 +95,7 @@ ng-alain 提供了一个基于 `nginx` WEB服务完整的构建Angular项目的�
 根据 Dockerfile 构建一个完整的 ng-alain 所需要的运行环境的镜像。
 
 ```bash
-$ docker build -t ng-alain .
+docker build -t ng-alain .
 ```
 
 #### 2、运行
@@ -103,7 +103,7 @@ $ docker build -t ng-alain .
 **基于compose（推荐）**
 
 ```bash
-$ docker-compose up -d
+docker-compose up -d
 ```
 
 其细节可以通过 `docker-compose.yml` 修改。
@@ -111,7 +111,7 @@ $ docker-compose up -d
 **基于命令式**
 
 ```bash
-$ docker run -d -p 80:80 --name alain ng-alain
+docker run -d -p 80:80 --name alain ng-alain
 ```
 
 最后你可以访问：http://localhost/

@@ -27,15 +27,16 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 
 ### CLI (Recommend)
 
+Please make sure global Angular Cli is latest version via `ng version` command (Currently <img src="https://img.shields.io/npm/v/@angular/cli.svg?style= Flat-square" alt="npm">), please refer to [CLI Command Reference](https://angular.cn/cli) for how to upgrade.
+
 ```bash
-# Make sure you are using the latest version of Angular cli
 ng new my-project --style less
 cd my-project
-ng add ng-alain --defaultLanguage=en
-ng serve
+ng add ng-alain
+npm start
 ```
 
-Please refer to [Schematics](/cli) for more details.
+> Please refer to [Schematics](/cli) for more details.
 
 ### Clone the Git Repository
 
@@ -43,7 +44,7 @@ Please refer to [Schematics](/cli) for more details.
 git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
 cd my-project
 yarn
-ng serve
+npm start
 ```
 
 > Note: Installing with the CLI is a clean scaffolding; using clone the git repository include all example pages.
@@ -81,16 +82,8 @@ ng-alain is a standard Angular CLI project that includes common routes for admin
 
 ## Development
 
-Install Dependencies
-
 ```bash
-$ yarn
-```
-
-> Please read [FQA](/docs/faq) if you problems.
-
-```bash
-$ ng serve
+npm start
 ```
 
 This will automatically open http://localhost:8000. If you see the following page then you have succeeded.
