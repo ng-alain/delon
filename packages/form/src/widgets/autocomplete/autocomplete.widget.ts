@@ -55,6 +55,7 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
   }
 
   reset(value: SFValue) {
+    this.typing = this.value;
     if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':

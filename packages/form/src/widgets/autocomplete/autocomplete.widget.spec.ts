@@ -4,7 +4,7 @@ import { createTestContext } from '@delon/testing';
 import { of } from 'rxjs';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchemaEnum } from '../../../src/schema/index';
+import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
 import { AutoCompleteWidget, EMAILSUFFIX } from './autocomplete.widget';
 
 describe('form: widget: autocomplete', () => {
@@ -92,6 +92,17 @@ describe('form: widget: autocomplete', () => {
         .click('nz-auto-option')
         .checkValue('a', `1`)
         .asyncEnd();
+    }));
+    it('should be show default value via schema.default', fakeAsync(() => {
+      const email = 'cipchk@qq.com';
+      page
+        .newSchema({
+          properties: {
+            a: { type: 'string', ui: { widget }, default: email },
+          },
+        })
+        .time();
+      expect((page.getEl('input') as HTMLInputElement).value).toBe(email);
     }));
   });
 
