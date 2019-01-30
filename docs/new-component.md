@@ -25,16 +25,16 @@ type: Dev
 > 在使用组件时，默认会在 `index.ts` 中寻找 export 的对象，如果你的组件比较复杂，可以分为多个文件，最后在 `index.ts` 中统一 export，就像这样：
 
 > ```ts
-// main.component.ts
-export class MainComponent {}
+> // main.component.ts
+> export class MainComponent {}
 >
-// sub.component.ts
-export class SubComponent {}
+> // sub.component.ts
+> export class SubComponent {}
 >
-// index.ts
-export MainComponent from './main.component';
-export SubComponent from './sub.component';
-```
+> // index.ts
+> export MainComponent from './main.component';
+> export SubComponent from './sub.component';
+> ```
 
 你的代码大概是这个样子：
 
@@ -43,38 +43,39 @@ export SubComponent from './sub.component';
 import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'image-wrapper',
-    template: `
+  selector: 'image-wrapper',
+  template: `
     <div [ngStyle]="style">
-        <img class="img" [src]="src" [alt]="desc" />
-        <div *ngIf="desc" class="desc">{{desc}}</div>
-    </div>`,
-    styleUrls: [ './index.less' ]
+      <img class="img" [src]="src" [alt]="desc" />
+      <div *ngIf="desc" class="desc">{{ desc }}</div>
+    </div>
+  `,
+  styleUrls: [ './index.less' ]
 })
 export class ImageWrapperComponent {
-    @Input() style: { [key: string]: string };
-    @Input() src: string;
-    @Input() desc: string;
+  @Input() style: { [key: string]: string };
+  @Input() src: string;
+  @Input() desc: string;
 }
 ```
 
 ```less
 // index.less
 :host {
-    padding: 0 20px 8px;
-    background: #f2f4f5;
-    width: 400px;
-    margin: 0 auto;
-    text-align: center;
+  padding: 0 20px 8px;
+  background: #f2f4f5;
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
 
-    ::ng-deep {
-        .img {
-            vertical-align: middle;
-            max-width: calc(100% - 32px);
-            margin: 2.4em 1em;
-            box-shadow: 0 8px 20px rgba(143, 168, 191, 0.35);
-        }
+  ::ng-deep {
+    .img {
+      vertical-align: middle;
+      max-width: calc(100% - 32px);
+      margin: 2.4em 1em;
+      box-shadow: 0 8px 20px rgba(143, 168, 191, 0.35);
     }
+  }
 }
 ```
 
@@ -90,7 +91,7 @@ export class ImageWrapperComponent {
 // #region your componets & directives
 import { ImageWrapperComponent } from './image-wrapper';
 const COMPONENTS = [
-    ImageWrapperComponent
+  ImageWrapperComponent
 ];
 const DIRECTIVES = [];
 // #endregion
@@ -102,6 +103,6 @@ const DIRECTIVES = [];
 
 ```html
 <image-wrapper
-    src="https://os.alipayobjects.com/rmsportal/mgesTPFxodmIwpi.png"
-    desc="示意图"></image-wrapper>
+  src="https://os.alipayobjects.com/rmsportal/mgesTPFxodmIwpi.png"
+  desc="示意图"></image-wrapper>
 ```

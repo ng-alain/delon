@@ -14,7 +14,7 @@ type: Dev
 npm run build
 ```
 
-ng-alain 本身是一个 Angular CLI 项目，因此也可以参照 [WiKi](https://github.com/angular/angular-cli/wiki/build) 完整更复杂的构建需求。构建打包成功之后，会在根目录生成 `dist` 文件夹，里面就是构建打包好的文件，通常是若干 `*.js`、`*.css`、`index.html` 等静态文件。
+ng-alain 本身是一个 Angular CLI 项目，因此也可以参照 [Build](https://angular.io/cli/build) 完成更复杂的构建需求。构建打包成功之后，会在根目录生成 `dist` 文件夹，里面就是构建打包好的文件，包含若干 `*.js`、`*.css`、`index.html` 等静态文件。
 
 ### 环境变量
 

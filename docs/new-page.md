@@ -8,9 +8,9 @@ type: Dev
 
 Angular 虽然是以组件树来渲染一个页面，然后实际开发是以一种模块树来组织代码，使其能更好地**代码复用**。而对于**模块粒度**取决于需求，ng-alain的定位在于中台前端，因此，比较建议从业务角度出发组织你的代码结构。
 
-ng-alain 提供一套非常丰富的 Schematics 模板，可以快速创建符合 ng-alain 特点的模板和页面。
+ng-alain 提供一套非常丰富的 Schematics 模板，可以快速创建符合 ng-alain 特点的模板和页面；同时包含多种可插拔[插件](/cli/plugin)。
 
-> 另：ng-alain 是一个标准的 Angular CLI 项目，你依然可以利用它快速的创建相关文件。
+> 另：ng-alain 是一个标准的 Angular CLI 项目，你依然可以使用默认的所有命令行。
 
 ## 一、模块
 
@@ -36,7 +36,7 @@ CLI 会自动在 `src/app/routes/sys` 下创建 `sys.module.ts` 和 `sys-routing
 
 ## 二、页面
 
-利用 `ng generate` 命令在 `sys` 目录下创建一个日志列表页：
+利用 `ng generate`（可简写为：`ng g`） 命令在 `sys` 目录下创建一个日志列表页：
 
 ```bash
 ng g ng-alain:list log -m=sys
@@ -58,10 +58,11 @@ ng g ng-alain:view view -m=sys -t=log
 
 除了 ng-alain 提供的 cli 命令行以外，推荐使用 [Visual Studio Code](https://code.visualstudio.com/) IDE，因为 ng-alain 针对 VSCode 增加一些额外的特性，可以更好的帮助你开发。
 
+> 或者直接使用 [NG-ALAIN Extension Pack](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-extension-pack) 套件。
+
 ### 代码片断
 
-- [ng-zorro snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode)
-- [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
+- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
 
 ### 代码风格
 
@@ -76,7 +77,7 @@ ng g ng-alain:view view -m=sys -t=log
 
 ng-alain 内置了大量的工具集样式（[API](/theme/tools)），安装以下插件可以直接在HTML模板里直接访问到它们。
 
-- [ng-alain snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
+- [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
 
 ### 其它
 

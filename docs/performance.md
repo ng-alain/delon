@@ -14,9 +14,9 @@ ng-alain 默认开启了对 IE 的支持，这给包体及样式增加了一定�
 
 ```json
 "browserslist": [
-    "last 2 versions",
-    "not ie <= 10",
-    "not ie_mob <= 10"
+  "last 2 versions",
+  "not ie <= 10",
+  "not ie_mob <= 10"
 ]
 ```
 
