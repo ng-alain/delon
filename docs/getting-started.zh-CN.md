@@ -27,17 +27,16 @@ ng-alain 是一个企业级中后台前端/设计解决方案脚手架，我们�
 
 ### CLI（推荐）
 
+请先通过 `ng version` 命令确认全局 Angular Cli 版本为最新版本号（当前最新版本号：<img src="https://img.shields.io/npm/v/@angular/cli.svg?style=flat-square" alt="npm">），有关如何升级请参考[CLI 命令参考手册](https://angular.cn/cli)。
+
 ```bash
-# 确保使用的是最新版本 Angular cli
 ng new my-project --style less
 cd my-project
 ng add ng-alain
-# 如果你想创建一个英文版本，则：
-ng add ng-alain --defaultLanguage=en
-ng serve
+npm start
 ```
 
-请参考[命令行工具](/cli)了解更多细节。
+> 请参考[命令行工具](/cli)了解更多细节。
 
 ### 克隆代码
 
@@ -45,7 +44,7 @@ ng serve
 git clone --depth=1 https://github.com/ng-alain/ng-alain.git my-project
 cd my-project
 yarn
-ng serve
+npm start
 ```
 
 > 注：使用CLI安装，是一个干净的脚手架；使用克隆代码会包含所有示例。
@@ -83,16 +82,8 @@ ng-alain 是一个标准的 Angular CLI 构建的项目，并提供了涵盖中�
 
 ## 本地开发
 
-安装依赖。
-
 ```bash
-$ yarn
-```
-
-> 遇到问题请阅读 [常见问题](/docs/faq)
-
-```bash
-$ ng serve
+npm start
 ```
 
 启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，若你看到如下页面则代表成功了。

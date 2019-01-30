@@ -33,7 +33,7 @@ type: Dev
 最后，重新安装依赖包。
 
 ```bash
-$ yarn
+yarn
 ```
 
 > 遇到问题请阅读 [常见问题](/docs/faq)
