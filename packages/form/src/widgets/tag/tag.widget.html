@@ -6,7 +6,7 @@
               [showTitle]="schema.title">
 
   <nz-tag *ngFor="let i of data"
-          nzMode="checkable"
+          [nzMode]="ui.mode || 'checkable'"
           [nzChecked]="i.checked"
           (nzAfterClose)="_afterClose()"
           (nzOnClose)="_close($event)"
