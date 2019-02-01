@@ -121,14 +121,15 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
       if (this.ngControl.disabled || this.ngControl.isDisabled) {
         return;
       }
-      const status = res !== 'VALID';
-      if (!this.onceFlag || this.invalid === status) {
+      const invalid = res === 'INVALID';
+      if (!this.onceFlag) {
         this.onceFlag = true;
         return;
       }
-      this.invalid = status;
+      this.invalid = this.ngControl.dirty && invalid;
       this.cdr.detectChanges();
     });
+
     if (this._autoId) {
       const control = deepGet(
         this.ngControl.valueAccessor,

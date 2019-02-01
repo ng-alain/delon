@@ -67,6 +67,7 @@ describe('abc: edit', () => {
             beforeEach(() => {
               ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
               changes = ngModel.statusChanges as EventEmitter<any>;
+              spyOnProperty(ngModel, 'dirty').and.returnValue(true);
             });
             it('with true', () => {
               context.label = 'a';
@@ -187,6 +188,7 @@ describe('abc: edit', () => {
         let ngModel: NgModel;
         it('should be show error', () => {
           ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
+          spyOnProperty(ngModel, 'dirty').and.returnValue(true);
           const changes = ngModel.statusChanges as EventEmitter<any>;
           // mock statusChanges
           changes.emit('VALID');
@@ -239,6 +241,7 @@ describe('abc: edit', () => {
       page = new PageObject();
       const formControlName = dl.query(By.directive(FormControlName)).injector.get(FormControlName);
       const changes = formControlName.statusChanges as EventEmitter<any>;
+      spyOnProperty(formControlName, 'dirty').and.returnValue(true);
       // mock statusChanges
       changes.emit('VALID');
       page.expect('se-error', 0);
