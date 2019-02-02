@@ -14,6 +14,7 @@ import {
   STMultiSort,
   STPage,
   STReq,
+  STRequestOptions,
   STRes,
   STRowClassName,
   STSingleSort,
@@ -243,8 +244,7 @@ export class STDataSource {
       ...this.getReqFilterMap(columns),
     };
 
-    // tslint:disable-next-line:no-any
-    let reqOptions: any = {
+    let reqOptions: STRequestOptions = {
       params,
       body: req.body,
       headers: req.headers,
@@ -254,6 +254,9 @@ export class STDataSource {
         body: { ...req.body, ...params },
         headers: req.headers,
       };
+    }
+    if (typeof req.process === 'function') {
+      reqOptions = req.process(reqOptions);
     }
     return this.http.request(method, url, reqOptions);
   }

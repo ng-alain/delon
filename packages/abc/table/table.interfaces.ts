@@ -1,4 +1,5 @@
 // tslint:disable:no-any
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { DrawerHelperOptions, ModalHelperOptions } from '@delon/theme';
 import { ModalOptionsForService, NzDrawerOptions } from 'ng-zorro-antd';
 import { STComponent } from './table.component';
@@ -30,6 +31,28 @@ export interface STReq {
    * 是否将请求所有参数数据都放入 `body` 当中（`url` 地址本身参数除外），仅当 `method: 'POST'` 时有效，默认：`false`
    */
   allInBody?: boolean;
+  /**
+   * 请求前数据处理
+   */
+  process?: (requestOptions: STRequestOptions) => STRequestOptions;
+}
+
+export interface STRequestOptions {
+  body?: any;
+  headers?:
+    | HttpHeaders
+    | {
+        [header: string]: string | string[];
+      };
+  params?:
+    | HttpParams
+    | {
+        [param: string]: string | string[];
+      };
+  observe?: 'body' | 'events' | 'response';
+  reportProgress?: boolean;
+  responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+  withCredentials?: boolean;
 }
 
 export interface STLoadOptions {
