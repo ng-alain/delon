@@ -4,6 +4,7 @@ import { of, throwError } from 'rxjs';
 import { CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
+import { HttpParams } from '@angular/common/http';
 import { STDataSource, STDataSourceOptions } from '../table-data-source';
 import { STConfig } from '../table.config';
 import { STColumnFilterMenu } from '../table.interfaces';
@@ -281,6 +282,22 @@ describe('abc: table: data-souce', () => {
         });
         srv.process(options).then(res => {
           expect(resBody.pi).toBe(options.pi);
+          done();
+        });
+      });
+      it('should be process', (done: () => void) => {
+        options.req.process = (a) => {
+          // tslint:disable-next-line:no-string-literal
+          a.params['PI'] = 2;
+          return a;
+        };
+        let resParams: any = {};
+        spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
+          resParams = opt.params;
+          return of([]);
+        });
+        srv.process(options).then(res => {
+          expect(resParams.PI).toBe(2);
           done();
         });
       });
