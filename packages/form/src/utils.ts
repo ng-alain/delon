@@ -28,7 +28,8 @@ export function isBlank(o: any) {
 }
 
 export function toBool(value: any, defaultValue: boolean) {
-  return toBoolean(value, defaultValue);
+  value = toBoolean(value, true);
+  return value == null ? defaultValue : value;
 }
 
 export function di(ui: SFUISchema, ...args) {
