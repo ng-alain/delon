@@ -138,7 +138,8 @@
     "less-bundle-promise": "^1.0.7",
     "@ngx-translate/http-loader": "^4.0.0",
     "lint-staged": "^8.1.0",
-    "ng-alain-codelyzer": "^0.0.1"
+    "ng-alain-codelyzer": "^0.0.1",
+    "terser": "3.14.1"
   },
   "husky": {
     "hooks": {
