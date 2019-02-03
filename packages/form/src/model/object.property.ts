@@ -52,7 +52,7 @@ export class ObjectProperty extends PropertyGroup {
 
   setValue(value: SFValue, onlySelf: boolean) {
     for (const propertyId in value) {
-      if (value.hasOwnProperty(propertyId)) {
+      if (value.hasOwnProperty(propertyId) && this.properties[propertyId]) {
         this.properties[propertyId].setValue(value[propertyId], true);
       }
     }
