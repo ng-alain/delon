@@ -40,13 +40,14 @@ export const ERRORSDEFAULT = {
 };
 
 export interface ErrorData {
+  [key: string]: any;
+
   keyword: string;
   dataPath?: string;
   schemaPath?: string;
   // tslint:disable-next-line:no-any
   params?: { [key: string]: any };
   message?: string;
-  _custom?: boolean;
 }
 
 export interface ErrorSchema {
