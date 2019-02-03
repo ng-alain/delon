@@ -122,7 +122,6 @@ export function generateDemo(
           }
         }
         item.summary = summaryRet;
-        // tslint:disable-next-line:forin
         for (const lang in item.summary) {
           item.summary[lang] = toHtml(item.summary[lang]);
         }

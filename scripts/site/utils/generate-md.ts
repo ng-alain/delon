@@ -1,11 +1,11 @@
+import { highlight } from '../converters/highlight';
 import {
   escapeHTML,
-  genAttr,
-  isStandalone,
-  isHeading,
   generateSluggedId,
+  genAttr,
+  isHeading,
+  isStandalone,
 } from './utils';
-import { highlight } from '../converters/highlight';
 const JsonML = require('jsonml.js/lib/utils');
 
 let headingList: any[] = [];
@@ -39,7 +39,6 @@ const converters = [highlight()].concat([
       const attrs = JsonML.getAttributes(node);
       const ret: any[] = [];
       if (attrs) {
-        // tslint:disable-next-line:forin
         for (const key in attrs) {
           let value = attrs[key];
           if (key === 'src' && ~value.indexOf(' | ')) {
@@ -61,7 +60,7 @@ const converters = [highlight()].concat([
   [
     (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'a',
     (node: any, index: number) => {
-      const attrs = Object.assign({}, JsonML.getAttributes(node));
+      const attrs = {...JsonML.getAttributes(node)};
       let target =
         attrs.href.startsWith('//') || attrs.href.startsWith('http')
           ? ' target="_blank"'
@@ -79,13 +78,13 @@ const converters = [highlight()].concat([
     (node: any, index: number) => {
       if (!node.url) return '';
       return `<!--${node.url}-->`;
-    }
+    },
   ],
   [
     () => true,
     (node: any) => {
       const tagName = JsonML.getTagName(node);
-      const attrs = genAttr(Object.assign({}, JsonML.getAttributes(node)));
+      const attrs = genAttr({...JsonML.getAttributes(node)});
       return `${tagName ? `<${tagName}${attrs ? ' ' + attrs : ''}>` : ''}${
         isStandalone(tagName)
           ? ''

@@ -75,7 +75,6 @@ describe('auth: social.service', () => {
       it(`${item.type} via href`, () => {
         srv.login(item.url, '/', { type: 'href' });
         const ret = injector.get(DOCUMENT).location.href;
-        // tslint:disable-next-line:forin
         for (const key in item.be) {
           const expected = `${key}=${item.be[key]}`;
           expect(ret).toContain(expected, `muse contain "${expected}"`);
@@ -91,7 +90,6 @@ describe('auth: social.service', () => {
         tick(130);
         expect(window.open).toHaveBeenCalled();
         const token = injector.get(DA_SERVICE_TOKEN).get();
-        // tslint:disable-next-line:forin
         for (const key in item.be) {
           expect(token[key]).toContain(item.be[key]);
         }
@@ -166,7 +164,6 @@ describe('auth: social.service', () => {
           return;
         }
         const ret = srv.callback(item.url);
-        // tslint:disable-next-line:forin
         for (const key in item.be) {
           expect(ret[key]).toBe(item.be[key]);
         }
