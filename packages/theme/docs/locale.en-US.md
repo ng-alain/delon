@@ -47,6 +47,7 @@ Note: `en_US` is the package name, follow below.
 | Chinese (Traditional) | zh_TW    |
 | Turkish               | tr_TR    |
 | Polish                | pl_PL    |
+| Greek                 | el_GR    |
 
 ## Add a new language
 
