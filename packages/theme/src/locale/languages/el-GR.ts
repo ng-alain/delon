@@ -14,8 +14,8 @@ export default {
   },
   reuseTab: {
     close: 'Κλείσιμο καρτέλας',
-    closeOther: 'Κλείσιμο των άλλον καρτέλων',
-    closeRight: 'Κλείσιμο των καρτέλων δεξιά',
+    closeOther: 'Κλείσιμο των άλλων καρτέλων',
+    closeRight: 'Κλείσιμο των καρτελών δεξιά',
     clear: 'Καθαρισμός καρτέλων',
   },
   tagSelect: {
