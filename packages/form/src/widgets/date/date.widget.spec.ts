@@ -179,6 +179,16 @@ describe('form: widget: date', () => {
   });
 
   describe('ui', () => {
+    it('#displayFormat', () => {
+      const s: SFSchema = {
+        properties: { a: { type: 'string', ui: { widget, displayFormat: 'yyyy' } } },
+      };
+      page.newSchema(s);
+      const comp = getComp();
+      comp._openChange(true);
+      comp._ok(true);
+      expect(comp.displayFormat).toBe('yyyy');
+    });
     it('should be trigger onOpenChange', () => {
       const s: SFSchema = {
         properties: { a: { type: 'string', ui: { widget, onOpenChange: jasmine.createSpy() } } },

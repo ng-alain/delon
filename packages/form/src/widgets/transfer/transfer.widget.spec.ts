@@ -143,7 +143,6 @@ describe('form: widget: transfer', () => {
               ],
               ui: {
                 widget,
-                titles: ['未拥有', '已拥有'],
                 showSearch: true,
               },
               default: 10,

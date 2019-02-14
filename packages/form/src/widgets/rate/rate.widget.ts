@@ -14,9 +14,7 @@ export class RateWidget extends ControlWidget implements OnInit {
   hasText = false;
 
   get text(): string {
-    return this.hasText
-      ? (this.ui.text as string).replace('{{value}}', this.formProperty.value)
-      : '';
+    return (this.ui.text as string).replace('{{value}}', this.formProperty.value);
   }
 
   ngOnInit(): void {
