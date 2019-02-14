@@ -56,7 +56,6 @@ export class _HttpClient {
     if (!params) return url;
     url += ~url.indexOf('?') ? '' : '?';
     const arr: string[] = [];
-    // tslint:disable-next-line:forin
     for (const key in params) {
       arr.push(`${key}=${params[key]}`);
     }

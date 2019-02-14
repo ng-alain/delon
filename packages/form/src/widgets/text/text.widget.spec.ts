@@ -26,8 +26,22 @@ describe('form: widget: text', () => {
 
   it('should working', () => {
     const s: SFSchema = {
-      properties: { a: { type: 'string', default: 'asdf' } },
+      properties: { a: { type: 'string', default: 'asdf', ui: { widget } } },
     };
     page.newSchema(s).checkValue('a', 'asdf');
+  });
+
+  it('should be show - when value is null', () => {
+    const s: SFSchema = {
+      properties: { a: { type: 'string', ui: { widget } } },
+    };
+    page.newSchema(s).checkElText('.ant-form-item-control', '-');
+  });
+
+  it('should be using default text when value is null', () => {
+    const s: SFSchema = {
+      properties: { a: { type: 'string', ui: { widget, defaultText: '~' } } },
+    };
+    page.newSchema(s).checkElText('.ant-form-item-control', '~');
   });
 });

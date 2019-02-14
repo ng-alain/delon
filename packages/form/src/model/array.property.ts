@@ -42,10 +42,7 @@ export class ArrayProperty extends PropertyGroup {
 
   resetValue(value: SFValue, onlySelf: boolean) {
     this._value = value || this.schema.default || [];
-    this.properties = [];
-    this.clearErrors();
-    this.resetProperties(this._value);
-    this.updateValueAndValidity(onlySelf, true);
+    this.setValue(this._value, onlySelf);
   }
 
   _hasValue(): boolean {

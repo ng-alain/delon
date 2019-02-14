@@ -4,6 +4,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { en_US, AlainThemeModule, DelonLocaleService } from '@delon/theme';
 import { deepCopy } from '@delon/util';
+import { of } from 'rxjs';
+import { FormProperty } from '../src/model/form.property';
+import { FormPropertyFactory } from '../src/model/form.property.factory';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
 import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
@@ -35,8 +38,24 @@ describe('form: component', () => {
     });
 
     describe('[default]', () => {
-      it('should be create a form', () => {
-        expect(context).not.toBeUndefined();
+      it('should throw error when parent is not object or array', () => {
+        expect(() => {
+          const factory = dl.injector.get(FormPropertyFactory);
+          factory.createProperty({}, {}, {}, { type: 'invalid', path: 'a' } as any, 'a');
+        }).toThrowError();
+      });
+
+      it('should throw error when type is invalid', () => {
+        expect(() => {
+          context.schema = {
+            properties: {
+              a: {
+                type: 'aa' as any,
+              },
+            },
+          };
+          fixture.detectChanges();
+        }).toThrowError(`Undefined type aa`);
       });
 
       it('should throw error when is invalid schema', () => {
@@ -356,6 +375,133 @@ describe('form: component', () => {
         expect(() => {
           context.comp.setValue('/invalid-path', name);
         }).toThrow();
+      });
+    });
+
+    describe('[Custom Validator]', () => {
+      it('with function and shoule be success when return a empty errors', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'string',
+              ui: {
+                validator: jasmine
+                  .createSpy()
+                  .and.returnValue([{ keyword: 'required', message: 'a' }]),
+              },
+            },
+          },
+        };
+        page.newSchema(s);
+        expect(page.getProperty('/a').valid).toBe(false);
+      });
+      it('with function', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'string',
+              ui: {
+                validator: jasmine
+                  .createSpy()
+                  .and.returnValue([]),
+              },
+            },
+          },
+        };
+        page.newSchema(s);
+        expect(page.getProperty('/a').valid).toBe(true);
+      });
+      it('with observable', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'string',
+              ui: {
+                validator: jasmine
+                  .createSpy()
+                  .and.returnValue(of([{ keyword: 'required', message: 'a' }])),
+              },
+            },
+          },
+        };
+        page.newSchema(s);
+        expect(page.getProperty('/a').valid).toBe(false);
+      });
+      it('shoule be throw error when non-include a message property', () => {
+        expect(() => {
+          const s: SFSchema = {
+            properties: {
+              a: {
+                type: 'string',
+                ui: {
+                  validator: jasmine
+                    .createSpy()
+                    .and.returnValue([{ keyword: 'required' }]),
+                },
+              },
+            },
+          };
+          page.newSchema(s);
+        }).toThrowError();
+      });
+      it('shoule be support custom params in message', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'string',
+              ui: {
+                validator: () => [{
+                  keyword: 'a',
+                  message: 'a-{id}-{invalid}',
+                  params: {
+                    id: 10,
+                  },
+                }],
+              },
+            },
+          },
+        };
+        page.newSchema(s);
+        expect(page.getProperty('/a').errors[0].message).toBe(`a-10-`);
+      });
+    });
+
+    describe('[Custom Show Errors]', () => {
+      it('shoule be re-error message via error property', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'string',
+              ui: {
+                errors: {
+                  required: 'REQUEST',
+                },
+              },
+            },
+          },
+          required: ['a'],
+        };
+        page.newSchema(s);
+        expect(page.getProperty('/a').errors[0].message).toBe('REQUEST');
+      });
+
+      it('shoule be re-error message via error property and type is function', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'string',
+              ui: {
+                errors: {
+                  required: jasmine.createSpy().and.returnValue('A'),
+                },
+              },
+            },
+          },
+          required: ['a'],
+        };
+        page.newSchema(s);
+        expect(page.getProperty('/a').errors[0].message).toBe('A');
+        expect((s.properties.a.ui as any).errors.required).toHaveBeenCalled();
       });
     });
   });

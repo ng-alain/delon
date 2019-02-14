@@ -93,7 +93,6 @@ describe('theme: http.client', () => {
           const ret = backend.expectOne(
             req => req.method === 'GET' && req.url === URL,
           ) as TestRequest;
-          // tslint:disable-next-line:forin
           for (const key in p) {
             let v = p[key];
             if (v instanceof Date) v = v.valueOf();

@@ -89,7 +89,7 @@ export abstract class FormProperty {
   }
 
   get valid() {
-    return this._errors === null;
+    return this._errors === null || this._errors.length === 0;
   }
 
   /**
@@ -217,7 +217,7 @@ export abstract class FormProperty {
     if (hasCustomError) {
       list.forEach((err, idx: number) => {
         if (!err.message)
-          throw new Error(`自定义校验器必须至少返回一个 'message' 属性，用于表示错误文本`);
+          throw new Error(`The custom validator must contain a 'message' attribute to viewed error text`);
         err._custom = true;
       });
     }
@@ -244,7 +244,9 @@ export abstract class FormProperty {
             ? err.message
             : (this.ui.errors || {})[err.keyword] || this.options.errors[err.keyword] || ``;
 
-        if (message && typeof message === 'function') message = message(err) as string;
+        if (message && typeof message === 'function') {
+          message = message(err) as string;
+        }
 
         if (message) {
           if (~(message as string).indexOf('{')) {
