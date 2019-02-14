@@ -14,7 +14,7 @@
         </nz-tooltip>
       </span>
     </label>
-    <div class="add">
+    <div class="sf__array-add">
       <button type="button"
               nz-button
               [nzType]="addType"
@@ -29,7 +29,7 @@
     <div class="ant-form-item-control"
          [class.has-error]="showError">
 
-      <nz-row class="sf-array-container">
+      <nz-row class="sf__array-container">
         <ng-container *ngFor="let i of formProperty.properties; let idx=index">
           <nz-col *ngIf="i.visible && !i.ui.hidden"
                   [nzSpan]="arraySpan"

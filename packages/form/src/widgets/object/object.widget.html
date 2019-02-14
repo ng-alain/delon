@@ -1,3 +1,4 @@
+<div *ngIf="title" class="sf__title">{{ title }}</div>
 <ng-container *ngIf="grid; else noGrid">
   <div nz-row
        [nzGutter]="grid.gutter">

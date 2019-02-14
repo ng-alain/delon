@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ArrayProperty } from '../../model/array.property';
 import { FormProperty } from '../../model/form.property';
 import { SFGridSchema } from '../../schema/ui';
 import { ObjectLayoutWidget } from '../../widget';
@@ -10,15 +11,21 @@ import { ObjectLayoutWidget } from '../../widget';
 export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   grid: SFGridSchema;
   list: Array<{}> = [];
+  title: string;
 
   ngOnInit(): void {
-    this.grid = this.ui.grid;
+    const { formProperty, ui } = this;
+    const { grid, showTitle } = ui;
+    if (showTitle || (typeof showTitle === 'undefined' && !formProperty.isRoot() && !(formProperty.parent instanceof ArrayProperty))) {
+      this.title = this.schema.title;
+    }
+    this.grid = grid;
     const list: Array<{}> = [];
-    for (const key of this.formProperty.propertiesId) {
-      const property = this.formProperty.properties[key] as FormProperty;
+    for (const key of formProperty.propertiesId) {
+      const property = formProperty.properties[key] as FormProperty;
       const item = {
         property,
-        grid: property.ui.grid || this.grid || {},
+        grid: property.ui.grid || grid || {},
         spanLabelFixed: property.ui.spanLabelFixed,
         show: property.ui.hidden === false,
       };
