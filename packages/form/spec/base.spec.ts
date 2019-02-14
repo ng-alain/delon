@@ -162,7 +162,7 @@ export class SFPage {
   }
 
   add(): this {
-    this.getEl('.add button').click();
+    this.getEl('.sf__array-add button').click();
     return this;
   }
   /** 下标从 `1` 开始 */

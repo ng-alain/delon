@@ -3,8 +3,6 @@ import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
-import { ObjectProperty } from '../../model/object.property';
 
 describe('form: widget: object', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -39,4 +37,77 @@ describe('form: widget: object', () => {
     const ipt = page.getEl('.ant-input') as HTMLInputElement;
     expect(ipt.value).toBe('1');
   }));
+
+  describe('#showTitle', () => {
+    it('should be show second title when value is undefined', () => {
+      page
+        .newSchema({
+          title: 'root',
+          properties: {
+            a: {
+              type: 'object',
+              title: 'a',
+              properties: {
+              },
+            },
+          },
+        })
+        .checkCount('.sf__title', 1);
+    });
+    it('should be show title when value is true', () => {
+      page
+        .newSchema({
+          title: 'root',
+          ui: { showTitle: true },
+          properties: {
+            a: {
+              type: 'object',
+              title: 'a',
+              properties: {
+              },
+            },
+          },
+        })
+        .checkCount('.sf__title', 2);
+    });
+    it('should be hide title when value is false', () => {
+      page
+        .newSchema({
+          title: 'root',
+          ui: { showTitle: false },
+          properties: {
+            a: {
+              type: 'object',
+              title: 'a',
+              ui: { showTitle: false },
+              properties: {
+              },
+            },
+          },
+        })
+        .checkCount('.sf__title', 0);
+    });
+    it('should be hide title when title is null', () => {
+      page
+        .newSchema({
+          title: null,
+          ui: { showTitle: true },
+          properties: {
+          },
+        })
+        .checkCount('.sf__title', 0);
+    });
+    it('should be hide title when is array property', () => {
+      page
+        .newSchema({
+          properties: {
+            a: {
+              title: 'a',
+              type: 'array',
+            },
+          },
+        })
+        .checkCount('.sf__title', 0);
+    });
+  });
 });
