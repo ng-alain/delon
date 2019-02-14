@@ -40,6 +40,9 @@ for ARG in "$@"; do
 done
 
 VERSION=$(node -p "require('./package.json').version")
+if [[ ${INTEGRATION} == true ]]; then
+  VERSION='*'
+fi
 DEPENDENCIES=$(node -p "
   const vs = require('./package.json').dependencies;
   const dvs = require('./package.json').devDependencies;
