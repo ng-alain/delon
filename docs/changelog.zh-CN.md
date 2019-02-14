@@ -4,6 +4,24 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.7](https://github.com/ng-alain/delon/compare/7.0.0-rc.6...7.0.0-rc.7) (2019-02-14)
+
+### Bug Fixes
+
+* **module:edit:** 修复应忽略 `dirty` 错误信息 ([#421](https://github.com/ng-alain/delon/issues/421)) ([908bd8d](https://github.com/ng-alain/delon/commit/908bd8d))
+* **module:sf:autocomplete:** 修复无效默认值 ([#417](https://github.com/ng-alain/delon/issues/417)) ([126e99d](https://github.com/ng-alain/delon/commit/126e99d)), closes [#387](https://github.com/ng-alain/delon/issues/387)
+* **module:sf:date:** 修复无效嵌套 `end` ([#405](https://github.com/ng-alain/delon/issues/405)) ([#407](https://github.com/ng-alain/delon/issues/407)) ([033713a](https://github.com/ng-alain/delon/commit/033713a))
+
+### Features
+
+* **module:sf:** 新增 `onlyVisual` 属性，使表单格式更内聚 ([#411](https://github.com/ng-alain/delon/issues/411)) ([f3a5e1a](https://github.com/ng-alain/delon/commit/f3a5e1a))
+* **module:sf:object:** 新增 Object 显示标题 ([#425](https://github.com/ng-alain/delon/issues/425)) ([087c979](https://github.com/ng-alain/delon/commit/087c979))
+* **module:st:** 新增 `STReq` 支持 `process` 函数 ([#422](https://github.com/ng-alain/delon/issues/422)) ([62a5749](https://github.com/ng-alain/delon/commit/62a5749)), closes [#419](https://github.com/ng-alain/delon/issues/419)
+* **module:st:** 新增 `skip`、`limit` 分页风格 ([#404](https://github.com/ng-alain/delon/issues/404)) ([9c6be6c](https://github.com/ng-alain/delon/commit/9c6be6c))
+* **module:st:** 新增统计命令 ([#413](https://github.com/ng-alain/delon/issues/413)) ([80c55d0](https://github.com/ng-alain/delon/commit/80c55d0))
+* **schematics:** 新增 `tpl` 命令支持自定义外部修正函数，可以定制更复杂的 `tpl` 命令 ([#410](https://github.com/ng-alain/delon/issues/410)) ([88def47](https://github.com/ng-alain/delon/commit/88def47)), closes [#409](https://github.com/ng-alain/delon/issues/409)
+
+
 # [7.0.0-rc.6](https://github.com/ng-alain/delon/compare/7.0.0-rc.5...7.0.0-rc.6) (2019-01-22)
 
 ### Bug Fixes
