@@ -4,6 +4,24 @@ title: Change Log
 type: Other
 ---
 
+# [7.0.0-rc.7](https://github.com/ng-alain/delon/compare/7.0.0-rc.6...7.0.0-rc.7) (2019-02-14)
+
+### Bug Fixes
+
+* **module:edit:** fix should contain dirty check ([#421](https://github.com/ng-alain/delon/issues/421)) ([908bd8d](https://github.com/ng-alain/delon/commit/908bd8d))
+* **module:sf:autocomplete:** fix losing defualt value ([#417](https://github.com/ng-alain/delon/issues/417)) ([126e99d](https://github.com/ng-alain/delon/commit/126e99d)), closes [#387](https://github.com/ng-alain/delon/issues/387)
+* **module:sf:date:** fix ui config error of end property when in a nested object ([#405](https://github.com/ng-alain/delon/issues/405)) ([#407](https://github.com/ng-alain/delon/issues/407)) ([033713a](https://github.com/ng-alain/delon/commit/033713a))
+
+### Features
+
+* **module:sf:** add onlyVisual property in sf component ([#411](https://github.com/ng-alain/delon/issues/411)) ([f3a5e1a](https://github.com/ng-alain/delon/commit/f3a5e1a))
+* **module:sf:object:** support view title text ([#425](https://github.com/ng-alain/delon/issues/425)) ([087c979](https://github.com/ng-alain/delon/commit/087c979))
+* **module:st:** add process in STReq ([#422](https://github.com/ng-alain/delon/issues/422)) ([62a5749](https://github.com/ng-alain/delon/commit/62a5749)), closes [#419](https://github.com/ng-alain/delon/issues/419)
+* **module:st:** add skip & limit pagination type ([#404](https://github.com/ng-alain/delon/issues/404)) ([9c6be6c](https://github.com/ng-alain/delon/commit/9c6be6c))
+* **module:st:** add statistical ([#413](https://github.com/ng-alain/delon/issues/413)) ([80c55d0](https://github.com/ng-alain/delon/commit/80c55d0))
+* **schematics:** add external fix function in tpl command ([#410](https://github.com/ng-alain/delon/issues/410)) ([88def47](https://github.com/ng-alain/delon/commit/88def47)), closes [#409](https://github.com/ng-alain/delon/issues/409)
+
+
 # [7.0.0-rc.6](https://github.com/ng-alain/delon/compare/7.0.0-rc.5...7.0.0-rc.6) (2019-01-22)
 
 ### Bug Fixes
