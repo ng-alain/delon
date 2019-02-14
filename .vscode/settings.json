@@ -5,12 +5,7 @@
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true,
     "**/dist/*/**": true,
-    "**/coverage/*/**": true,
-    "**/tools/*/**": true,
-    "**/.tmp/*/**": true,
-  },
-  "files.exclude": {
-    "**/.tmp/*/**": true,
+    "**/coverage/*/**": true
   },
   "tslint.autoFixOnSave": true,
   "tslint.alwaysShowStatus": true,

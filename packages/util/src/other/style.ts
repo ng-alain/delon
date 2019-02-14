@@ -1,7 +1,6 @@
 import { Renderer2 } from '@angular/core';
 
 function removeClass(el: HTMLElement, classMap: object, renderer: Renderer2): void {
-  // tslint:disable-next-line:forin
   for (const i in classMap) {
     renderer.removeClass(el, i);
   }

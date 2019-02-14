@@ -65,6 +65,13 @@ describe('form: widget: time', () => {
         const comp = getComp();
         expect(format(comp.value)).toBe(format(time));
       });
+      it('with HH:mm', () => {
+        const time = '11:10';
+        page.newSchema({
+          properties: { a: { type: 'string', ui: { widget }, default: time } },
+        });
+        expect(format(getComp().displayValue, 'HH:mm:ss')).toBe('11:10:00');
+      });
       it('with null', () => {
         const time = null;
         const s: SFSchema = {
@@ -98,6 +105,21 @@ describe('form: widget: time', () => {
       comp._change(val);
       const utcVal = Date.UTC(1970, 0, 1, val.getHours(), val.getMinutes(), val.getSeconds());
       expect(format(page.getValue('a'), 'HH:mm:ss')).toBe(format(utcVal, 'HH:mm:ss'));
+    });
+
+    describe('#format', () => {
+      it('should be used x when type is number', () => {
+        page.newSchema({
+          properties: { a: { type: 'number', ui: { widget } } },
+        });
+        expect(getComp().format).toBe('x');
+      });
+      it('should be used HH:mm:ss when type is not number', () => {
+        page.newSchema({
+          properties: { a: { type: 'string', ui: { widget } } },
+        });
+        expect(getComp().format).toBe('HH:mm:ss');
+      });
     });
   });
 });

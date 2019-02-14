@@ -34,10 +34,14 @@ export class TransferWidget extends ControlWidget implements OnInit {
   reset(value: SFValue) {
     getData(this.schema, this.ui, null).subscribe(list => {
       let formData = this.formProperty.formData;
-      if (!Array.isArray(formData)) formData = [formData];
+      if (!Array.isArray(formData)) {
+        formData = [formData];
+      }
       list.forEach((item: SFSchemaEnum) => {
         // tslint:disable-next-line:no-any
-        if (~(formData as any[]).indexOf(item.value)) item.direction = 'right';
+        if (~(formData as any[]).indexOf(item.value)) {
+          item.direction = 'right';
+        }
       });
       this.list = list;
       this._data = list.filter(w => w.direction === 'right');
@@ -67,6 +71,7 @@ export class TransferWidget extends ControlWidget implements OnInit {
 
   _searchChange(options: TransferSearchChange) {
     if (this.ui.searchChange) this.ui.searchChange(options);
+    this.cd.detectChanges();
   }
 
   _selectChange(options: TransferSelectChange) {
