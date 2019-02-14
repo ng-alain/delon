@@ -1,5 +1,5 @@
 import { UnitTestTree } from '@angular-devkit/schematics/testing';
-import { Schema as ApplicationOptions } from '@schematics/angular/application/schema';
+import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
 import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
 import { createNgRunner } from '../utils/testing';
 import { Schema as ModuleOptions } from './schema';
@@ -24,7 +24,7 @@ describe('NgAlainSchematic: module', () => {
     inlineStyle: false,
     inlineTemplate: false,
     routing: false,
-    style: 'css',
+    style: Style.Css,
     skipTests: false,
     skipPackageJson: false,
   };
