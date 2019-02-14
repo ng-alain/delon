@@ -47,8 +47,8 @@ export function useFactory(
   ],
   host: {
     '[class.sf]': 'true',
-    '[class.sf-search]': `mode === 'search'`,
-    '[class.sf-edit]': `mode === 'edit'`,
+    '[class.sf__search]': `mode === 'search'`,
+    '[class.sf__edit]': `mode === 'edit'`,
     '[class.sf__no-error]': `onlyVisual`,
   },
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -80,7 +80,7 @@ describe('form: widget: array', () => {
         .checkCount('.sf-array-item', 0)
         .add()
         .checkCount('.sf-array-item', 1)
-        .checkCount(`.sf-array-container [data-index="0"] .remove`, 0);
+        .checkCount(`.sf__array-container [data-index="0"] .remove`, 0);
     });
   });
   describe('#default data', () => {
