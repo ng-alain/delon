@@ -41,7 +41,7 @@ done
 
 VERSION=$(node -p "require('./package.json').version")
 if [[ ${INTEGRATION} == true ]]; then
-  VERSION='*'
+  VERSION='\*'
 else
   VERSION="^${VERSION}"
 fi
