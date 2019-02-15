@@ -427,4 +427,29 @@ describe('form: schema', () => {
       });
     });
   });
+
+  describe('[$ref]', () => {
+    it('should be required valid', () => {
+      page
+        .newSchema({
+          definitions: {
+            nameRef: {
+              type: 'string',
+              title: 'nameRef',
+            },
+          },
+          properties: {
+            name: {
+              type: 'string',
+              title: 'Name',
+            },
+            nameTwo: {
+              $ref: '#/definitions/nameRef',
+            },
+          },
+          required: ['name', 'nameTwo'],
+        })
+        .checkUI('/nameTwo', '_required', true);
+    });
+  });
 });

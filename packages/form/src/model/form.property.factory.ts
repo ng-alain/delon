@@ -11,6 +11,8 @@ import { NumberProperty } from './number.property';
 import { ObjectProperty } from './object.property';
 import { StringProperty } from './string.property';
 
+const SEQ = '/';
+
 export class FormPropertyFactory {
   constructor(
     private schemaValidatorFactory: SchemaValidatorFactory,
@@ -29,7 +31,7 @@ export class FormPropertyFactory {
     if (parent) {
       path += parent.path;
       if (parent.parent !== null) {
-        path += '/';
+        path += SEQ;
       }
       if (parent.type === 'object') {
         path += propertyId;
@@ -41,7 +43,7 @@ export class FormPropertyFactory {
         );
       }
     } else {
-      path = '/';
+      path = SEQ;
     }
 
     if (schema.$ref) {
@@ -49,11 +51,13 @@ export class FormPropertyFactory {
       newProperty = this.createProperty(refSchema, ui, formData, parent, path);
     } else {
       // fix required
-      if (propertyId && ((parent!.schema.required || []) as string[]).indexOf(propertyId) !== -1) {
+      if (propertyId && ((parent!.schema.required || []) as string[]).indexOf(propertyId.split(SEQ).pop()) !== -1) {
         ui._required = true;
       }
       // fix title
-      if (schema.title == null) schema.title = propertyId;
+      if (schema.title == null) {
+        schema.title = propertyId;
+      }
       // fix date
       if (
         (schema.type === 'string' || schema.type === 'number') &&
