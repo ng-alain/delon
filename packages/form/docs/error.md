@@ -128,3 +128,29 @@ schema: SFSchema = {
 ## 视觉
 
 可以通过设置 `DelonFormConfig.onlyVisual` 或 `ui.onlyVisual` 属性控制只展示错误视觉不显示错误文本。
+
+## Debug
+
+JSON Schema 对格式有严格的要求，例如日期格式必须遵守 [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.6) 时间格式：
+
+```ts
+{
+  properties: {
+    time: {
+      type: 'string',
+      ui: { widget: 'date', mode: 'range' },
+      title: 'Date',
+      format: 'YYYY-MM-DD HH:mm:ss'
+    }
+  },
+  ui: {
+    debug: true
+  }
+}
+```
+
+其中 `format` 是一个错误时间格式，当指定 `debug: true` 时，会在控制台接收到详细的校验错误描述：
+
+```
+Error: unknown format "YYYY-MM-DD HH:mm:ss" is used in schema at path "#/properties/time"
+```
