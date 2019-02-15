@@ -4,6 +4,18 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.8](https://github.com/ng-alain/delon/compare/7.0.0-rc.7...7.0.0-rc.8) (2019-02-15)
+
+
+### Bug Fixes
+
+* **module:se:** 修复未开启 `firstVisual` 导致重置时无法立即显示 ([#434](https://github.com/ng-alain/delon/issues/434)) ([f0f6622](https://github.com/ng-alain/delon/commit/f0f6622))
+* **module:sf:** 修复 `$ref` 引用元素无效必填项 ([#431](https://github.com/ng-alain/delon/issues/431)) ([2f83a4b](https://github.com/ng-alain/delon/commit/2f83a4b)), closes [#428](https://github.com/ng-alain/delon/issues/428)
+* **module:sf:checkbox:** 修复无效全选默认值状态 ([#433](https://github.com/ng-alain/delon/issues/433)) ([2b07901](https://github.com/ng-alain/delon/commit/2b07901))
+* **module:sf:object:** 修复默认隐藏所有标题 ([#429](https://github.com/ng-alain/delon/issues/429)) ([9c51e26](https://github.com/ng-alain/delon/commit/9c51e26)), closes [#430](https://github.com/ng-alain/delon/issues/430)
+* **module:theme:** 修复 `nz-transfer` 操作按钮多余间距 ([#435](https://github.com/ng-alain/delon/issues/435)) ([3a6d900](https://github.com/ng-alain/delon/commit/3a6d900))
+
+
 # [7.0.0-rc.7](https://github.com/ng-alain/delon/compare/7.0.0-rc.6...7.0.0-rc.7) (2019-02-14)
 
 ### Bug Fixes
