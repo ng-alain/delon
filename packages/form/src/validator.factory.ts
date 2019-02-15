@@ -12,7 +12,7 @@ declare var Ajv: any;
 export abstract class SchemaValidatorFactory {
   abstract createValidatorFn(
     schema: SFSchema,
-    extraOptions: { ingoreKeywords: string[] },
+    extraOptions: { ingoreKeywords: string[], debug: boolean },
   ): (value: SFSchema) => ErrorData[];
 }
 
@@ -39,7 +39,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
 
   createValidatorFn(
     schema: SFSchema,
-    extraOptions: { ingoreKeywords: string[] },
+    extraOptions: { ingoreKeywords: string[], debug: boolean },
   ): (value: SFValue) => ErrorData[] {
     const ingoreKeywords: string[] = []
       .concat(this.options.ingoreKeywords)
