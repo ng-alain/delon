@@ -51,7 +51,9 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
       } catch (e) {
         // swallow errors thrown in ajv due to invalid schemas, these
         // still get displayed
-        di(schema.ui as SFUISchemaItem, e);
+        if (extraOptions.debug) {
+          console.warn(e);
+        }
       }
       let errors = this.ajv.errors;
       if (this.options && ingoreKeywords && errors) {
