@@ -3,6 +3,8 @@ import { DelonFormConfig } from './config';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
 import { SFSchema } from './schema';
+import { SFUISchemaItem } from './schema/ui';
+import { di } from './utils';
 
 // tslint:disable-next-line:no-any
 declare var Ajv: any;
@@ -49,6 +51,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
       } catch (e) {
         // swallow errors thrown in ajv due to invalid schemas, these
         // still get displayed
+        di(schema.ui as SFUISchemaItem, e);
       }
       let errors = this.ajv.errors;
       if (this.options && ingoreKeywords && errors) {

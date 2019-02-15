@@ -84,12 +84,34 @@ describe('form: widget: checkbox', () => {
       checkAllBtn.click();
       expect(comp.allChecked).toBe(false);
     });
+    it('should be indeterminate when defaut inlcudes value', () => {
+      page
+        .newSchema({
+          properties: {
+            a: {
+              type: 'string',
+              title: 'Mulit',
+              enum: ['Apple', 'Pear', 'Orange'],
+              ui: {
+                widget: 'checkbox',
+                checkAll: true,
+              },
+              default: ['Apple'],
+            },
+          },
+        })
+        .checkCount('.sf__checkbox-all .ant-checkbox-indeterminate', 1);
+    });
   });
 
   it('should be use nz-checkbox-wrapper when spcify grid_span value', fakeAsync(() => {
     const s: SFSchema = {
       properties: {
-        a: { type: 'string', ui: { widget, span: 8, change: jasmine.createSpy() }, enum: ['item1', 'item2'] },
+        a: {
+          type: 'string',
+          ui: { widget, span: 8, change: jasmine.createSpy() },
+          enum: ['item1', 'item2'],
+        },
       },
     };
     page

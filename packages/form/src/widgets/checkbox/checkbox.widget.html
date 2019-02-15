@@ -1,7 +1,7 @@
 <ng-template #all>
   <label *ngIf="ui.checkAll"
          nz-checkbox
-         class="mr-sm"
+         class="sf__checkbox-all mr-sm"
          [(ngModel)]="allChecked"
          [nzIndeterminate]="indeterminate"
          (click)="onAllChecked($event)">{{ ui.checkAllText || l.checkAllText }}</label>

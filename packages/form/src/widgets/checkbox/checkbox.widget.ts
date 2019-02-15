@@ -59,7 +59,7 @@ export class CheckboxWidget extends ControlWidget {
   }
 
   updateAllChecked(): this {
-    if (this.data.every(item => item.checked === false)) {
+    if (this.data.every(item => item.checked !== true)) {
       this.allChecked = false;
       this.indeterminate = false;
     } else if (this.data.every(item => item.checked === true)) {
