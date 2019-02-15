@@ -16,7 +16,7 @@ export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   ngOnInit(): void {
     const { formProperty, ui } = this;
     const { grid, showTitle } = ui;
-    if (showTitle || (typeof showTitle === 'undefined' && !formProperty.isRoot() && !(formProperty.parent instanceof ArrayProperty))) {
+    if (!formProperty.isRoot() && !(formProperty.parent instanceof ArrayProperty) && showTitle === true) {
       this.title = this.schema.title;
     }
     this.grid = grid;

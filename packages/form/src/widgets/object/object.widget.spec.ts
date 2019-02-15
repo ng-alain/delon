@@ -39,7 +39,7 @@ describe('form: widget: object', () => {
   }));
 
   describe('#showTitle', () => {
-    it('should be show second title when value is undefined', () => {
+    it('should be hide second title when value is undefined', () => {
       page
         .newSchema({
           title: 'root',
@@ -52,7 +52,7 @@ describe('form: widget: object', () => {
             },
           },
         })
-        .checkCount('.sf__title', 1);
+        .checkCount('.sf__title', 0);
     });
     it('should be show title when value is true', () => {
       page
@@ -68,7 +68,7 @@ describe('form: widget: object', () => {
             },
           },
         })
-        .checkCount('.sf__title', 2);
+        .checkCount('.sf__title', 1);
     });
     it('should be hide title when value is false', () => {
       page
