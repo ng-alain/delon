@@ -117,18 +117,9 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   private bindModel() {
     if (!this.ngControl || this.status$) return;
 
-    this.status$ = this.ngControl.statusChanges.subscribe(res => {
-      if (this.ngControl.disabled || this.ngControl.isDisabled) {
-        return;
-      }
-      const invalid = res === 'INVALID';
-      if (!this.onceFlag) {
-        this.onceFlag = true;
-        return;
-      }
-      this.invalid = this.ngControl.dirty && invalid;
-      this.cdr.detectChanges();
-    });
+    this.status$ = this.ngControl.statusChanges.subscribe(res =>
+      this.updateStatus(res === 'INVALID'),
+    );
 
     if (this._autoId) {
       const control = deepGet(
@@ -141,6 +132,14 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
+  private updateStatus(invalid: boolean): void {
+    if (this.ngControl.disabled || this.ngControl.isDisabled) {
+      return;
+    }
+    this.invalid = (invalid && this.onceFlag) || (this.ngControl.dirty && invalid);
+    this.cdr.detectChanges();
+  }
+
   ngOnChanges() {
     this.onceFlag = this.parent.firstVisual;
     if (this.inited) this.setClass().bindModel();
@@ -149,6 +148,12 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.setClass().bindModel();
     this.inited = true;
+    if (this.onceFlag) {
+      Promise.resolve().then(() => {
+        this.updateStatus(this.ngControl.invalid);
+        this.onceFlag = false;
+      });
+    }
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,5 @@
 import { Component, DebugElement, EventEmitter, ViewChild } from '@angular/core';
-import { inject, ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, inject, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FormsModule,
   FormBuilder,
@@ -60,31 +60,6 @@ describe('abc: edit', () => {
             context.parent_title = `parent_title`;
             fixture.detectChanges();
             expect(page.getEl(prefixCls + 'title').textContent).toContain(`parent_title`);
-          });
-          describe('#firstVisual', () => {
-            let ngModel: NgModel;
-            let changes: EventEmitter<any>;
-            beforeEach(() => {
-              ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
-              changes = ngModel.statusChanges as EventEmitter<any>;
-              spyOnProperty(ngModel, 'dirty').and.returnValue(true);
-            });
-            it('with true', () => {
-              context.label = 'a';
-              context.parent_firstVisual = true;
-              fixture.detectChanges();
-              // mock statusChanges
-              changes.emit('INVALID');
-              page.expect('.has-error', 1);
-            });
-            it('with false', () => {
-              context.label = 'a';
-              context.parent_firstVisual = false;
-              fixture.detectChanges();
-              // mock statusChanges
-              changes.emit('INVALID');
-              page.expect('.has-error', 0);
-            });
           });
           it('#gutter', () => {
             const gutter = 24;
@@ -198,6 +173,28 @@ describe('abc: edit', () => {
           page.expect('se-error');
         });
       });
+    });
+
+    describe('#firstVisual', () => {
+      beforeEach(() => {
+        ({ fixture, dl, context } = createTestContext(TestComponent));
+        context.required = true;
+        context.label = 'a';
+      });
+      it('with true', fakeAsync(() => {
+        context.parent_firstVisual = true;
+        fixture.detectChanges();
+        tick();
+        page = new PageObject();
+        page.expect('.has-error', 1);
+      }));
+      it('with false', fakeAsync(() => {
+        context.parent_firstVisual = false;
+        fixture.detectChanges();
+        tick();
+        page = new PageObject();
+        page.expect('.has-error', 0);
+      }));
     });
   });
 
