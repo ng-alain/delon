@@ -27,6 +27,10 @@ describe('form: widget: upload', () => {
     return page.getWidget<UploadWidget>('sf-upload');
   }
 
+  function getUpload() {
+    return dl.query(By.directive(NzUploadComponent)).injector.get(NzUploadComponent);
+  }
+
   it('should be ingore update value when status is not success', () => {
     page.newSchema({
       properties: { a: { type: 'string', ui: { widget } } },
@@ -42,8 +46,7 @@ describe('form: widget: upload', () => {
       page.newSchema({
         properties: { a: { type: 'string', ui: { widget, fileList: [{}], limit: 1 } } },
       });
-      const upload = dl.query(By.directive(NzUploadComponent)).injector.get(NzUploadComponent);
-      expect(upload.nzFileList.length).toBe(1);
+      expect(getUpload().nzFileList.length).toBe(1);
     });
 
     it('#size', () => {
@@ -52,8 +55,7 @@ describe('form: widget: upload', () => {
           a: { type: 'string', ui: { widget, fileSize: 100, filter: [] } },
         },
       });
-      const upload = dl.query(By.directive(NzUploadComponent)).injector.get(NzUploadComponent);
-      expect(upload.nzSize).toBe(100);
+      expect(getUpload().nzSize).toBe(100);
     });
 
     it('#multiple', () => {
@@ -90,6 +92,24 @@ describe('form: widget: upload', () => {
         })
         .checkElText('.ant-upload-text', '单击或拖动文件到该区域上传')
         .checkElText('.ant-upload-hint', '支持单个或批量，严禁上传公司数据或其他安全文件');
+    });
+
+    it('#beforeUpload', () => {
+      page
+        .newSchema({
+          properties: { a: { type: 'string', ui: { widget, type: 'drag', beforeUpload: () => {} } } },
+        });
+
+      expect(getUpload().nzBeforeUpload != null).toBe(true);
+    });
+
+    it('#customRequest', () => {
+      page
+        .newSchema({
+          properties: { a: { type: 'string', ui: { widget, type: 'drag', customRequest: () => {} } } },
+        });
+
+      expect(getUpload().nzCustomRequest != null).toBe(true);
     });
 
     describe('preview', () => {
