@@ -42,8 +42,6 @@ done
 VERSION=$(node -p "require('./package.json').version")
 if [[ ${INTEGRATION} == true ]]; then
   VERSION='latest'
-else
-  VERSION="^${VERSION}"
 fi
 
 DEPENDENCIES=$(node -p "
@@ -95,10 +93,14 @@ updateVersionReferences() {
       perl -p -i -e "s/${lib}\@DEP\-0\.0\.0\-PLACEHOLDER/${lib}\@${version}/g" $(grep -ril ${lib}\@DEP\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
     done
 
+    FIX_VERSION="${VERSION}"
+    if [[ ${FIX_VERSION} != "latest" ]]; then
+      FIX_VERSION="^${FIX_VERSION}"
+    fi
     echo ">>> VERSION: Updating version references in ${NPM_DIR}"
     perl -p -i -e "s/ZORRO\-0\.0\.0\-PLACEHOLDER/${ZORROVERSION}/g" $(grep -ril ZORRO\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
-    perl -p -i -e "s/PEER\-0\.0\.0\-PLACEHOLDER/${VERSION}/g" $(grep -ril PEER\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
-    perl -p -i -e "s/0\.0\.0\-PLACEHOLDER/${VERSION}/g" $(grep -ril 0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
+    perl -p -i -e "s/PEER\-0\.0\.0\-PLACEHOLDER/${FIX_VERSION}/g" $(grep -ril PEER\-0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
+    perl -p -i -e "s/0\.0\.0\-PLACEHOLDER/${FIX_VERSION}/g" $(grep -ril 0\.0\.0\-PLACEHOLDER .) < /dev/null 2> /dev/null
   )
 }
 
