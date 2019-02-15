@@ -21,6 +21,13 @@
       margin-left: -1px;
     }
   }
+
+  // fix ng-zorro-antd components
+  .@{ant-prefix}-transfer-operation {
+    .@{ant-prefix}-btn + .@{ant-prefix}-btn {
+      margin-left: initial;
+    }
+  }
 }
 
 .preserve-white-spaces-mixin(@preserve-white-spaces-enabled);
