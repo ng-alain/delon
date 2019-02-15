@@ -4,6 +4,18 @@ title: Change Log
 type: Other
 ---
 
+# [7.0.0-rc.8](https://github.com/ng-alain/delon/compare/7.0.0-rc.7...7.0.0-rc.8) (2019-02-15)
+
+
+### Bug Fixes
+
+* **module:se:** fix error status in first visual ([#434](https://github.com/ng-alain/delon/issues/434)) ([f0f6622](https://github.com/ng-alain/delon/commit/f0f6622))
+* **module:sf:** fix invalid request in $ref property ([#431](https://github.com/ng-alain/delon/issues/431)) ([2f83a4b](https://github.com/ng-alain/delon/commit/2f83a4b)), closes [#428](https://github.com/ng-alain/delon/issues/428)
+* **module:sf:checkbox:** fix invalid indeterminate status ([#433](https://github.com/ng-alain/delon/issues/433)) ([2b07901](https://github.com/ng-alain/delon/commit/2b07901))
+* **module:sf:object:** fix default hide all title in object widget ([#429](https://github.com/ng-alain/delon/issues/429)) ([9c51e26](https://github.com/ng-alain/delon/commit/9c51e26)), closes [#430](https://github.com/ng-alain/delon/issues/430)
+* **module:theme:** fix button + button spacing of transfer options when enabled preserveWhitespaces ([#435](https://github.com/ng-alain/delon/issues/435)) ([3a6d900](https://github.com/ng-alain/delon/commit/3a6d900))
+
+
 # [7.0.0-rc.7](https://github.com/ng-alain/delon/compare/7.0.0-rc.6...7.0.0-rc.7) (2019-02-14)
 
 ### Bug Fixes
