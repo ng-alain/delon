@@ -3,6 +3,8 @@ import { DelonFormConfig } from './config';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
 import { SFSchema } from './schema';
+import { SFUISchemaItem } from './schema/ui';
+import { di } from './utils';
 
 // tslint:disable-next-line:no-any
 declare var Ajv: any;
@@ -10,7 +12,7 @@ declare var Ajv: any;
 export abstract class SchemaValidatorFactory {
   abstract createValidatorFn(
     schema: SFSchema,
-    extraOptions: { ingoreKeywords: string[] },
+    extraOptions: { ingoreKeywords: string[], debug: boolean },
   ): (value: SFSchema) => ErrorData[];
 }
 
@@ -37,7 +39,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
 
   createValidatorFn(
     schema: SFSchema,
-    extraOptions: { ingoreKeywords: string[] },
+    extraOptions: { ingoreKeywords: string[], debug: boolean },
   ): (value: SFValue) => ErrorData[] {
     const ingoreKeywords: string[] = []
       .concat(this.options.ingoreKeywords)
@@ -49,6 +51,9 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
       } catch (e) {
         // swallow errors thrown in ajv due to invalid schemas, these
         // still get displayed
+        if (extraOptions.debug) {
+          console.warn(e);
+        }
       }
       let errors = this.ajv.errors;
       if (this.options && ingoreKeywords && errors) {

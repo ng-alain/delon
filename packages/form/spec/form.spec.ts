@@ -106,6 +106,26 @@ describe('form: component', () => {
         page.setValue('/name', 'a');
         expect(console.warn).toHaveBeenCalled();
       });
+
+      it('should be console debug informations when ajv throw error', () => {
+        spyOn(console, 'warn');
+        expect(console.warn).not.toHaveBeenCalled();
+        context.schema = {
+          properties: {
+            time: {
+              type: 'string',
+              ui: { widget: 'date', mode: 'range' },
+              title: 'Date',
+              format: 'YYYY-MM-DD HH:mm:ss',
+            },
+          },
+          ui: {
+            debug: true,
+          },
+        };
+        fixture.detectChanges();
+        expect(console.warn).toHaveBeenCalled();
+      });
     });
 
     describe('[button]', () => {
