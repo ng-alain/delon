@@ -1,5 +1,3 @@
-// tslint:disable:no-any
-
 export interface CLodop {
   /** 建立打印机名单 */
   Create_Printer_List(el: Element): void;

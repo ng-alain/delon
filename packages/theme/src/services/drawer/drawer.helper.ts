@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { Injectable } from '@angular/core';
 import { NzDrawerOptions, NzDrawerService } from 'ng-zorro-antd';
 import { Observable, Observer } from 'rxjs';

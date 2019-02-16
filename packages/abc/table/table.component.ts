@@ -25,6 +25,7 @@ import {
   DatePipe,
   DelonLocaleService,
   DrawerHelper,
+  LocaleData,
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
@@ -82,8 +83,7 @@ import {
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   private totalTpl = ``;
-  // tslint:disable-next-line:no-any
-  private locale: any = {};
+  private locale: LocaleData = {};
   private clonePage: STPage;
   _data: STData[] = [];
   _statistical: STStatisticalResults = {};
@@ -163,7 +163,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   get multiSort() {
     return this._multiSort;
   }
-  // tslint:disable-next-line:no-any
   set multiSort(value: any) {
     if (typeof value === 'boolean' && !toBoolean(value)) {
       this._multiSort = null;
@@ -209,7 +208,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private exportSrv: STExport,
     private modalHelper: ModalHelper,
     private drawerHelper: DrawerHelper,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
     private columnSource: STColumnSource,
     private dataSource: STDataSource,
@@ -252,7 +250,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       : '';
   }
 
-  // tslint:disable-next-line:no-any
   private changeEmit(type: STChangeType, data?: any) {
     const res: STChange = {
       type,
@@ -445,7 +442,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   //#region sort
 
-  // tslint:disable-next-line:no-any
   sort(col: STColumn, idx: number, value: any) {
     if (this.multiSort) {
       col._sort.default = value;
@@ -573,7 +569,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (btn.type === 'modal' || btn.type === 'static') {
       const { modal } = btn;
       const obj = { [modal.paramsName]: record };
-      // tslint:disable-next-line:no-any
       (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         modal.component,
         { ...obj, ...(modal.params && modal.params(record)) },
@@ -605,7 +600,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.btnCallback(record, btn);
   }
 
-  // tslint:disable-next-line:no-any
   private btnCallback(record: STData, btn: STColumnButton, modal?: any) {
     if (!btn.click) return;
     if (typeof btn.click === 'string') {

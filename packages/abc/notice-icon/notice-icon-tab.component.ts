@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { LocaleData } from '@delon/theme';
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
@@ -6,8 +7,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   templateUrl: './notice-icon-tab.component.html',
 })
 export class NoticeIconTabComponent {
-  // tslint:disable-next-line:no-any
-  @Input() locale: any = {};
+  @Input() locale: LocaleData = {};
   @Input() data: NoticeItem;
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();

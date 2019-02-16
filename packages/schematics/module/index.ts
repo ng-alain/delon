@@ -84,7 +84,6 @@ export default function(schema: ModuleSchema): Rule {
 
     if (schema.path === undefined) {
       const projectDirName = project.projectType === 'application' ? 'app' : 'lib';
-      // tslint:disable-next-line:no-any
       schema.path = `/${(project as any).sourceRoot}/${projectDirName}/routes`;
     }
     if (schema.module) {

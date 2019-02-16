@@ -14,7 +14,6 @@ import { ControlWidget } from '../../widget';
 export class MentionWidget extends ControlWidget implements OnInit {
   @ViewChild('mentions') mentionChild: NzMentionComponent;
   data: SFSchemaEnum[] = [];
-  // tslint:disable-next-line:no-any
   i: any;
   loading = false;
 
@@ -51,12 +50,10 @@ export class MentionWidget extends ControlWidget implements OnInit {
     });
   }
 
-  // tslint:disable-next-line:no-any
   _select(options: any) {
     if (this.ui.select) this.ui.select(options);
   }
 
-  // tslint:disable-next-line:no-any
   _search(option: any) {
     if (typeof this.ui.loadData !== 'function') return;
 

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { en_US, DelonLocaleModule, DelonLocaleService } from '@delon/theme';
 
-import { ExceptionComponent } from './exception.component';
+import { ExceptionComponent, ExceptionType } from './exception.component';
 import { ExceptionModule } from './exception.module';
 
 describe('abc: exception', () => {
@@ -27,7 +27,7 @@ describe('abc: exception', () => {
 
   afterEach(() => context.comp.ngOnDestroy());
 
-  [403, 404, 500].forEach((type: any) => {
+  [403, 404, 500].forEach((type: ExceptionType) => {
     it(`#type=${type}`, () => {
       context.type = type;
       fixture.detectChanges();

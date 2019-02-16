@@ -1,36 +1,40 @@
-export interface ExceptionLocaleData {
+export interface LocaleData {
+  [key: string]: string;
+}
+
+export interface ExceptionLocaleData extends LocaleData {
   403: string;
   404: string;
   500: string;
   backToHome: string;
 }
 
-export interface NoticeIconLocaleData {
+export interface NoticeIconLocaleData extends LocaleData {
   emptyText: string;
   clearText: string;
 }
 
-export interface ReuseTabLocaleData {
+export interface ReuseTabLocaleData extends LocaleData {
   close: string;
   closeOther: string;
   closeRight: string;
   clear: string;
 }
 
-export interface TagSelectLocaleData {
+export interface TagSelectLocaleData extends LocaleData {
   expand: string;
   collapse: string;
 }
 
-export interface MiniProgressLocaleData {
+export interface MiniProgressLocaleData extends LocaleData {
   target: string;
 }
 
-export interface STLocaleData {
+export interface STLocaleData extends LocaleData {
   total: string;
 }
 
-export interface SFLocaleData {
+export interface SFLocaleData extends LocaleData {
   submit: string;
   reset: string;
   search: string;
@@ -40,7 +44,7 @@ export interface SFLocaleData {
   checkAllText: string;
 }
 
-export interface LocaleData {
+export interface FullLocaleData {
   abbr: string;
   exception: ExceptionLocaleData;
   noticeIcon: NoticeIconLocaleData;

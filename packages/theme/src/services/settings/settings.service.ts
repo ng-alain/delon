@@ -19,7 +19,6 @@ export class SettingsService {
     return JSON.parse(localStorage.getItem(key) || 'null') || null;
   }
 
-  // tslint:disable-next-line:no-any
   private set(key: string, value: any) {
     localStorage.setItem(key, JSON.stringify(value));
   }
@@ -61,7 +60,6 @@ export class SettingsService {
     return this.notify$.asObservable();
   }
 
-  // tslint:disable-next-line:no-any
   setLayout(name: string | Layout, value?: any): boolean {
     if (typeof name === 'string') {
       this.layout[name] = value;
@@ -69,7 +67,6 @@ export class SettingsService {
       this._layout = name;
     }
     this.set(LAYOUT, this._layout);
-    // tslint:disable-next-line:no-any
     this.notify$.next({ type: 'layout', name, value } as any);
     return true;
   }

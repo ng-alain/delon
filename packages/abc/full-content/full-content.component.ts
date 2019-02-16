@@ -60,7 +60,6 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     private cdr: ChangeDetectorRef,
     private srv: FullContentService,
     private router: Router,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {}
 

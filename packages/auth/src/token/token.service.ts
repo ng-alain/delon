@@ -28,7 +28,6 @@ export class TokenService implements ITokenService {
     return this.store.set(this.options.store_key, data);
   }
 
-  // tslint:disable-next-line:no-any
   get(type?: any);
   get<T extends ITokenModel>(type?: { new (): T }): T {
     const data = this.store.get(this.options.store_key);

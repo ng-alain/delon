@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LazyResult, LazyService } from '@delon/util';

@@ -1,4 +1,4 @@
-// tslint:disable:no-any no-invalid-this
+// tslint:disable:no-invalid-this
 import { HttpHeaders } from '@angular/common/http';
 import { Inject, Injector } from '@angular/core';
 import { ACLService } from '@delon/acl';

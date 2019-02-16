@@ -1,5 +1,4 @@
 export interface App {
-  // tslint:disable-next-line:no-any
   [key: string]: any;
   /** Name for app */
   name?: string;
@@ -8,7 +7,6 @@ export interface App {
 }
 
 export interface User {
-  // tslint:disable-next-line:no-any
   [key: string]: any;
   /** Name for current user */
   name?: string;
@@ -19,7 +17,6 @@ export interface User {
 }
 
 export interface Layout {
-  // tslint:disable-next-line:no-any
   [key: string]: any;
   /** Whether to fold menu */
   collapsed: boolean;
@@ -33,6 +30,5 @@ export interface SettingsNotify {
   type: 'layout' | 'app' | 'user';
   /** Update `key` name, limited `layout` type */
   name?: string;
-  // tslint:disable-next-line:no-any
   value: any;
 }

@@ -12,12 +12,10 @@ export class WidgetRegistry {
 
   private defaultWidget: Widget<FormProperty>;
 
-  // tslint:disable-next-line:no-any
   setDefault(widget: any) {
     this.defaultWidget = widget;
   }
 
-  // tslint:disable-next-line:no-any
   register(type: string, widget: any) {
     this.widgets[type] = widget;
   }
@@ -43,7 +41,6 @@ export class WidgetFactory {
       console.warn(`No widget for type "${type}"`);
     }
 
-    // tslint:disable-next-line:no-any
     const componentClass = this.registry.getType(type) as any;
     const componentFactory = this.resolver.resolveComponentFactory<Widget<FormProperty>>(
       componentClass,

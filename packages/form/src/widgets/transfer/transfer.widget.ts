@@ -18,7 +18,6 @@ import { ControlWidget } from '../../widget';
 })
 export class TransferWidget extends ControlWidget implements OnInit {
   list: SFSchemaEnum[] = [];
-  // tslint:disable-next-line:no-any
   i: any;
   private _data: SFSchemaEnum[] = [];
 
@@ -38,7 +37,6 @@ export class TransferWidget extends ControlWidget implements OnInit {
         formData = [formData];
       }
       list.forEach((item: SFSchemaEnum) => {
-        // tslint:disable-next-line:no-any
         if (~(formData as any[]).indexOf(item.value)) {
           item.direction = 'right';
         }
@@ -62,7 +60,6 @@ export class TransferWidget extends ControlWidget implements OnInit {
     if (options.to === 'right') {
       this._data = this._data.concat(...options.list);
     } else {
-      // tslint:disable-next-line:no-any
       this._data = this._data.filter((w: any) => options.list.indexOf(w) === -1);
     }
     if (this.ui.change) this.ui.change(options);

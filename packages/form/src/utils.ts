@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { deepCopy, toBoolean } from '@delon/util';
 import { of, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

@@ -1,5 +1,3 @@
-
-// tslint:disable:no-any
 import {
   HttpClient,
   HttpHeaders,

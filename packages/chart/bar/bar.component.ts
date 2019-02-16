@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import {
   ChangeDetectionStrategy,
   Component,
@@ -32,7 +31,6 @@ export interface G2BarData {
 })
 export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   private resize$: Subscription;
-  // tslint:disable-next-line:no-any
   private chart: any;
   @ViewChild('container') private node: ElementRef;
 

@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { HttpRequest } from '@angular/common/http';
 
 export interface MockCachedRule {

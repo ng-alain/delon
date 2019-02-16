@@ -26,7 +26,6 @@ export class FooterToolbarComponent implements OnInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {}
 

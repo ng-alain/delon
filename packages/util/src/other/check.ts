@@ -1,5 +1,3 @@
-// tslint:disable:no-any
-
 export function isEmpty(element: HTMLElement): boolean {
   const nodes = element.childNodes;
   for (let i = 0; i < nodes.length; i++) {
@@ -28,7 +26,6 @@ export function toBoolean(value: any, allowUndefined: boolean = false): boolean 
  * ```
  */
 export function InputBoolean(allowUndefined: boolean = false): any {
-  // tslint:disable-line:no-any
   return function InputBooleanPropDecorator(target: object, name: string): void {
     // Add our own private prop
     const privatePropName = `$$__${name}`;
@@ -70,7 +67,6 @@ export function toNumber(value: any, fallbackValue: number = 0): number {
  * ```
  */
 export function InputNumber(fallback: number = 0): any {
-  // tslint:disable-line:no-any
   return function InputBooleanPropDecorator(target: object, name: string): void {
     // Add our own private prop
     const privatePropName = `$$__${name}`;

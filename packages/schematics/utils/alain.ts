@@ -24,7 +24,6 @@ import { getSourceFile } from './ast';
 import { getProject, Project } from './project';
 
 export interface CommonSchema {
-  // tslint:disable-next-line:no-any
   [key: string]: any;
   _filesPath?: string;
   name?: string;
@@ -84,7 +83,6 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   // path
   if (schema.path === undefined) {
     const projectDirName = project.projectType === 'application' ? 'app' : 'lib';
-    // tslint:disable-next-line:no-any
     schema.path = `/${(project as any).sourceRoot}/${projectDirName}/routes`;
   }
 
@@ -93,7 +91,6 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   const parsedPath = parseName(schema.path, schema.name);
   schema.name = parsedPath.name;
   schema.path = parsedPath.path;
-  // tslint:disable-next-line:no-any
   schema.importModulePath = findModuleFromOptions(host, schema as any);
   // fill target
   if (schema.target) {
@@ -104,7 +101,6 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
 
   // html selector
   schema.selector =
-    // tslint:disable-next-line:no-any
     schema.selector || buildSelector(schema, (project as any).prefix);
 
   validateName(schema.name);
@@ -125,7 +121,6 @@ export function addValueToVariable(host: Tree, path: string, variableName: strin
   if (!node) {
     throw new SchematicsException(`Could not find any [${variableName}] variable.`);
   }
-  // tslint:disable-next-line:no-any
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
 
   const change = new InsertChange(
@@ -190,7 +185,6 @@ export function buildAlain(schema: CommonSchema): Rule {
 
     resolveSchema(host, project, schema);
 
-    // tslint:disable-next-line:no-any
     schema.componentName = buildComponentName(schema, (project as any).prefix);
 
     // Don't support inline

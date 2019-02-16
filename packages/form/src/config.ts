@@ -15,7 +15,6 @@ export class DelonFormConfig {
   /**
    * [ajv](http://epoberezkin.github.io/ajv/#options) 参数
    */
-  // tslint:disable-next-line:no-any
   ajv?: any;
   /**
    * 是否实时校验，默认：`true`

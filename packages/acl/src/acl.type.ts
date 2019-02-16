@@ -15,7 +15,6 @@ export interface ACLType {
    */
   mode?: 'allOf' | 'oneOf';
 
-  // tslint:disable-next-line:no-any
   [key: string]: any;
 }
 

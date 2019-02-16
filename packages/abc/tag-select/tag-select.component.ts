@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { DelonLocaleService } from '@delon/theme';
+import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { InputBoolean } from '@delon/util';
 
 @Component({
@@ -22,8 +22,7 @@ import { InputBoolean } from '@delon/util';
 })
 export class TagSelectComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
-  // tslint:disable-next-line:no-any
-  locale: any = {};
+  locale: LocaleData = {};
 
   /** 是否启用 `展开与收进` */
   @Input()

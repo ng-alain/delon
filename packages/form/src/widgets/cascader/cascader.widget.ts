@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocaleData } from '@delon/theme';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -14,7 +15,6 @@ export class CascaderWidget extends ControlWidget implements OnInit {
   showInput: boolean;
   triggerAction: string[];
   data: SFSchemaEnum[] = [];
-  // tslint:disable-next-line:no-any
   loadData: any;
 
   ngOnInit(): void {
@@ -23,7 +23,6 @@ export class CascaderWidget extends ControlWidget implements OnInit {
     this.showInput = toBool(this.ui.showInput, true);
     this.triggerAction = this.ui.triggerAction || ['click'];
     if (!!this.ui.asyncData) {
-      // tslint:disable-next-line:no-any
       this.loadData = (node: any, index: number) => (this.ui.asyncData as any)(node, index, this);
     }
   }
@@ -44,17 +43,14 @@ export class CascaderWidget extends ControlWidget implements OnInit {
     if (this.ui.change) this.ui.change(value);
   }
 
-  // tslint:disable-next-line:no-any
   _selectionChange(options: any) {
     if (this.ui.selectionChange) this.ui.selectionChange(options);
   }
 
-  // tslint:disable-next-line:no-any
   _select(options: any) {
     if (this.ui.select) this.ui.select(options);
   }
 
-  // tslint:disable-next-line:no-any
   _clear(options: any) {
     if (this.ui.clear) this.ui.clear(options);
   }

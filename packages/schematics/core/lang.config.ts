@@ -19,7 +19,6 @@ export const LANGS_CONFIG = [
   { langs: ['pl'], zorro: 'pl_PL', delon: 'pl_PL', fileName: 'pl-PL.json' },
 ];
 
-// tslint:disable-next-line:no-any
 export function getLangConfig(lang: string): any {
   return LANGS_CONFIG.find(w => w.langs.includes(lang));
 }

@@ -40,7 +40,6 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     cog: ErrorCollectConfig,
     private el: ElementRef,
     private cdr: ChangeDetectorRef,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
     Object.assign(this, { ...new ErrorCollectConfig(), ...cog });

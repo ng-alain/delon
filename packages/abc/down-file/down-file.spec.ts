@@ -67,7 +67,7 @@ describe('abc: down-file', () => {
     it('should be using header filename when repseon has [filename]', () => {
       let fn: string;
       const filename = 'newfile.docx';
-      spyOn(fs.default, 'saveAs').and.callFake((body: any, fileName: string) => (fn = fileName));
+      spyOn(fs.default, 'saveAs').and.callFake((body: {}, fileName: string) => (fn = fileName));
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
@@ -81,7 +81,7 @@ describe('abc: down-file', () => {
     it('should be using header filename when repseon has [x-filename]', () => {
       let fn: string;
       const filename = 'x-newfile.docx';
-      spyOn(fs.default, 'saveAs').and.callFake((body: any, fileName: string) => (fn = fileName));
+      spyOn(fs.default, 'saveAs').and.callFake((body: {}, fileName: string) => (fn = fileName));
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
@@ -127,7 +127,7 @@ describe('abc: down-file', () => {
     createComp();
     let fn: string;
     const filename = 'newfile.docx';
-    spyOn(fs.default, 'saveAs').and.callFake((body: any, fileName: string) => (fn = fileName));
+    spyOn(fs.default, 'saveAs').and.callFake((body: {}, fileName: string) => (fn = fileName));
     context.fileName = null;
     fixture.detectChanges();
     (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();

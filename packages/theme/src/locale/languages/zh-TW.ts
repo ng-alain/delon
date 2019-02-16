@@ -1,4 +1,4 @@
-import { LocaleData } from '../locale.types';
+import { FullLocaleData } from '../locale.types';
 
 export default {
   abbr: 'zh-TW',
@@ -37,4 +37,4 @@ export default {
     removeText: '移除',
     checkAllText: '全選',
   },
-} as LocaleData;
+} as FullLocaleData;

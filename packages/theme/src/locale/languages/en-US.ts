@@ -1,4 +1,4 @@
-import { LocaleData } from '../locale.types';
+import { FullLocaleData } from '../locale.types';
 
 export default {
   abbr: 'en-US',
@@ -37,4 +37,4 @@ export default {
     removeText: 'Remove',
     checkAllText: 'Check all',
   },
-} as LocaleData;
+} as FullLocaleData;

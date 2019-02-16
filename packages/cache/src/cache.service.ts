@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import addSeconds from 'date-fns/add_seconds';
@@ -194,7 +193,6 @@ export class CacheService implements OnDestroy {
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
         return this.http.get(key).pipe(
-          // tslint:disable-next-line:no-any
           map((ret: any) => this._deepGet(ret, this.cog.reName as string[], null)),
           tap(v => this.set(key, v, { type: options.type, expire: options.expire })),
         );

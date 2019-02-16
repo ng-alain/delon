@@ -11,7 +11,6 @@ export class DatePipe implements PipeTransform {
     if (value) {
       if (formatString === 'fn') {
         return distanceInWordsToNow(value, {
-          // tslint:disable-next-line:no-any
           locale: (window as any).__locale__,
         });
       }

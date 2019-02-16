@@ -55,7 +55,6 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private router: Router,
     private render: Renderer2,
     private cdr: ChangeDetectorRef,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
     @Inject(WINDOW) private win: Window,
   ) {}

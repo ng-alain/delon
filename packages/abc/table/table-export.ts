@@ -8,9 +8,7 @@ import { STColumn, STExportOptions } from './table.interfaces';
 export class STExport {
   constructor(@Optional() private xlsxSrv: XlsxService) {}
 
-  // tslint:disable-next-line:no-any
   private _stGet(item: any, col: STColumn): any {
-    // tslint:disable-next-line:no-any
     const ret: { [key: string]: any } = { t: 's', v: '' };
 
     if (col.format) {

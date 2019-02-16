@@ -27,7 +27,7 @@ function b64decode(str: string): string {
 
   for (
     // initialize result and counters
-    // tslint:disable:no-any no-conditional-assignment binary-expression-operand-order
+    // tslint:disable:no-conditional-assignment binary-expression-operand-order
     let bc = 0, bs: any, buffer: any, idx = 0;
     // get next character
     (buffer = str.charAt(idx++));

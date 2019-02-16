@@ -19,8 +19,7 @@ export class DownFileDirective {
   @Output() readonly error = new EventEmitter<{}>();
 
   private getDisposition(data: string) {
-    // tslint:disable-next-line:no-any
-    const arr: any[] = (data || '')
+    const arr: Array<{}> = (data || '')
       .split(';')
       .filter(i => i.includes('='))
       .map(v => {

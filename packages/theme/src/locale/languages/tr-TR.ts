@@ -1,4 +1,4 @@
-import { LocaleData } from '../locale.types';
+import { FullLocaleData } from '../locale.types';
 
 export default {
   abbr: 'tr-TR',
@@ -37,4 +37,4 @@ export default {
     removeText: 'Kaldır',
     checkAllText: 'Tümünü kontrol et',
   },
-} as LocaleData;
+} as FullLocaleData;
