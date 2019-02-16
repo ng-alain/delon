@@ -5,7 +5,6 @@ import {
   Component,
   ElementRef,
   HostBinding,
-  HostListener,
   Inject,
   Input,
   OnDestroy,
@@ -21,7 +20,10 @@ import { ErrorCollectConfig } from './error-collect.config';
     <i nz-icon type="exclamation-circle"></i>
     <span class="pl-sm">{{ count }}</span>
   `,
-  host: { '[class.error-collect]': 'true' },
+  host: {
+    '[class.error-collect]': 'true',
+    '(click)': '_click()',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'errorCollect',
 })
@@ -57,7 +59,6 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  @HostListener('click')
   _click() {
     if (this.count === 0) return false;
     // nz-form-control
