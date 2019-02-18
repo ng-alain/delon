@@ -1,9 +1,7 @@
-// tslint:disable:no-any
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding,
   Input,
   NgZone,
   OnChanges,
@@ -17,6 +15,9 @@ declare var G2: any;
 @Component({
   selector: 'g2-single-bar',
   template: ``,
+  host: {
+    '[style.height.px]': 'height',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
@@ -27,7 +28,7 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputNumber() delay = 0;
   @Input() plusColor = '#40a9ff';
   @Input() minusColor = '#ff4d4f';
-  @HostBinding('style.height.px') @Input() @InputNumber() height = 60;
+  @Input() @InputNumber() height = 60;
   @Input() @InputNumber() barSize = 30;
   @Input() @InputNumber() min = 0;
   @Input() @InputNumber() max = 100;

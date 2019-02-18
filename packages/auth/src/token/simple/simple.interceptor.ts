@@ -14,7 +14,6 @@ export class SimpleInterceptor extends BaseInterceptor {
     return CheckSimple(this.model as SimpleTokenModel);
   }
 
-  // tslint:disable-next-line:no-any
   setReq(req: HttpRequest<any>, options: DelonAuthConfig): HttpRequest<any> {
     const token = options.token_send_template.replace(
       /\$\{([\w]+)\}/g,

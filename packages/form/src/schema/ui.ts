@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 

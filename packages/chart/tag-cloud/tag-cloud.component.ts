@@ -1,9 +1,7 @@
-// tslint:disable:no-any
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding,
   Input,
   NgZone,
   OnChanges,
@@ -27,6 +25,9 @@ export interface G2TagCloudData {
 @Component({
   selector: 'g2-tag-cloud',
   template: ``,
+  host: {
+    '[style.height.px]': 'height',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
@@ -36,7 +37,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   // #region fields
 
   @Input() @InputNumber() delay = 0;
-  @HostBinding('style.height.px') @Input() @InputNumber() height = 100;
+  @Input() @InputNumber() height = 100;
   @Input() padding = 0;
   @Input() data: G2TagCloudData[] = [];
 

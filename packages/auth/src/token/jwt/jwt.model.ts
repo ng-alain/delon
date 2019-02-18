@@ -2,7 +2,6 @@ import { ITokenModel } from '../interface';
 import { urlBase64Decode } from './jwt.helper';
 
 export class JWTTokenModel implements ITokenModel {
-  // tslint:disable-next-line:no-any
   [key: string]: any;
 
   token: string;
@@ -10,7 +9,6 @@ export class JWTTokenModel implements ITokenModel {
   /**
    * 获取载荷信息
    */
-  // tslint:disable-next-line:no-any
   get payload(): any {
     const parts = (this.token || '').split('.');
     if (parts.length !== 3) throw new Error('JWT must have 3 parts');

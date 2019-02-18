@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 export interface AlainI18NService {
-  // tslint:disable-next-line:no-any
   [key: string]: any;
 
   /**
@@ -16,7 +15,6 @@ export interface AlainI18NService {
   /**
    * 返回当前语言列表
    */
-  // tslint:disable-next-line:no-any
   getLangs(): any[];
 
   /**
@@ -56,7 +54,6 @@ export class AlainI18NServiceFake implements AlainI18NService {
     this.change$.next(lang);
   }
 
-  // tslint:disable-next-line:no-any
   getLangs(): any[] {
     return [];
   }

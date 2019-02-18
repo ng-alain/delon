@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   Host,
-  HostBinding,
   Input,
   OnChanges,
   Optional,
@@ -23,6 +22,10 @@ const prefixCls = `sg`;
   template: `
     <ng-content></ng-content>
   `,
+  host: {
+    '[style.padding-left.px]': 'paddingValue',
+    '[style.padding-right.px]': 'paddingValue',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SGComponent implements OnChanges, AfterViewInit {
@@ -32,13 +35,7 @@ export class SGComponent implements OnChanges, AfterViewInit {
 
   @Input() @InputNumber(null) col: number;
 
-  @HostBinding('style.padding-left.px')
-  get paddingLeft(): number {
-    return this.parent.gutter / 2;
-  }
-
-  @HostBinding('style.padding-right.px')
-  get paddingRight(): number {
+  get paddingValue(): number {
     return this.parent.gutter / 2;
   }
 

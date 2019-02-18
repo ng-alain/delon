@@ -11,7 +11,6 @@ import { ControlWidget } from '../../widget';
   templateUrl: './upload.widget.html',
 })
 export class UploadWidget extends ControlWidget implements OnInit {
-  // tslint:disable-next-line:no-any
   i: any;
   fileList: UploadFile[] = [];
   btnType = '';

@@ -261,7 +261,7 @@ export class STDataSource {
     return this.http.request(method, url, reqOptions);
   }
 
-  //#region sort
+  // #region sort
 
   private getValidSort(columns: STColumn[]): STSortMap[] {
     return columns
@@ -326,9 +326,9 @@ export class STDataSource {
     return ret;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region filter
+  // #region filter
 
   private getReqFilterMap(columns: STColumn[]): { [key: string]: string } {
     let ret = {};
@@ -347,7 +347,7 @@ export class STDataSource {
     return ret;
   }
 
-  //#endregion
+  // #endregion
 
   // #region statistical
 

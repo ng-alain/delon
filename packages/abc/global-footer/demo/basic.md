@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
   <div style="background:#f5f5f5; height: 100%;">
     <div style="height: 280px;"></div>
     <global-footer [links]="links">
-      Copyright<i nz-icon type="copyright" class="mx-sm"></i>2018<a href="//github.com/cipchk" target="_blank" class="mx-sm">卡色</a>出品
+      Copyright<i nz-icon type="copyright" class="mx-sm"></i>2019<a href="//github.com/cipchk" target="_blank" class="mx-sm">卡色</a>出品
     </global-footer>
   </div>
   `,

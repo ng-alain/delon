@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { QRConfig } from './qr.config';
 
-// tslint:disable-next-line:no-any
 declare var QRious: any;
 
 @Injectable({ providedIn: 'root' })
 export class QRService {
   /** 当前qr实例 */
-  // tslint:disable-next-line:no-any
   readonly qr: any;
   /** 背景 */
   background: string;

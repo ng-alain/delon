@@ -4,7 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  HostListener,
   Inject,
   Input,
   OnDestroy,
@@ -27,6 +26,10 @@ const FLOATINGCLS = 'sidebar-nav__floating';
 @Component({
   selector: 'sidebar-nav',
   templateUrl: './sidebar-nav.component.html',
+  host: {
+    '(click)': '_click()',
+    '(document:click)': '_docClick()',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
@@ -55,7 +58,6 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private router: Router,
     private render: Renderer2,
     private cdr: ChangeDetectorRef,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
     @Inject(WINDOW) private win: Window,
   ) {}
@@ -177,7 +179,6 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  @HostListener('click')
   _click() {
     if (this.isPad && this.collapsed) {
       this.openAside(false);
@@ -185,7 +186,6 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('document:click')
   _docClick() {
     this.hideAll();
   }

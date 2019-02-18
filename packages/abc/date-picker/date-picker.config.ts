@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-// tslint:disable:no-any
 export class DateRangePickerConfig {
   nzFormat?: string = 'yyyy-MM-dd';
   nzClassName?: string;

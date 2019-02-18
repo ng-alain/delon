@@ -23,6 +23,5 @@ export interface Nav extends Menu {
 
   _depth?: number;
 
-  // tslint:disable-next-line:no-any
   [key: string]: any;
 }

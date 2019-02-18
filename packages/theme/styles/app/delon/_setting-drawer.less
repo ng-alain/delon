@@ -1,9 +1,8 @@
-@setting-drawer-enabled:    true;
-@setting-drawer-prefix:     ~'.setting-drawer';
-@setting-drawer-width:      500px;
+@setting-drawer-enabled: true;
+@setting-drawer-prefix: ~'.setting-drawer';
+@setting-drawer-width: 500px;
 
 .widget-setting-drawer-mixin(@enabled) when(@enabled=true) {
-
   @{setting-drawer-prefix} {
     &__content {
       min-height: 100%;
@@ -73,7 +72,6 @@
       }
     }
   }
-
 }
 
 .widget-setting-drawer-mixin(@setting-drawer-enabled);

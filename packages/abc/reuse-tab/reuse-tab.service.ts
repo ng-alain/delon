@@ -346,7 +346,6 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 刷新，触发一个 refresh 类型事件
    */
-  // tslint:disable-next-line:no-any
   refresh(data?: any) {
     this._cachedChange.next({ active: 'refresh', data });
   }
@@ -354,7 +353,6 @@ export class ReuseTabService implements OnDestroy {
 
   // #region privates
 
-  // tslint:disable-next-line:no-any
   private destroy(_handle: any) {
     if (_handle && _handle.componentRef && _handle.componentRef.destroy)
       _handle.componentRef.destroy();
@@ -381,7 +379,6 @@ export class ReuseTabService implements OnDestroy {
     return menus.pop();
   }
 
-  // tslint:disable-next-line:no-any
   private runHook(method: string, url: string, comp: any) {
     if (comp.instance && typeof comp.instance[method] === 'function') comp.instance[method]();
   }
@@ -402,7 +399,6 @@ export class ReuseTabService implements OnDestroy {
   /**
    * 存储
    */
-  // tslint:disable-next-line:no-any
   store(_snapshot: ActivatedRouteSnapshot, _handle: any) {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);

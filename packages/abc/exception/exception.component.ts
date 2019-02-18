@@ -1,8 +1,10 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { DelonLocaleService } from '@delon/theme';
+import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { isEmpty } from '@delon/util';
+
+export type ExceptionType = 403 | 404 | 500;
 
 @Component({
   selector: 'exception',
@@ -14,9 +16,8 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   @ViewChild('conTpl')
   private conTpl: ElementRef;
 
-  _type: number;
-  // tslint:disable-next-line:no-any
-  locale: any = {};
+  _type: ExceptionType;
+  locale: LocaleData = {};
   hasCon = false;
 
   _img = '';
@@ -24,7 +25,7 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   _desc = '';
 
   @Input()
-  set type(value: 403 | 404 | 500) {
+  set type(value: ExceptionType) {
     const item = {
       403: {
         img: 'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',
@@ -48,15 +49,17 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   }
 
   @Input()
-  set img(value) {
+  set img(value: string) {
     this._img = value;
   }
+
   @Input()
-  set title(value) {
+  set title(value: string) {
     this._title = value;
   }
+
   @Input()
-  set desc(value) {
+  set desc(value: string) {
     this._desc = value;
   }
 

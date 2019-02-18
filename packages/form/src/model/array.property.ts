@@ -50,7 +50,6 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   _updateValue() {
-    // tslint:disable-next-line:no-any
     const value: any[] = [];
     this.forEachChild((property: ObjectProperty) => {
       if (property.visible && property._hasValue()) {

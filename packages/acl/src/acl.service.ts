@@ -164,10 +164,8 @@ export class ACLService {
     }
     if (t.ability) {
       if (t.mode === 'allOf') {
-        // tslint:disable-next-line:no-any
         return (t.ability as any[]).every(v => this.abilities.includes(v));
       } else {
-        // tslint:disable-next-line:no-any
         return (t.ability as any[]).some(v => this.abilities.includes(v));
       }
     }

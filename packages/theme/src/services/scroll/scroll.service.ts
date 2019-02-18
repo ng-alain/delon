@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { WINDOW } from '../../win_tokens';

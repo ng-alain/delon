@@ -12,7 +12,6 @@ import { ControlWidget } from '../../widget';
   templateUrl: './tree-select.widget.html',
 })
 export class TreeSelectWidget extends ControlWidget implements OnInit {
-  // tslint:disable-next-line:no-any
   i: any;
   data: SFSchemaEnum[] = [];
 
@@ -23,7 +22,6 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
   }
 
   private tranData(list: SFSchemaEnum[]) {
-    // tslint:disable-next-line:no-any
     return list.map(node => new NzTreeNode(deepCopy(node) as any));
   }
 

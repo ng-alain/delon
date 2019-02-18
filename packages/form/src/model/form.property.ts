@@ -69,7 +69,6 @@ export abstract class FormProperty {
   }
 
   get root(): PropertyGroup {
-    // tslint:disable-next-line:no-any
     return this._root || ((this as any) as PropertyGroup);
   }
 

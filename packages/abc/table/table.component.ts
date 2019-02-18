@@ -25,6 +25,7 @@ import {
   DatePipe,
   DelonLocaleService,
   DrawerHelper,
+  LocaleData,
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
@@ -82,8 +83,7 @@ import {
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   private totalTpl = ``;
-  // tslint:disable-next-line:no-any
-  private locale: any = {};
+  private locale: LocaleData = {};
   private clonePage: STPage;
   _data: STData[] = [];
   _statistical: STStatisticalResults = {};
@@ -163,7 +163,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   get multiSort() {
     return this._multiSort;
   }
-  // tslint:disable-next-line:no-any
   set multiSort(value: any) {
     if (typeof value === 'boolean' && !toBoolean(value)) {
       this._multiSort = null;
@@ -209,7 +208,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private exportSrv: STExport,
     private modalHelper: ModalHelper,
     private drawerHelper: DrawerHelper,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
     private columnSource: STColumnSource,
     private dataSource: STDataSource,
@@ -252,7 +250,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       : '';
   }
 
-  // tslint:disable-next-line:no-any
   private changeEmit(type: STChangeType, data?: any) {
     const res: STChange = {
       type,
@@ -271,7 +268,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return { pi, ps, total };
   }
 
-  //#region data
+  // #region data
 
   private _load() {
     const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
@@ -441,11 +438,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this.cd();
   }
 
-  //#endregion
+  // #endregion
 
-  //#region sort
+  // #region sort
 
-  // tslint:disable-next-line:no-any
   sort(col: STColumn, idx: number, value: any) {
     if (this.multiSort) {
       col._sort.default = value;
@@ -466,9 +462,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region filter
+  // #region filter
 
   private handleFilter(col: STColumn) {
     col.filter.default = col.filter.menus.findIndex(w => w.checked) !== -1;
@@ -500,9 +496,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region checkbox
+  // #region checkbox
 
   /** 清除所有 `checkbox` */
   clearCheck(): this {
@@ -542,9 +538,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region radio
+  // #region radio
 
   /** 清除所有 `radio` */
   clearRadio(): this {
@@ -561,9 +557,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region buttons
+  // #region buttons
 
   _btnClick(e: Event, record: STData, btn: STColumnButton) {
     if (e) {
@@ -573,7 +569,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (btn.type === 'modal' || btn.type === 'static') {
       const { modal } = btn;
       const obj = { [modal.paramsName]: record };
-      // tslint:disable-next-line:no-any
       (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         modal.component,
         { ...obj, ...(modal.params && modal.params(record)) },
@@ -605,7 +600,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.btnCallback(record, btn);
   }
 
-  // tslint:disable-next-line:no-any
   private btnCallback(record: STData, btn: STColumnButton, modal?: any) {
     if (!btn.click) return;
     if (typeof btn.click === 'string') {
@@ -631,9 +625,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return col.buttons.filter(btn => btn.iif(item, btn, col));
   }
 
-  //#endregion
+  // #endregion
 
-  //#region export
+  // #region export
 
   /**
    * 导出当前页，确保已经注册 `XlsxModule`
@@ -652,7 +646,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     );
   }
 
-  //#endregion
+  // #endregion
 
   resetColumns() {
     return this.refreshColumns()._load();

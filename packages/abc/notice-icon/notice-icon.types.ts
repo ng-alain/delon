@@ -10,7 +10,6 @@ export interface NoticeItem {
 }
 
 export interface NoticeIconList {
-  // tslint:disable-next-line:no-any
   [key: string]: any;
 
   /** 头像图片链接 */

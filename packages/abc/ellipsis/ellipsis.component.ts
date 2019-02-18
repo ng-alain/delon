@@ -196,7 +196,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     return this.el.nativeElement.querySelector(cls);
   }
 
-  private executeOnStable(fn: () => any): void {
+  private executeOnStable(fn: () => void): void {
     if (this.ngZone.isStable) {
       fn();
     } else {

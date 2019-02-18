@@ -16,7 +16,6 @@ export class LazyService {
   private cached: { [key: string]: LazyResult } = {};
   private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
 
-  // tslint:disable-next-line:no-any
   constructor(@Inject(DOCUMENT) private doc: any) {}
 
   get change(): Observable<LazyResult[]> {
@@ -64,7 +63,6 @@ export class LazyService {
         resolve(item);
       };
 
-      // tslint:disable-next-line:no-any
       const node = this.doc.createElement('script') as any;
       node.type = 'text/javascript';
       node.src = path;

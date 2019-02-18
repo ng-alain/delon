@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { SFUISchemaItem } from './ui';
 
 export interface SFSchemaDefinition {

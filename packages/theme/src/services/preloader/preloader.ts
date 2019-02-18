@@ -14,7 +14,6 @@ export function preloaderFinished() {
     preloader.className += ' preloader-hidden-add preloader-hidden-add-active';
   }
 
-  // tslint:disable-next-line:no-any
   (window as any).appBootstrap = () => {
     setTimeout(() => {
       remove();

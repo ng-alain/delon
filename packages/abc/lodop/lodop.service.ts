@@ -138,7 +138,6 @@ export class LodopService implements OnDestroy {
       if (!res) return;
       const fn = this._lodop[res[1]];
       if (fn) {
-        // tslint:disable-next-line:no-any
         let arr: any[];
         try {
           const fakeFn = new Function(`return [${res[2]}]`);
@@ -174,7 +173,6 @@ export class LodopService implements OnDestroy {
     });
   }
 
-  // tslint:disable-next-line:no-any
   private printBuffer: any[] = [];
   private printDo() {
     const data = this.printBuffer.shift();

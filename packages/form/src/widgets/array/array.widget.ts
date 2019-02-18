@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocaleData } from '@delon/theme';
 import { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
 
@@ -19,8 +20,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
     );
   }
 
-  // tslint:disable-next-line:no-any
-  get l(): any {
+  get l(): LocaleData {
     return this.formProperty.root.widget.sfComp.locale;
   }
 

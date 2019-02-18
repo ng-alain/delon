@@ -3,22 +3,22 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import zhCN from './languages/zh-CN';
 import { DELON_LOCALE } from './locale.tokens';
-import { LocaleData } from './locale.types';
+import { FullLocaleData, LocaleData } from './locale.types';
 
 @Injectable()
 export class DelonLocaleService {
-  private _locale: LocaleData;
-  private change$ = new BehaviorSubject<LocaleData>(this._locale);
+  private _locale: FullLocaleData;
+  private change$ = new BehaviorSubject<FullLocaleData>(this._locale);
 
-  constructor(@Inject(DELON_LOCALE) locale: LocaleData) {
+  constructor(@Inject(DELON_LOCALE) locale: FullLocaleData) {
     this.setLocale(locale || zhCN);
   }
 
-  get change(): Observable<LocaleData> {
+  get change(): Observable<FullLocaleData> {
     return this.change$.asObservable();
   }
 
-  setLocale(locale: LocaleData): void {
+  setLocale(locale: FullLocaleData): void {
     if (this._locale && this._locale.abbr === locale.abbr) {
       return;
     }
@@ -26,18 +26,18 @@ export class DelonLocaleService {
     this.change$.next(locale);
   }
 
-  get locale(): LocaleData {
+  get locale(): FullLocaleData {
     return this._locale;
   }
 
-  getData(path: string) {
+  getData(path: string): LocaleData {
     return this._locale[path] || {};
   }
 }
 
 export function DELON_LOCALE_SERVICE_PROVIDER_FACTORY(
   exist: DelonLocaleService,
-  locale: LocaleData,
+  locale: FullLocaleData,
 ): DelonLocaleService {
   return exist || new DelonLocaleService(locale);
 }

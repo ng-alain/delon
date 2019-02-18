@@ -23,7 +23,6 @@ export class TitleService implements OnDestroy {
     @Optional()
     @Inject(ALAIN_I18N_TOKEN)
     private i18nSrv: AlainI18NService,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
     this.i18n$ = this.i18nSrv.change

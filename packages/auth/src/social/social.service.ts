@@ -18,7 +18,6 @@ export class SocialService implements OnDestroy {
 
   constructor(
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
     private router: Router,
   ) {}

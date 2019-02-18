@@ -9,7 +9,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { DelonLocaleService } from '@delon/theme';
+import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
 import { Subscription } from 'rxjs';
 
@@ -23,8 +23,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 })
 export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   private i18n$: Subscription;
-  // tslint:disable-next-line:no-any
-  locale: any = {};
+  locale: LocaleData = {};
 
   @Input() data: NoticeItem[] = [];
   @Input() @InputNumber() count: number;

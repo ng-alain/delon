@@ -4,8 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostBinding,
-  HostListener,
   Inject,
   Input,
   OnDestroy,
@@ -21,7 +19,11 @@ import { ErrorCollectConfig } from './error-collect.config';
     <i nz-icon type="exclamation-circle"></i>
     <span class="pl-sm">{{ count }}</span>
   `,
-  host: { '[class.error-collect]': 'true' },
+  host: {
+    '[class.error-collect]': 'true',
+    '[class.d-none]': '_hiden',
+    '(click)': '_click()',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
   exportAs: 'errorCollect',
 })
@@ -32,7 +34,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   @Input() @InputNumber() freq: number;
   @Input() @InputNumber() offsetTop: number;
 
-  @HostBinding('class.d-none') _hiden = true;
+  _hiden = true;
 
   count = 0;
 
@@ -40,7 +42,6 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     cog: ErrorCollectConfig,
     private el: ElementRef,
     private cdr: ChangeDetectorRef,
-    // tslint:disable-next-line:no-any
     @Inject(DOCUMENT) private doc: any,
   ) {
     Object.assign(this, { ...new ErrorCollectConfig(), ...cog });
@@ -58,7 +59,6 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  @HostListener('click')
   _click() {
     if (this.count === 0) return false;
     // nz-form-control

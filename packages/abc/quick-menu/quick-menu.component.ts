@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostListener,
   Input,
   OnChanges,
   OnInit,
@@ -16,7 +15,10 @@ import { InputNumber } from '@delon/util';
 @Component({
   selector: 'quick-menu',
   templateUrl: './quick-menu.component.html',
-  host: { '[class.quick-menu]': 'true' },
+  host: {
+    '[class.quick-menu]': 'true',
+    '(click)': '_click()',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
@@ -34,7 +36,6 @@ export class QuickMenuComponent implements OnInit, OnChanges {
 
   private show = false;
 
-  @HostListener('click')
   _click() {
     this.show = !this.show;
     this.setStyle();

@@ -45,7 +45,6 @@ export interface ErrorData {
   keyword: string;
   dataPath?: string;
   schemaPath?: string;
-  // tslint:disable-next-line:no-any
   params?: { [key: string]: any };
   message?: string;
 }

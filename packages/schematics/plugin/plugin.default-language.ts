@@ -3,7 +3,6 @@ import { getLangConfig } from '../core/lang.config';
 import { getProject } from '../utils/project';
 import { PluginOptions } from './interface';
 
-// tslint:disable-next-line:no-any
 export function pluginDefaultLanguage(options: PluginOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     if (options.type !== 'add') {

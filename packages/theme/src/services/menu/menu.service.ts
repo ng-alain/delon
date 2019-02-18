@@ -90,7 +90,6 @@ export class MenuService implements OnDestroy {
         } else if (/^https?:\/\//.test(item.icon)) {
           type = 'img';
         }
-        // tslint:disable-next-line:no-any
         item.icon = { type, value } as any;
       }
       if (item.icon != null) {

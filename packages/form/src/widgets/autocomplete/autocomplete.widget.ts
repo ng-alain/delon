@@ -15,7 +15,6 @@ export const EMAILSUFFIX = ['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun
   templateUrl: './autocomplete.widget.html',
 })
 export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
-  // tslint:disable-next-line:no-any
   i: any = {};
   fixData: SFSchemaEnum[] = [];
   list: Observable<SFSchemaEnum[]>;

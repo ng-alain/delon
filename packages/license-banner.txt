@@ -1,5 +1,5 @@
 /**
  * @license ng-alain(cipchk@qq.com) v0.0.0-PLACEHOLDER
- * (c) 2018 Cipchk https://ng-alain.com/
+ * (c) 2019 cipchk https://ng-alain.com/
  * License: MIT
  */

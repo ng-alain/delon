@@ -1,9 +1,12 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 import { XlsxService } from './xlsx.service';
 import { XlsxExportOptions } from './xlsx.types';
 
 @Directive({
   selector: '[xlsx]',
+  host: {
+    '(click)': '_click()',
+  },
   exportAs: 'xlsxDirective',
 })
 export class XlsxDirective {
@@ -11,7 +14,6 @@ export class XlsxDirective {
 
   constructor(private srv: XlsxService) {}
 
-  @HostListener('click')
   _click() {
     this.srv.export(this.data);
   }

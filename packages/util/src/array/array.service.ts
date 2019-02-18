@@ -1,4 +1,3 @@
-// tslint:disable:no-any
 import { Injectable } from '@angular/core';
 import { NzTreeNode } from 'ng-zorro-antd';
 import { DelonUtilConfig } from '../util.config';

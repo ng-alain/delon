@@ -1,6 +1,5 @@
 export class DelonMockConfig {
   /** 规则定义数据 */
-  // tslint:disable-next-line:no-any
   data: any;
   /** 请求延迟，单位：毫秒，默认：`300` */
   delay?: number = 300;

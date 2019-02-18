@@ -85,7 +85,6 @@ describe('chart: bar', () => {
 })
 class TestComponent implements OnInit {
   @ViewChild('comp') comp: G2BarComponent;
-  // tslint:disable-next-line:no-any
   data: any[] = [];
   ngOnInit(): void {
     for (let i = 0; i < PageG2DataCount; i += 1) {

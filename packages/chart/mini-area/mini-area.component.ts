@@ -1,9 +1,7 @@
-// tslint:disable:no-any
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding,
   Input,
   NgZone,
   OnChanges,
@@ -23,6 +21,9 @@ export interface G2MiniAreaData {
 @Component({
   selector: 'g2-mini-area',
   template: ``,
+  host: {
+    '[style.height.px]': 'height',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
@@ -34,7 +35,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   @Input() color = 'rgba(24, 144, 255, 0.2)';
   @Input() borderColor = '#1890FF';
   @Input() @InputNumber() borderWidth = 2;
-  @HostBinding('style.height.px') @Input() @InputNumber() height = 56;
+  @Input() @InputNumber() height = 56;
   @Input() @InputBoolean() fit = true;
   @Input() @InputBoolean() line = false;
   @Input() @InputBoolean() animate = true;

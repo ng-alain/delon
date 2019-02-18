@@ -14,7 +14,6 @@ export class DateWidget extends ControlWidget implements OnInit {
   displayValue: Date | Date[] = null;
   displayFormat: string;
   format: string;
-  // tslint:disable-next-line:no-any
   i: any;
   flatRange = false;
 
@@ -85,7 +84,6 @@ export class DateWidget extends ControlWidget implements OnInit {
     if (this.ui.onOpenChange) this.ui.onOpenChange(status);
   }
 
-  // tslint:disable-next-line:no-any
   _ok(value: any) {
     if (this.ui.onOk) this.ui.onOk(value);
   }
