@@ -70,4 +70,8 @@ export class DelonFormConfig {
    * time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp，日期统一使用 `1970-01-01`
    */
   uiTimeNumberFormat?: string = 'x';
+  /**
+   * 指定 `format: 'email'` 的默认Email后缀
+   */
+  uiEmailSuffixes?: string[] = ['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com'];
 }

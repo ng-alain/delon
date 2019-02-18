@@ -34,7 +34,7 @@ export abstract class FormProperty {
     formData: {},
     parent: PropertyGroup,
     path: string,
-    private options: DelonFormConfig,
+    private _options: DelonFormConfig,
   ) {
     this.schema = schema;
     this.ui = ui;
@@ -91,6 +91,10 @@ export abstract class FormProperty {
 
   get valid() {
     return this._errors === null || this._errors.length === 0;
+  }
+
+  get options() {
+    return this._options;
   }
 
   /**
@@ -243,7 +247,7 @@ export abstract class FormProperty {
         let message =
           err._custom === true && err.message
             ? err.message
-            : (this.ui.errors || {})[err.keyword] || this.options.errors[err.keyword] || ``;
+            : (this.ui.errors || {})[err.keyword] || this._options.errors[err.keyword] || ``;
 
         if (message && typeof message === 'function') {
           message = message(err) as string;

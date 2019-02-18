@@ -225,7 +225,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           widget: property.type,
           ...(property.format && FORMATMAPS[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
-          ...(!property.ui && Array.isArray(property.enum) && property.enum.length > 0
+          ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0
             ? { widget: 'select' }
             : null),
           ...this._defUi,
