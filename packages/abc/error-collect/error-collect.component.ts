@@ -4,7 +4,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostBinding,
   Inject,
   Input,
   OnDestroy,
@@ -22,6 +21,7 @@ import { ErrorCollectConfig } from './error-collect.config';
   `,
   host: {
     '[class.error-collect]': 'true',
+    '[class.d-none]': '_hiden',
     '(click)': '_click()',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,7 +34,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   @Input() @InputNumber() freq: number;
   @Input() @InputNumber() offsetTop: number;
 
-  @HostBinding('class.d-none') _hiden = true;
+  _hiden = true;
 
   count = 0;
 

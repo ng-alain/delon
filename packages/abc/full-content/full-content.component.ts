@@ -6,7 +6,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostBinding,
   Inject,
   Input,
   OnChanges,
@@ -30,7 +29,10 @@ const hideTitleCls = `full-content__hidden-title`;
   template: `
     <ng-content></ng-content>
   `,
-  host: { '[class.full-content]': 'true' },
+  host: {
+    '[class.full-content]': 'true',
+    '[style.height.px]': '_height',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
@@ -43,7 +45,6 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
     .substring(2)}`;
   private scroll$: Subscription = null;
 
-  @HostBinding('style.height.px')
   _height = 0;
 
   // #region fields

@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   EventEmitter,
-  HostBinding,
   Input,
   OnDestroy,
   OnInit,
@@ -17,24 +16,21 @@ import { InputBoolean } from '@delon/util';
 @Component({
   selector: 'tag-select',
   templateUrl: './tag-select.component.html',
-  host: { '[class.tag-select]': 'true' },
+  host: {
+    '[class.tag-select]': 'true',
+    '[class.tag-select__has-expand]': 'expandable',
+    '[class.tag-select__expanded]': 'expand',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagSelectComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
   locale: LocaleData = {};
-
-  /** 是否启用 `展开与收进` */
-  @Input()
-  @InputBoolean()
-  @HostBinding('class.tag-select__has-expand')
-  expandable = true;
-
-  @HostBinding('class.tag-select__expanded')
   expand = false;
 
-  @Output()
-  readonly change = new EventEmitter<boolean>();
+  /** 是否启用 `展开与收进` */
+  @Input() @InputBoolean() expandable = true;
+  @Output() readonly change = new EventEmitter<boolean>();
 
   constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}
 

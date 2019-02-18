@@ -6,7 +6,6 @@ import {
   ContentChild,
   ElementRef,
   Host,
-  HostBinding,
   Input,
   OnChanges,
   OnDestroy,
@@ -28,6 +27,11 @@ let nextUniqueId = 0;
 @Component({
   selector: 'se',
   templateUrl: './edit.component.html',
+  host: {
+    '[style.padding-left.px]': 'paddingValue',
+    '[style.padding-right.px]': 'paddingValue',
+    '[class.ant-form-item-with-help]': 'showErr',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
@@ -64,17 +68,10 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // #endregion
 
-  @HostBinding('style.padding-left.px')
-  get paddingLeft(): number {
+  get paddingValue(): number {
     return this.parent.gutter / 2;
   }
 
-  @HostBinding('style.padding-right.px')
-  get paddingRight(): number {
-    return this.parent.gutter / 2;
-  }
-
-  @HostBinding('class.ant-form-item-with-help')
   get showErr(): boolean {
     return this.invalid && this.parent.size !== 'compact' && !!this.error;
   }

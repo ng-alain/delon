@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding,
   Input,
   NgZone,
   OnChanges,
@@ -27,6 +26,9 @@ export interface G2BarData {
 @Component({
   selector: 'g2-bar',
   templateUrl: './bar.component.html',
+  host: {
+    '[style.height.px]': 'height',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
@@ -39,7 +41,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
   @Input() color = 'rgba(24, 144, 255, 0.85)';
-  @HostBinding('style.height.px') @Input() @InputNumber() height = 0;
+  @Input() @InputNumber() height = 0;
   @Input() padding: Array<number | string> | string = 'auto';
   @Input() data: G2BarData[] = [];
   @Input() @InputBoolean() autoLabel = true;

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { REP_TYPE } from '@delon/theme';
 import { InputNumber } from '@delon/util';
 import { SGConfig } from './grid.config';
@@ -9,6 +9,8 @@ import { SGConfig } from './grid.config';
     <ng-content></ng-content>
   `,
   host: {
+    '[style.margin-left.px]': 'marginValue',
+    '[style.margin-right.px]': 'marginValue',
     '[class.ant-row]': 'true',
     '[class.sg__wrap]': 'true',
   },
@@ -24,13 +26,7 @@ export class SGContainerComponent {
 
   // #endregion
 
-  @HostBinding('style.margin-left.px')
-  get marginLeft(): number {
-    return -(this.gutter / 2);
-  }
-
-  @HostBinding('style.margin-right.px')
-  get marginRight(): number {
+  get marginValue(): number {
     return -(this.gutter / 2);
   }
 

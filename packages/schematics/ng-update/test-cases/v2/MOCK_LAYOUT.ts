@@ -160,7 +160,6 @@ export class LayoutDefaultComponent {
   `,
   'src/app/layout/default/header/components/search.component.ts': `import {
     Component,
-    HostBinding,
     ViewChild,
     Input,
     OnInit,
@@ -176,15 +175,19 @@ export class LayoutDefaultComponent {
         [placeholder]="'top-search-ph' | translate">
     </nz-input-group>
     \`,
+    host: {
+      '[class.header-search__focus]': 'focus',
+      '[class.header-search__toggled]': 'searchToggled',
+    },
   })
   export class HeaderSearchComponent implements AfterViewInit {
     q: string;
 
     qIpt: HTMLInputElement;
 
-    @HostBinding('class.header-search__focus') focus = false;
+    focus = false;
 
-    @HostBinding('class.header-search__toggled') searchToggled = false;
+    searchToggled = false;
 
     @Input()
     set toggleChange(value: boolean) {

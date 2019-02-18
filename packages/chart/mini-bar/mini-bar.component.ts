@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostBinding,
   Input,
   NgZone,
   OnChanges,
@@ -22,6 +21,9 @@ export interface G2MiniBarData {
 @Component({
   selector: 'g2-mini-bar',
   template: ``,
+  host: {
+    '[style.height.px]': 'height',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
@@ -31,7 +33,7 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() @InputNumber() delay = 0;
   @Input() color = '#1890FF';
-  @HostBinding('style.height.px') @Input() @InputNumber() height = 0;
+  @Input() @InputNumber() height = 0;
   @Input() @InputNumber() borderWidth = 5;
   @Input() padding: Array<string | number> = [8, 8, 8, 8];
   @Input() data: G2MiniBarData[] = [];

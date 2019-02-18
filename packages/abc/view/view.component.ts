@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   Host,
-  HostBinding,
   Input,
   OnChanges,
   Optional,
@@ -22,6 +21,10 @@ const prefixCls = `sv`;
 @Component({
   selector: 'sv, [sv]',
   templateUrl: './view.component.html',
+  host: {
+    '[style.padding-left.px]': 'paddingValue',
+    '[style.padding-right.px]': 'paddingValue',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SVComponent implements AfterViewInit, OnChanges {
@@ -39,13 +42,7 @@ export class SVComponent implements AfterViewInit, OnChanges {
 
   // #endregion
 
-  @HostBinding('style.padding-left.px')
-  get paddingLeft(): number {
-    return this.parent && this.parent.gutter / 2;
-  }
-
-  @HostBinding('style.padding-right.px')
-  get paddingRight(): number {
+  get paddingValue(): number {
     return this.parent && this.parent.gutter / 2;
   }
 

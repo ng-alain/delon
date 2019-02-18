@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostBinding,
   Input,
   NgZone,
   OnChanges,
@@ -26,7 +25,10 @@ export interface G2RadarData {
 @Component({
   selector: 'g2-radar',
   templateUrl: './radar.component.html',
-  host: { '[class.g2-radar]': 'true' },
+  host: {
+    '[style.height.px]': 'height',
+    '[class.g2-radar]': 'true',
+  },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
@@ -38,7 +40,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
-  @HostBinding('style.height.px') @Input() @InputNumber() height = 0;
+  @Input() @InputNumber() height = 0;
   @Input() padding: number[] = [44, 30, 16, 30];
   @Input() @InputBoolean() hasLegend = true;
   @Input() @InputNumber() tickCount = 4;
