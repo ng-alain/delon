@@ -10,7 +10,7 @@ import { SEConfig } from './edit.config';
   exportAs: 'seContainer',
 })
 export class SEContainerComponent {
-  //#region fields
+  // #region fields
 
   @Input('se-container') @InputNumber(null) colInCon: REP_TYPE;
   @Input() @InputNumber(null) col: REP_TYPE;
@@ -42,7 +42,7 @@ export class SEContainerComponent {
   @Input() @InputBoolean() firstVisual: boolean;
   @Input() @InputBoolean() line = false;
 
-  //#endregion
+  // #endregion
 
   constructor(cog: SEConfig) {
     Object.assign(this, { ...new SEConfig(), ...cog });

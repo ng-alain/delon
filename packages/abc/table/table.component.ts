@@ -268,7 +268,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return { pi, ps, total };
   }
 
-  //#region data
+  // #region data
 
   private _load() {
     const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
@@ -438,9 +438,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this.cd();
   }
 
-  //#endregion
+  // #endregion
 
-  //#region sort
+  // #region sort
 
   sort(col: STColumn, idx: number, value: any) {
     if (this.multiSort) {
@@ -462,9 +462,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region filter
+  // #region filter
 
   private handleFilter(col: STColumn) {
     col.filter.default = col.filter.menus.findIndex(w => w.checked) !== -1;
@@ -496,9 +496,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region checkbox
+  // #region checkbox
 
   /** 清除所有 `checkbox` */
   clearCheck(): this {
@@ -538,9 +538,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region radio
+  // #region radio
 
   /** 清除所有 `radio` */
   clearRadio(): this {
@@ -557,9 +557,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  //#endregion
+  // #endregion
 
-  //#region buttons
+  // #region buttons
 
   _btnClick(e: Event, record: STData, btn: STColumnButton) {
     if (e) {
@@ -625,9 +625,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return col.buttons.filter(btn => btn.iif(item, btn, col));
   }
 
-  //#endregion
+  // #endregion
 
-  //#region export
+  // #region export
 
   /**
    * 导出当前页，确保已经注册 `XlsxModule`
@@ -646,7 +646,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     );
   }
 
-  //#endregion
+  // #endregion
 
   resetColumns() {
     return this.refreshColumns()._load();

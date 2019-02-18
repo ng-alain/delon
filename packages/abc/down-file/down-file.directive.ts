@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
 import { saveAs } from 'file-saver';
@@ -38,7 +38,7 @@ export class DownFileDirective {
     return arr.reduce((o, item) => item, {});
   }
 
-  constructor(private el: ElementRef, private http: HttpClient, private _http: _HttpClient) {}
+  constructor(private el: ElementRef, private _http: _HttpClient) {}
 
   _click() {
     this.el.nativeElement.disabled = true;

@@ -16,13 +16,13 @@ import { SGConfig } from './grid.config';
   exportAs: 'sgContainer',
 })
 export class SGContainerComponent {
-  //#region fields
+  // #region fields
 
   @Input() @InputNumber() gutter: number;
   @Input('sg-container') @InputNumber(null) colInCon: REP_TYPE;
   @Input() @InputNumber(null) col: REP_TYPE;
 
-  //#endregion
+  // #endregion
 
   @HostBinding('style.margin-left.px')
   get marginLeft(): number {

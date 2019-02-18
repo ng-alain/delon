@@ -30,14 +30,14 @@ export class SVComponent implements AfterViewInit, OnChanges {
   private el: HTMLElement;
   private clsMap: string[] = [];
 
-  //#region fields
+  // #region fields
 
   @Input() label: string | TemplateRef<void>;
   @Input() @InputNumber(null) col: number;
   @Input() @InputBoolean(null) default: boolean;
   @Input() type: 'primary' | 'success' | 'danger' | 'warning';
 
-  //#endregion
+  // #endregion
 
   @HostBinding('style.padding-left.px')
   get paddingLeft(): number {
