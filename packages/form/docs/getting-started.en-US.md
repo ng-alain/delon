@@ -101,6 +101,7 @@ Property | Description | Type | Default
 `[uiDateNumberFormat]` | Date widget default format | `string` | `x`
 `[uiTimeStringFormat]` | Time widget default format | `string` | `HH:mm:ss`
 `[uiTimeNumberFormat]` | Time widget default format | `string` | `x`
+`[uiEmailSuffixes]` | Specify the default Email suffix for `format: 'email'` | `string[]` | `['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']`
 
 For example, Build a email and name form:
 

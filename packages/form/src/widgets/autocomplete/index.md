@@ -12,7 +12,7 @@ type: Widgets
 
 指获取后每一次筛选是通过 `filterOption` 过滤，数据来源于 `asyncData`、`enum`。
 
-若 `schema.format: 'email'` 时自动渲染为自动补全邮箱后缀，默认 `['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']` 可通过 `enum` 来重新调整该值。
+若 `schema.format: 'email'` 时自动渲染为自动补全邮箱后缀，默认 `['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']` 可通过 `enum` 来重新调整该值或全局配置 `uiEmailSuffixes`。
 
 **实时**
 

@@ -1,11 +1,12 @@
-import { DebugElement } from '@angular/core';
+import { DebugElement, Inject } from '@angular/core';
 import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { of } from 'rxjs';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
-import { AutoCompleteWidget, EMAILSUFFIX } from './autocomplete.widget';
+import { SFSchemaEnum } from '../../../src/schema/index';
+import { DelonFormConfig } from '../../config';
+import { AutoCompleteWidget } from './autocomplete.widget';
 
 describe('form: widget: autocomplete', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -56,6 +57,7 @@ describe('form: widget: autocomplete', () => {
       });
     });
     it('with email of format', fakeAsync(() => {
+      const config = dl.injector.get(DelonFormConfig);
       const typeValue = 'a';
       page
         .newSchema({
@@ -68,9 +70,29 @@ describe('form: widget: autocomplete', () => {
         })
         .time(100)
         .typeChar(typeValue)
-        .checkCount('nz-auto-option', EMAILSUFFIX.length)
+        .checkCount('nz-auto-option', config.uiEmailSuffixes.length)
         .click('nz-auto-option')
-        .checkValue('a', `${typeValue}@${EMAILSUFFIX[0]}`)
+        .checkValue('a', `${typeValue}@${config.uiEmailSuffixes[0]}`)
+        .asyncEnd();
+    }));
+    it('with email and custom suffix of format', fakeAsync(() => {
+      const suffixes = [ 'a.com', 'b.com' ];
+      const typeValue = 'a';
+      page
+        .newSchema({
+          properties: {
+            a: {
+              type: 'string',
+              format: 'email',
+              enum: suffixes,
+            },
+          },
+        })
+        .time(100)
+        .typeChar(typeValue)
+        .checkCount('nz-auto-option', suffixes.length)
+        .click('nz-auto-option')
+        .checkValue('a', `${typeValue}@${suffixes[0]}`)
         .asyncEnd();
     }));
     it('should be used value to result', fakeAsync(() => {
