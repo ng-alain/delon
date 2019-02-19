@@ -39,6 +39,12 @@ describe('util: time', () => {
         expect(format(ret[1], FORMAT)).toBe(NOW);
       });
     });
+    it('[yesterday]', () => {
+      const ret = getTimeDistance('yesterday', time);
+      expect(ret.length).toBe(2);
+      expect(format(ret[0], FORMAT)).toBe(YESTERDAY);
+      expect(format(ret[1], FORMAT)).toBe(YESTERDAY);
+    });
     describe('[week]', () => {
       it('past', () => {
         const ret = getTimeDistance('-week', time);

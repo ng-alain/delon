@@ -105,7 +105,7 @@ describe('abc: date-picker: range', () => {
       });
       list[0].click();
       timeEnd();
-      expect(differenceInDays(context.i.end, context.i.start)).toBe(2);
+      expect(differenceInDays(context.i.end, context.i.start)).toBe(0);
     }));
     it('with false', fakeAsync(() => {
       context.shortcut = false;
@@ -127,7 +127,6 @@ describe('abc: date-picker: range', () => {
       getPickerFooterExtra().querySelectorAll('a')[0].click();
       timeEnd();
       expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(false);
-      expect(differenceInDays(context.i.end, context.i.start)).toBe(2);
     }));
   });
 

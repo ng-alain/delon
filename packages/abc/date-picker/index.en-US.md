@@ -48,4 +48,4 @@ Based on the `nz-range-picker` further optimization, better service to start and
 | ---------------- | ------------------------------------ | ------ | ------- |
 | `[enabled]` | Whether to enable | `boolean` | `false` |
 | `[closed]` | Whether to close the panel after clicking | `boolean` | `true` |
-| `[enabled]` | Shortcut list | `DateRangePickerShortcutItem[]` | `近3天,本周,本月,全年` |
+| `[enabled]` | Shortcut list | `DateRangePickerShortcutItem[]` | `今天,昨天,近3天,近7天,本周,本月,全年` |

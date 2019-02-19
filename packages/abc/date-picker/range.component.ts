@@ -1,6 +1,6 @@
 import { forwardRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { deepMergeKey, InputBoolean } from '@delon/util';
+import { deepMergeKey, fixEndTimeOfRange, InputBoolean } from '@delon/util';
 import {
   DatePickerConfig,
   DateRangePickerConfig,
@@ -87,7 +87,8 @@ export class RangePickerComponent implements ControlValueAccessor {
     this.nzOnOk.emit(e);
   }
 
-  valueChange(e: Date[]) {
+  valueChange(e: [Date, Date]) {
+    e = fixEndTimeOfRange(e);
     this.onChangeFn(e[0]);
     this.ngModelEnd = e[1];
     this.ngModelEndChange.emit(e[1]);
@@ -110,8 +111,8 @@ export class RangePickerComponent implements ControlValueAccessor {
   }
 
   clickShortcut(item: DateRangePickerShortcutItem) {
-    this.value = item.fn(this.value);
-    this.valueChange(this.value);
+    this.value = item.fn(this.value as any);
+    this.valueChange(this.value as [Date, Date]);
     if (this._shortcut.closed) {
       this.comp.closeOverlay();
     }

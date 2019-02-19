@@ -47,4 +47,4 @@ config: DateRangePickerConfig
 ------------|----------------------|---------------------------------|---------------
 `[enabled]` | 是否启用               | `boolean`                       | `false`
 `[closed]`  | 是否点击后立即关闭面板 | `boolean`                       | `true`
-`[enabled]` | 快捷列表               | `DateRangePickerShortcutItem[]` | `近3天,本周,本月,全年`
+`[enabled]` | 快捷列表               | `DateRangePickerShortcutItem[]` | `今天,昨天,近3天,近7天,本周,本月,全年`

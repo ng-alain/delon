@@ -25,8 +25,20 @@ export class DateRangePickerConfig {
     closed: true,
     list: [
       {
+        text: '今天',
+        fn: () => getTimeDistance('today'),
+      },
+      {
+        text: '昨天',
+        fn: () => getTimeDistance('yesterday'),
+      },
+      {
         text: '近3天',
         fn: () => getTimeDistance(-2),
+      },
+      {
+        text: '近7天',
+        fn: () => getTimeDistance(-6),
       },
       {
         text: '本周',
@@ -50,14 +62,14 @@ export interface DateRangePickerShortcut {
   /** Whether to close the panel after clicking, default: `true` */
   closed?: boolean;
   /**
-   * Shortcut list, default: `近3天`, `本周`, `本月`, `全年`
+   * Shortcut list, default: `今天`, `昨天`, `近3天`, `近7天`, `本周`, `本月`, `全年`
    */
   list?: DateRangePickerShortcutItem[];
 }
 
 export interface DateRangePickerShortcutItem {
   text: string;
-  fn: (value: Date[]) => Date[];
+  fn: (value: [Date, Date]) => [Date, Date];
 }
 
 @Injectable({ providedIn: 'root' })
