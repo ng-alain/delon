@@ -29,14 +29,14 @@ export class RangePickerComponent implements ControlValueAccessor {
 
   @Input() ngModelEnd: Date;
   @Input()
-  set shortcut(val: boolean | DateRangePickerShortcut) {
-    const item = deepMergeKey({}, true, this._cog.shortcuts, val) as DateRangePickerShortcut;
+  set shortcut(val: any) {
+    const item = deepMergeKey({}, true, this._cog.shortcuts, val == null ? {} : val) as DateRangePickerShortcut;
     if (typeof val === 'boolean') {
       item.enabled = val;
     }
     this._shortcut = item;
   }
-  get shortcut(): boolean | DateRangePickerShortcut {
+  get shortcut() {
     return this._shortcut;
   }
   @Output() readonly ngModelEndChange = new EventEmitter<Date>();

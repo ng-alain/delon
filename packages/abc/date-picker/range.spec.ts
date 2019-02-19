@@ -113,6 +113,12 @@ describe('abc: date-picker: range', () => {
       openPicker();
       expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(true);
     }));
+    it('with null', fakeAsync(() => {
+      context.shortcut = null;
+      fixture.detectChanges();
+      openPicker();
+      expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(true);
+    }));
     it('should be keeping open panel when closed is false', fakeAsync(() => {
       context.shortcut = { closed: false, enabled: true };
       fixture.detectChanges();
