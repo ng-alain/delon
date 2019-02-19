@@ -20,6 +20,7 @@ export function getTimeDistance(
   time?: Date | string | number,
 ): [Date, Date] {
   time = parse(time || new Date());
+  const options = { weekStartsOn: 1 };
 
   switch (type) {
     case 'today':
@@ -27,9 +28,9 @@ export function getTimeDistance(
     case '-today':
       return [addDays(time, -1), time];
     case 'week':
-      return [startOfWeek(time), endOfWeek(time)];
+      return [startOfWeek(time, options), endOfWeek(time, options)];
     case '-week':
-      return [startOfWeek(subWeeks(time, 1)), endOfWeek(subWeeks(time, 1))];
+      return [startOfWeek(subWeeks(time, 1), options), endOfWeek(subWeeks(time, 1), options)];
     case 'month':
       return [startOfMonth(time), endOfMonth(time)];
     case '-month':

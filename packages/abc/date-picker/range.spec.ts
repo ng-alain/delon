@@ -1,11 +1,18 @@
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite, createTestContext } from '@delon/testing';
+import { configureTestSuite, createTestContext, dispatchMouseEvent } from '@delon/testing';
+import differenceInDays from 'date-fns/difference_in_days';
 
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DateRangePickerShortcut } from './date-picker.config';
 import { DatePickerModule } from './date-picker.module';
 import { RangePickerComponent } from './range.component';
+
+registerLocaleData(zh);
 
 describe('abc: date-picker: range', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -14,7 +21,7 @@ describe('abc: date-picker: range', () => {
 
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      imports: [DatePickerModule, FormsModule],
+      imports: [DatePickerModule, FormsModule, NoopAnimationsModule],
       declarations: [TestComponent],
     });
   });
@@ -25,10 +32,6 @@ describe('abc: date-picker: range', () => {
     spyOn(context, '_nzOnOpenChange');
     spyOn(context, '_nzOnPanelChange');
     spyOn(context, '_nzOnOk');
-  });
-
-  it('should working', () => {
-    expect(context).not.toBeNull();
   });
 
   describe('#ngModel', () => {
@@ -87,6 +90,53 @@ describe('abc: date-picker: range', () => {
       expect(context._nzOnOk).toHaveBeenCalled();
     });
   });
+
+  describe('#shortcat', () => {
+    it('with true', fakeAsync(() => {
+      context.shortcut = true;
+      fixture.detectChanges();
+      openPicker();
+      const shortcut = context.comp.shortcut as DateRangePickerShortcut;
+      const list = getPickerFooterExtra().querySelectorAll('a');
+      expect(list.length).toBe(shortcut.list.length);
+      list[0].click();
+      timeEnd();
+      expect(differenceInDays(context.i.end, context.i.start)).toBe(2);
+    }));
+    it('with false', fakeAsync(() => {
+      context.shortcut = false;
+      fixture.detectChanges();
+      openPicker();
+      expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(true);
+    }));
+    it('should be keeping open panel when closed is false', fakeAsync(() => {
+      context.shortcut = { closed: false, enabled: true };
+      fixture.detectChanges();
+      openPicker();
+      expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(false);
+      getPickerFooterExtra().querySelectorAll('a')[0].click();
+      timeEnd();
+      expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(false);
+      expect(differenceInDays(context.i.end, context.i.start)).toBe(2);
+    }));
+  });
+
+  function openPicker(): HTMLInputElement {
+    const el = dl.query(By.css('nz-picker .ant-calendar-picker')).nativeElement as HTMLInputElement;
+    dispatchMouseEvent(el, 'click');
+    timeEnd();
+    return el;
+  }
+
+  function timeEnd() {
+    fixture.detectChanges();
+    tick(500);
+    fixture.detectChanges();
+  }
+
+  function getPickerFooterExtra(): HTMLElement {
+    return dl.query(By.css('.ant-calendar-footer-extra')).nativeElement as HTMLElement;
+  }
 });
 
 @Component({
@@ -98,6 +148,7 @@ describe('abc: date-picker: range', () => {
       (nzOnOpenChange)="_nzOnOpenChange()"
       (nzOnPanelChange)="_nzOnPanelChange()"
       (nzOnOk)="_nzOnOk()"
+      [shortcut]="shortcut"
     ></range-picker>
   `,
 })
@@ -108,4 +159,5 @@ class TestComponent {
   _nzOnOpenChange() {}
   _nzOnPanelChange() {}
   _nzOnOk() {}
+  shortcut: boolean | DateRangePickerShortcut = false;
 }
