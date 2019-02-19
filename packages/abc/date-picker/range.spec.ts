@@ -96,14 +96,7 @@ describe('abc: date-picker: range', () => {
       context.shortcut = true;
       fixture.detectChanges();
       openPicker();
-      const shortcut = context.comp.shortcut as DateRangePickerShortcut;
-      const list = getPickerFooterExtra().querySelectorAll('a');
-      expect(list.length).toBe(shortcut.list.length);
-      list.forEach(el => {
-        el.click();
-        timeEnd();
-      });
-      list[0].click();
+      getPickerFooterExtra().querySelectorAll('a')[0].click();
       timeEnd();
       expect(differenceInDays(context.i.end, context.i.start)).toBe(0);
     }));
@@ -125,6 +118,13 @@ describe('abc: date-picker: range', () => {
       openPicker();
       expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(false);
       getPickerFooterExtra().querySelectorAll('a')[0].click();
+      const list = getPickerFooterExtra().querySelectorAll('a');
+      const shortcut = context.comp.shortcut as DateRangePickerShortcut;
+      expect(list.length).toBe(shortcut.list.length);
+      list.forEach(el => {
+        el.click();
+        timeEnd();
+      });
       timeEnd();
       expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(false);
     }));
