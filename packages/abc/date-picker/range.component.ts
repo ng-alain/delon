@@ -36,7 +36,7 @@ export class RangePickerComponent implements ControlValueAccessor {
     }
     this._shortcut = item;
   }
-  get shortcut() {
+  get shortcut(): boolean | DateRangePickerShortcut {
     return this._shortcut;
   }
   @Output() readonly ngModelEndChange = new EventEmitter<Date>();
