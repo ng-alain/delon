@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { getTimeDistance } from '../../util';
+import { getTimeDistance } from '@delon/util';
 
 export class DateRangePickerConfig {
   nzFormat?: string = 'yyyy-MM-dd';
