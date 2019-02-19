@@ -99,6 +99,10 @@ describe('abc: date-picker: range', () => {
       const shortcut = context.comp.shortcut as DateRangePickerShortcut;
       const list = getPickerFooterExtra().querySelectorAll('a');
       expect(list.length).toBe(shortcut.list.length);
+      list.forEach(el => {
+        el.click();
+        timeEnd();
+      });
       list[0].click();
       timeEnd();
       expect(differenceInDays(context.i.end, context.i.start)).toBe(2);
