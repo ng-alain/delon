@@ -6,7 +6,7 @@ describe('NgAlainSchematic: application', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
-  describe(`update package.json`, () => {
+  describe(``, () => {
     beforeEach(() => ({ runner, tree } = createAlainApp()));
     it(`should add @delon to dependencies`, () => {
       const packageJson = JSON.parse(tree.readContent('package.json'));
@@ -17,6 +17,13 @@ describe('NgAlainSchematic: application', () => {
       expect(packageJson.dependencies['@delon/auth']).toBeDefined();
       expect(packageJson.dependencies['@delon/cache']).toBeDefined();
       expect(packageJson.dependencies['@delon/mock']).toBeDefined();
+    });
+    it('should be add vscode extensions confir', () => {
+      const filePath = '.vscode/extensions.json';
+      expect(tree.exists(filePath)).toBe(true, `Not found [${filePath}]`);
+      const json = JSON.parse(tree.readContent(filePath));
+      expect(json != null).toBe(true);
+      expect(json.recommendations[0]).toBe('cipchk.ng-alain-extension-pack');
     });
   });
 
