@@ -29,7 +29,7 @@ type: Widgets
 `[allowClear]` | 支持清除 | `boolean` | `false`
 `[dropdownMatchSelectWidth]` | 下拉菜单和选择器同宽 | `boolean` | `true`
 `[dropdownStyle]` | 下拉菜单的 style 属性 | `object` | -
-`[multiple]` | 支持多选（当设置 `checkable` 时自动变为true），重置时无法刷新默认值 [#2085](https://github.com/NG-ZORRO/ng-zorro-antd/issues/2085) | `boolean` | `false`
+`[multiple]` | 支持多选（当设置 `checkable` 时自动变为true） | `boolean` | `false`
 `[checkable]` | 节点前添加 Checkbox 复选框 | `boolean` | `false`
 `[showExpand]` | 节点前添加展开图标 | `boolean` | `true`
 `[showLine]` | 节点前添加展开图标 | `boolean` | `false`
