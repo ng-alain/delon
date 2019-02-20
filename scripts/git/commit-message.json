@@ -15,10 +15,16 @@
     "revert"
   ],
   "scopes": [
-    "showcase",
-    "packaging",
-    "changelog",
-    "schematics",
-    "module:*"
+    "abc",
+    "acl",
+    "auth",
+    "cache",
+    "chart",
+    "form",
+    "mock",
+    "cli",
+    "testing",
+    "theme",
+    "util"
   ]
 }

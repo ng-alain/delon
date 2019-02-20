@@ -15,7 +15,9 @@ const msgFile = process.env['HUSKY_GIT_PARAMS'];
 
 let isValid = true;
 if (msgFile || true) {
-  const commitMsg = fs.readFileSync(msgFile, { encoding: 'utf-8' });
+  const commitMsg = fs.readFileSync(msgFile, {
+    encoding: 'utf-8'
+  });
   const firstLine = commitMsg.split('\n')[0];
   isValid = checkMsg(firstLine);
   if (!isValid) {
@@ -29,3 +31,4 @@ if (msgFile || true) {
 }
 
 process.exit(isValid ? 0 : 1);
+// checkMsg(process.argv[2])

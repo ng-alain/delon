@@ -17,7 +17,7 @@ const PATTERN = /^(\w+)(?:\(([^)]+)\))?\: (.+)$/;
 const FIXUP_SQUASH = /^(fixup|squash)\! /i;
 const REVERT = /^revert:? /i;
 
-module.exports = function(commitSubject) {
+module.exports = function (commitSubject) {
   const subject = commitSubject.replace(FIXUP_SQUASH, '');
 
   if (subject.match(REVERT)) {
@@ -84,10 +84,8 @@ module.exports = function(commitSubject) {
   const scope = match[2];
 
   if (
-    scope &&
-    !config['scopes'].includes(scope) &&
-    type !== 'release' &&
-    !/module:.+/.test(scope)
+    scope && !config['scopes'].includes(scope) && type !== 'release' &&
+    !scope.includes(':')
   ) {
     error(
       `"${scope}" is not an allowed scope.\n => SCOPES: ${config['scopes'].join(
