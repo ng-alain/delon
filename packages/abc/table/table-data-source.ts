@@ -55,6 +55,8 @@ export interface STDataSourceResult {
 
 @Injectable()
 export class STDataSource {
+  private sortTick = 0;
+
   constructor(
     private http: _HttpClient,
     @Host() private currentyPipe: CNCurrencyPipe,
@@ -288,6 +290,10 @@ export class STDataSource {
     };
   }
 
+  get nextSortTick(): number {
+    return ++this.sortTick;
+  }
+
   getReqSortMap(
     singleSort: STSingleSort,
     multiSort: STMultiSort,
@@ -304,13 +310,10 @@ export class STDataSource {
         nameSeparator: '.',
         ...multiSort,
       };
-      sortList.forEach(item => {
-        ret[item.key] = (item.reName || {})[item.default] || item.default;
-      });
-      // 合并处理
+
       ret = {
-        [ms.key]: Object.keys(ret)
-          .map(key => key + ms.nameSeparator + ret[key])
+        [ms.key]: sortList.sort((a, b) => a.tick - b.tick)
+          .map(item => item.key + ms.nameSeparator + ((item.reName || {})[item.default] || item.default))
           .join(ms.separator),
       };
     } else {

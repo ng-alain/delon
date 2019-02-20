@@ -8,6 +8,8 @@ import { STConfig } from './table.config';
 import { STColumn, STColumnButton, STColumnFilter, STColumnSort } from './table.interfaces';
 
 export interface STSortMap extends STColumnSort {
+  [key: string]: any;
+
   /** 是否启用排序 */
   enabled?: boolean;
 }
