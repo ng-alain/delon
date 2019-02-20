@@ -39,18 +39,24 @@ describe('util: time', () => {
         expect(format(ret[1], FORMAT)).toBe(NOW);
       });
     });
+    it('[yesterday]', () => {
+      const ret = getTimeDistance('yesterday', time);
+      expect(ret.length).toBe(2);
+      expect(format(ret[0], FORMAT)).toBe(YESTERDAY);
+      expect(format(ret[1], FORMAT)).toBe(YESTERDAY);
+    });
     describe('[week]', () => {
       it('past', () => {
         const ret = getTimeDistance('-week', time);
         expect(ret.length).toBe(2);
-        expect(format(ret[0], FORMAT)).toBe('2018-02-25');
-        expect(format(ret[1], FORMAT)).toBe('2018-03-03');
+        expect(format(ret[0], FORMAT)).toBe('2018-02-26');
+        expect(format(ret[1], FORMAT)).toBe('2018-03-04');
       });
       it('feture', () => {
         const ret = getTimeDistance('week', time);
         expect(ret.length).toBe(2);
-        expect(format(ret[0], FORMAT)).toBe('2018-03-04');
-        expect(format(ret[1], FORMAT)).toBe('2018-03-10');
+        expect(format(ret[0], FORMAT)).toBe('2018-03-05');
+        expect(format(ret[1], FORMAT)).toBe('2018-03-11');
       });
     });
     describe('[month]', () => {

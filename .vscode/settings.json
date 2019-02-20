@@ -7,12 +7,15 @@
     "**/dist/*/**": true,
     "**/coverage/*/**": true
   },
-  "tslint.autoFixOnSave": true,
-  "tslint.alwaysShowStatus": true,
-  "html.format.wrapAttributes": "aligned-multiple",
+  "html.format.wrapAttributes": "force-aligned",
   "html.format.wrapLineLength": 100,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
   // "editor.formatOnSave": true,
-  "[markdown]": {
-    "editor.formatOnSave": false
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true
   }
 }

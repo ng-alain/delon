@@ -1,7 +1,12 @@
-import { forwardRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { forwardRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InputBoolean } from '@delon/util';
-import { DatePickerConfig, DateRangePickerConfig } from './date-picker.config';
+import { deepMergeKey, fixEndTimeOfRange, InputBoolean } from '@delon/util';
+import {
+  DatePickerConfig,
+  DateRangePickerConfig,
+  DateRangePickerShortcut,
+  DateRangePickerShortcutItem,
+} from './date-picker.config';
 
 @Component({
   selector: 'range-picker',
@@ -15,9 +20,25 @@ import { DatePickerConfig, DateRangePickerConfig } from './date-picker.config';
   ],
 })
 export class RangePickerComponent implements ControlValueAccessor {
+  private onChangeFn: (val: Date) => void;
+  private onTouchedFn: () => void;
+  private _shortcut: DateRangePickerShortcut;
+  private _cog: DateRangePickerConfig;
+  @ViewChild('comp') private comp: any;
   value: Date[] = [];
 
   @Input() ngModelEnd: Date;
+  @Input()
+  set shortcut(val: any) {
+    const item = deepMergeKey({}, true, this._cog.shortcuts, val == null ? {} : val) as DateRangePickerShortcut;
+    if (typeof val === 'boolean') {
+      item.enabled = val;
+    }
+    this._shortcut = item;
+  }
+  get shortcut() {
+    return this._shortcut;
+  }
   @Output() readonly ngModelEndChange = new EventEmitter<Date>();
 
   // #region Native properties
@@ -50,7 +71,8 @@ export class RangePickerComponent implements ControlValueAccessor {
   // #endregion
 
   constructor(cog: DatePickerConfig) {
-    Object.assign(this, new DateRangePickerConfig(), cog && cog.range);
+    this._cog = deepMergeKey(new DateRangePickerConfig(), true, cog && cog.range);
+    Object.assign(this, this._cog);
   }
 
   _nzOnOpenChange(e: any) {
@@ -65,14 +87,12 @@ export class RangePickerComponent implements ControlValueAccessor {
     this.nzOnOk.emit(e);
   }
 
-  valueChange(e: Date[]) {
+  valueChange(e: [Date, Date]) {
+    e = fixEndTimeOfRange(e);
     this.onChangeFn(e[0]);
     this.ngModelEnd = e[1];
     this.ngModelEndChange.emit(e[1]);
   }
-
-  private onChangeFn: (val: Date) => void;
-  private onTouchedFn: () => void;
 
   writeValue(value: Date): void {
     this.value = value && this.ngModelEnd ? [value, this.ngModelEnd] : [];
@@ -88,5 +108,13 @@ export class RangePickerComponent implements ControlValueAccessor {
 
   setDisabledState(disabled: boolean): void {
     this.nzDisabled = disabled;
+  }
+
+  clickShortcut(item: DateRangePickerShortcutItem) {
+    this.value = item.fn(this.value as any);
+    this.valueChange(this.value as [Date, Date]);
+    if (this._shortcut.closed) {
+      this.comp.closeOverlay();
+    }
   }
 }

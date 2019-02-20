@@ -1,4 +1,5 @@
-<nz-range-picker [ngModel]="value"
+<nz-range-picker #comp
+                 [ngModel]="value"
                  (ngModelChange)="valueChange($event)"
                  [nzAllowClear]="nzAllowClear"
                  [nzAutoFocus]="nzAutoFocus"
@@ -15,10 +16,16 @@
                  [nzDateRender]="nzDateRender"
                  [nzDisabledTime]="nzDisabledTime"
                  [nzFormat]="nzFormat"
-                 [nzRenderExtraFooter]="nzRenderExtraFooter"
+                 [nzRenderExtraFooter]="nzRenderExtraFooter || (shortcut?.enabled ? shortcutTpl : null)"
                  [nzShowTime]="nzShowTime"
                  [nzShowToday]="nzShowToday"
                  [nzMode]="nzMode"
                  [nzRanges]="nzRanges"
                  (nzOnPanelChange)="_nzOnPanelChange($event)"
                  (nzOnOk)="_nzOnOk($event)"></nz-range-picker>
+<ng-template #shortcutTpl>
+  <a *ngFor="let i of shortcut.list;let first=first"
+     (click)="clickShortcut(i)"
+     [innerHTML]="i.text"
+     [ngClass]="{'ml-sm': !first}"></a>
+</ng-template>
