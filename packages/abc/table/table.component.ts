@@ -445,6 +445,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   sort(col: STColumn, idx: number, value: any) {
     if (this.multiSort) {
       col._sort.default = value;
+      col._sort.tick = this.dataSource.nextSortTick;
     } else {
       this._columns.forEach((item, index) => (item._sort.default = index === idx ? value : null));
     }

@@ -504,6 +504,14 @@ describe('abc: table: data-souce', () => {
             done();
           });
         });
+        it(`should be in user order`, (done: () => void) => {
+          options.columns[1]._sort.tick = srv.nextSortTick;
+          options.columns[0]._sort.tick = srv.nextSortTick;
+          srv.process(options).then(res => {
+            expect(resParams.SORT).toBe('id2.ascend-id1.descend');
+            done();
+          });
+        });
       });
       describe('[singleSort]', () => {
         it(`should working`, (done: () => void) => {
