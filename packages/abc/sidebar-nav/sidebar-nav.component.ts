@@ -6,6 +6,7 @@ import {
   EventEmitter,
   Inject,
   Input,
+  NgZone,
   OnDestroy,
   OnInit,
   Output,
@@ -58,6 +59,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private router: Router,
     private render: Renderer2,
     private cdr: ChangeDetectorRef,
+    private ngZone: NgZone,
     @Inject(DOCUMENT) private doc: any,
     @Inject(WINDOW) private win: Window,
   ) {}
@@ -142,13 +144,15 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     if (this.collapsed !== true) {
       return;
     }
-    e.preventDefault();
-    const linkNode = e.target as Element;
-    this.genFloatingContainer();
-    const subNode = this.genSubNode(linkNode as HTMLLinkElement, item);
-    this.hideAll();
-    subNode.classList.add(SHOWCLS);
-    this.calPos(linkNode as HTMLLinkElement, subNode);
+    this.ngZone.runOutsideAngular(() => {
+      e.preventDefault();
+      const linkNode = e.target as Element;
+      this.genFloatingContainer();
+      const subNode = this.genSubNode(linkNode as HTMLLinkElement, item);
+      this.hideAll();
+      subNode.classList.add(SHOWCLS);
+      this.calPos(linkNode as HTMLLinkElement, subNode);
+    });
   }
 
   to(item: Menu) {
@@ -194,7 +198,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     const { doc, router, unsubscribe$, menuSrv, cdr } = this;
     this.bodyEl = doc.querySelector('body');
     menuSrv.openedByUrl(router.url, this.recursivePath);
-    this.genFloatingContainer();
+    this.ngZone.runOutsideAngular(() => this.genFloatingContainer());
     menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(data => {
       menuSrv.visit(data, i => {
         if (i._aclResult) return;
