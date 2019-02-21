@@ -67,7 +67,7 @@ angular.json
 全局配置性可以通过在根模块或 `DelonModule` 里覆盖，例如：
 
 ```ts
-import { DelonFormConfig } from '@delon/abc';
+import { DelonFormConfig } from '@delon/form';
 export function fnDelonFormConfig(): DelonFormConfig {
   return Object.assign(new DelonFormConfig(), <DelonFormConfig>{
     // values
