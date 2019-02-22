@@ -30,18 +30,22 @@ jobs:
   include:
     - stage: pre
       env: "TASK=test"
+    - stage: pre
       env: "TASK=lint"
+    - stage: pre
       env: "TASK=site:build"
+    - stage: pre
       env: "TASK=build"
+    - stage: pre
       env: "TASK=build_artifacts"
     - stage: cli
       env: "TASK=test:cli"
+
 stages:
   - name: pre
     if: branch = master
   - name: cli
     if: branch = master
-      
 
 # matrix:
 #   allow_failures:
