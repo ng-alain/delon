@@ -8,11 +8,27 @@ Chart provides the well-designed abstract chart components based on the [G2](htt
 
 ## Usage
 
+### Install dependence
+
 ```bash
 # add
 ng g ng-alain:plugin g2
 # remove
 ng g ng-alain:plugin g2 -t=remove
+```
+
+### Import module
+
+```ts
+// shared.module.ts
+import { DelonChartModule } from '@delon/chart';
+// Support for secondary imports, such as using only the `g2-bar` component
+// import { G2BarModule } from '@delon/chart/bar';
+
+@NgModule({
+  imports: [ DelonChartModule ],
+  exports: [ DelonChartModule ]
+})
 ```
 
 ## Custom G2 components
