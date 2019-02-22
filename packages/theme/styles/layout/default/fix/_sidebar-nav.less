@@ -13,6 +13,7 @@
     display: flex;
     flex-direction: column;
     &-link {
+      display: block;
       color: @alain-default-aside-nav-text-color;
       text-decoration: none !important;
       padding: @alain-default-aside-nav-padding-top-bottom @layout-gutter * 2;
@@ -41,6 +42,9 @@
     }
     &-disabled {
       opacity: .6;
+      &:hover {
+        color: initial;
+      }
     }
   }
   // Selected
@@ -191,6 +195,7 @@
       .@{sidebar-nav-prefix-cls}__item {
         border: none;
         &-link {
+          display: flex;
           justify-content: center;
           padding: (@layout-gutter * 3) 0;
           .@{sidebar-nav-prefix-cls}__item-icon {
