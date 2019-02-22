@@ -289,7 +289,8 @@ describe('abc: sidebar-nav', () => {
         setSrv.layout.collapsed = true;
         fixture.detectChanges();
         page.showSubMenu();
-        spyOn(context.comp.floatingEl, 'remove');
+        // tslint:disable-next-line: no-string-literal
+        spyOn(context.comp['floatingEl'], 'remove');
         page.hideSubMenu();
         expect(page.getEl<HTMLElement>(floatingShowCls, true)).toBeNull();
       });
@@ -316,6 +317,50 @@ describe('abc: sidebar-nav', () => {
         menuSrv.add(newMenus);
         const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="3"]');
         expect(itemEl == null).toBe(true);
+      });
+    });
+
+    describe('#openStrictly', () => {
+      beforeEach(() => {
+        createComp();
+        context.openStrictly = true;
+        fixture.detectChanges();
+        menuSrv.add([
+          {
+            text: '',
+            group: true,
+            children: [
+              {
+                text: '',
+                open: true,
+                children: [
+                  { text: '' },
+                ],
+              },
+              {
+                text: '',
+                open: true,
+                children: [
+                  { text: '' },
+                ],
+              },
+            ],
+          },
+        ] as Nav[]);
+        fixture.detectChanges();
+      });
+      it('should working', () => {
+        page.checkCount('.sidebar-nav__open', 2);
+      });
+      it(`should be won't close other item`, () => {
+        const list = dl.queryAll(By.css('.sidebar-nav__item-link'));
+        expect(list.length).toBe(4);
+        (list[0].nativeElement as HTMLElement).click();
+        fixture.detectChanges();
+        page.checkCount('.sidebar-nav__open', 1);
+        (list[2].nativeElement as HTMLElement).click();
+        fixture.detectChanges();
+        page.checkCount('.sidebar-nav__open', 0);
       });
     });
   });
@@ -483,6 +528,7 @@ describe('abc: sidebar-nav', () => {
       [disabledAcl]="disabledAcl"
       [autoCloseUnderPad]="autoCloseUnderPad"
       [recursivePath]="recursivePath"
+      [openStrictly]="openStrictly"
       (select)="select()"
     ></sidebar-nav>
   `,
@@ -493,6 +539,7 @@ class TestComponent {
   disabledAcl = false;
   autoCloseUnderPad = false;
   recursivePath = false;
+  openStrictly = false;
   select() {}
 }
 
