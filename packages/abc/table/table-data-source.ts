@@ -203,7 +203,7 @@ export class STDataSource {
     let ret = value;
     switch (col.type) {
       case 'no':
-        ret = col.noIndex + idx;
+        ret = typeof col.noIndex === 'function' ? col.noIndex(item, col, idx) : col.noIndex + idx;
         break;
       case 'img':
         ret = value ? `<img src="${value}" class="img">` : '';

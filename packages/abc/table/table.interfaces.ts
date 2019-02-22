@@ -293,8 +293,9 @@ export interface STColumn {
   /**
    * 行号索引，默认：`1`
    * - 计算规则为：`index + noIndex`
+   * - 支持自定义方法
    */
-  noIndex?: number;
+  noIndex?: number | ((item: STData, col: STColumn, idx: number) => number);
   /**
    * 条件表达式
    * - 仅赋值 `columns` 时执行一次
