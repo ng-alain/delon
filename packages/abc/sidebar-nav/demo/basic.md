@@ -43,6 +43,18 @@ export class DemoComponent {
           badge: 5,
         },
         {
+          text: 'Custom Class Name',
+          // Support for custom class
+          icon: {
+            type: 'class',
+            value: 'newClassName',
+          },
+          children: [
+            { text: 'Child' },
+            { text: 'Child' },
+          ],
+        },
+        {
           text: 'Level1',
           // Support for custom images
           icon: {

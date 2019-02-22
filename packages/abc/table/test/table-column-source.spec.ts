@@ -71,6 +71,11 @@ describe('abc: table: column-souce', () => {
           expect(res[0].type).toBe('no');
           expect(res[0].noIndex).toBe(0);
         });
+        it('should be custom by funciton', () => {
+          const res = srv.process([{ title: '', type: 'no', noIndex: () => 10 }]);
+          expect(res[0].type).toBe('no');
+          expect(typeof res[0].noIndex).toBe('function');
+        });
       });
       describe(`with checkbox`, () => {
         it('should be keep an empty list', () => {
