@@ -1,6 +1,6 @@
 <div class="ant-form-item-label se__label"
      [class.se__nolabel]="!label"
-     [style.width.px]="labelWidth">
+     [style.width.px]="_labelWidth">
   <label *ngIf="label"
          [attr.for]="_id"
          [ngClass]="{'ant-form-item-required': required}">

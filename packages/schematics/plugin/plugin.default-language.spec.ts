@@ -1,7 +1,7 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainApp } from '../utils/testing';
 
-const PATH = '/foo/src/app/app.module.ts';
+const PATH = '/projects/foo/src/app/app.module.ts';
 
 describe('NgAlainSchematic: plugin: default-language', () => {
   let runner: SchematicTestRunner;

@@ -5,10 +5,10 @@ import { Schema as NgAddOptions } from './schema';
 describe('Schematic: view', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
-  const modulePath = '/foo/src/app/routes/trade/trade.module.ts';
-  const routingPath = '/foo/src/app/routes/trade/trade-routing.module.ts';
-  const tsPath = '/foo/src/app/routes/trade/view/view.component.ts';
-  const htmlPath = '/foo/src/app/routes/trade/view/view.component.html';
+  const modulePath = '/projects/foo/src/app/routes/trade/trade.module.ts';
+  const routingPath = '/projects/foo/src/app/routes/trade/trade-routing.module.ts';
+  const tsPath = '/projects/foo/src/app/routes/trade/view/view.component.ts';
+  const htmlPath = '/projects/foo/src/app/routes/trade/view/view.component.html';
 
   beforeEach(() => {
     ({ runner, tree } = createAlainAndModuleApp());
@@ -33,6 +33,6 @@ describe('Schematic: view', () => {
 
   it('should support a.b.c module name', () => {
     tree = runner.runSchematic('view', { name: 'view', module: 'trade', target: 'list' }, tree);
-    expect(tree.exists('/foo/src/app/routes/trade/list/view/view.component.ts')).toBe(true);
+    expect(tree.exists('/projects/foo/src/app/routes/trade/list/view/view.component.ts')).toBe(true);
   });
 });
