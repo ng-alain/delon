@@ -240,6 +240,10 @@ integrationCli() {
   ng g ng-alain:ng-add --defaultLanguage=en --hmr=true --codeStyle=true --form=true --mock=true --i18n=true --g2=true
   echo ">>> Copy again ng-alain"
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
+  echo ">>> Copy @delon/*"
+  echo ">>>>>> Clone delon & cli dist..."
+  git clone --depth 1 https://github.com/ng-alain/delon-builds.git
+  rsync -a ${INTEGRATION_SOURCE}/delon-builds/ ${INTEGRATION_SOURCE}/node_modules/
   echo ">>> Running npm run icon"
   npm run icon
   echo ">>> Running build"
