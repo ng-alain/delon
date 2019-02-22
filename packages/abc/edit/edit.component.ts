@@ -43,7 +43,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
   private onceFlag = false;
   invalid = false;
-  labelWidth = null;
+  _labelWidth = null;
 
   // #region fields
 
@@ -56,6 +56,7 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() @InputBoolean() required = false;
   @Input() controlClass: string = '';
   @Input() @InputBoolean(null) line: boolean;
+  @Input() @InputNumber(null) labelWidth: number;
 
   @Input()
   set id(value: string) {
@@ -94,16 +95,16 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private setClass(): this {
-    const { el, ren, clsMap, col, parent, cdr } = this;
-    this.labelWidth = parent.labelWidth;
+    const { el, ren, clsMap, col, parent, cdr, line, labelWidth, rep } = this;
+    this._labelWidth = labelWidth != null ? labelWidth : parent.labelWidth;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
     const repCls =
       parent.nzLayout === 'horizontal'
-        ? this.rep.genCls(col != null ? col : parent.colInCon || parent.col)
+        ? rep.genCls(col != null ? col : parent.colInCon || parent.col)
         : [];
     clsMap.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
-    if (this.line || parent.line) {
+    if (line || parent.line) {
       clsMap.push(`${prefixCls}__line`);
     }
     clsMap.forEach(cls => ren.addClass(el, cls));
