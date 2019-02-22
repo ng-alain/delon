@@ -4,10 +4,10 @@ import { createAlainAndModuleApp } from '../utils/testing';
 describe('Schematic: list', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
-  const modulePath = '/foo/src/app/routes/trade/trade.module.ts';
-  const routingPath = '/foo/src/app/routes/trade/trade-routing.module.ts';
-  const tsPath = '/foo/src/app/routes/trade/list/list.component.ts';
-  const htmlPath = '/foo/src/app/routes/trade/list/list.component.html';
+  const modulePath = '/projects/foo/src/app/routes/trade/trade.module.ts';
+  const routingPath = '/projects/foo/src/app/routes/trade/trade-routing.module.ts';
+  const tsPath = '/projects/foo/src/app/routes/trade/list/list.component.ts';
+  const htmlPath = '/projects/foo/src/app/routes/trade/list/list.component.html';
 
   beforeEach(() => {
     ({ runner, tree } = createAlainAndModuleApp());
@@ -40,7 +40,7 @@ describe('Schematic: list', () => {
       { name: 'list2', module: 'trade', target: 'list/edit' },
       tree,
     );
-    expect(tree.exists(`/foo/src/app/routes/trade/list/edit/list2/list2.component.html`)).toBe(
+    expect(tree.exists(`/projects/foo/src/app/routes/trade/list/edit/list2/list2.component.html`)).toBe(
       true,
     );
   });

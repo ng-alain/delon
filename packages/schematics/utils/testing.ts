@@ -24,7 +24,7 @@ export function createAlainApp(
   const baseRunner = createNgRunner();
   const workspaceTree = baseRunner.runSchematic('workspace', {
     name: 'workspace',
-    newProjectRoot: '',
+    newProjectRoot: 'projects',
     version: '6.0.0',
   });
   const appTree = baseRunner.runSchematic(

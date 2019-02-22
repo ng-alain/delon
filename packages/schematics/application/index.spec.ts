@@ -31,14 +31,14 @@ describe('NgAlainSchematic: application', () => {
     describe('with true', () => {
       beforeEach(() => ({ runner, tree } = createAlainApp({ i18n: true })));
       it(`can add i18n related`, () => {
-        const specTs = tree.readContent('/foo/src/app/app.module.ts');
+        const specTs = tree.readContent('/projects/foo/src/app/app.module.ts');
         expect(specTs).toContain(`@core/i18n/`);
       });
     });
     describe('with false', () => {
       beforeEach(() => ({ runner, tree } = createAlainApp({ i18n: false })));
       it(`can't add i18n related`, () => {
-        const specTs = tree.readContent('/foo/src/app/app.module.ts');
+        const specTs = tree.readContent('/projects/foo/src/app/app.module.ts');
         expect(specTs).not.toContain(`@core/i18n/`);
       });
     });
@@ -53,7 +53,7 @@ describe('NgAlainSchematic: application', () => {
         const baseRunner = createNgRunner();
         const workspaceTree = baseRunner.runSchematic('workspace', {
           name: 'workspace',
-          newProjectRoot: '',
+          newProjectRoot: 'projects',
           version: '6.0.0',
         });
         const appTree = baseRunner.runSchematic(
