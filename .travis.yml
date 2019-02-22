@@ -29,22 +29,22 @@ before_install:
 jobs:
   include:
     - stage: pre
-      env: "TASK=test"
-    - stage: pre
-      env: "TASK=lint"
-    - stage: pre
-      env: "TASK=site:build"
-    - stage: pre
-      env: "TASK=build"
-    - stage: pre
       env: "TASK=build_artifacts"
-    - stage: cli
+    - stage: test
+      env: "TASK=test"
+    - stage: test
+      env: "TASK=lint"
+    - stage: test
+      env: "TASK=site:build"
+    - stage: test
+      env: "TASK=build"
+    - stage: test
       env: "TASK=test:cli"
 
 stages:
   - name: pre
     if: branch = master
-  - name: cli
+  - name: test
     if: branch = master
 
 # matrix:
