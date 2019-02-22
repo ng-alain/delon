@@ -37,9 +37,9 @@ jobs:
     - stage: cli
       env: "TASK=test:cli"
 stages:
-  - pre
+  - name: pre
     if: branch = master
-  - cli
+  - name: cli
     if: branch = master
       
 
