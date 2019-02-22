@@ -18,7 +18,7 @@ type: Widgets
 ----|------|-----|------
 `[minimum]` | 最小值 | `number` | -
 `[exclusiveMinimum]` | 约束是否包括 `minimum` 值，`true` 表示排除 `minimum` 值 | `boolean` | -
-`[maximum]` | 最小值 | `number` | -
+`[maximum]` | 最大值 | `number` | -
 `[exclusiveMaximum]` | 约束是否包括 `maximum` 值，`true` 表示排除 `maximum` 值 | `boolean` | -
 `[multipleOf]` | 倍数 | `number` | `1`
 
