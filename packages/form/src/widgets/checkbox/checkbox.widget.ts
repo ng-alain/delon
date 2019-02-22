@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LocaleData } from '@delon/theme';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
@@ -17,7 +16,7 @@ export class CheckboxWidget extends ControlWidget {
   labelTitle = ``;
   inited = false;
 
-  get l(): LocaleData {
+  get l(): any {
     return this.formProperty.root.widget.sfComp.locale;
   }
 
