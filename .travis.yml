@@ -28,17 +28,21 @@ before_install:
 
 jobs:
   include:
-    - env: "TASK=test"
-    - env: "TASK=test:cli"
-    - env: "TASK=lint"
-    - env: "TASK=site:build"
-    - env: "TASK=build"
-    - env: "TASK=build_artifacts"
-      if: branch = master
+    - stage: pre
+      - env: "TASK=test"
+      - env: "TASK=lint"
+      - env: "TASK=site:build"
+      - env: "TASK=build"
+      - env: "TASK=build_artifacts"
+        if: branch = master
+    - stage: cli
+      - env: "TASK=test:cli"
+        if: branch = master
+      
 
-matrix:
-  allow_failures:
-    - env: "TASK=build_artifacts"
+# matrix:
+#   allow_failures:
+#     - env: "TASK=build_artifacts"
 
 install:
   - chmod +x -R scripts
