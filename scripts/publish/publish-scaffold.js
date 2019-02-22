@@ -51,11 +51,13 @@ function fixVersion() {
     'theme',
     'util',
   ].forEach(v => {
-    json.dependencies[`@delon/${v}`] = nextVersion;
+    json.dependencies[`@delon/${v}`] = `^${nextVersion}`;
   });
-  json.devDependencies[`@delon/testing`] = nextVersion;
-  json.devDependencies[`ng-alain`] = nextVersion;
-  fs.writeJSONSync(packagePath, json, { spaces: 2 });
+  json.devDependencies[`@delon/testing`] = `^${nextVersion}`;
+  json.devDependencies[`ng-alain`] = `^${nextVersion}`;
+  fs.writeJSONSync(packagePath, json, {
+    spaces: 2
+  });
 }
 
 function fetchOlderVersions() {

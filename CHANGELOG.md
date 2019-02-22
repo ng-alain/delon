@@ -1,5 +1,10 @@
+# [7.0.0-rc.10](https://github.com/ng-alain/delon/compare/7.0.0-rc.9...7.0.0-rc.10) (2019-02-22)
+
+
+
 # [7.0.0-rc.9](https://github.com/ng-alain/delon/compare/7.0.0-rc.8...7.0.0-rc.9) (2019-02-22)
 
+[deprecated]
 
 ### Bug Fixes
 
