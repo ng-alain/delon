@@ -39,12 +39,12 @@ describe('NgAlainSchematic: plugin: icon', () => {
 
   beforeEach(() => {
     ({ runner, tree } = createAlainApp());
-    Object.keys(testCases).forEach(name => tree.create(`/foo/src/${name}`, testCases[name]));
+    Object.keys(testCases).forEach(name => tree.create(`/projects/foo/src/${name}`, testCases[name]));
     tree = runner.runSchematic('plugin', { name: 'icon', type: 'add' }, tree);
   });
 
   it(`should working`, () => {
-    const path = `/foo/src/style-icons-auto.ts`;
+    const path = `/projects/foo/src/style-icons-auto.ts`;
     expect(tree.exists(path)).toBe(true);
     const content = tree.readContent(path);
     // ingore custom icons
