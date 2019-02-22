@@ -203,7 +203,7 @@ export class STDataSource {
     let ret = value;
     switch (col.type) {
       case 'no':
-        ret = typeof col.noIndex === 'function' ? col.noIndex(item, col, idx) : col.noIndex + idx;
+        ret = this.getNoIndex(item, col, idx);
         break;
       case 'img':
         ret = value ? `<img src="${value}" class="img">` : '';
@@ -261,6 +261,10 @@ export class STDataSource {
       reqOptions = req.process(reqOptions);
     }
     return this.http.request(method, url, reqOptions);
+  }
+
+  getNoIndex(item: STData, col: STColumn, idx: number): number {
+    return typeof col.noIndex === 'function' ? col.noIndex(item, col, idx) : col.noIndex + idx;
   }
 
   // #region sort
