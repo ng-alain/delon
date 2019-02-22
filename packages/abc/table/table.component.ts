@@ -433,7 +433,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { text: c.noIndex + idx, org: idx })));
+      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
 
     return this.cd();
   }
