@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "7.0.0-rc.8",
+  "version": "7.0.0-rc.10",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for ng-alain.",
   "keywords": [
@@ -83,7 +83,7 @@
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~3.1.1",
+    "karma": "~4.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",

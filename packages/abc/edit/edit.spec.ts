@@ -72,13 +72,21 @@ describe('abc: edit', () => {
             expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
             expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
           });
-          it('#labelWidth', () => {
-            context.parent_labelWidth = 20;
-            context.label = 'aa';
-            fixture.detectChanges();
-            expect(page.getEl(prefixCls + 'label').style.width).toBe(
-              `${context.parent_labelWidth}px`,
-            );
+          describe('#labelWidth', () => {
+            it('should working', () => {
+              context.labelWidth = 20;
+              context.label = 'aa';
+              fixture.detectChanges();
+              expect(page.getEl(prefixCls + 'label').style.width).toBe(`${context.labelWidth}px`);
+            });
+            it('should be inherit parent labelWidth value', () => {
+              context.parent_labelWidth = 20;
+              context.label = 'aa';
+              fixture.detectChanges();
+              expect(page.getEl(prefixCls + 'label').style.width).toBe(
+                `${context.parent_labelWidth}px`,
+              );
+            });
           });
           it('#layout', () => {
             context.parent_layout = 'horizontal';
@@ -377,6 +385,7 @@ describe('abc: edit', () => {
         [col]="col"
         [required]="required"
         [line]="line"
+        [labelWidth]="labelWidth"
       >
         <input type="text" [(ngModel)]="val" name="val" required [disabled]="disabled" />
       </se>
@@ -408,6 +417,7 @@ class TestComponent {
   line: boolean;
   col: number;
   controlClass = '';
+  labelWidth = null;
 
   val = '';
   showModel = true;

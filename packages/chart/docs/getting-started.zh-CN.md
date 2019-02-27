@@ -20,11 +20,27 @@ type: Documents
 
 ## 如何使用
 
+### 安装依赖
+
 ```bash
 # add
 ng g ng-alain:plugin g2
 # remove
 ng g ng-alain:plugin g2 -t=remove
+```
+
+### 导入模块
+
+```ts
+// shared.module.ts
+import { DelonChartModule } from '@delon/chart';
+// 支持次级导入，例如只使用 `g2-bar` 组件，可以减少包体大小
+// import { G2BarModule } from '@delon/chart/bar';
+
+@NgModule({
+  imports: [ DelonChartModule ],
+  exports: [ DelonChartModule ]
+})
 ```
 
 ## 自定义 G2 组件

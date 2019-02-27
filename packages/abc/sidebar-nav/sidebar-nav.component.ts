@@ -36,13 +36,13 @@ const FLOATINGCLS = 'sidebar-nav__floating';
 export class SidebarNavComponent implements OnInit, OnDestroy {
   private bodyEl: HTMLBodyElement;
   private unsubscribe$ = new Subject<void>();
-  /** @inner */
-  floatingEl: HTMLDivElement;
+  private floatingEl: HTMLDivElement;
   list: Nav[] = [];
 
   @Input() @InputBoolean() disabledAcl = false;
   @Input() @InputBoolean() autoCloseUnderPad = true;
   @Input() @InputBoolean() recursivePath = true;
+  @Input() @InputBoolean() openStrictly = false;
   @Output() readonly select = new EventEmitter<Menu>();
 
   get collapsed() {
@@ -171,13 +171,15 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   toggleOpen(item: Nav) {
-    this.menuSrv.visit(this._d, (i, p) => {
-      if (i !== item) i._open = false;
-    });
-    let pItem = item.__parent;
-    while (pItem) {
-      pItem._open = true;
-      pItem = pItem.__parent;
+    if (!this.openStrictly) {
+      this.menuSrv.visit(this._d, (i, p) => {
+        if (i !== item) i._open = false;
+      });
+      let pItem = item.__parent;
+      while (pItem) {
+        pItem._open = true;
+        pItem = pItem.__parent;
+      }
     }
     item._open = !item._open;
     this.cdr.markForCheck();
@@ -200,12 +202,16 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     menuSrv.openedByUrl(router.url, this.recursivePath);
     this.ngZone.runOutsideAngular(() => this.genFloatingContainer());
     menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(data => {
-      menuSrv.visit(data, i => {
-        if (i._aclResult) return;
-        if (this.disabledAcl) {
-          i.disabled = true;
-        } else {
-          i._hidden = true;
+      menuSrv.visit(data, (i: Nav) => {
+        if (!i._aclResult) {
+          if (this.disabledAcl) {
+            i.disabled = true;
+          } else {
+            i._hidden = true;
+          }
+        }
+        if (this.openStrictly) {
+          i._open = i.open != null ? i.open : false;
         }
       });
       this.list = menuSrv.menus;

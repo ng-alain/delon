@@ -4,6 +4,30 @@ title: 更新日志
 type: Other
 ---
 
+# [7.0.0-rc.10](https://github.com/ng-alain/delon/compare/7.0.0-rc.9...7.0.0-rc.10) (2019-02-22)
+
+
+
+# [7.0.0-rc.9](https://github.com/ng-alain/delon/compare/7.0.0-rc.8...7.0.0-rc.9) (2019-02-22)
+
+[deprecated]
+
+### Bug Fixes
+
+* **abc:sidebar-nav:** 修复菜单文本溢出时应显示省略号 ([#447](https://github.com/ng-alain/delon/issues/447)) ([5d3c7ea](https://github.com/ng-alain/delon/commit/5d3c7ea))
+* **form:sf:autocomplete:** 修复 `enum` 表示自定义Email后缀 ([#439](https://github.com/ng-alain/delon/issues/439)) ([f072fe0](https://github.com/ng-alain/delon/commit/f072fe0)), closes [#438](https://github.com/ng-alain/delon/issues/438)
+* **abc:st:** 修复多排序值应保持用户点击的顺序 ([#445](https://github.com/ng-alain/delon/issues/445)) ([0dc95c2](https://github.com/ng-alain/delon/commit/0dc95c2))
+* **util:getTimeDistance:** 修复周数计算应使用国际标准 `weekStartsOn: 1` ([#441](https://github.com/ng-alain/delon/issues/441)) ([6598271](https://github.com/ng-alain/delon/commit/6598271))
+
+### Features
+
+* **abc:se:** 新增 `labelWidth` 属性 ([#451](https://github.com/ng-alain/delon/issues/451)) ([94ebfbe](https://github.com/ng-alain/delon/commit/94ebfbe))
+* **abc:sidebar-nav:** 新增 `openStrictly` 属性，是否完全自己受控 `open` 展开状态 ([#452](https://github.com/ng-alain/delon/issues/452)) ([ffeccdd](https://github.com/ng-alain/delon/commit/ffeccdd))
+* **abc:st:** 新增 `noIndex` 支持自定义函数 ([#453](https://github.com/ng-alain/delon/issues/453)) ([87bad16](https://github.com/ng-alain/delon/commit/87bad16))
+* **abc:range-picker:** 新增 `shortcut` 快捷项属性 ([#441](https://github.com/ng-alain/delon/issues/441)) ([6598271](https://github.com/ng-alain/delon/commit/6598271))
+* **schematics:** 新增VSCODE扩展推荐配置项 ([#443](https://github.com/ng-alain/delon/issues/443)) ([7df5ed2](https://github.com/ng-alain/delon/commit/7df5ed2))
+
+
 # [7.0.0-rc.8](https://github.com/ng-alain/delon/compare/7.0.0-rc.7...7.0.0-rc.8) (2019-02-15)
 
 

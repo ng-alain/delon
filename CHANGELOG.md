@@ -1,3 +1,33 @@
+# [7.0.0-rc.10](https://github.com/ng-alain/delon/compare/7.0.0-rc.9...7.0.0-rc.10) (2019-02-22)
+
+
+
+# [7.0.0-rc.9](https://github.com/ng-alain/delon/compare/7.0.0-rc.8...7.0.0-rc.9) (2019-02-22)
+
+[deprecated]
+
+### Bug Fixes
+
+* **abc:sidebar:** fix invalid menu item ellipsis when text overflow ([#447](https://github.com/ng-alain/delon/issues/447)) ([5d3c7ea](https://github.com/ng-alain/delon/commit/5d3c7ea))
+* **module:sf:autocomplete:** fix invalid custom email suffix by enum ([#439](https://github.com/ng-alain/delon/issues/439)) ([f072fe0](https://github.com/ng-alain/delon/commit/f072fe0)), closes [#438](https://github.com/ng-alain/delon/issues/438)
+* **module:st:** fix sort order data should be in user click order ([#445](https://github.com/ng-alain/delon/issues/445)) ([0dc95c2](https://github.com/ng-alain/delon/commit/0dc95c2))
+
+
+### Features
+
+* **abc:se:** add labelWidth property ([#451](https://github.com/ng-alain/delon/issues/451)) ([94ebfbe](https://github.com/ng-alain/delon/commit/94ebfbe))
+* **abc:sidebar-nav:** add  openStrictly property ([#452](https://github.com/ng-alain/delon/issues/452)) ([ffeccdd](https://github.com/ng-alain/delon/commit/ffeccdd))
+* **abc:st:** support custom function of noIndex ([#453](https://github.com/ng-alain/delon/issues/453)) ([87bad16](https://github.com/ng-alain/delon/commit/87bad16))
+* **module:range-picker:** add shortcut property ([#441](https://github.com/ng-alain/delon/issues/441)) ([6598271](https://github.com/ng-alain/delon/commit/6598271))
+* **schematics:** add VsCode extension recommendations in ng add ([#443](https://github.com/ng-alain/delon/issues/443)) ([7df5ed2](https://github.com/ng-alain/delon/commit/7df5ed2))
+
+
+### Performance Improvements
+
+* **abc:sidebar:** optimize dom rendering ([#448](https://github.com/ng-alain/delon/issues/448)) ([e35118a](https://github.com/ng-alain/delon/commit/e35118a))
+
+
+
 # [7.0.0-rc.8](https://github.com/ng-alain/delon/compare/7.0.0-rc.7...7.0.0-rc.8) (2019-02-15)
 
 

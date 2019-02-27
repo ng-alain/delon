@@ -618,6 +618,14 @@ describe('abc: table: data-souce', () => {
             done();
           });
         });
+        it('with function', (done: () => void) => {
+          options.columns[0].type = 'no';
+          options.columns[0].noIndex = () => 10;
+          srv.process(options).then(res => {
+            expect(res.list[0]._values[0].text).toBe(10);
+            done();
+          });
+        });
       });
       describe('via img', () => {
         it('with value', (done: () => void) => {

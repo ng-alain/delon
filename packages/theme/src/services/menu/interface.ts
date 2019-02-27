@@ -55,6 +55,8 @@ export interface Menu {
   shortcutRoot?: boolean;
   /** 是否允许复用，需配合 `reuse-tab` 组件 */
   reuse?: boolean;
+  /** 是否展开，当设置 `checkStrictly` 时有效 */
+  open?: boolean;
   /** 二级菜单 */
   children?: Menu[];
 }

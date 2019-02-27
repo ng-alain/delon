@@ -1,18 +1,14 @@
 ---
 order: 60
-title:
-  en-US: Import Module
-  zh-CN: 引入外部模块
+title: 使用第三方类库
 type: Dev
 ---
 
-除了 ng-zorro-antd 基础组件以及脚手架内置的 @delon 业务组件，有时我们还需要引入其他外部模块，这里以引入富文本组件 [ngx-tinymce](https://github.com/cipchk/ngx-tinymce) 为例进行介绍。
+除了 ng-zorro-antd 基础组件以及 @delon 业务组件以外，有时我们还需要引用其他外部类库，以下将介绍如何使用富文本组件 [ngx-tinymce](https://github.com/cipchk/ngx-tinymce)：
 
 ## Angular组件
 
 ### 安装依赖包
-
-在终端输入下面的命令完成安装：
 
 ```bash
 yarn add ngx-tinymce
@@ -46,8 +42,6 @@ import { NgxTinymceModule } from 'ngx-tinymce';
 export class AppModule { }
 ```
 
-### 使用
-
 接下来你可以在任何子模块中使用 `ngx-tinymce`：
 
 ```html
@@ -59,8 +53,6 @@ export class AppModule { }
 引用一个非 Angular 组件实际上是一个 JavaScript 类库，例如二维码类库 [qrious](https://neocotic.com/qrious/)，这是一个纯洁的 JavaScript 类库（建议尽可能使用纯洁类库而非带有依赖其他）。
 
 ### 安装依赖包
-
-在终端输入下面的命令完成安装：
 
 ```bash
 yarn add qrious
@@ -76,11 +68,13 @@ yarn add qrious
 ]
 ```
 
-> 注意：需要重新运行 `ng serve` 才会生效。
+如果第三方类库需要额外的样式，还需要在 `styles` 增加路径。
+
+> 注意：需要重新运行 `ng s` 才会生效。
 
 **延迟加载脚本**
 
-上述导入脚本方式会把代码直接打包进 `scripts.js`，这会导致核心类库体积变大，ng-alain 提供另一种延迟加载CDN类库脚本方案，特别适合**非**常用性功能，但又需要额外依赖一个比较大的类库时（例如：[zip](https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js) 压缩），可以利用 [LazyService](/util/lazy) 来解决延迟加载远程CDN脚本。
+上述导入脚本方式会把代码直接打包进 `scripts.js`，这会导致 `scripts.js` 体积变大，ng-alain 提供另一种延迟加载CDN类库脚本解决方案，适用低使用率的业务（例如：[zip](https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js) 压缩），可以利用 [LazyService](/util/lazy) 延迟加载远程CDN脚本。
 
 ### 使用
 
