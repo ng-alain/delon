@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { deepCopy } from '@delon/util';
-import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd';
-import { map } from 'rxjs/operators';
+import { NzFormatEmitEvent } from 'ng-zorro-antd';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -14,16 +12,6 @@ import { ControlWidget } from '../../widget';
 export class TreeSelectWidget extends ControlWidget implements OnInit {
   i: any;
   data: SFSchemaEnum[] = [];
-
-  private dc() {
-    // Muse wait `nz-tree-select` write values
-    // https://github.com/NG-ZORRO/ng-zorro-antd/issues/2316
-    setTimeout(() => this.detectChanges(), 1000);
-  }
-
-  private tranData(list: SFSchemaEnum[]) {
-    return list.map(node => new NzTreeNode(deepCopy(node) as any));
-  }
 
   ngOnInit(): void {
     const { ui } = this;
@@ -38,16 +26,14 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
       asyncData: typeof ui.expandChange === 'function',
       defaultExpandAll: toBool(ui.defaultExpandAll, false),
       defaultExpandedKeys: ui.defaultExpandedKeys || [],
-      displayWith: ui.displayWith || ((node: NzTreeNode) => node.title),
+      displayWith: ui.displayWith || ((node: any) => node.title),
     };
   }
 
   reset(value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData)
-      .pipe(map(list => this.tranData(list)))
       .subscribe(list => {
         this.data = list;
-        this.dc();
       });
   }
 
@@ -60,11 +46,9 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
     const { ui } = this;
     if (typeof ui.expandChange !== 'function') return;
     ui.expandChange(e)
-      .pipe(map((list: SFSchemaEnum[]) => this.tranData(list)))
       .subscribe(res => {
         e.node.clearChildren();
         e.node.addChildren(res);
-        this.dc();
       });
   }
 }

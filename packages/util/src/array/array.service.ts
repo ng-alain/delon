@@ -137,7 +137,7 @@ export class ArrayService {
       /** 转换成树数据后，执行的递归回调 */
       cb?: (item: any, parent: any, deep: number) => void;
     },
-  ): NzTreeNode[] {
+  ): any[] {
     options = {
       idMapName: this.c.idMapName,
       parentIdMapName: this.c.parentIdMapName,
@@ -171,7 +171,7 @@ export class ArrayService {
         options.cb(item, parent, deep);
       }
     });
-    return tree.map(node => new NzTreeNode(node));
+    return tree;
   }
 
   /**

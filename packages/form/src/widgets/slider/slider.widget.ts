@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Marks, SliderValue } from 'ng-zorro-antd';
 import { ControlWidget } from '../../widget';
 
 @Component({
@@ -10,7 +9,7 @@ export class SliderWidget extends ControlWidget implements OnInit {
   min: number;
   max: number;
   step: number;
-  marks: Marks;
+  marks: any;
   included: boolean;
 
   ngOnInit(): void {
@@ -28,7 +27,7 @@ export class SliderWidget extends ControlWidget implements OnInit {
     return value;
   }
 
-  _afterChange(value: SliderValue) {
+  _afterChange(value: any) {
     if (this.ui.afterChange) this.ui.afterChange(value);
   }
 }
