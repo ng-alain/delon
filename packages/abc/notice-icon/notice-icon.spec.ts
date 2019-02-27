@@ -5,6 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { en_US, zh_CN, DelonLocaleModule, DelonLocaleService } from '@delon/theme';
 
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NoticeIconComponent } from './notice-icon.component';
 import { NoticeIconModule } from './notice-icon.module';
 import { NoticeItem } from './notice-icon.types';
@@ -17,7 +18,7 @@ describe('abc: notice-icon', () => {
 
   configureTestSuite(() => {
     injector = TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, NoticeIconModule, DelonLocaleModule],
+      imports: [NoopAnimationsModule, NoticeIconModule, HttpClientTestingModule, DelonLocaleModule],
       declarations: [TestComponent],
     });
   });
