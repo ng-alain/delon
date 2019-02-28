@@ -126,7 +126,7 @@ export class ReuseTabService implements OnDestroy {
     return this.index(url) !== -1;
   }
   /** 获取指定路径缓存 */
-  get(url: string): ReuseTabCached {
+  get(url?: string): ReuseTabCached {
     return url ? this._cached.find(w => w.url === url) || null : null;
   }
   private remove(url: string | number, includeNonCloseable: boolean): boolean {

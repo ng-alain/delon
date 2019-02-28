@@ -67,7 +67,7 @@ describe('abc: page-header', () => {
 
   function checkValue(cls: string, value: any) {
     const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
-    expect(el.textContent.trim()).toBe(value);
+    expect(el.textContent!.trim()).toBe(value);
   }
 
   afterEach(() => context.comp.ngOnDestroy());
@@ -127,7 +127,7 @@ describe('abc: page-header', () => {
           const srv = injector.get(SettingsService);
           const affixComp = dl
             .query(By.directive(NzAffixComponent))
-            .injector.get(NzAffixComponent, null);
+            .injector.get<NzAffixComponent>(NzAffixComponent, undefined);
           spyOn(affixComp, 'updatePosition');
           srv.setLayout('collapsed', true);
           expect(affixComp.updatePosition).toHaveBeenCalled();
@@ -228,7 +228,7 @@ describe('abc: page-header', () => {
         const firstPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)'))
           .nativeElement;
         urlSpy.and.returnValue('/1-1/1-1-1');
-        fixture.ngZone.run(() => {
+        fixture.ngZone!.run(() => {
           router.navigateByUrl('/1-1/1-1-1');
           fixture.whenStable().then(() => {
             fixture.detectChanges();
@@ -286,7 +286,7 @@ describe('abc: page-header', () => {
         const text = 'asdf';
         // tslint:disable-next-line:no-shadowed-variable
         const i18n = 'i18n';
-        context.title = undefined;
+        context.title = null;
         context.autoTitle = true;
         context.autoBreadcrumb = true;
         spyOn(menuSrv, 'getPathByUrl').and.returnValue([{ text, i18n }]);
@@ -335,7 +335,7 @@ describe('abc: page-header', () => {
 
     it('should be refresh title when route changed of auto generate title', fakeAsync(() => {
       genModule({ created: false });
-      context.title = undefined;
+      context.title = null;
       context.autoTitle = true;
       menuSrv.add([{ text: '1', link: '/1-1/p1' }, { text: '2', link: '/1-1/p2' }]);
       const urlSpy = spyOnProperty(router, 'url');
@@ -366,7 +366,7 @@ describe('abc: page-header', () => {
           ],
         });
 
-        context.title = undefined;
+        context.title = null;
         context.autoTitle = true;
         context.syncTitle = true;
       });
@@ -423,7 +423,7 @@ describe('abc: page-header', () => {
 class TestBaseComponent {
   @ViewChild('comp')
   comp: PageHeaderComponent;
-  title = '所属类目';
+  title: string | null = '所属类目';
   autoBreadcrumb: boolean;
   autoTitle: boolean;
   syncTitle: boolean;
