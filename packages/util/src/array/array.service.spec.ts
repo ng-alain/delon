@@ -137,7 +137,7 @@ describe('utils: array', () => {
           const res = srv.arrToTreeNode(
             [{ id: 1, parent_id: 0, title: 't1', [key]: true, isLeaf: key !== 'expanded' }],
             options,
-          ).map(i => new NzTreeNode(i));
+          );
           page = new PageTreeNode(res);
           page.check(
             '0',
@@ -222,7 +222,7 @@ describe('utils: array', () => {
         : srv.arrToTreeNode(deepCopy(MOCK_ARR), {
             parentIdMapName: 'pid',
             titleMapName: 'name',
-          }).map(i => new NzTreeNode(i));
+          });
     }
     check(path: string, field: string, value: any): this {
       const pathArr = path.split('/');

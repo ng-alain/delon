@@ -49,6 +49,7 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
       .subscribe(res => {
         e.node.clearChildren();
         e.node.addChildren(res);
+        this.detectChanges();
       });
   }
 }
