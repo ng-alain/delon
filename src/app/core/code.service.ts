@@ -235,7 +235,7 @@ export class StartupService {
   load(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.lazy.load([
-        'https://cdnjs.cloudflare.com/ajax/libs/ajv/6.6.2/ajv.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/ajv/6.9.2/ajv.min.js'
       ])
         .then(() => resolve(null));
     });
