@@ -301,6 +301,10 @@ export class SFPage {
 
   typeEvent(eventName: string, cls = 'input'): this {
     const node = document.querySelector(cls) as HTMLInputElement;
+    if (node == null) {
+      expect(true).toBe(false, `won't found '${cls}' class element`);
+      return this;
+    }
     dispatchFakeEvent(node, eventName);
     return this.time().dc();
   }

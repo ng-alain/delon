@@ -69,8 +69,7 @@ export class CheckboxWidget extends ControlWidget {
     } else {
       this.indeterminate = true;
     }
-    // issues: https://github.com/NG-ZORRO/ng-zorro-antd/issues/2025
-    setTimeout(() => this.detectChanges());
+    this.detectChanges();
     return this;
   }
 

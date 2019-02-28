@@ -3,9 +3,10 @@ import { tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { NzDropDownDirective } from 'ng-zorro-antd';
+import { dispatchFakeEvent } from './dispatch-events';
 
 /**
- * [nz-dropdown](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/dropdown/nz-dropdown.component.ts#L159) 抖动合理值
+ * [nz-dropdown](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/dropdown/nz-dropdown.component.ts#L88) 抖动合理值
  */
 export const DROPDOWN_MIN_TIME = 51;
 
@@ -21,10 +22,11 @@ export function dispatchDropDown(
   if (allowNull && directive == null) {
     return false;
   }
+  const el = directive.injector.get(NzDropDownDirective).el;
   if (trigger === 'click') {
-    directive.injector.get(NzDropDownDirective).onClick(null);
+    dispatchFakeEvent(el, 'click');
   } else {
-    directive.injector.get(NzDropDownDirective).onMouseEnter(null);
+    dispatchFakeEvent(el, 'mouseenter');
   }
   tick(DROPDOWN_MIN_TIME);
   return true;

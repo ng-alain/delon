@@ -317,7 +317,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (cleanStatus) {
       this.clearStatus();
     }
-    this._data.length = 0;
+    this._data = [];
     return this.cd();
   }
 

@@ -1,4 +1,4 @@
-import { LocaleData } from '../locale.types';
+import { FullLocaleData } from '../locale.types';
 
 export default {
   abbr: 'el-GR',
@@ -37,4 +37,4 @@ export default {
     removeText: 'Αφαίρεση',
     checkAllText: 'Επιλογή όλων',
   },
-} as LocaleData;
+} as FullLocaleData;

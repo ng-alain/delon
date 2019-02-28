@@ -10,6 +10,7 @@ import { configureTestSuite } from '@delon/testing';
 import { AlainThemeModule, MenuIcon, MenuService, SettingsService, WINDOW } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SidebarNavComponent } from './sidebar-nav.component';
 import { SidebarNavModule } from './sidebar-nav.module';
 import { Nav } from './sidebar-nav.types';
@@ -75,7 +76,7 @@ describe('abc: sidebar-nav', () => {
 
   function createModule() {
     injector = TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), AlainThemeModule, SidebarNavModule],
+      imports: [RouterModule.forRoot([]), AlainThemeModule, HttpClientTestingModule, SidebarNavModule],
       declarations: [TestComponent],
       providers: [
         { provide: ACLService, useClass: MockACLService },
@@ -399,7 +400,7 @@ describe('abc: sidebar-nav', () => {
       });
       router.navigateByUrl('/');
       fixture.detectChanges();
-      tick(20);
+      tick(1000);
       expect(setSrv.layout.collapsed).toBe(defaultCollapsed);
     }));
     it('should be auto expaned when less than pad trigger click', fakeAsync(() => {
