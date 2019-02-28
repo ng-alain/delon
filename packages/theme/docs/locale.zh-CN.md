@@ -47,6 +47,7 @@ switchLanguage() {
 | 繁体中文     | zh_TW      |
 | 土耳其语     | tr_TR      |
 | 波兰语       | pl_PL      |
+| 希腊语       | el_GR      |
 
 ## 增加语言包
 
