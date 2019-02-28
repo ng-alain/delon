@@ -13,6 +13,7 @@ type: Dev
 + [Ant Design 指引文章](//ant.design/docs/spec/introduce-cn)
 + [Ant Design for Angular](//ng.ant.design/)
 + [Antv 图表](//antv.alipay.com/zh-cn/index.html)
++ [NG-ZORRO 社区推荐](https://ng.ant.design/docs/recommendation/zh#博客及网站)
 
 ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很详细的 [API](//ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
 
