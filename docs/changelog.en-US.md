@@ -14,6 +14,13 @@ type: Other
 
 ---
 
+## [7.0.1](https://github.com/ng-alain/delon/compare/7.0.0...7.0.1) (2019-03-01)
+
+### Bug Fixes
+
+* **cli:** fix ignores files and folders named "core" by default ([#461](https://github.com/ng-alain/delon/issues/461)) ([bd5696a](https://github.com/ng-alain/delon/commit/bd5696a))
+
+
 # [7.0.0](https://github.com/ng-alain/delon/compare/7.0.0-rc.10...7.0.0) (2019-02-28)
 
 **All is well, has been waiting for ng-zorro-antd 7.0.0, it's the basic component of ng-alain, so this update just keeps the synchronization of the major version number**
