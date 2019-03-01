@@ -47,12 +47,12 @@ function fetchOlderVersions() {
 function checkout() {
   log.info('Checkout and push a new branch for publishing...');
   execSync(`git checkout -b publish-${nextVersion}`, execSyncOptions);
-  // execSync('git add .', execSyncOptions);
-  // execSync(
-  //   `git commit -m "release(${nextVersion}): release ${nextVersion}"`,
-  //   execSyncOptions,
-  // );
+  execSync('git add .', execSyncOptions);
+  execSync(
+    `git commit -m "release(${nextVersion}): release ${nextVersion}"`,
+    execSyncOptions,
+  );
   // execSync(`git push origin publish-${nextVersion}`, execSyncOptions);
-  // log.success('Please go to GitHub and make a pull request.');
-  // log.success('Bye!');
+  log.success('Please go to GitHub and make a pull request.');
+  log.success('Bye!');
 }
