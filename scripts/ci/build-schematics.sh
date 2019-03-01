@@ -218,6 +218,7 @@ buildCLI() {
   fi
 
   cp ${SOURCE}/README.md ${DIST}/README.md
+  cp ${SOURCE}/.npmignore ${DIST}/.npmignore
   cp ./LICENSE ${DIST}/LICENSE
 
   updateVersionReferences ${DIST}
