@@ -14,6 +14,13 @@ type: Other
 
 ---
 
+## [7.0.1](https://github.com/ng-alain/delon/compare/7.0.0...7.0.1) (2019-03-01)
+
+### Bug Fixes
+
+* **cli:** 修复 `ng add ng-alain` 执行错误 ([#461](https://github.com/ng-alain/delon/issues/461)) ([bd5696a](https://github.com/ng-alain/delon/commit/bd5696a))
+
+
 # [7.0.0](https://github.com/ng-alain/delon/compare/7.0.0-rc.10...7.0.0) (2019-02-28)
 
 **一切安好，一直在等待 ng-zorro-antd 7.0.0 正式版，它是我们的基础组件，因此本次更新只是保持主版本号的同步**

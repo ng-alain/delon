@@ -31,7 +31,7 @@ const log = {
 log.info('Starting publishing process...');
 
 fetchOlderVersions();
-execSync('npm run sync-scaffold-version', execSyncOptions);
+execSync('npm run sync-scaffold-version');
 checkout();
 log.success(`Use commit message:`);
 log.success(`release(${nextVersion}): release ${nextVersion}`);
