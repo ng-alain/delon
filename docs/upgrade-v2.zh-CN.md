@@ -38,7 +38,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 ### 2、布局
 
-由于重新采用 BEM 来命名默认布局，这倒置所有 `src/app/layout/default` 需要修改相应样式名称。
+由于重新采用 BEM 来命名默认布局，这导致所有 `src/app/layout/default` 需要修改相应样式名称。
 
 #### 修改部分
 
