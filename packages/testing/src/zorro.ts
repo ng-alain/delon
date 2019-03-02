@@ -22,7 +22,7 @@ export function dispatchDropDown(
   if (allowNull && directive == null) {
     return false;
   }
-  const el = directive.injector.get(NzDropDownDirective).el;
+  const el = directive.injector.get<NzDropDownDirective>(NzDropDownDirective).elementRef.nativeElement as HTMLElement;
   if (trigger === 'click') {
     dispatchFakeEvent(el, 'click');
   } else {
