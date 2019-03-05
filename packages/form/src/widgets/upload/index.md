@@ -11,7 +11,7 @@ type: Widgets
 - **务必** 指定 `resReName` 来获取正确数据
 - `multiple` 决定返回数组或者单体数据
 - 若指定 `asyncData` 则被转化成 `fileList` (`nzFileList`) 值，且**务必**初始保证一个 `response` 属性表示远程数据并 `resReName` 能正确获取
-- 照片墙模式：预览统一使用 `nzModal` 实现且无法自定义
+- 图像预览：默认使用 `nzModal` 来显示包含文件对象的 `url` 或 `thumbUrl` 值
 
 ## API
 
@@ -30,6 +30,7 @@ type: Widgets
 `[text]` | 按钮文本 | `string` | `点击上传`
 `[hint]` | 提醒文本，drag 时有效 | `string` | `支持单个或批量，严禁上传公司数据或其他安全文件`
 `[resReName]` | 重命名返回参数，支持 `a.b.c` 的嵌套写法，若不指定表示整个返回体 | `string` | -
+`[urlReName]` | 重命名预览图像URL返回参数，支持 `a.b.c` 的嵌套写法，若不指定表示使用文件对象的 `url`、`thumbUrl` 值 | `string` | -
 `[action]` | 必选参数, 上传的地址 | `string` | -
 `[accept]` | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept) | `string` | -
 `[limit]` | 限制单次最多上传数量，`multiple` 打开时有效；`0` 表示不限  | `number` | `0`
