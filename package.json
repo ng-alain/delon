@@ -61,7 +61,7 @@
     "file-saver": "^2.0.0",
     "marked": "^0.6.0",
     "ng-github-button": "^2.1.4",
-    "ng-zorro-antd": "^7.0.0",
+    "ng-zorro-antd": "^7.0.1",
     "ng2-ace-editor": "^0.3.8",
     "ngx-color": "^2.0.5",
     "ngx-countdown": "^3.2.0",
