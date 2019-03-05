@@ -102,7 +102,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._req;
   }
   set req(value: STReq) {
-    this._req = deepMerge({}, this.cog.req, value);
+    this._req = deepMerge({}, this._req, this.cog.req, value);
   }
   private _req: STReq;
   /** 返回体配置 */
