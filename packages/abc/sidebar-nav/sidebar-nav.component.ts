@@ -167,7 +167,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       }
       return false;
     }
-    this.router.navigateByUrl(item.link);
+    this.ngZone.run(() => this.router.navigateByUrl(item.link));
   }
 
   toggleOpen(item: Nav) {
