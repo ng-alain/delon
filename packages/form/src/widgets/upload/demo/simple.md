@@ -46,6 +46,7 @@ export class DemoComponent {
           widget: 'upload',
           action: '/upload',
           resReName: 'resource_id',
+          urlReName: 'url',
         },
       },
       // 拖动模式
@@ -56,6 +57,7 @@ export class DemoComponent {
           widget: 'upload',
           action: '/upload',
           resReName: 'resource_id',
+          urlReName: 'url',
           type: 'drag',
         },
       },
