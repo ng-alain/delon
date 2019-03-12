@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ACLTYPE_PARSER_TOKEN, IACLTypeParser } from './acl-type-parser';
 import { ACLCanType, ACLType } from './acl.type';
 
 /**
@@ -14,6 +15,8 @@ export class ACLService {
     null,
   );
 
+constructor(@Inject(ACLTYPE_PARSER_TOKEN)private aclTypeParser: IACLTypeParser) {}
+
   /** ACL变更通知 */
   get change(): Observable<ACLType | boolean> {
     return this.aclChange.asObservable();
@@ -26,18 +29,6 @@ export class ACLService {
       roles: this.roles,
       abilities: this.abilities,
     };
-  }
-
-  private parseACLType(val: string | string[] | ACLType): ACLType {
-    if (typeof val !== 'string' && !Array.isArray(val)) {
-      return val as ACLType;
-    }
-    if (Array.isArray(val)) {
-      return { role: val as string[] } as ACLType;
-    }
-    return {
-      role: [val],
-    } as ACLType;
   }
 
   /**
@@ -140,23 +131,12 @@ export class ACLService {
    * - 当 `full: true` 或参数 `null` 时返回 `true`
    * - 若使用 `ACLType` 参数，可以指定 `mode` 校验模式
    */
-  can(roleOrAbility: ACLCanType): boolean {
-    if (this.full === true || !roleOrAbility) {
+  can(aclCanType: ACLCanType): boolean {
+    if (this.full === true || !aclCanType) {
       return true;
     }
 
-    let t: ACLType = {};
-    if (typeof roleOrAbility === 'number') {
-      t = { ability: [roleOrAbility] };
-    } else if (
-      Array.isArray(roleOrAbility) &&
-      roleOrAbility.length > 0 &&
-      typeof roleOrAbility[0] === 'number'
-    ) {
-      t = { ability: roleOrAbility };
-    } else {
-      t = this.parseACLType(roleOrAbility);
-    }
+    const t: ACLType =  this.aclTypeParser.parse(aclCanType);
 
     if (t.role) {
       if (t.mode === 'allOf') return t.role.every(v => this.roles.includes(v));
