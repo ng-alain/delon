@@ -1,5 +1,8 @@
+import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
+import { ACLTYPE_PARSER_TOKEN_FACTORY } from './default-type-parser.service';
+import { ACLTYPE_PARSER_TOKEN } from './interface';
 
 describe('acl: service', () => {
   const ADMIN = 'admin';
@@ -8,10 +11,16 @@ describe('acl: service', () => {
   const ABILITY_CREATE = 'order-create';
   const ABILITY_NUMBER = 1;
 
+  let injector: TestBedStatic;
   let srv: ACLService = null;
 
   beforeEach(() => {
-    srv = new ACLService();
+    injector = TestBed.configureTestingModule({
+      providers: [
+        {provide: ACLTYPE_PARSER_TOKEN, useFactory: ACLTYPE_PARSER_TOKEN_FACTORY },
+      ],
+    });
+    srv = injector.get(ACLService);
     srv.set({ role: [ADMIN] } as ACLType);
   });
 

@@ -2,6 +2,9 @@ import { ACLService } from '@delon/acl';
 import { AlainI18NService, AlainI18NServiceFake } from '@delon/theme';
 import { deepGet } from '@delon/util';
 
+import { TestBed, TestBedStatic } from '@angular/core/testing';
+import { ACLTYPE_PARSER_TOKEN_FACTORY } from '@delon/acl/src/default-type-parser.service';
+import { ACLTYPE_PARSER_TOKEN } from '@delon/acl/src/interface';
 import { STColumnSource } from '../table-column-source';
 import { STRowSource } from '../table-row.directive';
 import { STConfig } from '../table.config';
@@ -22,7 +25,13 @@ describe('abc: table: column-souce', () => {
   let page: PageObject;
 
   function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }) {
-    aclSrv = other.acl ? new ACLService() : null;
+    const injector: TestBedStatic = TestBed.configureTestingModule({
+      providers: [
+        {provide: ACLTYPE_PARSER_TOKEN, useFactory: ACLTYPE_PARSER_TOKEN_FACTORY },
+      ],
+    });
+
+    aclSrv = other.acl ? injector.get(ACLService) : null;
     i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
     rowSrv = new STRowSource();
     srv = new STColumnSource(rowSrv, aclSrv, i18nSrv, other.cog || new STConfig());

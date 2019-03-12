@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ACLTYPE_PARSER_TOKEN, IACLTypeParser } from './acl-type-parser';
 import { ACLCanType, ACLType } from './acl.type';
+import { ACLTYPE_PARSER_TOKEN, IACLTypeParser } from './interface';
 
 /**
  * 访问控制服务
