@@ -101,19 +101,27 @@ describe('form: widget: number', () => {
   describe('[ui]', () => {
     it('#prefix', fakeAsync(() => {
       const s: SFSchema = {
-        properties: { a: { type: 'number', default: 1, ui: { prefix: 'a' } } },
+        properties: { a: { type: 'number', default: undefined, ui: { prefix: 'a' } } },
       };
-      page.newSchema(s).typeChar(1);
+      const property = page.newSchema(s).getProperty('/a');
+      page.typeChar(undefined);
       const ipt = page.getEl('.ant-input-number-input') as HTMLInputElement;
+      expect(ipt.value).toBe(``);
+      property.setValue('1', true);
+      page.typeChar(1);
       expect(ipt.value).toBe(`a 1`);
     }));
 
-    it('#prefix', fakeAsync(() => {
+    it('#unit', fakeAsync(() => {
       const s: SFSchema = {
-        properties: { a: { type: 'number', default: 1, ui: { unit: 'b' } } },
+        properties: { a: { type: 'number', default: null, ui: { unit: 'b' } } },
       };
-      page.newSchema(s).typeChar(1);
+      const property = page.newSchema(s).getProperty('/a');
+      page.typeChar(null);
       const ipt = page.getEl('.ant-input-number-input') as HTMLInputElement;
+      expect(ipt.value).toBe(``);
+      property.setValue('1', true);
+      page.typeChar(1);
       expect(ipt.value).toBe(`1 b`);
     }));
 
