@@ -122,7 +122,7 @@ describe('form: widget: number', () => {
       expect(ipt.value).toBe(`1 b`);
       property.setValue(null, true);
       page.typeChar(null);
-      expect(ipt.value).toBe(null);
+      expect(ipt.value).toBe('');
 
     }));
 
