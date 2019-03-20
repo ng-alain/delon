@@ -715,11 +715,18 @@ describe('abc: table: data-souce', () => {
     });
 
     it('should be custom function', done => {
-      options.columns = [{ title: '', index: 'a', statistical: { type: values => ({ value: values[0] }) } }];
+      let callbackRawData = null;
+      options.columns = [{ title: '', index: 'a', statistical: {
+        type: (values, col, list, rawData) => {
+          callbackRawData = rawData;
+          return { value: values[0] };
+        },
+      } }];
       options.data = [{ a: 1 }, { a: 2 }];
 
       srv.process(options).then(res => {
         expect(res.statistical[0].value).toBe(1);
+        expect(Array.isArray(callbackRawData)).toBe(true);
         done();
       });
     });
