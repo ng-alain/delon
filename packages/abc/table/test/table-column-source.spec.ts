@@ -187,6 +187,22 @@ describe('abc: table: column-souce', () => {
         });
       });
     });
+    describe('[width]', () => {
+      it('should be support number type', () => {
+        page.expectValue(
+          [{ title: '', index: 'id', width: 65 }],
+          '65px',
+          'width',
+        );
+      });
+      it('should be support string type', () => {
+        page.expectValue(
+          [{ title: '', index: 'id', width: '65px' }],
+          '65px',
+          'width',
+        );
+      });
+    });
     describe('[className]', () => {
       it('should be custom class name', () => {
         page.expectValue([{ title: '', type: 'number', className: 'aa' }], 'aa', 'className');
