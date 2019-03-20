@@ -101,28 +101,29 @@ describe('form: widget: number', () => {
   describe('[ui]', () => {
     it('#prefix', fakeAsync(() => {
       const s: SFSchema = {
-        properties: { a: { type: 'number', default: undefined, ui: { prefix: 'a' } } },
+        properties: { a: { type: 'number', default: 1, ui: { prefix: 'a' } } },
       };
       const property = page.newSchema(s).getProperty('/a');
-      page.typeChar(undefined);
-      const ipt = page.getEl('.ant-input-number-input') as HTMLInputElement;
-      expect(ipt.value).toBe(``);
-      property.setValue('1', true);
       page.typeChar(1);
+      const ipt = page.getEl('.ant-input-number-input') as HTMLInputElement;
       expect(ipt.value).toBe(`a 1`);
+      property.setValue(null, true);
+      page.typeChar(null);
+      expect(ipt.value).toBe(``);
     }));
 
     it('#unit', fakeAsync(() => {
       const s: SFSchema = {
-        properties: { a: { type: 'number', default: null, ui: { unit: 'b' } } },
+        properties: { a: { type: 'number', default: 1, ui: { unit: 'b' } } },
       };
       const property = page.newSchema(s).getProperty('/a');
-      page.typeChar(null);
       const ipt = page.getEl('.ant-input-number-input') as HTMLInputElement;
-      expect(ipt.value).toBe(``);
-      property.setValue('1', true);
       page.typeChar(1);
       expect(ipt.value).toBe(`1 b`);
+      property.setValue(null, true);
+      page.typeChar(null);
+      expect(ipt.value).toBe(null);
+
     }));
 
     it('#formatter & #parser', fakeAsync(() => {
