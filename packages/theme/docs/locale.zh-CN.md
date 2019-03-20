@@ -48,6 +48,7 @@ switchLanguage() {
 | 土耳其语     | tr_TR      |
 | 波兰语       | pl_PL      |
 | 希腊语       | el_GR      |
+| 朝鲜的       | ko_KR      |
 
 ## 增加语言包
 

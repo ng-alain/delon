@@ -48,6 +48,7 @@ Note: `en_US` is the package name, follow below.
 | Turkish               | tr_TR    |
 | Polish                | pl_PL    |
 | Greek                 | el_GR    |
+| Korean                | ko_KR    |
 
 ## Add a new language
 
