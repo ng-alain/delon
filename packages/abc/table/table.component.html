@@ -55,7 +55,7 @@
               <span [innerHTML]="c.title"></span>
             </ng-container>
           </ng-container>
-          <nz-dropdown *ngIf="c.filter" class="st__filter" nzTrigger="click" [hasFilterButton]="true"
+          <nz-dropdown *ngIf="c.filter" class="st__filter" nzTrigger="click" nzTableFilter [hasFilterButton]="true"
                        [nzClickHide]="false" [(nzVisible)]="c.filter.visible">
             <i nz-icon [type]="c.filter.icon" theme="fill" [class.ant-table-filter-selected]="c.filter.default"
                [class.ant-table-filter-open]="c.filter.visible" nz-dropdown></i>
