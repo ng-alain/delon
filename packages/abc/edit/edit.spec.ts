@@ -342,6 +342,14 @@ describe('abc: edit', () => {
       `);
       expect(page.getEl('#expected').id).toBe('expected');
     });
+    it(`should be keeping placeholder when content is empty`, () => {
+      genModule(`
+      <form nz-form se-container>
+        <se label="a"></se>
+      </form>
+      `);
+      page.expect('.se__item-empty', 1);
+    });
   });
 
   class PageObject {

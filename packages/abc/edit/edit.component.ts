@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,12 +13,13 @@ import {
   Optional,
   Renderer2,
   TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { FormControlName, NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { ResponsiveService } from '@delon/theme';
-import { deepGet, InputBoolean, InputNumber } from '@delon/util';
+import { deepGet, isEmpty, InputBoolean, InputNumber } from '@delon/util';
 
 import { SEContainerComponent } from './edit-container.component';
 
@@ -34,11 +36,12 @@ let nextUniqueId = 0;
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
   private el: HTMLElement;
   private status$: Subscription;
   @ContentChild(NgModel) private readonly ngModel: NgModel;
   @ContentChild(FormControlName) private readonly formControlName: FormControlName;
+  @ViewChild('contentElement') private readonly contentElement: ElementRef;
   private clsMap: string[] = [];
   private inited = false;
   private onceFlag = false;
@@ -136,6 +139,20 @@ export class SEComponent implements OnChanges, AfterViewInit, OnDestroy {
     }
     this.invalid = (invalid && this.onceFlag) || (this.ngControl.dirty && invalid);
     this.cdr.detectChanges();
+  }
+
+  checkContent(): void {
+    const el = this.contentElement.nativeElement;
+    const cls = `${prefixCls}__item-empty`;
+    if (isEmpty(el)) {
+      this.ren.addClass(el, cls);
+    } else {
+      this.ren.removeClass(el, cls);
+    }
+  }
+
+  ngAfterContentInit(): void {
+    this.checkContent();
   }
 
   ngOnChanges() {
