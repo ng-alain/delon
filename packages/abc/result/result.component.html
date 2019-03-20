@@ -1,5 +1,8 @@
-<div class="result__icon"><i nz-icon
-     class="anticon anticon-{{_icon}} result__icon-{{_type}}"></i></div>
+<div class="result__icon">
+  <i nz-icon
+     [nzType]="_icon"
+     class="result__icon-{{_type}}"></i>
+</div>
 <div class="result__title">
   <ng-container *stringTemplateOutlet="title">{{title}}</ng-container>
 </div>
