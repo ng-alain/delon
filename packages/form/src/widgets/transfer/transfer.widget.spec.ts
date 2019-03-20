@@ -49,13 +49,13 @@ describe('form: widget: transfer', () => {
     };
     page
       .newSchema(s)
-      .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item')
+      .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item label')
       .typeEvent('click', CLS.rightBtn);
 
     expect((page.getValue('a') as number[]).length).toBe(2);
 
     page
-      .typeEvent('click', CLS.right + ' .ant-transfer-list-content-item')
+      .typeEvent('click', CLS.right + ' .ant-transfer-list-content-item label')
       .typeEvent('click', CLS.leftBtn);
 
     expect((page.getValue('a') as number[]).length).toBe(1);
@@ -89,7 +89,7 @@ describe('form: widget: transfer', () => {
       };
       page
         .newSchema(s)
-        .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item')
+        .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item label')
         .typeEvent('click', CLS.rightBtn);
 
       expect((s.properties.a.ui as any).change).toHaveBeenCalled();
@@ -120,7 +120,7 @@ describe('form: widget: transfer', () => {
       };
       page
         .newSchema(s)
-        .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item')
+        .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item label')
         .typeEvent('click', CLS.rightBtn);
 
       expect((s.properties.a.ui as any).canMove).toHaveBeenCalled();
