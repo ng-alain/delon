@@ -49,9 +49,9 @@ describe('abc: result', () => {
       isExists('.anticon-close-circle');
     });
     it('width custom', () => {
-      context.type = 'custom';
+      context.type = 'check';
       fixture.detectChanges();
-      isExists('.anticon-custom');
+      isExists('.anticon-check');
     });
   });
 
