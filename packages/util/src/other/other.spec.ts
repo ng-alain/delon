@@ -44,6 +44,10 @@ describe('abc: utils', () => {
     it('should be return default value when paths include null value', () => {
       expect(deepGet({ res: {} }, 'res.address.city')).toBeUndefined();
     });
+    it('should be get zero value', () => {
+      const res = deepGet({ res: { zero: 0 } }, 'res.zero');
+      expect(res).toBe(0);
+    });
   });
 
   it('#deepCopy', () => {
