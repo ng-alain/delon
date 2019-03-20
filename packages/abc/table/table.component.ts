@@ -85,6 +85,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private totalTpl = ``;
   private locale: LocaleData = {};
   private clonePage: STPage;
+  private copyCog: STConfig;
   _data: STData[] = [];
   _statistical: STStatisticalResults = {};
   _isPagination = true;
@@ -221,9 +222,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       }
     });
 
-    const copyCog = deepMergeKey(new STConfig(), true, cog);
-    delete copyCog.multiSort;
-    Object.assign(this, copyCog);
+    this.copyCog = deepMergeKey(new STConfig(), true, cog);
+    delete this.copyCog.multiSort;
+    Object.assign(this, this.copyCog);
     if (cog.multiSort && cog.multiSort.global !== false) {
       this.multiSort = { ...cog.multiSort };
     }
@@ -573,7 +574,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         modal.component,
         { ...obj, ...(modal.params && modal.params(record)) },
-        { ...modal },
+        deepMergeKey({}, true, this.copyCog.modal, modal),
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
@@ -586,7 +587,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           drawer.title,
           drawer.component,
           { ...obj, ...(drawer.params && drawer.params(record)) },
-          { ...drawer },
+          deepMergeKey({}, true, this.copyCog.drawer, drawer),
         )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
