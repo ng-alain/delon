@@ -14,6 +14,23 @@ type: Other
 
 ---
 
+## [7.0.3](https://github.com/ng-alain/delon/compare/7.0.2...7.0.3) (2019-03-20)
+
+### Bug Fixes
+
+* **abc:result:** 使用 `nzType` 替代已过期 anticon 类名 ([#483](https://github.com/ng-alain/delon/issues/483)) ([7553860](https://github.com/ng-alain/delon/commit/7553860))
+* **abc:se:** 修复当内容为空时应保持占位符的高度 ([#480](https://github.com/ng-alain/delon/issues/480)) ([e35c2e0](https://github.com/ng-alain/delon/commit/e35c2e0))
+* **abc:st:** 修复 `width` 不支持数字型 ([#481](https://github.com/ng-alain/delon/issues/481)) ([7cdbe6e](https://github.com/ng-alain/delon/commit/7cdbe6e))
+* **abc:st:** 修复丢失模态、抽屉全局配置 ([#482](https://github.com/ng-alain/delon/issues/482)) ([ab34a44](https://github.com/ng-alain/delon/commit/ab34a44))
+* **abc:st:** 修复丢失过滤框按钮样式 ([#474](https://github.com/ng-alain/delon/issues/474)) ([f491b4d](https://github.com/ng-alain/delon/commit/f491b4d))
+* **sf:number:** 修复指定 `prefix` 后缀时会显示 `null` ([#473](https://github.com/ng-alain/delon/issues/473)) ([4d2cede](https://github.com/ng-alain/delon/commit/4d2cede))
+* **util:deepGet:** 修复 `0` 被认为无效值问题 ([#479](https://github.com/ng-alain/delon/issues/479)) ([bf37459](https://github.com/ng-alain/delon/commit/bf37459))
+
+### Features
+
+* **abc:st:** 增加自定义统计方法支持原始数据参数 ([#478](https://github.com/ng-alain/delon/issues/478)) ([431c461](https://github.com/ng-alain/delon/commit/431c461))
+
+
 ## [7.0.2](https://github.com/ng-alain/delon/compare/7.0.1...7.0.2) (2019-03-05)
 
 ### Bug Fixes
