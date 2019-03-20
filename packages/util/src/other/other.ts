@@ -17,7 +17,8 @@ export function deepGet(obj: any, path: string | string[], defaultValue?: any): 
     const checkObj = obj[path[0]];
     return typeof checkObj === 'undefined' ? defaultValue : checkObj;
   }
-  return path.reduce((o, k) => (o || {})[k], obj) || defaultValue;
+  const res = path.reduce((o, k) => (o || {})[k], obj);
+  return typeof res === 'undefined' ? defaultValue : res;
 }
 
 export function deepCopy(obj: any): any {
