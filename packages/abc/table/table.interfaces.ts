@@ -317,6 +317,7 @@ export type STStatisticalFn = (
   values: number[],
   col: STColumn,
   list: STData[],
+  rawData?: any,
 ) => STStatisticalResult;
 
 export interface STStatistical {
