@@ -182,9 +182,6 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
         type: 'cat',
         range: [0, 1],
       },
-      y: {
-        min: 0,
-      },
     });
     chart.repaint();
 
