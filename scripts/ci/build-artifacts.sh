@@ -17,15 +17,17 @@ commitAuthorEmail=$(git --no-pager show -s --format='%ae' HEAD)
 commitMessage=$(git log --oneline -n 1)
 commitMessageCheck=$(git log --oneline -n 2)
 
+echo "Current commit author name: ${commitAuthorName}"
+
 if [ ${commitAuthorName} != '卡色' ]; then
-  echo "Warning: Just only 卡色 user (current: ${commitAuthorName})"
+  echo "Warning: Just only 卡色 user"
   exit 0
 fi
 
 if [ -z ${DELON_BUILDS_TOKEN} ]; then
   echo "Error: No access token for GitHub could be found." \
        "Please set the environment variable 'DELON_BUILDS_TOKEN'."
-  exit 1
+  exit 0
 fi
 
 travisFoldStart "publish.dist"
