@@ -360,7 +360,7 @@ Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[type]` | Statistic type of current column | `STStatisticalType | STStatisticalFn` | -
 `[digits]` | The number of digits to appear after the decimal point | `number` | `2`
-`[currenty]` | Whether formatting currenty, default to `true` when `type` is `STStatisticalFn`,`sum`,`average`,`max`,`min` | `boolean` | -
+`[currency]` | Whether formatting currency, default to `true` when `type` is `STStatisticalFn`,`sum`,`average`,`max`,`min` | `boolean` | -
 
 **STStatisticalFn**
 
