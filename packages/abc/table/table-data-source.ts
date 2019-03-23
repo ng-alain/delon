@@ -374,14 +374,14 @@ export class STDataSource {
     const val = col.statistical;
     const item: STStatistical = {
       digits: 2,
-      currenty: null,
+      currency: null,
       ...(typeof val === 'string' ? { type: val as STStatisticalType } : (val as STStatistical)),
     };
     let res: STStatisticalResult = { value: 0 };
-    let currenty = false;
+    let currency = false;
     if (typeof item.type === 'function') {
       res = item.type(this.getValues(index, list), col, list, rawData);
-      currenty = true;
+      currency = true;
     } else {
       switch (item.type) {
         case 'count':
@@ -394,23 +394,23 @@ export class STDataSource {
           break;
         case 'sum':
           res.value = this.toFixed(this.getSum(index, list), item.digits);
-          currenty = true;
+          currency = true;
           break;
         case 'average':
           res.value = this.toFixed(this.getSum(index, list) / list.length, item.digits);
-          currenty = true;
+          currency = true;
           break;
         case 'max':
           res.value = Math.max(...this.getValues(index, list));
-          currenty = true;
+          currency = true;
           break;
         case 'min':
           res.value = Math.min(...this.getValues(index, list));
-          currenty = true;
+          currency = true;
           break;
       }
     }
-    if (item.currenty === true || (item.currenty == null && currenty === true)) {
+    if (item.currency === true || (item.currency == null && currency === true)) {
       res.text = this.currentyPipe.transform(res.value);
     } else {
       res.text = String(res.value);

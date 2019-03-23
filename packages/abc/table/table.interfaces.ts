@@ -330,7 +330,7 @@ export interface STStatistical {
    * 是否需要货币格式化，默认以下情况为 `true`
    * - `type` 为 `STStatisticalFn`、 `sum`、`average`、`max`、`min`
    */
-  currenty?: boolean;
+  currency?: boolean;
 }
 
 export interface STStatisticalResults {

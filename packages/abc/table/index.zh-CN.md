@@ -353,7 +353,7 @@ class TestComponent {
 ----|------|-----|------
 `[type]` | 统计类型 | `STStatisticalType | STStatisticalFn` | -
 `[digits]` | 保留小数位数 | `number` | `2`
-`[currenty]` | 是否需要货币格式化，默认当 `type` 为 `STStatisticalFn`、 `sum`、`average`、`max`、`min` 时为 `true` | `boolean` | -
+`[currency]` | 是否需要货币格式化，默认当 `type` 为 `STStatisticalFn`、 `sum`、`average`、`max`、`min` 时为 `true` | `boolean` | -
 
 **STStatisticalFn**
 
