@@ -18,9 +18,6 @@ for ARG in "$@"; do
   esac
 done
 
-echo "Use npm registry in npm"
-nrm use npm
-
 VERSION=$(node -p "require('./package.json').version")
 echo "Version ${VERSION}"
 
@@ -56,6 +53,3 @@ else
   publishToMaster
 fi
 syncTaobao
-
-echo "Use taobao registry in npm"
-nrm use taobao
