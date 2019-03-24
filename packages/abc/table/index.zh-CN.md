@@ -216,7 +216,7 @@ class TestComponent {
 `[buttons]` | 按钮组 | `STColumnButton[]` | -
 `[width]` | 列宽（数字型表示 `px` 值，**注意：** 若固定列必须是数字），例如：`100`、`10%`、`100px` | `string,number` | -
 `[fixed]` | 固定前后列，当指定时务必指定 `width` 否则视为无效 | `left,right` | -
-`[format]` | 格式化列值 | `function(cell: any, row: any)` | -
+`[format]` | 格式化列值 | `(item: STData, col: STColumn) => string` | -
 `[className]` | 列 `class` 属性值，例如：；`text-center` 居中； `text-right` 居右； `text-danger` 异常色，更多参考[样式工具类](/theme/tools) | `string` | -
 `[colSpan]` | 合并列 | `number` | -
 `[sort]` | 排序配置项，远程数据配置**优先**规则：<br>`true` 表示允许排序<br>`string` 表示远程数据排序相对应 `key` 值 | `true,string,STColumnSort` | -
@@ -353,7 +353,7 @@ class TestComponent {
 ----|------|-----|------
 `[type]` | 统计类型 | `STStatisticalType | STStatisticalFn` | -
 `[digits]` | 保留小数位数 | `number` | `2`
-`[currenty]` | 是否需要货币格式化，默认当 `type` 为 `STStatisticalFn`、 `sum`、`average`、`max`、`min` 时为 `true` | `boolean` | -
+`[currency]` | 是否需要货币格式化，默认当 `type` 为 `STStatisticalFn`、 `sum`、`average`、`max`、`min` 时为 `true` | `boolean` | -
 
 **STStatisticalFn**
 
