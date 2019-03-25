@@ -19,6 +19,7 @@ import { pluginG2 } from './plugin.g2';
 import { pluginHmr } from './plugin.hmr';
 import { pluginIcon } from './plugin.icon';
 import { pluginNetworkEnv } from './plugin.network-env';
+import { pluginSTS } from './plugin.sts';
 
 function installPackages() {
   return (host: Tree, context: SchematicContext) => {
@@ -65,6 +66,9 @@ export default function(options: PluginSchema): Rule {
         break;
       case 'icon':
         rules.push(pluginIcon(pluginOptions));
+        break;
+      case 'sts':
+        rules.push(...pluginSTS(pluginOptions));
         break;
       case 'asdf':
         rules.push(pluginAsdf(pluginOptions));
