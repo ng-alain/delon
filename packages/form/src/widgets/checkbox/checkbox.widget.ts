@@ -53,8 +53,7 @@ export class CheckboxWidget extends ControlWidget {
     this.notifySet();
   }
 
-  onAllChecked(e: Event) {
-    e.stopPropagation();
+  onAllChecked() {
     this.data.forEach(item => (item.checked = this.allChecked));
     this.notifySet();
   }

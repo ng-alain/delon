@@ -78,7 +78,7 @@ describe('form: widget: checkbox', () => {
         },
       });
       const comp = page.getWidget<CheckboxWidget>('sf-checkbox');
-      const checkAllBtn = page.getEl('.sf__checkbox-list .ant-checkbox-wrapper');
+      const checkAllBtn = page.getEl('.sf__checkbox-list .ant-checkbox');
       checkAllBtn.click();
       expect(comp.allChecked).toBe(true);
       checkAllBtn.click();
