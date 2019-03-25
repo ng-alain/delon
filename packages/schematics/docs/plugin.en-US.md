@@ -106,6 +106,7 @@ ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 | Turkish    | tr     | tr        | tr_TR            | tr_TR       |
 | Polish    | pl     | pl        | pl_PL            | pl_PL       |
 | Greek    | el     | el        | el_GR            | el_GR       |
+| Korean    | ko     | ko        | ko_KR            | ko_KR       |
 
 ### networkEnv
 
