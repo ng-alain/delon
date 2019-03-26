@@ -30,6 +30,7 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | -------------- | -------------------- | ----------------------- | ------------ |
 | `[col]`        | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | - |
 | `[label]`      | label of view                                  | `string,TemplateRef<void>`            | - |
+| `[unit]`      | unit of view                                  | `string,TemplateRef<void>`            | - |
 | `[default]`    | whether default text, inherit `sv-container` | `boolean`                              | - |
 | `[type]`       | type of view                  | `'primary','success','danger','warning'` | - |
 
