@@ -123,6 +123,17 @@ ng g ng-alain:plugin networkEnv --packageManager=npm -t=remove
 ng g ng-alain:plugin networkEnv --packageManager=yarn -t=remove
 ```
 
+### sts
+
+[ng-alain-sts](https://github.com/ng-alain/sts) Plugins, Build Swagger APIs to list, edit pages, You can finish some interesting things.
+
+```bash
+# add
+ng g ng-alain:plugin sts
+# remove
+ng g ng-alain:plugin sts -t=remove
+```
+
 ### icon
 
 From the project to analyze and generate static load Icon, The plugin will automatically generate two files in the `src` directory:

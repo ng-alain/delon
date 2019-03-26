@@ -127,6 +127,17 @@ ng g ng-alain:plugin networkEnv --packageManager=npm -t=remove
 ng g ng-alain:plugin networkEnv --packageManager=yarn -t=remove
 ```
 
+### sts
+
+[ng-alain-sts](https://github.com/ng-alain/sts) 插件，构建 Swagger API 转换为列表、编辑页，更多有趣的玩法请自行想象。
+
+```bash
+# add
+ng g ng-alain:plugin sts
+# remove
+ng g ng-alain:plugin sts -t=remove
+```
+
 ### icon
 
 **尽可能**从项目中分析并生成静态 Icon，插件会自动在 `src` 目录下生成两个文件：
