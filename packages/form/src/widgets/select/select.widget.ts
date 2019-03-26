@@ -11,10 +11,12 @@ import { ControlWidget } from '../../widget';
 export class SelectWidget extends ControlWidget implements OnInit {
   i: any;
   data: SFSchemaEnum[];
+  _value: any;
   hasGroup = false;
 
   ngOnInit(): void {
     this.i = {
+      autoClearSearchValue: toBool(this.ui.autoClearSearchValue, true),
       allowClear: this.ui.allowClear,
       autoFocus: toBool(this.ui.autoFocus, false),
       dropdownClassName: this.ui.dropdownClassName || null,
@@ -24,11 +26,14 @@ export class SelectWidget extends ControlWidget implements OnInit {
       mode: this.ui.mode || 'default',
       notFoundContent: this.ui.notFoundContent || '无法找到',
       showSearch: toBool(this.ui.showSearch, true),
+      tokenSeparators: this.ui.tokenSeparators || [],
+      maxTagCount: this.ui.maxTagCount || null,
     };
   }
 
   reset(value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
+      this._value = value;
       this.data = list;
       this.hasGroup = list.filter(w => w.group === true).length > 0;
       this.detectChanges();
