@@ -30,7 +30,7 @@ npm i --save qrious
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[value]` | 值，不支持中文 [#62](https://github.com/neocotic/qrious/issues/62) | `string` | -
+`[value]` | 值 | `string` | -
 `[background]` | 背景 | `string` | `white`
 `[backgroundAlpha]` | 背景透明级别，范围：`0-1` 之间 | `number` | `1.0`
 `[foreground]` | 前景 | `string` | `white`
