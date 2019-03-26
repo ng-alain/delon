@@ -151,6 +151,13 @@ describe('abc: view', () => {
             page.expect(prefixCls + 'default', 0);
           });
         });
+        describe('#unit', () => {
+          it('should be working', () => {
+            context.unit = '个';
+            fixture.detectChanges();
+            page.expect(prefixCls + 'unit', 1);
+          });
+        });
         it('#type', () => {
           context.type = 'danger';
           fixture.detectChanges();
@@ -227,7 +234,7 @@ describe('abc: view', () => {
       [default]="parent_default"
     >
       <sv-title>title</sv-title>
-      <sv #viewComp [label]="label" [col]="col" [type]="type" [default]="default">{{ content }}</sv>
+      <sv #viewComp [label]="label" [col]="col" [type]="type" [default]="default" [unit]="unit">{{ content }}</sv>
     </sv-container>
   `,
 })
@@ -248,5 +255,6 @@ class TestComponent {
   content = '1';
   col: number;
   default: boolean;
+  unit: string;
   type: 'primary' | 'success' | 'danger' | 'warning';
 }

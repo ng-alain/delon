@@ -3,8 +3,10 @@
      [style.width.px]="parent.labelWidth">
   <ng-container *stringTemplateOutlet="label">{{label}}</ng-container>
 </div>
-<div class="sv__detail"
-     (cdkObserveContent)="checkContent()"
-     #conEl>
-  <ng-content></ng-content>
+<div class="sv__detail">
+  <span (cdkObserveContent)="checkContent()"
+        #conEl>
+    <ng-content></ng-content>
+  </span>
+  <span class="sv__unit" *stringTemplateOutlet="unit">{{unit}}</span>
 </div>

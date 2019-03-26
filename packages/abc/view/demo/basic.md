@@ -25,6 +25,8 @@ import { Component } from '@angular/core';
     <sv label="Firefox">A free, open source, cross-platform, graphical web browser developed by the Mozilla Corporation and hundreds of volunteers.</sv>
     <sv label="Firefox">A free, open source, cross-platform, graphical web browser developed by the Mozilla Corporation and hundreds of volunteers.</sv>
     <sv label="Default"></sv>
+    <sv label="Unit" unit="个">10</sv>
+    <sv label="Unit" unit="个"></sv>
   </sv-container>
   `,
 })
