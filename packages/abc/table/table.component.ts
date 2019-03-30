@@ -420,6 +420,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }, rowClickTime);
   }
 
+  _expandChange(item: STData): void {
+    this.changeEmit('expand', item);
+  }
+
   /** 移除某行数据 */
   removeRow(data: STData | STData[]) {
     if (!Array.isArray(data)) {

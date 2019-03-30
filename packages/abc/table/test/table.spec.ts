@@ -1094,6 +1094,18 @@ describe('abc: table', () => {
     });
     describe('#expand', () => {
       beforeEach(() => createComp(true, TestExpandComponent));
+      it('should be switch expand via expand icon', (done) => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          const el = page.getCell(1, 1).querySelector('.ant-table-row-expand-icon') as HTMLElement;
+          page.expectData(1, 'expand', undefined);
+          expect(context.change).not.toHaveBeenCalled();
+          el.click();
+          page.expectData(1, 'expand', true);
+          expect(context.change).toHaveBeenCalled();
+          done();
+        });
+      });
       describe('should be expanded when click row if expandRowByClick', () => {
         it('with true', (done) => {
           context.expandRowByClick = true;
