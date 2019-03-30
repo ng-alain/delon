@@ -146,20 +146,37 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
   // #region UI
 
+  private get acitveIndex() {
+    return this.list.find(w => w.active).index;
+  }
+
   cmChange(res: ReuseContextCloseEvent) {
+    let fn: () => void;
     switch (res.type) {
       case 'close':
         this._close(null, res.item.index, res.includeNonCloseable);
         break;
       case 'closeRight':
-        this.srv.closeRight(res.item.url, res.includeNonCloseable);
-        this.close.emit(null);
+        fn = () => {
+          this.srv.closeRight(res.item.url, res.includeNonCloseable);
+          this.close.emit(null);
+        };
         break;
       case 'clear':
       case 'closeOther':
-        this.srv.clear(res.includeNonCloseable);
-        this.close.emit(null);
+        fn = () => {
+          this.srv.clear(res.includeNonCloseable);
+          this.close.emit(null);
+        };
         break;
+    }
+    if (!fn) {
+      return ;
+    }
+    if (!res.item.active && res.item.index <= this.acitveIndex) {
+      this.to(null, res.item.index, fn);
+    } else {
+      fn();
     }
   }
 
@@ -171,7 +188,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     if (dc) this.cdr.detectChanges();
   }
 
-  to(e: Event, index: number) {
+  to(e: Event, index: number, cb?: () => void) {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -184,6 +201,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       this.item = item;
       this.refStatus();
       this.change.emit(item);
+      if (cb) {
+        cb();
+      }
     });
   }
 
