@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "7.0.3",
+  "version": "7.1.0",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for ng-alain.",
   "keywords": [
@@ -61,7 +61,7 @@
     "file-saver": "^2.0.0",
     "marked": "^0.6.0",
     "ng-github-button": "^2.1.4",
-    "ng-zorro-antd": "^7.1.0",
+    "ng-zorro-antd": "^7.2.0",
     "ng2-ace-editor": "^0.3.8",
     "ngx-color": "^2.0.5",
     "ngx-countdown": "^3.2.0",
@@ -75,7 +75,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
-    "@angular/cli": "~7.3.6",
+    "@angular/cli": "~7.3.7",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
     "@types/node": "~8.9.4",
