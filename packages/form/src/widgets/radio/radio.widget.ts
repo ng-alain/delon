@@ -14,7 +14,10 @@ export class RadioWidget extends ControlWidget {
 
   reset(value: SFValue) {
     this.styleType = (this.ui.styleType || 'default') === 'default';
-    getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => (this.data = list));
+    getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
+      this.data = list;
+      this.detectChanges();
+    });
   }
 
   _setValue(value: SFValue) {
