@@ -15,11 +15,11 @@ As you begin your business development on ng-alain, I recommend that you first r
 + [Antv chart](//antv.alipay.com/zh-cn/index.html)
 + [NG-ZORRO Community recommendation](https://ng.ant.design/docs/recommendation/en)
 
-Ng-alain's base component library comes from ng-zorro-antd, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website, for ng The components provided by -alain are obtained through the [component page] (/components).
+ng-alain's base component library comes from ng-zorro-antd, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website, for ng The components provided by -alain are obtained through the [component page] (/components).
 
 ## Second, the startup process
 
-Ng-alain is a scaffold that can be used directly in production environments. The prerequisite for understanding these details is that you have a certain knowledge of Angular. The following documents may be helpful to you before you start:
+ng-alain is a scaffold that can be used directly in production environments. The prerequisite for understanding these details is that you have a certain knowledge of Angular. The following documents may be helpful to you before you start:
 
 - ng-alain Getting started video ([YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[Tencent video](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[Station B](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）
 - [Know the column](https://zhuanlan.zhihu.com/ng-alain)
@@ -69,7 +69,7 @@ this.settingService.setLayout(`collapsed`, false);
 
 **Menu data**
 
-Ng-alain takes menu from the remote and can also inject `MenuService` ([API](/theme/menu)) to change the menu data. Of course, it is more reasonable to perform menu assignment before Angular starts.
+ng-alain takes menu from the remote and can also inject `MenuService` ([API](/theme/menu)) to change the menu data. Of course, it is more reasonable to perform menu assignment before Angular starts.
 
 Menu data **Make sure **ensure [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) format, menu data throughout Applications, for example: main menu component [sidebar-nav] (/components/sidebar-nav), page header auto navigation [page-header] (/components/page-header), page title text [TitleService] (/theme/title ) Wait.
 
