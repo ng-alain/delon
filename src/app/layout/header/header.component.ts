@@ -129,4 +129,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.router.navigateByUrl(item.url);
     }
   }
+
+  toViaMobile(url: string) {
+    if (url.indexOf('/') === -1) {
+      url = `/${url}/getting-started`;
+    }
+    this.router.navigateByUrl(`${url}/${this.i18n.zone}`).then(() => {
+      this.menuVisible = false;
+    });
+  }
 }

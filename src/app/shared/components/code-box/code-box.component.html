@@ -10,26 +10,26 @@
     {{ item.title }}
     <edit-button [item]="item"></edit-button>
   </div>
-  <div [innerHTML]="item.summary"></div>
-  <nz-tooltip [nzTitle]="expand ? 'Hide Code' : 'Show Code'">
-    <span class="code-expand-icon" nz-tooltip>
-      <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" [ngClass]="{'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand}"
-        (click)="handle()" />
-      <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" [ngClass]="{'code-expand-icon-show': expand, 'code-expand-icon-hide': !expand}"
-        (click)="handle()" />
-    </span>
-  </nz-tooltip>
+  <div class="code-box-description" [innerHTML]="item.summary"></div>
+  <div class="code-box-actions">
+    <nz-tooltip [nzTitle]="'app.demo.stackblitz' | translate">
+      <i nz-tooltip (click)="openOnStackBlitz()" nz-icon type="form" class="code-box-code-icon"></i>
+    </nz-tooltip>
+    <nz-tooltip [nzTitle]="'app.demo.copy' | translate">
+      <i nz-tooltip (click)="onCopy(item.code)" nz-icon type="copy" class="code-box-code-icon"></i>
+    </nz-tooltip>
+    <nz-tooltip [nzTitle]="expand ? 'Hide Code' : 'Show Code'" class="code-expand-icon">
+      <span nz-tooltip>
+        <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" [ngClass]="{'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand}"
+          (click)="handle()" />
+        <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" [ngClass]="{'code-expand-icon-show': expand, 'code-expand-icon-hide': !expand}"
+          (click)="handle()" />
+      </span>
+    </nz-tooltip>
+  </div>
 </section>
 <section class="highlight-wrapper" [ngClass]="{'highlight-wrapper-expand': expand}">
   <div class="highlight">
-    <div class="code-box-actions">
-      <nz-tooltip [nzTitle]="'app.demo.stackblitz' | translate">
-        <i nz-tooltip (click)="openOnStackBlitz()" nz-icon type="form" class="code-box-code-copy"></i>
-      </nz-tooltip>
-      <nz-tooltip [nzTitle]="'app.demo.copy' | translate">
-        <i nz-tooltip (click)="onCopy(item.code)" nz-icon type="copy" class="code-box-code-copy"></i>
-      </nz-tooltip>
-    </div>
     <pre class="hljs language-ts"><code>{{item.code}}</code></pre>
   </div>
 </section>
