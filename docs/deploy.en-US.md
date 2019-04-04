@@ -22,7 +22,7 @@ When you need to distinguish between development and deployment and test environ
 
 ### Analyze the build file volume
 
-**First way**
+**Method 1**
 
 If the build file is large, you can optimize your code by building and analyzing the volume distribution of dependent modules with the `analyze` command.
 
@@ -40,7 +40,7 @@ webpack-bundle-analyzer stats.json
 
 ![](./assets/screenshot/analyzer.png)
 
-**Second way**
+**Method 2**
 
 Package with the following command:
 

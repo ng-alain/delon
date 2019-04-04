@@ -22,7 +22,7 @@ ng-alain 本身是一个 Angular CLI 项目，因此也可以参照 [Build](http
 
 ### 分析构建文件体积
 
-**方式一**
+**方法 1**
 
 如果构建文件很大，可以通过 `analyze` 命令构建并分析依赖模块的体积分布，从而优化你的代码。
 
@@ -40,7 +40,7 @@ webpack-bundle-analyzer stats.json
 
 ![](./assets/screenshot/analyzer.png)
 
-**方式二**
+**方法 2**
 
 使用以下命令打包：
 
