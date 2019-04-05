@@ -8,7 +8,7 @@ type: Advance
 
 ## IE 优化
 
-ng-alain 默认开启了对 IE 的支持，这给包体及样式增加了一定大小，倘若你很在意并且不需要 `IE10` 及以下的版本支持的话，可以调整两项配置：
+`ng-alain` 默认开启了对 IE 的支持，这给包体及样式增加了一定大小，倘若你很在意并且不需要 `IE10` 及以下的版本支持的话，可以调整两项配置：
 
 一：在 `package.json` 加上 `browserslist` 节点减少 `flexbox` 前缀样式从而减少包体大小：
 
@@ -26,7 +26,7 @@ ng-alain 默认开启了对 IE 的支持，这给包体及样式增加了一定�
 
 分为JavaScript脚本文件和CSS文件，以下只描述脚本部分，有关CSS文件请参考[优化主题系统](/theme/performance)。
 
-**注意：** 建议始终以**业务优先，优化为后**的准则，且在开始前对 ng-alain 有一定了解后再进行优化。本章节的优化方案会随着版本的更迭有所变动，有关细节请持续关注。
+**注意：** 建议始终以**业务优先，优化为后**的准则，且在开始前对 `ng-alain` 有一定了解后再进行优化。本章节的优化方案会随着版本的更迭有所变动，有关细节请持续关注。
 
 ### 结构说明
 
@@ -40,7 +40,7 @@ ng-alain 默认开启了对 IE 的支持，这给包体及样式增加了一定�
 
 **main.js**
 
-默认使用 `ng build` 会将所有 @angular/*、ng-zorro-antd、@delon/* 以及一些第三方 Angular 组件都会被打包进来，除非你使用 `--vendor-chunk` 参数来分离这些类库。
+默认使用 `ng build` 会将所有 `@angular/*`、`ng-zorro-antd`、`@delon/*` 以及一些第三方 Angular 组件都会被打包进来，除非你使用 `--vendor-chunk` 参数来分离这些类库。
 
 ### 优化对象
 
@@ -48,7 +48,7 @@ ng-alain 默认开启了对 IE 的支持，这给包体及样式增加了一定�
 
 > 事实上，Angular Cli 默认将 `--vendor-chunk` 主要因素是这些 @angular/* 相对于迭代很快。
 
-根据 ng-alain 的[模块注册指导原则](/docs/module)，我们产生的两个决定 `main.js` 包体大小的核心入口：`delon.module.ts` 和 `shared.module.ts`。
+根据 `ng-alain` 的[模块注册指导原则](/docs/module)，我们产生的两个决定 `main.js` 包体大小的核心入口：`delon.module.ts` 和 `shared.module.ts`。
 
 而唯一能让我们减少体积的办法就是只导入我们所需要的模块，默认情况下我们并没有这么做，主要因素是它会增加很多额外的代码，以及受限于 ng-zorro-antd 目前还未支持次级模块的导入，因此这种优化并不是很明显。
 
