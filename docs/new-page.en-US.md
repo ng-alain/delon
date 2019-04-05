@@ -41,9 +41,9 @@ Use the `ng generate` (abbreviated as: `ng g`) command to create a log list page
 ng g ng-alain:list log -m=sys
 ```
 
-> See [Command Line Tools] (/cli) for more information.
+> See [Command Line Tools](/cli) for more information.
 
-Finally, you can access the [Log] (//localhost:4200/#/sys/log) page.
+Finally, you can access the [Log](//localhost:4200/#/sys/log) page.
 
 Of course, the log may be a very rich piece of information, you can add a view page opened in a modal box to display more details.
 
@@ -55,9 +55,9 @@ ng g ng-alain:view view -m=sys -t=log
 
 ## Third, IDE
 
-In addition to the cli command line provided by ng-alain, it is recommended to use the [Visual Studio Code] (https://code.visualstudio.com/) IDE, because ng-alain adds some extra features to VSCode to better help you. Development.
+In addition to the cli command line provided by ng-alain, it is recommended to use the [Visual Studio Code](https://code.visualstudio.com/) IDE, because ng-alain adds some extra features to VSCode to better help you. Development.
 
-> Or use the [NG-ALAIN Extension Pack] (https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-extension-pack) suite directly.
+> Or use the [NG-ALAIN Extension Pack](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-extension-pack) suite directly.
 
 ### Code fragment
 

@@ -6,7 +6,7 @@ title:
 type: Dev
 ---
 
-In [Architecture] (/docs/architecture) we have described the overall composition of the ng-alain scaffolding. We spent a lot of time developing some infrastructure and publishing these to the `@delon/*` series to Npm. , making the upgrade very easy.
+In [Architecture](/docs/architecture) we have described the overall composition of the `ng-alain` scaffolding. We spent a lot of time developing some infrastructure and publishing these to the `@delon/*` series to Npm. , making the upgrade very easy.
 
 ## Publishing rule
 
@@ -16,7 +16,7 @@ At the same time, please follow the following publishing rules and update versio
 
 - `@delon` as the infrastructure library, which will be slightly higher in the update frequency, usually updated at least once a week.
 - With **BREAKING CHANGES** at least one minor version number
-- [Update Log] (https://github.com/ng-alain/ng-alain/releases)
+- [Update Log](https://github.com/ng-alain/ng-alain/releases)
 
 ## How to upgrade?
 
@@ -36,7 +36,7 @@ Finally, reinstall the dependencies.
 yarn
 ```
 
-> Please read [Frequently Asked Questions] (/docs/faq)
+> Please read [Frequently Asked Questions](/docs/faq)
 
 ### Method 2: Update all class libraries
 

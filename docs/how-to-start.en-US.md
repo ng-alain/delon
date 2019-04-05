@@ -8,20 +8,20 @@ type: Dev
 
 ## First, pre-order preparation
 
-As you begin your business development on ng-alain, I recommend that you first review the following documents, which is very helpful for everyone on the team.
+As you begin your business development on `ng-alain`, I recommend that you first review the following documents, which is very helpful for everyone on the team.
 
 + [Ant Design Guide article](//ant.design/docs/spec/introduce-cn)
 + [Ant Design for Angular](//ng.ant.design/)
 + [Antv chart](//antv.alipay.com/zh-cn/index.html)
 + [NG-ZORRO Community recommendation](https://ng.ant.design/docs/recommendation/en)
 
-ng-alain's base component library comes from ng-zorro-antd, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website, for ng The components provided by -alain are obtained through the [component page] (/components).
+`ng-alain`'s base component library comes from `ng-zorro-antd`, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website, for ng The components provided by -alain are obtained through the [component page](/components).
 
 ## Second, the startup process
 
-ng-alain is a scaffold that can be used directly in production environments. The prerequisite for understanding these details is that you have a certain knowledge of Angular. The following documents may be helpful to you before you start:
+`ng-alain` is a scaffold that can be used directly in production environments. The prerequisite for understanding these details is that you have a certain knowledge of Angular. The following documents may be helpful to you before you start:
 
-- ng-alain Getting started video ([YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[Tencent video](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[Station B](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）
+- `ng-alain` Getting started video ([YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[Tencent video](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[Station B](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）
 - [Know the column](https://zhuanlan.zhihu.com/ng-alain)
 
 When running an app via `ng serve`, a complete Angular startup process would look like this:
@@ -32,17 +32,17 @@ When running an app via `ng serve`, a complete Angular startup process would loo
 
 ### 1、APP_INITIALIZER
 
-From a mid- and back-office perspective, ng-alain always believes that a network request is required to get some application information (eg menu data, user data, etc.) before Angular starts.[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；It returns a `Promise` object, which always needs to be called: `resolve()` to ensure that Angular starts normally.
+From a mid- and back-office perspective, `ng-alain` always believes that a network request is required to get some application information (eg menu data, user data, etc.) before Angular starts.[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；It returns a `Promise` object, which always needs to be called: `resolve()` to ensure that Angular starts normally.
 
 > Network requests may encounter a 403 error because the scaffolding uses the user authentication module by default and always assumes that all requests must be a valid user authorization. For more documentation see:
-> - [Interact with server] (/docs/server)
-> - [Auth User Authentication] (/auth)
+> - [Interact with server](/docs/server)
+> - [Auth User Authentication](/auth)
 
 After obtaining the application information, you need to assign some values ​​to the built-in services of the scaffolding, including:
 
 **Application Information**
 
-Including: application name, description, year, information can be directly injected into the `SettingsService` ([API] (/theme/settings)) and directly in the HTML template.
+Including: application name, description, year, information can be directly injected into the `SettingsService` ([API](/theme/settings)) and directly in the HTML template.
 
 ```ts
 this.settingService.setApp(res.app);
@@ -50,7 +50,7 @@ this.settingService.setApp(res.app);
 
 **User Info**
 
-Including: name, avatar, email address, etc., information can be directly injected into the `SettingsService` ([API] (/theme/settings)) and directly in the HTML template.
+Including: name, avatar, email address, etc., information can be directly injected into the `SettingsService` ([API](/theme/settings)) and directly in the HTML template.
 
 ```ts
 this.settingService.setUser(res.user);
@@ -58,7 +58,7 @@ this.settingService.setUser(res.user);
 
 **Layout information**
 
-Including: name, avatar, email address, etc., information can be directly injected into the `SettingsService` ([API] (/theme/settings)) and directly in the HTML template.
+Including: name, avatar, email address, etc., information can be directly injected into the `SettingsService` ([API](/theme/settings)) and directly in the HTML template.
 
 ```ts
 // Whether to fix the top menu
@@ -69,9 +69,9 @@ this.settingService.setLayout(`collapsed`, false);
 
 **Menu data**
 
-ng-alain takes menu from the remote and can also inject `MenuService` ([API](/theme/menu)) to change the menu data. Of course, it is more reasonable to perform menu assignment before Angular starts.
+`ng-alain` takes menu from the remote and can also inject `MenuService` ([API](/theme/menu)) to change the menu data. Of course, it is more reasonable to perform menu assignment before Angular starts.
 
-Menu data **Make sure **ensure [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) format, menu data throughout Applications, for example: main menu component [sidebar-nav] (/components/sidebar-nav), page header auto navigation [page-header] (/components/page-header), page title text [TitleService] (/theme/title ) Wait.
+Menu data **Make sure **ensure [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) format, menu data throughout Applications, for example: main menu component [sidebar-nav](/components/sidebar-nav), page header auto navigation [page-header](/components/page-header), page title text [TitleService](/theme/title ) Wait.
 
 ```ts
 this.menuService.add(res.menu);
@@ -92,15 +92,15 @@ this.titleService.suffix = res.app.name;
 this.aclService.setFull(true);
 ```
 
-It is recommended to load the ACL access control permission data before starting. For more details, please refer to [Access Control List] (/acl).
+It is recommended to load the ACL access control permission data before starting. For more details, please refer to [Access Control List](/acl).
 
 **globalization**
 
-It is recommended to load the internationalization package first before starting, which will ensure that the page is rendered as the target language after the project is started. See [Internationalization] (/docs/i18n) for more details.
+It is recommended to load the internationalization package first before starting, which will ensure that the page is rendered as the target language after the project is started. See [Internationalization](/docs/i18n) for more details.
 
 ### 2, business routing
 
-Scaffolding top-level routing begins with [routes-routing.module.ts] (https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) Its structure is as follows:
+Scaffolding top-level routing begins with [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) Its structure is as follows:
 
 ```ts
 const routes: Routes = [
@@ -150,4 +150,4 @@ Angular startup from the top-level component. When a lazy module is encountered,
 
 ### Routing permission control
 
-The routing URL may be affected by the browser's own historical memory, so that users may access the unprivileged route. If you want a better experience, you need to configure the `canActivate` option on the route. When the user has no permission, Automatically jump to the relevant page; see the [ACL Routing Guard] (/acl/guard) section for details.
+The routing URL may be affected by the browser's own historical memory, so that users may access the unprivileged route. If you want a better experience, you need to configure the `canActivate` option on the route. When the user has no permission, Automatically jump to the relevant page; see the [ACL Routing Guard](/acl/guard) section for details.

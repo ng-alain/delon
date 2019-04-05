@@ -12,15 +12,15 @@ Please check the FAQ below before asking questions.
 
 ### Can't Bind to since it isn't a known property of
 
-When you have multiple lazy modules, you want each submodule to use the component library (for example: `NgZorroAntdModule`, `NgxTinymceModule`) should be exported in `ShareModule`, please refer to [module registration guidelines] (/docs/ Module).
+When you have multiple lazy modules, you want each submodule to use the component library (for example: `NgZorroAntdModule`, `NgxTinymceModule`) should be exported in `ShareModule`, please refer to [module registration guidelines](/docs/ Module).
 
 ### Expression Changed After It Has Been Checked Error
 
-Common mistakes under Angular, [this article] (https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4) will help you understand why.
+Common mistakes under Angular, [this article](https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4) will help you understand why.
 
 ### Can't bind to 'formGroup' since it isn't a known property of 'form'
 
-Common mistakes under Angular, the use of Reactive Forms requires the introduction of `ReactiveFormsModule`, refer to [official documentation] (https://angular.io/guide/reactive-forms).
+Common mistakes under Angular, the use of Reactive Forms requires the introduction of `ReactiveFormsModule`, refer to [official documentation](https://angular.io/guide/reactive-forms).
 
 ### Why is the page not updated after the data is modified?
 
@@ -63,7 +63,7 @@ npm config delete sass_binary_site
 
 ### No such file or directory
 
-This question is difficult to explain, npm has a long building [#17444] (https://github.com/npm/npm/issues/17444#issuecomment-393761515), and finally gives a reluctant answer:
+This question is difficult to explain, npm has a long building [#17444](https://github.com/npm/npm/issues/17444#issuecomment-393761515), and finally gives a reluctant answer:
 
 1. Make sure to install the latest npm version: `npm i -g npm`
 2. Remove `node_modules` and `package-lock.json`
@@ -99,7 +99,7 @@ export class DelonModule {
 
 ### How do I deploy the antd icon locally?
 
-First, the latest iconfont file can go to [this link] (https://ant.design/docs/spec/download) ([mirror] (http://ant-design.gitee.io/docs/spec/download)) Download.
+First, the latest iconfont file can go to [this link](https://ant.design/docs/spec/download) ([mirror](http://ant-design.gitee.io/docs/spec/download)) Download.
 
 Finally, redefine the new path in `src/styles/theme.less`:
 
@@ -111,4 +111,4 @@ Finally, redefine the new path in `src/styles/theme.less`:
 
 ### Missing locale data for the locale "zh-cn"
 
-For missing language imports, refer to [app.module.ts] (https://github.com/ng-alain/ng-alain/blob/master/src/app/app.module.ts#L6-L25).
+For missing language imports, refer to [app.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/app.module.ts#L6-L25).

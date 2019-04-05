@@ -6,7 +6,7 @@ title:
 type: Basic
 ---
 
-ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular 版本） 基础组件库的中后台前端解决方案。脚手架包含着一套通用的功能和业务组件库，它们可以极大地减少一些基础建设开发工作。
+`ng-alain` 脚手架是基于 Angular 和 `ng-zorro-antd`（Ant Design 的 Angular 版本） 基础组件库的中后台前端解决方案。脚手架包含着一套通用的功能和业务组件库，它们可以极大地减少一些基础建设开发工作。
 
 ## 结构图
 
@@ -16,7 +16,7 @@ ng-alain 脚手架是基于 Angular 和 ng-zorro-antd（Ant Design 的 Angular �
 
 脚手架主题系统库，我们将主题相关发布至 Npm 当中，这极大地简化了升级成本。
 
-主题系统除了包含 ng-alain 基础框架所需要的样式（包含CSS工具集，一套类似bootstrap）以外，还包含一些通用的数据渲染（Pipe）、服务工具类（页面标题、滚动条等）的集合，这些是日常必不可少的一些组成。
+主题系统除了包含 `ng-alain` 基础框架所需要的样式（包含CSS工具集，一套类似bootstrap）以外，还包含一些通用的数据渲染（Pipe）、服务工具类（页面标题、滚动条等）的集合，这些是日常必不可少的一些组成。
 
 **@delon/abc**
 

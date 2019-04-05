@@ -14,7 +14,7 @@ When the project is developed, you can package your app with just one line of co
 npm run build
 ```
 
-ng-alain itself is an Angular CLI project, so you can also complete more complex build requirements with [Build](https://angular.io/cli/build). After the package is successfully packaged, the `dist` folder will be generated in the root directory, which is to build the packaged file, including several static files such as `*.js`, `*.css`, `index.html`.
+`ng-alain` itself is an Angular CLI project, so you can also complete more complex build requirements with [Build](https://angular.io/cli/build). After the package is successfully packaged, the `dist` folder will be generated in the root directory, which is to build the packaged file, including several static files such as `*.js`, `*.css`, `index.html`.
 
 ### Environmental variable
 
@@ -30,7 +30,7 @@ If the build file is large, you can optimize your code by building and analyzing
 npm run analyze
 ```
 
-Limited by [#10589] (https://github.com/angular/angular-cli/issues/10589), you need to install the global `webpack-bundle-analyzer` package:
+Limited by [#10589](https://github.com/angular/angular-cli/issues/10589), you need to install the global `webpack-bundle-analyzer` package:
 
 ```bash
 npm i -g webpack-bundle-analyzer@latest
@@ -48,7 +48,7 @@ Package with the following command:
 ng build --prod --sourcemaps
 ```
 
-Then use [source-map-explorer] (https://github.com/danvk/source-map-explorer/blob/master/README.md) to help you explore the JavaScript package after the production environment is built to analyze each module. The size of the volume.
+Then use [source-map-explorer](https://github.com/danvk/source-map-explorer/blob/master/README.md) to help you explore the JavaScript package after the production environment is built to analyze each module. The size of the volume.
 
 ## Release
 
@@ -66,7 +66,7 @@ The generated `index.html` inside `*.js`, `*.css` will automatically add `//cdn.
 
 ### Routing strategy
 
-Angular front-end routing has two different strategies `HashLocationStrategy` and `PathLocationStrategy`. The former is routed by the path after `#`, and the front-end routing management is performed by [HTML5 History] (//developer.mozilla.org/en-US/docs/Web/API/History_API), while the latter is similar. The access path does not have `#`. Through the configuration of the server, the specified URL can be accessed to the current page, enabling front-end routing management.
+Angular front-end routing has two different strategies `HashLocationStrategy` and `PathLocationStrategy`. The former is routed by the path after `#`, and the front-end routing management is performed by [HTML5 History](//developer.mozilla.org/en-US/docs/Web/API/History_API), while the latter is similar. The access path does not have `#`. Through the configuration of the server, the specified URL can be accessed to the current page, enabling front-end routing management.
 
 If you want to use the `PathLocationStrategy` policy, you need to replace `RouterModule.forRoot(routes, { useHash: true })` of `./src/app/routes/routes.module.ts` with `RouterModule.forRoot(routes )`. At the same time, the server needs to do a mapping, such as:
 
@@ -96,15 +96,15 @@ exports.index = function* () {
 app.get('home', '/*', 'home.index');
 ```
 
-For more questions about Angular routing, please read [official website] (//angular.io/guide/router).
+For more questions about Angular routing, please read [official website](//angular.io/guide/router).
 
 ### Docker
 
-ng-alain provides a complete image file for building Angular projects based on the `nginx` WEB service. Where `nginx` is a mirror using [nginx:1.13.5-alpine] (https://github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile), which basically satisfies ng-alain The project's good operating environment, if there are more needs, you can easily specify *nginx.conf* with `docker run`.
+`ng-alain` provides a complete image file for building Angular projects based on the `nginx` WEB service. Where `nginx` is a mirror using [nginx:1.13.5-alpine](https://github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile), which basically satisfies `ng-alain` The project's good operating environment, if there are more needs, you can easily specify *nginx.conf* with `docker run`.
 
 #### 1, Build the image
 
-Build a complete image of the runtime environment required by ng-alain based on the Dockerfile.
+Build a complete image of the runtime environment required by `ng-alain` based on the Dockerfile.
 
 ```bash
 docker build -t ng-alain .
@@ -130,7 +130,7 @@ Finally you can visit：http://localhost/
 
 #### 3, About SSL
 
-The Dockerfile provided by ng-alain is relatively simple, and the most common use of real projects is support for SSL.
+The Dockerfile provided by `ng-alain` is relatively simple, and the most common use of real projects is support for SSL.
 
 Therefore, by default you can place the certificate in the `_nginx/ssl` directory and enable the `_nginx/default.conf` related SSL configuration item.
 
@@ -142,4 +142,4 @@ Finally, add the `ports` node of `docker-compose.yml`:
 
 ### Container deployment
 
-Refer to [Angular Container Deployment] (https://zhuanlan.zhihu.com/p/35688938).
+Refer to [Angular Container Deployment](https://zhuanlan.zhihu.com/p/35688938).

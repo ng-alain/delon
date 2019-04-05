@@ -79,4 +79,4 @@ export class SharedModule {}
 
 ### 结论
 
-待 ng-zorro-antd 提供更好的优化支持后，我们会发布 [#684](https://github.com/ng-alain/ng-alain/pull/684) 希望对包体大小有更好的期望结果。
+待 `ng-zorro-antd` 提供更好的优化支持后，我们会发布 [#684](https://github.com/ng-alain/ng-alain/pull/684) 希望对包体大小有更好的期望结果。

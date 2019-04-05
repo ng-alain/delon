@@ -59,7 +59,7 @@ Please parameter [module registration guidelines](/docs/module).
 
 Vscode is the best choice for writing Angular. You can type: `ng g c list` in any directory of the project to generate the corresponding files for the component.
 
-`ng-alain` is configured by default without generating style files & unit tests. So you will see that only `.ts`, `.html` are generated. This is because ng-alain provides a very rich style API, and custom styles are not just needed on most pages. At the same time, unit tests.
+`ng-alain` is configured by default without generating style files & unit tests. So you will see that only `.ts`, `.html` are generated. This is because `ng-alain` provides a very rich style API, and custom styles are not just needed on most pages. At the same time, unit tests.
 
 Of course, you can easily adjust the default configuration in `angular.json`.
 
@@ -87,6 +87,6 @@ It is recommended to install several plugins for more friendly development in vs
 
 `lint` can be very effective in helping us find bugs and readability earlier. Isn't it cool if we can guarantee that the lint of the file in staged is automatically done before each commit in the team development process?
 
-ng-alain is configured to do lint each time you commit to staged and you can't commit if you find an error.
+`ng-alain` is configured to do lint each time you commit to staged and you can't commit if you find an error.
 
 By default, the `*.ts`, `*.less` commit process forces the formatting of the code. You can change the rules by modifying the `lint-staged` node of `package.json` (for example: `prettier --write`)

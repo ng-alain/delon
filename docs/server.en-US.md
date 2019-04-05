@@ -6,11 +6,11 @@ title:
 type: Dev
 ---
 
-ng-alain is a single-page application based on the Angular technology stack. We provide development models for front-end code and native analog data.
+`ng-alain` is a single-page application based on the Angular technology stack. We provide development models for front-end code and native analog data.
 Work in the form of the Restful API with the server application of any technology stack. The basics of interacting with the server are briefly described below.
 ## Front-end request process
 
-In ng-alain, a complete front-end UI interaction to the server-side processing flow looks like this:
+In `ng-alain`, a complete front-end UI interaction to the server-side processing flow looks like this:
 
 1. Start Angular for the first time to execute `APP_INITIALIZER`;
 2. UI component interaction;
@@ -28,7 +28,7 @@ By default, two interceptors are registered in the root module.[SimpleIntercepto
 
 **SimpleInterceptor**
 
-[User Authentication] (/docs/auth) has built-in interceptors for automatically adding `token` parameters to requests. There is also a [JWTInterceptor] (https://github.com/ng-alain/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) interceptor, which is a standard JWT specification. If the backend uses standard JWT, it can be directly replaced with a JWTInterceptor interceptor.
+[User Authentication](/docs/auth) has built-in interceptors for automatically adding `token` parameters to requests. There is also a [JWTInterceptor](https://github.com/ng-alain/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) interceptor, which is a standard JWT specification. If the backend uses standard JWT, it can be directly replaced with a JWTInterceptor interceptor.
 
 **DefaultInterceptor**
 
@@ -40,7 +40,7 @@ We can put the `next.handle(req)` as the demarcation point in the interceptor `i
 
 ## Development environment
 
-Under normal circumstances, the development environment and the production environment are not the same back-end request source. You can actually configure it under the [environment] (https://github.com/ng-alain/ng-alain/tree/master/src/environments) directory. [environment.ts] (https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.ts) and [environment.prod.ts] (https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.prod.ts) Change the request source for different environments.
+Under normal circumstances, the development environment and the production environment are not the same back-end request source. You can actually configure it under the [environment](https://github.com/ng-alain/ng-alain/tree/master/src/environments) directory. [environment.ts](https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.ts) and [environment.prod.ts](https://github.com/ng-alain/ng-alain/blob/master/src/environments/environment.prod.ts) Change the request source for different environments.
 
 > environment is actually a JSON object, you can organize different forms to meet the problem of multiple request sources.
 
@@ -54,7 +54,7 @@ export const USERS = {
 }
 ```
 
-So for the test environment, when the `/users` request is encountered, the `{users: [1, 2], total: 2 }` data is returned directly. See [here] (/docs/mock) for more Mock syntax and usage.
+So for the test environment, when the `/users` request is encountered, the `{users: [1, 2], total: 2 }` data is returned directly. See [here](/docs/mock) for more Mock syntax and usage.
 
 **Note: ** When you don't need a Mock interface for a request, be sure to comment out or remove it.
 
@@ -64,4 +64,4 @@ So for the test environment, when the `/users` request is encountered, the `{use
 
 Scaffolding uses the `SimpleInterceptor` interceptor of `@delon/auth` by default, which causes an error to be returned directly if a token cannot be obtained during the request.
 
-[User Authentication] (/docs/auth) This process is a must for the middle office.
+[User Authentication](/docs/auth) This process is a must for the middle office.

@@ -41,7 +41,7 @@ The following is a description and use of each directory and file.
 
 **_mock**
 
-The Mock data rules directory, if you create a project via [Command Line Tools] (/cli), you can specify the `--mock` parameter to determine if the Mock function is required.
+The Mock data rules directory, if you create a project via [Command Line Tools](/cli), you can specify the `--mock` parameter to determine if the Mock function is required.
 
 **src/app/core/core.module.ts**
 
@@ -49,7 +49,7 @@ The core module will only be imported once. Therefore, pure service classes (eg,
 
 **src/app/core/i18n**
 
-[Internationalization] (/docs/i18n) Data loading and processing related classes. If you create a project via [Command Line Tool] (/cli), you can specify the `-di` parameter to determine whether internationalization support is required.
+[Internationalization](/docs/i18n) Data loading and processing related classes. If you create a project via [Command Line Tool](/cli), you can specify the `-di` parameter to determine whether internationalization support is required.
 
 **src/app/core/net**
 
@@ -75,7 +75,7 @@ The shared module means that some third-party modules, custom components, and cu
 
 **src/app/delon.module.ts**
 
-For the @delon series of module import collections, all modules are imported by default, and you can use the [Optimization] (/docs/performance) section to further optimize on demand.
+For the @delon series of module import collections, all modules are imported by default, and you can use the [Optimization](/docs/performance) section to further optimize on demand.
 
 **src/styles/_alain-custom-variables.less**
 
@@ -93,7 +93,7 @@ The application environment variable contains the following values:
 
 The overall layout refers to the outermost frame structure including navigation, sidebars, content areas, footers, and so on.
 
-At the same time, in the internal area, the layout of the block, such as form, search box, list page, etc., is required. For this, ng-zorro-antd has two layout schemes:
+At the same time, in the internal area, the layout of the block, such as form, search box, list page, etc., is required. For this, `ng-zorro-antd` has two layout schemes:
 [Layout](https://ng.ant.design/#/components/layout) with [Grid](https://ng.ant.design/#/components/grid)。
 
 Scaffolding provides three overall layout options by default:
@@ -112,7 +112,7 @@ In the upper-left-right layout mode, it is applied to the development of the **b
 + Side area width `200px`（parameter：`@aside-wd`）
 + Hide side navigation when the screen is below `1140px` wide
 + Turn the side navigation to the `fixed` state when the screen is below `1140px` wide
-+ Mainly includes a [sidebar-nav (click to view API)] (/components/sidebar-nav) component
++ Mainly includes a [sidebar-nav (click to view API)](/components/sidebar-nav) component
 
 > Parameters are adjustable as needed by the `src/styles/_alain-custom-variables.less` file.
 
@@ -128,7 +128,7 @@ Scaffolding provides some regular top-level components by default, which are sto
 
 location：*src/app/layout/default/sidebar*。
 
-Only one user information and main menu are included. The main menu is a [sidebar-nav](/components/sidebar-nav) component. For details, please refer to [Business Components] (/components/sidebar-nav).
+Only one user information and main menu are included. The main menu is a [sidebar-nav](/components/sidebar-nav) component. For details, please refer to [Business Components](/components/sidebar-nav).
 
 **Internal area**
 
