@@ -45,11 +45,11 @@ The Mock data rules directory, if you create a project via [Command Line Tools](
 
 **src/app/core/core.module.ts**
 
-The core module will only be imported once. Therefore, pure service classes (eg, messages, data access, etc.) that are required for the entire ** business module should exist here.
+The core module will only be imported once. Therefore, core service classes (eg, messages, data access, etc.) that are required for the entire ** business module should exist here.
 
 **src/app/core/i18n**
 
-[Internationalization](/docs/i18n) Data loading and processing related classes. If you create a project via [Command Line Tool](/cli), you can specify the `-di` parameter to determine whether internationalization support is required.
+[Internationalization](/docs/i18n) data loading and processing related classes. If you create a project via [Command Line Tool](/cli), you can specify the `-di` parameter to determine whether internationalization support is required.
 
 **src/app/core/net**
 
@@ -118,15 +118,15 @@ In the upper-left-right layout mode, it is applied to the development of the **b
 
 **Top area**
 
-location：*src/app/layout/default/header*。
+location：*src/app/layout/default/header*
 
-Scaffolding provides some regular top-level components by default, which are stored in the *components* directory. At the same time `@delon/abc` also provides several top components (eg：[notice-icon](/components/notice-icon) Notification menu component）。You can build it yourself or develop it yourself based on the components provided.
+Scaffolding provides some regular top-level components by default, which are stored in the *components* directory. At the same time `@delon/abc` also provides several top components (eg：[notice-icon](/components/notice-icon) Notification menu component. You can build it yourself or develop it yourself based on the components provided.
 
 > Scaffolding supports responsive layout. For the top area, you may need to hide some components under the small screen, so you can add `hidden-xs` to the corresponding DOM node to automatically hide when the screen is smaller than `768px`.
 
 **Side area**
 
-location：*src/app/layout/default/sidebar*。
+location：*src/app/layout/default/sidebar*
 
 Only one user information and main menu are included. The main menu is a [sidebar-nav](/components/sidebar-nav) component. For details, please refer to [Business Components](/components/sidebar-nav).
 

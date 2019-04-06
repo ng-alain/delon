@@ -20,7 +20,7 @@ You can do this with a component that has a default style and can receive the pa
 
 ## Create a new file
 
-Create a new folder named after the component name under `src/app/shared/components`, and name it as much as possible. This is called `image-wrapper`. Add ts files, style files (if needed) and component API descriptions to this folder, named `index.ts`, `index.less`, and `README.md`.
+Create a new folder named `components` under `src/app/shared`. Create folder called `image-wrapper` and component file. If required add ts files `index.ts` and style files `index.less`. Provide `README.md` for component API descriptions in this folder.
 
 > When using components, the default is to look for the export object in `index.ts`. If your component is more complex, you can split it into multiple files, and finally unify the export in `index.ts`, like this:
 

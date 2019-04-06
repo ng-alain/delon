@@ -15,7 +15,7 @@ As you begin your business development on `ng-alain`, I recommend that you first
 + [Antv chart](//antv.alipay.com/zh-cn/index.html)
 + [NG-ZORRO Community recommendation](https://ng.ant.design/docs/recommendation/en)
 
-`ng-alain`'s base component library comes from `ng-zorro-antd`, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website, for ng The components provided by -alain are obtained through the [component page](/components).
+`ng-alain`'s base component library comes from `ng-zorro-antd`, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website. For ng components provided by -alain are obtained through the [component page](/components).
 
 ## Second, the startup process
 
@@ -30,9 +30,9 @@ When running an app via `ng serve`, a complete Angular startup process would loo
 2. Trigger service routing (src/app/routes/routes-routing.module.ts` for scaffolding)
 3. Rendering components
 
-### 1、APP_INITIALIZER
+### 1) APP_INITIALIZER
 
-From a mid- and back-office perspective, `ng-alain` always believes that a network request is required to get some application information (eg menu data, user data, etc.) before Angular starts.[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；It returns a `Promise` object, which always needs to be called: `resolve()` to ensure that Angular starts normally.
+From a mid and back-office perspective, `ng-alain` always believes that a network request is required to get some application information (eg menu data, user data, etc.) before Angular starts.[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；It returns a `Promise` object, which always needs to be called: `resolve()` to ensure that Angular starts normally.
 
 > Network requests may encounter a 403 error because the scaffolding uses the user authentication module by default and always assumes that all requests must be a valid user authorization. For more documentation see:
 > - [Interact with server](/docs/server)
@@ -98,7 +98,7 @@ It is recommended to load the ACL access control permission data before starting
 
 It is recommended to load the internationalization package first before starting, which will ensure that the page is rendered as the target language after the project is started. See [Internationalization](/docs/i18n) for more details.
 
-### 2, business routing
+### 2) business routing
 
 Scaffolding top-level routing begins with [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) Its structure is as follows:
 
@@ -140,7 +140,7 @@ const routes: Routes = [
 ];
 ```
 
-Above we used the `LayoutDefaultComponent` base layout in the business module, the user authorization uses the `LayoutPassportComponent` user authorization layout and the full screen layout.
+Above we used the `LayoutDefaultComponent` base layout in the business module. User authorization uses `LayoutPassportComponent` user authorization layout and the full screen layout.
 
 It is recommended that all submodules be loaded using a lazy module, such as the `TradeModule` order module, which organizes the code structure more efficiently.
 
@@ -150,4 +150,4 @@ Angular startup from the top-level component. When a lazy module is encountered,
 
 ### Routing permission control
 
-The routing URL may be affected by the browser's own historical memory, so that users may access the unprivileged route. If you want a better experience, you need to configure the `canActivate` option on the route. When the user has no permission, Automatically jump to the relevant page; see the [ACL Routing Guard](/acl/guard) section for details.
+The routing URL may be affected by the browser's own historical memory, so that users may access the unprivileged route. If you want a better experience, you need to configure the `canActivate` option on the route. When the user has no permission, it will utomatically jump to the relevant page. see the [ACL Routing Guard](/acl/guard) section for details.

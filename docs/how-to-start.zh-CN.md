@@ -30,7 +30,7 @@ type: Dev
 2. 触发业务路由（脚手架的 `src/app/routes/routes-routing.module.ts`）
 3. 渲染组件
 
-### 1、APP_INITIALIZER
+### 1) APP_INITIALIZER
 
 以中后台角度出发，`ng-alain` 始终认为在 Angular 启动之前需要一次网络请求来获取一些应用信息（例如：菜单数据、用户数据等），具体实现细节[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，不管怎么样始终都需要调用：`resolve()` 才能确保 Angular 正常启动。
 
@@ -98,7 +98,7 @@ this.aclService.setFull(true);
 
 建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。更多细节参考[国际化](/docs/i18n)。
 
-### 2、业务路由
+### 2) 业务路由
 
 脚手架顶层路由从 [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) 开始，其结构如下：
 
