@@ -35,6 +35,13 @@ export class AppModule { }
 
 ## API
 
+### DelonACLConfig
+
+| 属性 | 类型 | 说明 | 默认 |
+| --- | --- | --- | --- |
+| `[guard_url]` | `string` | 路由守卫失败后跳转 | `/403` |
+| `[preCan]` | `(roleOrAbility: ACLCanType) => ACLType` | `can` 执行前回调 | - |
+
 ### ACLService
 
 | 方法 | 说明 |

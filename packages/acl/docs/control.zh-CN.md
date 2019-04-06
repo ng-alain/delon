@@ -54,3 +54,27 @@ acl 指令为了能所传递的值是角色还是权限点，所以以 `string` 
 ```html
 <button [acl]="{ ability: [10, 'USER-EDIT'], mode: 'allOf' }"></button>
 ```
+
+**字符串型权限点**
+
+检查权限是通过 `can` 方法，`DelonACLConfig` 包含 `preCan` 方法，可以利用该方法来实现一个字符串区分角色或权限点。
+
+```ts
+export function fnDelonACLConfig(): DelonACLConfig {
+  return {
+    ...new DelonACLConfig(),
+    ...{
+      preCan: (roleOrAbility: ACLCanType) => {
+        const str = roleOrAbility.toString();
+        return str.startsWith('ability.') ? { ability: [ str ] } : null;
+      }
+    } as DelonACLConfig
+  };
+}
+```
+
+因此，当传递一个带有 `ability.` 开头的字符串会被认为这是一个权限点，例如：
+
+```html
+<button acl="ability.user.edit"></button>
+```
