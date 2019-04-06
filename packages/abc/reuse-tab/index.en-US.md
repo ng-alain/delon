@@ -195,6 +195,9 @@ Property | Description | Type | Default
 `[allowClose]` | Whether to allow close tab | `boolean` | `true`
 `[showCurrent]` | Always show current page | `boolean` | `true`
 `[customContextMenu]` | Custom context click menu | `ReuseCustomContextMenu[]` | -
+`[tabBarExtraContent]` | Extra content in tab bar | `TemplateRef<void>` | -
+`[tabBarStyle]` | Tab bar style object | `object` | -
+`[tabBarGutter]` | The gap between tabs | `number` | -
 `(close)` | Close callback event | `EventEmitter` | -
 `(change)` | Callback when switching | `EventEmitter` | -
 
