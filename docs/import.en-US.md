@@ -78,7 +78,7 @@ The above import script method will package the code directly into `scripts.js`,
 
 ### How to use
 
-Angular is using TypeScript language, and all types must be clearly defined to be used. For details, please refer to [Angular 如何使用第三方库](https://zhuanlan.zhihu.com/p/35796451).
+Angular is using TypeScript language, and all types must be clearly defined to be used. For details, please refer to [Angular How to use third-party libraries](https://zhuanlan.zhihu.com/p/35796451).
 
 A sample code for the call:
 
