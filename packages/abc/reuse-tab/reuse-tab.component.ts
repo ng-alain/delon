@@ -15,6 +15,7 @@ import {
   Renderer2,
   SimpleChange,
   SimpleChanges,
+  TemplateRef,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -68,6 +69,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       typeof value === 'string' ? this.doc.querySelector(value) : value;
   }
   @Input() customContextMenu: ReuseCustomContextMenu[] = [];
+  @Input() tabBarExtraContent: TemplateRef<void>;
+  @Input() tabBarGutter: number;
+  @Input() tabBarStyle: { [key: string]: string };
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem>();
 
