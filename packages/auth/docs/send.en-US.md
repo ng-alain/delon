@@ -2,7 +2,7 @@
 order: 20
 title: 
   zh-CN: 发送Token
-  EN-US: Send Token
+  en-US: Send Token
 type: Documents
 ---
 
