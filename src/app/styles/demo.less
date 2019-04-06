@@ -108,44 +108,47 @@
 		border-bottom: 1px dashed @site-border-color-split;
 	}
 
-	.code-expand-icon-show,
-	.code-expand-icon-hide {
-		transition: all 0.4s;
-		max-width: 100%;
-    height: 16px;
-    width: 16px;
-    cursor: pointer;
-	}
+	.code-expand-icon {
+		> span { display:flex; }
 
-	.code-expand-icon-show {
-		opacity: 0.55;
-		pointer-events: auto;
-		&:hover {
-			opacity: 1;
+		&-show,
+		&-hide {
+			transition: all 0.4s;
+			max-width: 100%;
+			height: 16px;
+			width: 16px;
+			cursor: pointer;
 		}
-	}
 
-	.code-expand-icon.ant-tooltip-open .code-expand-icon-show {
-		opacity: 1;
-	}
+		&-show {
+			opacity: 0.55;
+			pointer-events: auto;
+			&:hover {
+				opacity: 1;
+			}
+		}
 
-	.code-expand-icon-hide {
-		pointer-events: none;
-		display: none;
-	}
+		&-hide {
+			pointer-events: none;
+			display: none;
+		}
 
-	.highlight-wrapper {
-		display: none;
-		overflow: auto;
-		border-radius: 0 0 @border-radius-sm @border-radius-sm;
-
-		&-expand {
-			display: block;
+		&.ant-tooltip-open .code-expand-icon-show {
+			opacity: 1;
 		}
 	}
 
 	.highlight {
 		position: relative;
+		&-wrapper {
+			display: none;
+			overflow: auto;
+			border-radius: 0 0 @border-radius-sm @border-radius-sm;
+	
+			&-expand {
+				display: block;
+			}
+		}
 		pre {
 			margin: 0;
 			padding: 0;
