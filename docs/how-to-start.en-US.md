@@ -10,7 +10,7 @@ type: Dev
 
 As you begin your business development on `ng-alain`, I recommend that you first review the following documents, which is very helpful for everyone on the team.
 
-+ [Ant Design Guide article](//ant.design/docs/spec/introduce-cn)
++ [Ant Design Guide article](//ant.design/docs/spec/introduce)
 + [Ant Design for Angular](//ng.ant.design/)
 + [Antv chart](//antv.alipay.com/zh-cn/index.html)
 + [NG-ZORRO Community recommendation](https://ng.ant.design/docs/recommendation/en)
