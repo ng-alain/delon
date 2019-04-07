@@ -16,7 +16,7 @@ NG-ALAIN scaffold is a front-end solution to support middleware and back-end app
 
 Theme library of scaffold, we publish the theme library to NPM, which extremely simplifies upgrade effort.
 
-Theme library includes not only essential styles(CSS tool like bootstrap) required by `ng-alain`, but also a set of common data rendering(Pipe) and service tools(page title, scroll bar, etc..), which are needed during daily development.
+Theme library includes not only essential styles(CSS tool like bootstrap) required by NG-ALAIN, but also a set of common data rendering(Pipe) and service tools(page title, scroll bar, etc..), which are needed during daily development.
 
 **@delon/abc**
 
