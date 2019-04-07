@@ -31,7 +31,7 @@ When a route does not initiate a request, it means that the Token validity canno
 ]
 ```
 
-## how to choose?
+## How to choose?
 
 Similarly, the different authentication styles are:
 
