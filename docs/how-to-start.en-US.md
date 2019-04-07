@@ -71,18 +71,18 @@ this.settingService.setLayout(`collapsed`, false);
 
 `ng-alain` takes menu from the remote and can also inject `MenuService` ([API](/theme/menu)) to change the menu data. Of course, it is more reasonable to perform menu assignment before Angular starts.
 
-Menu data **Make sure **ensure [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) format, menu data throughout Applications, for example: main menu component [sidebar-nav](/components/sidebar-nav), page header auto navigation [page-header](/components/page-header), page title text [TitleService](/theme/title ) Wait.
+Menu data **Make sure** ensure [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) format, menu data throughout Applications, for example: main menu component [sidebar-nav](/components/sidebar-nav), page header auto navigation [page-header](/components/page-header), page title text [TitleService](/theme/title ) Wait.
 
 ```ts
 this.menuService.add(res.menu);
 ```
 
-**page title**
+**Page title**
 
 If the page title always wants to add the application name as a suffix, you can re-adjust the `suffix` attribute value by injecting `TitleService`([API](/theme/title)).
 
 ```ts
-/ / Set the suffix of the page title
+// Set the suffix of the page title
 this.titleService.suffix = res.app.name;
 ```
 
@@ -94,11 +94,11 @@ this.aclService.setFull(true);
 
 It is recommended to load the ACL access control permission data before starting. For more details, please refer to [Access Control List](/acl).
 
-**globalization**
+**Globalization**
 
 It is recommended to load the internationalization package first before starting, which will ensure that the page is rendered as the target language after the project is started. See [Internationalization](/docs/i18n) for more details.
 
-### 2) business routing
+### 2) Business routing
 
 Scaffolding top-level routing begins with [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) Its structure is as follows:
 
