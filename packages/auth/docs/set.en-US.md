@@ -6,7 +6,7 @@ title:
 type: Documents
 ---
 
-## how to use
+## How to use
 
 The `ITokenService` interface (the default implementation of `TokenService`) has only four methods and the `login_url` attribute:
 
