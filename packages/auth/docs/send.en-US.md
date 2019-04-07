@@ -26,7 +26,7 @@ Indicates the `{ token: 'Bearer token_string' }` data in the `header` of each re
 
 It is a standard JWT sending rule that automatically adds `{ Authorization: 'Bearer token_string' }` to `header`.
 
-### how to choose?
+### How to choose?
 
 `SimpleInterceptor` is a very liberal style, you can put `token` in the request body, request header, etc.
 
