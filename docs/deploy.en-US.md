@@ -120,7 +120,7 @@ docker-compose up -d
 
 The details can be modified with `docker-compose.yml`.
 
-**based on imperative **
+**Based on imperative**
 
 ```bash
 docker run -d -p 80:80 --name alain ng-alain
