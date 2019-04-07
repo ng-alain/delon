@@ -52,3 +52,27 @@ Displayed when the button must have a `10` and `USER-EDIT` permission.
 ```html
 <button [acl]="{ ability: [10, 'USER-EDIT'], mode: 'allOf' }"></button>
 ```
+
+**String permission**
+
+The check permission is via the `can` method, and the `DelonACLConfig` contains the `preCan` method, which can be used to implement a string to distinguish roles or permissions.
+
+```ts
+export function fnDelonACLConfig(): DelonACLConfig {
+  return {
+    ...new DelonACLConfig(),
+    ...{
+      preCan: (roleOrAbility: ACLCanType) => {
+        const str = roleOrAbility.toString();
+        return str.startsWith('ability.') ? { ability: [ str ] } : null;
+      }
+    } as DelonACLConfig
+  };
+}
+```
+
+Therefore, passing a string with the beginning of `ability.` will be considered a permission point, for example:
+
+```html
+<button acl="ability.user.edit"></button>
+```

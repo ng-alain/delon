@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { DelonACLConfig } from './acl.config';
 import { ACLCanType, ACLType } from './acl.type';
 
 /**
@@ -27,6 +28,8 @@ export class ACLService {
       abilities: this.abilities,
     };
   }
+
+  constructor(private options: DelonACLConfig) {}
 
   private parseACLType(val: string | string[] | ACLType): ACLType {
     if (typeof val !== 'string' && !Array.isArray(val)) {
@@ -145,6 +148,10 @@ export class ACLService {
       return true;
     }
 
+    const { preCan } = this.options;
+    if (preCan) {
+      roleOrAbility = preCan(roleOrAbility);
+    }
     let t: ACLType = {};
     if (typeof roleOrAbility === 'number') {
       t = { ability: [roleOrAbility] };

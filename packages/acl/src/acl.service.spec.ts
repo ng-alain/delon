@@ -1,3 +1,4 @@
+import { DelonACLConfig } from './acl.config';
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
 
@@ -9,9 +10,11 @@ describe('acl: service', () => {
   const ABILITY_NUMBER = 1;
 
   let srv: ACLService = null;
+  const mockOptions = new DelonACLConfig();
 
   beforeEach(() => {
-    srv = new ACLService();
+    mockOptions.preCan = null;
+    srv = new ACLService(mockOptions);
     srv.set({ role: [ADMIN] } as ACLType);
   });
 
@@ -81,16 +84,25 @@ describe('acl: service', () => {
     expect(srv.canAbility(ABILITY)).toBe(false);
   });
 
-  it(`#can()`, () => {
-    srv.attachAbility([ABILITY_NUMBER]);
-    expect(srv.can(ADMIN)).toBe(true, 'can ' + ADMIN);
-    expect(srv.can(ABILITY_NUMBER)).toBe(true, 'ability muse be true');
-    expect(srv.can([ABILITY_NUMBER])).toBe(true, 'ability array muse be true');
-    expect(srv.can([ADMIN])).toBe(true, 'role array muse be true');
-    expect(srv.can({ role: [ADMIN] } as ACLType)).toBe(true, 'ACLType item muse be true');
-    expect(srv.can(ADMIN + '1')).toBe(false);
-    expect(srv.can(null)).toBe(true);
-    expect(srv.can({})).toBe(false);
+  describe('#can()', () => {
+    it('should working', () => {
+      srv.attachAbility([ABILITY_NUMBER]);
+      expect(srv.can(ADMIN)).toBe(true, 'can ' + ADMIN);
+      expect(srv.can(ABILITY_NUMBER)).toBe(true, 'ability muse be true');
+      expect(srv.can([ABILITY_NUMBER])).toBe(true, 'ability array muse be true');
+      expect(srv.can([ADMIN])).toBe(true, 'role array muse be true');
+      expect(srv.can({ role: [ADMIN] } as ACLType)).toBe(true, 'ACLType item muse be true');
+      expect(srv.can(ADMIN + '1')).toBe(false);
+      expect(srv.can(null)).toBe(true);
+      expect(srv.can({})).toBe(false);
+    });
+    it('should be allow ability is string in can method by preCan', () => {
+      mockOptions.preCan = (a) => {
+        return a.toString().startsWith('order') ? { ability: [ a.toString() ] } : null;
+      };
+      srv.attachAbility([ABILITY_CREATE]);
+      expect(srv.can(ABILITY_CREATE)).toBe(true);
+    });
   });
 
   it('should be valid when all of for is array roles', () => {

@@ -35,6 +35,13 @@ export class AppModule { }
 
 ## API
 
+### DelonACLConfig
+
+| Name   | Type  | Summary | Default |
+| --- | --- | --- | --- |
+| `[guard_url]` | `string` | Router URL when guard fail | `/403` |
+| `[preCan]` | `(roleOrAbility: ACLCanType) => ACLType` | `can` before execution callback | - |
+
 ### ACLService
 
 | Name | Description |
