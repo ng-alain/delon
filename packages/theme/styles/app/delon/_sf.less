@@ -100,11 +100,11 @@
       margin-bottom: 8px;
     }
   }
-  &__search {
+  &__inline {
     sf-item-wrap {
-      .ant-form-item {
+      .@{ant-prefix}-form-item {
         display: inline-flex;
-        .ant-form-item-control-wrapper {
+        .@{ant-prefix}-form-item-control-wrapper {
           flex: 1;
         }
       }
@@ -114,13 +114,13 @@
     }
     @media (max-width: @mobile-max) {
       sf-item-wrap {
-        .ant-form-item {
+        .@{ant-prefix}-form-item {
           display: block !important;
           width: initial !important;
           margin-right: 0;;
+        }
       }
-      }
-      .ant-form-item-label, .ant-form-item-control-wrapper {
+      .@{ant-prefix}-form-item-label, .@{ant-prefix}-form-item-control-wrapper {
         display: block !important;
         width: 100% !important;
         padding: inherit;
