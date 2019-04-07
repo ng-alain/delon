@@ -12,7 +12,7 @@ As you begin your business development on `ng-alain`, I recommend that you first
 
 + [Ant Design Guide article](//ant.design/docs/spec/introduce)
 + [Ant Design for Angular](//ng.ant.design/)
-+ [Antv chart](//antv.alipay.com/zh-cn/index.html)
++ [Antv chart - G2](//www.yuque.com/antv/g2-docs-en?language=en-us)
 + [NG-ZORRO Community recommendation](https://ng.ant.design/docs/recommendation/en)
 
 `ng-alain`'s base component library comes from `ng-zorro-antd`, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website. For ng components provided by -alain are obtained through the [component page](/components).
