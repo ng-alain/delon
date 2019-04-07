@@ -49,4 +49,4 @@ To use this update method, you need to follow these steps:
 - Remove the `node_modules` folder and the `yarn.lock` file
 - Execute `yarn`
 
-**Note: ** This method will install all class libraries in a newer version, but it may cause unnecessary troubles due to damaging changes of third-party types.
+**Note:** This method will install all class libraries in a newer version, but it may cause unnecessary troubles due to damaging changes of third-party types.
