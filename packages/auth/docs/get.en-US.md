@@ -20,7 +20,7 @@ A complete social login takes about two steps:
 - Get the authentication information after the callback and [Token Information Store](/auth/set)
 
 
-### turn on
+### Turn on
 
 `SocialService` provides a `open()` method to open a login box. By default it is not registered in any module, because `@delon/auth` thinks that such a service is usually only generated during the login process, so there is no need to inject it globally; only need to use the `SocialService` component Inject it, of course you have to be willing to inject it in the root module.
 
@@ -38,7 +38,7 @@ Finally, use the `type` attribute to specify what form to open an authorization 
 
 ```ts
 this.socialService.login(`//github.com/login/oauth/authorize?xxxxxx`, '/', { type: 'href' });
-// 或使用 window.open 打开授权框并订阅结果
+// Or use window.open to open the authorization window and subscribe to the results
 this.socialService.login(`//github.com/login/oauth/authorize?xxxxxx`, '/', {
   type: 'window'
 }).subscribe(res => {
