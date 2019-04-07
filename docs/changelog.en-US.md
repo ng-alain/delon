@@ -4,7 +4,7 @@ title: Change Log
 type: Other
 ---
 
-`ng-alain` strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/).
+NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/).
 
 #### Release Schedule
 
@@ -72,11 +72,11 @@ type: Other
 
 # [7.0.0](https://github.com/ng-alain/delon/compare/7.0.0-rc.10...7.0.0) (2019-02-28)
 
-**All is well, has been waiting for `ng-zorro-antd 7.0.0`, it's the basic component of ng-alain, so this update just keeps the synchronization of the major version number**
+**All is well, has been waiting for NG-ZORRO 7.0.0, it's the basic component of ng-alain, so this update just keeps the synchronization of the major version number**
 
 ### Features
 
-* sync `ng-zorro-antd 7.0.0`
+* sync NG-ZORRO 7.0.0
 * add el_GR locale ([#423](https://github.com/ng-alain/delon/issues/423)) ([17a03d6](https://github.com/ng-alain/delon/commit/17a03d6))
 
 ## Old Version
