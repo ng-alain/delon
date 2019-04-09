@@ -14,6 +14,23 @@ type: Other
 
 ---
 
+## [7.2.0](https://github.com/ng-alain/delon/compare/7.1.0...7.2.0) (2019-04-09)
+
+### Bug Fixes
+
+* **abc:_src:** 修复无效 `size` 属性 ([#503](https://github.com/ng-alain/delon/issues/503)) ([76fc61b](https://github.com/ng-alain/delon/commit/76fc61b))
+* **abc:reuse-tab:** 修复右击关闭其他或右侧标签应以当前选择项为基准 ([#500](https://github.com/ng-alain/delon/issues/500)) ([ed3eef7](https://github.com/ng-alain/delon/commit/ed3eef7))
+* **abc:st:** 修复点击扩展图标无法触发 `expand` 事件 ([#501](https://github.com/ng-alain/delon/issues/501)) ([a0a9c53](https://github.com/ng-alain/delon/commit/a0a9c53))
+* **cli:** 修复未指定 i18n 时提示未找到 `header-i18n` ([#505](https://github.com/ng-alain/delon/issues/505)) ([9839f69](https://github.com/ng-alain/delon/commit/9839f69))
+* **sf:** 修复内联模式错位 ([#514](https://github.com/ng-alain/delon/issues/514)) ([9a7901a](https://github.com/ng-alain/delon/commit/9a7901a))
+* **sf:radio:** 修复异步数据无法渲染 ([#504](https://github.com/ng-alain/delon/issues/504)) ([18c6af5](https://github.com/ng-alain/delon/commit/18c6af5))
+
+### Features
+
+* **abc:reuse-tab:** 增加 `tabBarExtraContent` `tabBarStyle` `tabBarGutter` 属性 ([#510](https://github.com/ng-alain/delon/issues/510)) ([5d48933](https://github.com/ng-alain/delon/commit/5d48933))
+* **acl:** 增加全局 `preCan` 属性，更好的定制 ACL 权限 ([#511](https://github.com/ng-alain/delon/issues/511)) ([1bdbd8c](https://github.com/ng-alain/delon/commit/1bdbd8c))
+
+
 ## [7.1.0](https://github.com/ng-alain/delon/compare/7.0.3...7.1.0) (2019-03-29)
 
 ### Bug Fixes
