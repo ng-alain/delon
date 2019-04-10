@@ -8,20 +8,20 @@ type: Dev
 
 ## First, pre-order preparation
 
-As you begin your business development on `ng-alain`, I recommend that you first review the following documents, which is very helpful for everyone on the team.
+As you begin your business development on NG-ALAIN, i recommend that you first review the following documents, which is very helpful for everyone on the team.
 
 + [Ant Design Guide article](//ant.design/docs/spec/introduce)
 + [Ant Design for Angular](//ng.ant.design/)
 + [Antv chart - G2](//www.yuque.com/antv/g2-docs-en?language=en-us)
 + [NG-ZORRO Community recommendation](https://ng.ant.design/docs/recommendation/en)
 
-`ng-alain`'s base component library comes from `ng-zorro-antd`, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website. For ng components provided by -alain are obtained through the [component page](/components).
+NG-ALAIN's base component library comes from NG-ZORRO, so you can get a very detailed [API](//ng.ant.design/) documentation for its use on the official website. For ng components provided by -alain are obtained through the [component page](/components).
 
 ## Second, the startup process
 
-`ng-alain` is a scaffold that can be used directly in production environments. The prerequisite for understanding these details is that you have a certain knowledge of Angular. The following documents may be helpful to you before you start:
+NG-ALAIN is a scaffold that can be used directly in production environments. The prerequisite for understanding these details is that you have a certain knowledge of Angular. The following documents may be helpful to you before you start:
 
-- `ng-alain` Getting started video ([YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[Tencent video](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[Station B](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）
+- NG-ALAIN Getting started video ([YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[Tencent video](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[Station B](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）
 - [Know the column](https://zhuanlan.zhihu.com/ng-alain)
 
 When running an app via `ng serve`, a complete Angular startup process would look like this:
@@ -32,7 +32,7 @@ When running an app via `ng serve`, a complete Angular startup process would loo
 
 ### 1) APP_INITIALIZER
 
-From a mid and back-office perspective, `ng-alain` always believes that a network request is required to get some application information (eg menu data, user data, etc.) before Angular starts.[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；It returns a `Promise` object, which always needs to be called: `resolve()` to ensure that Angular starts normally.
+From a mid and back-office perspective, NG-ALAIN always believes that a network request is required to get some application information (eg menu data, user data, etc.) before Angular starts.[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；It returns a `Promise` object, which always needs to be called: `resolve()` to ensure that Angular starts normally.
 
 > Network requests may encounter a 403 error because the scaffolding uses the user authentication module by default and always assumes that all requests must be a valid user authorization. For more documentation see:
 > - [Interact with server](/docs/server)
@@ -58,7 +58,7 @@ this.settingService.setUser(res.user);
 
 **Layout information**
 
-Including: name, avatar, email address, etc., information can be directly injected into the `SettingsService` ([API](/theme/settings)) and directly in the HTML template.
+Including: name, avatar, email, address, etc., information can be directly injected into the `SettingsService` ([API](/theme/settings)) and directly in the HTML template.
 
 ```ts
 // Whether to fix the top menu
@@ -69,7 +69,7 @@ this.settingService.setLayout(`collapsed`, false);
 
 **Menu data**
 
-`ng-alain` takes menu from the remote and can also inject `MenuService` ([API](/theme/menu)) to change the menu data. Of course, it is more reasonable to perform menu assignment before Angular starts.
+NG-ALAIN takes menu from the remote and can also inject `MenuService` ([API](/theme/menu)) to change the menu data. Of course, it is more reasonable to perform menu assignment before Angular starts.
 
 Menu data **Make sure** ensure [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) format, menu data throughout Applications, for example: main menu component [sidebar-nav](/components/sidebar-nav), page header auto navigation [page-header](/components/page-header), page title text [TitleService](/theme/title ) Wait.
 
