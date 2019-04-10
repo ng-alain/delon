@@ -93,7 +93,7 @@ The application environment variable contains the following values:
 
 The overall layout refers to the outermost frame structure including navigation, sidebars, content areas, footers, and so on.
 
-At the same time, in the internal area, the layout of the block, such as form, search box, list page, etc., is required. For this, `ng-zorro-antd` has two layout schemes:
+At the same time, in the internal area, the layout of the block, such as form, search box, list page, etc., is required. For this, NG-ZORRO has two layout schemes:
 [Layout](https://ng.ant.design/#/components/layout) with [Grid](https://ng.ant.design/#/components/grid)。
 
 Scaffolding provides three overall layout options by default:
