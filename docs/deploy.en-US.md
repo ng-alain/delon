@@ -14,7 +14,7 @@ When the project is developed, you can package your app with just one line of co
 npm run build
 ```
 
-`ng-alain` itself is an Angular CLI project, so you can also complete more complex build requirements with [Build](https://angular.io/cli/build). After the package is successfully packaged, the `dist` folder will be generated in the root directory, which is to build the packaged file, including several static files such as `*.js`, `*.css`, `index.html`.
+NG-ALAIN itself is an Angular CLI project, so you can also complete more complex build requirements with [Build](https://angular.io/cli/build). After the package is successfully packaged, the `dist` folder will be generated in the root directory, which is to build the packaged file, including several static files such as `*.js`, `*.css`, `index.html`.
 
 ### Environmental variable
 
@@ -100,11 +100,11 @@ For more questions about Angular routing, please read [official website](//angul
 
 ### Docker
 
-`ng-alain` provides a complete image file for building Angular projects based on the `nginx` WEB service. Where `nginx` is a mirror using [nginx:1.13.5-alpine](https://github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile), which basically satisfies `ng-alain` The project's good operating environment, if there are more needs, you can easily specify *nginx.conf* with `docker run`.
+NG-ALAIN provides a complete image file for building Angular projects based on the nginx WEB service. Where nginx is a mirror using [nginx:1.13.5-alpine](https://github.com/nginxinc/docker-nginx/blob/master/mainline/alpine/Dockerfile), which basically satisfies NG-ALAIN The project's good operating environment, if there are more needs, you can easily specify *nginx.conf* with `docker run`.
 
 #### 1, Build the image
 
-Build a complete image of the runtime environment required by `ng-alain` based on the Dockerfile.
+Build a complete image of the runtime environment required by NG-ALAIN based on the Dockerfile.
 
 ```bash
 docker build -t ng-alain .
@@ -112,7 +112,7 @@ docker build -t ng-alain .
 
 #### 2, Running
 
-**Based on compose (recommended)**
+**Based on compose (Recommended)**
 
 ```bash
 docker-compose up -d
@@ -130,7 +130,7 @@ Finally you can visit：http://localhost/
 
 #### 3, About SSL
 
-The Dockerfile provided by `ng-alain` is relatively simple, and the most common use of real projects is support for SSL.
+The Dockerfile provided by NG-ALAIN is relatively simple, and the most common use of real projects is support for SSL.
 
 Therefore, by default you can place the certificate in the `_nginx/ssl` directory and enable the `_nginx/default.conf` related SSL configuration item.
 
