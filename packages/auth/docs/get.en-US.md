@@ -55,13 +55,13 @@ So `@delon/auth` is to take the information from the callback page URL address a
 You need to create a page for the callback, and the only thing the page has to do is call the `callback()` method on `ngOnInit` (for example: [callback.component.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/callback/callback.component.ts#L24)):
 
 ```ts
-// 1、默认根据当前URL地址
+// 1, default based on the current URL address
 this.socialService.callback();
-// 2、非 `{ useHash: true }` 路由
+// 2, without `{ useHash: true }` routing
 this.socialService.callback(`/callback?token=40SOJV-L8oOwwUIs&name=cipchk&uid=1`);
-// 3、带有 `{ useHash: true }` 路由
+// 3, with `{ useHash: true }` route
 this.socialService.callback(`/?token=40SOJV-L8oOwwUIs&name=cipchk&uid=1#/callback`);
-// 4、指定 `ITokenModel` 对象
+// 4, specify the `ITokenModel` object
 this.socialService.callback(<ITokenModel>{
   token: '123456789',
   name: 'cipchk',
