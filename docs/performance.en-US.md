@@ -8,7 +8,7 @@ type: Advance
 
 ## IE Performance
 
-`ng-alain` has IE support enabled by default. Which adds a certain size to the package and style. If you are very concerned and don't need `IE10` and below support, you can adjust the two configurations:
+NG-ALAIN has IE support enabled by default. Which adds a certain size to the package and style. If you are very concerned and don't need `IE10` and below support, you can adjust the two configurations:
 
 One: Reduce the body size by reducing the `flexbox` prefix style in `package.json` with the `browserslist` node:
 
@@ -26,7 +26,7 @@ Two: Close the `src/polyfills.ts` under `IE9, IE10 and IE11 requires all of the 
 
 Divided into JavaScript script files and CSS files. The following only describes the script part. For the CSS file, please refer to [Optimize Theme System](/theme/performance).
 
-**Note:** It is recommended to always prioritize **business, optimize to the post-** criteria, and have some understanding of `ng-alain` before starting to optimize. The optimization scheme in this chapter will change with the change of the version. Please pay attention to the details.
+**Note:** It is recommended to always prioritize **business, optimize to the post-** criteria, and have some understanding of NG-ALAIN before starting to optimize. The optimization scheme in this chapter will change with the change of the version. Please pay attention to the details.
 
 ### Structure description
 
@@ -48,9 +48,9 @@ We know that the resource file packaged by Angular Cli will contain the hashing 
 
 > In fact, Angular Cli defaults to `--vendor-chunk`. The main factor is that these `@angular/*` are very fast relative to iteration.
 
-According to `ng-alain`'s [module registration guidelines](/docs/module), we generate two core entries that determine the size of the `main.js` package: `delon.module.ts` and `shared.module.ts `.
+According to NG-ALAIN's [module registration guidelines](/docs/module), we generate two core entries that determine the size of the `main.js` package: `delon.module.ts` and `shared.module.ts `.
 
-The only way to reduce our size is to import only the modules we need. By default we don't do this. The main factor is that it adds a lot of extra code and it is limited by `ng-zorro-antd`. Support for the import of secondary modules, so this optimization is not very obvious.
+The only way to reduce our size is to import only the modules we need. By default we don't do this. The main factor is that it adds a lot of extra code and it is limited by NG-ZORRO. Support for the import of secondary modules, so this optimization is not very obvious.
 
 #### ng-zorro-antd
 
@@ -79,4 +79,4 @@ export class SharedModule {}
 
 ### Conclusion
 
-After `ng-zorro-antd` provides better optimization support, we will release [#684](https://github.com/ng-alain/ng-alain/pull/684) and hope to have a better package size. Expected results.
+After NG-ZORRO provides better optimization support, we will release [#684](https://github.com/ng-alain/ng-alain/pull/684) and hope to have a better package size. Expected results.
