@@ -6,11 +6,11 @@ title:
 type: Dev
 ---
 
-`ng-alain` is a single-page application based on the Angular technology stack. We provide development models for front-end code and native analog data.
+NG-ALAIN is a single-page application based on the Angular technology stack. We provide development models for front-end code and native analog data.
 Work in the form of the Restful API with the server application of any technology stack. The basics of interacting with the server are briefly described below.
 ## Front-end request process
 
-In `ng-alain`, a complete front-end UI interaction to the server-side processing flow looks like this:
+In NG-ALAIN, a complete front-end UI interaction to the server-side processing flow looks like this:
 
 1. Start Angular for the first time to execute `APP_INITIALIZER`;
 2. UI component interaction;
@@ -34,7 +34,7 @@ By default, two interceptors are registered in the root module.[SimpleIntercepto
 
 [DefaultInterceptor](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/net/default.interceptor.ts) The interceptor simply provides an interceptor. By default, it contains sample code that handles server request prefixes, handles request exceptions, and business exceptions. You can make adjustments based on your own needs.
 
-**important point**
+**Important point**
 
 We can put the `next.handle(req)` as the demarcation point in the interceptor `intercept` method. The first part is the request and the `pipe` part is the post. This will make it clearer which part is to be done before the request and which part will be executed after the request. For more information on interceptors, please refer to the official website.
 
