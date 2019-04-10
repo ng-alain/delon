@@ -4,7 +4,7 @@ title: 使用第三方类库
 type: Dev
 ---
 
-除了 `ng-zorro-antd` 基础组件以及 @delon 业务组件以外，有时我们还需要引用其他外部类库，以下将介绍如何使用富文本组件 [ngx-tinymce](https://github.com/cipchk/ngx-tinymce)：
+除了 NG-ZORRO 基础组件以及 @delon 业务组件以外，有时我们还需要引用其他外部类库，以下将介绍如何使用富文本组件 [ngx-tinymce](https://github.com/cipchk/ngx-tinymce)：
 
 ## Angular组件
 
@@ -25,7 +25,7 @@ const THIRDMODULES = [ NgxTinymceModule ];
 // #endregion
 ```
 
-> `region: third libs` 区域是`ng-alain`的一个编码约定，将所有第三方组件注册至 `THIRDMODULES` 变量中即可，而无须关心 `@NgModule` 内在的写法，有关更多编码约定可以参考[编码规范建议](/docs/style-guide)。
+> `region: third libs` 区域是NG-ALAIN的一个编码约定，将所有第三方组件注册至 `THIRDMODULES` 变量中即可，而无须关心 `@NgModule` 内在的写法，有关更多编码约定可以参考[编码规范建议](/docs/style-guide)。
 
 对于部分第三方组件，可能会需要一些配置项，建议在根模块中注册，例如：
 
@@ -74,7 +74,7 @@ yarn add qrious
 
 **延迟加载脚本**
 
-上述导入脚本方式会把代码直接打包进 `scripts.js`，这会导致 `scripts.js` 体积变大，`ng-alain` 提供另一种延迟加载CDN类库脚本解决方案，适用低使用率的业务（例如：[zip](https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js) 压缩），可以利用 [LazyService](/util/lazy) 延迟加载远程CDN脚本。
+上述导入脚本方式会把代码直接打包进 `scripts.js`，这会导致 `scripts.js` 体积变大，NG-ALAIN 提供另一种延迟加载CDN类库脚本解决方案，适用低使用率的业务（例如：[zip](https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js) 压缩），可以利用 [LazyService](/util/lazy) 延迟加载远程CDN脚本。
 
 ### 使用
 
