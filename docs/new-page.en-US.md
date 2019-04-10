@@ -8,9 +8,9 @@ type: Dev
 
 Angular renders a page in a component tree, the actual development is to organize the code in a module tree to make it better to resuse code. For **module granularity** depends on the requirements, ng-alain is positioned in the middle of the front-end. Therefore, it is recommended to organize your code structure from a business perspective.
 
-`ng-alain` provides a very rich set of Schematics templates to quickly create templates and pages that match `ng-alain` features, as well as a variety of pluggable [plugins](/cli/plugin).
+NG-ALAIN provides a very rich set of Schematics templates to quickly create templates and pages that match NG-ALAIN features, as well as a variety of pluggable [plugins](/cli/plugin).
 
-> Additionally: `ng-alain` is a standard Angular CLI project, you can still use the default command line.
+> Additionally: NG-ALAIN is a standard Angular CLI project, you can still use the default command line.
 
 ## First, the module
 
