@@ -6,7 +6,7 @@ title:
 type: Dev
 ---
 
-In [Architecture](/docs/architecture) we have described the overall composition of the `ng-alain` scaffolding. We spent a lot of time developing some infrastructure and publishing these to the `@delon/*` series to Npm. , making the upgrade very easy.
+In [Architecture](/docs/architecture) we have described the overall composition of the NG-ALAIN scaffolding. We spent a lot of time developing some infrastructure and publishing these to the `@delon/*` series to Npm. , making the upgrade very easy.
 
 ## Publishing rule
 
