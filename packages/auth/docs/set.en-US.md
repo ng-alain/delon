@@ -47,12 +47,12 @@ Contains three storage types:
 
 ### LocalStorageStore
 
-`localStorage` storage, ** not lost after closing the browser**.
+`localStorage` storage, **not lost after closing the browser**.
 
 ### SessionStorageStore
 
-`sessionStorage` storage, ** lost after closing the browser.
+`sessionStorage` storage, **lost after closing the browser.
 
 ### MemoryStore
 
-Memory storage, ** lost after closing the browser tab.
+Memory storage, **lost after closing the browser tab.
