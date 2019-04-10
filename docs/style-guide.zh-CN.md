@@ -6,7 +6,7 @@ title:
 type: Advance
 ---
 
-Angular CLI 构建的项目就其目录结构而言已经非常棒了，同时官网也有一份 [Angular Style Guide](https://angular.io/guide/styleguide)（[中文版](https://angular.cn/guide/styleguide)）风格指南，建议好好阅读几遍。除此之外，`ng-alain` 也有一部分编码风格，如下说明可能对于你阅读代码时有用。
+Angular CLI 构建的项目就其目录结构而言已经非常棒了，同时官网也有一份 [Angular Style Guide](https://angular.io/guide/styleguide)（[中文版](https://angular.cn/guide/styleguide)）风格指南，建议好好阅读几遍。除此之外，NG-ALAIN 也有一部分编码风格，如下说明可能对于你阅读代码时有用。
 
 ## 风格指南
 
@@ -63,11 +63,11 @@ vscode 是编写 Angular 最佳的选择，你可以在项目的任何目录里�
 
 ### vscode snippets
 
-vscode 是编写 Angular 最佳的选择，自然 `ng-alain` 也制作了相应 snippets 扩展插件：[ng-zorro-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode) 和 [ng-alain-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)。
+vscode 是编写 Angular 最佳的选择，自然 NG-ALAIN 也制作了相应 snippets 扩展插件：[ng-zorro-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-zorro-vscode) 和 [ng-alain-vscode](//marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)。
 
 ## 一致的代码风格
 
-`ng-alain` 使用 [Prettier](https://prettier.io/) 来优化代码风格，并且使其结果符合 `tslint.json`。
+NG-ALAIN 使用 [Prettier](https://prettier.io/) 来优化代码风格，并且使其结果符合 `tslint.json`。
 
 推荐安装几个插件在 vscode 中更友好的开发：
 
@@ -85,6 +85,6 @@ vscode 是编写 Angular 最佳的选择，自然 `ng-alain` 也制作了相应 
 
 `lint` 可以非常有效的帮助我们更早发现bug、更高的可读性；如果我们能够保证团队开发过程中每一次 commit 前都自动做一次 staged 中文件的 lint 的话，那不是非常酷吗？
 
-`ng-alain` 配置了每次对 staged 进行 commit 时会预先做 lint，若发现错误则无法提交。
+NG-ALAIN 配置了每次对 staged 进行 commit 时会预先做 lint，若发现错误则无法提交。
 
 默认开启了 `*.ts`、`*.less` 的提交过程中强制对代码进行格式化，你可以通过修改 `package.json` 的 `lint-staged` 节点来改变些规则（例如：`prettier --write`）。
