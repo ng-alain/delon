@@ -90,7 +90,7 @@
     </ng-container>
     <ng-container *ngFor="let i of _data; let index=index">
       <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [class]="i._rowClassName">
-        <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand" (nzExpandChange)="_expandChange(i)"></td>
+        <td *ngIf="expand" [nzShowExpand]="expand && i.showExpand !== false" [(nzExpand)]="i.expand" (nzExpandChange)="_expandChange(i)"></td>
         <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right"
             [nzCheckbox]="c.type === 'checkbox'" [ngClass]="columnClass(c)" [attr.colspan]="c.colSpan">
           <span class="ant-table-rep__title" [innerHTML]="c.title"></span>

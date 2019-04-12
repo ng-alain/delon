@@ -157,6 +157,10 @@ export interface STData {
    * 是否展开状态
    */
   expand?: boolean;
+  /**
+   * 是否显示展开按钮
+   */
+  showExpand?: boolean;
 
   [key: string]: any;
 }

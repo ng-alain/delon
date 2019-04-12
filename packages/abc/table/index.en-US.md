@@ -209,6 +209,7 @@ Property | Description | Type | Default
 `[checked]` | Select or radio button `checked` status value | `boolean` | -
 `[disabled]` | Select or radio button `disabled` status value | `boolean` | -
 `[expand]` | Whether to expand the status value | `boolean` | -
+`[showExpand]` | Whether show expand icon | `boolean` | -
 
 ### STColumn
 

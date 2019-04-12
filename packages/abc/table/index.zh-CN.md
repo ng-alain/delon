@@ -202,6 +202,7 @@ class TestComponent {
 `[checked]` | 选择框或单选框状态值 | `boolean` | -
 `[disabled]` | 选择框或单选框 `disabled` 值 | `boolean` | -
 `[expand]` | 是否展开状态 | `boolean` | -
+`[showExpand]` | 是否显示展开按钮 | `boolean` | -
 
 ### STColumn
 
