@@ -51,6 +51,7 @@ Property | Description | Type | Default
 `[noResult]` | Custom no result content | `string,TemplateRef<void>` | -
 `[bordered]` | Whether to show all table borders | `boolean` | `false`
 `[size]` | Size of table | `'small','middle','default'` | `'default'`
+`[widthMode]` | Set the table width mode | `STWidthMode` | -
 `[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | -
 `[loading]` | Loading status of table | `boolean` | `false`
 `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0`
@@ -353,6 +354,13 @@ Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[text]` | Tag text | `string` | -
 `[color]` | Tag color value | `string` | -
+
+### STWidthMode
+
+Property | Description | Type | Default
+-------- | ----------- | ---- | -------
+`[type]` | Type of width mode | `strict,default` | `default`
+`[strictBehavior]` | Behavior type of `strict` | `wrap,truncate` | `truncate`
 
 ### STStatistical
 

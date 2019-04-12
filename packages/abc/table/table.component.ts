@@ -63,6 +63,7 @@ import {
   STRowClassName,
   STSingleSort,
   STStatisticalResults,
+  STWidthMode,
 } from './table.interfaces';
 
 @Component({
@@ -174,6 +175,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     };
   }
   @Input() rowClassName: STRowClassName;
+  @Input()
+  set widthMode(value: STWidthMode) {
+    this._widthMode = { type: 'default', strictBehavior: 'truncate', ...value };
+  }
+  get widthMode() {
+    return this._widthMode;
+  }
+  private _widthMode: STWidthMode;
   /** `header` 标题 */
   @Input() header: string | TemplateRef<void>;
   /** `footer` 底部 */
@@ -249,6 +258,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           .replace('{{range[0]}}', range[0])
           .replace('{{range[1]}}', range[1])
       : '';
+  }
+
+  isTruncate(column: STColumn): boolean {
+    return column.width && this.widthMode.strictBehavior === 'truncate';
+  }
+
+  columnClass(column: STColumn): string {
+    return column.className || (this.isTruncate(column) ? 'text-truncate' : null);
   }
 
   private changeEmit(type: STChangeType, data?: any) {
@@ -664,9 +681,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private setClass() {
+    const { type, strictBehavior } = this.widthMode;
     updateHostClass(this.el.nativeElement, this.renderer, {
       [`st`]: true,
       [`st__p-${this.page.placement}`]: this.page.placement,
+      [`st__width-${type}`]: true,
+      [`st__width-strict-${strictBehavior}`]: type === 'strict',
       [`ant-table-rep__hide-header-footer`]: this.responsiveHideHeaderFooter,
     });
   }
