@@ -3,6 +3,21 @@ import { DrawerHelperOptions, ModalHelperOptions } from '@delon/theme';
 import { ModalOptionsForService, NzDrawerOptions } from 'ng-zorro-antd';
 import { STComponent } from './table.component';
 
+export interface STWidthMode {
+  /**
+   * 宽度类型
+   * - `default` 默认行为
+   * - `strict` 严格模式，即强制按 `width` 指定的宽度呈现，并根据 `strictBehavior` 类型处理
+   */
+  type?: 'strict' | 'default';
+  /**
+   * 严格模式的处理行为
+   * - `wrap` 强制换行
+   * - `truncate` 截短
+   */
+  strictBehavior?: 'wrap' | 'truncate';
+}
+
 export interface STReq {
   /**
    * 分页类型，默认：`page`

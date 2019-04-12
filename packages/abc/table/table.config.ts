@@ -9,6 +9,7 @@ import {
   STRes,
   STRowClassName,
   STSingleSort,
+  STWidthMode,
 } from './table.interfaces';
 
 @Injectable({ providedIn: 'root' })
@@ -126,4 +127,11 @@ export class STConfig {
    * 通过点击行来展开子行
    */
   expandRowByClick?: boolean = false;
+  /**
+   * 指定 `width` 模式
+   */
+  widthMode?: STWidthMode = {
+    type: 'default',
+    strictBehavior: 'truncate',
+  };
 }

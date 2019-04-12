@@ -92,7 +92,7 @@
       <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [class]="i._rowClassName">
         <td *ngIf="expand" [nzShowExpand]="expand" [(nzExpand)]="i.expand" (nzExpandChange)="_expandChange(i)"></td>
         <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right"
-            [nzCheckbox]="c.type === 'checkbox'" [ngClass]="c.className" [attr.colspan]="c.colSpan">
+            [nzCheckbox]="c.type === 'checkbox'" [ngClass]="columnClass(c)" [attr.colspan]="c.colSpan">
           <span class="ant-table-rep__title" [innerHTML]="c.title"></span>
           <span>
             <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
@@ -107,7 +107,7 @@
                   || i._values[cIdx].text}}</nz-tag>
                 <nz-badge *ngSwitchCase="'badge'" [nzStatus]="c.badge[i._values[cIdx].text].color"
                           [nzText]="c.badge[i._values[cIdx].text].text || i._values[cIdx].text"></nz-badge>
-                <span *ngSwitchDefault [innerHTML]="i._values[cIdx].text"></span>
+                <span *ngSwitchDefault [innerHTML]="i._values[cIdx].text" [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
               </ng-container>
               <ng-container *ngFor="let btn of _validBtns(i, c); let last=last">
                 <nz-dropdown *ngIf="btn.children.length > 0">
