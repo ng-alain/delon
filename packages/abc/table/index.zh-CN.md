@@ -51,7 +51,7 @@ config: STConfig
 `[noResult]` | 无数据时显示内容 | `string,TemplateRef<void>` | -
 `[bordered]` | 是否显示边框 | `boolean` | `false`
 `[size]` | table大小 | `'small','middle','default'` | `'default'`
-`[widthMode]` | 设置表格宽度模式 | `STWidthMode` | `{type:'default',strictBehavior:'truncate'}`
+`[widthMode]` | 设置表格宽度模式 | `STWidthMode` | -
 `[rowClassName]` | 表格行的类名 | `(record: STData, index: number) => string` | -
 `[loading]` | 页面是否加载中 | `boolean` | `false`
 `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0`
@@ -353,7 +353,7 @@ class TestComponent {
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 类型 | `strict,default` | `default`
-`[strictBehavior]` | `strict` 的行为类型 | `truncate` | -
+`[strictBehavior]` | `strict` 的行为类型 | `wrap,truncate` | `truncate`
 
 ### STStatistical
 

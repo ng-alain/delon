@@ -686,7 +686,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       [`st`]: true,
       [`st__p-${this.page.placement}`]: this.page.placement,
       [`st__width-${type}`]: true,
-      [`st__width-strict-truncate`]: type === 'strict' && strictBehavior === 'truncate',
+      [`st__width-strict-${strictBehavior}`]: type === 'strict',
       [`ant-table-rep__hide-header-footer`]: this.responsiveHideHeaderFooter,
     });
   }
