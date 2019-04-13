@@ -339,6 +339,7 @@ export class SFPage {
       [autocomplete]="autocomplete"
       [firstVisual]="firstVisual"
       [onlyVisual]="onlyVisual"
+      [loading]="loading"
       (formChange)="formChange($event)"
       (formSubmit)="formSubmit($event)"
       (formReset)="formReset($event)"
@@ -358,6 +359,7 @@ export class TestFormComponent {
   autocomplete: 'on' | 'off';
   firstVisual = true;
   onlyVisual = false;
+  loading = false;
 
   formChange(value: {}) {}
   formSubmit(value: {}) {}

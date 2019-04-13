@@ -26,12 +26,14 @@
                     nz-button
                     [nzType]="_btn.submit_type"
                     [nzSize]="_btn.render.size"
+                    [nzLoading]="loading"
                     [disabled]="liveValidate && !valid">{{_btn.submit}}</button>
             <button *ngIf="_btn.reset"
                     type="button"
                     nz-button
                     [nzType]="_btn.reset_type"
                     [nzSize]="_btn.render.size"
+                    [disabled]="loading"
                     (click)="reset(true)">
               {{_btn.reset}}
             </button>
