@@ -1133,6 +1133,21 @@ describe('abc: table', () => {
           });
         });
       });
+      describe('should be set showExpand in row data', () => {
+        it(`muse be hide expand icon`, (done) => {
+          context.expandRowByClick = false;
+          context.data = deepCopy(USERS).slice(0, 1);
+          context.data[0].showExpand = false;
+          fixture.detectChanges();
+          fixture.whenStable().then(() => {
+            page.expectElCount('.ant-table-row-expand-icon', 0);
+            expect(context.change).not.toHaveBeenCalled();
+            page.getCell(1, 2).click();
+            expect(context.change).not.toHaveBeenCalled();
+            done();
+          });
+        });
+      });
     });
     describe('[filter]', () => {
       describe('in local-data', () => {
