@@ -4,7 +4,7 @@ export default {
   abbr: 'en-US',
   exception: {
     403: `Sorry, you don't have access to this page`,
-    404: `Sorry, that page don't exist`,
+    404: `Sorry, that page doesn't exist`,
     500: `Sorry, server error`,
     backToHome: 'Back To Home',
   },
