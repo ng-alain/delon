@@ -55,18 +55,18 @@ ng-alain still does not break this rule, building a set of color classes for tex
 
 | Name | Primary Color | Description |
 | ---- | --- | --- |
-| `red` | `#f5222d` | Dust Red: 斗志、奔放 |
-| `volcano` | `#fa541c` | Volcano: 醒目、澎湃 |
-| `orange` | `#fa8c16` | Sunset Orange: 温暖、欢快 |
-| `gold` | `#faad14` | Calendula Gold: 活力、积极 |
-| `yellow` | `#fadb14` | Sunrise Yellow: 出生、阳光 |
-| `lime` | `#a0d911` | Lime: 自然、生机 |
-| `green` | `#52c41a` | Polar Green: 健康、创新 |
-| `cyan` | `#13c2c2` | Cyan: 希望、坚强 |
-| `blue` | `#1890ff` | Daybreak Blue: 包容、科技、普惠 |
-| `geekblue` | `#2f54eb` | Geek Blue: 探索、钻研 |
-| `purple` | `#722ed1` | Golden Purple: 优雅、浪漫 |
-| `magenta` | `#eb2f96` | Magenta: 平稳、中性 |
+| `red` | `#f5222d` | Dust Red: Fighting, unrestrained |
+| `volcano` | `#fa541c` | Volcano: Eye-catching |
+| `orange` | `#fa8c16` | Sunset Orange: Warm and cheerful |
+| `gold` | `#faad14` | Calendula Gold: Vital and active |
+| `yellow` | `#fadb14` | Sunrise Yellow: Birth, sunshine |
+| `lime` | `#a0d911` | Lime: Natural, vital |
+| `green` | `#52c41a` | Polar Green: Health, innovation |
+| `cyan` | `#13c2c2` | Cyan: Hope, strong |
+| `blue` | `#1890ff` | Daybreak Blue: Inclusive, technology, Pratt & Whitney |
+| `geekblue` | `#2f54eb` | Geek Blue: Explore and delve into |
+| `purple` | `#722ed1` | Golden Purple: Elegant, romantic |
+| `magenta` | `#eb2f96` | Magenta: Smooth, neutral |
 
 Ant Design's base color palette totals 120 colors, including 12 primary colors and their derivative colors. These colors can basically include the need for color in background applications design.
 

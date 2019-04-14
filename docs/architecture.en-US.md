@@ -6,7 +6,7 @@ title:
 type: Basic
 ---
 
-ng-alain scaffold is a front-end solution of middle and back-end application, which is based on [Angular](https://angular.io/) and [ng-zorro-antd](https://ng.ant.design/docs/introduce/en)(Angular implementation of Ant Design). The scaffold includes a set of common functionalities and business component libraries, which reduce lots of infrastructure development overwhelmingly and let you focus on business logic development.
+NG-ALAIN scaffold is a front-end solution to support middleware and back-end application. It is based on [Angular](https://angular.io/) and [ng-zorro-antd](https://ng.ant.design/docs/introduce/en)(Angular implementation of Ant Design). The scaffold includes a set of common functionalities and business component libraries. It reduces lots of infrastructure development overwhelmingly and let you focus on business logic development.
 
 ## Architecture Diagram
 
@@ -16,15 +16,15 @@ ng-alain scaffold is a front-end solution of middle and back-end application, wh
 
 Theme library of scaffold, we publish the theme library to NPM, which extremely simplifies upgrade effort.
 
-Theme library includes not only essential styles(CSS tool like bootstrap), which is needed by `ng-alain`, but also a set of common data rendering(Pipe) and service tools(page title, scroll bar, etc.), which are needed during daily development.
+Theme library includes not only essential styles(CSS tool like bootstrap) required by NG-ALAIN, but also a set of common data rendering(Pipe) and service tools(page title, scroll bar, etc..), which are needed during daily development.
 
 **@delon/abc**
 
-Scaffold provides a default set of [business components](/components/), which abstract commonly used block/area in console service. We will continue to maintain and iterate the components, provide more advanced abstract components than Ant Design base components to middle and back-end business.
+Scaffold provides a default set of [business components](/components/), which abstract commonly used block/area in console service. We will continue to maintain and iterate the components. Provide more advanced abstract components than Ant Design base components to middleware and back-end business.
 
 **@delon/chart**
 
-[@delon/chart](/chart) chart library is customised based on G2 (3.0), providing commonly used chart suite in business development, it can be used alone, or composed together to achieve more complex and fancy display effect.
+[@delon/chart](/chart) chart library is customised based on G2 (3.0). Providing commonly used chart suite in business development. It can be used alone or composed together to achieve more complex and fancy display effect.
 
 **@delon/form**
 
@@ -32,15 +32,15 @@ Scaffold provides a default set of [business components](/components/), which ab
 
 **@delon/auth**
 
-[User Authentication](/docs/auth) module is used for resolving steps about obtain, save and use authentication.
+[User Authentication](/docs/auth) module is used for resolving steps to obtain, save and use authentication.
 
 **@delon/acl**
 
-[ACL](/docs/acl) Access Control List is a very simple role based permission control, it can even reach the granularity of controlling the visibility of a button
+[ACL](/docs/acl) Access Control List is a very simple role based permission control. It can even reach the granularity of controlling the visibility of a button.
 
 **@delon/cache**
 
-You can [cache](/docs/cache) _dictionary_, _city data_ into memory or persistent layer, which will reduce amount of HTTP request.
+Reduce the Http request by storing [cache](/docs/cache) of the dictionary, city data, etc. into memory or persistence storage.
 
 **@delon/mock**
 
@@ -62,4 +62,4 @@ Commonly used testing suite.
 
 You can find all documents in [ng-alain.com](https://ng-alain.com).
 
-The documents will be iteratively changed with scaffold's upgrade ([Change log](https://github.com/ng-alain/ng-alain/releases)), please feedback from [here](https://github.com/ng-alain/ng-alain/issues) if you have any questions or requirements.
+The documents will be iteratively changed with scaffold's upgrade ([Change log](https://github.com/ng-alain/ng-alain/releases)). If you have any questions or requirements, please provide your feedback [here](https://github.com/ng-alain/ng-alain/issues). 

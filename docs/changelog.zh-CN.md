@@ -4,7 +4,7 @@ title: 更新日志
 type: Other
 ---
 
-`ng-alain` 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/) 语义化版本规范。
+NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/) 语义化版本规范。
 
 #### 发布周期
 
@@ -89,11 +89,11 @@ type: Other
 
 # [7.0.0](https://github.com/ng-alain/delon/compare/7.0.0-rc.10...7.0.0) (2019-02-28)
 
-**一切安好，一直在等待 ng-zorro-antd 7.0.0 正式版，它是我们的基础组件，因此本次更新只是保持主版本号的同步**
+**一切安好，一直在等待 NG-ZORRO 7.0.0 正式版，它是我们的基础组件，因此本次更新只是保持主版本号的同步**
 
 ### Features
 
-* 同步 ng-zorro-antd 7.0.0
+* 同步 NG-ZORRO 7.0.0
 * 新增希腊 `el_GR` 语言 ([#423](https://github.com/ng-alain/delon/issues/423)) ([17a03d6](https://github.com/ng-alain/delon/commit/17a03d6))
 
 

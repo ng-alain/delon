@@ -4,7 +4,7 @@ title: Use a third-party lib
 type: Dev
 ---
 
-In addition to the ng-zorro-antd base component and the @delon business component, sometimes we need to reference other external class libraries, the following is how to use the rich text component [ngx-tinymce](https://github.com/cipchk/ngx-tinymce):
+In addition to the NG-ALAIN base component and the @delon business component, sometimes we need to reference other external class libraries, the following is how to use the rich text component [ngx-tinymce](https://github.com/cipchk/ngx-tinymce):
 
 ## Angular Component
 
@@ -25,7 +25,7 @@ const THIRDMODULES = [ NgxTinymceModule ];
 // #endregion
 ```
 
-> The `region: third libs` region is a coding convention for ng-alain, register all third-party components into the `THIRDMODULES` variable, for more coding conventions, refer to [Style Guide](/docs/style-guide).
+> The `region: third libs` region is a coding convention for NG-ALAIN, register all third-party components into the `THIRDMODULES` variable, for more coding conventions, refer to [Style Guide](/docs/style-guide).
 
 For some third-party components, may be required global configuration. It's recommended to register in the root module, for example:
 
@@ -74,11 +74,11 @@ If the third-party library requires additional styles, you also need to add a pa
 
 **Lazy loading script**
 
-The above import script method will package the code directly into `scripts.js`, which will cause the `scripts.js` to become larger. ng-alain provides another delayed loading CDN library script solution for low-usage services. (Example: [zip](https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js) compression), you can use [LazyService](/util/lazy) to delay loading remote CDN scripts.
+The above import script method will package the code directly into `scripts.js`, which will cause the `scripts.js` to become larger. NG-ALAIN provides another delayed loading CDN library script solution for low-usage services. (Example: [zip](https://cdn.bootcss.com/jszip/3.1.5/jszip.min.js) compression), you can use [LazyService](/util/lazy) to delay loading remote CDN scripts.
 
 ### How to use
 
-Angular is using TypeScript language, and all types must be clearly defined to be used. For details, please refer to [Angular 如何使用第三方库](https://zhuanlan.zhihu.com/p/35796451).
+Angular is using TypeScript language, and all types must be clearly defined to be used. For details, please refer to [Angular How to use third-party libraries](https://zhuanlan.zhihu.com/p/35796451).
 
 A sample code for the call:
 
