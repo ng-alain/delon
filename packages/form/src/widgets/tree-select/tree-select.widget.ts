@@ -34,6 +34,7 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
     getData(this.schema, this.ui, this.formProperty.formData)
       .subscribe(list => {
         this.data = list;
+        this.detectChanges();
       });
   }
 
