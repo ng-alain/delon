@@ -94,8 +94,13 @@ export class UploadWidget extends ControlWidget implements OnInit {
     fileList.filter(file => !file.url).forEach(file => {
       file.url = deepGet(file.response, this.i.urlReName);
     });
-    const res = fileList.map(file => this._getValue(file));
+    const res = fileList.filter(w => w.status === 'done').map(file => this._getValue(file));
     this.setValue(this.i.multiple === true ? res : res.pop());
+  }
+
+  handleRemove = () => {
+    this._setValue(this.fileList);
+    return true;
   }
 
   handlePreview = (file: UploadFile) => {

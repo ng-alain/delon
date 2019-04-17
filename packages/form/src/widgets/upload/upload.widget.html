@@ -5,7 +5,7 @@
               [error]="error"
               [showTitle]="schema.title">
   <nz-upload [nzType]="i.type"
-             [nzFileList]="fileList"
+             [(nzFileList)]="fileList"
              [nzDisabled]="disabled"
              [nzAction]="i.action"
              [nzDirectory]="i.directory"
@@ -24,7 +24,7 @@
              [nzWithCredentials]="i.withCredentials"
              [nzBeforeUpload]="i.beforeUpload"
              [nzCustomRequest]="i.customRequest"
-             [nzRemove]="ui.remove"
+             [nzRemove]="ui.remove || handleRemove"
              [nzPreview]="handlePreview"
              (nzChange)="change($event)">
     <ng-container [ngSwitch]="btnType">
