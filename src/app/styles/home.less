@@ -178,8 +178,15 @@
       &__slogan {
         width: 100%;
         text-align: center;
+        max-width: 100%;
+        min-width: 100%;
         &-btn {
           justify-content: center;
+          flex-wrap: wrap;
+          > a,
+          > github-button {
+            margin-bottom: 16px;
+          }
         }
       }
       &__img {
@@ -196,32 +203,4 @@
       }
     }
   }
-
-  // @media (min-width: @mobile-min) {
-  //   .banner {
-  //     &-wrapper {
-  //       margin: 120px;
-  //       display: flex;
-  //       justify-content: center;
-  //       align-items: center;
-  //     }
-  //   }
-  // }
-
-  // @media (max-width: @mobile-max) {
-  //   .banner {
-  //     &-wrapper {
-  //       margin: 48px 10px;
-  //     }
-  //     &-slogan {
-  //       margin: 0 0 56px 0;
-  //       text-align: center;
-  //       .button-wrapper {
-  //         justify-content: center;
-  //         margin-top: 24px;
-  //         flex-wrap: wrap;
-  //       }
-  //     }
-  //   }
-  // }
 }
