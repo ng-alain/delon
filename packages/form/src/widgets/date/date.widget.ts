@@ -93,7 +93,9 @@ export class DateWidget extends ControlWidget implements OnInit {
   }
 
   private setEnd(value: string) {
-    this.endProperty.setValue(value, true);
+    if (this.flatRange) {
+      this.endProperty.setValue(value, true);
+    }
   }
 
   private toDate(value: SFValue) {
