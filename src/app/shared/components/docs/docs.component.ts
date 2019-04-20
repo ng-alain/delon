@@ -83,7 +83,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     // goTo
     setTimeout(() => {
       const toc = this.router.parseUrl(this.router.url).fragment || '';
-      if (toc) document.querySelector(`#${toc}`).scrollIntoView();
+      if (toc) document.querySelector(`#${toc}`)!.scrollIntoView();
     }, 200);
   }
 

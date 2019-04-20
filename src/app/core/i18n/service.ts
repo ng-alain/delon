@@ -39,7 +39,7 @@ export class I18NService implements AlainI18NService {
     this.use(lang, false);
   }
 
-  private getBrowserLang(): string {
+  private getBrowserLang(): string | undefined {
     const winNav: any = window.navigator;
     if (typeof window === 'undefined' || typeof winNav === 'undefined') {
       return undefined;

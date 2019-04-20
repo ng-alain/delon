@@ -81,7 +81,7 @@ export class DemoComponent {
           type: 'del',
           click: (record, modal, comp) => {
             this.message.success(`成功删除【${record.name}】`);
-            comp.removeRow(record);
+            comp!.removeRow(record);
           },
           iif: (item: any) => item.id % 2 === 0,
         },

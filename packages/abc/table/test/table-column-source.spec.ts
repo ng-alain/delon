@@ -5,7 +5,7 @@ import { deepGet } from '@delon/util';
 import { STColumnSource } from '../table-column-source';
 import { STRowSource } from '../table-row.directive';
 import { STConfig } from '../table.config';
-import { STColumn } from '../table.interfaces';
+import { STColumn, STColumnFilter } from '../table.interfaces';
 
 const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
@@ -593,7 +593,7 @@ describe('abc: table: column-souce', () => {
               menus: [{ text: '1', acl: 'admin' }],
             },
           },
-        ])[0].filter,
+        ])[0]!.filter as any,
       ).toBe(null);
     });
 

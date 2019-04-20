@@ -15,7 +15,7 @@ Import Excel and output JSON, support File, URL.
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, XlsxService } from '@delon/abc';
+import { XlsxService } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
@@ -34,7 +34,7 @@ export class DemoComponent {
 
   change(e: Event) {
     const node = e.target as HTMLInputElement;
-    this.xlsx.import(node.files[0]).then(res => this.data = res);
+    this.xlsx.import(node.files![0]).then(res => this.data = res);
     node.value = '';
   }
 }

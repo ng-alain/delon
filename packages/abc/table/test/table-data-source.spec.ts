@@ -124,8 +124,8 @@ describe('abc: table: data-souce', () => {
         });
         it('should not handle pi & total', (done: () => void) => {
           srv.process(options).then(res => {
-            expect(res.pi).toBe(undefined);
-            expect(res.total).toBe(undefined);
+            expect(res.pi as any).toBe(undefined);
+            expect(res.total as any).toBe(undefined);
             done();
           });
         });

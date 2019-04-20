@@ -242,7 +242,7 @@ describe('utils: array', () => {
       if (value == null) {
         expect(item == null).toBe(true);
       } else {
-        expect(item[field]).toBe(value);
+        expect(item![field]).toBe(value);
       }
       return this;
     }

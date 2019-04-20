@@ -90,7 +90,7 @@ describe('abc: ellipsis', () => {
         }));
         it('should working', () => {
           // tslint:disable-next-line:no-string-literal
-          expect(+page.getEl('.ellipsis')!.style['webkitLineClamp']).toBe(context.lines);
+          expect(+page.getEl('.ellipsis')!.style!['webkitLineClamp']).toBe(context!.lines as number);
         });
       });
       describe('in firefox', () => {

@@ -271,10 +271,10 @@ export class SixToSevenEditorComponent implements OnInit {
         this.converterService.run(this.source).then(res => {
             this.doing = false;
             if (!res.ok) {
-                this.msg.error(res.error);
+                this.msg.error(res.error as string);
                 return;
             }
-            this.result = res.result;
+            this.result = res.result as string;
             this.msg.success('转化成功');
         });
     }

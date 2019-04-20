@@ -1,5 +1,5 @@
-let body = document.querySelector('body');
-let preloader = document.querySelector('.preloader');
+let body = document.querySelector('body')!;
+let preloader = document.querySelector('.preloader')!;
 
 body.style.overflow = 'hidden';
 

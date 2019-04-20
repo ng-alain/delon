@@ -44,7 +44,7 @@ export class DemoComponent {
     notices.forEach(item => {
       const newItem = { ...item };
       if (newItem.datetime)
-        newItem.datetime = distanceInWordsToNow(item.datetime, { locale: (window as any).__locale__ });
+        newItem.datetime = distanceInWordsToNow(item.datetime!, { locale: (window as any).__locale__ });
       if (newItem.extra && newItem.status) {
         newItem.color = ({
           todo: undefined,
@@ -53,7 +53,7 @@ export class DemoComponent {
           doing: 'gold',
         })[newItem.status];
       }
-      data.find(w => w.title === newItem.type).list.push(newItem);
+      data.find(w => w.title === newItem.type)!.list.push(newItem);
     });
     return data;
   }

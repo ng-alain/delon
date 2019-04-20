@@ -246,21 +246,18 @@ export class SFPage {
 
   checkCls(cls: string, value: string): this {
     const el = this.getEl(cls);
-    expect(el).not.toBe(null);
     expect(el.classList).toContain(value);
     return this;
   }
 
   checkStyle(cls: string, key: string, value: string): this {
     const el = this.getEl(cls);
-    expect(el).not.toBe(null);
     expect(el.style[key]).toBe(value);
     return this;
   }
 
   checkAttr(cls: string, key: string, value: any, required = true): this {
     const el = this.getEl(cls);
-    expect(el).not.toBe(null);
     const attr = el.attributes.getNamedItem(key);
     if (required) expect(attr!.textContent).toBe(value);
     else expect(attr).toBe(value);
