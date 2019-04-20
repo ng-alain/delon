@@ -140,13 +140,13 @@ export class LodopService implements OnDestroy {
       if (!res) return;
       const fn = this._lodop![res[1]];
       if (fn) {
-        let arr: any[];
+        let arr: any[] | null = null;
         try {
           const fakeFn = new Function(`return [${res[2]}]`);
           arr = fakeFn();
         } catch {}
 
-        if (Array.isArray(arr!) && contextObj) {
+        if (arr != null && Array.isArray(arr) && contextObj) {
           for (let i = 0; i < arr.length; i++) {
             if (typeof arr[i] === 'string') {
               arr[i] = arr[i].replace(/{{(.*?)}}/g, (match, key) => contextObj[key.trim()] || '');
