@@ -89,14 +89,14 @@ describe('abc: table: data-souce', () => {
         });
         it(`should return ${DEFAULT.ps} rows of data`, (done: () => void) => {
           srv.process(options).then(res => {
-            expect(res.list.length).toBe(DEFAULT.ps);
+            expect(res.list!.length).toBe(DEFAULT.ps);
             done();
           });
         });
         it('should return second page of data', (done: () => void) => {
           options.pi = 2;
           srv.process(options).then(res => {
-            expect(res.list[0].id).toBe(DEFAULT.ps + 1);
+            expect(res.list![0].id).toBe(DEFAULT.ps + 1);
             expect(res.pi).toBe(2);
             done();
           });
@@ -112,7 +112,7 @@ describe('abc: table: data-souce', () => {
           options.page.show = false;
           srv.process(options).then(res => {
             expect(res.pageShow).toBe(false);
-            expect(res.list.length).toBe(DEFAULT.total);
+            expect(res.list!.length).toBe(DEFAULT.total);
             done();
           });
         });
@@ -209,7 +209,7 @@ describe('abc: table: data-souce', () => {
             expect(res.list.length).toBe(expectCount);
           })
           .then(() => {
-            options.columns[0].filter.menus[0].checked = false;
+            options.columns[0].filter!.menus[0].checked = false;
             return srv.process(options);
           })
           .then(res => {
@@ -288,7 +288,7 @@ describe('abc: table: data-souce', () => {
       it('should be process', (done: () => void) => {
         options.req.process = (a) => {
           // tslint:disable-next-line:no-string-literal
-          a.params['PI'] = 2;
+          a.params!['PI'] = 2;
           return a;
         };
         let resParams: any = {};
@@ -383,7 +383,7 @@ describe('abc: table: data-souce', () => {
       });
       it('should be return 0 when total invalid config and unspecified total', (done: () => void) => {
         options.res.reName = { total: 'T1', list: '1L' };
-        options.total = undefined;
+        options.total = undefined!;
         spyOn(http, 'request').and.callFake((method: string, url: string, opt: any) => {
           return of({ L: 1, T: DEFAULT.ps });
         });
@@ -554,7 +554,7 @@ describe('abc: table: data-souce', () => {
         });
       });
       it(`should be re-name`, (done: () => void) => {
-        options.columns[0].filter.reName = (list: STColumnFilterMenu[]) => {
+        options.columns[0].filter!.reName = (list: STColumnFilterMenu[]) => {
           return { id: list.map(i => i.value + '1').join(',') };
         };
         srv.process(options).then(res => {

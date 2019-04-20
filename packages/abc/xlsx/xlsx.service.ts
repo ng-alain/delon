@@ -13,7 +13,7 @@ export class XlsxService {
   constructor(private cog: XlsxConfig, private http: HttpClient, private lazy: LazyService) {}
 
   private init(): Promise<LazyResult[]> {
-    return this.lazy.load([this.cog.url].concat(this.cog.modules));
+    return this.lazy.load([this.cog.url!].concat(this.cog.modules!));
   }
 
   private read(wb: any): { [key: string]: any[][] } {

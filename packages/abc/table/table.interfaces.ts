@@ -187,7 +187,7 @@ export interface STColumn {
    * - `price.market`
    * - `[ 'price', 'market' ]`
    */
-  index?: string | string[];
+  index?: string | string[] | null;
   /**
    * 类型
    * - `no` 行号，计算规则：`index + noIndex`
@@ -304,11 +304,11 @@ export interface STColumn {
   /**
    * 徽标配置项
    */
-  badge?: STColumnBadge;
+  badge?: STColumnBadge | null;
   /**
    * 标签配置项
    */
-  tag?: STColumnTag;
+  tag?: STColumnTag | null;
   /**
    * 行号索引，默认：`1`
    * - 计算规则为：`index + noIndex`
@@ -376,7 +376,7 @@ export interface STColumnSort {
    * - 若 `multiSort: false` 时：`key: 'name' => ?name=1&pi=1`
    * - 若 `multiSort: true` 允许多个排序 key 存在，或使用 `STMultiSort` 指定多列排序key合并规则
    */
-  key?: string;
+  key?: string | null;
   /**
    * 远程数据的排序时后端相对应的VALUE
    * - `{ ascend: '0', descend: '1' }` 结果 `?name=1&pi=1`
@@ -393,7 +393,7 @@ export interface STColumnFilter {
   /**
    * 本地数据的筛选函数
    */
-  fn?: (filter: STColumnFilterMenu, record: STData) => boolean;
+  fn?: ((filter: STColumnFilterMenu, record: STData) => boolean) | null;
   /**
    * 标识数据是否已过滤，筛选图标会高亮
    */
@@ -418,7 +418,7 @@ export interface STColumnFilter {
    * 远程数据的过滤时后端相对应的KEY，默认使用 `index` 属性
    * `key: 'name'` 结果 `?name=1&pi=1`
    */
-  key?: string;
+  key?: string | null;
   /**
    * 远程数据的过滤时后端相对应的VALUE
    * - 默认当 `multiple: true` 时以英文逗号拼接的字符串

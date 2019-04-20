@@ -11,7 +11,7 @@ export function isEmpty(element: HTMLElement): boolean {
   return true;
 }
 
-export function toBoolean(value: any, allowUndefined: boolean = false): boolean | undefined {
+export function toBoolean(value: any, allowUndefined: boolean | null = false): boolean | undefined {
   return allowUndefined && typeof value === 'undefined'
     ? undefined
     : value != null && `${value}` !== 'false';

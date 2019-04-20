@@ -46,6 +46,7 @@ import {
   STPage,
   STReq,
   STRes,
+  STResReNameType,
   STWidthMode,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
@@ -126,8 +127,8 @@ describe('abc: table', () => {
       provide: ALAIN_I18N_TOKEN,
       useClass: MockI18NServiceFake,
     }];
-    if (other.providers.length > 0) {
-      providers.push(...other.providers);
+    if (other.providers!.length > 0) {
+      providers.push(...other.providers!);
     }
     injector = TestBed.configureTestingModule({
       imports,
@@ -223,7 +224,7 @@ describe('abc: table', () => {
                   .expectData(1, 'checked', undefined)
                   .expectData(2, 'checked', undefined);
                 // mock click
-                comp._rowSelection(comp._columns[0].selections[0]);
+                comp._rowSelection(comp._columns[0].selections![0]);
                 page
                   .expectData(1, 'checked', true)
                   .expectData(2, 'checked', false);
@@ -599,15 +600,15 @@ describe('abc: table', () => {
             comp._btnClick(
               new MouseEvent('click'),
               comp._data[0],
-              comp._columns[0].buttons[0],
+              comp._columns[0].buttons![0],
             );
-            expect(columns[0].buttons[1].click).not.toHaveBeenCalled();
+            expect(columns[0].buttons![1].click).not.toHaveBeenCalled();
             comp._btnClick(
               new MouseEvent('click'),
               comp._data[0],
-              comp._columns[0].buttons[1],
+              comp._columns[0].buttons![1],
             );
-            expect(columns[0].buttons[1].click).toHaveBeenCalled();
+            expect(columns[0].buttons![1].click).toHaveBeenCalled();
             done();
           });
         });
@@ -645,7 +646,7 @@ describe('abc: table', () => {
           ];
           page.newColumn(columns).then(() => {
             // mock trigger
-            comp._btnClick(null, comp._data[0], comp._columns[0].buttons[0]);
+            comp._btnClick(null!, comp._data[0], comp._columns[0].buttons![0]);
             expect(true).toBe(true);
             done();
           });
@@ -659,7 +660,7 @@ describe('abc: table', () => {
               },
             ];
             page.newColumn(columns).then(() => {
-              page.expectCell(null, 1, 1, 'a').expectCell('a', 2, 1, 'a');
+              page.expectCell(null!, 1, 1, 'a').expectCell('a', 2, 1, 'a');
               done();
             });
           });
@@ -720,9 +721,9 @@ describe('abc: table', () => {
                 expect(modalHelp.create).not.toHaveBeenCalled();
                 page.clickCell('a');
                 expect(modalHelp.create).toHaveBeenCalled();
-                expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+                expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
                 mock$.next({});
-                expect(columns[0].buttons[0].click).toHaveBeenCalled();
+                expect(columns[0].buttons![0].click).toHaveBeenCalled();
                 mock$.unsubscribe();
                 done();
               });
@@ -751,9 +752,9 @@ describe('abc: table', () => {
                 expect(modalHelp.createStatic).not.toHaveBeenCalled();
                 page.clickCell('a');
                 expect(modalHelp.createStatic).toHaveBeenCalled();
-                expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+                expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
                 mock$.next({});
-                expect(columns[0].buttons[0].click).toHaveBeenCalled();
+                expect(columns[0].buttons![0].click).toHaveBeenCalled();
                 mock$.unsubscribe();
                 done();
               });
@@ -784,9 +785,9 @@ describe('abc: table', () => {
                 expect(drawerHelp.create).not.toHaveBeenCalled();
                 page.clickCell('a');
                 expect(drawerHelp.create).toHaveBeenCalled();
-                expect(columns[0].buttons[0].click).not.toHaveBeenCalled();
+                expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
                 mock$.next({});
-                expect(columns[0].buttons[0].click).toHaveBeenCalled();
+                expect(columns[0].buttons![0].click).toHaveBeenCalled();
                 mock$.unsubscribe();
                 done();
               });
@@ -925,30 +926,32 @@ describe('abc: table', () => {
         context.req = { reName: { pi: 'PI' } };
         fixture.detectChanges();
         expect(comp.req.reName).not.toBeNull();
-        expect(comp.req.reName.pi).toBe('PI');
-        expect(comp.req.reName.ps).toBe('ps');
+        expect(comp.req.reName!.pi).toBe('PI');
+        expect(comp.req.reName!.ps).toBe('ps');
       });
     });
     describe('#res', () => {
       it('should fix all paraments when only part parament', () => {
         context.res = { reName: { total: 'a.b' } };
         fixture.detectChanges();
-        expect(comp.res.reName).not.toBeNull();
-        expect(comp.res.reName.total[0]).toBe('a');
-        expect(comp.res.reName.total[1]).toBe('b');
-        expect(comp.res.reName.list.length).toBe(1);
-        expect(comp.res.reName.list[0]).toBe('list');
+        const reName = comp.res.reName as STResReNameType;
+        expect(reName).not.toBeNull();
+        expect(reName.total![0]).toBe('a');
+        expect(reName.total![1]).toBe('b');
+        expect(reName.list!.length).toBe(1);
+        expect(reName.list![0]).toBe('list');
       });
       it('support a.b', () => {
         context.res = { reName: { total: 'a.b', list: 'c.d' } };
         fixture.detectChanges();
-        expect(comp.res.reName).not.toBeNull();
-        expect(Array.isArray(comp.res.reName.total)).toBe(true);
-        expect(Array.isArray(comp.res.reName.list)).toBe(true);
-        expect(comp.res.reName.total[0]).toBe('a');
-        expect(comp.res.reName.total[1]).toBe('b');
-        expect(comp.res.reName.list[0]).toBe('c');
-        expect(comp.res.reName.list[1]).toBe('d');
+        const reName = comp.res.reName as STResReNameType;
+        expect(reName).not.toBeNull();
+        expect(Array.isArray(reName.total)).toBe(true);
+        expect(Array.isArray(reName.list)).toBe(true);
+        expect(reName.total![0]).toBe('a');
+        expect(reName.total![1]).toBe('b');
+        expect(reName.list![0]).toBe('c');
+        expect(reName.list![1]).toBe('d');
       });
     });
     describe('#page', () => {
@@ -1137,7 +1140,7 @@ describe('abc: table', () => {
         it(`muse be hide expand icon`, (done) => {
           context.expandRowByClick = false;
           context.data = deepCopy(USERS).slice(0, 1);
-          context.data[0].showExpand = false;
+          context.data![0].showExpand = false;
           fixture.detectChanges();
           fixture.whenStable().then(() => {
             page.expectElCount('.ant-table-row-expand-icon', 0);
@@ -1174,10 +1177,10 @@ describe('abc: table', () => {
         });
         it('muse provide the fn function', (done: () => void) => {
           spyOn(console, 'warn');
-          context.columns[0].filter.fn = null;
+          context.columns[0].filter!.fn = null;
           fixture.detectChanges();
           firstCol = comp._columns[0];
-          filter = firstCol.filter;
+          filter = firstCol.filter as STColumnFilter;
           comp._filterRadio(firstCol, filter.menus[0], true);
           comp._filterRadio(firstCol, filter.menus[1], true);
           comp._filterConfirm(firstCol);
@@ -1189,10 +1192,10 @@ describe('abc: table', () => {
         });
         describe('when is single', () => {
           beforeEach(() => {
-            context.columns[0].filter.multiple = false;
+            context.columns[0].filter!.multiple = false;
             fixture.detectChanges();
             firstCol = comp._columns[0];
-            filter = firstCol.filter;
+            filter = firstCol.filter as STColumnFilter;
             comp._filterRadio(firstCol, filter.menus[0], true);
             comp._filterRadio(firstCol, filter.menus[1], true);
             comp._filterConfirm(firstCol);
@@ -1209,10 +1212,10 @@ describe('abc: table', () => {
         });
         describe('when is multiple', () => {
           beforeEach(() => {
-            context.columns[0].filter.multiple = true;
+            context.columns[0].filter!.multiple = true;
             fixture.detectChanges();
             firstCol = comp._columns[0];
-            filter = firstCol.filter;
+            filter = firstCol.filter as STColumnFilter;
             filter.menus[0].checked = true;
             filter.menus[1].checked = true;
             comp._filterConfirm(firstCol);
@@ -1640,7 +1643,7 @@ describe('abc: table', () => {
           .newColumn([{ title: '', index: 'id', renderTitle: 'id' }])
           .then(() => {
             expect(
-              page.getHead('id').querySelector('.id-title').textContent,
+              page.getHead('id').querySelector('.id-title')!.textContent,
             ).toBe('ID');
             done();
           });
@@ -1652,7 +1655,7 @@ describe('abc: table', () => {
           </st>`,
         });
         page.newColumn([{ title: '', index: 'id', render: 'id' }]).then(() => {
-          expect(page.getCell().querySelector('.j-id').textContent).toBe('id1');
+          expect(page.getCell().querySelector('.j-id')!.textContent).toBe('id1');
           done();
         });
       });
@@ -1677,10 +1680,10 @@ describe('abc: table', () => {
       it('should working', (done: () => void) => {
         page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
           const el = page.getEl('.ant-pagination-total-text');
-          expect(el.textContent.trim()).toContain(`共`);
+          expect(el.textContent!.trim()).toContain(`共`);
           injector.get(DelonLocaleService).setLocale(en_US);
           fixture.detectChanges();
-          expect(el.textContent.trim()).toContain(`of`);
+          expect(el.textContent!.trim()).toContain(`of`);
           done();
         });
       });
@@ -1743,7 +1746,7 @@ describe('abc: table', () => {
      * @param isContain 是否包含条件
      */
     expectCell(
-      value: string,
+      value: string | null,
       row: number = 1,
       column: number = 1,
       cls?: string,
@@ -1751,7 +1754,7 @@ describe('abc: table', () => {
     ): this {
       let cell = this.getCell(row, column);
       if (cls) {
-        cell = cell.querySelector(cls);
+        cell = cell.querySelector(cls) as HTMLElement;
       }
       if (value == null) {
         expect(cell).toBeNull();
@@ -1780,7 +1783,7 @@ describe('abc: table', () => {
     }
     expectHead(value: string, name: string, cls?: string): this {
       let cell = this.getHead(name);
-      if (cls) cell = cell.querySelector(cls);
+      if (cls) cell = cell.querySelector(cls) as HTMLElement;
       if (value == null) {
         expect(cell).toBeNull();
       } else {
@@ -1854,7 +1857,7 @@ describe('abc: table', () => {
       if (content == null) {
         expect(el).toBeNull(expectationFailOutput);
       } else {
-        expect(el.textContent.trim()).toBe(content, expectationFailOutput);
+        expect(el!.textContent!.trim()).toBe(content, expectationFailOutput);
       }
       return this;
     }
@@ -1910,7 +1913,7 @@ describe('abc: table', () => {
 class TestComponent {
   @ViewChild('st')
   comp: STComponent;
-  data: string | any[] | Observable<any[]> = deepCopy(USERS);
+  data: string | any[] | Observable<any[]> | null = deepCopy(USERS);
   res: STRes = {};
   req: STReq = {};
   columns: STColumn[];
