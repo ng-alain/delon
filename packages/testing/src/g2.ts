@@ -143,7 +143,7 @@ export class PageG2<T> {
     return this;
   }
 
-  checkTooltip(includeText: string, point?: { x: number; y: number }) {
+  checkTooltip(includeText: string | null, point?: { x: number; y: number }) {
     if (!point) {
       const g2El = this.dl.nativeElement as HTMLElement;
       point = {

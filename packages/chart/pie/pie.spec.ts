@@ -116,7 +116,7 @@ describe('chart: pie', () => {
 class TestMiniComponent {
   @ViewChild('comp') comp: G2PieComponent;
   data: any[];
-  color = 'rgba(24, 144, 255, 0.85)';
+  color: string | null = 'rgba(24, 144, 255, 0.85)';
   subTitle = 'subTitle';
   total = 'total';
   height = 100;

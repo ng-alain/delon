@@ -607,7 +607,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         .create(
           drawer!.title!,
           drawer!.component,
-          { ...obj, ...(drawer!.params != null ? drawer!.params(record) : {}) },
+          { ...obj, ...(drawer!.params != null ? drawer!.params!(record) : {}) },
           deepMergeKey({}, true, this.copyCog.drawer, drawer),
         )
         .pipe(filter(w => typeof w !== 'undefined'))

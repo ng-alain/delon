@@ -96,7 +96,7 @@ class TestComponent implements OnInit {
   }
   delay = 0;
   @ViewChild('titleTpl') titleTpl: TemplateRef<void>;
-  title: string | TemplateRef<void> = 'title';
+  title: string | TemplateRef<void> | null = 'title';
   height = PageG2Height;
   padding: number[];
   autoLabel = false;

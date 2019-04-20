@@ -25,7 +25,7 @@ describe('abc: number-info', () => {
 
   function isText(cls: string, value: string) {
     const el = dl.query(By.css(cls)).nativeElement as HTMLElement;
-    expect(el ? el.textContent.trim() : '').toBe(value);
+    expect(el ? el.textContent!.trim() : '').toBe(value);
   }
 
   function isExists(cls: string, stauts: boolean = true) {
@@ -91,7 +91,7 @@ describe('abc: number-info', () => {
     context.gap = 10;
     fixture.detectChanges();
     const el = dl.query(By.css('.number-info__value')).nativeElement as HTMLElement;
-    expect(+el.style.marginTop.replace('px', '')).toBe(10);
+    expect(+el.style.marginTop!.replace('px', '')).toBe(10);
   });
 });
 

@@ -54,7 +54,7 @@ export class CacheService implements OnDestroy {
   }
 
   private loadMeta() {
-    const ret = this.store.get(this.cog.meta_key);
+    const ret = this.store.get(this.cog.meta_key!);
     if (ret && ret.v) {
       (ret.v as string[]).forEach(key => this.meta.add(key));
     }
@@ -63,7 +63,7 @@ export class CacheService implements OnDestroy {
   private saveMeta() {
     const metaData: string[] = [];
     this.meta.forEach(key => metaData.push(key));
-    this.store.set(this.cog.meta_key, { v: metaData, e: 0 });
+    this.store.set(this.cog.meta_key!, { v: metaData, e: 0 });
   }
 
   getMeta() {
@@ -127,12 +127,12 @@ export class CacheService implements OnDestroy {
       e = addSeconds(new Date(), options.expire).valueOf();
     }
     if (!(data instanceof Observable)) {
-      this.save(options.type, key, { v: data, e });
+      this.save(options.type!, key, { v: data, e });
       return;
     }
     return data.pipe(
       tap((v: any) => {
-        this.save(options.type, key, { v, e });
+        this.save(options.type!, key, { v, e });
       }),
     );
   }
@@ -188,13 +188,13 @@ export class CacheService implements OnDestroy {
   ): Observable<any> | any {
     const isPromise = options.mode !== 'none' && this.cog.mode === 'promise';
     const value: ICache = this.memory.has(key)
-      ? this.memory.get(key)
+      ? this.memory.get(key) as ICache
       : this.store.get(this.cog.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
         return this.http.get(key).pipe(
           map((ret: any) => this._deepGet(ret, this.cog.reName as string[], null)),
-          tap(v => this.set(key, v, { type: options.type, expire: options.expire })),
+          tap(v => this.set(key, v, { type: options.type as any, expire: options.expire })),
         );
       }
       return null;
@@ -339,7 +339,7 @@ export class CacheService implements OnDestroy {
 
   private runNotify(key: string, type: CacheNotifyType) {
     if (!this.notifyBuffer.has(key)) return;
-    this.notifyBuffer.get(key).next({ type, value: this.getNone(key) });
+    this.notifyBuffer.get(key)!.next({ type, value: this.getNone(key) });
   }
 
   /**
@@ -353,7 +353,7 @@ export class CacheService implements OnDestroy {
       const change$ = new BehaviorSubject<CacheNotifyResult>(this.getNone(key));
       this.notifyBuffer.set(key, change$);
     }
-    return this.notifyBuffer.get(key).asObservable();
+    return this.notifyBuffer.get(key)!.asObservable();
   }
 
   /**
@@ -361,7 +361,7 @@ export class CacheService implements OnDestroy {
    */
   cancelNotify(key: string): void {
     if (!this.notifyBuffer.has(key)) return;
-    this.notifyBuffer.get(key).unsubscribe();
+    this.notifyBuffer.get(key)!.unsubscribe();
     this.notifyBuffer.delete(key);
   }
 

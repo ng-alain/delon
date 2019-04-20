@@ -349,8 +349,8 @@ export class STDataSource {
       .forEach(col => {
         const values = col.filter!.menus.filter(f => f.checked === true);
         let obj: {} = {};
-        if (col.filter!.reName != null) {
-          obj = col.filter!.reName(col.filter!.menus, col);
+        if (col.filter!.reName) {
+          obj = col.filter!.reName!(col.filter!.menus, col);
         } else {
           obj[col.filter!.key!] = values.map(i => i.value).join(',');
         }

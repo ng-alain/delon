@@ -78,7 +78,7 @@ describe('cache: service', () => {
         srv.set(KEY, 'a', { type: 's' });
         expect(localStorage.setItem).toHaveBeenCalled();
         expect(srv.has(KEY)).toBe(true);
-        const meta = JSON.parse(localStorage.getItem('__cache_meta')) as ICache;
+        const meta = JSON.parse(localStorage.getItem('__cache_meta')!) as ICache;
         expect(meta).not.toBeNaN();
         expect(meta.v.indexOf(KEY)).not.toBe(-1);
       });
@@ -89,7 +89,7 @@ describe('cache: service', () => {
       it('should be set string and expires vis storage', () => {
         srv.set(KEY, 'a', { type: 's', expire: 10 });
         expect(localStorage.setItem).toHaveBeenCalled();
-        const org = JSON.parse(localStorage.getItem(KEY)) as ICache;
+        const org = JSON.parse(localStorage.getItem(KEY)!) as ICache;
         expect(org.e).toBeGreaterThan(1000);
       });
       it('should be overwirte key', () => {
