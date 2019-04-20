@@ -138,7 +138,7 @@ export class SFPage {
 
   getProperty(path: string): FormProperty {
     path = this.fixPath(path);
-    return this.comp.getProperty(path);
+    return this.comp.getProperty(path)!;
   }
 
   submit(result = true): this {
@@ -189,9 +189,9 @@ export class SFPage {
 
   checkSchema(path: string, propertyName: string, value: any): this {
     path = this.fixPath(path);
-    const property = this.comp.rootProperty.searchProperty(path);
+    const property = this.comp.rootProperty!.searchProperty(path);
     expect(property != null).toBe(true);
-    const item = property.schema;
+    const item = property!.schema;
     const res = deepGet(item, propertyName.split('.'), undefined);
     expect(res).toBe(value);
     return this;
@@ -199,9 +199,9 @@ export class SFPage {
 
   checkUI(path: string, propertyName: string, value: any): this {
     path = this.fixPath(path);
-    const property = this.comp.rootProperty.searchProperty(path);
+    const property = this.comp.rootProperty!.searchProperty(path);
     expect(property != null).toBe(true);
-    const item = property.ui;
+    const item = property!.ui;
     const res = deepGet(item, propertyName.split('.'), undefined);
     expect(res).toBe(value);
     return this;
@@ -209,22 +209,22 @@ export class SFPage {
 
   checkValue(path: string, value: any, propertyName?: string): this {
     path = this.fixPath(path);
-    const property = this.comp.rootProperty.searchProperty(path);
+    const property = this.comp.rootProperty!.searchProperty(path);
     expect(property != null).toBe(true);
     if (typeof propertyName !== 'undefined') {
       const res = deepGet(property, propertyName.split('.'), undefined);
       expect(res).toBe(value);
     } else {
-      expect(property.value).toBe(value);
+      expect(property!.value).toBe(value);
     }
     return this;
   }
 
   checkCalled(path: string, propertyName: string, result = true): this {
     path = this.fixPath(path);
-    const property = this.comp.rootProperty.searchProperty(path);
+    const property = this.comp.rootProperty!.searchProperty(path);
     expect(property != null).toBe(true);
-    const item = property.ui;
+    const item = property!.ui;
     const res = deepGet(item, propertyName.split('.'), undefined);
     if (result) {
       expect(res).toHaveBeenCalled();
@@ -239,7 +239,7 @@ export class SFPage {
     if (value == null) {
       expect(node).toBeNull();
     } else {
-      expect(node.textContent.trim()).toBe(value);
+      expect(node!.textContent!.trim()).toBe(value);
     }
     return this;
   }
@@ -262,7 +262,7 @@ export class SFPage {
     const el = this.getEl(cls);
     expect(el).not.toBe(null);
     const attr = el.attributes.getNamedItem(key);
-    if (required) expect(attr.textContent).toBe(value);
+    if (required) expect(attr!.textContent).toBe(value);
     else expect(attr).toBe(value);
     return this;
   }
@@ -281,7 +281,7 @@ export class SFPage {
       expect(el == null).toBe(true);
       return this;
     }
-    expect(el.textContent.trim().includes(text)).toBe(true);
+    expect(el.textContent!.trim().includes(text)).toBe(true);
     return this;
   }
 
@@ -351,10 +351,10 @@ export class TestFormComponent {
   @ViewChild('comp') comp: SFComponent;
   mode: 'default' | 'search' | 'edit' = 'default';
   layout = 'horizontal';
-  schema: SFSchema = SCHEMA.user;
-  ui: SFUISchema = {};
+  schema: SFSchema | null = SCHEMA.user;
+  ui: SFUISchema | null = {};
   formData: any;
-  button: SFButton | 'none' = {};
+  button: SFButton | 'none' | null | undefined = {};
   liveValidate = true;
   autocomplete: 'on' | 'off';
   firstVisual = true;

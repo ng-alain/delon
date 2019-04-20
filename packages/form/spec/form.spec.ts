@@ -238,7 +238,7 @@ describe('form: component', () => {
       describe('#reset', () => {
         it('should be set default value', () => {
           const schema = deepCopy(SCHEMA.user) as SFSchema;
-          schema.properties.name.default = 'cipchk';
+          schema.properties!.name.default = 'cipchk';
           page
             .newSchema(schema)
             .reset()
@@ -398,7 +398,7 @@ describe('form: component', () => {
       });
       it('#getValue', () => {
         const name = 'asdf';
-        page.newSchema({ properties: { name: { type: 'string' } } }, null, { name });
+        page.newSchema({ properties: { name: { type: 'string' } } }, null!, { name });
         expect(context.comp.getValue('/name')).toBe(name);
       });
       it('#setValue', () => {
@@ -497,7 +497,7 @@ describe('form: component', () => {
           },
         };
         page.newSchema(s);
-        expect(page.getProperty('/a').errors[0].message).toBe(`a-10-`);
+        expect(page.getProperty('/a').errors![0].message).toBe(`a-10-`);
       });
     });
 
@@ -517,7 +517,7 @@ describe('form: component', () => {
           required: ['a'],
         };
         page.newSchema(s);
-        expect(page.getProperty('/a').errors[0].message).toBe('REQUEST');
+        expect(page.getProperty('/a').errors![0].message).toBe('REQUEST');
       });
 
       it('shoule be re-error message via error property and type is function', () => {
@@ -535,8 +535,8 @@ describe('form: component', () => {
           required: ['a'],
         };
         page.newSchema(s);
-        expect(page.getProperty('/a').errors[0].message).toBe('A');
-        expect((s.properties.a.ui as any).errors.required).toHaveBeenCalled();
+        expect(page.getProperty('/a').errors![0].message).toBe('A');
+        expect((s.properties!.a.ui as any).errors.required).toHaveBeenCalled();
       });
     });
   });

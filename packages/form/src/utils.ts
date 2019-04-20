@@ -78,7 +78,7 @@ export function resolveIf(schema: SFSchema, ui: SFUISchemaItemRun): SFSchema | n
   if (!schema.if!.properties) throw new Error(`if: does not contain 'properties'`);
 
   const allKeys = Object.keys(schema.properties!);
-  const ifKeys = Object.keys(schema.if!.properties);
+  const ifKeys = Object.keys(schema.if!.properties!);
   detectKey(allKeys, ifKeys);
   detectKey(allKeys, schema.then!.required!);
   schema.required = schema.required!.concat(schema.then!.required!);
