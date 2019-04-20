@@ -10,10 +10,10 @@ import { MenuService } from '../menu/menu.service';
 
 @Injectable({ providedIn: 'root' })
 export class TitleService implements OnDestroy {
-  private _prefix = '';
-  private _suffix = '';
-  private _separator = ' - ';
-  private _reverse = false;
+  private _prefix: string = '';
+  private _suffix: string = '';
+  private _separator: string = ' - ';
+  private _reverse: boolean = false;
   private i18n$: Subscription;
 
   constructor(
@@ -92,7 +92,7 @@ export class TitleService implements OnDestroy {
       title = [title];
     }
 
-    let newTitles = [];
+    let newTitles: string[] = [];
     if (this._prefix) {
       newTitles.push(this._prefix);
     }

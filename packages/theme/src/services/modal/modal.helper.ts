@@ -49,14 +49,14 @@ this.NzModalRef.destroy();
     return new Observable((observer: Observer<any>) => {
       let cls = '';
       let width = '';
-      if (options.size) {
-        if (typeof options.size === 'number') {
-          width = `${options.size}px`;
+      if (options!.size) {
+        if (typeof options!.size === 'number') {
+          width = `${options!.size}px`;
         } else {
-          cls = `modal-${options.size}`;
+          cls = `modal-${options!.size}`;
         }
       }
-      if (options.includeTabs) {
+      if (options!.includeTabs) {
         cls += ' modal-include-tabs';
       }
       const defaultOptions: ModalOptionsForService = {
@@ -68,10 +68,10 @@ this.NzModalRef.destroy();
         nzZIndex: ++this.zIndex,
       };
       const subject = this.srv.create(
-        { ...defaultOptions, ...options.modalOptions },
+        { ...defaultOptions, ...options!.modalOptions },
       );
       const afterClose$ = subject.afterClose.subscribe((res: any) => {
-        if (options.exact === true) {
+        if (options!.exact === true) {
           if (res != null) {
             observer.next(res);
           }

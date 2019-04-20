@@ -11,9 +11,9 @@ export const APP = 'app';
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
   private notify$ = new Subject<SettingsNotify>();
-  private _app: App = null;
-  private _user: User = null;
-  private _layout: Layout = null;
+  private _app: App | null = null;
+  private _user: User | null = null;
+  private _layout: Layout | null = null;
 
   private get(key: string) {
     return JSON.parse(localStorage.getItem(key) || 'null') || null;
@@ -34,7 +34,7 @@ export class SettingsService {
       };
       this.set(LAYOUT, this._layout);
     }
-    return this._layout;
+    return this._layout as Layout;
   }
 
   get app(): App {
@@ -45,7 +45,7 @@ export class SettingsService {
       };
       this.set(APP, this._app);
     }
-    return this._app;
+    return this._app as App;
   }
 
   get user(): User {
@@ -53,7 +53,7 @@ export class SettingsService {
       this._user = { ...this.get(USER) };
       this.set(USER, this._user);
     }
-    return this._user;
+    return this._user as User;
   }
 
   get notify(): Observable<SettingsNotify> {

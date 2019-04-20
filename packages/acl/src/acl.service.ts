@@ -11,12 +11,10 @@ export class ACLService {
   private roles: string[] = [];
   private abilities: Array<number | string> = [];
   private full = false;
-  private aclChange: BehaviorSubject<ACLType | boolean> = new BehaviorSubject<ACLType | boolean>(
-    null,
-  );
+  private aclChange = new BehaviorSubject<ACLType | boolean | null>(null);
 
   /** ACL变更通知 */
-  get change(): Observable<ACLType | boolean> {
+  get change(): Observable<ACLType | boolean | null> {
     return this.aclChange.asObservable();
   }
 
@@ -31,7 +29,7 @@ export class ACLService {
 
   constructor(private options: DelonACLConfig) {}
 
-  private parseACLType(val: string | string[] | ACLType): ACLType {
+  private parseACLType(val: string | string[] | ACLType | null): ACLType {
     if (typeof val !== 'string' && !Array.isArray(val)) {
       return val as ACLType;
     }
@@ -143,7 +141,7 @@ export class ACLService {
    * - 当 `full: true` 或参数 `null` 时返回 `true`
    * - 若使用 `ACLType` 参数，可以指定 `mode` 校验模式
    */
-  can(roleOrAbility: ACLCanType): boolean {
+  can(roleOrAbility: ACLCanType | null): boolean {
     if (this.full === true || !roleOrAbility) {
       return true;
     }

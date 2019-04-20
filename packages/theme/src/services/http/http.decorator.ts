@@ -119,7 +119,7 @@ function makeMethod(method: string) {
       targetKey?: string,
       descriptor?: PropertyDescriptor,
     ) => {
-      descriptor.value = function (...args: any[]): Observable<any> {
+      descriptor!.value = function (...args: any[]): Observable<any> {
         options = options || {};
 
         const http = this.injector.get(_HttpClient, null);

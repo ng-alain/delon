@@ -1,7 +1,9 @@
 import {
   HttpClient,
+  HttpEvent,
   HttpHeaders,
   HttpParams,
+  HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -61,31 +63,14 @@ export class _HttpClient {
   }
 
   begin() {
-    // console.time('http');
     setTimeout(() => (this._loading = true));
   }
 
   end() {
-    // console.timeEnd('http');
     setTimeout(() => (this._loading = false));
   }
 
   // #region get
-
-  /**
-   * GET：返回一个 `T` 类型
-   */
-  get<T>(
-    url: string,
-    params?: any,
-    options?: {
-      headers?: HttpHeaders | { [header: string]: string | string[] };
-      observe?: 'body';
-      reportProgress?: boolean;
-      responseType: 'json';
-      withCredentials?: boolean;
-    },
-  ): Observable<T>;
 
   /**
    * GET：返回一个 `string` 类型
@@ -118,21 +103,6 @@ export class _HttpClient {
   ): Observable<HttpResponse<{}>>;
 
   /**
-   * GET：返回一个 `JSON` 类型
-   */
-  get<T>(
-    url: string,
-    params: any,
-    options: {
-      headers?: HttpHeaders | { [header: string]: string | string[] };
-      observe: 'response';
-      reportProgress?: boolean;
-      responseType?: 'json';
-      withCredentials?: boolean;
-    },
-  ): Observable<HttpResponse<T>>;
-
-  /**
    * GET：返回一个 `any` 类型
    */
   get(
@@ -148,6 +118,21 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
+   * GET：返回一个 `JSON` 类型
+   */
+  get<T>(
+    url: string,
+    params: any,
+    options: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<HttpResponse<T>>;
+
+  /**
    * GET 请求
    */
   get(
@@ -159,16 +144,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+    } = {},
   ): Observable<any> {
-    return this.request(
-      'GET',
-      url,
-      {
-        params,
-        ...options,
-      },
-    );
+    return this.request('GET', url, {
+      params,
+      ...options,
+    });
   }
 
   // #endregion
@@ -208,22 +189,6 @@ export class _HttpClient {
   ): Observable<HttpResponse<{}>>;
 
   /**
-   * POST：返回一个 `JSON` 类型
-   */
-  post<T>(
-    url: string,
-    body?: any,
-    params?: any,
-    options?: {
-      headers?: HttpHeaders | { [header: string]: string | string[] };
-      observe: 'response';
-      reportProgress?: boolean;
-      responseType?: 'json';
-      withCredentials?: boolean;
-    },
-  ): Observable<T>;
-
-  /**
    * POST：返回一个 `any` 类型
    */
   post(
@@ -240,6 +205,22 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
+   * POST：返回一个 `JSON` 类型
+   */
+  post<T>(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<T>;
+
+  /**
    * POST 请求
    */
   post(
@@ -252,17 +233,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+    } = {},
   ): Observable<any> {
-    return this.request(
-      'POST',
-      url,
-      {
-        body,
-        params,
-        ...options,
-      },
-    );
+    return this.request('POST', url, {
+      body,
+      params,
+      ...options,
+    });
   }
 
   // #endregion
@@ -326,16 +303,12 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+    } = {},
   ): Observable<any> {
-    return this.request(
-      'DELETE',
-      url,
-      {
-        params,
-        ...options,
-      },
-    );
+    return this.request('DELETE', url, {
+      params,
+      ...options,
+    });
   }
 
   // #endregion
@@ -347,11 +320,7 @@ export class _HttpClient {
    * @param params 请求参数
    * @param callbackParam CALLBACK值，默认：JSONP_CALLBACK
    */
-  jsonp(
-    url: string,
-    params?: any,
-    callbackParam: string = 'JSONP_CALLBACK',
-  ): Observable<any> {
+  jsonp(url: string, params?: any, callbackParam: string = 'JSONP_CALLBACK'): Observable<any> {
     return this.http.jsonp(this.appliedUrl(url, params), callbackParam).pipe(
       tap(() => {
         this.end();
@@ -398,22 +367,6 @@ export class _HttpClient {
   ): Observable<HttpResponse<{}>>;
 
   /**
-   * PATCH：返回一个 `JSON` 类型
-   */
-  patch<T>(
-    url: string,
-    body?: any,
-    params?: any,
-    options?: {
-      headers?: HttpHeaders | { [header: string]: string | string[] };
-      observe: 'response';
-      reportProgress?: boolean;
-      responseType?: 'json';
-      withCredentials?: boolean;
-    },
-  ): Observable<T>;
-
-  /**
    * PATCH：返回一个 `any` 类型
    */
   patch(
@@ -430,6 +383,22 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
+   * PATCH：返回一个 `JSON` 类型
+   */
+  patch<T>(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<T>;
+
+  /**
    * PATCH 请求
    */
   patch(
@@ -442,17 +411,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+    } = {},
   ): Observable<any> {
-    return this.request(
-      'PATCH',
-      url,
-      {
-        body,
-        params,
-        ...options,
-      },
-    );
+    return this.request('PATCH', url, {
+      body,
+      params,
+      ...options,
+    });
   }
 
   // #endregion
@@ -492,22 +457,6 @@ export class _HttpClient {
   ): Observable<HttpResponse<{}>>;
 
   /**
-   * PUT：返回一个 `JSON` 类型
-   */
-  put<T>(
-    url: string,
-    body?: any,
-    params?: any,
-    options?: {
-      headers?: HttpHeaders | { [header: string]: string | string[] };
-      observe: 'response';
-      reportProgress?: boolean;
-      responseType?: 'json';
-      withCredentials?: boolean;
-    },
-  ): Observable<T>;
-
-  /**
    * PUT：返回一个 `any` 类型
    */
   put(
@@ -524,6 +473,22 @@ export class _HttpClient {
   ): Observable<any>;
 
   /**
+   * PUT：返回一个 `JSON` 类型
+   */
+  put<T>(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: HttpHeaders | { [header: string]: string | string[] };
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<T>;
+
+  /**
    * PUT 请求
    */
   put(
@@ -536,17 +501,13 @@ export class _HttpClient {
       reportProgress?: boolean;
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       withCredentials?: boolean;
-    },
+    } = {},
   ): Observable<any> {
-    return this.request(
-      'PUT',
-      url,
-      {
-        body,
-        params,
-        ...options,
-      },
-    );
+    return this.request('PUT', url, {
+      body,
+      params,
+      ...options,
+    });
   }
 
   // #endregion
@@ -564,16 +525,16 @@ export class _HttpClient {
     options?: {
       body?: any;
       headers?:
-      | HttpHeaders
-      | {
-        [header: string]: string | string[];
-      };
+        | HttpHeaders
+        | {
+            [header: string]: string | string[];
+          };
       observe?: 'body' | 'events' | 'response';
       params?:
-      | HttpParams
-      | {
-        [param: string]: string | string[];
-      };
+        | HttpParams
+        | {
+            [param: string]: string | string[];
+          };
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       reportProgress?: boolean;
       withCredentials?: boolean;
@@ -592,16 +553,16 @@ export class _HttpClient {
     options?: {
       body?: any;
       headers?:
-      | HttpHeaders
-      | {
-        [header: string]: string | string[];
-      };
+        | HttpHeaders
+        | {
+            [header: string]: string | string[];
+          };
       observe?: 'body' | 'events' | 'response';
       params?:
-      | HttpParams
-      | {
-        [param: string]: string | string[];
-      };
+        | HttpParams
+        | {
+            [param: string]: string | string[];
+          };
       responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
       reportProgress?: boolean;
       withCredentials?: boolean;
@@ -612,9 +573,7 @@ export class _HttpClient {
       if (options.params) options.params = this.parseParams(options.params);
     }
     return this.http.request(method, url, options).pipe(
-      tap(() => {
-        this.end();
-      }),
+      tap(() => this.end()),
       catchError(res => {
         this.end();
         return throwError(res);

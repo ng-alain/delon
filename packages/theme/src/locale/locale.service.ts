@@ -10,7 +10,7 @@ export class DelonLocaleService {
   private _locale: FullLocaleData;
   private change$ = new BehaviorSubject<FullLocaleData>(this._locale);
 
-  constructor(@Inject(DELON_LOCALE) locale: FullLocaleData) {
+  constructor(@Inject(DELON_LOCALE) locale: FullLocaleData | null) {
     this.setLocale(locale || zhCN);
   }
 

@@ -9,7 +9,7 @@ describe('acl: service', () => {
   const ABILITY_CREATE = 'order-create';
   const ABILITY_NUMBER = 1;
 
-  let srv: ACLService = null;
+  let srv: ACLService;
   const mockOptions = new DelonACLConfig();
 
   beforeEach(() => {
@@ -134,8 +134,8 @@ describe('acl: service', () => {
 
   it('#change', (done: () => void) => {
     srv.change.subscribe((res: ACLType) => {
-      expect(res.role.length).toBe(1);
-      expect(res.role[0]).toBe(ADMIN);
+      expect(res.role!.length).toBe(1);
+      expect(res.role![0]).toBe(ADMIN);
       done();
     });
   });

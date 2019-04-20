@@ -1,6 +1,6 @@
 export function preloaderFinished() {
-  const body = document.querySelector('body');
-  const preloader = document.querySelector('.preloader');
+  const body = document.querySelector('body')!;
+  const preloader = document.querySelector('.preloader')!;
 
   body.style.overflow = 'hidden';
 

@@ -22,7 +22,7 @@ export class ScrollService {
    * 设置滚动条位置
    * @param element 指定元素
    */
-  scrollToPosition(element: Element | Window, position: [number, number]): void {
+  scrollToPosition(element: Element | Window | null | undefined, position: [number, number]): void {
     (element || this.win).scrollTo(position[0], position[1]);
   }
 
@@ -31,14 +31,14 @@ export class ScrollService {
    * @param element 指定元素，默认 `document.body`
    * @param topOffset 偏移值，默认 `0`
    */
-  scrollToElement(element?: Element, topOffset = 0) {
+  scrollToElement(element?: Element | null, topOffset = 0) {
     if (!element) element = this.doc.body;
 
-    element.scrollIntoView();
+    element!.scrollIntoView();
 
     const w = this.win;
     if (w && w.scrollBy) {
-      w.scrollBy(0, element.getBoundingClientRect().top - topOffset);
+      w.scrollBy(0, element!.getBoundingClientRect().top - topOffset);
 
       if (w.pageYOffset < 20) {
         w.scrollBy(0, -w.pageYOffset);

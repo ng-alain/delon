@@ -11,5 +11,5 @@ export class DelonACLConfig {
   /**
    * `can` 执行前回调
    */
-  preCan?: (roleOrAbility: ACLCanType) => ACLType;
+  preCan?: ((roleOrAbility: ACLCanType) => ACLType | null) | null;
 }
