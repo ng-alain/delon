@@ -150,7 +150,8 @@ copyFiles() {
     "${1}src/app/app.component.ts|${2}application/files/src/app/"
     # layout
     "${1}src/app/layout/fullscreen|${2}application/files/src/app/layout/"
-    "${1}src/app/layout/passport|${2}application/files/src/app/layout/"
+    "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
+    "${1}src/app/layout/passport/passport.component.ts|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/default/setting-drawer|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/default.component.html|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/default.component.ts|${2}application/files/src/app/layout/default/"
@@ -218,6 +219,7 @@ buildCLI() {
   fi
 
   cp ${SOURCE}/README.md ${DIST}/README.md
+  cp ${SOURCE}/.npmignore ${DIST}/.npmignore
   cp ./LICENSE ${DIST}/LICENSE
 
   updateVersionReferences ${DIST}

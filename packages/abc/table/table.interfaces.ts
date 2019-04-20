@@ -3,6 +3,21 @@ import { DrawerHelperOptions, ModalHelperOptions } from '@delon/theme';
 import { ModalOptionsForService, NzDrawerOptions } from 'ng-zorro-antd';
 import { STComponent } from './table.component';
 
+export interface STWidthMode {
+  /**
+   * 宽度类型
+   * - `default` 默认行为
+   * - `strict` 严格模式，即强制按 `width` 指定的宽度呈现，并根据 `strictBehavior` 类型处理
+   */
+  type?: 'strict' | 'default';
+  /**
+   * 严格模式的处理行为
+   * - `wrap` 强制换行
+   * - `truncate` 截短
+   */
+  strictBehavior?: 'wrap' | 'truncate';
+}
+
 export interface STReq {
   /**
    * 分页类型，默认：`page`
@@ -142,6 +157,10 @@ export interface STData {
    * 是否展开状态
    */
   expand?: boolean;
+  /**
+   * 是否显示展开按钮
+   */
+  showExpand?: boolean;
 
   [key: string]: any;
 }
@@ -317,6 +336,7 @@ export type STStatisticalFn = (
   values: number[],
   col: STColumn,
   list: STData[],
+  rawData?: any,
 ) => STStatisticalResult;
 
 export interface STStatistical {
@@ -329,7 +349,7 @@ export interface STStatistical {
    * 是否需要货币格式化，默认以下情况为 `true`
    * - `type` 为 `STStatisticalFn`、 `sum`、`average`、`max`、`min`
    */
-  currenty?: boolean;
+  currency?: boolean;
 }
 
 export interface STStatisticalResults {

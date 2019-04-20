@@ -4,7 +4,7 @@ import { Observable, Observer } from 'rxjs';
 
 export interface DrawerHelperOptions {
   /**
-   * 大小；例如：lg、600，默认：`md`
+   * 大小，若值为数值类型，则根据 `nzPlacement` 自动转化为 `nzHeight` 或 `nzWidth`；例如：lg、600，默认：`md`
    *
    * | 类型 | 默认大小 |
    * | --- | ------ |
@@ -75,14 +75,6 @@ export class DrawerHelper {
         nzTitle: title,
       };
 
-      if (footer) {
-        defaultOptions.nzBodyStyle = {
-          height: `calc(100% - ${footerHeight}px)`,
-          overflow: 'auto',
-          'padding-bottom': `${footerHeight - 2}px`,
-        };
-      }
-
       if (typeof size === 'number') {
         defaultOptions[
           drawerOptions.nzPlacement === 'top' || drawerOptions.nzPlacement === 'bottom'
@@ -94,6 +86,23 @@ export class DrawerHelper {
           drawerOptions.nzWrapClassName + ` drawer-${options.size}`
         ).trim();
         delete drawerOptions.nzWrapClassName;
+      }
+
+      if (footer) {
+        const { nzPlacement, nzHeight } = drawerOptions;
+        // Should be header * footer, because of includes header
+        const reduceHeight = (footerHeight * 2) - 2;
+        if (nzPlacement === 'left' || nzPlacement === 'right') {
+          defaultOptions.nzBodyStyle = {
+            height: `calc(100% - ${reduceHeight}px)`,
+            overflow: 'auto',
+          };
+        } else {
+          defaultOptions.nzBodyStyle = {
+            height: `${+(nzHeight || 256) - reduceHeight}px`,
+            overflow: 'auto',
+          };
+        }
       }
 
       const subject = this.srv.create({ ...defaultOptions, ...drawerOptions });

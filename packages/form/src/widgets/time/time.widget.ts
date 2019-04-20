@@ -29,15 +29,10 @@ export class TimeWidget extends ControlWidget implements OnInit {
     };
   }
 
-  private compCd() {
-    // TODO: removed after nz-datepick support OnPush mode
-    setTimeout(() => this.detectChanges());
-  }
-
   reset(value: SFValue) {
     if (value instanceof Date) {
       this.displayValue = value;
-      this.compCd();
+      this.detectChanges();
       return;
     }
     let v = value != null && value.toString().length ? new Date(value) : null;
@@ -50,7 +45,7 @@ export class TimeWidget extends ControlWidget implements OnInit {
       v = new Date(`1970-1-1 ` + value);
     }
     this.displayValue = v;
-    this.compCd();
+    this.detectChanges();
   }
 
   _change(value: Date) {

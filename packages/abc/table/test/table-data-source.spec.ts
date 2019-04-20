@@ -715,11 +715,18 @@ describe('abc: table: data-souce', () => {
     });
 
     it('should be custom function', done => {
-      options.columns = [{ title: '', index: 'a', statistical: { type: values => ({ value: values[0] }) } }];
+      let callbackRawData = null;
+      options.columns = [{ title: '', index: 'a', statistical: {
+        type: (values, col, list, rawData) => {
+          callbackRawData = rawData;
+          return { value: values[0] };
+        },
+      } }];
       options.data = [{ a: 1 }, { a: 2 }];
 
       srv.process(options).then(res => {
         expect(res.statistical[0].value).toBe(1);
+        expect(Array.isArray(callbackRawData)).toBe(true);
         done();
       });
     });
@@ -744,9 +751,9 @@ describe('abc: table: data-souce', () => {
       });
     });
 
-    describe('#currenty', () => {
+    describe('#currency', () => {
       it('should working', done => {
-        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currenty: true } }];
+        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currency: true } }];
         options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
         expect(currentyPipe.transform).not.toHaveBeenCalled();
 
@@ -755,8 +762,8 @@ describe('abc: table: data-souce', () => {
           done();
         });
       });
-      it('should be ingore currenty', done => {
-        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currenty: false } }];
+      it('should be ingore currency', done => {
+        options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currency: false } }];
         options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
 
         srv.process(options).then(res => {

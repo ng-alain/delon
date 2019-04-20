@@ -124,7 +124,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
         takeUntil(this.unsubscribe$),
         filter(w => this.affix && w.type === 'layout' && w.name === 'collapsed'),
       )
-      .subscribe(() => this.affix.updatePosition({}));
+      .subscribe(() => this.affix.updatePosition({} as any));
 
     merge(
       menuSrv.change.pipe(filter(() => this.inited)),

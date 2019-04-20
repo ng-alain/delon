@@ -1,24 +1,18 @@
+
 import { Component } from '@angular/core';
 import { SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-demo',
-  template: `
-  <h1>sf</h1>
-  <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
-  `,
+  template: `<sf [schema]="schema" [loading]="loading" (formSubmit)="submit($event)"></sf>`,
 })
-export class DemoComponent  {
-  // @delon/form
+export class DemoComponent {
+  loading = false;
   schema: SFSchema = {
-    definitions: {
-      nameRef: {
-        type: 'string',
-        title: 'nameRef',
-      },
-    },
     properties: {
+      id1: { type: 'number', ui: { widget: 'text' } },
+      id2: { type: 'number', ui: { widget: 'text', defaultText: 'default text' } },
       name: {
         type: 'string',
         title: 'Name',
@@ -27,12 +21,15 @@ export class DemoComponent  {
           placeholder: 'RMB结算',
         },
       },
-      nameTwo: {
-        '$ref': '#/definitions/nameRef',
-      },
     },
-    required: ['name', 'nameTwo'],
+    required: ['name'],
   };
   constructor(public msg: NzMessageService) { }
-  submit(value: any) { this.msg.success(JSON.stringify(value)); }
+  submit(value: any) {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+      this.msg.success(JSON.stringify(value));
+    }, 1000);
+   }
 }

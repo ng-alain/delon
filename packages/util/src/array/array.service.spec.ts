@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { NzTreeNode } from 'ng-zorro-antd';
+import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd';
 import { deepCopy } from '../other/other';
 import { DelonUtilConfig } from '../util.config';
 import { DelonUtilModule } from '../util.module';
@@ -157,6 +157,10 @@ describe('utils: array', () => {
         );
       });
       it('should be include half checked', () => {
+        const treeService = new NzTreeBaseService();
+        page.data.forEach((i: any) => {
+          spyOnProperty(i, 'treeService', 'get').and.returnValue(treeService);
+        });
         page.data[0].isHalfChecked = true;
         expect(srv.getKeysByTreeNode(page.data, { includeHalfChecked: true }).join(',')).toBe(
           MOCK_ARR.filter(w => w.checked || w.halfChecked)

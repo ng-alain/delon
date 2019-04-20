@@ -4,8 +4,8 @@ export default {
   abbr: 'en-US',
   exception: {
     403: `Sorry, you don't have access to this page`,
-    404: `Sorry, that page don't exist`,
-    500: `Sorry, server error`,
+    404: `Sorry, the page you visited does not exist`,
+    500: `Sorry, the server is reporting an error`,
     backToHome: 'Back To Home',
   },
   noticeIcon: {

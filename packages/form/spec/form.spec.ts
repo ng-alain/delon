@@ -325,6 +325,21 @@ describe('form: component', () => {
         });
       });
 
+      it('#loading', () => {
+        context.loading = false;
+        fixture.detectChanges();
+        const CLS = {
+          loading: '.ant-btn-primary.ant-btn-loading',
+          disabled: '.ant-btn-default[disabled]',
+        };
+        page.checkCount(CLS.loading, 0);
+        page.checkCount(CLS.disabled, 0);
+        context.loading = true;
+        fixture.detectChanges();
+        page.checkCount(CLS.loading, 1);
+        page.checkCount(CLS.disabled, 1);
+      });
+
       it('#formChange', () => {
         page.setValue('/name', 'cipchk');
         expect(context.formChange).toHaveBeenCalled();
@@ -559,7 +574,7 @@ describe('form: component', () => {
 
 @Component({
   template: `
-    <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode"></sf>
+    <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode" [loading]="loading"></sf>
   `,
 })
 class TestModeComponent extends TestFormComponent {}

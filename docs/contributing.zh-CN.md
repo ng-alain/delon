@@ -4,7 +4,7 @@ title: 贡献指南
 type: Other
 ---
 
-这篇指南会指导你如何为 ng-alain 贡献一份自己的力量，请在你要提 issue 或者 pull request 之前花几分钟来阅读一遍这篇指南。
+这篇指南会指导你如何为 NG-ALAIN 贡献一份自己的力量，请在你要提 issue 或者 pull request 之前花几分钟来阅读一遍这篇指南。
 
 ## 行为准则
 

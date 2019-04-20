@@ -93,7 +93,7 @@ Mock 数据规则目录，若你通过 [命令行工具](/cli) 创建项目时�
 
 整体布局是指包含导航、侧边栏、内容区域、页脚等最外层的框架结构。
 
-同时在内部区域内，也需要区块的布局诸如表单、搜索框、列表页等，针对此目前 ng-zorro-antd 有两套布局方案：[Layout](https://ng.ant.design/#/components/layout) 和 [Grid](https://ng.ant.design/#/components/grid)。
+同时在内部区域内，也需要区块的布局诸如表单、搜索框、列表页等，针对此目前 NG-ZORRO 有两套布局方案：[Layout](https://ng.ant.design/#/components/layout) 和 [Grid](https://ng.ant.design/#/components/grid)。
 
 脚手架默认提供三种整体布局方案：
 

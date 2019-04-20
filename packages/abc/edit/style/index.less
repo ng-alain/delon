@@ -17,6 +17,12 @@
       margin-bottom: 0;
       padding-bottom: 0;
     }
+    &-empty {
+      &:before {
+        content: '';
+        display: inline-block;
+      }
+    }
     // fix angular & ng-zorro-antd
     .@{ant-prefix}-form-explain {
       display: block;
@@ -53,6 +59,7 @@
       padding-bottom: @se-compact-bottom;
     }
   }
+  &__hide-label,
   &__inline,
   &__vertical {
     @{se-prefix}__nolabel {

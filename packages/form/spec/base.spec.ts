@@ -301,6 +301,10 @@ export class SFPage {
 
   typeEvent(eventName: string, cls = 'input'): this {
     const node = document.querySelector(cls) as HTMLInputElement;
+    if (node == null) {
+      expect(true).toBe(false, `won't found '${cls}' class element`);
+      return this;
+    }
     dispatchFakeEvent(node, eventName);
     return this.time().dc();
   }
@@ -335,6 +339,7 @@ export class SFPage {
       [autocomplete]="autocomplete"
       [firstVisual]="firstVisual"
       [onlyVisual]="onlyVisual"
+      [loading]="loading"
       (formChange)="formChange($event)"
       (formSubmit)="formSubmit($event)"
       (formReset)="formReset($event)"
@@ -354,6 +359,7 @@ export class TestFormComponent {
   autocomplete: 'on' | 'off';
   firstVisual = true;
   onlyVisual = false;
+  loading = false;
 
   formChange(value: {}) {}
   formSubmit(value: {}) {}

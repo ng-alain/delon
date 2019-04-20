@@ -6,7 +6,7 @@ type: Basic
 
 ## 写在前面
 
-ng-alain 是一个企业级中后台前端/设计解决方案脚手架，我们秉承 [Ant Design](https://ant.design/) 的设计价值观，目标也非常简单，希望在Angular上面开发企业后台更简单、更快速。随着『设计者』的不断反馈，将持续迭代，逐步沉淀和总结出更多设计模式和相应的代码实现，阐述中后台产品模板/组件/业务场景的最佳实践，也十分期待你的参与和共建。
+NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们秉承 [Ant Design](https://ant.design/) 的设计价值观，目标也非常简单，希望在Angular上面开发企业后台更简单、更快速。随着『设计者』的不断反馈，将持续迭代，逐步沉淀和总结出更多设计模式和相应的代码实现，阐述中后台产品模板/组件/业务场景的最佳实践，也十分期待你的参与和共建。
 
 **如何阅读文档**
 
@@ -51,7 +51,7 @@ npm start
 
 ## 目录结构
 
-ng-alain 是一个标准的 Angular CLI 构建的项目，并提供了涵盖中后台开发的各类功能和坑位，下面是整个项目的目录结构。
+NG-ALAIN 是一个标准的 Angular CLI 构建的项目，并提供了涵盖中后台开发的各类功能和坑位，下面是整个项目的目录结构。
 
 ```
 ├── _mock                                       # Mock 数据规则
@@ -107,12 +107,12 @@ npm start
 
 1. [![Stack Overflow](https://cdn.sstatic.net/Sites/stackoverflow/company/img/logos/so/so-logo.svg | width=140)](https://stackoverflow.com/questions/tagged/ng-alain)（English）
 2. [![Segment Fault](https://gw.alipayobjects.com/zos/rmsportal/hfYFfCvHTQTUKntlJbMF.svg | width=140)](https://segmentfault.com/t/ng-alain)（中文）
-3. 加入 ng-alain 自助服务群（中文）
+3. 加入 NG-ALAIN 自助服务群（中文）
 
 ![](./assets/qq-group.png)
 
 ## 捐助
 
-如果你觉得 ng-alain 不错，可以考虑自愿为本站打赏或捐助。
+如果你觉得 NG-ALAIN 不错，可以考虑自愿为本站打赏或捐助。
 
 ![](./assets/donate.png)

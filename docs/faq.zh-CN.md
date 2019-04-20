@@ -8,6 +8,23 @@ type: Other
 
 提问之前，请先查阅下面的常见问题。
 
+## 基础
+
+### Can't Bind to since it isn't a known property of
+
+当你有多个懒模块时，希望每个子模块都需要使用组件库时（例如：`NgZorroAntdModule`、`NgxTinymceModule`）应在 `ShareModule` 中 export，请参考[模块注册指导原则](/docs/module)。
+
+### Expression Changed After It Has Been Checked Error 错误
+
+Angular 下常见错误，[这篇文章](https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4) 会帮助你理解原因。
+
+### Can't bind to 'formGroup' since it isn't a known property of 'form'
+
+Angular 下常见错误，使用 Reactive Forms 需要额外引入 `ReactiveFormsModule`，可以参考[官方文档](https://angular.io/guide/reactive-forms)。
+
+### 数据修改后页面为什么没有更新
+
+NG-ZORRO 及 @delon/* 组件默认在 OnPush 模式下工作，mutate 对象或者数组不会触发 Angular 的变更检测，请使用 immutable 方式。
 
 ## 安装
 

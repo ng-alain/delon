@@ -50,11 +50,12 @@ export class ImageDirective implements OnChanges, OnInit {
 
   private update() {
     let newSrc = this.src;
+    const { size, render, el } = this;
 
     if (newSrc.includes('qlogo.cn')) {
       const arr = newSrc.split('/');
-      const size = arr[arr.length - 1];
-      arr[arr.length - 1] = size === '0' || +size !== this.size ? this.size.toString() : size;
+      const imgSize = arr[arr.length - 1];
+      arr[arr.length - 1] = imgSize === '0' || +imgSize !== size ? size.toString() : imgSize;
       newSrc = arr.join('/');
     }
 
@@ -64,7 +65,10 @@ export class ImageDirective implements OnChanges, OnInit {
       newSrc = newSrc.substr(isHttp ? 5 : 6);
     }
 
-    this.render.setAttribute(this.el.nativeElement, 'src', newSrc);
+    render.setAttribute(el.nativeElement, 'src', newSrc);
+    ['height', 'width'].forEach(v =>
+      render.setAttribute(this.el.nativeElement, v, size.toString()),
+    );
   }
 
   private updateError() {

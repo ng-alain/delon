@@ -6,9 +6,10 @@
               [showTitle]="schema.title">
   <nz-select [nzDisabled]="disabled"
              [nzSize]="ui.size"
-             [ngModel]="value"
+             [(ngModel)]="_value"
              (ngModelChange)="change($event)"
              [nzPlaceHolder]="ui.placeholder"
+             [nzAutoClearSearchValue]="i.autoClearSearchValue"
              [nzAllowClear]="i.allowClear"
              [nzAutoFocus]="i.autoFocus"
              [nzDropdownClassName]="i.dropdownClassName"
@@ -18,6 +19,8 @@
              [nzMode]="i.mode"
              [nzNotFoundContent]="i.notFoundContent"
              [nzShowSearch]="i.showSearch"
+             [nzTokenSeparators]="i.tokenSeparators"
+             [nzMaxTagCount]="i.maxTagCount"
              (nzOpenChange)="openChange($event)"
              (nzOnSearch)="searchChange($event)"
              (nzScrollToBottom)="scrollToBottom()">

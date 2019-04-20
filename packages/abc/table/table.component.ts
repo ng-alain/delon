@@ -63,6 +63,7 @@ import {
   STRowClassName,
   STSingleSort,
   STStatisticalResults,
+  STWidthMode,
 } from './table.interfaces';
 
 @Component({
@@ -85,6 +86,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private totalTpl = ``;
   private locale: LocaleData = {};
   private clonePage: STPage;
+  private copyCog: STConfig;
   _data: STData[] = [];
   _statistical: STStatisticalResults = {};
   _isPagination = true;
@@ -102,7 +104,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._req;
   }
   set req(value: STReq) {
-    this._req = deepMerge({}, this.cog.req, value);
+    this._req = deepMerge({}, this._req, this.cog.req, value);
   }
   private _req: STReq;
   /** 返回体配置 */
@@ -173,6 +175,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     };
   }
   @Input() rowClassName: STRowClassName;
+  @Input()
+  set widthMode(value: STWidthMode) {
+    this._widthMode = { type: 'default', strictBehavior: 'truncate', ...value };
+  }
+  get widthMode() {
+    return this._widthMode;
+  }
+  private _widthMode: STWidthMode;
   /** `header` 标题 */
   @Input() header: string | TemplateRef<void>;
   /** `footer` 底部 */
@@ -221,9 +231,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       }
     });
 
-    const copyCog = deepMergeKey(new STConfig(), true, cog);
-    delete copyCog.multiSort;
-    Object.assign(this, copyCog);
+    this.copyCog = deepMergeKey(new STConfig(), true, cog);
+    delete this.copyCog.multiSort;
+    Object.assign(this, this.copyCog);
     if (cog.multiSort && cog.multiSort.global !== false) {
       this.multiSort = { ...cog.multiSort };
     }
@@ -248,6 +258,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           .replace('{{range[0]}}', range[0])
           .replace('{{range[1]}}', range[1])
       : '';
+  }
+
+  isTruncate(column: STColumn): boolean {
+    return column.width && this.widthMode.strictBehavior === 'truncate';
+  }
+
+  columnClass(column: STColumn): string {
+    return column.className || (this.isTruncate(column) ? 'text-truncate' : null);
   }
 
   private changeEmit(type: STChangeType, data?: any) {
@@ -317,7 +335,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (cleanStatus) {
       this.clearStatus();
     }
-    this._data.length = 0;
+    this._data = [];
     return this.cd();
   }
 
@@ -401,7 +419,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _rowClick(e: Event, item: STData, index: number) {
     if ((e.target as HTMLElement).nodeName === 'INPUT') return;
     const { expand, expandRowByClick, rowClickTime } = this;
-    if (!!expand && expandRowByClick) {
+    if (!!expand && item.showExpand !== false && expandRowByClick) {
       item.expand = !item.expand;
       this.changeEmit('expand', item);
       return;
@@ -417,6 +435,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       }
       this.rowClickCount = 0;
     }, rowClickTime);
+  }
+
+  _expandChange(item: STData): void {
+    this.changeEmit('expand', item);
   }
 
   /** 移除某行数据 */
@@ -573,7 +595,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         modal.component,
         { ...obj, ...(modal.params && modal.params(record)) },
-        { ...modal },
+        deepMergeKey({}, true, this.copyCog.modal, modal),
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
@@ -586,7 +608,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           drawer.title,
           drawer.component,
           { ...obj, ...(drawer.params && drawer.params(record)) },
-          { ...drawer },
+          deepMergeKey({}, true, this.copyCog.drawer, drawer),
         )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));
@@ -659,9 +681,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private setClass() {
+    const { type, strictBehavior } = this.widthMode;
     updateHostClass(this.el.nativeElement, this.renderer, {
       [`st`]: true,
       [`st__p-${this.page.placement}`]: this.page.placement,
+      [`st__width-${type}`]: true,
+      [`st__width-strict-${strictBehavior}`]: type === 'strict',
       [`ant-table-rep__hide-header-footer`]: this.responsiveHideHeaderFooter,
     });
   }

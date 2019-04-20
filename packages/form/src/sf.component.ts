@@ -8,6 +8,8 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  SimpleChange,
+  SimpleChanges,
   TemplateRef,
 } from '@angular/core';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
@@ -47,6 +49,7 @@ export function useFactory(
   ],
   host: {
     '[class.sf]': 'true',
+    '[class.sf__inline]': `layout === 'inline'`,
     '[class.sf__search]': `mode === 'search'`,
     '[class.sf__edit]': `mode === 'edit'`,
     '[class.sf__no-error]': `onlyVisual`,
@@ -124,7 +127,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     return this._mode;
   }
   private _mode: 'default' | 'search' | 'edit';
-
+  /**
+   * Whether to load status，when `true` reset button is disabled status, submit button is loading status
+   */
+  @Input() @InputBoolean() loading = false;
   /** 数据变更时回调 */
   @Output() readonly formChange = new EventEmitter<{}>();
   /** 提交表单时回调 */
@@ -369,7 +375,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.validator();
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
+    if (changes.loading && Object.keys(changes).length === 1) {
+      this.cdr.detectChanges();
+      return ;
+    }
     this.refreshSchema();
   }
 

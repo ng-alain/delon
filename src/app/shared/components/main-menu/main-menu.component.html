@@ -1,4 +1,4 @@
-<nz-affix>
+<ng-template #menuCon>
   <div class="main-menu-wrap scrollbar">
     <ul nz-menu [nzMode]="'inline'" style="padding-bottom: 64px;">
       <li nz-submenu nzOpen *ngFor="let group of meta.menus">
@@ -15,4 +15,9 @@
       </li>
     </ul>
   </div>
-</nz-affix>
+</ng-template>
+<ng-container *ngIf="!isMobile; else menuCon">
+  <nz-affix>
+    <ng-template [ngTemplateOutlet]="menuCon"></ng-template>
+  </nz-affix>
+</ng-container>

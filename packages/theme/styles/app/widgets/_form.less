@@ -18,13 +18,14 @@
 .search__form-mixin(@enabled) when(@enabled = true) {
   .search {
     &__form {
-      // BUG: https://github.com/NG-ZORRO/ng-zorro-antd/issues/1202
-      &.@{ant-prefix}-form-inline {
-        .@{ant-prefix}-form-item-label,
-        .@{ant-prefix}-form-item-control-wrapper {
-          padding: 0 !important;
-        }
-      }
+      // FIXED-CHECK
+      // // BUG: https://github.com/NG-ZORRO/ng-zorro-antd/issues/1202
+      // &.@{ant-prefix}-form-inline {
+      //   .@{ant-prefix}-form-item-label,
+      //   .@{ant-prefix}-form-item-control-wrapper {
+      //     padding: 0 !important;
+      //   }
+      // }
       .@{ant-prefix}-form-item {
         margin-bottom: 24px;
         margin-right: 0;

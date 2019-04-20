@@ -15,14 +15,15 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
 import { SFSchema } from '@delon/form';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`
+  template: `<sf [schema]="schema" [loading]="loading" (formSubmit)="submit($event)"></sf>`,
 })
 export class DemoComponent {
+  loading = false;
   schema: SFSchema = {
     properties: {
       id1: { type: 'number', ui: { widget: 'text' } },
@@ -32,13 +33,19 @@ export class DemoComponent {
         title: 'Name',
         ui: {
           addOnAfter: 'RMB',
-          placeholder: 'RMB结算'
-        }
-      }
+          placeholder: 'RMB结算',
+        },
+      },
     },
-    required: ['name']
+    required: ['name'],
   };
   constructor(public msg: NzMessageService) { }
-  submit(value: any) { this.msg.success(JSON.stringify(value)); }
+  submit(value: any) {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+      this.msg.success(JSON.stringify(value));
+    }, 1000);
+   }
 }
 ```

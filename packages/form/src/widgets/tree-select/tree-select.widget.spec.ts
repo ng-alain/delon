@@ -41,7 +41,7 @@ describe('form: widget: tree-select', () => {
     page
       .newSchema(s)
       .typeEvent('click', '.ant-select')
-      .typeEvent('click', '.ant-tree-switcher-icon')
+      .typeEvent('click', '.ant-select-switcher-icon')
       .typeEvent('click', 'nz-tree-node:nth-child(2)')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
@@ -97,7 +97,7 @@ describe('form: widget: tree-select', () => {
     page
       .newSchema(s)
       .typeEvent('click', '.ant-select')
-      .typeEvent('click', '.ant-tree-switcher-icon')
+      .typeEvent('click', '.ant-select-switcher-icon')
       .typeEvent('click', 'nz-tree-node:nth-child(2)')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);

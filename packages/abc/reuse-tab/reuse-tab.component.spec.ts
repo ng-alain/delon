@@ -391,6 +391,20 @@ describe('abc: reuse-tab', () => {
           .expectUrl(1, '/b/1')
           .expectTime(bTime);
       }));
+      it('should acitved select tab of closed right tab', fakeAsync(() => {
+        let bTime: string;
+        page
+          .to('#b') // 1
+          .tap(() => (bTime = page.time))
+          .to('#c') // 2
+          .to('#d') // 3
+          .openContextMenu(1)
+          .clickContentMenu('closeRight')
+          .expectCount(2)
+          .expectActive(1, true)
+          .expectUrl(1, '/b/1')
+          .expectTime(bTime);
+      }));
       it('should keeping tab of close other tab', fakeAsync(() => {
         let bTime: string;
         page

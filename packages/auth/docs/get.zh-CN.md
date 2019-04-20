@@ -1,6 +1,8 @@
 ---
 order: 10
-title: 获取Token
+title: 
+  en-US: Get Token
+  zh-CN: 获取Token
 type: Documents
 ---
 

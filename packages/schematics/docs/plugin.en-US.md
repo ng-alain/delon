@@ -106,6 +106,7 @@ ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 | Turkish    | tr     | tr        | tr_TR            | tr_TR       |
 | Polish    | pl     | pl        | pl_PL            | pl_PL       |
 | Greek    | el     | el        | el_GR            | el_GR       |
+| Korean    | ko     | ko        | ko_KR            | ko_KR       |
 
 ### networkEnv
 
@@ -120,6 +121,17 @@ ng g ng-alain:plugin networkEnv --packageManager=yarn
 ng g ng-alain:plugin networkEnv --packageManager=npm -t=remove
 # remove yarn
 ng g ng-alain:plugin networkEnv --packageManager=yarn -t=remove
+```
+
+### sts
+
+[ng-alain-sts](https://github.com/ng-alain/sts) Plugins, Build Swagger APIs to list, edit pages, You can finish some interesting things.
+
+```bash
+# add
+ng g ng-alain:plugin sts
+# remove
+ng g ng-alain:plugin sts -t=remove
 ```
 
 ### icon

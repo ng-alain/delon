@@ -46,6 +46,7 @@ import {
   STPage,
   STReq,
   STRes,
+  STWidthMode,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
 
@@ -1094,6 +1095,18 @@ describe('abc: table', () => {
     });
     describe('#expand', () => {
       beforeEach(() => createComp(true, TestExpandComponent));
+      it('should be switch expand via expand icon', (done) => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          const el = page.getCell(1, 1).querySelector('.ant-table-row-expand-icon') as HTMLElement;
+          page.expectData(1, 'expand', undefined);
+          expect(context.change).not.toHaveBeenCalled();
+          el.click();
+          page.expectData(1, 'expand', true);
+          expect(context.change).toHaveBeenCalled();
+          done();
+        });
+      });
       describe('should be expanded when click row if expandRowByClick', () => {
         it('with true', (done) => {
           context.expandRowByClick = true;
@@ -1116,6 +1129,21 @@ describe('abc: table', () => {
             page.expectData(1, 'expand', undefined);
             el.click();
             page.expectData(1, 'expand', undefined);
+            done();
+          });
+        });
+      });
+      describe('should be set showExpand in row data', () => {
+        it(`muse be hide expand icon`, (done) => {
+          context.expandRowByClick = false;
+          context.data = deepCopy(USERS).slice(0, 1);
+          context.data[0].showExpand = false;
+          fixture.detectChanges();
+          fixture.whenStable().then(() => {
+            page.expectElCount('.ant-table-row-expand-icon', 0);
+            expect(context.change).not.toHaveBeenCalled();
+            page.getCell(1, 2).click();
+            expect(context.change).not.toHaveBeenCalled();
             done();
           });
         });
@@ -1539,6 +1567,43 @@ describe('abc: table', () => {
         expect(ms.key).toBe('aa');
       });
     });
+    describe('#widthMode', () => {
+      it('with type is default', (done) => {
+        context.widthMode = { type: 'default' };
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          page.expectElCount(`.st__width-default`, 1);
+          done();
+        });
+      });
+      describe('with type is strict', () => {
+        it('shoule be add text-truncate class when className is empty and behavior is truncate', (done) => {
+          context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
+          fixture.detectChanges();
+          page
+            .newColumn([{ title: '', index: 'id', width: 50 }])
+            .then(() => {
+              page.expectElCount(`.st__width-strict`, 1);
+              page.expectElCount(`.st__width-strict-truncate`, 1);
+              page.expectElCount(`td.text-truncate`, context.comp._data.length);
+              done();
+            });
+        });
+        it('should be ingore add text-truncate class when className is non-empty', (done) => {
+          context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
+          fixture.detectChanges();
+          page
+            .newColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }])
+            .then(() => {
+              page.expectElCount(`.st__width-strict`, 1);
+              page.expectElCount(`.st__width-strict-truncate`, 1);
+              page.expectElCount(`.text-truncate`, 0);
+              page.expectElCount(`td.aaaa`, context.comp._data.length);
+              done();
+            });
+        });
+      });
+    });
   });
 
   describe('**slow**', () => {
@@ -1826,6 +1891,7 @@ describe('abc: table', () => {
         [ps]="ps" [pi]="pi" [total]="total"
         [page]="page"
         [responsiveHideHeaderFooter]="responsiveHideHeaderFooter"
+        [widthMode]="widthMode"
 
         [loading]="loading" [loadingDelay]="loadingDelay"
         [bordered]="bordered" [size]="size"
@@ -1863,6 +1929,7 @@ class TestComponent {
   rowClickTime = 200;
   responsiveHideHeaderFooter = false;
   expandRowByClick = false;
+  widthMode: STWidthMode = {};
 
   error() { }
   change() { }

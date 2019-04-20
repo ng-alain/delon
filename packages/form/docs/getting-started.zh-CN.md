@@ -152,6 +152,7 @@ export class HomeComponent {
 | `[firstVisual]`  | 是否立即呈现错误视觉            | `boolean`                   | `true`       |
 | `[liveValidate]` | 是否实时校验，`false` 提交时检验 | `boolean`                   | `true`       |
 | `[autocomplete]` | 指定表单 `autocomplete` 值      | `'on','off'`                    | `null`       |
+| `[loading]` | 是否加载状态，当 `true` 重置按钮禁止状态，提交按钮加载状态  | `boolean` | `false` |
 | `(formChange)`   | 数据变更时回调                  | `EventEmitter<{}>`          | -            |
 | `(formSubmit)`   | 提交表单时回调                  | `EventEmitter<{}>`          | -            |
 | `(formReset)`    | 重置表单时回调                  | `EventEmitter<{}>`          | -            |

@@ -3,8 +3,8 @@
          nz-checkbox
          class="sf__checkbox-all mr-sm"
          [(ngModel)]="allChecked"
-         [nzIndeterminate]="indeterminate"
-         (click)="onAllChecked($event)">{{ ui.checkAllText || l.checkAllText }}</label>
+         (ngModelChange)="onAllChecked()"
+         [nzIndeterminate]="indeterminate">{{ ui.checkAllText || l.checkAllText }}</label>
 </ng-template>
 <sf-item-wrap [id]="id"
               [schema]="schema"

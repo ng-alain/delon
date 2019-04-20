@@ -8,19 +8,20 @@ type: Dev
 
 ## 一、前序准备
 
-当你开始着手在 ng-alain 基础上进行业务开发时，我建议你先了解一下以下文档，这对于团队中每个成员都非常有帮助。
+当你开始着手在 NG-ALAIN 基础上进行业务开发时，我建议你先了解一下以下文档，这对于团队中每个成员都非常有帮助。
 
 + [Ant Design 指引文章](//ant.design/docs/spec/introduce-cn)
 + [Ant Design for Angular](//ng.ant.design/)
 + [Antv 图表](//antv.alipay.com/zh-cn/index.html)
++ [NG-ZORRO 社区推荐](https://ng.ant.design/docs/recommendation/zh#博客及网站)
 
-ng-alain 的基础组件库来自 ng-zorro-antd，因此对于这类组件的使用方式你可以通过其官网得到很详细的 [API](//ng.ant.design/) 文档说明，而对于 ng-alain 提供的组件则通过[组件页](/components)获取。
+NG-ALAIN 的基础组件库来自 NG-ZORRO，因此对于这类组件的使用方式你可以通过其官网得到很详细的 [API](//ng.ant.design/) 文档说明，而对于 NG-ALAIN 提供的组件则通过[组件页](/components)获取。
 
 ## 二、启动流程
 
-ng-alain 是一个可直接用于生产环境脚手架，要了解这些细节的前提条件是你对 Angular 有一定的知识储备，在开始之前下列文档可能对你有帮助：
+NG-ALAIN 是一个可直接用于生产环境脚手架，要了解这些细节的前提条件是你对 Angular 有一定的知识储备，在开始之前下列文档可能对你有帮助：
 
-- ng-alain 入门视频（[YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[腾讯视频](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[B站](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）
+- **NG-ALAIN 入门视频（[YouTube](https://www.youtube.com/watch?v=lPnNKPuULVw&list=PLhWkvn5F8uyJRimbVZ944unzRrHeujngw)、[腾讯视频](http://v.qq.com/vplus/2c1dd5c6db4feeeea25e9827b38c171e/foldervideos/870001501oy1ijf)、[B站](https://space.bilibili.com/12207877/#/channel/detail?cid=50229)）**
 - [知乎专栏](https://zhuanlan.zhihu.com/ng-alain)
 
 当通过 `ng serve` 运行应用后，一个完整的 Angular 启动流程大概是这样：
@@ -29,9 +30,9 @@ ng-alain 是一个可直接用于生产环境脚手架，要了解这些细节�
 2. 触发业务路由（脚手架的 `src/app/routes/routes-routing.module.ts`）
 3. 渲染组件
 
-### 1、APP_INITIALIZER
+### 1) APP_INITIALIZER
 
-以中后台角度出发，ng-alain 始终认为在 Angular 启动之前需要一次网络请求来获取一些应用信息（例如：菜单数据、用户数据等），具体实现细节[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，不管怎么样始终都需要调用：`resolve()` 才能确保 Angular 正常启动。
+以中后台角度出发，NG-ALAIN 始终认为在 Angular 启动之前需要一次网络请求来获取一些应用信息（例如：菜单数据、用户数据等），具体实现细节[startup.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/startup/startup.service.ts)；它返回的是一个 `Promise` 对象，不管怎么样始终都需要调用：`resolve()` 才能确保 Angular 正常启动。
 
 > 网络请求可能会遇到 403 错误，这是因为脚手架默认使用了用户认证模块，并始终认为所有请求务必是一个有效用户授权，更多文档见：
 > - [和服务端进行交互](/docs/server)
@@ -68,7 +69,7 @@ this.settingService.setLayout(`collapsed`, false);
 
 **菜单数据**
 
-ng-alain 认为菜单数据也是来自远程，也可以任意位置注入 `MenuService`（[API](/theme/menu)）来改变菜单数据，当然在 Angular 启动之前执行菜单赋值更为合理。
+NG-ALAIN 认为菜单数据也是来自远程，也可以任意位置注入 `MenuService`（[API](/theme/menu)）来改变菜单数据，当然在 Angular 启动之前执行菜单赋值更为合理。
 
 菜单数据**务必**确保 [Menu](https://github.com/ng-alain/delon/blob/master/packages/theme/src/services/menu/interface.ts) 格式，菜单数据贯穿整个应用，例如：主菜单组件 [sidebar-nav](/components/sidebar-nav)，页头自动导航 [page-header](/components/page-header)，页标题文本 [TitleService](/theme/title) 等。
 
@@ -97,7 +98,7 @@ this.aclService.setFull(true);
 
 建议在启动前优先加载国际化数据包，这样可确保项目启动后页面渲染为目标语言。更多细节参考[国际化](/docs/i18n)。
 
-### 2、业务路由
+### 2) 业务路由
 
 脚手架顶层路由从 [routes-routing.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/routes/routes-routing.module.ts) 开始，其结构如下：
 

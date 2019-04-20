@@ -22,7 +22,7 @@ describe('abc: table: column-souce', () => {
   let page: PageObject;
 
   function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }) {
-    aclSrv = other.acl ? new ACLService() : null;
+    aclSrv = other.acl ? new ACLService({}) : null;
     i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
     rowSrv = new STRowSource();
     srv = new STColumnSource(rowSrv, aclSrv, i18nSrv, other.cog || new STConfig());
@@ -185,6 +185,22 @@ describe('abc: table: column-souce', () => {
             .expectValue([{ title: '', type: 'tag' }], '', 'type')
             .expectValue([{ title: '', type: 'tag', tag: {} }], 'tag', 'type');
         });
+      });
+    });
+    describe('[width]', () => {
+      it('should be support number type', () => {
+        page.expectValue(
+          [{ title: '', index: 'id', width: 65 }],
+          '65px',
+          'width',
+        );
+      });
+      it('should be support string type', () => {
+        page.expectValue(
+          [{ title: '', index: 'id', width: '65px' }],
+          '65px',
+          'width',
+        );
       });
     });
     describe('[className]', () => {

@@ -5,7 +5,7 @@ import { of, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 import { _HttpClient, CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
-import { deepGet } from '@delon/util';
+import { deepCopy, deepGet } from '@delon/util';
 
 import { STSortMap } from './table-column-source';
 import {
@@ -75,12 +75,14 @@ export class STDataSource {
       let retPs: number;
       let retList: STData[];
       let retPi: number;
+      let rawData: any;
       let showPage = page.show;
 
       if (typeof data === 'string') {
         isRemote = true;
         data$ = this.getByHttp(data, options).pipe(
           map(result => {
+            rawData = result;
             let ret: STData[];
             if (Array.isArray(result)) {
               ret = result;
@@ -98,7 +100,7 @@ export class STDataSource {
                 res.reName.total && deepGet(result, res.reName.total as string[], null);
               retTotal = resultTotal == null ? total || 0 : +resultTotal;
             }
-            return ret;
+            return deepCopy(ret);
           }),
           catchError(err => {
             rejectPromise(err);
@@ -116,7 +118,8 @@ export class STDataSource {
         data$ = data$.pipe(
           // sort
           map((result: STData[]) => {
-            let copyResult = result.slice(0);
+            rawData = result;
+            let copyResult = deepCopy(result);
             const sorterFn = this.getSorterFn(columns);
             if (sorterFn) {
               copyResult = copyResult.sort(sorterFn);
@@ -182,7 +185,7 @@ export class STDataSource {
             ps: retPs,
             total: retTotal,
             list: retList,
-            statistical: this.genStatistical(columns, retList),
+            statistical: this.genStatistical(columns, retList, rawData),
             pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
           });
         });
@@ -358,27 +361,27 @@ export class STDataSource {
 
   // #region statistical
 
-  private genStatistical(columns: STColumn[], list: STData[]): STStatisticalResults {
+  private genStatistical(columns: STColumn[], list: STData[], rawData: any): STStatisticalResults {
     const res = {};
     columns.forEach((col, index) => {
       res[col.key ? col.key : index] =
-        col.statistical == null ? {} : this.getStatistical(col, index, list);
+        col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
     });
     return res;
   }
 
-  private getStatistical(col: STColumn, index: number, list: STData[]): STStatisticalResult {
+  private getStatistical(col: STColumn, index: number, list: STData[], rawData: any): STStatisticalResult {
     const val = col.statistical;
     const item: STStatistical = {
       digits: 2,
-      currenty: null,
+      currency: null,
       ...(typeof val === 'string' ? { type: val as STStatisticalType } : (val as STStatistical)),
     };
     let res: STStatisticalResult = { value: 0 };
-    let currenty = false;
+    let currency = false;
     if (typeof item.type === 'function') {
-      res = item.type(this.getValues(index, list), col, list);
-      currenty = true;
+      res = item.type(this.getValues(index, list), col, list, rawData);
+      currency = true;
     } else {
       switch (item.type) {
         case 'count':
@@ -391,23 +394,23 @@ export class STDataSource {
           break;
         case 'sum':
           res.value = this.toFixed(this.getSum(index, list), item.digits);
-          currenty = true;
+          currency = true;
           break;
         case 'average':
           res.value = this.toFixed(this.getSum(index, list) / list.length, item.digits);
-          currenty = true;
+          currency = true;
           break;
         case 'max':
           res.value = Math.max(...this.getValues(index, list));
-          currenty = true;
+          currency = true;
           break;
         case 'min':
           res.value = Math.min(...this.getValues(index, list));
-          currenty = true;
+          currency = true;
           break;
       }
     }
-    if (item.currenty === true || (item.currenty == null && currenty === true)) {
+    if (item.currency === true || (item.currency == null && currency === true)) {
       res.text = this.currentyPipe.transform(res.value);
     } else {
       res.text = String(res.value);

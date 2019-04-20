@@ -4,12 +4,12 @@ type: Other
 title: 升级到 2.0 版本
 ---
 
-ng-alain 2.0 变更主要从两个方面：
+NG-ALAIN 2.0 变更主要从两个方面：
 
 - 使 CURD 操作更“自然”开发体验（[#588](https://github.com/ng-alain/ng-alain/issues/588)）
 - 更友好响应式开发
 
-原 `simple-table`、`sf` 是受大家喜欢的组件之一，因此 ng-alain 2.0 重构并增加三个 Simple 系列组件：
+原 `simple-table`、`sf` 是受大家喜欢的组件之一，因此 NG-ALAIN 2.0 重构并增加三个 Simple 系列组件：
 
 - [st](/components/table) 原 `simple-table`
   - 输入属性的变更，若你之前**通用配置优先**来使用的话，这些改变会少非常多
@@ -19,7 +19,7 @@ ng-alain 2.0 变更主要从两个方面：
 - [se](/components/edit) 编辑
 - [sg](/components/grid) 栅格布局
 
-ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，并已经将相关的类库代码迁移至该组织下，因此部分示例链接也做改变：
+NG-ALAIN 2.0 启用全新的 [NG-ALAIN 组织](https://github.com/ng-alain/)，并已经将相关的类库代码迁移至该组织下，因此部分示例链接也做改变：
 
 - [DEMO](https://ng-alain.github.io/ng-alain/)
 - 原 1.x [文档站](https://ng-alain.github.io/1.x-doc/)
@@ -38,7 +38,7 @@ ng-alain 2.0 启用全新的 [ng-alain 组织](https://github.com/ng-alain/)，�
 
 ### 2、布局
 
-由于重新采用 BEM 来命名默认布局，这倒置所有 `src/app/layout/default` 需要修改相应样式名称。
+由于重新采用 BEM 来命名默认布局，这导致所有 `src/app/layout/default` 需要修改相应样式名称。
 
 #### 修改部分
 

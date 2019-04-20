@@ -26,4 +26,16 @@
   .@{ant-prefix}-table-pagination.@{ant-prefix}-pagination {
     margin-bottom: 0;
   }
+  @media screen and (min-width: @nz-table-rep-min-width) {
+    &__width {
+      &-strict {
+        .ant-table-body {
+          > table {
+            table-layout: fixed;
+            word-wrap: break-word;
+          }
+        }
+      }
+    }
+  }
 }

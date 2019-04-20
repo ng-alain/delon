@@ -37,7 +37,7 @@ export class QRService {
    * @param [value] 重新指定值
    */
   refresh(value?: string | {}): string {
-    this.qr.set(
+    const option: any =
       typeof value === 'object'
         ? value
         : {
@@ -49,9 +49,24 @@ export class QRService {
             padding: this.padding,
             size: this.size,
             value: value || this.value,
-          },
-    );
+          };
+    option.value = this.toUtf8ByteArray(option.value);
+    this.qr.set(option);
     return this.dataURL;
+  }
+
+  private toUtf8ByteArray(str: string): string {
+    str = encodeURI(str);
+    const result: number[] = [];
+    for (let i = 0; i < str.length; i++) {
+      if (str.charAt(i) !== '%') {
+        result.push(str.charCodeAt(i));
+      } else {
+        result.push(parseInt(str.substr(i + 1, 2), 16));
+        i += 2;
+      }
+    }
+    return result.map(v => String.fromCharCode(v)).join('');
   }
 
   /**

@@ -110,6 +110,7 @@ ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 | 土耳其语       | tr     | tr        | tr_TR            | tr_TR       |
 | 波兰语    | pl     | pl        | pl_PL            | pl_PL       |
 | 希腊语    | el     | el        | el_GR            | el_GR       |
+| 朝鲜语    | ko     | ko        | ko_KR            | ko_KR       |
 
 ### networkEnv
 
@@ -124,6 +125,17 @@ ng g ng-alain:plugin networkEnv --packageManager=yarn
 ng g ng-alain:plugin networkEnv --packageManager=npm -t=remove
 # remove yarn
 ng g ng-alain:plugin networkEnv --packageManager=yarn -t=remove
+```
+
+### sts
+
+[ng-alain-sts](https://github.com/ng-alain/sts) 插件，构建 Swagger API 转换为列表、编辑页，更多有趣的玩法请自行想象。
+
+```bash
+# add
+ng g ng-alain:plugin sts
+# remove
+ng g ng-alain:plugin sts -t=remove
 ```
 
 ### icon

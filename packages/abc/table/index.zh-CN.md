@@ -51,6 +51,7 @@ config: STConfig
 `[noResult]` | 无数据时显示内容 | `string,TemplateRef<void>` | -
 `[bordered]` | 是否显示边框 | `boolean` | `false`
 `[size]` | table大小 | `'small','middle','default'` | `'default'`
+`[widthMode]` | 设置表格宽度模式 | `STWidthMode` | -
 `[rowClassName]` | 表格行的类名 | `(record: STData, index: number) => string` | -
 `[loading]` | 页面是否加载中 | `boolean` | `false`
 `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0`
@@ -201,6 +202,7 @@ class TestComponent {
 `[checked]` | 选择框或单选框状态值 | `boolean` | -
 `[disabled]` | 选择框或单选框 `disabled` 值 | `boolean` | -
 `[expand]` | 是否展开状态 | `boolean` | -
+`[showExpand]` | 是否显示展开按钮 | `boolean` | -
 
 ### STColumn
 
@@ -216,7 +218,7 @@ class TestComponent {
 `[buttons]` | 按钮组 | `STColumnButton[]` | -
 `[width]` | 列宽（数字型表示 `px` 值，**注意：** 若固定列必须是数字），例如：`100`、`10%`、`100px` | `string,number` | -
 `[fixed]` | 固定前后列，当指定时务必指定 `width` 否则视为无效 | `left,right` | -
-`[format]` | 格式化列值 | `function(cell: any, row: any)` | -
+`[format]` | 格式化列值 | `(item: STData, col: STColumn) => string` | -
 `[className]` | 列 `class` 属性值，例如：；`text-center` 居中； `text-right` 居右； `text-danger` 异常色，更多参考[样式工具类](/theme/tools) | `string` | -
 `[colSpan]` | 合并列 | `number` | -
 `[sort]` | 排序配置项，远程数据配置**优先**规则：<br>`true` 表示允许排序<br>`string` 表示远程数据排序相对应 `key` 值 | `true,string,STColumnSort` | -
@@ -347,10 +349,28 @@ class TestComponent {
 `[text]` | 文本 | `string` | -
 `[color]` | Tag颜色值 | `string` | -
 
+### STWidthMode
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[type]` | 类型 | `strict,default` | `default`
+`[strictBehavior]` | `strict` 的行为类型 | `wrap,truncate` | `truncate`
+
 ### STStatistical
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 统计类型 | `STStatisticalType | STStatisticalFn` | -
 `[digits]` | 保留小数位数 | `number` | `2`
-`[currenty]` | 是否需要货币格式化，默认当 `type` 为 `STStatisticalFn`、 `sum`、`average`、`max`、`min` 时为 `true` | `boolean` | -
+`[currency]` | 是否需要货币格式化，默认当 `type` 为 `STStatisticalFn`、 `sum`、`average`、`max`、`min` 时为 `true` | `boolean` | -
+
+**STStatisticalFn**
+
+```ts
+(
+  values: number[],
+  col: STColumn,
+  list: STData[],
+  rawData?: any,
+) => STStatisticalResult
+```

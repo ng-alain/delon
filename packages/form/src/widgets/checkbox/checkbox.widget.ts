@@ -53,8 +53,7 @@ export class CheckboxWidget extends ControlWidget {
     this.notifySet();
   }
 
-  onAllChecked(e: Event) {
-    e.stopPropagation();
+  onAllChecked() {
     this.data.forEach(item => (item.checked = this.allChecked));
     this.notifySet();
   }
@@ -69,8 +68,7 @@ export class CheckboxWidget extends ControlWidget {
     } else {
       this.indeterminate = true;
     }
-    // issues: https://github.com/NG-ZORRO/ng-zorro-antd/issues/2025
-    setTimeout(() => this.detectChanges());
+    this.detectChanges();
     return this;
   }
 

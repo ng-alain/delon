@@ -6,7 +6,7 @@ type: Basic
 
 ## Foreword
 
-ng-alain is a production-ready solution for admin interfaces. Built on the design principles developed by [Ant Design](https://ant.design/), this project introduces higher level components; we have developed templates, components, and a corresponding design kit to improve the user and development experience for admin interfaces.
+NG-ALAIN is a production-ready solution for admin interfaces. Built on the design principles developed by [Ant Design](https://ant.design/), this project introduces higher level components; we have developed templates, components, and a corresponding design kit to improve the user and development experience for admin interfaces.
 
 **How to read document**
 
@@ -51,7 +51,7 @@ npm start
 
 ## Scaffolding
 
-ng-alain is a standard Angular CLI project that includes common routes for admins and demonstrates our component library. The project layout is as follows:
+NG-ALAIN is a standard Angular CLI project that includes common routes for admins and demonstrates our component library. The project layout is as follows:
 
 ```
 ├── _mock                                       # Local Mock Data
@@ -94,7 +94,7 @@ This will automatically open http://localhost:8000. If you see the following pag
 
 Please read our [CONTRIBUTING.md](/docs/contributing) first.
 
-If you'd like to help us improve ng-zorro-antd, just create a [Pull Request](https://github.com/ng-alain/ng-alain/pulls). Feel free to report bugs and issues [here](https://github.com/ng-alain/ng-alain/issues).
+If you'd like to help us improve NG-ZORRO, just create a [Pull Request](https://github.com/ng-alain/ng-alain/pulls). Feel free to report bugs and issues [here](https://github.com/ng-alain/ng-alain/issues).
 
 > If you're new to posting issues, we ask that you read [*How To Ask Questions The Smart Way*](http://www.catb.org/~esr/faqs/smart-questions.html)(This guide does not provide actual support services for this project!) and [How to Ask a Question in Open Source Community](https://github.com/seajs/seajs/issues/545) and [How to Report Bugs Effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html) prior to posting. Well written bug reports help us help you!
 
@@ -107,4 +107,4 @@ As always, we encourage experienced users to help those who are not familiar wit
 ## DONATE
 
 If you would like to [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/cipchk)
- to ng-alain.
+ to NG-ALAIN.
