@@ -17,14 +17,14 @@ export abstract class FormProperty {
   formData: {};
   _value: SFValue = null;
   widget: Widget<FormProperty>;
-  private _errors: ErrorData[] = null;
+  private _errors: ErrorData[] | null = null;
   protected _objErrors: { [key: string]: ErrorData[] } = {};
   private _valueChanges = new BehaviorSubject<SFValue>(null);
-  private _errorsChanges = new BehaviorSubject<ErrorData[]>(null);
+  private _errorsChanges = new BehaviorSubject<ErrorData[] | null>(null);
   private _visible = true;
   private _visibilityChanges = new BehaviorSubject<boolean>(true);
   private _root: PropertyGroup;
-  private _parent: PropertyGroup;
+  private _parent: PropertyGroup | null;
   private _path: string;
 
   constructor(
@@ -32,7 +32,7 @@ export abstract class FormProperty {
     schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
     formData: {},
-    parent: PropertyGroup,
+    parent: PropertyGroup | null,
     path: string,
     private _options: DelonFormConfig,
   ) {
@@ -40,7 +40,7 @@ export abstract class FormProperty {
     this.ui = ui;
     this.schemaValidator = schemaValidatorFactory.createValidatorFn(schema, {
       ingoreKeywords: this.ui.ingoreKeywords as string[],
-      debug: (ui as SFUISchemaItem)!.debug,
+      debug: (ui as SFUISchemaItem)!.debug!,
     });
     this.formData = formData || schema.default;
     this._parent = parent;
@@ -61,10 +61,10 @@ export abstract class FormProperty {
   }
 
   get type(): string {
-    return this.schema.type;
+    return this.schema.type as string;
   }
 
-  get parent(): PropertyGroup {
+  get parent(): PropertyGroup | null {
     return this._parent;
   }
 
@@ -80,7 +80,7 @@ export abstract class FormProperty {
     return this._value;
   }
 
-  get errors(): ErrorData[] {
+  get errors(): ErrorData[] | null {
     return this._errors;
   }
 
@@ -144,9 +144,9 @@ export abstract class FormProperty {
   }
 
   /** 根据路径搜索表单属性 */
-  searchProperty(path: string): FormProperty {
+  searchProperty(path: string): FormProperty | null {
     let prop: FormProperty = this;
-    let base: PropertyGroup = null;
+    let base: PropertyGroup | null = null;
 
     let result = null;
     if (path[0] === '/') {
@@ -246,7 +246,7 @@ export abstract class FormProperty {
         let message =
           err._custom === true && err.message
             ? err.message
-            : (this.ui.errors || {})[err.keyword] || this._options.errors[err.keyword] || ``;
+            : (this.ui.errors || {})[err.keyword] || this._options.errors![err.keyword] || ``;
 
         if (message && typeof message === 'function') {
           message = message(err) as string;
@@ -256,7 +256,7 @@ export abstract class FormProperty {
           if (~(message as string).indexOf('{')) {
             message = (message as string).replace(
               /{([\.a-z0-9]+)}/g,
-              (v: string, key: string) => err.params[key] || '',
+              (v: string, key: string) => err.params![key] || '',
             );
           }
           err.message = message as string;
@@ -342,13 +342,13 @@ export abstract class FormProperty {
 }
 
 export abstract class PropertyGroup extends FormProperty {
-  properties: { [key: string]: FormProperty } | FormProperty[] = null;
+  properties: { [key: string]: FormProperty } | FormProperty[] | null = null;
 
   getProperty(path: string) {
     const subPathIdx = path.indexOf('/');
     const propertyId = subPathIdx !== -1 ? path.substr(0, subPathIdx) : path;
 
-    let property = this.properties[propertyId];
+    let property = this.properties![propertyId];
     if (property !== null && subPathIdx !== -1 && property instanceof PropertyGroup) {
       const subPath = path.substr(subPathIdx + 1);
       property = (property as PropertyGroup).getProperty(subPath);

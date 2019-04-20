@@ -13,7 +13,7 @@ export class SFItemWrapComponent {
   @Input() showError: boolean;
   @Input() error: string;
   @Input() showTitle: boolean;
-  @Input() title: string = null;
+  @Input() title: string | null = null;
 
   get t() {
     return this.title === null ? this.schema.title : this.title;

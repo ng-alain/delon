@@ -23,10 +23,10 @@ export class FormPropertyFactory {
     schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
     formData: {},
-    parent: PropertyGroup = null,
+    parent: PropertyGroup | null = null,
     propertyId?: string,
   ): FormProperty {
-    let newProperty = null;
+    let newProperty: FormProperty | null = null;
     let path = '';
     if (parent) {
       path += parent.path;
@@ -47,11 +47,11 @@ export class FormPropertyFactory {
     }
 
     if (schema.$ref) {
-      const refSchema = retrieveSchema(schema, parent.root.schema.definitions);
+      const refSchema = retrieveSchema(schema, parent!.root.schema.definitions);
       newProperty = this.createProperty(refSchema, ui, formData, parent, path);
     } else {
       // fix required
-      if (propertyId && ((parent!.schema.required || []) as string[]).indexOf(propertyId.split(SEQ).pop()) !== -1) {
+      if (propertyId && ((parent!.schema.required || []) as string[]).indexOf(propertyId.split(SEQ).pop()!) !== -1) {
         ui._required = true;
       }
       // fix title

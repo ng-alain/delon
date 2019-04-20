@@ -25,7 +25,7 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
     return this.ui.class || '';
   }
 
-  get disabled(): boolean {
+  get disabled(): boolean | null {
     if (this.schema.readOnly === true) return true;
 
     return null;
@@ -41,7 +41,7 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
   ngAfterViewInit(): void {
     this.formProperty.errorsChanges
       .pipe(
-        takeUntil(this.sfItemComp.unsubscribe$),
+        takeUntil(this.sfItemComp!.unsubscribe$),
         filter(w => w != null),
       )
       .subscribe((errors: ErrorData[]) => {
@@ -50,7 +50,7 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
         // 不显示首次校验视觉
         if (this.firstVisual) {
           this.showError = errors.length > 0;
-          this.error = this.showError ? errors[0].message : '';
+          this.error = this.showError ? errors[0].message as string : '';
 
           this.cd.detectChanges();
         }
@@ -87,7 +87,7 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty> implements AfterVie
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges
-      .pipe(takeUntil(this.sfItemComp.unsubscribe$))
+      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
       .subscribe(() => this.cd.detectChanges());
   }
 }
@@ -97,7 +97,7 @@ export class ObjectLayoutWidget extends Widget<ObjectProperty> implements AfterV
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges
-      .pipe(takeUntil(this.sfItemComp.unsubscribe$))
+      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
       .subscribe(() => this.cd.detectChanges());
   }
 }

@@ -5,30 +5,30 @@ import { ErrorSchema } from '../errors';
 import { SFSchemaEnumType } from './index';
 
 export interface SFGridSizeSchema {
-  span?: number;
-  order?: number;
-  offset?: number;
-  push?: number;
-  pull?: number;
+  span?: number | null;
+  order?: number | null;
+  offset?: number | null;
+  push?: number | null;
+  pull?: number | null;
 }
 
 export interface SFGridSchema {
   /**
    * 栅格间隔
    */
-  gutter?: number;
+  gutter?: number | null;
   /**
    * 栅格占位格数，为 `0` 时相当于 `display: none`
    */
-  span?: number;
+  span?: number | null;
   /**
    * 数据栅格占位格数，为 `0` 时相当于 `display: none`
    */
-  arraySpan?: number;
+  arraySpan?: number | null;
   /**
    * 栅格左侧的间隔格数，间隔内不可以有栅格
    */
-  offset?: number;
+  offset?: number | null;
   xs?: number | SFGridSizeSchema;
   sm?: number | SFGridSizeSchema;
   md?: number | SFGridSizeSchema;
@@ -70,26 +70,26 @@ export interface SFHorizontalLayoutSchema {
    * - `0` 时相当于 `display: none`
    * - 限 `horizontal` 水平布局有效
    */
-  spanLabel?: number;
+  spanLabel?: number | null;
 
   /**
    * `control` 栅格占位格数，默认：`19`
    * - `0` 时相当于 `display: none`
    * - 限 `horizontal` 水平布局有效
    */
-  spanControl?: number;
+  spanControl?: number | null;
 
   /**
    * `control` 栅格左侧的间隔格数，间隔内不可以有栅格
    * - 限 `horizontal` 水平布局有效
    */
-  offsetControl?: number;
+  offsetControl?: number | null;
 
   /**
    * `label` 固定宽度
    * - 限 `horizontal` 水平布局有效
    */
-  spanLabelFixed?: number;
+  spanLabelFixed?: number | null;
 }
 
 export interface SFArraySchema {

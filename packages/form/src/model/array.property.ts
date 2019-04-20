@@ -16,7 +16,7 @@ export class ArrayProperty extends PropertyGroup {
     schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
     formData: {},
-    parent: PropertyGroup,
+    parent: PropertyGroup | null,
     path: string,
     options: DelonFormConfig,
   ) {
@@ -61,7 +61,7 @@ export class ArrayProperty extends PropertyGroup {
 
   private addProperty(formData: {}) {
     const newProperty = this.formPropertyFactory.createProperty(
-      this.schema.items,
+      this.schema.items!,
       this.ui.$items,
       formData,
       this,
