@@ -519,34 +519,6 @@ export class _HttpClient {
    * @param url URL地址
    * @param options 参数
    */
-  request<R>(
-    method: string,
-    url: string,
-    options?: {
-      body?: any;
-      headers?:
-        | HttpHeaders
-        | {
-            [header: string]: string | string[];
-          };
-      observe?: 'body' | 'events' | 'response';
-      params?:
-        | HttpParams
-        | {
-            [param: string]: string | string[];
-          };
-      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
-      reportProgress?: boolean;
-      withCredentials?: boolean;
-    },
-  ): Observable<R>;
-  /**
-   * `request` 请求
-   *
-   * @param method 请求方法类型
-   * @param url URL地址
-   * @param options 参数
-   */
   request(
     method: string,
     url: string,

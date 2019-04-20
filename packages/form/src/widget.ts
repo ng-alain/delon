@@ -40,17 +40,15 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.formProperty.errorsChanges
-      .pipe(
-        takeUntil(this.sfItemComp!.unsubscribe$),
-        filter(w => w != null),
-      )
-      .subscribe((errors: ErrorData[]) => {
+      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
+      .subscribe((errors: ErrorData[] | null) => {
+        if (errors == null) return;
         di(this.ui, 'errorsChanges', this.formProperty.path, errors);
 
         // 不显示首次校验视觉
         if (this.firstVisual) {
           this.showError = errors.length > 0;
-          this.error = this.showError ? errors[0].message as string : '';
+          this.error = this.showError ? (errors[0].message as string) : '';
 
           this.cd.detectChanges();
         }

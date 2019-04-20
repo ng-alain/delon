@@ -129,7 +129,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
     merge(
       menuSrv.change.pipe(filter(() => this.inited)),
-      router.events.pipe(filter((event: RouterEvent) => event instanceof NavigationEnd)),
+      router.events.pipe(filter(e => e instanceof NavigationEnd)),
       i18nSrv.change,
     )
       .pipe(takeUntil(this.unsubscribe$))

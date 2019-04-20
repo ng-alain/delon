@@ -45,8 +45,9 @@ export class AppComponent implements OnDestroy {
     });
 
     this.router.events
-      .pipe(filter(evt => evt instanceof NavigationEnd))
-      .subscribe((evt: NavigationEnd) => {
+      .subscribe(evt => {
+        if (!(evt instanceof NavigationEnd)) return ;
+
         const url = evt.url.split('#')[0].split('?')[0];
         if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
         this.prevUrl = url;

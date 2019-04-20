@@ -217,16 +217,13 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       this.list = menuSrv.menus;
       cdr.detectChanges();
     });
-    router.events
-      .pipe(
-        takeUntil(unsubscribe$),
-        filter(e => e instanceof NavigationEnd),
-      )
-      .subscribe((e: NavigationEnd) => {
+    router.events.pipe(takeUntil(unsubscribe$)).subscribe(e => {
+      if (e instanceof NavigationEnd) {
         this.menuSrv.openedByUrl(e.urlAfterRedirects, this.recursivePath);
         this.underPad();
         this.cdr.detectChanges();
-      });
+      }
+    });
     this.underPad();
   }
 
