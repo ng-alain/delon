@@ -594,7 +594,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       const obj = { [modal!.paramsName!]: record };
       (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         modal!.component,
-        { ...obj, ...(modal!.params && modal!.params(record)) },
+        { ...obj, ...(modal!.params != null ? modal!.params!(record) : {}) },
         deepMergeKey({}, true, this.copyCog.modal, modal),
       )
         .pipe(filter(w => typeof w !== 'undefined'))
@@ -607,7 +607,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         .create(
           drawer!.title!,
           drawer!.component,
-          { ...obj, ...(drawer!.params && drawer!.params(record)) },
+          { ...obj, ...(drawer!.params != null ? drawer!.params(record) : {}) },
           deepMergeKey({}, true, this.copyCog.drawer, drawer),
         )
         .pipe(filter(w => typeof w !== 'undefined'))
