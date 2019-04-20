@@ -24,7 +24,7 @@ export class DownFileDirective {
   /** 错误回调 */
   @Output() readonly error = new EventEmitter<{}>();
 
-  private getDisposition(data: string) {
+  private getDisposition(data: string | null) {
     const arr: Array<{}> = (data || '')
       .split(';')
       .filter(i => i.includes('='))
@@ -50,7 +50,7 @@ export class DownFileDirective {
       })
       .subscribe(
         (res: HttpResponse<Blob>) => {
-          if (res.status !== 200 || res.body.size <= 0) {
+          if (res.status !== 200 || res.body!.size <= 0) {
             this.error.emit(res);
             return;
           }

@@ -67,7 +67,7 @@ export class DrawerHelper {
       ...options,
     };
     return new Observable((observer: Observer<any>) => {
-      const { size, footer, footerHeight, drawerOptions } = options;
+      const { size, footer, footerHeight, drawerOptions } = options as DrawerHelperOptions;
       const defaultOptions: NzDrawerOptions = {
         nzContent: comp,
         nzContentParams: params,
@@ -77,21 +77,21 @@ export class DrawerHelper {
 
       if (typeof size === 'number') {
         defaultOptions[
-          drawerOptions.nzPlacement === 'top' || drawerOptions.nzPlacement === 'bottom'
+          drawerOptions!.nzPlacement === 'top' || drawerOptions!.nzPlacement === 'bottom'
             ? 'nzHeight'
             : 'nzWidth'
-        ] = options.size;
+        ] = options!.size;
       } else {
         defaultOptions.nzWrapClassName = (
-          drawerOptions.nzWrapClassName + ` drawer-${options.size}`
+          drawerOptions!.nzWrapClassName + ` drawer-${options!.size}`
         ).trim();
-        delete drawerOptions.nzWrapClassName;
+        delete drawerOptions!.nzWrapClassName;
       }
 
       if (footer) {
-        const { nzPlacement, nzHeight } = drawerOptions;
+        const { nzPlacement, nzHeight } = drawerOptions as NzDrawerOptions;
         // Should be header * footer, because of includes header
-        const reduceHeight = (footerHeight * 2) - 2;
+        const reduceHeight = (footerHeight! * 2) - 2;
         if (nzPlacement === 'left' || nzPlacement === 'right') {
           defaultOptions.nzBodyStyle = {
             height: `calc(100% - ${reduceHeight}px)`,

@@ -4,14 +4,14 @@ import { share } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class FullContentService {
-  private _change: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  private _change = new BehaviorSubject<boolean | null>(null);
 
   /** 切换全屏工作区状态 */
   toggle() {
     this._change.next(true);
   }
 
-  get change(): Observable<boolean> {
+  get change(): Observable<boolean | null> {
     return this._change.pipe(share());
   }
 }

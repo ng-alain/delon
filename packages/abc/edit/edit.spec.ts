@@ -406,10 +406,10 @@ class TestComponent {
   @ViewChild('viewComp')
   viewComp: SEComponent;
 
-  parent_gutter: number = 32;
-  parent_colInCon: number;
-  parent_col: number = 3;
-  parent_labelWidth: number = null;
+  parent_gutter: number | null = 32;
+  parent_colInCon: number | null;
+  parent_col: number | null = 3;
+  parent_labelWidth: number | null = null;
   parent_layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
   parent_size: 'default' | 'compact' = 'default';
   parent_firstVisual = true;
@@ -421,11 +421,11 @@ class TestComponent {
   error: string = 'required';
   extra: string;
   label: string;
-  required: boolean;
-  line: boolean;
-  col: number;
+  required: boolean | null;
+  line: boolean | null;
+  col: number | null;
   controlClass = '';
-  labelWidth = null;
+  labelWidth: number | null = null;
 
   val = '';
   showModel = true;

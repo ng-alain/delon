@@ -25,7 +25,7 @@ class MockLazyService {
     ++loadCount;
     if (isErrRequest) return Promise.resolve({ status: 'error' });
 
-    window[cog.name] = isNullLodop ? null : mockLodop;
+    window[cog.name!] = isNullLodop ? null : mockLodop;
     return Promise.resolve({ status: 'ok' });
   }
 }
@@ -85,7 +85,7 @@ describe('abc: lodop', () => {
         },
       };
       setTimeout(() => {
-        const obj = window[cog.name] as Lodop;
+        const obj = window[cog.name!] as Lodop;
         (obj.webskt as any).readyState = 1;
       }, 30);
       srv.lodop.subscribe(res => {
@@ -304,7 +304,7 @@ describe('abc: lodop', () => {
       srv.lodop
         .pipe(
           filter(w => w.ok),
-          tap(() => srv.print(code, null)),
+          tap(() => srv.print(code, null!)),
         )
         .subscribe(res => {
           expect(mockLodop.PRINT).not.toHaveBeenCalled();

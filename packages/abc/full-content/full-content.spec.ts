@@ -23,7 +23,7 @@ describe('abc: full-content', () => {
   let context: TestComponent;
   let doc: Document;
   let el: HTMLElement;
-  let bodyEl: HTMLElement;
+  let bodyEl: HTMLBodyElement;
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
@@ -40,7 +40,7 @@ describe('abc: full-content', () => {
     context = fixture.componentInstance;
     fixture.detectChanges();
     doc = injector.get(DOCUMENT);
-    bodyEl = document.querySelector('body');
+    bodyEl = document.querySelector('body') as HTMLBodyElement;
     el = dl.query(By.css('full-content')).nativeElement as HTMLElement;
   }
 
@@ -142,7 +142,7 @@ describe('abc: full-content', () => {
       // mock component destroy
       (dl.nativeElement as HTMLElement).innerHTML = ``;
 
-      eventsSub.next(new ActivationEnd(null));
+      eventsSub.next(new ActivationEnd(null!));
       eventsSub.complete();
       expect(bodyEl.classList.contains('full-content')).toBe(false);
     });
@@ -161,7 +161,7 @@ describe('abc: full-content', () => {
 
       bodyEl.classList.remove('full-content__body');
 
-      eventsSub.next(new ActivationEnd(null));
+      eventsSub.next(new ActivationEnd(null!));
       eventsSub.complete();
 
       expect(bodyEl.classList.contains('full-content__body')).toBe(true);

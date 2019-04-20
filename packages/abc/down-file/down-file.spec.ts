@@ -75,7 +75,7 @@ describe('abc: down-file', () => {
       ret.flush(genFile('docx'), {
         headers: new HttpHeaders({ filename }),
       });
-      expect(fn).toBe(filename);
+      expect(fn!).toBe(filename);
     });
 
     it('should be using header filename when repseon has [x-filename]', () => {
@@ -89,7 +89,7 @@ describe('abc: down-file', () => {
       ret.flush(genFile('docx'), {
         headers: new HttpHeaders({ 'x-filename': filename }),
       });
-      expect(fn).toBe(filename);
+      expect(fn!).toBe(filename);
     });
 
     it('should be throw error when a bad request', () => {
@@ -97,7 +97,7 @@ describe('abc: down-file', () => {
       expect(context.error).not.toHaveBeenCalled();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
-      ret.error(null, { status: 404 });
+      ret.error(new ErrorEvent(''), { status: 404 });
       expect(context.error).toHaveBeenCalled();
     });
 
@@ -137,7 +137,7 @@ describe('abc: down-file', () => {
         'Content-Disposition': `attachment; filename=${filename}; filename*=UTF-8''${filename}`,
       }),
     });
-    expect(fn).toBe(filename);
+    expect(fn!).toBe(filename);
   });
 });
 
@@ -163,12 +163,12 @@ class TestComponent {
   @ViewChild(DownFileDirective) comp: DownFileDirective;
   fileTypes = ['xlsx', 'docx', 'pptx', 'pdf'];
 
-  data = {
+  data: any = {
     otherdata: 1,
     time: new Date(),
   };
 
-  fileName = 'demo中文';
+  fileName: string | null = 'demo中文';
 
   success() {}
 

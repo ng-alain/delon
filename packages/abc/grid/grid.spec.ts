@@ -149,9 +149,9 @@ class TestComponent {
   @ViewChild('viewComp')
   viewComp: SGComponent;
 
-  parent_gutter: number = 32;
-  parent_colInCon: number;
-  parent_col: number = 3;
+  parent_gutter: number | null = 32;
+  parent_colInCon: number | null;
+  parent_col: number | null = 3;
 
-  col: number;
+  col: number | null;
 }

@@ -28,8 +28,8 @@ import { ErrorCollectConfig } from './error-collect.config';
   exportAs: 'errorCollect',
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
-  private $time = null;
-  private formEl: HTMLFormElement;
+  private $time: NodeJS.Timer | null = null;
+  private formEl: HTMLFormElement | null;
 
   @Input() @InputNumber() freq: number;
   @Input() @InputNumber() offsetTop: number;
@@ -48,7 +48,7 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   }
 
   private get errEls() {
-    return this.formEl.querySelectorAll('.has-error');
+    return this.formEl!.querySelectorAll('.has-error');
   }
 
   private update() {
@@ -76,19 +76,19 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
   }
 
   private uninstall() {
-    clearInterval(this.$time);
+    clearInterval(this.$time!);
   }
 
   private findParent(el: Element, selector: string) {
-    let retEl = null;
+    let retEl: HTMLElement | null = null;
     while (el) {
       if (el.querySelector(selector)) {
-        retEl = el;
+        retEl = el as HTMLElement;
         break;
       }
-      el = el.parentElement;
+      el = el.parentElement as HTMLElement;
     }
-    return retEl;
+    return retEl as HTMLFormElement | null;
   }
 
   ngOnInit() {

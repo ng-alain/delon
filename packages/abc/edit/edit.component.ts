@@ -46,7 +46,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   private inited = false;
   private onceFlag = false;
   invalid = false;
-  _labelWidth = null;
+  _labelWidth: number | null = null;
 
   // #region fields
 
@@ -118,7 +118,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   private bindModel() {
     if (!this.ngControl || this.status$) return;
 
-    this.status$ = this.ngControl.statusChanges.subscribe(res =>
+    this.status$ = this.ngControl.statusChanges!.subscribe(res =>
       this.updateStatus(res === 'INVALID'),
     );
 
@@ -137,7 +137,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     if (this.ngControl.disabled || this.ngControl.isDisabled) {
       return;
     }
-    this.invalid = (invalid && this.onceFlag) || (this.ngControl.dirty && invalid);
+    this.invalid = ((invalid && this.onceFlag) || (this.ngControl.dirty && invalid)) as boolean;
     this.cdr.detectChanges();
   }
 
@@ -165,7 +165,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     this.inited = true;
     if (this.onceFlag) {
       Promise.resolve().then(() => {
-        this.updateStatus(this.ngControl.invalid);
+        this.updateStatus(this.ngControl.invalid!);
         this.onceFlag = false;
       });
     }
