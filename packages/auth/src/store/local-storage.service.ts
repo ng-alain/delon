@@ -10,7 +10,7 @@ export class LocalStorageStore implements IStore {
     return JSON.parse(localStorage.getItem(key) || '{}') || {};
   }
 
-  set(key: string, value: ITokenModel): boolean {
+  set(key: string, value: ITokenModel | null): boolean {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
   }

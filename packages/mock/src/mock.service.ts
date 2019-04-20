@@ -67,7 +67,7 @@ export class MockService implements OnDestroy {
       url = splited[1];
     }
 
-    let martcher: RegExp = null;
+    let martcher: RegExp | null = null;
     let segments: string[] = [];
     if (~url.indexOf(':')) {
       segments = url!
@@ -110,7 +110,7 @@ export class MockService implements OnDestroy {
 
   // #endregion
 
-  getRule(method: string, url: string): MockRule {
+  getRule(method: string, url: string): MockRule | null {
     method = (method || 'GET').toUpperCase();
     const params = {};
     const list = this.cached.filter(
@@ -120,7 +120,7 @@ export class MockService implements OnDestroy {
     const ret = list.find(w => w.url === url) || list[0];
     if (ret.martcher) {
       const execArr = ret.martcher.exec(url);
-      execArr.slice(1).map((value: string, index: number) => {
+      execArr!.slice(1).map((value: string, index: number) => {
         params[ret.segments[index]] = value;
       });
     }

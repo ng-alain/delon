@@ -10,22 +10,22 @@ export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>('DA_SERVICE_TO
 export interface ITokenModel {
   [key: string]: any;
 
-  token: string;
+  token: string | null | undefined;
 }
 
 export interface AuthReferrer {
-  url?: string;
+  url?: string | null | undefined;
 }
 
 export interface ITokenService {
-  set(data: ITokenModel): boolean;
+  set(data: ITokenModel | null): boolean;
 
   /**
    * 获取Token，形式包括：
    * - `get()` 获取 Simple Token
    * - `get<JWTTokenModel>(JWTTokenModel)` 获取 JWT Token
    */
-  get(type?: any): ITokenModel;
+  get(type?: any): ITokenModel | null;
 
   /**
    * 获取Token，形式包括：
@@ -36,10 +36,10 @@ export interface ITokenService {
 
   clear(): void;
 
-  change(): Observable<ITokenModel>;
+  change(): Observable<ITokenModel | null>;
 
   /** 获取登录地址 */
-  readonly login_url: string;
+  readonly login_url: string | undefined;
 
   /** 获取授权失败前路由信息 */
   readonly referrer?: AuthReferrer;

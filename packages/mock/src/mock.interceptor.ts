@@ -37,7 +37,7 @@ export class MockInterceptor implements HttpInterceptor {
       force: false,
       log: true,
       executeOtherInterceptors: true,
-      ...this.injector.get(DelonMockConfig, null),
+      ...this.injector.get<DelonMockConfig>(DelonMockConfig),
     };
     const rule = src.getRule(req.method, req.url.split('?')[0]);
     if (!rule && !config.force) {
@@ -45,14 +45,14 @@ export class MockInterceptor implements HttpInterceptor {
     }
 
     let res: any;
-    switch (typeof rule.callback) {
+    switch (typeof rule!.callback) {
       case 'function':
         const mockRequest: MockRequest = {
           original: req,
           body: req.body,
           queryString: {},
           headers: {},
-          params: rule.params,
+          params: rule!.params,
         };
         const urlParams = req.url.split('?');
         if (urlParams.length > 1) {
@@ -75,7 +75,7 @@ export class MockInterceptor implements HttpInterceptor {
         req.headers.keys().forEach(key => (mockRequest.headers[key] = req.headers.get(key)));
 
         try {
-          res = rule.callback.call(this, mockRequest);
+          res = rule!.callback.call(this, mockRequest);
         } catch (e) {
           res = new HttpErrorResponse({
             url: req.url,
@@ -90,7 +90,7 @@ export class MockInterceptor implements HttpInterceptor {
         }
         break;
       default:
-        res = rule.callback;
+        res = rule!.callback;
         break;
     }
 

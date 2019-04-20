@@ -55,13 +55,13 @@ describe('auth: token.service', () => {
   it('#set', () => {
     service.set(VALUE);
     expect(service.get()).not.toBeNull();
-    expect(service.get().token).toBe(VALUE.token);
+    expect(service.get()!.token).toBe(VALUE.token);
   });
 
   it('#get', () => {
     service.set(VALUE);
     expect(service.get()).not.toBeNull();
-    expect(service.get().token).toBe(VALUE.token);
+    expect(service.get()!.token).toBe(VALUE.token);
   });
 
   it('#get, should be return JWTTokenModel', () => {
@@ -74,7 +74,7 @@ describe('auth: token.service', () => {
   it('#clear', () => {
     service.clear();
     expect(service.get()).not.toBeNull();
-    expect(service.get().token).toBeUndefined();
+    expect(service.get()!.token).toBeUndefined();
   });
 
   it('#change', (done: () => void) => {

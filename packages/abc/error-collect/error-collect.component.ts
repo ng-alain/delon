@@ -28,7 +28,7 @@ import { ErrorCollectConfig } from './error-collect.config';
   exportAs: 'errorCollect',
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
-  private $time: NodeJS.Timer | null = null;
+  private $time: any | null = null;
   private formEl: HTMLFormElement | null;
 
   @Input() @InputNumber() freq: number;

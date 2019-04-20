@@ -25,7 +25,7 @@ import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './in
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
 
-function genModel<T extends ITokenModel>(modelType: { new (): T }, token: string = `123`) {
+function genModel<T extends ITokenModel>(modelType: { new (): T }, token: string | null = `123`) {
   const model = new modelType();
   model.token = token;
   model.uid = 1;
