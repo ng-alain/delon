@@ -212,7 +212,7 @@ export interface SFSchema {
    * - 当值为 `null`、`undefined` 时使用 `key` 替代
    * - 当值为 `''` 空字符串表示不展示 `label` 部分，例如：`checkbox` 可能需要
    */
-  title?: string;
+  title?: string | null;
   /**
    * 属性目的性解释，采用 `nz-form-extra` 渲染
    */

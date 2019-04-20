@@ -164,16 +164,16 @@ describe('form: widget: date', () => {
     it('should be default', () => {
       const copyS = { ...s };
       const time = new Date();
-      copyS.properties.start.default = time;
-      copyS.properties.end.default = time;
+      copyS.properties!.start.default = time;
+      copyS.properties!.end.default = time;
       page.newSchema(copyS);
       const res = getComp().displayValue;
       expect(Array.isArray(res)).toBe(true);
-      expect(res[0]).toBe(time);
+      expect(res![0]).toBe(time);
     });
     it('should be removed ui.end when not found end path', () => {
       const copyS = { ...s };
-      (copyS.properties.start.ui as SFUISchemaItem).end = 'invalid-end';
+      (copyS.properties!.start.ui as SFUISchemaItem).end = 'invalid-end';
       page.newSchema(copyS).checkUI('/start', 'end', null);
     });
   });
@@ -195,7 +195,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      const ui = s.properties.a.ui as any;
+      const ui = s.properties!.a.ui as any;
       expect(ui.onOpenChange).not.toHaveBeenCalled();
       comp._openChange(true);
       expect(ui.onOpenChange).toHaveBeenCalled();
@@ -206,7 +206,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      const ui = s.properties.a.ui as any;
+      const ui = s.properties!.a.ui as any;
       expect(ui.onOk).not.toHaveBeenCalled();
       comp._ok(true);
       expect(ui.onOk).toHaveBeenCalled();

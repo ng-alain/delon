@@ -121,6 +121,6 @@ describe('form: widget: checkbox', () => {
       .click('.ant-col-8 label')
       .asyncEnd();
     expect(page.getValue('a').length).toBe(1);
-    expect((s.properties.a.ui as any).change).toHaveBeenCalled();
+    expect((s.properties!.a.ui as any).change).toHaveBeenCalled();
   }));
 });

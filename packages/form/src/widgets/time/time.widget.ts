@@ -9,7 +9,7 @@ import { ControlWidget } from '../../widget';
   templateUrl: './time.widget.html',
 })
 export class TimeWidget extends ControlWidget implements OnInit {
-  displayValue: Date = null;
+  displayValue: Date | null = null;
   format: string;
   i: any;
 
@@ -48,7 +48,7 @@ export class TimeWidget extends ControlWidget implements OnInit {
     this.detectChanges();
   }
 
-  _change(value: Date) {
+  _change(value: Date | null) {
     if (value == null) {
       this.setValue(null);
       return;

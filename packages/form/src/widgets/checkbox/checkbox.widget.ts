@@ -14,11 +14,11 @@ export class CheckboxWidget extends ControlWidget {
   allChecked = false;
   indeterminate = false;
   grid_span: number;
-  labelTitle = ``;
+  labelTitle: string = ``;
   inited = false;
 
   get l(): LocaleData {
-    return this.formProperty.root.widget.sfComp.locale;
+    return this.formProperty.root.widget.sfComp!.locale;
   }
 
   reset(value: SFValue) {
@@ -27,7 +27,7 @@ export class CheckboxWidget extends ControlWidget {
       this.data = list;
       this.allChecked = false;
       this.indeterminate = false;
-      this.labelTitle = list.length === 0 ? '' : this.schema.title;
+      this.labelTitle = list.length === 0 ? '' : this.schema.title as string;
       this.grid_span = this.ui.span && this.ui.span > 0 ? this.ui.span : 0;
 
       this.updateAllChecked();

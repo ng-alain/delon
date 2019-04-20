@@ -72,7 +72,7 @@ describe('form: widget: tree-select', () => {
       .typeEvent('click', 'nz-tree-node:nth-child(2)')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
-    expect((s.properties.a.ui as any).change).toHaveBeenCalled();
+    expect((s.properties!.a.ui as any).change).toHaveBeenCalled();
   }));
 
   it('#expandChange', fakeAsync(() => {
@@ -101,7 +101,7 @@ describe('form: widget: tree-select', () => {
       .typeEvent('click', 'nz-tree-node:nth-child(2)')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
-    expect((s.properties.a.ui as any).expandChange).toHaveBeenCalled();
+    expect((s.properties!.a.ui as any).expandChange).toHaveBeenCalled();
   }));
 
 });

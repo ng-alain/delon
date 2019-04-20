@@ -70,9 +70,9 @@ describe('form: widget: autocomplete', () => {
         })
         .time(100)
         .typeChar(typeValue)
-        .checkCount('nz-auto-option', config.uiEmailSuffixes.length)
+        .checkCount('nz-auto-option', config.uiEmailSuffixes!.length)
         .click('nz-auto-option')
-        .checkValue('a', `${typeValue}@${config.uiEmailSuffixes[0]}`)
+        .checkValue('a', `${typeValue}@${config.uiEmailSuffixes![0]}`)
         .asyncEnd();
     }));
     it('with email and custom suffix of format', fakeAsync(() => {

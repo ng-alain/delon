@@ -60,7 +60,7 @@ describe('form: widget: transfer', () => {
 
     expect((page.getValue('a') as number[]).length).toBe(1);
 
-    expect((s.properties.a.ui as any).selectChange).toHaveBeenCalled();
+    expect((s.properties!.a.ui as any).selectChange).toHaveBeenCalled();
 
     page.asyncEnd();
   }));
@@ -92,7 +92,7 @@ describe('form: widget: transfer', () => {
         .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item label')
         .typeEvent('click', CLS.rightBtn);
 
-      expect((s.properties.a.ui as any).change).toHaveBeenCalled();
+      expect((s.properties!.a.ui as any).change).toHaveBeenCalled();
 
       page.asyncEnd();
     }));
@@ -123,7 +123,7 @@ describe('form: widget: transfer', () => {
         .typeEvent('click', CLS.left + ' .ant-transfer-list-content-item label')
         .typeEvent('click', CLS.rightBtn);
 
-      expect((s.properties.a.ui as any).canMove).toHaveBeenCalled();
+      expect((s.properties!.a.ui as any).canMove).toHaveBeenCalled();
 
       page.asyncEnd();
     }));
@@ -182,7 +182,7 @@ describe('form: widget: transfer', () => {
             .typeChar('O', CLS.left + ' .ant-input')
             .checkCount(CLS.left + ' .ant-transfer-list-content-item', 1)
             .asyncEnd();
-        expect((s.properties.a.ui as any).searchChange).toHaveBeenCalled();
+        expect((s.properties!.a.ui as any).searchChange).toHaveBeenCalled();
       }));
     });
   });

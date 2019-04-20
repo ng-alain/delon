@@ -91,7 +91,7 @@ describe('form: widget: slider', () => {
     spyOn(comp, '_formatter');
     page.time();
     expect(comp._formatter).toHaveBeenCalled();
-    expect((s.properties.a.ui as any).formatter).toHaveBeenCalled();
+    expect((s.properties!.a.ui as any).formatter).toHaveBeenCalled();
   }));
 
   it('#afterChange', fakeAsync(() => {
@@ -110,6 +110,6 @@ describe('form: widget: slider', () => {
     };
     page.newSchema(s).time();
     getWidget()._afterChange(1);
-    expect((s.properties.a.ui as any).afterChange).toHaveBeenCalled();
+    expect((s.properties!.a.ui as any).afterChange).toHaveBeenCalled();
   }));
 });

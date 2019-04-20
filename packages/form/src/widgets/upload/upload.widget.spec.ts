@@ -120,7 +120,7 @@ describe('form: widget: upload', () => {
           },
         });
         const comp = page.getWidget<UploadWidget>('sf-upload');
-        comp.handlePreview(null);
+        comp.handlePreview(null!);
         page.checkCalled('a', 'preview');
       });
       it('should be preview image', inject([NzModalService], (msg: NzModalService) => {
