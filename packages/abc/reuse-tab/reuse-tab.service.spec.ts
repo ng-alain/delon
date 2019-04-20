@@ -356,7 +356,7 @@ describe('abc: reuse-tab(service)', () => {
     it('#refresh', () => {
       const _$ = srv.change.pipe(filter(w => w !== null)).subscribe(
         res => {
-          expect(res.active).toBe('refresh');
+          expect(res!.active).toBe('refresh');
           _$.unsubscribe();
         },
         () => expect(false).toBe(true),

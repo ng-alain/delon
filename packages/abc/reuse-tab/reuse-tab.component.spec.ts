@@ -312,7 +312,7 @@ describe('abc: reuse-tab', () => {
         expect(layoutComp.close).toHaveBeenCalled();
       }));
       it('should keeping tab if closed include multi prev tab', fakeAsync(() => {
-        let cTime: string;
+        let cTime = '';
         page
           .to('#b') // 1
           .to('#c') // 2
@@ -328,7 +328,7 @@ describe('abc: reuse-tab', () => {
           .expectTime(cTime);
       }));
       it('should show the previous tab if the right not tab', fakeAsync(() => {
-        let aTime: string;
+        let aTime = '';
         page
           .tap(() => (aTime = page.time))
           .to('#b') // 1
@@ -341,7 +341,7 @@ describe('abc: reuse-tab', () => {
           .expectTime(aTime);
       }));
       it('should show next tab if closed include multi right tab', fakeAsync(() => {
-        let cTime: string;
+        let cTime = '';
         page
           .to('#b') // 1
           .to('#c') // 2
@@ -376,7 +376,7 @@ describe('abc: reuse-tab', () => {
           .expectActive(0, true);
       }));
       it('should keeping tab of closed right tab', fakeAsync(() => {
-        let bTime: string;
+        let bTime = '';
         page
           .to('#b') // 1
           .tap(() => (bTime = page.time))
@@ -392,7 +392,7 @@ describe('abc: reuse-tab', () => {
           .expectTime(bTime);
       }));
       it('should acitved select tab of closed right tab', fakeAsync(() => {
-        let bTime: string;
+        let bTime = '';
         page
           .to('#b') // 1
           .tap(() => (bTime = page.time))
@@ -406,7 +406,7 @@ describe('abc: reuse-tab', () => {
           .expectTime(bTime);
       }));
       it('should keeping tab of close other tab', fakeAsync(() => {
-        let bTime: string;
+        let bTime = '';
         page
           .to('#b') // 1
           .tap(() => (bTime = page.time))
@@ -422,7 +422,7 @@ describe('abc: reuse-tab', () => {
           .expectTime(bTime);
       }));
       it('should keeping tab of clear tab', fakeAsync(() => {
-        let bTime: string;
+        let bTime = '';
         page
           .to('#b') // 1
           .tap(() => (bTime = page.time))
@@ -480,13 +480,13 @@ describe('abc: reuse-tab', () => {
           .openContextMenu(1)
           .tap(() =>
             expect(
-              document.querySelector(`.reuse-tab__cm li[data-type="close"]`).classList,
+              document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList,
             ).toContain('ant-menu-item-disabled'),
           )
           .openContextMenu(1, { ctrlKey: true })
           .tap(() =>
             expect(
-              document.querySelector(`.reuse-tab__cm li[data-type="close"]`).classList,
+              document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList,
             ).not.toContain('ant-menu-item-disabled'),
           )
           .expectCount(2);
@@ -529,7 +529,7 @@ describe('abc: reuse-tab', () => {
 
     describe('[routing]', () => {
       it('[ng-alain #326] should be restricted by canDeactivate when changing tab', fakeAsync(() => {
-        let lTime: string;
+        let lTime = '';
         page
           .to('#leave')
           .tap(() => (lTime = page.time))
@@ -560,14 +560,14 @@ describe('abc: reuse-tab', () => {
           .advance(KSTIME)
           .tap(() => {
             expect(srv.items[0].position != null).toBe(true);
-            expect(srv.items[0].position[1]).toBe(666);
+            expect(srv.items[0].position![1]).toBe(666);
             expect(ss.scrollToPosition).not.toHaveBeenCalled();
           })
           .to('#a')
           .advance(KSTIME)
           .tap(() => {
             expect(srv.items[1].position != null).toBe(true);
-            expect(srv.items[1].position[1]).toBe(666);
+            expect(srv.items[1].position![1]).toBe(666);
             expect(ss.scrollToPosition).toHaveBeenCalled();
           });
       }));
@@ -641,7 +641,7 @@ describe('abc: reuse-tab', () => {
             .advance(KSTIME)
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
-              expect(srv.items[0].position[1]).toBe(666);
+              expect(srv.items[0].position![1]).toBe(666);
               expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(window);
             });
         }));
@@ -655,7 +655,7 @@ describe('abc: reuse-tab', () => {
             .advance(KSTIME)
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
-              expect(srv.items[0].position[1]).toBe(666);
+              expect(srv.items[0].position![1]).toBe(666);
               expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(el);
             });
         }));
@@ -668,7 +668,7 @@ describe('abc: reuse-tab', () => {
             .advance(KSTIME)
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
-              expect(srv.items[0].position[1]).toBe(666);
+              expect(srv.items[0].position![1]).toBe(666);
               expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(
                 document.querySelector('#children'),
               );
@@ -693,11 +693,11 @@ describe('abc: reuse-tab', () => {
       genModule();
       createComp();
       page.to('#b').openContextMenu(1);
-      expect(document.querySelector('[data-type="close"]').textContent).toBe(zh_CN.reuseTab.close);
+      expect(document.querySelector('[data-type="close"]')!.textContent).toBe(zh_CN.reuseTab.close);
       injector.get(DelonLocaleService).setLocale(en_US);
       fixture.detectChanges();
       page.to('#a').openContextMenu(1);
-      expect(document.querySelector('[data-type="close"]').textContent).toBe(en_US.reuseTab.close);
+      expect(document.querySelector('[data-type="close"]')!.textContent).toBe(en_US.reuseTab.close);
     }));
   });
 
@@ -881,7 +881,7 @@ class LayoutComponent {
   allowClose = true;
   showCurrent = true;
   keepingScroll = false;
-  keepingScrollContainer = null;
+  keepingScrollContainer: Window | Element | string | null = null;
   customContextMenu: ReuseCustomContextMenu[] = [];
   change() {}
   close() {}

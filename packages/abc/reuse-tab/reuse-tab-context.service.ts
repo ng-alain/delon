@@ -8,11 +8,12 @@ import {
   ReuseContextCloseEvent,
   ReuseContextEvent,
   ReuseContextI18n,
+  ReuseCustomContextMenu,
 } from './reuse-tab.interfaces';
 
 @Injectable()
 export class ReuseTabContextService {
-  private ref: OverlayRef;
+  private ref: OverlayRef | null;
   i18n: ReuseContextI18n;
 
   show: Subject<ReuseContextEvent> = new Subject<ReuseContextEvent>();
@@ -63,7 +64,7 @@ export class ReuseTabContextService {
     const instance = comp.instance;
     instance.i18n = this.i18n;
     instance.item = { ...item };
-    instance.customContextMenu = customContextMenu;
+    instance.customContextMenu = customContextMenu as ReuseCustomContextMenu[];
     instance.event = event;
 
     const sub$ = new Subscription();

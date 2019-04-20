@@ -34,7 +34,7 @@ describe('abc: notice-icon', () => {
       fixture.detectChanges();
       const cur = dl.query(By.css('.ant-scroll-number-only .current')).nativeElement as HTMLElement;
       fixture.whenStable().then(() => {
-        expect(+cur.textContent.trim()).toBe(context.count);
+        expect(+cur.textContent!.trim()).toBe(context.count);
         done();
       });
     });

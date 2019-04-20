@@ -49,7 +49,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   private conTpl: ElementRef;
   @ViewChild('affix')
   private affix: NzAffixComponent;
-  private _menus: Menu[];
+  private _menus: Menu[] | null;
 
   private get menus() {
     if (this._menus) {
@@ -68,17 +68,18 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
   // #region fields
 
-  _title: string;
+  _title: string | null;
   _titleTpl: TemplateRef<void>;
   @Input()
   set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
+      this._titleVal = '';
     } else {
       this._title = value;
+      this._titleVal = this._title;
     }
-    this._titleVal = this._title;
   }
 
   @Input() @InputBoolean() loading = false;
@@ -153,7 +154,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb) return;
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-      paths.push({ title, link: item.link && [item.link] });
+      paths.push({ title, link: (item.link && [item.link]) as string[] });
     });
     // add home
     if (this.home) {

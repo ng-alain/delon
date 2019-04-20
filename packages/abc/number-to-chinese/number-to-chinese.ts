@@ -14,11 +14,11 @@ export function numberToChinese(
   if (!/^-?\d+(\.\d+)?$/.test(value) && options.validThrow)
     throw new Error(`${value} is invalid number type`);
   let integer: number | string;
-  let decimal: number | string;
+  let decimal: number | string | null;
   [integer, decimal] = value.split('.');
   let symbol = '';
   if (integer.startsWith('-')) {
-    symbol = options.minusSymbol;
+    symbol = options.minusSymbol!;
     integer = integer.substr(1);
   }
   if (/^-?\d+$/.test(value)) decimal = null;
