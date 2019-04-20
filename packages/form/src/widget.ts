@@ -31,6 +31,10 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
     return null;
   }
 
+  setDisabled(disable: boolean) {
+    this.schema.readOnly = false;
+    this.cd.detectChanges();
+  }
   constructor(
     @Inject(ChangeDetectorRef) public readonly cd: ChangeDetectorRef,
     @Inject(Injector) public readonly injector: Injector,
