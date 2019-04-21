@@ -27,9 +27,9 @@ describe('abc: exception', () => {
 
   afterEach(() => context.comp.ngOnDestroy());
 
-  [403, 404, 500].forEach((type: ExceptionType) => {
+  [403, 404, 500].forEach(type => {
     it(`#type=${type}`, () => {
-      context.type = type;
+      context.type = type as ExceptionType;
       fixture.detectChanges();
       expect(
         (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText,

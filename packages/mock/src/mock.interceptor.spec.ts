@@ -98,7 +98,7 @@ describe('mock: interceptor', () => {
       });
     });
     it('should response array', (done: () => void) => {
-      http.get('/array').subscribe((res: any[]) => {
+      http.get('/array').subscribe((res: any) => {
         expect(res).not.toBeNull();
         expect(Array.isArray(res)).toBe(true);
         done();

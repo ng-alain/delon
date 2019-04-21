@@ -133,7 +133,8 @@ describe('acl: service', () => {
   });
 
   it('#change', (done: () => void) => {
-    srv.change.subscribe((res: ACLType) => {
+    srv.change.subscribe(res => {
+      res = res as ACLType;
       expect(res.role!.length).toBe(1);
       expect(res.role![0]).toBe(ADMIN);
       done();
