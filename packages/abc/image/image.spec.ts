@@ -75,7 +75,7 @@ describe('abc: _src', () => {
 
 @Component({
   template: `
-    <div [_src]="src" #comp="srcDirective" [size]="size" [error]="error"></div>
+    <div [_src]="src" #comp="_src" [size]="size" [error]="error"></div>
   `,
 })
 class TestComponent {
