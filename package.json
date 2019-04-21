@@ -135,7 +135,7 @@
     "stylelint-config-prettier": "^5.0.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "xlsx": "^0.14.2",
-    "screenfull": "~4.0.0",
+    "screenfull": "^4.2.0",
     "less-bundle-promise": "^1.0.7",
     "@ngx-translate/http-loader": "^4.0.0",
     "lint-staged": "^8.1.0",

@@ -8,6 +8,12 @@ type: Documents
 
 Many times you need to control the permissions of a button. `@delon/acl` provides an `acl` directive that allows you to control the permissions of a button, table, list, etc.
 
+## Principle
+
+`[acl]` adds a `acl__hide` style to the target element by default, and hides the unauthorized element with `display: none`, which is a simple and efficient way.
+
+The corresponding `*aclIf` is a structured directive similar to `ngIf` which does not render the element when it is not authorized. **Note:** In order to keep it simple, it does not support `acl-ability` permission point configuration.
+
 ## DEMO
 
 ### Role
@@ -16,18 +22,21 @@ Displayed when the button must have a user role.
 
 ```html
 <button [acl]="'user'"></button>
+<button *aclIf="'user'"></button>
 ```
 
 Displayed when the button must have a user or manage role.
 
 ```html
 <button [acl]="['user', 'manage']"></button>
+<button *aclIf="['user', 'manage']"></button>
 ```
 
 Displayed when the button must have a user and manage role.
 
 ```html
 <button [acl]="{ role: ['user', 'manage'], mode: 'allOf' }"></button>
+<button *aclIf="{ role: ['user', 'manage'], mode: 'allOf' }"></button>
 ```
 
 ### Permission
