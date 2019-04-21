@@ -85,10 +85,7 @@ describe('abc: table: column-souce', () => {
         });
         it('should be throw error when mulit column', () => {
           expect(() => {
-            srv.process([
-              { title: '1', index: 'id', type: 'checkbox' },
-              { title: '2', index: 'id', type: 'checkbox' },
-            ]);
+            srv.process([{ title: '1', index: 'id', type: 'checkbox' }, { title: '2', index: 'id', type: 'checkbox' }]);
           }).toThrow();
         });
         it('should auto 50px width when without specified with value', () => {
@@ -109,31 +106,20 @@ describe('abc: table: column-souce', () => {
           );
         });
         it('should be width', () => {
-          page.expectValue(
-            [{ title: '', index: 'id', type: 'checkbox', width: '65px' }],
-            '65px',
-            'width',
-          );
+          page.expectValue([{ title: '', index: 'id', type: 'checkbox', width: '65px' }], '65px', 'width');
         });
       });
       describe(`with radio`, () => {
         it('should be throw error when mulit column', () => {
           expect(() => {
-            srv.process([
-              { title: '1', index: 'id', type: 'radio' },
-              { title: '2', index: 'id', type: 'radio' },
-            ]);
+            srv.process([{ title: '1', index: 'id', type: 'radio' }, { title: '2', index: 'id', type: 'radio' }]);
           }).toThrow();
         });
         it('should auto 50px width when without specified with value', () => {
           page.expectValue([{ title: '', index: 'id', type: 'radio' }], '50px', 'width');
         });
         it('should be specify width', () => {
-          page.expectValue(
-            [{ title: '', index: 'id', type: 'radio', width: '150px' }],
-            '150px',
-            'width',
-          );
+          page.expectValue([{ title: '', index: 'id', type: 'radio', width: '150px' }], '150px', 'width');
         });
       });
       describe(`with yn`, () => {
@@ -189,18 +175,10 @@ describe('abc: table: column-souce', () => {
     });
     describe('[width]', () => {
       it('should be support number type', () => {
-        page.expectValue(
-          [{ title: '', index: 'id', width: 65 }],
-          '65px',
-          'width',
-        );
+        page.expectValue([{ title: '', index: 'id', width: 65 }], '65px', 'width');
       });
       it('should be support string type', () => {
-        page.expectValue(
-          [{ title: '', index: 'id', width: '65px' }],
-          '65px',
-          'width',
-        );
+        page.expectValue([{ title: '', index: 'id', width: '65px' }], '65px', 'width');
       });
     });
     describe('[className]', () => {
@@ -302,9 +280,7 @@ describe('abc: table: column-souce', () => {
           expect(res!.multiple).toBe(true);
         });
         it('should be specify value', () => {
-          const res = srv.process([
-            { title: '', filter: { multiple: false, menus: [{ text: '' }] } },
-          ])[0].filter;
+          const res = srv.process([{ title: '', filter: { multiple: false, menus: [{ text: '' }] } }])[0].filter;
           expect(res!.multiple).toBe(false);
         });
       });
@@ -344,17 +320,13 @@ describe('abc: table: column-souce', () => {
           expect(res!.icon).toBe('filter');
         });
         it('should be specify value', () => {
-          const res = srv.process([
-            { title: '', filter: { icon: 'icona', menus: [{ text: '' }] } },
-          ])[0].filter;
+          const res = srv.process([{ title: '', filter: { icon: 'icona', menus: [{ text: '' }] } }])[0].filter;
           expect(res!.icon).toBe('icona');
         });
       });
       describe('#default', () => {
         it('when menus contain checked', () => {
-          const res = srv.process([
-            { title: '', filter: { menus: [{ text: '', checked: true }] } },
-          ])[0].filter;
+          const res = srv.process([{ title: '', filter: { menus: [{ text: '', checked: true }] } }])[0].filter;
           expect(res!.default).toBe(true);
         });
         it('when menus non-contain checked', () => {
@@ -368,18 +340,10 @@ describe('abc: table: column-souce', () => {
         page.expectBtnValue([{ title: '', buttons: [{ text: '', type: 'del' }] }], true, 'pop');
       });
       it('should be popTitle default to 确认删除吗？', () => {
-        page.expectBtnValue(
-          [{ title: '', buttons: [{ text: '', type: 'del' }] }],
-          '确认删除吗？',
-          'popTitle',
-        );
+        page.expectBtnValue([{ title: '', buttons: [{ text: '', type: 'del' }] }], '确认删除吗？', 'popTitle');
       });
       it('should be spcify popTitle value', () => {
-        page.expectBtnValue(
-          [{ title: '', buttons: [{ text: '', type: 'del', popTitle: 'aa' }] }],
-          'aa',
-          'popTitle',
-        );
+        page.expectBtnValue([{ title: '', buttons: [{ text: '', type: 'del', popTitle: 'aa' }] }], 'aa', 'popTitle');
       });
       describe('#icon', () => {
         it('should be string', () => {
@@ -394,9 +358,7 @@ describe('abc: table: column-souce', () => {
             [
               {
                 title: '',
-                buttons: [
-                  { text: '', icon: { type: 'edit', theme: 'fill' }, type: 'del', popTitle: 'aa' },
-                ],
+                buttons: [{ text: '', icon: { type: 'edit', theme: 'fill' }, type: 'del', popTitle: 'aa' }],
               },
             ],
             'fill',
@@ -410,8 +372,7 @@ describe('abc: table: column-souce', () => {
           expect(res.iif!(null!, null!, null!)).toBe(true);
         });
         it('should be support condition', () => {
-          const res = srv.process([{ title: '', buttons: [{ text: '', iif: () => false }] }])[0]
-            .buttons![0];
+          const res = srv.process([{ title: '', buttons: [{ text: '', iif: () => false }] }])[0].buttons![0];
           expect(res.iif!(null!, null!, null!)).toBe(false);
         });
         it('should be support children', () => {
@@ -446,9 +407,7 @@ describe('abc: table: column-souce', () => {
         describe('with modal', () => {
           it('should specify modal parameter', () => {
             spyOn(console, 'warn');
-            const res = srv.process([
-              { title: '', buttons: [{ text: '', type: 'modal', modal: {} }] },
-            ])[0].buttons![0];
+            const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', modal: {} }] }])[0].buttons![0];
             expect(console.warn).toHaveBeenCalled();
             expect(res.type).toBe('none');
           });
@@ -460,9 +419,8 @@ describe('abc: table: column-souce', () => {
           });
           describe('#compatible', () => {
             it('should be running', () => {
-              const res = srv.process([
-                { title: '', buttons: [{ text: '', type: 'modal', component: {} }] },
-              ])[0].buttons![0];
+              const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', component: {} }] }])[0]
+                .buttons![0];
               expect(res.modal!.paramsName).toBe('record');
             });
           });
@@ -470,9 +428,8 @@ describe('abc: table: column-souce', () => {
         describe('with drawer', () => {
           it('should specify drawer parameter', () => {
             spyOn(console, 'warn');
-            const res = srv.process([
-              { title: '', buttons: [{ text: '', type: 'drawer', drawer: {} }] },
-            ])[0].buttons![0];
+            const res = srv.process([{ title: '', buttons: [{ text: '', type: 'drawer', drawer: {} }] }])[0]
+              .buttons![0];
             expect(console.warn).toHaveBeenCalled();
             expect(res.type).toBe('none');
           });
@@ -541,9 +498,7 @@ describe('abc: table: column-souce', () => {
     });
 
     it('in columns', () => {
-      page
-        .expectCount([{ title: '', index: 'id' }], 1)
-        .expectCount([{ title: '', index: 'id', acl: 'admin' }], 0);
+      page.expectCount([{ title: '', index: 'id' }], 1).expectCount([{ title: '', index: 'id', acl: 'admin' }], 0);
     });
 
     it('in selections', () => {
@@ -584,32 +539,28 @@ describe('abc: table: column-souce', () => {
           },
         ])[0].filter!.menus.length,
       ).toBe(1);
-      expect(
-        srv.process([
-          {
-            title: '',
-            index: 'id',
-            filter: {
-              menus: [{ text: '1', acl: 'admin' }],
-            },
+      expect(srv.process([
+        {
+          title: '',
+          index: 'id',
+          filter: {
+            menus: [{ text: '1', acl: 'admin' }],
           },
-        ])[0]!.filter as any,
-      ).toBe(null);
+        },
+      ])[0]!.filter as any).toBe(null);
     });
 
     it('in buttons', () => {
-      page
-        .expectCount([{ title: '', buttons: [{ text: '<p class="j-btn"></p>' }] }], 1, 'buttons')
-        .expectCount(
-          [
-            {
-              title: '',
-              buttons: [{ text: '<p class="j-btn"></p>', acl: 'admin' }],
-            },
-          ],
-          0,
-          'buttons',
-        );
+      page.expectCount([{ title: '', buttons: [{ text: '<p class="j-btn"></p>' }] }], 1, 'buttons').expectCount(
+        [
+          {
+            title: '',
+            buttons: [{ text: '<p class="j-btn"></p>', acl: 'admin' }],
+          },
+        ],
+        0,
+        'buttons',
+      );
     });
   });
 
@@ -637,9 +588,7 @@ describe('abc: table: column-souce', () => {
 
   it('should be merge default config', () => {
     genModule({ cog: { size: 'lg' } });
-    const res = srv.process([
-      { title: '', buttons: [{ text: '', type: 'modal', modal: { component: {} } }] },
-    ]);
+    const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', modal: { component: {} } }] }]);
     expect(res[0].buttons![0].modal!.paramsName).toBe('record');
   });
 

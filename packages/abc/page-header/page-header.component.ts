@@ -20,14 +20,7 @@ import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import {
-  AlainI18NService,
-  ALAIN_I18N_TOKEN,
-  Menu,
-  MenuService,
-  SettingsService,
-  TitleService,
-} from '@delon/theme';
+import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
 
 import { PageHeaderConfig } from './page-header.config';
@@ -55,10 +48,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this._menus) {
       return this._menus;
     }
-    this._menus = this.menuSrv.getPathByUrl(
-      this.router.url.split('?')[0],
-      this.recursiveBreadcrumb,
-    );
+    this._menus = this.menuSrv.getPathByUrl(this.router.url.split('?')[0], this.recursiveBreadcrumb);
 
     return this._menus;
   }
@@ -168,12 +158,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   private setTitle() {
-    if (
-      this._title == null &&
-      this._titleTpl == null &&
-      this.autoTitle &&
-      this.menus.length > 0
-    ) {
+    if (this._title == null && this._titleTpl == null && this.autoTitle && this.menus.length > 0) {
       const item = this.menus[this.menus.length - 1];
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);

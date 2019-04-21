@@ -61,19 +61,13 @@ describe('v2', () => {
       const defaultCompHTML = tree.readContent('src/app/layout/default/default.component.html');
       expect(defaultCompHTML).toContain(`alain-default__progress-bar`);
 
-      const headerCompHTML = tree.readContent(
-        'src/app/layout/default/header/header.component.html',
-      );
+      const headerCompHTML = tree.readContent('src/app/layout/default/header/header.component.html');
       expect(headerCompHTML).toContain(`alain-default__header-logo-link`);
 
-      const headerSearchCompHTML = tree.readContent(
-        'src/app/layout/default/header/components/search.component.ts',
-      );
+      const headerSearchCompHTML = tree.readContent('src/app/layout/default/header/components/search.component.ts');
       expect(headerSearchCompHTML).toContain(`alain-default__search-focus`);
 
-      const sidebarCompHTML = tree.readContent(
-        'src/app/layout/default/sidebar/sidebar.component.html',
-      );
+      const sidebarCompHTML = tree.readContent('src/app/layout/default/sidebar/sidebar.component.html');
       expect(sidebarCompHTML).toContain(`alain-default__aside-inner`);
     });
   });
@@ -86,10 +80,7 @@ describe('v2', () => {
       const runner = new SchematicTestRunner('schematics', migrationCollection);
       tree = createFileSystemTestApp(runner).appTree;
       testCases.forEach(testCaseName => {
-        tree.create(
-          `src/app/${testCaseName}.ts`,
-          readFileContent(resolveBazelDataFile(`${testCaseName}_input.ts`)),
-        );
+        tree.create(`src/app/${testCaseName}.ts`, readFileContent(resolveBazelDataFile(`${testCaseName}_input.ts`)));
       });
       runner.runSchematic(migrationName, {}, tree);
     });

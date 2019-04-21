@@ -1,9 +1,4 @@
-import {
-  ComponentFactoryResolver,
-  ComponentRef,
-  Injectable,
-  ViewContainerRef,
-} from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
 import { FormProperty } from './model/form.property';
 import { Widget } from './widget';
 
@@ -42,9 +37,7 @@ export class WidgetFactory {
     }
 
     const componentClass = this.registry.getType(type) as any;
-    const componentFactory = this.resolver.resolveComponentFactory<Widget<FormProperty>>(
-      componentClass,
-    );
+    const componentFactory = this.resolver.resolveComponentFactory<Widget<FormProperty>>(componentClass);
     return container.createComponent(componentFactory);
   }
 }

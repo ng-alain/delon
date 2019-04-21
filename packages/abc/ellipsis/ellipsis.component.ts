@@ -77,14 +77,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }, '');
   }
 
-  private bisection(
-    th: number,
-    m: number,
-    b: number,
-    e: number,
-    text: string,
-    shadowNode: HTMLElement,
-  ): number {
+  private bisection(th: number, m: number, b: number, e: number, text: string, shadowNode: HTMLElement): number {
     const suffix = this.tail;
     let mid = m;
     let end = e;
@@ -154,9 +147,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         if (length - tail.length <= 0) {
           displayText = '';
         } else {
-          displayText = fullWidthRecognition
-            ? this.cutStrByFullLength(text, length)
-            : text.slice(0, length);
+          displayText = fullWidthRecognition ? this.cutStrByFullLength(text, length) : text.slice(0, length);
         }
         this.text = displayText + tail;
       }
@@ -177,14 +168,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         const len = text.length;
         const mid = Math.ceil(len / 2);
 
-        const count = this.bisection(
-          targetHeight,
-          mid,
-          0,
-          len,
-          text,
-          shadowTextEl.nativeElement.firstChild,
-        );
+        const count = this.bisection(targetHeight, mid, 0, len, text, shadowTextEl.nativeElement.firstChild);
         this.text = text;
         this.targetCount = count;
       }

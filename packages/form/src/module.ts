@@ -12,13 +12,7 @@ import { SFComponent } from './sf.component';
 import { AjvSchemaValidatorFactory, SchemaValidatorFactory } from './validator.factory';
 import { SFTemplateDirective } from './widgets/custom/sf-template.directive';
 
-const COMPONENTS = [
-  SFComponent,
-  SFItemComponent,
-  SFItemWrapComponent,
-  SFTemplateDirective,
-  SFFixedDirective,
-];
+const COMPONENTS = [SFComponent, SFItemComponent, SFItemWrapComponent, SFTemplateDirective, SFFixedDirective];
 
 // #region widgets
 

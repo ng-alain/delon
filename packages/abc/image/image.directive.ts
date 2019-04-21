@@ -1,13 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnInit,
-  Renderer2,
-  SimpleChange,
-  SimpleChanges,
-} from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChange, SimpleChanges } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
 import { ImageConfig } from './image.config';
@@ -66,9 +57,7 @@ export class ImageDirective implements OnChanges, OnInit {
     }
 
     render.setAttribute(el.nativeElement, 'src', newSrc);
-    ['height', 'width'].forEach(v =>
-      render.setAttribute(this.el.nativeElement, v, size.toString()),
-    );
+    ['height', 'width'].forEach(v => render.setAttribute(this.el.nativeElement, v, size.toString()));
   }
 
   private updateError() {

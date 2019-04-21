@@ -50,15 +50,7 @@ describe('abc: reuse-tab', () => {
 
   function genModule(needI18n = false) {
     injector = TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        LayoutComponent,
-        AComponent,
-        BComponent,
-        CComponent,
-        DComponent,
-        EComponent,
-      ],
+      declarations: [AppComponent, LayoutComponent, AComponent, BComponent, CComponent, DComponent, EComponent],
       imports: [
         DelonLocaleModule,
         ReuseTabModule,
@@ -244,15 +236,13 @@ describe('abc: reuse-tab', () => {
         }));
       });
       describe('#mode', () => {
-        [ReuseTabMatchMode.Menu, ReuseTabMatchMode.MenuForce, ReuseTabMatchMode.URL].forEach(
-          type => {
-            it(`with ${type}`, () => {
-              layoutComp.mode = type;
-              fixture.detectChanges();
-              expect(srv.mode).toBe(type);
-            });
-          },
-        );
+        [ReuseTabMatchMode.Menu, ReuseTabMatchMode.MenuForce, ReuseTabMatchMode.URL].forEach(type => {
+          it(`with ${type}`, () => {
+            layoutComp.mode = type;
+            fixture.detectChanges();
+            expect(srv.mode).toBe(type);
+          });
+        });
       });
       describe('#debug', () => {
         [true, false].forEach(type => {
@@ -479,15 +469,15 @@ describe('abc: reuse-tab', () => {
           .to('#e')
           .openContextMenu(1)
           .tap(() =>
-            expect(
-              document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList,
-            ).toContain('ant-menu-item-disabled'),
+            expect(document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList).toContain(
+              'ant-menu-item-disabled',
+            ),
           )
           .openContextMenu(1, { ctrlKey: true })
           .tap(() =>
-            expect(
-              document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList,
-            ).not.toContain('ant-menu-item-disabled'),
+            expect(document.querySelector(`.reuse-tab__cm li[data-type="close"]`)!.classList).not.toContain(
+              'ant-menu-item-disabled',
+            ),
           )
           .expectCount(2);
       }));
@@ -669,9 +659,7 @@ describe('abc: reuse-tab', () => {
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
               expect(srv.items[0].position![1]).toBe(666);
-              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(
-                document.querySelector('#children'),
-              );
+              expect(getScrollPositionSpy.calls.mostRecent().args[0]).toBe(document.querySelector('#children'));
             });
         }));
       });

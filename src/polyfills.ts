@@ -57,7 +57,7 @@ import 'core-js/es7/reflect';
  */
 import '@webcomponents/custom-elements'; //  Custom Elements Polyfill
 import '@webcomponents/custom-elements/src/native-shim';
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+import 'zone.js/dist/zone'; // Included with Angular CLI.
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { copy, LazyService } from '@delon/util';
 import { NzMessageService } from 'ng-zorro-antd';
@@ -41,9 +34,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private meta: MetaService,
     private lazy: LazyService,
   ) {
-    router.events
-      .pipe(filter(evt => evt instanceof NavigationEnd))
-      .subscribe(() => (this.menuVisible = false));
+    router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => (this.menuVisible = false));
     this.mobileSrv.change.subscribe(res => (this.isMobile = res));
   }
 
@@ -77,12 +68,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   @HostListener('document:keyup.s', ['$event'])
   onKeyUp(event: KeyboardEvent) {
-    if (
-      this.useDocsearch &&
-      this.searchInput &&
-      this.searchInput.nativeElement &&
-      event.target === document.body
-    ) {
+    if (this.useDocsearch && this.searchInput && this.searchInput.nativeElement && event.target === document.body) {
       this.searchInput.nativeElement.focus();
     }
   }

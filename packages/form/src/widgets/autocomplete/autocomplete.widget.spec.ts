@@ -76,7 +76,7 @@ describe('form: widget: autocomplete', () => {
         .asyncEnd();
     }));
     it('with email and custom suffix of format', fakeAsync(() => {
-      const suffixes = [ 'a.com', 'b.com' ];
+      const suffixes = ['a.com', 'b.com'];
       const typeValue = 'a';
       page
         .newSchema({

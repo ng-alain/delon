@@ -7,12 +7,7 @@ import { join } from 'path';
  *
  * @param [overwrite=false] `true` is force, default: `false`
  */
-export function overwriteFile(
-  host: Tree,
-  filePath: string,
-  sourcePath?: string,
-  overwrite = false,
-): Tree {
+export function overwriteFile(host: Tree, filePath: string, sourcePath?: string, overwrite = false): Tree {
   const isExists = host.exists(filePath);
   if (overwrite || isExists) {
     try {
@@ -36,12 +31,7 @@ export function overwriteFile(
  *
  * @param [overwrite=false] `true` is force, default: `false`
  */
-export function overwriteFiles(
-  host: Tree,
-  files: string[],
-  _filePath: string,
-  overwrite = false,
-): Tree {
+export function overwriteFiles(host: Tree, files: string[], _filePath: string, overwrite = false): Tree {
   files.forEach(p => overwriteFile(host, p, join(_filePath, p), overwrite));
   return host;
 }
@@ -52,8 +42,6 @@ export function overwriteFiles(
  * @param [overwrite=false] `true` is force, default: `false`
  */
 export function addFiles(host: Tree, files: string[], _filePath: string, overwrite = false): Tree {
-  files
-    .filter(p => overwrite || !host.exists(p))
-    .forEach(p => overwriteFile(host, p, join(_filePath, p), true));
+  files.filter(p => overwrite || !host.exists(p)).forEach(p => overwriteFile(host, p, join(_filePath, p), true));
   return host;
 }

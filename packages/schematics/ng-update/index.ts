@@ -26,11 +26,7 @@ const tslintUpgradeConfig: UpgradeTSLintConfig = {
 };
 
 export function updateToV2(): Rule {
-  return chain([
-    v2LayoutRule,
-    v2DomRule,
-    createUpgradeRule(TargetVersion.V2, tslintUpgradeConfig),
-  ]);
+  return chain([v2LayoutRule, v2DomRule, createUpgradeRule(TargetVersion.V2, tslintUpgradeConfig)]);
 }
 
 export function postUpdate(): Rule {

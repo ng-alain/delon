@@ -133,12 +133,7 @@ describe('abc: grid', () => {
 
 @Component({
   template: `
-    <div
-      [sg-container]="parent_colInCon"
-      #sgComp="sgContainer"
-      [col]="parent_col"
-      [gutter]="parent_gutter"
-    >
+    <div [sg-container]="parent_colInCon" #sgComp="sgContainer" [col]="parent_col" [gutter]="parent_gutter">
       <sg #viewComp [col]="col"></sg>
     </div>
   `,

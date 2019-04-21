@@ -35,9 +35,7 @@ export class STExport {
   private genSheet(opt: STExportOptions): { [sheet: string]: {} } {
     const sheets: { [sheet: string]: {} } = {};
     const sheet = (sheets[opt.sheetname || 'Sheet1'] = {});
-    const colData = opt._c!.filter(
-      w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0),
-    );
+    const colData = opt._c!.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
     const cc = colData.length;
     const dc = opt._d!.length;
 

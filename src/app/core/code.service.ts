@@ -17,7 +17,8 @@ export class CodeService {
     const isG2 = ~code.indexOf('<g2');
 
     if (isG2) {
-      code = `// G2
+      code =
+        `// G2
 declare var G2: any;
 declare var DataSet: any;
 declare var Slider: any;
@@ -25,12 +26,13 @@ declare var Slider: any;
 ` + code;
     }
 
-    sdk.openProject({
-      title,
-      description: `${title}-${summary.replace(/<[^>]+>/g, '')}`,
-      tags: ['ng-alain', '@delon'],
-      files: {
-        'angular.json': `{
+    sdk.openProject(
+      {
+        title,
+        description: `${title}-${summary.replace(/<[^>]+>/g, '')}`,
+        tags: ['ng-alain', '@delon'],
+        files: {
+          'angular.json': `{
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
@@ -155,20 +157,20 @@ declare var Slider: any;
   "defaultProject": "demo"
 }
 `,
-        'src/index.html': [
-          ~isG2
-            ? `
+          'src/index.html': [
+            ~isG2
+              ? `
 <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g2-3.4.1/dist/g2.min.js"></script>
 <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.10.1/dist/data-set.min.js"></script>
 <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/g2-plugin-slider/2.0.0/g2-plugin-slider.js"></script>
 `
-            : ``,
+              : ``,
 
-          `<${selector}>loading</${selector}>
+            `<${selector}>loading</${selector}>
 <div id="VERSION" style="position: fixed; bottom: 8px; right: 8px; z-index: 8888;"></div>
           `,
-        ].join(''),
-        'src/main.ts': `import './polyfills';
+          ].join(''),
+          'src/main.ts': `import './polyfills';
 
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -182,7 +184,7 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
   window['ngRef'] = ref;
   // Otherise, log the boot error
 }).catch(err => console.error(err));`,
-        'src/polyfills.ts': `/** IE9, IE10 and IE11 requires all of the following polyfills. **/
+          'src/polyfills.ts': `/** IE9, IE10 and IE11 requires all of the following polyfills. **/
 // import 'core-js/es6/symbol';
 // import 'core-js/es6/object';
 // import 'core-js/es6/function';
@@ -205,8 +207,8 @@ import 'core-js/es6/reflect';
 import 'core-js/es7/reflect';
 // import 'web-animations-js';
 import 'zone.js/dist/zone';`,
-        'src/app/app.component.ts': code,
-        'src/app/app.module.ts': `import { NgModule, APP_INITIALIZER, Injectable } from '@angular/core';
+          'src/app/app.component.ts': code,
+          'src/app/app.module.ts': `import { NgModule, APP_INITIALIZER, Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -290,41 +292,43 @@ export class AppModule {
   }
 }
   `,
-        'src/styles.less': ``,
-        '_mock/user.ts': require('!!raw-loader!../../../_mock/user.ts'),
-        '_mock/index.ts': `export * from './user';`,
+          'src/styles.less': ``,
+          '_mock/user.ts': require('!!raw-loader!../../../_mock/user.ts'),
+          '_mock/index.ts': `export * from './user';`,
+        },
+        template: 'angular-cli',
+        dependencies: {
+          '@angular/cdk': '*',
+          '@angular/core': '*',
+          '@angular/forms': '*',
+          '@angular/http': '*',
+          '@angular/language-service': '*',
+          '@angular/platform-browser': '*',
+          '@angular/platform-browser-dynamic': '*',
+          '@angular/common': '*',
+          '@angular/router': '*',
+          '@angular/animations': '*',
+          '@ant-design/icons-angular': '*',
+          'date-fns': '*',
+          'file-saver': '^1.3.3',
+          'ngx-countdown': '*',
+          'ng-zorro-antd': '^7.0.0-rc.1',
+          '@delon/theme': 'latest',
+          '@delon/abc': 'latest',
+          '@delon/chart': 'latest',
+          '@delon/acl': 'latest',
+          '@delon/auth': 'latest',
+          '@delon/cache': 'latest',
+          '@delon/mock': 'latest',
+          '@delon/form': 'latest',
+          '@delon/util': 'latest',
+          extend: '*',
+          qrious: '*',
+        },
       },
-      template: 'angular-cli',
-      dependencies: {
-        '@angular/cdk': '*',
-        '@angular/core': '*',
-        '@angular/forms': '*',
-        '@angular/http': '*',
-        '@angular/language-service': '*',
-        '@angular/platform-browser': '*',
-        '@angular/platform-browser-dynamic': '*',
-        '@angular/common': '*',
-        '@angular/router': '*',
-        '@angular/animations': '*',
-        '@ant-design/icons-angular': '*',
-        'date-fns': '*',
-        'file-saver': '^1.3.3',
-        'ngx-countdown': '*',
-        'ng-zorro-antd': '^7.0.0-rc.1',
-        '@delon/theme': 'latest',
-        '@delon/abc': 'latest',
-        '@delon/chart': 'latest',
-        '@delon/acl': 'latest',
-        '@delon/auth': 'latest',
-        '@delon/cache': 'latest',
-        '@delon/mock': 'latest',
-        '@delon/form': 'latest',
-        '@delon/util': 'latest',
-        'extend': '*',
-        'qrious': '*',
-      },
-    }, {
+      {
         openFile: `src/app/app.component.ts`,
-      });
+      },
+    );
   }
 }

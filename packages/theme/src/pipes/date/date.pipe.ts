@@ -4,10 +4,7 @@ import format from 'date-fns/format';
 
 @Pipe({ name: '_date' })
 export class DatePipe implements PipeTransform {
-  transform(
-    value: Date | string | number,
-    formatString: string = 'YYYY-MM-DD HH:mm',
-  ): string {
+  transform(value: Date | string | number, formatString: string = 'YYYY-MM-DD HH:mm'): string {
     if (value) {
       if (formatString === 'fn') {
         return distanceInWordsToNow(value, {

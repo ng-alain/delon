@@ -103,5 +103,4 @@ describe('form: widget: tree-select', () => {
       .asyncEnd(1000);
     expect((s.properties!.a.ui as any).expandChange).toHaveBeenCalled();
   }));
-
 });

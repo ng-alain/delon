@@ -128,10 +128,7 @@ describe('abc: ellipsis', () => {
     it('should be throw error when include html element', fakeAsync(() => {
       expect(() => {
         genModule();
-        TestBed.overrideTemplate(
-          TestLengthComponent,
-          `<ellipsis length="1"><p>asdf</p></ellipsis>`,
-        );
+        TestBed.overrideTemplate(TestLengthComponent, `<ellipsis length="1"><p>asdf</p></ellipsis>`);
         fixture = TestBed.createComponent(TestLengthComponent);
         dl = fixture.debugElement;
         context = fixture.componentInstance;
@@ -212,14 +209,9 @@ class TestBaseComponent {
 
 @Component({
   template: `
-    <ellipsis
-      #comp
-      [tooltip]="tooltip"
-      [length]="length"
-      [fullWidthRecognition]="fullWidthRecognition"
-      [tail]="tail"
-      >{{ text }}</ellipsis
-    >
+    <ellipsis #comp [tooltip]="tooltip" [length]="length" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail">{{
+      text
+    }}</ellipsis>
   `,
 })
 class TestLengthComponent extends TestBaseComponent {}

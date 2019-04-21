@@ -11,11 +11,7 @@ import { ReuseTabContextDirective } from './reuse-tab-context.directive';
 import { ReuseTabComponent } from './reuse-tab.component';
 
 const COMPONENTS = [ReuseTabComponent];
-const NOEXPORTS = [
-  ReuseTabContextMenuComponent,
-  ReuseTabContextComponent,
-  ReuseTabContextDirective,
-];
+const NOEXPORTS = [ReuseTabContextMenuComponent, ReuseTabContextComponent, ReuseTabContextDirective];
 
 @NgModule({
   imports: [CommonModule, RouterModule, DelonLocaleModule, NgZorroAntdModule, OverlayModule],

@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Host,
-  OnInit,
-  Optional,
-  Renderer2,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Host, OnInit, Optional, Renderer2 } from '@angular/core';
 import { SEContainerComponent } from './edit-container.component';
 
 @Component({

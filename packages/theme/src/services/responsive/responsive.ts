@@ -26,9 +26,7 @@ export class ResponsiveService {
         .map(i => +i)
         .some((i: number) => i < 1 || i > REP_MAX)
     ) {
-      throw new Error(
-        `[theme] the responseive rule index value range must be 1-${REP_MAX}`,
-      );
+      throw new Error(`[theme] the responseive rule index value range must be 1-${REP_MAX}`);
     }
   }
 

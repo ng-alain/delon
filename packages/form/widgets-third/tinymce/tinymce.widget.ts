@@ -12,13 +12,7 @@ import { ControlWidget } from '@delon/form';
       [error]="error"
       [showTitle]="schema.title"
     >
-      <tinymce
-        [ngModel]="value"
-        (ngModelChange)="change($event)"
-        [config]="config"
-        [loading]="loading"
-      >
-      </tinymce>
+      <tinymce [ngModel]="value" (ngModelChange)="change($event)" [config]="config" [loading]="loading"> </tinymce>
     </sf-item-wrap>
   `,
 })

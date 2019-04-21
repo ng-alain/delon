@@ -45,16 +45,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputBoolean() hasLegend = true;
   @Input() @InputNumber() tickCount = 4;
   @Input() data: G2RadarData[] = [];
-  @Input() colors = [
-    '#1890FF',
-    '#FACC14',
-    '#2FC25B',
-    '#8543E0',
-    '#F04864',
-    '#13C2C2',
-    '#fa8c16',
-    '#a0d911',
-  ];
+  @Input() colors = ['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911'];
 
   // #endregion
 

@@ -3,12 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
-import {
-  en_US as delonEnUS,
-  zh_CN as delonZhCn,
-  AlainI18NService,
-  DelonLocaleService,
-} from '@delon/theme';
+import { en_US as delonEnUS, zh_CN as delonZhCn, AlainI18NService, DelonLocaleService } from '@delon/theme';
 import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd';
 
 import { ENUS } from './en-US';
@@ -20,10 +15,7 @@ export type LangType = 'en-US' | 'zh-CN';
 export class I18NService implements AlainI18NService {
   private change$: Subject<LangType> = new Subject<LangType>();
 
-  private _langs = [
-    { code: 'en-US', text: 'English' },
-    { code: 'zh-CN', text: '中文' },
-  ];
+  private _langs = [{ code: 'en-US', text: 'English' }, { code: 'zh-CN', text: '中文' }];
 
   constructor(
     private zorroI18n: NzI18nService,
@@ -46,11 +38,7 @@ export class I18NService implements AlainI18NService {
     }
 
     let browserLang: any = winNav.languages ? winNav.languages[0] : null;
-    browserLang =
-      browserLang ||
-      winNav.language ||
-      winNav.browserLanguage ||
-      winNav.userLanguage;
+    browserLang = browserLang || winNav.language || winNav.browserLanguage || winNav.userLanguage;
 
     if (browserLang.indexOf('-') !== -1) {
       browserLang = browserLang.split('-')[0];
@@ -103,9 +91,7 @@ export class I18NService implements AlainI18NService {
   }
 
   get(i: any) {
-    return typeof i === 'string'
-      ? i
-      : i[this.lang] || i[this.defaultLang] || '';
+    return typeof i === 'string' ? i : i[this.lang] || i[this.defaultLang] || '';
   }
 
   getFullLang(lang: string) {

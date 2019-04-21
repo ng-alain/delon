@@ -20,9 +20,7 @@ describe('NgAlainSchematic: plugin: docker', () => {
   });
 
   describe('when remove', () => {
-    beforeEach(
-      () => (tree = runner.runSchematic('plugin', { name: 'docker', type: 'remove' }, tree)),
-    );
+    beforeEach(() => (tree = runner.runSchematic('plugin', { name: 'docker', type: 'remove' }, tree)));
     it(`should add fiels`, () => {
       expect(tree.exists(`/projects/${APPNAME}/.dockerignore`)).toBe(false);
       expect(tree.exists(`/projects/${APPNAME}/docker-compose.yml`)).toBe(false);

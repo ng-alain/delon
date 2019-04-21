@@ -15,8 +15,7 @@ describe('NgAlainSchematic: plugin: g2', () => {
 
     it(`should add scripts`, () => {
       const json = JSON.parse(tree.readContent('angular.json'));
-      const scripts: string[] =
-        (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
+      const scripts: string[] = (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
       expect(scripts.filter(w => w.includes('g2')).length).toBeGreaterThan(0);
     });
   });
@@ -31,8 +30,7 @@ describe('NgAlainSchematic: plugin: g2', () => {
 
     it(`should add scripts`, () => {
       const json = JSON.parse(tree.readContent('angular.json'));
-      const scripts: string[] =
-        (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
+      const scripts: string[] = (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
       expect(scripts.filter(w => w.includes('g2')).length).toBe(0);
     });
   });

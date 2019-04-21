@@ -75,10 +75,7 @@ describe('abc: page-header', () => {
   describe('', () => {
     configureTestSuite(() => {
       injector = TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]),
-          PageHeaderModule,
-        ],
+        imports: [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule],
         providers: [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService],
         declarations: [TestComponent, TestAutoBreadcrumbComponent, TestI18nComponent],
       });
@@ -161,10 +158,7 @@ describe('abc: page-header', () => {
               {
                 text: '1-1',
                 link: '/1-1',
-                children: [
-                  { text: '1-1-1', link: '/1-1/1-1-1' },
-                  { text: '1-1-2', link: '/1-1/1-1-2' },
-                ],
+                children: [{ text: '1-1-1', link: '/1-1/1-1-1' }, { text: '1-1-2', link: '/1-1/1-1-2' }],
               },
             ],
           },
@@ -195,10 +189,7 @@ describe('abc: page-header', () => {
               {
                 text: '1-1',
                 link: '/1-1',
-                children: [
-                  { text: '1-1-1', link: '/1-1/1-1-1' },
-                  { text: '1-1-2', link: '/1-1/1-1-2' },
-                ],
+                children: [{ text: '1-1-1', link: '/1-1/1-1-1' }, { text: '1-1-2', link: '/1-1/1-1-2' }],
               },
             ],
           },
@@ -225,15 +216,13 @@ describe('abc: page-header', () => {
         const urlSpy = spyOnProperty(router, 'url');
         urlSpy.and.returnValue('/1-1/1-1-2');
         fixture.detectChanges();
-        const firstPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)'))
-          .nativeElement;
+        const firstPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
         urlSpy.and.returnValue('/1-1/1-1-1');
         fixture.ngZone!.run(() => {
           router.navigateByUrl('/1-1/1-1-1');
           fixture.whenStable().then(() => {
             fixture.detectChanges();
-            const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)'))
-              .nativeElement;
+            const secondPath: HTMLElement = dl.query(By.css('nz-breadcrumb-item:nth-child(3)')).nativeElement;
             expect(firstPath.innerText).not.toBe(secondPath.innerText);
           });
         });
@@ -267,10 +256,7 @@ describe('abc: page-header', () => {
               {
                 text: '1-1',
                 link: '/1-1',
-                children: [
-                  { text: '1-1-1', link: '/1-1/1-1-1' },
-                  { text: '1-1-2', link: '/1-1/1-1-2' },
-                ],
+                children: [{ text: '1-1-1', link: '/1-1/1-1-1' }, { text: '1-1-2', link: '/1-1/1-1-2' }],
               },
             ],
           },
@@ -301,10 +287,7 @@ describe('abc: page-header', () => {
               {
                 text: '1-1',
                 link: '/1-1',
-                children: [
-                  { text: '1-1-1', link: '/1-1/1-1-1' },
-                  { text: '1-1-2', link: '/1-1/1-1-2' },
-                ],
+                children: [{ text: '1-1-1', link: '/1-1/1-1-1' }, { text: '1-1-2', link: '/1-1/1-1-2' }],
               },
             ],
           },

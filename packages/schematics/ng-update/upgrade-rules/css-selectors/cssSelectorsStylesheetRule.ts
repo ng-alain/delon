@@ -25,7 +25,6 @@ export class Rule extends Rules.AbstractRule {
 }
 
 export class Walker extends ComponentWalker {
-
   /** Change data that upgrades to the specified target version. */
   data = getUpgradeDataFromWalker(this, 'cssSelectors');
 
@@ -51,20 +50,21 @@ export class Walker extends ComponentWalker {
    * with the according messages that can be added to a rule failure.
    */
   private _createReplacementsForContent(node: ts.Node, stylesheetContent: string) {
-    const replacements: Array<{failureMessage: string, replacement: Replacement}> = [];
+    const replacements: Array<{ failureMessage: string; replacement: Replacement }> = [];
 
     this.data.forEach(data => {
       if (data.whitelist && !data.whitelist.stylesheet) {
         return;
       }
 
-      const failureMessage = `Found deprecated CSS selector "${chalk.red(data.replace)}" ` +
-          `which has been renamed to "${chalk.green(data.replaceWith)}"`;
+      const failureMessage =
+        `Found deprecated CSS selector "${chalk.red(data.replace)}" ` +
+        `which has been renamed to "${chalk.green(data.replaceWith)}"`;
 
       findAllSubstringIndices(stylesheetContent, data.replace)
         .map(offset => node.getStart() + offset)
         .map(start => new Replacement(start, data.replace.length, data.replaceWith))
-        .forEach(replacement => replacements.push({replacement, failureMessage}));
+        .forEach(replacement => replacements.push({ replacement, failureMessage }));
     });
 
     return replacements;

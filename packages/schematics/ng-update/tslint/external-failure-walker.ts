@@ -14,16 +14,13 @@ import { ExternalResource } from './component-file';
  * the source file that has been passed to the rule walker.
  */
 export class ExternalFailureWalker extends RuleWalker {
-
   /** Adds a failure for the external resource at the specified position with the given width. */
-  addExternalFailureAt(node: ExternalResource, start: number, width: number, message: string,
-                       fix?: Fix) {
+  addExternalFailureAt(node: ExternalResource, start: number, width: number, message: string, fix?: Fix) {
     this.addFailure(new RuleFailure(node, start, start + width, message, this.getRuleName(), fix));
   }
 
   /** Adds a failure at the specified range for the external resource. */
-  addExternalFailureFromStartToEnd(node: ExternalResource, start: number, end: number,
-                                   message: string, fix?: Fix) {
+  addExternalFailureFromStartToEnd(node: ExternalResource, start: number, end: number, message: string, fix?: Fix) {
     this.addFailure(new RuleFailure(node, start, end, message, this.getRuleName(), fix));
   }
 
@@ -33,8 +30,7 @@ export class ExternalFailureWalker extends RuleWalker {
   }
 
   /** Adds a failure to the external resource at the location of the specified replacement. */
-  addExternalFailureAtReplacement(node: ExternalResource, message: string,
-                                  replacement: Replacement) {
+  addExternalFailureAtReplacement(node: ExternalResource, message: string, replacement: Replacement) {
     this.addExternalFailureAt(node, replacement.start, replacement.end, message, replacement);
   }
 

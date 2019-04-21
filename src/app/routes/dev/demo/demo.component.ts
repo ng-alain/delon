@@ -1,11 +1,12 @@
-
 import { Component } from '@angular/core';
 import { SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" [loading]="loading" (formSubmit)="submit($event)"></sf>`,
+  template: `
+    <sf [schema]="schema" [loading]="loading" (formSubmit)="submit($event)"></sf>
+  `,
 })
 export class DemoComponent {
   loading = false;
@@ -24,12 +25,12 @@ export class DemoComponent {
     },
     required: ['name'],
   };
-  constructor(public msg: NzMessageService) { }
+  constructor(public msg: NzMessageService) {}
   submit(value: any) {
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
       this.msg.success(JSON.stringify(value));
     }, 1000);
-   }
+  }
 }

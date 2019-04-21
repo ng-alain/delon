@@ -108,7 +108,7 @@ describe('auth: social.service', () => {
       discardPeriodicTasks();
     }));
 
-    it('can\'t get model until closed', fakeAsync(() => {
+    it("can't get model until closed", fakeAsync(() => {
       spyOn(srv, 'ngOnDestroy');
       spyOn(window, 'open').and.callFake(() => {
         injector.get(DA_SERVICE_TOKEN).set(null);

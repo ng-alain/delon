@@ -24,11 +24,7 @@ import {
 @BaseHeaders({ bh: 'a' })
 class MockService extends BaseApi {
   @GET()
-  query(
-    @Query('pi') pi: number,
-    @Query('ps') ps: number,
-    @Headers('mh') mh: string,
-  ): Observable<any> {
+  query(@Query('pi') pi: number, @Query('ps') ps: number, @Headers('mh') mh: string): Observable<any> {
     return null as any;
   }
 

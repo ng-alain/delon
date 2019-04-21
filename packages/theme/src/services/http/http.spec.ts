@@ -1,8 +1,4 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { fakeAsync, tick, TestBed, TestBedStatic } from '@angular/core/testing';
 import { deepCopy } from '@delon/util';
 
@@ -67,14 +63,9 @@ describe('theme: http.client', () => {
             expect(res).toBe(OK);
             done();
           });
-          const ret = backend.expectOne(
-            req => req.method === 'GET' && req.url === URL,
-          ) as TestRequest;
+          const ret = backend.expectOne(req => req.method === 'GET' && req.url === URL) as TestRequest;
           for (const key in PARAMS)
-            expect(ret.request.params.get(key)).toBe(
-              PARAMS[key],
-              `param "${key}" muse be "${PARAMS[key]}"`,
-            );
+            expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
           ret.flush(OK);
         });
         it(`should be unix timestamp when is date param`, (done: () => void) => {
@@ -83,9 +74,7 @@ describe('theme: http.client', () => {
             expect(res).toBe(OK);
             done();
           });
-          const ret = backend.expectOne(
-            req => req.method === 'GET' && req.url === URL,
-          ) as TestRequest;
+          const ret = backend.expectOne(req => req.method === 'GET' && req.url === URL) as TestRequest;
           for (const key in p) {
             let v = p[key];
             if (v instanceof Date) v = v.valueOf();
@@ -101,14 +90,9 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'GET' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'GET' && req.url === URL) as TestRequest;
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -118,14 +102,9 @@ describe('theme: http.client', () => {
           expect(res.body).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'GET' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'GET' && req.url === URL) as TestRequest;
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -160,9 +139,7 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'POST' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'POST' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         ret.flush(OK);
       });
@@ -172,15 +149,10 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'POST' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'POST' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -190,15 +162,10 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'POST' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'POST' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -213,15 +180,10 @@ describe('theme: http.client', () => {
             expect(res.body).toBe(OK);
             done();
           });
-        const ret = backend.expectOne(
-          req => req.method === 'POST' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'POST' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
     });
@@ -240,14 +202,9 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'DELETE' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'DELETE' && req.url === URL) as TestRequest;
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -257,14 +214,9 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'DELETE' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'DELETE' && req.url === URL) as TestRequest;
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -274,14 +226,9 @@ describe('theme: http.client', () => {
           expect(res.body).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'DELETE' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'DELETE' && req.url === URL) as TestRequest;
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
     });
@@ -300,9 +247,7 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'JSONP' && req.url.startsWith(URL),
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'JSONP' && req.url.startsWith(URL)) as TestRequest;
         const newURL = http.appliedUrl(URL, PARAMS);
         expect(ret.request.url).toBe(newURL);
         ret.flush(OK);
@@ -314,9 +259,7 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'JSONP' && req.url.startsWith(u),
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'JSONP' && req.url.startsWith(u)) as TestRequest;
         const newURL = http.appliedUrl(u, PARAMS);
         expect(ret.request.url).toBe(newURL);
         ret.flush(OK);
@@ -328,9 +271,7 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'JSONP' && req.url.startsWith(URL),
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'JSONP' && req.url.startsWith(URL)) as TestRequest;
         const newURL = `${URL}?a=1`;
         expect(ret.request.url).toBe(newURL);
         expect(ret.request.urlWithParams).toBe(`${newURL}&${callbackParam}=JSONP_CALLBACK`);
@@ -368,9 +309,7 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'PATCH' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'PATCH' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         ret.flush(OK);
       });
@@ -380,15 +319,10 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'PATCH' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'PATCH' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -398,15 +332,10 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'PATCH' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'PATCH' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -421,15 +350,10 @@ describe('theme: http.client', () => {
             expect(res.body).toBe(OK);
             done();
           });
-        const ret = backend.expectOne(
-          req => req.method === 'PATCH' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'PATCH' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
     });
@@ -448,9 +372,7 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'PUT' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'PUT' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         ret.flush(OK);
       });
@@ -460,15 +382,10 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'PUT' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'PUT' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -478,15 +395,10 @@ describe('theme: http.client', () => {
           expect(res).toBe(OK);
           done();
         });
-        const ret = backend.expectOne(
-          req => req.method === 'PUT' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'PUT' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
 
@@ -501,15 +413,10 @@ describe('theme: http.client', () => {
             expect(res.body).toBe(OK);
             done();
           });
-        const ret = backend.expectOne(
-          req => req.method === 'PUT' && req.url === URL,
-        ) as TestRequest;
+        const ret = backend.expectOne(req => req.method === 'PUT' && req.url === URL) as TestRequest;
         expect(ret.request.body).toBe(BODY);
         for (const key in PARAMS)
-          expect(ret.request.params.get(key)).toBe(
-            PARAMS[key],
-            `param "${key}" muse be "${PARAMS[key]}"`,
-          );
+          expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });
     });

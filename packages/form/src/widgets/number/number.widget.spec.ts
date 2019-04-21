@@ -123,7 +123,6 @@ describe('form: widget: number', () => {
       property.setValue(null, true);
       page.typeChar(null);
       expect(ipt.value).toBe('');
-
     }));
 
     it('#formatter & #parser', fakeAsync(() => {

@@ -7,9 +7,7 @@ import * as fse from 'fs-extra';
 import { ModuleConfig } from '../interfaces';
 
 export function isHeading(node: any) {
-  return /h[1-6]/i.test(
-    typeof node === 'string' ? node : JsonML.getTagName(node),
-  );
+  return /h[1-6]/i.test(typeof node === 'string' ? node : JsonML.getTagName(node));
 }
 
 export function isStandalone(tagName: string) {
@@ -80,11 +78,7 @@ export function genUpperName(name: string) {
 }
 
 export function includeAttributes(config: ModuleConfig, targetMeta: any) {
-  if (
-    !config.metaIncludeAttributes ||
-    !Array.isArray(config.metaIncludeAttributes)
-  )
-    return;
+  if (!config.metaIncludeAttributes || !Array.isArray(config.metaIncludeAttributes)) return;
 
   targetMeta = targetMeta || {};
   for (const key of config.metaIncludeAttributes) {

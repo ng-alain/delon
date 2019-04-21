@@ -81,10 +81,7 @@ export class XlsxService {
         type: 'array',
         ...options.opts,
       });
-      saveAs(
-        new Blob([wbout], { type: 'application/octet-stream' }),
-        options.filename || 'export.xlsx',
-      );
+      saveAs(new Blob([wbout], { type: 'application/octet-stream' }), options.filename || 'export.xlsx');
     });
   }
 }

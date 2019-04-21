@@ -25,9 +25,7 @@ export class TitleService implements OnDestroy {
     private i18nSrv: AlainI18NService,
     @Inject(DOCUMENT) private doc: any,
   ) {
-    this.i18n$ = this.i18nSrv.change
-      .pipe(filter(() => !!this.i18n$))
-      .subscribe(() => this.setTitle());
+    this.i18n$ = this.i18nSrv.change.pipe(filter(() => !!this.i18n$)).subscribe(() => this.setTitle());
   }
 
   /** 设置分隔符 */
@@ -55,8 +53,7 @@ export class TitleService implements OnDestroy {
 
   private getByElement(): string {
     const el =
-      this.doc.querySelector('.alain-default__content-title h1') ||
-      this.doc.querySelector('.page-header__title');
+      this.doc.querySelector('.alain-default__content-title h1') || this.doc.querySelector('.page-header__title');
     if (el) {
       return el.firstChild.textContent.trim();
     }

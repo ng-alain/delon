@@ -6,7 +6,7 @@ import {
   Inject,
   OnDestroy,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { Subject } from 'rxjs';
@@ -32,9 +32,7 @@ export class MainMenuComponent implements OnInit, OnDestroy {
     private mobileSrv: MobileService,
     private cdr: ChangeDetectorRef,
   ) {
-    this.mobileSrv.change
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(res => (this.isMobile = res));
+    this.mobileSrv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(res => (this.isMobile = res));
   }
 
   to(url: string) {

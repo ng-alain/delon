@@ -63,12 +63,7 @@ export function deepMergeKey(original: any, ingoreArray: boolean, ...objects: an
         const newValue = target[key];
         if (!ingoreArray && Array.isArray(newValue)) {
           target[key] = [...newValue, ...oldValue];
-        } else if (
-          oldValue != null &&
-          isObject(oldValue) &&
-          newValue != null &&
-          isObject(newValue)
-        ) {
+        } else if (oldValue != null && isObject(oldValue) && newValue != null && isObject(newValue)) {
           target[key] = merge(newValue, oldValue);
         } else {
           target[key] = deepCopy(oldValue);

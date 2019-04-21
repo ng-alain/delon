@@ -45,22 +45,17 @@ function addDeclarationToNgModule(options: ModuleSchema): Rule {
     const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
 
     const importModulePath = normalize(
-      `/${options.path}/${
-        options.flat ? '' : strings.dasherize(options.name) + '/'
-      }${strings.dasherize(options.name)}.module`,
+      `/${options.path}/${options.flat ? '' : strings.dasherize(options.name) + '/'}${strings.dasherize(
+        options.name,
+      )}.module`,
     );
     const relativeDir = relative(dirname(modulePath), dirname(importModulePath));
 
     // tslint:disable-next-line:prefer-template
-    const relativePath = `${
-      relativeDir.startsWith('.') ? relativeDir : './' + relativeDir
-    }/${basename(importModulePath)}`;
-    const changes = addImportToModule(
-      source,
-      modulePath,
-      strings.classify(`${options.name}Module`),
-      relativePath,
-    );
+    const relativePath = `${relativeDir.startsWith('.') ? relativeDir : './' + relativeDir}/${basename(
+      importModulePath,
+    )}`;
+    const changes = addImportToModule(source, modulePath, strings.classify(`${options.name}Module`), relativePath);
 
     const recorder = host.beginUpdate(modulePath);
     for (const change of changes) {
@@ -107,8 +102,6 @@ export default function(schema: ModuleSchema): Rule {
       move(parsedPath.path),
     ]);
 
-    return chain([
-      branchAndMerge(chain([addDeclarationToNgModule(schema), mergeWith(templateSource)])),
-    ])(host, context);
+    return chain([branchAndMerge(chain([addDeclarationToNgModule(schema), mergeWith(templateSource)]))])(host, context);
   };
 }

@@ -28,10 +28,7 @@ import { di, resolveIf, retrieveSchema, FORMATMAPS } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
-export function useFactory(
-  schemaValidatorFactory: SchemaValidatorFactory,
-  options: DelonFormConfig,
-) {
+export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, options: DelonFormConfig) {
   return new FormPropertyFactory(schemaValidatorFactory, options);
 }
 
@@ -242,16 +239,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             }
           } else {
             if (!ui.spanLabel)
-              ui.spanLabel =
-                typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
+              ui.spanLabel = typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
             if (!ui.spanControl)
-              ui.spanControl =
-                typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
+              ui.spanControl = typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
             if (!ui.offsetControl)
               ui.offsetControl =
-                typeof parentUiSchema.offsetControl === 'undefined'
-                  ? null
-                  : parentUiSchema.offsetControl;
+                typeof parentUiSchema.offsetControl === 'undefined' ? null : parentUiSchema.offsetControl;
           }
         } else {
           ui.spanLabel = null;
@@ -276,13 +269,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
         if (property.items) {
           uiRes[uiKey].$items = uiRes[uiKey].$items || {};
-          inFn(
-            property.items,
-            property.items,
-            (uiSchema[uiKey] || {}).$items || {},
-            ui,
-            uiRes[uiKey].$items,
-          );
+          inFn(property.items, property.items, (uiSchema[uiKey] || {}).$items || {}, ui, uiRes[uiKey].$items);
         }
 
         if (property.properties && Object.keys(property.properties).length) {
@@ -354,10 +341,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this._btn.render!.spanLabelFixed = btnUi.spanLabelFixed;
       }
       // 固定标签宽度时，若不指定样式，则默认居中
-      if (
-        !this._btn.render!.class &&
-        (typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0)
-      ) {
+      if (!this._btn.render!.class && (typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0)) {
         this._btn.render!.class = 'text-center';
       }
     } else {
@@ -378,7 +362,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
     if (changes.loading && Object.keys(changes).length === 1) {
       this.cdr.detectChanges();
-      return ;
+      return;
     }
     this.refreshSchema();
   }
@@ -419,8 +403,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (newSchema) this.schema = newSchema;
     if (newUI) this.ui = newUI;
 
-    if (!this.schema || typeof this.schema.properties === 'undefined')
-      throw new Error(`Invalid Schema`);
+    if (!this.schema || typeof this.schema.properties === 'undefined') throw new Error(`Invalid Schema`);
     if (this.schema.ui && typeof this.schema.ui === 'string')
       throw new Error(`Don't support string with root ui property`);
 
@@ -435,11 +418,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.coverProperty();
     this.coverButtonProperty();
 
-    this.rootProperty = this.formPropertyFactory.createProperty(
-      this._schema,
-      this._ui,
-      this.formData,
-    );
+    this.rootProperty = this.formPropertyFactory.createProperty(this._schema, this._ui, this.formData);
     this.attachCustomRender();
 
     this.rootProperty.valueChanges.subscribe(value => {

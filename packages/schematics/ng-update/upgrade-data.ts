@@ -63,9 +63,9 @@ export function getAllChanges<T>(data: VersionChanges<T>): T[] {
  * The function reads out the target version and upgrade data object from the rule options and
  * resolves the specified data portion that is specifically tied to the target version.
  */
-export function getUpgradeDataFromWalker<
-  T extends keyof RuleUpgradeData,
-  U = ValueOfChanges<RuleUpgradeData[T]>
->(walker: RuleWalker, dataName: T): U[] {
+export function getUpgradeDataFromWalker<T extends keyof RuleUpgradeData, U = ValueOfChanges<RuleUpgradeData[T]>>(
+  walker: RuleWalker,
+  dataName: T,
+): U[] {
   return getChangesForTarget<U>(walker.getOptions()[0], walker.getOptions()[1][dataName]);
 }

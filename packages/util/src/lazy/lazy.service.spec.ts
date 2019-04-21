@@ -23,7 +23,7 @@ class MockDocument {
         },
       },
     ];
-  }
+  };
   createElement = () => {
     const ret: any = {
       testStatus,
@@ -31,7 +31,7 @@ class MockDocument {
     };
     if (isIE) ret.readyState = 'loading';
     return ret;
-  }
+  };
 }
 
 describe('utils: lazy', () => {

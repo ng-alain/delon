@@ -20,7 +20,7 @@ export interface ModalHelperOptions {
 export class ModalHelper {
   private zIndex = 500;
 
-  constructor(private srv: NzModalService) { }
+  constructor(private srv: NzModalService) {}
 
   /**
    * 构建一个对话框
@@ -44,7 +44,8 @@ this.NzModalRef.destroy();
     options = {
       size: 'lg',
       exact: true,
-      includeTabs: false, ...options,
+      includeTabs: false,
+      ...options,
     };
     return new Observable((observer: Observer<any>) => {
       let cls = '';
@@ -67,9 +68,7 @@ this.NzModalRef.destroy();
         nzComponentParams: params,
         nzZIndex: ++this.zIndex,
       };
-      const subject = this.srv.create(
-        { ...defaultOptions, ...options!.modalOptions },
-      );
+      const subject = this.srv.create({ ...defaultOptions, ...options!.modalOptions });
       const afterClose$ = subject.afterClose.subscribe((res: any) => {
         if (options!.exact === true) {
           if (res != null) {
@@ -165,14 +164,9 @@ this.NzModalRef.destroy();
     size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
     options?: any,
   ): Observable<any> {
-    return this.open(
-      comp,
-      params,
-      size,
-      {
-        nzMaskClosable: false,
-        ...options,
-      },
-    );
+    return this.open(comp, params, size, {
+      nzMaskClosable: false,
+      ...options,
+    });
   }
 }

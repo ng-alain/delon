@@ -14,15 +14,18 @@ export const EXTRARULES: ConvertAction[] = [
     type: 'name',
     name: 'nz-icon',
     rules: [
-      { type: 'name', value: 'i', extra_replace_attrs: { 'nzType': 'class' }, extra_update_attrs: { 'class': 'anticon anticon-{0}' } },
+      {
+        type: 'name',
+        value: 'i',
+        extra_replace_attrs: { nzType: 'class' },
+        extra_update_attrs: { class: 'anticon anticon-{0}' },
+      },
     ],
   },
   {
     type: 'name',
     name: 'nz-divider',
-    rules: [
-      { type: 'extra', extra_replace_attrs: { 'nzTitle': 'nzText' } },
-    ],
+    rules: [{ type: 'extra', extra_replace_attrs: { nzTitle: 'nzText' } }],
   },
   {
     type: 'name',

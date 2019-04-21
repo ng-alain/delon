@@ -8,11 +8,7 @@ import {
   HttpResponse,
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-  TestRequest,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -127,9 +123,7 @@ describe('auth: base.interceptor', () => {
     describe('#with allow_anonymous_key', () => {
       it(`in params`, (done: () => void) => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http
-          .get('/user', { responseType: 'text', params: { _allow_anonymous: '' } })
-          .subscribe(done);
+        http.get('/user', { responseType: 'text', params: { _allow_anonymous: '' } }).subscribe(done);
         const ret = httpBed.expectOne(() => true);
         expect(ret.request.headers.get('Authorization')).toBeNull();
         ret.flush('ok!');
@@ -155,9 +149,7 @@ describe('auth: base.interceptor', () => {
       });
       it(`in url (full url)`, (done: () => void) => {
         genModule({}, genModel(SimpleTokenModel, null));
-        http
-          .get('https://ng-alain.com/api/user?_allow_anonymous=1', { responseType: 'text' })
-          .subscribe(done);
+        http.get('https://ng-alain.com/api/user?_allow_anonymous=1', { responseType: 'text' }).subscribe(done);
         const ret = httpBed.expectOne(() => true);
         expect(ret.request.headers.get('Authorization')).toBeNull();
         ret.flush('ok!');

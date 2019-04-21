@@ -9,11 +9,7 @@ describe('NgAlainSchematic: plugin', () => {
 
   it('should be throw error when not find plugin name', () => {
     expect(() => {
-      runner.runSchematic(
-        'plugin',
-        { name: 'invalid-name', type: 'remove', packageManager: 'npm' },
-        tree,
-      );
+      runner.runSchematic('plugin', { name: 'invalid-name', type: 'remove', packageManager: 'npm' }, tree);
     }).toThrow();
   });
 });

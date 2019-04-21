@@ -14,16 +14,11 @@ describe('theme: ModalHelper', () => {
 
   beforeEach(() => {
     @NgModule({
-      imports: [
-        CommonModule,
-        NgZorroAntdModule,
-        NoopAnimationsModule,
-        AlainThemeModule.forChild(),
-      ],
+      imports: [CommonModule, NgZorroAntdModule, NoopAnimationsModule, AlainThemeModule.forChild()],
       declarations: [TestModalComponent, TestComponent],
       entryComponents: [TestModalComponent],
     })
-    class TestModule { }
+    class TestModule {}
 
     injector = TestBed.configureTestingModule({ imports: [TestModule] });
     fixture = TestBed.createComponent(TestComponent);
@@ -239,7 +234,11 @@ describe('theme: ModalHelper', () => {
   });
 });
 
-@Component({ template: `<div id="modal{{id}}">modal{{id}}</div>` })
+@Component({
+  template: `
+    <div id="modal{{ id }}">modal{{ id }}</div>
+  `,
+})
 class TestModalComponent {
   id: string = '';
   ret: any = 'true';
@@ -253,4 +252,4 @@ class TestModalComponent {
 }
 
 @Component({ template: `` })
-class TestComponent { }
+class TestComponent {}

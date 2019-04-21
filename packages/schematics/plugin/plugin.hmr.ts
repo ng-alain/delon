@@ -40,12 +40,7 @@ function envConfig(host: Tree, options: PluginOptions) {
   // 1. update default env file
   addValueToVariable(host, defEnvPath, 'environment', 'hmr: false');
   // 2. update prod env file
-  addValueToVariable(
-    host,
-    `${options.sourceRoot}/environments/environment.prod.ts`,
-    'environment',
-    'hmr: false',
-  );
+  addValueToVariable(host, `${options.sourceRoot}/environments/environment.prod.ts`, 'environment', 'hmr: false');
   // 3. copy default env file to hmr file
   const hmrEnvPath = `${options.sourceRoot}/environments/environment.hmr.ts`;
   host.create(hmrEnvPath, defContent);

@@ -70,12 +70,7 @@ export function builder(options?: {
 export function configureSFTestSuite() {
   configureTestSuite(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        AlainThemeModule.forRoot(),
-        DelonFormModule.forRoot(),
-        HttpClientTestingModule,
-      ],
+      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
       declarations: [TestFormComponent],
     });
   });
@@ -84,11 +79,7 @@ export function configureSFTestSuite() {
 export class SFPage {
   constructor(private comp: SFComponent) {}
 
-  prop(
-    _dl: DebugElement,
-    _context: TestFormComponent,
-    _fixture: ComponentFixture<TestFormComponent>,
-  ) {
+  prop(_dl: DebugElement, _context: TestFormComponent, _fixture: ComponentFixture<TestFormComponent>) {
     dl = _dl;
     context = _context;
     fixture = _fixture;
@@ -265,9 +256,7 @@ export class SFPage {
   }
 
   checkCount(cls: string, count: number, viaDocument = false): this {
-    const len = viaDocument
-      ? document.querySelectorAll(cls).length
-      : dl.queryAll(By.css(cls)).length;
+    const len = viaDocument ? document.querySelectorAll(cls).length : dl.queryAll(By.css(cls)).length;
     expect(len).toBe(count);
     return this;
   }

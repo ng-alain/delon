@@ -83,9 +83,7 @@ describe('abc: edit', () => {
               context.parent_labelWidth = 20;
               context.label = 'aa';
               fixture.detectChanges();
-              expect(page.getEl(prefixCls + 'label').style.width).toBe(
-                `${context.parent_labelWidth}px`,
-              );
+              expect(page.getEl(prefixCls + 'label').style.width).toBe(`${context.parent_labelWidth}px`);
             });
           });
           it('#layout', () => {

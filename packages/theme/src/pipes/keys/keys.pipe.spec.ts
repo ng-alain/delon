@@ -19,8 +19,7 @@ describe('Pipe: keys', () => {
 
   it('should return a array', () => {
     genModule();
-    const ul = (fixture.debugElement.query(By.css('#result'))
-      .nativeElement as HTMLUListElement).querySelectorAll('li');
+    const ul = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLUListElement).querySelectorAll('li');
     expect(ul.length).toBe(2);
     expect(ul[0].textContent).toBe('name');
     expect(ul[1].textContent).toBe('address');
@@ -32,8 +31,7 @@ describe('Pipe: keys', () => {
       <li *ngFor="let item of dist | keys: true">{{ item.key | json }}</li>
     </ul>
     `);
-    const ul = (fixture.debugElement.query(By.css('#result'))
-      .nativeElement as HTMLUListElement).querySelectorAll('li');
+    const ul = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLUListElement).querySelectorAll('li');
     expect(ul.length).toBe(2);
     expect(ul[0].textContent).toBe('1');
     expect(ul[1].textContent).toBe('2');
@@ -42,9 +40,10 @@ describe('Pipe: keys', () => {
 
 @Component({
   template: `
-  <ul id="result">
-    <li *ngFor="let item of data | keys">{{item.key}}</li>
-  </ul>`,
+    <ul id="result">
+      <li *ngFor="let item of data | keys">{{ item.key }}</li>
+    </ul>
+  `,
 })
 class TestComponent {
   data: any = {

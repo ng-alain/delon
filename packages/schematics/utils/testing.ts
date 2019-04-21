@@ -5,10 +5,7 @@ import { Schema as NgAddSchema } from '../ng-add/schema.d';
 export const APPNAME = 'foo';
 
 export function createNgRunner() {
-  return new SchematicTestRunner(
-    'schematics',
-    join('./node_modules/@schematics/angular/collection.json'),
-  );
+  return new SchematicTestRunner('schematics', join('./node_modules/@schematics/angular/collection.json'));
 }
 
 export function createAlainRunner() {

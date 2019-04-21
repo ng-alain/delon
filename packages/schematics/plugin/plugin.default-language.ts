@@ -29,18 +29,13 @@ export function pluginDefaultLanguage(options: PluginOptions): Rule {
     }
     const targetLang = getLangConfig(options.defaultLanguage);
     if (targetLang == null) {
-      console.warn(
-        `Target language not supported, refer to https://ng-alain.com/cli/plugin#defaultLanguage`,
-      );
+      console.warn(`Target language not supported, refer to https://ng-alain.com/cli/plugin#defaultLanguage`);
       return;
     }
     console.log(`Changes default languare [${oldLang}] to [${options.defaultLanguage}]`);
     // angular
     content = content
-      .replace(
-        /@angular\/common\/locales\/([^']+)/,
-        `@angular/common/locales/${options.defaultLanguage}`,
-      )
+      .replace(/@angular\/common\/locales\/([^']+)/, `@angular/common/locales/${options.defaultLanguage}`)
       .replace(/abbr: '([^']+)/, `abbr: '${options.defaultLanguage}`);
     // zorro
     content = content.replace(/NZ_I18N, ([^ ]+)/, `NZ_I18N, ${targetLang.zorro}`);

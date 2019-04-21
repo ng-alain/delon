@@ -317,14 +317,10 @@ export abstract class FormProperty {
               }),
             );
             const visibilityCheck = property._visibilityChanges;
-            const and = combineLatest(valueCheck, visibilityCheck).pipe(
-              map(results => results[0] && results[1]),
-            );
+            const and = combineLatest(valueCheck, visibilityCheck).pipe(map(results => results[0] && results[1]));
             propertiesBinding.push(and);
           } else {
-            console.warn(
-              `Can't find property ${dependencyPath} for visibility check of ${this.path}`,
-            );
+            console.warn(`Can't find property ${dependencyPath} for visibility check of ${this.path}`);
           }
         }
       }

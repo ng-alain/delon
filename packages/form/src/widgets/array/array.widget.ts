@@ -14,10 +14,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   arraySpan = 8;
 
   get addDisabled() {
-    return (
-      this.schema.maxItems &&
-      (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems
-    );
+    return this.schema.maxItems && (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems;
   }
 
   get l(): LocaleData {
@@ -31,8 +28,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
 
     this.addTitle = this.ui.addTitle || this.l.addText;
     this.addType = this.ui.addType || 'dashed';
-    this.removeTitle =
-      this.ui.removable === false ? null : this.ui.removeTitle || this.l.removeText;
+    this.removeTitle = this.ui.removable === false ? null : this.ui.removeTitle || this.l.removeText;
   }
 
   addItem() {

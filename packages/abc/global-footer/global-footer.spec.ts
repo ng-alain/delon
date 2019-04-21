@@ -35,10 +35,7 @@ describe('abc: global-footer', () => {
       imports: [RouterTestingModule.withRoutes([]), GlobalFooterModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [TestComponent],
-      providers: [
-        { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: WINDOW, useFactory: () => new MockWindow() },
-      ],
+      providers: [{ provide: APP_BASE_HREF, useValue: '/' }, { provide: WINDOW, useFactory: () => new MockWindow() }],
     });
   });
 

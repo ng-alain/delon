@@ -17,7 +17,7 @@ export interface MetaList {
 
   order?: number;
 
-  meta?: { [key: string ]: MetaItem };
+  meta?: { [key: string]: MetaItem };
 }
 
 export interface MetaItem {

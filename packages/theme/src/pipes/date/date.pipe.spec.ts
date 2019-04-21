@@ -45,16 +45,15 @@ describe('Pipe: _date', () => {
           });
       }
       fixture.detectChanges();
-      expect(
-        (fixture.debugElement.query(By.css('#result'))
-          .nativeElement as HTMLElement).innerText,
-      ).toBe(item.result);
+      expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe(item.result);
     });
   });
 });
 
 @Component({
-  template: `<p id="result">{{ value | _date:format }}</p>`,
+  template: `
+    <p id="result">{{ value | _date: format }}</p>
+  `,
 })
 class TestComponent {
   value: Date | string | number;

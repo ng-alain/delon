@@ -44,54 +44,53 @@ export class AppComponent implements OnDestroy {
       },
     });
 
-    this.router.events
-      .subscribe(evt => {
-        if (!(evt instanceof NavigationEnd)) return ;
+    this.router.events.subscribe(evt => {
+      if (!(evt instanceof NavigationEnd)) return;
 
-        const url = evt.url.split('#')[0].split('?')[0];
-        if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
-        this.prevUrl = url;
+      const url = evt.url.split('#')[0].split('?')[0];
+      if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
+      this.prevUrl = url;
 
-        let urlLang = url.split('/').pop() || this.i18n.zone;
-        if (urlLang && ['zh', 'en'].indexOf(urlLang) === -1) {
-          urlLang = this.i18n.zone;
+      let urlLang = url.split('/').pop() || this.i18n.zone;
+      if (urlLang && ['zh', 'en'].indexOf(urlLang) === -1) {
+        urlLang = this.i18n.zone;
+      }
+      const redirectArr = evt.urlAfterRedirects
+        .split('#')[0]
+        .split('?')[0]
+        .split('/');
+      const redirectLang = redirectArr.pop();
+      if (urlLang !== redirectLang) {
+        let newUrl = '';
+        if (~evt.urlAfterRedirects.indexOf('#')) {
+          newUrl = evt.urlAfterRedirects.replace(`/${redirectLang}#`, `/${urlLang}#`);
+        } else {
+          newUrl = redirectArr.concat(urlLang).join('/');
         }
-        const redirectArr = evt.urlAfterRedirects
-          .split('#')[0]
-          .split('?')[0]
-          .split('/');
-        const redirectLang = redirectArr.pop();
-        if (urlLang !== redirectLang) {
-          let newUrl = '';
-          if (~evt.urlAfterRedirects.indexOf('#')) {
-            newUrl = evt.urlAfterRedirects.replace(`/${redirectLang}#`, `/${urlLang}#`);
-          } else {
-            newUrl = redirectArr.concat(urlLang).join('/');
-          }
-          this.router.navigateByUrl(newUrl, { replaceUrl: true });
-          return;
-        }
+        this.router.navigateByUrl(newUrl, { replaceUrl: true });
+        return;
+      }
 
-        if (urlLang) {
-          const lang = this.i18n.getFullLang(urlLang);
+      if (urlLang) {
+        const lang = this.i18n.getFullLang(urlLang);
 
-          // update i18n
-          if (this.i18n.lang !== lang) {
-            this.i18n.use(lang as any);
-            this.meta.clearMenu();
-          }
-          this.meta.refMenu(url);
+        // update i18n
+        if (this.i18n.lang !== lang) {
+          this.i18n.use(lang as any);
+          this.meta.clearMenu();
         }
+        this.meta.refMenu(url);
+      }
 
-        if (this.meta.set(url)) {
-          this.router.navigateByUrl('/404');
-          return;
-        }
-        const item = this.meta.getPathByUrl(url);
-        this.title.setTitle(item ? item.title || item.subtitle : '');
-        // scroll to top
-        document.body.scrollIntoView();
-      });
+      if (this.meta.set(url)) {
+        this.router.navigateByUrl('/404');
+        return;
+      }
+      const item = this.meta.getPathByUrl(url);
+      this.title.setTitle(item ? item.title || item.subtitle : '');
+      // scroll to top
+      document.body.scrollIntoView();
+    });
   }
 
   ngOnDestroy(): void {

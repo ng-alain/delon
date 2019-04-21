@@ -26,7 +26,7 @@ export class SliderWidget extends ControlWidget implements OnInit {
   _formatter = (value: number) => {
     if (this.ui.formatter) return this.ui.formatter(value);
     return value;
-  }
+  };
 
   _afterChange(value: SliderValue) {
     if (this.ui.afterChange) this.ui.afterChange(value);

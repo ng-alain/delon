@@ -94,9 +94,7 @@ export class SocialService implements OnDestroy {
         this.observer.complete();
       }
     }, 100);
-    return Observable.create(
-      (observer: Observer<ITokenModel | null>) => (this.observer = observer),
-    );
+    return Observable.create((observer: Observer<ITokenModel | null>) => (this.observer = observer));
   }
 
   /**

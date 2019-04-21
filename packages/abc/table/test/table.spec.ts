@@ -1,13 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Component, DebugElement, Injector, Type, ViewChild } from '@angular/core';
-import {
-  discardPeriodicTasks,
-  fakeAsync,
-  tick,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { discardPeriodicTasks, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,10 +22,7 @@ import { deepCopy, deepGet } from '@delon/util';
 import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 
 import { configureTestSuite, dispatchDropDown } from '@delon/testing';
-import {
-  AlainI18NService,
-  AlainI18NServiceFake,
-} from '../../../theme/src/services/i18n/i18n';
+import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STDataSource } from '../table-data-source';
 import { STExport } from '../table-export';
 import { STComponent } from '../table.component';
@@ -53,8 +44,7 @@ import { STModule } from '../table.module';
 
 const MOCKDATE = new Date();
 const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
-const r = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min + 1) + min);
+const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
 
 function genData(count: number) {
   return Array(count)
@@ -123,10 +113,12 @@ describe('abc: table', () => {
       STModule,
       DelonLocaleModule,
     ];
-    const providers = [{
-      provide: ALAIN_I18N_TOKEN,
-      useClass: MockI18NServiceFake,
-    }];
+    const providers = [
+      {
+        provide: ALAIN_I18N_TOKEN,
+        useClass: MockI18NServiceFake,
+      },
+    ];
     if (other.providers!.length > 0) {
       providers.push(...other.providers!);
     }
@@ -163,50 +155,38 @@ describe('abc: table', () => {
       describe('[type]', () => {
         describe(`with checkbox`, () => {
           it(`should be render checkbox`, (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
-              .then(() => {
-                page
-                  .expectElCount('.st__checkall', 1, 'muse be a check all')
-                  .expectElCount(
-                    '.st__body .ant-checkbox-wrapper',
-                    PS,
-                    `muse be ${PS} check in body`,
-                  );
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
+              page
+                .expectElCount('.st__checkall', 1, 'muse be a check all')
+                .expectElCount('.st__body .ant-checkbox-wrapper', PS, `muse be ${PS} check in body`);
+              done();
+            });
           });
           it('should auto column width', (done: () => void) => {
-            page
-              .newColumn([{ title: 'id', index: 'id', type: 'checkbox' }])
-              .then(() => {
-                page.expectColumn('id', 'width', '50px');
-                done();
-              });
+            page.newColumn([{ title: 'id', index: 'id', type: 'checkbox' }]).then(() => {
+              page.expectColumn('id', 'width', '50px');
+              done();
+            });
           });
           it('should be check all current page', (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
-              .then(() => {
-                page.click('.st__checkall');
-                expect(comp._data.filter(w => w.checked).length).toBe(PS);
-                page.click('.st__checkall');
-                expect(comp._data.filter(w => w.checked).length).toBe(0);
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
+              page.click('.st__checkall');
+              expect(comp._data.filter(w => w.checked).length).toBe(PS);
+              page.click('.st__checkall');
+              expect(comp._data.filter(w => w.checked).length).toBe(0);
+              done();
+            });
           });
           it('should be checked in row', (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
-              .then(() => {
-                page
-                  .expectData(1, 'checked', undefined)
-                  .click('.st__body .ant-checkbox-wrapper')
-                  .expectData(1, 'checked', true)
-                  .click('.st__body .ant-checkbox-wrapper')
-                  .expectData(1, 'checked', false);
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
+              page
+                .expectData(1, 'checked', undefined)
+                .click('.st__body .ant-checkbox-wrapper')
+                .expectData(1, 'checked', true)
+                .click('.st__body .ant-checkbox-wrapper')
+                .expectData(1, 'checked', false);
+              done();
+            });
           });
           it('should selected id value less than 2 rows', (done: () => void) => {
             const selections = [
@@ -215,84 +195,62 @@ describe('abc: table', () => {
                 select: (ls: any[]) => ls.forEach(i => (i.checked = i.id < 2)),
               },
             ];
-            page
-              .newColumn([
-                { title: '', index: 'id', type: 'checkbox', selections },
-              ])
-              .then(() => {
-                page
-                  .expectData(1, 'checked', undefined)
-                  .expectData(2, 'checked', undefined);
-                // mock click
-                comp._rowSelection(comp._columns[0].selections![0]);
-                page
-                  .expectData(1, 'checked', true)
-                  .expectData(2, 'checked', false);
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'checkbox', selections }]).then(() => {
+              page.expectData(1, 'checked', undefined).expectData(2, 'checked', undefined);
+              // mock click
+              comp._rowSelection(comp._columns[0].selections![0]);
+              page.expectData(1, 'checked', true).expectData(2, 'checked', false);
+              done();
+            });
           });
           it('should be unchecked via clearCheck', (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'id', type: 'checkbox' }])
-              .then(() => {
-                page
-                  .expectData(1, 'checked', undefined)
-                  .click('.st__body .ant-checkbox-wrapper')
-                  .expectData(1, 'checked', true);
-                comp.clearCheck();
-                page.expectData(1, 'checked', false);
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
+              page
+                .expectData(1, 'checked', undefined)
+                .click('.st__body .ant-checkbox-wrapper')
+                .expectData(1, 'checked', true);
+              comp.clearCheck();
+              page.expectData(1, 'checked', false);
+              done();
+            });
           });
         });
         describe('with radio', () => {
           it(`should be render checkbox`, (done: () => void) => {
-            page
-              .newColumn([{ title: 'RADIOname', index: 'id', type: 'radio' }])
-              .then(() => {
-                page
-                  .expectHead('RADIOname', 'id')
-                  .expectElCount(
-                    '.st__body .ant-radio-wrapper',
-                    PS,
-                    `muse be ${PS} radio in body`,
-                  );
-                done();
-              });
+            page.newColumn([{ title: 'RADIOname', index: 'id', type: 'radio' }]).then(() => {
+              page
+                .expectHead('RADIOname', 'id')
+                .expectElCount('.st__body .ant-radio-wrapper', PS, `muse be ${PS} radio in body`);
+              done();
+            });
           });
           it('should auto column width', (done: () => void) => {
-            page
-              .newColumn([{ title: 'id', index: 'id', type: 'radio' }])
-              .then(() => {
-                page.expectColumn('id', 'width', '50px');
-                done();
-              });
+            page.newColumn([{ title: 'id', index: 'id', type: 'radio' }]).then(() => {
+              page.expectColumn('id', 'width', '50px');
+              done();
+            });
           });
           it('should be checked in row', (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'id', type: 'radio' }])
-              .then(() => {
-                page
-                  .expectData(1, 'checked', undefined)
-                  .click('.st__body .ant-radio-wrapper')
-                  .expectData(1, 'checked', true)
-                  .click('.st__body tr[data-index="1"] .ant-radio-wrapper')
-                  .expectData(1, 'checked', false);
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'radio' }]).then(() => {
+              page
+                .expectData(1, 'checked', undefined)
+                .click('.st__body .ant-radio-wrapper')
+                .expectData(1, 'checked', true)
+                .click('.st__body tr[data-index="1"] .ant-radio-wrapper')
+                .expectData(1, 'checked', false);
+              done();
+            });
           });
           it('should be unchecked via clearRadio', (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'id', type: 'radio' }])
-              .then(() => {
-                page
-                  .expectData(1, 'checked', undefined)
-                  .click('.st__body .ant-radio-wrapper')
-                  .expectData(1, 'checked', true);
-                comp.clearRadio();
-                page.expectData(1, 'checked', false);
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'radio' }]).then(() => {
+              page
+                .expectData(1, 'checked', undefined)
+                .click('.st__body .ant-radio-wrapper')
+                .expectData(1, 'checked', true);
+              comp.clearRadio();
+              page.expectData(1, 'checked', false);
+              done();
+            });
           });
         });
         describe('with link', () => {
@@ -312,12 +270,10 @@ describe('abc: table', () => {
             });
           });
           it(`should be text when not specify click`, (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'id', type: 'link' }])
-              .then(() => {
-                page.expectCell(null, 1, 1, 'a');
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'link' }]).then(() => {
+              page.expectCell(null, 1, 1, 'a');
+              done();
+            });
           });
           it('should be navigate url when click is string value', (done: () => void) => {
             const router = injector.get(Router);
@@ -358,30 +314,24 @@ describe('abc: table', () => {
         });
         describe('with currency', () => {
           it(`should be render currency`, (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'id', type: 'currency' }])
-              .then(() => {
-                page.expectCell('￥1.00');
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'currency' }]).then(() => {
+              page.expectCell('￥1.00');
+              done();
+            });
           });
           it(`should be text right`, (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'id', type: 'currency' }])
-              .then(() => {
-                expect(page.getCell().classList).toContain('text-right');
-                done();
-              });
+            page.newColumn([{ title: '', index: 'id', type: 'currency' }]).then(() => {
+              expect(page.getCell().classList).toContain('text-right');
+              done();
+            });
           });
         });
         describe('with number', () => {
           it(`should be render number`, (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'num', type: 'number' }])
-              .then(() => {
-                page.expectCell('11,111,111,111.456');
-                done();
-              });
+            page.newColumn([{ title: '', index: 'num', type: 'number' }]).then(() => {
+              page.expectCell('11,111,111,111.456');
+              done();
+            });
           });
           it(`should be custom render number digits`, (done: () => void) => {
             page
@@ -399,24 +349,18 @@ describe('abc: table', () => {
               });
           });
           it(`should be text right`, (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'num', type: 'number' }])
-              .then(() => {
-                expect(page.getCell().classList).toContain('text-right');
-                done();
-              });
+            page.newColumn([{ title: '', index: 'num', type: 'number' }]).then(() => {
+              expect(page.getCell().classList).toContain('text-right');
+              done();
+            });
           });
         });
         describe('with date', () => {
           it(`should be render date`, (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'date', type: 'date' }])
-              .then(() => {
-                page.expectCell(
-                  new DatePipe().transform(MOCKDATE, 'YYYY-MM-DD HH:mm'),
-                );
-                done();
-              });
+            page.newColumn([{ title: '', index: 'date', type: 'date' }]).then(() => {
+              page.expectCell(new DatePipe().transform(MOCKDATE, 'YYYY-MM-DD HH:mm'));
+              done();
+            });
           });
           it(`should be custom render date format`, (done: () => void) => {
             page
@@ -434,36 +378,24 @@ describe('abc: table', () => {
               });
           });
           it(`should be text center`, (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'date', type: 'date' }])
-              .then(() => {
-                expect(page.getCell().classList).toContain('text-center');
-                done();
-              });
+            page.newColumn([{ title: '', index: 'date', type: 'date' }]).then(() => {
+              expect(page.getCell().classList).toContain('text-center');
+              done();
+            });
           });
         });
         describe('with yn', () => {
           it(`should be render yn`, (done: () => void) => {
-            page
-              .newColumn([{ title: '', index: 'yn', type: 'yn' }])
-              .then(() => {
-                page
-                  .expectCell('是', 1, 1, '', true)
-                  .expectCell('否', 2, 1, '', true);
-                done();
-              });
+            page.newColumn([{ title: '', index: 'yn', type: 'yn' }]).then(() => {
+              page.expectCell('是', 1, 1, '', true).expectCell('否', 2, 1, '', true);
+              done();
+            });
           });
           it(`should be custom render yn`, (done: () => void) => {
-            page
-              .newColumn([
-                { title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' },
-              ])
-              .then(() => {
-                page
-                  .expectCell('Y', 1, 1, '', true)
-                  .expectCell('N', 2, 1, '', true);
-                done();
-              });
+            page.newColumn([{ title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' }]).then(() => {
+              page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
+              done();
+            });
           });
           it(`should be custom truth value`, (done: () => void) => {
             page
@@ -496,24 +428,16 @@ describe('abc: table', () => {
           5: { text: '警告', color: 'warning' },
         };
         it(`should be render badge`, (done: () => void) => {
-          page
-            .newColumn([
-              { title: '', index: 'status', type: 'badge', badge: BADGE },
-            ])
-            .then(() => {
-              page.expectElCount('.ant-badge', PS);
-              done();
-            });
+          page.newColumn([{ title: '', index: 'status', type: 'badge', badge: BADGE }]).then(() => {
+            page.expectElCount('.ant-badge', PS);
+            done();
+          });
         });
         it(`should be render text when badge is undefined or null`, (done: () => void) => {
-          page
-            .newColumn([
-              { title: '', index: 'status', type: 'badge', badge: null },
-            ])
-            .then(() => {
-              page.expectElCount('.ant-badge', 0);
-              done();
-            });
+          page.newColumn([{ title: '', index: 'status', type: 'badge', badge: null }]).then(() => {
+            page.expectElCount('.ant-badge', 0);
+            done();
+          });
         });
       });
       describe('with tag', () => {
@@ -525,20 +449,16 @@ describe('abc: table', () => {
           5: { text: '警告', color: 'orange' },
         };
         it(`should be render tag`, (done: () => void) => {
-          page
-            .newColumn([{ title: 'tag', index: 'tag', type: 'tag', tag: TAG }])
-            .then(() => {
-              page.expectElCount('.ant-tag', PS);
-              done();
-            });
+          page.newColumn([{ title: 'tag', index: 'tag', type: 'tag', tag: TAG }]).then(() => {
+            page.expectElCount('.ant-tag', PS);
+            done();
+          });
         });
         it(`should be render text when tag is undefined or null`, (done: () => void) => {
-          page
-            .newColumn([{ title: '', index: 'status', type: 'tag', tag: null }])
-            .then(() => {
-              page.expectElCount('.ant-tag', 0);
-              done();
-            });
+          page.newColumn([{ title: '', index: 'status', type: 'tag', tag: null }]).then(() => {
+            page.expectElCount('.ant-tag', 0);
+            done();
+          });
         });
       });
       describe('[other]', () => {
@@ -571,12 +491,10 @@ describe('abc: table', () => {
             });
         });
         it('should be custom class in cell', (done: () => void) => {
-          page
-            .newColumn([{ title: '', index: 'id', className: 'asdf' }])
-            .then(() => {
-              expect(page.getCell().classList).toContain('asdf');
-              done();
-            });
+          page.newColumn([{ title: '', index: 'id', className: 'asdf' }]).then(() => {
+            expect(page.getCell().classList).toContain('asdf');
+            done();
+          });
         });
       });
       describe('[buttons]', () => {
@@ -597,17 +515,9 @@ describe('abc: table', () => {
           page.newColumn(columns).then(() => {
             page.expectCell('del', 1, 1, 'nz-popconfirm');
             // mock trigger
-            comp._btnClick(
-              new MouseEvent('click'),
-              comp._data[0],
-              comp._columns[0].buttons![0],
-            );
+            comp._btnClick(new MouseEvent('click'), comp._data[0], comp._columns[0].buttons![0]);
             expect(columns[0].buttons![1].click).not.toHaveBeenCalled();
-            comp._btnClick(
-              new MouseEvent('click'),
-              comp._data[0],
-              comp._columns[0].buttons![1],
-            );
+            comp._btnClick(new MouseEvent('click'), comp._data[0], comp._columns[0].buttons![1]);
             expect(columns[0].buttons![1].click).toHaveBeenCalled();
             done();
           });
@@ -814,9 +724,7 @@ describe('abc: table', () => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [
-                    { text: 'a', type: 'link', click: (item: any) => '/a' },
-                  ],
+                  buttons: [{ text: 'a', type: 'link', click: (item: any) => '/a' }],
                 },
               ];
               const router = injector.get(Router);
@@ -832,9 +740,7 @@ describe('abc: table', () => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [
-                    { text: 'a', type: 'link', click: (item: any) => '/a' },
-                  ],
+                  buttons: [{ text: 'a', type: 'link', click: (item: any) => '/a' }],
                 },
               ];
               const router = injector.get(Router);
@@ -907,12 +813,12 @@ describe('abc: table', () => {
         fixture.detectChanges();
         expect(comp.ps).toBe(PS);
       });
-      it('should be automatically cancel paging when the returned body value is an array type', (done) => {
+      it('should be automatically cancel paging when the returned body value is an array type', done => {
         context.pi = 1;
         context.ps = 2;
         context.data = '/mock';
         fixture.detectChanges();
-        httpBed.expectOne(req => true).flush([ {}, {}, {} ]);
+        httpBed.expectOne(req => true).flush([{}, {}, {}]);
         fixture.whenStable().then(() => {
           expect(comp.pi).toBe(1);
           expect(comp.ps).toBe(3);
@@ -967,10 +873,7 @@ describe('abc: table', () => {
         context.page.total = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-          page.expectElContent(
-            '.ant-pagination-total-text',
-            `共 ${DEFAULTCOUNT} 条`,
-          );
+          page.expectElContent('.ant-pagination-total-text', `共 ${DEFAULTCOUNT} 条`);
           done();
         });
       });
@@ -988,10 +891,7 @@ describe('abc: table', () => {
         context.page.total = `{{total}}/{{range[0]}}/{{range[1]}}`;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-          page.expectElContent(
-            '.ant-pagination-total-text',
-            `${DEFAULTCOUNT}/${comp.pi}/${comp.ps}`,
-          );
+          page.expectElContent('.ant-pagination-total-text', `${DEFAULTCOUNT}/${comp.pi}/${comp.ps}`);
           done();
         });
       });
@@ -1098,7 +998,7 @@ describe('abc: table', () => {
     });
     describe('#expand', () => {
       beforeEach(() => createComp(true, TestExpandComponent));
-      it('should be switch expand via expand icon', (done) => {
+      it('should be switch expand via expand icon', done => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           const el = page.getCell(1, 1).querySelector('.ant-table-row-expand-icon') as HTMLElement;
@@ -1111,7 +1011,7 @@ describe('abc: table', () => {
         });
       });
       describe('should be expanded when click row if expandRowByClick', () => {
-        it('with true', (done) => {
+        it('with true', done => {
           context.expandRowByClick = true;
           fixture.detectChanges();
           fixture.whenStable().then(() => {
@@ -1124,7 +1024,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        it('with false', (done) => {
+        it('with false', done => {
           context.expandRowByClick = false;
           fixture.detectChanges();
           fixture.whenStable().then(() => {
@@ -1137,7 +1037,7 @@ describe('abc: table', () => {
         });
       });
       describe('should be set showExpand in row data', () => {
-        it(`muse be hide expand icon`, (done) => {
+        it(`muse be hide expand icon`, done => {
           context.expandRowByClick = false;
           context.data = deepCopy(USERS).slice(0, 1);
           context.data![0].showExpand = false;
@@ -1163,10 +1063,7 @@ describe('abc: table', () => {
               index: 'i',
               filter: {
                 multiple: true,
-                menus: [
-                  { text: 'f1', value: 'fv1' },
-                  { text: 'f2', value: 'fv2' },
-                ],
+                menus: [{ text: 'f1', value: 'fv1' }, { text: 'f2', value: 'fv2' }],
                 confirmText: 'ok',
                 clearText: 'reset',
                 icon: 'aa',
@@ -1265,9 +1162,7 @@ describe('abc: table', () => {
             fixture.detectChanges();
             comp.sort(comp._columns[0], 0, 'descend');
             const sortList = comp._columns
-              .filter(
-                item => item._sort && item._sort.enabled && item._sort.default,
-              )
+              .filter(item => item._sort && item._sort.enabled && item._sort.default)
               .map(item => item._sort);
             expect(sortList.length).toBe(1);
             expect(sortList[0].default).toBe('descend');
@@ -1280,9 +1175,7 @@ describe('abc: table', () => {
             comp.sort(comp._columns[0], 0, 'descend');
             comp.sort(comp._columns[1], 0, 'ascend');
             const sortList = comp._columns
-              .filter(
-                item => item._sort && item._sort.enabled && item._sort.default,
-              )
+              .filter(item => item._sort && item._sort.enabled && item._sort.default)
               .map(item => item._sort);
             expect(sortList.length).toBe(2);
             expect(sortList[0].default).toBe('descend');
@@ -1356,7 +1249,7 @@ describe('abc: table', () => {
           expect(comp.req.params.a).toBe(1);
           expect(comp.req.params.b).toBe(2);
         });
-        it('can\'t contaminate raw data', () => {
+        it("can't contaminate raw data", () => {
           const params: any = { a: 1 };
           context.req = { params };
           fixture.detectChanges();
@@ -1450,7 +1343,7 @@ describe('abc: table', () => {
           });
         });
         it('shoule be recalculate no value', done => {
-          page.newColumn([ { title: '', type: 'no' } ]).then(() => {
+          page.newColumn([{ title: '', type: 'no' }]).then(() => {
             page.expectCurrentPageTotal(PS);
             comp._data.forEach((v, idx) => expect(v._values[0].text).toBe(idx + 1));
             comp.removeRow(comp._data[0]);
@@ -1476,7 +1369,7 @@ describe('abc: table', () => {
           spyOn(comp, 'clearSort').and.returnValue(comp);
           fixture.detectChanges();
         });
-        it('#clear', (done) => {
+        it('#clear', done => {
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(PS);
             comp.clear();
@@ -1484,7 +1377,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        it('#clear, excludes clean status', (done) => {
+        it('#clear, excludes clean status', done => {
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(PS);
             expect(comp.clearCheck).not.toHaveBeenCalled();
@@ -1500,12 +1393,10 @@ describe('abc: table', () => {
           expect(comp.clearCheck).toHaveBeenCalled();
         });
       });
-      it('#resetColumns', (done) => {
+      it('#resetColumns', done => {
         let res = true;
         const cls = '.st__body tr[data-index="0"] td';
-        page.newColumn([
-          { title: '', index: 'name', iif: () => res },
-        ]);
+        page.newColumn([{ title: '', index: 'name', iif: () => res }]);
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           page.expectElCount(cls, 1);
@@ -1571,7 +1462,7 @@ describe('abc: table', () => {
       });
     });
     describe('#widthMode', () => {
-      it('with type is default', (done) => {
+      it('with type is default', done => {
         context.widthMode = { type: 'default' };
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -1580,30 +1471,26 @@ describe('abc: table', () => {
         });
       });
       describe('with type is strict', () => {
-        it('shoule be add text-truncate class when className is empty and behavior is truncate', (done) => {
+        it('shoule be add text-truncate class when className is empty and behavior is truncate', done => {
           context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
           fixture.detectChanges();
-          page
-            .newColumn([{ title: '', index: 'id', width: 50 }])
-            .then(() => {
-              page.expectElCount(`.st__width-strict`, 1);
-              page.expectElCount(`.st__width-strict-truncate`, 1);
-              page.expectElCount(`td.text-truncate`, context.comp._data.length);
-              done();
-            });
+          page.newColumn([{ title: '', index: 'id', width: 50 }]).then(() => {
+            page.expectElCount(`.st__width-strict`, 1);
+            page.expectElCount(`.st__width-strict-truncate`, 1);
+            page.expectElCount(`td.text-truncate`, context.comp._data.length);
+            done();
+          });
         });
-        it('should be ingore add text-truncate class when className is non-empty', (done) => {
+        it('should be ingore add text-truncate class when className is non-empty', done => {
           context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
           fixture.detectChanges();
-          page
-            .newColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }])
-            .then(() => {
-              page.expectElCount(`.st__width-strict`, 1);
-              page.expectElCount(`.st__width-strict-truncate`, 1);
-              page.expectElCount(`.text-truncate`, 0);
-              page.expectElCount(`td.aaaa`, context.comp._data.length);
-              done();
-            });
+          page.newColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }]).then(() => {
+            page.expectElCount(`.st__width-strict`, 1);
+            page.expectElCount(`.st__width-strict-truncate`, 1);
+            page.expectElCount(`.text-truncate`, 0);
+            page.expectElCount(`td.aaaa`, context.comp._data.length);
+            done();
+          });
         });
       });
     });
@@ -1613,20 +1500,26 @@ describe('abc: table', () => {
     describe('#multiSort', () => {
       it('should default is mulit sorting by config', () => {
         genModule({
-          minColumn: true, providers: [{
-            provide: STConfig,
-            useValue: Object.assign(new STConfig(), { multiSort: { global: true } } as STConfig),
-          }],
+          minColumn: true,
+          providers: [
+            {
+              provide: STConfig,
+              useValue: Object.assign(new STConfig(), { multiSort: { global: true } } as STConfig),
+            },
+          ],
         });
         const ms: STMultiSort = comp.multiSort;
         expect(ms).not.toBeUndefined();
       });
       it('should default non-mulit sorting by config', () => {
         genModule({
-          minColumn: true, providers: [{
-            provide: STConfig,
-            useValue: Object.assign(new STConfig(), { multiSort: { global: false } } as STConfig),
-          }],
+          minColumn: true,
+          providers: [
+            {
+              provide: STConfig,
+              useValue: Object.assign(new STConfig(), { multiSort: { global: false } } as STConfig),
+            },
+          ],
         });
         const ms: STMultiSort = comp.multiSort;
         expect(ms).toBeUndefined();
@@ -1639,14 +1532,10 @@ describe('abc: table', () => {
             <ng-template st-row="id" type="title"><div class="id-title">ID</div></ng-template>
           </st>`,
         });
-        page
-          .newColumn([{ title: '', index: 'id', renderTitle: 'id' }])
-          .then(() => {
-            expect(
-              page.getHead('id').querySelector('.id-title')!.textContent,
-            ).toBe('ID');
-            done();
-          });
+        page.newColumn([{ title: '', index: 'id', renderTitle: 'id' }]).then(() => {
+          expect(page.getHead('id').querySelector('.id-title')!.textContent).toBe('ID');
+          done();
+        });
       });
       it('should be custom row', (done: () => void) => {
         genModule({
@@ -1705,7 +1594,7 @@ describe('abc: table', () => {
     _changeData: STChange;
     constructor() {
       spyOn(context, 'error');
-      spyOn(context, 'change').and.callFake(e => this._changeData = e);
+      spyOn(context, 'change').and.callFake(e => (this._changeData = e));
       comp = context.comp;
     }
     get(cls: string): DebugElement {
@@ -1745,13 +1634,7 @@ describe('abc: table', () => {
      * @param cls 对单元格进一步筛选
      * @param isContain 是否包含条件
      */
-    expectCell(
-      value: string | null,
-      row: number = 1,
-      column: number = 1,
-      cls?: string,
-      isContain?: boolean,
-    ): this {
+    expectCell(value: string | null, row: number = 1, column: number = 1, cls?: string, isContain?: boolean): this {
       let cell = this.getCell(row, column);
       if (cls) {
         cell = cell.querySelector(cls) as HTMLElement;
@@ -1826,9 +1709,7 @@ describe('abc: table', () => {
     }
     expectTotalPage(value: number): this {
       const a = dl.query(By.css('nz-pagination'));
-      expect((a.componentInstance as NzPaginationComponent).lastIndex).toBe(
-        value,
-      );
+      expect((a.componentInstance as NzPaginationComponent).lastIndex).toBe(value);
       return this;
     }
     expectCurrentPageTotal(value: number): this {
@@ -1839,20 +1720,12 @@ describe('abc: table', () => {
       expect(deepGet(comp, 'pi')).toBe(value);
       return this;
     }
-    expectElCount(
-      cls: string,
-      count: number,
-      expectationFailOutput?: string,
-    ): this {
+    expectElCount(cls: string, count: number, expectationFailOutput?: string): this {
       const els = document.querySelectorAll(cls);
       expect(els.length).toBe(count, expectationFailOutput);
       return this;
     }
-    expectElContent(
-      cls: string,
-      content: string,
-      expectationFailOutput?: string,
-    ): this {
+    expectElContent(cls: string, content: string, expectationFailOutput?: string): this {
       const el = document.querySelector(cls);
       if (content == null) {
         expect(el).toBeNull(expectationFailOutput);
@@ -1862,18 +1735,12 @@ describe('abc: table', () => {
       return this;
     }
     openDropDownInHead(nams: string): this {
-      dispatchDropDown(
-        dl.query(By.css(`.ant-table-thead th[data-col="${nams}"]`)),
-        'click',
-      );
+      dispatchDropDown(dl.query(By.css(`.ant-table-thead th[data-col="${nams}"]`)), 'click');
       fixture.detectChanges();
       return this;
     }
     openDropDownInRow(row: number = 1) {
-      dispatchDropDown(
-        dl.query(By.css(`.st__body tr[data-index="${row - 1}"]`)),
-        'mouseleave',
-      );
+      dispatchDropDown(dl.query(By.css(`.st__body tr[data-index="${row - 1}"]`)), 'mouseleave');
       fixture.detectChanges();
       return this;
     }
@@ -1886,29 +1753,32 @@ describe('abc: table', () => {
 
 @Component({
   template: `
-    <st #st
-        [data]="data"
-        [req]="req"
-        [res]="res"
-        [columns]="columns"
-        [ps]="ps" [pi]="pi" [total]="total"
-        [page]="page"
-        [responsiveHideHeaderFooter]="responsiveHideHeaderFooter"
-        [widthMode]="widthMode"
-
-        [loading]="loading" [loadingDelay]="loadingDelay"
-        [bordered]="bordered" [size]="size"
-        [scroll]="scroll"
-        [multiSort]="multiSort"
-
-        [noResult]="noResult"
-        [widthConfig]="widthConfig"
-        [rowClickTime]="rowClickTime"
-
-        (change)="change($event)"
-        (error)="error()"
+    <st
+      #st
+      [data]="data"
+      [req]="req"
+      [res]="res"
+      [columns]="columns"
+      [ps]="ps"
+      [pi]="pi"
+      [total]="total"
+      [page]="page"
+      [responsiveHideHeaderFooter]="responsiveHideHeaderFooter"
+      [widthMode]="widthMode"
+      [loading]="loading"
+      [loadingDelay]="loadingDelay"
+      [bordered]="bordered"
+      [size]="size"
+      [scroll]="scroll"
+      [multiSort]="multiSort"
+      [noResult]="noResult"
+      [widthConfig]="widthConfig"
+      [rowClickTime]="rowClickTime"
+      (change)="change($event)"
+      (error)="error()"
     >
-    </st>`,
+    </st>
+  `,
 })
 class TestComponent {
   @ViewChild('st')
@@ -1934,22 +1804,24 @@ class TestComponent {
   expandRowByClick = false;
   widthMode: STWidthMode = {};
 
-  error() { }
-  change() { }
+  error() {}
+  change() {}
 }
 
 @Component({
   template: `
-    <st #st
-        [data]="data"
-        [columns]="columns"
-        [expand]="expand"
-        [expandRowByClick]="expandRowByClick"
-        (change)="change($event)">
-    <ng-template #expand let-item let-index="index" let-column="column">
-      {{ item.id }}
-    </ng-template>
-    </st>`,
+    <st
+      #st
+      [data]="data"
+      [columns]="columns"
+      [expand]="expand"
+      [expandRowByClick]="expandRowByClick"
+      (change)="change($event)"
+    >
+      <ng-template #expand let-item let-index="index" let-column="column">
+        {{ item.id }}
+      </ng-template>
+    </st>
+  `,
 })
-class TestExpandComponent extends TestComponent {
-}
+class TestExpandComponent extends TestComponent {}

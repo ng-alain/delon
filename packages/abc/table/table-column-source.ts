@@ -78,8 +78,7 @@ export class STColumnSource {
         };
       }
 
-      item.children =
-        item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
+      item.children = item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
 
       // i18n
       if (item.i18n && this.i18nSrv) {
@@ -111,10 +110,7 @@ export class STColumnSource {
     list
       .filter(w => w.fixed && w.fixed === 'right' && w.width)
       .reverse()
-      .forEach(
-        (item, idx) =>
-          (item._right = (idx > 0 ? list.slice(-idx).reduce(countReduce, 0) : 0) + 'px'),
-      );
+      .forEach((item, idx) => (item._right = (idx > 0 ? list.slice(-idx).reduce(countReduce, 0) : 0) + 'px'));
   }
 
   private sortCoerce(item: STColumn): STSortMap {

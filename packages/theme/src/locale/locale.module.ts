@@ -6,9 +6,6 @@ import { DELON_LOCALE_SERVICE_PROVIDER } from './locale.service';
 import { DELON_LOCALE } from './locale.tokens';
 
 @NgModule({
-  providers: [
-    { provide: DELON_LOCALE, useValue: zhCN },
-    DELON_LOCALE_SERVICE_PROVIDER,
-  ],
+  providers: [{ provide: DELON_LOCALE, useValue: zhCN }, DELON_LOCALE_SERVICE_PROVIDER],
 })
-export class DelonLocaleModule { }
+export class DelonLocaleModule {}

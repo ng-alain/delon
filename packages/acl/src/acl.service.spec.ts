@@ -97,8 +97,8 @@ describe('acl: service', () => {
       expect(srv.can({})).toBe(false);
     });
     it('should be allow ability is string in can method by preCan', () => {
-      mockOptions.preCan = (a) => {
-        return a.toString().startsWith('order') ? { ability: [ a.toString() ] } : null;
+      mockOptions.preCan = a => {
+        return a.toString().startsWith('order') ? { ability: [a.toString()] } : null;
       };
       srv.attachAbility([ABILITY_CREATE]);
       expect(srv.can(ABILITY_CREATE)).toBe(true);

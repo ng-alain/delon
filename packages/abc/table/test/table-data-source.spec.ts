@@ -69,14 +69,7 @@ describe('abc: table: data-souce', () => {
     ynPipe = new YNPipe(new MockDomSanitizer() as any);
     decimalPipe = new DecimalPipe('zh-CN');
     http = new MockHttpClient();
-    srv = new STDataSource(
-      http as any,
-      currentyPipe,
-      datePipe,
-      ynPipe,
-      decimalPipe,
-      new MockDomSanitizer() as any,
-    );
+    srv = new STDataSource(http as any, currentyPipe, datePipe, ynPipe, decimalPipe, new MockDomSanitizer() as any);
   }
 
   describe('[local data]', () => {
@@ -286,7 +279,7 @@ describe('abc: table: data-souce', () => {
         });
       });
       it('should be process', (done: () => void) => {
-        options.req.process = (a) => {
+        options.req.process = a => {
           // tslint:disable-next-line:no-string-literal
           a.params!['PI'] = 2;
           return a;
@@ -716,12 +709,18 @@ describe('abc: table: data-souce', () => {
 
     it('should be custom function', done => {
       let callbackRawData = null;
-      options.columns = [{ title: '', index: 'a', statistical: {
-        type: (values, col, list, rawData) => {
-          callbackRawData = rawData;
-          return { value: values[0] };
+      options.columns = [
+        {
+          title: '',
+          index: 'a',
+          statistical: {
+            type: (values, col, list, rawData) => {
+              callbackRawData = rawData;
+              return { value: values[0] };
+            },
+          },
         },
-      } }];
+      ];
       options.data = [{ a: 1 }, { a: 2 }];
 
       srv.process(options).then(res => {

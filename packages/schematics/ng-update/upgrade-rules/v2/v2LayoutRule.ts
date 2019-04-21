@@ -25,17 +25,7 @@ function fixClass(host: Tree, src: string, classes: {}) {
 function fixVersion(host: Tree, context: SchematicContext) {
   addPackageToPackageJson(
     host,
-    [
-      'abc',
-      'acl',
-      'auth',
-      'cache',
-      'form',
-      'mock',
-      'theme',
-      'util',
-      'chart',
-    ].map(pkg => `@delon/${pkg}@${VERSION}`),
+    ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(pkg => `@delon/${pkg}@${VERSION}`),
   );
 }
 
@@ -212,9 +202,7 @@ function fixHeaderHtml(host: Tree, context: SchematicContext) {
           if (
             dom.parent != null &&
             dom.parent.attribs &&
-            (dom.parent.attribs['class'] || '').includes(
-              'alain-default__header-logo',
-            )
+            (dom.parent.attribs['class'] || '').includes('alain-default__header-logo')
           ) {
             const classes = (dom.attribs['class'] || '').split(' ');
             classes.push('alain-default__header-logo-link');
@@ -285,14 +273,10 @@ export function v2LayoutRule(): Rule {
     fixDefaultHtml(host, context);
     fixDefaultTs(host, context);
     fixHeaderHtml(host, context);
-    fixClass(
-      host,
-      `src/app/layout/default/header/components/search.component.ts`,
-      {
-        'header-search__focus': 'alain-default__search-focus',
-        'header-search__toggled': 'alain-default__search-toggled',
-      },
-    );
+    fixClass(host, `src/app/layout/default/header/components/search.component.ts`, {
+      'header-search__focus': 'alain-default__search-focus',
+      'header-search__toggled': 'alain-default__search-toggled',
+    });
     fixSidebarHtml(host, context);
 
     fixFullScreenTs(host, context);

@@ -78,9 +78,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     // @delon/*
     addPackageToPackageJson(
       host,
-      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(
-        pkg => `@delon/${pkg}@${VERSION}`,
-      ),
+      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(pkg => `@delon/${pkg}@${VERSION}`),
     );
     // ng-alain
     addPackageToPackageJson(
@@ -424,13 +422,10 @@ function fixLangInHtml(host: Tree, p: string, langs: {}) {
   let html = host.get(p).content.toString('utf8');
   let matchCount = 0;
   // {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
-  html = html.replace(
-    /\{\{\(status \? '([^']+)' : '([^']+)'\) \| translate \}\}/g,
-    (word, key1, key2) => {
-      ++matchCount;
-      return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
-    },
-  );
+  html = html.replace(/\{\{\(status \? '([^']+)' : '([^']+)'\) \| translate \}\}/g, (word, key1, key2) => {
+    ++matchCount;
+    return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
+  });
   // {{ 'app.register-result.msg' | translate:params }}
   html = html.replace(/\{\{[ ]?'([^']+)'[ ]? \| translate:[^ ]+ \}\}/g, (word, key) => {
     ++matchCount;
@@ -468,9 +463,9 @@ function fixVsCode(options: ApplicationOptions) {
     let json = getJSON(host, filePath);
     if (json == null) {
       host.create(filePath, '');
-      json = { };
+      json = {};
     }
-    json.recommendations = [ 'cipchk.ng-alain-extension-pack' ];
+    json.recommendations = ['cipchk.ng-alain-extension-pack'];
     overwriteJSON(host, filePath, json);
   };
 }

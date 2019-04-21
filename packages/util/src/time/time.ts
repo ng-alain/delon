@@ -18,17 +18,7 @@ import subYears from 'date-fns/sub_years';
  * @param time 开始时间
  */
 export function getTimeDistance(
-  type:
-    | 'today'
-    | '-today'
-    | 'yesterday'
-    | 'week'
-    | '-week'
-    | 'month'
-    | '-month'
-    | 'year'
-    | '-year'
-    | number,
+  type: 'today' | '-today' | 'yesterday' | 'week' | '-week' | 'month' | '-month' | 'year' | '-year' | number,
   time?: Date | string | number,
 ): [Date, Date] {
   time = parse(time || new Date());
@@ -74,5 +64,5 @@ export function getTimeDistance(
  * fix time is the most, big value
  */
 export function fixEndTimeOfRange(dates: [Date, Date]): [Date, Date] {
-  return [ startOfDay(dates[0]), endOfDay(dates[1]) ];
+  return [startOfDay(dates[0]), endOfDay(dates[1])];
 }

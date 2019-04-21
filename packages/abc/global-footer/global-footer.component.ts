@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ContentChildren,
-  Inject,
-  Input,
-  QueryList,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChildren, Inject, Input, QueryList } from '@angular/core';
 import { Router } from '@angular/router';
 import { WINDOW } from '@delon/theme';
 

@@ -8,27 +8,27 @@
 
 import { Rule, SchematicContext, TaskId, Tree } from '@angular-devkit/schematics';
 import { NodePackageInstallTask, RunSchematicTask, TslintFixTask } from '@angular-devkit/schematics/tasks';
-import {sync as globSync } from 'glob';
+import { sync as globSync } from 'glob';
 import { TargetVersion } from '../target-version';
 import { getProjectTsConfigPaths } from './project-tsconfig-paths';
 import { createTslintConfig, UpgradeTSLintConfig } from './tslint-config';
 
 /** Creates a Angular schematic rule that runs the upgrade for the specified target version. */
-export function createUpgradeRule(targetVersion: TargetVersion,
-                                  upgradeConfig: UpgradeTSLintConfig): Rule {
+export function createUpgradeRule(targetVersion: TargetVersion, upgradeConfig: UpgradeTSLintConfig): Rule {
   return (tree: Tree, context: SchematicContext) => {
-
     const projectTsConfigPaths = getProjectTsConfigPaths(tree);
     const tslintFixTasks: TaskId[] = [];
 
     if (!projectTsConfigPaths.length) {
-      throw new Error('Could not find any tsconfig file. Please submit an issue on the Angular ' +
-        'Material repository that includes the name of your TypeScript configuration.');
+      throw new Error(
+        'Could not find any tsconfig file. Please submit an issue on the Angular ' +
+          'Material repository that includes the name of your TypeScript configuration.',
+      );
     }
     // In some applications, developers will have global stylesheets which are not specified in any
     // Angular component. Therefore we glob up all CSS and SCSS files outside of node_modules and
     // dist. The files will be read by the individual stylesheet rules and checked.
-    const extraStyleFiles = globSync('!(node_modules|dist)/**/*.+(css|scss|less)', {absolute: true});
+    const extraStyleFiles = globSync('!(node_modules|dist)/**/*.+(css|scss|less)', { absolute: true });
     const tslintConfig = createTslintConfig(targetVersion, {
       // Default options that can be overwritten if specified explicitly. e.g. if the
       // Material update schematic wants to specify a different upgrade data.
@@ -39,11 +39,15 @@ export function createUpgradeRule(targetVersion: TargetVersion,
 
     for (const tsconfig of projectTsConfigPaths) {
       // Run the update tslint rules.
-      tslintFixTasks.push(context.addTask(new TslintFixTask(tslintConfig, {
-        silent: false,
-        ignoreErrors: true,
-        tsConfigPath: tsconfig,
-      })));
+      tslintFixTasks.push(
+        context.addTask(
+          new TslintFixTask(tslintConfig, {
+            silent: false,
+            ignoreErrors: true,
+            tsConfigPath: tsconfig,
+          }),
+        ),
+      );
     }
 
     // Delete the temporary schematics directory.

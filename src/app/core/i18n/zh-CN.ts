@@ -3,8 +3,7 @@ export const ZHCN = {
   'app.header.search': '在 ng-alain.com 中搜索',
   'app.home.preview': '预览',
   'app.home.start': '开始使用',
-  'app.home.slogan':
-    '一个基于 Antd 中后台前端解决方案，提供更多通用性业务模块，让开发者更加专注于业务。',
+  'app.home.slogan': '一个基于 Antd 中后台前端解决方案，提供更多通用性业务模块，让开发者更加专注于业务。',
   'app.home.feature': '特征',
   'app.home.feature.antd': '符合 Ant Design 设计价值观',
   'app.home.feature.zorro': '丰富的几十种基础组件',

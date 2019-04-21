@@ -93,13 +93,11 @@ export class FormValidatorComponent implements OnInit {
       return;
     }
 
-    this.http
-      .get(`./assets/schema/${item.name}.json`, null, { responseType: 'text' })
-      .subscribe(res => {
-        item.cache = res;
-        this.schema = item.cache;
-        this.run();
-      });
+    this.http.get(`./assets/schema/${item.name}.json`, null, { responseType: 'text' }).subscribe(res => {
+      item.cache = res;
+      this.schema = item.cache;
+      this.run();
+    });
   }
 
   run() {
@@ -115,21 +113,14 @@ export class FormValidatorComponent implements OnInit {
       formData: this.formCode || '{}',
       ui: this.uiCode || '{}',
     };
-    const componentCode = stackBlitzTpl.replace(
-      /\{(\w+)\}/g,
-      (match: string, offset: any) => (obj[offset] || '').trim(),
+    const componentCode = stackBlitzTpl.replace(/\{(\w+)\}/g, (match: string, offset: any) =>
+      (obj[offset] || '').trim(),
     );
-    this.codeSrv.openOnStackBlitz(
-      componentCode,
-      this.title,
-      `@delon/form-${this.title}-${this.name}.json`,
-    );
+    this.codeSrv.openOnStackBlitz(componentCode, this.title, `@delon/form-${this.title}-${this.name}.json`);
   }
 
   onCopy() {
-    copy(this.schema).then(() =>
-      this.msg.success(this.i18n.fanyi('app.demo.copied')),
-    );
+    copy(this.schema).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
 
   submit(value: any) {

@@ -180,11 +180,7 @@ describe('form: component', () => {
             },
           };
           fixture.detectChanges();
-          page.checkStyle(
-            '.sf-btns .ant-form-item-control-wrapper',
-            'margin-left',
-            `${spanLabelFixed}px`,
-          );
+          page.checkStyle('.sf-btns .ant-form-item-control-wrapper', 'margin-left', `${spanLabelFixed}px`);
         });
       });
       describe('#size', () => {
@@ -420,9 +416,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine
-                  .createSpy()
-                  .and.returnValue([{ keyword: 'required', message: 'a' }]),
+                validator: jasmine.createSpy().and.returnValue([{ keyword: 'required', message: 'a' }]),
               },
             },
           },
@@ -436,9 +430,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine
-                  .createSpy()
-                  .and.returnValue([]),
+                validator: jasmine.createSpy().and.returnValue([]),
               },
             },
           },
@@ -452,9 +444,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine
-                  .createSpy()
-                  .and.returnValue(of([{ keyword: 'required', message: 'a' }])),
+                validator: jasmine.createSpy().and.returnValue(of([{ keyword: 'required', message: 'a' }])),
               },
             },
           },
@@ -469,9 +459,7 @@ describe('form: component', () => {
               a: {
                 type: 'string',
                 ui: {
-                  validator: jasmine
-                    .createSpy()
-                    .and.returnValue([{ keyword: 'required' }]),
+                  validator: jasmine.createSpy().and.returnValue([{ keyword: 'required' }]),
                 },
               },
             },
@@ -485,13 +473,15 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: () => [{
-                  keyword: 'a',
-                  message: 'a-{id}-{invalid}',
-                  params: {
-                    id: 10,
+                validator: () => [
+                  {
+                    keyword: 'a',
+                    message: 'a-{id}-{invalid}',
+                    params: {
+                      id: 10,
+                    },
                   },
-                }],
+                ],
               },
             },
           },

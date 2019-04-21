@@ -1,4 +1,3 @@
-
 import { Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 

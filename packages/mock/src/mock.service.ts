@@ -30,17 +30,13 @@ export class MockService implements OnDestroy {
       if (!rules) return;
       Object.keys(rules).forEach((ruleKey: string) => {
         const value = rules[ruleKey];
-        if (
-          !(typeof value === 'function' || typeof value === 'object' || typeof value === 'string')
-        ) {
+        if (!(typeof value === 'function' || typeof value === 'object' || typeof value === 'string')) {
           throw Error(
             `mock value of [${key}-${ruleKey}] should be function or object or string, but got ${typeof value}`,
           );
         }
         const rule = this.genRule(ruleKey, value);
-        if (
-          ['GET', 'POST', 'PUT', 'HEAD', 'DELETE', 'PATCH', 'OPTIONS'].indexOf(rule.method) === -1
-        ) {
+        if (['GET', 'POST', 'PUT', 'HEAD', 'DELETE', 'PATCH', 'OPTIONS'].indexOf(rule.method) === -1) {
           throw Error(`method of ${key}-${ruleKey} is not valid`);
         }
         const item = this.cached.find(w => w.url === rule.url && w.method === rule.method);
@@ -52,9 +48,7 @@ export class MockService implements OnDestroy {
       });
     });
     // regular ordering
-    this.cached.sort(
-      (a, b) => (b.martcher || '').toString().length - (a.martcher || '').toString().length,
-    );
+    this.cached.sort((a, b) => (b.martcher || '').toString().length - (a.martcher || '').toString().length);
   }
 
   private genRule(key: string, callback: any): MockCachedRule {
@@ -113,9 +107,7 @@ export class MockService implements OnDestroy {
   getRule(method: string, url: string): MockRule | null {
     method = (method || 'GET').toUpperCase();
     const params = {};
-    const list = this.cached.filter(
-      w => w.method === method && (w.martcher ? w.martcher.test(url) : w.url === url),
-    );
+    const list = this.cached.filter(w => w.method === method && (w.martcher ? w.martcher.test(url) : w.url === url));
     if (list.length === 0) return null;
     const ret = list.find(w => w.url === url) || list[0];
     if (ret.martcher) {
