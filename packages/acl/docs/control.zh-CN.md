@@ -8,6 +8,12 @@ type: Documents
 
 很多时候需要对某个按钮进行权限控制，`@delon/acl` 提供一个 `acl` 指令，可以利用角色或权限点对某个按钮、表格、列表等元素进行权限控制。
 
+## 原理
+
+`[acl]` 默认会在目标元素上增加一个 `acl__hide` 样式，利用 `display: none` 来隐藏未授权元素，它是一个简单、又高效的方式。
+
+以此相对应的 `*aclIf` 是一个结构型指令，它类似 `ngIf` 在未授权时会不渲染该元素。**注：** 为了保持简洁它并不支持 `acl-ability` 权限点配置。
+
 ## 示例
 
 ### 角色
@@ -16,18 +22,21 @@ type: Documents
 
 ```html
 <button [acl]="'user'"></button>
+<button *aclIf="'user'"></button>
 ```
 
 按钮必须拥有 user 或 manage 角色显示。
 
 ```html
 <button [acl]="['user', 'manage']"></button>
+<button *aclIf="['user', 'manage']"></button>
 ```
 
 按钮必须拥有 user 和 manage 角色显示。
 
 ```html
 <button [acl]="{ role: ['user', 'manage'], mode: 'allOf' }"></button>
+<button *aclIf="{ role: ['user', 'manage'], mode: 'allOf' }"></button>
 ```
 
 ### 权限点
