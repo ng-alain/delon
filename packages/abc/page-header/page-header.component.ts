@@ -63,7 +63,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     return this._menus;
   }
 
-  _titleVal: string;
+  _titleVal: string = '';
   paths: PageHeaderPath[] = [];
 
   // #region fields
@@ -169,8 +169,8 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
   private setTitle() {
     if (
-      typeof this._title === 'undefined' &&
-      typeof this._titleTpl === 'undefined' &&
+      this._title == null &&
+      this._titleTpl == null &&
       this.autoTitle &&
       this.menus.length > 0
     ) {
