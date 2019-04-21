@@ -11,3 +11,4 @@ package.json
 src/app/routes/gen/
 src/templates/
 packages/schematics/**/files/
+packages/schematics/**/test-cases/

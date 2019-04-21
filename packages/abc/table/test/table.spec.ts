@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Component, DebugElement, Injector, Type, ViewChild } from '@angular/core';
+import { Component, DebugElement, Type, ViewChild } from '@angular/core';
 import { discardPeriodicTasks, fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
