@@ -17,6 +17,7 @@ import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'ellipsis',
+  exportAs: 'ellipsis',
   templateUrl: './ellipsis.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -34,6 +34,7 @@ export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, optio
 
 @Component({
   selector: 'sf, [sf]',
+  exportAs: 'sf',
   templateUrl: './sf.component.html',
   providers: [
     WidgetFactory,

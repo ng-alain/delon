@@ -16,6 +16,7 @@ const CLSBODY = 'footer-toolbar__body';
 
 @Component({
   selector: 'footer-toolbar',
+  exportAs: 'footerToolbar',
   templateUrl: './footer-toolbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

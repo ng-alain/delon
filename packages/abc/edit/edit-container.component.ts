@@ -5,9 +5,9 @@ import { SEConfig } from './edit.config';
 
 @Component({
   selector: 'se-container, [se-container]',
+  exportAs: 'seContainer',
   templateUrl: './edit-container.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs: 'seContainer',
 })
 export class SEContainerComponent {
   // #region fields

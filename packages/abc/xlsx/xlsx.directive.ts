@@ -4,10 +4,10 @@ import { XlsxExportOptions } from './xlsx.types';
 
 @Directive({
   selector: '[xlsx]',
+  exportAs: 'xlsx',
   host: {
     '(click)': '_click()',
   },
-  exportAs: 'xlsxDirective',
 })
 export class XlsxDirective {
   @Input('xlsx') data: XlsxExportOptions;

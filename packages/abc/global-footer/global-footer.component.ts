@@ -7,6 +7,7 @@ import { GlobalFooterLink } from './global-footer.types';
 
 @Component({
   selector: 'global-footer',
+  exportAs: 'globalFooter',
   templateUrl: './global-footer.component.html',
   host: { '[class.global-footer]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,

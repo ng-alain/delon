@@ -10,6 +10,7 @@ import {
 
 @Component({
   selector: 'range-picker',
+  exportAs: 'rangePicker',
   templateUrl: './range.component.html',
   providers: [
     {

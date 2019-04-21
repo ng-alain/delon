@@ -20,6 +20,7 @@ const prefixCls = `sv`;
 
 @Component({
   selector: 'sv, [sv]',
+  exportAs: 'sv',
   templateUrl: './view.component.html',
   host: {
     '[style.padding-left.px]': 'paddingValue',

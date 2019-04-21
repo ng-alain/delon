@@ -28,6 +28,7 @@ let nextUniqueId = 0;
 
 @Component({
   selector: 'se',
+  exportAs: 'se',
   templateUrl: './edit.component.html',
   host: {
     '[style.padding-left.px]': 'paddingValue',

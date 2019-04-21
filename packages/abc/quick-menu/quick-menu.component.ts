@@ -14,6 +14,7 @@ import { InputNumber } from '@delon/util';
 
 @Component({
   selector: 'quick-menu',
+  exportAs: 'quickMenu',
   templateUrl: './quick-menu.component.html',
   host: {
     '[class.quick-menu]': 'true',

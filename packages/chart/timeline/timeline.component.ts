@@ -28,6 +28,7 @@ export class G2TimelineData {
 
 @Component({
   selector: 'g2-timeline',
+  exportAs: 'g2Timeline',
   templateUrl: './timeline.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

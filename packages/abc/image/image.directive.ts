@@ -11,7 +11,7 @@ import { ImageConfig } from './image.config';
  */
 @Directive({
   selector: '[_src]',
-  exportAs: 'srcDirective',
+  exportAs: '_src',
 })
 export class ImageDirective implements OnChanges, OnInit {
   @Input('_src') src: string;

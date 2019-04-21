@@ -17,6 +17,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
   selector: 'notice-icon',
+  exportAs: 'noticeIcon',
   templateUrl: './notice-icon.component.html',
   host: { '[class.notice-icon__btn]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,

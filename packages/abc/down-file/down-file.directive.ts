@@ -5,10 +5,10 @@ import { saveAs } from 'file-saver';
 
 @Directive({
   selector: '[down-file]',
+  exportAs: 'downFile',
   host: {
     '(click)': '_click()',
   },
-  exportAs: 'downFileDirective',
 })
 export class DownFileDirective {
   /** URL请求参数 */

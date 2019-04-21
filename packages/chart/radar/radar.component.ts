@@ -24,6 +24,7 @@ export interface G2RadarData {
 
 @Component({
   selector: 'g2-radar',
+  exportAs: 'g2Radar',
   templateUrl: './radar.component.html',
   host: {
     '[style.height.px]': 'height',

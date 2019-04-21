@@ -14,6 +14,7 @@ declare var G2: any;
 
 @Component({
   selector: 'g2-single-bar',
+  exportAs: 'g2SingleBar',
   template: ``,
   host: {
     '[style.height.px]': 'height',

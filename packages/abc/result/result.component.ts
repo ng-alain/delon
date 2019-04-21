@@ -2,6 +2,7 @@ import { Component, Input, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'result',
+  exportAs: 'result',
   templateUrl: './result.component.html',
   host: { '[class.result]': 'true' },
 })

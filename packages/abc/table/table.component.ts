@@ -61,6 +61,7 @@ import {
 
 @Component({
   selector: 'st',
+  exportAs: 'st',
   templateUrl: './table.component.html',
   providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,

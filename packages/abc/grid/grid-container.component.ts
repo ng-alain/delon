@@ -5,6 +5,7 @@ import { SGConfig } from './grid.config';
 
 @Component({
   selector: 'sg-container, [sg-container]',
+  exportAs: 'sgContainer',
   template: `
     <ng-content></ng-content>
   `,
@@ -15,7 +16,6 @@ import { SGConfig } from './grid.config';
     '[class.sg__wrap]': 'true',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs: 'sgContainer',
 })
 export class SGContainerComponent {
   // #region fields

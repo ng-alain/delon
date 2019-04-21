@@ -32,6 +32,7 @@ interface PageHeaderPath {
 
 @Component({
   selector: 'page-header',
+  exportAs: 'pageHeader',
   templateUrl: './page-header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

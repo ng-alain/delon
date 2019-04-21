@@ -2,9 +2,8 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'avatar-list-item, [avatar-list-item]',
-  template: `
-    <ng-content></ng-content>
-  `,
+  exportAs: 'avatarListItem',
+  template: `<ng-content></ng-content>`,
 })
 export class AvatarListItemComponent {
   @Input() src: string;

@@ -27,6 +27,7 @@ export interface G2PieData {
 
 @Component({
   selector: 'g2-pie',
+  exportAs: 'g2Pie',
   templateUrl: './pie.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

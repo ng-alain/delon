@@ -3,6 +3,7 @@ import { SVContainerComponent } from './view-container.component';
 
 @Component({
   selector: 'sv-title, [sv-title]',
+  exportAs: 'svTitle',
   template: '<ng-content></ng-content>',
   host: {
     '[class.sv__title]': 'true',
