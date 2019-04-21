@@ -27,6 +27,7 @@ export class DomService {
     const parser = new htmlparser2.Parser(handler, {
       lowerCaseTags: false,
       lowerCaseAttributeNames: false,
+// tslint:disable-next-line: deprecation
     } as htmlparser2.Options);
 
     parser.write(html.replace(/\n|\s\s/g, ' ').trim());

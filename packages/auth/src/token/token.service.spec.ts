@@ -1,11 +1,10 @@
-import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DelonAuthConfig } from '../auth.config';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
 
 describe('auth: token.service', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let service: ITokenService;
   const VALUE: ITokenModel = {
     token: 'token data',

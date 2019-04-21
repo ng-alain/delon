@@ -1,5 +1,5 @@
-import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, DebugElement, ViewChild } from '@angular/core';
+import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
   ActivatedRoute,
@@ -40,7 +40,7 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
 }
 
 describe('abc: reuse-tab', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let fixture: ComponentFixture<AppComponent>;
   let dl: DebugElement;
   let layoutComp: LayoutComponent;
@@ -110,13 +110,13 @@ describe('abc: reuse-tab', () => {
     tick();
     fixture.detectChanges();
 
-    srv = injector.get(ReuseTabService);
-    const router = injector.get(Router) as Router;
+    srv = injector.get<ReuseTabService>(ReuseTabService);
+    const router = injector.get<Router>(Router) as Router;
     router.routeReuseStrategy = new ReuseTabStrategy(srv);
 
     page = new PageObject();
-    layoutComp = dl.query(By.directive(LayoutComponent)).injector.get(LayoutComponent);
-    rtComp = dl.query(By.directive(ReuseTabComponent)).injector.get(ReuseTabComponent);
+    layoutComp = dl.query(By.directive(LayoutComponent)).injector.get<LayoutComponent>(LayoutComponent);
+    rtComp = dl.query(By.directive(ReuseTabComponent)).injector.get<ReuseTabComponent>(ReuseTabComponent);
     spyOn(layoutComp, 'change');
     spyOn(layoutComp, 'close');
   }
@@ -682,7 +682,7 @@ describe('abc: reuse-tab', () => {
       createComp();
       page.to('#b').openContextMenu(1);
       expect(document.querySelector('[data-type="close"]')!.textContent).toBe(zh_CN.reuseTab.close);
-      injector.get(DelonLocaleService).setLocale(en_US);
+      injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
       fixture.detectChanges();
       page.to('#a').openContextMenu(1);
       expect(document.querySelector('[data-type="close"]')!.textContent).toBe(en_US.reuseTab.close);

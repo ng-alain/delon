@@ -21,7 +21,7 @@ export function ToLogin(options: DelonAuthConfig, injector: Injector, url: strin
       if (/^https?:\/\//g.test(options.login_url!)) {
         injector.get(DOCUMENT).location.href = options.login_url as string;
       } else {
-        injector.get(Router).navigate([options.login_url]);
+        injector.get<Router>(Router).navigate([options.login_url]);
       }
     });
   }

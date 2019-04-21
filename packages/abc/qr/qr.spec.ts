@@ -1,5 +1,5 @@
-import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
-import { inject, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, DebugElement, ViewChild } from '@angular/core';
+import { inject, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 
@@ -9,7 +9,7 @@ import { QRModule } from './qr.module';
 import { QRService } from './qr.service';
 
 describe('abc: qr', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;

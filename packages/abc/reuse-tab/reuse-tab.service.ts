@@ -202,7 +202,7 @@ export class ReuseTabService implements OnDestroy {
     } else {
       this.removeUrlBuffer = url;
     }
-    this.injector.get(Router).navigateByUrl(newUrl);
+    this.injector.get<Router>(Router).navigateByUrl(newUrl);
   }
   /**
    * 获取标题，顺序如下：
@@ -479,7 +479,7 @@ export class ReuseTabService implements OnDestroy {
       this._router$.unsubscribe();
     }
 
-    this._router$ = this.injector.get(Router).events.subscribe(e => {
+    this._router$ = this.injector.get<Router>(Router).events.subscribe(e => {
       if (e instanceof NavigationStart) {
         const url = this.curUrl;
         if (this.getKeepingScroll(url, this.getTruthRoute(this.snapshot))) {

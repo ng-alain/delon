@@ -40,7 +40,7 @@ describe('form: component', () => {
     describe('[default]', () => {
       it('should throw error when parent is not object or array', () => {
         expect(() => {
-          const factory = dl.injector.get(FormPropertyFactory);
+          const factory = dl.injector.get<FormPropertyFactory>(FormPropertyFactory);
           factory.createProperty({}, {}, {}, { type: 'invalid', path: 'a' } as any, 'a');
         }).toThrowError();
       });

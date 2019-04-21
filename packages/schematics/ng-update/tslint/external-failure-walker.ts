@@ -16,11 +16,13 @@ import { ExternalResource } from './component-file';
 export class ExternalFailureWalker extends RuleWalker {
   /** Adds a failure for the external resource at the specified position with the given width. */
   addExternalFailureAt(node: ExternalResource, start: number, width: number, message: string, fix?: Fix) {
+// tslint:disable-next-line: deprecation
     this.addFailure(new RuleFailure(node, start, start + width, message, this.getRuleName(), fix));
   }
 
   /** Adds a failure at the specified range for the external resource. */
   addExternalFailureFromStartToEnd(node: ExternalResource, start: number, end: number, message: string, fix?: Fix) {
+// tslint:disable-next-line: deprecation
     this.addFailure(new RuleFailure(node, start, end, message, this.getRuleName(), fix));
   }
 

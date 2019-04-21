@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, Injector, NgModule } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, NgModule } from '@angular/core';
+import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgZorroAntdModule, NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AlainThemeModule } from '../../theme.module';
 import { ModalHelper } from './modal.helper';
 
 describe('theme: ModalHelper', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let modal: ModalHelper;
   let srv: NzModalService;
   let fixture: ComponentFixture<TestComponent>;

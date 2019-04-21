@@ -1,5 +1,5 @@
-import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, DebugElement, ViewChild } from '@angular/core';
+import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { en_US, DelonLocaleModule, DelonLocaleService } from '@delon/theme';
@@ -8,7 +8,7 @@ import { ExceptionComponent, ExceptionType } from './exception.component';
 import { ExceptionModule } from './exception.module';
 
 describe('abc: exception', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;

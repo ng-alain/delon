@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, Injector, NgModule } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, NgModule } from '@angular/core';
+import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgZorroAntdModule, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd';
 import { AlainThemeModule } from '../../theme.module';
 import { DrawerHelper } from './drawer.helper';
 
 describe('theme: DrawerHelper', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let drawer: DrawerHelper;
   let srv: NzDrawerService;
   let fixture: ComponentFixture<TestComponent>;

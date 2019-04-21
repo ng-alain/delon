@@ -69,7 +69,7 @@ export class TitleService implements OnDestroy {
   }
 
   private getByMenu(): string {
-    const menus = this.menuSrv.getPathByUrl(this.injector.get(Router).url);
+    const menus = this.menuSrv.getPathByUrl(this.injector.get<Router>(Router).url);
     if (!menus || menus.length <= 0) return '';
 
     const item = menus[menus.length - 1];

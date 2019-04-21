@@ -1,6 +1,6 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, Injector, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, ViewChild } from '@angular/core';
+import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivationEnd, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -11,7 +11,7 @@ import { FullContentModule } from './full-content.module';
 import { FullContentService } from './full-content.service';
 
 describe('abc: full-content', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;

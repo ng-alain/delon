@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Component, DebugElement, Injector, Type, ViewChild } from '@angular/core';
-import { discardPeriodicTasks, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { discardPeriodicTasks, fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -80,7 +80,7 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
 }
 
 describe('abc: table', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
   let dl: DebugElement;
@@ -1249,7 +1249,7 @@ describe('abc: table', () => {
           expect(comp.req.params.a).toBe(1);
           expect(comp.req.params.b).toBe(2);
         });
-        it("can't contaminate raw data", () => {
+        it('can\'t contaminate raw data', () => {
           const params: any = { a: 1 };
           context.req = { params };
           fixture.detectChanges();

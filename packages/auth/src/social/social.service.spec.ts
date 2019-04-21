@@ -1,13 +1,12 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Injector } from '@angular/core';
-import { discardPeriodicTasks, fakeAsync, tick, TestBed } from '@angular/core/testing';
+import { discardPeriodicTasks, fakeAsync, tick, TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { DOCUMENT } from '@angular/common';
 import { DelonAuthConfig } from '../auth.config';
 import { DelonAuthModule } from '../auth.module';
-import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../token/interface';
+import { DA_SERVICE_TOKEN, ITokenModel } from '../token/interface';
 import { SimpleTokenModel } from '../token/simple/simple.model';
 import { SocialService } from './social.service';
 
@@ -46,7 +45,7 @@ const MockAuth0 = {
 };
 
 describe('auth: social.service', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let srv: SocialService;
 
   function genModule(options: DelonAuthConfig, tokenData?: SimpleTokenModel) {
@@ -108,7 +107,7 @@ describe('auth: social.service', () => {
       discardPeriodicTasks();
     }));
 
-    it("can't get model until closed", fakeAsync(() => {
+    it('can\'t get model until closed', fakeAsync(() => {
       spyOn(srv, 'ngOnDestroy');
       spyOn(window, 'open').and.callFake(() => {
         injector.get(DA_SERVICE_TOKEN).set(null);

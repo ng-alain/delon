@@ -168,7 +168,7 @@ describe('abc: edit', () => {
       describe('[validate]', () => {
         let ngModel: NgModel;
         it('should be show error', () => {
-          ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
+          ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
           spyOnProperty(ngModel, 'dirty').and.returnValue(true);
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
@@ -242,7 +242,7 @@ describe('abc: edit', () => {
       dl = fixture2.debugElement;
       fixture2.detectChanges();
       page = new PageObject();
-      const formControlName = dl.query(By.directive(FormControlName)).injector.get(FormControlName);
+      const formControlName = dl.query(By.directive(FormControlName)).injector.get<FormControlName>(FormControlName);
       const changes = formControlName.statusChanges as EventEmitter<string>;
       spyOnProperty(formControlName, 'dirty').and.returnValue(true);
       // mock statusChanges
@@ -257,7 +257,7 @@ describe('abc: edit', () => {
         genModule();
         context.disabled = true;
         fixture.detectChanges();
-        ngModel = dl.query(By.directive(NgModel)).injector.get(NgModel);
+        ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
         const changes = ngModel.statusChanges as EventEmitter<string>;
         changes.emit('INVALID');
         page.expect('se-error', 0);
@@ -272,7 +272,7 @@ describe('abc: edit', () => {
         fixture2.detectChanges();
         page = new PageObject();
         const allControls = dl.queryAll(By.directive(FormControlName));
-        const formControlName = allControls[1].injector.get(FormControlName);
+        const formControlName = allControls[1].injector.get<FormControlName>(FormControlName);
         const changes = formControlName.statusChanges as EventEmitter<string>;
         // mock statusChanges
         changes.emit('VALID');

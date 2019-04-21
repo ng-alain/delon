@@ -1,5 +1,4 @@
-import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, TestBedStatic } from '@angular/core/testing';
 
 import { concat } from 'rxjs';
 import { filter, flatMap, tap } from 'rxjs/operators';
@@ -31,7 +30,7 @@ class MockLazyService {
 }
 
 describe('abc: lodop', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let srv: LodopService;
 
   function fnLodopConfig(): LodopConfig {

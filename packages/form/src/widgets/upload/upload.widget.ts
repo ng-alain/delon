@@ -101,7 +101,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
   handleRemove = () => {
     this._setValue(this.fileList);
     return true;
-  };
+  }
 
   handlePreview = (file: UploadFile) => {
     if (this.ui.preview) {
@@ -112,9 +112,9 @@ export class UploadWidget extends ControlWidget implements OnInit {
     if (!_url) {
       return;
     }
-    this.injector.get(NzModalService).create({
+    this.injector.get<NzModalService>(NzModalService).create({
       nzContent: `<img src="${_url}" class="img-fluid" />`,
       nzFooter: null,
     });
-  };
+  }
 }
