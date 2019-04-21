@@ -10,7 +10,10 @@ import { ACLDirective } from './acl.directive';
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
 
-@Directive({ selector: '[aclIf]' })
+@Directive({
+  selector: '[aclIf]',
+  exportAs: 'aclIf',
+})
 export class ACLIfDirective extends ACLDirective {
   constructor(
     private _viewContainer: ViewContainerRef,

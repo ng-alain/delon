@@ -10,6 +10,7 @@ import { toNumber, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-mini-progress',
+  exportAs: 'g2MiniProgress',
   templateUrl: './mini-progress.component.html',
   host: { '[class.g2-mini-progress]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,

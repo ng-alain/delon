@@ -15,6 +15,7 @@ import { ErrorCollectConfig } from './error-collect.config';
 
 @Component({
   selector: 'error-collect, [error-collect]',
+  exportAs: 'errorCollect',
   template: `
     <i nz-icon type="exclamation-circle"></i>
     <span class="pl-sm">{{ count }}</span>
@@ -25,7 +26,6 @@ import { ErrorCollectConfig } from './error-collect.config';
     '(click)': '_click()',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  exportAs: 'errorCollect',
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
   private $time = null;

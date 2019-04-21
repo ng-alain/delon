@@ -14,6 +14,7 @@ import { AvatarListItemComponent } from './avatar-list-item.component';
 
 @Component({
   selector: 'avatar-list',
+  exportAs: 'avatarList',
   templateUrl: './avatar-list.component.html',
   host: { '[class.avatar-list]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,

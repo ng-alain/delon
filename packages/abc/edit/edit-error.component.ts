@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'se-error',
+  exportAs: 'seError',
   animations: [
     trigger('errorAnt', [
       transition('void => *', [

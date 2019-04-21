@@ -18,6 +18,7 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'g2-water-wave',
+  exportAs: 'g2WaterWave',
   templateUrl: './water-wave.component.html',
   host: { '[class.g2-water-wave]': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,

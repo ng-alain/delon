@@ -3,6 +3,7 @@ import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'trend',
+  exportAs: 'trend',
   templateUrl: './trend.component.html',
   host: {
     '[class.trend]': 'true',

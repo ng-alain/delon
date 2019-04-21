@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { Menu, MenuService, SettingsService, WINDOW } from '@delon/theme';
 import { InputBoolean } from '@delon/util';
@@ -26,6 +26,7 @@ const FLOATINGCLS = 'sidebar-nav__floating';
 
 @Component({
   selector: 'sidebar-nav',
+  exportAs: 'sidebarNav',
   templateUrl: './sidebar-nav.component.html',
   host: {
     '(click)': '_click()',

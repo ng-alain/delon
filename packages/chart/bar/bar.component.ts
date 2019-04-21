@@ -25,6 +25,7 @@ export interface G2BarData {
 
 @Component({
   selector: 'g2-bar',
+  exportAs: 'g2Bar',
   templateUrl: './bar.component.html',
   host: {
     '[style.height.px]': 'height',

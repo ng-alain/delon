@@ -14,6 +14,7 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'g2,g2-custom',
+  exportAs: 'g2Custom',
   template: `
     <ng-content></ng-content>
   `,

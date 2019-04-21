@@ -8,6 +8,7 @@ export type ExceptionType = 403 | 404 | 500;
 
 @Component({
   selector: 'exception',
+  exportAs: 'exception',
   templateUrl: './exception.component.html',
   host: { '[class.exception]': 'true' },
 })

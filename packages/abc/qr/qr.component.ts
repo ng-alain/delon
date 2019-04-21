@@ -14,6 +14,7 @@ import { QRService } from './qr.service';
 
 @Component({
   selector: 'qr',
+  exportAs: 'qr',
   template: `
     <img class="qr__img" src="{{ dataURL }}" />
   `,

@@ -3,6 +3,7 @@ import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'global-footer-item',
+  exportAs: 'globalFooterItem',
   template: `
     <ng-template #host><ng-content></ng-content></ng-template>
   `,

@@ -24,6 +24,7 @@ export interface G2TagCloudData {
 
 @Component({
   selector: 'g2-tag-cloud',
+  exportAs: 'g2TagCloud',
   template: ``,
   host: {
     '[style.height.px]': 'height',

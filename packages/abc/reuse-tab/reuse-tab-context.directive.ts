@@ -5,6 +5,7 @@ import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
 
 @Directive({
   selector: '[reuse-tab-context-menu]',
+  exportAs: 'reuseTabContextMenu',
   host: {
     '(contextmenu)': '_onContextMenu($event)',
   },

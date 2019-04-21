@@ -19,6 +19,7 @@ let nextUniqueId = 0;
 
 @Component({
   selector: 'sf-item',
+  exportAs: 'sfItem',
   template: `
     <ng-template #target></ng-template>
   `,

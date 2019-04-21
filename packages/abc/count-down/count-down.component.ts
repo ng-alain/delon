@@ -4,6 +4,7 @@ import format from 'date-fns/format';
 
 @Component({
   selector: 'count-down',
+  exportAs: 'countDown',
   template: `
     <countdown
       *ngIf="config"

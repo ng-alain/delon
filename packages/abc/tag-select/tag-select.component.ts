@@ -15,6 +15,7 @@ import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'tag-select',
+  exportAs: 'tagSelect',
   templateUrl: './tag-select.component.html',
   host: {
     '[class.tag-select]': 'true',

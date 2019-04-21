@@ -20,6 +20,7 @@ export interface G2MiniBarData {
 
 @Component({
   selector: 'g2-mini-bar',
+  exportAs: 'g2MiniBar',
   template: ``,
   host: {
     '[style.height.px]': 'height',
