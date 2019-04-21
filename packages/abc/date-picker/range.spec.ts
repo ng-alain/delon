@@ -120,7 +120,7 @@ describe('abc: date-picker: range', () => {
       getPickerFooterExtra().querySelectorAll('a')[0].click();
       const list = getPickerFooterExtra().querySelectorAll('a');
       const shortcut = context.comp.shortcut as DateRangePickerShortcut;
-      expect(list.length).toBe(shortcut.list.length);
+      expect(list.length).toBe(shortcut.list!.length);
       list.forEach(el => {
         el.click();
         timeEnd();
@@ -168,5 +168,5 @@ class TestComponent {
   _nzOnOpenChange() {}
   _nzOnPanelChange() {}
   _nzOnOk() {}
-  shortcut: boolean | DateRangePickerShortcut = false;
+  shortcut: boolean | DateRangePickerShortcut | null = false;
 }

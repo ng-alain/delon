@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   private get body(): HTMLElement {
-    return this.doc.querySelector('body');
+    return this.doc.querySelector('body') as HTMLElement;
   }
 
   ngAfterViewInit(): void {

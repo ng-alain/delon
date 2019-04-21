@@ -11,7 +11,7 @@ import { ControlWidget } from '../../widget';
 })
 export class DateWidget extends ControlWidget implements OnInit {
   mode: string;
-  displayValue: Date | Date[] = null;
+  displayValue: Date | Date[] | null = null;
   displayFormat: string;
   format: string;
   i: any;
@@ -61,7 +61,7 @@ export class DateWidget extends ControlWidget implements OnInit {
     this.compCd();
   }
 
-  _change(value: Date | Date[]) {
+  _change(value: Date | Date[] | null) {
     if (value == null) {
       this.setValue(null);
       this.setEnd(null);
@@ -89,10 +89,10 @@ export class DateWidget extends ControlWidget implements OnInit {
   }
 
   private get endProperty(): FormProperty {
-    return this.formProperty.parent.properties[this.ui.end];
+    return this.formProperty.parent!.properties![this.ui.end];
   }
 
-  private setEnd(value: string) {
+  private setEnd(value: string | null) {
     if (this.flatRange) {
       this.endProperty.setValue(value, true);
     }

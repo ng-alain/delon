@@ -25,7 +25,7 @@ describe('Pipe: url', () => {
       fixture.detectChanges();
       const el = fixture.debugElement.query(By.css('#result'))
         .nativeElement as HTMLElement;
-      expect(el.attributes.getNamedItem('href').textContent).toBe(item.result);
+      expect(el.attributes.getNamedItem('href')!.textContent).toBe(item.result);
     });
   });
 });

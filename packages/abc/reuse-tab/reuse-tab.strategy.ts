@@ -13,7 +13,7 @@ export class ReuseTabStrategy implements RouteReuseStrategy {
   shouldAttach(route: ActivatedRouteSnapshot): boolean {
     return this.srv.shouldAttach(route);
   }
-  retrieve(route: ActivatedRouteSnapshot): {} {
+  retrieve(route: ActivatedRouteSnapshot): {} | null {
     return this.srv.retrieve(route);
   }
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {

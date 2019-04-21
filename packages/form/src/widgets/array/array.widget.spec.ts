@@ -63,7 +63,7 @@ describe('form: widget: array', () => {
   describe('#removable', () => {
     it('with true', () => {
       const s = deepCopy(schema) as SFSchema;
-      s.properties.arr.ui = { removable: true };
+      s.properties!.arr.ui = { removable: true };
       page
         .newSchema(s)
         .checkCount('.sf-array-item', 0)
@@ -74,7 +74,7 @@ describe('form: widget: array', () => {
     });
     it('with false', () => {
       const s = deepCopy(schema) as SFSchema;
-      s.properties.arr.ui = { removable: false };
+      s.properties!.arr.ui = { removable: false };
       page
         .newSchema(s)
         .checkCount('.sf-array-item', 0)
@@ -94,13 +94,13 @@ describe('form: widget: array', () => {
     it('via default in schema', () => {
       const data = [{ a: 'a1' }, { a: 'a2' }];
       const s = deepCopy(schema) as SFSchema;
-      s.properties.arr.default = data;
+      s.properties!.arr.default = data;
       page.newSchema(s).checkCount('.sf-array-item', data.length);
     });
     it('should be keeping default value in reset action', () => {
       const data = [{ a: 'a1' }, { a: 'a2' }];
       const s = deepCopy(schema) as SFSchema;
-      s.properties.arr.default = data;
+      s.properties!.arr.default = data;
       page
         .newSchema(s)
         .checkCount('.sf-array-item', data.length)

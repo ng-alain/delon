@@ -15,28 +15,29 @@ export class SimpleInterceptor extends BaseInterceptor {
   }
 
   setReq(req: HttpRequest<any>, options: DelonAuthConfig): HttpRequest<any> {
-    const token = options.token_send_template.replace(
+    const { token_send_template, token_send_key } = options;
+    const token = token_send_template!.replace(
       /\$\{([\w]+)\}/g,
       (_: string, g) => this.model[g],
     );
     switch (options.token_send_place) {
       case 'header':
         const obj = {};
-        obj[options.token_send_key] = token;
+        obj[token_send_key!] = token;
         req = req.clone({
           setHeaders: obj,
         });
         break;
       case 'body':
         const body = req.body || {};
-        body[options.token_send_key] = token;
+        body[token_send_key!] = token;
         req = req.clone({
           body,
         });
         break;
       case 'url':
         req = req.clone({
-          params: req.params.append(options.token_send_key, token),
+          params: req.params.append(token_send_key!, token),
         });
         break;
     }

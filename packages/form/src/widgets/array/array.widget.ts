@@ -10,7 +10,7 @@ import { ArrayLayoutWidget } from '../../widget';
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addTitle: string;
   addType: string;
-  removeTitle: string;
+  removeTitle: string | null;
   arraySpan = 8;
 
   get addDisabled() {
@@ -21,7 +21,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   get l(): LocaleData {
-    return this.formProperty.root.widget.sfComp.locale;
+    return this.formProperty.root.widget.sfComp!.locale;
   }
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   addItem() {
-    this.formProperty.add(null);
+    this.formProperty.add(null!);
   }
 
   removeItem(index: number) {

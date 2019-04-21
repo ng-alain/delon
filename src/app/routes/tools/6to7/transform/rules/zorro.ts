@@ -84,7 +84,7 @@ export const ZORRORULES: ConvertAction[] = [
         const refineAttribs = {};
         dom.children.filter(w => w.name === 'ng-template' && w.attribs)
           .forEach(v => {
-            const key = Object.keys(v.attribs)[0].substr(1);
+            const key = Object.keys(v.attribs!)[0].substr(1);
             refineAttribs[`[nz${key.substr(0, 1).toUpperCase()}${key.substr(1)}]`] = key;
           });
         dom.children = [

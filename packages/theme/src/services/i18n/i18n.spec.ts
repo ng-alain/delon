@@ -70,7 +70,7 @@ describe('theme: i18n', () => {
       const el = fixture.debugElement.query(By.css('#' + id))
         .nativeElement as HTMLElement;
 
-      expect(el.textContent.trim()).toBe(result);
+      expect(el.textContent!.trim()).toBe(result);
     }
 
     it('should working', () => {

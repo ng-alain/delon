@@ -40,7 +40,7 @@ describe('form: widget: mention', () => {
       .checkCount('.ant-mention-dropdown-item', DATA.length, true)
       .typeEvent('click', '.ant-mention-dropdown-item');
 
-    expect((s.properties.a.ui as any).select).toHaveBeenCalled();
+    expect((s.properties!.a.ui as any).select).toHaveBeenCalled();
   }));
 
   it('should be validator mention count via minimum or maximum', fakeAsync(() => {

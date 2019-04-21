@@ -30,7 +30,7 @@ export class MentionWidget extends ControlWidget implements OnInit {
     const max = typeof this.schema.maximum !== 'undefined' ? this.schema.maximum : -1;
 
     if (!this.ui.validator && (min !== -1 || max !== -1)) {
-      this.ui.validator = () => {
+      this.ui.validator = (() => {
         const count = this.mentionChild.getMentions().length;
         if (min !== -1 && count < min) {
           return [{ keyword: 'mention', message: `最少提及 ${min} 次` }];
@@ -39,7 +39,7 @@ export class MentionWidget extends ControlWidget implements OnInit {
           return [{ keyword: 'mention', message: `最多提及 ${max} 次` }];
         }
         return null;
-      };
+      }) as any;
     }
   }
 
@@ -61,7 +61,7 @@ export class MentionWidget extends ControlWidget implements OnInit {
     (this.ui.loadData(option) as Observable<SFSchemaEnumType[]>)
       .pipe(
         tap(() => (this.loading = false)),
-        map(res => getEnum(res, null, this.schema.readOnly)),
+        map(res => getEnum(res, null, this.schema.readOnly!)),
       )
       .subscribe(res => {
         this.data = res;

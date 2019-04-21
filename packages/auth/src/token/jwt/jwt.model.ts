@@ -4,7 +4,7 @@ import { urlBase64Decode } from './jwt.helper';
 export class JWTTokenModel implements ITokenModel {
   [key: string]: any;
 
-  token: string;
+  token: string | null | undefined;
 
   /**
    * 获取载荷信息
@@ -22,7 +22,7 @@ export class JWTTokenModel implements ITokenModel {
    *
    * @param offsetSeconds 偏移量
    */
-  isExpired(offsetSeconds: number = 0): boolean {
+  isExpired(offsetSeconds: number = 0): boolean | null {
     const decoded = this.payload;
     if (!decoded.hasOwnProperty('exp')) return null;
 

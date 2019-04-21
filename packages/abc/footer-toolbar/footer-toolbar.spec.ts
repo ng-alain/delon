@@ -40,7 +40,7 @@ describe('abc: footer-toolbar', () => {
     it('with string', () => {
       create();
       const left = dl.query(By.css('.footer-toolbar__left')).nativeElement as HTMLElement;
-      expect(left.textContent.trim()).toBe(`1`);
+      expect(left.textContent!.trim()).toBe(`1`);
     });
     it('with custom template', () => {
       TestBed.overrideTemplate(

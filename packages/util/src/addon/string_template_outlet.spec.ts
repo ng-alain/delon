@@ -22,7 +22,7 @@ describe('utils: string_template_outlet', () => {
   });
 
   function check(str: string): void {
-    const res = (dl.nativeElement as HTMLElement).textContent.trim();
+    const res = (dl.nativeElement as HTMLElement).textContent!.trim();
     expect(res).toBe(str);
   }
 
@@ -119,5 +119,5 @@ describe('utils: string_template_outlet', () => {
 class TestComponent {
   @ViewChild('tpl1') tpl1: TemplateRef<void>;
   @ViewChild('tpl2') tpl2: TemplateRef<void>;
-  value: string | TemplateRef<void>;
+  value: string | TemplateRef<void> | null | undefined;
 }

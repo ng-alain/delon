@@ -3,7 +3,6 @@ import endOfDay from 'date-fns/end_of_day';
 import endOfMonth from 'date-fns/end_of_month';
 import endOfWeek from 'date-fns/end_of_week';
 import endOfYear from 'date-fns/end_of_year';
-import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import startOfDay from 'date-fns/start_of_day';
 import startOfMonth from 'date-fns/start_of_month';

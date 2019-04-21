@@ -145,7 +145,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
       if (el.children.length > 0) {
         throw new Error('Ellipsis content must be string.');
       }
-      const text = el.textContent;
+      const text = el.textContent!;
       const textLength = fullWidthRecognition ? this.getStrFullLength(text) : text.length;
       if (textLength <= length || length < 0) {
         this.text = text;
@@ -164,8 +164,8 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     } else if (type === 'line') {
       const { shadowOrgEl, shadowTextEl } = this;
       const orgNode = shadowOrgEl.nativeElement as HTMLElement;
-      const text = orgNode.innerText || orgNode.textContent;
-      const lineHeight = parseInt(getComputedStyle(this.getEl('.ellipsis')).lineHeight, 10);
+      const text = orgNode.innerText || orgNode.textContent!;
+      const lineHeight = parseInt(getComputedStyle(this.getEl('.ellipsis')).lineHeight!, 10);
       const targetHeight = lines * lineHeight;
       this.getEl('.ellipsis__handle').style.height = `${targetHeight}px`;
 

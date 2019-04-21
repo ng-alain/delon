@@ -88,7 +88,7 @@ describe('form: widget: select', () => {
         .dc()
         .checkValue('/a', 'TRADE_SUCCESS')
         .asyncEnd();
-      const item = s.properties.a.ui as any;
+      const item = s.properties!.a.ui as any;
       expect(item.change).toHaveBeenCalled();
       expect(item.openChange).toHaveBeenCalled();
       getWidget().scrollToBottom();

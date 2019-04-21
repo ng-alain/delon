@@ -16,7 +16,7 @@ import { JWTTokenModel } from './jwt.model';
 @Injectable({ providedIn: 'root' })
 export class JWTGuard implements CanActivate, CanActivateChild, CanLoad {
   private cog: DelonAuthConfig;
-  private url: string;
+  private url: string | undefined;
 
   constructor(
     @Inject(DA_SERVICE_TOKEN) private srv: ITokenService,
@@ -27,7 +27,7 @@ export class JWTGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private process(): boolean {
-    const res = CheckJwt(this.srv.get<JWTTokenModel>(JWTTokenModel), this.cog.token_exp_offset);
+    const res = CheckJwt(this.srv.get<JWTTokenModel>(JWTTokenModel), this.cog.token_exp_offset!);
     if (!res) {
       ToLogin(this.cog, this.injector, this.url);
     }

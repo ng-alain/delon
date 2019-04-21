@@ -41,7 +41,7 @@ export class StringTemplateOutletDirective {
       /** use input template when input is templateRef **/
       this.viewContainer.clear();
       this.defaultViewRef = null;
-      this.inputViewRef = this.viewContainer.createEmbeddedView(this.inputTemplate);
+      this.inputViewRef = this.viewContainer.createEmbeddedView(this.inputTemplate!);
     }
   }
 }

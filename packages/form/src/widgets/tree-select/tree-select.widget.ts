@@ -48,8 +48,8 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
     if (typeof ui.expandChange !== 'function') return;
     ui.expandChange(e)
       .subscribe(res => {
-        e.node.clearChildren();
-        e.node.addChildren(res);
+        e.node!.clearChildren();
+        e.node!.addChildren(res);
         this.detectChanges();
       });
   }

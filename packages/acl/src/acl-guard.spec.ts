@@ -146,7 +146,7 @@ describe('acl: guard', () => {
             guard: of('user'),
           },
         } as any,
-        null,
+        null!,
       )
       .subscribe(res => {
         expect(res).toBeTruthy();

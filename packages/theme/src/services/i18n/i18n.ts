@@ -44,10 +44,10 @@ export function ALAIN_I18N_TOKEN_FACTORY() {
 
 @Injectable({ providedIn: 'root' })
 export class AlainI18NServiceFake implements AlainI18NService {
-  private change$ = new BehaviorSubject<string>(null);
+  private change$ = new BehaviorSubject<string | null>(null);
 
   get change(): Observable<string> {
-    return this.change$.asObservable().pipe(filter(w => w != null));
+    return this.change$.asObservable().pipe(filter(w => w != null)) as Observable<string>;
   }
 
   use(lang: string): void {

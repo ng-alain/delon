@@ -70,14 +70,14 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     if (linkNode.nodeName !== 'A') {
       return false;
     }
-    const id = +linkNode.dataset!.id;
+    const id = +linkNode.dataset!.id!;
     let item: Nav;
     this.menuSrv.visit(this._d, i => {
       if (!item && i.__id === id) {
         item = i;
       }
     });
-    this.to(item);
+    this.to(item!);
     this.hideAll();
     e.preventDefault();
     return false;
@@ -104,7 +104,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
   private genSubNode(linkNode: HTMLLinkElement, item: Nav): HTMLUListElement {
     const id = `_sidebar-nav-${item.__id}`;
-    const node = linkNode.nextElementSibling.cloneNode(true) as HTMLUListElement;
+    const node = linkNode.nextElementSibling!.cloneNode(true) as HTMLUListElement;
     node.id = id;
     node.classList.add(FLOATINGCLS);
     node.addEventListener(
@@ -167,7 +167,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       }
       return false;
     }
-    this.ngZone.run(() => this.router.navigateByUrl(item.link));
+    this.ngZone.run(() => this.router.navigateByUrl(item.link!));
   }
 
   toggleOpen(item: Nav) {
@@ -217,16 +217,13 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       this.list = menuSrv.menus;
       cdr.detectChanges();
     });
-    router.events
-      .pipe(
-        takeUntil(unsubscribe$),
-        filter(e => e instanceof NavigationEnd),
-      )
-      .subscribe((e: NavigationEnd) => {
+    router.events.pipe(takeUntil(unsubscribe$)).subscribe(e => {
+      if (e instanceof NavigationEnd) {
         this.menuSrv.openedByUrl(e.urlAfterRedirects, this.recursivePath);
         this.underPad();
         this.cdr.detectChanges();
-      });
+      }
+    });
     this.underPad();
   }
 

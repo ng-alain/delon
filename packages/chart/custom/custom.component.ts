@@ -23,7 +23,7 @@ import { debounceTime } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2CustomComponent implements AfterViewInit, OnDestroy {
-  private resize$: Subscription = null;
+  private resize$: Subscription | null = null;
 
   // #region fields
 

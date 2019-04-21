@@ -27,8 +27,8 @@ export class MenuService implements OnDestroy {
     return this._change$.pipe(share());
   }
 
-  visit(data: Menu[], callback: (item: Menu, parentMenum: Menu, depth?: number) => void) {
-    const inFn = (list: Menu[], parentMenu: Menu, depth: number) => {
+  visit(data: Menu[], callback: (item: Menu, parentMenum: Menu | null, depth?: number) => void) {
+    const inFn = (list: Menu[], parentMenu: Menu | null, depth: number) => {
       for (const item of list) {
         callback(item, parentMenu, depth);
         if (item.children && item.children.length > 0) {
@@ -50,7 +50,7 @@ export class MenuService implements OnDestroy {
   /**
    * 重置菜单，可能I18N、用户权限变动时需要调用刷新
    */
-  resume(callback?: (item: Menu, parentMenum: Menu, depth?: number) => void) {
+  resume(callback?: (item: Menu, parentMenum: Menu | null, depth?: number) => void) {
     let i = 1;
     const shortcuts: Menu[] = [];
     this.visit(this.data, (item, parent, depth) => {
@@ -134,10 +134,10 @@ export class MenuService implements OnDestroy {
       return;
     }
 
-    const ls = this.data[0].children;
+    const ls = this.data[0].children as Menu[];
     let pos = ls.findIndex(w => w.shortcutRoot === true);
     if (pos === -1) {
-      pos = ls.findIndex(w => w.link.includes('dashboard'));
+      pos = ls.findIndex(w => w.link!.includes('dashboard'));
       pos = (pos !== -1 ? pos : -1) + 1;
       const shortcutMenu = {
         text: '快捷菜单',
@@ -145,9 +145,9 @@ export class MenuService implements OnDestroy {
         icon: 'icon-rocket',
         children: [],
       } as Menu;
-      this.data[0].children.splice(pos, 0, shortcutMenu);
+      this.data[0].children!.splice(pos, 0, shortcutMenu);
     }
-    let _data = this.data[0].children[pos];
+    let _data = this.data[0].children![pos];
     if (_data.i18n && this.i18nSrv) _data.text = this.i18nSrv.fanyi(_data.i18n);
     // tslint:disable-next-line:prefer-object-spread
     _data = Object.assign(_data, {
@@ -176,8 +176,8 @@ export class MenuService implements OnDestroy {
     this._change$.next(this.data);
   }
 
-  getHit(data: Menu[], url: string, recursive = false, cb: (i: Menu) => void = null) {
-    let item: Menu = null;
+  getHit(data: Menu[], url: string, recursive = false, cb: ((i: Menu) => void) | null = null): Menu | null {
+    let item: Menu | null = null;
 
     while (!item && url) {
       this.visit(data, i => {
@@ -205,14 +205,14 @@ export class MenuService implements OnDestroy {
    * - 若 `recursive: true` 则会自动向上递归查找
    *  - 菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项
    */
-  openedByUrl(url: string, recursive = false) {
+  openedByUrl(url: string | null, recursive = false) {
     if (!url) return;
 
     let findItem = this.getHit(this.data, url, recursive, i => {
       i._selected = false;
       i._open = false;
     });
-    if (!findItem) return;
+    if (findItem == null) return;
 
     do {
       findItem._selected = true;

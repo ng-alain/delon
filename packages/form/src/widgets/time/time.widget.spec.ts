@@ -70,7 +70,7 @@ describe('form: widget: time', () => {
         page.newSchema({
           properties: { a: { type: 'string', ui: { widget }, default: time } },
         });
-        expect(format(getComp().displayValue, 'HH:mm:ss')).toBe('11:10:00');
+        expect(format(getComp().displayValue!, 'HH:mm:ss')).toBe('11:10:00');
       });
       it('with null', () => {
         const time = null;

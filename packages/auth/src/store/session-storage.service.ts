@@ -6,7 +6,7 @@ export class SessionStorageStore implements IStore {
     return JSON.parse(sessionStorage.getItem(key) || '{}') || {};
   }
 
-  set(key: string, value: ITokenModel): boolean {
+  set(key: string, value: ITokenModel | null): boolean {
     sessionStorage.setItem(key, JSON.stringify(value));
     return true;
   }

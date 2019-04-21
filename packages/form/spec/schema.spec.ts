@@ -160,8 +160,8 @@ describe('form: schema', () => {
       describe('[#via in json schema]', () => {
         it('should be has $items when is array', () => {
           const schema = deepCopy(arrSchema) as SFSchema;
-          schema.properties.name.ui = deepCopy(arrUI);
-          page.newSchema(schema).checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
+          schema.properties!.name.ui = deepCopy(arrUI);
+          page.newSchema(schema).checkUI('/name', 'grid.arraySpan', arrUI.grid!.arraySpan);
         });
       });
       describe('[#via ui property]', () => {
@@ -173,7 +173,7 @@ describe('form: schema', () => {
               ...deepCopy(arrUI),
             },
           };
-          page.newSchema(schema, uiSchema).checkUI('/name', 'grid.arraySpan', arrUI.grid.arraySpan);
+          page.newSchema(schema, uiSchema).checkUI('/name', 'grid.arraySpan', arrUI.grid!.arraySpan);
         });
       });
     });
@@ -349,7 +349,7 @@ describe('form: schema', () => {
 
   describe('[order]', () => {
     function genKeys() {
-      return JSON.stringify(Object.keys((context.comp.rootProperty as ObjectProperty).properties));
+      return JSON.stringify(Object.keys((context.comp.rootProperty as ObjectProperty).properties!));
     }
 
     function checkOrderKeys(arr: string[]) {

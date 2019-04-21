@@ -26,7 +26,7 @@ let nextUniqueId = 0;
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   private ref: ComponentRef<Widget<FormProperty>>;
   readonly unsubscribe$ = new Subject<void>();
-  widget: Widget<FormProperty> = null;
+  widget: Widget<FormProperty> | null = null;
 
   @Input() formProperty: FormProperty;
 
@@ -44,7 +44,7 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
     this.widget.schema = this.formProperty.schema;
     this.widget.ui = ui;
     this.widget.id = id;
-    this.widget.firstVisual = ui.firstVisual;
+    this.widget.firstVisual = ui.firstVisual as boolean;
     this.formProperty.widget = widget;
   }
 

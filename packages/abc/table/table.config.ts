@@ -68,11 +68,11 @@ export class STConfig {
    * - 若不指定，则返回：`columnName=ascend|descend`
    * - 若指定，则返回：`sort=columnName.(ascend|descend)`
    */
-  singleSort?: STSingleSort = null;
+  singleSort?: STSingleSort | null = null;
   /**
    * 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用
    */
-  multiSort?: STMultiSort = null;
+  multiSort?: STMultiSort | null = null;
   /**
    * 按钮模态框配置
    */

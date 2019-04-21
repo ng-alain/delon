@@ -90,7 +90,7 @@ describe('abc: ellipsis', () => {
         }));
         it('should working', () => {
           // tslint:disable-next-line:no-string-literal
-          expect(+page.getEl('.ellipsis').style['webkitLineClamp']).toBe(context.lines);
+          expect(+page.getEl('.ellipsis')!.style!['webkitLineClamp']).toBe(context!.lines as number);
         });
       });
       describe('in firefox', () => {
@@ -108,14 +108,14 @@ describe('abc: ellipsis', () => {
         }));
         it('should be not innerText', () => {
           const el = page.getEl('.ellipsis__shadow');
-          spyOnProperty(el, 'innerText').and.returnValue(null);
+          spyOnProperty(el!, 'innerText').and.returnValue(null);
           // tslint:disable-next-line:no-string-literal
           page.comp['gen']();
           expect(page.getText()).toBe('There');
         });
         it('should be raw response when html offsetHeight is smallest', () => {
           const el = page.getEl('.ellipsis__shadow');
-          spyOnProperty(el, 'offsetHeight').and.returnValue(1);
+          spyOnProperty(el!, 'offsetHeight').and.returnValue(1);
           // tslint:disable-next-line:no-string-literal
           page.comp['gen']();
           expect(page.getText()).not.toBe('There');
@@ -153,7 +153,7 @@ describe('abc: ellipsis', () => {
       return dl.nativeElement;
     }
 
-    getEl(cls: string): HTMLElement {
+    getEl(cls: string): HTMLElement | null {
       return this.root.querySelector(cls);
     }
 
@@ -202,8 +202,8 @@ describe('abc: ellipsis', () => {
 class TestBaseComponent {
   @ViewChild('comp') comp: EllipsisComponent;
   tooltip = false;
-  length = 10;
-  lines = 3;
+  length: number | null = 10;
+  lines: number | null = 3;
   fullWidthRecognition = false;
   tail = '...';
   text = `There were injuries alleged in three cases in 2015, and a fourth incident in September, according to the safety recall report. After meeting with US regulators in October, the firm decided to issue a voluntary recall.`;

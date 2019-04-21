@@ -89,7 +89,7 @@ describe('auth: social.service', () => {
         srv.login(item.url).subscribe(res => {});
         tick(130);
         expect(window.open).toHaveBeenCalled();
-        const token = injector.get(DA_SERVICE_TOKEN).get();
+        const token = injector.get(DA_SERVICE_TOKEN).get()!;
         for (const key in item.be) {
           expect(token[key]).toContain(item.be[key]);
         }

@@ -13,7 +13,7 @@ export class ZipService {
   constructor(private cog: ZipConfig, private http: HttpClient, private lazy: LazyService) {}
 
   private init(): Promise<LazyResult[]> {
-    return this.lazy.load([this.cog.url].concat(this.cog.utils));
+    return this.lazy.load([this.cog.url!].concat(this.cog.utils!));
   }
 
   private check(zip: any) {
@@ -85,7 +85,7 @@ export class ZipService {
    */
   save(zip: any, options?: ZipSaveOptions): Promise<void> {
     this.check(zip);
-    const opt = { ...options };
+    const opt = { ...options } as ZipSaveOptions;
     return new Promise<void>((resolve, reject) => {
       zip.generateAsync({ type: 'blob', ...opt.options }, opt.update).then(
         (data: Blob) => {

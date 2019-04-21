@@ -1,8 +1,8 @@
 import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, TestBedStatic } from '@angular/core/testing';
 import * as Mock from 'mockjs';
 import { DelonMockModule } from '../index';
-import { MockRequest } from './interface';
+import { MockRequest, MockRule } from './interface';
 import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
 
@@ -24,8 +24,8 @@ const DATA = {
 };
 
 describe('mock: service', () => {
-  let injector: Injector;
-  let srv: MockService = null;
+  let injector: TestBedStatic;
+  let srv: MockService;
 
   function genModule(options: DelonMockConfig) {
     options = Object.assign(new DelonMockConfig(), options);
@@ -51,20 +51,20 @@ describe('mock: service', () => {
     afterEach(() => srv.ngOnDestroy());
 
     it('should be return GET rule', () => {
-      const rule = srv.getRule('', '/users');
+      const rule = srv.getRule('', '/users') as MockRule;
       expect(rule).not.toBeNull();
       expect(rule.url).toBe('/users');
     });
 
     it('should be return POST rule', () => {
-      const rule = srv.getRule('POST', '/users/1');
+      const rule = srv.getRule('POST', '/users/1') as MockRule;
       expect(rule).not.toBeNull();
       expect(rule.method).toBe('POST');
       expect(rule.url).toBe('/users/1');
     });
 
     it('should be return route param', () => {
-      const rule = srv.getRule('GET', '/users/2');
+      const rule = srv.getRule('GET', '/users/2') as MockRule;
       expect(rule).not.toBeNull();
       expect(rule.method).toBe('GET');
       expect(rule.url).toBe('/users/2');
@@ -76,23 +76,23 @@ describe('mock: service', () => {
 
     it('should be support regex', () => {
       const url = '/data/2';
-      const rule = srv.getRule('GET', url);
+      const rule = srv.getRule('GET', url) as MockRule;
       expect(rule).not.toBeNull();
       expect(rule.url).toBe(url);
     });
 
     it('should be full url priority', () => {
-      const editRule = srv.getRule('GET', '/users/1/edit');
+      const editRule = srv.getRule('GET', '/users/1/edit') as MockRule;
       const editRes = editRule.callback(editRule as any);
       expect(editRes.s).toBe('edit');
-      const detailRule = srv.getRule('GET', '/users/1');
+      const detailRule = srv.getRule('GET', '/users/1') as MockRule;
       expect((detailRule.callback as any).rank).not.toBeUndefined();
     });
 
     it('should be exact match priority', () => {
-      const detail1Rule = srv.getRule('GET', '/users/1');
+      const detail1Rule = srv.getRule('GET', '/users/1') as MockRule;
       expect((detail1Rule.callback as any).rank).not.toBeUndefined();
-      const detail2Rule = srv.getRule('GET', '/users/2');
+      const detail2Rule = srv.getRule('GET', '/users/2') as MockRule;
       expect(detail2Rule.callback.name).toBe('/users/:id');
     });
   });
@@ -126,7 +126,7 @@ describe('mock: service', () => {
         },
       });
       expect(srv.rules.length).toBe(1);
-      const rule = srv.getRule('GET', '/users');
+      const rule = srv.getRule('GET', '/users') as MockRule;
       expect(rule).not.toBeNull();
       expect((rule.callback as any).a).toBe(2);
     });

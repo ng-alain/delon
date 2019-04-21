@@ -11,11 +11,12 @@ import {
 import { DelonAuthConfig } from '../../auth.config';
 import { CheckSimple, ToLogin } from '../helper';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
+import { SimpleTokenModel } from './simple.model';
 
 @Injectable({ providedIn: 'root' })
 export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
   private cog: DelonAuthConfig;
-  private url: string;
+  private url: string | null | undefined;
 
   constructor(
     @Inject(DA_SERVICE_TOKEN) private srv: ITokenService,
@@ -26,7 +27,7 @@ export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private process(): boolean {
-    const res = CheckSimple(this.srv.get());
+    const res = CheckSimple(this.srv.get() as SimpleTokenModel);
     if (!res) {
       ToLogin(this.cog, this.injector, this.url);
     }

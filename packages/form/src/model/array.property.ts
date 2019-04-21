@@ -16,7 +16,7 @@ export class ArrayProperty extends PropertyGroup {
     schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
     formData: {},
-    parent: PropertyGroup,
+    parent: PropertyGroup | null,
     path: string,
     options: DelonFormConfig,
   ) {
@@ -51,7 +51,7 @@ export class ArrayProperty extends PropertyGroup {
 
   _updateValue() {
     const value: any[] = [];
-    this.forEachChild((property: ObjectProperty) => {
+    this.forEachChild((property: FormProperty) => {
       if (property.visible && property._hasValue()) {
         value.push({ ...property.formData, ...property.value });
       }
@@ -61,7 +61,7 @@ export class ArrayProperty extends PropertyGroup {
 
   private addProperty(formData: {}) {
     const newProperty = this.formPropertyFactory.createProperty(
-      this.schema.items,
+      this.schema.items!,
       this.ui.$items,
       formData,
       this,

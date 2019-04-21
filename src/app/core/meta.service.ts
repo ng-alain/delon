@@ -26,18 +26,18 @@ const FULLMETAS: Meta[] = [
   FormMeta,
   CliMeta,
   ThemeMeta,
-];
+] as any;
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
   constructor(@Inject(ALAIN_I18N_TOKEN) private i18n: I18NService) {
     // plat titles
     for (const g of FULLMETAS) {
-      for (const item of g.list) {
-        const curTitle = item.meta[i18n.defaultLang].title;
+      for (const item of g.list!) {
+        const curTitle = item.meta![i18n.defaultLang].title;
         item._t =
           typeof curTitle !== 'string'
-            ? Object.values(curTitle)
+            ? Object.values(curTitle!)
                 .map(v => v)
                 .join('-')
             : curTitle;
@@ -77,11 +77,11 @@ export class MetaService {
     const category = this.getCatgory(url);
     if (!category) return false;
     const name = this.getPageName(url);
-    const data = category.list.find(w => w.name === name) || null;
+    const data = category.list!.find(w => w.name === name) || null;
     if (!data) return true;
     this._data = {
-      ...data.meta[this.i18n.defaultLang],
-      ...data.meta[this.i18n.lang],
+      ...data.meta![this.i18n.defaultLang],
+      ...data.meta![this.i18n.lang],
       i18n: data.i18n,
       name: data.name,
       module_name: category.module || '',
@@ -116,7 +116,7 @@ export class MetaService {
   }
 
   private _platMenus: any[];
-  private _menus: any[];
+  private _menus: any[] | null;
   private _type: string;
   get menus() {
     return this._menus;
@@ -158,16 +158,16 @@ export class MetaService {
     if (!category) return;
 
     // todo: support level 2
-    const group: any[] = category.types.map((item: any, index: number) => {
+    const group: any[] = category.types!.map((item: any, index: number) => {
       return {
         index,
         title: item[this.i18n.lang] || item[this.i18n.defaultLang],
         list: [],
       };
     });
-    category.list.forEach((item: any) => {
+    category.list!.forEach((item: any) => {
       const meta = item.meta[this.i18n.lang] || item.meta[this.i18n.defaultLang];
-      let typeIdx = category.types.findIndex(
+      let typeIdx = category.types!.findIndex(
         w => w['zh-CN'] === meta.type || w['en-US'] === meta.type,
       );
       if (typeIdx === -1) typeIdx = 0;
@@ -176,8 +176,8 @@ export class MetaService {
         groupItem = {
           index: typeIdx,
           title:
-            category.types[typeIdx][this.i18n.lang] ||
-            category.types[typeIdx][this.i18n.defaultLang],
+            category.types![typeIdx][this.i18n.lang] ||
+            category.types![typeIdx][this.i18n.defaultLang],
           list: [],
         };
         group.push(groupItem);
@@ -236,8 +236,8 @@ export class MetaService {
     const zone = this.i18n.zone;
     const res: MetaSearchGroup[] = [];
     for (const g of FULLMETAS) {
-      const type = g.name.toLowerCase();
-      const children: MetaSearchGroupItem[] = g.list
+      const type = g.name!.toLowerCase();
+      const children: MetaSearchGroupItem[] = g.list!
         .filter(w => w._t.includes(q))
         .map(item => {
           return {

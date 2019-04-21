@@ -49,7 +49,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   private conTpl: ElementRef;
   @ViewChild('affix')
   private affix: NzAffixComponent;
-  private _menus: Menu[];
+  private _menus: Menu[] | null;
 
   private get menus() {
     if (this._menus) {
@@ -63,22 +63,23 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     return this._menus;
   }
 
-  _titleVal: string;
+  _titleVal: string = '';
   paths: PageHeaderPath[] = [];
 
   // #region fields
 
-  _title: string;
+  _title: string | null;
   _titleTpl: TemplateRef<void>;
   @Input()
   set title(value: string | TemplateRef<void>) {
     if (value instanceof TemplateRef) {
       this._title = null;
       this._titleTpl = value;
+      this._titleVal = '';
     } else {
       this._title = value;
+      this._titleVal = this._title;
     }
-    this._titleVal = this._title;
   }
 
   @Input() @InputBoolean() loading = false;
@@ -128,7 +129,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
     merge(
       menuSrv.change.pipe(filter(() => this.inited)),
-      router.events.pipe(filter((event: RouterEvent) => event instanceof NavigationEnd)),
+      router.events.pipe(filter(e => e instanceof NavigationEnd)),
       i18nSrv.change,
     )
       .pipe(takeUntil(this.unsubscribe$))
@@ -153,7 +154,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       if (typeof item.hideInBreadcrumb !== 'undefined' && item.hideInBreadcrumb) return;
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-      paths.push({ title, link: item.link && [item.link] });
+      paths.push({ title, link: (item.link && [item.link]) as string[] });
     });
     // add home
     if (this.home) {
@@ -168,8 +169,8 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
   private setTitle() {
     if (
-      typeof this._title === 'undefined' &&
-      typeof this._titleTpl === 'undefined' &&
+      this._title == null &&
+      this._titleTpl == null &&
       this.autoTitle &&
       this.menus.length > 0
     ) {

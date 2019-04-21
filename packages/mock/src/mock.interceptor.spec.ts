@@ -53,7 +53,7 @@ class OtherInterceptor implements HttpInterceptor {
 
 describe('mock: interceptor', () => {
   let injector: TestBedStatic;
-  let srv: MockService = null;
+  let srv: MockService;
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
@@ -76,7 +76,7 @@ describe('mock: interceptor', () => {
         ]),
         DelonMockModule.forRoot(options),
       ].concat(imports),
-      providers: [].concat(providers || []),
+      providers: ([] as any[]).concat(providers || []),
     });
     srv = injector.get(MockService);
     http = injector.get(HttpClient);
@@ -98,7 +98,7 @@ describe('mock: interceptor', () => {
       });
     });
     it('should response array', (done: () => void) => {
-      http.get('/array').subscribe((res: any[]) => {
+      http.get('/array').subscribe((res: any) => {
         expect(res).not.toBeNull();
         expect(Array.isArray(res)).toBe(true);
         done();

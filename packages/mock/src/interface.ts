@@ -7,7 +7,7 @@ export interface MockCachedRule {
 
   url: string;
 
-  martcher: RegExp;
+  martcher: RegExp | null;
 
   segments: string[];
 

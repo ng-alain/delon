@@ -34,7 +34,7 @@ export interface Menu {
   /** 链接 target */
   target?: '_blank' | '_self' | '_parent' | '_top';
   /** 图标 */
-  icon?: string | MenuIcon;
+  icon?: string | MenuIcon | null;
   /** 徽标数，展示的数字。（注：`group:true` 无效） */
   badge?: number;
   /** 徽标数，显示小红点 */

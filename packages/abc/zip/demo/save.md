@@ -35,8 +35,7 @@ import * as JSZip from 'jszip';
   `
 })
 export class DemoComponent {
-
-  instance: JSZip = null;
+  instance: JSZip | null = null;
   data: { path: string, url: string }[] = [
     { path: 'demo.docx', url: 'https://ng-alain.com/assets/demo.docx' },
     { path: 'img/zorro.svg', url: 'https://ng.ant.design/assets/img/zorro.svg' },

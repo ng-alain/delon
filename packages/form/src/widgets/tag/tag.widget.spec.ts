@@ -49,7 +49,7 @@ describe('form: widget: tag', () => {
     const res = page.getValue('a') as number[];
     expect(res.length).toBe(1);
     expect(res[0]).toBe(2);
-    expect((s.properties.a.ui as any).checkedChange).toHaveBeenCalled();
+    expect((s.properties!.a.ui as any).checkedChange).toHaveBeenCalled();
   }));
 
   describe('#mode', () => {
@@ -124,7 +124,7 @@ describe('form: widget: tag', () => {
         };
         page.newSchema(s).typeEvent('click', '.anticon');
 
-        const ui = s.properties.a.ui as any;
+        const ui = s.properties!.a.ui as any;
         expect(ui.afterClose).toHaveBeenCalled();
         expect(ui.onClose).toHaveBeenCalled();
       }));

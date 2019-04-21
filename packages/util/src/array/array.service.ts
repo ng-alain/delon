@@ -3,6 +3,60 @@ import { NzTreeNode } from 'ng-zorro-antd';
 import { DelonUtilConfig } from '../util.config';
 import { ArrayConfig } from './array.config';
 
+export interface ArrayServiceTreeToArrOptions {
+  /** 深度项名，默认：`'deep'` */
+  deepMapName?: string;
+  /** 扁平后数组的父数据项名，默认：`'parent'` */
+  parentMapName?: string;
+  /** 源数据子项名，默认：`'children'` */
+  childrenMapName?: string;
+  /** 是否移除 `children` 节点，默认：`true` */
+  clearChildren?: boolean;
+  /** 转换成数组结构时回调 */
+  cb?: (item: any, parent: any, deep: number) => void;
+}
+
+export interface ArrayServiceArrToTreeOptions {
+  /** 编号项名，默认：`'id'` */
+  idMapName?: string;
+  /** 父编号项名，默认：`'parent_id'` */
+  parentIdMapName?: string;
+  /** 子项名，默认：`'children'` */
+  childrenMapName?: string;
+  /** 转换成树数据时回调 */
+  cb?: (item: any) => void;
+}
+
+export interface ArrayServiceArrToTreeNodeOptions {
+  /** 编号项名，默认：`'id'` */
+  idMapName?: string;
+  /** 父编号项名，默认：`'parent_id'` */
+  parentIdMapName?: string;
+  /** 标题项名，默认：`'title'` */
+  titleMapName?: string;
+  /** 设置为叶子节点项名，若数据源不存在时自动根据 `children` 值决定是否为叶子节点，默认：`'isLeaf'` */
+  isLeafMapName?: string;
+  /** 节点 Checkbox 是否选中项名，默认：`'checked'` */
+  checkedMapname?: string;
+  /** 节点本身是否选中项名，默认：`'selected'` */
+  selectedMapname?: string;
+  /** 节点是否展开(叶子节点无效)项名，默认：`'expanded'` */
+  expandedMapname?: string;
+  /** 设置是否禁用节点(不可进行任何操作)项名，默认：`'disabled'` */
+  disabledMapname?: string;
+  /** 转换成树数据后，执行的递归回调 */
+  cb?: (item: any, parent: any, deep: number) => void;
+}
+
+export interface ArrayServiceGetKeysByTreeNodeOptions {
+  /** 是否包含半选状态的值，默认：`true` */
+  includeHalfChecked?: boolean;
+  /** 是否重新指定 `key` 键名，若不指定表示使用 `NzTreeNode.key` 值 */
+  keyMapName?: string;
+  /** 回调，返回一个值 `key` 值，优先级高于其他 */
+  cb?: (item: NzTreeNode, parent: NzTreeNode, deep: number) => any;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ArrayService {
   private c: ArrayConfig;
@@ -24,83 +78,57 @@ export class ArrayService {
   /**
    * 将树结构转换成数组结构
    */
-  treeToArr(
-    tree: any[],
-    options?: {
-      /** 深度项名，默认：`'deep'` */
-      deepMapName?: string;
-      /** 扁平后数组的父数据项名，默认：`'parent'` */
-      parentMapName?: string;
-      /** 源数据子项名，默认：`'children'` */
-      childrenMapName?: string;
-      /** 是否移除 `children` 节点，默认：`true` */
-      clearChildren?: boolean;
-      /** 转换成数组结构时回调 */
-      cb?: (item: any, parent: any, deep: number) => void;
-    },
-  ): any[] {
-    options = {
+  treeToArr(tree: any[], options?: ArrayServiceTreeToArrOptions): any[] {
+    const opt = {
       deepMapName: this.c.deepMapName,
       parentMapName: this.c.parentMapName,
       childrenMapName: this.c.childrenMapName,
       clearChildren: true,
       cb: null,
       ...options,
-    };
+    } as ArrayServiceTreeToArrOptions;
     const result: any[] = [];
-    const inFn = (list: any[], parent: any, deep: number) => {
+    const inFn = (list: any[], parent: any, deep: number = 0) => {
       for (const i of list) {
-        i[options.deepMapName] = deep;
-        i[options.parentMapName] = parent;
-        if (options.cb) {
-          options.cb(i, parent, deep);
+        i[opt.deepMapName!] = deep;
+        i[opt.parentMapName!] = parent;
+        if (opt.cb) {
+          opt.cb(i, parent, deep);
         }
         result.push(i);
-        const children = i[options.childrenMapName];
+        const children = i[opt.childrenMapName!];
         if (children != null && Array.isArray(children) && children.length > 0) {
           inFn(children, i, deep + 1);
         }
-        if (options.clearChildren) {
-          delete i[options.childrenMapName];
+        if (opt.clearChildren) {
+          delete i[opt.childrenMapName!];
         }
       }
     };
-    inFn(tree, 1, null);
+    inFn(tree, 1);
     return result;
   }
 
   /**
    * 数组转换成树数据
    */
-  arrToTree(
-    arr: any[],
-    options?: {
-      /** 编号项名，默认：`'id'` */
-      idMapName?: string;
-      /** 父编号项名，默认：`'parent_id'` */
-      parentIdMapName?: string;
-      /** 子项名，默认：`'children'` */
-      childrenMapName?: string;
-      /** 转换成树数据时回调 */
-      cb?: (item: any) => void;
-    },
-  ): any[] {
-    options = {
+  arrToTree(arr: any[], options?: ArrayServiceArrToTreeOptions): any[] {
+    const opt = {
       idMapName: this.c.idMapName,
       parentIdMapName: this.c.parentIdMapName,
       childrenMapName: this.c.childrenMapName,
       cb: null,
       ...options,
-    };
+    } as ArrayServiceArrToTreeOptions;
     const tree: any[] = [];
     const childrenOf = {};
     for (const item of arr) {
-      const id = item[options.idMapName];
-      const pid = item[options.parentIdMapName];
+      const id = item[opt.idMapName!];
+      const pid = item[opt.parentIdMapName!];
       childrenOf[id] = childrenOf[id] || [];
-      item[options.childrenMapName] = childrenOf[id];
-      if (options.cb) {
-        options.cb(item);
+      item[opt.childrenMapName!] = childrenOf[id];
+      if (opt.cb) {
+        opt.cb(item);
       }
       if (pid) {
         childrenOf[pid] = childrenOf[pid] || [];
@@ -115,30 +143,8 @@ export class ArrayService {
   /**
    * 数组转换成 `nz-tree` 数据源，通过 `options` 转化项名，也可以使用 `options.cb` 更高级决定数据项
    */
-  arrToTreeNode(
-    arr: any[],
-    options?: {
-      /** 编号项名，默认：`'id'` */
-      idMapName?: string;
-      /** 父编号项名，默认：`'parent_id'` */
-      parentIdMapName?: string;
-      /** 标题项名，默认：`'title'` */
-      titleMapName?: string;
-      /** 设置为叶子节点项名，若数据源不存在时自动根据 `children` 值决定是否为叶子节点，默认：`'isLeaf'` */
-      isLeafMapName?: string;
-      /** 节点 Checkbox 是否选中项名，默认：`'checked'` */
-      checkedMapname?: string;
-      /** 节点本身是否选中项名，默认：`'selected'` */
-      selectedMapname?: string;
-      /** 节点是否展开(叶子节点无效)项名，默认：`'expanded'` */
-      expandedMapname?: string;
-      /** 设置是否禁用节点(不可进行任何操作)项名，默认：`'disabled'` */
-      disabledMapname?: string;
-      /** 转换成树数据后，执行的递归回调 */
-      cb?: (item: any, parent: any, deep: number) => void;
-    },
-  ): NzTreeNode[] {
-    options = {
+  arrToTreeNode(arr: any[], options?: ArrayServiceArrToTreeNodeOptions): NzTreeNode[] {
+    const opt = {
       idMapName: this.c.idMapName,
       parentIdMapName: this.c.parentIdMapName,
       titleMapName: this.c.titleMapName,
@@ -149,26 +155,26 @@ export class ArrayService {
       disabledMapname: this.c.disabledMapname,
       cb: null,
       ...options,
-    };
+    } as ArrayServiceArrToTreeNodeOptions;
     const tree = this.arrToTree(arr, {
-      idMapName: options.idMapName,
-      parentIdMapName: options.parentIdMapName,
+      idMapName: opt.idMapName,
+      parentIdMapName: opt.parentIdMapName,
       childrenMapName: 'children',
     });
     this.visitTree(tree, (item: any, parent: any, deep: number) => {
-      item.key = item[options.idMapName];
-      item.title = item[options.titleMapName];
-      item.checked = item[options.checkedMapname];
-      item.selected = item[options.selectedMapname];
-      item.expanded = item[options.expandedMapname];
-      item.disabled = item[options.disabledMapname];
-      if (item[options.isLeafMapName] == null) {
+      item.key = item[opt.idMapName!];
+      item.title = item[opt.titleMapName!];
+      item.checked = item[opt.checkedMapname!];
+      item.selected = item[opt.selectedMapname!];
+      item.expanded = item[opt.expandedMapname!];
+      item.disabled = item[opt.disabledMapname!];
+      if (item[opt.isLeafMapName!] == null) {
         item.isLeaf = item.children.length === 0;
       } else {
-        item.isLeaf = item[options.isLeafMapName];
+        item.isLeaf = item[opt.isLeafMapName!];
       }
-      if (options.cb) {
-        options.cb(item, parent, deep);
+      if (opt.cb) {
+        opt.cb(item, parent, deep);
       }
     });
     return tree.map(node => new NzTreeNode(node));
@@ -192,7 +198,7 @@ export class ArrayService {
     const inFn = (data: any[], parent: any, deep: number) => {
       for (const item of data) {
         cb(item, parent, deep);
-        const childrenVal = item[options.childrenMapName];
+        const childrenVal = item[options!.childrenMapName!];
         if (childrenVal && childrenVal.length > 0) {
           inFn(childrenVal, item, deep + 1);
         }
@@ -204,29 +210,19 @@ export class ArrayService {
   /**
    * 获取所有已经选中的 `key` 值
    */
-  getKeysByTreeNode(
-    tree: NzTreeNode[],
-    options?: {
-      /** 是否包含半选状态的值，默认：`true` */
-      includeHalfChecked?: boolean;
-      /** 是否重新指定 `key` 键名，若不指定表示使用 `NzTreeNode.key` 值 */
-      keyMapName?: string;
-      /** 回调，返回一个值 `key` 值，优先级高于其他 */
-      cb?: (item: NzTreeNode, parent: NzTreeNode, deep: number) => any;
-    },
-  ): any[] {
-    options = {
+  getKeysByTreeNode(tree: NzTreeNode[], options?: ArrayServiceGetKeysByTreeNodeOptions): any[] {
+    const opt = {
       includeHalfChecked: true,
       ...options,
-    };
+    } as ArrayServiceGetKeysByTreeNodeOptions;
     const keys: any[] = [];
     this.visitTree(tree, (item: NzTreeNode, parent: NzTreeNode, deep: number) => {
-      if (item.isChecked || (options.includeHalfChecked && item.isHalfChecked)) {
+      if (item.isChecked || (opt.includeHalfChecked && item.isHalfChecked)) {
         keys.push(
-          options.cb
-            ? options.cb(item, parent, deep)
-            : options.keyMapName
-            ? item.origin[options.keyMapName]
+          opt.cb
+            ? opt.cb(item, parent, deep)
+            : opt.keyMapName
+            ? item.origin[opt.keyMapName]
             : item.key,
         );
       }

@@ -23,7 +23,7 @@ import { debounceTime } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
-  private resize$: Subscription = null;
+  private resize$: Subscription | null = null;
   @ViewChild('container') private node: ElementRef;
   private timer: number;
 
@@ -54,7 +54,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     cancelAnimationFrame(this.timer);
 
     const canvas = node.nativeElement as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
     const radius = canvasWidth / 2;
@@ -73,7 +73,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     let currData = 0;
     const waveupsp = 0.005; // 水波上涨速度
 
-    let arcStack = [];
+    let arcStack: [[number, number]?] | null = [];
     const bR = radius - lineWidth;
     const circleOffset = -(Math.PI / 2);
     let circleLock = true;
@@ -83,7 +83,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
       arcStack.push([radius + bR * Math.cos(i), radius + bR * Math.sin(i)]);
     }
 
-    const cStartPoint = arcStack.shift();
+    const cStartPoint = arcStack.shift() as [number, number];
     ctx.strokeStyle = color;
     ctx.moveTo(cStartPoint[0], cStartPoint[1]);
 
@@ -91,7 +91,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
       ctx.beginPath();
       ctx.save();
 
-      const sinStack = [];
+      const sinStack: [[number, number]?] = [];
       for (let i = xOffset; i <= xOffset + axisLength; i += 20 / axisLength) {
         const x = sp + (xOffset + i) / unit;
         const y = Math.sin(x) * currRange;
@@ -103,7 +103,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
         sinStack.push([dx, dy]);
       }
 
-      const startPoint = sinStack.shift();
+      const startPoint = sinStack.shift() as [number, number];
 
       ctx.lineTo(xOffset + axisLength, canvasHeight);
       ctx.lineTo(xOffset, canvasHeight);
@@ -120,8 +120,8 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     function render() {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       if (circleLock && type !== 'update') {
-        if (arcStack.length) {
-          const temp = arcStack.shift();
+        if (arcStack!.length) {
+          const temp = arcStack!.shift() as [number, number];
           ctx.lineTo(temp[0], temp[1]);
           ctx.stroke();
         } else {
@@ -209,6 +209,6 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     if (this.timer) {
       cancelAnimationFrame(this.timer);
     }
-    this.resize$.unsubscribe();
+    this.resize$!.unsubscribe();
   }
 }

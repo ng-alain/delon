@@ -43,11 +43,11 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
     const orgTime = +(this.ui.debounceTime || 0);
     const time = Math.max(0, this.isAsync ? Math.max(50, orgTime) : orgTime);
 
-    this.list = this.ngModel.valueChanges.pipe(
+    this.list = this.ngModel.valueChanges!.pipe(
       debounceTime(time),
       startWith(''),
-      flatMap(input => (this.isAsync ? this.ui.asyncData(input) : this.filterData(input))),
-      map(res => getEnum(res, null, this.schema.readOnly)),
+      flatMap(input => (this.isAsync ? this.ui.asyncData!(input) : this.filterData(input))),
+      map(res => getEnum(res, null, this.schema.readOnly!)),
     );
   }
 
@@ -56,13 +56,13 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
     if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':
-        this.fixData = getCopyEnum(this.schema.enum || this.formProperty.options.uiEmailSuffixes, null, this.schema.readOnly);
+        this.fixData = getCopyEnum(this.schema.enum! || this.formProperty.options.uiEmailSuffixes, null, this.schema.readOnly!);
         break;
       default:
         this.fixData = getCopyEnum(
-          this.schema.enum,
+          this.schema.enum!,
           this.formProperty.formData,
-          this.schema.readOnly,
+          this.schema.readOnly!,
         );
         break;
     }

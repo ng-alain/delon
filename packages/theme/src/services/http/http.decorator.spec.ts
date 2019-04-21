@@ -29,78 +29,78 @@ class MockService extends BaseApi {
     @Query('ps') ps: number,
     @Headers('mh') mh: string,
   ): Observable<any> {
-    return;
+    return null as any;
   }
 
   @GET(':id')
   GET(@Path('id') id: number): Observable<any> {
-    return;
+    return null as any;
   }
 
   @GET(':id/:id')
   MulitPath(@Path('id') id: number): Observable<any> {
-    return;
+    return null as any;
   }
 
   @GET('')
   arrQS(@Query('ids') ids: number[]): Observable<any> {
-    return;
+    return null as any;
   }
 
   @POST(':id')
   save(@Path('id') id: number, @Body data: {}): Observable<any> {
-    return;
+    return null as any;
   }
 
   @DELETE()
   DELETE(): Observable<any> {
-    return;
+    return null as any;
   }
 
   @OPTIONS()
   OPTIONS(): Observable<any> {
-    return;
+    return null as any;
   }
 
   @PUT()
   PUT(): Observable<any> {
-    return;
+    return null as any;
   }
 
   @HEAD()
   HEAD(): Observable<any> {
-    return;
+    return null as any;
   }
 
   @PATCH()
   PATCH(): Observable<any> {
-    return;
+    return null as any;
   }
 
   @JSONP()
   JSONP(): Observable<any> {
-    return;
+    return null as any;
   }
 
   @GET('', { acl: 'admin' })
   ACL_Admin(): Observable<any> {
-    return;
+    return null as any;
   }
 
   @GET('', { acl: 'user' })
   ACL_User(): Observable<any> {
-    return;
+    return null as any;
   }
 }
 
 class MockEmptyService extends BaseApi {
   @GET()
   GET(): Observable<any> {
-    return;
+    return null as any;
   }
   @GET('/a')
   A(): Observable<any> {
-    return;
+    return null as any;
   }
 }
 
