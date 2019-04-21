@@ -28,9 +28,6 @@ export class ReuseTabService implements OnDestroy {
   private _inited = false;
   private _max = 10;
   private _keepingScroll = false;
-  private _debug = false;
-  private _mode = ReuseTabMatchMode.Menu;
-  private _excludes: RegExp[] = [];
   private _cachedChange = new BehaviorSubject<ReuseTabNotify | null>(null);
   private _cached: ReuseTabCached[] = [];
   private _titleCached: { [url: string]: ReuseTitle } = {};
@@ -38,6 +35,10 @@ export class ReuseTabService implements OnDestroy {
   private _router$: Unsubscribable;
   private removeUrlBuffer: string | null;
   private positionBuffer: { [url: string]: [number, number] } = {};
+  debug = false;
+  mode = ReuseTabMatchMode.Menu;
+  /** 排除规则，限 `mode=URL` */
+  excludes: RegExp[] = [];
 
   private get snapshot() {
     return this.injector.get(ActivatedRoute).snapshot;
@@ -61,20 +62,6 @@ export class ReuseTabService implements OnDestroy {
       this._cached.pop();
     }
   }
-  /** 设置匹配模式 */
-  set mode(value: ReuseTabMatchMode) {
-    this._mode = value;
-  }
-  get mode() {
-    return this._mode;
-  }
-  /** 设置Debug模式 */
-  set debug(value: boolean) {
-    this._debug = value;
-  }
-  get debug() {
-    return this._debug;
-  }
   set keepingScroll(value: boolean) {
     this._keepingScroll = value;
     this.initScroll();
@@ -83,14 +70,6 @@ export class ReuseTabService implements OnDestroy {
     return this._keepingScroll;
   }
   keepingScrollContainer: Element;
-  /** 排除规则，限 `mode=URL` */
-  set excludes(values: RegExp[]) {
-    if (!values) return;
-    this._excludes = values;
-  }
-  get excludes() {
-    return this._excludes;
-  }
   /** 获取已缓存的路由 */
   get items(): ReuseTabCached[] {
     return this._cached;
@@ -339,7 +318,7 @@ export class ReuseTabService implements OnDestroy {
       }
       return true;
     }
-    return this._excludes.findIndex(r => r.test(url)) === -1;
+    return this.excludes.findIndex(r => r.test(url)) === -1;
   }
   /**
    * 刷新，触发一个 refresh 类型事件
