@@ -11,6 +11,7 @@ import { updateHostClass, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'number-info',
+  exportAs: 'numberInfo',
   templateUrl: './number-info.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

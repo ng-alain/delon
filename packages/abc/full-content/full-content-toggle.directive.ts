@@ -3,6 +3,7 @@ import { FullContentComponent } from './full-content.component';
 
 @Directive({
   selector: '[full-toggle]',
+  exportAs: 'fullToggle',
   host: {
     '(click)': '_click()',
   },

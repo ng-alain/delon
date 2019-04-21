@@ -14,6 +14,7 @@ declare var G2: any;
 
 @Component({
   selector: 'g2-gauge',
+  exportAs: 'g2Gauge',
   template: ``,
   host: {
     '[class.g2-gauge]': 'true',

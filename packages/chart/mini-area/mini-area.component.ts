@@ -20,6 +20,7 @@ export interface G2MiniAreaData {
 
 @Component({
   selector: 'g2-mini-area',
+  exportAs: 'g2MiniArea',
   template: ``,
   host: {
     '[style.height.px]': 'height',

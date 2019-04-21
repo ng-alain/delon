@@ -19,6 +19,7 @@ const prefixCls = `sg`;
 
 @Component({
   selector: 'sg',
+  exportAs: 'sg',
   template: `
     <ng-content></ng-content>
   `,

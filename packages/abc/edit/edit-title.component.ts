@@ -11,6 +11,7 @@ import { SEContainerComponent } from './edit-container.component';
 
 @Component({
   selector: 'se-title, [se-title]',
+  exportAs: 'seTitle',
   template: '<ng-content></ng-content>',
   host: {
     '[class.se__title]': 'true',

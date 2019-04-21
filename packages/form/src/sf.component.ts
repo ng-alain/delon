@@ -37,6 +37,7 @@ export function useFactory(
 
 @Component({
   selector: 'sf, [sf]',
+  exportAs: 'sf',
   templateUrl: './sf.component.html',
   providers: [
     WidgetFactory,

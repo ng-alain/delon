@@ -26,6 +26,7 @@ const FLOATINGCLS = 'sidebar-nav__floating';
 
 @Component({
   selector: 'sidebar-nav',
+  exportAs: 'sidebarNav',
   templateUrl: './sidebar-nav.component.html',
   host: {
     '(click)': '_click()',
