@@ -920,6 +920,44 @@ describe('abc: table', () => {
           done();
         });
       });
+      describe('HTTP Status', () => {
+        it('error request', (done) => {
+          context.data = '/mock';
+          fixture.detectChanges();
+          httpBed.expectOne(req => true).error(new ErrorEvent('cancel'));
+          fixture.whenStable().then(() => {
+            expect(comp._data.length).toBe(0);
+            done();
+          });
+        });
+        it('0', (done) => {
+          context.data = '/mock';
+          fixture.detectChanges();
+          httpBed.expectOne(req => true).flush(null, { status: 0, statusText: '' });
+          fixture.whenStable().then(() => {
+            expect(comp._data.length).toBe(0);
+            done();
+          });
+        });
+        it('404', (done) => {
+          context.data = '/mock';
+          fixture.detectChanges();
+          httpBed.expectOne(req => true).flush(null, { status: 404, statusText: 'Not found' });
+          fixture.whenStable().then(() => {
+            expect(comp._data.length).toBe(0);
+            done();
+          });
+        });
+        it('403', (done) => {
+          context.data = '/mock';
+          fixture.detectChanges();
+          httpBed.expectOne(req => true).flush(null, { status: 403, statusText: 'Forbidden' });
+          fixture.whenStable().then(() => {
+            expect(comp._data.length).toBe(0);
+            done();
+          });
+        });
+      });
     });
     describe('#req', () => {
       it('should fix all paraments when only part parament', () => {
