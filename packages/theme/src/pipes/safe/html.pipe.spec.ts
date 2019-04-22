@@ -16,22 +16,21 @@ describe('Pipe: html', () => {
     fixture.detectChanges();
   });
 
-  [{ value: '', result: `` }, { value: '<i>asdf</i>', result: `asdf` }].forEach(
-    (item: any) => {
-      it(`${item.value.toString()} muse be ${item.result}`, () => {
-        fixture.componentInstance.value = item.value;
-        fixture.detectChanges();
-        expect(
-          (fixture.debugElement.query(By.css('#result'))
-            .nativeElement as HTMLElement).textContent,
-        ).toBe(item.result);
-      });
-    },
-  );
+  [{ value: '', result: `` }, { value: '<i>asdf</i>', result: `asdf` }].forEach((item: any) => {
+    it(`${item.value.toString()} muse be ${item.result}`, () => {
+      fixture.componentInstance.value = item.value;
+      fixture.detectChanges();
+      expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).textContent).toBe(
+        item.result,
+      );
+    });
+  });
 });
 
 @Component({
-  template: `<div id="result" [innerHTML]="value | html"></div>`,
+  template: `
+    <div id="result" [innerHTML]="value | html"></div>
+  `,
 })
 class TestComponent {
   value = '';

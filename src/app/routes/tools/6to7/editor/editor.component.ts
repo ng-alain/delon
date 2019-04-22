@@ -3,13 +3,12 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { ConverterService } from '../transform/converter.service';
 
 @Component({
-    selector: 'app-six-to-seven',
-    templateUrl: './editor.component.html',
-    providers: [ ConverterService ],
+  selector: 'app-six-to-seven',
+  templateUrl: './editor.component.html',
+  providers: [ConverterService],
 })
 export class SixToSevenEditorComponent implements OnInit {
-
-    source: string = `
+  source: string = `
     <pro-header [title]="'高级表单'">
         <ng-template #content>高级表单常见于一次性输入和提交大批量数据的场景。（示例采用响应式表单，也可使用模板驱动方式）</ng-template>
     </pro-header>
@@ -257,25 +256,25 @@ export class SixToSevenEditorComponent implements OnInit {
         </footer-toolbar>
     </form>
     `;
-    result: string;
-    doing = false;
+  result: string;
+  doing = false;
 
-    constructor(private converterService: ConverterService, private msg: NzMessageService) {}
+  constructor(private converterService: ConverterService, private msg: NzMessageService) {}
 
-    ngOnInit(): void {
-        this.run();
-    }
+  ngOnInit(): void {
+    this.run();
+  }
 
-    run() {
-        this.doing = true;
-        this.converterService.run(this.source).then(res => {
-            this.doing = false;
-            if (!res.ok) {
-                this.msg.error(res.error as string);
-                return;
-            }
-            this.result = res.result as string;
-            this.msg.success('转化成功');
-        });
-    }
+  run() {
+    this.doing = true;
+    this.converterService.run(this.source).then(res => {
+      this.doing = false;
+      if (!res.ok) {
+        this.msg.error(res.error as string);
+        return;
+      }
+      this.result = res.result as string;
+      this.msg.success('转化成功');
+    });
+  }
 }

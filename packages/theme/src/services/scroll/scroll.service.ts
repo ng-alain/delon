@@ -4,17 +4,17 @@ import { WINDOW } from '../../win_tokens';
 
 @Injectable({ providedIn: 'root' })
 export class ScrollService {
-  constructor(@Inject(WINDOW) private win: any, @Inject(DOCUMENT) private doc: any) { }
+  constructor(@Inject(WINDOW) private win: any, @Inject(DOCUMENT) private doc: any) {}
 
   /**
    * 获取滚动条位置
    * @param element 指定元素，默认 `window`
    */
-  getScrollPosition(element?: Element): [ number, number ] {
+  getScrollPosition(element?: Element): [number, number] {
     if (element && element !== this.win) {
-      return [ element.scrollLeft, element.scrollTop ];
+      return [element.scrollLeft, element.scrollTop];
     } else {
-      return [ this.win.pageXOffset, this.win.pageYOffset ];
+      return [this.win.pageXOffset, this.win.pageYOffset];
     }
   }
 

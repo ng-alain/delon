@@ -1,4 +1,4 @@
-import { Component, DebugElement, Injector, OnInit, ViewChild } from '@angular/core';
+import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { inject, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -13,10 +13,9 @@ describe('abc: error-collect', () => {
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
-  let injector: Injector;
 
   beforeEach(() => {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [ErrorCollectModule, ReactiveFormsModule, NgZorroAntdModule],
       declarations: [TestComponent],
     });

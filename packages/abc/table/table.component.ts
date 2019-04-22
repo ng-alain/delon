@@ -29,14 +29,7 @@ import {
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
-import {
-  deepMerge,
-  deepMergeKey,
-  toBoolean,
-  updateHostClass,
-  InputBoolean,
-  InputNumber,
-} from '@delon/util';
+import { deepMerge, deepMergeKey, toBoolean, updateHostClass, InputBoolean, InputNumber } from '@delon/util';
 import { of, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -70,16 +63,7 @@ import {
   selector: 'st',
   exportAs: 'st',
   templateUrl: './table.component.html',
-  providers: [
-    STDataSource,
-    STRowSource,
-    STColumnSource,
-    STExport,
-    CNCurrencyPipe,
-    DatePipe,
-    YNPipe,
-    DecimalPipe,
-  ],
+  providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
@@ -358,8 +342,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   load(pi = 1, extraParams?: {}, options?: STLoadOptions) {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
-      this._req.params =
-        options && options.merge ? { ...this._req.params, ...extraParams } : extraParams;
+      this._req.params = options && options.merge ? { ...this._req.params, ...extraParams } : extraParams;
     }
     this._change('pi');
     return this;
@@ -456,7 +439,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
+      .forEach(c =>
+        this._data.forEach(
+          (i, idx) => (i._values[c.__point] = { text: this.dataSource.getNoIndex(i, c, idx), org: idx }),
+        ),
+      );
 
     return this.cd();
   }

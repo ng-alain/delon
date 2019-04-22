@@ -97,8 +97,7 @@ export class STDataSource {
                 ret = [];
               }
               // total
-              const resultTotal =
-                res.reName!.total && deepGet(result, res.reName!.total as string[], null);
+              const resultTotal = res.reName!.total && deepGet(result, res.reName!.total as string[], null);
               retTotal = resultTotal == null ? total || 0 : +resultTotal;
             }
             return deepCopy(ret);
@@ -275,9 +274,7 @@ export class STDataSource {
   // #region sort
 
   private getValidSort(columns: STColumn[]): STSortMap[] {
-    return columns
-      .filter(item => item._sort && item._sort.enabled && item._sort.default)
-      .map(item => item._sort);
+    return columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort);
   }
 
   private getSorterFn(columns: STColumn[]) {
@@ -321,7 +318,8 @@ export class STDataSource {
       };
 
       ret = {
-        [ms.key]: sortList.sort((a, b) => a.tick - b.tick)
+        [ms.key]: sortList
+          .sort((a, b) => a.tick - b.tick)
           .map(item => item.key + ms.nameSeparator + ((item.reName || {})[item.default!] || item.default))
           .join(ms.separator),
       };
@@ -366,8 +364,7 @@ export class STDataSource {
   private genStatistical(columns: STColumn[], list: STData[], rawData: any): STStatisticalResults {
     const res = {};
     columns.forEach((col, index) => {
-      res[col.key ? col.key : index] =
-        col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
+      res[col.key ? col.key : index] = col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
     });
     return res;
   }
@@ -390,9 +387,7 @@ export class STDataSource {
           res.value = list.length;
           break;
         case 'distinctCount':
-          res.value = this.getValues(index, list).filter(
-            (value, idx, self) => self.indexOf(value) === idx,
-          ).length;
+          res.value = this.getValues(index, list).filter((value, idx, self) => self.indexOf(value) === idx).length;
           break;
         case 'sum':
           res.value = this.toFixed(this.getSum(index, list), item.digits!);

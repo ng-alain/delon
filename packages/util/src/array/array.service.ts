@@ -218,13 +218,7 @@ export class ArrayService {
     const keys: any[] = [];
     this.visitTree(tree, (item: NzTreeNode, parent: NzTreeNode, deep: number) => {
       if (item.isChecked || (opt.includeHalfChecked && item.isHalfChecked)) {
-        keys.push(
-          opt.cb
-            ? opt.cb(item, parent, deep)
-            : opt.keyMapName
-            ? item.origin[opt.keyMapName]
-            : item.key,
-        );
+        keys.push(opt.cb ? opt.cb(item, parent, deep) : opt.keyMapName ? item.origin[opt.keyMapName] : item.key);
       }
     });
     return keys;

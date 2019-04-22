@@ -31,7 +31,7 @@ export class MockInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const src = this.injector.get(MockService);
+    const src = this.injector.get<MockService>(MockService);
     const config = {
       delay: 300,
       force: false,

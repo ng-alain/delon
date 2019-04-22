@@ -6,9 +6,7 @@ export function highlight() {
     (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'pre',
     (node: any, index: number) => {
       const attr = JsonML.getAttributes(node);
-      return `<pre class="hljs language-${attr.lang}"><code>${getCode(
-        node,
-      )}</code></pre>`;
+      return `<pre class="hljs language-${attr.lang}"><code>${getCode(node)}</code></pre>`;
     },
   ];
 }

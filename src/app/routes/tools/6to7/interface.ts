@@ -7,7 +7,15 @@ export interface ConvertAction {
 
 export interface ConvertRule {
   /** 操作类型 */
-  type: 'name' | 'remove-child' | 'remove-child-template-attr' | 'change-tag-to-text' | 'name-to-attr' | 'attr-to-name' | 'add-template-atrr' | 'extra';
+  type:
+    | 'name'
+    | 'remove-child'
+    | 'remove-child-template-attr'
+    | 'change-tag-to-text'
+    | 'name-to-attr'
+    | 'attr-to-name'
+    | 'add-template-atrr'
+    | 'extra';
   /** 值对象 */
   value?: string;
   extra_name?: string;

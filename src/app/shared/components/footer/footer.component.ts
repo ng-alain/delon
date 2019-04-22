@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  Input,
-  NgZone,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, NgZone, OnInit } from '@angular/core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { copy, InputBoolean, LazyService } from '@delon/util';
 import { NzIconService, NzMessageService } from 'ng-zorro-antd';

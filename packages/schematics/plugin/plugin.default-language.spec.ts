@@ -17,11 +17,7 @@ describe('NgAlainSchematic: plugin: default-language', () => {
   });
 
   it('should be from en to zh', () => {
-    runner.runSchematic(
-      'plugin',
-      { name: 'defaultLanguage', type: 'add', defaultLanguage: 'zh' },
-      tree,
-    );
+    runner.runSchematic('plugin', { name: 'defaultLanguage', type: 'add', defaultLanguage: 'zh' }, tree);
     const content = tree.readContent(PATH);
     expect(content).toContain(`@angular/common/locales/zh`);
     expect(content).toContain(`NZ_I18N, zh_CN`);

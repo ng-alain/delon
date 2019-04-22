@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, DebugElement, Injector, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, DebugElement, ViewChild } from '@angular/core';
+import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -64,7 +64,7 @@ class MockLocation {
 }
 
 describe('abc: sidebar-nav', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -247,9 +247,7 @@ describe('abc: sidebar-nav', () => {
           page.showSubMenu();
         });
         it('should be displayed full submenu', () => {
-          const clientHeight = spyOnProperty(doc.documentElement, 'clientHeight').and.returnValue(
-            0,
-          );
+          const clientHeight = spyOnProperty(doc.documentElement, 'clientHeight').and.returnValue(0);
           spyOnProperty(doc.querySelector('body')!, 'clientHeight').and.returnValue(0);
           expect(clientHeight).not.toHaveBeenCalled();
           page.showSubMenu();
@@ -334,16 +332,12 @@ describe('abc: sidebar-nav', () => {
               {
                 text: '',
                 open: true,
-                children: [
-                  { text: '' },
-                ],
+                children: [{ text: '' }],
               },
               {
                 text: '',
                 open: true,
-                children: [
-                  { text: '' },
-                ],
+                children: [{ text: '' }],
               },
             ],
           },
@@ -371,10 +365,7 @@ describe('abc: sidebar-nav', () => {
 
     it('should be auto collapsed when less than pad', fakeAsync(() => {
       // create test component
-      TestBed.overrideTemplate(
-        TestComponent,
-        `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
-      );
+      TestBed.overrideTemplate(TestComponent, `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`);
       const defaultCollapsed = false;
       createComp(false, () => {
         spyOnProperty(window, 'innerWidth').and.returnValue(767);
@@ -388,10 +379,7 @@ describe('abc: sidebar-nav', () => {
     }));
     it(`should be won't collapsed when more than pad`, fakeAsync(() => {
       // create test component
-      TestBed.overrideTemplate(
-        TestComponent,
-        `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
-      );
+      TestBed.overrideTemplate(TestComponent, `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`);
       const defaultCollapsed = false;
       createComp(false, () => {
         spyOnProperty(window, 'innerWidth').and.returnValue(769);
@@ -405,10 +393,7 @@ describe('abc: sidebar-nav', () => {
     }));
     it('should be auto expaned when less than pad trigger click', fakeAsync(() => {
       // create test component
-      TestBed.overrideTemplate(
-        TestComponent,
-        `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`,
-      );
+      TestBed.overrideTemplate(TestComponent, `<sidebar-nav #comp [autoCloseUnderPad]="true"></sidebar-nav>`);
       createComp();
       setSrv.layout.collapsed = true;
       fixture.detectChanges();

@@ -10,9 +10,7 @@ const JsonML = require('jsonml.js/lib/utils');
 let exampleIndexTpl = null;
 
 function fixExample(item: any, filePath: string, config: ModuleConfig) {
-  item.componentIndexName = `${genUpperName(
-    `${config.name}-${item.name}-index`,
-  )}Component`;
+  item.componentIndexName = `${genUpperName(`${config.name}-${item.name}-index`)}Component`;
   const obj = {
     selector: item.id + '-index',
     demos: `
@@ -34,9 +32,7 @@ export function generateDemo(
   siteConfig: SiteConfig,
 ) {
   if (!exampleIndexTpl) {
-    exampleIndexTpl = fs
-      .readFileSync(path.join(rootDir, siteConfig.template.examples_index))
-      .toString('utf8');
+    exampleIndexTpl = fs.readFileSync(path.join(rootDir, siteConfig.template.examples_index)).toString('utf8');
   }
   const ret: { tpl: { left: string[]; right: string[] }; data: any[] } = {
     tpl: {
@@ -79,9 +75,7 @@ export function generateDemo(
       };
 
       const contentChildren = JsonML.getChildren(markdownData.content);
-      const codeStartIndex = contentChildren.findIndex(
-        (node: any) => JsonML.getTagName(node) === 'pre',
-      );
+      const codeStartIndex = contentChildren.findIndex((node: any) => JsonML.getTagName(node) === 'pre');
 
       if (codeStartIndex > -1) {
         item.summary = [''].concat(contentChildren.slice(0, codeStartIndex));
@@ -97,25 +91,16 @@ export function generateDemo(
       }
       // parse languages
       const summaryChildren = JsonML.getChildren(item.summary);
-      const summaryLangIdx = summaryChildren.findIndex(
-        (node: any) => JsonML.getTagName(node) === 'h2',
-      );
+      const summaryLangIdx = summaryChildren.findIndex((node: any) => JsonML.getTagName(node) === 'h2');
       if (summaryLangIdx !== -1) {
         const summaryRet: any = {};
         for (let i = 0; i < summaryChildren.length; i++) {
           const summaryNode = summaryChildren[i];
           const summaryLang = '' + summaryNode[1];
-          if (
-            JsonML.getTagName(summaryNode) === 'h2' &&
-            ~siteConfig.langs.indexOf(summaryLang)
-          ) {
-            const nextLangPos = summaryChildren
-              .slice(i + 1)
-              .findIndex((node: any) => JsonML.getTagName(node) === 'h2');
+          if (JsonML.getTagName(summaryNode) === 'h2' && ~siteConfig.langs.indexOf(summaryLang)) {
+            const nextLangPos = summaryChildren.slice(i + 1).findIndex((node: any) => JsonML.getTagName(node) === 'h2');
             summaryRet[summaryLang] = [''].concat(
-              nextLangPos === -1
-                ? summaryChildren.slice(i + 1)
-                : summaryChildren.slice(i + 1, nextLangPos + 1),
+              nextLangPos === -1 ? summaryChildren.slice(i + 1) : summaryChildren.slice(i + 1, nextLangPos + 1),
             );
             if (nextLangPos === -1) break;
             i = nextLangPos;
@@ -131,39 +116,21 @@ export function generateDemo(
 
       // replace component name
       if (item.type === 'example') {
-        item.componentName = `${genUpperName(
-          `${config.name}-${markdownData.name}`,
-        )}Component`;
+        item.componentName = `${genUpperName(`${config.name}-${markdownData.name}`)}Component`;
       } else {
         item.componentName = `${genUpperName(item.id)}Component`;
       }
       item.code = ('' + item.code)
         .replace(/selector:[ ]?(['|"|`])([^'"`]+)/g, `selector: $1${item.id}`)
-        .replace(
-          /export class ([^ {]+)/g,
-          `export class ${item.componentName}`,
-        );
+        .replace(/export class ([^ {]+)/g, `export class ${item.componentName}`);
       // save demo component
-      let filePath = path.join(
-        rootDir,
-        config.dist,
-        key,
-        `${markdownData.name}.ts`,
-      );
+      let filePath = path.join(rootDir, config.dist, key, `${markdownData.name}.ts`);
       if (item.type === 'example') {
-        filePath = path.join(
-          rootDir,
-          `./src/app/routes/gen/examples`,
-          `${markdownData.name}.ts`,
-        );
+        filePath = path.join(rootDir, `./src/app/routes/gen/examples`, `${markdownData.name}.ts`);
         fse.ensureDirSync(path.dirname(filePath));
 
         // generate container component
-        const containerFilePath = path.join(
-          rootDir,
-          `./src/app/routes/gen/examples`,
-          `${markdownData.name}_index.ts`,
-        );
+        const containerFilePath = path.join(rootDir, `./src/app/routes/gen/examples`, `${markdownData.name}_index.ts`);
         fixExample(item, containerFilePath, config);
       } else {
         fse.ensureDirSync(path.dirname(filePath));

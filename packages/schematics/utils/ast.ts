@@ -1,11 +1,6 @@
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { getDecoratorMetadata } from '@schematics/angular/utility/ast-utils';
-import {
-  Change,
-  InsertChange,
-  RemoveChange,
-  ReplaceChange,
-} from '@schematics/angular/utility/change';
+import { Change, InsertChange, RemoveChange, ReplaceChange } from '@schematics/angular/utility/change';
 import * as ts from 'typescript';
 
 /** Reads file given path and returns TypeScript source file. */

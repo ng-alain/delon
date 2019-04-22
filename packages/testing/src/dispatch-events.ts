@@ -6,12 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {
-  createFakeEvent,
-  createKeyboardEvent,
-  createMouseEvent,
-  createTouchEvent,
-} from './event-objects';
+import { createFakeEvent, createKeyboardEvent, createMouseEvent, createTouchEvent } from './event-objects';
 
 /** Utility to dispatch any event on a Node. */
 export function dispatchEvent(node: Node | Window, event: Event): Event {
@@ -25,12 +20,7 @@ export function dispatchFakeEvent(node: Node | Window, type: string, canBubble?:
 }
 
 /** Shorthand to dispatch a keyboard event with a specified key code. */
-export function dispatchKeyboardEvent(
-  node: Node,
-  type: string,
-  keyCode: number,
-  target?: Element,
-): KeyboardEvent {
+export function dispatchKeyboardEvent(node: Node, type: string, keyCode: number, target?: Element): KeyboardEvent {
   return dispatchEvent(node, createKeyboardEvent(type, keyCode, target)) as KeyboardEvent;
 }
 

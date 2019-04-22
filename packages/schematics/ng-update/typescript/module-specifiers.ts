@@ -1,20 +1,9 @@
 import * as ts from 'typescript';
-import {
-  getExportDeclaration,
-  getImportDeclaration,
-} from '../typescript/imports';
+import { getExportDeclaration, getImportDeclaration } from '../typescript/imports';
 
-export const delonModulesSpecifier = [
-  'abc',
-  'acl',
-  'auth',
-  'cache',
-  'form',
-  'mock',
-  'theme',
-  'util',
-  'chart',
-].map(pkg => `@delon/${pkg}`);
+export const delonModulesSpecifier = ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(
+  pkg => `@delon/${pkg}`,
+);
 
 /** Whether the specified node is part of an `@delon/*` declaration. */
 export function isDelonImportDeclaration(node: ts.Node) {
@@ -27,9 +16,7 @@ export function isDelonExportDeclaration(node: ts.Node) {
 }
 
 /** Whether the declaration is part of `@delon/*` */
-function isDelonDeclaration(
-  declaration: ts.ImportDeclaration | ts.ExportDeclaration,
-) {
+function isDelonDeclaration(declaration: ts.ImportDeclaration | ts.ExportDeclaration) {
   if (!declaration.moduleSpecifier) {
     return false;
   }

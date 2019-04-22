@@ -1,9 +1,4 @@
-import {
-  ModuleWithProviders,
-  NgModule,
-  Optional,
-  SkipSelf,
-} from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { throwIfAlreadyLoaded } from './core/module-import-guard';
 
 import { DelonFormModule } from '@delon/form';
@@ -55,11 +50,7 @@ export function fnLodopConfig(): LodopConfig {
 // #endregion
 
 @NgModule({
-  imports: [
-    AlainThemeModule.forRoot(),
-    DelonFormModule.forRoot(),
-    DelonMockModule.forRoot({ data: MOCKDATA }),
-  ],
+  imports: [AlainThemeModule.forRoot(), DelonFormModule.forRoot(), DelonMockModule.forRoot({ data: MOCKDATA })],
 })
 export class DelonModule {
   constructor(

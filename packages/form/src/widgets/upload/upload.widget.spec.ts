@@ -27,7 +27,7 @@ describe('form: widget: upload', () => {
   }
 
   function getUpload() {
-    return dl.query(By.directive(NzUploadComponent)).injector.get(NzUploadComponent);
+    return dl.query(By.directive(NzUploadComponent)).injector.get<NzUploadComponent>(NzUploadComponent);
   }
 
   it('should be ingore update value when status is not success', () => {

@@ -88,9 +88,7 @@ describe('abc: view', () => {
           context.label = 'aa';
           fixture.detectChanges();
           page.expect(prefixCls + 'item-fixed');
-          expect(page.getEl(prefixCls + 'label').style.width).toBe(
-            `${context.parent_labelWidth}px`,
-          );
+          expect(page.getEl(prefixCls + 'label').style.width).toBe(`${context.parent_labelWidth}px`);
         });
       });
       describe('#item', () => {

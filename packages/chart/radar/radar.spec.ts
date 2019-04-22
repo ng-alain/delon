@@ -35,14 +35,7 @@ describe('chart: radar', () => {
 
 @Component({
   template: `
-    <g2-radar
-      #comp
-      [hasLegend]="hasLegend"
-      [title]="title"
-      [tickCount]="tickCount"
-      [data]="data"
-      [delay]="delay"
-    >
+    <g2-radar #comp [hasLegend]="hasLegend" [title]="title" [tickCount]="tickCount" [data]="data" [delay]="delay">
     </g2-radar>
   `,
 })

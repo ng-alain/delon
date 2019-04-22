@@ -90,8 +90,7 @@ export class MetaService {
     };
     // fix title
     if (typeof this._data.title === 'object') {
-      this._data.title =
-        this._data.title[this.i18n.lang] || this._data.title[this.i18n.defaultLang];
+      this._data.title = this._data.title[this.i18n.lang] || this._data.title[this.i18n.defaultLang];
     }
 
     this.refPage(url);
@@ -167,17 +166,13 @@ export class MetaService {
     });
     category.list!.forEach((item: any) => {
       const meta = item.meta[this.i18n.lang] || item.meta[this.i18n.defaultLang];
-      let typeIdx = category.types!.findIndex(
-        w => w['zh-CN'] === meta.type || w['en-US'] === meta.type,
-      );
+      let typeIdx = category.types!.findIndex(w => w['zh-CN'] === meta.type || w['en-US'] === meta.type);
       if (typeIdx === -1) typeIdx = 0;
       let groupItem = group.find(w => w.index === typeIdx);
       if (!groupItem) {
         groupItem = {
           index: typeIdx,
-          title:
-            category.types![typeIdx][this.i18n.lang] ||
-            category.types![typeIdx][this.i18n.defaultLang],
+          title: category.types![typeIdx][this.i18n.lang] || category.types![typeIdx][this.i18n.defaultLang],
           list: [],
         };
         group.push(groupItem);
@@ -198,9 +193,7 @@ export class MetaService {
       .filter((item: any) => Array.isArray(item.list) && item.list.length > 0)
       .map((item: any) => {
         if (item.list[0].order === -1) {
-          item.list.sort((a: any, b: any) =>
-            a.title.toLowerCase().localeCompare(b.title.toLowerCase()),
-          );
+          item.list.sort((a: any, b: any) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
         } else {
           item.list.sort((a: any, b: any) => a.order - b.order);
         }
@@ -237,8 +230,8 @@ export class MetaService {
     const res: MetaSearchGroup[] = [];
     for (const g of FULLMETAS) {
       const type = g.name!.toLowerCase();
-      const children: MetaSearchGroupItem[] = g.list!
-        .filter(w => w._t.includes(q))
+      const children: MetaSearchGroupItem[] = g
+        .list!.filter(w => w._t.includes(q))
         .map(item => {
           return {
             title: item._t,

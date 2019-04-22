@@ -287,11 +287,7 @@ export interface Lodop extends CLodop {
   ): void;
 
   /** (增强型)设置打印项风格A, 继承 `SET_PRINT_STYLE` 的所有属性 */
-  SET_PRINT_STYLEA(
-    varItemNameID: number | string,
-    strStyleName: string,
-    varStyleValue: number | string,
-  ): void;
+  SET_PRINT_STYLEA(varItemNameID: number | string, strStyleName: string, varStyleValue: number | string): void;
 
   /** (增强型)导出数据到文件 */
   SAVE_TO_FILE(strFileName: string): boolean;
@@ -343,12 +339,7 @@ export interface Lodop extends CLodop {
    * @param  strLicenseA 附加注册号A，用途与控件参数LicenseA一样。
    * @param  strLicenseB 附加注册号B，用途与控件参数LicenseB一样。
    */
-  SET_LICENSES(
-    strCompanyName: string,
-    strLicense: string,
-    strLicenseA?: string,
-    strLicenseB?: string,
-  ): void;
+  SET_LICENSES(strCompanyName: string, strLicense: string, strLicenseA?: string, strLicenseB?: string): void;
 
   webskt: WebSocket;
 }

@@ -30,13 +30,10 @@ export interface AlainI18NService {
   readonly change: Observable<string>;
 }
 
-export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>(
-  'alainTranslatorToken',
-  {
-    providedIn: 'root',
-    factory: ALAIN_I18N_TOKEN_FACTORY,
-  },
-);
+export const ALAIN_I18N_TOKEN = new InjectionToken<AlainI18NService>('alainTranslatorToken', {
+  providedIn: 'root',
+  factory: ALAIN_I18N_TOKEN_FACTORY,
+});
 
 export function ALAIN_I18N_TOKEN_FACTORY() {
   return new AlainI18NServiceFake();

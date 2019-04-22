@@ -32,11 +32,7 @@ describe('form: widget: tag', () => {
         a: {
           type: 'number',
           title: '兴趣',
-          enum: [
-            { value: 1, label: '电影' },
-            { value: 2, label: '书' },
-            { value: 3, label: '旅行' },
-          ],
+          enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
           ui: {
             widget: 'tag',
             checkedChange: jasmine.createSpy(),
@@ -60,11 +56,7 @@ describe('form: widget: tag', () => {
             a: {
               type: 'number',
               title: '兴趣',
-              enum: [
-                { value: 1, label: '电影' },
-                { value: 2, label: '书' },
-                { value: 3, label: '旅行' },
-              ],
+              enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
               ui: {
                 widget: 'tag',
                 mode: 'default',
@@ -85,11 +77,7 @@ describe('form: widget: tag', () => {
               a: {
                 type: 'number',
                 title: '兴趣',
-                enum: [
-                  { value: 1, label: '电影' },
-                  { value: 2, label: '书' },
-                  { value: 3, label: '旅行' },
-                ],
+                enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
                 ui: {
                   widget: 'tag',
                   mode: 'closeable',
@@ -107,11 +95,7 @@ describe('form: widget: tag', () => {
             a: {
               type: 'number',
               title: '兴趣',
-              enum: [
-                { value: 1, label: '电影' },
-                { value: 2, label: '书' },
-                { value: 3, label: '旅行' },
-              ],
+              enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
               ui: {
                 widget: 'tag',
                 mode: 'closeable',

@@ -79,21 +79,13 @@ export class CacheService implements OnDestroy {
    * - `set('data/1', this.http.get('data/1')).subscribe()`
    * - `set('data/1', this.http.get('data/1'), { expire: 10 }).subscribe()`
    */
-  set<T>(
-    key: string,
-    data: Observable<T>,
-    options?: { type?: 's'; expire?: number },
-  ): Observable<T>;
+  set<T>(key: string, data: Observable<T>, options?: { type?: 's'; expire?: number }): Observable<T>;
   /**
    * 持久化缓存 `Observable` 对象，例如：
    * - `set('data/1', this.http.get('data/1')).subscribe()`
    * - `set('data/1', this.http.get('data/1'), { expire: 10 }).subscribe()`
    */
-  set(
-    key: string,
-    data: Observable<any>,
-    options?: { type?: 's'; expire?: number },
-  ): Observable<any>;
+  set(key: string, data: Observable<any>, options?: { type?: 's'; expire?: number }): Observable<any>;
   /**
    * 持久化缓存基础对象，例如：
    * - `set('data/1', 1)`
@@ -188,7 +180,7 @@ export class CacheService implements OnDestroy {
   ): Observable<any> | any {
     const isPromise = options.mode !== 'none' && this.cog.mode === 'promise';
     const value: ICache = this.memory.has(key)
-      ? this.memory.get(key) as ICache
+      ? (this.memory.get(key) as ICache)
       : this.store.get(this.cog.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
@@ -213,19 +205,11 @@ export class CacheService implements OnDestroy {
   /**
    * 获取缓存，若不存在则设置持久化缓存 `Observable` 对象
    */
-  tryGet<T>(
-    key: string,
-    data: Observable<T>,
-    options?: { type?: 's'; expire?: number },
-  ): Observable<T>;
+  tryGet<T>(key: string, data: Observable<T>, options?: { type?: 's'; expire?: number }): Observable<T>;
   /**
    * 获取缓存，若不存在则设置持久化缓存 `Observable` 对象
    */
-  tryGet(
-    key: string,
-    data: Observable<any>,
-    options?: { type?: 's'; expire?: number },
-  ): Observable<any>;
+  tryGet(key: string, data: Observable<any>, options?: { type?: 's'; expire?: number }): Observable<any>;
   /**
    * 获取缓存，若不存在则设置持久化缓存基础对象
    */

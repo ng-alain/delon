@@ -89,8 +89,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     if (this.isPercent) {
       this.select = false;
       this.tooltip = false;
-      this.percentColor = value =>
-        value === '占比' ? color || 'rgba(24, 144, 255, 0.85)' : '#F0F2F5';
+      this.percentColor = value => (value === '占比' ? color || 'rgba(24, 144, 255, 0.85)' : '#F0F2F5');
       this.data = [
         {
           x: '占比',
@@ -121,8 +120,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     } else {
       chart.tooltip({
         showTitle: false,
-        itemTpl:
-          '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value} %</li>',
+        itemTpl: '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value} %</li>',
       });
     }
 
@@ -149,17 +147,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const {
-      chart,
-      height,
-      padding,
-      animate,
-      data,
-      lineWidth,
-      isPercent,
-      percentColor,
-      colors,
-    } = this;
+    const { chart, height, padding, animate, data, lineWidth, isPercent, percentColor, colors } = this;
     if (!chart) return;
 
     chart.set('height', height);

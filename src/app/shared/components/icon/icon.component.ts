@@ -3,7 +3,9 @@ import { InputBoolean } from '@delon/util';
 
 @Component({
   selector: 'nz-icon',
-  template: `<i nz-icon [type]="type" [theme]="theme" [spin]="spin" [twoToneColor]="twoToneColor" [iconfont]="iconfont"></i>`,
+  template: `
+    <i nz-icon [type]="type" [theme]="theme" [spin]="spin" [twoToneColor]="twoToneColor" [iconfont]="iconfont"></i>
+  `,
 })
 export class IconComponent {
   @Input()

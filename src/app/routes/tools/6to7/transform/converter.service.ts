@@ -6,15 +6,13 @@ import { RULES } from './rules';
 
 @Injectable()
 export class ConverterService {
-
   dom: VDom[];
   ingoreClosedTag = ['input'];
 
-  constructor() {
-  }
+  constructor() {}
 
   private parseDOM(html: string): Promise<ConvertResult> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const handler = new DOMHandler((error, dom) => {
         if (error) {
           resolve({ ok: false, error });
@@ -114,8 +112,7 @@ export class ConverterService {
   private resolveRemoveChild(dom: VDom, name: string) {
     if (!dom.children || dom.children.length === 0) return;
     const has = dom.children.find(w => w.name === name);
-    if (has)
-      dom.children = has.children;
+    if (has) dom.children = has.children;
   }
 
   private resolveRemoveChildTemplateAttr(dom: VDom, attrName: string) {
@@ -157,7 +154,7 @@ export class ConverterService {
 
   private resolveExtra(dom: VDom, rule: ConvertRule) {
     if (rule.extra_insert_attrs) {
-      dom.attribs = {...dom.attribs, ...rule.extra_insert_attrs};
+      dom.attribs = { ...dom.attribs, ...rule.extra_insert_attrs };
     }
     if (rule.extra_replace_attrs) {
       Object.keys(dom.attribs!).forEach(key => {
@@ -193,14 +190,17 @@ export class ConverterService {
 
         if (!item.children || item.children.length === 0) {
           let html = `${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs!)}>`;
-          if (this.ingoreClosedTag.indexOf(item.name!) === -1)
-            html += `</${item.name}>`;
+          if (this.ingoreClosedTag.indexOf(item.name!) === -1) html += `</${item.name}>`;
           result.push(html);
           continue;
         }
 
         if (item.children && item.children.length === 1 && item.children[0].type === 'text') {
-          result.push(`${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs!)}>${item.children[0].data!.trim()}</${item.name}>`);
+          result.push(
+            `${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs!)}>${item.children[0].data!.trim()}</${
+              item.name
+            }>`,
+          );
           continue;
         }
 
@@ -227,24 +227,23 @@ export class ConverterService {
     const result: string[] = [];
     keys.forEach(key => {
       const val = attr[key] + '';
-      if (val && val.length > 0)
-        result.push(`${key}="${attr[key]}"`);
-      else
-        result.push(key);
+      if (val && val.length > 0) result.push(`${key}="${attr[key]}"`);
+      else result.push(key);
     });
     return ' ' + result.join(' ');
   }
 
   private genTab(count: number): string {
-    return Array(count).fill('    ').join('');
+    return Array(count)
+      .fill('    ')
+      .join('');
   }
 
   run(html: string): Promise<ConvertResult> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         this.parseDOM(html).then(res => resolve(res));
       });
     });
   }
-
 }

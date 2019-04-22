@@ -11,12 +11,7 @@ import {
 import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
 
 import { MenuService, ScrollService } from '@delon/theme';
-import {
-  ReuseTabCached,
-  ReuseTabMatchMode,
-  ReuseTabNotify,
-  ReuseTitle,
-} from './reuse-tab.interfaces';
+import { ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
 
 /**
  * 路由复用类，提供复用所需要一些基本接口
@@ -207,7 +202,7 @@ export class ReuseTabService implements OnDestroy {
     } else {
       this.removeUrlBuffer = url;
     }
-    this.injector.get(Router).navigateByUrl(newUrl);
+    this.injector.get<Router>(Router).navigateByUrl(newUrl);
   }
   /**
    * 获取标题，顺序如下：
@@ -262,8 +257,7 @@ export class ReuseTabService implements OnDestroy {
   getClosable(url: string, route?: ActivatedRouteSnapshot): boolean {
     if (typeof this._closableCached[url] !== 'undefined') return this._closableCached[url];
 
-    if (route && route.data && typeof route.data.reuseClosable === 'boolean')
-      return route.data.reuseClosable;
+    if (route && route.data && typeof route.data.reuseClosable === 'boolean') return route.data.reuseClosable;
 
     const menu = this.mode !== ReuseTabMatchMode.URL ? this.getMenu(url) : null;
     if (menu && typeof menu.reuseClosable === 'boolean') return menu.reuseClosable;
@@ -331,8 +325,7 @@ export class ReuseTabService implements OnDestroy {
   // #region privates
 
   private destroy(_handle: any) {
-    if (_handle && _handle.componentRef && _handle.componentRef.destroy)
-      _handle.componentRef.destroy();
+    if (_handle && _handle.componentRef && _handle.componentRef.destroy) _handle.componentRef.destroy();
   }
 
   private di(...args) {
@@ -464,8 +457,7 @@ export class ReuseTabService implements OnDestroy {
    * 3. 组件 `keepingScroll` 值
    */
   getKeepingScroll(url: string, route?: ActivatedRouteSnapshot): boolean {
-    if (route && route.data && typeof route.data.keepingScroll === 'boolean')
-      return route.data.keepingScroll;
+    if (route && route.data && typeof route.data.keepingScroll === 'boolean') return route.data.keepingScroll;
 
     const menu = this.mode !== ReuseTabMatchMode.URL ? this.getMenu(url) : null;
     if (menu && typeof menu.keepingScroll === 'boolean') return menu.keepingScroll;
@@ -487,7 +479,7 @@ export class ReuseTabService implements OnDestroy {
       this._router$.unsubscribe();
     }
 
-    this._router$ = this.injector.get(Router).events.subscribe(e => {
+    this._router$ = this.injector.get<Router>(Router).events.subscribe(e => {
       if (e instanceof NavigationStart) {
         const url = this.curUrl;
         if (this.getKeepingScroll(url, this.getTruthRoute(this.snapshot))) {
@@ -498,18 +490,11 @@ export class ReuseTabService implements OnDestroy {
       } else if (e instanceof NavigationEnd) {
         const url = this.curUrl;
         const item = this.get(url);
-        if (
-          item &&
-          item.position &&
-          this.getKeepingScroll(url, this.getTruthRoute(this.snapshot))
-        ) {
+        if (item && item.position && this.getKeepingScroll(url, this.getTruthRoute(this.snapshot))) {
           if (this.isDisabledInRouter) {
             this.ss.scrollToPosition(this.keepingScrollContainer, item.position);
           } else {
-            setTimeout(
-              () => this.ss.scrollToPosition(this.keepingScrollContainer, item.position!),
-              1,
-            );
+            setTimeout(() => this.ss.scrollToPosition(this.keepingScrollContainer, item.position!), 1);
           }
         }
       }

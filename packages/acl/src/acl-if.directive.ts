@@ -1,11 +1,4 @@
-import {
-  Directive,
-  ElementRef,
-  Input,
-  Renderer2,
-  TemplateRef,
-  ViewContainerRef,
-} from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 import { ACLDirective } from './acl.directive';
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';

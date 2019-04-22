@@ -100,13 +100,7 @@ const RULES: ConvertAction[] = [
 
       // #region res
       const resKeys = Object.keys(dom.attribs).filter(
-        key =>
-          ~[
-            `resReName`,
-            `[resReName]`,
-            `preDataChange`,
-            `[preDataChange]`,
-          ].indexOf(key),
+        key => ~[`resReName`, `[resReName]`, `preDataChange`, `[preDataChange]`].indexOf(key),
       );
       bondingAttr(
         'res',
@@ -176,10 +170,7 @@ const RULES: ConvertAction[] = [
   {
     type: 'tag',
     name: 'desc-list-item',
-    rules: [
-      { type: 'name', value: 'sv' },
-      { type: 'attr-name', value: 'term', newValue: 'label' },
-    ],
+    rules: [{ type: 'name', value: 'sv' }, { type: 'attr-name', value: 'term', newValue: 'label' }],
   },
   {
     type: 'tag',
@@ -252,7 +243,7 @@ function fixTs(host: Tree, path: string) {
 export function v2DomRule(): Rule {
   return (host: Tree, context: SchematicContext) => {
     host.visit(path => {
-      if (~path.indexOf(`/node_modules/`)) return ;
+      if (~path.indexOf(`/node_modules/`)) return;
 
       if (path.endsWith('.ts')) {
         fixTs(host, path);

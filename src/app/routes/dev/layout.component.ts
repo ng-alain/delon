@@ -141,7 +141,6 @@ export class DevLayoutComponent implements OnInit {
     public settings: SettingsService,
     public msgSrv: NzMessageService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
-
   ) {
     iconSrv.addIcon(...ICONS);
   }

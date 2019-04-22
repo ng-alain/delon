@@ -16,15 +16,11 @@ describe('Schematic: view', () => {
   });
 
   it('should be generate list page', () => {
-    [modulePath, routingPath, tsPath, htmlPath].forEach(path =>
-      expect(tree.exists(path)).toBe(true),
-    );
+    [modulePath, routingPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
   });
 
   it('should be has import code', () => {
-    expect(tree.readContent(modulePath)).toContain(
-      `import { TradeViewComponent } from './view/view.component';`,
-    );
+    expect(tree.readContent(modulePath)).toContain(`import { TradeViewComponent } from './view/view.component';`);
   });
 
   it('should not be imported into COMPONENTS', () => {

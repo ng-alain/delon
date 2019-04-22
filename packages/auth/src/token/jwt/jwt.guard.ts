@@ -18,11 +18,7 @@ export class JWTGuard implements CanActivate, CanActivateChild, CanLoad {
   private cog: DelonAuthConfig;
   private url: string | undefined;
 
-  constructor(
-    @Inject(DA_SERVICE_TOKEN) private srv: ITokenService,
-    private injector: Injector,
-    cog: DelonAuthConfig,
-  ) {
+  constructor(@Inject(DA_SERVICE_TOKEN) private srv: ITokenService, private injector: Injector, cog: DelonAuthConfig) {
     this.cog = { ...new DelonAuthConfig(), ...cog };
   }
 

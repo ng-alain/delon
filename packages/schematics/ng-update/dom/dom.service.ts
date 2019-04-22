@@ -27,6 +27,7 @@ export class DomService {
     const parser = new htmlparser2.Parser(handler, {
       lowerCaseTags: false,
       lowerCaseAttributeNames: false,
+// tslint:disable-next-line: deprecation
     } as htmlparser2.Options);
 
     parser.write(html.replace(/\n|\s\s/g, ' ').trim());
@@ -160,9 +161,7 @@ export class DomService {
 
   private resolveRemoveChildTemplateAttr(dom: VDom, attrName: string) {
     if (!dom.children || dom.children.length === 0) return;
-    const idx = dom.children.findIndex(
-      w => w.name === 'ng-template' && typeof w.attribs[attrName] !== 'undefined',
-    );
+    const idx = dom.children.findIndex(w => w.name === 'ng-template' && typeof w.attribs[attrName] !== 'undefined');
     if (idx !== -1) {
       dom.children.push(...dom.children[idx].children);
       dom.children.splice(idx, 1);
@@ -194,10 +193,7 @@ export class DomService {
   /** 添加未指定属性名的 ng-template */
   private resolveAddTemplateAtrr(dom: VDom, attrName: string, rule: ConvertRule) {
     const ngDom = dom.children.find(
-      w =>
-        w.type === 'tag' &&
-        w.name === 'ng-template' &&
-        typeof w.attribs[`#${rule.value}`] !== 'undefined',
+      w => w.type === 'tag' && w.name === 'ng-template' && typeof w.attribs[`#${rule.value}`] !== 'undefined',
     );
     if (ngDom) {
       dom.attribs[`[${rule.extra_name || rule.value}]`] = rule.value;
@@ -231,10 +227,7 @@ export class DomService {
   private resolveAddPrefixToTemplate(dom: VDom, attrName: string, rule: ConvertRule) {
     Object.keys(dom.attribs).forEach(k => {
       const ngDom = dom.children.find(
-        s =>
-          s.type === 'tag' &&
-          s.name === 'ng-template' &&
-          typeof s.attribs[`#${dom.attribs[k]}`] !== 'undefined',
+        s => s.type === 'tag' && s.name === 'ng-template' && typeof s.attribs[`#${dom.attribs[k]}`] !== 'undefined',
       );
       if (!ngDom) return;
       const name = dom.attribs[k];
@@ -311,9 +304,9 @@ export class DomService {
 
         if (item.children && item.children.length === 1 && item.children[0].type === 'text') {
           result.push(
-            `${this.genTab(deep)}<${item.name}${this.genAttr(
-              item.attribs,
-            )}>${item.children[0].data.trim()}</${item.name}>`,
+            `${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs)}>${item.children[0].data.trim()}</${
+              item.name
+            }>`,
           );
           continue;
         }

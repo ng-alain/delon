@@ -1,11 +1,5 @@
 import { Type } from '@angular/core';
-import {
-  discardPeriodicTasks,
-  flush,
-  tick,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { discardPeriodicTasks, flush, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 
 export type PageG2Type = 'geoms' | 'views';
 

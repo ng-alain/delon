@@ -1,11 +1,7 @@
 import chalk from 'chalk';
 import { Rules, RuleFailure } from 'tslint';
 import * as ts from 'typescript';
-import {
-  findElements,
-  findElementHasAttribute,
-  findElementHasAttributes,
-} from '../../html-parsing/elements';
+import { findElements, findElementHasAttribute, findElementHasAttributes } from '../../html-parsing/elements';
 import { ExternalResource } from '../../tslint/component-file';
 import { ComponentWalker } from '../../tslint/component-walker';
 
@@ -24,12 +20,7 @@ export class Walker extends ComponentWalker {
 
   visitExternalTemplate(node: ExternalResource) {
     this._createFailuresForContent(node, node.getText()).forEach(data => {
-      this.addExternalFailureFromStartToEnd(
-        node,
-        data.start,
-        data.end,
-        data.message,
-      );
+      this.addExternalFailureFromStartToEnd(node, data.start, data.end, data.message);
     });
   }
 
@@ -48,12 +39,8 @@ export class Walker extends ComponentWalker {
         start: node.getStart() + list.offset,
         end: node.getStart() + list.offset + list.attr.length,
         message:
-          `Found removed @Output() "${chalk.red(list.attr)}" on "${chalk.bold(
-            'st(simple-table)',
-          )}". ` +
-          `Use "${chalk.green(
-            '(change)',
-          )}" instead, Document: https://ng-alain.com/components/table#STChange`,
+          `Found removed @Output() "${chalk.red(list.attr)}" on "${chalk.bold('st(simple-table)')}". ` +
+          `Use "${chalk.green('(change)')}" instead, Document: https://ng-alain.com/components/table#STChange`,
       });
     });
 
@@ -61,28 +48,19 @@ export class Walker extends ComponentWalker {
       failures.push({
         start: node.getStart() + offset,
         end: node.getStart() + offset + '[sortReName]'.length,
-        message: `Found deprecated @Input() "${chalk.red(
-          '[sortReName]',
-        )}" which has been removed, Use "${chalk.green(
+        message: `Found deprecated @Input() "${chalk.red('[sortReName]')}" which has been removed, Use "${chalk.green(
           'STColumn.sort.reName',
         )}" instead.`,
       });
     });
 
-    findElementHasAttributes(content, 'sv', [
-      'detailClass',
-      '[detailClass]',
-    ]).forEach(list => {
+    findElementHasAttributes(content, 'sv', ['detailClass', '[detailClass]']).forEach(list => {
       failures.push({
         start: node.getStart() + list.offset,
         end: node.getStart() + list.offset + list.attr.length,
         message:
-          `Found deprecated @Input() "${chalk.red(list.attr)}" on "${chalk.bold(
-            'sv(desc-list-item)',
-          )}". ` +
-          `Use "${chalk.green(
-            '[type]',
-          )}" instead, Document: https://ng-alain.com/components/view#sv`,
+          `Found deprecated @Input() "${chalk.red(list.attr)}" on "${chalk.bold('sv(desc-list-item)')}". ` +
+          `Use "${chalk.green('[type]')}" instead, Document: https://ng-alain.com/components/view#sv`,
       });
     });
 

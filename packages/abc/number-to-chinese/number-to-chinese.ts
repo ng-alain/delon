@@ -1,18 +1,13 @@
 import { NumberToChineseOptions } from './number-to-chinese.interfaces';
 
-export function numberToChinese(
-  value: number | string,
-  rmb = true,
-  options?: NumberToChineseOptions,
-): string {
+export function numberToChinese(value: number | string, rmb = true, options?: NumberToChineseOptions): string {
   options = {
     minusSymbol: '负',
     validThrow: false,
     ...options,
   };
   if (typeof value === 'number') value = value.toString();
-  if (!/^-?\d+(\.\d+)?$/.test(value) && options.validThrow)
-    throw new Error(`${value} is invalid number type`);
+  if (!/^-?\d+(\.\d+)?$/.test(value) && options.validThrow) throw new Error(`${value} is invalid number type`);
   let integer: number | string;
   let decimal: number | string | null;
   [integer, decimal] = value.split('.');

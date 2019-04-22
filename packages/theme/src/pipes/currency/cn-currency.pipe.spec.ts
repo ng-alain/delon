@@ -35,21 +35,19 @@ describe('Pipe: _currency', () => {
   ].forEach((item: any) => {
     it(`${JSON.stringify(item)} muse be ${item.result}`, () => {
       fixture.componentInstance.value = item.value;
-      if (item.currencyCode)
-        fixture.componentInstance.currencyCode = item.currencyCode;
+      if (item.currencyCode) fixture.componentInstance.currencyCode = item.currencyCode;
       if (item.display) fixture.componentInstance.display = item.display;
       if (item.digits) fixture.componentInstance.digits = item.digits;
       fixture.detectChanges();
-      expect(
-        (fixture.debugElement.query(By.css('#result'))
-          .nativeElement as HTMLElement).innerText,
-      ).toBe(item.result);
+      expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe(item.result);
     });
   });
 });
 
 @Component({
-  template: `<p id="result">{{ value | _currency:currencyCode:display:digits }}</p>`,
+  template: `
+    <p id="result">{{ value | _currency: currencyCode:display:digits }}</p>
+  `,
 })
 class TestComponent {
   value: number;

@@ -1,5 +1,4 @@
-import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { XlsxService } from '../../xlsx/xlsx.service';
 import { XlsxExportOptions } from '../../xlsx/xlsx.types';
 import { STExport } from '../table-export';
@@ -62,7 +61,7 @@ const data: any[] = [
 ];
 
 describe('abc: table: export', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let srv: STExport;
 
   describe('[default]', () => {
@@ -85,9 +84,7 @@ describe('abc: table: export', () => {
       expect(ret.sheets).not.toBeNull();
       const sheet = ret.sheets.sn;
       expect(sheet).not.toBeNull();
-      const cc = columns.filter(
-        w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0),
-      );
+      const cc = columns.filter(w => w.exported !== false && w.index && (!w.buttons || w.buttons.length === 0));
       expect(sheet['!ref']).toBe(
         // tslint:disable-next-line:binary-expression-operand-order
         `A1:${String.fromCharCode(65 + cc.length - 1)}${data.length + 1}`,

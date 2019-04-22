@@ -85,12 +85,7 @@ export class LodopService implements OnDestroy {
         onResolve('load-variable-name-error', { name: this.cog.name });
         return;
       }
-      this._lodop.SET_LICENSES(
-        this.cog.companyName!,
-        this.cog.license,
-        this.cog.licenseA,
-        this.cog.licenseB,
-      );
+      this._lodop.SET_LICENSES(this.cog.companyName!, this.cog.license, this.cog.licenseA, this.cog.licenseB);
       checkStatus();
     });
   }

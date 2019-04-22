@@ -155,9 +155,7 @@ describe('form: widget: date', () => {
       expect(comp.mode).toBe('range');
       const time = new Date();
       comp._change([time, time]);
-      page
-        .checkValue('/start', format(time, comp.format))
-        .checkValue('/end', format(time, comp.format));
+      page.checkValue('/start', format(time, comp.format)).checkValue('/end', format(time, comp.format));
       comp._change(null);
       page.checkValue('/start', '').checkValue('/end', '');
     });

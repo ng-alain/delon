@@ -6,7 +6,7 @@ export default {
     403: `Üzgünüz, bu sayfaya erişiminiz yok`,
     404: `Maalesef bu sayfa mevcut değil`,
     500: `Üzgünüz, sunucu hatası`,
-    backToHome: 'Ana Sayfa\'ya geri dön',
+    backToHome: `Ana Sayfa'ya geri dön`,
   },
   noticeIcon: {
     emptyText: 'Veri yok',

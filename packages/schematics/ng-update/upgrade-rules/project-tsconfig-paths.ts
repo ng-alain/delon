@@ -15,28 +15,28 @@ import { getWorkspace } from '@schematics/angular/utility/config';
  */
 export function getProjectTsConfigPaths(tree: Tree): string[] {
   // Start with some tsconfig paths that are generally used within CLI projects.
-  const tsconfigPaths = new Set<string>([
-    './tsconfig.json',
-    './src/tsconfig.json',
-    './src/tsconfig.app.json',
-  ]);
+  const tsconfigPaths = new Set<string>(['./tsconfig.json', './src/tsconfig.json', './src/tsconfig.app.json']);
 
   // Add any tsconfig directly referenced in a build or test task of the angular.json workspace.
   const workspace = getWorkspace(tree);
 
   for (const project of Object.values(workspace.projects)) {
     ['build', 'test'].forEach(targetName => {
-      if (project.targets &&
-          project.targets[targetName] &&
-          project.targets[targetName].options &&
-          project.targets[targetName].options.tsConfig) {
+      if (
+        project.targets &&
+        project.targets[targetName] &&
+        project.targets[targetName].options &&
+        project.targets[targetName].options.tsConfig
+      ) {
         tsconfigPaths.add(project.targets[targetName].options.tsConfig);
       }
 
-      if (project.architect &&
-          project.architect[targetName] &&
-          project.architect[targetName].options &&
-          project.architect[targetName].options.tsConfig) {
+      if (
+        project.architect &&
+        project.architect[targetName] &&
+        project.architect[targetName].options &&
+        project.architect[targetName].options.tsConfig
+      ) {
         tsconfigPaths.add(project.architect[targetName].options.tsConfig);
       }
     });

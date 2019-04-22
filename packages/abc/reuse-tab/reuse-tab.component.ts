@@ -66,8 +66,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() keepingScroll = false;
   @Input()
   set keepingScrollContainer(value: string | Element) {
-    this._keepingScrollContainer =
-      typeof value === 'string' ? this.doc.querySelector(value) : value;
+    this._keepingScrollContainer = typeof value === 'string' ? this.doc.querySelector(value) : value;
   }
   @Input() customContextMenu: ReuseCustomContextMenu[] = [];
   @Input() tabBarExtraContent: TemplateRef<void>;
@@ -121,8 +120,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         ls.push({
           url,
           title: this.genTit(this.srv.getTitle(url, snapshotTrue)),
-          closable:
-            this.allowClose && this.srv.count > 0 && this.srv.getClosable(url, snapshotTrue),
+          closable: this.allowClose && this.srv.count > 0 && this.srv.getClosable(url, snapshotTrue),
           index: ls.length,
           active: false,
           last: false,
@@ -176,7 +174,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         break;
     }
     if (!fn) {
-      return ;
+      return;
     }
     if (!res.item.active && res.item.index <= this.acitveIndex) {
       this.to(null, res.item.index, fn);

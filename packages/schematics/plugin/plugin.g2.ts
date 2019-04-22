@@ -1,9 +1,5 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
-import {
-  addPackageToPackageJson,
-  removePackageFromPackageJson,
-  scriptsToAngularJson,
-} from '../utils/json';
+import { addPackageToPackageJson, removePackageFromPackageJson, scriptsToAngularJson } from '../utils/json';
 import { PluginOptions } from './interface';
 
 function g2Typing(host: Tree, options: PluginOptions) {

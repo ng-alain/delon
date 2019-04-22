@@ -7,11 +7,7 @@ import { ICONS } from '../../style-icons';
 
 @Injectable()
 export class StartupService {
-  constructor(
-    private injector: Injector,
-    iconSrv: NzIconService,
-    @Inject(DOCUMENT) private doc: Document,
-  ) {
+  constructor(private injector: Injector, iconSrv: NzIconService, @Inject(DOCUMENT) private doc: Document) {
     iconSrv.addIcon(...ICONS);
   }
 

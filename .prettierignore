@@ -1,1 +1,14 @@
-# add files you wish to ignore here
+**/*.md
+**/*.svg
+**/*.html
+**/test.ts
+_nginx/
+_screenshot/
+node_modules/
+coverage/
+dist/
+package.json
+src/app/routes/gen/
+src/templates/
+packages/schematics/**/files/
+packages/schematics/**/test-cases/

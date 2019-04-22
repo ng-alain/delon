@@ -7,12 +7,7 @@ import { DevHomeComponent } from './home/home.component';
 import { DevLayoutComponent } from './layout.component';
 import { DevPageComponent } from './pages/page.component';
 
-const COMPONENTS = [
-  DevLayoutComponent,
-  DevHomeComponent,
-  DevPageComponent,
-  DemoComponent,
-];
+const COMPONENTS = [DevLayoutComponent, DevHomeComponent, DevPageComponent, DemoComponent];
 
 const routes: Routes = [
   {

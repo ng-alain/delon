@@ -1,11 +1,5 @@
 import { highlight } from '../converters/highlight';
-import {
-  escapeHTML,
-  generateSluggedId,
-  genAttr,
-  isHeading,
-  isStandalone,
-} from './utils';
+import { escapeHTML, generateSluggedId, genAttr, isHeading, isStandalone } from './utils';
 const JsonML = require('jsonml.js/lib/utils');
 
 let headingList: any[] = [];
@@ -28,9 +22,7 @@ const converters = [highlight()].concat([
       // <a href="#${sluggedId}" class="anchor">#</a>
       return `<${tagName} id="${sluggedId}">${children
         .map(toHtml)
-        .join(
-          '',
-        )}<a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a></${tagName}>`;
+        .join('')}<a onclick="window.location.hash = '${sluggedId}'" class="anchor">#</a></${tagName}>`;
     },
   ],
   [
@@ -60,15 +52,10 @@ const converters = [highlight()].concat([
   [
     (node: any) => JsonML.isElement(node) && JsonML.getTagName(node) === 'a',
     (node: any, index: number) => {
-      const attrs = {...JsonML.getAttributes(node)};
-      let target =
-        attrs.href.startsWith('//') || attrs.href.startsWith('http')
-          ? ' target="_blank"'
-          : '';
+      const attrs = { ...JsonML.getAttributes(node) };
+      let target = attrs.href.startsWith('//') || attrs.href.startsWith('http') ? ' target="_blank"' : '';
       if (~attrs.href.indexOf('ng-alain.com')) target = '';
-      return `<a${target} href="${attrs.href}" data-url="${
-        attrs.href
-      }">${JsonML.getChildren(node)
+      return `<a${target} href="${attrs.href}" data-url="${attrs.href}">${JsonML.getChildren(node)
         .map(toHtml)
         .join('')}</a>`;
     },
@@ -84,7 +71,7 @@ const converters = [highlight()].concat([
     () => true,
     (node: any) => {
       const tagName = JsonML.getTagName(node);
-      const attrs = genAttr({...JsonML.getAttributes(node)});
+      const attrs = genAttr({ ...JsonML.getAttributes(node) });
       return `${tagName ? `<${tagName}${attrs ? ' ' + attrs : ''}>` : ''}${
         isStandalone(tagName)
           ? ''
@@ -105,9 +92,7 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
     return ret.replace(
       /<pre class="hljs language-([html|ts|typescript|diff]+)"><code>([\s\S]*)<\/code><\/pre>/g,
       (fullWord: any, lang: any, code: any) => {
-        return `<pre class="hljs language-$1"><code>${escapeHTML(
-          code,
-        )}</code></pre>`;
+        return `<pre class="hljs language-$1"><code>${escapeHTML(code)}</code></pre>`;
       },
     );
   } else {
@@ -125,14 +110,9 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
 }
 
 function fixAngular(html: string): string {
-  return html.replace(
-    /<code>(.*?)<\/code>/gim,
-    (fullWord: string, content: string) => {
-      return ~content.indexOf(`</a>`)
-        ? fullWord
-        : `<code>${content.replace(`<`, `&lt;`)}</code>`;
-    },
-  );
+  return html.replace(/<code>(.*?)<\/code>/gim, (fullWord: string, content: string) => {
+    return ~content.indexOf(`</a>`) ? fullWord : `<code>${content.replace(`<`, `&lt;`)}</code>`;
+  });
 }
 
 export function generateMd(markdownData: any) {
@@ -143,9 +123,7 @@ export function generateMd(markdownData: any) {
     .map(arr => arr[1]);
 
   const apiStartIndex = contentChildren.findIndex(
-    (node: any) =>
-      JsonML.getTagName(node) === 'h2' &&
-      /^API/.test(JsonML.getChildren(node)[0]),
+    (node: any) => JsonML.getTagName(node) === 'h2' && /^API/.test(JsonML.getChildren(node)[0]),
   );
 
   const ret: any = {};

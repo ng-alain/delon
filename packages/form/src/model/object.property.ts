@@ -33,8 +33,7 @@ export class ObjectProperty extends PropertyGroup {
     this._propertiesId = [];
     let orderedProperties: string[];
     try {
-      orderedProperties = orderProperties(Object.keys(this.schema.properties!), this.ui
-        .order as string[]);
+      orderedProperties = orderProperties(Object.keys(this.schema.properties!), this.ui.order as string[]);
     } catch (e) {
       console.error(`Invalid ${this.schema.title || 'root'} object field configuration:`, e);
     }

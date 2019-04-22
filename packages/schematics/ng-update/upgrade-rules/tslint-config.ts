@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {sync as globSync } from 'glob';
+import { sync as globSync } from 'glob';
 import { TargetVersion } from '../target-version';
 import { RuleUpgradeData } from '../upgrade-data';
 
@@ -40,7 +40,7 @@ const baseUpgradeRules: UpgradeRules = [
 ];
 
 /** List of absolute paths that refer to directories that contain the upgrade rules. */
-const ruleDirectories = globSync('./**/', {cwd: __dirname, absolute: true});
+const ruleDirectories = globSync('./**/', { cwd: __dirname, absolute: true });
 
 /**
  * Creates a TSLint configuration object that can be passed to the schematic `TSLintFixTask`.

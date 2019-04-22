@@ -37,10 +37,7 @@ export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
     return this.process((route.data && route.data.guard) || null);
   }
   // all children route
-  canActivateChild(
-    childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
-  ): Observable<boolean> {
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.canActivate(childRoute, state);
   }
   // route

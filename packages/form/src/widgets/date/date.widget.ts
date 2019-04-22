@@ -68,9 +68,7 @@ export class DateWidget extends ControlWidget implements OnInit {
       return;
     }
 
-    const res = Array.isArray(value)
-      ? value.map(d => format(d, this.format))
-      : format(value, this.format);
+    const res = Array.isArray(value) ? value.map(d => format(d, this.format)) : format(value, this.format);
 
     if (this.flatRange) {
       this.setEnd(res[1]);

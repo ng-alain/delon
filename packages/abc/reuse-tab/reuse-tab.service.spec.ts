@@ -1,5 +1,4 @@
-import { Injector } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -26,7 +25,7 @@ class MockRouter {
 }
 
 describe('abc: reuse-tab(service)', () => {
-  let injector: Injector;
+  let injector: TestBedStatic;
   let srv: ReuseTabService;
   let menuSrv: MenuService;
   let router: MockRouter;
@@ -47,7 +46,7 @@ describe('abc: reuse-tab(service)', () => {
       ].concat(providers),
     });
     srv = injector.get(ReuseTabService);
-    menuSrv = injector.get<MenuService>(MenuService, undefined);
+    menuSrv = injector.get(MenuService, undefined);
     router = injector.get(Router) as any;
   }
 

@@ -12,9 +12,7 @@ export function isEmpty(element: HTMLElement): boolean {
 }
 
 export function toBoolean(value: any, allowUndefined: boolean | null = false): boolean | undefined {
-  return allowUndefined && typeof value === 'undefined'
-    ? undefined
-    : value != null && `${value}` !== 'false';
+  return allowUndefined && typeof value === 'undefined' ? undefined : value != null && `${value}` !== 'false';
 }
 
 /**
@@ -31,9 +29,7 @@ export function InputBoolean(allowUndefined: boolean | null = false): any {
     const privatePropName = `$$__${name}`;
 
     if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
-      console.warn(
-        `The prop "${privatePropName}" is already exist, it will be overrided by InputBoolean decorator.`,
-      );
+      console.warn(`The prop "${privatePropName}" is already exist, it will be overrided by InputBoolean decorator.`);
     }
 
     Object.defineProperty(target, privatePropName, {
@@ -72,9 +68,7 @@ export function InputNumber(fallback: number | null = 0): any {
     const privatePropName = `$$__${name}`;
 
     if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
-      console.warn(
-        `The prop "${privatePropName}" is already exist, it will be overrided by InputNumber decorator.`,
-      );
+      console.warn(`The prop "${privatePropName}" is already exist, it will be overrided by InputNumber decorator.`);
     }
 
     Object.defineProperty(target, privatePropName, {

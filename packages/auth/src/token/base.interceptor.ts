@@ -31,7 +31,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
   abstract setReq(req: HttpRequest<any>, options: DelonAuthConfig): HttpRequest<any>;
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const options = { ...new DelonAuthConfig(), ...this.injector.get(DelonAuthConfig, null) };
+    const options = { ...new DelonAuthConfig(), ...this.injector.get<DelonAuthConfig>(DelonAuthConfig, undefined) };
     if (options.ignores) {
       for (const item of options.ignores as RegExp[]) {
         if (item.test(req.url)) return next.handle(req);

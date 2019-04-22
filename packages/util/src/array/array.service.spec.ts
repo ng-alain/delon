@@ -73,10 +73,7 @@ describe('utils: array', () => {
       }).get(ArrayService);
     });
     it('should be array to tree', () => {
-      const res = srv.arrToTree([
-        { id: 2, parent_id: 1, title: 'c1' },
-        { id: 1, parent_id: 0, title: 't1' },
-      ]);
+      const res = srv.arrToTree([{ id: 2, parent_id: 1, title: 'c1' }, { id: 1, parent_id: 0, title: 't1' }]);
       page = new PageTreeNode(res);
       page.check('0', 'id', 1).check('0/0', 'id', 2);
     });
@@ -88,10 +85,7 @@ describe('utils: array', () => {
       expect(options.cb).toHaveBeenCalled();
     });
     it('should be support parent_id is string', () => {
-      const res = srv.arrToTree([
-        { id: 2, parent_id: '1', title: 'c1' },
-        { id: 1, parent_id: '', title: 't1' },
-      ]);
+      const res = srv.arrToTree([{ id: 2, parent_id: '1', title: 'c1' }, { id: 1, parent_id: '', title: 't1' }]);
       page = new PageTreeNode(res);
       page.check('0', 'id', 1).check('0/0', 'id', 2);
     });
@@ -107,10 +101,7 @@ describe('utils: array', () => {
 
     describe('#arrToTreeNode', () => {
       it('should be array to NzTreeNode', () => {
-        const res = srv.arrToTreeNode([
-          { id: 1, parent_id: 0, title: 't1' },
-          { id: 2, parent_id: 1, title: 'c1' },
-        ]);
+        const res = srv.arrToTreeNode([{ id: 1, parent_id: 0, title: 't1' }, { id: 2, parent_id: 1, title: 'c1' }]);
         page = new PageTreeNode(res);
         page.check('0', 'key', 1).check('0/0', 'key', 2);
       });
@@ -139,11 +130,7 @@ describe('utils: array', () => {
             options,
           );
           page = new PageTreeNode(res);
-          page.check(
-            '0',
-            key.startsWith('is') ? key : `is` + (key.slice(0, 1).toUpperCase() + key.slice(1)),
-            true,
-          );
+          page.check('0', key.startsWith('is') ? key : `is` + (key.slice(0, 1).toUpperCase() + key.slice(1)), true);
         });
       }
     });
@@ -234,10 +221,7 @@ describe('utils: array', () => {
       let item = firstIdx >= this.data.length ? null : this.data[firstIdx];
       if (pathArr.length > 1) {
         const secondIdx = +pathArr[1];
-        item =
-          secondIdx >= (this.data as any)[firstIdx].children
-            ? null
-            : this.data[firstIdx].children[secondIdx];
+        item = secondIdx >= (this.data as any)[firstIdx].children ? null : this.data[firstIdx].children[secondIdx];
       }
       if (value == null) {
         expect(item == null).toBe(true);

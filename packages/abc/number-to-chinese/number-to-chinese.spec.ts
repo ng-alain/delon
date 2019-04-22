@@ -38,9 +38,9 @@ describe('abc: number-to-chinese', () => {
         options: { minusSymbol: '欠' },
       },
     ].forEach((item: any) => {
-      it(`${typeof item.num === 'string' ? '[string]' : ''}${item.rmb ? 'RMB:' : ''}${
-        item.num
-      } muse be ${item.value}`, () => {
+      it(`${typeof item.num === 'string' ? '[string]' : ''}${item.rmb ? 'RMB:' : ''}${item.num} muse be ${
+        item.value
+      }`, () => {
         expect(numberToChinese(item.num, item.rmb, item.options || null)).toBe(item.value);
       });
     });
@@ -80,9 +80,9 @@ describe('abc: number-to-chinese', () => {
         fixture.componentInstance.rmb = item.rmb;
         fixture.componentInstance.minusSymbol = item.minusSymbol;
         fixture.detectChanges();
-        expect(
-          (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML,
-        ).toBe(item.result);
+        expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toBe(
+          item.result,
+        );
       });
     });
   });

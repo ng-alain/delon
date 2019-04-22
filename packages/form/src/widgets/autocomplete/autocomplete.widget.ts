@@ -56,14 +56,14 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
     if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':
-        this.fixData = getCopyEnum(this.schema.enum! || this.formProperty.options.uiEmailSuffixes, null, this.schema.readOnly!);
-        break;
-      default:
         this.fixData = getCopyEnum(
-          this.schema.enum!,
-          this.formProperty.formData,
+          this.schema.enum! || this.formProperty.options.uiEmailSuffixes,
+          null,
           this.schema.readOnly!,
         );
+        break;
+      default:
+        this.fixData = getCopyEnum(this.schema.enum!, this.formProperty.formData, this.schema.readOnly!);
         break;
     }
   }
@@ -78,8 +78,6 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
   }
 
   private addEmailSuffix(value: string) {
-    return of(
-      !value || ~value.indexOf('@') ? [] : this.fixData.map(domain => `${value}@${domain.label}`),
-    );
+    return of(!value || ~value.indexOf('@') ? [] : this.fixData.map(domain => `${value}@${domain.label}`));
   }
 }

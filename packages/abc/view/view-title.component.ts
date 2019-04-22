@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Host,
-  OnInit,
-  Optional,
-  Renderer2,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Host, OnInit, Optional, Renderer2 } from '@angular/core';
 import { SVContainerComponent } from './view-container.component';
 
 @Component({
@@ -20,11 +12,7 @@ import { SVContainerComponent } from './view-container.component';
 })
 export class SVTitleComponent implements OnInit {
   private el: HTMLElement;
-  constructor(
-    el: ElementRef,
-    @Host() @Optional() private parent: SVContainerComponent,
-    private ren: Renderer2,
-  ) {
+  constructor(el: ElementRef, @Host() @Optional() private parent: SVContainerComponent, private ren: Renderer2) {
     if (parent == null) {
       throw new Error(`[sv-title] must include 'sv-container' component`);
     }

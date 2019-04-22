@@ -1,14 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { parseMd } from './utils/parse-md';
-import {
-  genUpperName,
-  genUrl,
-  generateDoc,
-  genComponentName,
-  genSelector,
-  includeAttributes,
-} from './utils/utils';
+import { genUpperName, genUrl, generateDoc, genComponentName, genSelector, includeAttributes } from './utils/utils';
 import { groupFiles } from './utils/group-files';
 import { generateDemo } from './utils/generate-demo';
 import {
@@ -26,14 +19,10 @@ import { generateExampleModule } from './utils/generate-example';
 const target = process.argv[2];
 const isSyncSpecific = !!target && target !== 'init';
 
-if (!target)
-  throw new Error(`Should specify the generation type, 'init' is all module`);
+if (!target) throw new Error(`Should specify the generation type, 'init' is all module`);
 
 const rootDir = path.resolve(__dirname, '../../');
-const siteConfig = require(path.join(
-  rootDir,
-  'src/site.config.js',
-)) as SiteConfig;
+const siteConfig = require(path.join(rootDir, 'src/site.config.js')) as SiteConfig;
 const defaultLang = siteConfig.defaultLang;
 
 const exampleModules: ExampleModules = {
@@ -50,30 +39,15 @@ function generateModule(config: ModuleConfig) {
     routes: [],
   };
 
-  function appendToModule(
-    componentName: string,
-    name: string,
-    filename: string,
-    needRouter: boolean = true,
-  ) {
-    modules.imports.push(
-      `import { ${componentName} } from './${name}/${filename}';`,
-    );
+  function appendToModule(componentName: string, name: string, filename: string, needRouter: boolean = true) {
+    modules.imports.push(`import { ${componentName} } from './${name}/${filename}';`);
     modules.components.push(componentName);
     if (needRouter) {
       if (modules.routes.length <= 0 && config.defaultRoute) {
-        modules.routes.push(
-          `{ path: '', redirectTo: '${
-            config.defaultRoute
-          }/zh', pathMatch: 'full' }`,
-        );
+        modules.routes.push(`{ path: '', redirectTo: '${config.defaultRoute}/zh', pathMatch: 'full' }`);
       }
-      modules.routes.push(
-        `{ path: '${name}', redirectTo: '${name}/zh', pathMatch: 'full' }`,
-      );
-      modules.routes.push(
-        `{ path: '${name}/:lang', component: ${componentName} }`,
-      );
+      modules.routes.push(`{ path: '${name}', redirectTo: '${name}/zh', pathMatch: 'full' }`);
+      modules.routes.push(`{ path: '${name}/:lang', component: ${componentName} }`);
     }
   }
 
@@ -88,18 +62,10 @@ function generateModule(config: ModuleConfig) {
     const demoHTML: string[] = [];
     demoHTML.push(`<nz-row [nzGutter]="16">`);
     if (demos.tpl.left.length > 0 && demos.tpl.right.length > 0) {
-      demoHTML.push(
-        `<nz-col nzSpan="12">${demos.tpl.left.join('')}</nz-col>`,
-      );
-      demoHTML.push(
-        `<nz-col nzSpan="12">${demos.tpl.right.join('')}</nz-col>`,
-      );
+      demoHTML.push(`<nz-col nzSpan="12">${demos.tpl.left.join('')}</nz-col>`);
+      demoHTML.push(`<nz-col nzSpan="12">${demos.tpl.right.join('')}</nz-col>`);
     } else {
-      demoHTML.push(
-        `<nz-col nzSpan="24">${demos.tpl.left.join(
-          '',
-        )}${demos.tpl.right.join('')}</nz-col>`,
-      );
+      demoHTML.push(`<nz-col nzSpan="24">${demos.tpl.left.join('')}${demos.tpl.right.join('')}</nz-col>`);
     }
 
     demoHTML.push('</nz-row>');
@@ -113,31 +79,27 @@ function generateModule(config: ModuleConfig) {
     Object.keys(contentObj).forEach(lan => {
       const demoArr = contentObj[lan].content.split(/(<!--demo\([^)]+\)-->)/g);
       if (demoArr.length > 1) {
-        contentObj[lan].content = demoArr.map(html => {
-          if (html.startsWith('<!--')) return html;
-          return `<section class="markdown">${html}</section>`;
-        }).join('').replace(
-          /<!--demo\(([^)]+)\)-->/g,
-          '<example-$1-index></example-$1-index>',
-        );
+        contentObj[lan].content = demoArr
+          .map(html => {
+            if (html.startsWith('<!--')) return html;
+            return `<section class="markdown">${html}</section>`;
+          })
+          .join('')
+          .replace(/<!--demo\(([^)]+)\)-->/g, '<example-$1-index></example-$1-index>');
       } else {
         contentObj[lan].content = `<section class="markdown">${contentObj[lan].content}</section>`;
       }
     });
 
     const newList = demos.data.filter(
-      w =>
-        w.type === 'example' &&
-        exampleModules.list.filter(ew => ew.urls === w.urls).length === 0,
+      w => w.type === 'example' && exampleModules.list.filter(ew => ew.urls === w.urls).length === 0,
     );
 
     exampleModules.list.push(...newList);
   }
 
   config.dir.forEach(dirConfig => {
-    const tpl = fs
-      .readFileSync(path.join(rootDir, dirConfig.template.content))
-      .toString('utf8');
+    const tpl = fs.readFileSync(path.join(rootDir, dirConfig.template.content)).toString('utf8');
 
     const files = groupFiles(
       dirConfig.src.map(p => path.join(rootDir, p)),
@@ -245,9 +207,7 @@ function generateModule(config: ModuleConfig) {
   };
   generateDoc(
     moduleObj,
-    fs
-      .readFileSync(path.join(rootDir, config.template.module))
-      .toString('utf8'),
+    fs.readFileSync(path.join(rootDir, config.template.module)).toString('utf8'),
     path.join(distPath, `${config.name}.module.ts`),
   );
   // #endregion

@@ -77,13 +77,11 @@ export class UploadWidget extends ControlWidget implements OnInit {
 
   reset(value: SFValue) {
     const { fileList } = this.ui;
-    (fileList ? of(fileList) : getData(this.schema, this.ui, this.formProperty.formData)).subscribe(
-      list => {
-        this.fileList = list as UploadFile[];
-        this._setValue(this.fileList);
-        this.detectChanges();
-      },
-    );
+    (fileList ? of(fileList) : getData(this.schema, this.ui, this.formProperty.formData)).subscribe(list => {
+      this.fileList = list as UploadFile[];
+      this._setValue(this.fileList);
+      this.detectChanges();
+    });
   }
 
   private _getValue(file: UploadFile) {
@@ -91,9 +89,11 @@ export class UploadWidget extends ControlWidget implements OnInit {
   }
 
   private _setValue(fileList: UploadFile[]) {
-    fileList.filter(file => !file.url).forEach(file => {
-      file.url = deepGet(file.response, this.i.urlReName);
-    });
+    fileList
+      .filter(file => !file.url)
+      .forEach(file => {
+        file.url = deepGet(file.response, this.i.urlReName);
+      });
     const res = fileList.filter(w => w.status === 'done').map(file => this._getValue(file));
     this.setValue(this.i.multiple === true ? res : res.pop());
   }
@@ -110,13 +110,11 @@ export class UploadWidget extends ControlWidget implements OnInit {
     }
     const _url = file.thumbUrl || file.url;
     if (!_url) {
-      return ;
+      return;
     }
-    this.injector
-      .get(NzModalService)
-      .create({
-        nzContent: `<img src="${_url}" class="img-fluid" />`,
-        nzFooter: null,
-      });
+    this.injector.get<NzModalService>(NzModalService).create({
+      nzContent: `<img src="${_url}" class="img-fluid" />`,
+      nzFooter: null,
+    });
   }
 }
