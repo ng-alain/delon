@@ -110,8 +110,8 @@ describe('abc: reuse-tab', () => {
     tick();
     fixture.detectChanges();
 
-    srv = injector.get<ReuseTabService>(ReuseTabService);
-    const router = injector.get<Router>(Router) as Router;
+    srv = injector.get(ReuseTabService);
+    const router = injector.get(Router) as Router;
     router.routeReuseStrategy = new ReuseTabStrategy(srv);
 
     page = new PageObject();
@@ -682,7 +682,7 @@ describe('abc: reuse-tab', () => {
       createComp();
       page.to('#b').openContextMenu(1);
       expect(document.querySelector('[data-type="close"]')!.textContent).toBe(zh_CN.reuseTab.close);
-      injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
+      injector.get(DelonLocaleService).setLocale(en_US);
       fixture.detectChanges();
       page.to('#a').openContextMenu(1);
       expect(document.querySelector('[data-type="close"]')!.textContent).toBe(en_US.reuseTab.close);
