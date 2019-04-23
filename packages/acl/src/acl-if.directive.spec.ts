@@ -73,14 +73,31 @@ describe('acl-if: directive', () => {
     expect(dl.queryAll(By.css(CLS)).length).toBe(1);
     expect(dl.queryAll(By.css(CLS_NOT)).length).toBe(0);
   });
+
+  it('should be specify then & else tempatel', () => {
+    context.srv.setFull(false);
+    context.srv.setRole(['user']);
+    context.role = 'admin';
+    fixture.detectChanges();
+    expect(dl.queryAll(By.css('.thenBlock')).length).toBe(0);
+    expect(dl.queryAll(By.css('.elseBlock')).length).toBe(1);
+    context.role = 'user';
+    fixture.detectChanges();
+    expect(dl.queryAll(By.css('.thenBlock')).length).toBe(1);
+    expect(dl.queryAll(By.css('.elseBlock')).length).toBe(0);
+  });
 });
 
 @Component({
   template: `
-    <button class="acl-ph" *aclIf="role else unauthorized"></button>
-    <ng-template #unauthorized>
-      <span class="unauthorized-acl-ph"></span>
-    </ng-template>
+  <button class="acl-ph" *aclIf="role else unauthorized"></button>
+  <ng-template #unauthorized>
+    <span class="unauthorized-acl-ph"></span>
+  </ng-template>
+  <h3>ng-template</h3>
+  <div *aclIf="role; then thenBlock else elseBlock"></div>
+  <ng-template #thenBlock><span class="thenBlock"></span></ng-template>
+  <ng-template #elseBlock><span class="elseBlock"></span></ng-template>
   `,
 })
 class TestComponent {
