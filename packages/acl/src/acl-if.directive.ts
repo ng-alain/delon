@@ -1,4 +1,5 @@
 import { Directive, EmbeddedViewRef, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
+import { InputBoolean } from '@delon/util';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ACLService } from './acl.service';
@@ -41,8 +42,11 @@ export class ACLIfDirective implements OnDestroy {
     this._updateView();
   }
 
+  @Input() @InputBoolean() except = false;
+
   protected _updateView(): void {
-    if (this.srv.can(this._value)) {
+    const res = this.srv.can(this._value);
+    if ((res && !this.except) || (!res && this.except)) {
       if (!this._thenViewRef) {
         this._viewContainer.clear();
         this._elseViewRef = null;

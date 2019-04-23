@@ -86,6 +86,41 @@ describe('acl-if: directive', () => {
     expect(dl.queryAll(By.css('.thenBlock')).length).toBe(1);
     expect(dl.queryAll(By.css('.elseBlock')).length).toBe(0);
   });
+
+  describe('#except', () => {
+    beforeEach(() => {
+      context.srv.setFull(false);
+      context.role = 'admin';
+    });
+    describe('with true', () => {
+      it('should be show when user does not a user role', () => {
+        context.except = true;
+        fixture.detectChanges();
+        context.srv.setRole(['user']);
+        expect(dl.queryAll(By.css('.exceptBlock')).length).toBe(1);
+      });
+      it('should be hide when user has a admin role', () => {
+        context.except = true;
+        fixture.detectChanges();
+        context.srv.setRole(['admin']);
+        expect(dl.queryAll(By.css('.exceptBlock')).length).toBe(0);
+      });
+    });
+    describe('with false', () => {
+      it('should be hide when user does not a user role', () => {
+        context.except = false;
+        fixture.detectChanges();
+        context.srv.setRole(['user']);
+        expect(dl.queryAll(By.css('.exceptBlock')).length).toBe(0);
+      });
+      it('should be show when user has a admin role', () => {
+        context.except = false;
+        fixture.detectChanges();
+        context.srv.setRole(['admin']);
+        expect(dl.queryAll(By.css('.exceptBlock')).length).toBe(1);
+      });
+    });
+  });
 });
 
 @Component({
@@ -98,9 +133,14 @@ describe('acl-if: directive', () => {
   <div *aclIf="role; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock><span class="thenBlock"></span></ng-template>
   <ng-template #elseBlock><span class="elseBlock"></span></ng-template>
+  <h3>except</h3>
+  <ng-template [aclIf]="role" [except]="except">
+    <span class="exceptBlock"></span>
+  </ng-template>
   `,
 })
 class TestComponent {
   role: ACLCanType = 'admin';
+  except = false;
   constructor(public srv: ACLService) {}
 }
