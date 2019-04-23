@@ -4,6 +4,9 @@
   "deleteDestPath": true,
   "lib": {
     "flatModuleFile": "acl",
-    "entryFile": "public_api.ts"
+    "entryFile": "public_api.ts",
+    "umdModuleIds": {
+      "@delon/util": "delon.util"
+    }
   }
 }
