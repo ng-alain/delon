@@ -39,6 +39,21 @@ Displayed when the button must have a user and manage role.
 <button *aclIf="{ role: ['user', 'manage'], mode: 'allOf' }"></button>
 ```
 
+Displayed when the input muse have a user role, displayed text when it's not authorized.
+
+```html
+<input nz-input *aclIf="'user'; else unauthorized">
+<ng-template #unauthorized>{{user}}</ng-template>
+```
+
+Use `except` reverse control to displayed when it's not authorized.
+
+```html
+<ng-template [aclIf]="role" except>
+  <input nz-input>
+</ng-template>
+```
+
 ### Permission
 
 Displayed when the button must have a 10 value permisseion.
@@ -85,3 +100,14 @@ Therefore, passing a string with the beginning of `ability.` will be considered 
 ```html
 <button acl="ability.user.edit"></button>
 ```
+
+## API
+
+### *aclIf
+
+Property  | Description    | Type     | Default
+----------|----------------|----------|-------
+`[aclIf]`  | `can` method parameter   | `ACLCanType` | -
+`[aclIfThen]` | Display template when authorized | `TemplateRef<void> | null` | -
+`[aclIfElse]` | Display template when not authorized | `TemplateRef<void> | null` | -
+`[except]` | Permissions denied to display | `boolean` | `false`

@@ -39,6 +39,21 @@ type: Documents
 <button *aclIf="{ role: ['user', 'manage'], mode: 'allOf' }"></button>
 ```
 
+当拥有 user 角色显示文本框，未授权显示文本。
+
+```html
+<input nz-input *aclIf="'user'; else unauthorized">
+<ng-template #unauthorized>{{user}}</ng-template>
+```
+
+使用 `except` 反向控制，当未拥有 user 角色时显示。
+
+```html
+<ng-template [aclIf]="role" except>
+  <input nz-input>
+</ng-template>
+```
+
 ### 权限点
 
 按钮必须拥有 10 权限点显示。
@@ -87,3 +102,14 @@ export function fnDelonACLConfig(): DelonACLConfig {
 ```html
 <button acl="ability.user.edit"></button>
 ```
+
+## API
+
+### *aclIf
+
+参数      | 说明            | 类型     | 默认值
+----------|----------------|----------|-------
+`[aclIf]`  | `can` 方法参数体   | `ACLCanType` | -
+`[aclIfThen]` | 已授权时显示模板 | `TemplateRef<void> | null` | -
+`[aclIfElse]` | 未授权时显示模板 | `TemplateRef<void> | null` | -
+`[except]` | 未授权时显示 | `boolean` | `false`

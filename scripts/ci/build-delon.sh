@@ -5,9 +5,9 @@ set -u -e -o pipefail
 
 cd $(dirname $0)/../..
 
-PACKAGES=(testing
+PACKAGES=(util
+  testing
   acl
-  util
   theme
   abc
   auth
