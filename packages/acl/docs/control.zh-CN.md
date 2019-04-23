@@ -39,6 +39,13 @@ type: Documents
 <button *aclIf="{ role: ['user', 'manage'], mode: 'allOf' }"></button>
 ```
 
+当拥有 user 角色显示文本框，未授权显示文本。
+
+```html
+<input nz-input *aclIf="'user'; else unauthorized">
+<ng-template #unauthorized>{{user}}</ng-template>
+```
+
 ### 权限点
 
 按钮必须拥有 10 权限点显示。

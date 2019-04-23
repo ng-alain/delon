@@ -39,6 +39,13 @@ Displayed when the button must have a user and manage role.
 <button *aclIf="{ role: ['user', 'manage'], mode: 'allOf' }"></button>
 ```
 
+Displayed when the input muse have a user role, displayed text when it's not authorized.
+
+```html
+<input nz-input *aclIf="'user'; else unauthorized">
+<ng-template #unauthorized>{{user}}</ng-template>
+```
+
 ### Permission
 
 Displayed when the button must have a 10 value permisseion.
