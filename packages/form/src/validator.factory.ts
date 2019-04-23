@@ -38,7 +38,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
     extraOptions: { ingoreKeywords: string[]; debug: boolean },
   ): (value: SFValue) => ErrorData[] {
     const ingoreKeywords: string[] = [
-      ...(this.options.ingoreKeywords as string[] || []),
+      ...(this.options.ingoreKeywords as string[]),
       ...(extraOptions.ingoreKeywords as string[] || []),
     ];
 
