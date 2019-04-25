@@ -132,7 +132,7 @@ class TestComponent {
 `[front]` | 前端分页，当 `data` 为 `any[]` 或 `Observable<any[]>` 有效 | `boolean` | `true`
 `[zeroIndexed]` | 后端分页是否采用`0`基索引，只在`data`类型为`string`时有效 | `boolean` | `false`
 `[placement]` | 分页方向 | `'left','center','right'` | `'right'`
-`[show]` | 是否显示分页器 | `boolean` | -
+`[show]` | 是否显示分页器 | `boolean` | `true`
 `[showSize]` | 是否显示分页器中改变页数 | `boolean` | `false`
 `[pageSizes]` | 分页器中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]`
 `[showQuickJumper]` | 是否显示分页器中快速跳转 | `boolean` | `false`
@@ -334,6 +334,7 @@ class TestComponent {
 `[truth]` | 真值条件 | `any` | `true`
 `[yes]` | 徽章 `true` 时文本 | `string` | `是`
 `[no]` | 徽章 `false` 时文本 | `string` | `否`
+`[mode]` | 显示模式 | `full,icon,text` | `icon`
 
 ### STColumnBadge
 
