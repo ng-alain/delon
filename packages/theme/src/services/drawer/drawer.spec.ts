@@ -161,7 +161,6 @@ describe('theme: DrawerHelper', () => {
               footerHeight,
               drawerOptions: {
                 nzWrapClassName: 'ccc',
-                nzPlacement: 'right',
               },
             },
           )
@@ -223,6 +222,36 @@ describe('theme: DrawerHelper', () => {
       expect(els.length).toBe(1);
       const bodyEl = (els[0] as HTMLElement).querySelector('.ant-drawer-body') as HTMLElement;
       expect(bodyEl.style.height).toBe(``);
+    });
+  });
+
+  describe('#exact width true', () => {
+    it('should be always subscript when return a undefined value', done => {
+      drawer
+        .create(
+          '',
+          TestDrawerComponent,
+          {
+            ret: undefined,
+          },
+          {
+            exact: true,
+          },
+        )
+        .subscribe(
+          res => {
+            expect(res).toBe(undefined);
+            done();
+          },
+          err => {
+            expect(false).toBeTruthy();
+            done();
+          },
+          () => {
+            done();
+          },
+        );
+      fixture.detectChanges();
     });
   });
 });
