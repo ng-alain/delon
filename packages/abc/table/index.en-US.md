@@ -132,7 +132,7 @@ Property | Description | Type | Default
 `[front]` | Front paging when `data` is `any[]` or `Observable<any[]>` | `boolean` | `true`
 `[zeroIndexed]` | Whether the backend paging uses the `0` base index (only data is url) | `boolean` | `false`
 `[placement]` | Pager direction | `'left','center','right'` | `'right'`
-`[show]` | Whether to show pager | `boolean` | -
+`[show]` | Whether to show pager | `boolean` | `true`
 `[showSize]` | Determine whether `ps` can be changed | `boolean` | `false`
 `[pageSizes]` | Specify the sizeChanger options | `number[]` | `[10, 20, 30, 40, 50]`
 `[showQuickJumper]` | Determine whether you can jump to pages directly | `boolean` | `false`
