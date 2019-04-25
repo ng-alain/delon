@@ -225,8 +225,8 @@ describe('theme: DrawerHelper', () => {
     });
   });
 
-  describe('#exact width true', () => {
-    it('should be always subscript when return a undefined value', done => {
+  describe('#exact', () => {
+    it('width true, should be only truth subscript', done => {
       drawer
         .create(
           '',
@@ -240,14 +240,37 @@ describe('theme: DrawerHelper', () => {
         )
         .subscribe(
           res => {
+            expect(false).toBe(true);
+          },
+          err => {
+            expect(false).toBe(true);
+          },
+          () => {
+            expect(true).toBe(true);
+            done();
+          },
+        );
+      fixture.detectChanges();
+    });
+    it('width false, should be always subscript', done => {
+      drawer
+        .create(
+          '',
+          TestDrawerComponent,
+          {
+            ret: undefined,
+          },
+          {
+            exact: false,
+          },
+        )
+        .subscribe(
+          res => {
             expect(res).toBe(undefined);
             done();
           },
           err => {
-            expect(false).toBeTruthy();
-            done();
-          },
-          () => {
+            expect(false).toBe(true);
             done();
           },
         );
