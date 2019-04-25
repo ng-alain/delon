@@ -51,4 +51,5 @@ If you don't bottom toolbar, you need specify `footer: false`.
 | `size` | Specify drawer size, responsive only supports non-numeric values | `sm,md,lg,xl,number` | `md` |
 | `footer` | Whether toolbar | `boolean` | `true` |
 | `footerHeight` | Toolbar height | `number` | `55` |
+| `exact` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true` |
 | `drawerOptions` | Drawer raw parameters [NzDrawerOptions](https://ng.ant.design/components/drawer/en#nzdraweroptions) 参数 | `NzDrawerOptions` | - |
