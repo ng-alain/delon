@@ -53,7 +53,7 @@ config: STConfig
 `[size]` | table大小 | `'small','middle','default'` | `'default'`
 `[widthMode]` | 设置表格宽度模式 | `STWidthMode` | -
 `[rowClassName]` | 表格行的类名 | `(record: STData, index: number) => string` | -
-`[loading]` | 页面是否加载中 | `boolean` | `false`
+`[loading]` | 页面是否加载中，当指定 `null` 由 st 受控 | `boolean | null` | `null`
 `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0`
 `[scroll]` | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：`{ x: "300px", y: "300px" }` | `{ y?: string; x?: string }` | -
 `[singleSort]` | 单排序规则<br>若不指定，则返回：`columnName=ascend|descend`<br>若指定，则返回：`sort=columnName.(ascend|descend)` | `STSingleSort` | `null`

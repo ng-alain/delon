@@ -53,7 +53,7 @@ Property | Description | Type | Default
 `[size]` | Size of table | `'small','middle','default'` | `'default'`
 `[widthMode]` | Set the table width mode | `STWidthMode` | -
 `[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | -
-`[loading]` | Loading status of table | `boolean` | `false`
+`[loading]` | Loading status of table, when specifying `null` is controlled by st | `boolean | null` | `null`
 `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0`
 `[scroll]` | Whether table can be scrolled in x/y direction, x or y can be a string that indicates the width and height of table body | `{ y?: string; x?: string }` | -
 `[singleSort]` | Single sort config<br>If not specified, return: `columnName=ascend|descend`<br>If specified, return: `sort=columnName.(ascend|descend)` | `STSingleSort` | `null`
