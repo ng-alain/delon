@@ -39,6 +39,21 @@ describe('theme: ModalHelper', () => {
           {
             ret: 'true',
           },
+        )
+        .subscribe(res => {
+          expect(true).toBeTruthy();
+          done();
+        });
+      fixture.detectChanges();
+    });
+
+    it('shoudl be size & nzWrapClassName toggle', done => {
+      modal
+        .open(
+          TestModalComponent,
+          {
+            ret: 'true',
+          },
           'sm',
           {
             nzWrapClassName: 'aaa',
