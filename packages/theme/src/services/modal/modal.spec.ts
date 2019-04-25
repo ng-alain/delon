@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
-import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgZorroAntdModule, NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { AlainThemeModule } from '../../theme.module';
@@ -32,11 +32,33 @@ describe('theme: ModalHelper', () => {
   });
 
   describe('[default]', () => {
-    it('#open', (done: () => void) => {
+    it('#open', done => {
       modal
-        .open(TestModalComponent, {
-          ret: 'true',
-        })
+        .open(
+          TestModalComponent,
+          {
+            ret: 'true',
+          },
+        )
+        .subscribe(res => {
+          expect(true).toBeTruthy();
+          done();
+        });
+      fixture.detectChanges();
+    });
+
+    it('shoudl be size & nzWrapClassName toggle', done => {
+      modal
+        .open(
+          TestModalComponent,
+          {
+            ret: 'true',
+          },
+          'sm',
+          {
+            nzWrapClassName: 'aaa',
+          },
+        )
         .subscribe(res => {
           expect(true).toBeTruthy();
           done();
@@ -245,8 +267,11 @@ class TestModalComponent {
 
   constructor(private modal: NzModalRef) {
     setTimeout(() => {
-      if (this.ret === 'destroy') this.modal.destroy();
-      else this.modal.close(this.ret);
+      if (this.ret === 'destroy') {
+        this.modal.destroy();
+      } else {
+        this.modal.close(this.ret);
+      }
     }, 100);
   }
 }

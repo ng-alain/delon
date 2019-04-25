@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { deepMerge } from '@delon/util';
 import { ModalOptionsForService, NzModalService } from 'ng-zorro-antd';
 import { Observable, Observer } from 'rxjs';
 
@@ -41,24 +42,31 @@ this.NzModalRef.destroy();
 ```
    */
   create(comp: any, params?: any, options?: ModalHelperOptions): Observable<any> {
-    options = {
-      size: 'lg',
-      exact: true,
-      includeTabs: false,
-      ...options,
-    };
+    options = deepMerge(
+      {
+        size: 'lg',
+        exact: true,
+        includeTabs: false,
+      },
+      options,
+    );
     return new Observable((observer: Observer<any>) => {
+      const { size, includeTabs, modalOptions } = options as ModalHelperOptions;
       let cls = '';
       let width = '';
-      if (options!.size) {
-        if (typeof options!.size === 'number') {
-          width = `${options!.size}px`;
+      if (size) {
+        if (typeof size === 'number') {
+          width = `${size}px`;
         } else {
-          cls = `modal-${options!.size}`;
+          cls = `modal-${size}`;
         }
       }
-      if (options!.includeTabs) {
+      if (includeTabs) {
         cls += ' modal-include-tabs';
+      }
+      if (modalOptions && modalOptions.nzWrapClassName) {
+        cls += ` ${modalOptions.nzWrapClassName}`;
+        delete modalOptions.nzWrapClassName;
       }
       const defaultOptions: ModalOptionsForService = {
         nzWrapClassName: cls,
@@ -68,7 +76,7 @@ this.NzModalRef.destroy();
         nzComponentParams: params,
         nzZIndex: ++this.zIndex,
       };
-      const subject = this.srv.create({ ...defaultOptions, ...options!.modalOptions });
+      const subject = this.srv.create({ ...defaultOptions, ...modalOptions });
       const afterClose$ = subject.afterClose.subscribe((res: any) => {
         if (options!.exact === true) {
           if (res != null) {
