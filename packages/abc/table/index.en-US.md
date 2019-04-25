@@ -341,6 +341,7 @@ Property | Description | Type | Default
 `[truth]` | Truth condition value | `any` | `true`
 `[yes]` | Badge `true` text | `string` | `是`
 `[no]` | Badge `false` text | `string` | `否`
+`[mode]` | Display mode for yn | `full,icon,text` | `icon`
 
 ### STColumnBadge
 

@@ -221,7 +221,7 @@ export class STDataSource {
         ret = this.datePipe.transform(value, col.dateFormat);
         break;
       case 'yn':
-        ret = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!);
+        ret = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!);
         break;
     }
     return { text: ret == null ? '' : ret, org: value };

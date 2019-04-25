@@ -334,6 +334,7 @@ class TestComponent {
 `[truth]` | 真值条件 | `any` | `true`
 `[yes]` | 徽章 `true` 时文本 | `string` | `是`
 `[no]` | 徽章 `false` 时文本 | `string` | `否`
+`[mode]` | 显示模式 | `full,icon,text` | `icon`
 
 ### STColumnBadge
 
