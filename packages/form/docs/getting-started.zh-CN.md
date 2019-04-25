@@ -164,8 +164,10 @@ export class HomeComponent {
 |------------|------------|----------|------|
 | `[submit]` | 提交按钮文本 | `string` | `提交` |
 | `[submit_type]` | 提交按钮类型 | `string` | `primary` |
+| `[submit_icon]` | 提交按钮图标 | `SFButtonIcon` | - |
 | `[reset]` | 重置按钮文本 | `string` | `重置` |
 | `[reset_type]` | 重置按钮类型 | `string` | `default` |
+| `[reset_icon]` | 重置按钮图标 | `SFButtonIcon` | - |
 | `[search]` | 搜索按钮文本 | `string` | `搜索` |
 | `[edit]` | 编辑按钮文本 | `string` | `保存` |
 | `[render]` | 按钮样式 | `SFRenderButton` | - |
