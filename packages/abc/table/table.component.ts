@@ -392,9 +392,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   _change(type: 'pi' | 'ps') {
-    this._load().then(() => {
-      this._toTop();
-    });
+    if (type === 'pi') {
+      this._load().then(() => {
+        this._toTop();
+      });
+    }
     this.changeEmit(type);
   }
 
