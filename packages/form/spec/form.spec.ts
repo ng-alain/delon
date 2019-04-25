@@ -5,7 +5,6 @@ import { configureTestSuite, createTestContext } from '@delon/testing';
 import { en_US, AlainThemeModule, DelonLocaleService } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 import { of } from 'rxjs';
-import { FormProperty } from '../src/model/form.property';
 import { FormPropertyFactory } from '../src/model/form.property.factory';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
@@ -146,6 +145,19 @@ describe('form: component', () => {
         context.button = 'none';
         fixture.detectChanges();
         page.checkCount('.sf-btns', 0);
+      });
+      it('should be icon', () => {
+        context.button = {
+          submit_icon: {
+            type: 'search',
+          },
+          reset_icon: {
+            type: 'file',
+          },
+        };
+        fixture.detectChanges();
+        page.checkCount('[type="submit"] .anticon', 1);
+        page.checkCount('[type="button"] .anticon', 1);
       });
       describe('when layout is horizontal', () => {
         it('should be has a fix 100px width', () => {
@@ -536,12 +548,12 @@ describe('form: component', () => {
     it('should be auto 搜索 in submit', () => {
       context.mode = 'search';
       createComp();
-      expect(page.getEl('.ant-btn-primary').textContent).toBe('搜索');
+      expect(page.getEl('.ant-btn-primary').textContent).toContain('搜索');
     });
     it('should be auto 保存 in submit', () => {
       context.mode = 'edit';
       createComp();
-      expect(page.getEl('.ant-btn-primary').textContent).toBe('保存');
+      expect(page.getEl('.ant-btn-primary').textContent).toContain('保存');
     });
     it('should be custom text of search', () => {
       context.mode = 'search';
@@ -549,7 +561,7 @@ describe('form: component', () => {
         search: 'SEARCH',
       };
       createComp();
-      expect(page.getEl('.ant-btn-primary').textContent).toBe('SEARCH');
+      expect(page.getEl('.ant-btn-primary').textContent).toContain('SEARCH');
     });
     it('should be custom text of edit', () => {
       context.mode = 'edit';
@@ -557,7 +569,7 @@ describe('form: component', () => {
         edit: 'SAVE',
       };
       createComp();
-      expect(page.getEl('.ant-btn-primary').textContent).toBe('SAVE');
+      expect(page.getEl('.ant-btn-primary').textContent).toContain('SAVE');
     });
   });
 });
