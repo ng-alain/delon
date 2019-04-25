@@ -44,18 +44,30 @@ describe('Pipe: yn', () => {
     });
   });
 
-  it('should be only text', () => {
-    fixture.componentInstance.mode = 'text';
-    fixture.detectChanges();
-    expect(fixture.debugElement.queryAll(By.css('svg')).length).toBe(0);
-  });
-
-  it('should be text & icon', () => {
-    fixture.componentInstance.mode = 'full';
-    fixture.detectChanges();
-    const html = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML;
-    expect(html).toContain('<svg');
-    expect(html).not.toContain(`title="`);
+  describe('#mode', () => {
+    it('with text', () => {
+      fixture.componentInstance.mode = 'text';
+      fixture.componentInstance.value = true;
+      fixture.detectChanges();
+      expect(fixture.debugElement.queryAll(By.css('svg')).length).toBe(0);
+      fixture.componentInstance.value = false;
+      fixture.detectChanges();
+      expect(fixture.debugElement.queryAll(By.css('svg')).length).toBe(0);
+    });
+    it('with full', () => {
+      fixture.componentInstance.mode = 'full';
+      fixture.componentInstance.value = true;
+      fixture.detectChanges();
+      let html = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML;
+      expect(html).toContain('<svg');
+      expect(html).not.toContain(`title="`);
+      // when false
+      fixture.componentInstance.value = false;
+      fixture.detectChanges();
+      html = (fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML;
+      expect(html).toContain('<svg');
+      expect(html).not.toContain(`title="`);
+    });
   });
 });
 
