@@ -128,8 +128,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this._page = item;
   }
   private _page: STPage;
+  _loading = false;
   /** 是否显示Loading */
-  @Input() @InputBoolean() loading = false;
+  @Input() loading: boolean | null = null;
   /** 延迟显示加载效果的时间（防止闪烁） */
   @Input() @InputNumber() loadingDelay = 0;
   /** 是否显示边框 */
@@ -273,9 +274,15 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region data
 
-  private _load() {
+  private setLoading(val: boolean): void {
+    if (this.loading == null) {
+      this._loading = val;
+    }
+  }
+
+  private _load(): Promise<this> {
     const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
-    this.loading = true;
+    this.setLoading(true);
     return this.dataSource
       .process({
         pi,
@@ -291,7 +298,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         rowClassName,
       })
       .then(result => {
-        this.loading = false;
+        this.setLoading(false);
         if (typeof result.pi !== 'undefined') {
           this.pi = result.pi;
         }
@@ -310,13 +317,15 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       })
       .then(() => this._refCheck())
       .catch(error => {
-        this.loading = false;
+        this.setLoading(false);
+        this.cdr.detectChanges();
         this.error.emit({ type: 'req', error });
+        return this;
       });
   }
 
   /** 清空所有数据 */
-  clear(cleanStatus = true) {
+  clear(cleanStatus = true): this {
     if (cleanStatus) {
       this.clearStatus();
     }
@@ -325,7 +334,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   /** 清空所有状态 */
-  clearStatus() {
+  clearStatus(): this {
     return this.clearCheck()
       .clearRadio()
       .clearFilter()
@@ -689,6 +698,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
     if (changes.data && changes.data.currentValue) {
       this._load();
+    }
+    if (changes.loading) {
+      this._loading = changes.loading.currentValue;
     }
     this.setClass();
   }

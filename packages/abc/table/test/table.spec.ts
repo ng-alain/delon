@@ -1358,17 +1358,20 @@ describe('abc: table', () => {
           expect(comp.req.params.a).toBe(1);
           expect(comp.req.params.b).toBe(2);
         });
-        it('should be clean check, radio, filter, sort', fakeAsync(() => {
+        it('should be clean check, radio, filter, sort', (done) => {
           spyOn(comp, 'clearCheck').and.returnValue(comp);
           spyOn(comp, 'clearRadio').and.returnValue(comp);
           spyOn(comp, 'clearFilter').and.returnValue(comp);
           spyOn(comp, 'clearSort').and.returnValue(comp);
           comp.reset();
-          expect(comp.clearCheck).toHaveBeenCalled();
-          expect(comp.clearRadio).toHaveBeenCalled();
-          expect(comp.clearFilter).toHaveBeenCalled();
-          expect(comp.clearSort).toHaveBeenCalled();
-        }));
+          fixture.whenStable().then(() => {
+            expect(comp.clearCheck).toHaveBeenCalled();
+            expect(comp.clearRadio).toHaveBeenCalled();
+            expect(comp.clearFilter).toHaveBeenCalled();
+            expect(comp.clearSort).toHaveBeenCalled();
+            done();
+          });
+        });
       });
       describe('#removeRow', () => {
         it('shoule be working', done => {
@@ -1529,6 +1532,23 @@ describe('abc: table', () => {
             page.expectElCount(`td.aaaa`, context.comp._data.length);
             done();
           });
+        });
+      });
+    });
+    describe('#loading', () => {
+      it('should be control loading property', (done) => {
+        context.loading = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+          page.expectElCount(`.ant-spin-spinning`, 1);
+          context.loading = false;
+          fixture.detectChanges();
+          return fixture.whenStable();
+        }).then(() => {
+          fixture.detectChanges();
+          page.expectElCount(`.ant-spin-spinning`, 0);
+          done();
         });
       });
     });
@@ -1829,7 +1849,7 @@ class TestComponent {
   pi: number;
   total: number;
   page: STPage = {};
-  loading: boolean;
+  loading: boolean | null = null;
   loadingDelay: number;
   bordered: boolean;
   size: 'small' | 'middle' | 'default';
