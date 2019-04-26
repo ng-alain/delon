@@ -237,7 +237,7 @@ export class StartupService {
   load(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.lazy.load([
-        'https://cdnjs.cloudflare.com/ajax/libs/ajv/6.9.2/ajv.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/ajv/6.10.0/ajv.min.js'
       ])
         .then(() => resolve(null));
     });
@@ -312,7 +312,7 @@ export class AppModule {
           'date-fns': '*',
           'file-saver': '^1.3.3',
           'ngx-countdown': '*',
-          'ng-zorro-antd': '^7.0.0-rc.1',
+          'ng-zorro-antd': '*',
           '@delon/theme': 'latest',
           '@delon/abc': 'latest',
           '@delon/chart': 'latest',

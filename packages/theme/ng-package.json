@@ -13,5 +13,8 @@
       "@delon/acl": "delon.acl",
       "@delon/util": "delon.util"
     }
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "tslib", "angular", "date-fns", "@ant-design/icons-angular"
+  ]
 }
