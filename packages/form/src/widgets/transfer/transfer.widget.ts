@@ -68,11 +68,11 @@ export class TransferWidget extends ControlWidget implements OnInit {
 
   _searchChange(options: TransferSearchChange) {
     if (this.ui.searchChange) this.ui.searchChange(options);
-    this.cd.detectChanges();
+    this.detectChanges();
   }
 
   _selectChange(options: TransferSelectChange) {
     if (this.ui.selectChange) this.ui.selectChange(options);
-    this.cd.detectChanges();
+    this.detectChanges();
   }
 }

@@ -65,7 +65,7 @@ export class MentionWidget extends ControlWidget implements OnInit {
       )
       .subscribe(res => {
         this.data = res;
-        this.cd.detectChanges();
+        this.detectChanges();
       });
   }
 }
