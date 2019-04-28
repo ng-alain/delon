@@ -8,19 +8,19 @@
 @footer-toolbar-padding: 0 24px;
 
 @{footer-toolbar-prefix} {
-  display: flex;
   position: fixed;
-  width: 100%;
-  bottom: 0;
   right: 0;
+  bottom: 0;
+  z-index: @zindex;
+  display: flex;
+  width: 100%;
   height: @footer-toolbar-height;
+  padding: @footer-toolbar-padding;
   line-height: @footer-toolbar-height;
-  box-shadow: @footer-toolbar-box-shadow;
   background: @footer-toolbar-bg;
   border-top: @footer-toolbar-border-top;
-  padding: @footer-toolbar-padding;
+  box-shadow: @footer-toolbar-box-shadow;
   transition: all 0.3s;
-  z-index: @zindex;
   &__left {
     flex: 1;
   }
