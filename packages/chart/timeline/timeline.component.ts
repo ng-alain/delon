@@ -12,10 +12,6 @@ import {
 } from '@angular/core';
 import { InputBoolean, InputNumber } from '@delon/util';
 
-declare var G2: any;
-declare var DataSet: any;
-declare var Slider: any;
-
 export class G2TimelineData {
   /** 非 `Date` 格式，自动使用 `new Date` 转换，因此，支持时间格式字符串、数字型时间戳 */
   x: Date | string | number;

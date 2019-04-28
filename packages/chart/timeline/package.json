@@ -6,6 +6,10 @@
       "umdModuleIds": {
         "@delon/util": "delon.util"
       }
-    }
+    },
+    "whitelistedNonPeerDependencies": [
+      "tslib",
+      "G2"
+    ]
   }
 }

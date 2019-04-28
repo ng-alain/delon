@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import sdk from '@stackblitz/sdk';
+import * as pkg from '../../../package.json';
 
 @Injectable({ providedIn: 'root' })
 export class CodeService {
@@ -14,17 +15,7 @@ export class CodeService {
     if (componentNameRe) {
       componentName = componentNameRe[1];
     }
-    const isG2 = ~code.indexOf('<g2');
-
-    if (isG2) {
-      code =
-        `// G2
-declare var G2: any;
-declare var DataSet: any;
-declare var Slider: any;
-
-` + code;
-    }
+    const isG2 = code.includes('<g2');
 
     sdk.openProject(
       {
@@ -158,11 +149,11 @@ declare var Slider: any;
 }
 `,
           'src/index.html': [
-            ~isG2
+            isG2
               ? `
-<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g2-3.4.1/dist/g2.min.js"></script>
-<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.10.1/dist/data-set.min.js"></script>
-<script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/assets/g2-plugin-slider/2.0.0/g2-plugin-slider.js"></script>
+<script type="text/javascript" src="https://unpkg.com/@antv/g2@${pkg.dependencies['@antv/g2'].substr(1)}/dist/g2.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/@antv/data-set@${pkg.dependencies['@antv/data-set'].substr(1)}/dist/data-set.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/@antv/g2-plugin-slider@${pkg.dependencies['@antv/g2-plugin-slider'].substr(1)}/dist/g2-plugin-slider.min.js"></script>
 `
               : ``,
 
@@ -170,6 +161,10 @@ declare var Slider: any;
 <div id="VERSION" style="position: fixed; bottom: 8px; right: 8px; z-index: 8888;"></div>
           `,
           ].join(''),
+          'src/typings.d.ts': `// G2
+declare var G2: any;
+declare var DataSet: any;
+declare var Slider: any;`,
           'src/main.ts': `import './polyfills';
 
 import { enableProdMode } from '@angular/core';
@@ -237,7 +232,7 @@ export class StartupService {
   load(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.lazy.load([
-        'https://cdnjs.cloudflare.com/ajax/libs/ajv/6.10.0/ajv.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/ajv/${pkg.dependencies.ajv.substr(1)}/ajv.min.js'
       ])
         .then(() => resolve(null));
     });
