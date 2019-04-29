@@ -1,24 +1,25 @@
 {
-  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-css-modules",
+    "stylelint-config-rational-order",
+    "stylelint-config-prettier"
+  ],
+  "plugins": ["stylelint-order", "stylelint-declaration-block-no-ignored-properties"],
   "rules": {
-    "comment-empty-line-before": null,
-    "declaration-empty-line-before": null,
-    "function-comma-newline-after": null,
-    "function-name-case": null,
-    "function-parentheses-newline-inside": null,
-    "function-max-empty-lines": null,
-    "function-whitespace-after": null,
-    "indentation": null,
-    "number-leading-zero": null,
-    "number-no-trailing-zeros": null,
-    "rule-empty-line-before": null,
-    "selector-combinator-space-after": null,
-    "selector-list-comma-newline-after": null,
-    "selector-pseudo-element-colon-notation": null,
-    "unit-no-unknown": null,
-    "value-list-max-empty-lines": null,
-    "font-family-no-missing-generic-family-keyword": null,
     "no-descending-specificity": null,
-    "selector-type-no-unknown": null
-  }
+    "plugin/declaration-block-no-ignored-properties": true,
+    "selector-type-no-unknown": null,
+    "selector-pseudo-element-no-unknown": [
+      true,
+      {
+        "ignorePseudoElements": [
+          "ng-deep"
+        ]
+      }
+    ]
+  },
+  "ignoreFiles": [
+    "src/assets/**/*"
+  ]
 }

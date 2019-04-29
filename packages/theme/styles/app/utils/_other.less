@@ -4,20 +4,20 @@
 
 .no {
   &-resize {
-    resize: none;
-    max-width: 100%;
     min-width: 100%;
+    max-width: 100%;
+    resize: none;
   }
   &-data {
     color: rgba(0, 0, 0, 0.25);
-    text-align: center;
-    line-height: 64px;
     font-size: 16px;
+    line-height: 64px;
+    text-align: center;
     i {
-      font-size: 24px;
-      margin-right: 16px;
       position: relative;
       top: 3px;
+      margin-right: 16px;
+      font-size: 24px;
     }
   }
 }
@@ -33,18 +33,18 @@
 }
 
 .page-loading {
-  background: @background-color-base;
-  z-index: 10000;
   position: absolute;
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
+  left: 0;
+  z-index: 10000;
   padding-top: 200px;
   text-align: center;
+  background: @background-color-base;
 }
 
 .color-weak {
-  filter: invert(80%);
   display: block;
+  filter: invert(80%);
 }
