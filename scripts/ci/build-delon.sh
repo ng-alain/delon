@@ -6,13 +6,13 @@ set -u -e -o pipefail
 cd $(dirname $0)/../..
 
 PACKAGES=(util
-  chart
   testing
   acl
   theme
   abc
   auth
   cache
+  chart
   mock
   form)
 NODE_PACKAGES=(cli)
