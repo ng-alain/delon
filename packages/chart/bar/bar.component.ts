@@ -14,6 +14,7 @@ import { InputBoolean, InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
+declare var G2: any;
 const TITLE_HEIGHT = 41;
 
 export interface G2BarData {

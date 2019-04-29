@@ -4,13 +4,8 @@
       "flatModuleFile": "bar",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "@delon/util": "delon.util",
-        "G2": "G2"
+        "@delon/util": "delon.util"
       }
-    },
-    "whitelistedNonPeerDependencies": [
-      "tslib",
-      "G2"
-    ]
+    }
   }
 }
