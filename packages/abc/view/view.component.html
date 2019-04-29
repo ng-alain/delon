@@ -8,5 +8,7 @@
         #conEl>
     <ng-content></ng-content>
   </span>
-  <span class="sv__unit" *stringTemplateOutlet="unit">{{unit}}</span>
+  <ng-container *ngIf="!!unit">
+    <span class="sv__unit" *stringTemplateOutlet="unit">{{unit}}</span>
+  </ng-container>
 </div>
