@@ -29,10 +29,10 @@
     &-fixed {
       display: flex;
       @{sv-prefix}__label {
-        text-align: right;
         flex: 0 0 auto;
-        text-overflow: ellipsis;
         overflow: hidden;
+        text-align: right;
+        text-overflow: ellipsis;
       }
       @{sv-prefix}__detail {
         flex: 1 0 0;
@@ -41,33 +41,33 @@
   }
   &__title {
     display: block;
-    font-size: 14px;
+    margin-bottom: @sv-bottom;
     color: @heading-color;
     font-weight: 500;
-    margin-bottom: @sv-bottom;
+    font-size: 14px;
   }
   &__label {
-    line-height: 22px;
-    padding-bottom: @sv-bottom;
-    margin-right: 8px;
-    color: @sv-label-color;
-    white-space: nowrap;
     display: table-cell;
+    // margin-right: 8px;
+    padding-bottom: @sv-bottom;
+    color: @sv-label-color;
+    line-height: 22px;
+    white-space: nowrap;
     &:not(@{sv-prefix}__label-empty) {
-      &:after {
-        content: ':';
-        margin: 0 8px 0 2px;
+      &::after {
         position: relative;
         top: -0.5px;
+        margin: 0 8px 0 2px;
+        content: ':';
       }
     }
   }
   &__detail {
-    line-height: 22px;
+    display: table-cell;
     width: 100%;
     padding-bottom: @sv-bottom;
     color: @sv-detail-color;
-    display: table-cell;
+    line-height: 22px;
     word-break: break-all;
   }
   &__type {
@@ -85,7 +85,7 @@
     }
   }
   &__default {
-    &:before {
+    &::before {
       content: @sv-default-text;
     }
 

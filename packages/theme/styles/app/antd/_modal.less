@@ -1,55 +1,55 @@
 // Small screen / tablet
 @media (min-width: @screen-sm) {
   .modal-sm .@{ant-prefix}-modal {
-    max-width: @modal-sm;
     width: auto !important;
+    max-width: @modal-sm;
   }
 }
 
 // Medium screen / desktop
 @media (min-width: @screen-md) {
   .modal-md .@{ant-prefix}-modal {
-    max-width: @modal-md;
     width: auto !important;
+    max-width: @modal-md;
   }
 }
 
 // Large screen / wide desktop
 @media (min-width: @screen-lg) {
   .modal-lg .@{ant-prefix}-modal {
-    max-width: @modal-lg;
     width: auto !important;
+    max-width: @modal-lg;
   }
 }
 
 // Extra large screen / large descktop
 @media (min-width: @screen-xxl) {
   .modal-xl .@{ant-prefix}-modal {
-    max-width: @modal-xl;
     width: auto !important;
+    max-width: @modal-xl;
   }
 }
 
 // 自定义模态框时非常有用，主要运用于查看、编辑页
 .modal {
   &-header {
-    padding: 16px 24px;
-    margin: -24px -24px 24px -24px;
-    border-radius: @border-radius-base @border-radius-base 0 0;
-    background: @component-background;
-    border-bottom: @border-width-base @border-style-base @border-color-split;
     display: flex;
     justify-content: space-between;
+    margin: -24px -24px 24px -24px;
+    padding: 16px 24px;
+    background: @component-background;
+    border-bottom: @border-width-base @border-style-base @border-color-split;
+    border-radius: @border-radius-base @border-radius-base 0 0;
   }
   &-title {
-    font-size: @font-size-lg;
-    font-weight: 500;
-    line-height: 22px;
     color: @heading-color;
+    font-weight: 500;
+    font-size: @font-size-lg;
+    line-height: 22px;
     small {
+      margin-left: @layout-gutter;
       color: @muted-color;
       font-size: 12px;
-      margin-left: @layout-gutter;
     }
   }
   &-spin {
@@ -59,11 +59,11 @@
     text-align: center;
   }
   &-footer {
-    border-top: @border-width-base @border-style-base @border-color-split;
+    margin: 24px -24px -24px -24px;
     padding: 10px 16px;
     text-align: right;
+    border-top: @border-width-base @border-style-base @border-color-split;
     border-radius: 0 0 @border-radius-base @border-radius-base;
-    margin: 24px -24px -24px -24px;
   }
   &-include-tabs {
     nz-tabset {

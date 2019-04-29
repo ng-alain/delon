@@ -7,20 +7,20 @@
   }
 
   .abs-center {
-    overflow: auto;
-    margin: auto;
     position: absolute;
     top: 0;
-    left: 0;
-    bottom: 0;
     right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    overflow: auto;
     &.abs-fixed {
       position: fixed;
       z-index: 999;
     }
     &.abs-right {
-      left: auto;
       right: 20px;
+      left: auto;
       text-align: right;
     }
     &.abs-left {

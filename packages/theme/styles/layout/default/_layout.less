@@ -1,6 +1,6 @@
 html {
-  direction: ltr;
   height: 100%; // http://updates.html5rocks.com/2013/12/300ms-tap-delay-gone-away
+  direction: ltr;
   touch-action: manipulation;
 }
 
@@ -17,8 +17,8 @@ body {
 }
 
 @{alain-default-prefix} {
-  display: block;
   position: relative;
+  display: block;
   width: 100%;
   height: auto;
   min-height: 100%;
@@ -37,23 +37,23 @@ body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: #929292;
+      margin-right: -@alain-default-content-padding;
+      margin-bottom: @alain-default-content-padding;
+      margin-left: -@alain-default-content-padding;
       padding: @alain-default-content-padding;
       padding-top: @alain-default-content-padding - 12;
       padding-bottom: @alain-default-content-padding - 12;
-      margin-right: -@alain-default-content-padding;
-      margin-left: -@alain-default-content-padding;
-      margin-bottom: @alain-default-content-padding;
+      color: #929292;
       background-color: @alain-default-content-heading-bg;
       border-bottom: 1px solid @alain-default-content-heading-border;
       > h1 {
-        font-size: 18px;
-        font-weight: normal;
         margin-bottom: 0;
+        font-weight: normal;
+        font-size: 18px;
         > small {
           display: block;
-          font-size: 12px;
           color: @muted-color;
+          font-size: 12px;
         }
       }
     }

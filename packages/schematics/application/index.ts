@@ -157,7 +157,7 @@ function addCodeStylesToPackageJson() {
     if (json == null) return host;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
     json.scripts['lint:ts'] = `tslint -p src/tsconfig.app.json -c tslint.json 'src/**/*.ts'`;
-    json.scripts['lint:style'] = `stylelint \"{src}/**/*.less\" --syntax less`;
+    json.scripts['lint:style'] = `stylelint 'src/**/*.less' --syntax less`;
     json.scripts['lint-staged'] = `lint-staged`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
     json['lint-staged'] = {

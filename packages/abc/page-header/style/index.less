@@ -6,8 +6,8 @@
 
 @{page-header-prefix} {
   display: block;
-  background-color: @page-header-bg;
   padding: 16px 32px 0 32px;
+  background-color: @page-header-bg;
   border-bottom: @border-width-base @border-style-base @border-color-split;
   &__wide {
     max-width: @page-header-wide;
@@ -34,25 +34,25 @@
     margin-right: 16px;
     padding-top: 1px;
     img {
+      display: block;
       width: 28px;
       height: 28px;
       border-radius: @border-radius-base;
-      display: block;
     }
   }
   &__title {
-    font-size: 20px;
-    font-weight: 500;
     color: @heading-color;
+    font-weight: 500;
+    font-size: 20px;
     small {
+      padding-left: @layout-gutter;
       font-weight: normal;
       font-size: 14px;
-      padding-left: @layout-gutter;
     }
   }
   &__action {
-    margin-left: 56px;
     min-width: 266px;
+    margin-left: 56px;
   }
 
   &__title,
@@ -87,8 +87,8 @@
   }
 
   &__extra {
-    margin-left: 88px;
     min-width: 242px;
+    margin-left: 88px;
   }
   @media screen and (max-width: @screen-xl) {
     &__extra {

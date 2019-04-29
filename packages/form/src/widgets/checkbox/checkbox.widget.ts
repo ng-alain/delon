@@ -32,7 +32,7 @@ export class CheckboxWidget extends ControlWidget {
 
       this.updateAllChecked();
       this.inited = true;
-      this.cd.detectChanges();
+      this.detectChanges();
     });
   }
 

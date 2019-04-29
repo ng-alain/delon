@@ -3,25 +3,25 @@
 @g2-pie-prefix: ~'.g2-pie';
 
 @{g2-pie-prefix} {
-  display: block;
   position: relative;
+  display: block;
   &__chart {
     position: relative;
   }
   &__legend {
     position: absolute;
+    top: 50%;
     right: 0;
     min-width: 200px;
-    top: 50%;
-    transform: translateY(-50%);
     margin: 0 20px;
-    list-style: none;
     padding: 0;
+    list-style: none;
+    transform: translateY(-50%);
     &-item {
-      cursor: pointer;
-      margin-bottom: 16px;
       height: 22px;
+      margin-bottom: 16px;
       line-height: 22px;
+      cursor: pointer;
       &:last-child {
         margin-bottom: 0;
       }
@@ -30,13 +30,13 @@
       color: @text-color;
     }
     &-dot {
-      border-radius: 8px;
-      display: inline-block;
-      margin-right: 8px;
       position: relative;
       top: -1px;
-      height: 8px;
+      display: inline-block;
       width: 8px;
+      height: 8px;
+      margin-right: 8px;
+      border-radius: 8px;
     }
     &-percent {
       color: @text-color-secondary;
@@ -63,24 +63,24 @@
   }
   &__total {
     position: absolute;
-    left: 50%;
     top: 50%;
-    text-align: center;
+    left: 50%;
     height: 62px;
+    text-align: center;
     transform: translate(-50%, -50%);
     &-title {
-      color: @text-color-secondary;
-      font-size: 14px;
-      line-height: 22px;
       height: 22px;
       margin-bottom: 8px;
+      color: @text-color-secondary;
       font-weight: normal;
+      font-size: 14px;
+      line-height: 22px;
     }
     &-stat {
-      color: @heading-color;
       display: block;
-      font-size: 1.2em;
       height: 32px;
+      color: @heading-color;
+      font-size: 1.2em;
       line-height: 32px;
       white-space: nowrap;
     }
@@ -88,8 +88,8 @@
   &__mini {
     @{g2-pie-prefix}__total {
       &-title {
-        margin-bottom: 0;
         margin-top: 4px;
+        margin-bottom: 0;
       }
     }
   }
