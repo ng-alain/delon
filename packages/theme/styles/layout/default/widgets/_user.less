@@ -2,20 +2,19 @@
 @alain-default-user-block-avatar-hw: @avatar-size-lg;
 
 .alain-default-aside-user-mixin(@enabled) when(@enabled=true) {
-
   @{alain-default-prefix}__aside-user {
-    padding-top: (@layout-gutter * 3);
-    margin: 0 auto;
     display: block !important;
     width: @alain-default-user-block-width;
+    margin: 0 auto;
+    padding-top: (@layout-gutter * 3);
     cursor: pointer;
     .@{ant-prefix}-dropdown-trigger {
       display: flex;
       align-items: center;
     }
     &-info {
-      color: @text-color;
       width: @alain-default-user-block-width - @alain-default-user-block-avatar-hw - @layout-gutter;
+      color: @text-color;
     }
     &-avatar {
       margin-right: @layout-gutter;

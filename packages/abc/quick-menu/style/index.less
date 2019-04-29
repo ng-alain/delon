@@ -6,13 +6,13 @@
 @quick-menu-border-color: #fff;
 
 @{quick-menu-prefix} {
-  display: block;
   position: fixed;
   right: -@quick-menu-border-width;
   left: auto;
-  backface-visibility: hidden;
-  border: @quick-menu-border-width solid @quick-menu-border-color;
   z-index: @zindex + 2;
+  display: block;
+  border: @quick-menu-border-width solid @quick-menu-border-color;
+  backface-visibility: hidden;
   transition: margin 0.3s cubic-bezier(1, 0, 0, 1);
   &__inner {
     position: relative;
@@ -24,14 +24,14 @@
     left: -@quick-menu-ctrl-hw;
     width: @quick-menu-ctrl-hw;
     height: @quick-menu-ctrl-hw;
+    text-align: center;
     border: @quick-menu-border-width solid @quick-menu-border-color;
     border-right: 0;
-    text-align: center;
-    cursor: pointer;
     border-radius: 3px 0 0 3px;
+    cursor: pointer;
     &-icon {
-      line-height: @quick-menu-ctrl-hw - 1;
       font-size: 20px;
+      line-height: @quick-menu-ctrl-hw - 1;
     }
   }
 }

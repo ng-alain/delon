@@ -17,5 +17,6 @@
   },
   "[javascript]": {
     "editor.formatOnSave": true
-  }
+  },
+  "prettier.stylelintIntegration": true
 }
