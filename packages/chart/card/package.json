@@ -4,7 +4,8 @@
       "flatModuleFile": "card",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "ng-zorro-antd": "ng-zorro-antd",
+        "ng-zorro-antd/card": "ng-zorro-antd/card",
+        "ng-zorro-antd/spin": "ng-zorro-antd/spin",
         "@delon/util": "delon.util"
       }
     }
