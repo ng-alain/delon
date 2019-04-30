@@ -4,7 +4,7 @@
       "flatModuleFile": "exception",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "ng-zorro-antd": "ng-zorro-antd",
+        "ng-zorro-antd/button": "ng-zorro-antd/button",
         "@delon/theme": "delon.theme",
         "@delon/util": "delon.util"
       }
