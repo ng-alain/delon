@@ -8,10 +8,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { InputBoolean } from '@delon/util';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tag-select',
