@@ -16,6 +16,10 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ## [7.3.1](https://github.com/ng-alain/delon/compare/7.3.0...7.3.1) (2019-04-30)
 
+### Scaffold
+
+* 更新 `stylelint` 配置 ([#1054](https://github.com/ng-alain/ng-alain/pull/1054))
+
 ### Bug Fixes
 
 * **abc:sv:** 修复内容包含块会引起错位 ([#545](https://github.com/ng-alain/delon/issues/545)) ([a3191a3](https://github.com/ng-alain/delon/commit/a3191a3))
