@@ -4,7 +4,7 @@
       "flatModuleFile": "result",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "ng-zorro-antd": "ng-zorro-antd",
+        "ng-zorro-antd/icon": "ng-zorro-antd/icon",
         "@delon/util": "delon.util"
       }
     }
