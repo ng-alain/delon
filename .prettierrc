@@ -5,12 +5,10 @@
   "trailingComma": "all",
   "tabWidth": 2,
   "useTabs": false,
-  "overrides": [
-    {
-      "files": ".prettierrc",
-      "options": {
-        "parser": "json"
-      }
+  "overrides": [{
+    "files": ".prettierrc",
+    "options": {
+      "parser": "json"
     }
-  ]
+  }]
 }

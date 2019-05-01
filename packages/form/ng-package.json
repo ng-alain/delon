@@ -18,6 +18,7 @@
       "ng-zorro-antd/input": "ng-zorro-antd/input",
       "ng-zorro-antd/input-number": "ng-zorro-antd/input-number",
       "ng-zorro-antd/mention": "ng-zorro-antd/mention",
+      "ng-zorro-antd/modal": "ng-zorro-antd/modal",
       "ng-zorro-antd/radio": "ng-zorro-antd/radio",
       "ng-zorro-antd/rate": "ng-zorro-antd/rate",
       "ng-zorro-antd/select": "ng-zorro-antd/select",
@@ -29,7 +30,6 @@
       "ng-zorro-antd/transfer": "ng-zorro-antd/transfer",
       "ng-zorro-antd/tree-select": "ng-zorro-antd/tree-select",
       "ng-zorro-antd/upload": "ng-zorro-antd/upload",
-      "ng-zorro-antd/modal": "ng-zorro-antd/modal",
       "@delon/theme": "delon.theme",
       "@delon/util": "delon.util"
     }

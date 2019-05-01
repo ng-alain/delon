@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { AlainThemeModule } from '../../theme.module';
 import { ModalHelper } from './modal.helper';
 
@@ -14,7 +14,7 @@ describe('theme: ModalHelper', () => {
 
   beforeEach(() => {
     @NgModule({
-      imports: [CommonModule, NoopAnimationsModule, AlainThemeModule.forChild()],
+      imports: [CommonModule, NoopAnimationsModule, AlainThemeModule.forChild(), NzModalModule],
       declarations: [TestModalComponent, TestComponent],
       entryComponents: [TestModalComponent],
     })

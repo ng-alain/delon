@@ -15,6 +15,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzMentionModule } from 'ng-zorro-antd/mention';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzRateModule } from 'ng-zorro-antd/rate';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -40,6 +41,7 @@ const ZORROS = [
   NzInputModule,
   NzInputNumberModule,
   NzMentionModule,
+  NzModalModule,
   NzRadioModule,
   NzRateModule,
   NzSelectModule,
