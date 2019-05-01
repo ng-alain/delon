@@ -4,5 +4,12 @@
   "lib": {
     "flatModuleFile": "abc",
     "entryFile": "public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "tslib",	
+    "file-saver",
+    "date-fns",
+    "qrious",
+    "ngx-countdown"
+  ]
 }
