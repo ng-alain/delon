@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { deepGet } from '@delon/util';
-import { NzModalService, UploadChangeParam, UploadFile } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { UploadChangeParam, UploadFile } from 'ng-zorro-antd/upload';
 import { of } from 'rxjs';
 import { SFValue } from '../../interface';
 import { getData, toBool } from '../../utils';
@@ -101,7 +102,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
   handleRemove = () => {
     this._setValue(this.fileList);
     return true;
-  }
+  };
 
   handlePreview = (file: UploadFile) => {
     if (this.ui.preview) {
@@ -116,5 +117,5 @@ export class UploadWidget extends ControlWidget implements OnInit {
       nzContent: `<img src="${_url}" class="img-fluid" />`,
       nzFooter: null,
     });
-  }
+  };
 }

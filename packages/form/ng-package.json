@@ -29,6 +29,7 @@
       "ng-zorro-antd/transfer": "ng-zorro-antd/transfer",
       "ng-zorro-antd/tree-select": "ng-zorro-antd/tree-select",
       "ng-zorro-antd/upload": "ng-zorro-antd/upload",
+      "ng-zorro-antd/modal": "ng-zorro-antd/modal",
       "@delon/theme": "delon.theme",
       "@delon/util": "delon.util"
     }

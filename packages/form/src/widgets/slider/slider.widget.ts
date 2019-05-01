@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Marks, SliderValue } from 'ng-zorro-antd';
+import { Marks, SliderValue } from 'ng-zorro-antd/slider';
 import { ControlWidget } from '../../widget';
 
 @Component({
@@ -26,7 +26,7 @@ export class SliderWidget extends ControlWidget implements OnInit {
   _formatter = (value: number) => {
     if (this.ui.formatter) return this.ui.formatter(value);
     return value;
-  }
+  };
 
   _afterChange(value: SliderValue) {
     if (this.ui.afterChange) this.ui.afterChange(value);
