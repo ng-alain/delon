@@ -11,9 +11,12 @@
   "html.format.wrapLineLength": 100,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  // "editor.formatOnSave": true,
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
+  },
+  "[markdown]": {
+    "editor.formatOnSave": true
   },
   "[javascript]": {
     "editor.formatOnSave": true

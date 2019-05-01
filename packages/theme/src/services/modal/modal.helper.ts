@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { deepMerge } from '@delon/util';
-import { ModalOptionsForService, NzModalService } from 'ng-zorro-antd';
+import { ModalOptionsForService, NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, Observer } from 'rxjs';
 
 export interface ModalHelperOptions {

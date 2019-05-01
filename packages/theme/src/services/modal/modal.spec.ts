@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NgZorroAntdModule, NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { AlainThemeModule } from '../../theme.module';
 import { ModalHelper } from './modal.helper';
 
@@ -14,7 +14,7 @@ describe('theme: ModalHelper', () => {
 
   beforeEach(() => {
     @NgModule({
-      imports: [CommonModule, NgZorroAntdModule, NoopAnimationsModule, AlainThemeModule.forChild()],
+      imports: [CommonModule, NoopAnimationsModule, AlainThemeModule.forChild()],
       declarations: [TestModalComponent, TestComponent],
       entryComponents: [TestModalComponent],
     })
@@ -34,12 +34,9 @@ describe('theme: ModalHelper', () => {
   describe('[default]', () => {
     it('#open', done => {
       modal
-        .open(
-          TestModalComponent,
-          {
-            ret: 'true',
-          },
-        )
+        .open(TestModalComponent, {
+          ret: 'true',
+        })
         .subscribe(res => {
           expect(true).toBeTruthy();
           done();
