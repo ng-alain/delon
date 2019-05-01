@@ -50,7 +50,7 @@ export class CodeBoxComponent implements OnDestroy {
     private codeSrv: CodeService,
     private sanitizer: DomSanitizer,
   ) {
-    this.i18n$ = this.i18n.change.pipe(filter(w => !!this._orgItem)).subscribe(() => {
+    this.i18n$ = this.i18n.change.pipe(filter(() => !!this._orgItem)).subscribe(() => {
       this.item.title = this.i18n.get(this._orgItem.meta.title);
       this.item.summary = this.i18n.get(this._orgItem.summary);
     });

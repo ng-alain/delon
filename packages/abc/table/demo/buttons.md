@@ -37,7 +37,7 @@ export class DemoComponent {
 
   users: any[] = Array(10)
     .fill({})
-    .map((item: any, idx: number) => {
+    .map((_item: any, idx: number) => {
       return {
         id: idx + 1,
         name: `name ${idx + 1}`,
@@ -59,7 +59,7 @@ export class DemoComponent {
           modal: {
             component: DemoModalComponent,
           },
-          click: (record: any, modal: any) =>
+          click: (_record: any, modal: any) =>
             this.message.success(
               `重新加载页面，回传值：${JSON.stringify(modal)}`,
             ),
@@ -71,7 +71,7 @@ export class DemoComponent {
             title: '编辑',
             component: DemoDrawerComponent,
           },
-          click: (record: any, modal: any) =>
+          click: (_record: any, modal: any) =>
             this.message.success(
               `重新加载页面，回传值：${JSON.stringify(modal)}`,
             ),
@@ -79,7 +79,7 @@ export class DemoComponent {
         {
           icon: 'delete',
           type: 'del',
-          click: (record, modal, comp) => {
+          click: (record, _modal, comp) => {
             this.message.success(`成功删除【${record.name}】`);
             comp!.removeRow(record);
           },
