@@ -5,7 +5,7 @@ import {
   TransferItem,
   TransferSearchChange,
   TransferSelectChange,
-} from 'ng-zorro-antd';
+} from 'ng-zorro-antd/transfer';
 import { of, Observable } from 'rxjs';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
@@ -54,7 +54,7 @@ export class TransferWidget extends ControlWidget implements OnInit {
 
   _canMove = (arg: TransferCanMove): Observable<TransferItem[]> => {
     return this.ui.canMove ? this.ui.canMove(arg) : of(arg.list);
-  }
+  };
 
   _change(options: TransferChange) {
     if (options.to === 'right') {

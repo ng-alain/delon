@@ -4,7 +4,7 @@
       "flatModuleFile": "ellipsis",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "ng-zorro-antd": "ng-zorro-antd",
+        "ng-zorro-antd/tooltip": "ng-zorro-antd/tooltip",
         "@delon/util": "delon.util"
       }
     }

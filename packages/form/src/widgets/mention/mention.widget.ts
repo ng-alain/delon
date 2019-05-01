@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NzMentionComponent } from 'ng-zorro-antd';
+import { NzMentionComponent } from 'ng-zorro-antd/mention';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { SFValue } from '../../interface';

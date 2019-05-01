@@ -18,7 +18,7 @@ import { Component } from '@angular/core';
     <ng-template #avatar><img style="width:56px; height: 56px" src="./assets/img/logo-color.svg"/></ng-template>
     <ng-template #action>
       <nz-tooltip [nzTitle]="'指标说明'">
-        <i nz-tooltip nz-icon type="info-circle"></i>
+        <i nz-tooltip nz-icon nzType="info-circle"></i>
       </nz-tooltip>
     </ng-template>
   </g2-card>

@@ -17,8 +17,8 @@
   </ng-container>
 </ng-template>
 <ng-template #btnTextTpl let-i let-btn="btn">
-  <i *ngIf="btn.icon" nz-icon [type]="btn.icon.type" [theme]="btn.icon.theme" [spin]="btn.icon.spin"
-     [twoToneColor]="btn.icon.twoToneColor" [iconfont]="btn.icon.iconfont"></i>
+  <i *ngIf="btn.icon" nz-icon [nzType]="btn.icon.type" [nzTheme]="btn.icon.theme" [nzSpin]="btn.icon.spin"
+     [nzTwotoneColor]="btn.icon.twoToneColor" [nzIconfont]="btn.icon.iconfont"></i>
   <span [innerHTML]="_btnText(i, btn)" [ngClass]="{'pl-xs': btn.icon}"></span>
 </ng-template>
 <nz-table [nzData]="_data" [(nzPageIndex)]="pi" (nzPageIndexChange)="_change('pi')" [(nzPageSize)]="ps"
@@ -42,7 +42,7 @@
                      [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll()"></label>
               <nz-dropdown *ngIf="c.selections.length" class="st__selection">
                 <span nz-dropdown>
-                  <i nz-icon type="down"></i>
+                  <i nz-icon nzType="down"></i>
                 </span>
                 <ul nz-menu>
                   <li nz-menu-item *ngFor="let rw of c.selections" (click)="_rowSelection(rw)"
@@ -57,7 +57,7 @@
           </ng-container>
           <nz-dropdown *ngIf="c.filter" class="st__filter" nzTrigger="click" nzTableFilter [hasFilterButton]="true"
                        [nzClickHide]="false" [(nzVisible)]="c.filter.visible">
-            <i nz-icon [type]="c.filter.icon" theme="fill" [class.ant-table-filter-selected]="c.filter.default"
+            <i nz-icon [nzType]="c.filter.icon" nzTheme="fill" [class.ant-table-filter-selected]="c.filter.default"
                [class.ant-table-filter-open]="c.filter.visible" nz-dropdown></i>
             <ul nz-menu>
               <ng-container *ngIf="c.filter.multiple">
@@ -113,7 +113,7 @@
                 <nz-dropdown *ngIf="btn.children.length > 0">
                   <a class="ant-dropdown-link" nz-dropdown>
                     <span [innerHTML]="_btnText(i, btn)"></span>
-                    <i nz-icon type="down"></i>
+                    <i nz-icon nzType="down"></i>
                   </a>
                   <ul nz-menu>
                     <ng-container *ngFor="let subBtn of btn.children">

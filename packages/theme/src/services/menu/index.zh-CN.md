@@ -53,7 +53,7 @@ children | 子菜单 | `Menu[]` | -
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 类型 | `class,icon,img` | `icon`
-`[value]` | 值，包含：类名、图标 `type`、图像 | `string` | -
+`[value]` | 值，包含：类名、图标 `nzType`、图像 | `string` | -
 `[theme]` | 图标主题风格 | `outline,twotone,fill` | `outline`
 `[spin]` | 是否有旋转动画 | `boolean` | `false`
 `[twoToneColor]` | 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 | `string` | -

@@ -11,6 +11,6 @@
   </span>
   <span *ngIf="status || subTotal" class="number-info__value-text number-info__value-sub">
     <ng-container *stringTemplateOutlet="subTotal">{{subTotal}}</ng-container>
-    <i *ngIf="status" nz-icon type="caret-{{status}}"></i>
+    <i *ngIf="status" nz-icon nzType="caret-{{status}}"></i>
   </span>
 </div>

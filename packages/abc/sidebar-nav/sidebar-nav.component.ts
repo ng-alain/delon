@@ -13,11 +13,10 @@ import {
   Renderer2,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
-
 import { Menu, MenuService, SettingsService, WINDOW } from '@delon/theme';
 import { InputBoolean } from '@delon/util';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Nav } from './sidebar-nav.types';
 

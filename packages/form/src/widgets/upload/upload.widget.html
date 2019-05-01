@@ -29,14 +29,12 @@
              (nzChange)="change($event)">
     <ng-container [ngSwitch]="btnType">
       <ng-container *ngSwitchCase="'plus'">
-        <i nz-icon
-           type="plus"></i>
+        <i nz-icon nzType="plus"></i>
         <div class="ant-upload-text"
              [innerHTML]="i.text"></div>
       </ng-container>
       <ng-container *ngSwitchCase="'drag'">
-        <p class="ant-upload-drag-icon"><i nz-icon
-             type="inbox"></i></p>
+        <p class="ant-upload-drag-icon"><i nz-icon nzType="inbox"></i></p>
         <p class="ant-upload-text"
            [innerHTML]="i.text"></p>
         <p class="ant-upload-hint"
@@ -45,8 +43,7 @@
       <ng-container *ngSwitchDefault>
         <button type="button"
                 nz-button>
-          <i nz-icon
-             type="upload"></i><span [innerHTML]="i.text"></span>
+          <i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span>
         </button>
       </ng-container>
     </ng-container>

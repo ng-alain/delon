@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { deepMerge } from '@delon/util';
-import { NzDrawerOptions, NzDrawerService } from 'ng-zorro-antd';
+import { NzDrawerOptions, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { Observable, Observer } from 'rxjs';
 
 export interface DrawerHelperOptions {
@@ -59,16 +59,19 @@ export class DrawerHelper {
    * 构建一个抽屉
    */
   create(title: string, comp: any, params?: any, options?: DrawerHelperOptions): Observable<any> {
-    options = deepMerge({
-      size: 'md',
-      footer: true,
-      footerHeight: 55,
-      exact: true,
-      drawerOptions: {
-        nzPlacement: 'right',
-        nzWrapClassName: '',
+    options = deepMerge(
+      {
+        size: 'md',
+        footer: true,
+        footerHeight: 55,
+        exact: true,
+        drawerOptions: {
+          nzPlacement: 'right',
+          nzWrapClassName: '',
+        },
       },
-    }, options);
+      options,
+    );
     return new Observable((observer: Observer<any>) => {
       const { size, footer, footerHeight, drawerOptions } = options as DrawerHelperOptions;
       const defaultOptions: NzDrawerOptions = {
