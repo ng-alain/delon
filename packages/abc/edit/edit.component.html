@@ -7,21 +7,16 @@
     <ng-container *stringTemplateOutlet="label">{{ label }}</ng-container>
     <span class="se__label-optional">
       {{ optional }}
-      <nz-tooltip *ngIf="optionalHelp"
-                  [nzTitle]="optionalHelp">
-        <i nz-tooltip
-           nz-icon
-           type="question-circle"></i>
+      <nz-tooltip *ngIf="optionalHelp" [nzTitle]="optionalHelp">
+        <i nz-tooltip nz-icon nzType="question-circle"></i>
       </nz-tooltip>
     </span>
   </label>
 </div>
 <div class="ant-form-item-control-wrapper se__control">
-  <div class="ant-form-item-control {{controlClass}}"
-       [class.has-error]="invalid">
+  <div class="ant-form-item-control {{controlClass}}" [class.has-error]="invalid">
     <span (cdkObserveContent)="checkContent()" #contentElement><ng-content></ng-content></span>
     <se-error *ngIf="showErr">{{error}}</se-error>
-    <div *ngIf="extra"
-         class="ant-form-extra">{{extra}}</div>
+    <div *ngIf="extra" class="ant-form-extra">{{extra}}</div>
   </div>
 </div>
