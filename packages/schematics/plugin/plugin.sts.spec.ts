@@ -1,5 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
-import { createAlainApp, APPNAME } from '../utils/testing';
+import { createAlainApp } from '../utils/testing';
 
 describe('NgAlainSchematic: plugin: sts', () => {
   let runner: SchematicTestRunner;

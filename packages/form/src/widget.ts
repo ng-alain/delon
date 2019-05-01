@@ -77,11 +77,11 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
 }
 
 export class ControlWidget extends Widget<FormProperty> {
-  reset(value: SFValue) {}
+  reset(_value: SFValue) {}
 }
 
 export class ArrayLayoutWidget extends Widget<ArrayProperty> implements AfterViewInit {
-  reset(value: SFValue) {}
+  reset(_value: SFValue) {}
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges
@@ -91,7 +91,7 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty> implements AfterVie
 }
 
 export class ObjectLayoutWidget extends Widget<ObjectProperty> implements AfterViewInit {
-  reset(value: SFValue) {}
+  reset(_value: SFValue) {}
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges

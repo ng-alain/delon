@@ -73,7 +73,7 @@ describe('auth: simple.interceptor', () => {
     it(`in headers`, (done: () => void) => {
       const basicModel = genModel();
       genModule({}, basicModel);
-      http.get('/test', { responseType: 'text' }).subscribe(value => {
+      http.get('/test', { responseType: 'text' }).subscribe(() => {
         done();
       });
       const req = httpBed.expectOne('/test') as TestRequest;
@@ -87,7 +87,7 @@ describe('auth: simple.interceptor', () => {
         },
         genModel('123'),
       );
-      http.get('/test', { responseType: 'text' }).subscribe(value => {
+      http.get('/test', { responseType: 'text' }).subscribe(() => {
         done();
       });
       const req = httpBed.expectOne('/test') as TestRequest;
@@ -101,7 +101,7 @@ describe('auth: simple.interceptor', () => {
         },
         genModel('123'),
       );
-      http.get('/test', { responseType: 'text' }).subscribe(value => {
+      http.get('/test', { responseType: 'text' }).subscribe(() => {
         done();
       });
       const req = httpBed.expectOne(() => true) as TestRequest;
@@ -116,7 +116,7 @@ describe('auth: simple.interceptor', () => {
         },
         genModel('123'),
       );
-      http.get('https://ng-alain.com/test', { responseType: 'text' }).subscribe(value => {
+      http.get('https://ng-alain.com/test', { responseType: 'text' }).subscribe(() => {
         done();
       });
       const req = httpBed.expectOne(() => true) as TestRequest;
@@ -141,7 +141,7 @@ describe('auth: simple.interceptor', () => {
         basicModel,
       );
 
-      http.get('/test', { responseType: 'text' }).subscribe(value => {
+      http.get('/test', { responseType: 'text' }).subscribe(() => {
         done();
       });
       const ret = httpBed.expectOne(r => r.method === 'GET' && (r.url as string).startsWith('/test')) as TestRequest;
@@ -161,7 +161,7 @@ describe('auth: simple.interceptor', () => {
         basicModel,
       );
 
-      http.get('/test', { responseType: 'text' }).subscribe(value => {
+      http.get('/test', { responseType: 'text' }).subscribe(() => {
         done();
       });
       const ret = httpBed.expectOne(r => r.method === 'GET' && (r.url as string).startsWith('/test')) as TestRequest;

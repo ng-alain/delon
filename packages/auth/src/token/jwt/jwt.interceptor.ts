@@ -14,7 +14,7 @@ export class JWTInterceptor extends BaseInterceptor {
     return CheckJwt(this.model as JWTTokenModel, options.token_exp_offset!);
   }
 
-  setReq(req: HttpRequest<any>, options: DelonAuthConfig): HttpRequest<any> {
+  setReq(req: HttpRequest<any>, _options: DelonAuthConfig): HttpRequest<any> {
     return req.clone({
       setHeaders: {
         Authorization: `Bearer ${this.model.token}`,

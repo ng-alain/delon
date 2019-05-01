@@ -40,7 +40,7 @@ describe('theme: http.client', () => {
     beforeEach(() => createModule());
 
     it('#loading', fakeAsync(() => {
-      http.get(URL).subscribe(res => {});
+      http.get(URL).subscribe(() => {});
       tick(10);
       expect(http.loading).toBeTruthy();
       backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(OK);
@@ -49,7 +49,7 @@ describe('theme: http.client', () => {
     }));
 
     describe('[get]', () => {
-      it(`basic`, (done) => {
+      it(`basic`, done => {
         http.get(URL).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -58,7 +58,7 @@ describe('theme: http.client', () => {
       });
 
       describe('#params', () => {
-        it(`specified params`, (done) => {
+        it(`specified params`, done => {
           http.get(URL, PARAMS).subscribe(res => {
             expect(res).toBe(OK);
             done();
@@ -68,7 +68,7 @@ describe('theme: http.client', () => {
             expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
           ret.flush(OK);
         });
-        it(`should be unix timestamp when is date param`, (done) => {
+        it(`should be unix timestamp when is date param`, done => {
           const p = Object.assign(deepCopy(PARAMS), { time, date: new Date() });
           http.get(URL, p).subscribe(res => {
             expect(res).toBe(OK);
@@ -84,7 +84,7 @@ describe('theme: http.client', () => {
         });
       });
 
-      it(`return a string`, (done) => {
+      it(`return a string`, done => {
         http.get(URL, PARAMS, { responseType: 'text' }).subscribe(res => {
           expect(typeof res).toBe('string');
           expect(res).toBe(OK);
@@ -96,7 +96,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`return a HttpResponse<Object>`, (done) => {
+      it(`return a HttpResponse<Object>`, done => {
         http.get(URL, PARAMS, { observe: 'response', responseType: 'json' }).subscribe(res => {
           expect(res.status).toBe(200);
           expect(res.body).toBe(OK);
@@ -108,7 +108,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it('return generic', (done) => {
+      it('return generic', done => {
         http.get<string>(URL).subscribe(res => {
           expect(typeof res).toBe('string');
           done();
@@ -116,13 +116,13 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(OK);
       });
 
-      it('should be catch error', (done) => {
+      it('should be catch error', done => {
         http.get(URL).subscribe(
-          res => {
+          () => {
             expect(false).toBe(true);
             done();
           },
-          err => {
+          () => {
             expect(true).toBe(true);
             done();
           },
@@ -134,7 +134,7 @@ describe('theme: http.client', () => {
     });
 
     describe('[post]', () => {
-      it(`basic`, (done) => {
+      it(`basic`, done => {
         http.post(URL).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -142,7 +142,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'POST' && req.url === URL).flush(OK);
       });
 
-      it(`has body`, (done) => {
+      it(`has body`, done => {
         http.post(URL, BODY).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -152,7 +152,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`specified params`, (done) => {
+      it(`specified params`, done => {
         http.post(URL, BODY, PARAMS).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -164,7 +164,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`return a string`, (done) => {
+      it(`return a string`, done => {
         http.post(URL, BODY, PARAMS, { responseType: 'text' }).subscribe(res => {
           expect(typeof res).toBe('string');
           expect(res).toBe(OK);
@@ -177,7 +177,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it('return generic', (done) => {
+      it('return generic', done => {
         http.post<string>(URL).subscribe(res => {
           expect(typeof res).toBe('string');
           done();
@@ -185,7 +185,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'POST' && req.url === URL).flush(OK);
       });
 
-      it(`return a HttpResponse<Object>`, (done) => {
+      it(`return a HttpResponse<Object>`, done => {
         http
           .post(URL, BODY, PARAMS, {
             observe: 'response',
@@ -205,7 +205,7 @@ describe('theme: http.client', () => {
     });
 
     describe('[delete]', () => {
-      it(`basic`, (done) => {
+      it(`basic`, done => {
         http.delete(URL).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -213,7 +213,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'DELETE' && req.url === URL).flush(OK);
       });
 
-      it(`specified params`, (done) => {
+      it(`specified params`, done => {
         http.delete(URL, PARAMS).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -224,7 +224,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`return a string`, (done) => {
+      it(`return a string`, done => {
         http.delete(URL, PARAMS, { responseType: 'text' }).subscribe(res => {
           expect(typeof res).toBe('string');
           expect(res).toBe(OK);
@@ -236,7 +236,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`return a HttpResponse<Object>`, (done) => {
+      it(`return a HttpResponse<Object>`, done => {
         http.delete(URL, PARAMS, { observe: 'response', responseType: 'json' }).subscribe(res => {
           expect(res.status).toBe(200);
           expect(res.body).toBe(OK);
@@ -250,7 +250,7 @@ describe('theme: http.client', () => {
     });
 
     describe('[jsonp]', () => {
-      it(`basic`, (done) => {
+      it(`basic`, done => {
         http.jsonp(URL).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -258,7 +258,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'JSONP' && req.url.startsWith(URL)).flush(OK);
       });
 
-      it(`specified params`, (done) => {
+      it(`specified params`, done => {
         http.jsonp(URL, PARAMS).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -269,7 +269,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`specified params and url include ?`, (done) => {
+      it(`specified params and url include ?`, done => {
         const u = URL + '?b=1';
         http.jsonp(u, PARAMS).subscribe(res => {
           expect(res).toBe(OK);
@@ -281,7 +281,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`specified params & callback`, (done) => {
+      it(`specified params & callback`, done => {
         const callbackParam = 'CB';
         http.jsonp(URL, PARAMS, callbackParam).subscribe(res => {
           expect(res).toBe(OK);
@@ -294,13 +294,13 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it('should be catch error', (done) => {
+      it('should be catch error', done => {
         http.jsonp(URL).subscribe(
-          res => {
+          () => {
             expect(false).toBe(true);
             done();
           },
-          err => {
+          () => {
             expect(true).toBe(true);
             done();
           },
@@ -312,7 +312,7 @@ describe('theme: http.client', () => {
     });
 
     describe('[patch]', () => {
-      it(`basic`, (done) => {
+      it(`basic`, done => {
         http.patch(URL).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -320,7 +320,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'PATCH' && req.url === URL).flush(OK);
       });
 
-      it(`has body`, (done) => {
+      it(`has body`, done => {
         http.patch(URL, BODY).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -330,7 +330,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`specified params`, (done) => {
+      it(`specified params`, done => {
         http.patch(URL, BODY, PARAMS).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -342,7 +342,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`return a string`, (done) => {
+      it(`return a string`, done => {
         http.patch(URL, BODY, PARAMS, { responseType: 'text' }).subscribe(res => {
           expect(typeof res).toBe('string');
           expect(res).toBe(OK);
@@ -355,7 +355,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it('return generic', (done) => {
+      it('return generic', done => {
         http.patch<string>(URL).subscribe(res => {
           expect(typeof res).toBe('string');
           done();
@@ -363,7 +363,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'PATCH' && req.url === URL).flush(OK);
       });
 
-      it(`return a HttpResponse<Object>`, (done) => {
+      it(`return a HttpResponse<Object>`, done => {
         http
           .patch(URL, BODY, PARAMS, {
             observe: 'response',
@@ -383,7 +383,7 @@ describe('theme: http.client', () => {
     });
 
     describe('[put]', () => {
-      it(`basic`, (done) => {
+      it(`basic`, done => {
         http.put(URL).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -391,7 +391,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'PUT' && req.url === URL).flush(OK);
       });
 
-      it(`has body`, (done) => {
+      it(`has body`, done => {
         http.put(URL, BODY).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -401,7 +401,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`specified params`, (done) => {
+      it(`specified params`, done => {
         http.put(URL, BODY, PARAMS).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -413,7 +413,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it(`return a string`, (done) => {
+      it(`return a string`, done => {
         http.put(URL, BODY, PARAMS, { responseType: 'text' }).subscribe(res => {
           expect(typeof res).toBe('string');
           expect(res).toBe(OK);
@@ -426,7 +426,7 @@ describe('theme: http.client', () => {
         ret.flush(OK);
       });
 
-      it('return generic', (done) => {
+      it('return generic', done => {
         http.put<string>(URL).subscribe(res => {
           expect(typeof res).toBe('string');
           done();
@@ -434,7 +434,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'PUT' && req.url === URL).flush(OK);
       });
 
-      it(`return a HttpResponse<Object>`, (done) => {
+      it(`return a HttpResponse<Object>`, done => {
         http
           .put(URL, BODY, PARAMS, {
             observe: 'response',
@@ -454,7 +454,7 @@ describe('theme: http.client', () => {
     });
 
     describe('[request]', () => {
-      it(`method: get`, (done) => {
+      it(`method: get`, done => {
         http.request('GET', URL).subscribe(res => {
           expect(res).toBe(OK);
           done();
@@ -462,7 +462,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(OK);
       });
 
-      it(`method: get, should be return Observable<ArrayBuffer>`, (done) => {
+      it(`method: get, should be return Observable<ArrayBuffer>`, done => {
         http
           .request('GET', URL, {
             responseType: 'arraybuffer',
@@ -474,7 +474,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(new ArrayBuffer(1));
       });
 
-      it(`method: get, should be return Observable<Blob>`, (done) => {
+      it(`method: get, should be return Observable<Blob>`, done => {
         const content = JSON.stringify({ hello: `world` }, null, 2);
         http
           .request('GET', URL, {
@@ -489,7 +489,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(blob);
       });
 
-      it(`method: get, should be return Observable<String>`, (done) => {
+      it(`method: get, should be return Observable<String>`, done => {
         http
           .request('GET', URL, {
             responseType: 'text',
@@ -501,7 +501,7 @@ describe('theme: http.client', () => {
         backend.expectOne(req => req.method === 'GET' && req.url === URL).flush(OK);
       });
 
-      it(`method: post`, (done) => {
+      it(`method: post`, done => {
         http.request('POST', URL).subscribe(res => {
           expect(res).toBe(OK);
           done();

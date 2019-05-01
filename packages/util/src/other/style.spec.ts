@@ -40,8 +40,8 @@ describe('util: style', () => {
   class PageObject {
     fakeEl: any = {};
     fakeRender: any = {
-      removeClass: (el, value) => delete this.fakeEl[value],
-      addClass: (el, value) => (this.fakeEl[value] = ''),
+      removeClass: (_el, value) => delete this.fakeEl[value],
+      addClass: (_el, value) => (this.fakeEl[value] = ''),
       removeAttribute: () => (this.fakeEl = {}),
     };
 

@@ -41,7 +41,7 @@ function setParam(target: any, key = paramKey) {
  * - 有效范围：类
  */
 export function BaseUrl(url: string) {
-  return function<TClass extends { new (...args: any[]): BaseApi }>(target: TClass): TClass {
+  return function<TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
     params.baseUrl = url;
     return target;
@@ -59,7 +59,7 @@ export function BaseHeaders(
         [header: string]: string | string[];
       },
 ) {
-  return function<TClass extends { new (...args: any[]): BaseApi }>(target: TClass): TClass {
+  return function<TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
     params.baseHeaders = headers;
     return target;
@@ -110,7 +110,7 @@ export const Headers = makeParam('headers');
 
 function makeMethod(method: string) {
   return function(url: string = '', options?: HttpOptions) {
-    return (target: BaseApi, targetKey?: string, descriptor?: PropertyDescriptor) => {
+    return (_target: BaseApi, targetKey?: string, descriptor?: PropertyDescriptor) => {
       descriptor!.value = function(...args: any[]): Observable<any> {
         options = options || {};
 

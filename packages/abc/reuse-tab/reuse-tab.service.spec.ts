@@ -54,7 +54,7 @@ describe('abc: reuse-tab(service)', () => {
     srv.clear();
     Array(count)
       .fill({})
-      .forEach((item: any, index: number) => {
+      .forEach((_item: any, index: number) => {
         srv.store(getSnapshot(index + 1, urlTpl), { a: 1 });
       });
   }

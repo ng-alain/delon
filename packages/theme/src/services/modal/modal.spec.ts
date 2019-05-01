@@ -37,7 +37,7 @@ describe('theme: ModalHelper', () => {
         .open(TestModalComponent, {
           ret: 'true',
         })
-        .subscribe(res => {
+        .subscribe(() => {
           expect(true).toBeTruthy();
           done();
         });
@@ -56,7 +56,7 @@ describe('theme: ModalHelper', () => {
             nzWrapClassName: 'aaa',
           },
         )
-        .subscribe(res => {
+        .subscribe(() => {
           expect(true).toBeTruthy();
           done();
         });
@@ -72,7 +72,7 @@ describe('theme: ModalHelper', () => {
           },
           100,
         )
-        .subscribe(res => {
+        .subscribe(() => {
           expect(true).toBeTruthy();
           done();
         });
@@ -86,7 +86,7 @@ describe('theme: ModalHelper', () => {
         .create(TestModalComponent, {
           ret: 'true',
         })
-        .subscribe(res => {
+        .subscribe(() => {
           expect(true).toBeTruthy();
           done();
         });
@@ -103,7 +103,7 @@ describe('theme: ModalHelper', () => {
             includeTabs: true,
           },
         )
-        .subscribe(res => {
+        .subscribe(() => {
           expect(true).toBeTruthy();
           done();
         });
@@ -124,11 +124,11 @@ describe('theme: ModalHelper', () => {
             },
           )
           .subscribe(
-            res => {
+            () => {
               expect(false).toBeTruthy();
               done();
             },
-            err => {
+            () => {
               expect(false).toBeTruthy();
               done();
             },

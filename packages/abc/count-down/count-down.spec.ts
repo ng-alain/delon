@@ -82,7 +82,7 @@ describe('abc: count-down', () => {
 class TestComponent {
   config: any;
   target: number | Date;
-  notify(val: number) {}
+  notify() {}
   begin() {}
   end() {}
 }

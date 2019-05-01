@@ -1,13 +1,13 @@
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule, Tree } from '@angular-devkit/schematics';
 import { addPackageToPackageJson, removePackageFromPackageJson, scriptsToAngularJson } from '../utils/json';
 import { PluginOptions } from './interface';
 
-function g2Typing(host: Tree, options: PluginOptions) {
+function g2Typing(host: Tree) {
   const typingsPath = '/src/typings.d.ts';
   if (!host.exists(typingsPath)) {
     host.create(typingsPath, '');
   }
-  let content = host.get(typingsPath).content.toString('UTF-8');
+  let content = host.get(typingsPath)!.content.toString('UTF-8');
   if (content.includes('G2')) return;
 
   content += `\n// G2
@@ -18,9 +18,9 @@ declare var Slider: any;`;
 }
 
 export function pluginG2(options: PluginOptions): Rule {
-  return (host: Tree, context: SchematicContext) => {
+  return (host: Tree) => {
     // typing
-    g2Typing(host, options);
+    g2Typing(host);
     // package
     (options.type === 'add' ? addPackageToPackageJson : removePackageFromPackageJson)(host, [
       '@antv/data-set@DEP-0.0.0-PLACEHOLDER',

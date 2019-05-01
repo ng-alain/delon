@@ -29,7 +29,7 @@ export function deepCopy(obj: any): any {
 /** 复制内容至剪贴板 */
 export function copy(value: string): Promise<string> {
   return new Promise<string>(
-    (resolve, reject): void => {
+    (resolve): void => {
       let copyTextArea: HTMLTextAreaElement | null = null;
       try {
         copyTextArea = document.createElement('textarea');

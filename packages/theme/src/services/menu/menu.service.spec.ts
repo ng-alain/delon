@@ -66,7 +66,7 @@ describe('Service: Menu', () => {
     it('#resume', () => {
       srv.add(deepCopy(DATA));
       let tick = 0;
-      srv.resume(item => ++tick);
+      srv.resume(() => ++tick);
       expect(tick).toBeGreaterThan(0);
     });
 

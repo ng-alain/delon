@@ -276,7 +276,7 @@ export class CacheService implements OnDestroy {
 
   /** 清空所有缓存 */
   clear() {
-    this.notifyBuffer.forEach((v, k) => this.runNotify(k, 'remove'));
+    this.notifyBuffer.forEach((_v, k) => this.runNotify(k, 'remove'));
     this.memory.clear();
     this.meta.forEach(key => this.store.remove(this.cog.prefix + key));
   }
@@ -308,7 +308,7 @@ export class CacheService implements OnDestroy {
 
   private checkExpireNotify() {
     const removed: string[] = [];
-    this.notifyBuffer.forEach((v, key) => {
+    this.notifyBuffer.forEach((_v, key) => {
       if (this.has(key) && this.getNone(key) === null) removed.push(key);
     });
     removed.forEach(key => {

@@ -57,9 +57,9 @@ export function updateComponentMetadata(
 
   const directiveMetadata = nodes[0] as ts.ObjectLiteralExpression;
 
-  let changes = [];
+  let changes: Change[] = [];
   if (propertyName) {
-    const property = directiveMetadata.properties.find(p => p.name.getText() === propertyName);
+    const property = directiveMetadata.properties.find(p => p.name!.getText() === propertyName);
     if (property) changes = callback(property as ts.Node);
   } else {
     changes = callback(directiveMetadata);

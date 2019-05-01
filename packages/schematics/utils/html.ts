@@ -4,8 +4,8 @@ import * as parse5 from 'parse5';
 import { Project } from './project';
 
 /** Gets the app index.html file */
-export function getIndexHtmlPath(host: Tree, project: Project): string {
-  const buildTarget = (project.targets || project.architect).build.options;
+export function getIndexHtmlPath(_host: Tree, project: Project): string {
+  const buildTarget = (project.targets || project.architect)!.build.options;
 
   if (buildTarget.index && buildTarget.index.endsWith('index.html')) {
     return buildTarget.index;
@@ -51,7 +51,7 @@ export function getTag(host: Tree, src: string, tagName: string) {
   };
 }
 
-export function getTagInV4(host: Tree, src: string, tagName: string) {
+export function getTagInV4(_host: Tree, src: string, tagName: string) {
   const document: any = parse5.parse(src, {
     locationInfo: true,
   } as any);

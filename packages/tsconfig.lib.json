@@ -17,6 +17,7 @@
     "inlineSources": true,
     "importHelpers": true,
     "alwaysStrict": true,
+    "noUnusedParameters": true,
     "strictNullChecks": true
   },
   "files": ["public_api.ts", "typings.d.ts"],

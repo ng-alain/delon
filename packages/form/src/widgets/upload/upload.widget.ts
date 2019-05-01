@@ -76,7 +76,7 @@ export class UploadWidget extends ControlWidget implements OnInit {
     this._setValue(args.fileList);
   }
 
-  reset(value: SFValue) {
+  reset(_value: SFValue) {
     const { fileList } = this.ui;
     (fileList ? of(fileList) : getData(this.schema, this.ui, this.formProperty.formData)).subscribe(list => {
       this.fileList = list as UploadFile[];
