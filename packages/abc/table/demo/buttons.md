@@ -92,7 +92,7 @@ export class DemoComponent {
               text: `过期`,
               click: (record: any) =>
                 this.message.error(`过期【${record.name}】`),
-              format: (record: any) => `过期`,
+              format: () => `过期`,
             },
             {
               text: `重新开始`,
