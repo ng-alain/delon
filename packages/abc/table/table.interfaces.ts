@@ -83,7 +83,7 @@ export interface STRes {
   /**
    * 数据预处理
    */
-  process?: (data: STData[]) => STData[];
+  process?: (data: STData[], rawData?: any) => STData[];
 }
 
 export interface STPage {

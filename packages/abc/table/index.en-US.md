@@ -123,7 +123,7 @@ Property | Description | Type | Default
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[reName]` | Map name `total`、`list`, could be set like `a.b.c` | `{total:string;list:string}` | -
-`[process]` | Data preprocessing | `(data: STData[]) => STData[]` | -
+`[process]` | Data preprocessing | `(data: STData[], rawData?: any) => STData[]` | -
 
 ### STPage
 

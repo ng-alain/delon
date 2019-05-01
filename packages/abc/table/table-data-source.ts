@@ -159,7 +159,7 @@ export class STDataSource {
 
       // pre-process
       if (typeof res.process === 'function') {
-        data$ = data$.pipe(map(result => res.process!(result)));
+        data$ = data$.pipe(map(result => res.process!(result, rawData)));
       }
 
       // data accelerator

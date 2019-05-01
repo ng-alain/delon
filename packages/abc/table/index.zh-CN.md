@@ -123,7 +123,7 @@ class TestComponent {
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[reName]` | 重命名返回参数 `total`、`list`，支持 `a.b.c` 的嵌套写法 | `{total:string;list:string}` | -
-`[process]` | 数据预处理 | `(data: STData[]) => STData[]` | -
+`[process]` | 数据预处理 | `(data: STData[], rawData?: any) => STData[]` | -
 
 ### STPage
 
