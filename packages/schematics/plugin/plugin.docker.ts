@@ -1,4 +1,4 @@
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule, Tree } from '@angular-devkit/schematics';
 import { tryAddFile, tryDelFile } from '../utils/alain';
 import { PluginOptions } from './interface';
 
@@ -125,7 +125,7 @@ function setNginx(host: Tree, options: PluginOptions) {
 }
 
 export function pluginDocker(options: PluginOptions): Rule {
-  return (host: Tree, context: SchematicContext) => {
+  return (host: Tree) => {
     // 1. ignore file
     setIgnore(host, options);
     // 2. docker-compose

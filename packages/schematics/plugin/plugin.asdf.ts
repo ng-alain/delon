@@ -1,8 +1,7 @@
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
-import { PluginOptions } from './interface';
+import { Rule } from '@angular-devkit/schematics';
 
-export function pluginAsdf(options: PluginOptions): Rule {
-  return (host: Tree, context: SchematicContext) => {
+export function pluginAsdf(): Rule {
+  return () => {
     console.log(`哈哈……什么都不做的！`);
   };
 }

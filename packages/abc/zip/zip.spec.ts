@@ -104,7 +104,7 @@ describe('abc: zip', () => {
     isClassZIP = true;
     genModule();
     srv.create().then(
-      res => {
+      () => {
         expect(true).toBe(true);
         done();
       },
@@ -127,7 +127,7 @@ describe('abc: zip', () => {
     });
     it('should be save zip file', (done: () => void) => {
       srv.pushUrl(zip, '1.zip', '1.zip').then(
-        res => {
+        () => {
           expect(true).toBe(true);
           done();
         },
@@ -140,7 +140,7 @@ describe('abc: zip', () => {
     it('should be reject when bad request', (done: () => void) => {
       isErrorRequest = true;
       srv.pushUrl(zip, '1.zip', '1.zip').then(
-        res => {
+        () => {
           expect(false).toBe(true);
           done();
         },
@@ -165,7 +165,7 @@ describe('abc: zip', () => {
     it('should be save zip file', (done: () => void) => {
       spyOn(fs.default, 'saveAs');
       srv.save(zip, { filename: '123.zip' }).then(
-        res => {
+        () => {
           expect(fs.default.saveAs).toHaveBeenCalled();
           expect(true).toBe(true);
           done();
@@ -184,7 +184,7 @@ describe('abc: zip', () => {
           callback: () => ++count,
         })
         .then(
-          res => {
+          () => {
             expect(count).toBe(1);
             expect(fs.default.saveAs).toHaveBeenCalled();
             done();
@@ -199,7 +199,7 @@ describe('abc: zip', () => {
       isErrorGenZip = true;
       spyOn(fs.default, 'saveAs');
       srv.save(zip).then(
-        res => {
+        () => {
           expect(false).toBe(true);
           done();
         },

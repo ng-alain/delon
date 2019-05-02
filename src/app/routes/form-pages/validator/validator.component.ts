@@ -113,7 +113,7 @@ export class FormValidatorComponent implements OnInit {
       formData: this.formCode || '{}',
       ui: this.uiCode || '{}',
     };
-    const componentCode = stackBlitzTpl.replace(/\{(\w+)\}/g, (match: string, offset: any) =>
+    const componentCode = stackBlitzTpl.replace(/\{(\w+)\}/g, (_match: string, offset: any) =>
       (obj[offset] || '').trim(),
     );
     this.codeSrv.openOnStackBlitz(componentCode, this.title, `@delon/form-${this.title}-${this.name}.json`);

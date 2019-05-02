@@ -34,7 +34,7 @@ import { ReuseTabStrategy } from './reuse-tab.strategy';
 
 let i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(key: string) {
+  fanyi(_key: string) {
     return i18nResult;
   }
 }
@@ -87,7 +87,7 @@ describe('abc: reuse-tab', () => {
         },
         {
           provide: 'CanDeactivate',
-          useValue: (c: DComponent, a: ActivatedRouteSnapshot, b: RouterStateSnapshot) => {
+          useValue: () => {
             return Observable.create((observer: any) => observer.next(false));
           },
         },

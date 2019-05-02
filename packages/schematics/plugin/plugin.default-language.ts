@@ -16,7 +16,7 @@ export function pluginDefaultLanguage(options: PluginOptions): Rule {
     if (!host.exists(modulePath)) {
       throw new SchematicsException(`AppModule file (${modulePath}) not found`);
     }
-    let content = host.get(modulePath).content.toString('UTF-8');
+    let content = host.get(modulePath)!.content.toString('UTF-8');
     const start = content.indexOf(`#region default language`);
     if (start === -1) {
       console.warn(`[#region default language] area not found`);

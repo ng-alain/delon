@@ -26,14 +26,14 @@ describe('theme: i18n', () => {
 
     class MockI18NService extends AlainI18NServiceFake {
       data: any = {};
-      use(lang: string) {
+      use(_lang: string) {
         this.data = {
           simple: 'a',
           param: 'a-{{value}}',
           html: '<i>asdf</i>',
         };
       }
-      fanyi(key: string, data?: {}, isSafe?: boolean) {
+      fanyi(key: string, data?: {}, _isSafe?: boolean) {
         let res = this.data[key] || '';
         if (data) {
           Object.keys(data).forEach(k => (res = res.replace(new RegExp(`{{${k}}}`, 'g'), data[k])));

@@ -17,7 +17,7 @@ describe('Service: Title', () => {
   }
 
   class TestMenuService {
-    getPathByUrl(url: string): Menu[] {
+    getPathByUrl(): Menu[] {
       return getPathByUrlData;
     }
   }

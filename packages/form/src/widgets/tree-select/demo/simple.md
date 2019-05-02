@@ -81,7 +81,7 @@ export class DemoComponent {
         ],
         ui: {
           widget: 'tree-select',
-          expandChange: (e: NzFormatEmitEvent) => {
+          expandChange: () => {
             return of([
               { title: '待支付', key: 'WAIT_BUYER_PAY' },
               { title: '已支付', key: 'TRADE_SUCCESS' },

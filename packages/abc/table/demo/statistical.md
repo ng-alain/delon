@@ -44,7 +44,7 @@ import { STColumn } from '@delon/abc';
 export class DemoComponent  {
   data: any[] = Array(100)
     .fill({})
-    .map((item: any, idx: number) => {
+    .map((_item: any, idx: number) => {
       return {
         id: idx + 1,
         price: ~~(Math.random() * 100),

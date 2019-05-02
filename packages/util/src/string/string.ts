@@ -14,7 +14,7 @@ export function format(
   obj: {} | null | undefined,
   needDeepGet: boolean = false,
 ): string {
-  return (str || '').replace(/\${([^}]+)}/g, (work: string, key: string) =>
+  return (str || '').replace(/\${([^}]+)}/g, (_work: string, key: string) =>
     needDeepGet ? deepGet(obj, key.split('.'), '') : (obj || {})[key] || '',
   );
 }

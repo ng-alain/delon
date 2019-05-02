@@ -140,7 +140,7 @@ describe('cache: service', () => {
       it('should be specify sotre type via promise mode', (done: () => void) => {
         const k = '/data/1';
         const setSpy = spyOn(srv, 'set');
-        srv.get(k, { mode: 'promise', type: 'm' }).subscribe(res => {
+        srv.get(k, { mode: 'promise', type: 'm' }).subscribe(() => {
           const data = setSpy.calls.mostRecent().args[2];
           expect(data.type).toBe('m');
           done();

@@ -78,7 +78,7 @@ describe('abc: table: export', () => {
         _c: columns,
         sheetname: 'sn',
         filename: 'filename.xlsx',
-        callback: (wb: any) => {},
+        callback: () => {},
       });
       expect(ret).not.toBeNull();
       expect(ret.sheets).not.toBeNull();
@@ -96,7 +96,7 @@ describe('abc: table: export', () => {
         _d: data,
         _c: columns,
         filename: 'filename.xlsx',
-        callback: (wb: any) => {},
+        callback: () => {},
       });
       expect(ret).not.toBeNull();
       expect(Object.keys(ret.sheets)).toContain('Sheet1');

@@ -11,7 +11,7 @@ import { ControlWidget } from '../../widget';
 export class TagWidget extends ControlWidget {
   data: SFSchemaEnum[];
 
-  reset(value: SFValue) {
+  reset(_value: SFValue) {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
       this.data = list;
       this.detectChanges();

@@ -106,5 +106,5 @@ class TestComponent {
   padding = 10;
   size = 220;
 
-  change(dataURL: string) {}
+  change() {}
 }

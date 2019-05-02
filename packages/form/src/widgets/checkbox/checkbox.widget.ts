@@ -21,7 +21,7 @@ export class CheckboxWidget extends ControlWidget {
     return this.formProperty.root.widget.sfComp!.locale;
   }
 
-  reset(value: SFValue) {
+  reset(_value: SFValue) {
     this.inited = false;
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
       this.data = list;

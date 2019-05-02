@@ -1,4 +1,4 @@
-import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { fakeAsync, tick, TestBed, TestBedStatic } from '@angular/core/testing';
 import { deepCopy } from '@delon/util';

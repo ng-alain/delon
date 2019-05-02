@@ -49,7 +49,7 @@ import { STColumn } from '@delon/abc';
 export class DemoComponent {
   users: any[] = Array(10)
     .fill({})
-    .map((item: any, idx: number) => {
+    .map((_item: any, idx: number) => {
       return {
         id: idx + 1,
         name: `name ${idx + 1}`,

@@ -30,7 +30,7 @@ export class TransferWidget extends ControlWidget implements OnInit {
     };
   }
 
-  reset(value: SFValue) {
+  reset(_value: SFValue) {
     getData(this.schema, this.ui, null).subscribe(list => {
       let formData = this.formProperty.formData;
       if (!Array.isArray(formData)) {

@@ -49,7 +49,7 @@ const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 
 function genData(count: number) {
   return Array(count)
     .fill({})
-    .map((item: any, idx: number) => {
+    .map((_item: any, idx: number) => {
       return {
         id: idx + 1,
         name: `name ${idx + 1}`,
@@ -74,7 +74,7 @@ const USERS: any[] = genData(DEFAULTCOUNT);
 
 const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(key: string) {
+  fanyi(_key: string) {
     return i18nResult;
   }
 }
@@ -618,7 +618,7 @@ describe('abc: table', () => {
                       click: jasmine.createSpy(),
                       modal: {
                         component: {},
-                        params: (record: any) => ({ aa: 1 }),
+                        params: () => ({ aa: 1 }),
                       },
                     },
                   ],
@@ -649,7 +649,7 @@ describe('abc: table', () => {
                       click: jasmine.createSpy(),
                       modal: {
                         component: {},
-                        params: (record: any) => ({ aa: 1 }),
+                        params: () => ({ aa: 1 }),
                       },
                     },
                   ],
@@ -682,7 +682,7 @@ describe('abc: table', () => {
                       click: jasmine.createSpy(),
                       drawer: {
                         component: {},
-                        params: (record: any) => ({ aa: 1 }),
+                        params: () => ({ aa: 1 }),
                       },
                     },
                   ],
@@ -724,7 +724,7 @@ describe('abc: table', () => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [{ text: 'a', type: 'link', click: (item: any) => '/a' }],
+                  buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
                 },
               ];
               const router = injector.get(Router);
@@ -740,7 +740,7 @@ describe('abc: table', () => {
               const columns: STColumn[] = [
                 {
                   title: '',
-                  buttons: [{ text: 'a', type: 'link', click: (item: any) => '/a' }],
+                  buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
                 },
               ];
               const router = injector.get(Router);
@@ -818,7 +818,7 @@ describe('abc: table', () => {
         context.ps = 2;
         context.data = '/mock';
         fixture.detectChanges();
-        httpBed.expectOne(req => true).flush([{}, {}, {}]);
+        httpBed.expectOne(() => true).flush([{}, {}, {}]);
         fixture.whenStable().then(() => {
           expect(comp.pi).toBe(1);
           expect(comp.ps).toBe(3);
@@ -827,37 +827,37 @@ describe('abc: table', () => {
         });
       });
       describe('HTTP Status', () => {
-        it('error request', (done) => {
+        it('error request', done => {
           context.data = '/mock';
           fixture.detectChanges();
-          httpBed.expectOne(req => true).error(new ErrorEvent('cancel'));
+          httpBed.expectOne(() => true).error(new ErrorEvent('cancel'));
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(0);
             done();
           });
         });
-        it('0', (done) => {
+        it('0', done => {
           context.data = '/mock';
           fixture.detectChanges();
-          httpBed.expectOne(req => true).flush(null, { status: 0, statusText: '' });
+          httpBed.expectOne(() => true).flush(null, { status: 0, statusText: '' });
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(0);
             done();
           });
         });
-        it('404', (done) => {
+        it('404', done => {
           context.data = '/mock';
           fixture.detectChanges();
-          httpBed.expectOne(req => true).flush(null, { status: 404, statusText: 'Not found' });
+          httpBed.expectOne(() => true).flush(null, { status: 404, statusText: 'Not found' });
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(0);
             done();
           });
         });
-        it('403', (done) => {
+        it('403', done => {
           context.data = '/mock';
           fixture.detectChanges();
-          httpBed.expectOne(req => true).flush(null, { status: 403, statusText: 'Forbidden' });
+          httpBed.expectOne(() => true).flush(null, { status: 403, statusText: 'Forbidden' });
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(0);
             done();
@@ -1287,7 +1287,7 @@ describe('abc: table', () => {
           expect(comp.req.params.a).toBe(1);
           expect(comp.req.params.b).toBe(2);
         });
-        it('can\'t contaminate raw data', () => {
+        it(`can't contaminate raw data`, () => {
           const params: any = { a: 1 };
           context.req = { params };
           fixture.detectChanges();
@@ -1358,7 +1358,7 @@ describe('abc: table', () => {
           expect(comp.req.params.a).toBe(1);
           expect(comp.req.params.b).toBe(2);
         });
-        it('should be clean check, radio, filter, sort', (done) => {
+        it('should be clean check, radio, filter, sort', done => {
           spyOn(comp, 'clearCheck').and.returnValue(comp);
           spyOn(comp, 'clearRadio').and.returnValue(comp);
           spyOn(comp, 'clearFilter').and.returnValue(comp);
@@ -1536,20 +1536,23 @@ describe('abc: table', () => {
       });
     });
     describe('#loading', () => {
-      it('should be control loading property', (done) => {
+      it('should be control loading property', done => {
         context.loading = true;
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
-          page.expectElCount(`.ant-spin-spinning`, 1);
-          context.loading = false;
-          fixture.detectChanges();
-          return fixture.whenStable();
-        }).then(() => {
-          fixture.detectChanges();
-          page.expectElCount(`.ant-spin-spinning`, 0);
-          done();
-        });
+        fixture
+          .whenStable()
+          .then(() => {
+            fixture.detectChanges();
+            page.expectElCount(`.ant-spin-spinning`, 1);
+            context.loading = false;
+            fixture.detectChanges();
+            return fixture.whenStable();
+          })
+          .then(() => {
+            fixture.detectChanges();
+            page.expectElCount(`.ant-spin-spinning`, 0);
+            done();
+          });
       });
     });
   });
