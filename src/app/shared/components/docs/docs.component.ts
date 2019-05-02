@@ -7,7 +7,6 @@ import { filter } from 'rxjs/operators';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 
-import { environment } from '../../../../environments/environment';
 import { I18NService } from '../../../core/i18n/service';
 import { MetaService } from '../../../core/meta.service';
 

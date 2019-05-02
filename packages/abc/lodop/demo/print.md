@@ -15,7 +15,7 @@ Get print server information (including: remote).
 
 ```ts
 import { Component } from '@angular/core';
-import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd';
 import { LodopService, Lodop } from '@delon/abc';
 
 @Component({
@@ -104,7 +104,6 @@ export class DemoComponent {
   constructor(
     public lodopSrv: LodopService,
     private msg: NzMessageService,
-    private notify: NzNotificationService
   ) {
     this.lodopSrv.lodop.subscribe(({ lodop, ok }) => {
       if (!ok) {

@@ -25,32 +25,38 @@ describe('auth: jwt.model', () => {
       expect(() => {
         model.token = null;
         const payload = model.payload;
+        console.log(payload);
       }).toThrowError();
       expect(() => {
         model.token = undefined;
         const payload = model.payload;
+        console.log(payload);
       }).toThrowError();
     });
     it('should be throw error when invalid token length', () => {
       expect(() => {
         model.token = `a`;
         const payload = model.payload;
+        console.log(payload);
       }).toThrowError();
       expect(() => {
         model.token = `a.a.a`;
         const payload = model.payload;
+        console.log(payload);
       }).toThrowError();
     });
     it('should be throw error when invalid token', () => {
       expect(() => {
         model.token = `a.aa.a`;
         const payload = model.payload;
+        console.log(payload);
       }).toThrowError();
     });
     it(`should be throw error when can't decode the token`, () => {
       expect(() => {
         model.token = `a.aaa.a`;
         const payload = model.payload;
+        console.log(payload);
       }).toThrowError();
     });
   });

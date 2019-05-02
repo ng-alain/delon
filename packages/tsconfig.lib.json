@@ -18,7 +18,9 @@
     "importHelpers": true,
     "alwaysStrict": true,
     "noUnusedParameters": true,
-    "strictNullChecks": true
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true
   },
   "files": ["public_api.ts", "typings.d.ts"],
   "exclude": ["*.spec.ts"],

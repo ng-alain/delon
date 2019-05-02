@@ -1,5 +1,5 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite } from '@delon/testing';
 
 import { By } from '@angular/platform-browser';
@@ -9,13 +9,12 @@ import { EllipsisModule } from './ellipsis.module';
 
 describe('abc: ellipsis', () => {
   let fixture: ComponentFixture<TestBaseComponent>;
-  let injector: TestBedStatic;
   let dl: DebugElement;
   let context: TestBaseComponent;
   let page: PageObject;
 
   function genModule() {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [EllipsisModule],
       declarations: [TestLengthComponent, TestLineComponent],
     });

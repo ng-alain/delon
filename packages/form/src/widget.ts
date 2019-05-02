@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, HostBinding, Inject, Injector } from '@angular/core';
-import { filter, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
 import { ArrayProperty } from './model/array.property';

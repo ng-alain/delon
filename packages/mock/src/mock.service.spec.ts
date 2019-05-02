@@ -1,4 +1,3 @@
-import { Injector } from '@angular/core';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import * as Mock from 'mockjs';
 import { DelonMockModule } from '../index';

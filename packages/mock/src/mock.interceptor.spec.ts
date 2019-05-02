@@ -20,7 +20,6 @@ import { mapTo } from 'rxjs/operators';
 import { MockRequest } from './interface';
 import { DelonMockConfig } from './mock.config';
 import { DelonMockModule } from './mock.module';
-import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
 
 const DATA = {
@@ -52,7 +51,6 @@ class OtherInterceptor implements HttpInterceptor {
 
 describe('mock: interceptor', () => {
   let injector: TestBedStatic;
-  let srv: MockService;
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
@@ -72,7 +70,6 @@ describe('mock: interceptor', () => {
       ].concat(imports),
       providers: ([] as any[]).concat(providers || []),
     });
-    srv = injector.get(MockService);
     http = injector.get(HttpClient);
     httpMock = injector.get(HttpTestingController);
     if (spyConsole) {

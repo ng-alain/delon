@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { G2CustomComponent } from './custom.component';
@@ -6,7 +6,6 @@ import { G2CustomModule } from './custom.module';
 
 describe('chart: custom', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let dl: DebugElement;
   let context: TestComponent;
 
   configureTestSuite(() => {
@@ -17,7 +16,7 @@ describe('chart: custom', () => {
   });
 
   beforeEach(() => {
-    ({ fixture, dl, context } = createTestContext(TestComponent));
+    ({ fixture, context } = createTestContext(TestComponent));
 
     spyOn(context, 'render');
     spyOn(context, 'resize');

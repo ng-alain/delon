@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
@@ -24,8 +24,6 @@ describe('abc: down-file', () => {
   let dl: DebugElement;
   let context: TestComponent;
   let injector: TestBedStatic;
-  let http: HttpClient;
-  let _http: _HttpClient;
   let httpBed: HttpTestingController;
 
   configureTestSuite(() => {
@@ -41,8 +39,6 @@ describe('abc: down-file', () => {
     context = fixture.componentInstance;
     fixture.detectChanges();
 
-    http = injector.get(HttpClient);
-    _http = injector.get(_HttpClient);
     httpBed = injector.get(HttpTestingController);
   }
 

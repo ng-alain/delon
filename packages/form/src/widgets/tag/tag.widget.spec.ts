@@ -1,18 +1,16 @@
 import { DebugElement } from '@angular/core';
 import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-import { NzSliderComponent, NzTagComponent } from 'ng-zorro-antd';
+import { NzTagComponent } from 'ng-zorro-antd';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
-import { TagWidget } from './tag.widget';
 
 describe('form: widget: tag', () => {
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
   let page: SFPage;
-  const widget = 'tag';
 
   configureSFTestSuite();
 

@@ -9,7 +9,6 @@ describe('form: widget: object', () => {
   let dl: DebugElement;
   let context: TestFormComponent;
   let page: SFPage;
-  const widget = 'object';
 
   configureSFTestSuite();
 
