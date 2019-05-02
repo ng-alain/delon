@@ -14,8 +14,8 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { NzAffixComponent } from 'ng-zorro-antd';
+import { NavigationEnd, Router } from '@angular/router';
+import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 

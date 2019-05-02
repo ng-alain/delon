@@ -4,7 +4,7 @@
       "flatModuleFile": "radar",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "ng-zorro-antd": "ng-zorro-antd",
+        "ng-zorro-antd/grid": "ng-zorro-antd/grid",
         "@delon/util": "delon.util"
       }
     }

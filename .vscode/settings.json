@@ -11,12 +11,15 @@
   "html.format.wrapLineLength": 100,
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
-  // "editor.formatOnSave": true,
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
   },
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
   "[javascript]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
   "prettier.stylelintIntegration": true
 }

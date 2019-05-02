@@ -1,11 +1,10 @@
 import { DecimalPipe } from '@angular/common';
 import { Host, Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { of, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-
 import { _HttpClient, CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
+import { of, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { STSortMap } from './table-column-source';
 import {
@@ -159,7 +158,7 @@ export class STDataSource {
 
       // pre-process
       if (typeof res.process === 'function') {
-        data$ = data$.pipe(map(result => res.process!(result)));
+        data$ = data$.pipe(map(result => res.process!(result, rawData)));
       }
 
       // data accelerator

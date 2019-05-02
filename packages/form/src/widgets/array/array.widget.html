@@ -10,7 +10,7 @@
                     [nzTitle]="ui.optionalHelp">
           <i nz-tooltip
              nz-icon
-             type="question-circle"></i>
+             nzType="question-circle"></i>
         </nz-tooltip>
       </span>
     </label>
@@ -41,8 +41,7 @@
                     class="remove"
                     (click)="removeItem(idx)"
                     [attr.title]="removeTitle">
-                <i nz-icon
-                   type="delete"></i>
+                <i nz-icon nzType="delete"></i>
               </span>
             </nz-card>
           </nz-col>

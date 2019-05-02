@@ -4,7 +4,9 @@
       "flatModuleFile": "pageHeader",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "ng-zorro-antd": "ng-zorro-antd",
+        "ng-zorro-antd/affix": "ng-zorro-antd/affix",
+        "ng-zorro-antd/breadcrumb": "ng-zorro-antd/breadcrumb",
+        "ng-zorro-antd/skeleton": "ng-zorro-antd/skeleton",
         "@delon/abc/reuse-tab": "delon.abc.reuseTab",
         "@delon/theme": "delon.theme",
         "@delon/util": "delon.util"

@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd';
+import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core';
 import { deepCopy } from '../other/other';
 import { DelonUtilConfig } from '../util.config';
 import { DelonUtilModule } from '../util.module';

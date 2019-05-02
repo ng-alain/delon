@@ -17,7 +17,7 @@ import { ErrorCollectConfig } from './error-collect.config';
   selector: 'error-collect, [error-collect]',
   exportAs: 'errorCollect',
   template: `
-    <i nz-icon type="exclamation-circle"></i>
+    <i nz-icon nzType="exclamation-circle"></i>
     <span class="pl-sm">{{ count }}</span>
   `,
   host: {

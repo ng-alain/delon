@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NzTreeNode } from 'ng-zorro-antd';
+import { NzTreeNode } from 'ng-zorro-antd/core';
 import { DelonUtilConfig } from '../util.config';
 import { ArrayConfig } from './array.config';
 

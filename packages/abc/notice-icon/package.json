@@ -4,7 +4,13 @@
       "flatModuleFile": "noticeIcon",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "ng-zorro-antd": "ng-zorro-antd",
+        "ng-zorro-antd/badge": "ng-zorro-antd/badge",
+        "ng-zorro-antd/dropdown": "ng-zorro-antd/dropdown",
+        "ng-zorro-antd/icon": "ng-zorro-antd/icon",
+        "ng-zorro-antd/list": "ng-zorro-antd/list",
+        "ng-zorro-antd/spin": "ng-zorro-antd/spin",
+        "ng-zorro-antd/tabs": "ng-zorro-antd/tabs",
+        "ng-zorro-antd/tag": "ng-zorro-antd/tag",
         "@delon/theme": "delon.theme",
         "@delon/util": "delon.util"
       }

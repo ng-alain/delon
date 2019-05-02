@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NgZorroAntdModule, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd';
+import { NzDrawerModule, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
 import { AlainThemeModule } from '../../theme.module';
 import { DrawerHelper } from './drawer.helper';
 
@@ -14,7 +14,7 @@ describe('theme: DrawerHelper', () => {
 
   beforeEach(() => {
     @NgModule({
-      imports: [CommonModule, NgZorroAntdModule, NoopAnimationsModule, AlainThemeModule.forChild()],
+      imports: [CommonModule, NoopAnimationsModule, AlainThemeModule.forChild(), NzDrawerModule],
       declarations: [TestDrawerComponent, TestComponent],
       entryComponents: [TestDrawerComponent],
     })

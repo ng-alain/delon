@@ -30,7 +30,7 @@ import { Component } from '@angular/core';
         <button nz-button>操作</button>
       </nz-button-group>
       <nz-dropdown class="mx-sm">
-        <button nz-button nz-dropdown><i nz-icon type="ellipsis"></i></button>
+        <button nz-button nz-dropdown><i nz-icon nzType="ellipsis"></i></button>
         <ul nz-menu>
           <li nz-menu-item>选项一</li>
           <li nz-menu-item>选项二</li>

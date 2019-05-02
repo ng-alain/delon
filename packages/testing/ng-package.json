@@ -6,7 +6,7 @@
     "flatModuleFile": "testing",
     "entryFile": "public_api.ts",
     "umdModuleIds": {
-      "ng-zorro-antd": "ng-zorro-antd"
+      "ng-zorro-antd/dropdown": "ng-zorro-antd/dropdown"
     }
   }
 }

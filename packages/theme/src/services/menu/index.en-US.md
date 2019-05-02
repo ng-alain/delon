@@ -55,7 +55,7 @@ children | Children for the menu item | `Menu[]` | -
 Property | Description  | Type  | Default
 ----|------|-----|------
 `[type]` | Type for icon | `class,icon,img` | `icon`
-`[value]` | Value for the icon, can be set Class Name, nz-icon of `type`, image | `string` | -
+`[value]` | Value for the icon, can be set Class Name, nz-icon of `nzType`, image | `string` | -
 `[theme]` | Type of the ant design icon | `outline,twotone,fill` | `outline`
 `[spin]` | Rotate icon with animation | `boolean` | `false`
 `[twoToneColor]` | Only support the two-tone icon. Specific the primary color. | `string` | -

@@ -7,7 +7,7 @@
     "entryFile": "public_api.ts",
     "umdModuleIds": {
       "date-fns": "DateFns",
-      "ng-zorro-antd": "ng-zorro-antd",
+      "ng-zorro-antd/core": "ng-zorro-antd/core",
       "extend": "Extend"
     }
   },
