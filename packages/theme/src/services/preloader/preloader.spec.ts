@@ -15,7 +15,7 @@ describe('theme: preloader', () => {
         style: {
           overflow: '',
         },
-        addEventListener: (key: string, fn: any) => {
+        addEventListener: (_key: string, fn: any) => {
           fn();
         },
       };
@@ -43,7 +43,7 @@ describe('theme: preloader', () => {
         style: {
           overflow: '',
         },
-        addEventListener: (key: string, fn: any) => {
+        addEventListener: (_key: string, fn: any) => {
           fn();
         },
       };

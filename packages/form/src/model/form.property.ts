@@ -219,7 +219,7 @@ export abstract class FormProperty {
     // fix error format
     const hasCustomError = list != null && list.length > 0;
     if (hasCustomError) {
-      list.forEach((err, idx: number) => {
+      list.forEach(err => {
         if (!err.message)
           throw new Error(`The custom validator must contain a 'message' attribute to viewed error text`);
         err._custom = true;
@@ -256,7 +256,7 @@ export abstract class FormProperty {
           if (~(message as string).indexOf('{')) {
             message = (message as string).replace(
               /{([\.a-z0-9]+)}/g,
-              (v: string, key: string) => err.params![key] || '',
+              (_v: string, key: string) => err.params![key] || '',
             );
           }
           err.message = message as string;

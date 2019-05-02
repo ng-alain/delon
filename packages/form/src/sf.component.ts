@@ -213,7 +213,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     const inFn = (
       schema: SFSchema,
-      parentSchema: SFSchema,
+      _parentSchema: SFSchema,
       uiSchema: SFUISchemaItemRun,
       parentUiSchema: SFUISchemaItemRun,
       uiRes: SFUISchemaItemRun,

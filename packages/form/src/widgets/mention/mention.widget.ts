@@ -43,7 +43,7 @@ export class MentionWidget extends ControlWidget implements OnInit {
     }
   }
 
-  reset(value: SFValue) {
+  reset(_value: SFValue) {
     getData(this.schema, this.ui, null).subscribe(list => {
       this.data = list;
       this.detectChanges();

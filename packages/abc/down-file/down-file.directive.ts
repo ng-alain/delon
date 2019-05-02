@@ -35,7 +35,7 @@ export class DownFileDirective {
         if (value.startsWith(utfId)) value = value.substr(utfId.length);
         return { [strArr[0].trim()]: value };
       });
-    return arr.reduce((o, item) => item, {});
+    return arr.reduce((_o, item) => item, {});
   }
 
   constructor(private el: ElementRef, private _http: _HttpClient) {}

@@ -31,17 +31,17 @@ export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   // lazy loading
-  canLoad(route: Route, segments: UrlSegment[]): boolean {
+  canLoad(route: Route, _segments: UrlSegment[]): boolean {
     this.url = route.path;
     return this.process();
   }
   // all children route
-  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivateChild(_childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     this.url = state.url;
     return this.process();
   }
   // route
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(_route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     this.url = state.url;
     return this.process();
   }

@@ -367,7 +367,7 @@ describe('abc: page-header', () => {
         setTitle = jasmine.createSpy();
       }
       class MockReuse {
-        set title(val: string) {}
+        set title(_val: string) {}
         get title(): string {
           return '';
         }

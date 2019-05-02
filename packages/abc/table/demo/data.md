@@ -98,7 +98,7 @@ export class DemoComponent implements OnInit {
     of(
       Array(100)
         .fill({})
-        .map((item: any, idx: number) => {
+        .map((_item: any, idx: number) => {
           return {
             id: idx + 1,
             name: `name ${idx + 1}`,

@@ -347,8 +347,8 @@ export class TestFormComponent {
   onlyVisual = false;
   loading = false;
 
-  formChange(value: {}) {}
-  formSubmit(value: {}) {}
-  formReset(value: {}) {}
-  formError(value: ErrorData[]) {}
+  formChange() {}
+  formSubmit() {}
+  formReset() {}
+  formError() {}
 }

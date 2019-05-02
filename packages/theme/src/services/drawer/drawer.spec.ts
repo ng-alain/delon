@@ -36,7 +36,7 @@ describe('theme: DrawerHelper', () => {
       .create('', TestDrawerComponent, {
         ret: 'true',
       })
-      .subscribe(res => {
+      .subscribe(() => {
         expect(true).toBeTruthy();
         done();
       });
@@ -49,7 +49,7 @@ describe('theme: DrawerHelper', () => {
         ret: 'destroy',
       })
       .subscribe(
-        res => {
+        () => {
           expect(false).toBeTruthy();
           done();
         },
@@ -67,7 +67,7 @@ describe('theme: DrawerHelper', () => {
       .static('', TestDrawerComponent, {
         ret: 'true',
       })
-      .subscribe(res => {
+      .subscribe(() => {
         expect(true).toBeTruthy();
         done();
       });
@@ -239,10 +239,10 @@ describe('theme: DrawerHelper', () => {
           },
         )
         .subscribe(
-          res => {
+          () => {
             expect(false).toBe(true);
           },
-          err => {
+          () => {
             expect(false).toBe(true);
           },
           () => {
@@ -269,7 +269,7 @@ describe('theme: DrawerHelper', () => {
             expect(res).toBe(undefined);
             done();
           },
-          err => {
+          () => {
             expect(false).toBe(true);
             done();
           },

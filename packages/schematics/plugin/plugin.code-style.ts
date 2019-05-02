@@ -1,9 +1,9 @@
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule, Tree } from '@angular-devkit/schematics';
 import { getJSON, overwritePackage } from '../utils/json';
 import { PluginOptions } from './interface';
 
 export function pluginCodeStyle(options: PluginOptions): Rule {
-  return (host: Tree, context: SchematicContext) => {
+  return (host: Tree) => {
     const json = getJSON(host, 'package.json');
     if (json == null) return;
 

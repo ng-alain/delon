@@ -138,7 +138,7 @@ describe('form: widget: autocomplete', () => {
               type: 'string',
               ui: {
                 widget,
-                filterOption: (input: string, option: SFSchemaEnum) => option.label === 'a11',
+                filterOption: (_input: string, option: SFSchemaEnum) => option.label === 'a11',
               },
               enum: data,
             },

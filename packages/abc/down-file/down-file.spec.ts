@@ -10,7 +10,7 @@ import * as fs from 'file-saver';
 import { DownFileDirective } from './down-file.directive';
 import { DownFileModule } from './down-file.module';
 
-function genFile(ext: string, isRealFile = true): Blob {
+function genFile(isRealFile = true): Blob {
   const blob = new Blob([
     isRealFile
       ? `iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==`
@@ -55,7 +55,7 @@ describe('abc: down-file', () => {
         fixture.detectChanges();
         (dl.query(By.css('#down-' + ext)).nativeElement as HTMLButtonElement).click();
         const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
-        ret.flush(genFile(ext));
+        ret.flush(genFile());
         expect(fs.default.saveAs).toHaveBeenCalled();
       });
     });
@@ -63,12 +63,12 @@ describe('abc: down-file', () => {
     it('should be using header filename when repseon has [filename]', () => {
       let fn: string;
       const filename = 'newfile.docx';
-      spyOn(fs.default, 'saveAs').and.callFake((body: {}, fileName: string) => (fn = fileName));
+      spyOn(fs.default, 'saveAs').and.callFake((_body: {}, fileName: string) => (fn = fileName));
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
-      ret.flush(genFile('docx'), {
+      ret.flush(genFile(), {
         headers: new HttpHeaders({ filename }),
       });
       expect(fn!).toBe(filename);
@@ -77,12 +77,12 @@ describe('abc: down-file', () => {
     it('should be using header filename when repseon has [x-filename]', () => {
       let fn: string;
       const filename = 'x-newfile.docx';
-      spyOn(fs.default, 'saveAs').and.callFake((body: {}, fileName: string) => (fn = fileName));
+      spyOn(fs.default, 'saveAs').and.callFake((_body: {}, fileName: string) => (fn = fileName));
       context.fileName = null;
       fixture.detectChanges();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
-      ret.flush(genFile('docx'), {
+      ret.flush(genFile(), {
         headers: new HttpHeaders({ 'x-filename': filename }),
       });
       expect(fn!).toBe(filename);
@@ -102,7 +102,7 @@ describe('abc: down-file', () => {
       expect(context.error).not.toHaveBeenCalled();
       (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
       const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
-      ret.flush(genFile('docx', false));
+      ret.flush(genFile(false));
       expect(context.error).toHaveBeenCalled();
     });
 
@@ -123,12 +123,12 @@ describe('abc: down-file', () => {
     createComp();
     let fn: string;
     const filename = 'newfile.docx';
-    spyOn(fs.default, 'saveAs').and.callFake((body: {}, fileName: string) => (fn = fileName));
+    spyOn(fs.default, 'saveAs').and.callFake((_body: {}, fileName: string) => (fn = fileName));
     context.fileName = null;
     fixture.detectChanges();
     (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
     const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
-    ret.flush(genFile('docx'), {
+    ret.flush(genFile(), {
       headers: new HttpHeaders({
         'Content-Disposition': `attachment; filename=${filename}; filename*=UTF-8''${filename}`,
       }),

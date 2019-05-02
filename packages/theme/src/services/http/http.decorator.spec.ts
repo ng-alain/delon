@@ -24,27 +24,27 @@ import {
 @BaseHeaders({ bh: 'a' })
 class MockService extends BaseApi {
   @GET()
-  query(@Query('pi') pi: number, @Query('ps') ps: number, @Headers('mh') mh: string): Observable<any> {
+  query(@Query('pi') _pi: number, @Query('ps') _ps: number, @Headers('mh') _mh: string): Observable<any> {
     return null as any;
   }
 
   @GET(':id')
-  GET(@Path('id') id: number): Observable<any> {
+  GET(@Path('id') _id: number): Observable<any> {
     return null as any;
   }
 
   @GET(':id/:id')
-  MulitPath(@Path('id') id: number): Observable<any> {
+  MulitPath(@Path('id') _id: number): Observable<any> {
     return null as any;
   }
 
   @GET('')
-  arrQS(@Query('ids') ids: number[]): Observable<any> {
+  arrQS(@Query('ids') _ids: number[]): Observable<any> {
     return null as any;
   }
 
   @POST(':id')
-  save(@Path('id') id: number, @Body data: {}): Observable<any> {
+  save(@Path('id') _id: number, @Body _data: {}): Observable<any> {
     return null as any;
   }
 

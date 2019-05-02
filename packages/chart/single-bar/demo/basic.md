@@ -41,7 +41,7 @@ import { Component } from '@angular/core';
   `],
 })
 export class DemoComponent {
-  list = new Array(5).fill({}).map((i, idx) => ({
+  list = new Array(5).fill({}).map(() => ({
     id: Math.floor(Math.random() * 10000),
     value: Math.floor(Math.random() * 100),
     other: Math.floor(Math.random() * 100) > 50 ? Math.floor(Math.random() * 100) : -Math.floor(Math.random() * 100),

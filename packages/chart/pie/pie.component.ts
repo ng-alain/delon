@@ -129,7 +129,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
 
     chart.coord('theta', { innerRadius: inner });
 
-    chart.filter('x', (val: any, item: any) => item.checked !== false);
+    chart.filter('x', (_val: any, item: any) => item.checked !== false);
 
     chart
       .intervalStack()

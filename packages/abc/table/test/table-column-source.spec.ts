@@ -9,7 +9,7 @@ import { STColumn, STColumnFilter } from '../table.interfaces';
 
 const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
-  fanyi(key: string) {
+  fanyi(_key: string) {
     return i18nResult;
   }
 }

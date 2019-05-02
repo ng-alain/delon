@@ -85,7 +85,7 @@ describe('auth: social.service', () => {
           injector.get(DA_SERVICE_TOKEN).set(item.model);
           return { closed: true };
         });
-        srv.login(item.url).subscribe(res => {});
+        srv.login(item.url).subscribe(() => {});
         tick(130);
         expect(window.open).toHaveBeenCalled();
         const token = injector.get(DA_SERVICE_TOKEN).get()!;
@@ -101,19 +101,19 @@ describe('auth: social.service', () => {
         injector.get(DA_SERVICE_TOKEN).set(null);
         return { closed: true };
       });
-      srv.login(MockAuth0.url).subscribe(res => {});
+      srv.login(MockAuth0.url).subscribe(() => {});
       tick(130);
       expect(window.open).toHaveBeenCalled();
       discardPeriodicTasks();
     }));
 
-    it('can\'t get model until closed', fakeAsync(() => {
+    it(`can't get model until closed`, fakeAsync(() => {
       spyOn(srv, 'ngOnDestroy');
       spyOn(window, 'open').and.callFake(() => {
         injector.get(DA_SERVICE_TOKEN).set(null);
         return { closed: false };
       });
-      srv.login(MockAuth0.url).subscribe(res => {});
+      srv.login(MockAuth0.url).subscribe(() => {});
       tick(130);
       expect(window.open).toHaveBeenCalled();
       expect(srv.ngOnDestroy).not.toHaveBeenCalled();
@@ -152,7 +152,7 @@ describe('auth: social.service', () => {
         be: 'throw',
       },
       { summary: 'via ITokenModel', url: swtData, be: swtData },
-    ].forEach((item: any, index: number) => {
+    ].forEach((item: any) => {
       it(`${item.summary}`, () => {
         if (item.be === 'throw') {
           const router = injector.get(Router) as any;

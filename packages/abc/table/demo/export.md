@@ -47,7 +47,7 @@ export class DemoComponent {
   // mock export data
   exportData: any[] = Array(10000)
     .fill({})
-    .map((item: any, index: number) => {
+    .map((_item: any, index: number) => {
       return {
         id: { value: index + 1 },
         picture: {

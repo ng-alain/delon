@@ -172,7 +172,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
   toggleOpen(item: Nav) {
     if (!this.openStrictly) {
-      this.menuSrv.visit(this._d, (i, p) => {
+      this.menuSrv.visit(this._d, i => {
         if (i !== item) i._open = false;
       });
       let pItem = item.__parent;

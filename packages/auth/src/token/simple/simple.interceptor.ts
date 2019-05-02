@@ -9,7 +9,7 @@ import { SimpleTokenModel } from './simple.model';
 
 @Injectable()
 export class SimpleInterceptor extends BaseInterceptor {
-  isAuth(options: DelonAuthConfig): boolean {
+  isAuth(_options: DelonAuthConfig): boolean {
     this.model = this.injector.get(DA_SERVICE_TOKEN).get() as SimpleTokenModel;
     return CheckSimple(this.model as SimpleTokenModel);
   }

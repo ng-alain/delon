@@ -198,7 +198,7 @@ describe('mock: interceptor', () => {
   describe('[disabled log]', () => {
     it('with request', (done: () => void) => {
       genModule({ data: DATA, delay: 1, log: false });
-      http.get('/users').subscribe((res: any) => {
+      http.get('/users').subscribe(() => {
         expect(console.log).not.toHaveBeenCalled();
         done();
       });

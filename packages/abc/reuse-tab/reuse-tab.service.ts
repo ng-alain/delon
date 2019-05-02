@@ -349,7 +349,7 @@ export class ReuseTabService implements OnDestroy {
     return menus.pop();
   }
 
-  private runHook(method: string, url: string, comp: any) {
+  private runHook(method: string, _url: string, comp: any) {
     if (comp.instance && typeof comp.instance[method] === 'function') comp.instance[method]();
   }
 
