@@ -55,21 +55,6 @@ export const ZORRORULES: ConvertAction[] = [
         return;
       }
       if (dom.children && dom.children.findIndex(w => w.name === 'ng-template') !== -1) {
-        const wrap: VDom = {
-          type: 'tag',
-          name: 'nz-input-group',
-          attribs: {},
-          children: [
-            {
-              type: 'tag',
-              name: 'input',
-              attribs: { 'nz-input': '', ...dom.attribs },
-            },
-            ...dom.children,
-          ],
-          next: dom.next,
-          prev: dom.prev,
-        };
         dom.type = 'tag';
         dom.name = 'nz-input-group';
         const refineAttribs = {};

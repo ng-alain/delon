@@ -5,7 +5,7 @@ import { deepGet } from '@delon/util';
 import { STColumnSource } from '../table-column-source';
 import { STRowSource } from '../table-row.directive';
 import { STConfig } from '../table.config';
-import { STColumn, STColumnFilter } from '../table.interfaces';
+import { STColumn } from '../table.interfaces';
 
 const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {

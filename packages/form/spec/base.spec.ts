@@ -7,7 +7,6 @@ import { deepCopy, deepGet } from '@delon/util';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { configureTestSuite, dispatchFakeEvent, typeInElement } from '@delon/testing';
-import { ErrorData } from '../src/errors';
 import { SFButton } from '../src/interface';
 import { FormProperty } from '../src/model/form.property';
 import { DelonFormModule } from '../src/module';

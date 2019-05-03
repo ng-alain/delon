@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LocaleData } from '@delon/theme';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';

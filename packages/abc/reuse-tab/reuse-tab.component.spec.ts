@@ -1,15 +1,7 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
 import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  ExtraOptions,
-  Router,
-  RouterStateSnapshot,
-  RouteReuseStrategy,
-  ROUTER_CONFIGURATION,
-} from '@angular/router';
+import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
 
@@ -897,7 +889,6 @@ class AComponent {
 })
 class BComponent {
   time = +new Date();
-  constructor(private router: ActivatedRoute) {}
 }
 
 @Component({
@@ -936,7 +927,7 @@ class DComponent {
 })
 class EComponent {
   time = +new Date();
-  constructor(private reuse: ReuseTabService) {
+  constructor(reuse: ReuseTabService) {
     reuse.closable = false;
   }
 }

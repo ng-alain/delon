@@ -11,7 +11,6 @@ describe('theme: http.client', () => {
   let http: _HttpClient;
   let backend: HttpTestingController;
   const time = new Date();
-  const timestamp = time.valueOf();
   const URL = '/user';
   const OK = 'ok!';
   const PARAMS = { a: 1 };

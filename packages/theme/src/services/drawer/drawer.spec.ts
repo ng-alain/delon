@@ -2,14 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NzDrawerModule, NzDrawerRef, NzDrawerService } from 'ng-zorro-antd/drawer';
+import { NzDrawerModule, NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { AlainThemeModule } from '../../theme.module';
 import { DrawerHelper } from './drawer.helper';
 
 describe('theme: DrawerHelper', () => {
   let injector: TestBedStatic;
   let drawer: DrawerHelper;
-  let srv: NzDrawerService;
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
@@ -23,7 +22,6 @@ describe('theme: DrawerHelper', () => {
     injector = TestBed.configureTestingModule({ imports: [TestModule] });
     fixture = TestBed.createComponent(TestComponent);
     drawer = injector.get(DrawerHelper);
-    srv = injector.get(NzDrawerService);
   });
 
   afterEach(() => {

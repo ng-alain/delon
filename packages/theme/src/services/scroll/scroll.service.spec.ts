@@ -8,7 +8,6 @@ describe('Service: Scroll', () => {
   const topOfPageElem = {} as Element;
   let injector: Injector;
   let window: any;
-  let doc: MockDocument;
   let scrollService: ScrollService;
 
   class MockElement {
@@ -36,7 +35,6 @@ describe('Service: Scroll', () => {
       ] as StaticProvider[];
       injector = Injector.create({ providers });
       window = injector.get(WINDOW);
-      doc = injector.get(DOCUMENT) as any;
       scrollService = injector.get(ScrollService);
 
       spyOn(window, 'scrollBy');
@@ -145,7 +143,6 @@ describe('Service: Scroll', () => {
       ] as StaticProvider[];
       injector = Injector.create({ providers });
       window = injector.get(WINDOW);
-      doc = injector.get(DOCUMENT) as any;
       scrollService = injector.get(ScrollService);
     });
     it('should only use scrollIntoView', () => {
