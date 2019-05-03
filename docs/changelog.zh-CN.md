@@ -26,6 +26,7 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 * **abc:se:** 修复内联模式时应忽略标签的宽度 ([#553](https://github.com/ng-alain/delon/issues/553)) ([70322fa](https://github.com/ng-alain/delon/commit/70322fa))
 * **abc:st:** 修复 `res.process` 缺少 `rawData` 参数 ([#549](https://github.com/ng-alain/delon/issues/549)) ([102f53f](https://github.com/ng-alain/delon/commit/102f53f))
 * **theme:http:** 修复 `get` 泛型返回错误类型 ([#551](https://github.com/ng-alain/delon/issues/551)) ([b2e1482](https://github.com/ng-alain/delon/commit/b2e1482))
+* **util:deepMergeKey:** 修复忽略数组无法问题 ([#555](https://github.com/ng-alain/delon/issues/551)) ([6d4c1cc](https://github.com/ng-alain/delon/commit/6d4c1cc))
 
 ### Performance Improvements
 

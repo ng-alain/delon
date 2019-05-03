@@ -26,6 +26,7 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 * **abc:se:** fix ingore label width when layout is inline ([#553](https://github.com/ng-alain/delon/issues/553)) ([70322fa](https://github.com/ng-alain/delon/commit/70322fa))
 * **abc:st:** add `rawData` parameter of `res.process` ([#549](https://github.com/ng-alain/delon/issues/549)) ([102f53f](https://github.com/ng-alain/delon/commit/102f53f))
 * **theme:http:** fix losing generic in `get` ([#551](https://github.com/ng-alain/delon/issues/551)) ([b2e1482](https://github.com/ng-alain/delon/commit/b2e1482))
+* **util:deepMergeKey:** fix override array when ingoreArray is true ([#555](https://github.com/ng-alain/delon/issues/551)) ([6d4c1cc](https://github.com/ng-alain/delon/commit/6d4c1cc))
 
 ### Performance Improvements
 
