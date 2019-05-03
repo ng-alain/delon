@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { fakeAsync, tick, TestBed, TestBedStatic } from '@angular/core/testing';
 import { deepCopy } from '@delon/util';
@@ -10,7 +10,6 @@ import { HttpClientConfig } from './http.config';
 describe('theme: http.client', () => {
   let injector: TestBedStatic;
   let http: _HttpClient;
-  let nghttp: HttpClient;
   let backend: HttpTestingController;
   const time = new Date();
   const URL = '/user';
@@ -34,7 +33,6 @@ describe('theme: http.client', () => {
     });
 
     http = injector.get(_HttpClient);
-    nghttp = injector.get(HttpClient);
     backend = injector.get(HttpTestingController);
   }
 
