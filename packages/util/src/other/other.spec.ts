@@ -128,9 +128,18 @@ describe('abc: utils', () => {
     });
   });
 
-  it('#deepMergeKey', () => {
-    const original = { arr: [1, 2] };
-    deepMergeKey(original, false, { arr: [3] });
-    expect(original.arr.length).toBe(3);
+  describe('#deepMergeKey', () => {
+    it('should be merge array', () => {
+      const original = { arr: [1, 2] };
+      deepMergeKey(original, false, { arr: [3] });
+      expect(original.arr.length).toBe(3);
+    });
+
+    it('should be override array ', () => {
+      const original = { arr: [1, 2] };
+      deepMergeKey(original, true, { arr: [3] });
+      expect(original.arr.length).toBe(1);
+      expect(original.arr[0]).toBe(3);
+    });
   });
 });
