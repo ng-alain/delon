@@ -13,7 +13,6 @@ describe('theme: http.client', () => {
   let nghttp: HttpClient;
   let backend: HttpTestingController;
   const time = new Date();
-  const timestamp = time.valueOf();
   const URL = '/user';
   const OK = 'ok!';
   const PARAMS = { a: 1 };
@@ -43,7 +42,7 @@ describe('theme: http.client', () => {
     beforeEach(() => createModule());
 
     it('#loading', fakeAsync(() => {
-      http.get(URL).subscribe(res => {});
+      http.get(URL).subscribe(() => {});
       tick(10);
       expect(http.loading).toBeTruthy();
       backend.expectOne(() => true).flush(OK);
@@ -171,11 +170,11 @@ describe('theme: http.client', () => {
 
       it('should be catch error', done => {
         http.get(URL).subscribe(
-          res => {
+          () => {
             expect(false).toBe(true);
             done();
           },
-          err => {
+          () => {
             expect(true).toBe(true);
             done();
           },
@@ -375,11 +374,11 @@ describe('theme: http.client', () => {
 
       it('should be catch error', done => {
         http.jsonp(URL).subscribe(
-          res => {
+          () => {
             expect(false).toBe(true);
             done();
           },
-          err => {
+          () => {
             expect(true).toBe(true);
             done();
           },
