@@ -22,7 +22,6 @@ import {
 })
 export class RangePickerComponent implements ControlValueAccessor {
   private onChangeFn: (val: Date) => void;
-  private onTouchedFn: () => void;
   private _shortcut: DateRangePickerShortcut;
   private _cog: DateRangePickerConfig;
   @ViewChild('comp') private comp: any;
@@ -103,8 +102,8 @@ export class RangePickerComponent implements ControlValueAccessor {
     this.onChangeFn = fn;
   }
 
-  registerOnTouched(fn: () => void): void {
-    this.onTouchedFn = fn;
+  registerOnTouched(_fn: () => void): void {
+    // this.onTouchedFn = fn;
   }
 
   setDisabledState(disabled: boolean): void {

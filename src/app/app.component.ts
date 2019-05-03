@@ -2,7 +2,6 @@ import { Component, ElementRef, HostBinding, Inject, OnDestroy, Renderer2 } from
 import { NavigationEnd, Router } from '@angular/router';
 import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd';
-import { filter } from 'rxjs/operators';
 
 import { I18NService } from './core/i18n/service';
 import { MetaService } from './core/meta.service';

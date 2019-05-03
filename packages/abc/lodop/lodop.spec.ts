@@ -143,6 +143,7 @@ describe('abc: lodop', () => {
       expect(() => {
         genModule();
         const ls = srv.printer;
+        console.log(ls);
       }).toThrowError('请务必先调用 lodop 获取对象');
     });
     it('should throw error when http request error', (done: () => void) => {

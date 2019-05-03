@@ -160,12 +160,10 @@ describe('abc: xlsx', () => {
   describe('[directive]', () => {
     let fixture: ComponentFixture<TestComponent>;
     let dl: DebugElement;
-    let context: TestComponent;
     beforeEach(() => {
       genModule();
       fixture = TestBed.createComponent(TestComponent);
       dl = fixture.debugElement;
-      context = fixture.componentInstance;
       fixture.detectChanges();
     });
     it('should be export via click', () => {

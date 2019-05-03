@@ -2,14 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 import { AlainThemeModule } from '../../theme.module';
 import { ModalHelper } from './modal.helper';
 
 describe('theme: ModalHelper', () => {
   let injector: TestBedStatic;
   let modal: ModalHelper;
-  let srv: NzModalService;
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
@@ -23,7 +22,6 @@ describe('theme: ModalHelper', () => {
     injector = TestBed.configureTestingModule({ imports: [TestModule] });
     fixture = TestBed.createComponent(TestComponent);
     modal = injector.get(ModalHelper);
-    srv = injector.get(NzModalService);
   });
 
   afterEach(() => {

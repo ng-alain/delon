@@ -10,7 +10,6 @@ describe('form: widget: number', () => {
   let dl: DebugElement;
   let context: TestFormComponent;
   let page: SFPage;
-  const widget = 'number';
 
   configureSFTestSuite();
 

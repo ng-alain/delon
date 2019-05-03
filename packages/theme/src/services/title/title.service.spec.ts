@@ -34,7 +34,6 @@ describe('Service: Title', () => {
 
   let title: TestTitleService;
   let srv: TitleService;
-  let menu: MenuService;
   let i18n: AlainI18NService;
   const alain = 'Alain';
   const notPageName = 'Not Page Name';
@@ -49,7 +48,6 @@ describe('Service: Title', () => {
     });
     title = TestBed.get(Title);
     srv = TestBed.get(TitleService);
-    menu = TestBed.get(MenuService);
     i18n = TestBed.get(ALAIN_I18N_TOKEN, null);
   }
 
@@ -61,8 +59,7 @@ describe('Service: Title', () => {
     it('should set the default empty title', () => {
       srv.suffix = alain;
       srv.setTitle();
-      // tslint:disable-next-line:prefer-template
-      expect(title.setTitle).toHaveBeenCalledWith(notPageName + ' - ' + alain);
+      expect(title.setTitle).toHaveBeenCalledWith(`${notPageName} - ${alain}`);
     });
 
     it('should set new title', () => {
@@ -195,8 +192,7 @@ describe('Service: Title', () => {
       genModule([], false);
       srv.suffix = alain;
       srv.setTitle();
-      // tslint:disable-next-line:prefer-template
-      expect(title.setTitle).toHaveBeenCalledWith(notPageName + ' - ' + alain);
+      expect(title.setTitle).toHaveBeenCalledWith(`${notPageName} - ${alain}`);
     });
     it('should be reset title when i18n has changed', () => {
       genModule();
@@ -209,8 +205,7 @@ describe('Service: Title', () => {
       srv.suffix = alain;
       const key = 'aa';
       srv.setTitleByI18n(key);
-      // tslint:disable-next-line:prefer-template
-      expect(title.setTitle).toHaveBeenCalledWith(key + ' - ' + alain);
+      expect(title.setTitle).toHaveBeenCalledWith(`${key} - ${alain}`);
     });
   });
 });

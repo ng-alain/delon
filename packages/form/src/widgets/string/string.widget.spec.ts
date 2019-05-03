@@ -1,18 +1,14 @@
 import { DebugElement } from '@angular/core';
-import { fakeAsync, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-import { NzSliderComponent } from 'ng-zorro-antd';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchema } from '../../../src/schema/index';
-import { StringWidget } from './string.widget';
 
 describe('form: widget: string', () => {
   let fixture: ComponentFixture<TestFormComponent>;
   let dl: DebugElement;
   let context: TestFormComponent;
   let page: SFPage;
-  const widget = 'string';
 
   configureSFTestSuite();
 
@@ -21,14 +17,6 @@ describe('form: widget: string', () => {
     page = new SFPage(context.comp);
     page.cleanOverlay().prop(dl, context, fixture);
   });
-
-  function getWidget() {
-    return page.getWidget<StringWidget>('sf-' + widget);
-  }
-
-  function getComp() {
-    return page.getWidget<NzSliderComponent>('nz-string');
-  }
 
   it('should be render input group when include addon', () => {
     page

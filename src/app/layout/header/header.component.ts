@@ -10,7 +10,7 @@ import { MobileService } from '../../core/mobile.service';
 import { MetaSearchGroup, MetaSearchGroupItem } from '../../interfaces';
 
 declare const docsearch: any;
-declare const algoliasearch: any;
+// declare const algoliasearch: any;
 
 @Component({
   selector: 'app-header',

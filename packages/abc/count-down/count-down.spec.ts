@@ -1,4 +1,4 @@
-import { Component, DebugElement } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import addSeconds from 'date-fns/add_seconds';
@@ -7,7 +7,6 @@ import { CountDownModule } from './count-down.module';
 
 describe('abc: count-down', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let dl: DebugElement;
   let context: TestComponent;
 
   configureTestSuite(() => {
@@ -17,7 +16,7 @@ describe('abc: count-down', () => {
     });
   });
 
-  beforeEach(() => ({ fixture, dl, context } = createTestContext(TestComponent)));
+  beforeEach(() => ({ fixture, context } = createTestContext(TestComponent)));
 
   it('should be create an instance via [config]', (done: () => void) => {
     spyOn(context, 'begin');

@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite, createTestContext, PageG2 } from '@delon/testing';
 
@@ -7,7 +7,6 @@ import { G2MiniProgressModule } from './mini-progress.module';
 
 describe('chart: mini-progress', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let dl: DebugElement;
   let context: TestComponent;
   let page: PageG2<TestComponent>;
 
@@ -19,7 +18,7 @@ describe('chart: mini-progress', () => {
   });
 
   beforeEach(() => {
-    ({ fixture, dl, context } = createTestContext(TestComponent));
+    ({ fixture, context } = createTestContext(TestComponent));
     fixture.detectChanges();
     page = new PageG2(fixture);
   });
