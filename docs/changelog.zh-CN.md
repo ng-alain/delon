@@ -14,6 +14,24 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [7.3.2](https://github.com/ng-alain/delon/compare/7.3.1...7.3.2) (2019-05-03)
+
+### Scaffold
+
+* style: 更新 prettier HTML 配置 ([c0338ef](https://github.com/ng-alain/ng-alain/commit/c0338ef))
+* perf: 优化所有DEMO ([#1062](https://github.com/ng-alain/ng-alain/pull/1062))
+
+### Bug Fixes
+
+* **abc:se:** 修复内联模式时应忽略标签的宽度 ([#553](https://github.com/ng-alain/delon/issues/553)) ([70322fa](https://github.com/ng-alain/delon/commit/70322fa))
+* **abc:st:** 修复 `res.process` 缺少 `rawData` 参数 ([#549](https://github.com/ng-alain/delon/issues/549)) ([102f53f](https://github.com/ng-alain/delon/commit/102f53f))
+* **theme:http:** 修复 `get` 泛型返回错误类型 ([#551](https://github.com/ng-alain/delon/issues/551)) ([b2e1482](https://github.com/ng-alain/delon/commit/b2e1482))
+
+### Performance Improvements
+
+* 使用 NG-ZORRO 二级入口 ([#548](https://github.com/ng-alain/delon/issues/548)) ([5d8bac1](https://github.com/ng-alain/delon/commit/5d8bac1))
+
+
 ## [7.3.1](https://github.com/ng-alain/delon/compare/7.3.0...7.3.1) (2019-04-30)
 
 ### Scaffold
