@@ -694,7 +694,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (changes.columns) {
       this.refreshColumns();
     }
-    if (changes.data && changes.dathis._load();
+    if (changes.data && changes.data.currentValue) {
+      this._load();
     }
     if (changes.loading) {
       this._loading = changes.loading.currentValue;
@@ -702,7 +703,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.setClass();
   }
 
-  ngOnDestroy()ubscribe$ } = this;
+  ngOnDestroy(): void {
+    const { unsubscribe$ } = this;
     unsubscribe$.next();
     unsubscribe$.complete();
   }
