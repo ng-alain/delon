@@ -14,6 +14,26 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [7.3.2](https://github.com/ng-alain/delon/compare/7.3.1...7.3.2) (2019-05-04)
+
+### Scaffold
+
+* style: update html config of prettier ([c0338ef](https://github.com/ng-alain/ng-alain/commit/c0338ef))
+* perf: performance demo ([#1062](https://github.com/ng-alain/ng-alain/pull/1062))
+
+### Bug Fixes
+
+* **abc:se:** fix ingore label width when layout is inline ([#553](https://github.com/ng-alain/delon/issues/553)) ([70322fa](https://github.com/ng-alain/delon/commit/70322fa))
+* **abc:st:** add `rawData` parameter of `res.process` ([#549](https://github.com/ng-alain/delon/issues/549)) ([102f53f](https://github.com/ng-alain/delon/commit/102f53f))
+* **abc:st:** fix auto hide dropdown in buttons ([#556](https://github.com/ng-alain/delon/issues/556)) ([5eb00eb](https://github.com/ng-alain/delon/commit/5eb00eb))
+* **theme:http:** fix losing generic in `get` ([#551](https://github.com/ng-alain/delon/issues/551)) ([b2e1482](https://github.com/ng-alain/delon/commit/b2e1482))
+* **util:deepMergeKey:** fix override array when  ingoreArray is true ([#555](https://github.com/ng-alain/delon/issues/555)) ([6d4c1cc](https://github.com/ng-alain/delon/commit/6d4c1cc))
+
+### Performance Improvements
+
+* use secondary entry modules in ng-zorro ([#548](https://github.com/ng-alain/delon/issues/548)) ([5d8bac1](https://github.com/ng-alain/delon/commit/5d8bac1))
+
+
 ## [7.3.1](https://github.com/ng-alain/delon/compare/7.3.0...7.3.1) (2019-04-30)
 
 ### Scaffold
