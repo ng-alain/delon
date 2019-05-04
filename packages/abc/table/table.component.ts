@@ -583,11 +583,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region buttons
 
-  _btnClick(e: Event, record: STData, btn: STColumnButton) {
-    if (e) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
+  _btnClick(record: STData, btn: STColumnButton) {
     if (btn.type === 'modal' || btn.type === 'static') {
       const { modal } = btn;
       const obj = { [modal!.paramsName!]: record };
@@ -698,8 +694,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (changes.columns) {
       this.refreshColumns();
     }
-    if (changes.data && changes.data.currentValue) {
-      this._load();
+    if (changes.data && changes.dathis._load();
     }
     if (changes.loading) {
       this._loading = changes.loading.currentValue;
@@ -707,8 +702,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.setClass();
   }
 
-  ngOnDestroy(): void {
-    const { unsubscribe$ } = this;
+  ngOnDestroy()ubscribe$ } = this;
     unsubscribe$.next();
     unsubscribe$.complete();
   }
