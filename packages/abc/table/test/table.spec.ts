@@ -515,9 +515,9 @@ describe('abc: table', () => {
           page.newColumn(columns).then(() => {
             page.expectCell('del', 1, 1, 'nz-popconfirm');
             // mock trigger
-            comp._btnClick(new MouseEvent('click'), comp._data[0], comp._columns[0].buttons![0]);
+            comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
             expect(columns[0].buttons![1].click).not.toHaveBeenCalled();
-            comp._btnClick(new MouseEvent('click'), comp._data[0], comp._columns[0].buttons![1]);
+            comp._btnClick(comp._data[0], comp._columns[0].buttons![1]);
             expect(columns[0].buttons![1].click).toHaveBeenCalled();
             done();
           });
@@ -556,7 +556,7 @@ describe('abc: table', () => {
           ];
           page.newColumn(columns).then(() => {
             // mock trigger
-            comp._btnClick(null!, comp._data[0], comp._columns[0].buttons![0]);
+            comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
             expect(true).toBe(true);
             done();
           });
