@@ -583,11 +583,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region buttons
 
-  _btnClick(e: Event, record: STData, btn: STColumnButton) {
-    if (e) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
+  _btnClick(record: STData, btn: STColumnButton) {
     if (btn.type === 'modal' || btn.type === 'static') {
       const { modal } = btn;
       const obj = { [modal!.paramsName!]: record };
