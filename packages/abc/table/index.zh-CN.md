@@ -308,6 +308,18 @@ class TestComponent {
 `[includeTabs]` | 是否包裹标签页，修复模态包含标签间距问题 | `boolean` | -
 `[modalOptions]` | 对话框 [ModalOptionsForService](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/nz-modal.type.ts) 参数 | `any` | -
 
+一些细节：
+
+- 当params存在时，不需要paramsName
+- params对象的属性对应目标组件的接收参数名，可同时传多个对象，示例如下
+
+```ts
+params:(record)=>({
+  record: {},    // 传递给目标组件的record属性
+  record2: {}    // 传递给目标组件的record2属性
+})
+```
+
 ### STColumnButtonDrawer
 
 参数 | 说明 | 类型 | 默认值
