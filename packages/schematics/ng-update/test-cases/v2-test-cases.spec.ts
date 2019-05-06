@@ -11,13 +11,14 @@ import { MOCK_LAYOUT } from './v2/MOCK_LAYOUT';
 
 describe('v2', () => {
   const migrationName = 'migration-v2';
+  let tree: UnitTestTree;
 
   describe('upgrade test cases', () => {
     /**
      * Name of test cases that will be used to verify that update schematics properly update
      * a developers application.
      */
-    const testCases = ['v2/css-selectors', 'v2/dom'];
+    const testCases = ['v2/css-selectors'];
 
     let testCasesOutputPath: string;
 
@@ -27,8 +28,9 @@ describe('v2', () => {
         return inputs;
       }, {});
 
-      const { tempPath } = await runTestCases(migrationName, testCaseInputs);
+      const { tempPath, appTree } = await runTestCases(migrationName, testCaseInputs);
       testCasesOutputPath = join(tempPath, 'projects/ng-alain/src/test-cases/');
+      tree = appTree;
     });
 
     // Iterates through every test case directory and generates a jasmine test block that will
@@ -45,7 +47,6 @@ describe('v2', () => {
   });
 
   describe('layout', () => {
-    let tree: UnitTestTree;
     beforeEach(() => {
       const runner = new SchematicTestRunner('schematics', migrationCollection);
       tree = createFileSystemTestApp(runner).appTree;
@@ -73,7 +74,6 @@ describe('v2', () => {
   describe('dom', () => {
     const testCases = ['v2/dom'];
 
-    let tree: UnitTestTree;
     beforeEach(() => {
       const runner = new SchematicTestRunner('schematics', migrationCollection);
       tree = createFileSystemTestApp(runner).appTree;
