@@ -73,6 +73,7 @@ describe('NgAlainSchematic: application', () => {
           '/demo.html',
           `
         {{(status ? 'key1' : 'key2') | translate }}
+        {{ (status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
         [placeholder]="'key1' | translate">
         <nz-tab [nzTitle]="'key1' | translate">
         {{ 'Please enter mobile number!' | translate }}
@@ -94,6 +95,7 @@ describe('NgAlainSchematic: application', () => {
         const res = tree.readContent('/demo.html');
         expect(res).toBe(`
         {{ status ? 'key1' : 'key2' }}
+        {{ status ? 'menu.fullscreen.exit' : 'menu.fullscreen' }}
         [placeholder]="'key1'">
         <nz-tab [nzTitle]="'key1'">
         Please enter mobile number!
