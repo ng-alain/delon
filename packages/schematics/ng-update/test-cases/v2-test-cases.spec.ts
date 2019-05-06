@@ -17,10 +17,9 @@ describe('v2', () => {
      * Name of test cases that will be used to verify that update schematics properly update
      * a developers application.
      */
-    const testCases = ['v2/css-selectors'];
+    const testCases = ['v2/css-selectors', 'v2/dom'];
 
     let testCasesOutputPath: string;
-    let testCasesLogOutput: string;
 
     beforeAll(async () => {
       const testCaseInputs = testCases.reduce((inputs, testCaseName) => {
@@ -28,9 +27,8 @@ describe('v2', () => {
         return inputs;
       }, {});
 
-      const { tempPath, logOutput } = await runTestCases(migrationName, testCaseInputs);
+      const { tempPath } = await runTestCases(migrationName, testCaseInputs);
       testCasesOutputPath = join(tempPath, 'projects/ng-alain/src/test-cases/');
-      testCasesLogOutput = logOutput;
     });
 
     // Iterates through every test case directory and generates a jasmine test block that will

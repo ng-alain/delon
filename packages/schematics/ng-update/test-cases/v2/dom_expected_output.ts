@@ -24,6 +24,9 @@ import { Component } from '@angular/core';
   <ng-template #phTab>tab</ng-template>
   <ng-template #phExtra>extra</ng-template>
 </page-header>
+<page-header [action]="phAction">
+  <ng-template #phAction>action</ng-template>
+</page-header>
 <g2-custom (render)="render($event)"></g2-custom>
 `,
 })

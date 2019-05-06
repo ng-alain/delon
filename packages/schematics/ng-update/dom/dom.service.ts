@@ -231,6 +231,7 @@ export class DomService {
       );
       if (!ngDom) return;
       const name = dom.attribs![k];
+      if (name.startsWith(rule.value!)) return;
       const newName = `${rule.value}${name.substr(0, 1).toUpperCase()}${name.substr(1)}`;
       // ng-template
       delete ngDom.attribs![`#${name}`];
