@@ -184,6 +184,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() widthConfig: string[];
   /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
   @Input() @InputNumber() rowClickTime = 200;
+  @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
   /** 请求异常时回调 */
   @Output() readonly error = new EventEmitter<STError>();
@@ -682,6 +683,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       [`st__p-${this.page.placement}`]: this.page.placement,
       [`st__width-${type}`]: true,
       [`st__width-strict-${strictBehavior}`]: type === 'strict',
+      [`ant-table-rep`]: this.responsive,
       [`ant-table-rep__hide-header-footer`]: this.responsiveHideHeaderFooter,
     });
   }

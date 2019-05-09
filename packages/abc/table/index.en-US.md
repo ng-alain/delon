@@ -66,6 +66,8 @@ Property | Description | Type | Default
 `[widthConfig]` | Set col width can not used with width of STColumn | `string[]` | -
 `[expandRowByClick]` | Whether to expand row by clicking anywhere in the whole row | `boolean` | `false`
 `[expand]` | Whether current column include expand icon | `TemplateRef<void>` | -
+`[responsive]` | Whether to turn on responsive | `boolean` | `true`
+`[responsiveHideHeaderFooter]` | Whether to display the header and footer under the small screen | `boolean` | `false`
 `(change)` | Events | `EventEmitter<STChange>` | -
 `(error)` | Error event | `EventEmitter<STError>` | -
 

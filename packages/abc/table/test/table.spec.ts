@@ -978,6 +978,24 @@ describe('abc: table', () => {
         });
       });
     });
+    describe('#responsive', () => {
+      it('with true', done => {
+        context.responsive = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          page.expectElCount(`.ant-table-rep`, 1);
+          done();
+        });
+      });
+      it('with false', done => {
+        context.responsive = false;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          page.expectElCount(`.ant-table-rep`, 0);
+          done();
+        });
+      });
+    });
     describe('#responsiveHideHeaderFooter', () => {
       it('should working', done => {
         context.responsiveHideHeaderFooter = true;
@@ -1824,6 +1842,7 @@ describe('abc: table', () => {
       [pi]="pi"
       [total]="total"
       [page]="page"
+      [responsive]="responsive"
       [responsiveHideHeaderFooter]="responsiveHideHeaderFooter"
       [widthMode]="widthMode"
       [loading]="loading"
@@ -1861,6 +1880,7 @@ class TestComponent {
   noResult = 'noResult';
   widthConfig: string[];
   rowClickTime = 200;
+  responsive = false;
   responsiveHideHeaderFooter = false;
   expandRowByClick = false;
   widthMode: STWidthMode = {};

@@ -66,6 +66,8 @@ config: STConfig
 `[widthConfig]` | 表头分组时指定每列宽度，与 STColumn 的 width 不可混用 | `string[]` | -
 `[expandRowByClick]` | 通过点击行来展开子行 | `boolean` | `false`
 `[expand]` | 当前列是否包含展开按钮，当数据源中包括 `expand` 表示展开状态 | `TemplateRef<void>` | -
+`[responsive]` | 是否开启响应式 | `boolean` | `true`
+`[responsiveHideHeaderFooter]` | 是否在小屏幕下才显示顶部与底部 | `boolean` | `false`
 `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` 变动 | `EventEmitter<STChange>` | -
 `(error)` | 异常时回调 | `EventEmitter<STError>` | -
 
