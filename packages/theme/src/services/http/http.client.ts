@@ -816,9 +816,7 @@ export class _HttpClient {
     } = {},
   ): Observable<any> {
     this.begin();
-    if (options) {
-      if (options.params) options.params = this.parseParams(options.params);
-    }
+    if (options.params) options.params = this.parseParams(options.params);
     return this.http.request(method, url, options).pipe(
       tap(() => this.end()),
       catchError(res => {

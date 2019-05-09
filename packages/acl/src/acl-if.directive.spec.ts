@@ -125,18 +125,20 @@ describe('acl-if: directive', () => {
 
 @Component({
   template: `
-  <button class="acl-ph" *aclIf="role else unauthorized"></button>
-  <ng-template #unauthorized>
-    <span class="unauthorized-acl-ph"></span>
-  </ng-template>
-  <h3>ng-template</h3>
-  <div *aclIf="role; then thenBlock else elseBlock"></div>
-  <ng-template #thenBlock><span class="thenBlock"></span></ng-template>
-  <ng-template #elseBlock><span class="elseBlock"></span></ng-template>
-  <h3>except</h3>
-  <ng-template [aclIf]="role" [except]="except">
-    <span class="exceptBlock"></span>
-  </ng-template>
+    <button class="acl-ph" *aclIf="role; else unauthorized"></button>
+    <ng-template #unauthorized>
+      <span class="unauthorized-acl-ph"></span>
+    </ng-template>
+    <h3>ng-template</h3>
+    <div *aclIf="role; then thenBlock; else elseBlock"></div>
+    <ng-template #thenBlock><span class="thenBlock"></span></ng-template>
+    <ng-template #elseBlock><span class="elseBlock"></span></ng-template>
+    <h3>except</h3>
+    <ng-template [aclIf]="role" [except]="except">
+      <span class="exceptBlock"></span>
+    </ng-template>
+    <div *aclIf="role; then null; else nullThenElseBlock"></div>
+    <ng-template #nullThenElseBlock><span class="nullThenElseBlock"></span></ng-template>
   `,
 })
 class TestComponent {
