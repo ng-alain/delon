@@ -59,11 +59,11 @@ export class _HttpClient {
   }
 
   begin() {
-    setTimeout(() => (this._loading = true));
+    this._loading = true;
   }
 
   end() {
-    setTimeout(() => (this._loading = false));
+    this._loading = false;
   }
 
   // #region get
@@ -380,10 +380,9 @@ export class _HttpClient {
    * @param callbackParam CALLBACK值，默认：JSONP_CALLBACK
    */
   jsonp(url: string, params?: any, callbackParam: string = 'JSONP_CALLBACK'): Observable<any> {
+    this.begin();
     return this.http.jsonp(this.appliedUrl(url, params), callbackParam).pipe(
-      tap(() => {
-        this.end();
-      }),
+      tap(() => this.end()),
       catchError(res => {
         this.end();
         return throwError(res);
