@@ -154,7 +154,7 @@ describe('abc: table', () => {
     describe('#columns', () => {
       describe('[type]', () => {
         describe(`with checkbox`, () => {
-          it(`should be render checkbox`, (done: () => void) => {
+          it(`should be render checkbox`, done => {
             page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
               page
                 .expectElCount('.st__checkall', 1, 'muse be a check all')
@@ -162,13 +162,13 @@ describe('abc: table', () => {
               done();
             });
           });
-          it('should auto column width', (done: () => void) => {
+          it('should auto column width', done => {
             page.newColumn([{ title: 'id', index: 'id', type: 'checkbox' }]).then(() => {
               page.expectColumn('id', 'width', '50px');
               done();
             });
           });
-          it('should be check all current page', (done: () => void) => {
+          it('should be check all current page', done => {
             page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
               page.click('.st__checkall');
               expect(comp._data.filter(w => w.checked).length).toBe(PS);
@@ -177,7 +177,7 @@ describe('abc: table', () => {
               done();
             });
           });
-          it('should be checked in row', (done: () => void) => {
+          it('should be checked in row', done => {
             page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
               page
                 .expectData(1, 'checked', undefined)
@@ -188,7 +188,7 @@ describe('abc: table', () => {
               done();
             });
           });
-          it('should selected id value less than 2 rows', (done: () => void) => {
+          it('should selected id value less than 2 rows', done => {
             const selections = [
               {
                 text: '<div class="j-s1"></div>',
@@ -203,7 +203,7 @@ describe('abc: table', () => {
               done();
             });
           });
-          it('should be unchecked via clearCheck', (done: () => void) => {
+          it('should be unchecked via clearCheck', done => {
             page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
               page
                 .expectData(1, 'checked', undefined)
@@ -216,7 +216,7 @@ describe('abc: table', () => {
           });
         });
         describe('with radio', () => {
-          it(`should be render checkbox`, (done: () => void) => {
+          it(`should be render checkbox`, done => {
             page.newColumn([{ title: 'RADIOname', index: 'id', type: 'radio' }]).then(() => {
               page
                 .expectHead('RADIOname', 'id')
@@ -224,13 +224,13 @@ describe('abc: table', () => {
               done();
             });
           });
-          it('should auto column width', (done: () => void) => {
+          it('should auto column width', done => {
             page.newColumn([{ title: 'id', index: 'id', type: 'radio' }]).then(() => {
               page.expectColumn('id', 'width', '50px');
               done();
             });
           });
-          it('should be checked in row', (done: () => void) => {
+          it('should be checked in row', done => {
             page.newColumn([{ title: '', index: 'id', type: 'radio' }]).then(() => {
               page
                 .expectData(1, 'checked', undefined)
@@ -241,7 +241,7 @@ describe('abc: table', () => {
               done();
             });
           });
-          it('should be unchecked via clearRadio', (done: () => void) => {
+          it('should be unchecked via clearRadio', done => {
             page.newColumn([{ title: '', index: 'id', type: 'radio' }]).then(() => {
               page
                 .expectData(1, 'checked', undefined)
@@ -254,7 +254,7 @@ describe('abc: table', () => {
           });
         });
         describe('with link', () => {
-          it(`should be render anchor link`, (done: () => void) => {
+          it(`should be render anchor link`, done => {
             const columns = [
               {
                 title: '',
@@ -269,13 +269,13 @@ describe('abc: table', () => {
               done();
             });
           });
-          it(`should be text when not specify click`, (done: () => void) => {
+          it(`should be text when not specify click`, done => {
             page.newColumn([{ title: '', index: 'id', type: 'link' }]).then(() => {
               page.expectCell(null, 1, 1, 'a');
               done();
             });
           });
-          it('should be navigate url when click is string value', (done: () => void) => {
+          it('should be navigate url when click is string value', done => {
             const router = injector.get(Router);
             spyOn(router, 'navigateByUrl');
             context.data = [{ link: '/a' }];
@@ -296,14 +296,14 @@ describe('abc: table', () => {
           });
         });
         describe('with img', () => {
-          it(`should be render img`, (done: () => void) => {
+          it(`should be render img`, done => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
             page.newColumn(columns as any).then(() => {
               page.expectCell('', 1, 1, 'img');
               done();
             });
           });
-          it('should not render img when is empty data', (done: () => void) => {
+          it('should not render img when is empty data', done => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
             context.data = [{ img: MOCKIMG }, { img: '' }];
             page.newColumn(columns as any).then(() => {
@@ -313,13 +313,13 @@ describe('abc: table', () => {
           });
         });
         describe('with currency', () => {
-          it(`should be render currency`, (done: () => void) => {
+          it(`should be render currency`, done => {
             page.newColumn([{ title: '', index: 'id', type: 'currency' }]).then(() => {
               page.expectCell('￥1.00');
               done();
             });
           });
-          it(`should be text right`, (done: () => void) => {
+          it(`should be text right`, done => {
             page.newColumn([{ title: '', index: 'id', type: 'currency' }]).then(() => {
               expect(page.getCell().classList).toContain('text-right');
               done();
@@ -327,13 +327,13 @@ describe('abc: table', () => {
           });
         });
         describe('with number', () => {
-          it(`should be render number`, (done: () => void) => {
+          it(`should be render number`, done => {
             page.newColumn([{ title: '', index: 'num', type: 'number' }]).then(() => {
               page.expectCell('11,111,111,111.456');
               done();
             });
           });
-          it(`should be custom render number digits`, (done: () => void) => {
+          it(`should be custom render number digits`, done => {
             page
               .newColumn([
                 {
@@ -348,7 +348,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          it(`should be text right`, (done: () => void) => {
+          it(`should be text right`, done => {
             page.newColumn([{ title: '', index: 'num', type: 'number' }]).then(() => {
               expect(page.getCell().classList).toContain('text-right');
               done();
@@ -356,13 +356,13 @@ describe('abc: table', () => {
           });
         });
         describe('with date', () => {
-          it(`should be render date`, (done: () => void) => {
+          it(`should be render date`, done => {
             page.newColumn([{ title: '', index: 'date', type: 'date' }]).then(() => {
               page.expectCell(new DatePipe().transform(MOCKDATE, 'YYYY-MM-DD HH:mm'));
               done();
             });
           });
-          it(`should be custom render date format`, (done: () => void) => {
+          it(`should be custom render date format`, done => {
             page
               .newColumn([
                 {
@@ -377,7 +377,7 @@ describe('abc: table', () => {
                 done();
               });
           });
-          it(`should be text center`, (done: () => void) => {
+          it(`should be text center`, done => {
             page.newColumn([{ title: '', index: 'date', type: 'date' }]).then(() => {
               expect(page.getCell().classList).toContain('text-center');
               done();
@@ -385,19 +385,19 @@ describe('abc: table', () => {
           });
         });
         describe('with yn', () => {
-          it(`should be render yn`, (done: () => void) => {
+          it(`should be render yn`, done => {
             page.newColumn([{ title: '', index: 'yn', type: 'yn' }]).then(() => {
               page.expectCell('是', 1, 1, '', true).expectCell('否', 2, 1, '', true);
               done();
             });
           });
-          it(`should be custom render yn`, (done: () => void) => {
+          it(`should be custom render yn`, done => {
             page.newColumn([{ title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' }]).then(() => {
               page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
               done();
             });
           });
-          it(`should be custom truth value`, (done: () => void) => {
+          it(`should be custom truth value`, done => {
             page
               .newColumn([
                 {
@@ -427,13 +427,13 @@ describe('abc: table', () => {
           4: { text: '默认', color: 'default' },
           5: { text: '警告', color: 'warning' },
         };
-        it(`should be render badge`, (done: () => void) => {
+        it(`should be render badge`, done => {
           page.newColumn([{ title: '', index: 'status', type: 'badge', badge: BADGE }]).then(() => {
             page.expectElCount('.ant-badge', PS);
             done();
           });
         });
-        it(`should be render text when badge is undefined or null`, (done: () => void) => {
+        it(`should be render text when badge is undefined or null`, done => {
           page.newColumn([{ title: '', index: 'status', type: 'badge', badge: null }]).then(() => {
             page.expectElCount('.ant-badge', 0);
             done();
@@ -448,13 +448,13 @@ describe('abc: table', () => {
           4: { text: '默认', color: '' },
           5: { text: '警告', color: 'orange' },
         };
-        it(`should be render tag`, (done: () => void) => {
+        it(`should be render tag`, done => {
           page.newColumn([{ title: 'tag', index: 'tag', type: 'tag', tag: TAG }]).then(() => {
             page.expectElCount('.ant-tag', PS);
             done();
           });
         });
-        it(`should be render text when tag is undefined or null`, (done: () => void) => {
+        it(`should be render text when tag is undefined or null`, done => {
           page.newColumn([{ title: '', index: 'status', type: 'tag', tag: null }]).then(() => {
             page.expectElCount('.ant-tag', 0);
             done();
@@ -462,7 +462,7 @@ describe('abc: table', () => {
         });
       });
       describe('[other]', () => {
-        it('should custom render via format', (done: () => void) => {
+        it('should custom render via format', done => {
           page
             .newColumn([
               {
@@ -476,7 +476,7 @@ describe('abc: table', () => {
               done();
             });
         });
-        it('should default render via default', (done: () => void) => {
+        it('should default render via default', done => {
           page
             .newColumn([
               {
@@ -490,7 +490,7 @@ describe('abc: table', () => {
               done();
             });
         });
-        it('should be custom class in cell', (done: () => void) => {
+        it('should be custom class in cell', done => {
           page.newColumn([{ title: '', index: 'id', className: 'asdf' }]).then(() => {
             expect(page.getCell().classList).toContain('asdf');
             done();
@@ -498,7 +498,7 @@ describe('abc: table', () => {
         });
       });
       describe('[buttons]', () => {
-        it(`should be pop confirm when type=del`, (done: () => void) => {
+        it(`should be pop confirm when type=del`, done => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -522,7 +522,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        it('should custom render text via format', (done: () => void) => {
+        it('should custom render text via format', done => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -539,7 +539,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        it('#614', (done: () => void) => {
+        it('#614', done => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -562,7 +562,7 @@ describe('abc: table', () => {
           });
         });
         describe('[condition]', () => {
-          it('should be hide menu in first row', (done: () => void) => {
+          it('should be hide menu in first row', done => {
             const columns: STColumn[] = [
               {
                 title: '',
@@ -576,7 +576,7 @@ describe('abc: table', () => {
           });
         });
         describe('[events]', () => {
-          it('#reload', (done: () => void) => {
+          it('#reload', done => {
             const columns: STColumn[] = [
               {
                 title: '',
@@ -591,7 +591,7 @@ describe('abc: table', () => {
               done();
             });
           });
-          it('#load', (done: () => void) => {
+          it('#load', done => {
             const columns: STColumn[] = [
               {
                 title: '',
@@ -607,7 +607,7 @@ describe('abc: table', () => {
             });
           });
           describe('#modal', () => {
-            it('is normal mode', (done: () => void) => {
+            it('is normal mode', done => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -638,7 +638,7 @@ describe('abc: table', () => {
                 done();
               });
             });
-            it('is static mode', (done: () => void) => {
+            it('is static mode', done => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -671,7 +671,7 @@ describe('abc: table', () => {
             });
           });
           describe('#drawer', () => {
-            it('is normal mode', (done: () => void) => {
+            it('is normal mode', done => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -704,7 +704,7 @@ describe('abc: table', () => {
             });
           });
           describe('#link', () => {
-            it('should be trigger click', (done: () => void) => {
+            it('should be trigger click', done => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -720,7 +720,7 @@ describe('abc: table', () => {
                 done();
               });
             });
-            it('should be navigate when return a string value', (done: () => void) => {
+            it('should be navigate when return a string value', done => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -736,7 +736,7 @@ describe('abc: table', () => {
                 done();
               });
             });
-            it('should be include route state when return a string value', (done: () => void) => {
+            it('should be include route state when return a string value', done => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -755,7 +755,7 @@ describe('abc: table', () => {
         });
       });
       describe('[fixed]', () => {
-        it('should be fixed left column', (done: () => void) => {
+        it('should be fixed left column', done => {
           page
             .newColumn([
               { title: '1', index: 'id', fixed: 'left', width: '100px' },
@@ -769,7 +769,7 @@ describe('abc: table', () => {
               done();
             });
         });
-        it('should be fixed right column', (done: () => void) => {
+        it('should be fixed right column', done => {
           page
             .newColumn([
               { title: '1', index: 'id', fixed: 'right', width: '100px' },
@@ -790,7 +790,7 @@ describe('abc: table', () => {
       beforeEach(() => {
         httpBed = injector.get(HttpTestingController);
       });
-      it('support null data', (done: () => void) => {
+      it('support null data', done => {
         context.data = null;
         fixture.detectChanges();
         fixture
@@ -905,9 +905,26 @@ describe('abc: table', () => {
         expect(comp.page.placement).toBe(`right`);
         expect(comp.page.total).toBe(`TO:{{total}}`);
       });
+      it('should be ingore pi event trigger when change size in last page', done => {
+        context.page = { showSize: true, pageSizes: [10, 20] };
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          page.go(2);
+          let load = 0;
+          spyOn(context.comp as any, '_load').and.callFake(() => ++load);
+          const pc = dl
+            .query(By.directive(NzPaginationComponent))
+            .injector.get<NzPaginationComponent>(NzPaginationComponent);
+          expect(load).toBe(0);
+          pc.onPageSizeChange(10);
+          fixture.detectChanges();
+          expect(load).toBe(1);
+          done();
+        });
+      });
     });
     describe('#showTotal', () => {
-      it('with true', (done: () => void) => {
+      it('with true', done => {
         context.page.total = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -915,7 +932,7 @@ describe('abc: table', () => {
           done();
         });
       });
-      it('with false', (done: () => void) => {
+      it('with false', done => {
         context.page.total = false;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -923,7 +940,7 @@ describe('abc: table', () => {
           done();
         });
       });
-      it('should be custom template', (done: () => void) => {
+      it('should be custom template', done => {
         context.pi = 1;
         context.ps = 3;
         context.page.total = `{{total}}/{{range[0]}}/{{range[1]}}`;
@@ -940,7 +957,7 @@ describe('abc: table', () => {
           context.ps = 2;
           context.page.show = undefined;
         });
-        it('should auto hide when total less than ps', (done: () => void) => {
+        it('should auto hide when total less than ps', done => {
           context.data = deepCopy(USERS).slice(0, 1);
           fixture.detectChanges();
           fixture.whenStable().then(() => {
@@ -948,7 +965,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        it('should auto show when ps less than total', (done: () => void) => {
+        it('should auto show when ps less than total', done => {
           context.data = deepCopy(USERS).slice(0, 3);
           fixture.detectChanges();
           fixture.whenStable().then(() => {
@@ -957,7 +974,7 @@ describe('abc: table', () => {
           });
         });
       });
-      it('should always show when with true', (done: () => void) => {
+      it('should always show when with true', done => {
         context.page.show = true;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -968,7 +985,7 @@ describe('abc: table', () => {
     });
     describe('#pagePlacement', () => {
       ['left', 'center', 'right'].forEach(pos => {
-        it(`with ${pos}`, (done: () => void) => {
+        it(`with ${pos}`, done => {
           context.page.placement = pos as any;
           fixture.detectChanges();
           fixture.whenStable().then(() => {
@@ -1010,7 +1027,7 @@ describe('abc: table', () => {
       beforeEach(() => {
         context.page.toTopOffset = 10;
       });
-      it('with true', (done: () => void) => {
+      it('with true', done => {
         context.page.toTop = true;
         fixture.detectChanges();
         const el = page.getEl('st');
@@ -1023,7 +1040,7 @@ describe('abc: table', () => {
             done();
           });
       });
-      it('with false', (done: () => void) => {
+      it('with false', done => {
         context.page.toTop = false;
         fixture.detectChanges();
         const el = page.getEl('st');
@@ -1036,7 +1053,7 @@ describe('abc: table', () => {
             done();
           });
       });
-      it('should scroll to .ant-table-body when used scroll', (done: () => void) => {
+      it('should scroll to .ant-table-body when used scroll', done => {
         context.scroll = { x: '1300px' };
         context.page.toTop = true;
         fixture.detectChanges();
@@ -1128,7 +1145,7 @@ describe('abc: table', () => {
             },
           ];
         });
-        it('muse provide the fn function', (done: () => void) => {
+        it('muse provide the fn function', done => {
           spyOn(console, 'warn');
           context.columns[0].filter!.fn = null;
           fixture.detectChanges();
@@ -1203,7 +1220,7 @@ describe('abc: table', () => {
         });
         describe('when single-sort', () => {
           beforeEach(() => (context.multiSort = false));
-          it('muse provide the compare function', (done: () => void) => {
+          it('muse provide the compare function', done => {
             spyOn(console, 'warn');
             context.columns = [{ title: '', index: 'i', sort: true }];
             fixture.detectChanges();
@@ -1455,9 +1472,7 @@ describe('abc: table', () => {
       it('#resetColumns', done => {
         let res = true;
         const cls = '.st__body tr[data-index="0"] td';
-        page.newColumn([{ title: '', index: 'name', iif: () => res }]);
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
+        page.newColumn([{ title: '', index: 'name', iif: () => res }]).then(() => {
           page.expectElCount(cls, 1);
           res = false;
           comp.resetColumns();
@@ -1605,7 +1620,7 @@ describe('abc: table', () => {
       });
     });
     describe('[custom render template]', () => {
-      it('with column title', (done: () => void) => {
+      it('with column title', done => {
         genModule({
           template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="id" type="title"><div class="id-title">ID</div></ng-template>
@@ -1616,7 +1631,7 @@ describe('abc: table', () => {
           done();
         });
       });
-      it('should be custom row', (done: () => void) => {
+      it('should be custom row', done => {
         genModule({
           template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
@@ -1627,7 +1642,7 @@ describe('abc: table', () => {
           done();
         });
       });
-      it('allow invalid id', (done: () => void) => {
+      it('allow invalid id', done => {
         genModule({
           template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="invalid-id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
@@ -1645,7 +1660,7 @@ describe('abc: table', () => {
         genModule({ i18n: true });
         spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
       });
-      it('should working', (done: () => void) => {
+      it('should working', done => {
         page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
           const el = page.getEl('.ant-pagination-total-text');
           expect(el.textContent!.trim()).toContain(`共`);
@@ -1655,7 +1670,7 @@ describe('abc: table', () => {
           done();
         });
       });
-      it('should be re-render columns when i18n changed', (done: () => void) => {
+      it('should be re-render columns when i18n changed', done => {
         curLang = 'en';
         page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
           page.expectHead(curLang, 'id');
