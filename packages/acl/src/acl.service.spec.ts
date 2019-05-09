@@ -132,12 +132,30 @@ describe('acl: service', () => {
     expect(srv.canAbility({ ability: [ABILITY, ABILITY_CREATE], mode: 'allOf' })).toBe(false);
   });
 
-  it('#change', (done: () => void) => {
+  it('#change', done => {
     srv.change.subscribe(res => {
       res = res as ACLType;
       expect(res.role!.length).toBe(1);
       expect(res.role![0]).toBe(ADMIN);
       done();
+    });
+  });
+
+  describe('#except', () => {
+    it('should be true is false', () => {
+      srv.attachRole([ADMIN]);
+      expect(srv.can({ role: [ADMIN], except: true })).toBe(false);
+    });
+    it('should be false is true', () => {
+      srv.attachRole([ADMIN]);
+      expect(srv.can({ role: [ADMIN + ADMIN], except: true })).toBe(true);
+    });
+    it('should be false when is full roles', () => {
+      srv.setFull(true);
+      expect(srv.can({ role: [ADMIN], except: true })).toBe(false);
+    });
+    it('should be true when arguments is null', () => {
+      expect(srv.can(null)).toBe(true);
     });
   });
 });
