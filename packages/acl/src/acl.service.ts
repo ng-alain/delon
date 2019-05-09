@@ -150,27 +150,31 @@ export class ACLService {
     if (preCan) {
       roleOrAbility = preCan(roleOrAbility);
     }
-    let t: ACLType = {};
+    let t: ACLType = { except: false };
     if (typeof roleOrAbility === 'number') {
-      t = { ability: [roleOrAbility] };
+      t = { ...t, ability: [roleOrAbility] };
     } else if (Array.isArray(roleOrAbility) && roleOrAbility.length > 0 && typeof roleOrAbility[0] === 'number') {
-      t = { ability: roleOrAbility };
+      t = { ...t, ability: roleOrAbility };
     } else {
-      t = this.parseACLType(roleOrAbility);
+      t = { ...t, ...this.parseACLType(roleOrAbility) };
     }
 
+    let result = false;
     if (t.role) {
-      if (t.mode === 'allOf') return t.role.every(v => this.roles.includes(v));
-      else return t.role.some(v => this.roles.includes(v));
+      if (t.mode === 'allOf') {
+        result = t.role.every(v => this.roles.includes(v));
+      } else {
+        result = t.role.some(v => this.roles.includes(v));
+      }
     }
     if (t.ability) {
       if (t.mode === 'allOf') {
-        return (t.ability as any[]).every(v => this.abilities.includes(v));
+        result = (t.ability as any[]).every(v => this.abilities.includes(v));
       } else {
-        return (t.ability as any[]).some(v => this.abilities.includes(v));
+        result = (t.ability as any[]).some(v => this.abilities.includes(v));
       }
     }
-    return false;
+    return t.except === true ? !result : result;
   }
 
   /** @inner */

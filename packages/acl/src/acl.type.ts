@@ -15,6 +15,11 @@ export interface ACLType {
    */
   mode?: 'allOf' | 'oneOf';
 
+  /**
+   * 是否取反，即结果为 `true` 时表示未授权
+   */
+  except?: boolean;
+
   [key: string]: any;
 }
 
