@@ -142,15 +142,20 @@ describe('acl: service', () => {
   });
 
   describe('#except', () => {
-    describe('with true', () => {
-      it('should be true is false', () => {
-        srv.attachRole([ADMIN]);
-        expect(srv.can({ role: [ADMIN], except: true })).toBe(false);
-      });
-      it('should be false is true', () => {
-        srv.attachRole([ADMIN]);
-        expect(srv.can({ role: [ADMIN + ADMIN], except: true })).toBe(true);
-      });
+    it('should be true is false', () => {
+      srv.attachRole([ADMIN]);
+      expect(srv.can({ role: [ADMIN], except: true })).toBe(false);
+    });
+    it('should be false is true', () => {
+      srv.attachRole([ADMIN]);
+      expect(srv.can({ role: [ADMIN + ADMIN], except: true })).toBe(true);
+    });
+    it('should be false when is full roles', () => {
+      srv.setFull(true);
+      expect(srv.can({ role: [ADMIN], except: true })).toBe(false);
+    });
+    it('should be true when arguments is null', () => {
+      expect(srv.can(null)).toBe(true);
     });
   });
 });

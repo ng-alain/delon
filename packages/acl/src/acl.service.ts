@@ -29,16 +29,21 @@ export class ACLService {
 
   constructor(private options: DelonACLConfig) {}
 
-  private parseACLType(val: string | string[] | ACLType | null): ACLType {
-    if (typeof val !== 'string' && !Array.isArray(val)) {
-      return val as ACLType;
+  private parseACLType(val: string | string[] | number | number[] | ACLType | null): ACLType {
+    let t: ACLType;
+    if (typeof val === 'number') {
+      t = { ability: [val] };
+    } else if (Array.isArray(val) && val.length > 0 && typeof val[0] === 'number') {
+      t = { ability: val };
+    } else if (typeof val === 'object' && !Array.isArray(val)) {
+      t = { ...val };
+    } else if (Array.isArray(val)) {
+      t = { role: val as string[] };
+    } else {
+      t = { role: val == null ? [] : [val] };
     }
-    if (Array.isArray(val)) {
-      return { role: val as string[] } as ACLType;
-    }
-    return {
-      role: [val],
-    } as ACLType;
+
+    return { except: false, ...t };
   }
 
   /**
@@ -142,38 +147,32 @@ export class ACLService {
    * - 若使用 `ACLType` 参数，可以指定 `mode` 校验模式
    */
   can(roleOrAbility: ACLCanType | null): boolean {
-    if (this.full === true || !roleOrAbility) {
-      return true;
-    }
-
     const { preCan } = this.options;
     if (preCan) {
-      roleOrAbility = preCan(roleOrAbility);
-    }
-    let t: ACLType = { except: false };
-    if (typeof roleOrAbility === 'number') {
-      t = { ...t, ability: [roleOrAbility] };
-    } else if (Array.isArray(roleOrAbility) && roleOrAbility.length > 0 && typeof roleOrAbility[0] === 'number') {
-      t = { ...t, ability: roleOrAbility };
-    } else {
-      t = { ...t, ...this.parseACLType(roleOrAbility) };
+      roleOrAbility = preCan(roleOrAbility!);
     }
 
+    const t = this.parseACLType(roleOrAbility);
     let result = false;
-    if (t.role) {
-      if (t.mode === 'allOf') {
-        result = t.role.every(v => this.roles.includes(v));
-      } else {
-        result = t.role.some(v => this.roles.includes(v));
+    if (this.full === true || !roleOrAbility) {
+      result = true;
+    } else {
+      if (t.role && t.role.length > 0) {
+        if (t.mode === 'allOf') {
+          result = t.role.every(v => this.roles.includes(v));
+        } else {
+          result = t.role.some(v => this.roles.includes(v));
+        }
+      }
+      if (t.ability && t.ability.length > 0) {
+        if (t.mode === 'allOf') {
+          result = (t.ability as any[]).every(v => this.abilities.includes(v));
+        } else {
+          result = (t.ability as any[]).some(v => this.abilities.includes(v));
+        }
       }
     }
-    if (t.ability) {
-      if (t.mode === 'allOf') {
-        result = (t.ability as any[]).every(v => this.abilities.includes(v));
-      } else {
-        result = (t.ability as any[]).some(v => this.abilities.includes(v));
-      }
-    }
+
     return t.except === true ? !result : result;
   }
 
