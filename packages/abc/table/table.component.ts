@@ -393,7 +393,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   _change(type: 'pi' | 'ps') {
-    if (this.pi <= Math.ceil(this.total / this.ps)) {
+    if (type === 'pi' || (type === 'ps' && this.pi <= Math.ceil(this.total / this.ps))) {
       this._load().then(() => this._toTop());
     }
 
