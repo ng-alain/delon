@@ -16,12 +16,13 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 import { Menu, MenuService, SettingsService } from '@delon/theme';
+import { NzIconService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <nz-switch [ngModel]="collapsed" (ngModelChange)="toggleCollapsed()"></nz-switch>
-  <sidebar-nav class="d-block mt-md"></sidebar-nav>
+    <nz-switch [ngModel]="collapsed" (ngModelChange)="toggleCollapsed()"></nz-switch>
+    <sidebar-nav class="d-block mt-md"></sidebar-nav>
   `,
   host: {
     '[class.d-block]': 'true',
@@ -43,16 +44,18 @@ export class DemoComponent {
           badge: 5,
         },
         {
+          text: 'Iconfont',
+          // Support for iconfont
+          icon: { type: 'iconfont', iconfont: 'icon-twitter' },
+        },
+        {
           text: 'Custom Class Name',
           // Support for custom class
           icon: {
             type: 'class',
             value: 'newClassName',
           },
-          children: [
-            { text: 'Child' },
-            { text: 'Child' },
-          ],
+          children: [{ text: 'Child' }, { text: 'Child' }],
         },
         {
           text: 'Level1',
@@ -64,10 +67,7 @@ export class DemoComponent {
           children: [
             {
               text: 'Level2',
-              children: [
-                { text: 'Level3A' },
-                { text: 'Level3B-DISABLED', disabled: true },
-              ],
+              children: [{ text: 'Level3A' }, { text: 'Level3B-DISABLED', disabled: true }],
             },
             { text: 'Level2-DISABLED', disabled: true },
           ],
@@ -76,8 +76,11 @@ export class DemoComponent {
     },
   ];
 
-  constructor(menuSrv: MenuService, public settingsSrv: SettingsService) {
+  constructor(menuSrv: MenuService, public settingsSrv: SettingsService, iconService: NzIconService) {
     menuSrv.add(this.menus);
+    iconService.fetchFromIconfont({
+      scriptUrl: 'https://at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
+    });
   }
 
   get collapsed() {
