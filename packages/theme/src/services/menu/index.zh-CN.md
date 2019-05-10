@@ -52,7 +52,7 @@ children | 子菜单 | `Menu[]` | -
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[type]` | 类型 | `class,icon,img` | `icon`
+`[type]` | 类型 | `class,icon,iconfont,img` | `icon`
 `[value]` | 值，包含：类名、图标 `nzType`、图像 | `string` | -
 `[theme]` | 图标主题风格 | `outline,twotone,fill` | `outline`
 `[spin]` | 是否有旋转动画 | `boolean` | `false`
