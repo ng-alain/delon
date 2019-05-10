@@ -1,6 +1,6 @@
 import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { HttpObserve } from '@angular/common/http/src/client';
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { AlainThemeConfig } from '../../theme.config';
@@ -18,7 +18,7 @@ export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] }
 // tslint:disable-next-line:class-name
 export class _HttpClient {
   private cog: HttpClientConfig;
-  constructor(private http: HttpClient, cog: AlainThemeConfig) {
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, cog: AlainThemeConfig) {
     this.cog = {
       nullValueHandling: 'include',
       dateValueHandling: 'timestamp',
@@ -60,10 +60,12 @@ export class _HttpClient {
 
   begin() {
     this._loading = true;
+    this.cdr.markForCheck();
   }
 
   end() {
     this._loading = false;
+    this.cdr.markForCheck();
   }
 
   // #region get
