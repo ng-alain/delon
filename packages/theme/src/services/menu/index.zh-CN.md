@@ -58,3 +58,5 @@ children | 子菜单 | `Menu[]` | -
 `[spin]` | 是否有旋转动画 | `boolean` | `false`
 `[twoToneColor]` | 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 | `string` | -
 `[iconfont]` | 指定来自 IconFont 的图标类型 | `string` | -
+
+> 使用 `iconfont` 类型必须先加载 `NzIconService.fetchFromIconfont`，建议在根模块中执行。
