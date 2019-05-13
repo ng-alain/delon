@@ -1,36 +1,29 @@
-import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
-import { NzMessageService } from 'ng-zorro-antd';
+import { Component, OnInit } from '@angular/core';
+import { STChange, STColumn } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <sf [schema]="schema" [loading]="loading" (formSubmit)="submit($event)"></sf>
-  `,
+  template: '<st [columns]="cols" [data]="data" (change)="change($event)"></st>',
 })
-export class DemoComponent {
-  loading = false;
-  schema: SFSchema = {
-    properties: {
-      id1: { type: 'number', ui: { widget: 'text' } },
-      id2: { type: 'number', ui: { widget: 'text', defaultText: 'default text' } },
-      name: {
-        type: 'string',
-        title: 'Name',
-        ui: {
-          addOnAfter: 'RMB',
-          placeholder: 'RMB结算',
-        },
-      },
-    },
-    required: ['name'],
-  };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
-    this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-      this.msg.success(JSON.stringify(value));
-    }, 1000);
+export class DemoComponent implements OnInit {
+  private _sortType: any = null;
+  cols: STColumn[] = [{ title: 'F1', index: 'F1', sort: { compare: null } }];
+  data: any[] = [];
+  ngOnInit() {
+    this.data = this.loadFromRemote();
+  }
+  change($event: STChange) {
+    switch ($event.type) {
+      case 'sort':
+        this._sortType = $event.sort!.value;
+        this.data = this.loadFromRemote();
+        break;
+    }
+  }
+  private loadFromRemote(): any[] {
+    const data = [{ F1: 3 }, { F1: 5 }, { F1: 4 }, { F1: 1 }, { F1: 2 }];
+    if (this._sortType === null) return data;
+
+    return this._sortType === 'descend' ? data.sort((a, b) => b.F1 - a.F1) : data.sort((a, b) => a.F1 - b.F1);
   }
 }

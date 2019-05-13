@@ -354,8 +354,9 @@ export interface STColumnSort {
   default?: 'ascend' | 'descend';
   /**
    * 本地数据的排序函数，使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction)
+   * - `null` 忽略本地排序，但保持排序功能
    */
-  compare?: (a: STData, b: STData) => number;
+  compare?: ((a: STData, b: STData) => number) | null;
   /**
    * 远程数据的排序时后端相对应的KEY，默认使用 `index` 属性
    * - 若 `multiSort: false` 时：`key: 'name' => ?name=1&pi=1`
