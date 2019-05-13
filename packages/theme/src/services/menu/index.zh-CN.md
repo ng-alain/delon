@@ -52,9 +52,11 @@ children | 子菜单 | `Menu[]` | -
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[type]` | 类型 | `class,icon,img` | `icon`
+`[type]` | 类型 | `class,icon,iconfont,img` | `icon`
 `[value]` | 值，包含：类名、图标 `nzType`、图像 | `string` | -
 `[theme]` | 图标主题风格 | `outline,twotone,fill` | `outline`
 `[spin]` | 是否有旋转动画 | `boolean` | `false`
 `[twoToneColor]` | 仅适用双色图标，设置双色图标的主要颜色，仅对当前 icon 生效 | `string` | -
 `[iconfont]` | 指定来自 IconFont 的图标类型 | `string` | -
+
+> 使用 `iconfont` 类型必须先加载 `NzIconService.fetchFromIconfont`，建议在根模块中执行。

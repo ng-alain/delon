@@ -1,7 +1,7 @@
 export interface MenuIcon {
-  type: 'class' | 'icon' | 'img';
+  type: 'class' | 'icon' | 'iconfont' | 'img';
   /** 值，包含：类名、图标 `type`、图像 */
-  value: string;
+  value?: string;
   /** 图标主题风格，默认：`outline` */
   theme?: 'outline' | 'twotone' | 'fill';
   /** 是否有旋转动画，默认：`false` */
