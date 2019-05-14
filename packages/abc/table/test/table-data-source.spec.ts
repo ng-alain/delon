@@ -162,7 +162,7 @@ describe('abc: table: data-souce', () => {
         };
       });
       it(`should be decremented`, done => {
-        options.data[5].id = 100000;
+        options.data[1].id = 100000;
         options.columns[0]._sort.default = 'descend';
         srv.process(options).then(res => {
           expect(res.list[0].id).toBe(100000);
@@ -170,10 +170,22 @@ describe('abc: table: data-souce', () => {
         });
       });
       it(`should be incremented`, done => {
-        options.data[5].id = -100000;
+        options.data[1].id = -100000;
         options.columns[0]._sort.default = 'ascend';
         srv.process(options).then(res => {
           expect(res.list[0].id).toBe(-100000);
+          done();
+        });
+      });
+      it('should be null, muse be ingore sort processing', done => {
+        options.columns[0]._sort = {
+          enabled: true,
+          compare: null,
+          default: 'descend',
+        };
+        options.data[1].id = 100000;
+        srv.process(options).then(res => {
+          expect(res.list[0].id).toBe(11);
           done();
         });
       });
