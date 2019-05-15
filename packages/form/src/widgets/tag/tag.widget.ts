@@ -21,7 +21,9 @@ export class TagWidget extends ControlWidget {
   onChange(item: SFSchemaEnum) {
     item.checked = !item.checked;
     this.updateValue();
-    if (this.ui.checkedChange) this.ui.checkedChange(item.checked);
+    if (this.ui.checkedChange) {
+      this.ui.checkedChange(item.checked);
+    }
   }
 
   _afterClose() {
