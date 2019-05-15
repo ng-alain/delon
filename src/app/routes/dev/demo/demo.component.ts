@@ -5,15 +5,12 @@ import { NzMessageService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-demo',
   template: `
-    <sf [schema]="schema" [loading]="loading" (formSubmit)="submit($event)"></sf>
+    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
   `,
 })
 export class DemoComponent {
-  loading = false;
   schema: SFSchema = {
     properties: {
-      id1: { type: 'number', ui: { widget: 'text' } },
-      id2: { type: 'number', ui: { widget: 'text', defaultText: 'default text' } },
       name: {
         type: 'string',
         title: 'Name',
@@ -22,15 +19,20 @@ export class DemoComponent {
           placeholder: 'RMB结算',
         },
       },
+      select: {
+        type: 'string',
+        title: 'test',
+        enum: [{ label: '1', value: '1' }, { label: '2', value: '2' }],
+        ui: {
+          widget: 'select',
+          mode: 'multiple',
+        },
+      },
     },
     required: ['name'],
   };
   constructor(public msg: NzMessageService) {}
   submit(value: any) {
-    this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-      this.msg.success(JSON.stringify(value));
-    }, 1000);
+    this.msg.success(JSON.stringify(value));
   }
 }
