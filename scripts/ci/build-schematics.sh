@@ -66,7 +66,8 @@ DEPENDENCIES=$(node -p "
     '@antv/g2',
     '@antv/g2-plugin-slider',
     '@angularclass/hmr',
-    'ng-alain-codelyzer'
+    'ng-alain-codelyzer',
+    'ng-alain-sts'
   ].map(key => key.replace(/\//g, '\\\\/').replace(/-/g, '\\\\-') + '|' + (vs[key] || dvs[key])).join('\n\t');
 ")
 ZORROVERSION=$(node -p "require('./package.json').dependencies['ng-zorro-antd']")
