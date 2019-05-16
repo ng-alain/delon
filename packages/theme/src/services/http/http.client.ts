@@ -59,11 +59,11 @@ export class _HttpClient {
   }
 
   begin() {
-    this._loading = true;
+    setTimeout(() => (this._loading = true), 10);
   }
 
   end() {
-    this._loading = false;
+    setTimeout(() => (this._loading = false), 10);
   }
 
   // #region get
@@ -815,9 +815,7 @@ export class _HttpClient {
     } = {},
   ): Observable<any> {
     this.begin();
-    if (options) {
-      if (options.params) options.params = this.parseParams(options.params);
-    }
+    if (options.params) options.params = this.parseParams(options.params);
     return this.http.request(method, url, options).pipe(
       tap(() => this.end()),
       catchError(res => {

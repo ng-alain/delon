@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LocaleData } from '@delon/theme';
 import { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
@@ -6,6 +6,8 @@ import { ArrayLayoutWidget } from '../../widget';
 @Component({
   selector: 'sf-array',
   templateUrl: './array.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   addTitle: string;

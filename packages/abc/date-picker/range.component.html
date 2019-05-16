@@ -24,7 +24,7 @@
                  (nzOnPanelChange)="_nzOnPanelChange($event)"
                  (nzOnOk)="_nzOnOk($event)"></nz-range-picker>
 <ng-template #shortcutTpl>
-  <a *ngFor="let i of shortcut.list;let first=first"
+  <a *ngFor="let i of shortcut?.list;let first=first"
      (click)="clickShortcut(i)"
      [innerHTML]="i.text"
      [ngClass]="{'ml-sm': !first}"></a>

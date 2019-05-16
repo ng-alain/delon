@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { deepGet } from '@delon/util';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UploadChangeParam, UploadFile } from 'ng-zorro-antd/upload';
@@ -10,6 +10,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-upload',
   templateUrl: './upload.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class UploadWidget extends ControlWidget implements OnInit {
   i: any;

@@ -1,4 +1,13 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
@@ -11,6 +20,9 @@ export type ExceptionType = 403 | 404 | 500;
   exportAs: 'exception',
   templateUrl: './exception.component.html',
   host: { '[class.exception]': 'true' },
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class ExceptionComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;

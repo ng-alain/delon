@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { toBool } from '../../utils';
 import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-rate',
   templateUrl: './rate.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class RateWidget extends ControlWidget implements OnInit {
   count: number;

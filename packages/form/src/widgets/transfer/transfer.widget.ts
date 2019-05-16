@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   TransferCanMove,
   TransferChange,
@@ -15,6 +15,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-transfer',
   templateUrl: './transfer.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class TransferWidget extends ControlWidget implements OnInit {
   list: SFSchemaEnum[] = [];

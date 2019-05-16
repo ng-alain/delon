@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { InputBoolean } from '@delon/util';
 
 @Component({
@@ -10,7 +10,9 @@ import { InputBoolean } from '@delon/util';
     '[class.trend__grey]': '!colorful',
     '[class.trend__reverse]': 'colorful && reverseColor',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class TrendComponent {
   /** 上升下降标识 */

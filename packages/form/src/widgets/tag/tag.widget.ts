@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
@@ -7,6 +7,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-tag',
   templateUrl: './tag.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class TagWidget extends ControlWidget {
   data: SFSchemaEnum[];
@@ -21,7 +23,9 @@ export class TagWidget extends ControlWidget {
   onChange(item: SFSchemaEnum) {
     item.checked = !item.checked;
     this.updateValue();
-    if (this.ui.checkedChange) this.ui.checkedChange(item.checked);
+    if (this.ui.checkedChange) {
+      this.ui.checkedChange(item.checked);
+    }
   }
 
   _afterClose() {

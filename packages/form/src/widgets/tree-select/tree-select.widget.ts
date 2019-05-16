@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { NzFormatEmitEvent } from 'ng-zorro-antd/core';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
@@ -8,6 +8,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-tree-select',
   templateUrl: './tree-select.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class TreeSelectWidget extends ControlWidget implements OnInit {
   i: any;

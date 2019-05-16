@@ -7,6 +7,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
@@ -19,7 +20,9 @@ declare var G2: any;
   host: {
     '[class.g2-gauge]': 'true',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   private chart: any;

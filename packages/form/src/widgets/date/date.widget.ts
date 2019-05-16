@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import format from 'date-fns/format';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
@@ -8,6 +8,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-date',
   templateUrl: './date.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class DateWidget extends ControlWidget implements OnInit {
   mode: string;

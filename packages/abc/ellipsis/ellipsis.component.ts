@@ -10,6 +10,7 @@ import {
   NgZone,
   OnChanges,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { InputBoolean, InputNumber } from '@delon/util';
@@ -19,7 +20,9 @@ import { take } from 'rxjs/operators';
   selector: 'ellipsis',
   exportAs: 'ellipsis',
   templateUrl: './ellipsis.component.html',
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class EllipsisComponent implements AfterViewInit, OnChanges {
   // tslint:disable-next-line:no-string-literal

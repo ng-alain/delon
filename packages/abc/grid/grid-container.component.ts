@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { REP_TYPE } from '@delon/theme';
 import { InputNumber } from '@delon/util';
 import { SGConfig } from './grid.config';
@@ -15,7 +15,9 @@ import { SGConfig } from './grid.config';
     '[class.ant-row]': 'true',
     '[class.sg__wrap]': 'true',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SGContainerComponent {
   // #region fields

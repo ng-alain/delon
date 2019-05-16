@@ -14,6 +14,7 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { FormControlName, NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -35,7 +36,9 @@ let nextUniqueId = 0;
     '[style.padding-right.px]': 'paddingValue',
     '[class.ant-form-item-with-help]': 'showErr',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
   private el: HTMLElement;

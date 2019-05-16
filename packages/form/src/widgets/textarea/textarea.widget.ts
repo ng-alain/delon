@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-textarea',
   templateUrl: './textarea.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class TextareaWidget extends ControlWidget implements OnInit {
   autosize: any = true;

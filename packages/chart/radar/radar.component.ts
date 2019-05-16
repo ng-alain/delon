@@ -10,6 +10,7 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputBoolean, InputNumber } from '@delon/util';
 
@@ -30,7 +31,9 @@ export interface G2RadarData {
     '[style.height.px]': 'height',
     '[class.g2-radar]': 'true',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('container') private node: ElementRef;

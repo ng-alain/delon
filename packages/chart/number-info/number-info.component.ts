@@ -6,6 +6,7 @@ import {
   OnChanges,
   Renderer2,
   TemplateRef,
+  ViewEncapsulation,
 } from '@angular/core';
 import { updateHostClass, InputNumber } from '@delon/util';
 
@@ -13,7 +14,9 @@ import { updateHostClass, InputNumber } from '@delon/util';
   selector: 'number-info',
   exportAs: 'numberInfo',
   templateUrl: './number-info.component.html',
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class NumberInfoComponent implements OnChanges {
   /** 标题 */

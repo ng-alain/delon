@@ -6,6 +6,7 @@ import {
   Input,
   OnChanges,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
@@ -23,7 +24,9 @@ import { QRService } from './qr.service';
     '[style.height.px]': 'size',
     '[style.width.px]': 'size',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class QRComponent implements OnChanges {
   dataURL: string;

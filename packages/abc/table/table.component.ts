@@ -16,6 +16,7 @@ import {
   SimpleChange,
   SimpleChanges,
   TemplateRef,
+  ViewEncapsulation,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -64,7 +65,9 @@ import {
   exportAs: 'st',
   templateUrl: './table.component.html',
   providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private unsubscribe$ = new Subject<void>();

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ControlWidget } from '../../widget';
 
 @Component({
@@ -18,5 +18,7 @@ import { ControlWidget } from '../../widget';
       ></ng-template>
     </sf-item-wrap>
   `,
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class CustomWidget extends ControlWidget {}

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
 import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-string',
   templateUrl: './string.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class StringWidget extends ControlWidget implements OnInit {
   type: string;

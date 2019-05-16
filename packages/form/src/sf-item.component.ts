@@ -7,6 +7,7 @@ import {
   OnInit,
   ViewChild,
   ViewContainerRef,
+  ViewEncapsulation,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormProperty } from './model/form.property';
@@ -23,6 +24,8 @@ let nextUniqueId = 0;
   template: `
     <ng-template #target></ng-template>
   `,
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   private ref: ComponentRef<Widget<FormProperty>>;

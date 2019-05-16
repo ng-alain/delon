@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  TemplateRef,
+  ViewEncapsulation,
+} from '@angular/core';
 import { InputBoolean } from '@delon/util';
 
 @Component({
@@ -6,7 +14,9 @@ import { InputBoolean } from '@delon/util';
   exportAs: 'g2Card',
   templateUrl: './card.component.html',
   host: { '[class.g2-card]': 'true' },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2CardComponent implements OnChanges {
   /** 是否显示边框 */

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NzMentionComponent } from 'ng-zorro-antd/mention';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -10,6 +10,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-mention',
   templateUrl: './mention.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class MentionWidget extends ControlWidget implements OnInit {
   @ViewChild('mentions') mentionChild: NzMentionComponent;

@@ -11,6 +11,7 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
@@ -21,7 +22,9 @@ import { debounceTime } from 'rxjs/operators';
   exportAs: 'g2WaterWave',
   templateUrl: './water-wave.component.html',
   host: { '[class.g2-water-wave]': 'true' },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   private resize$: Subscription | null = null;

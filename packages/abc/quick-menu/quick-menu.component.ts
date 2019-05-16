@@ -8,6 +8,7 @@ import {
   OnInit,
   Renderer2,
   TemplateRef,
+  ViewEncapsulation,
 } from '@angular/core';
 
 import { InputNumber } from '@delon/util';
@@ -20,7 +21,9 @@ import { InputNumber } from '@delon/util';
     '[class.quick-menu]': 'true',
     '(click)': '_click()',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
   // #region fields

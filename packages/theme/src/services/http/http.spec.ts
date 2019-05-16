@@ -41,10 +41,10 @@ describe('theme: http.client', () => {
 
     it('#loading', fakeAsync(() => {
       http.get(URL).subscribe(() => {});
-      tick(10);
+      tick(11);
       expect(http.loading).toBeTruthy();
       backend.expectOne(() => true).flush(OK);
-      tick(10);
+      tick(11);
       expect(http.loading).toBeFalsy();
     }));
 

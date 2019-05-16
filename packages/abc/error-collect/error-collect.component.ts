@@ -8,6 +8,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
@@ -25,7 +26,9 @@ import { ErrorCollectConfig } from './error-collect.config';
     '[class.d-none]': '_hiden',
     '(click)': '_click()',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class ErrorCollectComponent implements OnInit, OnDestroy {
   private $time: any | null = null;

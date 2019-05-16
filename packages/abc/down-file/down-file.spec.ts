@@ -138,7 +138,6 @@ describe('abc: down-file', () => {
     <button
       *ngFor="let i of fileTypes"
       id="down-{{ i }}"
-      class="mr-sm"
       down-file
       [http-data]="data"
       http-method="get"

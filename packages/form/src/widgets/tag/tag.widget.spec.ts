@@ -67,6 +67,26 @@ describe('form: widget: tag', () => {
       expect(getComp().nzMode).toBe('default');
     }));
 
+    it('with default', fakeAsync(() => {
+      page
+        .newSchema({
+          properties: {
+            a: {
+              type: 'number',
+              title: '兴趣',
+              enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
+              ui: {
+                widget: 'tag',
+                mode: 'checkable',
+              },
+              default: [1, 2],
+            },
+          },
+        })
+        .typeEvent('click', '.ant-tag');
+      expect(getComp().nzMode).toBe('checkable');
+    }));
+
     describe('with closeable', () => {
       it('should be closed', fakeAsync(() => {
         page
@@ -87,7 +107,7 @@ describe('form: widget: tag', () => {
           .typeEvent('click', '.anticon')
           .checkCount('.ant-tag', 2);
       }));
-      it('should be call events', fakeAsync(() => {
+      it('should be call close events', fakeAsync(() => {
         const s: SFSchema = {
           properties: {
             a: {

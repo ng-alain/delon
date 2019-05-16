@@ -9,6 +9,7 @@ import {
   OnInit,
   Renderer2,
   TemplateRef,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputBoolean } from '@delon/util';
 
@@ -18,7 +19,9 @@ const CLSBODY = 'footer-toolbar__body';
   selector: 'footer-toolbar',
   exportAs: 'footerToolbar',
   templateUrl: './footer-toolbar.component.html',
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class FooterToolbarComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() errorCollect = false;

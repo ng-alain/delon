@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-number',
   templateUrl: './number.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class NumberWidget extends ControlWidget implements OnInit {
   min: number;

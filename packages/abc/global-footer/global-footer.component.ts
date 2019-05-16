@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, ContentChildren, Inject, Input, QueryList } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ContentChildren,
+  Inject,
+  Input,
+  QueryList,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { WINDOW } from '@delon/theme';
 
@@ -10,7 +18,9 @@ import { GlobalFooterLink } from './global-footer.types';
   exportAs: 'globalFooter',
   templateUrl: './global-footer.component.html',
   host: { '[class.global-footer]': 'true' },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class GlobalFooterComponent {
   @Input()

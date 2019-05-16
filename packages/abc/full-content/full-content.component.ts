@@ -12,6 +12,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
 import { InputBoolean, InputNumber } from '@delon/util';
@@ -34,7 +35,9 @@ const hideTitleCls = `full-content__hidden-title`;
     '[class.full-content]': 'true',
     '[style.height.px]': '_height',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, OnDestroy {
   private bodyEl: HTMLElement;

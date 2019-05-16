@@ -1,6 +1,7 @@
 import { forwardRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { deepMergeKey, fixEndTimeOfRange, InputBoolean } from '@delon/util';
+import { NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 import {
   DatePickerConfig,
   DateRangePickerConfig,
@@ -24,12 +25,12 @@ export class RangePickerComponent implements ControlValueAccessor {
   private onChangeFn: (val: Date) => void;
   private _shortcut: DateRangePickerShortcut;
   private _cog: DateRangePickerConfig;
-  @ViewChild('comp') private comp: any;
+  @ViewChild('comp') private comp: NzRangePickerComponent;
   value: Date[] = [];
 
   @Input() ngModelEnd: Date;
   @Input()
-  set shortcut(val: any) {
+  set shortcut(val: DateRangePickerShortcut | null) {
     const item = deepMergeKey({}, true, this._cog.shortcuts, val == null ? {} : val) as DateRangePickerShortcut;
     if (typeof val === 'boolean') {
       item.enabled = val;

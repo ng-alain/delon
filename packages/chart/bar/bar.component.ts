@@ -9,6 +9,7 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputBoolean, InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
@@ -30,7 +31,9 @@ export interface G2BarData {
   host: {
     '[style.height.px]': 'height',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   private resize$: Subscription;
