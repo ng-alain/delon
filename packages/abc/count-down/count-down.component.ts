@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import addSeconds from 'date-fns/add_seconds';
 import format from 'date-fns/format';
 
@@ -14,6 +14,9 @@ import format from 'date-fns/format';
       (notify)="_notify($event)"
     ></countdown>
   `,
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class CountDownComponent {
   @Input() config: {};
