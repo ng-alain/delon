@@ -16,6 +16,7 @@ import {
   SimpleChange,
   SimpleChanges,
   TemplateRef,
+  ViewEncapsulation,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -40,11 +41,13 @@ import { ReuseTabService } from './reuse-tab.service';
   selector: 'reuse-tab',
   exportAs: 'reuseTab',
   templateUrl: './reuse-tab.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ReuseTabContextService],
   host: {
     '[class.reuse-tab]': 'true',
   },
+  providers: [ReuseTabContextService],
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   private el: HTMLElement;

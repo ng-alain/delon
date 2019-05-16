@@ -7,6 +7,7 @@ import {
   OnInit,
   Renderer2,
   TemplateRef,
+  ViewEncapsulation,
 } from '@angular/core';
 import { updateHostClass, InputNumber } from '@delon/util';
 import { SVConfig } from './view.config';
@@ -17,7 +18,9 @@ const prefixCls = `sv`;
   selector: 'sv-container, [sv-container]',
   exportAs: 'svContainer',
   templateUrl: './view-container.component.html',
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SVContainerComponent implements OnInit, OnChanges {
   private el: HTMLElement;

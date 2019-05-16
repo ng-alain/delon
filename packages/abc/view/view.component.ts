@@ -10,6 +10,7 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { ResponsiveService } from '@delon/theme';
 import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
@@ -26,7 +27,9 @@ const prefixCls = `sv`;
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SVComponent implements AfterViewInit, OnChanges {
   @ViewChild('conEl')

@@ -9,6 +9,7 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputBoolean, InputNumber } from '@delon/util';
 
@@ -30,7 +31,9 @@ export class G2TimelineData {
   selector: 'g2-timeline',
   exportAs: 'g2Timeline',
   templateUrl: './timeline.component.html',
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('container') private node: ElementRef;

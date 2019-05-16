@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Host, OnInit, Optional, Renderer2 } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Host,
+  OnInit,
+  Optional,
+  Renderer2,
+  ViewEncapsulation,
+} from '@angular/core';
 import { SVContainerComponent } from './view-container.component';
 
 @Component({
@@ -8,7 +17,9 @@ import { SVContainerComponent } from './view-container.component';
   host: {
     '[class.sv__title]': 'true',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SVTitleComponent implements OnInit {
   private el: HTMLElement;

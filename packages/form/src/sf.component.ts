@@ -11,6 +11,7 @@ import {
   SimpleChange,
   SimpleChanges,
   TemplateRef,
+  ViewEncapsulation,
 } from '@angular/core';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { deepCopy, InputBoolean } from '@delon/util';
@@ -52,7 +53,9 @@ export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, optio
     '[class.sf__edit]': `mode === 'edit'`,
     '[class.sf__no-error]': `onlyVisual`,
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private i18n$: Subscription;

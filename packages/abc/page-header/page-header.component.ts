@@ -13,6 +13,7 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
@@ -34,7 +35,9 @@ interface PageHeaderPath {
   selector: 'page-header',
   exportAs: 'pageHeader',
   templateUrl: './page-header.component.html',
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;

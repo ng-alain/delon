@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Marks, SliderValue } from 'ng-zorro-antd/slider';
 import { ControlWidget } from '../../widget';
 
 @Component({
   selector: 'sf-slider',
   templateUrl: './slider.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SliderWidget extends ControlWidget implements OnInit {
   min: number;

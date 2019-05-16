@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -7,6 +7,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-select',
   templateUrl: './select.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SelectWidget extends ControlWidget implements OnInit {
   i: any;

@@ -1,10 +1,13 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'result',
   exportAs: 'result',
   templateUrl: './result.component.html',
   host: { '[class.result]': 'true' },
+  preserveWhitespaces: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class ResultComponent {
   _type = '';

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { LocaleData } from '@delon/theme';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
@@ -8,6 +8,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-checkbox',
   templateUrl: './checkbox.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class CheckboxWidget extends ControlWidget {
   data: SFSchemaEnum[] = [];

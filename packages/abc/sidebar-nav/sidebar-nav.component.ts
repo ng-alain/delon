@@ -11,6 +11,7 @@ import {
   OnInit,
   Output,
   Renderer2,
+  ViewEncapsulation,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Menu, MenuService, SettingsService, WINDOW } from '@delon/theme';
@@ -31,7 +32,9 @@ const FLOATINGCLS = 'sidebar-nav__floating';
     '(click)': '_click()',
     '(document:click)': '_docClick()',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SidebarNavComponent implements OnInit, OnDestroy {
   private bodyEl: HTMLBodyElement;

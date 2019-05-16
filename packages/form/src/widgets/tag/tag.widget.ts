@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
@@ -7,6 +7,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-tag',
   templateUrl: './tag.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class TagWidget extends ControlWidget {
   data: SFSchemaEnum[];

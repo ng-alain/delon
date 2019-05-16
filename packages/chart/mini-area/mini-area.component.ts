@@ -7,6 +7,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputBoolean, InputNumber } from '@delon/util';
 
@@ -25,7 +26,9 @@ export interface G2MiniAreaData {
   host: {
     '[style.height.px]': 'height',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   private chart: any;

@@ -8,6 +8,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
@@ -20,7 +21,9 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
   exportAs: 'noticeIcon',
   templateUrl: './notice-icon.component.html',
   host: { '[class.notice-icon__btn]': 'true' },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   private i18n$: Subscription;

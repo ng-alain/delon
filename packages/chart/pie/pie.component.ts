@@ -11,6 +11,7 @@ import {
   Renderer2,
   TemplateRef,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { updateHostClass, InputBoolean, InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
@@ -29,7 +30,9 @@ export interface G2PieData {
   selector: 'g2-pie',
   exportAs: 'g2Pie',
   templateUrl: './pie.component.html',
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   private resize$: Subscription;

@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  ViewEncapsulation,
+} from '@angular/core';
 import { DelonLocaleService } from '@delon/theme';
 import { toNumber, InputNumber } from '@delon/util';
 
@@ -7,7 +14,9 @@ import { toNumber, InputNumber } from '@delon/util';
   exportAs: 'g2MiniProgress',
   templateUrl: './mini-progress.component.html',
   host: { '[class.g2-mini-progress]': 'true' },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2MiniProgressComponent implements OnChanges {
   @Input() color = '#1890FF';

@@ -7,6 +7,7 @@ import {
   Input,
   OnDestroy,
   Output,
+  ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
@@ -21,7 +22,9 @@ import { debounceTime } from 'rxjs/operators';
   host: {
     '[style.height.px]': 'height',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class G2CustomComponent implements AfterViewInit, OnDestroy {
   private resize$: Subscription | null = null;

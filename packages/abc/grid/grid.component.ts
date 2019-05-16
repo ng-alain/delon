@@ -8,6 +8,7 @@ import {
   OnChanges,
   Optional,
   Renderer2,
+  ViewEncapsulation,
 } from '@angular/core';
 
 import { ResponsiveService } from '@delon/theme';
@@ -27,7 +28,9 @@ const prefixCls = `sg`;
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue',
   },
+  preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class SGComponent implements OnChanges, AfterViewInit {
   private el: HTMLElement;

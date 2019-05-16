@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import { of, Observable } from 'rxjs';
@@ -11,6 +11,8 @@ import { ControlWidget } from '../../widget';
 @Component({
   selector: 'sf-autocomplete',
   templateUrl: './autocomplete.widget.html',
+  preserveWhitespaces: false,
+  encapsulation: ViewEncapsulation.None,
 })
 export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
   i: any = {};
