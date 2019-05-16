@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "7.3.2",
+  "version": "7.4.0",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
@@ -75,7 +75,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
-    "@angular/cli": "~7.3.8",
+    "@angular/cli": "~7.3.9",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
     "@types/node": "~8.9.4",

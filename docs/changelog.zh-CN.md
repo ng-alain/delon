@@ -14,6 +14,23 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [7.4.0](https://github.com/ng-alain/delon/compare/7.3.2...7.4.0) (2019-05-16)
+
+### Bug Fixes
+
+* **abc:sidebar:** 修复无法使用自定义 iconfont ([#568](https://github.com/ng-alain/delon/issues/568)) ([9a8ebae](https://github.com/ng-alain/delon/commit/9a8ebae))
+* **abc:st:** 修复切换页码时最后一页无法触发 `pi` 事件 ([#564](https://github.com/ng-alain/delon/issues/564)) ([375d605](https://github.com/ng-alain/delon/commit/375d605))
+* **abc:st:** 修复 `st` 响应式污染原生 `nz-table` ([#563](https://github.com/ng-alain/delon/issues/563)) ([4a78ef2](https://github.com/ng-alain/delon/commit/4a78ef2))
+* **cli:** 修复 `ng add` 会产生多余国际化代码 ([#561](https://github.com/ng-alain/delon/issues/561)) ([add2ec0](https://github.com/ng-alain/delon/commit/add2ec0))
+* **cli:** 修复 `ng g ng-alain` 会增加多余的变量前缀 ([#560](https://github.com/ng-alain/delon/issues/560)) ([7b8d9eb](https://github.com/ng-alain/delon/commit/7b8d9eb))
+* **form:select:** 修复无效标签数量 ([#571](https://github.com/ng-alain/delon/issues/571)) ([56abb18](https://github.com/ng-alain/delon/commit/56abb18))
+
+### Features
+
+* **abc:st:** 新增 `sort.compare` 为 `null` 时表示不忽略本地排序 ([#570](https://github.com/ng-alain/delon/issues/570)) ([0b625b4](https://github.com/ng-alain/delon/commit/0b625b4))
+* **acl:** 新增 `ACLType.except` 表示结果取反，即表示当未授权时有效，`st` 也一并支持 ([#566](https://github.com/ng-alain/delon/issues/566)) ([3787128](https://github.com/ng-alain/delon/commit/3787128))
+
+
 ## [7.3.2](https://github.com/ng-alain/delon/compare/7.3.1...7.3.2) (2019-05-03)
 
 ### Scaffold

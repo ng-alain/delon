@@ -1,3 +1,28 @@
+# [7.4.0](https://github.com/ng-alain/delon/compare/7.3.2...7.4.0) (2019-05-16)
+
+
+### Bug Fixes
+
+* **abc:sidebar:** fix invalid iconfont icon ([#568](https://github.com/ng-alain/delon/issues/568)) ([9a8ebae](https://github.com/ng-alain/delon/commit/9a8ebae))
+* **abc:st:** fix ingore pi event trigger when change size in last page ([#564](https://github.com/ng-alain/delon/issues/564)) ([375d605](https://github.com/ng-alain/delon/commit/375d605))
+* **abc:st:** fix responsive styles pollution `nz-table` ([#563](https://github.com/ng-alain/delon/issues/563)) ([4a78ef2](https://github.com/ng-alain/delon/commit/4a78ef2))
+* **cli:** fix invalid translate in ng add ([#561](https://github.com/ng-alain/delon/issues/561)) ([add2ec0](https://github.com/ng-alain/delon/commit/add2ec0))
+* **cli:** fix repeat variable suffix in `ng g ng-alain` ([#560](https://github.com/ng-alain/delon/issues/560)) ([7b8d9eb](https://github.com/ng-alain/delon/commit/7b8d9eb))
+* **form:select:** fix invlaid tag count ([#571](https://github.com/ng-alain/delon/issues/571)) ([56abb18](https://github.com/ng-alain/delon/commit/56abb18))
+
+
+### Features
+
+* **abc:st:** ingore sort procees when `compare` is `null` ([#570](https://github.com/ng-alain/delon/issues/570)) ([0b625b4](https://github.com/ng-alain/delon/commit/0b625b4))
+* **acl:** add `except` property in `ACLType` ([#566](https://github.com/ng-alain/delon/issues/566)) ([3787128](https://github.com/ng-alain/delon/commit/3787128))
+
+
+### Performance Improvements
+
+* **theme:http:** removed delay because all support OnPush ([9a8f21a](https://github.com/ng-alain/delon/commit/9a8f21a))
+
+
+
 ## [7.3.2](https://github.com/ng-alain/delon/compare/7.3.1...7.3.2) (2019-05-04)
 
 
