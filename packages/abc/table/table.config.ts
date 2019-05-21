@@ -132,6 +132,10 @@ export class STConfig {
    */
   expandRowByClick?: boolean = false;
   /**
+   * 手风琴模式
+   */
+  expandAccordion?: boolean = false;
+  /**
    * 指定 `width` 模式
    */
   widthMode?: STWidthMode = {
