@@ -1109,6 +1109,32 @@ describe('abc: table', () => {
           });
         });
       });
+      describe('expandRowByClick', () => {
+        it('should be close other expaned', done => {
+          context.expandAccordion = true;
+          context.expandRowByClick = true;
+          fixture.detectChanges();
+          fixture.whenStable().then(() => {
+            page.getCell(1, 2).click();
+            page.getCell(2, 2).click();
+            page.expectData(1, 'expand', false);
+            page.expectData(2, 'expand', true);
+            done();
+          });
+        });
+        it('should be keeping expaned', done => {
+          context.expandAccordion = false;
+          context.expandRowByClick = true;
+          fixture.detectChanges();
+          fixture.whenStable().then(() => {
+            page.getCell(1, 2).click();
+            page.getCell(2, 2).click();
+            page.expectData(1, 'expand', true);
+            page.expectData(2, 'expand', true);
+            done();
+          });
+        });
+      });
       describe('should be set showExpand in row data', () => {
         it(`muse be hide expand icon`, done => {
           context.expandRowByClick = false;
@@ -1898,6 +1924,7 @@ class TestComponent {
   responsive = false;
   responsiveHideHeaderFooter = false;
   expandRowByClick = false;
+  expandAccordion = false;
   widthMode: STWidthMode = {};
 
   error() {}
@@ -1912,6 +1939,7 @@ class TestComponent {
       [columns]="columns"
       [expand]="expand"
       [expandRowByClick]="expandRowByClick"
+      [expandAccordion]="expandAccordion"
       (change)="change($event)"
     >
       <ng-template #expand let-item let-index="index" let-column="column">

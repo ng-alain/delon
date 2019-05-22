@@ -7,19 +7,21 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  Optional,
   Output,
   SimpleChange,
   SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
+import { ACLService } from '@delon/acl';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { deepCopy, InputBoolean } from '@delon/util';
-import { Subscription } from 'rxjs';
-
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import { DelonFormConfig } from './config';
 import { ErrorData } from './errors';
-import { SFButton } from './interface';
+import { SFButton, SFLayout } from './interface';
 import { FormProperty } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import { SFSchema } from './schema/index';
@@ -58,7 +60,7 @@ export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, optio
   encapsulation: ViewEncapsulation.None,
 })
 export class SFComponent implements OnInit, OnChanges, OnDestroy {
-  private i18n$: Subscription;
+  private unsubscribe$ = new Subject<void>();
   private _renders = new Map<string, TemplateRef<void>>();
   private _item: {};
   private _valid = true;
@@ -75,7 +77,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   // #region fields
 
   /** 表单布局，等同 `nzLayout`，默认：horizontal */
-  @Input() layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
+  @Input() layout: SFLayout = 'horizontal';
   /** JSON Schema */
   @Input() schema: SFSchema;
   /** UI Schema */
@@ -194,19 +196,26 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     private formPropertyFactory: FormPropertyFactory,
     private terminator: TerminatorService,
     private options: DelonFormConfig,
+    @Optional() private aclSrv: ACLService,
     private cdr: ChangeDetectorRef,
     private i18n: DelonLocaleService,
   ) {
     this.liveValidate = options.liveValidate as boolean;
     this.firstVisual = options.firstVisual as boolean;
     this.autocomplete = options.autocomplete as 'on' | 'off';
-    this.i18n$ = this.i18n.change.subscribe(() => {
+    this.i18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.i18n.getData('sf');
       if (this._inited) {
         this.coverButtonProperty();
         this.cdr.detectChanges();
       }
     });
+    this.aclSrv.change
+      .pipe(
+        filter(() => this._inited),
+        takeUntil(this.unsubscribe$),
+      )
+      .subscribe(() => this.refreshSchema());
   }
 
   private coverProperty() {
@@ -221,6 +230,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       parentUiSchema: SFUISchemaItemRun,
       uiRes: SFUISchemaItemRun,
     ) => {
+      if (!Array.isArray(schema.required)) schema.required = [];
+
       Object.keys(schema.properties!).forEach(key => {
         const uiKey = `$${key}`;
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
@@ -267,9 +278,19 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           }
         }
         ui.hidden = typeof ui.hidden === 'boolean' ? ui.hidden : false;
+        if (ui.hidden === false && ui.acl && this.aclSrv && !this.aclSrv.can(ui.acl)) {
+          ui.hidden = true;
+        }
 
         uiRes[uiKey] = ui;
         delete property.ui;
+
+        if (ui.hidden === true) {
+          const idx = schema.required!.indexOf(key);
+          if (idx !== -1) {
+            schema.required!.splice(idx, 1);
+          }
+        }
 
         if (property.items) {
           uiRes[uiKey].$items = uiRes[uiKey].$items || {};
@@ -460,6 +481,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.cleanRootSub();
     this.terminator.destroy();
-    this.i18n$.unsubscribe();
+    const { unsubscribe$ } = this;
+    unsubscribe$.next();
+    unsubscribe$.complete();
   }
 }

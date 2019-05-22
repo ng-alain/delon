@@ -1,6 +1,6 @@
 import { TemplateRef } from '@angular/core';
+import { ACLCanType } from '@delon/acl';
 import { Observable } from 'rxjs';
-
 import { ErrorSchema } from '../errors';
 import { SFSchemaEnumType } from './index';
 
@@ -172,6 +172,11 @@ export interface SFUISchemaItem
    * - `visibleIf: { shown: (value: any) => value > 0 }`：复杂表达式
    */
   visibleIf?: { [key: string]: any[] | ((value: any) => boolean) };
+
+  /**
+   * ACL 配置
+   */
+  acl?: ACLCanType;
 }
 
 /**
