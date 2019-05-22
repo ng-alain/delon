@@ -2,6 +2,12 @@
      [class.sv__label-empty]="!label"
      [style.width.px]="parent.labelWidth">
   <ng-container *stringTemplateOutlet="label">{{label}}</ng-container>
+  <span class="sv__label-optional">
+    {{ optional }}
+    <nz-tooltip *ngIf="optionalHelp" [nzTitle]="optionalHelp">
+      <i nz-tooltip nz-icon nzType="question-circle"></i>
+    </nz-tooltip>
+  </span>
 </div>
 <div class="sv__detail">
   <span (cdkObserveContent)="checkContent()"

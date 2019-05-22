@@ -39,6 +39,8 @@ export class SVComponent implements AfterViewInit, OnChanges {
 
   // #region fields
 
+  @Input() optional: string;
+  @Input() optionalHelp: string;
   @Input() label: string | TemplateRef<void>;
   @Input() unit: string | TemplateRef<void>;
   @Input() @InputNumber(null) col: number;
