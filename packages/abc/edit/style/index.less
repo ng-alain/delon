@@ -2,6 +2,7 @@
 
 @se-prefix: ~'.se';
 @se-label-color: rgba(0, 0, 0, 0.85);
+@se-label-optional-color: rgba(0, 0, 0, 0.45);
 @se-compact-bottom: @layout-gutter;
 
 @{se-prefix} {
@@ -36,7 +37,7 @@
     white-space: nowrap;
     text-align: right;
     &-optional {
-      color: rgba(0, 0, 0, 0.45);
+      color: @se-label-optional-color;
     }
   }
   &__control {
