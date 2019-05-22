@@ -1,6 +1,7 @@
 import { Component, DebugElement } from '@angular/core';
 import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ACLService } from '@delon/acl';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { en_US, AlainThemeModule, DelonLocaleService } from '@delon/theme';
 import { deepCopy } from '@delon/util';
@@ -124,6 +125,20 @@ describe('form: component', () => {
         };
         fixture.detectChanges();
         expect(console.warn).toHaveBeenCalled();
+      });
+
+      it('should be ingore required when element is hidden', () => {
+        const s: SFSchema = {
+          properties: {
+            name: {
+              type: 'string',
+              ui: { hidden: true },
+            },
+          },
+          required: ['name'],
+        };
+        page.newSchema(s);
+        expect(context.comp._schema.required!.indexOf('name') === -1).toBe(true);
       });
     });
 
@@ -540,6 +555,32 @@ describe('form: component', () => {
         expect(page.getProperty('/a').errors![0].message).toBe('A');
         expect((s.properties!.a.ui as any).errors.required).toHaveBeenCalled();
       });
+    });
+
+    describe('ACL', () => {
+      let acl: ACLService;
+      beforeEach(() => (acl = injector.get(ACLService)));
+      it('shoule be working', fakeAsync(() => {
+        acl.setFull(false);
+        acl.setRole(['admin']);
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'string',
+              ui: {
+                acl: 'admin',
+              },
+            },
+          },
+          required: ['a'],
+        };
+        page.newSchema(s);
+        page.checkUI('/a', 'hidden', false);
+        acl.setRole(['user']);
+        tick();
+        fixture.detectChanges();
+        page.checkUI('/a', 'hidden', true);
+      }));
     });
   });
 

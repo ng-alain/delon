@@ -109,10 +109,10 @@ export class DelonModule {
 
 ```ts
 @Component({
-    selector: 'app-home',
-    template: `
-    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
-    `
+  selector: 'app-home',
+  template: `
+  <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+  `
 })
 export class HomeComponent {
   schema: SFSchema = {

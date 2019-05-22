@@ -205,13 +205,14 @@ Equals to `<sf [ui]="ui">`, a group of UI structure corresponds to JSON Schema s
 
 ### Basic Type
 
-| Parameter           | Description                 | Type                                                   | Default Value |   |
-|-----------------|----------------------|--------------------------------------------------------|--------|---|
-| `[debug]`           | Debug mode     | `boolean`                                              | -      |   |
-| `[order]`           | Order of property    | `string[]`                                             | -      |   |
-| `[asyncData]`       | Asynchronized static data source   | `(input?: any) => Observable<SFSchemaEnumType[]>`      | -      |   |
-| `[hidden]`          | If hide       | `boolean`      | `false`      |   |
-| `[visibleIf]`       | Is visible with conditions    | `{ [key: string]: any[] | ((value: any) => boolean) }` | -      |   |
+| Parameter     | Description     | Type                     | Default Value |
+|---------------|-----------------|--------------------------|---------------|
+| `[debug]`     | Debug mode     | `boolean`                 | -      |
+| `[order]`     | Order of property    | `string[]`          | -      |
+| `[asyncData]` | Asynchronized static data source   | `(input?: any) => Observable<SFSchemaEnumType[]>` | - |
+| `[hidden]`    | If hide       | `boolean`      | `false`      |   |
+| `[visibleIf]` | Is visible with conditions | `{ [key: string]: any[] | ((value: any) => boolean) }` | - |
+| `[acl]`       | ACL permission (Use `can()` verify) | `ACLCanType` | - |
 
 **visibleIf**
 
