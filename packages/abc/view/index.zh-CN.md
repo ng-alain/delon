@@ -33,6 +33,8 @@ config: SVConfig
 | `[unit]`      | 单位                                  | `string,TemplateRef<void>`            | - |
 | `[default]`    | 是否显示默认文本，继承 `sv-container` | `boolean`                              | - |
 | `[type]`       | 类型                  | `'primary','success','danger','warning'` | - |
+| `[optional]` | 标签可选信息 | `string` | - |
+| `[optionalHelp]` | 标签可选帮助 | `string` | - |
 
 ### sv-title
 
