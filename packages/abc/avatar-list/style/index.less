@@ -1,5 +1,5 @@
 @import '../../../theme/styles/default.less';
-@avatar-list-prefix: ~'.avatar-list';
+@import './variable.less';
 
 @{avatar-list-prefix} {
   display: inline-block;
@@ -29,12 +29,12 @@
     height: @avatar-size-sm;
   }
   &__mini {
-    width: 20px;
-    height: 20px;
+    width: @avatar-list-mini-wh;
+    height: @avatar-list-mini-wh;
     .@{ant-prefix}-avatar {
-      width: 20px;
-      height: 20px;
-      line-height: 20px;
+      width: @avatar-list-mini-wh;
+      height: @avatar-list-mini-wh;
+      line-height: @avatar-list-mini-wh;
       &-string {
         font-size: 12px;
         line-height: 18px;
