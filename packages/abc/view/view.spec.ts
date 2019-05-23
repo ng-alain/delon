@@ -117,6 +117,16 @@ describe('abc: view', () => {
           fixture.detectChanges();
           expect(page.getEl(prefixCls + 'label').textContent).toContain('test-label');
         });
+        it('#optional', () => {
+          context.optional = 'test-optional';
+          fixture.detectChanges();
+          expect(page.getEl(prefixCls + 'label-optional').textContent).toContain('test-optional');
+        });
+        it('#optionalHelp', () => {
+          context.optionalHelp = 'test-optional';
+          fixture.detectChanges();
+          expect(page.getEl('nz-tooltip') != null).toBe(true);
+        });
         describe('#default', () => {
           beforeEach(() => {
             context.content = '';
@@ -232,7 +242,18 @@ describe('abc: view', () => {
       [default]="parent_default"
     >
       <sv-title>title</sv-title>
-      <sv #viewComp [label]="label" [col]="col" [type]="type" [default]="default" [unit]="unit">{{ content }}</sv>
+      <sv
+        #viewComp
+        [label]="label"
+        [col]="col"
+        [type]="type"
+        [default]="default"
+        [unit]="unit"
+        [optional]="optional"
+        [optionalHelp]="optionalHelp"
+      >
+        {{ content }}
+      </sv>
     </sv-container>
   `,
 })
@@ -250,6 +271,8 @@ class TestComponent {
   parent_title = 'title';
 
   label: string;
+  optional: string;
+  optionalHelp: string;
   content = '1';
   col: number | null;
   default: boolean;
