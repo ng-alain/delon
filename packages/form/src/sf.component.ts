@@ -445,6 +445,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
     this.rootProperty = this.formPropertyFactory.createProperty(this._schema, this._ui, this.formData);
     this.attachCustomRender();
+    this.cdr.detectChanges();
+    this.reset();
 
     this.rootProperty.valueChanges.subscribe(value => {
       this._item = { ...this.formData, ...value };
@@ -456,7 +458,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       this.cdr.detectChanges();
     });
 
-    return this.reset();
+    return this;
   }
 
   /**

@@ -1,4 +1,4 @@
-import { combineLatest, BehaviorSubject, Observable } from 'rxjs';
+import { combineLatest, BehaviorSubject, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { DelonFormConfig } from '../config';
@@ -19,8 +19,8 @@ export abstract class FormProperty {
   widget: Widget<FormProperty>;
   private _errors: ErrorData[] | null = null;
   protected _objErrors: { [key: string]: ErrorData[] } = {};
-  private _valueChanges = new BehaviorSubject<SFValue>(null);
-  private _errorsChanges = new BehaviorSubject<ErrorData[] | null>(null);
+  private _valueChanges = new Subject<SFValue>();
+  private _errorsChanges = new Subject<ErrorData[]>();
   private _visible = true;
   private _visibilityChanges = new BehaviorSubject<boolean>(true);
   private _root: PropertyGroup;
