@@ -11,6 +11,7 @@
          [attr.disabled]="disabled"
          [nzSize]="ui.size"
          [(ngModel)]="typing"
+         (ngModelChange)="setValue($event)"
          [attr.maxLength]="schema.maxLength || null"
          [attr.placeholder]="ui.placeholder"
          autocomplete="off">
