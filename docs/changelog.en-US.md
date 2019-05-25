@@ -14,6 +14,25 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [7.5.0](https://github.com/ng-alain/delon/compare/7.4.0...7.5.0) (2019-05-25)
+
+### Scaffold
+
+* refactor `color-less.js` ([#1100](https://github.com/ng-alain/ng-alain/pull/1100))
+
+### Bug Fixes
+
+* **abc:se:** fix losing optional icon ([#577](https://github.com/ng-alain/delon/issues/577)) ([d9033dd](https://github.com/ng-alain/delon/commit/d9033dd))
+* **form:** fix ingore trigger `formChange` event when call `refreshSchema` ([#579](https://github.com/ng-alain/delon/issues/579)) ([4f4c4f9](https://github.com/ng-alain/delon/commit/4f4c4f9))
+* **form:autocomplete:** fix verify form in typing ([#580](https://github.com/ng-alain/delon/issues/580)) ([3371168](https://github.com/ng-alain/delon/commit/3371168))
+
+### Features
+
+* **abc:st:** add `expandAccordion` property ([#576](https://github.com/ng-alain/delon/issues/576)) ([d3dd0e4](https://github.com/ng-alain/delon/commit/d3dd0e4))
+* **abc:sv:** add `optional` `optionalHelp` properittes ([#578](https://github.com/ng-alain/delon/issues/578)) ([8968ae4](https://github.com/ng-alain/delon/commit/8968ae4))
+* **form:** add `acl` property ([#574](https://github.com/ng-alain/delon/issues/574)) ([54ddae9](https://github.com/ng-alain/delon/commit/54ddae9))
+
+
 # [7.4.0](https://github.com/ng-alain/delon/compare/7.3.2...7.4.0) (2019-05-16)
 
 ### Bug Fixes

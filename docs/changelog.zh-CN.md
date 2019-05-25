@@ -14,6 +14,25 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [7.5.0](https://github.com/ng-alain/delon/compare/7.4.0...7.5.0) (2019-05-25)
+
+### Scaffold
+
+* 重构 `color-less.js` ([#1100](https://github.com/ng-alain/ng-alain/pull/1100))
+
+### Bug Fixes
+
+* **abc:se:** 修复 icon 图标丢失 ([#577](https://github.com/ng-alain/delon/issues/577)) ([d9033dd](https://github.com/ng-alain/delon/commit/d9033dd))
+* **form:** 修复调用 `refreshSchema` 应忽略 `formChange` 事件触发 ([#579](https://github.com/ng-alain/delon/issues/579)) ([4f4c4f9](https://github.com/ng-alain/delon/commit/4f4c4f9))
+* **form:autocomplete:** 修复键入过程中应校验表单 ([#580](https://github.com/ng-alain/delon/issues/580)) ([3371168](https://github.com/ng-alain/delon/commit/3371168))
+
+### Features
+
+* **abc:st:** 新增展开手风琴模式 `expandAccordion` 属性 ([#576](https://github.com/ng-alain/delon/issues/576)) ([d3dd0e4](https://github.com/ng-alain/delon/commit/d3dd0e4))
+* **abc:sv:** 新增 `optional` `optionalHelp` 属性 ([#578](https://github.com/ng-alain/delon/issues/578)) ([8968ae4](https://github.com/ng-alain/delon/commit/8968ae4))
+* **form:** 新增 `acl` 权限属性 ([#574](https://github.com/ng-alain/delon/issues/574)) ([54ddae9](https://github.com/ng-alain/delon/commit/54ddae9))
+
+
 # [7.4.0](https://github.com/ng-alain/delon/compare/7.3.2...7.4.0) (2019-05-16)
 
 ### Bug Fixes
