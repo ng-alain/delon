@@ -16,6 +16,10 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 # [7.5.0](https://github.com/ng-alain/delon/compare/7.4.0...7.5.0) (2019-05-25)
 
+### Scaffold
+
+* refactor `color-less.js` ([#1100](https://github.com/ng-alain/ng-alain/pull/1100))
+
 ### Bug Fixes
 
 * **abc:se:** fix losing optional icon ([#577](https://github.com/ng-alain/delon/issues/577)) ([d9033dd](https://github.com/ng-alain/delon/commit/d9033dd))
