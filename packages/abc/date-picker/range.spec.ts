@@ -169,8 +169,8 @@ class TestComponent {
   @ViewChild('comp')
   comp: RangePickerComponent;
   i: any = {};
-  _nzOnOpenChange() {}
-  _nzOnPanelChange() {}
-  _nzOnOk() {}
   shortcut: boolean | DateRangePickerShortcut | null = false;
+  _nzOnOpenChange() { }
+  _nzOnPanelChange() { }
+  _nzOnOk() { }
 }

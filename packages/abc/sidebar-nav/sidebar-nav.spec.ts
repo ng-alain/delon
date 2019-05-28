@@ -50,8 +50,8 @@ class MockACLService {
 }
 
 class MockWindow {
-  open() {}
   location = new MockLocation();
+  open() { }
 }
 class MockLocation {
   private url: string;
@@ -468,8 +468,8 @@ describe('abc: sidebar-nav', () => {
       const el = body
         ? document.querySelector(cls)
         : dl.query(By.css(cls))
-        ? dl.query(By.css(cls)).nativeElement
-        : null;
+          ? dl.query(By.css(cls)).nativeElement
+          : null;
       return el ? (el as T) : null;
     }
     checkText(cls: string, value: any) {
@@ -526,8 +526,8 @@ class TestComponent {
   autoCloseUnderPad = false;
   recursivePath = false;
   openStrictly = false;
-  select() {}
+  select() { }
 }
 
 @Component({ template: `` })
-class TestRouteComponent {}
+class TestRouteComponent { }

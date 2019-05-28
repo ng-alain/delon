@@ -1,4 +1,4 @@
-// tslint:disable:no-import-side-effect
+// tslint:disable:no-import-side-effect jsdoc-format
 
 /**
  * This file includes polyfills needed by Angular and is loaded before the app.

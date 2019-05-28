@@ -200,7 +200,8 @@ describe('abc: lodop', () => {
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         SET_PRINT_STYLEA: jasmine.createSpy('SET_PRINT_STYLEA'),
-        PRINT_INITA: jasmine.createSpy('PRINT_INITA').and.callFake(function() {
+        // tslint:disable-next-line: only-arrow-functions
+        PRINT_INITA: jasmine.createSpy('PRINT_INITA').and.callFake(function () {
           mockRes = arguments[4];
         }),
         webskt: {
@@ -226,7 +227,7 @@ describe('abc: lodop', () => {
         `;
     mockLodop = {
       SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
-      PRINT_DESIGN: jasmine.createSpy('PRINT_DESIGN').and.callFake(function() {
+      PRINT_DESIGN: jasmine.createSpy('PRINT_DESIGN').and.callFake(function () {
         // tslint:disable-next-line:no-invalid-this
         setTimeout(() => this.On_Return(0, code), 30);
         // tslint:disable-next-line:no-invalid-this
@@ -257,7 +258,7 @@ describe('abc: lodop', () => {
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         PRINT_INITA: jasmine.createSpy('PRINT_INITA'),
-        PRINT: jasmine.createSpy('PRINT').and.callFake(function() {
+        PRINT: jasmine.createSpy('PRINT').and.callFake(function () {
           if (isPrintError) {
             // tslint:disable-next-line:no-invalid-this
             setTimeout(() => this.On_Return(0, '缺纸'), 10);

@@ -26,6 +26,12 @@ import { InputNumber } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
+
+  // #endregion
+
+  constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) { }
+  ctrlStyle: { [key: string]: string } = {};
+
   // #region fields
 
   @Input() icon: string | TemplateRef<void> = 'question-circle';
@@ -34,18 +40,15 @@ export class QuickMenuComponent implements OnInit, OnChanges {
   @Input() bgColor = '#fff';
   @Input() borderColor = '#ddd';
 
-  // #endregion
-
-  constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) {}
-
   private show = false;
+
+  private initFlag = false;
 
   _click() {
     this.show = !this.show;
     this.setStyle();
   }
 
-  ctrlStyle: { [key: string]: string } = {};
   private setStyle() {
     this.ctrlStyle = {
       'background-color': this.bgColor,
@@ -62,8 +65,6 @@ export class QuickMenuComponent implements OnInit, OnChanges {
     this.render.setAttribute(this.el.nativeElement, 'style', res.join(';'));
     this.cdr.detectChanges();
   }
-
-  private initFlag = false;
   ngOnInit(): void {
     this.initFlag = true;
     this.setStyle();

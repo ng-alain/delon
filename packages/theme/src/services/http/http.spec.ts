@@ -40,7 +40,7 @@ describe('theme: http.client', () => {
     beforeEach(() => createModule());
 
     it('#loading', fakeAsync(() => {
-      http.get(URL).subscribe(() => {});
+      http.get(URL).subscribe(() => { });
       tick(11);
       expect(http.loading).toBeTruthy();
       backend.expectOne(() => true).flush(OK);
@@ -66,6 +66,7 @@ describe('theme: http.client', () => {
           done();
         });
         const ret = backend.expectOne(() => true) as TestRequest;
+        // tslint:disable-next-line: forin
         for (const key in p) {
           let v = p[key];
           if (v instanceof Date) v = v.valueOf();

@@ -8,11 +8,6 @@ import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 
 @Injectable({ providedIn: 'root' })
 export class LodopService implements OnDestroy {
-  private _cog: LodopConfig;
-  private pending = false;
-  private _lodop: Lodop | null = null;
-  private _init = new Subject<LodopResult>();
-  private _events = new Subject<LodopPrintResult>();
 
   constructor(private defCog: LodopConfig, private scriptSrv: LazyService) {
     this.cog = defCog;
@@ -41,6 +36,34 @@ export class LodopService implements OnDestroy {
   get events(): Observable<LodopPrintResult> {
     return this._events.asObservable();
   }
+
+  /** 获取 lodop 对象 */
+  get lodop(): Observable<LodopResult> {
+    if (this._lodop) return of({ ok: true, lodop: this._lodop } as LodopResult);
+    if (this.pending) return this._init.asObservable();
+
+    this.request();
+
+    return this._init.asObservable();
+  }
+
+  /** 获取打印机列表 */
+  get printer(): string[] {
+    this.check();
+    const ret: string[] = [];
+    const count = this._lodop!.GET_PRINTER_COUNT();
+    for (let index = 0; index < count; index++) {
+      ret.push(this._lodop!.GET_PRINTER_NAME(index));
+    }
+    return ret;
+  }
+
+  private _cog: LodopConfig;
+  private pending = false;
+  private _lodop: Lodop | null = null;
+  private _init = new Subject<LodopResult>();
+  private _events = new Subject<LodopPrintResult>();
+  private printBuffer: any[] = [];
 
   private check() {
     if (!this._lodop) throw new Error(`请务必先调用 lodop 获取对象`);
@@ -97,27 +120,6 @@ export class LodopService implements OnDestroy {
     this.request();
   }
 
-  /** 获取 lodop 对象 */
-  get lodop(): Observable<LodopResult> {
-    if (this._lodop) return of({ ok: true, lodop: this._lodop } as LodopResult);
-    if (this.pending) return this._init.asObservable();
-
-    this.request();
-
-    return this._init.asObservable();
-  }
-
-  /** 获取打印机列表 */
-  get printer(): string[] {
-    this.check();
-    const ret: string[] = [];
-    const count = this._lodop!.GET_PRINTER_COUNT();
-    for (let index = 0; index < count; index++) {
-      ret.push(this._lodop!.GET_PRINTER_NAME(index));
-    }
-    return ret;
-  }
-
   /**
    * 附加代码至 `lodop` 对象上，字符串类支持 `{{key}}` 的动态参数
    *
@@ -139,7 +141,7 @@ export class LodopService implements OnDestroy {
         try {
           const fakeFn = new Function(`return [${res[2]}]`);
           arr = fakeFn();
-        } catch {}
+        } catch { }
 
         if (arr != null && Array.isArray(arr) && contextObj) {
           for (let i = 0; i < arr.length; i++) {
@@ -169,8 +171,6 @@ export class LodopService implements OnDestroy {
       };
     });
   }
-
-  private printBuffer: any[] = [];
   private printDo() {
     const data = this.printBuffer.shift();
     if (!data) return;

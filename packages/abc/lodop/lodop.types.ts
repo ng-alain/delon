@@ -1,10 +1,4 @@
 export interface CLodop {
-  /** 建立打印机名单 */
-  Create_Printer_List(el: Element): void;
-
-  /** 建立纸张类型名单 */
-  Create_PageSize_List(el: Element, iPrintIndex: number): void;
-
   /**
    * 判断是否支持https协议的属性
    *
@@ -14,11 +8,17 @@ export interface CLodop {
    */
   readonly HTTPS_STATUS: number;
 
+  /** 结果回调函数保留 */
+  readonly On_Return_Remain: boolean;
+
   /** 结果回调函数 */
   On_Return: ((taskID: string, value: boolean | string) => void) | null;
 
-  /** 结果回调函数保留 */
-  readonly On_Return_Remain: boolean;
+  /** 建立打印机名单 */
+  Create_Printer_List(el: Element): void;
+
+  /** 建立纸张类型名单 */
+  Create_PageSize_List(el: Element, iPrintIndex: number): void;
 }
 
 export interface Lodop extends CLodop {
@@ -55,7 +55,9 @@ export interface Lodop extends CLodop {
     strHtmlContent: string,
   ): void;
 
-  /** 增加表格打印项（超文本模式）*/
+  /**
+   * 增加表格打印项（超文本模式）
+   */
   ADD_PRINT_TABLE(
     Top: number | string,
     Left: number | string,
@@ -64,7 +66,9 @@ export interface Lodop extends CLodop {
     strHtml: string,
   ): void;
 
-  /** 增加表格打印项（超文本模式）*/
+  /**
+   * 增加表格打印项（超文本模式）
+   */
   ADD_PRINT_TABLE(
     Top: number | string,
     Left: number | string,
@@ -73,7 +77,9 @@ export interface Lodop extends CLodop {
     strHtml: string,
   ): void;
 
-  /** 增加超文本打印项（URL模式）*/
+  /**
+   * 增加超文本打印项（URL模式）
+   */
   ADD_PRINT_URL(
     Top: number | string,
     Left: number | string,
@@ -341,6 +347,7 @@ export interface Lodop extends CLodop {
    */
   SET_LICENSES(strCompanyName: string, strLicense: string, strLicenseA?: string, strLicenseB?: string): void;
 
+  // tslint:disable-next-line: member-ordering
   webskt: WebSocket;
 }
 

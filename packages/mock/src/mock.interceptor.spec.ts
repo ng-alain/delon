@@ -57,7 +57,7 @@ describe('mock: interceptor', () => {
   function genModule(options: DelonMockConfig, imports: any[] = [], spyConsole = true, providers?: any[]) {
     options = Object.assign(new DelonMockConfig(), options);
     injector = TestBed.configureTestingModule({
-      declarations: [RootCmp],
+      declarations: [RootComponent],
       imports: [
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([
@@ -224,7 +224,7 @@ describe('mock: interceptor', () => {
           selector: 'lazy',
           template: '<router-outlet></router-outlet>',
         })
-        class LayoutComponent {}
+        class LayoutComponent { }
 
         @Component({
           selector: 'child',
@@ -241,10 +241,10 @@ describe('mock: interceptor', () => {
           declarations: [LayoutComponent, ChildComponent],
           imports: [DelonMockModule.forChild(), RouterModule.forChild([{ path: 'child', component: ChildComponent }])],
         })
-        class LazyModule {}
+        class LazyModule { }
 
         loader.stubbedModules = { expected: LazyModule };
-        const fixture = TestBed.createComponent(RootCmp);
+        const fixture = TestBed.createComponent(RootComponent);
         fixture.detectChanges();
         router.navigateByUrl(`/lazy/child`);
         tick(500);
@@ -278,4 +278,4 @@ describe('mock: interceptor', () => {
     <router-outlet></router-outlet>
   `,
 })
-class RootCmp {}
+class RootComponent { }

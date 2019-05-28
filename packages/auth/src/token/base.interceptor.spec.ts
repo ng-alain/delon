@@ -31,6 +31,7 @@ function genModel<T extends ITokenModel>(modelType: new () => T, token: string |
 class MockTokenService implements ITokenService {
   [key: string]: any;
   _data: any;
+  referrer: AuthReferrer = {};
   set(data: ITokenModel): boolean {
     this._data = data;
     return true;
@@ -47,7 +48,6 @@ class MockTokenService implements ITokenService {
   get login_url() {
     return '/login';
   }
-  referrer: AuthReferrer = {};
 }
 
 let otherRes = new HttpResponse();
