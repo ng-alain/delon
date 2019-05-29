@@ -47,8 +47,10 @@ export interface STDataSourceResult {
   ps: number;
   /** 新 `total`，若返回 `undefined` 表示用户受控 */
   total: number;
-  /** 数据 */
+  /** 第一页显示的数据 */
   list: STData[];
+  /** 所有显示的数据 */
+  filteredlist: STData[];
   /** 统计数据 */
   statistical: STStatisticalResults;
 }
@@ -74,6 +76,7 @@ export class STDataSource {
       let retTotal: number;
       let retPs: number;
       let retList: STData[];
+      let retfilteredList: STData[];
       let retPi: number;
       let rawData: any;
       let showPage = page.show;
@@ -139,6 +142,7 @@ export class STDataSource {
                 }
                 result = result.filter(record => values.some(v => onFilter(v, record)));
               });
+            retfilteredList = result;
             return result;
           }),
           // paging
@@ -184,6 +188,7 @@ export class STDataSource {
             ps: retPs,
             total: retTotal,
             list: retList,
+            filteredlist: retfilteredList,
             statistical: this.genStatistical(columns, retList, rawData),
             pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
           });

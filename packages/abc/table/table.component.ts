@@ -76,6 +76,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private clonePage: STPage;
   private copyCog: STConfig;
   _data: STData[] = [];
+  _filtereddata: STData[] = [];
   _statistical: STStatisticalResults = {};
   _isPagination = true;
   _allChecked = false;
@@ -318,6 +319,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         }
         this._data = result.list as STData[];
         this._statistical = result.statistical as STStatisticalResults;
+        this._filtereddata = result.filteredlist as STData[];
         return this._data;
       })
       .then(() => this._refCheck())

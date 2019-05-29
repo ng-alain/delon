@@ -108,6 +108,14 @@ describe('abc: table: data-souce', () => {
             done();
           });
         });
+        it('should return all filtereddata even if page.show is true', done => {
+          options.page.show = true;
+          srv.process(options).then(res => {
+            expect(res.pageShow).toBe(true);
+            expect(res.filteredlist!.length).toBe(DEFAULT.total);
+            done();
+          });
+        });
       });
       describe('without front', () => {
         beforeEach(() => {
@@ -202,6 +210,12 @@ describe('abc: table: data-souce', () => {
         const expectCount = (options.data as any[]).filter(w => w.name.includes(`1`)).length;
         srv.process(options).then(res => {
           expect(res.list.length).toBe(expectCount);
+          done();
+        });
+      });
+      it('should return all filtereddata', done => {
+        srv.process(options).then(res => {
+          expect(res.filteredlist!.length).toBe(res.total);
           done();
         });
       });
