@@ -17,7 +17,7 @@ describe('theme: ModalHelper', () => {
       declarations: [TestModalComponent, TestComponent],
       entryComponents: [TestModalComponent],
     })
-    class TestModule {}
+    class TestModule { }
 
     injector = TestBed.configureTestingModule({ imports: [TestModule] });
     fixture = TestBed.createComponent(TestComponent);
@@ -257,7 +257,7 @@ describe('theme: ModalHelper', () => {
   `,
 })
 class TestModalComponent {
-  id: string = '';
+  id = '';
   ret: any = 'true';
 
   constructor(private modal: NzModalRef) {
@@ -272,4 +272,4 @@ class TestModalComponent {
 }
 
 @Component({ template: `` })
-class TestComponent {}
+class TestComponent { }

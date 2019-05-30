@@ -74,10 +74,10 @@ describe('auth: social.service', () => {
       it(`${item.type} via href`, () => {
         srv.login(item.url, '/', { type: 'href' });
         const ret = injector.get(DOCUMENT).location.href;
-        for (const key in item.be) {
+        Object.keys(item.be).forEach(key => {
           const expected = `${key}=${item.be[key]}`;
           expect(ret).toContain(expected, `muse contain "${expected}"`);
-        }
+        });
       });
 
       it(`${item.type} via window`, fakeAsync(() => {
@@ -85,13 +85,13 @@ describe('auth: social.service', () => {
           injector.get(DA_SERVICE_TOKEN).set(item.model);
           return { closed: true };
         });
-        srv.login(item.url).subscribe(() => {});
+        srv.login(item.url).subscribe(() => { });
         tick(130);
         expect(window.open).toHaveBeenCalled();
         const token = injector.get(DA_SERVICE_TOKEN).get()!;
-        for (const key in item.be) {
+        Object.keys(item.be).forEach(key => {
           expect(token[key]).toContain(item.be[key]);
-        }
+        });
         discardPeriodicTasks();
       }));
     });
@@ -101,7 +101,7 @@ describe('auth: social.service', () => {
         injector.get(DA_SERVICE_TOKEN).set(null);
         return { closed: true };
       });
-      srv.login(MockAuth0.url).subscribe(() => {});
+      srv.login(MockAuth0.url).subscribe(() => { });
       tick(130);
       expect(window.open).toHaveBeenCalled();
       discardPeriodicTasks();
@@ -113,7 +113,7 @@ describe('auth: social.service', () => {
         injector.get(DA_SERVICE_TOKEN).set(null);
         return { closed: false };
       });
-      srv.login(MockAuth0.url).subscribe(() => {});
+      srv.login(MockAuth0.url).subscribe(() => { });
       tick(130);
       expect(window.open).toHaveBeenCalled();
       expect(srv.ngOnDestroy).not.toHaveBeenCalled();
@@ -163,9 +163,9 @@ describe('auth: social.service', () => {
           return;
         }
         const ret = srv.callback(item.url);
-        for (const key in item.be) {
+        Object.keys(item.be).forEach(key => {
           expect(ret[key]).toBe(item.be[key]);
-        }
+        });
       });
     });
   });

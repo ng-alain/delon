@@ -33,10 +33,11 @@ function b64decode(str: string): string {
     (buffer = str.charAt(idx++));
     // character found in table? initialize bit storage and add its ascii value;
     ~buffer &&
-    ((bs = bc % 4 ? bs * 64 + buffer : buffer),
-    // and if not first of each 4 characters,
-    // convert the first 8 bits to one ascii character
-    bc++ % 4)
+      // tslint:disable-next-line: ban-comma-operator
+      ((bs = bc % 4 ? bs * 64 + buffer : buffer),
+        // and if not first of each 4 characters,
+        // convert the first 8 bits to one ascii character
+        bc++ % 4)
       ? (output += String.fromCharCode(255 & (bs >> ((-2 * bc) & 6))))
       : 0
   ) {

@@ -11,11 +11,7 @@ export abstract class AtomicProperty extends FormProperty {
 
   resetValue(value: SFValue, onlySelf: boolean) {
     if (value == null) {
-      if (this.schema.default !== undefined) {
-        value = this.schema.default;
-      } else {
-        value = this.fallbackValue();
-      }
+      value = this.schema.default !== undefined ? this.schema.default : this.fallbackValue();
     }
     this._value = value;
 
@@ -28,5 +24,5 @@ export abstract class AtomicProperty extends FormProperty {
     return this.fallbackValue() !== this.value;
   }
 
-  _updateValue() {}
+  _updateValue() { }
 }

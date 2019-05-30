@@ -2,6 +2,10 @@
 **/*.svg
 **/*.html
 **/test.ts
+
+.stylelintrc
+.prettierrc
+
 _nginx/
 _screenshot/
 node_modules/

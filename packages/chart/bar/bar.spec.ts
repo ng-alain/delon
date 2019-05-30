@@ -86,6 +86,13 @@ describe('chart: bar', () => {
 class TestComponent implements OnInit {
   @ViewChild('comp') comp: G2BarComponent;
   data: any[] = [];
+  delay = 0;
+  @ViewChild('titleTpl') titleTpl: TemplateRef<void>;
+  title: string | TemplateRef<void> | null = 'title';
+  height = PageG2Height;
+  padding: number[];
+  autoLabel = false;
+  color = 'rgba(24, 144, 255, 0.85)';
   ngOnInit(): void {
     for (let i = 0; i < PageG2DataCount; i += 1) {
       this.data.push({
@@ -94,11 +101,4 @@ class TestComponent implements OnInit {
       });
     }
   }
-  delay = 0;
-  @ViewChild('titleTpl') titleTpl: TemplateRef<void>;
-  title: string | TemplateRef<void> | null = 'title';
-  height = PageG2Height;
-  padding: number[];
-  autoLabel = false;
-  color = 'rgba(24, 144, 255, 0.85)';
 }

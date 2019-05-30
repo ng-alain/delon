@@ -10,8 +10,8 @@ import { GlobalFooterModule } from './global-footer.module';
 import { GlobalFooterLink } from './global-footer.types';
 
 class MockWindow {
-  open() {}
   location = new MockLocation();
+  open() { }
 }
 class MockLocation {
   private url: string;

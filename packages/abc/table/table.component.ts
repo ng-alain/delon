@@ -70,22 +70,6 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
-  private unsubscribe$ = new Subject<void>();
-  private totalTpl = ``;
-  private locale: LocaleData = {};
-  private clonePage: STPage;
-  private copyCog: STConfig;
-  _data: STData[] = [];
-  _statistical: STStatisticalResults = {};
-  _isPagination = true;
-  _allChecked = false;
-  _allCheckedDisabled = false;
-  _indeterminate = false;
-  _columns: STColumn[] = [];
-
-  // #region fields
-
-  @Input() data: string | STData[] | Observable<STData[]>;
   /** 请求体配置 */
   @Input()
   get req() {
@@ -94,7 +78,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   set req(value: STReq) {
     this._req = deepMerge({}, this._req, this.cog.req, value);
   }
-  private _req: STReq;
   /** 返回体配置 */
   @Input()
   get res() {
@@ -107,11 +90,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (!Array.isArray(reName.total)) reName.total = reName.total.split('.');
     this._res = item;
   }
-  private _res: STRes;
-  @Input() columns: STColumn[] = [];
-  @Input() @InputNumber() ps = 10;
-  @Input() @InputNumber() pi = 1;
-  @Input() @InputNumber() total = 0;
   /** 分页器配置 */
   @Input()
   get page() {
@@ -130,25 +108,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
     this._page = item;
   }
-  private _page: STPage;
-  _loading = false;
-  /** 是否显示Loading */
-  @Input() loading: boolean | null = null;
-  /** 延迟显示加载效果的时间（防止闪烁） */
-  @Input() @InputNumber() loadingDelay = 0;
-  /** 是否显示边框 */
-  @Input() @InputBoolean() bordered = false;
-  /** table大小 */
-  @Input() size: 'small' | 'middle' | 'default';
-  /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px', x: '300px' }` */
-  @Input() scroll: { y?: string; x?: string };
-  /**
-   * 单排序规则
-   * - 若不指定，则返回：`columnName=ascend|descend`
-   * - 若指定，则返回：`sort=columnName.(ascend|descend)`
-   */
-  @Input() singleSort: STSingleSort | null = null;
-  private _multiSort: STMultiSort | null;
   /** 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 */
   @Input()
   get multiSort() {
@@ -163,7 +122,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       ...(typeof value === 'object' ? value : {}),
     };
   }
-  @Input() rowClassName: STRowClassName;
   @Input()
   set widthMode(value: STWidthMode) {
     this._widthMode = { type: 'default', strictBehavior: 'truncate', ...value };
@@ -171,31 +129,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   get widthMode() {
     return this._widthMode;
   }
-  private _widthMode: STWidthMode;
-  /** `header` 标题 */
-  @Input() header: string | TemplateRef<void>;
-  /** `footer` 底部 */
-  @Input() footer: string | TemplateRef<void>;
-  /** 额外 `body` 顶部内容 */
-  @Input() bodyHeader: TemplateRef<STStatisticalResults>;
-  /** 额外 `body` 内容 */
-  @Input() body: TemplateRef<STStatisticalResults>;
-  @Input() @InputBoolean() expandRowByClick = false;
-  @Input() @InputBoolean() expandAccordion = false;
-  /** `expand` 可展开，当数据源中包括 `expand` 表示展开状态 */
-  @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
-  @Input() noResult: string | TemplateRef<void>;
-  @Input() widthConfig: string[];
-  /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
-  @Input() @InputNumber() rowClickTime = 200;
-  @Input() @InputBoolean() responsive: boolean = true;
-  @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
-  /** 请求异常时回调 */
-  @Output() readonly error = new EventEmitter<STError>();
-  /**
-   * 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动
-   */
-  @Output() readonly change = new EventEmitter<STChange>();
 
   // #endregion
 
@@ -237,6 +170,80 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       .subscribe(() => this.refreshColumns());
   }
 
+  private get routerState() {
+    const { pi, ps, total } = this;
+    return { pi, ps, total };
+  }
+  private unsubscribe$ = new Subject<void>();
+  private totalTpl = ``;
+  private locale: LocaleData = {};
+  private clonePage: STPage;
+  private copyCog: STConfig;
+  _data: STData[] = [];
+  _statistical: STStatisticalResults = {};
+  _isPagination = true;
+  _allChecked = false;
+  _allCheckedDisabled = false;
+  _indeterminate = false;
+  _columns: STColumn[] = [];
+
+  // #region fields
+
+  @Input() data: string | STData[] | Observable<STData[]>;
+  private _req: STReq;
+  private _res: STRes;
+  @Input() columns: STColumn[] = [];
+  @Input() @InputNumber() ps = 10;
+  @Input() @InputNumber() pi = 1;
+  @Input() @InputNumber() total = 0;
+  private _page: STPage;
+  _loading = false;
+  /** 是否显示Loading */
+  @Input() loading: boolean | null = null;
+  /** 延迟显示加载效果的时间（防止闪烁） */
+  @Input() @InputNumber() loadingDelay = 0;
+  /** 是否显示边框 */
+  @Input() @InputBoolean() bordered = false;
+  /** table大小 */
+  @Input() size: 'small' | 'middle' | 'default';
+  /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px', x: '300px' }` */
+  @Input() scroll: { y?: string; x?: string };
+  /**
+   * 单排序规则
+   * - 若不指定，则返回：`columnName=ascend|descend`
+   * - 若指定，则返回：`sort=columnName.(ascend|descend)`
+   */
+  @Input() singleSort: STSingleSort | null = null;
+  private _multiSort: STMultiSort | null;
+  @Input() rowClassName: STRowClassName;
+  private _widthMode: STWidthMode;
+  /** `header` 标题 */
+  @Input() header: string | TemplateRef<void>;
+  /** `footer` 底部 */
+  @Input() footer: string | TemplateRef<void>;
+  /** 额外 `body` 顶部内容 */
+  @Input() bodyHeader: TemplateRef<STStatisticalResults>;
+  /** 额外 `body` 内容 */
+  @Input() body: TemplateRef<STStatisticalResults>;
+  @Input() @InputBoolean() expandRowByClick = false;
+  @Input() @InputBoolean() expandAccordion = false;
+  /** `expand` 可展开，当数据源中包括 `expand` 表示展开状态 */
+  @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
+  @Input() noResult: string | TemplateRef<void>;
+  @Input() widthConfig: string[];
+  /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
+  @Input() @InputNumber() rowClickTime = 200;
+  @Input() @InputBoolean() responsive: boolean = true;
+  @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
+  /** 请求异常时回调 */
+  @Output() readonly error = new EventEmitter<STError>();
+  /**
+   * 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动
+   */
+  @Output() readonly change = new EventEmitter<STChange>();
+
+  private rowClickCount = 0;
+
   cd() {
     this.cdr.detectChanges();
     return this;
@@ -245,9 +252,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   renderTotal(total: string, range: string[]) {
     return this.totalTpl
       ? this.totalTpl
-          .replace('{{total}}', total)
-          .replace('{{range[0]}}', range[0])
-          .replace('{{range[1]}}', range[1])
+        .replace('{{total}}', total)
+        .replace('{{range[0]}}', range[0])
+        .replace('{{range[1]}}', range[1])
       : '';
   }
 
@@ -270,11 +277,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       res[type] = data;
     }
     this.change.emit(res);
-  }
-
-  private get routerState() {
-    const { pi, ps, total } = this;
-    return { pi, ps, total };
   }
 
   // #region data
@@ -413,8 +415,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
     return false;
   }
-
-  private rowClickCount = 0;
   private closeOtherExpand(item: STData) {
     if (this.expandAccordion === false) return;
     this._data.filter(i => i !== item).forEach(i => (i.expand = false));

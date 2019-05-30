@@ -7,6 +7,7 @@ export const DA_SERVICE_TOKEN = new InjectionToken<ITokenService>('DA_SERVICE_TO
   factory: DA_SERVICE_TOKEN_FACTORY,
 });
 
+// tslint:disable-next-line: interface-name
 export interface ITokenModel {
   [key: string]: any;
 
@@ -17,7 +18,14 @@ export interface AuthReferrer {
   url?: string | null | undefined;
 }
 
+// tslint:disable-next-line: interface-name
 export interface ITokenService {
+  /** 获取登录地址 */
+  readonly login_url: string | undefined;
+
+  /** 获取授权失败前路由信息 */
+  readonly referrer?: AuthReferrer;
+
   set(data: ITokenModel | null): boolean;
 
   /**
@@ -37,10 +45,4 @@ export interface ITokenService {
   clear(): void;
 
   change(): Observable<ITokenModel | null>;
-
-  /** 获取登录地址 */
-  readonly login_url: string | undefined;
-
-  /** 获取授权失败前路由信息 */
-  readonly referrer?: AuthReferrer;
 }
