@@ -7,10 +7,6 @@
     "**/dist/*/**": true,
     "**/coverage/*/**": true
   },
-  "html.format.wrapAttributes": "force-aligned",
-  "html.format.wrapLineLength": 100,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true

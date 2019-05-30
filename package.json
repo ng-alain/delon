@@ -132,7 +132,6 @@
     "readline-sync": "^1.4.9",
     "stream": "0.0.2",
     "stylelint": "^10.0.1",
-    "stylelint-config-css-modules": "^1.4.0",
     "stylelint-config-prettier": "^5.1.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^18.3.0",

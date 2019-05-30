@@ -8,7 +8,6 @@
   ],
   "rules": {
     // Angular parts
-    // [max-line-length, object-literal-key-quotes, quotemark] use prettier config
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
