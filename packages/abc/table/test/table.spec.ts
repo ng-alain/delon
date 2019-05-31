@@ -9,15 +9,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Observable, Subject } from 'rxjs';
 
-import {
-  en_US,
-  ALAIN_I18N_TOKEN,
-  DatePipe,
-  DelonLocaleModule,
-  DelonLocaleService,
-  DrawerHelper,
-  ModalHelper,
-} from '@delon/theme';
+import { en_US, ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, ModalHelper } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
 import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 
@@ -88,13 +80,7 @@ describe('abc: table', () => {
   let comp: STComponent;
   let i18nSrv: AlainI18NService;
 
-  function genModule(other: {
-    template?: string;
-    i18n?: boolean;
-    minColumn?: boolean;
-    providers?: any[];
-    createComp?: boolean;
-  }) {
+  function genModule(other: { template?: string; i18n?: boolean; minColumn?: boolean; providers?: any[]; createComp?: boolean }) {
     other = {
       template: '',
       i18n: false,
@@ -218,9 +204,7 @@ describe('abc: table', () => {
         describe('with radio', () => {
           it(`should be render checkbox`, done => {
             page.newColumn([{ title: 'RADIOname', index: 'id', type: 'radio' }]).then(() => {
-              page
-                .expectHead('RADIOname', 'id')
-                .expectElCount('.st__body .ant-radio-wrapper', PS, `muse be ${PS} radio in body`);
+              page.expectHead('RADIOname', 'id').expectElCount('.st__body .ant-radio-wrapper', PS, `muse be ${PS} radio in body`);
               done();
             });
           });
@@ -530,6 +514,22 @@ describe('abc: table', () => {
                 {
                   text: 'del',
                   format: a => `<div class="j-btn-format">${a.id}</div>`,
+                },
+              ],
+            },
+          ];
+          page.newColumn(columns).then(() => {
+            page.expectElCount('.j-btn-format', PS);
+            done();
+          });
+        });
+        it('should custom render text via text function', done => {
+          const columns: STColumn[] = [
+            {
+              title: '',
+              buttons: [
+                {
+                  text: a => `<div class="j-btn-format">${a.id}</div>`,
                 },
               ],
             },
@@ -912,9 +912,7 @@ describe('abc: table', () => {
           page.go(2);
           let load = 0;
           spyOn(context.comp as any, '_load').and.callFake(() => ++load);
-          const pc = dl
-            .query(By.directive(NzPaginationComponent))
-            .injector.get<NzPaginationComponent>(NzPaginationComponent);
+          const pc = dl.query(By.directive(NzPaginationComponent)).injector.get<NzPaginationComponent>(NzPaginationComponent);
           expect(load).toBe(0);
           pc.onPageSizeChange(10);
           fixture.detectChanges();
@@ -1260,9 +1258,7 @@ describe('abc: table', () => {
           it('should be sorting', () => {
             fixture.detectChanges();
             comp.sort(comp._columns[0], 0, 'descend');
-            const sortList = comp._columns
-              .filter(item => item._sort && item._sort.enabled && item._sort.default)
-              .map(item => item._sort);
+            const sortList = comp._columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort);
             expect(sortList.length).toBe(1);
             expect(sortList[0].default).toBe('descend');
           });
@@ -1273,9 +1269,7 @@ describe('abc: table', () => {
             fixture.detectChanges();
             comp.sort(comp._columns[0], 0, 'descend');
             comp.sort(comp._columns[1], 0, 'ascend');
-            const sortList = comp._columns
-              .filter(item => item._sort && item._sort.enabled && item._sort.default)
-              .map(item => item._sort);
+            const sortList = comp._columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort);
             expect(sortList.length).toBe(2);
             expect(sortList[0].default).toBe('descend');
             expect(sortList[1].default).toBe('ascend');
@@ -1772,9 +1766,7 @@ describe('abc: table', () => {
     }
     /** 获取标头 */
     getHead(name: string) {
-      const el = (dl.nativeElement as HTMLElement).querySelector(
-        `.ant-table-thead th[data-col="${name}"]`,
-      ) as HTMLElement;
+      const el = (dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th[data-col="${name}"]`) as HTMLElement;
       return el;
     }
     clickHead(name: string, cls: string): this {
