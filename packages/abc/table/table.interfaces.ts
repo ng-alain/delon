@@ -488,7 +488,7 @@ export interface STColumnButton {
   /**
    * 文本
    */
-  text?: string;
+  text?: string | ((record: STData, btn: STColumnButton) => string);
   /**
    * 文本 i18n
    */
@@ -498,7 +498,8 @@ export interface STColumnButton {
    */
   icon?: string | STIcon;
   /**
-   * 格式化文本，较高调用频率，请勿过多复杂计算免得产生性能问题
+   * 格式化文本
+   * @deprecated 使用 `text` 代替
    */
   format?: (record: STData, btn: STColumnButton) => string;
   /**
@@ -719,19 +720,7 @@ export interface STColumnTagValue {
    * - 预设：geekblue,blue,purple,success,red,volcano,orange,gold,lime,green,cyan
    * - 色值：#f50,#ff0
    */
-  color?:
-    | 'geekblue'
-    | 'blue'
-    | 'purple'
-    | 'success'
-    | 'red'
-    | 'volcano'
-    | 'orange'
-    | 'gold'
-    | 'lime'
-    | 'green'
-    | 'cyan'
-    | string;
+  color?: 'geekblue' | 'blue' | 'purple' | 'success' | 'red' | 'volcano' | 'orange' | 'gold' | 'lime' | 'green' | 'cyan' | string;
 }
 
 export type STChangeType = 'pi' | 'ps' | 'checkbox' | 'radio' | 'sort' | 'filter' | 'click' | 'dblClick' | 'expand';

@@ -252,9 +252,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   renderTotal(total: string, range: string[]) {
     return this.totalTpl
       ? this.totalTpl
-        .replace('{{total}}', total)
-        .replace('{{range[0]}}', range[0])
-        .replace('{{range[1]}}', range[1])
+          .replace('{{total}}', total)
+          .replace('{{range[0]}}', range[0])
+          .replace('{{range[1]}}', range[1])
       : '';
   }
 
@@ -460,11 +460,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c =>
-        this._data.forEach(
-          (i, idx) => (i._values[c.__point] = { text: this.dataSource.getNoIndex(i, c, idx), org: idx }),
-        ),
-      );
+      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
 
     return this.cd();
   }
@@ -645,8 +641,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   _btnText(record: STData, btn: STColumnButton) {
-    if (btn.format) return btn.format(record, btn);
-    return btn.text || '';
+    // tslint:disable-next-line: deprecation
+    if (btn.format) {
+      // tslint:disable-next-line: deprecation
+      return btn.format(record, btn);
+    }
+    return typeof btn.text === 'function' ? btn.text(record, btn) : btn.text || '';
   }
 
   _validBtns(item: STData, col: STColumn): STColumnButton[] {

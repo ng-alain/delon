@@ -292,10 +292,10 @@ Property | Description | Type | Default
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
-`[text]` | Text of button, coexist with icon | `string` | -
+`[text]` | Text of button, coexist with icon | `string | (record: STData, btn: STColumnButton) => string` | -
 `[icon]` | Icon of button, coexist with text | `string | STIcon` | -
 `[i18n]` | I18n key of button | `string` | -
-`[format]` | Format value of button text | `(record: STData, btn: STColumnButton) => string` | -
+`(deprecated) [format]` | Format value of button text | `(record: STData, btn: STColumnButton) => string` | -
 `[type]` | Type of button | `none,del,modal,static,drawer,link` | -
 `[click]` | Click callback; <br>**function** when `type=modal` will only fire when `confirmed`<br>**reload** Refresh current page<br>**load** load `1` page | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | -
 `[pop]` | Whether to pop confirm | `string` | -
