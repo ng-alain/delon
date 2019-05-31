@@ -21,14 +21,7 @@ import { tryAddFile } from '../utils/alain';
 import { HMR_CONTENT } from '../utils/contents';
 import { addFiles } from '../utils/file';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
-import {
-  addPackageToPackageJson,
-  getJSON,
-  getPackage,
-  overwriteJSON,
-  overwritePackage,
-  scriptsToAngularJson,
-} from '../utils/json';
+import { addPackageToPackageJson, getJSON, getPackage, overwriteJSON, overwritePackage, scriptsToAngularJson } from '../utils/json';
 import { VERSION, ZORROVERSION } from '../utils/lib-versions';
 import { getProject, Project } from '../utils/project';
 import { Schema as ApplicationOptions } from './schema';
@@ -94,10 +87,7 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     );
     // i18n
     if (options.i18n) {
-      addPackageToPackageJson(host, [
-        `@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`,
-        `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`,
-      ]);
+      addPackageToPackageJson(host, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
     }
     return host;
   };
@@ -156,14 +146,14 @@ function addCodeStylesToPackageJson() {
     const json = getPackage(host);
     if (json == null) return host;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
-    json.scripts['lint:ts'] = `tslint -p src/tsconfig.app.json -c tslint.json 'src/**/*.ts'`;
-    json.scripts['lint:style'] = `stylelint 'src/**/*.less' --syntax less`;
+    json.scripts['lint:ts'] = `tslint -p src/tsconfig.app.json -c tslint.json \"src/**/*.ts\" --fix`;
+    json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
     json.scripts['lint-staged'] = `lint-staged`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
     json['lint-staged'] = {
       '*.{cmd,html,json,md,sh,txt,xml,yml}': ['editorconfig-tools fix', 'git add'],
-      '*.ts': ['npm run lint:ts', 'prettier --write', 'git add'],
-      '*.less': ['npm run lint:style', 'prettier --write', 'git add'],
+      '*.ts': ['npm run lint:ts', 'git add'],
+      '*.less': ['npm run lint:style', 'git add'],
       ignore: ['src/assets/*'],
     };
     overwritePackage(host, json);
@@ -171,18 +161,8 @@ function addCodeStylesToPackageJson() {
     const tsLint = getJSON(host, 'tslint.json', 'rules');
     tsLint.rules.curly = false;
     tsLint.rules['use-host-property-decorator'] = false;
-    tsLint.rules['directive-selector'] = [
-      true,
-      'attribute',
-      [project.prefix, 'passport', 'exception', 'layout', 'header'],
-      'camelCase',
-    ];
-    tsLint.rules['component-selector'] = [
-      true,
-      'element',
-      [project.prefix, 'passport', 'exception', 'layout', 'header'],
-      'kebab-case',
-    ];
+    tsLint.rules['directive-selector'] = [true, 'attribute', [project.prefix, 'passport', 'exception', 'layout', 'header'], 'camelCase'];
+    tsLint.rules['component-selector'] = [true, 'element', [project.prefix, 'passport', 'exception', 'layout', 'header'], 'kebab-case'];
     overwriteJSON(host, 'tslint.json', tsLint);
     // app tslint
     const sourceTslint = `${project.sourceRoot}/tslint.json`;
@@ -280,11 +260,7 @@ function addStyle() {
       `  <div class="preloader"><div class="cs-loader"><div class="cs-loader-inner"><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label></div></div>\n`,
     );
     // add styles
-    addFiles(
-      host,
-      [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`],
-      overwriteDataFileRoot,
-    );
+    addFiles(host, [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`], overwriteDataFileRoot);
 
     return host;
   };
