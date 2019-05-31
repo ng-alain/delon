@@ -90,6 +90,14 @@ describe('form: widget: date', () => {
     });
 
     describe('when not specify displayFormat', () => {
+      it('should display yyyy with year mode ', () => {
+        const s: SFSchema = {
+          properties: { a: { type: 'string', ui: { widget, mode: 'year' } } },
+        };
+        page.newSchema(s);
+        const comp = getComp();
+        expect(comp.displayFormat).toBe('yyyy');
+      });
       it('should display yyyy-MM with month mode ', () => {
         const s: SFSchema = {
           properties: { a: { type: 'string', ui: { widget, mode: 'month' } } },

@@ -28,6 +28,9 @@ export class DateWidget extends ControlWidget implements OnInit {
     }
     if (!ui.displayFormat) {
       switch (this.mode) {
+        case 'year':
+          this.displayFormat = `yyyy`;
+          break;
         case 'month':
           this.displayFormat = `yyyy-MM`;
           break;

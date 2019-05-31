@@ -33,6 +33,7 @@ Property     | Description                  | Type      | Default
 
 Property     | Description                  | Type      | Default
 -------------|------------------------------|-----------|--------
+`[mode]`        | Render mode | `date,week,month,year` | `date`
 `[size]`        | Size of the `nz-date-picker`  | `string` | -
 `[placeholder]` | Placeholder of date input | `string` | -
 `[displayFormat]` | Display format([nzFormat](https://ng.ant.design/components/date-picker/en#api)) | `string` | `yyyy-MM-dd HH:mm:ss`
