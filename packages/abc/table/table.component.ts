@@ -673,7 +673,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   /**
    * 导出当前页，确保已经注册 `XlsxModule`
-   * @param newData 重新指定数据，例如希望导出所有数据非常有用；若为 `true` 表示使用 `filteredData` 数据
+   * @param newData 重新指定数据；若为 `true` 表示使用 `filteredData` 数据
    * @param opt 额外参数
    */
   export(newData?: STData[] | true, opt?: STExportOptions) {

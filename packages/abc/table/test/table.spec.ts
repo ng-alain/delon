@@ -1532,13 +1532,15 @@ describe('abc: table', () => {
           comp.export();
           expect(exportSrv.export).toHaveBeenCalled();
         });
-        it('when data is true', () => {
+        it('when data is true', fakeAsync(() => {
           context.data = genData(1);
           fixture.detectChanges();
+          spyOnProperty(comp, 'filteredData', 'get').and.returnValue(Promise.resolve([]));
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export(true);
+          tick();
           expect(exportSrv.export).toHaveBeenCalled();
-        });
+        }));
         it('when data is observable data', () => {
           context.data = of(genData(1));
           fixture.detectChanges();
