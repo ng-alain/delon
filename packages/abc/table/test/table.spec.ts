@@ -911,13 +911,16 @@ describe('abc: table', () => {
         fixture.whenStable().then(() => {
           page.go(2);
           let load = 0;
-          spyOn(context.comp as any, '_load').and.callFake(() => ++load);
+          spyOn(context.comp as any, 'loadData').and.callFake(() => {
+            ++load;
+            return Promise.resolve({});
+          });
           const pc = dl.query(By.directive(NzPaginationComponent)).injector.get<NzPaginationComponent>(NzPaginationComponent);
           expect(load).toBe(0);
           pc.onPageSizeChange(10);
           fixture.detectChanges();
           expect(load).toBe(1);
-          done();
+          setTimeout(done);
         });
       });
     });
@@ -1501,6 +1504,17 @@ describe('abc: table', () => {
           done();
         });
       });
+      it('#filteredData', done => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          expect((comp.data as any[]).length).toBe(DEFAULTCOUNT);
+          expect(comp._data.length).toBe(PS);
+          comp.filteredData.then(list => {
+            expect(list.length).toBe(DEFAULTCOUNT);
+            done();
+          });
+        });
+      });
     });
     describe('#export', () => {
       let exportSrv: STExport;
@@ -1518,6 +1532,15 @@ describe('abc: table', () => {
           comp.export();
           expect(exportSrv.export).toHaveBeenCalled();
         });
+        it('when data is true', fakeAsync(() => {
+          context.data = genData(1);
+          fixture.detectChanges();
+          spyOnProperty(comp, 'filteredData', 'get').and.returnValue(Promise.resolve([]));
+          expect(exportSrv.export).not.toHaveBeenCalled();
+          comp.export(true);
+          tick();
+          expect(exportSrv.export).toHaveBeenCalled();
+        }));
         it('when data is observable data', () => {
           context.data = of(genData(1));
           fixture.detectChanges();

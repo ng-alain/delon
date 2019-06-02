@@ -6,13 +6,16 @@ const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 
 export const USERS = {
   // 支持值为 Object 和 Array
   'GET /users': (req: MockRequest) => {
-    const total = req.queryString.total || 100;
+    const total = +(req.queryString.total || 100);
     const res: any = {
       list: [],
       total,
     };
     const onlyList = req.queryString!.field === 'list';
-    const num = onlyList ? total : +req.queryString.ps;
+    let num = onlyList ? total : +req.queryString.ps;
+    if (isNaN(num) || num <= 0) {
+      num = total;
+    }
     for (let i = 0; i < num; i++) {
       res.list.push({
         id: i + 1,

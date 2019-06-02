@@ -27,6 +27,7 @@ import {
 export interface STDataSourceOptions {
   pi: number;
   ps: number;
+  paginator: boolean;
   data: string | STData[] | Observable<STData[]>;
   total: number;
   req: STReq;
@@ -64,13 +65,13 @@ export class STDataSource {
     @Host() private ynPipe: YNPipe,
     @Host() private numberPipe: DecimalPipe,
     private dom: DomSanitizer,
-  ) { }
+  ) {}
 
   process(options: STDataSourceOptions): Promise<STDataSourceResult> {
     return new Promise((resolvePromise, rejectPromise) => {
       let data$: Observable<STData[]>;
       let isRemote = false;
-      const { data, res, total, page, pi, ps, columns } = options;
+      const { data, res, total, page, pi, ps, paginator, columns } = options;
       let retTotal: number;
       let retPs: number;
       let retList: STData[];
@@ -143,7 +144,7 @@ export class STDataSource {
           }),
           // paging
           map((result: STData[]) => {
-            if (page.front) {
+            if (paginator && page.front) {
               const maxPageIndex = Math.ceil(result.length / ps);
               retPi = Math.max(1, pi > maxPageIndex ? maxPageIndex : pi);
               retTotal = result.length;
@@ -227,20 +228,22 @@ export class STDataSource {
   }
 
   private getByHttp(url: string, options: STDataSourceOptions): Observable<{}> {
-    const { req, page, pi, ps, singleSort, multiSort, columns } = options;
+    const { req, page, paginator, pi, ps, singleSort, multiSort, columns } = options;
     const method = (req.method || 'GET').toUpperCase();
     let params = {};
     const reName = req.reName as STReqReNameType;
-    if (req.type === 'page') {
-      params = {
-        [reName.pi as string]: page.zeroIndexed ? pi - 1 : pi,
-        [reName.ps as string]: ps,
-      };
-    } else {
-      params = {
-        [reName.skip as string]: (pi - 1) * ps,
-        [reName.limit as string]: ps,
-      };
+    if (paginator) {
+      if (req.type === 'page') {
+        params = {
+          [reName.pi as string]: page.zeroIndexed ? pi - 1 : pi,
+          [reName.ps as string]: ps,
+        };
+      } else {
+        params = {
+          [reName.skip as string]: (pi - 1) * ps,
+          [reName.limit as string]: ps,
+        };
+      }
     }
     params = {
       ...params,
