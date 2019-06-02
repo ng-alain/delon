@@ -72,10 +72,11 @@ config: STConfig
 `(change)` | 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` 变动 | `EventEmitter<STChange>` | -
 `(error)` | 异常时回调 | `EventEmitter<STError>` | -
 
-### 组件方法
+### 组件属性与方法
 
 名称 | 说明
 --- | -----
+`filteredData` | 获取过滤后所有数据<br>- 本地数据：包含排序、过滤后不分页数据<br>- 远程数据：不传递 `pi`、`ps` 两个参数
 `resetColumns()` | 重置列描述
 `load(pi = 1, extraParams?: any, options?: STLoadOptions)` | 加载指定页
 `reload(extraParams?: any, options?: STLoadOptions)` | 刷新当前页
@@ -85,7 +86,7 @@ config: STConfig
 `clearStatus()` | 清空所有状态（包含单多选、排序、过滤状态）
 `clearCheck()` | 清除所有 `checkbox`
 `clearRadio()` | 清除所有 `radio`
-`export(newData?: any[], opt?: STExportOptions)` | 导出Excel，确保已经导入 `XlsxModule`
+`export(newData?: STData[] | true, opt?: STExportOptions)` | 导出Excel，确保已经导入 `XlsxModule`
 
 一些细节：
 
@@ -278,7 +279,7 @@ class TestComponent {
 `[text]` | 文本与图标共存 | `string | (record: STData, btn: STColumnButton) => string` | -
 `[icon]` | 图标与文本共存 | `string | STIcon` | -
 `[i18n]` | 文本i18n | `string` | -
-`(deprecated) [format]` | 格式化文本 | `(record: STData, btn: STColumnButton) => string` | -
+(deprecated) `[format]` | 格式化文本 | `(record: STData, btn: STColumnButton) => string` | -
 `[type]` | 按钮类型 | `none,del,modal,static,drawer,link` | -
 `[click]` | 点击回调；**函数：** `type=modal` 只会在 `确认` 时触发且 `modal` 参数有效<br>**reload：** 重新刷新当前页<br>**load：** 重新加载数据，并重置页码为：`1` | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | -
 `[pop]` | 是否需要气泡确认框 | `string` | -

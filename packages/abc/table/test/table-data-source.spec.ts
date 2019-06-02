@@ -62,6 +62,7 @@ describe('abc: table: data-souce', () => {
       res: deepCopy(def.res),
       page: deepCopy(def.page),
       columns: [{ title: '', index: 'id' }],
+      paginator: true,
     };
     currentyPipe = new CNCurrencyPipe('zh-CN');
     datePipe = new DatePipe();
@@ -227,6 +228,23 @@ describe('abc: table: data-souce', () => {
         options.data = of(genData(2));
         srv.process(options).then(res => {
           expect(res.list.length).toBe(2);
+          done();
+        });
+      });
+    });
+    describe('[filteredData]', () => {
+      beforeEach(() => {
+        options.paginator = false;
+        options.data = genData(20);
+      });
+      it('should be always return full data when include filter', done => {
+        options.columns[0].filter = {
+          menus: [{ text: '', value: '1', checked: true }],
+          fn: (filter: STColumnFilterMenu, record: any) => record.name.includes(filter.value),
+        };
+        const expectCount = (options.data as any[]).filter(w => w.name.includes(`1`)).length;
+        srv.process(options).then(res => {
+          expect(res.list.length).toBe(expectCount);
           done();
         });
       });
@@ -551,6 +569,25 @@ describe('abc: table: data-souce', () => {
         };
         srv.process(options).then(() => {
           expect(resParams.id).toBe('a1,b1');
+          done();
+        });
+      });
+    });
+    describe('[filteredData]', () => {
+      beforeEach(() => {
+        genModule();
+        options.paginator = false;
+        options.data = '/mockurl';
+      });
+      it(`should be include [pi] & [ps] request params`, done => {
+        let params: any;
+        spyOn(http, 'request').and.callFake((_method: string, _url: string, opt: any) => {
+          params = opt.params;
+          return of([]);
+        });
+        srv.process(options).then(() => {
+          expect(params.pi).toBeUndefined();
+          expect(params.ps).toBeUndefined();
           done();
         });
       });

@@ -14,21 +14,34 @@ title:
 Save the table data as Excel.
 
 ```ts
-import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc';
+import { Component, ViewChild } from '@angular/core';
+import { STColumn, STComponent } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
   template: `
     <button nz-button (click)="st.export()">Export</button>
-    <button nz-button (click)="st.export(exportData, { filename: 'via-data.xlsx', sheetname: 'user' })">Export via data</button>
-    <st #st [data]="url" [req]="{params: params}" [columns]="columns" class="mt-sm"></st>
-    `,
+    <button nz-button (click)="st.export(true)">Export Filtered Data</button>
+    <button nz-button (click)="st.export(data, { filename: 'via-data.xlsx', sheetname: 'user' })">Export via data</button>
+    <st #st [data]="data" [columns]="columns" class="mt-sm"></st>
+  `,
 })
 export class DemoComponent {
-  url = `/users?total=100`;
-  params = { a: 1, b: 2 };
-  // mock
+  @ViewChild('st') st: STComponent;
+  data: any[] = Array(10000)
+    .fill({})
+    .map((_item: any, index: number) => {
+      return {
+        id: index + 1,
+        picture: {
+          thumbnail: `https://randomuser.me/api/portraits/thumb/women/${Math.min(index + 1, 30)}.jpg`,
+        },
+        email: `e${index + 1}@qq.com`,
+        phone: `phone - ${index + 1}`,
+        price: Math.ceil(Math.random() * 10000000) + 10000000,
+        registered: new Date(),
+      };
+    });
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
     {
@@ -40,24 +53,16 @@ export class DemoComponent {
     },
     { title: '邮箱', index: 'email' },
     { title: '电话', index: 'phone' },
-    { title: '数字', index: 'price', type: 'number' },
+    {
+      title: '数字',
+      index: 'price',
+      type: 'number',
+      sort: {
+        compare: (a, b) => a.price - b.price,
+      },
+    },
     { title: '货币', index: 'price', type: 'currency' },
     { title: '注册时间', type: 'date', index: 'registered' },
   ];
-  // mock export data
-  exportData: any[] = Array(10000)
-    .fill({})
-    .map((_item: any, index: number) => {
-      return {
-        id: { value: index + 1 },
-        picture: {
-          thumbnail: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`,
-        },
-        email: `e${index + 1}@qq.com`,
-        phone: `phone - ${index + 1}`,
-        price: Math.ceil(Math.random() * 10000000) + 10000000,
-        registered: new Date(),
-      };
-    });
 }
 ```

@@ -72,10 +72,11 @@ Property | Description | Type | Default
 `(change)` | Events | `EventEmitter<STChange>` | -
 `(error)` | Error event | `EventEmitter<STError>` | -
 
-### Methods
+### Properties & Methods
 
 Name | Description
 ---- | -----------
+`filteredData` | Get all data after filtering & sorting<br>- Local data: including sorting, filtering<br>- Remote data: Don't pass `pi`, `ps` parameters in http request
 `resetColumns()` | Reset columns
 `load(pi = 1, extraParams?: any, options?: STLoadOptions)` | Load specified page
 `reload(extraParams?: any, options?: STLoadOptions)` | Refresh current page
@@ -85,7 +86,7 @@ Name | Description
 `clearStatus()` | Clean all status (like this: single multi-select, sort, filter status)
 `clearCheck()` | Clear all `checkbox`
 `clearRadio()` | Clear all `radio`
-`export(newData?: any[], opt?: STExportOptions)` | Export Excel and make sure you have imported `XlsxModule`
+`export(newData?: STData[] | true, opt?: STExportOptions)` | Export Excel and make sure you have imported `XlsxModule`
 
 Some details:
 
@@ -295,7 +296,7 @@ Property | Description | Type | Default
 `[text]` | Text of button, coexist with icon | `string | (record: STData, btn: STColumnButton) => string` | -
 `[icon]` | Icon of button, coexist with text | `string | STIcon` | -
 `[i18n]` | I18n key of button | `string` | -
-`(deprecated) [format]` | Format value of button text | `(record: STData, btn: STColumnButton) => string` | -
+(deprecated) `[format]` | Format value of button text | `(record: STData, btn: STColumnButton) => string` | -
 `[type]` | Type of button | `none,del,modal,static,drawer,link` | -
 `[click]` | Click callback; <br>**function** when `type=modal` will only fire when `confirmed`<br>**reload** Refresh current page<br>**load** load `1` page | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | -
 `[pop]` | Whether to pop confirm | `string` | -
