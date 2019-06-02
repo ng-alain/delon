@@ -14,6 +14,25 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [7.6.0](https://github.com/ng-alain/delon/compare/7.5.0...7.6.0) (2019-06-02)
+
+### Scaffold
+
+* 重构代码风格指南配置 ([#1119](https://github.com/ng-alain/ng-alain/pull/1119))
+
+### Bug Fixes
+
+* **abc:st:** 修复子菜单空白区域无法触发事件 ([#585](https://github.com/ng-alain/delon/issues/585)) ([3f7f9a5](https://github.com/ng-alain/delon/commit/3f7f9a5))
+* **cli:** 修复 windows 下部分命令行失效 ([#586](https://github.com/ng-alain/delon/issues/586)) ([1782498](https://github.com/ng-alain/delon/commit/1782498))
+
+### Features
+
+* **abc:st:** 新增 `filteredData` 属性用于获取过滤后所有数据 ([#588](https://github.com/ng-alain/delon/issues/588)) ([f74e589](https://github.com/ng-alain/delon/commit/f74e589))
+* **abc:st:** 新增虚拟滚动条，用于巨量数据加载 ([#590](https://github.com/ng-alain/delon/issues/590)) ([1a88bfd](https://github.com/ng-alain/delon/commit/1a88bfd))
+* **abc:st:** 新增按钮 `text` 属性支持函数 ([#585](https://github.com/ng-alain/delon/issues/585)) ([3f7f9a5](https://github.com/ng-alain/delon/commit/3f7f9a5))
+* **form:date:** 新增 `year` 模式 ([#587](https://github.com/ng-alain/delon/issues/587)) ([935b8c2](https://github.com/ng-alain/delon/commit/935b8c2))
+
+
 # [7.5.0](https://github.com/ng-alain/delon/compare/7.4.0...7.5.0) (2019-05-25)
 
 ### Scaffold
