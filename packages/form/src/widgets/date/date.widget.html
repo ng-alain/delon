@@ -6,6 +6,22 @@
               [showTitle]="schema.title">
   <ng-container [ngSwitch]="mode">
 
+    <nz-year-picker *ngSwitchCase="'year'"
+                    [nzDisabled]="disabled"
+                    [nzSize]="ui.size"
+                    [nzFormat]="displayFormat"
+                    [(ngModel)]="displayValue"
+                    (ngModelChange)="_change($event)"
+                    [nzAllowClear]="i.allowClear"
+                    [nzClassName]="ui.className"
+                    [nzDisabledDate]="ui.disabledDate"
+                    [nzLocale]="ui.locale"
+                    [nzPlaceHolder]="ui.placeholder"
+                    [nzPopupStyle]="ui.popupStyle"
+                    [nzDropdownClassName]="ui.dropdownClassName"
+                    (nzOnOpenChange)="_openChange($event)"
+                    [nzRenderExtraFooter]="ui.renderExtraFooter"></nz-year-picker>
+
     <nz-month-picker *ngSwitchCase="'month'"
                      [nzDisabled]="disabled"
                      [nzSize]="ui.size"

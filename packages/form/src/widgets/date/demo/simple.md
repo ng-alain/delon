@@ -20,8 +20,9 @@ import { SFSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"
-  (formChange)="change($event)"></sf>`,
+  template: `
+    <sf [schema]="schema" (formSubmit)="submit($event)" (formChange)="change($event)"></sf>
+  `,
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -37,6 +38,10 @@ export class DemoComponent {
       date_number: {
         type: 'number',
         ui: { widget: 'date' },
+      },
+      year: {
+        type: 'number',
+        ui: { widget: 'date', mode: 'year', format: 'YYYY' },
       },
       month: {
         type: 'string',
