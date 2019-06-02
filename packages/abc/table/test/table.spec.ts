@@ -1515,6 +1515,14 @@ describe('abc: table', () => {
           });
         });
       });
+      it('#cdkVirtualScrollViewport', done => {
+        context.virtualScroll = true;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
+          done();
+        });
+      });
     });
     describe('#export', () => {
       let exportSrv: STExport;
@@ -1903,6 +1911,7 @@ describe('abc: table', () => {
       [widthMode]="widthMode"
       [loading]="loading"
       [loadingDelay]="loadingDelay"
+      [virtualScroll]="virtualScroll"
       [bordered]="bordered"
       [size]="size"
       [scroll]="scroll"
@@ -1941,6 +1950,7 @@ class TestComponent {
   expandRowByClick = false;
   expandAccordion = false;
   widthMode: STWidthMode = {};
+  virtualScroll = false;
 
   error() {}
   change() {}

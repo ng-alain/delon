@@ -30,9 +30,10 @@
     }
   }
   // 清除页码底部间距，在大部分列表中会包裹 `nz-card` 导致底部间距过大，若有需求可自行使用 `mb-md` 来调整
-  .@{ant-prefix}-table-pagination.@{ant-prefix}-pagination {
+  .@{ant-prefix}-table ~ nz-pagination > .@{ant-prefix}-pagination {
     margin-bottom: 0;
   }
+
   @media screen and (min-width: @nz-table-rep-min-width) {
     &__width {
       &-strict {

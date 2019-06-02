@@ -17,6 +17,7 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -59,6 +60,7 @@ import {
   STStatisticalResults,
   STWidthMode,
 } from './table.interfaces';
+import { NzTableComponent } from 'ng-zorro-antd';
 
 @Component({
   selector: 'st',
@@ -70,6 +72,7 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
+  @ViewChild('table') orgTable: NzTableComponent;
   /** 请求体配置 */
   @Input()
   get req() {
@@ -202,12 +205,17 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() loading: boolean | null = null;
   /** 延迟显示加载效果的时间（防止闪烁） */
   @Input() @InputNumber() loadingDelay = 0;
+  @Input() loadingIndicator: TemplateRef<void>;
   /** 是否显示边框 */
   @Input() @InputBoolean() bordered = false;
   /** table大小 */
   @Input() size: 'small' | 'middle' | 'default';
   /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px', x: '300px' }` */
   @Input() scroll: { y?: string; x?: string };
+  @Input() @InputBoolean() virtualScroll = false;
+  @Input() @InputNumber() virtualItemSize = 54;
+  @Input() @InputNumber() virtualMaxBufferPx = 200;
+  @Input() @InputNumber() virtualMinBufferPx = 100;
   /**
    * 单排序规则
    * - 若不指定，则返回：`columnName=ascend|descend`
@@ -687,6 +695,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   // #endregion
+
+  get cdkVirtualScrollViewport() {
+    return this.orgTable.cdkVirtualScrollViewport;
+  }
 
   resetColumns() {
     return this.refreshColumns().loadPageData();

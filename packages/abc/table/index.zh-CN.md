@@ -54,8 +54,13 @@ config: STConfig
 `[widthMode]` | 设置表格宽度模式 | `STWidthMode` | -
 `[rowClassName]` | 表格行的类名 | `(record: STData, index: number) => string` | -
 `[loading]` | 页面是否加载中，当指定 `null` 由 st 受控 | `boolean | null` | `null`
+`[loadingIndicator]` | 加载指示符 | `TemplateRef<void>` | -
 `[loadingDelay]` | 延迟显示加载效果的时间（防止闪烁） | `number` | `0`
 `[scroll]` | 横向或纵向支持滚动，也可用于指定滚动区域的宽高度：`{ x: "300px", y: "300px" }` | `{ y?: string; x?: string }` | -
+`[virtualScroll]` | 是否启用虚拟滚动模式，与 `[nzScroll]` 配合使用 | `boolean` | `false`
+`[virtualItemSize]` | 虚拟滚动时每一列的高度，与 [cdk itemSize](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `54`
+`[virtualMaxBufferPx]` | 缓冲区最大像素高度，与 [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `200`
+`[virtualMinBufferPx]` | 缓冲区最小像素高度，低于该值时将加载新结构，与 [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api) 相同 | `number` | `100`
 `[singleSort]` | 单排序规则<br>若不指定，则返回：`columnName=ascend|descend`<br>若指定，则返回：`sort=columnName.(ascend|descend)` | `STSingleSort` | `null`
 `[multiSort]` | 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 | `boolean, STMultiSort` | `false`
 `[rowClickTime]` | 行单击多少时长之类为双击（单位：毫秒） | `number` | `200`
@@ -135,7 +140,8 @@ class TestComponent {
 ----|------|-----|------
 `[front]` | 前端分页，当 `data` 为 `any[]` 或 `Observable<any[]>` 有效 | `boolean` | `true`
 `[zeroIndexed]` | 后端分页是否采用`0`基索引，只在`data`类型为`string`时有效 | `boolean` | `false`
-`[placement]` | 分页方向 | `'left','center','right'` | `'right'`
+`[position]` | 指定分页显示的位置 | `top,bottom,both` | `bottom`
+`[placement]` | 指定分页分页方向 | `left,center,right` | `right`
 `[show]` | 是否显示分页器 | `boolean` | `true`
 `[showSize]` | 是否显示分页器中改变页数 | `boolean` | `false`
 `[pageSizes]` | 分页器中每页显示条目数下拉框值 | `number[]` | `[10, 20, 30, 40, 50]`

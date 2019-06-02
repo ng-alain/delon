@@ -36,8 +36,8 @@ const r = (min: number, max: number) => Math.floor(Math.random() * (max - min + 
 @Component({
   selector: 'app-demo',
   template: `
-  <button nz-button (click)="reload()">Reload</button>
-  <st #st [data]="users" [columns]="columns"></st>
+    <button nz-button (click)="reload()">Reload</button>
+    <st #st [data]="users" [columns]="columns" [page]="{ position: 'both' }"></st>
   `,
 })
 export class DemoComponent {
@@ -53,17 +53,17 @@ export class DemoComponent {
 
   reload() {
     this.users = Array(10)
-    .fill({})
-    .map((_item: any, idx: number) => {
-      return {
-        id: idx + 1,
-        name: `name ${idx + 1}`,
-        age: r(10, 50),
-        tag: r(1, 5),
-        badge: r(1, 5),
-        yn: [ true, false ][r(1, 5) % 2],
-      };
-    });
+      .fill({})
+      .map((_item: any, idx: number) => {
+        return {
+          id: idx + 1,
+          name: `name ${idx + 1}`,
+          age: r(10, 50),
+          tag: r(1, 5),
+          badge: r(1, 5),
+          yn: [true, false][r(1, 5) % 2],
+        };
+      });
   }
 
   constructor() {
