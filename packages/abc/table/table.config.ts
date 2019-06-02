@@ -53,6 +53,7 @@ export class STConfig {
   page?: STPage = {
     front: true,
     zeroIndexed: false,
+    position: 'bottom',
     placement: 'right',
     show: true,
     showSize: false,
@@ -142,4 +143,7 @@ export class STConfig {
     type: 'default',
     strictBehavior: 'truncate',
   };
+  virtualItemSize? = 54;
+  virtualMaxBufferPx? = 200;
+  virtualMinBufferPx? = 100;
 }

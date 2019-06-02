@@ -99,7 +99,11 @@ export interface STPage {
    */
   zeroIndexed?: boolean;
   /**
-   * 分页方向，默认：`right`
+   * 指定分页显示的位置，默认：`bottom`
+   */
+  position?: 'top' | 'bottom' | 'both';
+  /**
+   * 指定分页分页方向，默认：`right`
    */
   placement?: 'left' | 'center' | 'right';
   /**

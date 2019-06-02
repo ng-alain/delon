@@ -54,8 +54,13 @@ Property | Description | Type | Default
 `[widthMode]` | Set the table width mode | `STWidthMode` | -
 `[rowClassName]` | Row class name of table | `(record: STData, index: number) => string` | -
 `[loading]` | Loading status of table, when specifying `null` is controlled by st | `boolean | null` | `null`
+`[loadingIndicator]` | The spinning indicator | `TemplateRef<void>` | -
 `[loadingDelay]` | Specifies a delay in milliseconds for loading state (prevent flush) | `number` | `0`
 `[scroll]` | Whether table can be scrolled in x/y direction, x or y can be a string that indicates the width and height of table body | `{ y?: string; x?: string }` | -
+`[virtualScroll]` | Enable virtual scroll mode，work with `[nzScroll]` | `boolean` | `false`
+`[virtualItemSize]` | The size of the items in the list, same as [cdk itemSize](https://material.angular.io/cdk/scrolling/api) | `number` | `54`
+`[virtualMaxBufferPx]` | The number of pixels worth of buffer to render for when rendering new items, same as [cdk maxBufferPx](https://material.angular.io/cdk/scrolling/api) | `number` | `200`
+`[virtualMinBufferPx]` | The minimum amount of buffer rendered beyond the viewport (in pixels),same as [cdk minBufferPx](https://material.angular.io/cdk/scrolling/api) | `number` | `100`
 `[singleSort]` | Single sort config<br>If not specified, return: `columnName=ascend|descend`<br>If specified, return: `sort=columnName.(ascend|descend)` | `STSingleSort` | `null`
 `[multiSort]` | Whether to mulit-sort, recommended use in URL data source | `boolean, STMultiSort` | `false`
 `[rowClickTime]` | Click twice in the time range for double click, unit is millisecond | `number` | `200`
@@ -135,7 +140,8 @@ Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[front]` | Front paging when `data` is `any[]` or `Observable<any[]>` | `boolean` | `true`
 `[zeroIndexed]` | Whether the backend paging uses the `0` base index (only data is url) | `boolean` | `false`
-`[placement]` | Pager direction | `'left','center','right'` | `'right'`
+`[position]` | Specify the position of Pagination | `top,bottom,both` | `bottom`
+`[placement]` | Specify the direction of Pagination | `left,center,right` | `right`
 `[show]` | Whether to show pager | `boolean` | `true`
 `[showSize]` | Determine whether `ps` can be changed | `boolean` | `false`
 `[pageSizes]` | Specify the sizeChanger options | `number[]` | `[10, 20, 30, 40, 50]`
