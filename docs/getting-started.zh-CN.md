@@ -30,6 +30,8 @@ NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们�
 请先通过 `ng version` 命令确认全局 Angular Cli 版本为 `7.x` (ng-alain目前还不支持Angular8，见 [#1118](https://github.com/ng-alain/ng-alain/issues/1118))，有关如何升级请参考[CLI 命令参考手册](https://angular.cn/cli)。
 
 ```bash
+# Install global @angular/cli
+# yarn global add @angular/cli@7.3.x
 ng new my-project --style less
 cd my-project
 ng add ng-alain
