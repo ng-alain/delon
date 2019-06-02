@@ -699,6 +699,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   get cdkVirtualScrollViewport() {
     return this.orgTable.cdkVirtualScrollViewport;
   }
+
   resetColumns() {
     return this.refreshColumns().loadPageData();
   }
