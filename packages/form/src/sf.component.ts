@@ -239,9 +239,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           widget: property.type,
           ...(property.format && FORMATMAPS[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
-          ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0
-            ? { widget: 'select' }
-            : null),
+          ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null),
           ...this._defUi,
           ...(property.ui as SFUISchemaItem),
           ...uiSchema[uiKey],
@@ -253,13 +251,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
               ui.spanLabelFixed = parentUiSchema.spanLabelFixed;
             }
           } else {
-            if (!ui.spanLabel)
-              ui.spanLabel = typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
-            if (!ui.spanControl)
-              ui.spanControl = typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
+            if (!ui.spanLabel) ui.spanLabel = typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
+            if (!ui.spanControl) ui.spanControl = typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
             if (!ui.offsetControl)
-              ui.offsetControl =
-                typeof parentUiSchema.offsetControl === 'undefined' ? null : parentUiSchema.offsetControl;
+              ui.offsetControl = typeof parentUiSchema.offsetControl === 'undefined' ? null : parentUiSchema.offsetControl;
           }
         } else {
           ui.spanLabel = null;
@@ -429,8 +424,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (newUI) this.ui = newUI;
 
     if (!this.schema || typeof this.schema.properties === 'undefined') throw new Error(`Invalid Schema`);
-    if (this.schema.ui && typeof this.schema.ui === 'string')
-      throw new Error(`Don't support string with root ui property`);
+    if (this.schema.ui && typeof this.schema.ui === 'string') throw new Error(`Don't support string with root ui property`);
 
     this.schema.type = 'object';
 
@@ -448,8 +442,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.cdr.detectChanges();
     this.reset();
 
+    let isFirst = true;
     this.rootProperty.valueChanges.subscribe(value => {
       this._item = { ...this.formData, ...value };
+      if (isFirst) {
+        isFirst = false;
+        return;
+      }
       this.formChange.emit(this._item);
     });
     this.rootProperty.errorsChanges.subscribe(errors => {

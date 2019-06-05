@@ -1,4 +1,4 @@
-import { combineLatest, BehaviorSubject, Observable, Subject } from 'rxjs';
+import { combineLatest, BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { DelonFormConfig } from '../config';
@@ -19,8 +19,8 @@ export abstract class FormProperty {
   widget: Widget<FormProperty>;
   private _errors: ErrorData[] | null = null;
   protected _objErrors: { [key: string]: ErrorData[] } = {};
-  private _valueChanges = new Subject<SFValue>();
-  private _errorsChanges = new Subject<ErrorData[]>();
+  private _valueChanges = new BehaviorSubject<SFValue>(null);
+  private _errorsChanges = new BehaviorSubject<ErrorData[] | null>(null);
   private _visible = true;
   private _visibilityChanges = new BehaviorSubject<boolean>(true);
   private _root: PropertyGroup;
@@ -220,8 +220,9 @@ export abstract class FormProperty {
     const hasCustomError = list != null && list.length > 0;
     if (hasCustomError) {
       list.forEach(err => {
-        if (!err.message)
+        if (!err.message) {
           throw new Error(`The custom validator must contain a 'message' attribute to viewed error text`);
+        }
         err._custom = true;
       });
     }
@@ -254,10 +255,7 @@ export abstract class FormProperty {
 
         if (message) {
           if (~(message as string).indexOf('{')) {
-            message = (message as string).replace(
-              /{([\.a-z0-9]+)}/g,
-              (_v: string, key: string) => err.params![key] || '',
-            );
+            message = (message as string).replace(/{([\.a-z0-9]+)}/g, (_v: string, key: string) => err.params![key] || '');
           }
           err.message = message as string;
         }
