@@ -82,7 +82,7 @@ config: STConfig
 名称 | 说明
 --- | -----
 `filteredData` | 获取过滤后所有数据<br>- 本地数据：包含排序、过滤后不分页数据<br>- 远程数据：不传递 `pi`、`ps` 两个参数
-`resetColumns()` | 重置列描述
+`resetColumns(options?: STResetColumnsOption)` | 重置列描述
 `load(pi = 1, extraParams?: any, options?: STLoadOptions)` | 加载指定页
 `reload(extraParams?: any, options?: STLoadOptions)` | 刷新当前页
 `reset(extraParams?: any, options?: STLoadOptions)` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除）

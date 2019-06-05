@@ -59,6 +59,7 @@ import {
   STSingleSort,
   STStatisticalResults,
   STWidthMode,
+  STResetColumnsOption,
 } from './table.interfaces';
 import { NzTableComponent } from 'ng-zorro-antd';
 
@@ -700,7 +701,18 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this.orgTable.cdkVirtualScrollViewport;
   }
 
-  resetColumns() {
+  resetColumns(options?: STResetColumnsOption) {
+    if (options) {
+      if (typeof options.columns !== 'undefined') {
+        this.columns = options.columns;
+      }
+      if (typeof options.pi !== 'undefined') {
+        this.pi = options.pi;
+      }
+      if (typeof options.ps !== 'undefined') {
+        this.ps = options.ps;
+      }
+    }
     return this.refreshColumns().loadPageData();
   }
 
