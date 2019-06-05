@@ -404,8 +404,8 @@ function fixLangInHtml(host: Tree, p: string, langs: {}) {
     ++matchCount;
     return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
   });
-  // {{ 'app.register-result.msg' | translate:params }}
-  html = html.replace(/\{\{[ ]?'([^']+)'[ ]? \| translate:[^ ]+ \}\}/g, (_word, key) => {
+  // {{ 'app.register-result.msg' | translate: params }}
+  html = html.replace(/\{\{[ ]?'([^']+)'[ ]? \| translate: [^ ]+ \}\}/g, (_word, key) => {
     ++matchCount;
     return langs[key] || key;
   });
