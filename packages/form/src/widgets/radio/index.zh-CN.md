@@ -23,3 +23,4 @@ type: Widgets
 | `[size]`      | 大小，等同 `nzSize` | `string`                               | -         |
 | `[styleType]` | radio 的样式       | `default, button`                      | `default` |
 | `[change]`    | 值变更事件         | `(res: SFValue) => void`               | -         |
+| `[buttonStyle]` | RadioButton 的风格样式，目前有描边和填色两种风格 | `'outline'｜'solid'` | `'outline'` |
