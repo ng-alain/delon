@@ -17,19 +17,35 @@ export class SelectWidget extends ControlWidget implements OnInit {
   hasGroup = false;
 
   ngOnInit(): void {
+    const {
+      autoClearSearchValue,
+      allowClear,
+      autoFocus,
+      dropdownClassName,
+      dropdownMatchSelectWidth,
+      serverSearch,
+      maxMultipleCount,
+      mode,
+      notFoundContent,
+      showSearch,
+      tokenSeparators,
+      maxTagCount,
+      compareWith,
+    } = this.ui;
     this.i = {
-      autoClearSearchValue: toBool(this.ui.autoClearSearchValue, true),
-      allowClear: this.ui.allowClear,
-      autoFocus: toBool(this.ui.autoFocus, false),
-      dropdownClassName: this.ui.dropdownClassName || null,
-      dropdownMatchSelectWidth: toBool(this.ui.dropdownMatchSelectWidth, true),
-      serverSearch: toBool(this.ui.serverSearch, false),
-      maxMultipleCount: this.ui.maxMultipleCount || Infinity,
-      mode: this.ui.mode || 'default',
-      notFoundContent: this.ui.notFoundContent,
-      showSearch: toBool(this.ui.showSearch, true),
-      tokenSeparators: this.ui.tokenSeparators || [],
-      maxTagCount: this.ui.maxTagCount || undefined,
+      autoClearSearchValue: toBool(autoClearSearchValue, true),
+      allowClear,
+      autoFocus: toBool(autoFocus, false),
+      dropdownClassName: dropdownClassName || null,
+      dropdownMatchSelectWidth: toBool(dropdownMatchSelectWidth, true),
+      serverSearch: toBool(serverSearch, false),
+      maxMultipleCount: maxMultipleCount || Infinity,
+      mode: mode || 'default',
+      notFoundContent,
+      showSearch: toBool(showSearch, true),
+      tokenSeparators: tokenSeparators || [],
+      maxTagCount: maxTagCount || undefined,
+      compareWith: compareWith || ((o1: any, o2: any) => o1 === o2),
     };
   }
 

@@ -21,6 +21,7 @@ type: Widgets
 ----|------|-----|------
 `[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | -
 `[size]` | 大小，等同 `nzSize` | `string` | -
+`[compareWith]` | 与 [SelectControlValueAccessor](https://angular.io/api/forms/SelectControlValueAccessor#caveat-option-selection) 相同 | `(o1: any, o2: any) => boolean` | `(o1: any, o2: any) => o1===o2`
 `[placeholder]` | 在文字框中显示提示讯息 | `string` | -
 `[autoClearSearchValue]` | 是否在选中项后清空搜索框，只在 `mode` 为 `multiple` 或 `tags` 时有效。 | `boolean` | `true`
 `[allowClear]` | 支持清除 | `boolean` | `false`
