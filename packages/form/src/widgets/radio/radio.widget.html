@@ -9,7 +9,8 @@
                   [nzSize]="ui.size"
                   [nzName]="id"
                   [ngModel]="value"
-                  (ngModelChange)="_setValue($event)">
+                  (ngModelChange)="_setValue($event)"
+                  [nzButtonStyle]="ui.buttonStyle || 'outline'">
     <ng-container *ngIf="styleType">
       <label *ngFor="let option of data"
              nz-radio

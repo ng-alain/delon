@@ -23,3 +23,4 @@ Radio.
 | `[size]`      | Size of the `nz-radio`  | `string`                               | -         |
 | `[styleType]` | Style of the `nz-radio` | `default, button`                      | `default` |
 | `[change]`    | Changed event           | `(res: SFValue) => void`               | -         |
+| `[buttonStyle]` | style type of radio button | `'outline'｜'solid'` | `'outline'` |

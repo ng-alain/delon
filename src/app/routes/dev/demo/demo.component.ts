@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demo',
@@ -11,25 +13,29 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class DemoComponent {
   schema: SFSchema = {
     properties: {
-      name: {
+      btn: {
         type: 'string',
-        title: 'Name',
+        title: 'Button',
+        enum: ['A', 'B', 'C'],
         ui: {
-          addOnAfter: 'RMB',
-          placeholder: 'RMB结算',
+          widget: 'radio',
+          styleType: 'button',
+          buttonStyle: 'solid',
         },
+        default: 'A',
       },
-      select: {
+      // 异步数据
+      async: {
         type: 'string',
-        title: 'test',
-        enum: [{ label: '1', value: '1' }, { label: '2', value: '2' }],
+        title: 'Async',
         ui: {
-          widget: 'select',
-          mode: 'multiple',
+          widget: 'radio',
+          asyncData: () => of([{ label: '男', value: 'M' }, { label: '女', value: 'F' }, { label: '未知', value: 'N' }]).pipe(delay(100)),
+          change: console.log,
         },
+        default: 'N',
       },
     },
-    required: ['name'],
   };
   constructor(public msg: NzMessageService) {}
   submit(value: any) {
