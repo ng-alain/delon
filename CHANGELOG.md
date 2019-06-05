@@ -1,3 +1,16 @@
+## [7.6.1](https://github.com/ng-alain/delon/compare/7.6.0...7.6.1) (2019-06-05)
+
+
+### Bug Fixes
+
+* **cli:** fix invalid translating ([#598](https://github.com/ng-alain/delon/issues/598)) ([abc9e8e](https://github.com/ng-alain/delon/commit/abc9e8e))
+* **cli:** fix losing antd-theme-generator package ([#593](https://github.com/ng-alain/delon/issues/593)) ([97f0b1a](https://github.com/ng-alain/delon/commit/97f0b1a))
+* **form:** fix invalid form values when call `refreshSchema` method ([#596](https://github.com/ng-alain/delon/issues/596)) ([25f2617](https://github.com/ng-alain/delon/commit/25f2617))
+* **form:radio:** fix losing `nzButtonStyle` property ([#595](https://github.com/ng-alain/delon/issues/595)) ([638cffc](https://github.com/ng-alain/delon/commit/638cffc))
+* **form:select:** fix losing `compareWith` property ([#594](https://github.com/ng-alain/delon/issues/594)) ([1248716](https://github.com/ng-alain/delon/commit/1248716))
+
+
+
 # [7.6.0](https://github.com/ng-alain/delon/compare/7.5.0...7.6.0) (2019-06-02)
 
 
