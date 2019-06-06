@@ -231,7 +231,7 @@ Property | Description | Type | Default
 `[index]` | Display field of the data record, could be set like `a.b.c` | `string, string[]` | -
 `[render]` | Custom render template ID | `string` | -
 `[renderTitle]` | Title custom render template ID | `string` | -
-`[default]` | Replace with default value when no data exists | `string` | -
+`[default]` | Replace with default value when no data exists (value typeof is `undefined`) | `string` | -
 `[buttons]` | Buttons of this column | `STColumnButton[]` | -
 `[width]` | Width of this column (**NOTICE:** If the fixed column must be a number), e.g: `100`, `10%`, `100px` | `string,number` | -
 `[fixed]` | Set column to be fixed, must specify `width` | `left,right` | -
