@@ -8,7 +8,6 @@ type: Service
 基于 `NzModalService` 封装，它解决一些已知问题：
 
 - 更友好的处理回调
-- 自动管理 `z-index` 值
 
 ## 用法
 

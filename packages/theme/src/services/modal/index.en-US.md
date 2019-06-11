@@ -8,7 +8,6 @@ type: Service
 Based on the `NzModalService` package, it solves some known issues:
 
 - More friendly handling callbacks
-- Automatic management of `z-index` values
 
 ## Usage
 
