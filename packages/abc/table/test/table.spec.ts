@@ -1492,16 +1492,43 @@ describe('abc: table', () => {
           expect(comp.clearCheck).toHaveBeenCalled();
         });
       });
-      it('#resetColumns', done => {
-        let res = true;
-        const cls = '.st__body tr[data-index="0"] td';
-        page.newColumn([{ title: '', index: 'name', iif: () => res }]).then(() => {
-          page.expectElCount(cls, 1);
-          res = false;
-          comp.resetColumns();
-          fixture.detectChanges();
-          page.expectElCount(cls, 0);
-          done();
+      describe('#resetColumns', () => {
+        it('should working', done => {
+          let res = true;
+          const cls = '.st__body tr[data-index="0"] td';
+          page.newColumn([{ title: '', index: 'name', iif: () => res }]).then(() => {
+            page.expectElCount(cls, 1);
+            res = false;
+            comp.resetColumns();
+            fixture.detectChanges();
+            page.expectElCount(cls, 0);
+            done();
+          });
+        });
+        it('should be specify new columns', done => {
+          page.newColumn([{ title: '1', index: 'name' }]).then(() => {
+            page.expectHead('1', 'name');
+            comp.resetColumns({ columns: [{ title: '2', index: 'name' }] });
+            fixture.detectChanges();
+            page.expectHead('2', 'name');
+            done();
+          });
+        });
+        it('should be specify new pi', done => {
+          page.newColumn([{ title: '1', index: 'name' }]).then(() => {
+            expect(comp.pi).toBe(1);
+            comp.resetColumns({ pi: 2 });
+            expect(comp.pi).toBe(2);
+            done();
+          });
+        });
+        it('should be specify new ps', done => {
+          page.newColumn([{ title: '1', index: 'name' }]).then(() => {
+            expect(comp.ps).toBe(PS);
+            comp.resetColumns({ ps: 2 });
+            expect(comp.ps).toBe(2);
+            done();
+          });
         });
       });
       it('#filteredData', done => {
