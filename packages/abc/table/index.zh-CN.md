@@ -224,7 +224,7 @@ class TestComponent {
 `[index]` | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | -
 `[render]` | 自定义渲染ID | `string` | -
 `[renderTitle]` | 标题自定义渲染ID | `string` | -
-`[default]` | 当不存在数据时以默认值替代 | `string` | -
+`[default]` | 当不存在数据（值类型为 `undefined`）时以默认值替代 | `string` | -
 `[buttons]` | 按钮组 | `STColumnButton[]` | -
 `[width]` | 列宽（数字型表示 `px` 值，**注意：** 若固定列必须是数字），例如：`100`、`10%`、`100px` | `string,number` | -
 `[fixed]` | 固定前后列，当指定时务必指定 `width` 否则视为无效 | `left,right` | -
