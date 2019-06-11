@@ -31,17 +31,10 @@ export const SCHEMA = {
 let fixture: ComponentFixture<TestFormComponent>;
 let dl: DebugElement;
 let context: TestFormComponent;
-export function builder(options?: {
-  detectChanges?: boolean;
-  template?: string;
-  ingoreAntd?: boolean;
-  imports?: any[];
-}) {
+export function builder(options?: { detectChanges?: boolean; template?: string; ingoreAntd?: boolean; imports?: any[] }) {
   options = { detectChanges: true, ...options };
   TestBed.configureTestingModule({
-    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(
-      options.imports || [],
-    ),
+    imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()].concat(options.imports || []),
     declarations: [TestFormComponent],
   });
   if (options.template) {
@@ -324,6 +317,7 @@ export class SFPage {
       [autocomplete]="autocomplete"
       [firstVisual]="firstVisual"
       [onlyVisual]="onlyVisual"
+      [disabled]="disabled"
       [loading]="loading"
       (formChange)="formChange($event)"
       (formSubmit)="formSubmit($event)"
@@ -344,6 +338,7 @@ export class TestFormComponent {
   autocomplete: 'on' | 'off';
   firstVisual = true;
   onlyVisual = false;
+  disabled = false;
   loading = false;
 
   formChange() {}

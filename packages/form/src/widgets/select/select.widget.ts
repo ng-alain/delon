@@ -17,7 +17,7 @@ export class SelectWidget extends ControlWidget implements OnInit {
   hasGroup = false;
 
   private checkGroup(list: SFSchemaEnum[]): void {
-    this.hasGroup = list.filter(w => w.group === true).length > 0;
+    this.hasGroup = (list || []).filter(w => w.group === true).length > 0;
   }
 
   ngOnInit(): void {

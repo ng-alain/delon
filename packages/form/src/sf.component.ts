@@ -134,6 +134,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * Whether to load status，when `true` reset button is disabled status, submit button is loading status
    */
   @Input() @InputBoolean() loading = false;
+  @Input() @InputBoolean() disabled = false;
   /** 数据变更时回调 */
   @Output() readonly formChange = new EventEmitter<{}>();
   /** 提交表单时回调 */
@@ -380,7 +381,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
-    if (changes.loading && Object.keys(changes).length === 1) {
+    if (Object.keys(changes).length === 1 && (changes.loading || changes.disabled)) {
       this.cdr.detectChanges();
       return;
     }
