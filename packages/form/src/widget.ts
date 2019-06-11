@@ -26,7 +26,9 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
   }
 
   get disabled(): boolean | null {
-    if (this.schema.readOnly === true) return true;
+    if (this.schema.readOnly === true || this.sfComp!.disabled) {
+      return true;
+    }
 
     return null;
   }
@@ -39,21 +41,19 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.formProperty.errorsChanges
-      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
-      .subscribe((errors: ErrorData[] | null) => {
-        if (errors == null) return;
-        di(this.ui, 'errorsChanges', this.formProperty.path, errors);
+    this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe((errors: ErrorData[] | null) => {
+      if (errors == null) return;
+      di(this.ui, 'errorsChanges', this.formProperty.path, errors);
 
-        // 不显示首次校验视觉
-        if (this.firstVisual) {
-          this.showError = errors.length > 0;
-          this.error = this.showError ? (errors[0].message as string) : '';
+      // 不显示首次校验视觉
+      if (this.firstVisual) {
+        this.showError = errors.length > 0;
+        this.error = this.showError ? (errors[0].message as string) : '';
 
-          this.cd.detectChanges();
-        }
-        this.firstVisual = true;
-      });
+        this.cd.detectChanges();
+      }
+      this.firstVisual = true;
+    });
   }
 
   setValue(value: SFValue) {
@@ -84,9 +84,7 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty> implements AfterVie
   reset(_value: SFValue) {}
 
   ngAfterViewInit() {
-    this.formProperty.errorsChanges
-      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
-      .subscribe(() => this.cd.detectChanges());
+    this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
   }
 }
 
@@ -94,8 +92,6 @@ export class ObjectLayoutWidget extends Widget<ObjectProperty> implements AfterV
   reset(_value: SFValue) {}
 
   ngAfterViewInit() {
-    this.formProperty.errorsChanges
-      .pipe(takeUntil(this.sfItemComp!.unsubscribe$))
-      .subscribe(() => this.cd.detectChanges());
+    this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
   }
 }
