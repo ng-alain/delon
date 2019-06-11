@@ -71,6 +71,12 @@ export class DemoComponent {
           click: (_record, modal) => this.message.success(`重新加载页面，回传值：${JSON.stringify(modal)}`),
         },
         {
+          icon: 'check-circle',
+          click: record => this.message.info(`check-${record.name}`),
+          iif: record => record.id % 2 === 0,
+          iifBehavior: 'disabled',
+        },
+        {
           icon: 'delete',
           type: 'del',
           click: (record, _modal, comp) => {
@@ -90,6 +96,12 @@ export class DemoComponent {
               text: `重新开始`,
               icon: 'edit',
               click: record => this.message.success(`重新开始【${record.name}】`),
+            },
+            {
+              text: `审核`,
+              click: record => this.message.info(`check-${record.name}`),
+              iif: record => record.id % 2 === 0,
+              iifBehavior: 'disabled',
             },
           ],
         },

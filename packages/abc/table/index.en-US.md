@@ -312,6 +312,7 @@ Property | Description | Type | Default
 `[children]` | Drop-down menu, only supports level 1| `STColumnButton[]` | -
 `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | -
 `[iif]` | Custom conditional expression | `(item: STData, btn: STColumnButton, column: STColumn) => boolean` | `() => true`
+`[iifBehavior]` | Render button mode when the conditional expression `false` value | `hide,disabled` | `hide`
 
 ### STColumnButtonModal
 

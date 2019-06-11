@@ -1666,6 +1666,36 @@ describe('abc: table', () => {
           });
       });
     });
+    describe('#button', () => {
+      describe('#iifBehavior', () => {
+        it('with hide', done => {
+          page
+            .newColumn([
+              {
+                title: '',
+                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'hide' }],
+              },
+            ])
+            .then(() => {
+              page.expectElCount('.st__body tr td a', 0);
+              done();
+            });
+        });
+        it('with disabled', done => {
+          page
+            .newColumn([
+              {
+                title: '',
+                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'disabled' }],
+              },
+            ])
+            .then(() => {
+              page.expectElCount('.st__btn-disabled', PS);
+              done();
+            });
+        });
+      });
+    });
   });
 
   describe('**slow**', () => {

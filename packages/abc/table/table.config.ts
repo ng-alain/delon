@@ -10,6 +10,7 @@ import {
   STRowClassName,
   STSingleSort,
   STWidthMode,
+  IifBehaviorType,
 } from './table.interfaces';
 
 @Injectable({ providedIn: 'root' })
@@ -146,4 +147,9 @@ export class STConfig {
   virtualItemSize? = 54;
   virtualMaxBufferPx? = 200;
   virtualMinBufferPx? = 100;
+
+  /**
+   * Conditional expression rendering behavior, can be set to `hide` (default) or `disabled`
+   */
+  iifBehavior?: IifBehaviorType = 'hide';
 }

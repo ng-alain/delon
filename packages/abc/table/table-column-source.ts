@@ -94,8 +94,11 @@ export class STColumnSource {
   private btnCoerceIf(list: STColumnButton[]) {
     for (const item of list) {
       if (!item.iif) item.iif = () => true;
+      item.iifBehavior = item.iifBehavior || this.cog.iifBehavior;
       if (item.children && item.children.length > 0) {
         this.btnCoerceIf(item.children);
+      } else {
+        item.children = [];
       }
     }
   }
