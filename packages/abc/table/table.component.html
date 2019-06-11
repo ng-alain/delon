@@ -1,5 +1,5 @@
 <ng-template #btnTpl let-i let-btn="btn" let-sub="sub">
-  <nz-popconfirm *ngIf="btn.pop === true" [nzTitle]="btn.popTitle" (nzOnConfirm)="_btnClick(i, btn)">
+  <nz-popconfirm *ngIf="btn.pop" [nzTitle]="btn.popTitle" (nzOnConfirm)="_btnClick(i, btn)">
     <a *ngIf="!sub" nz-popconfirm>
       <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }"></ng-template>
     </a>
@@ -7,7 +7,7 @@
       <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }"></ng-template>
     </span>
   </nz-popconfirm>
-  <ng-container *ngIf="btn.pop !== true">
+  <ng-container *ngIf="!btn.pop">
     <a *ngIf="!sub" (click)="_btnClick(i, btn)">
       <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }"></ng-template>
     </a>
@@ -51,23 +51,23 @@
             </nz-badge>
             <span *ngSwitchDefault [innerHTML]="i._values[cIdx].text" [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
           </ng-container>
-          <ng-container *ngFor="let btn of _validBtns(i, c); let last=last">
+          <ng-container *ngFor="let btn of _validBtns(c.buttons, i, c); let last=last">
             <nz-dropdown *ngIf="btn.children.length > 0" nzOverlayClassName="st__btn-sub">
               <a nz-dropdown>
                 <span [innerHTML]="_btnText(i, btn)"></span>
                 <i nz-icon nzType="down"></i>
               </a>
               <ul nz-menu>
-                <ng-container *ngFor="let subBtn of btn.children">
-                  <li nz-menu-item *ngIf="subBtn.iif(i, subBtn, c)">
+                <ng-container *ngFor="let subBtn of _validBtns(btn.children, i, c)">
+                  <li nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
                     <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: subBtn, sub: true }"></ng-template>
                   </li>
                 </ng-container>
               </ul>
             </nz-dropdown>
-            <ng-container *ngIf="btn.children.length == 0">
+            <span *ngIf="btn.children.length == 0" [class.st__btn-disabled]="btn._disabled">
               <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn, sub: false }"></ng-template>
-            </ng-container>
+            </span>
             <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
           </ng-container>
           <ng-template [ngIf]="!c.__renderExpanded" [ngTemplateOutlet]="c.__renderExpanded"

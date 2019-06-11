@@ -672,8 +672,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return typeof btn.text === 'function' ? btn.text(record, btn) : btn.text || '';
   }
 
-  _validBtns(item: STData, col: STColumn): STColumnButton[] {
-    return col.buttons!.filter(btn => btn.iif!(item, btn, col));
+  _validBtns(btns: STColumnButton[], item: STData, col: STColumn): STColumnButton[] {
+    return btns.filter(btn => {
+      const result = btn.iif!(item, btn, col);
+      const isRenderDisabled = btn.iifBehavior === 'disabled';
+      btn._result = result;
+      btn._disabled = !result && isRenderDisabled;
+      return result || isRenderDisabled;
+    });
   }
 
   // #endregion

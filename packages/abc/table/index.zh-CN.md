@@ -295,6 +295,7 @@ class TestComponent {
 `[children]` | 下拉菜单，当存在时以 `dropdown` 形式渲染；只支持一级 | `STColumnButton[]` | -
 `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | -
 `[iif]` | 自定义条件表达式 | `(item: STData, btn: STColumnButton, column: STColumn) => boolean` | `() => true`
+`[iifBehavior]` | 表达式 `false` 值时渲染方式 | `hide,disabled` | `hide`
 
 ### STIcon
 

@@ -22,10 +22,19 @@
     }
   }
   // 修复按钮block
-  &__btn-sub {
-    .@{ant-prefix}-dropdown-menu-item {
-      > span {
-        display: block;
+  &__btn {
+    &-disabled {
+      &,
+      > a {
+        color: @st-btn-disabled-color;
+        pointer-events: none;
+      }
+    }
+    &-sub {
+      .@{ant-prefix}-dropdown-menu-item {
+        > span {
+          display: block;
+        }
       }
     }
   }
