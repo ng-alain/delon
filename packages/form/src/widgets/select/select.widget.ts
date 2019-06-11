@@ -16,6 +16,10 @@ export class SelectWidget extends ControlWidget implements OnInit {
   _value: any;
   hasGroup = false;
 
+  private checkGroup(list: SFSchemaEnum[]): void {
+    this.hasGroup = list.filter(w => w.group === true).length > 0;
+  }
+
   ngOnInit(): void {
     const {
       autoClearSearchValue,
@@ -53,7 +57,7 @@ export class SelectWidget extends ControlWidget implements OnInit {
     getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
       this._value = value;
       this.data = list;
-      this.hasGroup = list.filter(w => w.group === true).length > 0;
+      this.checkGroup(list);
       this.detectChanges();
     });
   }
@@ -73,8 +77,9 @@ export class SelectWidget extends ControlWidget implements OnInit {
 
   searchChange(text: string) {
     if (this.ui.onSearch) {
-      this.ui.onSearch(text).then((res: SFSchemaEnum[]) => {
-        this.data = res;
+      this.ui.onSearch(text).then((list: SFSchemaEnum[]) => {
+        this.data = list;
+        this.checkGroup(list);
         this.detectChanges();
       });
       return;
