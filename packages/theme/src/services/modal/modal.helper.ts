@@ -19,9 +19,7 @@ export interface ModalHelperOptions {
  */
 @Injectable({ providedIn: 'root' })
 export class ModalHelper {
-  private zIndex = 500;
-
-  constructor(private srv: NzModalService) { }
+  constructor(private srv: NzModalService) {}
 
   /**
    * 构建一个对话框
@@ -72,7 +70,6 @@ export class ModalHelper {
         nzWidth: width ? width : undefined,
         nzFooter: null,
         nzComponentParams: params,
-        nzZIndex: ++this.zIndex,
       };
       const subject = this.srv.create({ ...defaultOptions, ...modalOptions });
       const afterClose$ = subject.afterClose.subscribe((res: any) => {
@@ -129,12 +126,7 @@ export class ModalHelper {
    * // 关闭
    * this.NzModalRef.destroy();
    */
-  open(
-    comp: any,
-    params?: any,
-    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
-    options?: ModalOptionsForService,
-  ): Observable<any> {
+  open(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: ModalOptionsForService): Observable<any> {
     return this.create(comp, params, {
       size,
       modalOptions: options,
@@ -158,12 +150,7 @@ export class ModalHelper {
    * // 关闭
    * this.NzModalRef.destroy();
    */
-  static(
-    comp: any,
-    params?: any,
-    size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg',
-    options?: any,
-  ): Observable<any> {
+  static(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: any): Observable<any> {
     return this.open(comp, params, size, {
       nzMaskClosable: false,
       ...options,

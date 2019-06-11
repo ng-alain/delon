@@ -48,10 +48,7 @@ export interface DrawerHelperOptions {
  */
 @Injectable({ providedIn: 'root' })
 export class DrawerHelper {
-  // 大部分情况下抽屉的层级比 Modal 会更低一些
-  private zIndex = 400;
-
-  constructor(private srv: NzDrawerService) { }
+  constructor(private srv: NzDrawerService) {}
 
   /**
    * 构建一个抽屉
@@ -75,7 +72,6 @@ export class DrawerHelper {
       const defaultOptions: NzDrawerOptions = {
         nzContent: comp,
         nzContentParams: params,
-        nzZIndex: ++this.zIndex,
         nzTitle: title,
       };
 
