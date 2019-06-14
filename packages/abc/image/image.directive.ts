@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChange, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { InputNumber } from '@delon/util';
 
 import { ImageConfig } from './image.config';
@@ -19,9 +19,11 @@ export class ImageDirective implements OnChanges, OnInit {
   @Input() error = './assets/img/logo.svg';
 
   private inited = false;
+  private imgEl: HTMLImageElement;
 
-  constructor(cog: ImageConfig, private el: ElementRef, private render: Renderer2) {
+  constructor(cog: ImageConfig, el: ElementRef<HTMLImageElement>) {
     Object.assign(this, { ...new ImageConfig(), ...cog });
+    this.imgEl = el.nativeElement;
   }
 
   ngOnInit(): void {
@@ -34,14 +36,13 @@ export class ImageDirective implements OnChanges, OnInit {
     if (!this.inited) return;
     if (changes.error) {
       this.updateError();
-    } else {
-      this.update();
     }
+    this.update();
   }
 
   private update() {
     let newSrc = this.src;
-    const { size, render, el } = this;
+    const { size, imgEl } = this;
 
     if (newSrc.includes('qlogo.cn')) {
       const arr = newSrc.split('/');
@@ -50,17 +51,19 @@ export class ImageDirective implements OnChanges, OnInit {
       newSrc = arr.join('/');
     }
 
-    const isHttp = newSrc.startsWith('http:');
-    const isHttps = newSrc.startsWith('https:');
-    if (isHttp || isHttps) {
-      newSrc = newSrc.substr(isHttp ? 5 : 6);
-    }
+    newSrc = newSrc.replace(/^(?:https?:)/i, '');
 
-    render.setAttribute(el.nativeElement, 'src', newSrc);
-    ['height', 'width'].forEach(v => render.setAttribute(this.el.nativeElement, v, size.toString()));
+    imgEl.src = newSrc;
+    imgEl.height = size;
+    imgEl.width = size;
   }
 
   private updateError() {
-    this.render.setAttribute(this.el.nativeElement, 'onerror', `this.src='${this.error}'`);
+    const { imgEl, error } = this;
+    // tslint:disable-next-line: only-arrow-functions
+    imgEl.onerror = function() {
+      this.onerror = null;
+      this.src = error;
+    };
   }
 }

@@ -6,8 +6,7 @@ import { configureTestSuite, createTestContext } from '@delon/testing';
 import { ImageConfig } from './image.config';
 import { ImageDirective } from './image.directive';
 import { ImageModule } from './image.module';
-const SRC =
-  'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLL1byctY955Htv9ztzVlIzY9buI9zRLg5QrkpOynrmObArKicy9icIX7aVgv3UqIbeIEo2xuUtsqYw/';
+const SRC = 'http://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLL1byctY955Htv9ztzVlIzY9buI9zRLg5QrkpOynrmObArKicy9icIX7aVgv3UqIbeIEo2xuUtsqYw/';
 
 describe('abc: _src', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -20,6 +19,10 @@ describe('abc: _src', () => {
       declarations: [TestComponent],
     });
   });
+
+  function getEl(): HTMLImageElement {
+    return dl.query(By.css('div')).nativeElement;
+  }
 
   it('General Configuration', inject([ImageConfig], (cog: ImageConfig) => {
     cog.error = 'e.png';
@@ -37,38 +40,40 @@ describe('abc: _src', () => {
     it('should be support qlogo auto size', () => {
       context.src = `${SRC}0`;
       fixture.detectChanges();
-      const newSrc = (dl.query(By.css('div')).nativeElement as HTMLElement).getAttribute('src');
-      expect(newSrc).toBe(`${SRC.substr(5)}${context.size}`);
+      expect(getEl().src).toBe(`${SRC.substr(5)}${context.size}`);
     });
 
     it('should be support qlogo auto size when not full original address', () => {
       context.src = `${SRC}${context.size}`;
       fixture.detectChanges();
-      const newSrc = (dl.query(By.css('div')).nativeElement as HTMLElement).getAttribute('src');
-      expect(newSrc).toBe(`${SRC.substr(5)}${context.size}`);
+      expect(getEl().src).toBe(`${SRC.substr(5)}${context.size}`);
     });
 
     it('should be auto resize when is qlogo thum', () => {
       context.src = `${SRC}32`;
       context.size = 96;
       fixture.detectChanges();
-      const newSrc = (dl.query(By.css('div')).nativeElement as HTMLElement).getAttribute('src');
-      expect(newSrc).toBe(`${SRC.substr(5)}${context.size}`);
+      expect(getEl().src).toBe(`${SRC.substr(5)}${context.size}`);
     });
 
     it('should be custom error src', () => {
       context.error = 'error.png';
       fixture.detectChanges();
-      const imgEl = dl.query(By.css('div')).nativeElement as HTMLImageElement;
-      // tslint:disable-next-line:no-string-literal
-      expect(imgEl.attributes['onerror'].nodeValue).toContain(context.error);
+      const imgEl = getEl();
+      imgEl.onerror!(null!);
+      expect(imgEl.src).toBe(context.error);
+    });
+
+    it('should be ingore http', () => {
+      context.src = `http://ng-alain.com/1.png`;
+      fixture.detectChanges();
+      expect(getEl().src).toBe(`//ng-alain.com/1.png`);
     });
 
     it('should be ingore https', () => {
       context.src = `https://ng-alain.com/1.png`;
       fixture.detectChanges();
-      const newSrc = (dl.query(By.css('div')).nativeElement as HTMLElement).getAttribute('src');
-      expect(newSrc).toBe(`//ng-alain.com/1.png`);
+      expect(getEl().src).toBe(`//ng-alain.com/1.png`);
     });
   });
 });
