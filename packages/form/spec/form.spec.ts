@@ -10,6 +10,7 @@ import { FormPropertyFactory } from '../src/model/form.property.factory';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema/index';
 import { SCHEMA, SFPage, TestFormComponent } from './base.spec';
+import { WidgetRegistry } from '../src/widget.factory';
 
 describe('form: component', () => {
   let injector: TestBedStatic;
@@ -38,14 +39,14 @@ describe('form: component', () => {
     });
 
     describe('[default]', () => {
-      xit('should throw error when parent is not object or array', () => {
+      it('should throw error when parent is not object or array', () => {
         expect(() => {
           const factory = dl.injector.get<FormPropertyFactory>(FormPropertyFactory);
           factory.createProperty({}, {}, {}, { type: 'invalid', path: 'a' } as any, 'a');
         }).toThrowError();
       });
 
-      xit('should throw error when type is invalid', () => {
+      it('should throw error when type is invalid', () => {
         expect(() => {
           context.schema = {
             properties: {
@@ -58,14 +59,14 @@ describe('form: component', () => {
         }).toThrowError(`Undefined type aa`);
       });
 
-      xit('should throw error when is invalid schema', () => {
+      it('should throw error when is invalid schema', () => {
         expect(() => {
           context.schema = null;
           fixture.detectChanges();
         }).toThrowError('Invalid Schema');
       });
 
-      xit(`Don't support string with root ui property`, () => {
+      it(`Don't support string with root ui property`, () => {
         expect(() => {
           context.schema = {
             ui: 'string',
@@ -75,7 +76,7 @@ describe('form: component', () => {
         }).toThrowError(`Don't support string with root ui property`);
       });
 
-      xit('should be used default widget when is invalid schema type', () => {
+      it('should be used default widget when is invalid schema type', () => {
         spyOn(console, 'warn');
         expect(console.warn).not.toHaveBeenCalled();
         context.schema = {
@@ -89,7 +90,7 @@ describe('form: component', () => {
         expect(console.warn).toHaveBeenCalled();
       });
 
-      xit('should be console debug informations', () => {
+      it('should be console debug informations', () => {
         spyOn(console, 'warn');
         expect(console.warn).not.toHaveBeenCalled();
         context.schema = {
@@ -107,7 +108,7 @@ describe('form: component', () => {
         expect(console.warn).toHaveBeenCalled();
       });
 
-      xit('should be console debug informations when ajv throw error', () => {
+      it('should be console debug informations when ajv throw error', () => {
         spyOn(console, 'warn');
         expect(console.warn).not.toHaveBeenCalled();
         context.schema = {
@@ -127,7 +128,7 @@ describe('form: component', () => {
         expect(console.warn).toHaveBeenCalled();
       });
 
-      xit('should be ingore required when element is hidden', () => {
+      it('should be ingore required when element is hidden', () => {
         const s: SFSchema = {
           properties: {
             name: {
@@ -141,13 +142,13 @@ describe('form: component', () => {
         expect(context.comp._schema.required!.indexOf('name') === -1).toBe(true);
       });
 
-      xit('should be ingore trigger formChange event when call refreshSchema method', () => {
+      it('should be ingore trigger formChange event when call refreshSchema method', () => {
         expect(context.formChange).not.toHaveBeenCalled();
         page.newSchema({ properties: { name: { type: 'string' } } });
         expect(context.formChange).not.toHaveBeenCalled();
       });
 
-      xit('should be hava values when call refreshSchema method after', () => {
+      it('should be hava values when call refreshSchema method after', () => {
         page.newSchema({ properties: { name: { type: 'string', default: 'a' } } });
         expect(context.formChange).not.toHaveBeenCalled();
         expect(context.comp.value.name).toBe('a');
@@ -155,25 +156,25 @@ describe('form: component', () => {
     });
 
     describe('[button]', () => {
-      xit('should be has a primary button when default value', () => {
+      it('should be has a primary button when default value', () => {
         page.checkCount('.sf-btns', 1).checkCount('.ant-btn-primary', 1);
       });
-      xit('should be null', () => {
+      it('should be null', () => {
         context.button = null;
         fixture.detectChanges();
         page.checkCount('.sf-btns', 1).checkCount('button', 0);
       });
-      xit('should be undefined', () => {
+      it('should be undefined', () => {
         context.button = undefined;
         fixture.detectChanges();
         page.checkCount('.sf-btns', 1).checkCount('button', 0);
       });
-      xit('should be none', () => {
+      it('should be none', () => {
         context.button = 'none';
         fixture.detectChanges();
         page.checkCount('.sf-btns', 0);
       });
-      xit('should be icon', () => {
+      it('should be icon', () => {
         context.button = {
           submit_icon: {
             type: 'search',
@@ -187,7 +188,7 @@ describe('form: component', () => {
         page.checkCount('[type="button"] .anticon', 1);
       });
       describe('when layout is horizontal', () => {
-        xit('should be has a fix 100px width', () => {
+        it('should be has a fix 100px width', () => {
           page
             .newSchema({
               properties: {
@@ -201,7 +202,7 @@ describe('form: component', () => {
             })
             .checkStyle('.sf-btns .ant-form-item-control-wrapper', 'margin-left', '100px');
         });
-        xit('should be specified grid', () => {
+        it('should be specified grid', () => {
           const span = 11;
           context.button = {
             render: {
@@ -211,7 +212,7 @@ describe('form: component', () => {
           fixture.detectChanges();
           page.checkCls('.sf-btns .ant-form-item-control-wrapper', `ant-col-${span}`);
         });
-        xit('should be fixed label', () => {
+        it('should be fixed label', () => {
           const spanLabelFixed = 56;
           context.button = {
             render: {
@@ -223,18 +224,18 @@ describe('form: component', () => {
         });
       });
       describe('#size', () => {
-        xit('with small', () => {
+        it('with small', () => {
           context.button = { render: { size: 'small' } };
           fixture.detectChanges();
           page.checkCount('.ant-btn-sm', 2);
         });
-        xit('with large', () => {
+        it('with large', () => {
           context.button = { render: { size: 'large' } };
           fixture.detectChanges();
           page.checkCount('.ant-btn-lg', 2);
         });
       });
-      xit('should be update button text when i18n changed', () => {
+      it('should be update button text when i18n changed', () => {
         page.checkElText('.ant-btn-primary', '提交');
         const i18n = injector.get(DelonLocaleService) as DelonLocaleService;
         i18n.setLocale(en_US);
@@ -245,7 +246,7 @@ describe('form: component', () => {
 
     describe('properites', () => {
       describe('#validate', () => {
-        xit('should be validate when submitted and not liveValidate', () => {
+        it('should be validate when submitted and not liveValidate', () => {
           page.submit(false);
           expect((page.getEl('.ant-btn-primary') as HTMLButtonElement).disabled).toBe(true);
           context.liveValidate = false;
@@ -259,19 +260,19 @@ describe('form: component', () => {
       });
 
       describe('#submit', () => {
-        xit('should be submit when is valid', () => {
+        it('should be submit when is valid', () => {
           page
             .setValue('/name', 'cipchk')
             .setValue('/pwd', '1111')
             .isValid();
         });
-        xit('should not be submit when is invalid', () => {
+        it('should not be submit when is invalid', () => {
           page.setValue('/name', 'cipchk').isValid(false);
         });
       });
 
       describe('#reset', () => {
-        xit('should be set default value', () => {
+        it('should be set default value', () => {
           const schema = deepCopy(SCHEMA.user) as SFSchema;
           schema.properties!.name.default = 'cipchk';
           page
@@ -283,14 +284,14 @@ describe('form: component', () => {
 
       describe('#layout', () => {
         ['horizontal', 'vertical', 'inline'].forEach(type => {
-          xit(`with ${type}`, () => {
+          it(`with ${type}`, () => {
             context.layout = type;
             fixture.detectChanges();
             page.checkCls('form', `ant-form-${type}`);
           });
         });
         describe(`when with horizontal`, () => {
-          xit('shoule be fixed label width', () => {
+          it('shoule be fixed label width', () => {
             page
               .newSchema({
                 properties: {
@@ -304,7 +305,7 @@ describe('form: component', () => {
               })
               .checkStyle('.ant-form-item-label', 'width', '100px');
           });
-          xit('should inherit parent node', () => {
+          it('should inherit parent node', () => {
             page
               .newSchema({
                 properties: {
@@ -324,7 +325,7 @@ describe('form: component', () => {
 
       describe('#autocomplete', () => {
         [null, 'on', 'off'].forEach((type: any) => {
-          xit(`with [${type}]`, () => {
+          it(`with [${type}]`, () => {
             context.autocomplete = type;
             fixture.detectChanges();
             page.checkAttr('form', 'autocomplete', type, !!type);
@@ -333,12 +334,12 @@ describe('form: component', () => {
       });
 
       describe('#firstVisual', () => {
-        xit('with false', () => {
+        it('with false', () => {
           context.firstVisual = false;
           fixture.detectChanges();
           page.checkCount('nz-form-explain', 0);
         });
-        xit('with true', () => {
+        it('with true', () => {
           context.firstVisual = true;
           fixture.detectChanges();
           page.checkCount('nz-form-explain', 2);
@@ -346,13 +347,13 @@ describe('form: component', () => {
       });
 
       describe('#onlyVisual', () => {
-        xit('with false', () => {
+        it('with false', () => {
           context.onlyVisual = false;
           fixture.detectChanges();
           page.checkCount('.sf__no-error', 0);
           page.checkCount('nz-form-explain', 2);
         });
-        xit('with true', () => {
+        it('with true', () => {
           context.onlyVisual = true;
           fixture.detectChanges();
           page.checkCount('.sf__no-error', 1);
@@ -395,7 +396,7 @@ describe('form: component', () => {
         });
       });
 
-      xit('#loading', () => {
+      it('#loading', () => {
         context.loading = false;
         fixture.detectChanges();
         const CLS = {
@@ -410,12 +411,12 @@ describe('form: component', () => {
         page.checkCount(CLS.disabled, 1);
       });
 
-      xit('#formChange', () => {
+      it('#formChange', () => {
         page.setValue('/name', 'cipchk');
         expect(context.formChange).toHaveBeenCalled();
       });
 
-      xit('#formSubmit', () => {
+      it('#formSubmit', () => {
         page
           .setValue('/name', 'cipchk')
           .setValue('/pwd', 'asdf')
@@ -423,7 +424,7 @@ describe('form: component', () => {
         expect(context.formSubmit).toHaveBeenCalled();
       });
 
-      xit('#formReset', () => {
+      it('#formReset', () => {
         page
           .setValue('/name', 'cipchk')
           .setValue('/pwd', 'asdf')
@@ -431,50 +432,54 @@ describe('form: component', () => {
         expect(context.formReset).toHaveBeenCalled();
       });
 
-      xit('#formError', () => {
+      it('#formError', () => {
         page.setValue('/name', 'cipchk').setValue('/name', '');
         expect(context.formError).toHaveBeenCalled();
       });
     });
 
     describe('[widgets]', () => {
-      xit('#size', () => {
+      it('#size', () => {
         page
           .newSchema({
             properties: { name: { type: 'string', ui: { size: 'large' } } },
           })
           .checkCls('input', 'ant-input-lg');
       });
-      xit('#disabled', fakeAsync(() => {
+      it('#disabled', fakeAsync(() => {
         const el = page.newSchema({ properties: { name: { type: 'string', readOnly: true } } }).getEl('input') as HTMLInputElement;
         tick();
         expect(el.disabled).toBe(true);
         expect(el.classList).toContain('ant-input-disabled');
       }));
-      xit('should be custom class', () => {
+      it('should be custom class', () => {
         page
           .newSchema({
             properties: { name: { type: 'string', ui: { class: 'test-cls' } } },
           })
           .checkCls('sf-string', 'test-cls');
       });
+      it('should get all registered widgets', () => {
+        const wr = injector.get(WidgetRegistry) as WidgetRegistry;
+        expect(Object.keys(wr.widgets).length).toBeGreaterThan(0);
+      });
     });
 
     describe('public methods', () => {
-      xit('#getProperty', () => {
+      it('#getProperty', () => {
         expect(context.comp.getProperty('/name')).not.toBeNull();
       });
-      xit('#getValue', () => {
+      it('#getValue', () => {
         const name = 'asdf';
         page.newSchema({ properties: { name: { type: 'string' } } }, null!, { name });
         expect(context.comp.getValue('/name')).toBe(name);
       });
-      xit('#setValue', () => {
+      it('#setValue', () => {
         const name = 'new-asdf';
         context.comp.setValue('/name', name);
         expect(context.comp.value.name).toBe(name);
       });
-      xit('#setValue, shoule be throw error when invlaid path', () => {
+      it('#setValue, shoule be throw error when invlaid path', () => {
         expect(() => {
           context.comp.setValue('/invalid-path', name);
         }).toThrow();
@@ -482,7 +487,7 @@ describe('form: component', () => {
     });
 
     describe('[Custom Validator]', () => {
-      xit('with function and shoule be success when return a empty errors', () => {
+      it('with function and shoule be success when return a empty errors', () => {
         const s: SFSchema = {
           properties: {
             a: {
@@ -496,7 +501,7 @@ describe('form: component', () => {
         page.newSchema(s);
         expect(page.getProperty('/a').valid).toBe(false);
       });
-      xit('with function', () => {
+      it('with function', () => {
         const s: SFSchema = {
           properties: {
             a: {
@@ -510,7 +515,7 @@ describe('form: component', () => {
         page.newSchema(s);
         expect(page.getProperty('/a').valid).toBe(true);
       });
-      xit('with observable', () => {
+      it('with observable', () => {
         const s: SFSchema = {
           properties: {
             a: {
@@ -524,7 +529,7 @@ describe('form: component', () => {
         page.newSchema(s);
         expect(page.getProperty('/a').valid).toBe(false);
       });
-      xit('shoule be throw error when non-include a message property', () => {
+      it('shoule be throw error when non-include a message property', () => {
         expect(() => {
           const s: SFSchema = {
             properties: {
@@ -539,7 +544,7 @@ describe('form: component', () => {
           page.newSchema(s);
         }).toThrowError();
       });
-      xit('shoule be support custom params in message', () => {
+      it('shoule be support custom params in message', () => {
         const s: SFSchema = {
           properties: {
             a: {
@@ -564,7 +569,7 @@ describe('form: component', () => {
     });
 
     describe('[Custom Show Errors]', () => {
-      xit('shoule be re-error message via error property', () => {
+      it('shoule be re-error message via error property', () => {
         const s: SFSchema = {
           properties: {
             a: {
@@ -582,7 +587,7 @@ describe('form: component', () => {
         expect(page.getProperty('/a').errors![0].message).toBe('REQUEST');
       });
 
-      xit('shoule be re-error message via error property and type is function', () => {
+      it('shoule be re-error message via error property and type is function', () => {
         const s: SFSchema = {
           properties: {
             a: {
@@ -605,7 +610,7 @@ describe('form: component', () => {
     describe('ACL', () => {
       let acl: ACLService;
       beforeEach(() => (acl = injector.get(ACLService)));
-      xit('shoule be working', fakeAsync(() => {
+      it('shoule be working', fakeAsync(() => {
         acl.setFull(false);
         acl.setRole(['admin']);
         const s: SFSchema = {
@@ -631,17 +636,17 @@ describe('form: component', () => {
 
   describe('#mode', () => {
     beforeEach(() => ({ fixture, dl, context } = createTestContext(TestModeComponent)));
-    xit('should be auto 搜索 in submit', () => {
+    it('should be auto 搜索 in submit', () => {
       context.mode = 'search';
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('搜索');
     });
-    xit('should be auto 保存 in submit', () => {
+    it('should be auto 保存 in submit', () => {
       context.mode = 'edit';
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('保存');
     });
-    xit('should be custom text of search', () => {
+    it('should be custom text of search', () => {
       context.mode = 'search';
       context.button = {
         search: 'SEARCH',
@@ -649,7 +654,7 @@ describe('form: component', () => {
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('SEARCH');
     });
-    xit('should be custom text of edit', () => {
+    it('should be custom text of edit', () => {
       context.mode = 'edit';
       context.button = {
         edit: 'SAVE',
