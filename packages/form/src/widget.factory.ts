@@ -25,6 +25,10 @@ export class WidgetRegistry {
     }
     return this.defaultWidget;
   }
+  
+  getKeys(): string[] {    
+    return Object.keys(this.widgets);
+  }
 }
 
 @Injectable()
