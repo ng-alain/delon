@@ -3,25 +3,29 @@ import { FormProperty } from './model/form.property';
 import { Widget } from './widget';
 
 export class WidgetRegistry {
-  private widgets: { [type: string]: Widget<FormProperty> } = {};
+  private _widgets: { [type: string]: Widget<FormProperty> } = {};
 
   private defaultWidget: Widget<FormProperty>;
+
+  get widgets() {
+    return this._widgets;
+  }
 
   setDefault(widget: any) {
     this.defaultWidget = widget;
   }
 
   register(type: string, widget: any) {
-    this.widgets[type] = widget;
+    this._widgets[type] = widget;
   }
 
   has(type: string) {
-    return this.widgets.hasOwnProperty(type);
+    return this._widgets.hasOwnProperty(type);
   }
 
   getType(type: string): Widget<FormProperty> {
     if (this.has(type)) {
-      return this.widgets[type];
+      return this._widgets[type];
     }
     return this.defaultWidget;
   }
