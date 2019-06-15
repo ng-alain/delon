@@ -14,6 +14,25 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [7.7.0](https://github.com/ng-alain/delon/compare/7.6.1...7.7.0) (2019-06-15)
+
+### Scaffold
+
+* 修复 Angular 的预加载模块时会使进度条 `isFetching` 状态不正确 ([#1151](https://github.com/ng-alain/ng-alain/pull/1151))
+
+### Bug Fixes
+
+* **abc:_src:** 修复错误图片路径无效时会进入死循环 ([#607](https://github.com/ng-alain/delon/issues/607)) ([09cdff0](https://github.com/ng-alain/delon/commit/09cdff0))
+* **form:select:** 修复搜索模式下无法使用组项 ([#602](https://github.com/ng-alain/delon/issues/602)) ([eaa774b](https://github.com/ng-alain/delon/commit/eaa774b))
+* **theme:modal&drawer:** 取消自动管理 `z-index` 值，zorro 最新版已经很合理的自动管理 ([#601](https://github.com/ng-alain/delon/issues/601)) ([088d306](https://github.com/ng-alain/delon/commit/088d306))
+
+### Features
+
+* **abc:st:** 新增 `iifBehavior` 属性，用于指定无效按钮是禁用或隐藏 ([#604](https://github.com/ng-alain/delon/issues/604)) ([0cbacc1](https://github.com/ng-alain/delon/commit/0cbacc1))
+* **abc:st:** 新增 `resetColumns` 方法的可选参数 ([#597](https://github.com/ng-alain/delon/issues/597)) ([2d3f51d](https://github.com/ng-alain/delon/commit/2d3f51d))
+* **form:** 新增 `disabled` 禁用整个表单状态 ([#603](https://github.com/ng-alain/delon/issues/603)) ([d67f5cd](https://github.com/ng-alain/delon/commit/d67f5cd))
+
+
 ## [7.6.1](https://github.com/ng-alain/delon/compare/7.6.0...7.6.1) (2019-06-05)
 
 ### Bug Fixes

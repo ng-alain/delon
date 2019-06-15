@@ -14,6 +14,25 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [7.7.0](https://github.com/ng-alain/delon/compare/7.6.1...7.7.0) (2019-06-15)
+
+### Scaffold
+
+* fix `isFetching` status if using angular preloading ([#1151](https://github.com/ng-alain/ng-alain/pull/1151))
+
+### Bug Fixes
+
+* **abc:_src:** fix img causing infinite loop when error image still load fail ([#607](https://github.com/ng-alain/delon/issues/607)) ([09cdff0](https://github.com/ng-alain/delon/commit/09cdff0))
+* **form:select:** fix invlid render group in search mode ([#602](https://github.com/ng-alain/delon/issues/602)) ([eaa774b](https://github.com/ng-alain/delon/commit/eaa774b))
+* **theme:modal&drawer:** removed automatic management of `z-index` values ([#601](https://github.com/ng-alain/delon/issues/601)) ([088d306](https://github.com/ng-alain/delon/commit/088d306))
+
+### Features
+
+* **abc:st:** add `iifBehavior` property ([#604](https://github.com/ng-alain/delon/issues/604)) ([0cbacc1](https://github.com/ng-alain/delon/commit/0cbacc1))
+* **abc:st:** add optional parameters of `resetColumns` method ([#597](https://github.com/ng-alain/delon/issues/597)) ([2d3f51d](https://github.com/ng-alain/delon/commit/2d3f51d))
+* **form:** add `disabled` property ([#603](https://github.com/ng-alain/delon/issues/603)) ([d67f5cd](https://github.com/ng-alain/delon/commit/d67f5cd))
+
+
 ## [7.6.1](https://github.com/ng-alain/delon/compare/7.6.0...7.6.1) (2019-06-05)
 
 ### Bug Fixes
