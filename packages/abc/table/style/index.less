@@ -43,6 +43,16 @@
     margin-bottom: 0;
   }
 
+  &__filter {
+    &-keyword {
+      padding: @layout-gutter;
+    }
+  }
+  // 修复自动定义图标无法高亮问题
+  .@{ant-prefix}-table-thead > tr > th .@{ant-prefix}-table-filter-selected.@{ant-prefix}-table-filter-icon {
+    color: @primary-color;
+  }
+
   @media screen and (min-width: @nz-table-rep-min-width) {
     &__width {
       &-strict {

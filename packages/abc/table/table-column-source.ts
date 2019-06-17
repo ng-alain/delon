@@ -5,7 +5,7 @@ import { deepCopy } from '@delon/util';
 
 import { STRowSource } from './table-row.directive';
 import { STConfig } from './table.config';
-import { STColumn, STColumnButton, STColumnFilter, STColumnSort } from './table.interfaces';
+import { STColumn, STColumnButton, STColumnFilter, STColumnSort, STIcon } from './table.interfaces';
 
 export interface STSortMap extends STColumnSort {
   [key: string]: any;
@@ -168,7 +168,23 @@ export class STColumnSource {
       res = item.filter as STColumnFilter;
     }
 
-    if (res == null || res.menus.length === 0) {
+    if (res == null) {
+      return null;
+    }
+
+    res.type = res.type || 'default';
+
+    let icon = 'filter';
+    let iconTheme = 'fill';
+    if (res.type === 'keyword') {
+      if (res.menus == null || res.menus!.length === 0) {
+        res.menus = [{ value: '' }];
+      }
+      icon = 'search';
+      iconTheme = 'outline';
+    }
+
+    if (res.menus!.length === 0) {
       return null;
     }
 
@@ -181,20 +197,26 @@ export class STColumnSource {
     if (!res.clearText) {
       res.clearText = this.cog.filterClearText;
     }
-    if (!res.icon) {
-      res.icon = `filter`;
-    }
     if (!res.key) {
       res.key = item.indexKey;
     }
-
-    res.default = res.menus.findIndex(w => w.checked!) !== -1;
-
-    if (this.acl) {
-      res.menus = res.menus.filter(w => this.acl.can(w.acl));
+    if (!res.icon) {
+      res.icon = icon;
+    }
+    const baseIcon = { type: icon, theme: iconTheme } as STIcon;
+    if (typeof res.icon === 'string') {
+      res.icon = { ...baseIcon, type: res.icon } as STIcon;
+    } else {
+      res.icon = { ...baseIcon, ...res.icon };
     }
 
-    if (res.menus.length <= 0) {
+    this.updateDefault(res);
+
+    if (this.acl) {
+      res.menus = res.menus!.filter(w => this.acl.can(w.acl));
+    }
+
+    if (res.menus!.length <= 0) {
       res = null;
     }
 
@@ -316,5 +338,25 @@ export class STColumnSource {
 
   restoreAllRender(columns: STColumn[]) {
     columns.forEach(i => this.restoreRender(i));
+  }
+
+  updateDefault(filter: STColumnFilter): this {
+    if (filter.type === 'default') {
+      filter.default = filter.menus!.findIndex(w => w.checked!) !== -1;
+    } else {
+      filter.default = !!filter.menus![0].value;
+    }
+    return this;
+  }
+
+  cleanFilter(col: STColumn): this {
+    const f = col.filter!;
+    f.default = false;
+    if (f.type === 'default') {
+      f.menus!.forEach(i => (i.checked = false));
+    } else {
+      f.menus![0].value = undefined;
+    }
+    return this;
   }
 }

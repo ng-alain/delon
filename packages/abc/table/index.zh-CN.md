@@ -259,10 +259,11 @@ class TestComponent {
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
+`[type]` | 类型，`keyword` 文本框形式 | `default,keyword` | `default`
 `[menus]` | 表头的筛选菜单项，至少一项才会生效 | `STColumnFilterMenu[]` | -
 `[fn]` | 本地数据的筛选函数 | `(filter: STColumnFilterMenu, record: STData) => boolean` | -
 `[default]` | 标识数据是否经过过滤，筛选图标会高亮 | `boolean` | -
-`[icon]` | 自定义 fiter 图标 | `string` | `filter`
+`[icon]` | 自定义 fiter 图标<br>当 `type='default'` 默认 `filter`<br>当 `type='keyword'` 默认 `search` | `string | STIcon` | `filter`
 `[multiple]` | 是否多选 | `boolean` | `true`
 `[confirmText]` | filter 确认按钮文本 | `string` | `确认`
 `[clearText]` | filter 清除按钮文本 | `string` | `重置`
@@ -273,7 +274,7 @@ class TestComponent {
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[text]` | 文本 | `string` | -
+`[text]` | 文本<br>当 `type: 'keyword'` 时表示 `placeholder` | `string` | -
 `[value]` | 值 | `any` | -
 `[checked]` | 是否选中 | `boolean` | -
 `[acl]` | 权限，等同 `can()` 参数值 | `ACLCanType` | -
