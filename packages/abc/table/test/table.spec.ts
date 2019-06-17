@@ -1178,8 +1178,8 @@ describe('abc: table', () => {
           fixture.detectChanges();
           firstCol = comp._columns[0];
           filter = firstCol.filter as STColumnFilter;
-          comp._filterRadio(firstCol, filter.menus[0], true);
-          comp._filterRadio(firstCol, filter.menus[1], true);
+          comp._filterRadio(firstCol, filter.menus![0], true);
+          comp._filterRadio(firstCol, filter.menus![1], true);
           comp._filterConfirm(firstCol);
           fixture.detectChanges();
           fixture.whenStable().then(() => {
@@ -1193,17 +1193,17 @@ describe('abc: table', () => {
             fixture.detectChanges();
             firstCol = comp._columns[0];
             filter = firstCol.filter as STColumnFilter;
-            comp._filterRadio(firstCol, filter.menus[0], true);
-            comp._filterRadio(firstCol, filter.menus[1], true);
+            comp._filterRadio(firstCol, filter.menus![0], true);
+            comp._filterRadio(firstCol, filter.menus![1], true);
             comp._filterConfirm(firstCol);
           });
           it('should be filter', () => {
-            const res = filter.menus.filter(w => w.checked);
+            const res = filter.menus!.filter(w => w.checked);
             expect(res.length).toBe(1);
           });
           it('should be clean', () => {
             comp.clearFilter();
-            const res = filter.menus.filter(w => w.checked);
+            const res = filter.menus!.filter(w => w.checked);
             expect(res.length).toBe(0);
           });
         });
@@ -1213,19 +1213,42 @@ describe('abc: table', () => {
             fixture.detectChanges();
             firstCol = comp._columns[0];
             filter = firstCol.filter as STColumnFilter;
-            filter.menus[0].checked = true;
-            filter.menus[1].checked = true;
+            filter.menus![0].checked = true;
+            filter.menus![1].checked = true;
             comp._filterConfirm(firstCol);
           });
           it('should be filter', () => {
-            const res = filter.menus.filter(w => w.checked);
+            const res = filter.menus!.filter(w => w.checked);
             expect(res.length).toBe(2);
           });
           it('should be clean', () => {
             comp._filterClear(firstCol);
-            const res = filter.menus.filter(w => w.checked);
+            const res = filter.menus!.filter(w => w.checked);
             expect(res.length).toBe(0);
           });
+        });
+        describe('when type is keyword', () => {
+          beforeEach(() => {
+            context.columns[0].filter!.type = 'keyword';
+            context.columns[0].filter!.default = true;
+            context.columns[0].filter!.menus![0].value = 'a';
+            fixture.detectChanges();
+            firstCol = comp._columns[0];
+            filter = firstCol.filter!;
+          });
+          it('should be filter', fakeAsync(() => {
+            expect(context.change).not.toHaveBeenCalled();
+            comp._filterConfirm(firstCol);
+            expect(context.change).toHaveBeenCalled();
+            discardPeriodicTasks();
+          }));
+          it('should be clean', fakeAsync(() => {
+            const m = filter.menus![0];
+            expect(m.value).toBe('a');
+            context.comp.clearFilter();
+            expect(m.value).toBe(undefined);
+            discardPeriodicTasks();
+          }));
         });
       });
     });
@@ -1794,9 +1817,10 @@ describe('abc: table', () => {
 
   class PageObject {
     _changeData: STChange;
+    changeSpy: jasmine.Spy;
     constructor() {
       spyOn(context, 'error');
-      spyOn(context, 'change').and.callFake(e => (this._changeData = e));
+      this.changeSpy = spyOn(context, 'change').and.callFake(e => (this._changeData = e));
       comp = context.comp;
     }
     get(cls: string): DebugElement {

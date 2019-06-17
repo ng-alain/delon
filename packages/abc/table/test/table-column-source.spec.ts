@@ -5,7 +5,7 @@ import { deepGet } from '@delon/util';
 import { STColumnSource } from '../table-column-source';
 import { STRowSource } from '../table-row.directive';
 import { STConfig } from '../table.config';
-import { STColumn } from '../table.interfaces';
+import { STColumn, STIcon } from '../table.interfaces';
 
 const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {
@@ -167,9 +167,7 @@ describe('abc: table: column-souce', () => {
             .expectValue([{ title: '', type: 'badge', badge: {} }], 'badge', 'type');
         });
         it('when not specify tag value', () => {
-          page
-            .expectValue([{ title: '', type: 'tag' }], '', 'type')
-            .expectValue([{ title: '', type: 'tag', tag: {} }], 'tag', 'type');
+          page.expectValue([{ title: '', type: 'tag' }], '', 'type').expectValue([{ title: '', type: 'tag', tag: {} }], 'tag', 'type');
         });
       });
     });
@@ -316,12 +314,16 @@ describe('abc: table: column-souce', () => {
       });
       describe('#icon', () => {
         it('should be default to [filter] when is null', () => {
-          const res = srv.process([{ title: '', filter: { menus: [{ text: '' }] } }])[0].filter;
-          expect(res!.icon).toBe('filter');
+          const res = srv.process([{ title: '', filter: { menus: [{ text: '' }] } }])[0].filter!.icon as STIcon;
+          expect(res.type).toBe('filter');
         });
         it('should be specify value', () => {
-          const res = srv.process([{ title: '', filter: { icon: 'icona', menus: [{ text: '' }] } }])[0].filter;
-          expect(res!.icon).toBe('icona');
+          const res = srv.process([{ title: '', filter: { icon: 'icona', menus: [{ text: '' }] } }])[0].filter!.icon as STIcon;
+          expect(res.type).toBe('icona');
+        });
+        it('should be specify STIcon value', () => {
+          const res = srv.process([{ title: '', filter: { icon: { type: 'aa' }, menus: [{ text: '' }] } }])[0].filter!.icon as STIcon;
+          expect(res.type).toBe('aa');
         });
       });
       describe('#default', () => {
@@ -332,6 +334,19 @@ describe('abc: table: column-souce', () => {
         it('when menus non-contain checked', () => {
           const res = srv.process([{ title: '', filter: { menus: [{ text: '' }] } }])[0].filter;
           expect(res!.default).toBe(false);
+        });
+      });
+      describe('#type', () => {
+        describe('with keyword', () => {
+          it('should be ingore specify menus values', () => {
+            const res = srv.process([{ title: '', filter: { type: 'keyword' } }])[0].filter;
+            expect(res!.menus!.length).toBe(1);
+          });
+          it('should be specify menus values', () => {
+            const res = srv.process([{ title: '', filter: { type: 'keyword', menus: [{ text: 'a' }] } }])[0].filter;
+            expect(res!.menus!.length).toBe(1);
+            expect(res!.menus![0].text).toBe('a');
+          });
         });
       });
     });
@@ -347,11 +362,7 @@ describe('abc: table: column-souce', () => {
       });
       describe('#icon', () => {
         it('should be string', () => {
-          page.expectBtnValue(
-            [{ title: '', buttons: [{ text: '', icon: 'edit', type: 'del', popTitle: 'aa' }] }],
-            'edit',
-            'icon.type',
-          );
+          page.expectBtnValue([{ title: '', buttons: [{ text: '', icon: 'edit', type: 'del', popTitle: 'aa' }] }], 'edit', 'icon.type');
         });
         it('should be object', () => {
           page.expectBtnValue(
@@ -376,9 +387,8 @@ describe('abc: table: column-souce', () => {
           expect(res.iif!(null!, null!, null!)).toBe(false);
         });
         it('should be support children', () => {
-          const res = srv.process([
-            { title: '', buttons: [{ text: '', children: [{ text: '', iif: () => false }] }] },
-          ])[0].buttons![0].children![0];
+          const res = srv.process([{ title: '', buttons: [{ text: '', children: [{ text: '', iif: () => false }] }] }])[0].buttons![0]
+            .children![0];
           expect(res.iif!(null!, null!, null!)).toBe(false);
         });
       });
@@ -412,15 +422,12 @@ describe('abc: table: column-souce', () => {
             expect(res.type).toBe('none');
           });
           it('should be apply default values', () => {
-            const res = srv.process([
-              { title: '', buttons: [{ text: '', type: 'modal', modal: { component: {} } }] },
-            ])[0].buttons![0];
+            const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', modal: { component: {} } }] }])[0].buttons![0];
             expect(res.modal!.paramsName).toBe('record');
           });
           describe('#compatible', () => {
             it('should be running', () => {
-              const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', component: {} }] }])[0]
-                .buttons![0];
+              const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', component: {} }] }])[0].buttons![0];
               expect(res.modal!.paramsName).toBe('record');
             });
           });
@@ -428,15 +435,12 @@ describe('abc: table: column-souce', () => {
         describe('with drawer', () => {
           it('should specify drawer parameter', () => {
             spyOn(console, 'warn');
-            const res = srv.process([{ title: '', buttons: [{ text: '', type: 'drawer', drawer: {} }] }])[0]
-              .buttons![0];
+            const res = srv.process([{ title: '', buttons: [{ text: '', type: 'drawer', drawer: {} }] }])[0].buttons![0];
             expect(console.warn).toHaveBeenCalled();
             expect(res.type).toBe('none');
           });
           it('should be apply default values', () => {
-            const res = srv.process([
-              { title: '', buttons: [{ text: '', type: 'drawer', drawer: { component: {} } }] },
-            ])[0].buttons![0];
+            const res = srv.process([{ title: '', buttons: [{ text: '', type: 'drawer', drawer: { component: {} } }] }])[0].buttons![0];
             expect(res.drawer!.paramsName).toBe('record');
           });
         });
@@ -537,7 +541,7 @@ describe('abc: table: column-souce', () => {
               menus: [{ text: '1' }],
             },
           },
-        ])[0].filter!.menus.length,
+        ])[0].filter!.menus!.length,
       ).toBe(1);
       expect(srv.process([
         {

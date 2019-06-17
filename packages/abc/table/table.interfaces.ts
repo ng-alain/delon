@@ -290,7 +290,9 @@ export interface STColumn {
    * 是否允许导出，默认 `true`
    */
   exported?: boolean;
-  /** 权限，等同 `can()` 参数值 */
+  /**
+   * 权限，等同 [ACLCanType](https://ng-alain.com/acl/getting-started/#ACLCanType) 参数值
+   */
   acl?: any;
   /** 当不存在数据时以默认值替代 */
   default?: string;
@@ -383,9 +385,16 @@ export interface STColumnSort {
 
 export interface STColumnFilter {
   /**
-   * 表头的筛选菜单项，至少一项才会生效
+   * 搜索方式
+   * - `defualt` 默认形式
+   * - `keyword` 文本框形式
    */
-  menus: STColumnFilterMenu[];
+  type?: 'default' | 'keyword';
+  /**
+   * 表头的筛选菜单项，至少一项才会生效
+   * - 当 `type='keyword'` 时可为空
+   */
+  menus?: STColumnFilterMenu[];
   /**
    * 本地数据的筛选函数
    */
@@ -395,9 +404,11 @@ export interface STColumnFilter {
    */
   default?: boolean;
   /**
-   * 自定义 filter 图标，默认 `filter`
+   * 自定义 filter 图标
+   * - 当 `type='default'` 默认 `filter`
+   * - 当 `type='keyword'` 默认 `search`
    */
-  icon?: string;
+  icon?: string | STIcon;
   /**
    * 确认按钮文本，默认 `确认`
    */
@@ -426,8 +437,9 @@ export interface STColumnFilter {
 export interface STColumnFilterMenu {
   /**
    * 文本
+   * - 当 `type: 'keyword'` 时表示 `placeholder`
    */
-  text: string;
+  text?: string;
   /**
    * 值
    */
@@ -436,7 +448,9 @@ export interface STColumnFilterMenu {
    * 是否选中
    */
   checked?: boolean;
-  /** 权限，等同 `can()` 参数值 */
+  /**
+   * 权限，等同 [ACLCanType](https://ng-alain.com/acl/getting-started/#ACLCanType) 参数值
+   */
   acl?: any;
 
   [key: string]: any;

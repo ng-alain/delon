@@ -518,7 +518,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   // #region filter
 
   private handleFilter(col: STColumn) {
-    col.filter!.default = col.filter!.menus.findIndex(w => w.checked!) !== -1;
+    this.columnSource.updateDefault(col.filter!);
     this.loadPageData();
     this.changeEmit('filter', col);
   }
@@ -527,23 +527,18 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.handleFilter(col);
   }
 
-  _filterClear(col: STColumn) {
-    col.filter!.menus.forEach(i => (i.checked = false));
-    this.handleFilter(col);
-  }
-
   _filterRadio(col: STColumn, item: STColumnFilterMenu, checked: boolean) {
-    col.filter!.menus.forEach(i => (i.checked = false));
+    col.filter!.menus!.forEach(i => (i.checked = false));
     item.checked = checked;
   }
 
+  _filterClear(col: STColumn) {
+    this.columnSource.cleanFilter(col);
+    this.handleFilter(col);
+  }
+
   clearFilter() {
-    this._columns
-      .filter(w => w.filter && w.filter.default === true)
-      .forEach(col => {
-        col.filter!.default = false;
-        col.filter!.menus.forEach(f => (f.checked = false));
-      });
+    this._columns.filter(w => w.filter && w.filter.default === true).forEach(col => this.columnSource.cleanFilter(col));
     return this;
   }
 
@@ -563,8 +558,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     const allUnChecked = validData.every(value => !value.checked);
     this._indeterminate = !this._allChecked && !allUnChecked;
     this._allCheckedDisabled = this._data.length === this._data.filter(w => w.disabled).length;
-    this.cd();
-    return this;
+    return this.cd();
   }
 
   _checkAll(checked?: boolean): this {
