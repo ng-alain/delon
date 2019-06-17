@@ -32,7 +32,7 @@ const prefixCls = `sv`;
   encapsulation: ViewEncapsulation.None,
 })
 export class SVComponent implements AfterViewInit, OnChanges {
-  @ViewChild('conEl')
+  @ViewChild('conEl', { static: false })
   private conEl: ElementRef;
   private el: HTMLElement;
   private clsMap: string[] = [];

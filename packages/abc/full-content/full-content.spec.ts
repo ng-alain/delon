@@ -111,7 +111,7 @@ describe('abc: full-content', () => {
       const bodyHeight = 10;
       spyOn(bodyEl, 'getBoundingClientRect').and.returnValue({
         height: bodyHeight,
-      });
+      } as any);
       expect(bodyEl.getBoundingClientRect).not.toHaveBeenCalled();
       window.dispatchEvent(new Event('resize'));
       fixture.detectChanges();
@@ -163,19 +163,13 @@ describe('abc: full-content', () => {
 
 @Component({
   template: `
-    <full-content
-      #comp
-      [(fullscreen)]="fullscreen"
-      [hideTitle]="hideTitle"
-      [padding]="padding"
-      (fullscreenChange)="change()"
-    >
+    <full-content #comp [(fullscreen)]="fullscreen" [hideTitle]="hideTitle" [padding]="padding" (fullscreenChange)="change()">
       <button full-toggle>Full</button>
     </full-content>
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: FullContentComponent;
+  @ViewChild('comp', { static: false }) comp: FullContentComponent;
   fullscreen: boolean = false;
   hideTitle: boolean;
   padding = 24;

@@ -520,7 +520,7 @@ describe('abc: sidebar-nav', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: false })
   comp: SidebarNavComponent;
   disabledAcl = false;
   autoCloseUnderPad = false;

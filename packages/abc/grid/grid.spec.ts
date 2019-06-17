@@ -139,9 +139,9 @@ describe('abc: grid', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('sgComp')
+  @ViewChild('sgComp', { static: false })
   sgComp: SGContainerComponent;
-  @ViewChild('viewComp')
+  @ViewChild('viewComp', { static: false })
   viewComp: SGComponent;
 
   parent_gutter: number | null = 32;

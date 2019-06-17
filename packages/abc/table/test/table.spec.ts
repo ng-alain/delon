@@ -260,7 +260,7 @@ describe('abc: table', () => {
             });
           });
           it('should be navigate url when click is string value', done => {
-            const router = injector.get(Router);
+            const router = injector.get<Router>(Router);
             spyOn(router, 'navigateByUrl');
             context.data = [{ link: '/a' }];
             page
@@ -624,7 +624,7 @@ describe('abc: table', () => {
                   ],
                 },
               ];
-              const modalHelp = injector.get(ModalHelper);
+              const modalHelp = injector.get<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
               spyOn(modalHelp, 'create').and.callFake(() => mock$);
               page.newColumn(columns).then(() => {
@@ -655,7 +655,7 @@ describe('abc: table', () => {
                   ],
                 },
               ];
-              const modalHelp = injector.get(ModalHelper);
+              const modalHelp = injector.get<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
               spyOn(modalHelp, 'createStatic').and.callFake(() => mock$);
               page.newColumn(columns).then(() => {
@@ -688,7 +688,7 @@ describe('abc: table', () => {
                   ],
                 },
               ];
-              const drawerHelp = injector.get(DrawerHelper);
+              const drawerHelp = injector.get<DrawerHelper>(DrawerHelper);
               const mock$ = new Subject();
               spyOn(drawerHelp, 'create').and.callFake(() => mock$);
               page.newColumn(columns).then(() => {
@@ -711,7 +711,7 @@ describe('abc: table', () => {
                   buttons: [{ text: 'a', type: 'link', click: () => null }],
                 },
               ];
-              const router = injector.get(Router);
+              const router = injector.get<Router>(Router);
               spyOn(router, 'navigateByUrl');
               page.newColumn(columns).then(() => {
                 expect(router.navigateByUrl).not.toHaveBeenCalled();
@@ -727,7 +727,7 @@ describe('abc: table', () => {
                   buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
                 },
               ];
-              const router = injector.get(Router);
+              const router = injector.get<Router>(Router);
               spyOn(router, 'navigateByUrl');
               page.newColumn(columns).then(() => {
                 expect(router.navigateByUrl).not.toHaveBeenCalled();
@@ -743,11 +743,12 @@ describe('abc: table', () => {
                   buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
                 },
               ];
-              const router = injector.get(Router);
+              const router = injector.get<Router>(Router);
               const spy = spyOn(router, 'navigateByUrl');
               page.newColumn(columns).then(() => {
                 page.clickCell('a');
-                expect(spy.calls.mostRecent().args[1].state.pi).toBe(1);
+                const arg = spy.calls.mostRecent().args[1] as any;
+                expect(arg.state.pi).toBe(1);
                 done();
               });
             });
@@ -809,7 +810,7 @@ describe('abc: table', () => {
       it('should only restore data', () => {
         // tslint:disable-next-line:no-string-literal
         const dataSource: STDataSource = comp['dataSource'];
-        spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({}));
+        spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({} as any));
         fixture.detectChanges();
         expect(comp.ps).toBe(PS);
       });
@@ -1772,7 +1773,7 @@ describe('abc: table', () => {
         page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
           const el = page.getEl('.ant-pagination-total-text');
           expect(el.textContent!.trim()).toContain(`共`);
-          injector.get(DelonLocaleService).setLocale(en_US);
+          injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
           fixture.detectChanges();
           expect(el.textContent!.trim()).toContain(`of`);
           done();
@@ -1796,7 +1797,7 @@ describe('abc: table', () => {
     _changeData: STChange;
     constructor() {
       spyOn(context, 'error');
-      spyOn(context, 'change').and.callFake(e => (this._changeData = e));
+      spyOn(context, 'change').and.callFake((e => (this._changeData = e)) as any);
       comp = context.comp;
     }
     get(cls: string): DebugElement {
@@ -1983,7 +1984,7 @@ describe('abc: table', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('st')
+  @ViewChild('st', { static: false })
   comp: STComponent;
   data: string | any[] | Observable<any[]> | null = deepCopy(USERS);
   res: STRes = {};

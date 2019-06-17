@@ -48,7 +48,7 @@ schema: SFSchema = {
 **1、Schema 定义后可能受限于某个数据来自远程**
 
 ```ts
-@ViewChild('sf') sf: SFComponent;
+@ViewChild('sf', { static: false }) sf: SFComponent;
 schema: SFSchema = {
   properties: {
     app: {

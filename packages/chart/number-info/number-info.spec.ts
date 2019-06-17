@@ -115,11 +115,11 @@ describe('abc: number-info', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('ni') comp: NumberInfoComponent;
-  @ViewChild('titleTpl') titleTpl: TemplateRef<void>;
-  @ViewChild('subTitleTpl') subTitleTpl: TemplateRef<void>;
-  @ViewChild('totalTpl') totalTpl: TemplateRef<void>;
-  @ViewChild('subTotalTpl') subTotalTpl: TemplateRef<void>;
+  @ViewChild('ni', { static: false }) comp: NumberInfoComponent;
+  @ViewChild('titleTpl', { static: false }) titleTpl: TemplateRef<void>;
+  @ViewChild('subTitleTpl', { static: false }) subTitleTpl: TemplateRef<void>;
+  @ViewChild('totalTpl', { static: false }) totalTpl: TemplateRef<void>;
+  @ViewChild('subTotalTpl', { static: false }) subTotalTpl: TemplateRef<void>;
   title: string | TemplateRef<void> = 'title';
   subTitle: string | TemplateRef<void> = 'subTitle';
   total: string | TemplateRef<void> = 'total';

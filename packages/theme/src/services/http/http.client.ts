@@ -1,5 +1,4 @@
 import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { HttpObserve } from '@angular/common/http/src/client';
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -7,6 +6,7 @@ import { AlainThemeConfig } from '../../theme.config';
 import { HttpClientConfig } from './http.config';
 
 export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
+export type HttpObserve = 'body' | 'events' | 'response';
 
 /**
  * 封装HttpClient，主要解决：

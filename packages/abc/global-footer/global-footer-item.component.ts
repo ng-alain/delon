@@ -12,7 +12,7 @@ import { InputBoolean } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class GlobalFooterItemComponent {
-  @ViewChild('host') host: ElementRef;
+  @ViewChild('host', { static: false }) host: ElementRef;
 
   @Input() href: string;
   @Input() @InputBoolean() blankTarget: boolean;

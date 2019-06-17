@@ -19,7 +19,7 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
   fixData: SFSchemaEnum[] = [];
   list: Observable<SFSchemaEnum[]>;
   typing: string = '';
-  @ViewChild(NgModel) private ngModel: NgModel;
+  @ViewChild(NgModel, { static: false }) private ngModel: NgModel;
   private filterOption: (input: string, option: SFSchemaEnum) => boolean;
   private isAsync = false;
 
@@ -37,8 +37,7 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
 
     this.filterOption = this.ui.filterOption == null ? true : this.ui.filterOption;
     if (typeof this.filterOption === 'boolean') {
-      this.filterOption = (input: string, option: SFSchemaEnum) =>
-        option.label.toLowerCase().indexOf((input || '').toLowerCase()) > -1;
+      this.filterOption = (input: string, option: SFSchemaEnum) => option.label.toLowerCase().indexOf((input || '').toLowerCase()) > -1;
     }
 
     this.isAsync = !!this.ui.asyncData;
@@ -58,11 +57,7 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
     if (this.isAsync) return;
     switch (this.ui.type) {
       case 'email':
-        this.fixData = getCopyEnum(
-          this.schema.enum! || this.formProperty.options.uiEmailSuffixes,
-          null,
-          this.schema.readOnly!,
-        );
+        this.fixData = getCopyEnum(this.schema.enum! || this.formProperty.options.uiEmailSuffixes, null, this.schema.readOnly!);
         break;
       default:
         this.fixData = getCopyEnum(this.schema.enum!, this.formProperty.formData, this.schema.readOnly!);

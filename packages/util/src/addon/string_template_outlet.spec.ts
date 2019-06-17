@@ -117,7 +117,7 @@ describe('utils: string_template_outlet', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('tpl1') tpl1: TemplateRef<void>;
-  @ViewChild('tpl2') tpl2: TemplateRef<void>;
+  @ViewChild('tpl1', { static: false }) tpl1: TemplateRef<void>;
+  @ViewChild('tpl2', { static: false }) tpl2: TemplateRef<void>;
   value: string | TemplateRef<void> | null | undefined;
 }

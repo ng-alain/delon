@@ -4,6 +4,7 @@
     "sourceMap": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "module": "esnext",
     "outDir": "../out-tsc/app",
     "baseUrl": ".",
     "types": [],

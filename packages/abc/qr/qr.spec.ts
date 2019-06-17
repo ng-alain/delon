@@ -91,7 +91,7 @@ describe('abc: qr', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: false })
   comp: QRComponent;
 
   value = 'https://ng-alain.com/';

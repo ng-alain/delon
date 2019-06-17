@@ -852,7 +852,7 @@ class AppComponent {}
   `,
 })
 class LayoutComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: false })
   comp: ReuseTabComponent;
   mode: ReuseTabMatchMode = ReuseTabMatchMode.URL;
   debug = false;

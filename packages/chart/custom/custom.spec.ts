@@ -46,7 +46,7 @@ describe('chart: custom', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: G2CustomComponent;
+  @ViewChild('comp', { static: false }) comp: G2CustomComponent;
   resizeTime = 0;
   render() {}
   resize() {}

@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { DelonLocaleService, LocaleData } from '@delon/theme';
@@ -26,8 +17,7 @@ export type ExceptionType = 403 | 404 | 500;
 })
 export class ExceptionComponent implements OnInit, OnDestroy {
   private i18n$: Subscription;
-  @ViewChild('conTpl')
-  private conTpl: ElementRef;
+  @ViewChild('conTpl', { static: true }) private conTpl: ElementRef;
 
   _type: ExceptionType;
   locale: LocaleData = {};

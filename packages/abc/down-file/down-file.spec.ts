@@ -12,9 +12,7 @@ import { DownFileModule } from './down-file.module';
 
 function genFile(isRealFile = true): Blob {
   const blob = new Blob([
-    isRealFile
-      ? `iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==`
-      : '',
+    isRealFile ? `iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==` : '',
   ]);
   return blob;
 }
@@ -151,7 +149,7 @@ describe('abc: down-file', () => {
   `,
 })
 class TestComponent {
-  @ViewChild(DownFileDirective) comp: DownFileDirective;
+  @ViewChild(DownFileDirective, { static: true }) comp: DownFileDirective;
   fileTypes = ['xlsx', 'docx', 'pptx', 'pdf'];
 
   data: any = {

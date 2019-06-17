@@ -61,7 +61,7 @@ describe('abc: quick-menu', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: false })
   comp: QuickMenuComponent;
   width = 200;
 }

@@ -84,10 +84,10 @@ describe('chart: bar', () => {
   `,
 })
 class TestComponent implements OnInit {
-  @ViewChild('comp') comp: G2BarComponent;
+  @ViewChild('comp', { static: false }) comp: G2BarComponent;
   data: any[] = [];
   delay = 0;
-  @ViewChild('titleTpl') titleTpl: TemplateRef<void>;
+  @ViewChild('titleTpl', { static: false }) titleTpl: TemplateRef<void>;
   title: string | TemplateRef<void> | null = 'title';
   height = PageG2Height;
   padding: number[];

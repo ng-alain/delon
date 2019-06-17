@@ -1,3 +1,4 @@
+// tslint:disable: member-ordering
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { copy, LazyService } from '@delon/util';
@@ -25,6 +26,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   oldVersionList = [`1.x`];
   currentVersion = 'stable';
   delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util', 'cli'];
+
+  @ViewChild('searchInput', { static: false })
+  searchInput: ElementRef<HTMLInputElement>;
 
   constructor(
     public i18n: I18NService,
@@ -62,9 +66,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       ])
       .then(() => this.initDocSearch());
   }
-
-  @ViewChild('searchInput')
-  searchInput: ElementRef<HTMLInputElement>;
 
   @HostListener('document:keyup.s', ['$event'])
   onKeyUp(event: KeyboardEvent) {

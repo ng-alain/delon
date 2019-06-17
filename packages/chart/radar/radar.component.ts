@@ -36,7 +36,7 @@ export interface G2RadarData {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
-  @ViewChild('container') private node: ElementRef;
+  @ViewChild('container', { static: true }) private node: ElementRef;
   private chart: any;
   legendData: any[] = [];
 

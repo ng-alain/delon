@@ -1,14 +1,6 @@
 import { Component, DebugElement, EventEmitter, ViewChild } from '@angular/core';
 import { fakeAsync, inject, tick, ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  FormsModule,
-  FormBuilder,
-  FormControlName,
-  FormGroup,
-  NgModel,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormsModule, FormBuilder, FormControlName, FormGroup, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { configureTestSuite, createTestContext } from '@delon/testing';
@@ -399,9 +391,9 @@ describe('abc: edit', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('seComp')
+  @ViewChild('seComp', { static: true })
   seComp: SEContainerComponent;
-  @ViewChild('viewComp')
+  @ViewChild('viewComp', { static: true })
   viewComp: SEComponent;
 
   parent_gutter: number | null = 32;

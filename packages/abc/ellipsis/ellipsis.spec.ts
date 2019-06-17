@@ -94,7 +94,7 @@ describe('abc: ellipsis', () => {
       });
       describe('in firefox', () => {
         beforeEach(fakeAsync(() => {
-          spyOn(window, 'getComputedStyle').and.returnValue({ lineHeight: 20 });
+          spyOn(window, 'getComputedStyle').and.returnValue({ lineHeight: 20 } as any);
           // tslint:disable-next-line:no-string-literal
           page.comp['isSupportLineClamp'] = false;
           context.lines = 1;
@@ -196,7 +196,7 @@ describe('abc: ellipsis', () => {
 });
 
 class TestBaseComponent {
-  @ViewChild('comp') comp: EllipsisComponent;
+  @ViewChild('comp', { static: true }) comp: EllipsisComponent;
   tooltip = false;
   length: number | null = 10;
   lines: number | null = 3;
@@ -208,9 +208,7 @@ class TestBaseComponent {
 
 @Component({
   template: `
-    <ellipsis #comp [tooltip]="tooltip" [length]="length" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail">{{
-      text
-    }}</ellipsis>
+    <ellipsis #comp [tooltip]="tooltip" [length]="length" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail">{{ text }}</ellipsis>
   `,
 })
 class TestLengthComponent extends TestBaseComponent {}

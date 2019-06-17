@@ -5,14 +5,7 @@ import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { configureTestSuite, createTestContext } from '@delon/testing';
-import {
-  AlainI18NService,
-  AlainI18NServiceFake,
-  ALAIN_I18N_TOKEN,
-  MenuService,
-  SettingsService,
-  TitleService,
-} from '@delon/theme';
+import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 
 import { NzAffixComponent } from 'ng-zorro-antd';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
@@ -35,10 +28,7 @@ describe('abc: page-header', () => {
   let router: Router;
 
   function genModule(other: { template?: string; providers?: any[]; created?: boolean }) {
-    const imports = [
-      RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]),
-      PageHeaderModule,
-    ];
+    const imports = [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule];
     const providers = [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService];
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
@@ -122,9 +112,7 @@ describe('abc: page-header', () => {
         });
         it('should be update position when switch collapsed', () => {
           const srv = injector.get(SettingsService);
-          const affixComp = dl
-            .query(By.directive(NzAffixComponent))
-            .injector.get<NzAffixComponent>(NzAffixComponent, undefined);
+          const affixComp = dl.query(By.directive(NzAffixComponent)).injector.get<NzAffixComponent>(NzAffixComponent, undefined);
           spyOn(affixComp, 'updatePosition');
           srv.setLayout('collapsed', true);
           expect(affixComp.updatePosition).toHaveBeenCalled();
@@ -404,7 +392,7 @@ describe('abc: page-header', () => {
 });
 
 class TestBaseComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: false })
   comp: PageHeaderComponent;
   title: string | null = '所属类目';
   autoBreadcrumb: boolean;
@@ -452,13 +440,7 @@ class TestComponent extends TestBaseComponent {}
 
 @Component({
   template: `
-    <page-header
-      #comp
-      [title]="title"
-      [home]="home"
-      [homeI18n]="homeI18n"
-      [autoBreadcrumb]="autoBreadcrumb"
-    ></page-header>
+    <page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb"></page-header>
   `,
 })
 class TestAutoBreadcrumbComponent extends TestBaseComponent {}

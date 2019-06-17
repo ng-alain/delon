@@ -73,7 +73,7 @@ import { NzTableComponent } from 'ng-zorro-antd';
   encapsulation: ViewEncapsulation.None,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
-  @ViewChild('table') orgTable: NzTableComponent;
+  @ViewChild('table', { static: false }) orgTable: NzTableComponent;
   /** 请求体配置 */
   @Input()
   get req() {

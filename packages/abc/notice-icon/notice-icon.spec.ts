@@ -118,7 +118,7 @@ describe('abc: notice-icon', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: false })
   comp: NoticeIconComponent;
   data: NoticeItem[] = [
     {

@@ -27,9 +27,9 @@ import { take } from 'rxjs/operators';
 export class EllipsisComponent implements AfterViewInit, OnChanges {
   // tslint:disable-next-line:no-string-literal
   private isSupportLineClamp = this.doc.body.style['webkitLineClamp'] !== undefined;
-  @ViewChild('orgEl') private orgEl: ElementRef;
-  @ViewChild('shadowOrgEl') private shadowOrgEl: ElementRef;
-  @ViewChild('shadowTextEl') private shadowTextEl: ElementRef;
+  @ViewChild('orgEl', { static: false }) private orgEl: ElementRef;
+  @ViewChild('shadowOrgEl', { static: false }) private shadowOrgEl: ElementRef;
+  @ViewChild('shadowTextEl', { static: false }) private shadowTextEl: ElementRef;
   private inited = false;
   orgHtml: SafeHtml;
   type = 'default';
@@ -53,7 +53,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     private dom: DomSanitizer,
     @Inject(DOCUMENT) private doc: Document,
     private cdr: ChangeDetectorRef,
-  ) { }
+  ) {}
 
   private getStrFullLength(str: string): number {
     return str.split('').reduce((pre, cur) => {
@@ -96,7 +96,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         return mid;
       }
       begin = mid;
-      mid = (end - begin) === 1 ? begin + 1 : Math.floor((end - begin) / 2) + begin;
+      mid = end - begin === 1 ? begin + 1 : Math.floor((end - begin) / 2) + begin;
       return this.bisection(th, mid, begin, end, text, shadowNode);
     }
     if (mid - 1 < 0) {

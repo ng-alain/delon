@@ -70,7 +70,7 @@ describe('abc: tag-select', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: false })
   comp: TagSelectComponent;
   categories = [
     { id: 0, text: '全部', value: false },
