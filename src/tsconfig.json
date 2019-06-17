@@ -2,15 +2,9 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "sourceMap": false,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "outDir": "../out-tsc/app",
-    "target": "es5",
-    "module": "es2015",
     "baseUrl": ".",
     "types": [],
     "paths": {
