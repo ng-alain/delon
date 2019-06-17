@@ -22,11 +22,13 @@ import { delay } from 'rxjs/operators';
 @Component({
   selector: 'app-demo',
   template: `
-  <div class="mb-md">
-    <button (click)="st.clear()" nz-button>Clear Data</button>
-    <button (click)="st.clearStatus()" nz-button>Clear Status</button>
-  </div>
-  <st #st [data]="users" [columns]="columns" (change)="change($event)"></st>`,
+    <div class="mb-md">
+      <button (click)="st.clear()" nz-button>Clear Data</button>
+      <button (click)="st.reload()" nz-button>Reload Data</button>
+      <button (click)="st.clearStatus(); st.reload()" nz-button>Clear Status</button>
+    </div>
+    <st #st [data]="users" [columns]="columns" (change)="change($event)"></st>
+  `,
 })
 export class DemoComponent implements OnInit {
   users: any[] = [];
@@ -38,13 +40,11 @@ export class DemoComponent implements OnInit {
       selections: [
         {
           text: '小于25岁',
-          select: (data: any[]) =>
-            data.forEach(item => (item.checked = item.age < 25)),
+          select: data => data.forEach(item => (item.checked = item.age < 25)),
         },
         {
           text: '大于25岁',
-          select: (data: any[]) =>
-            data.forEach(item => (item.checked = item.age >= 25)),
+          select: data => data.forEach(item => (item.checked = item.age >= 25)),
         },
       ],
     },
@@ -55,12 +55,8 @@ export class DemoComponent implements OnInit {
         compare: (a, b) => a.name.length - b.name.length,
       },
       filter: {
-        menus: [
-          { text: 'name 1', value: 'name 1' },
-          { text: 'name 2', value: 'name 2' },
-        ],
-        fn: (filter: any, record: any) =>
-          record.name.indexOf(filter.value) === 0,
+        type: 'keyword',
+        fn: (filter, record) => !filter.value || record.name.indexOf(filter.value) !== -1,
       },
     },
     {
@@ -70,13 +66,8 @@ export class DemoComponent implements OnInit {
         compare: (a, b) => a.age - b.age,
       },
       filter: {
-        menus: [
-          { text: '20岁以下', value: [0, 20] },
-          { text: '20-25岁', value: [20, 25] },
-          { text: '25岁以上', value: [25, 100] },
-        ],
-        fn: (filter: any, record: any) =>
-          record.age >= filter.value[0] && record.age <= filter.value[1],
+        menus: [{ text: '20岁以下', value: [0, 20] }, { text: '20-25岁', value: [20, 25] }, { text: '25岁以上', value: [25, 100] }],
+        fn: (filter, record) => record.age >= filter.value[0] && record.age <= filter.value[1],
         multiple: false,
       },
     },

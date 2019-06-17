@@ -6,7 +6,7 @@ import { deepCopy } from '@delon/util';
 
 import { STDataSource, STDataSourceOptions } from '../table-data-source';
 import { STConfig } from '../table.config';
-import { STColumnFilterMenu } from '../table.interfaces';
+import { STColumnFilterMenu, STData } from '../table.interfaces';
 
 const DEFAULT = {
   pi: 1,
@@ -195,26 +195,27 @@ describe('abc: table: data-souce', () => {
       beforeEach(() => {
         options.data = genData();
         options.columns[0].filter = {
+          type: 'default',
           menus: [{ text: '', value: '1', checked: true }],
-          fn: (filter: STColumnFilterMenu, record: any) => record.name.includes(filter.value),
+          fn: (filter, record) => record.name.includes(filter.value),
         };
       });
       it(`should be filter [1] in name`, done => {
-        const expectCount = (options.data as any[]).filter(w => w.name.includes(`1`)).length;
+        const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
         srv.process(options).then(res => {
           expect(res.list.length).toBe(expectCount);
           done();
         });
       });
       it(`should be clean filtered`, done => {
-        const expectCount = (options.data as any[]).filter(w => w.name.includes(`1`)).length;
+        const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
         srv
           .process(options)
           .then(res => {
             expect(res.list.length).toBe(expectCount);
           })
           .then(() => {
-            options.columns[0].filter!.menus[0].checked = false;
+            options.columns[0].filter!.menus![0].checked = false;
             return srv.process(options);
           })
           .then(res => {
@@ -240,9 +241,9 @@ describe('abc: table: data-souce', () => {
       it('should be always return full data when include filter', done => {
         options.columns[0].filter = {
           menus: [{ text: '', value: '1', checked: true }],
-          fn: (filter: STColumnFilterMenu, record: any) => record.name.includes(filter.value),
+          fn: (filter, record) => record.name.includes(filter.value),
         };
-        const expectCount = (options.data as any[]).filter(w => w.name.includes(`1`)).length;
+        const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
         srv.process(options).then(res => {
           expect(res.list.length).toBe(expectCount);
           done();
@@ -548,6 +549,7 @@ describe('abc: table: data-souce', () => {
         genModule();
         options.data = '/mockurl';
         options.columns[0].filter = {
+          type: 'default',
           default: true,
           key: 'id',
           menus: [{ text: '', value: 'a', checked: true }, { text: '', value: 'b', checked: true }],
@@ -569,6 +571,13 @@ describe('abc: table: data-souce', () => {
         };
         srv.process(options).then(() => {
           expect(resParams.id).toBe('a1,b1');
+          done();
+        });
+      });
+      it('should be always return first value when type with keyword', done => {
+        options.columns[0].filter!.type = 'keyword';
+        srv.process(options).then(() => {
+          expect(resParams.id).toBe('a');
           done();
         });
       });

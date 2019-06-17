@@ -266,10 +266,11 @@ Property | Description | Type | Default
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
+`[type]` | Type of the filter, `keyword` render by input | `default,keyword` | `default`
 `[menus]` | Filter menu config | `STColumnFilterMenu[]` | -
 `[fn]` | Filter function for local data | `(filter: STColumnFilterMenu, record: STData) => boolean` | -
 `[default]` | Whether the `data` is filtered | `boolean` | -
-`[icon]` | Customized filter icon | `string` | `filter`
+`[icon]` | Customized filter icon<br>When `type='default'` default `filter`<br> when `type='keyword'` default `search` | `string | STIcon` | `filter`
 `[multiple]` | Whether multiple filters can be selected | `boolean` | `true`
 `[confirmText]` | Text of the confirm button | `string` | `确认`
 `[clearText]` | Text of the clear button | `string` | `重置`
@@ -280,7 +281,7 @@ Property | Description | Type | Default
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
-`[text]` | Filter text | `string` | -
+`[text]` | Filter text<br>When `type: 'keyword'` is `placeholder` value | `string` | -
 `[value]` | Filter value | `any` | -
 `[checked]` | Whether checked | `boolean` | -
 `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | -

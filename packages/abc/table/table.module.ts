@@ -11,6 +11,7 @@ import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 import { DelonACLModule } from '@delon/acl';
 import { DelonUtilModule } from '@delon/util';
@@ -37,6 +38,7 @@ const COMPONENTS = [STComponent, STRowDirective];
     NzMenuModule,
     NzRadioModule,
     NzTagModule,
+    NzInputModule,
   ],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],

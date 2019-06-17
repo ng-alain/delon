@@ -22,6 +22,7 @@ import {
   STStatisticalResult,
   STStatisticalResults,
   STStatisticalType,
+  STColumnFilter,
 } from './table.interfaces';
 
 export interface STDataSourceOptions {
@@ -131,9 +132,10 @@ export class STDataSource {
             columns
               .filter(w => w.filter)
               .forEach(c => {
-                const values = c.filter!.menus.filter(w => w.checked);
+                const filter = c.filter!;
+                const values = this.getFilteredData(filter);
                 if (values.length === 0) return;
-                const onFilter = c.filter!.fn;
+                const onFilter = filter.fn;
                 if (typeof onFilter !== 'function') {
                   console.warn(`[st] Muse provide the fn function in filter`);
                   return;
@@ -346,17 +348,22 @@ export class STDataSource {
 
   // #region filter
 
+  private getFilteredData(filter: STColumnFilter) {
+    return filter.type === 'default' ? filter.menus!.filter(f => f.checked === true) : filter.menus!.slice(0, 1);
+  }
+
   private getReqFilterMap(columns: STColumn[]): { [key: string]: string } {
     let ret = {};
     columns
       .filter(w => w.filter && w.filter.default === true)
       .forEach(col => {
-        const values = col.filter!.menus.filter(f => f.checked === true);
+        const filter = col.filter!;
+        const values = this.getFilteredData(filter);
         let obj: {} = {};
-        if (col.filter!.reName) {
-          obj = col.filter!.reName!(col.filter!.menus, col);
+        if (filter.reName) {
+          obj = filter.reName!(filter.menus!, col);
         } else {
-          obj[col.filter!.key!] = values.map(i => i.value).join(',');
+          obj[filter.key!] = values.map(i => i.value).join(',');
         }
         ret = { ...ret, ...obj };
       });
