@@ -14,6 +14,13 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [7.7.1](https://github.com/ng-alain/delon/compare/7.7.0...7.7.1) (2019-06-17)
+
+### Bug Fixes
+
+* **form:select:** 修复点击清空按钮无法清除值 ([#611](https://github.com/ng-alain/delon/issues/611)) ([8ab8d45](https://github.com/ng-alain/delon/commit/8ab8d45))
+
+
 # [7.7.0](https://github.com/ng-alain/delon/compare/7.6.1...7.7.0) (2019-06-15)
 
 ### Scaffold
