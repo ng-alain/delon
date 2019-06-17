@@ -1,3 +1,12 @@
+## [7.7.1](https://github.com/ng-alain/delon/compare/7.7.0...7.7.1) (2019-06-17)
+
+
+### Bug Fixes
+
+* **form:select:** fix invalid value via click clean ([#611](https://github.com/ng-alain/delon/issues/611)) ([8ab8d45](https://github.com/ng-alain/delon/commit/8ab8d45))
+
+
+
 # [7.7.0](https://github.com/ng-alain/delon/compare/7.6.1...7.7.0) (2019-06-15)
 
 
