@@ -40,7 +40,12 @@ function envConfig(host: Tree, options: PluginOptions) {
   // 1. update default env file
   addValueToVariable(host, defEnvPath, 'environment', 'hmr: false');
   // 2. update prod env file
-  addValueToVariable(host, `${options.sourceRoot}/environments/environment.prod.ts`, 'environment', 'hmr: false');
+  addValueToVariable(
+    host,
+    `${options.sourceRoot}/environments/environment.prod.ts`,
+    'environment',
+    'hmr: false',
+  );
   // 3. copy default env file to hmr file
   const hmrEnvPath = `${options.sourceRoot}/environments/environment.hmr.ts`;
   host.create(hmrEnvPath, defContent);
@@ -48,15 +53,20 @@ function envConfig(host: Tree, options: PluginOptions) {
 }
 
 function addNodeTypeToTsconfig(host: Tree, options: PluginOptions) {
-  const tsConfigPath = `${options.sourceRoot}/tsconfig.app.json`;
-  if (!host.exists(tsConfigPath)) return;
+  const tsConfigPath = `${options.root}/tsconfig.app.json`;
+  if (!host.exists(tsConfigPath)) {
+    console.warn(`Not found ${tsConfigPath} file`);
+    return;
+  }
   const json = getJSON(host, tsConfigPath);
   const TYPENAME = 'node';
   if (options.type === 'add') {
     json.compilerOptions.types = [TYPENAME];
   } else {
     const idx = (json.compilerOptions.types as string[]).findIndex(w => w === TYPENAME);
-    if (idx !== -1) (json.compilerOptions.types as string[]).splice(idx, 1);
+    if (idx !== -1) {
+      (json.compilerOptions.types as string[]).splice(idx, 1);
+    }
   }
   overwriteJSON(host, tsConfigPath, json);
 }

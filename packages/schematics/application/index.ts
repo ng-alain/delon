@@ -123,33 +123,17 @@ function addRunScriptToPackageJson() {
 
 function addPathsToTsConfig() {
   return (host: Tree) => {
-    [
-      {
-        path: 'tsconfig.json',
-        baseUrl: `${project.sourceRoot}/`,
-      },
-      {
-        path: `${project.sourceRoot}/tsconfig.app.json`,
-        baseUrl: './',
-      },
-      {
-        path: `${project.sourceRoot}/tsconfig.spec.json`,
-        baseUrl: './',
-      },
-    ].forEach(item => {
-      const json = getJSON(host, item.path, 'compilerOptions');
-      if (json == null) return host;
-      if (!json.compilerOptions) json.compilerOptions = {};
-      if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
-      json.compilerOptions.baseUrl = item.baseUrl;
-      const paths = json.compilerOptions.paths;
-      paths['@shared'] = ['app/shared/index'];
-      paths['@shared/*'] = ['app/shared/*'];
-      paths['@core'] = ['app/core/index'];
-      paths['@core/*'] = ['app/core/*'];
-      paths['@env/*'] = ['environments/*'];
-      overwriteJSON(host, item.path, json);
-    });
+    const json = getJSON(host, 'tsconfig.json', 'compilerOptions');
+    if (json == null) return host;
+    if (!json.compilerOptions) json.compilerOptions = {};
+    if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
+    const paths = json.compilerOptions.paths;
+    paths['@shared'] = ['src/app/shared/index'];
+    paths['@shared/*'] = ['src/app/shared/*'];
+    paths['@core'] = ['src/app/core/index'];
+    paths['@core/*'] = ['src/app/core/*'];
+    paths['@env/*'] = ['src/environments/*'];
+    overwriteJSON(host, 'tsconfig.json', json);
     return host;
   };
 }
@@ -481,8 +465,6 @@ function fixVsCode() {
 
 function installPackages() {
   return (_host: Tree, context: SchematicContext) => {
-    console.log(`Start installing dependencies, please wait...`);
-
     context.addTask(new NodePackageInstallTask());
   };
 }
