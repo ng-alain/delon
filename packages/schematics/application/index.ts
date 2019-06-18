@@ -41,6 +41,7 @@ function removeOrginalFiles() {
   return (host: Tree) => {
     [
       `${project.root}/README.md`,
+      `${project.root}/tslint.json`,
       `${project.sourceRoot}/main.ts`,
       `${project.sourceRoot}/environments/environment.prod.ts`,
       `${project.sourceRoot}/environments/environment.ts`,
@@ -143,9 +144,7 @@ function addCodeStylesToPackageJson() {
     const json = getPackage(host);
     if (json == null) return host;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
-    json.scripts[
-      'lint:ts'
-    ] = `tslint -p src/tsconfig.app.json -c tslint.json \"src/**/*.ts\" --fix`;
+    json.scripts['lint:ts'] = `tslint -p tsconfig.app.json -c tslint.json \"src/**/*.ts\" --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
     json.scripts['lint-staged'] = `lint-staged`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
@@ -156,41 +155,6 @@ function addCodeStylesToPackageJson() {
       ignore: ['src/assets/*'],
     };
     overwritePackage(host, json);
-    // tslint
-    const tsLint = getJSON(host, 'tslint.json', 'rules');
-    tsLint.rules.curly = false;
-    tsLint.rules['use-host-property-decorator'] = false;
-    tsLint.rules['directive-selector'] = [
-      true,
-      'attribute',
-      [project.prefix, 'passport', 'exception', 'layout', 'header'],
-      'camelCase',
-    ];
-    tsLint.rules['component-selector'] = [
-      true,
-      'element',
-      [project.prefix, 'passport', 'exception', 'layout', 'header'],
-      'kebab-case',
-    ];
-    overwriteJSON(host, 'tslint.json', tsLint);
-    // app tslint
-    const sourceTslint = `${project.sourceRoot}/tslint.json`;
-    if (host.exists(sourceTslint)) {
-      const appTsLint = getJSON(host, sourceTslint, 'rules');
-      appTsLint.rules['directive-selector'] = [
-        true,
-        'attribute',
-        [project.prefix, 'passport', 'exception', 'layout', 'header'],
-        'camelCase',
-      ];
-      appTsLint.rules['component-selector'] = [
-        true,
-        'element',
-        [project.prefix, 'passport', 'exception', 'layout', 'header'],
-        'kebab-case',
-      ];
-      overwriteJSON(host, sourceTslint, appTsLint);
-    }
     // dependencies
     addPackageToPackageJson(host, [
       `tslint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
