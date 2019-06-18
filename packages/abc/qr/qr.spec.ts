@@ -33,7 +33,7 @@ describe('abc: qr', () => {
     beforeEach(() => {
       ({ fixture, dl, context } = createTestContext(TestComponent));
       fixture.detectChanges();
-      srv = injector.get(QRService);
+      srv = injector.get<QRService>(QRService);
     });
 
     function getDataURL() {
@@ -91,7 +91,7 @@ describe('abc: qr', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp', { static: false })
+  @ViewChild('comp', { static: true })
   comp: QRComponent;
 
   value = 'https://ng-alain.com/';

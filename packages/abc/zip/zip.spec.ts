@@ -46,7 +46,7 @@ describe('abc: zip', () => {
         { provide: LazyService, useClass: MockLazyService },
       ],
     });
-    srv = injector.get(ZipService);
+    srv = injector.get<ZipService>(ZipService);
   }
 
   beforeEach(() => {

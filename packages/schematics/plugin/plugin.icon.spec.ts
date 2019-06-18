@@ -37,10 +37,14 @@ describe('NgAlainSchematic: plugin: icon', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
-  beforeEach(() => {
-    ({ runner, tree } = createAlainApp());
-    Object.keys(testCases).forEach(name => tree.create(`/projects/foo/src/${name}`, testCases[name]));
-    tree = runner.runSchematic('plugin', { name: 'icon', type: 'add' }, tree);
+  beforeEach(async () => {
+    ({ runner, tree } = await createAlainApp());
+    Object.keys(testCases).forEach(name =>
+      tree.create(`/projects/foo/src/${name}`, testCases[name]),
+    );
+    tree = await runner
+      .runSchematicAsync('plugin', { name: 'icon', type: 'add' }, tree)
+      .toPromise();
   });
 
   it(`should working`, () => {

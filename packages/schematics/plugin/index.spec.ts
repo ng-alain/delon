@@ -5,11 +5,20 @@ describe('NgAlainSchematic: plugin', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
-  beforeEach(() => ({ runner, tree } = createAlainApp({})));
+  beforeEach(async () => ({ runner, tree } = await createAlainApp({})));
 
-  it('should be throw error when not find plugin name', () => {
-    expect(() => {
-      runner.runSchematic('plugin', { name: 'invalid-name', type: 'remove', packageManager: 'npm' }, tree);
-    }).toThrow();
+  it('should be throw error when not find plugin name', async () => {
+    try {
+      await runner
+        .runSchematicAsync(
+          'plugin',
+          { name: 'invalid-name', type: 'remove', packageManager: 'npm' },
+          tree,
+        )
+        .toPromise();
+      expect(true).toBe(false);
+    } catch {
+      expect(true).toBe(true);
+    }
   });
 });

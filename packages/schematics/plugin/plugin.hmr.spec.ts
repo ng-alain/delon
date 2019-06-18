@@ -1,11 +1,10 @@
-import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+import { UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainApp } from '../utils/testing';
 
 describe('NgAlainSchematic: plugin: hmr', () => {
-  let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
-  beforeEach(() => ({ runner, tree } = createAlainApp({ hmr: true })));
+  beforeEach(async () => ({ tree } = await createAlainApp({ hmr: true })));
 
   describe('when add', () => {
     it(`should add devDependencies`, () => {

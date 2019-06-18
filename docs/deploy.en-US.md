@@ -59,7 +59,7 @@ The default static resource reference path directly points to the directory wher
 If your static resource is deployed to another domain name (such as a separate cdn address), you can specify a cdn address with the `-d` parameter.
 
 ```bash
-ng build --prod --build-optimizer -d=//cdn.ng-alain.com/
+ng build --prod -d=//cdn.ng-alain.com/
 ```
 
 The generated `index.html` inside `*.js`, `*.css` will automatically add `//cdn.ng-alain.com/*.js`.

@@ -39,12 +39,9 @@ describe('abc: lodop', () => {
   function genModule() {
     injector = TestBed.configureTestingModule({
       imports: [LodopModule],
-      providers: [
-        { provide: LazyService, useClass: MockLazyService },
-        { provide: LodopConfig, useFactory: fnLodopConfig },
-      ],
+      providers: [{ provide: LazyService, useClass: MockLazyService }, { provide: LodopConfig, useFactory: fnLodopConfig }],
     });
-    srv = injector.get(LodopService);
+    srv = injector.get<LodopService>(LodopService);
     isErrRequest = false;
     loadCount = 0;
     isNullLodop = false;
@@ -201,7 +198,7 @@ describe('abc: lodop', () => {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         SET_PRINT_STYLEA: jasmine.createSpy('SET_PRINT_STYLEA'),
         // tslint:disable-next-line: only-arrow-functions
-        PRINT_INITA: jasmine.createSpy('PRINT_INITA').and.callFake(function () {
+        PRINT_INITA: jasmine.createSpy('PRINT_INITA').and.callFake(function() {
           mockRes = arguments[4];
         }),
         webskt: {
@@ -227,7 +224,7 @@ describe('abc: lodop', () => {
         `;
     mockLodop = {
       SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
-      PRINT_DESIGN: jasmine.createSpy('PRINT_DESIGN').and.callFake(function () {
+      PRINT_DESIGN: jasmine.createSpy('PRINT_DESIGN').and.callFake(function() {
         // tslint:disable-next-line:no-invalid-this
         setTimeout(() => this.On_Return(0, code), 30);
         // tslint:disable-next-line:no-invalid-this
@@ -258,7 +255,7 @@ describe('abc: lodop', () => {
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),
         PRINT_INITA: jasmine.createSpy('PRINT_INITA'),
-        PRINT: jasmine.createSpy('PRINT').and.callFake(function () {
+        PRINT: jasmine.createSpy('PRINT').and.callFake(function() {
           if (isPrintError) {
             // tslint:disable-next-line:no-invalid-this
             setTimeout(() => this.On_Return(0, '缺纸'), 10);

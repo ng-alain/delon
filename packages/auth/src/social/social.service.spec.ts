@@ -1,5 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { discardPeriodicTasks, fakeAsync, tick, TestBed, TestBedStatic } from '@angular/core/testing';
+import {
+  discardPeriodicTasks,
+  fakeAsync,
+  tick,
+  TestBed,
+  TestBedStatic,
+} from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -60,7 +66,7 @@ describe('auth: social.service', () => {
     });
     if (tokenData) injector.get(DA_SERVICE_TOKEN).set(tokenData);
 
-    srv = injector.get(SocialService);
+    srv = injector.get<SocialService>(SocialService);
   }
 
   beforeEach(() => {
@@ -81,11 +87,13 @@ describe('auth: social.service', () => {
       });
 
       it(`${item.type} via window`, fakeAsync(() => {
-        spyOn(window, 'open').and.callFake(() => {
+        const mockWindowOpen = () => {
           injector.get(DA_SERVICE_TOKEN).set(item.model);
           return { closed: true };
-        });
-        srv.login(item.url).subscribe(() => { });
+        };
+        // tslint:disable-next-line: unnecessary-bind
+        spyOn(window, 'open').and.callFake(mockWindowOpen.bind(this));
+        srv.login(item.url).subscribe(() => {});
         tick(130);
         expect(window.open).toHaveBeenCalled();
         const token = injector.get(DA_SERVICE_TOKEN).get()!;
@@ -97,11 +105,13 @@ describe('auth: social.service', () => {
     });
 
     it(`should be return null model if set a null in window`, fakeAsync(() => {
-      spyOn(window, 'open').and.callFake(() => {
+      const mockWindowOpen = () => {
         injector.get(DA_SERVICE_TOKEN).set(null);
         return { closed: true };
-      });
-      srv.login(MockAuth0.url).subscribe(() => { });
+      };
+      // tslint:disable-next-line: unnecessary-bind
+      spyOn(window, 'open').and.callFake(mockWindowOpen.bind(this));
+      srv.login(MockAuth0.url).subscribe(() => {});
       tick(130);
       expect(window.open).toHaveBeenCalled();
       discardPeriodicTasks();
@@ -109,11 +119,13 @@ describe('auth: social.service', () => {
 
     it(`can't get model until closed`, fakeAsync(() => {
       spyOn(srv, 'ngOnDestroy');
-      spyOn(window, 'open').and.callFake(() => {
+      const mockWindowOpen = () => {
         injector.get(DA_SERVICE_TOKEN).set(null);
         return { closed: false };
-      });
-      srv.login(MockAuth0.url).subscribe(() => { });
+      };
+      // tslint:disable-next-line: unnecessary-bind
+      spyOn(window, 'open').and.callFake(mockWindowOpen.bind(this));
+      srv.login(MockAuth0.url).subscribe(() => {});
       tick(130);
       expect(window.open).toHaveBeenCalled();
       expect(srv.ngOnDestroy).not.toHaveBeenCalled();
@@ -155,7 +167,7 @@ describe('auth: social.service', () => {
     ].forEach((item: any) => {
       it(`${item.summary}`, () => {
         if (item.be === 'throw') {
-          const router = injector.get(Router) as any;
+          const router = injector.get<Router>(Router) as any;
           router.url = item.url;
           expect(() => {
             srv.callback(null);

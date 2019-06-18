@@ -258,9 +258,9 @@ describe('abc: view', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('svComp', { static: false })
+  @ViewChild('svComp', { static: true })
   svComp: SVContainerComponent;
-  @ViewChild('viewComp', { static: false })
+  @ViewChild('viewComp', { static: true })
   viewComp: SVComponent;
   parent_size: 'small' | 'large' = 'large';
   parent_layout: 'horizontal' | 'vertical' = 'horizontal';

@@ -52,7 +52,7 @@ describe('chart: single-bar', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp', { static: false }) comp: G2SingleBarComponent;
+  @ViewChild('comp', { static: true }) comp: G2SingleBarComponent;
   value = 10;
   plusColor = '#40a9ff';
   minusColor = '#ff4d4f';

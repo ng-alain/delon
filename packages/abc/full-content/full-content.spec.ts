@@ -117,7 +117,9 @@ describe('abc: full-content', () => {
       fixture.detectChanges();
       tick(210);
       expect(bodyEl.getBoundingClientRect).toHaveBeenCalled();
-      expect(context.comp._height).toBe(bodyHeight - el.getBoundingClientRect().top - context.padding);
+      expect(context.comp._height).toBe(
+        bodyHeight - el.getBoundingClientRect().top - context.padding,
+      );
     }));
     it('should be clear class when go to other route', () => {
       const eventsSub = new BehaviorSubject<any>(null);
@@ -163,13 +165,19 @@ describe('abc: full-content', () => {
 
 @Component({
   template: `
-    <full-content #comp [(fullscreen)]="fullscreen" [hideTitle]="hideTitle" [padding]="padding" (fullscreenChange)="change()">
+    <full-content
+      #comp
+      [(fullscreen)]="fullscreen"
+      [hideTitle]="hideTitle"
+      [padding]="padding"
+      (fullscreenChange)="change()"
+    >
       <button full-toggle>Full</button>
     </full-content>
   `,
 })
 class TestComponent {
-  @ViewChild('comp', { static: false }) comp: FullContentComponent;
+  @ViewChild('comp', { static: true }) comp: FullContentComponent;
   fullscreen: boolean = false;
   hideTitle: boolean;
   padding = 24;

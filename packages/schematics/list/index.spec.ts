@@ -9,17 +9,24 @@ describe('Schematic: list', () => {
   const tsPath = '/projects/foo/src/app/routes/trade/list/list.component.ts';
   const htmlPath = '/projects/foo/src/app/routes/trade/list/list.component.html';
 
-  beforeEach(() => {
-    ({ runner, tree } = createAlainAndModuleApp());
-    tree = runner.runSchematic('list', { name: 'list', module: 'trade' }, tree);
+  beforeEach(async () => {
+    ({ runner, tree } = await createAlainAndModuleApp());
+
+    tree = await runner
+      .runSchematicAsync('list', { name: 'list', module: 'trade' }, tree)
+      .toPromise();
   });
 
   it('should be generate list page', () => {
-    [modulePath, routingPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
+    [modulePath, routingPath, tsPath, htmlPath].forEach(path =>
+      expect(tree.exists(path)).toBe(true),
+    );
   });
 
   it('should be has import code', () => {
-    expect(tree.readContent(modulePath)).toContain(`import { TradeListComponent } from './list/list.component';`);
+    expect(tree.readContent(modulePath)).toContain(
+      `import { TradeListComponent } from './list/list.component';`,
+    );
   });
 
   it('should be include module name in component name', () => {
@@ -30,8 +37,12 @@ describe('Schematic: list', () => {
     expect(tree.readContent(tsPath)).not.toContain(`styleUrls`);
   });
 
-  it('should be support targets (like: list/edit)', () => {
-    tree = runner.runSchematic('list', { name: 'list2', module: 'trade', target: 'list/edit' }, tree);
-    expect(tree.exists(`/projects/foo/src/app/routes/trade/list/edit/list2/list2.component.html`)).toBe(true);
+  it('should be support targets (like: list/edit)', async () => {
+    tree = await runner
+      .runSchematicAsync('list', { name: 'list2', module: 'trade', target: 'list/edit' }, tree)
+      .toPromise();
+    expect(
+      tree.exists(`/projects/foo/src/app/routes/trade/list/edit/list2/list2.component.html`),
+    ).toBe(true);
   });
 });

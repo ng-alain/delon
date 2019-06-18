@@ -13,7 +13,7 @@ export type SocialOpenType = 'href' | 'window';
 @Injectable()
 export class SocialService implements OnDestroy {
   private _win: Window | null;
-  private _winTime;
+  private _winTime: any;
   private observer: Observer<ITokenModel | null>;
 
   constructor(
@@ -64,7 +64,7 @@ export class SocialService implements OnDestroy {
       type?: SocialOpenType;
       windowFeatures?: string;
     } = {},
-  ): Observable<ITokenModel> | void {
+  ): Observable<ITokenModel | null> | void {
     options = {
       type: 'window',
       windowFeatures: 'location=yes,height=570,width=520,scrollbars=yes,status=yes',
@@ -94,7 +94,9 @@ export class SocialService implements OnDestroy {
         this.observer.complete();
       }
     }, 100);
-    return Observable.create((observer: Observer<ITokenModel | null>) => (this.observer = observer));
+    return new Observable((observer: Observer<ITokenModel | null>) => {
+      this.observer = observer;
+    });
   }
 
   /**

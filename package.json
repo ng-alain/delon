@@ -30,7 +30,7 @@
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
     "site:gen": "node scripts/site/main init && node scripts/build/generate-only-color.js",
     "site": "npm run site:gen && ng s -o",
-    "site:build": "npm run site:gen && ng build --prod --build-optimizer --base-href /",
+    "site:build": "npm run site:gen && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
     "publish:next": "bash scripts/publish/publish.sh -next",

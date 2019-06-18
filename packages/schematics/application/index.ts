@@ -21,7 +21,14 @@ import { tryAddFile } from '../utils/alain';
 import { HMR_CONTENT } from '../utils/contents';
 import { addFiles } from '../utils/file';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
-import { addPackageToPackageJson, getJSON, getPackage, overwriteJSON, overwritePackage, scriptsToAngularJson } from '../utils/json';
+import {
+  addPackageToPackageJson,
+  getJSON,
+  getPackage,
+  overwriteJSON,
+  overwritePackage,
+  scriptsToAngularJson,
+} from '../utils/json';
 import { VERSION, ZORROVERSION } from '../utils/lib-versions';
 import { getProject, Project } from '../utils/project';
 import { Schema as ApplicationOptions } from './schema';
@@ -71,7 +78,9 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     // @delon/*
     addPackageToPackageJson(
       host,
-      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(pkg => `@delon/${pkg}@${VERSION}`),
+      ['abc', 'acl', 'auth', 'cache', 'form', 'mock', 'theme', 'util', 'chart'].map(
+        pkg => `@delon/${pkg}@${VERSION}`,
+      ),
     );
     // ng-alain
     addPackageToPackageJson(
@@ -88,7 +97,10 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     );
     // i18n
     if (options.i18n) {
-      addPackageToPackageJson(host, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
+      addPackageToPackageJson(host, [
+        `@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`,
+        `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`,
+      ]);
     }
     return host;
   };
@@ -99,8 +111,8 @@ function addRunScriptToPackageJson() {
     const json = getPackage(host, 'scripts');
     if (json == null) return host;
     json.scripts.start = `npm run color-less && ng serve -o`;
-    json.scripts.build = `npm run color-less && ng build --prod --build-optimizer`;
-    json.scripts.analyze = `npm run color-less && ng build --prod --build-optimizer --stats-json`;
+    json.scripts.build = `npm run color-less && ng build --prod`;
+    json.scripts.analyze = `npm run color-less && ng build --prod --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;
     json.scripts['color-less'] = `node scripts/color-less.js`;
     json.scripts.icon = `ng g ng-alain:plugin icon`;
@@ -147,7 +159,9 @@ function addCodeStylesToPackageJson() {
     const json = getPackage(host);
     if (json == null) return host;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
-    json.scripts['lint:ts'] = `tslint -p src/tsconfig.app.json -c tslint.json \"src/**/*.ts\" --fix`;
+    json.scripts[
+      'lint:ts'
+    ] = `tslint -p src/tsconfig.app.json -c tslint.json \"src/**/*.ts\" --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
     json.scripts['lint-staged'] = `lint-staged`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
@@ -162,8 +176,18 @@ function addCodeStylesToPackageJson() {
     const tsLint = getJSON(host, 'tslint.json', 'rules');
     tsLint.rules.curly = false;
     tsLint.rules['use-host-property-decorator'] = false;
-    tsLint.rules['directive-selector'] = [true, 'attribute', [project.prefix, 'passport', 'exception', 'layout', 'header'], 'camelCase'];
-    tsLint.rules['component-selector'] = [true, 'element', [project.prefix, 'passport', 'exception', 'layout', 'header'], 'kebab-case'];
+    tsLint.rules['directive-selector'] = [
+      true,
+      'attribute',
+      [project.prefix, 'passport', 'exception', 'layout', 'header'],
+      'camelCase',
+    ];
+    tsLint.rules['component-selector'] = [
+      true,
+      'element',
+      [project.prefix, 'passport', 'exception', 'layout', 'header'],
+      'kebab-case',
+    ];
     overwriteJSON(host, 'tslint.json', tsLint);
     // app tslint
     const sourceTslint = `${project.sourceRoot}/tslint.json`;
@@ -261,7 +285,11 @@ function addStyle() {
       `  <div class="preloader"><div class="cs-loader"><div class="cs-loader-inner"><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label><label>	●</label></div></div>\n`,
     );
     // add styles
-    addFiles(host, [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`], overwriteDataFileRoot);
+    addFiles(
+      host,
+      [`${project.sourceRoot}/styles/index.less`, `${project.sourceRoot}/styles/theme.less`],
+      overwriteDataFileRoot,
+    );
 
     return host;
   };
@@ -400,10 +428,13 @@ function fixLangInHtml(host: Tree, p: string, langs: {}) {
   let matchCount = 0;
   // {{(status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
   // {{ (status ? 'menu.fullscreen.exit' : 'menu.fullscreen') | translate }}
-  html = html.replace(/\{\{[ ]?\(status \? '([^']+)' : '([^']+)'\) \| translate \}\}/g, (_word, key1, key2) => {
-    ++matchCount;
-    return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
-  });
+  html = html.replace(
+    /\{\{[ ]?\(status \? '([^']+)' : '([^']+)'\) \| translate \}\}/g,
+    (_word, key1, key2) => {
+      ++matchCount;
+      return `{{ status ? '${langs[key1] || key1}' : '${langs[key2] || key2}' }}`;
+    },
+  );
   // {{ 'app.register-result.msg' | translate: params }}
   html = html.replace(/\{\{[ ]?'([^']+)'[ ]? \| translate: [^ ]+ \}\}/g, (_word, key) => {
     ++matchCount;

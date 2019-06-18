@@ -39,16 +39,21 @@ describe('Service: Title', () => {
   const notPageName = 'Not Page Name';
 
   function genModule(providers: any[] = [], loadI18n = true) {
-    const i18nProvider: any[] = loadI18n ? [{ provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake }] : [];
+    const i18nProvider: any[] = loadI18n
+      ? [{ provide: ALAIN_I18N_TOKEN, useClass: AlainI18NServiceFake }]
+      : [];
     TestBed.configureTestingModule({
       imports: [AlainThemeModule, RouterTestingModule],
-      providers: [TitleService, MenuService, { provide: Title, useClass: TestTitleService }, ...i18nProvider].concat(
-        providers,
-      ),
+      providers: [
+        TitleService,
+        MenuService,
+        { provide: Title, useClass: TestTitleService },
+        ...i18nProvider,
+      ].concat(providers),
     });
     title = TestBed.get(Title);
-    srv = TestBed.get(TitleService);
-    i18n = TestBed.get(ALAIN_I18N_TOKEN, null);
+    srv = TestBed.get<TitleService>(TitleService);
+    i18n = TestBed.get(ALAIN_I18N_TOKEN);
   }
 
   afterEach(() => srv.ngOnDestroy());

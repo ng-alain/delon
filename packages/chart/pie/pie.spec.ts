@@ -114,7 +114,7 @@ describe('chart: pie', () => {
   `,
 })
 class TestMiniComponent {
-  @ViewChild('comp', { static: false }) comp: G2PieComponent;
+  @ViewChild('comp', { static: true }) comp: G2PieComponent;
   data: any[];
   color: string | null = 'rgba(24, 144, 255, 0.85)';
   subTitle = 'subTitle';
@@ -152,7 +152,7 @@ class TestMiniComponent {
   `,
 })
 class TestFullComponent {
-  @ViewChild('comp', { static: false }) comp: G2PieComponent;
+  @ViewChild('comp', { static: true }) comp: G2PieComponent;
   data: any[] = [];
   color = 'rgba(24, 144, 255, 0.85)';
   subTitle = 'subTitle';

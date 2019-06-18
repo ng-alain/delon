@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { InputBoolean } from '@delon/util';
 
 @Component({
@@ -12,7 +19,7 @@ import { InputBoolean } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class GlobalFooterItemComponent {
-  @ViewChild('host', { static: false }) host: ElementRef;
+  @ViewChild('host', { static: true }) host: ElementRef;
 
   @Input() href: string;
   @Input() @InputBoolean() blankTarget: boolean;

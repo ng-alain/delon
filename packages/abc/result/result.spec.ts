@@ -103,14 +103,14 @@ describe('abc: result', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp', { static: false })
+  @ViewChild('comp', { static: true })
   comp: ResultComponent;
   type = 'custom';
-  @ViewChild('titleTpl', { static: false })
+  @ViewChild('titleTpl', { static: true })
   titleTpl: TemplateRef<void>;
-  @ViewChild('descriptionTpl', { static: false })
+  @ViewChild('descriptionTpl', { static: true })
   descriptionTpl: TemplateRef<void>;
-  @ViewChild('extraTpl', { static: false })
+  @ViewChild('extraTpl', { static: true })
   extraTpl: TemplateRef<void>;
   title: string | TemplateRef<void> = 'title';
   description: string | TemplateRef<void> = 'description';

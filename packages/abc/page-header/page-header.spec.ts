@@ -43,8 +43,8 @@ describe('abc: page-header', () => {
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     if (other.created !== false) fixture.detectChanges();
-    menuSrv = injector.get(MenuService);
-    router = injector.get(Router);
+    menuSrv = injector.get<MenuService>(MenuService);
+    router = injector.get<Router>(Router);
   }
 
   function isExists(cls: string, stauts: boolean = true) {
@@ -83,8 +83,8 @@ describe('abc: page-header', () => {
     describe('[property]', () => {
       beforeEach(() => {
         ({ fixture, dl, context } = createTestContext(TestComponent));
-        menuSrv = injector.get(MenuService);
-        router = injector.get(Router);
+        menuSrv = injector.get<MenuService>(MenuService);
+        router = injector.get<Router>(Router);
         fixture.detectChanges();
       });
       describe('#title', () => {
@@ -135,8 +135,8 @@ describe('abc: page-header', () => {
     describe('[generation breadcrumb]', () => {
       beforeEach(() => {
         ({ fixture, dl, context } = createTestContext(TestAutoBreadcrumbComponent));
-        menuSrv = injector.get(MenuService);
-        router = injector.get(Router);
+        menuSrv = injector.get<MenuService>(MenuService);
+        router = injector.get<Router>(Router);
         fixture.detectChanges();
 
         menuSrv.add([
@@ -225,8 +225,8 @@ describe('abc: page-header', () => {
         });
         ({ fixture, dl, context } = createTestContext(TestI18nComponent));
         i18n = injector.get(ALAIN_I18N_TOKEN);
-        menuSrv = injector.get(MenuService);
-        router = injector.get(Router);
+        menuSrv = injector.get<MenuService>(MenuService);
+        router = injector.get<Router>(Router);
         fixture.detectChanges();
       });
       it('should be refresh when i18n changed', () => {
@@ -375,8 +375,8 @@ describe('abc: page-header', () => {
             },
           ],
         });
-        titleSrv = injector.get(TitleService);
-        reuseSrv = injector.get(ReuseTabService);
+        titleSrv = injector.get<TitleService>(TitleService);
+        reuseSrv = injector.get<ReuseTabService>(ReuseTabService);
         context.syncTitle = true;
       });
 
@@ -392,7 +392,7 @@ describe('abc: page-header', () => {
 });
 
 class TestBaseComponent {
-  @ViewChild('comp', { static: false })
+  @ViewChild('comp', { static: true })
   comp: PageHeaderComponent;
   title: string | null = '所属类目';
   autoBreadcrumb: boolean;

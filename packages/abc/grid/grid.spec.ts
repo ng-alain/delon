@@ -133,15 +133,20 @@ describe('abc: grid', () => {
 
 @Component({
   template: `
-    <div [sg-container]="parent_colInCon" #sgComp="sgContainer" [col]="parent_col" [gutter]="parent_gutter">
+    <div
+      [sg-container]="parent_colInCon"
+      #sgComp="sgContainer"
+      [col]="parent_col"
+      [gutter]="parent_gutter"
+    >
       <sg #viewComp [col]="col"></sg>
     </div>
   `,
 })
 class TestComponent {
-  @ViewChild('sgComp', { static: false })
+  @ViewChild('sgComp', { static: true })
   sgComp: SGContainerComponent;
-  @ViewChild('viewComp', { static: false })
+  @ViewChild('viewComp', { static: true })
   viewComp: SGComponent;
 
   parent_gutter: number | null = 32;

@@ -84,7 +84,7 @@ describe('abc: trend', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp', { static: false }) comp: TrendComponent;
+  @ViewChild('comp', { static: true }) comp: TrendComponent;
   flag: 'up' | 'down';
   colorful: boolean;
   reverseColor: boolean;

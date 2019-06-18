@@ -5,7 +5,7 @@ describe('NgAlainSchematic: plugin: g2', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
-  beforeEach(() => ({ runner, tree } = createAlainApp({ g2: true })));
+  beforeEach(async () => ({ runner, tree } = await createAlainApp({ g2: true })));
 
   describe('when add', () => {
     it(`should add dependencies`, () => {
@@ -15,13 +15,16 @@ describe('NgAlainSchematic: plugin: g2', () => {
 
     it(`should add scripts`, () => {
       const json = JSON.parse(tree.readContent('angular.json'));
-      const scripts: string[] = (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
+      const scripts: string[] =
+        (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
       expect(scripts.filter(w => w.includes('g2')).length).toBeGreaterThan(0);
     });
   });
 
   describe('when remove', () => {
-    beforeEach(() => runner.runSchematic('plugin', { name: 'g2', type: 'remove' }, tree));
+    beforeEach(async () =>
+      runner.runSchematicAsync('plugin', { name: 'g2', type: 'remove' }, tree).toPromise(),
+    );
 
     it(`should add dependencies`, () => {
       const json = JSON.parse(tree.readContent('package.json'));
@@ -30,7 +33,8 @@ describe('NgAlainSchematic: plugin: g2', () => {
 
     it(`should add scripts`, () => {
       const json = JSON.parse(tree.readContent('angular.json'));
-      const scripts: string[] = (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
+      const scripts: string[] =
+        (json.projects.foo.targets || json.projects.foo.architect).build.options.scripts || [];
       expect(scripts.filter(w => w.includes('g2')).length).toBe(0);
     });
   });

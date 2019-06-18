@@ -68,7 +68,7 @@ describe('abc: utils', () => {
         });
     });
     it('[[boundary]]', (done: () => void) => {
-      spyOn(document, 'createElement').and.returnValue({ parentNode: null });
+      spyOn(document, 'createElement').and.returnValue({ parentNode: null } as any);
       copy('test')
         .then(() => {
           expect(false).toBe(true);

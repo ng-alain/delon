@@ -1,6 +1,6 @@
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
@@ -41,14 +41,11 @@ describe('auth: jwt.interceptor', () => {
         ]),
         DelonAuthModule,
       ],
-      providers: [
-        { provide: DelonAuthConfig, useValue: options },
-        { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
-      ],
+      providers: [{ provide: DelonAuthConfig, useValue: options }, { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true }],
     });
     if (tokenData) injector.get(DA_SERVICE_TOKEN).set(tokenData);
-    http = injector.get(HttpClient);
-    httpBed = injector.get(HttpTestingController);
+    http = injector.get<HttpClient>(HttpClient);
+    httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
   }
 
   it('should be add token', (done: () => void) => {

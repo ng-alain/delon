@@ -11,7 +11,7 @@ import { GlobalFooterLink } from './global-footer.types';
 
 class MockWindow {
   location = new MockLocation();
-  open() { }
+  open() {}
 }
 class MockLocation {
   private url: string;
@@ -104,7 +104,7 @@ describe('abc: global-footer', () => {
 
   it('should be navigate router', () => {
     createComp();
-    const router = injector.get(Router);
+    const router = injector.get<Router>(Router);
     spyOn(router, 'navigateByUrl');
     context.links = [
       {
@@ -119,7 +119,7 @@ describe('abc: global-footer', () => {
 
   it('should be ingore navigate when href is empty', () => {
     createComp();
-    const router = injector.get(Router);
+    const router = injector.get<Router>(Router);
     spyOn(router, 'navigateByUrl');
     context.links = [
       {

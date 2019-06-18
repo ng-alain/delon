@@ -23,11 +23,9 @@ import { GlobalFooterLink } from './global-footer.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class GlobalFooterComponent {
-  @Input()
-  links: GlobalFooterLink[] = [];
+  @Input() links: GlobalFooterLink[] = [];
 
-  @ContentChildren(GlobalFooterItemComponent)
-  items!: QueryList<GlobalFooterItemComponent>;
+  @ContentChildren(GlobalFooterItemComponent) items!: QueryList<GlobalFooterItemComponent>;
 
   constructor(private router: Router, @Inject(WINDOW) private win: Window) {}
 

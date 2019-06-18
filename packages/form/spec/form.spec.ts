@@ -220,7 +220,11 @@ describe('form: component', () => {
             },
           };
           fixture.detectChanges();
-          page.checkStyle('.sf-btns .ant-form-item-control-wrapper', 'margin-left', `${spanLabelFixed}px`);
+          page.checkStyle(
+            '.sf-btns .ant-form-item-control-wrapper',
+            'margin-left',
+            `${spanLabelFixed}px`,
+          );
         });
       });
       describe('#size', () => {
@@ -237,7 +241,7 @@ describe('form: component', () => {
       });
       it('should be update button text when i18n changed', () => {
         page.checkElText('.ant-btn-primary', '提交');
-        const i18n = injector.get(DelonLocaleService) as DelonLocaleService;
+        const i18n = injector.get<DelonLocaleService>(DelonLocaleService) as DelonLocaleService;
         i18n.setLocale(en_US);
         fixture.detectChanges();
         page.checkElText('.ant-btn-primary', 'Submit');
@@ -447,7 +451,9 @@ describe('form: component', () => {
           .checkCls('input', 'ant-input-lg');
       });
       it('#disabled', fakeAsync(() => {
-        const el = page.newSchema({ properties: { name: { type: 'string', readOnly: true } } }).getEl('input') as HTMLInputElement;
+        const el = page
+          .newSchema({ properties: { name: { type: 'string', readOnly: true } } })
+          .getEl('input') as HTMLInputElement;
         tick();
         expect(el.disabled).toBe(true);
         expect(el.classList).toContain('ant-input-disabled');
@@ -493,7 +499,9 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue([{ keyword: 'required', message: 'a' }]),
+                validator: jasmine
+                  .createSpy()
+                  .and.returnValue([{ keyword: 'required', message: 'a' }]),
               },
             },
           },
@@ -521,7 +529,9 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine.createSpy().and.returnValue(of([{ keyword: 'required', message: 'a' }])),
+                validator: jasmine
+                  .createSpy()
+                  .and.returnValue(of([{ keyword: 'required', message: 'a' }])),
               },
             },
           },
@@ -609,7 +619,7 @@ describe('form: component', () => {
 
     describe('ACL', () => {
       let acl: ACLService;
-      beforeEach(() => (acl = injector.get(ACLService)));
+      beforeEach(() => (acl = injector.get<ACLService>(ACLService)));
       it('shoule be working', fakeAsync(() => {
         acl.setFull(false);
         acl.setRole(['admin']);
@@ -667,7 +677,15 @@ describe('form: component', () => {
 
 @Component({
   template: `
-    <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode" [loading]="loading"></sf>
+    <sf
+      [layout]="layout"
+      #comp
+      [schema]="schema"
+      [ui]="ui"
+      [button]="button"
+      [mode]="mode"
+      [loading]="loading"
+    ></sf>
   `,
 })
 class TestModeComponent extends TestFormComponent {}

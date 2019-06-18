@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild, Type } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from '@delon/testing';
@@ -37,7 +37,7 @@ describe('abc: down-file', () => {
     context = fixture.componentInstance;
     fixture.detectChanges();
 
-    httpBed = injector.get(HttpTestingController);
+    httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
   }
 
   describe('[default]', () => {

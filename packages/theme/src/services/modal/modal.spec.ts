@@ -17,11 +17,11 @@ describe('theme: ModalHelper', () => {
       declarations: [TestModalComponent, TestComponent],
       entryComponents: [TestModalComponent],
     })
-    class TestModule { }
+    class TestModule {}
 
     injector = TestBed.configureTestingModule({ imports: [TestModule] });
     fixture = TestBed.createComponent(TestComponent);
-    modal = injector.get(ModalHelper);
+    modal = injector.get<ModalHelper>(ModalHelper);
   });
 
   afterEach(() => {
@@ -272,4 +272,4 @@ class TestModalComponent {
 }
 
 @Component({ template: `` })
-class TestComponent { }
+class TestComponent {}

@@ -51,7 +51,7 @@ describe('Service: Menu', () => {
           { provide: ACLService, useClass: MockACLService },
         ],
       });
-      srv = injector.get(MenuService);
+      srv = injector.get<MenuService>(MenuService);
     });
 
     it('should create an instance', () => {
@@ -322,7 +322,7 @@ describe('Service: Menu', () => {
           { provide: ACLService, useClass: MockACLService },
         ],
       });
-      srv = injector.get(MenuService);
+      srv = injector.get<MenuService>(MenuService);
       spyOn(srv, 'resume');
       expect(srv.resume).not.toHaveBeenCalled();
       injector.get(ALAIN_I18N_TOKEN).use('en');
@@ -333,7 +333,7 @@ describe('Service: Menu', () => {
       injector = TestBed.configureTestingModule({
         providers: [MenuService, { provide: ACLService, useClass: MockACLService }],
       });
-      srv = injector.get(MenuService);
+      srv = injector.get<MenuService>(MenuService);
       expect(true).toBe(true);
     });
   });

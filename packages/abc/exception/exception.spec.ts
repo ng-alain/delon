@@ -31,7 +31,9 @@ describe('abc: exception', () => {
     it(`#type=${type}`, () => {
       context.type = type as ExceptionType;
       fixture.detectChanges();
-      expect((dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText).toBe('' + type);
+      expect(
+        (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText,
+      ).toBe('' + type);
     });
   });
 
@@ -40,20 +42,29 @@ describe('abc: exception', () => {
   });
 
   it('should be custom img&title&desc', () => {
-    context.img = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+    context.img =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
     context.title = 'custom title';
     context.desc = 'custom desc';
     fixture.detectChanges();
-    expect((dl.query(By.css('.exception__img')).nativeElement as HTMLElement).style['background-image']).toContain(context.img);
-    expect((dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText).toBe(context.title);
-    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(context.desc);
+    expect(
+      (dl.query(By.css('.exception__img')).nativeElement as HTMLElement).style['background-image'],
+    ).toContain(context.img);
+    expect(
+      (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText,
+    ).toBe(context.title);
+    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(
+      context.desc,
+    );
   });
 
   it('#i18n', () => {
     injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
     context.type = 403;
     fixture.detectChanges();
-    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(en_US.exception['403']);
+    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(
+      en_US.exception['403'],
+    );
   });
 });
 
@@ -66,7 +77,7 @@ describe('abc: exception', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp', { static: false })
+  @ViewChild('comp', { static: true })
   comp: ExceptionComponent;
   type: 403 | 404 | 500;
   img: string;

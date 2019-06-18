@@ -13,6 +13,21 @@
     "deprecation": {
       "severity": "warn"
     },
+    "component-class-suffix": [true, "Component", "Widget"],
+    "contextual-lifecycle": true,
+    "directive-class-suffix": true,
+    "directive-selector": [
+      false,
+      "attribute",
+      "app",
+      "camelCase"
+    ],
+    "component-selector": [
+      false,
+      "element",
+      "app",
+      "kebab-case"
+    ],
     "import-blacklist": [
       true,
       "rxjs/Rx"
@@ -65,16 +80,18 @@
       "single"
     ],
     "trailing-comma": false,
-    "no-output-on-prefix": true,
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
-    "use-host-property-decorator": false,
+    "no-conflicting-lifecycle": true,
+    "no-host-metadata-property": false,
     "no-input-rename": false,
+    "no-inputs-metadata-property": true,
+    "no-output-native": false,
+    "no-output-on-prefix": true,
     "no-output-rename": false,
-    "use-life-cycle-interface": true,
+    "no-outputs-metadata-property": true,
+    "template-banana-in-box": true,
+    "template-no-negated-async": true,
+    "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
-    "component-class-suffix": [true, "Component", "Widget"],
-    "directive-class-suffix": true,
     // Custom parts
     "curly": false,
     "variable-name": false,
@@ -88,7 +105,8 @@
   "linterOptions": {
     "exclude": [
       "packages/schematics/**/files/**/*",
-      "packages/schematics/**/test-cases/**/*",
+      "packages/schematics/**/test-cases/misc/**/*",
+      "packages/schematics/**/test-cases/v2/**/*",
       "src/app/routes/gen/**/*"
     ]
   }

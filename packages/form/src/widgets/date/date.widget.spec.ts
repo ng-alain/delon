@@ -1,6 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import format from 'date-fns/format';
+import { deepCopy } from '@delon/util';
 
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -158,17 +159,19 @@ describe('form: widget: date', () => {
       },
     };
     it('should working', () => {
-      page.newSchema(s);
+      page.newSchema(deepCopy(s));
       const comp = getComp();
       expect(comp.mode).toBe('range');
       const time = new Date();
       comp._change([time, time]);
-      page.checkValue('/start', format(time, comp.format)).checkValue('/end', format(time, comp.format));
+      page
+        .checkValue('/start', format(time, comp.format))
+        .checkValue('/end', format(time, comp.format));
       comp._change(null);
       page.checkValue('/start', '').checkValue('/end', '');
     });
     it('should be default', () => {
-      const copyS = { ...s };
+      const copyS = deepCopy(s);
       const time = new Date();
       copyS.properties!.start.default = time;
       copyS.properties!.end.default = time;
@@ -178,7 +181,7 @@ describe('form: widget: date', () => {
       expect(res![0]).toBe(time);
     });
     it('should be removed ui.end when not found end path', () => {
-      const copyS = { ...s };
+      const copyS = deepCopy(s);
       (copyS.properties!.start.ui as SFUISchemaItem).end = 'invalid-end';
       page.newSchema(copyS).checkUI('/start', 'end', null);
     });

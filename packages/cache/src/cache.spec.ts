@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { of, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
+import { Type } from '@angular/core';
 import { AlainThemeModule } from '@delon/theme';
 
 import { DelonCacheModule } from './cache.module';
@@ -14,24 +14,22 @@ describe('cache: service', () => {
   let srv: CacheService;
   const KEY = 'a';
 
+  function getHTC(): HttpTestingController {
+    return injector.get(HttpTestingController as Type<HttpTestingController>);
+  }
+
   beforeEach(() => {
     let data: any = {};
 
-    spyOn(localStorage, 'getItem').and.callFake(
-      (key: string): string => {
-        return data[key] || null;
-      },
-    );
-    spyOn(localStorage, 'removeItem').and.callFake(
-      (key: string): void => {
-        delete data[key];
-      },
-    );
-    spyOn(localStorage, 'setItem').and.callFake(
-      (key: string, value: string): string => {
-        return (data[key] = value as string);
-      },
-    );
+    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
+      return data[key] || null;
+    });
+    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+      delete data[key];
+    });
+    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => {
+      return (data[key] = value as string);
+    });
     spyOn(localStorage, 'clear').and.callFake(() => {
       data = {};
     });
@@ -43,7 +41,7 @@ describe('cache: service', () => {
       providers: [],
     });
 
-    srv = injector.get(CacheService);
+    srv = injector.get<CacheService>(CacheService);
   }
 
   describe('[property]', () => {
@@ -132,8 +130,7 @@ describe('cache: service', () => {
           expect(srv.getNone(k)).toBe('ok!');
           done();
         });
-        injector
-          .get(HttpTestingController)
+        getHTC()
           .expectOne(k)
           .flush('ok!');
       });
@@ -145,8 +142,7 @@ describe('cache: service', () => {
           expect(data.type).toBe('m');
           done();
         });
-        injector
-          .get(HttpTestingController)
+        getHTC()
           .expectOne(k)
           .flush('ok!');
       });
@@ -155,8 +151,7 @@ describe('cache: service', () => {
         const firstGet = srv.get(url);
         expect(firstGet instanceof Observable).toBe(true);
         firstGet.subscribe();
-        injector
-          .get(HttpTestingController)
+        getHTC()
           .expectOne(url)
           .flush('ok!');
         const secondGet = srv.get(url);

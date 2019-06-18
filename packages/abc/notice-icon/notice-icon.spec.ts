@@ -97,7 +97,8 @@ describe('abc: notice-icon', () => {
     fixture.detectChanges();
     const a = dl.query(By.css('.notice-icon__notfound')).nativeElement as HTMLElement;
     expect(a.innerText).toBe(zh_CN.noticeIcon.emptyText);
-    injector.get(DelonLocaleService).setLocale(en_US);
+    const srv = injector.get<DelonLocaleService>(DelonLocaleService) as DelonLocaleService;
+    srv.setLocale(en_US);
     fixture.detectChanges();
     expect(a.innerText).toBe(en_US.noticeIcon.emptyText);
   });
@@ -118,7 +119,7 @@ describe('abc: notice-icon', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp', { static: false })
+  @ViewChild('comp', { static: true })
   comp: NoticeIconComponent;
   data: NoticeItem[] = [
     {

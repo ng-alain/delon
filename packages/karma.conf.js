@@ -19,7 +19,10 @@ module.exports = function (config) {
     ],
     client: {
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
-      timeout: 180000
+      timeout: 180000,
+      jasmine: {
+        random: false
+      }
     },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, '../coverage'),
@@ -41,6 +44,7 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
+    restartOnFileChange: true,
     browserDisconnectTimeout: 1800000,
     browserDisconnectTolerance: 3,
     browserNoActivityTimeout: 3000000,
