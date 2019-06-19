@@ -16,7 +16,7 @@ describe('acl-if: directive', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [TestComponent],
-      imports: [DelonACLModule],
+      imports: [DelonACLModule.forRoot()],
       providers: [{ provide: ComponentFixtureAutoDetect, useValue: true }],
     });
     fixture = TestBed.createComponent(TestComponent);

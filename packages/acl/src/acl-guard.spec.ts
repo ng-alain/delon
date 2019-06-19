@@ -13,7 +13,7 @@ describe('acl: guard', () => {
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([]), DelonACLModule],
+      imports: [RouterTestingModule.withRoutes([]), DelonACLModule.forRoot()],
     });
     srv = injector.get<ACLGuard>(ACLGuard);
     acl = injector.get<ACLService>(ACLService);
