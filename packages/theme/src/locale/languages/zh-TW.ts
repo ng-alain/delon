@@ -27,6 +27,8 @@ export default {
   },
   st: {
     total: '共 {{total}} 條',
+    filterConfirm: '確定',
+    filterReset: '重置',
   },
   sf: {
     submit: '提交',

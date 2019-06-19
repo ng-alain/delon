@@ -105,13 +105,13 @@ export class STConfig {
    */
   rowClickTime?: number = 200;
   /**
-   * 过滤按钮确认文本，默认：`确认`
+   * 过滤按钮确认文本
    */
-  filterConfirmText?: string = '确认';
+  filterConfirmText?: string;
   /**
-   * 过滤按钮重置文本，默认：`重置`
+   * 过滤按钮重置文本
    */
-  filterClearText?: string = '重置';
+  filterClearText?: string;
   /**
    * 按钮图标
    */

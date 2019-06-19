@@ -32,6 +32,8 @@ export interface MiniProgressLocaleData extends LocaleData {
 
 export interface STLocaleData extends LocaleData {
   total: string;
+  filterConfirm: string;
+  filterReset: string;
 }
 
 export interface SFLocaleData extends LocaleData {

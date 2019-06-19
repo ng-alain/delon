@@ -272,8 +272,8 @@ Property | Description | Type | Default
 `[default]` | Whether the `data` is filtered | `boolean` | -
 `[icon]` | Customized filter icon<br>When `type='default'` default `filter`<br> when `type='keyword'` default `search` | `string | STIcon` | `filter`
 `[multiple]` | Whether multiple filters can be selected | `boolean` | `true`
-`[confirmText]` | Text of the confirm button | `string` | `确认`
-`[clearText]` | Text of the clear button | `string` | `重置`
+`[confirmText]` | Text of the confirm button | `string` | -
+`[clearText]` | Text of the clear button | `string` | -
 `[key]` | Unique key of this column, default is `index` property value | `string` | -
 `[reName]` | Map name | `(list: STColumnFilterMenu[], col: STColumn) => Object` | -
 
