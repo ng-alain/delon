@@ -12,6 +12,6 @@
     }
   },
   "whitelistedNonPeerDependencies": [
-    "tslib", "angular", "date-fns", "@ant-design/icons-angular"
+    "tslib", "angular", "date-fns", "extend", "@ant-design/icons-angular"
   ]
 }

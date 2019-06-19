@@ -10,5 +10,10 @@
       "@delon/theme": "delon.theme",
       "@delon/util": "delon.util"
     }
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "tslib",
+    "@delon/theme",
+    "@delon/util"
+  ]
 }

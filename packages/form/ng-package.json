@@ -34,5 +34,11 @@
       "@delon/acl": "delon.acl",
       "@delon/util": "delon.util"
     }
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "tslib",
+    "@delon/theme",
+    "@delon/util",
+    "@delon/acl"
+  ]
 }
