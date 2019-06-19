@@ -25,6 +25,8 @@
   },
   "prettier.stylelintIntegration": true,
   "files.associations": {
-    "*.json": "jsonc"
+    "*.json": "jsonc",
+    ".prettierrc": "json",
+    ".stylelintrc": "json"
   }
 }

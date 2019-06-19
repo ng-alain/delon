@@ -1,21 +1,21 @@
 version: 3
 stages:
-- compile
-- deploy
+  - compile
+  - deploy
 release:
   stage: compile
   job_type: lite_image_build
   only:
     tags:
-    - .*
+      - .*
   allow_failure: false
   compile:
     build_dir: /
     cache: false
     dockerfile_path: /Dockerfile.compile
   extract:
-  - /usr/src/app/src/dist
-  - /usr/src/app/_nginx/default.conf
+    - /usr/src/app/src/dist
+    - /usr/src/app/_nginx/default.conf
   package:
     build_dir: /
     cache: false
@@ -25,9 +25,9 @@ self:
   job_type: DCS_deploy
   only:
     tags:
-    - .*
+      - .*
   allow_failure: false
   dependencies:
-  - release
+    - release
   app_name: ng-alain-com
-  cluster_id: ""
+  cluster_id: ''
