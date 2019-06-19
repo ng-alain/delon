@@ -10,17 +10,16 @@ type: Advance
 
 NG-ALAIN has IE support enabled by default. Which adds a certain size to the package and style. If you are very concerned and don't need `IE10` and below support, you can adjust the two configurations:
 
-One: Reduce the body size by reducing the `flexbox` prefix style in `package.json` with the `browserslist` node:
-
-```json
-"browserslist": [
-  "last 2 versions",
-  "not ie <= 10",
-  "not ie_mob <= 10"
-]
 ```
-
-Two: Close the `src/polyfills.ts` under `IE9, IE10 and IE11 requires all of the following polyfills. ` The contents of the node can reduce the package size of `polyfills.js`.
+// browserslist
+> 0.5%
+last 2 versions
+Firefox ESR
+not dead
+# IE 9-11
+not ie <= 10
+not ie_mob <= 10
+```
 
 ## Envelope size optimization
 

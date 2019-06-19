@@ -55,7 +55,6 @@ DEPENDENCIES=$(node -p "
     '@ngx-translate/http-loader',
     'tslint-config-prettier',
     'tslint-language-service',
-    'editorconfig-tools',
     'lint-staged',
     'husky',
     'prettier',
@@ -259,34 +258,34 @@ integrationCli() {
 
 if [[ ${BUILD} == true ]]; then
   travisFoldStart "BUILD"
-  
+
     tsconfigFile=${SOURCE}/tsconfig.json
     DIST=${PWD}/dist/ng-alain/
     buildCLI
-  
+
   travisFoldEnd "BUILD"
 fi
 
 if [[ ${TEST} == true ]]; then
   travisFoldStart "TEST"
-  
+
     tsconfigFile=${SOURCE}/tsconfig.spec.json
     DIST=${PWD}/dist/schematics-test/
     buildCLI
     $JASMINE "${DIST}/**/*.spec.js"
-  
+
   travisFoldEnd "TEST"
 fi
 
 if [[ ${INTEGRATION} == true ]]; then
   travisFoldStart "INTEGRATION"
-  
+
     tsconfigFile=${SOURCE}/tsconfig.json
     DIST=${PWD}/dist/ng-alain/
     COPY=true
     buildCLI
     integrationCli
-  
+
   travisFoldEnd "INTEGRATION"
 fi
 
