@@ -31,7 +31,10 @@ import { di, resolveIf, retrieveSchema, FORMATMAPS } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
-export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, options: DelonFormConfig) {
+export function useFactory(
+  schemaValidatorFactory: SchemaValidatorFactory,
+  options: DelonFormConfig,
+) {
   return new FormPropertyFactory(schemaValidatorFactory, options);
 }
 
@@ -211,12 +214,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this.cdr.detectChanges();
       }
     });
-    this.aclSrv.change
-      .pipe(
-        filter(() => this._inited),
-        takeUntil(this.unsubscribe$),
-      )
-      .subscribe(() => this.refreshSchema());
+    if (this.aclSrv) {
+      this.aclSrv.change
+        .pipe(
+          filter(() => this._inited),
+          takeUntil(this.unsubscribe$),
+        )
+        .subscribe(() => this.refreshSchema());
+    }
   }
 
   private coverProperty() {
@@ -240,7 +245,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           widget: property.type,
           ...(property.format && FORMATMAPS[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
-          ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null),
+          ...(!property.format &&
+          !property.ui &&
+          Array.isArray(property.enum) &&
+          property.enum.length > 0
+            ? { widget: 'select' }
+            : null),
           ...this._defUi,
           ...(property.ui as SFUISchemaItem),
           ...uiSchema[uiKey],
@@ -252,10 +262,17 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
               ui.spanLabelFixed = parentUiSchema.spanLabelFixed;
             }
           } else {
-            if (!ui.spanLabel) ui.spanLabel = typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
-            if (!ui.spanControl) ui.spanControl = typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
+            if (!ui.spanLabel)
+              ui.spanLabel =
+                typeof parentUiSchema.spanLabel === 'undefined' ? 5 : parentUiSchema.spanLabel;
+            if (!ui.spanControl)
+              ui.spanControl =
+                typeof parentUiSchema.spanControl === 'undefined' ? 19 : parentUiSchema.spanControl;
             if (!ui.offsetControl)
-              ui.offsetControl = typeof parentUiSchema.offsetControl === 'undefined' ? null : parentUiSchema.offsetControl;
+              ui.offsetControl =
+                typeof parentUiSchema.offsetControl === 'undefined'
+                  ? null
+                  : parentUiSchema.offsetControl;
           }
         } else {
           ui.spanLabel = null;
@@ -290,7 +307,13 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
 
         if (property.items) {
           uiRes[uiKey].$items = uiRes[uiKey].$items || {};
-          inFn(property.items, property.items, (uiSchema[uiKey] || {}).$items || {}, ui, uiRes[uiKey].$items);
+          inFn(
+            property.items,
+            property.items,
+            (uiSchema[uiKey] || {}).$items || {},
+            ui,
+            uiRes[uiKey].$items,
+          );
         }
 
         if (property.properties && Object.keys(property.properties).length) {
@@ -362,7 +385,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this._btn.render!.spanLabelFixed = btnUi.spanLabelFixed;
       }
       // 固定标签宽度时，若不指定样式，则默认居中
-      if (!this._btn.render!.class && (typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0)) {
+      if (
+        !this._btn.render!.class &&
+        (typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0)
+      ) {
         this._btn.render!.class = 'text-center';
       }
     } else {
@@ -424,8 +450,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (newSchema) this.schema = newSchema;
     if (newUI) this.ui = newUI;
 
-    if (!this.schema || typeof this.schema.properties === 'undefined') throw new Error(`Invalid Schema`);
-    if (this.schema.ui && typeof this.schema.ui === 'string') throw new Error(`Don't support string with root ui property`);
+    if (!this.schema || typeof this.schema.properties === 'undefined')
+      throw new Error(`Invalid Schema`);
+    if (this.schema.ui && typeof this.schema.ui === 'string')
+      throw new Error(`Don't support string with root ui property`);
 
     this.schema.type = 'object';
 
@@ -438,7 +466,11 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.coverProperty();
     this.coverButtonProperty();
 
-    this.rootProperty = this.formPropertyFactory.createProperty(this._schema, this._ui, this.formData);
+    this.rootProperty = this.formPropertyFactory.createProperty(
+      this._schema,
+      this._ui,
+      this.formData,
+    );
     this.attachCustomRender();
     this.cdr.detectChanges();
     this.reset();
