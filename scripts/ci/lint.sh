@@ -23,13 +23,13 @@ done
 
 if [[ ${TS} == true ]]; then
   travisFoldStart "lint.ts"
-    $(npm bin)/tslint -p tsconfig.json -c tslint.json 'packages/**/*.ts'
+    $(npm bin)/tslint -p tsconfig.json -c tslint.json 'packages/**/*.ts' --fix
   travisFoldEnd "lint.ts"
 fi
 
 if [[ ${LESS} == true ]]; then
   travisFoldStart "lint.less"
-    $(npm bin)/stylelint 'packages/**/*.less' --syntax less
+    $(npm bin)/stylelint 'packages/**/*.less' --syntax less --fix
   travisFoldEnd "lint.less"
 fi
 

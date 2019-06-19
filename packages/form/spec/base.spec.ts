@@ -327,7 +327,7 @@ export class SFPage {
   `,
 })
 export class TestFormComponent {
-  @ViewChild('comp') comp: SFComponent;
+  @ViewChild('comp', { static: true }) comp: SFComponent;
   mode: 'default' | 'search' | 'edit' = 'default';
   layout = 'horizontal';
   schema: SFSchema | null = SCHEMA.user;

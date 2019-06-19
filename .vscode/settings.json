@@ -20,5 +20,13 @@
   "[json]": {
     "editor.formatOnSave": false
   },
-  "prettier.stylelintIntegration": true
+  "[jsonc]": {
+    "editor.formatOnSave": false
+  },
+  "prettier.stylelintIntegration": true,
+  "files.associations": {
+    "*.json": "jsonc",
+    ".prettierrc": "json",
+    ".stylelintrc": "json"
+  }
 }

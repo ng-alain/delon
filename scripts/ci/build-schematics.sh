@@ -55,7 +55,6 @@ DEPENDENCIES=$(node -p "
     '@ngx-translate/http-loader',
     'tslint-config-prettier',
     'tslint-language-service',
-    'editorconfig-tools',
     'lint-staged',
     'husky',
     'prettier',
@@ -115,6 +114,7 @@ copyFiles() {
     "${1}.prettierignore|${2}application/files/root/__dot__prettierignore"
     "${1}.prettierrc|${2}application/files/root/__dot__prettierrc"
     "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
+    "${1}tslint.json|${2}application/files/root"
     # cli
     # "${1}_cli-tpl|${2}application/files/root/"
     # ci
@@ -189,7 +189,7 @@ copyFiles() {
 cloneScaffold() {
   if [[ ! -d ng-alain ]]; then
     echo ">>> Not found scaffold source files, must be clone ng-alain ..."
-    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+    git clone -b dev-ng8 --depth 1 https://github.com/ng-alain/ng-alain.git
     echo ">>> removed .git"
     rm -rf ng-alain/.git
   else
@@ -251,41 +251,41 @@ integrationCli() {
   echo ">>> Running npm run icon"
   npm run icon
   echo ">>> Running build"
-  ng build --prod --build-optimizer
+  ng build --prod
   cd ../../
   echo ">>> Current dir: ${PWD}"
 }
 
 if [[ ${BUILD} == true ]]; then
   travisFoldStart "BUILD"
-  
+
     tsconfigFile=${SOURCE}/tsconfig.json
     DIST=${PWD}/dist/ng-alain/
     buildCLI
-  
+
   travisFoldEnd "BUILD"
 fi
 
 if [[ ${TEST} == true ]]; then
   travisFoldStart "TEST"
-  
+
     tsconfigFile=${SOURCE}/tsconfig.spec.json
     DIST=${PWD}/dist/schematics-test/
     buildCLI
     $JASMINE "${DIST}/**/*.spec.js"
-  
+
   travisFoldEnd "TEST"
 fi
 
 if [[ ${INTEGRATION} == true ]]; then
   travisFoldStart "INTEGRATION"
-  
+
     tsconfigFile=${SOURCE}/tsconfig.json
     DIST=${PWD}/dist/ng-alain/
     COPY=true
     buildCLI
     integrationCli
-  
+
   travisFoldEnd "INTEGRATION"
 fi
 

@@ -46,7 +46,7 @@ describe('chart: tag-cloud', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: G2TagCloudComponent;
+  @ViewChild('comp', { static: true }) comp: G2TagCloudComponent;
   data: G2TagCloudData[] = [{ x: 'China', value: 1383220000, category: 'asia' }];
   delay = 0;
 }

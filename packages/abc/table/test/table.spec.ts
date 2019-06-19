@@ -1,7 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Component, DebugElement, Type, ViewChild } from '@angular/core';
-import { discardPeriodicTasks, fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import {
+  discardPeriodicTasks,
+  fakeAsync,
+  tick,
+  ComponentFixture,
+  TestBed,
+  TestBedStatic,
+} from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,7 +16,15 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Observable, Subject } from 'rxjs';
 
-import { en_US, ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, ModalHelper } from '@delon/theme';
+import {
+  en_US,
+  ALAIN_I18N_TOKEN,
+  DatePipe,
+  DelonLocaleModule,
+  DelonLocaleService,
+  DrawerHelper,
+  ModalHelper,
+} from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
 import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
 
@@ -80,7 +95,13 @@ describe('abc: table', () => {
   let comp: STComponent;
   let i18nSrv: AlainI18NService;
 
-  function genModule(other: { template?: string; i18n?: boolean; minColumn?: boolean; providers?: any[]; createComp?: boolean }) {
+  function genModule(other: {
+    template?: string;
+    i18n?: boolean;
+    minColumn?: boolean;
+    providers?: any[];
+    createComp?: boolean;
+  }) {
     other = {
       template: '',
       i18n: false,
@@ -144,7 +165,11 @@ describe('abc: table', () => {
             page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
               page
                 .expectElCount('.st__checkall', 1, 'muse be a check all')
-                .expectElCount('.st__body .ant-checkbox-wrapper', PS, `muse be ${PS} check in body`);
+                .expectElCount(
+                  '.st__body .ant-checkbox-wrapper',
+                  PS,
+                  `muse be ${PS} check in body`,
+                );
               done();
             });
           });
@@ -204,7 +229,9 @@ describe('abc: table', () => {
         describe('with radio', () => {
           it(`should be render checkbox`, done => {
             page.newColumn([{ title: 'RADIOname', index: 'id', type: 'radio' }]).then(() => {
-              page.expectHead('RADIOname', 'id').expectElCount('.st__body .ant-radio-wrapper', PS, `muse be ${PS} radio in body`);
+              page
+                .expectHead('RADIOname', 'id')
+                .expectElCount('.st__body .ant-radio-wrapper', PS, `muse be ${PS} radio in body`);
               done();
             });
           });
@@ -260,7 +287,7 @@ describe('abc: table', () => {
             });
           });
           it('should be navigate url when click is string value', done => {
-            const router = injector.get(Router);
+            const router = injector.get<Router>(Router);
             spyOn(router, 'navigateByUrl');
             context.data = [{ link: '/a' }];
             page
@@ -376,10 +403,12 @@ describe('abc: table', () => {
             });
           });
           it(`should be custom render yn`, done => {
-            page.newColumn([{ title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' }]).then(() => {
-              page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
-              done();
-            });
+            page
+              .newColumn([{ title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' }])
+              .then(() => {
+                page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
+                done();
+              });
           });
           it(`should be custom truth value`, done => {
             page
@@ -624,7 +653,7 @@ describe('abc: table', () => {
                   ],
                 },
               ];
-              const modalHelp = injector.get(ModalHelper);
+              const modalHelp = injector.get<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
               spyOn(modalHelp, 'create').and.callFake(() => mock$);
               page.newColumn(columns).then(() => {
@@ -655,7 +684,7 @@ describe('abc: table', () => {
                   ],
                 },
               ];
-              const modalHelp = injector.get(ModalHelper);
+              const modalHelp = injector.get<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
               spyOn(modalHelp, 'createStatic').and.callFake(() => mock$);
               page.newColumn(columns).then(() => {
@@ -688,7 +717,7 @@ describe('abc: table', () => {
                   ],
                 },
               ];
-              const drawerHelp = injector.get(DrawerHelper);
+              const drawerHelp = injector.get<DrawerHelper>(DrawerHelper);
               const mock$ = new Subject();
               spyOn(drawerHelp, 'create').and.callFake(() => mock$);
               page.newColumn(columns).then(() => {
@@ -711,7 +740,7 @@ describe('abc: table', () => {
                   buttons: [{ text: 'a', type: 'link', click: () => null }],
                 },
               ];
-              const router = injector.get(Router);
+              const router = injector.get<Router>(Router);
               spyOn(router, 'navigateByUrl');
               page.newColumn(columns).then(() => {
                 expect(router.navigateByUrl).not.toHaveBeenCalled();
@@ -727,7 +756,7 @@ describe('abc: table', () => {
                   buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
                 },
               ];
-              const router = injector.get(Router);
+              const router = injector.get<Router>(Router);
               spyOn(router, 'navigateByUrl');
               page.newColumn(columns).then(() => {
                 expect(router.navigateByUrl).not.toHaveBeenCalled();
@@ -743,11 +772,12 @@ describe('abc: table', () => {
                   buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
                 },
               ];
-              const router = injector.get(Router);
+              const router = injector.get<Router>(Router);
               const spy = spyOn(router, 'navigateByUrl');
               page.newColumn(columns).then(() => {
                 page.clickCell('a');
-                expect(spy.calls.mostRecent().args[1].state.pi).toBe(1);
+                const arg = spy.calls.mostRecent().args[1] as any;
+                expect(arg.state.pi).toBe(1);
                 done();
               });
             });
@@ -788,7 +818,7 @@ describe('abc: table', () => {
     describe('[data source]', () => {
       let httpBed: HttpTestingController;
       beforeEach(() => {
-        httpBed = injector.get(HttpTestingController);
+        httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
       });
       it('support null data', done => {
         context.data = null;
@@ -809,7 +839,7 @@ describe('abc: table', () => {
       it('should only restore data', () => {
         // tslint:disable-next-line:no-string-literal
         const dataSource: STDataSource = comp['dataSource'];
-        spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({}));
+        spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({} as any));
         fixture.detectChanges();
         expect(comp.ps).toBe(PS);
       });
@@ -915,7 +945,9 @@ describe('abc: table', () => {
             ++load;
             return Promise.resolve({});
           });
-          const pc = dl.query(By.directive(NzPaginationComponent)).injector.get<NzPaginationComponent>(NzPaginationComponent);
+          const pc = dl
+            .query(By.directive(NzPaginationComponent))
+            .injector.get<NzPaginationComponent>(NzPaginationComponent);
           expect(load).toBe(0);
           pc.onPageSizeChange(10);
           fixture.detectChanges();
@@ -947,7 +979,10 @@ describe('abc: table', () => {
         context.page.total = `{{total}}/{{range[0]}}/{{range[1]}}`;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-          page.expectElContent('.ant-pagination-total-text', `${DEFAULTCOUNT}/${comp.pi}/${comp.ps}`);
+          page.expectElContent(
+            '.ant-pagination-total-text',
+            `${DEFAULTCOUNT}/${comp.pi}/${comp.ps}`,
+          );
           done();
         });
       });
@@ -1284,7 +1319,9 @@ describe('abc: table', () => {
           it('should be sorting', () => {
             fixture.detectChanges();
             comp.sort(comp._columns[0], 0, 'descend');
-            const sortList = comp._columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort);
+            const sortList = comp._columns
+              .filter(item => item._sort && item._sort.enabled && item._sort.default)
+              .map(item => item._sort);
             expect(sortList.length).toBe(1);
             expect(sortList[0].default).toBe('descend');
           });
@@ -1295,7 +1332,9 @@ describe('abc: table', () => {
             fixture.detectChanges();
             comp.sort(comp._columns[0], 0, 'descend');
             comp.sort(comp._columns[1], 0, 'ascend');
-            const sortList = comp._columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort);
+            const sortList = comp._columns
+              .filter(item => item._sort && item._sort.enabled && item._sort.default)
+              .map(item => item._sort);
             expect(sortList.length).toBe(2);
             expect(sortList[0].default).toBe('descend');
             expect(sortList[1].default).toBe('ascend');
@@ -1696,7 +1735,9 @@ describe('abc: table', () => {
             .newColumn([
               {
                 title: '',
-                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'hide' }],
+                buttons: [
+                  { text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'hide' },
+                ],
               },
             ])
             .then(() => {
@@ -1709,7 +1750,9 @@ describe('abc: table', () => {
             .newColumn([
               {
                 title: '',
-                buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'disabled' }],
+                buttons: [
+                  { text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'disabled' },
+                ],
               },
             ])
             .then(() => {
@@ -1795,7 +1838,7 @@ describe('abc: table', () => {
         page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
           const el = page.getEl('.ant-pagination-total-text');
           expect(el.textContent!.trim()).toContain(`共`);
-          injector.get(DelonLocaleService).setLocale(en_US);
+          injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
           fixture.detectChanges();
           expect(el.textContent!.trim()).toContain(`of`);
           done();
@@ -1820,7 +1863,7 @@ describe('abc: table', () => {
     changeSpy: jasmine.Spy;
     constructor() {
       spyOn(context, 'error');
-      this.changeSpy = spyOn(context, 'change').and.callFake(e => (this._changeData = e));
+      this.changeSpy = spyOn(context, 'change').and.callFake((e => (this._changeData = e)) as any);
       comp = context.comp;
     }
     get(cls: string): DebugElement {
@@ -1860,7 +1903,13 @@ describe('abc: table', () => {
      * @param cls 对单元格进一步筛选
      * @param isContain 是否包含条件
      */
-    expectCell(value: string | null, row: number = 1, column: number = 1, cls?: string, isContain?: boolean): this {
+    expectCell(
+      value: string | null,
+      row: number = 1,
+      column: number = 1,
+      cls?: string,
+      isContain?: boolean,
+    ): this {
       let cell = this.getCell(row, column);
       if (cls) {
         cell = cell.querySelector(cls) as HTMLElement;
@@ -1878,7 +1927,9 @@ describe('abc: table', () => {
     }
     /** 获取标头 */
     getHead(name: string) {
-      const el = (dl.nativeElement as HTMLElement).querySelector(`.ant-table-thead th[data-col="${name}"]`) as HTMLElement;
+      const el = (dl.nativeElement as HTMLElement).querySelector(
+        `.ant-table-thead th[data-col="${name}"]`,
+      ) as HTMLElement;
       return el;
     }
     clickHead(name: string, cls: string): this {
@@ -2007,7 +2058,7 @@ describe('abc: table', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('st')
+  @ViewChild('st', { static: true })
   comp: STComponent;
   data: string | any[] | Observable<any[]> | null = deepCopy(USERS);
   res: STRes = {};

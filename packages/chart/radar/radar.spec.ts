@@ -40,7 +40,7 @@ describe('chart: radar', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: G2RadarComponent;
+  @ViewChild('comp', { static: true }) comp: G2RadarComponent;
   title = 'title';
   hasLegend = true;
   tickCount = 4;

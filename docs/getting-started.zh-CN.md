@@ -27,7 +27,7 @@ NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们�
 
 ### CLI（推荐）
 
-请先通过 `ng version` 命令确认全局 Angular Cli 版本为 `7.x` (ng-alain目前还不支持Angular8，见 [#1118](https://github.com/ng-alain/ng-alain/issues/1118))，有关如何升级请参考[CLI 命令参考手册](https://angular.cn/cli)。
+请先通过 `ng version` 命令确认全局 Angular Cli 版本为最新版本号（当前最新版本号：<img src="https://img.shields.io/npm/v/@angular/cli.svg?style=flat-square" alt="npm">），有关如何升级请参考[CLI 命令参考手册](https://angular.cn/cli)。
 
 ```bash
 # Install global @angular/cli

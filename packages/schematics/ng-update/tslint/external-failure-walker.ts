@@ -13,16 +13,29 @@ import { ExternalResource } from './component-file';
  * Enhanced TSLint rule walker that makes it easier to create rule failures that don't belong to
  * the source file that has been passed to the rule walker.
  */
+// tslint:disable-next-line: deprecation
 export class ExternalFailureWalker extends RuleWalker {
   /** Adds a failure for the external resource at the specified position with the given width. */
-  addExternalFailureAt(node: ExternalResource, start: number, width: number, message: string, fix?: Fix) {
-// tslint:disable-next-line: deprecation
+  addExternalFailureAt(
+    node: ExternalResource,
+    start: number,
+    width: number,
+    message: string,
+    fix?: Fix,
+  ) {
+    // tslint:disable-next-line: deprecation
     this.addFailure(new RuleFailure(node, start, start + width, message, this.getRuleName(), fix));
   }
 
   /** Adds a failure at the specified range for the external resource. */
-  addExternalFailureFromStartToEnd(node: ExternalResource, start: number, end: number, message: string, fix?: Fix) {
-// tslint:disable-next-line: deprecation
+  addExternalFailureFromStartToEnd(
+    node: ExternalResource,
+    start: number,
+    end: number,
+    message: string,
+    fix?: Fix,
+  ) {
+    // tslint:disable-next-line: deprecation
     this.addFailure(new RuleFailure(node, start, end, message, this.getRuleName(), fix));
   }
 
@@ -32,7 +45,11 @@ export class ExternalFailureWalker extends RuleWalker {
   }
 
   /** Adds a failure to the external resource at the location of the specified replacement. */
-  addExternalFailureAtReplacement(node: ExternalResource, message: string, replacement: Replacement) {
+  addExternalFailureAtReplacement(
+    node: ExternalResource,
+    message: string,
+    replacement: Replacement,
+  ) {
     this.addExternalFailureAt(node, replacement.start, replacement.end, message, replacement);
   }
 

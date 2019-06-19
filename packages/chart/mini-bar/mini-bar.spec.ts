@@ -55,7 +55,7 @@ describe('chart: mini-bar', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: G2MiniBarComponent;
+  @ViewChild('comp', { static: true }) comp: G2MiniBarComponent;
   data: any[] = [{ x: 1, y: 10 }, { x: 2, y: 20 }];
   height = PageG2Height;
   tooltipType = 'default';

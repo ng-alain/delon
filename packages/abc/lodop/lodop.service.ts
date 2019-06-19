@@ -8,7 +8,6 @@ import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 
 @Injectable({ providedIn: 'root' })
 export class LodopService implements OnDestroy {
-
   constructor(private defCog: LodopConfig, private scriptSrv: LazyService) {
     this.cog = defCog;
   }
@@ -139,9 +138,10 @@ export class LodopService implements OnDestroy {
       if (fn) {
         let arr: any[] | null = null;
         try {
+          // tslint:disable-next-line: function-constructor
           const fakeFn = new Function(`return [${res[2]}]`);
           arr = fakeFn();
-        } catch { }
+        } catch {}
 
         if (arr != null && Array.isArray(arr) && contextObj) {
           for (let i = 0; i < arr.length; i++) {

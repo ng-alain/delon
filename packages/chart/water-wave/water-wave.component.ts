@@ -28,7 +28,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   private resize$: Subscription | null = null;
-  @ViewChild('container') private node: ElementRef;
+  @ViewChild('container', { static: true }) private node: ElementRef;
   private timer: number;
 
   // #region fields
@@ -41,12 +41,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   // #endregion
 
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef,
-  ) {}
+  constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
   private renderChart(type: string) {
     if (!this.resize$) return;

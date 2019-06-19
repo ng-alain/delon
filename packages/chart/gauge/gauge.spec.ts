@@ -30,7 +30,7 @@ describe('chart: gauge', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: G2GaugeComponent;
+  @ViewChild('comp', { static: true }) comp: G2GaugeComponent;
   percent = 10;
   delay = 0;
 }

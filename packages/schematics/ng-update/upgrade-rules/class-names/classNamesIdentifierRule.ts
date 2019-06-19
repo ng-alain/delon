@@ -9,8 +9,15 @@
 import chalk from 'chalk';
 import { Rules, RuleFailure, RuleWalker } from 'tslint';
 import * as ts from 'typescript';
-import { isExportSpecifierNode, isImportSpecifierNode, isNamespaceImportNode } from '../../typescript/imports';
-import { isDelonExportDeclaration, isDelonImportDeclaration } from '../../typescript/module-specifiers';
+import {
+  isExportSpecifierNode,
+  isImportSpecifierNode,
+  isNamespaceImportNode,
+} from '../../typescript/imports';
+import {
+  isDelonExportDeclaration,
+  isDelonImportDeclaration,
+} from '../../typescript/module-specifiers';
 import { getUpgradeDataFromWalker } from '../../upgrade-data';
 
 /**
@@ -23,6 +30,7 @@ export class Rule extends Rules.AbstractRule {
   }
 }
 
+// tslint:disable-next-line: deprecation
 export class Walker extends RuleWalker {
   /** Change data that upgrades to the specified target version. */
   data = getUpgradeDataFromWalker(this, 'classNames');
@@ -93,7 +101,11 @@ export class Walker extends RuleWalker {
       return;
     }
 
-    const replacement = this.createReplacement(identifier.getStart(), identifier.getWidth(), classData.replaceWith);
+    const replacement = this.createReplacement(
+      identifier.getStart(),
+      identifier.getWidth(),
+      classData.replaceWith,
+    );
 
     this.addFailureAtNode(
       identifier,

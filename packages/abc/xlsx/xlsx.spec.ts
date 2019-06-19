@@ -60,7 +60,7 @@ describe('abc: xlsx', () => {
         { provide: LazyService, useClass: MockLazyService },
       ],
     });
-    srv = injector.get(XlsxService);
+    srv = injector.get<XlsxService>(XlsxService);
   }
 
   beforeEach(() => {

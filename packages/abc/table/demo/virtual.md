@@ -28,7 +28,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class DemoComponent implements AfterViewInit, OnDestroy {
   private destroy$ = new Subject();
-  @ViewChild('st') st: STComponent;
+  @ViewChild('st', { static: false }) st: STComponent;
 
   page: STPage = {
     front: false,

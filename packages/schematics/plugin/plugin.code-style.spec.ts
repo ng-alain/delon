@@ -5,7 +5,7 @@ describe('NgAlainSchematic: plugin: codeStyle', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
-  beforeEach(() => ({ runner, tree } = createAlainApp({ codeStyle: true })));
+  beforeEach(async () => ({ runner, tree } = await createAlainApp({ codeStyle: true })));
 
   describe('when add', () => {
     it(`should add precommit`, () => {
@@ -15,7 +15,9 @@ describe('NgAlainSchematic: plugin: codeStyle', () => {
   });
 
   describe('when remove', () => {
-    beforeEach(() => runner.runSchematic('plugin', { name: 'codeStyle', type: 'remove' }, tree));
+    beforeEach(async () =>
+      runner.runSchematicAsync('plugin', { name: 'codeStyle', type: 'remove' }, tree).toPromise(),
+    );
 
     it(`should remove precommit`, () => {
       const json = JSON.parse(tree.readContent('package.json'));

@@ -21,7 +21,7 @@ describe('theme: DrawerHelper', () => {
 
     injector = TestBed.configureTestingModule({ imports: [TestModule] });
     fixture = TestBed.createComponent(TestComponent);
-    drawer = injector.get(DrawerHelper);
+    drawer = injector.get<DrawerHelper>(DrawerHelper);
   });
 
   afterEach(() => {

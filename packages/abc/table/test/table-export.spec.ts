@@ -69,7 +69,7 @@ describe('abc: table: export', () => {
       injector = TestBed.configureTestingModule({
         providers: [{ provide: XlsxService, useClass: MockXlsxService }, STExport],
       });
-      srv = injector.get(STExport);
+      srv = injector.get<STExport>(STExport);
     });
 
     it('should be export a excel', () => {

@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, ViewChild, Type } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { configureTestSuite } from '@delon/testing';
@@ -12,9 +12,7 @@ import { DownFileModule } from './down-file.module';
 
 function genFile(isRealFile = true): Blob {
   const blob = new Blob([
-    isRealFile
-      ? `iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==`
-      : '',
+    isRealFile ? `iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==` : '',
   ]);
   return blob;
 }
@@ -39,7 +37,7 @@ describe('abc: down-file', () => {
     context = fixture.componentInstance;
     fixture.detectChanges();
 
-    httpBed = injector.get(HttpTestingController);
+    httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
   }
 
   describe('[default]', () => {
@@ -151,7 +149,7 @@ describe('abc: down-file', () => {
   `,
 })
 class TestComponent {
-  @ViewChild(DownFileDirective) comp: DownFileDirective;
+  @ViewChild(DownFileDirective, { static: true }) comp: DownFileDirective;
   fileTypes = ['xlsx', 'docx', 'pptx', 'pdf'];
 
   data: any = {

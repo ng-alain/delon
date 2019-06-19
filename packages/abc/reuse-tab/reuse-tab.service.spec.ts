@@ -45,9 +45,9 @@ describe('abc: reuse-tab(service)', () => {
         { provide: Router, useFactory: () => new MockRouter() },
       ].concat(providers),
     });
-    srv = injector.get(ReuseTabService);
-    menuSrv = injector.get(MenuService, undefined);
-    router = injector.get(Router) as any;
+    srv = injector.get<ReuseTabService>(ReuseTabService);
+    menuSrv = injector.get<MenuService>(MenuService, undefined);
+    router = injector.get<Router>(Router);
   }
 
   function genCached(count: number, urlTpl: string = `a/{index}`) {

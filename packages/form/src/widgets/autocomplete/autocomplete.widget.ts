@@ -3,6 +3,7 @@ import { NgModel } from '@angular/forms';
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import { of, Observable } from 'rxjs';
 import { debounceTime, flatMap, map, startWith } from 'rxjs/operators';
+
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum, toBool } from '../../utils';
@@ -19,7 +20,7 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
   fixData: SFSchemaEnum[] = [];
   list: Observable<SFSchemaEnum[]>;
   typing: string = '';
-  @ViewChild(NgModel) private ngModel: NgModel;
+  @ViewChild(NgModel, { static: false }) private ngModel: NgModel;
   private filterOption: (input: string, option: SFSchemaEnum) => boolean;
   private isAsync = false;
 
@@ -65,7 +66,11 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
         );
         break;
       default:
-        this.fixData = getCopyEnum(this.schema.enum!, this.formProperty.formData, this.schema.readOnly!);
+        this.fixData = getCopyEnum(
+          this.schema.enum!,
+          this.formProperty.formData,
+          this.schema.readOnly!,
+        );
         break;
     }
   }
@@ -80,6 +85,8 @@ export class AutoCompleteWidget extends ControlWidget implements AfterViewInit {
   }
 
   private addEmailSuffix(value: string) {
-    return of(!value || ~value.indexOf('@') ? [] : this.fixData.map(domain => `${value}@${domain.label}`));
+    return of(
+      !value || ~value.indexOf('@') ? [] : this.fixData.map(domain => `${value}@${domain.label}`),
+    );
   }
 }

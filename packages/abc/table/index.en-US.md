@@ -109,7 +109,7 @@ Some details:
   `
 })
 class TestComponent {
-  @ViewChild('st') comp: STComponent;
+  @ViewChild('st', { static: false }) comp: STComponent;
   // this.comp.load();
 }
 ```

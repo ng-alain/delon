@@ -111,13 +111,15 @@ describe('abc: full-content', () => {
       const bodyHeight = 10;
       spyOn(bodyEl, 'getBoundingClientRect').and.returnValue({
         height: bodyHeight,
-      });
+      } as any);
       expect(bodyEl.getBoundingClientRect).not.toHaveBeenCalled();
       window.dispatchEvent(new Event('resize'));
       fixture.detectChanges();
       tick(210);
       expect(bodyEl.getBoundingClientRect).toHaveBeenCalled();
-      expect(context.comp._height).toBe(bodyHeight - el.getBoundingClientRect().top - context.padding);
+      expect(context.comp._height).toBe(
+        bodyHeight - el.getBoundingClientRect().top - context.padding,
+      );
     }));
     it('should be clear class when go to other route', () => {
       const eventsSub = new BehaviorSubject<any>(null);
@@ -175,7 +177,7 @@ describe('abc: full-content', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: FullContentComponent;
+  @ViewChild('comp', { static: true }) comp: FullContentComponent;
   fullscreen: boolean = false;
   hideTitle: boolean;
   padding = 24;

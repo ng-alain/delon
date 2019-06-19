@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Type } from '@angular/core';
 
 import { DelonAuthConfig } from '../../auth.config';
 import { DelonAuthModule } from '../../auth.module';
@@ -65,8 +66,8 @@ describe('auth: simple.interceptor', () => {
     });
     if (tokenData) injector.get(DA_SERVICE_TOKEN).set(tokenData);
 
-    http = injector.get(HttpClient);
-    httpBed = injector.get(HttpTestingController);
+    http = injector.get<HttpClient>(HttpClient);
+    httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
   }
 
   describe('[token position]', () => {

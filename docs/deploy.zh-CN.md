@@ -59,7 +59,7 @@ ng build --prod --sourcemaps
 如果你的静态资源是部署到其他域名（例如独立的 cdn 地址），你可以透过 `-d` 参数指定一个 cdn 地址。
 
 ```bash
-ng build --prod --build-optimizer -d=//cdn.ng-alain.com/
+ng build --prod -d=//cdn.ng-alain.com/
 ```
 
 这样生成的 `index.html` 内 `*.js`、`*.css` 会自动加上 `//cdn.ng-alain.com/*.js`。

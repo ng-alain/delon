@@ -40,7 +40,7 @@ describe('abc: table: data-souce', () => {
   let httpResponse: any;
 
   class MockHttpClient {
-    request() {
+    request(_method: string, _url: string, _opt: any) {
       return of(httpResponse);
     }
   }

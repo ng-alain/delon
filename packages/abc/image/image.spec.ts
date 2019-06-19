@@ -84,7 +84,7 @@ describe('abc: _src', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: ImageDirective;
+  @ViewChild('comp', { static: true }) comp: ImageDirective;
   src = './assets/img/logo.svg';
   size = 64;
   error = './assets/img/logo.svg';

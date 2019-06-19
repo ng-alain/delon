@@ -15,8 +15,8 @@ describe('acl: guard', () => {
     injector = TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes([]), DelonACLModule],
     });
-    srv = injector.get(ACLGuard);
-    acl = injector.get(ACLService);
+    srv = injector.get<ACLGuard>(ACLGuard);
+    acl = injector.get<ACLService>(ACLService);
     acl.set({
       role: ['user'],
       ability: [1, 2, 3],

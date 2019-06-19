@@ -1,13 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  HttpClient,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponse,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
@@ -20,9 +12,10 @@ import { DelonAuthModule } from '../auth.module';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
+import { Type } from '@angular/core';
 
 function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`) {
-  const model = new modelType();
+  const model: any = new modelType();
   model.token = token;
   model.uid = 1;
   return model;
@@ -94,8 +87,8 @@ describe('auth: base.interceptor', () => {
     });
     if (tokenData) injector.get(DA_SERVICE_TOKEN).set(tokenData);
 
-    http = injector.get(HttpClient);
-    httpBed = injector.get(HttpTestingController);
+    http = injector.get<HttpClient>(HttpClient);
+    httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
   }
 
   describe('[ignores]', () => {
@@ -169,7 +162,7 @@ describe('auth: base.interceptor', () => {
           (err: any) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
-              expect(injector.get(Router).navigate).toHaveBeenCalled();
+              expect(injector.get<Router>(Router).navigate).toHaveBeenCalled();
               done();
             }, 20);
           },
@@ -219,7 +212,7 @@ describe('auth: base.interceptor', () => {
           done();
         },
         () => {
-          const tokenSrv = injector.get(DA_SERVICE_TOKEN, null) as MockTokenService;
+          const tokenSrv = injector.get(DA_SERVICE_TOKEN) as MockTokenService;
           expect(tokenSrv.referrer).not.toBeNull();
           expect(tokenSrv.referrer.url).toBe(url);
           done();

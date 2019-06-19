@@ -51,7 +51,7 @@ class MockACLService {
 
 class MockWindow {
   location = new MockLocation();
-  open() { }
+  open() {}
 }
 class MockLocation {
   private url: string;
@@ -78,10 +78,7 @@ describe('abc: sidebar-nav', () => {
     injector = TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), AlainThemeModule, HttpClientTestingModule, SidebarNavModule],
       declarations: [TestComponent],
-      providers: [
-        { provide: ACLService, useClass: MockACLService },
-        { provide: WINDOW, useFactory: () => new MockWindow() },
-      ],
+      providers: [{ provide: ACLService, useClass: MockACLService }, { provide: WINDOW, useFactory: () => new MockWindow() }],
     });
   }
 
@@ -90,9 +87,9 @@ describe('abc: sidebar-nav', () => {
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     fixture.detectChanges();
-    router = injector.get(Router);
-    setSrv = injector.get(SettingsService);
-    menuSrv = injector.get(MenuService);
+    router = injector.get<Router>(Router);
+    setSrv = injector.get<SettingsService>(SettingsService);
+    menuSrv = injector.get<MenuService>(MenuService);
     doc = injector.get(DOCUMENT);
     menuSrv.add(deepCopy(MOCKMENUS));
     page = new PageObject();
@@ -426,7 +423,7 @@ describe('abc: sidebar-nav', () => {
       fixture = TestBed.createComponent(TestComponent);
       dl = fixture.debugElement;
       context = fixture.componentInstance;
-      menuSrv = injector.get(MenuService);
+      menuSrv = injector.get<MenuService>(MenuService);
       fixture.detectChanges();
       createComp(false);
       menuSrv.add([
@@ -465,11 +462,7 @@ describe('abc: sidebar-nav', () => {
 
   class PageObject {
     getEl<T>(cls: string, body = false) {
-      const el = body
-        ? document.querySelector(cls)
-        : dl.query(By.css(cls))
-          ? dl.query(By.css(cls)).nativeElement
-          : null;
+      const el = body ? document.querySelector(cls) : dl.query(By.css(cls)) ? dl.query(By.css(cls)).nativeElement : null;
       return el ? (el as T) : null;
     }
     checkText(cls: string, value: any) {
@@ -520,14 +513,14 @@ describe('abc: sidebar-nav', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: true })
   comp: SidebarNavComponent;
   disabledAcl = false;
   autoCloseUnderPad = false;
   recursivePath = false;
   openStrictly = false;
-  select() { }
+  select() {}
 }
 
 @Component({ template: `` })
-class TestRouteComponent { }
+class TestRouteComponent {}

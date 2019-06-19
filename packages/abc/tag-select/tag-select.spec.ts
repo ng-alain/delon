@@ -56,7 +56,7 @@ describe('abc: tag-select', () => {
   it('#i18n', () => {
     const triEl = dl.query(By.css('.tag-select__trigger')).nativeElement as HTMLElement;
     expect(triEl.innerText).toContain(zh_CN.tagSelect.expand);
-    injector.get(DelonLocaleService).setLocale(en_US);
+    injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
     fixture.detectChanges();
     expect(triEl.innerText).toBe(en_US.tagSelect.expand);
   });
@@ -70,7 +70,7 @@ describe('abc: tag-select', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: true })
   comp: TagSelectComponent;
   categories = [
     { id: 0, text: '全部', value: false },

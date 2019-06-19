@@ -5,7 +5,7 @@ describe('Schematic: ng-add', () => {
   let runner: SchematicTestRunner;
   let tree: UnitTestTree;
 
-  beforeEach(() => ({ runner, tree } = createAlainApp()));
+  beforeEach(async () => ({ runner, tree } = await createAlainApp()));
 
   it('should dependencies @delon of an application', () => {
     const packageJson = JSON.parse(tree.readContent('package.json'));
@@ -13,8 +13,8 @@ describe('Schematic: ng-add', () => {
     expect(packageJson.dependencies['@antv/g2']).not.toBeDefined();
   });
 
-  it('should dependencies @antv when -g2', () => {
-    tree = runner.runSchematic('ng-add', { g2: true }, tree);
+  it('should dependencies @antv when -g2', async () => {
+    tree = await runner.runSchematicAsync('ng-add', { g2: true }, tree).toPromise();
     const packageJson = JSON.parse(tree.readContent('package.json'));
     expect(packageJson.dependencies['@antv/g2']).toBeDefined();
   });

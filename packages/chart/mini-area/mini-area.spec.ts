@@ -87,7 +87,7 @@ describe('chart: mini-area', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: G2MiniAreaComponent;
+  @ViewChild('comp', { static: true }) comp: G2MiniAreaComponent;
   line = false;
   height = PageG2Height;
   xAxis: any;

@@ -47,11 +47,12 @@ describe('v2', () => {
   });
 
   describe('layout', () => {
-    beforeEach(() => {
+    beforeEach(async() => {
       const runner = new SchematicTestRunner('schematics', migrationCollection);
-      tree = createFileSystemTestApp(runner).appTree;
+      const a = await createFileSystemTestApp(runner);
+      tree = a.tree;
       Object.keys(MOCK_LAYOUT).forEach(path => tree.create(path, MOCK_LAYOUT[path]));
-      runner.runSchematic(migrationName, {}, tree);
+      await runner.runSchematicAsync(migrationName, {}, tree).toPromise();
     });
 
     it('should working', () => {
@@ -74,13 +75,14 @@ describe('v2', () => {
   describe('dom', () => {
     const testCases = ['v2/dom'];
 
-    beforeEach(() => {
+    beforeEach(async () => {
       const runner = new SchematicTestRunner('schematics', migrationCollection);
-      tree = createFileSystemTestApp(runner).appTree;
+      const a = await createFileSystemTestApp(runner);
+      tree = a.tree;
       testCases.forEach(testCaseName => {
         tree.create(`src/app/${testCaseName}.ts`, readFileContent(resolveBazelDataFile(`${testCaseName}_input.ts`)));
       });
-      runner.runSchematic(migrationName, {}, tree);
+      await runner.runSchematicAsync(migrationName, {}, tree).toPromise();
     });
 
     testCases.forEach(testCaseName => {

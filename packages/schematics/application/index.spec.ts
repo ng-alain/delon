@@ -7,7 +7,7 @@ describe('NgAlainSchematic: application', () => {
   let tree: UnitTestTree;
 
   describe(``, () => {
-    beforeEach(() => ({ runner, tree } = createAlainApp()));
+    beforeEach(async () => ({ runner, tree } = await createAlainApp()));
     it(`should add @delon to dependencies`, () => {
       const packageJson = JSON.parse(tree.readContent('package.json'));
       expect(packageJson.dependencies['@delon/theme']).toBeDefined();
@@ -29,21 +29,21 @@ describe('NgAlainSchematic: application', () => {
 
   describe('#i18n', () => {
     describe('with true', () => {
-      beforeEach(() => ({ runner, tree } = createAlainApp({ i18n: true })));
+      beforeEach(async () => ({ runner, tree } = await createAlainApp({ i18n: true })));
       it(`can add i18n related`, () => {
         const specTs = tree.readContent('/projects/foo/src/app/app.module.ts');
         expect(specTs).toContain(`@core/i18n/`);
       });
     });
     describe('with false', () => {
-      beforeEach(() => ({ runner, tree } = createAlainApp({ i18n: false })));
+      beforeEach(async () => ({ runner, tree } = await createAlainApp({ i18n: false })));
       it(`can't add i18n related`, () => {
         const specTs = tree.readContent('/projects/foo/src/app/app.module.ts');
         expect(specTs).not.toContain(`@core/i18n/`);
       });
     });
     describe('default language', () => {
-      it(`with use zh`, () => {
+      it(`with use zh`, async () => {
         spyOn(LANG, 'getLangData').and.returnValue(
           JSON.stringify({
             key1: 'Key1',
@@ -51,24 +51,28 @@ describe('NgAlainSchematic: application', () => {
           }),
         );
         const baseRunner = createNgRunner();
-        const workspaceTree = baseRunner.runSchematic('workspace', {
-          name: 'workspace',
-          newProjectRoot: 'projects',
-          version: '6.0.0',
-        });
-        const appTree = baseRunner.runSchematic(
-          'application',
-          {
-            name: APPNAME,
-            inlineStyle: false,
-            inlineTemplate: false,
-            routing: false,
-            style: 'css',
-            skipTests: false,
-            skipPackageJson: false,
-          },
-          workspaceTree,
-        );
+        const workspaceTree = await baseRunner
+          .runSchematicAsync('workspace', {
+            name: 'workspace',
+            newProjectRoot: 'projects',
+            version: '6.0.0',
+          })
+          .toPromise();
+        const appTree = await baseRunner
+          .runSchematicAsync(
+            'application',
+            {
+              name: APPNAME,
+              inlineStyle: false,
+              inlineTemplate: false,
+              routing: false,
+              style: 'css',
+              skipTests: false,
+              skipPackageJson: false,
+            },
+            workspaceTree,
+          )
+          .toPromise();
         appTree.create(
           '/demo.html',
           `
@@ -83,14 +87,16 @@ describe('NgAlainSchematic: application', () => {
 
         const alainRunner = createAlainRunner();
         // tslint:disable-next-line:no-shadowed-variable
-        const tree = alainRunner.runSchematic(
-          'ng-add',
-          {
-            skipPackageJson: false,
-            defaultLanguage: 'zh',
-          },
-          appTree,
-        );
+        const tree = await alainRunner
+          .runSchematicAsync(
+            'ng-add',
+            {
+              skipPackageJson: false,
+              defaultLanguage: 'zh',
+            },
+            appTree,
+          )
+          .toPromise();
 
         const res = tree.readContent('/demo.html');
         expect(res).toBe(`

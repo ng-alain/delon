@@ -31,7 +31,9 @@ describe('abc: exception', () => {
     it(`#type=${type}`, () => {
       context.type = type as ExceptionType;
       fixture.detectChanges();
-      expect((dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText).toBe('' + type);
+      expect(
+        (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText,
+      ).toBe('' + type);
     });
   });
 
@@ -45,15 +47,19 @@ describe('abc: exception', () => {
     context.title = 'custom title';
     context.desc = 'custom desc';
     fixture.detectChanges();
-    expect((dl.query(By.css('.exception__img')).nativeElement as HTMLElement).style['background-image']).toContain(
-      context.img,
+    expect(
+      (dl.query(By.css('.exception__img')).nativeElement as HTMLElement).style['background-image'],
+    ).toContain(context.img);
+    expect(
+      (dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText,
+    ).toBe(context.title);
+    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(
+      context.desc,
     );
-    expect((dl.query(By.css('.exception__cont-title')).nativeElement as HTMLElement).innerText).toBe(context.title);
-    expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(context.desc);
   });
 
   it('#i18n', () => {
-    injector.get(DelonLocaleService).setLocale(en_US);
+    injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
     context.type = 403;
     fixture.detectChanges();
     expect((dl.query(By.css('.exception__cont-desc')).nativeElement as HTMLElement).innerText).toBe(
@@ -71,7 +77,7 @@ describe('abc: exception', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp')
+  @ViewChild('comp', { static: true })
   comp: ExceptionComponent;
   type: 403 | 404 | 500;
   img: string;

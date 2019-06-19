@@ -42,9 +42,9 @@ interface PageHeaderPath {
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private inited = false;
   private unsubscribe$ = new Subject<void>();
-  @ViewChild('conTpl')
+  @ViewChild('conTpl', { static: false })
   private conTpl: ElementRef;
-  @ViewChild('affix')
+  @ViewChild('affix', { static: false })
   private affix: NzAffixComponent;
   private _menus: Menu[] | null;
 
@@ -121,11 +121,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       )
       .subscribe(() => this.affix.updatePosition({} as any));
 
-    merge(
-      menuSrv.change.pipe(filter(() => this.inited)),
-      router.events.pipe(filter(e => e instanceof NavigationEnd)),
-      i18nSrv.change,
-    )
+    merge(menuSrv.change.pipe(filter(() => this.inited)), router.events.pipe(filter(e => e instanceof NavigationEnd)), i18nSrv.change)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
         this._menus = null;

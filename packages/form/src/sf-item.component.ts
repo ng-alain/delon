@@ -34,7 +34,7 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() formProperty: FormProperty;
 
-  @ViewChild('target', { read: ViewContainerRef })
+  @ViewChild('target', { read: ViewContainerRef, static: true })
   container: ViewContainerRef;
 
   constructor(private widgetFactory: WidgetFactory, private terminator: TerminatorService) {}
@@ -57,8 +57,7 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
-    this.ref = this.widgetFactory.createWidget(this.container, (this.formProperty.ui.widget ||
-      this.formProperty.schema.type) as string);
+    this.ref = this.widgetFactory.createWidget(this.container, (this.formProperty.ui.widget || this.formProperty.schema.type) as string);
     this.onWidgetInstanciated(this.ref.instance);
   }
 

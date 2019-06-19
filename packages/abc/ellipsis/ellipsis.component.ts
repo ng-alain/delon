@@ -27,9 +27,9 @@ import { take } from 'rxjs/operators';
 export class EllipsisComponent implements AfterViewInit, OnChanges {
   // tslint:disable-next-line:no-string-literal
   private isSupportLineClamp = this.doc.body.style['webkitLineClamp'] !== undefined;
-  @ViewChild('orgEl') private orgEl: ElementRef;
-  @ViewChild('shadowOrgEl') private shadowOrgEl: ElementRef;
-  @ViewChild('shadowTextEl') private shadowTextEl: ElementRef;
+  @ViewChild('orgEl', { static: false }) private orgEl: ElementRef;
+  @ViewChild('shadowOrgEl', { static: false }) private shadowOrgEl: ElementRef;
+  @ViewChild('shadowTextEl', { static: false }) private shadowTextEl: ElementRef;
   private inited = false;
   orgHtml: SafeHtml;
   type = 'default';
@@ -47,13 +47,21 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
 
   // #endregion
 
+  get linsWord(): string {
+    const { targetCount, text, tail } = this;
+    return (
+      (targetCount > 0 ? text.substring(0, targetCount) : '') +
+      (targetCount > 0 && targetCount < text.length ? tail : '')
+    );
+  }
+
   constructor(
     private el: ElementRef,
     private ngZone: NgZone,
     private dom: DomSanitizer,
     @Inject(DOCUMENT) private doc: Document,
     private cdr: ChangeDetectorRef,
-  ) { }
+  ) {}
 
   private getStrFullLength(str: string): number {
     return str.split('').reduce((pre, cur) => {
@@ -81,7 +89,14 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }, '');
   }
 
-  private bisection(th: number, m: number, b: number, e: number, text: string, shadowNode: HTMLElement): number {
+  private bisection(
+    th: number,
+    m: number,
+    b: number,
+    e: number,
+    text: string,
+    shadowNode: HTMLElement,
+  ): number {
     const suffix = this.tail;
     let mid = m;
     let end = e;
@@ -96,7 +111,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         return mid;
       }
       begin = mid;
-      mid = (end - begin) === 1 ? begin + 1 : Math.floor((end - begin) / 2) + begin;
+      mid = end - begin === 1 ? begin + 1 : Math.floor((end - begin) / 2) + begin;
       return this.bisection(th, mid, begin, end, text, shadowNode);
     }
     if (mid - 1 < 0) {
@@ -147,7 +162,9 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         if (length - tail.length <= 0) {
           displayText = '';
         } else {
-          displayText = fullWidthRecognition ? this.cutStrByFullLength(text, length) : text.slice(0, length);
+          displayText = fullWidthRecognition
+            ? this.cutStrByFullLength(text, length)
+            : text.slice(0, length);
         }
         this.text = displayText + tail;
       }
@@ -168,7 +185,14 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         const len = text.length;
         const mid = Math.ceil(len / 2);
 
-        const count = this.bisection(targetHeight, mid, 0, len, text, shadowTextEl.nativeElement.firstChild);
+        const count = this.bisection(
+          targetHeight,
+          mid,
+          0,
+          len,
+          text,
+          shadowTextEl.nativeElement.firstChild,
+        );
         this.text = text;
         this.targetCount = count;
       }

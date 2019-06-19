@@ -109,7 +109,7 @@ describe('abc: error-collect', () => {
 class TestComponent implements OnInit {
   freq = 20;
   offsetTop = 65 + 16;
-  @ViewChild('ec')
+  @ViewChild('ec', { static: true })
   comp: ErrorCollectComponent;
   validateForm: FormGroup;
   constructor(fb: FormBuilder) {

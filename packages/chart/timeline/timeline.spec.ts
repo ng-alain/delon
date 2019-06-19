@@ -64,7 +64,7 @@ describe('chart: timeline', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp') comp: G2TimelineComponent;
+  @ViewChild('comp', { static: true }) comp: G2TimelineComponent;
   title = 'title';
   titleMap = { y1: '客流量', y2: '支付笔数' };
   colorMap = { y1: '#1890FF', y2: '#2FC25B' };

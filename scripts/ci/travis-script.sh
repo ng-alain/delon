@@ -24,7 +24,7 @@ testing() {
     echo ">> starting gen site"
     node ../site/main init
     echo ">> starting ng build"
-    $(npm bin)/ng build --prod --build-optimizer --base-href /
+    $(npm bin)/ng build --prod --base-href /
   fi
 }
 

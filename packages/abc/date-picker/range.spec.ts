@@ -166,11 +166,10 @@ describe('abc: date-picker: range', () => {
   `,
 })
 class TestComponent {
-  @ViewChild('comp')
-  comp: RangePickerComponent;
+  @ViewChild('comp', { static: true }) comp: RangePickerComponent;
   i: any = {};
   shortcut: boolean | DateRangePickerShortcut | null = false;
-  _nzOnOpenChange() { }
-  _nzOnPanelChange() { }
-  _nzOnOk() { }
+  _nzOnOpenChange() {}
+  _nzOnPanelChange() {}
+  _nzOnOk() {}
 }
