@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainAndModuleApp } from '../utils/testing';
 
@@ -44,5 +45,17 @@ describe('Schematic: list', () => {
     expect(
       tree.exists(`/projects/foo/src/app/routes/trade/list/edit/list2/list2.component.html`),
     ).toBe(true);
+  });
+
+  it('should be throw error when directory already exists', async () => {
+    spyOn(fs, 'existsSync').and.returnValue(true);
+    try {
+      tree = await runner
+        .runSchematicAsync('list', { name: 'list', module: 'trade' }, tree)
+        .toPromise();
+      expect(true).toBe(false);
+    } catch (e) {
+      expect(e.message).toContain(`already exists`);
+    }
   });
 });

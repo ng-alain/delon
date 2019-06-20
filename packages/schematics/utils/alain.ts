@@ -20,6 +20,8 @@ import { buildRelativePath, findModuleFromOptions } from '@schematics/angular/ut
 import { parseName } from '@schematics/angular/utility/parse-name';
 import { validateHtmlSelector, validateName } from '@schematics/angular/utility/validation';
 import * as ts from 'typescript';
+import * as fs from 'fs';
+import * as path from 'path';
 import { getSourceFile } from './ast';
 import { getProject, Project } from './project';
 
@@ -72,17 +74,6 @@ function buildComponentName(schema: CommonSchema, _projectPrefix: string) {
 }
 
 function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
-  if (!schema._filesPath) {
-    // 若基础页尝试从 `_cli-tpl/_${schema.schematicName!}` 下查找该目录，若存在则优先使用
-    if (['list', 'edit', 'view', 'empty'].includes(schema.schematicName!)) {
-      const overrideDir = `/${project.root}/_cli-tpl/_${schema.schematicName!}`;
-      const overridePath = `${overrideDir}/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts`;
-      if (host.exists(overridePath)) {
-        schema._filesPath = `.${overrideDir}`;
-      }
-    }
-    schema._filesPath = schema._filesPath || './files';
-  }
   // module name
   if (!schema.module) {
     throw new SchematicsException(
@@ -100,7 +91,25 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   const parsedPath = parseName(schema.path, schema.name!);
   schema.name = parsedPath.name;
   schema.path = parsedPath.path;
+  const fullPath = path.join(process.cwd(), schema.path, schema.name);
+  if (fs.existsSync(fullPath)) {
+    throw new Error(`The directory (${fullPath}) already exists`);
+  }
   schema.importModulePath = findModuleFromOptions(host, schema as any);
+
+  if (!schema._filesPath) {
+    // 若基础页尝试从 `_cli-tpl/_${schema.schematicName!}` 下查找该目录，若存在则优先使用
+    if (['list', 'edit', 'view', 'empty'].includes(schema.schematicName!)) {
+      const overrideDir =
+        '/' + [project.root, `_cli-tpl/_${schema.schematicName}`].filter(i => !!i).join('/');
+      const overridePath = `${overrideDir}/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts`;
+      if (host.exists(overridePath)) {
+        // 所在目录与命令目录同属一个目录结构，因此无须特殊处理
+        schema._filesPath = path.relative(__dirname, process.cwd()) + overrideDir;
+      }
+    }
+    schema._filesPath = schema._filesPath || './files';
+  }
   // fill target
   if (schema.target) {
     schema.path += '/' + schema.target;
@@ -115,40 +124,45 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   validateHtmlSelector(schema.selector);
 }
 
-function addImportToModule(host: Tree, path: string, symbolName: string, fileName: string) {
-  const source = getSourceFile(host, path);
-  const change = insertImport(source, path, symbolName, fileName) as InsertChange;
-  const declarationRecorder = host.beginUpdate(path);
+function addImportToModule(host: Tree, filePath: string, symbolName: string, fileName: string) {
+  const source = getSourceFile(host, filePath);
+  const change = insertImport(source, filePath, symbolName, fileName) as InsertChange;
+  const declarationRecorder = host.beginUpdate(filePath);
   declarationRecorder.insertLeft(change.pos, change.toAdd);
   host.commitUpdate(declarationRecorder);
 }
 
-export function addValueToVariable(host: Tree, path: string, variableName: string, text: string) {
-  const source = getSourceFile(host, path);
+export function addValueToVariable(
+  host: Tree,
+  filePath: string,
+  variableName: string,
+  text: string,
+) {
+  const source = getSourceFile(host, filePath);
   const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
     throw new SchematicsException(
-      `Could not find any [${variableName}] variable in path: ${path}.`,
+      `Could not find any [${variableName}] variable in path: ${filePath}.`,
     );
   }
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
 
   const change = new InsertChange(
-    path,
+    filePath,
     arr.end - 1,
     `${arr.elements && arr.elements.length > 0 ? ',' : ''}\n  ${text}`,
   );
 
-  const declarationRecorder = host.beginUpdate(path);
+  const declarationRecorder = host.beginUpdate(filePath);
   declarationRecorder.insertLeft(change.pos, change.toAdd);
   host.commitUpdate(declarationRecorder);
 }
 
-function getRelativePath(path: string, schema: CommonSchema) {
+function getRelativePath(filePath: string, schema: CommonSchema) {
   const importPath = `/${schema.path}/${
     schema.flat ? '' : strings.dasherize(schema.name!) + '/'
   }${strings.dasherize(schema.name!)}.component`;
-  return buildRelativePath(path, importPath);
+  return buildRelativePath(filePath, importPath);
 }
 
 function addDeclaration(schema: CommonSchema) {
@@ -206,10 +220,10 @@ export function buildAlain(schema: CommonSchema): Rule {
     schema.inlineTemplate = false;
 
     const templateSource = apply(url(schema._filesPath!), [
-      filter(path => !path.endsWith('.DS_Store')),
-      schema.spec ? noop() : filter(path => !path.endsWith('.spec.ts')),
-      schema.inlineStyle ? filter(path => !path.endsWith('.__styleext__')) : noop(),
-      schema.inlineTemplate ? filter(path => !path.endsWith('.html')) : noop(),
+      filter(filePath => !filePath.endsWith('.DS_Store')),
+      schema.spec ? noop() : filter(filePath => !filePath.endsWith('.spec.ts')),
+      schema.inlineStyle ? filter(filePath => !filePath.endsWith('.__styleext__')) : noop(),
+      schema.inlineTemplate ? filter(filePath => !filePath.endsWith('.html')) : noop(),
       template({
         ...strings,
         'if-flat': (s: string) => (schema.flat ? '' : s),
@@ -225,13 +239,13 @@ export function buildAlain(schema: CommonSchema): Rule {
   };
 }
 
-export function tryDelFile(host: Tree, path: string) {
-  if (host.exists(path)) {
-    host.delete(path);
+export function tryDelFile(host: Tree, filePath: string) {
+  if (host.exists(filePath)) {
+    host.delete(filePath);
   }
 }
 
-export function tryAddFile(host: Tree, path: string, content: string) {
-  tryDelFile(host, path);
-  host.create(path, content);
+export function tryAddFile(host: Tree, filePath: string, content: string) {
+  tryDelFile(host, filePath);
+  host.create(filePath, content);
 }
