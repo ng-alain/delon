@@ -76,7 +76,9 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   }
   // module name
   if (!schema.module) {
-    throw new SchematicsException(`Must specify module name. (e.g: ng g ng-alain:list <list name> -m=<module name>)`);
+    throw new SchematicsException(
+      `Must specify module name. (e.g: ng g ng-alain:list <list name> -m=<module name>)`,
+    );
   }
   // path
   if (schema.path === undefined) {
@@ -116,7 +118,9 @@ export function addValueToVariable(host: Tree, path: string, variableName: strin
   const source = getSourceFile(host, path);
   const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
-    throw new SchematicsException(`Could not find any [${variableName}] variable.`);
+    throw new SchematicsException(
+      `Could not find any [${variableName}] variable in path: ${path}.`,
+    );
   }
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
 
@@ -132,9 +136,9 @@ export function addValueToVariable(host: Tree, path: string, variableName: strin
 }
 
 function getRelativePath(path: string, schema: CommonSchema) {
-  const importPath = `/${schema.path}/${schema.flat ? '' : strings.dasherize(schema.name!) + '/'}${strings.dasherize(
-    schema.name!,
-  )}.component`;
+  const importPath = `/${schema.path}/${
+    schema.flat ? '' : strings.dasherize(schema.name!) + '/'
+  }${strings.dasherize(schema.name!)}.component`;
   return buildRelativePath(path, importPath);
 }
 
@@ -154,7 +158,12 @@ function addDeclaration(schema: CommonSchema) {
 
     // component
     if (schema.modal === true) {
-      addValueToVariable(host, schema.importModulePath!, 'COMPONENTS_NOROUNT', schema.componentName!);
+      addValueToVariable(
+        host,
+        schema.importModulePath!,
+        'COMPONENTS_NOROUNT',
+        schema.componentName!,
+      );
     } else {
       addValueToVariable(host, schema.importModulePath!, 'COMPONENTS', schema.componentName!);
       // routing
@@ -200,7 +209,10 @@ export function buildAlain(schema: CommonSchema): Rule {
       move(null!, schema.path + '/'),
     ]);
 
-    return chain([branchAndMerge(chain([addDeclaration(schema), mergeWith(templateSource)]))])(host, context);
+    return chain([branchAndMerge(chain([addDeclaration(schema), mergeWith(templateSource)]))])(
+      host,
+      context,
+    );
   };
 }
 

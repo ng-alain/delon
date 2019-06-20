@@ -117,8 +117,7 @@
     "target": {
       "type": "string",
       "description": "指定目标路径，支持 `bus/list` 写法 (Specifies relative path, could be set like `bus/list`.)",
-      "alias": "t",
-      "x-prompt": "Specifies relative path(could be set like `bus/list`):"
+      "alias": "t"
     }
   },
   "required": [
