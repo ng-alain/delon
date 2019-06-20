@@ -180,9 +180,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   private unsubscribe$ = new Subject<void>();
   private totalTpl = ``;
-  private locale: LocaleData = {};
   private clonePage: STPage;
   private copyCog: STConfig;
+  locale: LocaleData = {};
   _data: STData[] = [];
   _statistical: STStatisticalResults = {};
   _isPagination = true;

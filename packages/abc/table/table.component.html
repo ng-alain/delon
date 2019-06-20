@@ -143,10 +143,10 @@
             </ng-container>
             <div class="ant-table-filter-dropdown-btns">
               <a class="ant-table-filter-dropdown-link confirm" (click)="c.filter.visible = false">
-                <span (click)="_filterConfirm(c)">{{c.filter.confirmText}}</span>
+                <span (click)="_filterConfirm(c)">{{c.filter.confirmText || locale.filterConfirm}}</span>
               </a>
               <a class="ant-table-filter-dropdown-link clear" (click)="c.filter.visible = false">
-                <span (click)="_filterClear(c)">{{c.filter.clearText}}</span>
+                <span (click)="_filterClear(c)">{{c.filter.clearText || locale.filterReset}}</span>
               </a>
             </div>
           </nz-dropdown>

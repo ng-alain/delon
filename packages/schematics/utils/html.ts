@@ -89,7 +89,7 @@ export function getIndexHtmlContent(host: Tree, project: Project) {
   const indexPath = getIndexHtmlPath(host, project);
   const buffer = host.read(indexPath);
   if (!buffer) {
-    throw new SchematicsException(`Could not find file for path: ${indexPath}`);
+    throw new SchematicsException(`Could not find file for path '${indexPath}'`);
   }
 
   return {

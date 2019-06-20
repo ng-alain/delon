@@ -68,6 +68,12 @@ sys
 ng g ng-alain:view view -m=sys -t=log
 ```
 
+**覆盖默认模板页**
+
+若 `list`、`edit`、`view`、`empty` 四个指令所产生默认页并非所在业务期望，可以覆盖它们。
+
+例如覆盖 `list` 命令默认模板，在根目录 `_cli-tpl` 下创建目录名 `_list`，目录结构务必等同 [原始list目录](https://github.com/ng-alain/delon/tree/master/packages/schematics/list/files) 的结构。
+
 ### edit & view 页
 
 对于 `edit`、`view` 默认是以模态框展示来生成，你可以改用页面展示则：

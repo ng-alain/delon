@@ -111,7 +111,7 @@ function addRunScriptToPackageJson() {
   return (host: Tree) => {
     const json = getPackage(host, 'scripts');
     if (json == null) return host;
-    json.scripts.start = `npm run color-less && ng serve -o`;
+    json.scripts.start = `npm run color-less && ng s -o`;
     json.scripts.build = `npm run color-less && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod`;
     json.scripts.analyze = `npm run color-less && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --stats-json`;
     json.scripts['test-coverage'] = `ng test --code-coverage --watch=false`;

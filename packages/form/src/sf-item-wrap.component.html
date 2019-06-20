@@ -1,30 +1,22 @@
 <nz-form-item [style.width.px]="ui.width">
-  <nz-col *ngIf="showTitle"
-          [nzSpan]="ui.spanLabel"
-          class="ant-form-item-label">
-    <label *ngIf="t"
-           [attr.for]="id"
-           [class.ant-form-item-required]="ui._required">
+  <nz-col *ngIf="showTitle" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
+    <label *ngIf="t" [attr.for]="id" [class.ant-form-item-required]="ui._required">
       {{ t }}
-      <span class="optional">
+      <span class="sf__optional">
         {{ ui.optional }}
-        <nz-tooltip *ngIf="ui.optionalHelp"
-                    [nzTitle]="ui.optionalHelp">
-          <i nz-tooltip
-             nz-icon
-             nzType="question-circle"></i>
+        <nz-tooltip *ngIf="oh"
+          [nzTitle]="oh.text" [nzPlacement]="oh.placement" [nzTrigger]="oh.trigger"
+          [nzOverlayClassName]="oh.overlayClassName" [nzOverlayStyle]="oh.overlayStyle"
+          [nzMouseEnterDelay]="oh.mouseEnterDelay" [nzMouseLeaveDelay]="oh.mouseLeaveDelay">
+          <i nz-tooltip nz-icon [nzType]="oh.icon"></i>
         </nz-tooltip>
       </span>
     </label>
   </nz-col>
-  <nz-col class="ant-form-item-control-wrapper"
-          [nzSpan]="ui.spanControl"
-          [nzOffset]="ui.offsetControl">
-    <div class="ant-form-item-control"
-         [class.has-error]="showError">
+  <nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl" [nzOffset]="ui.offsetControl">
+    <div class="ant-form-item-control" [class.has-error]="showError">
       <ng-content></ng-content>
-      <nz-form-extra *ngIf="schema.description"
-                     [innerHTML]="schema.description"></nz-form-extra>
+      <nz-form-extra *ngIf="schema.description" [innerHTML]="schema.description"></nz-form-extra>
       <nz-form-explain *ngIf="!ui.onlyVisual && showError">{{error}}</nz-form-explain>
     </div>
   </nz-col>
