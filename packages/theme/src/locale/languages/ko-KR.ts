@@ -27,6 +27,8 @@ export default {
   },
   st: {
     total: '전체 {{total}}건',
+    filterConfirm: '확인',
+    filterReset: '초기화',
   },
   sf: {
     submit: '제출',

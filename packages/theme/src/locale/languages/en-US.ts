@@ -27,6 +27,8 @@ export default {
   },
   st: {
     total: '{{range[0]}} - {{range[1]}} of {{total}}',
+    filterConfirm: 'OK',
+    filterReset: 'Reset',
   },
   sf: {
     submit: 'Submit',

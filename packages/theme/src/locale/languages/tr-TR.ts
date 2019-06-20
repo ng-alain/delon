@@ -27,6 +27,8 @@ export default {
   },
   st: {
     total: '{{range[0]}} ile {{range[1]}} arasında {{total}}',
+    filterConfirm: 'Tamam',
+    filterReset: 'Sıfırla',
   },
   sf: {
     submit: 'Gönder',

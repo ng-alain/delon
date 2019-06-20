@@ -27,6 +27,8 @@ export default {
   },
   st: {
     total: '{{range[0]}} - {{range[1]}} από {{total}}',
+    filterConfirm: 'ΟΚ',
+    filterReset: 'Επαναφορά',
   },
   sf: {
     submit: 'Υποβολή',
