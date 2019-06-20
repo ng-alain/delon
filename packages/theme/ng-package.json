@@ -17,6 +17,12 @@
     }
   },
   "whitelistedNonPeerDependencies": [
-    "tslib", "angular", "date-fns", "@ant-design/icons-angular", "@ant-design/icons-angular/icons"
+    "tslib",
+    "angular",
+    "date-fns",
+    "ng-zorro-antd",
+    "@delon/acl",
+    "@delon/util",
+    "@ant-design/icons-angular"
   ]
 }

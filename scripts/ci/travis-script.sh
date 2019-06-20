@@ -24,7 +24,7 @@ testing() {
     echo ">> starting gen site"
     node ../site/main init
     echo ">> starting ng build"
-    $(npm bin)/ng build --prod --base-href /
+    node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /
   fi
 }
 

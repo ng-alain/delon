@@ -251,7 +251,7 @@ integrationCli() {
   echo ">>> Running npm run icon"
   npm run icon
   echo ">>> Running build"
-  ng build --prod
+  node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod
   cd ../../
   echo ">>> Current dir: ${PWD}"
 }
