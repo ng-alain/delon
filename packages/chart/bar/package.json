@@ -2,7 +2,10 @@
   "ngPackage": {
     "lib": {
       "flatModuleFile": "bar",
-      "entryFile": "public_api.ts"
+      "entryFile": "public_api.ts",
+      "umdModuleIds": {
+        "@delon/util": "delon.util"
+      }
     }
   }
 }
