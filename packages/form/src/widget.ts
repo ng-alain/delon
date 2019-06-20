@@ -7,7 +7,7 @@ import { ArrayProperty } from './model/array.property';
 import { FormProperty } from './model/form.property';
 import { ObjectProperty } from './model/object.property';
 import { SFSchema } from './schema';
-import { SFUISchemaItem } from './schema/ui';
+import { SFUISchemaItem, SFOptionalHelp } from './schema/ui';
 import { SFItemComponent } from './sf-item.component';
 import { SFComponent } from './sf.component';
 import { di } from './utils';
@@ -39,7 +39,7 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
   }
 
   get oh() {
-    return this.ui.optionalHelp;
+    return this.ui.optionalHelp as SFOptionalHelp;
   }
 
   constructor(
