@@ -26,6 +26,7 @@ import { getProject, Project } from './project';
 export interface CommonSchema {
   [key: string]: any;
   _filesPath?: string;
+  schematicName?: string;
   name?: string;
   path?: string;
   module?: string;
@@ -72,7 +73,15 @@ function buildComponentName(schema: CommonSchema, _projectPrefix: string) {
 
 function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   if (!schema._filesPath) {
-    schema._filesPath = './files';
+    // 若基础页尝试从 `_cli-tpl/_${schema.schematicName!}` 下查找该目录，若存在则优先使用
+    if (['list', 'edit', 'view', 'empty'].includes(schema.schematicName!)) {
+      const overrideDir = `/${project.root}/_cli-tpl/_${schema.schematicName!}`;
+      const overridePath = `${overrideDir}/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts`;
+      if (host.exists(overridePath)) {
+        schema._filesPath = `.${overrideDir}`;
+      }
+    }
+    schema._filesPath = schema._filesPath || './files';
   }
   // module name
   if (!schema.module) {
@@ -83,7 +92,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   // path
   if (schema.path === undefined) {
     const projectDirName = project.projectType === 'application' ? 'app' : 'lib';
-    schema.path = `/${(project as any).sourceRoot}/${projectDirName}/routes`;
+    schema.path = `/${project.sourceRoot}/${projectDirName}/routes`;
   }
 
   schema.path += `/${schema.module}`;

@@ -6,7 +6,8 @@ import { mergeMap } from 'rxjs/operators';
 import { buildAlain } from '../utils/alain';
 import { Schema } from './schema';
 
-const REFER = ', please refer to: https://ng-alain.com/cli/generate#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5';
+const REFER =
+  ', please refer to: https://ng-alain.com/cli/generate#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A1%B5';
 
 function genFiles(options: Schema) {
   return () => {
@@ -60,5 +61,9 @@ function runFixJS(options: Schema) {
 }
 
 export default function(options: Schema): Rule {
-  return chain([genFiles(options), runFixJS(options), buildAlain(options)]);
+  return chain([
+    genFiles(options),
+    runFixJS(options),
+    buildAlain({ schematicName: 'tpl', ...options }),
+  ]);
 }
