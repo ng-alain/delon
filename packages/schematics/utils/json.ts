@@ -12,7 +12,9 @@ export function getJSON(host: Tree, jsonFile: string, type?: string): any {
     }
     return json;
   } catch (ex) {
-    console.log(`Can't parse json file (${jsonFile})`);
+    console.log(
+      `Can't parse json file (${jsonFile}), pls check for comments or trailing commas, or validate json via https://jsonlint.com/`,
+    );
     throw ex;
   }
 }

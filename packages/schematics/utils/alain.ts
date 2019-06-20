@@ -93,7 +93,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   schema.path = parsedPath.path;
   const fullPath = path.join(process.cwd(), schema.path, schema.name);
   if (fs.existsSync(fullPath)) {
-    throw new Error(`The directory (${fullPath}) already exists`);
+    throw new SchematicsException(`The directory (${fullPath}) already exists`);
   }
   schema.importModulePath = findModuleFromOptions(host, schema as any);
 
@@ -142,7 +142,7 @@ export function addValueToVariable(
   const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
     throw new SchematicsException(
-      `Could not find any [${variableName}] variable in path: ${filePath}.`,
+      `Could not find any [${variableName}] variable in path '${filePath}'.`,
     );
   }
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
