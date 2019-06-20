@@ -28,26 +28,24 @@ export function deepCopy(obj: any): any {
 
 /** 复制内容至剪贴板 */
 export function copy(value: string): Promise<string> {
-  return new Promise<string>(
-    (resolve): void => {
-      let copyTextArea: HTMLTextAreaElement | null = null;
-      try {
-        copyTextArea = document.createElement('textarea');
-        copyTextArea.style.height = '0px';
-        copyTextArea.style.opacity = '0';
-        copyTextArea.style.width = '0px';
-        document.body.appendChild(copyTextArea);
-        copyTextArea.value = value;
-        copyTextArea.select();
-        document.execCommand('copy');
-        resolve(value);
-      } finally {
-        if (copyTextArea && copyTextArea.parentNode) {
-          copyTextArea.parentNode.removeChild(copyTextArea);
-        }
+  return new Promise<string>((resolve): void => {
+    let copyTextArea: HTMLTextAreaElement | null = null;
+    try {
+      copyTextArea = document.createElement('textarea');
+      copyTextArea.style.height = '0px';
+      copyTextArea.style.opacity = '0';
+      copyTextArea.style.width = '0px';
+      document.body.appendChild(copyTextArea);
+      copyTextArea.value = value;
+      copyTextArea.select();
+      document.execCommand('copy');
+      resolve(value);
+    } finally {
+      if (copyTextArea && copyTextArea.parentNode) {
+        copyTextArea.parentNode.removeChild(copyTextArea);
       }
-    },
-  );
+    }
+  });
 }
 
 export function deepMergeKey(original: any, ingoreArray: boolean, ...objects: any[]): any {
@@ -72,7 +70,7 @@ export function deepMergeKey(original: any, ingoreArray: boolean, ...objects: an
     return target;
   };
 
-  objects.filter(v => isObject(v)).forEach(v => merge(original, v));
+  objects.filter(v => v != null && isObject(v)).forEach(v => merge(original, v));
 
   return original;
 }

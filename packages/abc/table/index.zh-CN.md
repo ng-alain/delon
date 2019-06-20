@@ -265,8 +265,8 @@ class TestComponent {
 `[default]` | 标识数据是否经过过滤，筛选图标会高亮 | `boolean` | -
 `[icon]` | 自定义 fiter 图标<br>当 `type='default'` 默认 `filter`<br>当 `type='keyword'` 默认 `search` | `string | STIcon` | `filter`
 `[multiple]` | 是否多选 | `boolean` | `true`
-`[confirmText]` | filter 确认按钮文本 | `string` | `确认`
-`[clearText]` | filter 清除按钮文本 | `string` | `重置`
+`[confirmText]` | filter 确认按钮文本 | `string` | -
+`[clearText]` | filter 清除按钮文本 | `string` | -
 `[key]` | 远程数据的过滤时后端相对应的KEY，默认使用 `index` 属性 | `string` | -
 `[reName]` | 远程数据的过滤时后端相对应的VALUE | `(list: STColumnFilterMenu[], col: STColumn) => Object` | -
 
