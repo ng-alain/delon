@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { LocaleData } from '@delon/theme';
 import { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
 
@@ -17,10 +16,6 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
 
   get addDisabled() {
     return this.schema.maxItems && (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems;
-  }
-
-  get l(): LocaleData {
-    return this.formProperty.root.widget.sfComp!.locale;
   }
 
   ngOnInit(): void {

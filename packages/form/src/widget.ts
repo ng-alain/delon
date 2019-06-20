@@ -1,5 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, HostBinding, Inject, Injector } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
+import { LocaleData } from '@delon/theme';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
 import { ArrayProperty } from './model/array.property';
@@ -31,6 +32,14 @@ export abstract class Widget<T extends FormProperty> implements AfterViewInit {
     }
 
     return null;
+  }
+
+  get l(): LocaleData {
+    return this.formProperty.root.widget.sfComp!.locale;
+  }
+
+  get oh() {
+    return this.ui.optionalHelp;
   }
 
   constructor(

@@ -20,4 +20,8 @@ export class SFItemWrapComponent {
   get t() {
     return this.title === null ? this.schema.title : this.title;
   }
+
+  get oh() {
+    return this.ui.optionalHelp;
+  }
 }
