@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { LocaleData } from '@delon/theme';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
@@ -18,10 +17,6 @@ export class CheckboxWidget extends ControlWidget {
   grid_span: number;
   labelTitle: string = ``;
   inited = false;
-
-  get l(): LocaleData {
-    return this.formProperty.root.widget.sfComp!.locale;
-  }
 
   reset(_value: SFValue) {
     this.inited = false;

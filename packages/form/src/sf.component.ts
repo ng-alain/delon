@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { ACLService } from '@delon/acl';
 import { DelonLocaleService, LocaleData } from '@delon/theme';
-import { deepCopy, InputBoolean } from '@delon/util';
+import { deepCopy, InputBoolean, deepMergeKey } from '@delon/util';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { DelonFormConfig } from './config';
@@ -25,7 +25,7 @@ import { SFButton, SFLayout } from './interface';
 import { FormProperty } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import { SFSchema } from './schema/index';
-import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun, SFOptionalHelp } from './schema/ui';
 import { TerminatorService } from './terminator.service';
 import { di, resolveIf, retrieveSchema, FORMATMAPS } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
@@ -236,15 +236,17 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       Object.keys(schema.properties!).forEach(key => {
         const uiKey = `$${key}`;
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
-        const ui = {
-          widget: property.type,
-          ...(property.format && FORMATMAPS[property.format]),
-          ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
-          ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null),
-          ...this._defUi,
-          ...(property.ui as SFUISchemaItem),
-          ...uiSchema[uiKey],
-        } as SFUISchemaItemRun;
+        const ui = deepMergeKey(
+          {},
+          true,
+          { widget: property.type },
+          property.format && FORMATMAPS[property.format],
+          typeof property.ui === 'string' ? { widget: property.ui } : null,
+          !property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null,
+          this._defUi,
+          property.ui,
+          uiSchema[uiKey],
+        ) as SFUISchemaItemRun;
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
@@ -271,6 +273,25 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             };
           } else {
             ui.end = null;
+          }
+        }
+        if (ui.optionalHelp) {
+          if (typeof ui.optionalHelp === 'string') {
+            ui.optionalHelp = {
+              text: ui.optionalHelp,
+            } as SFOptionalHelp;
+          }
+          ui.optionalHelp = {
+            text: '',
+            icon: 'question-circle',
+            placement: 'top',
+            trigger: 'hover',
+            mouseEnterDelay: 0.15,
+            mouseLeaveDelay: 0.1,
+            ...ui.optionalHelp,
+          };
+          if (!ui.optionalHelp.text) {
+            ui.optionalHelp = undefined;
           }
         }
         ui.hidden = typeof ui.hidden === 'boolean' ? ui.hidden : false;

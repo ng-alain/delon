@@ -61,7 +61,7 @@ Description from left to right:
 | Schema | `[required]`      | If required            | `string[]` | -      |
 | Schema | `[title]`         | Title               | `string`   | -      |
 | ui     | `[optional]`      | Optional information         | `string`   | -      |
-| ui     | `[optionalHelp]`  | Optional help information    | `string`   | -      |
+| ui     | `[optionalHelp]`  | Optional help information    | `string, SFOptionalHelp`   | -      |
 | ui     | `[placeholder]`   | Placeholder | `string`       | -      |
 | Schema | `[description]`   | Description for the property | `string`   | -      |
 | -      | `[error]`         | Error information  | `string`| -      |
@@ -261,7 +261,7 @@ Is visible with conditions, for example:
 | `[size]`         | Size of element          | `default,large,small` | -      |
 | `[grid]`         | Property for responsive      | `SFGridSchema`        | -      |
 | `[optional]`     | Optional      | `string`              | -      |
-| `[optionalHelp]` | Optional help      | `string`              | -      |
+| `[optionalHelp]` | Optional help      | `string, SFOptionalHelp`   | -      |
 
 ### Responsive Property SFGridSchema
 

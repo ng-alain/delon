@@ -1,6 +1,6 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { SFSchema } from './schema/index';
-import { SFUISchemaItem } from './schema/ui';
+import { SFUISchemaItem, SFOptionalHelp } from './schema/ui';
 
 @Component({
   selector: 'sf-item-wrap',
@@ -19,5 +19,9 @@ export class SFItemWrapComponent {
 
   get t() {
     return this.title === null ? this.schema.title : this.title;
+  }
+
+  get oh() {
+    return this.ui.optionalHelp as SFOptionalHelp;
   }
 }

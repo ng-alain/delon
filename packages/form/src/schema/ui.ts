@@ -4,6 +4,22 @@ import { Observable } from 'rxjs';
 import { ErrorSchema } from '../errors';
 import { SFSchemaEnumType } from './index';
 
+export type SFPlacement =
+  | 'top'
+  | 'left'
+  | 'right'
+  | 'bottom'
+  | 'topLeft'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomRight'
+  | 'leftTop'
+  | 'leftBottom'
+  | 'rightTop'
+  | 'rightBottom';
+
+export type SFTrigger = 'click' | 'focus' | 'hover';
+
 export interface SFGridSizeSchema {
   span?: number | null;
   order?: number | null;
@@ -61,7 +77,19 @@ export interface SFRenderSchema {
   /** 标签可选信息 */
   optional?: string;
   /** 标签可选帮助，使用 `nz-tooltip` 展示 */
-  optionalHelp?: string;
+  optionalHelp?: string | SFOptionalHelp;
+}
+
+export interface SFOptionalHelp {
+  text: string;
+  /** 图标，默认：`question-circle` */
+  icon?: string;
+  placement?: SFPlacement;
+  trigger?: SFTrigger;
+  mouseEnterDelay?: number;
+  mouseLeaveDelay?: number;
+  overlayClassName?: string;
+  overlayStyle?: { [key: string]: string };
 }
 
 export interface SFHorizontalLayoutSchema {
@@ -135,13 +163,7 @@ export interface SFDataSchema {
 }
 
 /** 指定如何渲染 `Schema` */
-export interface SFUISchemaItem
-  extends SFRenderSchema,
-    SFArraySchema,
-    SFHorizontalLayoutSchema,
-    SFDataSchema,
-    SFInputSchema,
-    ErrorSchema {
+export interface SFUISchemaItem extends SFRenderSchema, SFArraySchema, SFHorizontalLayoutSchema, SFDataSchema, SFInputSchema, ErrorSchema {
   [key: string]: any;
 
   /** 是否开启调试模式，在数据变更、校验会打印出相信信息，不建议在生产环境中使用 */

@@ -21,11 +21,11 @@
       {{schema.title}}
       <span class="sf__optional">
         {{ ui.optional }}
-        <nz-tooltip *ngIf="ui.optionalHelp"
-                    [nzTitle]="ui.optionalHelp">
-          <i nz-tooltip
-             nz-icon
-             nzType="question-circle"></i>
+        <nz-tooltip *ngIf="oh"
+          [nzTitle]="oh.text" [nzPlacement]="oh.placement" [nzTrigger]="oh.trigger"
+          [nzOverlayClassName]="oh.overlayClassName" [nzOverlayStyle]="oh.overlayStyle"
+          [nzMouseEnterDelay]="oh.mouseEnterDelay" [nzMouseLeaveDelay]="oh.mouseLeaveDelay">
+          <i nz-tooltip nz-icon [nzType]="oh.icon"></i>
         </nz-tooltip>
       </span>
     </label>
