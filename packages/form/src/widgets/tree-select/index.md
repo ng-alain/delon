@@ -34,7 +34,7 @@ type: Widgets
 `[showExpand]` | 节点前添加展开图标 | `boolean` | `true`
 `[showLine]` | 节点前添加展开图标 | `boolean` | `false`
 `[defaultExpandAll]` | 默认展开所有树节点 | `boolean` | `false`
-`[displayWith]` | 如何在输入框显示所选的节点值的方法 | `(node: NzTreeNode) => string` | `(node: NzTreeNode) => node.title`
+`[displayWith]` | 如何在输入框显示所选的节点值的方法 | `(node: NzTreeNode) => string | undefined` | `(node: NzTreeNode) => node.title`
 `[expandChange]` | 点击展开树节点图标调用 | `(e: NzFormatEmitEvent) => Observable<SFSchemaEnum[]>` | -
 
 > 异步数据务必先指定初始化数据（使用 `enum`、`asyncData` 选其一），否则无法触发 `expandChange`。

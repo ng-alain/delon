@@ -37,9 +37,9 @@ Property     | Description                  | Type      | Default
 `[allowEmpty]` | allow clearing text | `boolean` | `true`
 `[clearText]` | clear tooltip of icon | `string` | `清除`
 `[defaultOpenValue]` | default open panel value | `Date` | `new Date()`
-`[disabledHours]` | to specify the hours that cannot be selected | `function()` | -
-`[disabledMinutes]` | to specify the minutes that cannot be selected | `function(selectedHour)` | -
-`[disabledSeconds]` | to specify the seconds that cannot be selected | `function(selectedHour, selectedMinute)` | -
+`[disabledHours]` | to specify the hours that cannot be selected | `() => number[]` | -
+`[disabledMinutes]` | to specify the minutes that cannot be selected | `(hour: number) => number[]` | -
+`[disabledSeconds]` | to specify the seconds that cannot be selected | `(hour: number, minute: number) => number[]` | -
 `[hideDisabledOptions]` | hide the options that can not be selected | `boolean` | `false`
 `[hourStep]` | interval between hours in picker | `number` | `1`
 `[minuteStep]` | interval between minutes in picker | `number` | `1`

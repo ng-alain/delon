@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFTagWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-tag',
@@ -10,7 +11,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class TagWidget extends ControlWidget {
+export class TagWidget extends ControlUIWidget<SFTagWidgetSchema> {
   data: SFSchemaEnum[];
 
   reset(value: SFValue) {

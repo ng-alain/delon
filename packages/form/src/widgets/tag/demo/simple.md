@@ -15,7 +15,7 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFTagWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -35,7 +35,7 @@ export class DemoComponent {
         enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
         ui: {
           widget: 'tag',
-        },
+        } as SFTagWidgetSchema,
         default: [1, 2],
       },
       like1: {
@@ -43,13 +43,8 @@ export class DemoComponent {
         title: '兴趣',
         ui: {
           widget: 'tag',
-          asyncData: () =>
-            of([
-              { value: 1, label: '电影' },
-              { value: 2, label: '书' },
-              { value: 3, label: '旅行' },
-            ]).pipe(delay(10)),
-        },
+          asyncData: () => of([{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }]).pipe(delay(10)),
+        } as SFTagWidgetSchema,
         default: [1, 2],
       },
     },

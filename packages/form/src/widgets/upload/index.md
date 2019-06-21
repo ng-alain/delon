@@ -48,7 +48,7 @@ type: Widgets
 `[directory]` | 支持上传文件夹（[caniuse](https://caniuse.com/#feat=input-file-directory)） | `boolean` | `false`
 `[openFileDialogOnClick]` | 点击打开文件对话框 | `boolean` | `true`
 `[beforeUpload]` | 上传文件之前的钩子，参数为上传的文件，若返回 `false` 则停止上传 | `(file: UploadFile, fileList: UploadFile[]) => boolean｜Observable<boolean>` | -
-`[customRequest]` | 通过覆盖默认的上传行为，可以自定义自己的上传实现 | `(item) => Subscription` | -
+`[customRequest]` | 通过覆盖默认的上传行为，可以自定义自己的上传实现 | `(item: UploadXHRArgs) => Subscription` | -
 `[remove]` | 点击移除文件时的回调，返回值为 `false` 时不移除 | `(file: UploadFile) => boolean｜Observable` | -
 `[preview]` | 点击文件链接或预览图标时的回调 | `(file: UploadFile) => void` | -
 `[change]` | 上传文件改变时的状态 | `(args: UploadChangeParam) => void` | -

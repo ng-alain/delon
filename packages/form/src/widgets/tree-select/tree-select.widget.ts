@@ -3,7 +3,8 @@ import { NzFormatEmitEvent } from 'ng-zorro-antd/core';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFTreeSelectWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-tree-select',
@@ -11,7 +12,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class TreeSelectWidget extends ControlWidget implements OnInit {
+export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> implements OnInit {
   i: any;
   data: SFSchemaEnum[] = [];
 
