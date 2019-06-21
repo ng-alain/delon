@@ -20,27 +20,31 @@ import { SFSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`
+  template: `
+    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+  `,
 })
 export class DemoComponent {
-    schema: SFSchema = {
-        properties: {
-            status: {
-                type: 'boolean',
-                title: '是否启用'
-            },
-            // 指定内容文本
-            enabled: {
-                type: 'boolean',
-                title: '是否启用',
-                ui: {
-                    checkedChildren: '开',
-                    unCheckedChildren: '关'
-                }
-            }
-        }
-    };
-    constructor(public msg: NzMessageService) { }
-    submit(value: any) { this.msg.success(JSON.stringify(value)); }
+  schema: SFSchema = {
+    properties: {
+      status: {
+        type: 'boolean',
+        title: '是否启用',
+      },
+      // 指定内容文本
+      enabled: {
+        type: 'boolean',
+        title: '是否启用',
+        ui: {
+          checkedChildren: '开',
+          unCheckedChildren: '关',
+        },
+      },
+    },
+  };
+  constructor(public msg: NzMessageService) {}
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 }
 ```

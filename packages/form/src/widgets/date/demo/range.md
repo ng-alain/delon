@@ -16,26 +16,28 @@ A simple start & end date range, **Note: ** `end` still needs define in schema, 
 ```ts
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFDateWidgetSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
+  template: `
+    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+  `,
 })
 export class DemoComponent {
   schema: SFSchema = {
     properties: {
       start: {
         type: 'string',
-        ui: { widget: 'date', end: 'end' },
-        default: new Date
+        ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
+        default: new Date(),
       },
       end: {
         type: 'string',
         default: '2119-1-1',
       },
     },
-    required: [ 'start' ]
+    required: ['start'],
   };
 
   constructor(private msg: NzMessageService) {}

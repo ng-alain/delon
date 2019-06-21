@@ -20,8 +20,6 @@ type: Widgets
 
 指每一次每一次选择会触发HTTP请求，数据来源于 `asyncData`；包含三个参数 `(node: CascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>`，其中 `me` 表示当前小部件实例。
 
-受限于 `nz-cascader` 还不支持 OnPush 模式，因此数据请求返回后，**务必调用** `me.detectChanges(true)` 触发小部件变更检测。
-
 ## API
 
 ### schema 属性
@@ -42,6 +40,7 @@ type: Widgets
 `[allowClear]` | 是否显示清除按钮 | `bool` | `true`
 `[clearText]` | 清除按钮的标题 | `string` | `清除`
 `[showArrow]` | 是否显示箭头 | `bool` | `true`
+`[showInput]` | 是否显示输入框 | `bool` | `true`
 `[menuClassName]` | 自定义浮层类名 | `string` | -
 `[menuStyle]` | 自定义浮层样式 | `string` | -
 `[columnClassName]` | 弹出菜单中数据列的自定义样式 | `string` | -

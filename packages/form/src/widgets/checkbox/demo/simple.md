@@ -18,11 +18,13 @@ import { Component } from '@angular/core';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFCascaderWidgetSchema, SFCheckboxWidgetSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
+  template: `
+    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+  `,
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -34,7 +36,7 @@ export class DemoComponent {
         description: '《用户协议》',
         ui: {
           widget: 'checkbox',
-        },
+        } as SFCascaderWidgetSchema,
         default: true,
       },
       // 多选框组
@@ -45,8 +47,8 @@ export class DemoComponent {
         ui: {
           widget: 'checkbox',
           span: 8, // 指定每一项 8 个单元的布局
-          checkAll: true
-        },
+          checkAll: true,
+        } as SFCheckboxWidgetSchema,
         default: ['Apple'],
       },
       // 异步数据
@@ -56,12 +58,10 @@ export class DemoComponent {
         ui: {
           widget: 'checkbox',
           asyncData: () =>
-            of([
-              { label: 'Apple', value: 'Apple' },
-              { label: 'Pear', value: 'Pear' },
-              { label: 'Orange', value: 'Orange' },
-            ]).pipe(delay(200)),
-        },
+            of([{ label: 'Apple', value: 'Apple' }, { label: 'Pear', value: 'Pear' }, { label: 'Orange', value: 'Orange' }]).pipe(
+              delay(200),
+            ),
+        } as SFCheckboxWidgetSchema,
         default: ['Apple'],
       },
     },

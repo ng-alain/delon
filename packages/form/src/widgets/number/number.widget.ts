@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFNumberWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-number',
@@ -7,27 +8,29 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class NumberWidget extends ControlWidget implements OnInit {
+export class NumberWidget extends ControlUIWidget<SFNumberWidgetSchema> implements OnInit {
   min: number;
   max: number;
   step: number;
-  formatter = value => value;
-  parser = value => value;
+  formatter: (value: number) => string | number = value => value;
+  parser: (value: string) => string | number = value => value;
 
   ngOnInit(): void {
-    const { schema, ui } = this;
-    if (typeof schema.minimum !== 'undefined') {
-      this.min = schema.exclusiveMinimum ? schema.minimum + 1 : schema.minimum;
+    const { minimum, exclusiveMinimum, maximum, exclusiveMaximum, multipleOf, type } = this.schema;
+    if (typeof minimum !== 'undefined') {
+      this.min = exclusiveMinimum ? minimum + 1 : minimum;
     }
-    if (typeof schema.maximum !== 'undefined') {
-      this.max = schema.exclusiveMaximum ? schema.maximum - 1 : schema.maximum;
+    if (typeof maximum !== 'undefined') {
+      this.max = exclusiveMaximum ? maximum - 1 : maximum;
     }
-    this.step = schema.multipleOf || 1;
-    if (schema.type === 'integer') {
+    this.step = multipleOf || 1;
+    if (type === 'integer') {
       this.min = Math.trunc(this.min);
       this.max = Math.trunc(this.max);
       this.step = Math.trunc(this.step);
     }
+
+    const ui = this.ui;
     if (ui.prefix != null) {
       ui.formatter = value => (value == null ? '' : `${ui.prefix} ${value}`);
       ui.parser = value => value.replace(`${ui.prefix} `, '');

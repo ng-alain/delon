@@ -18,6 +18,10 @@ export type SFPlacement =
 
 export type SFTrigger = 'click' | 'focus' | 'hover';
 
+export type SFLSSize = 'large' | 'small';
+
+export type SFDLSSize = 'default' | 'large' | 'small';
+
 export interface SFGridSizeSchema {
   span?: number | null;
   order?: number | null;
@@ -63,7 +67,7 @@ export interface SFRenderSchema {
   /**
    * 元素组件大小
    */
-  size?: 'default' | 'large' | 'small';
+  size?: SFDLSSize;
   /**
    * 指定宽度，单位：`px`
    */
