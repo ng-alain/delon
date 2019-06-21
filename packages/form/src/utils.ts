@@ -165,14 +165,9 @@ export function getCopyEnum(list: any[], formData: any, readOnly: boolean) {
   return getEnum(deepCopy(list || []), formData, readOnly);
 }
 
-export function getData(
-  schema: SFSchema,
-  ui: SFUISchemaItem,
-  formData: any,
-  asyncArgs?: any,
-): Observable<SFSchemaEnum[]> {
+export function getData(schema: SFSchema, ui: SFUISchemaItem, formData: any, asyncArgs?: any): Observable<SFSchemaEnum[]> {
   if (typeof ui.asyncData === 'function') {
-    return ui.asyncData(asyncArgs).pipe(map(list => getEnum(list, formData, schema.readOnly!)));
+    return ui.asyncData(asyncArgs).pipe(map((list: SFSchemaEnum[]) => getEnum(list, formData, schema.readOnly!)));
   }
   return of(getCopyEnum(schema.enum!, formData, schema.readOnly!));
 }

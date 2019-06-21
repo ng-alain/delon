@@ -1,8 +1,6 @@
 import { TemplateRef } from '@angular/core';
 import { ACLCanType } from '@delon/acl';
-import { Observable } from 'rxjs';
 import { ErrorSchema } from '../errors';
-import { SFSchemaEnumType } from './index';
 
 export type SFPlacement =
   | 'top'
