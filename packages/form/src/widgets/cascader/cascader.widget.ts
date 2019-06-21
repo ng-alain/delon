@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { SFCascaderWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-cascader',
@@ -10,7 +11,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class CascaderWidget extends ControlWidget implements OnInit {
+export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> implements OnInit {
   clearText: string;
   showArrow: boolean;
   showInput: boolean;

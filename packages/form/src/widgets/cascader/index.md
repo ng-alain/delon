@@ -43,7 +43,7 @@ type: Widgets
 `[clearText]` | 清除按钮的标题 | `string` | `清除`
 `[showArrow]` | 是否显示箭头 | `bool` | `true`
 `[menuClassName]` | 自定义浮层类名 | `string` | -
-`[nzMenuStyle]` | 自定义浮层样式 | `string` | -
+`[menuStyle]` | 自定义浮层样式 | `string` | -
 `[columnClassName]` | 弹出菜单中数据列的自定义样式 | `string` | -
 `[data]` | 初始化列数据，用于第一列的数据，子列通过选项的 `children` 加载，或者通过 `load` 事件异步加载。 | `Array` | -
 `[enableCache]` | 是否缓存异步加载的数据，若每次异步加载的数据都是变化的，需将该值设置为 false | `bool` | `true`

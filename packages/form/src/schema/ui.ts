@@ -74,9 +74,13 @@ export interface SFRenderSchema {
    * 响应式属性
    */
   grid?: SFGridSchema;
-  /** 标签可选信息 */
+  /**
+   * 标签可选信息
+   */
   optional?: string;
-  /** 标签可选帮助，使用 `nz-tooltip` 展示 */
+  /**
+   * 标签可选帮助，使用 `nz-tooltip` 展示
+   */
   optionalHelp?: string | SFOptionalHelp;
 }
 
@@ -120,51 +124,17 @@ export interface SFHorizontalLayoutSchema {
   spanLabelFixed?: number | null;
 }
 
-export interface SFArraySchema {
-  /** **限array** 指定添加按钮文本，默认：添加 */
-  addTitle?: string;
-
-  /** **限array** 指定添加按钮风格，等同按钮 `nzType`，默认：dashed */
-  addType?: string;
-
-  /** **限array** 指定是否显示移除按钮 */
-  removable?: boolean;
-
-  /** **限array** 指定移除按钮文本，默认：移除 */
-  removeTitle?: string;
-
-  /** **限array** 指定是否显示排序按钮 */
-  // orderable?: boolean;
-}
-
-export interface SFInputSchema {
-  /**
-   * **string** 指定 `input` 的 `type` 值，默认为：`text`
-   */
-  type?: string;
-
-  /**
-   * 文字框中显示提示信息
-   */
-  placeholder?: string | string[];
-
-  /**
-   * 加载时是否获得焦点
-   */
-  autofocus?: boolean;
-}
-
-export interface SFDataSchema {
-  /**
-   * 异步静态数据源
-   * - `input` 可能根据不同部件的情况存在值，例如：`autocomplete` 表示当前键入的值
-   * - 参数、返回值：可能根据不同部件需求而定，具体参阅相应小部件独立说明
-   */
-  asyncData?: (input?: any) => Observable<SFSchemaEnumType[]>;
-}
+// export interface SFDataSchema {
+//   /**
+//    * 异步静态数据源
+//    * - `input` 可能根据不同部件的情况存在值，例如：`autocomplete` 表示当前键入的值
+//    * - 参数、返回值：可能根据不同部件需求而定，具体参阅相应小部件独立说明
+//    */
+//   asyncData?: (input?: any) => Observable<SFSchemaEnumType[]>;
+// }
 
 /** 指定如何渲染 `Schema` */
-export interface SFUISchemaItem extends SFRenderSchema, SFArraySchema, SFHorizontalLayoutSchema, SFDataSchema, SFInputSchema, ErrorSchema {
+export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema, ErrorSchema {
   [key: string]: any;
 
   /** 是否开启调试模式，在数据变更、校验会打印出相信信息，不建议在生产环境中使用 */

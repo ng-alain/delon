@@ -19,5 +19,5 @@ Switching Selector.
 | Property              | Description                                     | Type            | Default   |
 | --------------------- | ----------------------------------------------- | --------------- | --------- |
 | `[size]`              | Size of the `nz-switch`                         | `default,small` | `default` |
-| `[checkedChildren]`   | content to be shown when the state is checked   | `string`        | -         |
-| `[unCheckedChildren]` | content to be shown when the state is unchecked | `string`        | -         |
+| `[checkedChildren]`   | Content to be shown when the state is checked   | `string`        | -         |
+| `[unCheckedChildren]` | Content to be shown when the state is unchecked | `string`        | -         |

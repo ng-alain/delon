@@ -16,7 +16,7 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFStringWidgetSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
@@ -31,7 +31,7 @@ export class DemoComponent {
         ui: {
           addOnAfter: 'RMB',
           placeholder: 'RMB结算',
-        },
+        } as SFStringWidgetSchema,
       },
       mobile: {
         type: 'string',

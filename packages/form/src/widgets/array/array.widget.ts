@@ -19,13 +19,14 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.ui.grid && this.ui.grid.arraySpan) {
-      this.arraySpan = this.ui.grid.arraySpan;
+    const { grid, addTitle, addType, removable, removeTitle } = this.ui;
+    if (grid && grid.arraySpan) {
+      this.arraySpan = grid.arraySpan;
     }
 
-    this.addTitle = this.ui.addTitle || this.l.addText;
-    this.addType = this.ui.addType || 'dashed';
-    this.removeTitle = this.ui.removable === false ? null : this.ui.removeTitle || this.l.removeText;
+    this.addTitle = addTitle || this.l.addText;
+    this.addType = addType || 'dashed';
+    this.removeTitle = removable === false ? null : removeTitle || this.l.removeText;
   }
 
   addItem() {
