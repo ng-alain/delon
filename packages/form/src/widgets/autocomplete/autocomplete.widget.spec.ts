@@ -23,6 +23,23 @@ describe('form: widget: autocomplete', () => {
     page.prop(dl, context, fixture);
   });
 
+  it('#setValue', fakeAsync(() => {
+    page
+      .newSchema({
+        properties: {
+          a: { type: 'string', ui: { widget }, enum: ['aaa', 'bbb', 'ccc'] },
+        },
+      })
+      .setValue('/a', 'bbb');
+    const widgetInstance = page.getProperty('/a').widget as AutoCompleteWidget;
+    // tslint:disable-next-line: no-string-literal
+    const list = widgetInstance['fixData'] as SFSchemaEnum[];
+    const item = list.find(w => w.checked === true) as SFSchemaEnum;
+    expect(item != null).toBe(true);
+    expect(item.value).toBe('bbb');
+    page.asyncEnd();
+  }));
+
   describe('[data source]', () => {
     it('with enum', fakeAsync(() => {
       const data = ['aaa', 'bbb', 'ccc'];

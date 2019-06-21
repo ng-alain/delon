@@ -19,6 +19,17 @@ describe('form: widget: number', () => {
     page.prop(dl, context, fixture);
   });
 
+  it('#setValue', fakeAsync(() => {
+    page
+      .newSchema({
+        properties: { a: { type: 'number', default: 1 } },
+      })
+      .dc(1)
+      .checkInput('.ant-input-number-input', '1')
+      .setValue('/a', 2, 1)
+      .checkInput('.ant-input-number-input', '2');
+  }));
+
   it('should be default true via schema.default', () => {
     const s: SFSchema = {
       properties: { a: { type: 'number', default: 1 } },

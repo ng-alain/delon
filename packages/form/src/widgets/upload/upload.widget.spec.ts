@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { inject, ComponentFixture } from '@angular/core/testing';
+import { inject, ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NzModalService, NzUploadComponent } from 'ng-zorro-antd';
 
@@ -39,6 +39,43 @@ describe('form: widget: upload', () => {
     comp.change({ type: 'error', fileList: [] } as any);
     expect(comp.formProperty.setValue).not.toHaveBeenCalled();
   });
+
+  it('#setValue', fakeAsync(() => {
+    page
+      .newSchema({
+        properties: {
+          a: {
+            type: 'string',
+            enum: [
+              {
+                uid: -1,
+                name: 'xxx.png',
+                status: 'done',
+                response: {
+                  resource_id: 10,
+                },
+              },
+            ],
+            ui: { widget, resReName: 'resource_id' },
+          },
+        },
+      })
+      .dc(1);
+    expect(page.getEl('.ant-upload-list-item').textContent!.trim()).toContain('xxx.png');
+    page
+      .setValue('/a', [
+        {
+          uid: -1,
+          name: 'zzz.png',
+          status: 'done',
+          response: {
+            resource_id: 10,
+          },
+        },
+      ])
+      .dc(1);
+    expect(page.getEl('.ant-upload-list-item').textContent!.trim()).toContain('zzz.png');
+  }));
 
   describe('property', () => {
     it('#fileList', () => {
@@ -137,23 +174,20 @@ describe('form: widget: upload', () => {
         comp.handlePreview({ url: 'a' } as any);
         expect(msg.create).toHaveBeenCalled();
       }));
-      it(`should be won't preview image when not found url property`, inject(
-        [NzModalService],
-        (msg: NzModalService) => {
-          page.newSchema({
-            properties: {
-              a: {
-                type: 'string',
-                ui: { widget },
-              },
+      it(`should be won't preview image when not found url property`, inject([NzModalService], (msg: NzModalService) => {
+        page.newSchema({
+          properties: {
+            a: {
+              type: 'string',
+              ui: { widget },
             },
-          });
-          const comp = page.getWidget<UploadWidget>('sf-upload');
-          spyOn(msg, 'create');
-          comp.handlePreview({} as any);
-          expect(msg.create).not.toHaveBeenCalled();
-        },
-      ));
+          },
+        });
+        const comp = page.getWidget<UploadWidget>('sf-upload');
+        spyOn(msg, 'create');
+        comp.handlePreview({} as any);
+        expect(msg.create).not.toHaveBeenCalled();
+      }));
     });
   });
 

@@ -1,11 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-  TransferCanMove,
-  TransferChange,
-  TransferItem,
-  TransferSearchChange,
-  TransferSelectChange,
-} from 'ng-zorro-antd/transfer';
+import { TransferCanMove, TransferChange, TransferItem, TransferSearchChange, TransferSelectChange } from 'ng-zorro-antd/transfer';
 import { of, Observable } from 'rxjs';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
@@ -32,9 +26,9 @@ export class TransferWidget extends ControlWidget implements OnInit {
     };
   }
 
-  reset(_value: SFValue) {
+  reset(value: SFValue) {
     getData(this.schema, this.ui, null).subscribe(list => {
-      let formData = this.formProperty.formData;
+      let formData = value;
       if (!Array.isArray(formData)) {
         formData = [formData];
       }

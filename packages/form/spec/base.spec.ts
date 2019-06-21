@@ -113,9 +113,12 @@ export class SFPage {
     return this.comp.getValue(path);
   }
 
-  setValue(path: string, value: any): this {
+  setValue(path: string, value: any, dc = 0): this {
     path = this.fixPath(path);
     this.comp.setValue(path, value);
+    if (dc > 0) {
+      this.dc(dc);
+    }
     return this;
   }
 
@@ -253,6 +256,12 @@ export class SFPage {
     return this;
   }
 
+  checkInput(cls: string, value: any, viaDocument = false): this {
+    const ipt = (viaDocument ? document.querySelector(cls) : dl.query(By.css(cls)).nativeElement) as HTMLInputElement;
+    expect(ipt.value).toBe(value);
+    return this;
+  }
+
   checkError(text: string): this {
     const el = this.getEl('nz-form-explain');
     if (text == null) {
@@ -292,8 +301,12 @@ export class SFPage {
     return this;
   }
 
-  dc() {
+  dc(time = 0) {
     fixture.detectChanges();
+    if (time > 0) {
+      this.time(time);
+      fixture.detectChanges();
+    }
     return this;
   }
 

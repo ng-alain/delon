@@ -10,7 +10,7 @@ type: Widgets
 
 - **务必** 指定 `resReName` 来获取正确数据
 - `multiple` 决定返回数组或者单体数据
-- 若指定 `asyncData` 则被转化成 `fileList` (`nzFileList`) 值，且**务必**初始保证一个 `response` 属性表示远程数据并 `resReName` 能正确获取
+- 若指定 `enum` 或 `asyncData` 将被转化成 `fileList` (`nzFileList`) 值，且**务必**初始保证一个 `response` 属性表示远程数据并 `resReName` 能正确获取
 - 图像预览：默认使用 `nzModal` 来显示包含文件对象的 `url` 或 `thumbUrl` 值
 
 ## API

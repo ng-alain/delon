@@ -28,8 +28,8 @@ export class CascaderWidget extends ControlWidget implements OnInit {
     }
   }
 
-  reset(_value: SFValue) {
-    getData(this.schema, {}, this.formProperty.formData).subscribe(list => {
+  reset(value: SFValue) {
+    getData(this.schema, {}, value).subscribe(list => {
       this.data = list;
       this.detectChanges();
     });

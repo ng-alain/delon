@@ -33,6 +33,7 @@ const REUSETAB_PROVIDES = [
 // #region global config functions
 
 import { LodopConfig, STConfig } from '@delon/abc';
+import { DelonACLModule } from '@delon/acl';
 
 export function fnSTConfig(): STConfig {
   return Object.assign(new STConfig(), {
@@ -50,7 +51,7 @@ export function fnLodopConfig(): LodopConfig {
 // #endregion
 
 @NgModule({
-  imports: [AlainThemeModule.forRoot(), DelonFormModule.forRoot(), DelonMockModule.forRoot({ data: MOCKDATA })],
+  imports: [AlainThemeModule.forRoot(), DelonFormModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot({ data: MOCKDATA })],
 })
 export class DelonModule {
   constructor(
@@ -64,11 +65,7 @@ export class DelonModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: DelonModule,
-      providers: [
-        ...REUSETAB_PROVIDES,
-        { provide: STConfig, useFactory: fnSTConfig },
-        { provide: LodopConfig, useFactory: fnLodopConfig },
-      ],
+      providers: [...REUSETAB_PROVIDES, { provide: STConfig, useFactory: fnSTConfig }, { provide: LodopConfig, useFactory: fnLodopConfig }],
     };
   }
 }

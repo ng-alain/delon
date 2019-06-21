@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -18,6 +18,18 @@ describe('form: widget: boolean', () => {
     page = new SFPage(context.comp);
     page.prop(dl, context, fixture);
   });
+
+  it('#setValue', fakeAsync(() => {
+    page
+      .newSchema({
+        properties: { a: { type: 'boolean', default: true } },
+      })
+      .dc(1)
+      .checkCount('.ant-switch-checked', 1)
+      .setValue('/a', false)
+      .dc(1)
+      .checkCount('.ant-switch-checked', 0);
+  }));
 
   it('should be default true via schema.default', () => {
     page

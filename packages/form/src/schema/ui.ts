@@ -139,16 +139,17 @@ export interface SFArraySchema {
 
 export interface SFInputSchema {
   /**
-   * **限string** 指定 `input` 的 `type` 值，默认为：`text`
+   * **string** 指定 `input` 的 `type` 值，默认为：`text`
    */
   type?: string;
+
   /**
-   * **限string** 文字框中显示提示信息
+   * 文字框中显示提示信息
    */
   placeholder?: string | string[];
 
   /**
-   * **限string** 加载时是否获得焦点
+   * 加载时是否获得焦点
    */
   autofocus?: boolean;
 }
