@@ -54,7 +54,7 @@ export class SelectWidget extends ControlWidget implements OnInit {
   }
 
   reset(value: SFValue) {
-    getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
+    getData(this.schema, this.ui, value).subscribe(list => {
       this._value = value;
       this.data = list;
       this.checkGroup(list);

@@ -32,8 +32,8 @@ export class TreeSelectWidget extends ControlWidget implements OnInit {
     };
   }
 
-  reset(_value: SFValue) {
-    getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
+  reset(value: SFValue) {
+    getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list;
       this.detectChanges();
     });

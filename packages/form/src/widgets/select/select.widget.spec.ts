@@ -25,6 +25,18 @@ describe('form: widget: select', () => {
     return page.getWidget<SelectWidget>('sf-' + widget);
   }
 
+  it('#setValue', fakeAsync(() => {
+    page.newSchema({
+      properties: {
+        a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] },
+      },
+    });
+    page.setValue('/a', 'item1').dc(1);
+    expect(page.getEl('.ant-select-selection-selected-value').textContent!.trim()).toBe('item1');
+    page.setValue('/a', 'item2').dc(1);
+    expect(page.getEl('.ant-select-selection-selected-value').textContent!.trim()).toBe('item2');
+  }));
+
   it('should be disabled when readOnly is true', fakeAsync(() => {
     const s: SFSchema = {
       properties: {

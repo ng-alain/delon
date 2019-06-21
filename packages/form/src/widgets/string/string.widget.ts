@@ -27,7 +27,7 @@ export class StringWidget extends ControlWidget implements OnInit {
   }
 
   reset(value: SFValue) {
-    if (this.schema.format === 'color' && !value) {
+    if (!value && this.schema.format === 'color') {
       this.setValue('#000000');
     }
   }

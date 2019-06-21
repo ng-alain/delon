@@ -63,6 +63,31 @@ describe('form: widget: transfer', () => {
     page.asyncEnd();
   }));
 
+  it('#setValue', fakeAsync(() => {
+    const s: SFSchema = {
+      properties: {
+        a: {
+          type: 'number',
+          title: '角色',
+          enum: [
+            { title: 'DNS管理', value: 10 },
+            { title: 'ECS管理', value: 11 },
+            { title: 'OSS管理', value: 12 },
+            { title: 'RDS管理', value: 13 },
+          ],
+          ui: {
+            widget,
+          },
+          default: 10,
+        },
+      },
+    };
+    page.newSchema(s).dc(1);
+    expect(page.getEl(CLS.right).textContent!.trim()).toContain('DNS管理');
+    page.setValue('/a', 12).dc(1);
+    expect(page.getEl(CLS.right).textContent!.trim()).toContain('OSS管理');
+  }));
+
   describe('[ui]', () => {
     it('#change', fakeAsync(() => {
       const s: SFSchema = {

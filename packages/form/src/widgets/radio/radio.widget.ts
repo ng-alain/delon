@@ -14,9 +14,9 @@ export class RadioWidget extends ControlWidget {
   data: SFSchemaEnum[] = [];
   styleType: boolean;
 
-  reset(_value: SFValue) {
+  reset(value: SFValue) {
     this.styleType = (this.ui.styleType || 'default') === 'default';
-    getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
+    getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list;
       this.detectChanges();
     });

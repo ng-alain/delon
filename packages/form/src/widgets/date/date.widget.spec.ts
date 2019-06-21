@@ -1,7 +1,10 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import format from 'date-fns/format';
 import { deepCopy } from '@delon/util';
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
+registerLocaleData(zh);
 
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -59,16 +62,19 @@ describe('form: widget: date', () => {
         expect(format(comp.value)).toBe(format(time));
       });
     });
-    it('should be set value', () => {
+    it('should be set value', fakeAsync(() => {
       const s: SFSchema = {
         properties: { a: { type: 'string', format: 'date-time', ui: { widget } } },
       };
       page
         .newSchema(s)
         .checkValue('a', null)
-        .setValue('a', new Date());
+        .setValue('a', new Date(2019, 0, 1))
+        .dc(1);
       expect(page.getValue('a') instanceof Date).toBe(true);
-    });
+      const ipt = page.getEl('.ant-calendar-picker-input') as HTMLInputElement;
+      expect(ipt.value).toContain(`2019-01-01`);
+    }));
   });
 
   describe('#mode', () => {
@@ -164,9 +170,7 @@ describe('form: widget: date', () => {
       expect(comp.mode).toBe('range');
       const time = new Date();
       comp._change([time, time]);
-      page
-        .checkValue('/start', format(time, comp.format))
-        .checkValue('/end', format(time, comp.format));
+      page.checkValue('/start', format(time, comp.format)).checkValue('/end', format(time, comp.format));
       comp._change(null);
       page.checkValue('/start', '').checkValue('/end', '');
     });

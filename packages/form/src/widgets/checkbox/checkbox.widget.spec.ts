@@ -23,6 +23,18 @@ describe('form: widget: checkbox', () => {
     page.prop(dl, context, fixture);
   });
 
+  it('#setValue', fakeAsync(() => {
+    page.newSchema({
+      properties: {
+        a: { type: 'string', ui: { widget }, enum: ['item1', 'item2'] },
+      },
+    });
+    page.setValue('/a', 'item1').dc(1);
+    expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent).toBe('item1');
+    page.setValue('/a', 'item2').dc(1);
+    expect(page.getEl('.ant-checkbox-checked').nextSibling!.textContent).toBe('item2');
+  }));
+
   it('#visibleIf', () => {
     page
       .newSchema({

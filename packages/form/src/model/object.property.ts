@@ -4,7 +4,7 @@ import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { orderProperties } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
-import { PropertyGroup } from './form.property';
+import { PropertyGroup, FormProperty } from './form.property';
 import { FormPropertyFactory } from './form.property.factory';
 
 export class ObjectProperty extends PropertyGroup {
@@ -52,7 +52,7 @@ export class ObjectProperty extends PropertyGroup {
   setValue(value: SFValue, onlySelf: boolean) {
     for (const propertyId in value) {
       if (value.hasOwnProperty(propertyId) && this.properties![propertyId]) {
-        this.properties![propertyId].setValue(value[propertyId], true);
+        (this.properties![propertyId] as FormProperty).setValue(value[propertyId], true);
       }
     }
     this.updateValueAndValidity(onlySelf, true);
@@ -62,7 +62,7 @@ export class ObjectProperty extends PropertyGroup {
     value = value || this.schema.default || {};
     // tslint:disable-next-line: forin
     for (const propertyId in this.schema.properties) {
-      this.properties![propertyId].resetValue(value[propertyId], true);
+      (this.properties![propertyId] as FormProperty).resetValue(value[propertyId], true);
     }
     this.updateValueAndValidity(onlySelf, true);
   }

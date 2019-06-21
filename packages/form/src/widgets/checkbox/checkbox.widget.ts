@@ -18,9 +18,9 @@ export class CheckboxWidget extends ControlWidget {
   labelTitle: string = ``;
   inited = false;
 
-  reset(_value: SFValue) {
+  reset(value: SFValue) {
     this.inited = false;
-    getData(this.schema, this.ui, this.formProperty.formData).subscribe(list => {
+    getData(this.schema, this.ui, value).subscribe(list => {
       this.data = list;
       this.allChecked = false;
       this.indeterminate = false;
