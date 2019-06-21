@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema/index';
 import { getData } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFRadioWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-radio',
@@ -10,7 +11,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class RadioWidget extends ControlWidget {
+export class RadioWidget extends ControlUIWidget<SFRadioWidgetSchema> {
   data: SFSchemaEnum[] = [];
   styleType: boolean;
 

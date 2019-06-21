@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { toBool } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFRateWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-rate',
@@ -8,7 +9,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class RateWidget extends ControlWidget implements OnInit {
+export class RateWidget extends ControlUIWidget<SFRateWidgetSchema> implements OnInit {
   count: number;
   allowHalf: boolean;
   allowClear: boolean;
@@ -20,10 +21,11 @@ export class RateWidget extends ControlWidget implements OnInit {
   }
 
   ngOnInit(): void {
-    this.count = this.schema.maximum || 5;
-    this.allowHalf = (this.schema.multipleOf || 0.5) === 0.5;
-    this.allowClear = toBool(this.ui.allowClear, true);
-    this.autoFocus = toBool(this.ui.autoFocus, false);
-    this.hasText = !!this.ui.text;
+    const { schema, ui } = this;
+    this.count = schema.maximum || 5;
+    this.allowHalf = (schema.multipleOf || 0.5) === 0.5;
+    this.allowClear = toBool(ui.allowClear, true);
+    this.autoFocus = toBool(ui.autoFocus, false);
+    this.hasText = !!ui.text;
   }
 }
