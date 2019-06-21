@@ -8,5 +8,8 @@
     "umdModuleIds": {
       "@delon/util": "delon.util"
     }
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "tslib", "angular", "@delon/util"
+  ]
 }

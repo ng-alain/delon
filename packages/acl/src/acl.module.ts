@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
 
 import { ACLIfDirective } from './acl-if.directive';
 import { ACLDirective } from './acl.directive';
+import { ACLService } from './acl.service';
 
 const COMPONENTS = [ACLDirective, ACLIfDirective];
 
@@ -12,4 +13,11 @@ const COMPONENTS = [ACLDirective, ACLIfDirective];
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
-export class DelonACLModule {}
+export class DelonACLModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: DelonACLModule,
+      providers: [ACLService],
+    };
+  }
+}

@@ -14,6 +14,7 @@
         "ng-zorro-antd/radio": "ng-zorro-antd/radio",
         "ng-zorro-antd/table": "ng-zorro-antd/table",
         "ng-zorro-antd/tag": "ng-zorro-antd/tag",
+        "ng-zorro-antd/input": "ng-zorro-antd/input",
         "@delon/abc/xlsx": "delon.abc.xlsx",
         "@delon/theme": "delon.theme",
         "@delon/acl": "delon.acl",

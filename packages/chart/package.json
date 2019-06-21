@@ -24,7 +24,7 @@
     "angular",
     "component"
   ],
-  "peerDependencies": {
+  "dependencies": {
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER"
   },

@@ -6,10 +6,13 @@
     "entryFile": "public_api.ts"
   },
   "whitelistedNonPeerDependencies": [
-    "tslib",	
+    "tslib",
     "file-saver",
     "date-fns",
     "qrious",
-    "ngx-countdown"
+    "ngx-countdown",
+    "@delon/theme",
+    "@delon/util",
+    "@delon/acl"
   ]
 }

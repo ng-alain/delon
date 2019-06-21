@@ -54,7 +54,8 @@ describe('form: widget: mention', () => {
       .typeChar('@')
       .checkError(`最少提及 1 次`);
 
-    spyOn(getWidget().mentionChild, 'getMentions').and.returnValue(['', '', '', '']);
+    // tslint:disable-next-line: no-string-literal
+    spyOn(getWidget()['mentionChild'], 'getMentions').and.returnValue(['', '', '', '']);
     page.typeChar('@').checkError(`最多提及 2 次`);
   }));
 

@@ -27,7 +27,7 @@ import { DelonACLModule } from '@delon/acl';
 
 @NgModule({
   imports: [
-    DelonACLModule
+    DelonACLModule.forRoot()
   ]
 })
 export class AppModule { }

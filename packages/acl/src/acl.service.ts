@@ -6,7 +6,7 @@ import { ACLCanType, ACLType } from './acl.type';
 /**
  * 访问控制服务
  */
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ACLService {
   private roles: string[] = [];
   private abilities: Array<number | string> = [];

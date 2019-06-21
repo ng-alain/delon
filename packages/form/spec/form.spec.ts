@@ -1,7 +1,7 @@
 import { Component, DebugElement } from '@angular/core';
 import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ACLService } from '@delon/acl';
+import { ACLService, DelonACLModule } from '@delon/acl';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { en_US, AlainThemeModule, DelonLocaleService } from '@delon/theme';
 import { deepCopy } from '@delon/util';
@@ -19,12 +19,18 @@ describe('form: component', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  configureTestSuite(() => {
-    injector = TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()],
-      declarations: [TestFormComponent, TestModeComponent],
+  function genModule(options: { acl: boolean } = { acl: false }) {
+    configureTestSuite(() => {
+      const imports = [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()];
+      if (options.acl) {
+        imports.push(DelonACLModule.forRoot());
+      }
+      injector = TestBed.configureTestingModule({
+        imports,
+        declarations: [TestFormComponent, TestModeComponent],
+      });
     });
-  });
+  }
 
   function createComp() {
     fixture.detectChanges();
@@ -33,6 +39,8 @@ describe('form: component', () => {
   }
 
   describe('', () => {
+    genModule();
+
     beforeEach(() => {
       ({ fixture, dl, context } = createTestContext(TestFormComponent));
       createComp();
@@ -616,35 +624,11 @@ describe('form: component', () => {
         expect((s.properties!.a.ui as any).errors.required).toHaveBeenCalled();
       });
     });
-
-    describe('ACL', () => {
-      let acl: ACLService;
-      beforeEach(() => (acl = injector.get<ACLService>(ACLService)));
-      it('shoule be working', fakeAsync(() => {
-        acl.setFull(false);
-        acl.setRole(['admin']);
-        const s: SFSchema = {
-          properties: {
-            a: {
-              type: 'string',
-              ui: {
-                acl: 'admin',
-              },
-            },
-          },
-          required: ['a'],
-        };
-        page.newSchema(s);
-        page.checkUI('/a', 'hidden', false);
-        acl.setRole(['user']);
-        tick();
-        fixture.detectChanges();
-        page.checkUI('/a', 'hidden', true);
-      }));
-    });
   });
 
   describe('#mode', () => {
+    genModule();
+
     beforeEach(() => ({ fixture, dl, context } = createTestContext(TestModeComponent)));
     it('should be auto 搜索 in submit', () => {
       context.mode = 'search';
@@ -672,6 +656,35 @@ describe('form: component', () => {
       createComp();
       expect(page.getEl('.ant-btn-primary').textContent).toContain('SAVE');
     });
+  });
+
+  describe('ACL', () => {
+    genModule({ acl: true });
+
+    it('should working', fakeAsync(() => {
+      ({ fixture, dl, context } = createTestContext(TestFormComponent));
+      createComp();
+      const acl = injector.get<ACLService>(ACLService);
+      acl.setFull(false);
+      acl.setRole(['admin']);
+      const s: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            ui: {
+              acl: 'admin',
+            },
+          },
+        },
+        required: ['a'],
+      };
+      page.newSchema(s);
+      page.checkUI('/a', 'hidden', false);
+      acl.setRole(['user']);
+      tick();
+      fixture.detectChanges();
+      page.checkUI('/a', 'hidden', true);
+    }));
   });
 });
 

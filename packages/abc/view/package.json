@@ -5,6 +5,8 @@
       "entryFile": "public_api.ts",
       "umdModuleIds": {
         "@angular/cdk/observers": "ng.cdk.observers",
+        "ng-zorro-antd/tooltip": "ng-zorro-antd/tooltip",
+        "ng-zorro-antd/icon": "ng-zorro-antd/icon",
         "@delon/theme": "delon.theme",
         "@delon/util": "delon.util"
       }

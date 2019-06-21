@@ -153,18 +153,20 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
       if (el.children.length > 0) {
         throw new Error('Ellipsis content must be string.');
       }
-      const text = el.textContent!;
-      const textLength = fullWidthRecognition ? this.getStrFullLength(text) : text.length;
+      const lengthText = el.textContent!;
+      const textLength = fullWidthRecognition
+        ? this.getStrFullLength(lengthText)
+        : lengthText.length;
       if (textLength <= length || length < 0) {
-        this.text = text;
+        this.text = lengthText;
       } else {
         let displayText: string;
         if (length - tail.length <= 0) {
           displayText = '';
         } else {
           displayText = fullWidthRecognition
-            ? this.cutStrByFullLength(text, length)
-            : text.slice(0, length);
+            ? this.cutStrByFullLength(lengthText, length)
+            : lengthText.slice(0, length);
         }
         this.text = displayText + tail;
       }
@@ -172,17 +174,17 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     } else if (type === 'line') {
       const { shadowOrgEl, shadowTextEl } = this;
       const orgNode = shadowOrgEl.nativeElement as HTMLElement;
-      const text = orgNode.innerText || orgNode.textContent!;
+      const lineText = orgNode.innerText || orgNode.textContent!;
       const lineHeight = parseInt(getComputedStyle(this.getEl('.ellipsis')).lineHeight!, 10);
       const targetHeight = lines * lineHeight;
       this.getEl('.ellipsis__handle').style.height = `${targetHeight}px`;
 
       if (orgNode.offsetHeight <= targetHeight) {
-        this.text = text;
-        this.targetCount = text.length;
+        this.text = lineText;
+        this.targetCount = lineText.length;
       } else {
         // bisection
-        const len = text.length;
+        const len = lineText.length;
         const mid = Math.ceil(len / 2);
 
         const count = this.bisection(
@@ -190,10 +192,10 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
           mid,
           0,
           len,
-          text,
+          lineText,
           shadowTextEl.nativeElement.firstChild,
         );
-        this.text = text;
+        this.text = lineText;
         this.targetCount = count;
       }
       cdr.detectChanges();

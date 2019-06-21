@@ -211,12 +211,14 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this.cdr.detectChanges();
       }
     });
-    this.aclSrv.change
-      .pipe(
-        filter(() => this._inited),
-        takeUntil(this.unsubscribe$),
-      )
-      .subscribe(() => this.refreshSchema());
+    if (this.aclSrv) {
+      this.aclSrv.change
+        .pipe(
+          filter(() => this._inited),
+          takeUntil(this.unsubscribe$),
+        )
+        .subscribe(() => this.refreshSchema());
+    }
   }
 
   private coverProperty() {
