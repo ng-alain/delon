@@ -3,7 +3,7 @@ import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angu
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ACLService, DelonACLModule } from '@delon/acl';
 import { configureTestSuite, createTestContext } from '@delon/testing';
-import { en_US, AlainThemeModule, DelonLocaleService } from '@delon/theme';
+import { en_US, AlainThemeModule, DelonLocaleService, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 import { of } from 'rxjs';
 import { FormPropertyFactory } from '../src/model/form.property.factory';
@@ -19,9 +19,13 @@ describe('form: component', () => {
   let context: TestFormComponent;
   let page: SFPage;
 
-  function genModule(options: { acl: boolean } = { acl: false }) {
+  function genModule(options: { acl?: boolean; i18n?: boolean } = {}) {
+    options = { acl: false, i18n: false, ...options };
     configureTestSuite(() => {
-      const imports = [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot()];
+      const imports = [NoopAnimationsModule, DelonFormModule.forRoot()];
+      if (options.i18n) {
+        imports.push(AlainThemeModule.forRoot());
+      }
       if (options.acl) {
         imports.push(DelonACLModule.forRoot());
       }
@@ -704,6 +708,56 @@ describe('form: component', () => {
       tick();
       fixture.detectChanges();
       page.checkUI('/a', 'hidden', true);
+    }));
+  });
+
+  describe('I18N', () => {
+    genModule({ i18n: true });
+
+    it('should working', fakeAsync(() => {
+      ({ fixture, dl, context } = createTestContext(TestFormComponent));
+      createComp();
+      const i18n = injector.get(ALAIN_I18N_TOKEN) as AlainI18NService;
+      let lang = 'en';
+      spyOn(i18n, 'fanyi').and.callFake(((key: string) => {
+        if (key === 'null') return null;
+        return lang === 'en' ? key : `zh-${key}`;
+      }) as any);
+      const s: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            title: 'title',
+            description: 'title',
+            ui: {
+              i18n: 'i18n',
+              descriptionI18n: 'descriptionI18n',
+              optionalHelp: {
+                i18n: 'ohi18n',
+              },
+            },
+          },
+          b: {
+            type: 'string',
+            title: 'a',
+            ui: {
+              i18n: 'null',
+            },
+          },
+        },
+      };
+      page.newSchema(s);
+      page
+        .checkSchema('/a', 'title', 'i18n')
+        .checkSchema('/b', 'title', 'null')
+        .checkSchema('/a', 'description', 'descriptionI18n')
+        .checkUI('/a', 'optionalHelp.text', 'ohi18n');
+      lang = 'zh';
+      i18n.use(lang);
+      page
+        .checkSchema('/a', 'title', 'zh-i18n')
+        .checkSchema('/a', 'description', 'zh-descriptionI18n')
+        .checkUI('/a', 'optionalHelp.text', 'zh-ohi18n');
     }));
   });
 });

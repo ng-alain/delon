@@ -9,6 +9,7 @@
     "baseUrl": ".",
     "types": [],
     "paths": {
+      "@core/*": ["app/core/*"],
       "@shared": ["app/shared"],
       "@shared/*": ["app/shared/*"],
       "@delon/*": ["../packages/*"]

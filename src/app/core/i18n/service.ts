@@ -56,6 +56,7 @@ export class I18NService implements AlainI18NService {
   }
 
   use(lang: LangType, emit = true) {
+    console.log(lang);
     this.translate.use(lang);
     this.zorroI18n.setLocale(lang === 'en-US' ? en_US : zh_CN);
     this.delonI18n.setLocale(lang === 'en-US' ? delonEnUS : delonZhCn);
