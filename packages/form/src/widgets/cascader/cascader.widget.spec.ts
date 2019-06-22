@@ -123,7 +123,7 @@ describe('form: widget: cascader', () => {
       expect(ui.selectionChange).toHaveBeenCalled();
       comp._select(null);
       expect(ui.select).toHaveBeenCalled();
-      comp._clear(null);
+      comp._clear();
       expect(ui.clear).toHaveBeenCalled();
       page.asyncEnd();
     }));

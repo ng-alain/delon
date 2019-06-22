@@ -15,7 +15,7 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFAutoCompleteWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 import { of } from 'rxjs';
 
@@ -37,7 +37,7 @@ export class DemoComponent {
         ui: {
           widget: 'autocomplete',
           type: 'email',
-        },
+        } as SFAutoCompleteWidgetSchema,
       },
       async: {
         type: 'string',
@@ -46,7 +46,7 @@ export class DemoComponent {
           widget: 'autocomplete',
           debounceTime: 100,
           asyncData: (input: string) => of(input ? [{ label: input, value: 1 }, { label: input + input, value: 2 }] : []),
-        },
+        } as SFAutoCompleteWidgetSchema,
       },
     },
   };

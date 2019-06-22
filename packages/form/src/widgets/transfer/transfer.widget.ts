@@ -4,7 +4,8 @@ import { of, Observable } from 'rxjs';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFTransferWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-transfer',
@@ -12,17 +13,18 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class TransferWidget extends ControlWidget implements OnInit {
+export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> implements OnInit {
   list: SFSchemaEnum[] = [];
   i: any;
   private _data: SFSchemaEnum[] = [];
 
   ngOnInit(): void {
+    const { titles, operations, itemUnit, itemsUnit } = this.ui;
     this.i = {
-      titles: this.ui.titles || ['', ''],
-      operations: this.ui.operations || ['', ''],
-      itemUnit: this.ui.itemUnit || '项',
-      itemsUnit: this.ui.itemsUnit || '项',
+      titles: titles || ['', ''],
+      operations: operations || ['', ''],
+      itemUnit: itemUnit || '项',
+      itemsUnit: itemsUnit || '项',
     };
   }
 

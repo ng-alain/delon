@@ -15,7 +15,7 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFSliderWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
@@ -32,7 +32,7 @@ export class DemoComponent {
         title: '数量',
         ui: {
           widget: 'slider',
-        },
+        } as SFSliderWidgetSchema,
         default: 10,
       },
       // 双滑块模式
@@ -42,7 +42,7 @@ export class DemoComponent {
         ui: {
           widget: 'slider',
           range: true,
-        },
+        } as SFSliderWidgetSchema,
         default: [10, 20],
       },
     },

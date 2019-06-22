@@ -16,7 +16,7 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFDateWidgetSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
@@ -37,11 +37,11 @@ export class DemoComponent {
       },
       date_number: {
         type: 'number',
-        ui: { widget: 'date' },
+        ui: { widget: 'date' } as SFDateWidgetSchema,
       },
       year: {
         type: 'number',
-        ui: { widget: 'date', mode: 'year', format: 'YYYY' },
+        ui: { widget: 'date', mode: 'year', format: 'YYYY' } as SFDateWidgetSchema,
       },
       month: {
         type: 'string',
@@ -53,15 +53,15 @@ export class DemoComponent {
       },
       range: {
         type: 'string',
-        ui: { widget: 'date', mode: 'range' },
+        ui: { widget: 'date', mode: 'range' } as SFDateWidgetSchema,
       },
       start: {
         type: 'string',
-        ui: { widget: 'date', end: 'end' },
+        ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
       },
       end: {
         type: 'string',
-        ui: { widget: 'date', end: 'end' },
+        ui: { widget: 'date', end: 'end' } as SFDateWidgetSchema,
       },
     },
   };

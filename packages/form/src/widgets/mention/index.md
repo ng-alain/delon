@@ -45,4 +45,4 @@ type: Widgets
 `[valueWith]` | 建议选项的取值方法  | `(any) => string` | `(value: string) => string`
 `[select]` | 下拉框选择建议时回调 | `(value: any) => void` | -
 `[inputStyle]` | 文本框类型 | `text, textarea` | `text`
-`[autosize]` | 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }`  | `Boolean|Object` | `true`
+`[autosize]` | 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }`  | `boolean,AutoSizeType` | `true`

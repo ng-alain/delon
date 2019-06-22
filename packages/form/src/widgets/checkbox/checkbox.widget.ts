@@ -2,7 +2,8 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFCheckboxWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-checkbox',
@@ -10,7 +11,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class CheckboxWidget extends ControlWidget {
+export class CheckboxWidget extends ControlUIWidget<SFCheckboxWidgetSchema> {
   data: SFSchemaEnum[] = [];
   allChecked = false;
   indeterminate = false;
@@ -25,7 +26,8 @@ export class CheckboxWidget extends ControlWidget {
       this.allChecked = false;
       this.indeterminate = false;
       this.labelTitle = list.length === 0 ? '' : (this.schema.title as string);
-      this.grid_span = this.ui.span && this.ui.span > 0 ? this.ui.span : 0;
+      const { span } = this.ui;
+      this.grid_span = span && span > 0 ? span : 0;
 
       this.updateAllChecked();
       this.inited = true;

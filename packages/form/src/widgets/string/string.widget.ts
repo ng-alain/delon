@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFStringWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-string',
@@ -8,20 +9,12 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class StringWidget extends ControlWidget implements OnInit {
+export class StringWidget extends ControlUIWidget<SFStringWidgetSchema> implements OnInit {
   type: string;
 
   ngOnInit(): void {
-    this.type = !!(
-      this.ui.addOnAfter ||
-      this.ui.addOnBefore ||
-      this.ui.addOnAfterIcon ||
-      this.ui.addOnBeforeIcon ||
-      this.ui.prefix ||
-      this.ui.prefixIcon ||
-      this.ui.suffix ||
-      this.ui.suffixIcon
-    )
+    const { addOnAfter, addOnAfterIcon, addOnBefore, addOnBeforeIcon, prefix, prefixIcon, suffix, suffixIcon } = this.ui;
+    this.type = !!(addOnAfter || addOnBefore || addOnAfterIcon || addOnBeforeIcon || prefix || prefixIcon || suffix || suffixIcon)
       ? 'addon'
       : '';
   }

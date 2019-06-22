@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFTextWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-text',
@@ -7,7 +8,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class TextWidget extends ControlWidget implements OnInit {
+export class TextWidget extends ControlUIWidget<SFTextWidgetSchema> implements OnInit {
   ngOnInit(): void {
     this.ui._required = false;
   }

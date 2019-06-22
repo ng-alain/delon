@@ -38,9 +38,9 @@ type: Widgets
 | `[allowEmpty]` | 是否展示清除按钮 | `boolean` | `true` |
 | `[clearText]` | 清除按钮的提示文案 | `string` | `清除` |
 | `[defaultOpenValue]` | 设置面板打开时默认选中的值 | `Date` | `new Date()` |
-| `[disabledHours]` | 禁止选择部分小时选项 | `function()` | - |
-| `[disabledMinutes]` | 禁止选择部分分钟选项 | `function(selectedHour)` | - |
-| `[disabledSeconds]` | 禁止选择部分秒选项 | `function(selectedHour, selectedMinute)` | - |
+| `[disabledHours]` | 禁止选择部分小时选项 | `() => number[]` | - |
+| `[disabledMinutes]` | 禁止选择部分分钟选项 | `(hour: number) => number[]` | - |
+| `[disabledSeconds]` | 禁止选择部分秒选项 | `(hour: number, minute: number) => number[]` | - |
 | `[hideDisabledOptions]` | 隐藏禁止选择的选项 | `boolean` | `false` |
 | `[hourStep]` | 小时选项间隔 | `number` | `1` |
 | `[minuteStep]` | 分钟选项间隔 | `number` | `1` |

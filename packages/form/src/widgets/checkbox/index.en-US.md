@@ -22,7 +22,6 @@ Property        | Description                                 | Type            
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[asyncData]` | Async data source, render checkbox group when the value exists  | `() => Observable<SFSchemaEnumType[]>` | -
-`[size]` | Size of the `nz-checkbox` | `string` | -
 `[span]` | Raster number of cells to occupy, refer to [layout](https://ng.ant.design/components/checkbox/en#components-checkbox-demo-layout) | `number` | -
 `[styleType]` | Style of the `nz-checkbox` | `default, button` | `default`
 `[checkAll]` | Whether to select all  | `boolean` | -

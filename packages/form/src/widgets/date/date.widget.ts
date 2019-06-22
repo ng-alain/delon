@@ -3,7 +3,8 @@ import format from 'date-fns/format';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
 import { toBool } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFDateWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-date',
@@ -11,7 +12,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class DateWidget extends ControlWidget implements OnInit {
+export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements OnInit {
   mode: string;
   displayValue: Date | Date[] | null = null;
   displayFormat: string;
@@ -20,13 +21,14 @@ export class DateWidget extends ControlWidget implements OnInit {
   flatRange = false;
 
   ngOnInit(): void {
-    const ui = this.ui;
-    this.mode = ui.mode || 'date';
-    this.flatRange = ui.end != null;
+    // tslint:disable-next-line: no-shadowed-variable
+    const { mode, end, displayFormat, format, allowClear, showToday } = this.ui;
+    this.mode = mode || 'date';
+    this.flatRange = end != null;
     if (this.flatRange) {
       this.mode = 'range';
     }
-    if (!ui.displayFormat) {
+    if (!displayFormat) {
       switch (this.mode) {
         case 'year':
           this.displayFormat = `yyyy`;
@@ -39,15 +41,15 @@ export class DateWidget extends ControlWidget implements OnInit {
           break;
       }
     } else {
-      this.displayFormat = ui.displayFormat;
+      this.displayFormat = displayFormat;
     }
     // 构建属性对象时会对默认值进行校验，因此可以直接使用 format 作为格式化属性
-    this.format = ui.format;
+    this.format = format!;
     // 公共API
     this.i = {
-      allowClear: toBool(ui.allowClear, true),
+      allowClear: toBool(allowClear, true),
       // nz-date-picker
-      showToday: toBool(ui.showToday, true),
+      showToday: toBool(showToday, true),
     };
   }
 
@@ -92,7 +94,7 @@ export class DateWidget extends ControlWidget implements OnInit {
   }
 
   private get endProperty(): FormProperty {
-    return this.formProperty.parent!.properties![this.ui.end];
+    return this.formProperty.parent!.properties![this.ui.end!];
   }
 
   private setEnd(value: string | null) {

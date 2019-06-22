@@ -5,7 +5,8 @@ import { UploadChangeParam, UploadFile } from 'ng-zorro-antd/upload';
 import { of } from 'rxjs';
 import { SFValue } from '../../interface';
 import { getData, toBool } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFUploadWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-upload',
@@ -13,7 +14,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class UploadWidget extends ControlWidget implements OnInit {
+export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implements OnInit {
   i: any;
   fileList: UploadFile[] = [];
   btnType = '';

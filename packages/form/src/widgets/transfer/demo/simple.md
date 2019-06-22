@@ -15,7 +15,7 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFTransferWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -41,7 +41,7 @@ export class DemoComponent {
         ui: {
           widget: 'transfer',
           titles: ['未拥有', '已拥有'],
-        },
+        } as SFTransferWidgetSchema,
         default: [11, 12],
       },
       roles2: {
@@ -50,13 +50,14 @@ export class DemoComponent {
         ui: {
           widget: 'transfer',
           titles: ['未拥有', '已拥有'],
-          asyncData: () => of([
-            { title: 'DNS管理', value: 10 },
-            { title: 'ECS管理', value: 11 },
-            { title: 'OSS管理', value: 12 },
-            { title: 'RDS管理', value: 13 },
-          ]).pipe(delay(10)),
-        },
+          asyncData: () =>
+            of([
+              { title: 'DNS管理', value: 10 },
+              { title: 'ECS管理', value: 11 },
+              { title: 'OSS管理', value: 12 },
+              { title: 'RDS管理', value: 13 },
+            ]).pipe(delay(10)),
+        } as SFTransferWidgetSchema,
         default: [11, 12],
       },
     },

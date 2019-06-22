@@ -15,7 +15,7 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFSelectWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -40,7 +40,7 @@ export class DemoComponent {
         default: 'WAIT_BUYER_PAY',
         ui: {
           widget: 'select',
-        },
+        } as SFSelectWidgetSchema,
       },
       // 标签
       tags: {
@@ -54,7 +54,7 @@ export class DemoComponent {
         ui: {
           widget: 'select',
           mode: 'tags',
-        },
+        } as SFSelectWidgetSchema,
         default: null,
       },
       // 异步数据
@@ -76,7 +76,7 @@ export class DemoComponent {
                 ],
               },
             ]).pipe(delay(1200)),
-        },
+        } as SFSelectWidgetSchema,
       },
     },
   };

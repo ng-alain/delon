@@ -73,6 +73,7 @@ describe('form: widget: mention', () => {
     };
     page
       .newSchema(s)
+      .dc(1)
       .typeChar('@')
       .checkElText('.ant-mention-dropdown-item', '1', true);
   }));

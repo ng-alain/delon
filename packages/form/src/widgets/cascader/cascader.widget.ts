@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { CascaderOption } from 'ng-zorro-antd/cascader';
+import { SFCascaderWidgetSchema } from './schema';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
 
 @Component({
   selector: 'sf-cascader',
@@ -10,21 +12,22 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class CascaderWidget extends ControlWidget implements OnInit {
+export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> implements OnInit {
   clearText: string;
   showArrow: boolean;
   showInput: boolean;
   triggerAction: string[];
   data: SFSchemaEnum[] = [];
-  loadData: any;
+  loadData: (node: CascaderOption, index: number) => PromiseLike<any>;
 
   ngOnInit(): void {
-    this.clearText = this.ui.clearText || '清除';
-    this.showArrow = toBool(this.ui.showArrow, true);
-    this.showInput = toBool(this.ui.showInput, true);
-    this.triggerAction = this.ui.triggerAction || ['click'];
-    if (!!this.ui.asyncData) {
-      this.loadData = (node: any, index: number) => (this.ui.asyncData as any)(node, index, this);
+    const { clearText, showArrow, showInput, triggerAction, asyncData } = this.ui;
+    this.clearText = clearText || '清除';
+    this.showArrow = toBool(showArrow, true);
+    this.showInput = toBool(showInput, true);
+    this.triggerAction = triggerAction || ['click'];
+    if (!!asyncData) {
+      this.loadData = (node: CascaderOption, index: number) => asyncData(node, index, this).then(() => this.detectChanges());
     }
   }
 
@@ -39,7 +42,7 @@ export class CascaderWidget extends ControlWidget implements OnInit {
     if (this.ui.visibleChange) this.ui.visibleChange(status);
   }
 
-  _change(value: string) {
+  _change(value: any[] | null) {
     this.setValue(value);
     if (this.ui.change) this.ui.change(value);
   }
@@ -52,7 +55,7 @@ export class CascaderWidget extends ControlWidget implements OnInit {
     if (this.ui.select) this.ui.select(options);
   }
 
-  _clear(options: any) {
-    if (this.ui.clear) this.ui.clear(options);
+  _clear() {
+    if (this.ui.clear) this.ui.clear();
   }
 }

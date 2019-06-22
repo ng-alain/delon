@@ -16,7 +16,7 @@ export abstract class FormProperty {
   ui: SFUISchema | SFUISchemaItemRun;
   formData: {};
   _value: SFValue = null;
-  widget: Widget<FormProperty>;
+  widget: Widget<FormProperty, SFUISchemaItem>;
   private _errors: ErrorData[] | null = null;
   protected _objErrors: { [key: string]: ErrorData[] } = {};
   private _valueChanges = new BehaviorSubject<SFValue>(null);

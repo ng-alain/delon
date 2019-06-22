@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
-import { ControlWidget } from '../../widget';
+import { ControlUIWidget } from '../../widget';
+import { SFSelectWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-select',
@@ -10,7 +11,7 @@ import { ControlWidget } from '../../widget';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class SelectWidget extends ControlWidget implements OnInit {
+export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implements OnInit {
   i: any;
   data: SFSchemaEnum[];
   _value: any;
@@ -69,9 +70,9 @@ export class SelectWidget extends ControlWidget implements OnInit {
     this.setValue(values == null ? undefined : values);
   }
 
-  openChange(value: boolean) {
+  openChange(status: boolean) {
     if (this.ui.openChange) {
-      this.ui.openChange(value);
+      this.ui.openChange(status);
     }
   }
 

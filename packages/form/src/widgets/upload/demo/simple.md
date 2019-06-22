@@ -15,7 +15,7 @@ Simplest of usage.
 
 ```ts
 import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
+import { SFSchema, SFUploadWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
@@ -46,7 +46,7 @@ export class DemoComponent {
           action: '/upload',
           resReName: 'resource_id',
           urlReName: 'url',
-        },
+        } as SFUploadWidgetSchema,
       },
       mulit: {
         type: 'string',
@@ -57,7 +57,7 @@ export class DemoComponent {
           resReName: 'resource_id',
           urlReName: 'url',
           multiple: true,
-        },
+        } as SFUploadWidgetSchema,
       },
       // 拖动模式
       drag: {
@@ -69,7 +69,7 @@ export class DemoComponent {
           resReName: 'resource_id',
           urlReName: 'url',
           type: 'drag',
-        },
+        } as SFUploadWidgetSchema,
       },
     },
   };

@@ -28,9 +28,9 @@ let nextUniqueId = 0;
   encapsulation: ViewEncapsulation.None,
 })
 export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
-  private ref: ComponentRef<Widget<FormProperty>>;
+  private ref: ComponentRef<Widget<FormProperty, SFUISchemaItem>>;
   readonly unsubscribe$ = new Subject<void>();
-  widget: Widget<FormProperty> | null = null;
+  widget: Widget<FormProperty, SFUISchemaItem> | null = null;
 
   @Input() formProperty: FormProperty;
 
@@ -39,7 +39,7 @@ export class SFItemComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private widgetFactory: WidgetFactory, private terminator: TerminatorService) {}
 
-  onWidgetInstanciated(widget: Widget<FormProperty>) {
+  onWidgetInstanciated(widget: Widget<FormProperty, SFUISchemaItem>) {
     this.widget = widget;
     const id = `_sf-${nextUniqueId++}`;
 
