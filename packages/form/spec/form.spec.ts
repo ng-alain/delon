@@ -228,11 +228,7 @@ describe('form: component', () => {
             },
           };
           fixture.detectChanges();
-          page.checkStyle(
-            '.sf-btns .ant-form-item-control-wrapper',
-            'margin-left',
-            `${spanLabelFixed}px`,
-          );
+          page.checkStyle('.sf-btns .ant-form-item-control-wrapper', 'margin-left', `${spanLabelFixed}px`);
         });
       });
       describe('#size', () => {
@@ -459,9 +455,7 @@ describe('form: component', () => {
           .checkCls('input', 'ant-input-lg');
       });
       it('#disabled', fakeAsync(() => {
-        const el = page
-          .newSchema({ properties: { name: { type: 'string', readOnly: true } } })
-          .getEl('input') as HTMLInputElement;
+        const el = page.newSchema({ properties: { name: { type: 'string', readOnly: true } } }).getEl('input') as HTMLInputElement;
         tick();
         expect(el.disabled).toBe(true);
         expect(el.classList).toContain('ant-input-disabled');
@@ -507,9 +501,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine
-                  .createSpy()
-                  .and.returnValue([{ keyword: 'required', message: 'a' }]),
+                validator: jasmine.createSpy().and.returnValue([{ keyword: 'required', message: 'a' }]),
               },
             },
           },
@@ -537,9 +529,7 @@ describe('form: component', () => {
             a: {
               type: 'string',
               ui: {
-                validator: jasmine
-                  .createSpy()
-                  .and.returnValue(of([{ keyword: 'required', message: 'a' }])),
+                validator: jasmine.createSpy().and.returnValue(of([{ keyword: 'required', message: 'a' }])),
               },
             },
           },
@@ -623,6 +613,36 @@ describe('form: component', () => {
         expect(page.getProperty('/a').errors![0].message).toBe('A');
         expect((s.properties!.a.ui as any).errors.required).toHaveBeenCalled();
       });
+
+      it('should be i18n', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'string',
+            },
+            arr: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  name: {
+                    type: 'string',
+                  },
+                },
+                required: ['name'],
+              },
+            },
+          },
+          required: ['a'],
+        };
+        page.newSchema(s, undefined, { a: '', arr: [{ name: '' }] });
+        expect(page.getProperty('/a').errors![0].message).toBe(context.comp.locale.error.required);
+        const i18n = injector.get<DelonLocaleService>(DelonLocaleService) as DelonLocaleService;
+        i18n.setLocale(en_US);
+        fixture.detectChanges();
+        expect(page.getProperty('/a').errors![0].message).toBe(context.comp.locale.error.required);
+        expect(page.getProperty('/arr').errors![0].message).toBe(context.comp.locale.error.required);
+      });
     });
   });
 
@@ -690,15 +710,7 @@ describe('form: component', () => {
 
 @Component({
   template: `
-    <sf
-      [layout]="layout"
-      #comp
-      [schema]="schema"
-      [ui]="ui"
-      [button]="button"
-      [mode]="mode"
-      [loading]="loading"
-    ></sf>
+    <sf [layout]="layout" #comp [schema]="schema" [ui]="ui" [button]="button" [mode]="mode" [loading]="loading"></sf>
   `,
 })
 class TestModeComponent extends TestFormComponent {}

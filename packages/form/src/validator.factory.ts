@@ -33,14 +33,8 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
     this.ajv.addFormat('id-card', /(^\d{15}$)|(^\d{17}([0-9]|X)$)/);
   }
 
-  createValidatorFn(
-    schema: SFSchema,
-    extraOptions: { ingoreKeywords: string[]; debug: boolean },
-  ): (value: SFValue) => ErrorData[] {
-    const ingoreKeywords: string[] = [
-      ...(this.options.ingoreKeywords as string[]),
-      ...(extraOptions.ingoreKeywords as string[] || []),
-    ];
+  createValidatorFn(schema: SFSchema, extraOptions: { ingoreKeywords: string[]; debug: boolean }): (value: SFValue) => ErrorData[] {
+    const ingoreKeywords: string[] = [...(this.options.ingoreKeywords as string[]), ...((extraOptions.ingoreKeywords as string[]) || [])];
 
     return (value: SFValue): ErrorData[] => {
       try {
@@ -52,7 +46,7 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
           console.warn(e);
         }
       }
-      let errors = this.ajv.errors;
+      let errors: any[] = this.ajv.errors;
       if (this.options && ingoreKeywords && errors) {
         errors = errors.filter(w => ingoreKeywords.indexOf(w.keyword) === -1);
       }

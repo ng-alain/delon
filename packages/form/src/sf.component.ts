@@ -22,7 +22,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { DelonFormConfig } from './config';
 import { ErrorData } from './errors';
 import { SFButton, SFLayout } from './interface';
-import { FormProperty } from './model/form.property';
+import { FormProperty, PropertyGroup } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import { SFSchema } from './schema/index';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun, SFOptionalHelp } from './schema/ui';
@@ -207,8 +207,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     this.i18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.i18n.getData('sf');
       if (this._inited) {
+        this.validator({ emitError: false, onlyRoot: false });
         this.coverButtonProperty();
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       }
     });
     if (this.aclSrv) {
@@ -431,11 +432,26 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  validator(): this {
-    this.rootProperty!._runValidation();
+  validator(options: { emitError?: boolean; onlyRoot?: boolean } = { emitError: true, onlyRoot: true }): this {
+    const fn = (property: FormProperty) => {
+      if (property == null) return;
+      property._runValidation();
+      if (!(property instanceof PropertyGroup) || !property.properties) return;
+      if (Array.isArray(property.properties)) {
+        property.properties.forEach(p => fn(p));
+      } else {
+        Object.keys(property.properties).forEach(key => fn(property.properties![key]));
+      }
+    };
+    if (options.onlyRoot) {
+      this.rootProperty!._runValidation();
+    } else {
+      fn(this.rootProperty!);
+    }
+
     const errors = this.rootProperty!.errors;
     this._valid = !(errors && errors.length);
-    if (!this._valid) this.formError.emit(errors!);
+    if (options.emitError && !this._valid) this.formError.emit(errors!);
     this.cdr.detectChanges();
     return this;
   }

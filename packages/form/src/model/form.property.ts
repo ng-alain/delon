@@ -11,14 +11,7 @@ import { SchemaValidatorFactory } from '../validator.factory';
 import { Widget } from '../widget';
 
 export abstract class FormProperty {
-  schemaValidator: (value: SFValue) => ErrorData[];
-  schema: SFSchema;
-  ui: SFUISchema | SFUISchemaItemRun;
-  formData: {};
-  _value: SFValue = null;
-  widget: Widget<FormProperty, SFUISchemaItem>;
   private _errors: ErrorData[] | null = null;
-  protected _objErrors: { [key: string]: ErrorData[] } = {};
   private _valueChanges = new BehaviorSubject<SFValue>(null);
   private _errorsChanges = new BehaviorSubject<ErrorData[] | null>(null);
   private _visible = true;
@@ -26,6 +19,13 @@ export abstract class FormProperty {
   private _root: PropertyGroup;
   private _parent: PropertyGroup | null;
   private _path: string;
+  protected _objErrors: { [key: string]: ErrorData[] } = {};
+  schemaValidator: (value: SFValue) => ErrorData[];
+  schema: SFSchema;
+  ui: SFUISchema | SFUISchemaItemRun;
+  formData: {};
+  _value: SFValue = null;
+  widget: Widget<FormProperty, SFUISchemaItem>;
 
   constructor(
     schemaValidatorFactory: SchemaValidatorFactory,
@@ -243,11 +243,12 @@ export abstract class FormProperty {
 
   protected setErrors(errors: ErrorData[], emitFormat = true) {
     if (emitFormat && errors && !this.ui.onlyVisual) {
+      const l = (this.widget && this.widget.l.error) || {};
       errors = errors.map((err: ErrorData) => {
         let message =
           err._custom === true && err.message
             ? err.message
-            : (this.ui.errors || {})[err.keyword] || this._options.errors![err.keyword] || ``;
+            : (this.ui.errors || {})[err.keyword] || this._options.errors![err.keyword] || l[err.keyword] || ``;
 
         if (message && typeof message === 'function') {
           message = message(err) as string;
