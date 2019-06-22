@@ -87,7 +87,8 @@ export interface SFRenderSchema {
 }
 
 export interface SFOptionalHelp {
-  text: string;
+  text?: string;
+  i18n?: string;
   /** 图标，默认：`question-circle` */
   icon?: string;
   placement?: SFPlacement;
@@ -126,8 +127,19 @@ export interface SFHorizontalLayoutSchema {
   spanLabelFixed?: number | null;
 }
 
+export interface SFSchemaI18n {
+  /**
+   * 指 `schema.title` 的国际化键值
+   */
+  i18n?: string;
+  /**
+   * 对应 `schema.description` 国际化
+   */
+  descriptionI18n?: string;
+}
+
 /** 指定如何渲染 `Schema` */
-export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema, ErrorSchema {
+export interface SFUISchemaItem extends SFRenderSchema, SFHorizontalLayoutSchema, ErrorSchema, SFSchemaI18n {
   [key: string]: any;
 
   /** 是否开启调试模式，在数据变更、校验会打印出相信信息，不建议在生产环境中使用 */

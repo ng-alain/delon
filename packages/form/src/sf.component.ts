@@ -13,16 +13,17 @@ import {
   SimpleChanges,
   TemplateRef,
   ViewEncapsulation,
+  Inject,
 } from '@angular/core';
 import { ACLService } from '@delon/acl';
-import { DelonLocaleService, LocaleData } from '@delon/theme';
+import { DelonLocaleService, LocaleData, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
 import { deepCopy, InputBoolean, deepMergeKey } from '@delon/util';
-import { Subject } from 'rxjs';
+import { Subject, Observable, merge } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { DelonFormConfig } from './config';
 import { ErrorData } from './errors';
 import { SFButton, SFLayout } from './interface';
-import { FormProperty } from './model/form.property';
+import { FormProperty, PropertyGroup } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import { SFSchema } from './schema/index';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun, SFOptionalHelp } from './schema/ui';
@@ -197,28 +198,38 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     private formPropertyFactory: FormPropertyFactory,
     private terminator: TerminatorService,
     private options: DelonFormConfig,
-    @Optional() private aclSrv: ACLService,
     private cdr: ChangeDetectorRef,
-    private i18n: DelonLocaleService,
+    private localeSrv: DelonLocaleService,
+    @Optional() private aclSrv: ACLService,
+    @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
   ) {
     this.liveValidate = options.liveValidate as boolean;
     this.firstVisual = options.firstVisual as boolean;
     this.autocomplete = options.autocomplete as 'on' | 'off';
-    this.i18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-      this.locale = this.i18n.getData('sf');
+    this.localeSrv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+      this.locale = this.localeSrv.getData('sf');
       if (this._inited) {
+        this.validator({ emitError: false, onlyRoot: false });
         this.coverButtonProperty();
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       }
     });
-    if (this.aclSrv) {
-      this.aclSrv.change
+    const refSchemas: Array<Observable<any> | null> = [
+      this.aclSrv ? this.aclSrv.change : null,
+      this.i18nSrv ? this.i18nSrv.change : null,
+    ].filter(o => o != null);
+    if (refSchemas.length > 0) {
+      merge(...(refSchemas as Array<Observable<any>>))
         .pipe(
           filter(() => this._inited),
           takeUntil(this.unsubscribe$),
         )
         .subscribe(() => this.refreshSchema());
     }
+  }
+
+  protected fanyi(key: string): string {
+    return (this.i18nSrv ? this.i18nSrv.fanyi(key) : '') || key;
   }
 
   private coverProperty() {
@@ -283,7 +294,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
               text: ui.optionalHelp,
             } as SFOptionalHelp;
           }
-          ui.optionalHelp = {
+          const oh = (ui.optionalHelp = {
             text: '',
             icon: 'question-circle',
             placement: 'top',
@@ -291,10 +302,19 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             mouseEnterDelay: 0.15,
             mouseLeaveDelay: 0.1,
             ...ui.optionalHelp,
-          };
-          if (!ui.optionalHelp.text) {
+          });
+          if (oh.i18n) {
+            oh.text = this.fanyi(oh.i18n);
+          }
+          if (!oh.text) {
             ui.optionalHelp = undefined;
           }
+        }
+        if (ui.i18n) {
+          property.title = this.fanyi(ui.i18n);
+        }
+        if (ui.descriptionI18n) {
+          property.description = this.fanyi(ui.descriptionI18n);
         }
         ui.hidden = typeof ui.hidden === 'boolean' ? ui.hidden : false;
         if (ui.hidden === false && ui.acl && this.aclSrv && !this.aclSrv.can(ui.acl)) {
@@ -431,11 +451,25 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  validator(): this {
-    this.rootProperty!._runValidation();
+  validator(options: { emitError?: boolean; onlyRoot?: boolean } = { emitError: true, onlyRoot: true }): this {
+    const fn = (property: FormProperty) => {
+      property._runValidation();
+      if (!(property instanceof PropertyGroup) || !property.properties) return;
+      if (Array.isArray(property.properties)) {
+        property.properties.forEach(p => fn(p));
+      } else {
+        Object.keys(property.properties).forEach(key => fn(property.properties![key]));
+      }
+    };
+    if (options.onlyRoot) {
+      this.rootProperty!._runValidation();
+    } else {
+      fn(this.rootProperty!);
+    }
+
     const errors = this.rootProperty!.errors;
     this._valid = !(errors && errors.length);
-    if (!this._valid) this.formError.emit(errors!);
+    if (options.emitError && !this._valid) this.formError.emit(errors!);
     this.cdr.detectChanges();
     return this;
   }

@@ -63,4 +63,6 @@ export const ENUS = {
   'app.demo.copy': 'Copy code',
   'app.demo.copied': 'Copied!',
   'app.demo.stackblitz': 'Open in StackBlitz',
+  'sf.name': 'Name',
+  'sf.description': 'This is description',
 };

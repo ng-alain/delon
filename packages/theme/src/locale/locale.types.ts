@@ -1,5 +1,5 @@
 export interface LocaleData {
-  [key: string]: string;
+  [key: string]: any;
 }
 
 export interface ExceptionLocaleData extends LocaleData {
@@ -44,6 +44,44 @@ export interface SFLocaleData extends LocaleData {
   addText: string;
   removeText: string;
   checkAllText: string;
+  error: SFErrorLocaleData;
+}
+
+export interface SFErrorLocaleData extends LocaleData {
+  'false schema': string;
+  $ref: string;
+  additionalItems: string;
+  additionalProperties: string;
+  anyOf: string;
+  dependencies: string;
+  enum: string;
+  format: string;
+  type: string;
+  required: string;
+  maxLength: string;
+  minLength: string;
+  minimum: string;
+  formatMinimum: string;
+  maximum: string;
+  formatMaximum: string;
+  maxItems: string;
+  minItems: string;
+  maxProperties: string;
+  minProperties: string;
+  multipleOf: string;
+  not: string;
+  oneOf: string;
+  pattern: string;
+  uniqueItems: string;
+  custom: string;
+  propertyNames: string;
+  patternRequired: string;
+  switch: string;
+  const: string;
+  contains: string;
+  formatExclusiveMaximum: string;
+  formatExclusiveMinimum: string;
+  if: string;
 }
 
 export interface FullLocaleData {

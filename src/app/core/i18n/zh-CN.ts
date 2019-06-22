@@ -63,4 +63,6 @@ export const ZHCN = {
   'app.demo.copy': '复制代码',
   'app.demo.copied': '复制成功',
   'app.demo.stackblitz': '在 StackBlitz 中打开',
+  'sf.name': '名称',
+  'sf.description': '这是一段描述',
 };

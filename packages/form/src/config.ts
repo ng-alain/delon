@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ERRORSDEFAULT } from './errors';
 import { SFButton } from './interface';
 import { SFUISchemaItem } from './schema/ui';
 
@@ -37,7 +36,7 @@ export class DelonFormConfig {
   /**
    * 自定义通用错误信息
    */
-  errors?: { [key: string]: string } = ERRORSDEFAULT;
+  errors?: { [key: string]: string } = {};
   /**
    * 默认全局布局
    */
