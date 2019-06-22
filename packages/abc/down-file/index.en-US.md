@@ -34,3 +34,9 @@ Property | Description | Type | Default
 1. `file-name`
 2. `filename*`, `filename` of `content-disposition`
 3. `filename`, `x-filename` of `headers`
+
+### Supported Browsers
+
+Use `new Blob()` to verify [Browser Compatible](https://github.com/eligrey/FileSaver.js/#supported-browsers), The `down-file__not-support` style is added to the target element when not compatible.
+
+> The default incompatible processing behavior is hidden. You can set the Less variable to `@down-file-not-support-behavior: 'disabled'` to can't be click.

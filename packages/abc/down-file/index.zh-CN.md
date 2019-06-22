@@ -34,3 +34,9 @@ yarn add file-saver
 1. `file-name`
 2. `content-disposition` 的 `filename*`、`filename`
 3. header 参数 `filename`、`x-filename`
+
+### 兼容性
+
+使用 `new Blob()` 来校验[浏览器兼容](https://github.com/eligrey/FileSaver.js/#supported-browsers)，若不兼容会在目标元素上增加 `down-file__not-support` 样式。
+
+> 默认不兼容处理行为为隐藏，可以设置 Less 变量为 `@down-file-not-support-behavior: 'disabled'` 表示禁止点击。

@@ -1,0 +1,15 @@
+@import '../../../theme/styles/default.less';
+@import './variable.less';
+
+@{down-file-prefix} {
+  &__not-support {
+    // @down-file-not-support-behavior
+    .down-file-not-support-behavior-mixin(@value) when (@value = 'disabled') {
+      pointer-events: none;
+    }
+    .down-file-not-support-behavior-mixin(@value) when (@value = 'hidden') {
+      display: none;
+    }
+    .down-file-not-support-behavior-mixin(@down-file-not-support-behavior);
+  }
+}
