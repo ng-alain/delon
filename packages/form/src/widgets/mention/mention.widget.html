@@ -13,8 +13,7 @@
               [nzPrefix]="i.prefix"
               (nzOnSelect)="_select($event)"
               (nzOnSearchChange)="_search($event)">
-    <ng-container *ngIf="ui.inputStyle !== 'textarea'">
-      <input nzMentionTrigger
+      <input *ngIf="ui.inputStyle !== 'textarea'" nzMentionTrigger
              nz-input
              [attr.id]="id"
              [disabled]="disabled"
@@ -25,10 +24,7 @@
              [attr.maxLength]="schema.maxLength || null"
              [attr.placeholder]="ui.placeholder"
              autocomplete="off" />
-    </ng-container>
-
-    <ng-container *ngIf="ui.inputStyle === 'textarea'">
-      <textarea nzMentionTrigger
+      <textarea *ngIf="ui.inputStyle === 'textarea'" nzMentionTrigger
                 nz-input
                 [attr.id]="id"
                 [disabled]="disabled"
@@ -40,6 +36,5 @@
                 [attr.placeholder]="ui.placeholder"
                 [nzAutosize]="i.autosize">
         </textarea>
-    </ng-container>
   </nz-mention>
 </sf-item-wrap>

@@ -66,14 +66,14 @@
             {{'app.header.menu.components' | translate}}
           </li>
           <li nz-menu-item>
-            <nz-dropdown nzPlacement="bottomRight">
-              <div nz-dropdown>{{'app.header.menu.delon' | translate}}</div>
+            <div nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="delonMenu">{{'app.header.menu.delon' | translate}}</div>
+            <nz-dropdown-menu #delonMenu="nzDropdownMenu">
               <ul nz-menu>
                 <li *ngFor="let i of delon" nz-menu-item routerLink="/{{i}}/getting-started/{{i18n.zone}}">
                   {{'app.header.menu.' + i | translate}}
                 </li>
               </ul>
-            </nz-dropdown>
+            </nz-dropdown-menu>
           </li>
           <li nz-menu-item>
             <a href="https://e.ng-alain.com/" target="_blank">
