@@ -6,10 +6,9 @@ import { SchemaValidatorFactory } from '../validator.factory';
 import { FormProperty, PropertyGroup } from './form.property';
 import { FormPropertyFactory } from './form.property.factory';
 import { ObjectProperty } from './object.property';
+import { SF_SEQ } from '../const';
 
 export class ArrayProperty extends PropertyGroup {
-  tick = 1;
-
   constructor(
     private formPropertyFactory: FormPropertyFactory,
     schemaValidatorFactory: SchemaValidatorFactory,
@@ -25,10 +24,12 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   getProperty(path: string) {
-    const subPathIdx = path.indexOf('/');
+    const subPathIdx = path.indexOf(SF_SEQ);
     const pos = +(subPathIdx !== -1 ? path.substr(0, subPathIdx) : path);
     const list = this.properties as PropertyGroup[];
-    if (isNaN(pos) || pos >= list.length) return undefined;
+    if (isNaN(pos) || pos >= list.length) {
+      return undefined;
+    }
     const subPath = path.substr(subPathIdx + 1);
     return list[pos].getProperty(subPath);
   }
@@ -60,12 +61,7 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   private addProperty(formData: {}) {
-    const newProperty = this.formPropertyFactory.createProperty(
-      this.schema.items!,
-      this.ui.$items,
-      formData,
-      this,
-    ) as ObjectProperty;
+    const newProperty = this.formPropertyFactory.createProperty(this.schema.items!, this.ui.$items, formData, this) as ObjectProperty;
     (this.properties as FormProperty[]).push(newProperty);
     return newProperty;
   }
@@ -78,8 +74,17 @@ export class ArrayProperty extends PropertyGroup {
   }
 
   private clearErrors(path?: string) {
-    if (path) delete this._objErrors[path];
-    else this._objErrors = {};
+    if (path) {
+      delete this._objErrors[path];
+    } else {
+      this._objErrors = {};
+    }
+  }
+
+  private updatePaths() {
+    (this.properties as FormProperty[]).forEach((p, idx) => {
+      p.path = [p.parent!.path, idx].join(SF_SEQ);
+    });
   }
 
   // #region actions
@@ -94,6 +99,7 @@ export class ArrayProperty extends PropertyGroup {
     const list = this.properties as FormProperty[];
     this.clearErrors(list[index].path);
     list.splice(index, 1);
+    this.updatePaths();
     this.updateValueAndValidity(false, true);
   }
 

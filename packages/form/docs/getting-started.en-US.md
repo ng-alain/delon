@@ -129,9 +129,7 @@ export class HomeComponent {
     }
   };
 
-  submit(value: any) {
-
-  }
+  submit(value: any) { }
 }
 ```
 
@@ -184,7 +182,7 @@ export class HomeComponent {
 | `getValue`      | Get value via path                                          | `any`          |
 | `setValue`      | Set value via path, shoudl be throw error when invalid path | `this`         |
 
-> **Note:** All paths are separated by `/`, for example: `/user/name`.
+> **Note:** All paths are separated by `/`, for example: `/user/name`, `/arr/0/name`.
 
 ### Button
 
