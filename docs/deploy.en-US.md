@@ -16,6 +16,18 @@ npm run build
 
 NG-ALAIN itself is an Angular CLI project, so you can also complete more complex build requirements with [Build](https://angular.io/cli/build). After the package is successfully packaged, the `dist` folder will be generated in the root directory, which is to build the packaged file, including several static files such as `*.js`, `*.css`, `index.html`.
 
+### JavaScript heap out of memory
+
+Avoid executing `ng build` when throw error **JavaScript heap out of memory**:
+
+```json
+{
+  "scripts": {
+    "build": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod"
+  }
+}
+```
+
 ### Environmental variable
 
 When you need to distinguish between development and deployment and test environment, you can configure the corresponding parameters according to different environments through the `src/environments` folder. The configuration items can also be called directly in the application. At the same time, you need to configure the configuration items in `angular.json`. Finally, you can change the environment configuration through commands.

@@ -48,10 +48,6 @@ stages:
   - name: test
     if: branch = master
 
-# matrix:
-#   allow_failures:
-#     - env: "TASK=build_artifacts"
-
 install:
   - chmod +x -R scripts
   - yarn
