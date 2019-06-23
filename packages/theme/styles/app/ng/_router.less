@@ -1,12 +1,12 @@
 // router ant
-@router-animation-name:     antFadeIn;
+@router-animation-name: antFadeIn;
 @router-animation-duration: 1s;
 
-// https://github.com/angular/angular/issues/9845
-// 一种路由切换动画的简单实现
+// A simple implementation of a route switching animation
+// ISSUES: https://github.com/angular/angular/issues/9845
 app-layout router-outlet + * {
   display: block;
   // animation-fill-mode: both;
-	animation-name: @router-animation-name; // fadeIn;
+  animation-name: @router-animation-name; // fadeIn;
   animation-duration: @router-animation-duration;
 }
