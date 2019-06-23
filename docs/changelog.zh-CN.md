@@ -16,7 +16,7 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 # [8.0.0-rc.0](https://github.com/ng-alain/delon/compare/7.7.1...8.0.0-rc.0) (2019-06-23)
 
-**`8.0.0-rc.0` 版本有一些破坏性变更，更多请阅读[升级指南](https://ng-alain.com/docs/upgrade-v8/en)。**
+**`8.0.0-rc.0` 版本有一些破坏性变更，更多请阅读[升级指南](https://ng-alain.com/docs/upgrade-v8/zh)。**
 
 ### Bug Fixes
 
@@ -37,7 +37,7 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ### BREAKING CHANGES
 
-* `DelonACLModule` 必须使用 `forRoot()` 来导入访模块
+* `DelonACLModule` 必须使用 `forRoot()` 来导入该模块
 
 
 ## 8.0.0 之前版本
