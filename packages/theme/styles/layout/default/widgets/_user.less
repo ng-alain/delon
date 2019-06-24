@@ -1,20 +1,21 @@
-@alain-default-user-block-width: @alain-default-aside-wd - (@layout-gutter * 6);
+@alain-default-user-block-margin: @layout-gutter * 3;
 @alain-default-user-block-avatar-hw: @avatar-size-lg;
 
 .alain-default-aside-user-mixin(@enabled) when(@enabled=true) {
   @{alain-default-prefix}__aside-user {
-    display: block !important;
-    width: @alain-default-user-block-width;
-    margin: 0 auto;
-    padding-top: (@layout-gutter * 3);
+    display: flex;
+    margin: @alain-default-user-block-margin @alain-default-user-block-margin 0 @alain-default-user-block-margin;
     cursor: pointer;
     .@{ant-prefix}-dropdown-trigger {
       display: flex;
       align-items: center;
     }
     &-info {
-      width: @alain-default-user-block-width - @alain-default-user-block-avatar-hw - @layout-gutter;
+      flex: 1;
+      overflow: hidden;
       color: @text-color;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     &-avatar {
       margin-right: @layout-gutter;
