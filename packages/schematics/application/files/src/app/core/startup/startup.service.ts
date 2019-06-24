@@ -14,8 +14,8 @@ import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
 
 /**
- * 用于应用启动时
- * 一般用来获取应用所需要的基础数据等
+ * Used for application startup
+ * Generally used to get the basic data of the application, like: Menu Data, User Data, etc.
  */
 @Injectable()
 export class StartupService {
@@ -39,27 +39,26 @@ export class StartupService {
       this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),<% } %>
       this.httpClient.get('assets/tmp/app-data.json')
     ).pipe(
-      // 接收其他拦截器后产生的异常消息
       catchError(([<% if (i18n) { %>langData, <% } %>appData]) => {
           resolve(null);
           return [<% if (i18n) { %>langData, <% } %>appData];
       })
     ).subscribe(([<% if (i18n) { %>langData, <% } %>appData]) => {<% if (i18n) { %>
-      // setting language data
+      // Setting language data
       this.translate.setTranslation(this.i18n.defaultLang, langData);
       this.translate.setDefaultLang(this.i18n.defaultLang);<% } %>
 
-      // application data
+      // Application data
       const res: any = appData;
-      // 应用信息：包括站点名、描述、年份
+      // Application information: including site name, description, year
       this.settingService.setApp(res.app);
-      // 用户信息：包括姓名、头像、邮箱地址
+      // User information: including name, avatar, email address
       this.settingService.setUser(res.user);
-      // ACL：设置权限为全量
+      // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
       this.aclService.setFull(true);
-      // 初始化菜单
+      // Menu data, https://ng-alain.com/theme/menu
       this.menuService.add(res.menu);
-      // 设置页面标题的后缀
+      // Can be set page suffix title, https://ng-alain.com/theme/title
       this.titleService.suffix = res.app.name;
     },
     () => { },
@@ -97,32 +96,32 @@ export class StartupService {
       email: 'cipchk@qq.com',
       token: '123456789'
     };
-    // 应用信息：包括站点名、描述、年份
+    // Application information: including site name, description, year
     this.settingService.setApp(app);
-    // 用户信息：包括姓名、头像、邮箱地址
+    // User information: including name, avatar, email address
     this.settingService.setUser(user);
-    // ACL：设置权限为全量
+    // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
     this.aclService.setFull(true);
-    // 初始化菜单
+    // Menu data, https://ng-alain.com/theme/menu
     this.menuService.add([
       {
-        text: '主导航',
+        text: 'Main',
         group: true,
         children: [
           {
-            text: '仪表盘',
+            text: 'Dashboard',
             link: '/dashboard',
             icon: { type: 'icon', value: 'appstore' }
           },
           {
-            text: '快捷菜单',
+            text: 'Quick Menu',
             icon: { type: 'icon', value: 'rocket' },
             shortcutRoot: true
           }
         ]
       }
     ]);
-    // 设置页面标题的后缀
+    // Can be set page suffix title, https://ng-alain.com/theme/title
     this.titleService.suffix = app.name;
 
     resolve({});
