@@ -47,8 +47,8 @@ export abstract class FormProperty {
     this._parent = parent;
     if (parent) {
       this._root = parent.root;
-    } else if (this instanceof PropertyGroup) {
-      this._root = this as PropertyGroup;
+    } else {
+      this._root = this as any;
     }
     this.path = path;
   }
@@ -70,7 +70,7 @@ export abstract class FormProperty {
   }
 
   get root(): PropertyGroup {
-    return this._root || ((this as any) as PropertyGroup);
+    return this._root;
   }
 
   get value(): SFValue {

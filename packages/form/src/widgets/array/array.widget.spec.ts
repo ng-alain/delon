@@ -128,7 +128,6 @@ describe('form: widget: array', () => {
       expect(getPaths().length).toBe(1);
       expect(getPaths()[0]).toBe('/arr/0');
     });
-
     it('should always start from 0', () => {
       page
         .newSchema(deepCopy(schema))
@@ -140,6 +139,10 @@ describe('form: widget: array', () => {
       page.reset().add();
       expect(getPaths().length).toBe(1);
       expect(getPaths()[0]).toBe('/arr/0');
+    });
+    it('should be return undefined when invalid path subscript', () => {
+      page.newSchema(deepCopy(schema)).add();
+      expect(page.getProperty('/arr/10/a')).toBeUndefined();
     });
   });
 });

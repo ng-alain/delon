@@ -53,9 +53,10 @@ describe('form: component', () => {
     describe('[default]', () => {
       it('should throw error when parent is not object or array', () => {
         expect(() => {
-          const factory = dl.injector.get<FormPropertyFactory>(FormPropertyFactory);
+          // tslint:disable-next-line: no-string-literal
+          const factory = context.comp['formPropertyFactory'] as FormPropertyFactory;
           factory.createProperty({}, {}, {}, { type: 'invalid', path: 'a' } as any, 'a');
-        }).toThrowError();
+        }).toThrowError(`Instanciation of a FormProperty with an unknown parent type: invalid`);
       });
 
       it('should throw error when type is invalid', () => {
