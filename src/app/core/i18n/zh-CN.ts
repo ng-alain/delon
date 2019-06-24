@@ -9,7 +9,7 @@ export const ZHCN = {
   'app.home.feature.zorro': '丰富的几十种基础组件',
   'app.home.feature.delon': '一组更高阶的业务组件、图表、认证、授权、缓存、Mock、测试等',
   'app.home.feature.out-of-box': '开箱即用',
-  'app.home.feature.out-of-box.desc': '一个完整、可直接用于生产环境的Angular架手架',
+  'app.home.feature.out-of-box.desc': '一个完整、可直接用于生产环境的Angular脚手架',
   'app.home.feature.less': '简单定制',
   'app.home.feature.less.desc': '百种LESS参数定制品牌视觉',
   'app.home.feature.rep': '响应式',
