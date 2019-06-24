@@ -25,7 +25,13 @@ describe('abc: notice-icon', () => {
 
   beforeEach(() => ({ fixture, dl, context } = createTestContext(TestComponent)));
 
-  afterEach(() => context.comp.ngOnDestroy());
+  afterEach(() => {
+    context.comp.ngOnDestroy();
+    const el = document.querySelector('.cdk-overlay-container');
+    if (el) {
+      el.innerHTML = ``;
+    }
+  });
 
   describe('when not data', () => {
     beforeEach(() => (context.data = []));
@@ -68,7 +74,7 @@ describe('abc: notice-icon', () => {
       context.loading = true;
       context.popoverVisible = true;
       fixture.detectChanges();
-      const el = dl.query(By.css('.ant-spin-container')).nativeElement as HTMLElement;
+      const el = document.querySelector('.ant-spin-container') as HTMLElement;
       expect(el.style.display).toBe('');
     });
     it('should be select item', () => {
@@ -76,7 +82,7 @@ describe('abc: notice-icon', () => {
       context.popoverVisible = true;
       fixture.detectChanges();
       expect(context.select).not.toHaveBeenCalled();
-      (dl.query(By.css('nz-list-item')).nativeElement as HTMLElement).click();
+      (document.querySelector('nz-list-item')! as HTMLElement).click();
       fixture.detectChanges();
       expect(context.select).toHaveBeenCalled();
     });
@@ -85,7 +91,7 @@ describe('abc: notice-icon', () => {
       context.popoverVisible = true;
       fixture.detectChanges();
       expect(context.clear).not.toHaveBeenCalled();
-      (dl.query(By.css('.notice-icon__clear')).nativeElement as HTMLElement).click();
+      (document.querySelector('.notice-icon__clear')! as HTMLElement).click();
       fixture.detectChanges();
       expect(context.clear).toHaveBeenCalled();
     });
@@ -95,7 +101,7 @@ describe('abc: notice-icon', () => {
     context.popoverVisible = true;
     context.data = [{ title: 'a1', list: [] }];
     fixture.detectChanges();
-    const a = dl.query(By.css('.notice-icon__notfound')).nativeElement as HTMLElement;
+    const a = document.querySelector('.notice-icon__notfound')! as HTMLElement;
     expect(a.innerText).toBe(zh_CN.noticeIcon.emptyText);
     const srv = injector.get<DelonLocaleService>(DelonLocaleService) as DelonLocaleService;
     srv.setLocale(en_US);
