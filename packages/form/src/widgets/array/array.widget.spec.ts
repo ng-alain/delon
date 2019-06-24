@@ -4,6 +4,7 @@ import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
+import { ArrayProperty, FormProperty } from '../../model';
 
 describe('form: widget: array', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -108,6 +109,40 @@ describe('form: widget: array', () => {
         .checkCount('.sf-array-item', data.length + 1)
         .reset()
         .checkCount('.sf-array-item', data.length);
+    });
+  });
+  describe('#paths', () => {
+    function getPaths(): string[] {
+      const properties = (page.getProperty('/arr') as ArrayProperty).properties as FormProperty[];
+      return properties.map(p => p.path);
+    }
+    it('should be reset path subscript when remove item', () => {
+      page
+        .newSchema(deepCopy(schema))
+        .add()
+        .add();
+      expect(getPaths().length).toBe(2);
+      expect(getPaths()[0]).toBe('/arr/0');
+      expect(getPaths()[1]).toBe('/arr/1');
+      page.remove();
+      expect(getPaths().length).toBe(1);
+      expect(getPaths()[0]).toBe('/arr/0');
+    });
+    it('should always start from 0', () => {
+      page
+        .newSchema(deepCopy(schema))
+        .add()
+        .add();
+      expect(getPaths().length).toBe(2);
+      expect(getPaths()[0]).toBe('/arr/0');
+      expect(getPaths()[1]).toBe('/arr/1');
+      page.reset().add();
+      expect(getPaths().length).toBe(1);
+      expect(getPaths()[0]).toBe('/arr/0');
+    });
+    it('should be return undefined when invalid path subscript', () => {
+      page.newSchema(deepCopy(schema)).add();
+      expect(page.getProperty('/arr/10/a')).toBeUndefined();
     });
   });
 });

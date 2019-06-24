@@ -3,6 +3,7 @@ import { of, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
+import { SF_SEQ } from './const';
 
 export const FORMATMAPS = {
   'date-time': {
@@ -43,10 +44,10 @@ function findSchemaDefinition($ref: string, definitions: SFSchemaDefinition) {
   const match = /^#\/definitions\/(.*)$/.exec($ref);
   if (match && match[1]) {
     // parser JSON Pointer
-    const parts = match[1].split('/');
+    const parts = match[1].split(SF_SEQ);
     let current: any = definitions;
     for (let part of parts) {
-      part = part.replace(/~1/g, '/').replace(/~0/g, '~');
+      part = part.replace(/~1/g, SF_SEQ).replace(/~0/g, '~');
       if (current.hasOwnProperty(part)) {
         current = current[part];
       } else {

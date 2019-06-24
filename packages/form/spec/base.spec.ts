@@ -13,6 +13,7 @@ import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema';
 import { SFUISchema } from '../src/schema/ui';
 import { SFComponent } from '../src/sf.component';
+import { SF_SEQ } from '../src/const';
 
 export const SCHEMA = {
   user: {
@@ -105,7 +106,7 @@ export class SFPage {
   }
 
   private fixPath(path: string) {
-    return path.startsWith('/') ? path : '/' + path;
+    return path.startsWith(SF_SEQ) ? path : SF_SEQ + path;
   }
 
   getValue(path: string): any {

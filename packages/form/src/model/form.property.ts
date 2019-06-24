@@ -9,6 +9,7 @@ import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from '../schema/ui';
 import { isBlank } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
 import { Widget } from '../widget';
+import { SF_SEQ } from '../const';
 
 export abstract class FormProperty {
   private _errors: ErrorData[] | null = null;
@@ -18,7 +19,6 @@ export abstract class FormProperty {
   private _visibilityChanges = new BehaviorSubject<boolean>(true);
   private _root: PropertyGroup;
   private _parent: PropertyGroup | null;
-  private _path: string;
   protected _objErrors: { [key: string]: ErrorData[] } = {};
   schemaValidator: (value: SFValue) => ErrorData[];
   schema: SFSchema;
@@ -26,6 +26,7 @@ export abstract class FormProperty {
   formData: {};
   _value: SFValue = null;
   widget: Widget<FormProperty, SFUISchemaItem>;
+  path: string;
 
   constructor(
     schemaValidatorFactory: SchemaValidatorFactory,
@@ -46,10 +47,10 @@ export abstract class FormProperty {
     this._parent = parent;
     if (parent) {
       this._root = parent.root;
-    } else if (this instanceof PropertyGroup) {
-      this._root = this as PropertyGroup;
+    } else {
+      this._root = this as any;
     }
-    this._path = path;
+    this.path = path;
   }
 
   get valueChanges() {
@@ -69,11 +70,7 @@ export abstract class FormProperty {
   }
 
   get root(): PropertyGroup {
-    return this._root || ((this as any) as PropertyGroup);
-  }
-
-  get path(): string {
-    return this._path;
+    return this._root;
   }
 
   get value(): SFValue {
@@ -149,7 +146,7 @@ export abstract class FormProperty {
     let base: PropertyGroup | null = null;
 
     let result = null;
-    if (path[0] === '/') {
+    if (path[0] === SF_SEQ) {
       base = this.findRoot();
       result = base.getProperty(path.substr(1));
     } else {
@@ -340,7 +337,7 @@ export abstract class PropertyGroup extends FormProperty {
   properties: { [key: string]: FormProperty } | FormProperty[] | null = null;
 
   getProperty(path: string) {
-    const subPathIdx = path.indexOf('/');
+    const subPathIdx = path.indexOf(SF_SEQ);
     const propertyId = subPathIdx !== -1 ? path.substr(0, subPathIdx) : path;
 
     let property = this.properties![propertyId];
