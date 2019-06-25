@@ -24,20 +24,20 @@
 </div>
 <div class="alain-default__aside">
   <div class="alain-default__aside-inner">
-    <nz-dropdown nzTrigger="click" class="alain-default__aside-user">
-      <div nz-dropdown>
-        <nz-avatar class="alain-default__aside-user-avatar" [nzSize]="'large'" nzIcon="anticon anticon-user"></nz-avatar>
-        <div class="alain-default__aside-user-info">
-          <strong>{{settings.user.name}}</strong>
-          <p class="text-truncate mb0">{{settings.user.email}}</p>
-        </div>
+    <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
+      <nz-avatar class="alain-default__aside-user-avatar" [nzSize]="'large'" nzIcon="anticon anticon-user"></nz-avatar>
+      <div class="alain-default__aside-user-info">
+        <strong>{{settings.user.name}}</strong>
+        <p class="text-truncate mb0">{{settings.user.email}}</p>
       </div>
+    </div>
+    <nz-dropdown-menu #userMenu="nzDropdownMenu">
       <ul nz-menu>
         <li nz-menu-item (click)="msgSrv.success('profile')">{{ 'profile' | translate }}</li>
         <li nz-menu-item (click)="msgSrv.success('settings')">{{ 'settings' | translate }}</li>
         <li nz-menu-item (click)="msgSrv.success('logout')">{{ 'logout' | translate }}</li>
       </ul>
-    </nz-dropdown>
+    </nz-dropdown-menu>
     <sidebar-nav class="d-block py-lg"></sidebar-nav>
   </div>
 </div>

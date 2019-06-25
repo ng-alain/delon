@@ -4,7 +4,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 import { DelonFormConfig } from '../config';
 import { ErrorData } from '../errors';
 import { SFValue } from '../interface';
-import { SFSchema } from '../schema';
+import { SFSchema, SFSchemaType } from '../schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from '../schema/ui';
 import { isBlank } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
@@ -61,8 +61,8 @@ export abstract class FormProperty {
     return this._errorsChanges;
   }
 
-  get type(): string {
-    return this.schema.type as string;
+  get type(): SFSchemaType {
+    return this.schema.type!;
   }
 
   get parent(): PropertyGroup | null {

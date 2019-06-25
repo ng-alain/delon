@@ -3,10 +3,6 @@
 
 @{st-prefix} {
   display: block;
-  &__selection {
-    padding-left: 2px;
-    cursor: pointer;
-  }
   &__p-left {
     .@{ant-prefix}-table-pagination {
       display: block;
@@ -51,6 +47,10 @@
   // 修复自动定义图标无法高亮问题
   .@{ant-prefix}-table-thead > tr > th .@{ant-prefix}-table-filter-selected.@{ant-prefix}-table-filter-icon {
     color: @primary-color;
+  }
+  // 修复过滤图标优先级问题
+  .@{ant-prefix}-table-thead > tr > th .@{ant-prefix}-table-filter-icon {
+    position: absolute !important;
   }
 
   @media screen and (min-width: @nz-table-rep-min-width) {

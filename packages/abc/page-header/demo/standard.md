@@ -12,16 +12,16 @@ bg: f2f4f5
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-demo',
-    template: `
-<page-header [title]="'单号：234231029431'"
+  selector: 'app-demo',
+  template: `
+  <page-header [title]="'单号：234231029431'"
     [breadcrumb]="breadcrumb" [logo]="logo" [action]="action" [extra]="extra" [content]="content" [tab]="tab">
     <ng-template #breadcrumb>
-        <nz-breadcrumb>
-            <nz-breadcrumb-item><a>一级菜单</a></nz-breadcrumb-item>
-            <nz-breadcrumb-item><a>二级菜单</a></nz-breadcrumb-item>
-            <nz-breadcrumb-item><a>三级菜单</a></nz-breadcrumb-item>
-        </nz-breadcrumb>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item><a>一级菜单</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item><a>二级菜单</a></nz-breadcrumb-item>
+        <nz-breadcrumb-item><a>三级菜单</a></nz-breadcrumb-item>
+      </nz-breadcrumb>
     </ng-template>
     <ng-template #logo><img src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png"></ng-template>
     <ng-template #action>
@@ -29,14 +29,16 @@ import { Component } from '@angular/core';
         <button nz-button>操作</button>
         <button nz-button>操作</button>
       </nz-button-group>
-      <nz-dropdown class="mx-sm">
-        <button nz-button nz-dropdown><i nz-icon nzType="ellipsis"></i></button>
+      <button nz-button nz-dropdown [nzDropdownMenu]="actionMoreMenu" class="mx-sm">
+        <i nz-icon nzType="ellipsis"></i>
+      </button>
+      <nz-dropdown-menu #actionMoreMenu="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item>选项一</li>
           <li nz-menu-item>选项二</li>
           <li nz-menu-item>选项三</li>
         </ul>
-      </nz-dropdown>
+      </nz-dropdown-menu>
       <button nz-button [nzType]="'primary'">主操作</button>
     </ng-template>
     <ng-template #content>
@@ -50,25 +52,25 @@ import { Component } from '@angular/core';
       </sv-container>
     </ng-template>
     <ng-template #extra>
-        <div nz-row>
-            <div nz-col nzXs="24" nzSm="12">
-                <p class="text-grey">状态</p>
-                <p class="text-lg">待审批</p>
-            </div>
-            <div nz-col nzXs="24" nzSm="12">
-                <p class="text-grey">订单金额</p>
-                <p class="text-lg">¥ 568.08</p>
-            </div>
+      <div nz-row>
+        <div nz-col nzXs="24" nzSm="12">
+          <p class="text-grey">状态</p>
+          <p class="text-lg">待审批</p>
         </div>
+        <div nz-col nzXs="24" nzSm="12">
+          <p class="text-grey">订单金额</p>
+          <p class="text-lg">¥ 568.08</p>
+        </div>
+      </div>
     </ng-template>
     <ng-template #tab>
-        <nz-tabset [nzSize]="'default'">
-            <nz-tab nzTitle="详情"></nz-tab>
-            <nz-tab nzTitle="规则"></nz-tab>
-        </nz-tabset>
+      <nz-tabset [nzSize]="'default'">
+        <nz-tab nzTitle="详情"></nz-tab>
+        <nz-tab nzTitle="规则"></nz-tab>
+      </nz-tabset>
     </ng-template>
-</page-header>
-    `
+  </page-header>
+  `
 })
 export class DemoComponent {
 }

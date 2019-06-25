@@ -1,5 +1,5 @@
 import { DelonFormConfig } from '../config';
-import { SFSchema } from '../schema';
+import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { retrieveSchema } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
@@ -28,12 +28,15 @@ export class FormPropertyFactory {
       if (parent.parent !== null) {
         path += SF_SEQ;
       }
-      if (parent.type === 'object') {
-        path += propertyId;
-      } else if (parent.type === 'array') {
-        path += ((parent as ArrayProperty).properties as PropertyGroup[]).length;
-      } else {
-        throw new Error('Instanciation of a FormProperty with an unknown parent type: ' + parent.type);
+      switch (parent.type) {
+        case 'object':
+          path += propertyId;
+          break;
+        case 'array':
+          path += ((parent as ArrayProperty).properties as PropertyGroup[]).length;
+          break;
+        default:
+          throw new Error('Instanciation of a FormProperty with an unknown parent type: ' + parent.type);
       }
     } else {
       path = SF_SEQ;
