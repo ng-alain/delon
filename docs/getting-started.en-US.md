@@ -34,7 +34,7 @@ Please make sure global Angular Cli is latest version via `ng version` command (
 # yarn global add @angular/cli@7.3.x
 ng new my-project --style less
 cd my-project
-ng add ng-alain
+ng add ng-alain@next
 npm start
 ```
 

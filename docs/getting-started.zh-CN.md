@@ -34,7 +34,7 @@ NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们�
 # yarn global add @angular/cli@7.3.x
 ng new my-project --style less
 cd my-project
-ng add ng-alain
+ng add ng-alain@next
 npm start
 ```
 
