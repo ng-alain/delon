@@ -187,7 +187,7 @@ export interface STColumn {
   /**
    * 列标题
    */
-  title: string;
+  title?: string;
   /**
    * 列标题 i18n
    */
