@@ -23,7 +23,7 @@ describe('abc: ellipsis', () => {
   describe('', () => {
     configureTestSuite(genModule);
 
-    it('should be not lengthh & line', () => {
+    it('should be not length & line', () => {
       fixture = TestBed.createComponent(TestLengthComponent);
       dl = fixture.debugElement;
       context = fixture.componentInstance;
@@ -89,8 +89,7 @@ describe('abc: ellipsis', () => {
         }));
         it('should working', () => {
           // tslint:disable-next-line:no-string-literal
-          expect(+page.getEl('.ellipsis')!.style!['webkitLineClamp']).toBe(context!
-            .lines as number);
+          expect(+page.getEl('.ellipsis')!.style!['webkitLineClamp']).toBe(context!.lines as number);
         });
       });
       describe('when not support line clamp', () => {
@@ -104,14 +103,14 @@ describe('abc: ellipsis', () => {
         it('should working', fakeAsync(() => {
           context.lines = 3;
           page.tick();
-          expect(page.getText()).toBe('There were injuries');
+          expect(page.getText()).toBe('There were');
         }));
         it('should be not innerText', fakeAsync(() => {
           const el = page.getEl('.ellipsis__shadow');
           spyOnProperty(el!, 'innerText').and.returnValue(null);
           context.lines = 3;
           page.tick();
-          expect(page.getText()).toBe('There were injuries');
+          expect(page.getText()).toBe('There were');
         }));
         it('should be raw response when html offsetHeight is smallest', () => {
           const el = page.getEl('.ellipsis__shadow');
@@ -128,10 +127,7 @@ describe('abc: ellipsis', () => {
     it('should be throw error when include html element', fakeAsync(() => {
       expect(() => {
         genModule();
-        TestBed.overrideTemplate(
-          TestLengthComponent,
-          `<ellipsis length="1"><p>asdf</p></ellipsis>`,
-        );
+        TestBed.overrideTemplate(TestLengthComponent, `<ellipsis length="1"><p>asdf</p></ellipsis>`);
         fixture = TestBed.createComponent(TestLengthComponent);
         dl = fixture.debugElement;
         context = fixture.componentInstance;
@@ -212,14 +208,7 @@ class TestBaseComponent {
 
 @Component({
   template: `
-    <ellipsis
-      #comp
-      [tooltip]="tooltip"
-      [length]="length"
-      [fullWidthRecognition]="fullWidthRecognition"
-      [tail]="tail"
-      >{{ text }}</ellipsis
-    >
+    <ellipsis #comp [tooltip]="tooltip" [length]="length" [fullWidthRecognition]="fullWidthRecognition" [tail]="tail">{{ text }}</ellipsis>
   `,
 })
 class TestLengthComponent extends TestBaseComponent {}
