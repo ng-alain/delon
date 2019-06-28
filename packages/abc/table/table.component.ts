@@ -701,19 +701,24 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this.orgTable.cdkVirtualScrollViewport;
   }
 
-  resetColumns(options?: STResetColumnsOption) {
-    if (options) {
-      if (typeof options.columns !== 'undefined') {
-        this.columns = options.columns;
-      }
-      if (typeof options.pi !== 'undefined') {
-        this.pi = options.pi;
-      }
-      if (typeof options.ps !== 'undefined') {
-        this.ps = options.ps;
-      }
+  resetColumns(options?: STResetColumnsOption): Promise<this> {
+    options = { emitReload: true, ...options };
+    if (typeof options.columns !== 'undefined') {
+      this.columns = options.columns;
     }
-    return this.refreshColumns().loadPageData();
+    if (typeof options.pi !== 'undefined') {
+      this.pi = options.pi;
+    }
+    if (typeof options.ps !== 'undefined') {
+      this.ps = options.ps;
+    }
+    this.refreshColumns();
+    if (options.emitReload === true) {
+      return this.loadPageData();
+    } else {
+      this.cd();
+      return Promise.resolve(this);
+    }
   }
 
   private refreshColumns(): this {

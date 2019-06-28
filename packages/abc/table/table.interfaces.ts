@@ -23,6 +23,10 @@ export interface STResetColumnsOption {
   pi?: number;
   ps?: number;
   columns?: STColumn[];
+  /**
+   * Whether to trigger a data load, default: `true`
+   */
+  emitReload?: boolean;
 }
 
 export interface STReq {
