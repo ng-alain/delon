@@ -222,7 +222,7 @@ function getIcons(host: Tree): string[] {
       res = findIcons(host.read(path)!.toString());
     }
     if (res.length > 0) {
-      console.log(`found ${JSON.stringify(res)} icons in ${path}\n`);
+      console.log(`found ${JSON.stringify(res)} icons in ${path}`);
       iconClassList.push(...res);
     }
   });
@@ -287,7 +287,9 @@ export function pluginIcon(options: PluginOptions): Rule {
     genCustomIcons(options, host);
     const icons = getIcons(host);
     genIconFile(options, host, icons);
-    console.log(`\n生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`);
-    console.log(`\nFinished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`);
+    console.log(`\n\n`);
+    console.log(`生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`);
+    console.log(`Finished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`);
+    console.log(`\n\n`);
   };
 }
