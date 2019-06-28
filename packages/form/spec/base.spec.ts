@@ -264,7 +264,7 @@ export class SFPage {
   }
 
   checkError(text: string): this {
-    const el = this.getEl('nz-form-explain');
+    const el = this.getEl('.ant-form-explain');
     if (text == null) {
       expect(el == null).toBe(true);
       return this;
