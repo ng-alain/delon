@@ -30,9 +30,9 @@ const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe, I18nPipe, HTMLPipe, U
 
 // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts#L6
 
-import { BellOutline, CaretUpOutline, DeleteOutline, InboxOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import { BellOutline, DeleteOutline, InboxOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 import { NzIconService } from 'ng-zorro-antd/icon';
-const ICONS = [BellOutline, CaretUpOutline, DeleteOutline, PlusOutline, InboxOutline];
+const ICONS = [BellOutline, DeleteOutline, PlusOutline, InboxOutline];
 
 // #endregion
 
