@@ -28,7 +28,7 @@
           <nz-col *ngIf="i.visible && !i.ui.hidden" [nzSpan]="arraySpan" [attr.data-index]="idx" class="sf-array-item">
             <nz-card>
               <sf-item [formProperty]="i"></sf-item>
-              <span *ngIf="removeTitle" class="remove" (click)="removeItem(idx)" [attr.title]="removeTitle">
+              <span *ngIf="showRemove" class="sf__array-remove" (click)="removeItem(idx)" [attr.title]="removeTitle">
                 <i nz-icon nzType="delete"></i>
               </span>
             </nz-card>
