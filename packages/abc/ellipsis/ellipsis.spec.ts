@@ -41,10 +41,10 @@ describe('abc: ellipsis', () => {
         dl = fixture.debugElement;
         context = fixture.componentInstance;
         page = new PageObject();
-        fixture.detectChanges();
       });
 
       it('should working', () => {
+        fixture.detectChanges();
         page.check('There were...');
       });
 
