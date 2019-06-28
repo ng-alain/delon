@@ -23,6 +23,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     const {
       type,
       text,
+      hint,
       action,
       accept,
       limit,
@@ -41,7 +42,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       directory,
       openFileDialogOnClick,
     } = this.ui;
-    this.i = {
+    const res: any = {
       type: type || 'select',
       text: text || '点击上传',
       action: action || '',
@@ -55,22 +56,23 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       listType: listType || 'text',
       multiple: toBool(multiple, false),
       name: name || 'file',
-      showUploadList: toBool(showUploadList, true),
+      showUploadList: showUploadList == null ? true : showUploadList,
       withCredentials: toBool(withCredentials, false),
       resReName: (resReName || '').split('.'),
       urlReName: (urlReName || '').split('.'),
       beforeUpload: typeof beforeUpload === 'function' ? beforeUpload : null,
       customRequest: typeof customRequest === 'function' ? customRequest : null,
     };
-    if (this.i.listType === 'picture-card') {
+    if (res.listType === 'picture-card') {
       this.btnType = 'plus';
     }
-    if (this.i.type === 'drag') {
-      this.i.listType = null;
+    if (res.type === 'drag') {
+      res.listType = null;
       this.btnType = 'drag';
-      this.i.text = this.ui.text || `单击或拖动文件到该区域上传`;
-      this.i.hint = this.ui.hint || `支持单个或批量，严禁上传公司数据或其他安全文件`;
+      res.text = text || `单击或拖动文件到该区域上传`;
+      res.hint = hint || `支持单个或批量，严禁上传公司数据或其他安全文件`;
     }
+    this.i = res;
   }
 
   change(args: UploadChangeParam) {

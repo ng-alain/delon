@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs';
-import { UploadFilter, UploadFile, UploadXHRArgs, UploadChangeParam } from 'ng-zorro-antd/upload';
+import { UploadFilter, UploadFile, UploadXHRArgs, UploadChangeParam, ShowUploadListInterface } from 'ng-zorro-antd/upload';
 import { SFUISchemaItem } from '../../schema/ui';
 import { SFSchemaEnumType } from '../../schema';
 
@@ -82,7 +82,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 是否展示列表, 可设为一个对象，用于单独设定 `showPreviewIcon` 和 `showRemoveIcon`，默认：`true`
    */
-  showUploadList?: boolean;
+  showUploadList?: boolean | ShowUploadListInterface;
 
   /**
    * 是否支持多选文件，`IE10+` 支持。开启后按住 `ctrl` 可选择多个文件，默认：`false`
