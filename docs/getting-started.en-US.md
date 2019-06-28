@@ -30,8 +30,6 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 Please make sure global Angular Cli is latest version via `ng version` command (Currently <img src="https://img.shields.io/npm/v/@angular/cli.svg?style= Flat-square" alt="npm">), please refer to [CLI Command Reference](https://angular.cn/cli) for how to upgrade.
 
 ```bash
-# Install global @angular/cli
-# yarn global add @angular/cli@7.3.x
 ng new my-project --style less
 cd my-project
 ng add ng-alain@next

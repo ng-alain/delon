@@ -16,8 +16,8 @@
   <nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl" [nzOffset]="ui.offsetControl">
     <div class="ant-form-item-control" [class.has-error]="showError">
       <ng-content></ng-content>
-      <nz-form-extra *ngIf="schema.description" [innerHTML]="schema.description"></nz-form-extra>
-      <nz-form-explain *ngIf="!ui.onlyVisual && showError">{{error}}</nz-form-explain>
+      <div *ngIf="!ui.onlyVisual && showError" class="ant-form-explain">{{error}}</div>
+      <div *ngIf="schema.description" [innerHTML]="schema.description" class="ant-form-extra"></div>
     </div>
   </nz-col>
 </nz-form-item>

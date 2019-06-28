@@ -21,7 +21,7 @@
 </section>
 <div *ngIf="data.con.content" [innerHTML]="data.con.content" routeTransfer></div>
 <ng-container *ngIf="data.demo">
-  <h2 id="{{demoStr}}" style="margin-bottom: 32px;" [innerHTML]="demoContent"></h2>
+  <h2 id="{{demoStr}}" style="margin: 32px 0 24px 0;" [innerHTML]="demoContent"></h2>
   <ng-content></ng-content>
 </ng-container>
 <div *ngIf="data.con.api" class="markdown api-container" [innerHTML]="data.con.api" routeTransfer></div>

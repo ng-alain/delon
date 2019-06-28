@@ -350,12 +350,12 @@ describe('form: component', () => {
         it('with false', () => {
           context.firstVisual = false;
           fixture.detectChanges();
-          page.checkCount('nz-form-explain', 0);
+          page.checkCount('.ant-form-explain', 0);
         });
         it('with true', () => {
           context.firstVisual = true;
           fixture.detectChanges();
-          page.checkCount('nz-form-explain', 2);
+          page.checkCount('.ant-form-explain', 2);
         });
       });
 
@@ -364,13 +364,13 @@ describe('form: component', () => {
           context.onlyVisual = false;
           fixture.detectChanges();
           page.checkCount('.sf__no-error', 0);
-          page.checkCount('nz-form-explain', 2);
+          page.checkCount('.ant-form-explain', 2);
         });
         it('with true', () => {
           context.onlyVisual = true;
           fixture.detectChanges();
           page.checkCount('.sf__no-error', 1);
-          page.checkCount('nz-form-explain', 0);
+          page.checkCount('.ant-form-explain', 0);
         });
       });
 
