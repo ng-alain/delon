@@ -25,7 +25,7 @@ import { STColumn } from '@delon/abc';
   selector: 'app-demo',
   template: `
   <div class="mb-md">
-    <nz-checkbox-group [(ngModel)]="customColumns" (ngModelChange)="st.resetColumns()"></nz-checkbox-group>
+    <nz-checkbox-group [(ngModel)]="customColumns" (ngModelChange)="st.resetColumns({ emitReload: false })"></nz-checkbox-group>
   </div>
   <st #st [data]="users" [columns]="columns">
     <ng-template st-row="customTitle" type="title" let-c>
