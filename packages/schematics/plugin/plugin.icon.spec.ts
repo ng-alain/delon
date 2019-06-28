@@ -3,8 +3,8 @@ import { createAlainApp } from '../utils/testing';
 
 const testCases = {
   'style-icons.ts': `
-  import { FilterOutline, StepBackwardFill } from '@ant-design/icons-angular/icons';
-  export const ICONS = [ FilterOutline, StepBackwardFill ];
+  import { NzFilterOutline, StepBackwardFill } from '@ant-design/icons-angular/icons';
+  export const ICONS = [ NzFilterOutline, StepBackwardFill ];
   `,
   'test-icon.ts': `
   import { Component } from '@angular/core';
@@ -31,7 +31,7 @@ const testCases = {
     <i nz-icon nzType="nz-filter" nzTheme="outline"></i>
     <i nz-icon type="step-backward" theme="outline"></i>
     <i nz-icon type="step-backward" theme="fill"></i>
-    <i nz-icon nzType="nz-step-backward" nzTheme="fill"></i>
+    <i nz-icon nzType="nz-step-a" nzTheme="fill"></i>
     <i nz-icon type="up-circle" theme="twotone"></i>
     <nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
     \`
@@ -55,7 +55,7 @@ describe('NgAlainSchematic: plugin: icon', () => {
     expect(tree.exists(path)).toBe(true);
     const content = tree.readContent(path);
     // ingore custom icons
-    expect(content).not.toContain(`FilterOutline`);
+    expect(content).not.toContain(`NzFilterOutline`);
     expect(content).not.toContain(`StepBackwardFill`);
     // white icons
     expect(content).not.toContain(`LoadingOutline`);
@@ -76,6 +76,8 @@ describe('NgAlainSchematic: plugin: icon', () => {
     expect(content).toContain(`MenuFoldOutline`);
     expect(content).toContain(`MenuUnfoldFill`);
     expect(content).toContain(`MenuUnfoldOutline`);
+    // <i nz-icon nzType="nz-step-a" nzTheme="fill"></i>
+    expect(content).toContain(`NzStepA`);
     // attributes
     expect(content).toContain(`ArrowDownOutline`);
     // expect(content).toContain(`SearchOutline`);
