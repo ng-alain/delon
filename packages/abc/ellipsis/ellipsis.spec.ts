@@ -43,34 +43,32 @@ describe('abc: ellipsis', () => {
         page = new PageObject();
       });
 
-      it('should working', () => {
-        fixture.detectChanges();
-        page.check('There were...');
-      });
+      it('should working', fakeAsync(() => {
+        page.tick().check('There were...');
+      }));
 
-      it('should be tooltip', () => {
+      it('should be tooltip', fakeAsync(() => {
         context.tooltip = true;
-        fixture.detectChanges();
-        page.hasTooltip().check('There were...');
-      });
+        page
+          .tick()
+          .hasTooltip()
+          .check('There were...');
+      }));
 
-      it('should be auto hide tail', () => {
+      it('should be auto hide tail', fakeAsync(() => {
         context.length = 4;
         context.text = 'asdf';
-        fixture.detectChanges();
-        page.check('asdf');
+        page.tick().check('asdf');
         context.length = 1;
         context.text = 'as';
-        fixture.detectChanges();
-        page.check('...');
-      });
+        page.tick().check('...');
+      }));
 
-      it('#fullWidthRecognition', () => {
+      it('#fullWidthRecognition', fakeAsync(() => {
         context.fullWidthRecognition = true;
         context.text = 'cipchk,你好吗';
-        fixture.detectChanges();
-        page.check('cipchk,你...');
-      });
+        page.tick().check('cipchk,你...');
+      }));
     });
 
     describe('#line', () => {
