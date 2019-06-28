@@ -65,11 +65,12 @@ describe('abc: ellipsis', () => {
         page.check('...');
       });
 
-      it('#fullWidthRecognition', fakeAsync(() => {
+      it('#fullWidthRecognition', () => {
         context.fullWidthRecognition = true;
         context.text = 'cipchk,你好吗';
-        page.tick().check('cipchk,你...');
-      }));
+        fixture.detectChanges();
+        page.check('cipchk,你...');
+      });
     });
 
     describe('#line', () => {
@@ -100,16 +101,16 @@ describe('abc: ellipsis', () => {
           page.tick();
         }));
         it('should working', fakeAsync(() => {
-          context.lines = 3;
+          context.lines = 2;
           page.tick();
-          expect(page.getText()).toBe('There were');
+          expect((dl.nativeElement as HTMLElement).innerHTML).toContain('...');
         }));
         it('should be not innerText', fakeAsync(() => {
           const el = page.getEl('.ellipsis__shadow');
           spyOnProperty(el!, 'innerText').and.returnValue(null);
-          context.lines = 3;
+          context.lines = 2;
           page.tick();
-          expect(page.getText()).toBe('There were');
+          expect((dl.nativeElement as HTMLElement).innerHTML).toContain('...');
         }));
         it('should be raw response when html offsetHeight is smallest', () => {
           const el = page.getEl('.ellipsis__shadow');
@@ -187,7 +188,7 @@ describe('abc: ellipsis', () => {
 
     tick(): this {
       fixture.detectChanges();
-      tick();
+      tick(1000);
       fixture.detectChanges();
       return this;
     }
@@ -220,7 +221,7 @@ class TestLengthComponent extends TestBaseComponent {}
       [lines]="lines"
       [fullWidthRecognition]="fullWidthRecognition"
       [tail]="tail"
-      style="width: 20px; display: inline-block;"
+      style="width: 1px; display: block;"
       ><div [innerHTML]="html"></div
     ></ellipsis>
   `,

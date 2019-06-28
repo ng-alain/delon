@@ -16,7 +16,6 @@ const routes: Route[] = [
       { path: '', redirectTo: 'zh', pathMatch: 'full' },
       { path: 'zh', component: HomeComponent, data: { titleI18n: 'slogan' } },
       { path: 'en', component: HomeComponent, data: { titleI18n: 'slogan' } },
-      { path: 'tools', loadChildren: () => import('./tools/tools.module').then(m => m.ToolsModule) },
       // #region region routers
       { path: 'docs', loadChildren: () => import('./gen/docs/docs.module').then(m => m.DocsModule) },
       {

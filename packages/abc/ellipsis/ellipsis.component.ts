@@ -86,35 +86,32 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     }, '');
   }
 
-  private bisection(th: number, m: number, b: number, e: number, text: string, shadowNode: HTMLElement): number {
+  private bisection(targetHeight: number, mid: number, begin: number, end: number, text: string, node: HTMLElement): number {
     const suffix = this.tail;
-    let mid = m;
-    let end = e;
-    let begin = b;
-    shadowNode.innerHTML = text.substring(0, mid) + suffix;
-    let sh = shadowNode.offsetHeight;
+    node.innerHTML = text.substring(0, mid) + suffix;
+    let sh = node.offsetHeight;
 
-    if (sh <= th) {
-      shadowNode.innerHTML = text.substring(0, mid + 1) + suffix;
-      sh = shadowNode.offsetHeight;
-      if (sh > th || mid === begin) {
+    if (sh <= targetHeight) {
+      node.innerHTML = text.substring(0, mid + 1) + suffix;
+      sh = node.offsetHeight;
+      if (sh > targetHeight || mid === begin) {
         return mid;
       }
       begin = mid;
       mid = end - begin === 1 ? begin + 1 : Math.floor((end - begin) / 2) + begin;
-      return this.bisection(th, mid, begin, end, text, shadowNode);
+      return this.bisection(targetHeight, mid, begin, end, text, node);
     }
     if (mid - 1 < 0) {
       return mid;
     }
-    shadowNode.innerHTML = text.substring(0, mid - 1) + suffix;
-    sh = shadowNode.offsetHeight;
-    if (sh <= th) {
+    node.innerHTML = text.substring(0, mid - 1) + suffix;
+    sh = node.offsetHeight;
+    if (sh <= targetHeight) {
       return mid - 1;
     }
     end = mid;
     mid = Math.floor((end - begin) / 2) + begin;
-    return this.bisection(th, mid, begin, end, text, shadowNode);
+    return this.bisection(targetHeight, mid, begin, end, text, node);
   }
 
   private genType() {

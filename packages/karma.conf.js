@@ -60,7 +60,7 @@ module.exports = function (config) {
       executors,
       shardStrategy: 'round-robin'
     };
-    // configuration.browsers = ['ChromeHeadless'];
+    configuration.browsers = ['ChromeHeadless'];
   }
 
   config.set(configuration);
