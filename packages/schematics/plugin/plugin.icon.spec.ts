@@ -19,12 +19,19 @@ const testCases = {
     <i nz-icon class="anticon anticon-user"></i>
     <i nz-icon type="align-{{type ? 'left' : 'right'}}"></i>
     <i nz-icon type="align-{{type ? centerVar : topVar}}"></i>
+    <i nz-icon nzType="nz-align-{{type ? 'left' : 'right'}}"></i>
+    <i nz-icon nzType="nz-align-{{type ? centerVar : topVar}}"></i>
     <i nz-icon [type]="type ? 'menu-fold' : 'menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
     <i nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"></i>
+    <i nz-icon [nzType]="type ? 'nz-menu-fold' : 'nz-menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
+    <i nz-icon [nzType]="type ? 'nz-fullscreen' : 'nz-fullscreen-exit'"></i>
     <i nz-icon type="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
+    <i nz-icon nzType="{{ type ? 'nz-arrow-left' : 'nz-arrow-right' }}"></i>
     <i nz-icon type="filter" theme="outline"></i>
+    <i nz-icon nzType="nz-filter" nzTheme="outline"></i>
     <i nz-icon type="step-backward" theme="outline"></i>
     <i nz-icon type="step-backward" theme="fill"></i>
+    <i nz-icon nzType="nz-step-backward" nzTheme="fill"></i>
     <i nz-icon type="up-circle" theme="twotone"></i>
     <nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
     \`
@@ -39,12 +46,8 @@ describe('NgAlainSchematic: plugin: icon', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainApp());
-    Object.keys(testCases).forEach(name =>
-      tree.create(`/projects/foo/src/${name}`, testCases[name]),
-    );
-    tree = await runner
-      .runSchematicAsync('plugin', { name: 'icon', type: 'add' }, tree)
-      .toPromise();
+    Object.keys(testCases).forEach(name => tree.create(`/projects/foo/src/${name}`, testCases[name]));
+    tree = await runner.runSchematicAsync('plugin', { name: 'icon', type: 'add' }, tree).toPromise();
   });
 
   it(`should working`, () => {
@@ -62,6 +65,9 @@ describe('NgAlainSchematic: plugin: icon', () => {
     // type="align-{{type ? 'left' : 'right'}}"
     expect(content).toContain(`AlignLeftOutline`);
     expect(content).toContain(`AlignRightOutline`);
+    // nzType="align-{{type ? 'left' : 'right'}}"
+    expect(content).toContain(`NzAlignLeftOutline`);
+    expect(content).toContain(`NzAlignRightOutline`);
     // [type]="value ? 'icon' : 'icon'"
     expect(content).toContain(`FullscreenExitOutline`);
     expect(content).toContain(`FullscreenOutline`);

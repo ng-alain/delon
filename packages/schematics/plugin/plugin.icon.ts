@@ -1,21 +1,21 @@
 import { strings } from '@angular-devkit/core';
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { findNodes } from '@schematics/angular/utility/ast-utils';
-import { parseFragment, Attribute, DefaultTreeDocument, DefaultTreeElement } from 'parse5';
+import { parseFragment, Attribute, DefaultTreeDocument, DefaultTreeElement, DefaultTreeNode } from 'parse5';
 import * as ts from 'typescript';
 
 import { getSourceFile, updateComponentMetadata } from '../utils/ast';
 import { PluginOptions } from './interface';
 
 // includes ng-zorro-antd & @delon/*
-// - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts#L6
-// - @delon: https://github.com/ng-alain/delon/blob/master/packages/theme/src/theme.module.ts#L33
 const WHITE_ICONS = [
-  // zorro
+  // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts
   'BarsOutline',
   'CalendarOutline',
   'CaretDownFill',
   'CaretDownOutline',
+  'CaretUpFill',
+  'CaretUpOutline',
   'CheckCircleFill',
   'CheckCircleOutline',
   'CheckOutline',
@@ -23,9 +23,11 @@ const WHITE_ICONS = [
   'CloseCircleFill',
   'CloseCircleOutline',
   'CloseOutline',
+  'CopyOutline',
   'DoubleLeftOutline',
   'DoubleRightOutline',
   'DownOutline',
+  'EditOutline',
   'EllipsisOutline',
   'ExclamationCircleFill',
   'ExclamationCircleOutline',
@@ -41,13 +43,11 @@ const WHITE_ICONS = [
   'QuestionCircleOutline',
   'RightOutline',
   'SearchOutline',
+  'StarFill',
   'UploadOutline',
   'UpOutline',
-  // delon
+  // - @delon: https://github.com/ng-alain/delon/blob/master/packages/theme/src/theme.module.ts#L33
   'BellOutline',
-  'FilterFill',
-  'CaretUpOutline',
-  'CaretDownOutline',
   'DeleteOutline',
   'PlusOutline',
   'InboxOutline',
@@ -73,8 +73,8 @@ ATTRIBUTE_NAMES.forEach(key => {
 function findIcons(html: string): string[] {
   const res: string[] = [];
   const doc = parseFragment(html) as DefaultTreeDocument;
-  const visitNodes = nodes => {
-    nodes.forEach(node => {
+  const visitNodes = (nodes: DefaultTreeNode[]) => {
+    nodes.forEach((node: DefaultTreeElement) => {
       if (node.attrs) {
         const classIcon = genByClass(node);
         if (classIcon) res.push(classIcon);
@@ -105,13 +105,13 @@ function genByClass(node: DefaultTreeElement): string | null {
 function genByComp(node: DefaultTreeElement): string[] | null {
   if (!node.attrs.find(attr => attr.name === 'nz-icon')) return null;
 
-  const type = node.attrs.find(attr => attr.name === 'type' || attr.name === '[type]');
+  const type = node.attrs.find(attr => ['type', '[type]', 'nztype', '[nztype]'].includes(attr.name));
   if (!type) return null;
 
   const types = getNgValue(type);
   if (types == null) return null;
 
-  const theme = node.attrs.find(attr => attr.name === 'theme' || attr.name === '[theme]');
+  const theme = node.attrs.find(attr => ['theme', '[theme]', 'nztheme', '[nztheme]'].includes(attr.name));
   const themes = getNgValue(theme!);
   if (themes == null || themes.length === 0) return types;
 
@@ -233,7 +233,7 @@ function getIcons(host: Tree): string[] {
     .filter(w => w != null && !WHITE_ICONS.includes(w))
     .forEach(v => iconSet.add(v));
 
-  return Array.from(iconSet).sort();
+  return Array.from(iconSet).sort() as string[];
 }
 
 function genCustomIcons(options: PluginOptions, host: Tree) {
@@ -256,9 +256,7 @@ export const ICONS = [ ];
     w.moduleSpecifier.getText().includes('@ant-design/icons-angular/icons'),
   ) as ts.ImportDeclaration;
   if (!iconImport) return;
-  (iconImport.importClause!.namedBindings as ts.NamedImports)!.elements!.forEach(v =>
-    WHITE_ICONS.push(v.getText().trim()),
-  );
+  (iconImport.importClause!.namedBindings as ts.NamedImports)!.elements!.forEach(v => WHITE_ICONS.push(v.getText().trim()));
 }
 
 function genIconFile(options: PluginOptions, host: Tree, icons: string[]) {
@@ -290,8 +288,6 @@ export function pluginIcon(options: PluginOptions): Rule {
     const icons = getIcons(host);
     genIconFile(options, host, icons);
     console.log(`\n生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`);
-    console.log(
-      `\nFinished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`,
-    );
+    console.log(`\nFinished, if it's first run, you need manually reference it, refer to: https://ng-alain.com/theme/icon/en`);
   };
 }
