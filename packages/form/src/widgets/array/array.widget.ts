@@ -34,12 +34,10 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   addItem() {
-    if (this.addDisabled) return;
     this.formProperty.add({});
   }
 
   removeItem(index: number) {
-    if (!this.showRemove) return;
     this.formProperty.remove(index);
   }
 }
