@@ -133,7 +133,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
   }
 
   private gen() {
-    const { type, lines, length, fullWidthRecognition, tail, orgEl, cdr } = this;
+    const { type, lines, length, fullWidthRecognition, tail, orgEl, cdr, ngZone } = this;
     if (type === 'length') {
       const el = orgEl.nativeElement as HTMLElement;
       if (el.children.length > 0) {
@@ -152,7 +152,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         }
         this.text = displayText + tail;
       }
-      cdr.detectChanges();
+      ngZone.run(() => cdr.detectChanges());
     } else if (type === 'line') {
       const { shadowOrgEl, shadowTextEl } = this;
       const orgNode = shadowOrgEl.nativeElement as HTMLElement;
@@ -173,7 +173,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
         this.text = lineText;
         this.targetCount = count;
       }
-      cdr.detectChanges();
+      ngZone.run(() => cdr.detectChanges());
     }
   }
 
