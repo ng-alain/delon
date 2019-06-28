@@ -154,7 +154,7 @@ export class SFPage {
   }
   /** 下标从 `1` 开始 */
   remove(index = 1): this {
-    this.getEl(`.sf__array-container [data-index="${index - 1}"] .remove`).click();
+    this.getEl(`.sf__array-container [data-index="${index - 1}"] .sf__array-remove`).click();
     return this;
   }
 

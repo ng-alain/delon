@@ -81,7 +81,20 @@ describe('form: widget: array', () => {
         .checkCount('.sf-array-item', 0)
         .add()
         .checkCount('.sf-array-item', 1)
-        .checkCount(`.sf__array-container [data-index="0"] .remove`, 0);
+        .checkCount(`.sf__array-container [data-index="0"] .sf__array-remove`, 0);
+    });
+  });
+  describe('#disabled or #readOnly', () => {
+    let s: SFSchema;
+    beforeEach(() => {
+      s = deepCopy(schema);
+      s.properties!.arr.readOnly = true;
+    });
+    it('should be disabled add button', () => {
+      page.newSchema(s).checkCount('.sf__array-add button[disabled]', 1);
+    });
+    it('should be disabled all item remove button', () => {
+      page.newSchema(s, {}, { arr: [{}] }).checkCount('.sf__array-remove', 0);
     });
   });
   describe('#default data', () => {

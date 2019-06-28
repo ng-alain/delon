@@ -15,7 +15,11 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   arraySpan = 8;
 
   get addDisabled() {
-    return this.schema.maxItems && (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems;
+    return this.disabled || (this.schema.maxItems && (this.formProperty.properties as FormProperty[]).length >= this.schema.maxItems);
+  }
+
+  get showRemove() {
+    return !this.disabled && this.removeTitle;
   }
 
   ngOnInit(): void {
@@ -30,10 +34,12 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   addItem() {
-    this.formProperty.add(null!);
+    if (this.addDisabled) return;
+    this.formProperty.add({});
   }
 
   removeItem(index: number) {
+    if (!this.showRemove) return;
     this.formProperty.remove(index);
   }
 }
