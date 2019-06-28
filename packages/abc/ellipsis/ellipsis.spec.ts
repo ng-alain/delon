@@ -65,12 +65,11 @@ describe('abc: ellipsis', () => {
         page.check('...');
       });
 
-      it('#fullWidthRecognition', () => {
+      it('#fullWidthRecognition', fakeAsync(() => {
         context.fullWidthRecognition = true;
         context.text = 'cipchk,你好吗';
-        fixture.detectChanges();
-        page.check('cipchk,你...');
-      });
+        page.tick().check('cipchk,你...');
+      }));
     });
 
     describe('#line', () => {
@@ -222,9 +221,8 @@ class TestLengthComponent extends TestBaseComponent {}
       [fullWidthRecognition]="fullWidthRecognition"
       [tail]="tail"
       style="width: 20px; display: inline-block;"
-    >
-      <div [innerHTML]="html"></div>
-    </ellipsis>
+      ><div [innerHTML]="html"></div
+    ></ellipsis>
   `,
 })
 class TestLineComponent extends TestBaseComponent {}
