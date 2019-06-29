@@ -32,6 +32,7 @@ const exampleModules: ExampleModules = {
 function generateModule(config: ModuleConfig) {
   const distPath = path.join(rootDir, config.dist);
 
+  // tslint:disable-next-line: prefer-object-spread
   const metas: Meta[] = Object.assign([], config.extraRouteMeta);
   const modules: any = {
     imports: [],
@@ -91,9 +92,7 @@ function generateModule(config: ModuleConfig) {
       }
     });
 
-    const newList = demos.data.filter(
-      w => w.type === 'example' && exampleModules.list.filter(ew => ew.urls === w.urls).length === 0,
-    );
+    const newList = demos.data.filter(w => w.type === 'example' && exampleModules.list.filter(ew => ew.urls === w.urls).length === 0);
 
     exampleModules.list.push(...newList);
   }
@@ -101,13 +100,7 @@ function generateModule(config: ModuleConfig) {
   config.dir.forEach(dirConfig => {
     const tpl = fs.readFileSync(path.join(rootDir, dirConfig.template.content)).toString('utf8');
 
-    const files = groupFiles(
-      dirConfig.src.map(p => path.join(rootDir, p)),
-      dirConfig,
-      isSyncSpecific,
-      target,
-      siteConfig,
-    );
+    const files = groupFiles(dirConfig.src.map(p => path.join(rootDir, p)), dirConfig, isSyncSpecific, target, siteConfig);
 
     files.forEach(item => {
       // #region generate document file
@@ -137,14 +130,7 @@ function generateModule(config: ModuleConfig) {
       // #endregion
 
       // #region generate demo files
-      const demos = generateDemo(
-        rootDir,
-        item.key,
-        path.join(path.dirname(item.data[defaultLang]), 'demo'),
-        meta.cols,
-        config,
-        siteConfig,
-      );
+      const demos = generateDemo(rootDir, item.key, path.join(path.dirname(item.data[defaultLang]), 'demo'), meta.cols, config, siteConfig);
       // #endregion
 
       // #region generate document file
@@ -187,11 +173,11 @@ function generateModule(config: ModuleConfig) {
 
   // #region generate meta file
 
-  const metaObj = Object.assign({ types: [] }, includeAttributes(config, {}));
+  const metaObj = { types: [], ...includeAttributes(config, {}) };
   metaObj.list = metas;
 
   generateDoc(
-    <MetaTemplateData>{ data: JSON.stringify(metaObj) },
+    { data: JSON.stringify(metaObj) } as MetaTemplateData,
     fs.readFileSync(path.join(rootDir, config.template.meta)).toString('utf8'),
     path.join(distPath, `meta.ts`),
   );

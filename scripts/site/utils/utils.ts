@@ -20,7 +20,7 @@ export function escapeHTML(str: string, escapeQuotes: boolean = false) {
   }
 
   let escaped = str
-    .replace(/&/g, '&amp;')
+    // .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
@@ -95,6 +95,6 @@ export function genComponentName(...names) {
   return `${names.map(key => genUpperName(key)).join('')}Component`;
 }
 
-export function genSelector(...names) {
+export function genSelector(...names: string[]) {
   return `app-${names.join('-')}`;
 }

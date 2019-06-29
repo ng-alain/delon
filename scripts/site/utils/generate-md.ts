@@ -90,9 +90,16 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
   const ret: string = pair[1](markdownData);
   if (codeEscape) {
     return ret.replace(
-      /<pre class="hljs language-([html|ts|typescript|diff]+)"><code>([\s\S]*)<\/code><\/pre>/g,
-      (fullWord: any, lang: any, code: any) => {
-        return `<pre class="hljs language-$1"><code>${escapeHTML(code)}</code></pre>`;
+      /<pre class="hljs language-([a-zA-Z0-9]+)"><code>([\s\S]+)<\/code><\/pre>/g,
+      (_fullWord: string, lang: string, code: string) => {
+        if (lang === 'html') {
+          code = escapeHTML(code);
+        } else if ((lang === 'ts' || lang === 'typescript') && code.includes(`template: `)) {
+          code = code.replace(/template: `([^`]+)`/g, (_tFullword: string, tHtml: string) => {
+            return 'template: `' + escapeHTML(tHtml) + '`';
+          });
+        }
+        return `<pre class="hljs language-${lang}"><code>${code}</code></pre>`;
       },
     );
   } else {
