@@ -14,9 +14,26 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [8.0.0-rc.1](https://github.com/ng-alain/delon/compare/8.0.0-rc.0...8.0.0-rc.1) (2019-06-29)
+
+**`8.0.0-rc.x` version has some breaking changes. pls read more [Upgrade Guide](https://ng-alain.com/docs/upgrade-v8/en).**
+
+### Bug Fixes
+
+* **abc:st:** ingore `title` required in `STColumn` ([#632](https://github.com/ng-alain/delon/issues/632)) ([69608c5](https://github.com/ng-alain/delon/commit/69608c5))
+* **cli:plugin:icon:** fix unidentified `nzType` property ([#637](https://github.com/ng-alain/delon/issues/637)) ([2784a5a](https://github.com/ng-alain/delon/commit/2784a5a))
+* **form:array:** fix disabled add & remove buttons when `readOnly` is `true` ([#633](https://github.com/ng-alain/delon/issues/633)) ([15194cc](https://github.com/ng-alain/delon/commit/15194cc))
+* **form:array:** fix invalid value subscript of path value ([#628](https://github.com/ng-alain/delon/issues/628)) ([09807f7](https://github.com/ng-alain/delon/commit/09807f7))
+* **form:upload:** fix invalid `showUploadList` property ([#634](https://github.com/ng-alain/delon/issues/634)) ([54c3b90](https://github.com/ng-alain/delon/commit/54c3b90))
+
+### Features
+
+* **abc:st:** add `emitReload` of `resetColumns` method ([#635](https://github.com/ng-alain/delon/issues/635)) ([a96123e](https://github.com/ng-alain/delon/commit/a96123e))
+
+
 # [8.0.0-rc.0](https://github.com/ng-alain/delon/compare/7.7.1...8.0.0-rc.0) (2019-06-23)
 
-**`8.0.0-rc.0` version has some breaking changes. pls read more [Upgrade Guide](https://ng-alain.com/docs/upgrade-v8/en).**
+**`8.0.0-rc.x` version has some breaking changes. pls read more [Upgrade Guide](https://ng-alain.com/docs/upgrade-v8/en).**
 
 ### Bug Fixes
 
