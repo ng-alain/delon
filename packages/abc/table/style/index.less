@@ -19,18 +19,15 @@
   }
   // 修复按钮block
   &__btn {
-    &-disabled {
-      &,
-      > a {
-        color: @st-btn-disabled-color;
-        pointer-events: none;
+    &-sub {
+      @{st-prefix}__btn-text {
+        color: inherit;
       }
     }
-    &-sub {
-      .@{ant-prefix}-dropdown-menu-item {
-        > span {
-          display: block;
-        }
+    &-disabled {
+      @{st-prefix}__btn-text {
+        color: @st-btn-disabled-color;
+        pointer-events: none;
       }
     }
   }
