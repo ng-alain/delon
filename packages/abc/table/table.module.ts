@@ -12,6 +12,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 import { DelonACLModule } from '@delon/acl';
 import { DelonUtilModule } from '@delon/util';
@@ -39,6 +40,7 @@ const COMPONENTS = [STComponent, STRowDirective];
     NzRadioModule,
     NzTagModule,
     NzInputModule,
+    NzToolTipModule,
   ],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],

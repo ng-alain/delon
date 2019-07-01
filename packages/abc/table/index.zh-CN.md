@@ -297,6 +297,7 @@ class TestComponent {
 `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | -
 `[iif]` | 自定义条件表达式 | `(item: STData, btn: STColumnButton, column: STColumn) => boolean` | `() => true`
 `[iifBehavior]` | 表达式 `false` 值时渲染方式 | `hide,disabled` | `hide`
+`[tooltip]` | 按钮文字提示 | `string` | -
 
 ### STIcon
 

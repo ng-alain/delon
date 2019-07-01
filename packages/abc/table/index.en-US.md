@@ -314,6 +314,7 @@ Property | Description | Type | Default
 `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | -
 `[iif]` | Custom conditional expression | `(item: STData, btn: STColumnButton, column: STColumn) => boolean` | `() => true`
 `[iifBehavior]` | Render button mode when the conditional expression `false` value | `hide,disabled` | `hide`
+`[tooltip]` | Button popup tip | `string` | -
 
 ### STColumnButtonModal
 

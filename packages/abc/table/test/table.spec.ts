@@ -497,7 +497,7 @@ describe('abc: table', () => {
             },
           ];
           page.newColumn(columns).then(() => {
-            page.expectCell('del', 1, 1, 'nz-popconfirm');
+            page.expectCell('del', 1, 1, '[nz-popconfirm]');
             // mock trigger
             comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
             expect(columns[0].buttons![1].click).not.toHaveBeenCalled();
@@ -1728,6 +1728,19 @@ describe('abc: table', () => {
               done();
             });
         });
+      });
+      it('#tooltip', done => {
+        page
+          .newColumn([
+            {
+              title: '',
+              buttons: [{ text: 'a', click: () => 'load', tooltip: 't' }],
+            },
+          ])
+          .then(() => {
+            page.expectElCount('.st__body [nz-tooltip]', PS);
+            done();
+          });
       });
     });
   });

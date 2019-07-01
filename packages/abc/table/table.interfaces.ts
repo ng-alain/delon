@@ -582,6 +582,8 @@ export interface STColumnButton {
    */
   iifBehavior?: IifBehaviorType;
 
+  tooltip?: string;
+
   [key: string]: any;
 }
 

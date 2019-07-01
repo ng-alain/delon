@@ -23,8 +23,7 @@ Generate a set of button group with a simple configuration (example code: [DemoM
 import { Component } from '@angular/core';
 import { STColumn } from '@delon/abc';
 import { NzMessageService } from 'ng-zorro-antd';
-import { DemoModalComponent } from '@shared/components/dialog/modal.component';
-import { DemoDrawerComponent } from '@shared/components/dialog/drawer.component';
+import { DemoModalComponent, DemoDrawerComponent } from '@shared';
 
 @Component({
   selector: 'app-demo',
@@ -75,6 +74,7 @@ export class DemoComponent {
           click: record => this.message.info(`check-${record.name}`),
           iif: record => record.id % 2 === 0,
           iifBehavior: 'disabled',
+          tooltip: `Is disabled button`,
         },
         {
           icon: 'delete',
@@ -102,6 +102,7 @@ export class DemoComponent {
               click: record => this.message.info(`check-${record.name}`),
               iif: record => record.id % 2 === 0,
               iifBehavior: 'disabled',
+              tooltip: 'This is tooltip',
             },
           ],
         },
