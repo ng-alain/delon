@@ -155,7 +155,11 @@ function addCodeStylesToPackageJson() {
         `prettier@DEP-0.0.0-PLACEHOLDER`,
         `prettier-stylelint@DEP-0.0.0-PLACEHOLDER`,
         `stylelint@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-config-rational-order@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-standard@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-declaration-block-no-ignored-properties@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-order@DEP-0.0.0-PLACEHOLDER`,
       ],
       'devDependencies',
     );
