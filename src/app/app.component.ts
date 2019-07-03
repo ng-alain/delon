@@ -1,7 +1,8 @@
-import { Component, ElementRef, HostBinding, Inject, OnDestroy, Renderer2 } from '@angular/core';
+import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 import { I18NService } from './core/i18n/service';
 import { MetaService } from './core/meta.service';
@@ -13,7 +14,7 @@ import { MobileService } from './core/mobile.service';
     <router-outlet></router-outlet>
   `,
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent {
   @HostBinding('class.mobile')
   isMobile = false;
 
@@ -28,19 +29,14 @@ export class AppComponent implements OnDestroy {
     private title: TitleService,
     private router: Router,
     private mobileSrv: MobileService,
+    breakpointObserver: BreakpointObserver,
   ) {
     renderer.setAttribute(el.nativeElement, 'ng-alain-version', VERSION_ALAIN.full);
     renderer.setAttribute(el.nativeElement, 'ng-zorro-version', VERSION_ZORRO.full);
 
-    enquire.register(this.query, {
-      match: () => {
-        this.mobileSrv.next(true);
-        this.isMobile = true;
-      },
-      unmatch: () => {
-        this.mobileSrv.next(false);
-        this.isMobile = false;
-      },
+    breakpointObserver.observe(this.query).subscribe(res => {
+      this.isMobile = res.matches;
+      this.mobileSrv.next(this.isMobile);
     });
 
     this.router.events.subscribe(evt => {
@@ -90,9 +86,5 @@ export class AppComponent implements OnDestroy {
       // scroll to top
       document.body.scrollIntoView();
     });
-  }
-
-  ngOnDestroy(): void {
-    enquire.unregister(this.query);
   }
 }
