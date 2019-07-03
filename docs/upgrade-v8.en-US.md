@@ -100,7 +100,7 @@ After:
 
 ## 3、Delon
 
-Muse manually modify the `@delon/*` and `ng-alain` dependencies in `package.json` to be the version number: `^8.0.0-rc.0`:
+Muse manually modify the `@delon/*` and `ng-alain` dependencies in `package.json` to be the version number: `^8.0.0`:
 
 ```bash
 yarn
