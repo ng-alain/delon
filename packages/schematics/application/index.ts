@@ -91,6 +91,9 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     if (options.i18n) {
       addPackageToPackageJson(host, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
     }
+    // TODO: fix @angular-devkit/build-angular version
+    // https://github.com/ng-alain/ng-alain/issues/1183
+    addPackageToPackageJson(host, '@angular-devkit/build-angular@~0.800.6', 'devDependencies');
     return host;
   };
 }
