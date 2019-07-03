@@ -28,7 +28,6 @@
             "scripts": [
               "node_modules/aos/dist/aos.js",
               "node_modules/simplemde-antd/dist/simplemde.min.js",
-              "node_modules/enquire.js/dist/enquire.js",
               "node_modules/@antv/g2/dist/g2.min.js",
               "node_modules/@antv/data-set/dist/data-set.min.js",
               "node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js",

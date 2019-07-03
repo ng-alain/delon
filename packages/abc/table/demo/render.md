@@ -49,6 +49,7 @@ import { STColumn } from '@delon/abc';
   `,
 })
 export class DemoComponent {
+  searchValue: string;
   users: any[] = Array(10)
     .fill({})
     .map((_item: any, idx: number) => {

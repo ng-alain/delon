@@ -21,34 +21,38 @@ import { SFSchema } from '@delon/form';
 @Component({
   selector: 'app-demo',
   template: `
-  <sf [schema]="schema" (formSubmit)="submit($event)">
-    <ng-template sf-template="custom" let-me let-ui="ui" let-schema="schema">
+    <sf [schema]="schema" (formSubmit)="submit($event)">
+      <ng-template sf-template="custom" let-me let-ui="ui" let-schema="schema">
         自定义内容:
-        <input nz-input
-                [attr.id]="id"
-                [disabled]="me.disabled"
-                [attr.disabled]="me.disabled"
-                [nzSize]="ui.size"
-                [ngModel]="me.formProperty.value"
-                (ngModelChange)="me.setValue($event)">
-    </ng-template>
-  </sf>
-  `
+        <input
+          nz-input
+          [attr.id]="me.id"
+          [disabled]="me.disabled"
+          [attr.disabled]="me.disabled"
+          [nzSize]="ui.size"
+          [ngModel]="me.formProperty.value"
+          (ngModelChange)="me.setValue($event)"
+        />
+      </ng-template>
+    </sf>
+  `,
 })
 export class DemoComponent {
-    schema: SFSchema = {
-        properties: {
-            custom: {
-                type: 'string',
-                title: '自定义内容',
-                ui: {
-                    widget: 'custom'
-                },
-                default: 'test'
-            }
-        }
-    };
-    constructor(public msg: NzMessageService) { }
-    submit(value: any) { this.msg.success(JSON.stringify(value)); }
+  schema: SFSchema = {
+    properties: {
+      custom: {
+        type: 'string',
+        title: '自定义内容',
+        ui: {
+          widget: 'custom',
+        },
+        default: 'test',
+      },
+    },
+  };
+  constructor(public msg: NzMessageService) {}
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 }
 ```

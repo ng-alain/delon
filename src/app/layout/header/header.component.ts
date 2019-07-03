@@ -5,7 +5,7 @@ import { copy, LazyService } from '@delon/util';
 import { NzMessageService } from 'ng-zorro-antd';
 import { filter } from 'rxjs/operators';
 
-import { I18NService, LangType } from '../../core/i18n/service';
+import { I18NService } from '../../core/i18n/service';
 import { MetaService } from '../../core/meta.service';
 import { MobileService } from '../../core/mobile.service';
 import { MetaSearchGroup, MetaSearchGroupItem } from '../../interfaces';
@@ -95,7 +95,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     });
   }
 
-  langChange(language: LangType) {
+  langChange(language: 'en' | 'zh') {
     this.router.navigateByUrl(`${this.i18n.getRealUrl(this.router.url)}/${language}`);
   }
 

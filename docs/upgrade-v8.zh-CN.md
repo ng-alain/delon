@@ -130,7 +130,7 @@ NG-ALAIN 始终以 Angular Cli 产生的基础结构为基准，因此对于文�
 3. 修复 `lint:ts` 命令行相应路径
 ```diff
 - "lint:ts": "tslint -p src/tsconfig.app.json -c tslint.json \"src/**/*.ts\" --fix",
-+ "lint:ts": "tslint -p tsconfig.app.json -c tslint.json \"src/**/*.ts\" --fix",
++ "lint:ts": "tslint -c tslint.json \"src/**/*.ts\" --fix",
 ```
 
 ## 命令行

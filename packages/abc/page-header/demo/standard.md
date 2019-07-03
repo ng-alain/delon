@@ -10,6 +10,7 @@ bg: f2f4f5
 
 ```ts
 import { Component } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-demo',
@@ -73,5 +74,6 @@ import { Component } from '@angular/core';
   `
 })
 export class DemoComponent {
+  constructor(public msg: NzMessageService) {}
 }
 ```

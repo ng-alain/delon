@@ -57,10 +57,14 @@ DEPENDENCIES=$(node -p "
     'tslint-language-service',
     'lint-staged',
     'husky',
-    'prettier',
     'prettier-stylelint',
-    'stylelint',
+    'stylelint-config-prettier',
+    'stylelint-config-rational-order',
     'stylelint-config-standard',
+    'stylelint-declaration-block-no-ignored-properties',
+    'stylelint-order',
+    'stylelint',
+    'prettier',
     '@antv/data-set',
     '@antv/g2',
     '@antv/g2-plugin-slider',
@@ -294,11 +298,11 @@ echo "Finished!!"
 # TODO: just only cipchk
 # clear | bash ./scripts/ci/build-schematics.sh -b -t
 # clear | bash ./scripts/ci/build-schematics.sh -b -copy
-# clear | bash ./scripts/ci/build-schematics.sh -b -copy -debug -dev
+# clear | bash ./scripts/ci/build-schematics.sh -b -copy -debug
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng7/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng8/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}/application

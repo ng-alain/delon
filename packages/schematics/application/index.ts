@@ -91,6 +91,9 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     if (options.i18n) {
       addPackageToPackageJson(host, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
     }
+    // TODO: fix @angular-devkit/build-angular version
+    // https://github.com/ng-alain/ng-alain/issues/1183
+    addPackageToPackageJson(host, '@angular-devkit/build-angular@~0.800.6', 'devDependencies');
     return host;
   };
 }
@@ -132,14 +135,14 @@ function addCodeStylesToPackageJson() {
     const json = getPackage(host);
     if (json == null) return host;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
-    json.scripts['lint:ts'] = `tslint -p tsconfig.app.json -c tslint.json \"src/**/*.ts\" --fix`;
+    json.scripts['lint:ts'] = `tslint -c tslint.json \"src/**/*.ts\" --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
     json.scripts['lint-staged'] = `lint-staged`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
     json['lint-staged'] = {
       linters: {
-        '*.ts': ['npm run lint:ts', 'git add'],
-        '*.less': ['npm run lint:style', 'git add'],
+        'src/**/*.ts': ['npm run lint:ts', 'git add'],
+        'src/**/*.less': ['npm run lint:style', 'git add'],
       },
       ignore: ['src/assets/*'],
     };
@@ -155,7 +158,11 @@ function addCodeStylesToPackageJson() {
         `prettier@DEP-0.0.0-PLACEHOLDER`,
         `prettier-stylelint@DEP-0.0.0-PLACEHOLDER`,
         `stylelint@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-config-prettier@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-config-rational-order@DEP-0.0.0-PLACEHOLDER`,
         `stylelint-config-standard@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-declaration-block-no-ignored-properties@DEP-0.0.0-PLACEHOLDER`,
+        `stylelint-order@DEP-0.0.0-PLACEHOLDER`,
       ],
       'devDependencies',
     );
