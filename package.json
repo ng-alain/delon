@@ -140,7 +140,7 @@
     "screenfull": "^4.2.0",
     "less-bundle-promise": "^1.0.7",
     "@ngx-translate/http-loader": "^4.0.0",
-    "lint-staged": "^9.0.1",
+    "lint-staged": "^8.2.1",
     "ng-alain-codelyzer": "^0.0.1",
     "ng-alain-sts": "^0.0.1"
   },

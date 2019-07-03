@@ -132,14 +132,14 @@ function addCodeStylesToPackageJson() {
     const json = getPackage(host);
     if (json == null) return host;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
-    json.scripts['lint:ts'] = `tslint -p tsconfig.app.json -c tslint.json \"src/**/*.ts\" --fix`;
+    json.scripts['lint:ts'] = `tslint -c tslint.json \"src/**/*.ts\" --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
     json.scripts['lint-staged'] = `lint-staged`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
     json['lint-staged'] = {
       linters: {
-        '*.ts': ['npm run lint:ts', 'git add'],
-        '*.less': ['npm run lint:style', 'git add'],
+        'src/**/*.ts': ['npm run lint:ts', 'git add'],
+        'src/**/*.less': ['npm run lint:style', 'git add'],
       },
       ignore: ['src/assets/*'],
     };
