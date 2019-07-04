@@ -32,7 +32,7 @@ NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们�
 ```bash
 ng new my-project --style less
 cd my-project
-ng add ng-alain@next
+ng add ng-alain
 npm start
 ```
 

@@ -32,7 +32,7 @@ Please make sure global Angular Cli is latest version via `ng version` command (
 ```bash
 ng new my-project --style less
 cd my-project
-ng add ng-alain@next
+ng add ng-alain
 npm start
 ```
 
