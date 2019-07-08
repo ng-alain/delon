@@ -235,7 +235,7 @@ Property | Description | Type | Default
 `[buttons]` | Buttons of this column | `STColumnButton[]` | -
 `[width]` | Width of this column (**NOTICE:** If the fixed column must be a number), e.g: `100`, `10%`, `100px` | `string,number` | -
 `[fixed]` | Set column to be fixed, must specify `width` | `left,right` | -
-`[format]` | Format value of this column | `(item: STData, col: STColumn) => string` | -
+`[format]` | Format value of this column | `(item: STData, col: STColumn, index: number) => string` | -
 `[className]` | Class name of this column, e.g: `text-center`, `text-right`, `text-danger`, pls refer to [Style Tools](/theme/tools) | `string` | -
 `[colSpan]` | Span of this column's title | `number` | -
 `[sort]` | Sort config of this column, Remote Data Configuration**Priority** Rule: <br>`true` allow sorting<br>`string` corresponding `key` value| `true,string,STColumnSort` | -
