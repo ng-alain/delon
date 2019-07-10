@@ -261,7 +261,7 @@ export interface STColumn {
   /**
    * 格式化列值
    */
-  format?: (item: STData, col: STColumn) => string;
+  format?: (item: STData, col: STColumn, index: number) => string;
   /**
    * 自定义全/反选选择项
    */

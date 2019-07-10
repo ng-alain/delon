@@ -196,7 +196,7 @@ export class STDataSource {
 
   private get(item: STData, col: STColumn, idx: number): { text: any; org?: any } {
     if (col.format) {
-      const formatRes = col.format(item, col);
+      const formatRes = col.format(item, col, idx);
       if (formatRes && ~formatRes.indexOf('</')) {
         return { text: this.dom.bypassSecurityTrustHtml(formatRes), org: formatRes };
       }
