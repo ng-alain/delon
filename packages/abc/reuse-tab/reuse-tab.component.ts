@@ -94,7 +94,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private genTit(title: ReuseTitle): string {
-    return title.i18n && this.i18nSrv ? this.i18nSrv.fanyi(title.i18n) : title.text;
+    return title.i18n && this.i18nSrv ? this.i18nSrv.fanyi(title.i18n) : title.text!;
   }
 
   private genList(notify?: ReuseTabNotify) {
