@@ -34,7 +34,7 @@ export enum ReuseTabMatchMode {
 }
 
 export interface ReuseTitle {
-  text: string;
+  text?: string;
   i18n?: string;
 }
 
