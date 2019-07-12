@@ -31,14 +31,14 @@ Recursive upward find, for example, the menu data source contains `/ware`, then 
 
 Property | Description  | Type  | Default
 ----|------|-----|------
-text | Text for the menu item, **required** | `string` | -
-i18n | I18n key for the menu item text | `string` | -
+text | Text of menu item, can be choose one of `text` or `i18n` | `string` | -
+i18n | I18n key of menu item, can be choose one of `text` or `i18n` | `string` | -
 group | Whether to display the group name | `boolean` | `true`
-link | Routing for the menu item, Muse be choose `link` or `externalLink` | `string` | -
-externalLink | External link for the menu item, Muse be choose `link` or `externalLink` | `string` | -
-target | Link target value for external link | `_blank,_self,_parent,_top` | -
+link | Routing for the menu item, can be choose one of `link` or `externalLink` | `string` | -
+externalLink | External link for the menu item, can be choose one of `link` or `externalLink` | `string` | -
+target | Specifies `externalLink` where to display the linked URL | `_blank,_self,_parent,_top` | -
 icon | Icon for the menu item, only valid for the first level menu | `string | MenuIcon` | -
-badge | Badget for the menu item | `number` | -
+badge | Badget for the menu item when `group` is `true` | `number` | -
 badgeDot | Whether to display a red dot instead of `badge` value | `boolean` | -
 badgeStatus | Badge [color](https://ng.ant.design/components/badge/en#nz-badge) | `string` | -
 disabled | Whether disable for the menu item | `boolean` | `false`
@@ -48,6 +48,7 @@ acl | ACL configuration, it's equivalent to `ACLService.can(roleOrAbility: ACLCa
 shortcut | Whether shortcut menu item | `boolean` | -
 shortcutRoot | Wheter shortcut menu root node | `boolean` | -
 reuse | Whether to allow reuse, need to cooperate with the `reuse-tab` component | `boolean` | -
+open | Whether to expand, when `checkStrictly` is valid in `sidebar-nav` component | `boolean` | -
 children | Children for the menu item | `Menu[]` | -
 
 ### MenuIcon
@@ -58,5 +59,5 @@ Property | Description  | Type  | Default
 `[value]` | Value for the icon, can be set Class Name, nz-icon of `nzType`, image | `string` | -
 `[theme]` | Type of the ant design icon | `outline,twotone,fill` | `outline`
 `[spin]` | Rotate icon with animation | `boolean` | `false`
-`[twoToneColor]` | Only support the two-tone icon. Specific the primary color. | `string` | -
+`[twoToneColor]` | Only support the two-tone icon. Specific the primary color | `string` | -
 `[iconfont]` | Type of the icon from iconfont | `string` | -
