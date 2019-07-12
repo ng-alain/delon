@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { ACLService } from '@delon/acl';
 import { DelonLocaleService, LocaleData, ALAIN_I18N_TOKEN, AlainI18NService } from '@delon/theme';
-import { deepCopy, InputBoolean, deepMergeKey } from '@delon/util';
+import { deepCopy, InputBoolean } from '@delon/util';
 import { Subject, Observable, merge } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { DelonFormConfig } from './config';
@@ -232,6 +232,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     return (this.i18nSrv ? this.i18nSrv.fanyi(key) : '') || key;
   }
 
+  private inheritUI(ui: SFUISchemaItemRun): void {
+    ['optionalHelp'].filter(key => !!this._defUi[key]).forEach(key => (ui[key] = { ...this._defUi[key], ...ui[key] }));
+  }
+
   private coverProperty() {
     const isHorizontal = this.layout === 'horizontal';
     const _schema = deepCopy(this.schema);
@@ -249,17 +253,15 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       Object.keys(schema.properties!).forEach(key => {
         const uiKey = `$${key}`;
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
-        const ui = deepMergeKey(
-          {},
-          true,
-          { widget: property.type },
-          property.format && FORMATMAPS[property.format],
-          typeof property.ui === 'string' ? { widget: property.ui } : null,
-          !property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null,
-          this._defUi,
-          property.ui,
-          uiSchema[uiKey],
-        ) as SFUISchemaItemRun;
+        const ui = {
+          widget: property.type,
+          ...(property.format && FORMATMAPS[property.format]),
+          ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
+          ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null),
+          ...this._defUi,
+          ...(property.ui as SFUISchemaItem),
+          ...uiSchema[uiKey],
+        } as SFUISchemaItemRun;
         // 继承父节点布局属性
         if (isHorizontal) {
           if (parentUiSchema.spanLabelFixed) {
@@ -288,6 +290,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
             ui.end = null;
           }
         }
+        this.inheritUI(ui);
         if (ui.optionalHelp) {
           if (typeof ui.optionalHelp === 'string') {
             ui.optionalHelp = {
