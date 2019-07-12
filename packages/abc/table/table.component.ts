@@ -101,7 +101,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
   set page(value: STPage) {
     this.clonePage = value;
-    const item = deepMergeKey({}, true, this.cog.page, value);
+    const item = deepMergeKey({}, true, new STConfig().page, this.cog.page, value);
     const { total } = item;
     if (typeof total === 'string' && total.length) {
       this.totalTpl = total;
