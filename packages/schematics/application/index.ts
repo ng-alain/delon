@@ -21,9 +21,18 @@ import { tryAddFile } from '../utils/alain';
 import { HMR_CONTENT } from '../utils/contents';
 import { addFiles } from '../utils/file';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
-import { addPackageToPackageJson, getJSON, getPackage, overwriteJSON, overwritePackage, scriptsToAngularJson } from '../utils/json';
+import {
+  addPackageToPackageJson,
+  getJSON,
+  getPackage,
+  overwriteJSON,
+  overwritePackage,
+  scriptsToAngularJson,
+  getAngular,
+  overwriteAngular,
+} from '../utils/json';
 import { VERSION, ZORROVERSION } from '../utils/lib-versions';
-import { getProject, Project } from '../utils/project';
+import { getProject, Project, getProjectFromWorkspace } from '../utils/project';
 import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
@@ -54,6 +63,19 @@ function fixMain() {
   return (host: Tree) => {
     // fix: main.ts using no hmr file
     tryAddFile(host, `${project.sourceRoot}/main.ts`, HMR_CONTENT.NO_HMR_MAIN_DOT_TS);
+  };
+}
+
+function fixAngularJson(options: ApplicationOptions) {
+  return (host: Tree) => {
+    const json = getAngular(host);
+    const _project = getProjectFromWorkspace(json, options.project);
+
+    // Add proxy.conf.json
+    (_project.targets || _project.architect)!.serve!.options.proxyConfig = 'proxy.conf.json';
+
+    overwriteAngular(host, json);
+    return host;
   };
 }
 
@@ -91,9 +113,6 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
     if (options.i18n) {
       addPackageToPackageJson(host, [`@ngx-translate/core@DEP-0.0.0-PLACEHOLDER`, `@ngx-translate/http-loader@DEP-0.0.0-PLACEHOLDER`]);
     }
-    // TODO: fix @angular-devkit/build-angular version
-    // https://github.com/ng-alain/ng-alain/issues/1183
-    addPackageToPackageJson(host, '@angular-devkit/build-angular@~0.800.6', 'devDependencies');
     return host;
   };
 }
@@ -447,6 +466,7 @@ export default function(options: ApplicationOptions): Rule {
       addStyle(),
       fixLang(options),
       fixVsCode(),
+      fixAngularJson(options),
       installPackages(),
     ])(host, context);
   };

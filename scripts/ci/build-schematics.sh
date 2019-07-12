@@ -119,6 +119,7 @@ copyFiles() {
     "${1}.prettierrc|${2}application/files/root/__dot__prettierrc"
     "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
     "${1}tslint.json|${2}application/files/root"
+    "${1}proxy.conf.json|${2}application/files/root"
     # cli
     # "${1}_cli-tpl|${2}application/files/root/"
     # ci
