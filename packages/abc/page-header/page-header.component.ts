@@ -21,14 +21,7 @@ import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import {
-  AlainI18NService,
-  ALAIN_I18N_TOKEN,
-  Menu,
-  MenuService,
-  SettingsService,
-  TitleService,
-} from '@delon/theme';
+import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
 
 import { PageHeaderConfig } from './page-header.config';
@@ -57,10 +50,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this._menus) {
       return this._menus;
     }
-    this._menus = this.menuSrv.getPathByUrl(
-      this.router.url.split('?')[0],
-      this.recursiveBreadcrumb,
-    );
+    this._menus = this.menuSrv.getPathByUrl(this.router.url.split('?')[0], this.recursiveBreadcrumb);
 
     return this._menus;
   }
@@ -123,11 +113,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       )
       .subscribe(() => this.affix.updatePosition({} as any));
 
-    merge(
-      menuSrv.change.pipe(filter(() => this.inited)),
-      router.events.pipe(filter(e => e instanceof NavigationEnd)),
-      i18nSrv.change,
-    )
+    merge(menuSrv.change.pipe(filter(() => this.inited)), router.events.pipe(filter(e => e instanceof NavigationEnd)), i18nSrv.change)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
         this._menus = null;
@@ -168,7 +154,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       const item = this.menus[this.menus.length - 1];
       let title = item.text;
       if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-      this._titleVal = title;
+      this._titleVal = title!;
     }
 
     if (this._titleVal && this.syncTitle) {
