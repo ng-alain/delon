@@ -1,4 +1,4 @@
-<nz-form-item>
+<nz-form-item [class.ant-form-item-with-help]="showError">
   <nz-col *ngIf="schema.title" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
     <label>
       {{ schema.title }}
