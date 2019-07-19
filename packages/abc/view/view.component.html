@@ -1,8 +1,11 @@
 <div class="sv__label"
      [class.sv__label-empty]="!label"
-     [style.width.px]="parent.labelWidth">
-  <ng-container *stringTemplateOutlet="label">{{label}}</ng-container>
-  <span class="sv__label-optional">
+     [class.sv__label-width]="labelWidth !== null"
+     [style.width.px]="labelWidth">
+  <span class="sv__label-text">
+    <ng-container *stringTemplateOutlet="label">{{label}}</ng-container>
+  </span>
+  <span *ngIf="optional || optionalHelp" class="sv__label-optional">
     {{ optional }}
     <nz-tooltip *ngIf="optionalHelp" [nzTitle]="optionalHelp">
       <i nz-tooltip nz-icon nzType="question-circle"></i>

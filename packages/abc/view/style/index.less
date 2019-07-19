@@ -30,12 +30,12 @@
   }
   &__title {
     display: block;
+    float: none;
+    clear: both;
     margin-bottom: @sv-bottom;
     color: @heading-color;
     font-weight: 500;
     font-size: 14px;
-    float: none;
-    clear: both;
   }
   &__label {
     display: table-cell;
@@ -51,6 +51,9 @@
         margin: 0 8px 0 2px;
         content: ':';
       }
+    }
+    &-text {
+      margin-right: 2px;
     }
     &-optional {
       color: @sv-label-optional-color;
@@ -110,6 +113,16 @@
   &__large {
     @{sv-prefix}__title {
       font-size: 16px;
+    }
+  }
+  &__horizontal {
+    @{sv-prefix}__label-width {
+      display: flex;
+      justify-content: flex-end;
+      @{sv-prefix}__label-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
   &__vertical {

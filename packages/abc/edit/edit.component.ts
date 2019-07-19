@@ -104,13 +104,10 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
 
   private setClass(): this {
     const { el, ren, clsMap, col, parent, cdr, line, labelWidth, rep } = this;
-    this._labelWidth = labelWidth != null ? labelWidth : parent.labelWidth;
+    this._labelWidth = parent.nzLayout === 'horizontal' ? (labelWidth != null ? labelWidth : parent.labelWidth) : null;
     clsMap.forEach(cls => ren.removeClass(el, cls));
     clsMap.length = 0;
-    const repCls =
-      parent.nzLayout === 'horizontal'
-        ? rep.genCls(col != null ? col : parent.colInCon || parent.col)
-        : [];
+    const repCls = parent.nzLayout === 'horizontal' ? rep.genCls(col != null ? col : parent.colInCon || parent.col) : [];
     clsMap.push(`ant-form-item`, ...repCls, `${prefixCls}__item`);
     if (line || parent.line) {
       clsMap.push(`${prefixCls}__line`);
@@ -123,15 +120,10 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   private bindModel() {
     if (!this.ngControl || this.status$) return;
 
-    this.status$ = this.ngControl.statusChanges!.subscribe(res =>
-      this.updateStatus(res === 'INVALID'),
-    );
+    this.status$ = this.ngControl.statusChanges!.subscribe(res => this.updateStatus(res === 'INVALID'));
 
     if (this._autoId) {
-      const control = deepGet(
-        this.ngControl.valueAccessor,
-        '_elementRef.nativeElement',
-      ) as HTMLElement;
+      const control = deepGet(this.ngControl.valueAccessor, '_elementRef.nativeElement') as HTMLElement;
       if (control) {
         control.id = this._id;
       }

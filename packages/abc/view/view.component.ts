@@ -53,6 +53,11 @@ export class SVComponent implements AfterViewInit, OnChanges {
     return this.parent && this.parent.gutter / 2;
   }
 
+  get labelWidth(): number | null {
+    const { labelWidth, layout } = this.parent;
+    return layout === 'horizontal' ? labelWidth : null;
+  }
+
   constructor(
     el: ElementRef,
     @Host() @Optional() public parent: SVContainerComponent,
