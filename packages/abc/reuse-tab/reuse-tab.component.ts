@@ -43,6 +43,8 @@ import { ReuseTabService } from './reuse-tab.service';
   templateUrl: './reuse-tab.component.html',
   host: {
     '[class.reuse-tab]': 'true',
+    '[class.reuse-tab__line]': `tabType === 'line'`,
+    '[class.reuse-tab__card]': `tabType === 'card'`,
   },
   providers: [ReuseTabContextService],
   preserveWhitespaces: false,
@@ -75,6 +77,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tabBarExtraContent: TemplateRef<void>;
   @Input() tabBarGutter: number;
   @Input() tabBarStyle: { [key: string]: string };
+  @Input() tabType: 'line' | 'card' = 'line';
   @Output() readonly change = new EventEmitter<ReuseItem>();
   @Output() readonly close = new EventEmitter<ReuseItem | null>();
 
@@ -137,7 +140,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     this.list = ls;
 
     if (ls.length && isClosed) {
-      this.to(null, this.pos);
+      this.to(this.pos);
     }
 
     this.refStatus(false);
@@ -180,7 +183,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     if (!res.item.active && res.item.index <= this.acitveIndex) {
-      this.to(null, res.item.index, fn);
+      this.to(res.item.index, fn);
     } else {
       fn();
     }
@@ -194,11 +197,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     if (dc) this.cdr.detectChanges();
   }
 
-  to(e: Event | null, index: number, cb?: () => void) {
-    if (e != null) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+  to(index: number, cb?: () => void) {
     index = Math.max(0, Math.min(index, this.list.length - 1));
     const item = this.list[index];
     this.router.navigateByUrl(item.url).then(res => {

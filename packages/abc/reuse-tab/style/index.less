@@ -3,32 +3,49 @@
 
 @{reuse-tab-prefix} {
   display: block;
-  padding: @reuse-tab-padding;
   background-color: @reuse-tab-bg;
-  border-bottom: 1px solid @reuse-tab-border-color;
   outline: none;
   user-select: none;
-  .@{ant-prefix}-tabs-bar {
-    margin-bottom: 0;
-    border-bottom: none;
+  &__line {
+    padding: @reuse-tab-padding;
+    border-bottom: 1px solid @reuse-tab-border-color;
+    .@{ant-prefix}-tabs {
+      &-bar {
+        margin-bottom: 0;
+        border-bottom: none;
+      }
+      &-nav .@{ant-prefix}-tabs-tab {
+        padding: 0;
+        @{reuse-tab-prefix}__op {
+          position: absolute;
+          top: 12px;
+          right: 2px;
+          display: none;
+          margin: 0;
+          font-size: 10px;
+        }
+        &:hover {
+          @{reuse-tab-prefix}__op {
+            display: block;
+          }
+        }
+        @{reuse-tab-prefix}__name {
+          display: inline-block;
+          padding: 8px 20px;
+        }
+      }
+    }
   }
-  .@{ant-prefix}-tabs-nav .@{ant-prefix}-tabs-tab {
-    padding: 0;
-    @{reuse-tab-prefix}__name {
-      display: inline-block;
-      padding: 8px 20px;
+  &__card {
+    padding-top: @reuse-tab-padding;
+    .@{ant-prefix}-tabs-nav-container {
+      padding: 0 8px;
     }
-    @{reuse-tab-prefix}__op {
-      position: absolute;
-      top: 14px;
-      right: 2px;
-      display: none;
-      margin: 0;
-      font-size: 10px;
-    }
-    &:hover {
+    .@{ant-prefix}-tabs-nav .@{ant-prefix}-tabs-tab {
       @{reuse-tab-prefix}__op {
-        display: block;
+        margin-right: 0;
+        margin-left: 4px;
+        color: rgba(0, 0, 0, 0.45);
       }
     }
   }

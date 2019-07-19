@@ -198,6 +198,7 @@ Property | Description | Type | Default
 `[tabBarExtraContent]` | Extra content in tab bar | `TemplateRef<void>` | -
 `[tabBarStyle]` | Tab bar style object | `object` | -
 `[tabBarGutter]` | The gap between tabs | `number` | -
+`[tabType]` | Basic style of tabs | `line, card` | `line`
 `(close)` | Close callback event | `EventEmitter` | -
 `(change)` | Callback when switching | `EventEmitter` | -
 
