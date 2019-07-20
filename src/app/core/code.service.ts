@@ -27,12 +27,8 @@ declare var Slider: any;
  ` + code;
       g2Libs = [
         `'https://unpkg.com/@antv/g2@${pkg.dependencies['@antv/g2'].substr(1)}/dist/g2.min.js'`,
-        `'https://unpkg.com/@antv/data-set@${pkg.dependencies['@antv/data-set'].substr(
-          1,
-        )}/dist/data-set.min.js'`,
-        `'https://unpkg.com/@antv/g2-plugin-slider@${pkg.dependencies[
-          '@antv/g2-plugin-slider'
-        ].substr(1)}/dist/g2-plugin-slider.min.js'`,
+        `'https://unpkg.com/@antv/data-set@${pkg.dependencies['@antv/data-set'].substr(1)}/dist/data-set.min.js'`,
+        `'https://unpkg.com/@antv/g2-plugin-slider@${pkg.dependencies['@antv/g2-plugin-slider'].substr(1)}/dist/g2-plugin-slider.min.js'`,
       ];
     }
 
@@ -190,7 +186,7 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
           'src/app/app.component.ts': code,
           'src/app/app.module.ts': `import { NgModule, APP_INITIALIZER, Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -237,6 +233,7 @@ import { ${componentName} } from './app.component';
 imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([]),
@@ -282,7 +279,6 @@ export class AppModule {
           '@angular/cdk': '*',
           '@angular/core': '*',
           '@angular/forms': '*',
-          '@angular/http': '*',
           '@angular/language-service': '*',
           '@angular/platform-browser': '*',
           '@angular/platform-browser-dynamic': '*',

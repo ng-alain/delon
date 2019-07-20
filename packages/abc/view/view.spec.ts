@@ -83,12 +83,22 @@ describe('abc: view', () => {
           expect(page.getEl(itemCls).style.paddingLeft).toBe(`${halfGutter}px`);
           expect(page.getEl(itemCls).style.paddingRight).toBe(`${halfGutter}px`);
         });
-        it('#labelWidth', () => {
-          context.parent_labelWidth = 20;
-          context.label = 'aa';
-          fixture.detectChanges();
-          page.expect(prefixCls + 'item-fixed');
-          expect(page.getEl(prefixCls + 'label').style.width).toBe(`${context.parent_labelWidth}px`);
+        describe('#labelWidth', () => {
+          it('should working', () => {
+            context.parent_labelWidth = 20;
+            context.label = 'aa';
+            fixture.detectChanges();
+            page.expect(prefixCls + 'item-fixed');
+            expect(page.getEl(prefixCls + 'label').style.width).toBe(`${context.parent_labelWidth}px`);
+          });
+          it('should be ingore width when layout not horizontal', () => {
+            context.parent_layout = 'vertical';
+            context.parent_labelWidth = 20;
+            context.label = 'aa';
+            fixture.detectChanges();
+            page.expect(prefixCls + 'item-fixed');
+            page.expect('sv__label-width', 0);
+          });
         });
       });
       describe('#item', () => {

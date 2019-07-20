@@ -4,8 +4,10 @@
 @{se-prefix} {
   &__title {
     display: block;
+    float: none;
+    clear: both;
     color: @heading-color;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 14px;
     line-height: @form-component-max-height - 0.0001px;
   }
@@ -69,6 +71,22 @@
       &:last-child {
         margin-bottom: 0;
       }
+      @{se-prefix}__label {
+        display: flex;
+        justify-content: flex-end;
+        &-text {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      .@{ant-prefix}-form-item {
+        &-required::before {
+          line-height: inherit;
+        }
+        &-label > label::after {
+          margin-left: 4px;
+        }
+      }
     }
   }
   &__vertical {
@@ -77,7 +95,7 @@
     }
   }
   &__inline {
-    @{se-prefix}__label,
+    .@{ant-prefix}-form-item-label,
     @{se-prefix}__control {
       flex: none;
       width: initial !important;

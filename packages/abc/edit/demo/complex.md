@@ -61,7 +61,7 @@ import { Component } from '@angular/core';
     <se col="1">
       <textarea [(ngModel)]="i.comment" name="comment" nz-input rows="2" placeholder="write any thing"></textarea>
     </se>
-    <se col="1">
+    <se label="Long Long Long Long Long Long Label" col="1">
       <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
     </se>
   </form>`,
