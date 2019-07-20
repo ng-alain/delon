@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
-import { DefaultUrlSerializer, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -58,12 +58,7 @@ describe('auth: base.interceptor', () => {
   let injector: TestBedStatic;
   let http: HttpClient;
   let httpBed: HttpTestingController;
-  const MockRouter = {
-    navigate: jasmine.createSpy('navigate'),
-    parseUrl: jasmine.createSpy('parseUrl').and.callFake((value: any) => {
-      return new DefaultUrlSerializer().parse(value);
-    }),
-  };
+  let router: Router;
   const MockDoc = {
     location: {
       href: '',
@@ -76,7 +71,6 @@ describe('auth: base.interceptor', () => {
       providers: [
         { provide: DOCUMENT, useValue: MockDoc },
         { provide: DelonAuthConfig, useValue: options },
-        { provide: Router, useValue: MockRouter },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: SimpleInterceptor,
@@ -87,6 +81,8 @@ describe('auth: base.interceptor', () => {
     });
     if (tokenData) injector.get(DA_SERVICE_TOKEN).set(tokenData);
 
+    router = injector.get<Router>(Router);
+    spyOn(router, 'navigate');
     http = injector.get<HttpClient>(HttpClient);
     httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
   }
@@ -203,10 +199,9 @@ describe('auth: base.interceptor', () => {
   });
 
   describe('[referrer]', () => {
-    it('should working', (done: () => void) => {
+    it('should be always router url', (done: () => void) => {
       genModule({ executeOtherInterceptors: false }, genModel(SimpleTokenModel, null));
-      const url = '/to-test';
-      http.get(url, { responseType: 'text' }).subscribe(
+      http.get('/to-test', { responseType: 'text' }).subscribe(
         () => {
           expect(false).toBe(true);
           done();
@@ -214,7 +209,7 @@ describe('auth: base.interceptor', () => {
         () => {
           const tokenSrv = injector.get(DA_SERVICE_TOKEN) as MockTokenService;
           expect(tokenSrv.referrer).not.toBeNull();
-          expect(tokenSrv.referrer.url).toBe(url);
+          expect(tokenSrv.referrer.url).toBe('/');
           done();
         },
       );
