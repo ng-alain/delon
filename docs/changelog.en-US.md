@@ -14,6 +14,23 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [8.2.0](https://github.com/ng-alain/delon/compare/8.1.0...8.2.0) (2019-07-20)
+
+### Scaffold
+
+* fix: fix `alain-default.less` file write always append mode ([#1248](https://github.com/ng-alain/ng-alain/pull/1248))
+
+### Bug Fixes
+
+* **abc:*:** fix element as a block element in `sv-title`, `se-title` components ([#651](https://github.com/ng-alain/delon/issues/651)) ([d92a21d](https://github.com/ng-alain/delon/commit/d92a21d))
+* **auth:** fix `referrer.url` should be always latest router url ([#654](https://github.com/ng-alain/delon/issues/654)) ([89098e1](https://github.com/ng-alain/delon/commit/89098e1))
+
+### Features
+
+* **abc:reuse-tab:** add `tabType` property, support `card` style ([#652](https://github.com/ng-alain/delon/issues/652)) ([9da990f](https://github.com/ng-alain/delon/commit/9da990f))
+* **abc:*:** add ellipsis of long label text in `sv` and `se` components ([#651](https://github.com/ng-alain/delon/issues/651)) ([d92a21d](https://github.com/ng-alain/delon/commit/d92a21d))
+
+
 # [8.1.0](https://github.com/ng-alain/delon/compare/8.0.0...8.1.0) (2019-07-12)
 
 ### Scaffold
