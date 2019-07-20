@@ -492,6 +492,18 @@ describe('abc: reuse-tab', () => {
           expect(layoutComp.customContextMenu[1].fn).not.toHaveBeenCalled();
         }));
       });
+      describe('#tabType', () => {
+        it('with line', () => {
+          layoutComp.tabType = 'line';
+          fixture.detectChanges();
+          expect(dl.queryAll(By.css('.reuse-tab__line')).length).toBe(1);
+        });
+        it('with card', () => {
+          layoutComp.tabType = 'card';
+          fixture.detectChanges();
+          expect(dl.queryAll(By.css('.reuse-tab__card')).length).toBe(1);
+        });
+      });
     });
 
     describe('[routing]', () => {
@@ -770,7 +782,7 @@ describe('abc: reuse-tab', () => {
       return this;
     }
     go(pos: number): this {
-      const ls = document.querySelectorAll('.reuse-tab__name');
+      const ls = document.querySelectorAll('[nz-tab-label]');
       if (pos > ls.length) {
         expect(false).toBe(true, `the pos muse be 0-${ls.length}`);
         return this;
@@ -778,7 +790,7 @@ describe('abc: reuse-tab', () => {
         expect(false).toBe(true, `invalid item element`);
         return this;
       }
-      (ls[pos] as HTMLElement).click();
+      rtComp.to(pos);
       this.advance();
       return this;
     }
@@ -829,6 +841,7 @@ class AppComponent {}
       [keepingScroll]="keepingScroll"
       [keepingScrollContainer]="keepingScrollContainer"
       [customContextMenu]="customContextMenu"
+      [tabType]="tabType"
       (change)="change($event)"
       (close)="close($event)"
     >
@@ -848,6 +861,7 @@ class LayoutComponent {
   keepingScroll = false;
   keepingScrollContainer: Window | Element | string | null = null;
   customContextMenu: ReuseCustomContextMenu[] = [];
+  tabType: 'line' | 'card' = 'line';
   change() {}
   close() {}
 }

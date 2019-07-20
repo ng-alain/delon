@@ -199,6 +199,7 @@ export class DemoComponent {
 `[tabBarExtraContent]` | tab bar 上额外的元素 | `TemplateRef<void>` | -
 `[tabBarStyle]` | tab bar 的样式对象 | `object` | -
 `[tabBarGutter]` | tabs 之间的间隙 | `number` | -
+`[tabType]` | tabs 页签的基本样式 | `line, card` | `line`
 `(close)` | 关闭回调 | `EventEmitter` | -
 `(change)` | 切换时回调，接收的参数至少包含：`active`、`list` 两个参数 | `EventEmitter` | -
 
