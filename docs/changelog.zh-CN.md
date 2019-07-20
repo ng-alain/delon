@@ -14,6 +14,23 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [8.2.0](https://github.com/ng-alain/delon/compare/8.1.0...8.2.0) (2019-07-20)
+
+### Scaffold
+
+* 修复每次执行 `npm run color-less` 生成的 `alain-default.less` 文件总是包含上一次结果 ([#1248](https://github.com/ng-alain/ng-alain/pull/1248))
+
+### Bug Fixes
+
+* **abc:*:** 修复 `sv-title`, `se-title` 样式无法独立一行问题 ([#651](https://github.com/ng-alain/delon/issues/651)) ([d92a21d](https://github.com/ng-alain/delon/commit/d92a21d))
+* **auth:** 修复 `referrer.url` 应该总是最新路由地址 ([#654](https://github.com/ng-alain/delon/issues/654)) ([89098e1](https://github.com/ng-alain/delon/commit/89098e1))
+
+### Features
+
+* **abc:reuse-tab:** 新增 `tabType` 属性，支持 `card` 风格 ([#652](https://github.com/ng-alain/delon/issues/652)) ([9da990f](https://github.com/ng-alain/delon/commit/9da990f))
+* **abc:*:** 新增 `sv` 和 `se` 组件若长标签自动增加省略号 ([#651](https://github.com/ng-alain/delon/issues/651)) ([d92a21d](https://github.com/ng-alain/delon/commit/d92a21d))
+
+
 # [8.1.0](https://github.com/ng-alain/delon/compare/8.0.0...8.1.0) (2019-07-12)
 
 ### Scaffold

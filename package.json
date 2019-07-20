@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "8.1.0",
+  "version": "8.2.0",
   "typings": "index.d.ts",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
