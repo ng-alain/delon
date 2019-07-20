@@ -14,14 +14,15 @@ export function CheckJwt(model: JWTTokenModel, offset: number): boolean {
   return model != null && !!model.token && !model.isExpired(offset);
 }
 
-export function ToLogin(options: DelonAuthConfig, injector: Injector, url: string | null | undefined) {
-  (injector.get(DA_SERVICE_TOKEN) as ITokenService).referrer!.url = url;
+export function ToLogin(options: DelonAuthConfig, injector: Injector, url?: string) {
+  const router = injector.get<Router>(Router);
+  (injector.get(DA_SERVICE_TOKEN) as ITokenService).referrer!.url = url || router.url;
   if (options.token_invalid_redirect === true) {
     setTimeout(() => {
       if (/^https?:\/\//g.test(options.login_url!)) {
         injector.get(DOCUMENT).location.href = options.login_url as string;
       } else {
-        injector.get<Router>(Router).navigate([options.login_url]);
+        router.navigate([options.login_url]);
       }
     });
   }
