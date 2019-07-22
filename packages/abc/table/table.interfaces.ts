@@ -57,6 +57,10 @@ export interface STReq {
    */
   allInBody?: boolean;
   /**
+   * 是否延迟加载数据，即渲染结束后不会主动发起请求，默认：`false`
+   */
+  lazyLoad?: boolean;
+  /**
    * 请求前数据处理
    */
   process?: (requestOptions: STRequestOptions) => STRequestOptions;
