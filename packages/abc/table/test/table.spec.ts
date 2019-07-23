@@ -874,6 +874,13 @@ describe('abc: table', () => {
         expect(comp.req.reName!.pi).toBe('PI');
         expect(comp.req.reName!.ps).toBe('ps');
       });
+      it('should be ingore request when lazyLoad is true', () => {
+        const anyComp = comp as any;
+        spyOn(anyComp, 'loadPageData');
+        context.req = { lazyLoad: true };
+        fixture.detectChanges();
+        expect(anyComp.loadPageData).not.toHaveBeenCalled();
+      });
     });
     describe('#res', () => {
       it('should fix all paraments when only part parament', () => {
@@ -1675,6 +1682,16 @@ describe('abc: table', () => {
             page.expectElCount(`.st__width-strict-truncate`, 1);
             page.expectElCount(`.text-truncate`, 0);
             page.expectElCount(`td.aaaa`, context.comp._data.length);
+            done();
+          });
+        });
+        it('should be ingore add text-truncate class when type is img', done => {
+          context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
+          fixture.detectChanges();
+          page.newColumn([{ index: 'img', type: 'img', width: 50 }]).then(() => {
+            page.expectElCount(`.st__width-strict`, 1);
+            page.expectElCount(`.st__width-strict-truncate`, 1);
+            page.expectElCount(`td.text-truncate`, 0);
             done();
           });
         });

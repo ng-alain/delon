@@ -44,6 +44,7 @@ export class STConfig {
     type: 'page',
     method: 'GET',
     allInBody: false,
+    lazyLoad: false,
     reName: { pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' },
   };
   /** 返回体配置 */

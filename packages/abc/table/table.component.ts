@@ -268,7 +268,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   isTruncate(column: STColumn): boolean {
-    return !!column.width && this.widthMode.strictBehavior === 'truncate';
+    return !!column.width && this.widthMode.strictBehavior === 'truncate' && column.type !== 'img';
   }
 
   columnClass(column: STColumn): string | null {
@@ -746,7 +746,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (changes.columns) {
       this.refreshColumns();
     }
-    if (changes.data && changes.data.currentValue) {
+    const changeData = changes.data;
+    if (changeData && changeData.currentValue && !(this.req.lazyLoad && changeData.firstChange)) {
       this.loadPageData();
     }
     if (changes.loading) {

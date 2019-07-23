@@ -125,6 +125,7 @@ class TestComponent {
 `[headers]` | 请求体 `headers` | `any` | -
 `[reName]` | 重命名请求参数 `pi`、`ps` | `STReqReNameType` | `{ pi: 'pi', ps: 'ps', skip: 'skip', limit: 'limit' }`
 `[allInBody]` | 是否将请求所有参数数据都放入 `body` 当中（`url` 地址本身参数除外），仅当 `method: 'POST'` 时有效 | `boolean` | `false`
+`[lazyLoad]` | 是否延迟加载数据，即渲染结束后不会主动发起请求 | `boolean` | `false`
 `[process]` | 请求前数据处理 | `(requestOptions: STRequestOptions) => STRequestOptions` | -
 
 ### STRes
