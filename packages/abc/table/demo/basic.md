@@ -20,7 +20,8 @@ import { STColumn } from '@delon/abc';
 @Component({
   selector: 'app-demo',
   template: `
-  <st [widthMode]="{type: 'strict'}" [data]="url" [req]="{params: params}" [columns]="columns"></st>`,
+    <st [widthMode]="{ type: 'strict' }" [data]="url" [req]="{ params: params }" [columns]="columns"></st>
+  `,
 })
 export class DemoComponent {
   url = `/users?total=2&field=list`;
@@ -30,6 +31,7 @@ export class DemoComponent {
     { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },
     { title: '邮箱', index: 'email', width: 80 },
     { title: '电话', index: 'phone' },
+    { title: { text: '佣金', optional: '（单位：元）', optionalHelp: '计算公式=订单金额 * 0.6%' }, index: 'price' },
     { title: '注册时间', type: 'date', index: 'registered' },
   ];
 }

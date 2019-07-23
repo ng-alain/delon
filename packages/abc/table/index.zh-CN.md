@@ -219,7 +219,7 @@ class TestComponent {
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[title]` | 列名 | `string` | -
+`[title]` | 列名 | `string, STColumnTitle` | -
 `[i18n]` | 列名i18n | `string` | -
 `[type]` | `no` 行号<br>`checkbox` 多选<br>`radio` 单选<br>`link` 链接，可触发 `click`<br>`img` 图像且居中<br>`number` 数字且居右<br>`currency` 货币且居右<br>`date` 日期格式且居中<br>`badge` [徽标](https://ng.ant.design/components/badge/zh)<br>`tag` [标签](https://ng.ant.design/components/tag/zh)<br>`yn` 将`boolean`类型徽章化 [document](/theme/yn) | `string` | -
 `[index]` | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | -
@@ -246,6 +246,15 @@ class TestComponent {
 `[noIndex]` | 行号索引开始值 | `number,(item: STData, col: STColumn, idx: number) => number` | `1`
 `[iif]` | 条件表达式<br>1、仅赋值 `columns` 时执行一次<br>2、可调用 `resetColumns()` 再一次触发 | `(item: STColumn) => boolean` | -
 `[statistical]` | 统计信息 | `STStatisticalType,STStatistical` | -
+
+### STColumnTitle
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[text]` | 列标题，`text` 与 `i18n` 必选其一 | `string` | -
+`[i18n]` | 列标题i18n主键，`text` 与 `i18n` 必选其一 | `string` | -
+`[optional]` | 标签可选信息 | `string` | -
+`[optionalHelp]` | 标签可选帮助 | `string` | -
 
 ### STColumnSort
 
