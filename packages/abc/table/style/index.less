@@ -41,6 +41,18 @@
       padding: @layout-gutter;
     }
   }
+  // Title
+  .@{ant-prefix}-table-column-title {
+    display: flex;
+    align-items: center;
+  }
+  &__head {
+    &-optional,
+    &-tip {
+      margin-left: 2px;
+      color: @st-title-optional-color;
+    }
+  }
   // 修复自动定义图标无法高亮问题
   .@{ant-prefix}-table-thead > tr > th .@{ant-prefix}-table-filter-selected.@{ant-prefix}-table-filter-icon {
     color: @primary-color;

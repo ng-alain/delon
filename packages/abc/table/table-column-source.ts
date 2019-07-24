@@ -78,8 +78,7 @@ export class STColumnSource {
         };
       }
 
-      item.children =
-        item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
+      item.children = item.children && item.children.length > 0 ? this.btnCoerce(item.children) : [];
 
       // i18n
       if (item.i18n && this.i18nSrv) {
@@ -114,10 +113,7 @@ export class STColumnSource {
     list
       .filter(w => w.fixed && w.fixed === 'right' && w.width)
       .reverse()
-      .forEach(
-        (item, idx) =>
-          (item._right = (idx > 0 ? list.slice(-idx).reduce(countReduce, 0) : 0) + 'px'),
-      );
+      .forEach((item, idx) => (item._right = (idx > 0 ? list.slice(-idx).reduce(countReduce, 0) : 0) + 'px'));
   }
 
   private sortCoerce(item: STColumn): STSortMap {
@@ -253,10 +249,23 @@ export class STColumnSource {
         }
         item.indexKey = item.index.join('.');
       }
-      // title
-      if (item.i18n && this.i18nSrv) {
-        item.title = this.i18nSrv.fanyi(item.i18n);
+
+      // #region title
+      if (typeof item.title === 'string') {
+        item.title = { text: item.title };
       }
+      if (!item.title) {
+        item.title = {};
+      }
+      // Compatible， TODO: ng-alain 9.x
+      if (item.i18n) {
+        item.title!.i18n = item.i18n;
+      }
+      if (item.title!.i18n && this.i18nSrv) {
+        item.title!.text = this.i18nSrv.fanyi(item.title!.i18n);
+      }
+      // #endregion
+      
       // no
       if (item.type === 'no') {
         item.noIndex = item.noIndex == null ? noIndex : item.noIndex;

@@ -25,12 +25,19 @@
   </ng-container>
   <span [innerHTML]="_btnText(i, btn)" [ngClass]="{'pl-xs': btn.icon}"></span>
 </ng-template>
+<ng-template #titleTpl let-i>
+  <span [innerHTML]="i.text"></span>
+  <small *ngIf="i.optional" class="st__head-optional" [innerHTML]="i.optional"></small>
+  <i *ngIf="i.optionalHelp" class="st__head-tip" nz-tooltip [nzTitle]="i.optionalHelp" nz-icon nzType="question-circle"></i>
+</ng-template>
 <ng-template #bodyTpl let-i let-index="index">
   <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [class]="i._rowClassName">
     <td *ngIf="expand" [nzShowExpand]="expand && i.showExpand !== false" [(nzExpand)]="i.expand" (nzExpandChange)="_expandChange(i)"></td>
     <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right"
         [nzCheckbox]="c.type === 'checkbox'" [ngClass]="columnClass(c)" [attr.colspan]="c.colSpan">
-      <span class="ant-table-rep__title" [innerHTML]="c.title"></span>
+      <span class="ant-table-rep__title">
+        <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{$implicit: c.title }"></ng-template>
+      </span>
       <span>
         <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
         <ng-container *ngIf="!c.__render; else render">
@@ -124,7 +131,9 @@
                 </nz-dropdown-menu>
               </div>
             </ng-container>
-            <span *ngSwitchDefault [innerHTML]="c.title"></span>
+            <ng-container *ngSwitchDefault>
+              <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{$implicit: c.title }"></ng-template>
+            </ng-container>
           </ng-container>
           <ng-container *ngIf="c.filter">
             <i nz-icon [nzType]="c.filter.icon.type" [nzTheme]="c.filter.icon.theme"

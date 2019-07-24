@@ -31,6 +31,7 @@ import {
   STRes,
   STResReNameType,
   STWidthMode,
+  STColumnTitle,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
 
@@ -138,6 +139,21 @@ describe('abc: table', () => {
     configureTestSuite(() => genModule({ createComp: false }));
     beforeEach(() => createComp(true, TestComponent));
     describe('#columns', () => {
+      describe('[title]', () => {
+        it('with STColumnTitle type', done => {
+          page.newColumn([{ title: { text: 'a' }, index: 'id' }]).then(() => {
+            page.expectHead('a', 'id', '.ant-table-column-title');
+            done();
+          });
+        });
+        it('should be render optional', done => {
+          page.newColumn([{ title: { text: 'a', optional: 'b', optionalHelp: 'help' }, index: 'id' }]).then(() => {
+            page.expectHead('b', 'id', '.st__head-optional');
+            expect(page.getHead('id').querySelector('.st__head-tip') != null).toBe(true);
+            done();
+          });
+        });
+      });
       describe('[type]', () => {
         describe(`with checkbox`, () => {
           it(`should be render checkbox`, done => {
@@ -1833,7 +1849,7 @@ describe('abc: table', () => {
         spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
       });
       it('should working', done => {
-        page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
+        page.newColumn([{ title: { i18n: curLang }, index: 'id' }]).then(() => {
           const el = page.getEl('.ant-pagination-total-text');
           expect(el.textContent!.trim()).toContain(`共`);
           injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
@@ -1844,12 +1860,22 @@ describe('abc: table', () => {
       });
       it('should be re-render columns when i18n changed', done => {
         curLang = 'en';
-        page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
+        page.newColumn([{ title: { i18n: curLang }, index: 'id' }]).then(() => {
           page.expectHead(curLang, 'id');
           curLang = 'zh';
           i18nSrv.use(curLang);
           fixture.detectChanges();
           page.expectHead(curLang, 'id');
+          done();
+        });
+      });
+      it('should be compatible', done => {
+        page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
+          const el = page.getEl('.ant-pagination-total-text');
+          expect(el.textContent!.trim()).toContain(`共`);
+          injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
+          fixture.detectChanges();
+          expect(el.textContent!.trim()).toContain(`of`);
           done();
         });
       });
@@ -1941,7 +1967,7 @@ describe('abc: table', () => {
     }
     /** 断言组件内 `_columns` 值 */
     expectColumn(title: string, path: string, valule: any): this {
-      const ret = deepGet(comp._columns.find(w => w.title === title), path);
+      const ret = deepGet(comp._columns.find(w => (w.title as STColumnTitle).text === title), path);
       expect(ret).toBe(valule);
       return this;
     }

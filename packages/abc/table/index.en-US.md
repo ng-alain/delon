@@ -226,7 +226,7 @@ Property | Description | Type | Default
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
-`[title]` | Name of this column | `string` | -
+`[title]` | Name of this column | `string, STColumnTitle` | -
 `[i18n]` | I18n key of this column | `string` | -
 `[type]` | `no` Rows number<br>`checkbox` selection<br>`radio` selection<br>`link` Link that triggers `click`<br>`img` Align to the center<br>`number` Align to the right<br>`currency` Align to the right<br>`date` Align to the center<br>`badge` [Nz-Badge](https://ng.ant.design/components/badge/en)<br>`tag` [Nz-Tag](https://ng.ant.design/components/tag/en)<br>`yn` Make boolean as [badge](/theme/yn) | `string` | -
 `[index]` | Display field of the data record, could be set like `a.b.c` | `string, string[]` | -
@@ -253,6 +253,15 @@ Property | Description | Type | Default
 `[noIndex]` | Line number index start value | `number,(item: STData, col: STColumn, idx: number) => number` | `1`
 `[iif]` | Custom conditional expression<br>1. Execute only once when `columns` is assigned<br>2. Call `resetColumns()` to trigger again | `(item: STColumn) => boolean` | -
 `[statistical]` | Statistics | `STStatisticalType,STStatistical` | -
+
+### STColumnTitle
+
+Property | Description | Type | Default
+-------- | ----------- | ---- | -------
+`[text]` | Text of header, can be choose one of `text` or `i18n` | `string` | -
+`[i18n]` | I18n key of header, can be choose one of `text` or `i18n` | `string` | -
+`[optional]` | Optional information of header | `string` | -
+`[optionalHelp]` | Optional help of header | `string` | -
 
 ### STColumnSort
 
