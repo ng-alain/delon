@@ -307,51 +307,54 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   private loadData(options?: STDataSourceOptions): Promise<STDataSourceResult> {
     const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
-    return this.dataSource.process({
-      pi,
-      ps,
-      total,
-      data,
-      req,
-      res,
-      page,
-      columns: this._columns,
-      singleSort,
-      multiSort,
-      rowClassName,
-      paginator: true,
-      ...options,
+    return new Promise((resolvePromise, rejectPromise) => {
+      return this.dataSource
+        .process({
+          pi,
+          ps,
+          total,
+          data,
+          req,
+          res,
+          page,
+          columns: this._columns,
+          singleSort,
+          multiSort,
+          rowClassName,
+          paginator: true,
+          ...options,
+        })
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(result => resolvePromise(result), error => rejectPromise(error));
     });
   }
 
-  private loadPageData(): Promise<this> {
+  private async loadPageData(): Promise<this> {
     this.setLoading(true);
-    return this.loadData()
-      .then(result => {
-        this.setLoading(false);
-        if (typeof result.pi !== 'undefined') {
-          this.pi = result.pi;
-        }
-        if (typeof result.ps !== 'undefined') {
-          this.ps = result.ps;
-        }
-        if (typeof result.total !== 'undefined') {
-          this.total = result.total;
-        }
-        if (typeof result.pageShow !== 'undefined') {
-          this._isPagination = result.pageShow;
-        }
-        this._data = result.list as STData[];
-        this._statistical = result.statistical as STStatisticalResults;
-        return this._data;
-      })
-      .then(() => this._refCheck())
-      .catch(error => {
-        this.setLoading(false);
-        this.cdr.detectChanges();
-        this.error.emit({ type: 'req', error });
-        return this;
-      });
+    try {
+      const result = await this.loadData();
+      this.setLoading(false);
+      if (typeof result.pi !== 'undefined') {
+        this.pi = result.pi;
+      }
+      if (typeof result.ps !== 'undefined') {
+        this.ps = result.ps;
+      }
+      if (typeof result.total !== 'undefined') {
+        this.total = result.total;
+      }
+      if (typeof result.pageShow !== 'undefined') {
+        this._isPagination = result.pageShow;
+      }
+      this._data = result.list as STData[];
+      this._statistical = result.statistical as STStatisticalResults;
+      return this._refCheck();
+    } catch (error) {
+      this.setLoading(false);
+      this.cdr.detectChanges();
+      this.error.emit({ type: 'req', error });
+      return this;
+    }
   }
 
   /** 清空所有数据 */

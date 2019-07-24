@@ -826,7 +826,7 @@ describe('abc: table', () => {
       it('should only restore data', () => {
         // tslint:disable-next-line:no-string-literal
         const dataSource: STDataSource = comp['dataSource'];
-        spyOn(dataSource, 'process').and.callFake(() => Promise.resolve({} as any));
+        spyOn(dataSource, 'process').and.callFake(() => of({} as any));
         fixture.detectChanges();
         expect(comp.ps).toBe(PS);
       });
@@ -843,8 +843,8 @@ describe('abc: table', () => {
           done();
         });
       });
-      describe('HTTP Status', () => {
-        it('error request', done => {
+      describe('Http Request', () => {
+        it('when error request', done => {
           context.data = '/mock';
           fixture.detectChanges();
           httpBed.expectOne(() => true).error(new ErrorEvent('cancel'));
@@ -853,7 +853,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        it('0', done => {
+        it('when http status: 0', done => {
           context.data = '/mock';
           fixture.detectChanges();
           httpBed.expectOne(() => true).flush(null, { status: 0, statusText: '' });
@@ -862,7 +862,7 @@ describe('abc: table', () => {
             done();
           });
         });
-        it('404', done => {
+        it('when http status: 404', done => {
           context.data = '/mock';
           fixture.detectChanges();
           httpBed.expectOne(() => true).flush(null, { status: 404, statusText: 'Not found' });
@@ -871,12 +871,22 @@ describe('abc: table', () => {
             done();
           });
         });
-        it('403', done => {
+        it('when http status: 403', done => {
           context.data = '/mock';
           fixture.detectChanges();
           httpBed.expectOne(() => true).flush(null, { status: 403, statusText: 'Forbidden' });
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(0);
+            done();
+          });
+        });
+        it('should be ingore catch error when component is destroyed', done => {
+          expect(context.error).not.toHaveBeenCalled();
+          context.data = '/mock';
+          fixture.detectChanges();
+          comp.ngOnDestroy();
+          fixture.whenStable().then(() => {
+            expect(context.error).not.toHaveBeenCalled();
             done();
           });
         });

@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { _HttpClient, CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
 import { of, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { STSortMap } from './table-column-source';
 import {
@@ -68,130 +68,126 @@ export class STDataSource {
     private dom: DomSanitizer,
   ) {}
 
-  process(options: STDataSourceOptions): Promise<STDataSourceResult> {
-    return new Promise((resolvePromise, rejectPromise) => {
-      let data$: Observable<STData[]>;
-      let isRemote = false;
-      const { data, res, total, page, pi, ps, paginator, columns } = options;
-      let retTotal: number;
-      let retPs: number;
-      let retList: STData[];
-      let retPi: number;
-      let rawData: any;
-      let showPage = page.show;
+  process(options: STDataSourceOptions): Observable<STDataSourceResult> {
+    let data$: Observable<STData[]>;
+    let isRemote = false;
+    const { data, res, total, page, pi, ps, paginator, columns } = options;
+    let retTotal: number;
+    let retPs: number;
+    let retList: STData[];
+    let retPi: number;
+    let rawData: any;
+    let showPage = page.show;
 
-      if (typeof data === 'string') {
-        isRemote = true;
-        data$ = this.getByHttp(data, options).pipe(
-          map(result => {
-            rawData = result;
-            let ret: STData[];
-            if (Array.isArray(result)) {
-              ret = result;
-              retTotal = ret.length;
-              retPs = retTotal;
-              showPage = false;
-            } else {
-              // list
-              ret = deepGet(result, res.reName!.list as string[], []);
-              if (ret == null || !Array.isArray(ret)) {
-                ret = [];
-              }
-              // total
-              const resultTotal = res.reName!.total && deepGet(result, res.reName!.total as string[], null);
-              retTotal = resultTotal == null ? total || 0 : +resultTotal;
-            }
-            return deepCopy(ret);
-          }),
-          catchError(err => {
-            rejectPromise(err);
-            return [];
-          }),
-        );
-      } else if (Array.isArray(data)) {
-        data$ = of(data);
-      } else {
-        // a cold observable
-        data$ = data;
-      }
-
-      if (!isRemote) {
-        data$ = data$.pipe(
-          // sort
-          map((result: STData[]) => {
-            rawData = result;
-            let copyResult = deepCopy(result);
-            const sorterFn = this.getSorterFn(columns);
-            if (sorterFn) {
-              copyResult = copyResult.sort(sorterFn);
-            }
-            return copyResult;
-          }),
-          // filter
-          map((result: STData[]) => {
-            columns
-              .filter(w => w.filter)
-              .forEach(c => {
-                const filter = c.filter!;
-                const values = this.getFilteredData(filter);
-                if (values.length === 0) return;
-                const onFilter = filter.fn;
-                if (typeof onFilter !== 'function') {
-                  console.warn(`[st] Muse provide the fn function in filter`);
-                  return;
-                }
-                result = result.filter(record => values.some(v => onFilter(v, record)));
-              });
-            return result;
-          }),
-          // paging
-          map((result: STData[]) => {
-            if (paginator && page.front) {
-              const maxPageIndex = Math.ceil(result.length / ps);
-              retPi = Math.max(1, pi > maxPageIndex ? maxPageIndex : pi);
-              retTotal = result.length;
-              if (page.show === true) {
-                return result.slice((retPi - 1) * ps, retPi * ps);
-              }
-            }
-            return result;
-          }),
-        );
-      }
-
-      // pre-process
-      if (typeof res.process === 'function') {
-        data$ = data$.pipe(map(result => res.process!(result, rawData)));
-      }
-
-      // data accelerator
-      data$ = data$.pipe(
+    if (typeof data === 'string') {
+      isRemote = true;
+      data$ = this.getByHttp(data, options).pipe(
         map(result => {
-          for (let i = 0, len = result.length; i < len; i++) {
-            result[i]._values = columns.map(c => this.get(result[i], c, i));
-            if (options.rowClassName) {
-              result[i]._rowClassName = options.rowClassName(result[i], i);
+          rawData = result;
+          let ret: STData[];
+          if (Array.isArray(result)) {
+            ret = result;
+            retTotal = ret.length;
+            retPs = retTotal;
+            showPage = false;
+          } else {
+            // list
+            ret = deepGet(result, res.reName!.list as string[], []);
+            if (ret == null || !Array.isArray(ret)) {
+              ret = [];
+            }
+            // total
+            const resultTotal = res.reName!.total && deepGet(result, res.reName!.total as string[], null);
+            retTotal = resultTotal == null ? total || 0 : +resultTotal;
+          }
+          return deepCopy(ret);
+        }),
+      );
+    } else if (Array.isArray(data)) {
+      data$ = of(data);
+    } else {
+      // a cold observable
+      data$ = data;
+    }
+
+    if (!isRemote) {
+      data$ = data$.pipe(
+        // sort
+        map((result: STData[]) => {
+          rawData = result;
+          let copyResult = deepCopy(result);
+          const sorterFn = this.getSorterFn(columns);
+          if (sorterFn) {
+            copyResult = copyResult.sort(sorterFn);
+          }
+          return copyResult;
+        }),
+        // filter
+        map((result: STData[]) => {
+          columns
+            .filter(w => w.filter)
+            .forEach(c => {
+              const filter = c.filter!;
+              const values = this.getFilteredData(filter);
+              if (values.length === 0) return;
+              const onFilter = filter.fn;
+              if (typeof onFilter !== 'function') {
+                console.warn(`[st] Muse provide the fn function in filter`);
+                return;
+              }
+              result = result.filter(record => values.some(v => onFilter(v, record)));
+            });
+          return result;
+        }),
+        // paging
+        map((result: STData[]) => {
+          if (paginator && page.front) {
+            const maxPageIndex = Math.ceil(result.length / ps);
+            retPi = Math.max(1, pi > maxPageIndex ? maxPageIndex : pi);
+            retTotal = result.length;
+            if (page.show === true) {
+              return result.slice((retPi - 1) * ps, retPi * ps);
             }
           }
           return result;
         }),
       );
+    }
 
-      data$
-        .forEach((result: STData[]) => (retList = result))
-        .then(() => {
-          const realTotal = retTotal || total;
-          const realPs = retPs || ps;
-          resolvePromise({
-            pi: retPi,
-            ps: retPs,
-            total: retTotal,
-            list: retList,
-            statistical: this.genStatistical(columns, retList, rawData),
-            pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
-          });
-        });
-    });
+    // pre-process
+    if (typeof res.process === 'function') {
+      data$ = data$.pipe(map(result => res.process!(result, rawData)));
+    }
+
+    // data accelerator
+    data$ = data$.pipe(
+      map(result => {
+        for (let i = 0, len = result.length; i < len; i++) {
+          result[i]._values = columns.map(c => this.get(result[i], c, i));
+          if (options.rowClassName) {
+            result[i]._rowClassName = options.rowClassName(result[i], i);
+          }
+        }
+        return result;
+      }),
+    );
+
+    return data$.pipe(
+      map(result => {
+        retList = result;
+        const realTotal = retTotal || total;
+        const realPs = retPs || ps;
+
+        return {
+          pi: retPi,
+          ps: retPs,
+          total: retTotal,
+          list: retList,
+          statistical: this.genStatistical(columns, retList, rawData),
+          pageShow: typeof showPage === 'undefined' ? realTotal > realPs : showPage,
+        } as STDataSourceResult;
+      }),
+    );
   }
 
   private get(item: STData, col: STColumn, idx: number): { text: any; org?: any } {
