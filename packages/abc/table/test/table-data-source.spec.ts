@@ -81,14 +81,14 @@ describe('abc: table: data-souce', () => {
           options.data = genData();
         });
         it(`should return ${DEFAULT.ps} rows of data`, done => {
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.list!.length).toBe(DEFAULT.ps);
             done();
           });
         });
         it('should return second page of data', done => {
           options.pi = 2;
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.list![0].id).toBe(DEFAULT.ps + 1);
             expect(res.pi).toBe(2);
             done();
@@ -96,14 +96,14 @@ describe('abc: table: data-souce', () => {
         });
         it('should limit the maximum page', done => {
           options.pi = DEFAULT.maxPi + 1;
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.pi).toBe(DEFAULT.maxPi);
             done();
           });
         });
         it('should return all data when page.show is false', done => {
           options.page.show = false;
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.pageShow).toBe(false);
             expect(res.list!.length).toBe(DEFAULT.total);
             done();
@@ -116,7 +116,7 @@ describe('abc: table: data-souce', () => {
           options.data = genData();
         });
         it('should not handle pi & total', done => {
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.pi as any).toBe(undefined);
             expect(res.total as any).toBe(undefined);
             done();
@@ -126,7 +126,7 @@ describe('abc: table: data-souce', () => {
           options.page.show = undefined;
           options.total = DEFAULT.ps + 1;
           options.data = genData(options.total);
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.pageShow).toBe(true);
             done();
           });
@@ -139,14 +139,14 @@ describe('abc: table: data-souce', () => {
           });
           it('should auto hide when total less than ps', done => {
             options.data = genData(DEFAULT.ps);
-            srv.process(options).then(res => {
+            srv.process(options).subscribe(res => {
               expect(res.pageShow).toBe(false);
               done();
             });
           });
           it('should auto show when ps less than total', done => {
             options.data = genData(DEFAULT.ps + 1);
-            srv.process(options).then(res => {
+            srv.process(options).subscribe(res => {
               expect(res.pageShow).toBe(true);
               done();
             });
@@ -165,7 +165,7 @@ describe('abc: table: data-souce', () => {
       it(`should be decremented`, done => {
         options.data[1].id = 100000;
         options.columns[0]._sort.default = 'descend';
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.list[0].id).toBe(100000);
           done();
         });
@@ -173,7 +173,7 @@ describe('abc: table: data-souce', () => {
       it(`should be incremented`, done => {
         options.data[1].id = -100000;
         options.columns[0]._sort.default = 'ascend';
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.list[0].id).toBe(-100000);
           done();
         });
@@ -185,7 +185,7 @@ describe('abc: table: data-souce', () => {
           default: 'descend',
         };
         options.data[1].id = 100000;
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.list[0].id).toBe(11);
           done();
         });
@@ -202,7 +202,7 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be filter [1] in name`, done => {
         const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.list.length).toBe(expectCount);
           done();
         });
@@ -211,12 +211,13 @@ describe('abc: table: data-souce', () => {
         const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
         srv
           .process(options)
+          .toPromise()
           .then(res => {
             expect(res.list.length).toBe(expectCount);
           })
           .then(() => {
             options.columns[0].filter!.menus![0].checked = false;
-            return srv.process(options);
+            return srv.process(options).toPromise();
           })
           .then(res => {
             expect(res.list.length).toBe(DEFAULT.ps);
@@ -227,7 +228,7 @@ describe('abc: table: data-souce', () => {
     describe('with observable data', () => {
       it(`should be running`, done => {
         options.data = of(genData(2));
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.list.length).toBe(2);
           done();
         });
@@ -244,7 +245,7 @@ describe('abc: table: data-souce', () => {
           fn: (filter, record) => record.name.includes(filter.value),
         };
         const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.list.length).toBe(expectCount);
           done();
         });
@@ -265,7 +266,7 @@ describe('abc: table: data-souce', () => {
           resMethod = method;
           return of([]);
         });
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resMethod).toBe('GET');
           done();
         });
@@ -277,7 +278,7 @@ describe('abc: table: data-souce', () => {
           resParams = opt.params;
           return of([]);
         });
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.PI).toBe(options.pi);
           expect(resParams.PS).toBe(options.ps);
           done();
@@ -290,7 +291,7 @@ describe('abc: table: data-souce', () => {
           resParams = opt.params;
           return of([]);
         });
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.pi).toBe(options.pi - 1);
           done();
         });
@@ -303,7 +304,7 @@ describe('abc: table: data-souce', () => {
           resBody = opt.body;
           return of([]);
         });
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resBody.pi).toBe(options.pi);
           done();
         });
@@ -319,7 +320,7 @@ describe('abc: table: data-souce', () => {
           resParams = opt.params;
           return of([]);
         });
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.PI).toBe(2);
           done();
         });
@@ -333,7 +334,7 @@ describe('abc: table: data-souce', () => {
             resParams = opt.params;
             return of([]);
           });
-          srv.process(options).then(() => {
+          srv.process(options).subscribe(() => {
             expect(resParams.SKIP).toBe(0);
             expect(resParams.LIMIT).toBe(options.ps);
             done();
@@ -346,7 +347,7 @@ describe('abc: table: data-souce', () => {
             resParams = opt.params;
             return of([]);
           });
-          srv.process(options).then(() => {
+          srv.process(options).subscribe(() => {
             expect(resParams.skip).toBe(options.ps);
             expect(resParams.limit).toBe(options.ps);
             done();
@@ -364,7 +365,7 @@ describe('abc: table: data-souce', () => {
         spyOn(http, 'request').and.callFake(() => {
           return of({ L: genData(DEFAULT.ps), T: DEFAULT.ps });
         });
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(DEFAULT.ps);
           done();
@@ -373,7 +374,7 @@ describe('abc: table: data-souce', () => {
       it('should be invalid re-name config', done => {
         options.res.reName = { total: 'T', list: 'L1' };
         spyOn(http, 'request').and.callFake(() => of({ L: genData(DEFAULT.ps), T: DEFAULT.ps }));
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(0);
           done();
@@ -382,7 +383,7 @@ describe('abc: table: data-souce', () => {
       it('should be return empty when result is not array', done => {
         options.res.reName = { total: 'T', list: 'L' };
         spyOn(http, 'request').and.callFake(() => of({ L: 1, T: DEFAULT.ps }));
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(0);
           done();
@@ -392,7 +393,7 @@ describe('abc: table: data-souce', () => {
         options.res.reName = { total: 'T1', list: '1L' };
         options.total = 4;
         spyOn(http, 'request').and.callFake(() => of({ L: 1, T: DEFAULT.ps }));
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.total).toBe(options.total);
           expect(res.list.length).toBe(0);
           done();
@@ -402,7 +403,7 @@ describe('abc: table: data-souce', () => {
         options.res.reName = { total: 'T1', list: '1L' };
         options.total = undefined!;
         spyOn(http, 'request').and.callFake(() => of({ L: 1, T: DEFAULT.ps }));
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.total).toBe(0);
           expect(res.list.length).toBe(0);
           done();
@@ -410,20 +411,20 @@ describe('abc: table: data-souce', () => {
       });
       it('should be catch response error', done => {
         spyOn(http, 'request').and.callFake(() => throwError('aa'));
-        srv
-          .process(options)
-          .then(() => {
+        srv.process(options).subscribe(
+          () => {
             expect(false).toBe(true);
             done();
-          })
-          .catch(err => {
+          },
+          err => {
             expect(err).toBe('aa');
             done();
-          });
+          },
+        );
       });
       it('should be support array data', done => {
         spyOn(http, 'request').and.callFake(() => of(genData(DEFAULT.ps)));
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.total).toBe(DEFAULT.ps);
           expect(res.list.length).toBe(DEFAULT.ps);
           expect(res.ps).toBe(res.total);
@@ -447,14 +448,14 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be decremented`, done => {
         options.columns[0]._sort.default = 'descend';
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('descend');
           done();
         });
       });
       it(`should be incremented`, done => {
         options.columns[0]._sort.default = 'ascend';
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('ascend');
           done();
         });
@@ -462,7 +463,7 @@ describe('abc: table: data-souce', () => {
       it(`should be re-name`, done => {
         options.columns[0]._sort.default = 'ascend';
         options.columns[0]._sort.reName = { ascend: 'A', descend: 'D' };
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('A');
           done();
         });
@@ -470,7 +471,7 @@ describe('abc: table: data-souce', () => {
       it(`should be used default key when invalid re-name paraments`, done => {
         options.columns[0]._sort.default = 'ascend';
         options.columns[0]._sort.reName = {};
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('ascend');
           done();
         });
@@ -496,21 +497,21 @@ describe('abc: table: data-souce', () => {
           ];
         });
         it(`should be`, done => {
-          srv.process(options).then(() => {
+          srv.process(options).subscribe(() => {
             expect(resParams.SORT).toBe('id1.descend-id2.ascend');
             done();
           });
         });
         it(`should be re-name`, done => {
           options.columns[0]._sort.reName = { ascend: 'A', descend: 'D' };
-          srv.process(options).then(() => {
+          srv.process(options).subscribe(() => {
             expect(resParams.SORT).toBe('id1.D-id2.ascend');
             done();
           });
         });
         it(`should be used default key when invalid re-name paraments`, done => {
           options.columns[0]._sort.reName = {};
-          srv.process(options).then(() => {
+          srv.process(options).subscribe(() => {
             expect(resParams.SORT).toBe('id1.descend-id2.ascend');
             done();
           });
@@ -518,7 +519,7 @@ describe('abc: table: data-souce', () => {
         it(`should be in user order`, done => {
           options.columns[1]._sort.tick = srv.nextSortTick;
           options.columns[0]._sort.tick = srv.nextSortTick;
-          srv.process(options).then(() => {
+          srv.process(options).subscribe(() => {
             expect(resParams.SORT).toBe('id2.ascend-id1.descend');
             done();
           });
@@ -528,7 +529,7 @@ describe('abc: table: data-souce', () => {
         it(`should working`, done => {
           options.columns[0]._sort.default = 'ascend';
           options.singleSort = {};
-          srv.process(options).then(() => {
+          srv.process(options).subscribe(() => {
             expect(resParams.sort).toBe('id.ascend');
             done();
           });
@@ -536,7 +537,7 @@ describe('abc: table: data-souce', () => {
         it(`should specify options`, done => {
           options.columns[0]._sort.default = 'ascend';
           options.singleSort = { key: 'SORT', nameSeparator: '-' };
-          srv.process(options).then(() => {
+          srv.process(options).subscribe(() => {
             expect(resParams.SORT).toBe('id-ascend');
             done();
           });
@@ -560,7 +561,7 @@ describe('abc: table: data-souce', () => {
         });
       });
       it(`should be mulit field`, done => {
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('a,b');
           done();
         });
@@ -569,14 +570,14 @@ describe('abc: table: data-souce', () => {
         options.columns[0].filter!.reName = (list: STColumnFilterMenu[]) => {
           return { id: list.map(i => i.value + '1').join(',') };
         };
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('a1,b1');
           done();
         });
       });
       it('should be always return first value when type with keyword', done => {
         options.columns[0].filter!.type = 'keyword';
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('a');
           done();
         });
@@ -594,7 +595,7 @@ describe('abc: table: data-souce', () => {
           params = opt.params;
           return of([]);
         });
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(params.pi).toBeUndefined();
           expect(params.ps).toBeUndefined();
           done();
@@ -608,7 +609,7 @@ describe('abc: table: data-souce', () => {
     describe('#pre-process', () => {
       it('should run', done => {
         options.res.process = jasmine.createSpy().and.returnValue([]);
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(options.res.process).toHaveBeenCalled();
           done();
         });
@@ -619,14 +620,14 @@ describe('abc: table: data-souce', () => {
       describe('via format', () => {
         it('should be working', done => {
           options.columns[0].format = jasmine.createSpy().and.returnValue('');
-          srv.process(options).then(() => {
+          srv.process(options).subscribe(() => {
             expect(options.columns[0].format).toHaveBeenCalled();
             done();
           });
         });
         it('should be return empty string when is null or undefined', done => {
           options.columns[0].format = jasmine.createSpy().and.returnValue(null);
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.list[0]._values[0].text).toBe(``);
             done();
           });
@@ -634,7 +635,7 @@ describe('abc: table: data-souce', () => {
       });
       it('via index', done => {
         options.columns[0].index = 'name';
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.list[0]._values[0].text).toBe(`name 1`);
           done();
         });
@@ -643,7 +644,7 @@ describe('abc: table: data-souce', () => {
         it('with start 1', done => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = 1;
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.list[0]._values[0].text).toBe(1);
             done();
           });
@@ -651,7 +652,7 @@ describe('abc: table: data-souce', () => {
         it('with start 0', done => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = 0;
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.list[0]._values[0].text).toBe(0);
             done();
           });
@@ -659,7 +660,7 @@ describe('abc: table: data-souce', () => {
         it('with function', done => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = () => 10;
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.list[0]._values[0].text).toBe(10);
             done();
           });
@@ -668,7 +669,7 @@ describe('abc: table: data-souce', () => {
       describe('via img', () => {
         it('with value', done => {
           options.columns[0].type = 'img';
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.list[0]._values[0].text).toContain(`class="img"`);
             done();
           });
@@ -676,7 +677,7 @@ describe('abc: table: data-souce', () => {
         it('without value', done => {
           options.columns[0].type = 'img';
           options.data[0].id = '';
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.list[0]._values[0].text).toBe(``);
             done();
           });
@@ -685,7 +686,7 @@ describe('abc: table: data-souce', () => {
       it('via number', done => {
         options.columns[0].type = 'number';
         spyOn(decimalPipe, 'transform');
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(decimalPipe.transform).toHaveBeenCalled();
           done();
         });
@@ -693,7 +694,7 @@ describe('abc: table: data-souce', () => {
       it('via currency', done => {
         options.columns[0].type = 'currency';
         spyOn(currentyPipe, 'transform');
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(currentyPipe.transform).toHaveBeenCalled();
           done();
         });
@@ -701,7 +702,7 @@ describe('abc: table: data-souce', () => {
       it('via date', done => {
         options.columns[0].type = 'date';
         spyOn(datePipe, 'transform');
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(datePipe.transform).toHaveBeenCalled();
           done();
         });
@@ -710,7 +711,7 @@ describe('abc: table: data-souce', () => {
         options.columns[0].type = 'yn';
         options.columns[0].yn = {};
         spyOn(ynPipe, 'transform');
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(ynPipe.transform).toHaveBeenCalled();
           done();
         });
@@ -719,7 +720,7 @@ describe('abc: table: data-souce', () => {
     it('#rowClassName', done => {
       options.rowClassName = () => `aaa`;
       options.data = genData();
-      srv.process(options).then(res => {
+      srv.process(options).subscribe(res => {
         expect(res.list[0]._rowClassName).toBe('aaa');
         done();
       });
@@ -727,7 +728,7 @@ describe('abc: table: data-souce', () => {
     it('should be return empty string when is null or undefined', done => {
       options.data = genData(1);
       options.columns = [{ title: '', index: 'aa' }];
-      srv.process(options).then(res => {
+      srv.process(options).subscribe(res => {
         expect(res.list[0]._values[0].text).toBe('');
         done();
       });
@@ -746,7 +747,7 @@ describe('abc: table: data-souce', () => {
       options.columns = [{ title: '', index: 'a', key: 'a', statistical: { type: 'sum' } }];
       options.data = [{ a: 1 }, { a: 2 }];
 
-      srv.process(options).then(res => {
+      srv.process(options).subscribe(res => {
         expect(res.statistical.a.value).toBe(3);
         done();
       });
@@ -768,7 +769,7 @@ describe('abc: table: data-souce', () => {
       ];
       options.data = [{ a: 1 }, { a: 2 }];
 
-      srv.process(options).then(res => {
+      srv.process(options).subscribe(res => {
         expect(res.statistical[0].value).toBe(1);
         expect(Array.isArray(callbackRawData)).toBe(true);
         done();
@@ -779,7 +780,7 @@ describe('abc: table: data-souce', () => {
       options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', digits: 3 } }];
       options.data = [{ a: 1 }, { a: 2.5666 }];
 
-      srv.process(options).then(res => {
+      srv.process(options).subscribe(res => {
         expect(res.statistical[0].value).toBe(3.567);
         done();
       });
@@ -789,7 +790,7 @@ describe('abc: table: data-souce', () => {
       options.columns = [{ title: '', index: 'a', statistical: { type: 'invalid-type' as any } }];
       options.data = [{ a: 1 }, { a: 2 }];
 
-      srv.process(options).then(res => {
+      srv.process(options).subscribe(res => {
         expect(res.statistical[0].value).toBe(0);
         done();
       });
@@ -801,7 +802,7 @@ describe('abc: table: data-souce', () => {
         options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
         expect(currentyPipe.transform).not.toHaveBeenCalled();
 
-        srv.process(options).then(() => {
+        srv.process(options).subscribe(() => {
           expect(currentyPipe.transform).toHaveBeenCalled();
           done();
         });
@@ -810,7 +811,7 @@ describe('abc: table: data-souce', () => {
         options.columns = [{ title: '', index: 'a', statistical: { type: 'sum', currency: false } }];
         options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
 
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.statistical[0].text).toBe('3.1');
           done();
         });
@@ -822,7 +823,7 @@ describe('abc: table: data-souce', () => {
         options.columns = [{ title: '', index: 'a', statistical: 'count' }];
         options.data = [{ a: 1 }, { a: 1 }, { a: 1 }];
 
-        srv.process(options).then(res => {
+        srv.process(options).subscribe(res => {
           expect(res.statistical[0].value).toBe(3);
           done();
         });
@@ -833,7 +834,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'distinctCount' }];
           options.data = [{ a: 1 }, { a: 2 }, { a: 1 }];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(2);
             done();
           });
@@ -842,7 +843,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'distinctCount' }];
           options.data = [{ a: 1 }, { a: null }, { a: 1 }];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(2);
             done();
           });
@@ -854,7 +855,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'sum' }];
           options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(3.1);
             done();
           });
@@ -863,7 +864,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'sum' }];
           options.data = [{ a: Number.MAX_VALUE }, { a: Number.MAX_VALUE }];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(0);
             done();
           });
@@ -872,7 +873,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'sum' }];
           options.data = [];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(0);
             done();
           });
@@ -884,7 +885,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'average' }];
           options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(0.62);
             done();
           });
@@ -893,7 +894,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'average' }];
           options.data = [{ a: Number.MAX_VALUE }, { a: Number.MAX_VALUE }];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(0);
             done();
           });
@@ -902,7 +903,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'average' }];
           options.data = [];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(0);
             done();
           });
@@ -914,7 +915,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'max' }];
           options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(2);
             done();
           });
@@ -926,7 +927,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'min' }];
           options.data = [{ a: 1 }, { a: 2 }, { a: 0.1 }];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(0.1);
             done();
           });
@@ -935,7 +936,7 @@ describe('abc: table: data-souce', () => {
           options.columns = [{ title: '', index: 'a', statistical: 'min' }];
           options.data = [{ a: 1 }, { a: 2 }, { a: null }, { a: undefined }, { a: 0.1 }];
 
-          srv.process(options).then(res => {
+          srv.process(options).subscribe(res => {
             expect(res.statistical[0].value).toBe(0);
             done();
           });
