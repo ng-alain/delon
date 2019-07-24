@@ -27,5 +27,5 @@ Get the `title` value according to the following order:
 | `prefix`                                       | `property` | Prefix of document title        |
 | `suffix`                                       | `property` | Suffix of document title        |
 | `reverse`                                      | `property` | Whether to reverse              |
-| `setTitle(title?: string | string[])`          | `method`   | Set document title              |
-| `setTitleByI18n(key: string, params?: Object)` | `method`   | Set i18n document title         |
+| `setTitle(title?: string | string[])`          | `method`   | Set the document title, will be delay `25ms`, pls refer to [#1261](https://github.com/ng-alain/ng-alain/issues/1261)              |
+| `setTitleByI18n(key: string, params?: Object)` | `method`   | Set i18n key of the document title |

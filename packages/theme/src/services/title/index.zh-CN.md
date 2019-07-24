@@ -27,5 +27,5 @@ type: Service
 | `prefix`                                       | `property` | 设置前缀       |
 | `suffix`                                       | `property` | 设置后缀       |
 | `reverse`                                      | `property` | 设置是否反转   |
-| `setTitle(title?: string | string[])`          | `method`   | 设置标题       |
+| `setTitle(title?: string | string[])`          | `method`   | 设置标题，受限于 [#1261](https://github.com/ng-alain/ng-alain/issues/1261) 会有 `25ms` 的延迟  |
 | `setTitleByI18n(key: string, params?: Object)` | `method`   | 设置国际化标题 |
