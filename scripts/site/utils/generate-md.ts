@@ -93,7 +93,7 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
       /<pre class="hljs language-([a-zA-Z0-9]+)"><code>([\s\S]+)<\/code><\/pre>/g,
       (_fullWord: string, lang: string, code: string) => {
         if (lang === 'html') {
-          code = escapeHTML(code);
+          code = code.includes(`&lt;`) && code.includes(`&gt;`) ? code : escapeHTML(code);
         } else if ((lang === 'ts' || lang === 'typescript') && code.includes(`template: `)) {
           code = code.replace(/template: `([^`]+)`/g, (_tFullword: string, tHtml: string) => {
             return 'template: `' + escapeHTML(tHtml) + '`';
