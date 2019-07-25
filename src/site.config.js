@@ -490,6 +490,7 @@ module.exports = {
           template: {
             content: './src/templates/content.ts',
           },
+          ignores: ['docs'],
           hasSubDir: true,
         },
       ],

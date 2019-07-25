@@ -1,8 +1,9 @@
+const fs = require('fs');
 const path = require('path');
 const { generateTheme } = require('antd-theme-generator');
 
 const root = path.join(__dirname, '../..');
-
+const outputFilePath = path.join(root, './src/assets/color.less');
 const options = {
   antdStylesDir: path.join(root, './node_modules/ng-zorro-antd'),
   stylesDir: path.join(root, './src'),
@@ -17,7 +18,11 @@ const options = {
     '@text-color-secondary'
   ],
   // if provided, file will be created with generated less/styles
-  outputFilePath: path.join(root, './src/assets/color.less')
+  outputFilePath
+}
+
+if (fs.existsSync(outputFilePath)) {
+  fs.unlinkSync(outputFilePath);
 }
 
 generateTheme(options).then(less => {
