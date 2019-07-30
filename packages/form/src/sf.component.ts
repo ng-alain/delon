@@ -22,7 +22,7 @@ import { Subject, Observable, merge } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { DelonFormConfig } from './config';
 import { ErrorData } from './errors';
-import { SFButton, SFLayout } from './interface';
+import { SFButton, SFLayout, SFValue } from './interface';
 import { FormProperty, PropertyGroup } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import { SFSchema } from './schema/index';
@@ -138,6 +138,12 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() disabled = false;
   /** 数据变更时回调 */
   @Output() readonly formChange = new EventEmitter<{}>();
+
+  /**
+   * 表单数据变更时回调
+   */
+  @Output() readonly fromPropertyValueChange = new EventEmitter<{ path: string; value?: SFValue }>();
+
   /** 提交表单时回调 */
   @Output() readonly formSubmit = new EventEmitter<{}>();
   /** 重置表单时回调 */
@@ -512,6 +518,21 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.formChange.emit(this._item);
     });
+
+    this.rootProperty.propertyValueChanges.subscribe(data => {
+      if (isFirst) {
+        isFirst = false;
+        return;
+      }
+
+      if (!data.path) {
+        return;
+      }
+
+      const changeValue = { path: data.path, value: data.value };
+      this.fromPropertyValueChange.emit(changeValue);
+    });
+
     this.rootProperty.errorsChanges.subscribe(errors => {
       this._valid = !(errors && errors.length);
       this.formError.emit(errors!);
@@ -537,6 +558,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private cleanRootSub() {
     if (!this.rootProperty) return;
     this.rootProperty.errorsChanges.unsubscribe();
+    this.rootProperty.propertyValueChanges.unsubscribe();
     this.rootProperty.valueChanges.unsubscribe();
   }
 

@@ -3,7 +3,7 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { DelonFormConfig } from '../config';
 import { ErrorData } from '../errors';
-import { SFValue } from '../interface';
+import { SFValue, PropertyValueChange } from '../interface';
 import { SFSchema, SFSchemaType } from '../schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from '../schema/ui';
 import { isBlank } from '../utils';
@@ -14,6 +14,7 @@ import { SF_SEQ } from '../const';
 export abstract class FormProperty {
   private _errors: ErrorData[] | null = null;
   private _valueChanges = new BehaviorSubject<SFValue>(null);
+  private _propertyValueChanges = new BehaviorSubject<PropertyValueChange>({});
   private _errorsChanges = new BehaviorSubject<ErrorData[] | null>(null);
   private _visible = true;
   private _visibilityChanges = new BehaviorSubject<boolean>(true);
@@ -55,6 +56,10 @@ export abstract class FormProperty {
 
   get valueChanges() {
     return this._valueChanges;
+  }
+
+  get propertyValueChanges() {
+    return this._propertyValueChanges;
   }
 
   get errorsChanges() {
@@ -331,6 +336,17 @@ export abstract class FormProperty {
   }
 
   // #endregion
+
+  propertyValueChange(value: SFValue) {
+    const root = this.root;
+    if (!root || !this.path) {
+      return;
+    }
+    root.propertyValueChanges.next({
+      path: this.path,
+      value,
+    });
+  }
 }
 
 export abstract class PropertyGroup extends FormProperty {

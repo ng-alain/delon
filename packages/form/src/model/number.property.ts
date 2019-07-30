@@ -16,5 +16,6 @@ export class NumberProperty extends AtomicProperty {
     }
     this._value = value;
     this.updateValueAndValidity(onlySelf, true);
+    this.propertyValueChange(this._value);
   }
 }

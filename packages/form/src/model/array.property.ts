@@ -39,6 +39,7 @@ export class ArrayProperty extends PropertyGroup {
     this.clearErrors();
     this.resetProperties(value);
     this.updateValueAndValidity(onlySelf, true);
+    this.propertyValueChange(this._value);
   }
 
   resetValue(value: SFValue, onlySelf: boolean) {

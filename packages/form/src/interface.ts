@@ -2,6 +2,11 @@ import { SFHorizontalLayoutSchema, SFRenderSchema } from './schema/ui';
 
 export type SFValue = any;
 
+export interface PropertyValueChange {
+  path?: string | null;
+  value?: SFValue | null;
+}
+
 export type SFLayout = 'horizontal' | 'vertical' | 'inline';
 
 export interface SFButton {
