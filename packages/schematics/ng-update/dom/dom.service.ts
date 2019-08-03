@@ -1,6 +1,6 @@
 // tslint:disable:no-string-literal
 import * as htmlparser2 from 'htmlparser2';
-const DOMHandler = require('domhandler');
+import { DomHandler } from 'domhandler';
 import { ConvertAction, ConvertRule, VDom } from './interfaces';
 
 export class DomService {
@@ -12,7 +12,7 @@ export class DomService {
   replace(html: string, rules: ConvertAction[], callback: (dom: VDom[], count: number) => void) {
     this.rules = rules;
     this.count = 0;
-    const handler = new DOMHandler((error, dom) => {
+    const handler = new DomHandler((error, dom) => {
       if (error) {
         callback(null!, 0);
         return;
