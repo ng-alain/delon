@@ -1,6 +1,6 @@
 // tslint:disable:no-string-literal
 import * as htmlparser2 from 'htmlparser2';
-const DOMHandler = require('domhandler');
+import { DomHandler } from 'domhandler';
 import { ConvertAction, ConvertRule, VDom } from './interfaces';
 
 export class DomService {
@@ -12,7 +12,7 @@ export class DomService {
   replace(html: string, rules: ConvertAction[], callback: (dom: VDom[], count: number) => void) {
     this.rules = rules;
     this.count = 0;
-    const handler = new DOMHandler((error, dom) => {
+    const handler = new DomHandler((error, dom) => {
       if (error) {
         callback(null!, 0);
         return;
@@ -28,7 +28,7 @@ export class DomService {
       lowerCaseTags: false,
       lowerCaseAttributeNames: false,
       // tslint:disable-next-line: deprecation
-    } as htmlparser2.Options);
+    } as htmlparser2.ParserOptions);
 
     parser.write(html.replace(/\n|\s\s/g, ' ').trim());
     parser.done();
@@ -306,11 +306,7 @@ export class DomService {
         }
 
         if (item.children && item.children.length === 1 && item.children[0].type === 'text') {
-          result.push(
-            `${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs!)}>${item.children[0].data!.trim()}</${
-              item.name
-            }>`,
-          );
+          result.push(`${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs!)}>${item.children[0].data!.trim()}</${item.name}>`);
           continue;
         }
 

@@ -14,6 +14,24 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [8.3.0](https://github.com/ng-alain/delon/compare/8.2.0...8.3.0) (2019-08-03)
+
+### Bug Fixes
+
+* **abc:reuse-tab:** 修复 URL 模式也应该从菜单数据中获取标题 ([#661](https://github.com/ng-alain/delon/issues/661)) ([6e63418](https://github.com/ng-alain/delon/commit/6e63418))
+* **abc:sidebar:** 修复当包含徽章时无法展开子菜单问题 ([#665](https://github.com/ng-alain/delon/issues/665)) ([763a27e](https://github.com/ng-alain/delon/commit/763a27e))
+* **abc:st:** 修复当组件被销毁时应该中断 HTTP 请求 ([#658](https://github.com/ng-alain/delon/issues/658)) ([6bd97eb](https://github.com/ng-alain/delon/commit/6bd97eb))
+* **theme:title:** 修复路由跳转后在 `NavigationEnd` 事件里调用重置当前页无效问题 ([#660](https://github.com/ng-alain/delon/issues/660)) ([0db451d](https://github.com/ng-alain/delon/commit/0db451d))
+* **abc:st:** 修复当 `strictBehavior` 为 `truncate` 时 `img` 列不应该截断 ([#656](https://github.com/ng-alain/delon/issues/656)) ([4ae8f13](https://github.com/ng-alain/delon/commit/4ae8f13))
+
+### Features
+
+* **abc:st:** 新增 `req.lazyLoad` 属性首次不发送请求 ([#656](https://github.com/ng-alain/delon/issues/656)) ([4ae8f13](https://github.com/ng-alain/delon/commit/4ae8f13))
+* **abc:st:** 新增 `STColumnTitle.title` 支持可选和帮助信息描述 ([#657](https://github.com/ng-alain/delon/issues/657)) ([9408ccc](https://github.com/ng-alain/delon/commit/9408ccc))
+* **acl:** 新增支持在路由 `data` 属性里指定未授权跳转URL ([#666](https://github.com/ng-alain/delon/issues/666)) ([bee66fd](https://github.com/ng-alain/delon/commit/bee66fd))
+* **form:*:** 新增 `date` `time` 小部件对 date-fns 格式化的支持 ([#663](https://github.com/ng-alain/delon/issues/663)) ([ba91193](https://github.com/ng-alain/delon/commit/ba91193))
+
+
 # [8.2.0](https://github.com/ng-alain/delon/compare/8.1.0...8.2.0) (2019-07-20)
 
 ### Scaffold
