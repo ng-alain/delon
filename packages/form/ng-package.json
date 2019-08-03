@@ -30,6 +30,7 @@
       "ng-zorro-antd/transfer": "ng-zorro-antd/transfer",
       "ng-zorro-antd/tree-select": "ng-zorro-antd/tree-select",
       "ng-zorro-antd/upload": "ng-zorro-antd/upload",
+      "ng-zorro-antd/i18n": "ng-zorro-antd/i18n",
       "@delon/theme": "delon.theme",
       "@delon/acl": "delon.acl",
       "@delon/util": "delon.util"

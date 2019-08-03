@@ -1,3 +1,4 @@
+// tslint:disable: no-string-literal
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import format from 'date-fns/format';
@@ -11,6 +12,8 @@ import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/b
 import { SFSchema } from '../../../src/schema/index';
 import { SFUISchemaItem } from '../../schema/ui';
 import { DateWidget } from './date.widget';
+import * as utils from '../../utils';
+import { SFDateWidgetSchema } from './schema';
 
 describe('form: widget: date', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -40,7 +43,7 @@ describe('form: widget: date', () => {
       const comp = getComp();
       const time = new Date();
       comp._change(time);
-      page.checkValue('/a', format(time, comp.format));
+      page.checkValue('/a', format(time, comp['valueFormat']));
     });
     describe('default value', () => {
       it('with number type', () => {
@@ -131,7 +134,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      expect(comp.format).toBe('YYYY-MM-DD HH:mm:ss');
+      expect(comp['valueFormat']).toBe('YYYY-MM-DD HH:mm:ss');
     });
     it('should be spcify format', () => {
       const s: SFSchema = {
@@ -139,7 +142,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      expect(comp.format).toBe('yyyy');
+      expect(comp['valueFormat']).toBe('yyyy');
     });
     it('should be use timespan when type is number', () => {
       const s: SFSchema = {
@@ -147,7 +150,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      expect(comp.format).toBe('x');
+      expect(comp['valueFormat']).toBe('x');
     });
   });
 
@@ -170,7 +173,7 @@ describe('form: widget: date', () => {
       expect(comp.mode).toBe('range');
       const time = new Date();
       comp._change([time, time]);
-      page.checkValue('/start', format(time, comp.format)).checkValue('/end', format(time, comp.format));
+      page.checkValue('/start', format(time, comp['valueFormat'])).checkValue('/end', format(time, comp['valueFormat']));
       comp._change(null);
       page.checkValue('/start', '').checkValue('/end', '');
     });
@@ -223,6 +226,31 @@ describe('form: widget: date', () => {
       expect(ui.onOk).not.toHaveBeenCalled();
       comp._ok(true);
       expect(ui.onOk).toHaveBeenCalled();
+    });
+  });
+
+  describe('support date-fns', () => {
+    beforeEach(() => spyOn(utils, 'isDateFns').and.returnValue(true));
+    it('should be using YYYY when mode is year', () => {
+      page.newSchema({
+        properties: { a: { type: 'string', ui: { widget, mode: 'year' } as SFDateWidgetSchema } },
+      });
+      const comp = getComp();
+      expect(comp.displayFormat).toBe('YYYY');
+    });
+    it('should be using YYYY-MM when mode is month', () => {
+      page.newSchema({
+        properties: { a: { type: 'string', ui: { widget, mode: 'month' } as SFDateWidgetSchema } },
+      });
+      const comp = getComp();
+      expect(comp.displayFormat).toBe('YYYY-MM');
+    });
+    it('should be using YYYY-WW when mode is week', () => {
+      page.newSchema({
+        properties: { a: { type: 'string', ui: { widget, mode: 'week' } as SFDateWidgetSchema } },
+      });
+      const comp = getComp();
+      expect(comp.displayFormat).toBe('YYYY-WW');
     });
   });
 });

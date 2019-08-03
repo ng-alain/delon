@@ -42,9 +42,17 @@ export class DemoComponent {
           format: `HH:mm:ss+00:00`,
         } as SFTimeWidgetSchema,
       },
+      '12hours': {
+        type: 'string',
+        ui: {
+          widget: 'time',
+          format: 'h:mm:ss a',
+          use12Hours: true,
+        } as SFTimeWidgetSchema,
+      },
     },
   };
-  constructor(public msg: NzMessageService) {}
+  constructor(private msg: NzMessageService) {}
   submit(value: any) {
     this.msg.success(JSON.stringify(value));
   }

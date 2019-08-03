@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
 import format from 'date-fns/format';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
-import { toBool } from '../../utils';
+import { toBool, isDateFns } from '../../utils';
 import { ControlUIWidget } from '../../widget';
 import { SFDateWidgetSchema } from './schema';
 
@@ -13,12 +14,16 @@ import { SFDateWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None,
 })
 export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements OnInit {
+  private valueFormat: string;
+  private flatRange = false;
   mode: string;
   displayValue: Date | Date[] | null = null;
   displayFormat: string;
-  format: string;
   i: any;
-  flatRange = false;
+
+  private get zorroI18n(): NzI18nService {
+    return this.injector.get<NzI18nService>(NzI18nService);
+  }
 
   ngOnInit(): void {
     // tslint:disable-next-line: no-shadowed-variable
@@ -29,33 +34,28 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
       this.mode = 'range';
     }
     if (!displayFormat) {
+      const usingDateFns = isDateFns(this.zorroI18n);
       switch (this.mode) {
         case 'year':
-          this.displayFormat = `yyyy`;
+          this.displayFormat = usingDateFns ? `YYYY` : `yyyy`;
           break;
         case 'month':
-          this.displayFormat = `yyyy-MM`;
+          this.displayFormat = usingDateFns ? `YYYY-MM` : `yyyy-MM`;
           break;
         case 'week':
-          this.displayFormat = `yyyy-ww`;
+          this.displayFormat = usingDateFns ? `YYYY-WW` : `yyyy-ww`;
           break;
       }
     } else {
       this.displayFormat = displayFormat;
     }
     // 构建属性对象时会对默认值进行校验，因此可以直接使用 format 作为格式化属性
-    this.format = format!;
-    // 公共API
+    this.valueFormat = format!;
     this.i = {
       allowClear: toBool(allowClear, true),
       // nz-date-picker
       showToday: toBool(showToday, true),
     };
-  }
-
-  private compCd() {
-    // TODO: removed after nz-datepick support OnPush mode
-    setTimeout(() => this.detectChanges());
   }
 
   reset(value: SFValue) {
@@ -65,7 +65,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     } else {
       this.displayValue = value;
     }
-    this.compCd();
+    this.detectChanges();
   }
 
   _change(value: Date | Date[] | null) {
@@ -75,7 +75,7 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
       return;
     }
 
-    const res = Array.isArray(value) ? value.map(d => format(d, this.format)) : format(value, this.format);
+    const res = Array.isArray(value) ? value.map(d => format(d, this.valueFormat)) : format(value, this.valueFormat);
 
     if (this.flatRange) {
       this.setEnd(res[1]);
