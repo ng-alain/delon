@@ -1,3 +1,23 @@
+# [8.3.0](https://github.com/ng-alain/delon/compare/8.2.0...8.3.0) (2019-08-03)
+
+
+### Bug Fixes
+
+* **abc:reuse-tab:** should be always get title from  menu data ([#661](https://github.com/ng-alain/delon/issues/661)) ([6e63418](https://github.com/ng-alain/delon/commit/6e63418))
+* **abc:sidebar:** fix invalid subnode when include badge value i… ([#665](https://github.com/ng-alain/delon/issues/665)) ([763a27e](https://github.com/ng-alain/delon/commit/763a27e))
+* **abc:st:** fix ignore catch error of http request when component is destroyed ([#658](https://github.com/ng-alain/delon/issues/658)) ([6bd97eb](https://github.com/ng-alain/delon/commit/6bd97eb))
+* **theme:title:** should be avoid can't get title when rendered componet in `NavigationEnd` event ([#660](https://github.com/ng-alain/delon/issues/660)) ([0db451d](https://github.com/ng-alain/delon/commit/0db451d))
+
+
+### Features
+
+* **abc:st:** add `lazyLoad` property in `req` ([#656](https://github.com/ng-alain/delon/issues/656)) ([4ae8f13](https://github.com/ng-alain/delon/commit/4ae8f13))
+* **abc:st:** add `STColumnTitle` type of `title` property` ([#657](https://github.com/ng-alain/delon/issues/657)) ([9408ccc](https://github.com/ng-alain/delon/commit/9408ccc))
+* **acl:** support specify guard fail url in router data ([#666](https://github.com/ng-alain/delon/issues/666)) ([bee66fd](https://github.com/ng-alain/delon/commit/bee66fd))
+* **form:*:** support date-fns format in `date`, `time` widgets ([#663](https://github.com/ng-alain/delon/issues/663)) ([ba91193](https://github.com/ng-alain/delon/commit/ba91193))
+
+
+
 # [8.2.0](https://github.com/ng-alain/delon/compare/8.1.0...8.2.0) (2019-07-20)
 
 
