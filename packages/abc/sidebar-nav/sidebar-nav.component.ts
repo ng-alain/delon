@@ -107,7 +107,8 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
 
   private genSubNode(linkNode: HTMLLinkElement, item: Nav): HTMLUListElement {
     const id = `_sidebar-nav-${item.__id}`;
-    const node = linkNode.nextElementSibling!.cloneNode(true) as HTMLUListElement;
+    const childNode = item.badge ? linkNode.nextElementSibling!.nextElementSibling! : linkNode.nextElementSibling!;
+    const node = childNode.cloneNode(true) as HTMLUListElement;
     node.id = id;
     node.classList.add(FLOATINGCLS);
     node.addEventListener(

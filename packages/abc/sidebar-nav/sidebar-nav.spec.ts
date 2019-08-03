@@ -250,6 +250,15 @@ describe('abc: sidebar-nav', () => {
           page.showSubMenu();
           expect(clientHeight).toHaveBeenCalled();
         });
+        it('should be working when include badge', () => {
+          const mockMenu = deepCopy(MOCKMENUS) as Nav[];
+          mockMenu[0].children![0].badge = 1;
+          menuSrv.add(mockMenu);
+          fixture.detectChanges();
+          expect(page.getEl('.badge') != null).toBe(true);
+          page.showSubMenu();
+          expect(page.getEl('.sidebar-nav__floating-container .sidebar-nav__item', true) != null).toBe(true);
+        });
       });
       describe('should be hide sub-menu in floating container', () => {
         it('muse be hide via click menu link', () => {
