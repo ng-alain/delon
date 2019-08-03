@@ -1,6 +1,7 @@
 import { deepCopy, toBoolean } from '@delon/util';
 import { of, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 import { SF_SEQ } from './const';
@@ -171,4 +172,14 @@ export function getData(schema: SFSchema, ui: SFUISchemaItem, formData: any, asy
     return ui.asyncData(asyncArgs).pipe(map((list: SFSchemaEnum[]) => getEnum(list, formData, schema.readOnly!)));
   }
   return of(getCopyEnum(schema.enum!, formData, schema.readOnly!));
+}
+
+/**
+ * Whether to using date-fns to format a date
+ */
+export function isDateFns(srv: NzI18nService): boolean {
+  if (!srv) return false;
+  const data = srv.getDateLocale();
+  // Compatible date-fns v1.x & v2.x
+  return data != null && (!!data.distanceInWords || !!data.formatDistance);
 }

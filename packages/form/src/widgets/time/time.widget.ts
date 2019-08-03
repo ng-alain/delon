@@ -12,24 +12,29 @@ import { SFTimeWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None,
 })
 export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements OnInit {
+  private valueFormat: string | undefined;
   displayValue: Date | null = null;
-  format: string | undefined;
   i: any;
 
   ngOnInit(): void {
     const ui = this.ui;
     // 构建属性对象时会对默认值进行校验，因此可以直接使用 format 作为格式化属性
-    this.format = ui.format;
-    this.i = {
+    this.valueFormat = ui.format;
+    const opt = {
       displayFormat: ui.displayFormat || 'HH:mm:ss',
       allowEmpty: toBool(ui.allowEmpty, true),
       clearText: ui.clearText || '清除',
       defaultOpenValue: ui.defaultOpenValue || new Date(),
       hideDisabledOptions: toBool(ui.hideDisabledOptions, false),
+      use12Hours: toBool(ui.use12Hours, false),
       hourStep: ui.hourStep || 1,
       minuteStep: ui.nzMinuteStep || 1,
       secondStep: ui.secondStep || 1,
     };
+    if (opt.use12Hours && !ui.displayFormat) {
+      opt.displayFormat = `h:mm:ss a`;
+    }
+    this.i = opt;
   }
 
   reset(value: SFValue) {
@@ -60,6 +65,6 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
       this.setValue(Date.UTC(1970, 0, 1, value.getHours(), value.getMinutes(), value.getSeconds()));
       return;
     }
-    this.setValue(format(value, this.format));
+    this.setValue(format(value, this.valueFormat));
   }
 }

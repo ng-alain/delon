@@ -1,3 +1,4 @@
+// tslint:disable: no-string-literal
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
@@ -34,7 +35,7 @@ describe('form: widget: time', () => {
       const comp = getComp();
       const time = new Date();
       comp._change(time);
-      page.checkValue('/a', format(time, comp.format));
+      page.checkValue('/a', format(time, comp['valueFormat']));
     });
 
     describe('default value', () => {
@@ -107,18 +108,25 @@ describe('form: widget: time', () => {
       expect(format(page.getValue('a'), 'HH:mm:ss')).toBe(format(utcVal, 'HH:mm:ss'));
     });
 
+    it('should be display format [h:mm:ss a] when display format & use12Hours is true', () => {
+      page.newSchema({
+        properties: { a: { type: 'string', ui: { widget, use12Hours: true } } },
+      });
+      expect(getComp().i.displayFormat).toBe('h:mm:ss a');
+    });
+
     describe('#format', () => {
       it('should be used x when type is number', () => {
         page.newSchema({
           properties: { a: { type: 'number', ui: { widget } } },
         });
-        expect(getComp().format).toBe('x');
+        expect(getComp()['valueFormat']).toBe('x');
       });
       it('should be used HH:mm:ss when type is not number', () => {
         page.newSchema({
           properties: { a: { type: 'string', ui: { widget } } },
         });
-        expect(getComp().format).toBe('HH:mm:ss');
+        expect(getComp()['valueFormat']).toBe('HH:mm:ss');
       });
     });
   });
