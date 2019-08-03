@@ -1,5 +1,6 @@
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { ACLGuard } from './acl-guard';
 import { DelonACLModule } from './acl.module';
@@ -10,6 +11,7 @@ describe('acl: guard', () => {
   let injector: TestBedStatic;
   let srv: ACLGuard;
   let acl: ACLService;
+  let routerSpy: jasmine.Spy;
 
   beforeEach(() => {
     injector = TestBed.configureTestingModule({
@@ -21,6 +23,7 @@ describe('acl: guard', () => {
       role: ['user'],
       ability: [1, 2, 3],
     } as ACLType);
+    routerSpy = spyOn(injector.get<Router>(Router), 'navigateByUrl');
   });
 
   it(`should load route when no-specify permission`, (done: () => void) => {
@@ -151,5 +154,39 @@ describe('acl: guard', () => {
         expect(res).toBeTruthy();
         done();
       });
+  });
+
+  describe('#guard_url', () => {
+    it(`should be rediect to default url: /403`, (done: () => void) => {
+      srv
+        .canActivate(
+          {
+            data: {
+              guard: 'admin',
+            },
+          } as any,
+          null,
+        )
+        .subscribe(() => {
+          expect(routerSpy.calls.first().args[0]).toBe(`/403`);
+          done();
+        });
+    });
+    it(`should be specify rediect url`, (done: () => void) => {
+      srv
+        .canActivate(
+          {
+            data: {
+              guard: 'admin',
+              guard_url: '/no',
+            },
+          } as any,
+          null,
+        )
+        .subscribe(() => {
+          expect(routerSpy.calls.first().args[0]).toBe(`/no`);
+          done();
+        });
+    });
   });
 });
