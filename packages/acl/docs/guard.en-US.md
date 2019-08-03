@@ -27,7 +27,8 @@ const routes: Routes = [
         role: [ 'user1' ],
         ability: [ 10, 'USER-EDIT' ],
         mode: 'allOf'
-      }
+      },
+      guard_url: '/no-permisseion'
     }
   },
 ]
