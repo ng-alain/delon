@@ -28,7 +28,7 @@ export class DomService {
       lowerCaseTags: false,
       lowerCaseAttributeNames: false,
       // tslint:disable-next-line: deprecation
-    } as htmlparser2.Options);
+    } as htmlparser2.ParserOptions);
 
     parser.write(html.replace(/\n|\s\s/g, ' ').trim());
     parser.done();
@@ -306,11 +306,7 @@ export class DomService {
         }
 
         if (item.children && item.children.length === 1 && item.children[0].type === 'text') {
-          result.push(
-            `${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs!)}>${item.children[0].data!.trim()}</${
-              item.name
-            }>`,
-          );
+          result.push(`${this.genTab(deep)}<${item.name}${this.genAttr(item.attribs!)}>${item.children[0].data!.trim()}</${item.name}>`);
           continue;
         }
 
