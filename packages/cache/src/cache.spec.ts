@@ -1,3 +1,4 @@
+// tslint:disable: no-string-literal
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestBedStatic } from '@angular/core/testing';
 import { of, Observable } from 'rxjs';
@@ -8,6 +9,7 @@ import { AlainThemeModule } from '@delon/theme';
 import { DelonCacheModule } from './cache.module';
 import { CacheService } from './cache.service';
 import { ICache } from './interface';
+import { DelonCacheConfig } from './cache.config';
 
 describe('cache: service', () => {
   let injector: TestBedStatic;
@@ -35,14 +37,26 @@ describe('cache: service', () => {
     });
   });
 
-  function genModule() {
+  function genModule(defaultCog?: DelonCacheConfig) {
+    const providers: any[] = [];
+    if (defaultCog) {
+      providers.push({ provide: DelonCacheConfig, useValue: defaultCog });
+    }
     injector = TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, AlainThemeModule.forRoot(), DelonCacheModule],
-      providers: [],
+      providers,
     });
 
     srv = injector.get<CacheService>(CacheService);
   }
+
+  it('should be specify a global config', () => {
+    genModule({ expire: 100, type: 'm' });
+    const saveSpy = spyOn(srv as any, 'save');
+    srv.set(KEY, 'a');
+    const args = saveSpy.calls.first().args;
+    expect(args[0]).toBe('m');
+  });
 
   describe('[property]', () => {
     beforeEach(() => genModule());
@@ -249,23 +263,23 @@ describe('cache: service', () => {
         status: 'ok',
       };
       it('should be get [status]', () => {
-        expect(srv._deepGet(tree, ['status'])).toBe(tree.status);
+        expect(srv['deepGet'](tree, ['status'])).toBe(tree.status);
       });
       it('should be get [responsne.totle]', () => {
-        expect(srv._deepGet(tree, ['responsne', 'total'])).toBe(tree.responsne.total);
+        expect(srv['deepGet'](tree, ['responsne', 'total'])).toBe(tree.responsne.total);
       });
       it('should be return default value when not exist deep key', () => {
         const def = 'aa';
-        const res = srv._deepGet(tree, ['responsne', 'totala'], def);
+        const res = srv['deepGet'](tree, ['responsne', 'totala'], def);
         expect(res).toBe(def);
       });
       it('should be return default value when not exist key', () => {
         const def = 'aa';
-        expect(srv._deepGet(tree, ['status11'], def)).toBe(def);
+        expect(srv['deepGet'](tree, ['status11'], def)).toBe(def);
       });
       it('should be return default value when source object is null', () => {
         const def = 'aa';
-        expect(srv._deepGet(null, ['status11'], def)).toBe(def);
+        expect(srv['deepGet'](null, ['status11'], def)).toBe(def);
       });
     });
 
