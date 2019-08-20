@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestBedStatic, tick, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { configureTestSuite, createTestContext } from '@delon/testing';
@@ -35,30 +35,26 @@ describe('abc: notice-icon', () => {
 
   describe('when not data', () => {
     beforeEach(() => (context.data = []));
-    it('should be count', done => {
+    it('should be count', fakeAsync(() => {
       context.count = 5;
       fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
       const cur = dl.query(By.css('.ant-scroll-number-only .current')).nativeElement as HTMLElement;
-      fixture.whenStable().then(() => {
-        expect(+cur.textContent!.trim()).toBe(context.count);
-        done();
-      });
-    });
+      expect(+cur.textContent!.trim()).toBe(context.count);
+    }));
   });
 
   describe('when has data', () => {
     beforeEach(() => fixture.detectChanges());
 
     describe('should be show dropdown', () => {
-      it('via popoverVisible property', done => {
+      it('via popoverVisible property', () => {
         spyOn(context, 'popupVisibleChange');
         expect(context.comp.popoverVisible).toBe(false);
         context.popoverVisible = true;
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          expect(context.comp.popoverVisible).toBe(true);
-          done();
-        });
+        expect(context.comp.popoverVisible).toBe(true);
       });
       it('via click', done => {
         expect(context.popoverVisible).toBeUndefined();
