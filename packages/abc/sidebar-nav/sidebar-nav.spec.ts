@@ -259,6 +259,18 @@ describe('abc: sidebar-nav', () => {
           page.showSubMenu();
           expect(page.getEl('.sidebar-nav__floating-container .sidebar-nav__item', true) != null).toBe(true);
         });
+        it('should be ingore children title trigger event', () => {
+          spyOn(context, 'select');
+          expect(context.select).not.toHaveBeenCalled();
+          const mockMenu = deepCopy(MOCKMENUS) as Nav[];
+          mockMenu[0].children![0].children = [{ text: 'a', children: [{ text: 'b' }] }];
+          menuSrv.add(mockMenu);
+          fixture.detectChanges();
+          page.showSubMenu();
+          const containerEl = page.getEl<HTMLElement>(floatingShowCls, true)!;
+          (containerEl.querySelector('.sidebar-nav__item-link') as HTMLElement).click();
+          expect(context.select).not.toHaveBeenCalled();
+        });
       });
       describe('should be hide sub-menu in floating container', () => {
         it('muse be hide via click menu link', () => {
