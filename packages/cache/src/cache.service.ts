@@ -3,7 +3,6 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import addSeconds from 'date-fns/add_seconds';
 import { of, BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-
 import { DelonCacheConfig } from './cache.config';
 import { CacheNotifyResult, CacheNotifyType, ICache, ICacheStore } from './interface';
 import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';
@@ -11,26 +10,19 @@ import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';
 @Injectable({ providedIn: 'root' })
 export class CacheService implements OnDestroy {
   private readonly memory: Map<string, ICache> = new Map<string, ICache>();
-  private readonly notifyBuffer: Map<string, BehaviorSubject<CacheNotifyResult>> = new Map<
-    string,
-    BehaviorSubject<CacheNotifyResult>
-  >();
+  private readonly notifyBuffer: Map<string, BehaviorSubject<CacheNotifyResult>> = new Map<string, BehaviorSubject<CacheNotifyResult>>();
   private meta: Set<string> = new Set<string>();
   private freqTick = 3000;
-  private freqTime;
+  private freqTime: any;
   private cog: DelonCacheConfig = {};
 
-  constructor(
-    _: DelonCacheConfig,
-    @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore,
-    private http: HttpClient,
-  ) {
+  constructor(_: DelonCacheConfig, @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore, private http: HttpClient) {
     Object.assign(this.cog, { ...new DelonCacheConfig(), ..._ });
     this.loadMeta();
     this.startExpireNotify();
   }
 
-  _deepGet(obj: any, path: string[], defaultValue?: any) {
+  private deepGet(obj: any, path: string[], defaultValue?: any) {
     if (!obj) return defaultValue;
     if (path.length <= 1) {
       const checkObj = path.length ? obj[path[0]] : obj;
@@ -75,25 +67,25 @@ export class CacheService implements OnDestroy {
   // #region set
 
   /**
-   * 持久化缓存 `Observable` 对象，例如：
+   * Persistent cached `Observable` object, for example:
    * - `set('data/1', this.http.get('data/1')).subscribe()`
    * - `set('data/1', this.http.get('data/1'), { expire: 10 }).subscribe()`
    */
   set<T>(key: string, data: Observable<T>, options?: { type?: 's'; expire?: number }): Observable<T>;
   /**
-   * 持久化缓存 `Observable` 对象，例如：
+   * Persistent cached `Observable` object, for example:
    * - `set('data/1', this.http.get('data/1')).subscribe()`
    * - `set('data/1', this.http.get('data/1'), { expire: 10 }).subscribe()`
    */
   set(key: string, data: Observable<any>, options?: { type?: 's'; expire?: number }): Observable<any>;
   /**
-   * 持久化缓存基础对象，例如：
+   * Persistent cached simple object, for example:
    * - `set('data/1', 1)`
    * - `set('data/1', 1, { expire: 10 })`
    */
   set(key: string, data: {}, options?: { type?: 's'; expire?: number }): void;
   /**
-   * 指定缓存类型进行缓存对象，例如内存缓存：
+   * Persistent cached simple object and specify storage type, for example caching in memory:
    * - `set('data/1', 1, { type: 'm' })`
    * - `set('data/1', 1, { type: 'm', expire: 10 })`
    */
@@ -113,8 +105,13 @@ export class CacheService implements OnDestroy {
       expire?: number;
     } = {},
   ): any {
-    // expire
     let e = 0;
+    const { type, expire } = this.cog;
+    options = {
+      type,
+      expire,
+      ...options,
+    };
     if (options.expire) {
       e = addSeconds(new Date(), options.expire).valueOf();
     }
@@ -179,13 +176,11 @@ export class CacheService implements OnDestroy {
     } = {},
   ): Observable<any> | any {
     const isPromise = options.mode !== 'none' && this.cog.mode === 'promise';
-    const value: ICache = this.memory.has(key)
-      ? (this.memory.get(key) as ICache)
-      : this.store.get(this.cog.prefix + key);
+    const value: ICache = this.memory.has(key) ? (this.memory.get(key) as ICache) : this.store.get(this.cog.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
         return this.http.get(key).pipe(
-          map((ret: any) => this._deepGet(ret, this.cog.reName as string[], null)),
+          map((ret: any) => this.deepGet(ret, this.cog.reName as string[], null)),
           tap(v => this.set(key, v, { type: options.type as any, expire: options.expire })),
         );
       }
