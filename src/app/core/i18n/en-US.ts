@@ -35,7 +35,7 @@ export const ENUS = {
   'app.header.menu.form': '@delon/form-Dynamic Form',
   'app.header.menu.theme': '@delon/theme-Theme System',
   'app.header.menu.form.validator': 'Online Validator',
-  'app.header.menu.cli': 'ng-alain Schematics',
+  'app.header.menu.cli': 'Cli',
   'app.header.menu.tool': 'Tools',
   'app.header.menu.upgrade': 'HTML Upgrade Tool',
   'app.header.menu.themes': 'Themes',

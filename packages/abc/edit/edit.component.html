@@ -5,9 +5,7 @@
     </span>
     <span class="se__label-optional">
       {{ optional }}
-      <nz-tooltip *ngIf="optionalHelp" [nzTitle]="optionalHelp">
-        <i nz-tooltip nz-icon nzType="question-circle"></i>
-      </nz-tooltip>
+      <i *ngIf="optionalHelp" nz-tooltip [nzTooltipTitle]="optionalHelp" nz-icon nzType="question-circle"></i>
     </span>
   </label>
 </div>

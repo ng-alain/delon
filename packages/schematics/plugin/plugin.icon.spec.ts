@@ -17,22 +17,22 @@ const testCases = {
     <i class="anticon anticon-question-circle-o"></i>
     <i class="anticon anticon-spin anticon-loading"></i>
     <i nz-icon class="anticon anticon-user"></i>
-    <i nz-icon type="align-{{type ? 'left' : 'right'}}"></i>
-    <i nz-icon type="align-{{type ? centerVar : topVar}}"></i>
+    <i nz-icon nzType="align-{{type ? 'left' : 'right'}}"></i>
+    <i nz-icon nzType="align-{{type ? centerVar : topVar}}"></i>
     <i nz-icon nzType="nz-align-{{type ? 'left' : 'right'}}"></i>
     <i nz-icon nzType="nz-align-{{type ? centerVar : topVar}}"></i>
     <i nz-icon [type]="type ? 'menu-fold' : 'menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
     <i nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"></i>
     <i nz-icon [nzType]="type ? 'nz-menu-fold' : 'nz-menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
     <i nz-icon [nzType]="type ? 'nz-fullscreen' : 'nz-fullscreen-exit'"></i>
-    <i nz-icon type="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
+    <i nz-icon nzType="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
     <i nz-icon nzType="{{ type ? 'nz-arrow-left' : 'nz-arrow-right' }}"></i>
-    <i nz-icon type="filter" theme="outline"></i>
+    <i nz-icon nzType="filter" theme="outline"></i>
     <i nz-icon nzType="nz-filter" nzTheme="outline"></i>
-    <i nz-icon type="step-backward" theme="outline"></i>
-    <i nz-icon type="step-backward" theme="fill"></i>
+    <i nz-icon nzType="step-backward" theme="outline"></i>
+    <i nz-icon nzType="step-backward" theme="fill"></i>
     <i nz-icon nzType="nz-step-a" nzTheme="fill"></i>
-    <i nz-icon type="up-circle" theme="twotone"></i>
+    <i nz-icon nzType="up-circle" theme="twotone"></i>
     <nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
     \`
   })

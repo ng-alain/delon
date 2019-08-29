@@ -168,10 +168,10 @@ export class StartupService {
 <i class="anticon anticon-question-circle-o"></i>
 <i class="anticon anticon-spin anticon-loading"></i>
 <i nz-icon class="anticon anticon-user"></i>
-<i nz-icon type="align-{{type ? 'left' : 'right'}}"></i>
+<i nz-icon nzType="align-{{type ? 'left' : 'right'}}"></i>
 <i nz-icon [type]="type ? 'menu-fold' : 'menu-unfold'" [theme]="theme ? 'outline' : 'fill'"></i>
 <i nz-icon [type]="type ? 'fullscreen' : 'fullscreen-exit'"></i>
-<i nz-icon type="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
-<i nz-icon type="filter" theme="outline"></i>
+<i nz-icon nzType="{{ type ? 'arrow-left' : 'arrow-right' }}"></i>
+<i nz-icon nzType="filter" theme="outline"></i>
 <nz-input-group [nzAddOnBeforeIcon]="focus ? 'anticon anticon-arrow-down' : 'anticon anticon-search'"></nz-input-group>
 ```
