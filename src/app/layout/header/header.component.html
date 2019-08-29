@@ -1,5 +1,5 @@
 <ng-container *ngIf="isMobile">
-  <i nz-icon type="menu" class="header-menu-icon" nz-popover [(nzVisible)]="menuVisible" [nzTitle]="null" nzTrigger="click" nzPlacement="bottomRight" [nzContent]="mobileMenu"></i>
+  <i nz-icon nzType="menu" class="header-menu-icon" nz-popover [(nzVisible)]="menuVisible" [nzTitle]="null" nzTrigger="click" nzPlacement="bottomRight" [nzContent]="mobileMenu"></i>
   <ng-template #mobileMenu>
     <div class="header-menu">
       <div class="d-flex justify-content-between align-items-center">
@@ -17,6 +17,9 @@
         </li>
         <li nz-menu-item (click)="toViaMobile('/components/view')">
           {{'app.header.menu.components' | translate}}
+        </li>
+        <li nz-menu-item (click)="toViaMobile('/cli/getting-started')">
+          {{'app.header.menu.cli' | translate}}
         </li>
         <li nz-submenu>
           <span title>{{'app.header.menu.delon' | translate}}</span>
@@ -38,18 +41,16 @@
 <nz-row>
   <nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5" nzXl="5" nzXXl="4">
     <a routerLink="/{{i18n.zone}}">
-      <nz-tooltip nzTitle="{{ 'app.footer.qqgroup' | translate}}: 428749721">
-        <span nz-tooltip (click)="onCopy('428749721')" id="logo">
-          <img src="./assets/img/logo-color.svg" style="max-height: 32px;" />
-          <img src="./assets/img/ng-alain.svg" style="max-height: 32px;" />
-        </span>
-      </nz-tooltip>
+      <span nz-tooltip nzTooltipTitle="{{ 'app.footer.qqgroup' | translate}}: 428749721" (click)="onCopy('428749721')" id="logo">
+        <img src="./assets/img/logo-color.svg" style="max-height: 32px;" />
+        <img src="./assets/img/ng-alain.svg" style="max-height: 32px;" />
+      </span>
     </a>
   </nz-col>
   <nz-col nz-col nzXs="0" nzSm="0" nzMd="18" nzLg="19" nzXl="19" nzXXl="20">
     <div class="header-menu-container">
       <div id="search-box">
-        <i nz-icon type="search"></i>
+        <i nz-icon nzType="search"></i>
         <input *ngIf="useDocsearch" nz-input #searchInput [placeholder]="'app.header.search' | translate">
         <nz-select *ngIf="!useDocsearch" style="width: 200px;" [ngModel]="q" (ngModelChange)="to($event)" nzAllowClear nzShowSearch [nzServerSearch]="true" (nzOnSearch)="changeQ($event)" [nzPlaceHolder]="'app.header.search' | translate">
           <nz-option-group *ngFor="let group of list" [nzLabel]="group.title">
@@ -64,6 +65,9 @@
           </li>
           <li nz-menu-item routerLink="/components/view/{{i18n.zone}}">
             {{'app.header.menu.components' | translate}}
+          </li>
+          <li nz-menu-item routerLink="/cli/getting-started/{{i18n.zone}}">
+            {{'app.header.menu.cli' | translate}}
           </li>
           <li nz-menu-item>
             <div nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="delonMenu">{{'app.header.menu.delon' | translate}}</div>

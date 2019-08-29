@@ -6,7 +6,6 @@ import { ObjectProperty } from '../src/model/object.property';
 import { SFSchema } from '../src/schema/index';
 import { SFUISchema, SFUISchemaItem } from '../src/schema/ui';
 import { configureSFTestSuite, SFPage, TestFormComponent } from './base.spec';
-import { NzToolTipComponent } from 'ng-zorro-antd';
 
 describe('form: schema', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -186,7 +185,7 @@ describe('form: schema', () => {
             name: { type: 'string', ui: { optionalHelp: 'a' } },
           },
         });
-        page.checkCount('.sf__optional nz-tooltip', 1);
+        page.checkCount('.sf__optional [nz-tooltip]', 1);
         discardPeriodicTasks();
       }));
       it('should working when value is object', fakeAsync(() => {
@@ -195,7 +194,7 @@ describe('form: schema', () => {
             name: { type: 'string', ui: { optionalHelp: { text: 'b', placement: 'bottomRight' } } },
           },
         });
-        page.checkCount('.sf__optional nz-tooltip', 1);
+        page.checkCount('.sf__optional [nz-tooltip]', 1);
         discardPeriodicTasks();
       }));
       it('should be hide when not text value in object', fakeAsync(() => {
@@ -204,7 +203,7 @@ describe('form: schema', () => {
             name: { type: 'string', ui: { optionalHelp: { text: '', placement: 'bottomRight' } } },
           },
         });
-        page.checkCount('.sf__optional nz-tooltip', 0);
+        page.checkCount('.sf__optional [nz-tooltip]', 0);
         discardPeriodicTasks();
       }));
       it('should be inherit the root config', fakeAsync(() => {
@@ -216,8 +215,8 @@ describe('form: schema', () => {
           },
           { '*': { optionalHelp: { text: '', placement: 'bottomRight' } } },
         );
-        const a = page.getWidget<NzToolTipComponent>('nz-tooltip');
-        expect(a.nzPlacement).toBe(`bottomRight`);
+        const prop = page.getProperty('/name');
+        expect((prop!.ui!.optionalHelp as any).placement!).toBe(`bottomRight`);
         discardPeriodicTasks();
       }));
     });
