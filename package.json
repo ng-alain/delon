@@ -122,6 +122,7 @@
     "mockjs": "^1.0.1-beta3",
     "mustache": "^3.0.0",
     "ng-packagr": "^5.5.0",
+    "tsickle": "^0.37.0",
     "parse5": "^5.1.0",
     "prettier": "^1.18.2",
     "prettier-stylelint": "^0.4.2",
