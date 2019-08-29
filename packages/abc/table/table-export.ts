@@ -2,7 +2,7 @@ import { Injectable, Optional } from '@angular/core';
 import { XlsxService } from '@delon/abc/xlsx';
 import { deepGet } from '@delon/util';
 
-import { STColumn, STExportOptions } from './table.interfaces';
+import { STColumn, STExportOptions, STColumnTitle } from './table.interfaces';
 
 @Injectable()
 export class STExport {
@@ -41,9 +41,10 @@ export class STExport {
 
     // column
     for (let i = 0; i < cc; i++) {
+      const tit = colData[i].title;
       sheet[`${String.fromCharCode(i + 65)}1`] = {
         t: 's',
-        v: colData[i].title,
+        v: typeof tit === 'object' ? tit.text : tit,
       };
     }
 
