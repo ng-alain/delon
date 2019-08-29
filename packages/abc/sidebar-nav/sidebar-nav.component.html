@@ -33,11 +33,9 @@
             <ng-container *ngIf="!collapsed">
               <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
             </ng-container>
-            <nz-tooltip *ngIf="collapsed" nzPlacement="right" [nzTitle]="child1.text">
-              <span nz-tooltip>
-                <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
-              </span>
-            </nz-tooltip>
+            <span *ngIf="collapsed" nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="child1.text">
+              <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
+            </span>
             <span class="sidebar-nav__item-text">{{ child1.text }}</span>
           </a>
           <!-- has children link -->

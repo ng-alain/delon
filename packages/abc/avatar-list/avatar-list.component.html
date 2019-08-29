@@ -1,14 +1,12 @@
 <ul class="avatar-list__wrap">
   <li *ngFor="let i of items"
       [class]="cls">
-    <nz-tooltip *ngIf="i.tips"
-                [nzTitle]="i.tips">
-      <nz-avatar nz-tooltip
-                 [nzSrc]="i.src"
-                 [nzText]="i.text"
-                 [nzIcon]="i.icon"
-                 [nzSize]="avatarSize"></nz-avatar>
-    </nz-tooltip>
+    <nz-avatar *ngIf="i.tips"
+                nz-tooltip [nzTooltipTitle]="i.tips"
+                [nzSrc]="i.src"
+                [nzText]="i.text"
+                [nzIcon]="i.icon"
+                [nzSize]="avatarSize"></nz-avatar>
     <nz-avatar *ngIf="!i.tips"
                [nzSrc]="i.src"
                [nzText]="i.text"

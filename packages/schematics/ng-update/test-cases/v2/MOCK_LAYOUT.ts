@@ -97,25 +97,25 @@ export class LayoutDefaultComponent {
     <!-- Menu -->
     <li>
       <div class="item" (click)="toggleCollapsedSidebar()">
-        <i nz-icon type="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+        <i nz-icon nzType="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
       </div>
     </li>
     <!-- Github Page -->
     <li>
       <a class="item" href="//github.com/cipchk/ng-alain" target="_blank">
-        <i nz-icon type="github"></i>
+        <i nz-icon nzType="github"></i>
       </a>
     </li>
     <!-- Lock Page -->
     <li class="hidden-xs">
       <div class="item" [routerLink]="['/lock']">
-        <i nz-icon type="lock"></i>
+        <i nz-icon nzType="lock"></i>
       </div>
     </li>
     <!-- Search Button -->
     <li class="header-search__btn" (click)="searchToggleChange()">
       <div class="item">
-        <i nz-icon type="search"></i>
+        <i nz-icon nzType="search"></i>
       </div>
     </li>
   </ul>
@@ -137,7 +137,7 @@ export class LayoutDefaultComponent {
     <li class="hidden-xs">
       <nz-dropdown nzTrigger="click" nzPlacement="bottomRight">
         <div class="item" nz-dropdown>
-          <i nz-icon type="setting"></i>
+          <i nz-icon nzType="setting"></i>
         </div>
         <div nz-menu style="width:200px;">
           <div nz-menu-item>

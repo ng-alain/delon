@@ -53,14 +53,12 @@
       <div class="footer__center">
         Copyright &copy; 2019 <a href="//github.com/cipchk" target="_blank">&copy;卡色</a>
         <div style="margin-top: 20px;">
-          <nz-popover [nzTrigger]="'click'" nzOverlayClassName="theme-color-content">
-            <div class="theme-color" nz-popover>
-              <div class="theme-color-value" [ngStyle]="{'background': color}"></div>
-            </div>
-            <ng-template #nzTemplate>
-              <color-sketch [color]="color" (onChangeComplete)="changeColor($event)"></color-sketch>
-            </ng-template>
-          </nz-popover>
+          <div class="theme-color" nz-popover [nzPopoverContent]="colorTpl" nzPopoverTrigger="click" nzOverlayClassName="theme-color-content">
+            <div class="theme-color-value" [ngStyle]="{'background': color}"></div>
+          </div>
+          <ng-template #colorTpl>
+            <color-sketch [color]="color" (onChangeComplete)="changeColor($event)"></color-sketch>
+          </ng-template>
         </div>
       </div>
     </div>

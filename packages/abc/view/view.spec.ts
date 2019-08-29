@@ -135,7 +135,7 @@ describe('abc: view', () => {
         it('#optionalHelp', () => {
           context.optionalHelp = 'test-optional';
           fixture.detectChanges();
-          expect(page.getEl('nz-tooltip') != null).toBe(true);
+          expect(page.getEl('[nz-tooltip]') != null).toBe(true);
         });
         describe('#default', () => {
           beforeEach(() => {

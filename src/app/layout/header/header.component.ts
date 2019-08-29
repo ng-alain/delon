@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   useDocsearch = false;
   oldVersionList = [`1.x`];
   currentVersion = 'stable';
-  delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util', 'cli'];
+  delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
 
   @ViewChild('searchInput', { static: false })
   searchInput: ElementRef<HTMLInputElement>;

@@ -12,20 +12,14 @@
   </div>
   <div class="code-box-description" [innerHTML]="item.summary"></div>
   <div class="code-box-actions">
-    <nz-tooltip [nzTitle]="'app.demo.stackblitz' | translate">
-      <i nz-tooltip (click)="openOnStackBlitz()" nz-icon type="form" class="code-box-code-icon"></i>
-    </nz-tooltip>
-    <nz-tooltip [nzTitle]="'app.demo.copy' | translate">
-      <i nz-tooltip (click)="onCopy(item.code)" nz-icon type="copy" class="code-box-code-icon"></i>
-    </nz-tooltip>
-    <nz-tooltip [nzTitle]="expand ? 'Hide Code' : 'Show Code'" class="code-expand-icon">
-      <span nz-tooltip>
-        <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" [ngClass]="{'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand}"
-          (click)="handle()" />
-        <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" [ngClass]="{'code-expand-icon-show': expand, 'code-expand-icon-hide': !expand}"
-          (click)="handle()" />
-      </span>
-    </nz-tooltip>
+    <i nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | translate" (click)="openOnStackBlitz()" nz-icon nzType="form" class="code-box-code-icon"></i>
+    <i nz-tooltip [nzTooltipTitle]="'app.demo.copy' | translate" (click)="onCopy(item.code)" nz-icon nzType="copy" class="code-box-code-icon"></i>
+    <span nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" class="code-expand-icon">
+      <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" [ngClass]="{'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand}"
+        (click)="handle()" />
+      <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" [ngClass]="{'code-expand-icon-show': expand, 'code-expand-icon-hide': !expand}"
+        (click)="handle()" />
+    </span>
   </div>
 </section>
 <section class="highlight-wrapper" [ngClass]="{'highlight-wrapper-expand': expand}">
