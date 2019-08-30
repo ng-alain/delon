@@ -11,7 +11,7 @@ class MockXlsxService {
 }
 const columns: STColumn[] = [
   { title: 'id', index: ['id'], type: 'checkbox' },
-  { title: 'name', index: ['name'] },
+  { title: { text: 'name' }, index: ['name'] },
   { title: 'img', index: ['img'], type: 'img', exported: false },
   { title: 'currency', index: ['currency'], type: 'currency' },
   { title: 'date', index: ['date'], type: 'date' },
