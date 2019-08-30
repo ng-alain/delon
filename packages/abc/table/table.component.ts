@@ -32,7 +32,7 @@ import {
   YNPipe,
 } from '@delon/theme';
 import { deepMerge, deepMergeKey, toBoolean, updateHostClass, InputBoolean, InputNumber } from '@delon/util';
-import { of, Observable, Subject, from } from 'rxjs';
+import { of, Observable, Subject, from, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 import { STColumnSource } from './table-column-source';
@@ -179,6 +179,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return { pi, ps, total };
   }
   private unsubscribe$ = new Subject<void>();
+  private data$: Subscription;
   private totalTpl = ``;
   private clonePage: STPage;
   private copyCog: STConfig;
@@ -308,7 +309,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private loadData(options?: STDataSourceOptions): Promise<STDataSourceResult> {
     const { pi, ps, data, req, res, page, total, singleSort, multiSort, rowClassName } = this;
     return new Promise((resolvePromise, rejectPromise) => {
-      return this.dataSource
+      if (this.data$) {
+        this.data$.unsubscribe();
+      }
+
+      this.data$ = this.dataSource
         .process({
           pi,
           ps,

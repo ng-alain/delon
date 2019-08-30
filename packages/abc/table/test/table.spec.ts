@@ -890,6 +890,23 @@ describe('abc: table', () => {
             done();
           });
         });
+        it('should be ingored incomplete request when has new request', done => {
+          context.data = '/mock1';
+          fixture.detectChanges();
+          context.data = '/mock2';
+          fixture.detectChanges();
+          // Can't call have beed unsubscribe request in flush method, so muse be using `try {} catch {}`
+          try {
+            httpBed.expectOne(req => req.url === '/mock2').flush([{}]);
+            httpBed.expectOne(req => req.url === '/mock1').flush([{}, {}]);
+            expect(true).toBe(false);
+          } catch {}
+
+          fixture.whenStable().then(() => {
+            expect(comp._data.length).toBe(1);
+            done();
+          });
+        });
       });
     });
     describe('#req', () => {
