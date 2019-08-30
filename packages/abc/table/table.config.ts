@@ -11,6 +11,7 @@ import {
   STSingleSort,
   STWidthMode,
   IifBehaviorType,
+  STColumnButtonPop,
 } from './table.interfaces';
 
 @Injectable({ providedIn: 'root' })
@@ -98,9 +99,11 @@ export class STConfig {
     footerHeight: 55,
   };
   /**
-   * 气泡确认框内容
+   * 气泡参数
    */
-  popTitle?: string = '确认删除吗？';
+  pop?: STColumnButtonPop = {
+    title: '确认删除吗？',
+  };
   /**
    * 行单击多少时长之类为双击（单位：毫秒），默认：`200`
    */

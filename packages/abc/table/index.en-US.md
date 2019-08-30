@@ -316,8 +316,8 @@ Property | Description | Type | Default
 (deprecated) `[format]` | Format value of button text | `(record: STData, btn: STColumnButton) => string` | -
 `[type]` | Type of button | `none,del,modal,static,drawer,link` | -
 `[click]` | Click callback; <br>**function** when `type=modal` will only fire when `confirmed`<br>**reload** Refresh current page<br>**load** load `1` page | `(record: STData, modal?: any, instance?: STComponent) => void | reload` | -
-`[pop]` | Whether to pop confirm | `boolean` | `false`
-`[popTitle]` | Title of pop confirm | `string` | `确认删除吗？`
+`[pop]` | Whether to pop confirm | `boolean, string, STColumnButtonPop` | `false`
+(deprecated) `[popTitle]` | Title of pop confirm | `string` | `确认删除吗？`
 `[modal]` | Config of type is modal or static | `STColumnButtonModal` | -
 `[drawer]` | Config of type is drawer | `STColumnButtonDrawer` | -
 `[children]` | Drop-down menu, only supports level 1| `STColumnButton[]` | -

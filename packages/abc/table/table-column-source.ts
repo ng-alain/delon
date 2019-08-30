@@ -5,7 +5,7 @@ import { deepCopy } from '@delon/util';
 
 import { STRowSource } from './table-row.directive';
 import { STConfig } from './table.config';
-import { STColumn, STColumnButton, STColumnFilter, STColumnSort, STIcon } from './table.interfaces';
+import { STColumn, STColumnButton, STColumnFilter, STColumnSort, STIcon, STColumnButtonPop } from './table.interfaces';
 
 export interface STSortMap extends STColumnSort {
   [key: string]: any;
@@ -23,10 +23,40 @@ export class STColumnSource {
     private cog: STConfig,
   ) {}
 
+  private fixPop(i: STColumnButton, def: STColumnButtonPop): void {
+    if (i.pop == null || i.pop === false) {
+      i.pop = false;
+      return;
+    }
+
+    let pop = {
+      ...def,
+    };
+    // compatible
+    // tslint:disable-next-line: deprecation
+    if (i.popTitle) {
+      // tslint:disable-next-line: deprecation
+      pop.title = i.popTitle;
+    } else if (typeof i.pop === 'string') {
+      pop.title = i.pop;
+    } else if (typeof i.pop === 'object') {
+      pop = {
+        ...pop,
+        ...i.pop,
+      };
+    }
+
+    if (typeof pop.condition !== 'function') {
+      pop.condition = () => false;
+    }
+
+    i.pop = pop;
+  }
+
   private btnCoerce(list: STColumnButton[]): STColumnButton[] {
     if (!list) return [];
     const ret: STColumnButton[] = [];
-    const { modal, drawer, popTitle, btnIcon } = this.cog;
+    const { modal, drawer, pop, btnIcon } = this.cog;
 
     for (const item of list) {
       if (this.acl && item.acl && !this.acl.can(item.acl)) {
@@ -35,8 +65,10 @@ export class STColumnSource {
 
       if (item.type === 'modal' || item.type === 'static') {
         // compatible
+        // tslint:disable-next-line: deprecation
         if (item.component != null) {
           item.modal = {
+            // tslint:disable-next-line: deprecation
             component: item.component,
             params: item.params,
             paramsName: item.paramName || modal!.paramsName,
@@ -65,11 +97,8 @@ export class STColumnSource {
         item.pop = true;
       }
 
-      if (item.pop === true) {
-        item.popTitle = item.popTitle || popTitle;
-      } else {
-        item.pop = false;
-      }
+      // pop
+      this.fixPop(item, pop!);
 
       if (item.icon) {
         item.icon = {
@@ -257,15 +286,19 @@ export class STColumnSource {
       if (!item.title) {
         item.title = {};
       }
-      // Compatible， TODO: ng-alain 9.x
+
+      // Compatible
+      // tslint:disable-next-line: deprecation
       if (item.i18n) {
+        // tslint:disable-next-line: deprecation
         item.title!.i18n = item.i18n;
       }
       if (item.title!.i18n && this.i18nSrv) {
         item.title!.text = this.i18nSrv.fanyi(item.title!.i18n);
       }
+
       // #endregion
-      
+
       // no
       if (item.type === 'no') {
         item.noIndex = item.noIndex == null ? noIndex : item.noIndex;

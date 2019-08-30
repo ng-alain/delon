@@ -7,7 +7,11 @@
   </span>
 </ng-template>
 <ng-template #btnItemTpl let-i let-btn="btn">
-  <a *ngIf="btn.pop" nz-popconfirm [nzTitle]="btn.popTitle" (nzOnConfirm)="_btnClick(i, btn)" class="st__btn-text">
+  <a *ngIf="btn.pop"
+    nz-popconfirm [nzPopconfirmTitle]="btn.pop.title" [nzIcon]="btn.pop.icon" [nzCondition]="btn.pop.condition(i)"
+    [nzCancelText]="btn.pop.cancelText" [nzOkText]="btn.pop.okText" [nzOkType]="btn.pop.okType"
+    (nzOnConfirm)="_btnClick(i, btn)"
+    class="st__btn-text">
     <ng-template [ngTemplateOutlet]="btnTextTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }"></ng-template>
   </a>
   <a *ngIf="!btn.pop" (click)="_btnClick(i, btn)" class="st__btn-text">
