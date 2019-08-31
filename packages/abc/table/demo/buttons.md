@@ -79,6 +79,11 @@ export class DemoComponent {
         {
           icon: 'delete',
           type: 'del',
+          pop: {
+            title: 'Yar you sure?',
+            okType: 'danger',
+            icon: 'star',
+          },
           click: (record, _modal, comp) => {
             this.message.success(`成功删除【${record.name}】`);
             comp!.removeRow(record);
