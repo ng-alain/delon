@@ -21,6 +21,8 @@ export class CodeBoxComponent implements OnDestroy {
   private i18n$: Subscription;
   private _item: any;
   private _orgItem: any;
+  copied = false;
+
   @Input()
   set item(value: any) {
     if (!this._orgItem) {
@@ -41,8 +43,7 @@ export class CodeBoxComponent implements OnDestroy {
     return this._item;
   }
 
-  @Input()
-  expand: boolean = false;
+  @Input() expand: boolean = false;
 
   constructor(
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
@@ -61,15 +62,15 @@ export class CodeBoxComponent implements OnDestroy {
   }
 
   openOnStackBlitz() {
-    this.codeSrv.openOnStackBlitz(
-      this.item.code,
-      this.i18n.get(this.item.meta.title),
-      this.i18n.get(this.item.summary),
-    );
+    this.codeSrv.openOnStackBlitz(this.item.code, this.i18n.get(this.item.meta.title), this.i18n.get(this.item.summary));
   }
 
   onCopy(value: string) {
-    copy(value).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
+    copy(value).then(() => {
+      this.msg.success(this.i18n.fanyi('app.demo.copied'));
+      this.copied = true;
+      setTimeout(() => (this.copied = false), 1000);
+    });
   }
 
   ngOnDestroy() {

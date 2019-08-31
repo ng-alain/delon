@@ -12,14 +12,14 @@
   </div>
   <div class="code-box-description" [innerHTML]="item.summary"></div>
   <div class="code-box-actions">
-    <i nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | translate" (click)="openOnStackBlitz()" nz-icon nzType="form" class="code-box-code-icon"></i>
-    <i nz-tooltip [nzTooltipTitle]="'app.demo.copy' | translate" (click)="onCopy(item.code)" nz-icon nzType="copy" class="code-box-code-icon"></i>
-    <span nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" class="code-expand-icon">
+    <i nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | translate" (click)="openOnStackBlitz()" nz-icon nzType="thunderbolt" nzTheme="fill" class="code-box-code-icon"></i>
+    <i nz-tooltip [nzTooltipTitle]="'app.demo.copy' | translate" (click)="onCopy(item.code)" nz-icon [nzType]="copied ? 'check' : 'snippets'" class="code-box-code-icon" [class.ant-tooltip-open]="copied"></i>
+    <i nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" class="code-expand-icon">
       <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" [ngClass]="{'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand}"
         (click)="handle()" />
       <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" [ngClass]="{'code-expand-icon-show': expand, 'code-expand-icon-hide': !expand}"
         (click)="handle()" />
-    </span>
+    </i>
   </div>
 </section>
 <section class="highlight-wrapper" [ngClass]="{'highlight-wrapper-expand': expand}">
