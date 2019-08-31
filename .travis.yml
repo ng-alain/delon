@@ -11,7 +11,6 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
-      - google-chrome-beta
 
 git:
   depth: 1
@@ -22,10 +21,11 @@ cache:
     - ./node_modules/
 
 before_install:
+  - set -e
   - export NG_CLI_ANALYTICS=ci
-  - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+  - sleep 3
 
 jobs:
   include:

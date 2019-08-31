@@ -22,6 +22,8 @@ import {
   ToolOutline,
   VerticalLeftOutline,
   VerticalRightOutline,
+  ThunderboltFill,
+  SnippetsOutline,
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS = [
@@ -47,4 +49,6 @@ export const ICONS = [
   ToolOutline,
   VerticalLeftOutline,
   VerticalRightOutline,
+  ThunderboltFill,
+  SnippetsOutline,
 ];
