@@ -9,7 +9,8 @@
   },
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": true,
+    "source.fixAll.tslint": true
   },
   "[markdown]": {
     "editor.formatOnSave": false
@@ -23,7 +24,6 @@
   "[jsonc]": {
     "editor.formatOnSave": false
   },
-  "prettier.stylelintIntegration": true,
   "files.associations": {
     "*.json": "jsonc",
     ".prettierrc": "json",
