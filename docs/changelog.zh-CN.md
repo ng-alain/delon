@@ -14,6 +14,22 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [8.4.0](https://github.com/ng-alain/delon/compare/8.3.0...8.4.0) (2019-09-01)
+
+### Bug Fixes
+
+* **abc:sidebar-nav:** 修复收缩下点击父级标准抛出错误 ([#673](https://github.com/ng-alain/delon/issues/673)) ([b6c1fc6](https://github.com/ng-alain/delon/commit/b6c1fc6))
+* **abc:sidebar-nav:** 修复长名称样式错位 ([#677](https://github.com/ng-alain/delon/issues/677)) ([efd9bb1](https://github.com/ng-alain/delon/commit/efd9bb1))
+* **abc:st:** 修复新请求时应先中断旧请求 ([#674](https://github.com/ng-alain/delon/issues/674)) ([c98ae19](https://github.com/ng-alain/delon/commit/c98ae19))
+* **abc:st:** 修复导出Excel时产生无效标题 ([#672](https://github.com/ng-alain/delon/issues/672)) ([48ca08f](https://github.com/ng-alain/delon/commit/48ca08f))
+* **abc:sv:** 修复 `SVConfig` 的 `labelWidth` 无效类型 ([#668](https://github.com/ng-alain/delon/issues/668)) ([43cf770](https://github.com/ng-alain/delon/commit/43cf770))
+
+### Features
+
+* **abc:st:** 增加 `pop` 相关的若干属性 ([#676](https://github.com/ng-alain/delon/issues/676)) ([a078f02](https://github.com/ng-alain/delon/commit/a078f02))
+* **cache:** 增加全局 `DelonCacheConfig` 配置支持 `type`, `expire` 类型 ([#669](https://github.com/ng-alain/delon/issues/669)) ([9d393fb](https://github.com/ng-alain/delon/commit/9d393fb))
+
+
 # [8.3.0](https://github.com/ng-alain/delon/compare/8.2.0...8.3.0) (2019-08-03)
 
 ### Bug Fixes
