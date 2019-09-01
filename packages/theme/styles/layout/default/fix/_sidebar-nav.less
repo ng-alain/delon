@@ -1,5 +1,6 @@
 // Main Nav
 @sidebar-nav-prefix-cls: sidebar-nav;
+@sidebar-nav-arrow-width: 10px;
 
 .@{sidebar-nav-prefix-cls} {
   display: block;
@@ -15,7 +16,8 @@
     &-link {
       position: relative;
       display: block;
-      padding: @alain-default-aside-nav-padding-top-bottom @layout-gutter * 2;
+      padding: @alain-default-aside-nav-padding-top-bottom @alain-default-aside-nav-padding-left-right * 2
+        @alain-default-aside-nav-padding-top-bottom @alain-default-aside-nav-padding-left-right;
       overflow: hidden;
       color: @alain-default-aside-nav-text-color;
       white-space: nowrap;
@@ -86,8 +88,8 @@
     &-arrow {
       position: absolute;
       top: 50%;
-      right: @layout-gutter * 2;
-      width: 10px;
+      right: @alain-default-aside-nav-padding-left-right;
+      width: @sidebar-nav-arrow-width;
       transition: transform 0.3s @ease-in-out;
       &::before,
       &::after {
@@ -128,22 +130,22 @@
   // Dept
   &__depth1 {
     .@{sidebar-nav-prefix-cls}__item-link {
-      padding-left: (@layout-gutter * 3) + @alain-default-aside-nav-icon-width;
+      padding-left: @alain-default-aside-nav-depth1-padding-left + @alain-default-aside-nav-icon-width;
     }
   }
   &__depth2 {
     .@{sidebar-nav-prefix-cls}__item-link {
-      padding-left: (@layout-gutter * 4) + @alain-default-aside-nav-icon-width;
+      padding-left: @alain-default-aside-nav-depth2-padding-left + @alain-default-aside-nav-icon-width;
     }
   }
   &__depth3 {
     .@{sidebar-nav-prefix-cls}__item-link {
-      padding-left: (@layout-gutter * 5) + @alain-default-aside-nav-icon-width;
+      padding-left: @alain-default-aside-nav-depth3-padding-left + @alain-default-aside-nav-icon-width;
     }
   }
   &__depth4 {
     .@{sidebar-nav-prefix-cls}__item-link {
-      padding-left: (@layout-gutter * 6) + @alain-default-aside-nav-icon-width;
+      padding-left: @alain-default-aside-nav-depth4-padding-left + @alain-default-aside-nav-icon-width;
     }
   }
   // Floating
