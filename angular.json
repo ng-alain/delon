@@ -23,6 +23,7 @@
             "styles": [
               "node_modules/ngx-simplemde/src/index.css",
               "node_modules/aos/dist/aos.css",
+              "node_modules/docsearch.js/dist/cdn/docsearch.css",
               "src/styles.less"
             ],
             "scripts": [
@@ -35,7 +36,8 @@
               "node_modules/qrious/dist/qrious.min.js",
               "node_modules/ace-builds/src-min/ace.js",
               "node_modules/ace-builds/src-min/theme-github.js",
-              "node_modules/ace-builds/src-min/mode-json.js"
+              "node_modules/ace-builds/src-min/mode-json.js",
+              "node_modules/docsearch.js/dist/cdn/docsearch.js"
             ]
           },
           "configurations": {

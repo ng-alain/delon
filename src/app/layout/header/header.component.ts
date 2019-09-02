@@ -1,7 +1,7 @@
 // tslint:disable: member-ordering
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { copy, LazyService } from '@delon/util';
+import { copy } from '@delon/util';
 import { NzMessageService } from 'ng-zorro-antd';
 import { filter } from 'rxjs/operators';
 
@@ -11,7 +11,6 @@ import { MobileService } from '../../core/mobile.service';
 import { MetaSearchGroup, MetaSearchGroupItem } from '../../interfaces';
 
 declare const docsearch: any;
-// declare const algoliasearch: any;
 
 @Component({
   selector: 'app-header',
@@ -22,7 +21,7 @@ declare const docsearch: any;
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   isMobile: boolean;
-  useDocsearch = false;
+  useDocsearch = true;
   oldVersionList = [`1.x`];
   currentVersion = 'stable';
   delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
@@ -36,7 +35,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private msg: NzMessageService,
     private mobileSrv: MobileService,
     private meta: MetaService,
-    private lazy: LazyService,
   ) {
     router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => (this.menuVisible = false));
     this.mobileSrv.change.subscribe(res => (this.isMobile = res));
@@ -47,24 +45,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.loadDocsearch();
+    this.initDocSearch();
   }
 
   toVersion(version: string) {
     if (version !== this.currentVersion) {
       window.location.href = `https://ng-alain.github.io/${version}-doc/`;
     }
-  }
-
-  private loadDocsearch() {
-    if (!this.useDocsearch) return;
-    this.lazy
-      .load([
-        `https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css`,
-        `https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js`,
-        `https://cdn.jsdelivr.net/algoliasearch/3/algoliasearchLite.min.js`,
-      ])
-      .then(() => this.initDocSearch());
   }
 
   @HostListener('document:keyup.s', ['$event'])
@@ -75,9 +62,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   private initDocSearch() {
+    if (!this.useDocsearch) return;
     docsearch({
-      appId: '2WSH9IUML3',
-      apiKey: '6356fe022dba23c6bfc63427b2042bf8',
+      // appId: '2WSH9IUML3',
+      apiKey: 'abc8efef8b964f6ab0629f0ded98ab29',
       indexName: 'ng-alain',
       inputSelector: '#search-box input',
       algoliaOptions: {
