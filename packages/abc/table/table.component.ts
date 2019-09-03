@@ -60,6 +60,7 @@ import {
   STStatisticalResults,
   STWidthMode,
   STResetColumnsOption,
+  DefaultSTData,
 } from './table.interfaces';
 import { NzTableComponent } from 'ng-zorro-antd';
 
@@ -184,7 +185,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private clonePage: STPage;
   private copyCog: STConfig;
   locale: LocaleData = {};
-  _data: STData[] = [];
+  _data: (STData & DefaultSTData)[] = [];
   _statistical: STStatisticalResults = {};
   _isPagination = true;
   _allChecked = false;
@@ -194,7 +195,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   // #region fields
 
-  @Input() data: string | STData[] | Observable<STData[]>;
+  @Input() data: string | (STData & DefaultSTData)[] | Observable<(STData & DefaultSTData)[]>;
   private _req: STReq;
   private _res: STRes;
   @Input() columns: STColumn[] = [];

@@ -23,24 +23,25 @@ import {
   STStatisticalResults,
   STStatisticalType,
   STColumnFilter,
+  DefaultSTData,
 } from './table.interfaces';
 
-export interface STDataSourceOptions {
+export interface STDataSourceOptions<T = DefaultSTData> {
   pi: number;
   ps: number;
   paginator: boolean;
-  data: string | STData[] | Observable<STData[]>;
+  data: string | (STData & T)[] | Observable<(STData & T)[]>;
   total: number;
   req: STReq;
-  res: STRes;
+  res: STRes<T>;
   page: STPage;
-  columns: STColumn[];
+  columns: STColumn<T>[];
   singleSort?: STSingleSort | null;
   multiSort?: STMultiSort | null;
-  rowClassName?: STRowClassName;
+  rowClassName?: STRowClassName<T>;
 }
 
-export interface STDataSourceResult {
+export interface STDataSourceResult<T = DefaultSTData> {
   /** 是否需要显示分页器 */
   pageShow: boolean;
   /** 新 `pi`，若返回 `undefined` 表示用户受控 */
@@ -50,7 +51,7 @@ export interface STDataSourceResult {
   /** 新 `total`，若返回 `undefined` 表示用户受控 */
   total: number;
   /** 数据 */
-  list: STData[];
+  list: (STData & T)[];
   /** 统计数据 */
   statistical: STStatisticalResults;
 }
