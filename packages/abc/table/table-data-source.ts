@@ -432,7 +432,7 @@ export class STDataSource {
   }
 
   private getValues(index: number, list: STData[]): number[] {
-    return list.map(i => i._values[index].org).map(i => (i === '' || i == null ? 0 : i));
+    return list.map(i => i._values![index].org).map(i => (i === '' || i == null ? 0 : i));
   }
 
   private getSum(index: number, list: STData[]): number {

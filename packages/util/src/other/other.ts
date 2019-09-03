@@ -21,7 +21,7 @@ export function deepGet(obj: any | null, path: string | string[] | null | undefi
   return typeof res === 'undefined' ? defaultValue : res;
 }
 
-export function deepCopy(obj: any): any {
+export function deepCopy<T>(obj: T): T {
   const result = extend(true, {}, { _: obj });
   return result._;
 }
