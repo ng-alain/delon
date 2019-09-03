@@ -6,7 +6,7 @@ import { deepCopy } from '@delon/util';
 
 import { STDataSource, STDataSourceOptions } from '../table-data-source';
 import { STConfig } from '../table.config';
-import { STColumnFilterMenu, STData } from '../table.interfaces';
+import { STColumnFilterMenu, DefaultSTData } from '../table.interfaces';
 
 const DEFAULT = {
   pi: 1,
@@ -58,9 +58,9 @@ describe('abc: table: data-souce', () => {
       ps: DEFAULT.ps,
       data: [],
       total: DEFAULT.total,
-      req: deepCopy(def.req),
-      res: deepCopy(def.res),
-      page: deepCopy(def.page),
+      req: deepCopy(def.req!),
+      res: deepCopy(def.res!),
+      page: deepCopy(def.page!),
       columns: [{ title: '', index: 'id' }],
       paginator: true,
     };
@@ -201,14 +201,14 @@ describe('abc: table: data-souce', () => {
         };
       });
       it(`should be filter [1] in name`, done => {
-        const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
+        const expectCount = (options.data as DefaultSTData[]).filter(w => w.name.includes(`1`)).length;
         srv.process(options).subscribe(res => {
           expect(res.list.length).toBe(expectCount);
           done();
         });
       });
       it(`should be clean filtered`, done => {
-        const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
+        const expectCount = (options.data as DefaultSTData[]).filter(w => w.name.includes(`1`)).length;
         srv
           .process(options)
           .toPromise()
@@ -244,7 +244,7 @@ describe('abc: table: data-souce', () => {
           menus: [{ text: '', value: '1', checked: true }],
           fn: (filter, record) => record.name.includes(filter.value),
         };
-        const expectCount = (options.data as STData[]).filter(w => w.name.includes(`1`)).length;
+        const expectCount = (options.data as DefaultSTData[]).filter(w => w.name.includes(`1`)).length;
         srv.process(options).subscribe(res => {
           expect(res.list.length).toBe(expectCount);
           done();
@@ -628,7 +628,7 @@ describe('abc: table: data-souce', () => {
         it('should be return empty string when is null or undefined', done => {
           options.columns[0].format = jasmine.createSpy().and.returnValue(null);
           srv.process(options).subscribe(res => {
-            expect(res.list[0]._values[0].text).toBe(``);
+            expect(res.list[0]._values![0].text).toBe(``);
             done();
           });
         });
@@ -636,7 +636,7 @@ describe('abc: table: data-souce', () => {
       it('via index', done => {
         options.columns[0].index = 'name';
         srv.process(options).subscribe(res => {
-          expect(res.list[0]._values[0].text).toBe(`name 1`);
+          expect(res.list[0]._values![0].text).toBe(`name 1`);
           done();
         });
       });
@@ -645,7 +645,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = 1;
           srv.process(options).subscribe(res => {
-            expect(res.list[0]._values[0].text).toBe(1);
+            expect(res.list[0]._values![0].text).toBe(1);
             done();
           });
         });
@@ -653,7 +653,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = 0;
           srv.process(options).subscribe(res => {
-            expect(res.list[0]._values[0].text).toBe(0);
+            expect(res.list[0]._values![0].text).toBe(0);
             done();
           });
         });
@@ -661,7 +661,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'no';
           options.columns[0].noIndex = () => 10;
           srv.process(options).subscribe(res => {
-            expect(res.list[0]._values[0].text).toBe(10);
+            expect(res.list[0]._values![0].text).toBe(10);
             done();
           });
         });
@@ -670,7 +670,7 @@ describe('abc: table: data-souce', () => {
         it('with value', done => {
           options.columns[0].type = 'img';
           srv.process(options).subscribe(res => {
-            expect(res.list[0]._values[0].text).toContain(`class="img"`);
+            expect(res.list[0]._values![0].text).toContain(`class="img"`);
             done();
           });
         });
@@ -678,7 +678,7 @@ describe('abc: table: data-souce', () => {
           options.columns[0].type = 'img';
           options.data[0].id = '';
           srv.process(options).subscribe(res => {
-            expect(res.list[0]._values[0].text).toBe(``);
+            expect(res.list[0]._values![0].text).toBe(``);
             done();
           });
         });
@@ -729,7 +729,7 @@ describe('abc: table: data-souce', () => {
       options.data = genData(1);
       options.columns = [{ title: '', index: 'aa' }];
       srv.process(options).subscribe(res => {
-        expect(res.list[0]._values[0].text).toBe('');
+        expect(res.list[0]._values![0].text).toBe('');
         done();
       });
     });
