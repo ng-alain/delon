@@ -70,7 +70,8 @@
     "ngx-ueditor": "^2.1.3",
     "qrious": "^4.0.2",
     "@webcomponents/custom-elements": "^1.2.4",
-    "aos": "^3.0.0-beta.6"
+    "aos": "^3.0.0-beta.6",
+    "docsearch.js": "^2.6.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.1",
