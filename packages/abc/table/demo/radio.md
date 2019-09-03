@@ -39,7 +39,6 @@ export class DemoComponent {
   dataChange(data: STData[]) {
     return data.map((i: STData, index: number) => {
       i.disabled = index === 0;
-      i.hidden = index === 1;
       return i;
     });
   }
