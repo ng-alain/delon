@@ -68,9 +68,10 @@
             <nz-dropdown-menu #btnMenu="nzDropdownMenu">
               <ul nz-menu>
                 <ng-container *ngFor="let subBtn of _validBtns(btn.children, i, c)">
-                  <li nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
+                  <li *ngIf="subBtn.type !== 'divider'" nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
                     <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: subBtn }"></ng-template>
                   </li>
+                  <li *ngIf="subBtn.type === 'divider'" nz-menu-divider></li>
                 </ng-container>
               </ul>
             </nz-dropdown-menu>
