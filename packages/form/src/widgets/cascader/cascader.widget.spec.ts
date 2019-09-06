@@ -119,10 +119,8 @@ describe('form: widget: cascader', () => {
       expect(ui.visibleChange).toHaveBeenCalled();
       comp._change(null!);
       expect(ui.change).toHaveBeenCalled();
-      comp._selectionChange(null);
+      comp._selectionChange(null!);
       expect(ui.selectionChange).toHaveBeenCalled();
-      comp._select(null);
-      expect(ui.select).toHaveBeenCalled();
       comp._clear();
       expect(ui.clear).toHaveBeenCalled();
       page.asyncEnd();
