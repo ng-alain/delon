@@ -76,9 +76,7 @@ function buildComponentName(schema: CommonSchema, _projectPrefix: string) {
 function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   // module name
   if (!schema.module) {
-    throw new SchematicsException(
-      `Must specify module name. (e.g: ng g ng-alain:list <list name> -m=<module name>)`,
-    );
+    throw new SchematicsException(`Must specify module name. (e.g: ng g ng-alain:list <list name> -m=<module name>)`);
   }
   // path
   if (schema.path === undefined) {
@@ -100,8 +98,7 @@ function resolveSchema(host: Tree, project: Project, schema: CommonSchema) {
   if (!schema._filesPath) {
     // 若基础页尝试从 `_cli-tpl/_${schema.schematicName!}` 下查找该目录，若存在则优先使用
     if (['list', 'edit', 'view', 'empty'].includes(schema.schematicName!)) {
-      const overrideDir =
-        '/' + [project.root, `_cli-tpl/_${schema.schematicName}`].filter(i => !!i).join('/');
+      const overrideDir = '/' + [project.root, `_cli-tpl/_${schema.schematicName}`].filter(i => !!i).join('/');
       const overridePath = `${overrideDir}/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts`;
       if (host.exists(overridePath)) {
         // 所在目录与命令目录同属一个目录结构，因此无须特殊处理
@@ -132,25 +129,18 @@ function addImportToModule(host: Tree, filePath: string, symbolName: string, fil
   host.commitUpdate(declarationRecorder);
 }
 
-export function addValueToVariable(
-  host: Tree,
-  filePath: string,
-  variableName: string,
-  text: string,
-) {
+export function addValueToVariable(host: Tree, filePath: string, variableName: string, text: string, needWrap = true) {
   const source = getSourceFile(host, filePath);
   const node = findNode(source, ts.SyntaxKind.Identifier, variableName);
   if (!node) {
-    throw new SchematicsException(
-      `Could not find any [${variableName}] variable in path '${filePath}'.`,
-    );
+    throw new SchematicsException(`Could not find any [${variableName}] variable in path '${filePath}'.`);
   }
   const arr = (node.parent as any).initializer as ts.ArrayLiteralExpression;
 
   const change = new InsertChange(
     filePath,
     arr.end - 1,
-    `${arr.elements && arr.elements.length > 0 ? ',' : ''}\n  ${text}`,
+    `${arr.elements && arr.elements.length > 0 ? ',' : ''}${needWrap ? '\n  ' : ''}${text}`,
   );
 
   const declarationRecorder = host.beginUpdate(filePath);
@@ -159,9 +149,9 @@ export function addValueToVariable(
 }
 
 function getRelativePath(filePath: string, schema: CommonSchema) {
-  const importPath = `/${schema.path}/${
-    schema.flat ? '' : strings.dasherize(schema.name!) + '/'
-  }${strings.dasherize(schema.name!)}.component`;
+  const importPath = `/${schema.path}/${schema.flat ? '' : strings.dasherize(schema.name!) + '/'}${strings.dasherize(
+    schema.name!,
+  )}.component`;
   return buildRelativePath(filePath, importPath);
 }
 
@@ -172,36 +162,16 @@ function addDeclaration(schema: CommonSchema) {
     }
 
     // imports
-    addImportToModule(
-      host,
-      schema.importModulePath!,
-      schema.componentName!,
-      getRelativePath(schema.importModulePath!, schema),
-    );
+    addImportToModule(host, schema.importModulePath!, schema.componentName!, getRelativePath(schema.importModulePath!, schema));
 
     // component
     if (schema.modal === true) {
-      addValueToVariable(
-        host,
-        schema.importModulePath!,
-        'COMPONENTS_NOROUNT',
-        schema.componentName!,
-      );
+      addValueToVariable(host, schema.importModulePath!, 'COMPONENTS_NOROUNT', schema.componentName!);
     } else {
       addValueToVariable(host, schema.importModulePath!, 'COMPONENTS', schema.componentName!);
       // routing
-      addImportToModule(
-        host,
-        schema.routerModulePath!,
-        schema.componentName!,
-        getRelativePath(schema.routerModulePath!, schema),
-      );
-      addValueToVariable(
-        host,
-        schema.routerModulePath!,
-        'routes',
-        `{ path: '${schema.name}', component: ${schema.componentName} }`,
-      );
+      addImportToModule(host, schema.routerModulePath!, schema.componentName!, getRelativePath(schema.routerModulePath!, schema));
+      addValueToVariable(host, schema.routerModulePath!, 'routes', `{ path: '${schema.name}', component: ${schema.componentName} }`);
     }
 
     return host;
@@ -232,10 +202,7 @@ export function buildAlain(schema: CommonSchema): Rule {
       move(null!, schema.path + '/'),
     ]);
 
-    return chain([branchAndMerge(chain([addDeclaration(schema), mergeWith(templateSource)]))])(
-      host,
-      context,
-    );
+    return chain([branchAndMerge(chain([addDeclaration(schema), mergeWith(templateSource)]))])(host, context);
   };
 }
 
