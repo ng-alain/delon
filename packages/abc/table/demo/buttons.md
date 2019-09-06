@@ -98,16 +98,19 @@ export class DemoComponent {
               click: record => this.message.error(`${record.id === 1 ? `过期` : `正常`}【${record.name}】`),
             },
             {
-              text: `重新开始`,
-              icon: 'edit',
-              click: record => this.message.success(`重新开始【${record.name}】`),
-            },
-            {
               text: `审核`,
               click: record => this.message.info(`check-${record.name}`),
               iif: record => record.id % 2 === 0,
               iifBehavior: 'disabled',
               tooltip: 'This is tooltip',
+            },
+            {
+              type: 'divider',
+            },
+            {
+              text: `重新开始`,
+              icon: 'edit',
+              click: record => this.message.success(`重新开始【${record.name}】`),
             },
           ],
         },

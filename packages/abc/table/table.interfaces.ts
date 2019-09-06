@@ -567,8 +567,9 @@ export interface STColumnButton {
    * - `static` 静态对话框，需要指定 `component` 才会生效
    * - `drawer` 抽屉，需要指定 `component` 才会生效
    * - `link` 链接，当 `click` 返回字符串时自动调用 `navigateByUrl` 导航
+   * - `divider` 分割线
    */
-  type?: 'none' | 'del' | 'modal' | 'static' | 'drawer' | 'link';
+  type?: 'none' | 'del' | 'modal' | 'static' | 'drawer' | 'link' | 'divider';
   /**
    * 点击回调
    * - Function
