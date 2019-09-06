@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit, ViewChild } from '@angular/core';
 import addSeconds from 'date-fns/add_seconds';
 import format from 'date-fns/format';
-import { CountdownEvent, CountdownConfig } from 'ngx-countdown';
+import { CountdownEvent, CountdownConfig, CountdownComponent } from 'ngx-countdown';
 import { warnDeprecation } from 'ng-zorro-antd/core';
 
 @Component({
@@ -15,7 +15,7 @@ import { warnDeprecation } from 'ng-zorro-antd/core';
   encapsulation: ViewEncapsulation.None,
 })
 export class CountDownComponent implements OnInit {
-  @ViewChild('cd', { static: false }) readonly instance: CountDownComponent;
+  @ViewChild('cd', { static: false }) readonly instance: CountdownComponent;
 
   @Input() config: CountdownConfig;
 

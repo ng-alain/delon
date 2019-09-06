@@ -14,10 +14,9 @@ title:
 The simplest usage.
 
 ```ts
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { CountdownEvent } from 'ngx-countdown';
-import { CountDownComponent } from '@delon/abc';
 
 @Component({
   selector: 'app-demo',
@@ -30,8 +29,6 @@ import { CountDownComponent } from '@delon/abc';
   `,
 })
 export class DemoComponent {
-  @ViewChild('cd', { static: false }) readonly cd: CountDownComponent;
-
   constructor(private msg: NzMessageService) {}
 
   handleEvent(e: CountdownEvent) {
