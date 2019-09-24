@@ -50,15 +50,15 @@
                    (ngModelChange)="_checkSelection(i, $event)"></label>
             <label *ngSwitchCase="'radio'" nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked"
                    (ngModelChange)="_refRadio($event, i)"></label>
-            <a *ngSwitchCase="'link'" (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx].text"></a>
-            <nz-tag *ngSwitchCase="'tag'" [nzColor]="c.tag[i._values[cIdx].text].color">
-              {{c.tag[i._values[cIdx].text].text || i._values[cIdx].text}}
-            </nz-tag>
-            <nz-badge *ngSwitchCase="'badge'"
-                      [nzStatus]="c.badge[i._values[cIdx].text].color"
-                      [nzText]="c.badge[i._values[cIdx].text].text || i._values[cIdx].text">
-            </nz-badge>
-            <span *ngSwitchDefault [innerHTML]="i._values[cIdx].text" [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
+            <ng-conntainer *ngIf="i._values[cIdx].text">
+              <a *ngSwitchCase="'link'" (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx].text"></a>
+              <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color">
+                {{i._values[cIdx].text}}
+              </nz-tag>
+              <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text">
+              </nz-badge>
+              <span *ngSwitchDefault [innerHTML]="i._values[cIdx].text" [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
+            </ng-conntainer>
           </ng-container>
           <ng-container *ngFor="let btn of _validBtns(c.buttons, i, c); let last=last">
             <a *ngIf="btn.children.length > 0" nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">

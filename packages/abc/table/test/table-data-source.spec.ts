@@ -716,6 +716,28 @@ describe('abc: table: data-souce', () => {
           done();
         });
       });
+      it('via tag', done => {
+        options.columns[0].type = 'tag';
+        options.columns[0].tag = {
+          1: { text: '一' },
+        };
+        srv.process(options).subscribe(res => {
+          expect(res.list[0]._values[0].text).toBe('一');
+          expect(res.list[1]._values[0].text).toBe('');
+          done();
+        });
+      });
+      it('via badge', done => {
+        options.columns[0].type = 'badge';
+        options.columns[0].badge = {
+          1: { text: '一' },
+        };
+        srv.process(options).subscribe(res => {
+          expect(res.list[0]._values[0].text).toBe('一');
+          expect(res.list[1]._values[0].text).toBe('');
+          done();
+        });
+      });
     });
     it('#rowClassName', done => {
       options.rowClassName = () => `aaa`;
