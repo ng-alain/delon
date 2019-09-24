@@ -28,6 +28,8 @@ export class STExport {
       }
     }
 
+    ret.v = ret.v || '';
+
     return ret;
   }
 
