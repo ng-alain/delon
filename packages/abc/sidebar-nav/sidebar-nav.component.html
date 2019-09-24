@@ -63,8 +63,9 @@
                    (click)="to(child2)"
                    [attr.data-id]="child2.__id"
                    class="sidebar-nav__item-link"
-                   [ngClass]="{'sidebar-nav__item-disabled': child2.disabled}">{{
-                  child2.text }}</a>
+                   [ngClass]="{'sidebar-nav__item-disabled': child2.disabled}">
+                   {{ child2.text }}
+                </a>
                 <!-- has children link -->
                 <a *ngIf="child2._type === 3"
                    (click)="toggleOpen(child2)"
@@ -87,7 +88,7 @@
                         [class.sidebar-nav__selected]="child3._selected"
                         [class.sidebar-nav__open]="child3._open">
                       <!-- link -->
-                      <a *ngIf="child3._type <= 2"
+                      <a *ngIf="child3._type === 1"
                          (click)="to(child3)"
                          [attr.data-id]="child3.__id"
                          class="sidebar-nav__item-link"
