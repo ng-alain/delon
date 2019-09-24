@@ -28,6 +28,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
   updateValue(item: NzAutocompleteOptionComponent) {
     this.typing = item.nzLabel;
     this.setValue(item.nzValue);
+    if (this.ui.change) this.ui.change(item);
   }
 
   ngAfterViewInit(): void {
