@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import { SFUISchemaItem } from '../../schema/ui';
 import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
 
@@ -43,4 +44,9 @@ export interface SFAutoCompleteWidgetSchema extends SFUISchemaItem {
    * 自定义宽度单位 `px`，默认：触发元素宽度
    */
   nzWidth?: number;
+
+  /**
+   * 变更回调
+   */
+  change?: (item: NzAutocompleteOptionComponent) => void;
 }
