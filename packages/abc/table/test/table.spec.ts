@@ -1186,6 +1186,25 @@ describe('abc: table', () => {
             done();
           });
         });
+        it('should be stop propagation in button event', done => {
+          context.expandRowByClick = true;
+          context.columns = [
+            {
+              title: '',
+              buttons: [
+                {
+                  text: 'btn',
+                },
+              ],
+            },
+          ];
+          fixture.detectChanges();
+          fixture.whenStable().then(() => {
+            page.getEl('.st__btn-text').click();
+            page.expectData(1, 'expand', undefined);
+            done();
+          });
+        });
       });
       describe('should be set showExpand in row data', () => {
         it(`muse be hide expand icon`, done => {
