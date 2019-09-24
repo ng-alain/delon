@@ -78,12 +78,30 @@ class RestService extends BaseApi {
   }
 
   @GET(':id')
-  GET(@Path('id') id: number): Observable<any> {
+  get(@Path('id') id: number): Observable<any> {
+    return;
+  }
+
+  @GET()
+  get(@Payload data: {}): Observable<any> {
+    return;
+  }
+
+  // Use `::id` to indicate escaping, and should be will be ignored when `id` value is `undefined`, like this:
+  // When `id` is `10` => 10:type
+  // When `id` is `undefined` => :id:type
+  @GET(':id::type')
+  get(@Path('id') id: number): Observable<any> {
     return;
   }
 
   @POST(':id')
   save(@Path('id') id: number, @Body data: Object): Observable<any> {
+    return;
+  }
+
+  @POST()
+  save(@Payload data: {}): Observable<any> {
     return;
   }
 
@@ -127,3 +145,6 @@ class RestService extends BaseApi {
 - `@Query(key?: string)` QueryString of URL
 - `@Body` Body of URL
 - `@Headers(key?: string)` Headers of URL
+- `@Payload` Request Payload
+  - Supported body (like`POST`, `PUT`) as a body data, equivalent to `@Body`
+  - Not supported body (like `GET`, `DELETE` etc) as a `QueryString`

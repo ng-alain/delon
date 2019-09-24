@@ -18,6 +18,7 @@ import {
   POST,
   PUT,
   Query,
+  Payload,
 } from './http.decorator';
 
 @BaseUrl('/user')
@@ -38,6 +39,11 @@ class MockService extends BaseApi {
     return null as any;
   }
 
+  @GET('::id/:id/::id')
+  escapePath(@Path('id') _id: number | undefined): Observable<any> {
+    return null as any;
+  }
+
   @GET('')
   arrQS(@Query('ids') _ids: number[]): Observable<any> {
     return null as any;
@@ -45,6 +51,16 @@ class MockService extends BaseApi {
 
   @POST(':id')
   save(@Path('id') _id: number, @Body _data: {}): Observable<any> {
+    return null as any;
+  }
+
+  @GET('')
+  payloadGet(@Payload _query: any, @Query('status') _status?: number): Observable<any> {
+    return null as any;
+  }
+
+  @POST(':id')
+  payloadPost(@Payload _body: any, @Body _body2?: {}): Observable<any> {
     return null as any;
   }
 
@@ -188,6 +204,20 @@ describe('theme: http.decorator', () => {
         expect(request.calls.mostRecent().args[1]).toBe('/user');
       });
     });
+
+    it('should be escaping operations', () => {
+      srv.escapePath(10);
+
+      expect(request).toHaveBeenCalled();
+      expect(request.calls.mostRecent().args[1]).toContain(`:id/10/:id`);
+    });
+
+    it('should be ingore replace param when is invalid value', () => {
+      srv.escapePath(undefined);
+
+      expect(request).toHaveBeenCalled();
+      expect(request.calls.mostRecent().args[1]).toContain(`:id/:id/:id`);
+    });
   });
 
   it('should construct a POST request', () => {
@@ -201,6 +231,39 @@ describe('theme: http.decorator', () => {
       srv[type]();
       expect(request).toHaveBeenCalled();
       expect(request.calls.mostRecent().args[0]).toBe(type);
+    });
+  });
+
+  describe('PAYLOAD', () => {
+    it('should be get', () => {
+      srv.payloadGet({ pi: 1, ps: 10 });
+      expect(request).toHaveBeenCalled();
+      const arg = request.calls.mostRecent().args[2];
+      expect(arg.params.pi).toBe(1);
+      expect(arg.params.ps).toBe(10);
+    });
+    it('should be merge Query & Payload when method is get', () => {
+      srv.payloadGet({ pi: 13, ps: 14 }, 520);
+      expect(request).toHaveBeenCalled();
+      const arg = request.calls.mostRecent().args[2];
+      expect(arg.params.pi).toBe(13);
+      expect(arg.params.ps).toBe(14);
+      expect(arg.params.status).toBe(520);
+    });
+    it('should be post', () => {
+      srv.payloadPost({ pi: 1, ps: 10 });
+      expect(request).toHaveBeenCalled();
+      const arg = request.calls.mostRecent().args[2];
+      expect(arg.body.pi).toBe(1);
+      expect(arg.body.ps).toBe(10);
+    });
+    it('should be merge Body & Payload when method is post', () => {
+      srv.payloadPost({ pi: 13, ps: 14 }, { woc: 520 });
+      expect(request).toHaveBeenCalled();
+      const arg = request.calls.mostRecent().args[2];
+      expect(arg.body.pi).toBe(13);
+      expect(arg.body.ps).toBe(14);
+      expect(arg.body.woc).toBe(520);
     });
   });
 
