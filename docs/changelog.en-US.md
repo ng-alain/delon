@@ -14,6 +14,25 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [8.5.0](https://github.com/ng-alain/delon/compare/8.4.0...8.5.0) (2019-09-25)
+
+### Bug Fixes
+
+* **abc:sidebar-nav:** fix repeat render item in external link ([#688](https://github.com/ng-alain/delon/issues/688)) ([fbf52c4](https://github.com/ng-alain/delon/commit/fbf52c4))
+* **abc:st:** fix ingore invalid `tag` or `badge` ([#687](https://github.com/ng-alain/delon/issues/687)) ([3752205](https://github.com/ng-alain/delon/commit/3752205))
+* **abc:st:** fix render null value in export to excel ([#689](https://github.com/ng-alain/delon/issues/689)) ([2aef5a9](https://github.com/ng-alain/delon/commit/2aef5a9))
+* **abc:st:** should be stop propagation in button event when `expandRowByClick` is `true` ([#692](https://github.com/ng-alain/delon/issues/692)) ([da8d99d](https://github.com/ng-alain/delon/commit/da8d99d))
+* **sf:cascader:** removed `select` event, muse be use `selectionChange` ([#684](https://github.com/ng-alain/delon/issues/684)) ([1ed0ae1](https://github.com/ng-alain/delon/commit/1ed0ae1))
+
+### Features
+
+* **abc:reuse-tab:** add `tabMaxWidth` property ([#690](https://github.com/ng-alain/delon/issues/690)) ([19cc818](https://github.com/ng-alain/delon/commit/19cc818))
+* **abc:st:** add `divider` type in button ([#683](https://github.com/ng-alain/delon/issues/683)) ([d9f6014](https://github.com/ng-alain/delon/commit/d9f6014))
+* **form:autocomplete:** add `change` event ([#691](https://github.com/ng-alain/delon/issues/691)) ([f4215e4](https://github.com/ng-alain/delon/commit/f4215e4))
+* **theme:http:** add `@Payload` decorator ([#686](https://github.com/ng-alain/delon/issues/686)) ([123c29e](https://github.com/ng-alain/delon/commit/123c29e))
+* **theme:http:** use `::id` to indicate escaping ([#686](https://github.com/ng-alain/delon/issues/686)) ([123c29e](https://github.com/ng-alain/delon/commit/123c29e))
+
+
 # [8.4.0](https://github.com/ng-alain/delon/compare/8.3.0...8.4.0) (2019-09-01)
 
 ### Bug Fixes
