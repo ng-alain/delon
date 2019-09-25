@@ -78,12 +78,30 @@ class RestService extends BaseApi {
   }
 
   @GET(':id')
-  GET(@Path('id') id: number): Observable<any> {
+  get(@Path('id') id: number): Observable<any> {
+    return;
+  }
+
+  @GET()
+  get(@Payload data: {}): Observable<any> {
+    return;
+  }
+
+  // 使用 `::id` 来表示转义，若 `id` 值为 `undefined` 会忽略转换，例如：
+  // 当 `id` 为 `10` 时 => 10:type
+  // 当 `id` 为 `undefined` 时 => :id:type
+  @GET(':id::type')
+  get(@Path('id') id: number): Observable<any> {
     return;
   }
 
   @POST(':id')
   save(@Path('id') id: number, @Body data: Object): Observable<any> {
+    return;
+  }
+
+  @POST()
+  save(@Payload data: {}): Observable<any> {
     return;
   }
 
@@ -127,3 +145,6 @@ class RestService extends BaseApi {
 - `@Query(key?: string)` URL 参数 QueryString
 - `@Body` 参数 Body
 - `@Headers(key?: string)` 参数 Headers
+- `@Payload` 请求负载
+  - 当支持 Body 时（例如：`POST`、`PUT`）为内容体等同 `@Body`
+  - 当不支持 Body 时（例如：`GET`、`DELETE` 等）为 `QueryString`

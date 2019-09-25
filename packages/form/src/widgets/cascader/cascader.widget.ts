@@ -44,15 +44,15 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
 
   _change(value: any[] | null) {
     this.setValue(value);
-    if (this.ui.change) this.ui.change(value);
+    if (this.ui.change) {
+      this.ui.change(value);
+    }
   }
 
-  _selectionChange(options: any) {
-    if (this.ui.selectionChange) this.ui.selectionChange(options);
-  }
-
-  _select(options: any) {
-    if (this.ui.select) this.ui.select(options);
+  _selectionChange(options: CascaderOption[]) {
+    if (this.ui.selectionChange) {
+      this.ui.selectionChange(options);
+    }
   }
 
   _clear() {

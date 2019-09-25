@@ -18,6 +18,7 @@ const columns: STColumn[] = [
   { title: 'status', index: ['status'], type: 'yn', ynTruth: true },
   { title: 'format', index: ['status'], format: a => a.id },
   { title: 'invalid_index' },
+  { title: 'null', index: 'null' },
   { title: 'customYN', index: ['status'], type: 'yn', ynTruth: true, ynYes: 'Y', ynNo: 'N' },
   {
     title: '',
@@ -33,6 +34,7 @@ const data: any[] = [
     currency: 10000,
     date: '2018-1-1',
     status: true,
+    null: null,
   },
   {
     id: 2,
@@ -41,6 +43,7 @@ const data: any[] = [
     currency: 20000,
     date: '2018-1-2',
     status: false,
+    null: null,
   },
   {
     id: 3,
@@ -49,6 +52,7 @@ const data: any[] = [
     currency: 30000,
     date: '2018-1-3',
     status: false,
+    null: null,
   },
   {
     id: 4,
@@ -57,6 +61,7 @@ const data: any[] = [
     currency: 40000,
     date: '2018-1-4',
     status: true,
+    null: null,
   },
 ];
 

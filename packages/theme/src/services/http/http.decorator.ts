@@ -7,7 +7,7 @@ import { throwError, Observable } from 'rxjs';
 import { _HttpClient } from './http.client';
 
 export abstract class BaseApi {
-  constructor(@Inject(Injector) protected injector: Injector) { }
+  constructor(@Inject(Injector) protected injector: Injector) {}
 }
 
 export interface HttpOptions {
@@ -41,7 +41,7 @@ function setParam(target: any, key = paramKey) {
  * - 有效范围：类
  */
 export function BaseUrl(url: string) {
-  return function <TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
+  return function<TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
     params.baseUrl = url;
     return target;
@@ -56,10 +56,10 @@ export function BaseHeaders(
   headers:
     | HttpHeaders
     | {
-      [header: string]: string | string[];
-    },
+        [header: string]: string | string[];
+      },
 ) {
-  return function <TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
+  return function<TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
     params.baseHeaders = headers;
     return target;
@@ -67,8 +67,8 @@ export function BaseHeaders(
 }
 
 function makeParam(paramName: string) {
-  return function (key?: string, ...extraOptions: any[]) {
-    return function (target: BaseApi, propertyKey: string, index: number) {
+  return function(key?: string) {
+    return function(target: BaseApi, propertyKey: string, index: number) {
       const params = setParam(setParam(target), propertyKey);
       let tParams = params[paramName];
       if (typeof tParams === 'undefined') {
@@ -77,7 +77,6 @@ function makeParam(paramName: string) {
       tParams.push({
         key,
         index,
-        ...extraOptions,
       });
     };
   };
@@ -108,17 +107,29 @@ export const Body = makeParam('body')();
  */
 export const Headers = makeParam('headers');
 
+/**
+ * Request Payload
+ * - Supported body (like`POST`, `PUT`) as a body data, equivalent to `@Body`
+ * - Not supported body (like `GET`, `DELETE` etc) as a `QueryString`
+ */
+export const Payload = makeParam('payload')();
+
+function getValidArgs(data: any, key: string, args: any[]): {} {
+  if (!data[key] || !Array.isArray(data[key]) || data[key].length <= 0) {
+    return {};
+  }
+  return args[data[key][0].index];
+}
+
 function makeMethod(method: string) {
-  return function (url: string = '', options?: HttpOptions) {
+  return function(url: string = '', options?: HttpOptions) {
     return (_target: BaseApi, targetKey?: string, descriptor?: PropertyDescriptor) => {
-      descriptor!.value = function (...args: any[]): Observable<any> {
+      descriptor!.value = function(...args: any[]): Observable<any> {
         options = options || {};
 
-        const http = this.injector.get(_HttpClient, null);
+        const http = this.injector.get(_HttpClient, null) as _HttpClient;
         if (http == null) {
-          throw new TypeError(
-            `Not found '_HttpClient', You can import 'AlainThemeModule' && 'HttpClientModule' in your root module.`,
-          );
+          throw new TypeError(`Not found '_HttpClient', You can import 'AlainThemeModule' && 'HttpClientModule' in your root module.`);
         }
 
         const baseData = setParam(this);
@@ -143,23 +154,30 @@ function makeMethod(method: string) {
           delete options.acl;
         }
 
-        (data.path || []).forEach((i: ParamType) => {
-          requestUrl = requestUrl.replace(new RegExp(`:${i.key}`, 'g'), encodeURIComponent(args[i.index]));
-        });
+        requestUrl = requestUrl.replace(/::/g, '^^');
+        ((data.path as ParamType[]) || [])
+          .filter(w => typeof args[w.index] !== 'undefined')
+          .forEach((i: ParamType) => {
+            requestUrl = requestUrl.replace(new RegExp(`:${i.key}`, 'g'), encodeURIComponent(args[i.index]));
+          });
+        requestUrl = requestUrl.replace(/\^\^/g, `:`);
 
-        const params = (data.query || []).reduce((p, i: ParamType) => {
+        const params = (data.query || []).reduce((p: {}, i: ParamType) => {
           p[i.key] = args[i.index];
           return p;
         }, {});
 
-        const headers = (data.headers || []).reduce((p, i: ParamType) => {
+        const headers = (data.headers || []).reduce((p: {}, i: ParamType) => {
           p[i.key] = args[i.index];
           return p;
         }, {});
+
+        const payload = getValidArgs(data, 'payload', args);
+        const supportedBody = method === 'POST' || method === 'PUT';
 
         return http.request(method, requestUrl, {
-          body: data.body && data.body.length > 0 ? args[data.body[0].index] : null,
-          params,
+          body: supportedBody ? { ...getValidArgs(data, 'body', args), ...payload } : null,
+          params: !supportedBody ? { ...params, ...payload } : params,
           headers: { ...baseData.baseHeaders, ...headers },
           ...options,
         });

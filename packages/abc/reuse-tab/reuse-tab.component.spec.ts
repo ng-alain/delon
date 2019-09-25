@@ -270,6 +270,15 @@ describe('abc: reuse-tab', () => {
           expect(dl.queryAll(By.css('.reuse-tab__op')).length).toBe(0);
         }));
       });
+      describe('#tabMaxWidth', () => {
+        it('with 100', () => {
+          layoutComp.tabMaxWidth = 100;
+          fixture.detectChanges();
+          const el = page.getEl('.reuse-tab__name-width');
+          expect(el != null).toBe(true);
+          expect(el.style.maxWidth).toBe(`100px`);
+        });
+      });
     });
 
     describe('[context-menu]', () => {
@@ -842,6 +851,7 @@ class AppComponent {}
       [keepingScrollContainer]="keepingScrollContainer"
       [customContextMenu]="customContextMenu"
       [tabType]="tabType"
+      [tabMaxWidth]="tabMaxWidth"
       (change)="change($event)"
       (close)="close($event)"
     >
@@ -862,6 +872,7 @@ class LayoutComponent {
   keepingScrollContainer: Window | Element | string | null = null;
   customContextMenu: ReuseCustomContextMenu[] = [];
   tabType: 'line' | 'card' = 'line';
+  tabMaxWidth: number;
   change() {}
   close() {}
 }

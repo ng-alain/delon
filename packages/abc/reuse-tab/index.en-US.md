@@ -199,6 +199,7 @@ Property | Description | Type | Default
 `[tabBarStyle]` | Tab bar style object | `object` | -
 `[tabBarGutter]` | The gap between tabs | `number` | -
 `[tabType]` | Basic style of tabs | `line, card` | `line`
+`[tabMaxWidth]` | The maximum width of each tab, unit: `px` | `number` | -
 `(close)` | Close callback event | `EventEmitter` | -
 `(change)` | Callback when switching | `EventEmitter` | -
 

@@ -104,8 +104,9 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
 
   /**
    * 选项被选中事件
+   * @deprecated `select` is deprecated and will be removed, Please use `selectionChange` instead.
    */
-  select?: (values: { option: CascaderOption; index: number }) => void;
+  select?: (values: { option: CascaderOption; index: number } | null) => void;
 
   /**
    * 内容被清空事件

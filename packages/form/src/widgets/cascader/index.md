@@ -55,5 +55,4 @@ type: Widgets
 `[visibleChange]` | 异步加载事件 | `(value: boolean) => void` | -
 `[change]` | 选项值变更事件 | `(values: any[]) => void` | -
 `[selectionChange]` | 选项变更事件 | `(values: CascaderOption[]) => void` | -
-`[select]` | 选项被选中事件 | `(values: { option: CascaderOption, index: number }) => void` | -
 `[clear]` | 内容被清空事件 | `() => void` | -

@@ -190,7 +190,7 @@ export class STDataSource {
     );
   }
 
-  private get(item: STData, col: STColumn, idx: number): { text: any; org?: any } {
+  private get(item: STData, col: STColumn, idx: number): { text: any; org?: any; color?: string } {
     if (col.format) {
       const formatRes = col.format(item, col, idx);
       if (formatRes && ~formatRes.indexOf('</')) {
@@ -201,28 +201,40 @@ export class STDataSource {
 
     const value = deepGet(item, col.index as string[], col.default);
 
-    let ret = value;
+    let text = value;
+    let color: string | undefined;
     switch (col.type) {
       case 'no':
-        ret = this.getNoIndex(item, col, idx);
+        text = this.getNoIndex(item, col, idx);
         break;
       case 'img':
-        ret = value ? `<img src="${value}" class="img">` : '';
+        text = value ? `<img src="${value}" class="img">` : '';
         break;
       case 'number':
-        ret = this.numberPipe.transform(value, col.numberDigits);
+        text = this.numberPipe.transform(value, col.numberDigits);
         break;
       case 'currency':
-        ret = this.currentyPipe.transform(value);
+        text = this.currentyPipe.transform(value);
         break;
       case 'date':
-        ret = this.datePipe.transform(value, col.dateFormat);
+        text = this.datePipe.transform(value, col.dateFormat);
         break;
       case 'yn':
-        ret = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!);
+        text = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!);
+        break;
+      case 'tag':
+      case 'badge':
+        const data = col.type === 'tag' ? col.tag : col.badge;
+        if (data && data[text]) {
+          const dataItem = data[text];
+          text = dataItem.text;
+          color = dataItem.color;
+        } else {
+          text = '';
+        }
         break;
     }
-    return { text: ret == null ? '' : ret, org: value };
+    return { text: text == null ? '' : text, org: value, color };
   }
 
   private getByHttp(url: string, options: STDataSourceOptions): Observable<{}> {
