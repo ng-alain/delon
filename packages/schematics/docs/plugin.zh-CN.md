@@ -111,6 +111,7 @@ ng g ng-alain:plugin defaultLanguage --defaultLanguage=zh-tw
 | 波兰语    | pl     | pl        | pl_PL            | pl_PL       |
 | 希腊语    | el     | el        | el_GR            | el_GR       |
 | 朝鲜语    | ko     | ko        | ko_KR            | ko_KR       |
+| 克罗地亚       | hr     | hr        | hr_HR            | hr_HR       |
 
 ### networkEnv
 
