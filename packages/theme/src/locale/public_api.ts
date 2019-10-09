@@ -10,3 +10,4 @@ export { default as tr_TR } from './languages/tr-TR';
 export { default as pl_PL } from './languages/pl-PL';
 export { default as el_GR } from './languages/el-GR';
 export { default as ko_KR } from './languages/ko-KR';
+export { default as hr_HR } from './languages/hr-HR';

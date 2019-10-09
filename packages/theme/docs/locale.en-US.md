@@ -49,6 +49,7 @@ Note: `en_US` is the package name, follow below.
 | Polish                | pl_PL    |
 | Greek                 | el_GR    |
 | Korean                | ko_KR    |
+| Croatian              | hr_HR    |
 
 ## Add a new language
 

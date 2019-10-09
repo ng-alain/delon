@@ -49,6 +49,7 @@ switchLanguage() {
 | 波兰语       | pl_PL      |
 | 希腊语       | el_GR      |
 | 朝鲜语       | ko_KR      |
+| 克罗地亚     | hr_HR      |
 
 ## 增加语言包
 
