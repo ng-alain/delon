@@ -14,6 +14,29 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [8.5.0](https://github.com/ng-alain/delon/compare/8.4.0...8.5.0) (2019-09-25)
+
+### Bug Fixes
+
+* **abc:sidebar-nav:** 修复重复渲染外部链接 ([#688](https://github.com/ng-alain/delon/issues/688)) ([fbf52c4](https://github.com/ng-alain/delon/commit/fbf52c4))
+* **abc:st:** 修复 `tag` 或 `badge` 空值抛错 ([#687](https://github.com/ng-alain/delon/issues/687)) ([3752205](https://github.com/ng-alain/delon/commit/3752205))
+* **abc:st:** 修复导出 Excel 时空值显示 null 字符问题 ([#689](https://github.com/ng-alain/delon/issues/689)) ([2aef5a9](https://github.com/ng-alain/delon/commit/2aef5a9))
+* **abc:st:** 修复当设置 `expandRowByClick: true` 时按钮点击会触发展开问题 ([#692](https://github.com/ng-alain/delon/issues/692)) ([da8d99d](https://github.com/ng-alain/delon/commit/da8d99d))
+* **sf:cascader:** 修复 `select` 无效事件，应使用 `selectionChange` 替代 ([#684](https://github.com/ng-alain/delon/issues/684)) ([1ed0ae1](https://github.com/ng-alain/delon/commit/1ed0ae1))
+
+### Features
+
+* **abc:reuse-tab:** 新增 `tabMaxWidth` 属性 ([#690](https://github.com/ng-alain/delon/issues/690)) ([19cc818](https://github.com/ng-alain/delon/commit/19cc818))
+* **abc:st:** 新增 `divider` 按钮类型 ([#683](https://github.com/ng-alain/delon/issues/683)) ([d9f6014](https://github.com/ng-alain/delon/commit/d9f6014))
+* **form:autocomplete:** 新增 `change` 事件 ([#691](https://github.com/ng-alain/delon/issues/691)) ([f4215e4](https://github.com/ng-alain/delon/commit/f4215e4))
+* **theme:http:** 新增 `@Payload` 装饰 ([#686](https://github.com/ng-alain/delon/issues/686)) ([123c29e](https://github.com/ng-alain/delon/commit/123c29e))
+* **theme:http:** 新增 `::id` 表示转义字符 ([#686](https://github.com/ng-alain/delon/issues/686)) ([123c29e](https://github.com/ng-alain/delon/commit/123c29e))
+
+### BREAKING CHANGES
+
+* **abc:count-down** 升级至 `8.x`，其版本有破坏性变更[细节](https://github.com/cipchk/ngx-countdown/releases/tag/8.0.0)
+
+
 # [8.4.0](https://github.com/ng-alain/delon/compare/8.3.0...8.4.0) (2019-09-01)
 
 ### Bug Fixes
