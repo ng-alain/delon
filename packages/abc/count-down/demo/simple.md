@@ -16,21 +16,25 @@ The simplest usage.
 ```ts
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
-import { addMinutes } from 'date-fns';
+import { CountdownEvent } from 'ngx-countdown';
 
 @Component({
   selector: 'app-demo',
   template: `
-  <p class="mb-sm">10s: <count-down [target]="10" (end)="onEnd()" style="font-size: 20px;"></count-down></p>
-  <p>10m: <count-down [target]="target"></count-down></p>
-  `
+    <div>
+      <count-down #cd [target]="10" (event)="handleEvent($event)" style="font-size: 20px;"></count-down>
+    </div>
+    <button nz-button (click)="cd.instance.pause()">Pause</button>
+    <button nz-button (click)="cd.instance.resume()">Resume</button>
+  `,
 })
 export class DemoComponent {
-  target = addMinutes(new Date, 10);
   constructor(private msg: NzMessageService) {}
 
-  onEnd() {
-    this.msg.success('finised');
+  handleEvent(e: CountdownEvent) {
+    if (e.action === 'done') {
+      this.msg.success('finised');
+    }
   }
 }
 ```
