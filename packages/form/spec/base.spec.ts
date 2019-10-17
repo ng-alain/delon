@@ -333,6 +333,7 @@ export class SFPage {
       [onlyVisual]="onlyVisual"
       [disabled]="disabled"
       [loading]="loading"
+      [noColon]="noColon"
       (formChange)="formChange($event)"
       (formSubmit)="formSubmit($event)"
       (formReset)="formReset($event)"
@@ -354,6 +355,7 @@ export class TestFormComponent {
   onlyVisual = false;
   disabled = false;
   loading = false;
+  noColon = false;
 
   formChange() {}
   formSubmit() {}
