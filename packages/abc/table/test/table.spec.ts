@@ -1306,19 +1306,17 @@ describe('abc: table', () => {
             firstCol = comp._columns[0];
             filter = firstCol.filter!;
           });
-          it('should be filter', fakeAsync(() => {
+          it('should be filter', () => {
             expect(context.change).not.toHaveBeenCalled();
             comp._filterConfirm(firstCol);
             expect(context.change).toHaveBeenCalled();
-            discardPeriodicTasks();
-          }));
-          it('should be clean', fakeAsync(() => {
+          });
+          it('should be clean', () => {
             const m = filter.menus![0];
             expect(m.value).toBe('a');
             context.comp.clearFilter();
             expect(m.value).toBe(undefined);
-            discardPeriodicTasks();
-          }));
+          });
         });
       });
     });
