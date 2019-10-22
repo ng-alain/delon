@@ -178,6 +178,16 @@ describe('abc: table: column-souce', () => {
       it('should be support string type', () => {
         page.expectValue([{ title: '', index: 'id', width: '65px' }], '65px', 'width');
       });
+      it('should be auto 100% when not specified', () => {
+        const newColumns = srv.process([
+          { title: '', index: 'id', width: 10 },
+          { title: '', index: 'id' },
+          { title: '', index: 'id', width: 20 },
+        ]);
+        expect(newColumns[0].width).toBe(`10px`);
+        expect(newColumns[1].width).toBe(`100%`);
+        expect(newColumns[2].width).toBe(`20px`);
+      });
     });
     describe('[className]', () => {
       it('should be custom class name', () => {
