@@ -264,6 +264,7 @@ export class STColumnSource {
     let point = 0;
     const columns: STColumn[] = [];
     const copyColumens = deepCopy(list) as STColumn[];
+    const specifiedWidth = copyColumens.findIndex(w => w.width != null) !== -1;
     for (const item of copyColumens) {
       if (item.iif && !item.iif(item)) {
         continue;
@@ -369,6 +370,9 @@ export class STColumnSource {
     }
     if (radioCount > 1) {
       throw new Error(`[st]: just only one column radio`);
+    }
+    if (specifiedWidth) {
+      columns.filter(w => w.width == null).forEach(i => (i.width = '100%'));
     }
 
     this.fixedCoerce(columns);
