@@ -427,10 +427,11 @@ describe('form: component', () => {
       it('#noColon', () => {
         context.noColon = true;
         fixture.detectChanges();
-        page.checkCount(`sf__no-colon`, 1);
+        const CLS = `.sf__no-colon`;
+        page.checkCount(CLS, 1);
         context.noColon = false;
         fixture.detectChanges();
-        page.checkCount(`sf__no-colon`, 0);
+        page.checkCount(CLS, 0);
       });
 
       it('#formChange', () => {
