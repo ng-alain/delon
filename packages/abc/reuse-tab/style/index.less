@@ -6,6 +6,29 @@
   background-color: @reuse-tab-bg;
   outline: none;
   user-select: none;
+  .@{ant-prefix}-tabs {
+    &-nav .@{ant-prefix}-tabs-tab {
+      @{reuse-tab-prefix}__op {
+        position: absolute;
+        display: none;
+        margin: 0;
+        font-size: 10px;
+        color: rgba(0, 0, 0, 0.45);
+      }
+      &:hover {
+        @{reuse-tab-prefix}__op {
+          display: block;
+        }
+      }
+      @{reuse-tab-prefix}__name {
+        &-width {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: inline-block;
+        }
+      }
+    }
+  }
   &__line {
     padding: @reuse-tab-padding;
     border-bottom: 1px solid @reuse-tab-border-color;
@@ -17,26 +40,12 @@
       &-nav .@{ant-prefix}-tabs-tab {
         padding: 0;
         @{reuse-tab-prefix}__op {
-          position: absolute;
           top: 12px;
           right: 2px;
-          display: none;
-          margin: 0;
-          font-size: 10px;
-        }
-        &:hover {
-          @{reuse-tab-prefix}__op {
-            display: block;
-          }
         }
         @{reuse-tab-prefix}__name {
           display: inline-block;
           padding: 8px 20px;
-          &-width {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: inline-block;
-          }
         }
       }
     }
@@ -48,9 +57,8 @@
     }
     .@{ant-prefix}-tabs-nav .@{ant-prefix}-tabs-tab {
       @{reuse-tab-prefix}__op {
-        margin-right: 0;
-        margin-left: 4px;
-        color: rgba(0, 0, 0, 0.45);
+        top: 4px;
+        right: 4px;
       }
     }
   }
