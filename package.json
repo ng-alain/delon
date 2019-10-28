@@ -63,6 +63,7 @@
     "ng-zorro-antd": "^8.4.1",
     "ng2-ace-editor": "^0.3.9",
     "ngx-color": "^3.0.3",
+    "ngx-countdown": "^8.0.1",
     "ngx-highlight-js": "^2.1.1",
     "ngx-simplemde": "^1.1.1",
     "ngx-tinymce": "^7.0.0",
