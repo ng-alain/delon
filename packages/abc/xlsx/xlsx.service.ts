@@ -13,7 +13,7 @@ export class XlsxService {
   constructor(private cog: XlsxConfig, private http: HttpClient, private lazy: LazyService) {}
 
   private init(): Promise<LazyResult[]> {
-    return this.lazy.load([this.cog.url!].concat(this.cog.modules!));
+    return typeof XLSX !== 'undefined' ? Promise.resolve([]) : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
   }
 
   private read(wb: any): { [key: string]: any[][] } {
@@ -33,29 +33,31 @@ export class XlsxService {
     fileOrUrl: File | string,
     rABS: 'readAsBinaryString' | 'readAsArrayBuffer' = 'readAsBinaryString',
   ): Promise<{ [key: string]: any[][] }> {
-    return new Promise<{ [key: string]: any[][] }>((resolver, reject) => {
-      this.init().then(() => {
-        // from url
-        if (typeof fileOrUrl === 'string') {
-          this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe(
-            (res: ArrayBuffer) => {
-              const wb = XLSX.read(new Uint8Array(res), { type: 'array' });
-              resolver(this.read(wb));
-            },
-            (err: any) => {
-              reject(err);
-            },
-          );
-          return;
-        }
-        // from file
-        const reader: FileReader = new FileReader();
-        reader.onload = (e: any) => {
-          const wb: any = XLSX.read(e.target.result, { type: 'binary' });
-          resolver(this.read(wb));
-        };
-        reader[rABS](fileOrUrl);
-      });
+    return new Promise<{ [key: string]: any[][] }>((resolve, reject) => {
+      this.init()
+        .then(() => {
+          // from url
+          if (typeof fileOrUrl === 'string') {
+            this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe(
+              (res: ArrayBuffer) => {
+                const wb = XLSX.read(new Uint8Array(res), { type: 'array' });
+                resolve(this.read(wb));
+              },
+              (err: any) => {
+                reject(err);
+              },
+            );
+            return;
+          }
+          // from file
+          const reader: FileReader = new FileReader();
+          reader.onload = (e: any) => {
+            const wb: any = XLSX.read(e.target.result, { type: 'binary' });
+            resolve(this.read(wb));
+          };
+          reader[rABS](fileOrUrl);
+        })
+        .catch(() => reject(`Unable to load xlsx.js`));
     });
   }
 

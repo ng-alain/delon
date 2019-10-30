@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { deepCopy, LazyService } from '@delon/util';
 import * as fs from 'file-saver';
@@ -12,7 +12,6 @@ import { XlsxExportOptions } from './xlsx.types';
 
 class MockLazyService {
   load() {
-    (window as any).XLSX = deepCopy(DEFAULTMOCKXLSX);
     return Promise.resolve();
   }
 }
@@ -50,24 +49,37 @@ class MockHttpClient {
 }
 
 describe('abc: xlsx', () => {
+  let injector: TestBedStatic;
   let srv: XlsxService;
   function genModule() {
-    const injector = TestBed.configureTestingModule({
+    injector = TestBed.configureTestingModule({
       imports: [XlsxModule, HttpClientTestingModule],
       declarations: [TestComponent],
-      providers: [
-        { provide: HttpClient, useClass: MockHttpClient },
-        { provide: LazyService, useClass: MockLazyService },
-      ],
+      providers: [{ provide: HttpClient, useClass: MockHttpClient }, { provide: LazyService, useClass: MockLazyService }],
     });
     srv = injector.get<XlsxService>(XlsxService);
   }
 
   beforeEach(() => {
+    (window as any).XLSX = deepCopy(DEFAULTMOCKXLSX);
     isErrorRequest = false;
   });
 
+  afterEach(() => {
+    delete (window as any).XLSX;
+  });
+
   describe('[#import]', () => {
+    it('should be load xlsx lib when not found XLSX in window', () => {
+      delete (window as any).XLSX;
+      genModule();
+      const lazySrv: LazyService = injector.get<LazyService>(LazyService);
+      spyOn(lazySrv, 'load').and.callFake(() => Promise.reject());
+      expect(lazySrv.load).not.toHaveBeenCalled();
+      srv.import('/1.xlsx').catch(() => {});
+      expect(lazySrv.load).toHaveBeenCalled();
+    });
+
     it('should be load xlsx via url', (done: () => void) => {
       genModule();
       srv.import('/1.xlsx').then(
