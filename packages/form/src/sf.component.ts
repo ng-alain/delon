@@ -55,6 +55,7 @@ export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, optio
     '[class.sf__search]': `mode === 'search'`,
     '[class.sf__edit]': `mode === 'edit'`,
     '[class.sf__no-error]': `onlyVisual`,
+    '[class.sf__no-colon]': `noColon`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -136,6 +137,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    */
   @Input() @InputBoolean() loading = false;
   @Input() @InputBoolean() disabled = false;
+  @Input() @InputBoolean() noColon = false;
   /** 数据变更时回调 */
   @Output() readonly formChange = new EventEmitter<{}>();
   /** 提交表单时回调 */

@@ -424,6 +424,16 @@ describe('form: component', () => {
         page.checkCount(CLS.disabled, 1);
       });
 
+      it('#noColon', () => {
+        context.noColon = true;
+        fixture.detectChanges();
+        const CLS = `.sf__no-colon`;
+        page.checkCount(CLS, 1);
+        context.noColon = false;
+        fixture.detectChanges();
+        page.checkCount(CLS, 0);
+      });
+
       it('#formChange', () => {
         page.setValue('/name', 'cipchk');
         expect(context.formChange).toHaveBeenCalled();
