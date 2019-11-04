@@ -47,7 +47,7 @@ import { ControlWidget } from '@delon/form';
       [ngModel]="value"
       (ngModelChange)="change($event)"
       [config]="config"
-      [loading]="loading">
+      [loading]="loadingTip">
     </tinymce>
     <!-- 结束自定义控件区域 -->
   </sf-item-wrap>`
