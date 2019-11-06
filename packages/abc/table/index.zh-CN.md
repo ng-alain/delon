@@ -162,10 +162,11 @@ class TestComponent {
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[type]` | 变更类型，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` | `STChangeType` | -
+`[type]` | 变更类型，包括：`loaded`、`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` | `STChangeType` | -
 `[pi]` | 当前页码 | `number` | -
 `[ps]` | 每页数量 | `number` | -
 `[total]` | 数据总量 | `number` | -
+`[loaded]` | `loaded` 参数 | `STData[]` | -
 `[checkbox]` | `checkbox` 参数 | `STData[]` | -
 `[radio]` | `radio` 参数 | `STData` | -
 `[sort]` | 排序参数 | `STChangeSort` | -

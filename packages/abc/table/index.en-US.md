@@ -166,6 +166,7 @@ Property | Description | Type | Default
 `[pi]` | Page index | `number` | -
 `[ps]` | Page size | `number` | -
 `[total]` | Total data | `number` | -
+`[loaded]` | Parameters of type `loaded` | `STData[]` | -
 `[checkbox]` | Parameters of type `checkbox` | `STData[]` | -
 `[radio]` | Parameters of type `radio` | `STData` | -
 `[sort]` | Parameters of type `sort` | `STChangeSort` | -
