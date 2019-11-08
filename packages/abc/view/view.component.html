@@ -6,7 +6,7 @@
     <ng-container *stringTemplateOutlet="label">{{label}}</ng-container>
   </span>
   <span *ngIf="optional || optionalHelp" class="sv__label-optional">
-    {{ optional }}
+    <ng-container *stringTemplateOutlet="optional">{{ optional }}</ng-container>
     <i *ngIf="optionalHelp" nz-tooltip [nzTooltipTitle]="optionalHelp" nz-icon nzType="question-circle"></i>
   </span>
 </div>

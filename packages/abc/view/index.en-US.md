@@ -33,8 +33,8 @@ Viewing grid system is a higher-order components based on the original [Grid Sys
 | `[unit]`      | unit of view                                  | `string,TemplateRef<void>`            | - |
 | `[default]`    | whether default text, inherit `sv-container` | `boolean`                              | - |
 | `[type]`       | type of view                  | `'primary','success','danger','warning'` | - |
-| `[optional]` | Label optional information | `string` | - |
-| `[optionalHelp]` | Label optional help | `string` | - |
+| `[optional]` | Label optional information | `string, TemplateRef<void>` | - |
+| `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | - |
 
 ### sv-title
 

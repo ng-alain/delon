@@ -1,9 +1,9 @@
-<nz-tabset [nzSelectedIndex]="pos" (nzSelectedIndexChange)="to($event)"
+<nz-tabset [nzSelectedIndex]="pos"
   [nzAnimated]="false" [nzType]="tabType"
   [nzTabBarExtraContent]="tabBarExtraContent"
   [nzTabBarGutter]="tabBarGutter"
   [nzTabBarStyle]="tabBarStyle">
-  <nz-tab *ngFor="let i of list; let index = index" [nzTitle]="titleTemplate">
+  <nz-tab *ngFor="let i of list; let index = index" [nzTitle]="titleTemplate" (nzClick)="to(index)">
     <ng-template #titleTemplate>
       <div [reuse-tab-context-menu]="i" [customContextMenu]="customContextMenu" class="reuse-tab__name" [attr.title]="i.title">
         <span [class.reuse-tab__name-width]="tabMaxWidth" [style.max-width.px]="tabMaxWidth">
