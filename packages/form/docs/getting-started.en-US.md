@@ -150,7 +150,8 @@ export class HomeComponent {
 | `[autocomplete]` | autocomplete value of this form          | `on,off`                     | `null`       |
 | `[disabled]` | Whether to disabled status  | `boolean` | `false` |
 | `[loading]` | Whether to load status，when `true` reset button is disabled status, submit button is loading status  | `boolean` | `false` |
-| `[noColon]` | whether to not display `:` after label text. | `boolean` | `false` |
+| `[noColon]` | Whether to not display `:` after label text. | `boolean` | `false` |
+| `[cleanValue]` | Whether to clean up data for undefined Schema | `boolean` | `false` |
 | `(formChange)`   | Callback when data changes               | `EventEmitter<{}>`           | -            |
 | `(formSubmit)`   | Callback when submitting the form        | `EventEmitter<{}>`           | -            |
 | `(formReset)`    | Callback when resetting the form         | `EventEmitter<{}>`           | -            |
