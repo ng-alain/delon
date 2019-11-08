@@ -353,6 +353,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       }
       this._data = result.list as STData[];
       this._statistical = result.statistical as STStatisticalResults;
+      this.changeEmit('loaded', result.list);
       return this._refCheck();
     } catch (error) {
       this.setLoading(false);
