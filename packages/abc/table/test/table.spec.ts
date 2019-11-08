@@ -1211,7 +1211,6 @@ describe('abc: table', () => {
           fixture.detectChanges();
           fixture.whenStable().then(() => {
             page.expectElCount('.ant-table-row-expand-icon', 0);
-            expect(context.change).not.toHaveBeenCalled();
             page.getCell(1, 2).click();
             page.expectChangeType('expand', false);
             done();
@@ -1389,14 +1388,13 @@ describe('abc: table', () => {
         expect(page._changeData.type).toBe('dblClick');
       }));
       it('should be ingore input', fakeAsync(() => {
-        expect(context.change).not.toHaveBeenCalled();
         const el = page.getCell() as HTMLElement;
         // mock input nodeName
         spyOnProperty(el, 'nodeName', 'get').and.returnValue('INPUT');
         el.click();
         fixture.detectChanges();
         tick(100);
-        expect(context.change).not.toHaveBeenCalled();
+        page.expectChangeType('click', false);
       }));
     });
     describe('[public method]', () => {
@@ -2067,7 +2065,8 @@ describe('abc: table', () => {
       return this;
     }
     expectChangeType(type: STChangeType, called = true) {
-      const args = this.changeSpy.calls.first().args[0];
+      const callAll = this.changeSpy.calls.all();
+      const args = callAll[callAll.length - 1].args[0];
       if (called) {
         expect(args.type).toBe(type);
       } else {
