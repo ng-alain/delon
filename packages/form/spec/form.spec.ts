@@ -434,6 +434,33 @@ describe('form: component', () => {
         page.checkCount(CLS, 0);
       });
 
+      describe('#cleanValue', () => {
+        it('with true', () => {
+          context.cleanValue = true;
+          fixture.detectChanges();
+          page.newSchema(
+            {
+              properties: { name: { type: 'string' } },
+            },
+            {},
+            { name: 'a', age: 10 },
+          );
+          expect(context.comp.value.age == null).toBe(true);
+        });
+        it('with false', () => {
+          context.cleanValue = false;
+          fixture.detectChanges();
+          page.newSchema(
+            {
+              properties: { name: { type: 'string' } },
+            },
+            {},
+            { name: 'a', age: 10 },
+          );
+          expect(context.comp.value.age).toBe(10);
+        });
+      });
+
       it('#formChange', () => {
         page.setValue('/name', 'cipchk');
         expect(context.formChange).toHaveBeenCalled();

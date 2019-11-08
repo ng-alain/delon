@@ -334,6 +334,7 @@ export class SFPage {
       [disabled]="disabled"
       [loading]="loading"
       [noColon]="noColon"
+      [cleanValue]="cleanValue"
       (formChange)="formChange($event)"
       (formSubmit)="formSubmit($event)"
       (formReset)="formReset($event)"
@@ -356,6 +357,7 @@ export class TestFormComponent {
   disabled = false;
   loading = false;
   noColon = false;
+  cleanValue = false;
 
   formChange() {}
   formSubmit() {}
