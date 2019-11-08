@@ -32,6 +32,7 @@ import {
   STResReNameType,
   STWidthMode,
   STColumnTitle,
+  STChangeType,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
 
@@ -1128,10 +1129,8 @@ describe('abc: table', () => {
         fixture.whenStable().then(() => {
           const el = page.getCell(1, 1).querySelector('.ant-table-row-expand-icon') as HTMLElement;
           page.expectData(1, 'expand', undefined);
-          expect(context.change).not.toHaveBeenCalled();
           el.click();
-          page.expectData(1, 'expand', true);
-          expect(context.change).toHaveBeenCalled();
+          page.expectData(1, 'expand', true).expectChangeType('expand');
           done();
         });
       });
@@ -1142,10 +1141,8 @@ describe('abc: table', () => {
           fixture.whenStable().then(() => {
             const el = page.getCell(1, 2);
             page.expectData(1, 'expand', undefined);
-            expect(context.change).not.toHaveBeenCalled();
             el.click();
-            page.expectData(1, 'expand', true);
-            expect(context.change).toHaveBeenCalled();
+            page.expectData(1, 'expand', true).expectChangeType('expand');
             done();
           });
         });
@@ -1216,7 +1213,7 @@ describe('abc: table', () => {
             page.expectElCount('.ant-table-row-expand-icon', 0);
             expect(context.change).not.toHaveBeenCalled();
             page.getCell(1, 2).click();
-            expect(context.change).not.toHaveBeenCalled();
+            page.expectChangeType('expand', false);
             done();
           });
         });
@@ -2068,6 +2065,14 @@ describe('abc: table', () => {
         expect(el!.textContent!.trim()).toBe(content, expectationFailOutput);
       }
       return this;
+    }
+    expectChangeType(type: STChangeType, called = true) {
+      const args = this.changeSpy.calls.first().args[0];
+      if (called) {
+        expect(args.type).toBe(type);
+      } else {
+        expect(args.type).not.toBe(type);
+      }
     }
     openDropDownInHead(nams: string): this {
       dispatchDropDown(dl.query(By.css(`.ant-table-thead th[data-col="${nams}"]`)), 'click');
