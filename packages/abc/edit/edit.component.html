@@ -3,8 +3,8 @@
     <span class="se__label-text">
       <ng-container *stringTemplateOutlet="label">{{ label }}</ng-container>
     </span>
-    <span class="se__label-optional">
-      {{ optional }}
+    <span class="se__label-optional" *ngIf="optional || optionalHelp">
+      <ng-container *stringTemplateOutlet="optional">{{ optional }}</ng-container>
       <i *ngIf="optionalHelp" nz-tooltip [nzTooltipTitle]="optionalHelp" nz-icon nzType="question-circle"></i>
     </span>
   </label>

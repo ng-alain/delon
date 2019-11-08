@@ -55,8 +55,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
 
   // #region fields
 
-  @Input() optional: string;
-  @Input() optionalHelp: string;
+  @Input() optional: string | TemplateRef<void>;
+  @Input() optionalHelp: string | TemplateRef<void>;
   @Input() error: string;
   @Input() extra: string;
   @Input() label: string | TemplateRef<void>;

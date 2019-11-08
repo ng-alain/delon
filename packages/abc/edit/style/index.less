@@ -35,7 +35,11 @@
     white-space: nowrap;
     text-align: right;
     &-optional {
+      margin-left: @se-optional-margin;
       color: @se-label-optional-color;
+      > .anticon {
+        margin-left: @se-optional-margin;
+      }
     }
   }
   &__control {
