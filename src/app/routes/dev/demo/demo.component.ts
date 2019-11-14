@@ -1,44 +1,14 @@
 import { Component } from '@angular/core';
-import { SFSchema } from '@delon/form';
-import { NzMessageService } from 'ng-zorro-antd';
-import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+    <g2-bar height="200" [title]="'销售额趋势'" [data]="salesData"></g2-bar>
   `,
 })
 export class DemoComponent {
-  schema: SFSchema = {
-    properties: {
-      btn: {
-        type: 'string',
-        title: 'Button',
-        enum: ['A', 'B', 'C'],
-        ui: {
-          widget: 'radio',
-          styleType: 'button',
-          buttonStyle: 'solid',
-        },
-        default: 'A',
-      },
-      // 异步数据
-      async: {
-        type: 'string',
-        title: 'Async',
-        ui: {
-          widget: 'radio',
-          asyncData: () => of([{ label: '男', value: 'M' }, { label: '女', value: 'F' }, { label: '未知', value: 'N' }]).pipe(delay(100)),
-          change: console.log,
-        },
-        default: 'N',
-      },
-    },
-  };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
-    this.msg.success(JSON.stringify(value));
-  }
+  salesData: any[] = new Array(12).fill({}).map((_i, idx) => ({
+    x: `${idx + 1}月`,
+    y: idx === 0 ? 0.5 : Math.floor(Math.random() * 5),
+  }));
 }
