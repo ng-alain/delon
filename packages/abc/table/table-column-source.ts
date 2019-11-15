@@ -5,14 +5,7 @@ import { deepCopy } from '@delon/util';
 
 import { STRowSource } from './table-row.directive';
 import { STConfig } from './table.config';
-import { STColumn, STColumnButton, STColumnFilter, STColumnSort, STIcon, STColumnButtonPop } from './table.interfaces';
-
-export interface STSortMap extends STColumnSort {
-  [key: string]: any;
-
-  /** 是否启用排序 */
-  enabled?: boolean;
-}
+import { STColumn, STColumnButton, STColumnFilter, STSortMap, STIcon, STColumnButtonPop } from './table.interfaces';
 
 @Injectable()
 export class STColumnSource {
@@ -146,6 +139,15 @@ export class STColumnSource {
   }
 
   private sortCoerce(item: STColumn): STSortMap {
+    const res = this.fixCoerce(item);
+    res.reName = {
+      ...this.cog.sortReName,
+      ...res.reName,
+    };
+    return res;
+  }
+
+  private fixCoerce(item: STColumn): STSortMap {
     // compatible
     if (item.sorter && typeof item.sorter === 'function') {
       return {

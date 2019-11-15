@@ -213,6 +213,7 @@ Property | Description | Type | Default
 `[separator]` | Separator between attributes | `string` | `-`
 `[nameSeparator]` | Column name and state separator | `string` | `.`
 `[global]` | Whether global multi sort mode<br>`true` all `st` defaults multi-sort<br>`false` all `st` non-multiple sorting, just only configurable for rule | `boolean` | `true`
+`[keepEmptyKey]` | Whether to keep send empty key<br>`true` send the `key` name anyway<br>`false` don't send `key` when not sorting | `boolean` | `true`
 
 ### STData
 

@@ -206,6 +206,7 @@ class TestComponent {
 `[separator]` | 不同属性间分隔符 | `string` | `-`
 `[nameSeparator]` | 列名与状态间分隔符 | `string` | `.`
 `[global]` | 是否全局多排序模式<br>`true` 表示所有 `st` 默认为多排序<br>`false` 表示需要为每个 `st` 添加 `multiSort` 才会视为多排序模式 | `boolean` | `true`
+`[keepEmptyKey]` | 是否保持空值的键名<br>`true` 表示不管是否有排序都会发送 `key` 键名<br>`false` 表示无排序动作时不会发送 `key` 键名 | `boolean` | `true`
 
 ### STData
 
