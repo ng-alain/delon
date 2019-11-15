@@ -6,7 +6,6 @@ import { deepCopy, deepGet } from '@delon/util';
 import { of, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { STSortMap } from './table-column-source';
 import {
   STColumn,
   STData,
@@ -23,6 +22,7 @@ import {
   STStatisticalResults,
   STStatisticalType,
   STColumnFilter,
+  STSortMap,
 } from './table.interfaces';
 
 export interface STDataSourceOptions {
@@ -286,7 +286,7 @@ export class STDataSource {
   // #region sort
 
   private getValidSort(columns: STColumn[]): STSortMap[] {
-    return columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort);
+    return columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort!);
   }
 
   private getSorterFn(columns: STColumn[]) {
@@ -339,6 +339,9 @@ export class STDataSource {
           .map(item => item.key + ms.nameSeparator + ((item.reName || {})[item.default!] || item.default))
           .join(ms.separator),
       };
+      if (multiSort.keepEmptyKey === false && ret[ms.key].length === 0) {
+        ret = {};
+      }
     } else {
       const mapData = sortList[0];
       let sortFiled = mapData.key;

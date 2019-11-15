@@ -503,10 +503,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   sort(col: STColumn, idx: number, value: any) {
     if (this.multiSort) {
-      col._sort.default = value;
-      col._sort.tick = this.dataSource.nextSortTick;
+      col._sort!.default = value;
+      col._sort!.tick = this.dataSource.nextSortTick;
     } else {
-      this._columns.forEach((item, index) => (item._sort.default = index === idx ? value : null));
+      this._columns.forEach((item, index) => (item._sort!.default = index === idx ? value : null));
     }
     this.loadPageData();
     const res = {
@@ -518,7 +518,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   clearSort() {
-    this._columns.forEach(item => (item._sort.default = null));
+    this._columns.forEach(item => (item._sort!.default = null));
     return this;
   }
 

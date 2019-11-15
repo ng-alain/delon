@@ -216,27 +216,27 @@ describe('abc: table: column-souce', () => {
     describe('[sort]', () => {
       describe('#compatible', () => {
         it('should be enabled', () => {
-          expect(srv.process([{ title: '', sorter: () => true }])[0]._sort.enabled).toBe(true);
+          expect(srv.process([{ title: '', sorter: () => true }])[0]._sort!.enabled).toBe(true);
         });
       });
       it('should be disabled', () => {
-        expect(srv.process([{ title: '' }])[0]._sort.enabled).toBe(false);
+        expect(srv.process([{ title: '' }])[0]._sort!.enabled).toBe(false);
       });
       it('should be enabled when is true', () => {
-        expect(srv.process([{ title: '', sort: true }])[0]._sort.enabled).toBe(true);
+        expect(srv.process([{ title: '', sort: true }])[0]._sort!.enabled).toBe(true);
       });
       it('should be enabled when is string', () => {
-        const res = srv.process([{ title: '', sort: 'true' }])[0]._sort;
+        const res = srv.process([{ title: '', sort: 'true' }])[0]._sort!;
         expect(res.enabled).toBe(true);
         expect(res.key).toBe('true');
       });
       it('should be enabled when is object', () => {
-        const res = srv.process([{ title: '', sort: { default: 'ascend' } }])[0]._sort;
+        const res = srv.process([{ title: '', sort: { default: 'ascend' } }])[0]._sort!;
         expect(res.enabled).toBe(true);
         expect(res.default).toBe('ascend');
       });
       it('should be used index when key is null', () => {
-        const res = srv.process([{ title: '', index: 'aa', sort: { key: null } }])[0]._sort;
+        const res = srv.process([{ title: '', index: 'aa', sort: { key: null } }])[0]._sort!;
         expect(res.enabled).toBe(true);
         expect(res.key).toBe('aa');
       });

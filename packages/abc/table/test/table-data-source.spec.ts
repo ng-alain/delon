@@ -164,7 +164,7 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be decremented`, done => {
         options.data[1].id = 100000;
-        options.columns[0]._sort.default = 'descend';
+        options.columns[0]._sort!.default = 'descend';
         srv.process(options).subscribe(res => {
           expect(res.list[0].id).toBe(100000);
           done();
@@ -172,7 +172,7 @@ describe('abc: table: data-souce', () => {
       });
       it(`should be incremented`, done => {
         options.data[1].id = -100000;
-        options.columns[0]._sort.default = 'ascend';
+        options.columns[0]._sort!.default = 'ascend';
         srv.process(options).subscribe(res => {
           expect(res.list[0].id).toBe(-100000);
           done();
@@ -447,30 +447,30 @@ describe('abc: table: data-souce', () => {
         });
       });
       it(`should be decremented`, done => {
-        options.columns[0]._sort.default = 'descend';
+        options.columns[0]._sort!.default = 'descend';
         srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('descend');
           done();
         });
       });
       it(`should be incremented`, done => {
-        options.columns[0]._sort.default = 'ascend';
+        options.columns[0]._sort!.default = 'ascend';
         srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('ascend');
           done();
         });
       });
       it(`should be re-name`, done => {
-        options.columns[0]._sort.default = 'ascend';
-        options.columns[0]._sort.reName = { ascend: 'A', descend: 'D' };
+        options.columns[0]._sort!.default = 'ascend';
+        options.columns[0]._sort!.reName = { ascend: 'A', descend: 'D' };
         srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('A');
           done();
         });
       });
       it(`should be used default key when invalid re-name paraments`, done => {
-        options.columns[0]._sort.default = 'ascend';
-        options.columns[0]._sort.reName = {};
+        options.columns[0]._sort!.default = 'ascend';
+        options.columns[0]._sort!.reName = {};
         srv.process(options).subscribe(() => {
           expect(resParams.id).toBe('ascend');
           done();
@@ -503,22 +503,44 @@ describe('abc: table: data-souce', () => {
           });
         });
         it(`should be re-name`, done => {
-          options.columns[0]._sort.reName = { ascend: 'A', descend: 'D' };
+          options.columns[0]._sort!.reName = { ascend: 'A', descend: 'D' };
           srv.process(options).subscribe(() => {
             expect(resParams.SORT).toBe('id1.D-id2.ascend');
             done();
           });
         });
+        it(`should be removed key when no any sort of keepEmptyKey is false`, done => {
+          options.multiSort = {
+            ...options.multiSort,
+            keepEmptyKey: false,
+          };
+          options.columns = [
+            {
+              title: '',
+              index: 'id1',
+              sort: true,
+            },
+            {
+              title: '',
+              index: 'id2',
+              sort: true,
+            },
+          ];
+          srv.process(options).subscribe(() => {
+            expect(resParams.SORT).toBeUndefined();
+            done();
+          });
+        });
         it(`should be used default key when invalid re-name paraments`, done => {
-          options.columns[0]._sort.reName = {};
+          options.columns[0]._sort!.reName = {};
           srv.process(options).subscribe(() => {
             expect(resParams.SORT).toBe('id1.descend-id2.ascend');
             done();
           });
         });
         it(`should be in user order`, done => {
-          options.columns[1]._sort.tick = srv.nextSortTick;
-          options.columns[0]._sort.tick = srv.nextSortTick;
+          options.columns[1]._sort!.tick = srv.nextSortTick;
+          options.columns[0]._sort!.tick = srv.nextSortTick;
           srv.process(options).subscribe(() => {
             expect(resParams.SORT).toBe('id2.ascend-id1.descend');
             done();
@@ -527,7 +549,7 @@ describe('abc: table: data-souce', () => {
       });
       describe('[singleSort]', () => {
         it(`should working`, done => {
-          options.columns[0]._sort.default = 'ascend';
+          options.columns[0]._sort!.default = 'ascend';
           options.singleSort = {};
           srv.process(options).subscribe(() => {
             expect(resParams.sort).toBe('id.ascend');
@@ -535,7 +557,7 @@ describe('abc: table: data-souce', () => {
           });
         });
         it(`should specify options`, done => {
-          options.columns[0]._sort.default = 'ascend';
+          options.columns[0]._sort!.default = 'ascend';
           options.singleSort = { key: 'SORT', nameSeparator: '-' };
           srv.process(options).subscribe(() => {
             expect(resParams.SORT).toBe('id-ascend');
