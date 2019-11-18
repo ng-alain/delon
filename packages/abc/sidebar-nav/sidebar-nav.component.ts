@@ -20,6 +20,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { Nav } from './sidebar-nav.types';
+import { DomSanitizer } from '@angular/platform-browser';
 
 const SHOWCLS = 'sidebar-nav__floating-show';
 const FLOATINGCLS = 'sidebar-nav__floating';
@@ -63,6 +64,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private render: Renderer2,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
+    private domSanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
     @Inject(WINDOW) private win: Window,
   ) {}
@@ -149,6 +151,9 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     node.style.left = `${rect.right + 5}px`;
   }
 
+  sanitizeHtmlText(text: string) {
+    return this.domSanitizer.bypassSecurityTrustHtml(text);
+  }
   showSubMenu(e: MouseEvent, item: Nav) {
     if (this.collapsed !== true) {
       return;

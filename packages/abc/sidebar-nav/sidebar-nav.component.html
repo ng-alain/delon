@@ -17,7 +17,7 @@
   <ng-container *ngFor="let group of list">
     <ng-container *ngIf="group._hidden !== true">
       <li class="sidebar-nav__item sidebar-nav__group-title" *ngIf="group.group">
-        <span>{{ group.text }}</span>
+        <span [innerHTML]="sanitizeHtmlText(group.text)"></span>
       </li>
       <ng-container *ngFor="let child1 of group.children">
         <li *ngIf="child1._hidden !== true"
@@ -36,7 +36,7 @@
             <span *ngIf="collapsed" nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="child1.text">
               <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
             </span>
-            <span class="sidebar-nav__item-text">{{ child1.text }}</span>
+            <span class="sidebar-nav__item-text" [innerHTML]="sanitizeHtmlText(child1.text)"></span>
           </a>
           <!-- has children link -->
           <a *ngIf="child1._type === 3"
@@ -44,7 +44,7 @@
              (mouseenter)="showSubMenu($event, child1)"
              class="sidebar-nav__item-link">
             <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: child1.icon}"></ng-template>
-            <span class="sidebar-nav__item-text">{{ child1.text }}</span>
+            <span class="sidebar-nav__item-text" [innerHTML]="sanitizeHtmlText(child1.text)"></span>
             <i class="sidebar-nav__sub-arrow"></i>
           </a>
           <!-- badge -->
@@ -63,14 +63,14 @@
                    (click)="to(child2)"
                    [attr.data-id]="child2.__id"
                    class="sidebar-nav__item-link"
-                   [ngClass]="{'sidebar-nav__item-disabled': child2.disabled}">
-                   {{ child2.text }}
+                   [ngClass]="{'sidebar-nav__item-disabled': child2.disabled}"
+                   [innerHTML]="sanitizeHtmlText(child2.text)">
                 </a>
                 <!-- has children link -->
                 <a *ngIf="child2._type === 3"
                    (click)="toggleOpen(child2)"
                    class="sidebar-nav__item-link">
-                  {{ child2.text }}
+                 [innerHTML]="sanitizeHtmlText(child2.text)">
                   <i class="sidebar-nav__sub-arrow"></i>
                 </a>
                 <!-- badge -->
@@ -92,13 +92,13 @@
                          (click)="to(child3)"
                          [attr.data-id]="child3.__id"
                          class="sidebar-nav__item-link"
-                         [ngClass]="{'sidebar-nav__item-disabled': child3.disabled}">{{ child3.text }}</a>
+                         [ngClass]="{'sidebar-nav__item-disabled': child3.disabled}" [innerHTML]="sanitizeHtmlText(child3.text)"></a>
                       <!-- external link -->
                       <a *ngIf="child3._type === 2"
                          href="{{ child3.externalLink }}"
                          target="{{ child3.target }}"
                          data-type="external"
-                         class="sidebar-nav__item-link">{{ child3.text }}</a>
+                         class="sidebar-nav__item-link" [innerHTML]="sanitizeHtmlText(child3.text)"></a>
                       <!-- badge -->
                       <div *ngIf="child3.badge"
                            title="{{child3.badge}}"

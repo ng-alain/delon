@@ -72,6 +72,10 @@ export class DemoComponent {
             { text: 'Level2-DISABLED', disabled: true },
           ],
         },
+        {
+          // Support HTML syntax
+          text: 'With <b>HTML</b>',
+        },
       ],
     },
   ];
