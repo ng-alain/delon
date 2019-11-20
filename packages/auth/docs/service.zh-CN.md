@@ -30,4 +30,4 @@ constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
 | `change()`               | `Observable<ITokenModel>` | 监听 Token 变化回调 |
 | `set(data: ITokenModel)` | `boolean`                 | 设置 Token          |
 | `get(type?: any)`        | `ITokenModel`             | 获取 Token          |
-| `clear()`                | `void`                    | 清空 Token          |
+| `clear(options?: { onlyToken: boolean })`   | `void`   | 清空 Token          |

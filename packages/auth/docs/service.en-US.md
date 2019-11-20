@@ -30,4 +30,4 @@ constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {
 | `change()` | `Observable<ITokenModel>` | Token changed callback |
 | `set(data: ITokenModel)` | `boolean` | Set Token |
 | `get(type?: any)` | `ITokenModel` | Get Token |
-| `clear()` | `void` | Clear Token |
+| `clear(options?: { onlyToken: boolean })` | `void` | Clear Token |
