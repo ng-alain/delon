@@ -42,7 +42,10 @@ export interface ITokenService {
    */
   get<T extends ITokenModel>(type?: any): T;
 
-  clear(): void;
+  /**
+   * Clean authorization data
+   */
+  clear(options?: { onlyToken: boolean }): void;
 
   change(): Observable<ITokenModel | null>;
 }

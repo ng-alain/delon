@@ -16,21 +16,15 @@ describe('auth: token.service', () => {
   beforeEach(() => {
     let data = {};
 
-    spyOn(localStorage, 'getItem').and.callFake(
-      (key: string): string => {
-        return data[key] || null;
-      },
-    );
-    spyOn(localStorage, 'removeItem').and.callFake(
-      (key: string): void => {
-        delete data[key];
-      },
-    );
-    spyOn(localStorage, 'setItem').and.callFake(
-      (key: string, value: string): string => {
-        return (data[key] = value as string);
-      },
-    );
+    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
+      return data[key] || null;
+    });
+    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+      delete data[key];
+    });
+    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => {
+      return (data[key] = value as string);
+    });
     spyOn(localStorage, 'clear').and.callFake(() => {
       data = {};
     });
@@ -70,10 +64,22 @@ describe('auth: token.service', () => {
     expect(ret.payload).not.toBeUndefined();
   });
 
-  it('#clear', () => {
-    service.clear();
-    expect(service.get()).not.toBeNull();
-    expect(service.get()!.token).toBeUndefined();
+  describe('#clear', () => {
+    it('should be working', () => {
+      service.clear();
+      expect(service.get()).not.toBeNull();
+      expect(service.get()!.token).toBeUndefined();
+    });
+    it('should be only clear token data', () => {
+      service.set({ token: '1', a: 2 });
+      expect(service.get()).not.toBeNull();
+      expect(service.get()!.token).toBe(`1`);
+      expect(service.get()!.a).toBe(2);
+      service.clear({ onlyToken: true });
+      expect(service.get()).not.toBeNull();
+      expect(service.get()!.token).toBe(``);
+      expect(service.get()!.a).toBe(2);
+    });
   });
 
   it('#change', (done: () => void) => {
