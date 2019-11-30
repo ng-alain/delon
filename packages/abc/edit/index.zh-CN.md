@@ -57,7 +57,7 @@ config: SEConfig
 `[labelWidth]` | 标签文本宽度，单位：`px`（继承于 `se-container`） | `number` | -
 `[optional]` | 标签可选信息 | `string, TemplateRef<void>` | -
 `[optionalHelp]` | 标签可选帮助 | `string, TemplateRef<void>` | -
-`[error]` | 错误描述 | `string` | -
+`[error]` | 错误描述 | `string, { [key: string]: string }` | -
 `[extra]` | 额外提示信息 | `string` | -
 `[required]` | 是否必填项标识符 | `string` | -
 `[controlClass]` | 控件区域样式名 | `string` | -

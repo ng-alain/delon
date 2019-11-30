@@ -11,8 +11,10 @@
 </div>
 <div class="ant-form-item-control-wrapper se__control">
   <div class="ant-form-item-control {{controlClass}}" [class.has-error]="invalid">
-    <span (cdkObserveContent)="checkContent()" #contentElement><ng-content></ng-content></span>
-    <se-error *ngIf="showErr">{{error}}</se-error>
+    <span (cdkObserveContent)="checkContent()" #contentElement>
+      <ng-content></ng-content>
+    </span>
+    <se-error *ngIf="showErr">{{_error}}</se-error>
     <div *ngIf="extra" class="ant-form-extra">{{extra}}</div>
   </div>
 </div>

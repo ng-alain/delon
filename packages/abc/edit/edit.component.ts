@@ -50,14 +50,19 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   private clsMap: string[] = [];
   private inited = false;
   private onceFlag = false;
+  private errorData: { [key: string]: string } = {};
   invalid = false;
   _labelWidth: number | null = null;
+  _error: string;
 
   // #region fields
 
   @Input() optional: string | TemplateRef<void>;
   @Input() optionalHelp: string | TemplateRef<void>;
-  @Input() error: string;
+  @Input()
+  set error(val: string | { [key: string]: string }) {
+    this.errorData = typeof val === 'string' ? { '': val } : val;
+  }
   @Input() extra: string;
   @Input() label: string | TemplateRef<void>;
   @Input() @InputNumber(null) col: number;
@@ -82,7 +87,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   }
 
   get showErr(): boolean {
-    return this.invalid && this.parent.size !== 'compact' && !!this.error;
+    return this.invalid && this.parent.size !== 'compact' && !!this._error;
   }
 
   private get ngControl(): NgModel | FormControlName {
@@ -135,6 +140,13 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
       return;
     }
     this.invalid = ((invalid && this.onceFlag) || (this.ngControl.dirty && invalid)) as boolean;
+    const errors = this.ngControl.errors;
+    if (errors != null && Object.keys(errors).length > 0) {
+      const key = Object.keys(errors)[0] || '';
+      const err = this.errorData[key];
+      this._error = err != null ? err : this.errorData[''] || '';
+    }
+
     this.cdr.detectChanges();
   }
 
