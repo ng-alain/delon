@@ -171,6 +171,7 @@ describe('abc: edit', () => {
         it('should be show error', () => {
           ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
           spyOnProperty(ngModel, 'dirty').and.returnValue(true);
+          spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
           changes.emit('VALID');
@@ -178,6 +179,17 @@ describe('abc: edit', () => {
           // mock statusChanges
           changes.emit('INVALID');
           page.expect('se-error');
+        });
+        it('should be mulit error', () => {
+          context.error = { required: 'A', other: 'O' };
+          fixture.detectChanges();
+          ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
+          spyOnProperty(ngModel, 'dirty').and.returnValue(true);
+          spyOnProperty(ngModel, 'errors').and.returnValue({ other: true });
+          const changes = ngModel.statusChanges as EventEmitter<string>;
+          // mock statusChanges
+          changes.emit('INVALID');
+          expect(page.getEl('se-error').textContent!.trim()).toBe('O');
         });
       });
     });
@@ -417,7 +429,7 @@ class TestComponent {
 
   optional: string;
   optionalHelp: string;
-  error: string = 'required';
+  error: string | { [key: string]: string } = 'required';
   extra: string;
   label: string;
   required: boolean | null;

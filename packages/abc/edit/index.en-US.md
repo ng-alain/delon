@@ -57,7 +57,7 @@ Property | Description | Type | Default
 `[labelWidth]` | label text of width, unit is `px` (Inherited from `se-container`) | `number` | -
 `[optional]` | Label optional information | `string, TemplateRef<void>` | -
 `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | -
-`[error]` | validation error message | `string` | -
+`[error]` | validation error message | `string, { [key: string]: string }` | -
 `[extra]` | The extra prompt message. It is similar to help. | `string` | -
 `[required]` | whether required identifier | `string` | -
 `[controlClass]` | Control area classes | `string` | -
