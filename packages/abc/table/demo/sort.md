@@ -29,7 +29,7 @@ export class DemoComponent {
   params = { a: 1, b: 2 };
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
-    { title: '头像', type: 'img', width: '50px', index: 'picture.thumbnail' },
+    { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },
     {
       title: '姓名',
       index: 'name.last',

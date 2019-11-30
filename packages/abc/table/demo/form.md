@@ -34,7 +34,7 @@ export class DemoComponent {
   // mock
   columns: STColumn[] = [
     { title: '编号', index: 'id', default: '-' },
-    { title: '头像', type: 'img', width: '50px', index: 'picture.thumbnail' },
+    { title: '头像', type: 'img', width: 60, index: 'picture.thumbnail' },
     { title: '邮箱', index: 'email' },
     { title: '电话', index: 'phone' },
     { title: '注册时间', type: 'date', index: 'registered' },
