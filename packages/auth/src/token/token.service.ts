@@ -34,9 +34,16 @@ export class TokenService implements ITokenService {
     return type ? (Object.assign(new type(), data) as T) : (data as T);
   }
 
-  clear() {
-    this.change$.next(null);
-    this.store.remove(this.options.store_key!);
+  clear(options: { onlyToken: boolean } = { onlyToken: false }) {
+    let data: ITokenModel | null = null;
+    if (options.onlyToken === true) {
+      data = this.get() as ITokenModel;
+      data.token = ``;
+      this.set(data);
+    } else {
+      this.store.remove(this.options.store_key!);
+    }
+    this.change$.next(data);
   }
 
   change(): Observable<ITokenModel | null> {
