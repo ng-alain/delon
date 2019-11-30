@@ -42,9 +42,9 @@ export class DemoComponent {
       };
     });
   columns: STColumn[] = [
-    { title: '编号1', index: 'id', fixed: 'left', width: '100px' },
-    { title: '编号2', index: 'id', fixed: 'left', width: '100px' },
-    { title: '编号3', index: 'id', fixed: 'left', width: '100px' },
+    { title: '编号1', index: 'id', fixed: 'left', width: 100 },
+    { title: '编号2', index: 'id', fixed: 'left', width: 100 },
+    { title: '编号3', index: 'id', fixed: 'left', width: 100 },
     { title: '编号4', index: 'id' },
     { title: '编号5', index: 'id' },
     { title: '编号6', index: 'id' },
@@ -54,9 +54,9 @@ export class DemoComponent {
     { title: '编号8', index: 'id' },
     { title: '编号8', index: 'id' },
     { title: '编号8', index: 'id' },
-    { title: '姓名10', index: 'name', fixed: 'right', width: '100px' },
-    { title: '姓名11', index: 'name', fixed: 'right', width: '100px' },
-    { title: '年龄12', index: 'age', fixed: 'right', width: '100px' },
+    { title: '姓名10', index: 'name', fixed: 'right', width: 100 },
+    { title: '姓名11', index: 'name', fixed: 'right', width: 100 },
+    { title: '年龄12', index: 'age', fixed: 'right', width: 100 },
   ];
 }
 ```

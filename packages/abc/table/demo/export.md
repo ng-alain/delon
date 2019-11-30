@@ -47,7 +47,7 @@ export class DemoComponent {
     {
       title: '头像',
       type: 'img',
-      width: '50px',
+      width: 60,
       index: 'picture.thumbnail',
       exported: false,
     },
