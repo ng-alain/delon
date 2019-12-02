@@ -32,6 +32,10 @@ You can set `hide: true` in the menu.
 
 You can set `hideInBreadcrumb: true` in the menu.
 
+### How to update a menu item
+
+The menu will be re-rendered via calling `MenuService.setItem(key, newValue)`, please refer to the definition of [Menu](/theme/menu#Menu).
+
 ## API
 
 ### sidebar-nav

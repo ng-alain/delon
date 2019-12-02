@@ -31,25 +31,26 @@ Recursive upward find, for example, the menu data source contains `/ware`, then 
 
 Property | Description  | Type  | Default
 ----|------|-----|------
-text | Text of menu item, can be choose one of `text` or `i18n` | `string` | -
-i18n | I18n key of menu item, can be choose one of `text` or `i18n` | `string` | -
-group | Whether to display the group name | `boolean` | `true`
-link | Routing for the menu item, can be choose one of `link` or `externalLink` | `string` | -
-externalLink | External link for the menu item, can be choose one of `link` or `externalLink` | `string` | -
-target | Specifies `externalLink` where to display the linked URL | `_blank,_self,_parent,_top` | -
-icon | Icon for the menu item, only valid for the first level menu | `string | MenuIcon` | -
-badge | Badget for the menu item when `group` is `true` | `number` | -
-badgeDot | Whether to display a red dot instead of `badge` value | `boolean` | -
-badgeStatus | Badge [color](https://ng.ant.design/components/badge/en#nz-badge) | `string` | -
-disabled | Whether disable for the menu item | `boolean` | `false`
-hide | Whether hidden for the menu item | `boolean` | `false`
-hideInBreadcrumb | Whether hide in breadcrumbs, which are valid when the `page-header` component automatically generates breadcrumbs | `boolean` | -
-acl | ACL configuration, it's equivalent to `ACLService.can(roleOrAbility: ACLCanType)` parameter value | `any` | -
-shortcut | Whether shortcut menu item | `boolean` | -
-shortcutRoot | Wheter shortcut menu root node | `boolean` | -
-reuse | Whether to allow reuse, need to cooperate with the `reuse-tab` component | `boolean` | -
-open | Whether to expand, when `checkStrictly` is valid in `sidebar-nav` component | `boolean` | -
-children | Children for the menu item | `Menu[]` | -
+`text` | Text of menu item, can be choose one of `text` or `i18n` | `string` | -
+`i18n` | I18n key of menu item, can be choose one of `text` or `i18n` | `string` | -
+`group` | Whether to display the group name | `boolean` | `true`
+`link` | Routing for the menu item, can be choose one of `link` or `externalLink` | `string` | -
+`externalLink` | External link for the menu item, can be choose one of `link` or `externalLink` | `string` | -
+`target` | Specifies `externalLink` where to display the linked URL | `_blank,_self,_parent,_top` | -
+`icon` | Icon for the menu item, only valid for the first level menu | `string | MenuIcon` | -
+`badge` | Badget for the menu item when `group` is `true` | `number` | -
+`badgeDot` | Whether to display a red dot instead of `badge` value | `boolean` | -
+`badgeStatus` | Badge [color](https://ng.ant.design/components/badge/en#nz-badge) | `string` | -
+`disabled` | Whether disable for the menu item | `boolean` | `false`
+`hide` | Whether hidden for the menu item | `boolean` | `false`
+`hideInBreadcrumb` | Whether hide in breadcrumbs, which are valid when the `page-header` component automatically generates breadcrumbs | `boolean` | -
+`acl` | ACL configuration, it's equivalent to `ACLService.can(roleOrAbility: ACLCanType)` parameter value | `any` | -
+`shortcut` | Whether shortcut menu item | `boolean` | -
+`shortcutRoot` | Wheter shortcut menu root node | `boolean` | -
+`reuse` | Whether to allow reuse, need to cooperate with the `reuse-tab` component | `boolean` | -
+`open` | Whether to expand, when `checkStrictly` is valid in `sidebar-nav` component | `boolean` | -
+`key` | Unique identifier of the menu item, can be used in `getItem`, `setItem` to update a menu | `string` | -
+`children` | Children for the menu item | `Menu[]` | -
 
 ### MenuIcon
 

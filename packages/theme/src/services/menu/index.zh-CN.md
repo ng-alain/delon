@@ -29,24 +29,25 @@ type: Service
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-text | 文本，**必填项** | `string` | -
-i18n | i18n主键 | `string` | -
-group | 是否显示分组名，指[示例](//ng-alain.github.io/ng-alain/)中的【主导航】字样 | `boolean` | `true`
-link | 路由，`link`、`externalLink` 二选其一 | `string` | -
-externalLink | 外部链接，`link`、`externalLink` 二选其一 | `string` | -
-target | 链接 target | `_blank,_self,_parent,_top` | -
-icon | 图标，指[示例](//ng-alain.github.io/ng-alain/)中的【仪表盘】前图标，只对一级菜单有效 | `string | MenuIcon` | -
-badge | 徽标数，展示的数字，指[示例](//ng-alain.github.io/ng-alain/)中的【小部件】后的红色块。（注：`group:true` 时无效） | `number` | -
-badgeDot | 徽标数，显示小红点 | `boolean` | -
-badgeStatus | 徽标 Badge [颜色](https://ng.ant.design/components/badge/en#nz-badge) | `string` | -
-disabled | 是否禁用菜单 | `boolean` | `false`
-hide | 是否隐藏菜单 | `boolean` | `false`
-hideInBreadcrumb | 隐藏面包屑，指 `page-header` 组件的自动生成面包屑时有效 | `boolean` | -
-acl | ACL配置，若导入 `@delon/acl` 时自动有效，等同于 `ACLService.can(roleOrAbility: ACLCanType)` 参数值 | `any` | -
-shortcut | 是否快捷菜单项 | `boolean` | -
-shortcutRoot | 快捷菜单根节点 | `boolean` | -
-reuse | 是否允许复用，需配合 `reuse-tab` 组件 | `boolean` | -
-children | 子菜单 | `Menu[]` | -
+`text` | 文本，**必填项** | `string` | -
+`i18n` | i18n主键 | `string` | -
+`group` | 是否显示分组名，指[示例](//ng-alain.github.io/ng-alain/)中的【主导航】字样 | `boolean` | `true`
+`link` | 路由，`link`、`externalLink` 二选其一 | `string` | -
+`externalLink` | 外部链接，`link`、`externalLink` 二选其一 | `string` | -
+`target` | 链接 target | `_blank,_self,_parent,_top` | -
+`icon` | 图标，指[示例](//ng-alain.github.io/ng-alain/)中的【仪表盘】前图标，只对一级菜单有效 | `string | MenuIcon` | -
+`badge` | 徽标数，展示的数字，指[示例](//ng-alain.github.io/ng-alain/)中的【小部件】后的红色块。（注：`group:true` 时无效） | `number` | -
+`badgeDot` | 徽标数，显示小红点 | `boolean` | -
+`badgeStatus` | 徽标 Badge [颜色](https://ng.ant.design/components/badge/en#nz-badge) | `string` | -
+`disabled` | 是否禁用菜单 | `boolean` | `false`
+`hide` | 是否隐藏菜单 | `boolean` | `false`
+`hideInBreadcrumb` | 隐藏面包屑，指 `page-header` 组件的自动生成面包屑时有效 | `boolean` | -
+`acl` | ACL配置，若导入 `@delon/acl` 时自动有效，等同于 `ACLService.can(roleOrAbility: ACLCanType)` 参数值 | `any` | -
+`shortcut` | 是否快捷菜单项 | `boolean` | -
+`shortcutRoot` | 快捷菜单根节点 | `boolean` | -
+`reuse` | 是否允许复用，需配合 `reuse-tab` 组件 | `boolean` | -
+`key` | 菜单项唯一标识符，可用于 `getItem`、`setItem` 来更新某个菜单 | `string` | -
+`children` | 子菜单 | `Menu[]` | -
 
 ### MenuIcon
 
