@@ -51,7 +51,7 @@ class MockACLService {
 
 class MockWindow {
   location = new MockLocation();
-  open() {}
+  open() { }
 }
 class MockLocation {
   private url: string;
@@ -181,6 +181,14 @@ describe('abc: sidebar-nav', () => {
         itemEl!.click();
         fixture.detectChanges();
         expect(context.select).toHaveBeenCalled();
+      });
+
+      it('should be support html in text or i18n', () => {
+        createComp();
+        menuSrv.add([{ text: 'text <strong>1</strong>' }]);
+        page.checkText('.sidebar-nav__item', `text 1`);
+        menuSrv.add([{ i18n: 'i18n <strong>1</strong>' }]);
+        page.checkText('.sidebar-nav__item', `i18n 1`);
       });
     });
 
@@ -540,8 +548,8 @@ class TestComponent {
   autoCloseUnderPad = false;
   recursivePath = false;
   openStrictly = false;
-  select() {}
+  select() { }
 }
 
 @Component({ template: `` })
-class TestRouteComponent {}
+class TestRouteComponent { }
