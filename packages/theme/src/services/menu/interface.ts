@@ -51,6 +51,8 @@ export interface Menu {
   reuse?: boolean;
   /** Whether to expand, when `checkStrictly` is valid in `sidebar-nav` component */
   open?: boolean;
+  /** Unique identifier of the menu item, can be used in `getItem`,` setItem` to update a menu */
+  key?: string;
   /** Children menu of menu item */
   children?: Menu[];
 }

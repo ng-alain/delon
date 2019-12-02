@@ -240,6 +240,33 @@ export class MenuService implements OnDestroy {
     return ret;
   }
 
+  /**
+   * Get menu based on `key`
+   */
+  getItem(key: string): Menu | null {
+    let res: Menu | null = null;
+    this.visit(this.data, (item) => {
+      if (res == null && item.key === key) {
+        res = item;
+      }
+    });
+    return res;
+  }
+
+  /**
+   * Set menu based on `key`
+   */
+  setItem(key: string, value: Menu): void {
+    const item = this.getItem(key);
+    if (item == null) return;
+
+    Object.keys(value).forEach(k => {
+      item[k] = value[k];
+    });
+
+    this._change$.next(this.data);
+  }
+
   ngOnDestroy(): void {
     this._change$.unsubscribe();
     this.i18n$.unsubscribe();
