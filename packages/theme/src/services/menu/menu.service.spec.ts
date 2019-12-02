@@ -227,6 +227,30 @@ describe('Service: Menu', () => {
       srv.add(newMenus);
     });
 
+    it('#getItem', () => {
+      const newMenus = [{ text: 'new menu', key: 'a' }, { text: 'new menu' }];
+      srv.add(newMenus);
+      expect(srv.getItem('a') == null).toBe(false);
+      expect(srv.getItem('invalid-key') == null).toBe(true);
+    });
+
+    describe('#setItem', () => {
+      it('should be working', () => {
+        const newMenus = [{ text: 'a', key: 'a' }];
+        srv.add(newMenus);
+        expect(srv.getItem('a')!.text).toBe('a');
+        srv.setItem('a', { text: 'b', badge: 10 });
+        expect(srv.getItem('a')!.text).toBe('b');
+        expect(srv.getItem('a')!.badge).toBe(10);
+      });
+      it('should be ingore update when not found key', () => {
+        const newMenus = [{ text: 'a', key: 'a' }];
+        srv.add(newMenus);
+        srv.setItem('invalid-key', { text: 'b' });
+        expect(srv.getItem('a')!.text).toBe('a');
+      });
+    });
+
     describe('ISSUES', () => {
       it('ng-alain #107', () => {
         srv.add(deepCopy(DATA));
