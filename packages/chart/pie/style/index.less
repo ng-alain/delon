@@ -4,30 +4,35 @@
 @{g2-pie-prefix} {
   position: relative;
   display: block;
+
   &__chart {
     position: relative;
   }
+
   &__legend {
     position: absolute;
     top: 50%;
     right: 0;
-    min-width: 200px;
-    margin: 0 20px;
+    margin: 0 16px;
     padding: 0;
     list-style: none;
     transform: translateY(-50%);
+
     &-item {
       height: 22px;
       margin-bottom: 16px;
       line-height: 22px;
       cursor: pointer;
+
       &:last-child {
         margin-bottom: 0;
       }
     }
+
     &-title {
       color: @text-color;
     }
+
     &-dot {
       position: relative;
       top: -1px;
@@ -37,29 +42,30 @@
       margin-right: 8px;
       border-radius: 8px;
     }
+
     &-percent {
       color: @text-color-secondary;
     }
+
     &-value {
       position: absolute;
       right: 0;
     }
-    &-has {
-      @{g2-pie-prefix}__chart {
-        width: ~'calc(100% - 240px)';
-      }
-    }
+
     &-block {
       @{g2-pie-prefix}__chart {
-        width: 100%;
+        width: 100% !important;
         margin: 0 0 32px;
       }
+
       @{g2-pie-prefix}__legend {
         position: relative;
         transform: none;
+        margin: 0 auto;
       }
     }
   }
+
   &__total {
     position: absolute;
     top: 50%;
@@ -67,6 +73,7 @@
     height: 62px;
     text-align: center;
     transform: translate(-50%, -50%);
+
     &-title {
       height: 22px;
       margin-bottom: 8px;
@@ -75,6 +82,7 @@
       font-size: 14px;
       line-height: 22px;
     }
+
     &-stat {
       display: block;
       height: 32px;
@@ -84,6 +92,7 @@
       white-space: nowrap;
     }
   }
+
   &__mini {
     @{g2-pie-prefix}__total {
       &-title {

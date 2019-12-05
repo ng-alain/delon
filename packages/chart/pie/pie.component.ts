@@ -60,26 +60,32 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() valueFormat: (y: number) => string;
   @Input() data: G2PieData[] = [];
   @Input() colors: any[];
+  @Input() @InputNumber() legendWidth = 240;
 
   // #endregion
+
+  get chartWidth() {
+    const { hasLegend, legendWidth } = this;
+    // Must be add spacing width 32px
+    return hasLegend ? 'calc(100% - ' + (legendWidth + 32) + 'px)' : null;
+  }
 
   constructor(
     private el: ElementRef,
     private rend: Renderer2,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   private setCls() {
-    const { el, rend, hasLegend, isPercent } = this;
+    const { el, rend, hasLegend, isPercent, legendWidth } = this;
     const ne = el.nativeElement as HTMLElement;
     updateHostClass(
       ne,
       rend,
       {
         'g2-pie': true,
-        'g2-pie__legend-has': hasLegend,
-        'g2-pie__legend-block': hasLegend && ne.clientWidth <= 380,
+        'g2-pie__legend-block': hasLegend && ne.clientWidth <= legendWidth + 380,
         'g2-pie__mini': isPercent,
       },
       true,
