@@ -15,9 +15,9 @@ export interface MenuIcon {
 
 export interface Menu {
   [key: string]: any;
-  /** Text of menu item, can be choose one of  `text` or `i18n` */
+  /** Text of menu item, can be choose one of  `text` or `i18n` (Support HTML) */
   text?: string;
-  /** I18n key of menu item, can be choose one of  `text` or `i18n` */
+  /** I18n key of menu item, can be choose one of  `text` or `i18n` (Support HTML) */
   i18n?: string;
   /** Whether to display the group name, default: `true` */
   group?: boolean;

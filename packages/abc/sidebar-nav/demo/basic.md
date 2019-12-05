@@ -37,7 +37,7 @@ export class DemoComponent {
       group: true,
       children: [
         {
-          text: 'Dashboard',
+          text: 'Dashboard <strong>HTML</strong>',
           // Support icon by https://ng.ant.design/components/icon/zh
           // Format: `anticon-{icon key}`
           icon: 'anticon-dashboard',

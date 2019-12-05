@@ -29,8 +29,8 @@ type: Service
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`text` | 文本，**必填项** | `string` | -
-`i18n` | i18n主键 | `string` | -
+`text` | 文本（支持HTML），**必填项** | `string` | -
+`i18n` | i18n主键（支持HTML） | `string` | -
 `group` | 是否显示分组名，指[示例](//ng-alain.github.io/ng-alain/)中的【主导航】字样 | `boolean` | `true`
 `link` | 路由，`link`、`externalLink` 二选其一 | `string` | -
 `externalLink` | 外部链接，`link`、`externalLink` 二选其一 | `string` | -

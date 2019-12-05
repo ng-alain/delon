@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -63,9 +64,10 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private render: Renderer2,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
+    private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
     @Inject(WINDOW) private win: Window,
-  ) {}
+  ) { }
 
   private floatingAreaClickHandle(e: MouseEvent) {
     e.stopPropagation();
@@ -212,6 +214,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => this.genFloatingContainer());
     menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(data => {
       menuSrv.visit(data, (i: Nav) => {
+        i._text = this.sanitizer.bypassSecurityTrustHtml(i.text!);
         if (!i._aclResult) {
           if (this.disabledAcl) {
             i.disabled = true;
