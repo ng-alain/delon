@@ -86,7 +86,8 @@ Name | Description
 `load(pi = 1, extraParams?: any, options?: STLoadOptions)` | Load specified page
 `reload(extraParams?: any, options?: STLoadOptions)` | Refresh current page
 `reset(extraParams?: any, options?: STLoadOptions)` | Reset data and `pi` to `1`, including single multi-select, sort, filter status (Covered default state)
-`removeRow(data: STData | STData[])` | Remove row
+`removeRow(data: STData | STData[] | number)` | Remove a row in the table
+`setRow(index: number, item: STData)` | Sets the row value for the `index` in the table
 `clear(cleanStatus = true)` | Clear all data
 `clearStatus()` | Clean all status (like this: single multi-select, sort, filter status)
 `clearCheck()` | Clear all `checkbox`

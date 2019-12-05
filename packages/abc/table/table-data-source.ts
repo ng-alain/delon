@@ -66,7 +66,7 @@ export class STDataSource {
     @Host() private ynPipe: YNPipe,
     @Host() private numberPipe: DecimalPipe,
     private dom: DomSanitizer,
-  ) {}
+  ) { }
 
   process(options: STDataSourceOptions): Observable<STDataSourceResult> {
     let data$: Observable<STData[]>;
@@ -159,17 +159,8 @@ export class STDataSource {
       data$ = data$.pipe(map(result => res.process!(result, rawData)));
     }
 
-    // data accelerator
     data$ = data$.pipe(
-      map(result => {
-        for (let i = 0, len = result.length; i < len; i++) {
-          result[i]._values = columns.map(c => this.get(result[i], c, i));
-          if (options.rowClassName) {
-            result[i]._rowClassName = options.rowClassName(result[i], i);
-          }
-        }
-        return result;
-      }),
+      map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName })),
     );
 
     return data$.pipe(
@@ -277,6 +268,17 @@ export class STDataSource {
       reqOptions = req.process(reqOptions);
     }
     return this.http.request(method, url, reqOptions);
+  }
+
+  optimizeData(options: { columns: STColumn[]; result: STData[]; rowClassName?: STRowClassName }): STData[] {
+    const { result, columns, rowClassName } = options;
+    for (let i = 0, len = result.length; i < len; i++) {
+      result[i]._values = columns.map(c => this.get(result[i], c, i));
+      if (rowClassName) {
+        result[i]._rowClassName = rowClassName(result[i], i);
+      }
+    }
+    return result;
   }
 
   getNoIndex(item: STData, col: STColumn, idx: number): number {

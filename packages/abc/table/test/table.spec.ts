@@ -901,7 +901,7 @@ describe('abc: table', () => {
             httpBed.expectOne(req => req.url === '/mock2').flush([{}]);
             httpBed.expectOne(req => req.url === '/mock1').flush([{}, {}]);
             expect(true).toBe(false);
-          } catch {}
+          } catch { }
 
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(1);
@@ -1524,6 +1524,8 @@ describe('abc: table', () => {
             page.expectCurrentPageTotal(PS);
             comp.removeRow(comp._data[0]);
             page.expectCurrentPageTotal(PS - 1);
+            comp.removeRow(1);
+            page.expectCurrentPageTotal(PS - 2);
             done();
           });
         });
@@ -1542,6 +1544,17 @@ describe('abc: table', () => {
             page.expectCurrentPageTotal(PS);
             comp.removeRow([null]);
             page.expectCurrentPageTotal(PS);
+            done();
+          });
+        });
+      });
+      describe('#setRow', () => {
+        it('should be working', done => {
+          fixture.detectChanges();
+          fixture.whenStable().then(() => {
+            page.expectData(1, 'name', `name 1`);
+            comp.setRow(0, { name: 'new name' });
+            page.expectData(1, 'name', `new name`);
             done();
           });
         });
@@ -2148,8 +2161,8 @@ class TestComponent {
   widthMode: STWidthMode = {};
   virtualScroll = false;
 
-  error() {}
-  change() {}
+  error() { }
+  change() { }
 }
 
 @Component({
@@ -2169,4 +2182,4 @@ class TestComponent {
     </st>
   `,
 })
-class TestExpandComponent extends TestComponent {}
+class TestExpandComponent extends TestComponent { }
