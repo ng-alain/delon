@@ -37,7 +37,7 @@ export class DemoComponent {
     { title: '注册时间', type: 'date', index: 'registered' },
   ];
 
-  setRow(): vod {
+  setRow(): void {
     this.st.setRow(0, { price: 100000000 })
   }
 }
