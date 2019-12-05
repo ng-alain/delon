@@ -262,9 +262,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   renderTotal(total: string, range: string[]) {
     return this.totalTpl
       ? this.totalTpl
-          .replace('{{total}}', total)
-          .replace('{{range[0]}}', range[0])
-          .replace('{{range[1]}}', range[1])
+        .replace('{{total}}', total)
+        .replace('{{range[0]}}', range[0])
+        .replace('{{range[1]}}', range[1])
       : '';
   }
 
@@ -478,23 +478,49 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.changeEmit('expand', item);
   }
 
-  /** 移除某行数据 */
-  removeRow(data: STData | STData[]) {
-    if (!Array.isArray(data)) {
-      data = [data];
+  /**
+   * Remove a row in the table, like this:
+   *
+   * ```
+   * this.st.removeRow(0)
+   * this.st.removeRow(stDataItem)
+   * ```
+   */
+  removeRow(data: STData | STData[] | number) {
+    if (typeof data === 'number') {
+      this._data.splice(data, 1);
+    } else {
+      if (!Array.isArray(data)) {
+        data = [data];
+      }
+
+      (data as STData[])
+        .map(item => this._data.indexOf(item))
+        .filter(pos => pos !== -1)
+        .forEach(pos => this._data.splice(pos, 1));
+
     }
-
-    (data as STData[])
-      .map(item => this._data.indexOf(item))
-      .filter(pos => pos !== -1)
-      .forEach(pos => this._data.splice(pos, 1));
-
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
       .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
 
     return this.cd();
+  }
+
+  /**
+   * Sets the row value for the `index` in the table, like this:
+   *
+   * ```
+   * this.st.setRow(0, { price: 100 })
+   * this.st.setRow(0, { price: 100, name: 'asdf' })
+   * ```
+   */
+  setRow(index: number, item: STData): this {
+    this._data[index] = deepMergeKey(this._data[index], false, item);
+    this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+    this.cdr.detectChanges();
+    return this;
   }
 
   // #endregion
