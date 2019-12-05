@@ -1,3 +1,4 @@
+import { DomSanitizer, SafeHtml, SafeUrl } from '@angular/platform-browser';
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -23,9 +24,9 @@ export class ExceptionComponent implements OnInit, OnDestroy {
   locale: LocaleData = {};
   hasCon = false;
 
-  _img = '';
-  _title = '';
-  _desc = '';
+  _img: SafeUrl = '';
+  _title: SafeHtml = '';
+  _desc: SafeHtml = '';
 
   @Input()
   set type(value: ExceptionType) {
@@ -53,24 +54,24 @@ export class ExceptionComponent implements OnInit, OnDestroy {
 
   @Input()
   set img(value: string) {
-    this._img = value;
+    this._img = this.dom.bypassSecurityTrustUrl(value);
   }
 
   @Input()
   set title(value: string) {
-    this._title = value;
+    this._title = this.dom.bypassSecurityTrustHtml(value);
   }
 
   @Input()
   set desc(value: string) {
-    this._desc = value;
+    this._desc = this.dom.bypassSecurityTrustHtml(value);
   }
 
   checkContent() {
     this.hasCon = !isEmpty(this.conTpl.nativeElement);
   }
 
-  constructor(private i18n: DelonLocaleService) {}
+  constructor(private i18n: DelonLocaleService, private dom: DomSanitizer) { }
 
   ngOnInit() {
     this.i18n$ = this.i18n.change.subscribe(() => (this.locale = this.i18n.getData('exception')));
