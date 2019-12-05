@@ -32,6 +32,8 @@ So, @delon/auth is not limited to ng-alain scaffolding, can be used with any Ang
 
 @delon/auth thinks that the encrypted string that needs to be sent when requesting is called the Token value, whether it is JWT `Authorization` parameter or OAuth2 `access_token` value, which is also the value carried by each HTTP request. Therefore, the `ITokenModel` interface is used to represent authentication information and has only one `token` attribute.
 
+> Note: The token value must be a string type.
+
 ### Authentication Style
 
 There are currently two styles: Simple Web Token (using `SimpleTokenModel`) and Json Web Token (using `JWTTokenModel`) with parsing `payload` capabilities. The `ITokenModel` interface can be customized if you have special requirements.
