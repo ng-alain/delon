@@ -47,14 +47,19 @@ export class ExceptionComponent implements OnInit, OnDestroy {
 
     if (!item) return;
 
+    this.fixImg(item.img);
     this._type = value;
-    this._img = item.img;
     this._title = item.title;
+    this._desc = '';
+  }
+
+  private fixImg(src: string): void {
+    this._img = this.dom.bypassSecurityTrustStyle(`url('${src}')`);
   }
 
   @Input()
   set img(value: string) {
-    this._img = this.dom.bypassSecurityTrustUrl(value);
+    this.fixImg(value);
   }
 
   @Input()
