@@ -68,6 +68,7 @@ export interface DateRangePickerShortcut {
 }
 
 export interface DateRangePickerShortcutItem {
+  [key: string]: any;
   text: string;
   fn: (value: [Date, Date]) => [Date, Date];
 }
