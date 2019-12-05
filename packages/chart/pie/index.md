@@ -19,6 +19,7 @@ type: Components
 | `[color]`     | 图表颜色           | `string`      | `rgba(24, 144, 255, 0.85)` |
 | `[height]`    | 图表高度           | `number`      | -                          |
 | `[hasLegend]` | 是否显示 legend    | `boolean`     | `false`                    |
+| `[legendWidth]` | legend 显示宽度    | `number`     | `240`                   |
 | `[padding]`   | 图表内部间距       | `number[]`    | `[12, 0, 12, 0]`           |
 | `[percent]`   | 占比               | `number`      | -                          |
 | `[lineWidth]` | 边框粗细           | `number`      | `0`                        |
