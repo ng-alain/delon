@@ -11,9 +11,9 @@ RUN npm i \
 
 FROM node:10
 
-COPY --from=build /_nginx/default.conf /etc/nginx/conf.d/
+COPY --from=build /app/_nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
-COPY --from=build /src/dist /usr/share/nginx/html
+COPY --from=build /app/src/dist /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
