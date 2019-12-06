@@ -1,0 +1,19 @@
+FROM node:10
+
+LABEL authors="cipchk <cipchk@qq.com>"
+
+WORKDIR /
+
+COPY . .
+
+RUN npm i \
+    && npm run site:build
+
+WORKDIR /dist
+EXPOSE 80
+
+COPY /_nginx/default.conf /etc/nginx/conf.d/
+RUN rm -rf /usr/share/nginx/html/*
+COPY /src/dist /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
