@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:10 as build
 
 LABEL authors="cipchk <cipchk@qq.com>"
 
@@ -9,12 +9,11 @@ COPY . .
 RUN npm i \
     && npm run site:build
 
-WORKDIR /www
-EXPOSE 80
+FROM node:10
 
-RUN ls /src
-COPY /_nginx/default.conf /etc/nginx/conf.d/
+COPY --from=build /_nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
-COPY /src/dist/ /usr/share/nginx/html/
+COPY --from=build /src/dist /usr/share/nginx/html
 
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
