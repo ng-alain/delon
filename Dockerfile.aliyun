@@ -7,9 +7,10 @@ WORKDIR /
 COPY . .
 
 RUN npm i \
+    && ls \
     && npm run site:build
 
-WORKDIR /dist
+WORKDIR /app
 EXPOSE 80
 
 COPY /_nginx/default.conf /etc/nginx/conf.d/
