@@ -13,8 +13,8 @@ RUN npm i \
 WORKDIR /dist
 EXPOSE 80
 
-COPY /app/_nginx/default.conf /etc/nginx/conf.d/
+COPY /_nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
-COPY /app/src/dist /usr/share/nginx/html
+COPY /src/dist /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
