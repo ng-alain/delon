@@ -9,7 +9,7 @@ COPY . .
 RUN npm i \
     && npm run site:build
 
-FROM node:10
+FROM nginx:stable-alpine
 
 COPY --from=build /app/_nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
