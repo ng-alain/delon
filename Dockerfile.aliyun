@@ -11,6 +11,9 @@ RUN npm i \
 
 FROM nginx:stable-alpine
 
+WORKDIR /app
+EXPOSE 80
+
 COPY --from=build /app/_nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/src/dist /usr/share/nginx/html
