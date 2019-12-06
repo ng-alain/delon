@@ -12,6 +12,7 @@ RUN npm i \
 WORKDIR /www
 EXPOSE 80
 
+RUN ls /src
 COPY /_nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
 COPY /src/dist/ /usr/share/nginx/html/
