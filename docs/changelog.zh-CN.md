@@ -14,6 +14,25 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [8.7.0](https://github.com/ng-alain/delon/compare/8.6.0...8.7.0) (2019-12-06)
+
+### Scaffold
+
+* fix: 修复 `DefaultInterceptor.handleData()` 应更友好的处理异常错误 ([#1411](https://github.com/ng-alain/ng-alain/pull/1411))
+
+### Bug Fixes
+
+* **abc:st:** 修复 strict 宽度模式下扩展操作符列宽问题 ([#720](https://github.com/ng-alain/delon/issues/720)) ([248c27d](https://github.com/ng-alain/delon/commit/248c27d71891323975d48bfa2010805b4bab9072))
+
+### Features
+
+* **abc:sidebar-nav:** 新增 `text`、`i18n` 属性支持HTML ([#723](https://github.com/ng-alain/delon/issues/723)) ([d58f5b1](https://github.com/ng-alain/delon/commit/d58f5b1edb4109d5d21a2e1d7b4c1aa6fed0dca4)), closes [#716](https://github.com/ng-alain/delon/issues/716)
+* **abc:st:** 新增 `error` 支持多种错误类型 ([#721](https://github.com/ng-alain/delon/issues/721)) ([436a4e5](https://github.com/ng-alain/delon/commit/436a4e56346784e96ad2aaa4c268d3415d46f590))
+* **abc:st:** 新增 `setRow` 方法用于更新某列的部分数据 ([#725](https://github.com/ng-alain/delon/issues/725)) ([170bab2](https://github.com/ng-alain/delon/commit/170bab2a2ac9a7bbd2b92465183d711e03be8333))
+* **auth:** 新增 `clear` 方法允许只清空 Token 属性 ([#717](https://github.com/ng-alain/delon/issues/717)) ([f05ab21](https://github.com/ng-alain/delon/commit/f05ab21f9cac6d9db46af3689974be19693a8058))
+* **theme:MenuService:** 新增 `getItem`、`setItem` 方法，用于更新某个菜单项 ([#722](https://github.com/ng-alain/delon/issues/722)) ([2c05493](https://github.com/ng-alain/delon/commit/2c054935b94aa465dec4ef091994087fa32c053d))
+
+
 # [8.6.0](https://github.com/ng-alain/delon/compare/8.5.1...8.6.0) (2019-11-15)
 
 ### Bug Fixes
