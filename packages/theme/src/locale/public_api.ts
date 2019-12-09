@@ -11,3 +11,4 @@ export { default as pl_PL } from './languages/pl-PL';
 export { default as el_GR } from './languages/el-GR';
 export { default as ko_KR } from './languages/ko-KR';
 export { default as hr_HR } from './languages/hr-HR';
+export { default as ja_JP } from './languages/ja-JP';
