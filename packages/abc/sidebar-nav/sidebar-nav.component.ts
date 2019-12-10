@@ -53,10 +53,6 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     return this.settings.layout.collapsed;
   }
 
-  private get _d() {
-    return this.menuSrv.menus;
-  }
-
   constructor(
     private menuSrv: MenuService,
     private settings: SettingsService,
@@ -82,7 +78,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     }
 
     let item: Nav;
-    this.menuSrv.visit(this._d, i => {
+    this.menuSrv.visit(this.list, i => {
       if (!item && i.__id === id) {
         item = i;
       }
@@ -151,7 +147,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     node.style.left = `${rect.right + 5}px`;
   }
 
-  showSubMenu(e: MouseEvent, item: Nav) {
+  showSubMenu(e: MouseEvent, item: Nav): void {
     if (this.collapsed !== true) {
       return;
     }
@@ -166,7 +162,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     });
   }
 
-  to(item: Menu) {
+  to(item: Menu): void {
     this.select.emit(item);
     if (item.disabled) return;
 
@@ -176,14 +172,14 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
       } else {
         this.win.location.href = item.externalLink;
       }
-      return false;
+      return;
     }
     this.ngZone.run(() => this.router.navigateByUrl(item.link!));
   }
 
-  toggleOpen(item: Nav) {
+  toggleOpen(item: Nav): void {
     if (!this.openStrictly) {
-      this.menuSrv.visit(this._d, i => {
+      this.menuSrv.visit(this.list, i => {
         if (i !== item) i._open = false;
       });
       let pItem = item.__parent;
@@ -196,25 +192,26 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  _click() {
+  _click(): void {
     if (this.isPad && this.collapsed) {
       this.openAside(false);
       this.hideAll();
     }
   }
 
-  _docClick() {
+  _docClick(): void {
     this.hideAll();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const { doc, router, unsubscribe$, menuSrv, cdr } = this;
     this.bodyEl = doc.querySelector('body');
     menuSrv.openedByUrl(router.url, this.recursivePath);
     this.ngZone.runOutsideAngular(() => this.genFloatingContainer());
     menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(data => {
-      menuSrv.visit(data, (i: Nav) => {
+      menuSrv.visit(data, (i: Nav, _p, depth) => {
         i._text = this.sanitizer.bypassSecurityTrustHtml(i.text!);
+        i._needIcon = depth! <= 1;
         if (!i._aclResult) {
           if (this.disabledAcl) {
             i.disabled = true;
