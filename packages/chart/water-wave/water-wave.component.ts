@@ -41,10 +41,12 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   // #endregion
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
+  constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) { }
 
   private renderChart(type: string) {
     if (!this.resize$) return;
+
+    this.updateRadio();
 
     const { percent, color, node } = this;
 
@@ -194,7 +196,6 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.updateRadio();
     this.installResizeEvent();
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.renderChart(''), this.delay));
   }
