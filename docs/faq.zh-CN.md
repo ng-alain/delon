@@ -112,3 +112,13 @@ export class DelonModule {
 ### Missing locale data for the locale "zh-cn"
 
 缺少语言导入，参考[app.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/app.module.ts#L6-L25)。
+
+### 如何本地部署ng-alain.com文档
+
+我们提供一份在线快照：
+
+```barsh
+git clone --depth 1 --branch gh-pages https://github.com/ng-alain/delon.git docs
+```
+
+你可以简单的创建一个 Docker 容器来快速部署 ng-alain.com 相同的文档站点。
