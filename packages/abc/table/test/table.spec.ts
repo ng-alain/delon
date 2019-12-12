@@ -1062,6 +1062,7 @@ describe('abc: table', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           page.expectElCount(`.ant-table-rep`, 0);
+          page.expectElCount(`.ant-table-rep__title`, 0);
           done();
         });
       });

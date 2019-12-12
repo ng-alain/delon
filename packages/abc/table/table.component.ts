@@ -73,7 +73,21 @@ import { NzTableComponent } from 'ng-zorro-antd';
   encapsulation: ViewEncapsulation.None,
 })
 export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
+  private unsubscribe$ = new Subject<void>();
+  private data$: Subscription;
+  private totalTpl = ``;
+  private clonePage: STPage;
+  private copyCog: STConfig;
+  locale: LocaleData = {};
+  _data: STData[] = [];
+  _statistical: STStatisticalResults = {};
+  _isPagination = true;
+  _allChecked = false;
+  _allCheckedDisabled = false;
+  _indeterminate = false;
+  _columns: STColumn[] = [];
   @ViewChild('table', { static: false }) orgTable: NzTableComponent;
+
   /** 请求体配置 */
   @Input()
   get req() {
@@ -134,65 +148,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._widthMode;
   }
 
-  // #endregion
-
-  constructor(
-    @Optional() @Inject(ALAIN_I18N_TOKEN) i18nSrv: AlainI18NService,
-    private cdr: ChangeDetectorRef,
-    private cog: STConfig,
-    private router: Router,
-    private el: ElementRef,
-    private renderer: Renderer2,
-    private exportSrv: STExport,
-    private modalHelper: ModalHelper,
-    private drawerHelper: DrawerHelper,
-    @Inject(DOCUMENT) private doc: any,
-    private columnSource: STColumnSource,
-    private dataSource: STDataSource,
-    private delonI18n: DelonLocaleService,
-  ) {
-    this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
-      this.locale = this.delonI18n.getData('st');
-      if (this._columns.length > 0) {
-        this.page = this.clonePage;
-        this.cd();
-      }
-    });
-
-    this.copyCog = deepMergeKey(new STConfig(), true, cog);
-    delete this.copyCog.multiSort;
-    Object.assign(this, this.copyCog);
-    if (cog.multiSort && cog.multiSort.global !== false) {
-      this.multiSort = { ...cog.multiSort };
-    }
-
-    i18nSrv.change
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        filter(() => this._columns.length > 0),
-      )
-      .subscribe(() => this.refreshColumns());
-  }
-
   private get routerState() {
     const { pi, ps, total } = this;
     return { pi, ps, total };
   }
-  private unsubscribe$ = new Subject<void>();
-  private data$: Subscription;
-  private totalTpl = ``;
-  private clonePage: STPage;
-  private copyCog: STConfig;
-  locale: LocaleData = {};
-  _data: STData[] = [];
-  _statistical: STStatisticalResults = {};
-  _isPagination = true;
-  _allChecked = false;
-  _allCheckedDisabled = false;
-  _indeterminate = false;
-  _columns: STColumn[] = [];
-
-  // #region fields
 
   @Input() data: string | STData[] | Observable<STData[]>;
   private _req: STReq;
@@ -253,6 +212,44 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Output() readonly change = new EventEmitter<STChange>();
 
   private rowClickCount = 0;
+
+  constructor(
+    @Optional() @Inject(ALAIN_I18N_TOKEN) i18nSrv: AlainI18NService,
+    private cdr: ChangeDetectorRef,
+    private cog: STConfig,
+    private router: Router,
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private exportSrv: STExport,
+    private modalHelper: ModalHelper,
+    private drawerHelper: DrawerHelper,
+    @Inject(DOCUMENT) private doc: any,
+    private columnSource: STColumnSource,
+    private dataSource: STDataSource,
+    private delonI18n: DelonLocaleService,
+  ) {
+    this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+      this.locale = this.delonI18n.getData('st');
+      if (this._columns.length > 0) {
+        this.page = this.clonePage;
+        this.cd();
+      }
+    });
+
+    this.copyCog = deepMergeKey(new STConfig(), true, cog);
+    delete this.copyCog.multiSort;
+    Object.assign(this, this.copyCog);
+    if (cog.multiSort && cog.multiSort.global !== false) {
+      this.multiSort = { ...cog.multiSort };
+    }
+
+    i18nSrv.change
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter(() => this._columns.length > 0),
+      )
+      .subscribe(() => this.refreshColumns());
+  }
 
   cd() {
     this.cdr.detectChanges();
