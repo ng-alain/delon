@@ -1,13 +1,10 @@
 FROM node:10
 
-LABEL authors="cipchk <cipchk@qq.com>"
+MAINTAINER authors="cipchk <cipchk@qq.com>"
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src
 
-COPY package.json package.json
+RUN git clone --depth 1 --branch gh-pages https://github.com/ng-alain/delon.git dist
 
-RUN npm i
+COPY _nginx _nginx
 
-COPY . .
-
-RUN npm run site:build

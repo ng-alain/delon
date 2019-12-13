@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "8.6.0",
+  "version": "8.7.1",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -30,10 +30,11 @@
     "site:gen": "node scripts/site/main init && node scripts/build/generate-only-color.js",
     "site": "npm run site:gen && ng s -o",
     "site:build": "npm run site:gen && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /",
+    "site:gh": "npm run site:build && gh-pages -d src/dist",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
-    "publish:next": "bash scripts/publish/publish.sh -next",
-    "publish": "bash scripts/publish/publish.sh",
+    "publish:next": "bash scripts/publish/publish.sh -next && npm run site:gh",
+    "publish": "bash scripts/publish/publish.sh && npm run site:gh",
     "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js"
   },
   "dependencies": {
@@ -50,7 +51,7 @@
     "zone.js": "~0.9.1",
     "@angular/elements": "~8.2.11",
     "@antv/data-set": "^0.10.2",
-    "@antv/g2": "^3.5.9",
+    "@antv/g2": "^3.5.11",
     "@antv/g2-plugin-slider": "^2.1.1",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
@@ -60,7 +61,7 @@
     "file-saver": "^2.0.2",
     "marked": "^0.7.0",
     "ng-github-button": "^2.1.4",
-    "ng-zorro-antd": "^8.5.0",
+    "ng-zorro-antd": "^8.5.2",
     "ng2-ace-editor": "^0.3.9",
     "ngx-color": "^4.1.0",
     "ngx-countdown": "^8.0.2",
