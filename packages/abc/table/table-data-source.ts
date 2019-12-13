@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common';
 import { Host, Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { _HttpClient, CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
 import { of, Observable } from 'rxjs';
@@ -181,13 +181,13 @@ export class STDataSource {
     );
   }
 
-  private get(item: STData, col: STColumn, idx: number): { text: any; org?: any; color?: string } {
+  private get(item: STData, col: STColumn, idx: number): { text: any; _text: SafeHtml; org?: any; color?: string } {
     if (col.format) {
-      const formatRes = col.format(item, col, idx);
+      const formatRes = col.format(item, col, idx) || '';
       if (formatRes && ~formatRes.indexOf('</')) {
-        return { text: this.dom.bypassSecurityTrustHtml(formatRes), org: formatRes };
+        return { text: formatRes, _text: this.dom.bypassSecurityTrustHtml(formatRes), org: formatRes };
       }
-      return { text: formatRes == null ? '' : formatRes, org: formatRes };
+      return { text: formatRes, _text: formatRes, org: formatRes };
     }
 
     const value = deepGet(item, col.index as string[], col.default);
@@ -225,7 +225,8 @@ export class STDataSource {
         }
         break;
     }
-    return { text: text == null ? '' : text, org: value, color };
+    text = text || '';
+    return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: value, color };
   }
 
   private getByHttp(url: string, options: STDataSourceOptions): Observable<{}> {

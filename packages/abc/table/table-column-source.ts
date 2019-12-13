@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Host, Inject, Injectable, Optional } from '@angular/core';
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -10,6 +11,7 @@ import { STColumn, STColumnButton, STColumnFilter, STSortMap, STIcon, STColumnBu
 @Injectable()
 export class STColumnSource {
   constructor(
+    private dom: DomSanitizer,
     @Host() private rowSource: STRowSource,
     @Optional() private acl: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
@@ -290,13 +292,17 @@ export class STColumnSource {
       }
 
       // Compatible
+      const tit = item.title;
       // tslint:disable-next-line: deprecation
       if (item.i18n) {
         // tslint:disable-next-line: deprecation
-        item.title!.i18n = item.i18n;
+        tit.i18n = item.i18n;
       }
-      if (item.title!.i18n && this.i18nSrv) {
-        item.title!.text = this.i18nSrv.fanyi(item.title!.i18n);
+      if (tit.i18n && this.i18nSrv) {
+        tit.text = this.i18nSrv.fanyi(tit.i18n);
+      }
+      if (tit.text) {
+        tit._text = this.dom.bypassSecurityTrustHtml(tit.text);
       }
 
       // #endregion
