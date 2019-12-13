@@ -30,19 +30,15 @@
     <ng-container [ngSwitch]="btnType">
       <ng-container *ngSwitchCase="'plus'">
         <i nz-icon nzType="plus"></i>
-        <div class="ant-upload-text"
-             [innerHTML]="i.text"></div>
+        <div class="ant-upload-text" [innerHTML]="i.text"></div>
       </ng-container>
       <ng-container *ngSwitchCase="'drag'">
         <p class="ant-upload-drag-icon"><i nz-icon nzType="inbox"></i></p>
-        <p class="ant-upload-text"
-           [innerHTML]="i.text"></p>
-        <p class="ant-upload-hint"
-           [innerHTML]="i.hint"></p>
+        <p class="ant-upload-text" [innerHTML]="i.text"></p>
+        <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <button type="button"
-                nz-button>
+        <button type="button" nz-button>
           <i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span>
         </button>
       </ng-container>

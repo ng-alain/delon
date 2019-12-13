@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -201,6 +202,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     private formPropertyFactory: FormPropertyFactory,
     private terminator: TerminatorService,
     private options: DelonFormConfig,
+    private dom: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private localeSrv: DelonLocaleService,
     @Optional() private aclSrv: ACLService,
@@ -321,6 +323,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         }
         if (ui.descriptionI18n) {
           property.description = this.fanyi(ui.descriptionI18n);
+        }
+        if (property.description) {
+          property._description = this.dom.bypassSecurityTrustHtml(property.description);
         }
         ui.hidden = typeof ui.hidden === 'boolean' ? ui.hidden : false;
         if (ui.hidden === false && ui.acl && this.aclSrv && !this.aclSrv.can(ui.acl)) {
