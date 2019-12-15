@@ -28,7 +28,7 @@ By default, two interceptors are registered in the root module.[SimpleIntercepto
 
 **SimpleInterceptor**
 
-[User Authentication](/docs/auth) has built-in interceptors for automatically adding `token` parameters to requests. There is also a [JWTInterceptor](https://github.com/ng-alain/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) interceptor, which is a standard JWT specification. If the backend uses standard JWT, it can be directly replaced with a JWTInterceptor interceptor.
+[User Authentication](/auth) has built-in interceptors for automatically adding `token` parameters to requests. There is also a [JWTInterceptor](https://github.com/ng-alain/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) interceptor, which is a standard JWT specification. If the backend uses standard JWT, it can be directly replaced with a JWTInterceptor interceptor.
 
 **DefaultInterceptor**
 
@@ -50,11 +50,11 @@ Sometimes when you want to develop the front-end first, you can use @delon/mock 
 
 ```ts
 export const USERS = {
-    'GET /users': { users: [1, 2], total: 2 }
+  'GET /users': { users: [1, 2], total: 2 }
 }
 ```
 
-So for the test environment, when the `/users` request is encountered, the `{users: [1, 2], total: 2 }` data is returned directly. See [here](/docs/mock) for more Mock syntax and usage.
+So for the test environment, when the `/users` request is encountered, the `{users: [1, 2], total: 2 }` data is returned directly. See [here](/mock) for more Mock syntax and usage.
 
 **Note: ** When you don't need a Mock interface for a request, be sure to comment out or remove it.
 
@@ -64,4 +64,4 @@ So for the test environment, when the `/users` request is encountered, the `{use
 
 Scaffolding uses the `SimpleInterceptor` interceptor of `@delon/auth` by default, which causes an error to be returned directly if a token cannot be obtained during the request.
 
-[User Authentication](/docs/auth) This process is a must for the middle office.
+[User Authentication](/auth) This process is a must for the middle office.

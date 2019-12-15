@@ -12,7 +12,7 @@ Please check the FAQ below before asking questions.
 
 ### Can't Bind to since it isn't a known property of
 
-When you have multiple lazy modules, you want each submodule to use the component library (for example: `NgZorroAntdModule`, `NgxTinymceModule`) should be exported in `ShareModule`, please refer to [module registration guidelines](/docs/ Module).
+When you have multiple lazy modules, you want each submodule to use the component library (for example: `NgZorroAntdModule`, `NgxTinymceModule`) should be exported in `ShareModule`, please refer to [module registration guidelines](/docs/Module).
 
 ### Expression Changed After It Has Been Checked Error
 

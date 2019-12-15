@@ -32,19 +32,19 @@ NG-ALAIN 脚手架是基于 Angular 和 NG-ZORRO（Ant Design 的 Angular 版本
 
 **@delon/auth**
 
-[用户认证](/docs/auth)模块，用于解决如何获取、存取、使用这三个步骤的用户认证环节。
+[用户认证](/auth)模块，用于解决如何获取、存取、使用这三个步骤的用户认证环节。
 
 **@delon/acl**
 
-[ACL](/docs/acl)访问控制列表，是一种非常简单的基于角色权限控制，甚至达到控制某个按钮显隐的粒度。
+[ACL](/acl)访问控制列表，是一种非常简单的基于角色权限控制，甚至达到控制某个按钮显隐的粒度。
 
 **@delon/cache**
 
-将字典、城市数据等[缓存](/docs/cache)至内存或持久化当中，有效减少 Http 请求。
+将字典、城市数据等[缓存](/cache)至内存或持久化当中，有效减少 Http 请求。
 
 **@delon/mock**
 
-[Mock](/docs/mock)会拦截 Angular Http 请求并返回测试数据。
+[Mock](/mock)会拦截 Angular Http 请求并返回测试数据。
 
 **@delon/util**
 
