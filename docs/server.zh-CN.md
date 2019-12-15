@@ -29,7 +29,7 @@ NG-ALAIN 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 **SimpleInterceptor**
 
-[用户认证](/docs/auth)内置用于自动为请求添加 `token` 参数的拦截器。这里还有一个叫 [JWTInterceptor](https://github.com/ng-alain/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) 拦截器，是一个标准 JWT 规范，若后端采用标准JWT可以直接换成JWTInterceptor拦截器。
+[用户认证](/auth)内置用于自动为请求添加 `token` 参数的拦截器。这里还有一个叫 [JWTInterceptor](https://github.com/ng-alain/delon/blob/master/packages/auth/token/jwt/jwt.interceptor.ts) 拦截器，是一个标准 JWT 规范，若后端采用标准JWT可以直接换成JWTInterceptor拦截器。
 
 **DefaultInterceptor**
 
@@ -51,11 +51,11 @@ NG-ALAIN 是一套基于 Angular 技术栈的单页面应用，我们提供的�
 
 ```ts
 export const USERS = {
-    'GET /users': { users: [1, 2], total: 2 }
+  'GET /users': { users: [1, 2], total: 2 }
 }
 ```
 
-因此对于测试环境下当遇到 `/users` 请求直接返回 `{ users: [1, 2], total: 2 }` 数据。有关更多 Mock 语法和使用方式参考[这里](/docs/mock)。
+因此对于测试环境下当遇到 `/users` 请求直接返回 `{ users: [1, 2], total: 2 }` 数据。有关更多 Mock 语法和使用方式参考[这里](/mock)。
 
 **注：** 当你不需要某个请求的 Mock 接口时，务必要注释掉或移除它。
 
@@ -65,4 +65,4 @@ export const USERS = {
 
 脚手架默认情况下使用了 `@delon/auth` 的 `SimpleInterceptor` 拦截器，导致在请求过程中若发现无法获取 Token 时会直接返回错误。
 
-[用户认证](/docs/auth)这个过程是中台必备的。
+[用户认证](/auth)这个过程是中台必备的。

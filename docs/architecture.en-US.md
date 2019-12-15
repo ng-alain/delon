@@ -32,19 +32,19 @@ Scaffold provides a default set of [business components](/components/), which ab
 
 **@delon/auth**
 
-[User Authentication](/docs/auth) module is used for resolving steps to obtain, save and use authentication.
+[User Authentication](/auth) module is used for resolving steps to obtain, save and use authentication.
 
 **@delon/acl**
 
-[ACL](/docs/acl) Access Control List is a very simple role based permission control. It can even reach the granularity of controlling the visibility of a button.
+[ACL](/acl) Access Control List is a very simple role based permission control. It can even reach the granularity of controlling the visibility of a button.
 
 **@delon/cache**
 
-Reduce the Http request by storing [cache](/docs/cache) of the dictionary, city data, etc. into memory or persistence storage.
+Reduce the Http request by storing [cache](/cache) of the dictionary, city data, etc. into memory or persistence storage.
 
 **@delon/mock**
 
-[Mock](/docs/mock) will intercept Angular HTTP request and return testing data.
+[Mock](/mock) will intercept Angular HTTP request and return testing data.
 
 **@delon/util**
 
