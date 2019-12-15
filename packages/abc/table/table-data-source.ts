@@ -225,7 +225,7 @@ export class STDataSource {
         }
         break;
     }
-    text = text || '';
+    if (text == null) text = '';
     return { text, _text: this.dom.bypassSecurityTrustHtml(text), org: value, color };
   }
 
