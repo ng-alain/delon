@@ -21,12 +21,17 @@ export function deepGet(obj: any | null, path: string | string[] | null | undefi
   return typeof res === 'undefined' ? defaultValue : res;
 }
 
+/**
+ * 基于 [extend](https://github.com/justmoon/node-extend) 的深度拷贝
+ */
 export function deepCopy(obj: any): any {
   const result = extend(true, {}, { _: obj });
   return result._;
 }
 
-/** 复制内容至剪贴板 */
+/**
+ * 复制字符串文档至剪贴板
+ */
 export function copy(value: string): Promise<string> {
   return new Promise<string>((resolve): void => {
     let copyTextArea: HTMLTextAreaElement | null = null;
@@ -48,6 +53,13 @@ export function copy(value: string): Promise<string> {
   });
 }
 
+/**
+ * 深度合并对象
+ *
+ * @param original 原始对象
+ * @param ingoreArray 是否忽略数组，`true` 表示忽略数组的合并，`false` 表示会合并整个数组
+ * @param objects 要合并的对象
+ */
 export function deepMergeKey(original: any, ingoreArray: boolean, ...objects: any[]): any {
   if (Array.isArray(original) || typeof original !== 'object') return original;
 
@@ -75,6 +87,12 @@ export function deepMergeKey(original: any, ingoreArray: boolean, ...objects: an
   return original;
 }
 
+/**
+ * 深度合并对象
+ *
+ * @param original 原始对象
+ * @param objects 要合并的对象
+ */
 export function deepMerge(original: any, ...objects: any[]): any {
   return deepMergeKey(original, false, ...objects);
 }

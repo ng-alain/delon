@@ -7,6 +7,9 @@ import { CheckJwt } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 import { JWTTokenModel } from './jwt.model';
 
+/**
+ * JWT 拦截器
+ */
 @Injectable()
 export class JWTInterceptor extends BaseInterceptor {
   isAuth(options: DelonAuthConfig): boolean {

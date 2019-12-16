@@ -35,7 +35,7 @@ deepGet(obj, 'user.age'); // 18
 
 ## deepCopy
 
-Deep copy.
+Base on [extend](https://github.com/justmoon/node-extend) deep copy.
 
 ```ts
 const source = { a: 1, user: { name: 'cipchk' } };

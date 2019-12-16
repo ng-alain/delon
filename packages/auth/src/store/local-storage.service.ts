@@ -5,6 +5,9 @@ export function DA_STORE_TOKEN_LOCAL_FACTORY(): IStore {
   return new LocalStorageStore();
 }
 
+/**
+ * `localStorage` storage, **not lost after closing the browser**.
+ */
 export class LocalStorageStore implements IStore {
   get(key: string): ITokenModel {
     return JSON.parse(localStorage.getItem(key) || '{}') || {};
