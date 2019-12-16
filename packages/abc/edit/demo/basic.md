@@ -20,11 +20,11 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
   <form nz-form #f="ngForm" se-container gutter="32">
-    <se label="App Key" error="请填写">
-      <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required>
+    <se label="App Key" [error]="{ required: '请填写', pattern: '只能包含a-z, 0-9之间'}" required>
+      <input type="text" nz-input [(ngModel)]="i.ak" name="ak" required pattern="^[a-z0-9]*$" placeholder="必填项，且只能包含a-z, 0-9之间">
     </se>
-    <se label="App Secret" error="请填写，最多32位">
-      <input type="text" nz-input [(ngModel)]="i.sk" name="sk" required maxlength="32">
+    <se label="App Secret" [error]="{ required: '请填写', pattern: '只能包含0-9之间'}" required>
+      <input type="text" nz-input [(ngModel)]="i.sk" name="sk" required maxlength="32" pattern="^[0-9]*$" placeholder="必填项，且只能包含0-9之间">
     </se>
     <se>
       <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>

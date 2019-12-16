@@ -11,22 +11,26 @@
     font-size: 14px;
     line-height: @form-component-max-height - 0.0001px;
   }
+
   &__item {
     &:last-child {
       margin-bottom: 0;
       padding-bottom: 0;
     }
+
     &-empty {
       &::before {
         display: inline-block;
         content: '';
       }
     }
+
     // fix angular & ng-zorro-antd
     .@{ant-prefix}-form-explain {
       display: block;
     }
   }
+
   &__label {
     display: table-cell;
     flex: 0 0 auto;
@@ -34,34 +38,47 @@
     color: @se-label-color;
     white-space: nowrap;
     text-align: right;
+
     &-optional {
       margin-left: @se-optional-margin;
       color: @se-label-optional-color;
-      > .anticon {
+
+      &-no-text {
+        margin-left: 0;
+      }
+
+      >.anticon {
         margin-left: @se-optional-margin;
       }
     }
   }
+
   &__control {
     flex: 1 0 0;
     width: 100%;
   }
+
   &__compact {
+
     @{se-prefix}__title,
     @{se-prefix}__item {
       margin-bottom: @se-compact-bottom;
     }
+
     .@{ant-prefix}-form-extra {
       display: none;
     }
   }
+
   &__line {
     border-bottom: 1px dashed #e8e8e8;
+
     @{se-prefix}__label,
     @{se-prefix}__control {
       padding-bottom: @se-compact-bottom;
     }
   }
+
   &__hide-label,
   &__inline,
   &__vertical {
@@ -69,42 +86,52 @@
       display: none !important;
     }
   }
+
   &__horizontal {
     @{se-prefix}__item {
       display: flex;
+
       &:last-child {
         margin-bottom: 0;
       }
+
       @{se-prefix}__label {
         display: flex;
         justify-content: flex-end;
+
         &-text {
           overflow: hidden;
           text-overflow: ellipsis;
         }
       }
+
       .@{ant-prefix}-form-item {
         &-required::before {
           line-height: inherit;
         }
-        &-label > label::after {
+
+        &-label>label::after {
           margin-left: 4px;
         }
       }
     }
   }
+
   &__vertical {
     @{se-prefix}__item {
       display: block;
     }
   }
+
   &__inline {
+
     .@{ant-prefix}-form-item-label,
     @{se-prefix}__control {
       flex: none;
       width: initial !important;
       text-align: left;
     }
+
     @{se-prefix}__item {
       &:last-child {
         margin-right: 0;
@@ -120,8 +147,10 @@
         display: block;
       }
     }
+
     &__horizontal,
     &__vertical {
+
       @{se-prefix}__label,
       @{se-prefix}__control {
         width: 100% !important;
