@@ -7,6 +7,9 @@ import { CheckSimple } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';
 import { SimpleTokenModel } from './simple.model';
 
+/**
+ * Simple 拦截器
+ */
 @Injectable()
 export class SimpleInterceptor extends BaseInterceptor {
   isAuth(_options: DelonAuthConfig): boolean {

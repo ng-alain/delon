@@ -35,7 +35,7 @@ deepGet(obj, 'user.age'); // 18
 
 ## deepCopy
 
-深度复制。
+基于 [extend](https://github.com/justmoon/node-extend) 的深度拷贝。
 
 ```ts
 const source = { a: 1, user: { name: 'cipchk' } };
@@ -54,7 +54,7 @@ deepMerge(original, { b: { d: 'd' }, arr: [ 1 ] });
 
 ## copy
 
-复制内容至剪贴板。
+复制字符串文档至剪贴板。
 
 ## updateHostClass
 

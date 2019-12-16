@@ -10,13 +10,16 @@ export interface LazyResult {
   error?: {};
 }
 
+/**
+ * 延迟加载资源（js 或 css）服务
+ */
 @Injectable({ providedIn: 'root' })
 export class LazyService {
   private list: { [key: string]: boolean } = {};
   private cached: { [key: string]: LazyResult } = {};
   private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
 
-  constructor(@Inject(DOCUMENT) private doc: any) {}
+  constructor(@Inject(DOCUMENT) private doc: any) { }
 
   get change(): Observable<LazyResult[]> {
     return this._notify.asObservable().pipe(

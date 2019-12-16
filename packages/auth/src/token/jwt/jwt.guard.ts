@@ -13,6 +13,16 @@ import { CheckJwt, ToLogin } from '../helper';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { JWTTokenModel } from './jwt.model';
 
+/**
+ * JWT 路由守卫, [ACL Document](https://ng-alain.com/auth/guard).
+ *
+ * ```ts
+ * data: {
+ *  path: 'home',
+ *  canActivate: [ JWTGuard ]
+ * }
+ * ```
+ */
 @Injectable({ providedIn: 'root' })
 export class JWTGuard implements CanActivate, CanActivateChild, CanLoad {
   private cog: DelonAuthConfig;

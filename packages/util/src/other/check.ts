@@ -17,9 +17,9 @@ export function toBoolean(value: any, allowUndefined: boolean | null = false): b
 
 /**
  * Input decorator that handle a prop to do get/set automatically with toBoolean
- * @example
- * ```typescript
- * @Input() @InputBoolean() visible: boolean = false;
+ *
+ * ```ts
+ * @Input() InputBoolean() visible: boolean = false;
  * @Input() @InputBoolean(null) visible: boolean = false;
  * ```
  */
@@ -56,8 +56,8 @@ export function toNumber(value: any, fallbackValue: number = 0): number {
 
 /**
  * Input decorator that handle a prop to do get/set automatically with toNumber
- * @example
- * ```typescript
+ *
+ * ```ts
  * @Input() @InputNumber() visible: number = 1;
  * @Input() @InputNumber(null) visible: number = 2;
  * ```

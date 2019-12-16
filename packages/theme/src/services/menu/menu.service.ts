@@ -7,6 +7,9 @@ import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu, MenuIcon } from './interface';
 
+/**
+ * 菜单服务，[在线文档](https://ng-alain.com/theme/menu)
+ */
 @Injectable({ providedIn: 'root' })
 export class MenuService implements OnDestroy {
   private _change$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);

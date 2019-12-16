@@ -7,9 +7,20 @@ import { DelonACLConfig } from './acl.config';
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
 
+/**
+ * Routing guard prevent unauthorized users visit the page, [ACL Document](https://ng-alain.com/acl).
+ *
+ * ```ts
+ * data: {
+ *  path: 'home',
+ *  canActivate: [ ACLGuard ],
+ *  data: { guard: 'user1' }
+ * }
+ * ```
+ */
 @Injectable({ providedIn: 'root' })
 export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private srv: ACLService, private router: Router, private options: DelonACLConfig) {}
+  constructor(private srv: ACLService, private router: Router, private options: DelonACLConfig) { }
 
   private process(data: Data): Observable<boolean> {
     data = {
