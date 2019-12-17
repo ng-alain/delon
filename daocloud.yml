@@ -14,7 +14,7 @@ release:
     cache: false
     dockerfile_path: /Dockerfile.compile
   extract:
-    - /usr/src/src/dist
+    - /usr/src/dist
     - /usr/src/_nginx/default.conf
   package:
     build_dir: /
