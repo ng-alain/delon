@@ -338,7 +338,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         if (property.items) {
-          uiRes[uiKey].$items = uiRes[uiKey].$items || {};
+          uiRes[uiKey].$items = uiRes[uiKey].$items || { ...property.items.ui };
           inFn(property.items, property.items, (uiSchema[uiKey] || {}).$items || {}, ui, uiRes[uiKey].$items);
         }
 
