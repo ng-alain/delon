@@ -7,7 +7,7 @@ import { throwError, Observable } from 'rxjs';
 import { _HttpClient } from './http.client';
 
 export abstract class BaseApi {
-  constructor(@Inject(Injector) protected injector: Injector) {}
+  constructor(@Inject(Injector) protected injector: Injector) { }
 }
 
 export interface HttpOptions {
@@ -41,7 +41,7 @@ function setParam(target: any, key = paramKey) {
  * - 有效范围：类
  */
 export function BaseUrl(url: string) {
-  return function<TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
+  return function <TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
     params.baseUrl = url;
     return target;
@@ -56,10 +56,10 @@ export function BaseHeaders(
   headers:
     | HttpHeaders
     | {
-        [header: string]: string | string[];
-      },
+      [header: string]: string | string[];
+    },
 ) {
-  return function<TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
+  return function <TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
     params.baseHeaders = headers;
     return target;
@@ -67,8 +67,8 @@ export function BaseHeaders(
 }
 
 function makeParam(paramName: string) {
-  return function(key?: string) {
-    return function(target: BaseApi, propertyKey: string, index: number) {
+  return function (key?: string) {
+    return function (target: BaseApi, propertyKey: string, index: number) {
       const params = setParam(setParam(target), propertyKey);
       let tParams = params[paramName];
       if (typeof tParams === 'undefined') {
@@ -114,17 +114,26 @@ export const Headers = makeParam('headers');
  */
 export const Payload = makeParam('payload')();
 
-function getValidArgs(data: any, key: string, args: any[]): {} {
+function getValidArgs(data: any, key: string, args: any[]): {} | undefined {
   if (!data[key] || !Array.isArray(data[key]) || data[key].length <= 0) {
-    return {};
+    return undefined;
   }
   return args[data[key][0].index];
 }
 
+function genBody(data?: any, payload?: any): any {
+  if (Array.isArray(data) || Array.isArray(payload)) {
+    // tslint:disable-next-line:prefer-object-spread
+    return Object.assign([], data, payload);
+  }
+  // tslint:disable-next-line:prefer-object-spread
+  return Object.assign({}, data, payload);
+}
+
 function makeMethod(method: string) {
-  return function(url: string = '', options?: HttpOptions) {
+  return function (url: string = '', options?: HttpOptions) {
     return (_target: BaseApi, targetKey?: string, descriptor?: PropertyDescriptor) => {
-      descriptor!.value = function(...args: any[]): Observable<any> {
+      descriptor!.value = function (...args: any[]): Observable<any> {
         options = options || {};
 
         const http = this.injector.get(_HttpClient, null) as _HttpClient;
@@ -176,7 +185,7 @@ function makeMethod(method: string) {
         const supportedBody = method === 'POST' || method === 'PUT';
 
         return http.request(method, requestUrl, {
-          body: supportedBody ? { ...getValidArgs(data, 'body', args), ...payload } : null,
+          body: supportedBody ? genBody(getValidArgs(data, 'body', args), payload) : null,
           params: !supportedBody ? { ...params, ...payload } : params,
           headers: { ...baseData.baseHeaders, ...headers },
           ...options,
