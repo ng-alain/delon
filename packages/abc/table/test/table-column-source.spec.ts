@@ -123,22 +123,6 @@ describe('abc: table: column-souce', () => {
         });
       });
       describe(`with yn`, () => {
-        it('#compatible', () => {
-          const res = srv.process([
-            {
-              title: '',
-              index: 'id',
-              type: 'yn',
-              ynTruth: true,
-              ynYes: 'y',
-              ynNo: 'n',
-            },
-          ])[0];
-          expect(res.yn).not.toBeNull();
-          expect(res.yn!.truth).toBe(true);
-          expect(res.yn!.yes).toBe('y');
-          expect(res.yn!.no).toBe('n');
-        });
         it('should be auto specified truth is [true]', () => {
           const res = srv.process([{ title: '', index: 'id', type: 'yn' }])[0];
           expect(res.yn).not.toBeNull();
@@ -204,11 +188,6 @@ describe('abc: table: column-souce', () => {
       });
     });
     describe('[sort]', () => {
-      describe('#compatible', () => {
-        it('should be enabled', () => {
-          expect(srv.process([{ title: '', sorter: () => true }])[0]._sort!.enabled).toBe(true);
-        });
-      });
       it('should be disabled', () => {
         expect(srv.process([{ title: '' }])[0]._sort!.enabled).toBe(false);
       });
@@ -232,12 +211,6 @@ describe('abc: table: column-souce', () => {
       });
     });
     describe('[filter]', () => {
-      describe('#compatible', () => {
-        it('should be enabled', () => {
-          const res = srv.process([{ title: '', filters: [{ text: '' }] }])[0].filter;
-          expect(res).not.toBeNull();
-        });
-      });
       it('should be disabled when invalid menus', () => {
         const res = srv.process([{ title: '', filter: { menus: [] } }])[0].filter;
         expect(res).toBeNull();
@@ -447,12 +420,6 @@ describe('abc: table: column-souce', () => {
           it('should be apply default values', () => {
             const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', modal: { component: {} } }] }])[0].buttons![0];
             expect(res.modal!.paramsName).toBe('record');
-          });
-          describe('#compatible', () => {
-            it('should be running', () => {
-              const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', component: {} }] }])[0].buttons![0];
-              expect(res.modal!.paramsName).toBe('record');
-            });
           });
         });
         describe('with drawer', () => {

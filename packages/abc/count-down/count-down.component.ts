@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation, ViewChild } from '@angular/core';
 import addSeconds from 'date-fns/add_seconds';
 import format from 'date-fns/format';
 import { CountdownEvent, CountdownConfig, CountdownComponent } from 'ngx-countdown';
-import { warnDeprecation } from 'ng-zorro-antd/core';
 
 @Component({
   selector: 'count-down',
@@ -14,7 +13,7 @@ import { warnDeprecation } from 'ng-zorro-antd/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class CountDownComponent implements OnInit {
+export class CountDownComponent {
   @ViewChild('cd', { static: false }) readonly instance: CountdownComponent;
 
   @Input() config: CountdownConfig;
@@ -30,30 +29,9 @@ export class CountDownComponent implements OnInit {
     };
   }
 
-  @Output() readonly begin = new EventEmitter<void>();
-  @Output() readonly notify = new EventEmitter<number>();
-  @Output() readonly end = new EventEmitter<void>();
-
   @Output() readonly event = new EventEmitter<CountdownEvent>();
 
-  ngOnInit(): void {
-    if (this.begin.observers.length > 0 || this.notify.observers.length > 0 || this.end.observers.length > 0) {
-      warnDeprecation(`begin, notify, end events is deprecated and will be removed in 9.0.0. Please use 'event' instead.`);
-    }
-  }
-
   handleEvent(e: CountdownEvent) {
-    switch (e.action) {
-      case 'start':
-        this.begin.emit();
-        break;
-      case 'notify':
-        this.notify.emit(e.left);
-        break;
-      case 'done':
-        this.end.emit();
-        break;
-    }
     this.event.emit(e);
   }
 }

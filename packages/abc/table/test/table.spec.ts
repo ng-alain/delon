@@ -1922,16 +1922,6 @@ describe('abc: table', () => {
           done();
         });
       });
-      it('should be compatible', done => {
-        page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
-          const el = page.getEl('.ant-pagination-total-text');
-          expect(el.textContent!.trim()).toContain(`共`);
-          injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
-          fixture.detectChanges();
-          expect(el.textContent!.trim()).toContain(`of`);
-          done();
-        });
-      });
     });
   });
 
