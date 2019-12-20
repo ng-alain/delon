@@ -9,4 +9,8 @@ export class ConfigButtonComponent {
   isVisible = false;
 
   constructor(public meta: MetaService) {}
+
+  open(): void {
+    hljs.highlightBlock(document.getElementById('j-config-code'));
+  }
 }
