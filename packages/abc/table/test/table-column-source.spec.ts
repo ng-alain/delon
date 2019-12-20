@@ -14,7 +14,7 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
   }
 }
 
-describe('abc: table: column-souce', () => {
+describe('st: column-source', () => {
   let aclSrv: ACLService | null;
   let i18nSrv: AlainI18NService | null;
   let srv: STColumnSource;
@@ -352,9 +352,6 @@ describe('abc: table: column-souce', () => {
           expect(pop != null).toBe(true);
           expect(pop.condition!(null!)).toBe(true);
         });
-        it('should be spcify popTitle value', () => {
-          page.expectBtnValue([{ title: '', buttons: [{ text: '', type: 'del', popTitle: 'aa' }] }], 'aa', 'pop.title');
-        });
       });
       describe('#icon', () => {
         it('should be string', () => {
@@ -502,7 +499,7 @@ describe('abc: table: column-souce', () => {
             {
               title: '',
               index: 'id',
-              selections: [{ text: '1', select: () => { } }],
+              selections: [{ text: '1', select: () => {} }],
             },
           ],
           1,
@@ -513,7 +510,7 @@ describe('abc: table: column-souce', () => {
             {
               title: '',
               index: 'id',
-              selections: [{ text: '1', select: () => { }, acl: 'admin' }],
+              selections: [{ text: '1', select: () => {}, acl: 'admin' }],
             },
           ],
           0,
@@ -568,8 +565,6 @@ describe('abc: table: column-souce', () => {
     it('in title', () => {
       srv.process([{ title: '', index: 'id' }]);
       expect(i18nSrv!.fanyi).not.toHaveBeenCalled();
-      srv.process([{ title: '', i18n: 'en', index: 'id' }]);
-      expect(i18nSrv!.fanyi).toHaveBeenCalled();
     });
 
     it('in buttons', () => {

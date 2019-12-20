@@ -393,7 +393,7 @@ describe('abc: table', () => {
             });
           });
           it(`should be custom render yn`, done => {
-            page.newColumn([{ title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' }]).then(() => {
+            page.newColumn([{ title: '', index: 'yn', type: 'yn', yn: { yes: 'Y', no: 'N' } }]).then(() => {
               page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
               done();
             });
@@ -405,9 +405,11 @@ describe('abc: table', () => {
                   title: '',
                   index: 'id',
                   type: 'yn',
-                  ynTruth: 1,
-                  ynYes: 'Y',
-                  ynNo: 'N',
+                  yn: {
+                    truth: 1,
+                    yes: 'Y',
+                    no: 'N',
+                  },
                 },
               ])
               .then(() => {
@@ -529,8 +531,7 @@ describe('abc: table', () => {
               title: '',
               buttons: [
                 {
-                  text: 'del',
-                  format: a => `<div class="j-btn-format">${a.id}</div>`,
+                  text: a => `<div class="j-btn-format">${a.id}</div>`,
                 },
               ],
             },
@@ -901,7 +902,7 @@ describe('abc: table', () => {
             httpBed.expectOne(req => req.url === '/mock2').flush([{}]);
             httpBed.expectOne(req => req.url === '/mock1').flush([{}, {}]);
             expect(true).toBe(false);
-          } catch { }
+          } catch {}
 
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(1);
@@ -2152,8 +2153,8 @@ class TestComponent {
   widthMode: STWidthMode = {};
   virtualScroll = false;
 
-  error() { }
-  change() { }
+  error() {}
+  change() {}
 }
 
 @Component({
@@ -2173,4 +2174,4 @@ class TestComponent {
     </st>
   `,
 })
-class TestExpandComponent extends TestComponent { }
+class TestExpandComponent extends TestComponent {}
