@@ -51,8 +51,8 @@ Contains three storage types:
 
 ### SessionStorageStore
 
-`sessionStorage` storage, **lost after closing the browser.
+`sessionStorage` storage, **lost after closing the browser**.
 
 ### MemoryStore
 
-Memory storage, **lost after closing the browser tab.
+Memory storage, **lost after closing the browser tab**.

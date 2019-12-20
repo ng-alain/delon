@@ -15,7 +15,7 @@
       <ng-container *ngIf="!collapsed">
         <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: i.icon}"></ng-template>
       </ng-container>
-      <span *ngIf="collapsed" nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="i._text">
+      <span *ngIf="collapsed" nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="i.text">
         <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: i.icon}"></ng-template>
       </span>
     </ng-container>

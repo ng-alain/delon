@@ -3,31 +3,38 @@
 
 @{sv-prefix} {
   display: block;
-  + @{sv-prefix} {
+
+  +@{sv-prefix} {
     margin-top: @sv-bottom;
   }
+
   &__container {
     display: block;
+
     // offset the padding-bottom of last row
     .@{ant-prefix}-row {
       margin-bottom: -@sv-bottom;
       overflow: hidden;
     }
   }
+
   &__item {
     &-fixed {
       display: flex;
+
       @{sv-prefix}__label {
         flex: 0 0 auto;
         overflow: hidden;
         text-align: right;
         text-overflow: ellipsis;
       }
+
       @{sv-prefix}__detail {
         flex: 1 0 0;
       }
     }
   }
+
   &__title {
     display: block;
     float: none;
@@ -37,6 +44,7 @@
     font-weight: 500;
     font-size: 14px;
   }
+
   &__label {
     display: table-cell;
     // margin-right: 8px;
@@ -44,6 +52,7 @@
     color: @sv-label-color;
     line-height: 22px;
     white-space: nowrap;
+
     &:not(@{sv-prefix}__label-empty) {
       &::after {
         position: relative;
@@ -52,14 +61,21 @@
         content: ':';
       }
     }
-    &-text {
-      margin-right: @sv-optional-margin;
-    }
+
     &-optional {
-      margin-left: -@sv-optional-margin;
+      margin-left: @sv-optional-margin;
       color: @sv-label-optional-color;
+
+      &-no-text {
+        margin-left: 0;
+      }
+
+      >.anticon {
+        margin-left: @sv-optional-margin;
+      }
     }
   }
+
   &__detail {
     // contents 对 ie, edge 不支持，但对于子组件的支持会更友好
     display: table-cell;
@@ -69,63 +85,77 @@
     line-height: 22px;
     word-break: break-all;
   }
+
   &__type {
     &-primary @{sv-prefix}__detail {
       color: @sv-type-primary-color;
     }
+
     &-success @{sv-prefix}__detail {
       color: @sv-type-success-color;
     }
+
     &-danger @{sv-prefix}__detail {
       color: @sv-type-danger-color;
     }
+
     &-warning @{sv-prefix}__detail {
       color: @sv-type-warning-color;
     }
   }
+
   &__default {
     &::before {
       content: @sv-default-text;
     }
 
-    ~ @{sv-prefix}__unit {
+    ~@{sv-prefix}__unit {
       display: none !important;
     }
   }
+
   &__unit {
     display: inline;
     margin-left: @sv-unit-margin;
     color: @sv-unit-color;
   }
+
   &__small {
+
     // offset the padding-bottom of last row
     .@{ant-prefix}-row {
       margin-bottom: -8px;
     }
+
     @{sv-prefix}__title {
       margin-bottom: 12px;
       color: @text-color;
     }
+
     @{sv-prefix}__label,
     @{sv-prefix}__detail {
       padding-bottom: 8px;
     }
   }
+
   &__large {
     @{sv-prefix}__title {
       font-size: 16px;
     }
   }
+
   &__horizontal {
     @{sv-prefix}__label-width {
       display: flex;
       justify-content: flex-end;
+
       @{sv-prefix}__label-text {
         overflow: hidden;
         text-overflow: ellipsis;
       }
     }
   }
+
   &__vertical {
     @{sv-prefix}__label {
       padding-bottom: 8px;

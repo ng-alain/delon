@@ -60,9 +60,15 @@ describe('form: schema', () => {
             items: {
               type: 'object',
               properties: {
-                a: { type: 'string' },
+                a: {
+                  type: 'string',
+                  ui: {
+                    grid: { span: 12 }
+                  }
+                },
                 b: { type: 'string' },
               },
+              ui: { spanLabelFixed: 10 },
             },
           },
         },
@@ -80,7 +86,8 @@ describe('form: schema', () => {
         .newSchema(schema, ui)
         .checkUI('/name1', 'spanLabel', label)
         .add()
-        .checkUI('/name2/0/a', 'spanLabel', 9);
+        .checkUI('/name2/0/a', 'spanLabel', 9)
+        .checkUI('/name2/0/b', 'spanLabelFixed', 10);
     });
     it('should be fixed label width', () => {
       const schema: SFSchema = {

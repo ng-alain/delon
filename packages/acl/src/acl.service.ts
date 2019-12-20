@@ -4,7 +4,9 @@ import { DelonACLConfig } from './acl.config';
 import { ACLCanType, ACLType } from './acl.type';
 
 /**
- * 访问控制服务
+ * ACL 控制服务，[在线文档](https://ng-alain.com/acl)
+ *
+ * 务必在根目录注册 `DelonACLModule.forRoot()` 才能使用服务
  */
 @Injectable()
 export class ACLService {
@@ -27,7 +29,7 @@ export class ACLService {
     };
   }
 
-  constructor(private options: DelonACLConfig) {}
+  constructor(private options: DelonACLConfig) { }
 
   private parseACLType(val: string | string[] | number | number[] | ACLType | null): ACLType {
     let t: ACLType;

@@ -54,6 +54,11 @@ class MockService extends BaseApi {
     return null as any;
   }
 
+  @POST(':id')
+  saveByArray(@Path('id') _id: number, @Body _data: string[]): Observable<any> {
+    return null as any;
+  }
+
   @GET('')
   payloadGet(@Payload _query: any, @Query('status') _status?: number): Observable<any> {
     return null as any;
@@ -61,6 +66,11 @@ class MockService extends BaseApi {
 
   @POST(':id')
   payloadPost(@Payload _body: any, @Body _body2?: {}): Observable<any> {
+    return null as any;
+  }
+
+  @POST(':id')
+  payloadPostByArray(@Payload _body: string[]): Observable<any> {
     return null as any;
   }
 
@@ -226,6 +236,13 @@ describe('theme: http.decorator', () => {
     expect(request.calls.mostRecent().args[2].body.name).toBe('cipchk');
   });
 
+  it('should construct a POST request via array body', () => {
+    srv.saveByArray(1, ['a', 'b']);
+    expect(request).toHaveBeenCalled();
+    expect(request.calls.mostRecent().args[2].body[0]).toBe('a');
+    expect(request.calls.mostRecent().args[2].body[1]).toBe('b');
+  });
+
   [`DELETE`, `OPTIONS`, `PUT`, `HEAD`, `PATCH`, `JSONP`].forEach(type => {
     it(`should construct a ${type} request`, () => {
       srv[type]();
@@ -256,6 +273,13 @@ describe('theme: http.decorator', () => {
       const arg = request.calls.mostRecent().args[2];
       expect(arg.body.pi).toBe(1);
       expect(arg.body.ps).toBe(10);
+    });
+    it('should be post via array body', () => {
+      srv.payloadPostByArray(['a', 'b']);
+      expect(request).toHaveBeenCalled();
+      const arg = request.calls.mostRecent().args[2];
+      expect(arg.body[0]).toBe('a');
+      expect(arg.body[1]).toBe('b');
     });
     it('should be merge Body & Payload when method is post', () => {
       srv.payloadPost({ pi: 13, ps: 14 }, { woc: 520 });

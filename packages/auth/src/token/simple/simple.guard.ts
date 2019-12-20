@@ -5,6 +5,16 @@ import { CheckSimple, ToLogin } from '../helper';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { SimpleTokenModel } from './simple.model';
 
+/**
+ * Simple 路由守卫, [ACL Document](https://ng-alain.com/auth/guard).
+ *
+ * ```ts
+ * data: {
+ *  path: 'home',
+ *  canActivate: [ SimpleGuard ]
+ * }
+ * ```
+ */
 @Injectable({ providedIn: 'root' })
 export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
   private cog: DelonAuthConfig;

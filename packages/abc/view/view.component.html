@@ -1,18 +1,15 @@
-<div class="sv__label"
-     [class.sv__label-empty]="!label"
-     [class.sv__label-width]="labelWidth !== null"
-     [style.width.px]="labelWidth">
+<div class="sv__label" [class.sv__label-empty]="!label" [class.sv__label-width]="labelWidth !== null"
+  [style.width.px]="labelWidth">
   <span class="sv__label-text">
     <ng-container *stringTemplateOutlet="label">{{label}}</ng-container>
   </span>
-  <span *ngIf="optional || optionalHelp" class="sv__label-optional">
+  <span *ngIf="optional || optionalHelp" class="sv__label-optional" [class.sv__label-optional-no-text]="!optional">
     <ng-container *stringTemplateOutlet="optional">{{ optional }}</ng-container>
     <i *ngIf="optionalHelp" nz-tooltip [nzTooltipTitle]="optionalHelp" nz-icon nzType="question-circle"></i>
   </span>
 </div>
 <div class="sv__detail">
-  <span (cdkObserveContent)="checkContent()"
-        #conEl>
+  <span (cdkObserveContent)="checkContent()" #conEl>
     <ng-content></ng-content>
   </span>
   <ng-container *ngIf="!!unit">
