@@ -51,7 +51,7 @@ class MockACLService {
 
 class MockWindow {
   location = new MockLocation();
-  open() { }
+  open() {}
 }
 class MockLocation {
   private url: string;
@@ -308,6 +308,16 @@ describe('abc: sidebar-nav', () => {
           fixture.detectChanges();
           expect(router.navigateByUrl).not.toHaveBeenCalled();
         });
+        it('muse be hide via click span of menu item', () => {
+          createComp();
+          setSrv.layout.collapsed = true;
+          fixture.detectChanges();
+          page.showSubMenu();
+          const containerEl = page.getEl<HTMLElement>(floatingShowCls, true);
+          containerEl!.querySelectorAll('span')[1].click();
+          fixture.detectChanges();
+          expect(router.navigateByUrl).toHaveBeenCalled();
+        });
       });
       it('#52', () => {
         createComp();
@@ -548,8 +558,8 @@ class TestComponent {
   autoCloseUnderPad = false;
   recursivePath = false;
   openStrictly = false;
-  select() { }
+  select() {}
 }
 
 @Component({ template: `` })
-class TestRouteComponent { }
+class TestRouteComponent {}
