@@ -63,12 +63,17 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     @Inject(DOCUMENT) private doc: any,
     @Inject(WINDOW) private win: Window,
-  ) { }
+  ) {}
+
+  private getLinkNode(node: HTMLElement): HTMLElement | null {
+    node = node.nodeName === 'A' ? node : (node.parentNode as HTMLElement);
+    return node.nodeName !== 'A' ? null : node;
+  }
 
   private floatingAreaClickHandle(e: MouseEvent) {
     e.stopPropagation();
-    const linkNode = e.target as HTMLElement;
-    if (linkNode.nodeName !== 'A') {
+    const linkNode = this.getLinkNode(e.target as HTMLElement);
+    if (linkNode == null) {
       return false;
     }
     const id = +linkNode.dataset!.id!;
