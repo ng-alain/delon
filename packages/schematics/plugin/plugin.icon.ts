@@ -214,7 +214,7 @@ function getIcons(options: PluginOptions, host: Tree): string[] {
   const iconClassList: string[] = [];
 
   host.visit(path => {
-    if (~path.indexOf(`/node_modules/`) || !path.startsWith(`/${options.root}`)) return;
+    if (~path.indexOf(`/node_modules/`) || !path.startsWith(`/${options.sourceRoot}`)) return;
     let res: string[] = [];
     if (path.endsWith('.ts')) {
       res = fixTs(host, path);
