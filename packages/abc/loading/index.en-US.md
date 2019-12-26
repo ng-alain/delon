@@ -8,17 +8,23 @@ module: LoadingModule
 config: LoadingConfig
 ---
 
-like `src`, but more features:
-
-- Support WeChat, qq avatar thumbnail rule
-- Support remove http&https protocol
-- Support onerror events
+Global load indicator is generally used when an operation needs to interrupt the user operation.
 
 ## API
 
-### [_src]
+### LoadingService
 
-| Property  | Description           | Type     | Default                 |
-| --------- | --------------------- | -------- | ----------------------- |
-| `[size]`  | Size of image         | `number` | `64`                    |
-| `[error]` | Replaces failed image | `string` | `./assets/img/logo.svg` |
+Name | Description
+--- | -----
+`open(options?: LoadingShowOptions)`  | Open
+`close()` | Close
+
+### LoadingShowOptions
+
+Property | Description | Type | Default
+----|------|-----|------
+`type` | Show type of loading | `LoadingType` | `spin`
+`text` | 描述文案 | `string` | `加载中...`
+`icon` | Configuration item of type `icon` | `LoadingIcon` | -
+`custom` | Configuration item of type `custom` | `LoadingCustom` | -
+`delay` | Specifies a delay in milliseconds for loading state (prevent flush), unit: milliseconds | `number` | -

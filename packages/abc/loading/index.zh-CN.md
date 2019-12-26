@@ -8,17 +8,23 @@ module: LoadingModule
 config: LoadingConfig
 ---
 
-等同于 `src`，但相比较更多功能：
-
-+ 支持微信、qq头像规则缩略图规则
-+ 支持移除http&https协议http
-+ 支持增加onerror事件
+全局加载指示符，一般用于某个操作需要中断用户操作。
 
 ## API
 
-### [_src]
+### LoadingService
 
-参数      | 说明             | 类型     | 默认值
-----------|----------------|----------|------------------------
-`[size]`  | 图像大小         | `number` | `64`
-`[error]` | 替代图像无法加载 | `string` | `./assets/img/logo.svg`
+名称 | 说明
+--- | -----
+`open(options?: LoadingShowOptions)`  | 打开
+`close()` | 关闭
+
+### LoadingShowOptions
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`type` | 显示类型 | `LoadingType` | `spin`
+`text` | 描述文案 | `string` | `加载中...`
+`icon` | 类型为 `icon` 的配置项 | `LoadingIcon` | -
+`custom` | 类型为 `custom` 的配置项 | `LoadingCustom` | -
+`delay` | 延迟显示加载效果的时间（防止闪烁），单位：毫秒 | `number` | -
