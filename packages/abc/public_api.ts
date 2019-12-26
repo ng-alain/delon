@@ -25,5 +25,6 @@ export * from '@delon/abc/lodop';
 export * from '@delon/abc/quick-menu';
 export * from '@delon/abc/qr';
 export * from '@delon/abc/date-picker';
+export * from '@delon/abc/loading';
 
 export * from './abc.module';
