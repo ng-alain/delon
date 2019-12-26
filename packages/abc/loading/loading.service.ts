@@ -1,25 +1,38 @@
-import { Injectable, ComponentRef } from '@angular/core';
+import { Injectable, ComponentRef, OnDestroy } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
+import { Subject, timer, Subscription } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 import { LoadingShowOptions } from './loading.interfaces';
 import { LoadingConfig } from './loading.config';
 import { LoadingDefaultComponent } from './loading.component';
 
 @Injectable({ providedIn: 'root' })
-export class LoadingService {
+export class LoadingService implements OnDestroy {
   private _overlayRef: OverlayRef;
   private compRef: ComponentRef<LoadingDefaultComponent> | null = null;
+  private opt: LoadingShowOptions | null = null;
+  private n$ = new Subject();
+  private loading$: Subscription;
 
   get instance() {
-    return this.compRef!.instance;
+    return this.compRef != null ? this.compRef.instance : null;
   }
 
-  constructor(private cog: LoadingConfig, private overlay: Overlay) {}
+  constructor(private cog: LoadingConfig, private overlay: Overlay) {
+    this.loading$ = this.n$
+      .asObservable()
+      .pipe(
+        debounce(() => timer(this.opt!.delay)),
+      )
+      .subscribe(() => this.create());
+  }
 
-  open(options?: LoadingShowOptions): void {
-    if (this.compRef) return;
+  private create() {
+    if (this.opt == null) return;
 
-    options = { ...this.cog, ...options };
+    this._close(false);
+
     this._overlayRef = this.overlay.create({
       positionStrategy: this.overlay
         .position()
@@ -32,14 +45,28 @@ export class LoadingService {
     });
     const comp = new ComponentPortal(LoadingDefaultComponent);
     this.compRef = this._overlayRef.attach(comp);
-    Object.assign(this.instance, { options });
-    this.compRef.changeDetectorRef.detectChanges();
+    Object.assign(this.instance, { options: this.opt });
+    this.compRef.changeDetectorRef.markForCheck();
+  }
+
+  open(options?: LoadingShowOptions): void {
+    this.opt = { ...this.cog, ...options };
+
+    this.n$.next();
+  }
+
+  private _close(cleanOpt: boolean): void {
+    if (cleanOpt) this.opt = null;
+    if (!this._overlayRef) return;
+    this._overlayRef.detach();
+    this.compRef = null;
   }
 
   close(): void {
-    if (!this._overlayRef) return;
-    this.compRef!.destroy();
-    this._overlayRef.detach();
-    this.compRef = null;
+    this._close(true);
+  }
+
+  ngOnDestroy(): void {
+    this.loading$.unsubscribe();
   }
 }
