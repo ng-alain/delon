@@ -12,7 +12,8 @@ import { of, Observable, Subject } from 'rxjs';
 import { en_US, ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, ModalHelper } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
 import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 import { configureTestSuite, dispatchDropDown } from '@delon/testing';
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
@@ -98,7 +99,8 @@ describe('abc: table', () => {
       FormsModule,
       HttpClientTestingModule,
       RouterTestingModule.withRoutes([]),
-      NgZorroAntdModule,
+      NzModalModule,
+      NzDrawerModule,
       STModule,
       DelonLocaleModule,
     ];
