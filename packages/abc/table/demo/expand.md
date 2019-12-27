@@ -15,7 +15,7 @@ Use `#expand` template implement expandable, allowing you to receive three value
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',

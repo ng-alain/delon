@@ -34,7 +34,7 @@ export class AppModule { }
 通用配置项，例如统一对 `ArrayService` 设置映射名称。
 
 ```ts
-import { DelonUtilConfig } from '@delon/abc';
+import { DelonUtilConfig } from '@delon/util';
 export function fnDelonUtilConfig(): DelonUtilConfig {
   return Object.assign(new DelonUtilConfig(), <DelonUtilConfig>{
     array: {

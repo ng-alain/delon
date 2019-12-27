@@ -15,7 +15,7 @@ Quickly generate tables; use `res` to adapted backend data format.
 
 ```ts
 import { Component, ViewChild } from '@angular/core';
-import { STColumn, STComponent } from '@delon/abc';
+import { STColumn, STComponent } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',

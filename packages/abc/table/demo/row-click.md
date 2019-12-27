@@ -19,7 +19,7 @@ Use `(change)` to implement click line callback, because DOM events can't distin
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, STChange } from '@delon/abc';
+import { STColumn, STChange } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',

@@ -8,7 +8,7 @@ title: 压缩
 ```ts
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component } from '@angular/core';
-import { ZipService } from '@delon/abc';
+import { ZipService } from '@delon/abc/zip';
 import * as JSZip from 'jszip';
 
 @Component({

@@ -23,7 +23,7 @@ To fix some columns and scroll inside other columns, and you must set `scroll.x`
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',

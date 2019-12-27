@@ -15,7 +15,7 @@ Support for ten different column types: no, checkbox, radio, badge, tag, image, 
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, STColumnBadge, STColumnTag } from '@delon/abc';
+import { STColumn, STColumnBadge, STColumnTag } from '@delon/abc/st';
 
 const BADGE: STColumnBadge = {
   1: { text: '成功', color: 'success' },

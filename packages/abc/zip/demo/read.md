@@ -7,7 +7,7 @@ title: 解压
 
 ```ts
 import { Component } from '@angular/core';
-import { ZipService } from '@delon/abc';
+import { ZipService } from '@delon/abc/zip';
 
 @Component({
   selector: 'app-demo',

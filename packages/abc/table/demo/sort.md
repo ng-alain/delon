@@ -15,7 +15,7 @@ Using `multiSort` supported multi-field sorting.
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
