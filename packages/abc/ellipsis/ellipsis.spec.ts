@@ -3,7 +3,7 @@ import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testin
 import { configureTestSuite } from '@delon/testing';
 
 import { By } from '@angular/platform-browser';
-import { NzTooltipDirective } from 'ng-zorro-antd';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { EllipsisComponent } from './ellipsis.component';
 import { EllipsisModule } from './ellipsis.module';
 

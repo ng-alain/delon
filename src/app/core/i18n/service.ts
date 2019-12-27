@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
 import { en_US as delonEnUS, zh_CN as delonZhCn, AlainI18NService, DelonLocaleService } from '@delon/theme';
-import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd';
+import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd/i18n';
 
 import { ENUS } from './en-US';
 import { ZHCN } from './zh-CN';

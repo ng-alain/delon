@@ -1,7 +1,8 @@
 import { DebugElement } from '@angular/core';
 import { inject, ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NzModalService, NzUploadComponent } from 'ng-zorro-antd';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzUploadComponent } from 'ng-zorro-antd/upload';
 
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';

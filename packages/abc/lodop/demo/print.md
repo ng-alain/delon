@@ -15,7 +15,7 @@ Get print server information (including: remote).
 
 ```ts
 import { Component } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { LodopService, Lodop } from '@delon/abc';
 
 @Component({

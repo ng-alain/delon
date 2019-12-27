@@ -15,7 +15,7 @@ A simple start & end date range, **Note: ** `end` still needs define in schema, 
 
 ```ts
 import { Component } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { SFSchema, SFDateWidgetSchema } from '@delon/form';
 
 @Component({

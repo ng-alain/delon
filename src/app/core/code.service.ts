@@ -226,7 +226,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
 }
 
 import { VERSION as VERSION_ALAIN } from '@delon/theme';
-import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd';
+import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
 import { ${componentName} } from './app.component';
 
 @NgModule({
@@ -241,7 +241,7 @@ imports: [
     AlainThemeModule.forRoot(),
     DelonABCModule,
     DelonChartModule,
-    DelonACLModule,
+    DelonACLModule.forRoot(),
     DelonCacheModule,
     DelonUtilModule,
     DelonAuthModule,
