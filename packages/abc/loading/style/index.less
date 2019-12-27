@@ -1,0 +1,36 @@
+@import '../../../theme/styles/default.less';
+@import './variable.less';
+
+@{loading-prefix} {
+  &-backdrop {
+    z-index: @loading-zindex;
+    background-color: @loading-backdrop-bg;
+    opacity: 1;
+  }
+  &-default {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: @loading-zindex + 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__icon {
+      margin-bottom: 8px;
+      color: @loading-icon-color;
+      font-size: 24px;
+    }
+    &__text {
+      color: @loading-text-color;
+    }
+    &__custom {
+      width: 64px;
+      height: 64px;
+      fill: rgb(255, 255, 255);
+    }
+  }
+}
