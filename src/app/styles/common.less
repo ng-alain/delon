@@ -14,6 +14,7 @@ body {
 
 a {
   transition: color 0.3s ease;
+
   &:focus {
     text-decoration: underline;
     text-decoration-skip-ink: auto;
@@ -35,16 +36,19 @@ ol {
   @media (max-width: @mobile-max) {
     height: calc(100% - 86px);
   }
+
   &-wrapper {
     background: #fff;
     padding: 40px 0 0;
     position: relative;
+
     @media (max-width: @mobile-max) {
       width: 100%;
       border-radius: 0;
       margin: 0;
     }
   }
+
   &-container {
     padding: 0 170px 144px 64px;
     background: #fff;
@@ -53,11 +57,13 @@ ol {
     border-left: 1px solid @site-border-color-split;
     position: relative;
     margin-left: -1px;
+
     @media (max-width: @mobile-max) {
       padding-left: 16px;
       padding-right: 16px;
       margin-right: 0;
-      > .markdown > * {
+
+      >.markdown>* {
         width: 100% !important;
       }
     }
@@ -70,16 +76,20 @@ ol {
 
 .main-menu {
   z-index: 1;
+
   &-wrap {
     overflow-x: hidden;
     overflow-y: hidden;
     max-height: 100vh;
+
     &:hover {
       overflow-y: auto;
     }
   }
+
   .ant-menu-item {
     outline: none;
+
     &:after {
       left: 0;
       right: inherit;
@@ -89,21 +99,26 @@ ol {
 
 .aside-container {
   padding-bottom: 50px;
+
   &.ant-menu-inline .ant-menu-submenu-title h4,
-  &.ant-menu-inline > .ant-menu-item,
+  &.ant-menu-inline>.ant-menu-item,
   &.ant-menu-inline .ant-menu-item a {
     font-size: 14px;
     text-overflow: ellipsis;
     overflow: hidden;
   }
+
   &.ant-menu-inline .ant-menu-item-group-title {
     padding-left: 56px;
   }
+
   a[disabled] {
     color: #ccc;
   }
+
   .menu-item-link-outside {
     position: relative;
+
     .anticon {
       font-size: 12px;
       color: @primary-color;
@@ -113,10 +128,12 @@ ol {
       top: 16px;
       transition: all 0.3s;
     }
+
     &:hover .anticon {
       opacity: 1;
     }
   }
+
   @media (max-width: @mobile-max) {
     float: none;
     width: auto;
@@ -149,13 +166,29 @@ ol {
 }
 
 // reset menu text color
-.menu-site .ant-menu-item > a {
-  color: @site-text-color;
-}
+.menu-site {
+  .ant-menu-item>a {
+    color: @site-text-color;
+  }
 
-.menu-site .ant-menu-item-selected > a,
-.menu-site .ant-menu-item > a:hover {
-  color: @primary-color;
+  .ant-menu-item-selected>a,
+  .ant-menu-item>a:hover {
+    color: @primary-color;
+  }
+
+  &__more {
+    .ant-dropdown-trigger {
+      .anticon {
+        transition: transform 0.3s @ease-in-out-circ;
+      }
+
+      &:hover {
+        .anticon {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
 }
 
 #react-content {
@@ -168,7 +201,19 @@ ol {
   overflow: hidden;
   padding: 0;
   width: 100%;
+
   a {
     text-decoration: none;
+  }
+}
+
+.api-title {
+  .edit-button {
+    color: #314659;
+
+    .anticon {
+      padding-left: 4px;
+      font-size: 18px;
+    }
   }
 }
