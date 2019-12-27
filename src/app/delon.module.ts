@@ -32,7 +32,7 @@ const REUSETAB_PROVIDES = [
 
 // #region global config functions
 
-import { STConfig } from '@delon/abc/st';
+import { STConfig } from '@delon/abc/table';
 import { LodopConfig } from '@delon/abc/lodop';
 import { DelonACLModule } from '@delon/acl';
 

@@ -15,7 +15,7 @@ Use `change` event get selected data.
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, STData, STChange } from '@delon/abc/st';
+import { STColumn, STData, STChange } from '@delon/abc/table';
 
 @Component({
   selector: 'app-demo',

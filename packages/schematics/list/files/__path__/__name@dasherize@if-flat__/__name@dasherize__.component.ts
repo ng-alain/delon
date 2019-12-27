@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc/st';
+import { STColumn, STComponent } from '@delon/abc/table';
 import { SFSchema } from '@delon/form';
 
 @Component({

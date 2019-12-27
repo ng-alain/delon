@@ -5,11 +5,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { LodopService, Lodop } from '@delon/abc/lodop';
-import { NoticeIconList, NoticeItem } from '@delon/abc/notice-icon';
-import { STColumn } from '@delon/abc/st';
-import { XlsxService } from '@delon/abc/xlsx';
-
 const DATA = ['asdf', 'cipchk', '中文', 'にほんご'];
 
 @Component({
