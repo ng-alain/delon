@@ -33,5 +33,6 @@
       "description": "Specify default language [https://ng-alain.com/docs/i18n]."
     }
   },
-  "required": []
+  "required": [],
+  "additionalProperties": true
 }
