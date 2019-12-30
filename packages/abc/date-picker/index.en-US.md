@@ -9,6 +9,10 @@ config: DateRangePickerConfig
 
 Based on the `nz-range-picker` further optimization, better service to start and end dates.
 
+## Note
+
+If using date-fns, muse be modify the default `nzFormat` to` YYYY-MM-DD`.
+
 ## API
 
 ### range-picker

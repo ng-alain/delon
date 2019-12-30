@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { getTimeDistance } from '@delon/util';
 
 export class DateRangePickerConfig {
-  nzFormat = 'yyyy-MM-dd';
+  nzFormat?: string = 'yyyy-MM-dd';
   nzClassName?: string;
   nzSize?: string;
   nzStyle?: string;
-  nzAllowClear = true;
-  nzAutoFocus = false;
-  nzDisabled = false;
+  nzAllowClear?: boolean = true;
+  nzAutoFocus?: boolean = false;
+  nzDisabled?: boolean = false;
   nzDisabledDate?: any;
   nzDisabledTime?: any;
   nzLocale?: any;
@@ -17,7 +17,7 @@ export class DateRangePickerConfig {
   nzRenderExtraFooter?: any;
   nzPlaceHolder?: any;
   nzShowTime?: any;
-  nzShowToday = true;
+  nzShowToday?: boolean = true;
   nzMode?: any;
   nzRanges?: any;
   shortcuts?: DateRangePickerShortcut = {
