@@ -205,13 +205,34 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   }
 
   _docClick(): void {
-    this.hideAll();
+    if (this.collapsed) {
+      this.hideAll();
+    }
+  }
+
+  private openedByUrl(url: string | null) {
+    const { menuSrv, recursivePath, openStrictly } = this;
+    let findItem = menuSrv.getHit(this.menuSrv.menus, url!, recursivePath, i => {
+      i._selected = false;
+      if (!openStrictly) {
+        i._open = false;
+      }
+    });
+    if (findItem == null) return;
+
+    do {
+      findItem._selected = true;
+      if (!openStrictly) {
+        findItem._open = true;
+      }
+      findItem = findItem.__parent;
+    } while (findItem);
   }
 
   ngOnInit(): void {
     const { doc, router, unsubscribe$, menuSrv, cdr } = this;
     this.bodyEl = doc.querySelector('body');
-    menuSrv.openedByUrl(router.url, this.recursivePath);
+    this.openedByUrl(router.url);
     this.ngZone.runOutsideAngular(() => this.genFloatingContainer());
     menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(data => {
       menuSrv.visit(data, (i: Nav, _p, depth) => {
@@ -233,7 +254,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     });
     router.events.pipe(takeUntil(unsubscribe$)).subscribe(e => {
       if (e instanceof NavigationEnd) {
-        this.menuSrv.openedByUrl(e.urlAfterRedirects, this.recursivePath);
+        this.openedByUrl(e.urlAfterRedirects);
         this.underPad();
         this.cdr.detectChanges();
       }
