@@ -172,7 +172,8 @@ Property | Description | Type | Default
 `[radio]` | Parameters of type `radio` | `STData` | -
 `[sort]` | Parameters of type `sort` | `STChangeSort` | -
 `[filter]` | Parameters of type `filter` | `STColumn` | -
-`[click]` | Parameters of type `click` or `dblClick` | `STChangeRowClick` | -
+`[click]` | Parameters of type `click` | `STChangeRowClick` | -
+`[dblClick]` | Parameters of type `dblClick` | `STChangeRowClick` | -
 `[expand]` | Parameters of type `expand` | `STData` | -
 
 ### STChangeSort
