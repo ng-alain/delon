@@ -16,7 +16,7 @@ Simplest of usage.
 ```ts
 import { Component, OnDestroy } from '@angular/core';
 import { CacheService } from '@delon/cache';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 
 @Component({

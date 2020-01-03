@@ -21,8 +21,8 @@ Generate a set of button group with a simple configuration (example code: [DemoM
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc';
-import { NzMessageService } from 'ng-zorro-antd';
+import { STColumn } from '@delon/abc/table';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { DemoModalComponent, DemoDrawerComponent } from '@shared';
 
 @Component({

@@ -17,7 +17,7 @@ Simplest of usage.
 import { Component } from '@angular/core';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { SFSchema, SFCascaderWidgetSchema, SFCheckboxWidgetSchema } from '@delon/form';
 
 @Component({

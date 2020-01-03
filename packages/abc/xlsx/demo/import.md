@@ -15,7 +15,7 @@ Import Excel and output JSON, support File, URL.
 
 ```ts
 import { Component } from '@angular/core';
-import { XlsxService } from '@delon/abc';
+import { XlsxService } from '@delon/abc/xlsx';
 
 @Component({
   selector: 'app-demo',

@@ -26,7 +26,7 @@ import {
   NavigationError,
   NavigationCancel,
 } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { ScrollService, MenuService, SettingsService } from '@delon/theme';
 
 @Component({

@@ -1,14 +1,54 @@
 import { Component } from '@angular/core';
+import { SFSchema, SFMentionWidgetSchema } from '@delon/form';
+import { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
+
+const DATA = ['asdf', 'cipchk', '中文', 'にほんご'];
 
 @Component({
   selector: 'app-demo',
   template: `
-    <g2-bar height="200" [title]="'销售额趋势'" [data]="salesData"></g2-bar>
+    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
   `,
 })
 export class DemoComponent {
-  salesData: any[] = new Array(12).fill({}).map((_i, idx) => ({
-    x: `${idx + 1}月`,
-    y: idx === 0 ? 0.5 : Math.floor(Math.random() * 5),
-  }));
+  schema: SFSchema = {
+    properties: {
+      remark: {
+        type: 'string',
+        title: '描述',
+        enum: DATA,
+        minimum: 2,
+        maximum: 5,
+        ui: {
+          widget: 'mention',
+          inputStyle: 'textarea',
+        } as SFMentionWidgetSchema,
+      },
+      // 异步静态数据源
+      async: {
+        type: 'string',
+        title: 'Async',
+        ui: {
+          widget: 'mention',
+          asynxcData: () => of(DATA).pipe(delay(1000)),
+        } as SFMentionWidgetSchema,
+      },
+      // 实时数据
+      real_time: {
+        type: 'string',
+        title: 'RealTime',
+        ui: {
+          widget: 'mention',
+          loadData: (option: MentionOnSearchTypes) => of(DATA.filter(item => item.indexOf(option.value) !== -1)).pipe(delay(300)),
+        } as SFMentionWidgetSchema,
+      },
+    },
+  };
+  constructor(public msg: NzMessageService) {}
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 }

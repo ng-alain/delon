@@ -6,9 +6,9 @@ title: 压缩
 通过 `pushUrl` 可以快速将URL资源写入 Zip 实例。
 
 ```ts
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Component } from '@angular/core';
-import { ZipService } from '@delon/abc';
+import { ZipService } from '@delon/abc/zip';
 import * as JSZip from 'jszip';
 
 @Component({

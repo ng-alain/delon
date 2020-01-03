@@ -15,7 +15,8 @@ Export Excel and automatically pop save dialog.
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn, XlsxService } from '@delon/abc';
+import { STColumn } from '@delon/abc/table';
+import { XlsxService } from '@delon/abc/xlsx';
 
 @Component({
   selector: 'app-demo',

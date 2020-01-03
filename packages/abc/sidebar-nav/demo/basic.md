@@ -16,7 +16,7 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 import { Menu, MenuService, SettingsService } from '@delon/theme';
-import { NzIconService } from 'ng-zorro-antd';
+import { NzIconService } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-demo',

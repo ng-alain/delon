@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NzDrawerRef } from 'ng-zorro-antd';
+import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 
 @Component({
   selector: `app-demo-dialog-drawer`,

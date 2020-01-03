@@ -1,6 +1,7 @@
 import { Component, HostBinding, Inject, OnInit } from '@angular/core';
 import { ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService } from '@delon/theme';
-import { NzIconService, NzMessageService } from 'ng-zorro-antd';
+import { NzIconService } from 'ng-zorro-antd/icon';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 // #region icons
 
@@ -22,7 +23,7 @@ import {
   SettingOutline,
   UserOutline,
 } from '@ant-design/icons-angular/icons';
-import { ReuseCustomContextMenu } from '@delon/abc';
+import { ReuseCustomContextMenu } from '@delon/abc/reuse-tab';
 import { I18NService, LangType } from 'app/core/i18n/service';
 
 const ICONS = [
@@ -91,10 +92,7 @@ export class DevLayoutComponent implements OnInit {
             {
               text: 'Level2',
               link: '#',
-              children: [
-                { text: 'Level3A', link: '/dev/l1' },
-                { text: 'Level3B-DISABLED', link: '/dev/l1', disabled: true },
-              ],
+              children: [{ text: 'Level3A', link: '/dev/l1' }, { text: 'Level3B-DISABLED', link: '/dev/l1', disabled: true }],
             },
             { text: 'Level2-DISABLED', link: '/dev/l2', disabled: true },
           ],
