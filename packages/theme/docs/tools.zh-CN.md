@@ -182,6 +182,8 @@ Ant Design 的基础色板共计 120 个颜色，包含 12 个主色以及衍生
 | `align-self-center` | `align-self: center` |
 | `align-self-baseline` | `align-self: baseline` |
 | `align-self-stretch` | `align-self: stretch` |
+| `flex-center` | `display: flex; align-items: center;` |
+| `flex-center-between` | `display: flex; align-items: center; align-content: space-between;` |
 
 ## 位置
 
@@ -245,6 +247,7 @@ Ant Design 是以 `14px` 为基准字号。
 | 名称 | 说明 |
 | ---- | --- |
 | `text-hover` | `*:hover { color: @primary-color; }` |
+| `disabled` | 禁止 |
 
 ## Borders
 

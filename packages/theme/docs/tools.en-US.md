@@ -182,6 +182,8 @@ Clear floats `.clearfix`.
 | `align-self-center` | `align-self: center` |
 | `align-self-baseline` | `align-self: baseline` |
 | `align-self-stretch` | `align-self: stretch` |
+| `flex-center` | `display: flex; align-items: center;` |
+| `flex-center-between` | `display: flex; align-items: center; align-content: space-between;` |
 
 ## Position
 
@@ -245,6 +247,7 @@ Ant Design is based on `14px`.
 | Name | Description |
 | ---- | --- |
 | `text-hover` | `*:hover { color: @primary-color; }` |
+| `disabled` | Disabled |
 
 ## Borders
 
