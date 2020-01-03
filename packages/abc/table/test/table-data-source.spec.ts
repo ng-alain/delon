@@ -721,12 +721,22 @@ describe('abc: table: data-souce', () => {
           done();
         });
       });
-      it('via date', done => {
-        options.columns[0].type = 'date';
-        spyOn(datePipe, 'transform');
-        srv.process(options).subscribe(() => {
-          expect(datePipe.transform).toHaveBeenCalled();
-          done();
+      describe('via date', () => {
+        it('should be working', done => {
+          options.columns[0].type = 'date';
+          spyOn(datePipe, 'transform');
+          srv.process(options).subscribe(() => {
+            expect(datePipe.transform).toHaveBeenCalled();
+            done();
+          });
+        });
+        it('should be return default value', done => {
+          options.columns[0] = { index: 'date', type: 'date', default: '-' };
+          options.data = [{}, { date: new Date() }];
+          srv.process(options).subscribe(res => {
+            expect(res.list[0]._values[0].text).toBe('-');
+            done();
+          });
         });
       });
       it('via yn', done => {
