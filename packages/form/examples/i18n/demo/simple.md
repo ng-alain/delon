@@ -16,7 +16,7 @@ The `name` element uses built-in i18n method; `password` uses external i18n meth
 ```ts
 import { Component, Inject, ViewChild } from '@angular/core';
 import { SFSchema, SFComponent } from '@delon/form';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { I18NService } from '@core/i18n/service';
 

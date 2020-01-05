@@ -65,7 +65,7 @@ angular.json
 **DelonFormConfig**
 
 ```ts
-import { DelonFormConfig } from '@delon/abc';
+import { DelonFormConfig } from '@delon/form';
 export function fnDelonFormConfig(): DelonFormConfig {
   return Object.assign(new DelonFormConfig(), <DelonFormConfig>{
     // values

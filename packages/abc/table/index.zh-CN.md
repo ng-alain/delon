@@ -172,7 +172,8 @@ class TestComponent {
 `[radio]` | `radio` 参数 | `STData` | -
 `[sort]` | 排序参数 | `STChangeSort` | -
 `[filter]` | 过滤参数 | `STColumn` | -
-`[click]` | 行点击或双击参数 | `STChangeRowClick` | -
+`[click]` | 行点击参数 | `STChangeRowClick` | -
+`[dblClick]` | 行双击参数 | `STChangeRowClick` | -
 `[expand]` | `expand` 参数 | `STData` | -
 
 ### STChangeSort

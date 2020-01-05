@@ -12,16 +12,16 @@ const WHITE_ICONS = [
   // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts
   'BarsOutline',
   'CalendarOutline',
-  'CaretDownFill',
-  'CaretDownOutline',
   'CaretUpFill',
   'CaretUpOutline',
+  'CaretDownFill',
+  'CaretDownOutline',
   'CheckCircleFill',
   'CheckCircleOutline',
   'CheckOutline',
   'ClockCircleOutline',
-  'CloseCircleFill',
   'CloseCircleOutline',
+  'CloseCircleFill',
   'CloseOutline',
   'CopyOutline',
   'DoubleLeftOutline',
@@ -42,6 +42,7 @@ const WHITE_ICONS = [
   'PaperClipOutline',
   'QuestionCircleOutline',
   'RightOutline',
+  'StarFill',
   'SearchOutline',
   'StarFill',
   'UploadOutline',
@@ -209,11 +210,11 @@ function getIconNameByClassName(value: string): string | null {
   return strings.classify(res);
 }
 
-function getIcons(host: Tree): string[] {
+function getIcons(options: PluginOptions, host: Tree): string[] {
   const iconClassList: string[] = [];
 
   host.visit(path => {
-    if (~path.indexOf(`/node_modules/`)) return;
+    if (~path.indexOf(`/node_modules/`) || !path.startsWith(`/${options.sourceRoot}`)) return;
     let res: string[] = [];
     if (path.endsWith('.ts')) {
       res = fixTs(host, path);
@@ -285,7 +286,7 @@ export function pluginIcon(options: PluginOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     console.log(`Analyzing files...`);
     genCustomIcons(options, host);
-    const icons = getIcons(host);
+    const icons = getIcons(options, host);
     genIconFile(options, host, icons);
     console.log(`\n\n`);
     console.log(`生成成功，如果是首次运行，需要手动引用，参考：https://ng-alain.com/theme/icon/zh`);

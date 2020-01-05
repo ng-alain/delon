@@ -54,7 +54,7 @@ function setDockerfile(host: Tree, options: PluginOptions) {
       host,
       filePath,
       `# STEP 1: Build
-FROM node:8-alpine as builder
+FROM node:10 as builder
 
 LABEL authors="cipchk <cipchk@qq.com>"
 

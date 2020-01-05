@@ -16,7 +16,8 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 import { SFSchema, SFMentionWidgetSchema } from '@delon/form';
-import { MentionOnSearchTypes, NzMessageService } from 'ng-zorro-antd';
+import { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 

@@ -28,6 +28,7 @@ import { TagSelectModule } from '@delon/abc/tag-select';
 import { SVModule } from '@delon/abc/view';
 import { XlsxModule } from '@delon/abc/xlsx';
 import { ZipModule } from '@delon/abc/zip';
+import { LoadingModule } from '@delon/abc/loading';
 
 const MODULES = [
   ErrorCollectModule,
@@ -57,6 +58,7 @@ const MODULES = [
   SEModule,
   SGModule,
   DatePickerModule,
+  LoadingModule,
 ];
 
 @NgModule({ exports: MODULES })

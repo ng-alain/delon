@@ -1,4 +1,4 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild, Type } from '@angular/core';
 import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
@@ -54,6 +54,20 @@ describe('abc: down-file', () => {
         ret.flush(genFile());
         expect(fs.default.saveAs).toHaveBeenCalled();
       });
+    });
+
+    it('should be used custom filename', () => {
+      let fn: string;
+      const filename = 'newfile.docx';
+      spyOn(fs.default, 'saveAs').and.callFake((_body: {}, fileName: string) => (fn = fileName));
+      context.fileName = rep => rep.headers.get('a')!;
+      fixture.detectChanges();
+      (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
+      ret.flush(genFile(), {
+        headers: new HttpHeaders({ a: filename }),
+      });
+      expect(fn!).toBe(filename);
     });
 
     it('should be using header filename when repseon has [filename]', () => {
@@ -169,7 +183,7 @@ class TestComponent {
     time: new Date(),
   };
 
-  fileName: string | null = 'demo中文';
+  fileName: string | ((rep: HttpResponse<Blob>) => string) | null = 'demo中文';
 
   success() {}
 

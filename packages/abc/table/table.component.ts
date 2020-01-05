@@ -61,7 +61,7 @@ import {
   STWidthMode,
   STResetColumnsOption,
 } from './table.interfaces';
-import { NzTableComponent } from 'ng-zorro-antd';
+import { NzTableComponent } from 'ng-zorro-antd/table';
 
 @Component({
   selector: 'st',

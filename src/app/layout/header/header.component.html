@@ -1,9 +1,11 @@
 <ng-container *ngIf="isMobile">
-  <i nz-icon nzType="menu" class="header-menu-icon" nz-popover [(nzVisible)]="menuVisible" [nzTitle]="null" nzTrigger="click" nzPlacement="bottomRight" [nzContent]="mobileMenu"></i>
+  <i nz-icon nzType="menu" class="header-menu-icon" nz-popover [(nzVisible)]="menuVisible" [nzTitle]="null"
+    nzTrigger="click" nzPlacement="bottomRight" [nzContent]="mobileMenu"></i>
   <ng-template #mobileMenu>
     <div class="header-menu">
       <div class="d-flex justify-content-between align-items-center">
-        <nz-select nzSize="small" style="width: 75px;" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)" class="flex-1 mr-md">
+        <nz-select nzSize="small" style="width: 75px;" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)"
+          class="flex-1 mr-md">
           <nz-option *ngFor="let version of oldVersionList" [nzLabel]="version" [nzValue]="version"></nz-option>
           <nz-option [nzLabel]="currentVersion" [nzValue]="currentVersion"></nz-option>
         </nz-select>
@@ -41,7 +43,8 @@
 <nz-row>
   <nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5" nzXl="5" nzXXl="4">
     <a routerLink="/{{i18n.zone}}">
-      <span nz-tooltip nzTooltipTitle="{{ 'app.footer.qqgroup' | translate}}: 428749721" (click)="onCopy('428749721')" id="logo">
+      <span nz-tooltip nzTooltipTitle="{{ 'app.footer.qqgroup' | translate}}: 428749721" (click)="onCopy('428749721')"
+        id="logo">
         <img src="./assets/img/logo-color.svg" style="max-height: 32px;" />
         <img src="./assets/img/ng-alain.svg" style="max-height: 32px;" />
       </span>
@@ -52,7 +55,9 @@
       <div id="search-box">
         <i nz-icon nzType="search"></i>
         <input *ngIf="useDocsearch" nz-input #searchInput [placeholder]="'app.header.search' | translate">
-        <nz-select *ngIf="!useDocsearch" style="width: 200px;" [ngModel]="q" (ngModelChange)="to($event)" nzAllowClear nzShowSearch [nzServerSearch]="true" (nzOnSearch)="changeQ($event)" [nzPlaceHolder]="'app.header.search' | translate">
+        <nz-select *ngIf="!useDocsearch" style="width: 200px;" [ngModel]="q" (ngModelChange)="to($event)" nzAllowClear
+          nzShowSearch [nzServerSearch]="true" (nzOnSearch)="changeQ($event)"
+          [nzPlaceHolder]="'app.header.search' | translate">
           <nz-option-group *ngFor="let group of list" [nzLabel]="group.title">
             <nz-option *ngFor="let option of group.children" [nzValue]="option" [nzLabel]="option.title"></nz-option>
           </nz-option-group>
@@ -69,8 +74,11 @@
           <li nz-menu-item routerLink="/cli/getting-started/{{i18n.zone}}">
             {{'app.header.menu.cli' | translate}}
           </li>
-          <li nz-menu-item>
-            <div nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="delonMenu">{{'app.header.menu.delon' | translate}}</div>
+          <li nz-menu-item class="menu-site__more">
+            <div nz-dropdown nzPlacement="bottomRight" [nzDropdownMenu]="delonMenu">
+              {{'app.header.menu.delon' | translate}}
+              <i nz-icon nzType="down"></i>
+            </div>
             <nz-dropdown-menu #delonMenu="nzDropdownMenu">
               <ul nz-menu>
                 <li *ngFor="let i of delon" nz-menu-item routerLink="/{{i}}/getting-started/{{i18n.zone}}">
@@ -85,11 +93,13 @@
             </a>
           </li>
         </ul>
-        <nz-select nzSize="small" class="version" style="width: 75px;" [ngModel]="currentVersion" (ngModelChange)="toVersion($event)">
+        <nz-select nzSize="small" class="version" style="width: 75px;" [ngModel]="currentVersion"
+          (ngModelChange)="toVersion($event)">
           <nz-option *ngFor="let version of oldVersionList" [nzLabel]="version" [nzValue]="version"></nz-option>
           <nz-option [nzLabel]="currentVersion" [nzValue]="currentVersion"></nz-option>
         </nz-select>
-        <button nz-button nzGhost nzSize="small" (click)="langChange(i18n.zone==='zh'?'en':'zh')" class="header-lang-button">
+        <button nz-button nzGhost nzSize="small" (click)="langChange(i18n.zone==='zh'?'en':'zh')"
+          class="header-lang-button">
           {{ 'app.header.lang' | translate}}
         </button>
       </div>

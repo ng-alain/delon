@@ -17,7 +17,7 @@ Simplest of usage.
 import { Component } from '@angular/core';
 import { ACLService } from '@delon/acl';
 import { SFSchema } from '@delon/form';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',

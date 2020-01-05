@@ -34,7 +34,7 @@ export class AppModule { }
 Common configuration, such as unifying mapping name for `ArrayService`.
 
 ```ts
-import { DelonUtilConfig } from '@delon/abc';
+import { DelonUtilConfig } from '@delon/util';
 export function fnDelonUtilConfig(): DelonUtilConfig {
   return Object.assign(new DelonUtilConfig(), <DelonUtilConfig>{
     array: {

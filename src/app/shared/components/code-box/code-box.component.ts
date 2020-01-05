@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { copy, deepCopy } from '@delon/util';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 

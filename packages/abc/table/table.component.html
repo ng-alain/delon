@@ -142,43 +142,43 @@
               </ng-template>
             </ng-container>
           </ng-container>
-          <ng-container *ngIf="c.filter">
-            <i nz-icon [nzType]="c.filter.icon.type" [nzTheme]="c.filter.icon.theme"
-              class="st__filter ant-table-filter-icon" [class.ant-table-filter-selected]="c.filter.default"
-              [class.ant-table-filter-open]="c.filter.visible" nz-dropdown [nzDropdownMenu]="filterMenu"
-              nzTrigger="click" nzTableFilter [hasFilterButton]="true" [nzClickHide]="false"
-              [(nzVisible)]="c.filter.visible" nzOverlayClassName="st__filter-wrap"></i>
-            <nz-dropdown-menu #filterMenu="nzDropdownMenu">
-              <ng-container [ngSwitch]="c.filter.type">
-                <div *ngSwitchCase="'keyword'" class="st__filter-keyword">
-                  <input type="text" nz-input [attr.placeholder]="c.filter.menus[0].text"
-                    [(ngModel)]="c.filter.menus[0].value" />
-                </div>
-                <ul *ngSwitchDefault nz-menu>
-                  <ng-container *ngIf="c.filter.multiple">
-                    <li nz-menu-item *ngFor="let filter of c.filter.menus">
-                      <label nz-checkbox [(ngModel)]="filter.checked">{{filter.text}}</label>
-                    </li>
-                  </ng-container>
-                  <ng-container *ngIf="!c.filter.multiple">
-                    <li nz-menu-item *ngFor="let filter of c.filter.menus">
-                      <label nz-radio [ngModel]="filter.checked"
-                        (ngModelChange)="_filterRadio(c, filter, $event)">{{filter.text}}</label>
-                    </li>
-                  </ng-container>
-                </ul>
-              </ng-container>
-              <div class="ant-table-filter-dropdown-btns">
-                <a class="ant-table-filter-dropdown-link confirm" (click)="c.filter.visible = false">
-                  <span (click)="_filterConfirm(c)">{{c.filter.confirmText || locale.filterConfirm}}</span>
-                </a>
-                <a class="ant-table-filter-dropdown-link clear" (click)="c.filter.visible = false">
-                  <span (click)="_filterClear(c)">{{c.filter.clearText || locale.filterReset}}</span>
-                </a>
-              </div>
-            </nz-dropdown-menu>
-          </ng-container>
         </ng-container>
+        <div nz-th-extra *ngIf="c.filter">
+          <i nz-icon [nzType]="c.filter.icon.type" [nzTheme]="c.filter.icon.theme"
+            class="st__filter ant-table-filter-icon" [class.ant-table-filter-selected]="c.filter.default"
+            [class.ant-table-filter-open]="c.filter.visible" nz-dropdown [nzDropdownMenu]="filterMenu"
+            nzTrigger="click" nzTableFilter [hasFilterButton]="true" [nzClickHide]="false"
+            [(nzVisible)]="c.filter.visible" nzOverlayClassName="st__filter-wrap"></i>
+          <nz-dropdown-menu #filterMenu="nzDropdownMenu">
+            <ng-container [ngSwitch]="c.filter.type">
+              <div *ngSwitchCase="'keyword'" class="st__filter-keyword">
+                <input type="text" nz-input [attr.placeholder]="c.filter.menus[0].text"
+                  [(ngModel)]="c.filter.menus[0].value" />
+              </div>
+              <ul *ngSwitchDefault nz-menu>
+                <ng-container *ngIf="c.filter.multiple">
+                  <li nz-menu-item *ngFor="let filter of c.filter.menus">
+                    <label nz-checkbox [(ngModel)]="filter.checked">{{filter.text}}</label>
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="!c.filter.multiple">
+                  <li nz-menu-item *ngFor="let filter of c.filter.menus">
+                    <label nz-radio [ngModel]="filter.checked"
+                      (ngModelChange)="_filterRadio(c, filter, $event)">{{filter.text}}</label>
+                  </li>
+                </ng-container>
+              </ul>
+            </ng-container>
+            <div class="ant-table-filter-dropdown-btns">
+              <a class="ant-table-filter-dropdown-link confirm" (click)="c.filter.visible = false">
+                <span (click)="_filterConfirm(c)">{{c.filter.confirmText || locale.filterConfirm}}</span>
+              </a>
+              <a class="ant-table-filter-dropdown-link clear" (click)="c.filter.visible = false">
+                <span (click)="_filterClear(c)">{{c.filter.clearText || locale.filterReset}}</span>
+              </a>
+            </div>
+          </nz-dropdown-menu>
+        </div>
       </th>
     </tr>
   </thead>
