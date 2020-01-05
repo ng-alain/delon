@@ -23,7 +23,7 @@ yarn add file-saver
 `[http-data]` | URL请求参数 | `any` | -
 `[http-method]` | 请求类型 | `'POST','GET','HEAD','PUT','PATCH','DELETE'` | `'GET'`
 `[http-url]` | 下载地址 | `string` | -
-`[file-name]` | 指定文件名，若为空从服务端返回的 `header` 中获取 `filename`、`x-filename` | `string` | -
+`[file-name]` | 指定文件名，若为空从服务端返回的 `header` 中获取 `filename`、`x-filename` | `string, (rep: HttpResponse<Blob>) => string` | -
 `(success)` | 成功回调 | `EventEmitter<HttpResponse<Blob>>` | -
 `(error)` | 错误回调 | `EventEmitter<any>` | -
 

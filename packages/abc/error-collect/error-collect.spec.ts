@@ -3,7 +3,7 @@ import { inject, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
-import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NzFormModule } from 'ng-zorro-antd/form';
 
 import { ErrorCollectComponent } from './error-collect.component';
 import { ErrorCollectConfig } from './error-collect.config';
@@ -16,7 +16,7 @@ describe('abc: error-collect', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ErrorCollectModule, ReactiveFormsModule, NgZorroAntdModule],
+      imports: [ErrorCollectModule, ReactiveFormsModule, NzFormModule],
       declarations: [TestComponent],
     });
   });

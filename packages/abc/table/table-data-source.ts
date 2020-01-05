@@ -66,7 +66,7 @@ export class STDataSource {
     @Host() private ynPipe: YNPipe,
     @Host() private numberPipe: DecimalPipe,
     private dom: DomSanitizer,
-  ) { }
+  ) {}
 
   process(options: STDataSourceOptions): Observable<STDataSourceResult> {
     let data$: Observable<STData[]>;
@@ -159,9 +159,7 @@ export class STDataSource {
       data$ = data$.pipe(map(result => res.process!(result, rawData)));
     }
 
-    data$ = data$.pipe(
-      map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName })),
-    );
+    data$ = data$.pipe(map(result => this.optimizeData({ result, columns, rowClassName: options.rowClassName })));
 
     return data$.pipe(
       map(result => {
@@ -208,7 +206,7 @@ export class STDataSource {
         text = this.currentyPipe.transform(value);
         break;
       case 'date':
-        text = this.datePipe.transform(value, col.dateFormat);
+        text = value === col.default ? col.default : this.datePipe.transform(value, col.dateFormat);
         break;
       case 'yn':
         text = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!);

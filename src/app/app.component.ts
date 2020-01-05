@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
-import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd';
+import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 import { I18NService } from './core/i18n/service';

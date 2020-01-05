@@ -19,7 +19,7 @@ export class DownFileDirective {
   /** 下载地址 */
   @Input('http-url') httpUrl: string;
   /** 指定文件名，若为空从服务端返回的 `header` 中获取 `filename`、`x-filename` */
-  @Input('file-name') fileName: string;
+  @Input('file-name') fileName: string | ((rep: HttpResponse<Blob>) => string);
   /** 成功回调 */
   @Output() readonly success = new EventEmitter<HttpResponse<Blob>>();
   /** 错误回调 */
@@ -74,13 +74,11 @@ export class DownFileDirective {
             return;
           }
           const disposition = this.getDisposition(res.headers.get('content-disposition'));
-          const fileName =
-            this.fileName ||
-            disposition[`filename*`] ||
-            disposition[`filename`] ||
-            res.headers.get('filename') ||
-            res.headers.get('x-filename');
-          saveAs(res.body, decodeURI(fileName));
+          let fileName = this.fileName;
+          if (typeof fileName === 'function') fileName = fileName(res);
+          fileName =
+            fileName || disposition[`filename*`] || disposition[`filename`] || res.headers.get('filename') || res.headers.get('x-filename');
+          saveAs(res.body, decodeURI(fileName as string));
           this.success.emit(res);
         },
         err => this.error.emit(err),

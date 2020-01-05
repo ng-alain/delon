@@ -938,9 +938,13 @@ export interface STChange {
    */
   filter?: STColumn;
   /**
-   * 行点击或双击参数
+   * 行点击参数
    */
   click?: STChangeRowClick;
+  /**
+   * 行双击参数
+   */
+  dblClick?: STChangeRowClick;
   /**
    * `expand` 参数
    */

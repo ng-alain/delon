@@ -1,7 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-import { NzTagComponent } from 'ng-zorro-antd';
+import { NzTagComponent } from 'ng-zorro-antd/tag';
 
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';

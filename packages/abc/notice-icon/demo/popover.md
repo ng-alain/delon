@@ -7,9 +7,9 @@ title: 带浮层卡片
 
 ```ts
 import { Component } from '@angular/core';
-import { NoticeIconList, NoticeItem } from '@delon/abc';
+import { NoticeIconList, NoticeItem } from '@delon/abc/notice-icon';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',

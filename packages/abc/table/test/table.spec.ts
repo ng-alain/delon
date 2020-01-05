@@ -11,7 +11,9 @@ import { of, Observable, Subject } from 'rxjs';
 
 import { en_US, ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, ModalHelper } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
-import { NgZorroAntdModule, NzPaginationComponent } from 'ng-zorro-antd';
+import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 import { configureTestSuite, dispatchDropDown } from '@delon/testing';
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
@@ -97,7 +99,8 @@ describe('abc: table', () => {
       FormsModule,
       HttpClientTestingModule,
       RouterTestingModule.withRoutes([]),
-      NgZorroAntdModule,
+      NzModalModule,
+      NzDrawerModule,
       STModule,
       DelonLocaleModule,
     ];
@@ -901,7 +904,7 @@ describe('abc: table', () => {
             httpBed.expectOne(req => req.url === '/mock2').flush([{}]);
             httpBed.expectOne(req => req.url === '/mock1').flush([{}, {}]);
             expect(true).toBe(false);
-          } catch { }
+          } catch {}
 
           fixture.whenStable().then(() => {
             expect(comp._data.length).toBe(1);
@@ -2162,8 +2165,8 @@ class TestComponent {
   widthMode: STWidthMode = {};
   virtualScroll = false;
 
-  error() { }
-  change() { }
+  error() {}
+  change() {}
 }
 
 @Component({
@@ -2183,4 +2186,4 @@ class TestComponent {
     </st>
   `,
 })
-class TestExpandComponent extends TestComponent { }
+class TestExpandComponent extends TestComponent {}

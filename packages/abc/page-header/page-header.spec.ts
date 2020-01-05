@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { configureTestSuite, createTestContext } from '@delon/testing';
 import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 
-import { NzAffixComponent } from 'ng-zorro-antd';
+import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { PageHeaderComponent } from './page-header.component';
 import { PageHeaderConfig } from './page-header.config';

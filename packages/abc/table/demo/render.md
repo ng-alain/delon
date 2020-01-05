@@ -19,7 +19,7 @@ Specifying `type="title"` means to customize the column for the title. Additiona
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc';
+import { STColumn } from '@delon/abc/table';
 
 @Component({
   selector: 'app-demo',
