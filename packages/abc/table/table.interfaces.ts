@@ -342,6 +342,8 @@ export interface STColumn {
   /** @ignore internal property */
   _sort?: STSortMap;
 
+  children?: STColumn[];
+
   [key: string]: any;
 }
 
