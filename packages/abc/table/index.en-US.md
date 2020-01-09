@@ -81,7 +81,9 @@ Property | Description | Type | Default
 
 Name | Description
 ---- | -----------
-`filteredData` | Get all data after filtering & sorting<br>- Local data: including sorting, filtering<br>- Remote data: Don't pass `pi`, `ps` parameters in http request
+`[filteredData]` | Get all data after filtering & sorting<br>- Local data: including sorting, filtering<br>- Remote data: Don't pass `pi`, `ps` parameters in http request
+`[count]` | Get the number of the current page
+`[list]` | Get the data of the current page
 `resetColumns(options?: STResetColumnsOption)` | Reset columns
 `load(pi = 1, extraParams?: any, options?: STLoadOptions)` | Load specified page
 `reload(extraParams?: any, options?: STLoadOptions)` | Refresh current page
