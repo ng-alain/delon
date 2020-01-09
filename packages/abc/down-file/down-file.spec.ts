@@ -127,6 +127,13 @@ describe('abc: down-file', () => {
       expect(fs.default.saveAs).not.toHaveBeenCalled();
       expect(context.error).toHaveBeenCalled();
     });
+
+    it('should be request via post', () => {
+      spyOn(fs.default, 'saveAs');
+      (dl.query(By.css('#down-docx')).nativeElement as HTMLButtonElement).click();
+      const ret = httpBed.expectOne(req => req.url.startsWith('/')) as TestRequest;
+      expect(ret.request.body.a).toBe(1);
+    });
   });
 
   it('should be using content-disposition filename', () => {
@@ -164,7 +171,8 @@ describe('abc: down-file', () => {
       id="down-{{ i }}"
       down-file
       [http-data]="data"
-      http-method="get"
+      [http-body]="body"
+      [http-method]="method"
       http-url="/demo.{{ i }}"
       [file-name]="fileName"
       (success)="success()"
@@ -182,6 +190,12 @@ class TestComponent {
     otherdata: 1,
     time: new Date(),
   };
+
+  body = {
+    a: 1,
+  };
+
+  method = 'get';
 
   fileName: string | ((rep: HttpResponse<Blob>) => string) | null = 'demo中文';
 
