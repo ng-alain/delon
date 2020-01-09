@@ -81,7 +81,9 @@ config: STConfig
 
 名称 | 说明
 --- | -----
-`filteredData` | 获取过滤后所有数据<br>- 本地数据：包含排序、过滤后不分页数据<br>- 远程数据：不传递 `pi`、`ps` 两个参数
+`[filteredData]` | 获取过滤后所有数据<br>- 本地数据：包含排序、过滤后不分页数据<br>- 远程数据：不传递 `pi`、`ps` 两个参数
+`[count]` | 获取当前页的条目数
+`[list]` | 获取当前页的数据列表
 `resetColumns(options?: STResetColumnsOption)` | 重置列描述
 `load(pi = 1, extraParams?: any, options?: STLoadOptions)` | 加载指定页
 `reload(extraParams?: any, options?: STLoadOptions)` | 刷新当前页

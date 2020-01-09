@@ -20,28 +20,31 @@ import { STColumn } from '@delon/abc/table';
 @Component({
   selector: 'app-demo',
   template: `
+    <button nz-button (click)="data = []">Clean Data</button>
     <st #st [data]="data" [columns]="columns" [body]="bodyTpl">
       <ng-template #bodyTpl let-s>
-        <tr>
-          <td>合计</td>
-          <td>{{s.len.text}} 个</td>
-          <td>{{s.dc.text}}</td>
-          <td class="text-right">{{s.sum.text}}</td>
-          <td class="text-right">{{s.avg.text}}</td>
-          <td class="text-right">{{s.min.text}}</td>
-          <td class="text-right">{{s.max.text}}</td>
-          <td class="text-right">{{s.custom.text}}</td>
-        </tr>
-        <tr class="bg-grey-lighter">
-          <td colspan="3">性别平均值</td>
-          <td class="text-right">{{ s.sum.value / s.dc.value | _currency }}</td>
-          <td colspan="4"></td>
-        </tr>
+        <ng-container *ngIf="st.count > 0">
+          <tr>
+            <td>合计</td>
+            <td>{{ s.len.text }} 个</td>
+            <td>{{ s.dc.text }}</td>
+            <td class="text-right">{{ s.sum.text }}</td>
+            <td class="text-right">{{ s.avg.text }}</td>
+            <td class="text-right">{{ s.min.text }}</td>
+            <td class="text-right">{{ s.max.text }}</td>
+            <td class="text-right">{{ s.custom.text }}</td>
+          </tr>
+          <tr class="bg-grey-lighter">
+            <td colspan="3">性别平均值</td>
+            <td class="text-right">{{ s.sum.value / s.dc.value | _currency }}</td>
+            <td colspan="4"></td>
+          </tr>
+        </ng-container>
       </ng-template>
     </st>
   `,
 })
-export class DemoComponent  {
+export class DemoComponent {
   data: any[] = Array(100)
     .fill({})
     .map((_item: any, idx: number) => {
@@ -59,7 +62,13 @@ export class DemoComponent  {
     { title: 'Average', index: 'price', type: 'currency', statistical: 'average', key: 'avg' },
     { title: 'Min', index: 'price', type: 'currency', statistical: 'min', key: 'min' },
     { title: 'Max', index: 'price', type: 'currency', statistical: 'max', key: 'max' },
-    { title: 'Custom', index: 'price', type: 'currency', statistical: { type: values => ({ value: values[0], text: `**${values[0]}` }), currency: false }, key: 'custom' },
+    {
+      title: 'Custom',
+      index: 'price',
+      type: 'currency',
+      statistical: { type: values => ({ value: values[0], text: `**${values[0]}` }), currency: false },
+      key: 'custom',
+    },
   ];
 }
 ```
