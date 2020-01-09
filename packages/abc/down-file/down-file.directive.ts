@@ -14,6 +14,8 @@ export class DownFileDirective {
   private isFileSaverSupported = true;
   /** URL请求参数 */
   @Input('http-data') httpData: {};
+  /** URL请求参数 */
+  @Input('http-body') httpBody: {};
   /** 请求类型 */
   @Input('http-method') httpMethod: string = 'get';
   /** 下载地址 */
@@ -66,6 +68,7 @@ export class DownFileDirective {
         params: this.httpData || {},
         responseType: 'blob',
         observe: 'response',
+        body: this.httpBody,
       })
       .subscribe(
         (res: HttpResponse<Blob>) => {
