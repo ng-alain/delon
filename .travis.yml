@@ -6,11 +6,7 @@ node_js:
   - '10.9.0'
 
 addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
+  chrome: stable
 
 git:
   depth: 1
@@ -21,7 +17,6 @@ cache:
     - ./node_modules/
 
 before_install:
-  - set -e
   - export NG_CLI_ANALYTICS=ci
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
