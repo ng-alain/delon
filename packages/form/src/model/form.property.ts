@@ -19,7 +19,7 @@ export abstract class FormProperty {
   private _visibilityChanges = new BehaviorSubject<boolean>(true);
   private _root: PropertyGroup;
   private _parent: PropertyGroup | null;
-  protected _objErrors: { [key: string]: ErrorData[] } = {};
+  _objErrors: { [key: string]: ErrorData[] } = {};
   schemaValidator: (value: SFValue) => ErrorData[];
   schema: SFSchema;
   ui: SFUISchema | SFUISchemaItemRun;
