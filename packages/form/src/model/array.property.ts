@@ -73,18 +73,8 @@ export class ArrayProperty extends PropertyGroup {
     }
   }
 
-  private clearErrors(path?: string) {
-    if (path) {
-      delete this._objErrors[path];
-    } else {
-      this._objErrors = {};
-    }
-  }
-
-  private updatePaths() {
-    (this.properties as FormProperty[]).forEach((p, idx) => {
-      p.path = [p.parent!.path, idx].join(SF_SEQ);
-    });
+  private clearErrors(property?: FormProperty) {
+    (property || this)._objErrors = {};
   }
 
   // #region actions
@@ -97,10 +87,18 @@ export class ArrayProperty extends PropertyGroup {
 
   remove(index: number) {
     const list = this.properties as FormProperty[];
-    this.clearErrors(list[index].path);
+    this.clearErrors();
     list.splice(index, 1);
-    this.updatePaths();
-    this.updateValueAndValidity(false, true);
+    list.forEach((property, idx) => {
+      property.path = [property.parent!.path, idx].join(SF_SEQ);
+      this.clearErrors(property);
+      // TODO: 受限于 sf 的设计思路，对于移除数组项需要重新对每个子项进行校验，防止错误被父级合并后引起始终是错误的现象
+      if (property instanceof ObjectProperty) {
+        property.forEachChild(p => {
+          p.updateValueAndValidity();
+        });
+      }
+    });
   }
 
   // #endregion
