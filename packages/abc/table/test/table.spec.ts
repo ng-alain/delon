@@ -1234,7 +1234,10 @@ describe('abc: table', () => {
               index: 'i',
               filter: {
                 multiple: true,
-                menus: [{ text: 'f1', value: 'fv1' }, { text: 'f2', value: 'fv2' }],
+                menus: [
+                  { text: 'f1', value: 'fv1' },
+                  { text: 'f2', value: 'fv2' },
+                ],
                 confirmText: 'ok',
                 clearText: 'reset',
                 icon: 'aa',
@@ -1656,6 +1659,20 @@ describe('abc: table', () => {
           });
         });
       });
+      it('#count', done => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          expect(comp.count).toBe(PS);
+          done();
+        });
+      });
+      it('#list', done => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          expect(comp.list.length).toBe(PS);
+          done();
+        });
+      });
       it('#cdkVirtualScrollViewport', done => {
         context.virtualScroll = true;
         fixture.detectChanges();
@@ -2014,7 +2031,10 @@ describe('abc: table', () => {
     }
     /** 断言组件内 `_columns` 值 */
     expectColumn(title: string, path: string, valule: any): this {
-      const ret = deepGet(comp._columns.find(w => (w.title as STColumnTitle).text === title), path);
+      const ret = deepGet(
+        comp._columns.find(w => (w.title as STColumnTitle).text === title),
+        path,
+      );
       expect(ret).toBe(valule);
       return this;
     }

@@ -14,7 +14,8 @@ import { SFDateWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None,
 })
 export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements OnInit {
-  private valueFormat: string;
+  private startFormat: string;
+  private endFormat: string;
   private flatRange = false;
   mode: string;
   displayValue: Date | Date[] | null = null;
@@ -26,12 +27,15 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   }
 
   ngOnInit(): void {
-    // tslint:disable-next-line: no-shadowed-variable
-    const { mode, end, displayFormat, format, allowClear, showToday } = this.ui;
+    const { mode, end, displayFormat, allowClear, showToday } = this.ui;
     this.mode = mode || 'date';
     this.flatRange = end != null;
+    // 构建属性对象时会对默认值进行校验，因此可以直接使用 format 作为格式化属性
+    this.startFormat = this.ui._format!;
     if (this.flatRange) {
       this.mode = 'range';
+      const endUi = this.endProperty.ui as SFDateWidgetSchema;
+      this.endFormat = endUi.format ? endUi._format : this.startFormat;
     }
     if (!displayFormat) {
       const usingDateFns = isDateFns(this.zorroI18n);
@@ -49,8 +53,6 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     } else {
       this.displayFormat = displayFormat;
     }
-    // 构建属性对象时会对默认值进行校验，因此可以直接使用 format 作为格式化属性
-    this.valueFormat = format!;
     this.i = {
       allowClear: toBool(allowClear, true),
       // nz-date-picker
@@ -75,7 +77,9 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
       return;
     }
 
-    const res = Array.isArray(value) ? value.map(d => format(d, this.valueFormat)) : format(value, this.valueFormat);
+    const res = Array.isArray(value)
+      ? [format(value[0], this.startFormat), format(value[1], this.endFormat)]
+      : format(value, this.startFormat);
 
     if (this.flatRange) {
       this.setEnd(res[1]);
@@ -98,9 +102,9 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   }
 
   private setEnd(value: string | null) {
-    if (this.flatRange) {
-      this.endProperty.setValue(value, true);
-    }
+    if (!this.flatRange) return;
+
+    this.endProperty.setValue(value, true);
   }
 
   private toDate(value: SFValue) {

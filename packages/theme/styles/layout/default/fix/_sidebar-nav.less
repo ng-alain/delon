@@ -17,7 +17,8 @@
     &-link {
       position: relative;
       display: block;
-      padding: @alain-default-aside-nav-padding-top-bottom @alain-default-aside-nav-padding-left-right * 2 @alain-default-aside-nav-padding-top-bottom @alain-default-aside-nav-padding-left-right;
+      padding: @alain-default-aside-nav-padding-top-bottom @alain-default-aside-nav-padding-left-right * 2
+        @alain-default-aside-nav-padding-top-bottom @alain-default-aside-nav-padding-left-right;
       overflow: hidden;
       color: @alain-default-aside-nav-text-color;
       white-space: nowrap;
@@ -48,8 +49,8 @@
     }
 
     &-disabled {
-      opacity: 0.6;
       cursor: default;
+      opacity: 0.6;
 
       &:hover {
         color: @alain-default-aside-nav-text-color;
@@ -62,19 +63,19 @@
     background-color: @alain-default-aside-nav-selected-bg;
     border-left-color: @alain-default-aside-nav-selected-text-color;
 
-    >@{sidebar-nav-prefix}__item-link {
+    > @{sidebar-nav-prefix}__item-link {
       color: @alain-default-aside-nav-selected-text-color;
     }
   }
 
   // Open Submenu
   &__open {
-    >@{sidebar-nav-prefix}__sub {
+    > @{sidebar-nav-prefix}__sub {
       display: block;
       animation: fadeIn 0.5s;
     }
 
-    >@{sidebar-nav-prefix}__item-link {
+    > @{sidebar-nav-prefix}__item-link {
       @{sidebar-nav-prefix}__sub-arrow {
         transform: translateY(-2px);
 
@@ -139,9 +140,8 @@
 
     &:not(.badge-dot) {
       top: (@alain-default-aside-nav-item-height - @badge-height) / 2;
-      width: @badge-height;
       height: @badge-height;
-      padding: 0;
+      padding: 0 4px;
       overflow: hidden;
       line-height: @badge-height;
     }

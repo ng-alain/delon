@@ -57,9 +57,11 @@ export class FormPropertyFactory {
       // fix date
       if ((schema.type === 'string' || schema.type === 'number') && !schema.format && !(ui as SFUISchemaItem).format) {
         if ((ui as SFUISchemaItem).widget === 'date')
-          ui.format = schema.type === 'string' ? this.options.uiDateStringFormat : this.options.uiDateNumberFormat;
+          ui._format = schema.type === 'string' ? this.options.uiDateStringFormat : this.options.uiDateNumberFormat;
         else if ((ui as SFUISchemaItem).widget === 'time')
-          ui.format = schema.type === 'string' ? this.options.uiTimeStringFormat : this.options.uiTimeNumberFormat;
+          ui._format = schema.type === 'string' ? this.options.uiTimeStringFormat : this.options.uiTimeNumberFormat;
+      } else {
+        ui._format = ui.format;
       }
       switch (schema.type) {
         case 'integer':

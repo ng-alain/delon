@@ -10,7 +10,6 @@ registerLocaleData(zh);
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
-import { SFUISchemaItem } from '../../schema/ui';
 import { DateWidget } from './date.widget';
 import * as utils from '../../utils';
 import { SFDateWidgetSchema } from './schema';
@@ -43,7 +42,7 @@ describe('form: widget: date', () => {
       const comp = getComp();
       const time = new Date();
       comp._change(time);
-      page.checkValue('/a', format(time, comp['valueFormat']));
+      page.checkValue('/a', format(time, comp['startFormat']));
     });
     describe('default value', () => {
       it('with number type', () => {
@@ -134,7 +133,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      expect(comp['valueFormat']).toBe('YYYY-MM-DD HH:mm:ss');
+      expect(comp['startFormat']).toBe('YYYY-MM-DD HH:mm:ss');
     });
     it('should be spcify format', () => {
       const s: SFSchema = {
@@ -142,7 +141,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      expect(comp['valueFormat']).toBe('yyyy');
+      expect(comp['startFormat']).toBe('yyyy');
     });
     it('should be use timespan when type is number', () => {
       const s: SFSchema = {
@@ -150,7 +149,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      expect(comp['valueFormat']).toBe('x');
+      expect(comp['startFormat']).toBe('x');
     });
   });
 
@@ -173,7 +172,7 @@ describe('form: widget: date', () => {
       expect(comp.mode).toBe('range');
       const time = new Date();
       comp._change([time, time]);
-      page.checkValue('/start', format(time, comp['valueFormat'])).checkValue('/end', format(time, comp['valueFormat']));
+      page.checkValue('/start', format(time, comp['startFormat'])).checkValue('/end', format(time, comp['startFormat']));
       comp._change(null);
       page.checkValue('/start', '').checkValue('/end', '');
     });
@@ -189,8 +188,25 @@ describe('form: widget: date', () => {
     });
     it('should be removed ui.end when not found end path', () => {
       const copyS = deepCopy(s);
-      (copyS.properties!.start.ui as SFUISchemaItem).end = 'invalid-end';
+      (copyS.properties!.start.ui as SFDateWidgetSchema).end = 'invalid-end';
       page.newSchema(copyS).checkUI('/start', 'end', null);
+    });
+    it('should be use start format when end format is null', () => {
+      const copyS = deepCopy(s);
+      (copyS.properties!.start.ui as SFDateWidgetSchema).format = 'X';
+      (copyS.properties!.end.ui as SFDateWidgetSchema).format = '';
+      page.newSchema(copyS);
+      const comp = getComp();
+      expect(comp['endFormat']).toBe('X');
+    });
+    it('should be custom end format', () => {
+      const copyS = deepCopy(s);
+      (copyS.properties!.start.ui as SFDateWidgetSchema).format = 'YYYY';
+      (copyS.properties!.end.ui as SFDateWidgetSchema).format = 'X';
+      page.newSchema(copyS);
+      const comp = getComp();
+      expect(comp['startFormat']).toBe('YYYY');
+      expect(comp['endFormat']).toBe('X');
     });
   });
 
