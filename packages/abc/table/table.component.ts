@@ -211,6 +211,20 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    */
   @Output() readonly change = new EventEmitter<STChange>();
 
+  /**
+   * Get the number of the current page
+   */
+  get count(): number {
+    return this._data.length;
+  }
+
+  /**
+   * Get the data of the current page
+   */
+  get list(): STData[] {
+    return this._data;
+  }
+
   private rowClickCount = 0;
 
   constructor(
@@ -327,7 +341,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           ...options,
         })
         .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(result => resolvePromise(result), error => rejectPromise(error));
+        .subscribe(
+          result => resolvePromise(result),
+          error => rejectPromise(error),
+        );
     });
   }
 
@@ -693,11 +710,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   _btnText(record: STData, btn: STColumnButton) {
-    // tslint:disable-next-line: deprecation
-    if (btn.format) {
-      // tslint:disable-next-line: deprecation
-      return btn.format(record, btn);
-    }
     return typeof btn.text === 'function' ? btn.text(record, btn) : btn.text || '';
   }
 

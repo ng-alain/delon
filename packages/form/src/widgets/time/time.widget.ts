@@ -18,8 +18,7 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
 
   ngOnInit(): void {
     const ui = this.ui;
-    // 构建属性对象时会对默认值进行校验，因此可以直接使用 format 作为格式化属性
-    this.valueFormat = ui.format;
+    this.valueFormat = ui._format;
     const opt = {
       displayFormat: ui.displayFormat || 'HH:mm:ss',
       allowEmpty: toBool(ui.allowEmpty, true),

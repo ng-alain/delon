@@ -396,7 +396,7 @@ describe('abc: table', () => {
             });
           });
           it(`should be custom render yn`, done => {
-            page.newColumn([{ title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' }]).then(() => {
+            page.newColumn([{ title: '', index: 'yn', type: 'yn', yn: { yes: 'Y', no: 'N' } }]).then(() => {
               page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
               done();
             });
@@ -408,9 +408,11 @@ describe('abc: table', () => {
                   title: '',
                   index: 'id',
                   type: 'yn',
-                  ynTruth: 1,
-                  ynYes: 'Y',
-                  ynNo: 'N',
+                  yn: {
+                    truth: 1,
+                    yes: 'Y',
+                    no: 'N',
+                  },
                 },
               ])
               .then(() => {
@@ -532,8 +534,7 @@ describe('abc: table', () => {
               title: '',
               buttons: [
                 {
-                  text: 'del',
-                  format: a => `<div class="j-btn-format">${a.id}</div>`,
+                  text: a => `<div class="j-btn-format">${a.id}</div>`,
                 },
               ],
             },
@@ -1233,7 +1234,10 @@ describe('abc: table', () => {
               index: 'i',
               filter: {
                 multiple: true,
-                menus: [{ text: 'f1', value: 'fv1' }, { text: 'f2', value: 'fv2' }],
+                menus: [
+                  { text: 'f1', value: 'fv1' },
+                  { text: 'f2', value: 'fv2' },
+                ],
                 confirmText: 'ok',
                 clearText: 'reset',
                 icon: 'aa',
@@ -1655,6 +1659,20 @@ describe('abc: table', () => {
           });
         });
       });
+      it('#count', done => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          expect(comp.count).toBe(PS);
+          done();
+        });
+      });
+      it('#list', done => {
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          expect(comp.list.length).toBe(PS);
+          done();
+        });
+      });
       it('#cdkVirtualScrollViewport', done => {
         context.virtualScroll = true;
         fixture.detectChanges();
@@ -1925,16 +1943,6 @@ describe('abc: table', () => {
           done();
         });
       });
-      it('should be compatible', done => {
-        page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
-          const el = page.getEl('.ant-pagination-total-text');
-          expect(el.textContent!.trim()).toContain(`共`);
-          injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
-          fixture.detectChanges();
-          expect(el.textContent!.trim()).toContain(`of`);
-          done();
-        });
-      });
     });
   });
 
@@ -2023,7 +2031,10 @@ describe('abc: table', () => {
     }
     /** 断言组件内 `_columns` 值 */
     expectColumn(title: string, path: string, valule: any): this {
-      const ret = deepGet(comp._columns.find(w => (w.title as STColumnTitle).text === title), path);
+      const ret = deepGet(
+        comp._columns.find(w => (w.title as STColumnTitle).text === title),
+        path,
+      );
       expect(ret).toBe(valule);
       return this;
     }

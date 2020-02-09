@@ -15,31 +15,6 @@ export const collectionPath = join(__dirname, '..', 'collection.json');
 /** Path to the migration file for the Material update schematics */
 export const migrationCollection = join(__dirname, '..', 'migration.json');
 
-/**
- * Create a base app used for testing.
- * @deprecated Used `createTestAppAsync` instead.
- */
-export function createTestApp(appOptions = {}): UnitTestTree {
-  const baseRunner = new SchematicTestRunner('ng-alain', collectionPath);
-
-  // tslint:disable-next-line: deprecation
-  const workspaceTree = baseRunner.runExternalSchematic('@schematics/angular', 'workspace', {
-    name: 'workspace',
-    version: '6.0.0',
-    newProjectRoot: 'projects',
-  });
-
-  // tslint:disable-next-line: deprecation
-  const res = baseRunner.runExternalSchematic(
-    '@schematics/angular',
-    'application',
-    { ...appOptions, name: 'alain' },
-    workspaceTree,
-  );
-
-  return res;
-}
-
 /** Create a base app used for testing. */
 export async function createTestAppAsync(appOptions = {}): Promise<UnitTestTree> {
   const baseRunner = new SchematicTestRunner('ng-alain', collectionPath);
@@ -53,12 +28,7 @@ export async function createTestAppAsync(appOptions = {}): Promise<UnitTestTree>
     .toPromise();
 
   const res = await baseRunner
-    .runExternalSchematicAsync(
-      '@schematics/angular',
-      'application',
-      { ...appOptions, name: 'alain' },
-      workspaceTree,
-    )
+    .runExternalSchematicAsync('@schematics/angular', 'application', { ...appOptions, name: 'alain' }, workspaceTree)
     .toPromise();
 
   return res;
