@@ -63,7 +63,6 @@ export class STConfig {
     pageSizes: [10, 20, 30, 40, 50],
     showQuickJumper: false,
     total: true,
-    indexReset: true,
     toTop: true,
     toTopOffset: 100,
   };

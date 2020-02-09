@@ -14,7 +14,7 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
   }
 }
 
-describe('abc: table: column-souce', () => {
+describe('st: column-source', () => {
   let aclSrv: ACLService | null;
   let i18nSrv: AlainI18NService | null;
   let srv: STColumnSource;
@@ -123,22 +123,6 @@ describe('abc: table: column-souce', () => {
         });
       });
       describe(`with yn`, () => {
-        it('#compatible', () => {
-          const res = srv.process([
-            {
-              title: '',
-              index: 'id',
-              type: 'yn',
-              ynTruth: true,
-              ynYes: 'y',
-              ynNo: 'n',
-            },
-          ])[0];
-          expect(res.yn).not.toBeNull();
-          expect(res.yn!.truth).toBe(true);
-          expect(res.yn!.yes).toBe('y');
-          expect(res.yn!.no).toBe('n');
-        });
         it('should be auto specified truth is [true]', () => {
           const res = srv.process([{ title: '', index: 'id', type: 'yn' }])[0];
           expect(res.yn).not.toBeNull();
@@ -204,11 +188,6 @@ describe('abc: table: column-souce', () => {
       });
     });
     describe('[sort]', () => {
-      describe('#compatible', () => {
-        it('should be enabled', () => {
-          expect(srv.process([{ title: '', sorter: () => true }])[0]._sort!.enabled).toBe(true);
-        });
-      });
       it('should be disabled', () => {
         expect(srv.process([{ title: '' }])[0]._sort!.enabled).toBe(false);
       });
@@ -232,12 +211,6 @@ describe('abc: table: column-souce', () => {
       });
     });
     describe('[filter]', () => {
-      describe('#compatible', () => {
-        it('should be enabled', () => {
-          const res = srv.process([{ title: '', filters: [{ text: '' }] }])[0].filter;
-          expect(res).not.toBeNull();
-        });
-      });
       it('should be disabled when invalid menus', () => {
         const res = srv.process([{ title: '', filter: { menus: [] } }])[0].filter;
         expect(res).toBeNull();
@@ -379,9 +352,6 @@ describe('abc: table: column-souce', () => {
           expect(pop != null).toBe(true);
           expect(pop.condition!(null!)).toBe(true);
         });
-        it('should be spcify popTitle value', () => {
-          page.expectBtnValue([{ title: '', buttons: [{ text: '', type: 'del', popTitle: 'aa' }] }], 'aa', 'pop.title');
-        });
       });
       describe('#icon', () => {
         it('should be string', () => {
@@ -447,12 +417,6 @@ describe('abc: table: column-souce', () => {
           it('should be apply default values', () => {
             const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', modal: { component: {} } }] }])[0].buttons![0];
             expect(res.modal!.paramsName).toBe('record');
-          });
-          describe('#compatible', () => {
-            it('should be running', () => {
-              const res = srv.process([{ title: '', buttons: [{ text: '', type: 'modal', component: {} }] }])[0].buttons![0];
-              expect(res.modal!.paramsName).toBe('record');
-            });
           });
         });
         describe('with drawer', () => {
@@ -535,7 +499,7 @@ describe('abc: table: column-souce', () => {
             {
               title: '',
               index: 'id',
-              selections: [{ text: '1', select: () => { } }],
+              selections: [{ text: '1', select: () => {} }],
             },
           ],
           1,
@@ -546,7 +510,7 @@ describe('abc: table: column-souce', () => {
             {
               title: '',
               index: 'id',
-              selections: [{ text: '1', select: () => { }, acl: 'admin' }],
+              selections: [{ text: '1', select: () => {}, acl: 'admin' }],
             },
           ],
           0,
@@ -601,8 +565,6 @@ describe('abc: table: column-souce', () => {
     it('in title', () => {
       srv.process([{ title: '', index: 'id' }]);
       expect(i18nSrv!.fanyi).not.toHaveBeenCalled();
-      srv.process([{ title: '', i18n: 'en', index: 'id' }]);
-      expect(i18nSrv!.fanyi).toHaveBeenCalled();
     });
 
     it('in buttons', () => {

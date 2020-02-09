@@ -710,11 +710,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   _btnText(record: STData, btn: STColumnButton) {
-    // tslint:disable-next-line: deprecation
-    if (btn.format) {
-      // tslint:disable-next-line: deprecation
-      return btn.format(record, btn);
-    }
     return typeof btn.text === 'function' ? btn.text(record, btn) : btn.text || '';
   }
 
