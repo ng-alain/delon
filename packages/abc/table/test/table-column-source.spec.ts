@@ -14,6 +14,12 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
   }
 }
 
+class MockDomSanitizer {
+  bypassSecurityTrustHtml(text: string) {
+    return text;
+  }
+}
+
 describe('st: column-source', () => {
   let aclSrv: ACLService | null;
   let i18nSrv: AlainI18NService | null;
@@ -25,7 +31,7 @@ describe('st: column-source', () => {
     aclSrv = other.acl ? new ACLService({}) : null;
     i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
     rowSrv = new STRowSource();
-    srv = new STColumnSource(rowSrv, aclSrv!, i18nSrv!, other.cog || new STConfig());
+    srv = new STColumnSource(new MockDomSanitizer() as any, rowSrv, aclSrv!, i18nSrv!, other.cog || new STConfig());
     page = new PageObject();
   }
 

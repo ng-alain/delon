@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Host, Inject, Injectable, Optional } from '@angular/core';
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -10,6 +11,7 @@ import { STColumn, STColumnButton, STColumnFilter, STSortMap, STIcon, STColumnBu
 @Injectable()
 export class STColumnSource {
   constructor(
+    private dom: DomSanitizer,
     @Host() private rowSource: STRowSource,
     @Optional() private acl: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
@@ -237,16 +239,15 @@ export class STColumnSource {
       }
 
       // #region title
-      if (typeof item.title === 'string') {
-        item.title = { text: item.title };
-      }
-      if (!item.title) {
-        item.title = {};
-      }
 
-      if (item.title!.i18n && this.i18nSrv) {
-        item.title!.text = this.i18nSrv.fanyi(item.title!.i18n);
+      const tit = (typeof item.title === 'string' ? { text: item.title } : item.title) || {};
+      if (tit.i18n && this.i18nSrv) {
+        tit.text = this.i18nSrv.fanyi(tit.i18n);
       }
+      if (tit.text) {
+        tit._text = this.dom.bypassSecurityTrustHtml(tit.text);
+      }
+      item.title = tit;
 
       // #endregion
 
