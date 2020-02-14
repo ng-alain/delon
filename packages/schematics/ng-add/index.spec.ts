@@ -13,7 +13,7 @@ describe('Schematic: ng-add', () => {
     expect(packageJson.dependencies['@antv/g2']).not.toBeDefined();
   });
 
-  xit('should dependencies @antv when -g2', async () => {
+  it('should dependencies @antv when -g2', async () => {
     tree = await runner.runSchematicAsync('ng-add', { g2: true }, tree).toPromise();
     const packageJson = JSON.parse(tree.readContent('package.json'));
     expect(packageJson.dependencies['@antv/g2']).toBeDefined();
