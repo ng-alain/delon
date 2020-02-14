@@ -13,7 +13,7 @@
             <ng-container *stringTemplateOutlet="action">{{action}}</ng-container>
           </span>
         </div>
-        <p *ngIf="total" class="g2-card__total" [innerHTML]="total"></p>
+        <p *ngIf="total" class="g2-card__total">{{total}}</p>
       </div>
     </div>
     <div class="g2-card__desc" [ngStyle]="{'height':_height}">

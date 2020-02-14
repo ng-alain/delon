@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -23,11 +24,20 @@ import { GlobalFooterLink } from './global-footer.types';
   encapsulation: ViewEncapsulation.None,
 })
 export class GlobalFooterComponent {
-  @Input() links: GlobalFooterLink[] = [];
+  private _links: GlobalFooterLink[] = [];
+
+  @Input()
+  set links(val: GlobalFooterLink[]) {
+    val.forEach(i => i._title = this.dom.bypassSecurityTrustHtml(i.title));
+    this._links = val;
+  }
+  get links() {
+    return this._links;
+  }
 
   @ContentChildren(GlobalFooterItemComponent) items!: QueryList<GlobalFooterItemComponent>;
 
-  constructor(private router: Router, @Inject(WINDOW) private win: Window) {}
+  constructor(private router: Router, @Inject(WINDOW) private win: Window, private dom: DomSanitizer) { }
 
   to(item: GlobalFooterLink) {
     if (!item.href) {

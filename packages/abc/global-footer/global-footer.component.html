@@ -1,5 +1,5 @@
 <div *ngIf="links.length > 0 || items.length > 0" class="global-footer__links">
-  <a *ngFor="let i of links" class="global-footer__links-item" (click)="to(i)" [innerHTML]="i.title"></a>
+  <a *ngFor="let i of links" class="global-footer__links-item" (click)="to(i)" [innerHTML]="i._title"></a>
   <a *ngFor="let i of items" class="global-footer__links-item" (click)="to(i)">
     <ng-container *ngTemplateOutlet="i.host"></ng-container>
   </a>

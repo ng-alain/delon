@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { AfterViewInit, ChangeDetectorRef, HostBinding, Inject, Injector } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { LocaleData } from '@delon/theme';
@@ -43,12 +44,16 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     return this.ui.optionalHelp as SFOptionalHelp;
   }
 
+  get dom(): DomSanitizer {
+    return this.injector.get(DomSanitizer);
+  }
+
   constructor(
     @Inject(ChangeDetectorRef) public readonly cd: ChangeDetectorRef,
     @Inject(Injector) public readonly injector: Injector,
     @Inject(SFItemComponent) public readonly sfItemComp?: SFItemComponent,
     @Inject(SFComponent) public readonly sfComp?: SFComponent,
-  ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe((errors: ErrorData[] | null) => {
@@ -87,15 +92,15 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
 }
 
 export class ControlWidget extends Widget<FormProperty, SFUISchemaItem> {
-  reset(_value: SFValue) {}
+  reset(_value: SFValue) { }
 }
 
 export class ControlUIWidget<UIT extends SFUISchemaItem> extends Widget<FormProperty, UIT> {
-  reset(_value: SFValue) {}
+  reset(_value: SFValue) { }
 }
 
 export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema> implements AfterViewInit {
-  reset(_value: SFValue) {}
+  reset(_value: SFValue) { }
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
@@ -103,7 +108,7 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema
 }
 
 export class ObjectLayoutWidget extends Widget<ObjectProperty, SFObjectWidgetSchema> implements AfterViewInit {
-  reset(_value: SFValue) {}
+  reset(_value: SFValue) { }
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());

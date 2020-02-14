@@ -371,8 +371,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       return this._refCheck();
     } catch (error) {
       this.setLoading(false);
-      this.cdr.detectChanges();
-      this.error.emit({ type: 'req', error });
+      if (!this.unsubscribe$.isStopped) {
+        this.cdr.detectChanges();
+        this.error.emit({ type: 'req', error });
+      }
       return this;
     }
   }

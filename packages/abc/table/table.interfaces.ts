@@ -69,15 +69,15 @@ export interface STReq {
 export interface STRequestOptions {
   body?: any;
   headers?:
-    | HttpHeaders
-    | {
-        [header: string]: string | string[];
-      };
+  | HttpHeaders
+  | {
+    [header: string]: string | string[];
+  };
   params?:
-    | HttpParams
-    | {
-        [param: string]: string | string[];
-      };
+  | HttpParams
+  | {
+    [param: string]: string | string[];
+  };
   observe?: 'body' | 'events' | 'response';
   reportProgress?: boolean;
   responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
@@ -335,6 +335,8 @@ export interface STColumn {
 }
 
 export interface STColumnTitle {
+  [key: string]: any;
+
   /**
    * Text of header, can be choose one of `text` or `i18n`
    */
@@ -714,18 +716,18 @@ export interface STColumnButtonPop {
    * The position of the popover relative to the target, default: `top`
    */
   placement?:
-    | 'top'
-    | 'left'
-    | 'right'
-    | 'bottom'
-    | 'topLeft'
-    | 'topRight'
-    | 'bottomLeft'
-    | 'bottomRight'
-    | 'leftTop'
-    | 'leftBottom'
-    | 'rightTop'
-    | 'rightBottom';
+  | 'top'
+  | 'left'
+  | 'right'
+  | 'bottom'
+  | 'topLeft'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomRight'
+  | 'leftTop'
+  | 'leftBottom'
+  | 'rightTop'
+  | 'rightBottom';
 
   /**
    * Class name of the popover card

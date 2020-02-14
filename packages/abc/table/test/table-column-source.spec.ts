@@ -14,6 +14,12 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
   }
 }
 
+class MockDomSanitizer {
+  bypassSecurityTrustHtml(text: string) {
+    return text;
+  }
+}
+
 describe('st: column-source', () => {
   let aclSrv: ACLService | null;
   let i18nSrv: AlainI18NService | null;
@@ -25,7 +31,7 @@ describe('st: column-source', () => {
     aclSrv = other.acl ? new ACLService({}) : null;
     i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
     rowSrv = new STRowSource();
-    srv = new STColumnSource(rowSrv, aclSrv!, i18nSrv!, other.cog || new STConfig());
+    srv = new STColumnSource(new MockDomSanitizer() as any, rowSrv, aclSrv!, i18nSrv!, other.cog || new STConfig());
     page = new PageObject();
   }
 
@@ -85,7 +91,10 @@ describe('st: column-source', () => {
         });
         it('should be throw error when mulit column', () => {
           expect(() => {
-            srv.process([{ title: '1', index: 'id', type: 'checkbox' }, { title: '2', index: 'id', type: 'checkbox' }]);
+            srv.process([
+              { title: '1', index: 'id', type: 'checkbox' },
+              { title: '2', index: 'id', type: 'checkbox' },
+            ]);
           }).toThrow();
         });
         it('should auto 50px width when without specified with value', () => {
@@ -112,7 +121,10 @@ describe('st: column-source', () => {
       describe(`with radio`, () => {
         it('should be throw error when mulit column', () => {
           expect(() => {
-            srv.process([{ title: '1', index: 'id', type: 'radio' }, { title: '2', index: 'id', type: 'radio' }]);
+            srv.process([
+              { title: '1', index: 'id', type: 'radio' },
+              { title: '2', index: 'id', type: 'radio' },
+            ]);
           }).toThrow();
         });
         it('should auto 50px width when without specified with value', () => {
@@ -530,15 +542,17 @@ describe('st: column-source', () => {
           },
         ])[0].filter!.menus!.length,
       ).toBe(1);
-      expect(srv.process([
-        {
-          title: '',
-          index: 'id',
-          filter: {
-            menus: [{ text: '1', acl: 'admin' }],
+      expect(
+        srv.process([
+          {
+            title: '',
+            index: 'id',
+            filter: {
+              menus: [{ text: '1', acl: 'admin' }],
+            },
           },
-        },
-      ])[0]!.filter as any).toBe(null);
+        ])[0]!.filter as any,
+      ).toBe(null);
     });
 
     it('in buttons', () => {

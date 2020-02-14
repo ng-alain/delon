@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { forwardRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { deepMergeKey, fixEndTimeOfRange, InputBoolean } from '@delon/util';
@@ -30,6 +31,9 @@ export class RangePickerComponent implements ControlValueAccessor {
     if (typeof val === 'boolean') {
       item.enabled = val;
     }
+    (item.list || []).forEach(i => {
+      i._text = this.dom.bypassSecurityTrustHtml(i.text);
+    });
     this._shortcut = item;
   }
   get shortcut() {
@@ -66,7 +70,7 @@ export class RangePickerComponent implements ControlValueAccessor {
 
   // #endregion
 
-  constructor(cog: DatePickerConfig) {
+  constructor(cog: DatePickerConfig, private dom: DomSanitizer) {
     this._cog = deepMergeKey(new DateRangePickerConfig(), true, cog && cog.range);
     Object.assign(this, this._cog);
   }

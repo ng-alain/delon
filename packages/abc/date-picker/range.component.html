@@ -26,6 +26,6 @@
 <ng-template #shortcutTpl>
   <a *ngFor="let i of shortcut?.list;let first=first"
      (click)="clickShortcut(i)"
-     [innerHTML]="i.text"
+     [innerHTML]="i._text"
      [ngClass]="{'ml-sm': !first}"></a>
 </ng-template>
