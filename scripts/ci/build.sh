@@ -21,7 +21,7 @@ DIST="$(pwd)/dist"
 cloneScaffold() {
   if [[ ! -d ng-alain ]]; then
     echo ">>> Not found scaffold source files, must be clone ng-alain ..."
-    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+    git clone --depth 1 -b 8.x https://github.com/ng-alain/ng-alain.git
   else
     echo ">>> Found scaffold source files"
   fi
