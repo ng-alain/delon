@@ -19,8 +19,8 @@ commitMessageCheck=$(git log --oneline -n 2)
 
 echo "Current commit author name: ${commitAuthorName}"
 
-if [ ${commitAuthorName} != '卡色' ]; then
-  echo "Warning: Just only 卡色 user"
+if [ ${commitAuthorName} != '卡色' -o ${commitAuthorName} != 'cipchk' ]; then
+  echo "Warning: Just only 卡色 or cipchk user"
   exit 0
 fi
 
