@@ -1,8 +1,9 @@
-import { chain, schematic, Rule } from '@angular-devkit/schematics';
+import { chain, schematic, Rule, Tree } from '@angular-devkit/schematics';
 import { Schema as ApplicationOptions } from '../application/schema';
 import { Schema as NgAddOptions } from './schema';
+import { getJSON } from '../utils/json';
 
-export default function(options: NgAddOptions): Rule {
+function genRules(options: NgAddOptions): Rule {
   const rules: Rule[] = [];
 
   const applicationOptions: ApplicationOptions = { ...options };
@@ -51,4 +52,21 @@ export default function(options: NgAddOptions): Rule {
   }
 
   return chain(rules);
+}
+
+export default function(options: NgAddOptions) {
+  return (host: Tree) => {
+    const pkg = getJSON(host, `package.json`);
+    let ngCoreVersion = pkg.dependencies['@angular/core'] as string;
+    if (/^[\^|\~]/g.test(ngCoreVersion)) {
+      ngCoreVersion = ngCoreVersion.substr(1);
+    }
+    if (!ngCoreVersion.startsWith('8.')) {
+      throw new Error(
+        `Sorry, the current version only supports angular 8.x, pls downgrade the global Anguar-cli version: yarn global add @angular/cli@8.x`,
+      );
+    }
+
+    return genRules(options);
+  };
 }

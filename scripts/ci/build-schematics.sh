@@ -194,7 +194,7 @@ copyFiles() {
 cloneScaffold() {
   if [[ ! -d ng-alain ]]; then
     echo ">>> Not found scaffold source files, must be clone ng-alain ..."
-    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+    git clone --depth 1 -b 8.x https://github.com/ng-alain/ng-alain.git
     echo ">>> removed .git"
     rm -rf ng-alain/.git
   else
