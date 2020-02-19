@@ -35,9 +35,9 @@ checkout();
 
 function fetchOlderVersions() {
   log.info('Fetching older versions...');
-  execSync('git checkout master');
-  execSync('git pull upstream master');
-  execSync('git fetch upstream master --prune --tags');
+  execSync('git checkout 8.x');
+  execSync('git pull upstream 8.x');
+  execSync('git fetch upstream 8.x --prune --tags');
   log.success('Older versions fetched!');
 }
 
