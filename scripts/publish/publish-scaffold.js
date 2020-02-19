@@ -38,9 +38,9 @@ log.success(`release(${nextVersion}): release ${nextVersion}`);
 
 function fetchOlderVersions() {
   log.info('Fetching older versions...');
-  execSync('git checkout master', execSyncOptions);
-  execSync('git pull upstream master', execSyncOptions);
-  execSync('git fetch upstream master --prune --tags', execSyncOptions);
+  execSync('git checkout 8.x', execSyncOptions);
+  execSync('git pull upstream 8.x', execSyncOptions);
+  execSync('git fetch upstream 8.x --prune --tags', execSyncOptions);
   log.success('Older versions fetched!');
 }
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # set -u -e -o pipefail
+set -e
 
 readonly thisDir=$(cd $(dirname $0); pwd)
 
@@ -26,7 +27,15 @@ clone() {
   mkdir -p ${ROOT}
   cd ${DIST}
   echo ">>> Clone delon & cli dist..."
-  git clone --depth 1 https://github.com/ng-alain/delon-builds.git
+  git clone --depth 1 -b publish-8.9.0 https://github.com/ng-alain/delon-builds.git
+}
+
+checkVersion() {
+  VERSION_NOW=$(node -p "require('${ROOT}/ng-alain/package.json').version")
+  if [ ${VERSION} != ${VERSION_NOW} ]; then
+    echo ">>> Version invalid: ${VERSION_NOW}, pls check build dist."
+    exit 0
+  fi
 }
 
 publishToMaster() {
@@ -47,6 +56,7 @@ syncTaobao() {
 }
 
 clone
+checkVersion
 if [[ ${NEXT} == true ]]; then
   publishToNext
 else
