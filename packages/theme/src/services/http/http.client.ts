@@ -1,7 +1,7 @@
 import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError, Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { throwError, Observable, of } from 'rxjs';
+import { catchError, tap, switchMap } from 'rxjs/operators';
 import { AlainThemeConfig } from '../../theme.config';
 import { HttpClientConfig } from './http.config';
 
@@ -60,11 +60,11 @@ export class _HttpClient {
   }
 
   begin() {
-    setTimeout(() => (this._loading = true), 10);
+    Promise.resolve(null).then(() => (this._loading = true));
   }
 
   end() {
-    setTimeout(() => (this._loading = false), 10);
+    Promise.resolve(null).then(() => (this._loading = false));
   }
 
   // #region get
@@ -815,9 +815,10 @@ export class _HttpClient {
       withCredentials?: boolean;
     } = {},
   ): Observable<any> {
-    this.begin();
     if (options.params) options.params = this.parseParams(options.params);
-    return this.http.request(method, url, options).pipe(
+    return of(null).pipe(
+      tap(() => this.begin()),
+      switchMap(() => this.http.request(method, url, options)),
       tap(() => this.end()),
       catchError(res => {
         this.end();

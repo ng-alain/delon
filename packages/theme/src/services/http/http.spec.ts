@@ -42,10 +42,10 @@ describe('theme: http.client', () => {
 
     it('#loading', fakeAsync(() => {
       http.get(URL).subscribe(() => {});
-      tick(11);
+      tick();
       expect(http.loading).toBeTruthy();
       backend.expectOne(() => true).flush(OK);
-      tick(11);
+      tick();
       expect(http.loading).toBeFalsy();
     }));
 
@@ -108,11 +108,13 @@ describe('theme: http.client', () => {
       });
 
       it(`return a HttpResponse<Blob>`, done => {
-        http.get<Blob>(URL, PARAMS, { observe: 'response', responseType: 'blob' }).subscribe(res => {
-          expect(res.status).toBe(200);
-          expect(res.body instanceof Blob).toBe(true);
-          done();
-        });
+        http
+          .get<Blob>(URL, PARAMS, { observe: 'response', responseType: 'blob' })
+          .subscribe(res => {
+            expect(res.status).toBe(200);
+            expect(res.body instanceof Blob).toBe(true);
+            done();
+          });
         backend.expectOne(() => true).flush(new Blob());
       });
 
@@ -131,7 +133,11 @@ describe('theme: http.client', () => {
             expect(res).toBe(1);
             done();
           });
-          backend.expectOne(() => true).event(new HttpResponse<number>({ body: 1 }));
+          backend
+            .expectOne(() => true)
+            .event(
+              new HttpResponse<number>({ body: 1 }),
+            );
         });
         it('with boolean', done => {
           http.get<boolean>(URL).subscribe(res => {
@@ -139,7 +145,11 @@ describe('theme: http.client', () => {
             expect(res).toBe(true);
             done();
           });
-          backend.expectOne(() => true).event(new HttpResponse<boolean>({ body: true }));
+          backend
+            .expectOne(() => true)
+            .event(
+              new HttpResponse<boolean>({ body: true }),
+            );
         });
         it('with object', done => {
           http.get<object>(URL).subscribe(res => {
@@ -149,18 +159,22 @@ describe('theme: http.client', () => {
           backend.expectOne(() => true).flush({});
         });
         it('with HttpEvent', done => {
-          http.get<object>(URL, PARAMS, { observe: 'events' }).subscribe(res => {
-            expect(typeof res).toBe('object');
-            expect(typeof res.type).toBe('number');
-            done();
-          });
+          http
+            .get<object>(URL, PARAMS, { observe: 'events' })
+            .subscribe(res => {
+              expect(typeof res).toBe('object');
+              expect(typeof res.type).toBe('number');
+              done();
+            });
           backend.expectOne(() => true).flush({});
         });
         it('with response', done => {
-          http.get<object>(URL, PARAMS, { observe: 'response' }).subscribe(res => {
-            expect(res instanceof HttpResponse).toBe(true);
-            done();
-          });
+          http
+            .get<object>(URL, PARAMS, { observe: 'response' })
+            .subscribe(res => {
+              expect(res instanceof HttpResponse).toBe(true);
+              done();
+            });
           backend.expectOne(() => true).flush({});
         });
       });
@@ -241,11 +255,13 @@ describe('theme: http.client', () => {
       });
 
       it('return a HttpEvent', done => {
-        http.post<object>(URL, BODY, PARAMS, { observe: 'events' }).subscribe(res => {
-          expect(typeof res).toBe('object');
-          expect(typeof res.type).toBe('number');
-          done();
-        });
+        http
+          .post<object>(URL, BODY, PARAMS, { observe: 'events' })
+          .subscribe(res => {
+            expect(typeof res).toBe('object');
+            expect(typeof res.type).toBe('number');
+            done();
+          });
         backend.expectOne(() => true).flush({});
       });
 

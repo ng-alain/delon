@@ -1,10 +1,10 @@
 // tslint:disable: no-string-literal
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed, TestBedStatic } from '@angular/core/testing';
+import { fakeAsync, tick, TestBed, TestBedStatic } from '@angular/core/testing';
 import { of, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Type } from '@angular/core';
-import { AlainThemeModule } from '@delon/theme';
+import { AlainThemeModule, _HttpClient } from '@delon/theme';
 
 import { DelonCacheModule } from './cache.module';
 import { CacheService } from './cache.service';
@@ -197,6 +197,15 @@ describe('cache: service', () => {
           done();
         });
       });
+      it('should be return value via http request', fakeAsync(() => {
+        const http = injector.get<_HttpClient>(_HttpClient) as _HttpClient;
+        const get$ = srv.tryGet(KEY, http.get('/'));
+        expect(http.loading).toBeFalsy();
+        console.log('b');
+        get$.subscribe();
+        tick();
+        expect(http.loading).toBeTruthy();
+      }));
     });
 
     describe('#has', () => {
