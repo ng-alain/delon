@@ -71,14 +71,14 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   }
 
   _change(value: Date | Date[] | null) {
-    if (value == null) {
+    if (value == null || (<Date[]>value).length < 2) {
       this.setValue(null);
       this.setEnd(null);
       return;
     }
 
     const res = Array.isArray(value)
-      ? [format(value[0], this.startFormat), format(value[1], this.endFormat)]
+      ? [format(value[0], this.startFormat), format(value[1], this.endFormat || this.startFormat)]
       : format(value, this.startFormat);
 
     if (this.flatRange) {
