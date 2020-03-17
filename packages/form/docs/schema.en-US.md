@@ -46,7 +46,7 @@ ui = {
 }
 ```
 
-`ui` itself is a JSON structure, in order to distinguish with relationship of JSON Schema property, **must** add prefix `$` to all properties; must replace array elements with `$items`.
+`ui` itself is a JSON structure, in order to distinguish with relationship of JSON Schema property, **must** add prefix `$` to all properties; must replace array elements with `$items`. When KEY is `*`, it is valid for all properties.
 
 ### Relationship between Form and Data Structure
 
