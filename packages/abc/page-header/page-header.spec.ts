@@ -1,12 +1,11 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { fakeAsync, inject, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { configureTestSuite, createTestContext } from '@delon/testing';
+import { createTestContext } from '@delon/testing';
 import { AlainI18NService, AlainI18NServiceFake, ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
-
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { ReuseTabService } from '../reuse-tab/reuse-tab.service';
 import { PageHeaderComponent } from './page-header.component';
@@ -20,7 +19,6 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
 }
 
 describe('abc: page-header', () => {
-  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let menuSrv: MenuService;
@@ -33,7 +31,7 @@ describe('abc: page-header', () => {
     if (other.providers && other.providers.length) {
       providers.push(...other.providers);
     }
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports,
       declarations: [TestComponent],
       providers,
@@ -43,8 +41,8 @@ describe('abc: page-header', () => {
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     if (other.created !== false) fixture.detectChanges();
-    menuSrv = injector.get<MenuService>(MenuService);
-    router = injector.get<Router>(Router);
+    menuSrv = TestBed.inject<MenuService>(MenuService);
+    router = TestBed.inject<Router>(Router);
   }
 
   function isExists(cls: string, stauts: boolean = true) {
@@ -63,8 +61,8 @@ describe('abc: page-header', () => {
   afterEach(() => context.comp.ngOnDestroy());
 
   describe('', () => {
-    configureTestSuite(() => {
-      injector = TestBed.configureTestingModule({
+    beforeEach(() => {
+      TestBed.configureTestingModule({
         imports: [RouterTestingModule.withRoutes([{ path: '1-1/:name', component: TestComponent }]), PageHeaderModule],
         providers: [{ provide: APP_BASE_HREF, useValue: '/' }, SettingsService],
         declarations: [TestComponent, TestAutoBreadcrumbComponent, TestI18nComponent],
@@ -83,8 +81,8 @@ describe('abc: page-header', () => {
     describe('[property]', () => {
       beforeEach(() => {
         ({ fixture, dl, context } = createTestContext(TestComponent));
-        menuSrv = injector.get<MenuService>(MenuService);
-        router = injector.get<Router>(Router);
+        menuSrv = TestBed.inject<MenuService>(MenuService);
+        router = TestBed.inject<Router>(Router);
         fixture.detectChanges();
       });
       describe('#title', () => {
@@ -111,7 +109,7 @@ describe('abc: page-header', () => {
           isExists('nz-affix', true);
         });
         it('should be update position when switch collapsed', () => {
-          const srv = injector.get(SettingsService);
+          const srv = TestBed.inject(SettingsService);
           const affixComp = dl.query(By.directive(NzAffixComponent)).injector.get<NzAffixComponent>(NzAffixComponent, undefined);
           spyOn(affixComp, 'updatePosition');
           srv.setLayout('collapsed', true);
@@ -135,8 +133,8 @@ describe('abc: page-header', () => {
     describe('[generation breadcrumb]', () => {
       beforeEach(() => {
         ({ fixture, dl, context } = createTestContext(TestAutoBreadcrumbComponent));
-        menuSrv = injector.get<MenuService>(MenuService);
-        router = injector.get<Router>(Router);
+        menuSrv = TestBed.inject<MenuService>(MenuService);
+        router = TestBed.inject<Router>(Router);
         fixture.detectChanges();
 
         menuSrv.add([
@@ -146,7 +144,10 @@ describe('abc: page-header', () => {
               {
                 text: '1-1',
                 link: '/1-1',
-                children: [{ text: '1-1-1', link: '/1-1/1-1-1' }, { text: '1-1-2', link: '/1-1/1-1-2' }],
+                children: [
+                  { text: '1-1-1', link: '/1-1/1-1-1' },
+                  { text: '1-1-2', link: '/1-1/1-1-2' },
+                ],
               },
             ],
           },
@@ -177,7 +178,10 @@ describe('abc: page-header', () => {
               {
                 text: '1-1',
                 link: '/1-1',
-                children: [{ text: '1-1-1', link: '/1-1/1-1-1' }, { text: '1-1-2', link: '/1-1/1-1-2' }],
+                children: [
+                  { text: '1-1-1', link: '/1-1/1-1-1' },
+                  { text: '1-1-2', link: '/1-1/1-1-2' },
+                ],
               },
             ],
           },
@@ -224,9 +228,9 @@ describe('abc: page-header', () => {
           useFactory: () => new MockI18NServiceFake(),
         });
         ({ fixture, dl, context } = createTestContext(TestI18nComponent));
-        i18n = injector.get(ALAIN_I18N_TOKEN);
-        menuSrv = injector.get<MenuService>(MenuService);
-        router = injector.get<Router>(Router);
+        i18n = TestBed.inject(ALAIN_I18N_TOKEN);
+        menuSrv = TestBed.inject<MenuService>(MenuService);
+        router = TestBed.inject<Router>(Router);
         fixture.detectChanges();
       });
       it('should be refresh when i18n changed', () => {
@@ -244,7 +248,10 @@ describe('abc: page-header', () => {
               {
                 text: '1-1',
                 link: '/1-1',
-                children: [{ text: '1-1-1', link: '/1-1/1-1-1' }, { text: '1-1-2', link: '/1-1/1-1-2' }],
+                children: [
+                  { text: '1-1-1', link: '/1-1/1-1-1' },
+                  { text: '1-1-2', link: '/1-1/1-1-2' },
+                ],
               },
             ],
           },
@@ -275,7 +282,10 @@ describe('abc: page-header', () => {
               {
                 text: '1-1',
                 link: '/1-1',
-                children: [{ text: '1-1-1', link: '/1-1/1-1-1' }, { text: '1-1-2', link: '/1-1/1-1-2' }],
+                children: [
+                  { text: '1-1-1', link: '/1-1/1-1-1' },
+                  { text: '1-1-2', link: '/1-1/1-1-2' },
+                ],
               },
             ],
           },
@@ -308,7 +318,10 @@ describe('abc: page-header', () => {
       genModule({ created: false });
       context.title = null;
       context.autoTitle = true;
-      menuSrv.add([{ text: '1', link: '/1-1/p1' }, { text: '2', link: '/1-1/p2' }]);
+      menuSrv.add([
+        { text: '1', link: '/1-1/p1' },
+        { text: '2', link: '/1-1/p2' },
+      ]);
       const urlSpy = spyOnProperty(router, 'url');
       urlSpy.and.returnValue('/1-1/p1');
       tick();
@@ -375,8 +388,8 @@ describe('abc: page-header', () => {
             },
           ],
         });
-        titleSrv = injector.get<TitleService>(TitleService);
-        reuseSrv = injector.get<ReuseTabService>(ReuseTabService);
+        titleSrv = TestBed.inject<TitleService>(TitleService);
+        reuseSrv = TestBed.inject<ReuseTabService>(ReuseTabService);
         context.syncTitle = true;
       });
 
@@ -439,9 +452,7 @@ class TestBaseComponent {
 class TestComponent extends TestBaseComponent {}
 
 @Component({
-  template: `
-    <page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb"></page-header>
-  `,
+  template: ` <page-header #comp [title]="title" [home]="home" [homeI18n]="homeI18n" [autoBreadcrumb]="autoBreadcrumb"></page-header> `,
 })
 class TestAutoBreadcrumbComponent extends TestBaseComponent {}
 

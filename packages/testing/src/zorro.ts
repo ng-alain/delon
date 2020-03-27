@@ -1,14 +1,10 @@
 import { DebugElement } from '@angular/core';
 import { tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import { NzDropDownDirective } from 'ng-zorro-antd/dropdown';
 import { dispatchFakeEvent } from './dispatch-events';
 
-/**
- * [nz-dropdown](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/dropdown/nz-dropdown.component.ts#L88) 抖动合理值
- */
-export const DROPDOWN_MIN_TIME = 51;
+export const DROPDOWN_MIN_TIME = 1000;
 
 /**
  * 触发 dropdown

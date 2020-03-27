@@ -1,6 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { InputNumber } from '@delon/util';
-
 import { ImageConfig } from './image.config';
 
 /**
@@ -61,7 +60,7 @@ export class ImageDirective implements OnChanges, OnInit {
   private updateError() {
     const { imgEl, error } = this;
     // tslint:disable-next-line: only-arrow-functions
-    imgEl.onerror = function() {
+    imgEl.onerror = function () {
       this.onerror = null;
       this.src = error;
     };

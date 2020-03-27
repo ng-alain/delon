@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadingType, LoadingIcon, LoadingCustom } from './loading.interfaces';
+import { LoadingCustom, LoadingIcon, LoadingType } from './loading.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingConfig {

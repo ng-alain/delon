@@ -1,3 +1,4 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { deepGet } from '../other/other';
 
 /**
@@ -9,11 +10,7 @@ import { deepGet } from '../other/other';
  * // output: this is asdf
  * ```
  */
-export function format(
-  str: string | null | undefined,
-  obj: {} | null | undefined,
-  needDeepGet: boolean = false,
-): string {
+export function format(str: string | null | undefined, obj: NzSafeAny | null | undefined, needDeepGet: boolean = false): string {
   return (str || '').replace(/\${([^}]+)}/g, (_work: string, key: string) =>
     needDeepGet ? deepGet(obj, key.split('.'), '') : (obj || {})[key] || '',
   );

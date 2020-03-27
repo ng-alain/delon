@@ -1,5 +1,6 @@
 import { Type } from '@angular/core';
-import { discardPeriodicTasks, flush, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type PageG2Type = 'geoms' | 'views';
 
@@ -13,7 +14,7 @@ export class PageG2<T> {
     return this.fixture!.debugElement;
   }
 
-  get context() {
+  get context(): NzSafeAny {
     return this.fixture!.componentInstance;
   }
 
@@ -152,10 +153,7 @@ export class PageG2<T> {
     } else {
       expect(el != null).toBe(true, `Shoule be has g2-tooltip element`);
       const text = el.textContent!.trim();
-      expect(text.includes(includeText)).toBe(
-        true,
-        `Shoule be include "${includeText}" text of tooltip text context "${text}"`,
-      );
+      expect(text.includes(includeText)).toBe(true, `Shoule be include "${includeText}" text of tooltip text context "${text}"`);
     }
     return this;
   }

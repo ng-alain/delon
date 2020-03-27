@@ -1,5 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
-import { createAlainApp, APPNAME } from '../utils/testing';
+import { APPNAME, createAlainApp } from '../utils/testing';
 
 describe('NgAlainSchematic: plugin: docker', () => {
   let runner: SchematicTestRunner;
@@ -7,9 +7,7 @@ describe('NgAlainSchematic: plugin: docker', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainApp());
-    tree = await runner
-      .runSchematicAsync('plugin', { name: 'docker', type: 'add' }, tree)
-      .toPromise();
+    tree = await runner.runSchematicAsync('plugin', { name: 'docker', type: 'add' }, tree).toPromise();
   });
 
   describe('when add', () => {
@@ -22,12 +20,7 @@ describe('NgAlainSchematic: plugin: docker', () => {
   });
 
   describe('when remove', () => {
-    beforeEach(
-      async () =>
-        (tree = await runner
-          .runSchematicAsync('plugin', { name: 'docker', type: 'remove' }, tree)
-          .toPromise()),
-    );
+    beforeEach(async () => (tree = await runner.runSchematicAsync('plugin', { name: 'docker', type: 'remove' }, tree).toPromise()));
     it(`should add fiels`, () => {
       expect(tree.exists(`/projects/${APPNAME}/.dockerignore`)).toBe(false);
       expect(tree.exists(`/projects/${APPNAME}/docker-compose.yml`)).toBe(false);

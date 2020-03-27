@@ -92,7 +92,10 @@ export class DevLayoutComponent implements OnInit {
             {
               text: 'Level2',
               link: '#',
-              children: [{ text: 'Level3A', link: '/dev/l1' }, { text: 'Level3B-DISABLED', link: '/dev/l1', disabled: true }],
+              children: [
+                { text: 'Level3A', link: '/dev/l1' },
+                { text: 'Level3B-DISABLED', link: '/dev/l1', disabled: true },
+              ],
             },
             { text: 'Level2-DISABLED', link: '/dev/l2', disabled: true },
           ],

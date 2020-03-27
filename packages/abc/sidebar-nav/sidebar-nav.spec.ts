@@ -1,16 +1,13 @@
 import { DOCUMENT } from '@angular/common';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { ACLService } from '@delon/acl';
-import { configureTestSuite } from '@delon/testing';
 import { AlainThemeModule, MenuIcon, MenuService, SettingsService, WINDOW } from '@delon/theme';
 import { deepCopy } from '@delon/util';
-
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SidebarNavComponent } from './sidebar-nav.component';
 import { SidebarNavModule } from './sidebar-nav.module';
 import { Nav } from './sidebar-nav.types';
@@ -85,7 +82,6 @@ class MockLocation {
 }
 
 describe('abc: sidebar-nav', () => {
-  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -96,10 +92,13 @@ describe('abc: sidebar-nav', () => {
   let doc: Document;
 
   function createModule() {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [RouterModule.forRoot([]), AlainThemeModule, HttpClientTestingModule, SidebarNavModule],
       declarations: [TestComponent],
-      providers: [{ provide: ACLService, useClass: MockACLService }, { provide: WINDOW, useFactory: () => new MockWindow() }],
+      providers: [
+        { provide: ACLService, useClass: MockACLService },
+        { provide: WINDOW, useFactory: () => new MockWindow() },
+      ],
     });
   }
 
@@ -108,10 +107,10 @@ describe('abc: sidebar-nav', () => {
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     fixture.detectChanges();
-    router = injector.get<Router>(Router);
-    setSrv = injector.get<SettingsService>(SettingsService);
-    menuSrv = injector.get<MenuService>(MenuService);
-    doc = injector.get(DOCUMENT);
+    router = TestBed.inject<Router>(Router);
+    setSrv = TestBed.inject<SettingsService>(SettingsService);
+    menuSrv = TestBed.inject<MenuService>(MenuService);
+    doc = TestBed.inject(DOCUMENT);
     menuSrv.add(deepCopy(MOCKMENUS));
     page = new PageObject();
     if (needMockNavigateByUrl) spyOn(router, 'navigateByUrl');
@@ -121,7 +120,7 @@ describe('abc: sidebar-nav', () => {
   afterEach(() => context.comp.ngOnDestroy());
 
   describe('', () => {
-    configureTestSuite(createModule);
+    beforeEach(() => createModule());
 
     describe('[default]', () => {
       it('should be navigate url', () => {
@@ -141,7 +140,7 @@ describe('abc: sidebar-nav', () => {
       describe('should be navigate external link', () => {
         it('with target is _blank', () => {
           createComp();
-          const win = injector.get(WINDOW) as MockWindow;
+          const win = TestBed.inject(WINDOW) as MockWindow;
           spyOn(win, 'open');
           const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="6"]');
           itemEl!.click();
@@ -149,7 +148,7 @@ describe('abc: sidebar-nav', () => {
         });
         it('with target is _top', () => {
           createComp();
-          const win = injector.get(WINDOW) as MockWindow;
+          const win = TestBed.inject(WINDOW) as MockWindow;
           const itemEl = page.getEl<HTMLElement>('.sidebar-nav__item [data-id="7"]');
           itemEl!.click();
           expect(win.location.href).toBe(`//ng-alain.com/top`);
@@ -365,7 +364,10 @@ describe('abc: sidebar-nav', () => {
       const newMenus = [
         {
           text: '',
-          children: [{ text: 'new menu', acl: 'admin' }, { text: 'new menu', acl: 'user' }],
+          children: [
+            { text: 'new menu', acl: 'admin' },
+            { text: 'new menu', acl: 'user' },
+          ],
         },
       ];
       beforeEach(() => createComp());
@@ -456,8 +458,8 @@ describe('abc: sidebar-nav', () => {
   });
 
   describe('should be recursive path', () => {
-    configureTestSuite(() => {
-      injector = TestBed.configureTestingModule({
+    beforeEach(() => {
+      TestBed.configureTestingModule({
         imports: [
           RouterModule.forRoot([]),
           AlainThemeModule,
@@ -475,14 +477,17 @@ describe('abc: sidebar-nav', () => {
       fixture = TestBed.createComponent(TestComponent);
       dl = fixture.debugElement;
       context = fixture.componentInstance;
-      menuSrv = injector.get<MenuService>(MenuService);
+      menuSrv = TestBed.inject<MenuService>(MenuService);
       fixture.detectChanges();
       createComp(false);
       menuSrv.add([
         {
           text: '主导航',
           group: true,
-          children: [{ text: 'user1', link: '/user' }, { text: 'user2', link: '/user' }],
+          children: [
+            { text: 'user1', link: '/user' },
+            { text: 'user2', link: '/user' },
+          ],
         },
       ]);
     }));

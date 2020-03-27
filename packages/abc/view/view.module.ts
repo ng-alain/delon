@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-
 import { SVContainerComponent } from './view-container.component';
 import { SVTitleComponent } from './view-title.component';
 import { SVComponent } from './view.component';

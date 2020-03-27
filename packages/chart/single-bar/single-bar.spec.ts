@@ -4,7 +4,7 @@ import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
 import { G2SingleBarComponent } from './single-bar.component';
 import { G2SingleBarModule } from './single-bar.module';
 
-describe('chart: single-bar', () => {
+xdescribe('chart: single-bar', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 

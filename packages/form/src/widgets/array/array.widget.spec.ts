@@ -36,21 +36,10 @@ describe('form: widget: array', () => {
   });
 
   it('should be add item', () => {
-    page
-      .newSchema(schema)
-      .checkCount('.sf-array-item', 0)
-      .add()
-      .checkCount('.sf-array-item', 1);
+    page.newSchema(schema).checkCount('.sf-array-item', 0).add().checkCount('.sf-array-item', 1);
   });
   it(`should be maximum ${maxItems}`, () => {
-    page
-      .newSchema(schema)
-      .add()
-      .add()
-      .add()
-      .checkCount('.sf-array-item', maxItems)
-      .add()
-      .checkCount('.sf-array-item', maxItems);
+    page.newSchema(schema).add().add().add().checkCount('.sf-array-item', maxItems).add().checkCount('.sf-array-item', maxItems);
   });
   it('should be set values', () => {
     page
@@ -65,13 +54,7 @@ describe('form: widget: array', () => {
     it('with true', () => {
       const s = deepCopy(schema) as SFSchema;
       s.properties!.arr.ui = { removable: true };
-      page
-        .newSchema(s)
-        .checkCount('.sf-array-item', 0)
-        .add()
-        .checkCount('.sf-array-item', 1)
-        .remove()
-        .checkCount('.sf-array-item', 0);
+      page.newSchema(s).checkCount('.sf-array-item', 0).add().checkCount('.sf-array-item', 1).remove().checkCount('.sf-array-item', 0);
     });
     it('with false', () => {
       const s = deepCopy(schema) as SFSchema;
@@ -130,10 +113,7 @@ describe('form: widget: array', () => {
       return properties.map(p => p.path);
     }
     it('should be reset path subscript when remove item', () => {
-      page
-        .newSchema(deepCopy(schema))
-        .add()
-        .add();
+      page.newSchema(deepCopy(schema)).add().add();
       expect(getPaths().length).toBe(2);
       expect(getPaths()[0]).toBe('/arr/0');
       expect(getPaths()[1]).toBe('/arr/1');
@@ -142,10 +122,7 @@ describe('form: widget: array', () => {
       expect(getPaths()[0]).toBe('/arr/0');
     });
     it('should always start from 0', () => {
-      page
-        .newSchema(deepCopy(schema))
-        .add()
-        .add();
+      page.newSchema(deepCopy(schema)).add().add();
       expect(getPaths().length).toBe(2);
       expect(getPaths()[0]).toBe('/arr/0');
       expect(getPaths()[1]).toBe('/arr/1');

@@ -4,7 +4,7 @@ import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
 import { G2TimelineComponent, G2TimelineData } from './timeline.component';
 import { G2TimelineModule } from './timeline.module';
 
-describe('chart: timeline', () => {
+xdescribe('chart: timeline', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 

@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core';
+import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core/tree';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { deepCopy } from '../other/other';
 import { DelonUtilConfig } from '../util.config';
 import { DelonUtilModule } from '../util.module';
 import { ArrayService } from './array.service';
 
-const MOCK_ARR: any[] = [
+const MOCK_ARR: NzSafeAny[] = [
   { id: 1, pid: 0, name: 'name1', other: 'value1', halfChecked: true },
   { id: 2, pid: 0, name: 'name2', other: 'value2', disabled: true },
   { id: 3, pid: 1, name: 'name3', other: 'value3', expanded: true },
@@ -19,9 +20,10 @@ describe('utils: array', () => {
 
   describe('#treeToArr', () => {
     beforeEach(() => {
-      srv = TestBed.configureTestingModule({
+      TestBed.configureTestingModule({
         imports: [DelonUtilModule],
-      }).get<ArrayService>(ArrayService);
+      });
+      srv = TestBed.inject<ArrayService>(ArrayService);
     });
     it('should be tree to array', () => {
       const res = srv.treeToArr([
@@ -68,9 +70,10 @@ describe('utils: array', () => {
 
   describe('#arrToTree', () => {
     beforeEach(() => {
-      srv = TestBed.configureTestingModule({
+      TestBed.configureTestingModule({
         imports: [DelonUtilModule],
-      }).get<ArrayService>(ArrayService);
+      });
+      srv = TestBed.inject<ArrayService>(ArrayService);
     });
     it('should be array to tree', () => {
       const res = srv.arrToTree([
@@ -99,9 +102,10 @@ describe('utils: array', () => {
 
   describe('[NzTreeNode]', () => {
     beforeEach(() => {
-      srv = TestBed.configureTestingModule({
+      TestBed.configureTestingModule({
         imports: [DelonUtilModule],
-      }).get<ArrayService>(ArrayService);
+      });
+      srv = TestBed.inject<ArrayService>(ArrayService);
       page = new PageTreeNode();
     });
 
@@ -134,16 +138,9 @@ describe('utils: array', () => {
           const options = {
             [`${key}MapName`]: key,
           };
-          const res = srv.arrToTreeNode(
-            [{ id: 1, parent_id: 0, title: 't1', [key]: true, isLeaf: key !== 'expanded' }],
-            options,
-          );
+          const res = srv.arrToTreeNode([{ id: 1, parent_id: 0, title: 't1', [key]: true, isLeaf: key !== 'expanded' }], options);
           page = new PageTreeNode(res);
-          page.check(
-            '0',
-            key.startsWith('is') ? key : `is` + (key.slice(0, 1).toUpperCase() + key.slice(1)),
-            true,
-          );
+          page.check('0', key.startsWith('is') ? key : `is` + (key.slice(0, 1).toUpperCase() + key.slice(1)), true);
         });
       }
     });
@@ -158,7 +155,7 @@ describe('utils: array', () => {
       });
       it('should be include half checked', () => {
         const treeService = new NzTreeBaseService();
-        page.data.forEach((i: any) => {
+        page.data.forEach((i: NzSafeAny) => {
           spyOnProperty(i, 'treeService', 'get').and.returnValue(treeService);
         });
         page.data[0].isHalfChecked = true;
@@ -193,7 +190,7 @@ describe('utils: array', () => {
 
   describe('[config]', () => {
     beforeEach(() => {
-      srv = TestBed.configureTestingModule({
+      TestBed.configureTestingModule({
         imports: [DelonUtilModule],
         providers: [
           {
@@ -205,7 +202,8 @@ describe('utils: array', () => {
             },
           },
         ],
-      }).get<ArrayService>(ArrayService);
+      });
+      srv = TestBed.inject<ArrayService>(ArrayService);
     });
     it('should be tree to array', () => {
       const id = 100;
@@ -220,7 +218,7 @@ describe('utils: array', () => {
 
   class PageTreeNode {
     data: NzTreeNode[];
-    constructor(data?: any[]) {
+    constructor(data?: NzSafeAny[]) {
       this.data = data
         ? data
         : srv.arrToTreeNode(deepCopy(MOCK_ARR), {
@@ -228,21 +226,18 @@ describe('utils: array', () => {
             titleMapName: 'name',
           });
     }
-    check(path: string, field: string, value: any): this {
+    check(path: string, field: string, value: NzSafeAny): this {
       const pathArr = path.split('/');
       const firstIdx = +pathArr[0];
       let item = firstIdx >= this.data.length ? null : this.data[firstIdx];
       if (pathArr.length > 1) {
         const secondIdx = +pathArr[1];
-        item =
-          secondIdx >= (this.data as any)[firstIdx].children
-            ? null
-            : this.data[firstIdx].children[secondIdx];
+        item = secondIdx >= (this.data as NzSafeAny)[firstIdx].children ? null : this.data[firstIdx].children[secondIdx];
       }
       if (value == null) {
         expect(item == null).toBe(true);
       } else {
-        expect(item![field]).toBe(value);
+        expect((item! as NzSafeAny)[field]).toBe(value);
       }
       return this;
     }

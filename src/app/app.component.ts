@@ -1,18 +1,15 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ElementRef, HostBinding, Inject, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ALAIN_I18N_TOKEN, TitleService, VERSION as VERSION_ALAIN } from '@delon/theme';
 import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
-import { BreakpointObserver } from '@angular/cdk/layout';
-
 import { I18NService } from './core/i18n/service';
 import { MetaService } from './core/meta.service';
 import { MobileService } from './core/mobile.service';
 
 @Component({
   selector: 'app-root',
-  template: `
-    <router-outlet></router-outlet>
-  `,
+  template: ` <router-outlet></router-outlet> `,
 })
 export class AppComponent {
   @HostBinding('class.mobile')
@@ -50,10 +47,7 @@ export class AppComponent {
       if (urlLang && ['zh', 'en'].indexOf(urlLang) === -1) {
         urlLang = this.i18n.zone;
       }
-      const redirectArr = evt.urlAfterRedirects
-        .split('#')[0]
-        .split('?')[0]
-        .split('/');
+      const redirectArr = evt.urlAfterRedirects.split('#')[0].split('?')[0].split('/');
       const redirectLang = redirectArr.pop();
       if (urlLang !== redirectLang) {
         let newUrl = '';

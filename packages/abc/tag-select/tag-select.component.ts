@@ -33,6 +33,7 @@ export class TagSelectComponent implements OnInit, OnDestroy {
 
   /** 是否启用 `展开与收进` */
   @Input() @InputBoolean() expandable = true;
+  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<boolean>();
 
   constructor(private i18n: DelonLocaleService, private cdr: ChangeDetectorRef) {}

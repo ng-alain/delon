@@ -1,21 +1,19 @@
 import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { fakeAsync, tick, TestBed, TestBedStatic } from '@angular/core/testing';
-import { deepCopy } from '@delon/util';
 import { Type } from '@angular/core';
-
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { deepCopy } from '@delon/util';
 import { AlainThemeConfig } from '../../theme.config';
 import { _HttpClient } from './http.client';
 import { HttpClientConfig } from './http.config';
 
 describe('theme: http.client', () => {
-  let injector: TestBedStatic;
   let http: _HttpClient;
   let backend: HttpTestingController;
   const time = new Date();
   const URL = '/user';
   const OK = 'ok!';
-  const PARAMS = { a: 1 };
+  const PARAMS: { [key: string]: string } = { a: `1` };
   const BODY = 'body data';
 
   function createModule(config?: HttpClientConfig) {
@@ -28,13 +26,13 @@ describe('theme: http.client', () => {
         }),
       });
     }
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers,
     });
 
-    http = injector.get<_HttpClient>(_HttpClient);
-    backend = injector.get(HttpTestingController as Type<HttpTestingController>);
+    http = TestBed.inject<_HttpClient>(_HttpClient);
+    backend = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }
 
   describe('[property]', () => {
@@ -108,11 +106,13 @@ describe('theme: http.client', () => {
       });
 
       it(`return a HttpResponse<Blob>`, done => {
-        http.get<Blob>(URL, PARAMS, { observe: 'response', responseType: 'blob' }).subscribe(res => {
-          expect(res.status).toBe(200);
-          expect(res.body instanceof Blob).toBe(true);
-          done();
-        });
+        http
+          .get<Blob>(URL, PARAMS, { observe: 'response', responseType: 'blob' })
+          .subscribe(res => {
+            expect(res.status).toBe(200);
+            expect(res.body instanceof Blob).toBe(true);
+            done();
+          });
         backend.expectOne(() => true).flush(new Blob());
       });
 
@@ -131,7 +131,11 @@ describe('theme: http.client', () => {
             expect(res).toBe(1);
             done();
           });
-          backend.expectOne(() => true).event(new HttpResponse<number>({ body: 1 }));
+          backend
+            .expectOne(() => true)
+            .event(
+              new HttpResponse<number>({ body: 1 }),
+            );
         });
         it('with boolean', done => {
           http.get<boolean>(URL).subscribe(res => {
@@ -139,7 +143,11 @@ describe('theme: http.client', () => {
             expect(res).toBe(true);
             done();
           });
-          backend.expectOne(() => true).event(new HttpResponse<boolean>({ body: true }));
+          backend
+            .expectOne(() => true)
+            .event(
+              new HttpResponse<boolean>({ body: true }),
+            );
         });
         it('with object', done => {
           http.get<object>(URL).subscribe(res => {
@@ -149,18 +157,22 @@ describe('theme: http.client', () => {
           backend.expectOne(() => true).flush({});
         });
         it('with HttpEvent', done => {
-          http.get<object>(URL, PARAMS, { observe: 'events' }).subscribe(res => {
-            expect(typeof res).toBe('object');
-            expect(typeof res.type).toBe('number');
-            done();
-          });
+          http
+            .get<object>(URL, PARAMS, { observe: 'events' })
+            .subscribe(res => {
+              expect(typeof res).toBe('object');
+              expect(typeof res.type).toBe('number');
+              done();
+            });
           backend.expectOne(() => true).flush({});
         });
         it('with response', done => {
-          http.get<object>(URL, PARAMS, { observe: 'response' }).subscribe(res => {
-            expect(res instanceof HttpResponse).toBe(true);
-            done();
-          });
+          http
+            .get<object>(URL, PARAMS, { observe: 'response' })
+            .subscribe(res => {
+              expect(res instanceof HttpResponse).toBe(true);
+              done();
+            });
           backend.expectOne(() => true).flush({});
         });
       });
@@ -241,11 +253,13 @@ describe('theme: http.client', () => {
       });
 
       it('return a HttpEvent', done => {
-        http.post<object>(URL, BODY, PARAMS, { observe: 'events' }).subscribe(res => {
-          expect(typeof res).toBe('object');
-          expect(typeof res.type).toBe('number');
-          done();
-        });
+        http
+          .post<object>(URL, BODY, PARAMS, { observe: 'events' })
+          .subscribe(res => {
+            expect(typeof res).toBe('object');
+            expect(typeof res.type).toBe('number');
+            done();
+          });
         backend.expectOne(() => true).flush({});
       });
 

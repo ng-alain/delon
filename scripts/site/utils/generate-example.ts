@@ -16,15 +16,11 @@ export function generateExampleModule(rootDir: string, siteConfig: SiteConfig, o
     )
     .join(`\n`);
 
-  options.components = [...options.list.map(i => i.componentName), ...options.list.map(i => i.componentIndexName)].join(
-    ',',
-  );
+  options.components = [...options.list.map(i => i.componentName), ...options.list.map(i => i.componentIndexName)].join(',');
 
   options.metadata = options.list
-    .map(
-      i => `'example-${i.name}-index': { title: ${JSON.stringify(i.meta.title)}, component: ${i.componentIndexName} }`,
-    )
-    .join(`\n`);
+    .map(i => `'example-${i.name}-index': { title: ${JSON.stringify(i.meta.title)}, component: ${i.componentIndexName} }`)
+    .join(`,\n`);
 
   generateDoc(options, tpl, indexFilePath);
 }

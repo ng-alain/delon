@@ -9,16 +9,13 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
-
 import { QRConfig } from './qr.config';
 import { QRService } from './qr.service';
 
 @Component({
   selector: 'qr',
   exportAs: 'qr',
-  template: `
-    <img class="qr__img" src="{{ dataURL }}" />
-  `,
+  template: ` <img class="qr__img" src="{{ dataURL }}" /> `,
   host: {
     '[class.qr]': 'true',
     '[style.height.px]': 'size',
@@ -42,6 +39,7 @@ export class QRComponent implements OnChanges {
   @Input() @InputNumber() padding: number;
   @Input() @InputNumber() size: number;
   @Input() value: string;
+  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<string>();
 
   // #endregion

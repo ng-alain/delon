@@ -16,14 +16,12 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { ReuseTabService } from '@delon/abc/reuse-tab';
+import { ALAIN_I18N_TOKEN, AlainI18NService, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
+import { InputBoolean, InputNumber, isEmpty } from '@delon/util';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-
-import { ReuseTabService } from '@delon/abc/reuse-tab';
-import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
-import { isEmpty, InputBoolean, InputNumber } from '@delon/util';
-
 import { PageHeaderConfig } from './page-header.config';
 
 interface PageHeaderPath {

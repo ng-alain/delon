@@ -1,3 +1,6 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { warn } from '../logger/logger';
+
 export function isEmpty(element: HTMLElement): boolean {
   const nodes = element.childNodes;
   for (let i = 0; i < nodes.length; i++) {
@@ -9,6 +12,39 @@ export function isEmpty(element: HTMLElement): boolean {
     }
   }
   return true;
+}
+
+function propDecoratorFactory<T, D>(
+  name: string,
+  fallback: (v: T, defaultValue: D) => D,
+  defaultValue: NzSafeAny,
+): (target: NzSafeAny, propName: string) => void {
+  function propDecorator(target: NzSafeAny, propName: string, originalDescriptor?: TypedPropertyDescriptor<NzSafeAny>): NzSafeAny {
+    const privatePropName = `$$__${propName}`;
+
+    if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
+      warn(`The prop "${privatePropName}" is already exist, it will be overrided by ${name} decorator.`);
+    }
+
+    Object.defineProperty(target, privatePropName, {
+      configurable: true,
+      writable: true,
+    });
+
+    return {
+      get(): string {
+        return originalDescriptor && originalDescriptor.get ? originalDescriptor.get.bind(this)() : this[privatePropName];
+      },
+      set(value: T): void {
+        if (originalDescriptor && originalDescriptor.set) {
+          originalDescriptor.set.bind(this)(fallback(value, defaultValue));
+        }
+        this[privatePropName] = fallback(value, defaultValue);
+      },
+    };
+  }
+
+  return propDecorator;
 }
 
 export function toBoolean(value: any, allowUndefined: boolean | null = false): boolean | undefined {
@@ -23,29 +59,8 @@ export function toBoolean(value: any, allowUndefined: boolean | null = false): b
  * @Input() @InputBoolean(null) visible: boolean = false;
  * ```
  */
-export function InputBoolean(allowUndefined: boolean | null = false): any {
-  return function InputBooleanPropDecorator(target: object, name: string): void {
-    // Add our own private prop
-    const privatePropName = `$$__${name}`;
-
-    if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
-      console.warn(`The prop "${privatePropName}" is already exist, it will be overrided by InputBoolean decorator.`);
-    }
-
-    Object.defineProperty(target, privatePropName, {
-      configurable: true,
-      writable: true,
-    });
-
-    Object.defineProperty(target, name, {
-      get(): boolean {
-        return this[privatePropName]; // tslint:disable-line:no-invalid-this
-      },
-      set(value: any): void {
-        this[privatePropName] = toBoolean(value, allowUndefined); // tslint:disable-line:no-invalid-this
-      },
-    });
-  };
+export function InputBoolean(defaultValue: boolean | null = false): NzSafeAny {
+  return propDecoratorFactory('InputNumber', toBoolean, defaultValue);
 }
 
 export function toNumber(value: any): number;
@@ -62,27 +77,6 @@ export function toNumber(value: any, fallbackValue: number = 0): number {
  * @Input() @InputNumber(null) visible: number = 2;
  * ```
  */
-export function InputNumber(fallback: number | null = 0): any {
-  return function InputBooleanPropDecorator(target: object, name: string): void {
-    // Add our own private prop
-    const privatePropName = `$$__${name}`;
-
-    if (Object.prototype.hasOwnProperty.call(target, privatePropName)) {
-      console.warn(`The prop "${privatePropName}" is already exist, it will be overrided by InputNumber decorator.`);
-    }
-
-    Object.defineProperty(target, privatePropName, {
-      configurable: true,
-      writable: true,
-    });
-
-    Object.defineProperty(target, name, {
-      get(): boolean {
-        return this[privatePropName]; // tslint:disable-line:no-invalid-this
-      },
-      set(value: any): void {
-        this[privatePropName] = toNumber(value, fallback); // tslint:disable-line:no-invalid-this
-      },
-    });
-  };
+export function InputNumber(defaultValue: number | null = 0): NzSafeAny {
+  return propDecoratorFactory('InputNumber', toNumber, defaultValue);
 }

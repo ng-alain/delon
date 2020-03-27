@@ -16,8 +16,8 @@ import {
   SimpleChange,
   SimpleChanges,
   TemplateRef,
-  ViewEncapsulation,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -31,12 +31,13 @@ import {
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
-import { deepMerge, deepMergeKey, toBoolean, updateHostClass, InputBoolean, InputNumber } from '@delon/util';
-import { of, Observable, Subject, from, Subscription } from 'rxjs';
+import { deepMerge, deepMergeKey, InputBoolean, InputNumber, toBoolean, updateHostClass } from '@delon/util';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { NzTableComponent, NzTableStyleService } from 'ng-zorro-antd/table';
+import { from, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-
 import { STColumnSource } from './table-column-source';
-import { STDataSource, STDataSourceResult, STDataSourceOptions } from './table-data-source';
+import { STDataSource, STDataSourceOptions, STDataSourceResult } from './table-data-source';
 import { STExport } from './table-export';
 import { STRowSource } from './table-row.directive';
 import { STConfig } from './table.config';
@@ -55,19 +56,18 @@ import {
   STPage,
   STReq,
   STRes,
+  STResetColumnsOption,
   STRowClassName,
   STSingleSort,
   STStatisticalResults,
   STWidthMode,
-  STResetColumnsOption,
 } from './table.interfaces';
-import { NzTableComponent } from 'ng-zorro-antd/table';
 
 @Component({
   selector: 'st',
   exportAs: 'st',
   templateUrl: './table.component.html',
-  providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
+  providers: [NzTableStyleService, STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -86,7 +86,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _allCheckedDisabled = false;
   _indeterminate = false;
   _columns: STColumn[] = [];
-  @ViewChild('table', { static: false }) orgTable: NzTableComponent;
+  @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
 
   /** 请求体配置 */
   @Input()
@@ -205,10 +205,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
   /** 请求异常时回调 */
+  // tslint:disable-next-line:no-output-native
   @Output() readonly error = new EventEmitter<STError>();
   /**
    * 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动
    */
+  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<STChange>();
 
   /**
@@ -272,10 +274,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   renderTotal(total: string, range: string[]) {
     return this.totalTpl
-      ? this.totalTpl
-          .replace('{{total}}', total)
-          .replace('{{range[0]}}', range[0])
-          .replace('{{range[1]}}', range[1])
+      ? this.totalTpl.replace('{{total}}', total).replace('{{range[0]}}', range[0]).replace('{{range[1]}}', range[1])
       : '';
   }
 
@@ -390,10 +389,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   /** 清空所有状态 */
   clearStatus(): this {
-    return this.clearCheck()
-      .clearRadio()
-      .clearFilter()
-      .clearSort();
+    return this.clearCheck().clearRadio().clearFilter().clearSort();
   }
 
   /**
@@ -670,7 +666,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         deepMergeKey({}, true, this.copyCog.modal, modal),
       )
         .pipe(filter(w => typeof w !== 'undefined'))
-        .subscribe(res => this.btnCallback(record, btn, res));
+        .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
       return;
     } else if (btn.type === 'drawer') {
       const { drawer } = btn;

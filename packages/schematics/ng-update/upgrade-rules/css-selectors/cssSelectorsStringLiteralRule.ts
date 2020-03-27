@@ -6,8 +6,8 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import chalk from 'chalk';
-import { Replacement, Rules, RuleFailure, RuleWalker } from 'tslint';
+import * as chalk from 'chalk';
+import { Replacement, RuleFailure, Rules, RuleWalker } from 'tslint';
 import * as ts from 'typescript';
 import { CssSelectorUpgradeData } from '../../data/css-selectors';
 import { findAllSubstringIndices } from '../../typescript/literal';
@@ -48,15 +48,10 @@ export class Walker extends RuleWalker {
   }
 
   /** Adds a css selector failure with the given replacement at the specified node. */
-  private _addFailureWithReplacement(
-    node: ts.Node,
-    replacement: Replacement,
-    data: CssSelectorUpgradeData,
-  ) {
+  private _addFailureWithReplacement(node: ts.Node, replacement: Replacement, data: CssSelectorUpgradeData) {
     this.addFailureAtNode(
       node,
-      `Found deprecated CSS selector "${chalk.red(data.replace)}" which has ` +
-        `been renamed to "${chalk.green(data.replaceWith)}"`,
+      `Found deprecated CSS selector "${chalk.red(data.replace)}" which has ` + `been renamed to "${chalk.green(data.replaceWith)}"`,
       replacement,
     );
   }

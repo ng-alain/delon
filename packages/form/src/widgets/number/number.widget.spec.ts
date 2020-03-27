@@ -1,6 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { fakeAsync, ComponentFixture } from '@angular/core/testing';
-
+import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
@@ -143,10 +142,7 @@ describe('form: widget: number', () => {
         formatter: jasmine.createSpy('formatter'),
         parser: jasmine.createSpy('parser'),
       });
-      page
-        .newSchema(s)
-        .typeChar(10)
-        .typeEvent('blur');
+      page.newSchema(s).typeChar(10).typeEvent('blur');
       expect(ui.formatter).toHaveBeenCalled();
       expect(ui.parser).toHaveBeenCalled();
     }));

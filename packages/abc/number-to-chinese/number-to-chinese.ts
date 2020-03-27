@@ -1,3 +1,4 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NumberToChineseOptions } from './number-to-chinese.interfaces';
 
 export function numberToChinese(value: number | string, rmb = true, options?: NumberToChineseOptions): string {
@@ -23,50 +24,8 @@ export function numberToChinese(value: number | string, rmb = true, options?: Nu
       ? ['', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖', '点']
       : ['', '一', '二', '三', '四', '五', '六', '七', '八', '九', '点'],
     radice: rmb
-      ? [
-          '',
-          '拾',
-          '佰',
-          '仟',
-          '万',
-          '拾',
-          '佰',
-          '仟',
-          '亿',
-          '拾',
-          '佰',
-          '仟',
-          '万亿',
-          '拾',
-          '佰',
-          '仟',
-          '兆',
-          '拾',
-          '佰',
-          '仟',
-        ]
-      : [
-          '',
-          '十',
-          '百',
-          '千',
-          '万',
-          '十',
-          '百',
-          '千',
-          '亿',
-          '十',
-          '百',
-          '千',
-          '万亿',
-          '十',
-          '百',
-          '千',
-          '兆',
-          '十',
-          '百',
-          '千',
-        ],
+      ? ['', '拾', '佰', '仟', '万', '拾', '佰', '仟', '亿', '拾', '佰', '仟', '万亿', '拾', '佰', '仟', '兆', '拾', '佰', '仟']
+      : ['', '十', '百', '千', '万', '十', '百', '千', '亿', '十', '百', '千', '万亿', '十', '百', '千', '兆', '十', '百', '千'],
     dec: ['角', '分', '厘', '毫'],
   };
   if (rmb) value = (+value).toFixed(5).toString();
@@ -110,15 +69,13 @@ export function numberToChinese(value: number | string, rmb = true, options?: Nu
       if (rmb && i > unit.dec.length - 1) break;
       const n = decimal[i];
       const cnZero = n === '0' ? '零' : '';
-      const cnNum = unit.num[n];
+      const cnNum = (unit.num as NzSafeAny)[n];
       const cnDesc = rmb ? unit.dec[i] : '';
       decimalRes += cnZero + cnNum + cnDesc;
     }
   }
   const ret =
     symbol +
-    (rmb
-      ? integerRes + (decimalRes === '零' ? '元整' : `元${decimalRes}`)
-      : integerRes + (decimalRes === '' ? '' : `点${decimalRes}`));
+    (rmb ? integerRes + (decimalRes === '零' ? '元整' : `元${decimalRes}`) : integerRes + (decimalRes === '' ? '' : `点${decimalRes}`));
   return ret;
 }

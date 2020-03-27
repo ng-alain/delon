@@ -19,10 +19,12 @@ commitMessageCheck=$(git log --oneline -n 2)
 
 echo "Current commit author name: ${commitAuthorName}"
 
-if [ ${commitAuthorName} != '卡色' ]; then
-  echo "Warning: Just only 卡色 user"
+if [[ ${commitAuthorName} != '卡色' && ${commitAuthorName} != 'cipchk' ]]; then
+  echo "Warning: Just only 卡色 or cipchk user"
   exit 0
 fi
+
+echo "DELON_BUILDS_TOKEN: ${DELON_BUILDS_TOKEN}.."
 
 if [ -z ${DELON_BUILDS_TOKEN} ]; then
   echo "Error: No access token for GitHub could be found." \

@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { getTestBed, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, getTestBed, TestBed } from '@angular/core/testing';
 
 export class TestContext<T> {
   constructor(public fixture: ComponentFixture<T>) {}

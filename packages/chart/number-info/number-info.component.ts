@@ -1,14 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  Renderer2,
-  TemplateRef,
-  ViewEncapsulation,
-} from '@angular/core';
-import { updateHostClass, InputNumber } from '@delon/util';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, Renderer2, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { InputNumber, updateHostClass } from '@delon/util';
 
 @Component({
   selector: 'number-info',

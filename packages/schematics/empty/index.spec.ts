@@ -11,21 +11,15 @@ describe('Schematic: empty', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainAndModuleApp());
-    tree = await runner
-      .runSchematicAsync('empty', { name: 'list', module: 'trade' }, tree)
-      .toPromise();
+    tree = await runner.runSchematicAsync('empty', { name: 'list', module: 'trade' }, tree).toPromise();
   });
 
   it('should be generate list page', () => {
-    [modulePath, routingPath, tsPath, htmlPath].forEach(path =>
-      expect(tree.exists(path)).toBe(true),
-    );
+    [modulePath, routingPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
   });
 
   it('should be has import code', () => {
-    expect(tree.readContent(modulePath)).toContain(
-      `import { TradeListComponent } from './list/list.component';`,
-    );
+    expect(tree.readContent(modulePath)).toContain(`import { TradeListComponent } from './list/list.component';`);
   });
 
   it('should be include module name in component name', () => {

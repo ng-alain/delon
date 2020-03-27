@@ -1,4 +1,3 @@
-import { DomSanitizer } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -14,12 +13,12 @@ import {
   Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Menu, MenuService, SettingsService, WINDOW } from '@delon/theme';
 import { InputBoolean } from '@delon/util';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { Nav } from './sidebar-nav.types';
 
 const SHOWCLS = 'sidebar-nav__floating-show';
@@ -47,6 +46,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
   @Input() @InputBoolean() autoCloseUnderPad = true;
   @Input() @InputBoolean() recursivePath = true;
   @Input() @InputBoolean() openStrictly = false;
+  // tslint:disable-next-line:no-output-native
   @Output() readonly select = new EventEmitter<Menu>();
 
   get collapsed() {

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { deepCopy, LazyService } from '@delon/util';
 import * as fs from 'file-saver';
@@ -49,15 +49,17 @@ class MockHttpClient {
 }
 
 describe('abc: xlsx', () => {
-  let injector: TestBedStatic;
   let srv: XlsxService;
   function genModule() {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [XlsxModule, HttpClientTestingModule],
       declarations: [TestComponent],
-      providers: [{ provide: HttpClient, useClass: MockHttpClient }, { provide: LazyService, useClass: MockLazyService }],
+      providers: [
+        { provide: HttpClient, useClass: MockHttpClient },
+        { provide: LazyService, useClass: MockLazyService },
+      ],
     });
-    srv = injector.get<XlsxService>(XlsxService);
+    srv = TestBed.inject<XlsxService>(XlsxService);
   }
 
   beforeEach(() => {
@@ -73,7 +75,7 @@ describe('abc: xlsx', () => {
     it('should be load xlsx lib when not found XLSX in window', () => {
       delete (window as any).XLSX;
       genModule();
-      const lazySrv: LazyService = injector.get<LazyService>(LazyService);
+      const lazySrv: LazyService = TestBed.inject<LazyService>(LazyService);
       spyOn(lazySrv, 'load').and.callFake(() => Promise.reject());
       expect(lazySrv.load).not.toHaveBeenCalled();
       srv.import('/1.xlsx').catch(() => {});
@@ -126,7 +128,7 @@ describe('abc: xlsx', () => {
 
   describe('[#export]', () => {
     beforeEach(() => {
-      spyOn(fs.default, 'saveAs');
+      spyOn(fs, 'saveAs');
       genModule();
     });
     it('should be export xlsx via array', (done: () => void) => {
@@ -135,7 +137,7 @@ describe('abc: xlsx', () => {
           sheets: [{ data: null, name: 'asdf.xlsx' }, { data: null }],
         } as XlsxExportOptions)
         .then(() => {
-          expect(fs.default.saveAs).toHaveBeenCalled();
+          expect(fs.saveAs).toHaveBeenCalled();
           done();
         });
     });
@@ -147,7 +149,7 @@ describe('abc: xlsx', () => {
           },
         } as XlsxExportOptions)
         .then(() => {
-          expect(fs.default.saveAs).toHaveBeenCalled();
+          expect(fs.saveAs).toHaveBeenCalled();
           done();
         });
     });
@@ -188,9 +190,7 @@ describe('abc: xlsx', () => {
 });
 
 @Component({
-  template: `
-    <button [xlsx]="data"></button>
-  `,
+  template: ` <button [xlsx]="data"></button> `,
 })
 class TestComponent {
   data: any = {};

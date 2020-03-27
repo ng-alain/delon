@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
-import { of, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { debounceTime, flatMap, map, startWith } from 'rxjs/operators';
-
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getCopyEnum, getEnum, toBool } from '../../utils';

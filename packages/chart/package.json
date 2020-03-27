@@ -25,6 +25,7 @@
     "component"
   ],
   "dependencies": {
+    "@antv/g2": "^4.0.5",
     "@delon/util": "PEER-0.0.0-PLACEHOLDER",
     "@delon/theme": "PEER-0.0.0-PLACEHOLDER"
   },

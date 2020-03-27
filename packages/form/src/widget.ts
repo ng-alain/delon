@@ -1,14 +1,14 @@
-import { DomSanitizer } from '@angular/platform-browser';
 import { AfterViewInit, ChangeDetectorRef, HostBinding, Inject, Injector } from '@angular/core';
-import { takeUntil } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 import { LocaleData } from '@delon/theme';
+import { takeUntil } from 'rxjs/operators';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
 import { ArrayProperty } from './model/array.property';
 import { FormProperty } from './model/form.property';
 import { ObjectProperty } from './model/object.property';
 import { SFSchema } from './schema';
-import { SFUISchemaItem, SFOptionalHelp } from './schema/ui';
+import { SFOptionalHelp, SFUISchemaItem } from './schema/ui';
 import { SFItemComponent } from './sf-item.component';
 import { SFComponent } from './sf.component';
 import { di } from './utils';
@@ -53,7 +53,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     @Inject(Injector) public readonly injector: Injector,
     @Inject(SFItemComponent) public readonly sfItemComp?: SFItemComponent,
     @Inject(SFComponent) public readonly sfComp?: SFComponent,
-  ) { }
+  ) {}
 
   ngAfterViewInit(): void {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe((errors: ErrorData[] | null) => {
@@ -92,15 +92,15 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
 }
 
 export class ControlWidget extends Widget<FormProperty, SFUISchemaItem> {
-  reset(_value: SFValue) { }
+  reset(_value: SFValue) {}
 }
 
 export class ControlUIWidget<UIT extends SFUISchemaItem> extends Widget<FormProperty, UIT> {
-  reset(_value: SFValue) { }
+  reset(_value: SFValue) {}
 }
 
 export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema> implements AfterViewInit {
-  reset(_value: SFValue) { }
+  reset(_value: SFValue) {}
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
@@ -108,7 +108,7 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema
 }
 
 export class ObjectLayoutWidget extends Widget<ObjectProperty, SFObjectWidgetSchema> implements AfterViewInit {
-  reset(_value: SFValue) { }
+  reset(_value: SFValue) {}
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());

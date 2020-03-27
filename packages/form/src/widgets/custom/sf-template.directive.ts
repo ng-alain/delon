@@ -1,6 +1,6 @@
 import { Directive, Input, OnInit, TemplateRef } from '@angular/core';
-import { SFComponent } from '../../sf.component';
 import { SF_SEQ } from '../../const';
+import { SFComponent } from '../../sf.component';
 
 @Directive({
   selector: '[sf-template]',

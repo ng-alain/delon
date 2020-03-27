@@ -1,9 +1,8 @@
 import { strings } from '@angular-devkit/core';
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { findNodes } from '@schematics/angular/utility/ast-utils';
-import { parseFragment, Attribute, DefaultTreeDocument, DefaultTreeElement, DefaultTreeNode } from 'parse5';
+import { Attribute, DefaultTreeDocument, DefaultTreeElement, DefaultTreeNode, parseFragment } from 'parse5';
 import * as ts from 'typescript';
-
 import { getSourceFile, updateComponentMetadata } from '../utils/ast';
 import { PluginOptions } from './interface';
 

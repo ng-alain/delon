@@ -16,9 +16,7 @@ import { debounceTime } from 'rxjs/operators';
 @Component({
   selector: 'g2,g2-custom',
   exportAs: 'g2Custom',
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
   host: {
     '[style.height.px]': 'height',
   },
@@ -34,6 +32,7 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
   @Input() @InputNumber() height: number;
   @Input() @InputNumber() resizeTime = 0;
   @Output() readonly render = new EventEmitter<ElementRef>();
+  // tslint:disable-next-line:no-output-native
   @Output() readonly resize = new EventEmitter<ElementRef>();
   @Output() readonly destroy = new EventEmitter<ElementRef>();
 

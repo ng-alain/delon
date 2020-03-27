@@ -13,12 +13,11 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { updateHostClass, InputBoolean, InputNumber } from '@delon/util';
+import { Chart } from '@antv/g2';
+import { InteractionType } from '@delon/chart/core/types';
+import { InputBoolean, InputNumber, updateHostClass } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-
-declare var G2: any;
-declare var DataSet: any;
 
 export interface G2PieData {
   x: any;
@@ -37,7 +36,7 @@ export interface G2PieData {
 export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   private resize$: Subscription;
   @ViewChild('container', { static: true }) private node: ElementRef;
-  private chart: any;
+  private chart: Chart;
   private isPercent: boolean;
   private percentColor: any;
   legendData: any[] = [];
@@ -52,7 +51,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() height = 0;
   @Input() @InputBoolean() hasLegend = false;
   @Input() inner = 0.75;
-  @Input() padding: number[] = [12, 0, 12, 0];
+  @Input() padding: number | number[] | 'auto' = [12, 0, 12, 0];
   @Input() @InputNumber() percent: number;
   @Input() @InputBoolean() tooltip = true;
   @Input() @InputNumber() lineWidth = 0;
@@ -60,15 +59,11 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() valueFormat: (y: number) => string;
   @Input() data: G2PieData[] = [];
   @Input() colors: any[];
+  @Input() interaction: InteractionType = 'none';
 
   // #endregion
 
-  constructor(
-    private el: ElementRef,
-    private rend: Renderer2,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef,
-  ) {}
+  constructor(private el: ElementRef, private rend: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
   private setCls() {
     const { el, rend, hasLegend, isPercent } = this;
@@ -92,7 +87,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     if (this.isPercent) {
       this.select = false;
       this.tooltip = false;
-      this.percentColor = value => (value === '占比' ? color || 'rgba(24, 144, 255, 0.85)' : '#F0F2F5');
+      this.percentColor = (value: string) => (value === '占比' ? color || 'rgba(24, 144, 255, 0.85)' : '#F0F2F5');
       this.data = [
         {
           x: '占比',
@@ -109,13 +104,12 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   private install() {
     this.setCls();
 
-    const { node, height, padding, animate, tooltip, inner, hasLegend } = this;
-    const chart = (this.chart = new G2.Chart({
+    const { node, height, padding, tooltip, inner, hasLegend, interaction } = this;
+    const chart = (this.chart = new Chart({
       container: node.nativeElement,
-      forceFit: true,
+      autoFit: true,
       height,
       padding,
-      animate,
     }));
 
     if (!tooltip) {
@@ -123,28 +117,23 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     } else {
       chart.tooltip({
         showTitle: false,
-        itemTpl: '<li><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value} %</li>',
+        showMarkers: false,
       });
     }
-
-    chart.axis(false);
-    chart.legend(false);
-
-    chart.coord('theta', { innerRadius: inner });
-
+    if (interaction !== 'none') {
+      chart.interaction(interaction);
+    }
+    chart.axis(false).legend(false).coordinate('theta', { innerRadius: inner });
     chart.filter('x', (_val: any, item: any) => item.checked !== false);
-
     chart
-      .intervalStack()
+      .interval()
+      .adjust('stack')
       .position('y')
-      .tooltip('x*percent', (name, p) => ({
+      .tooltip('x*percent', (name: string, p: number) => ({
         name,
-        // 由于 hasLegend 会优先处理为百分比格式，因此无需要在 tooltip 中重新转换
-        value: hasLegend ? p : (p * 100).toFixed(2),
+        value: `${hasLegend ? p : (p * 100).toFixed(2)} %`,
       }))
-      .select(this.select);
-
-    chart.render();
+      .state({});
 
     this.attachChart();
   }
@@ -153,29 +142,22 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     const { chart, height, padding, animate, data, lineWidth, isPercent, percentColor, colors } = this;
     if (!chart) return;
 
-    chart.set('height', height);
-    chart.set('padding', padding);
-    chart.set('animate', animate);
-
-    chart
-      .get('geoms')[0]
-      .style({ lineWidth, stroke: '#fff' })
-      .color('x', isPercent ? percentColor : colors);
-
-    const dv = new DataSet.DataView();
-    dv.source(data).transform({
-      type: 'percent',
-      field: 'y',
-      dimension: 'x',
-      as: 'percent',
-    });
-    chart.source(dv, {
+    chart.height = height;
+    chart.padding = padding;
+    chart.animate(animate);
+    chart.geometries[0].style({ lineWidth, stroke: '#fff' }).color('x', isPercent ? percentColor : colors);
+    chart.scale({
       x: {
         type: 'cat',
         range: [0, 1],
       },
     });
-    chart.repaint();
+    // 转化 percent
+    const totalSum = data.reduce((cur, item) => cur + item.y, 0);
+    for (const item of data) {
+      item.percent = totalSum === 0 ? 0 : item.y / totalSum;
+    }
+    chart.changeData(data);
 
     this.ngZone.run(() => this.genLegend());
   }
@@ -184,16 +166,13 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     const { hasLegend, isPercent, cdr, chart } = this;
     if (!hasLegend || isPercent) return;
 
-    this.legendData = chart
-      .get('geoms')[0]
-      .get('dataArray')
-      .map((item: any) => {
-        const origin = item[0]._origin;
-        origin.color = item[0].color;
-        origin.checked = true;
-        origin.percent = (origin.percent * 100).toFixed(2);
-        return origin;
-      });
+    this.legendData = chart.geometries[0].dataArray.map((item: any) => {
+      const origin = item[0]._origin;
+      origin.color = item[0].color;
+      origin.checked = true;
+      origin.percent = (origin.percent * 100).toFixed(2);
+      return origin;
+    });
 
     cdr.detectChanges();
   }
@@ -201,7 +180,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   _click(i: number) {
     const { legendData, chart } = this;
     legendData[i].checked = !legendData[i].checked;
-    chart.repaint();
+    chart.render();
   }
 
   private installResizeEvent() {

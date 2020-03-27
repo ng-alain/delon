@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { deepCopy } from '@delon/util';
 import { ObjectProperty } from '../src/model/object.property';
@@ -63,8 +63,8 @@ describe('form: schema', () => {
                 a: {
                   type: 'string',
                   ui: {
-                    grid: { span: 12 }
-                  }
+                    grid: { span: 12 },
+                  },
                 },
                 b: { type: 'string' },
               },
@@ -105,10 +105,7 @@ describe('form: schema', () => {
         },
         ui: { spanLabelFixed: 10, debug: true },
       };
-      page
-        .newSchema(schema)
-        .checkUI('/name', 'spanLabelFixed', 10)
-        .checkUI('/protocol', 'spanLabelFixed', 10);
+      page.newSchema(schema).checkUI('/name', 'spanLabelFixed', 10).checkUI('/protocol', 'spanLabelFixed', 10);
     });
     it('support invalid format value', () => {
       page
@@ -275,7 +272,10 @@ describe('form: schema', () => {
             login_type: {
               type: 'string',
               title: '登录方式',
-              enum: [{ label: '手机', value: 'mobile' }, { label: '账密', value: 'account' }],
+              enum: [
+                { label: '手机', value: 'mobile' },
+                { label: '账密', value: 'account' },
+              ],
               default: 'mobile',
               ui: {
                 widget: 'radio',
@@ -318,7 +318,10 @@ describe('form: schema', () => {
             login_type: {
               type: 'string',
               title: '登录方式',
-              enum: [{ label: '手机', value: 'mobile' }, { label: '账密', value: 'account' }],
+              enum: [
+                { label: '手机', value: 'mobile' },
+                { label: '账密', value: 'account' },
+              ],
               default: 'mobile',
               ui: {
                 widget: 'radio',
@@ -367,7 +370,10 @@ describe('form: schema', () => {
             login_type: {
               type: 'string',
               title: '登录方式',
-              enum: [{ label: '手机', value: 'mobile' }, { label: '账密', value: 'account' }],
+              enum: [
+                { label: '手机', value: 'mobile' },
+                { label: '账密', value: 'account' },
+              ],
               default: 'mobile',
               ui: {
                 widget: 'radio',

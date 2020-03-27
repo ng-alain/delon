@@ -30,15 +30,12 @@ export class DelonLocaleService {
     return this._locale;
   }
 
-  getData(path: string): LocaleData {
-    return this._locale[path] || {};
+  getData(path: keyof FullLocaleData): LocaleData {
+    return (this._locale[path] || {}) as LocaleData;
   }
 }
 
-export function DELON_LOCALE_SERVICE_PROVIDER_FACTORY(
-  exist: DelonLocaleService,
-  locale: FullLocaleData,
-): DelonLocaleService {
+export function DELON_LOCALE_SERVICE_PROVIDER_FACTORY(exist: DelonLocaleService, locale: FullLocaleData): DelonLocaleService {
   return exist || new DelonLocaleService(locale);
 }
 

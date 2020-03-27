@@ -1,8 +1,7 @@
 import { DebugElement } from '@angular/core';
-import { fakeAsync, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { NzTagComponent } from 'ng-zorro-antd/tag';
-
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 
@@ -30,7 +29,11 @@ describe('form: widget: tag', () => {
         a: {
           type: 'number',
           title: '兴趣',
-          enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
+          enum: [
+            { value: 1, label: '电影' },
+            { value: 2, label: '书' },
+            { value: 3, label: '旅行' },
+          ],
           ui: {
             widget: 'tag',
             checkedChange: jasmine.createSpy(),
@@ -66,7 +69,11 @@ describe('form: widget: tag', () => {
             a: {
               type: 'number',
               title: '兴趣',
-              enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
+              enum: [
+                { value: 1, label: '电影' },
+                { value: 2, label: '书' },
+                { value: 3, label: '旅行' },
+              ],
               ui: {
                 widget: 'tag',
                 mode: 'default',
@@ -86,7 +93,11 @@ describe('form: widget: tag', () => {
             a: {
               type: 'number',
               title: '兴趣',
-              enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
+              enum: [
+                { value: 1, label: '电影' },
+                { value: 2, label: '书' },
+                { value: 3, label: '旅行' },
+              ],
               ui: {
                 widget: 'tag',
                 mode: 'checkable',
@@ -107,7 +118,11 @@ describe('form: widget: tag', () => {
               a: {
                 type: 'number',
                 title: '兴趣',
-                enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
+                enum: [
+                  { value: 1, label: '电影' },
+                  { value: 2, label: '书' },
+                  { value: 3, label: '旅行' },
+                ],
                 ui: {
                   widget: 'tag',
                   mode: 'closeable',
@@ -117,7 +132,7 @@ describe('form: widget: tag', () => {
             },
           })
           .typeEvent('click', '.anticon')
-          .checkCount('.ant-tag', 2);
+          .checkCount('.ant-tag', 2, true);
       }));
       it('should be call close events', fakeAsync(() => {
         const s: SFSchema = {
@@ -125,11 +140,14 @@ describe('form: widget: tag', () => {
             a: {
               type: 'number',
               title: '兴趣',
-              enum: [{ value: 1, label: '电影' }, { value: 2, label: '书' }, { value: 3, label: '旅行' }],
+              enum: [
+                { value: 1, label: '电影' },
+                { value: 2, label: '书' },
+                { value: 3, label: '旅行' },
+              ],
               ui: {
                 widget: 'tag',
                 mode: 'closeable',
-                afterClose: jasmine.createSpy(),
                 onClose: jasmine.createSpy(),
               },
               default: [1, 2],
@@ -139,7 +157,6 @@ describe('form: widget: tag', () => {
         page.newSchema(s).typeEvent('click', '.anticon');
 
         const ui = s.properties!.a.ui as any;
-        expect(ui.afterClose).toHaveBeenCalled();
         expect(ui.onClose).toHaveBeenCalled();
       }));
     });

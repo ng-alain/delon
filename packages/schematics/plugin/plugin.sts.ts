@@ -1,13 +1,13 @@
 import {
   apply,
   chain,
+  MergeStrategy,
   mergeWith,
   move,
-  url,
-  MergeStrategy,
   Rule,
   SchematicContext,
   Tree,
+  url,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { addPackageToPackageJson, removePackageFromPackageJson } from '../utils/json';

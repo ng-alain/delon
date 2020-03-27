@@ -1,21 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Component, DebugElement, Type, ViewChild } from '@angular/core';
-import { discardPeriodicTasks, fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { Component, DebugElement, Injectable, Type, ViewChild } from '@angular/core';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of, Observable, Subject } from 'rxjs';
-
-import { en_US, ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, ModalHelper } from '@delon/theme';
+import { dispatchDropDown } from '@delon/testing';
+import { ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, en_US, ModalHelper } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
-import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
-import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-
-import { configureTestSuite, dispatchDropDown } from '@delon/testing';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzPaginationComponent } from 'ng-zorro-antd/pagination';
+import { Observable, of, Subject } from 'rxjs';
 import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/services/i18n/i18n';
 import { STDataSource } from '../table-data-source';
 import { STExport } from '../table-export';
@@ -23,18 +22,18 @@ import { STComponent } from '../table.component';
 import { STConfig } from '../table.config';
 import {
   STChange,
+  STChangeType,
   STColumn,
   STColumnBadge,
   STColumnFilter,
   STColumnTag,
+  STColumnTitle,
   STMultiSort,
   STPage,
   STReq,
   STRes,
   STResReNameType,
   STWidthMode,
-  STColumnTitle,
-  STChangeType,
 } from '../table.interfaces';
 import { STModule } from '../table.module';
 
@@ -69,6 +68,7 @@ const DEFAULTCOUNT = PS + 1;
 const USERS: any[] = genData(DEFAULTCOUNT);
 
 const i18nResult = 'zh';
+@Injectable()
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(_key: string) {
     return i18nResult;
@@ -76,7 +76,6 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
 }
 
 describe('abc: table', () => {
-  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
   let dl: DebugElement;
@@ -113,14 +112,14 @@ describe('abc: table', () => {
     if (other.providers!.length > 0) {
       providers.push(...other.providers!);
     }
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports,
       declarations: [TestComponent, TestExpandComponent],
       providers,
     });
     if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
     // ALAIN_I18N_TOKEN 默认为 root 会导致永远都会存在
-    i18nSrv = injector.get(ALAIN_I18N_TOKEN);
+    i18nSrv = TestBed.inject(ALAIN_I18N_TOKEN);
     if (other.createComp) {
       createComp(other.minColumn, TestComponent);
     }
@@ -140,125 +139,114 @@ describe('abc: table', () => {
   afterEach(() => comp.ngOnDestroy());
 
   describe('', () => {
-    configureTestSuite(() => genModule({ createComp: false }));
-    beforeEach(() => createComp(true, TestComponent));
+    beforeEach(() => {
+      genModule({ createComp: false });
+      createComp(true, TestComponent);
+    });
     describe('#columns', () => {
       describe('[title]', () => {
-        it('with STColumnTitle type', done => {
-          page.newColumn([{ title: { text: 'a' }, index: 'id' }]).then(() => {
-            page.expectHead('a', 'id', '.ant-table-column-title');
-            done();
-          });
-        });
-        it('should be render optional', done => {
-          page.newColumn([{ title: { text: 'a', optional: 'b', optionalHelp: 'help' }, index: 'id' }]).then(() => {
-            page.expectHead('b', 'id', '.st__head-optional');
-            expect(page.getHead('id').querySelector('.st__head-tip') != null).toBe(true);
-            done();
-          });
-        });
+        it('with STColumnTitle type', fakeAsync(() => {
+          page
+            .updateColumn([{ title: { text: 'a' }, index: 'id' }])
+            .expectHead('a', 'id')
+            .asyncEnd();
+        }));
+        it('should be render optional', fakeAsync(() => {
+          page
+            .updateColumn([{ title: { text: 'a', optional: 'b', optionalHelp: 'help' }, index: 'id' }])
+            .expectHead('b', 'id', '.st__head-optional');
+          expect(page.getHead('id').querySelector('.st__head-tip') != null).toBe(true);
+          page.asyncEnd();
+        }));
       });
       describe('[type]', () => {
         describe(`with checkbox`, () => {
-          it(`should be render checkbox`, done => {
-            page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
-              page
-                .expectElCount('.st__checkall', 1, 'muse be a check all')
-                .expectElCount('.st__body .ant-checkbox-wrapper', PS, `muse be ${PS} check in body`);
-              done();
-            });
-          });
-          it('should auto column width', done => {
-            page.newColumn([{ title: 'id', index: 'id', type: 'checkbox' }]).then(() => {
-              page.expectColumn('id', 'width', '50px');
-              done();
-            });
-          });
-          it('should be check all current page', done => {
-            page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
-              page.click('.st__checkall');
-              expect(comp._data.filter(w => w.checked).length).toBe(PS);
-              page.click('.st__checkall');
-              expect(comp._data.filter(w => w.checked).length).toBe(0);
-              done();
-            });
-          });
-          it('should be checked in row', done => {
-            page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
-              page
-                .expectData(1, 'checked', undefined)
-                .click('.st__body .ant-checkbox-wrapper')
-                .expectData(1, 'checked', true)
-                .click('.st__body .ant-checkbox-wrapper')
-                .expectData(1, 'checked', false);
-              done();
-            });
-          });
-          it('should selected id value less than 2 rows', done => {
+          it(`should be render checkbox`, fakeAsync(() => {
+            page
+              .updateColumn([{ title: '', index: 'id', type: 'checkbox' }])
+              .expectElCount('.st__checkall', 1, 'muse be a check all')
+              .expectElCount('.st__body .ant-checkbox-wrapper', PS, `muse be ${PS} check in body`)
+              .asyncEnd();
+          }));
+          it('should auto column width', fakeAsync(() => {
+            page.updateColumn([{ title: 'id', index: 'id', type: 'checkbox' }]).expectColumn('id', 'width', '50px');
+          }));
+          it('should be check all current page', fakeAsync(() => {
+            page.updateColumn([{ title: '', index: 'id', type: 'checkbox' }]).click('.st__checkall');
+            expect(comp._data.filter(w => w.checked).length).toBe(PS);
+            page.click('.st__checkall');
+            expect(comp._data.filter(w => w.checked).length).toBe(0);
+            page.asyncEnd();
+          }));
+          it('should be checked in row', fakeAsync(() => {
+            page
+              .updateColumn([{ title: '', index: 'id', type: 'checkbox' }])
+              .expectData(1, 'checked', undefined)
+              .click('.st__body .ant-checkbox-wrapper')
+              .expectData(1, 'checked', true)
+              .click('.st__body .ant-checkbox-wrapper')
+              .expectData(1, 'checked', false)
+              .asyncEnd();
+          }));
+          it('should selected id value less than 2 rows', fakeAsync(() => {
             const selections = [
               {
                 text: '<div class="j-s1"></div>',
                 select: (ls: any[]) => ls.forEach(i => (i.checked = i.id < 2)),
               },
             ];
-            page.newColumn([{ title: '', index: 'id', type: 'checkbox', selections }]).then(() => {
-              page.expectData(1, 'checked', undefined).expectData(2, 'checked', undefined);
-              // mock click
-              comp._rowSelection(comp._columns[0].selections![0]);
-              page.expectData(1, 'checked', true).expectData(2, 'checked', false);
-              done();
-            });
-          });
-          it('should be unchecked via clearCheck', done => {
-            page.newColumn([{ title: '', index: 'id', type: 'checkbox' }]).then(() => {
-              page
-                .expectData(1, 'checked', undefined)
-                .click('.st__body .ant-checkbox-wrapper')
-                .expectData(1, 'checked', true);
-              comp.clearCheck();
-              page.expectData(1, 'checked', false);
-              done();
-            });
-          });
+            page
+              .updateColumn([{ title: '', index: 'id', type: 'checkbox', selections }])
+              .expectData(1, 'checked', undefined)
+              .expectData(2, 'checked', undefined);
+            // mock click
+            comp._rowSelection(comp._columns[0].selections![0]);
+            page.expectData(1, 'checked', true).expectData(2, 'checked', false);
+            page.asyncEnd();
+          }));
+          it('should be unchecked via clearCheck', fakeAsync(() => {
+            page
+              .updateColumn([{ title: '', index: 'id', type: 'checkbox' }])
+              .expectData(1, 'checked', undefined)
+              .click('.st__body .ant-checkbox-wrapper')
+              .expectData(1, 'checked', true);
+            comp.clearCheck();
+            page.expectData(1, 'checked', false).asyncEnd();
+          }));
         });
         describe('with radio', () => {
-          it(`should be render checkbox`, done => {
-            page.newColumn([{ title: 'RADIOname', index: 'id', type: 'radio' }]).then(() => {
-              page.expectHead('RADIOname', 'id').expectElCount('.st__body .ant-radio-wrapper', PS, `muse be ${PS} radio in body`);
-              done();
-            });
-          });
-          it('should auto column width', done => {
-            page.newColumn([{ title: 'id', index: 'id', type: 'radio' }]).then(() => {
-              page.expectColumn('id', 'width', '50px');
-              done();
-            });
-          });
-          it('should be checked in row', done => {
-            page.newColumn([{ title: '', index: 'id', type: 'radio' }]).then(() => {
-              page
-                .expectData(1, 'checked', undefined)
-                .click('.st__body .ant-radio-wrapper')
-                .expectData(1, 'checked', true)
-                .click('.st__body tr[data-index="1"] .ant-radio-wrapper')
-                .expectData(1, 'checked', false);
-              done();
-            });
-          });
-          it('should be unchecked via clearRadio', done => {
-            page.newColumn([{ title: '', index: 'id', type: 'radio' }]).then(() => {
-              page
-                .expectData(1, 'checked', undefined)
-                .click('.st__body .ant-radio-wrapper')
-                .expectData(1, 'checked', true);
-              comp.clearRadio();
-              page.expectData(1, 'checked', false);
-              done();
-            });
-          });
+          it(`should be render checkbox`, fakeAsync(() => {
+            page
+              .updateColumn([{ title: 'RADIOname', index: 'id', type: 'radio' }])
+              .expectHead('RADIOname', 'id')
+              .expectElCount('.st__body .ant-radio-wrapper', PS, `muse be ${PS} radio in body`)
+              .asyncEnd();
+          }));
+          it('should auto column width', fakeAsync(() => {
+            page.updateColumn([{ title: 'id', index: 'id', type: 'radio' }]).expectColumn('id', 'width', '50px');
+          }));
+          it('should be checked in row', fakeAsync(() => {
+            page
+              .updateColumn([{ title: '', index: 'id', type: 'radio' }])
+              .expectData(1, 'checked', undefined)
+              .click('.st__body .ant-radio-wrapper')
+              .expectData(1, 'checked', true)
+              .click('.st__body tr[data-index="1"] .ant-radio-wrapper')
+              .expectData(1, 'checked', false)
+              .asyncEnd();
+          }));
+          it('should be unchecked via clearRadio', fakeAsync(() => {
+            page
+              .updateColumn([{ title: '', index: 'id', type: 'radio' }])
+              .expectData(1, 'checked', undefined)
+              .click('.st__body .ant-radio-wrapper')
+              .expectData(1, 'checked', true);
+            comp.clearRadio();
+            page.expectData(1, 'checked', false).asyncEnd();
+          }));
         });
         describe('with link', () => {
-          it(`should be render anchor link`, done => {
+          it(`should be render anchor link`, fakeAsync(() => {
             const columns = [
               {
                 title: '',
@@ -267,24 +255,23 @@ describe('abc: table', () => {
                 click: jasmine.createSpy(),
               },
             ];
-            page.newColumn(columns as any).then(() => {
-              page.expectCell('1', 1, 1, 'a').clickCell('a');
-              expect(columns[0].click).toHaveBeenCalled();
-              done();
-            });
-          });
-          it(`should be text when not specify click`, done => {
-            page.newColumn([{ title: '', index: 'id', type: 'link' }]).then(() => {
-              page.expectCell(null, 1, 1, 'a');
-              done();
-            });
-          });
-          it('should be navigate url when click is string value', done => {
-            const router = injector.get<Router>(Router);
+            page
+              .updateColumn(columns as any)
+              .expectCell('1', 1, 1, 'a')
+              .clickCell('a');
+            expect(columns[0].click).toHaveBeenCalled();
+            page.asyncEnd();
+          }));
+          it(`should be text when not specify click`, fakeAsync(() => {
+            page.updateColumn([{ title: '', index: 'id', type: 'link' }]).expectCell(null, 1, 1, 'a');
+            page.asyncEnd();
+          }));
+          it('should be navigate url when click is string value', fakeAsync(() => {
+            const router = TestBed.inject<Router>(Router);
             spyOn(router, 'navigateByUrl');
             context.data = [{ link: '/a' }];
             page
-              .newColumn([
+              .updateColumn([
                 {
                   title: '',
                   index: 'link',
@@ -292,54 +279,52 @@ describe('abc: table', () => {
                   click: (item: any) => item.link,
                 },
               ])
-              .then(() => {
-                page.clickCell('a', 1, 1);
-                expect(router.navigateByUrl).toHaveBeenCalled();
-                done();
-              });
-          });
+              .clickCell('a');
+            expect(router.navigateByUrl).toHaveBeenCalled();
+            page.asyncEnd();
+          }));
         });
         describe('with img', () => {
-          it(`should be render img`, done => {
+          it(`should be render img`, fakeAsync(() => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
-            page.newColumn(columns as any).then(() => {
-              page.expectCell('', 1, 1, 'img');
-              done();
-            });
-          });
-          it('should not render img when is empty data', done => {
+            page
+              .updateColumn(columns as any)
+              .expectCell('', 1, 1, 'img')
+              .asyncEnd();
+          }));
+          it('should not render img when is empty data', fakeAsync(() => {
             const columns = [{ title: '', index: 'img', type: 'img' }];
             context.data = [{ img: MOCKIMG }, { img: '' }];
-            page.newColumn(columns as any).then(() => {
-              page.expectCell('', 1, 1, 'img').expectCell(null, 2, 1, 'img');
-              done();
-            });
-          });
+            page
+              .updateColumn(columns as any)
+              .expectCell('', 1, 1, 'img')
+              .expectCell(null, 2, 1, 'img')
+              .asyncEnd();
+          }));
         });
         describe('with currency', () => {
-          it(`should be render currency`, done => {
-            page.newColumn([{ title: '', index: 'id', type: 'currency' }]).then(() => {
-              page.expectCell('￥1.00');
-              done();
-            });
-          });
-          it(`should be text right`, done => {
-            page.newColumn([{ title: '', index: 'id', type: 'currency' }]).then(() => {
-              expect(page.getCell().classList).toContain('text-right');
-              done();
-            });
-          });
+          it(`should be render currency`, fakeAsync(() => {
+            page
+              .updateColumn([{ title: '', index: 'id', type: 'currency' }])
+              .expectCell('￥1.00')
+              .asyncEnd();
+          }));
+          it(`should be text right`, fakeAsync(() => {
+            page.updateColumn([{ title: '', index: 'id', type: 'currency' }]);
+            expect(page.getCell().classList).toContain('text-right');
+            page.asyncEnd();
+          }));
         });
         describe('with number', () => {
-          it(`should be render number`, done => {
-            page.newColumn([{ title: '', index: 'num', type: 'number' }]).then(() => {
-              page.expectCell('11,111,111,111.456');
-              done();
-            });
-          });
-          it(`should be custom render number digits`, done => {
+          it(`should be render number`, fakeAsync(() => {
             page
-              .newColumn([
+              .updateColumn([{ title: '', index: 'num', type: 'number' }])
+              .expectCell('11,111,111,111.456')
+              .asyncEnd();
+          }));
+          it(`should be custom render number digits`, fakeAsync(() => {
+            page
+              .updateColumn([
                 {
                   title: '',
                   index: 'id',
@@ -347,63 +332,59 @@ describe('abc: table', () => {
                   numberDigits: '3.1-5',
                 },
               ])
-              .then(() => {
-                page.expectCell('001.0');
-                done();
-              });
-          });
-          it(`should be text right`, done => {
-            page.newColumn([{ title: '', index: 'num', type: 'number' }]).then(() => {
-              expect(page.getCell().classList).toContain('text-right');
-              done();
-            });
-          });
+              .expectCell('001.0')
+              .asyncEnd();
+          }));
+          it(`should be text right`, fakeAsync(() => {
+            page.updateColumn([{ title: '', index: 'num', type: 'number' }]);
+            expect(page.getCell().classList).toContain('text-right');
+            page.asyncEnd();
+          }));
         });
         describe('with date', () => {
-          it(`should be render date`, done => {
-            page.newColumn([{ title: '', index: 'date', type: 'date' }]).then(() => {
-              page.expectCell(new DatePipe().transform(MOCKDATE, 'YYYY-MM-DD HH:mm'));
-              done();
-            });
-          });
-          it(`should be custom render date format`, done => {
+          it(`should be render date`, fakeAsync(() => {
             page
-              .newColumn([
+              .updateColumn([{ title: '', index: 'date', type: 'date' }])
+              .expectCell(new DatePipe().transform(MOCKDATE, 'yyyy-MM-dd HH:mm'))
+              .asyncEnd();
+          }));
+          it(`should be custom render date format`, fakeAsync(() => {
+            page
+              .updateColumn([
                 {
                   title: '',
                   index: 'date',
                   type: 'date',
-                  dateFormat: 'YYYY-MM',
+                  dateFormat: 'yyyy-MM',
                 },
               ])
-              .then(() => {
-                page.expectCell(new DatePipe().transform(MOCKDATE, 'YYYY-MM'));
-                done();
-              });
-          });
-          it(`should be text center`, done => {
-            page.newColumn([{ title: '', index: 'date', type: 'date' }]).then(() => {
-              expect(page.getCell().classList).toContain('text-center');
-              done();
-            });
-          });
+              .expectCell(new DatePipe().transform(MOCKDATE, 'yyyy-MM'))
+              .asyncEnd();
+          }));
+          it(`should be text center`, fakeAsync(() => {
+            page.updateColumn([{ title: '', index: 'date', type: 'date' }]);
+            expect(page.getCell().classList).toContain('text-center');
+            page.asyncEnd();
+          }));
         });
         describe('with yn', () => {
-          it(`should be render yn`, done => {
-            page.newColumn([{ title: '', index: 'yn', type: 'yn' }]).then(() => {
-              page.expectCell('是', 1, 1, '', true).expectCell('否', 2, 1, '', true);
-              done();
-            });
-          });
-          it(`should be custom render yn`, done => {
-            page.newColumn([{ title: '', index: 'yn', type: 'yn', yn: { yes: 'Y', no: 'N' } }]).then(() => {
-              page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
-              done();
-            });
-          });
-          it(`should be custom truth value`, done => {
+          it(`should be render yn`, fakeAsync(() => {
             page
-              .newColumn([
+              .updateColumn([{ title: '', index: 'yn', type: 'yn' }])
+              .expectCell('是', 1, 1, '', true)
+              .expectCell('否', 2, 1, '', true)
+              .asyncEnd();
+          }));
+          it(`should be custom render yn`, fakeAsync(() => {
+            page
+              .updateColumn([{ title: '', index: 'yn', type: 'yn', yn: { yes: 'Y', no: 'N' } }])
+              .expectCell('Y', 1, 1, '', true)
+              .expectCell('N', 2, 1, '', true)
+              .asyncEnd();
+          }));
+          it(`should be custom truth value`, fakeAsync(() => {
+            page
+              .updateColumn([
                 {
                   title: '',
                   index: 'id',
@@ -415,14 +396,11 @@ describe('abc: table', () => {
                   },
                 },
               ])
-              .then(() => {
-                page
-                  .expectCell('Y', 1, 1, '', true)
-                  .expectCell('N', 2, 1, '', true)
-                  .expectCell('N', 3, 1, '', true);
-                done();
-              });
-          });
+              .expectCell('Y', 1, 1, '', true)
+              .expectCell('N', 2, 1, '', true)
+              .expectCell('N', 3, 1, '', true)
+              .asyncEnd();
+          }));
         });
       });
       describe('with badge', () => {
@@ -433,18 +411,18 @@ describe('abc: table', () => {
           4: { text: '默认', color: 'default' },
           5: { text: '警告', color: 'warning' },
         };
-        it(`should be render badge`, done => {
-          page.newColumn([{ title: '', index: 'status', type: 'badge', badge: BADGE }]).then(() => {
-            page.expectElCount('.ant-badge', PS);
-            done();
-          });
-        });
-        it(`should be render text when badge is undefined or null`, done => {
-          page.newColumn([{ title: '', index: 'status', type: 'badge', badge: null }]).then(() => {
-            page.expectElCount('.ant-badge', 0);
-            done();
-          });
-        });
+        it(`should be render badge`, fakeAsync(() => {
+          page
+            .updateColumn([{ title: '', index: 'status', type: 'badge', badge: BADGE }])
+            .expectElCount('.ant-badge', PS)
+            .asyncEnd();
+        }));
+        it(`should be render text when badge is undefined or null`, fakeAsync(() => {
+          page
+            .updateColumn([{ title: '', index: 'status', type: 'badge', badge: null }])
+            .expectElCount('.ant-badge', 0)
+            .asyncEnd();
+        }));
       });
       describe('with tag', () => {
         const TAG: STColumnTag = {
@@ -454,57 +432,52 @@ describe('abc: table', () => {
           4: { text: '默认', color: '' },
           5: { text: '警告', color: 'orange' },
         };
-        it(`should be render tag`, done => {
-          page.newColumn([{ title: 'tag', index: 'tag', type: 'tag', tag: TAG }]).then(() => {
-            page.expectElCount('.ant-tag', PS);
-            done();
-          });
-        });
-        it(`should be render text when tag is undefined or null`, done => {
-          page.newColumn([{ title: '', index: 'status', type: 'tag', tag: null }]).then(() => {
-            page.expectElCount('.ant-tag', 0);
-            done();
-          });
-        });
+        it(`should be render tag`, fakeAsync(() => {
+          page
+            .updateColumn([{ title: 'tag', index: 'tag', type: 'tag', tag: TAG }])
+            .expectElCount('.ant-tag', PS)
+            .asyncEnd();
+        }));
+        it(`should be render text when tag is undefined or null`, fakeAsync(() => {
+          page
+            .updateColumn([{ title: '', index: 'status', type: 'tag', tag: null }])
+            .expectElCount('.ant-tag', 0)
+            .asyncEnd();
+        }));
       });
       describe('[other]', () => {
-        it('should custom render via format', done => {
+        it('should custom render via format', fakeAsync(() => {
           page
-            .newColumn([
+            .updateColumn([
               {
                 title: '',
                 index: 'id',
                 format: a => `<div class="j-format">${a.id}</div>`,
               },
             ])
-            .then(() => {
-              page.expectCell('1', 1, 1, '.j-format');
-              done();
-            });
-        });
-        it('should default render via default', done => {
+            .expectCell('1', 1, 1, '.j-format')
+            .asyncEnd();
+        }));
+        it('should default render via default', fakeAsync(() => {
           page
-            .newColumn([
+            .updateColumn([
               {
                 title: '',
                 index: 'id1',
                 default: '-',
               },
             ])
-            .then(() => {
-              page.expectCell('-');
-              done();
-            });
-        });
-        it('should be custom class in cell', done => {
-          page.newColumn([{ title: '', index: 'id', className: 'asdf' }]).then(() => {
-            expect(page.getCell().classList).toContain('asdf');
-            done();
-          });
-        });
+            .expectCell('-')
+            .asyncEnd();
+        }));
+        it('should be custom class in cell', fakeAsync(() => {
+          page.updateColumn([{ title: '', index: 'id', className: 'asdf' }]);
+          expect(page.getCell().classList).toContain('asdf');
+          page.asyncEnd();
+        }));
       });
       describe('[buttons]', () => {
-        it(`should be pop confirm when type=del`, done => {
+        it(`should be pop confirm when type=del`, fakeAsync(() => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -518,17 +491,15 @@ describe('abc: table', () => {
               ],
             },
           ];
-          page.newColumn(columns).then(() => {
-            page.expectCell('del', 1, 1, '[nz-popconfirm]');
-            // mock trigger
-            comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
-            expect(columns[0].buttons![1].click).not.toHaveBeenCalled();
-            comp._btnClick(comp._data[0], comp._columns[0].buttons![1]);
-            expect(columns[0].buttons![1].click).toHaveBeenCalled();
-            done();
-          });
-        });
-        it('should custom render text via format', done => {
+          page.updateColumn(columns).expectCell('del', 1, 1, '[nz-popconfirm]');
+          // mock trigger
+          comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
+          expect(columns[0].buttons![1].click).not.toHaveBeenCalled();
+          comp._btnClick(comp._data[0], comp._columns[0].buttons![1]);
+          expect(columns[0].buttons![1].click).toHaveBeenCalled();
+          page.asyncEnd();
+        }));
+        it('should custom render text via format', fakeAsync(() => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -539,12 +510,9 @@ describe('abc: table', () => {
               ],
             },
           ];
-          page.newColumn(columns).then(() => {
-            page.expectElCount('.j-btn-format', PS);
-            done();
-          });
-        });
-        it('should custom render text via text function', done => {
+          page.updateColumn(columns).expectElCount('.j-btn-format', PS).asyncEnd();
+        }));
+        it('should custom render text via text function', fakeAsync(() => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -555,12 +523,9 @@ describe('abc: table', () => {
               ],
             },
           ];
-          page.newColumn(columns).then(() => {
-            page.expectElCount('.j-btn-format', PS);
-            done();
-          });
-        });
-        it('#614', done => {
+          page.updateColumn(columns).expectElCount('.j-btn-format', PS).asyncEnd();
+        }));
+        it('#614', fakeAsync(() => {
           const columns: STColumn[] = [
             {
               title: '',
@@ -575,29 +540,25 @@ describe('abc: table', () => {
               ],
             },
           ];
-          page.newColumn(columns).then(() => {
-            // mock trigger
-            comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
-            expect(true).toBe(true);
-            done();
-          });
-        });
+          page.updateColumn(columns);
+          // mock trigger
+          comp._btnClick(comp._data[0], comp._columns[0].buttons![0]);
+          expect(true).toBe(true);
+          page.asyncEnd();
+        }));
         describe('[condition]', () => {
-          it('should be hide menu in first row', done => {
+          it('should be hide menu in first row', fakeAsync(() => {
             const columns: STColumn[] = [
               {
                 title: '',
                 buttons: [{ text: 'a', iif: (item: any) => item.id !== 1 }],
               },
             ];
-            page.newColumn(columns).then(() => {
-              page.expectCell(null!, 1, 1, 'a').expectCell('a', 2, 1, 'a');
-              done();
-            });
-          });
+            page.updateColumn(columns).expectCell(null!, 1, 1, 'a').expectCell('a', 2, 1, 'a').asyncEnd();
+          }));
         });
         describe('[events]', () => {
-          it('#reload', done => {
+          it('#reload', fakeAsync(() => {
             const columns: STColumn[] = [
               {
                 title: '',
@@ -605,14 +566,13 @@ describe('abc: table', () => {
               },
             ];
             spyOn(comp, 'reload');
-            page.newColumn(columns).then(() => {
-              expect(comp.reload).not.toHaveBeenCalled();
-              page.clickCell('a');
-              expect(comp.reload).toHaveBeenCalled();
-              done();
-            });
-          });
-          it('#load', done => {
+            page.updateColumn(columns);
+            expect(comp.reload).not.toHaveBeenCalled();
+            page.clickCell('a');
+            expect(comp.reload).toHaveBeenCalled();
+            page.asyncEnd();
+          }));
+          it('#load', fakeAsync(() => {
             const columns: STColumn[] = [
               {
                 title: '',
@@ -620,15 +580,14 @@ describe('abc: table', () => {
               },
             ];
             spyOn(comp, 'load');
-            page.newColumn(columns).then(() => {
-              expect(comp.load).not.toHaveBeenCalled();
-              page.clickCell('a');
-              expect(comp.load).toHaveBeenCalled();
-              done();
-            });
-          });
+            page.updateColumn(columns);
+            expect(comp.load).not.toHaveBeenCalled();
+            page.clickCell('a');
+            expect(comp.load).toHaveBeenCalled();
+            page.asyncEnd();
+          }));
           describe('#modal', () => {
-            it('is normal mode', done => {
+            it('is normal mode', fakeAsync(() => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -645,21 +604,20 @@ describe('abc: table', () => {
                   ],
                 },
               ];
-              const modalHelp = injector.get<ModalHelper>(ModalHelper);
+              const modalHelp = TestBed.inject<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
               spyOn(modalHelp, 'create').and.callFake(() => mock$);
-              page.newColumn(columns).then(() => {
-                expect(modalHelp.create).not.toHaveBeenCalled();
-                page.clickCell('a');
-                expect(modalHelp.create).toHaveBeenCalled();
-                expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
-                mock$.next({});
-                expect(columns[0].buttons![0].click).toHaveBeenCalled();
-                mock$.unsubscribe();
-                done();
-              });
-            });
-            it('is static mode', done => {
+              page.updateColumn(columns);
+              expect(modalHelp.create).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.create).toHaveBeenCalled();
+              expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons![0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+              page.asyncEnd();
+            }));
+            it('is static mode', fakeAsync(() => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -676,23 +634,22 @@ describe('abc: table', () => {
                   ],
                 },
               ];
-              const modalHelp = injector.get<ModalHelper>(ModalHelper);
+              const modalHelp = TestBed.inject<ModalHelper>(ModalHelper);
               const mock$ = new Subject();
               spyOn(modalHelp, 'createStatic').and.callFake(() => mock$);
-              page.newColumn(columns).then(() => {
-                expect(modalHelp.createStatic).not.toHaveBeenCalled();
-                page.clickCell('a');
-                expect(modalHelp.createStatic).toHaveBeenCalled();
-                expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
-                mock$.next({});
-                expect(columns[0].buttons![0].click).toHaveBeenCalled();
-                mock$.unsubscribe();
-                done();
-              });
-            });
+              page.updateColumn(columns);
+              expect(modalHelp.createStatic).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(modalHelp.createStatic).toHaveBeenCalled();
+              expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons![0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+              page.asyncEnd();
+            }));
           });
           describe('#drawer', () => {
-            it('is normal mode', done => {
+            it('is normal mode', fakeAsync(() => {
               const columns: STColumn[] = [
                 {
                   title: '',
@@ -709,125 +666,105 @@ describe('abc: table', () => {
                   ],
                 },
               ];
-              const drawerHelp = injector.get<DrawerHelper>(DrawerHelper);
+              const drawerHelp = TestBed.inject<DrawerHelper>(DrawerHelper);
               const mock$ = new Subject();
               spyOn(drawerHelp, 'create').and.callFake(() => mock$);
-              page.newColumn(columns).then(() => {
-                expect(drawerHelp.create).not.toHaveBeenCalled();
-                page.clickCell('a');
-                expect(drawerHelp.create).toHaveBeenCalled();
-                expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
-                mock$.next({});
-                expect(columns[0].buttons![0].click).toHaveBeenCalled();
-                mock$.unsubscribe();
-                done();
-              });
-            });
+              page.updateColumn(columns);
+              expect(drawerHelp.create).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(drawerHelp.create).toHaveBeenCalled();
+              expect(columns[0].buttons![0].click).not.toHaveBeenCalled();
+              mock$.next({});
+              expect(columns[0].buttons![0].click).toHaveBeenCalled();
+              mock$.unsubscribe();
+              page.asyncEnd();
+            }));
           });
           describe('#link', () => {
-            it('should be trigger click', done => {
+            it('should be trigger click', fakeAsync(() => {
               const columns: STColumn[] = [
                 {
                   title: '',
                   buttons: [{ text: 'a', type: 'link', click: () => null }],
                 },
               ];
-              const router = injector.get<Router>(Router);
+              const router = TestBed.inject<Router>(Router);
               spyOn(router, 'navigateByUrl');
-              page.newColumn(columns).then(() => {
-                expect(router.navigateByUrl).not.toHaveBeenCalled();
-                page.clickCell('a');
-                expect(router.navigateByUrl).not.toHaveBeenCalled();
-                done();
-              });
-            });
-            it('should be navigate when return a string value', done => {
+              page.updateColumn(columns);
+              expect(router.navigateByUrl).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(router.navigateByUrl).not.toHaveBeenCalled();
+              page.asyncEnd();
+            }));
+            it('should be navigate when return a string value', fakeAsync(() => {
               const columns: STColumn[] = [
                 {
                   title: '',
                   buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
                 },
               ];
-              const router = injector.get<Router>(Router);
+              const router = TestBed.inject<Router>(Router);
               spyOn(router, 'navigateByUrl');
-              page.newColumn(columns).then(() => {
-                expect(router.navigateByUrl).not.toHaveBeenCalled();
-                page.clickCell('a');
-                expect(router.navigateByUrl).toHaveBeenCalled();
-                done();
-              });
-            });
-            it('should be include route state when return a string value', done => {
+              page.updateColumn(columns);
+              expect(router.navigateByUrl).not.toHaveBeenCalled();
+              page.clickCell('a');
+              expect(router.navigateByUrl).toHaveBeenCalled();
+              page.asyncEnd();
+            }));
+            it('should be include route state when return a string value', fakeAsync(() => {
               const columns: STColumn[] = [
                 {
                   title: '',
                   buttons: [{ text: 'a', type: 'link', click: () => '/a' }],
                 },
               ];
-              const router = injector.get<Router>(Router);
+              const router = TestBed.inject<Router>(Router);
               const spy = spyOn(router, 'navigateByUrl');
-              page.newColumn(columns).then(() => {
-                page.clickCell('a');
-                const arg = spy.calls.mostRecent().args[1] as any;
-                expect(arg.state.pi).toBe(1);
-                done();
-              });
-            });
+              page.updateColumn(columns).clickCell('a');
+              const arg = spy.calls.mostRecent().args[1] as any;
+              expect(arg.state.pi).toBe(1);
+              page.asyncEnd();
+            }));
           });
         });
       });
       describe('[fixed]', () => {
-        it('should be fixed left column', done => {
-          page
-            .newColumn([
-              { title: '1', index: 'id', fixed: 'left', width: '100px' },
-              { title: '2', index: 'id', fixed: 'left', width: '100px' },
-              { title: '3', index: 'id', fixed: 'left', width: '100px' },
-            ])
-            .then(() => {
-              expect(page.getCell(1, 1).style.left).toBe('0px');
-              expect(page.getCell(1, 2).style.left).toBe('100px');
-              expect(page.getCell(1, 3).style.left).toBe('200px');
-              done();
-            });
-        });
-        it('should be fixed right column', done => {
-          page
-            .newColumn([
-              { title: '1', index: 'id', fixed: 'right', width: '100px' },
-              { title: '2', index: 'id', fixed: 'right', width: '100px' },
-              { title: '3', index: 'id', fixed: 'right', width: '100px' },
-            ])
-            .then(() => {
-              expect(page.getCell(1, 1).style.right).toBe('200px');
-              expect(page.getCell(1, 2).style.right).toBe('100px');
-              expect(page.getCell(1, 3).style.right).toBe('0px');
-              done();
-            });
-        });
+        it('should be fixed left column', fakeAsync(() => {
+          page.updateColumn([
+            { title: '1', index: 'id', fixed: 'left', width: '100px' },
+            { title: '2', index: 'id', fixed: 'left', width: '100px' },
+            { title: '3', index: 'id', fixed: 'left', width: '100px' },
+          ]);
+          expect(page.getCell(1, 1).style.left).toBe('0px');
+          expect(page.getCell(1, 2).style.left).toBe('100px');
+          expect(page.getCell(1, 3).style.left).toBe('200px');
+          page.asyncEnd();
+        }));
+        it('should be fixed right column', fakeAsync(() => {
+          page.updateColumn([
+            { title: '1', index: 'id', fixed: 'right', width: '100px' },
+            { title: '2', index: 'id', fixed: 'right', width: '100px' },
+            { title: '3', index: 'id', fixed: 'right', width: '100px' },
+          ]);
+          expect(page.getCell(1, 1).style.right).toBe('200px');
+          expect(page.getCell(1, 2).style.right).toBe('100px');
+          expect(page.getCell(1, 3).style.right).toBe('0px');
+          page.asyncEnd();
+        }));
       });
     });
     describe('[data source]', () => {
       let httpBed: HttpTestingController;
       beforeEach(() => {
-        httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
+        httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
       });
-      it('support null data', done => {
-        context.data = null;
-        fixture.detectChanges();
-        fixture
-          .whenStable()
-          .then(() => {
-            expect(comp._data.length).toBe(0);
-            context.data = genData(10);
-            fixture.detectChanges();
-            return fixture.whenStable();
-          })
-          .then(() => {
-            expect(comp._data.length).toBe(PS);
-            done();
-          });
-      });
+      it('support null data', fakeAsync(() => {
+        page.updateData(null);
+        expect(comp._data.length).toBe(0);
+        page.updateData(genData(10));
+        expect(comp._data.length).toBe(PS);
+        page.asyncEnd();
+      }));
       it('should only restore data', () => {
         // tslint:disable-next-line:no-string-literal
         const dataSource: STDataSource = comp['dataSource'];
@@ -961,52 +898,39 @@ describe('abc: table', () => {
         expect(comp.page.placement).toBe(`right`);
         expect(comp.page.total).toBe(`TO:{{total}}`);
       });
-      it('should be ingore pi event trigger when change size in last page', done => {
+      it('should be ingore pi event trigger when change size in last page', fakeAsync(() => {
         context.page = { showSize: true, pageSizes: [10, 20] };
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          page.go(2);
-          let load = 0;
-          spyOn(context.comp as any, 'loadData').and.callFake(() => {
-            ++load;
-            return Promise.resolve({});
-          });
-          const pc = dl.query(By.directive(NzPaginationComponent)).injector.get<NzPaginationComponent>(NzPaginationComponent);
-          expect(load).toBe(0);
-          pc.onPageSizeChange(10);
-          fixture.detectChanges();
-          expect(load).toBe(1);
-          setTimeout(done);
+        page.cd().go(2);
+        let load = 0;
+        spyOn(context.comp as any, 'loadData').and.callFake(() => {
+          ++load;
+          return Promise.resolve({});
         });
-      });
+        const pc = dl.query(By.directive(NzPaginationComponent)).injector.get<NzPaginationComponent>(NzPaginationComponent);
+        expect(load).toBe(0);
+        pc.onPageSizeChange(10);
+        fixture.detectChanges();
+        expect(load).toBe(1);
+        page.asyncEnd();
+      }));
     });
     describe('#showTotal', () => {
-      it('with true', done => {
+      it('with true', fakeAsync(() => {
         context.page.total = true;
+        page.cd();
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          page.expectElContent('.ant-pagination-total-text', `共 ${DEFAULTCOUNT} 条`);
-          done();
-        });
-      });
-      it('with false', done => {
+        page.expectElContent('.ant-pagination-total-text', `共 ${DEFAULTCOUNT} 条`).asyncEnd();
+      }));
+      it('with false', fakeAsync(() => {
         context.page.total = false;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          page.expectElContent('.ant-pagination-total-text', '');
-          done();
-        });
-      });
-      it('should be custom template', done => {
+        page.cd().expectElContent('.ant-pagination-total-text', '').asyncEnd();
+      }));
+      it('should be custom template', fakeAsync(() => {
         context.pi = 1;
         context.ps = 3;
         context.page.total = `{{total}}/{{range[0]}}/{{range[1]}}`;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          page.expectElContent('.ant-pagination-total-text', `${DEFAULTCOUNT}/${comp.pi}/${comp.ps}`);
-          done();
-        });
-      });
+        page.cd().expectElContent('.ant-pagination-total-text', `${DEFAULTCOUNT}/${comp.pi}/${comp.ps}`).asyncEnd();
+      }));
     });
     describe('#showPagination', () => {
       describe('with undefined', () => {
@@ -1014,181 +938,116 @@ describe('abc: table', () => {
           context.ps = 2;
           context.page.show = undefined;
         });
-        it('should auto hide when total less than ps', done => {
+        it('should auto hide when total less than ps', fakeAsync(() => {
           context.data = deepCopy(USERS).slice(0, 1);
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.expectElCount('nz-pagination', 0);
-            done();
-          });
-        });
-        it('should auto show when ps less than total', done => {
+          page.cd().expectElCount('nz-pagination', 0).asyncEnd();
+        }));
+        it('should auto show when ps less than total', fakeAsync(() => {
           context.data = deepCopy(USERS).slice(0, 3);
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.expectElCount('nz-pagination', 1);
-            done();
-          });
-        });
+          page.cd().expectElCount('nz-pagination', 1).asyncEnd();
+        }));
       });
-      it('should always show when with true', done => {
+      it('should always show when with true', fakeAsync(() => {
         context.page.show = true;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          page.expectElCount('nz-pagination', 1);
-          done();
-        });
-      });
+        page.cd().expectElCount('nz-pagination', 1).asyncEnd();
+      }));
     });
     describe('#pagePlacement', () => {
       ['left', 'center', 'right'].forEach(pos => {
-        it(`with ${pos}`, done => {
+        it(`with ${pos}`, fakeAsync(() => {
           context.page.placement = pos as any;
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.expectElCount(`.st__p-${pos}`, 1);
-            done();
-          });
-        });
+          page.cd().expectElCount(`.st__p-${pos}`, 1).asyncEnd();
+        }));
       });
     });
     describe('#responsive', () => {
-      it('with true', done => {
+      it('with true', fakeAsync(() => {
         context.responsive = true;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          page.expectElCount(`.ant-table-rep`, 1);
-          done();
-        });
-      });
-      it('with false', done => {
+        page.cd().expectElCount(`.ant-table-rep`, 1).asyncEnd();
+      }));
+      it('with false', fakeAsync(() => {
         context.responsive = false;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          page.expectElCount(`.ant-table-rep`, 0);
-          page.expectElCount(`.ant-table-rep__title`, 0);
-          done();
-        });
-      });
+        page.cd().expectElCount(`.ant-table-rep`, 0).expectElCount(`.ant-table-rep__title`, 0).asyncEnd();
+      }));
     });
     describe('#responsiveHideHeaderFooter', () => {
-      it('should working', done => {
+      it('should working', fakeAsync(() => {
         context.responsiveHideHeaderFooter = true;
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          page.expectElCount(`.ant-table-rep__hide-header-footer`, 1);
-          done();
-        });
-      });
+        page.cd().expectElCount(`.ant-table-rep__hide-header-footer`, 1).asyncEnd();
+      }));
     });
     describe('#toTop', () => {
       beforeEach(() => {
         context.page.toTopOffset = 10;
       });
-      it('with true', done => {
+      it('with true', fakeAsync(() => {
         context.page.toTop = true;
-        fixture.detectChanges();
+        page.cd();
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
-        fixture
-          .whenStable()
-          .then(() => page.go(2))
-          .then(() => {
-            expect(el.scrollIntoView).toHaveBeenCalled();
-            done();
-          });
-      });
-      it('with false', done => {
+        page.cd().go(2);
+        expect(el.scrollIntoView).toHaveBeenCalled();
+        page.asyncEnd();
+      }));
+      it('with false', fakeAsync(() => {
         context.page.toTop = false;
-        fixture.detectChanges();
+        page.cd();
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
-        fixture
-          .whenStable()
-          .then(() => page.go(2))
-          .then(() => {
-            expect(el.scrollIntoView).not.toHaveBeenCalled();
-            done();
-          });
-      });
-      it('should scroll to .ant-table-body when used scroll', done => {
+        page.cd().go(2);
+        expect(el.scrollIntoView).not.toHaveBeenCalled();
+        page.asyncEnd();
+      }));
+      it('should scroll to .ant-table-body when used scroll', fakeAsync(() => {
         context.scroll = { x: '1300px' };
         context.page.toTop = true;
-        fixture.detectChanges();
+        page.cd();
         const el = page.getEl('st');
         spyOn(el, 'scrollIntoView');
-        fixture
-          .whenStable()
-          .then(() => page.go(2))
-          .then(() => {
-            page.go(2);
-            expect(el.scrollIntoView).not.toHaveBeenCalled();
-            done();
-          });
-      });
+        page.go(2);
+        expect(el.scrollIntoView).not.toHaveBeenCalled();
+        page.asyncEnd();
+      }));
     });
     describe('#expand', () => {
       beforeEach(() => createComp(true, TestExpandComponent));
-      it('should be switch expand via expand icon', done => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          const el = page.getCell(1, 1).querySelector('.ant-table-row-expand-icon') as HTMLElement;
+      it('should be switch expand via expand icon', fakeAsync(() => {
+        page.cd();
+        const el = page.getCell(1, 1).querySelector('.ant-table-row-expand-icon') as HTMLElement;
+        page.expectData(1, 'expand', undefined);
+        el.click();
+        page.expectData(1, 'expand', true).expectChangeType('expand').asyncEnd();
+      }));
+      describe('should be expanded when click row if expandRowByClick', () => {
+        it('with true', fakeAsync(() => {
+          context.expandRowByClick = true;
+          page.cd();
+          const el = page.getCell(1, 2);
           page.expectData(1, 'expand', undefined);
           el.click();
-          page.expectData(1, 'expand', true).expectChangeType('expand');
-          done();
-        });
-      });
-      describe('should be expanded when click row if expandRowByClick', () => {
-        it('with true', done => {
-          context.expandRowByClick = true;
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            const el = page.getCell(1, 2);
-            page.expectData(1, 'expand', undefined);
-            el.click();
-            page.expectData(1, 'expand', true).expectChangeType('expand');
-            done();
-          });
-        });
-        it('with false', done => {
+          page.expectData(1, 'expand', true).expectChangeType('expand').asyncEnd();
+        }));
+        it('with false', fakeAsync(() => {
           context.expandRowByClick = false;
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            const el = page.getCell(1, 2);
-            page.expectData(1, 'expand', undefined);
-            el.click();
-            page.expectData(1, 'expand', undefined);
-            done();
-          });
-        });
+          page.cd();
+          const el = page.getCell(1, 2);
+          page.expectData(1, 'expand', undefined);
+          el.click();
+          page.expectData(1, 'expand', undefined).asyncEnd();
+        }));
       });
       describe('expandRowByClick', () => {
-        it('should be close other expaned', done => {
+        it('should be close other expaned', fakeAsync(() => {
           context.expandAccordion = true;
           context.expandRowByClick = true;
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.getCell(1, 2).click();
-            page.getCell(2, 2).click();
-            page.expectData(1, 'expand', false);
-            page.expectData(2, 'expand', true);
-            done();
-          });
-        });
-        it('should be keeping expaned', done => {
+          page.cd().clickCell(1, 2).clickCell(2, 2).expectData(1, 'expand', false).expectData(2, 'expand', true).asyncEnd();
+        }));
+        it('should be keeping expaned', fakeAsync(() => {
           context.expandAccordion = false;
           context.expandRowByClick = true;
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.getCell(1, 2).click();
-            page.getCell(2, 2).click();
-            page.expectData(1, 'expand', true);
-            page.expectData(2, 'expand', true);
-            done();
-          });
-        });
-        it('should be stop propagation in button event', done => {
+          page.cd().clickCell(1, 2).clickCell(2, 2).expectData(1, 'expand', true).expectData(2, 'expand', true).asyncEnd();
+        }));
+        it('should be stop propagation in button event', fakeAsync(() => {
           context.expandRowByClick = true;
           context.columns = [
             {
@@ -1200,27 +1059,16 @@ describe('abc: table', () => {
               ],
             },
           ];
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.getEl('.st__btn-text').click();
-            page.expectData(1, 'expand', undefined);
-            done();
-          });
-        });
+          page.cd().clickEl('.st__btn-text').expectData(1, 'expand', undefined).asyncEnd();
+        }));
       });
       describe('should be set showExpand in row data', () => {
-        it(`muse be hide expand icon`, done => {
+        it(`muse be hide expand icon`, fakeAsync(() => {
           context.expandRowByClick = false;
-          context.data = deepCopy(USERS).slice(0, 1);
-          context.data![0].showExpand = false;
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.expectElCount('.ant-table-row-expand-icon', 0);
-            page.getCell(1, 2).click();
-            page.expectChangeType('expand', false);
-            done();
-          });
-        });
+          context.data = deepCopy(USERS).slice(0, 1) as NzSafeAny[];
+          context.data[0].showExpand = false;
+          page.cd().expectElCount('.ant-table-row-expand-icon', 0).clickCell(1, 2).expectChangeType('expand', false).asyncEnd();
+        }));
       });
     });
     describe('[filter]', () => {
@@ -1246,21 +1094,19 @@ describe('abc: table', () => {
             },
           ];
         });
-        it('muse provide the fn function', done => {
+        it('muse provide the fn function', fakeAsync(() => {
           spyOn(console, 'warn');
           context.columns[0].filter!.fn = null;
-          fixture.detectChanges();
+          page.cd();
           firstCol = comp._columns[0];
           filter = firstCol.filter as STColumnFilter;
           comp._filterRadio(firstCol, filter.menus![0], true);
           comp._filterRadio(firstCol, filter.menus![1], true);
           comp._filterConfirm(firstCol);
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            expect(console.warn).toHaveBeenCalled();
-            done();
-          });
-        });
+          page.cd();
+          expect(console.warn).toHaveBeenCalled();
+          page.asyncEnd();
+        }));
         describe('when is single', () => {
           beforeEach(() => {
             context.columns[0].filter!.multiple = false;
@@ -1342,49 +1188,45 @@ describe('abc: table', () => {
         });
         describe('when single-sort', () => {
           beforeEach(() => (context.multiSort = false));
-          it('muse provide the compare function', done => {
+          it('muse provide the compare function', fakeAsync(() => {
             spyOn(console, 'warn');
-            context.columns = [{ title: '', index: 'i', sort: true }];
-            fixture.detectChanges();
+            page.updateColumn([{ title: '', index: 'i', sort: true }]);
             comp.sort(comp._columns[0], 0, 'descend');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-              expect(console.warn).toHaveBeenCalled();
-              done();
-            });
-          });
-          it('should be sorting', () => {
-            fixture.detectChanges();
+            page.cd();
+            expect(console.warn).toHaveBeenCalled();
+            page.asyncEnd();
+          }));
+          it('should be sorting', fakeAsync(() => {
+            page.cd();
             comp.sort(comp._columns[0], 0, 'descend');
             const sortList = comp._columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort!);
             expect(sortList.length).toBe(1);
             expect(sortList[0].default).toBe('descend');
-          });
+            page.asyncEnd();
+          }));
         });
         describe('when multi-sort', () => {
           beforeEach(() => (context.multiSort = true));
-          it('should be sorting', () => {
-            fixture.detectChanges();
+          it('should be sorting', fakeAsync(() => {
+            page.cd();
             comp.sort(comp._columns[0], 0, 'descend');
             comp.sort(comp._columns[1], 0, 'ascend');
             const sortList = comp._columns.filter(item => item._sort && item._sort.enabled && item._sort.default).map(item => item._sort!);
             expect(sortList.length).toBe(2);
             expect(sortList[0].default).toBe('descend');
             expect(sortList[1].default).toBe('ascend');
-          });
+            page.asyncEnd();
+          }));
         });
       });
     });
     describe('[row events]', () => {
       beforeEach(fakeAsync(() => {
         context.rowClickTime = 10;
-        fixture.detectChanges();
-        tick();
+        page.cd();
       }));
       it(`should be row click`, fakeAsync(() => {
-        (page.getCell() as HTMLElement).click();
-        fixture.detectChanges();
-        tick(100);
+        page.clickCell();
         expect(page._changeData.type).toBe('click');
       }));
       it(`should be row double click`, fakeAsync(() => {
@@ -1400,9 +1242,7 @@ describe('abc: table', () => {
         // mock input nodeName
         spyOnProperty(el, 'nodeName', 'get').and.returnValue('INPUT');
         el.click();
-        fixture.detectChanges();
-        tick(100);
-        page.expectChangeType('click', false);
+        page.cd().expectChangeType('click', false);
       }));
     });
     describe('[public method]', () => {
@@ -1510,88 +1350,66 @@ describe('abc: table', () => {
           expect(comp.req.params.a).toBe(1);
           expect(comp.req.params.b).toBe(2);
         });
-        it('should be clean check, radio, filter, sort', done => {
+        it('should be clean check, radio, filter, sort', fakeAsync(() => {
           spyOn(comp, 'clearCheck').and.returnValue(comp);
           spyOn(comp, 'clearRadio').and.returnValue(comp);
           spyOn(comp, 'clearFilter').and.returnValue(comp);
           spyOn(comp, 'clearSort').and.returnValue(comp);
           comp.reset();
-          fixture.whenStable().then(() => {
-            expect(comp.clearCheck).toHaveBeenCalled();
-            expect(comp.clearRadio).toHaveBeenCalled();
-            expect(comp.clearFilter).toHaveBeenCalled();
-            expect(comp.clearSort).toHaveBeenCalled();
-            done();
-          });
-        });
+          page.cd();
+          expect(comp.clearCheck).toHaveBeenCalled();
+          expect(comp.clearRadio).toHaveBeenCalled();
+          expect(comp.clearFilter).toHaveBeenCalled();
+          expect(comp.clearSort).toHaveBeenCalled();
+        }));
       });
       describe('#removeRow', () => {
-        it('shoule be working', done => {
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.expectCurrentPageTotal(PS);
-            comp.removeRow(comp._data[0]);
-            page.expectCurrentPageTotal(PS - 1);
-            comp.removeRow(1);
-            page.expectCurrentPageTotal(PS - 2);
-            done();
-          });
-        });
-        it('shoule be recalculate no value', done => {
-          page.newColumn([{ title: '', type: 'no' }]).then(() => {
-            page.expectCurrentPageTotal(PS);
-            comp._data.forEach((v, idx) => expect(v._values[0].text).toBe(idx + 1));
-            comp.removeRow(comp._data[0]);
-            comp._data.forEach((v, idx) => expect(v._values[0].text).toBe(idx + 1));
-            done();
-          });
-        });
-        it('shoule be ingored invalid data', done => {
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.expectCurrentPageTotal(PS);
-            comp.removeRow([null]);
-            page.expectCurrentPageTotal(PS);
-            done();
-          });
-        });
+        it('shoule be working', fakeAsync(() => {
+          page.cd().expectCurrentPageTotal(PS);
+          comp.removeRow(comp._data[0]);
+          page.expectCurrentPageTotal(PS - 1);
+          comp.removeRow(1);
+          page.expectCurrentPageTotal(PS - 2);
+        }));
+        it('shoule be recalculate no value', fakeAsync(() => {
+          page.updateColumn([{ title: '', type: 'no' }]).expectCurrentPageTotal(PS);
+          comp._data.forEach((v, idx) => expect(v._values[0].text).toBe(idx + 1));
+          comp.removeRow(comp._data[0]);
+          comp._data.forEach((v, idx) => expect(v._values[0].text).toBe(idx + 1));
+        }));
+        it('shoule be ingored invalid data', fakeAsync(() => {
+          page.cd().expectCurrentPageTotal(PS);
+          comp.removeRow([null]);
+          page.expectCurrentPageTotal(PS);
+        }));
       });
       describe('#setRow', () => {
-        it('should be working', done => {
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            page.expectData(1, 'name', `name 1`);
-            comp.setRow(0, { name: 'new name' });
-            page.expectData(1, 'name', `new name`);
-            done();
-          });
-        });
+        it('should be working', fakeAsync(() => {
+          page.cd();
+          page.expectData(1, 'name', `name 1`);
+          comp.setRow(0, { name: 'new name' });
+          page.expectData(1, 'name', `new name`);
+        }));
       });
       describe('#clean', () => {
-        beforeEach(() => {
+        beforeEach(fakeAsync(() => {
           spyOn(comp, 'clearCheck').and.returnValue(comp);
           spyOn(comp, 'clearRadio').and.returnValue(comp);
           spyOn(comp, 'clearFilter').and.returnValue(comp);
           spyOn(comp, 'clearSort').and.returnValue(comp);
-          fixture.detectChanges();
+          page.cd();
+        }));
+        it('#clear', () => {
+          expect(comp._data.length).toBe(PS);
+          comp.clear();
+          expect(comp._data.length).toBe(0);
         });
-        it('#clear', done => {
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(PS);
-            comp.clear();
-            expect(comp._data.length).toBe(0);
-            done();
-          });
-        });
-        it('#clear, excludes clean status', done => {
-          fixture.whenStable().then(() => {
-            expect(comp._data.length).toBe(PS);
-            expect(comp.clearCheck).not.toHaveBeenCalled();
-            comp.clear(false);
-            expect(comp._data.length).toBe(0);
-            expect(comp.clearCheck).not.toHaveBeenCalled();
-            done();
-          });
+        it('#clear, excludes clean status', () => {
+          expect(comp._data.length).toBe(PS);
+          expect(comp.clearCheck).not.toHaveBeenCalled();
+          comp.clear(false);
+          expect(comp._data.length).toBe(0);
+          expect(comp.clearCheck).not.toHaveBeenCalled();
         });
         it('#clearStatus', () => {
           expect(comp.clearCheck).not.toHaveBeenCalled();
@@ -1600,83 +1418,71 @@ describe('abc: table', () => {
         });
       });
       describe('#resetColumns', () => {
-        it('should working', done => {
+        it('should working', fakeAsync(() => {
           let res = true;
           const cls = '.st__body tr[data-index="0"] td';
-          page.newColumn([{ title: '', index: 'name', iif: () => res }]).then(() => {
-            page.expectElCount(cls, 1);
-            res = false;
-            comp.resetColumns();
-            fixture.detectChanges();
-            page.expectElCount(cls, 0);
-            done();
-          });
-        });
-        it('should be specify new columns', done => {
-          page.newColumn([{ title: '1', index: 'name' }]).then(() => {
-            page.expectHead('1', 'name');
-            comp.resetColumns({ columns: [{ title: '2', index: 'name' }] });
-            fixture.detectChanges();
-            page.expectHead('2', 'name');
-            done();
-          });
-        });
-        it('should be specify new pi', done => {
-          page.newColumn([{ title: '1', index: 'name' }]).then(() => {
-            expect(comp.pi).toBe(1);
-            comp.resetColumns({ pi: 2 });
-            expect(comp.pi).toBe(2);
-            done();
-          });
-        });
-        it('should be specify new ps', done => {
-          page.newColumn([{ title: '1', index: 'name' }]).then(() => {
-            expect(comp.ps).toBe(PS);
-            comp.resetColumns({ ps: 2 });
-            expect(comp.ps).toBe(2);
-            done();
-          });
-        });
-        it('should be ingore data reload', done => {
-          page.newColumn([{ title: '1', index: 'name' }]).then(() => {
-            expect(comp.ps).toBe(PS);
-            const compAny = comp as any;
-            spyOn(compAny, 'loadPageData');
-            comp.resetColumns({ emitReload: false });
-            expect(compAny.loadPageData).not.toHaveBeenCalled();
-            done();
-          });
-        });
+          page.updateColumn([{ title: '', index: 'name', iif: () => res }]).expectElCount(cls, 1);
+          res = false;
+          comp.resetColumns();
+          page.cd().expectElCount(cls, 0).asyncEnd();
+        }));
+        it('should be specify new columns', fakeAsync(() => {
+          page.updateColumn([{ title: '1', index: 'name' }]).expectHead('1', 'name');
+          comp.resetColumns({ columns: [{ title: '2', index: 'name' }] });
+          page.cd().expectHead('2', 'name').asyncEnd();
+        }));
+        it('should be specify new pi', fakeAsync(() => {
+          page.updateColumn([{ title: '1', index: 'name' }]);
+          expect(comp.pi).toBe(1);
+          comp.resetColumns({ pi: 2 });
+          page.cd();
+          expect(comp.pi).toBe(2);
+          page.asyncEnd();
+        }));
+        it('should be specify new ps', fakeAsync(() => {
+          page.updateColumn([{ title: '1', index: 'name' }]);
+          expect(comp.ps).toBe(PS);
+          comp.resetColumns({ ps: 2 });
+          page.cd();
+          expect(comp.ps).toBe(2);
+          page.asyncEnd();
+        }));
+        it('should be ingore data reload', fakeAsync(() => {
+          page.updateColumn([{ title: '1', index: 'name' }]);
+          expect(comp.ps).toBe(PS);
+          const compAny = comp as any;
+          spyOn(compAny, 'loadPageData');
+          comp.resetColumns({ emitReload: false });
+          page.cd();
+          expect(compAny.loadPageData).not.toHaveBeenCalled();
+          page.asyncEnd();
+        }));
       });
-      it('#filteredData', done => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          expect((comp.data as any[]).length).toBe(DEFAULTCOUNT);
-          expect(comp._data.length).toBe(PS);
-          comp.filteredData.then(list => {
-            expect(list.length).toBe(DEFAULTCOUNT);
-            done();
-          });
+      it('#filteredData', fakeAsync(() => {
+        page.cd();
+        expect((comp.data as any[]).length).toBe(DEFAULTCOUNT);
+        expect(comp._data.length).toBe(PS);
+        comp.filteredData.then(list => {
+          expect(list.length).toBe(DEFAULTCOUNT);
         });
-      });
-      it('#count', done => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          expect(comp.count).toBe(PS);
-          done();
-        });
-      });
-      it('#list', done => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          expect(comp.list.length).toBe(PS);
-          done();
-        });
-      });
-      it('#cdkVirtualScrollViewport', done => {
+        page.asyncEnd();
+      }));
+      it('#count', fakeAsync(() => {
+        page.cd();
+        expect(comp.count).toBe(PS);
+        page.asyncEnd();
+      }));
+      it('#list', fakeAsync(() => {
+        page.cd();
+        expect(comp.list.length).toBe(PS);
+        page.asyncEnd();
+      }));
+      xit('#cdkVirtualScrollViewport', done => {
         context.virtualScroll = true;
+        context.data = genData(10);
         fixture.detectChanges();
         fixture.whenStable().then(() => {
+          fixture.detectChanges();
           expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
           done();
         });
@@ -1700,12 +1506,13 @@ describe('abc: table', () => {
         });
         it('when data is true', fakeAsync(() => {
           context.data = genData(1);
-          fixture.detectChanges();
+          page.cd();
           spyOnProperty(comp, 'filteredData', 'get').and.returnValue(Promise.resolve([]));
           expect(exportSrv.export).not.toHaveBeenCalled();
           comp.export(true);
-          tick();
+          page.cd();
           expect(exportSrv.export).toHaveBeenCalled();
+          page.asyncEnd();
         }));
         it('when data is observable data', () => {
           context.data = of(genData(1));
@@ -1745,205 +1552,175 @@ describe('abc: table', () => {
       });
     });
     describe('#widthMode', () => {
-      it('with type is default', done => {
+      it('with type is default', fakeAsync(() => {
         context.widthMode = { type: 'default' };
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          page.expectElCount(`.st__width-default`, 1);
-          done();
-        });
-      });
+        page.cd().expectElCount(`.st__width-default`, 1);
+      }));
       describe('with type is strict', () => {
-        it('shoule be add text-truncate class when className is empty and behavior is truncate', done => {
+        it('shoule be add text-truncate class when className is empty and behavior is truncate', fakeAsync(() => {
           context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
-          fixture.detectChanges();
-          page.newColumn([{ title: '', index: 'id', width: 50 }]).then(() => {
-            page.expectElCount(`.st__width-strict`, 1);
-            page.expectElCount(`.st__width-strict-truncate`, 1);
-            page.expectElCount(`td.text-truncate`, context.comp._data.length);
-            done();
-          });
-        });
-        it('should be ingore add text-truncate class when className is non-empty', done => {
+          page
+            .cd()
+            .updateColumn([{ title: '', index: 'id', width: 50 }])
+            .expectElCount(`.st__width-strict`, 1)
+            .expectElCount(`.st__width-strict-truncate`, 1)
+            .expectElCount(`td.text-truncate`, context.comp._data.length)
+            .asyncEnd();
+        }));
+        it('should be ingore add text-truncate class when className is non-empty', fakeAsync(() => {
           context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
-          fixture.detectChanges();
-          page.newColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }]).then(() => {
-            page.expectElCount(`.st__width-strict`, 1);
-            page.expectElCount(`.st__width-strict-truncate`, 1);
-            page.expectElCount(`.text-truncate`, 0);
-            page.expectElCount(`td.aaaa`, context.comp._data.length);
-            done();
-          });
-        });
-        it('should be ingore add text-truncate class when type is img', done => {
+          page
+            .cd()
+            .updateColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }])
+            .expectElCount(`.st__width-strict`, 1)
+            .expectElCount(`.st__width-strict-truncate`, 1)
+            .expectElCount(`.text-truncate`, 0)
+            .expectElCount(`td.aaaa`, context.comp._data.length)
+            .asyncEnd();
+        }));
+        it('should be ingore add text-truncate class when type is img', fakeAsync(() => {
           context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
-          fixture.detectChanges();
-          page.newColumn([{ index: 'img', type: 'img', width: 50 }]).then(() => {
-            page.expectElCount(`.st__width-strict`, 1);
-            page.expectElCount(`.st__width-strict-truncate`, 1);
-            page.expectElCount(`td.text-truncate`, 0);
-            done();
-          });
-        });
+          page
+            .cd()
+            .updateColumn([{ index: 'img', type: 'img', width: 50 }])
+            .expectElCount(`.st__width-strict`, 1)
+            .expectElCount(`.st__width-strict-truncate`, 1)
+            .expectElCount(`td.text-truncate`, 0)
+            .asyncEnd();
+        }));
       });
     });
     describe('#loading', () => {
-      it('should be control loading property', done => {
+      it('should be control loading property', fakeAsync(() => {
         context.loading = true;
-        fixture.detectChanges();
-        fixture
-          .whenStable()
-          .then(() => {
-            fixture.detectChanges();
-            page.expectElCount(`.ant-spin-spinning`, 1);
-            context.loading = false;
-            fixture.detectChanges();
-            return fixture.whenStable();
-          })
-          .then(() => {
-            fixture.detectChanges();
-            page.expectElCount(`.ant-spin-spinning`, 0);
-            done();
-          });
-      });
+        page.cd().expectElCount(`.ant-spin-spinning`, 1);
+        context.loading = false;
+        page.cd();
+        page.expectElCount(`.ant-spin-spinning`, 0).asyncEnd();
+      }));
     });
     describe('#button', () => {
       describe('#iifBehavior', () => {
-        it('with hide', done => {
+        it('with hide', fakeAsync(() => {
           page
-            .newColumn([
+            .updateColumn([
               {
                 title: '',
                 buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'hide' }],
               },
             ])
-            .then(() => {
-              page.expectElCount('.st__body tr td a', 0);
-              done();
-            });
-        });
-        it('with disabled', done => {
+            .expectElCount('.st__body tr td a', 0)
+            .asyncEnd();
+        }));
+        it('with disabled', fakeAsync(() => {
           page
-            .newColumn([
+            .updateColumn([
               {
                 title: '',
                 buttons: [{ text: 'a', click: () => 'load', iif: () => false, iifBehavior: 'disabled' }],
               },
             ])
-            .then(() => {
-              page.expectElCount('.st__btn-disabled', PS);
-              done();
-            });
-        });
+            .expectElCount('.st__btn-disabled', PS)
+            .asyncEnd();
+        }));
       });
-      it('#tooltip', done => {
+      it('#tooltip', fakeAsync(() => {
         page
-          .newColumn([
+          .updateColumn([
             {
               title: '',
               buttons: [{ text: 'a', click: () => 'load', tooltip: 't' }],
             },
           ])
-          .then(() => {
-            page.expectElCount('.st__body [nz-tooltip]', PS);
-            done();
-          });
-      });
+          .expectElCount('.st__body [nz-tooltip]', PS)
+          .asyncEnd();
+      }));
     });
   });
 
-  describe('**slow**', () => {
-    describe('#multiSort', () => {
-      it('should default is mulit sorting by config', () => {
-        genModule({
-          minColumn: true,
-          providers: [
-            {
-              provide: STConfig,
-              useValue: Object.assign(new STConfig(), { multiSort: { global: true } } as STConfig),
-            },
-          ],
-        });
-        const ms: STMultiSort = comp.multiSort;
-        expect(ms).not.toBeUndefined();
+  describe('#multiSort', () => {
+    it('should default is mulit sorting by config', () => {
+      genModule({
+        minColumn: true,
+        providers: [
+          {
+            provide: STConfig,
+            useValue: Object.assign(new STConfig(), { multiSort: { global: true } } as STConfig),
+          },
+        ],
       });
-      it('should default non-mulit sorting by config', () => {
-        genModule({
-          minColumn: true,
-          providers: [
-            {
-              provide: STConfig,
-              useValue: Object.assign(new STConfig(), { multiSort: { global: false } } as STConfig),
-            },
-          ],
-        });
-        const ms: STMultiSort = comp.multiSort;
-        expect(ms).toBeUndefined();
-      });
+      const ms: STMultiSort = comp.multiSort;
+      expect(ms).not.toBeUndefined();
     });
-    describe('[custom render template]', () => {
-      it('with column title', done => {
-        genModule({
-          template: `<st #st [data]="data" [columns]="columns">
+    it('should default non-mulit sorting by config', () => {
+      genModule({
+        minColumn: true,
+        providers: [
+          {
+            provide: STConfig,
+            useValue: Object.assign(new STConfig(), { multiSort: { global: false } } as STConfig),
+          },
+        ],
+      });
+      const ms: STMultiSort = comp.multiSort;
+      expect(ms).toBeUndefined();
+    });
+  });
+  describe('[custom render template]', () => {
+    it('with column title', fakeAsync(() => {
+      genModule({
+        template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="id" type="title"><div class="id-title">ID</div></ng-template>
           </st>`,
-        });
-        page.newColumn([{ title: '', index: 'id', renderTitle: 'id' }]).then(() => {
-          expect(page.getHead('id').querySelector('.id-title')!.textContent).toBe('ID');
-          done();
-        });
       });
-      it('should be custom row', done => {
-        genModule({
-          template: `<st #st [data]="data" [columns]="columns">
+      page.updateColumn([{ title: '', index: 'id', renderTitle: 'id' }]);
+      expect(page.getHead('id').querySelector('.id-title')!.textContent).toBe('ID');
+      page.asyncEnd();
+    }));
+    it('should be custom row', fakeAsync(() => {
+      genModule({
+        template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
           </st>`,
-        });
-        page.newColumn([{ title: '', index: 'id', render: 'id' }]).then(() => {
-          expect(page.getCell().querySelector('.j-id')!.textContent).toBe('id1');
-          done();
-        });
       });
-      it('allow invalid id', done => {
-        genModule({
-          template: `<st #st [data]="data" [columns]="columns">
+      page.updateColumn([{ title: '', index: 'id', render: 'id' }]);
+      expect(page.getCell().querySelector('.j-id')!.textContent).toBe('id1');
+      page.asyncEnd();
+    }));
+    it('allow invalid id', fakeAsync(() => {
+      genModule({
+        template: `<st #st [data]="data" [columns]="columns">
             <ng-template st-row="invalid-id" let-item><div class="j-id">id{{item.id}}</div></ng-template>
           </st>`,
-        });
-        page.newColumn([{ title: '', index: 'id', render: 'id' }]).then(() => {
-          expect(page.getCell().querySelector('.j-id')).toBeNull();
-          done();
-        });
       });
+      page.updateColumn([{ title: '', index: 'id', render: 'id' }]);
+      expect(page.getCell().querySelector('.j-id')).toBeNull();
+      page.asyncEnd();
+    }));
+  });
+  describe('[i18n]', () => {
+    let curLang = 'en';
+    beforeEach(() => {
+      genModule({ i18n: true });
+      spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
     });
-    describe('[i18n]', () => {
-      let curLang = 'en';
-      beforeEach(() => {
-        genModule({ i18n: true });
-        spyOn(i18nSrv, 'fanyi').and.callFake(() => curLang);
-      });
-      it('should working', done => {
-        page.newColumn([{ title: { i18n: curLang }, index: 'id' }]).then(() => {
-          const el = page.getEl('.ant-pagination-total-text');
-          expect(el.textContent!.trim()).toContain(`共`);
-          injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
-          fixture.detectChanges();
-          expect(el.textContent!.trim()).toContain(`of`);
-          done();
-        });
-      });
-      it('should be re-render columns when i18n changed', done => {
-        curLang = 'en';
-        page.newColumn([{ title: { i18n: curLang }, index: 'id' }]).then(() => {
-          page.expectHead(curLang, 'id');
-          curLang = 'zh';
-          i18nSrv.use(curLang);
-          fixture.detectChanges();
-          page.expectHead(curLang, 'id');
-          done();
-        });
-      });
-    });
+    it('should working', fakeAsync(() => {
+      page.updateColumn([{ title: { i18n: curLang }, index: 'id' }]);
+      const el = page.getEl('.ant-pagination-total-text');
+      expect(el.textContent!.trim()).toContain(`共`);
+      TestBed.inject<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
+      page.cd();
+      expect(el.textContent!.trim()).toContain(`of`);
+      page.asyncEnd();
+    }));
+    it('should be re-render columns when i18n changed', fakeAsync(() => {
+      curLang = 'en';
+      page.updateColumn([{ title: { i18n: curLang }, index: 'id' }]);
+      page.expectHead(curLang, 'id');
+      curLang = 'zh';
+      i18nSrv.use(curLang);
+      expect(i18nSrv.fanyi).toHaveBeenCalled();
+    }));
   });
 
   class PageObject {
@@ -1951,7 +1728,7 @@ describe('abc: table', () => {
     changeSpy: jasmine.Spy;
     constructor() {
       spyOn(context, 'error');
-      this.changeSpy = spyOn(context, 'change').and.callFake((e => (this._changeData = e)) as any);
+      this.changeSpy = spyOn(context, 'change').and.callFake(((e: NzSafeAny) => (this._changeData = e)) as NzSafeAny);
       comp = context.comp;
     }
     get(cls: string): DebugElement {
@@ -1962,15 +1739,13 @@ describe('abc: table', () => {
       expect(el).not.toBeNull();
       return el.nativeElement as HTMLElement;
     }
+    clickEl(cls: string): this {
+      const el = this.getEl(cls);
+      el.click();
+      return this.cd();
+    }
     click(cls: string): this {
       const el = this.getEl(cls);
-      expect(el).not.toBeNull();
-      el.click();
-      fixture.detectChanges();
-      return this;
-    }
-    clickCell(cls: string, row: number = 1, column: number = 1): this {
-      const el = this.getCell(row, column).querySelector(cls) as HTMLElement;
       expect(el).not.toBeNull();
       el.click();
       fixture.detectChanges();
@@ -1984,6 +1759,21 @@ describe('abc: table', () => {
         `.st__body tr[data-index="${row - 1}"] td:nth-child(${column})`,
       ) as HTMLElement;
       return cell;
+    }
+    /**
+     * 单击单元格，下标从 `1` 开始
+     */
+    clickCell(rowOrCls: number | string = 1, column: number = 1, cls?: string) {
+      if (typeof rowOrCls === 'string') {
+        cls = rowOrCls.toString();
+        rowOrCls = 1;
+      }
+      let el = this.getCell(rowOrCls, column);
+      if (cls) {
+        el = el.querySelector(cls) as HTMLElement;
+      }
+      el.click();
+      return this.cd();
     }
     /**
      * 断言单元格内容，下标从 `1` 开始
@@ -2047,15 +1837,23 @@ describe('abc: table', () => {
     /** 切换分页 */
     go(pi: number = 2) {
       this.getEl(`.ant-pagination [title="${pi}"]`).click();
-      fixture.detectChanges();
-      return fixture.whenStable();
+      return this.cd();
     }
-    newColumn(columns: STColumn[], pi = 1, ps = PS) {
+    cd(time = 1000): this {
+      fixture.detectChanges();
+      tick(time);
+      fixture.detectChanges();
+      return this;
+    }
+    updateData(data: NzSafeAny): this {
+      context.data = data;
+      return this.cd();
+    }
+    updateColumn(columns: STColumn[], pi = 1, ps = PS): this {
       context.columns = columns;
       context.pi = pi;
       context.ps = ps;
-      fixture.detectChanges();
-      return fixture.whenStable();
+      return this.cd();
     }
     expectCompData(path: string, value: any): this {
       expect(deepGet(comp, path)).toBe(value);
@@ -2066,8 +1864,8 @@ describe('abc: table', () => {
       return this;
     }
     expectTotalPage(value: number): this {
-      const a = dl.query(By.css('nz-pagination'));
-      expect((a.componentInstance as NzPaginationComponent).lastIndex).toBe(value);
+      const a = dl.query(By.css('nz-pagination')).componentInstance as NzPaginationComponent;
+      expect(a.getLastIndex(a.nzTotal, a.nzPageSize)).toBe(value);
       return this;
     }
     expectCurrentPageTotal(value: number): this {
@@ -2100,6 +1898,7 @@ describe('abc: table', () => {
       } else {
         expect(args.type).not.toBe(type);
       }
+      return this;
     }
     openDropDownInHead(nams: string): this {
       dispatchDropDown(dl.query(By.css(`.ant-table-thead th[data-col="${nams}"]`)), 'click');
@@ -2112,6 +1911,7 @@ describe('abc: table', () => {
       return this;
     }
     asyncEnd() {
+      flush();
       discardPeriodicTasks();
       return this;
     }

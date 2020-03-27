@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
+import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
 import { SFUISchemaItem } from '../../schema/ui';
-import { SFSchemaEnumType, SFSchemaEnum } from '../../schema';
 
 export interface SFCheckboxWidgetSchema extends SFUISchemaItem {
   /**

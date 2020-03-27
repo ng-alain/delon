@@ -1,13 +1,11 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, en_US, MenuService, ScrollService, WINDOW, zh_CN } from '@delon/theme';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable } from 'rxjs';
-
-import { configureTestSuite } from '@delon/testing';
-import { en_US, zh_CN, ALAIN_I18N_TOKEN, DelonLocaleModule, DelonLocaleService, MenuService, ScrollService, WINDOW } from '@delon/theme';
-
 import { AlainI18NServiceFake } from '../../theme/src/services/i18n/i18n';
 import { ReuseTabComponent } from './reuse-tab.component';
 import { ReuseCustomContextMenu, ReuseTabMatchMode } from './reuse-tab.interfaces';
@@ -23,7 +21,6 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
 }
 
 describe('abc: reuse-tab', () => {
-  let injector: TestBedStatic;
   let fixture: ComponentFixture<AppComponent>;
   let dl: DebugElement;
   let layoutComp: LayoutComponent;
@@ -32,7 +29,7 @@ describe('abc: reuse-tab', () => {
   let page: PageObject;
 
   function genModule(needI18n = false) {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [AppComponent, LayoutComponent, AComponent, BComponent, CComponent, DComponent, EComponent],
       imports: [
         DelonLocaleModule,
@@ -93,8 +90,8 @@ describe('abc: reuse-tab', () => {
     tick();
     fixture.detectChanges();
 
-    srv = injector.get<ReuseTabService>(ReuseTabService);
-    const router = injector.get<Router>(Router) as Router;
+    srv = TestBed.inject<ReuseTabService>(ReuseTabService);
+    const router = TestBed.inject<Router>(Router) as Router;
     router.routeReuseStrategy = new ReuseTabStrategy(srv);
 
     page = new PageObject();
@@ -107,9 +104,10 @@ describe('abc: reuse-tab', () => {
   afterEach(() => rtComp.ngOnDestroy());
 
   describe('', () => {
-    configureTestSuite(genModule);
-
-    beforeEach(fakeAsync(() => createComp()));
+    beforeEach(fakeAsync(() => {
+      genModule();
+      createComp();
+    }));
 
     describe('[default]', () => {
       it('should be create an instance', fakeAsync(() => {
@@ -136,30 +134,17 @@ describe('abc: reuse-tab', () => {
 
     describe('#close', () => {
       it('should be close a tab', fakeAsync(() => {
-        page
-          .to('#b')
-          .expectUrl(0, '/a')
-          .expectUrl(1, '/b/1')
-          .close(0)
-          .expectUrl(0, '/b/1');
+        page.to('#b').expectUrl(0, '/a').expectUrl(1, '/b/1').close(0).expectUrl(0, '/b/1');
         expect(layoutComp.close).toHaveBeenCalled();
       }));
       it('should keep one tab when [showCurrent: true]', fakeAsync(() => {
-        page
-          .to('#b')
-          .expectCount(2)
-          .close(0)
-          .expectCount(1);
+        page.to('#b').expectCount(2).close(0).expectCount(1);
         expect(document.querySelectorAll('.anticon-close').length).toBe(0);
       }));
       it('should close all tab when [showCurrent: false]', fakeAsync(() => {
         layoutComp.showCurrent = false;
         fixture.detectChanges();
-        page
-          .to('#b')
-          .expectCount(1)
-          .close(0)
-          .expectCount(0);
+        page.to('#b').expectCount(1).close(0).expectCount(0);
         expect(page.getEl('reuse-tab').style.display).toBe('none');
       }));
       it('should show next tab when closed a has next tab', fakeAsync(() => {
@@ -174,12 +159,7 @@ describe('abc: reuse-tab', () => {
           .expectUrl(1, '/c');
       }));
       it('issues-363', fakeAsync(() => {
-        page
-          .to('#b')
-          .expectCount(2)
-          .close(1)
-          .expectCount(1)
-          .expectAttr(0, 'closable', false);
+        page.to('#b').expectCount(2).close(1).expectCount(1).expectAttr(0, 'closable', false);
       }));
     });
 
@@ -209,13 +189,7 @@ describe('abc: reuse-tab', () => {
         it('with false', fakeAsync(() => {
           layoutComp.showCurrent = false;
           fixture.detectChanges();
-          page
-            .to('#b')
-            .expectCount(1)
-            .expectUrl(0, '/a')
-            .to('#c')
-            .expectCount(2)
-            .expectUrl(1, '/b/1');
+          page.to('#b').expectCount(1).expectUrl(0, '/a').to('#c').expectCount(2).expectUrl(1, '/b/1');
         }));
       });
       describe('#mode', () => {
@@ -285,12 +259,7 @@ describe('abc: reuse-tab', () => {
       beforeEach(() => (srv.max = 10));
       it('should closed current tab', fakeAsync(() => {
         expect(layoutComp.close).not.toHaveBeenCalled();
-        page
-          .to('#b')
-          .expectCount(2)
-          .openContextMenu(1)
-          .clickContentMenu('close')
-          .expectCount(1);
+        page.to('#b').expectCount(2).openContextMenu(1).clickContentMenu('close').expectCount(1);
         expect(layoutComp.close).toHaveBeenCalled();
       }));
       it('should keeping tab if closed include multi prev tab', fakeAsync(() => {
@@ -339,23 +308,10 @@ describe('abc: reuse-tab', () => {
           .expectTime(cTime);
       }));
       it('should keeping tab when closed prev tab', fakeAsync(() => {
-        page
-          .to('#b')
-          .expectCount(2)
-          .openContextMenu(0)
-          .clickContentMenu('close')
-          .expectCount(1)
-          .expectActive(0, true);
+        page.to('#b').expectCount(2).openContextMenu(0).clickContentMenu('close').expectCount(1).expectActive(0, true);
       }));
       it('should keeping tab when closed next tab', fakeAsync(() => {
-        page
-          .to('#b')
-          .go(0)
-          .expectCount(2)
-          .openContextMenu(1)
-          .clickContentMenu('close')
-          .expectCount(1)
-          .expectActive(0, true);
+        page.to('#b').go(0).expectCount(2).openContextMenu(1).clickContentMenu('close').expectCount(1).expectActive(0, true);
       }));
       it('should keeping tab of closed right tab', fakeAsync(() => {
         let bTime = '';
@@ -429,28 +385,17 @@ describe('abc: reuse-tab', () => {
           .expectCount(2);
       }));
       it('should trigger off closeRight when is last', fakeAsync(() => {
-        page
-          .to('#b')
-          .openContextMenu(1)
-          .expectCount(2)
-          .clickContentMenu('closeRight')
-          .expectCount(2);
+        page.to('#b').openContextMenu(1).expectCount(2).clickContentMenu('closeRight').expectCount(2);
       }));
       it('should hide context menu via click', fakeAsync(() => {
-        page
-          .to('#b')
-          .openContextMenu(1)
-          .expectCount(2);
+        page.to('#b').openContextMenu(1).expectCount(2);
         expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(1);
         document.dispatchEvent(new Event('click'));
         page.advance();
         expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(0);
       }));
       it('should be allow multi context menu', fakeAsync(() => {
-        page
-          .to('#b')
-          .openContextMenu(1)
-          .expectCount(2);
+        page.to('#b').openContextMenu(1).expectCount(2);
         expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(1);
         document.dispatchEvent(new MouseEvent('click', { button: 2 }));
         page.advance();
@@ -486,18 +431,12 @@ describe('abc: reuse-tab', () => {
         });
         it('should working', fakeAsync(() => {
           expect(layoutComp.customContextMenu[0].fn).not.toHaveBeenCalled();
-          page
-            .to('#b')
-            .openContextMenu(1)
-            .clickContentMenu('custom1');
+          page.to('#b').openContextMenu(1).clickContentMenu('custom1');
           expect(layoutComp.customContextMenu[0].fn).toHaveBeenCalled();
         }));
         it('should be disabled', fakeAsync(() => {
           expect(layoutComp.customContextMenu[1].fn).not.toHaveBeenCalled();
-          page
-            .to('#b')
-            .openContextMenu(1)
-            .clickContentMenu('custom2');
+          page.to('#b').openContextMenu(1).clickContentMenu('custom2');
           expect(layoutComp.customContextMenu[1].fn).not.toHaveBeenCalled();
         }));
       });
@@ -536,7 +475,7 @@ describe('abc: reuse-tab', () => {
       let ss: ScrollService;
       let getScrollPositionSpy: jasmine.Spy;
       beforeEach(() => {
-        ss = injector.get(ScrollService) as ScrollService;
+        ss = TestBed.inject(ScrollService) as ScrollService;
         getScrollPositionSpy = spyOn(ss, 'getScrollPosition').and.returnValue([0, 666]);
         spyOn(ss, 'scrollToPosition');
       });
@@ -576,7 +515,7 @@ describe('abc: reuse-tab', () => {
       }));
       describe('should be delay trigger when has setting scrollPositionRestoration', () => {
         it('with disabled (not delay)', fakeAsync(() => {
-          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
+          const cog = TestBed.inject(ROUTER_CONFIGURATION) as ExtraOptions;
           cog.scrollPositionRestoration = 'disabled';
           srv.keepingScroll = true;
           page
@@ -588,7 +527,7 @@ describe('abc: reuse-tab', () => {
             });
         }));
         it('with enabled (must delay)', fakeAsync(() => {
-          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
+          const cog = TestBed.inject(ROUTER_CONFIGURATION) as ExtraOptions;
           cog.scrollPositionRestoration = 'enabled';
           srv.keepingScroll = true;
           page
@@ -601,7 +540,7 @@ describe('abc: reuse-tab', () => {
             });
         }));
         it('with top (must delay)', fakeAsync(() => {
-          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
+          const cog = TestBed.inject(ROUTER_CONFIGURATION) as ExtraOptions;
           cog.scrollPositionRestoration = 'top';
           srv.keepingScroll = true;
           page
@@ -616,7 +555,7 @@ describe('abc: reuse-tab', () => {
       });
       describe('#keepingScrollContainer', () => {
         beforeEach(() => {
-          const cog = injector.get(ROUTER_CONFIGURATION) as ExtraOptions;
+          const cog = TestBed.inject(ROUTER_CONFIGURATION) as ExtraOptions;
           cog.scrollPositionRestoration = 'disabled';
           layoutComp.keepingScroll = true;
         });
@@ -671,7 +610,7 @@ describe('abc: reuse-tab', () => {
       page.to('#e').expectAttr(1, 'title', 'zh');
 
       i18nResult = 'en';
-      injector.get(ALAIN_I18N_TOKEN).use('en');
+      TestBed.inject(ALAIN_I18N_TOKEN).use('en');
       tick(101);
       page.expectAttr(1, 'title', 'en');
     }));
@@ -680,7 +619,7 @@ describe('abc: reuse-tab', () => {
       createComp();
       page.to('#b').openContextMenu(1);
       expect(document.querySelector('[data-type="close"]')!.textContent).toBe(zh_CN.reuseTab.close);
-      injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
+      TestBed.inject<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
       fixture.detectChanges();
       page.to('#a').openContextMenu(1);
       expect(document.querySelector('[data-type="close"]')!.textContent).toBe(en_US.reuseTab.close);
@@ -689,7 +628,7 @@ describe('abc: reuse-tab', () => {
 
   describe('#issues', () => {
     it('#361', fakeAsync(() => {
-      injector = TestBed.configureTestingModule({
+      TestBed.configureTestingModule({
         declarations: [AppComponent, LayoutComponent, CComponent, DComponent],
         imports: [
           DelonLocaleModule,
@@ -719,11 +658,7 @@ describe('abc: reuse-tab', () => {
       });
       createComp();
 
-      page
-        .to('#to-d')
-        .to('#to-c')
-        .close(0)
-        .to('#to-d');
+      page.to('#to-d').to('#to-c').close(0).to('#to-d');
     }));
   });
 
@@ -766,7 +701,7 @@ describe('abc: reuse-tab', () => {
       return this;
     }
     expectAttr(pos: number, attrName: string, value: any): this {
-      expect(this.list[pos][attrName]).toBe(value);
+      expect((this.list[pos] as NzSafeAny)[attrName]).toBe(value);
       return this;
     }
     expectActive(pos: number, result: boolean): this {

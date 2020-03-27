@@ -16,7 +16,7 @@ export class TokenService implements ITokenService {
   private change$ = new BehaviorSubject<ITokenModel | null>(null);
   private _referrer: AuthReferrer = {};
 
-  constructor(private options: DelonAuthConfig, @Inject(DA_STORE_TOKEN) private store: IStore) { }
+  constructor(private options: DelonAuthConfig, @Inject(DA_STORE_TOKEN) private store: IStore) {}
 
   /**
    * 授权失败后跳转路由路径（支持外部链接地址），通过设置全局 `DelonAuthConfig.login_url` 来改变

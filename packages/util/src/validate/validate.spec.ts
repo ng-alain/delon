@@ -26,7 +26,12 @@ describe('utils: validate', () => {
   });
 
   it('#isInt', () => {
-    const data = [{ k: '123', v: true }, { k: 123, v: true }, { k: '123.1', v: false }, { k: '123.123', v: false }];
+    const data = [
+      { k: '123', v: true },
+      { k: 123, v: true },
+      { k: '123.1', v: false },
+      { k: '123.123', v: false },
+    ];
     for (const item of data) {
       expect(isInt(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 
@@ -62,7 +67,10 @@ describe('utils: validate', () => {
   });
 
   it('#isIdCard', () => {
-    const data = [{ k: '610102198006042614', v: true }, { k: '61010219800604261', v: false }];
+    const data = [
+      { k: '610102198006042614', v: true },
+      { k: '61010219800604261', v: false },
+    ];
     for (const item of data) {
       expect(isIdCard(item.k)).toBe(item.v, `${item.k}=${typeof item.k} must be ${item.v}`);
 

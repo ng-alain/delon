@@ -11,21 +11,15 @@ describe('Schematic: edit', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainAndModuleApp());
-    tree = await runner
-      .runSchematicAsync('edit', { name: 'edit', module: 'trade' }, tree)
-      .toPromise();
+    tree = await runner.runSchematicAsync('edit', { name: 'edit', module: 'trade' }, tree).toPromise();
   });
 
   it('should be generate list page', () => {
-    [modulePath, routingPath, tsPath, htmlPath].forEach(path =>
-      expect(tree.exists(path)).toBe(true),
-    );
+    [modulePath, routingPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
   });
 
   it('should be has import code', () => {
-    expect(tree.readContent(modulePath)).toContain(
-      `import { TradeEditComponent } from './edit/edit.component';`,
-    );
+    expect(tree.readContent(modulePath)).toContain(`import { TradeEditComponent } from './edit/edit.component';`);
   });
 
   it('Should not be imported into COMPONENTS', () => {

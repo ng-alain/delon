@@ -1,7 +1,6 @@
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { configureTestSuite, createTestContext } from '@delon/testing';
-
 import { DelonUtilModule } from '../util.module';
 
 describe('utils: string_template_outlet', () => {

@@ -1,7 +1,7 @@
-import chalk from 'chalk';
-import { Rules, RuleFailure } from 'tslint';
+import * as chalk from 'chalk';
+import { RuleFailure, Rules } from 'tslint';
 import * as ts from 'typescript';
-import { findElements, findElementHasAttribute, findElementHasAttributes } from '../../html-parsing/elements';
+import { findElementHasAttribute, findElementHasAttributes, findElements } from '../../html-parsing/elements';
 import { ExternalResource } from '../../tslint/component-file';
 import { ComponentWalker } from '../../tslint/component-walker';
 
@@ -68,9 +68,7 @@ export class Walker extends ComponentWalker {
       failures.push({
         start: node.getStart() + offset,
         end: node.getStart() + offset + 'standard-form-row'.length,
-        message: `Found deprecated component "${chalk.red(
-          '[standard-form-row]',
-        )}" which has been removed, you can use "${chalk.green(
+        message: `Found deprecated component "${chalk.red('[standard-form-row]')}" which has been removed, you can use "${chalk.green(
           '[se]',
         )}" instead, Document: https://ng-alain.com/components/edit`,
       });

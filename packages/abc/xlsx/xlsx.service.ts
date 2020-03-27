@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LazyResult, LazyService } from '@delon/util';
 import { saveAs } from 'file-saver';
-
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { XlsxConfig } from './xlsx.config';
 import { XlsxExportOptions, XlsxExportSheet } from './xlsx.types';
 
@@ -16,10 +16,10 @@ export class XlsxService {
     return typeof XLSX !== 'undefined' ? Promise.resolve([]) : this.lazy.load([this.cog.url!].concat(this.cog.modules!));
   }
 
-  private read(wb: any): { [key: string]: any[][] } {
-    const ret: any = {};
-    wb.SheetNames.forEach(name => {
-      const sheet: any = wb.Sheets[name];
+  private read(wb: NzSafeAny): { [key: string]: NzSafeAny[][] } {
+    const ret: NzSafeAny = {};
+    wb.SheetNames.forEach((name: string) => {
+      const sheet: NzSafeAny = wb.Sheets[name];
       ret[name] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
     });
     return ret;

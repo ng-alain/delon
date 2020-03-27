@@ -6,18 +6,11 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import chalk from 'chalk';
-import { Rules, RuleFailure, RuleWalker } from 'tslint';
+import * as chalk from 'chalk';
+import { RuleFailure, Rules, RuleWalker } from 'tslint';
 import * as ts from 'typescript';
-import {
-  isExportSpecifierNode,
-  isImportSpecifierNode,
-  isNamespaceImportNode,
-} from '../../typescript/imports';
-import {
-  isDelonExportDeclaration,
-  isDelonImportDeclaration,
-} from '../../typescript/module-specifiers';
+import { isExportSpecifierNode, isImportSpecifierNode, isNamespaceImportNode } from '../../typescript/imports';
+import { isDelonExportDeclaration, isDelonImportDeclaration } from '../../typescript/module-specifiers';
 import { getUpgradeDataFromWalker } from '../../upgrade-data';
 
 /**
@@ -94,18 +87,11 @@ export class Walker extends RuleWalker {
     const classData = this.data.find(data => data.replace === identifier.text);
 
     if (!classData) {
-      console.error(
-        `Could not find updated name for identifier "${identifier.text}" in ` +
-          ` in file ${this.getSourceFile().fileName}.`,
-      );
+      console.error(`Could not find updated name for identifier "${identifier.text}" in ` + ` in file ${this.getSourceFile().fileName}.`);
       return;
     }
 
-    const replacement = this.createReplacement(
-      identifier.getStart(),
-      identifier.getWidth(),
-      classData.replaceWith,
-    );
+    const replacement = this.createReplacement(identifier.getStart(), identifier.getWidth(), classData.replaceWith);
 
     this.addFailureAtNode(
       identifier,

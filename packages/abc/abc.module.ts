@@ -14,6 +14,7 @@ import { FullContentModule } from '@delon/abc/full-content';
 import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { SGModule } from '@delon/abc/grid';
 import { ImageModule } from '@delon/abc/image';
+import { LoadingModule } from '@delon/abc/loading';
 import { LodopModule } from '@delon/abc/lodop';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
@@ -28,7 +29,6 @@ import { TagSelectModule } from '@delon/abc/tag-select';
 import { SVModule } from '@delon/abc/view';
 import { XlsxModule } from '@delon/abc/xlsx';
 import { ZipModule } from '@delon/abc/zip';
-import { LoadingModule } from '@delon/abc/loading';
 
 const MODULES = [
   ErrorCollectModule,

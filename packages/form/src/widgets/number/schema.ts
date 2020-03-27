@@ -1,4 +1,4 @@
-import { SFUISchemaItem, SFDLSSize } from '../../schema/ui';
+import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
 
 export interface SFNumberWidgetSchema extends SFUISchemaItem {
   size?: SFDLSSize;

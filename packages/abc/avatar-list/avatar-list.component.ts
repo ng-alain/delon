@@ -10,7 +10,6 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
-
 import { AvatarListItemComponent } from './avatar-list-item.component';
 
 @Component({

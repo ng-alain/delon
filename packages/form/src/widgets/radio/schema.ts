@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { SFSchemaEnumType } from '../../schema';
-import { SFUISchemaItem, SFDLSSize } from '../../schema/ui';
 import { SFValue } from '../../interface';
+import { SFSchemaEnumType } from '../../schema';
+import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
 
 export interface SFRadioWidgetSchema extends SFUISchemaItem {
   /**

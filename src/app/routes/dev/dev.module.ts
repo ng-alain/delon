@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { SharedModule } from '../../shared/shared.module';
 import { DemoComponent } from './demo/demo.component';
 import { DevHomeComponent } from './home/home.component';

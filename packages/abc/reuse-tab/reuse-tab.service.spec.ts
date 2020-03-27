@@ -1,9 +1,8 @@
-import { TestBed, TestBedStatic } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
-import { filter } from 'rxjs/operators';
-
 import { MenuService } from '@delon/theme';
-
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { filter } from 'rxjs/operators';
 import { ReuseTabMatchMode, ReuseTitle } from './reuse-tab.interfaces';
 import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
@@ -25,7 +24,6 @@ class MockRouter {
 }
 
 describe('abc: reuse-tab(service)', () => {
-  let injector: TestBedStatic;
   let srv: ReuseTabService;
   let menuSrv: MenuService;
   let router: MockRouter;
@@ -33,7 +31,7 @@ describe('abc: reuse-tab(service)', () => {
   afterEach(() => srv.ngOnDestroy());
 
   function genModule(providers: any[] = [{ provide: MenuService, useClass: MockMenuService }]) {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       providers: [
         ReuseTabService,
         {
@@ -45,9 +43,9 @@ describe('abc: reuse-tab(service)', () => {
         { provide: Router, useFactory: () => new MockRouter() },
       ].concat(providers),
     });
-    srv = injector.get<ReuseTabService>(ReuseTabService);
-    menuSrv = injector.get<MenuService>(MenuService, undefined);
-    router = injector.get<Router>(Router);
+    srv = TestBed.inject<ReuseTabService>(ReuseTabService);
+    menuSrv = TestBed.inject<MenuService>(MenuService, undefined);
+    router = TestBed.inject<Router>(Router) as NzSafeAny;
   }
 
   function genCached(count: number, urlTpl: string = `a/{index}`) {

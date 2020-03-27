@@ -1,35 +1,30 @@
 import { TestBed } from '@angular/core/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { SettingsService } from './settings.service';
 
 describe('Service: Settings', () => {
   let srv: SettingsService;
   beforeEach(() => {
-    let data = {};
+    let data: { [key: string]: NzSafeAny } = {};
 
-    spyOn(localStorage, 'getItem').and.callFake(
-      (key: string): string => {
-        return data[key] || null;
-      },
-    );
-    spyOn(localStorage, 'removeItem').and.callFake(
-      (key: string): void => {
-        delete data[key];
-      },
-    );
-    spyOn(localStorage, 'setItem').and.callFake(
-      (key: string, value: string): string => {
-        return (data[key] = value as string);
-      },
-    );
+    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
+      return data[key] || null;
+    });
+    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+      delete data[key];
+    });
+    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => {
+      return (data[key] = value as string);
+    });
     spyOn(localStorage, 'clear').and.callFake(() => {
       data = {};
     });
 
-    const a = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [],
       providers: [SettingsService],
     });
-    srv = a.get(SettingsService);
+    srv = TestBed.inject(SettingsService);
   });
 
   describe('#layout', () => {

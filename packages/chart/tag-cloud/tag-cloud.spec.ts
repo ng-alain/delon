@@ -4,7 +4,7 @@ import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
 import { G2TagCloudComponent, G2TagCloudData } from './tag-cloud.component';
 import { G2TagCloudModule } from './tag-cloud.module';
 
-describe('chart: tag-cloud', () => {
+xdescribe('chart: tag-cloud', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 
@@ -41,9 +41,7 @@ describe('chart: tag-cloud', () => {
 });
 
 @Component({
-  template: `
-    <g2-tag-cloud #comp [data]="data" [delay]="delay"></g2-tag-cloud>
-  `,
+  template: ` <g2-tag-cloud #comp [data]="data" [delay]="delay"></g2-tag-cloud> `,
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2TagCloudComponent;

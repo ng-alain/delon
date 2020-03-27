@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { deepMerge } from '@delon/util';
-import { ModalOptionsForService, NzModalService } from 'ng-zorro-antd/modal';
+import { ModalOptions, NzModalService } from 'ng-zorro-antd/modal';
 import { Observable, Observer } from 'rxjs';
 
 export interface ModalHelperOptions {
   /** 大小；例如：lg、600，默认：`lg` */
   size?: 'sm' | 'md' | 'lg' | 'xl' | '' | number;
-  /** 对话框 [ModalOptionsForService](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/nz-modal.type.ts) 参数 */
-  modalOptions?: ModalOptionsForService;
+  /** 对话框 [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) 参数 */
+  modalOptions?: ModalOptions;
   /** 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 */
   exact?: boolean;
   /** 是否包裹标签页，修复模态包含标签间距问题 */
@@ -64,7 +64,7 @@ export class ModalHelper {
         cls += ` ${modalOptions.nzWrapClassName}`;
         delete modalOptions.nzWrapClassName;
       }
-      const defaultOptions: ModalOptionsForService = {
+      const defaultOptions: ModalOptions = {
         nzWrapClassName: cls,
         nzContent: comp,
         nzWidth: width ? width : undefined,
@@ -115,7 +115,6 @@ export class ModalHelper {
    * @param comp 组件
    * @param params 组件参数
    * @param size 大小；例如：lg、600，默认：lg
-   * @param options 对话框 `ModalOptionsForService` 参数
    *
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
@@ -126,7 +125,7 @@ export class ModalHelper {
    * // 关闭
    * this.NzModalRef.destroy();
    */
-  open(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: ModalOptionsForService): Observable<any> {
+  open(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: ModalOptions): Observable<any> {
     return this.create(comp, params, {
       size,
       modalOptions: options,
@@ -139,7 +138,6 @@ export class ModalHelper {
    * @param comp 组件
    * @param params 组件参数
    * @param size 大小；例如：lg、600，默认：lg
-   * @param options 对话框 `ModalOptionsForService` 参数
    *
    * @example
    * this.modalHelper.open(FormEditComponent, { i }).subscribe(res => this.load());
@@ -150,7 +148,7 @@ export class ModalHelper {
    * // 关闭
    * this.NzModalRef.destroy();
    */
-  static(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: any): Observable<any> {
+  static(comp: any, params?: any, size: 'sm' | 'md' | 'lg' | 'xl' | '' | number = 'lg', options?: ModalOptions): Observable<any> {
     return this.open(comp, params, size, {
       nzMaskClosable: false,
       ...options,

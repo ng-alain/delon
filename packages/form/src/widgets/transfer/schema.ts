@@ -1,7 +1,7 @@
+import { TransferCanMove, TransferChange, TransferItem, TransferSearchChange, TransferSelectChange } from 'ng-zorro-antd/transfer';
 import { Observable } from 'rxjs';
-import { TransferItem, TransferCanMove, TransferChange, TransferSearchChange, TransferSelectChange } from 'ng-zorro-antd/transfer';
-import { SFUISchemaItem } from '../../schema/ui';
 import { SFSchemaEnumType } from '../../schema';
+import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFTransferWidgetSchema extends SFUISchemaItem {
   /**

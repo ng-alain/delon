@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DelonUtilModule } from '../util.module';
 import { LazyService } from './lazy.service';
 
@@ -9,7 +10,7 @@ class MockDocument {
   getElementsByTagName = () => {
     return [
       {
-        appendChild: node => {
+        appendChild: (node: NzSafeAny) => {
           if (node.testStatus === 'ok') {
             if (node.readyState) {
               node.readyState = 'complete';
@@ -40,20 +41,21 @@ describe('utils: lazy', () => {
   beforeEach(() => {
     isIE = false;
     testStatus = 'ok';
-    const injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [DelonUtilModule],
       providers: [{ provide: DOCUMENT, useClass: MockDocument }],
     });
-    srv = injector.get(LazyService);
+    srv = TestBed.inject(LazyService);
     srv.clear();
-    doc = injector.get(DOCUMENT);
+    doc = TestBed.inject(DOCUMENT);
   });
 
   describe('#IE', () => {
-    it('should be load a js resource', () => {
+    it('should be load a js resource', done => {
       isIE = true;
       srv.change.subscribe(res => {
         expect(res[0].status).toBe('ok');
+        done();
       });
       srv.load(['/1.js']);
     });
@@ -69,8 +71,7 @@ describe('utils: lazy', () => {
         };
         return mockObj;
       };
-      // tslint:disable-next-line: unnecessary-bind
-      spyOn(doc, 'getElementsByTagName').and.callFake(mockGetElementsByTagName.bind(this));
+      spyOn(doc, 'getElementsByTagName').and.callFake(mockGetElementsByTagName as NzSafeAny);
       srv.change.subscribe(res => {
         expect(res[0].status).toBe('ok');
         done();
@@ -80,9 +81,10 @@ describe('utils: lazy', () => {
   });
 
   describe('Scripts', () => {
-    it('should be load a js resource', () => {
+    it('should be load a js resource', done => {
       srv.change.subscribe(res => {
         expect(res[0].status).toBe('ok');
+        done();
       });
       srv.load('/1.js');
     });
@@ -96,15 +98,17 @@ describe('utils: lazy', () => {
   });
 
   describe('Styles', () => {
-    it('should be load a css resource', () => {
+    it('should be load a css resource', done => {
       srv.change.subscribe(res => {
         expect(res[0].status).toBe('ok');
+        done();
       });
       srv.load('/1.css');
     });
-    it('should be load a less resource', () => {
+    it('should be load a less resource', done => {
       srv.loadStyle('/1.less', 'stylesheet/less').then(res => {
         expect(res.status).toBe('ok');
+        done();
       });
     });
     it('should be custom content', () => {
@@ -142,10 +146,11 @@ describe('utils: lazy', () => {
     expect(count).toBe(1);
   });
 
-  it('should be bad resource', () => {
+  it('should be bad resource', done => {
     testStatus = 'bad';
     srv.change.subscribe(res => {
       expect(res[0].status).toBe('error');
+      done();
     });
     srv.load('/3.js');
   });

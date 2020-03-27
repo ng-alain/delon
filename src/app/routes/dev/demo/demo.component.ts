@@ -1,54 +1,34 @@
 import { Component } from '@angular/core';
-import { SFSchema, SFMentionWidgetSchema } from '@delon/form';
-import { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-
-const DATA = ['asdf', 'cipchk', '中文', 'にほんご'];
 
 @Component({
   selector: 'app-demo',
   template: `
-    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+    <tag-select>
+      <nz-tag *ngFor="let i of categories; let idx = index" nzMode="checkable" [(nzChecked)]="i.value" (nzCheckedChange)="change(i)">{{
+        i.text
+      }}</nz-tag>
+    </tag-select>
   `,
 })
 export class DemoComponent {
-  schema: SFSchema = {
-    properties: {
-      remark: {
-        type: 'string',
-        title: '描述',
-        enum: DATA,
-        minimum: 2,
-        maximum: 5,
-        ui: {
-          widget: 'mention',
-          inputStyle: 'textarea',
-        } as SFMentionWidgetSchema,
-      },
-      // 异步静态数据源
-      async: {
-        type: 'string',
-        title: 'Async',
-        ui: {
-          widget: 'mention',
-          asynxcData: () => of(DATA).pipe(delay(1000)),
-        } as SFMentionWidgetSchema,
-      },
-      // 实时数据
-      real_time: {
-        type: 'string',
-        title: 'RealTime',
-        ui: {
-          widget: 'mention',
-          loadData: (option: MentionOnSearchTypes) => of(DATA.filter(item => item.indexOf(option.value) !== -1)).pipe(delay(300)),
-        } as SFMentionWidgetSchema,
-      },
-    },
-  };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
-    this.msg.success(JSON.stringify(value));
+  categories = [
+    { id: 0, text: '全部', value: false },
+    { id: 1, text: '类目一', value: false },
+    { id: 2, text: '类目二', value: false },
+    { id: 3, text: '类目三', value: false },
+    { id: 4, text: '类目四', value: false },
+    { id: 5, text: '类目五', value: false },
+    { id: 6, text: '类目六', value: false },
+    { id: 7, text: '类目七', value: false },
+    { id: 8, text: '类目八', value: false },
+    { id: 9, text: '类目九', value: false },
+    { id: 10, text: '类目十', value: false },
+    { id: 11, text: '类目十一', value: false },
+    { id: 12, text: '类目十二', value: false },
+  ];
+
+  change(res: any) {
+    if (res.id !== 0) return;
+    this.categories.forEach(i => (i.value = res.value));
   }
 }

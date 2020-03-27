@@ -4,7 +4,7 @@ import { checkDelay, PageG2 } from '@delon/testing';
 import { G2PieComponent } from './pie.component';
 import { G2PieModule } from './pie.module';
 
-describe('chart: pie', () => {
+xdescribe('chart: pie', () => {
   let page: PageG2<TestMiniComponent | TestFullComponent>;
 
   describe('[mini]', () => {
@@ -38,7 +38,11 @@ describe('chart: pie', () => {
       page = new PageG2<TestFullComponent>().makeModule(G2PieModule, TestFullComponent, {
         dc: false,
       });
-      page.context.data = [{ x: '1', y: 50 }, { x: '2', y: 20 }, { x: '3', y: 30 }];
+      page.context.data = [
+        { x: '1', y: 50 },
+        { x: '2', y: 20 },
+        { x: '3', y: 30 },
+      ];
       page.dcFirst();
     }));
 

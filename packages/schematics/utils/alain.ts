@@ -7,21 +7,21 @@ import {
   mergeWith,
   move,
   noop,
-  template,
-  url,
   Rule,
-  SchematicsException,
   SchematicContext,
+  SchematicsException,
+  template,
   Tree,
+  url,
 } from '@angular-devkit/schematics';
 import { findNode, insertImport } from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 import { buildRelativePath, findModuleFromOptions } from '@schematics/angular/utility/find-module';
 import { parseName } from '@schematics/angular/utility/parse-name';
 import { validateHtmlSelector, validateName } from '@schematics/angular/utility/validation';
-import * as ts from 'typescript';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as ts from 'typescript';
 import { getSourceFile } from './ast';
 import { getProject, Project } from './project';
 

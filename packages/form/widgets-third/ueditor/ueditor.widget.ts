@@ -4,22 +4,8 @@ import { ControlWidget } from '@delon/form';
 @Component({
   selector: 'sf-ueditor',
   template: `
-    <sf-item-wrap
-      [id]="id"
-      [schema]="schema"
-      [ui]="ui"
-      [showError]="showError"
-      [error]="error"
-      [showTitle]="schema.title"
-    >
-      <ueditor
-        [ngModel]="value"
-        [config]="config"
-        [loadingTip]="loading"
-        [delay]="delay"
-        (ngModelChange)="change($event)"
-      >
-      </ueditor>
+    <sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
+      <ueditor [ngModel]="value" [config]="config" [loadingTip]="loading" [delay]="delay" (ngModelChange)="change($event)"> </ueditor>
     </sf-item-wrap>
   `,
   styles: [

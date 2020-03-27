@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Route } from '@angular/router';
+import { PreloadAllModules, Route, RouterModule } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { LayoutComponent } from '../layout/layout.component';
 import { SharedModule } from '../shared/shared.module';

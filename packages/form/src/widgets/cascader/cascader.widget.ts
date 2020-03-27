@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CascaderOption } from 'ng-zorro-antd/cascader';
-import { SFCascaderWidgetSchema } from './schema';
+import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
 import { ControlUIWidget } from '../../widget';
+import { SFCascaderWidgetSchema } from './schema';
 
 @Component({
   selector: 'sf-cascader',
@@ -18,7 +18,7 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
   showInput: boolean;
   triggerAction: string[];
   data: SFSchemaEnum[] = [];
-  loadData: (node: CascaderOption, index: number) => PromiseLike<any>;
+  loadData: (node: NzCascaderOption, index: number) => PromiseLike<any>;
 
   ngOnInit(): void {
     const { clearText, showArrow, showInput, triggerAction, asyncData } = this.ui;
@@ -27,7 +27,7 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     this.showInput = toBool(showInput, true);
     this.triggerAction = triggerAction || ['click'];
     if (!!asyncData) {
-      this.loadData = (node: CascaderOption, index: number) => asyncData(node, index, this).then(() => this.detectChanges());
+      this.loadData = (node: NzCascaderOption, index: number) => asyncData(node, index, this).then(() => this.detectChanges());
     }
   }
 
@@ -49,7 +49,7 @@ export class CascaderWidget extends ControlUIWidget<SFCascaderWidgetSchema> impl
     }
   }
 
-  _selectionChange(options: CascaderOption[]) {
+  _selectionChange(options: NzCascaderOption[]) {
     if (this.ui.selectionChange) {
       this.ui.selectionChange(options);
     }

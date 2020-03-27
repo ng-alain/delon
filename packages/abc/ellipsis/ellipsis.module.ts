@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { DelonUtilModule } from '@delon/util';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-
 import { EllipsisComponent } from './ellipsis.component';
 
 const COMPONENTS = [EllipsisComponent];

@@ -1,7 +1,6 @@
 import { DebugElement } from '@angular/core';
-import { fakeAsync, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
-
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 
 describe('form: widget: radio', () => {

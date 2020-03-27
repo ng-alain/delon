@@ -4,7 +4,7 @@ import { checkDelay, configureTestSuite, PageG2, PageG2Height } from '@delon/tes
 import { G2MiniAreaComponent } from './mini-area.component';
 import { G2MiniAreaModule } from './mini-area.module';
 
-describe('chart: mini-area', () => {
+xdescribe('chart: mini-area', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 
@@ -20,7 +20,11 @@ describe('chart: mini-area', () => {
       page
         .dcFirst()
         .isDataCount('geoms', 2)
-        .newData([{ x: 1, y: 10 }, { x: 2, y: 20 }, { x: 3, y: 30 }])
+        .newData([
+          { x: 1, y: 10 },
+          { x: 2, y: 20 },
+          { x: 3, y: 30 },
+        ])
         .isDataCount('geoms', 3);
     }));
 
@@ -92,7 +96,10 @@ class TestComponent {
   height = PageG2Height;
   xAxis: any;
   yAxis: any;
-  data: any[] = [{ x: 1, y: 10 }, { x: 2, y: 20 }];
+  data: any[] = [
+    { x: 1, y: 10 },
+    { x: 2, y: 20 },
+  ];
   tooltipType = 'default';
   delay = 0;
 }

@@ -24,5 +24,5 @@ export abstract class AtomicProperty extends FormProperty {
     return this.fallbackValue() !== this.value;
   }
 
-  _updateValue() { }
+  _updateValue() {}
 }

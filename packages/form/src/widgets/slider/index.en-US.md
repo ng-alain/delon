@@ -25,9 +25,9 @@ Property | Description | Type | Default
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[range]` | dual thumb mode | `Boolean` | -
-`[marks]` | Tick mark of Slider, type of key must be `number`, and must in closed interval `[min, max]` ，each mark can declare its own style. | `object` | -
+`[marks]` | Tick mark of Slider, type of key must be `number`, and must in closed interval `[min, max]` ，each mark can declare its own style. | `NzMarks` | -
 `[dots]` | Whether the thumb can drag over tick only | `Boolean` | `false`
 `[included]` | Make effect when `marks` not null，`true` means containment and `false` means coordinative | `Boolean` | `true`
 `[vertical]` | If true, the slider will be vertical | `boolean` | `false`
-`[afterChange]` | Fire when `onmouseup` is fired. | `(value: SliderValue) => void` | -
+`[afterChange]` | Fire when `onmouseup` is fired. | `(value: NzSliderValue) => void` | -
 `[formatter]` | Slider will pass its value to `nzTipFormatter`, and display its value in Tooltip, and hide Tooltip when return value is null | `(value: number) => string` | -

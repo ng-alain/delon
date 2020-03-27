@@ -21,7 +21,7 @@ export class DemoComponent implements OnInit {
     const beginDay = new Date().getTime();
     for (let i = 0; i < 20; i += 1) {
       this.visitData.push({
-        x: format(new Date(beginDay + (1000 * 60 * 60 * 24 * i)), 'YYYY-MM-DD'),
+        x: format(new Date(beginDay + (1000 * 60 * 60 * 24 * i)), 'yyyy-MM-dd'),
         y: Math.floor(Math.random() * 100) + 10,
       });
     }

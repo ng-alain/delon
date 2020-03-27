@@ -9,7 +9,7 @@ bg: f2f4f5
 基本结构，具备响应式布局功能，主要断点为 768px 和 576px，拖动窗口改变大小试试看。
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'app-demo',
@@ -46,7 +46,8 @@ import { Component } from '@angular/core';
         background: #7dbcea;
         color: #fff;
     }
-    `]
+    `],
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class DemoComponent {
 }

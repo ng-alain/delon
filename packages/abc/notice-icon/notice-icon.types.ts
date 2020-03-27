@@ -22,7 +22,7 @@ export interface NoticeIconList {
   description?: string;
 
   /** 时间戳 */
-  datetime?: string;
+  datetime?: string | Date | number;
 
   /** 额外信息，在列表项右上角 */
   extra?: string;

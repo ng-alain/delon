@@ -1,7 +1,6 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import { ErrorCollectModule } from '../error-collect/error-collect.module';
 import { FooterToolbarModule } from './footer-toolbar.module';
 
@@ -58,9 +57,7 @@ describe('abc: footer-toolbar', () => {
 });
 
 @Component({
-  template: `
-    <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra"></footer-toolbar></form>
-  `,
+  template: ` <form><footer-toolbar [errorCollect]="errorCollect" [extra]="extra"></footer-toolbar></form> `,
 })
 class TestComponent {
   errorCollect = true;

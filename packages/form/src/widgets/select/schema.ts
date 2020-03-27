@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { SFUISchemaItem, SFDLSSize } from '../../schema/ui';
-import { SFSchemaEnumType, SFSchemaEnum } from '../../schema';
 import { SFValue } from '../../interface';
+import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
+import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
 
 export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**

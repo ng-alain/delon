@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import { parseFragment, DefaultTreeDocument, DefaultTreeElement } from 'parse5';
+import { DefaultTreeDocument, DefaultTreeElement, parseFragment } from 'parse5';
 
 export function parseDocument(html: string): any {
   return parseFragment(html, {
@@ -93,11 +93,7 @@ export function findElementHasAttribute(html: string, tagName: string, attr: str
 }
 
 /** 查找元素是否包含一组属性，返回一个属性与开始位置的数组集合 */
-export function findElementHasAttributes(
-  html: string,
-  tagName: string,
-  attrs: string[],
-): Array<{ attr: string; offset: number }> {
+export function findElementHasAttributes(html: string, tagName: string, attrs: string[]): Array<{ attr: string; offset: number }> {
   const res: Array<{ attr: string; offset: number }> = [];
   findElementsWithTagName(html, tagName).forEach(node => {
     attrs

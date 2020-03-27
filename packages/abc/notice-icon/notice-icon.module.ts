@@ -8,7 +8,6 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-
 import { NoticeIconTabComponent } from './notice-icon-tab.component';
 import { NoticeIconComponent } from './notice-icon.component';
 

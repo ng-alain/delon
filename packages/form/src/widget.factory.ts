@@ -1,7 +1,7 @@
 import { ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
 import { FormProperty } from './model/form.property';
-import { Widget } from './widget';
 import { SFUISchemaItem } from './schema/ui';
+import { Widget } from './widget';
 
 export class WidgetRegistry {
   private _widgets: { [type: string]: Widget<FormProperty, SFUISchemaItem> } = {};

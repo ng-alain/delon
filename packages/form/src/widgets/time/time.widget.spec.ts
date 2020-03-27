@@ -7,6 +7,8 @@ import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/b
 import { SFSchema } from '../../../src/schema/index';
 import { TimeWidget } from './time.widget';
 
+const FORMAT = 'yyyy-MM-dd HH:mm:ss';
+
 describe('form: widget: time', () => {
   let fixture: ComponentFixture<TestFormComponent>;
   let page: SFPage;
@@ -35,7 +37,7 @@ describe('form: widget: time', () => {
       const comp = getComp();
       const time = new Date();
       comp._change(time);
-      page.checkValue('/a', format(time, comp['valueFormat']));
+      page.checkValue('/a', format(time, comp['valueFormat'] as string));
     });
 
     describe('default value', () => {
@@ -46,7 +48,7 @@ describe('form: widget: time', () => {
         };
         page.newSchema(s);
         const comp = getComp();
-        expect(format(comp.value)).toBe(format(time));
+        expect(format(comp.value, FORMAT)).toBe(format(time, FORMAT));
       });
       it('with number type', () => {
         const time = +new Date();
@@ -55,16 +57,16 @@ describe('form: widget: time', () => {
         };
         page.newSchema(s);
         const comp = getComp();
-        expect(format(comp.value)).toBe(format(time));
+        expect(format(comp.value, FORMAT)).toBe(format(time, FORMAT));
       });
       it('with number type but is string value', () => {
-        const time = (+new Date()).toString();
+        const time = +new Date();
         const s: SFSchema = {
           properties: { a: { type: 'string', ui: { widget }, default: time } },
         };
         page.newSchema(s);
         const comp = getComp();
-        expect(format(comp.value)).toBe(format(time));
+        expect(format(comp.value, FORMAT)).toBe(format(time, FORMAT));
       });
       it('with HH:mm', () => {
         const time = '11:10';
@@ -80,7 +82,7 @@ describe('form: widget: time', () => {
         };
         page.newSchema(s);
         const comp = getComp();
-        expect(format(comp.value, 'YYYY-MM-DD')).toBe('1970-01-01');
+        expect(comp.value).toBe(null);
       });
     });
 

@@ -26,10 +26,9 @@ import { InputNumber } from '@delon/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class QuickMenuComponent implements OnInit, OnChanges {
-
   // #endregion
 
-  constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) { }
+  constructor(private cdr: ChangeDetectorRef, private el: ElementRef, private render: Renderer2) {}
   ctrlStyle: { [key: string]: string } = {};
 
   // #region fields

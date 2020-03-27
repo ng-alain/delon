@@ -1,12 +1,12 @@
-import { DomSanitizer } from '@angular/platform-browser';
 import { Host, Inject, Injectable, Optional } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { deepCopy } from '@delon/util';
-
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STRowSource } from './table-row.directive';
 import { STConfig } from './table.config';
-import { STColumn, STColumnButton, STColumnFilter, STSortMap, STIcon, STColumnButtonPop } from './table.interfaces';
+import { STColumn, STColumnButton, STColumnButtonPop, STColumnFilter, STIcon, STSortMap } from './table.interfaces';
 
 @Injectable()
 export class STColumnSource {
@@ -289,11 +289,11 @@ export class STColumnSource {
       }
       // className
       if (!item.className) {
-        item.className = {
+        item.className = ({
           number: 'text-right',
           currency: 'text-right',
           date: 'text-center',
-        }[item.type!];
+        } as NzSafeAny)[item.type!];
       }
       // width
       if (typeof item.width === 'number') {

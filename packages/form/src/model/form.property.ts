@@ -1,7 +1,7 @@
-import { combineLatest, BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-
 import { DelonFormConfig } from '../config';
+import { SF_SEQ } from '../const';
 import { ErrorData } from '../errors';
 import { SFValue } from '../interface';
 import { SFSchema, SFSchemaType } from '../schema';
@@ -9,7 +9,6 @@ import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from '../schema/ui';
 import { isBlank } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
 import { Widget } from '../widget';
-import { SF_SEQ } from '../const';
 
 export abstract class FormProperty {
   private _errors: ErrorData[] | null = null;
@@ -155,7 +154,7 @@ export abstract class FormProperty {
         result = base.getProperty(path);
       }
     }
-    return result;
+    return result!;
   }
 
   /** 查找根表单属性 */
@@ -313,7 +312,7 @@ export abstract class FormProperty {
               }),
             );
             const visibilityCheck = property._visibilityChanges;
-            const and = combineLatest(valueCheck, visibilityCheck).pipe(map(results => results[0] && results[1]));
+            const and = combineLatest([valueCheck, visibilityCheck]).pipe(map(results => results[0] && results[1]));
             propertiesBinding.push(and);
           } else {
             console.warn(`Can't find property ${dependencyPath} for visibility check of ${this.path}`);
@@ -336,14 +335,14 @@ export abstract class FormProperty {
 export abstract class PropertyGroup extends FormProperty {
   properties: { [key: string]: FormProperty } | FormProperty[] | null = null;
 
-  getProperty(path: string) {
+  getProperty(path: string): FormProperty | undefined {
     const subPathIdx = path.indexOf(SF_SEQ);
     const propertyId = subPathIdx !== -1 ? path.substr(0, subPathIdx) : path;
 
-    let property = this.properties![propertyId];
+    let property = (this.properties as { [key: string]: FormProperty })[propertyId];
     if (property !== null && subPathIdx !== -1 && property instanceof PropertyGroup) {
       const subPath = path.substr(subPathIdx + 1);
-      property = (property as PropertyGroup).getProperty(subPath);
+      property = (property as PropertyGroup).getProperty(subPath)!;
     }
     return property;
   }
@@ -351,7 +350,7 @@ export abstract class PropertyGroup extends FormProperty {
   forEachChild(fn: (formProperty: FormProperty, str: string) => void) {
     for (const propertyId in this.properties) {
       if (this.properties.hasOwnProperty(propertyId)) {
-        const property = this.properties[propertyId];
+        const property = (this.properties as { [key: string]: FormProperty })[propertyId];
         fn(property, propertyId);
       }
     }

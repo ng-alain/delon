@@ -1,11 +1,11 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
-import { throwIfAlreadyLoaded } from './core/module-import-guard';
-
 import { DelonFormModule } from '@delon/form';
 // mock
 import { DelonMockModule } from '@delon/mock';
 import { AlainThemeModule } from '@delon/theme';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import * as MOCKDATA from '../../_mock';
+import { throwIfAlreadyLoaded } from './core/module-import-guard';
 
 // #region reuse-tab
 /**
@@ -21,7 +21,7 @@ import * as MOCKDATA from '../../_mock';
  */
 // import { RouteReuseStrategy } from '@angular/router';
 // import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
-const REUSETAB_PROVIDES = [
+const REUSETAB_PROVIDES: NzSafeAny[] = [
   // {
   //   provide: RouteReuseStrategy,
   //   useClass: ReuseTabStrategy,
@@ -32,8 +32,8 @@ const REUSETAB_PROVIDES = [
 
 // #region global config functions
 
-import { STConfig } from '@delon/abc/table';
 import { LodopConfig } from '@delon/abc/lodop';
+import { STConfig } from '@delon/abc/table';
 import { DelonACLModule } from '@delon/acl';
 
 export function fnSTConfig(): STConfig {

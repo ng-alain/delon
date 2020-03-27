@@ -1,17 +1,16 @@
 // tslint:disable: no-string-literal
-import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
-import format from 'date-fns/format';
-import { deepCopy } from '@delon/util';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import { DebugElement } from '@angular/core';
+import { ComponentFixture, fakeAsync, flush } from '@angular/core/testing';
+import { deepCopy } from '@delon/util';
+import format from 'date-fns/format';
+import formatISO from 'date-fns/formatISO';
 registerLocaleData(zh);
-
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 import { DateWidget } from './date.widget';
-import * as utils from '../../utils';
 import { SFDateWidgetSchema } from './schema';
 
 describe('form: widget: date', () => {
@@ -52,29 +51,26 @@ describe('form: widget: date', () => {
         };
         page.newSchema(s);
         const comp = getComp();
-        expect(format(comp.value)).toBe(format(time));
+        expect(formatISO(comp.value)).toBe(formatISO(time));
       });
       it('with number type but is string value', () => {
-        const time = (+new Date()).toString();
+        const time = +new Date();
         const s: SFSchema = {
           properties: { a: { type: 'string', ui: { widget }, default: time } },
         };
         page.newSchema(s);
         const comp = getComp();
-        expect(format(comp.value)).toBe(format(time));
+        expect(formatISO(comp.value)).toBe(formatISO(time));
       });
     });
     it('should be set value', fakeAsync(() => {
       const s: SFSchema = {
         properties: { a: { type: 'string', format: 'date-time', ui: { widget } } },
       };
-      page
-        .newSchema(s)
-        .checkValue('a', null)
-        .setValue('a', new Date(2019, 0, 1))
-        .dc(1);
+      page.newSchema(s).checkValue('a', null).setValue('a', new Date(2019, 0, 1)).dc(1);
+      flush();
       expect(page.getValue('a') instanceof Date).toBe(true);
-      const ipt = page.getEl('.ant-calendar-picker-input') as HTMLInputElement;
+      const ipt = page.getEl('.ant-picker-input input') as HTMLInputElement;
       expect(ipt.value).toContain(`2019-01-01`);
     }));
   });
@@ -127,13 +123,13 @@ describe('form: widget: date', () => {
   });
 
   describe('#format', () => {
-    it('should be default YYYY-MM-DD HH:mm:ss', () => {
+    it('should be default yyyy-MM-dd HH:mm:ss', () => {
       const s: SFSchema = {
         properties: { a: { type: 'string', ui: { widget } } },
       };
       page.newSchema(s);
       const comp = getComp();
-      expect(comp['startFormat']).toBe('YYYY-MM-DD HH:mm:ss');
+      expect(comp['startFormat']).toBe('yyyy-MM-dd HH:mm:ss');
     });
     it('should be spcify format', () => {
       const s: SFSchema = {
@@ -182,7 +178,7 @@ describe('form: widget: date', () => {
       copyS.properties!.start.default = time;
       copyS.properties!.end.default = time;
       page.newSchema(copyS);
-      const res = getComp().displayValue;
+      const res = getComp().displayValue as Date[];
       expect(Array.isArray(res)).toBe(true);
       expect(res![0]).toBe(time);
     });
@@ -201,11 +197,11 @@ describe('form: widget: date', () => {
     });
     it('should be custom end format', () => {
       const copyS = deepCopy(s);
-      (copyS.properties!.start.ui as SFDateWidgetSchema).format = 'YYYY';
+      (copyS.properties!.start.ui as SFDateWidgetSchema).format = 'yyyy';
       (copyS.properties!.end.ui as SFDateWidgetSchema).format = 'X';
       page.newSchema(copyS);
       const comp = getComp();
-      expect(comp['startFormat']).toBe('YYYY');
+      expect(comp['startFormat']).toBe('yyyy');
       expect(comp['endFormat']).toBe('X');
     });
   });
@@ -242,31 +238,6 @@ describe('form: widget: date', () => {
       expect(ui.onOk).not.toHaveBeenCalled();
       comp._ok(true);
       expect(ui.onOk).toHaveBeenCalled();
-    });
-  });
-
-  describe('support date-fns', () => {
-    beforeEach(() => spyOn(utils, 'isDateFns').and.returnValue(true));
-    it('should be using YYYY when mode is year', () => {
-      page.newSchema({
-        properties: { a: { type: 'string', ui: { widget, mode: 'year' } as SFDateWidgetSchema } },
-      });
-      const comp = getComp();
-      expect(comp.displayFormat).toBe('YYYY');
-    });
-    it('should be using YYYY-MM when mode is month', () => {
-      page.newSchema({
-        properties: { a: { type: 'string', ui: { widget, mode: 'month' } as SFDateWidgetSchema } },
-      });
-      const comp = getComp();
-      expect(comp.displayFormat).toBe('YYYY-MM');
-    });
-    it('should be using YYYY-WW when mode is week', () => {
-      page.newSchema({
-        properties: { a: { type: 'string', ui: { widget, mode: 'week' } as SFDateWidgetSchema } },
-      });
-      const comp = getComp();
-      expect(comp.displayFormat).toBe('YYYY-WW');
     });
   });
 });

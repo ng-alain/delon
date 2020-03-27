@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
-
 import { HttpParams } from '@angular/common/http';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Observable } from 'rxjs';
 import { _HttpClient } from './http.client';
 import {
   BaseApi,
@@ -9,16 +9,16 @@ import {
   Body,
   DELETE,
   GET,
-  Headers,
   HEAD,
+  Headers,
   JSONP,
   OPTIONS,
-  Path,
   PATCH,
+  Path,
+  Payload,
   POST,
   PUT,
   Query,
-  Payload,
 } from './http.decorator';
 
 @BaseUrl('/user')
@@ -245,7 +245,7 @@ describe('theme: http.decorator', () => {
 
   [`DELETE`, `OPTIONS`, `PUT`, `HEAD`, `PATCH`, `JSONP`].forEach(type => {
     it(`should construct a ${type} request`, () => {
-      srv[type]();
+      (srv as NzSafeAny)[type]();
       expect(request).toHaveBeenCalled();
       expect(request.calls.mostRecent().args[0]).toBe(type);
     });

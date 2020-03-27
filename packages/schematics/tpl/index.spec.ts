@@ -1,5 +1,6 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as fs from 'fs';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { createAlainAndModuleApp } from '../utils/testing';
 
 describe('Schematic: tpl', () => {
@@ -7,9 +8,7 @@ describe('Schematic: tpl', () => {
   let tree: UnitTestTree;
 
   async function run() {
-    tree = await runner
-      .runSchematicAsync('tpl', { name: 'edit', module: 'trade', modal: true }, tree)
-      .toPromise();
+    tree = await runner.runSchematicAsync('tpl', { name: 'edit', module: 'trade', modal: true }, tree).toPromise();
   }
 
   beforeEach(async () => ({ runner, tree } = await createAlainAndModuleApp()));
@@ -25,7 +24,7 @@ describe('Schematic: tpl', () => {
 
   it('should be throw error when not found name', async () => {
     spyOn(fs, 'accessSync');
-    spyOn(fs, 'readdirSync').and.returnValue(['invalid-name']);
+    spyOn(fs, 'readdirSync').and.returnValue(['invalid-name'] as NzSafeAny);
     try {
       await run();
       expect(true).toBe(false);

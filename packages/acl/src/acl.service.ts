@@ -29,7 +29,7 @@ export class ACLService {
     };
   }
 
-  constructor(private options: DelonACLConfig) { }
+  constructor(private options: DelonACLConfig) {}
 
   private parseACLType(val: string | string[] | number | number[] | ACLType | null): ACLType {
     let t: ACLType;

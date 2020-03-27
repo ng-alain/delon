@@ -1,6 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { createAlainAndModuleApp } from '../utils/testing';
-import { Schema as NgAddOptions } from './schema';
 
 describe('Schematic: view', () => {
   let runner: SchematicTestRunner;
@@ -13,21 +12,15 @@ describe('Schematic: view', () => {
   beforeEach(async () => {
     ({ runner, tree } = await createAlainAndModuleApp());
 
-    tree = await runner
-      .runSchematicAsync('view', { name: 'view', module: 'trade' }, tree)
-      .toPromise();
+    tree = await runner.runSchematicAsync('view', { name: 'view', module: 'trade' }, tree).toPromise();
   });
 
   it('should be generate list page', () => {
-    [modulePath, routingPath, tsPath, htmlPath].forEach(path =>
-      expect(tree.exists(path)).toBe(true),
-    );
+    [modulePath, routingPath, tsPath, htmlPath].forEach(path => expect(tree.exists(path)).toBe(true));
   });
 
   it('should be has import code', () => {
-    expect(tree.readContent(modulePath)).toContain(
-      `import { TradeViewComponent } from './view/view.component';`,
-    );
+    expect(tree.readContent(modulePath)).toContain(`import { TradeViewComponent } from './view/view.component';`);
   });
 
   it('should not be imported into COMPONENTS', () => {
@@ -35,11 +28,7 @@ describe('Schematic: view', () => {
   });
 
   it('should support a.b.c module name', async () => {
-    tree = await runner
-      .runSchematicAsync('view', { name: 'view', module: 'trade', target: 'list' }, tree)
-      .toPromise();
-    expect(tree.exists('/projects/foo/src/app/routes/trade/list/view/view.component.ts')).toBe(
-      true,
-    );
+    tree = await runner.runSchematicAsync('view', { name: 'view', module: 'trade', target: 'list' }, tree).toPromise();
+    expect(tree.exists('/projects/foo/src/app/routes/trade/list/view/view.component.ts')).toBe(true);
   });
 });

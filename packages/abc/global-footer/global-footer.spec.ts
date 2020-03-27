@@ -1,11 +1,10 @@
 import { APP_BASE_HREF } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { WINDOW } from '@delon/theme';
-
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { WINDOW } from '@delon/theme';
 import { GlobalFooterModule } from './global-footer.module';
 import { GlobalFooterLink } from './global-footer.types';
 
@@ -24,18 +23,20 @@ class MockLocation {
 }
 
 describe('abc: global-footer', () => {
-  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
   let page: PageObject;
 
   beforeEach(() => {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes([]), GlobalFooterModule],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       declarations: [TestComponent],
-      providers: [{ provide: APP_BASE_HREF, useValue: '/' }, { provide: WINDOW, useFactory: () => new MockWindow() }],
+      providers: [
+        { provide: APP_BASE_HREF, useValue: '/' },
+        { provide: WINDOW, useFactory: () => new MockWindow() },
+      ],
     });
   });
 
@@ -74,7 +75,7 @@ describe('abc: global-footer', () => {
 
   it('should be open new window when blankTarget is true', () => {
     createComp();
-    const win = injector.get(WINDOW) as MockWindow;
+    const win = TestBed.inject(WINDOW) as MockWindow;
     spyOn(win, 'open');
     context.links = [
       {
@@ -90,7 +91,7 @@ describe('abc: global-footer', () => {
 
   it('should be open extral link', () => {
     createComp();
-    const win = injector.get(WINDOW) as MockWindow;
+    const win = TestBed.inject(WINDOW) as MockWindow;
     context.links = [
       {
         title: '',
@@ -104,7 +105,7 @@ describe('abc: global-footer', () => {
 
   it('should be navigate router', () => {
     createComp();
-    const router = injector.get<Router>(Router);
+    const router = TestBed.inject<Router>(Router);
     spyOn(router, 'navigateByUrl');
     context.links = [
       {
@@ -119,7 +120,7 @@ describe('abc: global-footer', () => {
 
   it('should be ingore navigate when href is empty', () => {
     createComp();
-    const router = injector.get<Router>(Router);
+    const router = TestBed.inject<Router>(Router);
     spyOn(router, 'navigateByUrl');
     context.links = [
       {

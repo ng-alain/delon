@@ -10,12 +10,5 @@ describe('Schematic: ng-add', () => {
   it('should dependencies @delon of an application', () => {
     const packageJson = JSON.parse(tree.readContent('package.json'));
     expect(packageJson.dependencies['@delon/theme']).toBeDefined();
-    expect(packageJson.dependencies['@antv/g2']).not.toBeDefined();
-  });
-
-  it('should dependencies @antv when -g2', async () => {
-    tree = await runner.runSchematicAsync('ng-add', { g2: true }, tree).toPromise();
-    const packageJson = JSON.parse(tree.readContent('package.json'));
-    expect(packageJson.dependencies['@antv/g2']).toBeDefined();
   });
 });

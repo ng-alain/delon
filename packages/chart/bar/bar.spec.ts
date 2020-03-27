@@ -4,7 +4,7 @@ import { checkDelay, PageG2, PageG2DataCount, PageG2Height } from '@delon/testin
 import { G2BarComponent } from './bar.component';
 import { G2BarModule } from './bar.module';
 
-describe('chart: bar', () => {
+xdescribe('chart: bar', () => {
   let page: PageG2<TestComponent>;
 
   describe('', () => {

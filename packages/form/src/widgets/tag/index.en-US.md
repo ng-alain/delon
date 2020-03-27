@@ -20,6 +20,5 @@ Tag for categorizing or markup, **Notice:** Just only supported `checkable` tag 
 |-------------------|-----------------------------------------------------|----------------------------------------|-------------|
 | `[asyncData]`     | Async data source                                   | `() => Observable<SFSchemaEnumType[]>` | -           |
 | `[mode]`          | Mode of tag                                         | `'closeable'｜'default'｜'checkable'`    | `'checkable'` |
-| `[afterClose]`    | Callback executed when close animation is completed | `() => void`                           | -           |
 | `[onClose]`       | Callback executed when tag is closed                | `(e:MouseEvent) => void`               | -           |
 | `[checkedChange]` | Checked status change call back                     | `(status: boolean) => void`            | -           |

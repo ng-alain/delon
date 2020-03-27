@@ -34,6 +34,8 @@ export interface SFSchemaEnum {
    */
   group?: boolean;
 
+  isLeaf?: boolean;
+
   /** 组对应的子类 */
   children?: SFSchemaEnum[];
 }

@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Host,
-  OnInit,
-  Optional,
-  Renderer2,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Host, OnInit, Optional, Renderer2, ViewEncapsulation } from '@angular/core';
 import { SVContainerComponent } from './view-container.component';
 
 @Component({

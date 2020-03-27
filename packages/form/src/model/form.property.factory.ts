@@ -1,9 +1,9 @@
 import { DelonFormConfig } from '../config';
+import { SF_SEQ } from '../const';
 import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { retrieveSchema } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
-import { SF_SEQ } from '../const';
 import { ArrayProperty } from './array.property';
 import { BooleanProperty } from './boolean.property';
 import { FormProperty, PropertyGroup } from './form.property';

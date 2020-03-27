@@ -1,4 +1,5 @@
 import {
+  HTTP_INTERCEPTORS,
   HttpBackend,
   HttpErrorResponse,
   HttpEvent,
@@ -7,12 +8,10 @@ import {
   HttpRequest,
   HttpResponse,
   HttpResponseBase,
-  HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { of, throwError, Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
-
 import { MockRequest } from './interface';
 import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
@@ -113,12 +112,9 @@ export class MockInterceptor implements HttpInterceptor {
       const interceptors = this.injector.get(HTTP_INTERCEPTORS, []);
       const lastInterceptors = interceptors.slice(interceptors.indexOf(this) + 1);
       if (lastInterceptors.length > 0) {
-        const chain = lastInterceptors.reduceRight(
-          (_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor),
-          {
-            handle: () => res$,
-          } as HttpBackend,
-        );
+        const chain = lastInterceptors.reduceRight((_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor), {
+          handle: () => res$,
+        } as HttpBackend);
         return chain.handle(req).pipe(delay(config.delay));
       }
     }

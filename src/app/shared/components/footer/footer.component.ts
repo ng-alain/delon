@@ -16,6 +16,9 @@ import { I18NService } from '../../../core/i18n/service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent implements OnInit {
+  color = `#1890ff`;
+  lessLoaded = false;
+
   @Input() @InputBoolean() small = false;
 
   constructor(
@@ -36,7 +39,6 @@ export class FooterComponent implements OnInit {
   }
 
   // region: color
-  color = `#1890ff`;
   initColor() {
     const node = document.createElement('link');
     node.rel = 'stylesheet/less';
@@ -44,7 +46,6 @@ export class FooterComponent implements OnInit {
     node.href = '/assets/color.less';
     document.getElementsByTagName('head')[0].appendChild(node);
   }
-  lessLoaded = false;
   changeColor(res: any) {
     const changeColor = () => {
       this.ngZone.runOutsideAngular(() => {

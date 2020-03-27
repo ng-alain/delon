@@ -10,10 +10,8 @@ import {
   Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
-
 import { ResponsiveService } from '@delon/theme';
 import { InputNumber } from '@delon/util';
-
 import { SGContainerComponent } from './grid-container.component';
 
 const prefixCls = `sg`;
@@ -21,9 +19,7 @@ const prefixCls = `sg`;
 @Component({
   selector: 'sg',
   exportAs: 'sg',
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
   host: {
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue',

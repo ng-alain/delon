@@ -1,7 +1,7 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { DrawerHelperOptions, ModalHelperOptions, YNMode } from '@delon/theme';
 import { NzDrawerOptions } from 'ng-zorro-antd/drawer';
-import { ModalOptionsForService } from 'ng-zorro-antd/modal';
+import { ModalOptions } from 'ng-zorro-antd/modal';
 import { STComponent } from './table.component';
 
 export interface STWidthMode {
@@ -69,15 +69,15 @@ export interface STReq {
 export interface STRequestOptions {
   body?: any;
   headers?:
-  | HttpHeaders
-  | {
-    [header: string]: string | string[];
-  };
+    | HttpHeaders
+    | {
+        [header: string]: string | string[];
+      };
   params?:
-  | HttpParams
-  | {
-    [param: string]: string | string[];
-  };
+    | HttpParams
+    | {
+        [param: string]: string | string[];
+      };
   observe?: 'body' | 'events' | 'response';
   reportProgress?: boolean;
   responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
@@ -262,7 +262,7 @@ export interface STColumn {
    */
   selections?: STColumnSelection[];
   /**
-   * 列 `class` 属性值（注：无须 `.` 点），例如：
+   * 列 `class` 属性值（注：无须 `.` 点）多个用空格隔开，例如：
    * - `text-center` 居中
    * - `text-right` 居右
    * - `text-success` 成功色
@@ -278,7 +278,7 @@ export interface STColumn {
    */
   numberDigits?: string;
   /**
-   * 日期格式，`type=date` 有效，（默认：`YYYY-MM-DD HH:mm`）
+   * 日期格式，`type=date` 有效，（默认：`yyyy-MM-dd HH:mm`）
    */
   dateFormat?: string;
   /**
@@ -646,8 +646,8 @@ export interface STColumnButtonModalConfig {
   paramsName?: string;
   /** 大小；例如：lg、600，默认：`lg` */
   size?: 'sm' | 'md' | 'lg' | 'xl' | '' | number;
-  /** 对话框 [ModalOptionsForService](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/nz-modal.type.ts) 参数 */
-  modalOptions?: ModalOptionsForService;
+  /** 对话框 [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) 参数 */
+  modalOptions?: ModalOptions;
   /** 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 */
   exact?: boolean;
 }
@@ -716,18 +716,18 @@ export interface STColumnButtonPop {
    * The position of the popover relative to the target, default: `top`
    */
   placement?:
-  | 'top'
-  | 'left'
-  | 'right'
-  | 'bottom'
-  | 'topLeft'
-  | 'topRight'
-  | 'bottomLeft'
-  | 'bottomRight'
-  | 'leftTop'
-  | 'leftBottom'
-  | 'rightTop'
-  | 'rightBottom';
+    | 'top'
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'topLeft'
+    | 'topRight'
+    | 'bottomLeft'
+    | 'bottomRight'
+    | 'leftTop'
+    | 'leftBottom'
+    | 'rightTop'
+    | 'rightBottom';
 
   /**
    * Class name of the popover card

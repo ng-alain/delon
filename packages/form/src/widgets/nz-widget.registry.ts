@@ -1,5 +1,4 @@
 import { WidgetRegistry } from '../widget.factory';
-
 import { ArrayWidget } from './array/array.widget';
 import { AutoCompleteWidget } from './autocomplete/autocomplete.widget';
 import { BooleanWidget } from './boolean/boolean.widget';

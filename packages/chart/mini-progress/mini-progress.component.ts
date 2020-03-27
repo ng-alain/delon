@@ -1,13 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnChanges,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, ViewEncapsulation } from '@angular/core';
 import { DelonLocaleService } from '@delon/theme';
-import { toNumber, InputNumber } from '@delon/util';
+import { InputNumber, toNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-mini-progress',

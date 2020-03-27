@@ -10,6 +10,38 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[{*.html}]
+indent_style=space
+indent_size=2
+
+[{.babelrc,.stylelintrc,.eslintrc,*.json}]
+indent_style=space
+indent_size=2
+
 [*.md]
 insert_final_newline = false
 trim_trailing_whitespace = false
+
+[{*.ats,*.ts}]
+indent_style=space
+indent_size=2
+
+[*.js]
+indent_style=space
+indent_size=2
+
+[*.js.map]
+indent_style=space
+indent_size=2
+
+[*.less]
+indent_style=space
+indent_size=2
+
+[{.analysis_options,*.yml,*.yaml}]
+indent_style=space
+indent_size=2
+
+[tslint.json]
+indent_style=space
+indent_size=2

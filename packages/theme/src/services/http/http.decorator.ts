@@ -1,13 +1,13 @@
-// tslint:disable:no-invalid-this only-arrow-functions
+// tslint:disable: only-arrow-functions
 import { HttpHeaders } from '@angular/common/http';
 import { Inject, Injector } from '@angular/core';
 import { ACLService } from '@delon/acl';
-import { throwError, Observable } from 'rxjs';
-
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Observable, throwError } from 'rxjs';
 import { _HttpClient } from './http.client';
 
 export abstract class BaseApi {
-  constructor(@Inject(Injector) protected injector: Injector) { }
+  constructor(@Inject(Injector) protected injector: Injector) {}
 }
 
 export interface HttpOptions {
@@ -56,8 +56,8 @@ export function BaseHeaders(
   headers:
     | HttpHeaders
     | {
-      [header: string]: string | string[];
-    },
+        [header: string]: string | string[];
+      },
 ) {
   return function <TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
@@ -136,7 +136,8 @@ function makeMethod(method: string) {
       descriptor!.value = function (...args: any[]): Observable<any> {
         options = options || {};
 
-        const http = this.injector.get(_HttpClient, null) as _HttpClient;
+        const injector = (this as NzSafeAny).injector as Injector;
+        const http = injector.get(_HttpClient, null) as _HttpClient;
         if (http == null) {
           throw new TypeError(`Not found '_HttpClient', You can import 'AlainThemeModule' && 'HttpClientModule' in your root module.`);
         }
@@ -152,7 +153,7 @@ function makeMethod(method: string) {
         }
 
         if (options.acl) {
-          const aclSrv: ACLService = this.injector.get(ACLService, null);
+          const aclSrv = injector.get(ACLService, null);
           if (aclSrv && !aclSrv.can(options.acl)) {
             return throwError({
               url: requestUrl,
@@ -171,12 +172,12 @@ function makeMethod(method: string) {
           });
         requestUrl = requestUrl.replace(/\^\^/g, `:`);
 
-        const params = (data.query || []).reduce((p: {}, i: ParamType) => {
+        const params = (data.query || []).reduce((p: NzSafeAny, i: ParamType) => {
           p[i.key] = args[i.index];
           return p;
         }, {});
 
-        const headers = (data.headers || []).reduce((p: {}, i: ParamType) => {
+        const headers = (data.headers || []).reduce((p: NzSafeAny, i: ParamType) => {
           p[i.key] = args[i.index];
           return p;
         }, {});

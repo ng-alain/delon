@@ -1,19 +1,19 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { discardPeriodicTasks, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { dispatchFakeEvent, typeInElement } from '@delon/testing';
 import { AlainThemeModule } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
-
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { configureTestSuite, dispatchFakeEvent, typeInElement } from '@delon/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { SF_SEQ } from '../src/const';
 import { SFButton } from '../src/interface';
 import { FormProperty } from '../src/model/form.property';
 import { DelonFormModule } from '../src/module';
 import { SFSchema } from '../src/schema';
 import { SFUISchema } from '../src/schema/ui';
 import { SFComponent } from '../src/sf.component';
-import { SF_SEQ } from '../src/const';
 
 export const SCHEMA = {
   user: {
@@ -61,7 +61,7 @@ export function builder(options?: { detectChanges?: boolean; template?: string; 
 }
 
 export function configureSFTestSuite() {
-  configureTestSuite(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NoopAnimationsModule, AlainThemeModule.forRoot(), DelonFormModule.forRoot(), HttpClientTestingModule],
       declarations: [TestFormComponent],
@@ -129,16 +129,22 @@ export class SFPage {
   }
 
   submit(result = true): this {
-    this.getEl('.ant-btn-primary').click();
-    if (result) expect(context.formSubmit).toHaveBeenCalled();
-    else expect(context.formSubmit).not.toHaveBeenCalled();
+    this.getEl('[data-type="submit"]').click();
+    if (result) {
+      expect(context.formSubmit).toHaveBeenCalled();
+    } else {
+      expect(context.formSubmit).not.toHaveBeenCalled();
+    }
     return this;
   }
 
   reset(result = true): this {
-    this.getEl('.ant-btn-default').click();
-    if (result) expect(context.formReset).toHaveBeenCalled();
-    else expect(context.formReset).not.toHaveBeenCalled();
+    this.getEl('[data-type="reset"]').click();
+    if (result) {
+      expect(context.formReset).toHaveBeenCalled();
+    } else {
+      expect(context.formReset).not.toHaveBeenCalled();
+    }
     return this;
   }
 
@@ -162,7 +168,7 @@ export class SFPage {
     context.schema = schema;
     if (typeof ui !== 'undefined') context.ui = ui;
     if (typeof formData !== 'undefined') context.formData = formData;
-    return this.dc();
+    return this.dc(1000);
   }
 
   /** 强制指定 `a` 节点 */
@@ -239,7 +245,7 @@ export class SFPage {
 
   checkStyle(cls: string, key: string, value: string): this {
     const el = this.getEl(cls);
-    expect(el.style[key]).toBe(value);
+    expect((el.style as NzSafeAny)[key]).toBe(value);
     return this;
   }
 
@@ -264,7 +270,7 @@ export class SFPage {
   }
 
   checkError(text: string): this {
-    const el = this.getEl('.ant-form-explain');
+    const el = this.getEl('.ant-form-item-explain');
     if (text == null) {
       expect(el == null).toBe(true);
       return this;

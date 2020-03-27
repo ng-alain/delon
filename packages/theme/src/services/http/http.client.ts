@@ -1,6 +1,7 @@
 import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError, Observable } from 'rxjs';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { AlainThemeConfig } from '../../theme.config';
 import { HttpClientConfig } from './http.config';
@@ -33,8 +34,8 @@ export class _HttpClient {
     return this._loading;
   }
 
-  parseParams(params: {}): HttpParams {
-    const newParams = {};
+  parseParams(params: NzSafeAny): HttpParams {
+    const newParams: NzSafeAny = {};
     Object.keys(params).forEach(key => {
       let _data = params[key];
       // 忽略空值
@@ -48,7 +49,7 @@ export class _HttpClient {
     return new HttpParams({ fromObject: newParams });
   }
 
-  appliedUrl(url: string, params?: {}) {
+  appliedUrl(url: string, params?: NzSafeAny) {
     if (!params) return url;
     url += ~url.indexOf('?') ? '' : '?';
     const arr: string[] = [];

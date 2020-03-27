@@ -1,23 +1,24 @@
 import { deepCopy, toBoolean } from '@delon/util';
-import { of, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SF_SEQ } from './const';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
-import { SF_SEQ } from './const';
 
 export const FORMATMAPS = {
   'date-time': {
     widget: 'date',
     showTime: true,
-    format: 'YYYY-MM-DDTHH:mm:ssZ',
+    format: 'yyyy-MM-ddTHH:mm:ssZ',
   },
-  date: { widget: 'date', format: 'YYYY-MM-DD' },
-  'full-date': { widget: 'date', format: 'YYYY-MM-DD' },
+  date: { widget: 'date', format: 'yyyy-MM-dd' },
+  'full-date': { widget: 'date', format: 'yyyy-MM-dd' },
   time: { widget: 'time' },
   'full-time': { widget: 'time' },
-  week: { widget: 'date', mode: 'week', format: 'YYYY-WW' },
-  month: { widget: 'date', mode: 'month', format: 'YYYY-MM' },
+  week: { widget: 'date', mode: 'week', format: 'yyyy-WW' },
+  month: { widget: 'date', mode: 'month', format: 'yyyy-MM' },
   uri: { widget: 'upload' },
   email: { widget: 'autocomplete', type: 'email' },
   color: { widget: 'string', type: 'color' },
@@ -33,7 +34,7 @@ export function toBool(value: any, defaultValue: boolean) {
   return value == null ? defaultValue : value;
 }
 
-export function di(ui: SFUISchema, ...args) {
+export function di(ui: SFUISchema, ...args: NzSafeAny[]) {
   if (ui.debug) {
     // tslint:disable-next-line:no-console
     console.warn(...args);
@@ -114,12 +115,12 @@ function detectKey(keys: string[], detectKeys: string[]) {
 
 export function orderProperties(properties: string[], order: string[]) {
   if (!Array.isArray(order)) return properties;
-  const arrayToHash = arr =>
-    arr.reduce((prev, curr) => {
+  const arrayToHash = (arr: NzSafeAny) =>
+    arr.reduce((prev: NzSafeAny, curr: NzSafeAny) => {
       prev[curr] = true;
       return prev;
     }, {});
-  const errorPropList = arr => `property [${arr.join(`', '`)}]`;
+  const errorPropList = (arr: NzSafeAny) => `property [${arr.join(`', '`)}]`;
 
   const propertyHash = arrayToHash(properties);
   const orderHash = arrayToHash(order);
@@ -181,5 +182,5 @@ export function isDateFns(srv: NzI18nService): boolean {
   if (!srv) return false;
   const data = srv.getDateLocale();
   // Compatible date-fns v1.x & v2.x
-  return data != null && (!!data.distanceInWords || !!data.formatDistance);
+  return data != null && !!data.formatDistance; // (!!data.distanceInWords || !!data.formatDistance);
 }

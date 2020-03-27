@@ -1,4 +1,5 @@
 import extend from 'extend';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 /**
  * 类似 `_.get`，根据 `path` 获取安全值
@@ -8,7 +9,7 @@ import extend from 'extend';
  * @param path 若 `null`、`[]`、未定义及未找到时返回 `defaultValue` 值
  * @param defaultValue 默认值
  */
-export function deepGet(obj: any | null, path: string | string[] | null | undefined, defaultValue?: any): any {
+export function deepGet(obj: NzSafeAny | null, path: string | string[] | null | undefined, defaultValue?: NzSafeAny): NzSafeAny {
   if (!obj || path == null || path.length === 0) return defaultValue;
   if (!Array.isArray(path)) {
     path = ~path.indexOf('.') ? path.split('.') : [path];
@@ -24,7 +25,7 @@ export function deepGet(obj: any | null, path: string | string[] | null | undefi
 /**
  * 基于 [extend](https://github.com/justmoon/node-extend) 的深度拷贝
  */
-export function deepCopy(obj: any): any {
+export function deepCopy(obj: NzSafeAny): NzSafeAny {
   const result = extend(true, {}, { _: obj });
   return result._;
 }
@@ -65,7 +66,7 @@ export function deepMergeKey(original: any, ingoreArray: boolean, ...objects: an
 
   const isObject = (v: any) => typeof v === 'object' || typeof v === 'function';
 
-  const merge = (target: any, obj: {}) => {
+  const merge = (target: any, obj: NzSafeAny) => {
     Object.keys(obj)
       .filter(key => key !== '__proto__' && Object.prototype.hasOwnProperty.call(obj, key))
       .forEach(key => {

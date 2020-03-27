@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NzMentionComponent, MentionOnSearchTypes } from 'ng-zorro-antd/mention';
+import { MentionOnSearchTypes, NzMentionComponent } from 'ng-zorro-antd/mention';
 import { map, tap } from 'rxjs/operators';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';

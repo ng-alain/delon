@@ -1,5 +1,5 @@
-import { DisabledTimeFn, DisabledDateFn, SupportTimeOptions } from 'ng-zorro-antd/date-picker/standard-types';
-import { SFUISchemaItem, SFDLSSize } from '../../schema/ui';
+import { DisabledDateFn, DisabledTimeFn, SupportTimeOptions } from 'ng-zorro-antd/date-picker/standard-types';
+import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
 
 export interface SFDateWidgetSchema extends SFUISchemaItem {
   mode?: 'date' | 'week' | 'month' | 'year' | 'range';
@@ -12,7 +12,7 @@ export interface SFDateWidgetSchema extends SFUISchemaItem {
    * **Just only support date-fns**
    *
    * Return the formatted date string in the given format, [Accepted tokens](https://date-fns.org/v1.30.1/docs/format), like this:
-   * - `YYYY-MM-DD HH:mm:ss` Date time
+   * - `yyyy-MM-dd HH:mm:ss` Date time
    * - `X` Seconds timestamp
    * - `x` Milliseconds timestamp
    */

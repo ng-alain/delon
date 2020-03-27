@@ -28,17 +28,6 @@ The `[plugin name]` is plugin name, `-t` supports two values `add` (default) and
 
 ## List of plugins
 
-### g2
-
-```bash
-# add
-ng g ng-alain:plugin g2
-# remove
-ng g ng-alain:plugin g2 -t=remove
-```
-
-> For more details, please refer to G2 [Development Documentation](/chart).
-
 ### codeStyle
 
 Code style rules:

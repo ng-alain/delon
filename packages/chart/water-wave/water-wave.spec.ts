@@ -4,7 +4,7 @@ import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
 import { G2WaterWaveComponent } from './water-wave.component';
 import { G2WaterWaveModule } from './water-wave.module';
 
-describe('chart: water-wave', () => {
+xdescribe('chart: water-wave', () => {
   describe('defualt', () => {
     let page: PageG2<TestComponent>;
 
@@ -17,10 +17,7 @@ describe('chart: water-wave', () => {
     afterEach(() => page.context.comp.ngOnDestroy());
 
     it('should be working', fakeAsync(() => {
-      page
-        .dcFirst()
-        .isCanvas()
-        .isText('.g2-water-wave__desc-title', page.context.title);
+      page.dcFirst().isCanvas().isText('.g2-water-wave__desc-title', page.context.title);
       page.context.percent = 30;
       page.dc().isText('.g2-water-wave__desc-percent', '30%');
     }));

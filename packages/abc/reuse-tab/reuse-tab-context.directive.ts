@@ -1,5 +1,4 @@
 import { Directive, Input } from '@angular/core';
-
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import { ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
 
