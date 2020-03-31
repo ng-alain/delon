@@ -194,10 +194,14 @@ export class MenuService implements OnDestroy {
 
       if (!recursive) break;
 
-      url = url
-        .split('/')
-        .slice(0, -1)
-        .join('/');
+      if (url.includes('?')) {
+        url = url.split('?')[0];
+      } else {
+        url = url
+          .split('/')
+          .slice(0, -1)
+          .join('/');
+      }
     }
 
     return item;
@@ -248,7 +252,7 @@ export class MenuService implements OnDestroy {
    */
   getItem(key: string): Menu | null {
     let res: Menu | null = null;
-    this.visit(this.data, (item) => {
+    this.visit(this.data, item => {
       if (res == null && item.key === key) {
         res = item;
       }

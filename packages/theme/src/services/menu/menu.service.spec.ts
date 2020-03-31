@@ -130,6 +130,9 @@ describe('Service: Menu', () => {
         const item = srv.getHit(DATA, '/dashboard/invalid', true);
         expect(item == null).toBe(false);
       });
+      it('when include queryString', () => {
+        expect(srv.getHit(DATA, '/test?a=1', true) != null).toBe(true);
+      });
     });
 
     describe('#getPathByUrl', () => {
@@ -160,11 +163,7 @@ describe('Service: Menu', () => {
         const newMenus = [
           {
             text: 'new menu',
-            children: [
-              { text: 'submenu1', link: '/' },
-              { text: 'submenu2', link: '/' },
-              { text: 'sc', shortcutRoot: true },
-            ],
+            children: [{ text: 'submenu1', link: '/' }, { text: 'submenu2', link: '/' }, { text: 'sc', shortcutRoot: true }],
           },
           {
             text: 'text',
@@ -192,11 +191,7 @@ describe('Service: Menu', () => {
         const newMenus = [
           {
             text: 'new menu',
-            children: [
-              { text: 'submenu1', link: '/' },
-              { text: 'submenu2', link: '/' },
-              { text: 'sc', shortcutRoot: true },
-            ],
+            children: [{ text: 'submenu1', link: '/' }, { text: 'submenu2', link: '/' }, { text: 'sc', shortcutRoot: true }],
           },
           {
             text: 'text',
