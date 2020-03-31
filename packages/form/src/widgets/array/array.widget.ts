@@ -1,3 +1,4 @@
+import { SafeHtml } from '@angular/platform-browser';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
@@ -9,7 +10,7 @@ import { ArrayLayoutWidget } from '../../widget';
   encapsulation: ViewEncapsulation.None,
 })
 export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
-  addTitle: string;
+  addTitle: SafeHtml;
   addType: string;
   removeTitle: string | null;
   arraySpan = 8;
@@ -28,7 +29,7 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
       this.arraySpan = grid.arraySpan;
     }
 
-    this.addTitle = addTitle || this.l.addText;
+    this.addTitle = this.dom.bypassSecurityTrustHtml(addTitle || this.l.addText);
     this.addType = addType || 'dashed';
     this.removeTitle = removable === false ? null : removeTitle || this.l.removeText;
   }

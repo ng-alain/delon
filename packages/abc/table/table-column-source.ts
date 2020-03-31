@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Host, Inject, Injectable, Optional } from '@angular/core';
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
@@ -10,11 +11,12 @@ import { STColumn, STColumnButton, STColumnFilter, STSortMap, STIcon, STColumnBu
 @Injectable()
 export class STColumnSource {
   constructor(
+    private dom: DomSanitizer,
     @Host() private rowSource: STRowSource,
     @Optional() private acl: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     private cog: STConfig,
-  ) { }
+  ) {}
 
   private fixPop(i: STColumnButton, def: STColumnButtonPop): void {
     if (i.pop == null || i.pop === false) {
@@ -25,12 +27,7 @@ export class STColumnSource {
     let pop = {
       ...def,
     };
-    // compatible
-    // tslint:disable-next-line: deprecation
-    if (i.popTitle) {
-      // tslint:disable-next-line: deprecation
-      pop.title = i.popTitle;
-    } else if (typeof i.pop === 'string') {
+    if (typeof i.pop === 'string') {
       pop.title = i.pop;
     } else if (typeof i.pop === 'object') {
       pop = {
@@ -57,18 +54,6 @@ export class STColumnSource {
       }
 
       if (item.type === 'modal' || item.type === 'static') {
-        // compatible
-        // tslint:disable-next-line: deprecation
-        if (item.component != null) {
-          item.modal = {
-            // tslint:disable-next-line: deprecation
-            component: item.component,
-            params: item.params,
-            paramsName: item.paramName || modal!.paramsName,
-            size: item.size || modal!.size,
-            modalOptions: item.modalOptions || modal!.modalOptions,
-          };
-        }
         if (item.modal == null || item.modal.component == null) {
           console.warn(`[st] Should specify modal parameter`);
           item.type = 'none';
@@ -148,17 +133,6 @@ export class STColumnSource {
   }
 
   private fixCoerce(item: STColumn): STSortMap {
-    // compatible
-    if (item.sorter && typeof item.sorter === 'function') {
-      return {
-        enabled: true,
-        default: item.sort as any,
-        compare: item.sorter,
-        key: item.sortKey || item.indexKey,
-        reName: item.sortReName,
-      };
-    }
-
     if (typeof item.sort === 'undefined') {
       return { enabled: false };
     }
@@ -181,28 +155,11 @@ export class STColumnSource {
   }
 
   private filterCoerce(item: STColumn): STColumnFilter | null {
-    let res: STColumnFilter | null = null;
-    // compatible
-    if (item.filters && item.filters.length > 0) {
-      res = {
-        confirmText: item.filterConfirmText,
-        clearText: item.filterClearText,
-        default: item.filtered,
-        fn: item.filter as any,
-        icon: item.filterIcon,
-        key: item.filterKey || item.indexKey,
-        menus: item.filters,
-        multiple: item.filterMultiple,
-        reName: item.filterReName,
-      };
-    } else {
-      res = item.filter as STColumnFilter;
-    }
-
-    if (res == null) {
+    if (item.filter == null) {
       return null;
     }
 
+    let res: STColumnFilter | null = item.filter;
     res.type = res.type || 'default';
 
     let icon = 'filter';
@@ -282,22 +239,15 @@ export class STColumnSource {
       }
 
       // #region title
-      if (typeof item.title === 'string') {
-        item.title = { text: item.title };
-      }
-      if (!item.title) {
-        item.title = {};
-      }
 
-      // Compatible
-      // tslint:disable-next-line: deprecation
-      if (item.i18n) {
-        // tslint:disable-next-line: deprecation
-        item.title!.i18n = item.i18n;
+      const tit = (typeof item.title === 'string' ? { text: item.title } : item.title) || {};
+      if (tit.i18n && this.i18nSrv) {
+        tit.text = this.i18nSrv.fanyi(tit.i18n);
       }
-      if (item.title!.i18n && this.i18nSrv) {
-        item.title!.text = this.i18nSrv.fanyi(item.title!.i18n);
+      if (tit.text) {
+        tit._text = this.dom.bypassSecurityTrustHtml(tit.text);
       }
+      item.title = tit;
 
       // #endregion
 
@@ -329,10 +279,6 @@ export class STColumnSource {
       // types
       if (item.type === 'yn') {
         item.yn = { truth: true, ...item.yn };
-        // compatible
-        if (item.ynTruth != null) item.yn.truth = item.ynTruth;
-        if (item.ynYes != null) item.yn.yes = item.ynYes;
-        if (item.ynNo != null) item.yn.no = item.ynNo;
       }
       if (
         (item.type === 'link' && typeof item.click !== 'function') ||

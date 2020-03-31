@@ -45,35 +45,12 @@ describe('abc: count-down', () => {
     tick(1001);
     expect(context.handleEvent).toHaveBeenCalled();
   }));
-
-  it('should be compatible old events', fakeAsync(() => {
-    spyOn(context, 'begin');
-    spyOn(context, 'notify');
-    spyOn(context, 'end');
-    context.config = {
-      leftTime: 2,
-      notify: [1.5],
-    };
-    fixture.detectChanges();
-    expect(context.begin).toHaveBeenCalled();
-    tick(1501);
-    expect(context.notify).toHaveBeenCalled();
-    tick(2001);
-    expect(context.end).toHaveBeenCalled();
-  }));
 });
 
 @Component({
   template: `
     <div *ngIf="config">
-      <count-down
-        [config]="config"
-        (begin)="begin()"
-        (end)="end()"
-        (notify)="notify($event)"
-        (event)="handleEvent()"
-        style="font-size: 20px"
-      ></count-down>
+      <count-down [config]="config" (event)="handleEvent()" style="font-size: 20px"></count-down>
     </div>
     <div *ngIf="target">
       <count-down [target]="target" (event)="handleEvent()" style="font-size: 20px"></count-down>
@@ -84,7 +61,4 @@ class TestComponent {
   config: CountdownConfig;
   target: number | Date;
   handleEvent() {}
-  notify() {}
-  begin() {}
-  end() {}
 }

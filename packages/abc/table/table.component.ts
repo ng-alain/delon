@@ -371,8 +371,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       return this._refCheck();
     } catch (error) {
       this.setLoading(false);
-      this.cdr.detectChanges();
-      this.error.emit({ type: 'req', error });
+      if (!this.unsubscribe$.isStopped) {
+        this.cdr.detectChanges();
+        this.error.emit({ type: 'req', error });
+      }
       return this;
     }
   }
@@ -710,11 +712,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   _btnText(record: STData, btn: STColumnButton) {
-    // tslint:disable-next-line: deprecation
-    if (btn.format) {
-      // tslint:disable-next-line: deprecation
-      return btn.format(record, btn);
-    }
     return typeof btn.text === 'function' ? btn.text(record, btn) : btn.text || '';
   }
 

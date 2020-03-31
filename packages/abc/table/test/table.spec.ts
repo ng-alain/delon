@@ -396,7 +396,7 @@ describe('abc: table', () => {
             });
           });
           it(`should be custom render yn`, done => {
-            page.newColumn([{ title: '', index: 'yn', type: 'yn', ynYes: 'Y', ynNo: 'N' }]).then(() => {
+            page.newColumn([{ title: '', index: 'yn', type: 'yn', yn: { yes: 'Y', no: 'N' } }]).then(() => {
               page.expectCell('Y', 1, 1, '', true).expectCell('N', 2, 1, '', true);
               done();
             });
@@ -408,9 +408,11 @@ describe('abc: table', () => {
                   title: '',
                   index: 'id',
                   type: 'yn',
-                  ynTruth: 1,
-                  ynYes: 'Y',
-                  ynNo: 'N',
+                  yn: {
+                    truth: 1,
+                    yes: 'Y',
+                    no: 'N',
+                  },
                 },
               ])
               .then(() => {
@@ -532,8 +534,7 @@ describe('abc: table', () => {
               title: '',
               buttons: [
                 {
-                  text: 'del',
-                  format: a => `<div class="j-btn-format">${a.id}</div>`,
+                  text: a => `<div class="j-btn-format">${a.id}</div>`,
                 },
               ],
             },
@@ -1939,16 +1940,6 @@ describe('abc: table', () => {
           i18nSrv.use(curLang);
           fixture.detectChanges();
           page.expectHead(curLang, 'id');
-          done();
-        });
-      });
-      it('should be compatible', done => {
-        page.newColumn([{ title: '', i18n: curLang, index: 'id' }]).then(() => {
-          const el = page.getEl('.ant-pagination-total-text');
-          expect(el.textContent!.trim()).toContain(`共`);
-          injector.get<DelonLocaleService>(DelonLocaleService).setLocale(en_US);
-          fixture.detectChanges();
-          expect(el.textContent!.trim()).toContain(`of`);
           done();
         });
       });

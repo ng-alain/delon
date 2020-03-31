@@ -25,10 +25,9 @@
   <span [innerHTML]="_btnText(i, btn)" [ngClass]="{'pl-xs': btn.icon}"></span>
 </ng-template>
 <ng-template #titleTpl let-i>
-  <span [innerHTML]="i.text"></span>
+  <span [innerHTML]="i._text"></span>
   <small *ngIf="i.optional" class="st__head-optional" [innerHTML]="i.optional"></small>
-  <i *ngIf="i.optionalHelp" class="st__head-tip" nz-tooltip [nzTitle]="i.optionalHelp" nz-icon
-    nzType="question-circle"></i>
+  <i *ngIf="i.optionalHelp" class="st__head-tip" nz-tooltip [nzTitle]="i.optionalHelp" nz-icon nzType="question-circle"></i>
 </ng-template>
 <ng-template #bodyTpl let-i let-index="index">
   <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [class]="i._rowClassName">
@@ -48,16 +47,15 @@
               (ngModelChange)="_checkSelection(i, $event)"></label>
             <label *ngSwitchCase="'radio'" nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked"
               (ngModelChange)="_refRadio($event, i)"></label>
-            <a *ngSwitchCase="'link'" (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx].text"></a>
+            <a *ngSwitchCase="'link'" (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx]._text"></a>
             <ng-conntainer *ngIf="i._values[cIdx].text">
               <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color">
-                {{i._values[cIdx].text}}
+                <span [innerHTML]="i._values[cIdx]._text"></span>
               </nz-tag>
               <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text">
               </nz-badge>
             </ng-conntainer>
-            <span *ngSwitchDefault [innerHTML]="i._values[cIdx].text"
-              [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
+            <span *ngSwitchDefault [innerHTML]="i._values[cIdx]._text" [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
           </ng-container>
           <ng-container *ngFor="let btn of _validBtns(c.buttons, i, c); let last=last">
             <a *ngIf="btn.children.length > 0" nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">

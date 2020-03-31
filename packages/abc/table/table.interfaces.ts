@@ -69,15 +69,15 @@ export interface STReq {
 export interface STRequestOptions {
   body?: any;
   headers?:
-    | HttpHeaders
-    | {
-        [header: string]: string | string[];
-      };
+  | HttpHeaders
+  | {
+    [header: string]: string | string[];
+  };
   params?:
-    | HttpParams
-    | {
-        [param: string]: string | string[];
-      };
+  | HttpParams
+  | {
+    [param: string]: string | string[];
+  };
   observe?: 'body' | 'events' | 'response';
   reportProgress?: boolean;
   responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
@@ -146,11 +146,6 @@ export interface STPage {
    */
   total?: string | boolean;
   /**
-   * @deprecated 9.0.0. This is deprecated and going to be removed in 9.0.0.
-   * 数据变更后是否保留在数据变更前的页码，默认：`true`
-   */
-  indexReset?: boolean;
-  /**
    * 切换分页时返回顶部，默认：`true`
    */
   toTop?: boolean;
@@ -196,12 +191,6 @@ export interface STColumn {
    * 列标题
    */
   title?: string | STColumnTitle;
-  /**
-   * 列标题 i18n
-   * @deprecated 使用 `title: { i18n: 'value' }` 代替
-   * @deprecated 9.0.0. This is deprecated and going to be removed in 9.0.0.
-   */
-  i18n?: string;
   /**
    * 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法，例如：
    * - `id`
@@ -346,6 +335,8 @@ export interface STColumn {
 }
 
 export interface STColumnTitle {
+  [key: string]: any;
+
   /**
    * Text of header, can be choose one of `text` or `i18n`
    */
@@ -564,12 +555,6 @@ export interface STColumnButton {
    */
   icon?: string | STIcon;
   /**
-   * 格式化文本
-   * @deprecated 使用 `text` 代替
-   * @deprecated 9.0.0. This is deprecated and going to be removed in 9.0.0.
-   */
-  format?: (record: STData, btn: STColumnButton) => string;
-  /**
    * 按钮类型
    * - `none` 无任何互动
    * - `del` 删除，默认开启 `pop: true`
@@ -594,13 +579,6 @@ export interface STColumnButton {
    * 气泡确认框参数，若 `string` 类型表示标题
    */
   pop?: boolean | string | STColumnButtonPop;
-  /**
-   * 气泡确认框内容，默认 `确认删除吗？`
-   *
-   * @deprecated 已过期，请使用 `pop.title` 替代
-   * @deprecated 9.0.0. This is deprecated and going to be removed in 9.0.0.
-   */
-  popTitle?: string;
   /**
    * 对话框参数
    */
@@ -630,11 +608,6 @@ export interface STColumnButton {
   iifBehavior?: IifBehaviorType;
 
   tooltip?: string;
-
-  /**
-   * @deprecated 9.0.0. This is deprecated and going to be removed in 9.0.0.
-   */
-  component?: any;
 
   [key: string]: any;
 }
@@ -743,18 +716,18 @@ export interface STColumnButtonPop {
    * The position of the popover relative to the target, default: `top`
    */
   placement?:
-    | 'top'
-    | 'left'
-    | 'right'
-    | 'bottom'
-    | 'topLeft'
-    | 'topRight'
-    | 'bottomLeft'
-    | 'bottomRight'
-    | 'leftTop'
-    | 'leftBottom'
-    | 'rightTop'
-    | 'rightBottom';
+  | 'top'
+  | 'left'
+  | 'right'
+  | 'bottom'
+  | 'topLeft'
+  | 'topRight'
+  | 'bottomLeft'
+  | 'bottomRight'
+  | 'leftTop'
+  | 'leftBottom'
+  | 'rightTop'
+  | 'rightBottom';
 
   /**
    * Class name of the popover card
