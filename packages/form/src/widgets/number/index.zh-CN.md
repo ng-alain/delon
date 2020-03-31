@@ -31,3 +31,4 @@ type: Widgets
 `[formatter]` | 等同 `nzFormatter` | - | -
 `[parser]` | 等同 `nzParser` | - | -
 `[precision]` | 等同 `nzPrecision` | - | -
+`[widgetWidth]` | 指定 `nz-number` 宽度 | `number` | `90`

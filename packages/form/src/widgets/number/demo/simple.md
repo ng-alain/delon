@@ -27,7 +27,7 @@ import { SFSchema, SFNumberWidgetSchema } from '@delon/form';
 export class DemoComponent {
   schema: SFSchema = {
     properties: {
-      number: { type: 'number', minimum: 18, maximum: 100, multipleOf: 2 },
+      number: { type: 'number', minimum: 18, maximum: 100, multipleOf: 2, ui: { widgetWidth: 200 } },
       integer: { type: 'integer', default: 10 },
       unit: { type: 'number', default: 10, ui: { unit: '%' } as SFNumberWidgetSchema },
       prefix: { type: 'number', default: 10, ui: { prefix: '$' } as SFNumberWidgetSchema },
