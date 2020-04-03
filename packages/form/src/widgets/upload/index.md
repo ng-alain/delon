@@ -47,6 +47,7 @@ type: Widgets
 `[withCredentials]` | 上传请求时是否携带 cookie | `boolean` | `false`
 `[directory]` | 支持上传文件夹（[caniuse](https://caniuse.com/#feat=input-file-directory)） | `boolean` | `false`
 `[openFileDialogOnClick]` | 点击打开文件对话框 | `boolean` | `true`
+`[limitFileCount]` | 限制上传文件数量，超过数量隐藏上传按钮 | `number` | `999`
 `[beforeUpload]` | 上传文件之前的钩子，参数为上传的文件，若返回 `false` 则停止上传 | `(file: UploadFile, fileList: UploadFile[]) => boolean｜Observable<boolean>` | -
 `[customRequest]` | 通过覆盖默认的上传行为，可以自定义自己的上传实现 | `(item: UploadXHRArgs) => Subscription` | -
 `[remove]` | 点击移除文件时的回调，返回值为 `false` 时不移除 | `(file: UploadFile) => boolean｜Observable` | -

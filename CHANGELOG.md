@@ -1,3 +1,15 @@
+## 8.9.1 (2020-04-03)
+
+
+### Bug Fixes
+
+* **abc:st:** fix text overflow in mobile screen ([#781](https://github.com/ng-alain/delon/issues/781)) ([a055b93](https://github.com/ng-alain/delon/commit/a055b93647d3aa7116162293947c6527643512e1))
+* **form:widget:upload:** fix hide button when limit upload count ([#784](https://github.com/ng-alain/delon/issues/784)) ([acc2347](https://github.com/ng-alain/delon/commit/acc234793760163d259ceb32f48383e082b72e3f))
+* **sf:widget:number:** specify widget width via `widgetWidth` property ([#782](https://github.com/ng-alain/delon/issues/782)) ([d2d3557](https://github.com/ng-alain/delon/commit/d2d3557dc8d3d226c8d1c566e272e1ddd9d47eb9))
+* **theme:menu:** fix can't hited when route include queryString ([#783](https://github.com/ng-alain/delon/issues/783)) ([9c9af73](https://github.com/ng-alain/delon/commit/9c9af73258f79c42be8ced9aca35699dc95b9e7c))
+
+
+
 # [8.9.0](https://github.com/ng-alain/delon/compare/8.8.0...8.9.0) (2020-02-19)
 
 
