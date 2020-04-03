@@ -28,7 +28,7 @@ log.info('Starting publishing process...');
 
 const nextVersion = fs.readJSONSync(path.join(root, 'package.json')).version;
 
-fetchOlderVersions();
+// fetchOlderVersions();
 generatingPublishNote();
 // fixDependenciePath();
 checkout();
