@@ -259,11 +259,11 @@ ng-zorro-antd/popconfirm
 
 ng-zorro-antd/select
 
-ng-zorro-antd/skeleton
-
 ng-zorro-antd/slider
 
-ngx-color/sketch
+ng-zorro-antd/switch
+
+ng-zorro-antd/tabs
 
 ngx-simplemde
 MIT
@@ -594,7 +594,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 core-js
 MIT
-Copyright (c) 2014-2019 Denis Pushkarev
+Copyright (c) 2014-2020 Denis Pushkarev
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -647,15 +647,13 @@ ng-zorro-antd/radio
 
 ng-zorro-antd/rate
 
+ng-zorro-antd/skeleton
+
 ng-zorro-antd/spin
 
 ng-zorro-antd/steps
 
-ng-zorro-antd/switch
-
 ng-zorro-antd/table
-
-ng-zorro-antd/tabs
 
 ng-zorro-antd/tag
 
@@ -698,6 +696,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+
+ngx-color/sketch
 
 ngx-countdown
 MIT
