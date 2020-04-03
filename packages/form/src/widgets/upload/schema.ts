@@ -138,4 +138,9 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
    * 上传文件改变时的状态
    */
   change?: (args: UploadChangeParam) => void;
+
+  /**
+   * 限制上传文件数量，超过数量隐藏上传按钮
+   */
+  limitFileCount?: number;
 }

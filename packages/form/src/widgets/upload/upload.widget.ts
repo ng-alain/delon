@@ -41,6 +41,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       customRequest,
       directory,
       openFileDialogOnClick,
+      limitFileCount
     } = this.ui;
     const res: any = {
       type: type || 'select',
@@ -62,6 +63,7 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
       urlReName: (urlReName || '').split('.'),
       beforeUpload: typeof beforeUpload === 'function' ? beforeUpload : null,
       customRequest: typeof customRequest === 'function' ? customRequest : null,
+      limitFileCount: limitFileCount || 999
     };
     if (res.listType === 'picture-card') {
       this.btnType = 'plus';
