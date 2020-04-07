@@ -38,51 +38,45 @@
       <span *ngIf="responsive" class="ant-table-rep__title">
         <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{$implicit: c.title }"></ng-template>
       </span>
-      <span>
-        <ng-template #render [ngTemplateOutlet]="c.__render"
-          [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
-        <ng-container *ngIf="!c.__render; else render">
-          <ng-container [ngSwitch]="c.type">
-            <label *ngSwitchCase="'checkbox'" nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked"
-              (ngModelChange)="_checkSelection(i, $event)"></label>
-            <label *ngSwitchCase="'radio'" nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked"
-              (ngModelChange)="_refRadio($event, i)"></label>
-            <a *ngSwitchCase="'link'" (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx]._text"></a>
-            <ng-conntainer *ngIf="i._values[cIdx].text">
-              <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color">
-                <span [innerHTML]="i._values[cIdx]._text"></span>
-              </nz-tag>
-              <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text">
-              </nz-badge>
-            </ng-conntainer>
-            <span *ngSwitchDefault [innerHTML]="i._values[cIdx]._text" [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
-          </ng-container>
-          <ng-container *ngFor="let btn of _validBtns(c.buttons, i, c); let last=last">
-            <a *ngIf="btn.children.length > 0" nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
-              <span [innerHTML]="_btnText(i, btn)"></span>
-              <i nz-icon nzType="down"></i>
-            </a>
-            <nz-dropdown-menu #btnMenu="nzDropdownMenu">
-              <ul nz-menu>
-                <ng-container *ngFor="let subBtn of _validBtns(btn.children, i, c)">
-                  <li *ngIf="subBtn.type !== 'divider'" nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
-                    <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: subBtn }">
-                    </ng-template>
-                  </li>
-                  <li *ngIf="subBtn.type === 'divider'" nz-menu-divider></li>
-                </ng-container>
-              </ul>
-            </nz-dropdown-menu>
-            <span *ngIf="btn.children.length == 0" [class.st__btn-disabled]="btn._disabled">
-              <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }">
-              </ng-template>
-            </span>
-            <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
-          </ng-container>
-          <ng-template [ngIf]="!c.__renderExpanded" [ngTemplateOutlet]="c.__renderExpanded"
-            [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
+      <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
+      <ng-container *ngIf="!c.__render; else render">
+        <ng-container [ngSwitch]="c.type">
+          <label *ngSwitchCase="'checkbox'" nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkSelection(i, $event)"></label>
+          <label *ngSwitchCase="'radio'" nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_refRadio($event, i)"></label>
+          <a *ngSwitchCase="'link'" (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx]._text"></a>
+          <ng-conntainer *ngIf="i._values[cIdx].text">
+            <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color">
+              <span [innerHTML]="i._values[cIdx]._text"></span>
+            </nz-tag>
+            <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text">
+            </nz-badge>
+          </ng-conntainer>
+          <span *ngSwitchDefault [innerHTML]="i._values[cIdx]._text" [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
         </ng-container>
-      </span>
+        <ng-container *ngFor="let btn of _validBtns(c.buttons, i, c); let last=last">
+          <a *ngIf="btn.children.length > 0" nz-dropdown [nzDropdownMenu]="btnMenu" nzOverlayClassName="st__btn-sub">
+            <span [innerHTML]="_btnText(i, btn)"></span>
+            <i nz-icon nzType="down"></i>
+          </a>
+          <nz-dropdown-menu #btnMenu="nzDropdownMenu">
+            <ul nz-menu>
+              <ng-container *ngFor="let subBtn of _validBtns(btn.children, i, c)">
+                <li *ngIf="subBtn.type !== 'divider'" nz-menu-item [class.st__btn-disabled]="subBtn._disabled">
+                  <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: subBtn }">
+                  </ng-template>
+                </li>
+                <li *ngIf="subBtn.type === 'divider'" nz-menu-divider></li>
+              </ng-container>
+            </ul>
+          </nz-dropdown-menu>
+          <span *ngIf="btn.children.length == 0" [class.st__btn-disabled]="btn._disabled">
+            <ng-template [ngTemplateOutlet]="btnTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }">
+            </ng-template>
+          </span>
+          <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
+        </ng-container>
+        <ng-template [ngIf]="!c.__renderExpanded" [ngTemplateOutlet]="c.__renderExpanded" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
+      </ng-container>
     </td>
   </tr>
   <tr [nzExpand]="i.expand">
