@@ -27,7 +27,7 @@ clone() {
   mkdir -p ${ROOT}
   cd ${DIST}
   echo ">>> Clone delon & cli dist..."
-  git clone --depth 1 -b publish-8.9.1 https://github.com/ng-alain/delon-builds.git
+  git clone --depth 1 -b publish-8.9.2 https://github.com/ng-alain/delon-builds.git
 }
 
 checkVersion() {

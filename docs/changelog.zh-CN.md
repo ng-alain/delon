@@ -14,6 +14,20 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## 8.9.2 (2020-04-07)
+
+### Bug Fixes
+
+* **abc:page-header:** 修复缺少导入模块 `@angular/cdk/observers` ([#789](https://github.com/ng-alain/delon/issues/789)) ([d4566d7](https://github.com/ng-alain/delon/commit/d4566d71e31a3a8a3ce59627709ed86db2d2e5b1))
+* **abc:st:** 修复无法渲染 `yn` 类型 ([#786](https://github.com/ng-alain/delon/issues/786)) ([e16e02f](https://github.com/ng-alain/delon/commit/e16e02f0175ac89c9a70a51a728ca8ce7ecc74d7))
+* **theme:title:** 修复不可以把注释节点设置为标题 ([#793](https://github.com/ng-alain/delon/issues/793)) ([8b34f60](https://github.com/ng-alain/delon/commit/8b34f60fa5b081f37f1a5a7db5a4db8d69f48964))
+
+### Features
+
+* **form:string:** 新增 `change`, `focus`, `blur`, `enter` 事件 ([#790](https://github.com/ng-alain/delon/issues/790)) ([29373c4](https://github.com/ng-alain/delon/commit/29373c4d05d94d0ea4d07c504dbfdf28acf245cd))
+* **theme:http:** 新增 `form` 方法用于传统表单 ([#787](https://github.com/ng-alain/delon/issues/787)) ([2edfd58](https://github.com/ng-alain/delon/commit/2edfd5868135750e67c195669bafc2f741e2952e))
+
+
 ## 8.9.1 (2020-04-03)
 
 ### Bug Fixes
