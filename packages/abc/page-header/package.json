@@ -4,6 +4,7 @@
       "flatModuleFile": "pageHeader",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
+        "@angular/cdk/observers": "ng.cdk.observers",
         "ng-zorro-antd/affix": "ng-zorro-antd/affix",
         "ng-zorro-antd/breadcrumb": "ng-zorro-antd/breadcrumb",
         "ng-zorro-antd/skeleton": "ng-zorro-antd/skeleton",

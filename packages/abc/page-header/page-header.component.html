@@ -38,9 +38,7 @@
               </div>
             </div>
             <div class="page-header__row">
-              <div class="page-header__desc"
-                   (cdkObserveContent)="checkContent()"
-                   #conTpl>
+              <div class="page-header__desc" (cdkObserveContent)="checkContent()" #conTpl>
                 <ng-content></ng-content>
                 <ng-template [ngTemplateOutlet]="content"></ng-template>
               </div>
