@@ -251,7 +251,7 @@ integrationCli() {
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
   echo ">>> Copy @delon/*"
   echo ">>>>>> Clone delon & cli dist..."
-  git clone --depth 1 https://github.com/ng-alain/delon-builds.git
+  git clone --depth 1 -b 8.x https://github.com/ng-alain/delon-builds.git
   rsync -a ${INTEGRATION_SOURCE}/delon-builds/ ${INTEGRATION_SOURCE}/node_modules/
   echo ">>> Running npm run icon"
   npm run icon
