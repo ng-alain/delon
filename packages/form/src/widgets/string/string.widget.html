@@ -12,12 +12,15 @@
            [attr.disabled]="disabled"
            [nzSize]="ui.size"
            [ngModel]="value"
-           (ngModelChange)="setValue($event)"
+           (ngModelChange)="change($event)"
            [attr.maxLength]="schema.maxLength || null"
            [attr.type]="ui.type || 'text'"
            [attr.placeholder]="ui.placeholder"
            [attr.autocomplete]="ui.autocomplete"
-           [attr.autoFocus]="ui.autofocus">
+           [attr.autoFocus]="ui.autofocus"
+           (keyup.enter)="enter($event)"
+           (focus)="focus($event)"
+           (blur)="blur($event)">
   </ng-template>
 
   <ng-container *ngIf="type === 'addon'; else ipt">

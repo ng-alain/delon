@@ -20,7 +20,9 @@ import { SFSchema, SFStringWidgetSchema } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
+  template: `
+    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+  `,
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -31,22 +33,11 @@ export class DemoComponent {
         ui: {
           addOnAfter: 'RMB',
           placeholder: 'RMB结算',
+          change: val => console.log(val),
+          focus: e => console.log('focus', e),
+          blur: e => console.log('blur', e),
+          enter: e => console.log('enter', e),
         } as SFStringWidgetSchema,
-      },
-      mobile: {
-        type: 'string',
-        format: 'mobile',
-        title: '手机号'
-      },
-      sfz: {
-        type: 'string',
-        format: 'id-card',
-        title: '身份证号'
-      },
-      color: {
-        type: 'string',
-        format: 'color',
-        title: '颜色'
       },
     },
     required: ['name'],
