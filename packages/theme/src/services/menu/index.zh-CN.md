@@ -17,9 +17,9 @@ type: Service
 | ----- | --- | ---- |
 | `add` | `items: Menu[]` | 设置菜单数据 |
 | `clear` | - | 清空菜单数据 |
-| `resume` | `callback: Funection` | 重置菜单，可能I18N、用户权限变动时需要调用刷新 |
-| `openedByUrl` | `url, recursive = false` | 根据URL设置菜单 `_open` 属性（`_open`用于是否展开菜单的条件值） |
-| `getPathByUrl` | `url, recursive = false` | 根据url获取菜单列表 |
+| `resume` | `callback?: (item: Menu, parentMenum: Menu | null, depth?: number) => void` | 重置菜单，可能I18N、用户权限变动时需要调用刷新 |
+| `openedByUrl` | `url: string | null, recursive = false` | 根据URL设置菜单 `_open` 属性（`_open`用于是否展开菜单的条件值） |
+| `getPathByUrl` | `url: string | null, recursive = false` | 根据url获取菜单列表 |
 
 **recursive**
 
