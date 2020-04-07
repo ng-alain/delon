@@ -573,6 +573,115 @@ export class _HttpClient {
 
   // #endregion
 
+  // #region post
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `string` 类型
+   */
+  form(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: _HttpHeaders;
+      observe?: 'body';
+      reportProgress?: boolean;
+      responseType: 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<string>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `HttpEvent<T>` 类型
+   */
+  form<T>(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: _HttpHeaders;
+      observe: 'events';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<HttpEvent<T>>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `HttpResponse<JSON>` 类型
+   */
+  form(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: _HttpHeaders;
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<HttpResponse<any>>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `any` 类型
+   */
+  form(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: _HttpHeaders;
+      observe?: 'body' | 'events' | 'response';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<any>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `JSON` 类型
+   */
+  form<T>(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: _HttpHeaders;
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<T>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）
+   */
+  form(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: _HttpHeaders;
+      observe?: 'body' | 'events' | 'response';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    } = {},
+  ): Observable<any> {
+    return this.request('POST', url, {
+      body,
+      params,
+      ...options,
+      headers: {
+        'content-type': `application/x-www-form-urlencoded`,
+      },
+    });
+  }
+
+  // #endregion
+
   // #region request
 
   /** 返回一个 `arraybuffer` 类型 */

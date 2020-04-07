@@ -105,6 +105,11 @@ class RestService extends BaseApi {
     return;
   }
 
+  @FORM()
+  save(@Payload data: {}): Observable<any> {
+    return;
+  }
+
   // If authorization is invalid, will be thrown directly `401` error and will not be sent.
   @GET('', { acl: 'admin' })
   ACL(): Observable<any> {

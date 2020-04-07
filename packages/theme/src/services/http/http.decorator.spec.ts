@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-
 import { HttpParams } from '@angular/common/http';
 import { _HttpClient } from './http.client';
 import {
@@ -19,6 +18,7 @@ import {
   PUT,
   Query,
   Payload,
+  FORM,
 } from './http.decorator';
 
 @BaseUrl('/user')
@@ -101,6 +101,11 @@ class MockService extends BaseApi {
 
   @JSONP()
   JSONP(): Observable<any> {
+    return null as any;
+  }
+
+  @FORM()
+  FORM(): Observable<any> {
     return null as any;
   }
 
@@ -249,6 +254,12 @@ describe('theme: http.decorator', () => {
       expect(request).toHaveBeenCalled();
       expect(request.calls.mostRecent().args[0]).toBe(type);
     });
+  });
+  it(`should be include content-type is application/x-www-form-urlencoded via FORM`, () => {
+    srv.FORM();
+    expect(request).toHaveBeenCalled();
+    const arg = request.calls.mostRecent().args[2];
+    expect(arg.headers['content-type']).toBe(`application/x-www-form-urlencoded`);
   });
 
   describe('PAYLOAD', () => {

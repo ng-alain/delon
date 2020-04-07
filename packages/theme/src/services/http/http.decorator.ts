@@ -7,7 +7,7 @@ import { throwError, Observable } from 'rxjs';
 import { _HttpClient } from './http.client';
 
 export abstract class BaseApi {
-  constructor(@Inject(Injector) protected injector: Injector) { }
+  constructor(@Inject(Injector) protected injector: Injector) {}
 }
 
 export interface HttpOptions {
@@ -41,7 +41,7 @@ function setParam(target: any, key = paramKey) {
  * - 有效范围：类
  */
 export function BaseUrl(url: string) {
-  return function <TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
+  return function<TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
     params.baseUrl = url;
     return target;
@@ -56,10 +56,10 @@ export function BaseHeaders(
   headers:
     | HttpHeaders
     | {
-      [header: string]: string | string[];
-    },
+        [header: string]: string | string[];
+      },
 ) {
-  return function <TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
+  return function<TClass extends new (...args: any[]) => BaseApi>(target: TClass): TClass {
     const params = setParam(target.prototype);
     params.baseHeaders = headers;
     return target;
@@ -67,8 +67,8 @@ export function BaseHeaders(
 }
 
 function makeParam(paramName: string) {
-  return function (key?: string) {
-    return function (target: BaseApi, propertyKey: string, index: number) {
+  return function(key?: string) {
+    return function(target: BaseApi, propertyKey: string, index: number) {
       const params = setParam(setParam(target), propertyKey);
       let tParams = params[paramName];
       if (typeof tParams === 'undefined') {
@@ -130,10 +130,12 @@ function genBody(data?: any, payload?: any): any {
   return Object.assign({}, data, payload);
 }
 
-function makeMethod(method: string) {
-  return function (url: string = '', options?: HttpOptions) {
+export type METHOD_TYPE = 'OPTIONS' | 'GET' | 'POST' | 'DELETE' | 'PUT' | 'HEAD' | 'PATCH' | 'JSONP' | 'FORM';
+
+function makeMethod(method: METHOD_TYPE) {
+  return function(url: string = '', options?: HttpOptions) {
     return (_target: BaseApi, targetKey?: string, descriptor?: PropertyDescriptor) => {
-      descriptor!.value = function (...args: any[]): Observable<any> {
+      descriptor!.value = function(...args: any[]): Observable<any> {
         options = options || {};
 
         const http = this.injector.get(_HttpClient, null) as _HttpClient;
@@ -180,6 +182,9 @@ function makeMethod(method: string) {
           p[i.key] = args[i.index];
           return p;
         }, {});
+        if (method === 'FORM') {
+          headers['content-type'] = 'application/x-www-form-urlencoded';
+        }
 
         const payload = getValidArgs(data, 'payload', args);
         const supportedBody = method === 'POST' || method === 'PUT';
@@ -244,3 +249,9 @@ export const PATCH = makeMethod('PATCH');
  * - 有效范围：方法
  */
 export const JSONP = makeMethod('JSONP');
+
+/**
+ * `FORM` 请求
+ * - 有效范围：方法
+ */
+export const FORM = makeMethod('FORM');
