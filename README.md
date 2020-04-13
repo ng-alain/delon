@@ -24,6 +24,9 @@ Delon
 
 </div>
 
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fng-alain%2Fdelon.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fng-alain%2Fdelon?ref=badge_large)
+
 ## Links
 
 + [Document](https://ng-alain.com)
@@ -32,6 +35,7 @@ Delon
 ## Architecture
 
 ![Architecture](https://raw.githubusercontent.com/ng-alain/delon/master/_screenshot/architecture.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fng-alain%2Fdelon.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fng-alain%2Fdelon?ref=badge_shield)
 
 ## Donation
 
