@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "rootDir": "./",
+    "target": "es5",
     "types": [
       "jasmine",
       "node"

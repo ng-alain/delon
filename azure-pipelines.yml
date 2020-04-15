@@ -47,7 +47,6 @@ stages:
             inputs:
               command: 'install'
           - script: |
-              sudo apt install google-chrome-stable
               npm run test
               cat ./coverage/lcov.info | ./node_modules/.bin/codecov
           - task: PublishCodeCoverageResults@1

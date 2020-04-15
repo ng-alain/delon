@@ -23,7 +23,7 @@
   "scripts": {
     "lint": "bash scripts/ci/lint.sh -ts -less",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI --code-coverage",
+    "test": "ng test --no-progress --browsers=ChromeHeadlessCI --code-coverage --no-watch",
     "test:cli": "bash scripts/ci/build-schematics.sh -b -t -travis",
     "test:integration": "bash scripts/ci/build-schematics.sh -b -t -travis -integration",
     "build": "bash scripts/ci/build.sh",

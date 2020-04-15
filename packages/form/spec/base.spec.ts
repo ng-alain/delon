@@ -168,7 +168,7 @@ export class SFPage {
     context.schema = schema;
     if (typeof ui !== 'undefined') context.ui = ui;
     if (typeof formData !== 'undefined') context.formData = formData;
-    return this.dc(1000);
+    return this.dc();
   }
 
   /** 强制指定 `a` 节点 */
