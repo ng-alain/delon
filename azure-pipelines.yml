@@ -49,6 +49,8 @@ stages:
           - script: |
               npm run test
               cat ./coverage/lcov.info | ./node_modules/.bin/codecov
+            env:
+              CODECOV_TOKEN: $(CODECOV_TOKEN)
 
           - task: PublishCodeCoverageResults@1
             displayName: 'publish code coverage results'
