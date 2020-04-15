@@ -14,7 +14,6 @@ import {
 import { Chart } from '@antv/g2';
 import { InteractionType } from '@delon/chart/core/types';
 import { InputBoolean, InputNumber } from '@delon/util';
-import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
@@ -100,7 +99,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
         const colorItem = this.data.find(w => w.x === x && w.y === y);
         return colorItem && colorItem.color ? colorItem.color : this.color;
       })
-      .tooltip('x*y', (x: NzSafeAny, y: NzSafeAny) => ({ name: x, value: y }));
+      .tooltip('x*y', (x, y) => ({ name: x, value: y }));
 
     this.attachChart();
   }

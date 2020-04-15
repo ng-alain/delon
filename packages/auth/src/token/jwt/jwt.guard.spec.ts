@@ -45,14 +45,14 @@ describe('auth: JWTGuard', () => {
     });
   });
 
-  xit(`should be activated when token valid`, (done: () => void) => {
+  it(`should be activated when token valid`, (done: () => void) => {
     router.navigateByUrl('/home').then(res => {
       expect(res).toBe(true);
       done();
     });
   });
 
-  xit(`should be activated when not guard route`, (done: () => void) => {
+  it(`should be activated when not guard route`, (done: () => void) => {
     srv.set({ token: `` });
     router.navigateByUrl('/login').then(res => {
       expect(res).toBe(true);
@@ -60,7 +60,7 @@ describe('auth: JWTGuard', () => {
     });
   });
 
-  xit(`should be go to login when token invalid`, (done: () => void) => {
+  it(`should be go to login when token invalid`, (done: () => void) => {
     srv.set({ token: `` });
     router.navigateByUrl('/home').then(res => {
       expect(res).toBe(false);
@@ -73,7 +73,7 @@ describe('auth: JWTGuard', () => {
     });
   });
 
-  xit(`should be support children route`, (done: () => void) => {
+  it(`should be support children route`, (done: () => void) => {
     router.navigateByUrl('/my/profile').then(res => {
       expect(res).toBe(true);
       done();

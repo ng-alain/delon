@@ -3,9 +3,8 @@ import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/cor
 import { FormBuilder, FormControlName, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { configureTestSuite, createTestContext } from '@delon/testing';
+import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
-
 import { SEContainerComponent } from './edit-container.component';
 import { SEComponent } from './edit.component';
 import { SEConfig } from './edit.config';
@@ -33,7 +32,7 @@ describe('abc: edit', () => {
   }
 
   describe('', () => {
-    configureTestSuite(moduleAction);
+    beforeEach(moduleAction);
 
     describe('', () => {
       beforeEach(createComp);

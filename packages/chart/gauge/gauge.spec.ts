@@ -4,7 +4,7 @@ import { checkDelay, PageG2 } from '@delon/testing';
 import { G2GaugeComponent } from './gauge.component';
 import { G2GaugeModule } from './gauge.module';
 
-xdescribe('chart: gauge', () => {
+describe('chart: gauge', () => {
   let page: PageG2<TestComponent>;
 
   describe('', () => {
@@ -15,9 +15,10 @@ xdescribe('chart: gauge', () => {
     afterEach(() => page.context.comp.ngOnDestroy());
 
     it('should be working', () => {
-      page.isText('.g2-gauge__percent', '10%');
+      expect(page.chart.geometries[0].data[0].value).toBe(10);
       page.context.percent = 30;
-      page.dc().isText('.g2-gauge__percent', '30%');
+      page.dc();
+      expect(page.chart.geometries[0].data[0].value).toBe(30);
     });
   });
 

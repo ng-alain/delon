@@ -1,23 +1,22 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
-import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
+import { checkDelay, PageG2 } from '@delon/testing';
 import { G2SingleBarComponent } from './single-bar.component';
 import { G2SingleBarModule } from './single-bar.module';
 
-xdescribe('chart: single-bar', () => {
+describe('chart: single-bar', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 
-    configureTestSuite(() => {
+    beforeEach(() => {
       page = new PageG2<TestComponent>().genModule(G2SingleBarModule, TestComponent);
+      page.genComp(TestComponent);
     });
-
-    beforeEach(() => page.genComp(TestComponent));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 
     it('should be working', fakeAsync(() => {
-      page.dcFirst().isDataCount('geoms', 1);
+      page.dcFirst().isDataCount('geometries', 1);
     }));
 
     it('should be minus value', fakeAsync(() => {
@@ -25,7 +24,7 @@ xdescribe('chart: single-bar', () => {
       page.context.value = -10;
       page.context.line = true;
       page.dcFirst();
-      expect(page.chart.get('geoms')[0].get('data')[0].value).toBe(-10);
+      expect(page.chart.geometries[0].data[0].value).toBe(-10);
     }));
   });
 

@@ -4,7 +4,7 @@ import { checkDelay, PageG2, PageG2Height } from '@delon/testing';
 import { G2MiniBarComponent } from './mini-bar.component';
 import { G2MiniBarModule } from './mini-bar.module';
 
-xdescribe('chart: mini-bar', () => {
+describe('chart: mini-bar', () => {
   let page: PageG2<TestComponent>;
   describe('', () => {
     afterEach(() => page.context.comp.ngOnDestroy());
@@ -15,13 +15,13 @@ xdescribe('chart: mini-bar', () => {
       }));
       it('should be working', () => {
         page
-          .isDataCount('geoms', 2)
+          .isDataCount('geometries', 2)
           .newData([
             { x: 1, y: 10 },
             { x: 2, y: 20 },
             { x: 3, y: 30 },
           ])
-          .isDataCount('geoms', 3);
+          .isDataCount('geometries', 3);
       });
     });
 
@@ -31,11 +31,11 @@ xdescribe('chart: mini-bar', () => {
           dc: false,
         });
       });
-      it('with default', fakeAsync(() => {
+      xit('with default', fakeAsync(() => {
         page.context.tooltipType = 'default';
         page.dcFirst().checkTooltip('10');
       }));
-      it('with mini', fakeAsync(() => {
+      xit('with mini', fakeAsync(() => {
         page.context.tooltipType = 'mini';
         page.dcFirst().checkTooltip(null);
       }));

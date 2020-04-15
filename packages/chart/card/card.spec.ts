@@ -1,21 +1,18 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { configureTestSuite, createTestContext } from '@delon/testing';
+import { createTestContext } from '@delon/testing';
 import { G2CardModule } from './card.module';
 
-xdescribe('chart: card', () => {
+describe('chart: card', () => {
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
 
-  configureTestSuite(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [G2CardModule],
       declarations: [TestComponent],
     });
-  });
-
-  beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });

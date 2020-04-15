@@ -20,7 +20,7 @@ describe('form: widget: tree-select', () => {
     page.prop(dl, context, fixture);
   });
 
-  xit('should working', fakeAsync(() => {
+  it('should working', fakeAsync(() => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -48,7 +48,7 @@ describe('form: widget: tree-select', () => {
       .asyncEnd(1000);
   }));
 
-  xit('#setValue', fakeAsync(() => {
+  it('#setValue', fakeAsync(() => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -67,12 +67,12 @@ describe('form: widget: tree-select', () => {
       },
     };
     page.newSchema(s).dc(1);
-    expect(page.getEl('.ant-select-selection-selected-value').textContent!.trim()).toContain('已支付');
+    expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toContain('已支付');
     page.setValue('/a', 'TRADE_FINISHED').dc(1);
-    expect(page.getEl('.ant-select-selection-selected-value').textContent!.trim()).toContain('交易完成');
+    expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toContain('交易完成');
   }));
 
-  xit('#change', fakeAsync(() => {
+  it('#change', fakeAsync(() => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -94,13 +94,13 @@ describe('form: widget: tree-select', () => {
     page
       .newSchema(s)
       .typeEvent('click', '.ant-select')
-      .typeEvent('click', 'nz-tree-node:nth-child(2)')
+      .typeEvent('click', 'nz-tree-node:nth-child(2) nz-tree-node-title')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
     expect((s.properties!.a.ui as any).change).toHaveBeenCalled();
   }));
 
-  xit('#expandChange', fakeAsync(() => {
+  it('#expandChange', fakeAsync(() => {
     const s: SFSchema = {
       properties: {
         a: {
@@ -123,7 +123,7 @@ describe('form: widget: tree-select', () => {
       .newSchema(s)
       .typeEvent('click', '.ant-select')
       .typeEvent('click', '.ant-select-tree-switcher-icon')
-      .typeEvent('click', 'nz-tree-node:nth-child(2)')
+      .typeEvent('click', 'nz-tree-node:nth-child(2) nz-tree-node-title')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
     expect((s.properties!.a.ui as any).expandChange).toHaveBeenCalled();

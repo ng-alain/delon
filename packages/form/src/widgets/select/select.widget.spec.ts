@@ -80,7 +80,7 @@ describe('form: widget: select', () => {
         },
       },
     };
-    page.newSchema(s).typeEvent('click', 'nz-select-top-control').dc(1000);
+    page.newSchema(s).typeEvent('click', 'nz-select-top-control').time(1000).dc();
     const el = document.querySelector('.ant-select-dropdown-menu-item:not(.ant-select-dropdown-menu-item-selected)') as HTMLElement;
     el.click();
     page.dc().checkValue('/a', 'TRADE_SUCCESS').asyncEnd();

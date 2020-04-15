@@ -1,18 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
-import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
+import { checkDelay, PageG2 } from '@delon/testing';
 import { G2WaterWaveComponent } from './water-wave.component';
 import { G2WaterWaveModule } from './water-wave.module';
 
-xdescribe('chart: water-wave', () => {
+describe('chart: water-wave', () => {
   describe('defualt', () => {
     let page: PageG2<TestComponent>;
 
-    configureTestSuite(() => {
+    beforeEach(() => {
       page = new PageG2<TestComponent>().genModule(G2WaterWaveModule, TestComponent);
+      page.genComp(TestComponent);
     });
-
-    beforeEach(() => page.genComp(TestComponent));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 

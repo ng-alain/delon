@@ -59,6 +59,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
       this._value = value;
       this.data = list;
       this.checkGroup(list);
+      console.log(this.data);
       this.detectChanges();
     });
   }

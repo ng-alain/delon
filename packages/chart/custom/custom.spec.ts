@@ -1,21 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { configureTestSuite, createTestContext } from '@delon/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { createTestContext } from '@delon/testing';
 import { G2CustomComponent } from './custom.component';
 import { G2CustomModule } from './custom.module';
 
-xdescribe('chart: custom', () => {
+describe('chart: custom', () => {
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
 
-  configureTestSuite(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [G2CustomModule],
       declarations: [TestComponent],
     });
-  });
-
-  beforeEach(() => {
     ({ fixture, context } = createTestContext(TestComponent));
 
     spyOn(context, 'render');
@@ -30,14 +27,16 @@ xdescribe('chart: custom', () => {
     expect(context.render).toHaveBeenCalled();
   });
 
-  it('should be resize', fakeAsync(() => {
+  it('should be resize', done => {
     expect(context.resize).not.toHaveBeenCalled();
-    context.resizeTime = 200;
+    context.resizeTime = 1;
     fixture.detectChanges();
     window.dispatchEvent(new Event('resize'));
-    tick(201);
-    expect(context.resize).toHaveBeenCalled();
-  }));
+    setTimeout(() => {
+      expect(context.resize).toHaveBeenCalled();
+      done();
+    }, 2);
+  });
 });
 
 @Component({

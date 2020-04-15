@@ -300,7 +300,8 @@ export class SFPage {
       return this;
     }
     dispatchFakeEvent(node, eventName);
-    return this.time().dc();
+    fixture.detectChanges();
+    return this.time(1000).dc();
   }
 
   time(time = 0) {
