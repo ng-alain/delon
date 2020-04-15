@@ -49,6 +49,7 @@ stages:
           - script: |
               npm run test
               cat ./coverage/lcov.info | ./node_modules/.bin/codecov
+
           - task: PublishCodeCoverageResults@1
             displayName: 'publish code coverage results'
             condition: succeededOrFailed()
