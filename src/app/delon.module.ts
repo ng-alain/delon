@@ -33,7 +33,7 @@ const REUSETAB_PROVIDES: NzSafeAny[] = [
 // #region global config functions
 
 import { LodopConfig } from '@delon/abc/lodop';
-import { STConfig } from '@delon/abc/table';
+import { STConfig } from '@delon/abc/st';
 import { DelonACLModule } from '@delon/acl';
 
 export function fnSTConfig(): STConfig {

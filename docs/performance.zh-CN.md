@@ -63,7 +63,7 @@ not ie_mob <= 10
 
 ```ts
 // 在 delon.module.ts 注册需要的模块
-import { STModule } from '@delon/abc/table';
+import { STModule } from '@delon/abc/st';
 
 const ABC_ROOT_MODULES = [ STModule.forRoot() ];
 

@@ -15,7 +15,7 @@ Support `count`, `distinctCount`, `sum`, `average`, `max`, `min` or custom funct
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/table';
+import { STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',

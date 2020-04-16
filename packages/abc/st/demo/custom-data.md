@@ -15,7 +15,7 @@ title:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
-import { STColumn, STChange } from '@delon/abc/table';
+import { STColumn, STChange } from '@delon/abc/st';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 

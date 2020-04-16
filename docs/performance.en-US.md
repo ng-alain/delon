@@ -63,7 +63,7 @@ For example, when you explicitly only need `@delon/abc` several components, you 
 
 ```ts
 // Register the required modules in delon.module.ts
-import { STModule } from '@delon/abc/table';
+import { STModule } from '@delon/abc/st';
 
 const ABC_ROOT_MODULES = [ STModule.forRoot() ];
 

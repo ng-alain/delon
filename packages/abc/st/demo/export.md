@@ -15,7 +15,7 @@ Save the table data as Excel.
 
 ```ts
 import { Component, ViewChild } from '@angular/core';
-import { STColumn, STComponent } from '@delon/abc/table';
+import { STColumn, STComponent } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',

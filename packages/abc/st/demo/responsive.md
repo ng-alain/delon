@@ -15,7 +15,7 @@ Table columns are displayed as stacked in responsive mode if the screen size bec
 
 ```ts
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/table';
+import { STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
