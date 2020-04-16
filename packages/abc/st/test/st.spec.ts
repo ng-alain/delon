@@ -1503,7 +1503,7 @@ describe('abc: table', () => {
         expect(comp.list.length).toBe(PS);
         page.asyncEnd();
       }));
-      // xit('#cdkVirtualScrollViewport', done => {
+      // it('#cdkVirtualScrollViewport', done => {
       //   context.virtualScroll = true;
       //   context.data = genData(10);
       //   fixture.detectChanges();

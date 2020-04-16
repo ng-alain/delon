@@ -16,6 +16,7 @@ import {
   SimpleChange,
   SimpleChanges,
   TemplateRef,
+  TrackByFunction,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
@@ -33,7 +34,7 @@ import {
 } from '@delon/theme';
 import { deepMerge, deepMergeKey, InputBoolean, InputNumber, toBoolean, updateHostClass } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzTableComponent, NzTableStyleService } from 'ng-zorro-antd/table';
+import { NzTableComponent, NzTableData, NzTableStyleService } from 'ng-zorro-antd/table';
 import { from, Observable, of, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { STColumnSource } from './st-column-source';
@@ -78,6 +79,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private totalTpl = ``;
   private clonePage: STPage;
   private copyCog: STConfig;
+  private rowClickCount = 0;
   locale: LocaleData = {};
   _data: STData[] = [];
   _statistical: STStatisticalResults = {};
@@ -173,10 +175,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() size: 'small' | 'middle' | 'default';
   /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px', x: '300px' }` */
   @Input() scroll: { y?: string; x?: string };
-  @Input() @InputBoolean() virtualScroll = false;
-  @Input() @InputNumber() virtualItemSize = 54;
-  @Input() @InputNumber() virtualMaxBufferPx = 200;
-  @Input() @InputNumber() virtualMinBufferPx = 100;
   /**
    * 单排序规则
    * - 若不指定，则返回：`columnName=ascend|descend`
@@ -212,6 +210,11 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    */
   // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<STChange>();
+  @Input() @InputBoolean() virtualScroll = false;
+  @Input() @InputNumber() virtualItemSize = 54;
+  @Input() @InputNumber() virtualMaxBufferPx = 200;
+  @Input() @InputNumber() virtualMinBufferPx = 100;
+  @Input() virtualForTrackBy: TrackByFunction<NzTableData> = index => index;
 
   /**
    * Get the number of the current page
@@ -226,8 +229,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   get list(): STData[] {
     return this._data;
   }
-
-  private rowClickCount = 0;
 
   constructor(
     @Optional() @Inject(ALAIN_I18N_TOKEN) i18nSrv: AlainI18NService,

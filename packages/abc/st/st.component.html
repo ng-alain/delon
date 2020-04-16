@@ -33,14 +33,12 @@
   <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [class]="i._rowClassName">
     <td *ngIf="expand" [nzShowExpand]="expand && i.showExpand !== false" [(nzExpand)]="i.expand"
       (nzExpandChange)="_expandChange(i)" nzWidth="50px"></td>
-    <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right"
-      [nzCheckbox]="c.type === 'checkbox'" [ngClass]="columnClass(c)" [attr.colspan]="c.colSpan">
+    <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right" [ngClass]="columnClass(c)" [attr.colspan]="c.colSpan">
       <span *ngIf="responsive" class="ant-table-rep__title">
         <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{$implicit: c.title }"></ng-template>
       </span>
       <span>
-        <ng-template #render [ngTemplateOutlet]="c.__render"
-          [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
+        <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
         <ng-container *ngIf="!c.__render; else render">
           <ng-container [ngSwitch]="c.type">
             <label *ngSwitchCase="'checkbox'" nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked"
@@ -101,10 +99,8 @@
   (nzPageSizeChange)="_change('ps')" [nzTotal]="total" [nzShowPagination]="_isPagination" [nzFrontPagination]="false"
   [nzBordered]="bordered" [nzSize]="size" [nzLoading]="_loading" [nzLoadingDelay]="loadingDelay"
   [nzLoadingIndicator]="loadingIndicator" [nzTitle]="header" [nzFooter]="footer" [nzScroll]="scroll"
-  [nzVirtualScroll]="virtualScroll" [nzVirtualItemSize]="virtualItemSize" [nzVirtualMaxBufferPx]="virtualMaxBufferPx"
-  [nzVirtualMinBufferPx]="virtualMinBufferPx" [nzNoResult]="noResult" [nzPageSizeOptions]="page.pageSizes"
-  [nzShowQuickJumper]="page.showQuickJumper" [nzShowSizeChanger]="page.showSize" [nzPaginationPosition]="page.position"
-  [nzShowTotal]="totalTpl">
+  [nzVirtualItemSize]="virtualItemSize" [nzVirtualMaxBufferPx]="virtualMaxBufferPx" [nzVirtualMinBufferPx]="virtualMinBufferPx" [nzVirtualForTrackBy]="virtualForTrackBy"
+  [nzNoResult]="noResult" [nzPageSizeOptions]="page.pageSizes" [nzShowQuickJumper]="page.showQuickJumper" [nzShowSizeChanger]="page.showSize" [nzPaginationPosition]="page.position" [nzShowTotal]="totalTpl">
   <thead class="st__head">
     <tr>
       <th *ngIf="expand" [nzShowExpand]="expand" nzWidth="50px"></th>
