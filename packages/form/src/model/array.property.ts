@@ -1,4 +1,5 @@
 import { DelonFormConfig } from '../config';
+import { SF_SEQ } from '../const';
 import { SFValue } from '../interface';
 import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
@@ -6,7 +7,6 @@ import { SchemaValidatorFactory } from '../validator.factory';
 import { FormProperty, PropertyGroup } from './form.property';
 import { FormPropertyFactory } from './form.property.factory';
 import { ObjectProperty } from './object.property';
-import { SF_SEQ } from '../const';
 
 export class ArrayProperty extends PropertyGroup {
   constructor(
@@ -23,7 +23,7 @@ export class ArrayProperty extends PropertyGroup {
     this.properties = [];
   }
 
-  getProperty(path: string) {
+  getProperty(path: string): FormProperty | undefined {
     const subPathIdx = path.indexOf(SF_SEQ);
     const pos = +(subPathIdx !== -1 ? path.substr(0, subPathIdx) : path);
     const list = this.properties as PropertyGroup[];
@@ -34,14 +34,14 @@ export class ArrayProperty extends PropertyGroup {
     return list[pos].getProperty(subPath);
   }
 
-  setValue(value: SFValue, onlySelf: boolean) {
+  setValue(value: SFValue, onlySelf: boolean): void {
     this.properties = [];
     this.clearErrors();
     this.resetProperties(value);
     this.updateValueAndValidity(onlySelf, true);
   }
 
-  resetValue(value: SFValue, onlySelf: boolean) {
+  resetValue(value: SFValue, onlySelf: boolean): void {
     this._value = value || this.schema.default || [];
     this.setValue(this._value, onlySelf);
   }
@@ -50,7 +50,7 @@ export class ArrayProperty extends PropertyGroup {
     return true;
   }
 
-  _updateValue() {
+  _updateValue(): void {
     const value: any[] = [];
     this.forEachChild((property: FormProperty) => {
       if (property.visible && property._hasValue()) {
@@ -60,20 +60,25 @@ export class ArrayProperty extends PropertyGroup {
     this._value = value;
   }
 
-  private addProperty(formData: {}) {
-    const newProperty = this.formPropertyFactory.createProperty(this.schema.items!, this.ui.$items, formData, this) as ObjectProperty;
+  private addProperty(formData: {}): FormProperty {
+    const newProperty = this.formPropertyFactory.createProperty(
+      this.schema.items!,
+      this.ui.$items,
+      formData,
+      this as PropertyGroup,
+    ) as ObjectProperty;
     (this.properties as FormProperty[]).push(newProperty);
     return newProperty;
   }
 
-  private resetProperties(formDatas: Array<{}>) {
+  private resetProperties(formDatas: Array<{}>): void {
     for (const item of formDatas) {
       const property = this.addProperty(item);
       property.resetValue(item, true);
     }
   }
 
-  private clearErrors(property?: FormProperty) {
+  private clearErrors(property?: FormProperty): void {
     (property || this)._objErrors = {};
   }
 
@@ -85,7 +90,7 @@ export class ArrayProperty extends PropertyGroup {
     return newProperty;
   }
 
-  remove(index: number) {
+  remove(index: number): void {
     const list = this.properties as FormProperty[];
     this.clearErrors();
     list.splice(index, 1);

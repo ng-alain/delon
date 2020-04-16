@@ -18,7 +18,6 @@ import { ActivationEnd, ActivationStart, Event, Router } from '@angular/router';
 import { InputBoolean, InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
-
 import { FullContentService } from './full-content.service';
 
 const wrapCls = `full-content__body`;
@@ -28,9 +27,7 @@ const hideTitleCls = `full-content__hidden-title`;
 @Component({
   selector: 'full-content',
   exportAs: 'fullContent',
-  template: `
-    <ng-content></ng-content>
-  `,
+  template: ` <ng-content></ng-content> `,
   host: {
     '[class.full-content]': 'true',
     '[style.height.px]': '_height',
@@ -44,9 +41,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
   private inited = false;
   private srv$: Subscription;
   private route$: Subscription;
-  private id = `_full-content-${Math.random()
-    .toString(36)
-    .substring(2)}`;
+  private id = `_full-content-${Math.random().toString(36).substring(2)}`;
   private scroll$: Subscription | null = null;
 
   _height = 0;
@@ -91,9 +86,7 @@ export class FullContentComponent implements AfterViewInit, OnInit, OnChanges, O
 
   private updateHeight() {
     this._height =
-      this.bodyEl.getBoundingClientRect().height -
-      (this.el.nativeElement as HTMLElement).getBoundingClientRect().top -
-      this.padding;
+      this.bodyEl.getBoundingClientRect().height - (this.el.nativeElement as HTMLElement).getBoundingClientRect().top - this.padding;
     this.cdr.detectChanges();
   }
 

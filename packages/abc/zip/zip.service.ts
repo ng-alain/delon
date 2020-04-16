@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LazyResult, LazyService } from '@delon/util';
 import { saveAs } from 'file-saver';
-
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ZipConfig } from './zip.config';
 import { ZipSaveOptions } from './zip.types';
 
@@ -28,7 +28,7 @@ export class ZipService {
         if (typeof fileOrUrl === 'string') {
           this.http.request('GET', fileOrUrl, { responseType: 'arraybuffer' }).subscribe(
             (res: ArrayBuffer) => {
-              JSZip.loadAsync(res, options).then(ret => resolve(ret));
+              JSZip.loadAsync(res, options).then((ret: NzSafeAny) => resolve(ret));
             },
             (err: any) => {
               reject(err);
@@ -39,7 +39,7 @@ export class ZipService {
         // from file
         const reader: FileReader = new FileReader();
         reader.onload = (e: any) => {
-          JSZip.loadAsync(e.target.result, options).then(ret => resolve(ret));
+          JSZip.loadAsync(e.target.result, options).then((ret: NzSafeAny) => resolve(ret));
         };
         reader.readAsBinaryString(fileOrUrl as File);
       });
@@ -93,7 +93,7 @@ export class ZipService {
           saveAs(data, opt.filename || 'download.zip');
           resolve();
         },
-        err => {
+        (err: NzSafeAny) => {
           reject(err);
         },
       );

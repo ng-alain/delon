@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { configureTestSuite, createTestContext } from '@delon/testing';
-import addSeconds from 'date-fns/add_seconds';
-
-import { CountDownModule } from './count-down.module';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { createTestContext } from '@delon/testing';
+import addSeconds from 'date-fns/addSeconds';
 import { CountdownConfig } from 'ngx-countdown';
+import { CountDownModule } from './count-down.module';
 
 describe('abc: count-down', () => {
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
 
-  configureTestSuite(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [CountDownModule],
       declarations: [TestComponent],
     });
+    ({ fixture, context } = createTestContext(TestComponent));
   });
-
-  beforeEach(() => ({ fixture, context } = createTestContext(TestComponent)));
 
   it('should be create an instance via [config]', fakeAsync(() => {
     spyOn(context, 'handleEvent');

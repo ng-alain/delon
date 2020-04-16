@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-
 import { ReuseTabContextService } from './reuse-tab-context.service';
 import { ReuseContextCloseEvent, ReuseContextI18n } from './reuse-tab.interfaces';
 
@@ -16,6 +15,7 @@ export class ReuseTabContextComponent implements OnDestroy {
     this.srv.i18n = value;
   }
 
+  // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<ReuseContextCloseEvent>();
 
   constructor(private srv: ReuseTabContextService) {

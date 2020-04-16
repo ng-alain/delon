@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { NzFormatEmitEvent } from 'ng-zorro-antd/core';
+import { NzFormatEmitEvent } from 'ng-zorro-antd/core/tree';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData, toBool } from '../../utils';
@@ -13,7 +14,7 @@ import { SFTreeSelectWidgetSchema } from './schema';
   encapsulation: ViewEncapsulation.None,
 })
 export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> implements OnInit {
-  i: any;
+  i: NzSafeAny;
   data: SFSchemaEnum[] = [];
 
   ngOnInit(): void {
@@ -28,7 +29,6 @@ export class TreeSelectWidget extends ControlUIWidget<SFTreeSelectWidgetSchema> 
       showLine: toBool(ui.showLine, false),
       asyncData: typeof ui.expandChange === 'function',
       defaultExpandAll: toBool(ui.defaultExpandAll, false),
-      defaultExpandedKeys: ui.defaultExpandedKeys || [],
       displayWith: ui.displayWith || ((node: any) => node.title),
     };
   }

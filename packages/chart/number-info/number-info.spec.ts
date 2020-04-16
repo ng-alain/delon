@@ -1,8 +1,7 @@
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite, createTestContext } from '@delon/testing';
-
+import { createTestContext } from '@delon/testing';
 import { NumberInfoComponent } from './number-info.component';
 import { NumberInfoModule } from './number-info.module';
 
@@ -11,14 +10,11 @@ describe('abc: number-info', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  configureTestSuite(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NumberInfoModule],
       declarations: [TestComponent],
     });
-  });
-
-  beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });

@@ -1,4 +1,4 @@
-import { Rule, SchematicsException, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { getLangConfig } from '../core/lang.config';
 import { getProject } from '../utils/project';
 import { PluginOptions } from './interface';

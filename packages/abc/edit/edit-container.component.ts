@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { REP_TYPE } from '@delon/theme';
-import { toNumber, InputBoolean, InputNumber } from '@delon/util';
+import { InputBoolean, InputNumber, toNumber } from '@delon/util';
 import { SEConfig } from './edit.config';
 
 @Component({

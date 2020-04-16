@@ -9,7 +9,7 @@
     color: @heading-color;
     font-weight: 700;
     font-size: 14px;
-    line-height: @form-component-max-height - 0.0001px;
+    line-height: @line-height-base;
   }
 
   &__item {
@@ -23,11 +23,6 @@
         display: inline-block;
         content: '';
       }
-    }
-
-    // fix angular & ng-zorro-antd
-    .@{ant-prefix}-form-explain {
-      display: block;
     }
   }
 
@@ -59,24 +54,18 @@
   }
 
   &__compact {
-
     @{se-prefix}__title,
     @{se-prefix}__item {
       margin-bottom: @se-compact-bottom;
     }
 
-    .@{ant-prefix}-form-extra {
+    .@{ant-prefix}-form-item-extra {
       display: none;
     }
   }
 
   &__line {
     border-bottom: 1px dashed #e8e8e8;
-
-    @{se-prefix}__label,
-    @{se-prefix}__control {
-      padding-bottom: @se-compact-bottom;
-    }
   }
 
   &__hide-label,
@@ -120,11 +109,11 @@
   &__vertical {
     @{se-prefix}__item {
       display: block;
+      width: 100%;
     }
   }
 
   &__inline {
-
     .@{ant-prefix}-form-item-label,
     @{se-prefix}__control {
       flex: none;
@@ -159,7 +148,6 @@
 
     &__horizontal,
     &__vertical {
-
       @{se-prefix}__label,
       @{se-prefix}__control {
         width: 100% !important;

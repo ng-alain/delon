@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
+  IifBehaviorType,
   STColumnButtonDrawerConfig,
   STColumnButtonModalConfig,
+  STColumnButtonPop,
   STIcon,
   STMultiSort,
   STPage,
@@ -10,8 +12,6 @@ import {
   STRowClassName,
   STSingleSort,
   STWidthMode,
-  IifBehaviorType,
-  STColumnButtonPop,
 } from './table.interfaces';
 
 @Injectable({ providedIn: 'root' })

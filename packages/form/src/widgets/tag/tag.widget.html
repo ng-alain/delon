@@ -8,7 +8,6 @@
   <nz-tag *ngFor="let i of data"
           [nzMode]="ui.mode || 'checkable'"
           [nzChecked]="i.checked"
-          (nzAfterClose)="_afterClose()"
           (nzOnClose)="_close($event)"
           (nzCheckedChange)="onChange(i)">
     {{i.label}}

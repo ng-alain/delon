@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AlainI18NService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
 import { TranslateService } from '@ngx-translate/core';
+import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
 import { Subject } from 'rxjs';
-
-import { en_US as delonEnUS, zh_CN as delonZhCn, AlainI18NService, DelonLocaleService } from '@delon/theme';
-import { en_US, zh_CN, NzI18nService } from 'ng-zorro-antd/i18n';
-
 import { ENUS } from './en-US';
 import { ZHCN } from './zh-CN';
 
@@ -15,7 +13,10 @@ export type LangType = 'en-US' | 'zh-CN';
 export class I18NService implements AlainI18NService {
   private change$: Subject<LangType> = new Subject<LangType>();
 
-  private _langs = [{ code: 'en-US', text: 'English' }, { code: 'zh-CN', text: '中文' }];
+  private _langs = [
+    { code: 'en-US', text: 'English' },
+    { code: 'zh-CN', text: '中文' },
+  ];
 
   constructor(
     private zorroI18n: NzI18nService,
@@ -100,10 +101,7 @@ export class I18NService implements AlainI18NService {
   }
 
   getRealUrl(url: string) {
-    const arr = url
-      .split('#')[0]
-      .split('?')[0]
-      .split('/');
+    const arr = url.split('#')[0].split('?')[0].split('/');
     arr.splice(-1);
     return arr.join('/');
   }

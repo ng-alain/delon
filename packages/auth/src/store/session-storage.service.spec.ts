@@ -1,3 +1,4 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ITokenModel } from '../token/interface';
 import { SessionStorageStore } from './session-storage.service';
 
@@ -9,23 +10,17 @@ describe('auth: session-storage', () => {
   } as ITokenModel;
 
   beforeEach(() => {
-    let data = {};
+    let data: { [key: string]: NzSafeAny } = {};
 
-    spyOn(sessionStorage, 'getItem').and.callFake(
-      (key: string): string => {
-        return data[key] || null;
-      },
-    );
-    spyOn(sessionStorage, 'removeItem').and.callFake(
-      (key: string): void => {
-        delete data[key];
-      },
-    );
-    spyOn(sessionStorage, 'setItem').and.callFake(
-      (key: string, value: string): string => {
-        return (data[key] = value as string);
-      },
-    );
+    spyOn(sessionStorage, 'getItem').and.callFake((key: string): string => {
+      return data[key] || null;
+    });
+    spyOn(sessionStorage, 'removeItem').and.callFake((key: string): void => {
+      delete data[key];
+    });
+    spyOn(sessionStorage, 'setItem').and.callFake((key: string, value: string): string => {
+      return (data[key] = value as string);
+    });
     spyOn(sessionStorage, 'clear').and.callFake(() => {
       data = {};
     });

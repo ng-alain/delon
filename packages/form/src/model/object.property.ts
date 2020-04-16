@@ -1,10 +1,11 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DelonFormConfig } from '../config';
 import { SFValue } from '../interface';
 import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
 import { orderProperties } from '../utils';
 import { SchemaValidatorFactory } from '../validator.factory';
-import { PropertyGroup, FormProperty } from './form.property';
+import { FormProperty, PropertyGroup } from './form.property';
 import { FormPropertyFactory } from './form.property.factory';
 
 export class ObjectProperty extends PropertyGroup {
@@ -19,7 +20,7 @@ export class ObjectProperty extends PropertyGroup {
     schemaValidatorFactory: SchemaValidatorFactory,
     schema: SFSchema,
     ui: SFUISchema | SFUISchemaItem,
-    formData: {},
+    formData: NzSafeAny,
     parent: PropertyGroup | null,
     path: string,
     options: DelonFormConfig,
@@ -38,10 +39,10 @@ export class ObjectProperty extends PropertyGroup {
       console.error(`Invalid ${this.schema.title || 'root'} object field configuration:`, e);
     }
     orderedProperties!.forEach(propertyId => {
-      this.properties![propertyId] = this.formPropertyFactory.createProperty(
+      (this.properties as { [key: string]: FormProperty })[propertyId] = this.formPropertyFactory.createProperty(
         this.schema.properties![propertyId],
         this.ui['$' + propertyId],
-        (this.formData || {})[propertyId],
+        ((this.formData || {}) as NzSafeAny)[propertyId],
         this,
         propertyId,
       );
@@ -50,9 +51,10 @@ export class ObjectProperty extends PropertyGroup {
   }
 
   setValue(value: SFValue, onlySelf: boolean) {
+    const properties = this.properties as { [key: string]: FormProperty };
     for (const propertyId in value) {
-      if (value.hasOwnProperty(propertyId) && this.properties![propertyId]) {
-        (this.properties![propertyId] as FormProperty).setValue(value[propertyId], true);
+      if (value.hasOwnProperty(propertyId) && properties[propertyId]) {
+        (properties[propertyId] as FormProperty).setValue(value[propertyId], true);
       }
     }
     this.updateValueAndValidity(onlySelf, true);
@@ -60,9 +62,10 @@ export class ObjectProperty extends PropertyGroup {
 
   resetValue(value: SFValue, onlySelf: boolean) {
     value = value || this.schema.default || {};
+    const properties = this.properties as { [key: string]: FormProperty };
     // tslint:disable-next-line: forin
     for (const propertyId in this.schema.properties) {
-      (this.properties![propertyId] as FormProperty).resetValue(value[propertyId], true);
+      properties[propertyId].resetValue(value[propertyId], true);
     }
     this.updateValueAndValidity(onlySelf, true);
   }

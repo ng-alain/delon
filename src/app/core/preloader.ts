@@ -4,7 +4,7 @@ let preloader = document.querySelector('.preloader')!;
 body.style.overflow = 'hidden';
 
 function remove() {
-  preloader.addEventListener('transitionend', function() {
+  preloader.addEventListener('transitionend', () => {
     preloader.className = 'preloader-hidden';
   });
 

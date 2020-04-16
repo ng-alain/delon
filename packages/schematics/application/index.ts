@@ -3,19 +3,18 @@ import {
   apply,
   chain,
   filter,
+  MergeStrategy,
   mergeWith,
   move,
   noop,
-  template,
-  url,
-  MergeStrategy,
   Rule,
   SchematicContext,
+  template,
   Tree,
+  url,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import * as path from 'path';
-
 import { getLangData } from '../core/lang.config';
 import { tryAddFile } from '../utils/alain';
 import { HMR_CONTENT } from '../utils/contents';
@@ -23,16 +22,16 @@ import { addFiles } from '../utils/file';
 import { addHeadStyle, addHtmlToBody } from '../utils/html';
 import {
   addPackageToPackageJson,
+  getAngular,
   getJSON,
   getPackage,
+  overwriteAngular,
   overwriteJSON,
   overwritePackage,
   scriptsToAngularJson,
-  getAngular,
-  overwriteAngular,
 } from '../utils/json';
 import { VERSION, ZORROVERSION } from '../utils/lib-versions';
-import { getProject, Project, getProjectFromWorkspace } from '../utils/project';
+import { getProject, getProjectFromWorkspace, Project } from '../utils/project';
 import { Schema as ApplicationOptions } from './schema';
 
 const overwriteDataFileRoot = path.join(__dirname, 'overwrites');
@@ -450,7 +449,7 @@ function cnpmTips() {
   };
 }
 
-export default function(options: ApplicationOptions): Rule {
+export default function (options: ApplicationOptions): Rule {
   return (host: Tree, context: SchematicContext) => {
     project = getProject(host, options.project);
 

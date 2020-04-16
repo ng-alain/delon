@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
-import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
+import { checkDelay, PageG2 } from '@delon/testing';
 import { G2RadarComponent, G2RadarData } from './radar.component';
 import { G2RadarModule } from './radar.module';
 
@@ -8,11 +8,10 @@ describe('chart: radar', () => {
   describe('defualt', () => {
     let page: PageG2<TestComponent>;
 
-    configureTestSuite(() => {
+    beforeEach(fakeAsync(() => {
       page = new PageG2<TestComponent>().genModule(G2RadarModule, TestComponent);
-    });
-
-    beforeEach(fakeAsync(() => page.genComp(TestComponent, true)));
+      page.genComp(TestComponent, true);
+    }));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 
@@ -34,10 +33,7 @@ describe('chart: radar', () => {
 });
 
 @Component({
-  template: `
-    <g2-radar #comp [hasLegend]="hasLegend" [title]="title" [tickCount]="tickCount" [data]="data" [delay]="delay">
-    </g2-radar>
-  `,
+  template: ` <g2-radar #comp [hasLegend]="hasLegend" [title]="title" [tickCount]="tickCount" [data]="data" [delay]="delay"> </g2-radar> `,
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2RadarComponent;

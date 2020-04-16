@@ -1,18 +1,17 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { TestBed, TestBedStatic } from '@angular/core/testing';
+import { Type } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { throwError, Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
 import { DelonAuthConfig } from '../auth.config';
 import { DelonAuthModule } from '../auth.module';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
 import { SimpleTokenModel } from './simple/simple.model';
-import { Type } from '@angular/core';
 
 function genModel<T extends ITokenModel>(modelType: new () => T, token: string | null = `123`) {
   const model: any = new modelType();
@@ -55,7 +54,6 @@ class OtherInterceptor implements HttpInterceptor {
 }
 
 describe('auth: base.interceptor', () => {
-  let injector: TestBedStatic;
   let http: HttpClient;
   let httpBed: HttpTestingController;
   let router: Router;
@@ -66,7 +64,7 @@ describe('auth: base.interceptor', () => {
   };
 
   function genModule(options: DelonAuthConfig, tokenData?: ITokenModel, provider: any[] = []) {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
         { provide: DOCUMENT, useValue: MockDoc },
@@ -79,12 +77,12 @@ describe('auth: base.interceptor', () => {
         { provide: DA_SERVICE_TOKEN, useClass: MockTokenService },
       ].concat(provider),
     });
-    if (tokenData) injector.get(DA_SERVICE_TOKEN).set(tokenData);
+    if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
-    router = injector.get<Router>(Router);
+    router = TestBed.inject<Router>(Router);
     spyOn(router, 'navigate');
-    http = injector.get<HttpClient>(HttpClient);
-    httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
+    http = TestBed.inject<HttpClient>(HttpClient);
+    httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }
 
   describe('[ignores]', () => {
@@ -158,7 +156,7 @@ describe('auth: base.interceptor', () => {
           (err: any) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
-              expect(injector.get<Router>(Router).navigate).toHaveBeenCalled();
+              expect(TestBed.inject<Router>(Router).navigate).toHaveBeenCalled();
               done();
             }, 20);
           },
@@ -175,7 +173,7 @@ describe('auth: base.interceptor', () => {
           (err: any) => {
             expect(err.status).toBe(401);
             setTimeout(() => {
-              expect(injector.get(DOCUMENT).location.href).toBe(login_url);
+              expect(TestBed.inject(DOCUMENT).location.href).toBe(login_url);
               done();
             }, 20);
           },
@@ -207,7 +205,7 @@ describe('auth: base.interceptor', () => {
           done();
         },
         () => {
-          const tokenSrv = injector.get(DA_SERVICE_TOKEN) as MockTokenService;
+          const tokenSrv = TestBed.inject(DA_SERVICE_TOKEN) as MockTokenService;
           expect(tokenSrv.referrer).not.toBeNull();
           expect(tokenSrv.referrer.url).toBe('/');
           done();

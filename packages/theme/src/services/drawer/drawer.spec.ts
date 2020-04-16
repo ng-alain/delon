@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
-import { ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NzDrawerModule, NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { AlainThemeModule } from '../../theme.module';
 import { DrawerHelper } from './drawer.helper';
 
 describe('theme: DrawerHelper', () => {
-  let injector: TestBedStatic;
   let drawer: DrawerHelper;
   let fixture: ComponentFixture<TestComponent>;
 
@@ -19,9 +18,9 @@ describe('theme: DrawerHelper', () => {
     })
     class TestModule {}
 
-    injector = TestBed.configureTestingModule({ imports: [TestModule] });
+    TestBed.configureTestingModule({ imports: [TestModule] });
     fixture = TestBed.createComponent(TestComponent);
-    drawer = injector.get<DrawerHelper>(DrawerHelper);
+    drawer = TestBed.inject<DrawerHelper>(DrawerHelper);
   });
 
   afterEach(() => {
@@ -278,9 +277,7 @@ describe('theme: DrawerHelper', () => {
 });
 
 @Component({
-  template: `
-    <div id="drawer{{ id }}">drawer{{ id }}</div>
-  `,
+  template: ` <div id="drawer{{ id }}">drawer{{ id }}</div> `,
 })
 class TestDrawerComponent {
   id: string = '';

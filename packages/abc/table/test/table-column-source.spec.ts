@@ -1,11 +1,10 @@
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, AlainI18NServiceFake } from '@delon/theme';
 import { deepGet } from '@delon/util';
-
 import { STColumnSource } from '../table-column-source';
 import { STRowSource } from '../table-row.directive';
 import { STConfig } from '../table.config';
-import { STColumn, STIcon, STColumnButtonPop } from '../table.interfaces';
+import { STColumn, STColumnButtonPop, STIcon } from '../table.interfaces';
 
 const i18nResult = 'zh';
 class MockI18NServiceFake extends AlainI18NServiceFake {

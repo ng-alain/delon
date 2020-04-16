@@ -1,7 +1,7 @@
-import { chain, schematic, Rule } from '@angular-devkit/schematics';
+import { chain, Rule, schematic } from '@angular-devkit/schematics';
 import { Schema as CURDOptions } from './schema';
 
-export default function(options: CURDOptions): Rule {
+export default function (options: CURDOptions): Rule {
   const rules: Rule[] = [];
 
   const name = options.name || 'list';

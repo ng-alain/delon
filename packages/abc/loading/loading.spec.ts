@@ -1,19 +1,18 @@
-import { TestBed, TestBedStatic, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { LoadingModule } from './loading.module';
 import { LoadingService } from './loading.service';
-import { Component } from '@angular/core';
 
 describe('abc: loading', () => {
-  let injector: TestBedStatic;
   let srv: LoadingService;
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [LoadingModule],
       declarations: [TestComponent],
     });
-    srv = injector.get(LoadingService);
+    srv = TestBed.inject(LoadingService);
     fixture = TestBed.createComponent(TestComponent);
   });
 

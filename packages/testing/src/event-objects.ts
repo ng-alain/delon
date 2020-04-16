@@ -1,3 +1,4 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 /**
  * @license
  * Copyright Google LLC All Rights Reserved.
@@ -38,7 +39,7 @@ export function createTouchEvent(type: string, pageX = 0, pageY = 0) {
   const event = document.createEvent('UIEvent');
   const touchDetails = { pageX, pageY };
 
-  event.initUIEvent(type, true, true, window, 0);
+  (event as NzSafeAny).initUIEvent(type, true, true, window, 0);
 
   // Most of the browsers don't have a "initTouchEvent" method that can be used to define
   // the touch details.
@@ -67,7 +68,7 @@ export function createKeyboardEvent(type: string, keyCode: number, target?: Elem
   });
 
   // IE won't set `defaultPrevented` on synthetic events so we need to do it manually.
-  event.preventDefault = function() {
+  event.preventDefault = function () {
     Object.defineProperty(event, 'defaultPrevented', { get: () => true });
     // tslint:disable-next-line:no-invalid-this
     return originalPreventDefault.apply(this, arguments);

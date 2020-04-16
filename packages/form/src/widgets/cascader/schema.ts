@@ -1,4 +1,4 @@
-import { CascaderOption } from 'ng-zorro-antd/cascader';
+import { NzCascaderOption } from 'ng-zorro-antd/cascader';
 import { SFUISchemaItem } from '../../schema/ui';
 import { CascaderWidget } from './cascader.widget';
 
@@ -6,7 +6,7 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   /**
    * 异步静态数据源
    */
-  asyncData?: (node: CascaderOption, index: number, me?: CascaderWidget) => PromiseLike<any>;
+  asyncData?: (node: NzCascaderOption, index: number, me?: CascaderWidget) => PromiseLike<any>;
   /**
    * 在文字框中显示提示讯息
    */
@@ -70,7 +70,7 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   /**
    * 可通过自定义的函数来判断点击菜单选项是否应该发生变化，当函数返回 `true` 时，将发生变化
    */
-  changeOn?: (option: CascaderOption, level: number) => boolean;
+  changeOn?: (option: NzCascaderOption, level: number) => boolean;
 
   /**
    * 触发菜单出现的行为，默认：`['click']`
@@ -100,7 +100,7 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   /**
    * 选项变更事件
    */
-  selectionChange?: (values: CascaderOption[]) => void;
+  selectionChange?: (values: NzCascaderOption[]) => void;
 
   /**
    * 内容被清空事件

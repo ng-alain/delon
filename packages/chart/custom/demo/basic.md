@@ -17,12 +17,12 @@ Copy [Basic Funnel Chart](https://antv.alipay.com/zh-cn/g2/3.x/demo/funnel/basic
 import { Component, ElementRef } from '@angular/core';
 
 @Component({
-  selector: 'app-demo',
+  selector: 'chart-custom-basic',
   template: `
   <g2-custom (render)="render($event)"></g2-custom>
   `,
 })
-export class DemoComponent {
+export class ChartCustomBasicComponent {
   render(el: ElementRef) {
     const { DataView } = DataSet;
     let data = [
@@ -58,7 +58,7 @@ export class DemoComponent {
     data = dv.rows;
     const chart = new G2.Chart({
       container: el.nativeElement,
-      forceFit: true,
+      autoFit: true,
       height: window.innerHeight,
       padding: [20, 120, 95],
     });
@@ -89,7 +89,7 @@ export class DemoComponent {
       .color('action', ['#0050B3', '#1890FF', '#40A9FF', '#69C0FF', '#BAE7FF'])
       .label(
         'action*pv',
-        function(action, pv) {
+        (action: string, pv: string) => {
           return action + ' ' + pv;
         },
         {
@@ -100,7 +100,7 @@ export class DemoComponent {
           },
         },
       )
-      .tooltip('action*pv*percent', function(action, pv, percent) {
+      .tooltip('action*pv*percent', (action: string, pv: string, percent: number) => {
         return {
           name: action,
           percent: (percent * 100).toFixed(2) + '%',

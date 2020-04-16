@@ -1,11 +1,10 @@
+import { LayoutModule } from '@angular/cdk/layout';
+import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
-import { LayoutModule } from '@angular/cdk/layout';
 
 // angular i18n
 import { registerLocaleData } from '@angular/common';

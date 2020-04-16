@@ -1,10 +1,8 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/spec",
     "baseUrl": "./",
-    "module": "commonjs",
-    "esModuleInterop": true,
+    "rootDir": "./",
     "target": "es5",
     "types": [
       "jasmine",
@@ -12,7 +10,9 @@
     ],
     "paths": {
       "@delon/*": ["./*"]
-    }
+    },
+    "esModuleInterop": true,
+    "noImplicitThis": false
   },
   "files": [
     "test.ts",

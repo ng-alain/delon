@@ -11,7 +11,7 @@ Based on the `nz-range-picker` further optimization, better service to start and
 
 ## Note
 
-If using date-fns, muse be modify the default `nzFormat` to` YYYY-MM-DD`.
+If using date-fns, muse be modify the default `nzFormat` to` yyyy-MM-dd`.
 
 ## API
 

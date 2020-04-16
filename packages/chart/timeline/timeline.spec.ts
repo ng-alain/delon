@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { fakeAsync } from '@angular/core/testing';
-import { checkDelay, configureTestSuite, PageG2 } from '@delon/testing';
+import { checkDelay, PageG2 } from '@delon/testing';
 import { G2TimelineComponent, G2TimelineData } from './timeline.component';
 import { G2TimelineModule } from './timeline.module';
 
@@ -8,37 +8,25 @@ describe('chart: timeline', () => {
   describe('', () => {
     let page: PageG2<TestComponent>;
 
-    configureTestSuite(() => {
+    beforeEach(() => {
       page = new PageG2<TestComponent>().genModule(G2TimelineModule, TestComponent);
+      page.genComp(TestComponent);
     });
-
-    beforeEach(() => page.genComp(TestComponent));
 
     afterEach(() => page.context.comp.ngOnDestroy());
 
     it('should be working', fakeAsync(() => {
       page.context.position = 'left';
       page.dcFirst();
-      spyOn(page.comp._slider, 'destroy');
-      expect(page.chart.get('legendController').options.position).toBe('left');
-      page.end();
-    }));
-
-    it('should be change slider', fakeAsync(() => {
-      page.dcFirst();
-      const slider = page.comp._slider;
-      spyOn(slider, 'destroy');
-      slider.onChange({ startValue: 1, endValue: 2 });
-      const state = page.chart.get('dataView').dataSet.state;
-      expect(state.start).toBe(1);
-      expect(state.end).toBe(2);
+      expect(page.chart.getOptions().slider).not.toBeUndefined();
+      expect(page.getController('legend').option.position).toBe('left');
       page.end();
     }));
 
     it('should be disabled slider', fakeAsync(() => {
       page.context.slider = false;
       page.dcFirst();
-      expect(page.getEls('canvas').length).toBe(1);
+      expect(page.chart.getOptions().slider).toBeUndefined();
       page.end();
     }));
   });

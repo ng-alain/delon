@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
 import { LoadingShowOptions } from './loading.interfaces';
 
 @Component({

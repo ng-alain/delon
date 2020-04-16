@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TransferCanMove, TransferChange, TransferItem, TransferSearchChange, TransferSelectChange } from 'ng-zorro-antd/transfer';
-import { of, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum } from '../../schema';
 import { getData } from '../../utils';
@@ -47,7 +47,10 @@ export class TransferWidget extends ControlUIWidget<SFTransferWidgetSchema> impl
   }
 
   private notify() {
-    this.formProperty.setValue(this._data.map(i => i.value), false);
+    this.formProperty.setValue(
+      this._data.map(i => i.value),
+      false,
+    );
   }
 
   _canMove = (arg: TransferCanMove): Observable<TransferItem[]> => {

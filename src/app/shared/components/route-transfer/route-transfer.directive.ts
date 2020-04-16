@@ -15,6 +15,7 @@ export class RouteTransferDirective {
       e.stopPropagation();
       return false;
     }
+    return true;
   }
 
   @HostListener('click', ['$event'])
@@ -38,5 +39,7 @@ export class RouteTransferDirective {
       e.stopPropagation();
       return false;
     }
+
+    return true;
   }
 }

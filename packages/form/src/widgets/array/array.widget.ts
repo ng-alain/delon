@@ -1,5 +1,5 @@
-import { SafeHtml } from '@angular/platform-browser';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { SafeHtml } from '@angular/platform-browser';
 import { FormProperty } from '../../model/form.property';
 import { ArrayLayoutWidget } from '../../widget';
 

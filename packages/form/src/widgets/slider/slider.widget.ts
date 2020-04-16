@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Marks, SliderValue } from 'ng-zorro-antd/slider';
+import { NzMarks, NzSliderValue } from 'ng-zorro-antd/slider';
 import { ControlUIWidget } from '../../widget';
 import { SFSliderWidgetSchema } from './schema';
 
@@ -13,7 +13,7 @@ export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implemen
   min: number;
   max: number;
   step: number;
-  marks: Marks | null;
+  marks: NzMarks | null;
   included: boolean;
 
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class SliderWidget extends ControlUIWidget<SFSliderWidgetSchema> implemen
     return value;
   };
 
-  _afterChange(value: SliderValue) {
+  _afterChange(value: NzSliderValue) {
     const { afterChange } = this.ui;
     if (afterChange) return afterChange(value);
   }

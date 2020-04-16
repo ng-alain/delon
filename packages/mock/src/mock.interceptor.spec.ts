@@ -9,11 +9,10 @@ import {
   HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Component, NgModule, Type, NgModuleFactoryLoader } from '@angular/core';
-import { fakeAsync, tick, TestBed, TestBedStatic } from '@angular/core/testing';
+import { Component, NgModule, NgModuleFactoryLoader, Type } from '@angular/core';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-
+import { RouterTestingModule, SpyNgModuleFactoryLoader } from '@angular/router/testing';
 import * as Mock from 'mockjs';
 import { Observable } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
@@ -30,8 +29,7 @@ const DATA = {
     '/array': [1, 2],
     '/fn/queryString': (req: MockRequest) => req.queryString,
     '/fn/header': (req: MockRequest) => req.headers,
-    '/HttpResponse': () =>
-      new HttpResponse({ body: 'Body', headers: new HttpHeaders({ token: '1' }) }),
+    '/HttpResponse': () => new HttpResponse({ body: 'Body', headers: new HttpHeaders({ token: '1' }) }),
     'POST /fn/body': (req: MockRequest) => req.body,
     'POST /users/1': { uid: 1, action: 'add' },
     '/404': () => {
@@ -51,18 +49,12 @@ class OtherInterceptor implements HttpInterceptor {
 }
 
 describe('mock: interceptor', () => {
-  let injector: TestBedStatic;
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  function genModule(
-    options: DelonMockConfig,
-    imports: any[] = [],
-    spyConsole = true,
-    providers?: any[],
-  ) {
+  function genModule(options: DelonMockConfig, imports: any[] = [], spyConsole = true, providers?: any[]) {
     options = Object.assign(new DelonMockConfig(), options);
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       declarations: [RootComponent],
       imports: [
         HttpClientTestingModule,
@@ -76,8 +68,8 @@ describe('mock: interceptor', () => {
       ].concat(imports),
       providers: ([] as any[]).concat(providers || []),
     });
-    http = injector.get<HttpClient>(HttpClient);
-    httpMock = injector.get(HttpTestingController as Type<HttpTestingController>);
+    http = TestBed.inject<HttpClient>(HttpClient);
+    httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
     if (spyConsole) {
       spyOn(console, 'log');
       spyOn(console, 'warn');
@@ -174,14 +166,12 @@ describe('mock: interceptor', () => {
       );
     });
     it('should request POST', (done: () => void) => {
-      http
-        .post('/users/1', { data: true }, { observe: 'response' })
-        .subscribe((res: HttpResponse<any>) => {
-          expect(res.body).not.toBeNull();
-          expect(res.body.uid).toBe(1);
-          expect(res.body.action).toBe('add');
-          done();
-        });
+      http.post('/users/1', { data: true }, { observe: 'response' }).subscribe((res: HttpResponse<any>) => {
+        expect(res.body).not.toBeNull();
+        expect(res.body.uid).toBe(1);
+        expect(res.body.action).toBe('add');
+        done();
+      });
     });
     it('should normal request if non-mock url', (done: () => void) => {
       http.get('/non-mock', { responseType: 'text' }).subscribe(value => {
@@ -227,9 +217,8 @@ describe('mock: interceptor', () => {
     beforeEach(() => genModule({ data: DATA, delay: 1 }));
 
     it('should work', fakeAsync(() => {
-      // tslint:disable-next-line: deprecation
-      const loader = injector.get(NgModuleFactoryLoader);
-      const router = injector.get<Router>(Router);
+      const loader = TestBed.inject(NgModuleFactoryLoader) as SpyNgModuleFactoryLoader;
+      const router = TestBed.inject<Router>(Router);
       @Component({
         selector: 'lazy',
         template: '<router-outlet></router-outlet>',
@@ -249,10 +238,7 @@ describe('mock: interceptor', () => {
 
       @NgModule({
         declarations: [LayoutComponent, ChildComponent],
-        imports: [
-          DelonMockModule.forChild(),
-          RouterModule.forChild([{ path: 'child', component: ChildComponent }]),
-        ],
+        imports: [DelonMockModule.forChild(), RouterModule.forChild([{ path: 'child', component: ChildComponent }])],
       })
       class LazyModule {}
 
@@ -286,8 +272,6 @@ describe('mock: interceptor', () => {
 
 @Component({
   selector: 'root-cmp',
-  template: `
-    <router-outlet></router-outlet>
-  `,
+  template: ` <router-outlet></router-outlet> `,
 })
 class RootComponent {}

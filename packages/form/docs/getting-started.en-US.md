@@ -97,7 +97,7 @@ Property | Description | Type | Default
 `[ui]` | Default global ui property | `SFUISchemaItem` | -
 `[size]` | Size of the all angular element | `default,large,small` | -
 `[button]` | Submit button of the form | `SFButton` | `{submit:'提交',submit_type:'primary',reset:'重置',reset_type:'default'}`
-`[uiDateStringFormat]` | Date widget default format | `string` | `YYYY-MM-DD HH:mm:ss`
+`[uiDateStringFormat]` | Date widget default format | `string` | `yyyy-MM-dd HH:mm:ss`
 `[uiDateNumberFormat]` | Date widget default format | `string` | `x`
 `[uiTimeStringFormat]` | Time widget default format | `string` | `HH:mm:ss`
 `[uiTimeNumberFormat]` | Time widget default format | `string` | `x`

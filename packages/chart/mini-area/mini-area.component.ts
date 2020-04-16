@@ -9,9 +9,9 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
+import { Chart } from '@antv/g2';
+import { TooltipOption } from '@antv/g2/lib/interface';
 import { InputBoolean, InputNumber } from '@delon/util';
-
-declare var G2: any;
 
 export interface G2MiniAreaData {
   x: any;
@@ -31,7 +31,7 @@ export interface G2MiniAreaData {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
-  private chart: any;
+  private chart: Chart;
 
   // #region fields
 
@@ -45,7 +45,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() animate = true;
   @Input() xAxis: any;
   @Input() yAxis: any;
-  @Input() padding: number[] = [8, 8, 8, 8];
+  @Input() padding: number | number[] | 'auto' = [8, 8, 8, 8];
   @Input() data: G2MiniAreaData[] = [];
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
@@ -56,9 +56,9 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
 
   private install() {
     const { el, fit, height, padding, xAxis, yAxis, yTooltipSuffix, tooltipType, line } = this;
-    const chart = (this.chart = new G2.Chart({
+    const chart = (this.chart = new Chart({
       container: el.nativeElement,
-      forceFit: fit,
+      autoFit: fit,
       height,
       padding,
     }));
@@ -80,28 +80,32 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     chart.legend(false);
-    chart.tooltip({
-      type: tooltipType === 'mini' ? 'mini' : null,
+    const tooltipOption: TooltipOption = {
       showTitle: false,
-      hideMarkders: false,
-      'g2-tooltip': { padding: 4 },
-      'g2-tooltip-list-item': { margin: `0px 4px` },
-    });
+      showMarkers: true,
+      enterable: true,
+      domStyles: {
+        'g2-tooltip': { padding: '0px' },
+        'g2-tooltip-title': { display: 'none' },
+        'g2-tooltip-list-item': { margin: '4px' },
+      },
+    };
+    if (tooltipType === 'mini') {
+      tooltipOption.position = 'top';
+      tooltipOption.domStyles!['g2-tooltip'] = { padding: '0px', backgroundColor: 'transparent', boxShadow: 'none' };
+      tooltipOption.itemTpl = `<li>{value}</li>`;
+      tooltipOption.offset = 0;
+    }
+    chart.tooltip(tooltipOption);
 
     chart
       .area()
       .position('x*y')
       .tooltip('x*y', (x, y) => ({ name: x, value: y + yTooltipSuffix }))
-      .shape('smooth')
-      .opacity(1);
+      .shape('smooth');
 
     if (line) {
-      chart
-        .line()
-        .position('x*y')
-        .shape('smooth')
-        .opacity(1)
-        .tooltip(false);
+      chart.line().position('x*y').shape('smooth').tooltip(false);
     }
 
     chart.render();
@@ -115,16 +119,16 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    const geoms = chart.get('geoms');
+    const geoms = chart.geometries;
     geoms.forEach(g => g.color(color));
     if (line) {
       geoms[1].color(borderColor).size(borderWidth);
     }
 
-    chart.set('forceFit', fit);
-    chart.set('height', height);
-    chart.set('animate', animate);
-    chart.set('padding', padding);
+    chart.autoFit = fit;
+    chart.height = height;
+    chart.animate(animate);
+    chart.padding = padding;
 
     chart.changeData(data);
   }

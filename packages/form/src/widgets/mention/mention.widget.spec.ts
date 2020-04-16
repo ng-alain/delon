@@ -1,6 +1,5 @@
-import { fakeAsync, ComponentFixture } from '@angular/core/testing';
-
 import { DebugElement } from '@angular/core';
+import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { of } from 'rxjs';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -49,10 +48,7 @@ describe('form: widget: mention', () => {
         a: { type: 'string', minimum: 1, maximum: 2, ui: { widget, asyncData: () => of(DATA) } },
       },
     };
-    page
-      .newSchema(s)
-      .typeChar('@')
-      .checkError(`最少提及 1 次`);
+    page.newSchema(s).typeChar('@').checkError(`最少提及 1 次`);
 
     // tslint:disable-next-line: no-string-literal
     spyOn(getWidget()['mentionChild'], 'getMentions').and.returnValue(['', '', '', '']);
@@ -71,10 +67,6 @@ describe('form: widget: mention', () => {
         },
       },
     };
-    page
-      .newSchema(s)
-      .dc(1)
-      .typeChar('@')
-      .checkElText('.ant-mention-dropdown-item', '1', true);
+    page.newSchema(s).dc(1).typeChar('@').checkElText('.ant-mention-dropdown-item', '1', true);
   }));
 });

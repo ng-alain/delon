@@ -31,7 +31,10 @@ export class DemoComponent {
     { id: 9, text: '类目九', value: false },
     { id: 10, text: '类目十', value: false },
     { id: 11, text: '类目十一', value: false },
-    { id: 12, text: '类目十二', value: false }
+    { id: 12, text: '类目十二', value: false },
+    { id: 13, text: '类目十三', value: false },
+    { id: 14, text: '类目十四', value: false },
+    { id: 15, text: '类目十五', value: false }
   ];
 
   change(res: any) {

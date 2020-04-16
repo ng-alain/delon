@@ -30,6 +30,12 @@ const FULLMETAS: Meta[] = [
 
 @Injectable({ providedIn: 'root' })
 export class MetaService {
+  private _platMenus: any[];
+  private _menus: any[] | null;
+  private _type: string;
+  next: any;
+  prev: any;
+
   constructor(@Inject(ALAIN_I18N_TOKEN) private i18n: I18NService) {
     // plat titles
     for (const g of FULLMETAS) {
@@ -65,11 +71,7 @@ export class MetaService {
   }
 
   private getPageName(url: string) {
-    return url
-      .split('?')[0]
-      .split('/')[2]
-      .toLowerCase()
-      .trim();
+    return url.split('?')[0].split('/')[2].toLowerCase().trim();
   }
 
   /** `true` 表示需要跳转404 */
@@ -114,9 +116,6 @@ export class MetaService {
     return this._isPages;
   }
 
-  private _platMenus: any[];
-  private _menus: any[] | null;
-  private _type: string;
   get menus() {
     return this._menus;
   }
@@ -131,13 +130,7 @@ export class MetaService {
 
   private getType(url: string): string {
     const category = this.getCatgory(url);
-    return category
-      ? url
-          .split('?')[0]
-          .split('/')[1]
-          .toLowerCase()
-          .split('-')[0]
-      : '';
+    return category ? url.split('?')[0].split('/')[1].toLowerCase().split('-')[0] : '';
   }
 
   refMenu(url: string) {
@@ -213,8 +206,6 @@ export class MetaService {
     return ret;
   }
 
-  next: any;
-  prev: any;
   private refPage(url: string) {
     this.next = null;
     this.prev = null;

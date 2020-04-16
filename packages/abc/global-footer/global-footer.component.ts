@@ -1,16 +1,7 @@
+import { ChangeDetectionStrategy, Component, ContentChildren, Inject, Input, QueryList, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ContentChildren,
-  Inject,
-  Input,
-  QueryList,
-  ViewEncapsulation,
-} from '@angular/core';
 import { Router } from '@angular/router';
 import { WINDOW } from '@delon/theme';
-
 import { GlobalFooterItemComponent } from './global-footer-item.component';
 import { GlobalFooterLink } from './global-footer.types';
 
@@ -28,7 +19,7 @@ export class GlobalFooterComponent {
 
   @Input()
   set links(val: GlobalFooterLink[]) {
-    val.forEach(i => i._title = this.dom.bypassSecurityTrustHtml(i.title));
+    val.forEach(i => (i._title = this.dom.bypassSecurityTrustHtml(i.title)));
     this._links = val;
   }
   get links() {
@@ -37,7 +28,7 @@ export class GlobalFooterComponent {
 
   @ContentChildren(GlobalFooterItemComponent) items!: QueryList<GlobalFooterItemComponent>;
 
-  constructor(private router: Router, @Inject(WINDOW) private win: Window, private dom: DomSanitizer) { }
+  constructor(private router: Router, @Inject(WINDOW) private win: Window, private dom: DomSanitizer) {}
 
   to(item: GlobalFooterLink) {
     if (!item.href) {

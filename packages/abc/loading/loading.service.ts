@@ -1,11 +1,11 @@
-import { Injectable, ComponentRef, OnDestroy } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Subject, timer, Subscription } from 'rxjs';
+import { ComponentRef, Injectable, OnDestroy } from '@angular/core';
+import { Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
-import { LoadingShowOptions } from './loading.interfaces';
-import { LoadingConfig } from './loading.config';
 import { LoadingDefaultComponent } from './loading.component';
+import { LoadingConfig } from './loading.config';
+import { LoadingShowOptions } from './loading.interfaces';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingService implements OnDestroy {
@@ -22,9 +22,7 @@ export class LoadingService implements OnDestroy {
   constructor(private cog: LoadingConfig, private overlay: Overlay) {
     this.loading$ = this.n$
       .asObservable()
-      .pipe(
-        debounce(() => timer(this.opt!.delay)),
-      )
+      .pipe(debounce(() => timer(this.opt!.delay)))
       .subscribe(() => this.create());
   }
 
@@ -34,11 +32,7 @@ export class LoadingService implements OnDestroy {
     this._close(false);
 
     this._overlayRef = this.overlay.create({
-      positionStrategy: this.overlay
-        .position()
-        .global()
-        .centerHorizontally()
-        .centerVertically(),
+      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
       scrollStrategy: this.overlay.scrollStrategies.block(),
       hasBackdrop: true,
       backdropClass: 'loading-backdrop',

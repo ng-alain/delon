@@ -57,9 +57,10 @@
   .@{ant-prefix}-table-thead > tr > th .@{ant-prefix}-table-filter-selected.@{ant-prefix}-table-filter-icon {
     color: @primary-color;
   }
-  // 修复过滤图标优先级问题
-  .@{ant-prefix}-table-thead > tr > th .@{ant-prefix}-table-filter-icon {
-    position: absolute !important;
+  // 修复全选与快捷的间距
+  &__checkall-selection {
+    display: inline-block;
+    margin-left: 4px;
   }
 
   @media screen and (min-width: @nz-table-rep-min-width) {

@@ -5,8 +5,7 @@ export function isNum(value: string | number): boolean {
 
 /** 是否为整数 */
 export function isInt(value: string | number): boolean {
-  // tslint:disable-next-line:triple-equals
-  return isNum(value) && parseInt(value.toString(), 10) == value;
+  return isNum(value) && parseInt(value.toString(), 10).toString() === value.toString();
 }
 
 /** 是否为小数 */

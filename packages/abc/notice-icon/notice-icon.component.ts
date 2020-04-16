@@ -13,7 +13,6 @@ import {
 import { DelonLocaleService, LocaleData } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
 import { Subscription } from 'rxjs';
-
 import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 
 @Component({
@@ -35,6 +34,7 @@ export class NoticeIconComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() popoverVisible = false;
   @Input() btnClass = '';
   @Input() btnIconClass = '';
+  // tslint:disable-next-line:no-output-native
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
   @Output() readonly popoverVisibleChange = new EventEmitter<boolean>();

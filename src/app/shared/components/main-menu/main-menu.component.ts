@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Inject,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

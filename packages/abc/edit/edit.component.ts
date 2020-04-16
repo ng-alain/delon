@@ -17,11 +17,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormControlName, NgModel } from '@angular/forms';
-import { Subscription } from 'rxjs';
-
 import { ResponsiveService } from '@delon/theme';
-import { deepGet, isEmpty, InputBoolean, InputNumber } from '@delon/util';
-
+import { InputBoolean, InputNumber, isEmpty } from '@delon/util';
+import { helpMotion } from 'ng-zorro-antd/core/animation';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Subscription } from 'rxjs';
 import { SEContainerComponent } from './edit-container.component';
 
 const prefixCls = `se`;
@@ -34,9 +34,11 @@ let nextUniqueId = 0;
   host: {
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue',
-    '[class.ant-form-item-with-help]': 'showErr',
+    '[class.ant-form-item-has-error]': 'showErr',
+    '[class.ant-form-item-with-help]': 'showErr && !compact',
   },
   preserveWhitespaces: false,
+  animations: [helpMotion],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
@@ -87,7 +89,11 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   }
 
   get showErr(): boolean {
-    return this.invalid && this.parent.size !== 'compact' && !!this._error;
+    return this.invalid && !!this._error;
+  }
+
+  get compact(): boolean {
+    return this.parent.size === 'compact';
   }
 
   private get ngControl(): NgModel | FormControlName {
@@ -128,7 +134,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     this.status$ = this.ngControl.statusChanges!.subscribe(res => this.updateStatus(res === 'INVALID'));
 
     if (this._autoId) {
-      const control = deepGet(this.ngControl.valueAccessor, '_elementRef.nativeElement') as HTMLElement;
+      const control = (this.ngControl.valueAccessor as NzSafeAny)?._elementRef?.nativeElement as HTMLElement;
       if (control) {
         control.id = this._id;
       }

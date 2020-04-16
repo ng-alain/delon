@@ -1,15 +1,16 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ITokenModel } from '../interface';
 import { urlBase64Decode } from './jwt.helper';
 
 export class JWTTokenModel implements ITokenModel {
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 
   token: string | null | undefined;
 
   /**
    * 获取载荷信息
    */
-  get payload(): any {
+  get payload(): NzSafeAny {
     const parts = (this.token || '').split('.');
     if (parts.length !== 3) throw new Error('JWT must have 3 parts');
 

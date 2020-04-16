@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { NzTreeNode } from 'ng-zorro-antd/core';
+import { NzTreeNode } from 'ng-zorro-antd/core/tree';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DelonUtilConfig } from '../util.config';
 import { ArrayConfig } from './array.config';
 
@@ -13,7 +14,7 @@ export interface ArrayServiceTreeToArrOptions {
   /** 是否移除 `children` 节点，默认：`true` */
   clearChildren?: boolean;
   /** 转换成数组结构时回调 */
-  cb?: (item: any, parent: any, deep: number) => void;
+  cb?: (item: NzSafeAny, parent: NzSafeAny, deep: number) => void;
 }
 
 export interface ArrayServiceArrToTreeOptions {
@@ -24,7 +25,7 @@ export interface ArrayServiceArrToTreeOptions {
   /** 子项名，默认：`'children'` */
   childrenMapName?: string;
   /** 转换成树数据时回调 */
-  cb?: (item: any) => void;
+  cb?: (item: NzSafeAny) => void;
 }
 
 export interface ArrayServiceArrToTreeNodeOptions {
@@ -45,7 +46,7 @@ export interface ArrayServiceArrToTreeNodeOptions {
   /** 设置是否禁用节点(不可进行任何操作)项名，默认：`'disabled'` */
   disabledMapname?: string;
   /** 转换成树数据后，执行的递归回调 */
-  cb?: (item: any, parent: any, deep: number) => void;
+  cb?: (item: NzSafeAny, parent: NzSafeAny, deep: number) => void;
 }
 
 export interface ArrayServiceGetKeysByTreeNodeOptions {
@@ -54,7 +55,7 @@ export interface ArrayServiceGetKeysByTreeNodeOptions {
   /** 是否重新指定 `key` 键名，若不指定表示使用 `NzTreeNode.key` 值 */
   keyMapName?: string;
   /** 回调，返回一个值 `key` 值，优先级高于其他 */
-  cb?: (item: NzTreeNode, parent: NzTreeNode, deep: number) => any;
+  cb?: (item: NzTreeNode, parent: NzTreeNode, deep: number) => NzSafeAny;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -78,7 +79,7 @@ export class ArrayService {
   /**
    * 将树结构转换成数组结构
    */
-  treeToArr(tree: any[], options?: ArrayServiceTreeToArrOptions): any[] {
+  treeToArr(tree: NzSafeAny[], options?: ArrayServiceTreeToArrOptions): NzSafeAny[] {
     const opt = {
       deepMapName: this.c.deepMapName,
       parentMapName: this.c.parentMapName,
@@ -87,8 +88,8 @@ export class ArrayService {
       cb: null,
       ...options,
     } as ArrayServiceTreeToArrOptions;
-    const result: any[] = [];
-    const inFn = (list: any[], parent: any, deep: number = 0) => {
+    const result: NzSafeAny[] = [];
+    const inFn = (list: NzSafeAny[], parent: NzSafeAny, deep: number = 0) => {
       for (const i of list) {
         i[opt.deepMapName!] = deep;
         i[opt.parentMapName!] = parent;
@@ -112,7 +113,7 @@ export class ArrayService {
   /**
    * 数组转换成树数据
    */
-  arrToTree(arr: any[], options?: ArrayServiceArrToTreeOptions): any[] {
+  arrToTree(arr: NzSafeAny[], options?: ArrayServiceArrToTreeOptions): NzSafeAny[] {
     const opt = {
       idMapName: this.c.idMapName,
       parentIdMapName: this.c.parentIdMapName,
@@ -120,8 +121,8 @@ export class ArrayService {
       cb: null,
       ...options,
     } as ArrayServiceArrToTreeOptions;
-    const tree: any[] = [];
-    const childrenOf = {};
+    const tree: NzSafeAny[] = [];
+    const childrenOf: NzSafeAny = {};
     for (const item of arr) {
       const id = item[opt.idMapName!];
       const pid = item[opt.parentIdMapName!];
@@ -143,7 +144,7 @@ export class ArrayService {
   /**
    * 数组转换成 `nz-tree` 数据源，通过 `options` 转化项名，也可以使用 `options.cb` 更高级决定数据项
    */
-  arrToTreeNode(arr: any[], options?: ArrayServiceArrToTreeNodeOptions): NzTreeNode[] {
+  arrToTreeNode(arr: NzSafeAny[], options?: ArrayServiceArrToTreeNodeOptions): NzTreeNode[] {
     const opt = {
       idMapName: this.c.idMapName,
       parentIdMapName: this.c.parentIdMapName,
@@ -161,7 +162,7 @@ export class ArrayService {
       parentIdMapName: opt.parentIdMapName,
       childrenMapName: 'children',
     });
-    this.visitTree(tree, (item: any, parent: any, deep: number) => {
+    this.visitTree(tree, (item: NzSafeAny, parent: NzSafeAny, deep: number) => {
       item.key = item[opt.idMapName!];
       item.title = item[opt.titleMapName!];
       item.checked = item[opt.checkedMapname!];
@@ -184,8 +185,8 @@ export class ArrayService {
    * 递归访问整个树
    */
   visitTree(
-    tree: any[],
-    cb: (item: any, parent: any, deep: number) => void,
+    tree: NzSafeAny[],
+    cb: (item: NzSafeAny, parent: NzSafeAny, deep: number) => void,
     options?: {
       /** 子项名，默认：`'children'` */
       childrenMapName?: string;
@@ -195,7 +196,7 @@ export class ArrayService {
       childrenMapName: this.c.childrenMapName,
       ...options,
     };
-    const inFn = (data: any[], parent: any, deep: number) => {
+    const inFn = (data: NzSafeAny[], parent: NzSafeAny, deep: number) => {
       for (const item of data) {
         cb(item, parent, deep);
         const childrenVal = item[options!.childrenMapName!];
@@ -210,12 +211,12 @@ export class ArrayService {
   /**
    * 获取所有已经选中的 `key` 值
    */
-  getKeysByTreeNode(tree: NzTreeNode[], options?: ArrayServiceGetKeysByTreeNodeOptions): any[] {
+  getKeysByTreeNode(tree: NzTreeNode[], options?: ArrayServiceGetKeysByTreeNodeOptions): NzSafeAny[] {
     const opt = {
       includeHalfChecked: true,
       ...options,
     } as ArrayServiceGetKeysByTreeNodeOptions;
-    const keys: any[] = [];
+    const keys: NzSafeAny[] = [];
     this.visitTree(tree, (item: NzTreeNode, parent: NzTreeNode, deep: number) => {
       if (item.isChecked || (opt.includeHalfChecked && item.isHalfChecked)) {
         keys.push(opt.cb ? opt.cb(item, parent, deep) : opt.keyMapName ? item.origin[opt.keyMapName] : item.key);

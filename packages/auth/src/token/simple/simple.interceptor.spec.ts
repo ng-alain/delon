@@ -1,10 +1,9 @@
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { TestBed, TestBedStatic } from '@angular/core/testing';
+import { Type } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Type } from '@angular/core';
-
 import { DelonAuthConfig } from '../../auth.config';
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
@@ -40,7 +39,6 @@ class MockTokenService implements ITokenService {
 }
 
 describe('auth: simple.interceptor', () => {
-  let injector: TestBedStatic;
   let http: HttpClient;
   let httpBed: HttpTestingController;
   const mockRouter = {
@@ -51,7 +49,7 @@ describe('auth: simple.interceptor', () => {
   };
 
   function genModule(options: DelonAuthConfig, tokenData?: SimpleTokenModel) {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
         { provide: DelonAuthConfig, useValue: options },
@@ -64,10 +62,10 @@ describe('auth: simple.interceptor', () => {
         { provide: DA_SERVICE_TOKEN, useClass: MockTokenService },
       ],
     });
-    if (tokenData) injector.get(DA_SERVICE_TOKEN).set(tokenData);
+    if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
-    http = injector.get<HttpClient>(HttpClient);
-    httpBed = injector.get(HttpTestingController as Type<HttpTestingController>);
+    http = TestBed.inject<HttpClient>(HttpClient);
+    httpBed = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
   }
 
   describe('[token position]', () => {

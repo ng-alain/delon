@@ -6,8 +6,8 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import chalk from 'chalk';
-import { IOptions, Replacement, Rules, RuleFailure } from 'tslint';
+import * as chalk from 'chalk';
+import { IOptions, Replacement, RuleFailure, Rules } from 'tslint';
 import * as ts from 'typescript';
 import { ExternalResource } from '../../tslint/component-file';
 import { ComponentWalker } from '../../tslint/component-walker';
@@ -58,8 +58,7 @@ export class Walker extends ComponentWalker {
       }
 
       const failureMessage =
-        `Found deprecated CSS selector "${chalk.red(data.replace)}" ` +
-        `which has been renamed to "${chalk.green(data.replaceWith)}"`;
+        `Found deprecated CSS selector "${chalk.red(data.replace)}" ` + `which has been renamed to "${chalk.green(data.replaceWith)}"`;
 
       findAllSubstringIndices(stylesheetContent, data.replace)
         .map(offset => node.getStart() + offset)

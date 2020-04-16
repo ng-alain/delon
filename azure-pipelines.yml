@@ -1,0 +1,147 @@
+name: ng-alain-delon
+
+trigger:
+  - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+pr:
+  autoCancel: true
+  branches:
+    exclude:
+      - gh-pages
+
+stages:
+  - stage: env
+    jobs:
+      - job: Nodes
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '12.13.1'
+            displayName: 'Install Node.js'
+
+  - stage: artifacts
+    dependsOn: env
+    jobs:
+      - job: build
+        steps:
+          - task: Npm@1
+            inputs:
+              command: 'install'
+          - task: Bash@3
+            env:
+              DELON_BUILDS_TOKEN: $(DELON_BUILDS_TOKEN)
+            inputs:
+              targetType: 'filePath'
+              filePath: 'scripts/ci/build-artifacts.sh'
+
+  - stage: test
+    dependsOn:
+      - env
+    jobs:
+      - job: packages
+        steps:
+          - task: Npm@1
+            inputs:
+              command: 'install'
+          - script: |
+              npm run test
+              cat ./coverage/lcov.info | ./node_modules/.bin/codecov
+            env:
+              CODECOV_TOKEN: $(CODECOV_TOKEN)
+
+          - task: PublishCodeCoverageResults@1
+            displayName: 'publish code coverage results'
+            condition: succeededOrFailed()
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
+              reportDirectory: $(System.DefaultWorkingDirectory)/coverage
+              failIfCoverageEmpty: true
+
+          - task: PublishTestResults@2
+            displayName: 'publish test results'
+            condition: succeededOrFailed()
+            inputs:
+              searchFolder: $(System.DefaultWorkingDirectory)/junit
+              failTaskOnFailedTests: true
+              testRunTitle: DELON
+              testResultsFormat: JUnit
+              testResultsFiles: '**/TESTS*.xml'
+      - job: cli
+        steps:
+          - task: Npm@1
+            inputs:
+              command: 'install'
+          - script: npm run test:cli
+
+  - stage: lint
+    dependsOn:
+      - env
+    jobs:
+      - job: packages
+        steps:
+          - task: Npm@1
+            inputs:
+              command: 'install'
+          - script: npm run lint
+
+  - stage: site
+    dependsOn:
+      - env
+      - artifacts
+    jobs:
+      - job: Build
+        steps:
+          - checkout: self
+            displayName: 'Checkout'
+            clean: true
+            fetchDepth: 1
+          - task: Npm@1
+            inputs:
+              command: 'install'
+          - script: |
+              node ./scripts/azure/github-comment.js "[Preview Preparing...](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
+            displayName: 'Comment on github'
+            env:
+              ACCESS_REPO: $(ACCESS_REPO)
+              ACCESS_TOKEN: $(ACCESS_TOKEN)
+          - script: npm run site:build
+            displayName: 'Build sites'
+          - script: ls -al src/dist/
+            displayName: 'List build'
+          - script: |
+              export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
+              echo "Deploy to $DEPLOY_DOMAIN"
+              npx surge --project ./src/dist --domain $DEPLOY_DOMAIN
+            displayName: 'Deploy Site'
+            env:
+              ACCESS_REPO: $(ACCESS_REPO)
+              ACCESS_TOKEN: $(ACCESS_TOKEN)
+              SURGE_LOGIN: $(SURGE_LOGIN)
+              SURGE_TOKEN: $(SURGE_TOKEN)
+          - script: |
+              export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
+              node ./scripts/azure/github-comment.js "[Preview is ready!]($DEPLOY_DOMAIN)"
+            displayName: 'Update comment on github'
+            env:
+              ACCESS_REPO: $(ACCESS_REPO)
+              ACCESS_TOKEN: $(ACCESS_TOKEN)
+      - job: Build_Failed
+        dependsOn: Build
+        condition: failed()
+        steps:
+          - checkout: self
+            displayName: 'Checkout'
+            clean: true
+            fetchDepth: 1
+          - script: npm install
+            displayName: 'Install modules'
+          - script: |
+              node ./scripts/azure/github-comment.js "[Preview Failed](https://dev.azure.com/ng-alain/delon/_build/results?buildId=$(Build.BuildId))"
+            displayName: 'Comment on github'
+            env:
+              ACCESS_REPO: $(ACCESS_REPO)
+              ACCESS_TOKEN: $(ACCESS_TOKEN)

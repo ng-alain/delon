@@ -64,6 +64,6 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
       this.setValue(Date.UTC(1970, 0, 1, value.getHours(), value.getMinutes(), value.getSeconds()));
       return;
     }
-    this.setValue(format(value, this.valueFormat));
+    this.setValue(format(value, this.valueFormat!));
   }
 }

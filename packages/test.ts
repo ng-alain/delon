@@ -20,5 +20,5 @@ const context = require.context('./', true, /\.spec\.ts$/);
 // And load the modules.
 context
   .keys()
-  .filter(path => path.indexOf('/schematics/') === -1)
+  .filter((path: string) => path.indexOf('/schematics/') === -1)
   .map(context);

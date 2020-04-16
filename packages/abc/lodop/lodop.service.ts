@@ -1,8 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { of, Observable, Subject } from 'rxjs';
-
 import { LazyService } from '@delon/util';
-
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Observable, of, Subject } from 'rxjs';
 import { LodopConfig } from './lodop.config';
 import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
 
@@ -73,7 +72,7 @@ export class LodopService implements OnDestroy {
 
     const url = `${this.cog.url}?name=${this.cog.name}`;
     let checkMaxCount = this.cog.checkMaxCount as number;
-    const onResolve = (status, error?: {}) => {
+    const onResolve = (status: NzSafeAny, error?: {}) => {
       this._init.next({
         ok: status === 'ok',
         status,
@@ -94,14 +93,15 @@ export class LodopService implements OnDestroy {
       }
     };
 
-    this.scriptSrv.loadScript(url).then(res => {
+    this.scriptSrv.loadScript(url).then((res: NzSafeAny) => {
       if (res.status !== 'ok') {
         this.pending = false;
         onResolve('script-load-error', res[0]);
         return;
       }
-      if (window.hasOwnProperty(this.cog.name!)) {
-        this._lodop = window[this.cog.name!] as Lodop;
+      const win = window as NzSafeAny;
+      if (win.hasOwnProperty(this.cog.name!)) {
+        this._lodop = win[this.cog.name!] as Lodop;
       }
       if (this._lodop === null) {
         onResolve('load-variable-name-error', { name: this.cog.name });
@@ -128,7 +128,7 @@ export class LodopService implements OnDestroy {
    * @param contextObj 动态参数上下文对象
    * @param parser 自定义解析表达式，默认：`/LODOP\.([^(]+)\(([^\n]+)\);/i`
    */
-  attachCode(code: string, contextObj?: {}, parser?: RegExp): void {
+  attachCode(code: string, contextObj?: NzSafeAny, parser?: RegExp): void {
     this.check();
     if (!parser) parser = /LODOP\.([^(]+)\(([^\n]+)\);/i;
     code.split('\n').forEach(line => {

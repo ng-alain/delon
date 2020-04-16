@@ -194,7 +194,7 @@ copyFiles() {
 cloneScaffold() {
   if [[ ! -d ng-alain ]]; then
     echo ">>> Not found scaffold source files, must be clone ng-alain ..."
-    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+    git clone --depth 1 -b dev-ng9 https://github.com/ng-alain/ng-alain.git
     echo ">>> removed .git"
     rm -rf ng-alain/.git
   else
@@ -235,18 +235,24 @@ buildCLI() {
 integrationCli() {
   echo ">>> Current dir: ${PWD}"
   # Unable to use `ng new` if the root directory contains `angular.json`
+  rm -rf ${PWD}/node_modules
+  rm ${PWD}/package.json
+  rm ${PWD}/tsconfig.json
   rm ${PWD}/angular.json
   INTEGRATION_SOURCE=${PWD}/integration
   mkdir -p ${INTEGRATION_SOURCE}
   cd ${INTEGRATION_SOURCE}
-  echo ">>> Generate a new angular project, Current dir: ${PWD}"
+  echo ">>> Generate a new angular project, Current dir: ${PWD}, using anguar version:"
+  ng version
   ng new integration --style=less --routing=true
   INTEGRATION_SOURCE=${PWD}/integration
   cd ${INTEGRATION_SOURCE}
   echo ">>> Copy ng-alain, Current dir: ${PWD}"
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
   echo ">>> Running ng g ng-alain:ng-add"
-  ng g ng-alain:ng-add --defaultLanguage=en --hmr=true --codeStyle=true --form=true --mock=true --i18n=true --g2=true
+  ng g ng-alain:ng-add --defaultLanguage=en --hmr=true --codeStyle=true --form=true --mock=true --i18n=true
+  echo ">>> Install dependencies"
+  npm i
   echo ">>> Copy again ng-alain"
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
   echo ">>> Copy @delon/*"
@@ -256,7 +262,7 @@ integrationCli() {
   echo ">>> Running npm run icon"
   npm run icon
   echo ">>> Running build"
-  node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod
+  npm run build
   cd ../../
   echo ">>> Current dir: ${PWD}"
 }

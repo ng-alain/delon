@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, share } from 'rxjs/operators';
 
@@ -19,7 +20,7 @@ export class LazyService {
   private cached: { [key: string]: LazyResult } = {};
   private _notify: BehaviorSubject<LazyResult[]> = new BehaviorSubject<LazyResult[]>([]);
 
-  constructor(@Inject(DOCUMENT) private doc: any) { }
+  constructor(@Inject(DOCUMENT) private doc: any) {}
 
   get change(): Observable<LazyResult[]> {
     return this._notify.asObservable().pipe(
@@ -66,7 +67,7 @@ export class LazyService {
         resolve(item);
       };
 
-      const node = this.doc.createElement('script') as any;
+      const node = this.doc.createElement('script') as NzSafeAny;
       node.type = 'text/javascript';
       node.src = path;
       node.charset = 'utf-8';

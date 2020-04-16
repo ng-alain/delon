@@ -1,10 +1,9 @@
 import { DebugElement } from '@angular/core';
-import { inject, ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { createTestContext } from '@delon/testing';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzUploadComponent } from 'ng-zorro-antd/upload';
-
-import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { UploadWidget } from './upload.widget';
 
@@ -211,8 +210,6 @@ describe('form: widget: upload', () => {
         },
       },
     });
-    page.checkValue('/a', 10);
-    page.click('.anticon-close');
-    page.checkValue('/a', '');
+    page.checkValue('/a', 10).click('.anticon-delete').checkValue('/a', '');
   });
 });

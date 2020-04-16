@@ -1,16 +1,16 @@
-import addDays from 'date-fns/add_days';
-import endOfDay from 'date-fns/end_of_day';
-import endOfMonth from 'date-fns/end_of_month';
-import endOfWeek from 'date-fns/end_of_week';
-import endOfYear from 'date-fns/end_of_year';
-import parse from 'date-fns/parse';
-import startOfDay from 'date-fns/start_of_day';
-import startOfMonth from 'date-fns/start_of_month';
-import startOfWeek from 'date-fns/start_of_week';
-import startOfYear from 'date-fns/start_of_year';
-import subMonths from 'date-fns/sub_months';
-import subWeeks from 'date-fns/sub_weeks';
-import subYears from 'date-fns/sub_years';
+import addDays from 'date-fns/addDays';
+import endOfDay from 'date-fns/endOfDay';
+import endOfMonth from 'date-fns/endOfMonth';
+import endOfWeek from 'date-fns/endOfWeek';
+import endOfYear from 'date-fns/endOfYear';
+import parseISO from 'date-fns/parseISO';
+import startOfDay from 'date-fns/startOfDay';
+import startOfMonth from 'date-fns/startOfMonth';
+import startOfWeek from 'date-fns/startOfWeek';
+import startOfYear from 'date-fns/startOfYear';
+import subMonths from 'date-fns/subMonths';
+import subWeeks from 'date-fns/subWeeks';
+import subYears from 'date-fns/subYears';
 
 /**
  * 获取时间范围
@@ -21,8 +21,8 @@ export function getTimeDistance(
   type: 'today' | '-today' | 'yesterday' | 'week' | '-week' | 'month' | '-month' | 'year' | '-year' | number,
   time?: Date | string | number,
 ): [Date, Date] {
-  time = parse(time || new Date());
-  const options = { weekStartsOn: 1 };
+  time = time ? (typeof time === 'string' ? parseISO(time) : new Date(time)) : new Date();
+  const options: { weekStartsOn: 1 } = { weekStartsOn: 1 };
 
   let res: [Date, Date];
   switch (type) {

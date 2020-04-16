@@ -1,6 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DelonAuthConfig } from '../../auth.config';
 import { BaseInterceptor } from '../base.interceptor';
 import { CheckSimple } from '../helper';
@@ -22,7 +22,7 @@ export class SimpleInterceptor extends BaseInterceptor {
     const token = token_send_template!.replace(/\$\{([\w]+)\}/g, (_: string, g) => this.model[g]);
     switch (options.token_send_place) {
       case 'header':
-        const obj = {};
+        const obj: NzSafeAny = {};
         obj[token_send_key!] = token;
         req = req.clone({
           setHeaders: obj,

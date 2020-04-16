@@ -3,14 +3,17 @@ npm-debug.log
 # package-lock.json
 yarn.lock
 yarn-error.log
+/coverage
+/coverage-report
+/junit
 
 .tmp
 .lib
 *.iml
 dist
-coverage
 .idea
 debug.log
+__ngcc_entry_points__.json
 
 src/app/routes/gen
 src/assets/color.less

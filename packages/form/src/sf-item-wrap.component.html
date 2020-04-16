@@ -1,4 +1,4 @@
-<nz-form-item [style.width.px]="ui.width" [class.ant-form-item-with-help]="showError">
+<nz-form-item [style.width.px]="ui.width" [class.ant-form-item-has-error]="showError" [class.ant-form-item-with-help]="showError">
   <nz-col *ngIf="showTitle" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
     <label *ngIf="t" [attr.for]="id" [class.ant-form-item-required]="ui._required">
       {{ t }}
@@ -12,11 +12,15 @@
       </span>
     </label>
   </nz-col>
-  <nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl" [nzOffset]="ui.offsetControl">
-    <div class="ant-form-item-control" [class.has-error]="showError">
-      <ng-content></ng-content>
-      <div *ngIf="!ui.onlyVisual && showError" class="ant-form-explain">{{error}}</div>
-      <div *ngIf="schema.description" [innerHTML]="schema._description" class="ant-form-extra"></div>
+  <nz-col class="ant-form-item-control" [nzSpan]="ui.spanControl" [nzOffset]="ui.offsetControl">
+    <div class="ant-form-item-control-input">
+      <div class="ant-form-item-control-input-content">
+        <ng-content></ng-content>
+      </div>
     </div>
+    <div *ngIf="!ui.onlyVisual && showError" class="ant-form-item-explain">
+      <div @helpMotion>{{error}}</div>
+    </div>
+    <div *ngIf="schema.description" class="ant-form-item-extra" [innerHTML]="schema._description"></div>
   </nz-col>
 </nz-form-item>

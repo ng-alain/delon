@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { SFSchema } from '@delon/form';
-import { _HttpClient, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { CodeService } from '../../../core/code.service';
 import { I18NService } from '../../../core/i18n/service';
@@ -107,7 +108,7 @@ export class FormValidatorComponent implements OnInit {
   }
 
   openOnStackBlitz() {
-    const obj = {
+    const obj: { [key: string]: NzSafeAny } = {
       schema: this.schema,
       layout: this.layout,
       formData: this.formCode || '{}',

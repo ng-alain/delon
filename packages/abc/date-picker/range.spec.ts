@@ -1,13 +1,12 @@
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite, createTestContext, dispatchMouseEvent } from '@delon/testing';
-import differenceInDays from 'date-fns/difference_in_days';
-
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { createTestContext, dispatchMouseEvent } from '@delon/testing';
+import differenceInDays from 'date-fns/differenceInDays';
 import { DateRangePickerShortcut } from './date-picker.config';
 import { DatePickerModule } from './date-picker.module';
 import { RangePickerComponent } from './range.component';
@@ -19,14 +18,11 @@ describe('abc: date-picker: range', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  configureTestSuite(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [DatePickerModule, FormsModule, NoopAnimationsModule],
       declarations: [TestComponent],
     });
-  });
-
-  beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
     spyOn(context, '_nzOnOpenChange');
@@ -69,7 +65,7 @@ describe('abc: date-picker: range', () => {
     it('should be disabled', () => {
       context.comp.setDisabledState(true);
       fixture.detectChanges();
-      expect(dl.queryAll(By.css('.ant-input-disabled')).length).toBe(1);
+      expect(dl.queryAll(By.css('.ant-picker-disabled')).length).toBe(1);
     });
   });
 
@@ -96,9 +92,7 @@ describe('abc: date-picker: range', () => {
       context.shortcut = true;
       fixture.detectChanges();
       openPicker();
-      getPickerFooterExtra()
-        .querySelectorAll('a')[0]
-        .click();
+      getPickerFooterExtra().querySelectorAll('a')[0].click();
       timeEnd();
       expect(differenceInDays(context.i.end, context.i.start)).toBe(0);
     }));
@@ -106,22 +100,20 @@ describe('abc: date-picker: range', () => {
       context.shortcut = false;
       fixture.detectChanges();
       openPicker();
-      expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(true);
+      expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(true);
     }));
     it('with null', fakeAsync(() => {
       context.shortcut = null;
       fixture.detectChanges();
       openPicker();
-      expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(true);
+      expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(true);
     }));
     it('should be keeping open panel when closed is false', fakeAsync(() => {
       context.shortcut = { closed: false, enabled: true };
       fixture.detectChanges();
       openPicker();
-      expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(false);
-      getPickerFooterExtra()
-        .querySelectorAll('a')[0]
-        .click();
+      expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(false);
+      getPickerFooterExtra().querySelectorAll('a')[0].click();
       const list = getPickerFooterExtra().querySelectorAll('a');
       const shortcut = context.comp.shortcut as DateRangePickerShortcut;
       expect(list.length).toBe(shortcut.list!.length);
@@ -130,12 +122,12 @@ describe('abc: date-picker: range', () => {
         timeEnd();
       });
       timeEnd();
-      expect(dl.query(By.css('.ant-calendar-footer-extra')) == null).toBe(false);
+      expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(false);
     }));
   });
 
   function openPicker(): HTMLInputElement {
-    const el = dl.query(By.css('nz-picker .ant-calendar-picker')).nativeElement as HTMLInputElement;
+    const el = dl.query(By.css('.ant-picker-input input')).nativeElement as HTMLInputElement;
     dispatchMouseEvent(el, 'click');
     timeEnd();
     return el;
@@ -148,7 +140,7 @@ describe('abc: date-picker: range', () => {
   }
 
   function getPickerFooterExtra(): HTMLElement {
-    return dl.query(By.css('.ant-calendar-footer-extra')).nativeElement as HTMLElement;
+    return dl.query(By.css('.ant-picker-footer-extra')).nativeElement as HTMLElement;
   }
 });
 

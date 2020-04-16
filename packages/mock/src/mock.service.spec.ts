@@ -1,4 +1,4 @@
-import { TestBed, TestBedStatic } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import * as Mock from 'mockjs';
 import { DelonMockModule } from '../index';
 import { MockRequest, MockRule } from './interface';
@@ -23,16 +23,15 @@ const DATA = {
 };
 
 describe('mock: service', () => {
-  let injector: TestBedStatic;
   let srv: MockService;
 
   function genModule(options: DelonMockConfig) {
     options = Object.assign(new DelonMockConfig(), options);
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [DelonMockModule.forRoot(options)],
       providers: [],
     });
-    srv = injector.get<MockService>(MockService);
+    srv = TestBed.inject<MockService>(MockService);
     spyOn(console, 'log');
     spyOn(console, 'group');
     spyOn(console, 'groupEnd');

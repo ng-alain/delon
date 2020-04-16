@@ -9,12 +9,12 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
+import DataSet from '@antv/data-set';
+import { Chart, registerShape, Util } from '@antv/g2';
 import { InputNumber } from '@delon/util';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
-
-declare var G2: any;
-declare var DataSet: any;
 
 export interface G2TagCloudData {
   x?: string;
@@ -36,13 +36,13 @@ export interface G2TagCloudData {
 })
 export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   private resize$: Subscription;
-  private chart: any;
+  private chart: Chart;
 
   // #region fields
 
   @Input() @InputNumber() delay = 0;
   @Input() @InputNumber() height = 100;
-  @Input() padding = 0;
+  @Input() padding: number | number[] | 'auto' = 0;
   @Input() data: G2TagCloudData[] = [];
 
   // #endregion
@@ -51,22 +51,27 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   private initTagCloud() {
     // 给point注册一个词云的shape
-    G2.Shape.registerShape('point', 'cloud', {
-      drawShape(cfg, container) {
-        const attrs = {
-          fillOpacity: cfg.opacity,
-          fontSize: cfg.origin._origin.size,
-          rotate: cfg.origin._origin.rotate,
-          text: cfg.origin._origin.text,
-          textAlign: 'center',
-          fontFamily: cfg.origin._origin.font,
-          fill: cfg.color,
-          textBaseline: 'Alphabetic',
-          ...cfg.style,
-        };
-        return container.addShape('text', {
-          attrs: { ...attrs, x: cfg.x, y: cfg.y },
+    registerShape('point', 'cloud', {
+      draw(cfg, container: NzSafeAny) {
+        const data = cfg.data as NzSafeAny;
+        const textShape = container.addShape('text', {
+          attrs: {
+            ...cfg.defaultStyle,
+            ...cfg.style,
+            fontSize: data.size,
+            text: data.text,
+            textAlign: 'center',
+            fontFamily: data.font,
+            fill: cfg.color, // || cfg.defaultStyle!.stroke,
+            textBaseline: 'Alphabetic',
+            x: cfg.x,
+            y: cfg.y,
+          },
         });
+        if (data.rotate) {
+          Util.rotate(textShape, (data.rotate * Math.PI) / 180);
+        }
+        return textShape;
       },
     });
   }
@@ -74,7 +79,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   private install() {
     const { el, padding, height } = this;
 
-    const chart = (this.chart = new G2.Chart({
+    const chart = (this.chart = new Chart({
       container: el.nativeElement,
       padding,
       height,
@@ -83,16 +88,11 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     chart.axis(false);
     chart.tooltip({
       showTitle: false,
+      showMarkers: false,
     });
-    chart.coord().reflect();
-    chart
-      .point()
-      .position('x*y')
-      .color('category')
-      .shape('cloud')
-      .tooltip('value*category');
-
-    chart.render();
+    chart.coordinate().reflect('x');
+    chart.point().position('x*y').color('category').shape('cloud').tooltip('value*category');
+    chart.interaction('element-active');
 
     this.attachChart();
   }
@@ -101,8 +101,8 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     const { chart, height, padding, data } = this;
     if (!chart || !data || data.length <= 0) return;
 
-    chart.set('height', height);
-    chart.set('padding', padding);
+    chart.height = height;
+    chart.padding = padding;
     chart.forceFit();
 
     const dv = new DataSet.View().source(data);
@@ -113,8 +113,8 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     dv.transform({
       type: 'tag-cloud',
       fields: ['x', 'value'],
-      size: [chart.get('width'), chart.get('height')],
-      padding,
+      size: [chart.width, chart.height],
+      padding: typeof padding === 'number' ? padding : undefined,
       timeInterval: 5000, // max execute time
       rotate: () => {
         let random = ~~(Math.random() * 4) % 4;
@@ -123,14 +123,21 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
         }
         return random * 90; // 0, 90, 270
       },
-      fontSize: d => (d.value ? ((d.value - min) / (max - min)) * (80 - 24) + 24 : 0),
-    });
-    chart.source(dv, {
+      fontSize(d: NzSafeAny) {
+        if (d.value) {
+          return ((d.value - min) / (max - min)) * (80 - 24) + 24;
+        }
+        return 0;
+      },
+    } as NzSafeAny);
+
+    chart.scale({
       x: { nice: false },
       y: { nice: false },
     });
 
-    chart.repaint();
+    chart.changeData(dv.rows);
+    chart.render();
   }
 
   private _attachChart() {
@@ -140,7 +147,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   private installResizeEvent() {
     this.resize$ = fromEvent(window, 'resize')
       .pipe(
-        filter(() => this.chart),
+        filter(() => !!this.chart),
         debounceTime(200),
       )
       .subscribe(() => this._attachChart());

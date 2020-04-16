@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import { numberToChinese } from './number-to-chinese';
 import { NumberToChineseModule } from './number-to-chinese.module';
 
@@ -38,9 +37,7 @@ describe('abc: number-to-chinese', () => {
         options: { minusSymbol: '欠' },
       },
     ].forEach((item: any) => {
-      it(`${typeof item.num === 'string' ? '[string]' : ''}${item.rmb ? 'RMB:' : ''}${item.num} muse be ${
-        item.value
-      }`, () => {
+      it(`${typeof item.num === 'string' ? '[string]' : ''}${item.rmb ? 'RMB:' : ''}${item.num} muse be ${item.value}`, () => {
         expect(numberToChinese(item.num, item.rmb, item.options || null)).toBe(item.value);
       });
     });
@@ -80,18 +77,14 @@ describe('abc: number-to-chinese', () => {
         fixture.componentInstance.rmb = item.rmb;
         fixture.componentInstance.minusSymbol = item.minusSymbol;
         fixture.detectChanges();
-        expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toBe(
-          item.result,
-        );
+        expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerHTML).toBe(item.result);
       });
     });
   });
 });
 
 @Component({
-  template: `
-    <div id="result" [innerHTML]="value | n2c: rmb:minusSymbol"></div>
-  `,
+  template: ` <div id="result" [innerHTML]="value | n2c: rmb:minusSymbol"></div> `,
 })
 class TestComponent {
   value: number | string = 1;

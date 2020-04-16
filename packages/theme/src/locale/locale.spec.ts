@@ -1,3 +1,4 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { filter } from 'rxjs/operators';
 import { DelonLocaleService } from './locale.service';
 
@@ -26,7 +27,7 @@ describe('theme: locale', () => {
 
   it('#getData', () => {
     expect(locale.getData('exception').backToHome).toBe(zhCN.exception.backToHome);
-    expect(Object.keys(locale.getData('invalid-key')).length).toBe(0);
+    expect(Object.keys(locale.getData('invalid-key' as NzSafeAny)).length).toBe(0);
   });
 
   it('#change', done => {

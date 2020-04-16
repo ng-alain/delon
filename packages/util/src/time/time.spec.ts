@@ -1,11 +1,11 @@
-import addDays from 'date-fns/add_days';
+import addDays from 'date-fns/addDays';
 import format from 'date-fns/format';
 import { getTimeDistance } from './time';
 
 describe('util: time', () => {
   describe('#getTimeDistance', () => {
     let time: Date;
-    const FORMAT = 'YYYY-MM-DD';
+    const FORMAT = 'yyyy-MM-dd';
     const NOW = '2018-03-05';
     const YESTERDAY = '2018-03-04';
     beforeEach(() => {

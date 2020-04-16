@@ -1,6 +1,6 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as LANG from '../core/lang.config';
-import { createAlainApp, createAlainRunner, createNgRunner, APPNAME } from '../utils/testing';
+import { APPNAME, createAlainApp, createAlainRunner, createNgRunner } from '../utils/testing';
 
 describe('NgAlainSchematic: application', () => {
   let runner: SchematicTestRunner;

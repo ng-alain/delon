@@ -11,9 +11,6 @@ import { DrawerHelper } from './services/drawer/drawer.helper';
 import { ModalHelper } from './services/modal/modal.helper';
 const HELPERS = [ModalHelper, DrawerHelper];
 
-// components
-const COMPONENTS = [];
-
 // pipes
 import { CNCurrencyPipe } from './pipes/currency/cn-currency.pipe';
 import { DatePipe } from './pipes/date/date.pipe';
@@ -38,8 +35,8 @@ const ICONS = [BellOutline, DeleteOutline, PlusOutline, InboxOutline];
 
 @NgModule({
   imports: [CommonModule, RouterModule, OverlayModule],
-  declarations: [...COMPONENTS, ...PIPES],
-  exports: [...COMPONENTS, ...PIPES, DelonLocaleModule],
+  declarations: [...PIPES],
+  exports: [...PIPES, DelonLocaleModule],
 })
 export class AlainThemeModule {
   constructor(iconSrv: NzIconService) {

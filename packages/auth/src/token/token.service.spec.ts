@@ -1,10 +1,10 @@
-import { TestBed, TestBedStatic } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DelonAuthConfig } from '../auth.config';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
 
 describe('auth: token.service', () => {
-  let injector: TestBedStatic;
   let service: ITokenService;
   const VALUE: ITokenModel = {
     token: 'token data',
@@ -14,7 +14,7 @@ describe('auth: token.service', () => {
   } as ITokenModel;
 
   beforeEach(() => {
-    let data = {};
+    let data: { [key: string]: NzSafeAny } = {};
 
     spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
       return data[key] || null;
@@ -29,7 +29,7 @@ describe('auth: token.service', () => {
       data = {};
     });
 
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       providers: [
         {
           provide: DelonAuthConfig,
@@ -38,7 +38,7 @@ describe('auth: token.service', () => {
       ],
     });
 
-    service = injector.get(DA_SERVICE_TOKEN);
+    service = TestBed.inject(DA_SERVICE_TOKEN);
   });
 
   it('#login_url', () => {

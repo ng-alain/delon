@@ -2,8 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Component, DebugElement, TemplateRef, ViewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { configureTestSuite, createTestContext } from '@delon/testing';
-
+import { createTestContext } from '@delon/testing';
 import { ResultComponent } from './result.component';
 import { ResultModule } from './result.module';
 
@@ -12,14 +11,11 @@ describe('abc: result', () => {
   let dl: DebugElement;
   let context: TestComponent;
 
-  configureTestSuite(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ResultModule, HttpClientTestingModule],
       declarations: [TestComponent],
     });
-  });
-
-  beforeEach(() => {
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
   });

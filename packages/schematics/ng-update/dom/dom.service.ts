@@ -1,6 +1,6 @@
 // tslint:disable:no-string-literal
-import * as htmlparser2 from 'htmlparser2';
 import { DomHandler } from 'domhandler';
+import * as htmlparser2 from 'htmlparser2';
 import { ConvertAction, ConvertRule, VDom } from './interfaces';
 
 export class DomService {
@@ -340,8 +340,6 @@ export class DomService {
   }
 
   private genTab(count: number): string {
-    return Array(count)
-      .fill('  ')
-      .join('');
+    return Array(count).fill('  ').join('');
   }
 }

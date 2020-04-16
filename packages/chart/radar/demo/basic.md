@@ -11,14 +11,14 @@ title:
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-demo',
+  selector: 'chart-radar-basic',
   template: `
     <g2-radar
         [hasLegend]="true"
         [data]="radarData"
         height="286"></g2-radar>`,
 })
-export class DemoComponent implements OnInit {
+export class ChartRadarBasicComponent implements OnInit {
   radarData: any[] = [];
   ngOnInit(): void {
     const radarOriginData = [
@@ -47,14 +47,14 @@ export class DemoComponent implements OnInit {
         hot: 7,
       },
     ];
-    const radarTitleMap = {
+    const radarTitleMap: { [key: string]: string } = {
       ref: '引用',
       koubei: '口碑',
       output: '产量',
       contribute: '贡献',
       hot: '热度',
     };
-    radarOriginData.forEach(item => {
+    radarOriginData.forEach((item: { [key: string]: any }) => {
       Object.keys(item).forEach(key => {
         if (key !== 'name') {
           this.radarData.push({

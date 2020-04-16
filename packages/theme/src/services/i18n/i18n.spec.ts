@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AlainThemeModule } from '../../theme.module';
@@ -24,6 +24,7 @@ describe('theme: i18n', () => {
     let fixture: ComponentFixture<TestComponent>;
     let srv: AlainI18NService;
 
+    @Injectable()
     class MockI18NService extends AlainI18NServiceFake {
       data: any = {};
       use(_lang: string) {
@@ -33,7 +34,7 @@ describe('theme: i18n', () => {
           html: '<i>asdf</i>',
         };
       }
-      fanyi(key: string, data?: {}, _isSafe?: boolean) {
+      fanyi(key: string, data?: { [key: string]: string }, _isSafe?: boolean) {
         let res = this.data[key] || '';
         if (data) {
           Object.keys(data).forEach(k => (res = res.replace(new RegExp(`{{${k}}}`, 'g'), data[k])));

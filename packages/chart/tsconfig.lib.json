@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.lib.json",
+  "extends": "../tsconfig.lib.prod.json",
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
@@ -12,7 +12,6 @@
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": false,
-    "fullTemplateTypeCheck": true,
     "skipTemplateCodegen": true
   }
 }

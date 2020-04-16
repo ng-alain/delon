@@ -1,6 +1,6 @@
-import { TestBed, TestBedStatic } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ACLGuard } from './acl-guard';
 import { DelonACLModule } from './acl.module';
@@ -8,22 +8,21 @@ import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
 
 describe('acl: guard', () => {
-  let injector: TestBedStatic;
   let srv: ACLGuard;
   let acl: ACLService;
   let routerSpy: jasmine.Spy;
 
   beforeEach(() => {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes([]), DelonACLModule.forRoot()],
     });
-    srv = injector.get<ACLGuard>(ACLGuard);
-    acl = injector.get<ACLService>(ACLService);
+    srv = TestBed.inject<ACLGuard>(ACLGuard);
+    acl = TestBed.inject<ACLService>(ACLService);
     acl.set({
       role: ['user'],
       ability: [1, 2, 3],
     } as ACLType);
-    routerSpy = spyOn(injector.get<Router>(Router), 'navigateByUrl');
+    routerSpy = spyOn(TestBed.inject<Router>(Router), 'navigateByUrl');
   });
 
   it(`should load route when no-specify permission`, (done: () => void) => {

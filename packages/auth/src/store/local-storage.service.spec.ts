@@ -1,3 +1,4 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ITokenModel } from '../token/interface';
 import { LocalStorageStore } from './local-storage.service';
 
@@ -9,23 +10,17 @@ describe('auth: local-storage', () => {
   } as ITokenModel;
 
   beforeEach(() => {
-    let data = {};
+    let data: { [key: string]: NzSafeAny } = {};
 
-    spyOn(localStorage, 'getItem').and.callFake(
-      (key: string): string => {
-        return data[key] || null;
-      },
-    );
-    spyOn(localStorage, 'removeItem').and.callFake(
-      (key: string): void => {
-        delete data[key];
-      },
-    );
-    spyOn(localStorage, 'setItem').and.callFake(
-      (key: string, value: string): string => {
-        return (data[key] = value as string);
-      },
-    );
+    spyOn(localStorage, 'getItem').and.callFake((key: string): string => {
+      return data[key] || null;
+    });
+    spyOn(localStorage, 'removeItem').and.callFake((key: string): void => {
+      delete data[key];
+    });
+    spyOn(localStorage, 'setItem').and.callFake((key: string, value: string): string => {
+      return (data[key] = value as string);
+    });
     spyOn(localStorage, 'clear').and.callFake(() => {
       data = {};
     });

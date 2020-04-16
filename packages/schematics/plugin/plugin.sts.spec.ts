@@ -15,26 +15,13 @@ describe('NgAlainSchematic: plugin: sts', () => {
       const json = JSON.parse(tree.readContent('package.json'));
       expect(json.devDependencies['ng-alain-sts']).toBeDefined();
       expect(tree.exists(`/_cli-tpl/_fix.js`)).toBe(true);
-      expect(
-        tree.exists(
-          `/_cli-tpl/swagger-edit/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.html`,
-        ),
-      ).toBe(true);
-      expect(
-        tree.exists(
-          `/_cli-tpl/swagger-list/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts`,
-        ),
-      ).toBe(true);
+      expect(tree.exists(`/_cli-tpl/swagger-edit/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.html`)).toBe(true);
+      expect(tree.exists(`/_cli-tpl/swagger-list/__path__/__name@dasherize@if-flat__/__name@dasherize__.component.ts`)).toBe(true);
     });
   });
 
   describe('when remove', () => {
-    beforeEach(
-      async () =>
-        (tree = await runner
-          .runSchematicAsync('plugin', { name: 'sts', type: 'remove' }, tree)
-          .toPromise()),
-    );
+    beforeEach(async () => (tree = await runner.runSchematicAsync('plugin', { name: 'sts', type: 'remove' }, tree).toPromise()));
     it(`should add fiels`, () => {
       const json = JSON.parse(tree.readContent('package.json'));
       expect(json.devDependencies['ng-alain-sts']).not.toBeDefined();

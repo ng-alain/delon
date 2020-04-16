@@ -1,7 +1,9 @@
 import { Type } from '@angular/core';
-import { discardPeriodicTasks, flush, tick, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
+import { Chart } from '@antv/g2';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-export type PageG2Type = 'geoms' | 'views';
+export type PageG2Type = 'geometries' | 'views';
 
 export const PageG2DataCount = 2;
 export const PageG2Height = 100;
@@ -13,7 +15,7 @@ export class PageG2<T> {
     return this.fixture!.debugElement;
   }
 
-  get context() {
+  get context(): NzSafeAny {
     return this.fixture!.componentInstance;
   }
 
@@ -22,7 +24,7 @@ export class PageG2<T> {
     return this.context['comp'];
   }
 
-  get chart() {
+  get chart(): Chart {
     return this.comp.chart;
   }
 
@@ -67,6 +69,7 @@ export class PageG2<T> {
   end() {
     // The 201 value is delay value
     tick(201);
+    flush();
     discardPeriodicTasks();
     return this;
   }
@@ -90,6 +93,10 @@ export class PageG2<T> {
     return (this.dl.nativeElement as HTMLElement).querySelector(cls) as HTMLElement;
   }
 
+  getController(type: 'axis' | 'legend') {
+    return this.chart.getController(type) as NzSafeAny;
+  }
+
   isCanvas(stauts: boolean = true): this {
     this.isExists('canvas', stauts);
     return this;
@@ -107,33 +114,33 @@ export class PageG2<T> {
   }
 
   checkOptions(key: string, value: any) {
-    expect(this.chart.get(key)).toBe(value);
+    expect((this.chart as NzSafeAny)[key]).toBe(value);
     return this;
   }
 
   checkAttrOptions(type: PageG2Type, key: string, value: any) {
-    const x = this.chart.get(type)[0].get('attrOptions')[key];
+    const x = (this.chart[type][0] as NzSafeAny).attributeOption[key];
     expect(x.field).toBe(value);
     return this;
   }
 
   isXScalesCount(num: number) {
-    const x = this.chart.getXScales();
-    expect(x[0].values.length).toBe(num);
+    const x = this.chart.getXScale();
+    expect(x.values!.length).toBe(num);
     return this;
   }
 
   isYScalesCount(num: number) {
     const y = this.chart.getYScales();
     expect(y.length).toBe(1);
-    expect(y[0].values.length).toBe(num);
+    expect(y[0].values!.length).toBe(num);
     return this;
   }
 
   isDataCount(type: PageG2Type, num: number) {
-    const results = this.chart.get(type);
+    const results = this.chart[type];
     expect(results.length).toBeGreaterThan(0);
-    expect(results[0].get('data').length).toBe(num);
+    expect(results[0].data.length).toBe(num);
     return this;
   }
 
@@ -152,10 +159,7 @@ export class PageG2<T> {
     } else {
       expect(el != null).toBe(true, `Shoule be has g2-tooltip element`);
       const text = el.textContent!.trim();
-      expect(text.includes(includeText)).toBe(
-        true,
-        `Shoule be include "${includeText}" text of tooltip text context "${text}"`,
-      );
+      expect(text.includes(includeText)).toBe(true, `Shoule be include "${includeText}" text of tooltip text context "${text}"`);
     }
     return this;
   }

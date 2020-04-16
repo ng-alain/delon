@@ -53,9 +53,9 @@ export class DelonFormConfig {
     reset_type: 'default',
   };
   /**
-   * date小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`YYYY-MM-DD HH:mm:ss`
+   * date小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`yyyy-MM-dd HH:mm:ss`
    */
-  uiDateStringFormat?: string = 'YYYY-MM-DD HH:mm:ss';
+  uiDateStringFormat?: string = 'yyyy-MM-dd HH:mm:ss';
   /**
    * date小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp
    */

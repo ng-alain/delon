@@ -185,10 +185,7 @@ export class EllipsisComponent implements AfterViewInit, OnChanges {
     if (this.ngZone.isStable) {
       fn();
     } else {
-      this.ngZone.onStable
-        .asObservable()
-        .pipe(take(1))
-        .subscribe(fn);
+      this.ngZone.onStable.asObservable().pipe(take(1)).subscribe(fn);
     }
   }
 

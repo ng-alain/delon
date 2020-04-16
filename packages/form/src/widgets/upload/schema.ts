@@ -1,7 +1,7 @@
+import { ShowUploadListInterface, UploadChangeParam, UploadFile, UploadFilter, UploadXHRArgs } from 'ng-zorro-antd/upload';
 import { Observable, Subscription } from 'rxjs';
-import { UploadFilter, UploadFile, UploadXHRArgs, UploadChangeParam, ShowUploadListInterface } from 'ng-zorro-antd/upload';
-import { SFUISchemaItem } from '../../schema/ui';
 import { SFSchemaEnumType } from '../../schema';
+import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**

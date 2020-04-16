@@ -53,4 +53,4 @@ Your body content
 | `size` | Specify modal size | `sm,md,lg,xl,number` | `lg` |
 | `exact` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true` |
 | `includeTabs` | Whether to wrap the tab page | `boolean` | `false` |
-| `modalOptions` | nz-modal raw parameters [ModalOptionsForService](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/nz-modal.type.ts) | `ModalOptionsForService` | - |
+| `modalOptions` | nz-modal raw parameters [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) | `ModalOptions` | - |

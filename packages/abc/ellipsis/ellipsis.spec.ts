@@ -1,7 +1,5 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
-import { configureTestSuite } from '@delon/testing';
-
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { EllipsisComponent } from './ellipsis.component';
@@ -21,7 +19,7 @@ describe('abc: ellipsis', () => {
   }
 
   describe('', () => {
-    configureTestSuite(genModule);
+    beforeEach(() => genModule());
 
     it('should be not length & line', () => {
       fixture = TestBed.createComponent(TestLengthComponent);
@@ -49,10 +47,7 @@ describe('abc: ellipsis', () => {
 
       it('should be tooltip', fakeAsync(() => {
         context.tooltip = true;
-        page
-          .tick()
-          .hasTooltip()
-          .check('There were...');
+        page.tick().hasTooltip().check('There were...');
       }));
 
       it('should be auto hide tail', fakeAsync(() => {

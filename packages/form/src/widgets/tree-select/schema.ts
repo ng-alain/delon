@@ -1,7 +1,7 @@
+import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd/core/tree';
 import { Observable } from 'rxjs';
-import { NzTreeNode, NzFormatEmitEvent } from 'ng-zorro-antd/core';
-import { SFUISchemaItem, SFDLSSize } from '../../schema/ui';
-import { SFSchemaEnumType, SFSchemaEnum } from '../../schema';
+import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
+import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
 
 export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
   /**

@@ -15,9 +15,10 @@ describe('chart: gauge', () => {
     afterEach(() => page.context.comp.ngOnDestroy());
 
     it('should be working', () => {
-      page.isText('.g2-gauge__percent', '10%');
+      expect(page.chart.geometries[0].data[0].value).toBe(10);
       page.context.percent = 30;
-      page.dc().isText('.g2-gauge__percent', '30%');
+      page.dc();
+      expect(page.chart.geometries[0].data[0].value).toBe(30);
     });
   });
 
@@ -25,9 +26,7 @@ describe('chart: gauge', () => {
 });
 
 @Component({
-  template: `
-    <g2-gauge #comp [title]="'核销率'" height="164" [percent]="percent" [delay]="delay"></g2-gauge>
-  `,
+  template: ` <g2-gauge #comp [title]="'核销率'" height="164" [percent]="percent" [delay]="delay"></g2-gauge> `,
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2GaugeComponent;

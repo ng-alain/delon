@@ -12,6 +12,7 @@ import { NoticeIconSelect, NoticeItem } from './notice-icon.types';
 export class NoticeIconTabComponent {
   @Input() locale: LocaleData = {};
   @Input() data: NoticeItem;
+  // tslint:disable-next-line:no-output-native
   @Output() readonly select = new EventEmitter<NoticeIconSelect>();
   @Output() readonly clear = new EventEmitter<string>();
 

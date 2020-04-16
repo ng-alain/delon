@@ -4,8 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
-import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
+import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
 import { MenuService } from '../menu/menu.service';
 
 @Injectable({ providedIn: 'root' })
@@ -76,7 +75,7 @@ export class TitleService implements OnDestroy {
     const item = menus[menus.length - 1];
     let title;
     if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
-    return title || item.text;
+    return title || item.text!;
   }
 
   private _setTitle(title?: string | string[]) {

@@ -1,17 +1,15 @@
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed, TestBedStatic } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivationEnd, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
-
 import { FullContentComponent } from './full-content.component';
 import { FullContentModule } from './full-content.module';
 import { FullContentService } from './full-content.service';
 
 describe('abc: full-content', () => {
-  let injector: TestBedStatic;
   let fixture: ComponentFixture<TestComponent>;
   let dl: DebugElement;
   let context: TestComponent;
@@ -20,7 +18,7 @@ describe('abc: full-content', () => {
   let bodyEl: HTMLBodyElement;
 
   beforeEach(() => {
-    injector = TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [FullContentModule, RouterTestingModule.withRoutes([])],
       declarations: [TestComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -33,7 +31,7 @@ describe('abc: full-content', () => {
     dl = fixture.debugElement;
     context = fixture.componentInstance;
     fixture.detectChanges();
-    doc = injector.get(DOCUMENT);
+    doc = TestBed.inject(DOCUMENT);
     bodyEl = document.querySelector('body') as HTMLBodyElement;
     el = dl.query(By.css('full-content')).nativeElement as HTMLElement;
   }
@@ -97,7 +95,7 @@ describe('abc: full-content', () => {
     });
     it('should be switch fullscreen via service', () => {
       createComp();
-      const srv = injector.get(FullContentService);
+      const srv = TestBed.inject(FullContentService);
       expect(context.fullscreen).toBe(false);
       srv.toggle();
       fixture.detectChanges();
@@ -117,9 +115,7 @@ describe('abc: full-content', () => {
       fixture.detectChanges();
       tick(210);
       expect(bodyEl.getBoundingClientRect).toHaveBeenCalled();
-      expect(context.comp._height).toBe(
-        bodyHeight - el.getBoundingClientRect().top - context.padding,
-      );
+      expect(context.comp._height).toBe(bodyHeight - el.getBoundingClientRect().top - context.padding);
     }));
     it('should be clear class when go to other route', () => {
       const eventsSub = new BehaviorSubject<any>(null);
@@ -165,13 +161,7 @@ describe('abc: full-content', () => {
 
 @Component({
   template: `
-    <full-content
-      #comp
-      [(fullscreen)]="fullscreen"
-      [hideTitle]="hideTitle"
-      [padding]="padding"
-      (fullscreenChange)="change()"
-    >
+    <full-content #comp [(fullscreen)]="fullscreen" [hideTitle]="hideTitle" [padding]="padding" (fullscreenChange)="change()">
       <button full-toggle>Full</button>
     </full-content>
   `,

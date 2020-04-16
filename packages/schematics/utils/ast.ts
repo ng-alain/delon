@@ -44,12 +44,7 @@ export function commitChanges(host: Tree, src: string, changes: Change[]) {
   host.commitUpdate(recorder);
 }
 
-export function updateComponentMetadata(
-  host: Tree,
-  src: string,
-  callback: (node: ts.Node) => Change[],
-  propertyName?: string,
-) {
+export function updateComponentMetadata(host: Tree, src: string, callback: (node: ts.Node) => Change[], propertyName?: string) {
   const source = getSourceFile(host, src);
 
   const nodes = getDecoratorMetadata(source, 'Component', '@angular/core');

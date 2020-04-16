@@ -21,6 +21,7 @@ type: Components
 | `[height]` | 图表高度 | `number` | - |
 | `[data]` | 数据 | `G2BarData[]` | `[]` |
 | `[autoLabel]` | 在宽度不足时，自动隐藏 x 轴的 label | `boolean` | `true` |
+| `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
 
 ### G2BarData
 

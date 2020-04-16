@@ -1,14 +1,7 @@
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule, Tree } from '@angular-devkit/schematics';
 import { addValueToVariable, tryAddFile, tryDelFile } from '../utils/alain';
 import { HMR_CONTENT } from '../utils/contents';
-import {
-  addPackageToPackageJson,
-  getAngular,
-  getJSON,
-  overwriteAngular,
-  overwriteJSON,
-  removePackageFromPackageJson,
-} from '../utils/json';
+import { addPackageToPackageJson, getAngular, getJSON, overwriteAngular, overwriteJSON, removePackageFromPackageJson } from '../utils/json';
 import { getProjectFromWorkspace } from '../utils/project';
 import { PluginOptions } from './interface';
 
@@ -40,12 +33,7 @@ function envConfig(host: Tree, options: PluginOptions) {
   // 1. update default env file
   addValueToVariable(host, defEnvPath, 'environment', 'hmr: false');
   // 2. update prod env file
-  addValueToVariable(
-    host,
-    `${options.sourceRoot}/environments/environment.prod.ts`,
-    'environment',
-    'hmr: false',
-  );
+  addValueToVariable(host, `${options.sourceRoot}/environments/environment.prod.ts`, 'environment', 'hmr: false');
   // 3. copy default env file to hmr file
   const hmrEnvPath = `${options.sourceRoot}/environments/environment.hmr.ts`;
   host.create(hmrEnvPath, defContent);
@@ -80,11 +68,7 @@ export function pluginHmr(options: PluginOptions): Rule {
       'devDependencies',
     );
     // 2. add run scripts
-    (options.type === 'add' ? addPackageToPackageJson : removePackageFromPackageJson)(
-      host,
-      ['hmr@ng serve -c=hmr'],
-      'scripts',
-    );
+    (options.type === 'add' ? addPackageToPackageJson : removePackageFromPackageJson)(host, ['hmr@ng serve -c=hmr'], 'scripts');
     // 3. add angular.json
     configToAngularJson(host, options);
     if (options.type === 'add') {

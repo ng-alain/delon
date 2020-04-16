@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DelonLocaleService } from '@delon/theme';
-
 import { CloseType, ReuseContextCloseEvent, ReuseContextI18n, ReuseCustomContextMenu, ReuseItem } from './reuse-tab.interfaces';
 
 @Component({
@@ -29,6 +28,7 @@ export class ReuseTabContextMenuComponent implements OnInit {
   @Input() item: ReuseItem;
   @Input() event: MouseEvent;
   @Input() customContextMenu: ReuseCustomContextMenu[];
+  // tslint:disable-next-line:no-output-native
   @Output() readonly close = new EventEmitter<ReuseContextCloseEvent>();
 
   get includeNonCloseable() {

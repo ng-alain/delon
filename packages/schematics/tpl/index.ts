@@ -1,4 +1,4 @@
-import { Rule, SchematicsException, Tree, SchematicContext } from '@angular-devkit/schematics';
+import { Rule, SchematicsException } from '@angular-devkit/schematics';
 import * as fs from 'fs';
 import * as path from 'path';
 import { buildAlain } from '../utils/alain';
@@ -49,7 +49,7 @@ function runFixJS(options: Schema) {
   return Promise.resolve();
 }
 
-export default function(options: Schema): Rule {
+export default function (options: Schema): Rule {
   genFiles(options);
   return (): Promise<Rule> => {
     return runFixJS(options).then(() => buildAlain({ schematicName: 'tpl', ...options }));

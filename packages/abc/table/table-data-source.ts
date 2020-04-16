@@ -1,28 +1,28 @@
 import { DecimalPipe } from '@angular/common';
 import { Host, Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { _HttpClient, CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
+import { CNCurrencyPipe, DatePipe, YNPipe, _HttpClient } from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
-import { of, Observable } from 'rxjs';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import {
   STColumn,
+  STColumnFilter,
   STData,
   STMultiSort,
   STPage,
   STReq,
-  STRequestOptions,
   STReqReNameType,
+  STRequestOptions,
   STRes,
   STRowClassName,
   STSingleSort,
+  STSortMap,
   STStatistical,
   STStatisticalResult,
   STStatisticalResults,
   STStatisticalType,
-  STColumnFilter,
-  STSortMap,
 } from './table.interfaces';
 
 export interface STDataSourceOptions {
@@ -371,7 +371,7 @@ export class STDataSource {
       .forEach(col => {
         const filter = col.filter!;
         const values = this.getFilteredData(filter);
-        let obj: {} = {};
+        let obj: { [key: string]: NzSafeAny } = {};
         if (filter.reName) {
           obj = filter.reName!(filter.menus!, col);
         } else {
@@ -387,7 +387,7 @@ export class STDataSource {
   // #region statistical
 
   private genStatistical(columns: STColumn[], list: STData[], rawData: any): STStatisticalResults {
-    const res = {};
+    const res: { [key: string]: NzSafeAny } = {};
     columns.forEach((col, index) => {
       res[col.key ? col.key : index] = col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
     });

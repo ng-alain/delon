@@ -11,7 +11,7 @@ config: DateRangePickerConfig
 
 ## 注意
 
-如果采用 date-fns 务必修改默认 `nzFormat` 值为 `YYYY-MM-DD`。
+如果采用 date-fns 务必修改默认 `nzFormat` 值为 `yyyy-MM-dd`。
 
 ## API
 

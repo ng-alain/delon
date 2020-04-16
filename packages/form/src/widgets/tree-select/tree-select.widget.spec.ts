@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { fakeAsync, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { of } from 'rxjs';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
@@ -38,11 +38,12 @@ describe('form: widget: tree-select', () => {
         },
       },
     };
+
     page
       .newSchema(s)
       .typeEvent('click', '.ant-select')
-      .typeEvent('click', '.ant-select-switcher-icon')
-      .typeEvent('click', 'nz-tree-node:nth-child(2)')
+      .typeEvent('click', 'nz-tree-node:nth-child(2) nz-tree-node-title')
+      .dc(1)
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
   }));
@@ -66,9 +67,9 @@ describe('form: widget: tree-select', () => {
       },
     };
     page.newSchema(s).dc(1);
-    expect(page.getEl('.ant-select-selection-selected-value').textContent!.trim()).toContain('已支付');
+    expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toContain('已支付');
     page.setValue('/a', 'TRADE_FINISHED').dc(1);
-    expect(page.getEl('.ant-select-selection-selected-value').textContent!.trim()).toContain('交易完成');
+    expect(page.getEl('.ant-select-selection-item').textContent!.trim()).toContain('交易完成');
   }));
 
   it('#change', fakeAsync(() => {
@@ -93,7 +94,7 @@ describe('form: widget: tree-select', () => {
     page
       .newSchema(s)
       .typeEvent('click', '.ant-select')
-      .typeEvent('click', 'nz-tree-node:nth-child(2)')
+      .typeEvent('click', 'nz-tree-node:nth-child(2) nz-tree-node-title')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
     expect((s.properties!.a.ui as any).change).toHaveBeenCalled();
@@ -121,8 +122,8 @@ describe('form: widget: tree-select', () => {
     page
       .newSchema(s)
       .typeEvent('click', '.ant-select')
-      .typeEvent('click', '.ant-select-switcher-icon')
-      .typeEvent('click', 'nz-tree-node:nth-child(2)')
+      .typeEvent('click', '.ant-select-tree-switcher-icon')
+      .typeEvent('click', 'nz-tree-node:nth-child(2) nz-tree-node-title')
       .checkValue('a', 'TRADE_SUCCESS')
       .asyncEnd(1000);
     expect((s.properties!.a.ui as any).expandChange).toHaveBeenCalled();

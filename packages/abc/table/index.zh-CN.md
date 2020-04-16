@@ -242,7 +242,7 @@ class TestComponent {
 `[filter]` | 过滤配置项 | `STColumnFilter` | -
 `[selections]` | 选择功能配置 | `STColumnSelection[]` | -
 `[numberDigits]` | 数字格式，`type=number` 有效 | `string` | -
-`[dateFormat]` | 日期格式，`type=date` 有效 | `string` | `YYYY-MM-DD HH:mm`
+`[dateFormat]` | 日期格式，`type=date` 有效 | `string` | `yyyy-MM-dd HH:mm`
 `[yn]` | 当 `type=yn` 有效 | `STColumnYn` | -
 `[exported]` | 是否允许导出 | `boolean` | `true`
 `[acl]` | ACL权限，等同 `can()` 参数值 | `ACLCanType` | -
@@ -335,7 +335,7 @@ class TestComponent {
 `[size]` | 对话框大小，支持数字类型 | `'sm','md','lg','xl'` | `'lg'`
 `[exact]` | 是否精准（默认：`true`），若返回值非空值（`null`或`undefined`）视为成功，否则视为错误 | `boolean` | `true`
 `[includeTabs]` | 是否包裹标签页，修复模态包含标签间距问题 | `boolean` | -
-`[modalOptions]` | 对话框 [ModalOptionsForService](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/nz-modal.type.ts) 参数 | `any` | -
+`[modalOptions]` | 对话框 [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) 参数 | `any` | -
 
 ### STColumnButtonDrawer
 

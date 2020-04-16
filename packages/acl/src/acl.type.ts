@@ -1,3 +1,5 @@
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+
 export interface ACLType {
   /**
    * 角色
@@ -20,7 +22,7 @@ export interface ACLType {
    */
   except?: boolean;
 
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 export type ACLCanType = number | number[] | string | string[] | ACLType;

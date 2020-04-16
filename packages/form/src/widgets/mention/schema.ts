@@ -1,8 +1,8 @@
-import { Observable } from 'rxjs';
-import { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
 import { AutoSizeType } from 'ng-zorro-antd/input';
-import { SFUISchemaItem, SFDLSSize } from '../../schema/ui';
+import { MentionOnSearchTypes } from 'ng-zorro-antd/mention';
+import { Observable } from 'rxjs';
 import { SFSchemaEnumType } from '../../schema';
+import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
 
 export interface SFMentionWidgetSchema extends SFUISchemaItem {
   /**

@@ -13,5 +13,5 @@ export interface IStore {
 
   set(key: string, value: ITokenModel): boolean;
 
-  remove(key: string);
+  remove(key: string): void;
 }

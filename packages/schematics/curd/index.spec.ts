@@ -7,9 +7,7 @@ describe('Schematic: curd', () => {
 
   beforeEach(async () => {
     ({ runner, tree } = await createAlainAndModuleApp());
-    tree = await runner
-      .runSchematicAsync('curd', { name: 'list', module: 'trade' }, tree)
-      .toPromise();
+    tree = await runner.runSchematicAsync('curd', { name: 'list', module: 'trade' }, tree).toPromise();
   });
 
   it('should be generate list page', () => {
@@ -17,14 +15,10 @@ describe('Schematic: curd', () => {
   });
 
   it('should be generate view page', () => {
-    expect(tree.exists('/projects/foo/src/app/routes/trade/list/view/view.component.ts')).toBe(
-      true,
-    );
+    expect(tree.exists('/projects/foo/src/app/routes/trade/list/view/view.component.ts')).toBe(true);
   });
 
   it('should be generate edit page', () => {
-    expect(tree.exists('/projects/foo/src/app/routes/trade/list/edit/edit.component.ts')).toBe(
-      true,
-    );
+    expect(tree.exists('/projects/foo/src/app/routes/trade/list/edit/edit.component.ts')).toBe(true);
   });
 });

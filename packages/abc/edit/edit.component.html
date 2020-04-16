@@ -9,12 +9,14 @@
     </span>
   </label>
 </div>
-<div class="ant-form-item-control-wrapper se__control">
-  <div class="ant-form-item-control {{controlClass}}" [class.has-error]="invalid">
-    <span (cdkObserveContent)="checkContent()" #contentElement>
+<div class="ant-form-item-control se__control">
+  <div class="ant-form-item-control-input {{controlClass}}">
+    <div class="ant-form-item-control-input-content" (cdkObserveContent)="checkContent()" #contentElement>
       <ng-content></ng-content>
-    </span>
-    <se-error *ngIf="showErr">{{_error}}</se-error>
-    <div *ngIf="extra" class="ant-form-extra">{{extra}}</div>
+    </div>
   </div>
+  <div class="ant-form-item-explain" *ngIf="showErr && !compact">
+    <div @helpMotion>{{_error}}</div>
+  </div>
+  <div *ngIf="extra && !compact" class="ant-form-item-extra">{{extra}}</div>
 </div>

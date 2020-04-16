@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
-import { configureTestSuite, createTestContext } from '@delon/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { createTestContext } from '@delon/testing';
 import { G2CustomComponent } from './custom.component';
 import { G2CustomModule } from './custom.module';
 
@@ -8,14 +8,11 @@ describe('chart: custom', () => {
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
 
-  configureTestSuite(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [G2CustomModule],
       declarations: [TestComponent],
     });
-  });
-
-  beforeEach(() => {
     ({ fixture, context } = createTestContext(TestComponent));
 
     spyOn(context, 'render');
@@ -30,20 +27,20 @@ describe('chart: custom', () => {
     expect(context.render).toHaveBeenCalled();
   });
 
-  it('should be resize', fakeAsync(() => {
+  it('should be resize', done => {
     expect(context.resize).not.toHaveBeenCalled();
-    context.resizeTime = 200;
+    context.resizeTime = 1;
     fixture.detectChanges();
     window.dispatchEvent(new Event('resize'));
-    tick(201);
-    expect(context.resize).toHaveBeenCalled();
-  }));
+    setTimeout(() => {
+      expect(context.resize).toHaveBeenCalled();
+      done();
+    }, 2);
+  });
 });
 
 @Component({
-  template: `
-    <g2-custom #comp [resizeTime]="resizeTime" (resize)="resize()" (render)="render()"></g2-custom>
-  `,
+  template: ` <g2-custom #comp [resizeTime]="resizeTime" (resize)="resize()" (render)="render()"></g2-custom> `,
 })
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: G2CustomComponent;

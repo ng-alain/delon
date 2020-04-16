@@ -18,7 +18,7 @@ type: Widgets
 
 **实时**
 
-指每一次每一次选择会触发HTTP请求，数据来源于 `asyncData`；包含三个参数 `(node: CascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>`，其中 `me` 表示当前小部件实例。
+指每一次每一次选择会触发HTTP请求，数据来源于 `asyncData`；包含三个参数 `(node: NzCascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>`，其中 `me` 表示当前小部件实例。
 
 ## API
 
@@ -33,7 +33,7 @@ type: Widgets
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[asyncData]` | 异步静态数据源 | `(node: CascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | -
+`[asyncData]` | 异步静态数据源 | `(node: NzCascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | -
 `[size]` | 大小，等同 `nzSize` | `string` | -
 `[placeholder]` | 在文字框中显示提示讯息 | `string` | -
 `[showSearch]` | 是否支持搜索 | `bool` | `false`
@@ -48,11 +48,11 @@ type: Widgets
 `[enableCache]` | 是否缓存异步加载的数据，若每次异步加载的数据都是变化的，需将该值设置为 false | `bool` | `true`
 `[expandTrigger]` | 次级菜单的展开方式，可选 'click' 和 'hover' | `string` | `click`
 `[changeOnSelect]` | 当此项为 true 时，点选每级菜单选项值都会发生变化，具体见上面的演示 | `bool` | `false`
-`[changeOn]` | 可通过自定义的函数来判断点击菜单选项是否应该发生变化，当函数返回 true 时，将发生变化 | `(option: CascaderOption, level: number) => boolean` | -
+`[changeOn]` | 可通过自定义的函数来判断点击菜单选项是否应该发生变化，当函数返回 true 时，将发生变化 | `(option: NzCascaderOption, level: number) => boolean` | -
 `[triggerAction]` | 触发菜单出现的行为 | `('click', 'hover')[]` | `['click']`
 `[valueProperty]` | 值 `value` 的属性名称 | `string` | `value`
 `[labelProperty]` | 值 `label` 的属性名称 | `string` | `label`
 `[visibleChange]` | 异步加载事件 | `(value: boolean) => void` | -
 `[change]` | 选项值变更事件 | `(values: any[]) => void` | -
-`[selectionChange]` | 选项变更事件 | `(values: CascaderOption[]) => void` | -
+`[selectionChange]` | 选项变更事件 | `(values: NzCascaderOption[]) => void` | -
 `[clear]` | 内容被清空事件 | `() => void` | -

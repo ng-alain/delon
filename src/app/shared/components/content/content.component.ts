@@ -11,6 +11,8 @@ import { MobileService } from '../../../core/mobile.service';
 })
 export class ContentComponent {
   isMobile: boolean;
+  opened = false;
+
   constructor(public meta: MetaService, private mobileSrv: MobileService) {
     this.mobileSrv.change.subscribe(res => (this.isMobile = res));
   }
@@ -18,6 +20,4 @@ export class ContentComponent {
   to() {
     this.opened = false;
   }
-
-  opened = false;
 }

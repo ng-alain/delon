@@ -11,7 +11,7 @@ export interface ICacheStore {
 
   set(key: string, value: ICache): boolean;
 
-  remove(key: string);
+  remove(key: string): void;
 }
 
 export type CacheNotifyType = 'set' | 'remove' | 'expire';

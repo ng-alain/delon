@@ -249,7 +249,7 @@ Property | Description | Type | Default
 `[filter]` | Filter config of this column | `STColumnFilter` | -
 `[selections]` | Config of type is checkbox | `STColumnSelection[]` | -
 `[numberDigits]` | Config of type is number | `string` | -
-`[dateFormat]` | Config of type is date | `YYYY-MM-DD HH:mm`
+`[dateFormat]` | Config of type is date | `yyyy-MM-dd HH:mm`
 `[yn]` | Config of type is yn | `STColumnYn` | -
 `[exported]` | Whether to allow export | `boolean` | `true`
 `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | -
@@ -342,7 +342,7 @@ Property | Description | Type | Default
 `[size]` | Size of modal, support number type | `'sm','md','lg','xl'` | `'lg'`
 `[exact]` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true`
 `[includeTabs]` | Whether to wrap the nz-tabset, fix content spacing problem | `boolean` | -
-`[modalOptions]` | nz-modal raw parameters [ModalOptionsForService](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/nz-modal.type.ts) | `any` | -
+`[modalOptions]` | nz-modal raw parameters [ModalOptions](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/modal/modal-types.ts) | `any` | -
 
 ### STColumnButtonDrawer
 

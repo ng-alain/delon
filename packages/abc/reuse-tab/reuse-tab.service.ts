@@ -8,9 +8,9 @@ import {
   Router,
   ROUTER_CONFIGURATION,
 } from '@angular/router';
-import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
-
 import { MenuService, ScrollService } from '@delon/theme';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
 import { ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
 
 /**
@@ -331,7 +331,7 @@ export class ReuseTabService implements OnDestroy {
     if (_handle && _handle.componentRef && _handle.componentRef.destroy) _handle.componentRef.destroy();
   }
 
-  private di(...args) {
+  private di(...args: NzSafeAny[]) {
     if (!this.debug) return;
     // tslint:disable-next-line:no-console
     console.warn(...args);

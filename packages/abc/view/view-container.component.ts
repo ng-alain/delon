@@ -9,7 +9,7 @@ import {
   TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { updateHostClass, InputNumber } from '@delon/util';
+import { InputNumber, updateHostClass } from '@delon/util';
 import { SVConfig } from './view.config';
 
 const prefixCls = `sv`;

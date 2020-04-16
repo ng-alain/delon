@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Observer } from 'rxjs';
-
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../token/interface';
 
 const OPENTYPE = '_delonAuthSocialType';
@@ -16,11 +15,7 @@ export class SocialService implements OnDestroy {
   private _winTime: any;
   private observer: Observer<ITokenModel | null>;
 
-  constructor(
-    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
-    @Inject(DOCUMENT) private doc: any,
-    private router: Router,
-  ) {}
+  constructor(@Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService, @Inject(DOCUMENT) private doc: any, private router: Router) {}
 
   /**
    * 使用窗体打开授权页，返回值是 `Observable<ITokenModel>` 用于订阅授权后返回的结果
