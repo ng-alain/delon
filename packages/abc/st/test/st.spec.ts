@@ -1503,16 +1503,16 @@ describe('abc: table', () => {
         expect(comp.list.length).toBe(PS);
         page.asyncEnd();
       }));
-      // xit('#cdkVirtualScrollViewport', done => {
-      //   context.virtualScroll = true;
-      //   context.data = genData(10);
-      //   fixture.detectChanges();
-      //   fixture.whenStable().then(() => {
-      //     fixture.detectChanges();
-      //     expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
-      //     done();
-      //   });
-      // });
+      it('#cdkVirtualScrollViewport', done => {
+        context.virtualScroll = true;
+        context.data = genData(10);
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+          expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
+          done();
+        });
+      });
     });
     describe('#export', () => {
       let exportSrv: STExport;
