@@ -100,6 +100,7 @@ config: STConfig
 
 - `extraParams` 若不传递表示保留原始值
 - `STLoadOptions.merge` 是否合并模式，即 `extraParams` 跟新值合并而非替代
+- `STLoadOptions.toTop` 是否跳转至顶部，若不指定由 `page.toTop` 来决定
 
 **使用方式**
 

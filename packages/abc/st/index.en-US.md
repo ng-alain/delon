@@ -100,6 +100,7 @@ Some details:
 
 - `extraParams` Keep original values when is null
 - `STLoadOptions.merge` merge mode, if `true` merges with new values instead of replacing
+- `STLoadOptions.toTop` Whether to jump to the top, if not specified, it's determined by `page.toTop`
 
 **Usage**
 

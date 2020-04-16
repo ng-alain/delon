@@ -404,7 +404,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (typeof extraParams !== 'undefined') {
       this._req.params = options && options.merge ? { ...this._req.params, ...extraParams } : extraParams;
     }
-    this._change('pi');
+    this._change('pi', options);
     return this;
   }
 
@@ -430,8 +430,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  private _toTop() {
-    if (!this.page.toTop) return;
+  private _toTop(enforce?: boolean) {
+    if (!(enforce == null ? this.page.toTop : enforce)) return;
     const el = this.el.nativeElement as HTMLElement;
     if (this.scroll) {
       el.querySelector('.ant-table-body')!.scrollTo(0, 0);
@@ -442,9 +442,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.doc.documentElement.scrollTop -= this.page.toTopOffset!;
   }
 
-  _change(type: 'pi' | 'ps') {
+  _change(type: 'pi' | 'ps', options?: STLoadOptions) {
     if (type === 'pi' || (type === 'ps' && this.pi <= Math.ceil(this.total / this.ps))) {
-      this.loadPageData().then(() => this._toTop());
+      this.loadPageData().then(() => this._toTop(options?.toTop));
     }
 
     this.changeEmit(type);

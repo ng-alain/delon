@@ -87,6 +87,8 @@ export interface STRequestOptions {
 export interface STLoadOptions {
   /** 是否合并，默认：`false` */
   merge?: boolean;
+  /** 是否跳转至顶部，若不指定由 `page.toTop` 来决定 */
+  toTop?: boolean;
 }
 
 export interface STRes {
