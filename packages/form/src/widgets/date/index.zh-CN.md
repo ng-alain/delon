@@ -11,11 +11,11 @@ type: Widgets
 - 格式化分为：**数据格式化**表示表单数据和**显示格式化**显示数据（等同 [nzFormat](https://ng.ant.design/components/date-picker/zh#api) 值）
 - 所有 **数据格式化** 单位，参考 [date-fns format](https://date-fns.org/v1.29.0/docs/format)（国内镜像：[moment format](http://momentjs.cn/docs/#/displaying/format/)）
 - 指定 `schema.format` 则必须遵守 [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.6) 时间格式，否则都视为格式错误，默认的数据格式化规则：
-  - `date-time` 默认 `YYYY-MM-DDTHH:mm:ssZ`，注意这里采用的是 `type="datetime-local"` 因此会涉及到**时区问题**
+  - `date-time` 默认 `yyyy-MM-DDTHH:mm:ssZ`，注意这里采用的是 `type="datetime-local"` 因此会涉及到**时区问题**
   - `date`、`full-date` 默认 `yyyy-MM-dd`
   - `time`、`full-time` 默认 `HH:mm:ss`
-  - 非标准：`week` 默认 `YYYY-WW`
-  - 非标准：`month` 默认 `YYYY-MM`
+  - 非标准：`week` 默认 `yyyy-WW`
+  - 非标准：`month` 默认 `yyyy-MM`
 - 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过 `DelonFormConfig` 替换）数据格式化：
   - `string` 默认 `yyyy-MM-dd HH:mm:ss`
   - `number` 默认 `x` 13位Unix Timestamp

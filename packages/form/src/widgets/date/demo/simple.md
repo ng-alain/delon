@@ -41,7 +41,7 @@ export class DemoComponent {
       },
       year: {
         type: 'number',
-        ui: { widget: 'date', mode: 'year', format: 'YYYY' } as SFDateWidgetSchema,
+        ui: { widget: 'date', mode: 'year', format: 'yyyy' } as SFDateWidgetSchema,
       },
       month: {
         type: 'string',

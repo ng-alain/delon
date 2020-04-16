@@ -11,11 +11,11 @@ To select or input a date.
 - Format is divided into two types: **Data format** means form data, **Display format** means display data ([nzFormat](https://ng.ant.design/components/date-picker/en#api))
 - All **Data format** units, reference [date-fns format](https://date-fns.org/v1.29.0/docs/format) (China mirror: [moment format](http://Momentjs.cn/docs/#/displaying/format/))
 - Specify `schema.format` must follow [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.6) time format, otherwise considered as a format error, default rules:
-  - `date-time` default is `YYYY-MM-DDTHH:mm:ssZ`
+  - `date-time` default is `yyyy-MM-ddTHH:mm:ssZ`
   - `date`, `full-date` default is `yyyy-MM-dd`
   - `time`, `full-time` default is `HH:mm:ss`
-  - *Non-standard:* `week` default is `YYYY-WW`
-  - *Non-standard:* `month` default is `YYYY-MM`
+  - *Non-standard:* `week` default is `yyyy-WW`
+  - *Non-standard:* `month` default is `yyyy-MM`
 - When `schema.format` is not specified, the data formatting (Allows you to reassign default values via `DelonFormConfig`) is determined by the `schema.type` type:
   - `string` default is `yyyy-MM-dd HH:mm:ss`
   - `number` default is `x` 13-bit Unix Timestamp
