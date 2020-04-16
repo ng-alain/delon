@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import format from 'date-fns/format';
+import parse from 'date-fns/parse';
 import { SFValue } from '../../interface';
 import { FormProperty } from '../../model/form.property';
 import { toBool } from '../../utils';
@@ -55,9 +56,9 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   }
 
   reset(value: SFValue) {
-    value = this.toDate(value);
+    value = this.toDate(value, this.startFormat);
     if (this.flatRange) {
-      this.displayValue = value == null ? [] : [value, this.toDate(this.endProperty.formData)];
+      this.displayValue = value == null ? [] : [value, this.toDate(this.endProperty.formData, this.endFormat || this.startFormat)];
     } else {
       this.displayValue = value;
     }
@@ -101,10 +102,14 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     this.endProperty.setValue(value, true);
   }
 
-  private toDate(value: SFValue) {
+  private toDate(value: SFValue, formatString: string): Date | null {
+    if (value instanceof Date) {
+      return value;
+    }
     if (typeof value === 'number' || (typeof value === 'string' && !isNaN(+value))) {
       value = new Date(+value);
     }
-    return value;
+    const res = value ? parse(value, formatString, new Date()) : null;
+    return res != null && res.toString() === 'Invalid Date' ? new Date(value) : res;
   }
 }

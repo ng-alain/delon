@@ -102,9 +102,9 @@ import { Component } from '@angular/core';
 })
 export class DemoComponent {
   value = 'https://ng-alain.com/';
-  background = '#fff';
+  background = '#ffffff';
   backgroundAlpha = 1.0;
-  foreground = '#000';
+  foreground = '#000000';
   foregroundAlpha = 1.0;
   level = 'L';
   mime = 'image/png';

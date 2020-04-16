@@ -30,7 +30,8 @@
     ],
     "import-blacklist": [
       true,
-      "rxjs/Rx"
+      "rxjs/Rx",
+      "ng-zorro-antd"
     ],
     "interface-name": false,
     "max-classes-per-file": false,

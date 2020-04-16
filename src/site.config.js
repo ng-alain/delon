@@ -214,7 +214,7 @@ module.exports = {
         },
       ],
       module: '@delon/abc',
-      defaultRoute: 'view',
+      defaultRoute: 'sv',
       metaIncludeAttributes: ['name', 'types', 'github', 'module'],
       template: {
         meta: './src/templates/meta.ts',
