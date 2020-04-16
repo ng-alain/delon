@@ -28,13 +28,14 @@ const PIPES = [DatePipe, CNCurrencyPipe, KeysPipe, YNPipe, I18nPipe, HTMLPipe, U
 // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts#L6
 
 import { BellOutline, DeleteOutline, InboxOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import { NzI18nModule } from 'ng-zorro-antd/i18n';
 import { NzIconService } from 'ng-zorro-antd/icon';
 const ICONS = [BellOutline, DeleteOutline, PlusOutline, InboxOutline];
 
 // #endregion
 
 @NgModule({
-  imports: [CommonModule, RouterModule, OverlayModule],
+  imports: [CommonModule, RouterModule, OverlayModule, NzI18nModule],
   declarations: [...PIPES],
   exports: [...PIPES, DelonLocaleModule],
 })

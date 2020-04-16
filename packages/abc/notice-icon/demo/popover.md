@@ -11,6 +11,7 @@ import { NoticeIconList, NoticeItem } from '@delon/abc/notice-icon';
 import add from 'date-fns/add';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import parse from 'date-fns/parse';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -57,7 +58,7 @@ export class DemoComponent {
   count = 5;
   loading = false;
 
-  constructor(private msg: NzMessageService) {}
+  constructor(private msg: NzMessageService, private nzI18n: NzI18nService) {}
 
   updateNoticeData(notices: NoticeIconList[]): NoticeItem[] {
     const data = this.data.slice();
@@ -68,7 +69,9 @@ export class DemoComponent {
       if (typeof newItem.datetime === 'string') {
         newItem.datetime = parse(newItem.datetime, 'yyyy-MM-dd', new Date());
       }
-      if (newItem.datetime) newItem.datetime = formatDistanceToNow(newItem.datetime as Date, { locale: (window as any).__locale__ });
+      if (newItem.datetime) {
+        newItem.datetime = formatDistanceToNow(newItem.datetime as Date, { locale: this.nzI18n.getDateLocale() });
+      }
       if (newItem.extra && newItem.status) {
         newItem.color = ({
           todo: undefined,

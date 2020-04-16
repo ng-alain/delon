@@ -11,6 +11,7 @@
       "ng-zorro-antd/drawer": "ng-zorro-antd/drawer",
       "ng-zorro-antd/modal": "ng-zorro-antd/modal",
       "ng-zorro-antd/icon": "ng-zorro-antd/icon",
+      "ng-zorro-antd/i18n": "ng-zorro-antd/i18n",
       "date-fns": "DateFns",
       "@delon/acl": "delon.acl",
       "@delon/util": "delon.util"
