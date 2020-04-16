@@ -4,12 +4,12 @@
        class="g2-pie__total">
     <h4 *ngIf="subTitle"
         class="g2-pie__total-title">
-      <ng-container *stringTemplateOutlet="subTitle">
+      <ng-container *nzStringTemplateOutlet="subTitle">
         <div [innerHTML]="subTitle"></div>
       </ng-container>
     </h4>
     <div *ngIf="total" class="g2-pie__total-stat">
-      <ng-container *stringTemplateOutlet="total">
+      <ng-container *nzStringTemplateOutlet="total">
         <div [innerHTML]="total"></div>
       </ng-container>
     </div>
