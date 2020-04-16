@@ -59,7 +59,7 @@ Property | Description | Type | Default
 `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | -
 `[error]` | validation error message | `string, { [key: string]: string }` | -
 `[extra]` | The extra prompt message. It is similar to help. | `string` | -
-`[required]` | whether required identifier | `string` | -
+`[required]` | Whether required identifier, if not set, the value is automatically set according to whether the form element has `RequiredValidator` validation | `string` | -
 `[controlClass]` | Control area classes | `string` | -
 `[id]` | Custom `id` value of component | `string` | -
 `[line]` | whether separation line style (Inherited from `se-container`) | `boolean` | -
