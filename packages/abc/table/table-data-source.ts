@@ -209,7 +209,7 @@ export class STDataSource {
         text = value === col.default ? col.default : this.datePipe.transform(value, col.dateFormat);
         break;
       case 'yn':
-        text = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!);
+        text = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!, false);
         break;
       case 'tag':
       case 'badge':

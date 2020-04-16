@@ -12,7 +12,7 @@ const CLS_NO = `class="yn__no"`;
 export class YNPipe implements PipeTransform {
   constructor(private dom: DomSanitizer) {}
 
-  transform(value: boolean, yes: string, no: string, mode: YNMode): SafeHtml {
+  transform(value: boolean, yes: string, no: string, mode: YNMode, isSafeHtml = true): SafeHtml {
     let html = '';
     yes = yes || '是';
     no = no || '否';
@@ -27,6 +27,6 @@ export class YNPipe implements PipeTransform {
         html = value ? `<i ${CLS_YES} title="${yes}">${ICON_YES}</i>` : `<i ${CLS_NO} title="${no}">${ICON_NO}</i>`;
         break;
     }
-    return this.dom.bypassSecurityTrustHtml(html);
+    return isSafeHtml ? this.dom.bypassSecurityTrustHtml(html) : html;
   }
 }

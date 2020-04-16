@@ -40,10 +40,10 @@ describe('theme: http.client', () => {
 
     it('#loading', fakeAsync(() => {
       http.get(URL).subscribe(() => {});
-      tick(11);
+      tick();
       expect(http.loading).toBeTruthy();
       backend.expectOne(() => true).flush(OK);
-      tick(11);
+      tick();
       expect(http.loading).toBeFalsy();
     }));
 
@@ -543,6 +543,96 @@ describe('theme: http.client', () => {
           });
         const ret = backend.expectOne(() => true) as TestRequest;
         expect(ret.request.body).toBe(BODY);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
+        ret.flush(OK);
+      });
+    });
+
+    describe('[form]', () => {
+      it(`should be re`, done => {
+        http.form(URL).subscribe(res => {
+          expect(res).toBe(OK);
+          done();
+        });
+        backend.expectOne(() => true).flush(OK);
+      });
+
+      it(`has body`, done => {
+        http.form(URL, BODY).subscribe(res => {
+          expect(res).toBe(OK);
+          done();
+        });
+        const ret = backend.expectOne(() => true) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        ret.flush(OK);
+      });
+
+      it(`specified params`, done => {
+        http.form(URL, BODY, PARAMS).subscribe(res => {
+          expect(res).toBe(OK);
+          done();
+        });
+        const ret = backend.expectOne(() => true) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
+        ret.flush(OK);
+      });
+
+      it(`return a string`, done => {
+        http.form(URL, BODY, PARAMS, { responseType: 'text' }).subscribe(res => {
+          expect(typeof res).toBe('string');
+          expect(res).toBe(OK);
+          done();
+        });
+        const ret = backend.expectOne(() => true) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
+        ret.flush(OK);
+      });
+
+      it('return generic with string type', done => {
+        http.form<string>(URL).subscribe(res => {
+          expect(typeof res).toBe('string');
+          expect(res).toBe(OK);
+          done();
+        });
+        backend.expectOne(() => true).flush(OK);
+      });
+
+      it(`return a generic with number type`, done => {
+        http.form<number>(URL).subscribe(res => {
+          expect(typeof res).toBe('number');
+          expect(res).toBe(1);
+          done();
+        });
+        backend.expectOne(() => true).flush(1);
+      });
+
+      it('return a HttpEvent', done => {
+        http
+          .form<object>(URL, BODY, PARAMS, { observe: 'events' })
+          .subscribe(res => {
+            expect(typeof res).toBe('object');
+            expect(typeof res.type).toBe('number');
+            done();
+          });
+        backend.expectOne(() => true).flush({});
+      });
+
+      it(`return a HttpResponse<Object>`, done => {
+        http
+          .form(URL, BODY, PARAMS, {
+            observe: 'response',
+            responseType: 'json',
+          })
+          .subscribe(res => {
+            expect(res.status).toBe(200);
+            expect(res.body).toBe(OK);
+            done();
+          });
+        const ret = backend.expectOne(() => true) as TestRequest;
+        expect(ret.request.body).toBe(BODY);
+        expect(ret.request.headers.get('content-type')).toBe(`application/x-www-form-urlencoded`);
         for (const key in PARAMS) expect(ret.request.params.get(key)).toBe(PARAMS[key], `param "${key}" muse be "${PARAMS[key]}"`);
         ret.flush(OK);
       });

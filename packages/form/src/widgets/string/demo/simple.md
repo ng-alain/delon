@@ -31,6 +31,10 @@ export class DemoComponent {
         ui: {
           addOnAfter: 'RMB',
           placeholder: 'RMB结算',
+          change: val => console.log(val),
+          focus: e => console.log('focus', e),
+          blur: e => console.log('blur', e),
+          enter: e => console.log('enter', e),
         } as SFStringWidgetSchema,
       },
       mobile: {

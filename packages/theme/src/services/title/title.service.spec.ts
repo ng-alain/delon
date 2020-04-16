@@ -25,6 +25,7 @@ describe('Service: Title', () => {
   class TestDocument {
     querySelector() {
       return {
+        childNodes: [],
         firstChild: {
           textContent: 'a',
         },

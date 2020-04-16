@@ -2,7 +2,7 @@ import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
 import { ACLService } from '@delon/acl';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { share } from 'rxjs/operators';
-import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu, MenuIcon } from './interface';
 
 /**
@@ -189,7 +189,11 @@ export class MenuService implements OnDestroy {
 
       if (!recursive) break;
 
-      url = url.split('/').slice(0, -1).join('/');
+      if (url.includes('?')) {
+        url = url.split('?')[0];
+      } else {
+        url = url.split('/').slice(0, -1).join('/');
+      }
     }
 
     return item;

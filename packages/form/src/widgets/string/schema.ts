@@ -60,4 +60,24 @@ export interface SFStringWidgetSchema extends SFUISchemaItem {
    * 后缀图标，等同 `nzSuffixIcon`
    */
   suffixIcon?: string;
+
+  /**
+   * 内容变更事件
+   */
+  change?: (val: string) => void;
+
+  /**
+   * 焦点事件
+   */
+  focus?: (e: FocusEvent) => void;
+
+  /**
+   * 失焦事件
+   */
+  blur?: (e: FocusEvent) => void;
+
+  /**
+   * 回车事件
+   */
+  enter?: (e: KeyboardEvent) => void;
 }

@@ -105,6 +105,11 @@ class RestService extends BaseApi {
     return;
   }
 
+  @FORM()
+  save(@Payload data: {}): Observable<any> {
+    return;
+  }
+  
   // 若请求的URL不符合授权要求，会直接抛出 `401` 错误，且不发送请求
   @GET('', { acl: 'admin' })
   ACL(): Observable<any> {

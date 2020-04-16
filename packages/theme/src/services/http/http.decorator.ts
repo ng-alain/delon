@@ -130,7 +130,9 @@ function genBody(data?: any, payload?: any): any {
   return Object.assign({}, data, payload);
 }
 
-function makeMethod(method: string) {
+export type METHOD_TYPE = 'OPTIONS' | 'GET' | 'POST' | 'DELETE' | 'PUT' | 'HEAD' | 'PATCH' | 'JSONP' | 'FORM';
+
+function makeMethod(method: METHOD_TYPE) {
   return function (url: string = '', options?: HttpOptions) {
     return (_target: BaseApi, targetKey?: string, descriptor?: PropertyDescriptor) => {
       descriptor!.value = function (...args: any[]): Observable<any> {
@@ -181,6 +183,10 @@ function makeMethod(method: string) {
           p[i.key] = args[i.index];
           return p;
         }, {});
+
+        if (method === 'FORM') {
+          headers['content-type'] = 'application/x-www-form-urlencoded';
+        }
 
         const payload = getValidArgs(data, 'payload', args);
         const supportedBody = method === 'POST' || method === 'PUT';
@@ -245,3 +251,9 @@ export const PATCH = makeMethod('PATCH');
  * - 有效范围：方法
  */
 export const JSONP = makeMethod('JSONP');
+
+/**
+ * `FORM` 请求
+ * - 有效范围：方法
+ */
+export const FORM = makeMethod('FORM');

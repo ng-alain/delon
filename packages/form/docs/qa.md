@@ -83,3 +83,13 @@ ngOnInit() {
 ## 什么时候使用 `default`？
 
 Schema 的 `default` 用于设置初始化，一般情况下当修改表单时是需要提供 `formData` 参数，但对于增加表单来说，应该依靠 `default` 提供一个更友好的表单给用户。
+
+## 如何刷新特定 Schema？
+
+可以通过 `getProperty` 方法来获取某个 Schema 的属性，其属性包含 Schema 数据以及 Ui 数据，可以修改这些数据，并重新调用小部件的 `reset` 方法重新渲染该 Schema，例如：
+
+```ts
+const statusProperty = this.sf.getProperty('/status')!;
+statusProperty.schema.enum = ['1', '2', '3'];
+statusProperty.widget.reset('2');
+```

@@ -1,8 +1,8 @@
 import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AlainThemeConfig } from '../../theme.config';
 import { HttpClientConfig } from './http.config';
 
@@ -61,11 +61,11 @@ export class _HttpClient {
   }
 
   begin() {
-    setTimeout(() => (this._loading = true), 10);
+    Promise.resolve(null).then(() => (this._loading = true));
   }
 
   end() {
-    setTimeout(() => (this._loading = false), 10);
+    Promise.resolve(null).then(() => (this._loading = false));
   }
 
   // #region get
@@ -574,6 +574,115 @@ export class _HttpClient {
 
   // #endregion
 
+  // #region form
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `string` 类型
+   */
+  form(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: _HttpHeaders;
+      observe?: 'body';
+      reportProgress?: boolean;
+      responseType: 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<string>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `HttpEvent<T>` 类型
+   */
+  form<T>(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: _HttpHeaders;
+      observe: 'events';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<HttpEvent<T>>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `HttpResponse<JSON>` 类型
+   */
+  form(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: _HttpHeaders;
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<HttpResponse<any>>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `any` 类型
+   */
+  form(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: _HttpHeaders;
+      observe?: 'body' | 'events' | 'response';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    },
+  ): Observable<any>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）：返回一个 `JSON` 类型
+   */
+  form<T>(
+    url: string,
+    body?: any,
+    params?: any,
+    options?: {
+      headers?: _HttpHeaders;
+      observe: 'response';
+      reportProgress?: boolean;
+      responseType?: 'json';
+      withCredentials?: boolean;
+    },
+  ): Observable<T>;
+
+  /**
+   * 发送传统表单请求（即：`application/x-www-form-urlencoded`）
+   */
+  form(
+    url: string,
+    body: any,
+    params: any,
+    options: {
+      headers?: _HttpHeaders;
+      observe?: 'body' | 'events' | 'response';
+      reportProgress?: boolean;
+      responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+      withCredentials?: boolean;
+    } = {},
+  ): Observable<any> {
+    return this.request('POST', url, {
+      body,
+      params,
+      ...options,
+      headers: {
+        'content-type': `application/x-www-form-urlencoded`,
+      },
+    });
+  }
+
+  // #endregion
+
   // #region request
 
   /** 返回一个 `arraybuffer` 类型 */
@@ -818,7 +927,9 @@ export class _HttpClient {
   ): Observable<any> {
     this.begin();
     if (options.params) options.params = this.parseParams(options.params);
-    return this.http.request(method, url, options).pipe(
+    return of(null).pipe(
+      tap(() => this.begin()),
+      switchMap(() => this.http.request(method, url, options)),
       tap(() => this.end()),
       catchError(res => {
         this.end();

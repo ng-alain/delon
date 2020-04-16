@@ -50,6 +50,11 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   limit?: number;
 
   /**
+   * 限制上传文件数量，超过数量隐藏上传按钮
+   */
+  limitFileCount?: number;
+
+  /**
    * 自定义过滤器
    */
   filter?: UploadFilter[];

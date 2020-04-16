@@ -1,3 +1,4 @@
+import { ObserversModule } from '@angular/cdk/observers';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -10,7 +11,7 @@ import { PageHeaderComponent } from './page-header.component';
 const COMPONENTS = [PageHeaderComponent];
 
 @NgModule({
-  imports: [CommonModule, RouterModule, DelonUtilModule, NzAffixModule, NzSkeletonModule, NzBreadCrumbModule],
+  imports: [CommonModule, RouterModule, ObserversModule, DelonUtilModule, NzAffixModule, NzSkeletonModule, NzBreadCrumbModule],
   declarations: [...COMPONENTS],
   exports: [...COMPONENTS],
 })
