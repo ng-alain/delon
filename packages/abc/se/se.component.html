@@ -16,7 +16,11 @@
     </div>
   </div>
   <div class="ant-form-item-explain" *ngIf="showErr && !compact">
-    <div @helpMotion>{{_error}}</div>
+    <div @helpMotion>
+      <ng-container *nzStringTemplateOutlet="_error">{{ _error }}</ng-container>
+    </div>
   </div>
-  <div *ngIf="extra && !compact" class="ant-form-item-extra">{{extra}}</div>
+  <div *ngIf="extra && !compact" class="ant-form-item-extra">
+    <ng-container *nzStringTemplateOutlet="extra">{{ extra }}</ng-container>
+  </div>
 </div>

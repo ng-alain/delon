@@ -1,4 +1,4 @@
-import { Component, DebugElement, EventEmitter, ViewChild } from '@angular/core';
+import { Component, DebugElement, EventEmitter, ViewChild, TemplateRef } from '@angular/core';
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder, FormControlName, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -448,7 +448,7 @@ class TestComponent {
 
   optional: string;
   optionalHelp: string;
-  error: string | { [key: string]: string } = 'required';
+  error: string | TemplateRef<void> | { [key: string]: string | TemplateRef<void> } = 'required';
   extra: string;
   label: string;
   required: boolean | null;

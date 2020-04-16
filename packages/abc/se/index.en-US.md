@@ -53,12 +53,12 @@ Property | Description | Type | Default
 Property | Description | Type | Default
 ----|------|-----|------
 `[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) (Inherited from `se-container`) | `'1','2','3','4','5','6'` | -
-`[label]` | Label | `string,TemplateRef<void>` | -
+`[label]` | Label | `string, TemplateRef<void>` | -
 `[labelWidth]` | label text of width, unit is `px` (Inherited from `se-container`) | `number` | -
 `[optional]` | Label optional information | `string, TemplateRef<void>` | -
 `[optionalHelp]` | Label optional help | `string, TemplateRef<void>` | -
-`[error]` | validation error message | `string, { [key: string]: string }` | -
-`[extra]` | The extra prompt message. It is similar to help. | `string` | -
+`[error]` | validation error message | `string, TemplateRef<void>, { [key: string]: string, TemplateRef<void> }` | -
+`[extra]` | The extra prompt message. It is similar to help. | `string, TemplateRef<void>` | -
 `[required]` | Whether required identifier, if not set, the value is automatically set according to whether the form element has `RequiredValidator` validation | `string` | -
 `[controlClass]` | Control area classes | `string` | -
 `[id]` | Custom `id` value of component | `string` | -
