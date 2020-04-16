@@ -1008,6 +1008,26 @@ describe('abc: table', () => {
         expect(el.scrollIntoView).not.toHaveBeenCalled();
         page.asyncEnd();
       }));
+      it('should be enforce to the top via load', fakeAsync(() => {
+        context.page.toTop = false;
+        page.cd();
+        const el = page.getEl('st');
+        spyOn(el, 'scrollIntoView');
+        comp.reload({}, { toTop: true });
+        page.cd();
+        expect(el.scrollIntoView).toHaveBeenCalled();
+        page.asyncEnd();
+      }));
+      it('should be cancelled to the top via load', fakeAsync(() => {
+        context.page.toTop = true;
+        page.cd();
+        const el = page.getEl('st');
+        spyOn(el, 'scrollIntoView');
+        comp.reload({}, { toTop: false });
+        page.cd();
+        expect(el.scrollIntoView).not.toHaveBeenCalled();
+        page.asyncEnd();
+      }));
     });
     describe('#expand', () => {
       beforeEach(() => createComp(true, TestExpandComponent));
@@ -1477,16 +1497,16 @@ describe('abc: table', () => {
         expect(comp.list.length).toBe(PS);
         page.asyncEnd();
       }));
-      xit('#cdkVirtualScrollViewport', done => {
-        context.virtualScroll = true;
-        context.data = genData(10);
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
-          expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
-          done();
-        });
-      });
+      // xit('#cdkVirtualScrollViewport', done => {
+      //   context.virtualScroll = true;
+      //   context.data = genData(10);
+      //   fixture.detectChanges();
+      //   fixture.whenStable().then(() => {
+      //     fixture.detectChanges();
+      //     expect(context.comp.cdkVirtualScrollViewport != null).toBe(true);
+      //     done();
+      //   });
+      // });
     });
     describe('#export', () => {
       let exportSrv: STExport;
