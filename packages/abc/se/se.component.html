@@ -1,10 +1,10 @@
 <div class="ant-form-item-label" [class.se__nolabel]="!label" [style.width.px]="_labelWidth">
   <label *ngIf="label" [attr.for]="_id" class="se__label" [ngClass]="{'ant-form-item-required': required}">
     <span class="se__label-text">
-      <ng-container *stringTemplateOutlet="label">{{ label }}</ng-container>
+      <ng-container *nzStringTemplateOutlet="label">{{ label }}</ng-container>
     </span>
     <span *ngIf="optional || optionalHelp" class="se__label-optional" [class.se__label-optional-no-text]="!optional">
-      <ng-container *stringTemplateOutlet="optional">{{ optional }}</ng-container>
+      <ng-container *nzStringTemplateOutlet="optional">{{ optional }}</ng-container>
       <i *ngIf="optionalHelp" nz-tooltip [nzTooltipTitle]="optionalHelp" nz-icon nzType="question-circle"></i>
     </span>
   </label>

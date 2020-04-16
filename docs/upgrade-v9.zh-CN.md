@@ -21,6 +21,10 @@ hot: true
 - `@delon/abc/grid` => `@delon/abc/sg`
 - `@delon/abc/edit` => `@delon/abc/se`
 
+减少与 `ng-zorro-antd` 重复性代码：
+
+- `*stringTemplateOutlet` => `*nzStringTemplateOutlet`
+
 ## 可选升级
 
 ### tslint

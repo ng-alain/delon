@@ -4,6 +4,7 @@
       "flatModuleFile": "footerToolbar",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
+        "ng-zorro-antd/core/outlet": "ng-zorro-antd/core/outlet",
         "@delon/abc/error-collect": "delon.theme.errorCollect",
         "@delon/theme": "delon.theme",
         "@delon/util": "delon.util"
