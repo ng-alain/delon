@@ -1,6 +1,6 @@
 import { Component, OnInit<% if(!!viewEncapsulation) { %>, ViewEncapsulation<% }%><% if(changeDetection !== 'Default') { %>, ChangeDetectionStrategy<% }%> } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
-import { STColumn } from '@delon/abc/table';
+import { STColumn } from '@delon/abc/st';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
