@@ -59,7 +59,7 @@ config: SEConfig
 `[optionalHelp]` | 标签可选帮助 | `string, TemplateRef<void>` | -
 `[error]` | 错误描述 | `string, { [key: string]: string }` | -
 `[extra]` | 额外提示信息 | `string` | -
-`[required]` | 是否必填项标识符 | `string` | -
+`[required]` | 是否必填项标识符，若不设置自动根据表单元素是否有 `RequiredValidator` 校验来设置值 | `string` | -
 `[controlClass]` | 控件区域样式名 | `string` | -
 `[id]` | 自定义组件 `id` | `string` | -
 `[line]` | 分隔线（继承于 `se-container`） | `boolean` | -

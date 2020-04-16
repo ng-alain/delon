@@ -252,6 +252,15 @@ describe('abc: edit', () => {
       fixture.detectChanges();
       page.expect('#ipt');
     });
+    it('should be auto set required when control include required', () => {
+      genModule(`
+      <form nz-form se-container>
+        <se label="l">
+          <input type="text" [(ngModel)]="val" name="val" required>
+        </se>
+      </form>`);
+      page.expect('.ant-form-item-required', 1);
+    });
     it('should be reactive form', () => {
       TestBed.configureTestingModule({
         imports: [SEModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
