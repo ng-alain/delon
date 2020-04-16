@@ -75,6 +75,12 @@ class MockI18NServiceFake extends AlainI18NServiceFake {
   }
 }
 
+class MockNzI18nService {
+  getDateLocale() {
+    return null;
+  }
+}
+
 describe('abc: table', () => {
   let fixture: ComponentFixture<TestComponent>;
   let context: TestComponent;
@@ -345,7 +351,7 @@ describe('abc: table', () => {
           it(`should be render date`, fakeAsync(() => {
             page
               .updateColumn([{ title: '', index: 'date', type: 'date' }])
-              .expectCell(new DatePipe().transform(MOCKDATE, 'yyyy-MM-dd HH:mm'))
+              .expectCell(new DatePipe(new MockNzI18nService() as any).transform(MOCKDATE, 'yyyy-MM-dd HH:mm'))
               .asyncEnd();
           }));
           it(`should be custom render date format`, fakeAsync(() => {
@@ -358,7 +364,7 @@ describe('abc: table', () => {
                   dateFormat: 'yyyy-MM',
                 },
               ])
-              .expectCell(new DatePipe().transform(MOCKDATE, 'yyyy-MM'))
+              .expectCell(new DatePipe(new MockNzI18nService() as any).transform(MOCKDATE, 'yyyy-MM'))
               .asyncEnd();
           }));
           it(`should be text center`, fakeAsync(() => {

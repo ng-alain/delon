@@ -3,9 +3,10 @@ import localeZhHans from '@angular/common/locales/zh-Hans';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NzI18nService, NZ_DATE_LOCALE } from 'ng-zorro-antd/i18n';
 registerLocaleData(localeZhHans);
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
-import * as zh_cn from 'date-fns/locale/zh-CN';
+import { zhCN as dateFnsLang } from 'date-fns/locale';
 import { AlainThemeModule } from '../../theme.module';
 
 describe('Pipe: _date', () => {
@@ -16,9 +17,9 @@ describe('Pipe: _date', () => {
     TestBed.configureTestingModule({
       imports: [AlainThemeModule.forRoot()],
       declarations: [TestComponent],
+      providers: [{ provide: NZ_DATE_LOCALE, useValue: dateFnsLang }],
     });
     fixture = TestBed.createComponent(TestComponent);
-    (window as any).__locale__ = zh_cn.default;
   });
 
   [
@@ -34,10 +35,12 @@ describe('Pipe: _date', () => {
       fixture.componentInstance.value = item.date;
       if (item.format) {
         fixture.componentInstance.format = item.format;
-        if (item.format === 'fn')
+        if (item.format === 'fn') {
+          const nzI18n = TestBed.inject(NzI18nService);
           item.result = formatDistanceToNow(item.date, {
-            locale: (window as any).__locale__,
+            locale: nzI18n.getDateLocale(),
           });
+        }
       }
       fixture.detectChanges();
       expect((fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement).innerText).toBe(item.result);
