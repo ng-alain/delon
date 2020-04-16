@@ -22,8 +22,8 @@ declare const docsearch: any;
 export class HeaderComponent implements OnInit, AfterViewInit {
   isMobile: boolean;
   useDocsearch = true;
-  oldVersionList = [`1.x`];
-  currentVersion = 'stable';
+  oldVersionList = [`1.x`, `8.x`, `stable`];
+  currentVersion = '8.x';
   delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
 
   @ViewChild('searchInput', { static: false })
@@ -49,6 +49,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   toVersion(version: string) {
+    if (version === 'stable') {
+      window.location.href = `https://ng-alain.com`;
+      return;
+    }
     if (version !== this.currentVersion) {
       window.location.href = `https://ng-alain.github.io/${version}-doc/`;
     }

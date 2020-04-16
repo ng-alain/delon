@@ -30,7 +30,7 @@
     "site:gen": "node scripts/site/main init && node scripts/build/generate-only-color.js",
     "site": "npm run site:gen && ng s -o",
     "site:build": "npm run site:gen && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /",
-    "site:gh": "npm run site:build && gh-pages -d src/dist",
+    "site:gh": "npm run site:gen && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /8.x-doc/ && node ./scripts/gen-404.js && gh-pages -d src/dist --repo https://github.com/ng-alain/8.x-doc.git",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
     "publish": "bash scripts/publish/publish.sh",
