@@ -1,5 +1,6 @@
 import { NzAffixModule } from 'ng-zorro-antd/affix';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -56,4 +57,5 @@ export const SHARED_ZORRO_MODULES = [
   NzSwitchModule,
   NzRadioModule,
   NzFormModule,
+  NzAvatarModule,
 ];

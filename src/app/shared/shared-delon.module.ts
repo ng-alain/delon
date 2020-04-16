@@ -14,6 +14,7 @@ import { PageHeaderModule } from '@delon/abc/page-header';
 import { QRModule } from '@delon/abc/qr';
 import { QuickMenuModule } from '@delon/abc/quick-menu';
 import { ResultModule } from '@delon/abc/result';
+import { ReuseTabModule } from '@delon/abc/reuse-tab';
 import { SEModule } from '@delon/abc/se';
 import { SGModule } from '@delon/abc/sg';
 import { SidebarNavModule } from '@delon/abc/sidebar-nav';
@@ -27,14 +28,14 @@ import { G2GaugeModule } from '@delon/chart/gauge';
 import { G2MiniAreaModule } from '@delon/chart/mini-area';
 import { G2MiniBarModule } from '@delon/chart/mini-bar';
 import { G2MiniProgressModule } from '@delon/chart/mini-progress';
+import { NumberInfoModule } from '@delon/chart/number-info';
 import { G2PieModule } from '@delon/chart/pie';
 import { G2RadarModule } from '@delon/chart/radar';
 import { G2SingleBarModule } from '@delon/chart/single-bar';
 import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 import { G2TimelineModule } from '@delon/chart/timeline';
-import { G2WaterWaveModule } from '@delon/chart/water-wave';
-import { NumberInfoModule } from '@delon/chart/number-info';
 import { TrendModule } from '@delon/chart/trend';
+import { G2WaterWaveModule } from '@delon/chart/water-wave';
 
 export const SHARED_DELON_MODULES = [
   AvatarListModule,
@@ -75,4 +76,5 @@ export const SHARED_DELON_MODULES = [
   G2WaterWaveModule,
   NumberInfoModule,
   TrendModule,
+  ReuseTabModule,
 ];
