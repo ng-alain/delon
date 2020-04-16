@@ -16,7 +16,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { FormControlName, NgModel } from '@angular/forms';
+import { FormControlName, NgModel, RequiredValidator, Validator } from '@angular/forms';
 import { ResponsiveService } from '@delon/theme';
 import { InputBoolean, InputNumber, isEmpty } from '@delon/util';
 import { helpMotion } from 'ng-zorro-antd/core/animation';
@@ -132,12 +132,16 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     if (!this.ngControl || this.status$) return;
 
     this.status$ = this.ngControl.statusChanges!.subscribe(res => this.updateStatus(res === 'INVALID'));
-
     if (this._autoId) {
       const control = (this.ngControl.valueAccessor as NzSafeAny)?._elementRef?.nativeElement as HTMLElement;
       if (control) {
         control.id = this._id;
       }
+    }
+    // auto required
+    if (this.required !== true) {
+      const rawValidators = (this.ngControl as NzSafeAny)?._rawValidators as Array<Validator>;
+      this.required = rawValidators.find(w => w instanceof RequiredValidator) != null;
     }
   }
 
