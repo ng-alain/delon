@@ -1,6 +1,4 @@
-<nz-affix #affix
-          *ngIf="fixed;else phTpl"
-          [nzOffsetTop]="fixedOffsetTop">
+<nz-affix #affix *ngIf="fixed;else phTpl" [nzOffsetTop]="fixedOffsetTop">
   <ng-template [ngTemplateOutlet]="phTpl"></ng-template>
 </nz-affix>
 <ng-template #phTpl>
@@ -22,30 +20,24 @@
           </nz-breadcrumb>
         </ng-container>
         <div class="page-header__detail">
-          <div *ngIf="logo"
-               class="page-header__logo">
+          <div *ngIf="logo" class="page-header__logo">
             <ng-template [ngTemplateOutlet]="logo"></ng-template>
           </div>
           <div class="page-header__main">
             <div class="page-header__row">
-              <h1 *ngIf="_titleVal || _titleTpl"
-                  class="page-header__title">
+              <h1 *ngIf="_titleVal || _titleTpl" class="page-header__title">
                 <ng-container *ngIf="_titleVal; else _titleTpl">{{_titleVal}}</ng-container>
               </h1>
-              <div *ngIf="action"
-                   class="page-header__action">
+              <div *ngIf="action" class="page-header__action">
                 <ng-template [ngTemplateOutlet]="action"></ng-template>
               </div>
             </div>
             <div class="page-header__row">
-              <div class="page-header__desc"
-                   (cdkObserveContent)="checkContent()"
-                   #conTpl>
+              <div class="page-header__desc" (cdkObserveContent)="checkContent()" #conTpl>
                 <ng-content></ng-content>
                 <ng-template [ngTemplateOutlet]="content"></ng-template>
               </div>
-              <div *ngIf="extra"
-                   class="page-header__extra">
+              <div *ngIf="extra" class="page-header__extra">
                 <ng-template [ngTemplateOutlet]="extra"></ng-template>
               </div>
             </div>

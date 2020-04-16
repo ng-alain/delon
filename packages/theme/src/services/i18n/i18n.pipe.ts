@@ -1,5 +1,5 @@
 import { Inject, Pipe, PipeTransform } from '@angular/core';
-import { ALAIN_I18N_TOKEN, AlainI18NService } from './i18n';
+import { AlainI18NService, ALAIN_I18N_TOKEN } from './i18n';
 
 @Pipe({ name: 'i18n' })
 export class I18nPipe implements PipeTransform {

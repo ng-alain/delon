@@ -14,8 +14,8 @@ order: 0
 Simplest of usage.
 
 ```ts
-import { Component } from '@angular/core';
-import { SFSchema, SFSelectWidgetSchema } from '@delon/form';
+import { Component, ViewChild } from '@angular/core';
+import { SFSchema, SFSelectWidgetSchema, SFComponent } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -23,10 +23,12 @@ import { delay } from 'rxjs/operators';
 @Component({
   selector: 'app-demo',
   template: `
-    <sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+    <sf #sf [schema]="schema" (formSubmit)="submit($event)"></sf>
+    <button nz-button (click)="updateStatus()">Update Status</button>
   `,
 })
 export class DemoComponent {
+  @ViewChild('sf', { static: false }) private sf: SFComponent;
   schema: SFSchema = {
     properties: {
       status: {
@@ -83,6 +85,12 @@ export class DemoComponent {
   constructor(public msg: NzMessageService) {}
   submit(value: any) {
     this.msg.success(JSON.stringify(value));
+  }
+
+  updateStatus() {
+    const statusProperty = this.sf.getProperty('/status')!;
+    statusProperty.schema.enum = ['1', '2', '3'];
+    statusProperty.widget.reset('2');
   }
 }
 ```

@@ -26,7 +26,8 @@
              [nzCustomRequest]="i.customRequest"
              [nzRemove]="ui.remove || handleRemove"
              [nzPreview]="handlePreview"
-             (nzChange)="change($event)">
+             (nzChange)="change($event)"
+             [nzShowButton]="fileList.length < i.limitFileCount">
     <ng-container [ngSwitch]="btnType">
       <ng-container *ngSwitchCase="'plus'">
         <i nz-icon nzType="plus"></i>

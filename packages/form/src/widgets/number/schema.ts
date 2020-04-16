@@ -27,4 +27,9 @@ export interface SFNumberWidgetSchema extends SFUISchemaItem {
    * 数值精度
    */
   precision?: number;
+
+  /**
+   * 指定 `nz-number` 宽度
+   */
+  widgetWidth?: number;
 }

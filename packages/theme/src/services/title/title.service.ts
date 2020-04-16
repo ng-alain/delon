@@ -4,7 +4,8 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { ALAIN_I18N_TOKEN, AlainI18NService } from '../i18n/i18n';
+
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { MenuService } from '../menu/menu.service';
 
 @Injectable({ providedIn: 'root' })
@@ -53,9 +54,15 @@ export class TitleService implements OnDestroy {
   default = `Not Page Name`;
 
   private getByElement(): string {
-    const el = this.doc.querySelector('.alain-default__content-title h1') || this.doc.querySelector('.page-header__title');
+    const el = (this.doc.querySelector('.alain-default__content-title h1') || this.doc.querySelector('.page-header__title')) as HTMLElement;
     if (el) {
-      return el.firstChild.textContent.trim();
+      let text = '';
+      el.childNodes.forEach(val => {
+        if (!text && val.nodeType === 3) {
+          text = val.textContent!.trim();
+        }
+      });
+      return text || el.firstChild!.textContent!.trim();
     }
     return '';
   }

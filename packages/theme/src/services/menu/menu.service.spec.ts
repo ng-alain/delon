@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ACLService } from '@delon/acl';
 import { deepCopy } from '@delon/util';
 import { filter } from 'rxjs/operators';
-import { ALAIN_I18N_TOKEN, AlainI18NServiceFake } from '../i18n/i18n';
+import { AlainI18NServiceFake, ALAIN_I18N_TOKEN } from '../i18n/i18n';
 import { Menu } from './interface';
 import { MenuService } from './menu.service';
 
@@ -129,6 +129,9 @@ describe('Service: Menu', () => {
       it('when recursive is true', () => {
         const item = srv.getHit(DATA, '/dashboard/invalid', true);
         expect(item == null).toBe(false);
+      });
+      it('when include queryString', () => {
+        expect(srv.getHit(DATA, '/test?a=1', true) != null).toBe(true);
       });
     });
 
