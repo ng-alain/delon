@@ -5,6 +5,7 @@ import {
   CopyrightOutline,
   DashboardOutline,
   DingdingOutline,
+  DownloadOutline,
   EditOutline,
   EllipsisOutline,
   FormOutline,
@@ -23,6 +24,7 @@ import {
   StarOutline,
   ThunderboltFill,
   ToolOutline,
+  UserOutline,
   VerticalLeftOutline,
   VerticalRightOutline,
 } from '@ant-design/icons-angular/icons';
@@ -32,6 +34,7 @@ export const ICONS = [
   CopyrightOutline,
   DashboardOutline,
   DingdingOutline,
+  DownloadOutline,
   EditOutline,
   EllipsisOutline,
   FormOutline,
@@ -52,4 +55,5 @@ export const ICONS = [
   ToolOutline,
   VerticalLeftOutline,
   VerticalRightOutline,
+  UserOutline,
 ];

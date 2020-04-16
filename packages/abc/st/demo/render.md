@@ -22,10 +22,10 @@ import { Component } from '@angular/core';
 import { STColumn } from '@delon/abc/st';
 
 @Component({
-  selector: 'app-demo',
+  selector: 'components-st-render',
   template: `
   <div class="mb-md">
-    <nz-checkbox-group [(ngModel)]="customColumns" (ngModelChange)="st.resetColumns({ emitReload: true })"></nz-checkbox-group>
+    <nz-checkbox-group [(ngModel)]="customColumns" name="customColumns" (ngModelChange)="st.resetColumns({ emitReload: true })"></nz-checkbox-group>
   </div>
   <st #st [data]="users" [columns]="columns">
     <ng-template st-row="customTitle" type="title" let-c>
@@ -35,7 +35,7 @@ import { STColumn } from '@delon/abc/st';
       </span>
       <nz-dropdown-menu #menuTpl="nzDropdownMenu">
         <div class="ant-table-filter-dropdown p-sm">
-          <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" class="width-sm mr-sm">
+          <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" name="searchValue" class="width-sm mr-sm">
           <button nz-button [nzType]="'primary'" (click)="st.load(2)">Search</button>
         </div>
       </nz-dropdown-menu>
@@ -46,7 +46,7 @@ import { STColumn } from '@delon/abc/st';
   </st>
   `,
 })
-export class DemoComponent {
+export class ComponentsStRenderComponent {
   searchValue: string;
   users: any[] = Array(10)
     .fill({})

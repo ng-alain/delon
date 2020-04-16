@@ -68,7 +68,7 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
       }));
 
     if (line) {
-      chart.guide().line({
+      chart.annotation().line({
         start: ['50%', '0%'],
         end: ['50%', '100%'],
         style: {

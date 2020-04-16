@@ -2,22 +2,20 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
-import { DelonABCModule } from '@delon/abc';
 import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
-import { DelonChartModule } from '@delon/chart';
 import { DelonFormModule } from '@delon/form';
 import { AlainThemeModule } from '@delon/theme';
-
 import { TranslateModule } from '@ngx-translate/core';
 import { GithubButtonModule } from 'ng-github-button';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { ColorSketchModule } from 'ngx-color/sketch';
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { SimplemdeModule } from 'ngx-simplemde';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
+
+import { SHARED_DELON_MODULES } from './shared-delon.module';
+import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
 
 import { CodeBoxComponent } from './components/code-box/code-box.component';
 import { ConfigButtonComponent } from './components/config-button/config-button.component';
@@ -61,13 +59,12 @@ const THIRDS = [
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    NgZorroAntdModule,
     AlainThemeModule.forChild(),
-    DelonABCModule,
     DelonACLModule,
     DelonFormModule,
-    DelonChartModule,
     DelonCacheModule,
+    ...SHARED_DELON_MODULES,
+    ...SHARED_ZORRO_MODULES,
     ...THIRDS,
   ],
   declarations: COMPONENTS,
@@ -77,13 +74,12 @@ const THIRDS = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    NgZorroAntdModule,
     AlainThemeModule,
-    DelonABCModule,
     DelonACLModule,
     DelonFormModule,
-    DelonChartModule,
     DelonCacheModule,
+    ...SHARED_DELON_MODULES,
+    ...SHARED_ZORRO_MODULES,
     ...THIRDS,
     ...COMPONENTS,
   ],
