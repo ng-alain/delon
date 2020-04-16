@@ -14,6 +14,13 @@ hot: true
 + import format from 'date-fns/format';
 ```
 
+重构部分目录结构：
+
+- `@delon/abc/table` => `@delon/abc/st`
+- `@delon/abc/view` => `@delon/abc/sv`
+- `@delon/abc/grid` => `@delon/abc/sg`
+- `@delon/abc/edit` => `@delon/abc/se`
+
 ## 可选升级
 
 ### tslint
