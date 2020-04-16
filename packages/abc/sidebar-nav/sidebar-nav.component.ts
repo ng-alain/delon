@@ -237,7 +237,7 @@ export class SidebarNavComponent implements OnInit, OnDestroy {
     menuSrv.change.pipe(takeUntil(unsubscribe$)).subscribe(data => {
       menuSrv.visit(data, (i: Nav, _p, depth) => {
         i._text = this.sanitizer.bypassSecurityTrustHtml(i.text!);
-        i._needIcon = depth! <= 1;
+        i._needIcon = depth! <= 3 && !!i.icon;
         if (!i._aclResult) {
           if (this.disabledAcl) {
             i.disabled = true;

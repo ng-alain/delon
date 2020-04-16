@@ -67,7 +67,11 @@ export class DemoComponent {
           children: [
             {
               text: 'Level2',
-              children: [{ text: 'Level3A' }, { text: 'Level3B-DISABLED', disabled: true }],
+              icon: { type: 'iconfont', iconfont: 'icon-twitter' },
+              children: [
+                { text: 'Level3A', icon: { type: 'iconfont', iconfont: 'icon-twitter' } },
+                { text: 'Level3B-DISABLED', disabled: true },
+              ],
             },
             { text: 'Level2-DISABLED', disabled: true },
           ],
