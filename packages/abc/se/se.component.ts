@@ -142,6 +142,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     if (this.required !== true) {
       const rawValidators = (this.ngControl as NzSafeAny)?._rawValidators as Array<Validator>;
       this.required = rawValidators.find(w => w instanceof RequiredValidator) != null;
+      this.cdr.detectChanges();
     }
   }
 
