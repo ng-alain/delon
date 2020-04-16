@@ -52,20 +52,20 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   private clsMap: string[] = [];
   private inited = false;
   private onceFlag = false;
-  private errorData: { [key: string]: string } = {};
+  private errorData: { [key: string]: string | TemplateRef<void> } = {};
   invalid = false;
   _labelWidth: number | null = null;
-  _error: string;
+  _error: string | TemplateRef<void>;
 
   // #region fields
 
   @Input() optional: string | TemplateRef<void>;
   @Input() optionalHelp: string | TemplateRef<void>;
   @Input()
-  set error(val: string | { [key: string]: string }) {
-    this.errorData = typeof val === 'string' ? { '': val } : val;
+  set error(val: string | TemplateRef<void> | { [key: string]: string | TemplateRef<void> }) {
+    this.errorData = typeof val === 'string' || val instanceof TemplateRef ? { '': val } : val;
   }
-  @Input() extra: string;
+  @Input() extra: string | TemplateRef<void>;
   @Input() label: string | TemplateRef<void>;
   @Input() @InputNumber(null) col: number;
   @Input() @InputBoolean() required = false;

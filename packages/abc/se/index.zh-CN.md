@@ -53,12 +53,12 @@ config: SEConfig
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[col]` | 指定表单元素最多分几列展示，最终一行几列由 col 配置结合[响应式规则](/theme/responsive)决定（继承于 `se-container`） | `'1','2','3','4','5','6'` | -
-`[label]` | 标签文本 | `string,TemplateRef<void>` | -
+`[label]` | 标签文本 | `string, TemplateRef<void>` | -
 `[labelWidth]` | 标签文本宽度，单位：`px`（继承于 `se-container`） | `number` | -
 `[optional]` | 标签可选信息 | `string, TemplateRef<void>` | -
 `[optionalHelp]` | 标签可选帮助 | `string, TemplateRef<void>` | -
-`[error]` | 错误描述 | `string, { [key: string]: string }` | -
-`[extra]` | 额外提示信息 | `string` | -
+`[error]` | 错误描述 | `string, TemplateRef<void>, { [key: string]: string, TemplateRef<void> }` | -
+`[extra]` | 额外提示信息 | `string, TemplateRef<void>` | -
 `[required]` | 是否必填项标识符，若不设置自动根据表单元素是否有 `RequiredValidator` 校验来设置值 | `string` | -
 `[controlClass]` | 控件区域样式名 | `string` | -
 `[id]` | 自定义组件 `id` | `string` | -
