@@ -24,7 +24,7 @@
     "lint": "bash scripts/ci/lint.sh -ts -less",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "test": "ng test --no-progress --browsers=ChromeHeadlessCI --code-coverage --no-watch",
-    "test:cli": "bash scripts/ci/build-schematics.sh -b -t -travis",
+    "test:cli": "bash scripts/ci/build-schematics.sh -t -clone",
     "test:integration": "bash scripts/ci/build-schematics.sh -b -t -travis -integration",
     "build": "bash scripts/ci/build.sh",
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
