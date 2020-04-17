@@ -31,6 +31,7 @@ import {
   scriptsToAngularJson,
 } from '../utils/json';
 import { VERSION, ZORROVERSION } from '../utils/lib-versions';
+import { applyLintFix } from '../utils/lint-fix';
 import { getProject, getProjectFromWorkspace, Project } from '../utils/project';
 import { Schema as ApplicationOptions } from './schema';
 
@@ -104,7 +105,6 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
         `@delon/testing@${VERSION}`,
         // color-less
         `antd-theme-generator@DEP-0.0.0-PLACEHOLDER`,
-        `less-bundle-promise@DEP-0.0.0-PLACEHOLDER`,
       ],
       'devDependencies',
     );
@@ -139,9 +139,7 @@ function addPathsToTsConfig() {
     if (!json.compilerOptions.paths) json.compilerOptions.paths = {};
     const paths = json.compilerOptions.paths;
     paths['@shared'] = ['src/app/shared/index'];
-    paths['@shared/*'] = ['src/app/shared/*'];
     paths['@core'] = ['src/app/core/index'];
-    paths['@core/*'] = ['src/app/core/*'];
     paths['@env/*'] = ['src/environments/*'];
     overwriteJSON(host, 'tsconfig.json', json);
     return host;
@@ -153,17 +151,10 @@ function addCodeStylesToPackageJson() {
     const json = getPackage(host);
     if (json == null) return host;
     json.scripts.lint = `npm run lint:ts && npm run lint:style`;
-    json.scripts['lint:ts'] = `tslint -c tslint.json \"src/**/*.ts\" --fix`;
+    json.scripts['lint:ts'] = `ng lint --fix`;
     json.scripts['lint:style'] = `stylelint \"src/**/*.less\" --syntax less --fix`;
     json.scripts['lint-staged'] = `lint-staged`;
     json.scripts['tslint-check'] = `tslint-config-prettier-check ./tslint.json`;
-    json['lint-staged'] = {
-      linters: {
-        'src/**/*.ts': ['npm run lint:ts', 'git add'],
-        'src/**/*.less': ['npm run lint:style', 'git add'],
-      },
-      ignore: ['src/assets/*'],
-    };
     overwritePackage(host, json);
     // dependencies
     addPackageToPackageJson(
@@ -443,8 +434,10 @@ function installPackages() {
   };
 }
 
-function cnpmTips() {
+function tips() {
   return (_host: Tree) => {
+    console.warn(``);
+    console.warn(`Don't use cnpm to install dependencies, pls refer to: https://ng-alain.com/docs/faq#Installation`);
     console.warn(`Don't use cnpm to install dependencies, pls refer to: https://ng-alain.com/docs/faq#Installation`);
   };
 }
@@ -473,7 +466,8 @@ export default function (options: ApplicationOptions): Rule {
       fixVsCode(),
       fixAngularJson(options),
       installPackages(),
-      cnpmTips(),
+      tips(),
+      applyLintFix(),
     ])(host, context);
   };
 }

@@ -32,7 +32,7 @@ describe('NgAlainSchematic: application', () => {
       beforeEach(async () => ({ runner, tree } = await createAlainApp({ i18n: true })));
       it(`can add i18n related`, () => {
         const specTs = tree.readContent('/projects/foo/src/app/app.module.ts');
-        expect(specTs).toContain(`@core/i18n/`);
+        expect(specTs).toContain(`import { I18NService } from '@core'`);
       });
     });
     describe('with false', () => {
