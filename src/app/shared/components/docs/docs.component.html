@@ -5,7 +5,7 @@
     </li>
   </ul>
 </nz-affix>
-<nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message">
+<nz-alert *ngIf="!meta.item.i18n" [nzType]="'warning'" [nzCloseable]="'true'" nzBanner [nzMessage]="message" class="my-md">
   <ng-template #message>
     This article has not been translated, hope that your can PR to translated it.
     <a href="//github.com/ng-alain/ng-alain/issues/74" target="_blank"> Help us!</a>
