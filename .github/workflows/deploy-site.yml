@@ -1,4 +1,7 @@
 name: Deploy website
+
+on: [push]
+
 # on:
 #   release:
 #     types: [published]
