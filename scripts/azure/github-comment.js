@@ -5,10 +5,6 @@ const TOKEN = process.env.ACCESS_TOKEN;
 const PR = process.env.SYSTEM_PULLREQUEST_PULLREQUESTNUMBER;
 const REPLACE_MARK = '<!-- AZURE_UPDATE_COMMENT -->';
 
-console.log('REPO', REPO);
-console.log('TOKEN', TOKEN);
-console.log('PR', PR);
-
 const argv = process.argv;
 
 const comment = argv[argv.length - 1];

@@ -15,22 +15,6 @@ export class CodeService {
     if (componentNameRe) {
       componentName = componentNameRe[1];
     }
-    const isG2 = code.includes('<g2');
-    let g2Libs: string[] = [];
-
-    if (isG2) {
-      code =
-        `// G2
-// declare var G2: any;
-// declare var DataSet: any;
-// declare var Slider: any;
- ` + code;
-      g2Libs = [
-        // `'https://unpkg.com/@antv/g2@${pkg.dependencies['@antv/g2'].substr(1)}/dist/g2.min.js'`,
-        // `'https://unpkg.com/@antv/data-set@${pkg.dependencies['@antv/data-set'].substr(1)}/dist/data-set.js'`,
-      ];
-    }
-
     sdk.openProject(
       {
         title,
@@ -213,7 +197,6 @@ export class StartupService {
     return new Promise((resolve, reject) => {
       this.lazy.load([
         'https://cdnjs.cloudflare.com/ajax/libs/ajv/${pkg.dependencies.ajv.substr(1)}/ajv.min.js',
-        ${isG2 ? g2Libs.join(',') : ''}
       ])
         .then(() => resolve(null));
     });
@@ -285,19 +268,22 @@ export class AppModule {
           '@angular/router': '*',
           '@angular/animations': '*',
           '@ant-design/icons-angular': '*',
-          'date-fns': '^1.30.1',
+          'core-js': '2.x',
+          '@antv/g2': '*',
+          '@antv/data-set': '*',
+          'date-fns': '*',
           'file-saver': '^1.3.3',
           'ngx-countdown': '*',
           'ng-zorro-antd': '*',
-          '@delon/theme': 'latest',
-          '@delon/abc': 'latest',
-          '@delon/chart': 'latest',
-          '@delon/acl': 'latest',
-          '@delon/auth': 'latest',
-          '@delon/cache': 'latest',
-          '@delon/mock': 'latest',
-          '@delon/form': 'latest',
-          '@delon/util': 'latest',
+          '@delon/theme': 'next',
+          '@delon/abc': 'next',
+          '@delon/chart': 'next',
+          '@delon/acl': 'next',
+          '@delon/auth': 'next',
+          '@delon/cache': 'next',
+          '@delon/mock': 'next',
+          '@delon/form': 'next',
+          '@delon/util': 'next',
           extend: '*',
           qrious: '*',
         },
