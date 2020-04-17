@@ -1,0 +1,25 @@
+name: Deploy website
+# on:
+#   release:
+#     types: [published]
+#     branches:
+#       - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: install
+        run: npm install
+
+      - name: build
+        run: npm run site:build
+
+      - name: deploy
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: git@e.coding.net:cipchk/ng-alain-site.git
+          ssh_private_key: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
