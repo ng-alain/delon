@@ -10,7 +10,8 @@ yarn-error.log
 .tmp
 .lib
 *.iml
-dist
+/dist
+#/src/dist
 .idea
 debug.log
 __ngcc_entry_points__.json

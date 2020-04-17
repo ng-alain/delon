@@ -15,11 +15,15 @@ jobs:
       - name: checkout
         uses: actions/checkout@master
 
-      - name: install
-        run: npm install
+      # - name: install
+      #   run: npm install
 
-      - name: build
-        run: npm run site:build
+      # - name: build
+      #   run: npm run site:build
+
+      - name: clean files
+        run: |
+          sh ./scripts/actions/clean.sh
 
       - name: deploy
         uses: pixta-dev/repository-mirroring-action@v1
