@@ -6,7 +6,6 @@ N="
 "
 PWD=`pwd`
 readonly thisDir=$(cd $(dirname $0); pwd)
-source ${thisDir}/_travis-fold.sh
 
 cd $(dirname $0)/../..
 
@@ -267,36 +266,24 @@ integrationCli() {
 }
 
 if [[ ${BUILD} == true ]]; then
-  travisFoldStart "BUILD"
-
-    tsconfigFile=${SOURCE}/tsconfig.json
-    DIST=${PWD}/dist/ng-alain/
-    buildCLI
-
-  travisFoldEnd "BUILD"
+  tsconfigFile=${SOURCE}/tsconfig.json
+  DIST=${PWD}/dist/ng-alain/
+  buildCLI
 fi
 
 if [[ ${TEST} == true ]]; then
-  travisFoldStart "TEST"
-
-    tsconfigFile=${SOURCE}/tsconfig.spec.json
-    DIST=${PWD}/dist/schematics-test/
-    buildCLI
-    $JASMINE "${DIST}/**/*.spec.js"
-
-  travisFoldEnd "TEST"
+  tsconfigFile=${SOURCE}/tsconfig.spec.json
+  DIST=${PWD}/dist/schematics-test/
+  buildCLI
+  $JASMINE "${DIST}/**/*.spec.js"
 fi
 
 if [[ ${INTEGRATION} == true ]]; then
-  travisFoldStart "INTEGRATION"
-
-    tsconfigFile=${SOURCE}/tsconfig.json
-    DIST=${PWD}/dist/ng-alain/
-    COPY=true
-    buildCLI
-    integrationCli
-
-  travisFoldEnd "INTEGRATION"
+  tsconfigFile=${SOURCE}/tsconfig.json
+  DIST=${PWD}/dist/ng-alain/
+  COPY=true
+  buildCLI
+  integrationCli
 fi
 
 echo "Finished!!"

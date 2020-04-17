@@ -25,7 +25,7 @@
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "test": "ng test --no-progress --browsers=ChromeHeadlessCI --code-coverage --no-watch",
     "test:cli": "bash scripts/ci/build-schematics.sh -t -clone",
-    "test:integration": "bash scripts/ci/build-schematics.sh -b -t -travis -integration",
+    "test:integration": "bash scripts/ci/build-schematics.sh -b -t -clone -integration",
     "build": "bash scripts/ci/build.sh",
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
     "site:gen": "node scripts/site/main init && node scripts/build/generate-only-color.js",

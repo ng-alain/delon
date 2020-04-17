@@ -3,7 +3,6 @@
 set -e
 
 readonly thisDir=$(cd $(dirname $0); pwd)
-source ${thisDir}/_travis-fold.sh
 
 TRAVIS=false
 for ARG in "$@"; do
@@ -28,15 +27,11 @@ cloneScaffold() {
 }
 
 buildDelon() {
-  travisFoldStart "@delon"
-    ./scripts/ci/build-delon.sh
-  travisFoldEnd "@delon"
+  ./scripts/ci/build-delon.sh
 }
 
 buildSchematies() {
-  travisFoldStart "schematies"
-    ./scripts/ci/build-schematics.sh -b -copy -travis
-  travisFoldEnd "schematies"
+  ./scripts/ci/build-schematics.sh -b -copy -clone
 }
 
 cloneScaffold
