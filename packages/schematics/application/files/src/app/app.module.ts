@@ -7,12 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // #region default language
 // Reference: https://ng-alain.com/docs/i18n
 import { default as ngLang } from '@angular/common/locales/zh';
-import { NZ_I18N, zh_CN as zorroLang } from 'ng-zorro-antd/i18n';
 import { DELON_LOCALE, zh_CN as delonLang } from '@delon/theme';
+import { zhCN as dateLang } from 'date-fns/locale';
+import { NZ_DATE_LOCALE, NZ_I18N, zh_CN as zorroLang } from 'ng-zorro-antd/i18n';
 const LANG = {
   abbr: 'zh',
   ng: ngLang,
   zorro: zorroLang,
+  date: dateLang,
   delon: delonLang,
 };
 // register angular
@@ -21,6 +23,7 @@ registerLocaleData(LANG.ng, LANG.abbr);
 const LANG_PROVIDES = [
   { provide: LOCALE_ID, useValue: LANG.abbr },
   { provide: NZ_I18N, useValue: LANG.zorro },
+  { provide: NZ_DATE_LOCALE, useValue: LANG.date },
   { provide: DELON_LOCALE, useValue: LANG.delon },
 ];
 // #endregion
@@ -28,20 +31,20 @@ const LANG_PROVIDES = [
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { I18NService } from '@core/i18n/i18n.service';
+import { I18NService } from '@core';
 
 export function I18nHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, `assets/tmp/i18n/`, '.json');
 }
 
 const I18NSERVICE_MODULES = [
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: I18nHttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+  TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: I18nHttpLoaderFactory,
+      deps: [HttpClient]
+    }
+  })
 ];
 
 const I18NSERVICE_PROVIDES = [
@@ -50,7 +53,7 @@ const I18NSERVICE_PROVIDES = [
 // #region
 <% } %>
 <% if (form) { %>// #region JSON Schema form (using @delon/form)
-import { JsonSchemaModule } from '@shared/json-schema/json-schema.module';
+import { JsonSchemaModule } from '@shared';
 const FORM_MODULES = [ JsonSchemaModule ];
 // #endregion
 <% } %>
@@ -58,7 +61,7 @@ const FORM_MODULES = [ JsonSchemaModule ];
 // #region Http Interceptors
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SimpleInterceptor } from '@delon/auth';
-import { DefaultInterceptor } from '@core/net/default.interceptor';
+import { DefaultInterceptor } from '@core';
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true},
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true}
@@ -71,7 +74,7 @@ const GLOBAL_THIRD_MODULES = [
 // #endregion
 
 // #region Startup Service
-import { StartupService } from '@core/startup/startup.service';
+import { StartupService } from '@core';
 export function StartupServiceFactory(startupService: StartupService) {
   return () => startupService.load();
 }

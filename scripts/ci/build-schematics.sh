@@ -13,7 +13,7 @@ cd $(dirname $0)/../..
 BUILD=false
 TEST=false
 DEBUG=false
-TRAVIS=false
+CLONE=false
 COPY=false
 INTEGRATION=false
 for ARG in "$@"; do
@@ -24,8 +24,8 @@ for ARG in "$@"; do
     -b)
       BUILD=true
       ;;
-    -travis)
-      TRAVIS=true
+    -clone)
+      CLONE=true
       ;;
     -copy)
       COPY=true
@@ -50,7 +50,6 @@ DEPENDENCIES=$(node -p "
   [
     'screenfull',
     'ajv',
-    'less-bundle-promise',
     '@ngx-translate/core',
     '@ngx-translate/http-loader',
     'tslint-config-prettier',
@@ -67,7 +66,6 @@ DEPENDENCIES=$(node -p "
     'prettier',
     '@antv/data-set',
     '@antv/g2',
-    '@antv/g2-plugin-slider',
     '@angularclass/hmr',
     'ng-alain-codelyzer',
     'ng-alain-sts',
@@ -120,6 +118,7 @@ copyFiles() {
     "${1}.stylelintrc|${2}application/files/root/__dot__stylelintrc"
     "${1}tslint.json|${2}application/files/root"
     "${1}proxy.conf.json|${2}application/files/root"
+    "${1}lint-staged.config.js|${2}application/files/root"
     # cli
     # "${1}_cli-tpl|${2}application/files/root/"
     # ci
@@ -194,7 +193,7 @@ copyFiles() {
 cloneScaffold() {
   if [[ ! -d ng-alain ]]; then
     echo ">>> Not found scaffold source files, must be clone ng-alain ..."
-    git clone --depth 1 -b dev-ng9 https://github.com/ng-alain/ng-alain.git
+    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
     echo ">>> removed .git"
     rm -rf ng-alain/.git
   else
@@ -213,7 +212,7 @@ buildCLI() {
   rm ${DIST}/test.ts ${DIST}/tsconfig.json ${DIST}/tsconfig.spec.json
 
   if [[ ${COPY} == true ]]; then
-    if [[ ${TRAVIS} == true ]]; then
+    if [[ ${CLONE} == true ]]; then
       cloneScaffold
       echo "== copy delon/ng-alain files via travis mode"
       copyFiles 'ng-alain/' ${DIST}/
@@ -309,10 +308,11 @@ echo "Finished!!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng8/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng9/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
   rm -rf ${DEBUG_TO}/application
+  mkdir -p ${DEBUG_TO}
   rsync -a ${DEBUG_FROM} ${DEBUG_TO}
   echo "DEBUG FINISHED~!"
 fi
