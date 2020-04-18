@@ -338,7 +338,7 @@ Property | Description | Type | Default
 
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
-`[component]` | Modal component class, be sure to register in `entryComponents` | `any` | -
+`[component]` | Modal component class | `any` | -
 `[params]` | Dialog parameter | `(record: STData) => Object` | -
 `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) Global settings | `string` | record
 `[size]` | Size of modal, support number type | `'sm','md','lg','xl'` | `'lg'`
@@ -351,7 +351,7 @@ Property | Description | Type | Default
 Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[title]` | Title of drawer | `string` | -
-`[component]` | Drawer component class, be sure to register in `entryComponents` | `any` | -
+`[component]` | Drawer component class | `any` | -
 `[params]` | Dialog parameter | `(record: STData) => Object` | -
 `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) Global settings | `string` | record
 `[size]` | Size of drawer, support number type | `'sm','md','lg','xl'` | `'md'`

@@ -14,6 +14,5 @@ const COMPONENTS_NOROUNT = [];
     ...COMPONENTS,
     ...COMPONENTS_NOROUNT
   ],
-  entryComponents: COMPONENTS_NOROUNT
 })
 export class <%= classify(name) %>Module { }

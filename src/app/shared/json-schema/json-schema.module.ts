@@ -10,7 +10,6 @@ export const SCHEMA_THIRDS_COMPONENTS = [TinymceWidget, UeditorWidget, MarkdownW
 
 @NgModule({
   declarations: SCHEMA_THIRDS_COMPONENTS,
-  entryComponents: SCHEMA_THIRDS_COMPONENTS,
   imports: [SharedModule, DelonFormModule.forRoot()],
   exports: [...SCHEMA_THIRDS_COMPONENTS],
 })
