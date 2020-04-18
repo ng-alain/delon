@@ -57,7 +57,8 @@ The latest version of G2 fully supports TypeScript, so there is no longer a need
 
 ```diff
 - "node_modules/@antv/g2/build/g2.js",
-+ "node_modules/@antv/g2/dist/g2.min.js",
+- "node_modules/@antv/data-set/dist/data-set.min.js",
+- "node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js",
 ```
 
 
