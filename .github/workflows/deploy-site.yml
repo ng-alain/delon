@@ -21,12 +21,14 @@ jobs:
       # - name: build
       #   run: npm run site:build
 
-      - name: clean files
-        run: |
-          sh ./scripts/actions/clean.sh
+      - name: gen 404.html
+        run: cp ./src/dist/index.html ./src/dist/404.html
 
       - name: deploy
-        uses: pixta-dev/repository-mirroring-action@v1
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./src/dist
         with:
-          target_repo_url: git@e.coding.net:cipchk/ng-alain-site.git
-          ssh_private_key: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
+          emptyCommits: false
