@@ -22,7 +22,7 @@ declare const docsearch: any;
 export class HeaderComponent implements OnInit, AfterViewInit {
   isMobile: boolean;
   useDocsearch = true;
-  oldVersionList = [`1.x`, `8.x`, `stable`];
+  oldVersionList = [`8.x`, `1.x`];
   currentVersion = 'stable';
   delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
 

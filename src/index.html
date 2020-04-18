@@ -26,7 +26,7 @@
   <div id="_slow" style="display:none;position:absolute;top:0;left:0;right:0;bottom:0;text-align:center;justify-content:center;align-items:center;background:#fff;z-index:9999;">
     <div>
       <h1 style="font-size:22px;">KEEPING LOAD...</h1>
-      <p style="margin: 0; font-size: 16px;">The network is slow, please try to access the <a href="https://netlify.ng-alain.com/" style="padding: 0 4px;">Netlify</a> mirror!</p>
+      <p style="margin: 0; font-size: 16px;">The network is slow, please try to access the <a href="https://ng-alain-doc.surge.sh/" style="padding: 0 4px;">Surge</a> mirror!</p>
     </div>
   </div>
   <script>
@@ -36,7 +36,7 @@
 
   </script>
   <script>
-    if (location.host !== 'netlify.ng-alain.com') {
+    if (location.host !== 'ng-alain-doc.surge.sh') {
       setTimeout(() => {
         var el = document.querySelector('#_slow');
         if (el) {

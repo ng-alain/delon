@@ -6,12 +6,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-pr:
-  autoCancel: true
-  branches:
-    exclude:
-      - gh-pages
-
 stages:
   - stage: env
     jobs:
