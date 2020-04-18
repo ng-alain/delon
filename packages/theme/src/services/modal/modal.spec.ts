@@ -14,7 +14,6 @@ describe('theme: ModalHelper', () => {
     @NgModule({
       imports: [CommonModule, NoopAnimationsModule, AlainThemeModule.forChild(), NzModalModule],
       declarations: [TestModalComponent, TestComponent],
-      entryComponents: [TestModalComponent],
     })
     class TestModule {}
 

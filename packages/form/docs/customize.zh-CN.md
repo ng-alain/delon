@@ -87,12 +87,11 @@ export class TinymceWidget extends ControlWidget implements OnInit {
 
 ### 注册小部件
 
-在根模块中定义（`declarations`、`entryComponents`）注册小部件组件，同时在模块中导入 `WidgetRegistry` 并注册自定义小部件。
+在根模块中定义（`declarations`）注册小部件组件，同时在模块中导入 `WidgetRegistry` 并注册自定义小部件。
 
 ```ts
 @NgModule({
   declarations: [ TinymceWidget ],
-  entryComponents: [ TinymceWidget ],
   imports: [
     DelonFormModule.forRoot()
   ]

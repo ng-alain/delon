@@ -628,7 +628,7 @@ export type IifBehaviorType = 'hide' | 'disabled';
 
 export interface STColumnButtonModal extends ModalHelperOptions {
   /**
-   * 对话框组件对象，务必在 `entryComponents` 注册
+   * 对话框组件对象
    */
   component?: any;
   /**
@@ -660,7 +660,7 @@ export interface STColumnButtonDrawer extends DrawerHelperOptions {
    */
   title?: string;
   /**
-   * 抽屉组件对象，务必在 `entryComponents` 注册
+   * 抽屉组件对象
    */
   component?: any;
   /**

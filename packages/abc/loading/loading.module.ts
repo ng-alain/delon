@@ -9,7 +9,6 @@ import { LoadingDefaultComponent } from './loading.component';
 @NgModule({
   imports: [CommonModule, OverlayModule, PortalModule, NzIconModule, NzSpinModule],
   declarations: [LoadingDefaultComponent],
-  entryComponents: [LoadingDefaultComponent],
   exports: [LoadingDefaultComponent],
 })
 export class LoadingModule {}

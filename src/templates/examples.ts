@@ -21,6 +21,5 @@ export const EXAMPLE_LIST = [
 @NgModule({
   imports: [ SharedModule ],
   declarations: EXAMPLE_LIST,
-  entryComponents: EXAMPLE_LIST,
 })
 export class ExampleModule { }

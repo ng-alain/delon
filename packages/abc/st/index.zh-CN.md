@@ -331,7 +331,7 @@ class TestComponent {
 
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
-`[component]` | 目标组件对象，务必在 `entryComponents` 注册 | `any` | -
+`[component]` | 目标组件对象 | `any` | -
 `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | -
 `[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) 全局设置 | `string` | record
 `[size]` | 对话框大小，支持数字类型 | `'sm','md','lg','xl'` | `'lg'`
@@ -344,7 +344,7 @@ class TestComponent {
 参数 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[title]` | 标题 | `any` | -
-`[component]` | 目标组件对象，务必在 `entryComponents` 注册 | `any` | -
+`[component]` | 目标组件对象 | `any` | -
 `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | -
 `[paramsName]` | 目标组件的接收参数名，若目标组件接收值为空时，检查 [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) 全局设置 | `string` | record
 `[size]` | 抽屉大小，支持数字类型 | `'sm','md','lg','xl'` | `'md'`

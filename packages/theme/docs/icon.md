@@ -115,7 +115,6 @@ import { createCustomElement } from '@angular/elements';
 
 @NgModule({
   declarations: [],
-  entryComponents: []
 })
 export class AppModule {
   constructor(injector: Injector) {

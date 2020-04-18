@@ -82,7 +82,7 @@ ng g ng-alain:view view -m=sys -t=log
 ng g ng-alain:edit [page name] --modal=false
 ```
 
-> 如果你不小心将收到【No provider for NzModalRef! 】表明你把一个需要使用 `nzModalService` 打开的模态框组件，用了路由注册的方式。打开模态框组件无须注册路由，但需要注册至 `entryComponents`。
+> 如果你不小心将收到【No provider for NzModalRef! 】表明你把一个需要使用 `nzModalService` 打开的模态框组件，用了路由注册的方式。打开模态框组件无须注册路由。
 
 ## 自定义页
 

@@ -82,12 +82,11 @@ The widget is manually trigger changed detection during the rendering process. I
 
 ### Register
 
-Define the widget component in the root module (includes: `declarations`, `entryComponents`), import `WidgetRegistry` in the module and register the custom widget.
+Define the widget component in the root module (includes: `declarations`), import `WidgetRegistry` in the module and register the custom widget.
 
 ```ts
 @NgModule({
   declarations: [ TinymceWidget ],
-  entryComponents: [ TinymceWidget ],
   imports: [
     DelonFormModule.forRoot()
   ]
