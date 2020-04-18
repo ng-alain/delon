@@ -11,7 +11,7 @@ yarn-error.log
 .lib
 *.iml
 /dist
-# /src/dist
+/src/dist
 .idea
 debug.log
 __ngcc_entry_points__.json
