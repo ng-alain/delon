@@ -29,6 +29,7 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
 
   // #region fields
 
+  @Input() @InputNumber() delay = 0;
   @Input() @InputNumber() height: number;
   @Input() @InputNumber() resizeTime = 0;
   @Output() readonly render = new EventEmitter<ElementRef>();
@@ -55,7 +56,7 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.renderChart();
+    setTimeout(() => this.renderChart(), this.delay);
   }
 
   ngOnDestroy(): void {
