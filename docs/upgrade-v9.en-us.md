@@ -45,8 +45,8 @@ Restructuring part of the directory structure will cause the import path to chan
 
 ### 3. Remove.
 
-| Database | Original | Current
---- --- --- --- --- --- --- --- --- ---
+| Libs | Original | Current |
+| --- | --------- | --- |
 | `@delon/util` | `*stringTemplateOutlet` | `*nzStringTemplateOutlet` |
 
 ### 4, G2
