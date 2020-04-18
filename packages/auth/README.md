@@ -4,8 +4,9 @@ Simple user authentication, support Json Web Token & Simple Token.
 
 ## Links
 
-- [Api Document](https://ng-alain.com/auth)
-- [Demo](//ng-alain.github.io/ng-alain/)
++ [Document](https://ng-alain.com/auth) ([Surge Mirror](https://ng-alain-doc.surge.sh/auth))
++ [@delon Source](https://github.com/ng-alain/delon)
++ [DEMO](https://ng-alain.surge.sh)
 
 ## Architecture
 

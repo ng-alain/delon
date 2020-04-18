@@ -4,8 +4,9 @@ ng-alain theme system library.
 
 ## Links
 
-- [Api Document](https://ng-alain.com)
-- [Demo](//ng-alain.github.io/ng-alain/)
++ [Document](https://ng-alain.com) ([Surge Mirror](https://ng-alain-doc.surge.sh))
++ [@delon Source](https://github.com/ng-alain/delon)
++ [DEMO](https://ng-alain.surge.sh)
 
 ## Architecture
 

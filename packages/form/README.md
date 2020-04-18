@@ -4,8 +4,9 @@ Angular form generation based on JSON-Schema.
 
 ## Links
 
-- [Api Document](https://ng-alain.com/form)
-- [Demo](//ng-alain.github.io/ng-alain/)
++ [Document](https://ng-alain.com/form) ([Surge Mirror](https://ng-alain-doc.surge.sh/form))
++ [@delon Source](https://github.com/ng-alain/delon)
++ [DEMO](https://ng-alain.surge.sh)
 
 ## Architecture
 
