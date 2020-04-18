@@ -9,10 +9,7 @@ declare var Ajv: NzSafeAny;
 
 @Injectable()
 export abstract class SchemaValidatorFactory {
-  abstract createValidatorFn(
-    schema: SFSchema,
-    extraOptions: { ingoreKeywords: string[]; debug: boolean },
-  ): (value: SFSchema) => ErrorData[];
+  abstract createValidatorFn(schema: SFSchema, extraOptions: { ingoreKeywords: string[]; debug: boolean }): (value: SFValue) => ErrorData[];
 }
 
 @Injectable()
