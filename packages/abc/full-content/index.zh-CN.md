@@ -6,7 +6,7 @@ cols: 1
 module: FullContentModule
 ---
 
-全屏工作区，常用于带有滚动条表格，一个在线[示例](https://ng-alain.github.io/ng-alain/#/delon/simple-table)。
+全屏工作区，常用于带有滚动条表格，一个在线[示例](https://ng-alain.surge.sh/#/delon/simple-table)。
 
 ## API
 

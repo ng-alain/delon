@@ -57,7 +57,8 @@ G2 最新版本全面支持 TypeScript，因此不再需要 `angular.json` 中�
 
 ```diff
 - "node_modules/@antv/g2/build/g2.js",
-+ "node_modules/@antv/g2/dist/g2.min.js",
+- "node_modules/@antv/data-set/dist/data-set.min.js",
+- "node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js",
 ```
 
 **typings.d.ts**

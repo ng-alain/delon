@@ -331,7 +331,7 @@ Ant Design 是以 `14px` 为基准字号。
 
 ### 瀑布流
 
-在线[示例](https://ng-alain.github.io/ng-alain/#/style/gridmasonry)。
+在线[示例](https://ng-alain.surge.sh/#/style/gridmasonry)。
 
 | 名称 | 说明 |
 | ---- | --- |
@@ -353,8 +353,8 @@ Ant Design 是以 `14px` 为基准字号。
 | ---- | --- |
 | `modal-{sm|md|lg|xl}` | 设置Modal的大小，`wrapClassName: 'modal-lg'` |
 | `modal-body-nopadding` | 内容无内边距 |
-| `modal-header` | 自定义Modal时非常有效，[DEMO](https://ng-alain.github.io/ng-alain/#/extras/poi) |
-| `modal-footer` | 自定义Modal时非常有效，[DEMO](https://ng-alain.github.io/ng-alain/#/extras/poi) |
+| `modal-header` | 自定义Modal时非常有效，[DEMO](https://ng-alain.surge.sh/#/extras/poi) |
+| `modal-footer` | 自定义Modal时非常有效，[DEMO](https://ng-alain.surge.sh/#/extras/poi) |
 
 ### nz-table
 

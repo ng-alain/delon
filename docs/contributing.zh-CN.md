@@ -62,7 +62,7 @@ Ng Alain 会关注所有的 pull request，我们会 review 以及合并你的�
 
 ### ng-alain 脚手架
 
-1. `npm start` 在本地运行[脚手架](https://ng-alain.github.io/ng-alain/)
+1. `npm start` 在本地运行[脚手架](https://ng-alain.surge.sh/)
 2. `npm run lint` 检查代码风格
 3. `npm test` 运行测试
 4. `npm run build` 构建生产环境网站

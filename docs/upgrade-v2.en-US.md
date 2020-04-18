@@ -21,7 +21,7 @@ Original `simple-table`, `sf` is popular with developer, so NG-ALAIN 2.0 refacto
 
 NG-ALAIN 2.0 enabled new [NG-ALAIN organization](https://github.com/ng-alain/) and has migrated to the organization, so some links have changed:
 
-- [DEMO](https://ng-alain.github.io/ng-alain/)
+- [DEMO](https://ng-alain.surge.sh/)
 - 1.x [Document](https://ng-alain.github.io/1.x-doc/)
 
 Note: This migration guide is based on the latest v1 version, Current beta version, the `ng update` will be supported after release. Changes scaffolding and `@delon/*` class library, The following is a detailed description of the two parts.
