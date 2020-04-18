@@ -6,7 +6,7 @@ cols: 1
 module: FullContentModule
 ---
 
-Often used for tables with scroll bars, a simple [demo](https://ng-alain.github.io/ng-alain/#/delon/simple-table)。
+Often used for tables with scroll bars, a simple [demo](https://ng-alain.surge.sh/#/delon/simple-table)。
 
 ## API
 

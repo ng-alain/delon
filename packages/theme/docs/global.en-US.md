@@ -109,5 +109,5 @@ By `nz-table`。
 | `@abs-enabled` | `true` | Whether abs element|
 | `@masonry-enabled` | `true` | Whether css masonry |
 | `@setting-drawer-enabled` | `true` | Whether setting drawer css |
-| `@search-form-enabled` | `true` | Simple style search form, [DEMO](https://ng-alain.github.io/ng-alain/) |
-| `@search__form-enabled` | `true` | Pro style search form, [DEMO](https://ng-alain.github.io/ng-alain/) |
+| `@search-form-enabled` | `true` | Simple style search form, [DEMO](https://ng-alain.surge.sh/) |
+| `@search__form-enabled` | `true` | Pro style search form, [DEMO](https://ng-alain.surge.sh/) |

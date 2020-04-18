@@ -62,7 +62,7 @@ After cloning `ng-alain` or `delon`, run `yarn` to fetch its dependencies. Then,
 
 ### ng-alain
 
-1. `npm run site` runs [demo site](https://ng-alain.github.io/ng-alain/) website locally
+1. `npm run site` runs [demo site](https://ng-alain.surge.sh/) website locally
 2. `npm run lint` checks the code style
 3. `npm test` runs test suite
-5. `npm run build` creates build of [demo site](https://ng-alain.github.io/ng-alain/)
+5. `npm run build` creates build of [demo site](https://ng-alain.surge.sh/)

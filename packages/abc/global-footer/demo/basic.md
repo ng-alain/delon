@@ -35,7 +35,7 @@ export class DemoComponent {
     },
     {
       title: '预览',
-      href: 'https://ng-alain.github.io/ng-alain/',
+      href: 'https://ng-alain.surge.sh/',
       blankTarget: true
     }
   ];

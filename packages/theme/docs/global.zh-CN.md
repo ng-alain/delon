@@ -109,5 +109,5 @@ title: 全局参数
 | `@abs-enabled` | `true` | 中心元素 |
 | `@masonry-enabled` | `true` | CSS瀑布流列 |
 | `@setting-drawer-enabled` | `true` | 主题设置 |
-| `@search-form-enabled` | `true` | 简化搜索框，[DEMO](https://ng-alain.github.io/ng-alain/) |
-| `@search__form-enabled` | `true` | Pro搜索框，[DEMO](https://ng-alain.github.io/ng-alain/) |
+| `@search-form-enabled` | `true` | 简化搜索框，[DEMO](https://ng-alain.surge.sh/) |
+| `@search__form-enabled` | `true` | Pro搜索框，[DEMO](https://ng-alain.surge.sh/) |

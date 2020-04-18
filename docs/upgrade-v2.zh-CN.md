@@ -21,7 +21,7 @@ NG-ALAIN 2.0 变更主要从两个方面：
 
 NG-ALAIN 2.0 启用全新的 [NG-ALAIN 组织](https://github.com/ng-alain/)，并已经将相关的类库代码迁移至该组织下，因此部分示例链接也做改变：
 
-- [DEMO](https://ng-alain.github.io/ng-alain/)
+- [DEMO](https://ng-alain.surge.sh/)
 - 原 1.x [文档站](https://ng-alain.github.io/1.x-doc/)
 
 此文档是为了更好将你的项目迁移至 2.0，当前版本还是 Beta 版本，会在正式版后发布部分组件变更的 `ng update` 支持，变更分为两个大部分：脚手架和 `@delon/*` 类库，以下是针对两个部分的细节说明。
