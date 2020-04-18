@@ -11,14 +11,20 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import DataSet from '@antv/data-set';
 import { Chart } from '@antv/g2';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { InputBoolean, InputNumber, warnDeprecation10 } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export class G2TimelineData {
-  /** 非 `Date` 格式，自动使用 `new Date` 转换，因此，支持时间格式字符串、数字型时间戳 */
-  x: Date | string | number;
+  /**
+   * 时间值
+   * @deprecated Use `time` instead
+   */
+  x?: Date | string | number;
+  /**
+   * 时间值
+   */
+  time?: Date | string | number;
   /** 指标1数据 */
   y1: number;
   /** 指标2数据 */
@@ -51,6 +57,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() padding: number[] = [60, 20, 64, 40];
   @Input() @InputNumber() borderWidth = 2;
   @Input() @InputBoolean() slider = true;
+  @Input() initialRange: { start: Date; end: Date } | null = null;
 
   // #endregion
 
@@ -61,19 +68,19 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private install() {
-    const { node, height, padding, mask, slider } = this;
+    const { node, height, padding, slider } = this;
     const chart = (this.chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
       padding,
     }));
-    chart.axis('x', { title: null });
+    chart.axis('time', { title: null });
     chart.axis('y1', { title: null });
     chart.axis('y2', false);
 
-    chart.line().position('x*y1');
-    chart.line().position('x*y2');
+    chart.line().position('time*y1');
+    chart.line().position('time*y2');
 
     const sliderPadding = { ...[], ...padding };
     sliderPadding[0] = 0;
@@ -85,7 +92,9 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
         trendCfg: {
           isArea: false,
         },
-        mask,
+        minLimit: 2,
+        // Tracking https://github.com/antvis/G2/issues/2332
+        // mask,
       });
     }
 
@@ -99,7 +108,6 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     chart.legend({
       position,
       custom: true,
-      // clickable: false,
       items: [
         { name: titleMap.y1, value: titleMap.y1, marker: { style: { fill: colorMap.y1 } } },
         { name: titleMap.y1, value: titleMap.y2, marker: { style: { fill: colorMap.y2 } } },
@@ -113,30 +121,18 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     chart.height = height;
     chart.padding = padding;
 
-    data
-      .filter(v => !(v.x instanceof Number))
-      .forEach(v => {
-        v.x = +new Date(v.x);
+    // TODO: compatible
+    if (data.find(w => !!w.x) != null) {
+      warnDeprecation10('x', 'time');
+      data.forEach(item => {
+        item.time = new Date(item.x!);
       });
-    data.sort((a, b) => +a.x - +b.x);
-    const max = Math.max([...data].sort((a, b) => b.y1 - a.y1)[0].y1, [...data].sort((a, b) => b.y2 - a.y2)[0].y2);
-    const ds = new DataSet({
-      state: {
-        start: data[0].x,
-        end: data[data.length - 1].x,
-      },
-    });
-    const dv = ds.createView('origin').source(data);
-    dv.transform({
-      type: 'filter',
-      callback: (val: G2TimelineData) => {
-        const time = +val.x;
-        return time >= ds.state.start && time <= ds.state.end;
-      },
-    });
+    }
+
+    const max = Math.max(data.sort((a, b) => b.y1 - a.y1)[0].y1, data.sort((a, b) => b.y2 - a.y2)[0].y2);
     chart.scale({
-      x: {
-        type: 'timeCat',
+      time: {
+        type: 'time',
         mask,
         range: [0, 1],
       },
@@ -151,7 +147,17 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
         min: 0,
       },
     });
-    chart.changeData(dv.rows);
+    const initialRange = {
+      start: new Date(data[0].time!),
+      end: new Date(data[data.length - 1].time!),
+      ...this.initialRange,
+    };
+    chart.changeData(
+      data.filter((val: G2TimelineData) => {
+        const time = +new Date(val.time!);
+        return time >= +initialRange.start && time <= +initialRange.end;
+      }),
+    );
   }
 
   ngOnChanges(): void {

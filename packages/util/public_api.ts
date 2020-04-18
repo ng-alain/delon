@@ -14,5 +14,7 @@ export * from './src/other/style';
 export * from './src/array/array.config';
 export * from './src/array/array.service';
 
+export * from './src/logger/index';
+
 export * from './src/util.config';
 export * from './src/util.module';
