@@ -280,7 +280,7 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
 }).catch(err => console.error(err));`;
     const indexHtmlCode = `<${selector}>loading</${selector}>
 <div id="VERSION" style="position: fixed; bottom: 8px; right: 8px; z-index: 8888;"></div>`;
-    const appModuleCode = `import { NgModule, APP_INITIALIZER, Injectable } from '@angular/core';
+    const appModuleCode = `import { NgModule, APP_INITIALIZER } from '@angular/core';
     import { BrowserModule } from '@angular/platform-browser';
     import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -304,31 +304,15 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
     import { DelonAuthModule } from '@delon/auth';
     import { DelonACLModule } from '@delon/acl';
     import { DelonCacheModule } from '@delon/cache';
-    import { DelonUtilModule, LazyService } from '@delon/util';
+    import { DelonUtilModule } from '@delon/util';
     import { DelonMockModule } from '@delon/mock';
     import * as MOCKDATA from '../../_mock';
+    import { StartupService, StartupServiceFactory } from './startup.service';
 
     const antDesignIcons = AllIcons as {
       [key: string]: IconDefinition;
     };
     const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key]);
-
-    @Injectable()
-    export class StartupService {
-      constructor(private lazy: LazyService) { }
-      load(): Promise<any> {
-        return new Promise((resolve, reject) => {
-          this.lazy.load([
-            'https://cdnjs.cloudflare.com/ajax/libs/ajv/${pkg.dependencies.ajv.substr(1)}/ajv.min.js',
-          ])
-            .then(() => resolve(null));
-        });
-      }
-    }
-
-    export function StartupServiceFactory(startupService: StartupService): Function {
-      return () => startupService.load();
-    }
 
     import { VERSION as VERSION_ALAIN } from '@delon/theme';
     import { VERSION as VERSION_ZORRO } from 'ng-zorro-antd/version';
@@ -460,6 +444,26 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
 "defaultProject": "demo"
 }
 `;
+    const startupServiceCode = `import { Injectable } from '@angular/core';
+import { LazyService } from '@delon/util';
+
+@Injectable()
+export class StartupService {
+  constructor(private lazy: LazyService) { }
+  load(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.lazy.load([
+        'https://cdnjs.cloudflare.com/ajax/libs/ajv/${pkg.dependencies.ajv.substr(1)}/ajv.min.js',
+      ])
+        .then(() => resolve(null));
+    });
+  }
+}
+
+export function StartupServiceFactory(startupService: StartupService): Function {
+  return () => startupService.load();
+}`;
+
     const NGALAIN_VERSION = `~${pkg.version}`;
     sdk.openProject(
       {
@@ -476,6 +480,7 @@ platformBrowserDynamic().bootstrapModule(AppModule).then(ref => {
           'src/app/ng-zorro-antd.module.ts': demoNgZorroAntdModule,
           'src/app/delon-abc.module.ts': demoDelonABCModule,
           'src/app/delon-chart.module.ts': demoDelonChartModule,
+          'src/app/startup.service.ts': startupServiceCode,
           'src/styles.less': ``,
           '_mock/user.ts': require('!!raw-loader!../../../_mock/user.ts').default,
           '_mock/index.ts': `export * from './user';`,
