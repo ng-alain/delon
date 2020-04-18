@@ -1,11 +1,12 @@
-# @delon/abc module [![Build Status](https://img.shields.io/travis/ng-alain/delon/master.svg?style=flat-square)](https://travis-ci.org/ng-alain/delon) [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg?style=flat-square)](https://www.npmjs.com/package/@delon/abc)
+# @delon/abc module [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/@delon/abc.svg?style=flat-square)](https://www.npmjs.com/package/@delon/abc)
 
 Common business components of ng-alain.
 
 ## Links
 
-- [Api Document](https://ng-alain.com/components)
-- [Demo](//ng-alain.github.io/ng-alain/)
++ [Document](https://ng-alain.com/components) ([Surge Mirror](https://ng-alain-doc.surge.sh/components))
++ [@delon Source](https://github.com/ng-alain/delon)
++ [DEMO](https://ng-alain.surge.sh)
 
 ## Architecture
 
