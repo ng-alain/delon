@@ -22,7 +22,7 @@ This description refers to the description of the upgrade from `8.9.x' to `9'; N
 + import format from 'date-fns/format';
 ```
 
-> The core factor is that Angular's own DatePipe is not implemented according to the ISO standard algorithm, so date-fns will be forced to format the date by default, see [How to use date-fns for date formatting](https://ng.ant.design/docs/i18n/zh#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-date-fns-%E8%BF%9B%E8%A1%8C%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96) for details.
+> The core factor is that Angular's own DatePipe is not implemented according to the ISO standard algorithm, so date-fns will be forced to format the date by default, see [How to use date-fns for date formatting](https://ng.ant.design/docs/i18n/en#how-to-format-a-date-using-date-fns) for details.
 
 **Add default language**
 
