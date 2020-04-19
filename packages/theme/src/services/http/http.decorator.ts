@@ -1,11 +1,19 @@
 // tslint:disable: only-arrow-functions
 import { HttpHeaders } from '@angular/common/http';
-import { Inject, Injector } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { ACLService } from '@delon/acl';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, throwError } from 'rxjs';
 import { _HttpClient } from './http.client';
 
+/**
+ * Every http decorator must be based on `BaseAPI`, Like this:
+ * ```ts
+ * \@Injectable()
+ * class DataService extends BaseApi {}
+ * ```
+ */
+@Injectable()
 export abstract class BaseApi {
   constructor(@Inject(Injector) protected injector: Injector) {}
 }
