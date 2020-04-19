@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { G2CustomComponent } from './custom.component';
 import { G2CustomModule } from './custom.module';
@@ -21,22 +21,23 @@ describe('chart: custom', () => {
 
   afterEach(() => context.comp.ngOnDestroy());
 
-  it('should be working', () => {
+  it('should be working', fakeAsync(() => {
     expect(context.render).not.toHaveBeenCalled();
     fixture.detectChanges();
+    tick(1);
     expect(context.render).toHaveBeenCalled();
-  });
+  }));
 
-  it('should be resize', done => {
+  it('should be resize', fakeAsync(() => {
     expect(context.resize).not.toHaveBeenCalled();
     context.resizeTime = 1;
     fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
     window.dispatchEvent(new Event('resize'));
-    setTimeout(() => {
-      expect(context.resize).toHaveBeenCalled();
-      done();
-    }, 2);
-  });
+    tick(2);
+    expect(context.resize).toHaveBeenCalled();
+  }));
 });
 
 @Component({
