@@ -14,6 +14,19 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [9.0.0-rc.2](https://github.com/ng-alain/delon/compare/9.0.0-rc.1...9.0.0-rc.2) (2020-04-19)
+
+### Bug Fixes
+
+* 修复依赖注入在lvy下兼容性问题 ([#819](https://github.com/ng-alain/delon/issues/819)) ([6f9bba5](https://github.com/ng-alain/delon/commit/6f9bba5895b2be17907f0faf7451ae73ff38625d))
+* **chart:tag-cloud:** 修复文本重叠 ([#816](https://github.com/ng-alain/delon/issues/816)) ([7f31648](https://github.com/ng-alain/delon/commit/7f3164875372dac9358a2349e76fa8e2d988ca84))
+* **chart:timeline:** 修复滑块日期显示不正确 ([#817](https://github.com/ng-alain/delon/issues/817)) ([1284553](https://github.com/ng-alain/delon/commit/12845534bef3df2f7f75aa162e036b6cd20912c5))
+
+### Features
+
+* **chart:custom:** 新增 `delay` 延迟属性 ([#818](https://github.com/ng-alain/delon/issues/818)) ([07e59fb](https://github.com/ng-alain/delon/commit/07e59fb5f1bdd1d51660510d34d45b968341faa9))
+
+
 # [9.0.0-rc.1](https://github.com/ng-alain/delon/compare/8.9.2...9.0.0-rc.1) (2020-04-18)
 
 欢迎来到 `ng-alain` 的 `9.0.0-rc.1` 版本，直接发布 `rc` 主要是因为 `ng-alain` 本身并无严重的破坏性变更，但 `ng-alain` 又是依赖 `ng-zorro`，因此本次升级着重点在于 `ng-zorro` 的升级，有关细节请参考[升级指南](https://github.com/ng-alain/ng-alain/issues/1569)。
