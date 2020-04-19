@@ -50,6 +50,7 @@ const MOCKMODULE = !environment.production ? [ DelonMockModule.forRoot({ data: M
 | `[force]` | `boolean` | `false` | 是否强制所有请求都Mock，`true` 表示当请求的URL不存在时直接返回 404 错误，`false` 表示未命中时发送真实HTTP请求 |
 | `[log]` | `boolean` | `true` | 是否打印 Mock 请求信息，弥补浏览器无Network信息；当请求经过 Mock 会接收【👽Mock】 |
 | `[executeOtherInterceptors]` | `boolean` | `true` | 是否拦截命中后继续调用后续拦截器的 `intercept` 方法 |
+| `[copy]` | `boolean` | `true` | 是否返回副本数据 |
 
 > 若**懒模块**还需要导入 `forChild` 确保HTTP拦截器有效，一般可以直接在 SharedModule 直接使用 `forChild`。
 
