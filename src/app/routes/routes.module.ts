@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, Route, RouterModule } from '@angular/router';
+import { Route, RouterModule } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { LayoutComponent } from '../layout/layout.component';
 import { SharedModule } from '../shared/shared.module';
@@ -47,10 +47,7 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  imports: [
-    SharedModule,
-    RouterModule.forRoot(routes, environment.production ? { preloadingStrategy: PreloadAllModules } : { useHash: true }),
-  ],
+  imports: [SharedModule, RouterModule.forRoot(routes, environment.production ? {} : { useHash: true })],
   declarations: [...COMPONENTS],
 })
 export class RoutesModule {}

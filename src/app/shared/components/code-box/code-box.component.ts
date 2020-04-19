@@ -61,7 +61,7 @@ export class CodeBoxComponent implements OnDestroy {
   }
 
   openOnStackBlitz() {
-    this.codeSrv.openOnStackBlitz(this.item.code, this.i18n.get(this.item.meta.title), this.i18n.get(this.item.summary));
+    this.codeSrv.openOnStackBlitz(this.item.code);
   }
 
   onCopy(value: string) {
