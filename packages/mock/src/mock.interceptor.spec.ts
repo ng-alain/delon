@@ -21,9 +21,10 @@ import { DelonMockConfig } from './mock.config';
 import { DelonMockModule } from './mock.module';
 import { MockStatusError } from './status.error';
 
+const USER_LIST = { users: [1, 2], a: 0 };
 const DATA = {
   USERS: {
-    'GET /users': { users: [1, 2] },
+    'GET /users': USER_LIST,
     '/users/1': Mock.mock({ id: 1, 'rank|3': '★★★' }),
     '/users/:id': (req: MockRequest) => req.params,
     '/array': [1, 2],
@@ -190,6 +191,7 @@ describe('mock: interceptor', () => {
       });
     });
   });
+
   describe('[disabled log]', () => {
     it('with request', (done: () => void) => {
       genModule({ data: DATA, delay: 1, log: false });
@@ -213,6 +215,26 @@ describe('mock: interceptor', () => {
       );
     });
   });
+
+  describe('[copy]', () => {
+    it('with true', (done: () => void) => {
+      genModule({ data: DATA, copy: true });
+      http.get('/users').subscribe((res: any) => {
+        res.a = 1;
+        expect(USER_LIST.a).toBe(0);
+        done();
+      });
+    });
+    it('with false', (done: () => void) => {
+      genModule({ data: DATA, copy: false });
+      http.get('/users').subscribe((res: any) => {
+        res.a = 1;
+        expect(USER_LIST.a).toBe(1);
+        done();
+      });
+    });
+  });
+
   describe('[lazy module]', () => {
     beforeEach(() => genModule({ data: DATA, delay: 1 }));
 

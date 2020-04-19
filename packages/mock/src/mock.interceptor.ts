@@ -1,5 +1,4 @@
 import {
-  HTTP_INTERCEPTORS,
   HttpBackend,
   HttpErrorResponse,
   HttpEvent,
@@ -8,8 +7,10 @@ import {
   HttpRequest,
   HttpResponse,
   HttpResponseBase,
+  HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
+import { deepCopy } from '@delon/util';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { MockRequest } from './interface';
@@ -79,13 +80,10 @@ export class MockInterceptor implements HttpInterceptor {
           res = new HttpErrorResponse({
             url: req.url,
             headers: req.headers,
-            status: 400,
+            status: e instanceof MockStatusError ? e.status : 400,
             statusText: e.statusText || 'Unknown Error',
             error: e.error,
           });
-          if (e instanceof MockStatusError) {
-            res.status = e.status;
-          }
         }
         break;
       default:
@@ -99,6 +97,10 @@ export class MockInterceptor implements HttpInterceptor {
         url: req.url,
         body: res,
       });
+    }
+
+    if (config.copy && res.body) {
+      res.body = deepCopy(res.body);
     }
 
     if (config.log) {
