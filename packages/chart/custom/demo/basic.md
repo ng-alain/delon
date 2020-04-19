@@ -15,37 +15,30 @@ Copy [Basic Funnel Chart](https://antv.alipay.com/zh-cn/g2/3.x/demo/funnel/basic
 
 ```ts
 import { Component, ElementRef, NgZone } from '@angular/core';
-import DataSet from '@antv/data-set';
 import { Chart } from '@antv/g2';
 
 @Component({
   selector: 'chart-custom-basic',
-  template: ` <g2-custom (render)="render($event)"></g2-custom> `,
+  template: ` <g2-custom delay="100" (render)="render($event)"></g2-custom> `,
 })
 export class DemoComponent {
   constructor(private ngZone: NgZone) {}
 
   render(el: ElementRef<HTMLDivElement>) {
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.init(el.nativeElement), 500));
+    this.ngZone.runOutsideAngular(() => this.init(el.nativeElement));
   }
 
   private init(el: HTMLElement) {
-    const { DataView } = DataSet;
-    const dv = new DataView().source([
+    const data: any[] = [
       { action: '浏览网站', pv: 50000 },
       { action: '放入购物车', pv: 35000 },
       { action: '生成订单', pv: 25000 },
       { action: '支付订单', pv: 15000 },
       { action: '完成交易', pv: 8000 },
-    ]);
-    dv.transform({
-      type: 'map',
-      callback(row) {
-        row.percent = row.pv / 50000;
-        return row;
-      },
+    ].map((row: any) => {
+      row.percent = row.pv / 50000;
+      return row;
     });
-    const data = dv.rows;
     const chart = new Chart({
       container: el,
       autoFit: true,

@@ -1,46 +1,19 @@
-import { Component } from '@angular/core';
-import { SFSchema, SFStringWidgetSchema } from '@delon/form';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { Component, OnInit } from '@angular/core';
+import format from 'date-fns/format';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
+  template: ` <g2-timeline [data]="chartData" [titleMap]="{ y1: '客流量', y2: '支付笔数' }" [height]="200"></g2-timeline>`,
 })
-export class DemoComponent {
-  schema: SFSchema = {
-    properties: {
-      name: {
-        type: 'string',
-        title: 'Name',
-        ui: {
-          addOnAfter: 'RMB',
-          placeholder: 'RMB结算',
-          change: val => console.log(val),
-          focus: e => console.log('focus', e),
-          blur: e => console.log('blur', e),
-          enter: e => console.log('enter', e),
-        } as SFStringWidgetSchema,
-      },
-      mobile: {
-        type: 'string',
-        format: 'mobile',
-        title: '手机号',
-      },
-      sfz: {
-        type: 'string',
-        format: 'id-card',
-        title: '身份证号',
-      },
-      color: {
-        type: 'string',
-        format: 'color',
-        title: '颜色',
-      },
-    },
-    required: ['name'],
-  };
-  constructor(public msg: NzMessageService) {}
-  submit(value: any) {
-    this.msg.success(JSON.stringify(value));
+export class DemoComponent implements OnInit {
+  chartData: any[] = [];
+  ngOnInit(): void {
+    for (let i = 0; i < 20; i += 1) {
+      this.chartData.push({
+        time: format(new Date().getTime() + 1000 * 60 * 30 * i, 'yyyy-MM-dd HH:mm'),
+        y1: Math.floor(Math.random() * 100) + 1000,
+        y2: Math.floor(Math.random() * 100) + 10,
+      });
+    }
   }
 }

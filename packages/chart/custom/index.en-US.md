@@ -41,10 +41,11 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 
 ### g2-custom
 
-| Property       | Description                | Type                       | Default |
-| -------------- | -------------------------- | -------------------------- | ------- |
-| `[height]`     | Height of chart container  | `number`                   | -       |
-| `[resizeTime]` | Resize event debounce time | `number`                   | `200`   |
-| `(render)`     | Render event               | `EventEmitter<ElementRef>` | -       |
-| `(resize)`     | Resize event               | `EventEmitter<ElementRef>` | -       |
-| `(destroy)`    | Destroy event              | `EventEmitter<ElementRef>` | -       |
+| Property       | Description                 | Type                       | Default |
+|----------------|-----------------------------|----------------------------|---------|
+| `[delay]`      | Delayed rendering, unit: ms | `number`                   | `0`     |
+| `[height]`     | Height of chart container   | `number`                   | -       |
+| `[resizeTime]` | Resize event debounce time  | `number`                   | `200`   |
+| `(render)`     | Render event                | `EventEmitter<ElementRef>` | -       |
+| `(resize)`     | Resize event                | `EventEmitter<ElementRef>` | -       |
+| `(destroy)`    | Destroy event               | `EventEmitter<ElementRef>` | -       |
