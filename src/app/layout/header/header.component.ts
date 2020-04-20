@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isMobile: boolean;
   useDocsearch = true;
   oldVersionList = [`8.x`, `1.x`];
-  currentVersion = 'stable';
+  currentVersion = '9.0.0';
   delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
 
   @ViewChild('searchInput', { static: false })
