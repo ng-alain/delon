@@ -20,11 +20,9 @@ export class STRowSource {
 
 @Directive({ selector: '[st-row]' })
 export class STRowDirective implements OnInit {
-  @Input('st-row')
-  id: string;
+  @Input('st-row') id: string;
 
-  @Input()
-  type: 'title';
+  @Input() type: 'title';
 
   constructor(private ref: TemplateRef<void>, @Host() private source: STRowSource) {}
 
