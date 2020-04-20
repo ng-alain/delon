@@ -1,31 +1,24 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnInit,
-  Renderer2,
-  TemplateRef,
-  ViewEncapsulation,
-} from '@angular/core';
-import { InputNumber, updateHostClass } from '@delon/util';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { InputNumber } from '@delon/util';
 import { SVConfig } from './sv.config';
-
-const prefixCls = `sv`;
 
 @Component({
   selector: 'sv-container, [sv-container]',
   exportAs: 'svContainer',
   templateUrl: './sv-container.component.html',
+  host: {
+    '[class.sv__container]': 'true',
+    '[class.sv__horizontal]': `layout === 'horizontal'`,
+    '[class.sv__vertical]': `layout === 'vertical'`,
+    '[class.sv__small]': `size === 'small'`,
+    '[class.sv__large]': `size === 'large'`,
+    '[class.clearfix]': `true`,
+  },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class SVContainerComponent implements OnInit, OnChanges {
-  private el: HTMLElement;
-  // #region fields
-
+export class SVContainerComponent {
   @Input() title: string | TemplateRef<void>;
   @Input() size: 'small' | 'large' = 'large';
   /** 列表项间距，单位为 `px` */
@@ -36,28 +29,7 @@ export class SVContainerComponent implements OnInit, OnChanges {
   @Input() @InputNumber() col: number;
   @Input() default: boolean;
 
-  // #endregion
-
-  constructor(el: ElementRef, private ren: Renderer2, cog: SVConfig) {
-    this.el = el.nativeElement;
+  constructor(cog: SVConfig) {
     Object.assign(this, { ...new SVConfig(), ...cog });
-  }
-
-  private setClass() {
-    const { el, ren, size, layout } = this;
-    updateHostClass(el, ren, {
-      [`${prefixCls}__container`]: true,
-      [`${prefixCls}__${size}`]: true,
-      [`${prefixCls}__${layout}`]: true,
-      [`clearfix`]: true,
-    });
-  }
-
-  ngOnInit() {
-    this.setClass();
-  }
-
-  ngOnChanges() {
-    this.setClass();
   }
 }

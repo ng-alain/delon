@@ -1,6 +1,5 @@
 <span class="type-label type-label__config" (click)="isVisible=true"></span>
-<nz-modal [(nzVisible)]="isVisible" (nzAfterOpen)="open()" nzTitle="DEMO" nzWidth="650" [nzFooter]="null"
-  (nzOnCancel)="isVisible=false">
+<nz-modal [(nzVisible)]="isVisible" (nzAfterOpen)="open()" nzTitle="DEMO" nzWidth="650" [nzFooter]="null" (nzOnCancel)="isVisible=false">
   <pre id="j-config-code" class="lang-typescript m0">import &#123; {{ meta.item.config }} &#125; from '{{meta.item.module_name}}';
 export function fn{{ meta.item.config }}(): {{ meta.item.config }} &#123;
   return &#123; ...new {{ meta.item.config }}(), ...&#123; &#125; as {{ meta.item.config }} &#125;;

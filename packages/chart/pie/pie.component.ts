@@ -8,16 +8,13 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Renderer2,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
 import { InteractionType } from '@delon/chart/core/types';
-import { InputBoolean, InputNumber, updateHostClass } from '@delon/util';
-import { fromEvent, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { InputBoolean, InputNumber } from '@delon/util';
 
 export interface G2PieData {
   x: any;
@@ -29,12 +26,17 @@ export interface G2PieData {
   selector: 'g2-pie',
   exportAs: 'g2Pie',
   templateUrl: './pie.component.html',
+  host: {
+    '[class.g2-pie]': 'true',
+    '[class.g2-pie__legend-has]': 'hasLegend',
+    '[class.g2-pie__legend-block]': 'block',
+    '[class.g2-pie__mini]': 'isPercent',
+  },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
-  private resize$: Subscription;
   @ViewChild('container', { static: true }) private node: ElementRef;
   private chart: Chart;
   private isPercent: boolean;
@@ -55,6 +57,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() percent: number;
   @Input() @InputBoolean() tooltip = true;
   @Input() @InputNumber() lineWidth = 0;
+  @Input() @InputNumber() blockMaxWidth = 380;
   @Input() @InputBoolean() select = true;
   @Input() valueFormat: (y: number) => string;
   @Input() data: G2PieData[] = [];
@@ -63,23 +66,11 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
 
   // #endregion
 
-  constructor(private el: ElementRef, private rend: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
-
-  private setCls() {
-    const { el, rend, hasLegend, isPercent } = this;
-    const ne = el.nativeElement as HTMLElement;
-    updateHostClass(
-      ne,
-      rend,
-      {
-        'g2-pie': true,
-        'g2-pie__legend-has': hasLegend,
-        'g2-pie__legend-block': hasLegend && ne.clientWidth <= 380,
-        'g2-pie__mini': isPercent,
-      },
-      true,
-    );
+  get block() {
+    return this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
   }
+
+  constructor(private el: ElementRef<HTMLElement>, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
   private fixData() {
     const { percent, color } = this;
@@ -102,8 +93,6 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private install() {
-    this.setCls();
-
     const { node, height, padding, tooltip, inner, hasLegend, interaction } = this;
     const chart = (this.chart = new Chart({
       container: node.nativeElement,
@@ -183,29 +172,16 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     chart.render();
   }
 
-  private installResizeEvent() {
-    if (this.resize$ || !this.hasLegend) return;
-
-    this.resize$ = fromEvent(window, 'resize')
-      .pipe(debounceTime(200))
-      .subscribe(() => this.setCls());
-  }
-
   ngOnInit(): void {
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   ngOnChanges(): void {
     this.fixData();
-    this.setCls();
     this.ngZone.runOutsideAngular(() => this.attachChart());
-    this.installResizeEvent();
   }
 
   ngOnDestroy(): void {
-    if (this.resize$) {
-      this.resize$.unsubscribe();
-    }
     if (this.chart) {
       this.ngZone.runOutsideAngular(() => this.chart.destroy());
     }
