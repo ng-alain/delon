@@ -12,7 +12,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
-import { InputBoolean, InputNumber, warnDeprecation10 } from '@delon/util';
+import { deprecation10, InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export class G2TimelineData {
@@ -123,7 +123,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
     // TODO: compatible
     if (data.find(w => !!w.x) != null) {
-      warnDeprecation10('x', 'time');
+      deprecation10('g2-timeline', 'x', 'time');
       data.forEach(item => {
         item.time = new Date(item.x!);
       });
