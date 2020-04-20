@@ -15,6 +15,7 @@ import {
 import { Chart } from '@antv/g2';
 import { InteractionType } from '@delon/chart/core/types';
 import { InputBoolean, InputNumber } from '@delon/util';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2PieData {
   x: any;
@@ -40,8 +41,8 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('container', { static: true }) private node: ElementRef;
   private chart: Chart;
   private isPercent: boolean;
-  private percentColor: any;
-  legendData: any[] = [];
+  private percentColor: (value: string) => string;
+  legendData: NzSafeAny[] = [];
 
   // #region fields
 
@@ -70,7 +71,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     return this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
   }
 
-  constructor(private el: ElementRef<HTMLElement>, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
+  constructor(public el: ElementRef<HTMLElement>, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
   private fixData() {
     const { percent, color } = this;
