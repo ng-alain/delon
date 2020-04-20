@@ -2,9 +2,10 @@ import { Host, Inject, Injectable, Optional } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
-import { deepCopy } from '@delon/util';
+import { deepCopy, warn } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STRowSource } from './st-row.directive';
+import { STWidgetRegistry } from './st-widget';
 import { STConfig } from './st.config';
 import { STColumn, STColumnButton, STColumnButtonPop, STColumnFilter, STIcon, STSortMap } from './st.interfaces';
 
@@ -16,6 +17,7 @@ export class STColumnSource {
     @Optional() private acl: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     private cog: STConfig,
+    private stWidgetRegistry: STWidgetRegistry,
   ) {}
 
   private fixPop(i: STColumnButton, def: STColumnButtonPop): void {
@@ -214,6 +216,14 @@ export class STColumnSource {
     }
   }
 
+  private widgetCoerce(item: STColumn): void {
+    if (item.type !== 'widget') return;
+    if (item.widget == null || !this.stWidgetRegistry.has(item.widget.type)) {
+      delete item.type;
+      warn(`st: No widget for type "${item.widget!.type}"`);
+    }
+  }
+
   process(list: STColumn[]): STColumn[] {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
@@ -306,6 +316,8 @@ export class STColumnSource {
       item.filter = this.filterCoerce(item) as STColumnFilter;
       // buttons
       item.buttons = this.btnCoerce(item.buttons!);
+      // widget
+      this.widgetCoerce(item);
       // restore custom row
       this.restoreRender(item);
 

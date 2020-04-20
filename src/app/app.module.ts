@@ -28,6 +28,7 @@ import { SimplemdeModule } from 'ngx-simplemde';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
+import { STWidgetModule } from './shared/st-widget/st-widget.module';
 
 import { ExampleModule, EXAMPLE_COMPONENTS } from './routes/gen/examples';
 import { IconComponent } from './shared/components/icon/icon.component';
@@ -45,6 +46,7 @@ export function StartupServiceFactory(startupService: StartupService) {
     LayoutModule,
     SharedModule,
     JsonSchemaModule,
+    STWidgetModule,
     RoutesModule,
     ExampleModule,
     // i18n
