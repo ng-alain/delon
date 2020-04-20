@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 
-export class STWidget {}
-
 @Injectable({ providedIn: 'root' })
 export class STWidgetRegistry {
-  private _widgets: { [type: string]: STWidget } = {};
+  private _widgets: { [type: string]: any } = {};
 
   get widgets() {
     return this._widgets;
   }
 
-  register(type: string, widget: STWidget) {
+  register(type: string, widget: any) {
     this._widgets[type] = widget;
   }
 
@@ -18,7 +16,7 @@ export class STWidgetRegistry {
     return this._widgets.hasOwnProperty(type);
   }
 
-  get(type: string): STWidget | undefined {
+  get(type: string): any {
     return this._widgets[type];
   }
 }

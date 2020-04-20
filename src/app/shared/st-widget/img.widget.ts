@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { STWidget } from '@delon/abc/st';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
@@ -10,14 +9,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class STImgWidget extends STWidget {
+export class STImgWidget {
   static readonly KEY = 'img';
 
   img: string;
 
-  constructor(private msg: NzMessageService) {
-    super();
-  }
+  constructor(private msg: NzMessageService) {}
 
   show(): void {
     this.msg.info(`正在打开大图${this.img}……`);
