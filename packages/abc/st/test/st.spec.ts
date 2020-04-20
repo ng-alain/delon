@@ -959,7 +959,7 @@ describe('abc: table', () => {
       }));
     });
     describe('#pagePlacement', () => {
-      ['left', 'center', 'right'].forEach(pos => {
+      ['left', 'center'].forEach(pos => {
         it(`with ${pos}`, fakeAsync(() => {
           context.page.placement = pos as any;
           page.cd().expectElCount(`.st__p-${pos}`, 1).asyncEnd();
@@ -1578,10 +1578,6 @@ describe('abc: table', () => {
       });
     });
     describe('#widthMode', () => {
-      it('with type is default', fakeAsync(() => {
-        context.widthMode = { type: 'default' };
-        page.cd().expectElCount(`.st__width-default`, 1);
-      }));
       describe('with type is strict', () => {
         it('shoule be add text-truncate class when className is empty and behavior is truncate', fakeAsync(() => {
           context.widthMode = { type: 'strict', strictBehavior: 'truncate' };
@@ -1589,7 +1585,6 @@ describe('abc: table', () => {
             .cd()
             .updateColumn([{ title: '', index: 'id', width: 50 }])
             .expectElCount(`.st__width-strict`, 1)
-            .expectElCount(`.st__width-strict-truncate`, 1)
             .expectElCount(`td.text-truncate`, context.comp._data.length)
             .asyncEnd();
         }));
@@ -1599,7 +1594,6 @@ describe('abc: table', () => {
             .cd()
             .updateColumn([{ title: '', index: 'id', width: 50, className: 'aaaa' }])
             .expectElCount(`.st__width-strict`, 1)
-            .expectElCount(`.st__width-strict-truncate`, 1)
             .expectElCount(`.text-truncate`, 0)
             .expectElCount(`td.aaaa`, context.comp._data.length)
             .asyncEnd();
@@ -1610,7 +1604,6 @@ describe('abc: table', () => {
             .cd()
             .updateColumn([{ index: 'img', type: 'img', width: 50 }])
             .expectElCount(`.st__width-strict`, 1)
-            .expectElCount(`.st__width-strict-truncate`, 1)
             .expectElCount(`td.text-truncate`, 0)
             .asyncEnd();
         }));
