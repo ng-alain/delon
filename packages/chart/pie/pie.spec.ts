@@ -58,21 +58,6 @@ describe('chart: pie', () => {
       page.dc();
       expect(page.context.comp.legendData[0].checked).toBe(false);
     });
-
-    it('should be auto legend block when container width less than 380', fakeAsync(() => {
-      const el = (page.dl.nativeElement as HTMLElement).querySelector('g2-pie') as HTMLElement;
-      let type = 1;
-      spyOnProperty(el, 'clientWidth').and.callFake(() => {
-        return type === 1 ? 381 : 379;
-      });
-      window.dispatchEvent(new Event('resize'));
-      page.end();
-      expect(el.classList.contains('g2-pie__legend-block')).toBe(false);
-      type = 2;
-      window.dispatchEvent(new Event('resize'));
-      page.end();
-      expect(el.classList.contains('g2-pie__legend-block')).toBe(true);
-    }));
   });
 
   describe('#tooltip', () => {

@@ -23,6 +23,7 @@ type: Components
 | `[percent]`   | 占比               | `number`      | -                          |
 | `[lineWidth]` | 边框粗细           | `number`      | `0`                        |
 | `[inner]`     | 内部极坐标系的半径 | `number`      | `0.75`                     |
+| `[blockMaxWidth]` | 多少宽度为块显示 | `number`      | `380`                     |
 | `[tooltip]`   | 是否显示 tooltip   | `boolean`     | `true`                     |
 | `[subTitle]`  | 图表子标题         | `string,TemplateRef<void><void>`      | -                          |
 | `[total]`     | 总量               | `string,TemplateRef<void><void>`      | -                          |
