@@ -12,7 +12,6 @@ import {
   OnDestroy,
   Optional,
   Output,
-  Renderer2,
   SimpleChange,
   SimpleChanges,
   TemplateRef,
@@ -32,7 +31,7 @@ import {
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
-import { deepMerge, deepMergeKey, InputBoolean, InputNumber, toBoolean, updateHostClass } from '@delon/util';
+import { deepMerge, deepMergeKey, InputBoolean, InputNumber, toBoolean } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTableComponent, NzTableData, NzTableStyleService } from 'ng-zorro-antd/table';
 import { from, Observable, of, Subject, Subscription } from 'rxjs';
@@ -69,6 +68,14 @@ import {
   exportAs: 'st',
   templateUrl: './st.component.html',
   providers: [NzTableStyleService, STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
+  host: {
+    '[class.st]': `true`,
+    '[class.st__p-left]': `page.placement === 'left'`,
+    '[class.st__p-center]': `page.placement === 'center'`,
+    '[class.st__width-strict]': `widthMode.type === 'strict'`,
+    '[class.ant-table-rep]': `responsive`,
+    '[class.ant-table-rep__hide-header-footer]': `responsiveHideHeaderFooter`,
+  },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
@@ -236,7 +243,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private cog: STConfig,
     private router: Router,
     private el: ElementRef,
-    private renderer: Renderer2,
     private exportSrv: STExport,
     private modalHelper: ModalHelper,
     private drawerHelper: DrawerHelper,
@@ -772,18 +778,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
-  private setClass() {
-    const { type, strictBehavior } = this.widthMode;
-    updateHostClass(this.el.nativeElement, this.renderer, {
-      [`st`]: true,
-      [`st__p-${this.page.placement}`]: this.page.placement,
-      [`st__width-${type}`]: true,
-      [`st__width-strict-${strictBehavior}`]: type === 'strict',
-      [`ant-table-rep`]: this.responsive,
-      [`ant-table-rep__hide-header-footer`]: this.responsiveHideHeaderFooter,
-    });
-  }
-
   ngAfterViewInit() {
     this.columnSource.restoreAllRender(this._columns);
   }
@@ -799,7 +793,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (changes.loading) {
       this._loading = changes.loading.currentValue;
     }
-    this.setClass();
   }
 
   ngOnDestroy(): void {

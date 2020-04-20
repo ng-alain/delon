@@ -30,7 +30,7 @@
   <i *ngIf="i.optionalHelp" class="st__head-tip" nz-tooltip [nzTooltipTitle]="i.optionalHelp" nz-icon nzType="question-circle"></i>
 </ng-template>
 <ng-template #bodyTpl let-i let-index="index">
-  <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [class]="i._rowClassName">
+  <tr [attr.data-index]="index" (click)="_rowClick($event, i, index)" [ngClass]="i._rowClassName">
     <td *ngIf="expand" [nzShowExpand]="expand && i.showExpand !== false" [(nzExpand)]="i.expand"
       (nzExpandChange)="_expandChange(i)" nzWidth="50px"></td>
     <td *ngFor="let c of _columns; let cIdx=index" [nzLeft]="c._left" [nzRight]="c._right" [ngClass]="columnClass(c)" [attr.colspan]="c.colSpan">

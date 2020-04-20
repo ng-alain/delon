@@ -1,15 +1,20 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnChanges, Renderer2, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { InputNumber, updateHostClass } from '@delon/util';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { InputNumber } from '@delon/util';
 
 @Component({
   selector: 'number-info',
   exportAs: 'numberInfo',
   templateUrl: './number-info.component.html',
+  host: {
+    '[class.number-info]': `true`,
+    '[class.number-info__light]': `theme === 'light'`,
+    '[class.number-info__default]': `theme === 'default'`,
+  },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class NumberInfoComponent implements OnChanges {
+export class NumberInfoComponent {
   /** 标题 */
   @Input() title: string | TemplateRef<void>;
   /** 子标题 */
@@ -26,23 +31,4 @@ export class NumberInfoComponent implements OnChanges {
   @Input() theme: 'light' | 'default' = 'light';
   /** 设置数字和描述直接的间距（像素） */
   @Input() @InputNumber() gap = 8;
-
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
-
-  setClass() {
-    const { el, renderer, theme } = this;
-    updateHostClass(
-      el.nativeElement,
-      renderer,
-      {
-        'number-info': true,
-        [`number-info__${theme}`]: true,
-      },
-      true,
-    );
-  }
-
-  ngOnChanges(): void {
-    this.setClass();
-  }
 }

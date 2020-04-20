@@ -31,7 +31,6 @@ import {
   scriptsToAngularJson,
 } from '../utils/json';
 import { VERSION, ZORROVERSION } from '../utils/lib-versions';
-import { applyLintFix } from '../utils/lint-fix';
 import { getProject, getProjectFromWorkspace, Project } from '../utils/project';
 import { Schema as ApplicationOptions } from './schema';
 
@@ -467,7 +466,7 @@ export default function (options: ApplicationOptions): Rule {
       fixAngularJson(options),
       installPackages(),
       tips(),
-      applyLintFix(),
+      // applyLintFix(),
     ])(host, context);
   };
 }

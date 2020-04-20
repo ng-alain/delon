@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import DataSet from '@antv/data-set';
 import { Chart, registerShape, Util } from '@antv/g2';
-import { InputNumber } from '@delon/util';
+import { deprecation10, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
@@ -126,6 +126,17 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   private attachChart() {
     const { chart, padding, data } = this;
     if (!chart || !data || data.length <= 0) return;
+
+    // TODO: compatible
+    if (data.find(w => !!w.x) != null) {
+      deprecation10('g2-tag-cloud', 'x', 'name');
+      data.forEach(item => {
+        item.name = item.x;
+      });
+    }
+    if (data.find(w => !!w.category) != null) {
+      deprecation10('g2-tag-cloud', 'category');
+    }
 
     chart.height = this.height;
     chart.width = this.width;
