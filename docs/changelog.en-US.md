@@ -16,6 +16,10 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 # [9.0.0-rc.3](https://github.com/ng-alain/delon/compare/9.0.0-rc.2...9.0.0-rc.3) (2020-04-21)
 
+### Scaffold
+
+* **feat(abc:st):** add ` widget` configuration of `st` ([#1579](https://github.com/ng-alain/ng-alain/pull/1579))
+
 ### Bug Fixes
 
 * **cli:** fix Invalid "extends" configuration value ([#824](https://github.com/ng-alain/delon/issues/824)) ([68b56c4](https://github.com/ng-alain/delon/commit/68b56c4226d6016ece6d0de00696f263af85294e))

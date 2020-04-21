@@ -16,6 +16,10 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 # [9.0.0-rc.3](https://github.com/ng-alain/delon/compare/9.0.0-rc.2...9.0.0-rc.3) (2020-04-21)
 
+### Scaffold
+
+* **feat(abc:st):** 新增 `st` 对应 `widget` 配置方式 ([#1579](https://github.com/ng-alain/ng-alain/pull/1579))
+
 ### Bug Fixes
 
 * **cli:** 修复 `ng add` 提示无效扩展 ([#824](https://github.com/ng-alain/delon/issues/824)) ([68b56c4](https://github.com/ng-alain/delon/commit/68b56c4226d6016ece6d0de00696f263af85294e))
