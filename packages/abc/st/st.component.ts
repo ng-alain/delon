@@ -541,7 +541,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     options = { refreshSchema: false, emitReload: false, ...options };
     this._data[index] = deepMergeKey(this._data[index], false, item);
     this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
-    if (!options.refreshSchema) {
+    if (options.refreshSchema) {
       this.resetColumns({ emitReload: options.emitReload });
       return this;
     }

@@ -414,6 +414,7 @@ describe('abc: table', () => {
         });
         describe('with widget', () => {
           it(`should be working`, fakeAsync(() => {
+            expect(Object.keys(registerWidget.widgets)).toContain('test');
             page.updateColumn([{ type: 'widget', widget: { type: 'test' } }], 1, 1).expectCell('1', 1, 1, '.widget-record-value');
           }));
           it(`should be specify parameters`, fakeAsync(() => {
@@ -1427,8 +1428,12 @@ describe('abc: table', () => {
         it('should be working', fakeAsync(() => {
           page.cd();
           page.expectData(1, 'name', `name 1`);
+          spyOn(comp, 'resetColumns');
           comp.setRow(0, { name: 'new name' });
+          expect(comp.resetColumns).not.toHaveBeenCalled();
           page.expectData(1, 'name', `new name`);
+          comp.setRow(0, { name: 'a' }, { refreshSchema: true });
+          expect(comp.resetColumns).toHaveBeenCalled();
           page.asyncEnd();
         }));
       });
