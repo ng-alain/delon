@@ -90,7 +90,7 @@ config: STConfig
 `reload(extraParams?: any, options?: STLoadOptions)` | 刷新当前页
 `reset(extraParams?: any, options?: STLoadOptions)` | 重置且重新设置 `pi` 为 `1`，包含单多选、排序、过滤状态（同默认状态一并清除）
 `removeRow(data: STData | STData[] | number)` | 移除行
-`setRow(index: number, item: STData)` | 修改行数据，支持部分字段更新
+`setRow(index: number, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean })` | 修改行数据，支持部分字段更新
 `clear(cleanStatus = true)` | 清空所有数据
 `clearStatus()` | 清空所有状态（包含单多选、排序、过滤状态）
 `clearCheck()` | 清除所有 `checkbox`
@@ -229,7 +229,7 @@ class TestComponent {
 ----|------|-----|------
 `[title]` | 列名 | `string, STColumnTitle` | -
 `[i18n]` | 列名i18n | `string` | -
-`[type]` | `no` 行号<br>`checkbox` 多选<br>`radio` 单选<br>`link` 链接，可触发 `click`<br>`img` 图像且居中<br>`number` 数字且居右<br>`currency` 货币且居右<br>`date` 日期格式且居中<br>`badge` [徽标](https://ng.ant.design/components/badge/zh)<br>`tag` [标签](https://ng.ant.design/components/tag/zh)<br>`yn` 将`boolean`类型徽章化 [document](/theme/yn) | `string` | -
+`[type]` | `no` 行号<br>`checkbox` 多选<br>`radio` 单选<br>`link` 链接，可触发 `click`<br>`img` 图像且居中<br>`number` 数字且居右<br>`currency` 货币且居右<br>`date` 日期格式且居中<br>`badge` [徽标](https://ng.ant.design/components/badge/zh)<br>`tag` [标签](https://ng.ant.design/components/tag/zh)<br>`yn` 将`boolean`类型徽章化 [document](/theme/yn)<br>`widget` 自定义小部件来渲染列 | `string` | -
 `[index]` | 列数据在数据项中对应的 key，支持 `a.b.c` 的嵌套写法 | `string, string[]` | -
 `[render]` | 自定义渲染ID | `string` | -
 `[renderTitle]` | 标题自定义渲染ID | `string` | -
@@ -251,6 +251,7 @@ class TestComponent {
 `[click]` | 链接回调 | `(record: STData, instance?: STComponent) => void` | -
 `[badge]` | 徽标配置项 | `STColumnBadge` | -
 `[tag]` | 徽标配置项 | `STColumnTag` | -
+`[widget]` | 小部件配置项 | `STWidgetColumn` | -
 `[noIndex]` | 行号索引开始值 | `number,(item: STData, col: STColumn, idx: number) => number` | `1`
 `[iif]` | 条件表达式<br>1、仅赋值 `columns` 时执行一次<br>2、可调用 `resetColumns()` 再一次触发 | `(item: STColumn) => boolean` | -
 `[statistical]` | 统计信息 | `STStatisticalType,STStatistical` | -
@@ -380,6 +381,14 @@ class TestComponent {
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
 `[color]` | Tag颜色值 | `string` | -
+
+### STWidgetColumn
+
+参数 | 说明 | 类型 | 默认值
+----|------|-----|------
+`[type]` | 指定类型名，可通过定义 `STWidgetRegistry` 来定制，[例如](https://github.com/ng-alain/delon/blob/master/src/app/shared/st-widget/st-widget.module.ts) | `string` | -
+`[params]` | 目标组件的参数 | `(options: { record: STData; column: STColumn }) => {}` | -
+
 
 ### STWidthMode
 

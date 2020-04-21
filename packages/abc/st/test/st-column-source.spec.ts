@@ -3,6 +3,7 @@ import { AlainI18NService, AlainI18NServiceFake } from '@delon/theme';
 import { deepGet } from '@delon/util';
 import { STColumnSource } from '../st-column-source';
 import { STRowSource } from '../st-row.directive';
+import { STWidgetRegistry } from '../st-widget';
 import { STConfig } from '../st.config';
 import { STColumn, STColumnButtonPop, STIcon } from '../st.interfaces';
 
@@ -24,13 +25,15 @@ describe('st: column-source', () => {
   let i18nSrv: AlainI18NService | null;
   let srv: STColumnSource;
   let rowSrv: STRowSource;
+  let stWidgetRegistry: STWidgetRegistry;
   let page: PageObject;
 
   function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }) {
     aclSrv = other.acl ? new ACLService({}) : null;
     i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
     rowSrv = new STRowSource();
-    srv = new STColumnSource(new MockDomSanitizer() as any, rowSrv, aclSrv!, i18nSrv!, other.cog || new STConfig());
+    stWidgetRegistry = new STWidgetRegistry();
+    srv = new STColumnSource(new MockDomSanitizer() as any, rowSrv, aclSrv!, i18nSrv!, other.cog || new STConfig(), stWidgetRegistry);
     page = new PageObject();
   }
 
@@ -148,6 +151,22 @@ describe('st: column-source', () => {
           const res = srv.process([{ title: '', index: 'id', type: 'yn', yn: { no: 'N' } }])[0];
           expect(res.yn).not.toBeNull();
           expect(res.yn!.no).toBe('N');
+        });
+      });
+      describe(`with widget`, () => {
+        it('should be working', () => {
+          spyOn(stWidgetRegistry, 'has').and.returnValue(true);
+          const res = srv.process([{ title: '', index: 'id', type: 'widget', widget: { type: 'test' } }])[0];
+          expect(res.type).toBe('widget');
+        });
+        it('should be remove type when widget not specified', () => {
+          const res = srv.process([{ title: '', index: 'id', type: 'widget' }])[0];
+          expect(res.type).toBeUndefined();
+        });
+        it('should be remove type when widget is not found', () => {
+          spyOn(stWidgetRegistry, 'has').and.returnValue(false);
+          const res = srv.process([{ title: '', index: 'id', type: 'widget', widget: { type: 'test' } }])[0];
+          expect(res.type).toBeUndefined();
         });
       });
       describe('invalid type', () => {

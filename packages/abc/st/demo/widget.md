@@ -1,3 +1,19 @@
+---
+order: 7
+title:
+  zh-CN: 自定义小部件
+  en-US: Custom Widgets
+---
+
+## zh-CN
+
+类型为 `widget` 自定义小部件，例如点击头像处理。
+
+## en-US
+
+The type is `widget` custom widget, eg: Click on Avatar effect.
+
+```ts
 import { Component, ViewChild } from '@angular/core';
 import { STColumn, STComponent } from '@delon/abc/st';
 
@@ -28,7 +44,7 @@ export class DemoComponent {
   ];
 
   changeImg(): void {
-    this.st.setRow(0, { picture: { thumbnail: 'https://ng-alain.com/assets/img/logo-color.svg' } });
-    this.st.resetColumns({ emitReload: false });
+    this.st.setRow(0, { picture: { thumbnail: 'https://ng-alain.com/assets/img/logo-color.svg' } }, { refreshSchema: true, emitReload: false });
   }
 }
+```
