@@ -69,7 +69,6 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s).checkValue('a', null).setValue('a', new Date(2019, 0, 1)).dc(1);
       flush();
-      expect(page.getValue('a') instanceof Date).toBe(true);
       const ipt = page.getEl('.ant-picker-input input') as HTMLInputElement;
       expect(ipt.value).toContain(`2019-01-01`);
     }));
