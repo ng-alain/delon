@@ -529,14 +529,22 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   /**
    * Sets the row value for the `index` in the table, like this:
    *
+   * - `optinos.refreshSchema` Whether to refresh of st schemas
+   * - `optinos.emitReload` Whether to trigger a reload http request when data is url
+   *
    * ```
    * this.st.setRow(0, { price: 100 })
    * this.st.setRow(0, { price: 100, name: 'asdf' })
    * ```
    */
-  setRow(index: number, item: STData): this {
+  setRow(index: number, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean }): this {
+    options = { refreshSchema: false, emitReload: false, ...options };
     this._data[index] = deepMergeKey(this._data[index], false, item);
     this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+    if (!options.refreshSchema) {
+      this.resetColumns({ emitReload: options.emitReload });
+      return this;
+    }
     this.cdr.detectChanges();
     return this;
   }

@@ -220,7 +220,7 @@ export class STColumnSource {
     if (item.type !== 'widget') return;
     if (item.widget == null || !this.stWidgetRegistry.has(item.widget.type)) {
       delete item.type;
-      warn(`st: No widget for type "${item.widget!.type}"`);
+      warn(`st: No widget for type "${item.widget?.type}"`);
     }
   }
 

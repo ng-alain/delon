@@ -44,8 +44,7 @@ export class DemoComponent {
   ];
 
   changeImg(): void {
-    this.st.setRow(0, { picture: { thumbnail: 'https://ng-alain.com/assets/img/logo-color.svg' } });
-    this.st.resetColumns({ emitReload: false });
+    this.st.setRow(0, { picture: { thumbnail: 'https://ng-alain.com/assets/img/logo-color.svg' } }, { refreshSchema: true, emitReload: false });
   }
 }
 ```

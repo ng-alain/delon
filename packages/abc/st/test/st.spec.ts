@@ -36,6 +36,7 @@ import {
   STWidthMode,
 } from '../st.interfaces';
 import { STModule } from '../st.module';
+import { STWidgetRegistry } from './../st-widget';
 
 const MOCKDATE = new Date();
 const MOCKIMG = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==`;
@@ -88,6 +89,7 @@ describe('abc: table', () => {
   let page: PageObject;
   let comp: STComponent;
   let i18nSrv: AlainI18NService;
+  let registerWidget: STWidgetRegistry;
 
   function genModule(other: { template?: string; i18n?: boolean; minColumn?: boolean; providers?: any[]; createComp?: boolean }) {
     other = {
@@ -120,10 +122,12 @@ describe('abc: table', () => {
     }
     TestBed.configureTestingModule({
       imports,
-      declarations: [TestComponent, TestExpandComponent],
+      declarations: [TestComponent, TestExpandComponent, TestWidgetComponent],
       providers,
     });
     if (other.template) TestBed.overrideTemplate(TestComponent, other.template);
+    registerWidget = TestBed.inject(STWidgetRegistry);
+    registerWidget.register('test', TestWidgetComponent);
     // ALAIN_I18N_TOKEN 默认为 root 会导致永远都会存在
     i18nSrv = TestBed.inject(ALAIN_I18N_TOKEN);
     if (other.createComp) {
@@ -406,6 +410,16 @@ describe('abc: table', () => {
               .expectCell('N', 2, 1, '', true)
               .expectCell('N', 3, 1, '', true)
               .asyncEnd();
+          }));
+        });
+        describe('with widget', () => {
+          it(`should be working`, fakeAsync(() => {
+            page.updateColumn([{ type: 'widget', widget: { type: 'test' } }], 1, 1).expectCell('1', 1, 1, '.widget-record-value');
+          }));
+          it(`should be specify parameters`, fakeAsync(() => {
+            page
+              .updateColumn([{ type: 'widget', widget: { type: 'test', params: () => ({ id: 10 }) } }], 1, 1)
+              .expectCell('10', 1, 1, '.widget-id-value');
           }));
         });
       });
@@ -1415,6 +1429,7 @@ describe('abc: table', () => {
           page.expectData(1, 'name', `name 1`);
           comp.setRow(0, { name: 'new name' });
           page.expectData(1, 'name', `new name`);
+          page.asyncEnd();
         }));
       });
       describe('#clean', () => {
@@ -1741,7 +1756,6 @@ describe('abc: table', () => {
       expect(i18nSrv.fanyi).toHaveBeenCalled();
     }));
   });
-
   class PageObject {
     _changeData: STChange;
     changeSpy: jasmine.Spy;
@@ -2017,3 +2031,12 @@ class TestComponent {
   `,
 })
 class TestExpandComponent extends TestComponent {}
+
+@Component({
+  template: ` <div class="widget-id-value">{{ id }}</div>
+    <div class="widget-record-value">{{ record?.id }}</div>`,
+})
+class TestWidgetComponent {
+  id: number;
+  record: any;
+}
