@@ -289,6 +289,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           if (dateEndProperty) {
             dateEndProperty.ui = {
               ...(dateEndProperty.ui as SFUISchemaItem),
+              widget: ui.widget,
               hidden: true,
             };
           } else {
@@ -421,7 +422,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         this._btn.render!.spanLabelFixed = btnUi.spanLabelFixed;
       }
       // 固定标签宽度时，若不指定样式，则默认居中
-      if (!this._btn.render!.class && (typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0)) {
+      if (!this._btn.render!.class && typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0) {
         this._btn.render!.class = 'text-center';
       }
     } else {
