@@ -1,4 +1,4 @@
-  <ng-template #btnTpl let-i let-btn="btn">
+<ng-template #btnTpl let-i let-btn="btn">
   <ng-container *ngIf="!btn.tooltip">
     <ng-template [ngTemplateOutlet]="btnItemTpl" [ngTemplateOutletContext]="{ $implicit: i, btn: btn }"></ng-template>
   </ng-container>
@@ -41,18 +41,16 @@
         <ng-template #render [ngTemplateOutlet]="c.__render" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
         <ng-container *ngIf="!c.__render; else render">
           <ng-container [ngSwitch]="c.type">
-            <label *ngSwitchCase="'checkbox'" nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked"
-              (ngModelChange)="_checkSelection(i, $event)"></label>
-            <label *ngSwitchCase="'radio'" nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked"
-              (ngModelChange)="_refRadio($event, i)"></label>
+            <label *ngSwitchCase="'checkbox'" nz-checkbox [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_checkSelection(i, $event)"></label>
+            <label *ngSwitchCase="'radio'" nz-radio [nzDisabled]="i.disabled" [ngModel]="i.checked" (ngModelChange)="_refRadio($event, i)"></label>
             <a *ngSwitchCase="'link'" (click)="_click($event, i, c)" [innerHTML]="i._values[cIdx]._text"></a>
-            <ng-conntainer *ngIf="i._values[cIdx].text">
+            <ng-container *ngIf="i._values[cIdx].text">
               <nz-tag *ngSwitchCase="'tag'" [nzColor]="i._values[cIdx].color">
                 <span [innerHTML]="i._values[cIdx]._text"></span>
               </nz-tag>
-              <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text">
-              </nz-badge>
-            </ng-conntainer>
+              <nz-badge *ngSwitchCase="'badge'" [nzStatus]="i._values[cIdx].color" [nzText]="i._values[cIdx].text"></nz-badge>
+            </ng-container>
+            <ng-template *ngSwitchCase="'widget'" st-widget-host [record]="i" [column]="c"></ng-template>
             <span *ngSwitchDefault [innerHTML]="i._values[cIdx]._text" [attr.title]="isTruncate(c) ? i._values[cIdx].text : null"></span>
           </ng-container>
           <ng-container *ngFor="let btn of _validBtns(c.buttons, i, c); let last=last">
@@ -77,8 +75,7 @@
             </span>
             <nz-divider *ngIf="!last" nzType="vertical"></nz-divider>
           </ng-container>
-          <ng-template [ngIf]="!c.__renderExpanded" [ngTemplateOutlet]="c.__renderExpanded"
-            [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
+          <ng-template [ngIf]="!c.__renderExpanded" [ngTemplateOutlet]="c.__renderExpanded" [ngTemplateOutletContext]="{$implicit: i, index: index, column: c }"></ng-template>
         </ng-container>
       </span>
     </td>

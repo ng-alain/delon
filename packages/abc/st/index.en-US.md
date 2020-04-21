@@ -90,7 +90,7 @@ Name | Description
 `reload(extraParams?: any, options?: STLoadOptions)` | Refresh current page
 `reset(extraParams?: any, options?: STLoadOptions)` | Reset data and `pi` to `1`, including single multi-select, sort, filter status (Covered default state)
 `removeRow(data: STData | STData[] | number)` | Remove a row in the table
-`setRow(index: number, item: STData)` | Sets the row value for the `index` in the table
+`setRow(index: number, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean })` | Sets the row value for the `index` in the table
 `clear(cleanStatus = true)` | Clear all data
 `clearStatus()` | Clean all status (like this: single multi-select, sort, filter status)
 `clearCheck()` | Clear all `checkbox`
@@ -236,7 +236,7 @@ Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[title]` | Name of this column | `string, STColumnTitle` | -
 `[i18n]` | I18n key of this column | `string` | -
-`[type]` | `no` Rows number<br>`checkbox` selection<br>`radio` selection<br>`link` Link that triggers `click`<br>`img` Align to the center<br>`number` Align to the right<br>`currency` Align to the right<br>`date` Align to the center<br>`badge` [Nz-Badge](https://ng.ant.design/components/badge/en)<br>`tag` [Nz-Tag](https://ng.ant.design/components/tag/en)<br>`yn` Make boolean as [badge](/theme/yn) | `string` | -
+`[type]` | `no` Rows number<br>`checkbox` selection<br>`radio` selection<br>`link` Link that triggers `click`<br>`img` Align to the center<br>`number` Align to the right<br>`currency` Align to the right<br>`date` Align to the center<br>`badge` [Nz-Badge](https://ng.ant.design/components/badge/en)<br>`tag` [Nz-Tag](https://ng.ant.design/components/tag/en)<br>`yn` Make boolean as [badge](/theme/yn)<br>`widget` Custom widgets to render columns | `string` | -
 `[index]` | Display field of the data record, could be set like `a.b.c` | `string, string[]` | -
 `[render]` | Custom render template ID | `string` | -
 `[renderTitle]` | Title custom render template ID | `string` | -
@@ -258,6 +258,7 @@ Property | Description | Type | Default
 `[click]` | Callback of type is link | `(record: STData, instance?: STComponent) => void` | -
 `[badge]` | Config of type is badge | `STColumnBadge` | -
 `[tag]` | Config of type is tag | `STColumnTag` | -
+`[widget]` | Config of type is widget | `STWidgetColumn` | -
 `[noIndex]` | Line number index start value | `number,(item: STData, col: STColumn, idx: number) => number` | `1`
 `[iif]` | Custom conditional expression<br>1. Execute only once when `columns` is assigned<br>2. Call `resetColumns()` to trigger again | `(item: STColumn) => boolean` | -
 `[statistical]` | Statistics | `STStatisticalType,STStatistical` | -
@@ -387,6 +388,13 @@ Property | Description | Type | Default
 -------- | ----------- | ---- | -------
 `[text]` | Tag text | `string` | -
 `[color]` | Tag color value | `string` | -
+
+### STWidgetColumn
+
+Property | Description | Type | Default
+-------- | ----------- | ---- | -------
+`[type]` | Specify the type name, which can be customized by `STWidgetRegistry`, [for example](https://github.com/ng-alain/delon/blob/master/src/app/shared/st-widget/st-widget.module.ts) | `string` | -
+`[params]` | Parameters of the target component | `(options: { record: STData; column: STColumn }) => {}` | -
 
 ### STWidthMode
 

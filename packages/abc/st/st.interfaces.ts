@@ -213,8 +213,9 @@ export interface STColumn {
    * - `currency` 货币且居右(若 `className` 存在则优先)
    * - `date` 日期格式且居中(若 `className` 存在则优先)，使用 `dateFormat` 自定义格式
    * - `yn` 将`boolean`类型徽章化 [document](https://ng-alain.com/docs/data-render#yn)
+   * - `widget` 使用自定义小部件动态创建
    */
-  type?: 'checkbox' | 'link' | 'badge' | 'tag' | 'radio' | 'img' | 'currency' | 'number' | 'date' | 'yn' | 'no';
+  type?: 'checkbox' | 'link' | 'badge' | 'tag' | 'radio' | 'img' | 'currency' | 'number' | 'date' | 'yn' | 'no' | 'widget';
   /**
    * 链接回调，若返回一个字符串表示导航URL会自动触发 `router.navigateByUrl`
    */
@@ -330,10 +331,18 @@ export interface STColumn {
    */
   statistical?: STStatisticalType | STStatistical;
 
+  widget?: STWidgetColumn;
+
   /** @ignore internal property */
   _sort?: STSortMap;
 
   [key: string]: any;
+}
+
+export interface STWidgetColumn {
+  type: string;
+
+  params?: (options: { record: STData; column: STColumn }) => {};
 }
 
 export interface STColumnTitle {
