@@ -290,6 +290,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           if (dateEndProperty) {
             dateEndProperty.ui = {
               ...(dateEndProperty.ui as SFUISchemaItem),
+              widget: ui.widget,
               hidden: true,
             };
           } else {
