@@ -68,6 +68,8 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
       this.displayValue = value;
     }
     this.detectChanges();
+    // TODO: Need to wait for the rendering to complete, otherwise it will be overwritten of end widget
+    setTimeout(() => this._change(this.displayValue));
   }
 
   _change(value: Date | Date[] | null) {
@@ -82,8 +84,8 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
       : format(value, this.startFormat);
 
     if (this.flatRange) {
-      this.setEnd(res[1]);
       this.setValue(res[0]);
+      this.setEnd(res[1]);
     } else {
       this.setValue(res);
     }
