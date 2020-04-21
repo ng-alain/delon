@@ -104,6 +104,9 @@ export class ArrayProperty extends PropertyGroup {
         });
       }
     });
+    if (list.length === 0) {
+      this.updateValueAndValidity();
+    }
   }
 
   // #endregion
