@@ -73,7 +73,6 @@ describe('form: widget: date', () => {
         .checkValue('a', null)
         .setValue('a', new Date(2019, 0, 1))
         .dc(1);
-      expect(page.getValue('a') instanceof Date).toBe(true);
       const ipt = page.getEl('.ant-calendar-picker-input') as HTMLInputElement;
       expect(ipt.value).toContain(`2019-01-01`);
     }));
