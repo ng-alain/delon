@@ -10,8 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { I18NService } from '../i18n/i18n.service';<% } %>
 
 import { NzIconService } from 'ng-zorro-antd/icon';
-import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
+import { ICONS_AUTO } from '../../../style-icons-auto';
 
 /**
  * Used for application startup
