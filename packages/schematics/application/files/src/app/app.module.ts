@@ -1,6 +1,6 @@
 // tslint:disable: no-duplicate-imports
-import { NgModule, LOCALE_ID, APP_INITIALIZER, Injector } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, Injector, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -60,8 +60,8 @@ const FORM_MODULES = [ JsonSchemaModule ];
 
 // #region Http Interceptors
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SimpleInterceptor } from '@delon/auth';
 import { DefaultInterceptor } from '@core';
+import { SimpleInterceptor } from '@delon/auth';
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true},
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true}
@@ -89,12 +89,13 @@ const APPINIT_PROVIDES = [
 ];
 // #endregion
 
-import { DelonModule } from './delon.module';
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
-import { RoutesModule } from './routes/routes.module';
+import { CoreModule } from './core/core.module';
+import { DelonModule } from './delon.module';
 import { LayoutModule } from './layout/layout.module';
+import { RoutesModule } from './routes/routes.module';
+import { SharedModule } from './shared/shared.module';
+import { STWidgetModule } from './shared/st-widget/st-widget.module';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { LayoutModule } from './layout/layout.module';
     CoreModule,
     SharedModule,
     LayoutModule,
-    RoutesModule,<% if (i18n) { %>
+    RoutesModule,
+    STWidgetModule,<% if (i18n) { %>
     ...I18NSERVICE_MODULES,<% } %><% if (form) { %>
     ...FORM_MODULES,<% } %>
     ...GLOBAL_THIRD_MODULES
