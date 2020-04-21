@@ -6,7 +6,7 @@ Universal toolset of ng-alain.
 
 + [Document](https://ng-alain.com/util) ([Surge Mirror](https://ng-alain-doc.surge.sh/util))
 + [@delon Source](https://github.com/ng-alain/delon)
-+ [DEMO](https://ng-alain.surge.sh)
++ [DEMO](https://ng-alain.surge.sh) ([国内镜像](https://ng-alain.gitee.io/))
 
 ## Architecture
 

@@ -6,7 +6,7 @@ Simple user authentication, support Json Web Token & Simple Token.
 
 + [Document](https://ng-alain.com/auth) ([Surge Mirror](https://ng-alain-doc.surge.sh/auth))
 + [@delon Source](https://github.com/ng-alain/delon)
-+ [DEMO](https://ng-alain.surge.sh)
++ [DEMO](https://ng-alain.surge.sh) ([国内镜像](https://ng-alain.gitee.io/))
 
 ## Architecture
 
