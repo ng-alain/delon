@@ -82,15 +82,6 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() borderWidth = 2;
   @Input() @InputBoolean() slider = true;
 
-  private _initialRange: { start: number; end: number };
-  @Input()
-  set initialRange(val: { start: G2Time; end: G2Time }) {
-    this._initialRange = {
-      start: +toDate(val.start),
-      end: +toDate(val.end),
-    };
-  }
-
   // #endregion
 
   constructor(private ngZone: NgZone) {}
@@ -128,8 +119,8 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     if (slider) {
       chart.option('slider', {
         height: 26,
-        start: 0.1,
-        end: 0.8,
+        start: 0,
+        end: 1,
         trendCfg: {
           isArea: false,
         },
@@ -203,7 +194,6 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     const initialRange = {
       start: data[0]._time,
       end: data[data.length - 1]._time,
-      ...this._initialRange,
     };
     const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
     chart.changeData(filterData);
