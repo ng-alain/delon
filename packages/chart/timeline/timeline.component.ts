@@ -12,24 +12,47 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
+import { LegendItem, ScaleOption } from '@antv/g2/lib/interface';
+import { G2Time, toDate } from '@delon/chart/core/time';
 import { deprecation10, InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
-export class G2TimelineData {
+export interface G2TimelineData {
   /**
    * 时间值
    * @deprecated Use `time` instead
    */
-  x?: Date | string | number;
+  x?: G2Time;
   /**
    * 时间值
    */
-  time?: Date | string | number;
+  time?: G2Time;
   /** 指标1数据 */
   y1: number;
   /** 指标2数据 */
   y2: number;
+  /** 指标3数据 */
+  y3?: number;
+  /** 指标4数据 */
+  y4?: number;
+  /** 指标5数据 */
+  y5?: number;
   [key: string]: any;
+}
+
+export interface G2TimelineMap {
+  /** 指标1 */
+  y1: string;
+  /** 指标 */
+  y2: string;
+  /** 指标3 */
+  y3?: string;
+  /** 指标4 */
+  y4?: string;
+  /** 指标5 */
+  y5?: string;
+
+  [key: string]: string | undefined;
 }
 
 @Component({
@@ -48,16 +71,25 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
+  @Input() @InputNumber() maxAxis = 2;
   @Input() data: G2TimelineData[] = [];
-  @Input() titleMap: { y1: string; y2: string };
-  @Input() colorMap: { y1: string; y2: string } = { y1: '#1890FF', y2: '#2FC25B' };
+  @Input() titleMap: G2TimelineMap;
+  @Input() colorMap: G2TimelineMap = { y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' };
   @Input() mask: string = 'HH:mm';
   @Input() position: 'top' | 'right' | 'bottom' | 'left' = 'top';
   @Input() @InputNumber() height = 450;
   @Input() padding: number[] = [60, 20, 64, 40];
   @Input() @InputNumber() borderWidth = 2;
   @Input() @InputBoolean() slider = true;
-  @Input() initialRange: { start: Date; end: Date } | null = null;
+
+  private _initialRange: { start: number; end: number };
+  @Input()
+  set initialRange(val: { start: G2Time; end: G2Time }) {
+    this._initialRange = {
+      start: +toDate(val.start),
+      end: +toDate(val.end),
+    };
+  }
 
   // #endregion
 
@@ -68,7 +100,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private install() {
-    const { node, height, padding, slider } = this;
+    const { node, height, padding, slider, maxAxis } = this;
     const chart = (this.chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
@@ -77,10 +109,19 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     }));
     chart.axis('time', { title: null });
     chart.axis('y1', { title: null });
-    chart.axis('y2', false);
+    for (let i = 2; i <= maxAxis; i++) {
+      chart.axis(`y${i}`, false);
+    }
 
     chart.line().position('time*y1');
-    chart.line().position('time*y2');
+    for (let i = 2; i <= maxAxis; i++) {
+      chart.line().position(`time*y${i}`);
+    }
+
+    chart.tooltip({
+      showCrosshairs: true,
+      shared: true,
+    });
 
     const sliderPadding = { ...[], ...padding };
     sliderPadding[0] = 0;
@@ -102,16 +143,19 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const { chart, height, padding, data, mask, titleMap, position, colorMap, borderWidth } = this;
+    const { chart, height, padding, mask, titleMap, position, colorMap, borderWidth, maxAxis } = this;
+    let data = [...this.data];
     if (!chart || !data || data.length <= 0) return;
+
+    const arrAxis = [...Array(maxAxis)].map((_, index) => index + 1);
 
     chart.legend({
       position,
       custom: true,
-      items: [
-        { name: titleMap.y1, value: titleMap.y1, marker: { style: { fill: colorMap.y1 } } },
-        { name: titleMap.y1, value: titleMap.y2, marker: { style: { fill: colorMap.y2 } } },
-      ],
+      items: arrAxis.map(id => {
+        const key = `y${id}`;
+        return { name: titleMap[key], value: titleMap[key], marker: { style: { fill: colorMap[key] } } } as LegendItem;
+      }),
     });
 
     // border
@@ -128,36 +172,41 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
         item.time = new Date(item.x!);
       });
     }
+    // 转换成日期类型
+    data = data
+      .map(item => {
+        item.time = toDate(item.time!);
+        item._time = +item.time;
+        return item;
+      })
+      .sort((a, b) => a._time - b._time);
 
-    const max = Math.max(data.sort((a, b) => b.y1 - a.y1)[0].y1, data.sort((a, b) => b.y2 - a.y2)[0].y2);
+    const max = Math.max(...arrAxis.map(id => [...data].sort((a, b) => b[`y${id}`] - a[`y${id}`])[0][`y${id}`]));
+    const scaleOptions: Record<string, ScaleOption> = {};
+    arrAxis.forEach(id => {
+      const key = `y${id}`;
+      scaleOptions[key] = {
+        alias: titleMap[key],
+        max,
+        min: 0,
+      };
+    });
     chart.scale({
       time: {
         type: 'time',
         mask,
         range: [0, 1],
       },
-      y1: {
-        alias: titleMap.y1,
-        max,
-        min: 0,
-      },
-      y2: {
-        alias: titleMap.y2,
-        max,
-        min: 0,
-      },
+      ...scaleOptions,
     });
+
     const initialRange = {
-      start: new Date(data[0].time!),
-      end: new Date(data[data.length - 1].time!),
-      ...this.initialRange,
+      start: data[0]._time,
+      end: data[data.length - 1]._time,
+      ...this._initialRange,
     };
-    chart.changeData(
-      data.filter((val: G2TimelineData) => {
-        const time = +new Date(val.time!);
-        return time >= +initialRange.start && time <= +initialRange.end;
-      }),
-    );
+    const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
+    chart.changeData(filterData);
   }
 
   ngOnChanges(): void {

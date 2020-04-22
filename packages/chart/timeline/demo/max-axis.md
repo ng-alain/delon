@@ -1,9 +1,19 @@
+---
+order: 1
+title:
+  zh-CN: 多指标
+  en-US: Multiple indicators
+---
+
+利用 `maxAxis` 属性来调整多个指标，最多支持 `5` 个指标值。
+
+```ts
 import { Component, OnInit } from '@angular/core';
 import { G2TimelineData, G2TimelineMap } from '@delon/chart/timeline';
 
 @Component({
   selector: 'app-demo',
-  template: ` <g2-timeline maxAxis="5" [data]="chartData" [titleMap]="titleMap" [height]="200"></g2-timeline>`,
+  template: ` <g2-timeline maxAxis="5" [data]="chartData" [titleMap]="titleMap" [height]="300"></g2-timeline>`,
 })
 export class DemoComponent implements OnInit {
   chartData: G2TimelineData[] = [];
@@ -21,3 +31,4 @@ export class DemoComponent implements OnInit {
     }
   }
 }
+```
