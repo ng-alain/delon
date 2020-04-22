@@ -13,8 +13,8 @@ import {
 } from '@angular/core';
 import { Chart } from '@antv/g2';
 import { LegendItem, ScaleOption } from '@antv/g2/lib/interface';
-import { G2Time, toDate } from '@delon/chart/core/time';
-import { deprecation10, InputBoolean, InputNumber } from '@delon/util';
+import { G2Time } from '@delon/chart/core/types';
+import { deprecation10, InputBoolean, InputNumber, toDate } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2TimelineData {
@@ -78,7 +78,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() mask: string = 'HH:mm';
   @Input() position: 'top' | 'right' | 'bottom' | 'left' = 'top';
   @Input() @InputNumber() height = 450;
-  @Input() padding: number[] = [60, 20, 64, 40];
+  @Input() padding: number[] = [40, 8, 64, 40];
   @Input() @InputNumber() borderWidth = 2;
   @Input() @InputBoolean() slider = true;
 

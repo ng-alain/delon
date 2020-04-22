@@ -21,7 +21,7 @@ type: Components
 | `[titleMap]`    | 指标别名           | `G2TimelineMap` | -                                  |
 | `[colorMap]`    | 颜色               | `G2TimelineMap` | `{ y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' }` |
 | `[height]`      | 高度值             | `number`                      | `400`                              |
-| `[padding]`     | 图表内部间距       | `number[]`                    | `[60, 20, 40, 40]`                 |
+| `[padding]`     | 图表内部间距       | `number[]`                    | `[40, 8, 64, 40]`                 |
 | `[borderWidth]` | 线条               | `number`                      | `2`                                |
 | `[mask]`        | 日期格式           | `string`                      | `HH:mm`                            |
 | `[position]`    | 标题位置           | `'top','right','bottom','left'`  | `'top'`                            |
