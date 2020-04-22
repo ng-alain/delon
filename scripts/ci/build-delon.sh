@@ -5,6 +5,7 @@ set -u -e -o pipefail
 
 cd $(dirname $0)/../..
 
+DEBUG=false
 PACKAGES=(util
   testing
   acl
@@ -21,6 +22,9 @@ for ARG in "$@"; do
   case "$ARG" in
     -n)
       PACKAGES=($2)
+      ;;
+    -debug)
+      DEBUG=true
       ;;
   esac
 done
@@ -76,29 +80,46 @@ DIST=${PWD}/dist/@delon
 # fix linux
 # npm rebuild node-sass
 
-for NAME in ${PACKAGES[@]}
-do
-  echo "====== PACKAGING ${NAME}"
+build() {
+  for NAME in ${PACKAGES[@]}
+  do
+    echo "====== PACKAGING ${NAME}"
 
-  LICENSE_BANNER=${SOURCE}/license-banner.txt
+    LICENSE_BANNER=${SOURCE}/license-banner.txt
 
-  if ! containsElement "${NAME}" "${NODE_PACKAGES[@]}"; then
-    # packaging
-    node --max_old_space_size=4096 ${PWD}/scripts/build/packing ${NAME}
-    # license banner
-    addBanners ${DIST}/${NAME}/bundles
-    # license file
-    cp ${PWD}/LICENSE ${DIST}/${NAME}/LICENSE
-    # package version
-    updateVersionReferences ${DIST}/${NAME}
-  else
-    echo "not yet!!!"
-  fi
+    if ! containsElement "${NAME}" "${NODE_PACKAGES[@]}"; then
+      # packaging
+      node --max_old_space_size=4096 ${PWD}/scripts/build/packing ${NAME}
+      # license banner
+      addBanners ${DIST}/${NAME}/bundles
+      # license file
+      cp ${PWD}/LICENSE ${DIST}/${NAME}/LICENSE
+      # package version
+      updateVersionReferences ${DIST}/${NAME}
+    else
+      echo "not yet!!!"
+    fi
 
-done
+  done
 
-if containsElement "theme" "${PACKAGES[@]}"; then
   buildLess
-fi
+}
+
+build
 
 echo 'FINISHED!'
+
+# TODO: just only cipchk
+# clear | bash ./scripts/ci/build-delon.sh -debug
+# clear | bash ./scripts/ci/build-delon.sh -n chart -debug
+if [[ ${DEBUG} == true ]]; then
+  cd ../../
+  DEBUG_FROM=${PWD}/work/delon/dist/@delon/*
+  DEBUG_TO=${PWD}/work/ng-alain/node_modules/@delon/
+  echo "DEBUG_FROM:${DEBUG_FROM}"
+  echo "DEBUG_TO:${DEBUG_TO}"
+  rm -rf ${DEBUG_TO}
+  mkdir -p ${DEBUG_TO}
+  rsync -a ${DEBUG_FROM} ${DEBUG_TO}
+  echo "DEBUG FINISHED~!"
+fi

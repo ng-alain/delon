@@ -61,7 +61,7 @@ class TestComponent {
   borderWidth = 2;
   slider = true;
   data: G2TimelineData[] = new Array(9).fill({}).map((_v, i) => ({
-    x: new Date().getTime() + 1000 * 60 * 30 * i,
+    time: new Date().getTime() + 1000 * 60 * 30 * i,
     y1: Math.floor(Math.random() * 100) + 1000,
     y2: Math.floor(Math.random() * 100) + 10,
   }));

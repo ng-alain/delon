@@ -1,6 +1,6 @@
 import addDays from 'date-fns/addDays';
 import format from 'date-fns/format';
-import { getTimeDistance } from './time';
+import { getTimeDistance, toDate } from './time';
 
 describe('util: time', () => {
   describe('#getTimeDistance', () => {
@@ -100,6 +100,22 @@ describe('util: time', () => {
         expect(format(ret[0], FORMAT)).toBe('2018-03-05');
         expect(format(ret[1], FORMAT)).toBe('2018-03-07');
       });
+    });
+  });
+  describe('#toDate', () => {
+    it('with type is date', () => {
+      const a = new Date();
+      expect(toDate(a)).toBe(a);
+    });
+    it('with type is number', () => {
+      const a = +new Date();
+      expect(toDate(a) instanceof Date).toBe(true);
+    });
+    it('with type is string', () => {
+      expect(toDate(`2020-12-12`) instanceof Date).toBe(true);
+    });
+    it('should be specify format', () => {
+      expect(toDate(`2020-12-12`, 'yyyy-MM-dd') instanceof Date).toBe(true);
     });
   });
 });

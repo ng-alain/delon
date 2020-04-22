@@ -3,6 +3,7 @@ import endOfDay from 'date-fns/endOfDay';
 import endOfMonth from 'date-fns/endOfMonth';
 import endOfWeek from 'date-fns/endOfWeek';
 import endOfYear from 'date-fns/endOfYear';
+import parse from 'date-fns/parse';
 import parseISO from 'date-fns/parseISO';
 import startOfDay from 'date-fns/startOfDay';
 import startOfMonth from 'date-fns/startOfMonth';
@@ -65,4 +66,10 @@ export function getTimeDistance(
  */
 export function fixEndTimeOfRange(dates: [Date, Date]): [Date, Date] {
   return [startOfDay(dates[0]), endOfDay(dates[1])];
+}
+
+export function toDate(val: Date | string | number, formatString = 'yyyy-MM-dd HH:mm:ss'): Date {
+  if (val instanceof Date) return val;
+  if (typeof val === 'number') return new Date(val);
+  return parse(val, formatString, new Date());
 }
