@@ -13,7 +13,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
+import { LooseObject } from '@antv/g2/lib/interface';
 import { InteractionType } from '@delon/chart/core/types';
+import { AlainConfigService } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -64,6 +66,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() data: G2PieData[] = [];
   @Input() colors: any[];
   @Input() interaction: InteractionType = 'none';
+  @Input() theme: string | LooseObject;
 
   // #endregion
 
@@ -71,7 +74,9 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     return this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
   }
 
-  constructor(public el: ElementRef<HTMLElement>, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
+  constructor(public el: ElementRef<HTMLElement>, private ngZone: NgZone, private cdr: ChangeDetectorRef, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   private fixData() {
     const { percent, color } = this;
@@ -94,12 +99,13 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private install() {
-    const { node, height, padding, tooltip, inner, hasLegend, interaction } = this;
+    const { node, height, padding, tooltip, inner, hasLegend, interaction, theme } = this;
     const chart = (this.chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
       padding,
+      theme,
     }));
 
     if (!tooltip) {

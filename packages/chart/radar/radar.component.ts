@@ -13,6 +13,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
+import { LooseObject } from '@antv/g2/lib/interface';
+import { AlainConfigService } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
 
 export interface G2RadarData {
@@ -49,23 +51,27 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() tickCount = 4;
   @Input() data: G2RadarData[] = [];
   @Input() colors = ['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911'];
+  @Input() theme: string | LooseObject;
 
   // #endregion
 
-  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone) {}
+  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   private getHeight() {
     return this.height - (this.hasLegend ? 80 : 22);
   }
 
   private install() {
-    const { node, padding } = this;
+    const { node, padding, theme } = this;
 
     const chart = (this.chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
       height: this.getHeight(),
       padding,
+      theme,
     }));
 
     chart.coordinate('polar');

@@ -22,3 +22,4 @@ type: Components
 | `[percent]` | 进度比例 | `number` | - |
 | `[padding]` | 内边距 | `Array<number | string>` | `[10, 10, 30, 10]` |
 | `[format]` | 坐标轴格式 | `(text: string, item: {}, index: number) => string` | - |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |

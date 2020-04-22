@@ -11,6 +11,8 @@ import {
 } from '@angular/core';
 import DataSet from '@antv/data-set';
 import { Chart, registerShape, Util } from '@antv/g2';
+import { LooseObject } from '@antv/g2/lib/interface';
+import { AlainConfigService } from '@delon/theme';
 import { deprecation10, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
@@ -49,10 +51,13 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   @Input() @InputNumber() height = 200;
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() data: G2TagCloudData[] = [];
+  @Input() theme: string | LooseObject;
 
   // #endregion
 
-  constructor(private el: ElementRef<HTMLDivElement>, private ngZone: NgZone) {}
+  constructor(private el: ElementRef<HTMLDivElement>, private ngZone: NgZone, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   private initTagCloud() {
     registerShape('point', 'cloud', {
@@ -80,7 +85,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   private install() {
-    const { el, padding } = this;
+    const { el, padding, theme } = this;
     if (this.height === 0) {
       this.height = this.el.nativeElement.clientHeight;
     }
@@ -94,6 +99,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       padding,
       height: this.height,
       width: this.width,
+      theme,
     }));
     chart.scale({
       x: { nice: false },

@@ -30,6 +30,7 @@ type: Components
 | `[valueFormat]` | y轴格式化      | `(y: number) => string`      | -                          |
 | `[data]`      | 数据               | `G2PieData[]` | -                          |
 | `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
 
 ### G2PieData
 

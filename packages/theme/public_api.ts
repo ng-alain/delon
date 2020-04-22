@@ -23,4 +23,5 @@ export { HTMLPipe } from './src/pipes/safe/html.pipe';
 export { URLPipe } from './src/pipes/safe/url.pipe';
 export { AlainThemeConfig } from './src/theme.config';
 export { AlainThemeModule } from './src/theme.module';
+export * from './src/config/index';
 export { VERSION } from './src/version';

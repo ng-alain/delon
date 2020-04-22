@@ -26,6 +26,7 @@ type: Components
 | `[mask]`        | 日期格式           | `string`                      | `HH:mm`                            |
 | `[position]`    | 标题位置           | `'top','right','bottom','left'`  | `'top'`                            |
 | `[slider]`      | 是否需要滑动条     | `boolean`                     | `true`                             |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
 
 ### G2TimelineData
 

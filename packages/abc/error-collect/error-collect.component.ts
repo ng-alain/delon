@@ -10,8 +10,8 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
+import { AlainConfigService, AlainErrorCollectConfig } from '@delon/theme';
 import { InputNumber } from '@delon/util';
-import { ErrorCollectConfig } from './error-collect.config';
 
 @Component({
   selector: 'error-collect, [error-collect]',
@@ -40,8 +40,8 @@ export class ErrorCollectComponent implements OnInit, OnDestroy {
 
   count = 0;
 
-  constructor(cog: ErrorCollectConfig, private el: ElementRef, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private doc: any) {
-    Object.assign(this, { ...new ErrorCollectConfig(), ...cog });
+  constructor(private el: ElementRef, private cdr: ChangeDetectorRef, @Inject(DOCUMENT) private doc: any, configSrv: AlainConfigService) {
+    configSrv.attach<AlainErrorCollectConfig, 'errorCollect'>(this, 'errorCollect', { freq: 500, offsetTop: 65 + 64 + 8 * 2 });
   }
 
   private get errEls(): NodeListOf<HTMLElement> {

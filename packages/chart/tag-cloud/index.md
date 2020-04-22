@@ -18,6 +18,7 @@ type: Components
 | `[height]` | 高度值             | `number`           | `200`      |
 | `[width]` | 宽度值，若不指定自动按宿主元素的宽度 | `number`           | `0`      |
 | `[data]`   | 数据               | `G2TagCloudData[]` | `[]`      |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
 
 ### G2TagCloudData
 

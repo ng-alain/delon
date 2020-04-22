@@ -26,6 +26,7 @@ type: Components
 | `[yTooltipSuffix]` | y 轴Tooltip后缀，一般指定单位 | `string` | - |
 | `[tooltipType]` | Tooltip显示类型 | `'mini','default'` | `'default'` |
 | `[data]` | 数据 | `G2MiniAreaData[]` | - |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
 
 ### G2MiniAreaData
 

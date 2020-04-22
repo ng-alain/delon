@@ -4,7 +4,8 @@
       "flatModuleFile": "mini-area",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "@delon/util": "delon.util"
+        "@delon/util": "delon.util",
+        "@delon/theme": "delon.theme"
       }
     }
   }

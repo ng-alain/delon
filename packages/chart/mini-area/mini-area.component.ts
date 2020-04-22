@@ -10,7 +10,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
-import { TooltipOption } from '@antv/g2/lib/interface';
+import { LooseObject, TooltipOption } from '@antv/g2/lib/interface';
+import { AlainConfigService } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
 
 export interface G2MiniAreaData {
@@ -49,18 +50,22 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   @Input() data: G2MiniAreaData[] = [];
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
+  @Input() theme: string | LooseObject;
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone) {}
+  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   private install() {
-    const { el, fit, height, padding, xAxis, yAxis, yTooltipSuffix, tooltipType, line } = this;
+    const { el, fit, height, padding, xAxis, yAxis, yTooltipSuffix, tooltipType, line, theme } = this;
     const chart = (this.chart = new Chart({
       container: el.nativeElement,
       autoFit: fit,
       height,
       padding,
+      theme,
     }));
 
     if (!xAxis && !yAxis) {

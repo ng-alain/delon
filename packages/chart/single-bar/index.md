@@ -25,3 +25,4 @@ type: Components
 | `[value]` | 值 | `number` | `0` |
 | `[format]` | 显示值格式 | `(value: number) => string` | - |
 | `[textStyle]` | 显示值样式 | `any` | `{ fontSize: 12, color: '#595959' }` |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |

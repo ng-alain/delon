@@ -49,3 +49,4 @@ If throw error `G2` not found, please refer to [Frequently Asked Questions](/cha
 | `(render)`     | Render event                | `EventEmitter<ElementRef>` | -       |
 | `(resize)`     | Resize event                | `EventEmitter<ElementRef>` | -       |
 | `(destroy)`    | Destroy event               | `EventEmitter<ElementRef>` | -       |
+| `[theme]` | Custom chart theme | `string | LooseObject` | - |

@@ -21,6 +21,7 @@ type: Components
 | `[padding]`   | 图表内部间距       | `array`                    | `[24, 30, 16, 30]` |
 | `[colors]`    | 颜色列表           | `string[]`                 | -                  |
 | `[data]`      | 数据               | `G2RadarData[]`            | -                  |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
 
 ### G2RadarData
 
