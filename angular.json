@@ -110,14 +110,5 @@
       }
     }
   },
-  "defaultProject": "site",
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "styleext": "less"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  }
+  "defaultProject": "site"
 }
