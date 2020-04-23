@@ -36,7 +36,6 @@ const alainConfig: AlainConfig = {
     license: `A59B099A586B3851E0F0D7FDBF37B603`,
     licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`,
   },
-  chart: { theme: 'dark' },
 };
 
 @NgModule({
