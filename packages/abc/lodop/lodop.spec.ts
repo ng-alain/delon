@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { AlainConfig, ALAIN_CONFIG } from '@delon/theme';
 import { LazyService } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { concat } from 'rxjs';
@@ -6,7 +7,6 @@ import { filter, flatMap, tap } from 'rxjs/operators';
 import { LodopModule } from './lodop.module';
 import { LodopService } from './lodop.service';
 import { Lodop } from './lodop.types';
-import { AlainConfig, ALAIN_CONFIG } from '@delon/theme';
 
 const cog: AlainConfig = {
   lodop: { name: 'LODOP' },

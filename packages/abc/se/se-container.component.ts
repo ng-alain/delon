@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { REP_TYPE } from '@delon/theme';
+import { AlainConfigService, AlainSEConfig, REP_TYPE } from '@delon/theme';
 import { InputBoolean, InputNumber, toNumber } from '@delon/util';
-import { SEConfig } from './se.config';
 
 @Component({
   selector: 'se-container, [se-container]',
@@ -46,7 +45,14 @@ export class SEContainerComponent {
 
   // #endregion
 
-  constructor(cog: SEConfig) {
-    Object.assign(this, { ...new SEConfig(), ...cog });
+  constructor(configSrv: AlainConfigService) {
+    configSrv.attach<AlainSEConfig, 'se'>(this, 'se', {
+      size: 'default',
+      nzLayout: 'horizontal',
+      gutter: 32,
+      col: 2,
+      labelWidth: 150,
+      firstVisual: false,
+    });
   }
 }

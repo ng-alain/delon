@@ -1,11 +1,11 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, OnDestroy } from '@angular/core';
+import { AlainConfigService, AlainLoadingConfig } from '@delon/theme';
 import { Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { LoadingDefaultComponent } from './loading.component';
 import { LoadingShowOptions } from './loading.types';
-import { AlainConfigService, AlainLoadingConfig } from '@delon/theme';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingService implements OnDestroy {
