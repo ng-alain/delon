@@ -38,14 +38,6 @@ describe('abc: error-collect', () => {
     if (context) context.comp.ngOnDestroy();
   });
 
-  it('General Configuration', inject([ErrorCollectConfig], (cog: ErrorCollectConfig) => {
-    cog.offsetTop = 10;
-    fixture = TestBed.createComponent(TestComponent);
-    context = fixture.componentInstance;
-    expect(context.comp.freq).toBe(500);
-    expect(context.comp.offsetTop).toBe(10);
-  }));
-
   describe('[default]', () => {
     beforeEach(() => getPropertiesAndCreate());
     it('should be collect error', (done: () => void) => {
