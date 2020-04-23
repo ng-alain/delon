@@ -17,9 +17,10 @@ The default `ReuseTabModule` does not register `RouteReuseStrategy`. If you need
 
 **Register**
 
-> How to use in ng-alain, pls refer to [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L33).
+> How to use in ng-alain, pls refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L22).
 
 ```ts
+// global-config.module.ts
 providers: [
   {
     provide: RouteReuseStrategy,
@@ -150,58 +151,58 @@ Turning on `keepingScroll` will restore the previous scrollbar position after re
 
 **Property**
 
-Property | Description | Type | Default
-----|------|-----|------
-`[max]` | Maximum of reuse | `number` | `10`
-`[mode]` | Matching Mode | `ReuseTabMatchMode` | `0`
-`[debug]` | Whether Debug mode | `boolean` | `false`
-`[keepingScroll]` | Keep the scrollbar position | `boolean` | `false`
-`[keepingScrollContainer]` | Keep the scroll bar container | `Element` | `window`
-`[excludes]` | Exclusion rules, limited by `mode=URL` | `RegExp[]` | -
-`[items]` | Get cached routes | `ReuseTabCached[]` | -
-`[count]` | Get the number of cached routes | `number` | -
-`[change]` | Cache change callback | `Observable<ReuseTabNotify>` | -
-`[title]` | Customize the current title | `string` | -
-`[closable]` | Customize the current `closable` state | `boolean` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[max]` | Maximum of reuse | `number` | `10` |
+| `[mode]` | Matching Mode | `ReuseTabMatchMode` | `0` |
+| `[debug]` | Whether Debug mode | `boolean` | `false` |
+| `[keepingScroll]` | Keep the scrollbar position | `boolean` | `false` |
+| `[keepingScrollContainer]` | Keep the scroll bar container | `Element` | `window` |
+| `[excludes]` | Exclusion rules, limited by `mode=URL` | `RegExp[]` | - |
+| `[items]` | Get cached routes | `ReuseTabCached[]` | - |
+| `[count]` | Get the number of cached routes | `number` | - |
+| `[change]` | Cache change callback | `Observable<ReuseTabNotify>` | - |
+| `[title]` | Customize the current title | `string` | - |
+| `[closable]` | Customize the current `closable` state | `boolean` | - |
 
 **Method**
 
-Name | Description | Type
-----|------|-----
-`index(url)` | Returns the index of the first element in the caches, and -1 otherwise | `number`
-`exists(url)` | Exists cache by URL | `boolean`
-`get(url)` | Get cache data by URL | `ReuseTabCached`
-`getTitle(url, route?: ActivatedRouteSnapshot)` | Get title | `string`
-`clearTitleCached()` | Clear all title caches | `void`
-`getClosable(url, route?: ActivatedRouteSnapshot)` | Get `closable` state | `string`
-`clearClosableCached()` | Clear cached of closable | `void`
-`remove(url)` | Remove the tag, touch change remove event | `void`
-`move(url, position)` | Move of caches, touch change move event | `void`
-`clear()` | Clear caches, touch change clear event | `void`
-`refresh()` | Just touch change refresh event | `void`
-`replace(url)` | Force closed current route (including the non-closable) and navigate back to the `newUrl` route | `void`
+| Name | Description | Type |
+|------|-------------|------|
+| `index(url)` | Returns the index of the first element in the caches, and -1 otherwise | `number` |
+| `exists(url)` | Exists cache by URL | `boolean` |
+| `get(url)` | Get cache data by URL | `ReuseTabCached` |
+| `getTitle(url, route?: ActivatedRouteSnapshot)` | Get title | `string` |
+| `clearTitleCached()` | Clear all title caches | `void` |
+| `getClosable(url, route?: ActivatedRouteSnapshot)` | Get `closable` state | `string` |
+| `clearClosableCached()` | Clear cached of closable | `void` |
+| `remove(url)` | Remove the tag, touch change remove event | `void` |
+| `move(url, position)` | Move of caches, touch change move event | `void` |
+| `clear()` | Clear caches, touch change clear event | `void` |
+| `refresh()` | Just touch change refresh event | `void` |
+| `replace(url)` | Force closed current route (including the non-closable) and navigate back to the `newUrl` route | `void` |
 
 ### reuse-tab
 
-Property | Description | Type | Default
-----|------|-----|------
-`[i18n]` | Context Menu internationalization, support HTML | `ReuseContextI18n` | -
-`[mode]` | Matching Mode | `ReuseTabMatchMode` | `0`
-`[debug]` | Whether Debug mode | `boolean` | `false`
-`[max]` | Maximum of reuse | `number` | `10`
-`[keepingScroll]` | Keep the scrollbar position | `boolean` | `false`
-`[keepingScrollContainer]` | Keep the scroll bar container | `string | Element` | `window`
-`[excludes]` | Exclusion rules, limited by `mode=URL` | `RegExp[]` | -
-`[allowClose]` | Whether to allow close tab | `boolean` | `true`
-`[showCurrent]` | Always show current page | `boolean` | `true`
-`[customContextMenu]` | Custom context click menu | `ReuseCustomContextMenu[]` | -
-`[tabBarExtraContent]` | Extra content in tab bar | `TemplateRef<void>` | -
-`[tabBarStyle]` | Tab bar style object | `object` | -
-`[tabBarGutter]` | The gap between tabs | `number` | -
-`[tabType]` | Basic style of tabs | `line, card` | `line`
-`[tabMaxWidth]` | The maximum width of each tab, unit: `px` | `number` | -
-`(close)` | Close callback event | `EventEmitter` | -
-`(change)` | Callback when switching | `EventEmitter` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[i18n]` | Context Menu internationalization, support HTML | `ReuseContextI18n` | - |
+| `[mode]` | Matching Mode | `ReuseTabMatchMode` | `0` |
+| `[debug]` | Whether Debug mode | `boolean` | `false` |
+| `[max]` | Maximum of reuse | `number` | `10` |
+| `[keepingScroll]` | Keep the scrollbar position | `boolean` | `false` |
+| `[keepingScrollContainer]` | Keep the scroll bar container | `string | Element` | `window` |
+| `[excludes]` | Exclusion rules, limited by `mode=URL` | `RegExp[]` | - |
+| `[allowClose]` | Whether to allow close tab | `boolean` | `true` |
+| `[showCurrent]` | Always show current page | `boolean` | `true` |
+| `[customContextMenu]` | Custom context click menu | `ReuseCustomContextMenu[]` | - |
+| `[tabBarExtraContent]` | Extra content in tab bar | `TemplateRef<void>` | - |
+| `[tabBarStyle]` | Tab bar style object | `object` | - |
+| `[tabBarGutter]` | The gap between tabs | `number` | - |
+| `[tabType]` | Basic style of tabs | `line, card` | `line` |
+| `[tabMaxWidth]` | The maximum width of each tab, unit: `px` | `number` | - |
+| `(close)` | Close callback event | `EventEmitter` | - |
+| `(change)` | Callback when switching | `EventEmitter` | - |
 
 **Context Menu**
 
@@ -209,35 +210,35 @@ The non-closeable item is forcibly removed when the keyboard `ctrl` is pressed.
 
 ### ReuseTabCached
 
-Property | Description | Type | Default
-----|------|-----|------
-`[title]` | Title | `string` | -
-`[url]` | URL | `string` | -
-`[closable]` | Whether to allow close | `boolean` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[title]` | Title | `string` | - |
+| `[url]` | URL | `string` | - |
+| `[closable]` | Whether to allow close | `boolean` | - |
 
 ### ReuseTabNotify
 
-Property | Description | Type | Default
-----|------|-----|------
-`[active]` | Event types | `title,close,closeRight,clear,move,closable,refresh,add` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[active]` | Event types | `title,close,closeRight,clear,move,closable,refresh,add` | - |
 
 ### ReuseContextI18n
 
-Property | Description | Type | Default
-----|------|-----|------
-`[close]` | Close | `string` | -
-`[closeOther]` | Close other tabs | `string` | -
-`[closeRight]` | Close tabs to the right  | `string` | -
-`[clear]` | Clear tabs | `string` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[close]` | Close | `string` | - |
+| `[closeOther]` | Close other tabs | `string` | - |
+| `[closeRight]` | Close tabs to the right | `string` | - |
+| `[clear]` | Clear tabs | `string` | - |
 
 ### ReuseCustomContextMenu
 
-Property | Description | Type | Default
-----|------|-----|------
-`[id]` | Identifier for current context menu | `string` | -
-`[title]` | Title for current context menu | `string` | -
-`[fn]` | Process method for current context menu | `(item: ReuseItem, menu: ReuseCustomContextMenu) => void` | -
-`[disabled]` | Whether to disabled | `(item: ReuseItem) => boolean` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[id]` | Identifier for current context menu | `string` | - |
+| `[title]` | Title for current context menu | `string` | - |
+| `[fn]` | Process method for current context menu | `(item: ReuseItem, menu: ReuseCustomContextMenu) => void` | - |
+| `[disabled]` | Whether to disabled | `(item: ReuseItem) => boolean` | - |
 
 ### Route data
 
@@ -250,13 +251,13 @@ By routing the `data` property, you can provide partial global configuration for
 { path: 'p1', component: DemoComponent, data: { title: 'New Title' } }
 ```
 
-Property | Description | Type | Default
-----|------|-----|------
-`[reuse]` | Whether to reuse | `boolean` | -
-`[title]` | Title | `string` | -
-`[titleI18n]` | Ii18n title key | `string` | -
-`[reuseClosable]` | Whether to allow close | `boolean` | -
-`[keepingScroll]` | Keep the scrollbar position | `boolean` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[reuse]` | Whether to reuse | `boolean` | - |
+| `[title]` | Title | `string` | - |
+| `[titleI18n]` | Ii18n title key | `string` | - |
+| `[reuseClosable]` | Whether to allow close | `boolean` | - |
+| `[keepingScroll]` | Keep the scrollbar position | `boolean` | - |
 
 > **Note:** The above data can also be reflected in the [Menu](/theme/menu#Menu) data.
 

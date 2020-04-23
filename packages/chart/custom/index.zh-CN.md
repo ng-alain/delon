@@ -49,3 +49,4 @@ export class DemoComponent {
 | `(render)`     | 渲染事件            | `EventEmitter<ElementRef>` | -      |
 | `(resize)`     | resize 事件         | `EventEmitter<ElementRef>` | -      |
 | `(destroy)`    | 销毁事件            | `EventEmitter<ElementRef>` | -      |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |

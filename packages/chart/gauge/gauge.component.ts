@@ -10,6 +10,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, registerShape } from '@antv/g2';
+import { LooseObject } from '@antv/g2/lib/interface';
+import { AlainConfigService } from '@delon/theme';
 import { InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -37,10 +39,13 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   @Input() format: (text: string, item: {}, index: number) => string;
   @Input() @InputNumber() percent: number;
   @Input() padding: number | number[] | 'auto' = [10, 10, 30, 10];
+  @Input() theme: string | LooseObject;
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone) {}
+  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   private install() {
     // 自定义Shape 部分
@@ -75,13 +80,14 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
       },
     });
 
-    const { el, height, padding, format } = this;
+    const { el, height, padding, format, theme } = this;
 
     const chart = (this.chart = new Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
       padding,
+      theme,
     }));
     chart.legend(false);
     chart.animate(false);

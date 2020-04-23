@@ -17,12 +17,20 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
+import {
+  AlainConfigService,
+  AlainI18NService,
+  AlainPageHeaderConfig,
+  ALAIN_I18N_TOKEN,
+  Menu,
+  MenuService,
+  SettingsService,
+  TitleService,
+} from '@delon/theme';
 import { InputBoolean, InputNumber, isEmpty } from '@delon/util';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { PageHeaderConfig } from './page-header.config';
 
 interface PageHeaderPath {
   title?: string;
@@ -93,7 +101,6 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   // #endregion
 
   constructor(
-    cog: PageHeaderConfig,
     settings: SettingsService,
     private renderer: Renderer2,
     private router: Router,
@@ -102,8 +109,18 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     @Optional() @Inject(TitleService) private titleSrv: TitleService,
     @Optional() @Inject(ReuseTabService) private reuseSrv: ReuseTabService,
     private cdr: ChangeDetectorRef,
+    configSrv: AlainConfigService,
   ) {
-    Object.assign(this, { ...new PageHeaderConfig(), ...cog });
+    configSrv.attach<AlainPageHeaderConfig, 'pageHeader'>(this, 'pageHeader', {
+      home: '首页',
+      homeLink: '/',
+      autoBreadcrumb: true,
+      recursiveBreadcrumb: false,
+      autoTitle: true,
+      syncTitle: true,
+      fixed: false,
+      fixedOffsetTop: 64,
+    });
     settings.notify
       .pipe(
         takeUntil(this.unsubscribe$),

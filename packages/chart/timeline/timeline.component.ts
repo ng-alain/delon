@@ -12,8 +12,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
-import { LegendItem, ScaleOption } from '@antv/g2/lib/interface';
+import { LegendItem, LooseObject, ScaleOption } from '@antv/g2/lib/interface';
 import { G2Time } from '@delon/chart/core/types';
+import { AlainConfigService } from '@delon/theme';
 import { deprecation10, InputBoolean, InputNumber, toDate } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -81,22 +82,26 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() padding: number[] = [40, 8, 64, 40];
   @Input() @InputNumber() borderWidth = 2;
   @Input() @InputBoolean() slider = true;
+  @Input() theme: string | LooseObject;
 
   // #endregion
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   ngOnInit(): void {
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
   private install() {
-    const { node, height, padding, slider, maxAxis } = this;
+    const { node, height, padding, slider, maxAxis, theme } = this;
     const chart = (this.chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
       padding,
+      theme,
     }));
     chart.axis('time', { title: null });
     chart.axis('y1', { title: null });

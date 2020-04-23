@@ -9,6 +9,8 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
+import { LooseObject } from '@antv/g2/lib/interface';
+import { AlainConfigService } from '@delon/theme';
 import { InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -32,6 +34,7 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
   @Input() @InputNumber() delay = 0;
   @Input() @InputNumber() height: number;
   @Input() @InputNumber() resizeTime = 0;
+  @Input() theme: string | LooseObject;
   @Output() readonly render = new EventEmitter<ElementRef>();
   // tslint:disable-next-line:no-output-native
   @Output() readonly resize = new EventEmitter<ElementRef>();
@@ -39,7 +42,9 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
 
   // #endregion
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   private renderChart() {
     this.el.nativeElement.innerHTML = '';

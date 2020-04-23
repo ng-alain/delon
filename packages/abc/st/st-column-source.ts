@@ -1,24 +1,28 @@
 import { Host, Inject, Injectable, Optional } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ACLService } from '@delon/acl';
-import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { AlainI18NService, AlainSTConfig, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { deepCopy, warn } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STRowSource } from './st-row.directive';
 import { STWidgetRegistry } from './st-widget';
-import { STConfig } from './st.config';
 import { STColumn, STColumnButton, STColumnButtonPop, STColumnFilter, STIcon, STSortMap } from './st.interfaces';
 
 @Injectable()
 export class STColumnSource {
+  private cog: AlainSTConfig;
+
   constructor(
     private dom: DomSanitizer,
     @Host() private rowSource: STRowSource,
     @Optional() private acl: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
-    private cog: STConfig,
     private stWidgetRegistry: STWidgetRegistry,
   ) {}
+
+  setCog(val: AlainSTConfig): void {
+    this.cog = val;
+  }
 
   private fixPop(i: STColumnButton, def: STColumnButtonPop): void {
     if (i.pop == null || i.pop === false) {

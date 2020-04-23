@@ -73,30 +73,6 @@ npm config delete sass_binary_site
 
 ## 配置
 
-### 如何覆盖 @delon/* 的配置
-
-```ts
-// delon.module.ts
-import { DelonAuthConfig } from '@delon/auth';
-export function delonAuthConfig(): DelonAuthConfig {
-  return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
-    login_url: '/passport/login'
-  });
-}
-
-@NgModule({})
-export class DelonModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: DelonModule,
-      providers: [
-        { provide: DelonAuthConfig, useFactory: delonAuthConfig}
-      ]
-    };
-  }
-}
-```
-
 ### 如何本地部署 antd 图标？
 
 首先，最新的 iconfont 文件可以到 [此链接](https://ant.design/docs/spec/download-cn)（[镜像](http://ant-design.gitee.io/docs/spec/download-cn)） 下载。

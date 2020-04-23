@@ -5,7 +5,6 @@ title: qr
 subtitle: QR
 cols: 1
 module: QRModule
-config: QRConfig
 ---
 
 Generate a QR code based on [qrious](https://neocotic.com/qrious).
@@ -28,18 +27,18 @@ npm i --save qrious
 
 ### qr
 
-Property | Description | Type | Default
-----|------|-----|------
-`[value]` | Value encoded within the QR code | `string` | -
-`[background]` | Background colour of the QR code | `string` | `white`
-`[backgroundAlpha]` | Background alpha of the QR code	 | `number` | `1.0`
-`[foreground]` | Foreground colour of the QR code | `string` | `white`
-`[foregroundAlpha]` | Foreground alpha of the QR code | `number` | `1.0`
-`[level]` | Error correction level of the QR code | `'L','M','Q','H'` | `'L'`
-`[mime]` | MIME type used to render the image for the QR code | `string` | `image/png`
-`[padding]` | Padding for the QR code (pixels) | `number` | `10`
-`[size]` | Size of the QR code (pixels) | `number` | `220`
-`(change)` | change event | `EventEmitter<string>` | -
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[value]` | Value encoded within the QR code | `string` | - |  |
+| `[background]` | Background colour of the QR code | `string` | `white` | ✅ |
+| `[backgroundAlpha]` | Background alpha of the QR code | `number` | `1` | ✅ |
+| `[foreground]` | Foreground colour of the QR code | `string` | `white` | ✅ |
+| `[foregroundAlpha]` | Foreground alpha of the QR code | `number` | `1` | ✅ |
+| `[level]` | Error correction level of the QR code | `'L','M','Q','H'` | `'L'` | ✅ |
+| `[mime]` | MIME type used to render the image for the QR code | `string` | `image/png` | ✅ |
+| `[padding]` | Padding for the QR code (pixels) | `number` | `10` | ✅ |
+| `[size]` | Size of the QR code (pixels) | `number` | `220` | ✅ |
+| `(change)` | change event | `EventEmitter<string>` | - |  |
 
 ## FAQ
 

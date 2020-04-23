@@ -1,16 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AlainConfigService, AlainZipConfig } from '@delon/theme';
 import { LazyResult, LazyService } from '@delon/util';
 import { saveAs } from 'file-saver';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { ZipConfig } from './zip.config';
 import { ZipSaveOptions } from './zip.types';
 
 declare var JSZip: any;
 
 @Injectable({ providedIn: 'root' })
 export class ZipService {
-  constructor(private cog: ZipConfig, private http: HttpClient, private lazy: LazyService) {}
+  private cog: AlainZipConfig;
+
+  constructor(private http: HttpClient, private lazy: LazyService, configSrv: AlainConfigService) {
+    this.cog = configSrv.merge<AlainZipConfig, 'zip'>('zip', {
+      url: '//cdn.bootcss.com/jszip/3.3.0/jszip.min.js',
+      utils: [],
+    });
+  }
 
   private init(): Promise<LazyResult[]> {
     return this.lazy.load([this.cog.url!].concat(this.cog.utils!));

@@ -1,17 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { AlainConfig, ALAIN_CONFIG } from '@delon/theme';
 import { LazyService } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { concat } from 'rxjs';
 import { filter, flatMap, tap } from 'rxjs/operators';
-import { LodopConfig } from './lodop.config';
 import { LodopModule } from './lodop.module';
 import { LodopService } from './lodop.service';
 import { Lodop } from './lodop.types';
 
-const cog: LodopConfig = {
-  license: '',
-  licenseA: '',
-  name: 'LODOP',
+const cog: AlainConfig = {
+  lodop: { name: 'LODOP' },
 };
 let mockLodop: any;
 let isErrRequest = false;
@@ -22,7 +20,7 @@ class MockLazyService {
     ++loadCount;
     if (isErrRequest) return Promise.resolve({ status: 'error' });
 
-    (window as NzSafeAny)[cog.name!] = isNullLodop ? null : mockLodop;
+    (window as NzSafeAny)[cog.lodop!.name!] = isNullLodop ? null : mockLodop;
     return Promise.resolve({ status: 'ok' });
   }
 }
@@ -30,15 +28,19 @@ class MockLazyService {
 describe('abc: lodop', () => {
   let srv: LodopService;
 
-  function fnLodopConfig(): LodopConfig {
+  function fnLodopConfig() {
     return cog;
   }
+
   function genModule() {
     TestBed.configureTestingModule({
       imports: [LodopModule],
       providers: [
+        {
+          provide: ALAIN_CONFIG,
+          useFactory: fnLodopConfig,
+        },
         { provide: LazyService, useClass: MockLazyService },
-        { provide: LodopConfig, useFactory: fnLodopConfig },
       ],
     });
     srv = TestBed.inject<LodopService>(LodopService);
@@ -81,7 +83,7 @@ describe('abc: lodop', () => {
         },
       };
       setTimeout(() => {
-        const obj = (window as NzSafeAny)[cog.name!] as Lodop;
+        const obj = (window as NzSafeAny)[cog.lodop!.name!] as Lodop;
         (obj.webskt as any).readyState = 1;
       }, 30);
       srv.lodop.subscribe(res => {
@@ -105,7 +107,7 @@ describe('abc: lodop', () => {
       );
     });
     it('#checkMaxCount', (done: () => void) => {
-      cog.checkMaxCount = 2;
+      cog.lodop!.checkMaxCount = 2;
       genModule();
       mockLodop = {
         SET_LICENSES: jasmine.createSpy('SET_LICENSES'),

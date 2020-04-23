@@ -8,7 +8,17 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { dispatchDropDown } from '@delon/testing';
-import { ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, en_US, ModalHelper } from '@delon/theme';
+import {
+  AlainConfig,
+  ALAIN_CONFIG,
+  ALAIN_I18N_TOKEN,
+  DatePipe,
+  DelonLocaleModule,
+  DelonLocaleService,
+  DrawerHelper,
+  en_US,
+  ModalHelper,
+} from '@delon/theme';
 import { deepCopy, deepGet } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
@@ -19,7 +29,6 @@ import { AlainI18NService, AlainI18NServiceFake } from '../../../theme/src/servi
 import { STDataSource } from '../st-data-source';
 import { STExport } from '../st-export';
 import { STComponent } from '../st.component';
-import { STConfig } from '../st.config';
 import {
   STChange,
   STChangeType,
@@ -1580,14 +1589,12 @@ describe('abc: table', () => {
       it('with true', () => {
         context.multiSort = true;
         fixture.detectChanges();
-        const ms: STMultiSort = comp.multiSort;
-        expect(typeof ms).toBe('object');
+        expect(typeof comp.multiSort).toBe('object');
       });
       it('with false', () => {
         context.multiSort = false;
         fixture.detectChanges();
-        const ms: STMultiSort = comp.multiSort;
-        expect(ms).toBeNull();
+        expect(comp.multiSort).toBeUndefined();
       });
       it('with object', () => {
         context.multiSort = { key: 'aa' };
@@ -1683,26 +1690,24 @@ describe('abc: table', () => {
         minColumn: true,
         providers: [
           {
-            provide: STConfig,
-            useValue: Object.assign(new STConfig(), { multiSort: { global: true } } as STConfig),
+            provide: ALAIN_CONFIG,
+            useValue: { st: { multiSort: { global: true } } } as AlainConfig,
           },
         ],
       });
-      const ms: STMultiSort = comp.multiSort;
-      expect(ms).not.toBeUndefined();
+      expect(comp.multiSort).not.toBeUndefined();
     });
     it('should default non-mulit sorting by config', () => {
       genModule({
         minColumn: true,
         providers: [
           {
-            provide: STConfig,
-            useValue: Object.assign(new STConfig(), { multiSort: { global: false } } as STConfig),
+            provide: ALAIN_CONFIG,
+            useValue: { st: { multiSort: { global: false } } } as AlainConfig,
           },
         ],
       });
-      const ms: STMultiSort = comp.multiSort;
-      expect(ms).toBeUndefined();
+      expect(comp.multiSort).toBeUndefined();
     });
   });
   describe('[custom render template]', () => {

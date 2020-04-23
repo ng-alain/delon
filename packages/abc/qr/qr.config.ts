@@ -1,7 +1,26 @@
 import { Injectable } from '@angular/core';
+import { AlainQRConfig } from '@delon/theme';
+import { deprecation10Cog } from '@delon/util';
 
+export const QR_DEFULAT_CONFIG: AlainQRConfig = {
+  background: 'white',
+  backgroundAlpha: 1,
+  foreground: 'black',
+  foregroundAlpha: 1,
+  level: 'L',
+  mime: 'image/png',
+  padding: 10,
+  size: 220,
+};
+
+/**
+ * @deprecated `QRConfig` is going to be removed in 10.0.0. Please refer to https://ng-alain.com/docs/global-config
+ */
 @Injectable({ providedIn: 'root' })
 export class QRConfig {
+  constructor() {
+    deprecation10Cog(`QRConfig`);
+  }
   /** 背景，默认：`white` */
   background = 'white';
   /** 背景透明级别，范围：`0-1` 之间，默认：`1.0` */

@@ -38,7 +38,7 @@ Markdown编辑器。
 
 ### ui 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[options]` | 配置项说明，[见官网](https://github.com/cipchk/ngx-simplemde) | `object` | -
 `[change]` | 编辑器内容发生改变时会触发该事件 | `(md: string) => void` | -

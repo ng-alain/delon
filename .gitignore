@@ -15,6 +15,7 @@ yarn-error.log
 .idea
 debug.log
 __ngcc_entry_points__.json
+report.*.json
 
 src/app/routes/gen
 src/assets/color.less

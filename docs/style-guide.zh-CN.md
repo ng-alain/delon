@@ -40,7 +40,7 @@ const THIRDMODULES = [ NzSchemaFormModule ];
 
 ## API
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 src | 图片地址  | `string` | -
 ```

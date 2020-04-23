@@ -1,11 +1,10 @@
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { ErrorCollectComponent } from './error-collect.component';
-import { ErrorCollectConfig } from './error-collect.config';
 import { ErrorCollectModule } from './error-collect.module';
 
 describe('abc: error-collect', () => {
@@ -37,14 +36,6 @@ describe('abc: error-collect', () => {
   afterEach(() => {
     if (context) context.comp.ngOnDestroy();
   });
-
-  it('General Configuration', inject([ErrorCollectConfig], (cog: ErrorCollectConfig) => {
-    cog.offsetTop = 10;
-    fixture = TestBed.createComponent(TestComponent);
-    context = fixture.componentInstance;
-    expect(context.comp.freq).toBe(500);
-    expect(context.comp.offsetTop).toBe(10);
-  }));
 
   describe('[default]', () => {
     beforeEach(() => getPropertiesAndCreate());

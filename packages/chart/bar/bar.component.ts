@@ -12,18 +12,21 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
+import { LooseObject } from '@antv/g2/lib/interface';
 import { InteractionType } from '@delon/chart/core/types';
+import { AlainConfigService } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 
 const TITLE_HEIGHT = 41;
 
 export interface G2BarData {
-  x: any;
-  y: any;
+  x: NzSafeAny;
+  y: NzSafeAny;
   color?: string;
-  [key: string]: any;
+  [key: string]: NzSafeAny;
 }
 
 @Component({
@@ -52,17 +55,20 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() data: G2BarData[] = [];
   @Input() @InputBoolean() autoLabel = true;
   @Input() interaction: InteractionType = 'none';
+  @Input() theme: string | LooseObject;
 
   // #endregion
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   private getHeight() {
     return this.title ? this.height - TITLE_HEIGHT : this.height;
   }
 
   private install() {
-    const { node, padding, interaction } = this;
+    const { node, padding, interaction, theme } = this;
 
     const container = node.nativeElement as HTMLElement;
     const chart = (this.chart = new Chart({
@@ -70,6 +76,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
       autoFit: true,
       height: this.getHeight(),
       padding,
+      theme,
     }));
     this.updatelabel();
     chart.axis('y', {

@@ -40,10 +40,10 @@ NG-ALAIN 左边主菜单，依赖于 `@delon/theme`。
 
 ### sidebar-nav
 
-参数 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[disabledAcl]` | `acl` 校验失败时以 `disabled` 状态显示 | `boolean` | `false`
-`[autoCloseUnderPad]` | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true`
-`[recursivePath]` | 自动向上递归查找，菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项 | `boolean` | `true`
-`[openStrictly]` | 展开完全受控，不再自动关闭已展开的项 | `boolean` | `false`
-`(select)` | 点击菜单时回调（包含 `disabled`） | `EventEmitter<Menu>` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[disabledAcl]` | `acl` 校验失败时以 `disabled` 状态显示 | `boolean` | `false` |
+| `[autoCloseUnderPad]` | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true` |
+| `[recursivePath]` | 自动向上递归查找，菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项 | `boolean` | `true` |
+| `[openStrictly]` | 展开完全受控，不再自动关闭已展开的项 | `boolean` | `false` |
+| `(select)` | 点击菜单时回调（包含 `disabled`） | `EventEmitter<Menu>` | - |

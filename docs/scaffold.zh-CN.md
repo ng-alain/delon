@@ -27,10 +27,12 @@ type: Basic
 │   │   │   ├── routes.module.ts                # 业务路由模块
 │   │   │   └── routes-routing.module.ts        # 业务路由注册口
 │   │   ├── shared                              # 共享模块
+│   │   │   ├── shared-delon.module.ts          # @Delon/* 次级共享模块导入
+│   │   │   ├── shared-zorro.module.ts          # NG-ZORRO 次级共享模块导入
 │   │   │   └── shared.module.ts                # 共享模块文件
 │   │   ├── app.component.ts                    # 根组件
 │   │   └── app.module.ts                       # 根模块
-│   │   └── delon.module.ts                     # @delon模块导入
+│   │   └── global-config.module.ts             # @delon & ng-zorro 全局配置项
 │   ├── assets                                  # 本地静态资源
 │   ├── environments                            # 环境变量配置
 │   ├── styles                                  # 样式目录
@@ -71,15 +73,11 @@ Mock 数据规则目录，若你通过 [命令行工具](/cli) 创建项目时�
 
 **src/app/shared/shared.module.ts**
 
-共享模块，指当你需要针对整个**业务模块都需要**使用的一些第三方模块、自定义组件、自定义指令，都应该存在这里。
+共享模块，指当你需要针对整个**业务模块都需要**使用的一些第三方模块、自定义组件、自定义指令，都应该存在这里。除此之外，针对 @delon & NG-ZORRO 分别构建了 `shared-delon.module.ts`、`shared-zorro.module.ts` 两种次级共享模块的导入。
 
-**src/app/delon.module.ts**
+**src/app/global-config.module.ts**
 
-针对 @delon 系列的模块导入集合，默认情况下导入所有模块，你可以利用[优化](/docs/performance)章节，进一步按需优化。
-
-**src/styles/_alain-custom-variables.less**
-
-**【【勿删】】** 可以根据需求调整 alain 的默认参数。
+针对 @delon & NG-ZORRO 的全局配置项。
 
 **src/environments**
 

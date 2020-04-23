@@ -1,8 +1,7 @@
 ---
-order: 11
-type: Basic
+order: 55
+type: Other
 title: Upgrade to V8
-hot: true
 ---
 
 NG-ALAIN 8.0 changes of three parts:

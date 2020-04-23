@@ -1,7 +1,8 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { DelonACLModule } from '@delon/acl';
 // mock
 import { DelonMockModule } from '@delon/mock';
-import { AlainThemeModule } from '@delon/theme';
+import { AlainConfig, AlainThemeModule, ALAIN_CONFIG } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import * as MOCKDATA from '../../_mock';
 import { throwIfAlreadyLoaded } from './core/module-import-guard';
@@ -29,43 +30,26 @@ const REUSETAB_PROVIDES: NzSafeAny[] = [
 ];
 // #endregion
 
-// #region global config functions
-
-import { LodopConfig } from '@delon/abc/lodop';
-import { STConfig } from '@delon/abc/st';
-import { DelonACLModule } from '@delon/acl';
-
-export function fnSTConfig(): STConfig {
-  return Object.assign(new STConfig(), {
-    ps: 3,
-  });
-}
-
-export function fnLodopConfig(): LodopConfig {
-  return Object.assign(new LodopConfig(), {
+const alainConfig: AlainConfig = {
+  st: { ps: 3 },
+  lodop: {
     license: `A59B099A586B3851E0F0D7FDBF37B603`,
     licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`,
-  });
-}
-
-// #endregion
+  },
+};
 
 @NgModule({
   imports: [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot({ data: MOCKDATA })],
 })
 export class DelonModule {
-  constructor(
-    @Optional()
-    @SkipSelf()
-    parentModule: DelonModule,
-  ) {
+  constructor(@Optional() @SkipSelf() parentModule: DelonModule) {
     throwIfAlreadyLoaded(parentModule, 'DelonModule');
   }
 
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: DelonModule,
-      providers: [...REUSETAB_PROVIDES, { provide: STConfig, useFactory: fnSTConfig }, { provide: LodopConfig, useFactory: fnLodopConfig }],
+      providers: [{ provide: ALAIN_CONFIG, useValue: alainConfig }, ...REUSETAB_PROVIDES],
     };
   }
 }

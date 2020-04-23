@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
+import { deprecation10Cog } from '@delon/util';
 
+/**
+ * @deprecated `SEConfig` is going to be removed in 10.0.0. Please refer to https://ng-alain.com/docs/global-config
+ */
 @Injectable({ providedIn: 'root' })
 export class SEConfig {
+  constructor() {
+    deprecation10Cog(`SEConfig`);
+  }
   /**
    * 大小，默认：`default`
    * - `compact` 紧凑型，强制忽略 `error`、`extra` 展示

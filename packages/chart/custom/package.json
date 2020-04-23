@@ -4,7 +4,8 @@
       "flatModuleFile": "g2Custom",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "@delon/util": "delon.util"
+        "@delon/util": "delon.util",
+        "@delon/theme": "delon.theme"
       }
     }
   }

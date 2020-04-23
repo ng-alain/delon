@@ -10,14 +10,14 @@ type: Widgets
 
 ### schema 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[maxLength]` | 表单最大长度  | `number` | -
 `[readOnly]` | 禁用状态  | `boolean` | -
 
 ### ui 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 等同 input 的 `type` 值，例如：`password` | `string` | -
 `[placeholder]` | 在文字框中显示提示讯息 | `string` | -

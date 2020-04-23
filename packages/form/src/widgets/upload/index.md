@@ -17,13 +17,13 @@ type: Widgets
 
 ### schema 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[readOnly]` | 禁用状态  | `boolean` | -
 
 ### ui 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | -
 `[type]` | 上传类型 | `select,drag` | `select`

@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
+import { deprecation10Cog } from '@delon/util';
 
+/**
+ * @deprecated `PageHeaderConfig` is going to be removed in 10.0.0. Please refer to https://ng-alain.com/docs/global-config
+ */
 @Injectable({ providedIn: 'root' })
 export class PageHeaderConfig {
+  constructor() {
+    deprecation10Cog(`PageHeaderConfig`);
+  }
   /**
    * 首页文本，若指定空表示不显示
    */

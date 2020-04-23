@@ -10,6 +10,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
+import { LooseObject } from '@antv/g2/lib/interface';
+import { AlainConfigService } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
 
 @Component({
@@ -40,18 +42,22 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() format: (value: number, item: {}, index: number) => string;
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() textStyle: any = { fontSize: 12, color: '#595959' };
+  @Input() theme: string | LooseObject;
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone) {}
+  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   private install() {
-    const { el, height, padding, textStyle, line, format } = this;
+    const { el, height, padding, textStyle, line, format, theme } = this;
     const chart = (this.chart = new Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
       padding,
+      theme,
     }));
     chart.legend(false);
     chart.axis(false);

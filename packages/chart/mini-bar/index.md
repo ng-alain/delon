@@ -22,6 +22,7 @@ type: Components
 | `[borderWidth]` | 线条粗细 | `number` | `5` |
 | `[padding]` | 图表内部间距 | `array` | `[8, 8, 8, 8]` |
 | `[data]` | 数据 | `G2MiniBarData[]` | - |
+| `[theme]` | 定制图表主题 | `string | LooseObject` | - |
 
 ### G2MiniBarData
 

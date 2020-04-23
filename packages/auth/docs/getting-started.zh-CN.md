@@ -85,7 +85,7 @@ export class AppModule { }
 你可以覆盖它们，例如：
 
 ```ts
-// delon.module.ts
+// global-config.module.ts
 import { DelonAuthConfig } from '@delon/auth';
 export function delonAuthConfig(): DelonAuthConfig {
   return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
@@ -94,10 +94,10 @@ export function delonAuthConfig(): DelonAuthConfig {
 }
 
 @NgModule({})
-export class DelonModule {
+export class GlobalConfigModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: DelonModule,
+      ngModule: GlobalConfigModule,
       providers: [
         { provide: DelonAuthConfig, useFactory: delonAuthConfig}
       ]

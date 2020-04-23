@@ -87,7 +87,7 @@ declare var QRious: any;
 
 @Component()
 export class DEMOComponent {
-  constructor(cog: QRConfig) {
+  constructor() {
     const qr = new QRious();
   }
 }

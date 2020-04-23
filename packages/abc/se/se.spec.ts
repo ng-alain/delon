@@ -1,5 +1,5 @@
 import { Component, DebugElement, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder, FormControlName, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -7,7 +7,6 @@ import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
 import { SEContainerComponent } from './se-container.component';
 import { SEComponent } from './se.component';
-import { SEConfig } from './se.config';
 import { SEModule } from './se.module';
 
 const prefixCls = `.se__`;
@@ -213,14 +212,6 @@ describe('abc: edit', () => {
         });
       });
     });
-
-    it('General Configuration', inject([SEConfig], (cog: SEConfig) => {
-      cog.size = 'compact';
-      ({ fixture, dl, context } = createTestContext(TestComponent));
-      expect(context.seComp.size).toBe('compact');
-      expect(context.seComp.nzLayout).toBe('horizontal');
-      expect(context.seComp.gutter).toBe(32);
-    }));
   });
 
   function genModule(template?: string) {

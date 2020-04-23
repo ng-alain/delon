@@ -1,17 +1,18 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, OnDestroy } from '@angular/core';
+import { AlainConfigService, AlainLoadingConfig } from '@delon/theme';
 import { Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { LoadingDefaultComponent } from './loading.component';
-import { LoadingConfig } from './loading.config';
-import { LoadingShowOptions } from './loading.interfaces';
+import { LoadingShowOptions } from './loading.types';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingService implements OnDestroy {
   private _overlayRef: OverlayRef;
   private compRef: ComponentRef<LoadingDefaultComponent> | null = null;
   private opt: LoadingShowOptions | null = null;
+  private cog: AlainLoadingConfig;
   private n$ = new Subject();
   private loading$: Subscription;
 
@@ -19,7 +20,17 @@ export class LoadingService implements OnDestroy {
     return this.compRef != null ? this.compRef.instance : null;
   }
 
-  constructor(private cog: LoadingConfig, private overlay: Overlay) {
+  constructor(private overlay: Overlay, configSrv: AlainConfigService) {
+    this.cog = configSrv.merge<AlainLoadingConfig, 'loading'>('loading', {
+      type: 'spin',
+      text: '加载中...',
+      icon: {
+        type: 'loading',
+        theme: 'outline',
+        spin: true,
+      },
+      delay: 0,
+    });
     this.loading$ = this.n$
       .asObservable()
       .pipe(debounce(() => timer(this.opt!.delay)))
@@ -45,7 +56,6 @@ export class LoadingService implements OnDestroy {
 
   open(options?: LoadingShowOptions): void {
     this.opt = { ...this.cog, ...options };
-
     this.n$.next();
   }
 

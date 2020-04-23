@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { getTimeDistance } from '@delon/util';
+import { deprecation10Cog, getTimeDistance } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { DisabledTimeFn, PanelMode, PresetRanges, SupportTimeOptions } from 'ng-zorro-antd/date-picker/standard-types';
 import { NzDatePickerI18nInterface } from 'ng-zorro-antd/i18n';
 
+/**
+ * @deprecated `DateRangePickerConfig` is going to be removed in 10.0.0, Please use `AlainDateRangePickerConfig` instead
+ */
 export class DateRangePickerConfig {
   nzFormat?: string = 'yyyy-MM-dd';
   nzClassName?: string;
@@ -23,6 +26,7 @@ export class DateRangePickerConfig {
   nzShowToday?: boolean = true;
   nzMode?: PanelMode | PanelMode[];
   nzRanges?: PresetRanges;
+  // tslint:disable-next-line: deprecation
   shortcuts?: DateRangePickerShortcut = {
     enabled: false,
     closed: true,
@@ -59,6 +63,9 @@ export class DateRangePickerConfig {
   };
 }
 
+/**
+ * @deprecated `DateRangePickerShortcut` is going to be removed in 10.0.0, Please use `AlainDateRangePickerShortcut` instead
+ */
 export interface DateRangePickerShortcut {
   /** Whether to enable, default: `false` */
   enabled?: boolean;
@@ -67,9 +74,13 @@ export interface DateRangePickerShortcut {
   /**
    * Shortcut list, default: `今天`, `昨天`, `近3天`, `近7天`, `本周`, `本月`, `全年`
    */
+  // tslint:disable-next-line: deprecation
   list?: DateRangePickerShortcutItem[];
 }
 
+/**
+ * @deprecated `DateRangePickerShortcutItem` is going to be removed in 10.0.0, Please use `AlainDateRangePickerShortcutItem` instead
+ */
 export interface DateRangePickerShortcutItem {
   [key: string]: NzSafeAny;
 
@@ -77,7 +88,14 @@ export interface DateRangePickerShortcutItem {
   fn: (value: [Date, Date]) => [Date, Date];
 }
 
+/**
+ * @deprecated `DatePickerConfig` is going to be removed in 10.0.0. Please refer to https://ng-alain.com/docs/global-config
+ */
 @Injectable({ providedIn: 'root' })
 export class DatePickerConfig {
+  constructor() {
+    deprecation10Cog(`DatePickerConfig`);
+  }
+  // tslint:disable-next-line: deprecation
   range?: DateRangePickerConfig;
 }

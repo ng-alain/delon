@@ -33,7 +33,7 @@ not ie_mob <= 10
 
 **scripts.js**
 
-它来自是 `angular.json` 的 `scripts` 节点的集合，因此，这个文件的大小取决于 `scripts` 节点所引用的第三方组件的大小。像 `@delon/chart` 是依赖于 G2，本身 G2 也是包体大小比较大，所以默认情况下把 G2 所需要依赖的脚本都当作第三方组件都依附在 `scripts` 下。
+它来自是 `angular.json` 的 `scripts` 节点的集合，因此，这个文件的大小取决于 `scripts` 节点所引用的第三方组件的大小。
 
 一般来说，当你在使用非 Angular 第三方组件时都应该放在 `scripts` 下。
 
@@ -47,34 +47,9 @@ not ie_mob <= 10
 
 > 事实上，Angular Cli 默认将 `--vendor-chunk` 主要因素是这些 @angular/* 相对于迭代很快。
 
-根据 NG-ALAIN 的[模块注册指导原则](/docs/module)，我们产生的两个决定 `main.js` 包体大小的核心入口：`delon.module.ts` 和 `shared.module.ts`。
+根据 NG-ALAIN 的[模块注册指导原则](/docs/module)，产生的两个 `shared-delon.module.ts`、`shared-zorro.module.ts` 两个专门针对 @Delon 与 NG-ZORRO 共享次级模块导入的汇总。
 
-而唯一能让我们减少体积的办法就是只导入我们所需要的模块，默认情况下我们并没有这么做，主要因素是它会增加很多额外的代码，以及受限于 ng-zorro-antd 目前还未支持次级模块的导入，因此这种优化并不是很明显。
-
-#### ng-zorro-antd
-
-不支持次级模块导入，所以细节略过。
-
-#### @delon
-
-@delon 类库包含各个层面，每个层面都包含可能还包含二级模块（例如 `abc` 类库，包含数十种不同组件模块），所有这一切都在 `delon.module.ts` 及 `shared.module.ts`。
-
-例如，当你明确只需要 `@delon/abc` 若干个组件时，你只需要导入这些模块。
-
-```ts
-// 在 delon.module.ts 注册需要的模块
-import { STModule } from '@delon/abc/st';
-
-const ABC_ROOT_MODULES = [ STModule.forRoot() ];
-
-// 在 share.module.ts 导入与导出确保所有懒模块有效
-const ABC_MODULES = [ STModule ];
-@NgModule({
-  imports: ...ABC_MODULES,
-  exports: ...ABC_MODULES,
-})
-export class SharedModule {}
-```
+`@delon/abc`、`@delon/chart`、`ng-zorro-antd` 三个主要类库都支持次级导入，只选择项目所需要的模块将有效的解决包体大小的问题。
 
 ### 结论
 

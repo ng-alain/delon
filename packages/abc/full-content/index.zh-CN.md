@@ -12,11 +12,11 @@ module: FullContentModule
 
 ### full-content
 
-参数             | 说明                              | 类型      | 默认值
------------------|---------------------------------|-----------|-------
-`[(fullscreen)]` | 是否完整全屏（不包括顶部、侧边栏等） | `boolean` | -
-`[hideTitle]`    | 完整全屏时是否隐藏标题            | `boolean` | `true`
-`[padding]`      | 工作区内边距                      | `number`  | `24`
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[(fullscreen)]` | 是否完整全屏（不包括顶部、侧边栏等） | `boolean` | - |
+| `[hideTitle]` | 完整全屏时是否隐藏标题 | `boolean` | `true` |
+| `[padding]` | 工作区内边距 | `number` | `24` |
 
 ### [full-toggle]
 

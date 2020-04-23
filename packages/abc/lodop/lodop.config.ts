@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
+import { deprecation10Cog } from '@delon/util';
 
+/**
+ * @deprecated `LodopConfig` is going to be removed in 10.0.0. Please refer to https://ng-alain.com/docs/global-config
+ */
 @Injectable({ providedIn: 'root' })
 export class LodopConfig {
+  constructor() {
+    deprecation10Cog(`LodopConfig`);
+  }
   /**
    * 注册信息：主注册号
    */

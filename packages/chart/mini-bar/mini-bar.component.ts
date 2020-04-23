@@ -10,7 +10,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart } from '@antv/g2';
-import { TooltipOption } from '@antv/g2/lib/interface';
+import { LooseObject, TooltipOption } from '@antv/g2/lib/interface';
+import { AlainConfigService } from '@delon/theme';
 import { InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -44,18 +45,22 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() data: G2MiniBarData[] = [];
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
+  @Input() theme: string | LooseObject;
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone) {}
+  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService) {
+    configSrv.attachKey(this, 'chart', 'theme');
+  }
 
   private install() {
-    const { el, height, padding, yTooltipSuffix, tooltipType } = this;
+    const { el, height, padding, yTooltipSuffix, tooltipType, theme } = this;
     const chart = (this.chart = new Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
       padding,
+      theme,
     }));
     chart.scale({
       x: {

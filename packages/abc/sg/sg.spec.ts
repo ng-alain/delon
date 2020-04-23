@@ -1,12 +1,11 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme/src/services/responsive/responsive';
 import { SGContainerComponent } from './sg-container.component';
 import { SGComponent } from './sg.component';
-import { SGConfig } from './sg.config';
 import { SGModule } from './sg.module';
 
 const prefixCls = `.sg__`;
@@ -38,13 +37,6 @@ describe('abc: grid', () => {
 
   describe('', () => {
     beforeEach(() => moduleAction());
-
-    it('General Configuration', inject([SGConfig], (cog: SGConfig) => {
-      cog.gutter = 24;
-      ({ fixture, dl, context } = createTestContext(TestComponent));
-      expect(context.sgComp.col).toBe(2);
-      expect(context.sgComp.gutter).toBe(24);
-    }));
 
     describe('[property]', () => {
       beforeEach(() => {

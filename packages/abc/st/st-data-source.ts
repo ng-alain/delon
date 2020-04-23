@@ -35,8 +35,8 @@ export interface STDataSourceOptions {
   res: STRes;
   page: STPage;
   columns: STColumn[];
-  singleSort?: STSingleSort | null;
-  multiSort?: STMultiSort | null;
+  singleSort?: STSingleSort;
+  multiSort?: STMultiSort;
   rowClassName?: STRowClassName;
 }
 
@@ -317,11 +317,7 @@ export class STDataSource {
     return ++this.sortTick;
   }
 
-  getReqSortMap(
-    singleSort: STSingleSort | null | undefined,
-    multiSort: STMultiSort | null | undefined,
-    columns: STColumn[],
-  ): { [key: string]: string } {
+  getReqSortMap(singleSort: STSingleSort | undefined, multiSort: STMultiSort | undefined, columns: STColumn[]): { [key: string]: string } {
     let ret: { [key: string]: string } = {};
     const sortList = this.getValidSort(columns);
     if (!multiSort && sortList.length === 0) return ret;

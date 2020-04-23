@@ -6,8 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { createTestContext, dispatchMouseEvent } from '@delon/testing';
+import { AlainDateRangePickerShortcut } from '@delon/theme';
 import differenceInDays from 'date-fns/differenceInDays';
-import { DateRangePickerShortcut } from './date-picker.config';
 import { DatePickerModule } from './date-picker.module';
 import { RangePickerComponent } from './range.component';
 
@@ -115,7 +115,7 @@ describe('abc: date-picker: range', () => {
       expect(dl.query(By.css('.ant-picker-footer-extra')) == null).toBe(false);
       getPickerFooterExtra().querySelectorAll('a')[0].click();
       const list = getPickerFooterExtra().querySelectorAll('a');
-      const shortcut = context.comp.shortcut as DateRangePickerShortcut;
+      const shortcut = context.comp.shortcut as AlainDateRangePickerShortcut;
       expect(list.length).toBe(shortcut.list!.length);
       list.forEach(el => {
         el.click();
@@ -160,7 +160,7 @@ describe('abc: date-picker: range', () => {
 class TestComponent {
   @ViewChild('comp', { static: true }) comp: RangePickerComponent;
   i: any = {};
-  shortcut: boolean | DateRangePickerShortcut | null = false;
+  shortcut: boolean | AlainDateRangePickerShortcut | null = false;
   _nzOnOpenChange() {}
   _nzOnPanelChange() {}
   _nzOnOk() {}
