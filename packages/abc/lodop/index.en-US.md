@@ -52,8 +52,8 @@ The basic implementation of [Lodop](http://c-lodop.com/) printing, commercial ne
 ### AlainLodopConfig
 
 | Property | Description | Type | Default | Global Config |
-|----------|-------------|------|---------|--| ✅ |
-| `companyName` | Company name | `string` | `` | ✅ |
+|----------|-------------|------|---------|---------------|
+| `companyName` | Company name | `string` | - | ✅ |
 | `license` | License | `string` | - | ✅ |
 | `licenseA` | LicenseA | `string` | - | ✅ |
 | `licenseB` | LicenseB | `string` | - | ✅ |

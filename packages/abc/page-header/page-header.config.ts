@@ -3,7 +3,8 @@ import { deprecation10Cog } from '@delon/util';
 
 /**
  * @deprecated `PageHeaderConfig` is going to be removed in 10.0.0. Please refer to https://ng-alain.com/docs/global-config
- */ @Injectable({ providedIn: 'root' })
+ */
+@Injectable({ providedIn: 'root' })
 export class PageHeaderConfig {
   constructor() {
     deprecation10Cog(`PageHeaderConfig`);

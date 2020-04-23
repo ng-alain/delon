@@ -26,6 +26,7 @@ export class DateRangePickerConfig {
   nzShowToday?: boolean = true;
   nzMode?: PanelMode | PanelMode[];
   nzRanges?: PresetRanges;
+  // tslint:disable-next-line: deprecation
   shortcuts?: DateRangePickerShortcut = {
     enabled: false,
     closed: true,
@@ -73,6 +74,7 @@ export interface DateRangePickerShortcut {
   /**
    * Shortcut list, default: `今天`, `昨天`, `近3天`, `近7天`, `本周`, `本月`, `全年`
    */
+  // tslint:disable-next-line: deprecation
   list?: DateRangePickerShortcutItem[];
 }
 
@@ -94,5 +96,6 @@ export class DatePickerConfig {
   constructor() {
     deprecation10Cog(`DatePickerConfig`);
   }
+  // tslint:disable-next-line: deprecation
   range?: DateRangePickerConfig;
 }

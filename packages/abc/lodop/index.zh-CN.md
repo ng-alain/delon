@@ -53,7 +53,7 @@ module: LodopModule
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|
-| `companyName` | 注册单位名称 | `string` | `` | ✅ |
+| `companyName` | 注册单位名称 | `string` | - | ✅ |
 | `license` | 主注册号 | `string` | - | ✅ |
 | `licenseA` | 附加注册号A | `string` | - | ✅ |
 | `licenseB` | 附加注册号B | `string` | - | ✅ |

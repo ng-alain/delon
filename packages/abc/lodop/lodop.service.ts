@@ -1,9 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { AlainConfigService, AlainLodopConfig } from '@delon/theme';
 import { LazyService } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of, Subject } from 'rxjs';
 import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
-import { AlainLodopConfig, AlainConfigService } from '@delon/theme';
 
 @Injectable({ providedIn: 'root' })
 export class LodopService implements OnDestroy {
@@ -17,7 +17,7 @@ export class LodopService implements OnDestroy {
 
   constructor(private scriptSrv: LazyService, configSrv: AlainConfigService) {
     this.defaultConfig = configSrv.merge<AlainLodopConfig, 'lodop'>('lodop', {
-      url: 'https://localhost:8443/CLodopfuncs.js',
+      url: '//localhost:8443/CLodopfuncs.js',
       name: 'CLODOP',
       companyName: '',
       checkMaxCount: 100,

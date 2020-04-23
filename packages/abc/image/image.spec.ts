@@ -1,8 +1,7 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { createTestContext } from '@delon/testing';
-import { ImageConfig } from './image.config';
 import { ImageDirective } from './image.directive';
 import { ImageModule } from './image.module';
 
@@ -23,13 +22,6 @@ describe('abc: _src', () => {
   function getEl(): HTMLImageElement {
     return dl.query(By.css('div')).nativeElement;
   }
-
-  it('General Configuration', inject([ImageConfig], (cog: ImageConfig) => {
-    cog.error = 'e.png';
-    ({ fixture, dl, context } = createTestContext(TestComponent));
-    expect(context.comp.error).toBe('e.png');
-    expect(context.comp.size).toBe(64);
-  }));
 
   describe('', () => {
     beforeEach(() => {

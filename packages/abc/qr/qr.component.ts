@@ -8,8 +8,9 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
+import { AlainConfigService, AlainQRConfig } from '@delon/theme';
 import { InputNumber } from '@delon/util';
-import { QRConfig } from './qr.config';
+import { DEFULAT_CONFIG } from './qr.config';
 import { QRService } from './qr.service';
 
 @Component({
@@ -44,8 +45,8 @@ export class QRComponent implements OnChanges {
 
   // #endregion
 
-  constructor(cog: QRConfig, private srv: QRService, private cdr: ChangeDetectorRef) {
-    Object.assign(this, { ...new QRConfig(), ...cog });
+  constructor(private srv: QRService, private cdr: ChangeDetectorRef, configSrv: AlainConfigService) {
+    configSrv.attach<AlainQRConfig, 'qr'>(this, 'qr', DEFULAT_CONFIG);
   }
 
   ngOnChanges(): void {
