@@ -5,7 +5,6 @@ title: _src
 subtitle: Image
 cols: 1
 module: ImageModule
-config: ImageConfig
 ---
 
 like `src`, but more features:
@@ -18,7 +17,7 @@ like `src`, but more features:
 
 ### [_src]
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `[size]` | Size of image | `number` | `64` |
-| `[error]` | Replaces failed image | `string` | `./assets/img/logo.svg` |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[size]` | Size of image | `number` | `64` | ✅ |
+| `[error]` | Replaces failed image | `string` | `./assets/img/logo.svg` | ✅ |

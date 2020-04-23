@@ -2,13 +2,27 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { LazyService } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of, Subject } from 'rxjs';
-import { LodopConfig } from './lodop.config';
 import { Lodop, LodopPrintResult, LodopResult } from './lodop.types';
+import { AlainLodopConfig, AlainConfigService } from '@delon/theme';
 
 @Injectable({ providedIn: 'root' })
 export class LodopService implements OnDestroy {
-  constructor(private defCog: LodopConfig, private scriptSrv: LazyService) {
-    this.cog = defCog;
+  private defaultConfig: AlainLodopConfig;
+  private _cog: AlainLodopConfig;
+  private pending = false;
+  private _lodop: Lodop | null = null;
+  private _init = new Subject<LodopResult>();
+  private _events = new Subject<LodopPrintResult>();
+  private printBuffer: any[] = [];
+
+  constructor(private scriptSrv: LazyService, configSrv: AlainConfigService) {
+    this.defaultConfig = configSrv.merge<AlainLodopConfig, 'lodop'>('lodop', {
+      url: 'https://localhost:8443/CLodopfuncs.js',
+      name: 'CLODOP',
+      companyName: '',
+      checkMaxCount: 100,
+    });
+    this.cog = this.defaultConfig;
   }
 
   /**
@@ -19,13 +33,9 @@ export class LodopService implements OnDestroy {
   get cog() {
     return this._cog;
   }
-  set cog(value: LodopConfig) {
+  set cog(value: AlainLodopConfig) {
     this._cog = {
-      url: 'https://localhost:8443/CLodopfuncs.js',
-      name: 'CLODOP',
-      companyName: '',
-      checkMaxCount: 100,
-      ...this.defCog,
+      ...this.defaultConfig,
       ...value,
     };
   }
@@ -55,13 +65,6 @@ export class LodopService implements OnDestroy {
     }
     return ret;
   }
-
-  private _cog: LodopConfig;
-  private pending = false;
-  private _lodop: Lodop | null = null;
-  private _init = new Subject<LodopResult>();
-  private _events = new Subject<LodopPrintResult>();
-  private printBuffer: any[] = [];
 
   private check() {
     if (!this._lodop) throw new Error(`请务必先调用 lodop 获取对象`);
@@ -107,7 +110,7 @@ export class LodopService implements OnDestroy {
         onResolve('load-variable-name-error', { name: this.cog.name });
         return;
       }
-      this._lodop.SET_LICENSES(this.cog.companyName!, this.cog.license, this.cog.licenseA, this.cog.licenseB);
+      this._lodop.SET_LICENSES(this.cog.companyName!, this.cog.license!, this.cog.licenseA, this.cog.licenseB);
       checkStatus();
     });
   }
