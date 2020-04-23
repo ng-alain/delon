@@ -16,6 +16,7 @@ import { LegendItem, LooseObject, ScaleOption } from '@antv/g2/lib/interface';
 import { G2Time } from '@delon/chart/core/types';
 import { AlainConfigService } from '@delon/theme';
 import { deprecation10, InputBoolean, InputNumber, toDate } from '@delon/util';
+import format from 'date-fns/format';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2TimelineData {
@@ -95,7 +96,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private install() {
-    const { node, height, padding, slider, maxAxis, theme } = this;
+    const { node, height, padding, slider, maxAxis, theme, mask } = this;
     const chart = (this.chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
@@ -124,14 +125,11 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     if (slider) {
       chart.option('slider', {
         height: 26,
-        start: 0,
-        end: 1,
         trendCfg: {
           isArea: false,
         },
         minLimit: 2,
-        // Tracking https://github.com/antvis/G2/issues/2332
-        // mask,
+        formatMask: (val: Date) => format(val, mask),
       });
     }
 
@@ -162,9 +160,11 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
     chart.padding = padding;
 
     // TODO: compatible
+    // tslint:disable-next-line: deprecation
     if (data.find(w => !!w.x) != null) {
       deprecation10('g2-timeline', 'x', 'time');
       data.forEach(item => {
+        // tslint:disable-next-line: deprecation
         item.time = new Date(item.x!);
       });
     }
