@@ -5,7 +5,6 @@ order: 7
 subtitle: Zip
 cols: 1
 module: ZipModule
-config: ZipConfig
 ---
 
 A Zip file operation based on [jszip](http://stuk.github.io/jszip/).
@@ -16,7 +15,7 @@ A Zip file operation based on [jszip](http://stuk.github.io/jszip/).
 yarn add file-saver
 ```
 
-The jszip script file takes the form of lazy loading. Allows you to specify a CDN URL in `NaZipModule.forRoot({})` module. The default is `//cdn.bootcss.com/jszip/3.1.5/jszip.min.js`.
+The jszip script file takes the form of lazy loading，you can change the default CDN path (or use the local path) via [Global Configuration](/docs/global-config). By default: `//cdn.bootcss.com/jszip/3.3.0/jszip.min.js`.
 
 ## API
 

@@ -1,4 +1,5 @@
 import { Inject, Injectable, Optional } from '@angular/core';
+import { deepMergeKey } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { AlainConfig, AlainConfigKey, ALAIN_CONFIG } from './config.types';
 
@@ -15,8 +16,8 @@ export class AlainConfigService {
     return key ? { [key]: res[key] } : res;
   }
 
-  merge<R, T extends AlainConfigKey>(componentName: T, defaultValues: R) {
-    return { ...defaultValues, ...this.get(componentName) };
+  merge<R, T extends AlainConfigKey>(componentName: T, defaultValues: R): R {
+    return deepMergeKey(defaultValues, true, this.get(componentName));
   }
 
   attach<R, T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, defaultValues: R) {

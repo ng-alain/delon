@@ -21,7 +21,9 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+  AlainConfigService,
   AlainI18NService,
+  AlainSTConfig,
   ALAIN_I18N_TOKEN,
   CNCurrencyPipe,
   DatePipe,
@@ -31,7 +33,7 @@ import {
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
-import { deepMerge, deepMergeKey, InputBoolean, InputNumber, toBoolean } from '@delon/util';
+import { deepMergeKey, InputBoolean, InputNumber, toBoolean } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTableComponent, NzTableData, NzTableStyleService } from 'ng-zorro-antd/table';
 import { from, Observable, of, Subject, Subscription } from 'rxjs';
@@ -40,7 +42,7 @@ import { STColumnSource } from './st-column-source';
 import { STDataSource, STDataSourceOptions, STDataSourceResult } from './st-data-source';
 import { STExport } from './st-export';
 import { STRowSource } from './st-row.directive';
-import { STConfig } from './st.config';
+import { ST_DEFULAT_CONFIG } from './st.config';
 import {
   STChange,
   STChangeType,
@@ -84,10 +86,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   private data$: Subscription;
   private totalTpl = ``;
-  private clonePage: STPage;
-  private copyCog: STConfig;
+  private cog: AlainSTConfig;
   private rowClickCount = 0;
+  private _req: STReq;
+  private _res: STRes;
+  private _page: STPage;
+  private _widthMode: STWidthMode;
   locale: LocaleData = {};
+  _loading = false;
   _data: STData[] = [];
   _statistical: STStatisticalResults = {};
   _isPagination = true;
@@ -97,13 +103,12 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _columns: STColumn[] = [];
   @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
 
-  /** 请求体配置 */
   @Input()
   get req() {
     return this._req;
   }
   set req(value: STReq) {
-    this._req = deepMerge({}, this._req, this.cog.req, value);
+    this._req = deepMergeKey({}, true, this.cog.req, value);
   }
   /** 返回体配置 */
   @Input()
@@ -111,110 +116,68 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._res;
   }
   set res(value: STRes) {
-    const item = deepMergeKey({}, true, this.cog.res, value);
-    const reName = item.reName;
-    if (!Array.isArray(reName.list)) reName.list = reName.list.split('.');
-    if (!Array.isArray(reName.total)) reName.total = reName.total.split('.');
+    const item = (this._res = deepMergeKey({}, true, this.cog.res, value));
+    const reName = item.reName!;
+    if (!Array.isArray(reName.list)) reName.list = reName.list!.split('.');
+    if (!Array.isArray(reName.total)) reName.total = reName.total!.split('.');
     this._res = item;
   }
-  /** 分页器配置 */
   @Input()
   get page() {
     return this._page;
   }
   set page(value: STPage) {
-    this.clonePage = value;
-    const item = deepMergeKey({}, true, new STConfig().page, this.cog.page, value);
-    const { total } = item;
-    if (typeof total === 'string' && total.length) {
-      this.totalTpl = total;
-    } else if (toBoolean(total)) {
-      this.totalTpl = this.locale.total;
-    } else {
-      this.totalTpl = '';
-    }
-    this._page = item;
+    this._page = { ...this.cog.page, ...value };
+    this.updateTotalTpl();
   }
-  /** 是否多排序，当 `sort` 多个相同值时自动合并，建议后端支持时使用 */
+  @Input() data: string | STData[] | Observable<STData[]>;
+  @Input() columns: STColumn[] = [];
+  @Input() @InputNumber() ps = 10;
+  @Input() @InputNumber() pi = 1;
+  @Input() @InputNumber() total = 0;
+  @Input() loading: boolean | null = null;
+  @Input() @InputNumber() loadingDelay = 0;
+  @Input() loadingIndicator: TemplateRef<void>;
+  @Input() @InputBoolean() bordered = false;
+  @Input() size: 'small' | 'middle' | 'default';
+  @Input() scroll: { y?: string; x?: string };
+  @Input() singleSort: STSingleSort;
+  private _multiSort?: STMultiSort;
   @Input()
   get multiSort() {
     return this._multiSort;
   }
-  set multiSort(value: any) {
+  set multiSort(value: NzSafeAny) {
     if (typeof value === 'boolean' && !toBoolean(value)) {
-      this._multiSort = null;
+      this._multiSort = undefined;
       return;
     }
     this._multiSort = {
       ...(typeof value === 'object' ? value : {}),
     };
   }
+  @Input() rowClassName: STRowClassName;
   @Input()
   set widthMode(value: STWidthMode) {
-    this._widthMode = { type: 'default', strictBehavior: 'truncate', ...value };
+    this._widthMode = { ...this.cog.widthMode, ...value };
   }
   get widthMode() {
     return this._widthMode;
   }
-
-  private get routerState() {
-    const { pi, ps, total } = this;
-    return { pi, ps, total };
-  }
-
-  @Input() data: string | STData[] | Observable<STData[]>;
-  private _req: STReq;
-  private _res: STRes;
-  @Input() columns: STColumn[] = [];
-  @Input() @InputNumber() ps = 10;
-  @Input() @InputNumber() pi = 1;
-  @Input() @InputNumber() total = 0;
-  private _page: STPage;
-  _loading = false;
-  /** 是否显示Loading */
-  @Input() loading: boolean | null = null;
-  /** 延迟显示加载效果的时间（防止闪烁） */
-  @Input() @InputNumber() loadingDelay = 0;
-  @Input() loadingIndicator: TemplateRef<void>;
-  /** 是否显示边框 */
-  @Input() @InputBoolean() bordered = false;
-  /** table大小 */
-  @Input() size: 'small' | 'middle' | 'default';
-  /** 纵向支持滚动，也可用于指定滚动区域的高度：`{ y: '300px', x: '300px' }` */
-  @Input() scroll: { y?: string; x?: string };
-  /**
-   * 单排序规则
-   * - 若不指定，则返回：`columnName=ascend|descend`
-   * - 若指定，则返回：`sort=columnName.(ascend|descend)`
-   */
-  @Input() singleSort: STSingleSort | null = null;
-  private _multiSort: STMultiSort | null;
-  @Input() rowClassName: STRowClassName;
-  private _widthMode: STWidthMode;
-  /** `header` 标题 */
   @Input() header: string | TemplateRef<void>;
-  /** `footer` 底部 */
   @Input() footer: string | TemplateRef<void>;
-  /** 额外 `body` 顶部内容 */
   @Input() bodyHeader: TemplateRef<STStatisticalResults>;
-  /** 额外 `body` 内容 */
   @Input() body: TemplateRef<STStatisticalResults>;
   @Input() @InputBoolean() expandRowByClick = false;
   @Input() @InputBoolean() expandAccordion = false;
-  /** `expand` 可展开，当数据源中包括 `expand` 表示展开状态 */
   @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
   @Input() noResult: string | TemplateRef<void>;
   @Input() widthConfig: string[];
-  /** 行单击多少时长之类为双击（单位：毫秒），默认：`200` */
   @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
-  /** 请求异常时回调 */
   // tslint:disable-next-line:no-output-native
   @Output() readonly error = new EventEmitter<STError>();
-  /**
-   * 变化时回调，包括：`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick` 变动
-   */
   // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<STChange>();
   @Input() @InputBoolean() virtualScroll = false;
@@ -237,10 +200,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._data;
   }
 
+  private get routerState() {
+    const { pi, ps, total } = this;
+    return { pi, ps, total };
+  }
+
   constructor(
     @Optional() @Inject(ALAIN_I18N_TOKEN) i18nSrv: AlainI18NService,
     private cdr: ChangeDetectorRef,
-    private cog: STConfig,
     private router: Router,
     private el: ElementRef,
     private exportSrv: STExport,
@@ -250,21 +217,17 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private columnSource: STColumnSource,
     private dataSource: STDataSource,
     private delonI18n: DelonLocaleService,
+    configSrv: AlainConfigService,
   ) {
+    this.setCog(configSrv.merge<AlainSTConfig, 'st'>('st', ST_DEFULAT_CONFIG));
+
     this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
       if (this._columns.length > 0) {
-        this.page = this.clonePage;
+        this.updateTotalTpl();
         this.cd();
       }
     });
-
-    this.copyCog = deepMergeKey(new STConfig(), true, cog);
-    delete this.copyCog.multiSort;
-    Object.assign(this, this.copyCog);
-    if (cog.multiSort && cog.multiSort.global !== false) {
-      this.multiSort = { ...cog.multiSort };
-    }
 
     i18nSrv.change
       .pipe(
@@ -272,6 +235,19 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         filter(() => this._columns.length > 0),
       )
       .subscribe(() => this.refreshColumns());
+  }
+
+  private setCog(cog: AlainSTConfig): void {
+    const copyMultiSort = { ...cog.multiSort };
+    // Because multiSort.global will affect the result, it should be removed first, and multiSort will be operated again after processing.
+    delete cog.multiSort;
+    this.cog = cog;
+    Object.assign(this, cog);
+
+    if (copyMultiSort.global !== false) {
+      this.multiSort = copyMultiSort;
+    }
+    this.columnSource.setCog(cog);
   }
 
   cd() {
@@ -315,6 +291,17 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
    */
   get filteredData(): Promise<STData[]> {
     return this.loadData({ paginator: false } as any).then(res => res.list);
+  }
+
+  private updateTotalTpl(): void {
+    const { total } = this.page;
+    if (typeof total === 'string' && total.length) {
+      this.totalTpl = total;
+    } else if (toBoolean(total)) {
+      this.totalTpl = this.locale.total;
+    } else {
+      this.totalTpl = '';
+    }
   }
 
   private setLoading(val: boolean): void {
@@ -409,7 +396,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   load(pi = 1, extraParams?: {}, options?: STLoadOptions) {
     if (pi !== -1) this.pi = pi;
     if (typeof extraParams !== 'undefined') {
-      this._req.params = options && options.merge ? { ...this._req.params, ...extraParams } : extraParams;
+      this.req.params = options && options.merge ? { ...this.req.params, ...extraParams } : extraParams;
     }
     this._change('pi', options);
     return this;
@@ -678,7 +665,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
       (this.modalHelper[btn.type === 'modal' ? 'create' : 'createStatic'] as any)(
         modal!.component,
         { ...obj, ...(modal!.params && modal!.params!(record)) },
-        deepMergeKey({}, true, this.copyCog.modal, modal),
+        deepMergeKey({}, true, this.cog.modal, modal),
       )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe((res: NzSafeAny) => this.btnCallback(record, btn, res));
@@ -691,7 +678,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
           drawer!.title!,
           drawer!.component,
           { ...obj, ...(drawer!.params && drawer!.params!(record)) },
-          deepMergeKey({}, true, this.copyCog.drawer, drawer),
+          deepMergeKey({}, true, this.cog.drawer, drawer),
         )
         .pipe(filter(w => typeof w !== 'undefined'))
         .subscribe(res => this.btnCallback(record, btn, res));

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlainConfigService, AlainQRConfig } from '@delon/theme';
-import { DEFULAT_CONFIG } from './qr.config';
+import { QR_DEFULAT_CONFIG } from './qr.config';
 
 declare var QRious: any;
 
@@ -28,7 +28,7 @@ export class QRService {
   value: string;
 
   constructor(configSrv: AlainConfigService) {
-    configSrv.attach<AlainQRConfig, 'qr'>(this, 'qr', DEFULAT_CONFIG);
+    configSrv.attach<AlainQRConfig, 'qr'>(this, 'qr', QR_DEFULAT_CONFIG);
     this.qr = new QRious();
   }
 

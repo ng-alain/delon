@@ -1,7 +1,8 @@
 import { InjectionToken } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { AlainDateRangePickerConfig } from './types/date-picker.type';
+import { AlainDateRangePickerConfig } from './date-picker/date-picker.type';
+import { AlainSTConfig } from './st/st.type';
 
 export interface AlainConfig {
   dataRange?: AlainDateRangePickerConfig;
@@ -14,6 +15,9 @@ export interface AlainConfig {
   se?: AlainSEConfig;
   sg?: AlainSGConfig;
   sv?: AlainSVConfig;
+  st?: AlainSTConfig;
+  xlsx?: AlainXlsxConfig;
+  zip?: AlainZipConfig;
   chart?: AlainChartConfig;
 }
 
@@ -213,6 +217,30 @@ export class AlainSVConfig {
   default?: boolean;
   /** `label` 固定宽度，若 `null` 或 `undefined` 表示非固定，默认：`null` */
   labelWidth?: number;
+}
+
+export interface AlainXlsxConfig {
+  /**
+   * Xlsx library path, default: `//cdn.bootcss.com/xlsx/0.15.6/xlsx.full.min.js`
+   */
+  url?: string;
+  /**
+   * Defines which Xlsx optional modules should get loaded, e.g:
+   *
+   * `[ '//cdn.bootcss.com/xlsx/0.15.6/cpexcel.js' ]`
+   */
+  modules?: string[];
+}
+
+export interface AlainZipConfig {
+  /**
+   * Zip library path, Default: `//cdn.bootcss.com/jszip/3.3.0/jszip.min.js`
+   */
+  url?: string;
+  /**
+   * Defines which zip optional utils should get loaded
+   */
+  utils?: string[];
 }
 
 export interface AlainChartConfig {

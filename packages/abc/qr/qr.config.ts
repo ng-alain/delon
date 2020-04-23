@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AlainQRConfig } from '@delon/theme';
 import { deprecation10Cog } from '@delon/util';
 
-export const DEFULAT_CONFIG: AlainQRConfig = {
+export const QR_DEFULAT_CONFIG: AlainQRConfig = {
   background: 'white',
   backgroundAlpha: 1,
   foreground: 'black',

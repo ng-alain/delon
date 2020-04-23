@@ -4,7 +4,7 @@ import { deepCopy } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { of, throwError } from 'rxjs';
 import { STDataSource, STDataSourceOptions } from '../st-data-source';
-import { STConfig } from '../st.config';
+import { ST_DEFULAT_CONFIG } from '../st.config';
 import { STColumnFilterMenu, STData } from '../st.interfaces';
 
 const DEFAULT = {
@@ -57,15 +57,14 @@ describe('abc: table: data-souce', () => {
   }
 
   function genModule() {
-    const def = new STConfig();
     options = {
       pi: DEFAULT.pi,
       ps: DEFAULT.ps,
       data: [],
       total: DEFAULT.total,
-      req: deepCopy(def.req),
-      res: deepCopy(def.res),
-      page: deepCopy(def.page),
+      req: deepCopy(ST_DEFULAT_CONFIG.req),
+      res: deepCopy(ST_DEFULAT_CONFIG.res),
+      page: deepCopy(ST_DEFULAT_CONFIG.page),
       columns: [{ title: '', index: 'id' }],
       paginator: true,
     };
