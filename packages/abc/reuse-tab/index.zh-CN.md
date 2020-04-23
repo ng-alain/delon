@@ -17,10 +17,10 @@ module: ReuseTabModule
 
 **注册RouteReuseStrategy**
 
-> ng-alain 使用方式参考：[delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L33)。
+> ng-alain 使用方式参考：[global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L22)。
 
 ```ts
-// delon.module.ts or app.module.ts
+// global-config.module.ts
 providers: [
   {
     provide: RouteReuseStrategy,

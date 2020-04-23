@@ -17,9 +17,10 @@ The default `ReuseTabModule` does not register `RouteReuseStrategy`. If you need
 
 **Register**
 
-> How to use in ng-alain, pls refer to [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L33).
+> How to use in ng-alain, pls refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L22).
 
 ```ts
+// global-config.module.ts
 providers: [
   {
     provide: RouteReuseStrategy,

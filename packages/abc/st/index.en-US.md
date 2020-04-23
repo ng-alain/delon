@@ -340,7 +340,7 @@ class TestComponent {
 |----------|-------------|------|---------|
 | `[component]` | Modal component class | `any` | - |
 | `[params]` | Dialog parameter | `(record: STData) => Object` | - |
-| `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) Global settings | `string` | record |
+| `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) Global settings | `string` | record |
 | `[size]` | Size of modal, support number type | `'sm','md','lg','xl'` | `'lg'` |
 | `[exact]` | Exact match return value, default is `true`, If the return value is not null (`null` or `undefined`) is considered successful, otherwise it is considered error. | `boolean` | `true` |
 | `[includeTabs]` | Whether to wrap the nz-tabset, fix content spacing problem | `boolean` | - |
@@ -353,7 +353,7 @@ class TestComponent {
 | `[title]` | Title of drawer | `string` | - |
 | `[component]` | Drawer component class | `any` | - |
 | `[params]` | Dialog parameter | `(record: STData) => Object` | - |
-| `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [delon.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/delon.module.ts#L69) Global settings | `string` | record |
+| `[paramsName]` | Receive parameter name of the target component, If target component receive value is null, pls check [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L52) Global settings | `string` | record |
 | `[size]` | Size of drawer, support number type | `'sm','md','lg','xl'` | `'md'` |
 | `[drawerOptions]` | nz-drawer raw parameters [NzDrawerOptions](https://ng.ant.design/components/drawer/zh#nzdraweroptions) | `any` | - |
 

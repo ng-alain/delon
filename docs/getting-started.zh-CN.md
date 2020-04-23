@@ -70,10 +70,12 @@ NG-ALAIN 是一个标准的 Angular CLI 构建的项目，并提供了涵盖中�
 │   │   │   ├── routes.module.ts                # 业务路由模块
 │   │   │   └── routes-routing.module.ts        # 业务路由注册口
 │   │   ├── shared                              # 共享模块
+│   │   │   ├── shared-delon.module.ts          # @Delon/* 次级共享模块导入
+│   │   │   ├── shared-zorro.module.ts          # NG-ZORRO 次级共享模块导入
 │   │   │   └── shared.module.ts                # 共享模块文件
 │   │   ├── app.component.ts                    # 根组件
 │   │   └── app.module.ts                       # 根模块
-│   │   └── delon.module.ts                     # @delon模块导入
+│   │   └── global-config.module.ts             # @delon & ng-zorro 全局配置项
 │   ├── assets                                  # 本地静态资源
 │   ├── environments                            # 环境变量配置
 │   ├── styles                                  # 样式目录

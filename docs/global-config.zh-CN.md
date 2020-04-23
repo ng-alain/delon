@@ -13,7 +13,7 @@ type: Dev
 想要为某些组件提供默认配置项，请在根注入器中根据注入令牌 `ALAIN_CONFIG` 提供一个符合 `AlainConfig` 接口的对象，例如：
 
 ```typescript
-// delon.module.ts
+// global-config.module.ts
 import { AlainConfig, ALAIN_CONFIG } from '@delon/theme';
 
 const alainConfig: AlainConfig = {
@@ -30,24 +30,6 @@ export class DelonModule {}
 
 这些全局配置项将会被注入 `AlainConfigService` 当中并保存。
 
-### 提供模板
+## 关于 NG-ZORRO 全局配置项
 
-一些组件支持传递模板 `TemplateRef<T>` 作为默认参数，我们来了解一下如何做到这一点。
-
-最简单的方式是在应用的根组件中调用 `AlainConfigService` 的相关方法：
-
-```typescript
-export class AppComponent implements OnInit {
-  @ViewChild('nzIndicatorTpl', { static: true }) nzIndicator!: TemplateRef<void>;
-
-  constructor(private readonly alainConfigService: AlainConfigService) {}
-
-  ngOnInit(): void {
-    this.alainConfigService.set('st', { ps: 3 });
-  }
-}
-```
-
-然而这种方式可能会让你的 AppComponent 相当臃肿，并违反关注分离原则。
-
-因此，当你的项目比较大时，我们建议你使用一个 `FactoryProvider`，如下所示：
+请参考 NG-ZORRO [官网文档](https://ng.ant.design/docs/global-config/zh)。

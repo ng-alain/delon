@@ -7,7 +7,7 @@ type: Theme
 Configure the chart theme for all G2, but only provide interfaces. For the configuration chart theme parameters, please refer to [G2 website](https://g2.antv.vision/zh/docs/manual/tutorial/theme).
 
 ```ts
-// delon.module.ts
+// global-config.module.ts
 const alainConfig: AlainConfig = {
   chart: { theme: 'dark' },
 };

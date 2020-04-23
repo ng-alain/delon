@@ -73,30 +73,6 @@ Finally, repeat the above steps if you still can't!
 
 ## Configuration
 
-### How to override the @delon/* configuration
-
-```ts
-// delon.module.ts
-import { DelonAuthConfig } from '@delon/auth';
-export function delonAuthConfig(): DelonAuthConfig {
-  return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
-    login_url: '/passport/login'
-  });
-}
-
-@NgModule({})
-export class DelonModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: DelonModule,
-      providers: [
-        { provide: DelonAuthConfig, useFactory: delonAuthConfig}
-      ]
-    };
-  }
-}
-```
-
 ### How do I deploy the antd icon locally?
 
 First, the latest iconfont file can go to [this link](https://ant.design/docs/spec/download) ([mirror](http://ant-design.gitee.io/docs/spec/download)) Download.

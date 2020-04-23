@@ -1,7 +1,12 @@
 import { Component, EventEmitter, forwardRef, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerShortcutItem } from '@delon/theme';
+import {
+  AlainConfigService,
+  AlainDateRangePickerConfig,
+  AlainDateRangePickerShortcut,
+  AlainDateRangePickerShortcutItem,
+} from '@delon/theme';
 import { deepMergeKey, fixEndTimeOfRange, getTimeDistance, InputBoolean } from '@delon/util';
 import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
@@ -72,11 +77,10 @@ export class RangePickerComponent implements ControlValueAccessor {
   // #endregion
 
   constructor(private dom: DomSanitizer, configSrv: AlainConfigService) {
-    const cog = configSrv.merge('dataRange', {
+    const cog = configSrv.merge<AlainDateRangePickerConfig, 'dataRange'>('dataRange', {
       nzFormat: 'yyyy-MM-dd',
       nzAllowClear: true,
       nzAutoFocus: false,
-      nzDisabled: false,
       nzPopupStyle: { position: 'relative' },
       nzShowToday: true,
       shortcuts: {

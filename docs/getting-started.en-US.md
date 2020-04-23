@@ -54,30 +54,32 @@ npm start
 NG-ALAIN is a standard Angular CLI project that includes common routes for admins and demonstrates our component library. The project layout is as follows:
 
 ```
-├── _mock                                       # Local Mock Data
+├── _mock                                       # Mock Data rule
 ├── src
 │   ├── app
-│   │   ├── core
+│   │   ├── core                                # Core module
 │   │   │   ├── i18n
 │   │   │   ├── net
 │   │   │   │   └── default.interceptor.ts      # Default HTTP interceptor
 │   │   │   ├── services
 │   │   │   │   └── startup.service.ts          # Initialize project configuration
 │   │   │   └── core.module.ts                  # Core module file
-│   │   ├── layout                              # Layout files
+│   │   ├── layout                              # Core layout
 │   │   ├── routes
 │   │   │   ├── **                              # Business directory
-│   │   │   ├── routes.module.ts                # Business routing module
-│   │   │   └── routes-routing.module.ts
+│   │   │   ├── routes.module.ts                # Service routing module
+│   │   │   └── routes-routing.module.ts        # Service routes registration
 │   │   ├── shared                              # Shared module
-│   │   │   └── shared.module.ts
+│   │   │   ├── shared-delon.module.ts          # @Delon/* import of secondary shared modules
+│   │   │   ├── shared-zorro.module.ts          # NG-ZORRO import of secondary shared modules
+│   │   │   └── shared.module.ts                # Shared module file
 │   │   ├── app.component.ts                    # Root component
 │   │   └── app.module.ts                       # Root module
-│   │   └── delon.module.ts                     # @delon modules import
-│   ├── assets                                  # Local static files
-│   ├── environments                            # Environment configuration
-│   ├── styles                                  # Project styles
-└── └── style.less                              # Style entry
+│   │   └── global-config.module.ts             # @delon & ng-zorro global config
+│   ├── assets                                  # Local static resource
+│   ├── environments                            # Environment variable configuration
+│   ├── styles                                  # Style directory
+└── └── style.less                              # Style guide entry
 ```
 
 ## Development

@@ -33,7 +33,7 @@ In general, there are two files that are larger after the build: `scripts.js` an
 
 **scripts.js**
 
-It comes from a collection of `scripts` nodes of `angular.json`, so the size of this file depends on the size of the third-party component referenced by the `scripts` node. Like `@delon/chart` is dependent on G2 and its own G2 is also a large package size. So by default, the scripts that G2 depends on are treated as third-party components attached to `scripts`.
+It comes from a collection of `scripts` nodes of `angular.json`, so the size of this file depends on the size of the third-party component referenced by the `scripts` node.
 
 In general, you should put it under `scripts` when you are using non-Angular third-party components.
 
@@ -47,34 +47,9 @@ We know that the resource file packaged by Angular Cli will contain the hashing 
 
 > In fact, Angular Cli defaults to `--vendor-chunk`. The main factor is that these `@angular/*` are very fast relative to iteration.
 
-According to NG-ALAIN's [module registration guidelines](/docs/module), we generate two core entries that determine the size of the `main.js` package: `delon.module.ts` and `shared.module.ts `.
+According to NG-ALAIN's [module registration guidelines](/docs/module), generate two `shared-delon.module.ts` and` shared-zorro.module.ts` produced are the summary of the import of secondary modules shared by @Delon and NG-ZORRO.
 
-The only way to reduce our size is to import only the modules we need. By default we don't do this. The main factor is that it adds a lot of extra code and it is limited by NG-ZORRO. Support for the import of secondary modules, so this optimization is not very obvious.
-
-#### ng-zorro-antd
-
-Sub-module import is not supported, so the details are skipped.
-
-#### @delon
-
-`@delon` class library contains layers, each of which contains possibly two-level modules (such as the `abc` class library, which contains dozens of different component modules), all of which are in `delon.module.ts` and ` Shared.module.ts`.
-
-For example, when you explicitly only need `@delon/abc` several components, you only need to import these modules.
-
-```ts
-// Register the required modules in delon.module.ts
-import { STModule } from '@delon/abc/st';
-
-const ABC_ROOT_MODULES = [ STModule.forRoot() ];
-
-// Import and export in share.module.ts to ensure all lazy modules are valid
-const ABC_MODULES = [ STModule ];
-@NgModule({
-  imports: ...ABC_MODULES,
-  exports: ...ABC_MODULES,
-})
-export class SharedModule {}
-```
+`@delon/abc`,`@delon/chart`, `ng-zorro-antd` The three main libraries all support secondary imports. Only selecting the modules required by the project will effectively solve the problem of package size.
 
 ### Conclusion
 

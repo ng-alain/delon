@@ -17,10 +17,6 @@ export interface AlainDateRangePickerConfig {
    * 默认：`false`
    */
   nzAutoFocus?: boolean;
-  /**
-   * 默认：`false`
-   */
-  nzDisabled?: boolean;
   nzDisabledDate?: (d: Date) => boolean;
   nzDisabledTime?: DisabledTimeFn;
   /**

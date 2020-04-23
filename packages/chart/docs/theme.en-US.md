@@ -7,7 +7,7 @@ type: Theme
 对所有 G2 进行配置图表主题，但只提供接口，有关配置图表主题参数，请参考[G2官网](https://g2.antv.vision/zh/docs/manual/tutorial/theme)。
 
 ```ts
-// delon.module.ts
+// global-config.module.ts
 const alainConfig: AlainConfig = {
   chart: { theme: 'dark' },
 };
