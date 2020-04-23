@@ -1,4 +1,5 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { DelonACLModule } from '@delon/acl';
 // mock
 import { DelonMockModule } from '@delon/mock';
 import { AlainConfig, AlainThemeModule, ALAIN_CONFIG } from '@delon/theme';
@@ -29,28 +30,12 @@ const REUSETAB_PROVIDES: NzSafeAny[] = [
 ];
 // #endregion
 
-// #region global config functions
-
-import { LodopConfig } from '@delon/abc/lodop';
-import { STConfig } from '@delon/abc/st';
-import { DelonACLModule } from '@delon/acl';
-
-export function fnSTConfig(): STConfig {
-  return Object.assign(new STConfig(), {
-    ps: 3,
-  });
-}
-
-export function fnLodopConfig(): LodopConfig {
-  return Object.assign(new LodopConfig(), {
+const alainConfig: AlainConfig = {
+  st: { ps: 3 },
+  lodop: {
     license: `A59B099A586B3851E0F0D7FDBF37B603`,
     licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`,
-  });
-}
-
-// #endregion
-
-const alainConfig: AlainConfig = {
+  },
   chart: { theme: 'dark' },
 };
 
@@ -65,12 +50,7 @@ export class DelonModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: DelonModule,
-      providers: [
-        { provide: ALAIN_CONFIG, useValue: alainConfig },
-        ...REUSETAB_PROVIDES,
-        { provide: STConfig, useFactory: fnSTConfig },
-        { provide: LodopConfig, useFactory: fnLodopConfig },
-      ],
+      providers: [{ provide: ALAIN_CONFIG, useValue: alainConfig }, ...REUSETAB_PROVIDES],
     };
   }
 }

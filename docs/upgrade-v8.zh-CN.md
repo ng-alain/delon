@@ -1,8 +1,7 @@
 ---
-order: 11
-type: Basic
+order: 55
+type: Other
 title: 升级到 8.0 版本
-hot: true
 ---
 
 NG-ALAIN 8.0 变更分为三大部分：
