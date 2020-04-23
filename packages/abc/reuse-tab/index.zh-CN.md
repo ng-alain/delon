@@ -151,58 +151,58 @@ export class DemoComponent {
 
 **属性**
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[max]` | 允许最多复用多少个页面，值发生变更时会强制关闭且忽略可关闭条件 | `number` | `10`
-`[mode]` | 设置匹配模式 | `ReuseTabMatchMode` | `0`
-`[debug]` | 是否Debug模式 | `boolean` | `false`
-`[keepingScroll]` | 保持滚动条位置 | `boolean` | `false`
-`[keepingScrollContainer]` | 保持滚动条容器 | `Element` | `window`
-`[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | -
-`[items]` | 获取已缓存的路由 | `ReuseTabCached[]` | -
-`[count]` | 获取当前缓存的路由总数 | `number` | -
-`[change]` | 订阅缓存变更通知 | `Observable<ReuseTabNotify>` | -
-`[title]` | 自定义当前标题 | `string` | -
-`[closable]` | 自定义当前 `closable` 状态 | `boolean` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[max]` | 允许最多复用多少个页面，值发生变更时会强制关闭且忽略可关闭条件 | `number` | `10` |
+| `[mode]` | 设置匹配模式 | `ReuseTabMatchMode` | `0` |
+| `[debug]` | 是否Debug模式 | `boolean` | `false` |
+| `[keepingScroll]` | 保持滚动条位置 | `boolean` | `false` |
+| `[keepingScrollContainer]` | 保持滚动条容器 | `Element` | `window` |
+| `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | - |
+| `[items]` | 获取已缓存的路由 | `ReuseTabCached[]` | - |
+| `[count]` | 获取当前缓存的路由总数 | `number` | - |
+| `[change]` | 订阅缓存变更通知 | `Observable<ReuseTabNotify>` | - |
+| `[title]` | 自定义当前标题 | `string` | - |
+| `[closable]` | 自定义当前 `closable` 状态 | `boolean` | - |
 
 **方法**
 
-方法名 | 说明 | 返回类型
-----|------|-----
-`index(url)` | 获取指定路径缓存所在位置，`-1` 表示无缓存 | `number`
-`exists(url)` | 获取指定路径缓存是否存在 | `boolean`
-`get(url)` | 获取指定路径缓存 | `ReuseTabCached`
-`getTitle(url, route?: ActivatedRouteSnapshot)` | 获取标题 | `string`
-`clearTitleCached()` | 清空自定义标题数据 | `void`
-`getClosable(url, route?: ActivatedRouteSnapshot)` | 获取 `closable` 状态 | `string`
-`clearClosableCached()` | 清空 `closable` 缓存 | `void`
-`remove(url)` | 根据URL移除标签，同时触 `change` remove事件 | `void`
-`move(url, position)` | 移动缓存数据，同时触 `change` move事件 | `void`
-`clear()` | 清除所有缓存，同时触 `change` clear事件 | `void`
-`refresh()` | 无任何动作，但会触 `change` refresh事件 | `void`
-`replace(url)` | 强制关闭当前路由（包含不可关闭状态），并重新导航至 `newUrl` 路由 | `void`
+| 方法名 | 说明 | 返回类型 |
+|-----|----|------|
+| `index(url)` | 获取指定路径缓存所在位置，`-1` 表示无缓存 | `number` |
+| `exists(url)` | 获取指定路径缓存是否存在 | `boolean` |
+| `get(url)` | 获取指定路径缓存 | `ReuseTabCached` |
+| `getTitle(url, route?: ActivatedRouteSnapshot)` | 获取标题 | `string` |
+| `clearTitleCached()` | 清空自定义标题数据 | `void` |
+| `getClosable(url, route?: ActivatedRouteSnapshot)` | 获取 `closable` 状态 | `string` |
+| `clearClosableCached()` | 清空 `closable` 缓存 | `void` |
+| `remove(url)` | 根据URL移除标签，同时触 `change` remove事件 | `void` |
+| `move(url, position)` | 移动缓存数据，同时触 `change` move事件 | `void` |
+| `clear()` | 清除所有缓存，同时触 `change` clear事件 | `void` |
+| `refresh()` | 无任何动作，但会触 `change` refresh事件 | `void` |
+| `replace(url)` | 强制关闭当前路由（包含不可关闭状态），并重新导航至 `newUrl` 路由 | `void` |
 
 ### reuse-tab
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[i18n]` | 右击菜单国际化，支持HTML | `ReuseContextI18n` | -
-`[mode]` | 设置匹配模式 | `ReuseTabMatchMode` | `0`
-`[debug]` | 是否Debug模式 | `boolean` | `false`
-`[max]` | 允许最多复用多少个页面 | `number` | `10`
-`[keepingScroll]` | 保持滚动条位置 | `boolean` | `false`
-`[keepingScrollContainer]` | 保持滚动条容器 | `string | Element` | `window`
-`[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | -
-`[allowClose]` | 允许关闭 | `boolean` | `true`
-`[showCurrent]` | 总是显示当前页 | `boolean` | `true`
-`[customContextMenu]` | 自定义右键菜单 | `ReuseCustomContextMenu[]` | -
-`[tabBarExtraContent]` | tab bar 上额外的元素 | `TemplateRef<void>` | -
-`[tabBarStyle]` | tab bar 的样式对象 | `object` | -
-`[tabBarGutter]` | tabs 之间的间隙 | `number` | -
-`[tabType]` | tabs 页签的基本样式 | `line, card` | `line`
-`[tabMaxWidth]` | tabs 页签每一项最大宽度，单位：`px` | `number` | -
-`(close)` | 关闭回调 | `EventEmitter` | -
-`(change)` | 切换时回调，接收的参数至少包含：`active`、`list` 两个参数 | `EventEmitter` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[i18n]` | 右击菜单国际化，支持HTML | `ReuseContextI18n` | - |
+| `[mode]` | 设置匹配模式 | `ReuseTabMatchMode` | `0` |
+| `[debug]` | 是否Debug模式 | `boolean` | `false` |
+| `[max]` | 允许最多复用多少个页面 | `number` | `10` |
+| `[keepingScroll]` | 保持滚动条位置 | `boolean` | `false` |
+| `[keepingScrollContainer]` | 保持滚动条容器 | `string | Element` | `window` |
+| `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | - |
+| `[allowClose]` | 允许关闭 | `boolean` | `true` |
+| `[showCurrent]` | 总是显示当前页 | `boolean` | `true` |
+| `[customContextMenu]` | 自定义右键菜单 | `ReuseCustomContextMenu[]` | - |
+| `[tabBarExtraContent]` | tab bar 上额外的元素 | `TemplateRef<void>` | - |
+| `[tabBarStyle]` | tab bar 的样式对象 | `object` | - |
+| `[tabBarGutter]` | tabs 之间的间隙 | `number` | - |
+| `[tabType]` | tabs 页签的基本样式 | `line, card` | `line` |
+| `[tabMaxWidth]` | tabs 页签每一项最大宽度，单位：`px` | `number` | - |
+| `(close)` | 关闭回调 | `EventEmitter` | - |
+| `(change)` | 切换时回调，接收的参数至少包含：`active`、`list` 两个参数 | `EventEmitter` | - |
 
 **右击菜单**
 
@@ -210,35 +210,35 @@ export class DemoComponent {
 
 ### ReuseTabCached
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[title]` | 标题 | `string` | -
-`[url]` | URL地址 | `string` | -
-`[closable]` | 是否允许关闭 | `boolean` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[title]` | 标题 | `string` | - |
+| `[url]` | URL地址 | `string` | - |
+| `[closable]` | 是否允许关闭 | `boolean` | - |
 
 ### ReuseTabNotify
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[active]` | 事件类型 | `title,close,closeRight,clear,move,closable,refresh,add` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[active]` | 事件类型 | `title,close,closeRight,clear,move,closable,refresh,add` | - |
 
 ### ReuseContextI18n
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[close]` | 关闭 | `string` | -
-`[closeOther]` | 关闭其它 | `string` | -
-`[closeRight]` | 关闭右边 | `string` | -
-`[clear]` | 清空 | `string` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[close]` | 关闭 | `string` | - |
+| `[closeOther]` | 关闭其它 | `string` | - |
+| `[closeRight]` | 关闭右边 | `string` | - |
+| `[clear]` | 清空 | `string` | - |
 
 ### ReuseCustomContextMenu
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[id]` | 唯一标识符 | `string` | -
-`[title]` | 标题 | `string` | -
-`[fn]` | 处理方法 | `(item: ReuseItem, menu: ReuseCustomContextMenu) => void` | -
-`[disabled]` | 是否禁用 | `(item: ReuseItem) => boolean` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[id]` | 唯一标识符 | `string` | - |
+| `[title]` | 标题 | `string` | - |
+| `[fn]` | 处理方法 | `(item: ReuseItem, menu: ReuseCustomContextMenu) => void` | - |
+| `[disabled]` | 是否禁用 | `(item: ReuseItem) => boolean` | - |
 
 ### 路由data
 
@@ -251,13 +251,13 @@ export class DemoComponent {
 { path: 'p1', component: DemoComponent, data: { title: 'New Title' } }
 ```
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[reuse]` | 是否复用 | `boolean` | -
-`[title]` | 标题 | `string` | -
-`[titleI18n]` | I18n标题Key | `string` | -
-`[reuseClosable]` | 是否允许关闭 | `boolean` | -
-`[keepingScroll]` | 是否保持滚动条 | `boolean` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[reuse]` | 是否复用 | `boolean` | - |
+| `[title]` | 标题 | `string` | - |
+| `[titleI18n]` | I18n标题Key | `string` | - |
+| `[reuseClosable]` | 是否允许关闭 | `boolean` | - |
+| `[keepingScroll]` | 是否保持滚动条 | `boolean` | - |
 
 > **注：** 以上数据也可在 [Menu](/theme/menu#Menu) 数据中体现。
 
