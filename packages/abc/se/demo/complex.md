@@ -20,6 +20,7 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <form nz-form #f="ngForm" se-container size="compact" gutter="24">
+      <se-title>Title 1</se-title>
       <se label="ID" col="1" [optionalHelp]="optionalHelpTpl">
         1000
         <ng-template #optionalHelpTpl>
@@ -63,10 +64,11 @@ import { Component } from '@angular/core';
           <span>I have read the <a>agreement</a></span>
         </label>
       </se>
-      <se col="1">
+      <se-title>Title 2</se-title>
+      <se label="Long Long Long Long Long Long Label" col="1">
         <textarea [(ngModel)]="i.comment" name="comment" nz-input rows="2" placeholder="write any thing"></textarea>
       </se>
-      <se label="Long Long Long Long Long Long Label" col="1">
+      <se col="1">
         <button nz-button nzType="primary" [disabled]="f.invalid">Save</button>
       </se>
     </form>
