@@ -16,8 +16,8 @@ module: FooterToolbarModule
 
 ### footer-toolbar
 
-参数 | 说明 | 类型 | 默认值
-----|------|-----|------
-`ng-content` | 工具栏内容，向右对齐 | `-` | -
-`[errorCollect]` | 是否需要 `error-collect`，务必包裹在 `<form>` 元素内 | `boolean` | `false`
-`[extra]` | 额外信息，向左对齐 | `string,TemplateRef<void>` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `ng-content` | 工具栏内容，向右对齐 | `-` | - |
+| `[errorCollect]` | 是否需要 `error-collect`，务必包裹在 `<form>` 元素内 | `boolean` | `false` |
+| `[extra]` | 额外信息，向左对齐 | `string,TemplateRef<void>` | - |

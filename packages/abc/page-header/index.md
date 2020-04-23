@@ -13,7 +13,7 @@ config: PageHeaderConfig
 
 ### page-header
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[title]` | 标题名 | `string,TemplateRef<void>` | -
 `[autoTitle]` | 自动生成标题，以当前路由从主菜单中定位  | `boolean` | `true`

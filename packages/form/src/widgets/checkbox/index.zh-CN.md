@@ -10,7 +10,7 @@ type: Widgets
 
 ### schema 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[enum]` | 数据源，当数据源存在于表示一组多选框 | `SFSchemaEnumType[]` | -
 `[readOnly]` | 禁用状态  | `boolean` | -
@@ -19,7 +19,7 @@ type: Widgets
 
 ### ui 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[asyncData]` | 异步数据源  | `() => Observable<SFSchemaEnumType[]>` | -
 `[span]` | 指定每个选框单元格数量，参考[布局](https://ng.ant.design/components/checkbox/zh#components-checkbox-demo-layout) | `number` | -

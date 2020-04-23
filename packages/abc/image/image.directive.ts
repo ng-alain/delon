@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { InputNumber } from '@delon/util';
-import { ImageConfig } from './image.config';
+import { AlainConfigService, AlainImageConfig } from '@delon/theme';
 
 /**
  * img标签
@@ -14,14 +14,14 @@ import { ImageConfig } from './image.config';
 })
 export class ImageDirective implements OnChanges, OnInit {
   @Input('_src') src: string;
-  @Input() @InputNumber() size = 64;
-  @Input() error = './assets/img/logo.svg';
+  @Input() @InputNumber() size: number;
+  @Input() error: string;
 
   private inited = false;
   private imgEl: HTMLImageElement;
 
-  constructor(cog: ImageConfig, el: ElementRef<HTMLImageElement>) {
-    Object.assign(this, { ...new ImageConfig(), ...cog });
+  constructor(el: ElementRef<HTMLImageElement>, configSrv: AlainConfigService) {
+    configSrv.attach<AlainImageConfig, 'image'>(this, 'image', { size: 64, error: `./assets/img/logo.svg` });
     this.imgEl = el.nativeElement;
   }
 

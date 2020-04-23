@@ -15,8 +15,12 @@ export class AlainConfigService {
     return key ? { [key]: res[key] } : res;
   }
 
+  merge<R, T extends AlainConfigKey>(componentName: T, defaultValues: R) {
+    return { ...defaultValues, ...this.get(componentName) };
+  }
+
   attach<R, T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, defaultValues: R) {
-    Object.assign(componentThis, { ...defaultValues, ...this.get(componentName) });
+    Object.assign(componentThis, this.merge(componentName, defaultValues));
   }
 
   attachKey<T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, key: string) {
@@ -27,5 +31,3 @@ export class AlainConfigService {
     this.config[componentName] = { ...this.config[componentName], ...value };
   }
 }
-
-// export function WithConfig(componentName: ConfigKey, configOptions?: { [key: string]: any }) {}

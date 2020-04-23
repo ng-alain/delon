@@ -18,7 +18,7 @@ like `src`, but more features:
 
 ### [_src]
 
-| Property  | Description           | Type     | Default                 |
-| --------- | --------------------- | -------- | ----------------------- |
-| `[size]`  | Size of image         | `number` | `64`                    |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[size]` | Size of image | `number` | `64` |
 | `[error]` | Replaces failed image | `string` | `./assets/img/logo.svg` |

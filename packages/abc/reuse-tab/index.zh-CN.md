@@ -151,7 +151,7 @@ export class DemoComponent {
 
 **属性**
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[max]` | 允许最多复用多少个页面，值发生变更时会强制关闭且忽略可关闭条件 | `number` | `10`
 `[mode]` | 设置匹配模式 | `ReuseTabMatchMode` | `0`
@@ -184,7 +184,7 @@ export class DemoComponent {
 
 ### reuse-tab
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[i18n]` | 右击菜单国际化，支持HTML | `ReuseContextI18n` | -
 `[mode]` | 设置匹配模式 | `ReuseTabMatchMode` | `0`
@@ -210,7 +210,7 @@ export class DemoComponent {
 
 ### ReuseTabCached
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[title]` | 标题 | `string` | -
 `[url]` | URL地址 | `string` | -
@@ -218,13 +218,13 @@ export class DemoComponent {
 
 ### ReuseTabNotify
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[active]` | 事件类型 | `title,close,closeRight,clear,move,closable,refresh,add` | -
 
 ### ReuseContextI18n
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[close]` | 关闭 | `string` | -
 `[closeOther]` | 关闭其它 | `string` | -
@@ -233,7 +233,7 @@ export class DemoComponent {
 
 ### ReuseCustomContextMenu
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[id]` | 唯一标识符 | `string` | -
 `[title]` | 标题 | `string` | -
@@ -251,7 +251,7 @@ export class DemoComponent {
 { path: 'p1', component: DemoComponent, data: { title: 'New Title' } }
 ```
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[reuse]` | 是否复用 | `boolean` | -
 `[title]` | 标题 | `string` | -

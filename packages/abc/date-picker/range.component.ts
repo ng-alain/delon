@@ -1,10 +1,10 @@
 import { Component, EventEmitter, forwardRef, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { deepMergeKey, fixEndTimeOfRange, InputBoolean } from '@delon/util';
+import { AlainConfigService, AlainDateRangePickerShortcut, AlainDateRangePickerShortcutItem } from '@delon/theme';
+import { deepMergeKey, fixEndTimeOfRange, getTimeDistance, InputBoolean } from '@delon/util';
 import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
-import { DatePickerConfig, DateRangePickerConfig, DateRangePickerShortcut, DateRangePickerShortcutItem } from './date-picker.config';
 
 @Component({
   selector: 'range-picker',
@@ -20,15 +20,15 @@ import { DatePickerConfig, DateRangePickerConfig, DateRangePickerShortcut, DateR
 })
 export class RangePickerComponent implements ControlValueAccessor {
   private onChangeFn: (val: Date) => void;
-  private _shortcut: DateRangePickerShortcut;
-  private _cog: DateRangePickerConfig;
+  private _shortcut: AlainDateRangePickerShortcut;
+  private defaultShortcuts: AlainDateRangePickerShortcut;
   @ViewChild('comp', { static: false }) private comp: NzRangePickerComponent;
   value: Date[] = [];
 
   @Input() ngModelEnd: Date;
   @Input()
-  set shortcut(val: DateRangePickerShortcut | null) {
-    const item = deepMergeKey({}, true, this._cog.shortcuts, val == null ? {} : val) as DateRangePickerShortcut;
+  set shortcut(val: AlainDateRangePickerShortcut | null) {
+    const item = deepMergeKey({}, true, this.defaultShortcuts, val == null ? {} : val) as AlainDateRangePickerShortcut;
     if (typeof val === 'boolean') {
       item.enabled = val;
     }
@@ -71,9 +71,51 @@ export class RangePickerComponent implements ControlValueAccessor {
 
   // #endregion
 
-  constructor(cog: DatePickerConfig, private dom: DomSanitizer) {
-    this._cog = deepMergeKey(new DateRangePickerConfig(), true, cog && cog.range);
-    Object.assign(this, this._cog);
+  constructor(private dom: DomSanitizer, configSrv: AlainConfigService) {
+    const cog = configSrv.merge('dataRange', {
+      nzFormat: 'yyyy-MM-dd',
+      nzAllowClear: true,
+      nzAutoFocus: false,
+      nzDisabled: false,
+      nzPopupStyle: { position: 'relative' },
+      nzShowToday: true,
+      shortcuts: {
+        enabled: false,
+        closed: true,
+        list: [
+          {
+            text: '今天',
+            fn: () => getTimeDistance('today'),
+          },
+          {
+            text: '昨天',
+            fn: () => getTimeDistance('yesterday'),
+          },
+          {
+            text: '近3天',
+            fn: () => getTimeDistance(-2),
+          },
+          {
+            text: '近7天',
+            fn: () => getTimeDistance(-6),
+          },
+          {
+            text: '本周',
+            fn: () => getTimeDistance('week'),
+          },
+          {
+            text: '本月',
+            fn: () => getTimeDistance('month'),
+          },
+          {
+            text: '全年',
+            fn: () => getTimeDistance('year'),
+          },
+        ],
+      },
+    });
+    this.defaultShortcuts = { ...cog.shortcuts } as AlainDateRangePickerShortcut;
+    Object.assign(this, cog);
   }
 
   _nzOnOpenChange(e: any) {
@@ -111,7 +153,7 @@ export class RangePickerComponent implements ControlValueAccessor {
     this.nzDisabled = disabled;
   }
 
-  clickShortcut(item: DateRangePickerShortcutItem) {
+  clickShortcut(item: AlainDateRangePickerShortcutItem) {
     this.value = item.fn(this.value as any);
     this.valueChange(this.value as [Date, Date]);
     if (this._shortcut.closed) {

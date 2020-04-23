@@ -22,7 +22,7 @@ yarn add file-saver
 
 ### ZipService
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `read(fileOrUrl: File | string, options?: JSZip.JSZipLoadOptions)` | 解压  | `Promise<JSZip>` | -
 `create()` | 创建 Zip 实例，用于创建压缩文件  | `Promise<JSZip>` | -

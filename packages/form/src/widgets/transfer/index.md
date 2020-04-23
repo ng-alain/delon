@@ -14,13 +14,13 @@ type: Widgets
 
 ### schema 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[enum]` | 数据源 | `SFSchemaEnumType[]` | -
 
 ### ui 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[asyncData]` | 异步数据源 | `() => Observable<SFSchemaEnumType[]>` | -
 `[titles]` | 标题集合，顺序从左至右 | `string[]` | `['', '']`

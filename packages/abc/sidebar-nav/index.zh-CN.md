@@ -40,7 +40,7 @@ NG-ALAIN 左边主菜单，依赖于 `@delon/theme`。
 
 ### sidebar-nav
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[disabledAcl]` | `acl` 校验失败时以 `disabled` 状态显示 | `boolean` | `false`
 `[autoCloseUnderPad]` | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true`

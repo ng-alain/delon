@@ -87,7 +87,7 @@ export class DelonModule {
 }
 ```
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[ajv]` | [ajv](http://epoberezkin.github.io/ajv/#options) 参数 | `Ajv.Options` | -
 `[ingoreKeywords]` | 是否忽略某些数据类型校验（[所有类型](https://github.com/ng-alain/delon/blob/master/packages/form/src/errors.ts#L4)） | `string[]` | `[ 'type', 'enum' ]`

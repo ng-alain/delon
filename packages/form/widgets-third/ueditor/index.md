@@ -16,7 +16,7 @@ Ueditor富文本。
 
 ### ui 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[config]` | 前端配置项说明，[见官网](http://fex.baidu.com/ueditor/#start-config) | `object` | -
 `[loading]` | 初始化提示文本 | `string` | `加载中...`

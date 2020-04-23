@@ -16,7 +16,7 @@ config: LodopConfig
 
 ### LodopService
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `cog` | 获取或设置配置项 | `LodopConfig` | -
 `events` | 打印过程通知 | `Observable<LodopPrintResult>` | -
@@ -24,7 +24,7 @@ config: LodopConfig
 
 **Lodop加载成功后辅助API**
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `printer` | 获取打印机列表  | `string[]` | -
 `attachCode()` | 附加代码至 `lodop` 对象上  | `void` | -
@@ -33,7 +33,7 @@ config: LodopConfig
 
 ### LodopPrintResult
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `ok` | 是否打印成功 | `boolean` | -
 `error` | 错误信息 | `string` | -
@@ -43,7 +43,7 @@ config: LodopConfig
 
 ### LodopResult
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `ok` | 表示是否加载成功 | `boolean` | -
 `status` | 状态码 | `string` | -
@@ -52,7 +52,7 @@ config: LodopConfig
 
 ### LodopConfig
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `companyName` | 注册单位名称 | `string` | ``
 `license` | 主注册号 | `string` | -

@@ -38,7 +38,7 @@ config: STConfig
 
 ### st
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[columns]` | 列描述 | `STColumn[]` | -
 `[data]` | 数据源 | `string, STData[], Observable<STData[]>` | -
@@ -121,7 +121,7 @@ class TestComponent {
 
 ### STReq
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 分页类型，`page` 使用 `pi`，`ps` 组合；`skip` 使用 `skip`，`limit` 组合 | `page,skip` | `page`
 `[params]` | 额外请求参数，默认自动附加 `pi`、`ps` 至URL | `any` | -
@@ -135,14 +135,14 @@ class TestComponent {
 
 ### STRes
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[reName]` | 重命名返回参数 `total`、`list`，支持 `a.b.c` 的嵌套写法 | `{total:string;list:string}` | -
 `[process]` | 数据预处理 | `(data: STData[], rawData?: any) => STData[]` | -
 
 ### STPage
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[front]` | 前端分页，当 `data` 为 `any[]` 或 `Observable<any[]>` 有效 | `boolean` | `true`
 `[zeroIndexed]` | 后端分页是否采用`0`基索引，只在`data`类型为`string`时有效 | `boolean` | `false`
@@ -158,14 +158,14 @@ class TestComponent {
 
 ### STError
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 异常类型，`req` 表示HTTP请求 | `req` | -
 `[error]` | 异常内容 | `any` | -
 
 ### STChange
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 变更类型，包括：`loaded`、`pi`、`ps`、`checkbox`、`radio`、`sort`、`filter`、`click`、`dblClick`、`expand` | `STChangeType` | -
 `[pi]` | 当前页码 | `number` | -
@@ -182,7 +182,7 @@ class TestComponent {
 
 ### STChangeSort
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[value]` | 当前列排序状态 | `ascend,descend` | -
 `[map]` | 所有列排序状态 | `{ [key: string]: string }` | -
@@ -190,7 +190,7 @@ class TestComponent {
 
 ### STChangeRowClick
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[e]` | 当前行事件 | `Event` | -
 `[item]` | 当前行数据 | `STData` | -
@@ -198,7 +198,7 @@ class TestComponent {
 
 ### STExportOptions
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[sheetname]` | 工作薄名称 | `string` | `Sheet1`
 `[filename]` | 保存的文件名 | `string` | `export.xslx`
@@ -206,7 +206,7 @@ class TestComponent {
 
 ### STMultiSort
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[key]` | 请求参数名 | `string` | `sort`
 `[separator]` | 不同属性间分隔符 | `string` | `-`
@@ -216,7 +216,7 @@ class TestComponent {
 
 ### STData
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[checked]` | 选择框或单选框状态值 | `boolean` | -
 `[disabled]` | 选择框或单选框 `disabled` 值 | `boolean` | -
@@ -225,7 +225,7 @@ class TestComponent {
 
 ### STColumn
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[title]` | 列名 | `string, STColumnTitle` | -
 `[i18n]` | 列名i18n | `string` | -
@@ -258,7 +258,7 @@ class TestComponent {
 
 ### STColumnTitle
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[text]` | 列标题，`text` 与 `i18n` 必选其一 | `string` | -
 `[i18n]` | 列标题i18n主键，`text` 与 `i18n` 必选其一 | `string` | -
@@ -267,7 +267,7 @@ class TestComponent {
 
 ### STColumnSort
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[default]` | 排序的受控属性 | `ascend,descend` | -
 `[compare]` | 本地数据的排序函数，使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction)，`null` 忽略本地排序，但保持排序功能 | `(a: any, b: any) => number, null` | -
@@ -276,7 +276,7 @@ class TestComponent {
 
 ### STColumnFilter
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 类型，`keyword` 文本框形式 | `default,keyword` | `default`
 `[menus]` | 表头的筛选菜单项，至少一项才会生效 | `STColumnFilterMenu[]` | -
@@ -291,7 +291,7 @@ class TestComponent {
 
 ### STColumnFilterMenu
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[text]` | 文本<br>当 `type: 'keyword'` 时表示 `placeholder` | `string` | -
 `[value]` | 值 | `any` | -
@@ -300,7 +300,7 @@ class TestComponent {
 
 ### STColumnButton
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[text]` | 文本与图标共存 | `string | (record: STData, btn: STColumnButton) => string` | -
 `[icon]` | 图标与文本共存 | `string | STIcon` | -
@@ -320,7 +320,7 @@ class TestComponent {
 
 ### STIcon
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 图标类型 | `string` | -
 `[theme]` | 图标主题风格 | `outline | twotone | fill` | `outline`
@@ -330,7 +330,7 @@ class TestComponent {
 
 ### STColumnButtonModal
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[component]` | 目标组件对象 | `any` | -
 `[params]` | 目标组件的接收参数对象 | `(record: STData) => Object` | -
@@ -342,7 +342,7 @@ class TestComponent {
 
 ### STColumnButtonDrawer
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[title]` | 标题 | `any` | -
 `[component]` | 目标组件对象 | `any` | -
@@ -353,7 +353,7 @@ class TestComponent {
 
 ### STColumnSelection
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
 `[select]` | 选择项点击回调，允许对参数 `data.checked` 进行操作 | `(data: STData[]) => void` | -
@@ -361,7 +361,7 @@ class TestComponent {
 
 ### STColumnYn
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[truth]` | 真值条件 | `any` | `true`
 `[yes]` | 徽章 `true` 时文本 | `string` | `是`
@@ -370,21 +370,21 @@ class TestComponent {
 
 ### STColumnBadge
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
 `[color]` | 徽标颜色值 | `success,processing,default,error,warning` | -
 
 ### STColumnTag
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[text]` | 文本 | `string` | -
 `[color]` | Tag颜色值 | `string` | -
 
 ### STWidgetColumn
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 指定类型名，可通过定义 `STWidgetRegistry` 来定制，[例如](https://github.com/ng-alain/delon/blob/master/src/app/shared/st-widget/st-widget.module.ts) | `string` | -
 `[params]` | 目标组件的参数 | `(options: { record: STData; column: STColumn }) => {}` | -
@@ -392,14 +392,14 @@ class TestComponent {
 
 ### STWidthMode
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 类型 | `strict,default` | `default`
 `[strictBehavior]` | `strict` 的行为类型 | `wrap,truncate` | `truncate`
 
 ### STStatistical
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 统计类型 | `STStatisticalType | STStatisticalFn` | -
 `[digits]` | 保留小数位数 | `number` | `2`

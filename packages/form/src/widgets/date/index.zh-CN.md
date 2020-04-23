@@ -24,7 +24,7 @@ type: Widgets
 
 ### schema 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[readOnly]` | 禁用状态  | `boolean` | -
 `[format]` | 数据格式类型  | `string` | -

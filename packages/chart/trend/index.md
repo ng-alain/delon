@@ -12,7 +12,7 @@ module: TrendModule
 
 ### trend
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[colorful]` | 是否彩色标记 | `boolean` | `true`
 `[flag]` | 上升下降标识 | `'up','down'` | -

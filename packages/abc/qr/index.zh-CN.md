@@ -28,7 +28,7 @@ npm i --save qrious
 
 ### qr
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[value]` | 值 | `string` | -
 `[background]` | 背景 | `string` | `white`

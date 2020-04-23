@@ -4,23 +4,18 @@ title: range-picker
 subtitle: Data Range
 cols: 1
 module: DataRangeModule
-config: DateRangePickerConfig
 ---
 
 Based on the `nz-range-picker` further optimization, better service to start and end dates.
-
-## Note
-
-If using date-fns, muse be modify the default `nzFormat` to` yyyy-MM-dd`.
 
 ## API
 
 ### range-picker
 
-| Property         | Description                          | Type   | Default |
-| ---------------- | ------------------------------------ | ------ | ------- |
-| `[(ngModel)]`    | Start date, start and end values at the same time | `Date` | -       |
-| `[(ngModelEnd)]` | End date, start and end values at the same time | `Date` | -       |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[(ngModel)]` | Start date, start and end values at the same time | `Date` | - |
+| `[(ngModelEnd)]` | End date, start and end values at the same time | `Date` | - |
 | `[shortcut]` | Set shortcuts | `boolean | DateRangePickerShortcut` | `false` |
 | `[nzAllowClear]` | Whether to show clear button | `boolean` | `true` |
 | `[nzAutoFocus]` | get focus when component mounted | `boolean` | `false` |
@@ -31,7 +26,7 @@ If using date-fns, muse be modify the default `nzFormat` to` yyyy-MM-dd`.
 | `[nzLocale]` | localization configuration | `object` | [default](https://github.com/ant-design/ant-design/blob/master/components/date-picker/locale/example.json) |
 | `[nzOpen]` | open state of picker | `boolean` | - |
 | `[nzPopupStyle]` | to customize the style of the popup calendar | `object` | `{}` |
-| `[nzDropdownClassName]` | to customize the className of the popup calendar  | `string` | - |
+| `[nzDropdownClassName]` | to customize the className of the popup calendar | `string` | - |
 | `[nzSize]` | determine the size of the input box, the height of `large` and `small`, are 40px and 24px respectively, while default size is 32px | `'large'｜'small'` | - |
 | `[nzStyle]` | to customize the style of the input box | `object` | `{}` |
 | `[nzDisabledTime]` | to specify the time that cannot be selected | `(current: Date, partial: 'start'｜'end') => { nzDisabledHours, nzDisabledMinutes, nzDisabledSeconds }` | - |
@@ -48,8 +43,8 @@ If using date-fns, muse be modify the default `nzFormat` to` yyyy-MM-dd`.
 
 ### DateRangePickerShortcut
 
-| Property         | Description                          | Type   | Default |
-| ---------------- | ------------------------------------ | ------ | ------- |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
 | `[enabled]` | Whether to enable | `boolean` | `false` |
 | `[closed]` | Whether to close the panel after clicking | `boolean` | `true` |
 | `[enabled]` | Shortcut list | `DateRangePickerShortcutItem[]` | `今天,昨天,近3天,近7天,本周,本月,全年` |

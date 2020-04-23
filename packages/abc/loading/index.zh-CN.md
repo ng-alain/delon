@@ -21,7 +21,7 @@ config: LoadingConfig
 
 ### LoadingShowOptions
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `type` | 显示类型 | `LoadingType` | `spin`
 `text` | 描述文案 | `string` | `加载中...`

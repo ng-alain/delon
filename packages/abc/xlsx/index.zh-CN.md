@@ -24,14 +24,14 @@ yarn add file-saver
 
 ### LazyService
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `import(fileOrUrl: File | string)` | 导入Excel，返回 JSON | `Promise<{ [key: string]: any[][] }>` | -
 `export(options: XlsxExportOptions)` | 导出Excel | `Promise<void>` | -
 
 ### XlsxExportOptions
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[sheets]` | 数据源 | `{ [sheet: string]: WorkSheet } | XlsxExportSheet[]` | -
 `[filename]` | Excel文件名 | `string` | `export.xlsx`

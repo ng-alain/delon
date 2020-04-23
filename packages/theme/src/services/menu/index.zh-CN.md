@@ -27,7 +27,7 @@ type: Service
 
 ### Menu
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `text` | 文本（支持HTML），**必填项** | `string` | -
 `i18n` | i18n主键（支持HTML） | `string` | -
@@ -51,7 +51,7 @@ type: Service
 
 ### MenuIcon
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[type]` | 类型 | `class,icon,iconfont,img` | `icon`
 `[value]` | 值，包含：类名、图标 `nzType`、图像 | `string` | -

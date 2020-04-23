@@ -24,14 +24,14 @@ type: Widgets
 
 ### schema 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[enum]` | 静态数据源 | `SFSchemaEnumType[]` | -
 `[readOnly]` | 禁用状态  | `boolean` | -
 
 ### ui 属性
 
-参数 | 说明 | 类型 | 默认值
+成员 | 说明 | 类型 | 默认值
 ----|------|-----|------
 `[asyncData]` | 异步静态数据源 | `(node: NzCascaderOption, index: number, me: CascaderWidget) => PromiseLike<any>` | -
 `[size]` | 大小，等同 `nzSize` | `string` | -
