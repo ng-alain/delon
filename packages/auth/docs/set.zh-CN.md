@@ -26,13 +26,13 @@ constructor(@Inject(DA_SERVICE_TOKEN) service: ITokenService) {
 
 ## 存储类型
 
-默认是采用 `LocalStorageStore` 持久化存储，你可以在 `delon.module.ts` 或根模块里变更其他存储方式。
+默认是采用 `LocalStorageStore` 持久化存储，你可以在 `global-config.module.ts` 或根模块里变更其他存储方式。
 
 ```ts
-export class DelonModule {
+export class GlobalConfigModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: DelonModule,
+      ngModule: GlobalConfigModule,
       providers: [
         { provide: DA_STORE_TOKEN, useClass: MemoryStore }
       ]

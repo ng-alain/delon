@@ -28,13 +28,13 @@ constructor(@Inject(DA_SERVICE_TOKEN) service: ITokenService) {
 
 ## Storage type
 
-The default is to use `LocalStorageStore` persistent storage, you can change other storage methods in `delon.module.ts` or root module.
+The default is to use `LocalStorageStore` persistent storage, you can change other storage methods in `global-config.module.ts` or root module.
 
 ```ts
-export class DelonModule {
+export class GlobalConfigModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: DelonModule,
+      ngModule: GlobalConfigModule,
       providers: [
         { provide: DA_STORE_TOKEN, useClass: MemoryStore }
       ]

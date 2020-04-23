@@ -81,7 +81,7 @@ export class AppModule { }
 You can override them, for example:
 
 ```ts
-// delon.module.ts
+// global-config.module.ts
 import { DelonAuthConfig } from '@delon/auth';
 export function delonAuthConfig(): DelonAuthConfig {
   return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
@@ -90,10 +90,10 @@ export function delonAuthConfig(): DelonAuthConfig {
 }
 
 @NgModule({})
-export class DelonModule {
+export class GlobalConfigModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: DelonModule,
+      ngModule: GlobalConfigModule,
       providers: [
         { provide: DelonAuthConfig, useFactory: delonAuthConfig}
       ]
