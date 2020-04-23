@@ -40,10 +40,10 @@ The menu will be re-rendered via calling `MenuService.setItem(key, newValue)`, p
 
 ### sidebar-nav
 
-Property | Description | Type | Default
-----|------|-----|------
-`[disabledAcl]` | Displayed `disabled` state when `acl` check fails. | `boolean` | `false`
-`[autoCloseUnderPad]` | When the route width is less than the Pad width, the sidebar is automatically closed. | `boolean` | `true`
-`[recursivePath]` | Automatic up recursive lookup, menu data source contains `/ware`, then `/ware/1` is also treated as `/ware` | `boolean` | `true`
-`[openStrictly]` | Precise check open status, does not auto closed other open item | `boolean` | `false`
-`(select)` | Callback when clicking menu (including `disabled`) | `EventEmitter<Menu>` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[disabledAcl]` | Displayed `disabled` state when `acl` check fails. | `boolean` | `false` |
+| `[autoCloseUnderPad]` | When the route width is less than the Pad width, the sidebar is automatically closed. | `boolean` | `true` |
+| `[recursivePath]` | Automatic up recursive lookup, menu data source contains `/ware`, then `/ware/1` is also treated as `/ware` | `boolean` | `true` |
+| `[openStrictly]` | Precise check open status, does not auto closed other open item | `boolean` | `false` |
+| `(select)` | Callback when clicking menu (including `disabled`) | `EventEmitter<Menu>` | - |

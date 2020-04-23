@@ -5,7 +5,6 @@ title: sg
 subtitle: Simple Grid
 cols: 1
 module: SGModule
-config: SGConfig
 ---
 
 A higher-order components of grid systems, that consists of `sg-container` (directive) and `sg` components:
@@ -34,14 +33,14 @@ More friendly:
 
 ### sg-container
 
-Property | Description | Type | Default
-----|------|-----|------
-`[gutter]` | specify the distance between two items, unit is `px`, only `nzLayout:horizontal` | `number` | `32`
-`[sg-container]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | -
-`[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | -
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[gutter]` | specify the distance between two items, unit is `px`, only `nzLayout:horizontal` | `number` | `32` | ✅ |
+| `[sg-container]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | - | - |
+| `[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | `2` | ✅ |
 
 ### sg
 
-Property | Description | Type | Default
-----|------|-----|------
-`[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[col]` | specify the maximum number of columns to display, the final columns number is determined by col setting combined with [Responsive Rules](/theme/responsive) | `'1','2','3','4','5','6'` | - |

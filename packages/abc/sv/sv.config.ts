@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
+import { deprecation10Cog } from '@delon/util';
 
+/**
+ * @deprecated `SVConfig` is going to be removed in 10.0.0. Please refer to https://ng-alain.com/docs/global-config
+ */
 @Injectable({ providedIn: 'root' })
 export class SVConfig {
+  constructor() {
+    deprecation10Cog(`SVConfig`);
+  }
   /** 大小 */
   size: 'small' | 'large';
   /** 间距，默认：`32` */

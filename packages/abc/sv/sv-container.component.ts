@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { AlainConfigService, AlainSVConfig } from '@delon/theme';
 import { InputNumber } from '@delon/util';
-import { SVConfig } from './sv.config';
 
 @Component({
   selector: 'sv-container, [sv-container]',
@@ -20,16 +20,22 @@ import { SVConfig } from './sv.config';
 })
 export class SVContainerComponent {
   @Input() title: string | TemplateRef<void>;
-  @Input() size: 'small' | 'large' = 'large';
+  @Input() size: 'small' | 'large';
   /** 列表项间距，单位为 `px` */
   @Input() @InputNumber() gutter: number;
-  @Input() layout: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() layout: 'horizontal' | 'vertical';
   @Input() @InputNumber(null) labelWidth: number;
   /** 指定信息最多分几列展示，最终一行几列由 col 配置结合响应式规则决定 */
   @Input() @InputNumber() col: number;
   @Input() default: boolean;
 
-  constructor(cog: SVConfig) {
-    Object.assign(this, { ...new SVConfig(), ...cog });
+  constructor(configSrv: AlainConfigService) {
+    configSrv.attach<AlainSVConfig, 'sv'>(this, 'sv', {
+      size: 'large',
+      gutter: 32,
+      layout: 'horizontal',
+      col: 3,
+      default: true,
+    });
   }
 }

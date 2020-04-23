@@ -1,11 +1,10 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { createTestContext } from '@delon/testing';
 import { REP_MAX } from '@delon/theme';
 import { SVContainerComponent } from './sv-container.component';
 import { SVComponent } from './sv.component';
-import { SVConfig } from './sv.config';
 import { SVModule } from './sv.module';
 
 const prefixCls = `.sv__`;
@@ -35,13 +34,6 @@ describe('abc: view', () => {
 
   describe('', () => {
     beforeEach(moduleAction);
-
-    it('General Configuration', inject([SVConfig], (cog: SVConfig) => {
-      cog.gutter = 24;
-      ({ fixture, dl, context } = createTestContext(TestComponent));
-      expect(context.svComp.col).toBe(3);
-      expect(context.svComp.gutter).toBe(24);
-    }));
 
     describe('[property]', () => {
       beforeEach(() => {
