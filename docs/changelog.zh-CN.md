@@ -16,6 +16,10 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 # [9.0.0-rc.4](https://github.com/ng-alain/delon/compare/9.0.0-rc.3...9.0.0-rc.4) (2020-04-24)
 
+### Scaffold
+
+* 重构全新统一全局配置 `@delon/abc/*`，`@delon/chart/*` ([#1591](https://github.com/ng-alain/ng-alain/pull/1591/files))
+
 ### Bug Fixes
 
 * **abc:se:** 修复 `se-title` 错位 ([#840](https://github.com/ng-alain/delon/issues/840)) ([a44b9e6](https://github.com/ng-alain/delon/commit/a44b9e6619d87ce96550f2d4e4a2f34238e6b361))

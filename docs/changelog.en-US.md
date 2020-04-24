@@ -16,6 +16,10 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 # [9.0.0-rc.4](https://github.com/ng-alain/delon/compare/9.0.0-rc.3...9.0.0-rc.4) (2020-04-24)
 
+### Scaffold
+
+* refactor global config ([#1591](https://github.com/ng-alain/ng-alain/pull/1591/files))
+
 ### Bug Fixes
 
 * **abc:se:** fix `se-title` misalignment ([#840](https://github.com/ng-alain/delon/issues/840)) ([a44b9e6](https://github.com/ng-alain/delon/commit/a44b9e6619d87ce96550f2d4e4a2f34238e6b361))
