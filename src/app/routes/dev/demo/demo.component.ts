@@ -1,23 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { G2TimelineData, G2TimelineMap } from '@delon/chart/timeline';
+import { Component } from '@angular/core';
+import { STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: ` <g2-timeline maxAxis="5" [data]="chartData" [titleMap]="titleMap" [height]="200"></g2-timeline>`,
+  template: `
+    <st [data]="users" [columns]="columns" [expand]="expand" expandRowByClick expandAccordion>
+      <ng-template #expand let-item let-index="index" let-column="column">
+        {{ item.description }}
+      </ng-template>
+    </st>
+  `,
 })
-export class DemoComponent implements OnInit {
-  chartData: G2TimelineData[] = [];
-  titleMap: G2TimelineMap = { y1: '指标1', y2: '指标2', y3: '指标3', y4: '指标4', y5: '指标5' };
-  ngOnInit(): void {
-    for (let i = 0; i < 20; i += 1) {
-      this.chartData.push({
-        time: new Date().getTime() + 1000 * 60 * 30 * i,
-        y1: Math.floor(Math.random() * 100) + 500,
-        y2: Math.floor(Math.random() * 100) + 1000,
-        y3: Math.floor(Math.random() * 100) + 1500,
-        y4: Math.floor(Math.random() * 100) + 2000,
-        y5: Math.floor(Math.random() * 100) + 2500,
-      });
-    }
-  }
+export class DemoComponent {
+  users: any[] = Array(10)
+    .fill({})
+    .map((_item: any, idx: number) => {
+      return {
+        id: idx + 1,
+        name: `name ${idx + 1}`,
+        age: Math.ceil(Math.random() * 10) + 20,
+        // 是否显示展开按钮
+        showExpand: idx !== 0,
+        description: `${idx + 1}. My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.`,
+      };
+    });
+  columns: STColumn[] = [
+    { title: '编号', index: 'id' },
+    { title: '姓名', index: 'name' },
+    { title: '年龄', index: 'age' },
+    {
+      buttons: [
+        {
+          text: 'Button',
+        },
+      ],
+    },
+  ];
 }

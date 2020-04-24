@@ -22,7 +22,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { LayoutComponent } from './layout/layout.component';
 
-import { DelonModule } from './delon.module';
+import { GlobalConfigModule } from './global-config.module';
 
 import { SimplemdeModule } from 'ngx-simplemde';
 import { NgxTinymceModule } from 'ngx-tinymce';
@@ -42,7 +42,7 @@ export function StartupServiceFactory(startupService: StartupService) {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    DelonModule.forRoot(),
+    GlobalConfigModule.forRoot(),
     LayoutModule,
     SharedModule,
     JsonSchemaModule,

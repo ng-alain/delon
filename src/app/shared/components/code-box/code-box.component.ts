@@ -5,7 +5,7 @@ import { copy, deepCopy } from '@delon/util';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { CodeService } from '../../../core/code.service';
+import { CodeService } from '../../../core/code/code.service';
 import { I18NService } from './../../../core/i18n/service';
 
 @Component({
@@ -60,8 +60,12 @@ export class CodeBoxComponent implements OnDestroy {
     this.expand = !this.expand;
   }
 
-  openOnStackBlitz() {
-    this.codeSrv.openOnStackBlitz(this.item.code);
+  openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz'): void {
+    if (ide === 'StackBlitz') {
+      this.codeSrv.openOnStackBlitz(this.item.code);
+    } else {
+      this.codeSrv.openOnCodeSandbox(this.item.code);
+    }
   }
 
   onCopy(value: string) {

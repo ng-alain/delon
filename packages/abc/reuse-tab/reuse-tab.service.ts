@@ -375,6 +375,7 @@ export class ReuseTabService implements OnDestroy {
   store(_snapshot: ActivatedRouteSnapshot, _handle: any) {
     const url = this.getUrl(_snapshot);
     const idx = this.index(url);
+    const isAdd = idx === -1;
 
     const item: ReuseTabCached = {
       title: this.getTitle(url, _snapshot),
@@ -384,7 +385,7 @@ export class ReuseTabService implements OnDestroy {
       _snapshot,
       _handle,
     };
-    if (idx === -1) {
+    if (isAdd) {
       if (this.count >= this._max) {
         // Get the oldest closable location
         const closeIdx = this._cached.findIndex(w => w.closable!);
@@ -396,13 +397,13 @@ export class ReuseTabService implements OnDestroy {
     }
     this.removeUrlBuffer = null;
 
-    this.di('#store', idx === -1 ? '[new]' : '[override]', url);
+    this.di('#store', isAdd ? '[new]' : '[override]', url);
 
     if (_handle && _handle.componentRef) {
       this.runHook('_onReuseDestroy', url, _handle.componentRef);
     }
 
-    this._cachedChange.next({ active: 'add', item, list: this._cached });
+    this._cachedChange.next({ active: isAdd ? 'add' : 'override', item, list: this._cached });
   }
 
   /**
