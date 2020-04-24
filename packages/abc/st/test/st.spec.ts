@@ -1066,7 +1066,7 @@ describe('abc: table', () => {
         const el = page.getCell(1, 1).querySelector('.ant-table-row-expand-icon') as HTMLElement;
         page.expectData(1, 'expand', undefined);
         el.click();
-        page.expectData(1, 'expand', true).expectChangeType('expand').asyncEnd();
+        page.expectData(1, 'expand', true).asyncEnd();
       }));
       describe('should be expanded when click row if expandRowByClick', () => {
         it('with true', fakeAsync(() => {
