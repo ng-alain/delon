@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { AlainACLConfig, AlainConfigService } from '@delon/theme';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DelonACLConfig } from './acl.config';
+import { ACL_DEFAULT_CONFIG } from './acl.config';
 import { ACLCanType, ACLType } from './acl.type';
 
 /**
@@ -10,6 +11,7 @@ import { ACLCanType, ACLType } from './acl.type';
  */
 @Injectable()
 export class ACLService {
+  private options: AlainACLConfig;
   private roles: string[] = [];
   private abilities: Array<number | string> = [];
   private full = false;
@@ -29,7 +31,13 @@ export class ACLService {
     };
   }
 
-  constructor(private options: DelonACLConfig) {}
+  get guard_url(): string {
+    return this.options.guard_url!;
+  }
+
+  constructor(configSrv: AlainConfigService) {
+    this.options = configSrv.merge('acl', ACL_DEFAULT_CONFIG);
+  }
 
   private parseACLType(val: string | string[] | number | number[] | ACLType | null): ACLType {
     let t: ACLType;

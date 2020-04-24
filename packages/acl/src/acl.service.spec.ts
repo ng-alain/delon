@@ -1,4 +1,3 @@
-import { DelonACLConfig } from './acl.config';
 import { ACLService } from './acl.service';
 import { ACLType } from './acl.type';
 
@@ -10,11 +9,9 @@ describe('acl: service', () => {
   const ABILITY_NUMBER = 1;
 
   let srv: ACLService;
-  const mockOptions = new DelonACLConfig();
 
   beforeEach(() => {
-    mockOptions.preCan = null;
-    srv = new ACLService(mockOptions);
+    srv = new ACLService({ merge: (_: any, def: any) => def } as any);
     srv.set({ role: [ADMIN] } as ACLType);
   });
 
@@ -97,11 +94,11 @@ describe('acl: service', () => {
       expect(srv.can({})).toBe(false);
     });
     it('should be allow ability is string in can method by preCan', () => {
-      mockOptions.preCan = a => {
-        return a.toString().startsWith('order') ? { ability: [a.toString()] } : null;
-      };
+      const preCanSpy = jasmine.createSpy();
+      srv = new ACLService({ merge: () => ({ preCan: preCanSpy }) } as any);
       srv.attachAbility([ABILITY_CREATE]);
-      expect(srv.can(ABILITY_CREATE)).toBe(true);
+      srv.can(ABILITY_CREATE);
+      expect(preCanSpy).toHaveBeenCalled();
     });
   });
 
