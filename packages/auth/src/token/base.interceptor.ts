@@ -1,7 +1,8 @@
-import { HTTP_INTERCEPTORS, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable, Injector, Optional } from '@angular/core';
+import { AlainAuthConfig, AlainConfigService } from '@delon/theme';
 import { Observable, Observer } from 'rxjs';
-import { DelonAuthConfig } from '../auth.config';
+import { mergeConfig } from '../auth.config';
 import { ToLogin } from './helper';
 import { ITokenModel } from './interface';
 
@@ -19,12 +20,12 @@ export abstract class BaseInterceptor implements HttpInterceptor {
 
   protected model: ITokenModel;
 
-  abstract isAuth(options: DelonAuthConfig): boolean;
+  abstract isAuth(options: AlainAuthConfig): boolean;
 
-  abstract setReq(req: HttpRequest<any>, options: DelonAuthConfig): HttpRequest<any>;
+  abstract setReq(req: HttpRequest<any>, options: AlainAuthConfig): HttpRequest<any>;
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const options = { ...new DelonAuthConfig(), ...this.injector.get<DelonAuthConfig>(DelonAuthConfig, undefined) };
+    const options = mergeConfig(this.injector.get(AlainConfigService));
     if (options.ignores) {
       for (const item of options.ignores as RegExp[]) {
         if (item.test(req.url)) return next.handle(req);
@@ -48,7 +49,7 @@ export abstract class BaseInterceptor implements HttpInterceptor {
           url: req.url,
           headers: req.headers,
           status: 401,
-          statusText: `来自 @delon/auth 的拦截，所请求URL未授权，若是登录API可加入 [url?_allow_anonymous=true] 来表示忽略校验，更多方法请参考： https://ng-alain.com/auth/getting-started#DelonAuthConfig\nThe interception from @delon/auth, the requested URL is not authorized. If the login API can add [url?_allow_anonymous=true] to ignore the check, please refer to: https://ng-alain.com/auth/getting-started#DelonAuthConfig`,
+          statusText: `来自 @delon/auth 的拦截，所请求URL未授权，若是登录API可加入 [url?_allow_anonymous=true] 来表示忽略校验，更多方法请参考： https://ng-alain.com/auth/getting-started#AlainAuthConfig\nThe interception from @delon/auth, the requested URL is not authorized. If the login API can add [url?_allow_anonymous=true] to ignore the check, please refer to: https://ng-alain.com/auth/getting-started#AlainAuthConfig`,
         });
         observer.error(res);
       });

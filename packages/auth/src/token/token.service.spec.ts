@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { DelonAuthConfig } from '../auth.config';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { JWTTokenModel } from './jwt/jwt.model';
 
@@ -30,12 +29,7 @@ describe('auth: token.service', () => {
     });
 
     TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: DelonAuthConfig,
-          useValue: { store_key: 'token', login_url: '/login' },
-        },
-      ],
+      providers: [],
     });
 
     service = TestBed.inject(DA_SERVICE_TOKEN);

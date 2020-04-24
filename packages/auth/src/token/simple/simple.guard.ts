@@ -1,6 +1,5 @@
 import { Inject, Injectable, Injector } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, RouterStateSnapshot, UrlSegment } from '@angular/router';
-import { DelonAuthConfig } from '../../auth.config';
 import { CheckSimple, ToLogin } from '../helper';
 import { DA_SERVICE_TOKEN, ITokenService } from '../interface';
 import { SimpleTokenModel } from './simple.model';
@@ -17,12 +16,13 @@ import { SimpleTokenModel } from './simple.model';
  */
 @Injectable({ providedIn: 'root' })
 export class SimpleGuard implements CanActivate, CanActivateChild, CanLoad {
-  private cog: DelonAuthConfig;
   private url?: string;
 
-  constructor(@Inject(DA_SERVICE_TOKEN) private srv: ITokenService, private injector: Injector, cog: DelonAuthConfig) {
-    this.cog = { ...new DelonAuthConfig(), ...cog };
+  private get cog() {
+    return this.srv.options;
   }
+
+  constructor(@Inject(DA_SERVICE_TOKEN) private srv: ITokenService, private injector: Injector) {}
 
   private process(): boolean {
     const res = CheckSimple(this.srv.get() as SimpleTokenModel);

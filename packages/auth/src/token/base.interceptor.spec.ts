@@ -1,13 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AlainAuthConfig, AlainConfig, ALAIN_CONFIG } from '@delon/theme';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { DelonAuthConfig } from '../auth.config';
 import { DelonAuthModule } from '../auth.module';
 import { AuthReferrer, DA_SERVICE_TOKEN, ITokenModel, ITokenService } from './interface';
 import { SimpleInterceptor } from './simple/simple.interceptor';
@@ -23,6 +23,7 @@ function genModel<T extends ITokenModel>(modelType: new () => T, token: string |
 class MockTokenService implements ITokenService {
   [key: string]: any;
   _data: any;
+  options: any;
   referrer: AuthReferrer = {};
   set(data: ITokenModel): boolean {
     this._data = data;
@@ -63,12 +64,12 @@ describe('auth: base.interceptor', () => {
     },
   };
 
-  function genModule(options: DelonAuthConfig, tokenData?: ITokenModel, provider: any[] = []) {
+  function genModule(options: AlainAuthConfig, tokenData?: ITokenModel, provider: any[] = []) {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
         { provide: DOCUMENT, useValue: MockDoc },
-        { provide: DelonAuthConfig, useValue: options },
+        { provide: ALAIN_CONFIG, useValue: { auth: options } as AlainConfig },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: SimpleInterceptor,

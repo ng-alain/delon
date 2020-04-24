@@ -2,6 +2,7 @@ import { InjectionToken } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { AlainACLConfig } from './acl/acl.type';
+import { AlainAuthConfig } from './auth/auth.type';
 import { AlainDateRangePickerConfig } from './date-picker/date-picker.type';
 import { AlainSTConfig } from './st/st.type';
 
@@ -21,6 +22,7 @@ export interface AlainConfig {
   zip?: AlainZipConfig;
   chart?: AlainChartConfig;
   acl?: AlainACLConfig;
+  auth?: AlainAuthConfig;
 }
 
 export interface AlainErrorCollectConfig {

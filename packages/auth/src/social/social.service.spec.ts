@@ -4,7 +4,6 @@ import { discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/te
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { DelonAuthConfig } from '../auth.config';
 import { DelonAuthModule } from '../auth.module';
 import { DA_SERVICE_TOKEN, ITokenModel } from '../token/interface';
 import { SimpleTokenModel } from '../token/simple/simple.model';
@@ -47,15 +46,10 @@ const MockAuth0 = {
 describe('auth: social.service', () => {
   let srv: SocialService;
 
-  function genModule(options: DelonAuthConfig, tokenData?: SimpleTokenModel) {
+  function genModule(tokenData?: SimpleTokenModel) {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
-      providers: [
-        SocialService,
-        { provide: DelonAuthConfig, useValue: options },
-        { provide: DOCUMENT, useClass: MockDocument },
-        { provide: Router, useValue: mockRouter },
-      ],
+      providers: [SocialService, { provide: DOCUMENT, useClass: MockDocument }, { provide: Router, useValue: mockRouter }],
     });
     if (tokenData) TestBed.inject(DA_SERVICE_TOKEN).set(tokenData);
 
@@ -63,7 +57,7 @@ describe('auth: social.service', () => {
   }
 
   beforeEach(() => {
-    genModule({});
+    genModule();
   });
 
   afterEach(() => srv.ngOnDestroy());

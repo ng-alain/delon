@@ -1,10 +1,10 @@
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { DefaultUrlSerializer, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DelonAuthConfig } from '../../auth.config';
+import { AlainAuthConfig, AlainConfig, ALAIN_CONFIG } from '@delon/theme';
 import { DelonAuthModule } from '../../auth.module';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService } from '../interface';
 import { SimpleInterceptor } from './simple.interceptor';
@@ -20,6 +20,7 @@ function genModel(token: string = `123`) {
 class MockTokenService implements ITokenService {
   [key: string]: any;
   _data: any;
+  options: any;
   set(data: ITokenModel): boolean {
     this._data = data;
     return true;
@@ -48,11 +49,11 @@ describe('auth: simple.interceptor', () => {
     }),
   };
 
-  function genModule(options: DelonAuthConfig, tokenData?: SimpleTokenModel) {
+  function genModule(options: AlainAuthConfig, tokenData?: SimpleTokenModel) {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
-        { provide: DelonAuthConfig, useValue: options },
+        { provide: ALAIN_CONFIG, useValue: { auth: options } as AlainConfig },
         { provide: Router, useValue: mockRouter },
         {
           provide: HTTP_INTERCEPTORS,
