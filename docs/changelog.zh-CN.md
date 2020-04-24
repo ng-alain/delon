@@ -14,6 +14,28 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [9.0.0-rc.4](https://github.com/ng-alain/delon/compare/9.0.0-rc.3...9.0.0-rc.4) (2020-04-24)
+
+### Bug Fixes
+
+* **abc:se:** 修复 `se-title` 错位 ([#840](https://github.com/ng-alain/delon/issues/840)) ([a44b9e6](https://github.com/ng-alain/delon/commit/a44b9e6619d87ce96550f2d4e4a2f34238e6b361))
+* **abc:st:** 修复无效可扩展 ([#842](https://github.com/ng-alain/delon/issues/842)) ([cfe14c4](https://github.com/ng-alain/delon/commit/cfe14c410c33fea192e61bb06b2a0c40856f7491))
+* **cli:** 修复使用 `style` 替换 `styleext` ([#837](https://github.com/ng-alain/delon/issues/837)) ([0d9704f](https://github.com/ng-alain/delon/commit/0d9704f11db3afe6a3c676488aedc0626d76f7b6))
+
+### Code Refactoring
+
+* 重构所有全局配置 ([#839](https://github.com/ng-alain/delon/issues/839)) ([a1903aa](https://github.com/ng-alain/delon/commit/a1903aae6dda4f031f5f2ad7be3aaff25fa31ab1))
+
+### Features
+
+* **chart:** 新增 `theme` 属性，可定制所有G2主题 ([#839](https://github.com/ng-alain/delon/issues/839)) ([a1903aa](https://github.com/ng-alain/delon/commit/a1903aae6dda4f031f5f2ad7be3aaff25fa31ab1))
+* **chart:time-line:** 新增 `maxAxis` 属性，最多可显示五个轴度 ([#838](https://github.com/ng-alain/delon/issues/838)) ([fa40822](https://github.com/ng-alain/delon/commit/fa40822932308db78c893e746992ba7b38f97de1))
+
+### BREAKING CHANGES
+
+* 所有 "General Configuration" 全局配置方式将在 `10.0.0` 移除，并使用新的全局统一配置项，请参考：https://ng-alain.com/docs/global-config
+
+
 # [9.0.0-rc.3](https://github.com/ng-alain/delon/compare/9.0.0-rc.2...9.0.0-rc.3) (2020-04-21)
 
 ### Scaffold

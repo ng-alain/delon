@@ -14,6 +14,28 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+# [9.0.0-rc.4](https://github.com/ng-alain/delon/compare/9.0.0-rc.3...9.0.0-rc.4) (2020-04-24)
+
+### Bug Fixes
+
+* **abc:se:** fix `se-title` misalignment ([#840](https://github.com/ng-alain/delon/issues/840)) ([a44b9e6](https://github.com/ng-alain/delon/commit/a44b9e6619d87ce96550f2d4e4a2f34238e6b361))
+* **abc:st:** fix invalid expand ([#842](https://github.com/ng-alain/delon/issues/842)) ([cfe14c4](https://github.com/ng-alain/delon/commit/cfe14c410c33fea192e61bb06b2a0c40856f7491))
+* **cli:** use `style` instead of `styleext` ([#837](https://github.com/ng-alain/delon/issues/837)) ([0d9704f](https://github.com/ng-alain/delon/commit/0d9704f11db3afe6a3c676488aedc0626d76f7b6))
+
+### Code Refactoring
+
+* refactor global config ([#839](https://github.com/ng-alain/delon/issues/839)) ([a1903aa](https://github.com/ng-alain/delon/commit/a1903aae6dda4f031f5f2ad7be3aaff25fa31ab1))
+
+### Features
+
+* **chart:** add `theme` property ([#839](https://github.com/ng-alain/delon/issues/839)) ([a1903aa](https://github.com/ng-alain/delon/commit/a1903aae6dda4f031f5f2ad7be3aaff25fa31ab1))
+* **chart:time-line:** add `maxAxis` property ([#838](https://github.com/ng-alain/delon/issues/838)) ([fa40822](https://github.com/ng-alain/delon/commit/fa40822932308db78c893e746992ba7b38f97de1))
+
+### BREAKING CHANGES
+
+* The All "General Configuration" method is going to be removed in 10.0.0. Please refer to https://ng-alain.com/docs/global-config
+
+
 # [9.0.0-rc.3](https://github.com/ng-alain/delon/compare/9.0.0-rc.2...9.0.0-rc.3) (2020-04-21)
 
 ### Scaffold
