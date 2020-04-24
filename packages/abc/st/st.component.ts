@@ -479,7 +479,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }, rowClickTime);
   }
 
-  _expandChange(item: STData): void {
+  _expandChange(item: STData, expand: boolean): void {
+    item.expand = expand;
     this.closeOtherExpand(item);
     this.changeEmit('expand', item);
   }
