@@ -100,7 +100,7 @@ describe('auth: base.interceptor', () => {
       });
 
       it('should be non-ignore', (done: () => void) => {
-        genModule({ ignores: null }, basicModel);
+        genModule({ ignores: [] }, basicModel);
         http.get('/login', { responseType: 'text' }).subscribe(done);
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBe('123');
