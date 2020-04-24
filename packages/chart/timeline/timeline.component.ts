@@ -129,7 +129,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
           isArea: false,
         },
         minLimit: 2,
-        formatMask: (val: Date) => format(val, mask),
+        mask: (val: Date) => format(val, mask),
       });
     }
 
