@@ -79,20 +79,18 @@ Displayed when the button must have a `10` and `USER-EDIT` permission.
 
 **String permission**
 
-The check permission is via the `can` method, and the `DelonACLConfig` contains the `preCan` method, which can be used to implement a string to distinguish roles or permissions.
+The check permission is via the `can` method, and through [Global Configuration](/docs/global-config) `acl.preCan` method, which can be used to implement a string to distinguish roles or permissions.
 
 ```ts
-export function fnDelonACLConfig(): DelonACLConfig {
-  return {
-    ...new DelonACLConfig(),
-    ...{
-      preCan: (roleOrAbility: ACLCanType) => {
-        const str = roleOrAbility.toString();
-        return str.startsWith('ability.') ? { ability: [ str ] } : null;
-      }
-    } as DelonACLConfig
-  };
-}
+// global-config.module.ts
+const alainConfig: AlainConfig = {
+  acl: {
+    preCan: (roleOrAbility) => {
+      const str = roleOrAbility.toString();
+      return str.startsWith('ability.') ? { ability: [ str ] } : null;
+    }
+  }
+};
 ```
 
 Therefore, passing a string with the beginning of `ability.` will be considered a permission point, for example:
