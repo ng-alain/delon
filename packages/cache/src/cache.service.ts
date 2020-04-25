@@ -17,8 +17,8 @@ export class CacheService implements OnDestroy {
   private freqTime: NzSafeAny;
   private cog: AlainCacheConfig;
 
-  constructor(_: AlainConfigService, @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore, private http: HttpClient) {
-    this.cog = _.merge<AlainCacheConfig, 'cache'>('cache', {
+  constructor(cogSrv: AlainConfigService, @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore, private http: HttpClient) {
+    this.cog = cogSrv.merge<AlainCacheConfig, 'cache'>('cache', {
       mode: 'promise',
       reName: '',
       prefix: '',

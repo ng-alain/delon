@@ -18,6 +18,8 @@ import { AlainACLConfig } from './acl/acl.type';
 import { AlainAuthConfig } from './auth/auth.type';
 import { AlainCacheConfig } from './cache/cache.type';
 import { AlainChartConfig } from './chart/chart.type';
+import { AlainMockConfig } from './mock/mock.type';
+import { AlainThemeHttpClientConfig, AlainThemeResponsiveConfig } from './theme/index';
 import { AlainUtilArrayConfig } from './util/array.type';
 
 export interface AlainConfig {
@@ -38,7 +40,10 @@ export interface AlainConfig {
   auth?: AlainAuthConfig;
   cache?: AlainCacheConfig;
   chart?: AlainChartConfig;
+  mock?: AlainMockConfig;
   utilArray?: AlainUtilArrayConfig;
+  themeHttp?: AlainThemeHttpClientConfig;
+  themeResponsive?: AlainThemeResponsiveConfig;
 }
 
 export type AlainConfigKey = keyof AlainConfig;

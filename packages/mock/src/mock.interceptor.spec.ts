@@ -13,11 +13,11 @@ import { Component, NgModule, NgModuleFactoryLoader, Type } from '@angular/core'
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { RouterTestingModule, SpyNgModuleFactoryLoader } from '@angular/router/testing';
+import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util';
 import * as Mock from 'mockjs';
 import { Observable } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { MockRequest } from './interface';
-import { DelonMockConfig } from './mock.config';
 import { DelonMockModule } from './mock.module';
 import { MockStatusError } from './status.error';
 
@@ -53,8 +53,7 @@ describe('mock: interceptor', () => {
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  function genModule(options: DelonMockConfig, imports: any[] = [], spyConsole = true, providers?: any[]) {
-    options = Object.assign(new DelonMockConfig(), options);
+  function genModule(options: AlainMockConfig, imports: any[] = [], spyConsole = true, providers?: any[]) {
     TestBed.configureTestingModule({
       declarations: [RootComponent],
       imports: [
@@ -65,9 +64,9 @@ describe('mock: interceptor', () => {
             loadChildren: 'expected',
           },
         ]),
-        DelonMockModule.forRoot(options),
+        DelonMockModule.forRoot(),
       ].concat(imports),
-      providers: ([] as any[]).concat(providers || []),
+      providers: ([{ provide: ALAIN_CONFIG, useValue: { mock: options } }] as any[]).concat(providers || []),
     });
     http = TestBed.inject<HttpClient>(HttpClient);
     httpMock = TestBed.inject(HttpTestingController as Type<HttpTestingController>);
@@ -213,25 +212,6 @@ describe('mock: interceptor', () => {
           done();
         },
       );
-    });
-  });
-
-  describe('[copy]', () => {
-    it('with true', (done: () => void) => {
-      genModule({ data: DATA, copy: true });
-      http.get('/users').subscribe((res: any) => {
-        res.a = 1;
-        expect(USER_LIST.a).toBe(0);
-        done();
-      });
-    });
-    it('with false', (done: () => void) => {
-      genModule({ data: DATA, copy: false });
-      http.get('/users').subscribe((res: any) => {
-        res.a = 1;
-        expect(USER_LIST.a).toBe(1);
-        done();
-      });
     });
   });
 

@@ -6,17 +6,17 @@ describe('theme: responsive', () => {
   it('should be throw error when invalid range', () => {
     expect(() => {
       srv = new ResponsiveService({
-        responsive: {
-          rules: {
-            10: {},
-          },
-        },
-      });
+        merge: (_key: string, def: any) => ({ ...def, ...{ rules: { 10: {} } } }),
+      } as any);
     }).toThrow();
   });
 
   describe('#genCls', () => {
-    beforeEach(() => (srv = new ResponsiveService({})));
+    beforeEach(() => {
+      srv = new ResponsiveService({
+        merge: (_key: string, def: any) => ({ ...def }),
+      } as any);
+    });
     it('rule 1', () => {
       const res = srv.genCls(1);
       expect(res.length).toBe(1);

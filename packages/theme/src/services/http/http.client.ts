@@ -1,10 +1,9 @@
 import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AlainConfigService, AlainThemeHttpClientConfig } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { AlainThemeConfig } from '../../theme.config';
-import { HttpClientConfig } from './http.config';
 
 export type _HttpHeaders = HttpHeaders | { [header: string]: string | string[] };
 export type HttpObserve = 'body' | 'events' | 'response';
@@ -18,13 +17,12 @@ export type HttpObserve = 'body' | 'events' | 'response';
 @Injectable({ providedIn: 'root' })
 // tslint:disable-next-line:class-name
 export class _HttpClient {
-  private cog: HttpClientConfig;
-  constructor(private http: HttpClient, cog: AlainThemeConfig) {
-    this.cog = {
+  private cog: AlainThemeHttpClientConfig;
+  constructor(private http: HttpClient, cogSrv: AlainConfigService) {
+    this.cog = cogSrv.merge<AlainThemeHttpClientConfig, 'themeHttp'>('themeHttp', {
       nullValueHandling: 'include',
       dateValueHandling: 'timestamp',
-      ...cog!.http,
-    };
+    });
   }
 
   private _loading = false;

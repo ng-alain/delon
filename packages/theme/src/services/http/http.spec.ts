@@ -2,10 +2,8 @@ import { HttpResponse } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { deepCopy } from '@delon/util';
-import { AlainThemeConfig } from '../../theme.config';
+import { AlainThemeHttpClientConfig, ALAIN_CONFIG, deepCopy } from '@delon/util';
 import { _HttpClient } from './http.client';
-import { HttpClientConfig } from './http.config';
 
 describe('theme: http.client', () => {
   let http: _HttpClient;
@@ -16,15 +14,10 @@ describe('theme: http.client', () => {
   const PARAMS: { [key: string]: string } = { a: `1` };
   const BODY = 'body data';
 
-  function createModule(config?: HttpClientConfig) {
+  function createModule(config?: AlainThemeHttpClientConfig) {
     const providers: any[] = [_HttpClient];
     if (config) {
-      providers.push({
-        provide: AlainThemeConfig,
-        useFactory: () => ({
-          http: config,
-        }),
-      });
+      providers.push({ provide: ALAIN_CONFIG, useValue: { themeHttp: config } });
     }
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],

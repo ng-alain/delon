@@ -1,13 +1,16 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { AlainConfigService, AlainMockConfig } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { MockCachedRule, MockRule } from './interface';
-import { DelonMockConfig } from './mock.config';
+import { MOCK_DEFULAT_CONFIG } from './mock.config';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MockService implements OnDestroy {
   private cached: MockCachedRule[] = [];
+  readonly config: AlainMockConfig;
 
-  constructor(private config: DelonMockConfig) {
+  constructor(cogSrv: AlainConfigService) {
+    this.config = cogSrv.merge<AlainMockConfig, 'mock'>('mock', MOCK_DEFULAT_CONFIG);
     this.applyMock();
     delete this.config.data;
   }
