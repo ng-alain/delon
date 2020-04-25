@@ -1,4 +1,4 @@
-export interface ArrayConfig {
+export interface AlainUtilArrayConfig {
   /** 深度项名，默认：`'deep'` */
   deepMapName?: string;
   /** 扁平后数组的父数据项名，默认：`'parent'` */

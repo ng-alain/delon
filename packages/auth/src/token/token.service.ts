@@ -1,5 +1,5 @@
 import { inject, Inject } from '@angular/core';
-import { AlainAuthConfig, AlainConfigService } from '@delon/theme';
+import { AlainAuthConfig, AlainConfigService } from '@delon/util';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 import { mergeConfig } from '../auth.config';

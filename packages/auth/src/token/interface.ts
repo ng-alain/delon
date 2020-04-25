@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { AlainAuthConfig } from '@delon/theme';
+import { AlainAuthConfig } from '@delon/util';
 import { Observable } from 'rxjs';
 import { DA_SERVICE_TOKEN_FACTORY } from './token.service';
 

@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable, Injector, Optional } from '@angular/core';
-import { AlainAuthConfig, AlainConfigService } from '@delon/theme';
+import { AlainAuthConfig, AlainConfigService } from '@delon/util';
 import { Observable, Observer } from 'rxjs';
 import { mergeConfig } from '../auth.config';
 import { ToLogin } from './helper';

@@ -1,4 +1,4 @@
-import { AlainAuthConfig, AlainConfigService } from '@delon/theme';
+import { AlainAuthConfig, AlainConfigService } from '@delon/util';
 
 export const AUTH_DEFAULT_CONFIG: AlainAuthConfig = {
   store_key: `_token`,

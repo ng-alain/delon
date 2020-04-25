@@ -1,6 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlainAuthConfig } from '@delon/theme';
+import { AlainAuthConfig } from '@delon/util';
 import { BaseInterceptor } from '../base.interceptor';
 import { CheckJwt } from '../helper';
 import { DA_SERVICE_TOKEN } from '../interface';

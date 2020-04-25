@@ -18,6 +18,7 @@ import { AlainACLConfig } from './acl/acl.type';
 import { AlainAuthConfig } from './auth/auth.type';
 import { AlainCacheConfig } from './cache/cache.type';
 import { AlainChartConfig } from './chart/chart.type';
+import { AlainUtilArrayConfig } from './util/array.type';
 
 export interface AlainConfig {
   dataRange?: AlainDateRangePickerConfig;
@@ -37,6 +38,7 @@ export interface AlainConfig {
   auth?: AlainAuthConfig;
   cache?: AlainCacheConfig;
   chart?: AlainChartConfig;
+  utilArray?: AlainUtilArrayConfig;
 }
 
 export type AlainConfigKey = keyof AlainConfig;

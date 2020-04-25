@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { NzTreeBaseService, NzTreeNode } from 'ng-zorro-antd/core/tree';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { AlainConfig, ALAIN_CONFIG } from '../config';
 import { deepCopy } from '../other/other';
-import { DelonUtilConfig } from '../util.config';
 import { DelonUtilModule } from '../util.module';
 import { ArrayService } from './array.service';
 
@@ -194,12 +194,12 @@ describe('utils: array', () => {
         imports: [DelonUtilModule],
         providers: [
           {
-            provide: DelonUtilConfig,
+            provide: ALAIN_CONFIG,
             useValue: {
-              array: {
+              utilArray: {
                 idMapName: 'ID',
               },
-            },
+            } as AlainConfig,
           },
         ],
       });
