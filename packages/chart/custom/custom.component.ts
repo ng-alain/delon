@@ -10,8 +10,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { LooseObject } from '@antv/g2/lib/interface';
-import { AlainConfigService } from '@delon/config';
-import { InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 

@@ -5,7 +5,6 @@
       "entryFile": "public_api.ts",
       "umdModuleIds": {
         "ng-zorro-antd/date-picker": "ng-zorro-antd/date-picker",
-        "@delon/config": "delon.config",
         "@delon/util": "delon.util"
       }
     }

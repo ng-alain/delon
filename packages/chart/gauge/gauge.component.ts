@@ -11,8 +11,7 @@ import {
 } from '@angular/core';
 import { Chart, registerShape } from '@antv/g2';
 import { LooseObject } from '@antv/g2/lib/interface';
-import { AlainConfigService } from '@delon/config';
-import { InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 @Component({

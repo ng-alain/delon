@@ -18,3 +18,5 @@ export * from './src/logger/index';
 
 export * from './src/util.config';
 export * from './src/util.module';
+
+export * from './src/config/index';

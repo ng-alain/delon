@@ -4,8 +4,7 @@
       "flatModuleFile": "tag-cloud",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
-        "@delon/util": "delon.util",
-        "@delon/config": "delon.config"
+        "@delon/util": "delon.util"
       }
     }
   }

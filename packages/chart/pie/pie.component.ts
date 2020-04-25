@@ -15,8 +15,7 @@ import {
 import { Chart } from '@antv/g2';
 import { LooseObject } from '@antv/g2/lib/interface';
 import { InteractionType } from '@delon/chart/core/types';
-import { AlainConfigService } from '@delon/config';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2PieData {

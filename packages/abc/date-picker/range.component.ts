@@ -6,8 +6,11 @@ import {
   AlainDateRangePickerConfig,
   AlainDateRangePickerShortcut,
   AlainDateRangePickerShortcutItem,
-} from '@delon/config';
-import { deepMergeKey, fixEndTimeOfRange, getTimeDistance, InputBoolean } from '@delon/util';
+  deepMergeKey,
+  fixEndTimeOfRange,
+  getTimeDistance,
+  InputBoolean,
+} from '@delon/util';
 import { FunctionProp, NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzRangePickerComponent } from 'ng-zorro-antd/date-picker';
 

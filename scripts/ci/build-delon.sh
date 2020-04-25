@@ -6,8 +6,7 @@ set -u -e -o pipefail
 cd $(dirname $0)/../..
 
 DEBUG=false
-PACKAGES=(config
-  util
+PACKAGES=(util
   testing
   acl
   theme

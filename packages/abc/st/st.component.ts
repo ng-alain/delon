@@ -20,7 +20,6 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlainConfigService, AlainSTConfig } from '@delon/config';
 import {
   AlainI18NService,
   ALAIN_I18N_TOKEN,
@@ -32,7 +31,7 @@ import {
   ModalHelper,
   YNPipe,
 } from '@delon/theme';
-import { deepMergeKey, InputBoolean, InputNumber, toBoolean } from '@delon/util';
+import { AlainConfigService, AlainSTConfig, deepMergeKey, InputBoolean, InputNumber, toBoolean } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzTableComponent, NzTableData, NzTableStyleService } from 'ng-zorro-antd/table';
 import { from, Observable, of, Subject, Subscription } from 'rxjs';

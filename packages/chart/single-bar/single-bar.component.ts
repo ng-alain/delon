@@ -11,8 +11,7 @@ import {
 } from '@angular/core';
 import { Chart } from '@antv/g2';
 import { LooseObject } from '@antv/g2/lib/interface';
-import { AlainConfigService } from '@delon/config';
-import { InputBoolean, InputNumber } from '@delon/util';
+import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'g2-single-bar',

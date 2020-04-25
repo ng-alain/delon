@@ -5,8 +5,7 @@
       "entryFile": "public_api.ts",
       "umdModuleIds": {
         "ng-zorro-antd/core/outlet": "ng-zorro-antd/core/outlet",
-        "@delon/util": "delon.util",
-        "@delon/config": "delon.config"
+        "@delon/util": "delon.util"
       }
     }
   }

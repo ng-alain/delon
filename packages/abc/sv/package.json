@@ -8,7 +8,6 @@
         "ng-zorro-antd/tooltip": "ng-zorro-antd/tooltip",
         "ng-zorro-antd/core/outlet": "ng-zorro-antd/core/outlet",
         "ng-zorro-antd/icon": "ng-zorro-antd/icon",
-        "@delon/config": "delon.config",
         "@delon/util": "delon.util"
       }
     }

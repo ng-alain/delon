@@ -6,7 +6,6 @@
       "umdModuleIds": {
         "@delon/abc/error-collect": "delon.theme.errorCollect",
         "@delon/theme": "delon.theme",
-        "@delon/config": "delon.config",
         "@delon/util": "delon.util"
       }
     }

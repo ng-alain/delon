@@ -30,7 +30,7 @@ const REUSETAB_PROVIDES: NzSafeAny[] = [
 ];
 // #endregion
 
-import { AlainConfig, ALAIN_CONFIG } from '@delon/config';
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
   lodop: {

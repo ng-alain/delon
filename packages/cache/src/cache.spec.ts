@@ -2,8 +2,8 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/config';
 import { AlainThemeModule, _HttpClient } from '@delon/theme';
+import { AlainCacheConfig, ALAIN_CONFIG } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
