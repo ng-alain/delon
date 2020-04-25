@@ -1,0 +1,28 @@
+{
+  "name": "@delon/config",
+  "version": "0.0.0-PLACEHOLDER",
+  "author": "cipchk<cipchk@qq.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ng-alain/delon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ng-alain/ng-alain/issues"
+  },
+  "homepage": "https://ng-alain.com",
+  "keywords": [
+    "delon",
+    "ng-alain",
+    "alain",
+    "config",
+    "angular config",
+    "ng config",
+    "ngx config",
+    "antd",
+    "ng-zorro-antd",
+    "angular",
+    "component"
+  ],
+  "sideEffects": false
+}

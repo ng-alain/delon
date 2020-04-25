@@ -1,0 +1,9 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/@delon/config",
+  "deleteDestPath": true,
+  "lib": {
+    "flatModuleFile": "config",
+    "entryFile": "public_api.ts"
+  }
+}
