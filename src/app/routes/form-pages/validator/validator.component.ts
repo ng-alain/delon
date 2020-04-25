@@ -4,7 +4,7 @@ import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { CodeService } from '../../../core/code.service';
+import { CodeService } from '../../../core/code/code.service';
 import { I18NService } from '../../../core/i18n/service';
 
 const stackBlitzTpl = `

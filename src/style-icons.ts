@@ -1,6 +1,7 @@
 // Custom icon static resources
 
 import {
+  CodeSandboxOutline,
   CopyOutline,
   CopyrightOutline,
   DashboardOutline,
@@ -30,6 +31,7 @@ import {
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS = [
+  CodeSandboxOutline,
   CopyOutline,
   CopyrightOutline,
   DashboardOutline,
@@ -53,7 +55,7 @@ export const ICONS = [
   StarOutline,
   ThunderboltFill,
   ToolOutline,
+  UserOutline,
   VerticalLeftOutline,
   VerticalRightOutline,
-  UserOutline,
 ];
