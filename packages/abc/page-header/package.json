@@ -10,6 +10,7 @@
         "ng-zorro-antd/skeleton": "ng-zorro-antd/skeleton",
         "@delon/abc/reuse-tab": "delon.abc.reuseTab",
         "@delon/theme": "delon.theme",
+        "@delon/config": "delon.config",
         "@delon/util": "delon.util"
       }
     }

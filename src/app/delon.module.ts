@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core
 import { DelonACLModule } from '@delon/acl';
 // mock
 import { DelonMockModule } from '@delon/mock';
-import { AlainConfig, AlainThemeModule, ALAIN_CONFIG } from '@delon/theme';
+import { AlainThemeModule } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import * as MOCKDATA from '../../_mock';
 import { throwIfAlreadyLoaded } from './core/module-import-guard';
@@ -30,6 +30,7 @@ const REUSETAB_PROVIDES: NzSafeAny[] = [
 ];
 // #endregion
 
+import { AlainConfig, ALAIN_CONFIG } from '@delon/config';
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
   lodop: {

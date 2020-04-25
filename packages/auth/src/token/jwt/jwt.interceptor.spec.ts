@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/theme';
+import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/config';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { DelonAuthModule } from '../../auth.module';

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainXlsxConfig } from '@delon/theme';
+import { AlainConfigService, AlainXlsxConfig } from '@delon/config';
 import { LazyResult, LazyService } from '@delon/util';
 import { saveAs } from 'file-saver';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';

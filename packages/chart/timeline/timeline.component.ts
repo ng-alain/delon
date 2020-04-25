@@ -14,7 +14,7 @@ import {
 import { Chart } from '@antv/g2';
 import { LegendItem, LooseObject, ScaleOption } from '@antv/g2/lib/interface';
 import { G2Time } from '@delon/chart/core/types';
-import { AlainConfigService } from '@delon/theme';
+import { AlainConfigService } from '@delon/config';
 import { deprecation10, InputBoolean, InputNumber, toDate } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 

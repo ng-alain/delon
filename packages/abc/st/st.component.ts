@@ -20,10 +20,9 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlainConfigService, AlainSTConfig } from '@delon/config';
 import {
-  AlainConfigService,
   AlainI18NService,
-  AlainSTConfig,
   ALAIN_I18N_TOKEN,
   CNCurrencyPipe,
   DatePipe,

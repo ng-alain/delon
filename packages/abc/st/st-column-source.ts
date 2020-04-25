@@ -1,7 +1,8 @@
 import { Host, Inject, Injectable, Optional } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ACLService } from '@delon/acl';
-import { AlainI18NService, AlainSTConfig, ALAIN_I18N_TOKEN } from '@delon/theme';
+import { AlainSTConfig } from '@delon/config';
+import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { deepCopy, warn } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STRowSource } from './st-row.directive';

@@ -1,4 +1,5 @@
-import { AlainSTConfig } from '@delon/theme';
+import { AlainSTConfig } from '@delon/config';
+
 export const ST_DEFULAT_CONFIG: AlainSTConfig = {
   pi: 1,
   ps: 10,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainQRConfig } from '@delon/theme';
+import { AlainConfigService, AlainQRConfig } from '@delon/config';
 import { QR_DEFULAT_CONFIG } from './qr.config';
 
 declare var QRious: any;

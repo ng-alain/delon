@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { AlainConfigService, AlainSEConfig, REP_TYPE } from '@delon/theme';
+import { AlainConfigService, AlainSEConfig } from '@delon/config';
+import { REP_TYPE } from '@delon/theme';
 import { InputBoolean, InputNumber, toNumber } from '@delon/util';
 
 @Component({

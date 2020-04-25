@@ -6,6 +6,7 @@
     "flatModuleFile": "acl",
     "entryFile": "public_api.ts",
     "umdModuleIds": {
+      "@delon/config": "delon.config",
       "@delon/util": "delon.util"
     }
   },

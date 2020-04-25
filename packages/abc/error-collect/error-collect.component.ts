@@ -10,7 +10,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { AlainConfigService, AlainErrorCollectConfig } from '@delon/theme';
+import { AlainConfigService, AlainErrorCollectConfig } from '@delon/config';
 import { InputNumber } from '@delon/util';
 
 @Component({

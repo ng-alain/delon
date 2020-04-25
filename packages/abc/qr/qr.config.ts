@@ -1,4 +1,4 @@
-import { AlainQRConfig } from '@delon/theme';
+import { AlainQRConfig } from '@delon/config';
 
 export const QR_DEFULAT_CONFIG: AlainQRConfig = {
   background: 'white',

@@ -7,7 +7,7 @@
         "ng-zorro-antd/core/outlet": "ng-zorro-antd/core/outlet",
         "ng-zorro-antd/divider": "ng-zorro-antd/divider",
         "@delon/util": "delon.util",
-        "@delon/theme": "delon.theme"
+        "@delon/config": "delon.config"
       }
     }
   }

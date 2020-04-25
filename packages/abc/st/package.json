@@ -18,6 +18,7 @@
         "ng-zorro-antd/tooltip": "ng-zorro-antd/tooltip",
         "@delon/abc/xlsx": "delon.abc.xlsx",
         "@delon/theme": "delon.theme",
+        "@delon/config": "delon.config",
         "@delon/acl": "delon.acl",
         "@delon/util": "delon.util"
       }

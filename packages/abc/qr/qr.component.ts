@@ -8,7 +8,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { AlainConfigService, AlainQRConfig } from '@delon/theme';
+import { AlainConfigService, AlainQRConfig } from '@delon/config';
 import { InputNumber } from '@delon/util';
 import { QR_DEFULAT_CONFIG } from './qr.config';
 import { QRService } from './qr.service';

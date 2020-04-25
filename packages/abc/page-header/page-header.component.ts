@@ -17,16 +17,8 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import {
-  AlainConfigService,
-  AlainI18NService,
-  AlainPageHeaderConfig,
-  ALAIN_I18N_TOKEN,
-  Menu,
-  MenuService,
-  SettingsService,
-  TitleService,
-} from '@delon/theme';
+import { AlainConfigService, AlainPageHeaderConfig } from '@delon/config';
+import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { InputBoolean, InputNumber, isEmpty } from '@delon/util';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';

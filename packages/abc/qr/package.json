@@ -5,7 +5,7 @@
       "entryFile": "public_api.ts",
       "umdModuleIds": {
         "@delon/util": "delon.util",
-        "@delon/theme": "delon.theme"
+        "@delon/config": "delon.config"
       }
     }
   }
