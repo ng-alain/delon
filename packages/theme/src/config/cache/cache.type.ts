@@ -1,20 +1,17 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({ providedIn: 'root' })
-export class DelonCacheConfig {
+export interface AlainCacheConfig {
   /**
    * Cache mode, default: `promise`
    * - `promise` Convention mode, allowing `key` to get data as http
    * - `none` Normal mode
    */
-  mode?: 'promise' | 'none' = 'promise';
+  mode?: 'promise' | 'none';
   /**
-   * Rename the return parameters, for example:
+   * Rename the return parameters, default: ``, for example:
    * - `null` The response body is content
    * - `list` The response body should be `{ list: [] }`
    * - `result.list` The response body should be `{ result: { list: [] } }`
    */
-  reName?: string | string[] = '';
+  reName?: string | string[];
   /**
    * Set the default storage type
    * - `m` Storage via memory
@@ -26,11 +23,11 @@ export class DelonCacheConfig {
    */
   expire?: number;
   /**
-   * Key prefix of persistent data
+   * Key prefix of persistent data, default: ``
    */
-  prefix?: string = '';
+  prefix?: string;
   /**
-   * Key name of persistent data metadata storage
+   * Key name of persistent data metadata storage, default: `__cache_meta`
    */
-  meta_key?: string = '__cache_meta';
+  meta_key?: string;
 }

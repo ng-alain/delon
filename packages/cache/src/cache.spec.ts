@@ -2,11 +2,10 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { AlainThemeModule, _HttpClient } from '@delon/theme';
+import { AlainCacheConfig, AlainThemeModule, ALAIN_CONFIG, _HttpClient } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { DelonCacheConfig } from './cache.config';
 import { DelonCacheModule } from './cache.module';
 import { CacheService } from './cache.service';
 import { ICache } from './interface';
@@ -36,10 +35,10 @@ describe('cache: service', () => {
     });
   });
 
-  function genModule(defaultCog?: DelonCacheConfig) {
+  function genModule(options?: AlainCacheConfig) {
     const providers: any[] = [];
-    if (defaultCog) {
-      providers.push({ provide: DelonCacheConfig, useValue: defaultCog });
+    if (options) {
+      providers.push({ provide: ALAIN_CONFIG, useValue: { cache: options } });
     }
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, AlainThemeModule.forRoot(), DelonCacheModule],
