@@ -1,6 +1,6 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { deepMergeKey } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { deepMergeKey } from '../../other/other';
 import { AlainConfig, AlainConfigKey, ALAIN_CONFIG } from './config.types';
 
 @Injectable({ providedIn: 'root' })
