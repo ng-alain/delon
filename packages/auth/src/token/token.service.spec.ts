@@ -28,9 +28,7 @@ describe('auth: token.service', () => {
       data = {};
     });
 
-    TestBed.configureTestingModule({
-      providers: [],
-    });
+    TestBed.configureTestingModule({});
 
     service = TestBed.inject(DA_SERVICE_TOKEN);
   });

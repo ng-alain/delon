@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { Component, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlainAuthConfig, AlainConfig, ALAIN_CONFIG } from '@delon/theme';
+import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/theme';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { DelonAuthModule } from '../../auth.module';
@@ -40,7 +40,7 @@ describe('auth: jwt.interceptor', () => {
         DelonAuthModule,
       ],
       providers: [
-        { provide: ALAIN_CONFIG, useValue: { auth: options } as AlainConfig },
+        { provide: ALAIN_CONFIG, useValue: { auth: options } },
         { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
       ],
     });

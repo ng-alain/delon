@@ -17,7 +17,7 @@ export class AlainConfigService {
   }
 
   merge<R, T extends AlainConfigKey>(componentName: T, defaultValues: R): R {
-    return deepMergeKey(defaultValues, true, this.get(componentName));
+    return deepMergeKey({}, true, defaultValues, this.get(componentName));
   }
 
   attach<R, T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, defaultValues: R) {

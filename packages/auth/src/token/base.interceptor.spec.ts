@@ -5,7 +5,7 @@ import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AlainAuthConfig, AlainConfig, ALAIN_CONFIG } from '@delon/theme';
+import { AlainAuthConfig, ALAIN_CONFIG } from '@delon/theme';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { DelonAuthModule } from '../auth.module';
@@ -69,7 +69,7 @@ describe('auth: base.interceptor', () => {
       imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([]), DelonAuthModule],
       providers: [
         { provide: DOCUMENT, useValue: MockDoc },
-        { provide: ALAIN_CONFIG, useValue: { auth: options } as AlainConfig },
+        { provide: ALAIN_CONFIG, useValue: { auth: options } },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: SimpleInterceptor,
