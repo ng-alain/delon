@@ -19,14 +19,14 @@ import { throwIfAlreadyLoaded } from './core/module-import-guard';
  *  </section>
  *  ```
  */
-// import { RouteReuseStrategy } from '@angular/router';
-// import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
+import { RouteReuseStrategy } from '@angular/router';
+import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
 const REUSETAB_PROVIDES: NzSafeAny[] = [
-  // {
-  //   provide: RouteReuseStrategy,
-  //   useClass: ReuseTabStrategy,
-  //   deps: [ReuseTabService],
-  // },
+  {
+    provide: RouteReuseStrategy,
+    useClass: ReuseTabStrategy,
+    deps: [ReuseTabService],
+  },
 ];
 // #endregion
 
@@ -42,14 +42,14 @@ const alainConfig: AlainConfig = {
 @NgModule({
   imports: [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot({ data: MOCKDATA })],
 })
-export class DelonModule {
-  constructor(@Optional() @SkipSelf() parentModule: DelonModule) {
+export class GlobalConfigModule {
+  constructor(@Optional() @SkipSelf() parentModule: GlobalConfigModule) {
     throwIfAlreadyLoaded(parentModule, 'DelonModule');
   }
 
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: DelonModule,
+      ngModule: GlobalConfigModule,
       providers: [{ provide: ALAIN_CONFIG, useValue: alainConfig }, ...REUSETAB_PROVIDES],
     };
   }

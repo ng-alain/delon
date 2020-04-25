@@ -12,7 +12,8 @@
   </div>
   <div class="code-box-description" [innerHTML]="item.summary"></div>
   <div class="code-box-actions">
-    <i nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | translate" (click)="openOnStackBlitz()" nz-icon nzType="thunderbolt" nzTheme="fill" class="code-box-code-icon"></i>
+    <i nz-tooltip [nzTooltipTitle]="'app.demo.code-sandbox' | translate" (click)="openOnlineIDE('CodeSandbox')" nz-icon nzType="code-sandbox" class="code-box-code-icon"></i>
+    <i nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | translate" (click)="openOnlineIDE()" nz-icon nzType="thunderbolt" nzTheme="fill" class="code-box-code-icon"></i>
     <i nz-tooltip [nzTooltipTitle]="'app.demo.copy' | translate" (click)="onCopy(item.code)" nz-icon [nzType]="copied ? 'check' : 'snippets'" class="code-box-code-icon" [class.ant-tooltip-open]="copied"></i>
     <i nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" class="code-expand-icon">
       <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" [ngClass]="{'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand}"
