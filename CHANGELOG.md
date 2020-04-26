@@ -1,3 +1,17 @@
+# [9.0.0-rc.5](https://github.com/ng-alain/delon/compare/9.0.0-rc.4...9.0.0-rc.5) (2020-04-26)
+
+
+### Bug Fixes
+
+* fix invalid date via date-fns ([#846](https://github.com/ng-alain/delon/issues/846)) ([37a2c7a](https://github.com/ng-alain/delon/commit/37a2c7a9039b50162e1b38e702d22ae930cebb3a)), closes [#841](https://github.com/ng-alain/delon/issues/841)
+
+
+### Features
+
+* **cli:** add `ng update ng-alain` ([#847](https://github.com/ng-alain/delon/issues/847)) ([c097f89](https://github.com/ng-alain/delon/commit/c097f895508e8f3b892ea4551a79cf4daf386888))
+
+
+
 # [9.0.0-rc.4](https://github.com/ng-alain/delon/compare/9.0.0-rc.3...9.0.0-rc.4) (2020-04-24)
 
 
