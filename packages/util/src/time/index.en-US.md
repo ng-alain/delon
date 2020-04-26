@@ -20,3 +20,7 @@ getTimeDistance('week')
   - `month`, `-month` This month or last month
   - `year`, `-year` This year or last year
 - `time` Specify start time, default is `now`
+
+## toDate
+
+Return the date parsed from string using the given format string, If the argument is a number, it is treated as a timestamp.

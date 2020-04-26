@@ -1,5 +1,5 @@
 import { DecimalPipe } from '@angular/common';
-import { CNCurrencyPipe, DatePipe, YNPipe } from '@delon/theme';
+import { CNCurrencyPipe, YNPipe } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { of, throwError } from 'rxjs';
@@ -32,7 +32,6 @@ describe('abc: table: data-souce', () => {
   let options: STDataSourceOptions;
   let http: MockHttpClient;
   let currentyPipe: CNCurrencyPipe;
-  let datePipe: DatePipe;
   let ynPipe: YNPipe;
   let decimalPipe: DecimalPipe;
   // tslint:disable-next-line:prefer-const
@@ -50,12 +49,6 @@ describe('abc: table: data-souce', () => {
     }
   }
 
-  class MockNzI18nService {
-    getDateLocale() {
-      return null;
-    }
-  }
-
   function genModule() {
     options = {
       pi: DEFAULT.pi,
@@ -69,11 +62,10 @@ describe('abc: table: data-souce', () => {
       paginator: true,
     };
     currentyPipe = new CNCurrencyPipe('zh-CN');
-    datePipe = new DatePipe(new MockNzI18nService() as any);
     ynPipe = new YNPipe(new MockDomSanitizer() as any);
     decimalPipe = new DecimalPipe('zh-CN');
     http = new MockHttpClient();
-    srv = new STDataSource(http as any, currentyPipe, datePipe, ynPipe, decimalPipe, new MockDomSanitizer() as any);
+    srv = new STDataSource(http as any, currentyPipe, ynPipe, decimalPipe, new MockDomSanitizer() as any);
   }
 
   describe('[local data]', () => {
@@ -728,14 +720,6 @@ describe('abc: table: data-souce', () => {
         });
       });
       describe('via date', () => {
-        it('should be working', done => {
-          options.columns[0].type = 'date';
-          spyOn(datePipe, 'transform');
-          srv.process(options).subscribe(() => {
-            expect(datePipe.transform).toHaveBeenCalled();
-            done();
-          });
-        });
         it('should be return default value', done => {
           options.columns[0] = { index: 'date', type: 'date', default: '-' };
           options.data = [{}, { date: new Date() }];

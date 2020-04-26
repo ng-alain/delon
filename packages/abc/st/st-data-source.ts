@@ -1,8 +1,8 @@
 import { DecimalPipe } from '@angular/common';
 import { Host, Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { CNCurrencyPipe, DatePipe, YNPipe, _HttpClient } from '@delon/theme';
-import { deepCopy, deepGet } from '@delon/util';
+import { CNCurrencyPipe, YNPipe, _HttpClient } from '@delon/theme';
+import { deepCopy, deepGet, toDate } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -62,7 +62,6 @@ export class STDataSource {
   constructor(
     private http: _HttpClient,
     @Host() private currentyPipe: CNCurrencyPipe,
-    @Host() private datePipe: DatePipe,
     @Host() private ynPipe: YNPipe,
     @Host() private numberPipe: DecimalPipe,
     private dom: DomSanitizer,
@@ -206,7 +205,7 @@ export class STDataSource {
         text = this.currentyPipe.transform(value);
         break;
       case 'date':
-        text = value === col.default ? col.default : this.datePipe.transform(value, col.dateFormat);
+        text = value === col.default ? col.default : toDate(value, col.dateFormat);
         break;
       case 'yn':
         text = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!, false);

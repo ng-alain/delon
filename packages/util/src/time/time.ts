@@ -4,6 +4,7 @@ import endOfMonth from 'date-fns/endOfMonth';
 import endOfWeek from 'date-fns/endOfWeek';
 import endOfYear from 'date-fns/endOfYear';
 import parse from 'date-fns/parse';
+import parseISO from 'date-fns/parseISO';
 import startOfDay from 'date-fns/startOfDay';
 import startOfMonth from 'date-fns/startOfMonth';
 import startOfWeek from 'date-fns/startOfWeek';
@@ -11,6 +12,7 @@ import startOfYear from 'date-fns/startOfYear';
 import subMonths from 'date-fns/subMonths';
 import subWeeks from 'date-fns/subWeeks';
 import subYears from 'date-fns/subYears';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 /**
  * 获取时间范围
@@ -67,8 +69,20 @@ export function fixEndTimeOfRange(dates: [Date, Date]): [Date, Date] {
   return [startOfDay(dates[0]), endOfDay(dates[1])];
 }
 
-export function toDate(val: Date | string | number, formatString = 'yyyy-MM-dd HH:mm:ss'): Date {
-  if (val instanceof Date) return val;
-  if (typeof val === 'number') return new Date(val);
-  return parse(val, formatString, new Date());
+/**
+ * Return the date parsed from string using the given format string
+ * - If the argument is a number, it is treated as a timestamp.
+ * @param formatString If parsing fails try to parse the date by pressing `formatString`
+ */
+export function toDate(value: Date | string | number, formatString = 'yyyy-MM-dd HH:mm:ss'): Date {
+  if (value == null) return new Date(NaN);
+  if (value instanceof Date) return value;
+  if (typeof value === 'number') return new Date(value);
+
+  const tryDate = !isNaN(+value) ? new Date(+value) : parseISO(value);
+  if (isNaN(tryDate as NzSafeAny)) {
+    return parse(value, formatString, new Date());
+  }
+
+  return tryDate;
 }

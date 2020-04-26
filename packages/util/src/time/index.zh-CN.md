@@ -20,3 +20,7 @@ getTimeDistance('week')
   - `month`、`-month` 本周或上月
   - `year`、`-year` 今年或去年
 - `time` 指定开始时间，默认为：`now`
+
+## toDate
+
+转换成 `Date` 格式，支持 `Date, number, string` 类型，如果是 `number` 表示 Unix timestamp。

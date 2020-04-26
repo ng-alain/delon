@@ -1,5 +1,6 @@
 import addDays from 'date-fns/addDays';
 import format from 'date-fns/format';
+import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { getTimeDistance, toDate } from './time';
 
 describe('util: time', () => {
@@ -103,6 +104,9 @@ describe('util: time', () => {
     });
   });
   describe('#toDate', () => {
+    it('with type is null', () => {
+      expect(isNaN(toDate(null as NzSafeAny) as NzSafeAny)).toBe(true);
+    });
     it('with type is date', () => {
       const a = new Date();
       expect(toDate(a)).toBe(a);
@@ -111,11 +115,15 @@ describe('util: time', () => {
       const a = +new Date();
       expect(toDate(a) instanceof Date).toBe(true);
     });
+    it('with type is string number', () => {
+      const a = (+new Date()).toString();
+      expect(toDate(a) instanceof Date).toBe(true);
+    });
     it('with type is string', () => {
       expect(toDate(`2020-12-12`) instanceof Date).toBe(true);
     });
-    it('should be specify format', () => {
-      expect(toDate(`2020-12-12`, 'yyyy-MM-dd') instanceof Date).toBe(true);
+    it('should be specify format when parseISO return invalid date', () => {
+      expect(toDate(`12/12/2020`, 'MM/dd/yyyy') instanceof Date).toBe(true);
     });
   });
 });
