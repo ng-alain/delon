@@ -35,8 +35,8 @@
     "site:gh": "npm run site:build && gh-pages -d src/dist",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
-    "publish:next": "bash scripts/publish/publish.sh -next && npm run site:gh",
-    "publish": "bash scripts/publish/publish.sh && npm run site:gh",
+    "publish:next": "bash scripts/publish/publish.sh -next",
+    "publish": "bash scripts/publish/publish.sh",
     "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js"
   },
   "dependencies": {
