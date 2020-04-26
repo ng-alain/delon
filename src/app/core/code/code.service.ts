@@ -9,6 +9,7 @@ import delonABCModuleTS from './files/delon-abc.module';
 import delonChartModuleTS from './files/delon-chart.module';
 import dotAngularCliJSON from './files/dot_angular-cli.json';
 import environmentTS from './files/environment';
+import globalConfigTS from './files/global-config.module';
 import mainTS from './files/main';
 import nzZorroAntdModuleTS from './files/ng-zorro-antd.module';
 import polyfillTS from './files/polyfill';
@@ -99,13 +100,14 @@ export class CodeService {
         tags: ['ng-alain', '@delon', 'NG-ZORRO', 'ng-zorro-antd', 'Ant Design', 'Angular', 'ng'],
         dependencies: this.dependencies,
         files: {
-          'angular.json': `${JSON.stringify(angularJSON)}`,
-          'environments/environment.ts': environmentTS,
+          'angular.json': `${JSON.stringify(angularJSON, null, 2)}`,
+          'src/environments/environment.ts': environmentTS,
           'src/index.html': res.html,
           'src/main.ts': mainTS,
           'src/polyfills.ts': polyfillTS,
           'src/app/app.component.ts': appComponentCode,
           'src/app/app.module.ts': appModuleTS(res.componentName),
+          'src/app/global-config.module.ts': globalConfigTS,
           'src/app/ng-zorro-antd.module.ts': nzZorroAntdModuleTS,
           'src/app/delon-abc.module.ts': delonABCModuleTS,
           'src/app/delon-chart.module.ts': delonChartModuleTS,
@@ -140,7 +142,7 @@ export class CodeService {
           content: dotAngularCliJSON,
           isBinary: false,
         },
-        'environments/environment.ts': {
+        'src/environments/environment.ts': {
           content: environmentTS,
           isBinary: false,
         },
@@ -158,6 +160,10 @@ export class CodeService {
         },
         'src/app/app.module.ts': {
           content: appModuleTS(res.componentName),
+          isBinary: false,
+        },
+        'src/app/global-config.module.ts': {
+          content: globalConfigTS,
           isBinary: false,
         },
         'src/app/app.component.ts': {

@@ -20,6 +20,25 @@ export default {
             assets: ['src/favicon.ico', 'src/assets'],
             styles: ['node_modules/@delon/theme/styles/ng-alain.css', 'src/styles.css'],
           },
+          configurations: {
+            production: {
+              optimization: true,
+              outputHashing: 'all',
+              sourceMap: false,
+              extractCss: true,
+              namedChunks: false,
+              aot: true,
+              extractLicenses: true,
+              vendorChunk: false,
+              buildOptimizer: true,
+            },
+          },
+        },
+        serve: {
+          builder: '@angular-devkit/build-angular:dev-server',
+          options: {
+            browserTarget: 'demo:build',
+          },
         },
       },
     },

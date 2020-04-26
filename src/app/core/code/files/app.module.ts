@@ -23,9 +23,8 @@ import { DelonAuthModule } from '@delon/auth';
 import { DelonACLModule } from '@delon/acl';
 import { DelonCacheModule } from '@delon/cache';
 import { DelonUtilModule } from '@delon/util';
-import { DelonMockModule } from '@delon/mock';
-import * as MOCKDATA from '../../_mock';
 import { StartupService, StartupServiceFactory } from './startup.service';
+import { GlobalConfigModule } from './global-config.module';
 
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
@@ -53,7 +52,7 @@ imports: [
     DelonUtilModule,
     DelonAuthModule,
     DelonFormModule.forRoot(),
-    DelonMockModule.forRoot({ data: MOCKDATA }),
+    GlobalConfigModule.forRoot(),
 ],
 providers: [
   StartupService,

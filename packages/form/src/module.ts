@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DelonLocaleModule } from '@delon/theme';
-import { DelonUtilModule } from '@delon/util';
+import { AlainConfigService, DelonUtilModule } from '@delon/util';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -132,6 +132,7 @@ export class DelonFormModule {
         {
           provide: SchemaValidatorFactory,
           useClass: AjvSchemaValidatorFactory,
+          deps: [AlainConfigService],
         },
         { provide: WidgetRegistry, useClass: NzWidgetRegistry },
       ],
