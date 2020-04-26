@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
+import { AlainConfigService, AlainSFConfig } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { DelonFormConfig } from './config';
+import { mergeConfig } from './config';
 import { ErrorData } from './errors';
 import { SFValue } from './interface';
 import { SFSchema } from './schema';
@@ -15,11 +16,13 @@ export abstract class SchemaValidatorFactory {
 @Injectable()
 export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
   protected ajv: NzSafeAny;
+  protected options: AlainSFConfig;
 
-  constructor(@Inject(DelonFormConfig) private options: DelonFormConfig) {
+  constructor(@Inject(AlainConfigService) cogSrv: AlainConfigService) {
     super();
+    this.options = mergeConfig(cogSrv);
     this.ajv = new Ajv({
-      ...options.ajv,
+      ...this.options.ajv,
       errorDataPath: 'property',
       allErrors: true,
       jsonPointers: true,

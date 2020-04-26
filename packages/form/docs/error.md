@@ -24,7 +24,7 @@ JSON Schema 校验过程中会生产一组错误信息，每一个错误都有�
 
 ## 自定义错误文本
 
-分别支持 `DelonFormConfig.errors`（一般用于国际化） 或 `ui.errors`（针对某个属性） 结构来处理错误文本。
+分别支持[全局配置](/docs/global-config) `errors`（一般用于国际化） 或 `ui.errors`（针对某个属性） 结构来处理错误文本。
 
 **DelonFormConfig**
 

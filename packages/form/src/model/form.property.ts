@@ -1,6 +1,6 @@
+import { AlainSFConfig } from '@delon/util';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { DelonFormConfig } from '../config';
 import { SF_SEQ } from '../const';
 import { ErrorData } from '../errors';
 import { SFValue } from '../interface';
@@ -34,7 +34,7 @@ export abstract class FormProperty {
     formData: {},
     parent: PropertyGroup | null,
     path: string,
-    private _options: DelonFormConfig,
+    private _options: AlainSFConfig,
   ) {
     this.schema = schema;
     this.ui = ui;

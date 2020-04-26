@@ -19,6 +19,7 @@ import { AlainAuthConfig } from './auth/auth.type';
 import { AlainCacheConfig } from './cache/cache.type';
 import { AlainChartConfig } from './chart/chart.type';
 import { AlainMockConfig } from './mock/mock.type';
+import { AlainSFConfig } from './sf/sf.type';
 import { AlainThemeHttpClientConfig, AlainThemeResponsiveConfig } from './theme/index';
 import { AlainUtilArrayConfig } from './util/array.type';
 
@@ -34,6 +35,7 @@ export interface AlainConfig {
   sg?: AlainSGConfig;
   sv?: AlainSVConfig;
   st?: AlainSTConfig;
+  sf?: AlainSFConfig;
   xlsx?: AlainXlsxConfig;
   zip?: AlainZipConfig;
   acl?: AlainACLConfig;

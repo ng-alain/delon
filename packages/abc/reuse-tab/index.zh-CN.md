@@ -242,7 +242,7 @@ export class DemoComponent {
 
 ### 路由data
 
-透过路由 `data` 附加数据，可以对部分页面提供覆盖全局配置，例如：
+透过路由 `data` 附加数据，可以对部分页面提供覆盖[全局配置](/docs/global-config)，例如：
 
 ```ts
 // 指定不复路由

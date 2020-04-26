@@ -64,7 +64,7 @@ angular.json
 
 **DelonFormConfig**
 
-全局配置性可以通过在根模块或 `DelonModule` 里覆盖，例如：
+[全局配置](/docs/global-config)可以通过在根模块或 `DelonModule` 里覆盖，例如：
 
 ```ts
 import { DelonFormConfig } from '@delon/form';

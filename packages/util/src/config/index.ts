@@ -6,6 +6,7 @@ export * from './chart/chart.type';
 export * from './util/array.type';
 export * from './theme/index';
 export * from './mock/mock.type';
+export * from './sf/sf.type';
 
 export * from './config.types';
 export * from './config.service';

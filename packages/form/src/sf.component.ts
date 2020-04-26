@@ -18,11 +18,11 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { ACLService } from '@delon/acl';
 import { AlainI18NService, ALAIN_I18N_TOKEN, DelonLocaleService, LocaleData } from '@delon/theme';
-import { deepCopy, InputBoolean } from '@delon/util';
+import { AlainConfigService, AlainSFConfig, deepCopy, InputBoolean } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { merge, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { DelonFormConfig } from './config';
+import { mergeConfig } from './config';
 import { ErrorData } from './errors';
 import { SFButton, SFLayout } from './interface';
 import { FormProperty, PropertyGroup } from './model/form.property';
@@ -34,8 +34,8 @@ import { di, FORMATMAPS, resolveIf, retrieveSchema } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
-export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, options: DelonFormConfig) {
-  return new FormPropertyFactory(schemaValidatorFactory, options);
+export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, cogSrv: AlainConfigService) {
+  return new FormPropertyFactory(schemaValidatorFactory, cogSrv);
 }
 
 @Component({
@@ -47,7 +47,7 @@ export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, optio
     {
       provide: FormPropertyFactory,
       useFactory,
-      deps: [SchemaValidatorFactory, DelonFormConfig],
+      deps: [SchemaValidatorFactory, AlainConfigService],
     },
     TerminatorService,
   ],
@@ -70,6 +70,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   private _valid = true;
   private _defUi: SFUISchemaItem;
   private _inited = false;
+  readonly options: AlainSFConfig;
 
   locale: LocaleData = {};
   rootProperty: FormProperty | null = null;
@@ -202,16 +203,17 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private formPropertyFactory: FormPropertyFactory,
     private terminator: TerminatorService,
-    private options: DelonFormConfig,
     private dom: DomSanitizer,
     private cdr: ChangeDetectorRef,
     private localeSrv: DelonLocaleService,
     @Optional() private aclSrv: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
+    cogSrv: AlainConfigService,
   ) {
-    this.liveValidate = options.liveValidate as boolean;
-    this.firstVisual = options.firstVisual as boolean;
-    this.autocomplete = options.autocomplete as 'on' | 'off';
+    this.options = mergeConfig(cogSrv);
+    this.liveValidate = this.options.liveValidate as boolean;
+    this.firstVisual = this.options.firstVisual as boolean;
+    this.autocomplete = this.options.autocomplete as 'on' | 'off';
     this.localeSrv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.localeSrv.getData('sf');
       if (this._inited) {

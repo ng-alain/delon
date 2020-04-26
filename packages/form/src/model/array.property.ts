@@ -1,4 +1,4 @@
-import { DelonFormConfig } from '../config';
+import { AlainSFConfig } from '@delon/util';
 import { SF_SEQ } from '../const';
 import { SFValue } from '../interface';
 import { SFSchema } from '../schema/index';
@@ -17,7 +17,7 @@ export class ArrayProperty extends PropertyGroup {
     formData: {},
     parent: PropertyGroup | null,
     path: string,
-    options: DelonFormConfig,
+    options: AlainSFConfig,
   ) {
     super(schemaValidatorFactory, schema, ui, formData, parent, path, options);
     this.properties = [];

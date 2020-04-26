@@ -1,10 +1,11 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
+import { AlainConfigService } from '@delon/util';
 import { of } from 'rxjs';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchemaEnum } from '../../../src/schema/index';
-import { DelonFormConfig } from '../../config';
+import { mergeConfig } from '../../config';
 import { AutoCompleteWidget } from './autocomplete.widget';
 
 describe('form: widget: autocomplete', () => {
@@ -73,7 +74,7 @@ describe('form: widget: autocomplete', () => {
       });
     });
     it('with email of format', fakeAsync(() => {
-      const config = dl.injector.get(DelonFormConfig);
+      const config = mergeConfig(TestBed.inject(AlainConfigService));
       const typeValue = 'a';
       page
         .newSchema({

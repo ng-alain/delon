@@ -1,4 +1,5 @@
-import { DelonFormConfig } from '../config';
+import { AlainConfigService, AlainSFConfig } from '@delon/util';
+import { mergeConfig } from '../config';
 import { SF_SEQ } from '../const';
 import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
@@ -12,7 +13,10 @@ import { ObjectProperty } from './object.property';
 import { StringProperty } from './string.property';
 
 export class FormPropertyFactory {
-  constructor(private schemaValidatorFactory: SchemaValidatorFactory, private options: DelonFormConfig) {}
+  private options: AlainSFConfig;
+  constructor(private schemaValidatorFactory: SchemaValidatorFactory, cogSrv: AlainConfigService) {
+    this.options = mergeConfig(cogSrv);
+  }
 
   createProperty(
     schema: SFSchema,
