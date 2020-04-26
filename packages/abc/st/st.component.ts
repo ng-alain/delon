@@ -24,6 +24,7 @@ import {
   AlainI18NService,
   ALAIN_I18N_TOKEN,
   CNCurrencyPipe,
+  DatePipe,
   DelonLocaleService,
   DrawerHelper,
   LocaleData,
@@ -66,7 +67,7 @@ import {
   selector: 'st',
   exportAs: 'st',
   templateUrl: './st.component.html',
-  providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, YNPipe, DecimalPipe],
+  providers: [STDataSource, STRowSource, STColumnSource, STExport, CNCurrencyPipe, DatePipe, YNPipe, DecimalPipe],
   host: {
     '[class.st]': `true`,
     '[class.st__p-left]': `page.placement === 'left'`,
