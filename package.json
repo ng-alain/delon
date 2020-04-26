@@ -1,6 +1,6 @@
 {
   "name": "delon",
-  "version": "9.0.0-rc.4",
+  "version": "9.0.0",
   "description": "Delon is a set of essential modules for NG-ALAIN.",
   "keywords": [
     "delon",
@@ -35,8 +35,8 @@
     "site:gh": "npm run site:build && gh-pages -d src/dist",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
-    "publish:next": "bash scripts/publish/publish.sh -next && npm run site:gh",
-    "publish": "bash scripts/publish/publish.sh && npm run site:gh",
+    "publish:next": "bash scripts/publish/publish.sh -next",
+    "publish": "bash scripts/publish/publish.sh",
     "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js"
   },
   "dependencies": {
@@ -63,7 +63,7 @@
     "file-saver": "^2.0.2",
     "marked": "^0.8.2",
     "ng-github-button": "^9.0.0",
-    "ng-zorro-antd": "^9.0.1",
+    "ng-zorro-antd": "^9.1.0",
     "ng2-ace-editor": "^0.3.9",
     "ngx-color": "^5.0.3",
     "ngx-countdown": "^9.0.1",
