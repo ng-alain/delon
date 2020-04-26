@@ -10,8 +10,8 @@ export class DatePipe implements PipeTransform {
 
   transform(value: Date | string | number, formatString: string = 'yyyy-MM-dd HH:mm'): string {
     const options = { locale: this.nzI18n.getDateLocale() };
-    value = typeof value === 'string' ? (!isNaN(+value) ? +value : parse(value, formatString, new Date(), options)) : value;
-    if (!value) return '';
+    value = typeof value === 'string' ? (!isNaN(+value) ? +value : parse(value, 'yyyy-MM-dd HH:mm:ss', new Date(), options)) : value;
+    if (!value || value.toString() === 'Invalid Date') return '';
     return formatString === 'fn' ? formatDistanceToNow(value, options) : format(value, formatString, options);
   }
 }

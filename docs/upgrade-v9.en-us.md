@@ -13,6 +13,12 @@ This description refers to the description of the upgrade from `8.9.x' to `9'; N
 
 # Note: If you have any problems during the upgrade process, please submit a [Issues](https://github.com/ng-alain/ng-alain/issues/new?template=bug_report.md) and describe detail. You can also search through [8-to-9 tags](https://github.com/ng-alain/ng-alain/labels/8-to-9) known issues.
 
+## Before upgrade
+
+1. Make sure `Node.js` >= `10.13`.
+2. Create a new branch, or use other methods to back up the current project.
+3. Delete the `node_modules`, `package-lock.json` or `yarn.lock` file.
+
 ## Major projects
 
 ### 1. Global configuration

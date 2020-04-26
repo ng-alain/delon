@@ -14,7 +14,7 @@ To select/input a time.
   - `time`、`full-time` default is `HH:mm:ss`
 - When `schema.format` is not specified, the data formatting (Allows you to reassign default values via [Global Configuration](/docs/global-config)) is determined by the `schema.type` type:
   - `string` default is `HH:mm:ss`
-  - `number` default is `x` 13-bit Unix Timestamp
+  - `number` default is `T` 13-bit Unix Timestamp
 - Since `disabledHours`, `disabledMinutes`, `disabledSeconds` will cause the time format to be corrupted, it may cause the display format error. The solution is specify a complete `Date` object in the default value (`schema.default` or `formData`)
 
 ## API

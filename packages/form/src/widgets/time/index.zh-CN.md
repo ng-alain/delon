@@ -14,7 +14,7 @@ type: Widgets
   - `time`、`full-time` 默认 `HH:mm:ss`
 - 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过[全局配置](/docs/global-config)替换）数据格式化：
   - `string` 默认 `HH:mm:ss`
-  - `number` 默认 `x` 13位Unix Timestamp
+  - `number` 默认 `T` 13位 Unix Timestamp
 - 由于 `disabledHours`、`disabledMinutes`、`disabledSeconds` 组合导致时间格式被破坏，可能会导致无法正常显示或显示不正确时可以指定一个完整的 `Date` 对象给默认值（`schema.default` 或 `formData`）
 
 ## API

@@ -18,7 +18,7 @@ To select or input a date.
   - *Non-standard:* `month` default is `yyyy-MM`
 - When `schema.format` is not specified, the data formatting (Allows you to reassign default values via [Global Configuration](/docs/global-config)) is determined by the `schema.type` type:
   - `string` default is `yyyy-MM-dd HH:mm:ss`
-  - `number` default is `x` 13-bit Unix Timestamp
+  - `number` default is `T` 13-bit Unix Timestamp
 
 ## API
 

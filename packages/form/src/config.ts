@@ -12,9 +12,9 @@ export const SF_DEFAULT_CONFIG: AlainSFConfig = {
   ui: {} as SFUISchemaItem,
   button: { submit_type: 'primary', reset_type: 'default' } as SFButton,
   uiDateStringFormat: 'yyyy-MM-dd HH:mm:ss',
-  uiDateNumberFormat: 'x',
+  uiDateNumberFormat: 'T',
   uiTimeStringFormat: 'HH:mm:ss',
-  uiTimeNumberFormat: 'x',
+  uiTimeNumberFormat: 'T',
   uiEmailSuffixes: ['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com'],
 };
 

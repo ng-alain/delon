@@ -57,7 +57,7 @@ export interface AlainSFConfig {
    */
   uiDateStringFormat?: string;
   /**
-   * date小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp
+   * date小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`T` 13位 Unix Timestamp
    */
   uiDateNumberFormat?: string;
   /**
@@ -65,7 +65,7 @@ export interface AlainSFConfig {
    */
   uiTimeStringFormat?: string;
   /**
-   * time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp，日期统一使用 `1970-01-01`
+   * time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`T` 13位 Unix Timestamp，日期统一使用 `1970-01-01`
    */
   uiTimeNumberFormat?: string;
   /**

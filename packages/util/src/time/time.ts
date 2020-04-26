@@ -4,7 +4,6 @@ import endOfMonth from 'date-fns/endOfMonth';
 import endOfWeek from 'date-fns/endOfWeek';
 import endOfYear from 'date-fns/endOfYear';
 import parse from 'date-fns/parse';
-import parseISO from 'date-fns/parseISO';
 import startOfDay from 'date-fns/startOfDay';
 import startOfMonth from 'date-fns/startOfMonth';
 import startOfWeek from 'date-fns/startOfWeek';
@@ -22,7 +21,7 @@ export function getTimeDistance(
   type: 'today' | '-today' | 'yesterday' | 'week' | '-week' | 'month' | '-month' | 'year' | '-year' | number,
   time?: Date | string | number,
 ): [Date, Date] {
-  time = time ? (typeof time === 'string' ? parseISO(time) : new Date(time)) : new Date();
+  time = time ? (typeof time === 'string' ? parse(time, 'yyyy-MM-dd HH:mm:ss', new Date()) : new Date(time)) : new Date();
   const options: { weekStartsOn: 1 } = { weekStartsOn: 1 };
 
   let res: [Date, Date];

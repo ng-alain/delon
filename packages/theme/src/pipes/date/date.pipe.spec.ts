@@ -27,6 +27,7 @@ describe('Pipe: _date', () => {
     { date: +date, result: `2017-10-17 15:35` },
     { date: (+date).toString(), result: `2017-10-17 15:35` },
     { date, result: `2017年10月17日`, format: 'yyyy年MM月dd日' },
+    { date: `2017-10-17 15:35:59`, result: `2017-10-17 15:35` },
     { date: null, result: `` },
     { date: undefined, result: `` },
     { date, result: ``, format: 'fn' },

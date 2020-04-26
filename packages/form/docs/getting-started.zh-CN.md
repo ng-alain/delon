@@ -78,9 +78,9 @@ angular.json
 | `[size]` | 元素组件大小，用于 `nzSize` 值 | `default,large,small` | - |
 | `[button]` | 按钮风格 | `SFButton` | `{submit:'提交',submit_type:'primary',reset:'重置',reset_type:'default'}` |
 | `[uiDateStringFormat]` | date小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `yyyy-MM-dd HH:mm:ss` |
-| `[uiDateNumberFormat]` | date小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp | `string` | `x` |
+| `[uiDateNumberFormat]` | date小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`T` 13位Unix Timestamp | `string` | `T` |
 | `[uiTimeStringFormat]` | time小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `HH:mm:ss` |
-| `[uiTimeNumberFormat]` | time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp，日期统一使用 `1970-01-01` | `string` | `x` |
+| `[uiTimeNumberFormat]` | time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`T` 13位Unix Timestamp，日期统一使用 `1970-01-01` | `string` | `T` |
 | `[uiEmailSuffixes]` | 指定 `format: 'email'` 的默认Email后缀 | `string[]` | `['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']` |
 
 构建一个邮箱、姓名表单：
