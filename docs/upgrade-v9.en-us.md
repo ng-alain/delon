@@ -11,9 +11,15 @@ This description refers to the description of the upgrade from `8.9.x' to `9'; N
 - In the NG-ZORRO section, there are no disruptive changes this time either, just the removal of expired attributes that were warned at `8.x`, the vast majority of items can be upgraded directly by `ng update ng-zorro-antd`, for more information on possible problems go to [NG-ZORRO v9 Upgrade Guide] (https://github.com/NG-ZORRO/ng-zorro-antd/issues/5035).
 - NG-ALAIN does not have changes to the `@delon/*` series, but instead is subject to the NG-ZORRO section with less detail to deal with; other than that, it is mainly optimized for code style, G2, and forcing the use of `date-fns` as the preferred date operation.
 
+# Note: If you have any problems during the upgrade process, please submit a [Issues](https://github.com/ng-alain/ng-alain/issues/new?template=bug_report.md) and describe detail. You can also search through [8-to-9 tags](https://github.com/ng-alain/ng-alain/labels/8-to-9) known issues.
+
 ## Major projects
 
-### 1, date-fns
+### 1. Global configuration
+
+Through `ALAIN_CONFIG`, you can unify the default configuration for all `@delon/*` and `ng-zorro-antd`, remove `delon.module.ts` file and replace with [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts).
+
+### 2. date-fns
 
 `date-fns` Upgrade to `2.x` All import names have changed.
 
@@ -34,7 +40,7 @@ This description refers to the description of the upgrade from `8.9.x' to `9'; N
 
 If the project is using internationalization, also be sure to go to [i18n.service.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/core/i18n/i18n.service.ts#L25) to import the date.
 
-### 2, @delon/abc directory structure
+### 3. @delon/abc directory structure
 
 Restructuring part of the directory structure will cause the import path to change as well.
 
@@ -43,13 +49,14 @@ Restructuring part of the directory structure will cause the import path to chan
 - `@delon/abc/grid` => `@delon/abc/sg`
 - `@delon/abc/edit` => `@delon/abc/se`
 
-### 3. Remove.
+### 4. Remove
 
-| Libs | Original | Current |
-| --- | --------- | --- |
-| `@delon/util` | `*stringTemplateOutlet` | `*nzStringTemplateOutlet` |
+| Original | Current |
+|----------|---------|
+| `@delon/util` => `ng-zorro-antd/core/outlet` | `*stringTemplateOutlet` => `*nzStringTemplateOutlet` |
 
-### 4, G2
+
+### 5. G2
 
 The latest version of G2 fully supports TypeScript, so there is no longer a need to reference full dependency packages in `angular.json`.
 
