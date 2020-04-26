@@ -6,7 +6,7 @@ type: Documents
 
 ## 写在前面
 
-JSON Schema 校验过程中会生产一组错误信息，每一个错误都有一个固定的 `keyword` 来表示，允许通过 `DelonFormConfig.errors` 来覆盖默认的错误信息，包括处理错误信息国际化问题。例如当某属性为必填性时产生的错误信息为:
+JSON Schema 校验过程中会生产一组错误信息，每一个错误都有一个固定的 `keyword` 来表示，允许通过[全局配置](/docs/global-config)来覆盖 `errors` 默认的错误信息，包括处理错误信息国际化问题。例如当某属性为必填性时产生的错误信息为:
 
 ```json
 [{
@@ -25,34 +25,6 @@ JSON Schema 校验过程中会生产一组错误信息，每一个错误都有�
 ## 自定义错误文本
 
 分别支持[全局配置](/docs/global-config) `errors`（一般用于国际化） 或 `ui.errors`（针对某个属性） 结构来处理错误文本。
-
-**DelonFormConfig**
-
-在根模块重新注入 `DelonFormConfig` 实例：
-
-```ts
-import { DelonFormConfig } from '@delon/form';
-export function fnDelonFormConfig(): DelonFormConfig {
-  return Object.assign(new DelonFormConfig(), <DelonFormConfig>{
-    errors: {
-      'required': '必填项',
-      // others
-    }
-  });
-}
-
-@NgModule({ })
-export class DelonModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: DelonModule,
-      providers: [
-        { provide: DelonFormConfig, useFactory: fnDelonFormConfig }
-      ]
-    };
-  }
-}
-```
 
 **ui.errors**
 
@@ -127,7 +99,7 @@ schema: SFSchema = {
 
 ## 视觉
 
-可以通过设置 `DelonFormConfig.onlyVisual` 或 `ui.onlyVisual` 属性控制只展示错误视觉不显示错误文本。
+可以通过设置[全局配置](/docs/global-config)或 `ui.onlyVisual` 属性控制只展示错误视觉不显示错误文本。
 
 ## Debug
 

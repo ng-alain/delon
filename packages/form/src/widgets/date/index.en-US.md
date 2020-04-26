@@ -16,7 +16,7 @@ To select or input a date.
   - `time`, `full-time` default is `HH:mm:ss`
   - *Non-standard:* `week` default is `yyyy-WW`
   - *Non-standard:* `month` default is `yyyy-MM`
-- When `schema.format` is not specified, the data formatting (Allows you to reassign default values via `DelonFormConfig`) is determined by the `schema.type` type:
+- When `schema.format` is not specified, the data formatting (Allows you to reassign default values via [Global Configuration](/docs/global-config)) is determined by the `schema.type` type:
   - `string` default is `yyyy-MM-dd HH:mm:ss`
   - `number` default is `x` 13-bit Unix Timestamp
 

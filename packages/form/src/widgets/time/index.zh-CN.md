@@ -12,7 +12,7 @@ type: Widgets
 - 所有 **数据格式化** 单位，参考 [date-fns format](https://date-fns.org/v1.29.0/docs/format)（国内镜像：[moment format](http://momentjs.cn/docs/#/displaying/format/)）
 - 指定 `schema.format` 则必须遵守 [RFC3339](https://tools.ietf.org/html/rfc3339#section-5.6) 时间格式，否则都视为格式错误，默认的数据格式化：
   - `time`、`full-time` 默认 `HH:mm:ss`
-- 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过 `DelonFormConfig` 替换）数据格式化：
+- 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过[全局配置](/docs/global-config)替换）数据格式化：
   - `string` 默认 `HH:mm:ss`
   - `number` 默认 `x` 13位Unix Timestamp
 - 由于 `disabledHours`、`disabledMinutes`、`disabledSeconds` 组合导致时间格式被破坏，可能会导致无法正常显示或显示不正确时可以指定一个完整的 `Date` 对象给默认值（`schema.default` 或 `formData`）
