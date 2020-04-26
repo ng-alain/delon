@@ -11,10 +11,10 @@ export interface SFDateWidgetSchema extends SFUISchemaItem {
   /**
    * **Just only support date-fns**
    *
-   * Return the formatted date string in the given format, [Accepted tokens](https://date-fns.org/v1.30.1/docs/format), like this:
+   * Return the formatted date string in the given format, [Accepted tokens](https://date-fns.org/v2.12.0/docs/format), like this:
    * - `yyyy-MM-dd HH:mm:ss` Date time
-   * - `X` Seconds timestamp
-   * - `x` Milliseconds timestamp
+   * - `t` Seconds timestamp
+   * - `T` Milliseconds timestamp
    */
   format?: string;
 

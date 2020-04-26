@@ -13,6 +13,12 @@ hot: true
 
 # 注意：如果你升级过程中有任何问题，请提交一份 [Issues](https://github.com/ng-alain/ng-alain/issues/new?template=bug_report.md) 并详细描述，也可以通过 [8-to-9标签](https://github.com/ng-alain/ng-alain/labels/8-to-9) 来检索已知问题。
 
+## 开始之前
+
+1. 首先确保你 `Node.js` >= `10.13`
+2. 创建新的分支，或者使用其他方式备份当前项目
+3. 删除项目下 `node_modules`、`package-lock.json` 或 `yarn.lock` 文件
+
 ## 主要项目
 
 ### 1、全局配置

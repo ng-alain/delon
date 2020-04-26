@@ -334,7 +334,10 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
           result => resolvePromise(result),
-          error => rejectPromise(error),
+          error => {
+            console.warn(error);
+            rejectPromise(error);
+          },
         );
     });
   }
