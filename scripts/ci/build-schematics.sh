@@ -215,14 +215,14 @@ buildCLI() {
   if [[ ${COPY} == true ]]; then
     if [[ ${CLONE} == true ]]; then
       cloneScaffold
-      echo "== copy delon/ng-alain files via travis mode"
+      echo ">>> copy delon/ng-alain files via travis mode"
       copyFiles 'ng-alain/' ${DIST}/
     else
-      echo "== copy work/ng-alain files via dev mode"
+      echo ">>> copy work/ng-alain files via dev mode"
       copyFiles '../ng-alain/' ${DIST}/
     fi
   else
-    echo "== can't copy files!"
+    echo ">>> can't copy files!"
   fi
 
   cp ${SOURCE}/README.md ${DIST}/README.md
@@ -230,6 +230,7 @@ buildCLI() {
   cp ./LICENSE ${DIST}/LICENSE
 
   updateVersionReferences ${DIST}
+  echo "Build Success!"
 }
 
 integrationCli() {
@@ -297,10 +298,10 @@ echo "Finished!!"
 if [[ ${DEBUG} == true ]]; then
   cd ../../
   DEBUG_FROM=${PWD}/work/delon/dist/ng-alain/*
-  DEBUG_TO=${PWD}/work/ng9/node_modules/ng-alain/
+  DEBUG_TO=${PWD}/work/ng-alain-8/node_modules/ng-alain/
   echo "DEBUG_FROM:${DEBUG_FROM}"
   echo "DEBUG_TO:${DEBUG_TO}"
-  rm -rf ${DEBUG_TO}/application
+  rm -rf ${DEBUG_TO}
   mkdir -p ${DEBUG_TO}
   rsync -a ${DEBUG_FROM} ${DEBUG_TO}
   echo "DEBUG FINISHED~!"

@@ -7,12 +7,17 @@ import { join } from 'path';
  *
  * @param [overwrite=false] `true` is force, default: `false`
  */
-export function overwriteFile(host: Tree, filePath: string, sourcePath?: string, overwrite = false): Tree {
+export function overwriteFile(host: Tree, filePath: string, sourcePath?: string, overwrite = false, sourcePathIsString = false): Tree {
   const isExists = host.exists(filePath);
   if (overwrite || isExists) {
     try {
-      const buffer = fs.readFileSync(sourcePath);
-      const content = buffer ? buffer.toString('utf-8') : '';
+      let content = '';
+      if (sourcePathIsString) {
+        content = sourcePath;
+      } else {
+        const buffer = fs.readFileSync(sourcePath);
+        content = buffer ? buffer.toString('utf-8') : '';
+      }
       if (overwrite) {
         if (isExists) {
           host.delete(filePath);

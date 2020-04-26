@@ -6,6 +6,7 @@ import { createUpgradeRule } from './upgrade-rules';
 import { UpgradeTSLintConfig } from './upgrade-rules/tslint-config';
 import { v2DomRule } from './upgrade-rules/v2/v2DomRule';
 import { v2LayoutRule } from './upgrade-rules/v2/v2LayoutRule';
+import { v9Rule } from './upgrade-rules/v9/v9Rule';
 
 /** List of additional upgrade rules which are specifically for the CDK. */
 const extraUpgradeRules = [
@@ -30,10 +31,7 @@ export function updateToV2(): Rule {
 }
 
 export function updateToV9(): Rule {
-  return () =>
-    console.log(
-      `本次升级请参考：https://github.com/ng-alain/ng-alain/issues/1569 \nPlease refer to https://github.com/ng-alain/ng-alain/issues/1569`,
-    );
+  return chain([v9Rule]);
 }
 
 export function postUpdate(): Rule {

@@ -9,7 +9,7 @@ hot: true
 
 - Angula 并无什么破坏性变更，可以根据 [Angular Update Guide | 8.0 -> 9.0 for Basic Apps](https://update.angular.io/#8.0:9.0) 逐一检查升级
 - NG-ZORRO 部分，本次也并无任何破坏性变更，只是移除在 `8.x` 时就已经警告的过期属性，绝大部分项目可以直接 `ng update ng-zorro-antd` 完成升级，有关更多可能遇到的问题请至 [NG-ZORRO v9 升级指南](https://github.com/NG-ZORRO/ng-zorro-antd/issues/5035)。
-- NG-ALAIN 并无 `@delon/*` 系列的变动，反之会受 NG-ZORRO 部分而少些细节需要处理；除此之外，主要对代码风格、G2、强制使用 `date-fns` 作为日期操作的首选进行优化。
+- NG-ALAIN 如果你是 `8.x` 可以直接使用 `ng update ng-alain`，会修复一次细节的变动；`@delon/*` 系列的大变动，反之会受 NG-ZORRO 部分而少些细节需要处理；除此之外，主要对代码风格、G2、强制使用 `date-fns` 作为日期操作的首选进行优化。
 
 # 注意：如果你升级过程中有任何问题，请提交一份 [Issues](https://github.com/ng-alain/ng-alain/issues/new?template=bug_report.md) 并详细描述，也可以通过 [8-to-9标签](https://github.com/ng-alain/ng-alain/labels/8-to-9) 来检索已知问题。
 

@@ -23,7 +23,7 @@ export async function createAlainApp(ngAddOptions?: NgAddSchema): Promise<AppRes
     .runSchematicAsync('workspace', {
       name: 'workspace',
       newProjectRoot: 'projects',
-      version: '6.0.0',
+      version: '8.0.0',
     })
     .toPromise();
   const appTree = await baseRunner
