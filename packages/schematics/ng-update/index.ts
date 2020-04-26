@@ -29,9 +29,14 @@ export function updateToV2(): Rule {
   return chain([v2LayoutRule, v2DomRule, createUpgradeRule(TargetVersion.V2, tslintUpgradeConfig)]);
 }
 
-export function postUpdate(): Rule {
+export function updateToV9(): Rule {
   return () =>
     console.log(
-      '\nComplete! Please check the output above for any issues that were detected but could not be automatically fixed.',
+      `本次升级请参考：https://github.com/ng-alain/ng-alain/issues/1569 \nPlease refer to https://github.com/ng-alain/ng-alain/issues/1569`,
     );
+}
+
+export function postUpdate(): Rule {
+  return () =>
+    console.log('\nComplete! Please check the output above for any issues that were detected but could not be automatically fixed.');
 }
