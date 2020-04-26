@@ -14,7 +14,7 @@ If you want to provide default configurations to some components, you should pro
 
 ```typescript
 // global-config.module.ts
-import { AlainConfig, ALAIN_CONFIG } from '@delon/theme';
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
 
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
@@ -25,7 +25,7 @@ const alainConfig: AlainConfig = {
     { provide: ALAIN_CONFIG, useValue: alainConfig },
   ],
 })
-export class DelonModule {}
+export class GlobalConfigModule {}
 ```
 
 These global configuration would be injected into a service named `AlainConfigService` and gets stored.

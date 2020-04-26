@@ -14,7 +14,7 @@ type: Dev
 
 ```typescript
 // global-config.module.ts
-import { AlainConfig, ALAIN_CONFIG } from '@delon/theme';
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
 
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
@@ -25,7 +25,7 @@ const alainConfig: AlainConfig = {
     { provide: ALAIN_CONFIG, useValue: alainConfig },
   ],
 })
-export class DelonModule {}
+export class GlobalConfigModule {}
 ```
 
 这些全局配置项将会被注入 `AlainConfigService` 当中并保存。
