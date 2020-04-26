@@ -144,7 +144,7 @@ describe('form: widget: date', () => {
       };
       page.newSchema(s);
       const comp = getComp();
-      expect(comp['startFormat']).toBe('x');
+      expect(comp['startFormat']).toBe('T');
     });
   });
 

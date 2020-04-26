@@ -122,7 +122,7 @@ describe('form: widget: time', () => {
         page.newSchema({
           properties: { a: { type: 'number', ui: { widget } } },
         });
-        expect(getComp()['valueFormat']).toBe('x');
+        expect(getComp()['valueFormat']).toBe('T');
       });
       it('should be used HH:mm:ss when type is not number', () => {
         page.newSchema({
