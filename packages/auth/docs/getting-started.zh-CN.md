@@ -67,7 +67,7 @@ export class AppModule { }
 
 默认 `DelonAuthModule` 并不会注册任何HTTP拦截器，主要是因为 @delon/auth 提供了多种不同[认证风格](/auth/getting-started#认证风格)。
 
-## DelonAuthConfig
+## AlainAuthConfig
 
 | 参数名 | 类型 | 默认值 | 描述 |
 | ----- | --- | --- | --- |

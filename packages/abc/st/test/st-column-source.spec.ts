@@ -29,7 +29,7 @@ describe('st: column-source', () => {
   let page: PageObject;
 
   function genModule(other: { acl?: boolean; i18n?: boolean; cog?: any }) {
-    aclSrv = other.acl ? new ACLService({}) : null;
+    aclSrv = other.acl ? new ACLService({ merge: (_: any, def: any) => def } as any) : null;
     i18nSrv = other.i18n ? new MockI18NServiceFake() : null;
     rowSrv = new STRowSource();
     stWidgetRegistry = new STWidgetRegistry();

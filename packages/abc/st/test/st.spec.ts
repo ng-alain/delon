@@ -8,18 +8,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { dispatchDropDown } from '@delon/testing';
-import {
-  AlainConfig,
-  ALAIN_CONFIG,
-  ALAIN_I18N_TOKEN,
-  DatePipe,
-  DelonLocaleModule,
-  DelonLocaleService,
-  DrawerHelper,
-  en_US,
-  ModalHelper,
-} from '@delon/theme';
-import { deepCopy, deepGet } from '@delon/util';
+import { ALAIN_I18N_TOKEN, DatePipe, DelonLocaleModule, DelonLocaleService, DrawerHelper, en_US, ModalHelper } from '@delon/theme';
+import { AlainConfig, ALAIN_CONFIG, deepCopy, deepGet } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzModalModule } from 'ng-zorro-antd/modal';

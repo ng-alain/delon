@@ -3,7 +3,6 @@ order: 1
 title: 开始使用
 type: Documents
 module: DelonFormModule
-config: DelonFormConfig
 ---
 
 @delon/form 是一个基于 [JSON Schema](http://json-schema.org/) 标准的动态构建表单。
@@ -62,48 +61,27 @@ angular.json
 ]
 ```
 
-**DelonFormConfig**
+**全局配置**
 
-全局配置性可以通过在根模块或 `DelonModule` 里覆盖，例如：
+请参考[全局配置](/docs/global-config)，成员如下：
 
-```ts
-import { DelonFormConfig } from '@delon/form';
-export function fnDelonFormConfig(): DelonFormConfig {
-  return Object.assign(new DelonFormConfig(), <DelonFormConfig>{
-    // values
-  });
-}
-
-@NgModule({ })
-export class DelonModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: DelonModule,
-      providers: [
-        { provide: DelonFormConfig, useFactory: fnDelonFormConfig }
-      ]
-    };
-  }
-}
-```
-
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[ajv]` | [ajv](http://epoberezkin.github.io/ajv/#options) 参数 | `Ajv.Options` | -
-`[ingoreKeywords]` | 是否忽略某些数据类型校验（[所有类型](https://github.com/ng-alain/delon/blob/master/packages/form/src/errors.ts#L4)） | `string[]` | `[ 'type', 'enum' ]`
-`[liveValidate]` | 是否实时校验 | `boolean` | `true`
-`[autocomplete]` | 指定表单 `autocomplete` 值 | `on,off` | `null`
-`[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false`
-`[onlyVisual]` | 是否只展示错误视觉不显示错误文本，并取消错误文本间距 | `boolean` | `false`
-`[errors]` | 自定义通用错误信息 | `{ [ key: string ]: string }` | `ERRORSDEFAULT`
-`[ui]` | 默认全局布局 | `SFUISchemaItem` | -
-`[size]` | 元素组件大小，用于 `nzSize` 值 | `default,large,small` | -
-`[button]` | 按钮风格 | `SFButton` | `{submit:'提交',submit_type:'primary',reset:'重置',reset_type:'default'}`
-`[uiDateStringFormat]` | date小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `yyyy-MM-dd HH:mm:ss`
-`[uiDateNumberFormat]` | date小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp | `string` | `x`
-`[uiTimeStringFormat]` | time小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `HH:mm:ss`
-`[uiTimeNumberFormat]` | time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp，日期统一使用 `1970-01-01` | `string` | `x`
-`[uiEmailSuffixes]` | 指定 `format: 'email'` 的默认Email后缀 | `string[]` | `['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']`
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[ajv]` | [ajv](http://epoberezkin.github.io/ajv/#options) 参数 | `Ajv.Options` | - |
+| `[ingoreKeywords]` | 是否忽略某些数据类型校验（[所有类型](https://github.com/ng-alain/delon/blob/master/packages/form/src/errors.ts#L4)） | `string[]` | `[ 'type', 'enum' ]` |
+| `[liveValidate]` | 是否实时校验 | `boolean` | `true` |
+| `[autocomplete]` | 指定表单 `autocomplete` 值 | `on,off` | `null` |
+| `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false` |
+| `[onlyVisual]` | 是否只展示错误视觉不显示错误文本，并取消错误文本间距 | `boolean` | `false` |
+| `[errors]` | 自定义通用错误信息 | `{ [ key: string ]: string }` | `ERRORSDEFAULT` |
+| `[ui]` | 默认全局布局 | `SFUISchemaItem` | - |
+| `[size]` | 元素组件大小，用于 `nzSize` 值 | `default,large,small` | - |
+| `[button]` | 按钮风格 | `SFButton` | `{submit:'提交',submit_type:'primary',reset:'重置',reset_type:'default'}` |
+| `[uiDateStringFormat]` | date小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `yyyy-MM-dd HH:mm:ss` |
+| `[uiDateNumberFormat]` | date小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp | `string` | `x` |
+| `[uiTimeStringFormat]` | time小部件：`type="string"` 且不指定 `schema.format` 和 `ui.format` 时日期格式 | `string` | `HH:mm:ss` |
+| `[uiTimeNumberFormat]` | time小部件：`type="number"` 且不指定 `schema.format` 和 `ui.format` 时日期格式，默认：`x` 13位Unix Timestamp，日期统一使用 `1970-01-01` | `string` | `x` |
+| `[uiEmailSuffixes]` | 指定 `format: 'email'` 的默认Email后缀 | `string[]` | `['qq.com', '163.com', 'gmail.com', '126.com', 'aliyun.com']` |
 
 构建一个邮箱、姓名表单：
 
@@ -139,30 +117,30 @@ export class HomeComponent {
 
 ### sf
 
-| 参数         | 说明                            | 类型                        | 默认值       |
-|--------------|---------------------------------|-----------------------------|--------------|
-| `[layout]`       | 表单布局，等同 `nzLayout`  | `'horizontal','vertical','inline'`   | `'horizontal'` |
-| `[schema]`       | **必填项** JSON Schema          | `SFSchema`                  | -            |
-| `[ui]`           | UI Schema                       | `SFUISchema`                | -            |
-| `[formData]`     | 表单默认值                      | `any`                       | -            |
-| `[mode]`         | 表单模式，细节见常见问题         | `'default','search','edit'`       | `'default'`    |
-| `[button]`       | 按钮                            | `SFButton|'none'`          | `{}`         |
-| `[firstVisual]`  | 是否立即呈现错误视觉            | `boolean`                   | `true`       |
-| `[liveValidate]` | 是否实时校验，`false` 提交时检验 | `boolean`                   | `true`       |
-| `[autocomplete]` | 指定表单 `autocomplete` 值      | `'on','off'`                    | `null`       |
-| `[disabled]` | 是否禁用状态  | `boolean` | `false` |
-| `[loading]` | 是否加载状态，当 `true` 重置按钮禁止状态，提交按钮加载状态  | `boolean` | `false` |
-| `[noColon]` | 是否不显示 `label` 后面的冒号	  | `boolean` | `false` |
-| `[cleanValue]` | 是否清理未定义 Schema 的数据  | `boolean` | `false` |
-| `(formChange)`   | 数据变更时回调                  | `EventEmitter<{}>`          | -            |
-| `(formSubmit)`   | 提交表单时回调                  | `EventEmitter<{}>`          | -            |
-| `(formReset)`    | 重置表单时回调                  | `EventEmitter<{}>`          | -            |
-| `(formError)`    | 表单校验结果回调                | `EventEmitter<ErrorData[]>` | -            |
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[layout]` | 表单布局，等同 `nzLayout` | `'horizontal','vertical','inline'` | `'horizontal'` |
+| `[schema]` | **必填项** JSON Schema | `SFSchema` | - |
+| `[ui]` | UI Schema | `SFUISchema` | - |
+| `[formData]` | 表单默认值 | `any` | - |
+| `[mode]` | 表单模式，细节见常见问题 | `'default','search','edit'` | `'default'` |
+| `[button]` | 按钮 | `SFButton|'none'` | `{}` |
+| `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `true` |
+| `[liveValidate]` | 是否实时校验，`false` 提交时检验 | `boolean` | `true` |
+| `[autocomplete]` | 指定表单 `autocomplete` 值 | `'on','off'` | `null` |
+| `[disabled]` | 是否禁用状态 | `boolean` | `false` |
+| `[loading]` | 是否加载状态，当 `true` 重置按钮禁止状态，提交按钮加载状态 | `boolean` | `false` |
+| `[noColon]` | 是否不显示 `label` 后面的冒号 | `boolean` | `false` |
+| `[cleanValue]` | 是否清理未定义 Schema 的数据 | `boolean` | `false` |
+| `(formChange)` | 数据变更时回调 | `EventEmitter<{}>` | - |
+| `(formSubmit)` | 提交表单时回调 | `EventEmitter<{}>` | - |
+| `(formReset)` | 重置表单时回调 | `EventEmitter<{}>` | - |
+| `(formError)` | 表单校验结果回调 | `EventEmitter<ErrorData[]>` | - |
 
 ### SFButton
 
-| 参数       | 说明         | 类型     | 默认值 |
-|------------|------------|----------|------|
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
 | `[submit]` | 提交按钮文本 | `string` | `提交` |
 | `[submit_type]` | 提交按钮类型 | `string` | `primary` |
 | `[submit_icon]` | 提交按钮图标 | `SFButtonIcon` | - |
@@ -175,16 +153,16 @@ export class HomeComponent {
 
 ### 组件方法
 
-| 参数            | 说明                                                  | 返回值         |
-|-----------------|-----------------------------------------------------|----------------|
-| `valid`         | 表单是否有效                                          | `boolean`      |
-| `value`         | 表单值                                                | `any`          |
-| `refreshSchema` | 刷新 JSON Schema                                      | `void`         |
-| `reset`         | 重置表单                                              | `void`         |
-| `validator`     | 手动校验一次表单                                      | `void`         |
-| `getProperty`   | 根据路径获取表单元素属性                              | `FormProperty` |
-| `getValue`      | 根据路径获取表单元素当前值                            | `any`          |
-| `setValue`      | 根据路径设置某个表单元素属性值，若路径不存在会产生异常 | `this`         |
+| 参数 | 说明 | 返回值 |
+|----|----|-----|
+| `valid` | 表单是否有效 | `boolean` |
+| `value` | 表单值 | `any` |
+| `refreshSchema` | 刷新 JSON Schema | `void` |
+| `reset` | 重置表单 | `void` |
+| `validator` | 手动校验一次表单 | `void` |
+| `getProperty` | 根据路径获取表单元素属性 | `FormProperty` |
+| `getValue` | 根据路径获取表单元素当前值 | `any` |
+| `setValue` | 根据路径设置某个表单元素属性值，若路径不存在会产生异常 | `this` |
 
 > **注：** 所有 path 采用 `/` 来分隔，例如：`/user/name`、`/arr/0/name`。
 

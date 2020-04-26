@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core
 import { DelonACLModule } from '@delon/acl';
 // mock
 import { DelonMockModule } from '@delon/mock';
-import { AlainConfig, AlainThemeModule, ALAIN_CONFIG } from '@delon/theme';
+import { AlainThemeModule } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import * as MOCKDATA from '../../_mock';
 import { throwIfAlreadyLoaded } from './core/module-import-guard';
@@ -30,16 +30,20 @@ const REUSETAB_PROVIDES: NzSafeAny[] = [
 ];
 // #endregion
 
+import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
 const alainConfig: AlainConfig = {
   st: { ps: 3 },
   lodop: {
     license: `A59B099A586B3851E0F0D7FDBF37B603`,
     licenseA: `C94CEE276DB2187AE6B65D56B3FC2848`,
   },
+  mock: {
+    data: MOCKDATA,
+  },
 };
 
 @NgModule({
-  imports: [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot({ data: MOCKDATA })],
+  imports: [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot()],
 })
 export class GlobalConfigModule {
   constructor(@Optional() @SkipSelf() parentModule: GlobalConfigModule) {

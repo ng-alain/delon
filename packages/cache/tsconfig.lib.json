@@ -2,7 +2,10 @@
   "extends": "../tsconfig.lib.prod.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "@delon/*": ["../../dist/@delon/*"]
+    }
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,

@@ -14,7 +14,6 @@ import { deepCopy } from '@delon/util';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { MockRequest } from './interface';
-import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
 import { MockStatusError } from './status.error';
 
@@ -31,14 +30,8 @@ export class MockInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const src = this.injector.get<MockService>(MockService);
-    const config = {
-      delay: 300,
-      force: false,
-      log: true,
-      executeOtherInterceptors: true,
-      ...this.injector.get<DelonMockConfig>(DelonMockConfig),
-    };
+    const src = this.injector.get(MockService);
+    const config = src.config;
     const rule = src.getRule(req.method, req.url.split('?')[0]);
     if (!rule && !config.force) {
       return next.handle(req);
@@ -99,7 +92,7 @@ export class MockInterceptor implements HttpInterceptor {
       });
     }
 
-    if (config.copy && res.body) {
+    if (res.body) {
       res.body = deepCopy(res.body);
     }
 
@@ -117,10 +110,10 @@ export class MockInterceptor implements HttpInterceptor {
         const chain = lastInterceptors.reduceRight((_next, _interceptor) => new HttpMockInterceptorHandler(_next, _interceptor), {
           handle: () => res$,
         } as HttpBackend);
-        return chain.handle(req).pipe(delay(config.delay));
+        return chain.handle(req).pipe(delay(config.delay!));
       }
     }
 
-    return res$.pipe(delay(config.delay));
+    return res$.pipe(delay(config.delay!));
   }
 }

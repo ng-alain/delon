@@ -242,7 +242,7 @@ The non-closeable item is forcibly removed when the keyboard `ctrl` is pressed.
 
 ### Route data
 
-By routing the `data` property, you can provide partial global configuration for some pages, for example:
+By routing the `data` property, you can provide partial [global configuration](/docs/global-config) for some pages, for example:
 
 ```ts
 // Specify no route

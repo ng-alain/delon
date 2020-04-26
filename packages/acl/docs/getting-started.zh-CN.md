@@ -3,7 +3,6 @@ order: 1
 title: 开始使用
 type: Documents
 module: DelonACLModule
-config: DelonACLConfig
 ---
 
 ACL 全称叫访问控制列表（Access Control List），是一种非常简单的基于角色权限控制方式。一个完全独立 `@delon/acl` 模块（[DEMO](//ng-alain.github.io/ng-alain/#/logics/acl)）。
@@ -37,15 +36,15 @@ export class AppModule { }
 
 ### DelonACLConfig
 
-| 属性 | 类型 | 说明 | 默认 |
-| --- | --- | --- | --- |
-| `[guard_url]` | `string` | 路由守卫失败后跳转 | `/403` |
-| `[preCan]` | `(roleOrAbility: ACLCanType) => ACLType` | `can` 执行前回调 | - |
+| 参数 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[guard_url]` | `string` | 路由守卫失败后跳转 | `/403` | ✅ |
+| `[preCan]` | `(roleOrAbility: ACLCanType) => ACLType` | `can` 执行前回调 | - | ✅ |
 
 ### ACLService
 
 | 方法 | 说明 |
-| --- | --- |
+|----|----|
 | `[change]` | 监听ACL变更通知 |
 | `[data]` | 获取所有ACL数据 |
 | `setFull(val: boolean)` | 标识当前用户为全量，即不受限 |
@@ -69,7 +68,7 @@ type ACLCanType = number | number[] | string | string[] | ACLType
 ### ACLType
 
 | 属性 | 类型 | 说明 | 默认 |
-| --- | --- | --- | --- |
+|----|----|----|----|
 | `[role]` | `string[]` | 角色 | - |
 | `[ability]` | `number[], string[]` | 权限点 | - |
 | `[mode]` | `allOf, oneOf` | `allOf` 表示必须满足所有角色或权限点数组算有效<br>`oneOf` 表示只须满足角色或权限点数组中的一项算有效 | `oneOf` |

@@ -1,12 +1,13 @@
 import { inject, Inject } from '@angular/core';
+import { AlainAuthConfig, AlainConfigService } from '@delon/util';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
-import { DelonAuthConfig } from '../auth.config';
+import { mergeConfig } from '../auth.config';
 import { DA_STORE_TOKEN, IStore } from '../store/interface';
 import { AuthReferrer, ITokenModel, ITokenService } from './interface';
 
 export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
-  return new TokenService(inject(DelonAuthConfig), inject(DA_STORE_TOKEN));
+  return new TokenService(inject(AlainConfigService), inject(DA_STORE_TOKEN));
 }
 
 /**
@@ -15,14 +16,17 @@ export function DA_SERVICE_TOKEN_FACTORY(): ITokenService {
 export class TokenService implements ITokenService {
   private change$ = new BehaviorSubject<ITokenModel | null>(null);
   private _referrer: AuthReferrer = {};
+  private _options: AlainAuthConfig;
 
-  constructor(private options: DelonAuthConfig, @Inject(DA_STORE_TOKEN) private store: IStore) {}
+  constructor(configSrv: AlainConfigService, @Inject(DA_STORE_TOKEN) private store: IStore) {
+    this._options = mergeConfig(configSrv);
+  }
 
   /**
-   * 授权失败后跳转路由路径（支持外部链接地址），通过设置全局 `DelonAuthConfig.login_url` 来改变
+   * 授权失败后跳转路由路径（支持外部链接地址），通过设置[全局配置](https://ng-alain.com/docs/global-config)来改变
    */
   get login_url(): string | undefined {
-    return this.options.login_url;
+    return this._options.login_url;
   }
 
   /**
@@ -32,12 +36,16 @@ export class TokenService implements ITokenService {
     return this._referrer;
   }
 
+  get options() {
+    return this._options;
+  }
+
   /**
    * 设置 Token 信息
    */
   set(data: ITokenModel): boolean {
     this.change$.next(data);
-    return this.store.set(this.options.store_key!, data);
+    return this.store.set(this._options.store_key!, data);
   }
 
   /**
@@ -53,7 +61,7 @@ export class TokenService implements ITokenService {
    */
   get(type?: any): any;
   get<T extends ITokenModel>(type?: new () => T): T {
-    const data = this.store.get(this.options.store_key!);
+    const data = this.store.get(this._options.store_key!);
     return type ? (Object.assign(new type(), data) as T) : (data as T);
   }
 
@@ -73,7 +81,7 @@ export class TokenService implements ITokenService {
       data.token = ``;
       this.set(data);
     } else {
-      this.store.remove(this.options.store_key!);
+      this.store.remove(this._options.store_key!);
     }
     this.change$.next(data);
   }

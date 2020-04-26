@@ -9,6 +9,7 @@
       "ng-zorro-antd/auto-complete": "ng-zorro-antd/auto-complete",
       "ng-zorro-antd/button": "ng-zorro-antd/button",
       "ng-zorro-antd/card": "ng-zorro-antd/card",
+      "ng-zorro-antd/core/animation": "ng-zorro-antd/core/animation",
       "ng-zorro-antd/cascader": "ng-zorro-antd/cascader",
       "ng-zorro-antd/checkbox": "ng-zorro-antd/checkbox",
       "ng-zorro-antd/date-picker": "ng-zorro-antd/date-picker",

@@ -1,5 +1,5 @@
+import { AlainSFConfig } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { DelonFormConfig } from '../config';
 import { SFValue } from '../interface';
 import { SFSchema } from '../schema/index';
 import { SFUISchema, SFUISchemaItem } from '../schema/ui';
@@ -23,7 +23,7 @@ export class ObjectProperty extends PropertyGroup {
     formData: NzSafeAny,
     parent: PropertyGroup | null,
     path: string,
-    options: DelonFormConfig,
+    options: AlainSFConfig,
   ) {
     super(schemaValidatorFactory, schema, ui, formData, parent, path, options);
     this.createProperties();

@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { AlainCacheConfig, AlainConfigService } from '@delon/util';
 import addSeconds from 'date-fns/addSeconds';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { DelonCacheConfig } from './cache.config';
 import { CacheNotifyResult, CacheNotifyType, ICache, ICacheStore } from './interface';
 import { DC_STORE_STORAGE_TOKEN } from './local-storage-cache.service';
 
@@ -15,10 +15,15 @@ export class CacheService implements OnDestroy {
   private meta: Set<string> = new Set<string>();
   private freqTick = 3000;
   private freqTime: NzSafeAny;
-  private cog: DelonCacheConfig = {};
+  private cog: AlainCacheConfig;
 
-  constructor(_: DelonCacheConfig, @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore, private http: HttpClient) {
-    Object.assign(this.cog, { ...new DelonCacheConfig(), ..._ });
+  constructor(cogSrv: AlainConfigService, @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore, private http: HttpClient) {
+    this.cog = cogSrv.merge<AlainCacheConfig, 'cache'>('cache', {
+      mode: 'promise',
+      reName: '',
+      prefix: '',
+      meta_key: '__cache_meta',
+    });
     this.loadMeta();
     this.startExpireNotify();
   }

@@ -10,8 +10,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { AlainConfigService, AlainErrorCollectConfig } from '@delon/theme';
-import { InputNumber } from '@delon/util';
+import { AlainConfigService, AlainErrorCollectConfig, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'error-collect, [error-collect]',

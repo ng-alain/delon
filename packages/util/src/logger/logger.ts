@@ -30,10 +30,6 @@ export const deprecation10 = (comp: string, from: string, to?: string) => {
   warnDeprecation(`${comp} => '${from}' is going to be removed in 10.0.0${to ? `, Please use '${to}' instead` : ``}.`);
 };
 
-export const deprecation10Cog = (cogName: string) => {
-  warnDeprecation(`${cogName} is going to be removed in 10.0.0. Please refer to https://ng-alain.com/docs/global-config`);
-};
-
 export const warnDeprecation = (...args: NzSafeAny[]) => {
   if (!environment.isTestMode) {
     const stack = new Error().stack;

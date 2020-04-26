@@ -11,8 +11,7 @@ import {
 } from '@angular/core';
 import { Chart } from '@antv/g2';
 import { LooseObject, TooltipOption } from '@antv/g2/lib/interface';
-import { AlainConfigService } from '@delon/theme';
-import { InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export interface G2MiniBarData {

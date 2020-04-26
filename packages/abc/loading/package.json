@@ -8,7 +8,7 @@
         "@angular/cdk/portal": "ng.cdk.portal",
         "ng-zorro-antd/icon": "ng-zorro-antd/icon",
         "ng-zorro-antd/spin": "ng-zorro-antd/spin",
-        "@delon/theme": "delon.theme"
+        "@delon/util": "delon.util"
       }
     }
   }

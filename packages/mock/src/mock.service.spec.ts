@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+import { AlainMockConfig, ALAIN_CONFIG } from '@delon/util';
 import * as Mock from 'mockjs';
 import { DelonMockModule } from '../index';
 import { MockRequest, MockRule } from './interface';
-import { DelonMockConfig } from './mock.config';
 import { MockService } from './mock.service';
 
 const DATA = {
@@ -25,11 +25,10 @@ const DATA = {
 describe('mock: service', () => {
   let srv: MockService;
 
-  function genModule(options: DelonMockConfig) {
-    options = Object.assign(new DelonMockConfig(), options);
+  function genModule(options: AlainMockConfig) {
     TestBed.configureTestingModule({
-      imports: [DelonMockModule.forRoot(options)],
-      providers: [],
+      imports: [DelonMockModule.forRoot()],
+      providers: [{ provide: ALAIN_CONFIG, useValue: { mock: options } }],
     });
     srv = TestBed.inject<MockService>(MockService);
     spyOn(console, 'log');

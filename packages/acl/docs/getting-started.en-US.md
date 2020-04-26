@@ -3,7 +3,6 @@ order: 1
 title: Getting Started
 type: Documents
 module: DelonACLModule
-config: DelonACLConfig
 ---
 
 ACL (Access Control List) is a very simple role-based permission control method, you can use in any Angular projects, a online [DEMO](//ng-alain.github.io/ng-alain/#/logics/acl)
@@ -37,15 +36,15 @@ export class AppModule { }
 
 ### DelonACLConfig
 
-| Name   | Type  | Summary | Default |
-| --- | --- | --- | --- |
-| `[guard_url]` | `string` | Router URL when guard fail | `/403` |
-| `[preCan]` | `(roleOrAbility: ACLCanType) => ACLType` | `can` before execution callback | - |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[guard_url]` | `string` | Router URL when guard fail | `/403` | ✅ |
+| `[preCan]` | `(roleOrAbility: ACLCanType) => ACLType` | `can` before execution callback | - | ✅ |
 
 ### ACLService
 
 | Name | Description |
-| --- | --- |
+|------|-------------|
 | `[change]` | Listen for ACL change notifications |
 | `[data]` | Get all ACL data |
 | `setFull(val: boolean)` | Whether to super administrator |
@@ -68,8 +67,8 @@ type ACLCanType = number | number[] | string | string[] | ACLType
 
 ### ACLType
 
-| Name    | Type  | Summary | Default |
-| --- | --- | --- | --- |
+| Name | Type | Summary | Default |
+|------|------|---------|---------|
 | `[role]` | `string[]` | List of role | - |
 | `[ability]` | `number[], string[]` | List of permission | - |
 | `[mode]` | `allOf, oneOf` | `allOf` Must be valid against all of the given permission.<br>`oneOf` Must be valid against exactly one of the given permission. | `oneOf` |

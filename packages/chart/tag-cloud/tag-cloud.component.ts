@@ -12,8 +12,7 @@ import {
 import DataSet from '@antv/data-set';
 import { Chart, registerShape, Util } from '@antv/g2';
 import { LooseObject } from '@antv/g2/lib/interface';
-import { AlainConfigService } from '@delon/theme';
-import { deprecation10, InputNumber } from '@delon/util';
+import { AlainConfigService, deprecation10, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';

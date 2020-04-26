@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
-import { AlainConfigService, AlainSGConfig, REP_TYPE } from '@delon/theme';
-import { InputNumber } from '@delon/util';
+import { REP_TYPE } from '@delon/theme';
+import { AlainConfigService, AlainSGConfig, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'sg-container, [sg-container]',

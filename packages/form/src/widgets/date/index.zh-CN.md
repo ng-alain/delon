@@ -16,7 +16,7 @@ type: Widgets
   - `time`、`full-time` 默认 `HH:mm:ss`
   - 非标准：`week` 默认 `yyyy-WW`
   - 非标准：`month` 默认 `yyyy-MM`
-- 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过 `DelonFormConfig` 替换）数据格式化：
+- 不指定 `schema.format` 根据 `schema.type` 值按以下规则处理（允许通过[全局配置](/docs/global-config)替换）数据格式化：
   - `string` 默认 `yyyy-MM-dd HH:mm:ss`
   - `number` 默认 `x` 13位Unix Timestamp
 

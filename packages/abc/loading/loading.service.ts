@@ -1,7 +1,7 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, OnDestroy } from '@angular/core';
-import { AlainConfigService, AlainLoadingConfig } from '@delon/theme';
+import { AlainConfigService, AlainLoadingConfig } from '@delon/util';
 import { Subject, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { LoadingDefaultComponent } from './loading.component';

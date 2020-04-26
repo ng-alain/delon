@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NzTreeNode } from 'ng-zorro-antd/core/tree';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { DelonUtilConfig } from '../util.config';
-import { ArrayConfig } from './array.config';
+import { AlainConfigService, AlainUtilArrayConfig } from '../config';
 
 export interface ArrayServiceTreeToArrOptions {
   /** 深度项名，默认：`'deep'` */
@@ -60,9 +59,9 @@ export interface ArrayServiceGetKeysByTreeNodeOptions {
 
 @Injectable({ providedIn: 'root' })
 export class ArrayService {
-  private c: ArrayConfig;
-  constructor(cog: DelonUtilConfig) {
-    this.c = {
+  private c: AlainUtilArrayConfig;
+  constructor(cog: AlainConfigService) {
+    this.c = cog.merge<AlainUtilArrayConfig, 'utilArray'>('utilArray', {
       deepMapName: 'deep',
       parentMapName: 'parent',
       idMapName: 'id',
@@ -73,8 +72,7 @@ export class ArrayService {
       selectedMapname: 'selected',
       expandedMapname: 'expanded',
       disabledMapname: 'disabled',
-      ...(cog && cog.array),
-    };
+    });
   }
   /**
    * 将树结构转换成数组结构

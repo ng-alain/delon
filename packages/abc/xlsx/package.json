@@ -5,8 +5,7 @@
       "entryFile": "public_api.ts",
       "umdModuleIds": {
         "file-saver": "saveAs",
-        "@delon/util": "delon.util",
-        "@delon/theme": "delon.theme"
+        "@delon/util": "delon.util"
       }
     }
   }

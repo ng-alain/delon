@@ -1,4 +1,4 @@
-export interface HttpClientConfig {
+export interface AlainThemeHttpClientConfig {
   /**
    * 空值处理，默认：`include`
    * - include：包含

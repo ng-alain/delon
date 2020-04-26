@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Data, Route, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { DelonACLConfig } from './acl.config';
 import { ACLService } from './acl.service';
 import { ACLCanType } from './acl.type';
 
@@ -19,12 +18,12 @@ import { ACLCanType } from './acl.type';
  */
 @Injectable({ providedIn: 'root' })
 export class ACLGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private srv: ACLService, private router: Router, private options: DelonACLConfig) {}
+  constructor(private srv: ACLService, private router: Router) {}
 
   private process(data: Data): Observable<boolean> {
     data = {
       guard: null,
-      guard_url: this.options.guard_url,
+      guard_url: this.srv.guard_url,
       ...data,
     };
     const guard: ACLCanType | Observable<ACLCanType> = data.guard;
