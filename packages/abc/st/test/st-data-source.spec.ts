@@ -49,7 +49,6 @@ describe('abc: table: data-souce', () => {
       return val;
     }
   }
-
   class MockNzI18nService {
     getDateLocale() {
       return null;
