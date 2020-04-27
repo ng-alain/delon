@@ -125,5 +125,8 @@ describe('util: time', () => {
     it('should be specify format when parseISO return invalid date', () => {
       expect(toDate(`12/12/2020`, 'MM/dd/yyyy') instanceof Date).toBe(true);
     });
+    it('should be return default value', () => {
+      expect(toDate(`12/12/2020`, { defaultValue: '1' }) as NzSafeAny).toBe('1');
+    });
   });
 });

@@ -57,9 +57,15 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
   }
 
   reset(value: SFValue) {
-    value = toDate(value, this.startFormat);
+    value = toDate(value, { formatString: this.startFormat, defaultValue: null });
     if (this.flatRange) {
-      this.displayValue = value == null ? [] : [value, toDate(this.endProperty.formData as NzSafeAny, this.endFormat || this.startFormat)];
+      this.displayValue =
+        value == null
+          ? []
+          : [
+              value,
+              toDate(this.endProperty.formData as NzSafeAny, { formatString: this.endFormat || this.startFormat, defaultValue: null }),
+            ];
     } else {
       this.displayValue = value;
     }
