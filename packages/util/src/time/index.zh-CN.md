@@ -24,3 +24,6 @@ getTimeDistance('week')
 ## toDate
 
 转换成 `Date` 格式，支持 `Date, number, string` 类型，如果是 `number` 表示 Unix timestamp。
+
+* `formatString` 如果转换失败尝试根据 `formatString` 格式来转换
+* `defaultValue` 无效日期应返回的默认值，默认：`new Date(NaN)`

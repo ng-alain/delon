@@ -24,3 +24,6 @@ getTimeDistance('week')
 ## toDate
 
 Return the date parsed from string using the given format string, If the argument is a number, it is treated as a timestamp.
+
+* `formatString` If parsing fails try to parse the date by pressing `formatString`
+* `defaultValue` If parsing fails returned default value, default: `new Date(NaN)`
