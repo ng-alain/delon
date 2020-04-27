@@ -16,6 +16,10 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ## [9.0.1](https://github.com/ng-alain/delon/compare/9.0.0...9.0.1) (2020-04-27)
 
+### Scaffold
+
+* fix invalid get browser lange ([#1600](https://github.com/ng-alain/ng-alain/pull/1600/files))
+
 ### Bug Fixes
 
 * fix support ISO 8601 ([#852](https://github.com/ng-alain/delon/issues/852)) ([ff07adc](https://github.com/ng-alain/delon/commit/ff07adc159c6026cc4e237dccf9f5218df560b21))

@@ -16,6 +16,10 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ## [9.0.1](https://github.com/ng-alain/delon/compare/9.0.0...9.0.1) (2020-04-27)
 
+### Scaffold
+
+* 修复无法正确获取浏览器默认语言代码 ([#1600](https://github.com/ng-alain/ng-alain/pull/1600/files))
+
 ### Bug Fixes
 
 * 修复ISO8610格式问题 ([#852](https://github.com/ng-alain/delon/issues/852)) ([ff07adc](https://github.com/ng-alain/delon/commit/ff07adc159c6026cc4e237dccf9f5218df560b21))
