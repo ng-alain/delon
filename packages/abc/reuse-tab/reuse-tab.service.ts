@@ -352,8 +352,12 @@ export class ReuseTabService implements OnDestroy {
     return menus.pop();
   }
 
-  private runHook(method: string, _url: string, comp: any) {
-    if (comp.instance && typeof comp.instance[method] === 'function') comp.instance[method]();
+  private runHook(method: '_onReuseInit' | '_onReuseDestroy', _url: string, comp: any) {
+    if (!comp.instance) return;
+    console.log(comp.instance);
+    if (typeof comp.instance[method] === 'function') {
+      comp.instance[method]();
+    }
   }
 
   private hasInValidRoute(route: ActivatedRouteSnapshot) {
