@@ -2,6 +2,11 @@ import { Tree } from '@angular-devkit/schematics';
 import * as fs from 'fs';
 import { join } from 'path';
 
+export function readContent(host: Tree, filePath: string) {
+  if (!host.exists(filePath)) return '';
+  return host.read(filePath).toString('utf-8');
+}
+
 /**
  * Overwrite files to the project
  *

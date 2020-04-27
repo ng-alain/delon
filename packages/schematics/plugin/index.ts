@@ -8,6 +8,7 @@ import { pluginDefaultLanguage } from './plugin.default-language';
 import { pluginDocker } from './plugin.docker';
 import { pluginHmr } from './plugin.hmr';
 import { pluginIcon } from './plugin.icon';
+import { pluginIE } from './plugin.ie';
 import { pluginNetworkEnv } from './plugin.network-env';
 import { pluginSTS } from './plugin.sts';
 import { Schema as PluginSchema } from './schema';
@@ -57,6 +58,9 @@ export default function (options: PluginSchema): Rule {
         break;
       case 'sts':
         rules.push(...pluginSTS(pluginOptions));
+        break;
+      case 'ie':
+        rules.push(pluginIE(pluginOptions));
         break;
       case 'asdf':
         rules.push(pluginAsdf());
