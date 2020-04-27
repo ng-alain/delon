@@ -1,7 +1,7 @@
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import * as colors from 'ansi-colors';
 import { overwriteFile } from '../../../utils/file';
-import { addPackageToPackageJson, getJSON, overwritePackage } from '../../../utils/json';
+import { addPackageToPackageJson, getJSON, overwritePackage, scriptsToAngularJson } from '../../../utils/json';
 import { VERSION } from '../../../utils/lib-versions';
 import { getProjectFromWorkspace, getWorkspace, Project } from '../../../utils/project';
 import lintstagedrcTS from './files-tpl/lintstagedrc';
@@ -55,6 +55,32 @@ function fixScripts(tree: Tree, context: SchematicContext) {
   context.logger.info(`  ✓  Upgrade [lint:ts] script`);
 }
 
+function fixG2Scripts(tree: Tree, context: SchematicContext) {
+  const typingsPath = '/src/typings.d.ts';
+  if (!tree.exists(typingsPath)) {
+    tree.create(typingsPath, '');
+  }
+  const content = tree.get(typingsPath)!.content.toString('UTF-8');
+  if (content.includes('G2')) {
+    tree.overwrite(
+      typingsPath,
+      content.replace(`declare var G2: any;`, '').replace(`declare var DataSet: any;`, '').replace(`declare var Slider: any;`, ''),
+    );
+  }
+
+  scriptsToAngularJson(
+    tree,
+    [
+      'node_modules/@antv/g2/dist/g2.min.js',
+      'node_modules/@antv/data-set/dist/data-set.min.js',
+      'node_modules/@antv/g2-plugin-slider/dist/g2-plugin-slider.min.js',
+    ],
+    'delete',
+    ['build', 'test'],
+  );
+  context.logger.info(`  ✓  Removed g2 script in angular.json & declaration in /src/typings.d.ts`);
+}
+
 function addStWidgetModule(tree: Tree, context: SchematicContext) {
   overwriteFile(tree, `${project.sourceRoot}/app/shared/st-widget/st-widget.module.ts`, stWidgetModuleTS, true, true);
   context.logger.info(colors.red(`  ⚠  Add [st-widget.module.ts], But you must manually import in [app.module.ts] to take effect.`));
@@ -74,6 +100,7 @@ export function v9Rule(): Rule {
     fixVersion(tree, context);
     fixThirdVersion(tree, context);
     fixScripts(tree, context);
+    fixG2Scripts(tree, context);
     addStWidgetModule(tree, context);
     addGlobalConfigModule(tree, context);
 
