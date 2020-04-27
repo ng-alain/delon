@@ -82,7 +82,7 @@ export function toDate(value: Date | string | number, options?: ToDateOptions): 
   const { formatString, defaultValue } = { formatString: 'yyyy-MM-dd HH:mm:ss', defaultValue: new Date(NaN), ...options };
   if (value == null) return defaultValue;
   if (value instanceof Date) return value;
-  if (typeof value === 'number') return defaultValue;
+  if (typeof value === 'number') return new Date(value);
 
   let tryDate = !isNaN(+value) ? new Date(+value) : parseISO(value);
   if (isNaN(tryDate as NzSafeAny)) {
