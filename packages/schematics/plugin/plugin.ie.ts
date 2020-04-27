@@ -1,5 +1,4 @@
 import { Rule, Tree } from '@angular-devkit/schematics';
-import { tryAddFile, tryDelFile } from '../utils/alain';
 import { overwriteFile, readContent } from '../utils/file';
 import { addPackageToPackageJson, getAngular, overwriteAngular, removePackageFromPackageJson } from '../utils/json';
 import { getProject, getProjectFromWorkspace, Project } from '../utils/project';
@@ -11,25 +10,25 @@ let project: Project;
 
 function setAngularJson(host: Tree, options: PluginOptions) {
   const json = getAngular(host);
-  const project = getProjectFromWorkspace(json, options.project);
+  const p = getProjectFromWorkspace(json, options.project);
   if (options.type === 'add') {
-    project.architect.build.configurations.es5 = { tsConfig: './tsconfig-es5.app.json' };
-    project.architect.serve.configurations.es5 = { browserTarget: `${project.name}:build:es5` };
-    project.architect.test.configurations = {
+    p.architect.build.configurations.es5 = { tsConfig: './tsconfig-es5.app.json' };
+    p.architect.serve.configurations.es5 = { browserTarget: `${p.name}:build:es5` };
+    p.architect.test.configurations = {
       es5: { tsConfig: './tsconfig-es5.app.json' },
     };
-    project.architect.e2e.configurations.es5 = { browserTarget: `${project.name}:build:es5` };
+    p.architect.e2e.configurations.es5 = { browserTarget: `${p.name}:build:es5` };
   } else {
-    delete project.architect.build.configurations.es5;
-    delete project.architect.serve.configurations.es5;
-    delete project.architect.test.configurations;
-    delete project.architect.e2e.configurations.es5;
+    delete p.architect.build.configurations.es5;
+    delete p.architect.serve.configurations.es5;
+    delete p.architect.test.configurations;
+    delete p.architect.e2e.configurations.es5;
   }
   overwriteAngular(host, json);
 }
 
 function setBrowserslist(host: Tree, options: PluginOptions) {
-  const filePath = `/browserslist`;
+  const filePath = `${options.root}/browserslist`;
   let content = readContent(host, filePath);
   if (options.type === 'add') {
     content = content.replace(`not IE 9-11`, `not IE 9-10`);
@@ -70,13 +69,13 @@ import 'zone.js/dist/zone';`;
 
 function setTsConfig(host: Tree, options: PluginOptions) {
   // build
-  const buildFilePath = `/tsconfig-es5.app.json`;
+  const buildFilePath = `${options.root}/tsconfig-es5.app.json`;
   if (host.exists(buildFilePath)) host.delete(buildFilePath);
   if (options.type === 'add') {
     overwriteFile(host, buildFilePath, JSON.stringify(tsConfigEs5App, null, 2), true, true);
   }
   // spec
-  const specFilePath = `/tsconfig-es5.spec.json`;
+  const specFilePath = `${options.root}/tsconfig-es5.spec.json`;
   if (host.exists(specFilePath)) host.delete(specFilePath);
   if (options.type === 'add') {
     overwriteFile(host, specFilePath, JSON.stringify(tsConfigEs5Spec, null, 2), true, true);
