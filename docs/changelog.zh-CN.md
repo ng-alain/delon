@@ -14,6 +14,19 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [9.0.1](https://github.com/ng-alain/delon/compare/9.0.0...9.0.1) (2020-04-27)
+
+### Scaffold
+
+* 修复无法正确获取浏览器默认语言代码 ([#1600](https://github.com/ng-alain/ng-alain/pull/1600/files))
+
+### Bug Fixes
+
+* 修复ISO8610格式问题 ([#852](https://github.com/ng-alain/delon/issues/852)) ([ff07adc](https://github.com/ng-alain/delon/commit/ff07adc159c6026cc4e237dccf9f5218df560b21))
+* **cli:** 修复 `ng update` 一并移除 G2 的依赖 ([#853](https://github.com/ng-alain/delon/issues/853)) ([cd0df52](https://github.com/ng-alain/delon/commit/cd0df52a2a850d64b2a8393a057927127da8e5cd))
+* **cli:plugin:ie:** 新增 `ie` 插件，支持 IE11 开发环境 ([#855](https://github.com/ng-alain/delon/issues/855)) ([b033c81](https://github.com/ng-alain/delon/commit/b033c81e2eddbcd32f1a312d87ca4cd1cd5d777e))
+
+
 # 9.0.0 (2020-04-24)
 
 ## 欢迎来到 `ng-alain` 的 `9.0.0` 版本，有关细节请参考[升级指南](https://github.com/ng-alain/ng-alain/issues/1569)。
