@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { warnDeprecation } from '@delon/util';
 
 // #region all modules
 import { AvatarListModule } from '@delon/abc/avatar-list';
@@ -27,6 +28,7 @@ import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 import { STModule } from '@delon/abc/st';
 import { SVModule } from '@delon/abc/sv';
 import { TagSelectModule } from '@delon/abc/tag-select';
+import { VedioPlyrModule } from '@delon/abc/vedio-plyr';
 import { XlsxModule } from '@delon/abc/xlsx';
 import { ZipModule } from '@delon/abc/zip';
 
@@ -59,7 +61,17 @@ const MODULES = [
   SGModule,
   DatePickerModule,
   LoadingModule,
+  VedioPlyrModule,
 ];
 
+/**
+ * @deprecated Use secondary entry eg: `import { STModule } from 'ng-zorro-antd/st';`.
+ */
 @NgModule({ exports: MODULES })
-export class DelonABCModule {}
+export class DelonABCModule {
+  constructor() {
+    warnDeprecation(
+      "The `DelonABCModule` has been deprecated and will be removed in 10.0.0. Please use secondary entry instead.\ne.g. `import { STModule } from 'ng-zorro-antd/st';`",
+    );
+  }
+}

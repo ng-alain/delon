@@ -21,6 +21,7 @@ import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 import { STModule } from '@delon/abc/st';
 import { SVModule } from '@delon/abc/sv';
 import { TagSelectModule } from '@delon/abc/tag-select';
+import { VedioPlyrModule } from '@delon/abc/vedio-plyr';
 import { G2BarModule } from '@delon/chart/bar';
 import { G2CardModule } from '@delon/chart/card';
 import { G2CustomModule } from '@delon/chart/custom';
@@ -77,4 +78,5 @@ export const SHARED_DELON_MODULES = [
   NumberInfoModule,
   TrendModule,
   ReuseTabModule,
+  VedioPlyrModule,
 ];
