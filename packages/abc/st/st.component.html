@@ -169,10 +169,7 @@
         </td>
       </tr>
       <tr [nzExpand]="i.expand">
-        <td></td>
-        <td [attr.colspan]="_columns.length">
-          <ng-template [ngTemplateOutlet]="expand" [ngTemplateOutletContext]="{$implicit: i, index: index }"></ng-template>
-        </td>
+        <ng-template [ngTemplateOutlet]="expand" [ngTemplateOutletContext]="{$implicit: i, index: index }"></ng-template>
       </tr>
     </ng-template>
     <ng-container *ngIf="!virtualScroll">

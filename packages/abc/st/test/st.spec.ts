@@ -1075,6 +1075,16 @@ describe('abc: table', () => {
           el.click();
           page.expectData(1, 'expand', undefined).asyncEnd();
         }));
+        it('should be click icon when with true', fakeAsync(() => {
+          context.expandRowByClick = true;
+          page
+            .cd()
+            .expectData(1, 'expand', undefined)
+            .clickCell('.ant-table-row-expand-icon')
+            .expectData(1, 'expand', true)
+            .expectChangeType('expand')
+            .asyncEnd();
+        }));
       });
       describe('expandRowByClick', () => {
         it('should be close other expaned', fakeAsync(() => {
