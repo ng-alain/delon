@@ -3,7 +3,7 @@ type: Basic
 order: 1
 title: media
 subtitle: HTML5媒体
-cols: 1
+cols: 2
 module: MediaModule
 ---
 

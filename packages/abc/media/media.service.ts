@@ -15,11 +15,7 @@ export class MediaService {
     this._cog = this.cogSrv.merge<AlainMediaConfig, 'media'>(
       'media',
       {
-        urls: [
-          'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js',
-          'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css',
-          // 'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.svg',
-        ],
+        urls: ['https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js', 'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css'],
       },
       val,
     );

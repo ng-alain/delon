@@ -1,3 +1,19 @@
+---
+order: 1
+title:
+  zh-CN: 自定义
+  en-US: Custom
+---
+
+## zh-CN
+
+指定 `source`、`options` 来自定义播放器。
+
+## en-US
+
+Specify `source` and` options` to customize the player.
+
+```ts
 import { Component } from '@angular/core';
 import { PlyrMediaSource } from '@delon/abc/media';
 
@@ -37,3 +53,4 @@ export class DemoComponent {
     },
   };
 }
+```

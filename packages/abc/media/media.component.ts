@@ -1,19 +1,22 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
+  Output,
   Renderer2,
+  SimpleChange,
   ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { MediaService } from './media.service';
+import { PlyrMediaType } from './plyr.types';
 
 declare const Plyr: NzSafeAny;
 
@@ -22,7 +25,7 @@ declare const Plyr: NzSafeAny;
   exportAs: 'mediaComponent',
   template: ``,
   host: {
-    '[class.media]': 'true',
+    '[class.d-block]': 'true',
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,11 +37,11 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // #region fields
 
-  @Input() src: string;
-  @Input() type: 'video' | 'audio' = 'video';
+  @Input() source: string | MediaSource;
+  @Input() type: PlyrMediaType = 'video';
   @Input() options: NzSafeAny;
   @Input() @InputNumber() delay = 0;
-  // @Output() readonly change = new EventEmitter<string>();
+  @Output() readonly ready = new EventEmitter<NzSafeAny>();
 
   // #endregion
 
@@ -46,13 +49,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this._p;
   }
 
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private renderer: Renderer2,
-    private srv: MediaService,
-    private ngZone: NgZone,
-    private cdr: ChangeDetectorRef,
-  ) {}
+  constructor(private el: ElementRef<HTMLElement>, private renderer: Renderer2, private srv: MediaService, private ngZone: NgZone) {}
 
   private initDelay() {
     this.ngZone.runOutsideAngular(() => {
@@ -73,9 +70,13 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
       );
     }
     this.ensureElement();
-    this._p = new Plyr(this.videoEl, {
+
+    const player = (this._p = new Plyr(this.videoEl, {
       ...this.srv.cog.options,
-    });
+    }));
+
+    player.on('ready', () => this.ready.next(player));
+
     this.uploadSource();
   }
 
@@ -97,9 +98,10 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private uploadSource(): void {
-    const { src, type } = this;
-    const source: NzSafeAny = typeof src === 'string' ? { type, sources: [{ src }] } : src;
-    this._p.source = source;
+    this.ngZone.runOutsideAngular(() => {
+      const { source, type } = this;
+      this._p.source = typeof source === 'string' ? { type, sources: [{ source }] } : source;
+    });
   }
 
   ngAfterViewInit(): void {
@@ -114,10 +116,11 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
       .subscribe(() => this.initDelay());
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: { [p in keyof MediaComponent]?: SimpleChange }): void {
     this.srv.cog = { options: this.options };
-
-    this.cdr.detectChanges();
+    if (changes.source && this._p) {
+      this.uploadSource();
+    }
   }
 
   ngOnDestroy(): void {
