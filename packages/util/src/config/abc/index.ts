@@ -11,4 +11,4 @@ export * from './sg.type';
 export * from './st.type';
 export * from './xlsx.type';
 export * from './zip.type';
-export * from './vedio.type';
+export * from './media.type';

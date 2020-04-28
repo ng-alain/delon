@@ -15,6 +15,7 @@ import { GlobalFooterModule } from '@delon/abc/global-footer';
 import { ImageModule } from '@delon/abc/image';
 import { LoadingModule } from '@delon/abc/loading';
 import { LodopModule } from '@delon/abc/lodop';
+import { MediaModule } from '@delon/abc/media';
 import { NoticeIconModule } from '@delon/abc/notice-icon';
 import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 import { PageHeaderModule } from '@delon/abc/page-header';
@@ -28,7 +29,6 @@ import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 import { STModule } from '@delon/abc/st';
 import { SVModule } from '@delon/abc/sv';
 import { TagSelectModule } from '@delon/abc/tag-select';
-import { VedioPlyrModule } from '@delon/abc/vedio-plyr';
 import { XlsxModule } from '@delon/abc/xlsx';
 import { ZipModule } from '@delon/abc/zip';
 
@@ -61,7 +61,7 @@ const MODULES = [
   SGModule,
   DatePickerModule,
   LoadingModule,
-  VedioPlyrModule,
+  MediaModule,
 ];
 
 /**

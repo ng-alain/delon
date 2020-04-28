@@ -1,7 +1,7 @@
 {
   "ngPackage": {
     "lib": {
-      "flatModuleFile": "vedio",
+      "flatModuleFile": "media",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
         "@delon/util": "delon.util"

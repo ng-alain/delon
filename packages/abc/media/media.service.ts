@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { AlainConfigService, AlainVedioConfig, LazyService } from '@delon/util';
+import { AlainConfigService, AlainMediaConfig, LazyService } from '@delon/util';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class VedioService {
-  private _cog: AlainVedioConfig;
+export class MediaService {
+  private _cog: AlainMediaConfig;
   private loaded = false;
   private notify$ = new Subject<void>();
 
-  get cog(): AlainVedioConfig {
+  get cog(): AlainMediaConfig {
     return this._cog;
   }
-  set cog(val: AlainVedioConfig) {
-    this._cog = this.cogSrv.merge<AlainVedioConfig, 'vedio'>(
-      'vedio',
+  set cog(val: AlainMediaConfig) {
+    this._cog = this.cogSrv.merge<AlainMediaConfig, 'media'>(
+      'media',
       {
         urls: [
           'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js',
           'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css',
-          'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.svg',
+          // 'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.svg',
         ],
       },
       val,

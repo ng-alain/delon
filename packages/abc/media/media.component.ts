@@ -8,31 +8,34 @@ import {
   NgZone,
   OnChanges,
   OnDestroy,
+  Renderer2,
   ViewEncapsulation,
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { VedioService } from './vedio-plyr.service';
+import { MediaService } from './media.service';
 
 declare const Plyr: NzSafeAny;
 
 @Component({
-  selector: 'vedio-plyr',
-  exportAs: 'vedioPlyr',
+  selector: 'media',
+  exportAs: 'mediaComponent',
   template: ``,
   host: {
-    '[class.vedio-plyr]': 'true',
+    '[class.media]': 'true',
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class VedioPlyrComponent implements OnChanges, AfterViewInit, OnDestroy {
+export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   private _p: NzSafeAny;
+  private videoEl: HTMLElement;
 
   // #region fields
 
   @Input() src: string;
+  @Input() type: 'video' | 'audio' = 'video';
   @Input() options: NzSafeAny;
   @Input() @InputNumber() delay = 0;
   // @Output() readonly change = new EventEmitter<string>();
@@ -43,7 +46,13 @@ export class VedioPlyrComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this._p;
   }
 
-  constructor(private el: ElementRef<HTMLElement>, private srv: VedioService, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    private renderer: Renderer2,
+    private srv: MediaService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   private initDelay() {
     this.ngZone.runOutsideAngular(() => {
@@ -63,15 +72,22 @@ export class VedioPlyrComponent implements OnChanges, AfterViewInit, OnDestroy {
         )}`,
       );
     }
-    this._p = new Plyr(this.el.nativeElement, {
+    this.ensureElement();
+    this._p = new Plyr(this.videoEl, {
       ...this.srv.cog.options,
-      urls: [{ type: 'video', sources: [{ src: this.src, type: 'video/mp4' }] }],
     });
-    this._p.on('error', (event: NzSafeAny) => {
-      console.log(event);
-      debugger;
-    });
-    // this.uploadSource();
+    this.uploadSource();
+  }
+
+  private ensureElement() {
+    const { type } = this;
+    let el = this.el.nativeElement.querySelector(type) as HTMLElement;
+    if (!el) {
+      el = this.renderer.createElement(type);
+      (el as HTMLVideoElement).controls = true;
+      this.el.nativeElement.appendChild(el);
+    }
+    this.videoEl = el;
   }
 
   private destroy(): void {
@@ -81,10 +97,9 @@ export class VedioPlyrComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private uploadSource(): void {
-    const { src } = this;
-    const source: NzSafeAny = typeof src === 'string' ? { type: 'video', sources: [{ src }] } : src;
+    const { src, type } = this;
+    const source: NzSafeAny = typeof src === 'string' ? { type, sources: [{ src }] } : src;
     this._p.source = source;
-    console.log(source, this._p.source);
   }
 
   ngAfterViewInit(): void {
@@ -101,6 +116,7 @@ export class VedioPlyrComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   ngOnChanges(): void {
     this.srv.cog = { options: this.options };
+
     this.cdr.detectChanges();
   }
 

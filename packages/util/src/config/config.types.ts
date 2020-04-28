@@ -5,13 +5,13 @@ import {
   AlainImageConfig,
   AlainLoadingConfig,
   AlainLodopConfig,
+  AlainMediaConfig,
   AlainPageHeaderConfig,
   AlainQRConfig,
   AlainSEConfig,
   AlainSGConfig,
   AlainSTConfig,
   AlainSVConfig,
-  AlainVedioConfig,
   AlainXlsxConfig,
   AlainZipConfig,
 } from './abc/index';
@@ -39,7 +39,7 @@ export interface AlainConfig {
   sf?: AlainSFConfig;
   xlsx?: AlainXlsxConfig;
   zip?: AlainZipConfig;
-  vedio?: AlainVedioConfig;
+  media?: AlainMediaConfig;
   acl?: AlainACLConfig;
   auth?: AlainAuthConfig;
   cache?: AlainCacheConfig;

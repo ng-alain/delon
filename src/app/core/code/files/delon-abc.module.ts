@@ -27,7 +27,7 @@ import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 import { STModule } from '@delon/abc/st';
 import { SVModule } from '@delon/abc/sv';
 import { TagSelectModule } from '@delon/abc/tag-select';
-import { VedioPlyrModule } from '@delon/abc/vedio-plyr';
+import { MediaModule } from '@delon/abc/media';
 import { XlsxModule } from '@delon/abc/xlsx';
 import { ZipModule } from '@delon/abc/zip';
 
@@ -60,7 +60,7 @@ const MODULES = [
   SGModule,
   DatePickerModule,
   LoadingModule,
-  VedioPlyrModule,
+  MediaModule,
 ];
 
 @NgModule({ exports: MODULES })
