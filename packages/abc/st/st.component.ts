@@ -305,6 +305,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   private setLoading(val: boolean): void {
     if (this.loading == null) {
       this._loading = val;
+      this.cdr.detectChanges();
     }
   }
 
