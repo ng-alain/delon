@@ -481,6 +481,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   _expandChange(item: STData, expand: boolean): void {
+    if (this.expandRowByClick) {
+      return;
+    }
     item.expand = expand;
     this.closeOtherExpand(item);
     this.changeEmit('expand', item);
