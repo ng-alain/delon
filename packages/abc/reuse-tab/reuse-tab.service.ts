@@ -85,6 +85,7 @@ export class ReuseTabService implements OnDestroy {
     this.di('update current tag title: ', value);
     this._cachedChange.next({
       active: 'title',
+      url,
       title: value,
       list: this._cached,
     });
@@ -415,8 +416,12 @@ export class ReuseTabService implements OnDestroy {
     const data = this.get(url);
     const ret = !!(data && data._handle);
     this.di('#shouldAttach', ret, url);
-    if (ret && data!._handle.componentRef) {
-      this.runHook('_onReuseInit', url, data!._handle.componentRef);
+    if (ret) {
+      if (data!._handle.componentRef) {
+        this.runHook('_onReuseInit', url, data!._handle.componentRef);
+      }
+    } else {
+      this._cachedChange.next({ active: 'add', url, list: this._cached });
     }
     return ret;
   }

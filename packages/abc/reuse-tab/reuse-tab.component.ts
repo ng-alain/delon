@@ -16,11 +16,13 @@ import {
   SimpleChange,
   SimpleChanges,
   TemplateRef,
+  ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlainI18NService, ALAIN_I18N_TOKEN } from '@delon/theme';
 import { InputBoolean, InputNumber } from '@delon/util';
+import { NzTabSetComponent } from 'ng-zorro-antd/tabs';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { ReuseTabContextService } from './reuse-tab-context.service';
@@ -37,7 +39,7 @@ import {
 import { ReuseTabService } from './reuse-tab.service';
 
 @Component({
-  selector: 'reuse-tab',
+  selector: 'reuse-tab, [reuse-tab]',
   exportAs: 'reuseTab',
   templateUrl: './reuse-tab.component.html',
   host: {
@@ -51,8 +53,10 @@ import { ReuseTabService } from './reuse-tab.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
+  @ViewChild('tabset') private tabset: NzTabSetComponent;
   private el: HTMLElement;
   private unsubscribe$ = new Subject<void>();
+  private updatePos$ = new Subject<void>();
   private _keepingScrollContainer: Element;
   list: ReuseItem[] = [];
   item: ReuseItem;
@@ -102,9 +106,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     return title.i18n && this.i18nSrv ? this.i18nSrv.fanyi(title.i18n) : title.text!;
   }
 
-  private genList(notify?: ReuseTabNotify) {
-    const isClosed = notify && notify.active === 'close';
-    const beforeClosePos = isClosed ? this.list.findIndex(w => w.url === notify!.url) : -1;
+  private genList(notify?: ReuseTabNotify): void {
     const ls = this.srv.items.map((item: ReuseTabCached, index: number) => {
       return {
         url: item.url,
@@ -115,14 +117,19 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
         last: false,
       } as ReuseItem;
     });
+
+    const isClosed = notify?.active === 'close';
+    let goToPos = this.pos;
     if (this.showCurrent) {
+      const notifyUrl = notify?.url;
+      const beforeClosePos = isClosed ? this.list.findIndex(w => w.url === notifyUrl) : -1;
       const snapshot = this.route.snapshot;
       const url = this.srv.getUrl(snapshot);
       const idx = ls.findIndex(w => w.url === url);
       // jump directly when the current exists in the list
       // or create a new current item and jump
-      if (idx !== -1 || (isClosed && notify!.url === url)) {
-        this.pos = isClosed ? (idx >= beforeClosePos ? this.pos - 1 : this.pos) : idx;
+      if (idx !== -1 || (isClosed && notifyUrl === url)) {
+        goToPos = isClosed ? (idx >= beforeClosePos ? goToPos - 1 : goToPos) : idx;
       } else {
         const snapshotTrue = this.srv.getTruthRoute(snapshot);
         ls.push({
@@ -133,35 +140,36 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           active: false,
           last: false,
         } as ReuseItem);
-        this.pos = ls.length - 1;
+        goToPos = ls.length - 1;
       }
       // fix unabled close last item
       if (ls.length <= 1) ls[0].closable = false;
+    } else {
+      this.render.setStyle(this.el, 'display', ls.length === 0 ? 'none' : 'block');
+    }
+
+    // Muse be go to a valid page when is close operators
+    if (isClosed && goToPos !== null) {
+      this.to(goToPos);
+      return;
     }
 
     this.list = ls;
-
-    if (ls.length && isClosed) {
-      this.to(this.pos);
-    }
-
-    this.refStatus(false);
-    this.visibility();
     this.cdr.detectChanges();
+    this.updatePos$.next();
   }
 
-  private visibility() {
-    if (this.showCurrent) return;
-    this.render.setStyle(this.el, 'display', this.list.length === 0 ? 'none' : 'block');
+  private updateTitle(res: ReuseTabNotify): void {
+    const url = res?.url;
+    const item = this.list.find(w => w.url === url);
+    if (!item) return;
+    item.title = this.genTit(res?.title!);
+    this.cdr.detectChanges();
   }
 
   // #region UI
 
-  private get acitveIndex() {
-    return this.list.find(w => w.active)!.index;
-  }
-
-  cmChange(res: ReuseContextCloseEvent) {
+  contextMenuChange(res: ReuseContextCloseEvent) {
     let fn: (() => void) | null = null;
     switch (res.type) {
       case 'close':
@@ -184,19 +192,11 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     if (!fn) {
       return;
     }
-    if (!res.item.active && res.item.index <= this.acitveIndex) {
+    if (!res.item.active && res.item.index <= this.list.find(w => w.active)!.index) {
       this.to(res.item.index, fn);
     } else {
       fn();
     }
-  }
-
-  refStatus(dc = true) {
-    if (this.list.length) {
-      this.list[this.list.length - 1].last = true;
-      this.list.forEach((i, idx) => (i.active = this.pos === idx));
-    }
-    if (dc) this.cdr.detectChanges();
   }
 
   to(index: number, cb?: () => void) {
@@ -204,9 +204,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     const item = this.list[index];
     this.router.navigateByUrl(item.url).then(res => {
       if (!res) return;
-      this.pos = index;
       this.item = item;
-      this.refStatus();
       this.change.emit(item);
       if (cb) {
         cb();
@@ -229,14 +227,39 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   // #endregion
 
   ngOnInit(): void {
-    this.router.events
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        filter(evt => evt instanceof NavigationEnd),
-      )
-      .subscribe(() => this.genList());
+    this.updatePos$.pipe(takeUntil(this.unsubscribe$), debounceTime(100)).subscribe(() => {
+      const ls = this.list;
+      const last = ls[ls.length - 1];
+      let pos = ls.length - 1;
+      const url = this.srv.getUrl(this.route.snapshot);
+      const item = ls.find(w => w.url === url);
+      if (item == null) {
+        pos = last.index;
+      } else {
+        pos = item.index;
+      }
+      last.last = true;
+      ls.forEach((i, idx) => (i.active = pos === idx));
+      this.pos = pos;
+      this.cdr.detectChanges();
+      // TODO: A very bad way to fix the position force, ~_~, https://github.com/ng-alain/ng-alain/issues/1590
+      this.tabset?.nzTabsNavComponent?.scrollToLabel(pos);
+    });
 
-    this.srv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(res => this.genList(res!));
+    this.srv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
+      switch (res?.active) {
+        case 'title':
+          this.updateTitle(res);
+          return;
+        case 'override':
+          this.updatePos$.next();
+          return;
+        case 'refresh':
+          // 刷新页面
+          return;
+      }
+      this.genList(res!);
+    });
 
     this.i18nSrv.change
       .pipe(
