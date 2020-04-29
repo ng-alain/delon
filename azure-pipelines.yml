@@ -109,6 +109,7 @@ stages:
           - script: |
               export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
               echo "Deploy to $DEPLOY_DOMAIN"
+              cp ./src/dist/index.html ./src/dist/404.html
               npx surge --project ./src/dist --domain $DEPLOY_DOMAIN
             displayName: 'Deploy Site'
             env:
