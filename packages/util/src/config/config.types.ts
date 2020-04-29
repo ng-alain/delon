@@ -5,6 +5,7 @@ import {
   AlainImageConfig,
   AlainLoadingConfig,
   AlainLodopConfig,
+  AlainMediaConfig,
   AlainPageHeaderConfig,
   AlainQRConfig,
   AlainSEConfig,
@@ -38,6 +39,7 @@ export interface AlainConfig {
   sf?: AlainSFConfig;
   xlsx?: AlainXlsxConfig;
   zip?: AlainZipConfig;
+  media?: AlainMediaConfig;
   acl?: AlainACLConfig;
   auth?: AlainAuthConfig;
   cache?: AlainCacheConfig;

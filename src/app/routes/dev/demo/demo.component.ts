@@ -1,39 +1,39 @@
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+import { PlyrMediaSource } from '@delon/abc/media';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <st [data]="users" [columns]="columns" [expand]="expand" expandRowByClick expandAccordion>
-      <ng-template #expand let-item let-index="index" let-column="column">
-        {{ item.description }}
-      </ng-template>
-    </st>
+    <div class="mb-sm">
+      <button nz-button (click)="media.player.play()">Play</button>
+      <button nz-button (click)="media.player.pause()">Pause</button>
+      <button nz-button (click)="media.player.restart()">Restart</button>
+    </div>
+    <media #media [source]="source" [options]="options" style="height: 200px"></media>
   `,
 })
 export class DemoComponent {
-  users: any[] = Array(10)
-    .fill({})
-    .map((_item: any, idx: number) => {
-      return {
-        id: idx + 1,
-        name: `name ${idx + 1}`,
-        age: Math.ceil(Math.random() * 10) + 20,
-        // 是否显示展开按钮
-        showExpand: idx !== 0,
-        description: `${idx + 1}. My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.`,
-      };
-    });
-  columns: STColumn[] = [
-    { title: '编号', index: 'id' },
-    { title: '姓名', index: 'name' },
-    { title: '年龄', index: 'age' },
-    {
-      buttons: [
-        {
-          text: 'Button',
-        },
-      ],
+  source: PlyrMediaSource = {
+    type: 'video',
+    sources: [
+      {
+        src: `https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_Bastion_TheLastBastion.mp4`,
+      },
+    ],
+    // 字幕
+    tracks: [],
+  };
+
+  options = {
+    // If you any problems, open `debug` and you can quickly find the issues
+    debug: true,
+    // controls: ['play-large'],
+    i18n: {
+      // For more parameters, please refer to: https://github.com/sampotts/plyr/blob/master/src/js/config/defaults.js#L151
+      play: '播放',
+      pause: '暂停',
+      speed: '速度',
+      normal: '正常',
     },
-  ];
+  };
 }
