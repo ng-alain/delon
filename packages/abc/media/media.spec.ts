@@ -5,10 +5,10 @@ import { LazyService } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 import { MediaComponent } from './media.component';
 import { MediaModule } from './media.module';
-import { PlyrMediaType } from './plyr.types';
+import { PlyrMediaSource, PlyrMediaType } from './plyr.types';
 
 class MockPlyr {
-  source: NzSafeAny;
+  source: NzSafeAny = {};
   on() {}
   destroy() {}
 }
@@ -24,7 +24,7 @@ describe('abc: media', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MediaModule],
-      declarations: [TestComponent],
+      declarations: [TestComponent, TestCustomVideoComponent],
     });
     ({ fixture, context } = createTestContext(TestComponent));
     page = new PageObject();
@@ -39,9 +39,37 @@ describe('abc: media', () => {
   describe('', () => {
     beforeEach(() => (win.Plyr = MockPlyr));
     afterEach(() => delete win.Plyr);
+
     it('should be working', fakeAsync(() => {
       page.cd();
       expect(page.player != null).toBe(true);
+    }));
+
+    it('should be load once libs', fakeAsync(() => {
+      page.cd();
+      expect(lazySrv.load).toHaveBeenCalledTimes(1);
+      const fixture2 = TestBed.createComponent(TestComponent);
+      fixture2.detectChanges();
+      tick();
+      fixture2.detectChanges();
+      expect(lazySrv.load).toHaveBeenCalledTimes(1);
+    }));
+
+    it('should be used full source argument', fakeAsync(() => {
+      page.cd();
+      expect(page.player.source.type).toBe('video');
+      context.source = { type: 'audio', sources: [] };
+      page.cd();
+      expect(page.player.source.type).toBe('audio');
+    }));
+
+    it('should be custom vedio dom', fakeAsync(() => {
+      const fixture2 = TestBed.createComponent(TestCustomVideoComponent);
+      fixture2.detectChanges();
+      tick();
+      fixture2.detectChanges();
+      // tslint:disable-next-line: no-string-literal
+      expect(fixture2.componentInstance.comp['videoEl'].dataset.type).toBe(`custom`);
     }));
   });
 
@@ -70,8 +98,12 @@ describe('abc: media', () => {
 class TestComponent {
   @ViewChild('comp') comp: MediaComponent;
   type: PlyrMediaType = 'video';
-  source: string | MediaSource;
+  source: string | PlyrMediaSource = '1.mp4';
   options: NzSafeAny;
   delay = 0;
   ready() {}
 }
+@Component({
+  template: `<media #comp [source]="source"><video data-type="custom"></video></media>`,
+})
+class TestCustomVideoComponent extends TestComponent {}

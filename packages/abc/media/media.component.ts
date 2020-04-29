@@ -16,7 +16,7 @@ import {
 import { InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { MediaService } from './media.service';
-import { PlyrMediaType } from './plyr.types';
+import { PlyrMediaSource, PlyrMediaType } from './plyr.types';
 
 declare const Plyr: NzSafeAny;
 
@@ -38,7 +38,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   // #region fields
 
   @Input() type: PlyrMediaType = 'video';
-  @Input() source: string | MediaSource;
+  @Input() source: string | PlyrMediaSource;
   @Input() options: NzSafeAny;
   @Input() @InputNumber() delay = 0;
   @Output() readonly ready = new EventEmitter<NzSafeAny>();
@@ -68,7 +68,6 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
 
     const player = (this._p = new Plyr(this.videoEl, {
       ...this.srv.cog.options,
-      debug: true,
     }));
 
     player.on('ready', () => this.ready.next(player));
@@ -99,11 +98,6 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    if ((window as any).Plyr) {
-      this.initDelay();
-      return;
-    }
-
     this.srv
       .load()
       .notify()
