@@ -23,9 +23,9 @@ declare const Plyr: NzSafeAny;
 @Component({
   selector: 'media',
   exportAs: 'mediaComponent',
-  template: ``,
+  template: `<ng-content></ng-content>`,
   host: {
-    '[class.d-block]': 'true',
+    '[style.display]': `'block'`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,8 +37,8 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // #region fields
 
-  @Input() source: string | MediaSource;
   @Input() type: PlyrMediaType = 'video';
+  @Input() source: string | MediaSource;
   @Input() options: NzSafeAny;
   @Input() @InputNumber() delay = 0;
   @Output() readonly ready = new EventEmitter<NzSafeAny>();
@@ -52,27 +52,23 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   constructor(private el: ElementRef<HTMLElement>, private renderer: Renderer2, private srv: MediaService, private ngZone: NgZone) {}
 
   private initDelay() {
-    this.ngZone.runOutsideAngular(() => {
-      if (this.delay > 0) {
-        setTimeout(() => this.init(), this.delay);
-      } else {
-        this.init();
-      }
-    });
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.init(), this.delay));
   }
 
   private init(): void {
-    if (!Plyr) {
+    if (!(window as any).Plyr) {
       throw new Error(
-        `No Plyr object was found, please make sure that cdn or local path exists, the current referenced path is: ${JSON.stringify(
+        `No window.Plyr found, please make sure that cdn or local path exists, the current referenced path is: ${JSON.stringify(
           this.srv.cog.urls,
         )}`,
       );
     }
+
     this.ensureElement();
 
     const player = (this._p = new Plyr(this.videoEl, {
       ...this.srv.cog.options,
+      debug: true,
     }));
 
     player.on('ready', () => this.ready.next(player));
@@ -98,10 +94,8 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private uploadSource(): void {
-    this.ngZone.runOutsideAngular(() => {
-      const { source, type } = this;
-      this._p.source = typeof source === 'string' ? { type, sources: [{ source }] } : source;
-    });
+    const { source, type } = this;
+    this._p.source = typeof source === 'string' ? { type, sources: [{ src: source }] } : source;
   }
 
   ngAfterViewInit(): void {

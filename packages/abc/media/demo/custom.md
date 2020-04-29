@@ -15,17 +15,16 @@ Specify `source` and` options` to customize the player.
 
 ```ts
 import { Component } from '@angular/core';
-import { PlyrMediaSource } from '@delon/abc/media';
+import { PlyrMediaSource, PlyrMediaType } from '@delon/abc/media';
 
 @Component({
   selector: 'app-demo',
   template: `
     <div class="mb-sm">
-      <button nz-button (click)="media.player.play()">Play</button>
-      <button nz-button (click)="media.player.pause()">Pause</button>
-      <button nz-button (click)="media.player.restart()">Restart</button>
+      <button nz-button (click)="play('video')">Change Play Video</button>
+      <button nz-button (click)="play('audio')">Change Play Audio</button>
     </div>
-    <media #media [source]="source" [options]="options" style="height: 200px"></media>
+    <media #media [source]="source" [options]="options" style="height: 200px;"></media>
   `,
 })
 export class DemoComponent {
@@ -33,7 +32,7 @@ export class DemoComponent {
     type: 'video',
     sources: [
       {
-        src: `https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_Bastion_TheLastBastion.mp4`,
+        src: ``,
       },
     ],
     // 字幕
@@ -52,5 +51,19 @@ export class DemoComponent {
       normal: '正常',
     },
   };
+
+  constructor() {
+    this.play('video');
+  }
+
+  play(type: PlyrMediaType): void {
+    this.source.type = type;
+    if (type === 'video') {
+      this.source.sources[0].src = `https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_Bastion_TheLastBastion.mp4`;
+    } else {
+      this.source.sources[0].src = `http://h5player.bytedance.com/video/music/audio.mp3`;
+    }
+    this.source = { ...this.source };
+  }
 }
 ```

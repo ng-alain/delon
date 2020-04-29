@@ -24,11 +24,12 @@ export class MediaService {
   constructor(private cogSrv: AlainConfigService, private lazySrv: LazyService) {}
 
   load(): this {
-    if (this.loaded) return this;
-    this.loaded = true;
-    this.lazySrv.load(this.cog.urls!).then(() => {
+    if (this.loaded) {
       this.notify$.next();
-    });
+      return this;
+    }
+    this.loaded = true;
+    this.lazySrv.load(this.cog.urls!).then(() => this.notify$.next());
     return this;
   }
 
