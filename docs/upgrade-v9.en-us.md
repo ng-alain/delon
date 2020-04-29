@@ -7,7 +7,7 @@ hot: true
 
 This description refers to the description of the upgrade from `8.9.x' to `9'; NG-ALAIN still needs to be upgraded from three parts.
 
-- There are no disruptive changes to Angula, and you can check upgrades one by one according to [Angular Update Guide | 8.0 -> 9.0 for Basic Apps](https://update.angular.io/#8.0:9.0)
+- There are no disruptive changes to Angular, and you can check upgrades one by one according to [Angular Update Guide | 8.0 -> 9.0 for Basic Apps](https://update.angular.io/#8.0:9.0)
 - In the NG-ZORRO section, there are no disruptive changes this time either, just the removal of expired attributes that were warned at `8.x`, the vast majority of items can be upgraded directly by `ng update ng-zorro-antd`, for more information on possible problems go to [NG-ZORRO v9 Upgrade Guide] (https://github.com/NG-ZORRO/ng-zorro-antd/issues/5035).
 - NG-ALAIN If you are `8.x`, you can directly use` ng update ng-alain`, it will fix a detail change; does not have changes to the `@delon/*` series, but instead is subject to the NG-ZORRO section with less detail to deal with; other than that, it is mainly optimized for code style, G2, and forcing the use of `date-fns` as the preferred date operation.
 
