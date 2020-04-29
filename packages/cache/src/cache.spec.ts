@@ -194,7 +194,6 @@ describe('cache: service', () => {
         const http = TestBed.inject(_HttpClient);
         const get$ = srv.tryGet(KEY, http.get('/'));
         expect(http.loading).toBeFalsy();
-        console.log('b');
         get$.subscribe();
         tick();
         expect(http.loading).toBeTruthy();
