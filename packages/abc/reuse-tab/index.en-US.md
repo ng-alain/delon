@@ -194,7 +194,6 @@ Turning on `keepingScroll` will restore the previous scrollbar position after re
 | `[keepingScrollContainer]` | Keep the scroll bar container | `string | Element` | `window` |
 | `[excludes]` | Exclusion rules, limited by `mode=URL` | `RegExp[]` | - |
 | `[allowClose]` | Whether to allow close tab | `boolean` | `true` |
-| `[showCurrent]` | Always show current page | `boolean` | `true` |
 | `[customContextMenu]` | Custom context click menu | `ReuseCustomContextMenu[]` | - |
 | `[tabBarExtraContent]` | Extra content in tab bar | `TemplateRef<void>` | - |
 | `[tabBarStyle]` | Tab bar style object | `object` | - |
@@ -280,3 +279,9 @@ Limiting the maximum number of reuse can reduce memory growth. There are several
 ### Not supported QueryString parameters
 
 Route reuse preserves uses URLs to distinguish whether the same page, and QueryString query parameters will be repeatedly misused, so not supported, and the QueryString part is forced to be ignored.
+
+### About refresh
+
+The route will be reset when the active tab is refresh, so you must enable `RouterModule.forRoot([], {onSameUrlNavigation: 'reload'});`, otherwise the same route can't be reset.
+
+Refresh the active tab will not trigger `_onReuseInit`, but will reload the route; For inactive tabs, it will trigger `_onReuseInit` once.

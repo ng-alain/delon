@@ -1,5 +1,5 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -87,7 +87,8 @@ describe('abc: reuse-tab', () => {
   function createComp() {
     fixture = TestBed.createComponent(AppComponent);
     dl = fixture.debugElement;
-    tick();
+    fixture.detectChanges();
+    tick(101);
     fixture.detectChanges();
 
     srv = TestBed.inject<ReuseTabService>(ReuseTabService);
@@ -99,6 +100,9 @@ describe('abc: reuse-tab', () => {
     rtComp = dl.query(By.directive(ReuseTabComponent)).injector.get<ReuseTabComponent>(ReuseTabComponent);
     spyOn(layoutComp, 'change');
     spyOn(layoutComp, 'close');
+
+    flush();
+    discardPeriodicTasks();
   }
 
   afterEach(() => rtComp.ngOnDestroy());
@@ -110,9 +114,9 @@ describe('abc: reuse-tab', () => {
     }));
 
     describe('[default]', () => {
-      it('should be create an instance', fakeAsync(() => {
+      it('should be create an instance', () => {
         page.expectCount(1);
-      }));
+      });
       it('should be add a tab when route changed', fakeAsync(() => {
         page.to('#b').expectCount(2);
       }));
@@ -126,7 +130,7 @@ describe('abc: reuse-tab', () => {
           .to('#b')
           .tap(() => {
             page.getEl('#b2').click();
-            page.advance();
+            page.cd();
           })
           .expectCount(3);
       }));
@@ -136,16 +140,6 @@ describe('abc: reuse-tab', () => {
       it('should be close a tab', fakeAsync(() => {
         page.to('#b').expectUrl(0, '/a').expectUrl(1, '/b/1').close(0).expectUrl(0, '/b/1');
         expect(layoutComp.close).toHaveBeenCalled();
-      }));
-      it('should keep one tab when [showCurrent: true]', fakeAsync(() => {
-        page.to('#b').expectCount(2).close(0).expectCount(1);
-        expect(document.querySelectorAll('.anticon-close').length).toBe(0);
-      }));
-      it('should close all tab when [showCurrent: false]', fakeAsync(() => {
-        layoutComp.showCurrent = false;
-        fixture.detectChanges();
-        page.to('#b').expectCount(1).close(0).expectCount(0);
-        expect(page.getEl('reuse-tab').style.display).toBe('none');
       }));
       it('should show next tab when closed a has next tab', fakeAsync(() => {
         srv.max = 10;
@@ -171,27 +165,6 @@ describe('abc: reuse-tab', () => {
     });
 
     describe('[property]', () => {
-      describe('#showCurrent', () => {
-        it('with true', fakeAsync(() => {
-          layoutComp.showCurrent = true;
-          fixture.detectChanges();
-          page
-            .to('#b')
-            .expectCount(2)
-            .expectUrl(0, '/a')
-            .expectUrl(1, '/b/1')
-            .to('#c')
-            .expectCount(3)
-            .expectUrl(0, '/a')
-            .expectUrl(1, '/b/1')
-            .expectUrl(2, '/c');
-        }));
-        it('with false', fakeAsync(() => {
-          layoutComp.showCurrent = false;
-          fixture.detectChanges();
-          page.to('#b').expectCount(1).expectUrl(0, '/a').to('#c').expectCount(2).expectUrl(1, '/b/1');
-        }));
-      });
       describe('#mode', () => {
         [ReuseTabMatchMode.Menu, ReuseTabMatchMode.MenuForce, ReuseTabMatchMode.URL].forEach(type => {
           it(`with ${type}`, () => {
@@ -221,9 +194,9 @@ describe('abc: reuse-tab', () => {
             .to('#b')
             .expectCount(MAX)
             .to('#c')
-            .expectCount(MAX + (layoutComp.showCurrent ? 1 : 0))
+            .expectCount(MAX + 1) // +1 => current page
             .to('#d')
-            .expectCount(MAX + (layoutComp.showCurrent ? 1 : 0));
+            .expectCount(MAX + 1);
         }));
       });
       describe('#allowClose', () => {
@@ -292,11 +265,9 @@ describe('abc: reuse-tab', () => {
           .expectTime(aTime);
       }));
       it('should show next tab if closed include multi right tab', fakeAsync(() => {
-        let cTime = '';
         page
           .to('#b') // 1
           .to('#c') // 2
-          .tap(() => (cTime = page.time))
           .to('#d') // 3
           .go(1)
           .expectCount(4)
@@ -304,8 +275,7 @@ describe('abc: reuse-tab', () => {
           .clickContentMenu('close')
           .expectCount(3)
           .expectActive(1, true)
-          .expectUrl(1, '/c')
-          .expectTime(cTime);
+          .expectUrl(1, '/c');
       }));
       it('should keeping tab when closed prev tab', fakeAsync(() => {
         page.to('#b').expectCount(2).openContextMenu(0).clickContentMenu('close').expectCount(1).expectActive(0, true);
@@ -359,22 +329,6 @@ describe('abc: reuse-tab', () => {
           .expectUrl(0, '/b/1')
           .expectTime(bTime);
       }));
-      it('should keeping tab of clear tab', fakeAsync(() => {
-        let bTime = '';
-        page
-          .to('#b') // 1
-          .tap(() => (bTime = page.time))
-          .to('#c') // 2
-          .to('#d') // 3
-          .go(1)
-          .expectCount(4)
-          .openContextMenu(1)
-          .clickContentMenu('clear')
-          .expectCount(1)
-          .expectActive(0, true)
-          .expectUrl(0, '/b/1')
-          .expectTime(bTime);
-      }));
       it('should trigger off close when closable: false', fakeAsync(() => {
         page
           .to('#b')
@@ -391,14 +345,14 @@ describe('abc: reuse-tab', () => {
         page.to('#b').openContextMenu(1).expectCount(2);
         expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(1);
         document.dispatchEvent(new Event('click'));
-        page.advance();
+        page.cd();
         expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(0);
       }));
       it('should be allow multi context menu', fakeAsync(() => {
         page.to('#b').openContextMenu(1).expectCount(2);
         expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(1);
         document.dispatchEvent(new MouseEvent('click', { button: 2 }));
-        page.advance();
+        page.cd();
         expect(document.querySelectorAll('.reuse-tab__cm').length).toBe(1);
       }));
       it('should be include non-closeable when push ctrl key', fakeAsync(() => {
@@ -484,14 +438,14 @@ describe('abc: reuse-tab', () => {
         page
           .to('#a') // default page, not trigger store
           .to('#b')
-          .advance(KSTIME)
+          .cd(KSTIME)
           .tap(() => {
             expect(srv.items[0].position != null).toBe(true);
             expect(srv.items[0].position![1]).toBe(666);
             expect(ss.scrollToPosition).not.toHaveBeenCalled();
           })
           .to('#a')
-          .advance(KSTIME)
+          .cd(KSTIME)
           .tap(() => {
             expect(srv.items[1].position != null).toBe(true);
             expect(srv.items[1].position![1]).toBe(666);
@@ -503,12 +457,12 @@ describe('abc: reuse-tab', () => {
         page
           .to('#a') // default page, not trigger store
           .to('#b')
-          .advance(KSTIME)
+          .cd(KSTIME)
           .tap(() => {
             expect(ss.getScrollPosition).not.toHaveBeenCalled();
           })
           .to('#a')
-          .advance(KSTIME)
+          .cd(KSTIME)
           .tap(() => {
             expect(ss.getScrollPosition).not.toHaveBeenCalled();
           });
@@ -534,7 +488,7 @@ describe('abc: reuse-tab', () => {
             .to('#a') // default page, not trigger store
             .to('#b')
             .to('#a')
-            .advance(KSTIME)
+            .cd(KSTIME)
             .tap(() => {
               expect(ss.scrollToPosition).toHaveBeenCalled();
             });
@@ -547,7 +501,7 @@ describe('abc: reuse-tab', () => {
             .to('#a') // default page, not trigger store
             .to('#b')
             .to('#a')
-            .advance(KSTIME)
+            .cd(KSTIME)
             .tap(() => {
               expect(ss.scrollToPosition).toHaveBeenCalled();
             });
@@ -565,7 +519,7 @@ describe('abc: reuse-tab', () => {
           page
             .to('#a') // default page, not trigger store
             .to('#b')
-            .advance(KSTIME)
+            .cd(KSTIME)
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
               expect(srv.items[0].position![1]).toBe(666);
@@ -579,7 +533,7 @@ describe('abc: reuse-tab', () => {
           page
             .to('#a') // default page, not trigger store
             .to('#b')
-            .advance(KSTIME)
+            .cd(KSTIME)
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
               expect(srv.items[0].position![1]).toBe(666);
@@ -592,7 +546,7 @@ describe('abc: reuse-tab', () => {
           page
             .to('#a') // default page, not trigger store
             .to('#b')
-            .advance(KSTIME)
+            .cd(KSTIME)
             .tap(() => {
               expect(srv.items[0].position != null).toBe(true);
               expect(srv.items[0].position![1]).toBe(666);
@@ -608,11 +562,9 @@ describe('abc: reuse-tab', () => {
       genModule(true);
       createComp();
       page.to('#e').expectAttr(1, 'title', 'zh');
-
       i18nResult = 'en';
       TestBed.inject(ALAIN_I18N_TOKEN).use('en');
-      tick(101);
-      page.expectAttr(1, 'title', 'en');
+      page.cd().expectAttr(1, 'title', 'en').end();
     }));
     it('#context-menu-text', fakeAsync(() => {
       genModule();
@@ -676,14 +628,15 @@ describe('abc: reuse-tab', () => {
     getEl(cls: string): HTMLElement {
       return dl.query(By.css(cls)).nativeElement as HTMLElement;
     }
-    advance(time = 0): this {
+    cd(time = 101): this {
+      fixture.detectChanges();
       tick(time);
       fixture.detectChanges();
       return this;
     }
     to(id: string): this {
       this.getEl(id).click();
-      this.advance();
+      this.cd();
       return this;
     }
     get list() {
@@ -722,8 +675,7 @@ describe('abc: reuse-tab', () => {
         return this;
       }
       (ls[pos] as HTMLElement).click();
-      this.advance();
-      return this;
+      return this.cd();
     }
     go(pos: number): this {
       const ls = document.querySelectorAll('[nz-tab-label]');
@@ -734,8 +686,8 @@ describe('abc: reuse-tab', () => {
         expect(false).toBe(true, `invalid item element`);
         return this;
       }
-      rtComp.to(pos);
-      this.advance();
+      rtComp._to(pos);
+      this.cd();
       return this;
     }
     openContextMenu(pos: number, eventArgs?: any): this {
@@ -745,15 +697,18 @@ describe('abc: reuse-tab', () => {
         return this;
       }
       (ls[pos] as HTMLElement).dispatchEvent(new MouseEvent('contextmenu', eventArgs));
-      this.advance();
+      this.cd();
       return this;
     }
     clickContentMenu(type: string): this {
       const el = document.querySelector(`.reuse-tab__cm li[data-type="${type}"]`);
       expect(el).not.toBeNull(`the ${type} is invalid element of content menu container`);
       (el as HTMLElement).click();
-      this.advance();
-      return this;
+      return this.cd();
+    }
+    end() {
+      flush();
+      discardPeriodicTasks();
     }
   }
 });
@@ -781,7 +736,6 @@ class AppComponent {}
       [debug]="debug"
       [excludes]="excludes"
       [allowClose]="allowClose"
-      [showCurrent]="showCurrent"
       [keepingScroll]="keepingScroll"
       [keepingScrollContainer]="keepingScrollContainer"
       [customContextMenu]="customContextMenu"
@@ -802,7 +756,6 @@ class LayoutComponent {
   max: number = 3;
   excludes: RegExp[] = [];
   allowClose = true;
-  showCurrent = true;
   keepingScroll = false;
   keepingScrollContainer: Window | Element | string | null = null;
   customContextMenu: ReuseCustomContextMenu[] = [];

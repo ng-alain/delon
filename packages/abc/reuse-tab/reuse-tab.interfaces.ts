@@ -80,7 +80,7 @@ export interface ReuseContextEvent {
   customContextMenu?: ReuseCustomContextMenu[];
 }
 
-export type CloseType = 'close' | 'closeOther' | 'closeRight' | 'clear' | 'custom' | null;
+export type CloseType = 'close' | 'closeOther' | 'closeRight' | 'custom' | 'refresh' | null;
 
 export interface ReuseContextCloseEvent {
   type: CloseType;

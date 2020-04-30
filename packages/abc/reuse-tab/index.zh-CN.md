@@ -194,7 +194,6 @@ export class DemoComponent {
 | `[keepingScrollContainer]` | 保持滚动条容器 | `string | Element` | `window` |
 | `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | - |
 | `[allowClose]` | 允许关闭 | `boolean` | `true` |
-| `[showCurrent]` | 总是显示当前页 | `boolean` | `true` |
 | `[customContextMenu]` | 自定义右键菜单 | `ReuseCustomContextMenu[]` | - |
 | `[tabBarExtraContent]` | tab bar 上额外的元素 | `TemplateRef<void>` | - |
 | `[tabBarStyle]` | tab bar 的样式对象 | `object` | - |
@@ -280,3 +279,9 @@ export class DemoComponent {
 ### 不支持 QueryString 查询参数
 
 复用采用URL来区分是否同一个页面，而 QueryString 查询参数很容易产生重复性误用，因此不支持查询参数，且在复用过程中会强制忽略掉 QueryString 部分。
+
+### 关于刷新
+
+激活页刷新时会重置整个路由流程，因此必须开启 `RouterModule.forRoot([], { onSameUrlNavigation: 'reload' });`，否则相同路由无法重置。
+
+刷新时当前激活页不会触发 `_onReuseInit`，而是重新加载路由，而对于非激活页只会触发一次 `_onReuseInit`。

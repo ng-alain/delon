@@ -404,7 +404,9 @@ export class ReuseTabService implements OnDestroy {
       this.runHook('_onReuseDestroy', url, _handle.componentRef);
     }
 
-    this._cachedChange.next({ active: isAdd ? 'add' : 'override', item, list: this._cached });
+    if (!isAdd) {
+      this._cachedChange.next({ active: 'override', item, list: this._cached });
+    }
   }
 
   /**

@@ -19,6 +19,7 @@ export interface ReuseTabLocaleData extends LocaleData {
   closeOther: string;
   closeRight: string;
   clear: string;
+  refresh: string;
 }
 
 export interface TagSelectLocaleData extends LocaleData {
