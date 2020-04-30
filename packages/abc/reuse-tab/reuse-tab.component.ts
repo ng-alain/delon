@@ -162,11 +162,18 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     this.cdr.detectChanges();
   }
 
+  private refresh(item: ReuseItem): void {
+    this.srv.runHook('_onReuseInit', this.pos === item.index ? this.srv.compInstance : item.index);
+  }
+
   // #region UI
 
   contextMenuChange(res: ReuseContextCloseEvent) {
     let fn: (() => void) | null = null;
     switch (res.type) {
+      case 'refresh':
+        this.refresh(res.item);
+        break;
       case 'close':
         this._close(null, res.item.index, res.includeNonCloseable);
         break;
@@ -216,6 +223,10 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     this.close.emit(item);
     this.cdr.detectChanges();
     return false;
+  }
+
+  activate(instance: any): void {
+    this.srv.compInstance = { instance };
   }
 
   // #endregion

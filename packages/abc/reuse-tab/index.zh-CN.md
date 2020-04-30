@@ -17,17 +17,17 @@ module: ReuseTabModule
 
 **注册RouteReuseStrategy**
 
-> ng-alain 使用方式参考：[global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L22)。
+> ng-alain 使用方式参考：[global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L32)。
 
 ```ts
 // global-config.module.ts
-providers: [
-  {
-    provide: RouteReuseStrategy,
-    useClass: ReuseTabStrategy,
-    deps: [ReuseTabService],
-  }
-]
+import { RouteReuseStrategy } from '@angular/router';
+import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
+alainProvides.push({
+  provide: RouteReuseStrategy,
+  useClass: ReuseTabStrategy,
+  deps: [ReuseTabService],
+} as any);
 ```
 
 **添加组件**
@@ -36,8 +36,8 @@ providers: [
 
 ```html
 <section class="alain-default__content">
-  <reuse-tab></reuse-tab>
-  <router-outlet></router-outlet>
+  <reuse-tab #reuseTab></reuse-tab>
+  <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 </section>
 ```
 
@@ -279,9 +279,3 @@ export class DemoComponent {
 ### 不支持 QueryString 查询参数
 
 复用采用URL来区分是否同一个页面，而 QueryString 查询参数很容易产生重复性误用，因此不支持查询参数，且在复用过程中会强制忽略掉 QueryString 部分。
-
-### 关于刷新
-
-激活页刷新时会重置整个路由流程，因此必须开启 `RouterModule.forRoot([], { onSameUrlNavigation: 'reload' });`，否则相同路由无法重置。
-
-刷新时当前激活页不会触发 `_onReuseInit`，而是重新加载路由，而对于非激活页只会触发一次 `_onReuseInit`。

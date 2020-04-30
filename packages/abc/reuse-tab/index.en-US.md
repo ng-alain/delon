@@ -17,17 +17,17 @@ The default `ReuseTabModule` does not register `RouteReuseStrategy`. If you need
 
 **Register**
 
-> How to use in ng-alain, pls refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L22).
+> How to use in ng-alain, pls refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L32).
 
 ```ts
 // global-config.module.ts
-providers: [
-  {
-    provide: RouteReuseStrategy,
-    useClass: ReuseTabStrategy,
-    deps: [ReuseTabService],
-  }
-]
+import { RouteReuseStrategy } from '@angular/router';
+import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
+alainProvides.push({
+  provide: RouteReuseStrategy,
+  useClass: ReuseTabStrategy,
+  deps: [ReuseTabService],
+} as any);
 ```
 
 **Add Component**
@@ -36,8 +36,8 @@ providers: [
 
 ```html
 <section class="alain-default__content">
-  <reuse-tab></reuse-tab>
-  <router-outlet></router-outlet>
+  <reuse-tab #reuseTab></reuse-tab>
+  <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 </section>
 ```
 
@@ -279,9 +279,3 @@ Limiting the maximum number of reuse can reduce memory growth. There are several
 ### Not supported QueryString parameters
 
 Route reuse preserves uses URLs to distinguish whether the same page, and QueryString query parameters will be repeatedly misused, so not supported, and the QueryString part is forced to be ignored.
-
-### About refresh
-
-The route will be reset when the active tab is refresh, so you must enable `RouterModule.forRoot([], {onSameUrlNavigation: 'reload'});`, otherwise the same route can't be reset.
-
-Refresh the active tab will not trigger `_onReuseInit`, but will reload the route; For inactive tabs, it will trigger `_onReuseInit` once.

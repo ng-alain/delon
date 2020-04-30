@@ -16,7 +16,6 @@ export default {
     close: 'Κλείσιμο καρτέλας',
     closeOther: 'Κλείσιμο των άλλων καρτέλων',
     closeRight: 'Κλείσιμο των καρτελών δεξιά',
-    clear: 'Καθαρισμός καρτελών',
     refresh: 'φρεσκάρω',
   },
   tagSelect: {

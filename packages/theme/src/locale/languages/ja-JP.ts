@@ -16,7 +16,6 @@ export default {
     close: 'タブを閉じる',
     closeOther: '他のタブを閉じる',
     closeRight: '右のタブを閉じる',
-    clear: 'クリア',
     refresh: 'リフレッシュ',
   },
   tagSelect: {

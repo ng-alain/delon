@@ -30,6 +30,7 @@ export class ReuseTabService implements OnDestroy {
   private _router$: Unsubscribable;
   private removeUrlBuffer: string | null;
   private positionBuffer: { [url: string]: [number, number] } = {};
+  compInstance: any;
   debug = false;
   mode = ReuseTabMatchMode.Menu;
   /** 排除规则，限 `mode=URL` */
@@ -353,7 +354,11 @@ export class ReuseTabService implements OnDestroy {
     return menus.pop();
   }
 
-  private runHook(method: string, _url: string, comp: any) {
+  runHook(method: '_onReuseInit' | '_onReuseDestroy', comp: any) {
+    if (typeof comp === 'number') {
+      const item = this._cached[comp];
+      comp = item._handle.componentRef;
+    }
     if (comp.instance && typeof comp.instance[method] === 'function') comp.instance[method]();
   }
 
@@ -401,7 +406,7 @@ export class ReuseTabService implements OnDestroy {
     this.di('#store', isAdd ? '[new]' : '[override]', url);
 
     if (_handle && _handle.componentRef) {
-      this.runHook('_onReuseDestroy', url, _handle.componentRef);
+      this.runHook('_onReuseDestroy', _handle.componentRef);
     }
 
     if (!isAdd) {
@@ -419,8 +424,10 @@ export class ReuseTabService implements OnDestroy {
     const ret = !!(data && data._handle);
     this.di('#shouldAttach', ret, url);
     if (ret) {
-      if (data!._handle.componentRef) {
-        this.runHook('_onReuseInit', url, data!._handle.componentRef);
+      const compRef = data!._handle.componentRef;
+      if (compRef) {
+        this.compInstance = compRef;
+        this.runHook('_onReuseInit', compRef);
       }
     } else {
       this._cachedChange.next({ active: 'add', url, list: this._cached });

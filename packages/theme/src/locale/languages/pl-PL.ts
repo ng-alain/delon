@@ -16,7 +16,6 @@ export default {
     close: 'Zamknij kartę',
     closeOther: 'Zamknij inne karty',
     closeRight: 'Zamknij karty po prawej',
-    clear: 'Wyczyść karty',
     refresh: 'Refresh',
   },
   tagSelect: {

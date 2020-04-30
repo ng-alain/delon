@@ -16,7 +16,6 @@ export default {
     close: '關閉標簽',
     closeOther: '關閉其它標簽',
     closeRight: '關閉右側標簽',
-    clear: '清空',
     refresh: '刷新',
   },
   tagSelect: {
