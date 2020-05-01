@@ -15,8 +15,5 @@
       "@delon/*": ["../packages/*"]
     }
   },
-  "exclude": ["test.ts", "**/*.spec.ts", "templates/*.ts"],
-  "angularCompilerOptions": {
-    "enableIvy": false
-  }
+  "exclude": ["test.ts", "**/*.spec.ts", "templates/*.ts"]
 }
