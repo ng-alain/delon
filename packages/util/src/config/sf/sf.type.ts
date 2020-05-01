@@ -1,4 +1,19 @@
+export interface AlainSFConfigFormatMap {
+  'date-time': { widget?: string; showTime?: boolean; format?: string };
+  date: { widget?: string; format?: string };
+  'full-date': { widget?: string; format?: string };
+  time: { widget?: string; format?: string };
+  'full-time': { widget?: string; format?: string };
+  week: { widget?: string; mode?: string; format?: string };
+  month: { widget?: string; mode?: string; format?: string };
+  uri: { widget?: string };
+  email: { widget?: string; type?: string };
+  color: { widget?: string; type?: string };
+  '': { widget?: string };
+}
+
 export interface AlainSFConfig {
+  formatMap?: AlainSFConfigFormatMap;
   /**
    * 是否忽略某些数据类型校验 `ERRORSDEFAULT`，默认：`[ 'type', 'enum' ]`
    *
