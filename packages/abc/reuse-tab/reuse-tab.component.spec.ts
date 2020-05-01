@@ -84,7 +84,8 @@ describe('abc: reuse-tab', () => {
     });
   }
 
-  function createComp() {
+  function createComp(layoutTemplate?: string) {
+    if (layoutTemplate) TestBed.overrideTemplate(LayoutComponent, layoutTemplate);
     fixture = TestBed.createComponent(AppComponent);
     dl = fixture.debugElement;
     fixture.detectChanges();
@@ -557,6 +558,34 @@ describe('abc: reuse-tab', () => {
     });
   });
 
+  describe('[refresh]', () => {
+    beforeEach(() => genModule(false));
+    it('should be can not call _onReuseInit when router-outlet not define (activate) event in refresh active tab', fakeAsync(() => {
+      createComp(`<reuse-tab #comp></reuse-tab><router-outlet></router-outlet>`);
+      let time = 0;
+      page
+        .to('#a')
+        .tap(() => (time = +page.time))
+        .openContextMenu(0)
+        .clickContentMenu('refresh');
+      expect(time).toBe(+page.time);
+    }));
+    it('should be call _onReuseInit when refresh active tab', fakeAsync(() => {
+      createComp(`<reuse-tab #comp></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`);
+      page.to('#a').openContextMenu(0);
+      spyOn(srv.componentRef.instance, '_onReuseInit');
+      page.clickContentMenu('refresh');
+      expect(srv.componentRef.instance._onReuseInit).toHaveBeenCalled();
+    }));
+    it('should be call _onReuseInit when refresh non-active tab', fakeAsync(() => {
+      createComp(`<reuse-tab #comp></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`);
+      page.to('#a').to('#b').openContextMenu(0);
+      spyOn(srv.componentRef.instance, '_onReuseInit');
+      page.clickContentMenu('refresh');
+      expect(srv.componentRef.instance._onReuseInit).toHaveBeenCalled();
+    }));
+  });
+
   describe('[i18n]', () => {
     it('should be rendered', fakeAsync(() => {
       genModule(true);
@@ -774,6 +803,8 @@ class LayoutComponent {
 })
 class AComponent {
   time = +new Date();
+  _onReuseInit() {}
+  _onReuseDestroy() {}
 }
 
 @Component({
@@ -787,6 +818,8 @@ class AComponent {
 })
 class BComponent {
   time = +new Date();
+  _onReuseInit() {}
+  _onReuseDestroy() {}
 }
 
 @Component({
@@ -802,6 +835,8 @@ class CComponent {
   constructor(private srv: ReuseTabService) {
     this.srv.title = 'new c title';
   }
+  _onReuseInit() {}
+  _onReuseDestroy() {}
 }
 
 @Component({
@@ -814,6 +849,8 @@ class CComponent {
 })
 class DComponent {
   time = +new Date();
+  _onReuseInit() {}
+  _onReuseDestroy() {}
 }
 
 @Component({
@@ -828,4 +865,6 @@ class EComponent {
   constructor(reuse: ReuseTabService) {
     reuse.closable = false;
   }
+  _onReuseInit() {}
+  _onReuseDestroy() {}
 }

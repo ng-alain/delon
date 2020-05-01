@@ -163,7 +163,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private refresh(item: ReuseItem): void {
-    this.srv.runHook('_onReuseInit', this.pos === item.index ? this.srv.compInstance : item.index);
+    this.srv.runHook('_onReuseInit', this.pos === item.index ? this.srv.componentRef : item.index);
   }
 
   // #region UI
@@ -226,7 +226,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   activate(instance: any): void {
-    this.srv.compInstance = { instance };
+    this.srv.componentRef = { instance };
   }
 
   // #endregion
@@ -253,9 +253,6 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           return;
         case 'override':
           this.updatePos$.next();
-          return;
-        case 'refresh':
-          // 刷新页面
           return;
       }
       this.genList(res!);

@@ -11,7 +11,7 @@ import {
 import { MenuService, ScrollService } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
-import { ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
+import { ReuseComponentRef, ReuseHookTypes, ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
 
 /**
  * 路由复用类，提供复用所需要一些基本接口
@@ -30,7 +30,7 @@ export class ReuseTabService implements OnDestroy {
   private _router$: Unsubscribable;
   private removeUrlBuffer: string | null;
   private positionBuffer: { [url: string]: [number, number] } = {};
-  compInstance: any;
+  componentRef: ReuseComponentRef;
   debug = false;
   mode = ReuseTabMatchMode.Menu;
   /** 排除规则，限 `mode=URL` */
@@ -354,10 +354,13 @@ export class ReuseTabService implements OnDestroy {
     return menus.pop();
   }
 
-  runHook(method: '_onReuseInit' | '_onReuseDestroy', comp: any) {
+  runHook(method: ReuseHookTypes, comp: ReuseComponentRef | number) {
     if (typeof comp === 'number') {
       const item = this._cached[comp];
       comp = item._handle.componentRef;
+    }
+    if (comp == null) {
+      return;
     }
     if (comp.instance && typeof comp.instance[method] === 'function') comp.instance[method]();
   }
@@ -426,7 +429,7 @@ export class ReuseTabService implements OnDestroy {
     if (ret) {
       const compRef = data!._handle.componentRef;
       if (compRef) {
-        this.compInstance = compRef;
+        this.componentRef = compRef;
         this.runHook('_onReuseInit', compRef);
       }
     } else {
