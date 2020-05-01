@@ -11,7 +11,7 @@ import {
 import { MenuService, ScrollService } from '@delon/theme';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { BehaviorSubject, Observable, Unsubscribable } from 'rxjs';
-import { ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
+import { ReuseComponentRef, ReuseHookTypes, ReuseTabCached, ReuseTabMatchMode, ReuseTabNotify, ReuseTitle } from './reuse-tab.interfaces';
 
 /**
  * 路由复用类，提供复用所需要一些基本接口
@@ -30,6 +30,7 @@ export class ReuseTabService implements OnDestroy {
   private _router$: Unsubscribable;
   private removeUrlBuffer: string | null;
   private positionBuffer: { [url: string]: [number, number] } = {};
+  componentRef: ReuseComponentRef;
   debug = false;
   mode = ReuseTabMatchMode.Menu;
   /** 排除规则，限 `mode=URL` */
@@ -85,6 +86,7 @@ export class ReuseTabService implements OnDestroy {
     this.di('update current tag title: ', value);
     this._cachedChange.next({
       active: 'title',
+      url,
       title: value,
       list: this._cached,
     });
@@ -352,8 +354,17 @@ export class ReuseTabService implements OnDestroy {
     return menus.pop();
   }
 
-  private runHook(method: string, _url: string, comp: any) {
-    if (comp.instance && typeof comp.instance[method] === 'function') comp.instance[method]();
+  runHook(method: ReuseHookTypes, comp: ReuseComponentRef | number) {
+    if (typeof comp === 'number') {
+      const item = this._cached[comp];
+      comp = item._handle.componentRef;
+    }
+    if (comp == null) {
+      return;
+    }
+    if (comp.instance && typeof comp.instance[method] === 'function') {
+      comp.instance[method]();
+    }
   }
 
   private hasInValidRoute(route: ActivatedRouteSnapshot) {
@@ -400,10 +411,12 @@ export class ReuseTabService implements OnDestroy {
     this.di('#store', isAdd ? '[new]' : '[override]', url);
 
     if (_handle && _handle.componentRef) {
-      this.runHook('_onReuseDestroy', url, _handle.componentRef);
+      this.runHook('_onReuseDestroy', _handle.componentRef);
     }
 
-    this._cachedChange.next({ active: isAdd ? 'add' : 'override', item, list: this._cached });
+    if (!isAdd) {
+      this._cachedChange.next({ active: 'override', item, list: this._cached });
+    }
   }
 
   /**
@@ -415,8 +428,14 @@ export class ReuseTabService implements OnDestroy {
     const data = this.get(url);
     const ret = !!(data && data._handle);
     this.di('#shouldAttach', ret, url);
-    if (ret && data!._handle.componentRef) {
-      this.runHook('_onReuseInit', url, data!._handle.componentRef);
+    if (ret) {
+      const compRef = data!._handle.componentRef;
+      if (compRef) {
+        this.componentRef = compRef;
+        this.runHook('_onReuseInit', compRef);
+      }
+    } else {
+      this._cachedChange.next({ active: 'add', url, list: this._cached });
     }
     return ret;
   }

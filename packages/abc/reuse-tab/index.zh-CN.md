@@ -17,17 +17,17 @@ module: ReuseTabModule
 
 **注册RouteReuseStrategy**
 
-> ng-alain 使用方式参考：[global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L22)。
+> ng-alain 使用方式参考：[global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L32)。
 
 ```ts
 // global-config.module.ts
-providers: [
-  {
-    provide: RouteReuseStrategy,
-    useClass: ReuseTabStrategy,
-    deps: [ReuseTabService],
-  }
-]
+import { RouteReuseStrategy } from '@angular/router';
+import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
+alainProvides.push({
+  provide: RouteReuseStrategy,
+  useClass: ReuseTabStrategy,
+  deps: [ReuseTabService],
+} as any);
 ```
 
 **添加组件**
@@ -36,10 +36,12 @@ providers: [
 
 ```html
 <section class="alain-default__content">
-  <reuse-tab></reuse-tab>
-  <router-outlet></router-outlet>
+  <reuse-tab #reuseTab></reuse-tab>
+  <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 </section>
 ```
+
+> **注意：若不指定 `(activate)` 事件，无法刷新未缓存过的当前标签页。**
 
 ## 匹配模式
 
@@ -194,7 +196,6 @@ export class DemoComponent {
 | `[keepingScrollContainer]` | 保持滚动条容器 | `string | Element` | `window` |
 | `[excludes]` | 排除规则，限 `mode=URL` | `RegExp[]` | - |
 | `[allowClose]` | 允许关闭 | `boolean` | `true` |
-| `[showCurrent]` | 总是显示当前页 | `boolean` | `true` |
 | `[customContextMenu]` | 自定义右键菜单 | `ReuseCustomContextMenu[]` | - |
 | `[tabBarExtraContent]` | tab bar 上额外的元素 | `TemplateRef<void>` | - |
 | `[tabBarStyle]` | tab bar 的样式对象 | `object` | - |

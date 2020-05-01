@@ -16,7 +16,7 @@ export default {
     close: 'Close tab',
     closeOther: 'Close other tabs',
     closeRight: 'Close tabs to right',
-    clear: 'Clear tabs',
+    refresh: 'Refresh',
   },
   tagSelect: {
     expand: 'Expand',

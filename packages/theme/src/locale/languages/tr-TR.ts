@@ -16,7 +16,7 @@ export default {
     close: 'Sekmeyi Kapat',
     closeOther: 'Diğer sekmeleri kapat',
     closeRight: 'Sağdaki sekmeleri kapat',
-    clear: 'Sekmeleri temizle',
+    refresh: 'täzele',
   },
   tagSelect: {
     expand: 'Genişlet',
