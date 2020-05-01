@@ -65,7 +65,7 @@ export class FormPropertyFactory {
         else if ((ui as SFUISchemaItem).widget === 'time')
           ui._format = schema.type === 'string' ? this.options.uiTimeStringFormat : this.options.uiTimeNumberFormat;
       } else {
-        ui._format = schema.format || ui.format;
+        ui._format = ui.format;
       }
       switch (schema.type) {
         case 'integer':
