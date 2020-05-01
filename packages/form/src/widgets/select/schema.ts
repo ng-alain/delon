@@ -32,6 +32,11 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   allowClear?: boolean;
 
   /**
+   * 是否无边框，默认：`false`
+   */
+  borderless?: boolean;
+
+  /**
    * 默认获取焦点，默认：`false`
    */
   autoFocus?: boolean;

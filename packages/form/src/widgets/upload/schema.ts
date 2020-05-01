@@ -1,4 +1,11 @@
-import { ShowUploadListInterface, UploadChangeParam, UploadFile, UploadFilter, UploadXHRArgs } from 'ng-zorro-antd/upload';
+import {
+  ShowUploadListInterface,
+  UploadChangeParam,
+  UploadFile,
+  UploadFilter,
+  UploadTransformFileType,
+  UploadXHRArgs,
+} from 'ng-zorro-antd/upload';
 import { Observable, Subscription } from 'rxjs';
 import { SFSchemaEnumType } from '../../schema';
 import { SFUISchemaItem } from '../../schema/ui';
@@ -37,12 +44,12 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * **必选参数** 上传的地址
    */
-  action?: string;
+  action?: string | ((file: UploadFile) => string | Observable<string>);
 
   /**
    * 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-accept)
    */
-  accept?: string;
+  accept?: string | string[];
 
   /**
    * 限制单次最多上传数量，`multiple` 打开时有效；`0` 表示不限，默认：`0`
@@ -77,7 +84,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 设置上传的请求头部
    */
-  headers?: {} | ((file: UploadFile) => {});
+  headers?: {} | ((file: UploadFile) => {} | Observable<{}>);
 
   /**
    * 上传列表的内建样式，默认：`text`
@@ -102,7 +109,7 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
   /**
    * 上传所需参数或返回上传参数的方法
    */
-  data?: {} | ((file: UploadFile) => {});
+  data?: {} | ((file: UploadFile) => {} | Observable<{}>);
 
   /**
    * 上传请求时是否携带 cookie，默认：`false`
@@ -138,6 +145,21 @@ export interface SFUploadWidgetSchema extends SFUISchemaItem {
    * 点击文件链接或预览图标时的回调
    */
   preview?: (file: UploadFile) => void;
+
+  /**
+   * 自定义文件预览逻辑
+   */
+  previewFile?: (file: UploadFile) => Observable<string>;
+
+  /**
+   * 点击下载文件时的回调，如果没有指定，则默认跳转到文件 url 对应的标签页
+   */
+  download?: (file: UploadFile) => void;
+
+  /**
+   * 在上传之前转换文件。支持返回一个 Observable 对象
+   */
+  transformFile?: (file: UploadFile) => UploadTransformFileType;
 
   /**
    * 上传文件改变时的状态

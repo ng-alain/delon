@@ -26,6 +26,9 @@
              [nzCustomRequest]="i.customRequest"
              [nzRemove]="ui.remove || handleRemove"
              [nzPreview]="handlePreview"
+             [nzPreviewFile]="ui.previewFile"
+             [nzDownload]="ui.download"
+             [nzTransformFile]="ui.transformFile"
              (nzChange)="change($event)"
              [nzShowButton]="fileList.length < i.limitFileCount">
     <ng-container [ngSwitch]="btnType">

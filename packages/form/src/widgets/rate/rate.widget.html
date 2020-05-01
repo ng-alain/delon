@@ -9,6 +9,7 @@
            (ngModelChange)="setValue($event)"
            [nzAllowClear]="allowClear"
            [nzAllowHalf]="allowHalf"
+           [nzTooltips]="ui.tooltips || []"
            [nzAutoFocus]="autoFocus"
            [nzCount]="count"></nz-rate>
   <span *ngIf="hasText && formProperty.value"
