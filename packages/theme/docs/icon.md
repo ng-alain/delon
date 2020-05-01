@@ -89,7 +89,7 @@ export class StartupService {
 ],
 ```
 
-如果非cnd还需要将相应的 icon 图标文件复制到 `assets` 目录下，同时修改 `iconfont.css` 中 `@font-face` 对应的 url 路径。
+如果非cdn还需要将相应的 icon 图标文件复制到 `assets` 目录下，同时修改 `iconfont.css` 中 `@font-face` 对应的 url 路径。
 
 ### @angular/elements
 
