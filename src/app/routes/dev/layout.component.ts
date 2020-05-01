@@ -1,4 +1,5 @@
 import { Component, HostBinding, Inject, OnInit } from '@angular/core';
+// import { Router } from '@angular/router';
 import { ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService } from '@delon/theme';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -141,10 +142,26 @@ export class DevLayoutComponent implements OnInit {
     private menuSrv: MenuService,
     public settings: SettingsService,
     public msgSrv: NzMessageService,
+    // private router: Router,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
   ) {
     iconSrv.addIcon(...ICONS);
+    // this.testReuse();
   }
+
+  // private testReuse(): void {
+  //   const urls = ['/dev/l2', '/dev/l3', '/dev/l4', '/dev/l5', '/dev/l6'];
+  //   const fn = (pos: number) => {
+  //     if (pos >= urls.length) return;
+
+  //     setTimeout(() => {
+  //       console.log('--------------------');
+  //       this.router.navigateByUrl(urls[pos]);
+  //       fn(++pos);
+  //     }, 300);
+  //   };
+  //   fn(0);
+  // }
 
   toggleCollapsedSideabar() {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);

@@ -16,7 +16,7 @@ export default {
     close: '탭 닫기',
     closeOther: '다른 탭 닫기',
     closeRight: '오른쪽 탭 닫기',
-    clear: '탭 지우기',
+    refresh: '새롭게 하다',
   },
   tagSelect: {
     expand: '펼치기',

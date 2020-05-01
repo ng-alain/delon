@@ -16,7 +16,7 @@ export default {
     close: '关闭标签',
     closeOther: '关闭其它标签',
     closeRight: '关闭右侧标签',
-    clear: '清空',
+    refresh: '刷新',
   },
   tagSelect: {
     expand: '展开',

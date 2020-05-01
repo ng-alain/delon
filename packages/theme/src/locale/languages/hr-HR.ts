@@ -16,7 +16,7 @@ export default {
     close: 'Zatvori karticu',
     closeOther: 'Zatvori druge kartice',
     closeRight: 'Zatvori kartice desno',
-    clear: 'Obriši kartice',
+    refresh: 'Refresh',
   },
   tagSelect: {
     expand: 'Proširi',

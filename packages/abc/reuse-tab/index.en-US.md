@@ -17,17 +17,17 @@ The default `ReuseTabModule` does not register `RouteReuseStrategy`. If you need
 
 **Register**
 
-> How to use in ng-alain, pls refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L22).
+> How to use in ng-alain, pls refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L32).
 
 ```ts
 // global-config.module.ts
-providers: [
-  {
-    provide: RouteReuseStrategy,
-    useClass: ReuseTabStrategy,
-    deps: [ReuseTabService],
-  }
-]
+import { RouteReuseStrategy } from '@angular/router';
+import { ReuseTabService, ReuseTabStrategy } from '@delon/abc/reuse-tab';
+alainProvides.push({
+  provide: RouteReuseStrategy,
+  useClass: ReuseTabStrategy,
+  deps: [ReuseTabService],
+} as any);
 ```
 
 **Add Component**
@@ -36,10 +36,12 @@ providers: [
 
 ```html
 <section class="alain-default__content">
-  <reuse-tab></reuse-tab>
-  <router-outlet></router-outlet>
+  <reuse-tab #reuseTab></reuse-tab>
+  <router-outlet (activate)="reuseTab.activate($event)"></router-outlet>
 </section>
 ```
+
+> **Note: If you do not specify the `(activate)` event, you cannot refresh current tab when uncached.**
 
 ## Matching Mode
 
@@ -194,7 +196,6 @@ Turning on `keepingScroll` will restore the previous scrollbar position after re
 | `[keepingScrollContainer]` | Keep the scroll bar container | `string | Element` | `window` |
 | `[excludes]` | Exclusion rules, limited by `mode=URL` | `RegExp[]` | - |
 | `[allowClose]` | Whether to allow close tab | `boolean` | `true` |
-| `[showCurrent]` | Always show current page | `boolean` | `true` |
 | `[customContextMenu]` | Custom context click menu | `ReuseCustomContextMenu[]` | - |
 | `[tabBarExtraContent]` | Extra content in tab bar | `TemplateRef<void>` | - |
 | `[tabBarStyle]` | Tab bar style object | `object` | - |
