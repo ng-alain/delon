@@ -1,4 +1,4 @@
-import { Component, DebugElement, ViewChild } from '@angular/core';
+import { Component, DebugElement, Injectable, ViewChild } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ExtraOptions, Router, RouteReuseStrategy, ROUTER_CONFIGURATION } from '@angular/router';
@@ -14,6 +14,7 @@ import { ReuseTabService } from './reuse-tab.service';
 import { ReuseTabStrategy } from './reuse-tab.strategy';
 
 let i18nResult = 'zh';
+@Injectable()
 class MockI18NServiceFake extends AlainI18NServiceFake {
   fanyi(_key: string) {
     return i18nResult;
@@ -561,7 +562,7 @@ describe('abc: reuse-tab', () => {
   describe('[refresh]', () => {
     beforeEach(() => genModule(false));
     it('should be can not call _onReuseInit when router-outlet not define (activate) event in refresh active tab', fakeAsync(() => {
-      createComp(`<reuse-tab #comp></reuse-tab><router-outlet></router-outlet>`);
+      createComp(`<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet></router-outlet>`);
       let time = 0;
       page
         .to('#a')
@@ -571,18 +572,25 @@ describe('abc: reuse-tab', () => {
       expect(time).toBe(+page.time);
     }));
     it('should be call _onReuseInit when refresh active tab', fakeAsync(() => {
-      createComp(`<reuse-tab #comp></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`);
+      createComp(`<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`);
       page.to('#a').openContextMenu(0);
       spyOn(srv.componentRef.instance, '_onReuseInit');
       page.clickContentMenu('refresh');
       expect(srv.componentRef.instance._onReuseInit).toHaveBeenCalled();
     }));
     it('should be call _onReuseInit when refresh non-active tab', fakeAsync(() => {
-      createComp(`<reuse-tab #comp></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`);
+      createComp(`<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet (activate)="comp.activate($event)"></router-outlet>`);
       page.to('#a').to('#b').openContextMenu(0);
-      spyOn(srv.componentRef.instance, '_onReuseInit');
+      spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
       page.clickContentMenu('refresh');
-      expect(srv.componentRef.instance._onReuseInit).toHaveBeenCalled();
+      expect(srv.items[0]._handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
+    }));
+    it('should be call _onReuseInit when refresh non-active tab and not define (activate) event', fakeAsync(() => {
+      createComp(`<reuse-tab #comp [mode]="mode"></reuse-tab><router-outlet></router-outlet>`);
+      page.to('#a').to('#b').openContextMenu(0);
+      spyOn(srv.items[0]._handle.componentRef.instance, '_onReuseInit');
+      page.clickContentMenu('refresh');
+      expect(srv.items[0]._handle.componentRef.instance._onReuseInit).toHaveBeenCalled();
     }));
   });
 
@@ -604,42 +612,6 @@ describe('abc: reuse-tab', () => {
       fixture.detectChanges();
       page.to('#a').openContextMenu(1);
       expect(document.querySelector('[data-type="close"]')!.textContent).toBe(en_US.reuseTab.close);
-    }));
-  });
-
-  describe('#issues', () => {
-    it('#361', fakeAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [AppComponent, LayoutComponent, CComponent, DComponent],
-        imports: [
-          DelonLocaleModule,
-          ReuseTabModule,
-          RouterTestingModule.withRoutes([
-            {
-              path: '',
-              component: LayoutComponent,
-              children: [
-                { path: 'a', redirectTo: 'c', pathMatch: 'full' },
-                { path: 'b', component: DComponent, data: { title: 'b', reuse: false } },
-                { path: 'c', component: CComponent, data: { title: 'c', reuse: false } },
-                { path: 'd', component: DComponent, data: { title: 'd', reuse: true } },
-              ],
-            },
-          ]),
-        ],
-        providers: [
-          MenuService,
-          { provide: WINDOW, useValue: window },
-          {
-            provide: RouteReuseStrategy,
-            useClass: ReuseTabStrategy,
-            deps: [ReuseTabService],
-          },
-        ],
-      });
-      createComp();
-
-      page.to('#to-d').to('#to-c').close(0).to('#to-d');
     }));
   });
 

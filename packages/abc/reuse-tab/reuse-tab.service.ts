@@ -362,7 +362,9 @@ export class ReuseTabService implements OnDestroy {
     if (comp == null) {
       return;
     }
-    if (comp.instance && typeof comp.instance[method] === 'function') comp.instance[method]();
+    if (comp.instance && typeof comp.instance[method] === 'function') {
+      comp.instance[method]();
+    }
   }
 
   private hasInValidRoute(route: ActivatedRouteSnapshot) {
