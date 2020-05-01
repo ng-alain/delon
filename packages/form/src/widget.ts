@@ -69,6 +69,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
       }
       this.firstVisual = true;
     });
+    this.afterViewInit();
   }
 
   setValue(value: SFValue) {
@@ -89,18 +90,23 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
   }
 
   abstract reset(value: SFValue): void;
+
+  abstract afterViewInit(): void;
 }
 
 export class ControlWidget extends Widget<FormProperty, SFUISchemaItem> {
   reset(_value: SFValue) {}
+  afterViewInit() {}
 }
 
 export class ControlUIWidget<UIT extends SFUISchemaItem> extends Widget<FormProperty, UIT> {
   reset(_value: SFValue) {}
+  afterViewInit() {}
 }
 
 export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema> implements AfterViewInit {
   reset(_value: SFValue) {}
+  afterViewInit() {}
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
@@ -109,6 +115,7 @@ export class ArrayLayoutWidget extends Widget<ArrayProperty, SFArrayWidgetSchema
 
 export class ObjectLayoutWidget extends Widget<ObjectProperty, SFObjectWidgetSchema> implements AfterViewInit {
   reset(_value: SFValue) {}
+  afterViewInit() {}
 
   ngAfterViewInit() {
     this.formProperty.errorsChanges.pipe(takeUntil(this.sfItemComp!.unsubscribe$)).subscribe(() => this.cd.detectChanges());
