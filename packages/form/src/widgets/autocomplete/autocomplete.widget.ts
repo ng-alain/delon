@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import { Observable, of } from 'rxjs';
@@ -15,7 +15,7 @@ import { SFAutoCompleteWidgetSchema } from './schema';
   preserveWhitespaces: false,
   encapsulation: ViewEncapsulation.None,
 })
-export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSchema> implements AfterViewInit {
+export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSchema> {
   i: any = {};
   list: Observable<SFSchemaEnum[]>;
   typing: string = '';
@@ -30,7 +30,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     if (this.ui.change) this.ui.change(item);
   }
 
-  ngAfterViewInit(): void {
+  afterViewInit(): void {
     const { backfill, defaultActiveFirstOption, nzWidth, filterOption, asyncData } = this.ui;
     this.i = {
       backfill: toBool(backfill, false),
