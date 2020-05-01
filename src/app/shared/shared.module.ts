@@ -68,6 +68,7 @@ const THIRDS = [
     ...THIRDS,
   ],
   declarations: COMPONENTS,
+  entryComponents: DIALOG_COMPONENTS,
   exports: [
     CommonModule,
     FormsModule,
