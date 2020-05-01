@@ -7,24 +7,6 @@ import { SF_SEQ } from './const';
 import { SFSchema, SFSchemaDefinition, SFSchemaEnum } from './schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 
-export const FORMATMAPS = {
-  'date-time': {
-    widget: 'date',
-    showTime: true,
-    format: 'yyyy-MM-ddTHH:mm:ssZ',
-  },
-  date: { widget: 'date', format: 'yyyy-MM-dd' },
-  'full-date': { widget: 'date', format: 'yyyy-MM-dd' },
-  time: { widget: 'time' },
-  'full-time': { widget: 'time' },
-  week: { widget: 'date', mode: 'week', format: 'yyyy-WW' },
-  month: { widget: 'date', mode: 'month', format: 'yyyy-MM' },
-  uri: { widget: 'upload' },
-  email: { widget: 'autocomplete', type: 'email' },
-  color: { widget: 'string', type: 'color' },
-  '': { widget: 'string' },
-};
-
 export function isBlank(o: any) {
   return o == null;
 }

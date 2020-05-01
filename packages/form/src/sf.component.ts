@@ -30,7 +30,7 @@ import { FormPropertyFactory } from './model/form.property.factory';
 import { SFSchema } from './schema/index';
 import { SFOptionalHelp, SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from './schema/ui';
 import { TerminatorService } from './terminator.service';
-import { di, FORMATMAPS, resolveIf, retrieveSchema } from './utils';
+import { di, resolveIf, retrieveSchema } from './utils';
 import { SchemaValidatorFactory } from './validator.factory';
 import { WidgetFactory } from './widget.factory';
 
@@ -263,7 +263,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         const property = retrieveSchema(schema.properties![key] as SFSchema, definitions);
         const ui = {
           widget: property.type,
-          ...(property.format && (FORMATMAPS as NzSafeAny)[property.format]),
+          ...(property.format && (this.options.formatMap as NzSafeAny)[property.format]),
           ...(typeof property.ui === 'string' ? { widget: property.ui } : null),
           ...(!property.format && !property.ui && Array.isArray(property.enum) && property.enum.length > 0 ? { widget: 'select' } : null),
           ...this._defUi,
