@@ -48,6 +48,11 @@ export interface SFCascaderWidgetSchema extends SFUISchemaItem {
   menuStyle?: string;
 
   /**
+   * 当下拉列表为空时显示的内容
+   */
+  notFoundContent?: string;
+
+  /**
    * 弹出菜单中数据列的自定义样式
    */
   columnClassName?: string;

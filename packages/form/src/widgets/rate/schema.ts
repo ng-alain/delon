@@ -15,4 +15,9 @@ export interface SFRateWidgetSchema extends SFUISchemaItem {
    * 提醒文本模板，`{{value}}` 表示当前值（注意无任何空格）
    */
   text?: string;
+
+  /**
+   * 自定义每项的提示信息
+   */
+  tooltips?: string[];
 }

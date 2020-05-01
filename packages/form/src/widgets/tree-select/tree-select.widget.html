@@ -20,6 +20,7 @@
                   [nzDefaultExpandAll]="i.defaultExpandAll"
                   [nzDisplayWith]="i.displayWith"
                   [ngModel]="value"
+                  [nzNotFoundContent]="ui.notFoundContent"
                   (ngModelChange)="change($event)"
                   (nzExpandChange)="expandChange($event)">
   </nz-tree-select>

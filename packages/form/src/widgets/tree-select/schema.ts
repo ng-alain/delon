@@ -54,6 +54,11 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
   defaultExpandAll?: boolean;
 
   /**
+   * 当下拉列表为空时显示的内容
+   */
+  notFoundContent?: string;
+
+  /**
    * 如何在输入框显示所选的节点值的方法
    */
   displayWith?: (node: NzTreeNode) => string | undefined;

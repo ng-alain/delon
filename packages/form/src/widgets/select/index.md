@@ -25,6 +25,7 @@ type: Widgets
 `[placeholder]` | 在文字框中显示提示讯息 | `string` | -
 `[autoClearSearchValue]` | 是否在选中项后清空搜索框，只在 `mode` 为 `multiple` 或 `tags` 时有效。 | `boolean` | `true`
 `[allowClear]` | 支持清除 | `boolean` | `false`
+`[borderless]` | 是否无边框 | `boolean` | `false`
 `[autoFocus]` | 默认获取焦点 | `boolean` | `false`
 `[dropdownClassName]` | 下拉菜单的 className 属性 | `string` | -
 `[dropdownMatchSelectWidth]` | 下拉菜单和选择器同宽 | `boolean` | `true`

@@ -25,6 +25,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     const {
       autoClearSearchValue,
       allowClear,
+      borderless,
       autoFocus,
       dropdownClassName,
       dropdownMatchSelectWidth,
@@ -40,6 +41,7 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
     this.i = {
       autoClearSearchValue: toBool(autoClearSearchValue, true),
       allowClear,
+      borderless: toBool(borderless, false),
       autoFocus: toBool(autoFocus, false),
       dropdownClassName: dropdownClassName || null,
       dropdownMatchSelectWidth: toBool(dropdownMatchSelectWidth, true),
