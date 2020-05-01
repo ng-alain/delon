@@ -1,3 +1,5 @@
+// node scripts/publish/sync-scaffold-version.js
+// node scripts/publish/sync-scaffold-version.js theme
 const fs = require('fs-extra');
 const path = require('path');
 
@@ -7,7 +9,8 @@ const nextVersions = {
   ...nextJson.dependencies,
   ...nextJson.devDependencies
 };
-const packagePath = path.resolve(__dirname, `../../../ng-alain/package.json`);
+const name = process.argv.length >=2 ? process.argv[2] : '';
+const packagePath = path.resolve(__dirname, `../../../${name || 'ng-alain'}/package.json`);
 
 const json = fs.readJSONSync(packagePath);
 // Update third party
