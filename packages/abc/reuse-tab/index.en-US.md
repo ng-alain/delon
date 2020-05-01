@@ -41,6 +41,8 @@ alainProvides.push({
 </section>
 ```
 
+> **Note: If you do not specify the `(activate)` event, you cannot refresh current tab when uncached.**
+
 ## Matching Mode
 
 Inject the `ReuseTabService` class anywhere in the project (recommended: `startup.service.ts`) and set the `mode` property, or pass `<reuse-tab [mode]="0"></reuse-tab> ` Reset values.

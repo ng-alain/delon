@@ -41,6 +41,8 @@ alainProvides.push({
 </section>
 ```
 
+> **注意：若不指定 `(activate)` 事件，无法刷新未缓存过的当前标签页。**
+
 ## 匹配模式
 
 在项目的任何位置（建议：`startup.service.ts`）注入 `ReuseTabService` 类，并设置 `mode` 属性，或通过 `<reuse-tab [mode]="0"></reuse-tab>` 重新设置值，包括：
