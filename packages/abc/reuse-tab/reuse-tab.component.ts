@@ -155,10 +155,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updateTitle(res: ReuseTabNotify): void {
-    const url = res?.url;
-    const item = this.list.find(w => w.url === url);
+    const item = this.list.find(w => w.url === res!.url);
     if (!item) return;
-    item.title = this.genTit(res?.title!);
+    item.title = this.genTit(res!.title!);
     this.cdr.detectChanges();
   }
 
