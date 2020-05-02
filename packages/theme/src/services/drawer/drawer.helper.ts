@@ -58,7 +58,7 @@ export class DrawerHelper {
       {
         size: 'md',
         footer: true,
-        footerHeight: 55,
+        footerHeight: 50,
         exact: true,
         drawerOptions: {
           nzPlacement: 'right',
@@ -85,20 +85,10 @@ export class DrawerHelper {
       }
 
       if (footer) {
-        const { nzPlacement, nzHeight } = drawerOptions as NzDrawerOptions;
-        // Should be header * footer, because of includes header
-        const reduceHeight = footerHeight! * 2 - 2;
-        if (nzPlacement === 'left' || nzPlacement === 'right') {
-          defaultOptions.nzBodyStyle = {
-            height: `calc(100% - ${reduceHeight}px)`,
-            overflow: 'auto',
-          };
-        } else {
-          defaultOptions.nzBodyStyle = {
-            height: `${+(nzHeight || 256) - reduceHeight}px`,
-            overflow: 'auto',
-          };
-        }
+        // The 24 value is @drawer-body-padding
+        defaultOptions.nzBodyStyle = {
+          'padding-bottom.px': footerHeight! + 24,
+        };
       }
 
       const subject = this.srv.create({ ...defaultOptions, ...drawerOptions });
