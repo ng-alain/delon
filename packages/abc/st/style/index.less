@@ -62,10 +62,17 @@
     display: inline-block;
     margin-left: 4px;
   }
-  // 修复 `st` 内嵌表格额外产生边距
+  // 修复 `st` 会导致内嵌表格的BUG
   .@{ant-prefix}-table-tbody > tr {
-    .@{ant-prefix}-table-wrapper:only-child .@{ant-prefix}-table {
-      margin: 0;
+    .@{ant-prefix}-table-wrapper:only-child {
+      // 修复 https://github.com/ng-alain/ng-alain/issues/1619
+      .ant-table-tbody > tr:last-child > td {
+        border-bottom: @border-width-base @border-style-base @border-color-split;
+      }
+      // 额外产生边距 https://github.com/ng-alain/ng-alain/issues/1608
+      .@{ant-prefix}-table {
+        margin: 0;
+      }
     }
   }
 
