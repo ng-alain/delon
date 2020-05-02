@@ -336,7 +336,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
         .subscribe(
           result => resolvePromise(result),
           error => {
-            console.warn(error);
+            console.warn('st.loadDate', error);
             rejectPromise(error);
           },
         );

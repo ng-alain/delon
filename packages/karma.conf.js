@@ -61,17 +61,5 @@ module.exports = function (config) {
     captureTimeout: 1800000,
   };
 
-  if (process.env.TRAVIS) {
-    const executors = (Math.ceil(require('os').cpus().length / 2));
-    console.log(`executors cpus: `, executors);
-    configuration.frameworks.splice(0, 0, 'parallel');
-    configuration.plugins.push(karmaParallel);
-    configuration.parallelOptions = {
-      executors,
-      shardStrategy: 'round-robin'
-    };
-    configuration.browsers = ['ChromeHeadless'];
-  }
-
   config.set(configuration);
 };
