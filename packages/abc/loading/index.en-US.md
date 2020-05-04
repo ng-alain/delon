@@ -4,7 +4,7 @@ order: 2
 title: loading
 subtitle: Loading indicator
 cols: 2
-module: LoadingModule
+module: import { LoadingModule } from '@delon/abc/loading';
 ---
 
 Global load indicator is generally used when an operation needs to interrupt the user operation.

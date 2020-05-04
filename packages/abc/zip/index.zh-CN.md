@@ -4,7 +4,7 @@ title: zip
 order: 7
 subtitle: Zip 操作
 cols: 1
-module: NaZipModule
+module: import { ZipModule } from '@delon/abc/zip';
 ---
 
 一个基于 [jszip](http://stuk.github.io/jszip/) 的Zip文件操作。

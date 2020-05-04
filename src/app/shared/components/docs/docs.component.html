@@ -15,10 +15,12 @@
   <h1 class="api-title">
     {{meta.item.title}}
     <span *ngIf="meta.item.subtitle" class="subtitle">{{meta.item.subtitle}}</span>
-    <config-button *ngIf="meta.item.config"></config-button>
     <edit-button [item]="item"></edit-button>
   </h1>
   <div *ngIf="data.con.content" class="markdown" [innerHTML]="data.con.content" routeTransfer></div>
+  <div *ngIf="data.con.module" class="highlight">
+    <pre class="hljs language-ts" [innerHTML]="data.con.module"></pre>
+  </div>
   <ng-container *ngIf="data.demo">
     <h2 id="{{demoStr}}" style="margin: 32px 0 24px 0;" [innerHTML]="demoContent"></h2>
     <ng-content></ng-content>

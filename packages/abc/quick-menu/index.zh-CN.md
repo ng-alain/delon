@@ -3,7 +3,7 @@ type: Business
 title: quick-menu
 subtitle: 快速菜单
 cols: 1
-module: QuickMenuModule
+module: import { QuickMenuModule } from '@delon/abc/quick-menu';
 ---
 
 快速菜单，用于右侧隐式辅助列表。

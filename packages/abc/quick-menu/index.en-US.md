@@ -3,7 +3,7 @@ type: Business
 title: quick-menu
 subtitle: Quick Menu
 cols: 1
-module: QuickMenuModule
+module: import { QuickMenuModule } from '@delon/abc/quick-menu';
 ---
 
 Quick menu for the implicit auxiliary list on the right.

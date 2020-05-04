@@ -3,7 +3,7 @@ type: Layout
 title: global-footer
 subtitle: Global footer
 cols: 1
-module: GlobalFooterModule
+module: import { GlobalFooterModule } from '@delon/abc/global-footer';
 ---
 
 The footer is part of the global navigation as a supplement to the top navigation.

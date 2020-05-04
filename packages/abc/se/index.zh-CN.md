@@ -4,7 +4,7 @@ title: se
 subtitle: 编辑
 cols: 1
 order: 3
-module: SEModule
+module: import { SEModule } from '@delon/abc/se';
 ---
 
 简化表单HTML模板的高阶组件，并进一步优化了一些细节：

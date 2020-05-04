@@ -3,7 +3,7 @@ type: Business
 title: sidebar-nav
 subtitle: 主菜单
 cols: 1
-module: SidebarNavModule
+module: import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 ---
 
 NG-ALAIN 左边主菜单，依赖于 `@delon/theme`。

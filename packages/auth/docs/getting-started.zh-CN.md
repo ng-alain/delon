@@ -2,8 +2,6 @@
 order: 1
 title: 开始使用
 type: Documents
-module: DelonAuthModule
-config: DelonAuthConfig
 ---
 
 ## 写在前面
@@ -69,39 +67,17 @@ export class AppModule { }
 
 ## AlainAuthConfig
 
-| 参数名 | 类型 | 默认值 | 描述 |
-| ----- | --- | --- | --- |
-| `[store_key]` | `string` | `_token` | `localStorage` 的存储KEY值 |
-| `[token_invalid_redirect]` | `boolean` | `true` | 无效时跳转至登录页，包括：无效token值、token已过期（限JWT） |
-| `[token_exp_offset]` | `number` | `10` | JWT token过期时间偏移值（单位：秒） |
-| `[token_send_key]` | `string` | Token | 发送token参数名 |
-| `[token_send_template]` | `string` | `${token}` | 发送token模板，以 `${属性名}` 表示占位符，属性名要确保存在否则以空字符代替 |
-| `[token_send_place]` | `header,body,url` | `header` | 发送token参数位置 |
-| `[login_url]` | `string` | `/login` | 登录页路由地址 |
-| `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略 URL 地址清单 |
-| `[allow_anonymous_key]` | `string` | `_allow_anonymous` | 允许匿名登录标识号，若请求参数中带有该KEY表示忽略TOKEN |
-| `[executeOtherInterceptors]` | `boolean` | `true` | 是否校验失效时命中后继续调用后续拦截器的 `intercept` 方法 |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[store_key]` | `string` | `_token` | `localStorage` 的存储KEY值 | ✅ |
+| `[token_invalid_redirect]` | `boolean` | `true` | 无效时跳转至登录页，包括：无效token值、token已过期（限JWT） | ✅ |
+| `[token_exp_offset]` | `number` | `10` | JWT token过期时间偏移值（单位：秒） | ✅ |
+| `[token_send_key]` | `string` | Token | 发送token参数名 | ✅ |
+| `[token_send_template]` | `string` | `${token}` | 发送token模板，以 `${属性名}` 表示占位符，属性名要确保存在否则以空字符代替 | ✅ |
+| `[token_send_place]` | `header,body,url` | `header` | 发送token参数位置 | ✅ |
+| `[login_url]` | `string` | `/login` | 登录页路由地址 | ✅ |
+| `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | 忽略 URL 地址清单 | ✅ |
+| `[allow_anonymous_key]` | `string` | `_allow_anonymous` | 允许匿名登录标识号，若请求参数中带有该KEY表示忽略TOKEN | ✅ |
+| `[executeOtherInterceptors]` | `boolean` | `true` | 是否校验失效时命中后继续调用后续拦截器的 `intercept` 方法 | ✅ |
 
-你可以覆盖它们，例如：
-
-```ts
-// global-config.module.ts
-import { DelonAuthConfig } from '@delon/auth';
-export function delonAuthConfig(): DelonAuthConfig {
-  return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
-    login_url: '/passport/login'
-  });
-}
-
-@NgModule({})
-export class GlobalConfigModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: GlobalConfigModule,
-      providers: [
-        { provide: DelonAuthConfig, useFactory: delonAuthConfig}
-      ]
-    };
-  }
-}
-```
+> 可以通过[全局配置](/docs/global-config)覆盖它们。

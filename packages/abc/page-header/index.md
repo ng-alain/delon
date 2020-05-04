@@ -3,7 +3,7 @@ type: Layout
 title: page-header
 subtitle: 页头
 cols: 1
-module: PageHeaderModule
+module: import { PageHeaderModule } from '@delon/abc/page-header';
 ---
 
 页头用来声明页面的主题，包含了用户所关注的最重要的信息，使用户可以快速理解当前页面是什么以及它的功能。

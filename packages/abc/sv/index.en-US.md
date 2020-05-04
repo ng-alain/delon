@@ -4,7 +4,7 @@ title: sv
 subtitle: View
 cols: 1
 order: 2
-module: SVModule
+module: import { SVModule } from '@delon/abc/sv';
 ---
 
 Viewing grid system is a higher-order components based on the original [Grid System] (https://ng.ant.design/components/grid/zh) that server for view pages.

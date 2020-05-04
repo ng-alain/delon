@@ -2,8 +2,6 @@
 order: 1
 title: Getting Started
 type: Documents
-module: DelonUtilModule
-config: DelonUtilConfig
 ---
 
 `@delon/util` is a collection of tool functions.
@@ -29,30 +27,6 @@ import { DelonUtilModule } from '@delon/util';
 export class AppModule { }
 ```
 
-## DelonUtilConfig
+## Parameters
 
-Common configuration, such as unifying mapping name for `ArrayService`.
-
-```ts
-import { DelonUtilConfig } from '@delon/util';
-export function fnDelonUtilConfig(): DelonUtilConfig {
-  return Object.assign(new DelonUtilConfig(), <DelonUtilConfig>{
-    array: {
-      idMapName: 'Id',
-      parentIdMapName: 'ParentId'
-    }
-  });
-}
-
-@NgModule({ })
-export class DelonModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: DelonModule,
-      providers: [
-        { provide: DelonUtilConfig, useFactory: fnDelonUtilConfig }
-      ]
-    };
-  }
-}
-```
+You can override [ArrayService] to set the mapping name through [Global Configuration](/docs/global-config).

@@ -18,11 +18,9 @@ export class DocsComponent implements OnInit, OnDestroy {
   demoContent: SafeHtml;
   data: any = {};
 
-  @Input()
-  codes: any[];
+  @Input() codes: any[];
 
-  @Input()
-  item: any;
+  @Input() item: any;
 
   constructor(
     public meta: MetaService,
@@ -70,6 +68,9 @@ export class DocsComponent implements OnInit, OnDestroy {
 
     if (ret.con.content) ret.con.content = this.sanitizer.bypassSecurityTrustHtml(ret.con.content);
     if (ret.con.api) ret.con.api = this.sanitizer.bypassSecurityTrustHtml(ret.con.api);
+    if (ret.con.meta.module) {
+      ret.con.module = ret.con.meta.module;
+    }
 
     this.data = ret;
 

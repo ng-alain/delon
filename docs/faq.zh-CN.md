@@ -61,6 +61,12 @@ npm config delete registry
 npm config delete sass_binary_site
 ```
 
+Angular Cli 默认是使用 `npm` 来安装依赖，如果你习惯使用 `yarn` 来安装依赖，可以设置 Angular Cli 全局默认使用 `yarn`：
+
+```bash
+ng config -g cli.packageManager yarn
+```
+
 ### no such file or directory
 
 这个问题很难解释，npm 有一个长楼 [#17444](https://github.com/npm/npm/issues/17444#issuecomment-393761515)，并且最后给出一种勉强答案：

@@ -4,7 +4,7 @@ order: 1
 title: sg
 subtitle: Simple Grid
 cols: 1
-module: SGModule
+module: import { SGModule } from '@delon/abc/sg';
 ---
 
 A higher-order components of grid systems, that consists of `sg-container` (directive) and `sg` components:

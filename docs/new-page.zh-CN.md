@@ -27,7 +27,7 @@ CLI 会自动在 `src/app/routes/sys` 下创建 `sys.module.ts` 和 `sys-routing
   path: '',
   component: LayoutDefaultComponent,
   children: [
-    { path: 'sys', loadChildren: './sys/sys.module#SysModule' }
+    { path: 'sys', loadChildren: () => import('./sys/sys.module').then(m => m.SysModule) }
   ]
 }
 ```
@@ -64,22 +64,8 @@ ng g ng-alain:view view -m=sys -t=log
 
 - [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
 
-### 代码风格
-
-- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
-
-### 代码注释
-
-- [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis)
-
 ### Class样式智能提醒
 
 ng-alain 内置了大量的工具集样式（[API](/theme/tools)），安装以下插件可以直接在HTML模板里直接访问到它们。
 
 - [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
-
-### 其它
-
-- [Path Autocomplete](https://marketplace.visualstudio.com/items?itemName=ionutvmi.path-autocomplete)
-- [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)

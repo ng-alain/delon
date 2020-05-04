@@ -27,10 +27,10 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 
 ### CLI (Recommend)
 
-Please make sure global Angular Cli is latest version via `ng version` command (Currently <img src="https://img.shields.io/npm/v/@angular/cli.svg?style= Flat-square" alt="npm">), please refer to [CLI Command Reference](https://angular.cn/cli) for how to upgrade.
+Please make sure global Angular Cli is latest version via `ng version` command (Currently <img src="https://img.shields.io/npm/v/@angular/cli.svg?style=flat-square" alt="npm">), please refer to [CLI Command Reference](https://angular.io/cli) for how to upgrade.
 
 ```bash
-ng new my-project --style less
+ng new my-project --style less --routing
 cd my-project
 ng add ng-alain
 npm start
@@ -88,7 +88,7 @@ NG-ALAIN is a standard Angular CLI project that includes common routes for admin
 npm start
 ```
 
-This will automatically open http://localhost:8000. If you see the following page then you have succeeded.
+This will automatically open [http://localhost:4200](http://localhost:4200). If you see the following page then you have succeeded.
 
 ![](./assets/screenshot/desktop.png | width=700)
 

@@ -23,33 +23,19 @@ Install `@delon/mock` from `yarn`.
 yarn add @delon/mock -D
 ```
 
-Import the [mock rule data](/mock/rule) and `DelonMockModule` in to your root `AppModule`.
-
-```ts
-import { DelonMockModule } from '@delon/mock';
-import * as MOCKDATA from '../../_mock';
-// Configuration for test environment only.
-import { environment } from '../environments/environment';
-const MOCKMODULE = !environment.production ? [ DelonMockModule.forRoot({ data: MOCKDATA }) ] : [];
-
-@NgModule({
-  imports: [
-    ...MOCKMODULE
-  ]
-})
-```
+Please refer to [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L26-L30) import the [Mock Rule data](/mock/rule).
 
 ### MockOptions
 
-The `forRoot` parameters:
+> You can override them via [Global Configuration](/docs/global-config).
 
-| Property | Type  | Default  | Description   |
-| ----- | --- | --- | --- |
-| `[data]` | `any` | - | Mock data rule |
-| `[delay]` | `number` | `300` | Request delay, unit is milliseconds |
-| `[force]` | `boolean` | `false` | Whether to force all requests to Mock, `true` means to return a 404 error directly when the requested URL does not exist, `false` means to send a real HTTP request when the request is missed |
-| `[log]` | `boolean` | `true` | Whether to print Mock request information, make up for the browser without Network information; it will output [👽Mock] when hit |
-| `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after mock rule hit |
-| `[copy]` | `boolean` | `true` | Whether to return copy data |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[data]` | `any` | - | Mock data rule | ✅ |
+| `[delay]` | `number` | `300` | Request delay, unit is milliseconds | ✅ |
+| `[force]` | `boolean` | `false` | Whether to force all requests to Mock, `true` means to return a 404 error directly when the requested URL does not exist, `false` means to send a real HTTP request when the request is missed | ✅ |
+| `[log]` | `boolean` | `true` | Whether to print Mock request information, make up for the browser without Network information; it will output [👽Mock] when hit | ✅ |
+| `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after mock rule hit | ✅ |
+| `[copy]` | `boolean` | `true` | Whether to return copy data | ✅ |
 
 > **Lazy modules** need to import `forChild`, You can import `forChild` in the `SharedModule`.

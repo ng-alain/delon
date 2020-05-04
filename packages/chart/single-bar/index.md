@@ -2,8 +2,8 @@
 title: g2-single-bar
 subtitle: 单一柱状图
 cols: 1
-module: G2SingleBarModule
 type: Components
+module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 ---
 
 单一柱状图更适合在列表中展示简单的区间数据，简洁的表现方式可以很好的减少大数据量的视觉展现压力。

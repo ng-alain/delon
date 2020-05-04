@@ -3,7 +3,7 @@ type: Basic
 title: count-down
 subtitle: 倒计时
 cols: 3
-module: CountDownModule
+module: import { CountDownModule } from '@delon/abc/count-down';
 ---
 
 倒计时组件，依赖 [ngx-countdown](https://github.com/cipchk/ngx-countdown)。

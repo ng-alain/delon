@@ -3,7 +3,7 @@ type: Layout
 title: full-content
 subtitle: Full Screen Workspace
 cols: 1
-module: FullContentModule
+module: import { FullContentModule } from '@delon/abc/full-content';
 ---
 
 Often used for tables with scroll bars, a simple [demo](https://ng-alain.surge.sh/#/delon/simple-table)。

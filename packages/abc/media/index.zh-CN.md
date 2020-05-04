@@ -4,7 +4,7 @@ order: 1
 title: media
 subtitle: HTML5媒体
 cols: 2
-module: MediaModule
+module: import { MediaModule } from '@delon/abc/media';
 ---
 
 基于 [plyr](https://github.com/sampotts/plyr) HTML5播放器。

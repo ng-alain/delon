@@ -4,7 +4,7 @@ order: 2
 title: _src
 subtitle: Image
 cols: 1
-module: ImageModule
+module: import { ImageModule } from '@delon/abc/image';
 ---
 
 like `src`, but more features:

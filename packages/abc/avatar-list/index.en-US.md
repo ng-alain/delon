@@ -3,7 +3,7 @@ type: Basic
 title: avatar-list
 subtitle: AvatarList
 cols: 1
-module: AvatarListModule
+module: import { AvatarListModule } from '@delon/abc/avatar-list';
 ---
 
 A list of user's avatar for project or group member list frequently. If a large or small avatar-list is desired, set the `size` property to either `large` or `small` and `mini` respectively. Omit the `size` property for a avatar-list with the default size.

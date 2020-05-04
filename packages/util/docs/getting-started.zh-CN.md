@@ -2,8 +2,6 @@
 order: 1
 title: 开始使用
 type: Documents
-module: DelonUtilModule
-config: DelonUtilConfig
 ---
 
 @delon/util 是一组日常普通使用的工具函数的集合。
@@ -29,30 +27,6 @@ import { DelonUtilModule } from '@delon/util';
 export class AppModule { }
 ```
 
-## DelonUtilConfig
+## 参数
 
-通用配置项，例如统一对 `ArrayService` 设置映射名称。
-
-```ts
-import { DelonUtilConfig } from '@delon/util';
-export function fnDelonUtilConfig(): DelonUtilConfig {
-  return Object.assign(new DelonUtilConfig(), <DelonUtilConfig>{
-    array: {
-      idMapName: 'Id',
-      parentIdMapName: 'ParentId'
-    }
-  });
-}
-
-@NgModule({ })
-export class DelonModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: DelonModule,
-      providers: [
-        { provide: DelonUtilConfig, useFactory: fnDelonUtilConfig }
-      ]
-    };
-  }
-}
-```
+可以通过[全局配置](/docs/global-config)覆盖 `ArrayService` 设置映射名称。

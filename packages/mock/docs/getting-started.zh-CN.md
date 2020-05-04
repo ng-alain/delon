@@ -23,34 +23,20 @@ Mock 是指通过生成模拟数据让前端开发人员独立于后端进行开
 yarn add @delon/mock -D
 ```
 
-在根模块 `AppModule` 导入 [Mock 规则数据](/mock/rule)和 `DelonMockModule`；
-
-```ts
-import { DelonMockModule } from '@delon/mock';
-import * as MOCKDATA from '../../_mock';
-// 只对开发环境有效
-import { environment } from '../environments/environment';
-const MOCKMODULE = !environment.production ? [ DelonMockModule.forRoot({ data: MOCKDATA }) ] : [];
-
-@NgModule({
-  imports: [
-    ...MOCKMODULE
-  ]
-})
-```
+参考 [global-config.module.ts](https://github.com/ng-alain/ng-alain/blob/master/src/app/global-config.module.ts#L26-L30) 导入[Mock 规则数据](/mock/rule)。
 
 ### MockOptions 配置
 
-`forRoot` 参数还包括：
+> 可以通过[全局配置](/docs/global-config)覆盖它们。
 
-| 参数名 | 类型 | 默认值 | 描述 |
-| ----- | --- | --- | --- |
-| `[data]` | `any` | - | Mock 数据规则 |
-| `[delay]` | `number` | `300` | 请求延迟，单位：毫秒 |
-| `[force]` | `boolean` | `false` | 是否强制所有请求都Mock，`true` 表示当请求的URL不存在时直接返回 404 错误，`false` 表示未命中时发送真实HTTP请求 |
-| `[log]` | `boolean` | `true` | 是否打印 Mock 请求信息，弥补浏览器无Network信息；当请求经过 Mock 会接收【👽Mock】 |
-| `[executeOtherInterceptors]` | `boolean` | `true` | 是否拦截命中后继续调用后续拦截器的 `intercept` 方法 |
-| `[copy]` | `boolean` | `true` | 是否返回副本数据 |
+| 成员 | 说明 | 类型 | 默认值 | 全局配置 |
+|----|----|----|-----|------|
+| `[data]` | `any` | - | Mock 数据规则 | ✅ |
+| `[delay]` | `number` | `300` | 请求延迟，单位：毫秒 | ✅ |
+| `[force]` | `boolean` | `false` | 是否强制所有请求都Mock，`true` 表示当请求的URL不存在时直接返回 404 错误，`false` 表示未命中时发送真实HTTP请求 | ✅ |
+| `[log]` | `boolean` | `true` | 是否打印 Mock 请求信息，弥补浏览器无Network信息；当请求经过 Mock 会接收【👽Mock】 | ✅ |
+| `[executeOtherInterceptors]` | `boolean` | `true` | 是否拦截命中后继续调用后续拦截器的 `intercept` 方法 | ✅ |
+| `[copy]` | `boolean` | `true` | 是否返回副本数据 | ✅ |
 
 > 若**懒模块**还需要导入 `forChild` 确保HTTP拦截器有效，一般可以直接在 SharedModule 直接使用 `forChild`。
 

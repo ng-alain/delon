@@ -27,7 +27,7 @@ The CLI will automatically create `sys.module.ts` and `sys-routing.module.ts` fi
   path: '',
   component: LayoutDefaultComponent,
   children: [
-    { path: 'sys', loadChildren: './sys/sys.module#SysModule' }
+    { path: 'sys', loadChildren: () => import('./sys/sys.module').then(m => m.SysModule) }
   ]
 }
 ```
@@ -64,22 +64,8 @@ In addition to the cli command line provided by ng-alain, it is recommended to u
 
 - [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
 
-### Code style
-
-- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
-
-### Code comment
-
-- [Document This](https://marketplace.visualstudio.com/items?itemName=joelday.docthis)
-
 ### Class style smart reminder
 
 ng-alain has a lot of built-in toolkit styles ([API](/theme/tools)), and the following plugins can be installed directly into the HTML template.
 
 - [NG-ALAIN Snippets](https://marketplace.visualstudio.com/items?itemName=cipchk.ng-alain-vscode)
-
-### Other
-
-- [Path Autocomplete](https://marketplace.visualstudio.com/items?itemName=ionutvmi.path-autocomplete)
-- [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)

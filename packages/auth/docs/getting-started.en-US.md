@@ -2,8 +2,6 @@
 order: 1
 title: Getting Started
 type: Documents
-module: DelonAuthModule
-config: DelonAuthConfig
 ---
 
 ## Foreword
@@ -63,41 +61,19 @@ import { DelonAuthModule, SimpleInterceptor } from '@delon/auth';
 export class AppModule { }
 ```
 
-## DelonAuthConfig
+## AlainAuthConfig
 
-| Name | Type | Default | Description |
-| ----- | --- | --- | --- |
-| `[store_key]` | `string` | `_token` | `localStorage` storage KEY value |
-| `[token_invalid_redirect]` | `boolean` | `true` | Jump to login page if invalid, includs: invalid token, token expired (Only: JWT) |
-| `[token_exp_offset]` | `number` | `10` | JWT token expiration time offset value (unit: second) |
-| `[token_send_key]` | `string` | Token | Send token parameter name |
-| `[token_send_template]` | `string` | `${token}` | Send a token template with a `${property name}` placeholder |
-| `[token_send_place]` | `header,body,url` | `header` | Send token parameter position |
-| `[login_url]` | `string` | `/login` | Login page routing address |
-| `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | Ignore the list of URL addresses |
-| `[allow_anonymous_key]` | `string` | `_allow_anonymous` | Anonymous login KEY identification, if the request parameter with the KEY is to ignore token |
-| `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after token missing |
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[store_key]` | `string` | `_token` | `localStorage` storage KEY value | ✅ |
+| `[token_invalid_redirect]` | `boolean` | `true` | Jump to login page if invalid, includs: invalid token, token expired (Only: JWT) | ✅ |
+| `[token_exp_offset]` | `number` | `10` | JWT token expiration time offset value (unit: second) | ✅ |
+| `[token_send_key]` | `string` | Token | Send token parameter name | ✅ |
+| `[token_send_template]` | `string` | `${token}` | Send a token template with a `${property name}` placeholder | ✅ |
+| `[token_send_place]` | `header,body,url` | `header` | Send token parameter position | ✅ |
+| `[login_url]` | `string` | `/login` | Login page routing address | ✅ |
+| `[ignores]` | `RegExp[]` | `[ /\/login/, /assets\// ]` | Ignore the list of URL addresses | ✅ |
+| `[allow_anonymous_key]` | `string` | `_allow_anonymous` | Anonymous login KEY identification, if the request parameter with the KEY is to ignore token | ✅ |
+| `[executeOtherInterceptors]` | `boolean` | `true` | Whether continue to call other interceptor `intercept` method after token missing | ✅ |
 
-You can override them, for example:
-
-```ts
-// global-config.module.ts
-import { DelonAuthConfig } from '@delon/auth';
-export function delonAuthConfig(): DelonAuthConfig {
-  return Object.assign(new DelonAuthConfig(), <DelonAuthConfig>{
-    login_url: '/passport/login'
-  });
-}
-
-@NgModule({})
-export class GlobalConfigModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: GlobalConfigModule,
-      providers: [
-        { provide: DelonAuthConfig, useFactory: delonAuthConfig}
-      ]
-    };
-  }
-}
-```
+> You can override them via [Global Configuration](/docs/global-config).

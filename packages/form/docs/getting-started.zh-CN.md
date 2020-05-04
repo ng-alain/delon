@@ -2,7 +2,6 @@
 order: 1
 title: 开始使用
 type: Documents
-module: DelonFormModule
 ---
 
 @delon/form 是一个基于 [JSON Schema](http://json-schema.org/) 标准的动态构建表单。

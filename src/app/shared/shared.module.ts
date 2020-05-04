@@ -18,7 +18,6 @@ import { SHARED_DELON_MODULES } from './shared-delon.module';
 import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
 
 import { CodeBoxComponent } from './components/code-box/code-box.component';
-import { ConfigButtonComponent } from './components/config-button/config-button.component';
 import { ContentComponent } from './components/content/content.component';
 import { DemoDrawerComponent } from './components/dialog/drawer.component';
 import { DemoModalComponent } from './components/dialog/modal.component';
@@ -35,7 +34,6 @@ const COMPONENTS = [
   FooterComponent,
   MainMenuComponent,
   ContentComponent,
-  ConfigButtonComponent,
   EditButtonComponent,
   DocsComponent,
   CodeBoxComponent,

@@ -4,7 +4,7 @@ title: st
 subtitle: 表格
 cols: 1
 order: 1
-module: STModule
+module: import { STModule } from '@delon/abc/st';
 ---
 
 `st` 并不是在创造另一个表格组件，而是在 `nz-table` 基础上以**可配置**形式渲染表格，在中后台里这种方式可以满足绝大多数场景，但又可以更易地管理表格渲染动作。

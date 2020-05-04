@@ -4,7 +4,7 @@ title: xlsx
 order: 6
 subtitle: Excel 操作
 cols: 1
-module: XlsxModule
+module: import { XlsxModule } from '@delon/abc/xlsx';
 ---
 
 一个基于 [SheetJS](http://sheetjs.com/) 的Excel文件操作，它是目前在浏览器中包含最全的Excel操作的脚本库。
