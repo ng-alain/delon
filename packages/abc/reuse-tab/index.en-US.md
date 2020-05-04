@@ -4,7 +4,7 @@ order: 1
 title: reuse-tab
 subtitle: Reuse Route Tab
 cols: 1
-module: ReuseTabModule
+module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
 ---
 
 Reuse route tab are extremely common for admin interfaces, and the problem of component data is not lost when switching routes.

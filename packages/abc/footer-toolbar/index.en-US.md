@@ -3,7 +3,7 @@ type: Layout
 title: footer-toolbar
 subtitle: FooterToolbar
 cols: 1
-module: FooterToolbarModule
+module: import { FooterToolbarModule } from '@delon/abc/footer-toolbar';
 ---
 
 A toolbar fixed at the bottom.

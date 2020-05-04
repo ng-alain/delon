@@ -3,7 +3,7 @@ type: Layout
 title: result
 subtitle: Result
 cols: 1
-module: ResultModule
+module: import { ResultModule } from '@delon/abc/result';
 ---
 
 Used to feedback the processing results of a series of tasks performed by the user.

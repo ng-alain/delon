@@ -4,7 +4,7 @@ order: 2
 title: loading
 subtitle: 加载指示符
 cols: 2
-module: LoadingModule
+module: import { LoadingModule } from '@delon/abc/loading';
 ---
 
 全局加载指示符，一般用于某个操作需要中断用户操作。

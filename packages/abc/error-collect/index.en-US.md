@@ -3,7 +3,7 @@ type: Form
 title: error-collect
 subtitle: Error Collect
 cols: 2
-module: ErrorCollectModule
+module: import { ErrorCollectModule } from '@delon/abc/error-collect';
 ---
 
 A simple form exception messages collector that jump to element location via click icon; it must be a standard `form`.

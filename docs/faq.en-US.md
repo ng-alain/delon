@@ -61,6 +61,12 @@ npm config delete registry
 npm config delete sass_binary_site
 ```
 
+Angular Cli use `npm` to install dependencies by default, if you want change to `yarn`, you can set Angular Cli to use `yarn` globally by default:
+
+```bash
+ng config -g cli.packageManager yarn
+```
+
 ### No such file or directory
 
 This question is difficult to explain, npm has a long building [#17444](https://github.com/npm/npm/issues/17444#issuecomment-393761515), and finally gives a reluctant answer:

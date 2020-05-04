@@ -2,8 +2,8 @@
 title: g2-water-wave
 subtitle: 水波图
 cols: 1
-module: G2WaterWaveModule
 type: Components
+module: import { G2WaterWaveModule } from '@delon/chart/water-wave';
 ---
 
 水波图是一种比例的展示方式，可以更直观的展示关键值的占比。

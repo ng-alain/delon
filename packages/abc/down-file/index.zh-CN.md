@@ -3,7 +3,7 @@ type: Basic
 title: down-file
 subtitle: 下载文件
 cols: 1
-module: DownFileModule
+module: import { DownFileModule } from '@delon/abc/down-file';
 ---
 
 一个基于 `blob` 的文件下载。

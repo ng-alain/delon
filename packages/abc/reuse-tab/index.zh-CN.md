@@ -4,7 +4,7 @@ order: 1
 title: reuse-tab
 subtitle: 路由复用标签
 cols: 1
-module: ReuseTabModule
+module: import { ReuseTabModule } from '@delon/abc/reuse-tab';
 ---
 
 复用标签在中台系统非常常见，本质是解决不同路由页切换时组件数据不丢失问题。

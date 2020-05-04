@@ -2,8 +2,8 @@
 title: g2-mini-bar
 subtitle: 迷你柱状图
 cols: 2
-module: G2MiniBarModule
 type: Components
+module: import { G2MiniBarModule } from '@delon/chart/mini-bar';
 ---
 
 迷你柱状图更适合展示简单的区间数据，简洁的表现方式可以很好的减少大数据量的视觉展现压力。

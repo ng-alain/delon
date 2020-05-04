@@ -2,8 +2,8 @@
 title: g2-bar
 subtitle: 柱状图
 cols: 1
-module: G2BarModule
 type: Components
+module: import { G2BarModule } from '@delon/chart/bar';
 ---
 
 使用垂直的柱子显示类别之间的数值比较。其中一个轴表示需要对比的分类维度，另一个轴代表相应的数值。

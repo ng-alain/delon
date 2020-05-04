@@ -29,8 +29,10 @@ NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们�
 
 请先通过 `ng version` 命令确认全局 Angular Cli 版本为最新版本号（当前最新版本号：<img src="https://img.shields.io/npm/v/@angular/cli.svg?style=flat-square" alt="npm">），有关如何升级请参考[CLI 命令参考手册](https://angular.cn/cli)。
 
+> 注意：Angular Cli 默认会使用 npm install 来安装依赖，可能会比较慢，请参考 [如何正确使用淘宝源？](/docs/faq/zh#%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E6%B7%98%E5%AE%9D%E6%BA%90%EF%BC%9F) 解决安装依赖慢的问题。
+
 ```bash
-ng new my-project --style less
+ng new my-project --style less --routing
 cd my-project
 ng add ng-alain
 npm start
@@ -88,7 +90,7 @@ NG-ALAIN 是一个标准的 Angular CLI 构建的项目，并提供了涵盖中�
 npm start
 ```
 
-启动完成后会打开浏览器访问 [//localhost:4200](//localhost:4200)，若你看到如下页面则代表成功了。
+启动完成后会打开浏览器访问 [http://localhost:4200](http://localhost:4200)，若你看到如下页面则代表成功了。
 
 ![](./assets/screenshot/desktop.png | width=700)
 
@@ -110,9 +112,8 @@ npm start
 1. QQ 群
     - [316911865](//shang.qq.com/wpa/qunwpa?idkey=f5102185e4ecf8b641a176596aca3037a45d3452329f69cf3bc496877cd087ff) 满
     - [428749721](//shang.qq.com/wpa/qunwpa?idkey=06823e225199af79b0c5ba3bbc89756ee57c2b0cc2115e3f44cc19230db2b0c3)
-2. [![Stack Overflow](https://cdn.sstatic.net/Sites/stackoverflow/company/img/logos/so/so-logo.svg | width=140)](https://stackoverflow.com/questions/tagged/ng-alain)（English）
-3. [![Segment Fault](https://gw.alipayobjects.com/zos/rmsportal/hfYFfCvHTQTUKntlJbMF.svg | width=140)](https://segmentfault.com/t/ng-alain)（中文）
-4. 加入 NG-ALAIN 自助服务群（中文）
+2. [![Segment Fault](https://gw.alipayobjects.com/zos/rmsportal/hfYFfCvHTQTUKntlJbMF.svg | width=140)](https://segmentfault.com/t/ng-alain)（中文）
+3. 加入 NG-ALAIN 自助服务群（中文）
 
 ![](./assets/qq-group.png)
 

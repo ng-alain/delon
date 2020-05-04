@@ -4,7 +4,7 @@ order: 1
 title: sg
 subtitle: 简易栅格
 cols: 1
-module: SGModule
+module: import { SGModule } from '@delon/abc/sg';
 ---
 
 简化栅格系统运用的高阶组件，它由 `sg-container` 容器（指令）和 `sg` 组件组合代替一个响应式布局：

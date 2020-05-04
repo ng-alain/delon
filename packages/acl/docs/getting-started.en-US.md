@@ -2,7 +2,6 @@
 order: 1
 title: Getting Started
 type: Documents
-module: DelonACLModule
 ---
 
 ACL (Access Control List) is a very simple role-based permission control method, you can use in any Angular projects, a online [DEMO](//ng-alain.github.io/ng-alain/#/logics/acl)
@@ -34,12 +33,14 @@ export class AppModule { }
 
 ## API
 
-### DelonACLConfig
+### Parameters
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
 | `[guard_url]` | `string` | Router URL when guard fail | `/403` | ✅ |
 | `[preCan]` | `(roleOrAbility: ACLCanType) => ACLType` | `can` before execution callback | - | ✅ |
+
+> You can override them via [Global Configuration](/docs/global-config).
 
 ### ACLService
 

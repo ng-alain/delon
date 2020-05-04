@@ -3,7 +3,7 @@ type: Business
 title: sidebar-nav
 subtitle: Sidebar
 cols: 1
-module: SidebarNavModule
+module: import { SidebarNavModule } from '@delon/abc/sidebar-nav';
 ---
 
 NG-ALAIN The left main menu depends on `@delon/theme`.

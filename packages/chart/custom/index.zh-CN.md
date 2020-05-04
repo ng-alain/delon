@@ -2,8 +2,8 @@
 title: g2-chart
 subtitle: 自定义图表
 cols: 1
-module: G2CustomModule
 type: Components
+module: import { G2CustomModule } from '@delon/chart/custom';
 ---
 
 使用 `g2-custom` 组件可以更快速的封装自己的图表组件。

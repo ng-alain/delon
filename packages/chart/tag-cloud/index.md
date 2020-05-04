@@ -2,8 +2,8 @@
 title: g2-tag-cloud
 subtitle: 标签云
 cols: 1
-module: G2TagCloudModule
 type: Components
+module: import { G2TagCloudModule } from '@delon/chart/tag-cloud';
 ---
 
 标签云是一套相关的标签以及与此相应的权重展示方式，一般典型的标签云有 30 至 150 个标签，而权重影响使用的字体大小或其他视觉效果。

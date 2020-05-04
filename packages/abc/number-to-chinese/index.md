@@ -4,7 +4,7 @@ order: 5
 title: number-to-chinese
 subtitle: 人民币大写
 cols: 1
-module: NumberToChineseModule
+module: import { NumberToChineseModule } from '@delon/abc/number-to-chinese';
 ---
 
 常用在数值转化为人民币大写。

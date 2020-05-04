@@ -4,7 +4,7 @@ order: 4
 title: lodop
 subtitle: Lodop打印
 cols: 1
-module: LodopModule
+module: import { LodopModule } from '@delon/abc/lodop';
 ---
 
 [Lodop](http://c-lodop.com/) 打印的基础实现，商用需要购买KEY。（同时感谢 lodop 为 ng-alain 免费提供正版KEY）

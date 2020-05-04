@@ -2,8 +2,8 @@
 title: g2-chart
 subtitle: Custom Chart
 cols: 1
-module: G2CustomModule
 type: Components
+module: import { G2CustomModule } from '@delon/chart/custom';
 ---
 
 Use `g2-custom` component to package your G2 chart.

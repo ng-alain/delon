@@ -3,7 +3,7 @@ type: Basic
 title: down-file
 subtitle: Download file
 cols: 1
-module: DownFileModule
+module: import { DownFileModule } from '@delon/abc/down-file';
 ---
 
 A file download based on `blob`.

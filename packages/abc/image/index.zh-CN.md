@@ -4,7 +4,7 @@ order: 2
 title: _src
 subtitle: 显示图像
 cols: 1
-module: ImageModule
+module: import { ImageModule } from '@delon/abc/image';
 ---
 
 等同于 `src`，但相比较更多功能：

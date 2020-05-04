@@ -2,7 +2,6 @@
 order: 1
 title: Getting Started
 type: Documents
-module: DelonFormModule
 ---
 
 @delon/form is a dynamic build form based on the [JSON Schema](http://json-schema.org/) standard.

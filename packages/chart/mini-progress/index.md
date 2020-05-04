@@ -2,8 +2,8 @@
 title: g2-mini-progress
 subtitle: 迷你进度条
 cols: 1
-module: G2MiniProgressModule
 type: Components
+module: import { G2MiniProgressModule } from '@delon/chart/mini-progress';
 ---
 
 用于显示跟速度相关图形再适合不过。

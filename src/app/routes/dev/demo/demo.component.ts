@@ -1,39 +1,39 @@
 import { Component } from '@angular/core';
-import { PlyrMediaSource } from '@delon/abc/media';
+import { STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
   template: `
-    <div class="mb-sm">
-      <button nz-button (click)="media.player.play()">Play</button>
-      <button nz-button (click)="media.player.pause()">Pause</button>
-      <button nz-button (click)="media.player.restart()">Restart</button>
-    </div>
-    <media #media [source]="source" [options]="options" style="height: 200px"></media>
+    <st [data]="url" ps="2" [req]="{ params: params }" [columns]="columns" [expand]="expand">
+      <ng-template #expand let-item let-index="index" let-column="column">
+        <nz-card [nzBordered]="false">
+          <nz-alert nzType="info" [nzMessage]="alertMsg" nzShowIcon>
+            <ng-template #alertMsg> 结算总金额：{{ 1000 }} </ng-template>
+          </nz-alert>
+          <st bordered="true" [data]="url" ps="2" [req]="{ params: params }" [columns]="columns" [body]="bodyTpl">
+            <ng-template #bodyTpl let-s>
+              <tr>
+                <td>合计</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </ng-template>
+          </st>
+        </nz-card>
+      </ng-template>
+    </st>
   `,
 })
 export class DemoComponent {
-  source: PlyrMediaSource = {
-    type: 'video',
-    sources: [
-      {
-        src: `https://blz-videos.nosdn.127.net/1/OverWatch/AnimatedShots/Overwatch_AnimatedShot_Bastion_TheLastBastion.mp4`,
-      },
-    ],
-    // 字幕
-    tracks: [],
-  };
-
-  options = {
-    // If you any problems, open `debug` and you can quickly find the issues
-    debug: true,
-    // controls: ['play-large'],
-    i18n: {
-      // For more parameters, please refer to: https://github.com/sampotts/plyr/blob/master/src/js/config/defaults.js#L151
-      play: '播放',
-      pause: '暂停',
-      speed: '速度',
-      normal: '正常',
-    },
-  };
+  url = `/users?total=100`;
+  params = { a: 1, b: 2 };
+  columns: STColumn[] = [
+    { title: '编号', index: 'id' },
+    { title: '头像', type: 'img', width: 50, index: 'picture.thumbnail' },
+    { title: '邮箱', index: 'email' },
+    { title: '电话', index: 'phone' },
+    { title: '注册时间', type: 'date', index: 'registered' },
+  ];
 }

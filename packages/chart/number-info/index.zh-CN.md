@@ -3,7 +3,7 @@ type: Components
 title: number-info
 subtitle: 数据文本
 cols: 2
-module: NumberInfoModule
+module: import { NumberInfoModule } from '@delon/chart/number-info';
 ---
 
 常用在数据卡片中，用于突出展示某个业务数据。

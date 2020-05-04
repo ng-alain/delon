@@ -2,7 +2,6 @@
 order: 1
 title: 开始使用
 type: Documents
-module: DelonACLModule
 ---
 
 ACL 全称叫访问控制列表（Access Control List），是一种非常简单的基于角色权限控制方式。一个完全独立 `@delon/acl` 模块（[DEMO](//ng-alain.github.io/ng-alain/#/logics/acl)）。
@@ -34,12 +33,14 @@ export class AppModule { }
 
 ## API
 
-### DelonACLConfig
+### 参数
 
 | 参数 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|
 | `[guard_url]` | `string` | 路由守卫失败后跳转 | `/403` | ✅ |
 | `[preCan]` | `(roleOrAbility: ACLCanType) => ACLType` | `can` 执行前回调 | - | ✅ |
+
+> 可以通过[全局配置](/docs/global-config)覆盖它们。
 
 ### ACLService
 

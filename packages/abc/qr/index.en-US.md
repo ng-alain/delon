@@ -4,7 +4,7 @@ order: 3
 title: qr
 subtitle: QR
 cols: 1
-module: QRModule
+module: import { QRModule } from '@delon/abc/qr';
 ---
 
 Generate a QR code based on [qrious](https://neocotic.com/qrious).

@@ -4,7 +4,7 @@ title: st
 subtitle: Table
 cols: 1
 order: 1
-module: STModule
+module: import { STModule } from '@delon/abc/st';
 ---
 
 `st` is not creating another table component, but use **configurable** rendering table on base of `nz-table`. this method can satisfy most scenes in admin interfaces, but it's easier to rendering table.
