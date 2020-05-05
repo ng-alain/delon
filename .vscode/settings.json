@@ -28,9 +28,6 @@
   "[jsonc]": {
     "editor.formatOnSave": false
   },
-  "[html]": {
-    "editor.formatOnSave": false
-  },
   "files.associations": {
     "*.json": "jsonc",
     ".prettierrc": "json",

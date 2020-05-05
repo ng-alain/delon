@@ -1,6 +1,6 @@
 **/*.md
 **/*.svg
-**/*.html
+# **/*.html
 **/test.ts
 
 .stylelintrc
