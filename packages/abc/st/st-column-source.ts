@@ -6,7 +6,7 @@ import { AlainSTConfig, deepCopy, warn } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { STRowSource } from './st-row.directive';
 import { STWidgetRegistry } from './st-widget';
-import { STColumn, STColumnButton, STColumnButtonPop, STColumnFilter, STIcon, STSortMap } from './st.interfaces';
+import { STColumn, STColumnButton, STColumnButtonPop, STColumnFilter, STColumnGroupType, STIcon, STSortMap } from './st.interfaces';
 
 @Injectable()
 export class STColumnSource {
@@ -228,7 +228,63 @@ export class STColumnSource {
     }
   }
 
-  process(list: STColumn[]): STColumn[] {
+  private genHeaders(rootColumns: STColumn[]): STColumn[][] {
+    const rows: STColumn[][] = [];
+    const fillRowCells = (columns: STColumn[], colIndex: number, rowIndex = 0): number[] => {
+      // Init rows
+      rows[rowIndex] = rows[rowIndex] || [];
+
+      let currentColIndex = colIndex;
+      const colSpans: number[] = columns.map(column => {
+        const cell: STColumnGroupType = {
+          column,
+          colStart: currentColIndex,
+        };
+
+        let colSpan: number = 1;
+
+        const subColumns = column.children;
+        if (Array.isArray(subColumns) && subColumns.length > 0) {
+          colSpan = fillRowCells(subColumns, currentColIndex, rowIndex + 1).reduce((total, count) => total + count, 0);
+          cell.hasSubColumns = true;
+        }
+
+        if ('colSpan' in column) {
+          colSpan = column.colSpan!;
+        }
+
+        if ('rowSpan' in column) {
+          cell.rowSpan = column.rowSpan;
+        }
+
+        cell.colSpan = colSpan;
+        cell.colEnd = cell.colStart + colSpan - 1;
+        rows[rowIndex].push(cell);
+
+        currentColIndex += colSpan;
+
+        return colSpan;
+      });
+
+      return colSpans;
+    };
+
+    fillRowCells(rootColumns, 0);
+
+    // Handle `rowSpan`
+    const rowCount = rows.length;
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+      rows[rowIndex].forEach(cell => {
+        if (!('rowSpan' in cell) && !cell.hasSubColumns) {
+          cell.rowSpan = rowCount - rowIndex;
+        }
+      });
+    }
+
+    return rows;
+  }
+
+  process(list: STColumn[]): { columns: STColumn[]; headers: STColumn[][] } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
     const { noIndex } = this.cog;
@@ -236,13 +292,13 @@ export class STColumnSource {
     let radioCount = 0;
     let point = 0;
     const columns: STColumn[] = [];
-    const copyColumens = deepCopy(list) as STColumn[];
-    for (const item of copyColumens) {
+
+    const processItem = (item: STColumn): STColumn | null => {
       if (item.iif && !item.iif(item)) {
-        continue;
+        return null;
       }
       if (this.acl && item.acl && !this.acl.can(item.acl)) {
-        continue;
+        return null;
       }
       // index
       if (item.index) {
@@ -326,8 +382,26 @@ export class STColumnSource {
       this.restoreRender(item);
 
       item.__point = point++;
-      columns.push(item);
-    }
+
+      return item;
+    };
+
+    const processList = (data: STColumn[]): void => {
+      for (const item of data) {
+        const resItem = processItem(item);
+        if (resItem == null) continue;
+
+        if (Array.isArray(item.children)) {
+          processList(item.children);
+        } else {
+          columns.push(resItem);
+        }
+      }
+    };
+
+    const copyList = deepCopy(list);
+    processList(copyList);
+
     if (checkboxCount > 1) {
       throw new Error(`[st]: just only one column checkbox`);
     }
@@ -337,7 +411,7 @@ export class STColumnSource {
 
     this.fixedCoerce(columns);
 
-    return columns;
+    return { columns, headers: this.genHeaders(copyList) };
   }
 
   restoreAllRender(columns: STColumn[]) {

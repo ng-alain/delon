@@ -261,6 +261,7 @@ class TestComponent {
 | `[noIndex]` | Line number index start value | `number,(item: STData, col: STColumn, idx: number) => number` | `1` |
 | `[iif]` | Custom conditional expression<br>1. Execute only once when `columns` is assigned<br>2. Call `resetColumns()` to trigger again | `(item: STColumn) => boolean` | - |
 | `[statistical]` | Statistics | `STStatisticalType,STStatistical` | - |
+| `[children]` | Group columns | `STColumn[]` | - |
 
 ### STColumnTitle
 

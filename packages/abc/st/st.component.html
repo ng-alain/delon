@@ -41,59 +41,59 @@
   [nzVirtualItemSize]="virtualItemSize" [nzVirtualMaxBufferPx]="virtualMaxBufferPx" [nzVirtualMinBufferPx]="virtualMinBufferPx" [nzVirtualForTrackBy]="virtualForTrackBy"
   [nzNoResult]="noResult" [nzPageSizeOptions]="page.pageSizes" [nzShowQuickJumper]="page.showQuickJumper" [nzShowSizeChanger]="page.showSize" [nzPaginationPosition]="page.position" [nzShowTotal]="totalTpl">
   <thead class="st__head">
-    <tr>
-      <th *ngIf="expand" nzWidth="50px"></th>
-      <th *ngFor="let c of _columns; let index=index" [nzWidth]="c.width" [nzLeft]="c._left" [nzRight]="c._right"
-        [ngClass]="c.className" [attr.colspan]="c.colSpan" [attr.data-col]="c.indexKey" [nzShowSort]="c._sort.enabled"
-        [nzSortOrder]="c._sort.default" (nzSortOrderChange)="sort(c, index, $event)" [nzCustomFilter]="c.filter">
-        <ng-template #renderTitle [ngTemplateOutlet]="c.__renderTitle" [ngTemplateOutletContext]="{$implicit: c, index: index }"></ng-template>
-        <ng-container *ngIf="!c.__renderTitle; else renderTitle">
-          <ng-container [ngSwitch]="c.type">
+    <tr *ngFor="let row of _headers">
+      <th *ngIf="expand" nzWidth="50px" [attr.rowspan]="3"></th>
+      <th *ngFor="let h of row; let index=index;" [attr.colspan]="h.colSpan" [attr.rowspan]="h.rowSpan"
+        [nzWidth]="h.column.width" [nzLeft]="h.column._left" [nzRight]="h.column._right"
+        [ngClass]="h.column.className" [attr.data-col]="h.column.indexKey" [nzShowSort]="h.column._sort.enabled"
+        [nzSortOrder]="h.column._sort.default" (nzSortOrderChange)="sort(h.column, index, $event)" [nzCustomFilter]="h.column.filter">
+        <ng-template #renderTitle [ngTemplateOutlet]="h.column.__renderTitle" [ngTemplateOutletContext]="{$implicit: c, index: index }"></ng-template>
+        <ng-container *ngIf="!h.column.__renderTitle; else renderTitle">
+          <ng-container [ngSwitch]="h.column.type">
             <ng-container *ngSwitchCase="'checkbox'">
-              <ng-container *ngIf="c.selections.length === 0">
+              <ng-container *ngIf="h.column.selections.length === 0">
                 <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{$implicit: false }">
                 </ng-template>
               </ng-container>
-              <div *ngIf="c.selections.length > 0" class="ant-table-selection">
+              <div *ngIf="h.column.selections.length > 0" class="ant-table-selection">
                 <ng-template [ngTemplateOutlet]="chkAllTpl" [ngTemplateOutletContext]="{$implicit: true }">
                 </ng-template>
-                <div *ngIf="c.selections.length" nz-dropdown nzPlacement="bottomLeft" [nzDropdownMenu]="selectionMenu" class="ant-table-selection-down st__checkall-selection">
+                <div *ngIf="h.column.selections.length" nz-dropdown nzPlacement="bottomLeft" [nzDropdownMenu]="selectionMenu" class="ant-table-selection-down st__checkall-selection">
                   <i nz-icon nzType="down"></i>
                 </div>
                 <nz-dropdown-menu #selectionMenu="nzDropdownMenu">
                   <ul nz-menu class="ant-table-selection-menu">
-                    <li nz-menu-item *ngFor="let rw of c.selections" (click)="_rowSelection(rw)" [innerHTML]="rw.text">
+                    <li nz-menu-item *ngFor="let rw of h.column.selections" (click)="_rowSelection(rw)" [innerHTML]="rw.text">
                     </li>
                   </ul>
                 </nz-dropdown-menu>
               </div>
             </ng-container>
             <ng-container *ngSwitchDefault>
-              <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{$implicit: c.title }">
-              </ng-template>
+              <ng-template [ngTemplateOutlet]="titleTpl" [ngTemplateOutletContext]="{$implicit: h.column.title }"></ng-template>
             </ng-container>
           </ng-container>
         </ng-container>
-        <div nz-th-extra *ngIf="c.filter" class="ant-table-filter-trigger-container st__filter" [class.ant-table-filter-trigger-container-open]="c.filter.visible">
-          <span class="ant-table-filter-trigger" [class.ant-table-filter-open]="c.filter.default" [class.active]="c.filter.visible"
-            nz-dropdown [nzDropdownMenu]="filterMenu" nzTrigger="click" [nzClickHide]="false" [(nzVisible)]="c.filter.visible" nzOverlayClassName="st__filter-wrap">
-            <i nz-icon [nzType]="c.filter.icon.type" [nzTheme]="c.filter.icon.theme"></i>
+        <div nz-th-extra *ngIf="h.column.filter" class="ant-table-filter-trigger-container st__filter" [class.ant-table-filter-trigger-container-open]="h.column.filter.visible">
+          <span class="ant-table-filter-trigger" [class.ant-table-filter-open]="h.column.filter.default" [class.active]="h.column.filter.visible"
+            nz-dropdown [nzDropdownMenu]="filterMenu" nzTrigger="click" [nzClickHide]="false" [(nzVisible)]="h.column.filter.visible" nzOverlayClassName="st__filter-wrap">
+            <i nz-icon [nzType]="h.column.filter.icon.type" [nzTheme]="h.column.filter.icon.theme"></i>
           </span>
           <nz-dropdown-menu #filterMenu="nzDropdownMenu">
             <div class="ant-table-filter-dropdown">
-              <ng-container [ngSwitch]="c.filter.type">
+              <ng-container [ngSwitch]="h.column.filter.type">
                 <div *ngSwitchCase="'keyword'" class="st__filter-keyword">
-                  <input type="text" nz-input [attr.placeholder]="c.filter.menus[0].text"
-                    [(ngModel)]="c.filter.menus[0].value" />
+                  <input type="text" nz-input [attr.placeholder]="h.column.filter.menus[0].text"
+                    [(ngModel)]="h.column.filter.menus[0].value" />
                 </div>
                 <ul *ngSwitchDefault nz-menu>
-                  <ng-container *ngIf="c.filter.multiple">
-                    <li nz-menu-item *ngFor="let filter of c.filter.menus">
+                  <ng-container *ngIf="h.column.filter.multiple">
+                    <li nz-menu-item *ngFor="let filter of h.column.filter.menus">
                       <label nz-checkbox [(ngModel)]="filter.checked">{{filter.text}}</label>
                     </li>
                   </ng-container>
-                  <ng-container *ngIf="!c.filter.multiple">
-                    <li nz-menu-item *ngFor="let filter of c.filter.menus">
+                  <ng-container *ngIf="!h.column.filter.multiple">
+                    <li nz-menu-item *ngFor="let filter of h.column.filter.menus">
                       <label nz-radio [ngModel]="filter.checked"
                         (ngModelChange)="_filterRadio(c, filter, $event)">{{filter.text}}</label>
                     </li>
@@ -101,11 +101,11 @@
                 </ul>
               </ng-container>
               <div class="ant-table-filter-dropdown-btns">
-                <a class="ant-table-filter-dropdown-link confirm" (click)="c.filter.visible = false">
-                  <span (click)="_filterConfirm(c)">{{c.filter.confirmText || locale.filterConfirm}}</span>
+                <a class="ant-table-filter-dropdown-link confirm" (click)="h.column.filter.visible = false">
+                  <span (click)="_filterConfirm(c)">{{h.column.filter.confirmText || locale.filterConfirm}}</span>
                 </a>
-                <a class="ant-table-filter-dropdown-link clear" (click)="c.filter.visible = false">
-                  <span (click)="_filterClear(c)">{{c.filter.clearText || locale.filterReset}}</span>
+                <a class="ant-table-filter-dropdown-link clear" (click)="h.column.filter.visible = false">
+                  <span (click)="_filterClear(c)">{{h.column.filter.clearText || locale.filterReset}}</span>
                 </a>
               </div>
             </div>
