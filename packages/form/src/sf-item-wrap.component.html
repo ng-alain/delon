@@ -4,11 +4,19 @@
       {{ t }}
       <span class="sf__optional">
         {{ ui.optional }}
-        <i *ngIf="oh" nz-tooltip
-          [nzTooltipTitle]="oh.text" [nzTooltipPlacement]="oh.placement" [nzTooltipTrigger]="oh.trigger"
-          [nzOverlayClassName]="oh.overlayClassName" [nzOverlayStyle]="oh.overlayStyle"
-          [nzMouseEnterDelay]="oh.mouseEnterDelay" [nzMouseLeaveDelay]="oh.mouseLeaveDelay"
-          nz-icon [nzType]="oh.icon"></i>
+        <i
+          *ngIf="oh"
+          nz-tooltip
+          [nzTooltipTitle]="oh.text"
+          [nzTooltipPlacement]="oh.placement"
+          [nzTooltipTrigger]="oh.trigger"
+          [nzOverlayClassName]="oh.overlayClassName"
+          [nzOverlayStyle]="oh.overlayStyle"
+          [nzMouseEnterDelay]="oh.mouseEnterDelay"
+          [nzMouseLeaveDelay]="oh.mouseLeaveDelay"
+          nz-icon
+          [nzType]="oh.icon"
+        ></i>
       </span>
     </label>
   </nz-col>
@@ -19,7 +27,7 @@
       </div>
     </div>
     <div *ngIf="!ui.onlyVisual && showError" class="ant-form-item-explain">
-      <div @helpMotion>{{error}}</div>
+      <div @helpMotion>{{ error }}</div>
     </div>
     <div *ngIf="schema.description" class="ant-form-item-extra" [innerHTML]="schema._description"></div>
   </nz-col>

@@ -16,22 +16,21 @@ describe('Pipe: url', () => {
     fixture.detectChanges();
   });
 
-  [{ value: '', result: `` }, { value: 'https://ng-alain.com', result: `https://ng-alain.com` }].forEach(
-    (item: any) => {
-      it(`${item.value.toString()} muse be ${item.result}`, () => {
-        fixture.componentInstance.value = item.value;
-        fixture.detectChanges();
-        const el = fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement;
-        expect(el.attributes.getNamedItem('href')!.textContent).toBe(item.result);
-      });
-    },
-  );
+  [
+    { value: '', result: `` },
+    { value: 'https://ng-alain.com', result: `https://ng-alain.com` },
+  ].forEach((item: any) => {
+    it(`${item.value.toString()} muse be ${item.result}`, () => {
+      fixture.componentInstance.value = item.value;
+      fixture.detectChanges();
+      const el = fixture.debugElement.query(By.css('#result')).nativeElement as HTMLElement;
+      expect(el.attributes.getNamedItem('href')!.textContent).toBe(item.result);
+    });
+  });
 });
 
 @Component({
-  template: `
-    <a id="result" [href]="value | url"></a>
-  `,
+  template: ` <a id="result" [href]="value | url"></a> `,
 })
 class TestComponent {
   value = '';
