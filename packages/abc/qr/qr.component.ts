@@ -48,7 +48,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() mime: string;
   @Input() @InputNumber() padding: number;
   @Input() @InputNumber() size: number;
-  @Input() value: string;
+  @Input() value = '';
   @Input() @InputNumber() delay: number;
   // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<string>();
@@ -108,7 +108,6 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   private toUtf8ByteArray(str: string): string {
-    if (str == null) return '';
     str = encodeURI(str);
     const result: number[] = [];
     for (let i = 0; i < str.length; i++) {

@@ -29,9 +29,18 @@ describe('abc: qr', () => {
     });
   }
 
+  function mockQRious() {
+    win.QRious = MockQRious;
+  }
+
+  afterEach(() => {
+    if (context.comp && context.comp.ngOnDestroy) context.comp.ngOnDestroy();
+    delete win.QRious;
+  });
+
   function createComp() {
     createModule();
-    win.QRious = MockQRious;
+    mockQRious();
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
     spyOn(context, 'change');
@@ -65,8 +74,8 @@ describe('abc: qr', () => {
     spyOn(cogSrv, 'merge').and.returnValue({ lib: '1.js' });
     spyOnProperty(lazySrv, 'change').and.returnValue(of([{ path: '1.js', status: 'ok' }]));
     ({ fixture, dl, context } = createTestContext(TestComponent));
-    win.QRious = MockQRious;
     fixture.detectChanges();
+    mockQRious();
     spyOn(context, 'change');
     context.value = '11';
     fixture.detectChanges();
