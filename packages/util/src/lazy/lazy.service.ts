@@ -6,6 +6,9 @@ import { filter, share } from 'rxjs/operators';
 
 export interface LazyResult {
   path: string;
+  /**
+   * @deprecated Used `status === 'ok'`, This is deprecated and going to be removed in 10.0.0.
+   */
   loaded: boolean;
   status: 'ok' | 'error' | 'loading';
   error?: {};
@@ -65,7 +68,7 @@ export class LazyService {
       const onSuccess = (item: LazyResult) => {
         this.cached[path] = item;
         resolve(item);
-        this._notify.next([{ ...item, status: 'ok' }]);
+        this._notify.next([item]);
       };
 
       const node = this.doc.createElement('script') as NzSafeAny;
