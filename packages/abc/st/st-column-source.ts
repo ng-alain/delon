@@ -416,7 +416,7 @@ export class STColumnSource {
 
     this.fixedCoerce(columns);
 
-    return { columns, headers: this.genHeaders(copyList) };
+    return { columns: columns.filter(w => !Array.isArray(w.children)), headers: this.genHeaders(copyList) };
   }
 
   restoreAllRender(columns: STColumn[]) {
