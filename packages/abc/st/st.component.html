@@ -47,7 +47,7 @@
         [nzWidth]="h.column.width" [nzLeft]="h.column._left" [nzRight]="h.column._right"
         [ngClass]="h.column.className" [attr.data-col]="h.column.indexKey" [nzShowSort]="h.column._sort.enabled"
         [nzSortOrder]="h.column._sort.default" (nzSortOrderChange)="sort(h.column, index, $event)" [nzCustomFilter]="h.column.filter">
-        <ng-template #renderTitle [ngTemplateOutlet]="h.column.__renderTitle" [ngTemplateOutletContext]="{$implicit: c, index: index }"></ng-template>
+        <ng-template #renderTitle [ngTemplateOutlet]="h.column.__renderTitle" [ngTemplateOutletContext]="{$implicit: h.column, index: index }"></ng-template>
         <ng-container *ngIf="!h.column.__renderTitle; else renderTitle">
           <ng-container [ngSwitch]="h.column.type">
             <ng-container *ngSwitchCase="'checkbox'">
@@ -95,17 +95,17 @@
                   <ng-container *ngIf="!h.column.filter.multiple">
                     <li nz-menu-item *ngFor="let filter of h.column.filter.menus">
                       <label nz-radio [ngModel]="filter.checked"
-                        (ngModelChange)="_filterRadio(c, filter, $event)">{{filter.text}}</label>
+                        (ngModelChange)="_filterRadio(h.column, filter, $event)">{{filter.text}}</label>
                     </li>
                   </ng-container>
                 </ul>
               </ng-container>
               <div class="ant-table-filter-dropdown-btns">
                 <a class="ant-table-filter-dropdown-link confirm" (click)="h.column.filter.visible = false">
-                  <span (click)="_filterConfirm(c)">{{h.column.filter.confirmText || locale.filterConfirm}}</span>
+                  <span (click)="_filterConfirm(h.column)">{{h.column.filter.confirmText || locale.filterConfirm}}</span>
                 </a>
                 <a class="ant-table-filter-dropdown-link clear" (click)="h.column.filter.visible = false">
-                  <span (click)="_filterClear(c)">{{h.column.filter.clearText || locale.filterReset}}</span>
+                  <span (click)="_filterClear(h.column)">{{h.column.filter.clearText || locale.filterReset}}</span>
                 </a>
               </div>
             </div>
