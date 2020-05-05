@@ -1,36 +1,33 @@
-<sf-item-wrap [id]="id"
-              [schema]="schema"
-              [ui]="ui"
-              [showError]="showError"
-              [error]="error"
-              [showTitle]="schema.title">
-  <nz-upload [nzType]="i.type"
-             [(nzFileList)]="fileList"
-             [nzDisabled]="disabled"
-             [nzAction]="i.action"
-             [nzDirectory]="i.directory"
-             [nzOpenFileDialogOnClick]="i.openFileDialogOnClick"
-             [nzAccept]="i.accept"
-             [nzLimit]="i.limit"
-             [nzFilter]="i.filter"
-             [nzSize]="i.size"
-             [nzFileType]="i.fileType"
-             [nzHeaders]="ui.headers"
-             [nzData]="ui.data"
-             [nzListType]="i.listType"
-             [nzMultiple]="i.multiple"
-             [nzName]="i.name"
-             [nzShowUploadList]="i.showUploadList"
-             [nzWithCredentials]="i.withCredentials"
-             [nzBeforeUpload]="i.beforeUpload"
-             [nzCustomRequest]="i.customRequest"
-             [nzRemove]="ui.remove || handleRemove"
-             [nzPreview]="handlePreview"
-             [nzPreviewFile]="ui.previewFile"
-             [nzDownload]="ui.download"
-             [nzTransformFile]="ui.transformFile"
-             (nzChange)="change($event)"
-             [nzShowButton]="fileList.length < i.limitFileCount">
+<sf-item-wrap [id]="id" [schema]="schema" [ui]="ui" [showError]="showError" [error]="error" [showTitle]="schema.title">
+  <nz-upload
+    [nzType]="i.type"
+    [(nzFileList)]="fileList"
+    [nzDisabled]="disabled"
+    [nzAction]="i.action"
+    [nzDirectory]="i.directory"
+    [nzOpenFileDialogOnClick]="i.openFileDialogOnClick"
+    [nzAccept]="i.accept"
+    [nzLimit]="i.limit"
+    [nzFilter]="i.filter"
+    [nzSize]="i.size"
+    [nzFileType]="i.fileType"
+    [nzHeaders]="ui.headers"
+    [nzData]="ui.data"
+    [nzListType]="i.listType"
+    [nzMultiple]="i.multiple"
+    [nzName]="i.name"
+    [nzShowUploadList]="i.showUploadList"
+    [nzWithCredentials]="i.withCredentials"
+    [nzBeforeUpload]="i.beforeUpload"
+    [nzCustomRequest]="i.customRequest"
+    [nzRemove]="ui.remove || handleRemove"
+    [nzPreview]="handlePreview"
+    [nzPreviewFile]="ui.previewFile"
+    [nzDownload]="ui.download"
+    [nzTransformFile]="ui.transformFile"
+    (nzChange)="change($event)"
+    [nzShowButton]="fileList.length < i.limitFileCount"
+  >
     <ng-container [ngSwitch]="btnType">
       <ng-container *ngSwitchCase="'plus'">
         <i nz-icon nzType="plus"></i>
@@ -42,9 +39,7 @@
         <p class="ant-upload-hint" [innerHTML]="i.hint"></p>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <button type="button" nz-button>
-          <i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span>
-        </button>
+        <button type="button" nz-button><i nz-icon nzType="upload"></i><span [innerHTML]="i.text"></span></button>
       </ng-container>
     </ng-container>
   </nz-upload>

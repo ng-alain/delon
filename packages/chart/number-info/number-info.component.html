@@ -1,16 +1,16 @@
 <div *ngIf="title" class="number-info__title">
-  <ng-container *nzStringTemplateOutlet="title">{{title}}</ng-container>
+  <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
 </div>
 <div *ngIf="subTitle" class="number-info__title-sub">
-  <ng-container *nzStringTemplateOutlet="subTitle">{{subTitle}}</ng-container>
+  <ng-container *nzStringTemplateOutlet="subTitle">{{ subTitle }}</ng-container>
 </div>
-<div class="number-info__value" [ngStyle]="{'margin-top.px': gap}">
+<div class="number-info__value" [ngStyle]="{ 'margin-top.px': gap }">
   <span class="number-info__value-text">
-    <ng-container *nzStringTemplateOutlet="total">{{total}}</ng-container>
-    <em class="number-info__value-suffix" *ngIf="suffix">{{suffix}}</em>
+    <ng-container *nzStringTemplateOutlet="total">{{ total }}</ng-container>
+    <em class="number-info__value-suffix" *ngIf="suffix">{{ suffix }}</em>
   </span>
   <span *ngIf="status || subTotal" class="number-info__value-text number-info__value-sub">
-    <ng-container *nzStringTemplateOutlet="subTotal">{{subTotal}}</ng-container>
-    <i *ngIf="status" nz-icon nzType="caret-{{status}}"></i>
+    <ng-container *nzStringTemplateOutlet="subTotal">{{ subTotal }}</ng-container>
+    <i *ngIf="status" nz-icon nzType="caret-{{ status }}"></i>
   </span>
 </div>

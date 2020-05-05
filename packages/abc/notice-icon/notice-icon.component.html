@@ -6,13 +6,16 @@
 <div *ngIf="data?.length === 0">
   <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
 </div>
-<div *ngIf="data?.length > 0" nz-dropdown
-    [nzVisible]="popoverVisible"
-    (nzVisibleChange)="onVisibleChange($event)"
-    nzTrigger="click"
-    nzPlacement="bottomRight"
-    [nzOverlayClassName]="['header-dropdown', 'notice-icon']"
-    [nzDropdownMenu]="noticeMenu">
+<div
+  *ngIf="data?.length > 0"
+  nz-dropdown
+  [nzVisible]="popoverVisible"
+  (nzVisibleChange)="onVisibleChange($event)"
+  nzTrigger="click"
+  nzPlacement="bottomRight"
+  [nzOverlayClassName]="['header-dropdown', 'notice-icon']"
+  [nzDropdownMenu]="noticeMenu"
+>
   <ng-template [ngTemplateOutlet]="badgeTpl"></ng-template>
 </div>
 <nz-dropdown-menu #noticeMenu="nzDropdownMenu">

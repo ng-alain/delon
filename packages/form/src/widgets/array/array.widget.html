@@ -4,20 +4,23 @@
       {{ schema.title }}
       <span class="sf__optional">
         {{ ui.optional }}
-        <i *ngIf="oh" nz-tooltip
-          [nzTooltipTitle]="oh.text" [nzTooltipPlacement]="oh.placement" [nzTooltipTrigger]="oh.trigger"
-          [nzOverlayClassName]="oh.overlayClassName" [nzOverlayStyle]="oh.overlayStyle"
-          [nzMouseEnterDelay]="oh.mouseEnterDelay" [nzMouseLeaveDelay]="oh.mouseLeaveDelay"
-          nz-icon [nzType]="oh.icon"></i>
+        <i
+          *ngIf="oh"
+          nz-tooltip
+          [nzTooltipTitle]="oh.text"
+          [nzTooltipPlacement]="oh.placement"
+          [nzTooltipTrigger]="oh.trigger"
+          [nzOverlayClassName]="oh.overlayClassName"
+          [nzOverlayStyle]="oh.overlayStyle"
+          [nzMouseEnterDelay]="oh.mouseEnterDelay"
+          [nzMouseLeaveDelay]="oh.mouseLeaveDelay"
+          nz-icon
+          [nzType]="oh.icon"
+        ></i>
       </span>
     </label>
     <div class="sf__array-add">
-      <button type="button"
-              nz-button
-              [nzType]="addType"
-              [disabled]="addDisabled"
-              (click)="addItem()"
-              [innerHTML]="addTitle"></button>
+      <button type="button" nz-button [nzType]="addType" [disabled]="addDisabled" (click)="addItem()" [innerHTML]="addTitle"></button>
     </div>
   </nz-col>
   <nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl" [nzOffset]="ui.offsetControl">

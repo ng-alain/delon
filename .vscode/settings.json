@@ -28,7 +28,7 @@
   "[jsonc]": {
     "editor.formatOnSave": false
   },
-  "[html]": {
+  "[less]": {
     "editor.formatOnSave": false
   },
   "files.associations": {

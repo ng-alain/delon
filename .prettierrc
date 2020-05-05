@@ -12,6 +12,12 @@
       "options": {
         "parser": "json"
       }
+    },
+    {
+      "files": "*.html",
+      "options": {
+        "printWidth": 160
+      }
     }
   ]
 }

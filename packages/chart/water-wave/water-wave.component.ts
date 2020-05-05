@@ -41,7 +41,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   // #endregion
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) { }
+  constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
   private renderChart(type: string) {
     if (!this.resize$) return;
