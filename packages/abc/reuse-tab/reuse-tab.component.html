@@ -1,11 +1,16 @@
-<nz-tabset [nzSelectedIndex]="pos" [nzAnimated]="false" [nzType]="tabType"
-  [nzTabBarExtraContent]="tabBarExtraContent" [nzTabBarGutter]="tabBarGutter" [nzTabBarStyle]="tabBarStyle">
+<nz-tabset
+  [nzSelectedIndex]="pos"
+  [nzAnimated]="false"
+  [nzType]="tabType"
+  [nzTabBarExtraContent]="tabBarExtraContent"
+  [nzTabBarGutter]="tabBarGutter"
+  [nzTabBarStyle]="tabBarStyle"
+>
   <nz-tab *ngFor="let i of list; let index = index" [nzTitle]="titleTemplate" (nzClick)="_to(index)">
     <ng-template #titleTemplate>
-      <div [reuse-tab-context-menu]="i" [customContextMenu]="customContextMenu" class="reuse-tab__name"
-        [attr.title]="i.title">
+      <div [reuse-tab-context-menu]="i" [customContextMenu]="customContextMenu" class="reuse-tab__name" [attr.title]="i.title">
         <span [class.reuse-tab__name-width]="tabMaxWidth" [style.max-width.px]="tabMaxWidth">
-          {{i.title}}
+          {{ i.title }}
         </span>
       </div>
       <i *ngIf="i.closable" nz-icon nzType="close" class="reuse-tab__op" (click)="_close($event, index, false)"></i>

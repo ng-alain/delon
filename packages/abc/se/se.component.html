@@ -1,5 +1,5 @@
 <div class="ant-form-item-label" [class.se__nolabel]="!label" [style.width.px]="_labelWidth">
-  <label *ngIf="label" [attr.for]="_id" class="se__label" [ngClass]="{'ant-form-item-required': required}">
+  <label *ngIf="label" [attr.for]="_id" class="se__label" [ngClass]="{ 'ant-form-item-required': required }">
     <span class="se__label-text">
       <ng-container *nzStringTemplateOutlet="label">{{ label }}</ng-container>
     </span>
@@ -10,7 +10,7 @@
   </label>
 </div>
 <div class="ant-form-item-control se__control">
-  <div class="ant-form-item-control-input {{controlClass}}">
+  <div class="ant-form-item-control-input {{ controlClass }}">
     <div class="ant-form-item-control-input-content" (cdkObserveContent)="checkContent()" #contentElement>
       <ng-content></ng-content>
     </div>
