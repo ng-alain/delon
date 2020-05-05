@@ -56,3 +56,7 @@ Contains three storage types:
 ### MemoryStore
 
 Memory storage, **lost after closing the browser tab**.
+
+### CookieStorageStore
+
+`cookie` storage, muse be install [js-cookie](https://github.com/js-cookie/js-cookie) libary and import `"node_modules/js-cookie/src/js.cookie.js"` in `angular.json`.
