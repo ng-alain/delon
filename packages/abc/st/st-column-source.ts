@@ -284,6 +284,21 @@ export class STColumnSource {
     return rows;
   }
 
+  private cleanCond(list: STColumn[]): STColumn[] {
+    const res: STColumn[] = [];
+    const copyList = deepCopy(list);
+    for (const item of copyList) {
+      if (item.iif && !item.iif(item)) {
+        continue;
+      }
+      if (this.acl && item.acl && !this.acl.can(item.acl)) {
+        continue;
+      }
+      res.push(item);
+    }
+    return res;
+  }
+
   process(list: STColumn[]): { columns: STColumn[]; headers: STColumn[][] } {
     if (!list || list.length === 0) throw new Error(`[st]: the columns property muse be define!`);
 
@@ -293,13 +308,7 @@ export class STColumnSource {
     let point = 0;
     const columns: STColumn[] = [];
 
-    const processItem = (item: STColumn): STColumn | null => {
-      if (item.iif && !item.iif(item)) {
-        return null;
-      }
-      if (this.acl && item.acl && !this.acl.can(item.acl)) {
-        return null;
-      }
+    const processItem = (item: STColumn): STColumn => {
       // index
       if (item.index) {
         if (!Array.isArray(item.index)) {
@@ -388,18 +397,15 @@ export class STColumnSource {
 
     const processList = (data: STColumn[]): void => {
       for (const item of data) {
-        const resItem = processItem(item);
-        if (resItem == null) continue;
-
         if (Array.isArray(item.children)) {
           processList(item.children);
         } else {
-          columns.push(resItem);
+          columns.push(processItem(item));
         }
       }
     };
 
-    const copyList = deepCopy(list);
+    const copyList = this.cleanCond(list);
     processList(copyList);
 
     if (checkboxCount > 1) {
