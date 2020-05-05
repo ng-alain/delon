@@ -27,6 +27,7 @@ Qr libary is lazy loading by default，you can change the default CDN path (or u
 | `[mime]` | MIME type used to render the image for the QR code | `string` | `image/png` | ✅ |
 | `[padding]` | Padding for the QR code (pixels) | `number` | `10` | ✅ |
 | `[size]` | Size of the QR code (pixels) | `number` | `220` | ✅ |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` | ✅ |
 | `(change)` | change event | `EventEmitter<string>` | - |  |
 
 ## FAQ

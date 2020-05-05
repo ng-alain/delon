@@ -10,4 +10,5 @@ export const QR_DEFULAT_CONFIG: AlainQRConfig = {
   mime: 'image/png',
   padding: 10,
   size: 220,
+  delay: 0,
 };

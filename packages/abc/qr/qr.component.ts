@@ -35,6 +35,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   private cog: AlainQRConfig;
   private option: QROptions;
   private inited = false;
+
   dataURL: string;
 
   // #region fields
@@ -48,9 +49,9 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   @Input() @InputNumber() padding: number;
   @Input() @InputNumber() size: number;
   @Input() value: string;
+  @Input() @InputNumber() delay: number;
   // tslint:disable-next-line:no-output-native
   @Output() readonly change = new EventEmitter<string>();
-  @Input() @InputNumber() delay = 100;
 
   // #endregion
 
@@ -122,6 +123,8 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.lazy$.unsubscribe();
+    if (this.lazy$) {
+      this.lazy$.unsubscribe();
+    }
   }
 }

@@ -21,4 +21,5 @@ export interface AlainQRConfig {
   padding?: number;
   /** 大小（单位：px），默认：`220` */
   size?: number;
+  delay?: number;
 }

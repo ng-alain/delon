@@ -26,6 +26,7 @@ module: import { QRModule } from '@delon/abc/qr';
 | `[mime]` | 二维码输出图片MIME类型 | `string` | `image/png` | ✅ |
 | `[padding]` | 内边距（单位：px） | `number` | `10` | ✅ |
 | `[size]` | 大小（单位：px） | `number` | `220` | ✅ |
+| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` | ✅ |
 | `(change)` | 变更时回调，返回二维码dataURL值 | `EventEmitter<string>` | - |  |
 
 ## 常见问题
