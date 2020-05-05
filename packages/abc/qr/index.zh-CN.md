@@ -9,19 +9,7 @@ module: import { QRModule } from '@delon/abc/qr';
 
 基于 [qrious](https://neocotic.com/qrious) 生成二维码。
 
-## 注意
-
-默认 `QRModule` 并没有强制依赖 `qrious`，因此还需要额外在 `angular.json` 的 `scripts` 节点引用它。
-
-```bash
-npm i --save qrious
-```
-
-```ts
-"scripts": [
-  "node_modules/qrious/dist/qrious.min.js"
-]
-```
+默认二维码的操作并不是刚需的原因，因此采用一种延迟加载脚本的形式，可以通过[全局配置](/docs/global-config)配置来改变默认 CDN 路径（或使用本地路径），默认情况下使用 `https://cdn.bootcdn.net/ajax/libs/qrious/4.0.2/qrious.min.js`。或安装 `npm i --save qrious` 依赖包并在 `angular.json` 的 `scripts` 引用 `"node_modules/qrious/dist/qrious.min.js"`。
 
 ## API
 
@@ -38,6 +26,7 @@ npm i --save qrious
 | `[mime]` | 二维码输出图片MIME类型 | `string` | `image/png` | ✅ |
 | `[padding]` | 内边距（单位：px） | `number` | `10` | ✅ |
 | `[size]` | 大小（单位：px） | `number` | `220` | ✅ |
+| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` | ✅ |
 | `(change)` | 变更时回调，返回二维码dataURL值 | `EventEmitter<string>` | - |  |
 
 ## 常见问题

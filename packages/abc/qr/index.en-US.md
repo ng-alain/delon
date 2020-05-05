@@ -9,19 +9,8 @@ module: import { QRModule } from '@delon/abc/qr';
 
 Generate a QR code based on [qrious](https://neocotic.com/qrious).
 
-## Notice
 
-The default `QRModule` don't mandatory dependence `qrious`, so you need to additionally reference it in the `scripts` of `angular.json`, like this:
-
-```bash
-npm i --save qrious
-```
-
-```ts
-"scripts": [
-  "node_modules/qrious/dist/qrious.min.js"
-]
-```
+Qr libary is lazy loading by default，you can change the default CDN path (or use the local path) via [Global Configuration](/docs/global-config). By default: `//cdn.bootcss.com/xlsx/0.15.6/xlsx.full.min.js`. Or install dependence via `npm i --save qrious`, and import script path in `angular.json`.
 
 ## API
 
@@ -38,6 +27,7 @@ npm i --save qrious
 | `[mime]` | MIME type used to render the image for the QR code | `string` | `image/png` | ✅ |
 | `[padding]` | Padding for the QR code (pixels) | `number` | `10` | ✅ |
 | `[size]` | Size of the QR code (pixels) | `number` | `220` | ✅ |
+| `[delay]` | Delayed rendering, unit: ms | `number` | `0` | ✅ |
 | `(change)` | change event | `EventEmitter<string>` | - |  |
 
 ## FAQ
