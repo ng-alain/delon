@@ -1,21 +1,17 @@
-<nz-affix #affix *ngIf="fixed;else phTpl" [nzOffsetTop]="fixedOffsetTop">
+<nz-affix #affix *ngIf="fixed; else phTpl" [nzOffsetTop]="fixedOffsetTop">
   <ng-template [ngTemplateOutlet]="phTpl"></ng-template>
 </nz-affix>
 <ng-template #phTpl>
   <div class="page-header">
-    <div [ngClass]="{'page-header__wide': wide}">
-      <nz-skeleton [nzLoading]="loading"
-                   [nzTitle]="false"
-                   [nzActive]="true"
-                   [nzParagraph]="{rows: 3}"
-                   [nzAvatar]="{ size: 'large', shape: 'circle' }">
+    <div [ngClass]="{ 'page-header__wide': wide }">
+      <nz-skeleton [nzLoading]="loading" [nzTitle]="false" [nzActive]="true" [nzParagraph]="{ rows: 3 }" [nzAvatar]="{ size: 'large', shape: 'circle' }">
         <ng-container *ngIf="!breadcrumb; else breadcrumb">
           <nz-breadcrumb *ngIf="paths && paths.length > 0">
             <nz-breadcrumb-item *ngFor="let i of paths">
               <ng-container *ngIf="i.link">
-                <a [routerLink]="i.link">{{i.title}}</a>
+                <a [routerLink]="i.link">{{ i.title }}</a>
               </ng-container>
-              <ng-container *ngIf="!i.link">{{i.title}}</ng-container>
+              <ng-container *ngIf="!i.link">{{ i.title }}</ng-container>
             </nz-breadcrumb-item>
           </nz-breadcrumb>
         </ng-container>
@@ -26,7 +22,7 @@
           <div class="page-header__main">
             <div class="page-header__row">
               <h1 *ngIf="_titleVal || _titleTpl" class="page-header__title">
-                <ng-container *ngIf="_titleVal; else _titleTpl">{{_titleVal}}</ng-container>
+                <ng-container *ngIf="_titleVal; else _titleTpl">{{ _titleVal }}</ng-container>
               </h1>
               <div *ngIf="action" class="page-header__action">
                 <ng-template [ngTemplateOutlet]="action"></ng-template>

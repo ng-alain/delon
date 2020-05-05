@@ -1,35 +1,42 @@
 <ng-template #icon let-i>
   <ng-container *ngIf="i" [ngSwitch]="i.type">
-    <i *ngSwitchCase="'icon'" class="sidebar-nav__item-icon" nz-icon [nzType]="i.value" [nzTheme]="i.theme"
-      [nzSpin]="i.spin" [nzTwotoneColor]="i.twoToneColor" [nzIconfont]="i.iconfont"></i>
+    <i
+      *ngSwitchCase="'icon'"
+      class="sidebar-nav__item-icon"
+      nz-icon
+      [nzType]="i.value"
+      [nzTheme]="i.theme"
+      [nzSpin]="i.spin"
+      [nzTwotoneColor]="i.twoToneColor"
+      [nzIconfont]="i.iconfont"
+    ></i>
     <i *ngSwitchCase="'iconfont'" class="sidebar-nav__item-icon" nz-icon [nzIconfont]="i.iconfont"></i>
-    <img *ngSwitchCase="'img'" [src]="i.value" class="sidebar-nav__item-icon sidebar-nav__item-img">
+    <img *ngSwitchCase="'img'" [src]="i.value" class="sidebar-nav__item-icon sidebar-nav__item-img" />
     <i *ngSwitchDefault class="sidebar-nav__item-icon {{ i.value }}"></i>
   </ng-container>
 </ng-template>
 <ng-template #item let-i>
   <!-- link -->
-  <a *ngIf="i._type <= 2" (click)="to(i)" [attr.data-id]="i.__id" class="sidebar-nav__item-link"
-    [ngClass]="{'sidebar-nav__item-disabled': i.disabled}">
+  <a *ngIf="i._type <= 2" (click)="to(i)" [attr.data-id]="i.__id" class="sidebar-nav__item-link" [ngClass]="{ 'sidebar-nav__item-disabled': i.disabled }">
     <ng-container *ngIf="i._needIcon">
       <ng-container *ngIf="!collapsed">
-        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: i.icon}"></ng-template>
+        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }"></ng-template>
       </ng-container>
       <span *ngIf="collapsed" nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="i.text">
-        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: i.icon}"></ng-template>
+        <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }"></ng-template>
       </span>
     </ng-container>
     <span class="sidebar-nav__item-text" [innerHTML]="i._text"></span>
   </a>
   <!-- has children link -->
   <a *ngIf="i._type === 3" (click)="toggleOpen(i)" (mouseenter)="showSubMenu($event, i)" class="sidebar-nav__item-link">
-    <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{$implicit: i.icon}"></ng-template>
+    <ng-template [ngTemplateOutlet]="icon" [ngTemplateOutletContext]="{ $implicit: i.icon }"></ng-template>
     <span class="sidebar-nav__item-text" [innerHTML]="i._text"></span>
     <i class="sidebar-nav__sub-arrow"></i>
   </a>
   <!-- badge -->
-  <div *ngIf="i.badge" [attr.title]="i.badge" class="badge badge-{{i.badgeStatus}}" [class.badge-dot]="i.badgeDot">
-    <em>{{i.badge}}</em>
+  <div *ngIf="i.badge" [attr.title]="i.badge" class="badge badge-{{ i.badgeStatus }}" [class.badge-dot]="i.badgeDot">
+    <em>{{ i.badge }}</em>
   </div>
 </ng-template>
 <ul class="sidebar-nav">
@@ -39,22 +46,28 @@
         <span [innerHTML]="group._text"></span>
       </li>
       <ng-container *ngFor="let child1 of group.children">
-        <li *ngIf="child1._hidden !== true" class="sidebar-nav__item" [class.sidebar-nav__selected]="child1._selected"
-          [class.sidebar-nav__open]="child1._open">
-          <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{$implicit: child1}"></ng-template>
+        <li *ngIf="child1._hidden !== true" class="sidebar-nav__item" [class.sidebar-nav__selected]="child1._selected" [class.sidebar-nav__open]="child1._open">
+          <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ $implicit: child1 }"></ng-template>
           <!-- Level 2 -->
-          <ul *ngIf="child1._type === 3" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{child1._depth}}">
+          <ul *ngIf="child1._type === 3" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{ child1._depth }}">
             <ng-container *ngFor="let child2 of child1.children">
-              <li *ngIf="child2._hidden !== true" class="sidebar-nav__item"
-                [class.sidebar-nav__selected]="child2._selected" [class.sidebar-nav__open]="child2._open">
-                <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{$implicit: child2}"></ng-template>
+              <li
+                *ngIf="child2._hidden !== true"
+                class="sidebar-nav__item"
+                [class.sidebar-nav__selected]="child2._selected"
+                [class.sidebar-nav__open]="child2._open"
+              >
+                <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ $implicit: child2 }"></ng-template>
                 <!-- Level 3 -->
-                <ul *ngIf="child2._type === 3" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{child2._depth}}">
+                <ul *ngIf="child2._type === 3" class="sidebar-nav sidebar-nav__sub sidebar-nav__depth{{ child2._depth }}">
                   <ng-container *ngFor="let child3 of child2.children">
-                    <li *ngIf="child3._hidden !== true" class="sidebar-nav__item"
-                      [class.sidebar-nav__selected]="child3._selected" [class.sidebar-nav__open]="child3._open">
-                      <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{$implicit: child3}">
-                      </ng-template>
+                    <li
+                      *ngIf="child3._hidden !== true"
+                      class="sidebar-nav__item"
+                      [class.sidebar-nav__selected]="child3._selected"
+                      [class.sidebar-nav__open]="child3._open"
+                    >
+                      <ng-template [ngTemplateOutlet]="item" [ngTemplateOutletContext]="{ $implicit: child3 }"> </ng-template>
                     </li>
                   </ng-container>
                 </ul>
