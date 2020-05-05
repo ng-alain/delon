@@ -47,6 +47,7 @@ export class DemoComponent {
         { title: '邮箱', index: 'email' },
         {
           title: '姓名',
+          sort: true,
           children: [
             { title: 'first', index: 'name.first', sort: true },
             { title: 'last', index: 'name.last' },
