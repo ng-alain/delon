@@ -3,6 +3,7 @@ export * from './src/store/interface';
 export * from './src/store/local-storage.service';
 export * from './src/store/memory.service';
 export * from './src/store/session-storage.service';
+export * from './src/store/cookie-storage.service';
 export * from './src/token/base.interceptor';
 export * from './src/token/interface';
 export * from './src/token/token.service';
