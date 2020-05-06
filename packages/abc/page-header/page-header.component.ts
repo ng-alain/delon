@@ -177,7 +177,6 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   ngOnInit() {
     this.refresh();
     this.inited = true;
-    console.log('ngoninit', this.recursiveBreadcrumb);
   }
 
   ngAfterViewInit(): void {
