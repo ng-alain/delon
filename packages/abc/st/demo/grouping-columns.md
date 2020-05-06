@@ -19,21 +19,7 @@ import { STColumn } from '@delon/abc/st';
 
 @Component({
   selector: 'app-demo',
-  template: ` <st
-    #st
-    [data]="url"
-    [req]="{ params: params }"
-    [columns]="columns"
-    bordered
-    size="middle"
-    [expand]="expand"
-    expandRowByClick
-    expandAccordion
-  >
-    <ng-template #expand let-item let-index="index" let-column="column">
-      {{ item | json }}
-    </ng-template>
-  </st>`,
+  template: ` <st #st [data]="url" [req]="{ params: params }" [columns]="columns" bordered size="middle"> </st>`,
 })
 export class DemoComponent {
   url = `/users?total=2&field=list`;
