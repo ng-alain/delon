@@ -103,4 +103,16 @@ describe('form: widget: object', () => {
         .checkCount('.sf__title', 0);
     });
   });
+
+  describe('render card', () => {
+    it('should be working', () => {
+      page
+        .newSchema({
+          title: 'root',
+          properties: {},
+          ui: { type: 'card' },
+        })
+        .checkCount('.sf__object-card', 1);
+    });
+  });
 });

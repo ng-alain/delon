@@ -3,6 +3,7 @@ import { ArrayProperty } from '../../model/array.property';
 import { FormProperty } from '../../model/form.property';
 import { SFGridSchema } from '../../schema/ui';
 import { ObjectLayoutWidget } from '../../widget';
+import { SFObjectWidgetRenderType } from './schema';
 
 @Component({
   selector: 'sf-object',
@@ -12,13 +13,15 @@ import { ObjectLayoutWidget } from '../../widget';
 })
 export class ObjectWidget extends ObjectLayoutWidget implements OnInit {
   grid: SFGridSchema;
+  type: SFObjectWidgetRenderType = 'default';
   list: Array<{}> = [];
   title: string;
 
   ngOnInit(): void {
     const { formProperty, ui } = this;
-    const { grid, showTitle } = ui;
-    if (!formProperty.isRoot() && !(formProperty.parent instanceof ArrayProperty) && showTitle === true) {
+    const { grid, showTitle, type } = ui;
+    this.type = type ?? 'default';
+    if (this.type === 'card' || (!formProperty.isRoot() && !(formProperty.parent instanceof ArrayProperty) && showTitle === true)) {
       this.title = this.schema.title as string;
     }
     this.grid = grid as SFGridSchema;
