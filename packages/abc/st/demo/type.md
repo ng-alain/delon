@@ -7,11 +7,11 @@ title:
 
 ## zh-CN
 
-支持十种不同列类型：行号、多选、单选、徽标、标签、图片、数字、货币、日期、布尔徽章。也可以使用自定义列完成更复杂渲染。
+支持十种不同列类型：行号、多选、单选、徽标、标签、图片、数字、货币、日期、布尔徽章、枚举。也可以使用自定义列完成更复杂渲染。
 
 ## en-US
 
-Support for ten different column types: no, checkbox, radio, badge, tag, image, number, currency, date, boolean badge.
+Support for ten different column types: no, checkbox, radio, badge, tag, image, number, currency, date, boolean badge, enum.
 
 ```ts
 import { Component } from '@angular/core';
@@ -48,6 +48,7 @@ export class DemoComponent {
     { title: '年龄', index: 'age', type: 'number' },
     { title: 'tag', index: 'tag', type: 'tag', tag: TAG },
     { title: 'badge', index: 'badge', type: 'badge', badge: BADGE },
+    { title: 'Enum', index: 'enum', type: 'enum', enum: { 1: '壹', 2: '贰', 3: '叁' } },
     { title: 'yn', index: 'yn', type: 'yn' },
   ];
 
@@ -61,6 +62,7 @@ export class DemoComponent {
           age: r(10, 50),
           tag: r(1, 5),
           badge: r(1, 5),
+          enum: r(1, 3),
           yn: [true, false][r(1, 5) % 2],
         };
       });

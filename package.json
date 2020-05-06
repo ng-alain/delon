@@ -98,7 +98,6 @@
     "karma-junit-reporter": "^2.0.1",
     "karma-spec-reporter": "0.0.32",
     "karma-viewport": "^1.0.6",
-    "puppeteer": "^2.1.1",
     "@types/aos": "^3.0.3",
     "@schematics/schematics": "^0.901.1",
     "@angularclass/hmr": "^2.1.3",

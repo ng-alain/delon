@@ -211,6 +211,9 @@ export class STDataSource {
       case 'yn':
         text = this.ynPipe.transform(value === col.yn!.truth, col.yn!.yes!, col.yn!.no!, col.yn!.mode!, false);
         break;
+      case 'enum':
+        text = col.enum![value];
+        break;
       case 'tag':
       case 'badge':
         const data = col.type === 'tag' ? col.tag : col.badge;

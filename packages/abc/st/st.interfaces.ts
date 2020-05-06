@@ -208,6 +208,7 @@ export interface STColumn {
    * - `link` 链接，务必指定 `click`
    * - `badge` [徽标](https://ng.ant.design/components/badge/zh)，务必指定 `badge` 参数配置徽标对应值
    * - `tag` [标签](https://ng.ant.design/components/tag/zh)，务必指定 `tag` 参数配置标签对应值
+   * - `enum` 枚举转换，务必指定 `enum` 参数配置标签对应值
    * - `img` 图片且居中(若 `className` 存在则优先)
    * - `number` 数字且居右(若 `className` 存在则优先)
    * - `currency` 货币且居右(若 `className` 存在则优先)
@@ -215,7 +216,7 @@ export interface STColumn {
    * - `yn` 将`boolean`类型徽章化 [document](https://ng-alain.com/docs/data-render#yn)
    * - `widget` 使用自定义小部件动态创建
    */
-  type?: 'checkbox' | 'link' | 'badge' | 'tag' | 'radio' | 'img' | 'currency' | 'number' | 'date' | 'yn' | 'no' | 'widget';
+  type?: 'checkbox' | 'link' | 'badge' | 'tag' | 'enum' | 'radio' | 'img' | 'currency' | 'number' | 'date' | 'yn' | 'no' | 'widget';
   /**
    * 链接回调，若返回一个字符串表示导航URL会自动触发 `router.navigateByUrl`
    */
@@ -332,6 +333,8 @@ export interface STColumn {
   statistical?: STStatisticalType | STStatistical;
 
   widget?: STWidgetColumn;
+
+  enum?: { [key: string]: string; [key: number]: string };
 
   /**
    * 分组表头
