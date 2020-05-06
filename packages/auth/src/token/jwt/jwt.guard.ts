@@ -11,7 +11,14 @@ import { JWTTokenModel } from './jwt.model';
  * data: {
  *  path: 'home',
  *  canActivate: [ JWTGuard ]
- * }
+ * },
+ * {
+ *   path: 'my',
+ *   canActivateChild: [JWTGuard],
+ *   children: [
+ *     { path: 'profile', component: MockComponent }
+ *   ],
+ * },
  * ```
  */
 @Injectable({ providedIn: 'root' })

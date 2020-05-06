@@ -41,7 +41,7 @@ export class TokenService implements ITokenService {
   }
 
   /**
-   * 设置 Token 信息
+   * 设置 Token 信息，当用户 Token 发生变动时都需要调用此方法重新刷新
    */
   set(data: ITokenModel): boolean {
     this.change$.next(data);
@@ -66,7 +66,7 @@ export class TokenService implements ITokenService {
   }
 
   /**
-   * 清除 Token 信息，例如：
+   * 清除 Token 信息，当用户退出登录时调用。
    * ```
    * // 清除所有 Token 信息
    * tokenService.clear();

@@ -2,6 +2,40 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { ITokenModel } from '../interface';
 import { urlBase64Decode } from './jwt.helper';
 
+export interface JWT {
+  /**
+   * Issuerd
+   */
+  iss: string;
+  /**
+   * Issued At
+   */
+  iat: string;
+  /**
+   * Subject
+   */
+  sub: string;
+  /**
+   * Expiration Time
+   */
+  exp: number;
+  /**
+   * Audience
+   */
+  aud: string;
+  /**
+   * Not Before
+   */
+  nbf: string;
+  /**
+   * JWT ID
+   */
+  jti: string;
+
+  [key: string]: any;
+  [key: number]: any;
+}
+
 export class JWTTokenModel implements ITokenModel {
   [key: string]: NzSafeAny;
 
@@ -10,7 +44,7 @@ export class JWTTokenModel implements ITokenModel {
   /**
    * 获取载荷信息
    */
-  get payload(): NzSafeAny {
+  get payload(): JWT {
     const parts = (this.token || '').split('.');
     if (parts.length !== 3) throw new Error('JWT must have 3 parts');
 
@@ -19,17 +53,25 @@ export class JWTTokenModel implements ITokenModel {
   }
 
   /**
-   * 检查Token是否过期，`payload` 必须包含 `exp` 时有效
+   * 获取过期时间戳（单位：ms）
+   */
+  get exp(): number | null {
+    const decoded = this.payload;
+    if (!decoded.hasOwnProperty('exp')) return null;
+    const date = new Date(0);
+    date.setUTCSeconds(decoded.exp);
+    return date.valueOf();
+  }
+
+  /**
+   * 检查Token是否过期，当`payload` 包含 `exp` 字段时有效，若无 `exp` 字段直接返回 `null`
    *
    * @param offsetSeconds 偏移量
    */
   isExpired(offsetSeconds: number = 0): boolean | null {
-    const decoded = this.payload;
-    if (!decoded.hasOwnProperty('exp')) return null;
+    const exp = this.exp;
+    if (exp == null) return null;
 
-    const date = new Date(0);
-    date.setUTCSeconds(decoded.exp);
-
-    return !(date.valueOf() > new Date().valueOf() + offsetSeconds * 1000);
+    return !(exp > new Date().valueOf() + offsetSeconds * 1000);
   }
 }
