@@ -98,6 +98,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   _allChecked = false;
   _allCheckedDisabled = false;
   _indeterminate = false;
+  _headers: STColumn[][] = [];
   _columns: STColumn[] = [];
   @ViewChild('table', { static: false }) readonly orgTable: NzTableComponent;
 
@@ -775,7 +776,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private refreshColumns(): this {
-    this._columns = this.columnSource.process(this.columns);
+    const res = this.columnSource.process(this.columns);
+    this._columns = res.columns;
+    this._headers = res.headers;
     return this;
   }
 

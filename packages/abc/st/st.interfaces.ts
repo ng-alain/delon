@@ -333,6 +333,11 @@ export interface STColumn {
 
   widget?: STWidgetColumn;
 
+  /**
+   * 分组表头
+   */
+  children?: STColumn[];
+
   /** @ignore internal property */
   _sort?: STSortMap;
 
@@ -953,3 +958,12 @@ export interface STError {
 }
 
 export type STRowClassName = (record: STData, index: number) => string;
+
+export interface STColumnGroupType {
+  column: STColumn;
+  colStart: number;
+  colEnd?: number;
+  colSpan?: number;
+  rowSpan?: number;
+  hasSubColumns?: boolean;
+}

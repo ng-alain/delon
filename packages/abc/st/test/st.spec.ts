@@ -772,6 +772,20 @@ describe('abc: table', () => {
           page.asyncEnd();
         }));
       });
+      describe('[Mulit Headers]', () => {
+        it('should be working', fakeAsync(() => {
+          page.updateColumn([
+            {
+              title: 'user',
+              children: [
+                { title: 'name', index: 'name' },
+                { title: 'age', index: 'age', colSpan: 1, rowSpan: 2 },
+              ],
+            },
+          ]);
+          page.expectElCount('.ant-table-thead .ant-table-row', 2).expectElCount('.ant-table-thead .ant-table-cell', 3).asyncEnd();
+        }));
+      });
     });
     describe('[data source]', () => {
       let httpBed: HttpTestingController;
