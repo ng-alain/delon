@@ -495,7 +495,17 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /**
-   * 刷新 Schema，一般需要动态修改 Schema 某个值时可以方便调用
+   * 刷新整个 Schema，当指定 `newSchema` 表示替换当前的 Schema
+   *
+   * 若希望对某个表单元素进行刷新请使用：
+   * ```
+   * // 获取某个元素
+   * const statusProperty = this.sf.getProperty('/status')!;
+   * // 重置 `schema` 或 `ui` 参数
+   * statusProperty.schema.enum = ['1', '2', '3'];
+   * // 调用 `reset` 重置初始值
+   * statusProperty.widget.reset('2');
+   * ```
    */
   refreshSchema(newSchema?: SFSchema, newUI?: SFUISchema): this {
     if (newSchema) this.schema = newSchema;

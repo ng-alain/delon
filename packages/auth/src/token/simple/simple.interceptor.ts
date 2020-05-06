@@ -9,6 +9,11 @@ import { SimpleTokenModel } from './simple.model';
 
 /**
  * Simple 拦截器
+ *
+ * ```
+ * // app.module.ts
+ * { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true}
+ * ```
  */
 @Injectable()
 export class SimpleInterceptor extends BaseInterceptor {

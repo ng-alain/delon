@@ -8,6 +8,11 @@ import { JWTTokenModel } from './jwt.model';
 
 /**
  * JWT 拦截器
+ *
+ * ```
+ * // app.module.ts
+ * { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true}
+ * ```
  */
 @Injectable()
 export class JWTInterceptor extends BaseInterceptor {

@@ -11,7 +11,14 @@ import { SimpleTokenModel } from './simple.model';
  * data: {
  *  path: 'home',
  *  canActivate: [ SimpleGuard ]
- * }
+ * },
+ * {
+ *   path: 'my',
+ *   canActivateChild: [SimpleGuard],
+ *   children: [
+ *     { path: 'profile', component: MockComponent }
+ *   ],
+ * },
  * ```
  */
 @Injectable({ providedIn: 'root' })
