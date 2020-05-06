@@ -257,6 +257,7 @@ class TestComponent {
 | `[click]` | Callback of type is link | `(record: STData, instance?: STComponent) => void` | - |
 | `[badge]` | Config of type is badge | `STColumnBadge` | - |
 | `[tag]` | Config of type is tag | `STColumnTag` | - |
+| `[enum]` | Config of type is enum | `{ [key: string]: string; [key: number]: string }` | - |
 | `[widget]` | Config of type is widget | `STWidgetColumn` | - |
 | `[noIndex]` | Line number index start value | `number,(item: STData, col: STColumn, idx: number) => number` | `1` |
 | `[iif]` | Custom conditional expression<br>1. Execute only once when `columns` is assigned<br>2. Call `resetColumns()` to trigger again | `(item: STColumn) => boolean` | - |

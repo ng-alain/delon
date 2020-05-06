@@ -775,6 +775,17 @@ describe('abc: table: data-souce', () => {
           done();
         });
       });
+      it('via enum', done => {
+        options.columns[0].type = 'enum';
+        options.columns[0].enum = {
+          1: '一',
+        };
+        srv.process(options).subscribe(res => {
+          expect(res.list[0]._values[0].text).toBe('一');
+          expect(res.list[1]._values[0].text).toBe('');
+          done();
+        });
+      });
     });
     it('#rowClassName', done => {
       options.rowClassName = () => `aaa`;
