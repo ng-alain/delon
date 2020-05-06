@@ -27,9 +27,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { IconComponent } from './components/icon/icon.component';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { RouteTransferDirective } from './components/route-transfer/route-transfer.directive';
-import { STWIDGET_COMPONENTS } from './st-widget/st-widget.module';
 
-const DIALOG_COMPONENTS = [DemoModalComponent, DemoDrawerComponent, IconComponent, ...STWIDGET_COMPONENTS];
+const DIALOG_COMPONENTS = [DemoModalComponent, DemoDrawerComponent, IconComponent];
 
 const COMPONENTS = [
   FooterComponent,
