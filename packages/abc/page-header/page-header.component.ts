@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import { AlainI18NService, ALAIN_I18N_TOKEN, Menu, MenuService, SettingsService, TitleService } from '@delon/theme';
+import { AlainI18NService, ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { AlainConfigService, AlainPageHeaderConfig, InputBoolean, InputNumber, isEmpty } from '@delon/util';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
@@ -41,15 +41,9 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   private unsubscribe$ = new Subject<void>();
   @ViewChild('conTpl', { static: false }) private conTpl: ElementRef;
   @ViewChild('affix', { static: false }) private affix: NzAffixComponent;
-  private _menus: Menu[] | null;
 
   private get menus() {
-    if (this._menus) {
-      return this._menus;
-    }
-    this._menus = this.menuSrv.getPathByUrl(this.router.url.split('?')[0], this.recursiveBreadcrumb);
-
-    return this._menus;
+    return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
   }
 
   _titleVal: string = '';
@@ -121,10 +115,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
 
     merge(menuSrv.change.pipe(filter(() => this.inited)), router.events.pipe(filter(e => e instanceof NavigationEnd)), i18nSrv.change)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
-        this._menus = null;
-        this.refresh();
-      });
+      .subscribe(() => this.refresh());
   }
 
   refresh() {
@@ -186,6 +177,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   ngOnInit() {
     this.refresh();
     this.inited = true;
+    console.log('ngoninit', this.recursiveBreadcrumb);
   }
 
   ngAfterViewInit(): void {
