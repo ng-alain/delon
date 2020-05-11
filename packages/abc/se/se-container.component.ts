@@ -5,7 +5,22 @@ import { AlainConfigService, AlainSEConfig, InputBoolean, InputNumber, toNumber 
 @Component({
   selector: 'se-container, [se-container]',
   exportAs: 'seContainer',
-  templateUrl: './se-container.component.html',
+  template: `
+    <se-title *ngIf="title">
+      <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
+    </se-title>
+    <ng-content></ng-content>
+  `,
+  host: {
+    '[class.ant-row]': `true`,
+    '[class.se__container]': `true`,
+    '[class.se__horizontal]': `nzLayout === 'horizontal'`,
+    '[class.se__vertical]': `nzLayout === 'vertical'`,
+    '[class.se__inline]': `nzLayout === 'inline'`,
+    '[class.se__compact]': `size === 'compact'`,
+    '[style.margin-left.px]': `-(gutter / 2)`,
+    '[style.margin-right.px]': `-(gutter / 2)`,
+  },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
