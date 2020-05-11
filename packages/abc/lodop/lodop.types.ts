@@ -9,7 +9,7 @@ export interface CLodop {
   readonly HTTPS_STATUS: number;
 
   /** 结果回调函数保留 */
-  readonly On_Return_Remain: boolean;
+  On_Return_Remain: boolean;
 
   /** 结果回调函数 */
   On_Return: ((taskID: string, value: boolean | string) => void) | null;
