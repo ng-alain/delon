@@ -748,7 +748,8 @@ describe('abc: table', () => {
           });
         });
       });
-      describe('[fixed]', () => {
+      // TODO: 当前版本自动设置，无须参与计算
+      xdescribe('[fixed]', () => {
         it('should be fixed left column', fakeAsync(() => {
           page.updateColumn([
             { title: '1', index: 'id', fixed: 'left', width: '100px' },
