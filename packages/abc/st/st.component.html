@@ -139,14 +139,14 @@
         >
           <span
             class="ant-table-filter-trigger"
-            [class.ant-table-filter-open]="h.column.filter.default"
-            [class.active]="h.column.filter.visible"
+            [class.active]="h.column.filter.visible || h.column.filter.default"
             nz-dropdown
             [nzDropdownMenu]="filterMenu"
             nzTrigger="click"
             [nzClickHide]="false"
             [(nzVisible)]="h.column.filter.visible"
             nzOverlayClassName="st__filter-wrap"
+            (click)="_filterClick($event)"
           >
             <i nz-icon [nzType]="h.column.filter.icon.type" [nzTheme]="h.column.filter.icon.theme"></i>
           </span>

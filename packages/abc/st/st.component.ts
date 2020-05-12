@@ -597,6 +597,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
+  _filterClick($event: MouseEvent): void {
+    $event.stopPropagation();
+  }
   // #endregion
 
   // #region checkbox
