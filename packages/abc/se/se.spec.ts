@@ -117,9 +117,6 @@ describe('abc: edit', () => {
             page.expect(prefixCls + 'compact');
           });
           it('#size', () => {
-            context.parent_size = 'default';
-            fixture.detectChanges();
-            page.expect(prefixCls + 'default');
             context.parent_size = 'compact';
             fixture.detectChanges();
             page.expect(prefixCls + 'compact');
