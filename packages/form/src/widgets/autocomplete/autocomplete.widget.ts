@@ -25,7 +25,7 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
   private fixData: SFSchemaEnum[] = [];
 
   updateValue(item: NzAutocompleteOptionComponent) {
-    this.typing = item.nzLabel;
+    this.typing = item.nzLabel!;
     this.setValue(item.nzValue);
     if (this.ui.change) this.ui.change(item);
   }
