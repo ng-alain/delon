@@ -597,6 +597,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
+  _filterClick($event: MouseEvent): void {
+    $event.stopPropagation();
+  }
   // #endregion
 
   // #region checkbox
@@ -752,7 +755,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   // #endregion
 
   get cdkVirtualScrollViewport() {
-    return this.orgTable.cdkVirtualScrollViewport;
+    return this.orgTable.cdkVirtualScrollViewport!;
   }
 
   resetColumns(options?: STResetColumnsOption): Promise<this> {
