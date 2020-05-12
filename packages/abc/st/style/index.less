@@ -75,6 +75,17 @@
       }
     }
   }
+  // 修复无法显示阴影问题
+  .@{ant-prefix}-table {
+    &-cell-fix-left-first::after,
+    &-cell-fix-left-last::after {
+      transform: translateX(80%);
+    }
+    &-cell-fix-right-first::after,
+    &-cell-fix-right-last::after {
+      transform: translateX(-80%);
+    }
+  }
 
   @media screen and (min-width: @nz-table-rep-min-width) {
     &__width {
