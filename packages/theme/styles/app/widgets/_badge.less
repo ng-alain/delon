@@ -1,11 +1,10 @@
 // Badges
-@badge-enabled:      true;
-@badge-color:        @white;
-@badge-font-size:    @font-size-base;
-@badge-padding:      0 8px;
+@badge-enabled: true;
+@badge-color: @white;
+@badge-font-size: @font-size-base;
+@badge-padding: 0 8px;
 
 .widget-badge-mixin(@enabled) when(@enabled=true) {
-
   .badge {
     display: inline-block;
     padding: @badge-padding;
@@ -51,12 +50,11 @@
   });
 
   .for-each(@aliasColors, {
-      @aliasColor: ~`getColor("@{colors}", "@{adValue}", @{color-basic-position})`;
+      @aliasColor: ~`getColor('@{colors}', '@{adValue}', @{color-basic-position})`;
       .badge-@{adKey} {
           .badge-variant(color(@aliasColor))
       }
   });
-
 }
 
 .widget-badge-mixin(@badge-enabled);

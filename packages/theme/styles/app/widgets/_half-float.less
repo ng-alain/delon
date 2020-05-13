@@ -1,11 +1,7 @@
-@hafl-enabled:      true;
-@hafl-float-size:
-  sm @layout-gutter * 8,
-  md @layout-gutter * 10,
-  lg @layout-gutter * 12;
+@hafl-enabled: true;
+@hafl-float-size: sm @layout-gutter * 8, md @layout-gutter * 10, lg @layout-gutter * 12;
 
 .widget-hafl-mixin(@enabled) when(@enabled=true) {
-
   .half-float {
     position: relative;
     img {
@@ -31,8 +27,6 @@
       }
     });
   }
-
 }
 
 .widget-hafl-mixin(@hafl-enabled);
-

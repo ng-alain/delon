@@ -1,9 +1,8 @@
 // masonry
-@masonry-enabled:     true;
-@masonry-column-gap:  @layout-gutter * 2;
+@masonry-enabled: true;
+@masonry-column-gap: @layout-gutter * 2;
 
 .widget-masonry-mixin(@enabled) when(@enabled=true) {
-
   .row-masonry {
     position: relative;
     width: 100%;
@@ -33,7 +32,6 @@
       .loopColumn();
     }
   });
-
 }
 
 .widget-masonry-mixin(@masonry-enabled);
