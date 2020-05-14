@@ -86,7 +86,7 @@ describe('form: schema', () => {
         .newSchema(schema, ui)
         .checkUI('/name1', 'spanLabel', label)
         .add()
-        .checkUI('/name2/0/a', 'spanLabel', 9)
+        .checkUI('/name2/0/a', 'spanLabel', null) // 当指定标签为固定宽度时无须指定 `spanLabel`，`spanControl` 会强制清理
         .checkUI('/name2/0/b', 'spanLabelFixed', 10);
     });
     it('should be fixed label width', () => {
@@ -137,7 +137,7 @@ describe('form: schema', () => {
         { '*': { spanLabelFixed: 100, spanControl: 10, offsetControl: 11 } },
       );
       page.checkUI('/user/name', 'spanLabelFixed', 100);
-      page.checkUI('/user/name', 'spanControl', 10);
+      page.checkUI('/user/name', 'spanControl', null); // 当指定标签为固定宽度时无须指定 `spanLabel`，`spanControl` 会强制清理
       page.checkUI('/user/name', 'offsetControl', 11);
       discardPeriodicTasks();
     }));
