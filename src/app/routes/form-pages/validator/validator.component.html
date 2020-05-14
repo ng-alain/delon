@@ -11,8 +11,8 @@
   </nz-col>
   <nz-col [nzSpan]="6" class="text-right">
     <nz-button-group>
-      <button nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" nz-button (click)="expand=!expand">
-        <i nz-icon nzType="vertical-{{ expand ? 'right' : 'left'}}"></i>
+      <button nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" nz-button (click)="expand = !expand">
+        <i nz-icon nzType="vertical-{{ expand ? 'right' : 'left' }}"></i>
       </button>
       <button nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | translate" nz-button (click)="openOnStackBlitz()" class="ml-sm">
         <i nz-icon nzType="form"></i>
@@ -26,19 +26,26 @@
 <nz-row class="border-bottom-1 pb-sm mb-md" nzGutter="24">
   <nz-col [nzSpan]="12" [hidden]="!expand">
     <nz-tabset>
-      <nz-tab nzTitle="Schema">
-        <ace-editor [(text)]="schema" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '16px'}" [durationBeforeCallback]="1000" (textChanged)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
+      <nz-tab nzTitle="Schema" (nzClick)="refreshLayout('schemaEditor')">
+        <nu-monaco-editor #schemaEditor [(ngModel)]="schema" (ngModelChange)="run()" [options]="{ language: 'json' }" height="500px"></nu-monaco-editor>
       </nz-tab>
-      <nz-tab nzTitle="Form Data">
-        <ace-editor [(text)]="formCode" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '16px'}" [durationBeforeCallback]="1000" (textChanged)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
+      <nz-tab nzTitle="Form Data" (nzClick)="refreshLayout('formCodeEditor')">
+        <nu-monaco-editor #formCodeEditor [(ngModel)]="formCode" (ngModelChange)="run()" [options]="{ language: 'json' }" height="500px"></nu-monaco-editor>
       </nz-tab>
-      <nz-tab nzTitle="UI Schema">
-        <ace-editor [(text)]="uiCode" [mode]="'json'" [theme]="'github'" [options]="{fontSize: '16px'}" [durationBeforeCallback]="1000" (textChanged)="run()" style="min-height: 500px; width:100%; overflow: auto;"></ace-editor>
+      <nz-tab nzTitle="UI Schema" (nzClick)="refreshLayout('uiEditor')">
+        <nu-monaco-editor #uiEditor [(ngModel)]="uiCode" (ngModelChange)="run()" [options]="{ language: 'json' }" height="500px"></nu-monaco-editor>
       </nz-tab>
     </nz-tabset>
   </nz-col>
   <nz-col [nzSpan]="expand ? 12 : 24" *ngIf="schemaData">
-    <sf [schema]="schemaData" [formData]="formData" [ui]="uiSchema" [layout]="layout" (formSubmit)="submit($event)" (formChange)="change($event)"
-      (formError)="error($event)"></sf>
+    <sf
+      [schema]="schemaData"
+      [formData]="formData"
+      [ui]="uiSchema"
+      [layout]="layout"
+      (formSubmit)="submit($event)"
+      (formChange)="change($event)"
+      (formError)="error($event)"
+    ></sf>
   </nz-col>
 </nz-row>
