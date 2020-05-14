@@ -22,7 +22,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [SharedModule, NuMonacoEditorModule.forRoot(), RouterModule.forChild(routes)],
+  imports: [
+    SharedModule,
+    NuMonacoEditorModule.forRoot({
+      defaultOptions: { scrollBeyondLastLine: false },
+    }),
+    RouterModule.forChild(routes),
+  ],
   declarations: COMPONENTS,
 })
 export class FormPagesModule {}
