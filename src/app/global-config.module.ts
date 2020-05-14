@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DelonMockModule } from '@delon/mock';
 import { AlainThemeModule } from '@delon/theme';
-import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
+import { AlainConfig, ALAIN_CONFIG, DelonUtilModule } from '@delon/util';
 
 // Please refer to: https://ng-alain.com/docs/global-config
 // #region NG-ALAIN Config
@@ -18,7 +18,7 @@ const alainConfig: AlainConfig = {
   mock: { data: MOCKDATA },
 };
 
-const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot()];
+const alainModules = [AlainThemeModule.forRoot(), DelonACLModule.forRoot(), DelonMockModule.forRoot(), DelonUtilModule.forRoot()];
 const alainProvides = [{ provide: ALAIN_CONFIG, useValue: alainConfig }];
 
 /**
