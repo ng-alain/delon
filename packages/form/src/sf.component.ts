@@ -287,6 +287,19 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
           ui.spanControl = null;
           ui.offsetControl = null;
         }
+        // 内联强制清理 `grid` 参数
+        if (this.layout === 'inline') {
+          delete ui.grid;
+        }
+        // 非水平布局强制清理 `spanLabelFixed` 值
+        if (this.layout !== 'horizontal') {
+          ui.spanLabelFixed = null;
+        }
+        // 当指定标签为固定宽度时无须指定 `spanLabel`，`spanControl`
+        if (ui.spanLabelFixed != null && ui.spanLabelFixed > 0) {
+          ui.spanLabel = null;
+          ui.spanControl = null;
+        }
         if (ui.widget === 'date' && ui.end != null) {
           const dateEndProperty = schema.properties![ui.end];
           if (dateEndProperty) {
@@ -389,6 +402,10 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     if (this.onlyVisual === true) {
       this._defUi.onlyVisual = true;
     }
+    // 内联强制清理 `grid` 参数
+    if (this.layout === 'inline') {
+      delete this._defUi.grid;
+    }
 
     // root
     this._ui = { ...this._defUi };
@@ -412,24 +429,25 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
       ...(this.button as SFButton),
     };
     const firstKey = Object.keys(this._ui).find(w => w.startsWith('$'));
+    const btnRender = this._btn.render!;
     if (this.layout === 'horizontal') {
       const btnUi = firstKey ? this._ui[firstKey] : this._defUi;
-      if (!this._btn.render!.grid) {
-        this._btn.render!.grid = {
+      if (!btnRender.grid) {
+        btnRender.grid = {
           offset: btnUi.spanLabel,
           span: btnUi.spanControl,
         };
       }
       // fixed label
-      if (this._btn.render!.spanLabelFixed == null) {
-        this._btn.render!.spanLabelFixed = btnUi.spanLabelFixed;
+      if (btnRender.spanLabelFixed == null) {
+        btnRender.spanLabelFixed = btnUi.spanLabelFixed;
       }
       // 固定标签宽度时，若不指定样式，则默认居中
-      if (!this._btn.render!.class && typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0) {
-        this._btn.render!.class = 'text-center';
+      if (!btnRender.class && typeof btnUi.spanLabelFixed === 'number' && btnUi.spanLabelFixed > 0) {
+        btnRender.class = 'text-center';
       }
     } else {
-      this._btn.render!.grid = {};
+      btnRender.grid = {};
     }
     if (this._mode) {
       this.mode = this._mode;

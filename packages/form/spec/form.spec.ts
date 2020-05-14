@@ -304,7 +304,8 @@ describe('form: component', () => {
                   },
                 },
               })
-              .checkStyle('.ant-form-item-label', 'width', '100px');
+              .checkStyle('.ant-form-item-label', 'flex', '0 0 100px')
+              .checkStyle('.ant-form-item-control', 'maxWidth', 'calc(100% - 100px)');
           });
           it('should inherit parent node', () => {
             page
@@ -319,7 +320,8 @@ describe('form: component', () => {
                   },
                 },
               })
-              .checkStyle('.ant-form-item-label', 'width', '98px');
+              .checkStyle('.ant-form-item-label', 'flex', '0 0 98px')
+              .checkStyle('.ant-form-item-control', 'maxWidth', 'calc(100% - 98px)');
           });
         });
       });
