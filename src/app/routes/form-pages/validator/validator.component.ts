@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { SFSchema } from '@delon/form';
 import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util';
+import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { CodeService } from '../../../core/code/code.service';
@@ -49,6 +50,10 @@ declare var ace: any;
   templateUrl: './validator.component.html',
 })
 export class FormValidatorComponent implements OnInit {
+  @ViewChild('schemaEditor') private schemaEditor: NuMonacoEditorComponent;
+  @ViewChild('formCodeEditor') private formCodeEditor: NuMonacoEditorComponent;
+  @ViewChild('uiEditor') private uiEditor: NuMonacoEditorComponent;
+
   files: any[] = [
     { name: 'basic', title: '基本' },
     { name: 'conditional', title: '条件' },
@@ -76,11 +81,16 @@ export class FormValidatorComponent implements OnInit {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
     this.title = this.files[defaultIndex].title;
-    ace.config.set('workerPath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/');
   }
 
   ngOnInit(): void {
     this.getSchema();
+  }
+
+  refreshLayout(type: 'schemaEditor' | 'formCodeEditor' | 'uiEditor'): void {
+    setTimeout(() => {
+      this[type].editor.layout();
+    }, 100);
   }
 
   getSchema() {

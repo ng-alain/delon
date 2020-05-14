@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AceEditorModule } from 'ng2-ace-editor';
+import { NuMonacoEditorModule } from '@ng-util/monaco-editor';
 import { ContentComponent } from '../../shared/components/content/content.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormValidatorComponent } from './validator/validator.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [SharedModule, AceEditorModule, RouterModule.forChild(routes)],
+  imports: [SharedModule, NuMonacoEditorModule.forRoot(), RouterModule.forChild(routes)],
   declarations: COMPONENTS,
 })
 export class FormPagesModule {}

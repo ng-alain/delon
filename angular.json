@@ -29,9 +29,6 @@
               "node_modules/aos/dist/aos.js",
               "node_modules/simplemde-antd/dist/simplemde.min.js",
               "node_modules/ajv/dist/ajv.bundle.js",
-              "node_modules/ace-builds/src-min/ace.js",
-              "node_modules/ace-builds/src-min/theme-github.js",
-              "node_modules/ace-builds/src-min/mode-json.js",
               "node_modules/docsearch.js/dist/cdn/docsearch.js"
             ]
           },

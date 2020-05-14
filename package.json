@@ -63,7 +63,6 @@
     "marked": "^0.8.2",
     "ng-github-button": "^9.0.0",
     "ng-zorro-antd": "^9.1.2",
-    "ng2-ace-editor": "^0.3.9",
     "ngx-color": "^5.0.3",
     "ngx-countdown": "^9.0.1",
     "ngx-highlight-js": "^9.0.0",
@@ -73,7 +72,8 @@
     "qrious": "^4.0.2",
     "@webcomponents/custom-elements": "^1.4.1",
     "aos": "^3.0.0-beta.6",
-    "docsearch.js": "^2.6.3"
+    "docsearch.js": "^2.6.3",
+    "@ng-util/monaco-editor": "^9.1.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.4",
