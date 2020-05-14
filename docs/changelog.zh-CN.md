@@ -14,6 +14,14 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [9.2.3](https://github.com/ng-alain/delon/compare/9.2.2...9.2.3) (2020-05-14)
+
+### Bug Fixes
+
+* 修复缺少导出成员 'PanelMode' ([#894](https://github.com/ng-alain/delon/issues/894)) ([702a485](https://github.com/ng-alain/delon/commit/da07bc1fc4d326e9bb8f06813d95e99093073187))
+* **form:** 修复固定标签时 `nz-select` 组件会错位 ([#895](https://github.com/ng-alain/delon/issues/895)) ([702a485](https://github.com/ng-alain/delon/commit/702a4859ca093eca35675e7ba18b8f3288fc0990))
+
+
 ## [9.2.2](https://github.com/ng-alain/delon/compare/9.2.1...9.2.2) (2020-05-12)
 
 ### Bug Fixes
