@@ -1,10 +1,18 @@
 // color
-.bg-white         { background-color: #fff !important; }
-.bg-transparent   { background-color: transparent !important; }
-.text-white       { color: #fff !important; }
+.bg-white {
+  background-color: #fff !important;
+}
+.bg-transparent {
+  background-color: transparent !important;
+}
+.text-white {
+  color: #fff !important;
+}
 .text-hover {
   cursor: pointer;
-  &:hover { color: @primary-color !important; }
+  &:hover {
+    color: @primary-color !important;
+  }
 }
 
 .for-each(@colors, {
@@ -22,17 +30,17 @@
 });
 
 .for-each(@aliasColors, {
-  .bg-@{adKey}-light  { background-color: ~`getColor("@{colors}", "@{adValue}", @{color-light-position})` !important; }
-  .bg-@{adKey}        { background-color: ~`getColor("@{colors}", "@{adValue}", @{color-basic-position})` !important; }
-  .bg-@{adKey}-dark   { background-color: ~`getColor("@{colors}", "@{adValue}", @{color-dark-position})` !important; }
+  .bg-@{adKey}-light  { background-color: ~`getColor('@{colors}', '@{adValue}', @{color-light-position})` !important; }
+  .bg-@{adKey}        { background-color: ~`getColor('@{colors}', '@{adValue}', @{color-basic-position})` !important; }
+  .bg-@{adKey}-dark   { background-color: ~`getColor('@{colors}', '@{adValue}', @{color-dark-position})` !important; }
 
-  .bg-@{adKey}-light-h  { transition: background-color 300ms; &:hover { background-color: ~`getColor("@{colors}", "@{adValue}", @{color-light-position})` !important; } }
-  .bg-@{adKey}-h        { transition: background-color 300ms; &:hover { background-color: ~`getColor("@{colors}", "@{adValue}", @{color-basic-position})` !important; } }
-  .bg-@{adKey}-dark-h   { transition: background-color 300ms; &:hover { background-color: ~`getColor("@{colors}", "@{adValue}", @{color-dark-position})` !important; } }
+  .bg-@{adKey}-light-h  { transition: background-color 300ms; &:hover { background-color: ~`getColor('@{colors}', '@{adValue}', @{color-light-position})` !important; } }
+  .bg-@{adKey}-h        { transition: background-color 300ms; &:hover { background-color: ~`getColor('@{colors}', '@{adValue}', @{color-basic-position})` !important; } }
+  .bg-@{adKey}-dark-h   { transition: background-color 300ms; &:hover { background-color: ~`getColor('@{colors}', '@{adValue}', @{color-dark-position})` !important; } }
 
-  .text-@{adKey}-light  { color: ~`getColor("@{colors}", "@{adValue}", @{color-light-position})` !important; }
-  .text-@{adKey}        { color: ~`getColor("@{colors}", "@{adValue}", @{color-basic-position})` !important; }
-  .text-@{adKey}-dark   { color: ~`getColor("@{colors}", "@{adValue}", @{color-dark-position})` !important; }
+  .text-@{adKey}-light  { color: ~`getColor('@{colors}', '@{adValue}', @{color-light-position})` !important; }
+  .text-@{adKey}        { color: ~`getColor('@{colors}', '@{adValue}', @{color-basic-position})` !important; }
+  .text-@{adKey}-dark   { color: ~`getColor('@{colors}', '@{adValue}', @{color-dark-position})` !important; }
 });
 
 // grey
@@ -43,19 +51,26 @@
 });
 
 .all-colors-minin(@enabled) when (@enabled = true) {
-
   .loop-no(@adKey, @adValue, @i: 1) when (@i =< length(@color-no-list)) {
     // @color-no-list
-    @name: "@{adKey}-@{i}";
-    .bg-@{adKey}-@{i}    { background-color: @@name !important; }
-    .bg-@{adKey}-@{i}-h  { transition: background-color 300ms; &:hover { background-color: @@name !important; } }
-    .text-@{adKey}-@{i}  { color: @@name !important; }
+    @name: '@{adKey}-@{i}';
+    .bg-@{adKey}-@{i} {
+      background-color: @@name !important;
+    }
+    .bg-@{adKey}-@{i}-h {
+      transition: background-color 300ms;
+      &:hover {
+        background-color: @@name !important;
+      }
+    }
+    .text-@{adKey}-@{i} {
+      color: @@name !important;
+    }
     .loop-no(@adKey, @adValue, @i + 1);
   }
 
   .for-each(@colors, {
     .loop-no(@adKey, @adValue, 1);
   });
-
 }
 .all-colors-minin(@enable-all-colors);

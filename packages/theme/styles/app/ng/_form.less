@@ -3,7 +3,7 @@
 .form-state-visual-feedback-mixin(@enabled) when(@enabled = true) {
   .ng-invalid {
     &:focus {
-      box-shadow: 0 0 @outline-blur-size @outline-width fade-out(@error-color, .8);
+      box-shadow: 0 0 @outline-blur-size @outline-width fade-out(@error-color, 0.8);
     }
     &,
     &:hover {

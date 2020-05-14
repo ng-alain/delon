@@ -1,5 +1,5 @@
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { DisabledTimeFn, PanelMode, PresetRanges, SupportTimeOptions } from 'ng-zorro-antd/date-picker/standard-types';
+import { DisabledTimeFn, NzDateMode, PresetRanges, SupportTimeOptions } from 'ng-zorro-antd/date-picker/standard-types';
 
 export interface AlainDateRangePickerConfig {
   /**
@@ -30,7 +30,7 @@ export interface AlainDateRangePickerConfig {
    * 默认：`true`
    */
   nzShowToday?: boolean;
-  nzMode?: PanelMode | PanelMode[];
+  nzMode?: NzDateMode | NzDateMode[];
   nzRanges?: PresetRanges;
   shortcuts?: AlainDateRangePickerShortcut;
 }

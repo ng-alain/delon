@@ -55,7 +55,6 @@ DEPENDENCIES=$(node -p "
     'tslint-language-service',
     'lint-staged',
     'husky',
-    'prettier-stylelint',
     'stylelint-config-prettier',
     'stylelint-config-rational-order',
     'stylelint-config-standard',

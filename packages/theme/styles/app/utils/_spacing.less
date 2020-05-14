@@ -4,17 +4,27 @@
   @item: extract(@mp-list, @i);
   @abbrev: extract(@item, 2);
   @prop: extract(@item, 1);
-  .@{abbrev}@{infix}  { @{prop}:        @adValue !important; }
-  .@{abbrev}t@{infix} { @{prop}-top:    @adValue !important; }
-  .@{abbrev}r@{infix} { @{prop}-right:  @adValue !important; }
-  .@{abbrev}b@{infix} { @{prop}-bottom: @adValue !important; }
-  .@{abbrev}l@{infix} { @{prop}-left:   @adValue !important; }
+  .@{abbrev}@{infix} {
+    @{prop}: @adValue !important;
+  }
+  .@{abbrev}t@{infix} {
+    @{prop}-top: @adValue !important;
+  }
+  .@{abbrev}r@{infix} {
+    @{prop}-right: @adValue !important;
+  }
+  .@{abbrev}b@{infix} {
+    @{prop}-bottom: @adValue !important;
+  }
+  .@{abbrev}l@{infix} {
+    @{prop}-left: @adValue !important;
+  }
   .@{abbrev}x@{infix} {
     @{prop}-right: @adValue !important;
-    @{prop}-left:  @adValue !important;
+    @{prop}-left: @adValue !important;
   }
   .@{abbrev}y@{infix} {
-    @{prop}-top:    @adValue !important;
+    @{prop}-top: @adValue !important;
     @{prop}-bottom: @adValue !important;
   }
 
@@ -26,7 +36,7 @@
     @infix: 0;
   }
   .infix-mixin(@adKey) when(default()) {
-    @infix: ~"-@{adKey}";
+    @infix: ~'-@{adKey}';
   }
   .infix-mixin(@adKey);
 
