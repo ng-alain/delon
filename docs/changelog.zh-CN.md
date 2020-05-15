@@ -14,6 +14,20 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [9.2.4](https://github.com/ng-alain/delon/compare/9.2.3...9.2.4) (2020-05-15)
+
+### Scaffold
+
+* 修复 `catchError` 不会处理数组异常 ([#1652](https://github.com/ng-alain/ng-alain/pull/1652/files))
+
+### Bug Fixes
+
+* **abc:lodop:** 修复无法附加 `LODOP.NEWPAGE();` 代码 ([#902](https://github.com/ng-alain/delon/issues/902)) ([8022a66](https://github.com/ng-alain/delon/commit/8022a66c863d48d9cee81939e4f2ed96e246f9f4))
+* **abc:st:** 修复 `strict` 宽度模式无法指定列宽 ([#900](https://github.com/ng-alain/delon/issues/900)) ([a12cf4f](https://github.com/ng-alain/delon/commit/a12cf4f36c16691b5904d47956ac2527aa117ba3))
+* **cli:ng-add:** 修复 `catchError` 不会处理数组异常 ([#901](https://github.com/ng-alain/delon/issues/901)) ([a6d6ee3](https://github.com/ng-alain/delon/commit/a6d6ee33f449b7597fbedee8655c51275598db85))
+* **cli:plugin:ie:** 修复错误修改了 `app.module.ts` 文件，应修改至 `polyfills.ts` ([#898](https://github.com/ng-alain/delon/issues/898)) ([b3de732](https://github.com/ng-alain/delon/commit/b3de7321661dc2664832f0be78c007f0231bf8a1))
+
+
 ## [9.2.3](https://github.com/ng-alain/delon/compare/9.2.2...9.2.3) (2020-05-14)
 
 ### Bug Fixes

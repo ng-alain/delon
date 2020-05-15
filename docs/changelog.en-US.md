@@ -14,6 +14,20 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ---
 
+## [9.2.4](https://github.com/ng-alain/delon/compare/9.2.3...9.2.4) (2020-05-15)
+
+### Scaffold
+
+* fix invalid parameter in catchError ([#1652](https://github.com/ng-alain/ng-alain/pull/1652/files))
+
+### Bug Fixes
+
+* **abc:lodop:** fix unable to attach `LODOP.NEWPAGE();` this kind of code ([#902](https://github.com/ng-alain/delon/issues/902)) ([8022a66](https://github.com/ng-alain/delon/commit/8022a66c863d48d9cee81939e4f2ed96e246f9f4))
+* **abc:st:** fix invalid link break in strict mode ([#900](https://github.com/ng-alain/delon/issues/900)) ([a12cf4f](https://github.com/ng-alain/delon/commit/a12cf4f36c16691b5904d47956ac2527aa117ba3))
+* **cli:ng-add:** fix invalid parameter in catchError ([#901](https://github.com/ng-alain/delon/issues/901)) ([a6d6ee3](https://github.com/ng-alain/delon/commit/a6d6ee33f449b7597fbedee8655c51275598db85))
+* **cli:plugin:ie:** fix modifiy invalid file ([#898](https://github.com/ng-alain/delon/issues/898)) ([b3de732](https://github.com/ng-alain/delon/commit/b3de7321661dc2664832f0be78c007f0231bf8a1))
+
+
 ## [9.2.3](https://github.com/ng-alain/delon/compare/9.2.2...9.2.3) (2020-05-14)
 
 ### Bug Fixes
