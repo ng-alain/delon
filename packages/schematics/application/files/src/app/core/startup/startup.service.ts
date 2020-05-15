@@ -39,9 +39,10 @@ export class StartupService {
       this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),<% } %>
       this.httpClient.get('assets/tmp/app-data.json')
     ).pipe(
-      catchError(([<% if (i18n) { %>langData, <% } %>appData]) => {
-          resolve(null);
-          return [<% if (i18n) { %>langData, <% } %>appData];
+      catchError((res) => {
+        console.warn(`StartupService.load: Network request failed`, res);
+        resolve(null);
+        return [];
       })
     ).subscribe(([<% if (i18n) { %>langData, <% } %>appData]) => {<% if (i18n) { %>
       // Setting language data
