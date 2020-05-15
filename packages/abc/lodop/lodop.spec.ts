@@ -191,6 +191,7 @@ describe('abc: lodop', () => {
       const code = `
             LODOP.PRINT_INITA(10, 10, 762, 533, '{{title}}');
             LODOP.SET_PRINT_STYLEA(0, 'FontName', '{{fs}}');
+            LODOP.NEWPAGE();
             LODOP.xxx(10, 10, 762, 533, '{{title2}}');
             `;
       let mockRes = '';
@@ -209,7 +210,7 @@ describe('abc: lodop', () => {
 
       srv.lodop.subscribe(() => {
         expect(mockLodop.PRINT_INITA).not.toHaveBeenCalled();
-        srv.attachCode(code, contextData, /LODOP\.([^(]+)\(([^\n]+)\);/i);
+        srv.attachCode(code, contextData, /LODOP\.([^(]+)\(([^\n]+)?\);/i);
         expect(mockLodop.PRINT_INITA).toHaveBeenCalled();
         expect(mockRes).toBe(contextData.title);
         done();

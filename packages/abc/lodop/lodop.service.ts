@@ -128,11 +128,11 @@ export class LodopService implements OnDestroy {
    *
    * @param code 代码
    * @param contextObj 动态参数上下文对象
-   * @param parser 自定义解析表达式，默认：`/LODOP\.([^(]+)\(([^\n]+)\);/i`
+   * @param parser 自定义解析表达式，默认：`/LODOP\.([^(]+)\(([^\n]+)?\);/i`
    */
   attachCode(code: string, contextObj?: NzSafeAny, parser?: RegExp): void {
     this.check();
-    if (!parser) parser = /LODOP\.([^(]+)\(([^\n]+)\);/i;
+    if (!parser) parser = /LODOP\.([^(]+)\(([^\n]+)?\);/i;
     code.split('\n').forEach(line => {
       const res = parser!.exec(line.trim());
       if (!res) return;
@@ -195,7 +195,7 @@ export class LodopService implements OnDestroy {
    *
    * @param code 代码
    * @param contextObj 动态参数上下文对象
-   * @param parser 自定义解析表达式，默认：`/LODOP\.([^(]+)\(([^\n]+)\);/i`
+   * @param parser 自定义解析表达式，默认：`/LODOP\.([^(]+)\(([^\n]+)?\);/i`
    */
   print(code: string, contextObj: {} | Array<{}>, parser?: RegExp): void {
     this.check();
