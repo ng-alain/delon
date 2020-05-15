@@ -1,4 +1,5 @@
-import { Rule, Tree } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import * as colors from 'ansi-colors';
 import { overwriteFile, readContent } from '../utils/file';
 import { addPackageToPackageJson, getAngular, overwriteAngular, removePackageFromPackageJson } from '../utils/json';
 import { getProject, getProjectFromWorkspace, Project } from '../utils/project';
@@ -83,7 +84,7 @@ function setTsConfig(host: Tree, options: PluginOptions) {
 }
 
 export function pluginIE(options: PluginOptions): Rule {
-  return (host: Tree) => {
+  return (host: Tree, context: SchematicContext) => {
     project = getProject(host, options.project);
 
     setAngularJson(host, options);
@@ -91,5 +92,11 @@ export function pluginIE(options: PluginOptions): Rule {
     setPackage(host, options);
     setPolyfills(host, options);
     setTsConfig(host, options);
+
+    context.logger.info(
+      colors.yellow(
+        `  ⚠  If you encounter [No provider for AlainConfigService], please refer to https://github.com/ng-alain/ng-alain/issues/1624#issuecomment-623071468`,
+      ),
+    );
   };
 }
