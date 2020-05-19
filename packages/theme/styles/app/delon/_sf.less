@@ -1,5 +1,6 @@
 @sf-prefix: ~'.sf';
 @sf-title-text-align: left;
+@sf-inline-ant-select-min-width: 100px;
 
 @{sf-prefix} {
   display: block;
@@ -89,17 +90,6 @@
       margin-left: 0;
     }
   }
-  // fix select width when inline mode
-  .@{ant-prefix}-form-inline {
-    sf-select {
-      .@{ant-prefix}-form-item {
-        display: inline-flex;
-        > .@{ant-prefix}-form-item-control-wrapper {
-          flex: 1 0 0;
-        }
-      }
-    }
-  }
   &__no-error {
     .@{ant-prefix}-form-item {
       margin-bottom: 8px;
@@ -111,13 +101,15 @@
       margin-bottom: 8px;
     }
     .@{ant-prefix}-form-inline {
-      display: block;
       > sf-item {
         margin-bottom: 0;
       }
-    }
-    .@{ant-prefix}-form-inline .@{ant-prefix}-form-item {
-      display: inline;
+      .@{ant-prefix}-form-item {
+        display: inline;
+      }
+      .@{ant-prefix}-select {
+        min-width: @sf-inline-ant-select-min-width;
+      }
     }
     .sf-btns {
       margin-right: 0;
