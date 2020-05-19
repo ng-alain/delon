@@ -249,7 +249,7 @@ export interface STColumn {
   width?: string | number;
   /**
    * 排序配置项，远程数据配置**优先**规则：
-   * - `true` 表示允许排序
+   * - `true` 表示允许排序，且若数据源为本地时自动生成 `compare: (a, b) => a[index] - b[index]` 方法
    * - `string` 表示远程数据排序相对应 `key` 值
    */
   sort?: true | string | STColumnSort;
@@ -412,6 +412,7 @@ export interface STColumnSort {
   /**
    * 本地数据的排序函数，使用一个函数(参考 [Array.sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) 的 compareFunction)
    * - `null` 忽略本地排序，但保持排序功能
+   * - 若数据源为本地时自动生成 `(a, b) => a[index] - b[index]` 方法
    */
   compare?: ((a: STData, b: STData) => number) | null;
   /**
@@ -832,17 +833,19 @@ export interface STMultiSort {
   /** 列名与状态间分隔符，默认：`.` */
   nameSeparator?: string;
   /**
-   * 是否全局多排序模式，默认：`true`
-   * - `true` 表示所有 `st` 默认为多排序
-   * - `false` 表示需要为每个 `st` 添加 `multiSort` 才会视为多排序模式
-   */
-  global?: boolean;
-  /**
    * 是否保持空值的键名，默认：`true`
    * - `true` 表示不管是否有排序都会发送 `key` 键名
    * - `false` 表示无排序动作时不会发送 `key` 键名
    */
   keepEmptyKey?: boolean;
+  /**
+   * ## 仅限全局配置项有效
+   *
+   * 是否全局多排序模式，默认：`true`
+   * - `true` 表示所有 `st` 默认为多排序
+   * - `false` 表示需要为每个 `st` 添加 `multiSort` 才会视为多排序模式
+   */
+  global?: boolean;
 }
 
 /**

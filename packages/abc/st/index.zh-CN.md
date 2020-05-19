@@ -210,8 +210,8 @@ class TestComponent {
 | `[key]` | 请求参数名 | `string` | `sort` |
 | `[separator]` | 不同属性间分隔符 | `string` | `-` |
 | `[nameSeparator]` | 列名与状态间分隔符 | `string` | `.` |
-| `[global]` | 是否全局多排序模式<br>`true` 表示所有 `st` 默认为多排序<br>`false` 表示需要为每个 `st` 添加 `multiSort` 才会视为多排序模式 | `boolean` | `true` |
 | `[keepEmptyKey]` | 是否保持空值的键名<br>`true` 表示不管是否有排序都会发送 `key` 键名<br>`false` 表示无排序动作时不会发送 `key` 键名 | `boolean` | `true` |
+| `[global]` | **仅限全局配置项有效**，是否全局多排序模式<br>`true` 表示所有 `st` 默认为多排序<br>`false` 表示需要为每个 `st` 添加 `multiSort` 才会视为多排序模式 | `boolean` | `true` |
 
 ### STData
 
@@ -239,7 +239,7 @@ class TestComponent {
 | `[format]` | 格式化列值 | `(item: STData, col: STColumn, index: number) => string` | - |
 | `[className]` | 列 `class` 属性值，例如：；`text-center` 居中； `text-right` 居右； `text-danger` 异常色，更多参考[样式工具类](/theme/tools) | `string` | - |
 | `[colSpan]` | 合并列 | `number` | - |
-| `[sort]` | 排序配置项，远程数据配置**优先**规则：<br>`true` 表示允许排序<br>`string` 表示远程数据排序相对应 `key` 值 | `true,string,STColumnSort` | - |
+| `[sort]` | 排序配置项，远程数据配置**优先**规则：<br>`true` 表示允许排序，且若数据源为本地数据时会自动生成 `compare: (a, b) => a[index] - b[index]` 方法<br>`string` 表示远程数据排序相对应 `key` 值 | `true,string,STColumnSort` | - |
 | `[filter]` | 过滤配置项 | `STColumnFilter` | - |
 | `[selections]` | 选择功能配置 | `STColumnSelection[]` | - |
 | `[numberDigits]` | 数字格式，`type=number` 有效 | `string` | - |

@@ -130,7 +130,7 @@ export class STColumnSource {
   }
 
   private sortCoerce(item: STColumn): STSortMap {
-    const res = this.fixCoerce(item);
+    const res = this.fixSortCoerce(item);
     res.reName = {
       ...this.cog.sortReName,
       ...res.reName,
@@ -138,7 +138,7 @@ export class STColumnSource {
     return res;
   }
 
-  private fixCoerce(item: STColumn): STSortMap {
+  private fixSortCoerce(item: STColumn): STSortMap {
     if (typeof item.sort === 'undefined') {
       return { enabled: false };
     }
@@ -149,6 +149,8 @@ export class STColumnSource {
       res.key = item.sort;
     } else if (typeof item.sort !== 'boolean') {
       res = item.sort;
+    } else if (typeof item.sort === 'boolean') {
+      res.compare = (a, b) => a[item.indexKey] - b[item.indexKey];
     }
 
     if (!res.key) {
