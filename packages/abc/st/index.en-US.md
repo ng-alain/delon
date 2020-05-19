@@ -217,8 +217,8 @@ class TestComponent {
 | `[key]` | Request parameter name | `string` | `sort` |
 | `[separator]` | Separator between attributes | `string` | `-` |
 | `[nameSeparator]` | Column name and state separator | `string` | `.` |
-| `[global]` | Whether global multi sort mode<br>`true` all `st` defaults multi-sort<br>`false` all `st` non-multiple sorting, just only configurable for rule | `boolean` | `true` |
 | `[keepEmptyKey]` | Whether to keep send empty key<br>`true` send the `key` name anyway<br>`false` don't send `key` when not sorting | `boolean` | `true` |
+| `[global]` | **Only global config**, Whether global multi sort mode<br>`true` all `st` defaults multi-sort<br>`false` all `st` non-multiple sorting, just only configurable for rule | `boolean` | `true` |
 
 ### STData
 
@@ -246,7 +246,7 @@ class TestComponent {
 | `[format]` | Format value of this column | `(item: STData, col: STColumn, index: number) => string` | - |
 | `[className]` | Class name of this column, e.g: `text-center`, `text-right`, `text-danger`, pls refer to [Style Tools](/theme/tools) | `string` | - |
 | `[colSpan]` | Span of this column's title | `number` | - |
-| `[sort]` | Sort config of this column, Remote Data Configuration**Priority** Rule: <br>`true` allow sorting<br>`string` corresponding `key` value | `true,string,STColumnSort` | - |
+| `[sort]` | Sort config of this column, Remote Data Configuration**Priority** Rule: <br>`true` allow sorting, should be auto generate compose `compare: (a, b) => a[index] - b[index]` method when data is local<br>`string` corresponding `key` value | `true,string,STColumnSort` | - |
 | `[filter]` | Filter config of this column | `STColumnFilter` | - |
 | `[selections]` | Config of type is checkbox | `STColumnSelection[]` | - |
 | `[numberDigits]` | Config of type is number | `string` | - |

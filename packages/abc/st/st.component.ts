@@ -147,7 +147,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this._multiSort;
   }
   set multiSort(value: NzSafeAny) {
-    if (typeof value === 'boolean' && !toBoolean(value)) {
+    if ((typeof value === 'boolean' && !toBoolean(value)) || (typeof value === 'object' && Object.keys(value).length === 0)) {
       this._multiSort = undefined;
       return;
     }
@@ -548,12 +548,14 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   // #region sort
 
   sort(col: STColumn, idx: number, value: any) {
+    console.log(this.multiSort);
     if (this.multiSort) {
       col._sort!.default = value;
       col._sort!.tick = this.dataSource.nextSortTick;
     } else {
       this._columns.forEach((item, index) => (item._sort!.default = index === idx ? value : null));
     }
+    this.cdr.detectChanges();
     this.loadPageData();
     const res = {
       value,

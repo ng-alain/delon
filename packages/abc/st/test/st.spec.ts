@@ -1255,10 +1255,18 @@ describe('abc: table', () => {
           beforeEach(() => (context.multiSort = false));
           it('muse provide the compare function', fakeAsync(() => {
             spyOn(console, 'warn');
-            page.updateColumn([{ title: '', index: 'i', sort: true }]);
+            page.updateColumn([{ title: '', index: 'i', sort: { compare: 'a' } as any }]);
             comp.sort(comp._columns[0], 0, 'descend');
             page.cd();
             expect(console.warn).toHaveBeenCalled();
+            page.asyncEnd();
+          }));
+          it('should be auto generate compose when sort is true', fakeAsync(() => {
+            context.data = [{ i: 1 }, { i: 2 }];
+            page.updateColumn([{ title: '', index: 'i', sort: true }]);
+            comp.sort(comp._columns[0], 0, 'descend');
+            page.cd();
+            expect(context.comp.list[0].i).toBe(2);
             page.asyncEnd();
           }));
           it('should be sorting', fakeAsync(() => {
