@@ -1,3 +1,4 @@
+import { FormProperty } from '../../model/form.property';
 import { SFUISchemaItem } from '../../schema/ui';
 
 export interface SFArrayWidgetSchema extends SFUISchemaItem {
@@ -13,6 +14,9 @@ export interface SFArrayWidgetSchema extends SFUISchemaItem {
   /** 指定移除按钮文本，默认：移除 */
   removeTitle?: string;
 
-  /** 指定是否显示排序按钮 */
-  // orderable?: boolean;
+  /** 添加回调，`property` 表示添加后的表单属性 */
+  add: (property: FormProperty) => void;
+
+  /** 移除回调 */
+  remove: (index: number) => void;
 }
