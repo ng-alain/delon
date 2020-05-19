@@ -5,6 +5,7 @@ import { deepCopy } from '@delon/util';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
 import { ArrayProperty, FormProperty } from '../../model';
+import { SFArrayWidgetSchema } from './schema';
 
 describe('form: widget: array', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -23,6 +24,10 @@ describe('form: widget: array', () => {
             a: { type: 'string' },
           },
         },
+        ui: {
+          add: jasmine.createSpy('add') as any,
+          remove: jasmine.createSpy('remove') as any,
+        },
       },
     },
   };
@@ -37,6 +42,7 @@ describe('form: widget: array', () => {
 
   it('should be add item', () => {
     page.newSchema(schema).checkCount('.sf-array-item', 0).add().checkCount('.sf-array-item', 1);
+    expect((schema.properties!.arr.ui as any).add).toHaveBeenCalled();
   });
   it(`should be maximum ${maxItems}`, () => {
     page.newSchema(schema).add().add().add().checkCount('.sf-array-item', maxItems).add().checkCount('.sf-array-item', maxItems);
@@ -53,8 +59,9 @@ describe('form: widget: array', () => {
   describe('#removable', () => {
     it('with true', () => {
       const s = deepCopy(schema) as SFSchema;
-      s.properties!.arr.ui = { removable: true };
+      s.properties!.arr.ui = { removable: true, remove: jasmine.createSpy('remove') as any } as SFArrayWidgetSchema;
       page.newSchema(s).checkCount('.sf-array-item', 0).add().checkCount('.sf-array-item', 1).remove().checkCount('.sf-array-item', 0);
+      expect(s.properties!.arr.ui.remove).toHaveBeenCalled();
     });
     it('with false', () => {
       const s = deepCopy(schema) as SFSchema;

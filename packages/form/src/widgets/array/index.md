@@ -45,19 +45,21 @@ const ui = {
 
 ### schema 属性
 
-参数        | 说明                     | 类型       | 默认值
-------------|--------------------------|------------|--------
-`[items]`       | 数组元素类型描述         | `SFSchema` | -
-`[minItems]`    | 约束数组最小的元素个数   | `number`   | -
-`[maxItems]`    | 约束数组最大的元素个数   | `number`   | -
-`[uniqueItems]` | 约束数组每个元素都不相同 | `boolean`  | -
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[items]` | 数组元素类型描述 | `SFSchema` | - |
+| `[minItems]` | 约束数组最小的元素个数 | `number` | - |
+| `[maxItems]` | 约束数组最大的元素个数 | `number` | - |
+| `[uniqueItems]` | 约束数组每个元素都不相同 | `boolean` | - |
 
 ### ui 属性
 
-参数         | 说明                       | 类型      | 默认值
--------------|----------------------------|-----------|----------
-`[addTitle]`    | 添加按钮文本               | `string`  | `添加`
-`[addType]`     | 添加按钮类型，等同 `nzType` | `string`  | `dashed`
-`[removable]`    | 是否包含移除按钮           | `boolean` | `true`
-`[removeTitle]` | 移除按钮文本               | `string`  | `移除`
-`[$items]` | 数组元素类型UI描述               | `SFUISchema`  | `移除`
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[addTitle]` | 添加按钮文本 | `string` | `添加` |
+| `[addType]` | 添加按钮类型，等同 `nzType` | `string` | `dashed` |
+| `[removable]` | 是否包含移除按钮 | `boolean` | `true` |
+| `[removeTitle]` | 移除按钮文本 | `string` | `移除` |
+| `[$items]` | 数组元素类型UI描述 | `SFUISchema` | `移除` |
+| `(add)` | 添加回调，`property` 表示添加后的表单属性 | `(property: FormProperty) => void` | - |
+| `(remove)` | 移除回调 | `(index: number) => void` | - |

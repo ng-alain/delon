@@ -35,10 +35,16 @@ export class ArrayWidget extends ArrayLayoutWidget implements OnInit {
   }
 
   addItem() {
-    this.formProperty.add({});
+    const property = this.formProperty.add({});
+    if (this.ui.add) {
+      this.ui.add(property);
+    }
   }
 
   removeItem(index: number) {
     this.formProperty.remove(index);
+    if (this.ui.remove) {
+      this.ui.remove(index);
+    }
   }
 }
