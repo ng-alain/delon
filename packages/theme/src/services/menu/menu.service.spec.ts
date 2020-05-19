@@ -133,6 +133,9 @@ describe('Service: Menu', () => {
       it('when include queryString', () => {
         expect(srv.getHit(DATA, '/test?a=1', true) != null).toBe(true);
       });
+      it('when include queryString when is hash location strategy', () => {
+        expect(srv.getHit(DATA, '/test;reload=1', true) != null).toBe(true);
+      });
     });
 
     describe('#getPathByUrl', () => {
