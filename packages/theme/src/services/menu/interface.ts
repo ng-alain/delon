@@ -55,4 +55,18 @@ export interface Menu {
   key?: string;
   /** Children menu of menu item */
   children?: Menu[];
+  /** @inner Not recommended */
+  _id?: number;
+  /** @inner Not recommended */
+  _parent?: Menu | null;
+  /** @inner Not recommended */
+  _depth?: number;
+  /** @inner Not recommended */
+  _hidden?: boolean;
+  /** @inner Not recommended */
+  _selected?: boolean;
+  /** @inner Not recommended */
+  _open?: boolean;
+  /** @inner Not recommended */
+  _aclResult?: boolean;
 }

@@ -55,8 +55,9 @@ export class MenuService implements OnDestroy {
     let i = 1;
     const shortcuts: Menu[] = [];
     this.visit(this.data, (item, parent, depth) => {
-      item.__id = i++;
-      item.__parent = parent;
+      item._aclResult = true;
+      item._id = i++;
+      item._parent = parent;
       item._depth = depth;
 
       if (!item.link) item.link = '';
@@ -72,9 +73,8 @@ export class MenuService implements OnDestroy {
         }
       }
 
-      item._type = item.externalLink ? 2 : 1;
-      if (item.children && item.children.length > 0) {
-        item._type = 3;
+      if (!Array.isArray(item.children)) {
+        item.children = [];
       }
 
       // icon
@@ -150,14 +150,13 @@ export class MenuService implements OnDestroy {
     // tslint:disable-next-line:prefer-object-spread
     _data = Object.assign(_data, {
       shortcutRoot: true,
-      __id: -1,
-      __parent: null,
-      _type: 3,
+      _id: -1,
+      _parent: null,
       _depth: 1,
-    });
+    } as Menu);
     _data.children = shortcuts.map(i => {
       i._depth = 2;
-      i.__parent = _data;
+      i._parent = _data;
       return i;
     });
   }
@@ -216,7 +215,7 @@ export class MenuService implements OnDestroy {
     do {
       findItem._selected = true;
       findItem._open = true;
-      findItem = findItem.__parent;
+      findItem = findItem._parent!;
     } while (findItem);
   }
 
@@ -233,7 +232,7 @@ export class MenuService implements OnDestroy {
 
     do {
       ret.splice(0, 0, item);
-      item = item.__parent;
+      item = item._parent!;
     } while (item);
 
     return ret;

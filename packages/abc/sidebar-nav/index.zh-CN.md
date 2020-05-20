@@ -46,4 +46,5 @@ NG-ALAIN 左边主菜单，依赖于 `@delon/theme`。
 | `[autoCloseUnderPad]` | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true` |
 | `[recursivePath]` | 自动向上递归查找，菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项 | `boolean` | `true` |
 | `[openStrictly]` | 展开完全受控，不再自动关闭已展开的项 | `boolean` | `false` |
+| `[maxLevelIcon]` | Icon最多显示到第几层 | `number` | `3` |
 | `(select)` | 点击菜单时回调（包含 `disabled`） | `EventEmitter<Menu>` | - |
