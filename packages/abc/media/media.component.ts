@@ -15,6 +15,7 @@ import {
 } from '@angular/core';
 import { InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
+import { Subscription } from 'rxjs';
 import { MediaService } from './media.service';
 import { PlyrMediaSource, PlyrMediaType } from './plyr.types';
 
@@ -34,6 +35,8 @@ declare const Plyr: NzSafeAny;
 export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   private _p: NzSafeAny;
   private videoEl: HTMLElement;
+  private time: NzSafeAny;
+  private notify$: Subscription;
 
   // #region fields
 
@@ -49,10 +52,14 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this._p;
   }
 
-  constructor(private el: ElementRef<HTMLElement>, private renderer: Renderer2, private srv: MediaService, private ngZone: NgZone) {}
+  constructor(private el: ElementRef<HTMLElement>, private renderer: Renderer2, private srv: MediaService, private ngZone: NgZone) {
+    this.notify$ = this.srv.notify().subscribe(() => this.initDelay());
+  }
 
   private initDelay() {
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.init(), this.delay));
+    this.ngZone.runOutsideAngular(() => {
+      this.time = setTimeout(() => this.init(), this.delay);
+    });
   }
 
   private init(): void {
@@ -98,10 +105,7 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.srv
-      .load()
-      .notify()
-      .subscribe(() => this.initDelay());
+    this.srv.load();
   }
 
   ngOnChanges(changes: { [p in keyof MediaComponent]?: SimpleChange }): void {
@@ -112,6 +116,9 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    clearTimeout(this.time);
     this.destroy();
+    this._p = null;
+    this.notify$.unsubscribe();
   }
 }
