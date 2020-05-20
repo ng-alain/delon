@@ -328,7 +328,10 @@ export interface STColumn {
   iif?: (item: STColumn) => boolean;
 
   /**
-   * 统计，可以根据 `key` 来定义生成后需要的键名，如果未指定 `key` 则使用 `index` 来表示一个字段
+   * 统计列数据
+   * - 若使用自定义统计函数可无须指定 `index`
+   * - 可以根据 `key` 来定义生成后需要的键名，如果未指定 `key` 则使用 `index` 来表示键名
+   * - 当无法找到有效键名时，使用下标（从 `0` 开始）来代替
    */
   statistical?: STStatisticalType | STStatistical;
 

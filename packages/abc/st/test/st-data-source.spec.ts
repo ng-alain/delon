@@ -823,16 +823,25 @@ describe('abc: table: data-souce', () => {
       });
     });
 
+    it('should be use indexKey instead of key when not spcify key', done => {
+      options.columns = [{ title: '', index: 'a', indexKey: 'a', statistical: { type: 'sum' } }];
+      options.data = [{ a: 1 }, { a: 2 }];
+
+      srv.process(options).subscribe(res => {
+        expect(res.statistical.a.value).toBe(3);
+        done();
+      });
+    });
+
     it('should be custom function', done => {
       let callbackRawData: NzSafeAny = null;
       options.columns = [
         {
           title: '',
-          index: 'a',
           statistical: {
-            type: (values, _col, _list, rawData) => {
+            type: (_values, _col, _list, rawData) => {
               callbackRawData = rawData;
-              return { value: values[0] };
+              return { value: 10 };
             },
           },
         },
@@ -840,7 +849,7 @@ describe('abc: table: data-souce', () => {
       options.data = [{ a: 1 }, { a: 2 }];
 
       srv.process(options).subscribe(res => {
-        expect(res.statistical[0].value).toBe(1);
+        expect(res.statistical[0].value).toBe(10);
         expect(Array.isArray(callbackRawData)).toBe(true);
         done();
       });
