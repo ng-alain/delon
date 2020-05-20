@@ -388,7 +388,7 @@ export class STDataSource {
   private genStatistical(columns: STColumn[], list: STData[], rawData: any): STStatisticalResults {
     const res: { [key: string]: NzSafeAny } = {};
     columns.forEach((col, index) => {
-      res[col.key ? col.key : index] = col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
+      res[col.key || col.indexKey] = col.statistical == null ? {} : this.getStatistical(col, index, list, rawData);
     });
     return res;
   }

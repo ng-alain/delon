@@ -186,7 +186,7 @@ export interface STData {
  */
 export interface STColumn {
   /**
-   * 用于定义数据源主键，例如：`STStatistical`
+   * 用于定义数据源主键，例如：`statistical`
    */
   key?: string;
   /**
@@ -328,7 +328,7 @@ export interface STColumn {
   iif?: (item: STColumn) => boolean;
 
   /**
-   * 统计
+   * 统计，可以根据 `key` 来定义生成后需要的键名，如果未指定 `key` 则使用 `index` 来表示一个字段
    */
   statistical?: STStatisticalType | STStatistical;
 
