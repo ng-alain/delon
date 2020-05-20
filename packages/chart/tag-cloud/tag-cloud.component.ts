@@ -10,7 +10,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import DataSet from '@antv/data-set';
-import { Chart, registerShape, Util, Types } from '@antv/g2';
+import { Chart, registerShape, Types, Util } from '@antv/g2';
 import { AlainConfigService, deprecation10, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
