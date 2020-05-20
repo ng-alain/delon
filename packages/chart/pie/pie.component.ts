@@ -12,8 +12,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart } from '@antv/g2';
-import { LooseObject } from '@antv/g2/lib/interface';
+import { Chart, Types } from '@antv/g2';
 import { InteractionType } from '@delon/chart/core/types';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -65,7 +64,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() data: G2PieData[] = [];
   @Input() colors: any[];
   @Input() interaction: InteractionType = 'none';
-  @Input() theme: string | LooseObject;
+  @Input() theme: string | Types.LooseObject;
 
   // #endregion
 

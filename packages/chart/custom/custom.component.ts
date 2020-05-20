@@ -9,7 +9,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { LooseObject } from '@antv/g2/lib/interface';
+import { Types } from '@antv/g2';
 import { AlainConfigService, InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -33,7 +33,7 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
   @Input() @InputNumber() delay = 0;
   @Input() @InputNumber() height: number;
   @Input() @InputNumber() resizeTime = 0;
-  @Input() theme: string | LooseObject;
+  @Input() theme: string | Types.LooseObject;
   @Output() readonly render = new EventEmitter<ElementRef>();
   // tslint:disable-next-line:no-output-native
   @Output() readonly resize = new EventEmitter<ElementRef>();

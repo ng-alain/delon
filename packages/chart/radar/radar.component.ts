@@ -12,8 +12,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart } from '@antv/g2';
-import { LooseObject } from '@antv/g2/lib/interface';
+import { Chart, Types } from '@antv/g2';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 
 export interface G2RadarData {
@@ -50,7 +49,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() tickCount = 4;
   @Input() data: G2RadarData[] = [];
   @Input() colors = ['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911'];
-  @Input() theme: string | LooseObject;
+  @Input() theme: string | Types.LooseObject;
 
   // #endregion
 

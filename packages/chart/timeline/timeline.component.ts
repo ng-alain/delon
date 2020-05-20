@@ -11,8 +11,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart } from '@antv/g2';
-import { LegendItem, LooseObject, ScaleOption } from '@antv/g2/lib/interface';
+import { Chart, Types } from '@antv/g2';
 import { G2Time } from '@delon/chart/core/types';
 import { AlainConfigService, deprecation10, InputBoolean, InputNumber, toDate } from '@delon/util';
 import format from 'date-fns/format';
@@ -82,7 +81,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() padding: number[] = [40, 8, 64, 40];
   @Input() @InputNumber() borderWidth = 2;
   @Input() @InputBoolean() slider = true;
-  @Input() theme: string | LooseObject;
+  @Input() theme: string | Types.LooseObject;
 
   // #endregion
 
@@ -149,7 +148,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       custom: true,
       items: arrAxis.map(id => {
         const key = `y${id}`;
-        return { name: titleMap[key], value: titleMap[key], marker: { style: { fill: colorMap[key] } } } as LegendItem;
+        return { name: titleMap[key], value: titleMap[key], marker: { style: { fill: colorMap[key] } } } as Types.LegendItem;
       }),
     });
 
@@ -177,7 +176,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       .sort((a, b) => a._time - b._time);
 
     const max = Math.max(...arrAxis.map(id => [...data].sort((a, b) => b[`y${id}`] - a[`y${id}`])[0][`y${id}`]));
-    const scaleOptions: Record<string, ScaleOption> = {};
+    const scaleOptions: Record<string, Types.ScaleOption> = {};
     arrAxis.forEach(id => {
       const key = `y${id}`;
       scaleOptions[key] = {

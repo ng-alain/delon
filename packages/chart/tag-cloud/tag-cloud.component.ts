@@ -10,8 +10,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import DataSet from '@antv/data-set';
-import { Chart, registerShape, Util } from '@antv/g2';
-import { LooseObject } from '@antv/g2/lib/interface';
+import { Chart, registerShape, Util, Types } from '@antv/g2';
 import { AlainConfigService, deprecation10, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
@@ -50,7 +49,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   @Input() @InputNumber() height = 200;
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() data: G2TagCloudData[] = [];
-  @Input() theme: string | LooseObject;
+  @Input() theme: string | Types.LooseObject;
 
   // #endregion
 
