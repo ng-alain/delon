@@ -22,7 +22,7 @@ NG-ALAIN 左边主菜单，依赖于 `@delon/theme`。
 
 因此，建议在菜单数据的 `0` 索引下保持一个有效的 `shortcutRoot: true` 数据。
 
-### 关于隐藏
+### 常见问题
 
 **隐藏主菜单项**
 
@@ -32,7 +32,11 @@ NG-ALAIN 左边主菜单，依赖于 `@delon/theme`。
 
 表示不显示该节点，可以在菜单设置 `hideInBreadcrumb: true`。
 
-### 如何更新某个菜单项
+**关于层级**
+
+虽然支持无限层级，但为了用户体验请保持最多不超过四层（含组别）。
+
+**如何更新某个菜单项**
 
 当调用 `MenuService.setItem(key, newValue)` 时会自动重新渲染主菜单，其中 `key` 必须是存在值，请参考 [Menu](/theme/menu#Menu) 的定义。
 
@@ -46,4 +50,5 @@ NG-ALAIN 左边主菜单，依赖于 `@delon/theme`。
 | `[autoCloseUnderPad]` | 小于Pad宽度时路由切换后自动关闭侧边栏 | `boolean` | `true` |
 | `[recursivePath]` | 自动向上递归查找，菜单数据源包含 `/ware`，则 `/ware/1` 也视为 `/ware` 项 | `boolean` | `true` |
 | `[openStrictly]` | 展开完全受控，不再自动关闭已展开的项 | `boolean` | `false` |
+| `[maxLevelIcon]` | Icon最多显示到第几层 | `number` | `3` |
 | `(select)` | 点击菜单时回调（包含 `disabled`） | `EventEmitter<Menu>` | - |

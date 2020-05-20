@@ -212,7 +212,7 @@ describe('Service: Menu', () => {
         srv.add(newMenus);
         const shortcutList = srv.menus[0].children![2].children;
         expect(shortcutList!.length).toBe(1);
-        expect(shortcutList![0].__parent).toBe(srv.menus[0].children![2]);
+        expect(shortcutList![0]._parent).toBe(srv.menus[0].children![2]);
       });
     });
 
