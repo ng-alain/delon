@@ -22,7 +22,7 @@ The shortcut menu generation rules are uniformly searched under the `0` index，
 
 Therefore, it's recommended to keep a valid `shortcutRoot: true` data under the `0` index of the menu data.
 
-### About hide
+### FAQ
 
 **Hide main menu item**
 
@@ -32,7 +32,11 @@ You can set `hide: true` in the menu.
 
 You can set `hideInBreadcrumb: true` in the menu.
 
-### How to update a menu item
+**About level**
+
+Although unlimited levels are supported, please keep no more than four levels (including groups) for user experience.
+
+**How to update a menu item**
 
 The menu will be re-rendered via calling `MenuService.setItem(key, newValue)`, please refer to the definition of [Menu](/theme/menu#Menu).
 
