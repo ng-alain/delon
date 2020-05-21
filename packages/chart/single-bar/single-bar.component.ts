@@ -9,8 +9,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart } from '@antv/g2';
-import { LooseObject } from '@antv/g2/lib/interface';
+import { Chart, Types } from '@antv/g2';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 
 @Component({
@@ -41,7 +40,7 @@ export class G2SingleBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() format: (value: number, item: {}, index: number) => string;
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() textStyle: any = { fontSize: 12, color: '#595959' };
-  @Input() theme: string | LooseObject;
+  @Input() theme: string | Types.LooseObject;
 
   // #endregion
 

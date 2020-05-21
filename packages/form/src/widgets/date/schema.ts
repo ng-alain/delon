@@ -1,4 +1,4 @@
-import { DisabledDateFn, DisabledTimeFn, SupportTimeOptions } from 'ng-zorro-antd/date-picker/standard-types';
+import { DisabledDateFn, DisabledTimeFn, SupportTimeOptions } from 'ng-zorro-antd/date-picker';
 import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
 
 export interface SFDateWidgetSchema extends SFUISchemaItem {

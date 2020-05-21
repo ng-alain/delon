@@ -9,8 +9,7 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, registerShape } from '@antv/g2';
-import { LooseObject } from '@antv/g2/lib/interface';
+import { Chart, registerShape, Types } from '@antv/g2';
 import { AlainConfigService, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -38,7 +37,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   @Input() format: (text: string, item: {}, index: number) => string;
   @Input() @InputNumber() percent: number;
   @Input() padding: number | number[] | 'auto' = [10, 10, 30, 10];
-  @Input() theme: string | LooseObject;
+  @Input() theme: string | Types.LooseObject;
 
   // #endregion
 
