@@ -113,7 +113,7 @@
     "karma-parallel": "^0.3.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-language-service": "^0.9.9",
-    "antd-theme-generator": "^1.2.3",
+    "antd-theme-generator": "1.2.2",
     "chalk": "^4.0.0",
     "codecov": "^3.7.0",
     "conventional-changelog-cli": "^2.0.34",
