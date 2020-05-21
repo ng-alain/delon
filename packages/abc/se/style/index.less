@@ -1,4 +1,4 @@
-@import '../../../theme/styles/default.less';
+@import '../../../theme/system/theme-default.less';
 @import './variable.less';
 
 @{se-prefix} {
@@ -6,11 +6,11 @@
     display: block;
     float: none;
     clear: both;
+    width: 100%;
     color: @heading-color;
     font-weight: 700;
     font-size: 14px;
     line-height: @line-height-base;
-    width: 100%;
   }
 
   &__item {
@@ -43,7 +43,7 @@
         margin-left: 0;
       }
 
-      >.anticon {
+      > .anticon {
         margin-left: @se-optional-margin;
       }
     }
@@ -100,7 +100,7 @@
           line-height: inherit;
         }
 
-        &-label>label::after {
+        &-label > label::after {
           margin-left: 4px;
         }
       }
@@ -124,7 +124,7 @@
 
     > @{se-prefix}__item {
       margin-right: 16px;
-      &[col="1"] {
+      &[col='1'] {
         flex-basis: auto;
         width: 100%;
       }

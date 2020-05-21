@@ -1,12 +1,13 @@
-@import '../../../theme/styles/default.less';
+@import '../../../theme/system/theme-default.less';
+@import './variable.less';
 
-.tag-select {
+@{tag-select-prefix} {
   position: relative;
   display: block;
   max-height: 24px;
-  line-height: @line-height-base;
   margin-left: -8px;
   overflow: hidden;
+  line-height: @line-height-base;
   transition: all 0.3s;
   user-select: none;
   &__expanded {

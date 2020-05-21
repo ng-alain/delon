@@ -1,10 +1,10 @@
-@import '../../../theme/styles/default.less';
+@import '../../../theme/system/theme-default.less';
 @import './variable.less';
 
 @{sv-prefix} {
   display: block;
 
-  +@{sv-prefix} {
+  + @{sv-prefix} {
     margin-top: @sv-bottom;
   }
 
@@ -39,11 +39,11 @@
     display: block;
     float: none;
     clear: both;
+    width: 100%;
     margin-bottom: @sv-bottom;
     color: @heading-color;
     font-weight: 500;
     font-size: 14px;
-    width: 100%;
   }
 
   &__label {
@@ -71,7 +71,7 @@
         margin-left: 0;
       }
 
-      >.anticon {
+      > .anticon {
         margin-left: @sv-optional-margin;
       }
     }
@@ -110,7 +110,7 @@
       content: @sv-default-text;
     }
 
-    ~@{sv-prefix}__unit {
+    ~ @{sv-prefix}__unit {
       display: none !important;
     }
   }
@@ -122,7 +122,6 @@
   }
 
   &__small {
-
     // offset the padding-bottom of last row
     .@{ant-prefix}-row {
       margin-bottom: -8px;

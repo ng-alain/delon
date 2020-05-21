@@ -1,10 +1,23 @@
-// alain
-@import '../packages/theme/styles/index.less';
-@import '../packages/theme/styles/layout/default/index.less';
+// @theme: dark;
+// @theme: default;
+
+// 单项引入
+// @import '../packages/theme/system/index.less';
+// @import '../packages/abc/avatar-list/style/index.less';
+// @import '~ng-zorro-antd/style/entry.less'; /* 引入基本样式 */
+// @import '~ng-zorro-antd/button/style/entry.less'; /* 引入组件样式 */
+// @import '../packages/theme/theme-dark.less';
+
+// 全部引入
+@import '../packages/theme/system/index.less';
 @import '../packages/abc/index.less';
 @import '../packages/chart/index.less';
+@import '../packages/theme/layout/default/index.less';
+
+// 可以替换 dark, compact
+// @import '../packages/theme/theme-compact.less';
 
 // docs
-@import './app/styles/index.less';
+@import './style/index.less';
 
-.scrollbar-mixin(~'.ant-affix');
+// .scrollbar-mixin(~'.ant-affix');
