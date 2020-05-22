@@ -64,6 +64,9 @@ export const ZHCN = {
   'app.demo.copied': '复制成功',
   'app.demo.code-sandbox': '在 CodeSandbox 上打开',
   'app.demo.stackblitz': '在 StackBlitz 中打开',
+  'app.theme-btn.default': '默认主题',
+  'app.theme-btn.dark': '暗黑主题',
+  'app.theme-btn.compact': '紧凑主题',
   'sf.name': '名称',
   'sf.description': '这是一段描述',
 };

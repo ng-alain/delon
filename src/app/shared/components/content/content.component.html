@@ -1,34 +1,36 @@
-<nz-row>
-  <nz-col *ngIf="!isMobile" nzXs="24" nzSm="24" nzMd="24" nzLg="6" nzXl="5" nzXXl="4">
-    <main-menu class="main-menu" (click)="to()"></main-menu>
-  </nz-col>
-  <nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="18" nzXl="19" nzXXl="20">
+<div nz-row>
+  <div nz-col *ngIf="!isMobile" nzXs="24" nzSm="24" nzMd="24" nzLg="6" nzXl="5" nzXXl="4" class="main-menu">
+    <nz-affix>
+      <div main-menu (to)="to()"></div>
+    </nz-affix>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="18" nzXl="19" nzXXl="20">
     <div class="main-container" [class.pages-container]="meta.isPages">
       <router-outlet></router-outlet>
     </div>
     <div *ngIf="meta.next || meta.prev" class="prev-next-nav">
-      <a class="prev-page" *ngIf="meta.prev" routerLink="{{meta.prev.url}}">
+      <a class="prev-page" *ngIf="meta.prev" routerLink="{{ meta.prev.url }}">
         <i nz-icon nzType="left" class="footer-nav-icon-before"></i>
-        <span>{{meta.prev.title}}</span>
-        <span class="chinese">{{meta.prev.subtitle}}</span>
+        <span>{{ meta.prev.title }}</span>
+        <span class="chinese">{{ meta.prev.subtitle }}</span>
       </a>
-      <a class="next-page" *ngIf="meta.next" routerLink="{{meta.next.url}}">
-        <span>{{meta.next.title}}</span>
-        <span class="chinese">{{meta.next.subtitle}}</span>
+      <a class="next-page" *ngIf="meta.next" routerLink="{{ meta.next.url }}">
+        <span>{{ meta.next.title }}</span>
+        <span class="chinese">{{ meta.next.subtitle }}</span>
         <i nz-icon nzType="right" class="footer-nav-icon-after"></i>
       </a>
     </div>
     <app-footer small></app-footer>
-  </nz-col>
-</nz-row>
+  </div>
+</div>
 <ng-container *ngIf="isMobile">
   <div class="drawer drawer-left" [class.drawer-open]="opened">
-    <div class="drawer-bg" [hidden]="!opened" (click)="opened=!opened"></div>
+    <div class="drawer-bg" [hidden]="!opened" (click)="opened = !opened"></div>
     <div class="drawer-content-wrapper">
       <div class="drawer-content">
-        <main-menu (click)="to()"></main-menu>
+        <main-menu (to)="to()"></main-menu>
       </div>
-      <div class="drawer-button" (click)="opened=!opened"><i nz-icon nzType="menu-unfold"></i></div>
+      <div class="drawer-button" (click)="opened = !opened"><i nz-icon nzType="menu-unfold"></i></div>
     </div>
   </div>
 </ng-container>

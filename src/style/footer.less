@@ -2,13 +2,13 @@
 @footer-full-padding-space: 144px;
 
 @{footer-prefix} {
-  display: block;
-  clear: both;
-  font-size: 14px;
-  background-color: #000;
   position: relative;
   z-index: 9;
+  display: block;
+  clear: both;
   color: rgba(255, 255, 255, 0.65);
+  font-size: 14px;
+  background-color: #000;
   box-shadow: 0 1000px 0 1000px #fff;
   .ant-row {
     text-align: center;
@@ -17,20 +17,20 @@
     display: inline-block;
     text-align: left;
     > h2 {
-      font-size: 16px;
+      position: relative;
       margin: 0 auto 24px;
       font-weight: 500;
-      position: relative;
+      font-size: 16px;
       > .title-icon {
         width: 27px;
         margin-right: 16px;
       }
       > .anticon {
-        font-size: 16px;
         position: absolute;
-        left: -22px;
         top: 3px;
+        left: -22px;
         color: #aaa;
+        font-size: 16px;
       }
     }
     > div {
@@ -61,13 +61,13 @@
 }
 
 .theme-color {
+  display: inline-block;
   padding: 4px;
+  vertical-align: middle;
   background: #fff;
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 0 1px;
-  display: inline-block;
   cursor: pointer;
-  vertical-align: middle;
   &-value {
     width: 80px;
     height: 16px;

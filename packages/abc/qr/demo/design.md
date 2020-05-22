@@ -19,8 +19,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-demo',
   template: `
-    <nz-row [nzGutter]="24">
-      <nz-col [nzSpan]="8" class="text-center">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8" class="text-center">
         <qr
           [value]="value"
           [background]="background"
@@ -34,8 +34,8 @@ import { Component } from '@angular/core';
           (change)="change($event)"
           style="border:1px solid #999"
         ></qr>
-      </nz-col>
-      <nz-col [nzSpan]="16">
+      </div>
+      <div nz-col [nzSpan]="16">
         <se-container col="1">
           <se label="背景">
             <nz-input-group>
@@ -102,8 +102,8 @@ import { Component } from '@angular/core';
             px
           </se>
         </se-container>
-      </nz-col>
-    </nz-row>
+      </div>
+    </div>
   `,
 })
 export class DemoComponent {

@@ -38,14 +38,14 @@
     </ng-container>
     <ng-container *ngIf="grid_span !== 0">
       <nz-checkbox-wrapper class="sf__checkbox-list" (nzOnChange)="groupInGridChange($event)">
-        <nz-row>
-          <nz-col [nzSpan]="grid_span" *ngIf="ui.checkAll">
+        <div nz-row>
+          <div nz-col [nzSpan]="grid_span" *ngIf="ui.checkAll">
             <ng-template [ngTemplateOutlet]="all"></ng-template>
-          </nz-col>
-          <nz-col [nzSpan]="grid_span" *ngFor="let i of data">
+          </div>
+          <div nz-col [nzSpan]="grid_span" *ngFor="let i of data">
             <label nz-checkbox [nzValue]="i.value" [ngModel]="i.checked" [nzDisabled]="i.disabled">{{i.label}}</label>
-          </nz-col>
-        </nz-row>
+          </div>
+        </div>
       </nz-checkbox-wrapper>
     </ng-container>
   </ng-container>

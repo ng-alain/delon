@@ -1,6 +1,6 @@
-<section class="code-box-demo" [ngStyle]="{'background': item.bg}">
-  <div [ngClass]="{'browser-mockup': item.browser}" [ngStyle]="{'height.px': item.browser}">
-    <div [ngClass]="{'browser-scroll': item.browser}">
+<section class="code-box-demo" [ngStyle]="{ background: item.bg }">
+  <div [ngClass]="{ 'browser-mockup': item.browser }" [ngStyle]="{ 'height.px': item.browser }">
+    <div [ngClass]="{ 'browser-scroll': item.browser }">
       <ng-content></ng-content>
     </div>
   </div>
@@ -12,18 +12,57 @@
   </div>
   <div class="code-box-description" [innerHTML]="item.summary"></div>
   <div class="code-box-actions">
-    <i nz-tooltip [nzTooltipTitle]="'app.demo.code-sandbox' | translate" (click)="openOnlineIDE('CodeSandbox')" nz-icon nzType="code-sandbox" class="code-box-code-icon"></i>
-    <i nz-tooltip [nzTooltipTitle]="'app.demo.stackblitz' | translate" (click)="openOnlineIDE()" nz-icon nzType="thunderbolt" nzTheme="fill" class="code-box-code-icon"></i>
-    <i nz-tooltip [nzTooltipTitle]="'app.demo.copy' | translate" (click)="onCopy(item.code)" nz-icon [nzType]="copied ? 'check' : 'snippets'" class="code-box-code-icon" [class.ant-tooltip-open]="copied"></i>
+    <i
+      nz-tooltip
+      [nzTooltipTitle]="'app.demo.code-sandbox' | translate"
+      (click)="openOnlineIDE('CodeSandbox')"
+      nz-icon
+      nzType="code-sandbox"
+      class="code-box-code-icon"
+    ></i>
+    <i
+      nz-tooltip
+      [nzTooltipTitle]="'app.demo.stackblitz' | translate"
+      (click)="openOnlineIDE()"
+      nz-icon
+      nzType="thunderbolt"
+      nzTheme="fill"
+      class="code-box-code-icon"
+    ></i>
+    <i
+      nz-tooltip
+      [nzTooltipTitle]="'app.demo.copy' | translate"
+      (click)="onCopy(item.code)"
+      nz-icon
+      [nzType]="copied ? 'check' : 'snippets'"
+      class="code-box-code-icon"
+      [class.ant-tooltip-open]="copied"
+    ></i>
     <i nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" class="code-expand-icon">
-      <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg" [ngClass]="{'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand}"
-        (click)="handle()" />
-      <img alt="expand code" src="https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg" [ngClass]="{'code-expand-icon-show': expand, 'code-expand-icon-hide': !expand}"
-        (click)="handle()" />
+      <img
+        alt="expand code"
+        [src]="
+          theme === 'dark'
+            ? 'https://gw.alipayobjects.com/zos/antfincdn/btT3qDZn1U/wSAkBuJFbdxsosKKpqyq.svg'
+            : 'https://gw.alipayobjects.com/zos/rmsportal/wSAkBuJFbdxsosKKpqyq.svg'
+        "
+        [ngClass]="{ 'code-expand-icon-hide': expand, 'code-expand-icon-show': !expand }"
+        (click)="handle()"
+      />
+      <img
+        alt="expand code"
+        [src]="
+          theme === 'dark'
+            ? 'https://gw.alipayobjects.com/zos/antfincdn/CjZPwcKUG3/OpROPHYqWmrMDBFMZtKF.svg'
+            : 'https://gw.alipayobjects.com/zos/rmsportal/OpROPHYqWmrMDBFMZtKF.svg'
+        "
+        [ngClass]="{ 'code-expand-icon-show': expand, 'code-expand-icon-hide': !expand }"
+        (click)="handle()"
+      />
     </i>
   </div>
 </section>
-<section class="highlight-wrapper" [ngClass]="{'highlight-wrapper-expand': expand}">
+<section class="highlight-wrapper" [ngClass]="{ 'highlight-wrapper-expand': expand }">
   <div class="highlight">
     <pre class="hljs language-ts"><code>{{item.code}}</code></pre>
   </div>

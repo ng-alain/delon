@@ -1,5 +1,5 @@
 import { highlight } from '../converters/highlight';
-import { escapeHTML, generateSluggedId, genAttr, isHeading, isStandalone } from './utils';
+import { escapeHTML, genAttr, generateSluggedId, isHeading, isStandalone } from './utils';
 const JsonML = require('jsonml.js/lib/utils');
 
 let headingList: any[] = [];
@@ -34,10 +34,7 @@ const converters = [highlight()].concat([
         for (const key in attrs) {
           let value = attrs[key];
           if (key === 'src' && ~value.indexOf(' | ')) {
-            const imgWH = value
-              .split(' | ')[1]
-              .trim()
-              .split('=');
+            const imgWH = value.split(' | ')[1].trim().split('=');
             for (let i = 0; i < imgWH.length; i += 2) {
               ret.push(`${imgWH[i]}=${imgWH[i + 1]}`);
             }
@@ -55,9 +52,7 @@ const converters = [highlight()].concat([
       const attrs = { ...JsonML.getAttributes(node) };
       let target = attrs.href.startsWith('//') || attrs.href.startsWith('http') ? ' target="_blank"' : '';
       if (~attrs.href.indexOf('ng-alain.com')) target = '';
-      return `<a${target} href="${attrs.href}" data-url="${attrs.href}">${JsonML.getChildren(node)
-        .map(toHtml)
-        .join('')}</a>`;
+      return `<a${target} href="${attrs.href}" data-url="${attrs.href}">${JsonML.getChildren(node).map(toHtml).join('')}</a>`;
     },
   ],
   [
@@ -73,17 +68,13 @@ const converters = [highlight()].concat([
       const tagName = JsonML.getTagName(node);
       const attrs = genAttr({ ...JsonML.getAttributes(node) });
       return `${tagName ? `<${tagName}${attrs ? ' ' + attrs : ''}>` : ''}${
-        isStandalone(tagName)
-          ? ''
-          : JsonML.getChildren(node)
-              .map(toHtml)
-              .join('') + (tagName ? `</${tagName}>` : '')
+        isStandalone(tagName) ? '' : JsonML.getChildren(node).map(toHtml).join('') + (tagName ? `</${tagName}>` : '')
       }`;
     },
   ],
 ]);
 
-export function toHtml(markdownData: any, codeEscape: boolean = true) {
+export function toHtml(markdownData: any[], codeEscape: boolean = true) {
   const pair: any = converters.filter((converter: any) => {
     return converter[0](markdownData);
   })[0];
@@ -117,9 +108,13 @@ export function toHtml(markdownData: any, codeEscape: boolean = true) {
 }
 
 function fixAngular(html: string): string {
-  return html.replace(/<code>(.*?)<\/code>/gim, (fullWord: string, content: string) => {
+  let res = html.replace(/<code>(.*?)<\/code>/gim, (fullWord: string, content: string) => {
     return ~content.indexOf(`</a>`) ? fullWord : `<code>${content.replace(`<`, `&lt;`)}</code>`;
   });
+  if (res.startsWith('<article>') && res.endsWith('</article>')) {
+    res = res.substr(9, res.length - 19);
+  }
+  return res;
 }
 
 export function generateMd(markdownData: any) {

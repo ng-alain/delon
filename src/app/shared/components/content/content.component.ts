@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MetaService } from '../../../core/meta.service';
 import { MobileService } from '../../../core/mobile.service';
 
@@ -8,6 +8,7 @@ import { MobileService } from '../../../core/mobile.service';
   host: {
     '[class.main-wrapper]': 'true',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContentComponent {
   isMobile: boolean;

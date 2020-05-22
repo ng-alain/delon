@@ -1,10 +1,11 @@
-import { Component, Inject, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AppService } from '@core/app.service';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { copy, deepCopy } from '@delon/util';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import { CodeService } from '../../../core/code/code.service';
 import { I18NService } from './../../../core/i18n/service';
 
@@ -15,12 +16,14 @@ import { I18NService } from './../../../core/i18n/service';
     '[class.code-box]': 'true',
     '[class.expand]': 'expand',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CodeBoxComponent implements OnDestroy {
-  private i18n$: Subscription;
   private _item: any;
   private _orgItem: any;
+  private destroy$ = new Subject();
   copied = false;
+  theme = 'default';
 
   @Input()
   set item(value: any) {
@@ -45,19 +48,36 @@ export class CodeBoxComponent implements OnDestroy {
   @Input() expand: boolean = false;
 
   constructor(
+    private appService: AppService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private msg: NzMessageService,
     private codeSrv: CodeService,
     private sanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef,
   ) {
-    this.i18n$ = this.i18n.change.pipe(filter(() => !!this._orgItem)).subscribe(() => {
-      this.item.title = this.i18n.get(this._orgItem.meta.title);
-      this.item.summary = this.i18n.get(this._orgItem.summary);
+    this.appService.theme$.pipe(takeUntil(this.destroy$)).subscribe(data => {
+      this.theme = data;
+      this.check();
     });
+    this.i18n.change
+      .pipe(
+        filter(() => !!this._orgItem),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => {
+        this.item.title = this.i18n.get(this._orgItem.meta.title);
+        this.item.summary = this.i18n.get(this._orgItem.summary);
+        this.check();
+      });
+  }
+
+  check(): void {
+    this.cdr.markForCheck();
   }
 
   handle() {
     this.expand = !this.expand;
+    this.check();
   }
 
   openOnlineIDE(ide: 'StackBlitz' | 'CodeSandbox' = 'StackBlitz'): void {
@@ -72,11 +92,16 @@ export class CodeBoxComponent implements OnDestroy {
     copy(value).then(() => {
       this.msg.success(this.i18n.fanyi('app.demo.copied'));
       this.copied = true;
-      setTimeout(() => (this.copied = false), 1000);
+      this.check();
+      setTimeout(() => {
+        this.copied = false;
+        this.check();
+      }, 1000);
     });
   }
 
   ngOnDestroy() {
-    this.i18n$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
