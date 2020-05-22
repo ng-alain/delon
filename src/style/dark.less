@@ -91,6 +91,10 @@
     &-codesandbox {
       background: transparent url('https://gw.alipayobjects.com/zos/antfincdn/hNEf2p1ZnS/aaYmtdDyHSCkXyLZVgGK.svg') center / 14px no-repeat;
     }
+
+    .highlight pre {
+      background: @component-background;
+    }
   }
 
   ul.anticons-list {
@@ -261,8 +265,12 @@
     box-shadow: 0 0 0 2px #fb4742, 1.5em 0 0 2px #99bc2e, 3em 0 0 2px #ffba5a;
   }
 
-  .browser-mockup.with-tab::after {
+  .browser-mockup::after {
     border-bottom: 2em solid @component-background;
+  }
+
+  .browser-scroll {
+    background: #262626;
   }
 
   .algolia-autocomplete {

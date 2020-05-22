@@ -27,13 +27,13 @@
   <div nz-col [nzSpan]="12" [hidden]="!expand">
     <nz-tabset>
       <nz-tab nzTitle="Schema" (nzClick)="refreshLayout('schemaEditor')">
-        <nu-monaco-editor #schemaEditor [(ngModel)]="schema" (ngModelChange)="run()" [options]="{ language: 'json' }" height="500px"></nu-monaco-editor>
+        <nu-monaco-editor #schemaEditor [(ngModel)]="schema" (ngModelChange)="run()" [options]="editorOptions" height="500px"></nu-monaco-editor>
       </nz-tab>
       <nz-tab nzTitle="Form Data" (nzClick)="refreshLayout('formCodeEditor')">
-        <nu-monaco-editor #formCodeEditor [(ngModel)]="formCode" (ngModelChange)="run()" [options]="{ language: 'json' }" height="500px"></nu-monaco-editor>
+        <nu-monaco-editor #formCodeEditor [(ngModel)]="formCode" (ngModelChange)="run()" [options]="editorOptions" height="500px"></nu-monaco-editor>
       </nz-tab>
       <nz-tab nzTitle="UI Schema" (nzClick)="refreshLayout('uiEditor')">
-        <nu-monaco-editor #uiEditor [(ngModel)]="uiCode" (ngModelChange)="run()" [options]="{ language: 'json' }" height="500px"></nu-monaco-editor>
+        <nu-monaco-editor #uiEditor [(ngModel)]="uiCode" (ngModelChange)="run()" [options]="editorOptions" height="500px"></nu-monaco-editor>
       </nz-tab>
     </nz-tabset>
   </div>

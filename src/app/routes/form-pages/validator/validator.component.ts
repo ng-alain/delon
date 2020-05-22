@@ -1,10 +1,13 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AppService } from '@core/app.service';
 import { SFSchema } from '@delon/form';
 import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util';
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CodeService } from '../../../core/code/code.service';
 import { I18NService } from '../../../core/i18n/service';
 
@@ -49,11 +52,12 @@ declare var ace: any;
   selector: 'form-validator',
   templateUrl: './validator.component.html',
 })
-export class FormValidatorComponent implements OnInit {
+export class FormValidatorComponent implements OnInit, OnDestroy {
   @ViewChild('schemaEditor') private schemaEditor: NuMonacoEditorComponent;
   @ViewChild('formCodeEditor') private formCodeEditor: NuMonacoEditorComponent;
   @ViewChild('uiEditor') private uiEditor: NuMonacoEditorComponent;
 
+  private destroy$ = new Subject();
   files: any[] = [
     { name: 'basic', title: '基本' },
     { name: 'conditional', title: '条件' },
@@ -71,16 +75,21 @@ export class FormValidatorComponent implements OnInit {
   uiCode: string;
   uiSchema: {};
   expand = true;
+  editorOptions = { language: 'json', theme: 'vs' };
 
   constructor(
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private codeSrv: CodeService,
     private http: _HttpClient,
     private msg: NzMessageService,
+    private appService: AppService,
   ) {
     const defaultIndex = 0;
     this.name = this.files[defaultIndex].name;
     this.title = this.files[defaultIndex].title;
+    this.appService.theme$.pipe(takeUntil(this.destroy$)).subscribe(data => {
+      this.editorOptions = { language: 'json', theme: data === 'dark' ? 'vs-dark' : 'vs' };
+    });
   }
 
   ngOnInit(): void {
@@ -142,5 +151,10 @@ export class FormValidatorComponent implements OnInit {
 
   error(value: any) {
     console.log('formError', value);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -7,9 +7,16 @@
   left: auto;
   z-index: @zindex + 2;
   display: block;
-  border: @quick-menu-border-width solid @quick-menu-border-color;
   backface-visibility: hidden;
   transition: margin 0.3s cubic-bezier(1, 0, 0, 1);
+
+  &,
+  &__ctrl {
+    background-color: @quick-menu-bg;
+    border: @quick-menu-border-width solid @quick-menu-border-color;
+    box-shadow: @shadow-1-down;
+  }
+
   &__inner {
     position: relative;
     padding: 0 12px;
@@ -21,7 +28,6 @@
     width: @quick-menu-ctrl-hw;
     height: @quick-menu-ctrl-hw;
     text-align: center;
-    border: @quick-menu-border-width solid @quick-menu-border-color;
     border-right: 0;
     border-radius: 3px 0 0 3px;
     cursor: pointer;

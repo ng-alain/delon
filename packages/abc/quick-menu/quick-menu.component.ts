@@ -36,8 +36,8 @@ export class QuickMenuComponent implements OnInit, OnChanges {
   @Input() icon: string | TemplateRef<void> = 'question-circle';
   @Input() @InputNumber() top = 120;
   @Input() @InputNumber() width = 200;
-  @Input() bgColor = '#fff';
-  @Input() borderColor = '#ddd';
+  @Input() bgColor: string;
+  @Input() borderColor: string;
 
   private show = false;
 
@@ -54,13 +54,13 @@ export class QuickMenuComponent implements OnInit, OnChanges {
       'border-color': this.borderColor,
     };
 
-    const res: string[] = [
-      `top:${this.top}px`,
-      `width:${this.width}px`,
-      `background-color:${this.bgColor}`,
-      `border-color:${this.borderColor}`,
-      `margin-right:-${this.show ? 0 : this.width}px`,
-    ];
+    const res: string[] = [`top:${this.top}px`, `width:${this.width}px`, `margin-right:-${this.show ? 0 : this.width}px`];
+    if (this.bgColor) {
+      res.push(`background-color:${this.bgColor}`);
+    }
+    if (this.borderColor) {
+      res.push(`border-color:${this.borderColor}`);
+    }
     this.render.setAttribute(this.el.nativeElement, 'style', res.join(';'));
     this.cdr.detectChanges();
   }

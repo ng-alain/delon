@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, Renderer2 } from '@angular/core';
 import { AppService } from '@core/app.service';
+import { AlainChartConfig, AlainConfigService } from '@delon/util';
 
 type SiteTheme = 'default' | 'dark' | 'compact';
 
@@ -14,15 +15,20 @@ type SiteTheme = 'default' | 'dark' | 'compact';
 export class ThemeBtnComponent implements OnInit {
   theme: SiteTheme = 'default';
 
-  constructor(private appService: AppService, private renderer: Renderer2) {}
+  constructor(private appService: AppService, private renderer: Renderer2, private configSrv: AlainConfigService) {}
 
   ngOnInit(): void {
     this.initTheme();
   }
 
   private initTheme(): void {
-    const theme = (localStorage.getItem('site-theme') as SiteTheme) || 'default';
-    this.onThemeChange(theme);
+    this.theme = (localStorage.getItem('site-theme') as SiteTheme) || 'default';
+    this.updateChartTheme();
+    this.onThemeChange(this.theme);
+  }
+
+  private updateChartTheme(): void {
+    this.configSrv.update<AlainChartConfig, 'chart'>('chart', { theme: this.theme === 'dark' ? 'dark' : '' });
   }
 
   onThemeChange(theme: SiteTheme): void {
@@ -44,5 +50,6 @@ export class ThemeBtnComponent implements OnInit {
       localStorage.setItem('site-theme', theme);
       document.body.append(style);
     }
+    this.updateChartTheme();
   }
 }

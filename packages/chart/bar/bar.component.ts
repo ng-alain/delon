@@ -47,7 +47,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
-  @Input() color = 'rgba(24, 144, 255, 0.85)';
+  @Input() color: string; // = 'rgba(24, 144, 255, 0.85)';
   @Input() @InputNumber() height = 0;
   @Input() padding: number | number[] | 'auto' = 'auto';
   @Input() data: G2BarData[] = [];

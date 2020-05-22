@@ -1,11 +1,9 @@
 @sf-prefix: ~'.sf';
-@sf-title-text-align: left;
-@sf-inline-ant-select-min-width: 100px;
 
 @{sf-prefix} {
   display: block;
   &__optional {
-    color: rgba(0, 0, 0, 0.45);
+    color: @sf-optional-color;
   }
   // 固定 label
   &__fixed {
@@ -44,7 +42,7 @@
           font-size: 20px;
           line-height: 32px;
           text-align: center;
-          background: rgba(0, 0, 0, 0.26);
+          background: @sf-widget-array-type-card-remove-bg;
           border-radius: 50%;
           cursor: pointer;
           i {
@@ -79,7 +77,7 @@
   // transfer
   .@{ant-prefix}-transfer {
     &-list {
-      background: #fff;
+      background: @sf-widget-array-transfer-bg;
       &-header {
         label {
           position: unset;
