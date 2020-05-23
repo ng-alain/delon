@@ -123,9 +123,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     const data = [{ name: title, value: percent }];
     const val = data[0].value;
     chart.annotation().clear(true);
-    if (color) {
-      chart.geometries[0].color(color);
-    }
+    chart.geometries[0].color(color);
     // 绘制仪表盘背景
     chart.annotation().arc({
       top: false,
