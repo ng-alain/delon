@@ -23,11 +23,19 @@ function copyLess(name) {
 
 // copy theme
 function copyTheme() {
-  ['system', 'layout', 'default.less', 'dark.less', 'compact.less', `theme-default.less`, `theme-dark.less`, `theme-compact.less`].forEach(
-    fileName => {
-      fse.copySync(path.join(root, `packages/theme/${fileName}`), path.join(root, `dist/@delon/theme/${fileName}`));
-    },
-  );
+  [
+    'system',
+    'layout',
+    'index.less',
+    'default.less',
+    'dark.less',
+    'compact.less',
+    `theme-default.less`,
+    `theme-dark.less`,
+    `theme-compact.less`,
+  ].forEach(fileName => {
+    fse.copySync(path.join(root, `packages/theme/${fileName}`), path.join(root, `dist/@delon/theme/${fileName}`));
+  });
 }
 
 ['abc', 'chart'].forEach(name => copyLess(name));

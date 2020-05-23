@@ -2,7 +2,7 @@
 
 const less = require('less');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
-const NpmImportPlugin = require('less-plugin-npm-import');
+const LessPluginNpmImport = require('less-plugin-npm-import');
 const fs = require('fs-extra');
 const path = require('path');
 const root = path.join(__dirname, '../../..');
@@ -17,7 +17,7 @@ function generateTheme(vars, fileName) {
   return less
     .render(themeContent, {
       javascriptEnabled: true,
-      plugins: [new NpmImportPlugin({ prefix: '~' }), new LessPluginCleanCSS({ advanced: true })],
+      plugins: [new LessPluginNpmImport({ prefix: '~' }), new LessPluginCleanCSS({ advanced: true })],
       modifyVars: {
         // hack: `true;@import '~ng-zorro-antd/style/color/colorPalette.less';`,
         ...vars,
