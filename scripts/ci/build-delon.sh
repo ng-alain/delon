@@ -31,11 +31,12 @@ done
 
 buildLess() {
   echo 'copy styles...'
-  node ./scripts/build/generate-copy-less.js
-  # echo 'fix zorro path...'
-  node ./scripts/build/generate-fix-zorro-path.js
-  # echo 'build full css...'
+  node ./scripts/build/copy-less.js
+  echo 'fix zorro path...'
+  node ./scripts/build/fix-zorro-path.js
+  echo 'build full css...'
   node ./scripts/build/generate-css.js
+  echo 'generate less var...'
   node ./scripts/build/generate-less-vars.js
 }
 

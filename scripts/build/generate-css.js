@@ -5,7 +5,6 @@ const path = require('path');
 const less = require('less');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 
-const args = process.argv.slice(2);
 const ROOT_DIR = `${path.resolve(__dirname, '../../')}/dist/@delon`;
 
 async function genCss(name, min) {

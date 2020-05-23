@@ -1,8 +1,10 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const path = require('path');
 const { generateTheme } = require('antd-theme-generator');
 
-const root = path.join(__dirname, '../..');
+const root = path.join(__dirname, '../../..');
 const outputFilePath = path.join(root, './src/assets/color.less');
 const options = {
   antdStylesDir: path.join(root, './node_modules/ng-zorro-antd'),
