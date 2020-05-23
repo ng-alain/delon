@@ -3,7 +3,7 @@
 
 @{page-header-prefix} {
   display: block;
-  padding: 16px 32px 0 32px;
+  padding: @page-padding;
   background-color: @page-header-bg;
   border-bottom: @border-width-base @border-style-base @border-color-split;
   &__wide {
@@ -11,10 +11,10 @@
     margin: auto;
   }
   .@{ant-prefix}-breadcrumb {
-    margin-bottom: 16px;
+    margin-bottom: @margin-md;
   }
   .@{ant-prefix}-tabs {
-    margin: 0 0 -17px -8px;
+    margin: 0 0 - (@margin-md + 1) 0;
     &-bar {
       border-bottom: @border-width-base @border-style-base @border-color-split;
     }
@@ -28,7 +28,7 @@
   }
   &__logo {
     flex: 0 1 auto;
-    margin-right: 16px;
+    margin-right: @margin-md;
     padding-top: 1px;
     img {
       display: block;
@@ -69,13 +69,13 @@
 
   &__title,
   &__action {
-    margin-bottom: 16px;
+    margin-bottom: @margin-md;
   }
 
   &__logo,
   &__desc,
   &__extra {
-    margin-bottom: 16px;
+    margin-bottom: @margin-md;
   }
 
   &__action,

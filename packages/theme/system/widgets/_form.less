@@ -19,17 +19,8 @@
   .search {
     &__form {
       .@{ant-prefix}-form-item {
-        display: flex;
         margin-right: 0;
-        margin-bottom: 24px;
-        > .@{ant-prefix}-form-item-label {
-          width: auto;
-          padding-right: 8px;
-          line-height: 32px;
-        }
-        .@{ant-prefix}-form-item-control-content {
-          line-height: 32px;
-        }
+        margin-bottom: @form-item-margin-bottom;
       }
       .@{ant-prefix}-form-item-control {
         flex: 1;
