@@ -9,6 +9,7 @@ Ant Design 设计规范上支持一定程度的样式定制，以满足业务和
 ![](https://zos.alipayobjects.com/rmsportal/zTFoszBtDODhXfLAazfSpYbSLSEeytoG.png)
 
 ## 定制方式
+
 Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，并定义了一系列全局/组件的样式变量，你可以根据需求进行相应调整，默认样式变量：[NG-ZORRO](https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/style/themes/default.less)、[NG-ALAIN]() 两部分。
 
 ### 初始化项目时定制主题
@@ -24,11 +25,22 @@ Ant Design 的样式使用了 [Less](http://lesscss.org/) 作为开发语言，�
 
 ### 方式一
 
-是在样式文件全量引入 `dark.less` 或 `compact.less` 覆盖主题变量。
+在样式文件 `src/styles.less` 全量引入 `theme-dark.less` 或 `theme-compact.less` 覆盖主题变量。
 
 ```less
-@import "~@delon/theme/dark.less";    // 引入官方提供的暗色 less 样式文件
-@import "~@delon/theme/compact.less"; // 引入官方提供的紧凑 less 样式文件
+@import '~@delon/theme/system/index';
+@import '~@delon/abc/index';
+@import '~@delon/chart/index';
+@import '~@delon/theme/layout/default/index';
+@import '~@delon/theme/layout/fullscreen/index';
+
+@import './styles/index';
+@import './styles/theme';
+
+// 可以替换 dark, compact
+// - `dark` 🌑 暗黑主题（9+ 支持）
+// - `compact` 📦 紧凑主题（9+ 支持）
+// @import '~@delon/theme/theme-compact.less';
 ```
 
 ### 方式二
@@ -67,12 +79,14 @@ angular.json 中
 # yarn
 yarn add less -D less-plugin-clean-css -D less-plugin-npm-import -D
 # npm
-npm i less -D less-plugin-clean-css -D less-plugin-npm-import -D
+# npm i less -D less-plugin-clean-css -D less-plugin-npm-import -D
 ```
 
 2. 编写脚本
 
 以黑暗主题为例，使用 `less` 编译应用的样式入口文件，并且在 `modifyVars` 参数中替换样式变量，并输出到目标位置。
+
+> 完整代码请参考 [theme.js](https://github.com/ng-alain/ng-alain/blob/master/scripts/theme.js)。
 
 ```js
 const less = require('less');
@@ -82,10 +96,7 @@ const fs = require('fs');
 const darkThemeVars = require('@delon/theme/theme-dark');
 
 const appStyles = 'src/styles.less'; // 应用的样式入口文件
-const themeContent = `
-@import '~ng-zorro-antd/style/color/colorPalette.less';
-@import '${appStyles}';
-`;
+const themeContent = `@import '${appStyles}';`;
 
 less.render(themeContent, {
   javascriptEnabled: true,
@@ -109,6 +120,8 @@ less.render(themeContent, {
 
 动态创建 `link` 标签，将样式文件动态加载在应用中，反之移除。
 
+> 完整代码请参考 [theme-btn](https://github.com/ng-alain/ng-alain/tree/master/src/app/layout/default/theme-btn)。
+
 ```ts
 changeTheme(theme: 'default' | 'dark'): void {
   if (theme === 'dark') {
@@ -126,3 +139,4 @@ changeTheme(theme: 'default' | 'dark'): void {
 }
 ```
 
+> 注意：如果你使用 `@delon/chart` 或第三方组件，可能需要手动修改组件来支持相应的主题。
