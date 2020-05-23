@@ -1,18 +1,77 @@
-@import './st/style/variable.less';
-@import './sv/style/variable.less';
-@import './se/style/variable.less';
-@import './avatar-list/style/variable.less';
-@import './ellipsis/style/variable.less';
-@import './error-collect/style/variable.less';
-@import './exception/style/variable.less';
-@import './footer-toolbar/style/variable.less';
-@import './full-content/style/variable.less';
-@import './global-footer/style/variable.less';
-@import './notice-icon/style/variable.less';
-@import './page-header/style/variable.less';
-@import './quick-menu/style/variable.less';
-@import './result/style/variable.less';
-@import './reuse-tab/style/variable.less';
-@import './tag-select/style/variable.less';
-@import './down-file/style/variable.less';
-@import './loading/style/variable.less';
+// st
+// --
+@st-btn-disabled-color: rgba(0, 0, 0, 0.25);
+@st-title-optional-color: rgba(0, 0, 0, 0.35);
+
+// sv
+// --
+@sv-label-color: rgba(0, 0, 0, 0.5);
+@sv-label-optional-color: rgba(0, 0, 0, 0.35);
+@sv-detail-color: @text-color;
+@sv-type-primary-color: @primary-color;
+@sv-type-success-color: @success-color;
+@sv-type-danger-color: @error-color;
+@sv-type-warning-color: @warning-color;
+@sv-bottom: @layout-gutter * 2;
+@sv-default-text: '-';
+@sv-unit-margin: 8px;
+@sv-unit-color: @grey-7;
+@sv-optional-margin: 2px;
+
+// se
+// --
+@se-label-optional-color: rgba(0, 0, 0, 0.35);
+@se-compact-bottom: @layout-gutter;
+@se-optional-margin: 2px;
+
+// avatar-list
+// --
+@avatar-list-mini-wh: 20px;
+
+// error-collect
+// --
+@error-collect-color: #f5222d;
+
+// footer-toolbar
+// --
+@footer-toolbar-height: 56px;
+@footer-toolbar-box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.03);
+@footer-toolbar-bg: #fff;
+@footer-toolbar-border-top: 1px solid @border-color-split;
+@footer-toolbar-padding: 0 24px;
+
+// page-header
+// --
+@page-header-bg: #fff;
+@page-header-wide: 1200px;
+
+// quick-menu
+// --
+@quick-menu-border-width: 1px;
+@quick-menu-ctrl-hw: 50px;
+@quick-menu-border-color: #fff;
+@quick-menu-bg: #fff;
+
+// result
+// --
+@result-extra-bg: #fafafa;
+
+// reuse-tab
+// --
+@reuse-tab-height: 52px;
+@reuse-tab-bg: #fff;
+@reuse-tab-padding: 8px;
+@reuse-tab-border-color: #d9d9d9;
+
+// down-file
+// --
+// - `hidden` 隐藏状态（默认）
+// - `disabled` 禁用状态
+@down-file-not-support-behavior: 'hidden';
+
+// loading
+// --
+@loading-zindex: 9999;
+@loading-backdrop-bg: rgba(0, 0, 0, 0.15);
+@loading-icon-color: @primary-color;
+@loading-text-color: @primary-color;
