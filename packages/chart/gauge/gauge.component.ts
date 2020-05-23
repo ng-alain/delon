@@ -32,7 +32,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() delay = 0;
   @Input() title: string;
   @Input() @InputNumber() height: number;
-  @Input() color: string; // = '#2f9cff';
+  @Input() color = '#2f9cff';
   @Input() bgColor: string; // = '#f0f2f5';
   @Input() format: (text: string, item: {}, index: number) => string;
   @Input() @InputNumber() percent: number;
