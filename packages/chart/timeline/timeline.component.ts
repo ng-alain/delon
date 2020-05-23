@@ -12,7 +12,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Types } from '@antv/g2';
-import { G2Time } from '@delon/chart/core/types';
+import { G2Time } from '@delon/chart/core';
 import { AlainConfigService, deprecation10, InputBoolean, InputNumber, toDate } from '@delon/util';
 import format from 'date-fns/format';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';

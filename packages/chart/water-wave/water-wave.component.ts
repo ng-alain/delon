@@ -43,7 +43,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
 
-  private renderChart(type: string) {
+  private renderChart(isUpdate: boolean) {
     if (!this.resize$) return;
 
     this.updateRadio();
@@ -120,7 +120,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
     function render() {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-      if (circleLock && type !== 'update') {
+      if (circleLock && !isUpdate) {
         if (arcStack!.length) {
           const temp = arcStack!.shift() as [number, number];
           ctx.lineTo(temp[0], temp[1]);
@@ -197,11 +197,11 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   ngOnInit(): void {
     this.installResizeEvent();
-    this.ngZone.runOutsideAngular(() => setTimeout(() => this.renderChart(''), this.delay));
+    this.ngZone.runOutsideAngular(() => setTimeout(() => this.renderChart(false), this.delay));
   }
 
   ngOnChanges(): void {
-    this.ngZone.runOutsideAngular(() => this.renderChart('update'));
+    this.ngZone.runOutsideAngular(() => this.renderChart(true));
     this.cdr.detectChanges();
   }
 

@@ -12,7 +12,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Types } from '@antv/g2';
-import { InteractionType } from '@delon/chart/core/types';
+import { G2InteractionType } from '@delon/chart/core';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
@@ -47,12 +47,12 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
-  @Input() color: string; // = 'rgba(24, 144, 255, 0.85)';
+  @Input() color = 'rgba(24, 144, 255, 0.85)';
   @Input() @InputNumber() height = 0;
   @Input() padding: number | number[] | 'auto' = 'auto';
   @Input() data: G2BarData[] = [];
   @Input() @InputBoolean() autoLabel = true;
-  @Input() interaction: InteractionType = 'none';
+  @Input() interaction: G2InteractionType = 'none';
   @Input() theme: string | Types.LooseObject;
 
   // #endregion
