@@ -7,7 +7,7 @@ const path = require('path');
 const root = path.resolve(__dirname, `../..`);
 const themeRoot = path.join(root, `dist/@delon/theme`);
 const projectRoot = path.join(themeRoot, `../..`);
-[`theme-default.less`, `theme-dark.less`, `theme-compact.less`, `system/index.less`, `system/variable/_mixins.less`].forEach(fileName => {
+[`theme-default.less`, `theme-dark.less`, `theme-compact.less`, `system/index.less`].forEach(fileName => {
   const fullFilePath = path.join(themeRoot, fileName);
   const content = fse
     .readFileSync(fullFilePath)
