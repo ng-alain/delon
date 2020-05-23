@@ -33,7 +33,7 @@
     "site": "npm run site:gen && ng s -o --hmr",
     "site:build": "npm run site:gen && node scripts/ci/build-no-lvy && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
-    "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js",
+    "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js && bash ../ng-alain/scripts/_ci/fix-mock.sh",
     "publish:next": "bash scripts/publish/publish.sh -next",
     "publish": "bash scripts/publish/publish.sh",
     "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js"
