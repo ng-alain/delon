@@ -2,7 +2,7 @@
 order: 15
 title: 
   zh-CN: 存储Token
-  en-Us: Store Token
+  en-US: Store Token
 type: Documents
 ---
 
