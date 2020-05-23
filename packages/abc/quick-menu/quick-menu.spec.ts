@@ -41,6 +41,14 @@ describe('abc: quick-menu', () => {
     });
   });
 
+  it('#color', () => {
+    context.bgColor = '#000000';
+    context.borderColor = '#f60';
+    fixture.detectChanges();
+    style('backgroundColor', 'rgb(0, 0, 0)');
+    style('borderColor', 'rgb(255, 102, 0)');
+  });
+
   describe('#click', () => {
     it('should be show when click icon', () => {
       getEl().click();
@@ -54,10 +62,12 @@ describe('abc: quick-menu', () => {
 });
 
 @Component({
-  template: ` <quick-menu #comp [width]="width"></quick-menu> `,
+  template: ` <quick-menu #comp [width]="width" [bgColor]="bgColor" [borderColor]="borderColor"></quick-menu> `,
 })
 class TestComponent {
   @ViewChild('comp', { static: true })
   comp: QuickMenuComponent;
   width = 200;
+  bgColor: string;
+  borderColor: string;
 }

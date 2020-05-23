@@ -27,6 +27,15 @@ ol {
   list-style: none;
 }
 
+.fetching {
+  position: relative;
+  &-icon {
+    position: absolute;
+    top: 64px;
+    left: 48%;
+  }
+}
+
 .main {
   @media (max-width: @mobile-max) {
     height: calc(100% - 86px);
