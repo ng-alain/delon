@@ -1,5 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
+import { AppService } from '@core/app.service';
+import { deepCopy } from '@delon/util';
 import sdk from '@stackblitz/sdk';
 import { getParameters } from 'codesandbox/lib/api/define';
 import * as pkg from '../../../../package.json';
@@ -56,7 +58,11 @@ export class CodeService {
     };
   }
 
-  constructor(@Inject(DOCUMENT) document: any) {
+  private get themePath(): string {
+    return `node_modules/@delon/theme/styles/${this.appSrv.theme}.css`;
+  }
+
+  constructor(private appSrv: AppService, @Inject(DOCUMENT) document: any) {
     this.document = document;
   }
 
@@ -92,7 +98,8 @@ export class CodeService {
 
   openOnStackBlitz(appComponentCode: string) {
     const res = this.parseCode(appComponentCode);
-    console.log(this.dependencies);
+    const json = deepCopy(angularJSON);
+    json.projects.demo.architect.build.options.styles.splice(0, 0, this.themePath);
     sdk.openProject(
       {
         title: 'NG-ALAIN',
@@ -100,7 +107,7 @@ export class CodeService {
         tags: ['ng-alain', '@delon', 'NG-ZORRO', 'ng-zorro-antd', 'Ant Design', 'Angular', 'ng'],
         dependencies: this.dependencies,
         files: {
-          'angular.json': `${JSON.stringify(angularJSON, null, 2)}`,
+          'angular.json': `${JSON.stringify(json, null, 2)}`,
           'src/environments/environment.ts': environmentTS,
           'src/index.html': res.html,
           'src/main.ts': mainTS,
@@ -126,6 +133,8 @@ export class CodeService {
   openOnCodeSandbox(appComponentCode: string) {
     const res = this.parseCode(appComponentCode);
     const mockObj = this.genMock;
+    const json = deepCopy(dotAngularCliJSON);
+    json.apps[0].styles.splice(0, 0, this.themePath);
     const parameters = getParameters({
       files: {
         'package.json': {
@@ -139,7 +148,7 @@ export class CodeService {
           isBinary: false,
         },
         '.angular-cli.json': {
-          content: dotAngularCliJSON,
+          content: `${JSON.stringify(json, null, 2)}`,
           isBinary: false,
         },
         'src/environments/environment.ts': {

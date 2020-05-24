@@ -18,7 +18,7 @@ export default {
             polyfills: 'src/polyfills.ts',
             tsConfig: 'src/tsconfig.app.json',
             assets: ['src/favicon.ico', 'src/assets'],
-            styles: ['node_modules/@delon/theme/styles/ng-alain.css', 'src/styles.css'],
+            styles: ['src/styles.css'],
           },
           configurations: {
             production: {
