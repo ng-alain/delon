@@ -103,7 +103,11 @@ function addDependenciesToPackageJson(options: ApplicationOptions) {
         `ng-alain-codelyzer@DEP-0.0.0-PLACEHOLDER`,
         `@delon/testing@${VERSION}`,
         // color-less
-        `antd-theme-generator@DEP-0.0.0-PLACEHOLDER`,
+        // TODO: https://github.com/mzohaibqc/antd-theme-generator/issues/42
+        `antd-theme-generator@1.2.2`,
+        // theme
+        `less-plugin-clean-css@DEP-0.0.0-PLACEHOLDER`,
+        `less-plugin-npm-import@DEP-0.0.0-PLACEHOLDER`,
       ],
       'devDependencies',
     );
