@@ -1,11 +1,11 @@
 name: Deploy website
 
-# on: push
+on: push
 
-on:
-  push:
-    branches:
-      - 'publish-**'
+# on:
+#   push:
+#     branches:
+#       - 'publish-**'
 
 jobs:
   build-and-deploy:
@@ -18,7 +18,10 @@ jobs:
         run: npm install
 
       - name: build
-        run: npm run site:build
+        run: |
+          npm run site:gen
+          node scripts/ci/build-no-lvy
+          node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /delon/
 
       - name: gen 404.html
         run: cp ./src/dist/index.html ./src/dist/404.html
