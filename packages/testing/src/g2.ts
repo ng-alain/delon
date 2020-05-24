@@ -15,13 +15,13 @@ export class PageG2<T> {
     return this.fixture!.debugElement;
   }
 
-  get context(): NzSafeAny {
+  get context(): T {
     return this.fixture!.componentInstance;
   }
 
   get comp() {
     // tslint:disable-next-line:no-string-literal
-    return this.context['comp'];
+    return (this.context as NzSafeAny)['comp'];
   }
 
   get chart(): Chart {
@@ -80,7 +80,7 @@ export class PageG2<T> {
 
   newData(data: any): this {
     // tslint:disable-next-line:no-string-literal
-    this.context['data'] = data;
+    (this.context as NzSafeAny)['data'] = data;
     this.dc();
     return this;
   }
