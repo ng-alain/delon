@@ -31,12 +31,13 @@ done
 
 buildLess() {
   echo 'copy styles...'
-  node ./scripts/build/generate-less.js
-  echo 'fix zorro paths...'
-  sed -i -r "s/~ng-zorro-antd/..\/..\/..\/..\/node_modules\/ng-zorro-antd/g" `grep ~ng-zorro-antd -rl ${DIST}/theme/styles/`
+  node ./scripts/build/copy-less.js
+  echo 'fix zorro path...'
+  node ./scripts/build/fix-zorro-path.js
   echo 'build full css...'
   node ./scripts/build/generate-css.js
-  node ./scripts/build/generate-css.js min
+  echo 'generate less var...'
+  node ./scripts/build/generate-less-vars.js
 }
 
 containsElement () {

@@ -7,26 +7,22 @@
     "**/dist/*/**": true,
     "**/coverage/*/**": true
   },
-  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     // For ESLint
     "source.fixAll.eslint": true,
     // For TSLint
     "source.fixAll.tslint": true,
     // For Stylelint
-    "source.fixAll.stylelint": true,
+    "source.fixAll.stylelint": true
   },
-  "[markdown]": {
-    "editor.formatOnSave": false
+  "[html]": {
+    "editor.formatOnSave": true
   },
-  "[javascript]": {
-    "editor.formatOnSave": false
+  "[typescript]": {
+    "editor.formatOnSave": true
   },
-  "[json]": {
-    "editor.formatOnSave": false
-  },
-  "[jsonc]": {
-    "editor.formatOnSave": false
+  "[less]": {
+    "editor.formatOnSave": true
   },
   "files.associations": {
     "*.json": "jsonc",

@@ -25,18 +25,18 @@
   </nz-col>
   <nz-col class="ant-form-item-control-wrapper" [nzSpan]="ui.spanControl" [nzOffset]="ui.offsetControl">
     <div class="ant-form-item-control" [class.has-error]="showError">
-      <nz-row class="sf__array-container">
+      <div nz-row class="sf__array-container">
         <ng-container *ngFor="let i of formProperty.properties; let idx=index">
-          <nz-col *ngIf="i.visible && !i.ui.hidden" [nzSpan]="arraySpan" [attr.data-index]="idx" class="sf-array-item">
+          <div nz-col *ngIf="i.visible && !i.ui.hidden" [nzSpan]="arraySpan" [attr.data-index]="idx" class="sf-array-item">
             <nz-card>
               <sf-item [formProperty]="i"></sf-item>
               <span *ngIf="showRemove" class="sf__array-remove" (click)="removeItem(idx)" [attr.title]="removeTitle">
                 <i nz-icon nzType="delete"></i>
               </span>
             </nz-card>
-          </nz-col>
+          </div>
         </ng-container>
-      </nz-row>
+      </div>
       <div *ngIf="!ui.onlyVisual && showError" class="ant-form-explain">{{error}}</div>
       <div *ngIf="schema.description" [innerHTML]="schema._description" class="ant-form-extra"></div>
     </div>

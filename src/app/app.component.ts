@@ -9,7 +9,7 @@ import { MobileService } from './core/mobile.service';
 
 @Component({
   selector: 'app-root',
-  template: ` <router-outlet></router-outlet> `,
+  template: ` <router-outlet></router-outlet>`,
 })
 export class AppComponent {
   @HostBinding('class.mobile')
@@ -21,11 +21,11 @@ export class AppComponent {
   constructor(
     el: ElementRef,
     renderer: Renderer2,
-    @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
-    private meta: MetaService,
-    private title: TitleService,
-    private router: Router,
-    private mobileSrv: MobileService,
+    @Inject(ALAIN_I18N_TOKEN) i18n: I18NService,
+    meta: MetaService,
+    title: TitleService,
+    router: Router,
+    mobileSrv: MobileService,
     breakpointObserver: BreakpointObserver,
   ) {
     renderer.setAttribute(el.nativeElement, 'ng-alain-version', VERSION_ALAIN.full);
@@ -33,19 +33,19 @@ export class AppComponent {
 
     breakpointObserver.observe(this.query).subscribe(res => {
       this.isMobile = res.matches;
-      this.mobileSrv.next(this.isMobile);
+      mobileSrv.next(this.isMobile);
     });
 
-    this.router.events.subscribe(evt => {
+    router.events.subscribe(evt => {
       if (!(evt instanceof NavigationEnd)) return;
 
       const url = evt.url.split('#')[0].split('?')[0];
       if (url.includes('/dev') || url.includes('/404') || this.prevUrl === url) return;
       this.prevUrl = url;
 
-      let urlLang = url.split('/').pop() || this.i18n.zone;
+      let urlLang = url.split('/').pop() || i18n.zone;
       if (urlLang && ['zh', 'en'].indexOf(urlLang) === -1) {
-        urlLang = this.i18n.zone;
+        urlLang = i18n.zone;
       }
       const redirectArr = evt.urlAfterRedirects.split('#')[0].split('?')[0].split('/');
       const redirectLang = redirectArr.pop();
@@ -56,29 +56,27 @@ export class AppComponent {
         } else {
           newUrl = redirectArr.concat(urlLang).join('/');
         }
-        this.router.navigateByUrl(newUrl, { replaceUrl: true });
+        router.navigateByUrl(newUrl, { replaceUrl: true });
         return;
       }
 
       if (urlLang) {
-        const lang = this.i18n.getFullLang(urlLang);
+        const lang = i18n.getFullLang(urlLang);
 
         // update i18n
-        if (this.i18n.lang !== lang) {
-          this.i18n.use(lang as any);
-          this.meta.clearMenu();
+        if (i18n.lang !== lang) {
+          i18n.use(lang as any);
+          meta.clearMenu();
         }
-        this.meta.refMenu(url);
+        meta.refMenu(url);
       }
 
-      if (this.meta.set(url)) {
-        this.router.navigateByUrl('/404');
+      if (meta.set(url)) {
+        router.navigateByUrl('/404');
         return;
       }
-      const item = this.meta.getPathByUrl(url);
-      this.title.setTitle(item ? item.title || item.subtitle : '');
-      // scroll to top
-      document.body.scrollIntoView();
+      const item = meta.getPathByUrl(url);
+      title.setTitle(item ? item.title || item.subtitle : '');
     });
   }
 }

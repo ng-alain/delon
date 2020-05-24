@@ -1,5 +1,5 @@
 ---
-type: Theme
+type: Documents
 order: 10
 title: 包体优化
 ---

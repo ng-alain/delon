@@ -19,7 +19,10 @@ report.*.json
 
 src/app/routes/gen
 src/assets/color.less
+src/assets/compact.css
+src/assets/dark.css
 /scaffold
 /_scaffold
 /ng-alain
 /integration
+scripts/build/var.less

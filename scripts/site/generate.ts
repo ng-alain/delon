@@ -1,20 +1,20 @@
-import * as path from 'path';
 import * as fs from 'fs';
-import { parseMd } from './utils/parse-md';
-import { genUpperName, genUrl, generateDoc, genComponentName, genSelector, includeAttributes } from './utils/utils';
-import { groupFiles } from './utils/group-files';
-import { generateDemo } from './utils/generate-demo';
+import * as path from 'path';
 import {
-  SiteConfig,
-  ModuleConfig,
-  Meta,
-  MetaTemplateData,
-  ModuleTemplateData,
-  MetaOriginal,
   ContentTemplateData,
   ExampleModules,
+  Meta,
+  MetaOriginal,
+  MetaTemplateData,
+  ModuleConfig,
+  ModuleTemplateData,
+  SiteConfig,
 } from './interfaces';
+import { generateDemo } from './utils/generate-demo';
 import { generateExampleModule } from './utils/generate-example';
+import { groupFiles } from './utils/group-files';
+import { parseMd } from './utils/parse-md';
+import { genComponentName, generateDoc, genSelector, genUpperName, genUrl, includeAttributes } from './utils/utils';
 
 const target = process.argv[2];
 const isSyncSpecific = !!target && target !== 'init';
@@ -61,15 +61,15 @@ function generateModule(config: ModuleConfig) {
 
   function fixDemo(fileObject: any, demos: any) {
     const demoHTML: string[] = [];
-    demoHTML.push(`<nz-row [nzGutter]="16">`);
+    demoHTML.push(`<div nz-row [nzGutter]="16">`);
     if (demos.tpl.left.length > 0 && demos.tpl.right.length > 0) {
-      demoHTML.push(`<nz-col nzSpan="12">${demos.tpl.left.join('')}</nz-col>`);
-      demoHTML.push(`<nz-col nzSpan="12">${demos.tpl.right.join('')}</nz-col>`);
+      demoHTML.push(`<div nz-col nzSpan="12">${demos.tpl.left.join('')}</div>`);
+      demoHTML.push(`<div nz-col nzSpan="12">${demos.tpl.right.join('')}</div>`);
     } else {
-      demoHTML.push(`<nz-col nzSpan="24">${demos.tpl.left.join('')}${demos.tpl.right.join('')}</nz-col>`);
+      demoHTML.push(`<div nz-col nzSpan="24">${demos.tpl.left.join('')}${demos.tpl.right.join('')}</div>`);
     }
 
-    demoHTML.push('</nz-row>');
+    demoHTML.push('</div>');
     fileObject.demos = demoHTML.join('');
 
     fixMDClass(fileObject);
@@ -100,7 +100,13 @@ function generateModule(config: ModuleConfig) {
   config.dir.forEach(dirConfig => {
     const tpl = fs.readFileSync(path.join(rootDir, dirConfig.template.content)).toString('utf8');
 
-    const files = groupFiles(dirConfig.src.map(p => path.join(rootDir, p)), dirConfig, isSyncSpecific, target, siteConfig);
+    const files = groupFiles(
+      dirConfig.src.map(p => path.join(rootDir, p)),
+      dirConfig,
+      isSyncSpecific,
+      target,
+      siteConfig,
+    );
 
     files.forEach(item => {
       // #region generate document file

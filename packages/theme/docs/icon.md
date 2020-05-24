@@ -1,6 +1,6 @@
 ---
-type: Theme
-order: 3
+type: Documents
+order: 20
 title: Icon
 ---
 

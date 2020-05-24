@@ -1,5 +1,5 @@
 import { Component, DebugElement, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { createTestContext } from '@delon/testing';
 import { of } from 'rxjs';
@@ -38,16 +38,15 @@ describe('abc: qr', () => {
     delete win.QRious;
   });
 
-  function createComp() {
-    createModule();
-    mockQRious();
-    ({ fixture, dl, context } = createTestContext(TestComponent));
-    fixture.detectChanges();
-    spyOn(context, 'change');
-  }
-
   describe('', () => {
-    beforeEach(() => createComp());
+    beforeEach(fakeAsync(() => {
+      createModule();
+      mockQRious();
+      ({ fixture, dl, context } = createTestContext(TestComponent));
+      fixture.detectChanges();
+      spyOn(context, 'change');
+      tick(100);
+    }));
 
     function getDataURL() {
       return (dl.query(By.css('img')).nativeElement as HTMLImageElement).src;

@@ -1,0 +1,204 @@
+@index-home-color: #314659;
+@index-home-bg: #49a9ee;
+@index-home-max-width: 1200px;
+
+.index-page {
+  color: #697b8c;
+
+  #header {
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto 0;
+    padding: 0 24px;
+    box-shadow: none;
+  }
+
+  #nav.ant-menu-horizontal > .ant-menu-item-selected {
+    border-top: none;
+  }
+
+  .page {
+    position: relative;
+    width: 100%;
+    max-width: @index-home-max-width;
+    margin: auto;
+    padding: 0 24px;
+    &-wrapper {
+      position: relative;
+      z-index: 1;
+      overflow: inherit;
+      color: @index-home-color;
+      font-family: Avenir, 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+        'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+      font-variant: tabular-nums;
+    }
+    h2 {
+      padding: 80px 0 40px;
+      color: @index-home-color;
+      font-weight: 400;
+      font-size: 38px;
+      line-height: 46px;
+      text-align: center;
+    }
+  }
+
+  .page-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: @index-home-max-width;
+    height: 520px;
+    margin: auto;
+    padding: 0 24px;
+    &__slogan {
+      width: 54%;
+      min-width: 420px;
+      max-width: 560px;
+      min-height: 336px;
+      color: #0d1a26;
+      h1 {
+        margin: 12px 0;
+        font-size: 54px;
+        font-family: 'Futura', 'Helvetica Neue For Number', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC',
+          'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      }
+      p {
+        font-size: 20px;
+      }
+      .ant-btn {
+        min-width: 110px;
+        height: 40px;
+        margin-right: 16px;
+        font-size: 16px;
+        border-radius: 20px;
+      }
+      &-btn {
+        display: flex;
+        align-items: center;
+        margin-top: 64px;
+        line-height: 40px;
+        .github {
+          display: flex;
+        }
+      }
+    }
+    &__img {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 46%;
+      max-width: 482px;
+      height: 420px;
+      overflow: hidden;
+      img {
+        height: 100%;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .page-feature {
+    position: relative;
+    padding-bottom: 80px;
+    color: #fff;
+    &__bg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: 0;
+      background: @index-home-bg;
+      transform: skewY(-4.5deg);
+      &-bottom {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 200px;
+        background: @index-home-bg;
+      }
+    }
+    h2,
+    h3 {
+      color: #fff;
+    }
+    h2 {
+      padding-top: 100px;
+    }
+    h3 {
+      font-size: 18px;
+    }
+    &__item {
+      display: flex;
+      height: 100px;
+      margin-bottom: 56px;
+    }
+    .anticon {
+      margin-right: 16px;
+      padding-top: 8px;
+      font-size: 36px;
+    }
+  }
+
+  .page-theme {
+    margin-bottom: 48px;
+    overflow: hidden;
+    background: #fff;
+    &__item {
+      display: block;
+      margin-bottom: 32px;
+      color: @index-home-color;
+      text-align: center;
+
+      &:hover {
+        color: @index-home-bg;
+      }
+      img {
+        max-width: 80%;
+      }
+
+      h3,
+      p {
+        margin-top: 16px;
+      }
+    }
+  }
+
+  // 768
+  @media (max-width: @screen-md-max) {
+    #logo {
+      padding-left: 0;
+    }
+    .page-banner {
+      &__slogan {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        text-align: center;
+        &-btn {
+          flex-wrap: wrap;
+          justify-content: center;
+          > a,
+          > github-button {
+            margin-bottom: 16px;
+          }
+        }
+      }
+      &__img {
+        display: none;
+      }
+    }
+    .page-feature {
+      &__item {
+        flex-direction: column;
+        text-align: center;
+        .anticon {
+          margin: 0 0 16px 0;
+        }
+      }
+    }
+  }
+}

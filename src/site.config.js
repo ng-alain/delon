@@ -562,7 +562,7 @@ module.exports = {
           hasSubDir: false,
         },
         {
-          src: ['./packages/theme/styles/layout'],
+          src: ['./packages/theme/layout'],
           template: {
             content: './src/templates/content.ts',
           },

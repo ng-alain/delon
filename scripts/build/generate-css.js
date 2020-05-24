@@ -2,37 +2,41 @@
 
 const fs = require('fs');
 const path = require('path');
-const glob = require('glob');
 const less = require('less');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 
-const args = process.argv.slice(2);
-const min = args.includes('min');
-
 const ROOT_DIR = `${path.resolve(__dirname, '../../')}/dist/@delon`;
-const content = `
-@import "${path.join(ROOT_DIR, 'theme/styles/index.less')}";\n
-@import "${path.join(ROOT_DIR, 'theme/styles/layout/default/index.less')}";\n
-@import "${path.join(ROOT_DIR, 'theme/styles/layout/fullscreen/index.less')}";\n
-@import "${path.join(ROOT_DIR, 'abc/index.less')}";\n
-@import "${path.join(ROOT_DIR, 'chart/index.less')}";\n
-`;
 
-const plugins = [];
-if (min) {
-  const cleanCSSPlugin = new LessPluginCleanCSS({ advanced: true });
-  plugins.push(cleanCSSPlugin);
+async function genCss(name, min) {
+  const content = `
+  @import "${path.join(ROOT_DIR, `theme/${name}.less`)}";\n
+  `;
+
+  const plugins = [];
+  if (min) {
+    const cleanCSSPlugin = new LessPluginCleanCSS({ advanced: true });
+    plugins.push(cleanCSSPlugin);
+  }
+
+  less.render
+    .call(less, content, {
+      plugins,
+      paths: ['/node_modules/ng-zorro-antd/src/'],
+      javascriptEnabled: true,
+    })
+    .then(({ css }) => {
+      fs.writeFileSync(path.join(ROOT_DIR, `theme/${name}${min ? '.min' : ''}.css`), css);
+      console.log(`完成生成 ${name} ${min ? 'min' : ''}版本`);
+    })
+    .catch(err => console.warn(`${name} ${min ? 'min' : ''} 异常`, err));
 }
-less.render
-  .call(less, content, {
-    plugins,
-    paths: ['/node_modules/ng-zorro-antd/src/'],
-    javascriptEnabled: true,
-  })
-  .then(({ css }) => {
-    fs.writeFileSync(
-      path.join(ROOT_DIR, `theme/styles/ng-alain${min ? '.min' : ''}.css`),
-      css,
-    );
-  })
-  .catch(err => console.warn(err));
+
+function runCss(min) {
+  ['default', 'dark', 'compact'].forEach(async name => {
+    console.log(`开始生成 ${name} ${min ? 'min' : ''}版本`);
+    await genCss(name, min);
+  });
+}
+
+runCss();
+runCss(true);

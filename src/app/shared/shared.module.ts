@@ -27,6 +27,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { IconComponent } from './components/icon/icon.component';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { RouteTransferDirective } from './components/route-transfer/route-transfer.directive';
+import { ThemeBtnComponent } from './components/theme-btn/theme-btn.component';
 
 const DIALOG_COMPONENTS = [DemoModalComponent, DemoDrawerComponent, IconComponent];
 
@@ -38,6 +39,7 @@ const COMPONENTS = [
   DocsComponent,
   CodeBoxComponent,
   RouteTransferDirective,
+  ThemeBtnComponent,
   ...DIALOG_COMPONENTS,
 ];
 

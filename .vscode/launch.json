@@ -16,11 +16,14 @@
       "type": "node",
       "request": "launch",
       "name": "site generate",
-      "runtimeArgs": ["-r", "ts-node/register"],
-      "cwd": "${workspaceRoot}",
+      "runtimeArgs": ["-r", "ts-node/register", "-r", "tsconfig-paths/register"],
       "protocol": "inspector",
       "internalConsoleOptions": "openOnSessionStart",
-      "args": ["${workspaceFolder}/scripts/site/generate.ts", "table"]
+      "args": ["${workspaceFolder}/scripts/site/generate.ts", "fullscreen"],
+      "env": {
+        "TS_NODE_PROJECT": "${workspaceFolder}/scripts/site/tsconfig.json",
+        "TS_NODE_TRANSPILE_ONLY": "true"
+      }
     },
     {
       "type": "node",

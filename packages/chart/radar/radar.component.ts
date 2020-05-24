@@ -78,9 +78,6 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
       line: null,
       label: {
         offset: 8,
-        style: {
-          fill: 'rgba(0, 0, 0, .65)',
-        },
       },
       grid: {
         line: {
@@ -101,11 +98,6 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
             lineWidth: 1,
             lineDash: [0, 0],
           },
-        },
-      },
-      label: {
-        style: {
-          fill: 'rgba(0, 0, 0, .65)',
         },
       },
     });

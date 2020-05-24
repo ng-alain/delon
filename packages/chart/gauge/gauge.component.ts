@@ -33,7 +33,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
   @Input() title: string;
   @Input() @InputNumber() height: number;
   @Input() color = '#2f9cff';
-  @Input() bgColor = '#f0f2f5';
+  @Input() bgColor: string; // = '#f0f2f5';
   @Input() format: (text: string, item: {}, index: number) => string;
   @Input() @InputNumber() percent: number;
   @Input() padding: number | number[] | 'auto' = [10, 10, 30, 10];
@@ -105,7 +105,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
     chart.axis('value', {
       line: null,
       label: {
-        offset: -12,
+        offset: -14,
         formatter: format,
       },
       tickLine: null,
@@ -145,7 +145,6 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
       },
     });
 
-    // 绘制指标数字
     chart.annotation().text({
       position: ['50%', '85%'],
       content: title,
@@ -159,7 +158,7 @@ export class G2GaugeComponent implements OnInit, OnDestroy, OnChanges {
       position: ['50%', '90%'],
       content: `${val} %`,
       style: {
-        fontSize: 24,
+        fontSize: 20,
         fill: 'rgba(0, 0, 0, 0.85)',
         textAlign: 'center',
       },

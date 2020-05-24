@@ -17,5 +17,5 @@ module: import { QuickMenuModule } from '@delon/abc/quick-menu';
 | `[icon]` | 图标 | `string,TemplateRef<void>` | `question-circle` |
 | `[top]` | 距离顶部 | `number` | `120` |
 | `[width]` | 打开后宽度 | `number` | `200` |
-| `[bgColor]` | 背景 | `string` | `#fff` |
-| `[borderColor]` | 边框颜色 | `string` | `#ddd` |
+| `[bgColor]` | 背景 | `string` | - |
+| `[borderColor]` | 边框颜色 | `string` | - |

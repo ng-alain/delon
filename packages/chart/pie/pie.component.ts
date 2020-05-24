@@ -13,7 +13,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { Chart, Types } from '@antv/g2';
-import { InteractionType } from '@delon/chart/core/types';
+import { G2InteractionType } from '@delon/chart/core';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -63,7 +63,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() valueFormat: (y: number) => string;
   @Input() data: G2PieData[] = [];
   @Input() colors: any[];
-  @Input() interaction: InteractionType = 'none';
+  @Input() interaction: G2InteractionType = 'none';
   @Input() theme: string | Types.LooseObject;
 
   // #endregion

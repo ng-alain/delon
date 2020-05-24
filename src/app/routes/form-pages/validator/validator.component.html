@@ -1,5 +1,5 @@
-<nz-row class="border-bottom-1 pb-sm mb-md">
-  <nz-col [nzSpan]="18">
+<div nz-row class="border-bottom-1 pb-sm mb-md">
+  <div nz-col [nzSpan]="18">
     <nz-select [(ngModel)]="name" (ngModelChange)="getSchema()">
       <nz-option *ngFor="let i of files" [nzValue]="i.name" [nzLabel]="i.title"></nz-option>
     </nz-select>
@@ -8,8 +8,8 @@
       <label nz-radio-button nzValue="vertical">垂直</label>
       <label nz-radio-button nzValue="inline">行内</label>
     </nz-radio-group>
-  </nz-col>
-  <nz-col [nzSpan]="6" class="text-right">
+  </div>
+  <div nz-col [nzSpan]="6" class="text-right">
     <nz-button-group>
       <button nz-tooltip [nzTooltipTitle]="expand ? 'Hide Code' : 'Show Code'" nz-button (click)="expand = !expand">
         <i nz-icon nzType="vertical-{{ expand ? 'right' : 'left' }}"></i>
@@ -21,23 +21,23 @@
         <i nz-icon nzType="copy"></i>
       </button>
     </nz-button-group>
-  </nz-col>
-</nz-row>
-<nz-row class="border-bottom-1 pb-sm mb-md" nzGutter="24">
-  <nz-col [nzSpan]="12" [hidden]="!expand">
+  </div>
+</div>
+<div nz-row class="border-bottom-1 pb-sm mb-md" nzGutter="24">
+  <div nz-col [nzSpan]="12" [hidden]="!expand">
     <nz-tabset>
       <nz-tab nzTitle="Schema" (nzClick)="refreshLayout('schemaEditor')">
-        <nu-monaco-editor #schemaEditor [(ngModel)]="schema" (ngModelChange)="run()" [options]="{ language: 'json' }" height="500px"></nu-monaco-editor>
+        <nu-monaco-editor #schemaEditor [(ngModel)]="schema" (ngModelChange)="run()" [options]="editorOptions" height="500px"></nu-monaco-editor>
       </nz-tab>
       <nz-tab nzTitle="Form Data" (nzClick)="refreshLayout('formCodeEditor')">
-        <nu-monaco-editor #formCodeEditor [(ngModel)]="formCode" (ngModelChange)="run()" [options]="{ language: 'json' }" height="500px"></nu-monaco-editor>
+        <nu-monaco-editor #formCodeEditor [(ngModel)]="formCode" (ngModelChange)="run()" [options]="editorOptions" height="500px"></nu-monaco-editor>
       </nz-tab>
       <nz-tab nzTitle="UI Schema" (nzClick)="refreshLayout('uiEditor')">
-        <nu-monaco-editor #uiEditor [(ngModel)]="uiCode" (ngModelChange)="run()" [options]="{ language: 'json' }" height="500px"></nu-monaco-editor>
+        <nu-monaco-editor #uiEditor [(ngModel)]="uiCode" (ngModelChange)="run()" [options]="editorOptions" height="500px"></nu-monaco-editor>
       </nz-tab>
     </nz-tabset>
-  </nz-col>
-  <nz-col [nzSpan]="expand ? 12 : 24" *ngIf="schemaData">
+  </div>
+  <div nz-col [nzSpan]="expand ? 12 : 24" *ngIf="schemaData">
     <sf
       [schema]="schemaData"
       [formData]="formData"
@@ -47,5 +47,5 @@
       (formChange)="change($event)"
       (formError)="error($event)"
     ></sf>
-  </nz-col>
-</nz-row>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+@yn-prefix: ~'.yn';
+
+@{yn-prefix} {
+  &__yes,
+  &__no {
+    display: inline-flex;
+    align-items: center;
+    font-style: normal;
+    span {
+      margin-left: 4px;
+    }
+  }
+  &__yes {
+    color: @yn-yes-color;
+  }
+  &__no {
+    color: @yn-no-color;
+  }
+}
