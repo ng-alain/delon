@@ -58,6 +58,7 @@ export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, cogSr
     '[class.sf__edit]': `mode === 'edit'`,
     '[class.sf__no-error]': `onlyVisual`,
     '[class.sf__no-colon]': `noColon`,
+    '[class.sf__compact]': `compact`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -108,6 +109,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() firstVisual = true;
   /** 是否只展示错误视觉不显示错误文本 */
   @Input() @InputBoolean() onlyVisual = false;
+  @Input() @InputBoolean() compact = false;
   /** 表单模式 */
   @Input()
   set mode(value: 'default' | 'search' | 'edit') {

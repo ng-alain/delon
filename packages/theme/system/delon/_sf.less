@@ -31,7 +31,7 @@
     }
     &-container {
       nz-card {
-        margin: 0 16px 0 0;
+        margin: 0 16px 16px 0;
         @{sf-prefix}__array-remove {
           position: absolute;
           top: -16px;
@@ -136,6 +136,23 @@
       label {
         &::after {
           content: ' ';
+        }
+      }
+    }
+  }
+  &__compact {
+    .@{ant-prefix}-form-item {
+      margin-bottom: 8px;
+    }
+    @{sf-prefix}__array {
+      &-container {
+        nz-card {
+          margin: 0 8px 8px 0;
+        }
+      }
+      &-item {
+        .@{ant-prefix}-card-body {
+          padding: 8px;
         }
       }
     }
