@@ -45,7 +45,6 @@ export const ZHCN = {
   'app.footer.antd': 'ANTD Angular版本',
   'app.footer.cli': '脚手架',
   'app.footer.antv': '数据可视化',
-  'app.footer.ngfans': 'Angular开发者',
   'app.footer.community': '社区',
   'app.footer.change-log': '更新记录',
   'app.footer.faq': '常见问题',

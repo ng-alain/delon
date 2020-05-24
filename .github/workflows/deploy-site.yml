@@ -42,3 +42,9 @@ jobs:
           PUBLISH_DIR: ./src/dist
         with:
           emptyCommits: false
+
+      - uses: actions/checkout@v1
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: git@gitee.com:ng-alain/delon.git
+          ssh_private_key: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
