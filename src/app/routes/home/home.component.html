@@ -1,21 +1,22 @@
 <div class="page-wrapper page-banner">
   <div class="page-banner__slogan">
     <h1 data-aos="fade-up" data-aos-once="true">NG-ALAIN</h1>
-    <p data-aos="fade-up" data-aos-delay="150" data-aos-once="true">{{'app.home.slogan' | i18n}}</p>
+    <p data-aos="fade-up" data-aos-delay="150" data-aos-once="true">{{ 'app.home.slogan' | i18n }}</p>
     <div class="page-banner__slogan-btn">
-      <a routerLink="/docs/getting-started/{{i18n.zone}}">
-        <button nz-button [nzType]="'primary'" [nzSize]="'large'">{{'app.home.start' | i18n}}</button>
+      <a routerLink="/docs/getting-started/{{ i18n.zone }}">
+        <button nz-button [nzType]="'primary'" [nzSize]="'large'">{{ 'app.home.start' | i18n }}</button>
       </a>
-      <a href="https://ng-alain.surge.sh/" target="_blank" rel="noopener noreferrer">
-        <button nz-button [nzSize]="'large'">{{'app.home.preview' | i18n}}</button>
+      <a href="https://ng-alain.surge.sh/" target="_blank" rel="noopener noreferrer" nz-tooltip [nzTooltipTitle]="previewTpl">
+        <button nz-button [nzSize]="'large'">{{ 'app.home.preview' | i18n }}</button>
+        <ng-template #previewTpl> 国内镜像：<a href="https://ng-alain.gitee.io" target="_blank">ng-alain.gitee.io</a> </ng-template>
       </a>
       <github-button type="stargazers" size="large" namespace="ng-alain" repo="ng-alain"></github-button>
     </div>
   </div>
   <nz-carousel class="page-banner__img" nzAutoPlay nzEffect="fade">
     <div nz-carousel-content *ngFor="let i of list">
-      <a href="{{i.url}}" target="_blank">
-        <img src="./assets/screenshot/{{i.type}}.png">
+      <a href="{{ i.url }}" target="_blank">
+        <img src="./assets/screenshot/{{ i.type }}.png" />
       </a>
     </div>
   </nz-carousel>
@@ -24,14 +25,14 @@
   <div class="page-feature__bg"></div>
   <div class="page-feature__bg-bottom"></div>
   <div class="page">
-    <h2>{{'app.home.feature' | i18n}}</h2>
+    <h2>{{ 'app.home.feature' | i18n }}</h2>
     <div class="ant-row">
       <div class="ant-col-xs-24 ant-col-md-6">
         <div class="page-feature__item" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-delay="0">
           <i nz-icon nzType="heart"></i>
           <div>
             <h3>Ant Design</h3>
-            <p>{{'app.home.feature.antd' | i18n}}</p>
+            <p>{{ 'app.home.feature.antd' | i18n }}</p>
           </div>
         </div>
       </div>
@@ -40,7 +41,7 @@
           <i nz-icon nzType="heart"></i>
           <div>
             <h3>NG-ZORRO</h3>
-            <p>{{'app.home.feature.zorro' | i18n}}</p>
+            <p>{{ 'app.home.feature.zorro' | i18n }}</p>
           </div>
         </div>
       </div>
@@ -49,7 +50,7 @@
           <i nz-icon nzType="heart"></i>
           <div>
             <h3>Delon</h3>
-            <p>{{'app.home.feature.delon' | i18n}}</p>
+            <p>{{ 'app.home.feature.delon' | i18n }}</p>
           </div>
         </div>
       </div>
@@ -58,7 +59,7 @@
           <i nz-icon nzType="rocket"></i>
           <div>
             <h3>{{ 'app.home.feature.out-of-box' | i18n }}</h3>
-            <p>{{'app.home.feature.out-of-box.desc' | i18n}}</p>
+            <p>{{ 'app.home.feature.out-of-box.desc' | i18n }}</p>
           </div>
         </div>
       </div>
@@ -67,7 +68,7 @@
           <i nz-icon nzType="skin"></i>
           <div>
             <h3>{{ 'app.home.feature.less' | i18n }}</h3>
-            <p>{{'app.home.feature.less.desc' | i18n}}</p>
+            <p>{{ 'app.home.feature.less.desc' | i18n }}</p>
           </div>
         </div>
       </div>
@@ -76,7 +77,7 @@
           <i nz-icon nzType="heart"></i>
           <div>
             <h3>{{ 'app.home.feature.rep' | i18n }}</h3>
-            <p>{{'app.home.feature.rep.desc' | i18n}}</p>
+            <p>{{ 'app.home.feature.rep.desc' | i18n }}</p>
           </div>
         </div>
       </div>
@@ -85,7 +86,7 @@
           <i nz-icon nzType="tool"></i>
           <div>
             <h3>{{ 'app.home.feature.tool' | i18n }}</h3>
-            <p>{{'app.home.feature.tool.desc' | i18n}}</p>
+            <p>{{ 'app.home.feature.tool.desc' | i18n }}</p>
           </div>
         </div>
       </div>
@@ -94,7 +95,7 @@
           <i nz-icon nzType="layout"></i>
           <div>
             <h3>{{ 'app.home.feature.demo' | i18n }}</h3>
-            <p>{{'app.home.feature.demo.desc' | i18n}}</p>
+            <p>{{ 'app.home.feature.demo.desc' | i18n }}</p>
           </div>
         </div>
       </div>
@@ -107,14 +108,14 @@
     <div class="ant-row">
       <div class="ant-col-xs-24 ant-col-md-12">
         <a class="page-theme__item" href="https://e.ng-alain.com/theme/pro" data-aos="zoom-in" data-aos-delay="0">
-          <img src="./assets/screenshot/pro.png">
+          <img src="./assets/screenshot/pro.png" />
           <h3>PRO</h3>
           <p>{{ 'app.home.theme.pro.desc' | i18n }}</p>
         </a>
       </div>
       <div class="ant-col-xs-24 ant-col-md-12">
         <a class="page-theme__item" href="https://e.ng-alain.com/theme/ms" data-aos="zoom-in" data-aos-delay="100">
-          <img src="./assets/screenshot/ms.png">
+          <img src="./assets/screenshot/ms.png" />
           <h3>{{ 'app.home.theme.ms' | i18n }}</h3>
           <p>{{ 'app.home.theme.ms.desc' | i18n }}</p>
         </a>
