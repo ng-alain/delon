@@ -27,7 +27,7 @@
     <div class="ant-form-item-control" [class.has-error]="showError">
       <div nz-row class="sf__array-container">
         <ng-container *ngFor="let i of formProperty.properties; let idx=index">
-          <div nz-col *ngIf="i.visible && !i.ui.hidden" [nzSpan]="arraySpan" [attr.data-index]="idx" class="sf-array-item">
+          <div nz-col *ngIf="i.visible && !i.ui.hidden" [nzSpan]="arraySpan" [attr.data-index]="idx" class="sf__array-item">
             <nz-card>
               <sf-item [formProperty]="i"></sf-item>
               <span *ngIf="showRemove" class="sf__array-remove" (click)="removeItem(idx)" [attr.title]="removeTitle">

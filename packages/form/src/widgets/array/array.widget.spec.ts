@@ -41,26 +41,26 @@ describe('form: widget: array', () => {
   });
 
   it('should be add item', () => {
-    page.newSchema(schema).checkCount('.sf-array-item', 0).add().checkCount('.sf-array-item', 1);
+    page.newSchema(schema).checkCount('.sf__array-item', 0).add().checkCount('.sf__array-item', 1);
     expect((schema.properties!.arr.ui as any).add).toHaveBeenCalled();
   });
   it(`should be maximum ${maxItems}`, () => {
-    page.newSchema(schema).add().add().add().checkCount('.sf-array-item', maxItems).add().checkCount('.sf-array-item', maxItems);
+    page.newSchema(schema).add().add().add().checkCount('.sf__array-item', maxItems).add().checkCount('.sf__array-item', maxItems);
   });
   it('should be set values', () => {
     page
       .newSchema(schema)
-      .checkCount('.sf-array-item', 0)
+      .checkCount('.sf__array-item', 0)
       .add()
-      .checkCount('.sf-array-item', 1)
+      .checkCount('.sf__array-item', 1)
       .setValue('/arr', [])
-      .checkCount('.sf-array-item', 0);
+      .checkCount('.sf__array-item', 0);
   });
   describe('#removable', () => {
     it('with true', () => {
       const s = deepCopy(schema) as SFSchema;
       s.properties!.arr.ui = { removable: true, remove: jasmine.createSpy('remove') as any } as SFArrayWidgetSchema;
-      page.newSchema(s).checkCount('.sf-array-item', 0).add().checkCount('.sf-array-item', 1).remove().checkCount('.sf-array-item', 0);
+      page.newSchema(s).checkCount('.sf__array-item', 0).add().checkCount('.sf__array-item', 1).remove().checkCount('.sf__array-item', 0);
       expect(s.properties!.arr.ui.remove).toHaveBeenCalled();
     });
     it('with false', () => {
@@ -68,9 +68,9 @@ describe('form: widget: array', () => {
       s.properties!.arr.ui = { removable: false };
       page
         .newSchema(s)
-        .checkCount('.sf-array-item', 0)
+        .checkCount('.sf__array-item', 0)
         .add()
-        .checkCount('.sf-array-item', 1)
+        .checkCount('.sf__array-item', 1)
         .checkCount(`.sf__array-container [data-index="0"] .sf__array-remove`, 0);
     });
   });
@@ -93,13 +93,13 @@ describe('form: widget: array', () => {
         arr: [{ a: 'a1' }, { a: 'a2' }],
       };
       context.formData = data;
-      page.newSchema(schema).checkCount('.sf-array-item', data.arr.length);
+      page.newSchema(schema).checkCount('.sf__array-item', data.arr.length);
     });
     it('via default in schema', () => {
       const data = [{ a: 'a1' }, { a: 'a2' }];
       const s = deepCopy(schema) as SFSchema;
       s.properties!.arr.default = data;
-      page.newSchema(s).checkCount('.sf-array-item', data.length);
+      page.newSchema(s).checkCount('.sf__array-item', data.length);
     });
     it('should be keeping default value in reset action', () => {
       const data = [{ a: 'a1' }, { a: 'a2' }];
@@ -107,11 +107,11 @@ describe('form: widget: array', () => {
       s.properties!.arr.default = data;
       page
         .newSchema(s)
-        .checkCount('.sf-array-item', data.length)
+        .checkCount('.sf__array-item', data.length)
         .add()
-        .checkCount('.sf-array-item', data.length + 1)
+        .checkCount('.sf__array-item', data.length + 1)
         .reset()
-        .checkCount('.sf-array-item', data.length);
+        .checkCount('.sf__array-item', data.length);
     });
   });
   describe('#paths', () => {
