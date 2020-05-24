@@ -12,9 +12,10 @@ module: import { G2WaterWaveModule } from '@delon/chart/water-wave';
 
 ### g2-water-wave
 
-| 参数      | 说明                                      | 类型         | 默认值 |
-|----------|------------------------------------------|-------------|-------|
-| `[delay]` | 延迟渲染，单位：毫秒 | `number`    | `0`    |
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[animate]` | 是否显示动画 | `boolean` | `true` |
+| `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
 | `[height]` | 图表高度 | `number` | `160` |
 | `[color]` | 图表颜色 | `string` | `#1890FF` |

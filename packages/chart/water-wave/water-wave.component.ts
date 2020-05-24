@@ -13,7 +13,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { InputNumber } from '@delon/util';
+import { InputBoolean, InputNumber } from '@delon/util';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -33,6 +33,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   // #region fields
 
+  @Input() @InputBoolean() animate = true;
   @Input() @InputNumber() delay = 0;
   @Input() title: string | TemplateRef<void>;
   @Input() color = '#1890FF';
@@ -48,7 +49,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
     this.updateRadio();
 
-    const { percent, color, node } = this;
+    const { percent, color, node, animate } = this;
 
     const data = Math.min(Math.max(percent / 100, 0), 100);
     const self = this;
@@ -67,12 +68,12 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
     const axisLength = canvasWidth - lineWidth;
     const unit = axisLength / 8;
-    const range = 0.2; // 振幅
-    let currRange = range;
     const xOffset = lineWidth;
     let sp = 0; // 周期偏移量
+    const range = 0.2; // 振幅
+    let currRange = range;
     let currData = 0;
-    const waveupsp = 0.005; // 水波上涨速度
+    const waveupsp = animate ? 0.005 : 0.015; // 水波上涨速度
 
     let arcStack: [[number, number]?] | null = [];
     const bR = radius - lineWidth;
@@ -122,9 +123,17 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
       if (circleLock && !isUpdate) {
         if (arcStack!.length) {
-          const temp = arcStack!.shift() as [number, number];
-          ctx.lineTo(temp[0], temp[1]);
-          ctx.stroke();
+          if (animate) {
+            const temp = arcStack!.shift() as [number, number];
+            ctx.lineTo(temp[0], temp[1]);
+            ctx.stroke();
+          } else {
+            for (const temp of arcStack!) {
+              ctx.lineTo(temp![0], temp![1]);
+              ctx.stroke();
+            }
+            arcStack = [];
+          }
         } else {
           circleLock = false;
           ctx.lineTo(cStartPoint[0], cStartPoint[1]);
@@ -181,6 +190,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     }
 
     render();
+    // drawSin();
   }
 
   private updateRadio() {

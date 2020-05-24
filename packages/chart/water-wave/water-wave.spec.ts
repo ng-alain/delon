@@ -23,6 +23,7 @@ describe('chart: water-wave', () => {
 
     it('should be scale scaling when height is gt; container width', fakeAsync(() => {
       const styleSpy = spyOn(page.comp.renderer, 'setStyle');
+      page.context.animate = false;
       page.context.height = 100;
       spyOnProperty(page.comp.el.nativeElement.parentNode, 'offsetWidth').and.returnValue(50);
       page.dcFirst();
@@ -43,7 +44,15 @@ describe('chart: water-wave', () => {
 
 @Component({
   template: `
-    <g2-water-wave #comp [title]="title" [color]="color" [height]="height" [percent]="percent" [delay]="delay"> </g2-water-wave>
+    <g2-water-wave
+      #comp
+      [title]="title"
+      [color]="color"
+      [height]="height"
+      [percent]="percent"
+      [delay]="delay"
+      [animate]="animate"
+    ></g2-water-wave>
   `,
 })
 class TestComponent {
@@ -53,4 +62,5 @@ class TestComponent {
   height = 100;
   percent = 10;
   delay = 0;
+  animate = true;
 }
