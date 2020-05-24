@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+export type SiteTheme = 'default' | 'dark' | 'compact';
+
+@Injectable({ providedIn: 'root' })
 export class AppService {
-  theme$ = new ReplaySubject<string>(1);
+  theme: SiteTheme = 'default';
+  theme$ = new ReplaySubject<SiteTheme>(1);
+
+  setTheme(theme: SiteTheme): void {
+    this.theme = theme;
+    this.theme$.next(theme);
+  }
 }

@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, Renderer2 } from '@angular/core';
-import { AppService } from '@core/app.service';
+import { AppService, SiteTheme } from '@core/app.service';
 import { AlainChartConfig, AlainConfigService } from '@delon/util';
-
-type SiteTheme = 'default' | 'dark' | 'compact';
 
 @Component({
   selector: 'theme-btn',
@@ -33,7 +31,7 @@ export class ThemeBtnComponent implements OnInit {
 
   onThemeChange(theme: SiteTheme): void {
     this.theme = theme;
-    this.appService.theme$.next(theme);
+    this.appService.setTheme(theme);
     this.renderer.setAttribute(document.body, 'data-theme', theme);
     const dom = document.getElementById('site-theme');
     if (dom) {

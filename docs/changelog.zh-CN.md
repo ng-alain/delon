@@ -14,6 +14,63 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [9.3.0](https://github.com/ng-alain/delon/compare/9.2.4...9.3.0) (2020-05-24)
+
+### Scaffold
+
+* 新增暗黑、紧凑两种主题，因此需要手动更新 `src/styles.less` 文件：
+
+```less
+// #region PLACEHOLDER, IMPORTANT: don't remove
+@import '~@delon/theme/styles/index';
+@import '~@delon/abc/index';
+@import '~@delon/chart/index';
+@import '~@delon/theme/styles/layout/default/index';
+@import '~@delon/theme/styles/layout/fullscreen/index';
+@import './styles/index';
+@import './styles/theme';
+// #endregion
+```
+
+更新为：
+
+```less
+@import '~@delon/theme/system/index';
+@import '~@delon/abc/index';
+@import '~@delon/chart/index';
+@import '~@delon/theme/layout/default/index';
+@import '~@delon/theme/layout/fullscreen/index';
+
+@import './styles/index';
+@import './styles/theme';
+
+// You can directly set the default theme
+// - `dark` Import the official dark less style file
+// - `compact` Import the official compact less style file
+// @import '~@delon/theme/theme-dark.less';
+```
+
+如果你希望跟示例网站一样，支持这两种动态主题的切换，请参考[定制主题](https://ng-alain.com/theme/customize-theme)。
+
+> 本次更新完整 PR 请参考 ([#1668](https://github.com/ng-alain/ng-alain/pull/1668/files))
+
+### Bug Fixes
+
+* 修复次级导入警告 ([#911](https://github.com/ng-alain/delon/issues/911)) ([248e8c8](https://github.com/ng-alain/delon/commit/248e8c8961e593fb525f752c16ff2cef6d3a213c))
+* **abc:media:** 修复初始化无法再次实例 `Plyr` ([#909](https://github.com/ng-alain/delon/issues/909)) ([e22fd25](https://github.com/ng-alain/delon/commit/e22fd259699c9c065604ac1624a3009e548421da))
+* **abc:st:** 修复统计数据时若未指定 `key` 时应优先使用 `index` 最后才使用当前下标 ([#908](https://github.com/ng-alain/delon/issues/908)) ([1de4383](https://github.com/ng-alain/delon/commit/1de438366e9ac57340c4c2a3bb9f6b51a01e0486))
+* **form:** 修复内联模式按钮与表单错位 ([#904](https://github.com/ng-alain/delon/issues/904)) ([e869da0](https://github.com/ng-alain/delon/commit/e869da0c0ddc5349593fb3beb432df511f9cf438))
+* **theme:menu.service:** 修复在 Hash 路由模式下无法命中 ([#906](https://github.com/ng-alain/delon/issues/906)) ([47b8bc7](https://github.com/ng-alain/delon/commit/47b8bc78e31e51beae083e2a50ab894d331ff58f))
+
+### Features
+
+* **abc:sidebar-nav:** 新增无限层级 ([#910](https://github.com/ng-alain/delon/issues/910)) ([81b5422](https://github.com/ng-alain/delon/commit/81b54220cc7d14e47be92c009238ee8cf29bd80b))
+* **abc:st:** 新增 `sort: true` 自动生成 `compose` 方法 ([#907](https://github.com/ng-alain/delon/issues/907)) ([8e1657a](https://github.com/ng-alain/delon/commit/8e1657ace1efed132038d34588f71189c98d39d8))
+* **chart:water-wave:** 新增 `animate` 动画属性 ([#918](https://github.com/ng-alain/delon/issues/918)) ([7ae1f35](https://github.com/ng-alain/delon/commit/7ae1f3576409d12844fdaec3d075d03bc42e6e69))
+* **form:** 新增 `compact` 紧凑属性 ([#917](https://github.com/ng-alain/delon/issues/917)) ([cc11212](https://github.com/ng-alain/delon/commit/cc1121236a4f3f405526a624225af8b6b9a1202d))
+* **form:widget:array:** 新增 `add`、`remove` 回调事件 ([#905](https://github.com/ng-alain/delon/issues/905)) ([31b031d](https://github.com/ng-alain/delon/commit/31b031d35ed277241ee6a682250ad0273a27734a))
+
+
 ## [9.2.4](https://github.com/ng-alain/delon/compare/9.2.3...9.2.4) (2020-05-15)
 
 ### Scaffold

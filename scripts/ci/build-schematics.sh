@@ -161,7 +161,7 @@ copyFiles() {
     "${1}src/app/layout/passport/passport.component.less|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/passport/passport.component.ts|${2}application/files/src/app/layout/passport/"
     "${1}src/app/layout/default/setting-drawer|${2}application/files/src/app/layout/default/"
-    "${1}src/app/layout/default/default.component.html|${2}application/files/src/app/layout/default/"
+    # "${1}src/app/layout/default/default.component.html|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/default.component.ts|${2}application/files/src/app/layout/default/"
     "${1}src/app/layout/default/header/index.md|${2}application/files/src/app/layout/default/header/"
     "${1}src/app/layout/default/header/components|${2}application/files/src/app/layout/default/header/"
