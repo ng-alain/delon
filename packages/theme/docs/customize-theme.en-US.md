@@ -137,3 +137,37 @@ changeTheme(theme: 'default' | 'dark'): void {
   }
 }
 ```
+
+Note: If you use `@delon/chart` or third-party component, you may need to manually modify the component to support the corresponding theme.
+
+## Component development issues
+
+The above theme switching method is based on the fact that all Less style content is independent of `src/styles.less`. Sometimes, it is also defined in the component, like:
+
+```ts
+@Component({
+  selector: 'app-dashboard-analysis',
+  templateUrl: './analysis.component.html',
+  styleUrls: ['./analysis.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DashboardAnalysisComponent {}
+```
+
+```less
+// analysis.component.less
+@import '~@delon/theme/index';
+:host ::ng-deep { 
+  color: @text-color;
+}
+```
+
+Because the styles defined in the component run independently under Angular, it is impossible to switch to the dark theme as a whole according to the introduction of `@import '~@delon/theme/theme-compact.less';`, if you want the same in the component To use the dark series, you must:
+
+```diff
+// analysis.component.less
+- @import '~@delon/theme/index';
++ @import '~@delon/theme/theme-dark';
+```
+
+In other words, you can only choose one of the styles defined in the component.

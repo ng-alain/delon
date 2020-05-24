@@ -3,7 +3,7 @@
 
 @{page-header-prefix} {
   display: block;
-  padding: @page-padding;
+  padding: @page-header-padding;
   background-color: @page-header-bg;
   border-bottom: @border-width-base @border-style-base @border-color-split;
   &__wide {
@@ -14,7 +14,7 @@
     margin-bottom: @margin-md;
   }
   .@{ant-prefix}-tabs {
-    margin: 0 0 - (@margin-md + 1) 0;
+    margin: 0 0 (-(@margin-md + 1)) 0;
     &-bar {
       border-bottom: @border-width-base @border-style-base @border-color-split;
     }

@@ -140,3 +140,35 @@ changeTheme(theme: 'default' | 'dark'): void {
 ```
 
 > 注意：如果你使用 `@delon/chart` 或第三方组件，可能需要手动修改组件来支持相应的主题。
+
+## 组件开发问题
+
+以上主题切换方式是在一个将所有 Less 样式内容独立于 `src/styles.less` 下面，当正常情况下，还会在组件内定义，就像：
+
+```ts
+@Component({
+  selector: 'app-dashboard-analysis',
+  templateUrl: './analysis.component.html',
+  styleUrls: ['./analysis.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DashboardAnalysisComponent {}
+```
+
+```less
+// analysis.component.less
+@import '~@delon/theme/index';
+:host ::ng-deep { 
+  color: @text-color;
+}
+```
+
+由于组件内定义的样式独立运行在 Angular 下面，是无法根据 `@import '~@delon/theme/theme-compact.less';` 的引入来整体切换成暗黑系，如果你希望在组件内也同样使用暗黑系，则必须将：
+
+```diff
+// analysis.component.less
+- @import '~@delon/theme/index';
++ @import '~@delon/theme/theme-dark';
+```
+
+换言之，对于组件内定义的风格始终只能选择其一。
