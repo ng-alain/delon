@@ -1,17 +1,15 @@
 <div class="alain-default__header">
   <div class="alain-default__header-logo">
     <a [routerLink]="['/dev']" class="alain-default__header-logo-link">
-      <img class="alain-default__header-logo-expanded" src="./assets/img/logo-full.svg" alt="{{settings.app.name}}" style="max-height:40px;"
-      />
-      <img class="alain-default__header-logo-collapsed" src="./assets/img/logo.svg" alt="{{settings.app.name}}" style="max-height:30px;"
-      />
+      <img class="alain-default__header-logo-expanded" src="./assets/img/logo-full.svg" alt="{{ settings.app.name }}" style="max-height: 40px;" />
+      <img class="alain-default__header-logo-collapsed" src="./assets/img/logo.svg" alt="{{ settings.app.name }}" style="max-height: 30px;" />
     </a>
   </div>
   <div class="alain-default__nav-wrap">
     <ul class="alain-default__nav">
       <li>
         <div class="alain-default__nav-item" (click)="toggleCollapsedSideabar()">
-          <i nz-icon nzType="menu-{{settings.layout.collapsed ? 'unfold' : 'fold'}}"></i>
+          <i nz-icon nzType="menu-{{ settings.layout.collapsed ? 'unfold' : 'fold' }}"></i>
         </div>
       </li>
       <li>
@@ -27,8 +25,8 @@
     <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
       <nz-avatar class="alain-default__aside-user-avatar" [nzSize]="'large'" nzIcon="anticon anticon-user"></nz-avatar>
       <div class="alain-default__aside-user-info">
-        <strong>{{settings.user.name}}</strong>
-        <p class="text-truncate mb0">{{settings.user.email}}</p>
+        <strong>{{ settings.user.name }}</strong>
+        <p class="text-truncate mb0">{{ settings.user.email }}</p>
       </div>
     </div>
     <nz-dropdown-menu #userMenu="nzDropdownMenu">

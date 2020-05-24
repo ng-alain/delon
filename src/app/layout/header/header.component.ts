@@ -1,4 +1,3 @@
-// tslint:disable: member-ordering
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { copy } from '@delon/util';
@@ -20,15 +19,6 @@ declare const docsearch: any;
   },
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  isMobile: boolean;
-  useDocsearch = true;
-  oldVersionList = [`8.x`, `1.x`];
-  currentVersion = 'stable';
-  delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
-
-  @ViewChild('searchInput', { static: false })
-  searchInput: ElementRef<HTMLInputElement>;
-
   constructor(
     public i18n: I18NService,
     private router: Router,
@@ -39,6 +29,19 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => (this.menuVisible = false));
     this.mobileSrv.change.subscribe(res => (this.isMobile = res));
   }
+  isMobile: boolean;
+  useDocsearch = true;
+  oldVersionList = [`8.x`, `1.x`];
+  currentVersion = 'stable';
+  delon = ['theme', 'auth', 'acl', 'form', 'cache', 'chart', 'mock', 'util'];
+
+  @ViewChild('searchInput', { static: false })
+  searchInput: ElementRef<HTMLInputElement>;
+
+  menuVisible = false;
+
+  q: string;
+  list: MetaSearchGroup[] = [];
 
   ngOnInit(): void {
     if (!this.useDocsearch) this.changeQ('');
@@ -90,11 +93,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   onCopy(value: string) {
     copy(value).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
-
-  menuVisible = false;
-
-  q: string;
-  list: MetaSearchGroup[] = [];
   changeQ(value: any) {
     this.list = this.meta.search(value);
   }

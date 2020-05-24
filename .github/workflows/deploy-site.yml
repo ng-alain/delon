@@ -18,7 +18,10 @@ jobs:
         run: npm install
 
       - name: build
-        run: npm run site:build
+        run: |
+          npm run site:gen
+          node scripts/ci/build-no-lvy
+          node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /delon/
 
       - name: gen 404.html
         run: cp ./src/dist/index.html ./src/dist/404.html
@@ -39,3 +42,9 @@ jobs:
           PUBLISH_DIR: ./src/dist
         with:
           emptyCommits: false
+
+      - uses: actions/checkout@v1
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: git@gitee.com:ng-alain/delon.git
+          ssh_private_key: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
