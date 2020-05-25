@@ -189,12 +189,12 @@ export class HomeComponent {
 
 ### What is mode
 
-`mode` 只是快捷作用，**且优先级高于一切**，规则如下：
+`mode` is just a quick action, **which has the highest priority**, rules:
 
-- `default` 默认模式，什么也不做
-- `search` 搜索模式，自动设置 `layout: inline`、`firstVisual: false`、`liveValidate: false`、`button.submit: '搜索'`
-- `edit` 编辑模式，自动设置 `layout: horizontal`、`firstVisual: false`、`liveValidate: true`、`button.submit: '保存'`
+- `default` default mode, do nothing
+- `search` search mode, automatically set `layout: inline`、`firstVisual: false`、`liveValidate: false`、`button.submit: 'Search'`
+- `edit` edit mode,  automatically set `layout: horizontal`、`firstVisual: false`、`liveValidate: true`、`button.submit: 'Save'`
 
-### Schema国际化
+### Schema Internationalization
 
-`sf` 并不支持任何 Schema 国际化动作，这是因为本身 Schema 是一组 JSON 值，国际化的实现只需要提供不同语言版本即可。
+`sf` doesn't support any Schema internationalization, this is because Schema itself is a group of JSON values, you can just provide different versions of languages to support internationalization.
