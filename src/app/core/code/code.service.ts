@@ -59,7 +59,7 @@ export class CodeService {
   }
 
   private get themePath(): string {
-    return `node_modules/@delon/theme/styles/${this.appSrv.theme}.css`;
+    return `node_modules/@delon/theme/${this.appSrv.theme}.css`;
   }
 
   constructor(private appSrv: AppService, @Inject(DOCUMENT) document: any) {
