@@ -231,17 +231,18 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
   // #endregion
 
   ngOnInit(): void {
-    this.updatePos$.pipe(takeUntil(this.unsubscribe$), debounceTime(100)).subscribe(() => {
-      const ls = this.list;
+    this.updatePos$.pipe(takeUntil(this.unsubscribe$), debounceTime(50)).subscribe(() => {
+      const url = this.srv.getUrl(this.route.snapshot);
+      const ls = this.list.filter(w => w.url === url || !this.srv.isExclude(w.url));
       if (ls.length === 0) return;
 
       const last = ls[ls.length - 1];
-      const url = this.srv.getUrl(this.route.snapshot);
       const item = ls.find(w => w.url === url);
       last.last = true;
       const pos = item == null ? last.index : item.index;
       ls.forEach((i, idx) => (i.active = pos === idx));
       this.pos = pos;
+      this.list = ls;
       this.cdr.detectChanges();
     });
 
