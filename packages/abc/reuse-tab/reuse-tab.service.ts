@@ -317,8 +317,13 @@ export class ReuseTabService implements OnDestroy {
       }
       return true;
     }
-    return this.excludes.findIndex(r => r.test(url)) === -1;
+    return !this.isExclude(url);
   }
+
+  isExclude(url: string): boolean {
+    return this.excludes.findIndex(r => r.test(url)) !== -1;
+  }
+
   /**
    * 刷新，触发一个 refresh 类型事件
    */
