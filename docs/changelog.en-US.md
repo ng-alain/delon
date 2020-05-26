@@ -18,7 +18,9 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ### Scaffold
 
-* Add dark and compact themes, so you need to manually modify the `src/styles.less` file:
+* **BREAKING CHANGE** Add dark and compact themes, You need to manually update two places:
+
+**1. `src/styles.less` File**
 
 ```less
 // #region PLACEHOLDER, IMPORTANT: don't remove
@@ -50,9 +52,13 @@ After:
 // @import '~@delon/theme/theme-dark.less';
 ```
 
-If you want to support the switching between these two dynamic themes like the preview website, please refer to [
-Customize Theme](https://ng-alain.com/theme/customize-theme).
+**2. Theme variable path**
 
+Replace all `@import '~@delon/theme/styles/default';` with `@import '~@delon/theme/index';`
+
+> If you want to support the switching between these two dynamic themes like the preview website, please refer to [
+Customize Theme](https://ng-alain.com/theme/customize-theme).
+>
 > Please refer to ([#1668](https://github.com/ng-alain/ng-alain/pull/1668/files)) the complete PR for this update.
 
 ### Bug Fixes
