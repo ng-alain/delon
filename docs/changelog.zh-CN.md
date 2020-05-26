@@ -18,7 +18,9 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ### Scaffold
 
-* 新增暗黑、紧凑两种主题，因此需要手动更新 `src/styles.less` 文件：
+* 新增暗黑、紧凑两种主题，本次为**破坏性变更**，需要手动更新两个地方：
+
+**1、`src/styles.less` 文件**
 
 ```less
 // #region PLACEHOLDER, IMPORTANT: don't remove
@@ -50,8 +52,12 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 // @import '~@delon/theme/theme-dark.less';
 ```
 
-如果你希望跟示例网站一样，支持这两种动态主题的切换，请参考[定制主题](https://ng-alain.com/theme/customize-theme)。
+**2、主题变量路径**
 
+将所有 `@import '~@delon/theme/styles/default';` 替换成 `@import '~@delon/theme/index';`
+
+> 如果你希望跟示例网站一样，支持这两种动态主题的切换，请参考[定制主题](https://ng-alain.com/theme/customize-theme)。
+>
 > 本次更新完整 PR 请参考 ([#1668](https://github.com/ng-alain/ng-alain/pull/1668/files))
 
 ### Bug Fixes
