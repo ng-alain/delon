@@ -34,8 +34,8 @@ let nextUniqueId = 0;
   host: {
     '[style.padding-left.px]': 'paddingValue',
     '[style.padding-right.px]': 'paddingValue',
-    '[class.ant-form-item-has-error]': 'showErr',
-    '[class.ant-form-item-with-help]': 'showErr && !compact',
+    '[class.ant-form-item-has-error]': 'invalid',
+    '[class.ant-form-item-with-help]': 'showErr',
   },
   preserveWhitespaces: false,
   animations: [helpMotion],
@@ -89,7 +89,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   }
 
   get showErr(): boolean {
-    return this.invalid && !!this._error;
+    return this.invalid && !!this._error && !this.compact;
   }
 
   get compact(): boolean {
