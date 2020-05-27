@@ -171,4 +171,13 @@ export class DashboardAnalysisComponent {}
 + @import '~@delon/theme/theme-dark';
 ```
 
-换言之，对于组件内定义的风格始终只能选择其一。
+或者，重新针对某一个主题重新定义：
+
+```less
+// analysis.component.less
+[data-theme="dark"] {
+  :host {
+    // 针对暗黑系重新定义
+  }
+}
+```

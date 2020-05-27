@@ -170,4 +170,13 @@ Because the styles defined in the component run independently under Angular, it 
 + @import '~@delon/theme/theme-dark';
 ```
 
-In other words, you can only choose one of the styles defined in the component.
+Or, redefine for a component theme:
+
+```less
+// analysis.component.less
+[data-theme="dark"] {
+  :host {
+    // Redefining the dark theme
+  }
+}
+```
