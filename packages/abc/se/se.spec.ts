@@ -207,6 +207,21 @@ describe('abc: edit', () => {
           fixture.detectChanges();
           expect(page.getEl('.ant-form-item-has-error').textContent!.trim()).toBe('O');
         });
+        it('should be only control vision when error is null', () => {
+          context.error = '';
+          fixture.detectChanges();
+          ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
+          spyOnProperty(ngModel, 'dirty').and.returnValue(true);
+          spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
+          const changes = ngModel.statusChanges as EventEmitter<string>;
+          // mock statusChanges
+          changes.emit('VALID');
+          page.expect('.ant-form-item-has-error', 0).expect('.ant-form-item-with-help', 0);
+          // mock statusChanges
+          changes.emit('INVALID');
+          fixture.detectChanges();
+          page.expect('.ant-form-item-has-error').expect('.ant-form-item-with-help', 0);
+        });
       });
     });
   });
