@@ -62,24 +62,24 @@ export class ImageWrapperComponent {
 ```less
 // index.less
 :host {
-  padding: 0 20px 8px;
-  background: #f2f4f5;
   width: 400px;
   margin: 0 auto;
+  padding: 0 20px 8px;
   text-align: center;
+  background: #f2f4f5;
 
   ::ng-deep {
     .img {
-      vertical-align: middle;
       max-width: calc(100% - 32px);
       margin: 2.4em 1em;
+      vertical-align: middle;
       box-shadow: 0 8px 20px rgba(143, 168, 191, 0.35);
     }
   }
 }
 ```
 
-The components are built here.
+The components are built here, to learn more about the development of [component styles](/theme/component-styles).
 
 ## Register
 
@@ -87,14 +87,10 @@ Once the component is created, you need to import the component into `SharedModu
 
 ```ts
 // shared.module.ts
-
-// #region your componets & directives
 import { ImageWrapperComponent } from './image-wrapper';
 const COMPONENTS = [
   ImageWrapperComponent
 ];
-const DIRECTIVES = [];
-// #endregion
 ```
 
 ## Use

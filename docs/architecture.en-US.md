@@ -24,7 +24,7 @@ Scaffold provides a default set of [business components](/components/), which ab
 
 **@delon/chart**
 
-[@delon/chart](/chart) chart library is customised based on G2 (3.0). Providing commonly used chart suite in business development. It can be used alone or composed together to achieve more complex and fancy display effect.
+[@delon/chart](/chart) chart library is customised based on G2. Providing commonly used chart suite in business development. It can be used alone or composed together to achieve more complex and fancy display effect.
 
 **@delon/form**
 
