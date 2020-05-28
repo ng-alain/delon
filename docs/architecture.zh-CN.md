@@ -24,7 +24,7 @@ NG-ALAIN 脚手架是基于 Angular 和 NG-ZORRO（Ant Design 的 Angular 版本
 
 **@delon/chart**
 
-[@delon/chart](/chart) 图表是基于 G2 (3.0) 的基础上二次封装，提供了业务中常用的图表套件，可以单独使用，也可以组合起来实现复杂的展示效果。
+[@delon/chart](/chart) 图表是基于 G2 的基础上二次封装，提供了业务中常用的图表套件，可以单独使用，也可以组合起来实现复杂的展示效果。
 
 **@delon/form**
 

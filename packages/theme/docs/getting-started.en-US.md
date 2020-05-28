@@ -2,7 +2,6 @@
 order: 1
 title: Getting Started
 type: Documents
-module: AlainThemeModule
 ---
 
 `@delon/theme` is the only must be imported to ng-alain scaffold. It contains a lot of [style parameters](/theme/global) and several generalities [services](/theme/menu), [pipes](/theme/date).
@@ -19,7 +18,7 @@ Scaffolding include two layouts: [default layout](/theme/default), [fullscreen l
 
 You can use the toolset provided by ng-alain to adjust spacing, color, size, borders, etc. It's a set of like bootstrap style tools.
 
-Or customize your styles with *src/styles/index.less*, which will work in global applications, in the style development process, there are two prominent problems:
+Or customize your styles with [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less), which will work in global applications, in the style development process, there are two prominent problems:
 
 - Global Pollution - CSS selectors are globally valid. Selectors with the same name in different files will be built together, and the former will be overrided by the latter.
 - Complex Selector - in order to avoid the above problem, we have to be careful when writing styles. The increase in flags for range restriction will lead to a growing class name, besides that, naming style confusion in multi person development and an increasing number of selectors on an element is hard to avoid.
@@ -30,7 +29,7 @@ We should use component `styles` property to create component styles. For how us
 
 In a project, style files can be divided into different categories depending on their function.
 
-### src/styles/index.less
+### theme.less
 
 Global style file, where you can make some common settings.
 

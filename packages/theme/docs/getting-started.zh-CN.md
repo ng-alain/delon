@@ -2,7 +2,6 @@
 order: 1
 title: 开始使用
 type: Documents
-module: AlainThemeModule
 ---
 
 `@delon/theme` 是 ng-alain 架手脚唯一必须引入的模块。它包含了非常多[主题样式参数](/theme/global)，通过覆盖参数数值进而定制一些特别的需求；以及若干通用性[服务](/theme/menu)、[管道](/theme/date)。
@@ -19,7 +18,7 @@ ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到�
 
 在开发过程中，绝大部分情况下可以利用 ng-alain 提供的工具集来调整间距、颜色、大小、边框等，它是一个套类似 bootstrap 风格的工具集。
 
-或通过 *src/styles/index.less* 下定制你的样式，这些样式将会在全局应用中有效，且有两个问题比较突出：
+或通过 [theme.less](https://github.com/ng-alain/ng-alain/blob/master/src/styles/theme.less) 下定制你的样式，这些样式将会在全局应用中有效，且有两个问题比较突出：
 
 - 全局污染 —— CSS 文件中的选择器是全局生效的，不同文件中的同名选择器，根据 build 后生成文件中的先后顺序，后面的样式会将前面的覆盖；
 - 选择器复杂 —— 为了避免上面的问题，我们在编写样式的时候不得不小心翼翼，类名里会带上限制范围的标识，变得越来越长，多人开发时还很容易导致命名风格混乱，一个元素上使用的选择器个数也可能越来越多。
@@ -30,7 +29,7 @@ ng-alain 默认使用 less 作为样式语言，建议在使用前或者遇到�
 
 在一个项目中，样式文件根据功能不同，可以划分为不同的类别。
 
-### src/styles/index.less
+### theme.less
 
 全局样式文件，在这里你可以进行一些通用设置。
 

@@ -175,9 +175,23 @@ export class DashboardAnalysisComponent {}
 
 ```less
 // analysis.component.less
-[data-theme="dark"] {
-  :host {
+[data-theme='dark'] {
+  :host ::ng-deep {
     // 针对暗黑系重新定义
   }
 }
 ```
+
+或紧凑主题：
+
+```less
+[data-theme='compact'] {
+  :host ::ng-deep {
+    // 针对紧凑重新定义
+  }
+}
+```
+
+## 相关文章
+
+- [组件样式](/theme/component-styles)
