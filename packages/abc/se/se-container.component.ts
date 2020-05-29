@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { REP_TYPE } from '@delon/theme';
 import { AlainConfigService, AlainSEConfig, InputBoolean, InputNumber, toNumber } from '@delon/util';
+import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { SEErrorRefresh, SELayout } from './se.types';
 
 @Component({
   selector: 'se-container, [se-container]',
@@ -26,8 +30,7 @@ import { AlainConfigService, AlainSEConfig, InputBoolean, InputNumber, toNumber 
   encapsulation: ViewEncapsulation.None,
 })
 export class SEContainerComponent {
-  // #region fields
-
+  private errorNotify$ = new BehaviorSubject<SEErrorRefresh>(null as NzSafeAny);
   @Input('se-container') @InputNumber(null) colInCon: REP_TYPE;
   @Input() @InputNumber(null) col: REP_TYPE;
   @Input() @InputNumber(null) labelWidth: number;
@@ -46,19 +49,25 @@ export class SEContainerComponent {
   get nzLayout() {
     return this._nzLayout;
   }
-  set nzLayout(value: string) {
+  set nzLayout(value: SELayout) {
     this._nzLayout = value;
     if (value === 'inline') {
       this.size = 'compact';
     }
   }
-  private _nzLayout: string;
+  private _nzLayout: SELayout;
 
   @Input() size: 'default' | 'compact';
   @Input() @InputBoolean() firstVisual: boolean;
   @Input() @InputBoolean() line = false;
+  @Input()
+  set errors(val: SEErrorRefresh[]) {
+    this.setErrors(val);
+  }
 
-  // #endregion
+  get errorNotify(): Observable<SEErrorRefresh> {
+    return this.errorNotify$.pipe(filter(v => v != null));
+  }
 
   constructor(configSrv: AlainConfigService) {
     configSrv.attach<AlainSEConfig, 'se'>(this, 'se', {
@@ -69,5 +78,11 @@ export class SEContainerComponent {
       labelWidth: 150,
       firstVisual: false,
     });
+  }
+
+  setErrors(errors: SEErrorRefresh[]): void {
+    for (const error of errors) {
+      this.errorNotify$.next(error);
+    }
   }
 }

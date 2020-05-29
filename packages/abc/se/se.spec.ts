@@ -8,6 +8,7 @@ import { REP_MAX } from '@delon/theme';
 import { SEContainerComponent } from './se-container.component';
 import { SEComponent } from './se.component';
 import { SEModule } from './se.module';
+import { SEErrorRefresh } from './se.types';
 
 const prefixCls = `.se__`;
 
@@ -23,6 +24,18 @@ describe('abc: edit', () => {
       declarations: [TestComponent],
     });
   };
+
+  function genModule(template?: string) {
+    moduleAction();
+    if (template) {
+      TestBed.overrideTemplate(TestComponent, template);
+    }
+    fixture = TestBed.createComponent(TestComponent);
+    dl = fixture.debugElement;
+    context = fixture.componentInstance;
+    fixture.detectChanges();
+    page = new PageObject();
+  }
 
   function createComp() {
     ({ fixture, dl, context } = createTestContext(TestComponent));
@@ -127,6 +140,28 @@ describe('abc: edit', () => {
             page.expect('.ant-col-xs-24');
             page.expect('.ant-col-sm-12');
           });
+          describe('#errors', () => {
+            let ngModel: NgModel;
+            let changes: EventEmitter<string>;
+            beforeEach(() => {
+              ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
+              spyOnProperty(ngModel, 'dirty').and.returnValue(true);
+              spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
+              changes = ngModel.statusChanges as EventEmitter<string>;
+              changes.emit('INVALID');
+              fixture.detectChanges();
+            });
+
+            it('should be working', () => {
+              page.expectText('.ant-form-item-explain', context.error as string);
+              const NEW_ERROR = 'new request';
+              context.parent_errors = [{ name: 'val', error: NEW_ERROR }];
+              fixture.detectChanges();
+              changes.emit('INVALID');
+              fixture.detectChanges();
+              page.expectText('.ant-form-item-explain', NEW_ERROR);
+            });
+          });
         });
         describe('#item', () => {
           describe('#col', () => {
@@ -225,18 +260,6 @@ describe('abc: edit', () => {
       });
     });
   });
-
-  function genModule(template?: string) {
-    moduleAction();
-    if (template) {
-      TestBed.overrideTemplate(TestComponent, template);
-    }
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
-    fixture.detectChanges();
-    page = new PageObject();
-  }
 
   describe('[validate]', () => {
     let ngModel: NgModel;
@@ -396,6 +419,10 @@ describe('abc: edit', () => {
       expect(this.getEls(cls).length).toBe(count);
       return this;
     }
+    expectText(cls: string, text: string): this {
+      expect(this.getEl(cls).textContent?.trim()).toBe(text);
+      return this;
+    }
   }
 });
 
@@ -413,6 +440,7 @@ describe('abc: edit', () => {
       [nzLayout]="parent_layout"
       [labelWidth]="parent_labelWidth"
       [gutter]="parent_gutter"
+      [errors]="parent_errors"
     >
       <se-title>title</se-title>
       <se
@@ -448,6 +476,7 @@ class TestComponent {
   parent_firstVisual = true;
   parent_line = false;
   parent_title = 'title';
+  parent_errors: SEErrorRefresh[] = [];
 
   optional: string;
   optionalHelp: string;
