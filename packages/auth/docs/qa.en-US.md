@@ -1,8 +1,6 @@
 ---
-order: 10
-title: 
-  zh-CN: 常见问题
-  en-US: common problem
+order: 1000
+title: FAQ
 type: Documents
 ---
 
