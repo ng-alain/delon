@@ -3,11 +3,6 @@ name: ng-alain-delon
 trigger:
   - master
 
-pr:
-  branches:
-    include:
-      - '*'
-
 pool:
   vmImage: 'ubuntu-latest'
 
