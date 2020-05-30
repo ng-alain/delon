@@ -1,6 +1,6 @@
 import { TemplateRef } from '@angular/core';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { NzOptionComponent, NzSelectOptionInterface } from 'ng-zorro-antd/select';
+import { NzOptionComponent } from 'ng-zorro-antd/select';
 import { Observable } from 'rxjs';
 import { SFValue } from '../../interface';
 import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
