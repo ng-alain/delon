@@ -15,7 +15,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { AlainConfigService, AlainPageHeaderConfig, InputBoolean, InputNumber, isEmpty } from '@delon/util';
@@ -113,7 +113,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       )
       .subscribe(() => this.affix.updatePosition({} as any));
 
-    merge(menuSrv.change.pipe(filter(() => this.inited)), router.events.pipe(filter(e => e instanceof NavigationEnd)), i18nSrv.change)
+    merge(menuSrv.change.pipe(filter(() => this.inited)), i18nSrv.change)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.refresh());
   }
@@ -150,7 +150,9 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     if (this._title == null && this._titleTpl == null && this.autoTitle && this.menus.length > 0) {
       const item = this.menus[this.menus.length - 1];
       let title = item.text;
-      if (item.i18n && this.i18nSrv) title = this.i18nSrv.fanyi(item.i18n);
+      if (item.i18n && this.i18nSrv) {
+        title = this.i18nSrv.fanyi(item.i18n);
+      }
       this._titleVal = title!;
     }
 
