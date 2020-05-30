@@ -89,7 +89,9 @@ function addStWidgetModule(tree: Tree, context: SchematicContext) {
 function addGlobalConfigModule(tree: Tree, context: SchematicContext) {
   overwriteFile(tree, `${project.sourceRoot}/app/global-config.module.ts`, stWidgetModuleTS, true, true);
   context.logger.info(
-    colors.red(`  ⚠  Using [global-config.module.ts] instead of [delon.module.ts], But you must manually remove [delon.module.ts]`),
+    colors.red(
+      `  ⚠  Using [global-config.module.ts] instead of [delon.module.ts], But you must manually modify global config (please refer to https://ng-alain.com/docs/global-config) and remove [delon.module.ts]`,
+    ),
   );
 }
 
