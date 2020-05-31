@@ -73,6 +73,12 @@ export interface ErrorSchema {
    * - 值始终包含 `DelonSchemaFormConfig.ingoreKeywords`
    */
   ingoreKeywords?: string[];
+
+  /**
+   * 是否强制在标签上显示 `*` 来表示必填，一般在当使用自定义校验 `validator` 可能需要必填项处理
+   */
+  showRequired?: boolean;
+
   /**
    * 自定义校验
    */

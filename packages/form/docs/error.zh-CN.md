@@ -67,6 +67,7 @@ schema: SFSchema = {
       title: '邮箱',
       format: 'email',
       ui: {
+        showRequired: true,
         validator: (value: any, formProperty: FormProperty, form: PropertyGroup) => {
           return form.value.name === 'cipchk' ? [] : [{ keyword: 'required', message: '必须是cipchk@qq.com'}];
         }
@@ -86,6 +87,7 @@ schema: SFSchema = {
     name: {
       type: 'string',
       ui: {
+        showRequired: true,
         validator: (value: any) => this.http.get(`/user/check/${value}`).pipe(
           map(res => res ? [ { keyword: 'required', message: '用户名已存在'} ] : [])
         )
