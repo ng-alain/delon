@@ -174,9 +174,23 @@ Or, redefine for a component theme:
 
 ```less
 // analysis.component.less
-[data-theme="dark"] {
-  :host {
+[data-theme='dark'] {
+  :host ::ng-deep {
     // Redefining the dark theme
   }
 }
 ```
+
+Or compact theme:
+
+```less
+[data-theme='compact'] {
+  :host ::ng-deep {
+    // Redefining the compact theme
+  }
+}
+```
+
+## Related articles
+
+- [Component styles](/theme/component-styles)

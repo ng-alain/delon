@@ -18,16 +18,16 @@ commitMessageCheck=$(git log --oneline -n 2)
 
 echo "Current commit author name: ${commitAuthorName}"
 
-if [[ ${commitAuthorName} != '卡色' && ${commitAuthorName} != 'cipchk' ]]; then
-  echo "Warning: Just only 卡色 or cipchk user"
-  exit 0
-fi
+# if [[ ${commitAuthorName} != '卡色' && ${commitAuthorName} != 'cipchk' ]]; then
+#   echo "Warning: Just only 卡色 or cipchk user"
+#   exit 0
+# fi
 
-echo "DELON_BUILDS_TOKEN: ${DELON_BUILDS_TOKEN}.."
+# echo "ACCESS_TOKEN: ${ACCESS_TOKEN}.."
 
-if [ -z ${DELON_BUILDS_TOKEN} ]; then
+if [ -z ${ACCESS_TOKEN} ]; then
   echo "Error: No access token for GitHub could be found." \
-       "Please set the environment variable 'DELON_BUILDS_TOKEN'."
+       "Please set the environment variable 'ACCESS_TOKEN'."
   exit 0
 fi
 
@@ -93,7 +93,7 @@ git config user.name "${commitAuthorName}"
 git config user.email "${commitAuthorEmail}"
 git config credential.helper "store --file=.git/credentials"
 
-echo "https://${DELON_BUILDS_TOKEN}:@github.com" > .git/credentials
+echo "https://${ACCESS_TOKEN}:@github.com" > .git/credentials
 
 if [[ $(git ls-remote origin "refs/tags/${buildTagName}") ]]; then
   echo "removed tag because tag is already published"
