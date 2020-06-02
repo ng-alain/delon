@@ -46,6 +46,7 @@ module: import { SEModule } from '@delon/abc/se';
 | `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false` | ✅ |
 | `[line]` | 分隔线 | `boolean` | `false` |  |
 | `[title]` | 标题 | `string,TemplateRef<void>` | - |  |
+| `[errors]` | 批量修改 `se` 错误消息描述 | `SEErrorRefresh[]` | - |  |
 
 ### se
 

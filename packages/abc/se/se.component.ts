@@ -21,8 +21,10 @@ import { ResponsiveService } from '@delon/theme';
 import { InputBoolean, InputNumber, isEmpty } from '@delon/util';
 import { helpMotion } from 'ng-zorro-antd/core/animation';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
 import { SEContainerComponent } from './se-container.component';
+import { SEError, SEErrorType } from './se.types';
 
 const prefixCls = `se`;
 let nextUniqueId = 0;
@@ -44,7 +46,7 @@ let nextUniqueId = 0;
 })
 export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
   private el: HTMLElement;
-  private status$: Subscription;
+  private unsubscribe$ = new Subject<void>();
   @ContentChild(NgModel, { static: true }) private readonly ngModel: NgModel;
   @ContentChild(FormControlName, { static: true })
   private readonly formControlName: FormControlName;
@@ -52,7 +54,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   private clsMap: string[] = [];
   private inited = false;
   private onceFlag = false;
-  private errorData: { [key: string]: string | TemplateRef<void> } = {};
+  private errorData: SEError = {};
+  private isBindModel = false;
   invalid = false;
   _labelWidth: number | null = null;
   _error: string | TemplateRef<void>;
@@ -62,7 +65,7 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   @Input() optional: string | TemplateRef<void>;
   @Input() optionalHelp: string | TemplateRef<void>;
   @Input()
-  set error(val: string | TemplateRef<void> | { [key: string]: string | TemplateRef<void> }) {
+  set error(val: SEErrorType) {
     this.errorData = typeof val === 'string' || val instanceof TemplateRef ? { '': val } : val;
   }
   @Input() extra: string | TemplateRef<void>;
@@ -111,6 +114,15 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
       throw new Error(`[se] must include 'se-container' component`);
     }
     this.el = el.nativeElement;
+    parent.errorNotify
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter(w => this.inited && this.ngControl != null && this.ngControl.name === w.name),
+      )
+      .subscribe(item => {
+        this.error = item.error;
+        this.updateStatus(this.ngControl.invalid!);
+      });
   }
 
   private setClass(): this {
@@ -129,9 +141,10 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   }
 
   private bindModel() {
-    if (!this.ngControl || this.status$) return;
+    if (!this.ngControl || this.isBindModel) return;
 
-    this.status$ = this.ngControl.statusChanges!.subscribe(res => this.updateStatus(res === 'INVALID'));
+    this.isBindModel = true;
+    this.ngControl.statusChanges!.pipe(takeUntil(this.unsubscribe$)).subscribe(res => this.updateStatus(res === 'INVALID'));
     if (this._autoId) {
       const control = (this.ngControl.valueAccessor as NzSafeAny)?._elementRef?.nativeElement as HTMLElement;
       if (control) {
@@ -177,7 +190,9 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
 
   ngOnChanges() {
     this.onceFlag = this.parent.firstVisual;
-    if (this.inited) this.setClass().bindModel();
+    if (this.inited) {
+      this.setClass().bindModel();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -192,8 +207,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
   }
 
   ngOnDestroy(): void {
-    if (this.status$) {
-      this.status$.unsubscribe();
-    }
+    const { unsubscribe$ } = this;
+    unsubscribe$.next();
+    unsubscribe$.complete();
   }
 }
