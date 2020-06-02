@@ -1,7 +1,7 @@
 .for-each(@widths, {
-  .width-@{adKey}  { width: @adValue !important; }
-  .max-width-@{adKey}  { max-width: @adValue !important; }
-  .min-width-@{adKey}  { min-width: @adValue !important; }
+  .width-@{adKey}  { width: ~`genComment('@{adValue} !important','指定宽度为 "@{adValue}"', 'Specify the width as "@{adValue}"')` }
+  .max-width-@{adKey}  { max-width: ~`genComment('@{adValue} !important', '指定最大宽度为 "@{adValue}"', 'Specify the maximum width as "@{adValue}"')` }
+  .min-width-@{adKey}  { min-width: ~`genComment('@{adValue} !important', '指定最小宽度为 "@{adValue}"', 'Specify the minimum width as "@{adValue}"')` }
 });
 
 @media (max-width: @mobile-max) {

@@ -1,64 +1,151 @@
-// Alignment
+/**
+ * 文本对齐方式：左边
+ * The inline contents are aligned to the left edge of the line box
+ */
 .text-left {
   text-align: left !important;
 }
+
+/**
+ * 文本对齐方式：中间
+ * The inline contents are aligned to the center edge of the line box
+ */
 .text-center {
   text-align: center !important;
 }
+
+/**
+ * 文本对齐方式：左边
+ * The inline contents are aligned to the right edge of the line box
+ */
 .text-right {
   text-align: right !important;
 }
 
-// Transformation
+/**
+ * 设置文本为小写
+ * Set text to lower case
+ */
 .text-lowercase {
   text-transform: lowercase !important;
 }
+
+/**
+ * 设置文本为大写
+ * Set text to upper case
+ */
 .text-uppercase {
   text-transform: uppercase !important;
 }
+
+/**
+ * 设置每个单词以大写字母开头
+ * Is a keyword that converts the first letter of each word to uppercase
+ */
 .text-capitalize {
   text-transform: capitalize !important;
 }
+
+/**
+ * 设置文本为删除线
+ * Set text to strikethrough
+ */
 .text-deleted {
   text-decoration: line-through;
 }
 
-// wrapping
+/**
+ * 文本不会换行，文本会在在同一行上继续，直到遇到 `<br>` 标签为止
+ * Sequences of whitespace will collapse into a single whitespace. Text will never wrap to the next line. The text continues on the same line until a `<br>` tag is encountered
+ */
 .text-nowrap {
   white-space: nowrap !important;
 }
+
+/**
+ * 保留空白符序列，但是正常地进行换行
+ * Whitespace is preserved by the browser. Text will wrap when necessary, and on line breaks
+ */
 .text-wrap {
   white-space: pre-wrap !important;
 }
+
+/**
+ * 截短文本，并以 `...` 结尾
+ * Truncate text and end with `...`
+ */
 .text-truncate {
   .text-truncate();
 }
 
-// Weight and italics
-
+/**
+ * 普通字体粗细
+ * Normal font weight. Same as `400`
+ */
 .font-weight-normal {
   font-weight: normal;
 }
+
+/**
+ * 粗体
+ * Bold font weight. Same as `400`
+ */
 .font-weight-bold {
   font-weight: 700;
 }
+
+/**
+ * 斜体
+ * Italic font style
+ */
 .font-italic {
   font-style: italic;
 }
 
-// Sizing
+/**
+ * `12px` 文本大小
+ * `12px` text size
+ */
 .text-xs {
   font-size: @text-xs !important;
 }
+
+/**
+ * `14px` 文本大小
+ * `14px` text size
+ */
 .text-sm {
   font-size: @text-sm !important;
 }
+
+/**
+ * `16px` 文本大小
+ * `16px` text size
+ */
 .text-md {
   font-size: @text-md !important;
 }
+
+/**
+ * `18px` 文本大小
+ * `18px` text size
+ */
 .text-lg {
   font-size: @text-lg !important;
 }
+
+/**
+ * `22px` 文本大小
+ * `22px` text size
+ */
 .text-xl {
   font-size: @text-xl !important;
+}
+
+/**
+ * `28px` 文本大小
+ * `28px` text size
+ */
+.text-xxl {
+  font-size: @text-xxl !important;
 }

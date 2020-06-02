@@ -30,9 +30,12 @@
   }
 }
 
-// 自定义模态框时非常有用，主要运用于查看、编辑页
 .modal {
   &-header {
+    /**
+      * 对话框顶部区域，用于对话框目标组件内使用
+      * The header of the modal for for use in modal target components
+      */
     display: flex;
     justify-content: space-between;
     margin: -@margin-lg -@margin-lg @margin-lg -@margin-lg;
@@ -60,7 +63,12 @@
     line-height: 150px;
     text-align: center;
   }
+
   &-footer {
+    /**
+      * 对话框底部区域，用于对话框目标组件内使用
+      * The footer of the modal for for use in modal target components
+      */
     margin: @margin-lg -@margin-lg -@margin-lg -@margin-lg;
     padding: @modal-footer-padding-vertical @modal-footer-padding-horizontal;
     text-align: right;
@@ -68,11 +76,19 @@
     border-radius: 0 0 @border-radius-base @border-radius-base;
   }
   &-include-tabs {
+    /**
+      * 对话框内容是否包裹 `nz-tabs`，清除带来的多余边距
+      * Whether the content of the modal is wrapped with `nz-tabs`, to clear the extra margin
+      */
     nz-tabset {
       margin-top: -16px;
     }
   }
   &-body-nopadding {
+    /**
+      * 清除对话框内容内边距
+      * Clear inner margin of modal content
+      */
     .@{ant-prefix}-modal-body {
       padding: 0 !important;
     }
