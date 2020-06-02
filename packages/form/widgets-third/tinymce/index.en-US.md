@@ -16,8 +16,8 @@ Tinymce rich text
 
 ### ui 
 
-Property    | Description                                                                                              | Type                     | Default
-------------|----------------------------------------------------------------------------------------------------------|--------------------------|---------
-`[config]`  | Configuration options, [official website](https://www.tinymce.com/docs/configure/integration-and-setup/) | `object`                 | -
-`[loading]` | Initial hint message                                                                                     | `string`                 | `加载中...`
-`[change]`  | Callback function when content in editor is changed                                                      | `(html: string) => void` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[config]` | Configuration options, [official website](https://www.tinymce.com/docs/configure/integration-and-setup/) | `object` | - |
+| `[loading]` | Initial hint message | `string` | `加载中...` |
+| `[change]` | Callback function when content in editor is changed | `(html: string) => void` | - |

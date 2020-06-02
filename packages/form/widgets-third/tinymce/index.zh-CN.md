@@ -16,8 +16,8 @@ Tinymce富文本。
 
 ### ui 属性
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[config]` | 配置项说明，[见官网](https://www.tinymce.com/docs/configure/integration-and-setup/) | `object` | -
-`[loading]` | 初始化提示文本 | `string` | `加载中...`
-`[change]` | 编辑器内容发生改变时会触发该事件 | `(html: string) => void` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[config]` | 配置项说明，[见官网](https://www.tinymce.com/docs/configure/integration-and-setup/) | `object` | - |
+| `[loading]` | 初始化提示文本 | `string` | `加载中...` |
+| `[change]` | 编辑器内容发生改变时会触发该事件 | `(html: string) => void` | - |

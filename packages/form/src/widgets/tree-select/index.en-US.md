@@ -14,15 +14,15 @@ Tree select widget.
 
 ### schema
 
-| Property     | Description | Type                 | Default |
-|--------------|-------------|----------------------|---------|
-| `[enum]`     | Data source | `SFSchemaEnumType[]` | -       |
-| `[readOnly]` | Read only   | `boolean`            | -       |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[enum]` | Data source | `SFSchemaEnumType[]` | - |
+| `[readOnly]` | Read only | `boolean` | - |
 
 ### ui
 
 | Property | Description | Type | Default |
-|----|----|----|-----|
+|----------|-------------|------|---------|
 | `[asyncData]` | Asynchronous data source | `() => Observable<SFSchemaEnumType[]>` | - |
 | `[size]` | Size, equals to `nzSize` | `string` | `default` |
 | `[placeholder]` | Placeholder | `string` | - |
@@ -31,12 +31,12 @@ Tree select widget.
 | `[dropdownMatchSelectWidth]` | Determine whether the dropdown menu and the select input are the same width | `boolean` | `true` |
 | `[dropdownStyle]` | Set the style of the dropdown menu | `object` | - |
 | `[dropdownClassName]` | Set className of the dropdown menu | `string` | - |
-| `[multiple]` | Support multiple select（set to true automatically when `checkable` is set）| `boolean` | `false` |
+| `[multiple]` | Support multiple select（set to true automatically when `checkable` is set） | `boolean` | `false` |
 | `[hideUnMatched]` | Hide unmatched nodes | `boolean` | `false` |
 | `[checkable]` | Whether to show checkbox on the treeNodes | `boolean` | `false` |
 | `[checkStrictly]` | Fully control node itself when it's checkable status(No relationship about check status between parent and child nodes) | `boolean` | `false` |
 | `[showIcon]` | Whether to show icon in front of TreeNode title, there is no default style | `boolean` | `false` |
-| `[showExpand]` | Show a expand icon before the treeNodes  | `boolean` | `true` |
+| `[showExpand]` | Show a expand icon before the treeNodes | `boolean` | `true` |
 | `[showLine]` | Shows a connecting line | `boolean` | `false` |
 | `[defaultExpandAll]` | Whether to expand all treeNodes by default | `boolean` | `false` |
 | `[displayWith]` | How to display the selected node value in input box | `(node: NzTreeNode) => string | undefined` | `(node: NzTreeNode) => node.title` |

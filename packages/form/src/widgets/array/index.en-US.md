@@ -45,21 +45,21 @@ const ui = {
 
 ### schema
 
-| Property        | Description                     | Type       | Default |
-|-----------------|---------------------------------|------------|---------|
-| `[items]`       | Description of array element    | `SFSchema` | -       |
-| `[minItems]`    | Minimum number of array element | `number`   | -       |
-| `[maxItems]`    | Maximum number of array element | `number`   | -       |
-| `[uniqueItems]` | Element in array is unique      | `boolean`  | -       |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[items]` | Description of array element | `SFSchema` | - |
+| `[minItems]` | Minimum number of array element | `number` | - |
+| `[maxItems]` | Maximum number of array element | `number` | - |
+| `[uniqueItems]` | Element in array is unique | `boolean` | - |
 
 ### ui
 
-| Property        | Description                                               | Type                               | Default  |
-|-----------------|-----------------------------------------------------------|------------------------------------|----------|
-| `[addTitle]`    | Add button title                                          | `string`                           | `add`    |
-| `[addType]`     | Add button type, equals to `nzType`                       | `string`                           | `dashed` |
-| `[removable]`   | Whether includes remove button                            | `boolean`                          | `true`   |
-| `[removeTitle]` | Remove button title                                       | `string`                           | `remove` |
-| `[$items]`      | UI description of array element                           | `SFUISchema`                       | `remove` |
-| `(add)`         | Add callback，`property` indicates form property after add | `(property: FormProperty) => void` | -        |
-| `(remove)`      | Remove callback                                           | `(index: number) => void`          | -        |
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[addTitle]` | Add button title | `string` | `add` |
+| `[addType]` | Add button type, equals to `nzType` | `string` | `dashed` |
+| `[removable]` | Whether includes remove button | `boolean` | `true` |
+| `[removeTitle]` | Remove button title | `string` | `remove` |
+| `[$items]` | UI description of array element | `SFUISchema` | `remove` |
+| `(add)` | Add callback，`property` indicates form property after add | `(property: FormProperty) => void` | - |
+| `(remove)` | Remove callback | `(index: number) => void` | - |

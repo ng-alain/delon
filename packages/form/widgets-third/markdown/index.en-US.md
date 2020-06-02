@@ -38,7 +38,7 @@ Import related resource in `angular.json`.
 
 ### ui
 
-Property    | Description                                                                        | Type                   | Default
-------------|------------------------------------------------------------------------------------|------------------------|--------
-`[options]` | Configuration options, [official website](https://github.com/cipchk/ngx-simplemde) | `object`               | -
-`[change]`  | Callback function when content in editor is changed                                | `(md: string) => void` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[options]` | Configuration options, [official website](https://github.com/cipchk/ngx-simplemde) | `object` | - |
+| `[change]` | Callback function when content in editor is changed | `(md: string) => void` | - |

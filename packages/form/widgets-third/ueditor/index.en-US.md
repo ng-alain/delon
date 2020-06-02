@@ -16,9 +16,9 @@ Ueditor Rich Text.
 
 ### ui
 
-Property    | Description                                                                           | Type                     | Default
-------------|---------------------------------------------------------------------------------------|--------------------------|---------
-`[config]`  | Configuration options, [official website](http://fex.baidu.com/ueditor/#start-config) | `object`                 | -
-`[loading]` | Initial hint message                                                                  | `string`                 | `加载中...`
-`[delay]`   | Lazy initialize UEditor, unit: millisecond                                            | `number`                 | `300`
-`[change]`  | Callback function when content in editor is changed                                   | `(html: string) => void` | -
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[config]` | Configuration options, [official website](http://fex.baidu.com/ueditor/#start-config) | `object` | - |
+| `[loading]` | Initial hint message | `string` | `加载中...` |
+| `[delay]` | Lazy initialize UEditor, unit: millisecond | `number` | `300` |
+| `[change]` | Callback function when content in editor is changed | `(html: string) => void` | - |
