@@ -2,6 +2,10 @@
 @border-color: @border-color-split;
 @border-grids: sm @border-radius-sm, md @border-radius-md, lg @border-radius-lg;
 
+/**
+ * `1px` 边框
+ * `1px` Border
+ */
 .border {
   border: 1px solid @border-color !important;
 }
@@ -48,10 +52,18 @@
   .rounded-bottom-right-@{adKey}    { border-bottom-right-radius: @adValue !important; }
 });
 
+/**
+ * 圆框
+ * Rounded circle
+ */
 .rounded-circle {
   border-radius: 50%;
 }
 
+/**
+ * 无框
+ * Rounded empty
+ */
 .rounded-0 {
   border-radius: 0;
 }

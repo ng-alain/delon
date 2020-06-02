@@ -1,15 +1,39 @@
+/**
+ * 隐藏元素
+ * Turns off the display of an element
+ */
 .d-none {
   display: none !important;
 }
+
+/**
+ * 块级元素，此元素前后会带有换行符
+ * The element generates a block element box, generating line breaks both before and after the element when in the normal flow.
+ */
 .d-block {
   display: block !important;
 }
+
+/**
+ * 内联元素，元素前后没有换行符
+ * The element generates one or more inline element boxes that do not generate line breaks before or after themselves
+ */
 .d-inline-block {
   display: inline-block !important;
 }
+
+/**
+ * 设置弹性盒模型 `flex`
+ * The element behaves like a block element and lays out its content according to the flexbox model
+ */
 .d-flex {
   display: flex !important;
 }
+
+/**
+ * 设置弹性盒模型 `flex`，并使用内联元素
+ * The element behaves like an inline element and lays out its content according to the flexbox model
+ */
 .d-inline-flex {
   display: inline-flex !important;
 }
@@ -112,11 +136,19 @@
   flex-grow: 1 !important;
 }
 
+/**
+ * 垂直并居中
+ * Vertical and centered
+ */
 .flex-center {
   display: flex !important;
   align-items: center !important;
 }
 
+/**
+ * 垂直并居中，且主轴元素之间留有空白（例如：两个元素分别在左右两边，中间留空）
+ * Vertical and centered, and there is a space between the main axis elements (for example: the two elements are on the left and right sides, and the middle is left blank)
+ */
 .flex-center-between {
   display: flex !important;
   align-items: center !important;
