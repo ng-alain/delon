@@ -56,15 +56,15 @@ We think a complete form should include some of following elements:
 
 Description from left to right:
 
-| Structure Source | Parameter          | Description                 | Type       | Default Value |
-|--------|---------------|----------------------|------------|--------|
-| Schema | `[required]`      | If required            | `string[]` | -      |
-| Schema | `[title]`         | Title               | `string`   | -      |
-| ui     | `[optional]`      | Optional information         | `string`   | -      |
-| ui     | `[optionalHelp]`  | Optional help information    | `string, SFOptionalHelp`   | -      |
-| ui     | `[placeholder]`   | Placeholder | `string`       | -      |
-| Schema | `[description]`   | Description for the property | `string`   | -      |
-| -      | `[error]`         | Error information  | `string`| -      |
+| Structure Source | Parameter | Description | Type | Default Value |
+|------------------|-----------|-------------|------|---------------|
+| Schema | `[required]` | If required | `string[]` | - |
+| Schema | `[title]` | Title | `string` | - |
+| ui | `[optional]` | Optional information | `string` | - |
+| ui | `[optionalHelp]` | Optional help information | `string, SFOptionalHelp` | - |
+| ui | `[placeholder]` | Placeholder | `string` | - |
+| Schema | `[description]` | Description for the property | `string` | - |
+| - | `[error]` | Error information | `string` | - |
 
 ### Some Specifications
 
@@ -77,20 +77,20 @@ JSON Schema has complete specification descrbes for each property, `@delon/form`
 
 ### Common Type
 
-| Parameter | Description                              | Type                                 | Default Value   |
-|------|-----------------------------------|--------------------------------------|----------|
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
 | `[type]` | Data type, support JavaScript basic types | `number,string,boolean,object,array` | `object` |
-| `[enum]` | Enum, static data source                  | `SFSchemaEnumType[]`                 | -        |
+| `[enum]` | Enum, static data source | `SFSchemaEnumType[]` | - |
 
 ### Value Type
 
-| Parameter             | Description                      | Type      | Default Value |
-|------------------|---------------------------|-----------|--------|
-| `[minimum]`          | Minimum value                | `number`  | -      |
-| `[exclusiveMinimum]` | If excluding `minimum` value | `boolean` | -      |
-| `[maximum]`          | Maximum value                | `number`  | -      |
-| `[exclusiveMaximum]` | If excluding `maximum` value | `boolean` | -      |
-| `[multipleOf]`       | Multiple                     | `number`  | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[minimum]` | Minimum value | `number` | - |
+| `[exclusiveMinimum]` | If excluding `minimum` value | `boolean` | - |
+| `[maximum]` | Maximum value | `number` | - |
+| `[exclusiveMaximum]` | If excluding `maximum` value | `boolean` | - |
+| `[multipleOf]` | Multiple | `number` | - |
 
 **About exclusiveMinimum and exclusiveMaximum**
 
@@ -98,38 +98,38 @@ The implementation mechanism of `sf` causes that it couldn't handle error captur
 
 ### String Type
 
-| Parameter      | Description                                                   | Type     | Default Value |
-|-----------|--------------------------------------------------------------------|----------|--------|
-| `[maxLength]` | Maximum length of string                                       | `number` | -      |
-| `[minLength]` | Minimum length of string                                       | `number` | -      |
-| `[pattern]`   | Regular expression, must set if `format: 'regex'` has been set | `string` | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[maxLength]` | Maximum length of string | `number` | - |
+| `[minLength]` | Minimum length of string | `number` | - |
+| `[pattern]` | Regular expression, must set if `format: 'regex'` has been set | `string` | - |
 
 ### Array Type
 
-| Parameter            | Description                                                                 | Type       | Default Value |
-|-----------------|----------------------------------------------------------------------|------------|--------|
-| `[items]`           | Array element description, only support array object. Can use other components if array of basic type is needed | `SFSchema` | -      |
-| `[minItems]`        | Minimum number of element in array    | `number`   | -      |
-| `[maxItems]`        | Maximum number of element in array    | `number`   | -      |
-| `[uniqueItems]`     | Element is unique in array            | `boolean`  | -      |
-| `[additionalItems]` | additional validation rules for array | `SFSchema` | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[items]` | Array element description, only support array object. Can use other components if array of basic type is needed | `SFSchema` | - |
+| `[minItems]` | Minimum number of element in array | `number` | - |
+| `[maxItems]` | Maximum number of element in array | `number` | - |
+| `[uniqueItems]` | Element is unique in array | `boolean` | - |
+| `[additionalItems]` | additional validation rules for array | `SFSchema` | - |
 
 ### Object Type
 
-| Parameter          | Description                        | Type                          | Default Value |
-|---------------|-----------------------------|-------------------------------|--------|
-| `[maxProperties]` | Maximum number of property, must be a nonnegative integer | `number`                      | -      |
-| `[minProperties]` | Maximum number of property, must be a nonnegative integer | `number`                      | -      |
-| `[required]`      | If required     | `string[]`                    | -      |
-| `[properties]`    | Propery definition          | `{ [key: string]: SFSchema }` | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[maxProperties]` | Maximum number of property, must be a nonnegative integer | `number` | - |
+| `[minProperties]` | Maximum number of property, must be a nonnegative integer | `number` | - |
+| `[required]` | If required | `string[]` | - |
+| `[properties]` | Propery definition | `{ [key: string]: SFSchema }` | - |
 
 ### Condition Type
 
-| Parameter | Description     | Type       | Default Value |
-|------|----------|------------|--------|
-| `[if]`   | Condition validation | `SFSchema` | -      |
-| `[then]` | Condition validation | `SFSchema` | -      |
-| `[else]` | Condition validation | `SFSchema` | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[if]` | Condition validation | `SFSchema` | - |
+| `[then]` | Condition validation | `SFSchema` | - |
+| `[else]` | Condition validation | `SFSchema` | - |
 
 Validation of condition check is very strong and rich, but considering it breaks UI and adds complexity to component build, `@delon/form` only implements `required`, and uses it to determine if need validation, for example, a login page, it can show different login mode based on different login methods:
 
@@ -161,37 +161,37 @@ Actually, condition type is eventually parsed to `ui.visibleIf`, more informatio
 
 ### Logic Type
 
-| Parameter  | Description                                                    | Type         | Default Value |
-|-------|---------------------------------------------------------|--------------|--------|
-| `[allOf]` | **Not recommended**, can be replaced by `required`      | `SFSchema[]` | -      |
-| `[anyOf]` | **Not recommended**, can be replaced by `required` and `minProperties` | `SFSchema[]` | -      |
-| `[oneOf]` | **Not recommended**, value must be one of                        | `SFSchema[]` | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[allOf]` | **Not recommended**, can be replaced by `required` | `SFSchema[]` | - |
+| `[anyOf]` | **Not recommended**, can be replaced by `required` and `minProperties` | `SFSchema[]` | - |
+| `[oneOf]` | **Not recommended**, value must be one of | `SFSchema[]` | - |
 
 > **Not recommended**, mainly because there is no UI handle for logic type, it's similar to condition type, will affect UI rendering.
 
 ### Format and Visual Type
 
-| Parameter        | Description                           | Type      | Default Value |
-|-------------|--------------------------------|-----------|--------|
-| `[title]`       | Title               | `string`  | -      |
-| `[description]` | Description                | `string`  | -      |
-| `[default]`     | Default value                  | `any`     | -      |
-| `[readOnly]`    | If read only, equals to `nzDisabled` | `boolean` | -      |
-| `[format]`      | Data format, [Doc](http://json-schema.org/latest/json-schema-validation.html#rfc.section.7.3)| `string` | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[title]` | Title | `string` | - |
+| `[description]` | Description | `string` | - |
+| `[default]` | Default value | `any` | - |
+| `[readOnly]` | If read only, equals to `nzDisabled` | `boolean` | - |
+| `[format]` | Data format, [Doc](http://json-schema.org/latest/json-schema-validation.html#rfc.section.7.3) | `string` | - |
 
 ### Other
 
-| Parameter        | Description                                     | Type                 | Default Value |
-|-------------|------------------------------------------|----------------------|--------|
-| `[definitions]` | Internal definition                | `SFSchemaDefinition` | -      |
-| `[$ref]`        | Reference definition       | `string`             | -      |
-| `[$comment]`    | Comment for developer, no real meaning, won't be validated  | `string`   | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[definitions]` | Internal definition | `SFSchemaDefinition` | - |
+| `[$ref]` | Reference definition | `string` | - |
+| `[$comment]` | Comment for developer, no real meaning, won't be validated | `string` | - |
 
 ### Non Standard
 
-| Parameter | Description                                            | Type             | Default Value |
-|------|-------------------------------------------------|------------------|--------|
-| `[ui]`   | UI configuration, has more priority than `ui` property of `sf` component | `SFUISchemaItem` | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[ui]` | UI configuration, has more priority than `ui` property of `sf` component | `SFUISchemaItem` | - |
 
 ## UI（SFUISchemaItem）
 
@@ -205,14 +205,14 @@ Equals to `<sf [ui]="ui">`, a group of UI structure corresponds to JSON Schema s
 
 ### Basic Type
 
-| Parameter     | Description     | Type                     | Default Value |
-|---------------|-----------------|--------------------------|---------------|
-| `[debug]`     | Debug mode     | `boolean`                 | -      |
-| `[order]`     | Order of property    | `string[]`          | -      |
-| `[asyncData]` | Asynchronized static data source   | `(input?: any) => Observable<SFSchemaEnumType[]>` | - |
-| `[hidden]`    | If hide       | `boolean`      | `false`      |   |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[debug]` | Debug mode | `boolean` | - |
+| `[order]` | Order of property | `string[]` | - |
+| `[asyncData]` | Asynchronized static data source | `(input?: any) => Observable<SFSchemaEnumType[]>` | - |
+| `[hidden]` | If hide | `boolean` | `false` |
 | `[visibleIf]` | Is visible with conditions | `{ [key: string]: any[] | ((value: any) => boolean) }` | - |
-| `[acl]`       | ACL permission (Use `can()` verify) | `ACLCanType` | - |
+| `[acl]` | ACL permission (Use `can()` verify) | `ACLCanType` | - |
 
 **visibleIf**
 
@@ -224,69 +224,70 @@ Is visible with conditions, for example:
 
 ### Validation Type
 
-| Parameter            | Description                             | Type       | Default Value  |
-|-----------------|----------------------------------|------------|---------|
-| `[liveValidate]`   | If realtime validation    | `boolean`  | `true`  |
-| `[firstVisual]`    | If show visual error immediately      | `boolean`  | `false` |
-| `[onlyVisual]`     | If only show visiual error not error text | `boolean`  | `false` |
-| `[ingoreKeywords]` | Ignore validation for some data types   | `string[]` |         |
-| `[errors]`          | Customized error text  | `{ [ key: string ]: string | ((obj: ErrorData) => string) }` | -  |
-| `[validator]`       | Customized validator          | `(value: any, formProperty: FormProperty, form: PropertyGroup) => ErrorData[]` | -  |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[liveValidate]` | If realtime validation | `boolean` | `true` |
+| `[firstVisual]` | If show visual error immediately | `boolean` | `false` |
+| `[onlyVisual]` | If only show visiual error not error text | `boolean` | `false` |
+| `[ingoreKeywords]` | Ignore validation for some data types | `string[]` |  |
+| `[errors]` | Customized error text | `{ [ key: string ]: string | ((obj: ErrorData) => string) }` | - |
+| `[showRequired]` | Whether to display the required logo * | `boolean` | - |
+| `[validator]` | Customized validator | `(value: any, formProperty: FormProperty, form: PropertyGroup) => ErrorData[]` | - |
 
 ### Array Type
 
-| Parameter         | Description                               | Type         | Default Value   |
-|--------------|------------------------------------|--------------|----------|
-| `[items]`        | UI of specific sub element                    | `SFUISchema` | -        |
-| `[addTitle]`    | Add Title  | `string`     | `Add`   |
-| `[addType]`     | Add button style, equals to  `nzType` | `string`     | `dashed` |
-| `[removable]`    | If show remove button     | `boolean`    | -        |
-| `[removeTitle]` |  Text of remove button   | `string`     | `Remove`   |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[items]` | UI of specific sub element | `SFUISchema` | - |
+| `[addTitle]` | Add Title | `string` | `Add` |
+| `[addType]` | Add button style, equals to  `nzType` | `string` | `dashed` |
+| `[removable]` | If show remove button | `boolean` | - |
+| `[removeTitle]` | Text of remove button | `string` | `Remove` |
 
 ### Form Element Type
 
-| Parameter         | Description                               | Type         | Default Value   |
-|--------------|------------------------------------|--------------|----------|
-| `[type]`        | `type` of `input`                     | `string` | `text`        |
-| `[placeholder]`    | placeholder               | `string`     |- |
-| `[autofocus]`     | If auto focus during loading | `boolean`     | - |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[type]` | `type` of `input` | `string` | `text` |
+| `[placeholder]` | placeholder | `string` | - |
+| `[autofocus]` | If auto focus during loading | `boolean` | - |
 
 ### Render Type
 
-| Parameter             | Description                         | Type                  | Default Value |
-|------------------|------------------------------|-----------------------|--------|
-| `[widget]`       | Widget      | `string`              | -      |
-| `[i18n]`         | Refers to the i18n key of `schema.title`      | `string`              | -      |
-| `[descriptionI18n]` | Refers to the i18n key of `schema.description`  | `string`   | - |
-| `[class]`        | Customized class, equals to `[ngClass]` | `string,string[]`  | -      |
-| `[width]`        | Width, unit: `px`           | `number`              | -      |
-| `[size]`         | Size of element          | `default,large,small` | -      |
-| `[grid]`         | Property for responsive      | `SFGridSchema`        | -      |
-| `[optional]`     | Optional      | `string`              | -      |
-| `[optionalHelp]` | Optional help      | `string, SFOptionalHelp`   | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[widget]` | Widget | `string` | - |
+| `[i18n]` | Refers to the i18n key of `schema.title` | `string` | - |
+| `[descriptionI18n]` | Refers to the i18n key of `schema.description` | `string` | - |
+| `[class]` | Customized class, equals to `[ngClass]` | `string,string[]` | - |
+| `[width]` | Width, unit: `px` | `number` | - |
+| `[size]` | Size of element | `default,large,small` | - |
+| `[grid]` | Property for responsive | `SFGridSchema` | - |
+| `[optional]` | Optional | `string` | - |
+| `[optionalHelp]` | Optional help | `string, SFOptionalHelp` | - |
 
 ### Responsive Property SFGridSchema
 
 `grid` equals to complete [Grid](https://ng.ant.design/components/grid/en), can determine how to render the form by `grid`
 
-| Parameter   | Description                                                     | Type             | Default Value |
-|--------|----------------------------------------------------------|------------------|--------|
-| `[gutter]` | Gutter                                                 | `number`         | -      |
-| `[span]`   | Number of column for each element, `0` means `display: none` | `number`         | -      |
-| `[xs]`     | `<768px` responsive grid, can be number of columns or including object of other properties  | `number, SFGridSizeSchema` | -      |
-| `[sm]`     | `≥768px` responsive grid, can be number of columns or including object of other properties   | `number, SFGridSizeSchema` | -      |
-| `[md]`     | `≥992px` responsive grid, can be number of columns or including object of other properties   | `number, SFGridSizeSchema` | -      |
-| `[lg]`     | `≥1200px` responsive grid, can be number of columns or including object of other properties  | `number, SFGridSizeSchema` | -      |
-| `[xl]`     | `≥1600px` responsive grid, can be number of columns or including object of other properties  | `number, SFGridSizeSchema` | -      |
-| `[xxl]`    | Reserved field, support after version `0.7.0`                                  | `number, SFGridSizeSchema` | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[gutter]` | Gutter | `number` | - |
+| `[span]` | Number of column for each element, `0` means `display: none` | `number` | - |
+| `[xs]` | `<768px` responsive grid, can be number of columns or including object of other properties | `number, SFGridSizeSchema` | - |
+| `[sm]` | `≥768px` responsive grid, can be number of columns or including object of other properties | `number, SFGridSizeSchema` | - |
+| `[md]` | `≥992px` responsive grid, can be number of columns or including object of other properties | `number, SFGridSizeSchema` | - |
+| `[lg]` | `≥1200px` responsive grid, can be number of columns or including object of other properties | `number, SFGridSizeSchema` | - |
+| `[xl]` | `≥1600px` responsive grid, can be number of columns or including object of other properties | `number, SFGridSizeSchema` | - |
+| `[xxl]` | Reserved field, support after version `0.7.0` | `number, SFGridSizeSchema` | - |
 
 ### Horizontal Layout Type
 
 > The sum of label and control **must** be `24`
 
-| Parameter             | Description                                            | Type     | Default Value |
-|------------------|-------------------------------------------------|----------|--------|
-| `[spanLabel]`       | Number of column for `label`     | `number` | 5      |
-| `[spanControl]`     | Number of column for form element             | `number` | 19     |
-| `[offsetControl]`   | Number of column for left side of `control`  | `number` | -      |
-| `[spanLabelFixed]` | Fixed width for `label`        | `number` | -      |
+| Parameter | Description | Type | Default Value |
+|-----------|-------------|------|---------------|
+| `[spanLabel]` | Number of column for `label` | `number` | 5 |
+| `[spanControl]` | Number of column for form element | `number` | 19 |
+| `[offsetControl]` | Number of column for left side of `control` | `number` | - |
+| `[spanLabelFixed]` | Fixed width for `label` | `number` | - |

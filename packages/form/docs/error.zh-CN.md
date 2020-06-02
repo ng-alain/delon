@@ -59,20 +59,42 @@ JSON Schema 校验并不一定能够满足一些业务的需求，例如需要�
 ```ts
 schema: SFSchema = {
   properties: {
-    name: {
-      type: 'string'
+    type: {
+      type: 'string',
+      title: 'Type',
+      enum: [
+        { value: 'mobile', label: 'Mobile' },
+        { value: 'email', label: 'email' },
+      ],
+      default: 'mobile',
+    },
+    mobile: {
+      type: 'string',
+      title: 'Mobile',
+      ui: {
+        visibleIf: { type: ['mobile'] },
+        showRequired: true,
+        validator: val => (!val ? [{ keyword: 'required', message: 'Required mobile' }] : []),
+      },
     },
     email: {
       type: 'string',
-      title: '邮箱',
-      format: 'email',
+      title: 'Email',
       ui: {
-        validator: (value: any, formProperty: FormProperty, form: PropertyGroup) => {
-          return form.value.name === 'cipchk' ? [] : [{ keyword: 'required', message: '必须是cipchk@qq.com'}];
-        }
-      }
-    }
-  }
+        visibleIf: { type: ['email'] },
+        showRequired: true,
+        validator: val => (!val ? [{ keyword: 'required', message: 'Required email' }] : []),
+      },
+    },
+    pwd: {
+      type: 'string',
+      title: 'Password',
+      ui: {
+        type: 'password',
+      },
+    },
+  },
+  required: ['type', 'pwd'],
 };
 ```
 
@@ -86,6 +108,7 @@ schema: SFSchema = {
     name: {
       type: 'string',
       ui: {
+        showRequired: true,
         validator: (value: any) => this.http.get(`/user/check/${value}`).pipe(
           map(res => res ? [ { keyword: 'required', message: '用户名已存在'} ] : [])
         )

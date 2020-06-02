@@ -670,6 +670,20 @@ describe('form: component', () => {
         expect(page.getProperty('/a').errors![0].message).toBe(context.comp.locale.error.required);
         expect(page.getProperty('/arr').errors![0].message).toBe(context.comp.locale.error.required);
       });
+
+      it('should be display required * when showRequired is true', () => {
+        const s: SFSchema = {
+          properties: {
+            a: {
+              type: 'string',
+              ui: {
+                showRequired: true,
+              },
+            },
+          },
+        };
+        page.newSchema(s).checkCount('.ant-form-item-required', 1);
+      });
     });
   });
 

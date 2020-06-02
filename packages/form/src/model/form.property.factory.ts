@@ -51,7 +51,7 @@ export class FormPropertyFactory {
       newProperty = this.createProperty(refSchema, ui, formData, parent, path);
     } else {
       // fix required
-      if (propertyId && parent!.schema.required!.indexOf(propertyId.split(SF_SEQ).pop()!) !== -1) {
+      if ((propertyId && parent!.schema.required!.indexOf(propertyId.split(SF_SEQ).pop()!) !== -1) || ui.showRequired === true) {
         ui._required = true;
       }
       // fix title
