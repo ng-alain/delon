@@ -22,7 +22,7 @@ describe('form: component', () => {
 
   function genModule(options: { acl?: boolean; i18n?: boolean } = {}) {
     options = { acl: false, i18n: false, ...options };
-    const imports = [NoopAnimationsModule, DelonFormModule.forRoot()];
+    const imports = [NoopAnimationsModule, DelonFormModule.forRoot(), AlainThemeModule.forRoot()];
     if (options.i18n) {
       imports.push(AlainThemeModule.forRoot());
     }
@@ -429,24 +429,32 @@ describe('form: component', () => {
           fixture.detectChanges();
           page.newSchema(
             {
-              properties: { name: { type: 'string' } },
+              properties: {
+                name: { type: 'string' },
+                arr: { type: 'array', items: { type: 'object', properties: { x: { type: 'string' } } } },
+              },
             },
             {},
-            { name: 'a', age: 10 },
+            { name: 'a', age: 10, arr: [{ x: 1, y: 2 }] },
           );
           expect(context.comp.value.age == null).toBe(true);
+          expect(context.comp.value.arr[0].y == null).toBe(true);
         });
         it('with false', () => {
           context.cleanValue = false;
           fixture.detectChanges();
           page.newSchema(
             {
-              properties: { name: { type: 'string' } },
+              properties: {
+                name: { type: 'string' },
+                arr: { type: 'array', items: { type: 'object', properties: { x: { type: 'string' } } } },
+              },
             },
             {},
-            { name: 'a', age: 10 },
+            { name: 'a', age: 10, arr: [{ x: 1, y: 2 }] },
           );
           expect(context.comp.value.age).toBe(10);
+          expect(context.comp.value.arr[0].y).toBe(2);
         });
       });
 
