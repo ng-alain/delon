@@ -87,7 +87,6 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     const { fileList } = this.ui;
     (fileList ? of(fileList) : Array.isArray(value) ? of(value) : getData(this.schema, this.ui, null)).subscribe(list => {
       this.fileList = list as UploadFile[];
-      this._setValue(this.fileList);
       this.detectChanges();
     });
   }
