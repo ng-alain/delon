@@ -44,6 +44,7 @@ Also, automatically processed all Angular built-in validation, such as `required
 | `[nzLayout]` | type of layout when `inline` forced size is `compact` | `'horizontal','vertical','inline'` | `'horizontal'` | ✅ |
 | `[size]` | size of edit, forced ingores `error`, `extra` | `'default','compact'` | `'default'` | ✅ |
 | `[firstVisual]` | Immediately show validation error message | `boolean` | `false` | ✅ |
+| `[ingoreDirty]` | Whether to ignore the `dirty` check | `boolean` | `false` | ✅ |
 | `[line]` | whether separation line style | `boolean` | `false` |  |
 | `[title]` | Display title | `string,TemplateRef<void>` | - |  |
 | `[errors]` | Batch modify `se` error value | `SEErrorRefresh[]` | - |  |
