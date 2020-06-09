@@ -48,6 +48,10 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     return this.injector.get(DomSanitizer);
   }
 
+  get cleanValue(): boolean {
+    return this.sfComp?.cleanValue!;
+  }
+
   constructor(
     @Inject(ChangeDetectorRef) protected readonly cd: ChangeDetectorRef,
     @Inject(Injector) protected readonly injector: Injector,
