@@ -87,7 +87,8 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     const { fileList } = this.ui;
     (fileList ? of(fileList) : Array.isArray(value) ? of(value) : getData(this.schema, this.ui, null)).subscribe(list => {
       this.fileList = list as UploadFile[];
-      this._setValue(this.fileList);
+      this.formProperty._value = this.pureValue(list);
+      this.formProperty.updateValueAndValidity(false, false, false);
       this.detectChanges();
     });
   }
@@ -96,14 +97,18 @@ export class UploadWidget extends ControlUIWidget<SFUploadWidgetSchema> implemen
     return deepGet(file.response, this.i.resReName, file.response);
   }
 
-  private _setValue(fileList: UploadFile[]) {
+  private pureValue(fileList: UploadFile[]) {
     fileList
       .filter(file => !file.url)
       .forEach(file => {
         file.url = deepGet(file.response, this.i.urlReName);
       });
     const res = fileList.filter(w => w.status === 'done').map(file => this._getValue(file));
-    this.setValue(this.i.multiple === true ? res : res.pop());
+    return this.i.multiple === true ? res : res.pop();
+  }
+
+  private _setValue(fileList: UploadFile[]) {
+    this.setValue(this.pureValue(fileList));
   }
 
   handleRemove = () => {
