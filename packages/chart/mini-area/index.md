@@ -12,8 +12,8 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 
 ### g2-mini-area
 
-| 参数      | 说明                   | 类型         | 默认值 |
-|----------|------------------------|-------------|-------|
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.2)` |
 | `[borderColor]` | 图表边颜色 | `string` | `#1890FF` |
@@ -30,7 +30,7 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 
 ### G2MiniAreaData
 
-| 参数  | 说明 | 类型     | 默认值 |
-|-------|-----|----------|--------|
-| `[x]` | x轴  | `any` | -      |
-| `[y]` | y轴  | `any` | -      |
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[x]` | x轴 | `any` | - |
+| `[y]` | y轴 | `any` | - |

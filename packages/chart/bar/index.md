@@ -12,8 +12,8 @@ module: import { G2BarModule } from '@delon/chart/bar';
 
 ### g2-bar
 
-| 参数      | 说明                                      | 类型         | 默认值 |
-|----------|------------------------------------------|-------------|-------|
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string,TemplateRef<void>` | - |
 | `[color]` | 图表颜色 | `string` | `rgba(24, 144, 255, 0.85)` |
@@ -23,10 +23,11 @@ module: import { G2BarModule } from '@delon/chart/bar';
 | `[autoLabel]` | 在宽度不足时，自动隐藏 x 轴的 label | `boolean` | `true` |
 | `[interaction]` | 交互类型，none 无 element-active 图形元素，active-region 图表组件，brush 框选，drag-move 移动 | `InteractionType` | `none` |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `EventEmitter<G2BarClickItem>` | - |
 
 ### G2BarData
 
-| 参数  | 说明 | 类型     | 默认值 |
-|-------|-----|----------|--------|
-| `[x]` | x轴  | `any` | -      |
-| `[y]` | y轴  | `any` | -      |
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[x]` | x轴 | `any` | - |
+| `[y]` | y轴 | `any` | - |

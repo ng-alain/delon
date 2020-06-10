@@ -9,21 +9,24 @@ title:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
+import { G2PieClickItem, G2PieData } from '@delon/chart/pie';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `
-  <g2-pie
+  template: ` <g2-pie
     [hasLegend]="true"
     title="销售额"
     subTitle="销售额"
     [total]="total"
     [valueFormat]="format"
     [data]="salesPieData"
-    height="294"></g2-pie>`
+    height="294"
+    (clickItem)="handleClick($event)"
+  ></g2-pie>`,
 })
 export class DemoComponent implements OnInit {
-  salesPieData = [
+  salesPieData: G2PieData[] = [
     {
       x: '家用电器',
       y: 4544,
@@ -50,11 +53,19 @@ export class DemoComponent implements OnInit {
     },
   ];
   total: string;
+
+  constructor(private msg: NzMessageService) {}
+
   ngOnInit(): void {
     this.total = `&yen ${this.salesPieData.reduce((pre, now) => now.y + pre, 0).toFixed(2)}`;
   }
+
   format(val: number) {
     return `&yen ${val.toFixed(2)}`;
+  }
+
+  handleClick(data: G2PieClickItem): void {
+    this.msg.info(`${data.item.x} - ${data.item.y}`);
   }
 }
 ```

@@ -14,14 +14,9 @@ import { Component } from '@angular/core';
   selector: 'app-demo',
   template: `
     <div style="width: 200px; display: inline-block">
-        <g2-pie
-            percent="28"
-            subTitle="中式快餐"
-            total="28%"
-            height="130"></g2-pie>
+      <g2-pie percent="28" subTitle="中式快餐" total="28%" height="130"></g2-pie>
     </div>
-  `
+  `,
 })
-export class DemoComponent {
-}
+export class DemoComponent {}
 ```

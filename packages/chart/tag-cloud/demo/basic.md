@@ -9,13 +9,15 @@ title:
 
 ```ts
 import { Component } from '@angular/core';
+import { G2TagCloudClickItem, G2TagCloudData } from '@delon/chart/tag-cloud';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `<g2-tag-cloud [data]="tags" height="400"></g2-tag-cloud>`,
+  template: `<g2-tag-cloud [data]="tags" height="400" (clickItem)="handleClick($event)"></g2-tag-cloud>`,
 })
 export class DemoComponent {
-  tags = [
+  tags: G2TagCloudData[] = [
     { value: 9, name: 'AntV' },
     { value: 8, name: 'F2' },
     { value: 8, name: 'G2' },
@@ -196,5 +198,11 @@ export class DemoComponent {
     { value: 2, name: 'Vega' },
     { value: 2, name: '统计图表' },
   ];
+
+  constructor(private msg: NzMessageService) {}
+
+  handleClick(data: G2TagCloudClickItem): void {
+    this.msg.info(`${data.item.name} - ${data.item.value}`);
+  }
 }
 ```

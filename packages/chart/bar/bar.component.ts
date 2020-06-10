@@ -2,16 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
+import { Chart, Event, Types } from '@antv/g2';
 import { G2InteractionType } from '@delon/chart/core';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -25,6 +27,11 @@ export interface G2BarData {
   y: NzSafeAny;
   color?: string;
   [key: string]: NzSafeAny;
+}
+
+export interface G2BarClickItem {
+  item: G2BarData;
+  ev: Event;
 }
 
 @Component({
@@ -54,6 +61,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() autoLabel = true;
   @Input() interaction: G2InteractionType = 'none';
   @Input() theme: string | Types.LooseObject;
+  @Output() clickItem = new EventEmitter<G2BarClickItem>();
 
   // #endregion
 
@@ -105,6 +113,10 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
         return colorItem && colorItem.color ? colorItem.color : this.color;
       })
       .tooltip('x*y', (x, y) => ({ name: x, value: y }));
+
+    chart.on(`interval:click`, (ev: Event) => {
+      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    });
 
     this.attachChart();
   }
