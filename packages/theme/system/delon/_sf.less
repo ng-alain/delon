@@ -132,6 +132,16 @@
       }
     }
   }
+  &__horizontal {
+    .@{ant-prefix}-form-item-label > label {
+      display: flex;
+      justify-content: flex-end;
+    }
+    @{sf-prefix}__label-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
   &__no-colon {
     .@{ant-prefix}-form-item-label {
       label {

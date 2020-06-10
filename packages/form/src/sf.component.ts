@@ -54,6 +54,7 @@ export function useFactory(schemaValidatorFactory: SchemaValidatorFactory, cogSr
   host: {
     '[class.sf]': 'true',
     '[class.sf__inline]': `layout === 'inline'`,
+    '[class.sf__horizontal]': `layout === 'horizontal'`,
     '[class.sf__search]': `mode === 'search'`,
     '[class.sf__edit]': `mode === 'edit'`,
     '[class.sf__no-error]': `onlyVisual`,
