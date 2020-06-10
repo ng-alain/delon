@@ -72,11 +72,14 @@ export class DateWidget extends ControlUIWidget<SFDateWidgetSchema> implements O
     this.detectChanges();
     // TODO: Need to wait for the rendering to complete, otherwise it will be overwritten of end widget
     if (this.displayValue) {
-      setTimeout(() => this._change(this.displayValue));
+      setTimeout(() => this._change(this.displayValue, false));
     }
   }
 
-  _change(value: Date | Date[] | null) {
+  _change(value: Date | Date[] | null, emitModelChange = true) {
+    if (emitModelChange && this.ui.change) {
+      this.ui.change(value);
+    }
     if (value == null || (Array.isArray(value) && value.length < 2)) {
       this.setValue(null);
       this.setEnd(null);

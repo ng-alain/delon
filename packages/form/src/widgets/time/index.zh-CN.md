@@ -21,15 +21,15 @@ type: Widgets
 
 ### schema 属性
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[readOnly]` | 禁用状态  | `boolean` | -
-`[format]` | 数据格式类型  | `string` | -
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[readOnly]` | 禁用状态 | `boolean` | - |
+| `[format]` | 数据格式类型 | `string` | - |
 
 ### ui 属性
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
 | `[size]` | 大小，等同 `nzSize` | `string` | - |
 | `[placeholder]` | 在文字框中显示提示讯息 | `string` | - |
 | `[format]` | 数据格式化 | `string` | `HH:mm:ss` |
@@ -46,3 +46,5 @@ type: Widgets
 | `[minuteStep]` | 分钟选项间隔 | `number` | `1` |
 | `[secondStep]` | 秒选项间隔 | `number` | `1` |
 | `[popupClassName]` | 弹出层类名 | `string` | - |
+| `[change]` | 时间发生变化的回调 | `(value: Date) => void` | - |
+| `[openChange]` | 面板打开/关闭时的回调 | `(status: boolean) => void` | - |

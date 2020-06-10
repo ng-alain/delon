@@ -56,6 +56,9 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
   }
 
   _change(value: Date | null) {
+    if (this.ui.change) {
+      this.ui.change(value);
+    }
     if (value == null) {
       this.setValue(null);
       return;
@@ -65,5 +68,11 @@ export class TimeWidget extends ControlUIWidget<SFTimeWidgetSchema> implements O
       return;
     }
     this.setValue(format(value, this.valueFormat!));
+  }
+
+  _openChange(status: boolean) {
+    if (this.ui.openChange) {
+      this.ui.openChange(status);
+    }
   }
 }
