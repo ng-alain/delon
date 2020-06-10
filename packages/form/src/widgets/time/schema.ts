@@ -86,4 +86,14 @@ export interface SFTimeWidgetSchema extends SFUISchemaItem {
    * ClassName of panel
    */
   popupClassName?: string;
+
+  /**
+   * a callback function, can be executed when the selected time is changing
+   */
+  change?: (value: Date | null) => void;
+
+  /**
+   * a callback function which will be called while panel opening/closing
+   */
+  openChange?: (status: boolean) => void;
 }
