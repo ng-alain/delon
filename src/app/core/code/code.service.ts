@@ -25,7 +25,7 @@ export class CodeService {
     const NGALAIN_VERSION = `~${pkg.version}`;
     return {
       '@angular/animations': '^9.0.0',
-      '@angular/cdk': '9.2.1',
+      '@angular/cdk': '^9.2.4',
       '@angular/common': '^9.0.0',
       '@angular/compiler': '^9.0.0',
       '@angular/core': '^9.0.0',
