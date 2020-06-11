@@ -31,13 +31,20 @@
 </ng-template>
 <nz-card
   *ngIf="type === 'card'; else default"
-  [nzTitle]="title"
+  [nzTitle]="cardTitleTpl"
   [nzExtra]="ui.cardExtra"
   [nzSize]="ui.cardSize || 'small'"
   [nzActions]="ui.cardActions || []"
   [nzBodyStyle]="cardBodyStyle"
   [nzBordered]="cardBordered || true"
   class="sf__object-card"
+  [class.sf__object-card-fold]="!expand"
 >
+  <ng-template #cardTitleTpl>
+    <div [class.point]="showExpand" (click)="changeExpand()">
+      <i *ngIf="showExpand" nz-icon [nzType]="expand ? 'down' : 'up'" class="mr-xs text-xs"></i>
+      {{title}}
+    </div>
+  </ng-template>
   <ng-template [ngTemplateOutlet]="default" [ngTemplateOutletContext]="{ $implicit: true }"></ng-template>
 </nz-card>
