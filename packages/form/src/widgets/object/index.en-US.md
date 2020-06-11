@@ -22,6 +22,8 @@ Create an object widget, valid only for `schema.type="object"`.
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `[showExpand]` | Whether to show the card body, click to hide the content, only `type ==='card'` | `boolean` | `true` |
+| `[expand]` | Expanded state, only `type ==='card'` | `boolean` | `true` |
 | `[showTitle]` | Whether to display the title | `boolean` | `false` |
 | `[type]` | Render type of object | `card, default` | `default` |
 | `[cardSize]` | The same as `nzSize` | `small, default` | `small` |

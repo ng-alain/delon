@@ -21,6 +21,8 @@ type: Widgets
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
+| `[showExpand]` | 是否显示扩展，点击隐藏内容，限 `type === 'card'` | `boolean` | `true` |
+| `[expand]` | 展开状态，限 `type === 'card'` | `boolean` | `true` |
 | `[showTitle]` | 是否显示标题 | `boolean` | `false` |
 | `[type]` | 渲染类型 | `card, default` | `default` |
 | `[cardSize]` | 等同 `nzSize` 属性 | `small, default` | `small` |
