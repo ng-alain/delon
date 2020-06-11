@@ -2,6 +2,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
+import { SFObjectWidgetSchema } from './schema';
 
 describe('form: widget: object', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -112,7 +113,22 @@ describe('form: widget: object', () => {
           properties: {},
           ui: { type: 'card' },
         })
-        .checkCount('.sf__object-card', 1);
+        .checkCount('.sf__object-card', 1)
+        .checkCount('.sf__object-card-fold', 0)
+        .click('.ant-card-head-title div')
+        .checkCount('.sf__object-card-fold', 1);
+    });
+    it('should be disabled toggle expand when showExpand is false', () => {
+      page
+        .newSchema({
+          title: 'root',
+          properties: {},
+          ui: { type: 'card', showExpand: false } as SFObjectWidgetSchema,
+        })
+        .checkCount('.sf__object-card', 1)
+        .checkCount('.sf__object-card-fold', 0)
+        .click('.ant-card-head-title div')
+        .checkCount('.sf__object-card-fold', 0);
     });
   });
 });
