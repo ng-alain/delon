@@ -773,6 +773,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
     this.refreshColumns();
     if (options.emitReload === true) {
+      // Should clean data, Because of changing columns may cause inaccurate data
+      this._data = [];
       return this.loadPageData();
     } else {
       this.cd();
