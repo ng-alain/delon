@@ -96,7 +96,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     private cdr: ChangeDetectorRef,
     configSrv: AlainConfigService,
   ) {
-    configSrv.attach<AlainPageHeaderConfig, 'pageHeader'>(this, 'pageHeader', {
+    configSrv.attach(this, 'pageHeader', {
       home: '首页',
       homeLink: '/',
       autoBreadcrumb: true,

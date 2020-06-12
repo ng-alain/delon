@@ -15,12 +15,12 @@ export class LodopService implements OnDestroy {
   private printBuffer: any[] = [];
 
   constructor(private scriptSrv: LazyService, configSrv: AlainConfigService) {
-    this.defaultConfig = configSrv.merge<AlainLodopConfig, 'lodop'>('lodop', {
+    this.defaultConfig = configSrv.merge('lodop', {
       url: '//localhost:8443/CLodopfuncs.js',
       name: 'CLODOP',
       companyName: '',
       checkMaxCount: 100,
-    });
+    })!;
     this.cog = this.defaultConfig;
   }
 

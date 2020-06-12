@@ -71,7 +71,7 @@ export class SEContainerComponent {
   }
 
   constructor(configSrv: AlainConfigService) {
-    configSrv.attach<AlainSEConfig, 'se'>(this, 'se', {
+    configSrv.attach(this, 'se', {
       size: 'default',
       nzLayout: 'horizontal',
       gutter: 32,

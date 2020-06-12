@@ -29,7 +29,7 @@ export class SVContainerComponent {
   @Input() default: boolean;
 
   constructor(configSrv: AlainConfigService) {
-    configSrv.attach<AlainSVConfig, 'sv'>(this, 'sv', {
+    configSrv.attach(this, 'sv', {
       size: 'large',
       gutter: 32,
       layout: 'horizontal',

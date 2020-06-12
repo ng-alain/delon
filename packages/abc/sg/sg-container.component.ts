@@ -30,7 +30,7 @@ export class SGContainerComponent {
   }
 
   constructor(configSrv: AlainConfigService) {
-    configSrv.attach<AlainSGConfig, 'sg'>(this, 'sg', {
+    configSrv.attach(this, 'sg', {
       gutter: 32,
       col: 2,
     });

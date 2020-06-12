@@ -80,7 +80,7 @@ export class RangePickerComponent implements ControlValueAccessor {
   // #endregion
 
   constructor(private dom: DomSanitizer, configSrv: AlainConfigService) {
-    const cog = configSrv.merge<AlainDateRangePickerConfig, 'dataRange'>('dataRange', {
+    const cog = configSrv.merge('dataRange', {
       nzFormat: 'yyyy-MM-dd',
       nzAllowClear: true,
       nzAutoFocus: false,
