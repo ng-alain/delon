@@ -12,8 +12,8 @@ module: import { G2CardModule } from '@delon/chart/card';
 
 ### g2-card
 
-| 参数      | 说明                                      | 类型         | 默认值 |
-|----------|------------------------------------------|-------------|-------|
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
 | `[title]` | 卡片标题 | `string,TemplateRef<void>` | - |
 | `[avatar]` | 头像 | `string,TemplateRef<void>` | - |
 | `[action]` | 卡片操作 | `string,TemplateRef<void>` | - |

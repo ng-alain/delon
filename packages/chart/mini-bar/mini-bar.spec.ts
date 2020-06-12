@@ -31,11 +31,11 @@ describe('chart: mini-bar', () => {
           dc: false,
         });
       });
-      xit('with default', fakeAsync(() => {
+      it('with default', fakeAsync(() => {
         page.context.tooltipType = 'default';
         page.dcFirst().checkTooltip('10');
       }));
-      xit('with mini', fakeAsync(() => {
+      it('with mini', fakeAsync(() => {
         page.context.tooltipType = 'mini';
         page.dcFirst().checkTooltip(null);
       }));

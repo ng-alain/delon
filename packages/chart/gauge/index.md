@@ -12,8 +12,8 @@ module: import { G2GaugeModule } from '@delon/chart/gauge';
 
 ### g2-gauge
 
-| 参数      | 说明           | 类型         | 默认值 |
-|----------|----------------|-------------|-------|
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[title]` | 图表标题 | `string` | - |
 | `[height]` | 图表高度 | `number` | - |

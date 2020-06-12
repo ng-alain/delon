@@ -2,20 +2,27 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
+import { Chart, Event, Types } from '@antv/g2';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 
 export interface G2MiniAreaData {
   x: any;
   y: any;
   [key: string]: any;
+}
+
+export interface G2MiniAreaClickItem {
+  item: G2MiniAreaData;
+  ev: Event;
 }
 
 @Component({
@@ -49,6 +56,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
   @Input() theme: string | Types.LooseObject;
+  @Output() clickItem = new EventEmitter<G2MiniAreaClickItem>();
 
   // #endregion
 
@@ -110,6 +118,11 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
     if (line) {
       chart.line().position('x*y').shape('smooth').tooltip(false);
     }
+
+    chart.on(`plot:click`, (ev: Event) => {
+      const records = this.chart.getSnapRecords({ x: ev.x, y: ev.y });
+      this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
+    });
 
     chart.render();
 

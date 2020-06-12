@@ -3,16 +3,18 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
+import { Chart, Event, Types } from '@antv/g2';
 import { G2InteractionType } from '@delon/chart/core';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -21,6 +23,11 @@ export interface G2PieData {
   x: any;
   y: number;
   [key: string]: any;
+}
+
+export interface G2PieClickItem {
+  item: G2PieData;
+  ev: Event;
 }
 
 @Component({
@@ -65,6 +72,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() colors: any[];
   @Input() interaction: G2InteractionType = 'none';
   @Input() theme: string | Types.LooseObject;
+  @Output() clickItem = new EventEmitter<G2PieClickItem>();
 
   // #endregion
 
@@ -128,6 +136,10 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
         value: `${hasLegend ? p : (p * 100).toFixed(2)} %`,
       }))
       .state({});
+
+    chart.on(`interval:click`, (ev: Event) => {
+      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    });
 
     this.attachChart();
   }

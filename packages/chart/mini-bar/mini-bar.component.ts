@@ -2,14 +2,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
+import { Chart, Event, Types } from '@antv/g2';
 import { AlainConfigService, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -17,6 +19,11 @@ export interface G2MiniBarData {
   x: any;
   y: any;
   [key: string]: any;
+}
+
+export interface G2MiniBarClickItem {
+  item: G2MiniBarData;
+  ev: Event;
 }
 
 @Component({
@@ -44,6 +51,7 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
   @Input() theme: string | Types.LooseObject;
+  @Output() clickItem = new EventEmitter<G2MiniBarClickItem>();
 
   // #endregion
 
@@ -92,6 +100,10 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
       .interval()
       .position('x*y')
       .tooltip('x*y', (x: NzSafeAny, y: NzSafeAny) => ({ name: x, value: y + yTooltipSuffix }));
+
+    chart.on(`interval:click`, (ev: Event) => {
+      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    });
 
     chart.render();
 

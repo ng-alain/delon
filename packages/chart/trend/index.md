@@ -12,8 +12,8 @@ module: import { TrendModule } from '@delon/chart/trend';
 
 ### trend
 
-成员 | 说明 | 类型 | 默认值
-----|------|-----|------
-`[colorful]` | 是否彩色标记 | `boolean` | `true`
-`[flag]` | 上升下降标识 | `'up','down'` | -
-`[reverseColor]` | 颜色反转 | `boolean` | `false`
+| 成员 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
+| `[colorful]` | 是否彩色标记 | `boolean` | `true` |
+| `[flag]` | 上升下降标识 | `'up','down'` | - |
+| `[reverseColor]` | 颜色反转 | `boolean` | `false` |

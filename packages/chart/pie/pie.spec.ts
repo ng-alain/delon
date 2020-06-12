@@ -71,13 +71,13 @@ describe('chart: pie', () => {
     xit('should be working', fakeAsync(() => {
       page.context.hasLegend = false;
       page.dcFirst();
-      page.checkTooltip('100.00', { x: 50, y: 50 });
+      page.checkTooltip('100.00');
     }));
     // 由于 hasLegend 会优先处理为百分比格式，因此无需要在 tooltip 中重新转换
     xit('should be original value when has has legend', fakeAsync(() => {
       page.context.hasLegend = true;
       page.dcFirst();
-      page.checkTooltip('100.00', { x: 50, y: 50 });
+      page.checkTooltip('100.00');
     }));
   });
 
