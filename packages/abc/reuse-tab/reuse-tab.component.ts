@@ -252,7 +252,9 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           this.updateTitle(res);
           return;
         case 'override':
-          this.updatePos$.next();
+          if (res?.list?.length === this.list.length) {
+            this.updatePos$.next();
+          }
           return;
       }
       this.genList(res!);
