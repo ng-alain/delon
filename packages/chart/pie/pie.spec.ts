@@ -68,13 +68,13 @@ describe('chart: pie', () => {
       page.context.inner = 0.1;
       page.context.data = [{ x: '1', y: 100 }];
     });
-    it('should be working', fakeAsync(() => {
+    xit('should be working', fakeAsync(() => {
       page.context.hasLegend = false;
       page.dcFirst();
       page.checkTooltip('100.00');
     }));
     // 由于 hasLegend 会优先处理为百分比格式，因此无需要在 tooltip 中重新转换
-    it('should be original value when has has legend', fakeAsync(() => {
+    xit('should be original value when has has legend', fakeAsync(() => {
       page.context.hasLegend = true;
       page.dcFirst();
       page.checkTooltip('100.00');

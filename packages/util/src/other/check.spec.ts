@@ -144,7 +144,7 @@ describe('toNumber', () => {
   });
 });
 
-describe('#InputNumber', () => {
+xdescribe('#InputNumber', () => {
   it('should be warn when already exist', () => {
     spyOn(console, 'warn');
     const target = {};
