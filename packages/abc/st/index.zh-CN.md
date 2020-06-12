@@ -33,6 +33,12 @@ module: import { STModule } from '@delon/abc/st';
   - `false` 由用户通过 `total` 和 `data` 参数受控分页，并维护 `(change)` 当分页变更时重新加载数据
 - `page.show` 是否显示分页器；当未指定时若 `ps>total` 情况下自动不显示
 
+### 常见问题
+
+**Cannot read property 'text' of undefined**
+
+当数据已经加载，动态改变 `columns` 时会出现该错误，这是因为 `st` 每次只会根据 `columns` 对数据处理，当发生列定义发生改变时会对应数据依然是旧的，因此这种情况下，请使用 `this.st.resetColumns({ columns: [], emitReload: true })` 来更新列定义。
+
 ## API
 
 ### st
