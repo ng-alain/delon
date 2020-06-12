@@ -27,6 +27,7 @@ module: import { G2MiniAreaModule } from '@delon/chart/mini-area';
 | `[tooltipType]` | Tooltip显示类型 | `'mini','default'` | `'default'` |
 | `[data]` | 数据 | `G2MiniAreaData[]` | - |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |
+| `(clickItem)` | 点击项回调 | `EventEmitter<G2MiniAreaClickItem>` | - |
 
 ### G2MiniAreaData
 
