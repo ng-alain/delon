@@ -37,7 +37,7 @@ The value is `STData[]` or `Observable<STData[]>`, both follow the following rul
 
 **Cannot read property 'text' of undefined**
 
-This error occurs when the data has been load finished and the columns chaning. This is because `st` only processes the data according by the columns. When the column definition changes, the corresponding data is still old, so In this case, please use `this.st.resetColumns({ columns: [], emitReload: true })` to update the column definition.
+If the component has been rendered, this error may appear when `columns` is changed again. This is because `st` will only process the data according to `columns` each time. When the column definition changes, it may be because of the column definition. Unable to match with existing data, you may need to use `this.st.resetColumns({ columns: [], emitReload: true })` to update the column definition and reload the data.
 
 ## API
 

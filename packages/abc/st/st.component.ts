@@ -534,7 +534,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   setRow(index: number, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean }): this {
     options = { refreshSchema: false, emitReload: false, ...options };
     this._data[index] = deepMergeKey(this._data[index], false, item);
-    this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+    this.optimizeData();
     if (options.refreshSchema) {
       this.resetColumns({ emitReload: options.emitReload });
       return this;
@@ -789,13 +789,17 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
+  private optimizeData(): void {
+    this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+  }
+
   ngAfterViewInit() {
     this.columnSource.restoreAllRender(this._columns);
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
     if (changes.columns) {
-      this.refreshColumns();
+      this.refreshColumns().optimizeData();
     }
     const changeData = changes.data;
     if (changeData && changeData.currentValue && !(this.req.lazyLoad && changeData.firstChange)) {

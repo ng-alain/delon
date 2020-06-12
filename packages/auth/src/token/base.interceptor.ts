@@ -26,8 +26,8 @@ export abstract class BaseInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const options = mergeConfig(this.injector.get(AlainConfigService));
-    if (options.ignores) {
-      for (const item of options.ignores as RegExp[]) {
+    if (Array.isArray(options.ignores)) {
+      for (const item of options.ignores) {
         if (item.test(req.url)) return next.handle(req);
       }
     }
