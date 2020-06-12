@@ -3,7 +3,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   AlainConfigService,
-  AlainDateRangePickerConfig,
   AlainDateRangePickerShortcut,
   AlainDateRangePickerShortcutItem,
   deepMergeKey,

@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnChanges, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
-import { AlainConfigService, AlainImageConfig, InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber } from '@delon/util';
 
 /**
  * img标签
