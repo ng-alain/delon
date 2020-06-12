@@ -56,7 +56,7 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   // #endregion
 
   constructor(private cdr: ChangeDetectorRef, configSrv: AlainConfigService, private lazySrv: LazyService) {
-    this.cog = configSrv.merge<AlainQRConfig, 'qr'>('qr', QR_DEFULAT_CONFIG);
+    this.cog = configSrv.merge('qr', QR_DEFULAT_CONFIG)!;
     Object.assign(this, this.cog);
   }
 

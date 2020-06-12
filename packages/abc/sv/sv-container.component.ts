@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
-import { AlainConfigService, AlainSVConfig, InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'sv-container, [sv-container]',
@@ -29,7 +29,7 @@ export class SVContainerComponent {
   @Input() default: boolean;
 
   constructor(configSrv: AlainConfigService) {
-    configSrv.attach<AlainSVConfig, 'sv'>(this, 'sv', {
+    configSrv.attach(this, 'sv', {
       size: 'large',
       gutter: 32,
       layout: 'horizontal',

@@ -12,13 +12,13 @@ export class MediaService {
     return this._cog;
   }
   set cog(val: AlainMediaConfig) {
-    this._cog = this.cogSrv.merge<AlainMediaConfig, 'media'>(
+    this._cog = this.cogSrv.merge(
       'media',
       {
         urls: ['https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.min.js', 'https://cdn.bootcdn.net/ajax/libs/plyr/3.5.10/plyr.css'],
       },
       val,
-    );
+    )!;
   }
 
   constructor(private cogSrv: AlainConfigService, private lazySrv: LazyService) {}

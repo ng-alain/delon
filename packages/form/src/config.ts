@@ -36,5 +36,5 @@ export const SF_DEFAULT_CONFIG: AlainSFConfig = {
 };
 
 export function mergeConfig(srv: AlainConfigService): AlainSFConfig {
-  return srv.merge('sf', SF_DEFAULT_CONFIG);
+  return srv.merge('sf', SF_DEFAULT_CONFIG)!;
 }

@@ -11,20 +11,16 @@ export class AlainConfigService {
     this.config = defaultConfig || {};
   }
 
-  update<R, T extends AlainConfigKey>(componentName: T, newValues: R): void {
-    this.config[componentName] = { ...this.config[componentName], ...newValues };
-  }
-
   get<T extends AlainConfigKey>(componentName: T, key?: string): AlainConfig[T] {
     const res = ((this.config[componentName] as { [key: string]: NzSafeAny }) || {}) as NzSafeAny;
     return key ? { [key]: res[key] } : res;
   }
 
-  merge<R, T extends AlainConfigKey>(componentName: T, ...defaultValues: R[]): R {
+  merge<T extends AlainConfigKey>(componentName: T, ...defaultValues: AlainConfig[T][]): AlainConfig[T] {
     return deepMergeKey({}, true, ...defaultValues, this.get(componentName));
   }
 
-  attach<R, T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, defaultValues: R) {
+  attach<T extends AlainConfigKey>(componentThis: NzSafeAny, componentName: T, defaultValues: AlainConfig[T]) {
     Object.assign(componentThis, this.merge(componentName, defaultValues));
   }
 

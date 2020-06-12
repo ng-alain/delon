@@ -61,7 +61,7 @@ export interface ArrayServiceGetKeysByTreeNodeOptions {
 export class ArrayService {
   private c: AlainUtilArrayConfig;
   constructor(cog: AlainConfigService) {
-    this.c = cog.merge<AlainUtilArrayConfig, 'utilArray'>('utilArray', {
+    this.c = cog.merge('utilArray', {
       deepMapName: 'deep',
       parentMapName: 'parent',
       idMapName: 'id',
@@ -72,7 +72,7 @@ export class ArrayService {
       selectedMapname: 'selected',
       expandedMapname: 'expanded',
       disabledMapname: 'disabled',
-    });
+    })!;
   }
   /**
    * 将树结构转换成数组结构
