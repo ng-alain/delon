@@ -119,7 +119,7 @@ export class RangePickerComponent implements ControlValueAccessor {
           },
         ],
       },
-    });
+    })!;
     this.defaultShortcuts = { ...cog.shortcuts } as AlainDateRangePickerShortcut;
     Object.assign(this, cog);
   }
