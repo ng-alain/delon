@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, Renderer2 } from '@angular/core';
 import { AppService, SiteTheme } from '@core/app.service';
-import { AlainChartConfig, AlainConfigService } from '@delon/util';
+import { AlainConfigService } from '@delon/util';
 
 @Component({
   selector: 'theme-btn',
