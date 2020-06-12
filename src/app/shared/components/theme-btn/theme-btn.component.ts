@@ -26,7 +26,7 @@ export class ThemeBtnComponent implements OnInit {
   }
 
   private updateChartTheme(): void {
-    this.configSrv.update<AlainChartConfig, 'chart'>('chart', { theme: this.theme === 'dark' ? 'dark' : '' });
+    this.configSrv.set('chart', { theme: this.theme === 'dark' ? 'dark' : '' });
   }
 
   onThemeChange(theme: SiteTheme): void {
