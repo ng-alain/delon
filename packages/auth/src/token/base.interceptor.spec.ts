@@ -99,8 +99,16 @@ describe('auth: base.interceptor', () => {
         req.flush('ok!');
       });
 
-      it('should be non-ignore', (done: () => void) => {
+      it('should be empty ignore', (done: () => void) => {
         genModule({ ignores: [] }, basicModel);
+        http.get('/login', { responseType: 'text' }).subscribe(done);
+        const req = httpBed.expectOne('/login') as TestRequest;
+        expect(req.request.headers.get('token')).toBe('123');
+        req.flush('ok!');
+      });
+
+      it('should be undefined', (done: () => void) => {
+        genModule({ ignores: undefined }, basicModel);
         http.get('/login', { responseType: 'text' }).subscribe(done);
         const req = httpBed.expectOne('/login') as TestRequest;
         expect(req.request.headers.get('token')).toBe('123');
