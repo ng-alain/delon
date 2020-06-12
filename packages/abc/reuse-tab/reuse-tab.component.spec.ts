@@ -164,6 +164,12 @@ describe('abc: reuse-tab', () => {
         page.to('#c');
         expect(page.list[page.count - 1].title).toBe(`new c title`);
       }));
+      it(`should reset title via service`, fakeAsync(() => {
+        page.to('#c');
+        srv.title = 'NEW TITLE';
+        expect(page.list[page.count - 1].title).toBe(`NEW TITLE`);
+        page.end();
+      }));
     });
 
     describe('[property]', () => {
