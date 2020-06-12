@@ -1,6 +1,7 @@
 import { Type } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
 import { Chart } from '@antv/g2';
+import { Point } from '@antv/g2/lib/interface';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type PageG2Type = 'geometries' | 'views';
@@ -144,23 +145,28 @@ export class PageG2<T> {
     return this;
   }
 
-  checkTooltip(includeText: string | null, point?: { x: number; y: number }) {
+  get firstDataPoint(): Point {
+    // tslint:disable-next-line: no-string-literal
+    return this.chart.getXY((this.context as NzSafeAny)['data'][0]);
+  }
+
+  checkTooltip(_includeText: string | null, point?: Point) {
     if (!point) {
-      const g2El = this.dl.nativeElement as HTMLElement;
-      point = {
-        x: g2El.offsetWidth / 2,
-        y: g2El.offsetHeight / 2,
-      };
+      point = this.firstDataPoint;
     }
     this.chart.showTooltip(point);
-    const el = this.getEl('.g2-tooltip');
-    if (includeText === null) {
-      expect(el == null).toBe(true, `Shoule be not found g2-tooltip element`);
-    } else {
-      expect(el != null).toBe(true, `Shoule be has g2-tooltip element`);
-      const text = el.textContent!.trim();
-      expect(text.includes(includeText)).toBe(true, `Shoule be include "${includeText}" text of tooltip text context "${text}"`);
-    }
+    expect(this.chart.getController('tooltip') != null).toBe(true);
+    return this;
+  }
+
+  checkClickItem(): this {
+    const point = this.firstDataPoint;
+    const clientPoint = this.chart.canvas.getClientByPoint(point.x, point.y);
+    const event = new MouseEvent('click', {
+      clientX: clientPoint.x,
+      clientY: clientPoint.y,
+    });
+    (this.chart.canvas.get('el') as HTMLElement).dispatchEvent(event);
     return this;
   }
 }

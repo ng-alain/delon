@@ -67,9 +67,9 @@ describe('chart: mini-area', () => {
     }));
 
     describe('#tooltipType', () => {
-      xit('with default', fakeAsync(() => page.dcFirst().checkTooltip('10', { x: 50, y: 50 })));
+      it('with default', fakeAsync(() => page.dcFirst().checkTooltip('10')));
 
-      xit('with mini', fakeAsync(() => {
+      it('with mini', fakeAsync(() => {
         page.context.tooltipType = 'mini';
         page.dcFirst().checkTooltip(null);
       }));

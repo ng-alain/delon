@@ -62,7 +62,7 @@ describe('chart: bar', () => {
       expect(page.chart.render).toHaveBeenCalled();
     }));
 
-    xit('tooltip', () => page.checkTooltip('1月', { x: 50, y: 50 }));
+    it('tooltip', () => page.checkTooltip('1月'));
   });
 
   it('#delay', fakeAsync(() => checkDelay(G2BarModule, TestComponent)));
@@ -80,6 +80,7 @@ describe('chart: bar', () => {
       [padding]="padding"
       [data]="data"
       [autoLabel]="autoLabel"
+      (clickItem)="clickItem($event)"
     ></g2-bar>
     <ng-template #titleTpl><p id="titleTpl">titleTpl</p></ng-template>
   `,
@@ -94,11 +95,12 @@ class TestComponent implements OnInit {
   padding: number[];
   autoLabel = false;
   color = 'rgba(24, 144, 255, 0.85)';
+  clickItem(): void {}
   ngOnInit(): void {
     for (let i = 0; i < PageG2DataCount; i += 1) {
       this.data.push({
         x: `${i + 1}月`,
-        y: Math.floor(Math.random() * 1000) + 200,
+        y: i === 0 ? 10 : Math.floor(Math.random() * 1000) + 200,
       });
     }
   }
