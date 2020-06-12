@@ -11,10 +11,10 @@ declare var XLSX: any;
 export class XlsxService {
   private cog: AlainXlsxConfig;
   constructor(private http: HttpClient, private lazy: LazyService, configSrv: AlainConfigService) {
-    this.cog = configSrv.merge<AlainXlsxConfig, 'xlsx'>('xlsx', {
+    this.cog = configSrv.merge('xlsx', {
       url: '//cdn.bootcss.com/xlsx/0.15.6/xlsx.full.min.js',
       modules: [],
-    });
+    })!;
   }
 
   private init(): Promise<LazyResult[]> {

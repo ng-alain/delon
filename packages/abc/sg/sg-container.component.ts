@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { REP_TYPE } from '@delon/theme';
-import { AlainConfigService, AlainSGConfig, InputNumber } from '@delon/util';
+import { AlainConfigService, InputNumber } from '@delon/util';
 
 @Component({
   selector: 'sg-container, [sg-container]',
@@ -30,7 +30,7 @@ export class SGContainerComponent {
   }
 
   constructor(configSrv: AlainConfigService) {
-    configSrv.attach<AlainSGConfig, 'sg'>(this, 'sg', {
+    configSrv.attach(this, 'sg', {
       gutter: 32,
       col: 2,
     });

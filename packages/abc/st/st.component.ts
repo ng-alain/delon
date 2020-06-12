@@ -218,7 +218,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private delonI18n: DelonLocaleService,
     configSrv: AlainConfigService,
   ) {
-    this.setCog(configSrv.merge<AlainSTConfig, 'st'>('st', ST_DEFULAT_CONFIG));
+    this.setCog(configSrv.merge('st', ST_DEFULAT_CONFIG)!);
 
     this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');

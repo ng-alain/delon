@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { REP_TYPE } from '@delon/theme';
-import { AlainConfigService, AlainSEConfig, InputBoolean, InputNumber, toNumber } from '@delon/util';
+import { AlainConfigService, InputBoolean, InputNumber, toNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types/any';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -71,7 +71,7 @@ export class SEContainerComponent {
   }
 
   constructor(configSrv: AlainConfigService) {
-    configSrv.attach<AlainSEConfig, 'se'>(this, 'se', {
+    configSrv.attach(this, 'se', {
       size: 'default',
       nzLayout: 'horizontal',
       gutter: 32,

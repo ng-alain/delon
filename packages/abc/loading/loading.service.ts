@@ -21,7 +21,7 @@ export class LoadingService implements OnDestroy {
   }
 
   constructor(private overlay: Overlay, configSrv: AlainConfigService) {
-    this.cog = configSrv.merge<AlainLoadingConfig, 'loading'>('loading', {
+    this.cog = configSrv.merge('loading', {
       type: 'spin',
       text: '加载中...',
       icon: {
@@ -30,7 +30,7 @@ export class LoadingService implements OnDestroy {
         spin: true,
       },
       delay: 0,
-    });
+    })!;
     this.loading$ = this.n$
       .asObservable()
       .pipe(debounce(() => timer(this.opt!.delay)))

@@ -36,7 +36,7 @@ export class ACLService {
   }
 
   constructor(configSrv: AlainConfigService) {
-    this.options = configSrv.merge('acl', ACL_DEFAULT_CONFIG);
+    this.options = configSrv.merge('acl', ACL_DEFAULT_CONFIG)!;
   }
 
   private parseACLType(val: string | string[] | number | number[] | ACLType | null): ACLType {
