@@ -247,15 +247,15 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     this.srv.change.pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
-      switch (res?.active) {
-        case 'title':
-          this.updateTitle(res);
-          return;
-        case 'override':
-          if (res?.list?.length === this.list.length) {
+      if (res?.list?.length === this.list.length) {
+        switch (res?.active) {
+          case 'title':
+            this.updateTitle(res);
+            return;
+          case 'override':
             this.updatePos$.next();
-          }
-          return;
+            return;
+        }
       }
       this.genList(res!);
     });
