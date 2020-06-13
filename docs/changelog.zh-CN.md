@@ -18,7 +18,7 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ### Scaffold
 
-* **theme-btn:** 使用 `set` 替代 `update` ([#1712](https://github.com/ng-alain/ng-alain/pull/1712/files))
+* **BREAKING CHANGES** **theme-btn:** 使用 `set` 替代 `update` ([#1712](https://github.com/ng-alain/ng-alain/pull/1712/files))
 
 ### Bug Fixes
 

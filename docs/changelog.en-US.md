@@ -18,7 +18,7 @@ NG-ALAIN strictly follows [Semantic Versioning 2.0.0](http://semver.org/lang/zh-
 
 ### Scaffold
 
-* **theme-btn:** `update` instead of `set` ([#1712](https://github.com/ng-alain/ng-alain/pull/1712/files))
+* **BREAKING CHANGES** **theme-btn:** `update` instead of `set` ([#1712](https://github.com/ng-alain/ng-alain/pull/1712/files))
 
 ### Bug Fixes
 
