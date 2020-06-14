@@ -1,11 +1,11 @@
 name: Deploy website
 
-# on: push
+on: push
 
-on:
-  push:
-    branches:
-      - 'publish-**'
+# on:
+#   push:
+#     branches:
+#       - 'publish-**'
 
 jobs:
   build-and-deploy:
@@ -22,9 +22,23 @@ jobs:
           npm run site:gen
           node scripts/ci/build-no-lvy
           node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /delon/
+          cp ./src/dist/index.html ./src/dist/404.html
 
-      - name: gen 404.html
-        run: cp ./src/dist/index.html ./src/dist/404.html
+      - name: deploy-to-gh-pages-gitee
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          PUBLISH_BRANCH: gh-pages-gitee
+          PUBLISH_DIR: ./src/dist
+        with:
+          emptyCommits: false
+
+      - name: pre-deploy-to-others
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: '/delon/'
+          replace: '/'
+          include: '*.html'
 
       - name: deploy-to-surge
         uses: yohix/deploy-surge@v1.0.0
