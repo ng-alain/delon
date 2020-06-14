@@ -1,4 +1,4 @@
-FROM nginx:stable-alpine
+FROM nginx:lts
 
 MAINTAINER authors="cipchk <cipchk@qq.com>"
 
