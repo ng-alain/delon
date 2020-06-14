@@ -22,16 +22,7 @@ jobs:
           npm run site:gen
           node scripts/ci/build-no-lvy
           node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /delon/
-
-      - name: gen 404.html
-        run: cp ./src/dist/index.html ./src/dist/404.html
-
-      - name: deploy-to-surge
-        uses: yohix/deploy-surge@v1.0.0
-        with:
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-          DOMAIN_NAME: https://ng-alain-doc.surge.sh
-          BUILD_DIRECTORY: ./src/dist
+          cp ./src/dist/index.html ./src/dist/404.html
 
       - name: deploy-to-gh-pages
         uses: peaceiris/actions-gh-pages@v2
@@ -42,6 +33,20 @@ jobs:
           PUBLISH_DIR: ./src/dist
         with:
           emptyCommits: false
+
+      - name: deploy-to-surge-pre
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: '/delon/'
+          replace: '/'
+          include: '\.html$'
+
+      - name: deploy-to-surge
+        uses: yohix/deploy-surge@v1.0.0
+        with:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+          DOMAIN_NAME: https://ng-alain-doc.surge.sh
+          BUILD_DIRECTORY: ./src/dist
 
       - uses: actions/checkout@v1
       - uses: pixta-dev/repository-mirroring-action@v1
