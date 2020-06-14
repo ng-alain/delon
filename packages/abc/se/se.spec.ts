@@ -428,6 +428,17 @@ describe('abc: edit', () => {
       `);
       expect(page.getEl('#expected').id).toBe('expected');
     });
+    it(`should be ingored set id when control has id value`, () => {
+      const id = 'aaaa';
+      genModule(`
+      <form nz-form se-container>
+        <se label="a">
+          <input type="text" id="${id}" [(ngModel)]="val" name="val">
+        </se>
+      </form>
+      `);
+      expect(page.getEl('label').getAttribute('for')).toBe(id);
+    });
     it(`should be keeping placeholder when content is empty`, () => {
       genModule(`
       <form nz-form se-container>
