@@ -24,16 +24,23 @@ jobs:
           node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --base-href /delon/
           cp ./src/dist/index.html ./src/dist/404.html
 
-      - name: deploy-to-gh-pages-gitee
+      - name: deploy-to-gh-pages
         uses: peaceiris/actions-gh-pages@v2
         env:
           PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          PUBLISH_BRANCH: gh-pages-gitee
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./src/dist
         with:
           emptyCommits: false
 
-      - name: pre-deploy-to-others
+      - name: sync-to-gitee
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: git@gitee.com:ng-alain/delon.git
+          ssh_private_key: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
+
+      - name: deploy-to-surge-pre
         uses: jacobtomlinson/gha-find-replace@master
         with:
           find: '/delon/'
@@ -46,19 +53,3 @@ jobs:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
           DOMAIN_NAME: https://ng-alain-doc.surge.sh
           BUILD_DIRECTORY: ./src/dist
-
-      - name: deploy-to-gh-pages
-        uses: peaceiris/actions-gh-pages@v2
-        env:
-          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: ./src/dist
-        with:
-          emptyCommits: false
-
-      - uses: actions/checkout@v1
-      - uses: pixta-dev/repository-mirroring-action@v1
-        with:
-          target_repo_url: git@gitee.com:ng-alain/delon.git
-          ssh_private_key: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
