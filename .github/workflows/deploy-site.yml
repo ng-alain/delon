@@ -1,14 +1,10 @@
-name: Deploy website
+name: Deploy
 
-# on: push
-
-on:
-  push:
-    branches:
-      - 'publish-**'
+on: push
 
 jobs:
-  build-and-deploy:
+  website:
+    if: "startsWith(github.event.commits[0].message, 'release')"
     runs-on: ubuntu-latest
     steps:
       - name: checkout

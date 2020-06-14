@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     { type: 'basic', url: 'https://ng-alain.github.io/ng-alain' },
     { type: 'pro', url: 'https://e.ng-alain.com/theme/pro' },
     { type: 'ms', url: 'https://e.ng-alain.com/theme/ms' },
+    { type: 'yun', url: 'https://e.ng-alain.com/theme/yun' },
   ];
   constructor(@Inject(ALAIN_I18N_TOKEN) public i18n: I18NService, private ngZone: NgZone, @Inject(DOCUMENT) private doc: Document) {}
 

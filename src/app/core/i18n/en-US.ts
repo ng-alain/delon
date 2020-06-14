@@ -22,6 +22,8 @@ export const ENUS = {
   'app.home.theme.pro.desc': 'An enterprise-class UI design language for web applications',
   'app.home.theme.ms': 'Microservices',
   'app.home.theme.ms.desc': 'For microservice development style',
+  'app.home.theme.yun': 'Yun',
+  'app.home.theme.yun.desc': 'Let users focus more on business',
   'app.header.menu.home': 'Home',
   'app.header.menu.docs': 'Docs',
   'app.header.menu.components': 'Components',

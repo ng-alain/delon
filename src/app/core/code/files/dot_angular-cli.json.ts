@@ -3,7 +3,7 @@ export default {
     {
       root: 'src',
       outDir: 'dist',
-      assets: ['assets', 'favicon.ico'],
+      assets: ['assets'],
       index: 'index.html',
       main: 'main.ts',
       polyfills: 'polyfills.ts',

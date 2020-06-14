@@ -17,7 +17,7 @@ export default {
             main: 'src/main.ts',
             polyfills: 'src/polyfills.ts',
             tsConfig: 'src/tsconfig.app.json',
-            assets: ['src/favicon.ico', 'src/assets'],
+            assets: ['src/assets'],
             styles: ['src/styles.css'],
           },
           configurations: {
