@@ -6,8 +6,8 @@ release:
   stage: compile
   job_type: lite_image_build
   only:
-    tags:
-      - .*
+    branches:
+      - master
   allow_failure: false
   compile:
     build_dir: /
@@ -24,8 +24,8 @@ self:
   stage: deploy
   job_type: DCS_deploy
   only:
-    tags:
-      - .*
+    branches:
+      - master
   allow_failure: false
   dependencies:
     - release
