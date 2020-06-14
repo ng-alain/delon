@@ -10,6 +10,8 @@ module: import { EllipsisModule } from '@delon/abc/ellipsis';
 
 ## API
 
+### ellipsis
+
 | 成员 | 说明 | 类型 | 默认值 |
 |----|----|----|-----|
 | `[tooltip]` | 移动到文本展示完整内容的提示 | `boolean` | `false` |
