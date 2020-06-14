@@ -34,12 +34,6 @@ jobs:
         with:
           emptyCommits: false
 
-      - name: sync-to-gitee
-        uses: pixta-dev/repository-mirroring-action@v1
-        with:
-          target_repo_url: git@gitee.com:ng-alain/delon.git
-          ssh_private_key: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
-
       - name: deploy-to-surge-pre
         uses: jacobtomlinson/gha-find-replace@master
         with:
@@ -53,3 +47,9 @@ jobs:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
           DOMAIN_NAME: https://ng-alain-doc.surge.sh
           BUILD_DIRECTORY: ./src/dist
+
+      - uses: actions/checkout@v1
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url: git@gitee.com:ng-alain/delon.git
+          ssh_private_key: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
