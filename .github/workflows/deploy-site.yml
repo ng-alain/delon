@@ -1,9 +1,9 @@
-name: Deploy website
+name: Deploy
 
 on: push
 
 jobs:
-  build-and-deploy:
+  website:
     if: "startsWith(github.event.commits[0].message, 'release')"
     runs-on: ubuntu-latest
     steps:
