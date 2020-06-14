@@ -38,7 +38,7 @@ jobs:
         with:
           find: '/delon/'
           replace: '/'
-          include: '*.html'
+          include: '\.html$'
 
       - name: deploy-to-surge
         uses: yohix/deploy-surge@v1.0.0
