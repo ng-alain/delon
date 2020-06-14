@@ -1,4 +1,4 @@
-export default (componentName: string) => `import { NgModule, APP_INITIALIZER } from '@angular/core';
+export default (componentName: string) => `import { NgModule, APP_INITIALIZER, VERSION as VERSION_NG } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -71,7 +71,7 @@ export class AppModule {
   constructor() {
     setTimeout(() => {
       document.querySelector('#VERSION').innerHTML = \`
-      VERSIONS: ng-zorro-antd(\${VERSION_ZORRO.full}), @delon(\${VERSION_ALAIN.full})
+      VERSIONS: angular(\${VERSION_NG.full}), ng-zorro-antd(\${VERSION_ZORRO.full}), @delon(\${VERSION_ALAIN.full})
       \`;
     }, 1000);
   }
