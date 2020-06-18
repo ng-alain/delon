@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AppService } from '@core/app.service';
+import { AppService, CodeService, I18NService } from '@core';
 import { SFSchema } from '@delon/form';
 import { ALAIN_I18N_TOKEN, _HttpClient } from '@delon/theme';
 import { copy } from '@delon/util';
@@ -8,8 +8,6 @@ import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CodeService } from '../../../core/code/code.service';
-import { I18NService } from '../../../core/i18n/service';
 
 const stackBlitzTpl = `
 import { Component } from '@angular/core';

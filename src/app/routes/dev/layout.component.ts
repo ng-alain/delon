@@ -24,8 +24,8 @@ import {
   SettingOutline,
   UserOutline,
 } from '@ant-design/icons-angular/icons';
+import { I18NService, LangType } from '@core';
 import { ReuseCustomContextMenu } from '@delon/abc/reuse-tab';
-import { I18NService, LangType } from 'app/core/i18n/service';
 
 const ICONS = [
   MenuFoldOutline,

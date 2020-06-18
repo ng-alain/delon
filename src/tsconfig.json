@@ -1,19 +1,11 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "sourceMap": false,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "outDir": "../out-tsc/app",
-    "baseUrl": ".",
+    "outDir": "./out-tsc/app",
     "types": [],
-    "paths": {
-      "@core/*": ["app/core/*"],
-      "@shared": ["app/shared"],
-      "@shared/*": ["app/shared/*"],
-      "@delon/*": ["../packages/*"]
-    }
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
-  "exclude": ["test.ts", "**/*.spec.ts", "templates/*.ts"]
+  "files": ["main.ts", "polyfills.ts"],
+  "exclude": ["**/*.d.ts", "test.ts", "**/*.spec.ts", "templates/*.ts"]
 }

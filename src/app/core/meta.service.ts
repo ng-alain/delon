@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { I18NService } from '../core/i18n/service';
 import { Meta, MetaList, MetaSearchGroup, MetaSearchGroupItem } from '../interfaces';
 import { META as ACLMeta } from '../routes/gen/acl/meta';
 import { META as AuthMeta } from '../routes/gen/auth/meta';
@@ -13,6 +12,7 @@ import { META as FormMeta } from '../routes/gen/form/meta';
 import { META as MockMeta } from '../routes/gen/mock/meta';
 import { META as ThemeMeta } from '../routes/gen/theme/meta';
 import { META as UtilMeta } from '../routes/gen/util/meta';
+import { I18NService } from './i18n/service';
 
 const FULLMETAS: Meta[] = [
   DocsMeta,

@@ -1,10 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { AppService } from '@core/app.service';
 import { deepCopy } from '@delon/util';
 import sdk from '@stackblitz/sdk';
 import { getParameters } from 'codesandbox/lib/api/define';
 import * as pkg from '../../../../package.json';
+import { AppService } from '../app.service';
 import angularJSON from './files/angular.json';
 import appModuleTS from './files/app.module';
 import delonABCModuleTS from './files/delon-abc.module';

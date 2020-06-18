@@ -1,39 +1,41 @@
 import { Component } from '@angular/core';
-import { STColumn } from '@delon/abc/st';
+import { SFSchema, SFUploadWidgetSchema } from '@delon/form';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `
-    <st [data]="url" ps="2" [req]="{ params: params }" [columns]="columns" [expand]="expand">
-      <ng-template #expand let-item let-index="index" let-column="column">
-        <nz-card [nzBordered]="false">
-          <nz-alert nzType="info" [nzMessage]="alertMsg" nzShowIcon>
-            <ng-template #alertMsg> 结算总金额：{{ 1000 }} </ng-template>
-          </nz-alert>
-          <st bordered="true" [data]="url" ps="2" [req]="{ params: params }" [columns]="columns" [body]="bodyTpl">
-            <ng-template #bodyTpl let-s>
-              <tr>
-                <td>合计</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </ng-template>
-          </st>
-        </nz-card>
-      </ng-template>
-    </st>
-  `,
+  template: ` <sf [schema]="schema" (formSubmit)="submit($event)"></sf> `,
 })
 export class DemoComponent {
-  url = `/users?total=100`;
-  params = { a: 1, b: 2 };
-  columns: STColumn[] = [
-    { title: '编号', index: 'id' },
-    { title: '头像', type: 'img', width: 50, index: 'picture.thumbnail' },
-    { title: '邮箱', index: 'email' },
-    { title: '电话', index: 'phone' },
-    { title: '注册时间', type: 'date', index: 'registered' },
-  ];
+  schema: SFSchema = {
+    properties: {
+      file: {
+        type: 'string',
+        title: '单个文件',
+        enum: [
+          {
+            uid: -1,
+            name: 'xxx.png',
+            status: 'done',
+            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+            response: {
+              resource_id: 1,
+            },
+          },
+        ],
+        default: 1,
+        ui: {
+          widget: 'upload',
+          action: '/upload',
+          resReName: 'resource_id',
+          urlReName: 'url',
+        } as SFUploadWidgetSchema,
+      },
+    },
+    required: ['file'],
+  };
+  constructor(public msg: NzMessageService) {}
+  submit(value: any) {
+    this.msg.success(JSON.stringify(value));
+  }
 }

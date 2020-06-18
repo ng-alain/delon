@@ -1,12 +1,10 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { I18NService, MetaService, MobileService } from '@core';
 import { copy } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { filter } from 'rxjs/operators';
-import { I18NService } from '../../core/i18n/service';
-import { MetaService } from '../../core/meta.service';
-import { MobileService } from '../../core/mobile.service';
 import { MetaSearchGroup, MetaSearchGroupItem } from '../../interfaces';
 
 declare const docsearch: any;

@@ -1,8 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { I18NService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import AOS from 'aos';
-import { I18NService } from '../../core/i18n/service';
 
 @Component({
   selector: 'app-home',
