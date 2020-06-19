@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, Renderer2 } from '@angular/core';
-import { AppService, SiteTheme } from '@core/app.service';
+import { AppService, SiteTheme } from '@core';
 import { AlainConfigService } from '@delon/util';
 
 @Component({

@@ -14,9 +14,8 @@ registerLocaleData(localeZh);
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 
+import { I18NService, StartupService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { I18NService } from './core/i18n/service';
-import { StartupService } from './core/startup.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';

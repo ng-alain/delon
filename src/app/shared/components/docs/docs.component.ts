@@ -1,12 +1,13 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { I18NService, MetaService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { I18NService } from '../../../core/i18n/service';
-import { MetaService } from '../../../core/meta.service';
+
+declare var hljs: any;
 
 @Component({
   selector: 'app-docs',

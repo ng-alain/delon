@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
+import { I18NService, MetaService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { I18NService } from '../../../core/i18n/service';
-import { MetaService } from '../../../core/meta.service';
 
 @Component({
   selector: 'main-menu, [main-menu]',

@@ -18,7 +18,7 @@ import { Component, Inject, ViewChild } from '@angular/core';
 import { SFSchema, SFComponent } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { I18NService } from '@core/i18n/service';
+import { I18NService } from '@core';
 
 @Component({
   selector: 'app-demo',

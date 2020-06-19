@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AppService } from '@core/app.service';
+import { AppService, CodeService, I18NService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { copy, deepCopy } from '@delon/util';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { CodeService } from '../../../core/code/code.service';
-import { I18NService } from './../../../core/i18n/service';
 
 @Component({
   selector: 'code-box',

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MetaService } from '../../../core/meta.service';
-import { MobileService } from '../../../core/mobile.service';
+import { MetaService, MobileService } from '@core';
 
 @Component({
   selector: 'app-content',

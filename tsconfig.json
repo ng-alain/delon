@@ -16,7 +16,8 @@
     "baseUrl": "./",
     "paths": {
       "@delon/*": ["./packages/*"],
-      "@core/*": ["./src/app/core/*"]
+      "@shared": ["./src/app/shared"],
+      "@core": ["./src/app/core/index"]
     },
     "noUnusedParameters": true,
     "noUnusedLocals": true,
