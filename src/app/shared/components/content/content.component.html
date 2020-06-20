@@ -1,6 +1,6 @@
 <div nz-row>
   <div nz-col *ngIf="!isMobile" nzXs="24" nzSm="24" nzMd="24" nzLg="6" nzXl="5" nzXXl="4" class="main-menu">
-    <nz-affix>
+    <nz-affix *ngIf="isBrowser">
       <div main-menu (to)="to()"></div>
     </nz-affix>
   </div>

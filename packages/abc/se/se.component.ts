@@ -146,7 +146,8 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     this.isBindModel = true;
     this.ngControl.statusChanges!.pipe(takeUntil(this.unsubscribe$)).subscribe(res => this.updateStatus(res === 'INVALID'));
     if (this._autoId) {
-      const control = (this.ngControl.valueAccessor as NzSafeAny)?._elementRef?.nativeElement as HTMLElement;
+      const controlAccessor = this.ngControl.valueAccessor as NzSafeAny;
+      const control = (controlAccessor?.elementRef || controlAccessor?._elementRef)?.nativeElement as HTMLElement;
       if (control.id) {
         this._id = control.id;
       } else {

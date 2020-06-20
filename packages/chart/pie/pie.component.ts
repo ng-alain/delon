@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -80,7 +81,13 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     return this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
   }
 
-  constructor(public el: ElementRef<HTMLElement>, private ngZone: NgZone, private cdr: ChangeDetectorRef, configSrv: AlainConfigService) {
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
+    configSrv: AlainConfigService,
+    private platform: Platform,
+  ) {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
@@ -190,6 +197,9 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 

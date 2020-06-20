@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -65,7 +66,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
 
   // #endregion
 
-  constructor(private ngZone: NgZone, configSrv: AlainConfigService) {
+  constructor(private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
@@ -154,6 +155,9 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 

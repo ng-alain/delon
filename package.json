@@ -21,6 +21,7 @@
   },
   "homepage": "https://ng-alain.com",
   "scripts": {
+    "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
     "start": "npm run site:gen && ng s -o --hmr",
     "lint": "bash scripts/ci/lint.sh -ts -less",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
@@ -29,14 +30,18 @@
     "test:integration": "bash scripts/ci/build-schematics.sh -b -t -clone -integration",
     "build": "bash scripts/ci/build.sh",
     "build_artifacts": "bash scripts/ci/build-artifacts.sh",
-    "analyze": "node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod --stats-json",
+    "analyze": "npm run ng-high-memory build --prod --stats-json",
     "site:gen": "node scripts/site/main init && node scripts/site/scripts/color.js && node scripts/site/scripts/theme.js",
-    "site:build": "npm run site:gen && node scripts/ci/build-no-lvy && node --max_old_space_size=5120 ./node_modules/@angular/cli/bin/ng build --prod",
+    "site:build": "npm run site:gen && node scripts/ci/build-no-lvy && npm run ng-high-memory build --prod",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --pkg package.json",
     "pre-publish": "node scripts/publish/publish.js && node scripts/publish/publish-scaffold.js && bash ../ng-alain/scripts/_ci/fix-mock.sh",
     "publish:next": "bash scripts/publish/publish.sh -next",
     "publish": "bash scripts/publish/publish.sh",
-    "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js"
+    "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js",
+    "ssr": "npm run ng-high-memory run site:serve-ssr",
+    "ssr:serve": "node src/dist/server/main.js",
+    "ssr:build": "npm run site:build && npm run ng-high-memory run site:server:production",
+    "ssr:prerender": "npm run ng-high-memory run site:prerender"
   },
   "dependencies": {
     "@angular/animations": "~9.1.9",
@@ -46,6 +51,7 @@
     "@angular/forms": "~9.1.9",
     "@angular/platform-browser": "~9.1.9",
     "@angular/platform-browser-dynamic": "~9.1.9",
+    "@angular/platform-server": "~9.1.9",
     "@angular/router": "~9.1.9",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
@@ -73,7 +79,9 @@
     "@webcomponents/custom-elements": "^1.4.1",
     "aos": "^3.0.0-beta.6",
     "docsearch.js": "^2.6.3",
-    "@ng-util/monaco-editor": "^9.2.0"
+    "@ng-util/monaco-editor": "^9.2.0",
+    "@nguniversal/express-engine": "^9.1.1",
+    "express": "^4.15.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.6",
@@ -149,7 +157,9 @@
     "lint-staged": "^10.2.4",
     "ng-alain-codelyzer": "^0.0.1",
     "ng-alain-sts": "^0.0.1",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "^3.9.0",
+    "@nguniversal/builders": "^9.1.1",
+    "@types/express": "^4.17.0"
   },
   "husky": {
     "hooks": {

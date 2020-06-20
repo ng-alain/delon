@@ -20,6 +20,9 @@ export class AjvSchemaValidatorFactory extends SchemaValidatorFactory {
 
   constructor(@Inject(AlainConfigService) cogSrv: AlainConfigService) {
     super();
+    if (!(typeof document === 'object' && !!document)) {
+      return;
+    }
     this.options = mergeConfig(cogSrv);
     this.ajv = new Ajv({
       ...this.options.ajv,

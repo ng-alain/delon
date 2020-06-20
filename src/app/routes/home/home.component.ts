@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { I18NService } from '@core';
@@ -18,13 +19,22 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     { type: 'ms', url: 'https://e.ng-alain.com/theme/ms' },
     { type: 'yun', url: 'https://e.ng-alain.com/theme/yun' },
   ];
-  constructor(@Inject(ALAIN_I18N_TOKEN) public i18n: I18NService, private ngZone: NgZone, @Inject(DOCUMENT) private doc: Document) {}
+  get isBrowser(): boolean {
+    return this.platform.isBrowser;
+  }
+  constructor(
+    @Inject(ALAIN_I18N_TOKEN) public i18n: I18NService,
+    private ngZone: NgZone,
+    @Inject(DOCUMENT) private doc: Document,
+    private platform: Platform,
+  ) {}
 
   private get body(): HTMLElement {
     return this.doc.querySelector('body') as HTMLElement;
   }
 
   ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
     this.ngZone.runOutsideAngular(() => AOS.init());
   }
 

@@ -1,4 +1,4 @@
-<nz-affix #affix *ngIf="fixed; else phTpl" [nzOffsetTop]="fixedOffsetTop">
+<nz-affix #affix *ngIf="isBrowser && fixed; else phTpl" [nzOffsetTop]="fixedOffsetTop">
   <ng-template [ngTemplateOutlet]="phTpl"></ng-template>
 </nz-affix>
 <ng-template #phTpl>

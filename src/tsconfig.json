@@ -7,5 +7,9 @@
     "esModuleInterop": true
   },
   "files": ["main.ts", "polyfills.ts"],
-  "exclude": ["**/*.d.ts", "test.ts", "**/*.spec.ts", "templates/*.ts"]
+  "exclude": ["**/*.d.ts", "test.ts", "**/*.spec.ts", "templates/*.ts"],
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
 }

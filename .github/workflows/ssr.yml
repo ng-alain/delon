@@ -1,0 +1,26 @@
+name: SSR
+
+on: push
+
+jobs:
+  website:
+    if: "contains(github.event.commits[0].message, 'ssr')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: install
+        run: npm install
+
+      - name: build
+        run: |
+          node scripts/ci/build-no-lvy
+          npm run ssr:build
+
+      - name: deploy-to-surge
+        uses: yohix/deploy-surge@v1.0.0
+        with:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+          DOMAIN_NAME: https://ng-alain-doc-ssr.surge.sh
+          BUILD_DIRECTORY: ./src/dist/browser

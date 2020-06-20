@@ -1,13 +1,12 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
-import { createCustomElement } from '@angular/elements';
+import { APP_INITIALIZER, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
 // angular i18n
-import { registerLocaleData } from '@angular/common';
+import { isPlatformBrowser, registerLocaleData } from '@angular/common';
 import localeZh from '@angular/common/locales/zh';
 registerLocaleData(localeZh);
 
@@ -36,9 +35,25 @@ export function StartupServiceFactory(startupService: StartupService) {
   return () => startupService.load();
 }
 
+function registerElements(injector: Injector, platformId: {}) {
+  // issues: https://github.com/angular/angular/issues/24551#issuecomment-397862707
+  if (!isPlatformBrowser(platformId)) {
+    return;
+  }
+  const { createCustomElement } = require('@angular/elements');
+  Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
+    const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {
+      injector,
+    });
+    customElements.define(key, element);
+  });
+  // icon
+  customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
+}
+
 @NgModule({
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     HttpClientModule,
     GlobalConfigModule.forRoot(),
@@ -79,14 +94,7 @@ export function StartupServiceFactory(startupService: StartupService) {
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(injector: Injector) {
-    Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
-      const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {
-        injector,
-      });
-      customElements.define(key, element);
-    });
-    // icon
-    customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
+  constructor(injector: Injector, @Inject(PLATFORM_ID) platformId: {}) {
+    registerElements(injector, platformId);
   }
 }

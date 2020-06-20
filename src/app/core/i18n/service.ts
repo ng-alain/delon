@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AlainI18NService, DelonLocaleService, en_US as delonEnUS, zh_CN as delonZhCn } from '@delon/theme';
@@ -23,6 +24,7 @@ export class I18NService implements AlainI18NService {
     private delonI18n: DelonLocaleService,
     private translate: TranslateService,
     private dom: DomSanitizer,
+    private platform: Platform,
   ) {
     this.translate.setTranslation('en-US', ENUS);
     this.translate.setTranslation('zh-CN', ZHCN);
@@ -33,6 +35,9 @@ export class I18NService implements AlainI18NService {
   }
 
   private getBrowserLang(): string | undefined {
+    if (!this.platform.isBrowser) {
+      return undefined;
+    }
     const winNav: any = window.navigator;
     if (typeof window === 'undefined' || typeof winNav === 'undefined') {
       return undefined;

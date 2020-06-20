@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { environment } from '../../environments/environment';
 import { LayoutComponent } from '../layout/layout.component';
 import { SharedModule } from '../shared/shared.module';
 import { NotFoundComponent } from './404/404.component';
@@ -47,7 +46,7 @@ const routes: Route[] = [
 ];
 
 @NgModule({
-  imports: [SharedModule, RouterModule.forRoot(routes, environment.production ? {} : { useHash: true })],
+  imports: [SharedModule, RouterModule.forRoot(routes, { scrollPositionRestoration: 'top', initialNavigation: 'enabled' })],
   declarations: [...COMPONENTS],
 })
 export class RoutesModule {}

@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -41,6 +42,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   private unsubscribe$ = new Subject<void>();
   @ViewChild('conTpl', { static: false }) private conTpl: ElementRef;
   @ViewChild('affix', { static: false }) private affix: NzAffixComponent;
+  isBrowser = true;
 
   private get menus() {
     return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
@@ -95,7 +97,9 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     @Optional() @Inject(ReuseTabService) private reuseSrv: ReuseTabService,
     private cdr: ChangeDetectorRef,
     configSrv: AlainConfigService,
+    platform: Platform,
   ) {
+    this.isBrowser = platform.isBrowser;
     configSrv.attach(this, 'pageHeader', {
       home: '首页',
       homeLink: '/',

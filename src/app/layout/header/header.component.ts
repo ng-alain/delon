@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { I18NService, MetaService, MobileService } from '@core';
@@ -17,16 +18,6 @@ declare const docsearch: any;
   },
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
-  constructor(
-    public i18n: I18NService,
-    private router: Router,
-    private msg: NzMessageService,
-    private mobileSrv: MobileService,
-    private meta: MetaService,
-  ) {
-    router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => (this.menuVisible = false));
-    this.mobileSrv.change.subscribe(res => (this.isMobile = res));
-  }
   isMobile: boolean;
   useDocsearch = true;
   oldVersionList = [`8.x`, `1.x`];
@@ -40,6 +31,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   q: string;
   list: MetaSearchGroup[] = [];
+
+  constructor(
+    public i18n: I18NService,
+    private router: Router,
+    private msg: NzMessageService,
+    private mobileSrv: MobileService,
+    private meta: MetaService,
+    private platform: Platform,
+  ) {
+    router.events.pipe(filter(evt => evt instanceof NavigationEnd)).subscribe(() => (this.menuVisible = false));
+    this.mobileSrv.change.subscribe(res => (this.isMobile = res));
+  }
 
   ngOnInit(): void {
     if (!this.useDocsearch) this.changeQ('');
@@ -63,7 +66,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   private initDocSearch() {
-    if (!this.useDocsearch) return;
+    if (!this.platform.isBrowser || !this.useDocsearch) {
+      return;
+    }
+
     docsearch({
       // appId: '2WSH9IUML3',
       apiKey: 'abc8efef8b964f6ab0629f0ded98ab29',

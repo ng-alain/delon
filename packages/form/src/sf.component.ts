@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -212,6 +213,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
     @Optional() private aclSrv: ACLService,
     @Optional() @Inject(ALAIN_I18N_TOKEN) private i18nSrv: AlainI18NService,
     cogSrv: AlainConfigService,
+    private platform: Platform,
   ) {
     this.options = mergeConfig(cogSrv);
     this.liveValidate = this.options.liveValidate as boolean;
@@ -460,6 +462,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this._inited = true;
     this.validator();
   }
@@ -493,6 +498,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   validator(options: { emitError?: boolean; onlyRoot?: boolean } = { emitError: true, onlyRoot: true }): this {
+    if (!this.platform.isBrowser) {
+      return this;
+    }
     const fn = (property: FormProperty) => {
       property._runValidation();
       if (!(property instanceof PropertyGroup) || !property.properties) return;
@@ -529,6 +537,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * ```
    */
   refreshSchema(newSchema?: SFSchema, newUI?: SFUISchema): this {
+    if (!this.platform.isBrowser) {
+      return this;
+    }
     if (newSchema) this.schema = newSchema;
     if (newUI) this.ui = newUI;
 
@@ -574,6 +585,9 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
    * @param [emit] 是否触发 `formReset` 事件，默认：`false`
    */
   reset(emit = false): this {
+    if (!this.platform.isBrowser) {
+      return this;
+    }
     this.rootProperty!.resetValue(this.formData, false);
     Promise.resolve().then(() => this.cdr.detectChanges());
     if (emit) {
