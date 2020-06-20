@@ -41,7 +41,7 @@
     "ssr": "npm run ng-high-memory run site:serve-ssr",
     "ssr:serve": "node src/dist/server/main.js",
     "ssr:build": "npm run site:build && npm run ng-high-memory run site:server:production",
-    "ssr:prerender": "npm run ng-high-memory run site:prerender"
+    "ssr:prerender": "npm run site:build && npm run ng-high-memory run site:prerender"
   },
   "dependencies": {
     "@angular/animations": "~9.1.9",
