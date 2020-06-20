@@ -16,7 +16,7 @@ jobs:
       - name: build
         run: |
           node scripts/ci/build-no-lvy
-          npm run ssr:build
+          npm run ssr:prerender
 
       - name: deploy-to-surge
         uses: yohix/deploy-surge@v1.0.0
