@@ -2033,7 +2033,7 @@ class TestComponent {
   scroll: { y?: string; x?: string };
   multiSort: boolean | STMultiSort;
   noResult = 'noResult';
-  widthConfig: string[];
+  widthConfig: string[] = [];
   rowClickTime = 200;
   responsive = false;
   responsiveHideHeaderFooter = false;
