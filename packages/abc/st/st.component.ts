@@ -171,7 +171,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() expandAccordion = false;
   @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
   @Input() noResult: string | TemplateRef<void>;
-  @Input() widthConfig: string[];
+  @Input() widthConfig: string[] = [];
   @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
