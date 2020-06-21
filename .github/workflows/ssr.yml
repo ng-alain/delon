@@ -4,6 +4,7 @@ on: push
 
 jobs:
   website:
+    # if: "contains(github.event.commits[0].message, 'ssr')"
     runs-on: ubuntu-latest
     steps:
       - name: checkout
