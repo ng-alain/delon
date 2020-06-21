@@ -119,7 +119,7 @@
           "options": {
             "browserTarget": "site:build:production",
             "serverTarget": "site:server:production",
-            "routes": ["/", "zh"]
+            "routes": ["/", "zh", "en"]
           },
           "configurations": {
             "production": {}

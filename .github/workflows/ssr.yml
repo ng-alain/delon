@@ -18,9 +18,17 @@ jobs:
           npm run ssr:prerender
           ls -al ./src/dist/server
 
-      - name: deploy-to-surge
-        uses: yohix/deploy-surge@v1.0.0
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1
         with:
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-          DOMAIN_NAME: https://ng-alain-doc-ssr.surge.sh
-          BUILD_DIRECTORY: ./src/dist/server
+          publish-dir: './src/dist/server'
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy from GitHub Actions'
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+          alias: deploy-preview-${{ github.event.number }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: 'cfd0fbf1-29e9-4d31-9595-219f95ef65df'
