@@ -4,12 +4,12 @@ import { Inject, Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class ScrollService {
-  private _getDocument(): Document {
+  private _getDoc(): Document {
     return this._doc || document;
   }
 
-  private _getWindow(): Window {
-    const doc = this._getDocument();
+  private _getWin(): Window {
+    const doc = this._getDoc();
     return doc.defaultView || window;
   }
 
@@ -23,7 +23,8 @@ export class ScrollService {
     if (!this.platform.isBrowser) {
       return [0, 0];
     }
-    const win = this._getWindow();
+
+    const win = this._getWin();
     if (element && element !== win) {
       return [(element as Element).scrollLeft, (element as Element).scrollTop];
     } else {
@@ -39,7 +40,7 @@ export class ScrollService {
     if (!this.platform.isBrowser) {
       return;
     }
-    (element || this._getWindow()).scrollTo(position[0], position[1]);
+    (element || this._getWin()).scrollTo(position[0], position[1]);
   }
 
   /**
@@ -51,16 +52,18 @@ export class ScrollService {
     if (!this.platform.isBrowser) {
       return;
     }
-    if (!element) element = this._getDocument().body;
+    if (!element) {
+      element = this._getDoc().body;
+    }
 
-    element!.scrollIntoView();
+    element.scrollIntoView();
 
-    const w = this._getWindow();
-    if (w && w.scrollBy) {
-      w.scrollBy(0, element!.getBoundingClientRect().top - topOffset);
+    const win = this._getWin();
+    if (win && win.scrollBy) {
+      win.scrollBy(0, element!.getBoundingClientRect().top - topOffset);
 
-      if (w.pageYOffset < 20) {
-        w.scrollBy(0, -w.pageYOffset);
+      if (win.pageYOffset < 20) {
+        win.scrollBy(0, -win.pageYOffset);
       }
     }
   }
@@ -73,6 +76,6 @@ export class ScrollService {
     if (!this.platform.isBrowser) {
       return;
     }
-    this.scrollToElement(this._getDocument().body, topOffset);
+    this.scrollToElement(this._getDoc().body, topOffset);
   }
 }
