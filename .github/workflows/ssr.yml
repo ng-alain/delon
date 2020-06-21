@@ -23,4 +23,4 @@ jobs:
         with:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
           DOMAIN_NAME: https://ng-alain-doc-ssr.surge.sh
-          BUILD_DIRECTORY: ./src/dist/browser
+          BUILD_DIRECTORY: ./src/dist/server
