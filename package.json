@@ -40,8 +40,8 @@
     "sync-scaffold-version": "node scripts/publish/sync-scaffold-version.js",
     "ssr": "npm run ng-high-memory run site:serve-ssr",
     "ssr:serve": "node src/dist/server/main.js",
-    "ssr:build": "npm run site:build && npm run ng-high-memory run site:server:production",
-    "ssr:prerender": "npm run site:build && npm run ng-high-memory run site:prerender"
+    "ssr:build": "npm run site:gen && npm run ng-high-memory run site:server:production",
+    "ssr:prerender": "npm run site:gen && npm run ng-high-memory run site:prerender"
   },
   "dependencies": {
     "@angular/animations": "~9.1.9",

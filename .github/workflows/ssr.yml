@@ -4,7 +4,6 @@ on: push
 
 jobs:
   website:
-    if: "contains(github.event.commits[0].message, 'ssr')"
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -17,6 +16,7 @@ jobs:
         run: |
           node scripts/ci/build-no-lvy
           npm run ssr:prerender
+          ls -al ./src/dist/server
 
       - name: deploy-to-surge
         uses: yohix/deploy-surge@v1.0.0
