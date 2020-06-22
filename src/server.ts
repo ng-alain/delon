@@ -5,7 +5,7 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import express from 'express';
 import { join } from 'path';
 import { existsSync } from 'fs';
-import { AppServerModule } from './src/main.server';
+import { AppServerModule } from './main.server';
 
 const distFolder = join(process.cwd(), 'src/dist/browser');
 const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
@@ -73,4 +73,4 @@ if (moduleFilename === __filename || moduleFilename.includes('iisnode')) {
   run();
 }
 
-export * from './src/main.server';
+export * from './main.server';
