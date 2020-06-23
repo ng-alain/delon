@@ -16,7 +16,7 @@ jobs:
       - name: build
         run: |
           node scripts/ci/build-no-lvy
-          npm run ssr:prerender
+          npm run ssr:build
           ls -al ./src/dist
 
       - name: Deploy to Netlify
@@ -29,7 +29,6 @@ jobs:
           enable-pull-request-comment: false
           enable-commit-comment: true
           overwrites-pull-request-comment: true
-          functions-dir: 'src/dist/server'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: 'cfd0fbf1-29e9-4d31-9595-219f95ef65df'

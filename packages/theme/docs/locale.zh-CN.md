@@ -40,17 +40,18 @@ switchLanguage() {
 
 ## 支持语言
 
-| 语言         | 语言包名称 |
-| ------------ | ---------- |
-| 英语（美式） | en_US      |
-| 简体中文     | zh_CN      |
-| 繁体中文     | zh_TW      |
-| 土耳其语     | tr_TR      |
-| 波兰语       | pl_PL      |
-| 希腊语       | el_GR      |
-| 朝鲜语       | ko_KR      |
-| 克罗地亚     | hr_HR      |
+| 语言 | 语言包名称 |
+|----|-------|
+| 英语（美式） | en_US |
+| 简体中文 | zh_CN |
+| 繁体中文 | zh_TW |
+| 土耳其语 | tr_TR |
+| 波兰语 | pl_PL |
+| 希腊语 | el_GR |
+| 朝鲜语 | ko_KR |
+| 克罗地亚 | hr_HR |
+| 日语 | ja_JP |
 
 ## 增加语言包
 
-如果你找不到你需要的语言包，欢迎你在 [英文语言包](https://github.com/ng-alain/delon/tree/master/packages/theme/src/locale/languages/en-US.ts) 的基础上创建一个新的语言包，并给我们 Pull Request。
+如果你找不到你需要的语言包，欢迎你在 [英文语言包](https://github.com/ng-alain/delon/tree/master/packages/theme/src/locale/languages/en-US.ts)（你也可以参考 [#308](https://github.com/ng-alain/delon/pull/308) 向我们贡献语言包）的基础上创建一个新的语言包，并给我们 Pull Request。

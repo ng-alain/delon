@@ -7,7 +7,7 @@ import { join } from 'path';
 import { existsSync } from 'fs';
 import { AppServerModule } from './main.server';
 
-const distFolder = join(process.cwd(), 'src/dist/browser');
+const distFolder = join(__dirname, '../browser');
 const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
 // ssr DOM
