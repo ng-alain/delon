@@ -18,17 +18,3 @@ jobs:
           node scripts/ci/build-no-lvy
           npm run ssr:build
           ls -al ./src/dist
-
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1
-        with:
-          publish-dir: './src/dist'
-          production-branch: master
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: 'Deploy from GitHub Actions'
-          enable-pull-request-comment: false
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: 'cfd0fbf1-29e9-4d31-9595-219f95ef65df'
