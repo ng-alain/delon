@@ -8,7 +8,7 @@ import { PluginOptions } from './interface';
 
 // includes ng-zorro-antd & @delon/*
 const WHITE_ICONS = [
-  // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/nz-icon.service.ts
+  // - zorro: https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/components/icon/icons.ts
   'BarsOutline',
   'CalendarOutline',
   'CaretUpFill',
@@ -97,7 +97,7 @@ function findIcons(html: string): string[] {
 function genByClass(node: DefaultTreeElement): string | null {
   const attr = node.attrs.find(a => a.name === 'class');
   if (!attr || !attr.value) return null;
-  const match = (attr.value as string).match(/anticon(-\w+)+/g);
+  const match = attr.value.match(/anticon(-\w+)+/g);
   if (!match || match.length === 0) return null;
   return match[0];
 }
@@ -215,11 +215,15 @@ function getIcons(options: PluginOptions, host: Tree): string[] {
   host.visit(path => {
     if (~path.indexOf(`/node_modules/`) || !path.startsWith(`/${options.sourceRoot}`)) return;
     let res: string[] = [];
-    if (path.endsWith('.ts')) {
-      res = fixTs(host, path);
-    }
-    if (path.endsWith('.html')) {
-      res = findIcons(host.read(path)!.toString());
+    try {
+      if (path.endsWith('.ts')) {
+        res = fixTs(host, path);
+      }
+      if (path.endsWith('.html')) {
+        res = findIcons(host.read(path)!.toString());
+      }
+    } catch (ex) {
+      console.warn(`Skip file "${path}" because parsing error: ${ex}`);
     }
     if (res.length > 0) {
       console.log(`found ${JSON.stringify(res)} icons in ${path}`);
