@@ -62,6 +62,7 @@ export class ImageDirective implements OnChanges, OnInit {
 
   private getByHttp(): void {
     if (!this.platform.isBrowser) {
+      console.log('isBrowser');
       return;
     }
 
