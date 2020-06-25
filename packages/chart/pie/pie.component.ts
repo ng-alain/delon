@@ -47,9 +47,9 @@ export interface G2PieClickItem {
 export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('container', { static: true }) private node: ElementRef;
   private chart: Chart;
-  private isPercent: boolean;
   private percentColor: (value: string) => string;
   legendData: NzSafeAny[] = [];
+  isPercent: boolean;
 
   // #region fields
 
