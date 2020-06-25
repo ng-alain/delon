@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -41,7 +42,7 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
 
   // #endregion
 
-  constructor(private el: ElementRef, configSrv: AlainConfigService) {
+  constructor(private el: ElementRef, configSrv: AlainConfigService, private platform: Platform) {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
@@ -60,6 +61,9 @@ export class G2CustomComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     setTimeout(() => this.renderChart(), this.delay);
   }
 

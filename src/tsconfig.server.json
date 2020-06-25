@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app-server",
+    "module": "commonjs",
+    "types": ["node"],
+    "typeRoots": ["../node_modules/@types"]
+  },
+  "files": ["main.server.ts", "server.ts"],
+  "angularCompilerOptions": {
+    "entryModule": "./app/app.server.module#AppServerModule"
+  }
+}

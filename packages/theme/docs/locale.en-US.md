@@ -40,17 +40,18 @@ Note: `en_US` is the package name, follow below.
 
 ## Supported languages
 
-| Language              | Filename |
-| --------------------- | -------- |
-| English               | en_US    |
-| Chinese (Simplified)  | zh_CN    |
-| Chinese (Traditional) | zh_TW    |
-| Turkish               | tr_TR    |
-| Polish                | pl_PL    |
-| Greek                 | el_GR    |
-| Korean                | ko_KR    |
-| Croatian              | hr_HR    |
+| Language | Filename |
+|----------|----------|
+| English | en_US |
+| Chinese (Simplified) | zh_CN |
+| Chinese (Traditional) | zh_TW |
+| Turkish | tr_TR |
+| Polish | pl_PL |
+| Greek | el_GR |
+| Korean | ko_KR |
+| Croatian | hr_HR |
+| Japanese | ja_JP |
 
 ## Add a new language
 
-If you can't find your language, you are welcome to create a locale package based on [en_US](https://github.com/ng-alain/delon/tree/master/packages/theme/src/locale/languages/en-US.ts) and send us a pull request.
+If you can't find your language, you are welcome to create a locale package based on [en_US](https://github.com/ng-alain/delon/tree/master/packages/theme/src/locale/languages/en-US.ts) (You can also refer to [#308](https://github.com/ng-alain/delon/pull/308) to contribute language package to us) and send us a pull request.

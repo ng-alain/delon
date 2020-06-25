@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -52,7 +53,13 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
     return this._p;
   }
 
-  constructor(private el: ElementRef<HTMLElement>, private renderer: Renderer2, private srv: MediaService, private ngZone: NgZone) {
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    private renderer: Renderer2,
+    private srv: MediaService,
+    private ngZone: NgZone,
+    private platform: Platform,
+  ) {
     this.notify$ = this.srv.notify().subscribe(() => this.initDelay());
   }
 
@@ -105,6 +112,9 @@ export class MediaComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.srv.load();
   }
 

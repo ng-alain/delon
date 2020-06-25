@@ -1,7 +1,6 @@
 import { Type } from '@angular/core';
 import { ComponentFixture, discardPeriodicTasks, flush, TestBed, tick } from '@angular/core/testing';
 import { Chart } from '@antv/g2';
-import { Point } from '@antv/g2/lib/interface';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 export type PageG2Type = 'geometries' | 'views';
@@ -145,12 +144,12 @@ export class PageG2<T> {
     return this;
   }
 
-  get firstDataPoint(): Point {
+  get firstDataPoint(): { x: number; y: number } {
     // tslint:disable-next-line: no-string-literal
     return this.chart.getXY((this.context as NzSafeAny)['data'][0]);
   }
 
-  checkTooltip(_includeText: string | null, point?: Point) {
+  checkTooltip(_includeText: string | null, point?: { x: number; y: number }) {
     if (!point) {
       point = this.firstDataPoint;
     }

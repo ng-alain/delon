@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectionStrategy, Component, OnInit, Renderer2 } from '@angular/core';
 import { AppService, SiteTheme } from '@core';
 import { AlainConfigService } from '@delon/util';
@@ -13,9 +14,17 @@ import { AlainConfigService } from '@delon/util';
 export class ThemeBtnComponent implements OnInit {
   theme: SiteTheme = 'default';
 
-  constructor(private appService: AppService, private renderer: Renderer2, private configSrv: AlainConfigService) {}
+  constructor(
+    private appService: AppService,
+    private renderer: Renderer2,
+    private configSrv: AlainConfigService,
+    private platform: Platform,
+  ) {}
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.initTheme();
   }
 

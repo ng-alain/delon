@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -42,7 +43,13 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
 
   // #endregion
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
+    private platform: Platform,
+  ) {}
 
   private renderChart(isUpdate: boolean) {
     if (!this.resize$) return;
@@ -206,6 +213,9 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.installResizeEvent();
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.renderChart(false), this.delay));
   }
@@ -219,6 +229,8 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     if (this.timer) {
       cancelAnimationFrame(this.timer);
     }
-    this.resize$!.unsubscribe();
+    if (this.resize$) {
+      this.resize$.unsubscribe();
+    }
   }
 }

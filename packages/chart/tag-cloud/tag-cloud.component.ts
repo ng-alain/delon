@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -61,7 +62,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
 
   // #endregion
 
-  constructor(private el: ElementRef<HTMLDivElement>, private ngZone: NgZone, configSrv: AlainConfigService) {
+  constructor(private el: ElementRef<HTMLDivElement>, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
@@ -202,6 +203,9 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.initTagCloud();
     this.installResizeEvent();
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
@@ -212,7 +216,9 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnDestroy(): void {
-    this.resize$.unsubscribe();
+    if (this.resize$) {
+      this.resize$.unsubscribe();
+    }
     if (this.chart) {
       this.ngZone.runOutsideAngular(() => this.chart.destroy());
     }

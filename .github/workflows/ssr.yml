@@ -1,0 +1,20 @@
+name: SSR
+
+on: push
+
+jobs:
+  website:
+    # if: "contains(github.event.commits[0].message, 'ssr')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: install
+        run: npm install
+
+      - name: build
+        run: |
+          node scripts/ci/build-no-lvy
+          npm run ssr:build
+          ls -al ./src/dist

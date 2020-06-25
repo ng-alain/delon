@@ -7,7 +7,7 @@ export interface ICache {
 
 // tslint:disable-next-line: interface-name
 export interface ICacheStore {
-  get(key: string): ICache;
+  get(key: string): ICache | null;
 
   set(key: string, value: ICache): boolean;
 
