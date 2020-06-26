@@ -1,6 +1,6 @@
 import { InputBoolean, InputNumber, isEmpty, toBoolean, toNumber } from './check';
 
-describe('#isEmpty', () => {
+describe('util.#isEmpty', () => {
   it('should empty when only spaces', () => {
     const mockEl: any = {
       childNodes: {
@@ -31,7 +31,7 @@ describe('#isEmpty', () => {
   });
 });
 
-describe('#toBoolean', () => {
+describe('util.#toBoolean', () => {
   [
     { value: undefined, ret: undefined, au: true },
     { value: undefined, ret: false },
@@ -57,7 +57,22 @@ describe('#toBoolean', () => {
   });
 });
 
-describe('#InputBoolean', () => {
+describe('util.#InputBoolean', () => {
+  it('should be working', () => {
+    class MockClass {
+      private _val = true;
+      @InputBoolean() set val(val: any) {
+        this._val = val;
+      }
+      get val() {
+        return this._val;
+      }
+    }
+    const cls = new MockClass();
+    expect(cls.val).toBe(true);
+    cls.val = 'false';
+    expect(cls.val).toBe(false);
+  });
   it('should be warn when already exist', () => {
     spyOn(console, 'warn');
     const target = {};
@@ -67,7 +82,7 @@ describe('#InputBoolean', () => {
   });
 });
 
-describe('toNumber', () => {
+describe('util.toNumber', () => {
   it('should coerce undefined to 0 or default', () => {
     expect(toNumber(undefined)).toBe(0);
     expect(toNumber(undefined, 111)).toBe(111);
@@ -144,12 +159,22 @@ describe('toNumber', () => {
   });
 });
 
-xdescribe('#InputNumber', () => {
+describe('util.#InputNumber', () => {
   it('should be warn when already exist', () => {
     spyOn(console, 'warn');
-    const target = {};
-    InputNumber()(target, 'a');
-    InputNumber()(target, 'a');
+    class MockClass {
+      private _val = true;
+      @InputNumber()
+      @InputNumber()
+      set val(val: any) {
+        this._val = val;
+      }
+      get val() {
+        return this._val;
+      }
+    }
+    // tslint:disable-next-line: no-unused-expression
+    new MockClass();
     expect(console.warn).toHaveBeenCalled();
   });
 });

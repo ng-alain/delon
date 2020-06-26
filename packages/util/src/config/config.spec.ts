@@ -12,9 +12,9 @@ describe('util: config', () => {
     srv = TestBed.inject(AlainConfigService);
   });
 
-  it('#update', () => {
+  it('#set', () => {
     expect(srv.get('chart')?.theme).toBeUndefined();
-    srv.update('chart', { theme: 'dark' } as AlainChartConfig);
+    srv.set('chart', { theme: 'dark' } as AlainChartConfig);
     expect(srv.get('chart')?.theme).toBe('dark');
   });
 });

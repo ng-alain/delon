@@ -1,4 +1,5 @@
-import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd/core/tree';
+import { TemplateRef } from '@angular/core';
+import { NzFormatEmitEvent, NzTreeNode, NzTreeNodeOptions } from 'ng-zorro-antd/core/tree';
 import { Observable } from 'rxjs';
 import { SFSchemaEnum, SFSchemaEnumType } from '../../schema';
 import { SFDLSSize, SFUISchemaItem } from '../../schema/ui';
@@ -29,14 +30,34 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
   dropdownStyle?: object;
 
   /**
+   * 下拉菜单的 className 属性
+   */
+  dropdownClassName?: string;
+
+  /**
    * 支持多选（当设置 `checkable` 时自动变为true），默认：`false`
    */
   multiple?: boolean;
 
   /**
+   * 搜索隐藏未匹配的节点，默认：`false`
+   */
+  hideUnMatched?: boolean;
+
+  /**
    * 节点前添加 Checkbox 复选框，默认：`false`
    */
   checkable?: boolean;
+
+  /**
+   * checkable 状态下节点选择完全受控（父子节点选中状态不再关联），默认：`false`
+   */
+  checkStrictly?: boolean;
+
+  /**
+   * 是否展示 TreeNode title 前的图标，没有默认样式，默认：`false`
+   */
+  showIcon?: boolean;
 
   /**
    * 节点前添加展开图标，默认：`true`
@@ -57,6 +78,26 @@ export interface SFTreeSelectWidgetSchema extends SFUISchemaItem {
    * 当下拉列表为空时显示的内容
    */
   notFoundContent?: string;
+
+  /**
+   * 默认展开指定的树节点
+   */
+  expandedKeys?: string[];
+
+  /**
+   * 最多显示多少个 tag
+   */
+  maxTagCount?: number;
+
+  /**
+   * 隐藏 tag 时显示的内容
+   */
+  maxTagPlaceholder?: TemplateRef<{ $implicit: NzTreeNode[] }> | null;
+
+  /**
+   * 自定义节点
+   */
+  treeTemplate?: TemplateRef<{ $implicit: NzTreeNode; origin: NzTreeNodeOptions }>;
 
   /**
    * 如何在输入框显示所选的节点值的方法

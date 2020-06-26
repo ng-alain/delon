@@ -1,16 +1,19 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   ViewEncapsulation,
 } from '@angular/core';
 import DataSet from '@antv/data-set';
-import { Chart, registerShape, Types, Util } from '@antv/g2';
+import { Chart, Event, registerShape, Types, Util } from '@antv/g2';
 import { AlainConfigService, deprecation10, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { fromEvent, Subscription } from 'rxjs';
@@ -28,6 +31,11 @@ export interface G2TagCloudData {
    */
   category?: any;
   [key: string]: any;
+}
+
+export interface G2TagCloudClickItem {
+  item: G2TagCloudData;
+  ev: Event;
 }
 
 @Component({
@@ -50,18 +58,21 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   @Input() padding: number | number[] | 'auto' = 0;
   @Input() data: G2TagCloudData[] = [];
   @Input() theme: string | Types.LooseObject;
+  @Output() clickItem = new EventEmitter<G2TagCloudClickItem>();
 
   // #endregion
 
-  constructor(private el: ElementRef<HTMLDivElement>, private ngZone: NgZone, configSrv: AlainConfigService) {
+  constructor(private el: ElementRef<HTMLDivElement>, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
   private initTagCloud() {
     registerShape('point', 'cloud', {
-      draw(cfg, container: NzSafeAny) {
+      draw(cfg, container) {
         const data = cfg.data as NzSafeAny;
-        const textShape = container.addShape('text', {
+        const textShape = container.addShape({
+          type: 'text',
+          name: 'tag-cloud-text',
           attrs: {
             ...cfg.style,
             fontSize: data.size,
@@ -72,7 +83,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
             textBaseline: 'Alphabetic',
             x: cfg.x,
             y: cfg.y,
-          },
+          } as NzSafeAny,
         });
         if (data.rotate) {
           Util.rotate(textShape, (data.rotate * Math.PI) / 180);
@@ -123,6 +134,10 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
         },
       });
     chart.interaction('element-active');
+
+    chart.on('tag-cloud-text:click', (ev: Event) => {
+      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    });
 
     this.attachChart();
   }
@@ -188,6 +203,9 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.initTagCloud();
     this.installResizeEvent();
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
@@ -198,7 +216,9 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   ngOnDestroy(): void {
-    this.resize$.unsubscribe();
+    if (this.resize$) {
+      this.resize$.unsubscribe();
+    }
     if (this.chart) {
       this.ngZone.runOutsideAngular(() => this.chart.destroy());
     }

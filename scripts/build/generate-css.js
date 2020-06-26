@@ -25,8 +25,9 @@ async function genCss(name, min) {
       javascriptEnabled: true,
     })
     .then(({ css }) => {
-      fs.writeFileSync(path.join(ROOT_DIR, `theme/${name}${min ? '.min' : ''}.css`), css);
-      console.log(`完成生成 ${name} ${min ? 'min' : ''}版本`);
+      const savePath = path.join(ROOT_DIR, `theme/${name}${min ? '.min' : ''}.css`);
+      fs.writeFileSync(savePath, css);
+      console.log(`完成生成 ${name} ${min ? 'min' : ''}版本, ${savePath}`);
     })
     .catch(err => console.warn(`${name} ${min ? 'min' : ''} 异常`, err));
 }

@@ -1,9 +1,10 @@
 name: GiteeMirror
 
-on: [push]
+on: push
 
 jobs:
   to_gitee:
+    if: "!startsWith(github.event.commits[0].message, 'release')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

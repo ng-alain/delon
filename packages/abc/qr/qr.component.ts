@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -55,8 +56,8 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
 
   // #endregion
 
-  constructor(private cdr: ChangeDetectorRef, configSrv: AlainConfigService, private lazySrv: LazyService) {
-    this.cog = configSrv.merge<AlainQRConfig, 'qr'>('qr', QR_DEFULAT_CONFIG);
+  constructor(private cdr: ChangeDetectorRef, configSrv: AlainConfigService, private lazySrv: LazyService, private platform: Platform) {
+    this.cog = configSrv.merge('qr', QR_DEFULAT_CONFIG)!;
     Object.assign(this, this.cog);
   }
 
@@ -80,6 +81,9 @@ export class QRComponent implements OnChanges, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     if ((window as any).QRious) {
       this.initDelay();
       return;

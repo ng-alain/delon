@@ -1,12 +1,15 @@
+import { Platform } from '@angular/cdk/platform';
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { I18NService, MetaService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { deepCopy } from '@delon/util';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { I18NService } from '../../../core/i18n/service';
-import { MetaService } from '../../../core/meta.service';
+
+declare var hljs: any;
 
 @Component({
   selector: 'app-docs',
@@ -17,6 +20,7 @@ export class DocsComponent implements OnInit, OnDestroy {
   demoStr: string;
   demoContent: SafeHtml;
   data: any = {};
+  isBrowser = true;
 
   @Input() codes: any[];
 
@@ -27,7 +31,10 @@ export class DocsComponent implements OnInit, OnDestroy {
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     private router: Router,
     private sanitizer: DomSanitizer,
+    @Inject(DOCUMENT) private doc: any,
+    platform: Platform,
   ) {
+    this.isBrowser = platform.isBrowser;
     this.i18NChange$ = this.i18n.change.pipe(filter(() => !!this.item)).subscribe(() => {
       this.init();
     });
@@ -77,7 +84,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     // goTo
     setTimeout(() => {
       const toc = this.router.parseUrl(this.router.url).fragment || '';
-      if (toc) document.querySelector(`#${toc}`)!.scrollIntoView();
+      if (toc) this.doc.querySelector(`#${toc}`)!.scrollIntoView();
     }, 200);
   }
 
@@ -85,7 +92,7 @@ export class DocsComponent implements OnInit, OnDestroy {
     let targetEl: any;
     const href = '#' + item.id;
     try {
-      targetEl = document.querySelector(href);
+      targetEl = this.doc.querySelector(href);
     } catch (e) {
       console.warn(`查找目标元素异常：${href}`, e);
     }
@@ -112,8 +119,11 @@ export class DocsComponent implements OnInit, OnDestroy {
   private init() {
     this.genData();
     this.genDemoTitle();
+    if (!this.isBrowser) {
+      return;
+    }
     setTimeout(() => {
-      const elements = document.querySelectorAll('[class*="language-"], [class*="lang-"]');
+      const elements = this.doc.querySelectorAll('[class*="language-"], [class*="lang-"]');
       // tslint:disable-next-line:no-conditional-assignment
       for (let i = 0, element; (element = elements[i++]); ) {
         hljs.highlightBlock(element);

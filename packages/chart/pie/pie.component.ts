@@ -1,18 +1,21 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
+import { Chart, Event, Types } from '@antv/g2';
 import { G2InteractionType } from '@delon/chart/core';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
@@ -21,6 +24,11 @@ export interface G2PieData {
   x: any;
   y: number;
   [key: string]: any;
+}
+
+export interface G2PieClickItem {
+  item: G2PieData;
+  ev: Event;
 }
 
 @Component({
@@ -40,9 +48,9 @@ export interface G2PieData {
 export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('container', { static: true }) private node: ElementRef;
   private chart: Chart;
-  private isPercent: boolean;
   private percentColor: (value: string) => string;
   legendData: NzSafeAny[] = [];
+  isPercent: boolean;
 
   // #region fields
 
@@ -65,6 +73,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @Input() colors: any[];
   @Input() interaction: G2InteractionType = 'none';
   @Input() theme: string | Types.LooseObject;
+  @Output() clickItem = new EventEmitter<G2PieClickItem>();
 
   // #endregion
 
@@ -72,7 +81,13 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     return this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
   }
 
-  constructor(public el: ElementRef<HTMLElement>, private ngZone: NgZone, private cdr: ChangeDetectorRef, configSrv: AlainConfigService) {
+  constructor(
+    private el: ElementRef<HTMLElement>,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
+    configSrv: AlainConfigService,
+    private platform: Platform,
+  ) {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
@@ -129,6 +144,10 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
       }))
       .state({});
 
+    chart.on(`interval:click`, (ev: Event) => {
+      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    });
+
     this.attachChart();
   }
 
@@ -178,6 +197,9 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 

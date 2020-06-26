@@ -33,6 +33,12 @@ The value is `STData[]` or `Observable<STData[]>`, both follow the following rul
   - `false` controlled by the user through the `total` and `data` parameters, and maintains `(change)` when the page changes to reload data
 - Whether `page.show` displays pager; if not specified, it will not be displayed automatically if `ps>total`
 
+### FAQ
+
+**Cannot read property 'text' of undefined**
+
+If the component has been rendered, this error may appear when `columns` is changed again. This is because `st` will only process the data according to `columns` each time. When the column definition changes, it may be because of the column definition. Unable to match with existing data, you may need to use `this.st.resetColumns({ columns: [], emitReload: true })` to update the column definition and reload the data.
+
 ## API
 
 ### st

@@ -9,16 +9,24 @@ title:
 
 ```ts
 import { Component } from '@angular/core';
+import { G2BarClickItem, G2BarData } from '@delon/chart/bar';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-demo',
-  template: `<g2-bar height="200" [title]="'销售额趋势'" [data]="salesData"></g2-bar>`,
+  template: `<g2-bar height="200" [title]="'销售额趋势'" [data]="salesData" (clickItem)="handleClick($event)"></g2-bar>`,
 })
 export class DemoComponent {
-  salesData: any[] = new Array(12).fill({}).map((_i, idx) => ({
+  constructor(private msg: NzMessageService) {}
+
+  salesData: G2BarData[] = new Array(12).fill({}).map((_i, idx) => ({
     x: `${idx + 1}月`,
     y: Math.floor(Math.random() * 1000) + 200,
-    color: idx > 5 ? '#f50' : null,
+    color: idx > 5 ? '#f50' : undefined,
   }));
+
+  handleClick(data: G2BarClickItem): void {
+    this.msg.info(`${data.item.x} - ${data.item.y}`);
+  }
 }
 ```

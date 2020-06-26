@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -18,7 +19,7 @@ import {
 import { Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
-import { AlainConfigService, AlainPageHeaderConfig, InputBoolean, InputNumber, isEmpty } from '@delon/util';
+import { AlainConfigService, InputBoolean, InputNumber, isEmpty } from '@delon/util';
 import { NzAffixComponent } from 'ng-zorro-antd/affix';
 import { merge, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -41,6 +42,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   private unsubscribe$ = new Subject<void>();
   @ViewChild('conTpl', { static: false }) private conTpl: ElementRef;
   @ViewChild('affix', { static: false }) private affix: NzAffixComponent;
+  isBrowser = true;
 
   private get menus() {
     return this.menuSrv.getPathByUrl(this.router.url, this.recursiveBreadcrumb);
@@ -95,8 +97,10 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
     @Optional() @Inject(ReuseTabService) private reuseSrv: ReuseTabService,
     private cdr: ChangeDetectorRef,
     configSrv: AlainConfigService,
+    platform: Platform,
   ) {
-    configSrv.attach<AlainPageHeaderConfig, 'pageHeader'>(this, 'pageHeader', {
+    this.isBrowser = platform.isBrowser;
+    configSrv.attach(this, 'pageHeader', {
       home: '首页',
       homeLink: '/',
       autoBreadcrumb: true,

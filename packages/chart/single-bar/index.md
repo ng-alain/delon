@@ -12,8 +12,8 @@ module: import { G2SingleBarModule } from '@delon/chart/single-bar';
 
 ### g2-single-bar
 
-| 参数      | 说明                 | 类型         | 默认值 |
-|----------|----------------------|-------------|-------|
+| 参数 | 说明 | 类型 | 默认值 |
+|----|----|----|-----|
 | `[delay]` | 延迟渲染，单位：毫秒 | `number` | `0` |
 | `[plusColor]` | 图表颜色 | `string` | `#40a9ff` |
 | `[minusColor]` | 负值图表颜色 | `string` | `#ff4d4f` |

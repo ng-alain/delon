@@ -9,7 +9,7 @@ export type REP_TYPE = 1 | 2 | 3 | 4 | 5 | 6;
 export class ResponsiveService {
   private cog: AlainThemeResponsiveConfig;
   constructor(cogSrv: AlainConfigService) {
-    this.cog = cogSrv.merge<AlainThemeResponsiveConfig, 'themeResponsive'>('themeResponsive', {
+    this.cog = cogSrv.merge('themeResponsive', {
       rules: {
         1: { xs: 24 },
         2: { xs: 24, sm: 12 },
@@ -18,7 +18,7 @@ export class ResponsiveService {
         5: { xs: 24, sm: 12, md: 8, lg: 6, xl: 4 },
         6: { xs: 24, sm: 12, md: 8, lg: 6, xl: 4, xxl: 2 },
       },
-    });
+    })!;
     if (
       Object.keys(this.cog.rules)
         .map(i => +i)

@@ -1,15 +1,18 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
+import { Chart, Event, Types } from '@antv/g2';
 import { AlainConfigService, InputNumber } from '@delon/util';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
@@ -17,6 +20,11 @@ export interface G2MiniBarData {
   x: any;
   y: any;
   [key: string]: any;
+}
+
+export interface G2MiniBarClickItem {
+  item: G2MiniBarData;
+  ev: Event;
 }
 
 @Component({
@@ -44,10 +52,11 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() yTooltipSuffix = '';
   @Input() tooltipType: 'mini' | 'default' = 'default';
   @Input() theme: string | Types.LooseObject;
+  @Output() clickItem = new EventEmitter<G2MiniBarClickItem>();
 
   // #endregion
 
-  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService) {
+  constructor(private el: ElementRef, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
@@ -93,6 +102,10 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
       .position('x*y')
       .tooltip('x*y', (x: NzSafeAny, y: NzSafeAny) => ({ name: x, value: y + yTooltipSuffix }));
 
+    chart.on(`interval:click`, (ev: Event) => {
+      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    });
+
     chart.render();
 
     this.attachChart();
@@ -108,6 +121,9 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 

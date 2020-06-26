@@ -1,22 +1,20 @@
 import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, Injector, NgModule } from '@angular/core';
-import { createCustomElement } from '@angular/elements';
+import { APP_INITIALIZER, Inject, Injector, NgModule, PLATFORM_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
 // angular i18n
-import { registerLocaleData } from '@angular/common';
+import { isPlatformBrowser, registerLocaleData } from '@angular/common';
 import localeZh from '@angular/common/locales/zh';
 registerLocaleData(localeZh);
 
 import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 
+import { I18NService, StartupService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { I18NService } from './core/i18n/service';
-import { StartupService } from './core/startup.service';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layout/header/header.component';
@@ -28,7 +26,7 @@ import { SimplemdeModule } from 'ngx-simplemde';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { UEditorModule } from 'ngx-ueditor';
 import { JsonSchemaModule } from './shared/json-schema/json-schema.module';
-import { STWidgetModule } from './shared/st-widget/st-widget.module';
+import { STWidgetModule, STWIDGET_COMPONENTS } from './shared/st-widget/st-widget.module';
 
 import { ExampleModule, EXAMPLE_COMPONENTS } from './routes/gen/examples';
 import { IconComponent } from './shared/components/icon/icon.component';
@@ -37,9 +35,25 @@ export function StartupServiceFactory(startupService: StartupService) {
   return () => startupService.load();
 }
 
+function registerElements(injector: Injector, platformId: {}) {
+  // issues: https://github.com/angular/angular/issues/24551#issuecomment-397862707
+  if (!isPlatformBrowser(platformId)) {
+    return;
+  }
+  const { createCustomElement } = require('@angular/elements');
+  Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
+    const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {
+      injector,
+    });
+    customElements.define(key, element);
+  });
+  // icon
+  customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
+}
+
 @NgModule({
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
     HttpClientModule,
     GlobalConfigModule.forRoot(),
@@ -76,17 +90,11 @@ export function StartupServiceFactory(startupService: StartupService) {
     },
   ],
   declarations: [AppComponent, LayoutComponent, HeaderComponent],
+  entryComponents: STWIDGET_COMPONENTS,
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(injector: Injector) {
-    Object.keys(EXAMPLE_COMPONENTS).forEach(key => {
-      const element = createCustomElement(EXAMPLE_COMPONENTS[key].component, {
-        injector,
-      });
-      customElements.define(key, element);
-    });
-    // icon
-    customElements.define('nz-icon', createCustomElement(IconComponent, { injector }));
+  constructor(injector: Injector, @Inject(PLATFORM_ID) platformId: {}) {
+    registerElements(injector, platformId);
   }
 }

@@ -61,6 +61,7 @@ export class DemoComponent implements OnInit {
           },
           ui: {
             type: 'card',
+            showExpand: false,
           } as SFObjectWidgetSchema,
         },
       },

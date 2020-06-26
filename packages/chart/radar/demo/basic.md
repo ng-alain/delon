@@ -9,17 +9,18 @@ title:
 
 ```ts
 import { Component, OnInit } from '@angular/core';
+import { G2RadarClickItem, G2RadarData } from '@delon/chart/radar';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'chart-radar-basic',
-  template: `
-    <g2-radar
-        [hasLegend]="true"
-        [data]="radarData"
-        height="286"></g2-radar>`,
+  template: ` <g2-radar [hasLegend]="true" [data]="radarData" height="286" (clickItem)="handleClick($event)"></g2-radar>`,
 })
-export class ChartRadarBasicComponent implements OnInit {
-  radarData: any[] = [];
+export class DemoComponent implements OnInit {
+  radarData: G2RadarData[] = [];
+
+  constructor(private msg: NzMessageService) {}
+
   ngOnInit(): void {
     const radarOriginData = [
       {
@@ -65,6 +66,10 @@ export class ChartRadarBasicComponent implements OnInit {
         }
       });
     });
+  }
+
+  handleClick(data: G2RadarClickItem): void {
+    this.msg.info(`${data.item.label} - ${data.item.name} - ${data.item.value}`);
   }
 }
 ```

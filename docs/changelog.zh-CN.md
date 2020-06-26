@@ -14,6 +14,56 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [9.4.1](https://github.com/ng-alain/delon/compare/9.4.0...9.4.1) (2020-06-25)
+
+### Bug Fixes
+
+* **abc:se:** 修复嵌套 `se` 时无法有效自动分配 id 值 ([#959](https://github.com/ng-alain/delon/issues/959)) ([cc081b8](https://github.com/ng-alain/delon/commit/cc081b864c231df0835a76ca8eb590eee8f37c68))
+* **abc:st:** 修复缺少 `nzWidthConfig` 属性 ([#964](https://github.com/ng-alain/delon/issues/964)) ([bf0aa88](https://github.com/ng-alain/delon/commit/bf0aa8874817bf9d4fac40978cce29dcfea9b76a))
+* **chart:pie:** 修复 `isPercent` 作用域 ([#965](https://github.com/ng-alain/delon/issues/965)) ([d8815af](https://github.com/ng-alain/delon/commit/d8815afc10bb3e6e98d33176286738dab26dbc21))
+* **cli:plugin:icon:** 修复应跳过无法解析文件 ([#966](https://github.com/ng-alain/delon/issues/966)) ([4512f93](https://github.com/ng-alain/delon/commit/4512f93239142dd216c1aeacd3b085f1b4717a7c))
+
+
+# [9.4.0](https://github.com/ng-alain/delon/compare/9.3.2...9.4.0) (2020-06-13)
+
+### Scaffold
+
+* **BREAKING CHANGES** **theme-btn:** 使用 `set` 替代 `update` ([#1712](https://github.com/ng-alain/ng-alain/pull/1712/files))
+
+### Bug Fixes
+
+* **abc:reuse-tab:** 修复 `replace` 方法无法清空旧数据 ([#953](https://github.com/ng-alain/delon/issues/953)) ([44b6a9c](https://github.com/ng-alain/delon/commit/44b6a9c9d02f6d1315fdade5f2fbf0bf6710a21c))
+* **abc:st:** 修复调用 `resetColumns` 方法若指定 `emitReload: true` 应先清空数据 ([#954](https://github.com/ng-alain/delon/issues/954)) ([b89f13c](https://github.com/ng-alain/delon/commit/b89f13cc31a058742b891fdfd656f21572750a25))
+* **abc:st:** 修复重置 `columns` 时应重新触发数据生成 ([#954](https://github.com/ng-alain/delon/issues/954)) ([b89f13c](https://github.com/ng-alain/delon/commit/b89f13cc31a058742b891fdfd656f21572750a25))
+* **abc:st:** 修复调用 `removeRows` 应重新计算 `no` 列值 ([#944](https://github.com/ng-alain/delon/issues/944)) ([09202dd](https://github.com/ng-alain/delon/commit/09202ddb5ce8abff2692a0ddd206d8af5aef04d2))
+* **form:** 修复标签溢出问题 ([#949](https://github.com/ng-alain/delon/issues/949)) ([34a2c63](https://github.com/ng-alain/delon/commit/34a2c6369c0899ee7d6d00fbc07c4e24be61eea2))
+* **form:widget:array:** 修复指定 `cleanValue` 应清除数组的部分 ([#948](https://github.com/ng-alain/delon/issues/948)) ([3881014](https://github.com/ng-alain/delon/commit/3881014d4b137ab38dbba85dcfe62a6b12733352))
+* **form:widget:upload:** 修复首次加载会触发校验 ([#947](https://github.com/ng-alain/delon/issues/947)) ([5d3abf0](https://github.com/ng-alain/delon/commit/5d3abf0a8b1ae3a4a150e176c74a8a27dab51afd))
+
+### Features
+
+* **abc:se:** 增加 `errors` 属性，用于批量更新所有 `se` 的 `error` 属性值 ([#932](https://github.com/ng-alain/delon/issues/932)) ([7316257](https://github.com/ng-alain/delon/commit/7316257ba248d1308cbf0e9e0a87d7c24e5a0737))
+* **abc:se:** 增加 `ingoreDirty` 属性，忽略对表单元素 `diry` 的校验 ([#945](https://github.com/ng-alain/delon/issues/945)) ([5f5dfcc](https://github.com/ng-alain/delon/commit/5f5dfccdf73b5a547c28c2240a0351c9d5600830))
+* **chart:** 增加 `clickItem` 事件 ([#951](https://github.com/ng-alain/delon/issues/951)) ([f9fff60](https://github.com/ng-alain/delon/commit/f9fff6077324e1ef75b5b80ed6063fc375b58f89))
+* **form:** 增加 `showRequired` 属性，用于是否强制显示必填项符号 ([#940](https://github.com/ng-alain/delon/issues/940)) ([d10f29d](https://github.com/ng-alain/delon/commit/d10f29d336a4674014d8955ac19e8a1c9d1f67a5))
+* **form:widget:date:** 增加 `change` 事件 ([#950](https://github.com/ng-alain/delon/issues/950)) ([172ba08](https://github.com/ng-alain/delon/commit/172ba0805e6c3e5ccc8a46e0971277cbeabc04ea))
+* **form:widget:object:** 增加卡片类型可扩展行为 ([#952](https://github.com/ng-alain/delon/issues/952)) ([22833c0](https://github.com/ng-alain/delon/commit/22833c01c3bfaf80291ea1f159f01fe779e13b39))
+
+
+## [9.3.2](https://github.com/ng-alain/delon/compare/9.3.1...9.3.2) (2020-06-01)
+
+### Scaffold
+
+* 修复若干暗黑主题示例页样式不正确 ([#1682](https://github.com/ng-alain/ng-alain/pull/1682/files), [#1685](https://github.com/ng-alain/ng-alain/pull/1685/files))
+
+### Bug Fixes
+
+* **abc:page-header:** 修复复用路由下无法注销 `event` 订阅问题 ([#933](https://github.com/ng-alain/delon/issues/933)) ([0080efd](https://github.com/ng-alain/delon/commit/0080efdfe32e2fa23900562c11c386e3d76bd31b))
+* **cli:** 修复 `ng-update` 若干细节 ([#934](https://github.com/ng-alain/delon/issues/934)) ([8f26c71](https://github.com/ng-alain/delon/commit/8f26c71e085715c569185c72bfa6b3a777047f9c))
+* **form:** 同步 `select`、`tree-select` 两个小部件的新属性 ([#935](https://github.com/ng-alain/delon/issues/935)) ([aa6de23](https://github.com/ng-alain/delon/commit/aa6de23b98ec40a886fa5acbdbc7629ff5453499))
+* **form:** 修复暗黑主题可选颜色 ([#941](https://github.com/ng-alain/delon/issues/941)) ([50d1617](https://github.com/ng-alain/delon/commit/50d161782db78872f504b35570704cf4e1739a7a)), closes [#939](https://github.com/ng-alain/delon/issues/939)
+
+
 ## [9.3.1](https://github.com/ng-alain/delon/compare/9.3.0...9.3.1) (2020-05-27)
 
 ### Bug Fixes

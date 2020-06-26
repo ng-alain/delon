@@ -1,12 +1,12 @@
+import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Injector, StaticProvider } from '@angular/core';
-
-import { WINDOW } from '../../win_tokens';
 import { ScrollService } from './scroll.service';
 
 describe('Service: Scroll', () => {
   const topOfPageElem = {} as Element;
   let injector: Injector;
+  let doc: any;
   let window: any;
   let scrollService: ScrollService;
 
@@ -20,6 +20,7 @@ describe('Service: Scroll', () => {
     body = new MockElement();
     getElementById = jasmine.createSpy('Document getElementById').and.returnValue(topOfPageElem);
     querySelector = jasmine.createSpy('Document querySelector');
+    defaultView: any = null;
   }
 
   describe('[default]', () => {
@@ -29,12 +30,14 @@ describe('Service: Scroll', () => {
     }
     beforeEach(() => {
       const providers = [
-        { provide: ScrollService, useClass: ScrollService, deps: [WINDOW, DOCUMENT] },
-        { provide: WINDOW, useClass: MockWindow, deps: [] },
+        { provide: ScrollService, useClass: ScrollService, deps: [DOCUMENT, Platform] },
+        { provide: Platform, useValue: { isBrowser: true } },
         { provide: DOCUMENT, useClass: MockDocument, deps: [] },
       ] as StaticProvider[];
       injector = Injector.create({ providers });
-      window = injector.get(WINDOW);
+      doc = injector.get(DOCUMENT) as any;
+      doc.defaultView = new MockWindow();
+      window = doc.defaultView;
       scrollService = injector.get(ScrollService);
 
       spyOn(window, 'scrollBy');
@@ -117,6 +120,14 @@ describe('Service: Scroll', () => {
         scrollService.scrollToElement(null);
         expect(window.scrollBy).toHaveBeenCalledWith(0, 0);
       });
+
+      it('should only use scrollIntoView', () => {
+        doc.defaultView.scrollBy = null;
+        const element: Element = new MockElement() as any;
+        scrollService.scrollToElement(element);
+        expect(element.scrollIntoView).toHaveBeenCalled();
+        expect(element.getBoundingClientRect).not.toHaveBeenCalled();
+      });
     });
 
     describe('#scrollToTop', () => {
@@ -128,28 +139,6 @@ describe('Service: Scroll', () => {
         scrollService.scrollToTop(10);
         expect(window.scrollBy).toHaveBeenCalledWith(0, -10);
       });
-    });
-  });
-
-  describe('[edge]', () => {
-    class MockWindow {
-      scrollBy = null;
-    }
-    beforeEach(() => {
-      const providers = [
-        { provide: ScrollService, useClass: ScrollService, deps: [WINDOW, DOCUMENT] },
-        { provide: WINDOW, useClass: MockWindow, deps: [] },
-        { provide: DOCUMENT, useClass: MockDocument, deps: [] },
-      ] as StaticProvider[];
-      injector = Injector.create({ providers });
-      window = injector.get(WINDOW);
-      scrollService = injector.get(ScrollService);
-    });
-    it('should only use scrollIntoView', () => {
-      const element: Element = new MockElement() as any;
-      scrollService.scrollToElement(element);
-      expect(element.scrollIntoView).toHaveBeenCalled();
-      expect(element.getBoundingClientRect).not.toHaveBeenCalled();
     });
   });
 });

@@ -171,7 +171,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() expandAccordion = false;
   @Input() expand: TemplateRef<{ $implicit: {}; column: STColumn }>;
   @Input() noResult: string | TemplateRef<void>;
-  @Input() widthConfig: string[];
+  @Input() widthConfig: string[] = [];
   @Input() @InputNumber() rowClickTime = 200;
   @Input() @InputBoolean() responsive: boolean = true;
   @Input() @InputBoolean() responsiveHideHeaderFooter: boolean;
@@ -218,7 +218,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     private delonI18n: DelonLocaleService,
     configSrv: AlainConfigService,
   ) {
-    this.setCog(configSrv.merge<AlainSTConfig, 'st'>('st', ST_DEFULAT_CONFIG));
+    this.setCog(configSrv.merge('st', ST_DEFULAT_CONFIG)!);
 
     this.delonI18n.change.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.locale = this.delonI18n.getData('st');
@@ -515,7 +515,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     // recalculate no
     this._columns
       .filter(w => w.type === 'no')
-      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
+      .forEach(c => this._data.forEach((i, idx) => (i._values[c.__point] = { _text: this.dataSource.getNoIndex(i, c, idx), org: idx })));
 
     return this.cd();
   }
@@ -534,7 +534,7 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   setRow(index: number, item: STData, options?: { refreshSchema?: boolean; emitReload?: boolean }): this {
     options = { refreshSchema: false, emitReload: false, ...options };
     this._data[index] = deepMergeKey(this._data[index], false, item);
-    this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+    this.optimizeData();
     if (options.refreshSchema) {
       this.resetColumns({ emitReload: options.emitReload });
       return this;
@@ -548,7 +548,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   // #region sort
 
   sort(col: STColumn, idx: number, value: any) {
-    console.log(this.multiSort);
     if (this.multiSort) {
       col._sort!.default = value;
       col._sort!.tick = this.dataSource.nextSortTick;
@@ -773,6 +772,8 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
     this.refreshColumns();
     if (options.emitReload === true) {
+      // Should clean data, Because of changing columns may cause inaccurate data
+      this._data = [];
       return this.loadPageData();
     } else {
       this.cd();
@@ -787,13 +788,17 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     return this;
   }
 
+  private optimizeData(): void {
+    this._data = this.dataSource.optimizeData({ columns: this._columns, result: this._data, rowClassName: this.rowClassName });
+  }
+
   ngAfterViewInit() {
     this.columnSource.restoreAllRender(this._columns);
   }
 
   ngOnChanges(changes: { [P in keyof this]?: SimpleChange } & SimpleChanges): void {
     if (changes.columns) {
-      this.refreshColumns();
+      this.refreshColumns().optimizeData();
     }
     const changeData = changes.data;
     if (changeData && changeData.currentValue && !(this.req.lazyLoad && changeData.firstChange)) {

@@ -4,6 +4,7 @@
       "flatModuleFile": "image",
       "entryFile": "public_api.ts",
       "umdModuleIds": {
+        "@delon/theme": "delon.theme",
         "@delon/util": "delon.util"
       }
     }

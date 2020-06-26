@@ -1,8 +1,8 @@
 <nz-form-item [style.width.px]="ui.width" [class.ant-form-item-has-error]="showError" [class.ant-form-item-with-help]="showError">
   <nz-col *ngIf="showTitle" [nzSpan]="ui.spanLabel" class="ant-form-item-label">
     <label *ngIf="t" [attr.for]="id" [class.ant-form-item-required]="ui._required">
-      {{ t }}
-      <span class="sf__optional">
+      <span class="sf__label-text">{{ t }}</span>
+      <span *ngIf="ui.optional || oh" class="sf__optional">
         {{ ui.optional }}
         <i
           *ngIf="oh"

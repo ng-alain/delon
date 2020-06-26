@@ -1,17 +1,20 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
+import { Chart, Event, Types } from '@antv/g2';
 import { G2Time } from '@delon/chart/core';
 import { AlainConfigService, deprecation10, InputBoolean, InputNumber, toDate } from '@delon/util';
 import format from 'date-fns/format';
@@ -55,6 +58,11 @@ export interface G2TimelineMap {
   [key: string]: string | undefined;
 }
 
+export interface G2TimelineClickItem {
+  item: G2TimelineData;
+  ev: Event;
+}
+
 @Component({
   selector: 'g2-timeline',
   exportAs: 'g2Timeline',
@@ -82,14 +90,18 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() @InputNumber() borderWidth = 2;
   @Input() @InputBoolean() slider = true;
   @Input() theme: string | Types.LooseObject;
+  @Output() clickItem = new EventEmitter<G2TimelineClickItem>();
 
   // #endregion
 
-  constructor(private ngZone: NgZone, configSrv: AlainConfigService) {
+  constructor(private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 
@@ -132,6 +144,11 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
         formatter: (val: Date) => format(val, mask),
       });
     }
+
+    chart.on(`plot:click`, (ev: Event) => {
+      const records = this.chart.getSnapRecords({ x: ev.x, y: ev.y });
+      this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
+    });
 
     this.attachChart();
   }

@@ -164,6 +164,12 @@ describe('abc: reuse-tab', () => {
         page.to('#c');
         expect(page.list[page.count - 1].title).toBe(`new c title`);
       }));
+      it(`should reset title via service`, fakeAsync(() => {
+        page.to('#c');
+        srv.title = 'NEW TITLE';
+        expect(page.list[page.count - 1].title).toBe(`NEW TITLE`);
+        page.end();
+      }));
     });
 
     describe('[property]', () => {
@@ -408,6 +414,14 @@ describe('abc: reuse-tab', () => {
           expect(dl.queryAll(By.css('.reuse-tab__card')).length).toBe(1);
         });
       });
+    });
+
+    describe('[replace]', () => {
+      it('shoulde be working', fakeAsync(() => {
+        page.to('#a').to('#d').expectCount(2).expectUrl(0, '/a').expectUrl(1, '/d').cd();
+        srv.replace('/c');
+        page.cd(1).expectCount(2).expectUrl(0, '/a').expectUrl(1, '/c').end();
+      }));
     });
 
     describe('[routing]', () => {
@@ -719,7 +733,8 @@ describe('abc: reuse-tab', () => {
   template: `
     <a id="a" [routerLink]="['/a']">a</a>
     <a id="b" [routerLink]="['/b/1']">b1</a>
-    <a id="c" [routerLink]="['/c']">c</a> <a id="d" [routerLink]="['/d']">d</a>
+    <a id="c" [routerLink]="['/c']">c</a>
+    <a id="d" [routerLink]="['/d']">d</a>
     <a id="e" [routerLink]="['/e']">e</a>
     <a id="leave" [routerLink]="['/leave']">leave</a>
     <router-outlet></router-outlet>

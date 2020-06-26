@@ -12,10 +12,10 @@ export class ZipService {
   private cog: AlainZipConfig;
 
   constructor(private http: HttpClient, private lazy: LazyService, configSrv: AlainConfigService) {
-    this.cog = configSrv.merge<AlainZipConfig, 'zip'>('zip', {
+    this.cog = configSrv.merge('zip', {
       url: '//cdn.bootcss.com/jszip/3.3.0/jszip.min.js',
       utils: [],
-    });
+    })!;
   }
 
   private init(): Promise<LazyResult[]> {

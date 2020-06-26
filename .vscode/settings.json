@@ -24,6 +24,12 @@
   "[less]": {
     "editor.formatOnSave": true
   },
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": false
+  },
   "files.associations": {
     "*.json": "jsonc",
     ".prettierrc": "json",

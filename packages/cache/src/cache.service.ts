@@ -18,12 +18,12 @@ export class CacheService implements OnDestroy {
   private cog: AlainCacheConfig;
 
   constructor(cogSrv: AlainConfigService, @Inject(DC_STORE_STORAGE_TOKEN) private store: ICacheStore, private http: HttpClient) {
-    this.cog = cogSrv.merge<AlainCacheConfig, 'cache'>('cache', {
+    this.cog = cogSrv.merge('cache', {
       mode: 'promise',
       reName: '',
       prefix: '',
       meta_key: '__cache_meta',
-    });
+    })!;
     this.loadMeta();
     this.startExpireNotify();
   }
@@ -182,7 +182,7 @@ export class CacheService implements OnDestroy {
     } = {},
   ): Observable<NzSafeAny> | NzSafeAny {
     const isPromise = options.mode !== 'none' && this.cog.mode === 'promise';
-    const value: ICache = this.memory.has(key) ? (this.memory.get(key) as ICache) : this.store.get(this.cog.prefix + key);
+    const value = this.memory.has(key) ? (this.memory.get(key) as ICache) : this.store.get(this.cog.prefix + key);
     if (!value || (value.e && value.e > 0 && value.e < new Date().valueOf())) {
       if (isPromise) {
         return this.http.get(key).pipe(

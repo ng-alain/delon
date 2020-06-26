@@ -1,9 +1,10 @@
+import { Platform } from '@angular/cdk/platform';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, NgZone, OnInit } from '@angular/core';
+import { I18NService } from '@core';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
 import { copy, InputBoolean, LazyService } from '@delon/util';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { I18NService } from '../../../core/i18n/service';
 
 @Component({
   selector: 'app-footer',
@@ -28,6 +29,7 @@ export class FooterComponent implements OnInit {
     private iconSrv: NzIconService,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
+    private platform: Platform,
   ) {}
 
   onCopy(value: string) {
@@ -35,18 +37,22 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.initColor();
   }
 
   // region: color
-  initColor() {
+  initColor(): void {
     const node = document.createElement('link');
     node.rel = 'stylesheet/less';
     node.type = 'text/css';
     node.href = '/assets/color.less';
     document.getElementsByTagName('head')[0].appendChild(node);
   }
-  changeColor(res: any) {
+
+  changeColor(res: any): void {
     const changeColor = () => {
       this.ngZone.runOutsideAngular(() => {
         (window as any).less

@@ -44,8 +44,10 @@ module: import { SEModule } from '@delon/abc/se';
 | `[nzLayout]` | 表单布局，当 `inline` 时强制大小为 `compact` | `'horizontal','vertical','inline'` | `'horizontal'` | ✅ |
 | `[size]` | 大小 `compact` 紧凑型，强制忽略 `error`、`extra` 展示 | `'default','compact'` | `'default'` | ✅ |
 | `[firstVisual]` | 是否立即呈现错误视觉 | `boolean` | `false` | ✅ |
+| `[ingoreDirty]` | 是否忽略 `dirty` 校验 | `boolean` | `false` | ✅ |
 | `[line]` | 分隔线 | `boolean` | `false` |  |
 | `[title]` | 标题 | `string,TemplateRef<void>` | - |  |
+| `[errors]` | 批量修改 `se` 错误消息描述 | `SEErrorRefresh[]` | - |  |
 
 ### se
 

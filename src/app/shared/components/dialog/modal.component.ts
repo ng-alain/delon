@@ -25,8 +25,7 @@ export class DemoModalComponent {
   constructor(private modal: NzModalRef) {}
 
   ok() {
-    this.modal.close(`new time: ${+new Date()}`);
-    this.cancel();
+    this.modal.destroy(`new time: ${+new Date()}`);
   }
 
   cancel() {

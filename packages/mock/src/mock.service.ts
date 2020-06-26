@@ -10,7 +10,7 @@ export class MockService implements OnDestroy {
   readonly config: AlainMockConfig;
 
   constructor(cogSrv: AlainConfigService) {
-    this.config = cogSrv.merge<AlainMockConfig, 'mock'>('mock', MOCK_DEFULAT_CONFIG);
+    this.config = cogSrv.merge('mock', MOCK_DEFULAT_CONFIG)!;
     this.applyMock();
     delete this.config.data;
   }

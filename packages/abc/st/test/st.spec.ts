@@ -1446,9 +1446,9 @@ describe('abc: table', () => {
         }));
         it('shoule be recalculate no value', fakeAsync(() => {
           page.updateColumn([{ title: '', type: 'no' }]).expectCurrentPageTotal(PS);
-          comp._data.forEach((v, idx) => expect(v._values[0].text).toBe(idx + 1));
+          comp._data.forEach((_v, idx) => page.expectCell(`${idx + 1}`, idx + 1));
           comp.removeRow(comp._data[0]);
-          comp._data.forEach((v, idx) => expect(v._values[0].text).toBe(idx + 1));
+          comp._data.forEach((_v, idx) => page.expectCell(`${idx + 1}`, idx + 1));
         }));
         it('shoule be ingored invalid data', fakeAsync(() => {
           page.cd().expectCurrentPageTotal(PS);
@@ -2033,7 +2033,7 @@ class TestComponent {
   scroll: { y?: string; x?: string };
   multiSort: boolean | STMultiSort;
   noResult = 'noResult';
-  widthConfig: string[];
+  widthConfig: string[] = [];
   rowClickTime = 200;
   responsive = false;
   responsiveHideHeaderFooter = false;

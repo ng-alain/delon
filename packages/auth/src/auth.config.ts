@@ -15,5 +15,5 @@ export const AUTH_DEFAULT_CONFIG: AlainAuthConfig = {
 };
 
 export function mergeConfig(srv: AlainConfigService): AlainAuthConfig {
-  return srv.merge('auth', AUTH_DEFAULT_CONFIG);
+  return srv.merge('auth', AUTH_DEFAULT_CONFIG)!;
 }

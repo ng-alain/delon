@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { App, Layout, SettingsNotify, User } from './interface';
@@ -15,11 +16,19 @@ export class SettingsService {
   private _user: User | null = null;
   private _layout: Layout | null = null;
 
+  constructor(private platform: Platform) {}
+
   private get(key: string) {
+    if (!this.platform.isBrowser) {
+      return null;
+    }
     return JSON.parse(localStorage.getItem(key) || 'null') || null;
   }
 
   private set(key: string, value: any) {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     localStorage.setItem(key, JSON.stringify(value));
   }
 

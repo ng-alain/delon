@@ -8,8 +8,10 @@ import { REP_MAX } from '@delon/theme';
 import { SEContainerComponent } from './se-container.component';
 import { SEComponent } from './se.component';
 import { SEModule } from './se.module';
+import { SEErrorRefresh } from './se.types';
 
 const prefixCls = `.se__`;
+const ANT_FORM_HAS_ERROR_CLS = `.ant-form-item-has-error`;
 
 describe('abc: edit', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -24,6 +26,18 @@ describe('abc: edit', () => {
     });
   };
 
+  function genModule(template?: string) {
+    moduleAction();
+    if (template) {
+      TestBed.overrideTemplate(TestComponent, template);
+    }
+    fixture = TestBed.createComponent(TestComponent);
+    dl = fixture.debugElement;
+    context = fixture.componentInstance;
+    fixture.detectChanges();
+    page = new PageObject();
+  }
+
   function createComp() {
     ({ fixture, dl, context } = createTestContext(TestComponent));
     fixture.detectChanges();
@@ -37,13 +51,14 @@ describe('abc: edit', () => {
       beforeEach(createComp);
 
       describe('#firstVisual', () => {
+        let ngModel: NgModel;
         beforeEach(() => {
           ({ fixture, dl, context } = createTestContext(TestComponent));
           context.required = true;
           context.label = 'fv';
           context.val = '';
           context.parent_size = 'default';
-          const ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
+          ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
           spyOnProperty(ngModel, 'invalid').and.returnValue(true);
         });
         it('with true', fakeAsync(() => {
@@ -52,7 +67,7 @@ describe('abc: edit', () => {
           tick();
           fixture.detectChanges();
           page = new PageObject();
-          page.expect('.ant-form-item-has-error', 1);
+          page.expect(ANT_FORM_HAS_ERROR_CLS, 1);
         }));
         it('with false', fakeAsync(() => {
           context.parent_firstVisual = false;
@@ -60,7 +75,35 @@ describe('abc: edit', () => {
           tick();
           fixture.detectChanges();
           page = new PageObject();
-          page.expect('.ant-form-item-has-error', 0);
+          page.expect(ANT_FORM_HAS_ERROR_CLS, 0);
+        }));
+      });
+      describe('#ingoreDirty', () => {
+        let changes: EventEmitter<string>;
+        beforeEach(() => {
+          ({ fixture, dl, context } = createTestContext(TestComponent));
+          page = new PageObject();
+          context.required = true;
+          context.parent_firstVisual = false;
+          context.val = '';
+          const ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
+          spyOnProperty(ngModel, 'invalid').and.returnValue(true);
+          changes = ngModel.statusChanges as EventEmitter<string>;
+          spyOnProperty(ngModel, 'dirty').and.returnValue(false);
+        });
+        it('with true', fakeAsync(() => {
+          context.parent_ingoreDirty = true;
+          fixture.detectChanges();
+          changes.emit('INVALID');
+          fixture.detectChanges();
+          page.expect(ANT_FORM_HAS_ERROR_CLS, 1);
+        }));
+        it('with false', fakeAsync(() => {
+          context.parent_ingoreDirty = false;
+          fixture.detectChanges();
+          changes.emit('INVALID');
+          fixture.detectChanges();
+          page.expect(ANT_FORM_HAS_ERROR_CLS, 0);
         }));
       });
       describe('[property]', () => {
@@ -127,6 +170,28 @@ describe('abc: edit', () => {
             page.expect('.ant-col-xs-24');
             page.expect('.ant-col-sm-12');
           });
+          describe('#errors', () => {
+            let ngModel: NgModel;
+            let changes: EventEmitter<string>;
+            beforeEach(() => {
+              ngModel = dl.query(By.directive(NgModel)).injector.get<NgModel>(NgModel);
+              spyOnProperty(ngModel, 'dirty').and.returnValue(true);
+              spyOnProperty(ngModel, 'errors').and.returnValue({ required: true });
+              changes = ngModel.statusChanges as EventEmitter<string>;
+              changes.emit('INVALID');
+              fixture.detectChanges();
+            });
+
+            it('should be working', () => {
+              page.expectText('.ant-form-item-explain', context.error as string);
+              const NEW_ERROR = 'new request';
+              context.parent_errors = [{ name: 'val', error: NEW_ERROR }];
+              fixture.detectChanges();
+              changes.emit('INVALID');
+              fixture.detectChanges();
+              page.expectText('.ant-form-item-explain', NEW_ERROR);
+            });
+          });
         });
         describe('#item', () => {
           describe('#col', () => {
@@ -189,11 +254,11 @@ describe('abc: edit', () => {
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
           changes.emit('VALID');
-          page.expect('.ant-form-item-has-error', 0);
+          page.expect(ANT_FORM_HAS_ERROR_CLS, 0);
           // mock statusChanges
           changes.emit('INVALID');
           fixture.detectChanges();
-          page.expect('.ant-form-item-has-error');
+          page.expect(ANT_FORM_HAS_ERROR_CLS);
         });
         it('should be mulit error', () => {
           context.error = { required: 'A', other: 'O' };
@@ -205,7 +270,7 @@ describe('abc: edit', () => {
           // mock statusChanges
           changes.emit('INVALID');
           fixture.detectChanges();
-          expect(page.getEl('.ant-form-item-has-error').textContent!.trim()).toBe('O');
+          expect(page.getEl(ANT_FORM_HAS_ERROR_CLS).textContent!.trim()).toBe('O');
         });
         it('should be only control vision when error is null', () => {
           context.error = '';
@@ -216,27 +281,15 @@ describe('abc: edit', () => {
           const changes = ngModel.statusChanges as EventEmitter<string>;
           // mock statusChanges
           changes.emit('VALID');
-          page.expect('.ant-form-item-has-error', 0).expect('.ant-form-item-with-help', 0);
+          page.expect(ANT_FORM_HAS_ERROR_CLS, 0).expect('.ant-form-item-with-help', 0);
           // mock statusChanges
           changes.emit('INVALID');
           fixture.detectChanges();
-          page.expect('.ant-form-item-has-error').expect('.ant-form-item-with-help', 0);
+          page.expect(ANT_FORM_HAS_ERROR_CLS).expect('.ant-form-item-with-help', 0);
         });
       });
     });
   });
-
-  function genModule(template?: string) {
-    moduleAction();
-    if (template) {
-      TestBed.overrideTemplate(TestComponent, template);
-    }
-    fixture = TestBed.createComponent(TestComponent);
-    dl = fixture.debugElement;
-    context = fixture.componentInstance;
-    fixture.detectChanges();
-    page = new PageObject();
-  }
 
   describe('[validate]', () => {
     let ngModel: NgModel;
@@ -279,11 +332,11 @@ describe('abc: edit', () => {
       // mock statusChanges
       changes.emit('VALID');
       fixture2.detectChanges();
-      page.expect('.ant-form-item-has-error', 0);
+      page.expect(ANT_FORM_HAS_ERROR_CLS, 0);
       // mock statusChanges
       changes.emit('INVALID');
       fixture2.detectChanges();
-      page.expect('.ant-form-item-has-error');
+      page.expect(ANT_FORM_HAS_ERROR_CLS);
     });
     describe('should be ingore error visual when is disabled', () => {
       it('in ngModel', () => {
@@ -294,7 +347,7 @@ describe('abc: edit', () => {
         const changes = ngModel.statusChanges as EventEmitter<string>;
         changes.emit('INVALID');
         fixture.detectChanges();
-        page.expect('.ant-form-item-has-error', 0);
+        page.expect(ANT_FORM_HAS_ERROR_CLS, 0);
       });
       it('in reactive form', () => {
         TestBed.configureTestingModule({
@@ -311,11 +364,11 @@ describe('abc: edit', () => {
         // mock statusChanges
         changes.emit('VALID');
         fixture2.detectChanges();
-        page.expect('.ant-form-item-has-error', 0);
+        page.expect(ANT_FORM_HAS_ERROR_CLS, 0);
         // mock statusChanges
         changes.emit('INVALID');
         fixture2.detectChanges();
-        page.expect('.ant-form-item-has-error', 0);
+        page.expect(ANT_FORM_HAS_ERROR_CLS, 0);
       });
     });
   });
@@ -375,6 +428,17 @@ describe('abc: edit', () => {
       `);
       expect(page.getEl('#expected').id).toBe('expected');
     });
+    it(`should be ingored set id when control has id value`, () => {
+      const id = 'aaaa';
+      genModule(`
+      <form nz-form se-container>
+        <se label="a">
+          <input type="text" id="${id}" [(ngModel)]="val" name="val">
+        </se>
+      </form>
+      `);
+      expect(page.getEl('label').getAttribute('for')).toBe(id);
+    });
     it(`should be keeping placeholder when content is empty`, () => {
       genModule(`
       <form nz-form se-container>
@@ -396,6 +460,16 @@ describe('abc: edit', () => {
       expect(this.getEls(cls).length).toBe(count);
       return this;
     }
+    expectText(cls: string, text: string): this {
+      expect(this.getEl(cls).textContent?.trim()).toBe(text);
+      return this;
+    }
+    cd(time = 0): this {
+      fixture.detectChanges();
+      tick(time);
+      fixture.detectChanges();
+      return this;
+    }
   }
 });
 
@@ -408,11 +482,13 @@ describe('abc: edit', () => {
       [col]="parent_col"
       [title]="parent_title"
       [firstVisual]="parent_firstVisual"
+      [ingoreDirty]="parent_ingoreDirty"
       [line]="parent_line"
       [size]="parent_size"
       [nzLayout]="parent_layout"
       [labelWidth]="parent_labelWidth"
       [gutter]="parent_gutter"
+      [errors]="parent_errors"
     >
       <se-title>title</se-title>
       <se
@@ -446,8 +522,10 @@ class TestComponent {
   parent_layout: 'horizontal' | 'vertical' | 'inline' = 'horizontal';
   parent_size: 'default' | 'compact' = 'default';
   parent_firstVisual = true;
+  parent_ingoreDirty = false;
   parent_line = false;
   parent_title = 'title';
+  parent_errors: SEErrorRefresh[] = [];
 
   optional: string;
   optionalHelp: string;

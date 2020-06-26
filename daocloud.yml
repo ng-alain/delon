@@ -6,15 +6,15 @@ release:
   stage: compile
   job_type: lite_image_build
   only:
-    tags:
-      - .*
+    branches:
+      - master
   allow_failure: false
   compile:
     build_dir: /
     cache: false
     dockerfile_path: /Dockerfile.compile
   extract:
-    - /usr/src/dist
+    - /usr/src/dist/browser
     - /usr/src/_nginx/default.conf
   package:
     build_dir: /
@@ -24,10 +24,10 @@ self:
   stage: deploy
   job_type: DCS_deploy
   only:
-    tags:
-      - .*
+    branches:
+      - master
   allow_failure: false
   dependencies:
     - release
-  app_name: ng-alain-com
+  app_name: doc
   cluster_id: ''

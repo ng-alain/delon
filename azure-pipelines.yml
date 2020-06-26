@@ -26,7 +26,7 @@ stages:
               command: 'install'
           - task: Bash@3
             env:
-              DELON_BUILDS_TOKEN: $(DELON_BUILDS_TOKEN)
+              ACCESS_TOKEN: $(ACCESS_TOKEN)
             inputs:
               targetType: 'filePath'
               filePath: 'scripts/ci/build-artifacts.sh'
@@ -104,13 +104,13 @@ stages:
               ACCESS_TOKEN: $(ACCESS_TOKEN)
           - script: npm run site:build
             displayName: 'Build sites'
-          - script: ls -al src/dist/
+          - script: ls -al src/dist/browser/
             displayName: 'List build'
           - script: |
               export DEPLOY_DOMAIN=https://preview-${SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}-ng-alain-delon.surge.sh
               echo "Deploy to $DEPLOY_DOMAIN"
-              cp ./src/dist/index.html ./src/dist/404.html
-              npx surge --project ./src/dist --domain $DEPLOY_DOMAIN
+              cp ./src/dist/browser/index.html ./src/dist/browser/404.html
+              npx surge --project ./src/dist/browser --domain $DEPLOY_DOMAIN
             displayName: 'Deploy Site'
             env:
               ACCESS_REPO: $(ACCESS_REPO)

@@ -22,6 +22,8 @@ export const ZHCN = {
   'app.home.theme.pro.desc': '提炼自企业级中后台产品的交互语言和视觉风格',
   'app.home.theme.ms': '微服务',
   'app.home.theme.ms.desc': '面向微服务开发风格的主题',
+  'app.home.theme.yun': '云',
+  'app.home.theme.yun.desc': '将功能细节化让用户更聚焦业务',
   'app.header.menu.home': '首页',
   'app.header.menu.docs': '文档',
   'app.header.menu.components': '组件',

@@ -54,7 +54,7 @@ export class ArrayProperty extends PropertyGroup {
     const value: any[] = [];
     this.forEachChild((property: FormProperty) => {
       if (property.visible && property._hasValue()) {
-        value.push({ ...property.formData, ...property.value });
+        value.push({ ...(this.widget?.cleanValue ? null : property.formData), ...property.value });
       }
     });
     this._value = value;

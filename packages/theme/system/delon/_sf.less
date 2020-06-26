@@ -3,6 +3,7 @@
 @{sf-prefix} {
   display: block;
   &__optional {
+    margin-left: @sf-optional-margin;
     color: @sf-optional-color;
   }
   // 固定 label
@@ -21,6 +22,14 @@
     &-card {
       .@{ant-prefix}-card-body {
         padding-left: 0;
+      }
+      @{sf-prefix}__fixed {
+        flex-wrap: wrap;
+      }
+      &-fold {
+        .@{ant-prefix}-card-body {
+          display: none;
+        }
       }
     }
   }
@@ -129,6 +138,16 @@
         line-height: @line-height-base;
         text-align: left;
       }
+    }
+  }
+  &__horizontal {
+    .@{ant-prefix}-form-item-label > label {
+      display: flex;
+      justify-content: flex-end;
+    }
+    @{sf-prefix}__label-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   &__no-colon {

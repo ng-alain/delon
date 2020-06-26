@@ -1,18 +1,21 @@
+import { Platform } from '@angular/cdk/platform';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Chart, Types } from '@antv/g2';
+import { Chart, Event, Types } from '@antv/g2';
 import { AlainConfigService, InputBoolean, InputNumber } from '@delon/util';
 
 export interface G2RadarData {
@@ -20,6 +23,11 @@ export interface G2RadarData {
   label: string;
   value: number;
   [key: string]: any;
+}
+
+export interface G2RadarClickItem {
+  item: G2RadarData;
+  ev: Event;
 }
 
 @Component({
@@ -50,10 +58,11 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   @Input() data: G2RadarData[] = [];
   @Input() colors = ['#1890FF', '#FACC14', '#2FC25B', '#8543E0', '#F04864', '#13C2C2', '#fa8c16', '#a0d911'];
   @Input() theme: string | Types.LooseObject;
+  @Output() clickItem = new EventEmitter<G2RadarClickItem>();
 
   // #endregion
 
-  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone, configSrv: AlainConfigService) {
+  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone, configSrv: AlainConfigService, private platform: Platform) {
     configSrv.attachKey(this, 'chart', 'theme');
   }
 
@@ -112,6 +121,10 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
 
     chart.render();
 
+    chart.on(`point:click`, (ev: Event) => {
+      this.ngZone.run(() => this.clickItem.emit({ item: ev.data?.data, ev }));
+    });
+
     this.attachChart();
   }
 
@@ -160,6 +173,9 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
+    if (!this.platform.isBrowser) {
+      return;
+    }
     this.ngZone.runOutsideAngular(() => setTimeout(() => this.install(), this.delay));
   }
 

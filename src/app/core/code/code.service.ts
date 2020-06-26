@@ -1,10 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { AppService } from '@core/app.service';
 import { deepCopy } from '@delon/util';
 import sdk from '@stackblitz/sdk';
 import { getParameters } from 'codesandbox/lib/api/define';
 import * as pkg from '../../../../package.json';
+import { AppService } from '../app.service';
 import angularJSON from './files/angular.json';
 import appModuleTS from './files/app.module';
 import delonABCModuleTS from './files/delon-abc.module';
@@ -16,6 +16,7 @@ import mainTS from './files/main';
 import nzZorroAntdModuleTS from './files/ng-zorro-antd.module';
 import polyfillTS from './files/polyfill';
 import startupServiceTS from './files/startup.service';
+import tsconfigJSON from './files/tsconfig.json';
 
 @Injectable({ providedIn: 'root' })
 export class CodeService {
@@ -24,25 +25,27 @@ export class CodeService {
   private get dependencies() {
     const NGALAIN_VERSION = `~${pkg.version}`;
     return {
-      '@angular/animations': '^9.0.0',
-      '@angular/cdk': '9.2.1',
-      '@angular/common': '^9.0.0',
-      '@angular/compiler': '^9.0.0',
-      '@angular/core': '^9.0.0',
-      '@angular/forms': '^9.0.0',
-      '@angular/platform-browser': '^9.0.0',
-      '@angular/platform-browser-dynamic': '^9.0.0',
-      '@angular/router': '^9.0.0',
-      '@ant-design/icons-angular': '9.0.1',
-      'core-js': '3.6.4',
-      rxjs: '6.5.4',
-      tslib: '1.11.1',
-      'zone.js': '0.10.2',
+      '@angular/animations': '^9.1.4',
+      '@angular/compiler': '^9.1.4',
+      '@angular/cdk': '^9.2.4',
+      '@angular/common': '^9.1.4',
+      '@angular/core': '^9.1.4',
+      '@angular/forms': '^9.1.4',
+      '@angular/platform-browser': '^9.1.4',
+      '@angular/platform-browser-dynamic': '^9.1.4',
+      '@angular/router': '^9.1.4',
+      '@ant-design/icons-angular': '^9.0.1',
+      'core-js': '^3.6.4',
+      rxjs: '^6.5.5',
+      tslib: '^1.11.1',
+      'zone.js': '^0.10.3',
       '@antv/g2': '*',
       '@antv/data-set': '*',
       'date-fns': '*',
-      'file-saver': '^1.3.3',
+      'file-saver': '*',
       'ngx-countdown': '*',
+      extend: '*',
+      qrious: '*',
       'ng-zorro-antd': '*',
       '@delon/theme': NGALAIN_VERSION,
       '@delon/abc': NGALAIN_VERSION,
@@ -53,8 +56,6 @@ export class CodeService {
       '@delon/mock': NGALAIN_VERSION,
       '@delon/form': NGALAIN_VERSION,
       '@delon/util': NGALAIN_VERSION,
-      extend: '*',
-      qrious: '*',
     };
   }
 
@@ -108,6 +109,7 @@ export class CodeService {
         dependencies: this.dependencies,
         files: {
           'angular.json': `${JSON.stringify(json, null, 2)}`,
+          'tsconfig.json': `${JSON.stringify(tsconfigJSON, null, 2)}`,
           'src/environments/environment.ts': environmentTS,
           'src/index.html': res.html,
           'src/main.ts': mainTS,
@@ -151,6 +153,10 @@ export class CodeService {
           content: `${JSON.stringify(json, null, 2)}`,
           isBinary: false,
         },
+        // 'tsconfig.json': {
+        //   content: `${JSON.stringify(tsconfigJSON, null, 2)}`,
+        //   isBinary: false,
+        // },
         'src/environments/environment.ts': {
           content: environmentTS,
           isBinary: false,

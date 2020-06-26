@@ -19,10 +19,10 @@ export type HttpObserve = 'body' | 'events' | 'response';
 export class _HttpClient {
   private cog: AlainThemeHttpClientConfig;
   constructor(private http: HttpClient, cogSrv: AlainConfigService) {
-    this.cog = cogSrv.merge<AlainThemeHttpClientConfig, 'themeHttp'>('themeHttp', {
+    this.cog = cogSrv.merge('themeHttp', {
       nullValueHandling: 'include',
       dateValueHandling: 'timestamp',
-    });
+    })!;
   }
 
   private _loading = false;

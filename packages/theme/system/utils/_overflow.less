@@ -1,3 +1,15 @@
-.for-each(@overflows, {
-  .overflow-@{adKey}    { overflow: @adKey !important; }
-});
+/**
+ * 如果溢出框，则应该提供滚动机制
+ * If overflow is clipped, a scroll-bar should be added to see the rest of the content
+ */
+.overflow-auto {
+  overflow: auto !important;
+}
+
+/**
+ * 裁剪内容，不提供滚动机制
+ * The overflow is clipped, and the rest of the content will be invisible
+ */
+.overflow-hidden {
+  overflow: hidden !important;
+}

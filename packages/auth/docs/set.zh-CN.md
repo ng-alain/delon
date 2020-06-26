@@ -57,4 +57,4 @@ export class GlobalConfigModule {
 
 ### CookieStorageStore
 
-Cookie 存储，需要额外安装 [js-cookie](https://github.com/js-cookie/js-cookie) 依赖，并在 `angular.json` 的 `scripts` 节点中引用 `"node_modules/js-cookie/src/js.cookie.js"`。
+Cookie 存储，需要额外安装 [js-cookie](https://github.com/js-cookie/js-cookie) 依赖，并在 `angular.json` 的 `scripts` 节点中引用 `"node_modules/js-cookie/dist/js.cookie.js"`。

@@ -3,7 +3,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   AlainConfigService,
-  AlainDateRangePickerConfig,
   AlainDateRangePickerShortcut,
   AlainDateRangePickerShortcutItem,
   deepMergeKey,
@@ -80,7 +79,7 @@ export class RangePickerComponent implements ControlValueAccessor {
   // #endregion
 
   constructor(private dom: DomSanitizer, configSrv: AlainConfigService) {
-    const cog = configSrv.merge<AlainDateRangePickerConfig, 'dataRange'>('dataRange', {
+    const cog = configSrv.merge('dataRange', {
       nzFormat: 'yyyy-MM-dd',
       nzAllowClear: true,
       nzAutoFocus: false,
@@ -120,7 +119,7 @@ export class RangePickerComponent implements ControlValueAccessor {
           },
         ],
       },
-    });
+    })!;
     this.defaultShortcuts = { ...cog.shortcuts } as AlainDateRangePickerShortcut;
     Object.assign(this, cog);
   }

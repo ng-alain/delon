@@ -10,6 +10,8 @@ When the text is too long, the Ellipsis automatically shortens it according to i
 
 ## API
 
+### ellipsis
+
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `[tooltip]` | tooltip for showing the full text content when hovering over | `boolean` | `false` |

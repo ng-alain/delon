@@ -11,14 +11,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "src/dist",
+            "outputPath": "src/dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.json",
             "polyfills": "src/polyfills.ts",
-            "assets": [
-              "src/assets"
-            ],
+            "assets": ["src/assets"],
             "styles": [
               "node_modules/ngx-simplemde/lib/index.less",
               "node_modules/aos/dist/aos.css",
@@ -43,16 +41,20 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }]
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "hmr": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.hmr.ts"
-              }]
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
             }
           }
         },
@@ -77,6 +79,51 @@
             "tsConfig": ["src/tsconfig.json"],
             "exclude": ["**/node_modules/**"]
           }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "src/dist/server",
+            "main": "./src/server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "site:build",
+            "serverTarget": "site:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "site:build:production",
+              "serverTarget": "site:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "site:build:production",
+            "serverTarget": "site:server:production",
+            "routes": ["/", "zh", "en"]
+          },
+          "configurations": {
+            "production": {}
+          }
         }
       }
     },
@@ -92,13 +139,8 @@
             "karmaConfig": "packages/karma.conf.js",
             "polyfills": "packages/polyfills.ts",
             "tsConfig": "packages/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/ajv/dist/ajv.bundle.js"
-            ],
-            "codeCoverageExclude": [
-              "packages/schematics/**",
-              "packages/testing/**"
-            ]
+            "scripts": ["node_modules/ajv/dist/ajv.bundle.js"],
+            "codeCoverageExclude": ["packages/schematics/**", "packages/testing/**"]
           }
         }
       }

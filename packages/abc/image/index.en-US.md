@@ -3,7 +3,7 @@ type: Basic
 order: 2
 title: _src
 subtitle: Image
-cols: 1
+cols: 2
 module: import { ImageModule } from '@delon/abc/image';
 ---
 
@@ -12,6 +12,7 @@ like `src`, but more features:
 - Support WeChat, qq avatar thumbnail rule
 - Support remove http&https protocol
 - Support onerror events
+- Support use `HttpClient` to request image resources, Automatically converted to Base64, generally used to request image resources that require authorization
 
 ## API
 
@@ -21,3 +22,4 @@ like `src`, but more features:
 |----------|-------------|------|---------|---------------|
 | `[size]` | Size of image | `number` | `64` | ✅ |
 | `[error]` | Replaces failed image | `string` | `./assets/img/logo.svg` | ✅ |
+| `[useHttp]` | Whether to use `HttpClient` to request image resources | `boolean` | `false` | - |
