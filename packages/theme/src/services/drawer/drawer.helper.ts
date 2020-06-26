@@ -79,7 +79,7 @@ export class DrawerHelper {
         defaultOptions[
           drawerOptions!.nzPlacement === 'top' || drawerOptions!.nzPlacement === 'bottom' ? 'nzHeight' : 'nzWidth'
         ] = options!.size;
-      } else {
+      } else if (!drawerOptions!.nzWidth) {
         defaultOptions.nzWrapClassName = (drawerOptions!.nzWrapClassName + ` drawer-${options!.size}`).trim();
         delete drawerOptions!.nzWrapClassName;
       }
