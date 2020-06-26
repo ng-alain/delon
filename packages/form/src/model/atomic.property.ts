@@ -6,7 +6,7 @@ export abstract class AtomicProperty extends FormProperty {
 
   setValue(value: SFValue, onlySelf: boolean) {
     this._value = value;
-    this.updateValueAndValidity(onlySelf, true);
+    this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 
   resetValue(value: SFValue, onlySelf: boolean) {
@@ -15,7 +15,7 @@ export abstract class AtomicProperty extends FormProperty {
     }
     this._value = value;
 
-    this.updateValueAndValidity(onlySelf, true);
+    this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
 
     if (this.widget) this.widget.reset(value);
   }

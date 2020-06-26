@@ -153,15 +153,15 @@ describe('form: component', () => {
         expect(context.comp._schema.required!.indexOf('name') === -1).toBe(true);
       });
 
-      it('should be ingore trigger formChange event when call refreshSchema method', () => {
-        expect(context.formChange).not.toHaveBeenCalled();
+      it('should be ingore trigger formChange2 event when call refreshSchema method', () => {
+        expect(context.formChange2).not.toHaveBeenCalled();
         page.newSchema({ properties: { name: { type: 'string' } } });
-        expect(context.formChange).not.toHaveBeenCalled();
+        expect(context.formChange2).not.toHaveBeenCalled();
       });
 
       it('should be hava values when call refreshSchema method after', () => {
         page.newSchema({ properties: { name: { type: 'string', default: 'a' } } });
-        expect(context.formChange).not.toHaveBeenCalled();
+        expect(context.formChange2).not.toHaveBeenCalled();
         expect(context.comp.value.name).toBe('a');
       });
     });
@@ -458,9 +458,9 @@ describe('form: component', () => {
         });
       });
 
-      it('#formChange', () => {
+      it('#formChange2', () => {
         page.setValue('/name', 'cipchk');
-        expect(context.formChange).toHaveBeenCalled();
+        expect(context.formChange2).toHaveBeenCalled();
       });
 
       it('#formSubmit', () => {
