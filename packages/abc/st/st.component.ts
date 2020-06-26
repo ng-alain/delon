@@ -548,7 +548,6 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
   // #region sort
 
   sort(col: STColumn, idx: number, value: any) {
-    console.log(this.multiSort);
     if (this.multiSort) {
       col._sort!.default = value;
       col._sort!.tick = this.dataSource.nextSortTick;
