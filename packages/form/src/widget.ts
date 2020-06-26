@@ -56,7 +56,7 @@ export abstract class Widget<T extends FormProperty, UIT extends SFUISchemaItem>
     @Inject(ChangeDetectorRef) protected readonly cd: ChangeDetectorRef,
     @Inject(Injector) protected readonly injector: Injector,
     @Inject(SFItemComponent) protected readonly sfItemComp?: SFItemComponent,
-    @Inject(SFComponent) protected readonly sfComp?: SFComponent,
+    @Inject(SFComponent) readonly sfComp?: SFComponent,
   ) {}
 
   ngAfterViewInit(): void {

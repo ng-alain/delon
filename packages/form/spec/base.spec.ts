@@ -44,7 +44,7 @@ export function builder(options?: { detectChanges?: boolean; template?: string; 
   fixture = TestBed.createComponent(TestFormComponent);
   dl = fixture.debugElement;
   context = fixture.componentInstance;
-  spyOn(context, 'formChange');
+  spyOn(context, 'formChange2');
   spyOn(context, 'formSubmit');
   spyOn(context, 'formReset');
   spyOn(context, 'formError');
@@ -76,7 +76,7 @@ export class SFPage {
     dl = _dl;
     context = _context;
     fixture = _fixture;
-    spyOn(context, 'formChange');
+    spyOn(context, 'formChange2');
     spyOn(context, 'formSubmit');
     spyOn(context, 'formReset');
     spyOn(context, 'formError');
@@ -293,7 +293,7 @@ export class SFPage {
     return this.dc();
   }
 
-  typeEvent(eventName: string, cls = 'input'): this {
+  typeEvent(eventName: string | Event, cls = 'input'): this {
     const node = document.querySelector(cls) as HTMLInputElement;
     if (node == null) {
       expect(true).toBe(false, `won't found '${cls}' class element`);
@@ -342,7 +342,7 @@ export class SFPage {
       [loading]="loading"
       [noColon]="noColon"
       [cleanValue]="cleanValue"
-      (formChange)="formChange($event)"
+      (formChange2)="formChange2($event)"
       (formSubmit)="formSubmit($event)"
       (formReset)="formReset($event)"
       (formError)="formError($event)"
@@ -366,7 +366,7 @@ export class TestFormComponent {
   noColon = false;
   cleanValue = false;
 
-  formChange() {}
+  formChange2() {}
   formSubmit() {}
   formReset() {}
   formError() {}

@@ -57,7 +57,7 @@ export class ObjectProperty extends PropertyGroup {
         (properties[propertyId] as FormProperty).setValue(value[propertyId], true);
       }
     }
-    this.updateValueAndValidity(onlySelf, true);
+    this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 
   resetValue(value: SFValue, onlySelf: boolean) {
@@ -67,7 +67,7 @@ export class ObjectProperty extends PropertyGroup {
     for (const propertyId in this.schema.properties) {
       properties[propertyId].resetValue(value[propertyId], true);
     }
-    this.updateValueAndValidity(onlySelf, true);
+    this.updateValueAndValidity({ onlySelf, emitValueEvent: true });
   }
 
   _hasValue(): boolean {

@@ -15,8 +15,8 @@ export function dispatchEvent(node: Node | Window, event: Event): Event {
 }
 
 /** Shorthand to dispatch a fake event on a specified node. */
-export function dispatchFakeEvent(node: Node | Window, type: string, canBubble?: boolean): Event {
-  return dispatchEvent(node, createFakeEvent(type, canBubble));
+export function dispatchFakeEvent(node: Node | Window, type: string | Event, canBubble?: boolean): Event {
+  return dispatchEvent(node, typeof type === 'string' ? createFakeEvent(type, canBubble) : type);
 }
 
 /** Shorthand to dispatch a keyboard event with a specified key code. */

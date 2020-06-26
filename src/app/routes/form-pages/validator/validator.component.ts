@@ -19,7 +19,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   template: \`
   <sf [schema]="schema" [formData]="formData" [ui]="ui" [layout]="layout"
       (formSubmit)="submit($event)"
-      (formChange)="change($event)"
+      (formChange2)="change($event)"
       (formError)="error($event)"></sf>
     \`
 })
@@ -36,7 +36,7 @@ export class DemoComponent {
   }
 
   change(value: any) {
-    console.log('formChange', value);
+    console.log('formChange2', value);
   }
 
   error(value: any) {
@@ -144,7 +144,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
   }
 
   change(value: any) {
-    console.log('formChange', value);
+    console.log('formChange2', value);
   }
 
   error(value: any) {
