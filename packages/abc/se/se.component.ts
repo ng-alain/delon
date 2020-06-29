@@ -148,10 +148,12 @@ export class SEComponent implements OnChanges, AfterContentInit, AfterViewInit, 
     if (this._autoId) {
       const controlAccessor = this.ngControl.valueAccessor as NzSafeAny;
       const control = (controlAccessor?.elementRef || controlAccessor?._elementRef)?.nativeElement as HTMLElement;
-      if (control.id) {
-        this._id = control.id;
-      } else {
-        control.id = this._id;
+      if (!!control) {
+        if (control.id) {
+          this._id = control.id;
+        } else {
+          control.id = this._id;
+        }
       }
     }
     // auto required
