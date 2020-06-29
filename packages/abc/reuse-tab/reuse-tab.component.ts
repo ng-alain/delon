@@ -112,7 +112,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
     };
   }
 
-  private genList(notify: ReuseTabNotify): void {
+  private genList(notify: ReuseTabNotify | null): void {
     const ls = this.srv.items.map(
       (item: ReuseTabCached, index: number) =>
         ({
@@ -127,7 +127,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
 
     const url = this.curUrl;
     let addCurrent = ls.findIndex(w => w.url === url) === -1;
-    if (notify.active === 'close' && notify.url === url) {
+    if (notify && notify.active === 'close' && notify.url === url) {
       addCurrent = false;
       let toPos = 0;
       const curItem = this.list.find(w => w.url === url)!;
@@ -257,7 +257,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
           }
           return;
       }
-      this.genList(res!);
+      this.genList(res);
     });
 
     this.i18nSrv.change
