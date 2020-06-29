@@ -153,6 +153,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       ls[0].closable = false;
     }
     this.list = ls;
+    this.cdr.detectChanges();
     this.updatePos$.next();
   }
 
@@ -237,7 +238,6 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       const url = this.srv.getUrl(this.route.snapshot);
       const ls = this.list.filter(w => w.url === url || !this.srv.isExclude(w.url));
       if (ls.length === 0) {
-        this.cdr.detectChanges();
         return;
       }
 
@@ -246,7 +246,7 @@ export class ReuseTabComponent implements OnInit, OnChanges, OnDestroy {
       last.last = true;
       const pos = item == null ? last.index : item.index;
       ls.forEach((i, idx) => (i.active = pos === idx));
-      // this.pos = pos;
+      this.pos = pos;
       // TODO: 目前无法知道为什么 `pos` 无法通过 `nzSelectedIndex` 生效，因此强制使用组件实例的方式来修改，这种方式是安全的
       // https://github.com/ng-alain/ng-alain/issues/1736
       this.tabset.nzSelectedIndex = pos;
