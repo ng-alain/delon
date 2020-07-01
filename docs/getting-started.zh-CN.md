@@ -27,7 +27,15 @@ NG-ALAIN 是一个企业级中后台前端/设计解决方案脚手架，我们�
 
 ### CLI（推荐）
 
-请先通过 `ng version` 命令确认全局 Angular Cli 版本为最新版本号（当前最新版本号：<img src="https://img.shields.io/npm/v/@angular/cli.svg?style=flat-square" alt="npm">），有关如何升级请参考[CLI 命令参考手册](https://angular.cn/cli)。
+请先通过 `ng version` 命令确认全局 Angular Cli 版本为 `9.x`，有关如何升级请参考[CLI 命令参考手册](https://angular.cn/cli)。
+
+```bash
+# 安装 9.x 版本的全局Angluar Cli版本
+# 使用 yarn
+yarn global add @angular/cli@9.x
+# 或使用 npm
+# npm install -g @angular/cli@9.x
+```
 
 > 注意：Angular Cli 默认会使用 npm install 来安装依赖，可能会比较慢，请参考 [如何正确使用淘宝源？](/docs/faq/zh#%E5%A6%82%E4%BD%95%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E6%B7%98%E5%AE%9D%E6%BA%90%EF%BC%9F) 解决安装依赖慢的问题。
 
