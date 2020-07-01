@@ -16,11 +16,11 @@ Simplest of usage.
 ```ts
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { SFSchema, SFStringWidgetSchema } from '@delon/form';
+import { SFSchema, SFStringWidgetSchema, SFValueChange } from '@delon/form';
 
 @Component({
   selector: 'app-demo',
-  template: `<sf [schema]="schema" (formSubmit)="submit($event)"></sf>`,
+  template: `<sf [schema]="schema" (formValueChange)="valueChange($event)" (formSubmit)="submit($event)"></sf>`,
 })
 export class DemoComponent {
   schema: SFSchema = {
@@ -55,9 +55,15 @@ export class DemoComponent {
     },
     required: ['name'],
   };
+
   constructor(public msg: NzMessageService) {}
-  submit(value: any) {
+
+  submit(value: any): void {
     this.msg.success(JSON.stringify(value));
+  }
+
+  valueChange(res: SFValueChange): void {
+    this.msg.info(JSON.stringify(res));
   }
 }
 ```

@@ -3,7 +3,7 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { SF_SEQ } from '../const';
 import { ErrorData } from '../errors';
-import { SFUpdateValueAndValidity, SFValue, SFValueChange } from '../interface';
+import { SFFormValueChange, SFUpdateValueAndValidity, SFValue } from '../interface';
 import { SFSchema, SFSchemaType } from '../schema';
 import { SFUISchema, SFUISchemaItem, SFUISchemaItemRun } from '../schema/ui';
 import { isBlank } from '../utils';
@@ -12,7 +12,7 @@ import { Widget } from '../widget';
 
 export abstract class FormProperty {
   private _errors: ErrorData[] | null = null;
-  private _valueChanges = new BehaviorSubject<SFValueChange>({ path: null, pathValue: null, value: null });
+  private _valueChanges = new BehaviorSubject<SFFormValueChange>({ path: null, pathValue: null, value: null });
   private _errorsChanges = new BehaviorSubject<ErrorData[] | null>(null);
   private _visible = true;
   private _visibilityChanges = new BehaviorSubject<boolean>(true);

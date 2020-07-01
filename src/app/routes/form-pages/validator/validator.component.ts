@@ -19,7 +19,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   template: \`
   <sf [schema]="schema" [formData]="formData" [ui]="ui" [layout]="layout"
       (formSubmit)="submit($event)"
-      (formChange2)="change($event)"
+      (formChange)="change($event)"
       (formError)="error($event)"></sf>
     \`
 })
@@ -36,7 +36,7 @@ export class DemoComponent {
   }
 
   change(value: any) {
-    console.log('formChange2', value);
+    console.log('formChange', value);
   }
 
   error(value: any) {
@@ -100,7 +100,7 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     }, 100);
   }
 
-  getSchema() {
+  getSchema(): void {
     const item = this.files.find(w => w.name === this.name);
     if (!item) return;
     this.name = item.name;
@@ -118,13 +118,13 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     });
   }
 
-  run() {
+  run(): void {
     this.schemaData = JSON.parse(this.schema || '{}');
     this.formData = JSON.parse(this.formCode || '{}');
     this.uiSchema = JSON.parse(this.uiCode || '{}');
   }
 
-  openOnStackBlitz() {
+  openOnStackBlitz(): void {
     const obj: { [key: string]: NzSafeAny } = {
       schema: this.schema,
       layout: this.layout,
@@ -135,23 +135,27 @@ export class FormValidatorComponent implements OnInit, OnDestroy {
     this.codeSrv.openOnStackBlitz(componentCode);
   }
 
-  onCopy() {
+  onCopy(): void {
     copy(this.schema).then(() => this.msg.success(this.i18n.fanyi('app.demo.copied')));
   }
 
-  submit(value: any) {
+  submit(value: any): void {
     this.msg.success(JSON.stringify(value));
   }
 
-  change(value: any) {
-    console.log('formChange2', value);
+  change(value: any): void {
+    console.log('formChange', value);
   }
 
-  error(value: any) {
+  valueChange(value: any): void {
+    console.log('formChange', value);
+  }
+
+  error(value: any): void {
     console.log('formError', value);
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }

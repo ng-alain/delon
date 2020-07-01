@@ -132,7 +132,8 @@ export class HomeComponent {
 | `[noColon]` | Whether to not display `:` after label text. | `boolean` | `false` |
 | `[compact]` | Whether compact style | `boolean` | `false` |
 | `[cleanValue]` | Whether to clean up data for undefined Schema | `boolean` | `false` |
-| `(formChange2)` | Callback when data changes | `EventEmitter<SFChange>` | - |
+| `(formChange)` | Callback when data changes | `EventEmitter<{}>` | - |
+| `(formValueChange)` | Callback when value changes | `EventEmitter<SFValueChange>` | - |
 | `(formSubmit)` | Callback when submitting the form | `EventEmitter<{}>` | - |
 | `(formReset)` | Callback when resetting the form | `EventEmitter<{}>` | - |
 | `(formError)` | Callback when form check | `EventEmitter<ErrorData[]>` | - |
@@ -151,7 +152,7 @@ export class HomeComponent {
 | `[edit]` | Edit text of button | `string` | `保存` |
 | `[render]` | Button layout | `SFRenderButton` | - |
 
-### SFChange
+### SFValueChange
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|

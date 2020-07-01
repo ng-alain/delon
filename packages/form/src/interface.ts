@@ -4,13 +4,13 @@ export type SFValue = any;
 
 export type SFLayout = 'horizontal' | 'vertical' | 'inline';
 
-export interface SFValueChange {
+export interface SFFormValueChange {
   path: string | null;
   pathValue: SFValue;
   value: SFValue;
 }
 
-export interface SFChange {
+export interface SFValueChange {
   /**
    * Always return complete data
    */
