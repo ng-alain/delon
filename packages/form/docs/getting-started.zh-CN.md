@@ -132,7 +132,8 @@ export class HomeComponent {
 | `[noColon]` | 是否不显示 `label` 后面的冒号 | `boolean` | `false` |
 | `[compact]` | 是否紧凑 | `boolean` | `false` |
 | `[cleanValue]` | 是否清理未定义 Schema 的数据 | `boolean` | `false` |
-| `(formChange2)` | 数据变更时回调 | `EventEmitter<SFChange>` | - |
+| `(formChange)` | 数据变更时回调 | `EventEmitter<{}>` | - |
+| `(formValueChange)` | 值数据变更时回调 | `EventEmitter<SFValueChange>` | - |
 | `(formSubmit)` | 提交表单时回调 | `EventEmitter<{}>` | - |
 | `(formReset)` | 重置表单时回调 | `EventEmitter<{}>` | - |
 | `(formError)` | 表单校验结果回调 | `EventEmitter<ErrorData[]>` | - |
@@ -151,7 +152,7 @@ export class HomeComponent {
 | `[edit]` | 编辑按钮文本 | `string` | `保存` |
 | `[render]` | 按钮样式 | `SFRenderButton` | - |
 
-### SFChange
+### SFValueChange
 
 | 参数 | 说明 | 类型 | 默认值 |
 |----------|-------------|------|---------|

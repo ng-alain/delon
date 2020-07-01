@@ -44,7 +44,8 @@
       [ui]="uiSchema"
       [layout]="layout"
       (formSubmit)="submit($event)"
-      (formChange2)="change($event)"
+      (formChange)="change($event)"
+      (formValueChange)="valueChange($event)"
       (formError)="error($event)"
     ></sf>
   </div>

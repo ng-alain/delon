@@ -44,7 +44,8 @@ export function builder(options?: { detectChanges?: boolean; template?: string; 
   fixture = TestBed.createComponent(TestFormComponent);
   dl = fixture.debugElement;
   context = fixture.componentInstance;
-  spyOn(context, 'formChange2');
+  spyOn(context, 'formChange');
+  spyOn(context, 'formValueChange');
   spyOn(context, 'formSubmit');
   spyOn(context, 'formReset');
   spyOn(context, 'formError');
@@ -76,7 +77,8 @@ export class SFPage {
     dl = _dl;
     context = _context;
     fixture = _fixture;
-    spyOn(context, 'formChange2');
+    spyOn(context, 'formValueChange');
+    spyOn(context, 'formChange');
     spyOn(context, 'formSubmit');
     spyOn(context, 'formReset');
     spyOn(context, 'formError');
@@ -342,7 +344,8 @@ export class SFPage {
       [loading]="loading"
       [noColon]="noColon"
       [cleanValue]="cleanValue"
-      (formChange2)="formChange2($event)"
+      (formChange)="formChange($event)"
+      (formValueChange)="formValueChange($event)"
       (formSubmit)="formSubmit($event)"
       (formReset)="formReset($event)"
       (formError)="formError($event)"
@@ -366,7 +369,8 @@ export class TestFormComponent {
   noColon = false;
   cleanValue = false;
 
-  formChange2() {}
+  formChange() {}
+  formValueChange() {}
   formSubmit() {}
   formReset() {}
   formError() {}

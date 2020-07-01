@@ -25,7 +25,7 @@ import { merge, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { mergeConfig } from './config';
 import { ErrorData } from './errors';
-import { SFButton, SFChange, SFLayout } from './interface';
+import { SFButton, SFLayout, SFValueChange } from './interface';
 import { FormProperty, PropertyGroup } from './model/form.property';
 import { FormPropertyFactory } from './model/form.property.factory';
 import { SFSchema } from './schema/index';
@@ -146,11 +146,7 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
   @Input() @InputBoolean() disabled = false;
   @Input() @InputBoolean() noColon = false;
   @Input() @InputBoolean() cleanValue = false;
-  @Output() readonly formChange2 = new EventEmitter<SFChange>();
-  /**
-   * 数据变更时回调
-   * @deprecated Will be removed in 11.0.0. Please use `formChange2` instead
-   */
+  @Output() readonly formValueChange = new EventEmitter<SFValueChange>();
   @Output() readonly formChange = new EventEmitter<{}>();
   @Output() readonly formSubmit = new EventEmitter<{}>();
   @Output() readonly formReset = new EventEmitter<{}>();
@@ -570,9 +566,8 @@ export class SFComponent implements OnInit, OnChanges, OnDestroy {
         isFirst = false;
         return;
       }
-      // tslint:disable-next-line: deprecation
       this.formChange.emit(this._item);
-      this.formChange2.emit({ value: this._item, path: res.path, pathValue: res.pathValue });
+      this.formValueChange.emit({ value: this._item, path: res.path, pathValue: res.pathValue });
     });
     this.rootProperty.errorsChanges.subscribe(errors => {
       this._valid = !(errors && errors.length);
