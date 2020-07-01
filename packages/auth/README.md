@@ -1,4 +1,4 @@
-# @delon/auth module [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/@delon/auth.svg?style=flat-square)](https://www.npmjs.com/package/@delon/auth)
+# @delon/auth [![Build Status](https://dev.azure.com/ng-alain/delon/_apis/build/status/delon-CI?branchName=master)](https://dev.azure.com/ng-alain/delon/_build/latest?definitionId=1&branchName=master) [![NPM version](https://img.shields.io/npm/v/@delon/auth.svg?style=flat-square)](https://www.npmjs.com/package/@delon/auth)
 
 Simple user authentication, support Json Web Token & Simple Token.
 
