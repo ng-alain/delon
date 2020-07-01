@@ -59,7 +59,7 @@ export default function (options: NgAddOptions): Rule {
     }
     if (!ngCoreVersion.startsWith('9.')) {
       throw new Error(
-        `Sorry, the current version only supports angular 9.x, pls downgrade the global Anguar-cli version: yarn global add @angular/cli@9.x (or via npm: npm install -g @angular/cli@9.x)`,
+        `Sorry, the current version only supports angular 9.x, pls downgrade the global Anguar-cli version: [yarn global add @angular/cli@9.x] (or via npm: [npm install -g @angular/cli@9.x])`,
       );
     }
 
