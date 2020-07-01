@@ -27,7 +27,15 @@ You will need [node](http://nodejs.org/) and [git](https://git-scm.com/). The pr
 
 ### CLI (Recommend)
 
-Please make sure global Angular Cli is latest version via `ng version` command (Currently <img src="https://img.shields.io/npm/v/@angular/cli.svg?style=flat-square" alt="npm">), please refer to [CLI Command Reference](https://angular.io/cli) for how to upgrade.
+Please make sure global Angular Cli is `9.x` version via `ng version` command, please refer to [CLI Command Reference](https://angular.io/cli) for how to upgrade.
+
+```bash
+# Install the 9.x version of the global Angular Cli version
+# Via yarn
+yarn global add @angular/cli@9.x
+# Or via npm
+# npm install -g @angular/cli@9.x
+```
 
 ```bash
 ng new my-project --style less --routing
