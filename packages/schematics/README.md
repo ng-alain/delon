@@ -8,7 +8,7 @@ Angular CLI Schematics of ng-alain.
 
 ## Links
 
-+ [Document](https://ng-alain.com) ([Surge Mirror](https://ng-alain-doc.surge.sh))
++ [Document](https://ng-alain.com/cli) ([Surge Mirror](https://ng-alain-doc.surge.sh/cli) - [国内镜像](https://ng-alain.gitee.io/delon/cli))
 + [@delon Source](https://github.com/ng-alain/delon)
 + [DEMO](https://ng-alain.surge.sh) ([国内镜像](https://ng-alain.gitee.io/))
 

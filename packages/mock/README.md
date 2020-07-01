@@ -4,7 +4,7 @@ Generate random data, intercept http requests.
 
 ## Links
 
-+ [Document](https://ng-alain.com/mock) ([Surge Mirror](https://ng-alain-doc.surge.sh/mock))
++ [Document](https://ng-alain.com/mock) ([Surge Mirror](https://ng-alain-doc.surge.sh/mock) - [国内镜像](https://ng-alain.gitee.io/delon/mock))
 + [@delon Source](https://github.com/ng-alain/delon)
 + [DEMO](https://ng-alain.surge.sh) ([国内镜像](https://ng-alain.gitee.io/))
 
