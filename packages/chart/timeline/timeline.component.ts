@@ -84,6 +84,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() titleMap: G2TimelineMap;
   @Input() colorMap: G2TimelineMap = { y1: '#5B8FF9', y2: '#5AD8A6', y3: '#5D7092', y4: '#F6BD16', y5: '#E86452' };
   @Input() mask: string = 'HH:mm';
+  @Input() maskSlider: string = 'HH:mm';
   @Input() position: 'top' | 'right' | 'bottom' | 'left' = 'top';
   @Input() @InputNumber() height = 450;
   @Input() padding: number[] = [40, 8, 64, 40];
@@ -106,7 +107,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private install() {
-    const { node, height, padding, slider, maxAxis, theme, mask } = this;
+    const { node, height, padding, slider, maxAxis, theme, maskSlider } = this;
     const chart = (this.chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
@@ -141,7 +142,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
           isArea: false,
         },
         minLimit: 2,
-        formatter: (val: Date) => format(val, mask),
+        formatter: (val: Date) => format(val, maskSlider),
       });
     }
 
@@ -216,6 +217,7 @@ export class G2TimelineComponent implements OnInit, OnDestroy, OnChanges {
       end: data[data.length - 1]._time,
     };
     const filterData = data.filter(val => val._time >= initialRange.start && val._time <= initialRange.end);
+    console.log(filterData);
     chart.changeData(filterData);
   }
 
