@@ -195,7 +195,7 @@ copyFiles() {
 cloneScaffold() {
   if [[ ! -d ng-alain ]]; then
     echo ">>> Not found scaffold source files, must be clone ng-alain ..."
-    git clone --depth 1 https://github.com/ng-alain/ng-alain.git
+    git clone --depth 1 -b 9.x https://github.com/ng-alain/ng-alain.git
     echo ">>> removed .git"
     rm -rf ng-alain/.git
   else
@@ -259,7 +259,7 @@ integrationCli() {
   rsync -a ${DIST} ${INTEGRATION_SOURCE}/node_modules/ng-alain
   echo ">>> Copy @delon/*"
   echo ">>>>>> Clone delon & cli dist..."
-  git clone --depth 1 https://github.com/ng-alain/delon-builds.git
+  git clone --depth 1 -b 9.x https://github.com/ng-alain/delon-builds.git
   rsync -a ${INTEGRATION_SOURCE}/delon-builds/ ${INTEGRATION_SOURCE}/node_modules/
   echo ">>> Running npm run icon"
   npm run icon

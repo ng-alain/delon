@@ -26,7 +26,7 @@ clone() {
   mkdir -p ${ROOT}
   cd ${DIST}
   echo ">>> Clone delon & cli dist..."
-  git clone --depth 1 https://github.com/ng-alain/delon-builds.git
+  git clone --depth 1 -b publish-9.5.0 https://github.com/ng-alain/delon-builds.git
 }
 
 publishToMaster() {
