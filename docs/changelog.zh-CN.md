@@ -14,6 +14,33 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+# [9.5.0](https://github.com/ng-alain/delon/compare/9.4.1...9.5.0) (2020-07-01)
+
+**默认并没有 NG-ALAIN 直接支持 SSR，可以参考[SSR章节](https://ng-alain.com/docs/ssr)来实现。**
+
+### Scaffold
+
+* **SSR:** 确保 `i18n.service.ts`, `theme-btn.component.ts` 支持 SSR ([#1730](https://github.com/ng-alain/ng-alain/pull/1730/files))
+
+### Bug Fixes
+
+* 所有 `@delon/*` 支持 SSR
+* **abc:reuest-tab:** 修复 cannot read property 'active' 错误 ([#973](https://github.com/ng-alain/delon/issues/973)) ([2bf13f9](https://github.com/ng-alain/delon/commit/2bf13f96db73a1ec36525eb12312f0fd5536c4fd))
+* **abc:reuse-tab:** 修复某些情况下 Tab 的位置无法更新 ([#974](https://github.com/ng-alain/delon/issues/974)) ([f4abe81](https://github.com/ng-alain/delon/commit/f4abe81b5b941ba4aae3c7cbed5e7300ea5e36f4))
+* **abc:se:** 修复部分组件无法自动设置 `id` 问题 ([#975](https://github.com/ng-alain/delon/issues/975)) ([e205c4d](https://github.com/ng-alain/delon/commit/e205c4dc1d96f8eca5a36705d66bde4604a53070))
+* **cli:** 修复丢失引用 "@antv/data-set" 类库 ([#971](https://github.com/ng-alain/delon/issues/971)) ([95a35ac](https://github.com/ng-alain/delon/commit/95a35ac771d35f42253fec7060a85ad54c4ca9e2))
+* **cli:** 修复 `ng add ng-alain` 只支持 angular 9.x ([#978](https://github.com/ng-alain/delon/issues/978)) ([d9fccf7](https://github.com/ng-alain/delon/commit/d9fccf7b690a90d9610b6eda3a185f73b34b867d))
+* **form:** 修复缺少 `utils` 工具集导出 ([#972](https://github.com/ng-alain/delon/issues/972)) ([f61947e](https://github.com/ng-alain/delon/commit/f61947ecee40076b024a7a81d692c3fb122d1b5a))
+* **form:** 修复内联模式下无效 `width` ([#977](https://github.com/ng-alain/delon/issues/977)) ([5de1015](https://github.com/ng-alain/delon/commit/5de101584abb384373d45c8a54f050caef6b7e0a))
+* **theme:drawer:** 修复无法指定 `nzWidth` ([#970](https://github.com/ng-alain/delon/issues/970)) ([772e3de](https://github.com/ng-alain/delon/commit/772e3de67abc72b7c04ce09ddb806d86142da73e))
+* **theme:SettingsService:** 优化更友好的覆盖 ([#976](https://github.com/ng-alain/delon/issues/976)) ([680607b](https://github.com/ng-alain/delon/commit/680607bae71f3125825a73941daaff1a9fc5a923))
+
+### Features
+
+* **abc:image:** 新增 `useHttp` 属性，支持自动转化 Base64 ([#968](https://github.com/ng-alain/delon/issues/968)) ([c3488b6](https://github.com/ng-alain/delon/commit/c3488b68f3a48bc883895f59e991d2f5c07017d7))
+* **form:** 新增 `formValueChange` 事件返回当前路径和路径对应的值 ([#979](https://github.com/ng-alain/delon/issues/979)) ([edadc29](https://github.com/ng-alain/delon/commit/edadc29436f09e9473831441e9a5535f8d1b1747))
+
+
 ## [9.4.1](https://github.com/ng-alain/delon/compare/9.4.0...9.4.1) (2020-06-25)
 
 ### Bug Fixes
