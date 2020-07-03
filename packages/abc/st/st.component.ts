@@ -785,6 +785,9 @@ export class STComponent implements AfterViewInit, OnChanges, OnDestroy {
     const res = this.columnSource.process(this.columns);
     this._columns = res.columns;
     this._headers = res.headers;
+    if (this.widthConfig.length === 0 && res.headerWidths != null) {
+      this.widthConfig = res.headerWidths;
+    }
     return this;
   }
 
