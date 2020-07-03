@@ -44,8 +44,12 @@ export interface G2RadarClickItem {
 })
 export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('container', { static: true }) private node: ElementRef;
-  private chart: Chart;
+  private _chart: Chart;
   legendData: any[] = [];
+
+  get chart(): Chart {
+    return this._chart;
+  }
 
   // #region fields
 
@@ -73,7 +77,7 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   private install() {
     const { node, padding, theme } = this;
 
-    const chart = (this.chart = new Chart({
+    const chart = (this._chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
       height: this.getHeight(),
@@ -129,29 +133,29 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const { chart, padding, data, colors, tickCount } = this;
-    if (!chart || !data || data.length <= 0) return;
+    const { _chart, padding, data, colors, tickCount } = this;
+    if (!_chart || !data || data.length <= 0) return;
 
-    chart.height = this.getHeight();
-    chart.padding = padding;
-    chart.scale({
+    _chart.height = this.getHeight();
+    _chart.padding = padding;
+    _chart.scale({
       value: {
         min: 0,
         tickCount,
       },
     });
 
-    chart.geometries.forEach(g => g.color('name', colors));
-    chart.changeData(data);
+    _chart.geometries.forEach(g => g.color('name', colors));
+    _chart.changeData(data);
 
     this.ngZone.run(() => this.genLegend());
   }
 
   private genLegend() {
-    const { hasLegend, cdr, chart } = this;
+    const { hasLegend, cdr, _chart } = this;
     if (!hasLegend) return;
 
-    this.legendData = chart.geometries[0].dataArray.map(item => {
+    this.legendData = _chart.geometries[0].dataArray.map(item => {
       const origin = item[0]._origin;
       const result = {
         name: origin.name,
@@ -167,9 +171,9 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   _click(i: number) {
-    const { legendData, chart } = this;
+    const { legendData, _chart } = this;
     legendData[i].checked = !legendData[i].checked;
-    chart.render();
+    _chart.render();
   }
 
   ngOnInit(): void {
@@ -185,8 +189,8 @@ export class G2RadarComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    if (this._chart) {
+      this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
   }
 }

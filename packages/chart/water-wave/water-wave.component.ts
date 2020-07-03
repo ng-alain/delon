@@ -200,7 +200,7 @@ export class G2WaterWaveComponent implements OnDestroy, OnChanges, OnInit {
     // drawSin();
   }
 
-  private updateRadio() {
+  updateRadio() {
     const { offsetWidth } = this.el.nativeElement.parentNode;
     const radio = offsetWidth < this.height ? offsetWidth / this.height : 1;
     this.renderer.setStyle(this.el.nativeElement, 'transform', `scale(${radio})`);

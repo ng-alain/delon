@@ -38,7 +38,11 @@ export interface G2MiniAreaClickItem {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
-  private chart: Chart;
+  private _chart: Chart;
+
+  get chart(): Chart {
+    return this._chart;
+  }
 
   // #region fields
 
@@ -67,7 +71,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
 
   private install() {
     const { el, fit, height, padding, xAxis, yAxis, yTooltipSuffix, tooltipType, line, theme } = this;
-    const chart = (this.chart = new Chart({
+    const chart = (this._chart = new Chart({
       container: el.nativeElement,
       autoFit: fit,
       height,
@@ -121,7 +125,7 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     chart.on(`plot:click`, (ev: Event) => {
-      const records = this.chart.getSnapRecords({ x: ev.x, y: ev.y });
+      const records = this._chart.getSnapRecords({ x: ev.x, y: ev.y });
       this.ngZone.run(() => this.clickItem.emit({ item: records[0]._origin, ev }));
     });
 
@@ -131,23 +135,23 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private attachChart() {
-    const { chart, line, fit, height, animate, padding, data, color, borderColor, borderWidth } = this;
-    if (!chart || !data || data.length <= 0) {
+    const { _chart, line, fit, height, animate, padding, data, color, borderColor, borderWidth } = this;
+    if (!_chart || !data || data.length <= 0) {
       return;
     }
 
-    const geoms = chart.geometries;
+    const geoms = _chart.geometries;
     geoms.forEach(g => g.color(color));
     if (line) {
       geoms[1].color(borderColor).size(borderWidth);
     }
 
-    chart.autoFit = fit;
-    chart.height = height;
-    chart.animate(animate);
-    chart.padding = padding;
+    _chart.autoFit = fit;
+    _chart.height = height;
+    _chart.animate(animate);
+    _chart.padding = padding;
 
-    chart.changeData(data);
+    _chart.changeData(data);
   }
 
   ngOnInit() {
@@ -162,8 +166,8 @@ export class G2MiniAreaComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    if (this._chart) {
+      this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
   }
 }
