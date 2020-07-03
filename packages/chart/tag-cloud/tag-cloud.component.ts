@@ -48,7 +48,11 @@ export interface G2TagCloudClickItem {
 })
 export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   private resize$: Subscription;
-  private chart: Chart;
+  private _chart: Chart;
+
+  get chart(): Chart {
+    return this._chart;
+  }
 
   // #region fields
 
@@ -102,7 +106,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       this.width = this.el.nativeElement.clientWidth;
     }
 
-    const chart = (this.chart = new Chart({
+    const chart = (this._chart = new Chart({
       container: el.nativeElement,
       autoFit: false,
       padding,
@@ -143,8 +147,8 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   private attachChart() {
-    const { chart, padding, data } = this;
-    if (!chart || !data || data.length <= 0) return;
+    const { _chart, padding, data } = this;
+    if (!_chart || !data || data.length <= 0) return;
 
     // TODO: compatible
     if (data.find(w => !!w.x) != null) {
@@ -157,9 +161,9 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
       deprecation10('g2-tag-cloud', 'category');
     }
 
-    chart.height = this.height;
-    chart.width = this.width;
-    chart.padding = padding;
+    _chart.height = this.height;
+    _chart.width = this.width;
+    _chart.padding = padding;
 
     const dv = new DataSet.View().source(data);
     const range = dv.range('value');
@@ -185,8 +189,8 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
         return ((d.value - min) / (max - min)) * (32 - 8) + 8;
       },
     } as NzSafeAny);
-    chart.data(dv.rows);
-    chart.render();
+    _chart.data(dv.rows);
+    _chart.render();
   }
 
   private _attachChart() {
@@ -196,7 +200,7 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
   private installResizeEvent() {
     this.resize$ = fromEvent(window, 'resize')
       .pipe(
-        filter(() => !!this.chart),
+        filter(() => !!this._chart),
         debounceTime(200),
       )
       .subscribe(() => this._attachChart());
@@ -219,8 +223,8 @@ export class G2TagCloudComponent implements OnDestroy, OnChanges, OnInit {
     if (this.resize$) {
       this.resize$.unsubscribe();
     }
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    if (this._chart) {
+      this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
   }
 }
