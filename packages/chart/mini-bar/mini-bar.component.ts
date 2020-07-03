@@ -39,7 +39,11 @@ export interface G2MiniBarClickItem {
   encapsulation: ViewEncapsulation.None,
 })
 export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
-  private chart: Chart;
+  private _chart: Chart;
+
+  get chart(): Chart {
+    return this._chart;
+  }
 
   // #region fields
 
@@ -62,7 +66,7 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
 
   private install() {
     const { el, height, padding, yTooltipSuffix, tooltipType, theme } = this;
-    const chart = (this.chart = new Chart({
+    const chart = (this._chart = new Chart({
       container: el.nativeElement,
       autoFit: true,
       height,
@@ -112,12 +116,12 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private attachChart() {
-    const { chart, height, padding, data, color, borderWidth } = this;
-    if (!chart || !data || data.length <= 0) return;
-    chart.geometries[0].size(borderWidth).color(color);
-    chart.height = height;
-    chart.padding = padding;
-    chart.changeData(data);
+    const { _chart, height, padding, data, color, borderWidth } = this;
+    if (!_chart || !data || data.length <= 0) return;
+    _chart.geometries[0].size(borderWidth).color(color);
+    _chart.height = height;
+    _chart.padding = padding;
+    _chart.changeData(data);
   }
 
   ngOnInit() {
@@ -132,8 +136,8 @@ export class G2MiniBarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    if (this._chart) {
+      this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
   }
 }
