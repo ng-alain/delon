@@ -1,3 +1,12 @@
+## [9.5.1](https://github.com/ng-alain/delon/compare/9.5.0...9.5.1) (2020-07-02)
+
+
+### Bug Fixes
+
+* **chart:timeline:** fix invalid format of slider ([#981](https://github.com/ng-alain/delon/issues/981)) ([d445935](https://github.com/ng-alain/delon/commit/d445935c3b11c509e6999ea132ae55700e353a04))
+
+
+
 # [9.5.0](https://github.com/ng-alain/delon/compare/9.4.1...9.5.0) (2020-07-01)
 
 

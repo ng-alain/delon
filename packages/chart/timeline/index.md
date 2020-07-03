@@ -23,7 +23,8 @@ module: import { G2TimelineModule } from '@delon/chart/timeline';
 | `[height]` | 高度值 | `number` | `400` |
 | `[padding]` | 图表内部间距 | `number[]` | `[40, 8, 64, 40]` |
 | `[borderWidth]` | 线条 | `number` | `2` |
-| `[mask]` | 日期格式 | `string` | `HH:mm` |
+| `[mask]` | 日期格式，使用 [G2 Mask日期格式](https://g2.antv.vision/zh/docs/manual/concepts/data-and-scales#time) | `string` | `HH:mm` |
+| `[maskSlider]` | 滑动条日期格式，使用 [date-fns 日期格式](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table) | `string` | `HH:mm` |
 | `[position]` | 标题位置 | `'top','right','bottom','left'` | `'top'` |
 | `[slider]` | 是否需要滑动条 | `boolean` | `true` |
 | `[theme]` | 定制图表主题 | `string | LooseObject` | - |

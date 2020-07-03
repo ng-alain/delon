@@ -42,6 +42,7 @@ describe('chart: timeline', () => {
       [titleMap]="titleMap"
       [colorMap]="colorMap"
       [mask]="mask"
+      [maskSlider]="maskSlider"
       [position]="position"
       [borderWidth]="borderWidth"
       [data]="data"
@@ -57,6 +58,7 @@ class TestComponent {
   titleMap = { y1: '客流量', y2: '支付笔数' };
   colorMap = { y1: '#1890FF', y2: '#2FC25B' };
   mask: string = 'HH:mm';
+  maskSlider: string = 'HH:mm';
   position: 'top' | 'right' | 'bottom' | 'left' = 'top';
   borderWidth = 2;
   slider = true;

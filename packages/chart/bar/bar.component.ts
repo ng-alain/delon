@@ -48,8 +48,12 @@ export interface G2BarClickItem {
 })
 export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   private resize$: Subscription;
-  private chart: Chart;
+  private _chart: Chart;
   @ViewChild('container', { static: true }) private node: ElementRef;
+
+  get chart(): Chart {
+    return this._chart;
+  }
 
   // #region fields
 
@@ -78,7 +82,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
     const { node, padding, interaction, theme } = this;
 
     const container = node.nativeElement as HTMLElement;
-    const chart = (this.chart = new Chart({
+    const chart = (this._chart = new Chart({
       container,
       autoFit: true,
       height: this.getHeight(),
@@ -123,24 +127,24 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private attachChart() {
-    const { chart, padding, data } = this;
-    if (!chart || !data || data.length <= 0) return;
+    const { _chart, padding, data } = this;
+    if (!_chart || !data || data.length <= 0) return;
     this.installResizeEvent();
     const height = this.getHeight();
-    if (chart.height !== height) {
-      chart.height = height;
+    if (_chart.height !== height) {
+      _chart.height = height;
     }
-    chart.padding = padding;
+    _chart.padding = padding;
 
-    chart.data(data);
-    chart.render();
+    _chart.data(data);
+    _chart.render();
   }
 
   private updatelabel() {
-    const { node, data, chart } = this;
+    const { node, data, _chart } = this;
     const canvasWidth = node.nativeElement.clientWidth;
     const minWidth = data.length * 30;
-    chart.axis('x', canvasWidth > minWidth).render();
+    _chart.axis('x', canvasWidth > minWidth).render();
   }
 
   private installResizeEvent() {
@@ -148,7 +152,7 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
 
     this.resize$ = fromEvent(window, 'resize')
       .pipe(
-        filter(() => !!this.chart),
+        filter(() => !!this._chart),
         debounceTime(200),
       )
       .subscribe(() => this.ngZone.runOutsideAngular(() => this.updatelabel()));
@@ -169,8 +173,8 @@ export class G2BarComponent implements OnInit, OnChanges, OnDestroy {
     if (this.resize$) {
       this.resize$.unsubscribe();
     }
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    if (this._chart) {
+      this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
   }
 }

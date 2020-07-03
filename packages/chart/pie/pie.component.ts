@@ -47,7 +47,7 @@ export interface G2PieClickItem {
 })
 export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('container', { static: true }) private node: ElementRef;
-  private chart: Chart;
+  private _chart: Chart;
   private percentColor: (value: string) => string;
   legendData: NzSafeAny[] = [];
   isPercent: boolean;
@@ -79,6 +79,10 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
 
   get block() {
     return this.hasLegend && this.el.nativeElement.clientWidth <= this.blockMaxWidth;
+  }
+
+  get chart(): Chart {
+    return this._chart;
   }
 
   constructor(
@@ -113,7 +117,7 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
 
   private install() {
     const { node, height, padding, tooltip, inner, hasLegend, interaction, theme } = this;
-    const chart = (this.chart = new Chart({
+    const chart = (this._chart = new Chart({
       container: node.nativeElement,
       autoFit: true,
       height,
@@ -152,14 +156,14 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private attachChart() {
-    const { chart, height, padding, animate, data, lineWidth, isPercent, percentColor, colors } = this;
-    if (!chart) return;
+    const { _chart, height, padding, animate, data, lineWidth, isPercent, percentColor, colors } = this;
+    if (!_chart) return;
 
-    chart.height = height;
-    chart.padding = padding;
-    chart.animate(animate);
-    chart.geometries[0].style({ lineWidth, stroke: '#fff' }).color('x', isPercent ? percentColor : colors);
-    chart.scale({
+    _chart.height = height;
+    _chart.padding = padding;
+    _chart.animate(animate);
+    _chart.geometries[0].style({ lineWidth, stroke: '#fff' }).color('x', isPercent ? percentColor : colors);
+    _chart.scale({
       x: {
         type: 'cat',
         range: [0, 1],
@@ -170,16 +174,16 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
     for (const item of data) {
       item.percent = totalSum === 0 ? 0 : item.y / totalSum;
     }
-    chart.changeData(data);
+    _chart.changeData(data);
 
     this.ngZone.run(() => this.genLegend());
   }
 
   private genLegend() {
-    const { hasLegend, isPercent, cdr, chart } = this;
+    const { hasLegend, isPercent, cdr, _chart } = this;
     if (!hasLegend || isPercent) return;
 
-    this.legendData = chart.geometries[0].dataArray.map((item: any) => {
+    this.legendData = _chart.geometries[0].dataArray.map((item: any) => {
       const origin = item[0]._origin;
       origin.color = item[0].color;
       origin.checked = true;
@@ -191,9 +195,9 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   _click(i: number) {
-    const { legendData, chart } = this;
+    const { legendData, _chart } = this;
     legendData[i].checked = !legendData[i].checked;
-    chart.render();
+    _chart.render();
   }
 
   ngOnInit(): void {
@@ -209,8 +213,8 @@ export class G2PieComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    if (this.chart) {
-      this.ngZone.runOutsideAngular(() => this.chart.destroy());
+    if (this._chart) {
+      this.ngZone.runOutsideAngular(() => this._chart.destroy());
     }
   }
 }

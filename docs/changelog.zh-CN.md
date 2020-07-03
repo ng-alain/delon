@@ -14,6 +14,13 @@ NG-ALAIN 严格遵循 [Semantic Versioning 2.0.0](http://semver.org/lang/zh-CN/)
 
 ---
 
+## [9.5.1](https://github.com/ng-alain/delon/compare/9.5.0...9.5.1) (2020-07-02)
+
+### Bug Fixes
+
+* **chart:timeline:** 修复滑动块无效日期格式 ([#981](https://github.com/ng-alain/delon/issues/981)) ([d445935](https://github.com/ng-alain/delon/commit/d445935c3b11c509e6999ea132ae55700e353a04))
+
+
 # [9.5.0](https://github.com/ng-alain/delon/compare/9.4.1...9.5.0) (2020-07-01)
 
 **默认并没有 NG-ALAIN 直接支持 SSR，可以参考[SSR章节](https://ng-alain.com/docs/ssr)来实现。**
