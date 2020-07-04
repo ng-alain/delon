@@ -33,6 +33,14 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
     }
   }
 
+  _setValue(item: SFSchemaEnum): void {
+    let val = item.toString();
+    if (typeof item !== 'string') {
+      val = item.value;
+    }
+    this.setValue(val);
+  }
+
   afterViewInit(): void {
     const { backfill, defaultActiveFirstOption, nzWidth, filterOption, asyncData } = this.ui;
     this.i = {
