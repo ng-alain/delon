@@ -3,6 +3,7 @@ import { ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { createTestContext } from '@delon/testing';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
 import { SFSchema } from '../../../src/schema/index';
+import { SFSelectWidgetSchema } from './schema';
 import { SelectWidget } from './select.widget';
 
 describe('form: widget: select', () => {
@@ -58,40 +59,71 @@ describe('form: widget: select', () => {
     page.newSchema(s).typeEvent('click', 'nz-select').checkCount('.ant-select-disabled', 1).asyncEnd();
   }));
 
-  xit('#events', fakeAsync(() => {
-    const s: SFSchema = {
-      properties: {
-        a: {
-          type: 'string',
-          title: '状态',
-          enum: [
-            { label: '待支付', value: 'WAIT_BUYER_PAY' },
-            { label: '已支付', value: 'TRADE_SUCCESS' },
-            { label: '交易完成', value: 'TRADE_FINISHED' },
-          ],
-          default: 'WAIT_BUYER_PAY',
-          ui: {
-            widget,
-            change: jasmine.createSpy(),
-            openChange: jasmine.createSpy(),
-            onSearch: jasmine.createSpy().and.returnValue(Promise.resolve()),
-            scrollToBottom: jasmine.createSpy(),
+  describe('#events', () => {
+    it('#change', fakeAsync(() => {
+      const s: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            title: '状态',
+            enum: [
+              { label: '待支付', value: 'WAIT_BUYER_PAY' },
+              { label: '已支付', value: 'TRADE_SUCCESS' },
+              { label: '交易完成', value: 'TRADE_FINISHED' },
+            ],
+            default: 'WAIT_BUYER_PAY',
+            ui: {
+              widget,
+              change: jasmine.createSpy(),
+              openChange: jasmine.createSpy(),
+              onSearch: jasmine.createSpy().and.returnValue(Promise.resolve()),
+              scrollToBottom: jasmine.createSpy(),
+            },
           },
         },
-      },
-    };
-    page.newSchema(s).typeEvent('click', 'nz-select-top-control').time(1000).dc();
-    const el = document.querySelector('.ant-select-dropdown-menu-item:not(.ant-select-dropdown-menu-item-selected)') as HTMLElement;
-    el.click();
-    page.dc().checkValue('/a', 'TRADE_SUCCESS').asyncEnd();
-    const item = s.properties!.a.ui as any;
-    expect(item.change).toHaveBeenCalled();
-    expect(item.openChange).toHaveBeenCalled();
-    getWidget().scrollToBottom();
-    expect(item.scrollToBottom).toHaveBeenCalled();
-    getWidget().searchChange('a');
-    expect(item.onSearch).toHaveBeenCalled();
-  }));
+      };
+      page.newSchema(s);
+      const selectWidget = getWidget();
+      selectWidget.change('WAIT_BUYER_PAY');
+      const item = s.properties!.a.ui as SFSelectWidgetSchema;
+      expect(item.change).toHaveBeenCalled();
+      selectWidget.openChange(true);
+      expect(item.openChange).toHaveBeenCalled();
+      selectWidget.scrollToBottom();
+      expect(item.scrollToBottom).toHaveBeenCalled();
+      selectWidget.searchChange('1');
+      expect(item.onSearch).toHaveBeenCalled();
+    }));
+    it('#change, when values is multiple', fakeAsync(() => {
+      const s: SFSchema = {
+        properties: {
+          a: {
+            type: 'string',
+            title: '状态',
+            enum: [
+              {
+                label: '待支付',
+                group: true,
+                children: [
+                  { label: '已支付', value: 'TRADE_SUCCESS' },
+                  { label: '交易完成', value: 'TRADE_FINISHED' },
+                ],
+              },
+            ],
+            ui: {
+              widget,
+              change: jasmine.createSpy(),
+            },
+          },
+        },
+      };
+      page.newSchema(s);
+      const selectWidget = getWidget();
+      selectWidget.change(['TRADE_FINISHED', 'TRADE_SUCCESS']);
+      const item = s.properties!.a.ui as SFSelectWidgetSchema;
+      expect(item.change).toHaveBeenCalled();
+    }));
+  });
 
   it('should be clean value by click icon', fakeAsync(() => {
     const s: SFSchema = {
