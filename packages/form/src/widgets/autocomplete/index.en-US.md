@@ -39,5 +39,5 @@ Every filter after data got is filtered by `filterOption`, data source is from `
 | `[debounceTime]` | debounce time, minimum is `50` by default when it's realtime data source, unit: millisecond | `number` | `0` |
 | `[defaultActiveFirstOption]` | Whether active the first item by default | `boolean` | `true` |
 | `[backfill]` | Fill selected value into input when keyboard selection options is used | `boolean` | `false` |
-| `[change]` | Change callback | `(item: NzAutocompleteOptionComponent) => void` | - |
 | `[nzWidth]` | Customize width, unit is px | `number` | Trigger width of element |
+| `[change]` | Change callback | `(item: NzAutocompleteOptionComponent, orgData: SFSchemaEnum) => void` | - |

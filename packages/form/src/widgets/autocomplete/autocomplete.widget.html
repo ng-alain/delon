@@ -19,7 +19,7 @@
     [nzWidth]="i.width"
     (selectionChange)="updateValue($event)"
   >
-    <nz-auto-option *ngFor="let i of list | async" [nzValue]="i.value" [nzLabel]="i.label">
+    <nz-auto-option *ngFor="let i of list | async" [nzValue]="i" [nzLabel]="i.label">
       {{i.label}}
     </nz-auto-option>
   </nz-autocomplete>

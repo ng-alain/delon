@@ -1,5 +1,6 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
+import { SFSchemaEnumType } from 'dist/@delon/form/form';
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import { Observable, of } from 'rxjs';
 import { debounceTime, flatMap, map, startWith } from 'rxjs/operators';
@@ -26,8 +27,11 @@ export class AutoCompleteWidget extends ControlUIWidget<SFAutoCompleteWidgetSche
 
   updateValue(item: NzAutocompleteOptionComponent) {
     this.typing = item.nzLabel!;
-    this.setValue(item.nzValue);
-    if (this.ui.change) this.ui.change(item);
+    const data: SFSchemaEnum = item.nzValue;
+    this.setValue(data.value);
+    if (this.ui.change) {
+      this.ui.change(item, data);
+    }
   }
 
   afterViewInit(): void {
