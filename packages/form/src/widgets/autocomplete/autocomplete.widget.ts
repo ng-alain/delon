@@ -1,6 +1,5 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { SFSchemaEnumType } from 'dist/@delon/form/form';
 import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 import { Observable, of } from 'rxjs';
 import { debounceTime, flatMap, map, startWith } from 'rxjs/operators';
