@@ -15,7 +15,7 @@ Simplest of usage.
 
 ```ts
 import { Component, ViewChild } from '@angular/core';
-import { SFSchema, SFSelectWidgetSchema, SFComponent } from '@delon/form';
+import { SFComponent, SFSchema, SFSelectWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -35,13 +35,14 @@ export class DemoComponent {
         type: 'string',
         title: '状态',
         enum: [
-          { label: '待支付', value: 'WAIT_BUYER_PAY' },
+          { label: '待支付', value: 'WAIT_BUYER_PAY', otherData: 1 },
           { label: '已支付', value: 'TRADE_SUCCESS' },
           { label: '交易完成', value: 'TRADE_FINISHED' },
         ],
         default: 'WAIT_BUYER_PAY',
         ui: {
           widget: 'select',
+          change: (value, orgData) => console.log(value, orgData),
         } as SFSelectWidgetSchema,
       },
       // 标签

@@ -66,9 +66,22 @@ export class SelectWidget extends ControlUIWidget<SFSelectWidgetSchema> implemen
 
   change(values: SFValue) {
     if (this.ui.change) {
-      this.ui.change(values);
+      this.ui.change(values, this.getOrgData(values));
     }
     this.setValue(values == null ? undefined : values);
+  }
+
+  private getOrgData(values: SFValue): SFSchemaEnum | SFSchemaEnum[] {
+    if (!Array.isArray(values)) {
+      return this.data.find(w => w.value === values)!;
+    }
+    return values.map(value => {
+      let item: SFSchemaEnum | null = null;
+      this.data.forEach(list => {
+        item = list.children?.find(w => w.value === value)!;
+      });
+      return item;
+    });
   }
 
   openChange(status: boolean) {

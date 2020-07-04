@@ -38,7 +38,7 @@ type: Widgets
 | `[onSearch]` | 搜索内容变化回调函数，参数为搜索内容，必须返回 `Promise` 对象 | `(text: string) => Promise<SFSchemaEnum[]>` | - |
 | `[tokenSeparators]` | 在 tags 和 multiple 模式下自动分词的分隔符 | `string[]` | `[]` |
 | `[maxTagCount]` | 最多显示多少个 tag | `number` | - |
-| `[change]` | 选中的 nz-option 发生变化时，调用此函数 | `(ngModel:any丨any[])=>void` | - |
+| `[change]` | 选中的 nz-option 发生变化时，调用此函数 | `(ngModel:any丨any[], orgData: SFSchemaEnum丨SFSchemaEnum[])=>void` | - |
 | `[openChange]` | 下拉菜单打开关闭回调函数 | `(status: boolean) => void` | - |
 | `[scrollToBottom]` | 下拉菜单滚动到底部回调，可用于作为动态加载的触发条件 | `() => void` | - |
 | `[customTemplate]` | 自定义选择框的Template内容 | `TemplateRef<{ $implicit: NzOptionComponent }>` | - |

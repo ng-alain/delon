@@ -147,7 +147,7 @@ export interface SFSelectWidgetSchema extends SFUISchemaItem {
   /**
    * 选中的 `nz-option` 发生变化时，调用此函数
    */
-  change?: (ngModel: SFValue | SFValue[]) => void;
+  change?: (ngModel: SFValue | SFValue[], orgData: SFSchemaEnum | SFSchemaEnum[]) => void;
 
   /**
    * 下拉菜单打开关闭回调函数

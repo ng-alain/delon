@@ -39,5 +39,5 @@ type: Widgets
 | `[debounceTime]` | 去抖时间，当实时数据源时默认最少 `50`，单位：毫秒 | `number` | `0` |
 | `[defaultActiveFirstOption]` | 是否默认高亮第一个选项 | `boolean` | `true` |
 | `[backfill]` | 使用键盘选择选项的时候把选中项回填到输入框中 | `boolean` | `false` |
-| `[change]` | 变更回调 | `(item: NzAutocompleteOptionComponent) => void` | - |
 | `[nzWidth]` | 自定义宽度单位 px | `number` | 触发元素宽度 |
+| `[change]` | 变更回调 | `(item: NzAutocompleteOptionComponent, orgData: SFSchemaEnum) => void` | - |
