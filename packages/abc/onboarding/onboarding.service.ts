@@ -85,7 +85,7 @@ export class OnboardingService implements OnDestroy {
       mask: true,
       maskClosable: true,
       animation: false,
-      showTotal: true,
+      showTotal: false,
       ...data,
     };
     this.active = 0;

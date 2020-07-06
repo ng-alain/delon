@@ -7,10 +7,8 @@ import {
   ElementRef,
   EventEmitter,
   Inject,
-  Input,
   OnDestroy,
   Optional,
-  Output,
   ViewEncapsulation,
 } from '@angular/core';
 import { OnboardingData, OnboardingItem, OnboardingOpType } from './onboarding.types';
@@ -38,11 +36,11 @@ interface OnboardingLightData {
 export class OnboardingComponent implements OnDestroy {
   private time: any;
   private prevSelectorEl: HTMLElement;
-  @Input() data: OnboardingData;
-  @Input() item: OnboardingItem;
-  @Input() active = 0;
-  @Input() max = 0;
-  @Output() readonly op = new EventEmitter<OnboardingOpType>();
+  data: OnboardingData;
+  item: OnboardingItem;
+  active = 0;
+  max = 0;
+  readonly op = new EventEmitter<OnboardingOpType>();
   visible = false;
 
   get first(): boolean {
@@ -120,7 +118,6 @@ export class OnboardingComponent implements OnDestroy {
     lightStyle.width = `${pos.width}px`;
     lightStyle.height = `${pos.height}px`;
 
-    this.genColor();
     this.updatePrevElStatus(false);
     this.setVisible(false);
 
@@ -141,24 +138,6 @@ export class OnboardingComponent implements OnDestroy {
     if (this.prevSelectorEl) {
       this.prevSelectorEl.classList[status ? 'add' : 'remove']('onboarding__light-el');
     }
-  }
-
-  private genColor(): void {
-    const color = this.item.color!;
-    const prefix = `.onboarding__box`;
-    const id = `onboarding-theme`;
-    let el = this.el.nativeElement.querySelector(`#${id}`) as HTMLStyleElement;
-    if (!el) {
-      el = this._getDoc().createElement('style');
-      el.id = id;
-      this.el.nativeElement.appendChild(el);
-    }
-    el.innerHTML = color
-      ? [
-          `${prefix} .ant-popover-arrow { border-color: ${color} !important; }`,
-          `${prefix} .ant-popover-inner { background-color: ${color} !important; }`,
-        ].join('\n')
-      : ``;
   }
 
   to(type: OnboardingOpType): void {

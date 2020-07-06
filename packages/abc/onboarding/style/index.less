@@ -22,9 +22,8 @@
     position: absolute;
     z-index: @onboarding-zindex;
     background-color: @onboarding-light-background-color;
-    border: @onboarding-light-border;
-    border-radius: @onboarding-light-border-radius;
-    box-shadow: @onboarding-light-shadow;
+    animation: @onboarding-light-ant;
+    pointer-events: none;
 
     &-el {
       position: relative;
@@ -32,10 +31,24 @@
     }
 
     &-ant {
-      transition: @onboarding-ant;
+      transition: @onboarding-changing-ant;
     }
   }
   &__footer {
     margin-top: 8px;
+  }
+  &__total {
+    color: @text-color;
+  }
+
+  @keyframes onboardingAnt {
+    0%,
+    33% {
+      box-shadow: color(@onboarding-light-ant-color) 0 0 0 2px, @onboarding-light-ant-color 0 0 0;
+    }
+    66%,
+    100% {
+      box-shadow: @onboarding-light-ant-color 0 0 0 2px, fade(@onboarding-light-ant-color, 1%) 0 0 0 10px;
+    }
   }
 }

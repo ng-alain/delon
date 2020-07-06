@@ -7,23 +7,42 @@ cols: 1
 module: import { OnboardingModule } from '@delon/abc/onboarding';
 ---
 
-A Zip file operation based on [jszip](http://stuk.github.io/jszip/).
-
-## Dependencies
-
-```
-yarn add file-saver
-```
-
-The jszip script file takes the form of lazy loading，you can change the default CDN path (or use the local path) via [Global Configuration](/docs/global-config). By default: `//cdn.bootcss.com/jszip/3.3.0/jszip.min.js`.
+The user guidance is to help users better understand and use the product.
 
 ## API
 
-### ZipService
+### OnboardingService
 
-Property | Description | Type | Default
-----|------|-----|------
-`read(fileOrUrl: File | string, options?: JSZip.JSZipLoadOptions)` | Decompression  | `Promise<JSZip>` | -
-`create()` | Create a Zip instance for creating a compressed file  | `Promise<JSZip>` | -
-`pushUrl(zip: JSZip, path: string, url: string)` | Download the URL resource and write it to zip  | `Promise<void>` | -
-`save(zip: JSZip, options?: ZipWriteOptions)` | Save  | `Promise<void>` | -
+The components only support the use of `OnboardingService` service to build.
+
+| Name | Description |
+|------|-------------|
+| `start(data: OnboardingData)` | Start a new user guidance |
+| `next()` | Next |
+| `prev()` | Prev |
+| `done()` | Done |
+
+### OnboardingData
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `[items]` | Onboarding items | `OnboardingItem[]` | `[]` |
+| `[mask]` | Whether to show mask or not | `boolean` | `true` |
+| `[maskClosable]` | Clicking on the mask (area outside the onboarding) to close the onboarding or not | `boolean` | `true` |
+| `[animation]` | Whether to animate | `boolean` | `false` |
+| `[showTotal]` | Whether to show total | `boolean` | `false` |
+
+### OnboardingItem
+
+| Property | Description | Type | Default | Global Config |
+|----------|-------------|------|---------|---------------|
+| `[selector]` | The CSS selector, which identifies the html element you want to describe | `string` | - | - |
+| `[position]` | Positioning of the selector element, relative to the contents of the children | `top, left, right, bottom, topLeft, topRight, bottomLeft, bottomRight, leftTop, leftBottom, rightTop, rightBottom` | `bottomLeft` | ✅ |
+| `[className]` | Class name of the panel | `string` | - | - |
+| `[width]` | Width of the panel | `number` | - | - |
+| `[headline]` | Headline text of the panel | `string, TemplateRef<void>` | - | - |
+| `[detail]` | Detail text of the panel | `string, TemplateRef<void>` | - | - |
+| `[skip]` | Skip button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `跳过` | ✅ |
+| `[prev]` | Prev button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `上一项` | ✅ |
+| `[next]` | Next button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `下一项` | ✅ |
+| `[done]` | Done button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `完成` | ✅ |

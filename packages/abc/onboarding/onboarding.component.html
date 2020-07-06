@@ -1,4 +1,4 @@
-<div class="onboarding__mask" (click)="to('done')"></div>
+<div *ngIf="visible" class="onboarding__mask" (click)="to('done')"></div>
 <div
   *ngIf="item"
   class="onboarding__light"
@@ -10,7 +10,8 @@
   [nzPopoverTrigger]="null"
   [nzPopoverPlacement]="item.position"
   [nzNoAnimation]="true"
-  nzOverlayClassName="onboarding__box"
+  [nzOverlayClassName]="item.className"
+  [nzOverlayStyle]="{ 'max-width.px': item.width }"
 ></div>
 <ng-template #content>
   <ng-container *nzStringTemplateOutlet="item.detail">{{ item.detail }}</ng-container>
@@ -19,7 +20,7 @@
       <ng-container *ngIf="data.showTotal">{{ active + 1 }}/{{ max }}</ng-container>
     </span>
     <div class="onboarding__btns">
-      <a *ngIf="item.skip !== null" nz-button nzType="link" (click)="to('skip')" nzSize="small">
+      <a *ngIf="!last && item.skip !== null" nz-button nzType="link" (click)="to('skip')" nzSize="small">
         <ng-container *nzStringTemplateOutlet="item.skip">{{ item.skip }}</ng-container>
       </a>
       <a *ngIf="!first && item.prev !== null" nz-button (click)="to('prev')" nzSize="small">
