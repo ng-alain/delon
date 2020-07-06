@@ -1,0 +1,36 @@
+<div class="onboarding__mask" (click)="to('done')"></div>
+<div
+  *ngIf="item"
+  class="onboarding__light"
+  [class.onboarding__light-ant]="data.animation"
+  nz-popover
+  [nzPopoverTitle]="item.headline"
+  [nzPopoverContent]="content"
+  [nzVisible]="visible"
+  [nzPopoverTrigger]="null"
+  [nzPopoverPlacement]="item.position"
+  [nzNoAnimation]="true"
+  nzOverlayClassName="onboarding__box"
+></div>
+<ng-template #content>
+  <ng-container *nzStringTemplateOutlet="item.detail">{{ item.detail }}</ng-container>
+  <div class="flex-center-between onboarding__footer">
+    <span class="onboarding__total">
+      <ng-container *ngIf="data.showTotal">{{ active + 1 }}/{{ max }}</ng-container>
+    </span>
+    <div class="onboarding__btns">
+      <a *ngIf="item.skip !== null" nz-button nzType="link" (click)="to('skip')" nzSize="small">
+        <ng-container *nzStringTemplateOutlet="item.skip">{{ item.skip }}</ng-container>
+      </a>
+      <a *ngIf="!first && item.prev !== null" nz-button (click)="to('prev')" nzSize="small">
+        <ng-container *nzStringTemplateOutlet="item.prev">{{ item.prev }}</ng-container>
+      </a>
+      <a *ngIf="!last && item.next !== null" nz-button (click)="to('next')" nzType="primary" nzSize="small">
+        <ng-container *nzStringTemplateOutlet="item.next">{{ item.next }}</ng-container>
+      </a>
+      <a *ngIf="last && item.done !== null" nz-button (click)="to('done')" nzType="primary" nzSize="small">
+        <ng-container *nzStringTemplateOutlet="item.done">{{ item.done }}</ng-container>
+      </a>
+    </div>
+  </div>
+</ng-template>

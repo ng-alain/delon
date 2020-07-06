@@ -1,2 +1,3 @@
-// export * from './onboarding.types';
-export { OnboardingModule } from './onboarding.module';
+export * from './onboarding.module';
+export * from './onboarding.service';
+export * from './onboarding.types';
