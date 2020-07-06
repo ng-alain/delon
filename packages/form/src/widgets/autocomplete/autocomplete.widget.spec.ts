@@ -4,9 +4,10 @@ import { createTestContext } from '@delon/testing';
 import { AlainConfigService } from '@delon/util';
 import { of } from 'rxjs';
 import { configureSFTestSuite, SFPage, TestFormComponent } from '../../../spec/base.spec';
-import { SFSchemaEnum } from '../../../src/schema/index';
+import { SFSchema, SFSchemaEnum } from '../../../src/schema/index';
 import { mergeConfig } from '../../config';
 import { AutoCompleteWidget } from './autocomplete.widget';
+import { SFAutoCompleteWidgetSchema } from './schema';
 
 describe('form: widget: autocomplete', () => {
   let fixture: ComponentFixture<TestFormComponent>;
@@ -39,6 +40,28 @@ describe('form: widget: autocomplete', () => {
     expect(item.value).toBe('bbb');
     page.asyncEnd();
   }));
+
+  it('#change', () => {
+    const s: SFSchema = {
+      properties: {
+        a: {
+          type: 'string',
+          title: '状态',
+          enum: ['aaa', 'bbb', 'ccc'],
+          default: 'aaa',
+          ui: {
+            widget,
+            change: jasmine.createSpy(),
+          } as SFAutoCompleteWidgetSchema,
+        },
+      },
+    };
+    page.newSchema(s);
+    const selectWidget = page.getWidget<AutoCompleteWidget>('sf-' + widget);
+    selectWidget.updateValue({ nzLabel: 'aaa', nzValue: { value: 'aaa', label: 'aaa' } } as any);
+    const item = s.properties!.a.ui as SFAutoCompleteWidgetSchema;
+    expect(item.change).toHaveBeenCalled();
+  });
 
   describe('[data source]', () => {
     it('with enum', fakeAsync(() => {
