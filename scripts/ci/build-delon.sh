@@ -67,6 +67,10 @@ addBanners() {
   done
 }
 
+copySchemas() {
+  cp ${SOURCE}/abc/onboarding/schema.json ${DIST}/abc/onboarding/schema.json
+}
+
 VERSION=$(node -p "require('./package.json').version")
 ZORROVERSION=$(node -p "require('./package.json').dependencies['ng-zorro-antd']")
 echo "=====BUILDING: Version ${VERSION}, Zorro Version ${ZORROVERSION}"
@@ -104,6 +108,7 @@ build() {
   done
 
   buildLess
+  copySchemas
 }
 
 build
