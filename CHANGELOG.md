@@ -1,3 +1,15 @@
+## [9.5.2](https://github.com/ng-alain/delon/compare/9.5.1...9.5.2) (2020-07-06)
+
+
+### Bug Fixes
+
+* **abc:page-header:** fix refresh title when route changed ([#987](https://github.com/ng-alain/delon/issues/987)) ([8f302fb](https://github.com/ng-alain/delon/commit/8f302fb9a2c779dc0e799f276f93e31936a05108))
+* **abc:st:** fix invalid width in grouping header ([#984](https://github.com/ng-alain/delon/issues/984)) ([7cd5b49](https://github.com/ng-alain/delon/commit/7cd5b497b0554a13eb7b58a1e7e113fdf819b6cc))
+* **chart:*:** fix access to `chart` instances ([#983](https://github.com/ng-alain/delon/issues/983)) ([4a3e80c](https://github.com/ng-alain/delon/commit/4a3e80c172ca5209f9a896b28ddc3b5fd6ffb4e8))
+* **form:autocomplete,select:** fix return original data in `change` property ([#985](https://github.com/ng-alain/delon/issues/985)) ([7d70629](https://github.com/ng-alain/delon/commit/7d70629f01f820658240fd6e966b6f782fe3a087))
+
+
+
 ## [9.5.1](https://github.com/ng-alain/delon/compare/9.5.0...9.5.1) (2020-07-02)
 
 
