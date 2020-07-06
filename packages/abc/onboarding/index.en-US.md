@@ -36,12 +36,12 @@ The components only support the use of `OnboardingService` service to build.
 
 | Property | Description | Type | Default | Global Config |
 |----------|-------------|------|---------|---------------|
-| `[selector]` | The CSS selector, which identifies the html element you want to describe | `string` | - | - |
+| `[selectors]` | The CSS selector, which identifies the html element you want to describe | `string` | - | - |
 | `[position]` | Positioning of the selector element, relative to the contents of the children | `top, left, right, bottom, topLeft, topRight, bottomLeft, bottomRight, leftTop, leftBottom, rightTop, rightBottom` | `bottomLeft` | ✅ |
 | `[className]` | Class name of the panel | `string` | - | - |
 | `[width]` | Width of the panel | `number` | - | - |
-| `[headline]` | Headline text of the panel | `string, TemplateRef<void>` | - | - |
-| `[detail]` | Detail text of the panel | `string, TemplateRef<void>` | - | - |
+| `[title]` | Headline text of the panel | `string, TemplateRef<void>` | - | - |
+| `[content]` | Detail text of the panel | `string, TemplateRef<void>` | - | - |
 | `[skip]` | Skip button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `跳过` | ✅ |
 | `[prev]` | Prev button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `上一项` | ✅ |
 | `[next]` | Next button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `下一项` | ✅ |

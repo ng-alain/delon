@@ -36,12 +36,12 @@ module: import { OnboardingModule } from '@delon/abc/onboarding';
 
 | 成员 | 说明 | 类型 | 默认值 | 全局配置 |
 |----|----|----|-----|------|
-| `[selector]` | CSS选项项，用于查找目标元素 | `string` | - | - |
+| `[selectors]` | CSS选项项，用于查找目标元素 | `string` | - | - |
 | `[position]` | 引导面板显示位置 | `top, left, right, bottom, topLeft, topRight, bottomLeft, bottomRight, leftTop, leftBottom, rightTop, rightBottom` | `bottomLeft` | ✅ |
 | `[className]` | 引导面板类名 | `string` | - | - |
 | `[width]` | 引导面板宽度 | `number` | - | - |
-| `[headline]` | 引导面板标题 | `string, TemplateRef<void>` | - | - |
-| `[detail]` | 引导面板内容 | `string, TemplateRef<void>` | - | - |
+| `[title]` | 引导面板标题 | `string, TemplateRef<void>` | - | - |
+| `[content]` | 引导面板内容 | `string, TemplateRef<void>` | - | - |
 | `[skip]` | 跳过按钮文本，`null` 表示强击不显示 | `string, TemplateRef<void>, null` | `跳过` | ✅ |
 | `[prev]` | 跳过按钮文本，`null` 表示强击不显示 | `string, TemplateRef<void>, null` | `上一项` | ✅ |
 | `[next]` | 跳过按钮文本，`null` 表示强击不显示 | `string, TemplateRef<void>, null` | `下一项` | ✅ |

@@ -2,7 +2,7 @@ import { TemplateRef } from '@angular/core';
 
 export type OnboardingOpType = 'next' | 'prev' | 'skip' | 'done';
 
-export interface OnboardingData {
+export interface OnboardingConfig {
   /**
    * Onboarding items
    */
@@ -29,7 +29,7 @@ export interface OnboardingItem {
   /**
    * The CSS selector, which identifies the html element you want to describe
    */
-  selector: string;
+  selectors: string;
   /**
    * Positioning of the selector element, relative to the contents of the children, Default: `bottomLeft`
    */
@@ -55,13 +55,13 @@ export interface OnboardingItem {
    */
   width?: number;
   /**
-   * Headline text of the panel
+   * Title text of the panel
    */
-  headline?: string | TemplateRef<void>;
+  title?: string | TemplateRef<void>;
   /**
-   * Detail text of the panel
+   * Content text of the panel
    */
-  detail?: string | TemplateRef<void>;
+  content?: string | TemplateRef<void>;
   /**
    * Skip button of the panel
    * - `null` Don't show

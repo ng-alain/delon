@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { createTestContext } from '@delon/testing';
 import { OnboardingModule } from './onboarding.module';
 import { OnboardingService } from './onboarding.service';
-import { OnboardingData, OnboardingOpType } from './onboarding.types';
+import { OnboardingConfig, OnboardingOpType } from './onboarding.types';
 
 describe('abc: onboarding', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -73,7 +73,7 @@ describe('abc: onboarding', () => {
     }));
   });
   it('should be hide panel when selector is invalid', fakeAsync(() => {
-    page.start({ items: [{ selector: 'invalid-el' }] }).checkEl('.onboarding__light-hide', true);
+    page.start({ items: [{ selectors: 'invalid-el' }] }).checkEl('.onboarding__light-hide', true);
   }));
   it('#animation', fakeAsync(() => {
     page.start({ animation: true }).click('next').checkActive(1);
@@ -114,15 +114,15 @@ describe('abc: onboarding', () => {
       return this.cd();
     }
 
-    start(data?: OnboardingData): this {
-      data = {
+    start(config?: OnboardingConfig): this {
+      config = {
         items: [
-          { selector: '#a', headline: 'atitle', detail: 'acontent' },
-          { selector: '#b', headline: 'btitle' },
+          { selectors: '#a', title: 'atitle', content: 'acontent' },
+          { selectors: '#b', title: 'btitle' },
         ],
-        ...data,
+        ...config,
       };
-      srv.start(data);
+      srv.start(config);
       return this.cd();
     }
 

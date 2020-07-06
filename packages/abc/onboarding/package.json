@@ -1,5 +1,6 @@
 {
   "ngPackage": {
+    "assets": ["schema.json"],
     "lib": {
       "flatModuleFile": "onboarding",
       "entryFile": "public_api.ts",

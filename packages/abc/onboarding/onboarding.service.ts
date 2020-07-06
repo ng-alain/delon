@@ -12,13 +12,13 @@ import {
 import { DelonLocaleService } from '@delon/theme';
 import { Subscription } from 'rxjs';
 import { OnboardingComponent } from './onboarding.component';
-import { OnboardingData, OnboardingItem, OnboardingOpType } from './onboarding.types';
+import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
 @Injectable({ providedIn: 'root' })
 export class OnboardingService implements OnDestroy {
   private compRef: ComponentRef<OnboardingComponent>;
   private op$: Subscription;
-  private data: OnboardingData;
+  private config: OnboardingConfig;
   private active = 0;
 
   private _getDoc(): Document {
@@ -66,24 +66,24 @@ export class OnboardingService implements OnDestroy {
   }
 
   private showItem(cleanTime = false): void {
-    const items = this.data.items!;
+    const items = this.config.items!;
     const item = {
       position: 'bottomLeft',
       ...this.i18n.getData('onboarding'),
       ...items[this.active],
     } as OnboardingItem;
-    Object.assign(this.compRef.instance, { item, data: this.data, active: this.active, max: items.length });
+    Object.assign(this.compRef.instance, { item, config: this.config, active: this.active, max: items.length });
     setTimeout(() => this.compRef.instance.updatePosition({ time: cleanTime ? 0 : 300 }));
   }
 
-  start(data: OnboardingData): void {
-    this.data = {
+  start(config: OnboardingConfig): void {
+    this.config = {
       items: [],
       mask: true,
       maskClosable: true,
       animation: false,
       showTotal: false,
-      ...data,
+      ...config,
     };
     this.active = 0;
     this.attach();
@@ -91,7 +91,7 @@ export class OnboardingService implements OnDestroy {
   }
 
   next(): void {
-    if (this.active + 1 >= this.data.items!.length) {
+    if (this.active + 1 >= this.config.items!.length) {
       this.done();
       return;
     }

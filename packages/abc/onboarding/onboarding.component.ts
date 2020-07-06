@@ -11,7 +11,7 @@ import {
   Optional,
   ViewEncapsulation,
 } from '@angular/core';
-import { OnboardingData, OnboardingItem, OnboardingOpType } from './onboarding.types';
+import { OnboardingConfig, OnboardingItem, OnboardingOpType } from './onboarding.types';
 
 interface OnboardingLightData {
   el: HTMLElement;
@@ -37,7 +37,7 @@ interface OnboardingLightData {
 export class OnboardingComponent implements OnDestroy {
   private time: any;
   private prevSelectorEl: HTMLElement;
-  data: OnboardingData;
+  config: OnboardingConfig;
   item: OnboardingItem;
   active = 0;
   max = 0;
@@ -70,7 +70,7 @@ export class OnboardingComponent implements OnDestroy {
   private getLightData(): OnboardingLightData | null {
     const doc = this._getDoc();
     const win = this._getWin();
-    const el = doc.querySelector(this.item.selector) as HTMLElement;
+    const el = doc.querySelector(this.item.selectors) as HTMLElement;
     if (!el) {
       return null;
     }
@@ -123,7 +123,7 @@ export class OnboardingComponent implements OnDestroy {
     this.updatePrevElStatus(false);
     this.setVisible(false);
 
-    if (options.time === 0 || !this.data.animation) {
+    if (options.time === 0 || !this.config.animation) {
       this.scroll(pos);
       return;
     }
@@ -147,7 +147,7 @@ export class OnboardingComponent implements OnDestroy {
   }
 
   handleMask(): void {
-    if (this.data.maskClosable === true) {
+    if (this.config.maskClosable === true) {
       this.to('done');
     }
   }

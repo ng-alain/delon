@@ -34,9 +34,9 @@ export class DemoComponent {
   start(): void {
     this.srv.start({
       items: [
-        { selector: '.test1-1', detail: 'The user guidance is to help users better understand and use the product', width: 300 },
-        { selector: '.test1-2', headline: 'Test2', detail: 'The user guidance is to help users better understand and use the product' },
-        { selector: '.test1-3', headline: 'Test3', detail: 'The user guidance is to help users better understand and use the product' },
+        { selectors: '.test1-1', content: 'The user guidance is to help users better understand and use the product', width: 300 },
+        { selectors: '.test1-2', title: 'Test2', content: 'The user guidance is to help users better understand and use the product' },
+        { selectors: '.test1-3', title: 'Test3', content: 'The user guidance is to help users better understand and use the product' },
       ],
     });
   }
