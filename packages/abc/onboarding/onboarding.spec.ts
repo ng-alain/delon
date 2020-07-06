@@ -1,10 +1,160 @@
+import { Component } from '@angular/core';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { createTestContext } from '@delon/testing';
+import { OnboardingModule } from './onboarding.module';
+import { OnboardingService } from './onboarding.service';
+import { OnboardingData, OnboardingOpType } from './onboarding.types';
+
 describe('abc: onboarding', () => {
-  // let srv: OnboardingService;
-  // function genModule() {
-  //   TestBed.configureTestingModule({
-  //     imports: [OnboardingModule],
-  //     providers: [],
-  //   });
-  //   srv = TestBed.inject<OnboardingService>(OnboardingService);
-  // }
+  let fixture: ComponentFixture<TestComponent>;
+  let srv: OnboardingService;
+  let page: PageObject;
+
+  function genModule() {
+    TestBed.configureTestingModule({
+      imports: [OnboardingModule, NoopAnimationsModule],
+      declarations: [TestComponent],
+    });
+    ({ fixture } = createTestContext(TestComponent));
+    srv = TestBed.inject<OnboardingService>(OnboardingService);
+    fixture.detectChanges();
+    page = new PageObject();
+  }
+
+  afterEach(fakeAsync(() => {
+    if (srv) {
+      srv.done();
+      srv.ngOnDestroy();
+      page.cd();
+    }
+  }));
+
+  beforeEach(() => genModule());
+  it('should working', fakeAsync(() => {
+    page.start().checkActive().click('next').checkDone(false).click('done').checkDone();
+  }));
+  it('#skip', fakeAsync(() => {
+    page.start().checkActive().click('skip').checkDone();
+  }));
+  describe('#next', () => {
+    it('should working', fakeAsync(() => {
+      page.start().next().checkActive(1);
+    }));
+    it('should be done when next is last', fakeAsync(() => {
+      page.start().next().next().checkDone();
+    }));
+  });
+  describe('#prev', () => {
+    it('should working in op', fakeAsync(() => {
+      page.start().click('next').checkActive(1).click('prev').checkActive(0);
+    }));
+    it('should working in service', fakeAsync(() => {
+      page.start().next().prev().checkActive(0);
+    }));
+    it('should be ingore when prev is first', fakeAsync(() => {
+      page.start().prev().checkActive(0);
+    }));
+  });
+  describe('#mask', () => {
+    const maskCls = '.onboarding__mask';
+    it('with true', fakeAsync(() => {
+      page.start({ mask: true, maskClosable: true }).checkEl(maskCls, true);
+      page.getEl(maskCls).click();
+      page.cd().checkDone();
+    }));
+    it('with false', fakeAsync(() => {
+      page.start({ mask: false }).checkEl(maskCls, false);
+    }));
+    it('shoudl be disabled done when maskClosable is false', fakeAsync(() => {
+      page.start({ mask: true, maskClosable: false }).checkEl(maskCls, true);
+      page.getEl(maskCls).click();
+      page.cd().checkDone(false);
+    }));
+  });
+  it('should be hide panel when selector is invalid', fakeAsync(() => {
+    page.start({ items: [{ selector: 'invalid-el' }] }).checkEl('.onboarding__light-hide', true);
+  }));
+  it('#animation', fakeAsync(() => {
+    page.start({ animation: true }).click('next').checkActive(1);
+  }));
+  it('#showTotal', fakeAsync(() => {
+    page.start({ showTotal: true });
+    expect(document.querySelector('.onboarding__total') != null).toBe(true);
+  }));
+
+  class PageObject {
+    get el(): HTMLElement {
+      return document.querySelector('onboarding') as HTMLElement;
+    }
+
+    getEl(cls: string): HTMLElement {
+      return this.el.querySelector(cls) as HTMLElement;
+    }
+
+    checkActive(active = 0): this {
+      expect(parseInt(this.el.dataset.onboardingActive?.toString()!, 10)).toBe(active);
+      return this;
+    }
+
+    checkEl(cls: string, status: boolean): this {
+      expect(this.getEl(cls) != null).toBe(status);
+      return this;
+    }
+
+    click(type: OnboardingOpType): this {
+      const btn = document.querySelector(`[data-btnType="${type}"]`) as HTMLElement;
+      expect(btn == null).toBe(false);
+      btn.dispatchEvent(new Event('click'));
+      return this.cd();
+    }
+
+    checkDone(done = true): this {
+      expect(this.el == null).toBe(done);
+      return this.cd();
+    }
+
+    start(data?: OnboardingData): this {
+      data = {
+        items: [
+          { selector: '#a', headline: 'atitle', detail: 'acontent' },
+          { selector: '#b', headline: 'btitle' },
+        ],
+        ...data,
+      };
+      srv.start(data);
+      return this.cd();
+    }
+
+    next(): this {
+      srv.next();
+      return this.cd();
+    }
+
+    prev(): this {
+      srv.prev();
+      return this.cd();
+    }
+
+    done(): this {
+      srv.done();
+      return this.cd();
+    }
+
+    cd(time = 301): this {
+      fixture.detectChanges();
+      tick(time);
+      fixture.detectChanges();
+      return this;
+    }
+  }
 });
+
+@Component({
+  template: ` <div id="a" style="width: 100px; height: 50px">a</div>
+    <div style="padding: 100px">
+      <div id="b" style="width: 1000px; height: 50px">b</div>
+    </div>
+    <div id="c" style="width: 100px; height: 50px">c</div>`,
+})
+class TestComponent {}

@@ -28,6 +28,7 @@ interface OnboardingLightData {
   templateUrl: './onboarding.component.html',
   host: {
     '[class.onboarding]': `true`,
+    '[attr.data-onboarding-active]': `active`,
   },
   preserveWhitespaces: false,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -69,7 +70,7 @@ export class OnboardingComponent implements OnDestroy {
   private getLightData(): OnboardingLightData | null {
     const doc = this._getDoc();
     const win = this._getWin();
-    const el = doc.querySelector(this.item.selector!) as HTMLElement;
+    const el = doc.querySelector(this.item.selector) as HTMLElement;
     if (!el) {
       return null;
     }
@@ -109,6 +110,7 @@ export class OnboardingComponent implements OnDestroy {
 
     const pos = this.getLightData();
     if (pos == null) {
+      this.setVisible(false);
       return;
     }
 
@@ -142,6 +144,12 @@ export class OnboardingComponent implements OnDestroy {
 
   to(type: OnboardingOpType): void {
     this.op.emit(type);
+  }
+
+  handleMask(): void {
+    if (this.data.maskClosable === true) {
+      this.to('done');
+    }
   }
 
   ngOnDestroy(): void {

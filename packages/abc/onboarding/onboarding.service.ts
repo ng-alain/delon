@@ -21,7 +21,7 @@ export class OnboardingService implements OnDestroy {
   private data: OnboardingData;
   private active = 0;
 
-  _getDoc(): Document {
+  private _getDoc(): Document {
     return this.doc;
   }
 
@@ -33,7 +33,7 @@ export class OnboardingService implements OnDestroy {
     @Inject(DOCUMENT) private doc: any,
   ) {}
 
-  private attachOverlay(): void {
+  private attach(): void {
     const compRef = (this.compRef = this.resolver.resolveComponentFactory(OnboardingComponent).create(this.injector));
     this.appRef.attachView(compRef.hostView);
     const compNode = (compRef.hostView as EmbeddedViewRef<any>).rootNodes[0];
@@ -62,9 +62,7 @@ export class OnboardingService implements OnDestroy {
   private destroy(): void {
     this.appRef.detachView(this.compRef.hostView);
     this.compRef.destroy();
-    if (this.op$) {
-      this.op$.unsubscribe();
-    }
+    this.op$.unsubscribe();
   }
 
   private showItem(cleanTime = false): void {
@@ -75,7 +73,6 @@ export class OnboardingService implements OnDestroy {
       ...items[this.active],
     } as OnboardingItem;
     Object.assign(this.compRef.instance, { item, data: this.data, active: this.active, max: items.length });
-    // this.compRef.changeDetectorRef.detectChanges();
     setTimeout(() => this.compRef.instance.updatePosition({ time: cleanTime ? 0 : 300 }));
   }
 
@@ -89,12 +86,12 @@ export class OnboardingService implements OnDestroy {
       ...data,
     };
     this.active = 0;
-    this.attachOverlay();
+    this.attach();
     this.showItem(true);
   }
 
   next(): void {
-    if (this.active + 1 >= this.data.items?.length!) {
+    if (this.active + 1 >= this.data.items!.length) {
       this.done();
       return;
     }

@@ -29,7 +29,7 @@ export interface OnboardingItem {
   /**
    * The CSS selector, which identifies the html element you want to describe
    */
-  selector?: string;
+  selector: string;
   /**
    * Positioning of the selector element, relative to the contents of the children, Default: `bottomLeft`
    */
