@@ -16,7 +16,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { AlainI18NService, ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 import { AlainConfigService, InputBoolean, InputNumber, isEmpty } from '@delon/util';
@@ -38,7 +38,7 @@ interface PageHeaderPath {
   encapsulation: ViewEncapsulation.None,
 })
 export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-  private inited = false;
+  inited = false;
   private unsubscribe$ = new Subject<void>();
   @ViewChild('conTpl', { static: false }) private conTpl: ElementRef;
   @ViewChild('affix', { static: false }) private affix: NzAffixComponent;
@@ -117,7 +117,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       )
       .subscribe(() => this.affix.updatePosition({} as any));
 
-    merge(menuSrv.change.pipe(filter(() => this.inited)), i18nSrv.change)
+    merge(menuSrv.change.pipe(filter(() => this.inited)), router.events.pipe(filter(ev => ev instanceof NavigationEnd)), i18nSrv.change)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.refresh());
   }
@@ -164,7 +164,7 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
       if (this.titleSrv) {
         this.titleSrv.setTitle(this._titleVal);
       }
-      if (this.reuseSrv) {
+      if (!this.inited && this.reuseSrv) {
         this.reuseSrv.title = this._titleVal;
       }
     }
@@ -190,7 +190,9 @@ export class PageHeaderComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   ngOnChanges(): void {
-    if (this.inited) this.refresh();
+    if (this.inited) {
+      this.refresh();
+    }
   }
 
   ngOnDestroy(): void {
