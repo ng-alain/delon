@@ -75,4 +75,10 @@ export default {
       if: `Should match "{failingKeyword}" schema`,
     },
   },
+  onboarding: {
+    skip: `Skip`,
+    prev: `Prev`,
+    next: `Next`,
+    done: `Done`,
+  },
 } as FullLocaleData;

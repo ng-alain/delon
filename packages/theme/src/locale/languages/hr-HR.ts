@@ -39,4 +39,10 @@ export default {
     removeText: 'Ukloni',
     checkAllText: 'Označi sve',
   },
+  onboarding: {
+    skip: `Skip`,
+    prev: `Prev`,
+    next: `Next`,
+    done: `Done`,
+  },
 } as FullLocaleData;

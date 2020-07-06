@@ -75,4 +75,10 @@ export default {
       if: `パターンと一致する必要があります: "{failingKeyword}" `,
     },
   },
+  onboarding: {
+    skip: `Skip`,
+    prev: `Prev`,
+    next: `Next`,
+    done: `Done`,
+  },
 } as FullLocaleData;

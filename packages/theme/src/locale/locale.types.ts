@@ -85,12 +85,20 @@ export interface SFErrorLocaleData extends LocaleData {
   if: string;
 }
 
+export interface OnboardingLocaleData extends LocaleData {
+  skip: string;
+  prev: string;
+  next: string;
+  done: string;
+}
+
 export interface FullLocaleData {
   abbr: string;
   exception: ExceptionLocaleData;
   noticeIcon: NoticeIconLocaleData;
   reuseTab: ReuseTabLocaleData;
   tagSelect: TagSelectLocaleData;
+  onboarding: OnboardingLocaleData;
   miniProgress: MiniProgressLocaleData;
   st: STLocaleData;
   sf: SFLocaleData;

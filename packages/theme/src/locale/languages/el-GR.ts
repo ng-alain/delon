@@ -75,4 +75,10 @@ export default {
       if: `Πρέπει να ταιριάζει στην δομή "{failingKeyword}"`,
     },
   },
+  onboarding: {
+    skip: `Skip`,
+    prev: `Prev`,
+    next: `Next`,
+    done: `Done`,
+  },
 } as FullLocaleData;
