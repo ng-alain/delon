@@ -29,7 +29,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
     </div>
     <button nz-button (click)="start()">Start</button>
     <button nz-button (click)="viaHttp()">Start Via Http</button>
-    <a href="https://github.com/ng-alain/delon/blob/master/src/assets/schema/schema.json" target="_blank">onboarding.json</a>
+    <a href="https://github.com/ng-alain/delon/blob/master/src/assets/schema/schema.json" target="_blank" class="ml-md">onboarding.json</a>
   `,
 })
 export class DemoComponent {

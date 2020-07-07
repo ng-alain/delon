@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { createTestContext } from '@delon/testing';
+import { throwError } from 'rxjs';
 import { OnboardingModule } from './onboarding.module';
 import { OnboardingService } from './onboarding.service';
 import { OnboardingConfig, OnboardingOpType } from './onboarding.types';
@@ -13,7 +16,7 @@ describe('abc: onboarding', () => {
 
   function genModule() {
     TestBed.configureTestingModule({
-      imports: [OnboardingModule, NoopAnimationsModule],
+      imports: [OnboardingModule, NoopAnimationsModule, RouterTestingModule],
       declarations: [TestComponent],
     });
     ({ fixture } = createTestContext(TestComponent));
@@ -31,12 +34,15 @@ describe('abc: onboarding', () => {
   }));
 
   beforeEach(() => genModule());
+
   it('should working', fakeAsync(() => {
     page.start().checkActive().click('next').checkDone(false).click('done').checkDone();
   }));
+
   it('#skip', fakeAsync(() => {
     page.start().checkActive().click('skip').checkDone();
   }));
+
   describe('#next', () => {
     it('should working', fakeAsync(() => {
       page.start().next().checkActive(1);
@@ -45,6 +51,7 @@ describe('abc: onboarding', () => {
       page.start().next().next().checkDone();
     }));
   });
+
   describe('#prev', () => {
     it('should working in op', fakeAsync(() => {
       page.start().click('next').checkActive(1).click('prev').checkActive(0);
@@ -56,6 +63,7 @@ describe('abc: onboarding', () => {
       page.start().prev().checkActive(0);
     }));
   });
+
   describe('#mask', () => {
     const maskCls = '.onboarding__mask';
     it('with true', fakeAsync(() => {
@@ -72,15 +80,42 @@ describe('abc: onboarding', () => {
       page.cd().checkDone(false);
     }));
   });
+
   it('should be hide panel when selector is invalid', fakeAsync(() => {
-    page.start({ items: [{ selectors: 'invalid-el' }] }).checkEl('.onboarding__light-hide', true);
+    spyOn(console, 'warn');
+    page.start({ items: [{ selectors: 'invalid-el' }] });
+    expect(console.warn).toHaveBeenCalled();
   }));
-  it('#animation', fakeAsync(() => {
-    page.start({ animation: true }).click('next').checkActive(1);
-  }));
+
   it('#showTotal', fakeAsync(() => {
     page.start({ showTotal: true });
     expect(document.querySelector('.onboarding__total') != null).toBe(true);
+  }));
+
+  it('should navigate first', fakeAsync(() => {
+    const router = TestBed.inject<Router>(Router);
+    spyOn(router, 'navigateByUrl');
+    page.start({ items: [{ url: '/', selectors: '#a' }] });
+    expect(router.navigateByUrl).toHaveBeenCalled();
+  }));
+
+  it('should be delay with before', fakeAsync(() => {
+    page.start({ items: [{ before: 1, selectors: '#a' }] }).checkActive();
+  }));
+
+  it('should be done when before is throw error', fakeAsync(() => {
+    spyOn(srv, 'done');
+    page.start({ items: [{ before: throwError(''), selectors: '#a' }] });
+    expect(srv.done).toHaveBeenCalled();
+  }));
+
+  it('should ingore start when current is running', fakeAsync(() => {
+    page.start();
+    spyOnProperty(srv, 'running').and.returnValue(true);
+    const srvAny = srv as any;
+    spyOn(srvAny as any, 'attach');
+    page.start();
+    expect(srvAny.attach).not.toHaveBeenCalled();
   }));
 
   class PageObject {

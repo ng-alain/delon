@@ -71,6 +71,18 @@
           "done": {
             "description": "Done button of the panel, `null` Don't show",
             "type": "string"
+          },
+          "url": {
+            "description": "Target router url",
+            "type": "string"
+          },
+          "before": {
+            "description": "Callback before entering, triggered when call `next` operates",
+            "type": "number"
+          },
+          "after": {
+            "description": "Callback after entering, triggered when call `prev` operates",
+            "type": "number"
           }
         },
         "required": ["selectors"]
@@ -85,11 +97,6 @@
       "description": "Clicking on the mask (area outside the onboarding) to close the onboarding or not",
       "type": "boolean",
       "default": true
-    },
-    "animation": {
-      "description": "Whether to animate",
-      "type": "boolean",
-      "default": false
     },
     "showTotal": {
       "description": "Whether to show total",

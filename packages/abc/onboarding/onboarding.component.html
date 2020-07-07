@@ -1,13 +1,12 @@
-<div *ngIf="visible && config.mask" class="onboarding__mask" (click)="handleMask()"></div>
+<div *ngIf="!running && config.mask" class="onboarding__mask" (click)="handleMask()"></div>
 <div
   *ngIf="item"
   class="onboarding__light"
-  [class.onboarding__light-ant]="config.animation"
-  [class.onboarding__light-hide]="!visible"
+  [class.onboarding__light-hide]="running"
   nz-popover
   [nzPopoverTitle]="item.title"
   [nzPopoverContent]="content"
-  [nzVisible]="visible"
+  [nzVisible]="!running"
   [nzPopoverTrigger]="null"
   [nzPopoverPlacement]="item.position"
   [nzNoAnimation]="true"
@@ -15,7 +14,9 @@
   [nzOverlayStyle]="{ 'max-width.px': item.width }"
 ></div>
 <ng-template #content>
-  <ng-container *nzStringTemplateOutlet="item.content">{{ item.content }}</ng-container>
+  <ng-container *nzStringTemplateOutlet="item.content">
+    <div [innerHTML]="item.content"></div>
+  </ng-container>
   <div class="flex-center-between onboarding__footer">
     <span class="onboarding__total">
       <ng-container *ngIf="config.showTotal">{{ active + 1 }}/{{ max }}</ng-container>

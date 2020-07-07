@@ -19,6 +19,7 @@ export const ENUS = {
   'app.home.feature.demo': 'Example page',
   'app.home.feature.demo.desc': 'A lot of example pages can be referenced or used',
   'app.home.theme': 'Business Theme',
+  'app.home.theme.pro': 'Pro',
   'app.home.theme.pro.desc': 'An enterprise-class UI design language for web applications',
   'app.home.theme.ms': 'Microservices',
   'app.home.theme.ms.desc': 'For microservice development style',

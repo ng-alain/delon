@@ -106,25 +106,11 @@
   <div class="page">
     <h2>{{ 'app.home.theme' | i18n }}</h2>
     <div class="ant-row">
-      <div class="ant-col-xs-24 ant-col-md-12">
-        <a class="page-theme__item" href="https://e.ng-alain.com/theme/pro" data-aos="zoom-in" data-aos-delay="0">
-          <img src="./assets/screenshot/pro.png" />
-          <h3>PRO</h3>
-          <p>{{ 'app.home.theme.pro.desc' | i18n }}</p>
-        </a>
-      </div>
-      <div class="ant-col-xs-24 ant-col-md-12">
-        <a class="page-theme__item" href="https://e.ng-alain.com/theme/ms" data-aos="zoom-in" data-aos-delay="100">
-          <img src="./assets/screenshot/ms.png" />
-          <h3>{{ 'app.home.theme.ms' | i18n }}</h3>
-          <p>{{ 'app.home.theme.ms.desc' | i18n }}</p>
-        </a>
-      </div>
-      <div class="ant-col-xs-24 ant-col-md-12">
-        <a class="page-theme__item" href="https://e.ng-alain.com/theme/yun" data-aos="zoom-in" data-aos-delay="100">
-          <img src="./assets/screenshot/yun.png" />
-          <h3>{{ 'app.home.theme.yun' | i18n }}</h3>
-          <p>{{ 'app.home.theme.yun.desc' | i18n }}</p>
+      <div *ngFor="let t of themes" class="ant-col-xs-24 ant-col-md-12">
+        <a class="page-theme__item" [attr.href]="'https://e.ng-alain.com/theme/' + t" data-aos="zoom-in" data-aos-delay="0" [attr.data-theme]="t">
+          <img src="./assets/screenshot/{{ t }}.png" />
+          <h3>{{ 'app.home.theme.' + t | i18n }}</h3>
+          <p>{{ 'app.home.theme.' + t + '.desc' | i18n }}</p>
         </a>
       </div>
     </div>

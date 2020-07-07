@@ -3,7 +3,6 @@ type: Basic
 title: onboarding
 subtitle: Onboarding
 order: 7
-cols: 1
 module: import { OnboardingModule } from '@delon/abc/onboarding';
 ---
 
@@ -29,20 +28,22 @@ The components only support the use of `OnboardingService` service to build.
 | `[items]` | Onboarding items | `OnboardingItem[]` | `[]` |
 | `[mask]` | Whether to show mask or not | `boolean` | `true` |
 | `[maskClosable]` | Clicking on the mask (area outside the onboarding) to close the onboarding or not | `boolean` | `true` |
-| `[animation]` | Whether to animate | `boolean` | `false` |
 | `[showTotal]` | Whether to show total | `boolean` | `false` |
 
 ### OnboardingItem
 
-| Property | Description | Type | Default | Global Config |
-|----------|-------------|------|---------|---------------|
-| `[selectors]` | The CSS selector, which identifies the html element you want to describe | `string` | - | - |
-| `[position]` | Positioning of the selector element, relative to the contents of the children | `top, left, right, bottom, topLeft, topRight, bottomLeft, bottomRight, leftTop, leftBottom, rightTop, rightBottom` | `bottomLeft` | ✅ |
-| `[className]` | Class name of the panel | `string` | - | - |
-| `[width]` | Width of the panel | `number` | - | - |
-| `[title]` | Headline text of the panel | `string, TemplateRef<void>` | - | - |
-| `[content]` | Detail text of the panel | `string, TemplateRef<void>` | - | - |
-| `[skip]` | Skip button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `跳过` | ✅ |
-| `[prev]` | Prev button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `上一项` | ✅ |
-| `[next]` | Next button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `下一项` | ✅ |
-| `[done]` | Done button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `完成` | ✅ |
+| Property | Description | Type | Default | 
+|----------|-------------|------|---------|
+| `[selectors]` | The CSS selector, which identifies the html element you want to describe | `string` | - |
+| `[position]` | Positioning of the selector element, relative to the contents of the children | `top, left, right, bottom, topLeft, topRight, bottomLeft, bottomRight, leftTop, leftBottom, rightTop, rightBottom` | `bottomLeft` |
+| `[className]` | Class name of the panel | `string` | - |
+| `[width]` | Width of the panel | `number` | - |
+| `[title]` | Headline text of the panel | `string, TemplateRef<void>` | - |
+| `[content]` | Detail text of the panel | `string, SafeHtml, TemplateRef<void>` | - | 
+| `[skip]` | Skip button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `跳过` |
+| `[prev]` | Prev button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `上一项` |
+| `[next]` | Next button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `下一项` |
+| `[done]` | Done button of the panel, `null` Don't show | `string, TemplateRef<void>, null` | `完成` |
+| `[url]` | Target router url | `string` | - |
+| `[before]` | Callback before entering, triggered when call `next` operates, `number` indicate delay | `Observable<any>, number` | - |
+| `[after]` | Callback after entering, triggered when call `prev` operates, `number` indicate delay | `Observable<any>, number` | - |

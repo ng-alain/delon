@@ -42,7 +42,7 @@ export class OnboardingComponent implements OnDestroy {
   active = 0;
   max = 0;
   readonly op = new EventEmitter<OnboardingOpType>();
-  visible = false;
+  running = false;
 
   get first(): boolean {
     return this.active === 0;
@@ -100,17 +100,24 @@ export class OnboardingComponent implements OnDestroy {
     const scrollY = pos.top - (pos.clientHeight - pos.height) / 2;
     this._getWin().scrollTo({ top: scrollY });
     this.updatePrevElStatus(true);
-    this.setVisible(true);
   }
 
-  updatePosition(options: { time?: number } = { time: 300 }): void {
+  updateRunning(status: boolean): void {
+    this.running = status;
+    this.cdr.detectChanges();
+    if (!status) {
+      this.updatePosition();
+    }
+  }
+
+  private updatePosition(): void {
     if (!this.platform.isBrowser) {
       return;
     }
 
     const pos = this.getLightData();
     if (pos == null) {
-      this.setVisible(false);
+      console.warn(`Did not matches selectors [${this.item.selectors}]`);
       return;
     }
 
@@ -121,19 +128,7 @@ export class OnboardingComponent implements OnDestroy {
     lightStyle.height = `${pos.height}px`;
 
     this.updatePrevElStatus(false);
-    this.setVisible(false);
-
-    if (options.time === 0 || !this.config.animation) {
-      this.scroll(pos);
-      return;
-    }
-
-    this.time = setTimeout(() => this.scroll(pos), options.time);
-  }
-
-  private setVisible(status: boolean): void {
-    this.visible = status;
-    this.cdr.detectChanges();
+    this.scroll(pos);
   }
 
   private updatePrevElStatus(status: boolean): void {
